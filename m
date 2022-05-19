@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 884A4C433EF
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 18:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EDB8C433FE
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 18:18:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243827AbiESSS0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 14:18:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34060 "EHLO
+        id S243843AbiESSSg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 14:18:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243789AbiESSSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 14:18:17 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB9C6EBA9D
-        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:12 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id r23so8355777wrr.2
-        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:12 -0700 (PDT)
+        with ESMTP id S243781AbiESSSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 14:18:11 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF79DE31F
+        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:10 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id r9-20020a1c4409000000b00397345f2c6fso797332wma.4
+        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sXZbh0MamYACiDTr6HvklkpnU4A4eZMx4voLUuNMvpg=;
-        b=G5DoKSlVFslUU7jbeQnIGBLc6yl8wzceirTENODVQtDmC5nI9TnuKS7L93eUZ1rMUt
-         fnFIHexfU3Cmai2WD7dPU9X7GIt9Yn3wfalBYuQluliFcStA3ZxFgnrwlv13DU9qrTmz
-         Hj4RZf3vryUpFAYiKCMKqARLL21DXPEjxNwkCyMBFnOZ2myXVsKU5KlDd8XecZIfDaVh
-         kR9FLprY67WZr7krxqEzZaP3CB6vkQaRTB+46WxpJomYgTUWXio2MU5Cj6fg4Rp4JSzq
-         BEktmRQL4VBJQtW/stcvOLTAzTWn6o/9Xmgn5tBxIR+g/mDh4J2Q4DsnBzFhfL7CV6QO
-         SoOg==
+        bh=Uo6VeR463A8bpTnDe4txbUadyp7c2hS7RwvOwDAMeOI=;
+        b=jr/kfFl6+YEIPlnrX3/LC4o12aGClr/jSv5wkOAearLbm4+bFXMAF+9oJvakIaUM8s
+         oMK/zeHMVera1DrInjM3TawVbm1WxZPnGWXxmIrgQLYXkdD4TJNfHyAXze1vieJcq7/o
+         Sx42vWI2zRMR4SB+Z2/4bPaBMLyQ8R1pwa6G7amk6IrPhMINux6ImQg1UB9KvipNaL9K
+         5n0HN9QjIHKBr5rt8xomF+6FuTz8qp8yTRrK5qo+XeVgM2JZxVaZRRDTZBpwkXdRnPYh
+         CGgB8sKSwGjg7WX/dJrWl5CD9KY4ElCb9R/D+Ibhn8n3d7eEYntXsZtYyxbEPT6QRDD1
+         GcTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sXZbh0MamYACiDTr6HvklkpnU4A4eZMx4voLUuNMvpg=;
-        b=Za6WS3dBTyH5k7HiiT3QCpZBpejnD0xH10/yzNJ+dG5lLy6YYGddLBQIC+nFFExCfY
-         lF9Q4skyT8tofs/sgMy0esHMZ6GSD+VD1R7pFdPpOgVtFdv6IN2pJitNT3PdyIPaJth3
-         H+FpfjWItm4jHvXSkI9/RZrjyQeU/ZGDSMw8u/AS4NYha3wlNObdPrBHogL1335Pqznh
-         M3uvYEfLwIx/hb5lnbXAYgZsTpM0r+/yd3obZvYe1jOQLIXqTQuHvCKibUJ0072/fFev
-         iHcmsjcHsSv2xZJmQlXxHpd1QekYACKN4xZWezenSnT7ohcMXuL3tCkvdlx305TGt+2Q
-         cbFg==
-X-Gm-Message-State: AOAM532moju6fRuqPSVHgDg47kTCV5MA1dJBHbEHMXvr23IxN/lDSic+
-        VRlVZKN4w8lKtz6Rju0daIiMCbwKtQU=
-X-Google-Smtp-Source: ABdhPJxcGU4Fcf8epFbzHLP+68MwuW6g9ZJzoO2w2EuhjqMtg/lwNZebHC8PFtA4IDHIbsqY+aWi+A==
-X-Received: by 2002:a5d:52ce:0:b0:20c:e030:b05a with SMTP id r14-20020a5d52ce000000b0020ce030b05amr5003081wrv.174.1652984291130;
-        Thu, 19 May 2022 11:18:11 -0700 (PDT)
+        bh=Uo6VeR463A8bpTnDe4txbUadyp7c2hS7RwvOwDAMeOI=;
+        b=3tA765fwlSrpBPff2lIqi8i0XmkvvDp74XQlxpQGLrRJhlQ/KxbbRnYSKR/Xnq4GgW
+         dkD892BHQ9z3a2u0Fe0fQQSPQRITUK/cDt7f/RLgctRd0+DBuaToUc3sW6AqlA1daD4g
+         Xq4yaJBd7sfTM6D/YV0e5Nvu566ZFbmqOj14Iv7N+93bmvEpSn/3JmX2LOoKrdEfNI6y
+         wiAsVUEd0M1bic6E78LYBcEF4vUi0qDb0ssbUW0FYJ6ZTkWFkyckfXkvmT7a6/GYmh2I
+         ebDiXZH2VOWyAxZnI07QIx3LIh32k1dPQ1vMxw8qDvL8tUvM4mxFSyoMZA3gaaU5MHJt
+         qmvA==
+X-Gm-Message-State: AOAM5336AJQy40m6fgRbCORATfUeN+09BKqX+xe5ofQ/TYjYWJllZ8ay
+        PP3XToqsLJWevTP6oW0qXDRCs52NFUI=
+X-Google-Smtp-Source: ABdhPJwslcmeIZWXzN4YdrZH6wW4ctcDNuvvHYQUu1Yp10pN3QAE52/w08Qe0l+bfymHOxYFpSGHIg==
+X-Received: by 2002:a7b:c5cd:0:b0:38c:8b1b:d220 with SMTP id n13-20020a7bc5cd000000b0038c8b1bd220mr4858188wmk.118.1652984288620;
+        Thu, 19 May 2022 11:18:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u16-20020a05600c035000b00396fbf6f524sm282950wmd.1.2022.05.19.11.18.10
+        by smtp.gmail.com with ESMTPSA id o21-20020adfa115000000b0020c5253d8bdsm340377wro.9.2022.05.19.11.18.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 11:18:10 -0700 (PDT)
-Message-Id: <2e645b08a9e3c8505d4c525dadddd1f3eac77201.1652984283.git.gitgitgadget@gmail.com>
+        Thu, 19 May 2022 11:18:08 -0700 (PDT)
+Message-Id: <f1ba69c02d705ffd1d1ccbc96e2801adf470c6f1.1652984283.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
 References: <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
         <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 May 2022 18:18:01 +0000
-Subject: [PATCH v5 5/7] scalar diagnose: include disk space information
+Date:   Thu, 19 May 2022 18:17:59 +0000
+Subject: [PATCH v5 3/7] scalar: validate the optional enlistment argument
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,99 +73,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When analyzing problems with large worktrees/repositories, it is useful
-to know how close to a "full disk" situation Scalar/Git operates. Let's
-include this information.
+The `scalar` command needs a Scalar enlistment for many subcommands, and
+looks in the current directory for such an enlistment (traversing the
+parent directories until it finds one).
+
+These is subcommands can also be called with an optional argument
+specifying the enlistment. Here, too, we traverse parent directories as
+needed, until we find an enlistment.
+
+However, if the specified directory does not even exist, or is not a
+directory, we should stop right there, with an error message.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          | 53 ++++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh |  1 +
- 2 files changed, 54 insertions(+)
+ contrib/scalar/scalar.c          | 6 ++++--
+ contrib/scalar/t/t9099-scalar.sh | 5 +++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 53213f9a3b9..0a9e25a57f8 100644
+index 1ce9c2b00e8..00dcd4b50ef 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -303,6 +303,58 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
- 	return res;
- }
+@@ -43,9 +43,11 @@ static void setup_enlistment_directory(int argc, const char **argv,
+ 		usage_with_options(usagestr, options);
  
-+#ifndef WIN32
-+#include <sys/statvfs.h>
-+#endif
-+
-+static int get_disk_info(struct strbuf *out)
-+{
-+#ifdef WIN32
-+	struct strbuf buf = STRBUF_INIT;
-+	char volume_name[MAX_PATH], fs_name[MAX_PATH];
-+	DWORD serial_number, component_length, flags;
-+	ULARGE_INTEGER avail2caller, total, avail;
-+
-+	strbuf_realpath(&buf, ".", 1);
-+	if (!GetDiskFreeSpaceExA(buf.buf, &avail2caller, &total, &avail)) {
-+		error(_("could not determine free disk size for '%s'"),
-+		      buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+
-+	strbuf_setlen(&buf, offset_1st_component(buf.buf));
-+	if (!GetVolumeInformationA(buf.buf, volume_name, sizeof(volume_name),
-+				   &serial_number, &component_length, &flags,
-+				   fs_name, sizeof(fs_name))) {
-+		error(_("could not get info for '%s'"), buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+	strbuf_addf(out, "Available space on '%s': ", buf.buf);
-+	strbuf_humanise_bytes(out, avail2caller.QuadPart);
-+	strbuf_addch(out, '\n');
-+	strbuf_release(&buf);
-+#else
-+	struct strbuf buf = STRBUF_INIT;
-+	struct statvfs stat;
-+
-+	strbuf_realpath(&buf, ".", 1);
-+	if (statvfs(buf.buf, &stat) < 0) {
-+		error_errno(_("could not determine free disk size for '%s'"),
-+			    buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+
-+	strbuf_addf(out, "Available space on '%s': ", buf.buf);
-+	strbuf_humanise_bytes(out, st_mult(stat.f_bsize, stat.f_bavail));
-+	strbuf_addf(out, " (mount flags 0x%lx)\n", stat.f_flag);
-+	strbuf_release(&buf);
-+#endif
-+	return 0;
-+}
-+
- /* printf-style interface, expects `<key>=<value>` argument */
- static int set_config(const char *fmt, ...)
- {
-@@ -599,6 +651,7 @@ static int cmd_diagnose(int argc, const char **argv)
- 	get_version_info(&buf, 1);
+ 	/* find the worktree, determine its corresponding root */
+-	if (argc == 1)
++	if (argc == 1) {
+ 		strbuf_add_absolute_path(&path, argv[0]);
+-	else if (strbuf_getcwd(&path) < 0)
++		if (!is_directory(path.buf))
++			die(_("'%s' does not exist"), path.buf);
++	} else if (strbuf_getcwd(&path) < 0)
+ 		die(_("need a working directory"));
  
- 	strbuf_addf(&buf, "Enlistment root: %s\n", the_repository->worktree);
-+	get_disk_info(&buf);
- 	write_or_die(stdout_fd, buf.buf, buf.len);
- 	strvec_pushf(&archiver_args,
- 		     "--add-virtual-file=diagnostics.log:%.*s",
+ 	strbuf_trim_trailing_dir_sep(&path);
 diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index 6802d317258..934b2485d91 100755
+index 2e1502ad45e..9d83fdf25e8 100755
 --- a/contrib/scalar/t/t9099-scalar.sh
 +++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -94,6 +94,7 @@ SQ="'"
- test_expect_success UNZIP 'scalar diagnose' '
- 	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	scalar diagnose cloned >out 2>err &&
-+	grep "Available space" out &&
- 	sed -n "s/.*$SQ\\(.*\\.zip\\)$SQ.*/\\1/p" <err >zip_path &&
- 	zip_path=$(cat zip_path) &&
- 	test -n "$zip_path" &&
+@@ -85,4 +85,9 @@ test_expect_success 'scalar delete with enlistment' '
+ 	test_path_is_missing cloned
+ '
+ 
++test_expect_success '`scalar [...] <dir>` errors out when dir is missing' '
++	! scalar run config cloned 2>err &&
++	grep "cloned. does not exist" err
++'
++
+ test_done
 -- 
 gitgitgadget
 
