@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A1A5C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 20:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8506BC433EF
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 20:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353395AbiETUBW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 16:01:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36326 "EHLO
+        id S1352232AbiETUD3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 16:03:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353391AbiETUBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 16:01:21 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3145A1EC64
-        for <git@vger.kernel.org>; Fri, 20 May 2022 13:01:19 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id g12so12088698edq.4
-        for <git@vger.kernel.org>; Fri, 20 May 2022 13:01:19 -0700 (PDT)
+        with ESMTP id S236170AbiETUD1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 16:03:27 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAAA419C3B6
+        for <git@vger.kernel.org>; Fri, 20 May 2022 13:03:26 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id rs12so5781638ejb.13
+        for <git@vger.kernel.org>; Fri, 20 May 2022 13:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yiD8DaaQNaF+8wA0z7T1/BxjCJGiRMc3QRCpMEAAIJQ=;
-        b=I5saXz4bhECUBJwpjC5Nv2D9RSI4HYJYkP/AoaXT59oL3t4nHHAbqqUTEwg9peEsTe
-         XXAav+sCEFJHpn6ENIOLlz7lr+BE1UH7/Y9d7qiCzkRVcC7htZpLoc7rEje8d3tRdIk4
-         TMiD+I4i0V27yhovvSMEaKaKYq9D5nVtMIuP4idyoHHte1WLbMMzYDMEP3Zzbb4s1DKS
-         GjuO50rbpQ7scVZ4Du2ivQ7Uo6Oy9UOnvgNDuYpl5BlckCj7lfS0okTNkrZdDqoZnX7g
-         gC1bUYva+aVTttMzpTejImCzdz79ufXKCNJs6xjgmm9taU2xT74YiyDowalN2NlFMX4l
-         gy2A==
+        bh=GmTmfw7WlqumPEftjp48zTXtmCbUSPUwuvwzlWTUJf0=;
+        b=YW/unjnRDMT86j2qCmxVFTYY/eFNxUGhbezmKCeGxeZ361DyoGdsdYTR+QDp5WuoVZ
+         Kah8tQUJmn5Z8BUNXVs1N3Pr31gI1qF6DzJXlE8HumRx7m4fqcAEgOHdSCuxssinT/ly
+         OEqCmDPxdSN9POcvjnilPo9cDE4ROljJ8ZvjwllFcfKwytJ25pPouyIH8jB5w6nLEkmm
+         Nf+lieTPypFrVHUmiWOh7vmGK+UT8UKjfg6D0bnKWvQHA5H6Z8piQQOwVPC706H/8JM1
+         ha3JDpj7pHqnIGC5BuIjdf0D7oNkWvxUqSXP6nOSqlpTbRjdiLlDc4TpZhyCcAUw66Hc
+         H9HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yiD8DaaQNaF+8wA0z7T1/BxjCJGiRMc3QRCpMEAAIJQ=;
-        b=zQEtERlEbU/Ld+12zhSBFc2qQ95BA+waqJDcHcfDHdfsVj41rjhLHOfkaG309Z61hO
-         bx0JA3um/c+CV4Ub/5wUGT41AXcC9Zv+hDpywoX67i0ycHkcgwEq3go927almOcs3um8
-         bDmIkkLRXOCeJARWjUrelPlkByVoADNfM9sSabODo+zp49cw7Qcf0j12hkbsq75h+/AC
-         oDZcCII6K/ehCCm+q7A5jrloPfLSV9zeYkXjkjFKLabfSLUikDbfLA1+mSjx/FQnjuLV
-         lb2tsWmAYci4bsZxvg0Bi08zURC9c/tWsPW5BZokq3PIuGmqxst8pYjFEfJLXTHOEFTp
-         vdtQ==
-X-Gm-Message-State: AOAM533QC7AQkHCCueysYn4MTjFrod49+53BffcGFv3KqZr8G6n2Cwao
-        fB33JTliqOI7M+HupQKoHsI31jdGnvd3Q7gbltE=
-X-Google-Smtp-Source: ABdhPJy9VH540oK78S6P6e9VKiZh8SPTdqgAn4C9ab/vNzXisKTpfrdHe5R5np4P5CJNCRHLBrBorcy0YUjwf3zltwA=
-X-Received: by 2002:a50:fd11:0:b0:42a:b6af:6e13 with SMTP id
- i17-20020a50fd11000000b0042ab6af6e13mr12684420eds.221.1653076877704; Fri, 20
- May 2022 13:01:17 -0700 (PDT)
+        bh=GmTmfw7WlqumPEftjp48zTXtmCbUSPUwuvwzlWTUJf0=;
+        b=jdMGDJr3ROZJEa1PvedkO2TnMv4To7kK20zxqwSmFrwnmXPIETHdvxxeFQmHejP4Fx
+         90TsQb5N8F0BdirI/ka5gjPxFA6wMnyHoYem7cMfTn+xN4kefv/TVSnp1CXWSYb+msZE
+         siU++g5TTIanMavprPT2X7nHt30ZIDAaBRakpPQQyOBO/NbNbF8VYEkUw8KFueOLPKD+
+         G26e48Ljl0PKmoJqDmY7FqTRRKAEzCJksQuU5uipH25bwRpCqioKiXYkk3aIRuK7oBiT
+         cuyjSfxkII6VWsKPfcu1GNVgs9zwofeHEBCrKYAt3ZjSwnTpZ4Xw2IAMwXTxGciTCv4Y
+         VSGw==
+X-Gm-Message-State: AOAM530ZX26TVeZFeKtqtBTAMVdKfOOzfJ2poAit5eH9v6wL56vKIPU/
+        pHnqb5KeLorNR2EX1VvqRklhvoTRKqI1fSpsuxU=
+X-Google-Smtp-Source: ABdhPJxg9gjivSIh/EMv7a2NFb6CyP75UHjercq3erI9XDwA3BkgWPldNv8c4MPgTXqgf9DByQhLhBlzZzHdF+/+A3Y=
+X-Received: by 2002:a17:906:39d1:b0:6fa:8e62:c8a2 with SMTP id
+ i17-20020a17090639d100b006fa8e62c8a2mr10370803eje.487.1653077005505; Fri, 20
+ May 2022 13:03:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220505203234.21586-1-ggossdev@gmail.com> <20220510171527.25778-1-ggossdev@gmail.com>
- <20220510171527.25778-2-ggossdev@gmail.com> <xmqqsfpfhdnh.fsf@gitster.g>
-In-Reply-To: <xmqqsfpfhdnh.fsf@gitster.g>
+ <20220510171527.25778-3-ggossdev@gmail.com> <xmqqv8ucko6v.fsf@gitster.g>
+In-Reply-To: <xmqqv8ucko6v.fsf@gitster.g>
 From:   oss dev <gg.oss.dev@gmail.com>
-Date:   Fri, 20 May 2022 16:01:06 -0400
-Message-ID: <CAAA5oLkpATLtxgLDg3tZzSZLd_cUGkOeDrMN-5QgTqPOhRRAOg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dir: consider worktree config in path recursion
+Date:   Fri, 20 May 2022 16:03:14 -0400
+Message-ID: <CAAA5oLndkcrRSXSmMbGk9JTQEE58e_Q=WYr3vaFx1C8i7ZSgZw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] dir: minor refactoring / clean-up
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         christian w <usebees@gmail.com>,
@@ -62,20 +62,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I think I've mentioned this ealier, but the above only describes the
-> scenario and does not say what behaviour is expected and what behaviour
-> is observed.  "no longer works" is OK, but not sufficient.
-
-I've updated the commit message for the fact that using option
-`--git-dir` can also cause the traversal to skip over the repository.
-I've therefore had to be a bit more generic in the description, so let
-me know if it's not specific enough.
-
-> > +     git --git-dir="test1/.git" config core.worktree "$(pwd)" &&
+> > Improve readability.
 >
-> I wonder if this lets funny paths to be added to the index, e.g.
-> would "git add test1" recursively add everything in that directory?
+> It reads somewhat a subjective opinion, without explaining how/why
+> the change makes it more readable.  Perhaps
+>
+>         Narrow the scope of the nested_repo variable to the block
+>         that uses it.
+>
+> or something?
 
-Yes, it would recursively add files inside test1.  I've added testcase
-3c which I believe does what we want but let me know if that doesn't
-address your question.
+I've updated this message.  Thanks!
