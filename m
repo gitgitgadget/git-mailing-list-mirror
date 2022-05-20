@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46EF5C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 19:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0698C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 19:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353142AbiETTB4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 15:01:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53092 "EHLO
+        id S1353145AbiETTCH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 15:02:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353111AbiETTBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 15:01:53 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11529185402
-        for <git@vger.kernel.org>; Fri, 20 May 2022 12:01:52 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id n10so7483944qvi.5
-        for <git@vger.kernel.org>; Fri, 20 May 2022 12:01:52 -0700 (PDT)
+        with ESMTP id S1353111AbiETTB4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 15:01:56 -0400
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CC26197F4A
+        for <git@vger.kernel.org>; Fri, 20 May 2022 12:01:55 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id eq14so7499345qvb.4
+        for <git@vger.kernel.org>; Fri, 20 May 2022 12:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=bU1K3fg22Xd2affdrK5307jLaNbTlMOx/5lP00CuVZc=;
-        b=4O4IlFBRrO73b3ba3Px3Oys+TH4qT5DG76Zt8Xq01q5m7QUZbCLdHOe3RIELtVSugL
-         tRWRzL3FkBfoxkYwjrBDkugYfT4Zu5TXj8fQR6CHUsVJONz5IayPrx/B/VST2YB5B9wp
-         yYSjdVxOSo6PJiPsxHZo480xFUa4JWXo3RU/fVtkMGBRL/tQYzq9qosgXkZROQcYllow
-         SIne0lor0OCundPRPS3WByYBXyLredmMQPPK6PJyshWEGQfkk2BnqVQ5zHIJAp+Z/vkn
-         at/r2wrtO3l7/ocgeOJWMvEynkTJtgW7yO0vWRCFoilG3CVGGznEYqdlMSET7uhaDQk2
-         pZKQ==
+        bh=Zyz6Yw3GkMghOPW6YQl2A8Ep+L1zlk6nE0W8HBFO5Do=;
+        b=W1okgsU9YM81YGCplYAmXcpD1SasaARZF8sAP6XJBaYunZTL+m3rNvR0rctRCDEHRy
+         rxKLW0zzYeTldDkRdxquZxjqfAShSTKpX/cvvCnAseLsX8FAuCxyDz+mJemTi20UzPTa
+         fbdkm6porwPXGQwyurfP83zWq4iTZnoOh3q7IsPGGrMwdBQBKVrYomJYz8g582bMaTba
+         nNuxDMJL1EMxsbII8dpuUS3InusgwwAvoysPAV3Hk2jOKGobF3OZDocQLT7UwyWQMU6i
+         PeKrA/cBOeEsl9HKkxQVRjnAailiU8hfXvR+g7tUcD9ksnbzURQgNxbvlD7/kAW+lOyK
+         yJGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=bU1K3fg22Xd2affdrK5307jLaNbTlMOx/5lP00CuVZc=;
-        b=KewkFnqXwF0DoohdJ+lPAE8E8kQVFq936naOFmncDpksXsXsKx/+Zk+RrowpiDmpTh
-         lFatWDT8FRoXqR5GprL27J2xi7uj8FyNqOmuE14X738e0HoD3X+PW1WNQ6NLVUS1uZ12
-         4qRi6EOufjktx546FF8lJVGNqeXvH0C5JlS47hxX4HmQQ65mtBj2LflJScdsYooWyqZ3
-         55tEOXYaYT+h9tx7JbO+ktY7sTSrFD1ZmfhzxKjkEnR14FJz2pzk1ydf+nqsqPiNZMQx
-         6Z154NxK+c+dIClkSxvzuHjdpWn5oMEb6ptqTUgmdazcirlB3YDeB7ebpywMfFzDMIwg
-         3Cgw==
-X-Gm-Message-State: AOAM530QSrHHWuKEsJpd+Vcw7nCVxAVhvr/b3bVsWMYxNfuYOR3pTr7C
-        KVAYf35yOJZCk0eJm6wrMJM70V3EV5Npp1JD
-X-Google-Smtp-Source: ABdhPJw0rx9yewO6N8nDlaSuEyRRqU6bxsMNmr/NKL2yaetMUViEfjk8fEqKJnezaP4fW6WMGnvRLg==
-X-Received: by 2002:a05:6214:27ce:b0:461:dec4:1bb6 with SMTP id ge14-20020a05621427ce00b00461dec41bb6mr9106197qvb.46.1653073310330;
-        Fri, 20 May 2022 12:01:50 -0700 (PDT)
+        bh=Zyz6Yw3GkMghOPW6YQl2A8Ep+L1zlk6nE0W8HBFO5Do=;
+        b=rsDlEIAxtRRN9tgbcT0RzNA01BD/1MG17QEawbpEwGG9hyVBwPXuXn/t8UtiDe3vrp
+         QC/YYaE+7WNiU0B011CwbGxksQkugrbj7VqdGZn9d6ZbV5VnCWvIpjdFAnou8MhSy9hj
+         eB5iW8wcb96kdubkoTLaqwDgznLMMuFQ0lSwpTKT35WW404hKXsyUAf1puB8wwU9fHW2
+         UAQK4F3xpdLXn9Bs7OiCDHdTfjJ4IW7hNH68AcC18zEwBmDdAjY3+GaqfMta83WCAF36
+         Cm/nX8oeJpiVhKcwYFmS1PTky0ibubiffQuJ0OTVoH1LKuB3qa9kQrwzv/9IeG7Jul4H
+         6YCA==
+X-Gm-Message-State: AOAM5326gDBLMBkg5eDEvx14WTFphD2hOadYijyT/Yqvk2ICFfuh2hAQ
+        KAKGq7diR5McisaafATg03GWERsAc2Bu1eLq
+X-Google-Smtp-Source: ABdhPJwAe2jHlKUMCuXu0WpQk8hYcojCBQqEnkHWJVk8FWo8FonNm/rjRPomAHRBhBWRL4R5tYb7jA==
+X-Received: by 2002:a05:6214:ac3:b0:461:c492:d628 with SMTP id g3-20020a0562140ac300b00461c492d628mr9135488qvi.68.1653073313439;
+        Fri, 20 May 2022 12:01:53 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v15-20020ac8748f000000b002f9114d2ebcsm154692qtq.17.2022.05.20.12.01.49
+        by smtp.gmail.com with ESMTPSA id c19-20020a05620a165300b0069fc13ce1e5sm158619qko.22.2022.05.20.12.01.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 12:01:49 -0700 (PDT)
-Date:   Fri, 20 May 2022 15:01:48 -0400
+        Fri, 20 May 2022 12:01:52 -0700 (PDT)
+Date:   Fri, 20 May 2022 15:01:51 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     vdye@github.com, gitster@pobox.com
-Subject: [PATCH 2/3] t7703: demonstrate object corruption with
- pack.packSizeLimit
-Message-ID: <08da02fa74c211ae1019cb0a9f4e30cc239e1ab9.1653073280.git.me@ttaylorr.com>
+Subject: [PATCH 3/3] builtin/repack.c: ensure that `names` is sorted
+Message-ID: <a3d25b9e5dda9a999597115933bf0ce70dce51b2.1653073280.git.me@ttaylorr.com>
 References: <cover.1653073280.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -63,123 +62,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When doing a `--geometric=<d>` repack, `git repack` determines a
-splitting point among packs ordered by their object count such that:
+The previous patch demonstrates a scenario where the list of packs
+written by `pack-objects` (and stored in the `names` string_list) is
+out-of-order, and can thus cause us to delete packs we shouldn't.
 
-  - each pack above the split has at least `<d>` times as many objects
-    as the next-largest pack by object count, and
-  - the first pack above the split has at least `<d>` times as many
-    object as the sum of all packs below the split line combined
+This patch resolves that bug by ensuring that `names` is sorted in all
+cases, not just when
 
-`git repack` then creates a pack containing all of the objects contained
-in packs below the split line by running `git pack-objects
---stdin-packs` underneath. Once packs are moved into place, then any
-packs below the split line are removed, since their objects were just
-combined into a new pack.
+    delete_redundant && pack_everything & ALL_INTO_ONE
 
-But `git repack` tries to be careful to avoid removing a pack that it
-just wrote, by checking:
+is true.
 
-    struct packed_git *p = geometry->pack[i];
-    if (string_list_has_string(&names, hash_to_hex(p->hash)))
-      continue;
+Because we did sort `names` in that case (which, prior to `--geometric`
+repacks, was the only time we would actually delete packs, this is only
+a bug for `--geometric` repacks.
 
-in the `delete_redundant` and `geometric` conditional towards the end of
-`cmd_repack`.
+It would be sufficient to only sort `names` when `delete_redundant` is
+set to a non-zero value. But sorting a small list of strings is cheap,
+and it is defensive against future calls to `string_list_has_string()`
+on this list.
 
-But it's possible to trick `git repack` into not recognizing a pack that
-it just wrote when `names` is out-of-order (which violates
-`string_list_has_string()`'s assumption that the list is sorted and thus
-binary search-able).
-
-When this happens in just the right circumstances, it is possible to
-remove a pack that we just wrote, leading to object corruption.
-
-Luckily, this is quite difficult to provoke in practice (for a couple of
-reasons):
-
-  - we ordinarily write just one pack, so `names` usually contains just
-    one entry, and is thus sorted
-  - when we do write more than one pack (e.g., due to `--max-pack-size`)
-    we have to: (a) write a pack identical to one that already
-    exists, (b) have that pack be below the split line, and (c) have
-    the set of packs written by `pack-objects` occur in an order which
-    tricks `string_list_has_string()`.
-
-Demonstrate the above scenario in a failing test, which causes `git
-repack --geometric` to write a pack which occurs below the split line,
-_and_ fail to recognize that it wrote that pack.
-
-The following patch will fix this bug.
-
+Co-discovered-by: Victoria Dye <vdye@github.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t7703-repack-geometric.sh | 47 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+ builtin/repack.c            | 3 ++-
+ t/t7703-repack-geometric.sh | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/repack.c b/builtin/repack.c
+index ea56e92ad5..0e4aae80c0 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -856,6 +856,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	if (!names.nr && !po_args.quiet)
+ 		printf_ln(_("Nothing new to pack."));
+ 
++	string_list_sort(&names);
++
+ 	for_each_string_list_item(item, &names) {
+ 		item->util = (void *)(uintptr_t)populate_pack_exts(item->string);
+ 	}
+@@ -896,7 +898,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 
+ 	if (delete_redundant && pack_everything & ALL_INTO_ONE) {
+ 		const int hexsz = the_hash_algo->hexsz;
+-		string_list_sort(&names);
+ 		for_each_string_list_item(item, &existing_nonkept_packs) {
+ 			char *sha1;
+ 			size_t len = strlen(item->string);
 diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 91bb2b37a8..2cd1de7295 100755
+index 2cd1de7295..da87f8b2d8 100755
 --- a/t/t7703-repack-geometric.sh
 +++ b/t/t7703-repack-geometric.sh
-@@ -7,6 +7,7 @@ test_description='git repack --geometric works correctly'
- GIT_TEST_MULTI_PACK_INDEX=0
- 
- objdir=.git/objects
-+packdir=$objdir/pack
- midx=$objdir/pack/multi-pack-index
- 
- test_expect_success '--geometric with no packs' '
-@@ -230,4 +231,50 @@ test_expect_success '--geometric chooses largest MIDX preferred pack' '
+@@ -231,7 +231,7 @@ test_expect_success '--geometric chooses largest MIDX preferred pack' '
  	)
  '
  
-+test_expect_failure '--geometric with pack.packSizeLimit' '
-+	git init pack-rewrite &&
-+	test_when_finished "rm -fr pack-rewrite" &&
-+	(
-+		cd pack-rewrite &&
-+
-+		test-tool genrandom foo 1048576 >foo &&
-+		test-tool genrandom bar 1048576 >bar &&
-+
-+		git add foo bar &&
-+		test_tick &&
-+		git commit -m base &&
-+
-+		git rev-parse HEAD:foo HEAD:bar >p1.objects &&
-+		git rev-parse HEAD HEAD^{tree} >p2.objects &&
-+
-+		# These two packs each contain two objects, so the following
-+		# `--geometric` repack will try to combine them.
-+		p1="$(git pack-objects $packdir/pack <p1.objects)" &&
-+		p2="$(git pack-objects $packdir/pack <p2.objects)" &&
-+
-+		# Remove any loose objects in packs, since we do not want extra
-+		# copies around (which would mask over potential object
-+		# corruption issues).
-+		git prune-packed &&
-+
-+		# Both p1 and p2 will be rolled up, but pack-objects will write
-+		# three packs:
-+		#
-+		#   - one containing object "foo",
-+		#   - another containing object "bar",
-+		#   - a final pack containing the commit and tree objects
-+		#     (identical to p2 above)
-+		git repack --geometric 2 -d --max-pack-size=1048576 &&
-+
-+		# Ensure `repack` can detect that the third pack it wrote
-+		# (containing just the tree and commit objects) was identical to
-+		# one that was below the geometric split, so that we can save it
-+		# from deletion.
-+		#
-+		# If `repack` fails to do that, we will incorrectly delete p2,
-+		# causing object corruption.
-+		git fsck
-+	)
-+'
-+
- test_done
+-test_expect_failure '--geometric with pack.packSizeLimit' '
++test_expect_success '--geometric with pack.packSizeLimit' '
+ 	git init pack-rewrite &&
+ 	test_when_finished "rm -fr pack-rewrite" &&
+ 	(
 -- 
 2.36.1.94.gb0d54bedca
-
