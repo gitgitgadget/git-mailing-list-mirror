@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54F43C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 23:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C73C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 23:18:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353276AbiETXSG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 19:18:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50502 "EHLO
+        id S1354037AbiETXSH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 19:18:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354041AbiETXRy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 19:17:54 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B69DB1A4907
-        for <git@vger.kernel.org>; Fri, 20 May 2022 16:17:51 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id k2so8899982qtp.1
-        for <git@vger.kernel.org>; Fri, 20 May 2022 16:17:51 -0700 (PDT)
+        with ESMTP id S1347331AbiETXRq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 19:17:46 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF02197F4F
+        for <git@vger.kernel.org>; Fri, 20 May 2022 16:17:37 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id x7so5667777qta.6
+        for <git@vger.kernel.org>; Fri, 20 May 2022 16:17:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=eGZdPFnS0lM71M7JI9AHcwK6IUXvVZUam/Aut+ZfQZg=;
-        b=yui52nYCeASRK55n8/Y+ShUU406zEwNBpkbkAFlWJV8hQlcLlEmqpmJtgilMLzB2Nd
-         hBaU1Q1/3T6GFbawHLUJdN6aL1jaFoZ29OXU6sWEIwJCz+hNOPNHvFSuiN0p90j/vklP
-         E/gVHObihkY+hfV63Yxhgz/rN3eUZzyBrDz7Ez4+K8V4HsWMF3JZSGB5KADNiCnq/aCy
-         9wJ7voXFyiE0rHv+pUJkB+oy07XpwOr3fgIbd9reGTRL7Qi+VGAa0/sapv2TxIuSavV9
-         GyhIEI1Rpl+xlDNRxh3VTvFXu5MkE5nkNph6iBID565TgxENMLW4xeVz6ElSHU07A1oh
-         PijQ==
+        bh=vpVrKS7+fN+BtOnK0GINvFj8vmLh0kOEvIdfu03/qZ8=;
+        b=EYMW3gNAk23GrJx1zqzxJNuAfppbKPuid/RbDnXPqRXRthlqiEbh+XNi25tXJM90fc
+         60zA6tNrBfHsuFZnSJ54EjvK7pp6SOp+8ReOzjRODzVnCZHNliAO299RdBXwEWguCWnf
+         At9epmQWAqV0QHJwPCKG2s5G7Ac1lYV2Vn9g498RIcRFocXTyxkoLPSQEZSd1PGqPWhw
+         EsFGSkehICCoYZaHeIGuvznmK2PW2mZtEcDEmvM/FDddAUABzSLwfxTmNYlrTs6yW3pb
+         8S1nVQb2JLRbrTkXBMradchLsiNK+Xh3yWPmfIl582/K0rH7Sk5mLxWuViGAlGqKnkZD
+         dhDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=eGZdPFnS0lM71M7JI9AHcwK6IUXvVZUam/Aut+ZfQZg=;
-        b=yBu7JQdyI7Ial5FEm6BeS6MkMRNfiCPqyT6hp6BfRB6Xn3sDUvo+tTSi8OQ0DyMrOq
-         NSj+4ED36H+V86neNR52UEicsbs1+GCO5T5yJ3rZxz+AqKQfij7y827p144S+nLuFyOJ
-         cP9zJ3YnnXg0qmWMXifgUTXVoxwb9JPvAT9SLFLJFZ5fn+ElZ+cNTwkAtmnB9lcgAr3x
-         IJ/K9d2WZQPMupQI3vQCMTI7kTTGVUKaEv3V4XxFcs+sp0Ee3UkGwqRpPJhTsWmVuIQf
-         fssloN//3homuEzK98LFDMhy7elXAtHyzXHXLoPTl5FObtIh0C6l35enKyRenjJYkMaI
-         Uk3g==
-X-Gm-Message-State: AOAM532ufeh+I0Ft8ZX4E4fEfMShjH/mixKCoHtkU8ZxgzfL+DCpq9+e
-        wR7YrRbwmsc1o6tM9m6L2NvdvU9Ew+6dJy1z
-X-Google-Smtp-Source: ABdhPJz/ARuA1qXIdjoTTWVxcyLYPtVohzPs68ObtZZwiQi61rqFz+CVvXymmSNtUikaU9562AfquQ==
-X-Received: by 2002:a05:622a:493:b0:2f3:e77b:640b with SMTP id p19-20020a05622a049300b002f3e77b640bmr9455784qtx.236.1653088670699;
-        Fri, 20 May 2022 16:17:50 -0700 (PDT)
+        bh=vpVrKS7+fN+BtOnK0GINvFj8vmLh0kOEvIdfu03/qZ8=;
+        b=YHYQKLfXyMhqX77t/LiUW9dqrZhVfsaYkfPGL9hKrqi+Io5iAH/+i2g/9tqMyVDxQe
+         qQcapj4qaDjsVdPvWNJRpLobPVNgpzxZxbFmAbMUyWEpI89TPw7FeRS20LExOZi60Yh5
+         5SG3Ua23YiB/nAU2gc/odP6DfExYrX8UdyXzMT1c5Fua4T8Id7pZGFJQkiLzyqo2R2j6
+         G9la6nHbLZ58R7MZDmHtjy77wWg2xVrFPkk4ZqC6XHEWYkOEtbh01HlOA7MV/Uw4ybYf
+         NEPswuYYcMCanwxogPaKugqWi3H0PHWpakcFy18TsOEc5yd3lTcBckd4ZCQQit2NT0YV
+         PZDQ==
+X-Gm-Message-State: AOAM5336kc7WtzTvgeQrL9Tdp3z35ItKM9chVC04AwC5zm0wYl+ghm5h
+        ya31i+6/gUJchobekeXegvqjcZ9mCp6fxv08
+X-Google-Smtp-Source: ABdhPJxe+RRe6hX4MzEMvb1NPyKeqUlWCy1+2C+CqKnQRilvZee8tCmZuXZUORCqrdnSBThCFIQ/VA==
+X-Received: by 2002:ac8:5f47:0:b0:2f9:2bf3:a540 with SMTP id y7-20020ac85f47000000b002f92bf3a540mr341487qta.254.1653088656589;
+        Fri, 20 May 2022 16:17:36 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id cm26-20020a05622a251a00b002f39b99f6a6sm459072qtb.64.2022.05.20.16.17.50
+        by smtp.gmail.com with ESMTPSA id br11-20020a05622a1e0b00b002f39b99f6acsm478803qtb.70.2022.05.20.16.17.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 16:17:50 -0700 (PDT)
-Date:   Fri, 20 May 2022 19:17:49 -0400
+        Fri, 20 May 2022 16:17:36 -0700 (PDT)
+Date:   Fri, 20 May 2022 19:17:35 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, derrickstolee@github.com, gitster@pobox.com,
         jrnieder@gmail.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: [PATCH v5 07/17] builtin/pack-objects.c: return from
- create_object_entry()
-Message-ID: <edb6fcd5ec72159f2b1fdef41077a841a89cd6a4.1653088640.git.me@ttaylorr.com>
+Subject: [PATCH v5 02/17] pack-mtimes: support reading .mtimes files
+Message-ID: <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1653088640.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -65,50 +64,316 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A new caller in the next commit will want to immediately modify the
-object_entry structure created by create_object_entry(). Instead of
-forcing that caller to wastefully look-up the entry we just created,
-return it from create_object_entry() instead.
+To store the individual mtimes of objects in a cruft pack, introduce a
+new `.mtimes` format that can optionally accompany a single pack in the
+repository.
+
+The format is defined in Documentation/technical/pack-format.txt, and
+stores a 4-byte network order timestamp for each object in name (index)
+order.
+
+This patch prepares for cruft packs by defining the `.mtimes` format,
+and introducing a basic API that callers can use to read out individual
+mtimes.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ Documentation/technical/pack-format.txt |  19 ++++
+ Makefile                                |   1 +
+ builtin/repack.c                        |   1 +
+ object-store.h                          |   5 +-
+ pack-mtimes.c                           | 126 ++++++++++++++++++++++++
+ pack-mtimes.h                           |  15 +++
+ packfile.c                              |  19 +++-
+ 7 files changed, 183 insertions(+), 3 deletions(-)
+ create mode 100644 pack-mtimes.c
+ create mode 100644 pack-mtimes.h
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 6ac927047c..c6d16872ee 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1516,13 +1516,13 @@ static int want_object_in_pack(const struct object_id *oid,
- 	return 1;
- }
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index 6d3efb7d16..b520aa9c45 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -294,6 +294,25 @@ Pack file entry: <+
  
--static void create_object_entry(const struct object_id *oid,
--				enum object_type type,
--				uint32_t hash,
--				int exclude,
--				int no_try_delta,
--				struct packed_git *found_pack,
--				off_t found_offset)
-+static struct object_entry *create_object_entry(const struct object_id *oid,
-+						enum object_type type,
-+						uint32_t hash,
-+						int exclude,
-+						int no_try_delta,
-+						struct packed_git *found_pack,
-+						off_t found_offset)
- {
- 	struct object_entry *entry;
+ All 4-byte numbers are in network order.
  
-@@ -1539,6 +1539,8 @@ static void create_object_entry(const struct object_id *oid,
- 	}
- 
- 	entry->no_try_delta = no_try_delta;
++== pack-*.mtimes files have the format:
 +
-+	return entry;
++All 4-byte numbers are in network byte order.
++
++  - A 4-byte magic number '0x4d544d45' ('MTME').
++
++  - A 4-byte version identifier (= 1).
++
++  - A 4-byte hash function identifier (= 1 for SHA-1, 2 for SHA-256).
++
++  - A table of 4-byte unsigned integers. The ith value is the
++    modification time (mtime) of the ith object in the corresponding
++    pack by lexicographic (index) order. The mtimes count standard
++    epoch seconds.
++
++  - A trailer, containing a checksum of the corresponding packfile,
++    and a checksum of all of the above (each having length according
++    to the specified hash function).
++
+ == multi-pack-index (MIDX) files have the following format:
+ 
+ The multi-pack-index files refer to multiple pack-files and loose objects.
+diff --git a/Makefile b/Makefile
+index 61aadf3ce8..a299580b7c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -993,6 +993,7 @@ LIB_OBJS += oidtree.o
+ LIB_OBJS += pack-bitmap-write.o
+ LIB_OBJS += pack-bitmap.o
+ LIB_OBJS += pack-check.o
++LIB_OBJS += pack-mtimes.o
+ LIB_OBJS += pack-objects.o
+ LIB_OBJS += pack-revindex.o
+ LIB_OBJS += pack-write.o
+diff --git a/builtin/repack.c b/builtin/repack.c
+index d1a563d5b6..e7a3920c6d 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -217,6 +217,7 @@ static struct {
+ } exts[] = {
+ 	{".pack"},
+ 	{".rev", 1},
++	{".mtimes", 1},
+ 	{".bitmap", 1},
+ 	{".promisor", 1},
+ 	{".idx"},
+diff --git a/object-store.h b/object-store.h
+index 53996018c1..2c4671ed7a 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -115,12 +115,15 @@ struct packed_git {
+ 		 freshened:1,
+ 		 do_not_close:1,
+ 		 pack_promisor:1,
+-		 multi_pack_index:1;
++		 multi_pack_index:1,
++		 is_cruft:1;
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 	struct revindex_entry *revindex;
+ 	const uint32_t *revindex_data;
+ 	const uint32_t *revindex_map;
+ 	size_t revindex_size;
++	const uint32_t *mtimes_map;
++	size_t mtimes_size;
+ 	/* something like ".git/objects/pack/xxxxx.pack" */
+ 	char pack_name[FLEX_ARRAY]; /* more */
+ };
+diff --git a/pack-mtimes.c b/pack-mtimes.c
+new file mode 100644
+index 0000000000..46ad584af1
+--- /dev/null
++++ b/pack-mtimes.c
+@@ -0,0 +1,126 @@
++#include "pack-mtimes.h"
++#include "object-store.h"
++#include "packfile.h"
++
++static char *pack_mtimes_filename(struct packed_git *p)
++{
++	size_t len;
++	if (!strip_suffix(p->pack_name, ".pack", &len))
++		BUG("pack_name does not end in .pack");
++	/* NEEDSWORK: this could reuse code from pack-revindex.c. */
++	return xstrfmt("%.*s.mtimes", (int)len, p->pack_name);
++}
++
++#define MTIMES_HEADER_SIZE (12)
++#define MTIMES_MIN_SIZE (MTIMES_HEADER_SIZE + (2 * the_hash_algo->rawsz))
++
++struct mtimes_header {
++	uint32_t signature;
++	uint32_t version;
++	uint32_t hash_id;
++};
++
++static int load_pack_mtimes_file(char *mtimes_file,
++				 uint32_t num_objects,
++				 const uint32_t **data_p, size_t *len_p)
++{
++	int fd, ret = 0;
++	struct stat st;
++	void *data = NULL;
++	size_t mtimes_size;
++	struct mtimes_header header;
++	uint32_t *hdr;
++
++	fd = git_open(mtimes_file);
++
++	if (fd < 0) {
++		ret = -1;
++		goto cleanup;
++	}
++	if (fstat(fd, &st)) {
++		ret = error_errno(_("failed to read %s"), mtimes_file);
++		goto cleanup;
++	}
++
++	mtimes_size = xsize_t(st.st_size);
++
++	if (mtimes_size < MTIMES_MIN_SIZE) {
++		ret = error(_("mtimes file %s is too small"), mtimes_file);
++		goto cleanup;
++	}
++
++	if (mtimes_size - MTIMES_MIN_SIZE != st_mult(sizeof(uint32_t), num_objects)) {
++		ret = error(_("mtimes file %s is corrupt"), mtimes_file);
++		goto cleanup;
++	}
++
++	data = hdr = xmmap(NULL, mtimes_size, PROT_READ, MAP_PRIVATE, fd, 0);
++
++	header.signature = ntohl(hdr[0]);
++	header.version = ntohl(hdr[1]);
++	header.hash_id = ntohl(hdr[2]);
++
++	if (header.signature != MTIMES_SIGNATURE) {
++		ret = error(_("mtimes file %s has unknown signature"), mtimes_file);
++		goto cleanup;
++	}
++
++	if (header.version != 1) {
++		ret = error(_("mtimes file %s has unsupported version %"PRIu32),
++			    mtimes_file, header.version);
++		goto cleanup;
++	}
++
++	if (!(header.hash_id == 1 || header.hash_id == 2)) {
++		ret = error(_("mtimes file %s has unsupported hash id %"PRIu32),
++			    mtimes_file, header.hash_id);
++		goto cleanup;
++	}
++
++cleanup:
++	if (ret) {
++		if (data)
++			munmap(data, mtimes_size);
++	} else {
++		*len_p = mtimes_size;
++		*data_p = (const uint32_t *)data;
++	}
++
++	close(fd);
++	return ret;
++}
++
++int load_pack_mtimes(struct packed_git *p)
++{
++	char *mtimes_name = NULL;
++	int ret = 0;
++
++	if (!p->is_cruft)
++		return ret; /* not a cruft pack */
++	if (p->mtimes_map)
++		return ret; /* already loaded */
++
++	ret = open_pack_index(p);
++	if (ret < 0)
++		goto cleanup;
++
++	mtimes_name = pack_mtimes_filename(p);
++	ret = load_pack_mtimes_file(mtimes_name,
++				    p->num_objects,
++				    &p->mtimes_map,
++				    &p->mtimes_size);
++cleanup:
++	free(mtimes_name);
++	return ret;
++}
++
++uint32_t nth_packed_mtime(struct packed_git *p, uint32_t pos)
++{
++	if (!p->mtimes_map)
++		BUG("pack .mtimes file not loaded for %s", p->pack_name);
++	if (p->num_objects <= pos)
++		BUG("pack .mtimes out-of-bounds (%"PRIu32" vs %"PRIu32")",
++		    pos, p->num_objects);
++
++	return get_be32(p->mtimes_map + pos + 3);
++}
+diff --git a/pack-mtimes.h b/pack-mtimes.h
+new file mode 100644
+index 0000000000..38ddb9f893
+--- /dev/null
++++ b/pack-mtimes.h
+@@ -0,0 +1,15 @@
++#ifndef PACK_MTIMES_H
++#define PACK_MTIMES_H
++
++#include "git-compat-util.h"
++
++#define MTIMES_SIGNATURE 0x4d544d45 /* "MTME" */
++#define MTIMES_VERSION 1
++
++struct packed_git;
++
++int load_pack_mtimes(struct packed_git *p);
++
++uint32_t nth_packed_mtime(struct packed_git *p, uint32_t pos);
++
++#endif
+diff --git a/packfile.c b/packfile.c
+index 835b2d2716..fc0245fbab 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -334,12 +334,22 @@ static void close_pack_revindex(struct packed_git *p)
+ 	p->revindex_data = NULL;
  }
  
- static const char no_closure_warning[] = N_(
++static void close_pack_mtimes(struct packed_git *p)
++{
++	if (!p->mtimes_map)
++		return;
++
++	munmap((void *)p->mtimes_map, p->mtimes_size);
++	p->mtimes_map = NULL;
++}
++
+ void close_pack(struct packed_git *p)
+ {
+ 	close_pack_windows(p);
+ 	close_pack_fd(p);
+ 	close_pack_index(p);
+ 	close_pack_revindex(p);
++	close_pack_mtimes(p);
+ 	oidset_clear(&p->bad_objects);
+ }
+ 
+@@ -363,7 +373,7 @@ void close_object_store(struct raw_object_store *o)
+ 
+ void unlink_pack_path(const char *pack_name, int force_delete)
+ {
+-	static const char *exts[] = {".pack", ".idx", ".rev", ".keep", ".bitmap", ".promisor"};
++	static const char *exts[] = {".pack", ".idx", ".rev", ".keep", ".bitmap", ".promisor", ".mtimes"};
+ 	int i;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t plen;
+@@ -718,6 +728,10 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
+ 	if (!access(p->pack_name, F_OK))
+ 		p->pack_promisor = 1;
+ 
++	xsnprintf(p->pack_name + path_len, alloc - path_len, ".mtimes");
++	if (!access(p->pack_name, F_OK))
++		p->is_cruft = 1;
++
+ 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
+ 	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
+ 		free(p);
+@@ -869,7 +883,8 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
+ 	    ends_with(file_name, ".pack") ||
+ 	    ends_with(file_name, ".bitmap") ||
+ 	    ends_with(file_name, ".keep") ||
+-	    ends_with(file_name, ".promisor"))
++	    ends_with(file_name, ".promisor") ||
++	    ends_with(file_name, ".mtimes"))
+ 		string_list_append(data->garbage, full_name);
+ 	else
+ 		report_garbage(PACKDIR_FILE_GARBAGE, full_name);
 -- 
 2.36.1.94.gb0d54bedca
 
