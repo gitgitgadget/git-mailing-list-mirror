@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FB64C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEBBEC433EF
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352391AbiETSBg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 14:01:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46232 "EHLO
+        id S1346154AbiETSFN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 14:05:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348038AbiETSBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 14:01:33 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738EB9D04E
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:01:30 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id i74so2798980ioa.4
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:01:30 -0700 (PDT)
+        with ESMTP id S237434AbiETSFM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 14:05:12 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76C4C18C047
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:05:11 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id t2so6015735ilm.13
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:05:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=0Sizldm/PMeTzKg2dB2zUonn+YtNRyV+4saK3Iu32hg=;
-        b=YfOd/XpvP2fFH2CY7EKrnMfHrOlXWTuJwHZhXD8Bkg+wlMmdgkTFi2y2pFk7voAUym
-         QY1FsGaybbEaETqH+F3EYXmPVokQ1pWTGy2HF71ni1ARZycDrlGwi3yV+7r4Y3GAotZI
-         eRNj07oUq4HzvWkkR27u75HbeQ+w7qGtC9YqZZVH6kQhC0SHUskEIXirPrgVJiLorVnf
-         h0HSSBriH21og7rj55fdGg/GhqvGpsYoW/+co6oXBRJwzh9YFm8b+HT+xxnu45xm0cqs
-         wREJYPVAgNFfepy2IsyYRJOCj7pO7UsaicZn+JzrJjQghpAi4dXWVS3m3AlJOC1Dsm19
-         rRhw==
+        bh=+kkW1+0zRgKZP1s2AAkHyQYYah6STSl09lUhQENlpus=;
+        b=Mo/uA+iG1bVgq4TtxyzXC4hb1gB4qOeEdYr3lm/kJ9H6wxsAEwboNyjft5uTBFnhfy
+         /0DcyrXFBlTrlck5qjUyus0tD9CNCLrYVJKhytW1X6HFmM9Wzya9uO8Oy7u53OuSRnY4
+         UkLI/BicHkR6qboWkuUXz+ltjrdZWDlDFa6v/7O+5lL1qXycC/gZoiZQfQ6CAfBCNE5V
+         hpvIpbNqFt9KbwUCs5xeNMfDUwy4Ro5xxHKb5b0pa0F2zW8jGRzFtzcw8+12tIL9PmbA
+         iJ8rHJfWz/4KvHDlmmX6WRNEiMehkgSl/lzWKFtvE1d1bphyE0t3siGPtZo5/kfPjREz
+         EwDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=0Sizldm/PMeTzKg2dB2zUonn+YtNRyV+4saK3Iu32hg=;
-        b=uTW7ty1Zm2T2bdGMnw0BvAchpv+7XRRhme+tny6e3ez8Zvv55w8bUwM3vCnWIZlO+c
-         cXIn32bbqkYpMWXWk+W0f1OWCXvF66cY03FqI3aes9RoR8Kqs0vTALHMZOuaS55EoRX2
-         9OPx1PIvtX/C/luCjMrzuR/yyg2GoEGZSHmPhNWXaacVwIi/MNypnPmo2W7c6nWkZ8gH
-         EL5cObYWI/09e41FihQNY1eMSAMo9WtIp5BwEkZuK4TOWLjLQNZXKGy10Z7UxPqamhDG
-         QqqSQbSVTiez3FfF+bjFnzhA/SA7kxra8Cy0oQJrFn9+d/bPWLSefIR2CGjuG8e3yPec
-         Q5tw==
-X-Gm-Message-State: AOAM531F7qtTRj1gmbctaH3JIoJtzlrOt8S7u7AU1NIOw0bKUyQhfyuc
-        rIYsk/Rp773ULwdF9iPL0RLo
-X-Google-Smtp-Source: ABdhPJysSgAJKbigcyGZHOn3My29HoJgLSLDrRdr3LYIUd3INlU7TfMHS5/NmHIXEGDHwTdaaEM1xw==
-X-Received: by 2002:a05:6638:15c9:b0:32d:b26d:a01e with SMTP id i9-20020a05663815c900b0032db26da01emr6253508jat.11.1653069689776;
-        Fri, 20 May 2022 11:01:29 -0700 (PDT)
+        bh=+kkW1+0zRgKZP1s2AAkHyQYYah6STSl09lUhQENlpus=;
+        b=AbEXvqoqa0kSx7lzQ3kYakmmnFiDsdsizYyU6zktpwznlEbz9dmqsZls6Vd7tYPRxl
+         wtz8jVpaB8cGbgQJ25TdVDWClilbrVKwsdG4nglJGpttnBkGm8IHhXXvoRCJuYaSr036
+         fM3FT62FZK9nseq99dLn03M5oC4DR6P9D3ofpxCS3REyIBQtcxTQqTmcWWDE45mPIzOT
+         rZFNAPnuo3EBoyo7ydFyEhqP40rYsJmTd1BDjvh9RsiwULUxTErSHlZNFN6msLsmhm+N
+         NWVFn1rmZGZGsuFT8akoajBoz3JL+YCw62H6CaSHltwHProMit4fElyW2AH2pOvcyJFp
+         0gBg==
+X-Gm-Message-State: AOAM5321OsKzPwm/Um1RyOCI6k4pPPNJDeSL+v4FdZDf7mZPooTRB2IC
+        y4tvQh+2LxqY476o8+B5OV83+LDLcMvv
+X-Google-Smtp-Source: ABdhPJzCMTCDvQAwjSwgzctmiPZZCPApRLKx7UbsK10+f6IryeMwnPvoa0OUrqWDfKe/TE84tl23MQ==
+X-Received: by 2002:a05:6e02:19cd:b0:2ce:ff0d:b8b7 with SMTP id r13-20020a056e0219cd00b002ceff0db8b7mr5977506ill.189.1653069910884;
+        Fri, 20 May 2022 11:05:10 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:34b9:84ab:204:3752? ([2600:1700:e72:80a0:34b9:84ab:204:3752])
-        by smtp.gmail.com with ESMTPSA id l9-20020a026a09000000b0032ba5cbae2esm832612jac.144.2022.05.20.11.01.28
+        by smtp.gmail.com with ESMTPSA id z17-20020a92d191000000b002d138bd0d2asm2094171ilz.21.2022.05.20.11.05.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 May 2022 11:01:29 -0700 (PDT)
-Message-ID: <3d4cb244-2e55-0337-90f8-a380ed836465@github.com>
-Date:   Fri, 20 May 2022 14:01:27 -0400
+        Fri, 20 May 2022 11:05:10 -0700 (PDT)
+Message-ID: <0b2215e1-7f12-ed0d-b7bf-03648b19e30a@github.com>
+Date:   Fri, 20 May 2022 14:05:09 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.0
-Subject: Re: [PATCH v2 03/10] sparse-index: create expand_to_pattern_list()
+Subject: Re: [PATCH v2 04/10] sparse-index: introduce partially-sparse indexes
 Content-Language: en-US
 To:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
@@ -61,58 +61,76 @@ Cc:     git@vger.kernel.org, vdye@github.com, shaoxuan.yuan02@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
  <pull.1208.v2.git.1652982758.gitgitgadget@gmail.com>
- <d15338573e570aebe239dacdd8c2aba275ff61b9.1652982758.git.gitgitgadget@gmail.com>
- <xmqqsfp5mhcw.fsf@gitster.g>
+ <269c206c331bb43006678beaa20832a75754c3df.1652982758.git.gitgitgadget@gmail.com>
+ <xmqqleuxmgof.fsf@gitster.g>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqsfp5mhcw.fsf@gitster.g>
+In-Reply-To: <xmqqleuxmgof.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/19/2022 3:50 PM, Junio C Hamano wrote:
+On 5/19/2022 4:05 PM, Junio C Hamano wrote:
 > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->> list is NULL as that does the same as ensure_full_index(). In fact,
->> ensure_full_index() is converted to a shim over
->> expand_to_pattern_list().
-> 
-> Sounds like a natural evolution of the API that used to be
-> all-or-none to expand-only-those-that-match.
-> 
-> The old one had a sensible name to tell us that it is about the
-> in-core index (and "full index" implied it was about sparse-index
-> feature because what state other than "full" the index can be---some
-> are shrunk into tree entries, which by definition is the
-> sparse-index feature).  Contrasted to that, the name of the new one
-> is horrible.  It does not even have index anywhere in the name.
-> 
-> I wonder expand_index() would work?
-
-Makes sense. Good suggestion.
- 
->> -	trace2_region_enter("index", "ensure_full_index", istate->repo);
+>> +enum sparse_index_mode {
 >> +	/*
->> +	 * A NULL pattern set indicates we are expanding a full index, so
->> +	 * we use a special region name that indicates the full expansion.
->> +	 * This is used by test cases, but also helps to differentiate the
->> +	 * two cases.
+>> +	 * COMPLETELY_FULL: there are no sparse directories
+>> +	 * in the index at all.
 >> +	 */
+>> +	COMPLETELY_FULL = 0,
 > 
-> Except that we lost the distinction for non-cone mode, which I am
-> not sure matters, but I suspect we do not have to, if we do not want
-> to.  Nobody used "pl" up to this point, so resetting it to NULL can
-> be done much later.  In later phases of this series, we add another
-> case where we can lose pl even if we are not using cone mode, so
-> this distinction may start to matter later.  I dunno.
+> Two things that make me wonder are:
 > 
-> I'd invent a separate "const char *tr2_region_label" variable and
-> set it at the beginning, regardless of where we clobber pl and why,
-> and use that label variable for trace2 calls, if I were doing this
-> patch.  That feels much simpler and cleaner.
+>  * Do concrete values assigned to these symbols matter?  If we do
+> 
+> 	if (some_function_that_returns_this_type())
+> 		/* ok, we know it is full */
+> 		do_full_thing();
+> 
+>    then the answer is yes.  If we write these values to on-disk
+>    file, and other versions and reimplementations of Git need to
+>    know the concrete values, then the answer is yes.  Otherwise, we
+>    may not want to say "= 0" and the like here.
 
-Good idea.
+The = 0 case matters because that is the default when the index
+struct is initialized to zero. The other values are not important.
+ 
+>  * Is it worth repeating the label in the comment?  IOW, I am
+>    wondering if
+> 
+> 	/* there are no sparse directories in the index */
+> 	COMPLETELY_FULL,
+> 
+>    is equally readable and slightly more maintainable.
+
+Can do.
+
+> Also these names being in cache.h and visible everywhere is somewhat
+> worrying.  Other CPP macros and enum constants in the file have
+> names that are prepared to be truly global, but COMPLETELY_FULL and
+> COLLAPSED do not hint that they are about sparse-index state as
+> strongly as PARTIALLY_SPARSE does.
+
+Would prepending with "INDEX_" be sufficient?
+
+>> -		 /*
+>> -		  * sparse_index == 1 when sparse-directory
+>> -		  * entries exist. Requires sparse-checkout
+>> -		  * in cone mode.
+>> -		  */
+>> -		 sparse_index : 1;
+>> +		 fsmonitor_has_run_once : 1;
+>> +	enum sparse_index_mode sparse_index;
+> 
+> Good that we can lose the comment on a single bit.  Are some of the
+> enum sparse_index_mode values only possible in cone mode, just like
+> having true in this bit was only possible in cone mode?  Perhaps a
+> comment before "enum sparse_index_mode {" can say "in non-cone mode,
+> COMPLETELY_FULL is the only possible value" or somesuch?
+
+I can add that comment for the COMPLETELY_FULL enum value.
 
 Thanks,
 -Stolee
