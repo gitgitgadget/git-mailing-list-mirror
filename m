@@ -2,121 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38B05C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A161DC433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 19:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348929AbiETSmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 14:42:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38170 "EHLO
+        id S1346113AbiETTBs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 15:01:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353041AbiETSlN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 14:41:13 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20D913E5D0
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:12 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id k26so4985109wms.1
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:12 -0700 (PDT)
+        with ESMTP id S236624AbiETTBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 15:01:46 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B79C140861
+        for <git@vger.kernel.org>; Fri, 20 May 2022 12:01:45 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id 11so5549594qtp.9
+        for <git@vger.kernel.org>; Fri, 20 May 2022 12:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=OB47nvBfn10GC/3wzBItSawBlUfHGeW6WiLWeNJnb/w=;
-        b=jC3Xw6k69Dm+Pppot01ftsrfggYFIpbi0nRdAu606HkTPP2M7/Ex1IXAxesWoF8tJq
-         w+1HBCetL5Mr++sFxrkfzbbPUzndBf1gyvo+8OVXUGlhruWZ9UElwRELdzlJeivxOZ5Q
-         faHqSKjvL0c3iWJRwLw3pMdr41p0ovoaiMKzOiAuDwElx0HrHp1R/595WMrSDIP70fSi
-         j89QnBLLBqCbIW0rAA51r26DHSuZ/bZ4MohHrNI6qPjbnyYqB+f2CHOuQAuNMYrC4gNx
-         2lb2kG1vimApzkQ674ibjTK5pge1+Dn+iMJabNxqmAV5SxillrJjXOOVvg92INZZ1jQj
-         gvHg==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=EObPkzA6cK/ajNaNGQiQxHDaDELO4yuvO4mQCyn3yY0=;
+        b=q4ysbx5TEom1YShGnab0/f+KWGlUWCR1NYYM2rGfhnZS3m2zidODRS7DQQQ5j9MOz2
+         Azt7fBA2CafPbEeTxnzPOdu9o5FjiwOQZlgWQlt7GZvyWIUMX6D6m5rCh4AurXPX5Owa
+         XEUdeaDIczcVtap5isSPzRzeRSufdbe9aHtD7LFkljy1F0JDH4YuXyUbZbg/6/K25UpT
+         4c2wEE2T2k6nhfBgAmWqk7A7HhrGHnumSBt50BAWSD09TYl+VFQ0fbivg3eut2uBJQrs
+         BgowW6x4LFsD+mTJPesEquaK3SltGeamtweh+H8sXFDjJC4qjdAD9j430kOQfJaAlmlJ
+         RSaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OB47nvBfn10GC/3wzBItSawBlUfHGeW6WiLWeNJnb/w=;
-        b=VFLK4Jgrpzd9GeWFIMn0rD74a+7tZz8KuePtOQEl3r7kxqJwGjTztkSb2W/L5Q3j96
-         cQmoH9palYpu6vmuqryosmXGaVyKC88XzpIIwdh9jrC6+kztAmao6fQQmWQtQi3kTFGG
-         YHCniOZe8rZEyzl/ziil8hycbnAae0BAZLVmIqVMgtxORZUMHtWIr5F1UFYTRQMSS+i+
-         MOKtvmmqvopP0Z8Y9DxQ9IYt8hNiOgDeRU1UyXsEXxLWF0Oh9wVDZ41dyYbEfNL/QmNo
-         P2wBiZgV+cXd4KLjWbeJM5WQivp4IWNZC5rQ1M9+XAL+BSGnh7lwsqNmBXw1Vkq3WhjY
-         gTuA==
-X-Gm-Message-State: AOAM532HGIjEcV4rT45YuIITfPAhhr6cSETBGAciCWYSjdQh5q62Xizg
-        /u0amMMXZVdjK3OQYlmNIcTFudy7fO4=
-X-Google-Smtp-Source: ABdhPJzVmf6qK8ocPqvL5adSpC8JVSF4louhPryL43N3K3Uell4xRMJrmHLVMB1qwZXwTAHUJ96FSQ==
-X-Received: by 2002:a7b:c341:0:b0:37b:ed90:7dad with SMTP id l1-20020a7bc341000000b0037bed907dadmr9340576wmj.138.1653072070295;
-        Fri, 20 May 2022 11:41:10 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z13-20020a7bc7cd000000b0039456fb80b3sm2511755wmk.43.2022.05.20.11.41.09
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=EObPkzA6cK/ajNaNGQiQxHDaDELO4yuvO4mQCyn3yY0=;
+        b=7l7vLbm/HvR313jzN6+xRgZcJjrWYCkqO4aAKDd4aoBORn6w6sGX2zJ7YCCEy+YgBI
+         wYpKlr7yBRrVLJwuZFHo8bIjTMfmhlBOabX/yEYZWBXvOFmjOoiPX3y71IdeK24MpVnu
+         +9ds4eljX91mIyXPr+b/UnWaX+OxNzdyK2IGHDQy4QNHCHkI8h+jOu3cdzgqnvfnTroy
+         nacJoN5cZRCRHxaYhS1HzjeIHQMZ0qTFWY6Bb5p8u+F8Q+kyGCpym6VKIhnI+Q038ehm
+         9NjabszoOtonVjOw6yARulR7pbyU6TSkfuDdDw5OPxUjLbdt6DbCHf8eXdGG2YfK8q70
+         hXfQ==
+X-Gm-Message-State: AOAM5325pmbUK+VhBq1YkA6+CaTlC4w+ogxemJofXTrAQyNbarEweVkH
+        JmM9XKD9t2/UpLj/25F4JtNlmsgLszsNskHx
+X-Google-Smtp-Source: ABdhPJzP9bqUvXfSQ/vLbrl0UBiVaOcOjB/Wa+9zTa+0LsBVoDeVo8WbnxVWPd7vjwdt3MrpUhuMdg==
+X-Received: by 2002:a05:622a:1753:b0:2f3:cb4f:e58d with SMTP id l19-20020a05622a175300b002f3cb4fe58dmr8980810qtk.603.1653073303919;
+        Fri, 20 May 2022 12:01:43 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id ew6-20020a05622a514600b002f39b99f69esm156177qtb.56.2022.05.20.12.01.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 11:41:09 -0700 (PDT)
-Message-Id: <a0cf2c0977b8a73d518cd5c04e3b1e765b4ecc89.1653072042.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
-References: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 May 2022 18:40:41 +0000
-Subject: [PATCH 23/24] clone: unbundle the advertised bundles
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Fri, 20 May 2022 12:01:43 -0700 (PDT)
+Date:   Fri, 20 May 2022 15:01:41 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Teng Long <dyroneteng@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Cc:     vdye@github.com, gitster@pobox.com
+Subject: [PATCH 0/3] repack: handle --keep-pack, --max-pack-size for
+ geometric repacks
+Message-ID: <cover.1653073280.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+This series fixes two issues that Victoria and I noticed while working on an
+unrelated issue yesterday.
 
-A previous change introduced the transport methods to acquire a bundle
-list from the 'bundle-uri' protocol v2 verb, when advertised _and_ when
-the client has chosen to enable the feature.
+  - The first patch comes from Victoria's earlier submission[1], and addresses
+    an issue where packs specified as kept via the `--keep-pack` option could
+    potentially be removed (without rewriting their objects) during a
+    `--geometric` repack.
 
-Teach Git to download and unbundle the data advertised by those bundles
-during 'git clone'.
+    The first patch is Victoria's alone, with some minor fixups applied from my
+    review in [2]. It's included in this series since it's related, and avoids
+    any conflicts when merging.
 
-Also, since the --bundle-uri option exists, we do not want to mix the
-advertised bundles with the user-specified bundles.
+  - The latter two patches are mine, and address an issue where specifying a
+    `--max-pack-size` value during a `--geometric` repack could result in object
+    loss because of a false positive in our "did we write a pack with this
+    name?" check (which can occur when the list of packs we wrote isn't sorted).
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- builtin/clone.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+    The first of these two patches demonstrates the issue (done in a separate
+    patch, since the scenario is quite involved), and the second patch fixes the
+    bug.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index ca2291552f7..cbe392cf60f 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1263,11 +1263,22 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (refs)
- 		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
- 
--	/*
--	 * Populate transport->got_remote_bundle_uri and
--	 * transport->bundle_uri. We might get nothing.
--	 */
--	transport_get_remote_bundle_uri(transport, 1);
-+	if (!bundle_uri) {
-+		/*
-+		* Populate transport->got_remote_bundle_uri and
-+		* transport->bundle_uri. We might get nothing.
-+		*/
-+		transport_get_remote_bundle_uri(transport, 1);
-+
-+		if (transport->bundles) {
-+			/* At this point, we need the_repository to match the cloned repo. */
-+			repo_init(the_repository, git_dir, work_tree);
-+			if (fetch_bundle_list(the_repository,
-+					      remote->url[0],
-+					      transport->bundles))
-+				warning(_("failed to fetch advertised bundles"));
-+		}
-+	}
- 
- 	if (mapped_refs) {
- 		int hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
+Thanks in advance for your review.
+
+[1]: https://lore.kernel.org/git/pull.1235.git.1653064572170.gitgitgadget@gmail.com/
+[2]: https://lore.kernel.org/git/YofJLv8+x5J7yPmf@nand.local/
+
+Taylor Blau (2):
+  t7703: demonstrate object corruption with pack.packSizeLimit
+  builtin/repack.c: ensure that `names` is sorted
+
+Victoria Dye (1):
+  repack: respect --keep-pack with geometric repack
+
+ builtin/repack.c            | 49 ++++++++++++++++++------
+ t/t7703-repack-geometric.sh | 75 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 112 insertions(+), 12 deletions(-)
+
 -- 
-gitgitgadget
-
+2.36.1.94.gb0d54bedca
