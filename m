@@ -2,158 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7FCEC433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAF8BC433FE
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:42:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353096AbiETSmb (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1353098AbiETSmb (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 20 May 2022 14:42:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38172 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353042AbiETSlN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 14:41:13 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FF1E3EA85
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:12 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id n6so4996477wms.0
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:12 -0700 (PDT)
+        with ESMTP id S1353037AbiETSlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 14:41:12 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 611B820BCF
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:08 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id j25so12607095wrc.9
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=PgDHTGjqvuAMjLeFxmVnpbHmwxtDC1ju8eSC7NyitIc=;
-        b=Uc33bWQT3CuFlIlyY1f/29AxE3znEPdQEVd8/56oCE6MvT0EnhSfRWSR9WEHfNMQSc
-         Tk1aTRQxQF+a0l2vaeVKkuhjoXQfJoEuC2/Xtkd0bykqoqSCrR0iMFGz7u0GyZ5PgTTz
-         UVNjBTOlXHO8QT+DCaoYxjRmzW7x0PtpGEgwVYPpIq8M4+fEkm0nlF8ArfINyO1rTrab
-         OpUXbsQixqvdRXzd/lGuNUE+ZvXTWTXf9tv+435EYMPxvB/3t6fFoUfd0x4AQkRPY0Ft
-         7AZFdSsnI8mHBAxIRNB+JDfhDlaP6EBem6nDzPqQQ7dSuMAK2qJpyMrEhLp0m1etqyme
-         KaOg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=q4hxNFkqTVCCuMwbXAWIlyBGIglHeh8calg7Yq0Cafo=;
+        b=DCIQVMVCWqGgGfd0fU93ApGSE+aZr3NbFLKzEXtWvtRE6NRlevvAAo5tTiCPUx+yed
+         5DEoJAPRC1tdBPwwlXXae4fgT32aV29AJz9nQJZJCfFkQLw0GF6ttuVeMrPYm31Y4fbq
+         C77AoYay99bbtoeArdCoMxg7HtUdvFtSFG8Svc0PH8CdtBEQXloY8ceA2CHt5/l6pqjP
+         ohMwjdDUOITr9TfWa3J0E/ivp8y4GcJOztVB3FFa6vJvoDz6RPhDbtMP40c0H6NachNH
+         utpw6INGv7E/m8wtJ03e7uZixzXiFjTnFoLcB2kbOhYW+lNcWtxAhIfRZiLLWAiPQXBS
+         thFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PgDHTGjqvuAMjLeFxmVnpbHmwxtDC1ju8eSC7NyitIc=;
-        b=CfJz56j80qz82g3rG5RAY1dub3H8Zew9D6Yd9rUlgWWUr+LaKB/K7NRLuRdqJ+uBsA
-         /GsSQuFIEt2COiVcrXrPfTvS5GhQKJouMCPZxwzLATcGD5hMrycxztZW6O5BtbP5XKA1
-         JE4ApJSCWl70piALs3p6n/IFwrDpfYVORry/btnoH2+WQ1lfPrM8YTNmouU5ujSYTybs
-         kbtfdM9D3UD7y1uA4PykYioAsAf3MtbNTakq4J11GHYbuj8aqsixFltLrrRMC2yEgyst
-         CgjYn7OikjrGuhl+G1Es1ct9w65IRO0p4UbNe2RPu5EVOt7phn6gUwEPvwSFNZ6+4bER
-         gc6Q==
-X-Gm-Message-State: AOAM530PU7TW2CRrkiwqJIQgZjVgYSpjBvpG3bS0ji5nJGJUWXMMv09d
-        TZHbHbyayR9PGl7pjkNBAMt+QREyqgY=
-X-Google-Smtp-Source: ABdhPJzkmF7yS+pShFHpg3+wVWjxhhEVbuW2BPOf0MnNoKDK2TTBB1LQt7StDigqShtcLqSRDgG0wQ==
-X-Received: by 2002:a7b:cd97:0:b0:38f:f785:ff8 with SMTP id y23-20020a7bcd97000000b0038ff7850ff8mr9657086wmj.44.1653072071499;
-        Fri, 20 May 2022 11:41:11 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=q4hxNFkqTVCCuMwbXAWIlyBGIglHeh8calg7Yq0Cafo=;
+        b=4uSQVzF+x0tdJQNDFjg51Lzqs7UXPyMnOr+UsaqrrNvEd/sHzQix1U+8WKLDMup9sB
+         zEjYp7/ZE/8wL38F3ToGM0fQfyzGMzWkc5Bte/Vm41t4hZ3GyXkS+g7KMepGlUoNdHQJ
+         Qdubf3ckGpMkIKVtQMqfrkm7M0LGEJQJCKOICSn38mc0TdxF8F3Q8f6DaPTT18QI8rO8
+         TFrtasQo9cBv0TBhkeNDnxeWD63kgXWxr4Y0PFhiBSEcnHlIllA0MCt5noULzKo6BRdC
+         g9CASymlCiod7yXUJ6QqwazST8QUGU4j3j4EXEXfDRIWt1Bu/4Svjz+onwZMQG5bkL63
+         pbOA==
+X-Gm-Message-State: AOAM533KB1NB86lw83syq1bgMWjWU+apvmx9oaKBcyg1GZ0ITFyEUbmP
+        IIco41I8zjju7c899JG50aiudPSyQ6w=
+X-Google-Smtp-Source: ABdhPJxReRRGl+j0cwrGlzy/DTj5ZZjw2pK13CCrVIFY29Jcc8a1IKOxpvKTYjSNXRLJwauCoT6xpw==
+X-Received: by 2002:a05:6000:1548:b0:20f:c4e3:637a with SMTP id 8-20020a056000154800b0020fc4e3637amr437247wry.513.1653072067081;
+        Fri, 20 May 2022 11:41:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o27-20020a05600c511b00b0039453fe55a7sm2621388wms.35.2022.05.20.11.41.10
+        by smtp.gmail.com with ESMTPSA id f20-20020a7bcc14000000b00394351e35edsm2561289wmh.26.2022.05.20.11.41.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 11:41:10 -0700 (PDT)
-Message-Id: <de1a0ce0919d3a25c95db2fce060ded36982da4d.1653072042.git.gitgitgadget@gmail.com>
+        Fri, 20 May 2022 11:41:06 -0700 (PDT)
+Message-Id: <2bc114925ade24d5e2e4c7cbd4fb90dcff09e85e.1653072042.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
 References: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 May 2022 18:40:42 +0000
-Subject: [PATCH 24/24] t5601: basic bundle URI tests
-Fcc:    Sent
+From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Fri, 20 May 2022 18:40:38 +0000
+Subject: [PATCH 20/24] bundle-uri client: add boolean transfer.bundleURI
+ setting
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Teng Long <dyroneteng@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+ <avarab@gmail.com>
 
-This test demonstrates an end-to-end form of the bundle URI feature
-given by an HTTP server advertising the 'features' capability with a
-bundle URI that is a bundle file on that same HTTP server. We verify
-that we unbundled a bundle, which could only have happened if we
-successfully downloaded that file.
+The yet-to-be introduced client support for bundle-uri will always
+fall back on a full clone, but we'd still like to be able to ignore a
+server's bundle-uri advertisement entirely.
 
-RFC-TODO: Create similar tests throughout the series that perform
-similar tests, including examples with table of contents and partial
-clones.
+The new transfer.bundleURI config option defaults to 'false', but a user
+can set it to 'true' to enable checking for bundle URIs from the origin
+Git server using protocol v2.
 
+To enable this setting by default in the correct tests, add a
+GIT_TEST_BUNDLE_URI environment variable.
+
+Co-authored-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t5601-clone.sh | 59 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ Documentation/config/transfer.txt     |  6 ++++++
+ t/lib-t5730-protocol-v2-bundle-uri.sh |  3 +++
+ transport.c                           | 10 +++++++---
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 4a61f2c901e..4ee9e231203 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -767,6 +767,65 @@ test_expect_success 'reject cloning shallow repository using HTTP' '
- 	git clone --no-reject-shallow $HTTPD_URL/smart/repo.git repo
- '
+diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
+index b49429eb4db..337a7886546 100644
+--- a/Documentation/config/transfer.txt
++++ b/Documentation/config/transfer.txt
+@@ -77,3 +77,9 @@ transfer.unpackLimit::
+ transfer.advertiseSID::
+ 	Boolean. When true, client and server processes will advertise their
+ 	unique session IDs to their remote counterpart. Defaults to false.
++
++transfer.bundleURI::
++	When set to `false` ignores any server advertisement of
++	`bundle-uri` and proceed with a "normal" clone/fetch even if
++	using bundles to bootstap is possible. Defaults to `true`,
++	i.e. bundle-uri is tried whenever a server offers it.
+diff --git a/t/lib-t5730-protocol-v2-bundle-uri.sh b/t/lib-t5730-protocol-v2-bundle-uri.sh
+index 23f2de0d9d7..49d4d848cac 100644
+--- a/t/lib-t5730-protocol-v2-bundle-uri.sh
++++ b/t/lib-t5730-protocol-v2-bundle-uri.sh
+@@ -1,5 +1,8 @@
+ # Included from t573*-protocol-v2-bundle-uri-*.sh
  
-+test_expect_success 'auto-discover bundle URI from HTTP clone' '
-+	test_when_finished rm -rf trace.txt repo2 "$HTTPD_DOCUMENT_ROOT_PATH/repo2.git" &&
-+	git -C src bundle create "$HTTPD_DOCUMENT_ROOT_PATH/everything.bundle" --all &&
-+	git clone --bare --no-local src "$HTTPD_DOCUMENT_ROOT_PATH/repo2.git" &&
++GIT_TEST_BUNDLE_URI=1
++export GIT_TEST_BUNDLE_URI
 +
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo2.git" config \
-+		uploadpack.advertiseBundleURIs true &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo2.git" config \
-+		bundle.list.version 1 &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo2.git" config \
-+		bundle.list.mode all &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo2.git" config \
-+		bundle.everything.uri "$HTTPD_URL/everything.bundle" &&
-+
-+	GIT_TEST_BUNDLE_URI=1 \
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		git -c protocol.version=2 clone \
-+		$HTTPD_URL/smart/repo2.git repo2 &&
-+	cat >pattern <<-EOF &&
-+	"event":"child_start".*"argv":\["git-remote-https","origin","$HTTPD_URL/everything.bundle"\]
-+	EOF
-+	grep -f pattern trace.txt
-+'
-+
-+test_expect_success 'auto-discover multiple bundles from HTTP clone' '
-+	test_when_finished rm -rf trace.txt repo3 "$HTTPD_DOCUMENT_ROOT_PATH/repo3.git" &&
-+
-+	test_commit -C src new &&
-+	git -C src bundle create "$HTTPD_DOCUMENT_ROOT_PATH/new.bundle" HEAD~1..HEAD &&
-+	git clone --bare --no-local src "$HTTPD_DOCUMENT_ROOT_PATH/repo3.git" &&
-+
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo3.git" config \
-+		uploadpack.advertiseBundleURIs true &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo3.git" config \
-+		bundle.list.version 1 &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo3.git" config \
-+		bundle.list.mode all &&
-+
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo3.git" config \
-+		bundle.everything.uri "$HTTPD_URL/everything.bundle" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/repo3.git" config \
-+		bundle.new.uri "$HTTPD_URL/new.bundle" &&
-+
-+	GIT_TEST_BUNDLE_URI=1 \
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		git -c protocol.version=2 clone \
-+		$HTTPD_URL/smart/repo3.git repo3 &&
-+
-+	# We should fetch _both_ bundles
-+	cat >pattern <<-EOF &&
-+	"event":"child_start".*"argv":\["git-remote-https","origin","$HTTPD_URL/everything.bundle"\]
-+	EOF
-+	grep -f pattern trace.txt &&
-+	cat >pattern <<-EOF &&
-+	"event":"child_start".*"argv":\["git-remote-https","origin","$HTTPD_URL/new.bundle"\]
-+	EOF
-+	grep -f pattern trace.txt
-+'
-+
- # DO NOT add non-httpd-specific tests here, because the last part of this
- # test script is only executed when httpd is available and enabled.
+ T5730_PARENT=
+ T5730_URI=
+ T5730_BUNDLE_URI=
+diff --git a/transport.c b/transport.c
+index c9d2e1804eb..f0114778ff4 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1529,6 +1529,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
  
+ int transport_get_remote_bundle_uri(struct transport *transport, int quiet)
+ {
++	int value = 0;
+ 	const struct transport_vtable *vtable = transport->vtable;
+ 
+ 	/* Check config only once. */
+@@ -1536,10 +1537,13 @@ int transport_get_remote_bundle_uri(struct transport *transport, int quiet)
+ 		return 0;
+ 
+ 	/*
+-	 * This is intentionally below the transport.injectBundleURI,
+-	 * we want to be able to inject into protocol v0, or into the
+-	 * dialog of a server who doesn't support this.
++	 * Don't use bundle-uri at all, if configured not to.
++	 * This logic defaults "transfer.bundleURI" to false.
+ 	 */
++	if (!git_env_bool("GIT_TEST_BUNDLE_URI", 0) &&
++	    (git_config_get_bool("transfer.bundleuri", &value) || !value))
++		return 0;
++
+ 	if (!vtable->get_bundle_uri) {
+ 		if (quiet)
+ 			return -1;
 -- 
 gitgitgadget
+
