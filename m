@@ -2,77 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6D19C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 23:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2B4FC433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 23:22:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238807AbiETXTY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 19:19:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51622 "EHLO
+        id S1353036AbiETXWI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 19:22:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349077AbiETXTW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 19:19:22 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 070F51957A6
-        for <git@vger.kernel.org>; Fri, 20 May 2022 16:19:20 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 53B8419DD0B;
-        Fri, 20 May 2022 19:19:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lT3T9l1Dbv2ub4h4K2jfzyPnidFiIVbr4B2TYF
-        uy4Ac=; b=HfGAJCGTJF4v/gitl9Mu2ARhbnlaqVidNhT/Q1z+RHtWY/+ChU5uge
-        o34R2JLcQ+YzTK1i8cRWoewlo8jgMJzL4T1FVBzxcufwGol/awQu4J3RA92OstFl
-        scANfja+SniAHlm9AdqYy3Z07SkqDS6qoPeVSlG432jsdvV3l3ARo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3F77B19DD0A;
-        Fri, 20 May 2022 19:19:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.247.111.240])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D0A6419DD09;
-        Fri, 20 May 2022 19:19:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
+        with ESMTP id S1354062AbiETXWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 19:22:04 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C70371A35A9
+        for <git@vger.kernel.org>; Fri, 20 May 2022 16:22:02 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id x65so4665310qke.2
+        for <git@vger.kernel.org>; Fri, 20 May 2022 16:22:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GAY9ThXc7nrq7MYj4SIZzClWFs4G3oOyA9zZ1pBEshc=;
+        b=iQ1PoyobYvzcbGTyqfs8nh7RdJ1nBfETeLYs+wztnnJ7yI7p2bgcxkXmYsRvAg7cjR
+         i0nvmWMTxzRiRWyxLOGvKXNX+Azm7XIqpP4nVV4BA0D/m4+ebj0onD55bBlEatk2cBg0
+         s+Os757JgoQDt9QG+LdkBSgxceLFvF8rXM1JcIqwUfkEI9gQxNql14wnQIuIeRSYdwdt
+         KRGFqTc8FaMxulRnHZHP+76RRJ5gX2B58wvIDpeMndhSJFcQDelqkBBybn1QTZuPdfUS
+         xKgJfNfpvm2hvSu93z+EI5NzS+GFJdhSWLCPioGXfZKdAdeVBZzzvqsDQFRbnVCVw9nn
+         DIfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GAY9ThXc7nrq7MYj4SIZzClWFs4G3oOyA9zZ1pBEshc=;
+        b=lHPjgl7Porh76VZHf/EYWuOSpcnXuafLJSmLWe1UIwWpiRRjSCLmk1rN/UVkBfL0gH
+         yB6zmk0PbfJdMOzTcSY5G0oyz9txT+2aIGChzNdSmPmgkM9BpxhtVPyH5e9osyY4w3eU
+         D0gtn1IkHXAGA4wdjuYALw12ofb7GlxJE471hpou6JufJH9kOQNIAwIYYMiohx8gvFu5
+         Tr4uKImKWwsi2274DogZbltiZMxQocM60vaNLp0KghNe54LAsnZIMuhVTkRZSXzvfJLe
+         ZKeMrbZYB26Q0o1CIAMJAE7Shk4uaG/Ksm9aGUheaxbr+JiyvRMsi0h90cWXSdYcFHP4
+         6nCA==
+X-Gm-Message-State: AOAM5323YdN+bTljopcLWwlOExy9LE3zUBgWW6hA5x32EEQZmvblVEzl
+        0g2wuNnINwP7T7VQvWytsZqQ3Q==
+X-Google-Smtp-Source: ABdhPJxAKwtjWsCtUhhGw27XZygfqwuhTkFzri1B2CN9bzhzxsSazxOQKJXEkP/gmyAtSDZmzvMSHA==
+X-Received: by 2002:a05:620a:cc1:b0:6a3:4f36:decb with SMTP id b1-20020a05620a0cc100b006a34f36decbmr2678717qkj.740.1653088921886;
+        Fri, 20 May 2022 16:22:01 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a2-20020a05620a16c200b006a006c884f0sm414725qkn.106.2022.05.20.16.22.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 May 2022 16:22:01 -0700 (PDT)
+Date:   Fri, 20 May 2022 19:22:00 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Victoria Dye <vdye@github.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com, jrnieder@gmail.com, larsxschneider@gmail.com,
-        tytso@mit.edu
-Subject: Re: [PATCH v4 00/17] cruft packs
-References: <cover.1638224692.git.me@ttaylorr.com>
-        <cover.1652915424.git.me@ttaylorr.com>
-        <98d9bbe5-1902-0dc4-e41e-33020d0396ad@github.com>
-Date:   Fri, 20 May 2022 16:19:15 -0700
-In-Reply-To: <98d9bbe5-1902-0dc4-e41e-33020d0396ad@github.com> (Derrick
-        Stolee's message of "Wed, 18 May 2022 19:48:37 -0400")
-Message-ID: <xmqqa6bbg5cc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        gitster@pobox.com
+Subject: Re: [PATCH 2/3] t7703: demonstrate object corruption with
+ pack.packSizeLimit
+Message-ID: <YogimAfbnkxCG8IP@nand.local>
+References: <cover.1653073280.git.me@ttaylorr.com>
+ <08da02fa74c211ae1019cb0a9f4e30cc239e1ab9.1653073280.git.me@ttaylorr.com>
+ <a060d672-df82-95a3-072a-7ab7b0566556@github.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 44DBF576-D893-11EC-A8D4-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a060d672-df82-95a3-072a-7ab7b0566556@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
-
->>   - updating the `finalize_hashfile()` calls for writing `.mtimes` files
->>     to indicate that they are `FSYNC_COMPONENT_PACK_METADATA`, since the
->>     original version of this series predates the fine-grained fsync
->>     configuration in 2.36.
+On Fri, May 20, 2022 at 12:42:58PM -0700, Victoria Dye wrote:
+> > @@ -230,4 +231,50 @@ test_expect_success '--geometric chooses largest MIDX preferred pack' '
+> >  	)
+> >  '
+> >
+> > +test_expect_failure '--geometric with pack.packSizeLimit' '
+> > +	git init pack-rewrite &&
+> > +	test_when_finished "rm -fr pack-rewrite" &&
+> > +	(
+> > +		cd pack-rewrite &&
+> > +
+> > +		test-tool genrandom foo 1048576 >foo &&
+> > +		test-tool genrandom bar 1048576 >bar &&
+> > +
 >
-> Good to have this update and not require it to be handled at merge
-> time by the maintainer.
+> I was a bit worried about this test being flaky in the future (relying on
+> particular pseudorandomly-generated file contents and the subsequent
+> ordering of hashes on the packs). But, since neither 'genrandom' nor the
+> pack hash generation seem likely to change (and I can't come up with an
+> alternative to this approach anyway), the test looks good as-is.
 
-Heh, my rerere database is good enough to make it a non-issue ;-)
+Note that the "random" contents aren't so random (though I suspect
+you're talking about _how_ genrandom interprets the seed changing), and
+that we're really only depending on genrandom here to create a large
+amount of data.
 
->> As always, a range-diff is below. Thanks in advance for taking another
->> look!
->
-> Looking at the range-diff, I'm happy with this version.
+We are relying on the pack hashes appearing in a certain order, so in
+that sense this test could "break" even if pack-objects reported the
+packs it wrote in a different order.
 
-Thanks.  I am tempted to mark the topic as "expecting (hopefully the
-final) reroll", to be merged down to 'next' soonish.
+But I agree in the sense that I also cannot come up with a less brittle
+approach for writing this test ;).
 
-
+Thanks,
+Taylor
