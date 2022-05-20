@@ -2,74 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A543C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 16:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EBC0C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 16:22:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347402AbiETQWG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 12:22:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35582 "EHLO
+        id S241143AbiETQWr convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 20 May 2022 12:22:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231239AbiETQWF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 12:22:05 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C8E6381B5
-        for <git@vger.kernel.org>; Fri, 20 May 2022 09:22:04 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A41A419B32E;
-        Fri, 20 May 2022 12:22:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=7DM4yhVqTSG4
-        jTrQTD1Wv/ko9l/gO/O4Wyfoi/xEnjA=; b=Q3i3DySKil8TKtHsGgSO3D9xAEVr
-        QSILcatAJI65bYcYxNFO7ri8omsVYibnPVXGjApMp8Z+btODHJhW6sK93QZARjns
-        qbbSDtxqwvfT1+OuEM6RnXbyUNxK4k1f2aBsI1bpVDLSinWV3i69gYRWCb0+y+EI
-        RfLAn9RF0/0LI3E=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9CDD419B32D;
-        Fri, 20 May 2022 12:22:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.247.111.240])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4410E19B328;
-        Fri, 20 May 2022 12:22:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 1/7] archive: optionally add "virtual" files
-References: <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
-        <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
-        <42e73fb0aaca1f2498ed817c517859103d72d32b.1652984283.git.gitgitgadget@gmail.com>
-        <99ffe394-42bb-6c04-b8ab-2d67c38d7756@web.de>
-Date:   Fri, 20 May 2022 09:21:59 -0700
-In-Reply-To: <99ffe394-42bb-6c04-b8ab-2d67c38d7756@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Fri, 20 May 2022 16:41:07 +0200")
-Message-ID: <xmqqmtfcjhso.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1351562AbiETQWm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 12:22:42 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD3D6170F13
+        for <git@vger.kernel.org>; Fri, 20 May 2022 09:22:41 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24KGMcVR008345
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 20 May 2022 12:22:38 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Alice Merrick'" <amerrick@google.com>,
+        "'Emily Shaffer'" <emilyshaffer@google.com>
+Cc:     "'Jonathan Nieder'" <jrnieder@gmail.com>,
+        "'Git List'" <git@vger.kernel.org>,
+        "'David Aguilar'" <davvid@gmail.com>
+References: <CA+Yb-VSaeKy-g_ywkZzQuEX=k3EXM+Ky-rHOb2az0SHGVbdaVw@mail.gmail.com> <Ynndk0L6r9O7jLVU@google.com> <CAJoAoZ=t=BEfsfHBay1K7CY2MYEwcvPYKYxvgv_BvLL3SMcf_A@mail.gmail.com> <YoEnsb2UpDwdjDpd@google.com> <CAJoAoZnP47PT9EQYkNib9+_a-Qg=HxhjowgUx7qJ1V7=KY5iiA@mail.gmail.com> <CA+Yb-VQx2CMixGh6GExce9n=QxR-esuhPuuHwzfDKYNow4Zyzw@mail.gmail.com>
+In-Reply-To: <CA+Yb-VQx2CMixGh6GExce9n=QxR-esuhPuuHwzfDKYNow4Zyzw@mail.gmail.com>
+Subject: RE: Let's have a user experience workshop
+Date:   Fri, 20 May 2022 12:22:33 -0400
+Organization: Nexbridge Inc.
+Message-ID: <028801d86c65$d2785db0$77691910$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F9E61DE2-D858-11EC-A31F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQFz2vmS2SKxDSIWIk7j/fBGjCh5MQHAbuKkApbb2NcBvxu0YgD9B1oeAhjL1W2tp7NIcA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On May 20, 2022 12:18 PM, Alice Merrick wrote:
+>>"3. Testing ideas
+>> with users" I would find it worrisome if getting user input would
+>>require reviews on a given patch stalling out until the next monthly
+>>meeting.  (Reviews are already slower than they should be as it is!)  I
+>>don't know that that's what you meant to suggest; I'm just aiming to
+>>understand what you mean about the "all 4" above.
+>
+>I agree, you wouldn't want to wait until something is in review to get user
+>feedback or testing. I think a Lean UX
+>(https://www.scaledagileframework.com/lean-ux/) approach would be more
+>appropriate especially when there is no designated UX person. You might need to
+>lean more heavily on design standards and instrumentation for feedback, but
+>sessions with users would still be important for developing standards and could be
+>used as needed if it's not possible to do them on a regular basis.
+>
+>> > > I'd envision it as something between a working group and a book
+>> > > club - we could learn different aspects of UX design and research,
+>> > > and apply them in various ways.
+>
+>I like this idea. A working group could work on developing design standards and
+>work out what to measure and how to measure it.
 
-> Am 19.05.22 um 20:17 schrieb Johannes Schindelin via GitGitGadget:
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> With the `--add-file-with-content=3D<path>:<content>` option, `git
->             ^^^^^^^^^^^^^^^^^^^^^^^
-> That's still the old option name.  Same in the subject of patch 2.
+I would imagine that some patch series do not directly impact UX while others do. Figuring out which are what might be a starting point. In some places, an API change would be UX - if the users are developers. Just a thought.
+--Randall
 
-Good eyes, and thanks for catching what I missed---the risk of
-relying too much on the range-diff X-<.
