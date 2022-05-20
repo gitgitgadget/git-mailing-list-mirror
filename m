@@ -2,104 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EC24C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 04:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0A21C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 04:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235428AbiETE1i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 00:27:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54588 "EHLO
+        id S1345308AbiETEhj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 00:37:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234418AbiETE1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 00:27:35 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B38B2954B9
-        for <git@vger.kernel.org>; Thu, 19 May 2022 21:27:33 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 374EC1970D8;
-        Fri, 20 May 2022 00:27:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vl31yUX8D2No
-        g3zBHs6Bpw9smiD1V9HjQih+fdPXqgM=; b=k29pyTNj0avlagahm68x9/IpUbAJ
-        4klLW5jiHPINoTEgGwQ6iR2INdwebP2UMTqUG/JoVtf9aoWYXMIeUgcbPRnUZ19x
-        ltgK1744SsUnpkAU8clTPwaMBidFancV/RPvW+KlO67CotEYY+BxRKMGUPA4GqbS
-        p7vn5Fvo0Wlyd7s=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 310C11970D6;
-        Fri, 20 May 2022 00:27:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.247.111.240])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D53371970D5;
-        Fri, 20 May 2022 00:27:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [RFC PATCH 2/2] object-file API: have unpack_loose_header()
- return "int" again
-References: <377be0e9-8a0f-4a86-0a66-3b08c0284dae@github.com>
-        <RFC-cover-0.2-00000000000-20220519T195055Z-avarab@gmail.com>
-        <RFC-patch-2.2-af0dfd017af-20220519T195055Z-avarab@gmail.com>
-Date:   Thu, 19 May 2022 21:27:28 -0700
-In-Reply-To: <RFC-patch-2.2-af0dfd017af-20220519T195055Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 19 May
- 2022 22:09:17
-        +0200")
-Message-ID: <xmqq35h4ltfz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1343815AbiETEhg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 00:37:36 -0400
+X-Greylist: delayed 903 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 19 May 2022 21:37:35 PDT
+Received: from sender4-of-o53.zoho.com (sender4-of-o53.zoho.com [136.143.188.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F008CCC8
+        for <git@vger.kernel.org>; Thu, 19 May 2022 21:37:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1653020549; cv=none; 
+        d=zohomail.com; s=zohoarc; 
+        b=IC3/Sqk3iNu2j9gUDbuDmY5Y4/efLv1Q76t69q+M3CerwSzZZ/nWPb/nkiZxgPYoEEJ83fFB8+7uDFH39ALBcfZ+7/LKBuvvXDfHc0fJHA8RvYyzfGcDh2ukiuUSufUZdj5aHpLc7w4CrYwVqubxdWeDIKB5O1DAjF3KCVaZbh0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+        t=1653020549; h=Content-Type:Content-Transfer-Encoding:Date:From:MIME-Version:Message-ID:Subject:To; 
+        bh=YJpD9loUgRDREcN9EJPPWFd4ZftW8hHTyAyIRrk3+u8=; 
+        b=RhyOJucis5x+Iu41AkON3SK6c+7PMBB/52zgVQ0D3mv6pw5ueXhADcqV7IzdiwMev6Px88nIpPaJBcd61/9Spc2KwRS86PmigMdawW1HKjKqEuRNP3/xK3oto8+EHcSLecePvinLtmSL8zfYx5qL5zkwjqVVS7USN65GWz73tsI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+        dkim=pass  header.i=allejo.io;
+        spf=pass  smtp.mailfrom=me@allejo.io;
+        dmarc=pass header.from=<me@allejo.io>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1653020549;
+        s=zoho; d=allejo.io; i=me@allejo.io;
+        h=Date:Date:From:From:To:To:Message-ID:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+        bh=YJpD9loUgRDREcN9EJPPWFd4ZftW8hHTyAyIRrk3+u8=;
+        b=CzgCN1rj4KR2C4Kl4J1dabecOVQDBkvj3Hl4sMtjrheVIJ2QRpjDgvEhT3qTKW5C
+        CFcYv2vsuaa8eElEBe+q+SWQNvBDxNCe8aPsMxTzTf5uxDQG2Dczn0pR+J8lZdpitYV
+        w+mqK2s4ovvit/tuCum3Gmre8jNv8H1USRgT/PfY=
+Received: from mail.zoho.com by mx.zohomail.com
+        with SMTP id 1653020547301331.45592430893544; Thu, 19 May 2022 21:22:27 -0700 (PDT)
+Date:   Thu, 19 May 2022 21:22:27 -0700
+From:   allejo <me@allejo.io>
+To:     "git" <git@vger.kernel.org>
+Message-ID: <180dfb3d8d3.12352a818142651.7062268074453572353@allejo.io>
+In-Reply-To: 
+Subject: =?UTF-8?Q?bug:_`git_diff`_implies_folder_isn=E2=80=99t_a_git_repo?=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 29247A9A-D7F5-11EC-AC22-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Please answer the following questions to help us understand your issue.
 
-> +int unpack_loose_header(git_zstream *stream, unsigned char *map,
-> +			unsigned long mapsize, void *buffer,
-> +			unsigned long bufsiz, struct strbuf *header);
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Simpler is better as long as we don't make it too simple ;-)
+Change ownership of a Git repo to require `safe.directory` behavior.
 
->  	if (!header)
-> -		return ULHR_TOO_LONG;
-> +		return error(_("header too long, exceeds %d bytes"),
-> +			     MAX_HEADER_LEN);
+What did you expect to happen? (Expected behavior)
 
-OK.
+If you run `git diff --exit-code` on a non-`safe.directory`, you should get the standard error.
 
-> -	return ULHR_BAD;
-> +	return error(_("could not find end of corrupt long header"));
->  }
+    Error: fatal: unsafe repository ('/path/to/repo' is owned by someone else)
 
-OK.
+What happened instead? (Actual behavior)
 
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index dadf3b14583..d742697d3bf 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -536,12 +536,14 @@ do
->  			if test "$arg2" =3D "-p"
->  			then
->  				cat >expect <<-EOF
-> -				error: header for $bogus_long_sha1 too long, exceeds 32 bytes
-> +				error: header too long, exceeds 32 bytes
-> +				error: unable to unpack $bogus_long_sha1 header
->  				fatal: Not a valid object name $bogus_long_sha1
->  				EOF
->  			else
->  				cat >expect <<-EOF
-> -				error: header for $bogus_long_sha1 too long, exceeds 32 bytes
-> +				error: header too long, exceeds 32 bytes
-> +				error: unable to unpack $bogus_long_sha1 header
->  				fatal: git cat-file: could not get object info
->  				EOF
->  			fi &&
+I get an error message saying it's not actually a git repository even though it is, it's just not safe to work in.
 
-Looking good.
+    warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+    usage: git diff --no-index [<options>] <path> <path>
+
+    Diff output format options
+        -p, --patch           generate patch
+        -s, --no-patch        suppress diff output
+        -u                    generate patch
+        -U, --unified[=<n>]   generate diffs with <n> lines context
+        -W, --function-context
+                              generate diffs with <n> lines context
+        --raw                 generate the diff in raw format
+        --patch-with-raw      synonym for '-p --raw'
+        --patch-with-stat     synonym for '-p --stat'
+        --numstat             machine friendly --stat
+        --shortstat           output only the last line of --stat
+        -X, --dirstat[=<param1,param2>...]
+                              output the distribution of relative amount of changes for each sub-directory
+    ...
+
+What's different between what you expected and what actually happened?
+
+One error message implies the folder isn't a Git repo while the other explicitly says it's not safe to work in and how to fix it.
+
+Anything else you want to add:
+
+I am installing git on Ubuntu 20.04.4 from its default repositories inside of a GitHub Actions runner.
+
+[System Info]
+git version:
+git version 2.25.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
 
