@@ -2,164 +2,293 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 621F7C433EF
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 17:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B31AEC433EF
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 17:27:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352169AbiETRXl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 13:23:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34298 "EHLO
+        id S237156AbiETR10 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 13:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352155AbiETRXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 13:23:37 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15ACA187045
-        for <git@vger.kernel.org>; Fri, 20 May 2022 10:23:36 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id o16so5983819ilq.8
-        for <git@vger.kernel.org>; Fri, 20 May 2022 10:23:36 -0700 (PDT)
+        with ESMTP id S236051AbiETR1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 13:27:24 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9979517CE6F
+        for <git@vger.kernel.org>; Fri, 20 May 2022 10:27:23 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id t11-20020a17090a6a0b00b001df6f318a8bso12037374pjj.4
+        for <git@vger.kernel.org>; Fri, 20 May 2022 10:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=9IOLb1Cp3RE0Xswr9MxNVGzxpFR/I/2+wjauaAo81rg=;
-        b=H7jBUwk+jyncCC/4Jx8Obh8pHyw+Zq+5csnzCOP45u52TNWNNRAa6hmPTlt3qAbW38
-         +KZpm5sMDMvM7kd3cwvysCv4qS/qIOpz7ciEZz8CT37e5+Qs16we6OFBnehikEAIq86a
-         sAQdLNnXJZVonDCg+OKpMrRJ1EGoA2V+tw1f/vqdHuNftCdKllrcWQJ8vIKzqGof9FdX
-         1W2rkkWT0E+RCn2ccVro4zm8n/OiFkyAj6p90fgGnuNhds8ccDi5GcvMNHJeECFsAVkX
-         O/zEjEHFhUBRQA7fz6vZLcKReviRbITlEZk8TcP4FBSMT3/iq7tFiykky8T8aVfS9Tvh
-         YUIA==
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=izndWJjslfUwBwQZfE5O/x2PLY40b6HWJyYng7YxIxs=;
+        b=awrma6d6bcPIHxngqjEPNcRlT/BYvkc0r6kXgNqwldmBf5O0SHtBsRNOhXy5382nzs
+         wbC6eRDJ9offjBpfwUGRy5meAhZ/bgE0sIa+7dpI+fL7BvcjIABLrt0rfLZvjiofh2/5
+         TV7o6/o2R+2WnH/QNEkxuVYuVHWg86IQHnXWqrhhAFDujkoTdyYtCwwTsy4BzVVNyPwR
+         Iz9GrUrOggmig7F935bowfUwMSjm3IrelQVigHGa+SKBvVq8yRCFcPgxRCsivRXoZF8L
+         KqZuEzal4vLthXjqXl6LnKKWRv5xla2uUPwKVWCW2R3VI0YEfHrdrIGdE6SpxRZ/EeWm
+         qs1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=9IOLb1Cp3RE0Xswr9MxNVGzxpFR/I/2+wjauaAo81rg=;
-        b=XbVVAv19wOeSfQcyKHL5wbV97f9FqV6gGtW/hrj2kh3yVmP6nUnpXwK225i/6EDCkT
-         oApEpo5jiiXb74oAWDQyQ5cCwYVm3PgCfjm8gDc4tpC7VAQbK9x0JZKSobRxRVIfJ+T1
-         heD/3ghk6xvq4DxOz0CVXvdal6nDJyNFbh8fq42QSb2G5cmw6x08amna5lW6gegv8eJl
-         jOFsUql3XY15zNIgmzRJbYFXr70UuYBE8U5x6NtvlwCsrlxnbbRLhh2nI4HnnHTybJeZ
-         30jJXSHMol5RxWW8ykheNlcj30Gtt3q4R4lVcZzqIuJiEqYqi5qcprF9ZLM79D1/qhOK
-         9PaA==
-X-Gm-Message-State: AOAM533NHs9Z/yPxDl0mXRRdkmwjJ5fJNFiaSNIhbFOtnrBGYEwRmu7I
-        Dle63UF5vgrQzHkFcLI5TP/8
-X-Google-Smtp-Source: ABdhPJzNzsbla4Xhm+1gjdMEkd9nxLSt3aUaYwKdfk0ir8F+Ap4mUTRxbsyXwrlSHy9cbcTLT3Owsg==
-X-Received: by 2002:a05:6e02:1747:b0:2cf:65d:4449 with SMTP id y7-20020a056e02174700b002cf065d4449mr5699991ill.77.1653067415403;
-        Fri, 20 May 2022 10:23:35 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:34b9:84ab:204:3752? ([2600:1700:e72:80a0:34b9:84ab:204:3752])
-        by smtp.gmail.com with ESMTPSA id w69-20020a025d48000000b0032b3a7817casm809145jaa.142.2022.05.20.10.23.32
+        bh=izndWJjslfUwBwQZfE5O/x2PLY40b6HWJyYng7YxIxs=;
+        b=ybyiDk1mcGW8oXhQMqwPRP6OFDGK5lKTQK6ZcnXnRzSCTlcuCyyYR6QippYe7JcA/G
+         xD52+WlVc372Ozqmg4s9opmEcEYPsEd+J7SZ+PRu9lxwWLbDcwRqDjohYp6GNkPLhwO+
+         kwV3nEVM1UHSbgJyuSkCfPqjW1r/R67K3dg2MGpEbk8285gWz7a9O2aaQNXVJRFdgHou
+         vDFwqEZYz0QqWJ5qo9sYFXoglVjHJn/webBFhtvshC+bzA+W/ShAqLrGCj2bybmr/qi4
+         MF86mvAHqmytHT3nWX4FA7eNcp4ecMy179pCQXyuzomNepCsv+awX79UX+MHI3Bye1Qf
+         bA4g==
+X-Gm-Message-State: AOAM530m76Jd9PjJauBSiyw/jNXIdUoXLE26klFlF0xufQpROWnZcUrL
+        fznxnSD9KbCEwfzPmZgDCT8v
+X-Google-Smtp-Source: ABdhPJzwUpJzJl2WfJhQZ0gTUpq4MfjmBM81yRc+Ymv0d3onET/68ObkVlnkvZZOTToDMWoAo/u7+g==
+X-Received: by 2002:a17:902:7597:b0:15e:b5d3:267d with SMTP id j23-20020a170902759700b0015eb5d3267dmr10856462pll.55.1653067643009;
+        Fri, 20 May 2022 10:27:23 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id k16-20020a170902761000b001615de533a9sm32616pll.30.2022.05.20.10.27.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 May 2022 10:23:33 -0700 (PDT)
-Message-ID: <35e80e21-7388-8047-d8b9-02e136d20e04@github.com>
-Date:   Fri, 20 May 2022 13:23:31 -0400
+        Fri, 20 May 2022 10:27:22 -0700 (PDT)
+Message-ID: <bb19159b-6d0c-a683-a58e-95ebdc128627@github.com>
+Date:   Fri, 20 May 2022 10:27:21 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [Discussion] What is Git's Security Boundary?
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.1
+Subject: Re: [PATCH] repack: respect --keep-pack with geometric repack
 Content-Language: en-US
-To:     rsbecker@nexbridge.com, 'Git Mailing List' <git@vger.kernel.org>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        'Taylor Blau' <me@ttaylorr.com>,
-        'Emily Shaffer' <emilyshaffer@google.com>,
-        'Glen Choo' <chooglen@google.com>,
-        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
-        <avarab@gmail.com>, 'Christian Couder' <christian.couder@gmail.com>
-References: <6af83767-576b-75c4-c778-0284344a8fe7@github.com>
- <daadac3e-d4c2-431f-a0bd-d8734d4424d8@github.com>
- <004d01d86932$a36f95f0$ea4ec1d0$@nexbridge.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <004d01d86932$a36f95f0$ea4ec1d0$@nexbridge.com>
+To:     Taylor Blau <me@ttaylorr.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1235.git.1653064572170.gitgitgadget@gmail.com>
+ <YofJLv8+x5J7yPmf@nand.local>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <YofJLv8+x5J7yPmf@nand.local>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/16/2022 10:38 AM, rsbecker@nexbridge.com wrote:
-> On May 16, 2022 10:14 AM, Derrick Stolee wrote:
+Taylor Blau wrote:
+> Hi Victoria,
+> 
+> On Fri, May 20, 2022 at 04:36:12PM +0000, Victoria Dye via GitGitGadget wrote:
+>> From: Victoria Dye <vdye@github.com>
 >>
->> I'm sending this email as a hopeful ping that this topic could use some feedback.
->> I'm looking forward to your ideas.
+>> Update 'repack' to ignore packs named on the command line with the
+>> '--keep-pack' option. Specifically, modify 'init_pack_geometry()' to treat
+>> command line-kept packs the same way it treats packs with an on-disk '.keep'
+>> file (that is, skip the pack and do not include it in the 'geometry'
+>> structure).
+>>
+>> Without this handling, a '--keep-pack' pack would be included in the
+>> 'geometry' structure. If the pack is *before* the geometry split line (with
+>> at least one other pack and/or loose objects present), 'repack' assumes the
+>> pack's contents are "rolled up" into another pack via 'pack-objects'.
+>> However, because the internally-invoked 'pack-objects' properly excludes
+>> '--keep-pack' objects, any new pack it creates will not contain the kept
+>> objects. Finally, 'repack' deletes the '--keep-pack' as "redundant" (since
+>> it assumes 'pack-objects' created a new pack with its contents), resulting
+>> in possible object loss and repository corruption.
 > 
-> Some ramblings, since you asked, and I hope I am not missing the point:
+> Nicely found and explained. Having discussed this fix with you already
+> off-list, this approach (to treat kept packs as excluded from the list
+> of packs in the `geometry` structure regardless of whether they are kept
+> on disk or in-core) makes sense to me.
 > 
-> I guess some (me) were waiting for more ideas on what you meant by
-> "Security boundary". In network security, the definition is fairly clear
-> - the line where security needs change, so a firewall, DMZ, etc. When
-> talking about applications, a security boundary would be an area where
-> the concept of a user diverges from the system, so your GitHub logon vs.
-> user ids on the servers where GitHub runs - or perhaps Amazon is a
-> better example.
+> I left a couple of small notes on the patch below, but since I have some
+> patches that deal with a separate issue in the `git repack --geometric`
+> code coming, do you want to combine forces (and I can send a
+> lightly-reworked version of this patch as a part of my series)?
 > 
-> The line blurs for git because we depend on the underlying user
-> authentication mechanisms of the platform. To do anything in git, you
-> either have to have a legitimate logon to the server where git runs or
-> are coming in anonymously in a read-only (hopefully) fashion. In one
-> view, your boundary expands beyond one system, making the boundary
-> non-traditional.
 
-Yes, this is exactly why this is an interesting discussion to have.
+Works for me! I'm happy with all the suggested changes you noted below
+(moving the 'string_list_sort' and cleaning up the test), so feel free to
+include them in your series.
 
-> The "security boundary" line is different for git than what a network
-> security admin would consider as a similar domain. In gits terms (my
-> view anyway), the boundary is functional. Do we want git doing something
-> intended vs. unintended given the structure of the repository. In strict
-> technical terms, the boundary is at fopen() and exec(). Can git access
-> something or do something on a system and if so, should it. Conversely,
-> is git blocked from doing something it should be able to do. This seems
-> like well structured problem except for the introduction of incoming
-> changes that could trigger undesired behaviour either at clone,
-> fetch/merge time, switch or other situations where there is a side
-> impact.
+Thanks!
 
-I agree that the boundary is functional. We want Git users to feel safe
-running Git commands that their data will not go anywhere unintended and
-no unintended behavior could comprimise their security. This is all for
-things outside of the umbrella of "doing what you told Git to do," so not
-understanding Git isn't a way to claim there is a security issue. Git
-should push data where it is told, when the appropriate commands are run.
-Git should run the hooks that are configured in the repository, since that
-is an important functionality.
-
-The biggest questions are how much we can rely on a "properly configured
-and secured" system? Should we consider the filesystem to be trusted
-state, or are our only concerns with data that is sent over a network? The
-recent CVE around safe.directory hints that we don't always trust the file
-system. Embedded Git repositories can be placed by a "git clone" but they
-are not dangerous until after the user has a chance to inspect the data
-that is on their filesystem.
-
-> So putting the fopen() boundary into a box, that seems pretty much up to
-> the operating system. I am not 100% sure that the safe.directory
-> situation is required for that - although I have had customers asking
-> for something like that for about 3 years.
+>> @@ -332,17 +332,34 @@ static int geometry_cmp(const void *va, const void *vb)
+>>  	return 0;
+>>  }
+>>
+>> -static void init_pack_geometry(struct pack_geometry **geometry_p)
+>> +static void init_pack_geometry(struct pack_geometry **geometry_p,
+>> +			       struct string_list *existing_kept_packs)
+>>  {
+>>  	struct packed_git *p;
+>>  	struct pack_geometry *geometry;
+>> +	struct strbuf buf = STRBUF_INIT;
+>>
+>>  	*geometry_p = xcalloc(1, sizeof(struct pack_geometry));
+>>  	geometry = *geometry_p;
+>>
+>> +	string_list_sort(existing_kept_packs);
 > 
-> There are three areas of ancillary impacts that give me continual
-> concern: clean/smudge, hooks, workflows. Each hits the exec() boundary.
-> Clean/smudge has a well-defined control that is up to the user or system
-> admin to manage. Similarly hooks, although hook import has become a
-> topic lately. The GitHub (and other app) Workflow Actions concept opens
-> up a new area that allows the exec() boundary to be traversed,
-> potentially with undesired side effects. Actions depends on GitHub to
-> provide safety controls, which is outside git's responsibility although
-> git is the transport vector through which potential problems can be
-> introduced.
+> Would it be worth sorting this as early as in collect_pack_filenames()?
+> For our purposes in this patch, this works as-is, but it may be
+> defensive to try and minimize the time that list has unsorted contents.
+> 
 
-My biggest concern (outside of our well-established concerns over network
-communication vulnerabilities) is the exec() boundary. How easy is it for
-an attacker to trick Git into running a bad hook? This goes hand in hand
-with how difficult it is to "install" hooks and that efforts to make that
-easier are also likely to make it easier to create this kind of
-vulnerability.
+I went back and forth on this, eventually settling on this to keep the
+'string_list_sort' as close as possible to where the sorted list is needed.
+I'm still pretty indifferent, though, so moving it to the end of
+'collect_pack_filenames()' is fine with me.
 
-> We then get into "trust" and who is trusted across that
-> boundary and is the trust justified. If it were up to me, I would want
-> all of the incoming changes to be signed at least for accountability,
-> but more having some kind of authentication to ensure the trust.
+>>  	for (p = get_all_packs(the_repository); p; p = p->next) {
+>> -		if (!pack_kept_objects && p->pack_keep)
+>> -			continue;
+>> +		if (!pack_kept_objects) {
+>> +			if (p->pack_keep)
+>> +				continue;
+> 
+> (You mentioned this to me off-list, but I'll repeat it here since it
+> wasn't obvious to me on first read): this check for `p->pack_keep` isn't
+> strictly necessary, since any packs that have their `pack_keep` bit set
+> will appear in the `existing_kept_packs` list.
+> 
+> But it does give us a fast path to avoid having to check that list, so
+> it's worth checking that bit to avoid a slightly more expensive check
+> where possible.
+> 
+>> +			/*
+>> +			 * The pack may be kept via the --keep-pack option;
+>> +			 * check 'existing_kept_packs' to determine whether to
+>> +			 * ignore it.
+>> +			 */
+>> +			strbuf_reset(&buf);
+>> +			strbuf_addstr(&buf, pack_basename(p));
+>> +			strbuf_strip_suffix(&buf, ".pack");
+>> +
+>> +			if (string_list_has_string(existing_kept_packs, buf.buf))
+>> +				continue;
+> 
+> It's too bad that we have to do this check at all, and can't rely on the
+> `pack_keep_in_core` in the same way as we check `p->pack_keep`. But
+> lifting that restriction is a more invasive change, so I'm happy to
+> rely on the contents of existing_kept_packs here in the meantime.
+> 
+>> +		}
+>>
+>>  		ALLOC_GROW(geometry->pack,
+>>  			   geometry->pack_nr + 1,
+>> @@ -353,6 +370,7 @@ static void init_pack_geometry(struct pack_geometry **geometry_p)
+>>  	}
+>>
+>>  	QSORT(geometry->pack, geometry->pack_nr, geometry_cmp);
+>> +	strbuf_release(&buf);
+>>  }
+>>
+>>  static void split_pack_geometry(struct pack_geometry *geometry, int factor)
+>> @@ -714,17 +732,20 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>>  		strbuf_release(&path);
+>>  	}
+>>
+>> +	packdir = mkpathdup("%s/pack", get_object_directory());
+>> +	packtmp_name = xstrfmt(".tmp-%d-pack", (int)getpid());
+>> +	packtmp = mkpathdup("%s/%s", packdir, packtmp_name);
+>> +
+>> +	collect_pack_filenames(&existing_nonkept_packs, &existing_kept_packs,
+>> +			       &keep_pack_list);
+>> +
+> 
+> Makes sense; we have to initialize existing_kept_packs before arranging
+> the list of packs for the `--geometric` split. And presumably
+> `collect_pack_filenames()` relies on `packdir`, `packtmp_name`, and
+> `packtmp` being setup ahead of time, too.
+> 
+>>  	if (geometric_factor) {
+>>  		if (pack_everything)
+>>  			die(_("options '%s' and '%s' cannot be used together"), "--geometric", "-A/-a");
+>> -		init_pack_geometry(&geometry);
+>> +		init_pack_geometry(&geometry, &existing_kept_packs);
+>>  		split_pack_geometry(geometry, geometric_factor);
+>>  	}
+>>
+>> -	packdir = mkpathdup("%s/pack", get_object_directory());
+>> -	packtmp_name = xstrfmt(".tmp-%d-pack", (int)getpid());
+>> -	packtmp = mkpathdup("%s/%s", packdir, packtmp_name);
+>> -
+>>  	sigchain_push_common(remove_pack_on_signal);
+>>
+>>  	prepare_pack_objects(&cmd, &po_args);
+>> @@ -764,9 +785,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>>  	if (use_delta_islands)
+>>  		strvec_push(&cmd.args, "--delta-islands");
+>>
+>> -	collect_pack_filenames(&existing_nonkept_packs, &existing_kept_packs,
+>> -			       &keep_pack_list);
+>> -
+>>  	if (pack_everything & ALL_INTO_ONE) {
+>>  		repack_promisor_objects(&po_args, &names);
+>>
+>> diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+>> index bdbbcbf1eca..f5ac23413d5 100755
+>> --- a/t/t7703-repack-geometric.sh
+>> +++ b/t/t7703-repack-geometric.sh
+>> @@ -180,6 +180,40 @@ test_expect_success '--geometric ignores kept packs' '
+>>  	)
+>>  '
+>>
+>> +test_expect_success '--geometric ignores --keep-pack packs' '
+>> +	git init geometric &&
+>> +	test_when_finished "rm -fr geometric" &&
+>> +	(
+>> +		cd geometric &&
+>> +
+>> +		# Create two equal-sized packs
+>> +		test_commit kept && # 3 objects
+>> +		test_commit pack && # 3 objects
+>> +
+>> +		KEPT=$(git pack-objects --revs $objdir/pack/pack <<-EOF
+>> +		refs/tags/kept
+>> +		EOF
+>> +		) &&
+>> +		PACK=$(git pack-objects --revs $objdir/pack/pack <<-EOF
+>> +		refs/tags/pack
+>> +		^refs/tags/kept
+>> +		EOF
+>> +		) &&
+> 
+> Nit; we don't care about the name of $PACK, so it would probably be fine
+> to avoid storing the `PACK` variable. We could write these packs with
+> just `git repack -d` after each `test_commit` (which would avoid us
+> having to call `prune-packed`).
+> 
 
-This level of trust is interesting. Outside of introducing an opt-in mode
-that rejects any commits that are not signed by trusted parties, we
-cannot make this change without breaking almost all existing scenarios.
-This is an interesting thing to think about providing for ultra-security-
-conscious folks.
+Makes sense.
 
-Thanks for your thoughts!
--Stolee
+> Does it matter which one is kept? I don't think so, since AFAICT the
+> critical bit is that we mark one of the packs being rolled up as a
+> `--keep-pack`.
+> 
+
+Correct, the two packs in this test are just two same-sized (or, more
+generally, non-geometrically progressing) packs with non-overlapping
+content.
+
+>> +		# Prune loose objects that are now packed into PACK and KEEP
+>> +		git prune-packed &&
+>> +
+>> +		git repack --geometric 2 -dm --keep-pack=pack-$KEPT.pack >out &&
+>> +
+>> +		# Packs should not have changed (only one non-kept pack, no
+>> +		# loose objects), but midx should now exist.
+>> +		test_i18ngrep "Nothing new to pack" out &&
+> 
+> Nit; test_i18ngrep here should just be "grep".
+> 
+
+Thanks for pointing this out - I've been a bit unsure of the difference for
+a while, but this pushed me to figure out the difference and I found the
+note in 'test-lib-functions.sh' clarifying that 'test_i18ngrep' is
+deprecated.
+
+>> +		test_path_is_file $midx &&
+>> +		test_path_is_file $objdir/pack/pack-$KEPT.pack &&
+>> +		git fsck
+>> +	)
+> 
+> 
+> Thanks,
+> Taylor
+
