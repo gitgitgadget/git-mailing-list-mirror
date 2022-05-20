@@ -2,87 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01845C433F5
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 23:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1EFDC4332F
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 03:06:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343737AbiESXr2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 19:47:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53932 "EHLO
+        id S1345030AbiETDGP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 23:06:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343751AbiESXrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 19:47:14 -0400
-X-Greylist: delayed 453 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 19 May 2022 16:47:13 PDT
-Received: from vulcan.kevinlocke.name (vulcan.kevinlocke.name [IPv6:2001:19f0:5:727:1e84:17da:7c52:5ab4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 662B239B94
-        for <git@vger.kernel.org>; Thu, 19 May 2022 16:47:13 -0700 (PDT)
-Received: from kevinolos.kevinlocke.name (unknown [69.145.56.143])
-        (Authenticated sender: kevin@kevinlocke.name)
-        by vulcan.kevinlocke.name (Postfix) with ESMTPSA id C01AB2E536DF;
-        Thu, 19 May 2022 23:39:37 +0000 (UTC)
-Received: by kevinolos.kevinlocke.name (Postfix, from userid 1000)
-        id 849C5130035B; Thu, 19 May 2022 17:39:25 -0600 (MDT)
-From:   Kevin Locke <kevin@kevinlocke.name>
+        with ESMTP id S1345027AbiETDF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 23:05:56 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67E6F6305
+        for <git@vger.kernel.org>; Thu, 19 May 2022 20:05:53 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id a38so3777057pgl.9
+        for <git@vger.kernel.org>; Thu, 19 May 2022 20:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4HtF0zfOPnbhSpONjV62TDWnajMrfBaAsFsQq1Tl2AI=;
+        b=Yu/nE4OP6Sr3487aQSs9y72uZowZKApQ0ZQ+5KVYU0evNWCeq9GwpZW/1yWPBa3Jqc
+         LO1QKV4f3J/YbhyKzB59JAauV+Tx6Bl9g30CrrFHifNMVSY6SLO+pxwtpNkTOGmOTaPY
+         qvHnwyTY6lxxaDhquVyT5D89FpQLsipPqdSgXAUy7+8xJtBcxaMHA5o5uynGrf/ye6MI
+         WSdIevyElL0XpXmDRfutrgzyfSpGrPUE9EwUYR5z6+7TV5pNM0G18cf2704yb58zHyQm
+         UVQWanQP5Xq9Dy5bBphvT5AZXGp4pyRFE+VEhRjPEf50LIIA8HAxQasqiJMjdah9360H
+         w6iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4HtF0zfOPnbhSpONjV62TDWnajMrfBaAsFsQq1Tl2AI=;
+        b=pmkxp1SmzHy7XutqWfR2dGd/vPx/K7fAcsQ8B421TPT4LGQbZF3Q8R7rKTt52bWk8M
+         TwXWepvV5rbY/fsJkJetg/9ntLRRJkpr4L7mZqmxA1Q7FuoUVn92P0MvkXOumYCuMZxP
+         z7ubRXHDaY4RwZiccxODTg/5MD12V+RzAy1sRSVsqLoTy6w2n3Ts4iO7PppyuFoU4KmB
+         hOalvgwUIRvHdfIsbXVM/6k/prnzk3YMp3Z3kmKDXlKae5i34eaLJyaXqsihGfC4Z0+f
+         fmCs/ExOmCH7A8ek16MXhX4CfEw+Gjsk/57srJCmKxfYVHFSD6ttM9AfRchhneyKbOI9
+         rJhQ==
+X-Gm-Message-State: AOAM532dNsIqAjfQwTd7IXYVRnGTffzc9Xh4zxb6tO+BJ4STq5DCHPp1
+        /Cly5lPm4kbXg1LPZ+wDvJNkFasPiyw=
+X-Google-Smtp-Source: ABdhPJwhW4XS6wu0JkobJLWrbfvDyGUbdLqGVSOF+T8MxnUokaEVh/1S1B5ZmO960OCIHmMWyhpVGA==
+X-Received: by 2002:a63:7d3:0:b0:3f6:885:cd22 with SMTP id 202-20020a6307d3000000b003f60885cd22mr6718172pgh.143.1653015950657;
+        Thu, 19 May 2022 20:05:50 -0700 (PDT)
+Received: from JMHNXMC7VH.bytedance.net ([139.177.225.227])
+        by smtp.gmail.com with ESMTPSA id z5-20020a63e105000000b003c14af505f6sm4294471pgh.14.2022.05.19.20.05.46
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 19 May 2022 20:05:49 -0700 (PDT)
+From:   Han Xin <chiyutianyi@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH] setup: don't die if realpath(3) fails on getcwd(3)
-Date:   Thu, 19 May 2022 17:39:13 -0600
-Message-Id: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
-X-Mailer: git-send-email 2.35.1
+Cc:     Han Xin <chiyutianyi@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 0/1] unpack-objects: low memory footprint for get_data() in dry_run mode
+Date:   Fri, 20 May 2022 11:05:13 +0800
+Message-Id: <cover.1653015534.git.chiyutianyi@gmail.com>
+X-Mailer: git-send-email 2.36.1
+In-Reply-To: <cover-v11-0.8-00000000000-20220319T001411Z-avarab@gmail.com>
+References: <cover-v11-0.8-00000000000-20220319T001411Z-avarab@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prior to Git 2.35.0, git could be run from an inaccessible working
-directory so long as the git repository specified by options and/or
-environment variables was accessible.  For example:
+This patch teaches "git unpack-objects" to use a lower memory footprint
+for "get_data()" in dry-run mode since the returned data is not used.
 
-    git init repo
-    mkdir -p a/b
-    cd a/b
-    chmod u-x ..
-    git -C "${PWD%/a/b}/repo" status
+This patch is separeted from "[PATCH v12 0/8] unpack-objects: support
+streaming blobs to disk"[1] because it has less impact and less controversy
+on existing ones.
 
-If this example seems a bit contrived, consider running with the
-repository owner as a substitute UID (e.g. with runuser(1) or sudo(8))
-without ensuring the working directory is accessible by that user.
+1. https://lore.kernel.org/git/cover-v12-0.8-00000000000-20220329T135446Z-avarab@gmail.com/
 
-The code added by e6f8861bd4 to preserve the working directory attempts
-to normalize the path using strbuf_realpath().  If that fails, as in the
-case above, it is treated as a fatal error.  To avoid this, we can
-continue after the error.  At worst, git will fail to detect that the
-working directory is inside the worktree, resulting in the pre-2.35.0
-behavior of not preserving the working directory.
+Han Xin (1):
+  unpack-objects: low memory footprint for get_data() in dry_run mode
 
-Fixes: e6f8861bd4 ("setup: introduce startup_info->original_cwd")
-Signed-off-by: Kevin Locke <kevin@kevinlocke.name>
----
- setup.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ builtin/unpack-objects.c        | 34 ++++++++++++++++++---------
+ t/t5351-unpack-large-objects.sh | 41 +++++++++++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+), 11 deletions(-)
+ create mode 100755 t/t5351-unpack-large-objects.sh
 
-diff --git a/setup.c b/setup.c
-index a7b36f3ffb..fb68caaae0 100644
---- a/setup.c
-+++ b/setup.c
-@@ -458,11 +458,13 @@ static void setup_original_cwd(void)
- 	 *     not startup_info->original_cwd.
- 	 */
- 
--	/* Normalize the directory */
--	strbuf_realpath(&tmp, tmp_original_cwd, 1);
--	free((char*)tmp_original_cwd);
-+	/* Try to normalize the directory.  Fails if ancestor not readable. */
-+	if (strbuf_realpath(&tmp, tmp_original_cwd, 0)) {
-+		free((char*)tmp_original_cwd);
-+		startup_info->original_cwd = strbuf_detach(&tmp, NULL);
-+	} else
-+		startup_info->original_cwd = tmp_original_cwd;
- 	tmp_original_cwd = NULL;
--	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
- 
- 	/*
- 	 * Get our worktree; we only protect the current working directory
 -- 
-2.35.1
+2.36.1
 
