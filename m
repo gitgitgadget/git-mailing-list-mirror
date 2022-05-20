@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A38BCC433EF
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C1EBC433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:41:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352973AbiETSll (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 14:41:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37522 "EHLO
+        id S1352013AbiETSln (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 14:41:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352967AbiETSlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 14:41:01 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D83820BCF
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:40:51 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id f2so12666674wrc.0
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:40:51 -0700 (PDT)
+        with ESMTP id S1352960AbiETSlA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 14:41:00 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A9A33EA4
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:40:50 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id e28so12029752wra.10
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:40:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pAmjfZ/qRZAPyOcPXAG/ywCb5OVVlR+UFdolfRENHZY=;
-        b=J2jkjje+K9/CfYzwBnbv1ihqKe2fzcoh+O7Q7GaAnPmolbIu2mRWB3MEBZkVoF2cM5
-         3jD0a4S6kXhpBzs84QLfUgYEjF2o05pzOzNmMjI33H+l9/kXPVDS4JUEA0pI9eIWo4Ib
-         wFuCFfLWG5Sq1NuNKUlPJFeZMdctD435r4oQpLtc5W7S023jj1BfH8JWBNY2S4PTMQZC
-         dhx5bTQM2nKIKVJI6SCOCTf4DiqQPXkZsMw9GXJ9lhExEPnI4EpPn3x2Pe1vebSptWVy
-         /VSbj8dIcrEahAgyRjICRih3bNUmsfA7gb4H1+FOf6g5IduFlJEVxuO8WQDgxMqAr3pU
-         L3Mw==
+        bh=1DVIcTWk8cDkE79S+hn14HeQRHkbq1Nzraaodiv24OU=;
+        b=WDy8yscN4psCawHydMjQYUXFMj640hkPqorqtw2Ml0+G6faFG1v5QhmLMhGXoDs+PA
+         iDt9k7aXdBQRYhWhif89ERdrA7tf/nkVx2OdjdGZKCF89bpKxIhbetVt/y1UmqrJ0FHg
+         3UmGECEJ6ubiJltGIWT5pLgVSkRhJgm2XWf349R1ScdPJCxEvReoyiUKk0AKc8qUvr+V
+         hDqE7obh0pgNzumZWzS/Vx7ZqRQt7IDUBfih4AXHIpDj7rxYrDTOxuYhYq2hbJruKiue
+         Tk6WqanhbINNY8uky5o0nUglq8Ed5N6z1b+5EwyFVZ8YWwBOk2LDXF3dbdLkMxX7nscd
+         GTNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pAmjfZ/qRZAPyOcPXAG/ywCb5OVVlR+UFdolfRENHZY=;
-        b=8EUOSUzgzeQoaJneudsLISOgzjyg/eAfvz6tSb4cxuGfCbxeLvDVm31rhUQ4caKigG
-         06D/cxQcW0fl/j8lmX12NeTfxc+J94OpUxzZCmlR1fmaeSQL0ZilL3Qdt/SoRQKhtMm2
-         Edt4xESi5q78s9k+7Im3o+Xsutu1pGL83YbKbpcjWH2NnwToWN9UkZWwHje5KiO7lKVX
-         y9V2iHnm7SDsMPEEmn24RpyFNqC8kdlR42cn79yiquX40NKPVc6OBqkhBDu2Vkjg17YE
-         mnFX+M2xMN6CXMm430zoDFCMZDHky0Bt+RZdlltO5zDWF17Fe86BAJmEEgW7a9yAHwBH
-         tr2w==
-X-Gm-Message-State: AOAM533mjiAOiK6SLpclMQp8+6Pr8j84KimSzokkLeMcUjGurFgdKbDY
-        PARTL30iBGlDl5+MP0Rwlr7daslG/K4=
-X-Google-Smtp-Source: ABdhPJxR5lO20FTk6IAJDBs+IgZcLaP08RBzCNPskhZ+lmJwdmB0ufKu4OFwecpnX9xgcIv7QOv/rw==
-X-Received: by 2002:a05:6000:1689:b0:20e:6de0:a578 with SMTP id y9-20020a056000168900b0020e6de0a578mr7626481wrd.85.1653072050121;
-        Fri, 20 May 2022 11:40:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j6-20020adfa546000000b0020c635ca28bsm3187112wrb.87.2022.05.20.11.40.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=1DVIcTWk8cDkE79S+hn14HeQRHkbq1Nzraaodiv24OU=;
+        b=h1zac3DqKN3bKeKg6CYvZpe+BAA6j3vKMGCRl1m4UIhNNEOq1v2R8iAxBoH2Q88QjM
+         /r+DK8ivOtYbsZ1aajiR8rT3kPazG8t11WHj37MdPt5/7EPzdFXOSsN7xffN1BKp3Xe+
+         QsNFg6BhOMvpe/mYpY2dkwUFUPJRQzaHp+vQWot9oXKwacBjnSwn+dV22On3QsEbATIq
+         5ayd3w2JxpxCpmbUYumiJ+89xWxCg/+up6ikKgXow7ZBYuPkpDgrFTPASOjB2yiP9Iq0
+         qlvt2kmQpu45a81GRQMhgZ5NkJd+hChZGtFnzr//48tQWCx+IHbBM4sGMFsVJ7YNFhgl
+         SRFg==
+X-Gm-Message-State: AOAM531DuzWV18JEsW5ugUIKI0vxKXjaV2FD7sfw1kIFHQLfH+xkbr0Q
+        LfzhDQ/wOAKu/sWh3XUIT0J3O5bMZTI=
+X-Google-Smtp-Source: ABdhPJwTtpV2I5nleLbB+uxBaLkeQwsw8z3Ffo5Es59jCk/ayKp9xuWDvPGrmAWwZV9G/enT0HjSHg==
+X-Received: by 2002:a5d:4492:0:b0:20d:740:beb9 with SMTP id j18-20020a5d4492000000b0020d0740beb9mr9424252wrq.179.1653072049134;
         Fri, 20 May 2022 11:40:49 -0700 (PDT)
-Message-Id: <c7ec97011e0b2b6a347a144549be93bd78526476.1653072042.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c12-20020adfa70c000000b0020e0b9487besm2977594wrd.109.2022.05.20.11.40.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 May 2022 11:40:48 -0700 (PDT)
+Message-Id: <7bd508d5ebb5433615bee4a6d7777486a38213c4.1653072042.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
 References: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 May 2022 18:40:23 +0000
-Subject: [PATCH 05/24] fetch: add --bundle-uri option
+Date:   Fri, 20 May 2022 18:40:22 +0000
+Subject: [PATCH 04/24] bundle-uri: add support for http(s):// and file://
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,115 +70,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Teach 'git fetch' a new --bundle-uri=<uri> option which changes the mode
-from fetching from a remote using the Git protocol to fetching a bundle
-from the given <uri>. See Documentation/technical/bundle-uri.txt for
-more information on the design of this feature.
-
-This implementation is limited to the most basic version of the feature.
-We expect the content at that URI to be a bundle file, not a bundle
-list. Bundle lists will be implemented later.
-
-This implementation is sufficient for a bundle provider to create a
-single bootstrap bundle for a large repository. The user would bootstrap
-a repository using a sequence of Git commands, such as:
-
- 1. git init <repo> && cd <repo>
- 2. git fetch --bundle-uri=<uri>
- 3. git remote add origin <url>
- 4. git fetch origin
- 5. git checkout FETCH_HEAD
-
-Later changes will make this seamless within a 'git clone' command, but
-this implementation is large enough to delay that integration.
-
-Currently, this option supports URIs using "http(s)://", "file://" or
-simply specifying a filename. Other protocols could be added in the
-future.
-
-RFC TODO: add end-to-end tests of this workflow.
+The previous change created the logic for copying a file by name. Now,
+first inspect the URI for an HTTP(S) prefix and use git-remote-https as
+the way to download the data at that URI. Otherwise, check to see if
+file:// is present and modify the prefix accordingly.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/fetch-options.txt |  5 +++++
- Documentation/git-fetch.txt     |  1 +
- builtin/fetch.c                 | 10 ++++++++++
- 3 files changed, 16 insertions(+)
+ bundle-uri.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 622bd84768b..09bd1feeed8 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -317,3 +317,8 @@ endif::git-pull[]
- -6::
- --ipv6::
- 	Use IPv6 addresses only, ignoring IPv4 addresses.
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 91aba061833..08de7257c74 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -19,10 +19,73 @@ static void find_temp_filename(struct strbuf *name)
+ 	unlink(name->buf);
+ }
+ 
++static int download_https_uri_to_file(const char *uri, const char *file)
++{
++	int result = 0;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	FILE *child_in = NULL, *child_out = NULL;
++	struct strbuf line = STRBUF_INIT;
++	int found_get = 0;
 +
-+--bundle-uri=<uri>::
-+	Instead of fetching from a remote, fetch a bundle from the given
-+	`<uri>` and unbundle the data into the local repository. The refs
-+	in the bundle will be stored under the `refs/bundle/*` namespace.
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index e9d364669af..4fd8911b336 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 'git fetch' [<options>] <group>
- 'git fetch' --multiple [<options>] [(<repository> | <group>)...]
- 'git fetch' --all [<options>]
-+'git fetch' --bundle-uri=<uri> [<options>]
- 
- 
- DESCRIPTION
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e3791f09ed5..cb0d2fbe82c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -29,6 +29,7 @@
- #include "commit-graph.h"
- #include "shallow.h"
- #include "worktree.h"
-+#include "bundle-uri.h"
- 
- #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
- 
-@@ -37,6 +38,7 @@ static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] <group>"),
- 	N_("git fetch --multiple [<options>] [(<repository> | <group>)...]"),
- 	N_("git fetch --all [<options>]"),
-+	N_("git fetch --bundle-uri=<uri> [<options>]"),
- 	NULL
- };
- 
-@@ -86,6 +88,7 @@ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
- static int fetch_write_commit_graph = -1;
- static int stdin_refspecs = 0;
- static int negotiate_only;
-+static const char *bundle_uri;
- 
- static int git_fetch_config(const char *k, const char *v, void *cb)
- {
-@@ -224,6 +227,8 @@ static struct option builtin_fetch_options[] = {
- 		 N_("write the commit-graph after fetching")),
- 	OPT_BOOL(0, "stdin", &stdin_refspecs,
- 		 N_("accept refspecs from stdin")),
-+	OPT_STRING(0, "bundle-uri", &bundle_uri, N_("uri"),
-+		   N_("download bundle data from the given URI instead of from a remote")),
- 	OPT_END()
- };
- 
-@@ -2181,6 +2186,11 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (dry_run)
- 		write_fetch_head = 0;
- 
-+	if (bundle_uri) {
-+		result = fetch_bundle_uri(the_repository, bundle_uri);
++	strvec_pushl(&cp.args, "git-remote-https", "origin", uri, NULL);
++	cp.in = -1;
++	cp.out = -1;
++
++	if (start_command(&cp))
++		return 1;
++
++	child_in = fdopen(cp.in, "w");
++	if (!child_in) {
++		result = 1;
 +		goto cleanup;
 +	}
 +
- 	if (all) {
- 		if (argc == 1)
- 			die(_("fetch --all does not take a repository argument"));
++	child_out = fdopen(cp.out, "r");
++	if (!child_out) {
++		result = 1;
++		goto cleanup;
++	}
++
++	fprintf(child_in, "capabilities\n");
++	fflush(child_in);
++
++	while (!strbuf_getline(&line, child_out)) {
++		if (!line.len)
++			break;
++		if (!strcmp(line.buf, "get"))
++			found_get = 1;
++	}
++	strbuf_release(&line);
++
++	if (!found_get) {
++		result = error(_("insufficient capabilities"));
++		goto cleanup;
++	}
++
++	fprintf(child_in, "get %s %s\n\n", uri, file);
++
++cleanup:
++	if (child_in)
++		fclose(child_in);
++	if (finish_command(&cp))
++		return 1;
++	if (child_out)
++		fclose(child_out);
++	return result;
++}
++
+ static int copy_uri_to_file(const char *uri, const char *file)
+ {
++	const char *out;
++	if (skip_prefix(uri, "https:", &out) ||
++	    skip_prefix(uri, "http:", &out))
++		return download_https_uri_to_file(uri, file);
++
++	if (!skip_prefix(uri, "file://", &out))
++		out = uri;
++
+ 	/* Copy as a file */
+-	return copy_file(uri, file, 0444);
++	return !!copy_file(out, file, 0);
+ }
+ 
+ static int unbundle_from_file(struct repository *r, const char *file)
 -- 
 gitgitgadget
 
