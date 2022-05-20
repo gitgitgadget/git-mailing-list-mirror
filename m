@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B012C433EF
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 23:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54F43C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 23:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354049AbiETXSD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 19:18:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50174 "EHLO
+        id S1353276AbiETXSG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 19:18:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354014AbiETXRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 19:17:53 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B0411A35B5
-        for <git@vger.kernel.org>; Fri, 20 May 2022 16:17:48 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id x7so5667777qta.6
-        for <git@vger.kernel.org>; Fri, 20 May 2022 16:17:48 -0700 (PDT)
+        with ESMTP id S1354041AbiETXRy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 19:17:54 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B69DB1A4907
+        for <git@vger.kernel.org>; Fri, 20 May 2022 16:17:51 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id k2so8899982qtp.1
+        for <git@vger.kernel.org>; Fri, 20 May 2022 16:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=SqASYvmKa442CO3IwI5FZCBpEfKsU3INt4MwBobT+bg=;
-        b=htLC5MA43u28HNR4ohEvDj7hFUmSMVf6ZpuS+mT/qkKifoX2v8nKZmCx6H2d5DAkrR
-         sx55oOPzdJQqxk8l19hRfW6Ny84Xuf1JF45n9obcraHYK7Cimo1eba1hHfoRF2kHA6YO
-         5aX273Xac8vC7KH15h5KtkKFXVSvrEGngi1uU5YPzbik0Qo/d0lVKhPUlV9RXVy4Eatz
-         NjlAjr6FUKyrrgVV6o3bjSX18DtfXxwGGUo6tgX0n2uBYZfWrOTibV3vaQgdhFlJRkqq
-         aC01pv4Tx7E8nWmU0O7re0cnPMgfpGrbcW8vl3K1FjSAscH22yTWgva5k8fm8/VVsiNE
-         TD7A==
+        bh=eGZdPFnS0lM71M7JI9AHcwK6IUXvVZUam/Aut+ZfQZg=;
+        b=yui52nYCeASRK55n8/Y+ShUU406zEwNBpkbkAFlWJV8hQlcLlEmqpmJtgilMLzB2Nd
+         hBaU1Q1/3T6GFbawHLUJdN6aL1jaFoZ29OXU6sWEIwJCz+hNOPNHvFSuiN0p90j/vklP
+         E/gVHObihkY+hfV63Yxhgz/rN3eUZzyBrDz7Ez4+K8V4HsWMF3JZSGB5KADNiCnq/aCy
+         9wJ7voXFyiE0rHv+pUJkB+oy07XpwOr3fgIbd9reGTRL7Qi+VGAa0/sapv2TxIuSavV9
+         GyhIEI1Rpl+xlDNRxh3VTvFXu5MkE5nkNph6iBID565TgxENMLW4xeVz6ElSHU07A1oh
+         PijQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=SqASYvmKa442CO3IwI5FZCBpEfKsU3INt4MwBobT+bg=;
-        b=Mx56ckFwKD7ItZIZIN6GUJ+SduejpSLe3Qg4XoPZ3wc3hKNJaLveT2pMdgXOjQkK6P
-         bj2rSvqrE9mkOhKclc+VZ4iKHe5OP5EjJu7ppeGvoePpw88bZQw2Ul5SqRnfHERzV0iX
-         Br43CBc8yjSW49Vw3TVF0XNB0c4fWnNYfFnC8msCi0Mz9sjaIMwichHrFLBiC6K90CKv
-         +bfhQDo/I4vcneLmtcQvbBGsyHyUF988y3B4QDEno683kDekvvkVheRbP9nOD5Bt4sDT
-         3VOfUUfO6xdKh/rUSyBa0yrztqbv+QEh8FvdrGwrYNZ97T6sXxGjgCT0+RSA/i5lT02l
-         Doaw==
-X-Gm-Message-State: AOAM530chUsevarPjqxbmGF/t6s+xeuBD2TKHdb1VwzCkYvrC3XwMjVB
-        bmNK5LW+mznFZurUtHllTLu73jR6wEMzoVzo
-X-Google-Smtp-Source: ABdhPJyURXU0lq1+2erhYRBtEfpxR/SsNJ8VWqgWo1k2Z2xpbuJ1zJKfmxY2k4YpO9Yhm7UncdN21Q==
-X-Received: by 2002:ac8:5b51:0:b0:2f3:d5a9:fde with SMTP id n17-20020ac85b51000000b002f3d5a90fdemr9467372qtw.60.1653088667967;
-        Fri, 20 May 2022 16:17:47 -0700 (PDT)
+        bh=eGZdPFnS0lM71M7JI9AHcwK6IUXvVZUam/Aut+ZfQZg=;
+        b=yBu7JQdyI7Ial5FEm6BeS6MkMRNfiCPqyT6hp6BfRB6Xn3sDUvo+tTSi8OQ0DyMrOq
+         NSj+4ED36H+V86neNR52UEicsbs1+GCO5T5yJ3rZxz+AqKQfij7y827p144S+nLuFyOJ
+         cP9zJ3YnnXg0qmWMXifgUTXVoxwb9JPvAT9SLFLJFZ5fn+ElZ+cNTwkAtmnB9lcgAr3x
+         IJ/K9d2WZQPMupQI3vQCMTI7kTTGVUKaEv3V4XxFcs+sp0Ee3UkGwqRpPJhTsWmVuIQf
+         fssloN//3homuEzK98LFDMhy7elXAtHyzXHXLoPTl5FObtIh0C6l35enKyRenjJYkMaI
+         Uk3g==
+X-Gm-Message-State: AOAM532ufeh+I0Ft8ZX4E4fEfMShjH/mixKCoHtkU8ZxgzfL+DCpq9+e
+        wR7YrRbwmsc1o6tM9m6L2NvdvU9Ew+6dJy1z
+X-Google-Smtp-Source: ABdhPJz/ARuA1qXIdjoTTWVxcyLYPtVohzPs68ObtZZwiQi61rqFz+CVvXymmSNtUikaU9562AfquQ==
+X-Received: by 2002:a05:622a:493:b0:2f3:e77b:640b with SMTP id p19-20020a05622a049300b002f3e77b640bmr9455784qtx.236.1653088670699;
+        Fri, 20 May 2022 16:17:50 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z18-20020ac87cb2000000b002f39b99f6b6sm424700qtv.80.2022.05.20.16.17.47
+        by smtp.gmail.com with ESMTPSA id cm26-20020a05622a251a00b002f39b99f6a6sm459072qtb.64.2022.05.20.16.17.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 16:17:47 -0700 (PDT)
-Date:   Fri, 20 May 2022 19:17:46 -0400
+        Fri, 20 May 2022 16:17:50 -0700 (PDT)
+Date:   Fri, 20 May 2022 19:17:49 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, derrickstolee@github.com, gitster@pobox.com,
         jrnieder@gmail.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: [PATCH v5 06/17] t/helper: add 'pack-mtimes' test-tool
-Message-ID: <2a6cfb00bf287380f44f324549db274a1b022499.1653088640.git.me@ttaylorr.com>
+Subject: [PATCH v5 07/17] builtin/pack-objects.c: return from
+ create_object_entry()
+Message-ID: <edb6fcd5ec72159f2b1fdef41077a841a89cd6a4.1653088640.git.me@ttaylorr.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1653088640.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -64,119 +65,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the next patch, we will implement and test support for writing a
-cruft pack via a special mode of `git pack-objects`. To make sure that
-objects are written with the correct timestamps, and a new test-tool
-that can dump the object names and corresponding timestamps from a given
-`.mtimes` file.
+A new caller in the next commit will want to immediately modify the
+object_entry structure created by create_object_entry(). Instead of
+forcing that caller to wastefully look-up the entry we just created,
+return it from create_object_entry() instead.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Makefile                    |  1 +
- t/helper/test-pack-mtimes.c | 56 +++++++++++++++++++++++++++++++++++++
- t/helper/test-tool.c        |  1 +
- t/helper/test-tool.h        |  1 +
- 4 files changed, 59 insertions(+)
- create mode 100644 t/helper/test-pack-mtimes.c
+ builtin/pack-objects.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index a299580b7c..0b6eab0453 100644
---- a/Makefile
-+++ b/Makefile
-@@ -738,6 +738,7 @@ TEST_BUILTINS_OBJS += test-oid-array.o
- TEST_BUILTINS_OBJS += test-oidmap.o
- TEST_BUILTINS_OBJS += test-oidtree.o
- TEST_BUILTINS_OBJS += test-online-cpus.o
-+TEST_BUILTINS_OBJS += test-pack-mtimes.o
- TEST_BUILTINS_OBJS += test-parse-options.o
- TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
- TEST_BUILTINS_OBJS += test-partial-clone.o
-diff --git a/t/helper/test-pack-mtimes.c b/t/helper/test-pack-mtimes.c
-new file mode 100644
-index 0000000000..f7b79daf4c
---- /dev/null
-+++ b/t/helper/test-pack-mtimes.c
-@@ -0,0 +1,56 @@
-+#include "git-compat-util.h"
-+#include "test-tool.h"
-+#include "strbuf.h"
-+#include "object-store.h"
-+#include "packfile.h"
-+#include "pack-mtimes.h"
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6ac927047c..c6d16872ee 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1516,13 +1516,13 @@ static int want_object_in_pack(const struct object_id *oid,
+ 	return 1;
+ }
+ 
+-static void create_object_entry(const struct object_id *oid,
+-				enum object_type type,
+-				uint32_t hash,
+-				int exclude,
+-				int no_try_delta,
+-				struct packed_git *found_pack,
+-				off_t found_offset)
++static struct object_entry *create_object_entry(const struct object_id *oid,
++						enum object_type type,
++						uint32_t hash,
++						int exclude,
++						int no_try_delta,
++						struct packed_git *found_pack,
++						off_t found_offset)
+ {
+ 	struct object_entry *entry;
+ 
+@@ -1539,6 +1539,8 @@ static void create_object_entry(const struct object_id *oid,
+ 	}
+ 
+ 	entry->no_try_delta = no_try_delta;
 +
-+static void dump_mtimes(struct packed_git *p)
-+{
-+	uint32_t i;
-+	if (load_pack_mtimes(p) < 0)
-+		die("could not load pack .mtimes");
-+
-+	for (i = 0; i < p->num_objects; i++) {
-+		struct object_id oid;
-+		if (nth_packed_object_id(&oid, p, i) < 0)
-+			die("could not load object id at position %"PRIu32, i);
-+
-+		printf("%s %"PRIu32"\n",
-+		       oid_to_hex(&oid), nth_packed_mtime(p, i));
-+	}
-+}
-+
-+static const char *pack_mtimes_usage = "\n"
-+"  test-tool pack-mtimes <pack-name.mtimes>";
-+
-+int cmd__pack_mtimes(int argc, const char **argv)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct packed_git *p;
-+
-+	setup_git_directory();
-+
-+	if (argc != 2)
-+		usage(pack_mtimes_usage);
-+
-+	for (p = get_all_packs(the_repository); p; p = p->next) {
-+		strbuf_addstr(&buf, basename(p->pack_name));
-+		strbuf_strip_suffix(&buf, ".pack");
-+		strbuf_addstr(&buf, ".mtimes");
-+
-+		if (!strcmp(buf.buf, argv[1]))
-+			break;
-+
-+		strbuf_reset(&buf);
-+	}
-+
-+	strbuf_release(&buf);
-+
-+	if (!p)
-+		die("could not find pack '%s'", argv[1]);
-+
-+	dump_mtimes(p);
-+
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 0424f7adf5..d2eacd302d 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -48,6 +48,7 @@ static struct test_cmd cmds[] = {
- 	{ "oidmap", cmd__oidmap },
- 	{ "oidtree", cmd__oidtree },
- 	{ "online-cpus", cmd__online_cpus },
-+	{ "pack-mtimes", cmd__pack_mtimes },
- 	{ "parse-options", cmd__parse_options },
- 	{ "parse-pathspec-file", cmd__parse_pathspec_file },
- 	{ "partial-clone", cmd__partial_clone },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index c876e8246f..960cc27ef7 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -38,6 +38,7 @@ int cmd__mktemp(int argc, const char **argv);
- int cmd__oidmap(int argc, const char **argv);
- int cmd__oidtree(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
-+int cmd__pack_mtimes(int argc, const char **argv);
- int cmd__parse_options(int argc, const char **argv);
- int cmd__parse_pathspec_file(int argc, const char** argv);
- int cmd__partial_clone(int argc, const char **argv);
++	return entry;
+ }
+ 
+ static const char no_closure_warning[] = N_(
 -- 
 2.36.1.94.gb0d54bedca
 
