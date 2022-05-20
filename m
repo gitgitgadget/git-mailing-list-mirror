@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 493C9C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AC24C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:42:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353074AbiETSmP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 14:42:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37948 "EHLO
+        id S1353022AbiETSmT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 14:42:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353022AbiETSlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1353019AbiETSlJ (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 20 May 2022 14:41:09 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6E63237FD
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:06 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id n6so4996539wms.0
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:06 -0700 (PDT)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7929833EA7
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:05 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id u27so11807740wru.8
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=x+TY/9N2d674JRCaLR7HnPUQUg+jdft8S9Jv0um4vuM=;
-        b=fytmzWb9EmP95sAl6OQBcfQuWeHO7Fwd66LNb+29JrWw12OknjgM46zqDF4qmaj5iT
-         9xcvLA1MD1a0KbLG7F04sC2KZ0nzGDoOH5ZkcoNngKzrt77IlPKlEjaLcGbSrz+lz+R1
-         nI9uDN/7v3CgoK1TDfFBbWU6/kDIGy4duny8Fh/Hzq/2i+GEsGbZi0yuBQ9yT+AvsO8d
-         J7zuElTFohpz8e98DrGQLYJ5qpY5a1USf9bHCith2VdbTQpshXTxFe7r0DM9J7sWQC2+
-         D0C+CtqexK2TKOFpVHK+njzwl4sDV4wgnrdkVlLjHKcCjcIepSwtcdv1YFkLKhRMwAkI
-         FEgw==
+        bh=WD+ZuMC5e0h+ITqwsZQZuyHZ7Z+8n4b882PrVYoujLE=;
+        b=A/lrYYao8BN+dRfRDKqyHaRETLFSnFKt4Wx5Fm21w+1X84i8+4QgNFiJSUR56MkCs9
+         DgJP9glZ43a82BncCsrN2ecZ/juWce+aWDEFNoi3YOUHuwz9P9ExPW5lPUq4JE446t0p
+         +Glcou5ULgfn20efDx0A8dHEzZVWoepluLxITkgV5PdTbLeX6JHDYW2bZtp1RP/Epbny
+         WpTB/VkTS/V1i4SZqv44vYvrcKAC4SfPU1BU4KIlTbMJpWVFcF23fRV/NWx7Jn3DfpLt
+         19d70jDBFZGKfxl3oGlfGUAXhbvcZDggRdriyF9JCCkwdp57jT+kXGVJlsbm/nZmbrt5
+         pUCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=x+TY/9N2d674JRCaLR7HnPUQUg+jdft8S9Jv0um4vuM=;
-        b=kQYGeFxlukubLE5FUT+ZjvX3mqWeoiGUhUMcxJSpaUPGHUqWMuBtsQV1OQpRwpBGiw
-         MqyE30Q2VFGidAYKV9vEFLc5LyDpdBRqBMO1yLwEKJr+hDQ/dZyJ5hbV1qs0DfUBOqtd
-         dfGYT0DFPitfU9OrJCOM3CIPEYm8JhXb5O/VquMdZF5V5lFq3HRMvHG9oHTLKK7V86mM
-         /Y/2PRTbBIaXv9zPPeV5vxz6FK3gTy/zbbHiBJ4nv8sPG2vmphZv58YvoKOKJQtOk9wk
-         OfhSlRR8uGG2fojtA73IwKe3Gp5jCR54As4W8ioFJhGLjfLDD2eZFLlS/4RCxtHTbhvI
-         O2vw==
-X-Gm-Message-State: AOAM533dfIaxh/Ijj6rRw3ImHcm24F9kUDQC+EYeTp8BiM1X0OOCHEjN
-        gU3ZLMFiIaANroln6EDwLAjXaRjws6U=
-X-Google-Smtp-Source: ABdhPJx8sX+Z4w2ZYu3ykaTzYCX+kIQtiFl49wN47YFGWSAFA7OxMg4q9eYcaz5yZaHl4vv29TCw2A==
-X-Received: by 2002:a05:600c:4f95:b0:394:8919:7557 with SMTP id n21-20020a05600c4f9500b0039489197557mr9583277wmq.166.1653072064693;
-        Fri, 20 May 2022 11:41:04 -0700 (PDT)
+        bh=WD+ZuMC5e0h+ITqwsZQZuyHZ7Z+8n4b882PrVYoujLE=;
+        b=ewqpdcoVEBHpyYgoZjGIoY4HmEYr0U+uWcLRJT62YNPi+ddEZtUbA760E+7qRve+DM
+         oyXSPq6axT5/jG/CzJqSJD8fhlnc51VxiHTyVXU2JFuCb0Kd/X3BXqsyoYMRjPk0KYpz
+         SbL81gYxoavVarf4H442zrx0CBYiytsBIpjv8EsV3FI5DpjDOFwl19SUx+ZY+A0eQSAB
+         vHz8wtnh+firMlQ4PqN8ipHxMyhkVVaQRUAifeV64Ml3AgLUo0PvPyRpXvGywTp5YaYX
+         m/FjbcEG5isdgXvkhJyZiWvdLaFe62smD/bJNexpNw3nLNJ/8mKwM37E+gX3npcz6EQ3
+         rwJg==
+X-Gm-Message-State: AOAM532cuRpSVPCUYSWs1Ui8urCVABNCWSoH9K+F2zdxmC2/nDri1lJS
+        A3k7/FdFblCVUhCGbTxFawYx0DuBoFI=
+X-Google-Smtp-Source: ABdhPJweyRUFn7cft7S5/OHK3DpkfMrWgxVq6j0SvU2+OX0gTYBaYx8yYlXO7bUZ7gTcPrYSiWrwKw==
+X-Received: by 2002:a05:6000:1869:b0:20f:c1a4:111 with SMTP id d9-20020a056000186900b0020fc1a40111mr2282213wri.261.1653072063522;
+        Fri, 20 May 2022 11:41:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m6-20020adfa3c6000000b0020fc4cd81f6sm279895wrb.60.2022.05.20.11.41.03
+        by smtp.gmail.com with ESMTPSA id r4-20020adfbb04000000b0020fbf62db96sm2405147wrg.36.2022.05.20.11.41.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 11:41:04 -0700 (PDT)
-Message-Id: <f14144ffada7bc426ca33d07b810b3ebfbde9fb2.1653072042.git.gitgitgadget@gmail.com>
+        Fri, 20 May 2022 11:41:03 -0700 (PDT)
+Message-Id: <1830d193b116b00dd1b484852385062ac92a451c.1653072042.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
 References: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 20 May 2022 18:40:36 +0000
-Subject: [PATCH 18/24] bundle-uri client: add "git ls-remote-bundle-uri"
+Date:   Fri, 20 May 2022 18:40:35 +0000
+Subject: [PATCH 17/24] bundle-uri client: add minimal NOOP client
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,481 +73,539 @@ X-Mailing-List: git@vger.kernel.org
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
  <avarab@gmail.com>
 
-TODO: make this a test-helper instead of its own builtin?
+Set up all the needed client parts of the "bundle-uri" protocol
+extension, without actually doing anything with the bundle URIs.
 
-Add a git-ls-remote-bundle-uri command, this is a thin wrapper for
-issuing protocol v2 "bundle-uri" commands to a server, and to the
-parsing routines in bundle-uri.c.
+I.e. if the server says it supports "bundle-uri" we'll issue a
+command=bundle-uri after command=ls-refs when we're cloning. We'll
+parse the returned output using the code already tested for in
+t5750-bundle-uri-parse.sh.
 
-Since in the "git clone" case we'll have already done the handshake(),
-but not here, introduce a "got_advertisement" state along with
-"got_remote_heads". It seems to me that the "got_remote_heads" is
-badly named in the first place, and the whole logic of eagerly getting
-ls-refs on handshake() or not could be refactored somewhat, but let's
-not do that now, and instead just add another self-documenting state
-variable.
+What we aren't doing is actually acting on that data, i.e. downloading
+the bundle(s) before we get to doing the command=fetch, and adjusting
+our negotiation dialog appropriately. I'll do that in subsequent
+commits.
 
+There's a question of what level of encapsulation we should use here,
+I've opted to use connect.h in clone.c, but we could also e.g. make
+transport_get_remote_refs() invoke this, i.e. make it implicitly get
+the bundle-uri list for later steps.
+
+This approach means that we don't "support" this in "git fetch" for
+now. I'm starting with the case of initial clones, although as noted
+in preceding commits to the protocol documentation nothing about this
+approach precludes getting bundles on incremental fetches.
+
+For the t5732-protocol-v2-bundle-uri-http.sh it's not easy to set
+environment variables for git-upload-pack (it's started by Apache), so
+let's skip the test under T5730_HTTP, and add unused T5730_{FILE,GIT}
+prerequisites for consistency and future use.
+
+Co-authored-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- .gitignore                                 |   1 +
- Documentation/git-ls-remote-bundle-uri.txt |  62 +++++++++
- Documentation/git-ls-remote.txt            |   1 +
- Makefile                                   |   1 +
- builtin.h                                  |   1 +
- builtin/clone.c                            |   2 +-
- builtin/ls-remote-bundle-uri.c             |  71 ++++++++++
- command-list.txt                           |   1 +
- git.c                                      |   1 +
- t/lib-t5730-protocol-v2-bundle-uri.sh      | 147 ++++++++++++++++++++-
- transport.c                                |  43 ++++--
- transport.h                                |   6 +-
- 12 files changed, 324 insertions(+), 13 deletions(-)
- create mode 100644 Documentation/git-ls-remote-bundle-uri.txt
- create mode 100644 builtin/ls-remote-bundle-uri.c
+ builtin/clone.c                        |   7 ++
+ bundle-uri.c                           |   4 +
+ connect.c                              |  47 ++++++++
+ remote.h                               |   5 +
+ t/lib-t5730-protocol-v2-bundle-uri.sh  | 148 +++++++++++++++++++++++++
+ t/t5730-protocol-v2-bundle-uri-file.sh |  36 ++++++
+ t/t5731-protocol-v2-bundle-uri-git.sh  |  17 +++
+ t/t5732-protocol-v2-bundle-uri-http.sh |  17 +++
+ transport-helper.c                     |  13 +++
+ transport-internal.h                   |   7 ++
+ transport.c                            |  55 +++++++++
+ transport.h                            |  19 ++++
+ 12 files changed, 375 insertions(+)
+ create mode 100644 t/lib-t5730-protocol-v2-bundle-uri.sh
+ create mode 100755 t/t5730-protocol-v2-bundle-uri-file.sh
+ create mode 100755 t/t5731-protocol-v2-bundle-uri-git.sh
+ create mode 100755 t/t5732-protocol-v2-bundle-uri-http.sh
 
-diff --git a/.gitignore b/.gitignore
-index e81de1063a4..e1312b2795c 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -91,6 +91,7 @@
- /git-log
- /git-ls-files
- /git-ls-remote
-+/git-ls-remote-bundle-uri
- /git-ls-tree
- /git-mailinfo
- /git-mailsplit
-diff --git a/Documentation/git-ls-remote-bundle-uri.txt b/Documentation/git-ls-remote-bundle-uri.txt
-new file mode 100644
-index 00000000000..793d7677f2f
---- /dev/null
-+++ b/Documentation/git-ls-remote-bundle-uri.txt
-@@ -0,0 +1,62 @@
-+git-ls-remote-bundle-uri(1)
-+===========================
-+
-+NAME
-+----
-+git-ls-remote-bundle-uri - List 'bundle-uri' in a remote repository
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git ls-remote-bundle-uri' [-q |--quiet] [--uri] [--upload-pack=<exec>]
-+			 [[-o | --server-option=]<option>] <repository>
-+
-+
-+DESCRIPTION
-+-----------
-+
-+Displays the `bundle-uri`s advertised by a remote repository. See
-+`bundle-uri` in link:technical/protocol-v2.html[the Git Wire Protocol,
-+Version 2] documentation for what the output format looks like.
-+
-+OPTIONS
-+-------
-+
-+-q::
-+--quiet::
-+	Do not print remote URL to stderr in cases where the remote
-+	name is inferred from config.
-++
-+When the remote name is not inferred (e.g. `git ls-remote-bundle-uri
-+origin`, or `git ls-remote-bundle-uri https://[...]`) the remote URL
-+is not printed in any case.
-+
-+--uri::
-+	Print only the URIs, and not any of their optional attributes.
-+
-+--upload-pack=<exec>::
-+	Specify the full path of 'git-upload-pack' on the remote
-+	host. This allows listing references from repositories accessed via
-+	SSH and where the SSH daemon does not use the PATH configured by the
-+	user.
-+
-+-o <option>::
-+--server-option=<option>::
-+	Transmit the given string to the server when communicating using
-+	protocol version 2.  The given string must not contain a NUL or LF
-+	character.
-+	When multiple `--server-option=<option>` are given, they are all
-+	sent to the other side in the order listed on the command line.
-+
-+<repository>::
-+	The "remote" repository to query.  This parameter can be
-+	either a URL or the name of a remote (see the GIT URLS and
-+	REMOTES sections of linkgit:git-fetch[1]).
-+
-+SEE ALSO
-+--------
-+linkgit:git-ls-remote[1].
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 492e573856f..86c07eff832 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -114,6 +114,7 @@ c5db5456ae3b0873fc659c19fafdde22313cc441	refs/tags/v0.99.2
- 
- SEE ALSO
- --------
-+linkgit:git-ls-remote-bundle-uri[1].
- linkgit:git-check-ref-format[1].
- 
- GIT
-diff --git a/Makefile b/Makefile
-index c8a14793005..badb87bed78 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1161,6 +1161,7 @@ BUILTIN_OBJS += builtin/init-db.o
- BUILTIN_OBJS += builtin/interpret-trailers.o
- BUILTIN_OBJS += builtin/log.o
- BUILTIN_OBJS += builtin/ls-files.o
-+BUILTIN_OBJS += builtin/ls-remote-bundle-uri.o
- BUILTIN_OBJS += builtin/ls-remote.o
- BUILTIN_OBJS += builtin/ls-tree.o
- BUILTIN_OBJS += builtin/mailinfo.o
-diff --git a/builtin.h b/builtin.h
-index 40e9ecc8485..c80bec94abe 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -173,6 +173,7 @@ int cmd_log(int argc, const char **argv, const char *prefix);
- int cmd_log_reflog(int argc, const char **argv, const char *prefix);
- int cmd_ls_files(int argc, const char **argv, const char *prefix);
- int cmd_ls_tree(int argc, const char **argv, const char *prefix);
-+int cmd_ls_remote_bundle_uri(int argc, const char **argv, const char *prefix);
- int cmd_ls_remote(int argc, const char **argv, const char *prefix);
- int cmd_mailinfo(int argc, const char **argv, const char *prefix);
- int cmd_mailsplit(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 7bedd9eb29e..ca2291552f7 100644
+index a9caa5dfed6..7bedd9eb29e 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -1267,7 +1267,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	 * Populate transport->got_remote_bundle_uri and
- 	 * transport->bundle_uri. We might get nothing.
- 	 */
--	transport_get_remote_bundle_uri(transport);
-+	transport_get_remote_bundle_uri(transport, 1);
+@@ -27,6 +27,7 @@
+ #include "iterator.h"
+ #include "sigchain.h"
+ #include "branch.h"
++#include "connect.h"
+ #include "remote.h"
+ #include "run-command.h"
+ #include "connected.h"
+@@ -1262,6 +1263,12 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (refs)
+ 		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
  
++	/*
++	 * Populate transport->got_remote_bundle_uri and
++	 * transport->bundle_uri. We might get nothing.
++	 */
++	transport_get_remote_bundle_uri(transport);
++
  	if (mapped_refs) {
  		int hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
-diff --git a/builtin/ls-remote-bundle-uri.c b/builtin/ls-remote-bundle-uri.c
-new file mode 100644
-index 00000000000..dbd499d369e
---- /dev/null
-+++ b/builtin/ls-remote-bundle-uri.c
-@@ -0,0 +1,71 @@
-+#include "builtin.h"
-+#include "cache.h"
+ 
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 79a6b7ed8b8..fed508cd51a 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -565,6 +565,10 @@ static int advertise_bundle_uri = -1;
+ 
+ int bundle_uri_advertise(struct repository *r, struct strbuf *value)
+ {
++	if (value &&
++	    git_env_bool("GIT_TEST_BUNDLE_URI_UNKNOWN_CAPABILITY_VALUE", 0))
++		strbuf_addstr(value, "test-unknown-capability-value");
++
+ 	if (advertise_bundle_uri != -1)
+ 		goto cached;
+ 
+diff --git a/connect.c b/connect.c
+index e6d0b1d34bd..00dd00cfa44 100644
+--- a/connect.c
++++ b/connect.c
+@@ -15,6 +15,7 @@
+ #include "version.h"
+ #include "protocol.h"
+ #include "alias.h"
 +#include "bundle-uri.h"
-+#include "transport.h"
-+#include "ref-filter.h"
-+#include "remote.h"
-+#include "refs.h"
-+
-+static const char * const ls_remote_bundle_uri_usage[] = {
-+	N_("git ls-remote-bundle-uri <repository>"),
-+	NULL
-+};
-+
-+int cmd_ls_remote_bundle_uri(int argc, const char **argv, const char *prefix)
+ 
+ static char *server_capabilities_v1;
+ static struct strvec server_capabilities_v2 = STRVEC_INIT;
+@@ -491,6 +492,52 @@ static void send_capabilities(int fd_out, struct packet_reader *reader)
+ 	}
+ }
+ 
++int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
++			  struct bundle_list *bundles, int stateless_rpc)
 +{
-+	int quiet = 0;
-+	int uri = 0;
-+	const char *uploadpack = NULL;
-+	struct string_list server_options = STRING_LIST_INIT_DUP;
-+	struct option options[] = {
-+		OPT__QUIET(&quiet, N_("do not print remote URL")),
-+		OPT_BOOL(0, "uri", &uri, N_("limit to showing uri field")),
-+		OPT_STRING(0, "upload-pack", &uploadpack, N_("exec"),
-+			   N_("path of git-upload-pack on the remote host")),
-+		OPT_STRING_LIST('o', "server-option", &server_options,
-+				N_("server-specific"),
-+				N_("option to transmit")),
-+		OPT_END()
-+	};
-+	const char *dest = NULL;
-+	struct remote *remote;
-+	struct transport *transport;
-+	int status = 0;
++	int line_nr = 1;
 +
-+	argc = parse_options(argc, argv, prefix, options, ls_remote_bundle_uri_usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION);
-+	dest = argv[0];
++	/* Assert bundle-uri support */
++	server_supports_v2("bundle-uri", 1);
 +
-+	packet_trace_identity("ls-remote-bundle-uri");
++	/* (Re-)send capabilities */
++	send_capabilities(fd_out, reader);
 +
-+	remote = remote_get(dest);
-+	if (!remote) {
-+		if (dest)
-+			die(_("bad repository '%s'"), dest);
-+		die(_("no remote configured to get bundle URIs from"));
-+	}
-+	if (!remote->url_nr)
-+		die(_("remote '%s' has no configured URL"), dest);
++	/* Send command */
++	packet_write_fmt(fd_out, "command=bundle-uri\n");
++	packet_delim(fd_out);
 +
-+	transport = transport_get(remote, NULL);
-+	if (uploadpack)
-+		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
-+	if (server_options.nr)
-+		transport->server_options = &server_options;
++	/* Send options */
++	if (git_env_bool("GIT_TEST_PROTOCOL_BAD_BUNDLE_URI", 0))
++		packet_write_fmt(fd_out, "test-bad-client\n");
++	packet_flush(fd_out);
 +
-+	if (!dest && !quiet)
-+		fprintf(stderr, "From %s\n", *remote->url);
++	/* Process response from server */
++	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
++		const char *line = reader->line;
++		line_nr++;
 +
-+	if (transport_get_remote_bundle_uri(transport, 0) < 0) {
-+		error(_("could not get the bundle-uri list"));
-+		status = 1;
-+		goto cleanup;
++		if (!bundle_uri_parse_line(bundles, line))
++			continue;
++
++		return error(_("error on bundle-uri response line %d: %s"),
++			     line_nr, line);
 +	}
 +
-+	print_bundle_list(stdout, transport->bundles);
++	if (reader->status != PACKET_READ_FLUSH)
++		return error(_("expected flush after bundle-uri listing"));
 +
-+cleanup:
-+	if (transport_disconnect(transport))
-+		return 1;
-+	return status;
++	/*
++	 * Might die(), but obscure enough that that's OK, e.g. in
++	 * serve.c we'll call BUG() on its equivalent (the
++	 * PACKET_READ_RESPONSE_END check).
++	 */
++	check_stateless_delimiter(stateless_rpc, reader,
++				  _("expected response end packet after ref listing"));
++
++	return 0;
 +}
-diff --git a/command-list.txt b/command-list.txt
-index 9bd6f3c48f4..a50eebd4aa2 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -115,6 +115,7 @@ git-interpret-trailers                  purehelpers
- git-log                                 mainporcelain           info
- git-ls-files                            plumbinginterrogators
- git-ls-remote                           plumbinginterrogators
-+git-ls-remote-bundle-uri                plumbinginterrogators
- git-ls-tree                             plumbinginterrogators
- git-mailinfo                            purehelpers
- git-mailsplit                           purehelpers
-diff --git a/git.c b/git.c
-index 3d8e48cf555..352e76cedaf 100644
---- a/git.c
-+++ b/git.c
-@@ -551,6 +551,7 @@ static struct cmd_struct commands[] = {
- 	{ "log", cmd_log, RUN_SETUP },
- 	{ "ls-files", cmd_ls_files, RUN_SETUP },
- 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
-+	{ "ls-remote-bundle-uri", cmd_ls_remote_bundle_uri, RUN_SETUP_GENTLY },
- 	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
- 	{ "mailinfo", cmd_mailinfo, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "mailsplit", cmd_mailsplit, NO_PARSEOPT },
++
+ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 			     struct ref **list, int for_push,
+ 			     struct transport_ls_refs_options *transport_options,
+diff --git a/remote.h b/remote.h
+index dd4402436f1..5f743438cd4 100644
+--- a/remote.h
++++ b/remote.h
+@@ -236,6 +236,11 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 			     const struct string_list *server_options,
+ 			     int stateless_rpc);
+ 
++/* Used for protocol v2 in order to retrieve refs from a remote */
++struct bundle_list;
++int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
++			  struct bundle_list *bundles, int stateless_rpc);
++
+ int resolve_remote_symref(struct ref *ref, struct ref *list);
+ 
+ /*
 diff --git a/t/lib-t5730-protocol-v2-bundle-uri.sh b/t/lib-t5730-protocol-v2-bundle-uri.sh
-index 27294e9c976..23f2de0d9d7 100644
---- a/t/lib-t5730-protocol-v2-bundle-uri.sh
+new file mode 100644
+index 00000000000..27294e9c976
+--- /dev/null
 +++ b/t/lib-t5730-protocol-v2-bundle-uri.sh
-@@ -34,7 +34,9 @@ esac
- test_expect_success "setup protocol v2 $T5730_PROTOCOL:// tests" '
- 	git init "$T5730_PARENT" &&
- 	test_commit -C "$T5730_PARENT" one &&
--	git -C "$T5730_PARENT" config uploadpack.advertiseBundleURIs true
-+	git -C "$T5730_PARENT" config uploadpack.advertiseBundleURIs true &&
-+	git -C "$T5730_PARENT" config bundle.list.version 1 &&
-+	git -C "$T5730_PARENT" config bundle.list.mode all
- '
- 
- # Poor man's URI escaping. Good enough for the test suite whose trash
-@@ -94,7 +96,7 @@ test_expect_success "connect with $T5730_PROTOCOL:// using protocol v2: have bun
- test_expect_success !T5730_HTTP "bad client with $T5730_PROTOCOL:// using protocol v2" '
- 	test_when_finished "rm -f log" &&
- 
--	test_config -C "$T5730_PARENT" uploadpack.bundleURI \
-+	test_config -C "$T5730_PARENT" bundle.only.uri \
- 		"$T5730_BUNDLE_URI_ESCAPED" &&
- 
- 	cat >err.expect <<-\EOF &&
-@@ -146,3 +148,144 @@ test_expect_success !T5730_HTTP "bad client with $T5730_PROTOCOL:// using protoc
- 	grep "clone> test-bad-client$" log >sent-bad-request &&
- 	test_file_not_empty sent-bad-request
- '
+@@ -0,0 +1,148 @@
++# Included from t573*-protocol-v2-bundle-uri-*.sh
 +
-+test_expect_success "ls-remote-bundle-uri with $T5730_PROTOCOL:// using protocol v2" '
++T5730_PARENT=
++T5730_URI=
++T5730_BUNDLE_URI=
++case "$T5730_PROTOCOL" in
++file)
++	T5730_PARENT=file_parent
++	T5730_URI="file://$PWD/file_parent"
++	T5730_BUNDLE_URI="$T5730_URI/fake.bdl"
++	test_set_prereq T5730_FILE
++	;;
++git)
++	. "$TEST_DIRECTORY"/lib-git-daemon.sh
++	start_git_daemon --export-all --enable=receive-pack
++	T5730_PARENT="$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent"
++	T5730_URI="$GIT_DAEMON_URL/parent"
++	T5730_BUNDLE_URI="https://example.com/fake.bdl"
++	test_set_prereq T5730_GIT
++	;;
++http)
++	. "$TEST_DIRECTORY"/lib-httpd.sh
++	start_httpd
++	T5730_PARENT="$HTTPD_DOCUMENT_ROOT_PATH/http_parent"
++	T5730_URI="$HTTPD_URL/smart/http_parent"
++	T5730_BUNDLE_URI="https://example.com/fake.bdl"
++	test_set_prereq T5730_HTTP
++	;;
++*)
++	BUG "Need to pass valid T5730_PROTOCOL (was $T5730_PROTOCOL)"
++	;;
++esac
++
++test_expect_success "setup protocol v2 $T5730_PROTOCOL:// tests" '
++	git init "$T5730_PARENT" &&
++	test_commit -C "$T5730_PARENT" one &&
++	git -C "$T5730_PARENT" config uploadpack.advertiseBundleURIs true
++'
++
++# Poor man's URI escaping. Good enough for the test suite whose trash
++# directory has a space in it. See 93c3fcbe4d4 (git-svn: attempt to
++# mimic SVN 1.7 URL canonicalization, 2012-07-28) for prior art.
++test_uri_escape() {
++	sed 's/ /%20/g'
++}
++
++case "$T5730_PROTOCOL" in
++http)
++	test_expect_success "setup config for $T5730_PROTOCOL:// tests" '
++		git -C "$T5730_PARENT" config http.receivepack true
++	'
++	;;
++*)
++	;;
++esac
++T5730_BUNDLE_URI_ESCAPED=$(echo "$T5730_BUNDLE_URI" | test_uri_escape)
++
++test_expect_success "connect with $T5730_PROTOCOL:// using protocol v2: no bundle-uri" '
 +	test_when_finished "rm -f log" &&
++	test_when_finished "git -C \"$T5730_PARENT\" config uploadpack.advertiseBundleURIs true" &&
++	git -C "$T5730_PARENT" config uploadpack.advertiseBundleURIs false &&
 +
-+	test_config -C "$T5730_PARENT" bundle.only.uri \
-+		"$T5730_BUNDLE_URI_ESCAPED" &&
-+
-+	# All data about bundle URIs
-+	cat >expect <<-EOF &&
-+	[bundle "list"]
-+		version = 1
-+		mode = all
-+	[bundle "only"]
-+		uri = $T5730_BUNDLE_URI_ESCAPED
-+	EOF
 +	GIT_TRACE_PACKET="$PWD/log" \
 +	git \
 +		-c protocol.version=2 \
-+		ls-remote-bundle-uri \
-+		"$T5730_URI" \
-+		>actual &&
-+	test_cmp_config_output expect actual &&
++		ls-remote --symref "$T5730_URI" \
++		>actual 2>err &&
 +
-+	# Only the URIs
-+	git \
-+		-c protocol.version=2 \
-+		ls-remote-bundle-uri --uri \
-+		"$T5730_URI" \
-+		>actual2 &&
-+	test_cmp actual actual2
++	# Server responded using protocol v2
++	grep "< version 2" log &&
++
++	! grep bundle-uri log
 +'
 +
-+test_expect_success "ls-remote-bundle-uri with $T5730_PROTOCOL:// using protocol v2" '
++test_expect_success "connect with $T5730_PROTOCOL:// using protocol v2: have bundle-uri" '
 +	test_when_finished "rm -f log" &&
 +
-+	test_config -C "$T5730_PARENT" bundle.only.uri \
-+		"$T5730_BUNDLE_URI_ESCAPED" &&
++	test_config -C "$T5730_PARENT" \
++		uploadpack.bundleURI "$T5730_BUNDLE_URI_ESCAPED" &&
 +
-+	# Extra data should be ignored
-+	test_config -C "$T5730_PARENT" bundle.only.extra bogus &&
-+
-+	# All data about bundle URIs
-+	cat >expect <<-EOF &&
-+	[bundle "list"]
-+		version = 1
-+		mode = all
-+	[bundle "only"]
-+		uri = $T5730_BUNDLE_URI_ESCAPED
-+	EOF
 +	GIT_TRACE_PACKET="$PWD/log" \
 +	git \
 +		-c protocol.version=2 \
-+		ls-remote-bundle-uri \
-+		"$T5730_URI" \
-+		>actual &&
-+	test_cmp_config_output expect actual
++		ls-remote --symref "$T5730_URI" \
++		>actual 2>err &&
++
++	# Server responded using protocol v2
++	grep "< version 2" log &&
++
++	# Server advertised bundle-uri capability
++	grep bundle-uri log
 +'
 +
-+test_expect_success "ls-remote-bundle-uri with $T5730_PROTOCOL:// using protocol v2: --uri" '
++test_expect_success !T5730_HTTP "bad client with $T5730_PROTOCOL:// using protocol v2" '
 +	test_when_finished "rm -f log" &&
 +
-+	test_config -C "$T5730_PARENT" bundle.only.uri \
++	test_config -C "$T5730_PARENT" uploadpack.bundleURI \
 +		"$T5730_BUNDLE_URI_ESCAPED" &&
 +
-+	# All data about bundle URIs
-+	cat >expect <<-EOF &&
-+	[bundle "list"]
-+		version = 1
-+		mode = all
-+	[bundle "only"]
-+		uri = $T5730_BUNDLE_URI_ESCAPED
++	cat >err.expect <<-\EOF &&
++	Cloning into '"'"'child'"'"'...
 +	EOF
-+	GIT_TRACE_PACKET="$PWD/log" \
-+	git \
-+		-c protocol.version=2 \
-+		ls-remote-bundle-uri \
-+		--uri \
-+		"$T5730_URI" \
-+		>actual &&
-+	test_cmp_config_output expect actual
-+'
++	case "$T5730_PROTOCOL" in
++	file)
++		cat >fatal-bundle-uri.expect <<-\EOF
++		fatal: bundle-uri: unexpected argument: '"'"'test-bad-client'"'"'
++		EOF
++		;;
++	*)
++		cat >fatal.expect <<-\EOF
++		fatal: read error: Connection reset by peer
++		EOF
++		;;
++	esac &&
 +
-+test_expect_success "ls-remote-bundle-uri --[no-]quiet with $T5730_PROTOCOL:// using protocol v2" '
-+	test_when_finished "rm -f log" &&
 +	test_when_finished "rm -rf child" &&
-+	env GIT_TRACE_PACKET="$PWD/log" \
-+	git \
-+		-c protocol.version=2 \
-+		 clone "$T5730_URI" child &&
++	test_must_fail ok=sigpipe env \
++		GIT_TRACE_PACKET="$PWD/log" \
++		GIT_TEST_PROTOCOL_BAD_BUNDLE_URI=true \
++		git -c protocol.version=2 \
++		clone "$T5730_URI" child \
++		>out 2>err &&
++	test_must_be_empty out &&
 +
-+	test_config -C "$T5730_PARENT" bundle.only.uri \
-+		"$T5730_BUNDLE_URI_ESCAPED" &&
-+
-+	# Without --[no-]quiet
-+	cat >out.expect <<-EOF &&
-+	[bundle "list"]
-+		version = 1
-+		mode = all
-+	[bundle "only"]
-+		uri = $T5730_BUNDLE_URI_ESCAPED
-+	EOF
-+	cat >err.expect <<-EOF &&
-+	From $T5730_URI
-+	EOF
-+	git \
-+		-C child \
-+		 -c protocol.version=2 \
-+		ls-remote-bundle-uri \
-+		>out.actual 2>err.actual &&
++	grep -v -e ^fatal: -e ^error: err >err.actual &&
 +	test_cmp err.expect err.actual &&
-+	test_cmp_config_output out.expect out.actual &&
 +
-+	# --no-quiet is the default
-+	git \
-+		-C child \
-+		-c protocol.version=2 \
-+		ls-remote-bundle-uri \
-+		--no-quiet \
-+		>out.actual 2>err.actual &&
-+	test_cmp err.expect err.actual &&
-+	test_cmp_config_output out.expect out.actual &&
++	case "$T5730_PROTOCOL" in
++	file)
++		# Due to general race conditions with client/server replies we
++		# may or may not get "fatal: the remote end hung up
++		# expectedly" here
++		grep "^fatal: bundle-uri:" err >fatal-bundle-uri.actual &&
++		test_cmp fatal-bundle-uri.expect fatal-bundle-uri.actual
++		;;
++	*)
++		grep "^fatal:" err >fatal.actual &&
++		# Due to the same race conditions this might be
++		# "fatal: read error: Connection reset by peer", "fatal: the remote end
++		# hung up unexpectedly" etc.
++		cat fatal.actual &&
++		test_file_not_empty fatal.actual
++		;;
++	esac &&
 +
-+	# --quiet quiets the "From" line
-+	git \
-+		-C child \
-+		-c protocol.version=2 \
-+		ls-remote-bundle-uri \
-+		--quiet \
-+		>out.actual 2>err &&
-+	test_must_be_empty err &&
-+	test_cmp_config_output out.expect out.actual &&
-+
-+	# --quiet is implicit if the remote is not implicit
-+	git \
-+		-c protocol.version=2 \
-+		ls-remote-bundle-uri \
-+		"$T5730_URI" \
-+		>out.actual 2>err &&
-+	test_must_be_empty err &&
-+	test_cmp_config_output out.expect out.actual
++	grep "clone> test-bad-client$" log >sent-bad-request &&
++	test_file_not_empty sent-bad-request
 +'
+diff --git a/t/t5730-protocol-v2-bundle-uri-file.sh b/t/t5730-protocol-v2-bundle-uri-file.sh
+new file mode 100755
+index 00000000000..89203d3a23c
+--- /dev/null
++++ b/t/t5730-protocol-v2-bundle-uri-file.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++
++test_description="Test bundle-uri with protocol v2 and 'file://' transport"
++
++TEST_NO_CREATE_REPO=1
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++# Test protocol v2 with 'file://' transport
++#
++T5730_PROTOCOL=file
++. "$TEST_DIRECTORY"/lib-t5730-protocol-v2-bundle-uri.sh
++
++test_expect_success "unknown capability value with $T5730_PROTOCOL:// using protocol v2" '
++	test_when_finished "rm -f log" &&
++
++	test_config -C "$T5730_PARENT" \
++		uploadpack.bundleURI "$T5730_BUNDLE_URI_ESCAPED" &&
++
++	GIT_TRACE_PACKET="$PWD/log" \
++	GIT_TEST_BUNDLE_URI_UNKNOWN_CAPABILITY_VALUE=true \
++	git \
++		-c protocol.version=2 \
++		ls-remote --symref "$T5730_URI" \
++		>actual 2>err &&
++
++	# Server responded using protocol v2
++	grep "< version 2" log &&
++
++	grep "> bundle-uri=test-unknown-capability-value" log
++'
++
++test_done
+diff --git a/t/t5731-protocol-v2-bundle-uri-git.sh b/t/t5731-protocol-v2-bundle-uri-git.sh
+new file mode 100755
+index 00000000000..282847b311f
+--- /dev/null
++++ b/t/t5731-protocol-v2-bundle-uri-git.sh
+@@ -0,0 +1,17 @@
++#!/bin/sh
++
++test_description="Test bundle-uri with protocol v2 and 'git://' transport"
++
++TEST_NO_CREATE_REPO=1
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++# Test protocol v2 with 'git://' transport
++#
++T5730_PROTOCOL=git
++. "$TEST_DIRECTORY"/lib-t5730-protocol-v2-bundle-uri.sh
++
++test_done
+diff --git a/t/t5732-protocol-v2-bundle-uri-http.sh b/t/t5732-protocol-v2-bundle-uri-http.sh
+new file mode 100755
+index 00000000000..fcc1cf3faef
+--- /dev/null
++++ b/t/t5732-protocol-v2-bundle-uri-http.sh
+@@ -0,0 +1,17 @@
++#!/bin/sh
++
++test_description="Test bundle-uri with protocol v2 and 'git://' transport"
++
++TEST_NO_CREATE_REPO=1
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++# Test protocol v2 with 'git://' transport
++#
++T5730_PROTOCOL=http
++. "$TEST_DIRECTORY"/lib-t5730-protocol-v2-bundle-uri.sh
++
++test_done
+diff --git a/transport-helper.c b/transport-helper.c
+index dfbeaebe40c..ee7d0b09a24 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1270,9 +1270,22 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
+ 	return ret;
+ }
+ 
++static int get_bundle_uri(struct transport *transport)
++{
++	get_helper(transport);
++
++	if (process_connect(transport, 0)) {
++		do_take_over(transport);
++		return transport->vtable->get_bundle_uri(transport);
++	}
++
++	return -1;
++}
++
+ static struct transport_vtable vtable = {
+ 	.set_option	= set_helper_option,
+ 	.get_refs_list	= get_refs_list,
++	.get_bundle_uri = get_bundle_uri,
+ 	.fetch_refs	= fetch_refs,
+ 	.push_refs	= push_refs,
+ 	.connect	= connect_helper,
+diff --git a/transport-internal.h b/transport-internal.h
+index c4ca0b733ac..90ea749e5cf 100644
+--- a/transport-internal.h
++++ b/transport-internal.h
+@@ -26,6 +26,13 @@ struct transport_vtable {
+ 	struct ref *(*get_refs_list)(struct transport *transport, int for_push,
+ 				     struct transport_ls_refs_options *transport_options);
+ 
++	/**
++	 * Populates the remote side's bundle-uri under protocol v2,
++	 * if the "bundle-uri" capability was advertised. Returns 0 if
++	 * OK, negative values on error.
++	 */
++	int (*get_bundle_uri)(struct transport *transport);
++
+ 	/**
+ 	 * Fetch the objects for the given refs. Note that this gets
+ 	 * an array, and should ignore the list structure.
 diff --git a/transport.c b/transport.c
-index 106bb8c5577..c9d2e1804eb 100644
+index 3d64a43ab39..106bb8c5577 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -198,6 +198,7 @@ struct git_transport_data {
- 	struct git_transport_options options;
- 	struct child_process *conn;
- 	int fd[2];
-+	unsigned got_advertisement : 1;
- 	unsigned got_remote_heads : 1;
- 	enum protocol_version version;
- 	struct oid_array extra_have;
-@@ -346,6 +347,7 @@ static struct ref *handshake(struct transport *transport, int for_push,
- 		BUG("unknown protocol version");
- 	}
- 	data->got_remote_heads = 1;
-+	data->got_advertisement = 1;
- 	transport->hash_algo = reader.hash_algo;
+@@ -22,6 +22,7 @@
+ #include "protocol.h"
+ #include "object-store.h"
+ #include "color.h"
++#include "bundle-uri.h"
  
- 	if (reader.line_peeked)
-@@ -371,6 +373,33 @@ static int get_bundle_uri(struct transport *transport)
- 		init_bundle_list(transport->bundles);
- 	}
+ static int transport_use_color = -1;
+ static char transport_colors[][COLOR_MAXLEN] = {
+@@ -359,6 +360,25 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
+ 	return handshake(transport, for_push, options, 1);
+ }
  
-+	if (!data->got_advertisement) {
-+		struct ref *refs;
-+		struct git_transport_data *data = transport->data;
-+		enum protocol_version version;
++static int get_bundle_uri(struct transport *transport)
++{
++	struct git_transport_data *data = transport->data;
++	struct packet_reader reader;
++	int stateless_rpc = transport->stateless_rpc;
 +
-+		refs = handshake(transport, 0, NULL, 0);
-+		version = data->version;
-+
-+		switch (version) {
-+		case protocol_v2:
-+			assert(!refs);
-+			break;
-+		case protocol_v0:
-+		case protocol_v1:
-+		case protocol_unknown_version:
-+			assert(refs);
-+			break;
-+		}
++	if (!transport->bundles) {
++		CALLOC_ARRAY(transport->bundles, 1);
++		init_bundle_list(transport->bundles);
 +	}
++
++	packet_reader_init(&reader, data->fd[0], NULL, 0,
++			   PACKET_READ_CHOMP_NEWLINE |
++			   PACKET_READ_GENTLE_ON_EOF);
++
++	return get_remote_bundle_uri(data->fd[1], &reader,
++				     transport->bundles, stateless_rpc);
++}
++
+ static int fetch_refs_via_pack(struct transport *transport,
+ 			       int nr_heads, struct ref **to_fetch)
+ {
+@@ -899,6 +919,7 @@ static int disconnect_git(struct transport *transport)
+ 
+ static struct transport_vtable taken_over_vtable = {
+ 	.get_refs_list	= get_refs_via_connect,
++	.get_bundle_uri = get_bundle_uri,
+ 	.fetch_refs	= fetch_refs_via_pack,
+ 	.push_refs	= git_transport_push,
+ 	.disconnect	= disconnect_git
+@@ -1052,6 +1073,7 @@ static struct transport_vtable bundle_vtable = {
+ 
+ static struct transport_vtable builtin_smart_vtable = {
+ 	.get_refs_list	= get_refs_via_connect,
++	.get_bundle_uri = get_bundle_uri,
+ 	.fetch_refs	= fetch_refs_via_pack,
+ 	.push_refs	= git_transport_push,
+ 	.connect	= connect_git,
+@@ -1066,6 +1088,9 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 	ret->progress = isatty(2);
+ 	string_list_init_dup(&ret->pack_lockfiles);
+ 
++	CALLOC_ARRAY(ret->bundles, 1);
++	init_bundle_list(ret->bundles);
++
+ 	if (!remote)
+ 		BUG("No remote provided to transport_get()");
+ 
+@@ -1473,6 +1498,34 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ 	return rc;
+ }
+ 
++int transport_get_remote_bundle_uri(struct transport *transport)
++{
++	const struct transport_vtable *vtable = transport->vtable;
++
++	/* Check config only once. */
++	if (transport->got_remote_bundle_uri++)
++		return 0;
 +
 +	/*
 +	 * "Support" protocol v0 and v2 without bundle-uri support by
@@ -556,61 +614,75 @@ index 106bb8c5577..c9d2e1804eb 100644
 +	if (!server_supports_v2("bundle-uri", 0))
 +		return 0;
 +
- 	packet_reader_init(&reader, data->fd[0], NULL, 0,
- 			   PACKET_READ_CHOMP_NEWLINE |
- 			   PACKET_READ_GENTLE_ON_EOF);
-@@ -1498,7 +1527,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
- 	return rc;
- }
- 
--int transport_get_remote_bundle_uri(struct transport *transport)
-+int transport_get_remote_bundle_uri(struct transport *transport, int quiet)
++	/*
++	 * This is intentionally below the transport.injectBundleURI,
++	 * we want to be able to inject into protocol v0, or into the
++	 * dialog of a server who doesn't support this.
++	 */
++	if (!vtable->get_bundle_uri)
++		return error(_("bundle-uri operation not supported by protocol"));
++
++	if (vtable->get_bundle_uri(transport) < 0)
++		return error(_("could not retrieve server-advertised bundle-uri list"));
++	return 0;
++}
++
+ void transport_unlock_pack(struct transport *transport, unsigned int flags)
  {
- 	const struct transport_vtable *vtable = transport->vtable;
- 
-@@ -1506,20 +1535,16 @@ int transport_get_remote_bundle_uri(struct transport *transport)
- 	if (transport->got_remote_bundle_uri++)
- 		return 0;
- 
--	/*
--	 * "Support" protocol v0 and v2 without bundle-uri support by
--	 * silently degrading to a NOOP.
--	 */
--	if (!server_supports_v2("bundle-uri", 0))
--		return 0;
--
- 	/*
- 	 * This is intentionally below the transport.injectBundleURI,
- 	 * we want to be able to inject into protocol v0, or into the
- 	 * dialog of a server who doesn't support this.
- 	 */
--	if (!vtable->get_bundle_uri)
-+	if (!vtable->get_bundle_uri) {
-+		if (quiet)
-+			return -1;
- 		return error(_("bundle-uri operation not supported by protocol"));
-+	}
- 
- 	if (vtable->get_bundle_uri(transport) < 0)
- 		return error(_("could not retrieve server-advertised bundle-uri list"));
+ 	int in_signal_handler = !!(flags & TRANSPORT_UNLOCK_PACK_IN_SIGNAL_HANDLER);
+@@ -1503,6 +1556,8 @@ int transport_disconnect(struct transport *transport)
+ 		ret = transport->vtable->disconnect(transport);
+ 	if (transport->got_remote_refs)
+ 		free_refs((void *)transport->remote_refs);
++	clear_bundle_list(transport->bundles);
++	free(transport->bundles);
+ 	free(transport);
+ 	return ret;
+ }
 diff --git a/transport.h b/transport.h
-index 015375e083d..f40bf2c69b8 100644
+index 12bc08fc339..015375e083d 100644
 --- a/transport.h
 +++ b/transport.h
-@@ -296,8 +296,12 @@ const struct ref *transport_get_remote_refs(struct transport *transport,
- /**
-  * Retrieve bundle URI(s) from a remote. Populates "struct
-  * transport"'s "bundle_uri" and "got_remote_bundle_uri".
-+ *
-+ * With `quiet=1` it will not complain if the serve doesn't support
-+ * the protocol, but only if we discover the server uses it, and
-+ * encounter issues then.
-  */
--int transport_get_remote_bundle_uri(struct transport *transport);
-+int transport_get_remote_bundle_uri(struct transport *transport, int quiet);
+@@ -62,6 +62,7 @@ enum transport_family {
+ 	TRANSPORT_FAMILY_IPV6
+ };
  
++struct bundle_list;
+ struct transport {
+ 	const struct transport_vtable *vtable;
+ 
+@@ -76,6 +77,18 @@ struct transport {
+ 	 */
+ 	unsigned got_remote_refs : 1;
+ 
++	/**
++	 * Indicates whether we already called get_bundle_uri_list(); set by
++	 * transport.c::transport_get_remote_bundle_uri().
++	 */
++	unsigned got_remote_bundle_uri : 1;
++
++	/*
++	 * The results of "command=bundle-uri", if both sides support
++	 * the "bundle-uri" capability.
++	 */
++	struct bundle_list *bundles;
++
+ 	/*
+ 	 * Transports that call take-over destroys the data specific to
+ 	 * the transport type while doing so, and cannot be reused.
+@@ -280,6 +293,12 @@ void transport_ls_refs_options_release(struct transport_ls_refs_options *opts);
+ const struct ref *transport_get_remote_refs(struct transport *transport,
+ 					    struct transport_ls_refs_options *transport_options);
+ 
++/**
++ * Retrieve bundle URI(s) from a remote. Populates "struct
++ * transport"'s "bundle_uri" and "got_remote_bundle_uri".
++ */
++int transport_get_remote_bundle_uri(struct transport *transport);
++
  /*
   * Fetch the hash algorithm used by a remote.
+  *
 -- 
 gitgitgadget
 
