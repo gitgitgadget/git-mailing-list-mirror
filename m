@@ -2,308 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17601C433EF
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 15:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7E78C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 15:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350960AbiETPl5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 11:41:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37482 "EHLO
+        id S1351136AbiETPzY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 11:55:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350913AbiETPlt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 11:41:49 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B463A1790AC
-        for <git@vger.kernel.org>; Fri, 20 May 2022 08:41:47 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id y13so15593151eje.2
-        for <git@vger.kernel.org>; Fri, 20 May 2022 08:41:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=cmUEMDqbAjWunm8+KV4OJJOuvJZvGWK4a/bMA3KaT0Q=;
-        b=UvXisDMogI668RqKpWrDbln4A6FrY6EIWYky3s645C58asW7+x5L1E+Gns/IyzGNUh
-         WLFvkp2s/2eLkHMOvo4AzDIS4JCq/0WW0jr8iMs4uYEL7+TyC7ZJ+6Gajjc+KiyewZMW
-         oJfqylT7R8lka8JwnVIsifIbnksyryz7D9fNXi7nUmH53mPaJaJ7ziqHo/uCTdSge3p8
-         OfIPrGGChOeAYtu/nZ5Y7hPDNbzic542seehKRxq8Z4c6NuofnTtO8/tnKnBnMX7PRC1
-         pIXGiNaKfMUFftlRCqdg5McZsSoxOQU+4ZnsPthXct5DMss4z/CiXkKPIAGH91mHDx7C
-         fW4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=cmUEMDqbAjWunm8+KV4OJJOuvJZvGWK4a/bMA3KaT0Q=;
-        b=CBqTAJQ/orqdCw6MlOiyCKbrMVCRb1Z9aURB97PHIX1/L79OUKOP0Rs8U9DG87f2pp
-         RuCY5EAzuLviAbP9OByeFQmkrpDLzOnQqUO9YXd7IiZQgZezEOApoWH5TtqnvJf6mrDz
-         kTKMdO0WylHiS69DboZf/SRh/TK5/CycxbhhNebdJIPegiuzHK6kXxhuyrBGRm4RWpDM
-         Dn2I3aJj2zL+YHO4Bws9PqtvlYSiO+7SaAigO0gBhQgn2+8wh3Ln4IrCDx+cwEE0zg6X
-         GIiWjwiS4dKCJkQhF7jkUXcAU1CC6ei9muhfKAeSRXuQJThfgId9fNjB//fcsjdQPfPp
-         WTaQ==
-X-Gm-Message-State: AOAM533e82Se5xQOkr+bbwdFnaQPLxnEAjf9va56nbXpOzgxTdTcXau0
-        yW3dhzEaodj1ZFC1w6mYULc=
-X-Google-Smtp-Source: ABdhPJzyJaesAmVSAXC8Jsgb7xXr6FG2hnPkKB1iHet4Jm5rpKEcnqjW8NkUa4XxfsmtZxObC8h2yg==
-X-Received: by 2002:a17:907:c24:b0:6f4:d6f2:9f6c with SMTP id ga36-20020a1709070c2400b006f4d6f29f6cmr8987645ejc.539.1653061306105;
-        Fri, 20 May 2022 08:41:46 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id jz17-20020a17090775f100b006f3ef214e68sm3202864ejc.206.2022.05.20.08.41.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 08:41:45 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ns4l6-002aBe-Bp;
-        Fri, 20 May 2022 17:41:44 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Daniel Li <dan@danielyli.com>, git@vger.kernel.org
-Subject: the state of diff_free() and release_revisions() (was: [PATCH] 2.36
- format-patch regression fix)
-Date:   Fri, 20 May 2022 17:23:01 +0200
-References: <CAHVT7hW28jMcphDPhcUG==mycCWDaAt46wWo68=oTcSvebHWwg@mail.gmail.com>
-        <xmqqzgk388tt.fsf@gitster.g> <xmqqo80j87g0.fsf_-_@gitster.g>
-        <c36896a1-6247-123b-4fa3-b7eb24af1897@web.de>
-        <20220430163232.ytvwru4fnylow2jk@carlos-mbp.lan>
-        <6af1aed1-ab13-ee0e-e979-d2f826ec776a@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <6af1aed1-ab13-ee0e-e979-d2f826ec776a@web.de>
-Message-ID: <220520.86pmk81a9z.gmgdl@evledraar.gmail.com>
+        with ESMTP id S244131AbiETPzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 11:55:23 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A69170F14
+        for <git@vger.kernel.org>; Fri, 20 May 2022 08:55:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1653062108;
+        bh=ijtp4XSQoHPbVfwVOmtRM8f8bWvFhPNXXQ+dsDXbHq4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=dz7knBI++qShNzK1mvORQbuYY8ZQ+474p7nFdbV+opshVpXbNjWEEX+tUrjQpPvrZ
+         0KOJoPPnuyr7Vxp+q6xy4DjiCC2Qemr1DmYKEikrxqwrHGxPvHCywHQDreV4VdN5v5
+         TJwEN1l0UiyyYiwzJkzKxA6n8oIRxwniMaUN/e8g=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.242.215] ([89.1.215.85]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1Ycl-1ntRkF0zjn-0034gv; Fri, 20
+ May 2022 17:55:08 +0200
+Date:   Fri, 20 May 2022 17:55:04 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 3/7] scalar: validate the optional enlistment
+ argument
+In-Reply-To: <220520.86fsl43bkf.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2205201753300.352@tvgsbejvaqbjf.bet>
+References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com> <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com> <da9f52a82406ffc909e9c5f2b6b5e77818d972c0.1652210824.git.gitgitgadget@gmail.com> <220517.867d6k6wjr.gmgdl@evledraar.gmail.com>
+ <xmqqbkvuwxps.fsf@gitster.g> <220520.86fsl43bkf.gmgdl@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-294935800-1653062108=:352"
+X-Provags-ID: V03:K1:ct0omeutuX/NoiQIOhUx+IACKOT7NMwjf2/pQvNgX1+c8Re5HxW
+ UCNHnK1+27npdNSpmEX8X/jq1+lxqu/Dz3oipZSXU6QqXuHU4eXIa8xgykUAQY6XXxfsUaM
+ FX9ZDiRTm0wGafqTUeZDwpS8KwsTlfOg9Qs8I7qN+IFsrXNz13DxLspLvTd1qsQx6GEa/Sm
+ 6PK3Pj7SiMEdpbw3B+Yqg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WlrpH8qnLbA=:M8TtgBCDO4+aN+H7SwUyjh
+ OyqK4jwaiNVfOa30cn6LEYIc569FjK/QzM9c85Vz66RjlSYq6OSFSAhF97jAYq0YQ3SCRdT2j
+ sNjqXJWjOJp2EMqrLIFQGjiZ3IrCZllS7UqBF/U9WJmQNN0HZSY0S19jpB0fErfq7TeKHgQdO
+ B7HFtiRAuZLomleuQg8wT6tmr6sYjS65NlR6iMX3HQjNm6kjh+Pwk6yEogUTgQs1s3T+BHQxw
+ SEJFm40f+9df6H/W4QwfS4YJ7fHkLD9E3aSy8VBTWrVBJ68esCL1GGd0OY4G+07WSvg8hbGC/
+ B2p7nH+WpuerSS2v4Vkj9XDeYQh/Pj5Tp4L1dkHUqTe1u16CogVHQz5qUd4HCTOCEXBsrzn53
+ jWUYSltf2HOP3xXY1SWjUCGlkb3s9IW1SsT8fzlBr66EDQcNnw5BjIH2UKUYVQrSrL8iyAvtI
+ WgImQKGhTUmA1dhfyv/MIJRc/nYwpk99Y2GWG7p3xvNIQkvpj+dI9w5MpFAPLmqQ3TWQJeB0+
+ 8jP8KMkOwO0GI5W4Nj5jJhHNJVoWwRZigodq3esdpukcG+N6L/QhdIAfgPNTmwmzpVSmwG+3Y
+ rXu6uU1P+3ToQwyp5GheUJu22wHAhm0K0gBu+vybvpephZ/kklvt2JX3tXKWX1kZxkUSKmArz
+ G1JkcnEb/kdizq9jq9F5QjLVFfMv23OgJNmnh+9hHUcBzY6XJCWzarB78KXgIfwxlOy86/pie
+ r842UNrblsLD2WD7ofWkNWQ5qcdq4EU6c605twaPxfXVF55VIqOHMVvAe5JX/1gMUuccPFGls
+ 7vjNcY1lsg2VZC00QiAPjM1Qznk5SyFZOVHsZeyi6GDAdlAwlxWD754rLfsByC/ziwYlUhO7N
+ /qClNykQB+xcFw3R55TFnLXdB8lOg8zBBIdu6Zhe+Rx5a3zOTu33QX+hQp5FLWfVnybJDGh1n
+ rM1QsuACpw9koGm3/LTm2Gch5E9X04SANIWwMcYpdtILXjV/RYWUNSKZOentGl37awyzW25ZE
+ g9lbHnuyhmzwXURYCEQ0extibIJ3ieGheVwyCjjaK9+ie4/Dr04zdylvxQ8/MfaKq19wPhuUO
+ BwBxAg6WhkIbOGgMEBDuUGRopi/BrJjXZIK9ViHmcsfSUO3RPxcoNrbug==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sun, May 01 2022, Ren=C3=A9 Scharfe wrote:
+--8323328-294935800-1653062108=:352
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Am 30.04.22 um 18:32 schrieb Carlo Marcelo Arenas Bel=C3=B3n:
->> On Sat, Apr 30, 2022 at 12:32:44PM +0200, Ren=C3=A9 Scharfe wrote:
->>> e900d494dc (diff: add an API for deferred freeing, 2021-02-11) added a
->>> way to allow reusing diffopts: the no_free bit.  244c27242f (diff.[ch]:
->>> have diff_free() call clear_pathspec(opts.pathspec), 2022-02-16) made
->>> that mechanism mandatory.
->>>
->>> git format-patch only sets no_free when --output is given, causing it to
->>> forget pathspecs after the first commit.  Set no_free unconditionally
->>> instead.
->>
->> I remember when I saw the first commit long ago, and thought; well that =
-is
->> very round about way to reintroduce the UNLEAK removal that might have m=
-ade
->> it visible.
->>
->> Haven't looked too closely, but considering that we were warned[1] the
->> interface was hard to use and might cause problems later and it did.
->>
->> wouldn't it a better and more secure solution to UNLEAK and remove all t=
-his
->> code, at least until it could be refactored cleanly, of course?
+Hi =C3=86var,
+
+On Fri, 20 May 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
 >
-> Silently self-destructing pathspecs are a safety hazard indeed.
+> On Wed, May 18 2022, Junio C Hamano wrote:
 >
-> no_free also affects freeing ignore_regex and parseopts, and even
-> closing the output file.  I don't know about the file, but leaking the
-> first two is harmless.  So removing the flag is safe as long as we make
-> sure the output file is closed as needed.
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> >
+> >>> +test_expect_success '`scalar [...] <dir>` errors out when dir is mi=
+ssing' '
+> >>> +	! scalar run config cloned 2>err &&
+> >>
+> >> Needs to use test_must_fail, not !
+> >
+> > Good eyes and careful reading are very much appreciated, but in this
+> > case, doesn't such an improvement depend on an update to teach
+> > test_must_fail_acceptable about scalar being whitelisted?
 >
-> A safe diff_free() would only be called a particular diffopt once, when
-> it's no longer needed.  It could check for reuse by setting a flag the
-> first time, like in the patch below.  1426 tests in 163 test scripts
-> fail for me with it applied on top of the regression fixes from this
-> thread.
->
-> Removing the diff_free() calls from diff.c::diff_flush() and
-> log-tree.c::log_tree_commit() reduces this to just one or two in t7527
-> (seems to be flaky).  Perhaps this is still salvageable?
+> Yes, I think so (but haven't tested it just now), but it's a relatively
+> small change to t/test-lib-functions.sh.
 
-Thanks both for handling this, and sorry that I was away at the time.
+Let it be noted that I fully agree with Junio that good eyes and careful
+reading are very much appreciated. And that in this case, that would have
+implied noticing that `test_must_fail` is reserved for Git commands.
 
-AFAICT the current status in this area is that with 2cc712324d5 (Merge
-branch 'rs/fast-export-pathspec-fix', 2022-05-04) and 5048b20d1c2 (Merge
-branch 'rs/format-patch-pathspec-fix', 2022-05-04) merged the known bugs
-related to this have been fixed, along with 3da993f2e63 (Merge branch
-'jc/diff-tree-stdin-fix', 2022-04-28).
+Scalar is not (yet?) a Git command.
 
-"This" being my e900d494dcf (diff: add an API for deferred freeing,
-2021-02-11), and 244c27242f4 (diff.[ch]: have diff_free() call
-clear_pathspec(opts.pathspec), 2022-02-16) for the diff-tree case.
+Ciao,
+Johannes
 
-Not coincidentally around the same time my ab/plug-leak-in-revisions got
-un-marked for "next" from [1] to [2], and I'm looking for a path forward
-for this whole thing...
-
-1. https://lore.kernel.org/git/xmqqbkwyz78z.fsf@gitster.g/
-2. https://lore.kernel.org/git/xmqqwnfcskw2.fsf@gitster.g/
-
->> [1] https://lore.kernel.org/git/YCUFNVj7qlt9wzlX@coredump.intra.peff.net/
->
->
-> ---
->  diff.c | 3 +++
->  diff.h | 1 +
->  2 files changed, 4 insertions(+)
->
-> diff --git a/diff.c b/diff.c
-> index ef7159968b..01296829b5 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6458,10 +6458,13 @@ void diff_free(struct diff_options *options)
->  	if (options->no_free)
->  		return;
->
-> +	if (options->is_dead)
-> +		BUG("double diff_free() on %p", (void *)options);
->  	diff_free_file(options);
->  	diff_free_ignore_regex(options);
->  	clear_pathspec(&options->pathspec);
->  	FREE_AND_NULL(options->parseopts);
-> +	options->is_dead =3D 1;
->  }
->
->  void diff_flush(struct diff_options *options)
-> diff --git a/diff.h b/diff.h
-> index 8ae18e5ab1..c31d32ba19 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -398,6 +398,7 @@ struct diff_options {
->  	struct strmap *additional_path_headers;
->
->  	int no_free;
-> +	int is_dead;
->  };
->
->  unsigned diff_filter_bit(char status);
-
-Yes, that's quite scary. It shows that in general diff_free() isn't
-reentrant-safe, but that we do call it repeatedly again.
-
-However if we patch it like this instead we can see that (gulp!) we just
-barely putter along, according to our test coverage at least. I.e. we
-don't end up calling the parts of it that would be unsafe to call again:
-=09
-	diff --git a/diff.c b/diff.c
-	index ef7159968b6..0fe8bc5fade 100644
-	--- a/diff.c
-	+++ b/diff.c
-	@@ -6438,14 +6438,23 @@ static void diff_flush_patch_all_file_pairs(struct=
- diff_options *o)
-=09=20
-	 static void diff_free_file(struct diff_options *options)
-	 {
-	-	if (options->close_file)
-	+	if (options->close_file) {
-	+		if (options->is_dead)
-	+			BUG("double diff_free() on %p", (void *)options);
-	 		fclose(options->file);
-	+	}
-	 }
-=09=20
-	 static void diff_free_ignore_regex(struct diff_options *options)
-	 {
-	 	int i;
-=09=20
-	+	if (!options->ignore_regex_nr && !options->ignore_regex)
-	+		return;
-	+
-	+	if (options->is_dead)
-	+		BUG("double diff_free() on %p", (void *)options);
-	+
-	 	for (i =3D 0; i < options->ignore_regex_nr; i++) {
-	 		regfree(options->ignore_regex[i]);
-	 		free(options->ignore_regex[i]);
-	@@ -6462,6 +6471,7 @@ void diff_free(struct diff_options *options)
-	 	diff_free_ignore_regex(options);
-	 	clear_pathspec(&options->pathspec);
-	 	FREE_AND_NULL(options->parseopts);
-	+	options->is_dead =3D 1;
-	 }
-=09=20
-	 void diff_flush(struct diff_options *options)
-	@@ -6560,7 +6570,6 @@ void diff_flush(struct diff_options *options)
-	 free_queue:
-	 	free(q->queue);
-	 	DIFF_QUEUE_CLEAR(q);
-	-	diff_free(options);
-=09=20
-	 	/*
-	 	 * Report the content-level differences with HAS_CHANGES;
-	diff --git a/diff.h b/diff.h
-	index 8ae18e5ab1e..c31d32ba192 100644
-	--- a/diff.h
-	+++ b/diff.h
-	@@ -398,6 +398,7 @@ struct diff_options {
-	 	struct strmap *additional_path_headers;
-=09=20
-	 	int no_free;
-	+	int is_dead;
-	 };
-=09=20
-	 unsigned diff_filter_bit(char status);
-
-I'd really like to fix this properly, but AFAICT the best way to do that
-is to:
-
- A. Get ab/plug-leak-in-revisions merged down
- B. Fix diff_free() on top of that
-
-Before I knew of these bugs I'd already written patches to get rid of
-that whole "no_free" business. In retrospect it was completely the wrong
-thing to do, but in hindsight something like it was needed to fix those
-leaks as long as we didn't have a revisions_release().
-
-I.e. the tricky cases where I ended up needing to set "no_free" are ones
-where all the complexity neatly goes away once we start releasing the
-"struct rev_info" properly, as it contains the data we'd like to
-diff_free() at the end.
-
-How does that plan sound, and is there anything I've missed?
-
-I could also re-roll ab/plug-leak-in-revisions to include a fix that
-makes it safe in the interim, i.e.:
-
-	diff --git a/diff.c b/diff.c
-	index ef7159968b6..2bc7ee81e4e 100644
-	--- a/diff.c
-	+++ b/diff.c
-	@@ -6438,8 +6438,12 @@ static void diff_flush_patch_all_file_pairs(struct =
-diff_options *o)
-=09=20
-	 static void diff_free_file(struct diff_options *options)
-	 {
-	-	if (options->close_file)
-	+	if (options->close_file) {
-	 		fclose(options->file);
-	+
-	+		options->file =3D NULL;
-	+		options->close_file =3D 0;
-	+	}
-	 }
-=09=20
-	 static void diff_free_ignore_regex(struct diff_options *options)
-	@@ -6450,7 +6454,8 @@ static void diff_free_ignore_regex(struct diff_optio=
-ns *options)
-	 		regfree(options->ignore_regex[i]);
-	 		free(options->ignore_regex[i]);
-	 	}
-	-	free(options->ignore_regex);
-	+	options->ignore_regex_nr =3D 0;
-	+	FREE_AND_NULL(options->ignore_regex);
-	 }
-=09=20
-	 void diff_free(struct diff_options *options)
-
-But as long as we're not adding new API users of it until the follow-up
-after ab/plug-leak-in-revisions we should also be safe for now, but
-perhaps it's prudent to do it anyway.
-
-I *could* potentially produce a shorter series than
-ab/plug-leak-in-revisions to narrowly try to remove "no_free" from
-diff.c first, but it would basically need to first introduce a
-release_revisions(), and without the other revisions API leaks being
-fixed testing it would be much tricker. I'd really prefer not to do
-that.
-
-How does all that sound?
+--8323328-294935800-1653062108=:352--
