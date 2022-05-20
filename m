@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D6CCC433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 23:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01367C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 23:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354060AbiETXSt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 19:18:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51652 "EHLO
+        id S1347492AbiETXTK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 19:19:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354057AbiETXST (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 19:18:19 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7092F1A491C
-        for <git@vger.kernel.org>; Fri, 20 May 2022 16:18:11 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id u35so8855557qtc.13
-        for <git@vger.kernel.org>; Fri, 20 May 2022 16:18:11 -0700 (PDT)
+        with ESMTP id S1354104AbiETXSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 19:18:41 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB4FB1A077A
+        for <git@vger.kernel.org>; Fri, 20 May 2022 16:18:18 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id 190so2337329qkj.8
+        for <git@vger.kernel.org>; Fri, 20 May 2022 16:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zg8D+mVhTqbxYEbGanVURWql8MDAlH6HQ57KJAQ9z7Q=;
-        b=PAp2aB7UJ0iAFYC329N3K7/rbexG6tqSfMcg+HzGF9Nh7pZavJ+X/7rix4Jv7MLp3U
-         /A8uMr6gaSkhRmZquA2zpc7ctDhLDAk4WkhR4U7FAT1SQ4NBt5tLmTOzJdH6Hz8xznNX
-         DQsaxQ+3MyoJ+3FMpeB5tW780QBIHlANzCqb2Jdsjy/zjS9O6nQcpZeMcnAlyEagf6Of
-         WqQRdjNbhvhWqM8px08PYxY3s9qxZi6oGyhYD+3TakWzlWpn8wDxvfU8TR8HDqSgYZg5
-         U9LZ/nzAInfGu1/JFLW1qa1Z6f5Ixz66/wQ0CQUjoA6lXPHoawK7c5qQQZsE/lb5r2vK
-         DD9g==
+        bh=TO70jr9rzedrZWeM+KmyeO0J+S6jY0bck1zLwDugc+w=;
+        b=umMLOhJzs4SddB4wju7WVe4ORm5e1bkyrAdR6lj3r5QQSUYmqCwl0WKt5jgXm7App2
+         /knIbB2FlOnB5a2BNCJJC+NAbIEEiX72s+iSlP0HaY2enVFrMFeZOr4xeNMdEOxi6OrJ
+         hQtZPrh5DATRepc3RyylKXEfap5tiums0yJz9waQXela6sCFjDAwzBt7GRwjDWV7+wmd
+         8+mdA5xiRhTwNArvVCOnMx/THEOrMNo48LkCsGQ+rYrtrJD9fRzDoT7T9xul0EgrltPL
+         kBOzdbwY8livSL9kTzGgvdWlbq+z46tz3pC8AOaudJzbfeNcOOUI3GK2++ejXhPCWNRc
+         7dBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zg8D+mVhTqbxYEbGanVURWql8MDAlH6HQ57KJAQ9z7Q=;
-        b=EhhPxOpPTPqhCo9/Sr7tU7Jv3NqYutWrq80Wbz3AGme0hl0q6JKw8DztX63ClbfLqm
-         +jsr3/jhU4BCAoe8jAsKNu665LPf9BMydtNeSlohqfxACLWQKS2qYDxbbY/bc4jXi/K6
-         8J001pynUDmv56IRFAwUBniLi58GslIjA90gEI4tKyLjqUGCVSauNHY4gJ4sTBT0liur
-         02VLuVd40toRtwAt3ElmwbY0FnKmzPPA3rGNDSrLNzm4w+HYV2y3xYDvaup722fg9aPd
-         ftCNIl59qqvNNvoraM+CQFz7haWJ0k7q1PvZp6GMrYDX6/RfFW7UUysU6helMLxQ7dDP
-         /mhQ==
-X-Gm-Message-State: AOAM530EAb59wtePXHmcEdbpkGMiTn9zyov/C3h9t3Acv7A3k8+nRI1j
-        u4S349WoBc1YopCPXcbFEoHddokO/6Kpg+ly
-X-Google-Smtp-Source: ABdhPJzgYpDMyx+5Qm6tYFhX7GdzmwBB7x2zh6UuG7QhpuvdfNdGLWltuOoaW7Jn0XY/M9vwCgfq+Q==
-X-Received: by 2002:a05:622a:2c2:b0:2f9:db4:2b56 with SMTP id a2-20020a05622a02c200b002f90db42b56mr9451069qtx.540.1653088690024;
-        Fri, 20 May 2022 16:18:10 -0700 (PDT)
+        bh=TO70jr9rzedrZWeM+KmyeO0J+S6jY0bck1zLwDugc+w=;
+        b=y3bL1eYR+jDq7jZkIzcBaUUtTPqhvslJ9si8/0Ppp/jgBDf4hI+15bBISd9GDLh78z
+         b5hIQVhC3MPKHsHRiErbYMj/wO/ew+RQK/8wwArcAjnGpu9AMqb0aCTbtBmhOR4WySSB
+         EazhwZ70xQwNtme6SxHLfl8FJfS0wqsEd0N16tMSWdnuCqP1C93dRn0RcPnlUjk2Cz3P
+         dkncubE1emc//5Pktww+0ZwEgaCVmXcRHgUAjuNjU5WD7aYI+/HFVvwujYFHt07HbQ4S
+         jbAg46FceCkdN6MpJF3HUg4Xq6MMxecJY2vTc0FEfPZynoM7Zhm4W/vU1urPEpX6AKsG
+         Ebeg==
+X-Gm-Message-State: AOAM533MeRKrkmquYg4D+HIyuf1ULJ9bD9dXR/mOFbyzaL5boA/mrrQx
+        DdOaMKtzDTMryYQk6v0StRRxO593W9471F/x
+X-Google-Smtp-Source: ABdhPJySqOcqIi12B80b4pOckGXigVOgqhRTs/YTCvXxp2cdfY44mCqHtJaaeL+0vHqt1Uff4+Bnog==
+X-Received: by 2002:a37:62cd:0:b0:6a3:4cbe:e74e with SMTP id w196-20020a3762cd000000b006a34cbee74emr3150984qkb.550.1653088698307;
+        Fri, 20 May 2022 16:18:18 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v4-20020a05622a188400b002f9094e8a5csm562851qtc.53.2022.05.20.16.18.09
+        by smtp.gmail.com with ESMTPSA id cm26-20020a05622a251a00b002f39b99f6a6sm459669qtb.64.2022.05.20.16.18.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 16:18:09 -0700 (PDT)
-Date:   Fri, 20 May 2022 19:18:08 -0400
+        Fri, 20 May 2022 16:18:17 -0700 (PDT)
+Date:   Fri, 20 May 2022 19:18:17 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, derrickstolee@github.com, gitster@pobox.com,
         jrnieder@gmail.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: [PATCH v5 14/17] builtin/repack.c: use named flags for existing_packs
-Message-ID: <f9e3ab56b1a8801f95a46b42084d5c7f923a8fc9.1653088640.git.me@ttaylorr.com>
+Subject: [PATCH v5 17/17] sha1-file.c: don't freshen cruft packs
+Message-ID: <1e313b89e85ce0a5cc6fa6cb93127c13ae1e9e19.1653088640.git.me@ttaylorr.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1653088640.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -64,60 +64,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We use the `util` pointer for items in the `existing_packs` string list
-to indicate which packs are going to be deleted. Since that has so far
-been the only use of that `util` pointer, we just set it to 0 or 1.
+We don't bother to freshen objects stored in a cruft pack individually
+by updating the `.mtimes` file. This is because we can't portably `mmap`
+and write into the middle of a file (i.e., to update the mtime of just
+one object). Instead, we would have to rewrite the entire `.mtimes` file
+which may incur some wasted effort especially if there a lot of cruft
+objects and they are freshened infrequently.
 
-But we're going to add an additional state to this field in the next
-patch, so prepare for that by adding a #define for the first bit so we
-can more expressively inspect the flags state.
+Instead, force the freshening code to avoid an optimizing write by
+writing out the object loose and letting it pick up a current mtime.
+
+This works because we prefer the mtime of the loose copy of an object
+when both a loose and packed one exist (whether or not the packed copy
+comes from a cruft pack or not).
+
+This could certainly do with a test and/or be included earlier in this
+series/PR, but I want to wait until after I have a chance to clean up
+the overly-repetitive nature of the cruft pack tests in general.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ object-file.c                 |  2 ++
+ t/t5329-pack-objects-cruft.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index b85483a148..36d1f03671 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -22,6 +22,8 @@
- #define LOOSEN_UNREACHABLE 2
- #define PACK_CRUFT 4
+diff --git a/object-file.c b/object-file.c
+index ff0cffe68e..495a359200 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2035,6 +2035,8 @@ static int freshen_packed_object(const struct object_id *oid)
+ 	struct pack_entry e;
+ 	if (!find_pack_entry(the_repository, oid, &e))
+ 		return 0;
++	if (e.p->is_cruft)
++		return 0;
+ 	if (e.p->freshened)
+ 		return 1;
+ 	if (!freshen_file(e.p->pack_name))
+diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
+index 70a6a9553c..b481224b93 100755
+--- a/t/t5329-pack-objects-cruft.sh
++++ b/t/t5329-pack-objects-cruft.sh
+@@ -711,4 +711,29 @@ test_expect_success 'MIDX bitmaps tolerate reachable cruft objects' '
+ 	)
+ '
  
-+#define DELETE_PACK 1
++test_expect_success 'cruft objects are freshend via loose' '
++	git init repo &&
++	test_when_finished "rm -fr repo" &&
++	(
++		cd repo &&
 +
- static int pack_everything;
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
-@@ -564,7 +566,7 @@ static void midx_included_packs(struct string_list *include,
- 		}
- 	} else {
- 		for_each_string_list_item(item, existing_nonkept_packs) {
--			if (item->util)
-+			if ((uintptr_t)item->util & DELETE_PACK)
- 				continue;
- 			string_list_insert(include, xstrfmt("%s.idx", item->string));
- 		}
-@@ -1002,7 +1004,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			 * was given) and that we will actually delete this pack
- 			 * (if `-d` was given).
- 			 */
--			item->util = (void*)(intptr_t)!string_list_has_string(&names, sha1);
-+			if (!string_list_has_string(&names, sha1))
-+				item->util = (void*)(uintptr_t)((size_t)item->util | DELETE_PACK);
- 		}
- 	}
- 
-@@ -1026,7 +1029,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (delete_redundant) {
- 		int opts = 0;
- 		for_each_string_list_item(item, &existing_nonkept_packs) {
--			if (!item->util)
-+			if (!((uintptr_t)item->util & DELETE_PACK))
- 				continue;
- 			remove_redundant_pack(packdir, item->string);
- 		}
++		echo "cruft" >contents &&
++		blob="$(git hash-object -w -t blob contents)" &&
++		loose="$objdir/$(test_oid_to_path $blob)" &&
++
++		test_commit base &&
++
++		git repack --cruft -d &&
++
++		test_path_is_missing "$loose" &&
++		test-tool pack-mtimes "$(basename "$(ls $packdir/pack-*.mtimes)")" >cruft &&
++		grep "$blob" cruft &&
++
++		# write the same object again
++		git hash-object -w -t blob contents &&
++
++		test_path_is_file "$loose"
++	)
++'
++
+ test_done
 -- 
 2.36.1.94.gb0d54bedca
-
