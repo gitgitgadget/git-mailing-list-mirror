@@ -2,122 +2,374 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DD5DC433FE
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 07:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AB41C433EF
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 08:27:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346503AbiETHd7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 03:33:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44094 "EHLO
+        id S1347000AbiETI1D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 04:27:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346494AbiETHdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 03:33:54 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B716014AC97
-        for <git@vger.kernel.org>; Fri, 20 May 2022 00:33:53 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id i27so13997841ejd.9
-        for <git@vger.kernel.org>; Fri, 20 May 2022 00:33:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=OUPUESvpnw0Vw7OS/bRpaZOuDt+UGokqlcCkvy9TlBE=;
-        b=JYHjgQ4Pdx9Yk4VqAd7z7S8cJ4jgXJ0ntt3QpSbg7dV0LyYOgJ3WsO/Ookthyi5aNw
-         wyGfbmRA7fS4YREj/EKD4lGj20v4R3fUopc/WPTXMbN/TG67Vui+O9xiRSoJT41Q0sLa
-         dJok4iwND7GA+Ygii3RK29932p9t1BD5OKf85RMYRX5BHkC6Lr9YfqpGyFg5QG4+tUGy
-         S0hkyUVQH5UnZS9XTK30Fqp0fKfTjuxJeEIUJFTIEvSUwsYrsw2Nz1SwGsbUlpTppEMo
-         HLFyxDj21Xj9zDjWWFWaUPwcF6/Zk8CnNFGVm0d8cDIQml2Seo3B3LALFSsvVUezq9c5
-         xsQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=OUPUESvpnw0Vw7OS/bRpaZOuDt+UGokqlcCkvy9TlBE=;
-        b=wuB3VEGO1I5yOQp13/XYRz6A+sk7Q6yvZiEtfwyw06JaP7OI03zD+L6NxMQmSfZyYL
-         M8dhOOWscbjUaRlYQLHE5nuq/YjL5P1OT086z6YeRvnTuOx4QueW3+KK3Ogc3XBSBhgx
-         H+tkx1/nbn+FPco1QSinPx2j8owtO0Eay0XX+KgNmwTxJn+U8vVqljRpc5UbgSBex+42
-         CBEhci+4VJFnrSWSVu4Al46sh+N6wgU4bNfFMMTL7UcIwsSR1KqYEgOLXQhu2pByNzC6
-         8jLrOpvazbTBXzSPgA1rr8OnkkGqv0DnQam/S04NWcI4ZiAr4DjIMoTSPb+URMo+By96
-         gtRw==
-X-Gm-Message-State: AOAM532ZkU1s95EXjHrxk5u7VILYI5/xVE8zjMvTyIS42T/3lqgy8bWq
-        DmoBOzcF99Ut78ma+8aSJ4A/6jjKDGqxaQ==
-X-Google-Smtp-Source: ABdhPJxlA2PvxreGXxzU1XXDiKMOcO2sink8nTfUcMUih5zRGtZqxEcvbx7vW+WPcRY+H96HB//A4g==
-X-Received: by 2002:a17:907:3e0e:b0:6fe:b42f:db81 with SMTP id hp14-20020a1709073e0e00b006feb42fdb81mr493112ejc.516.1653032032136;
-        Fri, 20 May 2022 00:33:52 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ia20-20020a170907a07400b006f3ef214dfcsm2865507ejc.98.2022.05.20.00.33.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 00:33:51 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nrx8v-002PBM-6u;
-        Fri, 20 May 2022 09:33:49 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        derrickstolee@github.com, jrnieder@gmail.com,
-        larsxschneider@gmail.com, tytso@mit.edu
-Subject: Re: [PATCH v4 02/17] pack-mtimes: support reading .mtimes files
-Date:   Fri, 20 May 2022 09:32:50 +0200
-References: <cover.1638224692.git.me@ttaylorr.com>
- <cover.1652915424.git.me@ttaylorr.com>
- <8f9fd21be9fcdda5c73d800fc66d1087d61a6888.1652915424.git.me@ttaylorr.com>
- <220519.86zgjd4wvk.gmgdl@evledraar.gmail.com> <xmqqr14pr1jt.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqr14pr1jt.fsf@gitster.g>
-Message-ID: <220520.86bkvs3bfm.gmgdl@evledraar.gmail.com>
+        with ESMTP id S239123AbiETI0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 04:26:51 -0400
+X-Greylist: delayed 558 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 20 May 2022 01:26:44 PDT
+Received: from hrbata.com (hrbata.com [109.123.216.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 34A8B2EA01
+        for <git@vger.kernel.org>; Fri, 20 May 2022 01:26:42 -0700 (PDT)
+Received: from fedora.redhat.com (ip-89-102-24-184.net.upcbroadband.cz [89.102.24.184])
+        by hrbata.com (Postfix) with ESMTPSA id 38BA544C18;
+        Fri, 20 May 2022 10:17:23 +0200 (CEST)
+From:   Frantisek Hrbata <frantisek@hrbata.com>
+To:     git@vger.kernel.org
+Cc:     Frantisek Hrbata <frantisek@hrbata.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH] transport: free local and remote refs in transport_push()
+Date:   Fri, 20 May 2022 10:17:22 +0200
+Message-Id: <20220520081723.1031830-1-frantisek@hrbata.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fix memory leaks in transport_push(), where remote_refs and local_refs
+are never freed. While at it, remove the unnecessary indenting and make
+the code hopefully more readable.
 
-On Thu, May 19 2022, Junio C Hamano wrote:
+116 bytes in 1 blocks are definitely lost in loss record 56 of 103
+   at 0x484486F: malloc (vg_replace_malloc.c:381)
+   by 0x4938D7E: strdup (strdup.c:42)
+   by 0x628418: xstrdup (wrapper.c:39)
+   by 0x4FD454: process_capabilities (connect.c:232)
+   by 0x4FD454: get_remote_heads (connect.c:354)
+   by 0x610A38: handshake (transport.c:333)
+   by 0x612B02: transport_push (transport.c:1302)
+   by 0x4803D6: push_with_options (push.c:357)
+   by 0x4811D6: do_push (push.c:414)
+   by 0x4811D6: cmd_push (push.c:650)
+   by 0x405210: run_builtin (git.c:465)
+   by 0x405210: handle_builtin (git.c:719)
+   by 0x406363: run_argv (git.c:786)
+   by 0x406363: cmd_main (git.c:917)
+   by 0x404F17: main (common-main.c:56)
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Wed, May 18 2022, Taylor Blau wrote:
->>
->> Nit:
->>
->>> +  - A 4-byte magic number '0x4d544d45' ('MTME').
->>> +
->>> +  - A 4-byte version identifier (=3D 1).
->>> +
->>> +  - A 4-byte hash function identifier (=3D 1 for SHA-1, 2 for SHA-256).
->>
->> Here we let it suffice that later we'll say "All 4-byte numbers are in
->> network order".
->>
->>> +  - A table of 4-byte unsigned integers in network order. The ith
->>
->> But here we call out "network order" explicitly, shouldn't this just be
->> s/ in network order//?
->>
->>> +    value is the modification time (mtime) of the ith object in the
->>> +    corresponding pack by lexicographic (index) order. The mtimes
->>> +    count standard epoch seconds.
->>> +
->>> +  - A trailer, containing a checksum of the corresponding packfile,
->>> +    and a checksum of all of the above (each having length according
->>> +    to the specified hash function).
->>> +
->>> +All 4-byte numbers are in network order.
->>
->> I.e. this is sufficient.
->
-> Very good eyes.  One explicit mention among several others can
-> indeed be misleading the readers.
->
-> When asked for "network order", all your search engines show are
-> entries about "network byte order", so let's use that longer form of
-> spelling.
+5,912 (388 direct, 5,524 indirect) bytes in 2 blocks are definitely lost in loss record 98 of 103
+   at 0x4849464: calloc (vg_replace_malloc.c:1328)
+   by 0x628705: xcalloc (wrapper.c:150)
+   by 0x5C216D: alloc_ref_with_prefix (remote.c:975)
+   by 0x5C232A: alloc_ref (remote.c:983)
+   by 0x5C232A: one_local_ref (remote.c:2299)
+   by 0x5C232A: one_local_ref (remote.c:2289)
+   by 0x5BDB03: do_for_each_repo_ref_iterator (iterator.c:418)
+   by 0x5B4C4F: do_for_each_ref (refs.c:1486)
+   by 0x5B4C4F: refs_for_each_ref (refs.c:1492)
+   by 0x5B4C4F: for_each_ref (refs.c:1497)
+   by 0x5C6ADF: get_local_heads (remote.c:2310)
+   by 0x612A85: transport_push (transport.c:1286)
+   by 0x4803D6: push_with_options (push.c:357)
+   by 0x4811D6: do_push (push.c:414)
+   by 0x4811D6: cmd_push (push.c:650)
+   by 0x405210: run_builtin (git.c:465)
+   by 0x405210: handle_builtin (git.c:719)
+   by 0x406363: run_argv (git.c:786)
+   by 0x406363: cmd_main (git.c:917)
 
-*Nod*, note that "network order" is on "master" already though,
-i.e. this section re-used a template introduced in 2f4ba2a867f
-(packfile: prepare for the existence of '*.rev' files, 2021-01-25) just
-above this hunk.
+Signed-off-by: Frantisek Hrbata <frantisek@hrbata.com>
+---
+For remote_refs it might be worth to leave the freeing to
+transport_disconnect() and introduce helper similar to
+transport_get_remote_refs().
 
-Before that change the rest of the file used "network byte order"
-consistently.
+ transport.c | 254 +++++++++++++++++++++++++++-------------------------
+ 1 file changed, 130 insertions(+), 124 deletions(-)
+
+diff --git a/transport.c b/transport.c
+index 3d64a43ab3..4c5d9db7f2 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1276,146 +1276,152 @@ int transport_push(struct repository *r,
+ 		   struct refspec *rs, int flags,
+ 		   unsigned int *reject_reasons)
+ {
++	struct ref *remote_refs = NULL;
++	struct ref *local_refs = NULL;
++	int match_flags = MATCH_REFS_NONE;
++	int verbose = (transport->verbose > 0);
++	int quiet = (transport->verbose < 0);
++	int porcelain = flags & TRANSPORT_PUSH_PORCELAIN;
++	int pretend = flags & TRANSPORT_PUSH_DRY_RUN;
++	int push_ret, ret, err;
++	struct transport_ls_refs_options transport_options =
++		TRANSPORT_LS_REFS_OPTIONS_INIT;
++
+ 	*reject_reasons = 0;
+ 
+ 	if (transport_color_config() < 0)
+ 		return -1;
+ 
+-	if (transport->vtable->push_refs) {
+-		struct ref *remote_refs;
+-		struct ref *local_refs = get_local_heads();
+-		int match_flags = MATCH_REFS_NONE;
+-		int verbose = (transport->verbose > 0);
+-		int quiet = (transport->verbose < 0);
+-		int porcelain = flags & TRANSPORT_PUSH_PORCELAIN;
+-		int pretend = flags & TRANSPORT_PUSH_DRY_RUN;
+-		int push_ret, ret, err;
+-		struct transport_ls_refs_options transport_options =
+-			TRANSPORT_LS_REFS_OPTIONS_INIT;
+-
+-		if (check_push_refs(local_refs, rs) < 0)
+-			return -1;
+-
+-		refspec_ref_prefixes(rs, &transport_options.ref_prefixes);
+-
+-		trace2_region_enter("transport_push", "get_refs_list", r);
+-		remote_refs = transport->vtable->get_refs_list(transport, 1,
+-							       &transport_options);
+-		trace2_region_leave("transport_push", "get_refs_list", r);
+-
+-		transport_ls_refs_options_release(&transport_options);
+-
+-		if (flags & TRANSPORT_PUSH_ALL)
+-			match_flags |= MATCH_REFS_ALL;
+-		if (flags & TRANSPORT_PUSH_MIRROR)
+-			match_flags |= MATCH_REFS_MIRROR;
+-		if (flags & TRANSPORT_PUSH_PRUNE)
+-			match_flags |= MATCH_REFS_PRUNE;
+-		if (flags & TRANSPORT_PUSH_FOLLOW_TAGS)
+-			match_flags |= MATCH_REFS_FOLLOW_TAGS;
+-
+-		if (match_push_refs(local_refs, &remote_refs, rs, match_flags))
+-			return -1;
+-
+-		if (transport->smart_options &&
+-		    transport->smart_options->cas &&
+-		    !is_empty_cas(transport->smart_options->cas))
+-			apply_push_cas(transport->smart_options->cas,
+-				       transport->remote, remote_refs);
+-
+-		set_ref_status_for_push(remote_refs,
+-			flags & TRANSPORT_PUSH_MIRROR,
+-			flags & TRANSPORT_PUSH_FORCE);
+-
+-		if (!(flags & TRANSPORT_PUSH_NO_HOOK))
+-			if (run_pre_push_hook(transport, remote_refs))
+-				return -1;
++	if (!transport->vtable->push_refs)
++		return 1;
+ 
+-		if ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
+-			      TRANSPORT_RECURSE_SUBMODULES_ONLY)) &&
+-		    !is_bare_repository()) {
+-			struct ref *ref = remote_refs;
+-			struct oid_array commits = OID_ARRAY_INIT;
+-
+-			trace2_region_enter("transport_push", "push_submodules", r);
+-			for (; ref; ref = ref->next)
+-				if (!is_null_oid(&ref->new_oid))
+-					oid_array_append(&commits,
+-							  &ref->new_oid);
+-
+-			if (!push_unpushed_submodules(r,
+-						      &commits,
+-						      transport->remote,
+-						      rs,
+-						      transport->push_options,
+-						      pretend)) {
+-				oid_array_clear(&commits);
+-				trace2_region_leave("transport_push", "push_submodules", r);
+-				die(_("failed to push all needed submodules"));
+-			}
++	ret = -1;
++	local_refs = get_local_heads();
++
++	if (check_push_refs(local_refs, rs) < 0)
++		goto done;
++
++	refspec_ref_prefixes(rs, &transport_options.ref_prefixes);
++
++	trace2_region_enter("transport_push", "get_refs_list", r);
++	remote_refs = transport->vtable->get_refs_list(transport, 1,
++						       &transport_options);
++	trace2_region_leave("transport_push", "get_refs_list", r);
++
++	transport_ls_refs_options_release(&transport_options);
++
++	if (flags & TRANSPORT_PUSH_ALL)
++		match_flags |= MATCH_REFS_ALL;
++	if (flags & TRANSPORT_PUSH_MIRROR)
++		match_flags |= MATCH_REFS_MIRROR;
++	if (flags & TRANSPORT_PUSH_PRUNE)
++		match_flags |= MATCH_REFS_PRUNE;
++	if (flags & TRANSPORT_PUSH_FOLLOW_TAGS)
++		match_flags |= MATCH_REFS_FOLLOW_TAGS;
++
++	if (match_push_refs(local_refs, &remote_refs, rs, match_flags))
++		goto done;
++
++	if (transport->smart_options &&
++	    transport->smart_options->cas &&
++	    !is_empty_cas(transport->smart_options->cas))
++		apply_push_cas(transport->smart_options->cas,
++			       transport->remote, remote_refs);
++
++	set_ref_status_for_push(remote_refs,
++		flags & TRANSPORT_PUSH_MIRROR,
++		flags & TRANSPORT_PUSH_FORCE);
++
++	if (!(flags & TRANSPORT_PUSH_NO_HOOK))
++		if (run_pre_push_hook(transport, remote_refs))
++			goto done;
++
++	if ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
++		      TRANSPORT_RECURSE_SUBMODULES_ONLY)) &&
++	    !is_bare_repository()) {
++		struct ref *ref = remote_refs;
++		struct oid_array commits = OID_ARRAY_INIT;
++
++		trace2_region_enter("transport_push", "push_submodules", r);
++		for (; ref; ref = ref->next)
++			if (!is_null_oid(&ref->new_oid))
++				oid_array_append(&commits,
++						  &ref->new_oid);
++
++		if (!push_unpushed_submodules(r,
++					      &commits,
++					      transport->remote,
++					      rs,
++					      transport->push_options,
++					      pretend)) {
+ 			oid_array_clear(&commits);
+ 			trace2_region_leave("transport_push", "push_submodules", r);
++			die(_("failed to push all needed submodules"));
+ 		}
++		oid_array_clear(&commits);
++		trace2_region_leave("transport_push", "push_submodules", r);
++	}
+ 
+-		if (((flags & TRANSPORT_RECURSE_SUBMODULES_CHECK) ||
+-		     ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
+-				TRANSPORT_RECURSE_SUBMODULES_ONLY)) &&
+-		      !pretend)) && !is_bare_repository()) {
+-			struct ref *ref = remote_refs;
+-			struct string_list needs_pushing = STRING_LIST_INIT_DUP;
+-			struct oid_array commits = OID_ARRAY_INIT;
+-
+-			trace2_region_enter("transport_push", "check_submodules", r);
+-			for (; ref; ref = ref->next)
+-				if (!is_null_oid(&ref->new_oid))
+-					oid_array_append(&commits,
+-							  &ref->new_oid);
+-
+-			if (find_unpushed_submodules(r,
+-						     &commits,
+-						     transport->remote->name,
+-						     &needs_pushing)) {
+-				oid_array_clear(&commits);
+-				trace2_region_leave("transport_push", "check_submodules", r);
+-				die_with_unpushed_submodules(&needs_pushing);
+-			}
+-			string_list_clear(&needs_pushing, 0);
++	if (((flags & TRANSPORT_RECURSE_SUBMODULES_CHECK) ||
++	     ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
++			TRANSPORT_RECURSE_SUBMODULES_ONLY)) &&
++	      !pretend)) && !is_bare_repository()) {
++		struct ref *ref = remote_refs;
++		struct string_list needs_pushing = STRING_LIST_INIT_DUP;
++		struct oid_array commits = OID_ARRAY_INIT;
++
++		trace2_region_enter("transport_push", "check_submodules", r);
++		for (; ref; ref = ref->next)
++			if (!is_null_oid(&ref->new_oid))
++				oid_array_append(&commits,
++						  &ref->new_oid);
++
++		if (find_unpushed_submodules(r,
++					     &commits,
++					     transport->remote->name,
++					     &needs_pushing)) {
+ 			oid_array_clear(&commits);
+ 			trace2_region_leave("transport_push", "check_submodules", r);
++			die_with_unpushed_submodules(&needs_pushing);
+ 		}
++		string_list_clear(&needs_pushing, 0);
++		oid_array_clear(&commits);
++		trace2_region_leave("transport_push", "check_submodules", r);
++	}
+ 
+-		if (!(flags & TRANSPORT_RECURSE_SUBMODULES_ONLY)) {
+-			trace2_region_enter("transport_push", "push_refs", r);
+-			push_ret = transport->vtable->push_refs(transport, remote_refs, flags);
+-			trace2_region_leave("transport_push", "push_refs", r);
+-		} else
+-			push_ret = 0;
+-		err = push_had_errors(remote_refs);
+-		ret = push_ret | err;
+-
+-		if (!quiet || err)
+-			transport_print_push_status(transport->url, remote_refs,
+-					verbose | porcelain, porcelain,
+-					reject_reasons);
+-
+-		if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
+-			set_upstreams(transport, remote_refs, pretend);
+-
+-		if (!(flags & (TRANSPORT_PUSH_DRY_RUN |
+-			       TRANSPORT_RECURSE_SUBMODULES_ONLY))) {
+-			struct ref *ref;
+-			for (ref = remote_refs; ref; ref = ref->next)
+-				transport_update_tracking_ref(transport->remote, ref, verbose);
+-		}
++	if (!(flags & TRANSPORT_RECURSE_SUBMODULES_ONLY)) {
++		trace2_region_enter("transport_push", "push_refs", r);
++		push_ret = transport->vtable->push_refs(transport, remote_refs, flags);
++		trace2_region_leave("transport_push", "push_refs", r);
++	} else
++		push_ret = 0;
++	err = push_had_errors(remote_refs);
++	ret = push_ret | err;
++
++	if (!quiet || err)
++		transport_print_push_status(transport->url, remote_refs,
++				verbose | porcelain, porcelain,
++				reject_reasons);
++
++	if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
++		set_upstreams(transport, remote_refs, pretend);
++
++	if (!(flags & (TRANSPORT_PUSH_DRY_RUN |
++		       TRANSPORT_RECURSE_SUBMODULES_ONLY))) {
++		struct ref *ref;
++		for (ref = remote_refs; ref; ref = ref->next)
++			transport_update_tracking_ref(transport->remote, ref, verbose);
++	}
+ 
+-		if (porcelain && !push_ret)
+-			puts("Done");
+-		else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
+-			fprintf(stderr, "Everything up-to-date\n");
++	if (porcelain && !push_ret)
++		puts("Done");
++	else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
++		fprintf(stderr, "Everything up-to-date\n");
+ 
+-		return ret;
+-	}
+-	return 1;
++done:
++	free_refs(local_refs);
++	free_refs(remote_refs);
++	return ret;
+ }
+ 
+ const struct ref *transport_get_remote_refs(struct transport *transport,
+
+base-commit: e54793a95afeea1e10de1e5ad7eab914e7416250
+-- 
+2.35.1
+
