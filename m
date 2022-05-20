@@ -2,376 +2,266 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 226D2C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:42:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12422C433F5
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 18:42:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353072AbiETSmC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 14:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37804 "EHLO
+        id S1352960AbiETSmF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 14:42:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353012AbiETSlH (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1353014AbiETSlH (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 20 May 2022 14:41:07 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FAB620BCF
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:03 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id n6so4996477wms.0
-        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:03 -0700 (PDT)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4278D220D9
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:04 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id h14so12641816wrc.6
+        for <git@vger.kernel.org>; Fri, 20 May 2022 11:41:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=C2loti5NN/J1UqXaUEJC+qCF2iAcXU4wiSeLPbl4a1s=;
-        b=LJDjMsOzQYmYjUYwznT7+r7/ec4JuCOH5bnwPG/vSj7eVjEuhSDBc/Q+r6Nzy2mLOc
-         oQUvvPgKi19JEnexllb/elI8T+o0/HWx/Le28mJ5T8Dc2aPzdb12NkAEzwN5ERv8LJTm
-         oMVsMI0dTeM1VU708Chco9TbUUzVZcp8wfPmpPrYw/rU7R/+/N+8oYwU1Dg4jmU5id0n
-         dtoG9pCHrXQ7vrkcqhwrM/nxmTTXUKZugyWSTkAMnoCQNInb3iKq5Y8Mth64Ga6LRwIZ
-         iqk6RMXS+tL92HErARYaKnsIwRn6mzSD7hYCfJ/MMOX4T8d2H4KehKTtFMM/iU9/iwom
-         nDXA==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=egM23Z1gtXjOynBl3UOwVGse3TLP4q2+Rj1TiJL74ic=;
+        b=XXZNtbvmiJudGjdb13YYdxIneIGqJlv7HZUW29QVHbqcYtcuJ0CVgsgqdz7KgPLqCy
+         gZ5FoGxUjBVloCx/Ez56SlHvdQgGpM+Wtd6mPbCY7EDHRGihO1A8vjWA+bBwKBJ2xgH9
+         PU8RfKpiNFz2ESivAAw29FwaITGPwsebvjLxxoSFvFubnaJmjwQr/HnWc2hWC+FwfMcF
+         DjCgyVR1WQCBoRBUDnvvs6WZh5K0l8/4mwsKhdHzs8DqWOFe3YCHTZRMpZN+itBHwgpI
+         l0SvKoDbKC4YmhWHZRsZrHpQ/IP5bqXmhqeX7fksZzhD7le69hCvAX9kWg5mQ3A083Oq
+         1q4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=C2loti5NN/J1UqXaUEJC+qCF2iAcXU4wiSeLPbl4a1s=;
-        b=yi8evb8qnlEvuYYoGsbZbmDtqoTPRsKDqucWIb0kZNVnBU6gbpzYnhjRv6hgId9fPM
-         sN9nRCCd8ZbxvHcPxRPyHonyUFXhGAbFczyBdUWmDzQY6QFbV8X/ncxZ01+GUBuiQzpW
-         nzfMe+loYlz2b4v/dQVgDijJPiiuMrb+1//d2hRHAq33QbW8D9e/05tblvp5PUqsRrct
-         dKIRlSG7UC5kuVJ0iSH9GxOB9hLKEzBWltMIrjBAU5RmEIHr1uCNcjqP9TSc9R9WKIHU
-         WHWD/pRaL+Q7ls0wtD6AmOGvC/v85yAYw0pOKVx2rYdZlwbElh4oTs1CTL83bRUrVeLm
-         2a+Q==
-X-Gm-Message-State: AOAM530j/Cks3kowu4DxKy0CgN1tYtFLomM6kAlKYH0uHrHG7xgEbHqA
-        M2oxc4LgShN+eyMHF1A6++qUr/3Mulo=
-X-Google-Smtp-Source: ABdhPJyFJzp7YkRwKMfPhMBJginN2SONEA2+DiXXvhICqdq93ySFis7dsDz1adisNnFs4V53MO4nNQ==
-X-Received: by 2002:a05:600c:1d18:b0:394:6469:abec with SMTP id l24-20020a05600c1d1800b003946469abecmr9454840wms.89.1653072061278;
-        Fri, 20 May 2022 11:41:01 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=egM23Z1gtXjOynBl3UOwVGse3TLP4q2+Rj1TiJL74ic=;
+        b=dq8SLcbyww2yzYV32JEDu3OpZHACgiIrjeC1hzeWBmS4ySXLhpETVIV9eFBbxg8ajQ
+         bNp5xCkAAfumOjgB7seGve02A+ZTtFmXl8lif81IdQ3uLHi6O1+rYRH3Fgaliu8vGlh+
+         p/cuHfbSSeMUHxGfTGVOOEddaxfoAJMwtfhPUPf+3hTkCIkyZQORAf2HEJcy3qq5zeyb
+         8hwdFxp5S37Bt2NAtd10GIGkfzSSw57qFfweMOxCcipZGG398I/25+ZvRCI8pjP8OIS9
+         2hgyV43HPEGBErM8+sgGDVMm6zRnrMwKTJ64dErfHxnqOvwaYjog1DA3HoEqpmQa2JXw
+         NEMw==
+X-Gm-Message-State: AOAM531ANSTnevKWcmXp0Vw1pg6dQDhcCuCX9foIkYokIu94vGk+xZBA
+        qBXFDkE6Voi2F2NHSSpqZYj+03TS/e0=
+X-Google-Smtp-Source: ABdhPJxIY9ntMXjElJ85sa9c0x/Ls9N5B4Ag3e/WPcQXH6Vajep8evftyrq9+38/9FtGyAmee8Wqjg==
+X-Received: by 2002:a5d:5910:0:b0:20d:6e9:d4e9 with SMTP id v16-20020a5d5910000000b0020d06e9d4e9mr9369560wrd.69.1653072062501;
+        Fri, 20 May 2022 11:41:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w10-20020a7bc10a000000b00397099b8cffsm2713412wmi.1.2022.05.20.11.41.00
+        by smtp.gmail.com with ESMTPSA id e2-20020adfa742000000b0020c5253d8f2sm3071792wrd.62.2022.05.20.11.41.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 11:41:00 -0700 (PDT)
-Message-Id: <ceb253ec445b7275943e1c04ac51f12869271e91.1653072042.git.gitgitgadget@gmail.com>
+        Fri, 20 May 2022 11:41:01 -0700 (PDT)
+Message-Id: <94f552e771644aef60c23e5d9379723951542031.1653072042.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
 References: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 May 2022 18:40:33 +0000
-Subject: [PATCH 15/24] bundle-uri: fetch a list of bundles
-Fcc:    Sent
+From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Fri, 20 May 2022 18:40:34 +0000
+Subject: [PATCH 16/24] protocol v2: add server-side "bundle-uri" skeleton
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Teng Long <dyroneteng@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+ <avarab@gmail.com>
 
-When the content at a given bundle URI is not understood as a bundle
-(based on inspecting the initial content), then Git currently gives up
-and ignores that content. Independent bundle providers may want to split
-up the bundle content into multiple bundles, but still make them
-available from a single URI.
+Add a skeleton server-side implementation of a new "bundle-uri" command
+to protocol v2. This will allow conforming clients to optionally seed
+their initial clones or incremental fetches from URLs containing
+"*.bundle" files created with "git bundle create".
 
-Teach Git to attempt parsing the bundle URI content as a Git config file
-providing the key=value pairs for a bundle list. Git then looks at the
-mode of the list to see if ANY single bundle is sufficient or if ALL
-bundles are required. The content at the selected URIs are downloaded
-and the content is inspected again, creating a recursive process.
+This change only performs the basic boilerplate of advertising a new
+protocol v2 capability. The new 'bundle-uri' capability allows a client
+to request a list of bundles. Right now, the server only returns a flush
+packet, which corresponds to an empty advertisement.
 
-To guard the recursion against malformed or malicious content, limit the
-recursion depth to a reasonable four for now. This can be converted to a
-configured value in the future if necessary. The value of four is twice
-as high as expected to be useful (a bundle list is unlikely to point to
-more bundle lists).
+The critical bit right now is that the new boolean
+uploadPack.adverstiseBundleURIs config value signals whether or not this
+capability should be advertised at all.
 
-RFC TODO: add tests for this feature right now.
+RFC TODO: Write documentation.
 
+RFC TODO: Compare to original implementation.
+
+Co-authored-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle-uri.c | 213 ++++++++++++++++++++++++++++++++++++++++++++++-----
- bundle-uri.h |   6 ++
- 2 files changed, 200 insertions(+), 19 deletions(-)
+ bundle-uri.c         | 36 ++++++++++++++++++++++++++++++++++++
+ bundle-uri.h         |  7 +++++++
+ serve.c              |  6 ++++++
+ t/t5701-git-serve.sh | 40 +++++++++++++++++++++++++++++++++++++++-
+ 4 files changed, 88 insertions(+), 1 deletion(-)
 
 diff --git a/bundle-uri.c b/bundle-uri.c
-index ab4b6385fc0..601e6e87822 100644
+index 601e6e87822..79a6b7ed8b8 100644
 --- a/bundle-uri.c
 +++ b/bundle-uri.c
-@@ -35,9 +35,10 @@ void init_bundle_list(struct bundle_list *list)
- static int clear_remote_bundle_info(struct remote_bundle_info *bundle,
- 				    void *data)
- {
--	free(bundle->id);
--	free(bundle->uri);
-+	FREE_AND_NULL(bundle->id);
-+	FREE_AND_NULL(bundle->uri);
- 	strbuf_release(&bundle->file);
-+	bundle->unbundled = 0;
- 	return 0;
- }
- 
-@@ -336,18 +337,102 @@ static int unbundle_from_file(struct repository *r, const char *file)
+@@ -557,6 +557,42 @@ cleanup:
  	return result;
  }
- 
-+struct bundle_list_context {
-+	struct repository *r;
-+	struct bundle_list *list;
-+	enum bundle_list_mode mode;
-+	int count;
-+	int depth;
-+};
-+
-+/*
-+ * This early definition is necessary because we use indirect recursion:
-+ *
-+ * While iterating through a bundle list that was downloaded as part
-+ * of fetch_bundle_uri_internal(), iterator methods eventually call it
-+ * again, but with depth + 1.
-+ */
-+static int fetch_bundle_uri_internal(struct repository *r,
-+				     struct remote_bundle_info *bundle,
-+				     int depth,
-+				     struct bundle_list *list);
-+
-+static int download_bundle_to_file(struct remote_bundle_info *bundle, void *data)
-+{
-+	struct bundle_list_context *ctx = data;
-+
-+	if (ctx->mode == BUNDLE_MODE_ANY && ctx->count)
-+		return 0;
-+
-+	ctx->count++;
-+	return fetch_bundle_uri_internal(ctx->r, bundle, ctx->depth + 1, ctx->list);
-+}
-+
-+static int download_bundle_list(struct repository *r,
-+				struct bundle_list *local_list,
-+				struct bundle_list *global_list,
-+				int depth)
-+{
-+	struct bundle_list_context ctx = {
-+		.r = r,
-+		.list = global_list,
-+		.depth = depth + 1,
-+		.mode = local_list->mode,
-+	};
-+
-+	return for_all_bundles_in_list(local_list, download_bundle_to_file, &ctx);
-+}
-+
-+static int fetch_bundle_list_in_config_format(struct repository *r,
-+					      struct bundle_list *global_list,
-+					      struct remote_bundle_info *bundle,
-+					      int depth)
-+{
-+	int result;
-+	struct bundle_list list_from_bundle;
-+
-+	init_bundle_list(&list_from_bundle);
-+
-+	if ((result = parse_bundle_list_in_config_format(bundle->uri,
-+							 bundle->file.buf,
-+							 &list_from_bundle)))
-+		goto cleanup;
-+
-+	if (list_from_bundle.mode == BUNDLE_MODE_NONE) {
-+		warning(_("unrecognized bundle mode from URI '%s'"),
-+			bundle->uri);
-+		result = -1;
-+		goto cleanup;
-+	}
-+
-+	if ((result = download_bundle_list(r, &list_from_bundle,
-+					   global_list, depth)))
-+		goto cleanup;
-+
-+cleanup:
-+	clear_bundle_list(&list_from_bundle);
-+	return result;
-+}
-+
- /**
-  * This limits the recursion on fetch_bundle_uri_internal() when following
-  * bundle lists.
-  */
- static int max_bundle_uri_depth = 4;
  
 +/**
-+ * Recursively download all bundles advertised at the given URI
-+ * to files. If the file is a bundle, then add it to the given
-+ * 'list'. Otherwise, expect a bundle list and recurse on the
-+ * URIs in that list according to the list mode (ANY or ALL).
++ * API for serve.c.
 + */
- static int fetch_bundle_uri_internal(struct repository *r,
--				     const char *uri,
--				     int depth)
-+				     struct remote_bundle_info *bundle,
-+				     int depth,
-+				     struct bundle_list *list)
- {
- 	int result = 0;
--	struct strbuf filename = STRBUF_INIT;
-+	struct remote_bundle_info *bcopy;
- 
- 	if (depth >= max_bundle_uri_depth) {
- 		warning(_("exceeded bundle URI recursion limit (%d)"),
-@@ -355,31 +440,121 @@ static int fetch_bundle_uri_internal(struct repository *r,
- 		return -1;
- 	}
- 
--	find_temp_filename(&filename);
--	if ((result = copy_uri_to_file(uri, filename.buf)))
-+	if (!bundle->file.len)
-+		find_temp_filename(&bundle->file);
-+	if ((result = copy_uri_to_file(bundle->uri, bundle->file.buf)))
- 		goto cleanup;
- 
--	if ((result = !is_bundle(filename.buf, 0)))
--		goto cleanup;
--
--	if ((result = unbundle_from_file(r, filename.buf)))
-+	if ((result = !is_bundle(bundle->file.buf, 1))) {
-+		result = fetch_bundle_list_in_config_format(
-+				r, list, bundle, depth);
- 		goto cleanup;
-+	}
- 
--	git_config_set_multivar_gently("log.excludedecoration",
--					"refs/bundle/",
--					"refs/bundle/",
--					CONFIG_FLAGS_FIXED_VALUE |
--					CONFIG_FLAGS_MULTI_REPLACE);
-+	/* Copy the bundle and insert it into the global list. */
-+	CALLOC_ARRAY(bcopy, 1);
-+	bcopy->id = xstrdup(bundle->id);
-+	strbuf_init(&bcopy->file, 0);
-+	strbuf_add(&bcopy->file, bundle->file.buf, bundle->file.len);
-+	strbuf_detach(&bundle->file, NULL);
-+	hashmap_entry_init(&bcopy->ent, strhash(bcopy->id));
-+	hashmap_add(&list->bundles, &bcopy->ent);
- 
- cleanup:
--	unlink(filename.buf);
--	strbuf_release(&filename);
-+	if (bundle->file.len)
-+		unlink(bundle->file.buf);
- 	return result;
- }
- 
-+struct attempt_unbundle_context {
-+	struct repository *r;
-+	int success_count;
-+	int failure_count;
-+};
 +
-+static int attempt_unbundle(struct remote_bundle_info *info, void *data)
++static int advertise_bundle_uri = -1;
++
++int bundle_uri_advertise(struct repository *r, struct strbuf *value)
 +{
-+	struct attempt_unbundle_context *ctx = data;
++	if (advertise_bundle_uri != -1)
++		goto cached;
 +
-+	if (info->unbundled || !unbundle_from_file(ctx->r, info->file.buf)) {
-+		ctx->success_count++;
-+		info->unbundled = 1;
-+	} else {
-+		ctx->failure_count++;
-+	}
++	advertise_bundle_uri = 0;
++	git_config_get_maybe_bool("uploadpack.advertisebundleuris", &advertise_bundle_uri);
++
++cached:
++	return advertise_bundle_uri;
++}
++
++int bundle_uri_command(struct repository *r,
++		       struct packet_reader *request)
++{
++	struct packet_writer writer;
++	packet_writer_init(&writer, 1);
++
++	while (packet_reader_read(request) == PACKET_READ_NORMAL)
++		die(_("bundle-uri: unexpected argument: '%s'"), request->line);
++	if (request->status != PACKET_READ_FLUSH)
++		die(_("bundle-uri: expected flush after arguments"));
++
++	/* TODO: Implement the communication */
++
++	packet_writer_flush(&writer);
 +
 +	return 0;
 +}
 +
-+static int unbundle_all_bundles(struct repository *r,
-+				struct bundle_list *list)
-+{
-+	int last_success_count = -1;
-+	struct attempt_unbundle_context ctx = {
-+		.r = r,
-+	};
-+
-+	/*
-+	 * Iterate through all bundles looking for ones that can
-+	 * successfully unbundle. If any succeed, then perhaps another
-+	 * will succeed in the next attempt.
-+	 */
-+	while (last_success_count < ctx.success_count) {
-+		last_success_count = ctx.success_count;
-+
-+		ctx.success_count = 0;
-+		ctx.failure_count = 0;
-+		for_all_bundles_in_list(list, attempt_unbundle, &ctx);
-+	}
-+
-+	if (ctx.success_count)
-+		git_config_set_multivar_gently("log.excludedecoration",
-+						"refs/bundle/",
-+						"refs/bundle/",
-+						CONFIG_FLAGS_FIXED_VALUE |
-+						CONFIG_FLAGS_MULTI_REPLACE);
-+
-+	if (ctx.failure_count) {
-+		warning(_("failed to unbundle %d bundles"),
-+			ctx.failure_count);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int unlink_bundle(struct remote_bundle_info *info, void *data)
-+{
-+	if (info->file.buf)
-+		unlink_or_warn(info->file.buf);
-+	return 0;
-+}
-+
- int fetch_bundle_uri(struct repository *r, const char *uri)
- {
--	return fetch_bundle_uri_internal(r, uri, 0);
-+	int result;
-+	struct bundle_list list;
-+	struct remote_bundle_info bundle = {
-+		.uri = xstrdup(uri),
-+		.id = xstrdup("<root>"),
-+		.file = STRBUF_INIT,
-+	};
-+
-+	init_bundle_list(&list);
-+
-+	/* If a bundle is added to this global list, then it is required. */
-+	list.mode = BUNDLE_MODE_ALL;
-+
-+	if ((result = fetch_bundle_uri_internal(r, &bundle, 0, &list)))
-+		goto cleanup;
-+
-+	result = unbundle_all_bundles(r, &list);
-+
-+cleanup:
-+	for_all_bundles_in_list(&list, unlink_bundle, NULL);
-+	clear_bundle_list(&list);
-+	clear_remote_bundle_info(&bundle, NULL);
-+	return result;
- }
- 
  /**
+  * General API for {transport,connect}.c etc.
+  */
 diff --git a/bundle-uri.h b/bundle-uri.h
-index b0183870336..adce5dc07e2 100644
+index adce5dc07e2..9f6fc2d75f9 100644
 --- a/bundle-uri.h
 +++ b/bundle-uri.h
-@@ -36,6 +36,12 @@ struct remote_bundle_info {
- 	 * an empty string.
- 	 */
- 	struct strbuf file;
+@@ -4,6 +4,7 @@
+ #include "hashmap.h"
+ #include "strbuf.h"
+ 
++struct packet_reader;
+ struct repository;
+ struct strbuf;
+ struct string_list;
+@@ -97,6 +98,12 @@ int parse_bundle_list_in_config_format(const char *uri,
+  */
+ int fetch_bundle_uri(struct repository *r, const char *uri);
+ 
++/**
++ * API for serve.c.
++ */
++int bundle_uri_advertise(struct repository *r, struct strbuf *value);
++int bundle_uri_command(struct repository *r, struct packet_reader *request);
 +
-+	/**
-+	 * If the bundle has been unbundled successfully, then
-+	 * this boolean is true.
-+	 */
-+	unsigned unbundled:1;
+ /**
+  * General API for {transport,connect}.c etc.
+  */
+diff --git a/serve.c b/serve.c
+index b3fe9b5126a..f3e0203d2c6 100644
+--- a/serve.c
++++ b/serve.c
+@@ -8,6 +8,7 @@
+ #include "protocol-caps.h"
+ #include "serve.h"
+ #include "upload-pack.h"
++#include "bundle-uri.h"
+ 
+ static int advertise_sid = -1;
+ static int client_hash_algo = GIT_HASH_SHA1;
+@@ -136,6 +137,11 @@ static struct protocol_capability capabilities[] = {
+ 		.advertise = always_advertise,
+ 		.command = cap_object_info,
+ 	},
++	{
++		.name = "bundle-uri",
++		.advertise = bundle_uri_advertise,
++		.command = bundle_uri_command,
++	},
  };
  
- #define REMOTE_BUNDLE_INFO_INIT { \
+ void protocol_v2_advertise_capabilities(void)
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index 1896f671cb3..f21e5e9d33d 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -13,7 +13,7 @@ test_expect_success 'test capability advertisement' '
+ 	wrong_algo sha1:sha256
+ 	wrong_algo sha256:sha1
+ 	EOF
+-	cat >expect <<-EOF &&
++	cat >expect.base <<-EOF &&
+ 	version 2
+ 	agent=git/$(git version | cut -d" " -f3)
+ 	ls-refs=unborn
+@@ -21,8 +21,11 @@ test_expect_success 'test capability advertisement' '
+ 	server-option
+ 	object-format=$(test_oid algo)
+ 	object-info
++	EOF
++	cat >expect.trailer <<-EOF &&
+ 	0000
+ 	EOF
++	cat expect.base expect.trailer >expect &&
+ 
+ 	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
+ 		--advertise-capabilities >out &&
+@@ -342,4 +345,39 @@ test_expect_success 'basics of object-info' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'test capability advertisement with uploadpack.advertiseBundleURIs' '
++	test_config uploadpack.advertiseBundleURIs true &&
++
++	cat >expect.extra <<-EOF &&
++	bundle-uri
++	EOF
++	cat expect.base \
++	    expect.extra \
++	    expect.trailer >expect &&
++
++	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
++		--advertise-capabilities >out &&
++	test-tool pkt-line unpack <out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'basics of bundle-uri: dies if not enabled' '
++	test-tool pkt-line pack >in <<-EOF &&
++	command=bundle-uri
++	0000
++	EOF
++
++	cat >err.expect <<-\EOF &&
++	fatal: invalid command '"'"'bundle-uri'"'"'
++	EOF
++
++	cat >expect <<-\EOF &&
++	ERR serve: invalid command '"'"'bundle-uri'"'"'
++	EOF
++
++	test_must_fail test-tool serve-v2 --stateless-rpc <in >out 2>err.actual &&
++	test_cmp err.expect err.actual &&
++	test_must_be_empty out
++'
++
+ test_done
 -- 
 gitgitgadget
 
