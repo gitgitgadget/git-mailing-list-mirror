@@ -2,110 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0A21C433F5
-	for <git@archiver.kernel.org>; Fri, 20 May 2022 04:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B08C1C433EF
+	for <git@archiver.kernel.org>; Fri, 20 May 2022 07:24:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345308AbiETEhj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 00:37:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43724 "EHLO
+        id S1346442AbiETHYz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 03:24:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343815AbiETEhg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 00:37:36 -0400
-X-Greylist: delayed 903 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 19 May 2022 21:37:35 PDT
-Received: from sender4-of-o53.zoho.com (sender4-of-o53.zoho.com [136.143.188.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F008CCC8
-        for <git@vger.kernel.org>; Thu, 19 May 2022 21:37:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1653020549; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=IC3/Sqk3iNu2j9gUDbuDmY5Y4/efLv1Q76t69q+M3CerwSzZZ/nWPb/nkiZxgPYoEEJ83fFB8+7uDFH39ALBcfZ+7/LKBuvvXDfHc0fJHA8RvYyzfGcDh2ukiuUSufUZdj5aHpLc7w4CrYwVqubxdWeDIKB5O1DAjF3KCVaZbh0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1653020549; h=Content-Type:Content-Transfer-Encoding:Date:From:MIME-Version:Message-ID:Subject:To; 
-        bh=YJpD9loUgRDREcN9EJPPWFd4ZftW8hHTyAyIRrk3+u8=; 
-        b=RhyOJucis5x+Iu41AkON3SK6c+7PMBB/52zgVQ0D3mv6pw5ueXhADcqV7IzdiwMev6Px88nIpPaJBcd61/9Spc2KwRS86PmigMdawW1HKjKqEuRNP3/xK3oto8+EHcSLecePvinLtmSL8zfYx5qL5zkwjqVVS7USN65GWz73tsI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        dkim=pass  header.i=allejo.io;
-        spf=pass  smtp.mailfrom=me@allejo.io;
-        dmarc=pass header.from=<me@allejo.io>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1653020549;
-        s=zoho; d=allejo.io; i=me@allejo.io;
-        h=Date:Date:From:From:To:To:Message-ID:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-        bh=YJpD9loUgRDREcN9EJPPWFd4ZftW8hHTyAyIRrk3+u8=;
-        b=CzgCN1rj4KR2C4Kl4J1dabecOVQDBkvj3Hl4sMtjrheVIJ2QRpjDgvEhT3qTKW5C
-        CFcYv2vsuaa8eElEBe+q+SWQNvBDxNCe8aPsMxTzTf5uxDQG2Dczn0pR+J8lZdpitYV
-        w+mqK2s4ovvit/tuCum3Gmre8jNv8H1USRgT/PfY=
-Received: from mail.zoho.com by mx.zohomail.com
-        with SMTP id 1653020547301331.45592430893544; Thu, 19 May 2022 21:22:27 -0700 (PDT)
-Date:   Thu, 19 May 2022 21:22:27 -0700
-From:   allejo <me@allejo.io>
-To:     "git" <git@vger.kernel.org>
-Message-ID: <180dfb3d8d3.12352a818142651.7062268074453572353@allejo.io>
-In-Reply-To: 
-Subject: =?UTF-8?Q?bug:_`git_diff`_implies_folder_isn=E2=80=99t_a_git_repo?=
+        with ESMTP id S1346410AbiETHYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 03:24:50 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A332514ACB8
+        for <git@vger.kernel.org>; Fri, 20 May 2022 00:24:49 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id h5so9113456wrb.11
+        for <git@vger.kernel.org>; Fri, 20 May 2022 00:24:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=62LHopTH5Ei2jtHOuBIhMLgwmJJx5YtQPPGStK/wz5o=;
+        b=T1mKyXAGgtON1p/YdfDQCNGDxzgdBckJ35zZCzhRpbo2QwQl69MjqK+4Moetp96rVg
+         fLxRELE+kRGOa/gxEWEJm6VO1cZ5JAzzf+aKb+6Cb8oRt1WD27x6i7oEtX8F9auJ8AJN
+         3wBracLBjpcHoPMfLEAw0M+T6ZolsLJdTr6eOujqHFIJNN0KU/BZqUnlL2zhnGDOahyZ
+         gyNiHcnOWQj3BizRFKjlz54MDv7RWgvC5Hixxup1gjnt5z/XzNesAv9TqzsxiZAwVo3C
+         jYBOzDocfW6tTmA/0S0xSlJH6PCaiCSZYMJP4QbQqPWO2qXqIbEXLRrpyX5D/NB4F9VU
+         HScA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=62LHopTH5Ei2jtHOuBIhMLgwmJJx5YtQPPGStK/wz5o=;
+        b=3m18L6sZRBCBUpa/Ya3oljrDSi8gteqk0KmDoIDbhXqoOr83qHvrLBdBTc+Rep46MY
+         d8sprsi9LWfvYDHIZq9oEj2elHgKutb/BslPg1UZy4RFtOkhg7BnzocfqVZsm36cLvNT
+         UmCookHG8Ic5qxHNRvVExrkj502/1Wywd/ypCe24KYPRIxH8caOfd11VXyIt6h8iAeBg
+         7rw3uDh/Tfsez+1E1MF8p3B7j8rmWnhLN17vQ2bV2BHXZJEJpE9VJ9+dIi0hhPqN14Db
+         2RKvC/sVjPGnbfEsBf3+sbg3DiFEhgVqGEAphVVSHYBBTVvEF52Eemb1bKUtM4JLgXwr
+         Jy/g==
+X-Gm-Message-State: AOAM532Jv6lzNlue6Ny7pq1LLR80jOqv7DpiBrhLJf3saEsLSt2M7sZp
+        Y05kODXbmiudo+ifJFoaDIt5Hb4U3S8rLg==
+X-Google-Smtp-Source: ABdhPJzVlzG7hrlKq22Gxei2TGdEPwBJzAhcsqxdeP7KtE/HaEFNaZoCFA3X++Ns7IfqSpzya+WOFA==
+X-Received: by 2002:adf:e70a:0:b0:20d:e3e:f79f with SMTP id c10-20020adfe70a000000b0020d0e3ef79fmr7163314wrm.105.1653031487751;
+        Fri, 20 May 2022 00:24:47 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id t16-20020adfa2d0000000b0020d0a070c80sm1668429wra.35.2022.05.20.00.24.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 May 2022 00:24:45 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Enzo Matsumiya <ematsumiya@suse.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/4] run-command.h: rename "env_array" to "env"
+Date:   Fri, 20 May 2022 09:24:38 +0200
+Message-Id: <cover-v2-0.4-00000000000-20220520T072122Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.957.g2c13267e09b
+In-Reply-To: <cover-0.3-00000000000-20220406T104134Z-avarab@gmail.com>
+References: <cover-0.3-00000000000-20220406T104134Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please answer the following questions to help us understand your issue.
+Follow-up 32ec72c3e1 (Merge branch 'ab/run-command', 2021-12-15) and
+rename the "env_array" member to simply "env" in the "struct
+child_process".
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Changes since v1:
 
-Change ownership of a Git repo to require `safe.directory` behavior.
+ * Added a commit to remove the coccinelle rule after its application,
+   as suggested by Junio in
+   https://lore.kernel.org/git/xmqqzgjdkxon.fsf@gitster.g/
 
-What did you expect to happen? (Expected behavior)
+ * Minor commit rewording for 4/4 to adjust for that new 3/4.
 
-If you run `git diff --exit-code` on a non-`safe.directory`, you should get the standard error.
+Ævar Arnfjörð Bjarmason (4):
+  cocci: add a rename of "struct child_process"'s "env_array" to "env"
+  run-command API: rename "env_array" to "env"
+  cocci: remove env_array -> env migration
+  run-command API users: use "env" not "env_array" in comments & names
 
-    Error: fatal: unsafe repository ('/path/to/repo' is owned by someone else)
+ add-patch.c                 |  2 +-
+ branch.c                    |  2 +-
+ builtin/difftool.c          |  6 ++---
+ builtin/receive-pack.c      | 32 +++++++++++++--------------
+ builtin/stash.c             | 16 +++++++-------
+ builtin/submodule--helper.c | 44 ++++++++++++++++++-------------------
+ builtin/worktree.c          |  8 +++----
+ connect.c                   |  9 ++++----
+ connected.c                 |  2 +-
+ daemon.c                    | 14 ++++++------
+ editor.c                    |  2 +-
+ hook.c                      |  2 +-
+ http-backend.c              |  4 ++--
+ object-file.c               |  2 +-
+ pager.c                     |  4 ++--
+ promisor-remote.c           |  2 +-
+ run-command.c               | 19 ++++++++--------
+ run-command.h               | 14 ++++++------
+ sequencer.c                 | 18 +++++++--------
+ submodule.c                 | 38 ++++++++++++++++----------------
+ submodule.h                 |  4 ++--
+ t/helper/test-run-command.c |  2 +-
+ trailer.c                   |  2 +-
+ transport-helper.c          |  2 +-
+ wt-status.c                 |  2 +-
+ 25 files changed, 127 insertions(+), 125 deletions(-)
 
-What happened instead? (Actual behavior)
-
-I get an error message saying it's not actually a git repository even though it is, it's just not safe to work in.
-
-    warning: Not a git repository. Use --no-index to compare two paths outside a working tree
-    usage: git diff --no-index [<options>] <path> <path>
-
-    Diff output format options
-        -p, --patch           generate patch
-        -s, --no-patch        suppress diff output
-        -u                    generate patch
-        -U, --unified[=<n>]   generate diffs with <n> lines context
-        -W, --function-context
-                              generate diffs with <n> lines context
-        --raw                 generate the diff in raw format
-        --patch-with-raw      synonym for '-p --raw'
-        --patch-with-stat     synonym for '-p --stat'
-        --numstat             machine friendly --stat
-        --shortstat           output only the last line of --stat
-        -X, --dirstat[=<param1,param2>...]
-                              output the distribution of relative amount of changes for each sub-directory
-    ...
-
-What's different between what you expected and what actually happened?
-
-One error message implies the folder isn't a Git repo while the other explicitly says it's not safe to work in and how to fix it.
-
-Anything else you want to add:
-
-I am installing git on Ubuntu 20.04.4 from its default repositories inside of a GitHub Actions runner.
-
-[System Info]
-git version:
-git version 2.25.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Range-diff against v1:
+1:  b943ed5d5b7 = 1:  e3f33fce566 cocci: add a rename of "struct child_process"'s "env_array" to "env"
+2:  51063a31b16 = 2:  5aeb6ec9117 run-command API: rename "env_array" to "env"
+-:  ----------- > 3:  ca09da570ef cocci: remove env_array -> env migration
+3:  8af76f39b9f ! 4:  5419f839c74 run-command API users: use "env" not "env_array" in comments & names
+    @@ Metadata
+      ## Commit message ##
+         run-command API users: use "env" not "env_array" in comments & names
+     
+    -    Follow-up on the preceding commit which changed all references to the
+    +    Follow-up on a preceding commit which changed all references to the
+         "env_array" when referring to the "struct child_process" member. These
+         changes are all unnecessary for the compiler, but help the code's
+         human readers.
+-- 
+2.36.1.957.g2c13267e09b
 
