@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BF7FC433F5
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 22:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28D29C433EF
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 22:19:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347182AbiEUWTM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 May 2022 18:19:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45238 "EHLO
+        id S1347184AbiEUWTQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 18:19:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346344AbiEUWTD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 May 2022 18:19:03 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E58AA4EF7A
-        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:02 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id e28so15307994wra.10
-        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:02 -0700 (PDT)
+        with ESMTP id S1347077AbiEUWTF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 May 2022 18:19:05 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 061164EF53
+        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:04 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id w4so15875671wrg.12
+        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=iGAE3SZGJU7eojvkhG0qydiDez1X+uPg8UYp38uGbF0=;
-        b=pnpgYtzE8eCl+OV5Z9Qsot3aHuK9I6XMOW/tXVdFGMfKAkllTarp/scudzRP9H0ued
-         VPwdEEC6MD1MlkEpNyA0A+t/YNo+pAwNujSTbb9vwsI31hZz95aY8eJXEbR5ZCPR2LjR
-         8oDwzNeebh2Bv4DCjRy8BQ39RwtHidFQOYsfWjbk3d5Mu7GmLlqAZqyv6jXDebh3pnGY
-         LY+SnkNJe4odJypUtd+kRPYKpnCXb1it5zga0neekjyQyINb96uIKNKWmH6q9QavvHwI
-         kik1cx6gAyt3HxR7amy4fIBINZcrm62J+wHTzL23dCbrYgomVPYdCYHqrDzYComfWQ+C
-         /fow==
+        bh=IALL0QMC0v8ysobvDm4KtZMwa6z5A/re01nuKPjfC2M=;
+        b=SmCjqgVfXftHeCK7Ug1T6doqz7axxkZFem0AiCG7JV2ZTI/ts2JJzlWJ5e9uBJNaJR
+         CQ+3XsR+VmK/SynE9qZ7ieu6NLZPgKyA4kZjH8U9dmt/Hi0lw7KdSGOhwyHEXfn0DiSq
+         xYuOqCsLh/+wh83mA7GR5hUTF8E/1iHoc6nlwJLtJ0sMrjG7BXjeV5PalawVwpXJJUAb
+         cBIrbtd+wJ0z1xDojqAfUpf8MSo/MVT6HhPXelb3pX1a9ySDl+pnxY/MUNiO4fdNzsv6
+         ePwsWbngvwrqDA1ONfj+FU4UHhTwfz18G4lC7n6v/bAJUiupf3tL7zLMJ8v192+HZnD1
+         RoJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=iGAE3SZGJU7eojvkhG0qydiDez1X+uPg8UYp38uGbF0=;
-        b=shP1R27ZZPo3u7ZJlFyR6e3e0HIfxK3DXbZ22/rqvwk/rXzS+6R+I4c96lm4ivXMcI
-         d8/Utanlij5sPIfDaH5OjNUG+9yb4j5Vh/T4ajtYOTsBo6G24dZDUUX+Incfr4I72D8X
-         lz+7r3eqq7amfVZ60PpDq2U+YYaPqkueldYYEHPIGCgTgQ0mLmSzh4pF/rMY84rWWG6w
-         HxvQf2t9TV/IoSBtjd5osPB6dANhPl61TCexHKaFHZWCLhKo2NHaG+gISLxRE0Nho/rP
-         phLKb6y3lrkCj3r64gEJmOmGfs8mmx4TRVxS348upObolu1j+R8BO7bIObdmgehGYGjb
-         PVxw==
-X-Gm-Message-State: AOAM533zafciX/cGwFmI30QrowMSCfXPQHUYELBHHL097frxPhJGzlQD
-        kMMaxY5qbYCwogmheBAwAzxwFjJFfGk=
-X-Google-Smtp-Source: ABdhPJxTDJ4ii3jI9F4cZ4CuUf6SrbDt2lWOtgtamp6IuAzYvc29b/mKFDukgB48zi2tcpTXt9eQVA==
-X-Received: by 2002:a05:6000:1841:b0:20c:788b:9306 with SMTP id c1-20020a056000184100b0020c788b9306mr13129820wri.369.1653171541147;
-        Sat, 21 May 2022 15:19:01 -0700 (PDT)
+        bh=IALL0QMC0v8ysobvDm4KtZMwa6z5A/re01nuKPjfC2M=;
+        b=irZRBr4yt+kX2WP0Uy6kLlSHe9S/fhfJ10rqpspHB0MYwh68nnyOXEcqpgJ4MUfAY7
+         pmkJIV6JkL/7Gfg4RlqSILv4TVGu+tsMHsJhMvm3AQOAADSkJMtTKRryu27Raq3CXooq
+         8eT/uh30JJX28cEbAbAzsKV5o39Vx7e1X0Mpe7YZ4nVTg0VEWyIiJAKydmzCQl3KcFX+
+         hQUJe0Z8PgUb5p1lV2JyEUJ9sVU5mgCPT1DaLQl1NnJo7wBtrYaIjAGK9uhZVZ/Jpk6+
+         t+8wkoGqJpdMxwAXYIMlryguOhDhQSSF3xmHo4sYdTwNRBvSQ+OEs/d35S8UQzuiGK+d
+         fa/Q==
+X-Gm-Message-State: AOAM5320M7gBQzN58B3EV0I2h3Fq04QyyUpONylmc2gjZ9cFud+Puat0
+        3uGaiCE1fukGg7mmv4UZ6P2XEWiXj3E=
+X-Google-Smtp-Source: ABdhPJwIVZd4ORzpGg/bdbaENaxOQFONEmrTNBZBNpmiB1po9DBKrS+Dysn5GD7rgsMvLgXIcBpJmA==
+X-Received: by 2002:adf:f611:0:b0:20d:1317:5bae with SMTP id t17-20020adff611000000b0020d13175baemr13056841wrp.359.1653171542144;
+        Sat, 21 May 2022 15:19:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9-20020adf8bc9000000b0020d07958bb3sm6119835wra.3.2022.05.21.15.19.00
+        by smtp.gmail.com with ESMTPSA id g10-20020adfa58a000000b0020e60baffd1sm2702432wrc.52.2022.05.21.15.19.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 May 2022 15:19:00 -0700 (PDT)
-Message-Id: <30ccd602108fea74d64a5b81e6665fcc7efb6f0a.1653171536.git.gitgitgadget@gmail.com>
+        Sat, 21 May 2022 15:19:01 -0700 (PDT)
+Message-Id: <8f5b112bd08dcaf63ea764be71a17942c184de0e.1653171536.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
 References: <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
         <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 May 2022 22:18:47 +0000
-Subject: [PATCH v3 03/12] test(junit): avoid line feeds in XML attributes
+Date:   Sat, 21 May 2022 22:18:48 +0000
+Subject: [PATCH v3 04/12] ci/run-build-and-tests: take a more high-level view
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,61 +71,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the test case's output, we do want newline characters, but in the XML
-attributes we do not want them.
+In the web UI of GitHub workflows, failed runs are presented with the
+job step that failed auto-expanded. In the current setup, this is not
+helpful at all because that shows only the output of `prove`, which says
+which test failed, but not in what way.
 
-However, the `xml_attr_encode` function always adds a Line Feed at the
-end (which are then encoded as `&#x0a;`, even for XML attributes.
+What would help understand the reader what went wrong is the verbose
+test output of the failed test.
 
-This seems not to faze Azure Pipelines' XML parser, but it still is
-incorrect, so let's fix it.
+The logs of the failed runs do contain that verbose test output, but it
+is shown in the _next_ step (which is marked as succeeding, and is
+therefore _not_ auto-expanded). Anyone not intimately familiar with this
+would completely miss the verbose test output, being left mostly
+puzzled with the test failures.
+
+We are about to show the failed test cases' output in the _same_ step,
+so that the user has a much easier time to figure out what was going
+wrong.
+
+But first, we must partially revert the change that tried to improve the
+CI runs by combining the `Makefile` targets to build into a single
+`make` invocation. That might have sounded like a good idea at the time,
+but it does make it rather impossible for the CI script to determine
+whether the _build_ failed, or the _tests_. If the tests were run at
+all, that is.
+
+So let's go back to calling `make` for the build, and call `make test`
+separately so that we can easily detect that _that_ invocation failed,
+and react appropriately.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib-junit.sh | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ ci/run-build-and-tests.sh | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/t/test-lib-junit.sh b/t/test-lib-junit.sh
-index 9d55d74d764..c959183c7e2 100644
---- a/t/test-lib-junit.sh
-+++ b/t/test-lib-junit.sh
-@@ -50,7 +50,7 @@ finalize_test_case_output () {
- 		;;
- 	failure)
- 		junit_insert="<failure message=\"not ok $test_count -"
--		junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
-+		junit_insert="$junit_insert $(xml_attr_encode --no-lf "$1")\">"
- 		junit_insert="$junit_insert $(xml_attr_encode \
- 			"$(if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
- 			   then
-@@ -74,12 +74,12 @@ finalize_test_case_output () {
- 		set "$* (known breakage)"
- 		;;
- 	skip)
--		message="$(xml_attr_encode "$skipped_reason")"
-+		message="$(xml_attr_encode --no-lf "$skipped_reason")"
- 		set "$1" "      <skipped message=\"$message\" />"
- 		;;
- 	esac
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 280dda7d285..2818b3046ae 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -10,7 +10,7 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
+ *) ln -s "$cache_dir/.prove" t/.prove;;
+ esac
  
--	junit_attrs="name=\"$(xml_attr_encode "$this_test.$test_count $1")\""
-+	junit_attrs="name=\"$(xml_attr_encode --no-lf "$this_test.$test_count $1")\""
- 	shift
- 	junit_attrs="$junit_attrs classname=\"$this_test\""
- 	junit_attrs="$junit_attrs time=\"$(test-tool \
-@@ -122,5 +122,11 @@ write_junit_xml () {
- }
+-export MAKE_TARGETS="all test"
++run_tests=t
  
- xml_attr_encode () {
--	printf '%s\n' "$@" | test-tool xml-encode
-+	if test "x$1" = "x--no-lf"
-+	then
-+		shift
-+		printf '%s' "$*" | test-tool xml-encode
-+	else
-+		printf '%s\n' "$@" | test-tool xml-encode
-+	fi
- }
+ case "$jobname" in
+ linux-gcc)
+@@ -41,14 +41,15 @@ pedantic)
+ 	# Don't run the tests; we only care about whether Git can be
+ 	# built.
+ 	export DEVOPTS=pedantic
+-	export MAKE_TARGETS=all
++	run_tests=
+ 	;;
+ esac
+ 
+-# Any new "test" targets should not go after this "make", but should
+-# adjust $MAKE_TARGETS. Otherwise compilation-only targets above will
+-# start running tests.
+-make $MAKE_TARGETS
++make
++if test -n "$run_tests"
++then
++	make test
++fi
+ check_unignored_build_artifacts
+ 
+ save_good_tree
 -- 
 gitgitgadget
 
