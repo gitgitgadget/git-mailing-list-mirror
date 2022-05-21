@@ -2,164 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B72B6C433EF
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 00:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62699C433F5
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 00:38:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243537AbiEUAO5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 20:14:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56922 "EHLO
+        id S233836AbiEUAi6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 May 2022 20:38:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237832AbiEUAOz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 20:14:55 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709D0674FD
-        for <git@vger.kernel.org>; Fri, 20 May 2022 17:14:54 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id j4so8167254edq.6
-        for <git@vger.kernel.org>; Fri, 20 May 2022 17:14:54 -0700 (PDT)
+        with ESMTP id S231704AbiEUAi5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 May 2022 20:38:57 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D21BC1AB7B4
+        for <git@vger.kernel.org>; Fri, 20 May 2022 17:38:56 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id bs17so9098735qkb.0
+        for <git@vger.kernel.org>; Fri, 20 May 2022 17:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xI7eaAQzcSsXk0zqo0gTkzQxrwqBy0Y+12l8WZ5OplE=;
-        b=gbpQDieiSaUXAhFS0YHDU1vFbJRLjQYOKXhaCn1VVeVUTj+AOkUSNJbz3vE2G0tW2m
-         MSO67328dERYTongCTEFpONHInuuGW98nGDDSF9jENY9SltLUOWPNyz4OMienXbQefvT
-         dmoO3Tgeq2EX4uZsIx4n/IeyxtmUYLEPgCItfOQCg5SYvpAtXTfR1bQ3RMF9HE6j1LOb
-         hYLsWCwrOB58WVH/u+luEYlnhZKUeDVd7soY+7EInnFopX8LTBP/h7I0DNzy9IVQm9Wd
-         jdS+q/qjhA0hexgEU1+JA1ll8xycP4C7RLk2yof05fhklwgQln89ctfB/RaeRCoUvxW3
-         s+DQ==
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=oWPWYS158YOZ8EmrsEwzn15jze6W0jRPyLYNcVnfdF8=;
+        b=Lkxg6Gx74uheAYr6XSafQC8zZLAyOZxUMHMnzSfJvYfROnaqeKUP4exjsF3SgfkA1M
+         kksmfsjQCHbrkH7T1apfBVRa/EATJutxC1MtN9NaeT9WG78/utST8ea6XRnQwmPHhk/H
+         jwgfpHuuzcpPEASdsQhe2SmC/sreAeNZogI4km+cxkHCBEWYdk9EEldtwP3KCLZAkGaN
+         R9tEGl6M5ZBUUzzNbbdX9w3kDWpwQeDb+NyTkZNDS+WZqZPgAUnuoIJGnNWum9nmstsh
+         iAa99ZQlnEFwr8dfr0tVHLRufvAdULgVy6A7cPNEtY5KJCb0aiQ4QgJXJBcYI9ur5NLS
+         kWzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xI7eaAQzcSsXk0zqo0gTkzQxrwqBy0Y+12l8WZ5OplE=;
-        b=c07NS2YXximiJC0fSSckNCDJmPvtsshHdNXADpfkmFc6ys56gRwHGXyGLmXAqCELLx
-         TKlC5E/6+AxE5avBP0aLnfI1bFZfK5c8PclSyZERKo6TWGNeuQ1vONbAaPvNDMWHxD95
-         T+Lwa9UNzT2wuEDZSMXycDS1LIirPpQm3P3eJpMUNZ9r7bt9d0SQh3fv4WN2WnGEJdGB
-         74wCMpjdA7CZmQ9kVAbgFZqsYP/EbxTjNI0oxaPp3CZi0OU2OYTzbbyAo3PxJp7cM7y2
-         3pXbH3MJR7kH1RUEg7cqbRxoLHhghYZMjuyRL9HoL1frP86TpAAMnUSsoipK/5KOimW6
-         lXfQ==
-X-Gm-Message-State: AOAM532r7JQdFJW2WnWykPiNnFtvu9F++ulvjjVR+ntWNun+nU9UBCPX
-        uZ3QAbEWkekWe6xCyAF872aWK+8E1UsHGTdz8sb03hXW
-X-Google-Smtp-Source: ABdhPJzWcAtl4gbA/CKGgcKoq3i4EXerj5mTCYqkPG25zMbUB8rLR82Mb4+suRYXzbRh6ChKb1GUVk0Q/u3sebvyyhM=
-X-Received: by 2002:aa7:cac8:0:b0:42b:258d:1cc1 with SMTP id
- l8-20020aa7cac8000000b0042b258d1cc1mr6902204edt.22.1653092092899; Fri, 20 May
- 2022 17:14:52 -0700 (PDT)
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=oWPWYS158YOZ8EmrsEwzn15jze6W0jRPyLYNcVnfdF8=;
+        b=LoCVcWC9WS3eJ14ZQ7YNn3cEY0xDU6RjFMKpTip7VNqG8UlVxmCXgdfUJrRGiTmhFz
+         TgVJNZBej4SgcXUg8td0E+9PRqqDasbm35H8T8lh5r6o3kRzTfFeyVnKt7i3GMYbVOjt
+         nvmKUEnxm7MEIDec0bgTev1GFWqZXi0BY2+jPylESjgN8F6VbJfo55k9nHE7OPjKS04T
+         lE5/nM/7JWttZuBCjYwc586qAuqyBsZaI+AB5PxuVA35dewYciUCZtvKzqESeUZoXrJU
+         d2uQ/MU2UT8Eg+RfNeH77QjR3lbOlQj8dkwu2PaLI1XlVkEFEJUIYBOGaYodVAFqy+Vt
+         n7HA==
+X-Gm-Message-State: AOAM533oYoZPdGcQLpz/kCQBe15qTf+pbjB+TouLxm/Zyfly8giQIxH+
+        Azw9K9Xck4bCqElmUo5rZ/A=
+X-Google-Smtp-Source: ABdhPJzI6OyLaVnRuRk3uTmUSOCQmKrgsF56OfXZrC/8GrFRsSM48XluW94JkWs1DesNvwLIf3x6Nw==
+X-Received: by 2002:a37:9e92:0:b0:6a3:4a0e:7296 with SMTP id h140-20020a379e92000000b006a34a0e7296mr4407704qke.504.1653093535860;
+        Fri, 20 May 2022 17:38:55 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id s63-20020ae9de42000000b006a2f5ea4a29sm568370qkf.46.2022.05.20.17.38.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 May 2022 17:38:55 -0700 (PDT)
+To:     Git mailing list <git@vger.kernel.org>
+Cc:     Carlo Arenas <carenas@gmail.com>, Ed Maste <emaste@FreeBSD.org>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Investigating Cirrus CI FreeBSD failures
+Message-ID: <9cc31276-ab78-fa8a-9fb4-b19266911211@gmail.com>
+Date:   Fri, 20 May 2022 20:38:53 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
-In-Reply-To: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 20 May 2022 17:14:41 -0700
-Message-ID: <CABPp-BH+=zd_ZpPMy=S5Q-ygTW85ZXD9-RLOk9Apt_Q1_SgzzA@mail.gmail.com>
-Subject: Re: [PATCH] setup: don't die if realpath(3) fails on getcwd(3)
-To:     Kevin Locke <kevin@kevinlocke.name>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Thanks for sending along a fix!
+I spent a bit of time investigating the Git Cirrus-CI failures on FreeBSD.
+It seems something goes wrong with the Perl installation, as most failures 
+are in t9001-send-email.sh, and the error messages are:
 
-On Thu, May 19, 2022 at 4:39 PM Kevin Locke <kevin@kevinlocke.name> wrote:
->
-> Prior to Git 2.35.0, git could be run from an inaccessible working
-> directory so long as the git repository specified by options and/or
-> environment variables was accessible.  For example:
+ld-elf.so.1: /usr/local/lib/perl5/5.32/mach/CORE/libperl.so.5.32: Undefined symbol "strerror_l@FBSD_1.6"
 
-Ah, good point.
+The first instance is in t9001.6. (See for example [1]).
 
->     git init repo
->     mkdir -p a/b
->     cd a/b
->     chmod u-x ..
->     git -C "${PWD%/a/b}/repo" status
->
-> If this example seems a bit contrived, consider running with the
-> repository owner as a substitute UID (e.g. with runuser(1) or sudo(8))
-> without ensuring the working directory is accessible by that user.
->
-> The code added by e6f8861bd4 to preserve the working directory attempts
+I know next to nothing about Perl or FreeBSD, but simply changing our image
+to FreeBSD 13.0 makes all failures in t9001 disappear [2]:
 
-When referencing commits in commit messages, this project prefers that the first
-reference in the commit message use the output from `git log --no-walk
---pretty=reference $HASH` rather than just $HASH.
-So, here, it'd be
 
-    The code added by e6f8861bd4 (setup: introduce
-startup_info->original_cwd, 2021-12-09) to preserve the ...
+diff --git a/.cirrus.yml b/.cirrus.yml
+index 0d94d89f6c..d1ea14362f 100644
+--- a/.cirrus.yml
++++ b/.cirrus.yml
+@@ -9,7 +9,7 @@ freebsd_12_task:
+     DEFAULT_TEST_TARGET: prove
+     DEVELOPER: 1
+   freebsd_instance:
+-    image_family: freebsd-12-2
++    image_family: freebsd-13-0
+     memory: 2G
+   install_script:
+     pkg install -y gettext gmake perl5 vim
 
-> to normalize the path using strbuf_realpath().  If that fails, as in the
-> case above, it is treated as a fatal error.  To avoid this, we can
-> continue after the error.  At worst, git will fail to detect that the
-> working directory is inside the worktree, resulting in the pre-2.35.0
-> behavior of not preserving the working directory.
->
-> Fixes: e6f8861bd4 ("setup: introduce startup_info->original_cwd")
+Is this something that we should do ? Or should we stick to FreeBSD 12
+and try to debug this installation problem ?
 
-I was slightly surprised to see this tag, but it appears others in
-git.git have used it, so it must just be me that's not familiar with
-it.
+Cheers,
+Philippe.
 
-> Signed-off-by: Kevin Locke <kevin@kevinlocke.name>
-
-Nicely explained commit message.
-
-> ---
->  setup.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/setup.c b/setup.c
-> index a7b36f3ffb..fb68caaae0 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -458,11 +458,13 @@ static void setup_original_cwd(void)
->          *     not startup_info->original_cwd.
->          */
->
-> -       /* Normalize the directory */
-> -       strbuf_realpath(&tmp, tmp_original_cwd, 1);
-> -       free((char*)tmp_original_cwd);
-> +       /* Try to normalize the directory.  Fails if ancestor not readable. */
-
-Is that the only reason it fails?  I'm unsure if the second half of
-the comment helps there.
-
-> +       if (strbuf_realpath(&tmp, tmp_original_cwd, 0)) {
-> +               free((char*)tmp_original_cwd);
-> +               startup_info->original_cwd = strbuf_detach(&tmp, NULL);
-> +       } else
-
-git.git coding style: if either of the if/else blocks use braces, use
-braces for both
-
-> +               startup_info->original_cwd = tmp_original_cwd;
-
-tmp_original_cwd is not required to be normalized, and there are very
-strong normalization assumptions on startup_info->original_cwd.  While
-a non-normalized value would work to get pre-2.35.0 behavior, it's by
-accident rather than design, and might be confusing for others to
-later reason about.  Also, I think it might be possible for
-tmp_original_cwd to still be NULL, and some of the immediately
-following code I believe will assume it's operating with a non-NULL
-value, so you'd need to skip that stuff.  I think the else block here
-should use "goto no_prevention_needed", as the no_prevention_needed
-block will handle setting startup_info->original_cwd to NULL for you,
-and get you the pre-2.35.0 behavior.
-
->         tmp_original_cwd = NULL;
-
-After changing the above else block to a goto, you may also want to
-copy this to the no_prevention_needed block or else copy it to the
-else portion of the block above (just before the goto you add).
-
-> -       startup_info->original_cwd = strbuf_detach(&tmp, NULL);
->
->         /*
->          * Get our worktree; we only protect the current working directory
-> --
-> 2.35.1
-
-Again, thanks for sending in a bug fix!  Looking forward to seeing
-your revised patch.
+[1] https://cirrus-ci.com/task/5856927879004160
+[2] https://cirrus-ci.com/task/4597971764379648
