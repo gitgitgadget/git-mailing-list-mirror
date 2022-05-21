@@ -2,106 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47FD0C433F5
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 16:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3244BC433EF
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 16:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245412AbiEUQRR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 May 2022 12:17:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56342 "EHLO
+        id S241505AbiEUQu6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 12:50:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237279AbiEUQRP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 May 2022 12:17:15 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A73175C34C
-        for <git@vger.kernel.org>; Sat, 21 May 2022 09:17:14 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id g21so1486742qtg.5
-        for <git@vger.kernel.org>; Sat, 21 May 2022 09:17:14 -0700 (PDT)
+        with ESMTP id S240437AbiEUQuy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 May 2022 12:50:54 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82FD6AE43
+        for <git@vger.kernel.org>; Sat, 21 May 2022 09:50:52 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id gh17so7716297ejc.6
+        for <git@vger.kernel.org>; Sat, 21 May 2022 09:50:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/hml4Uab6jD5E7gP/J/77ueJUFu/broUSsq48WO8zGg=;
-        b=CjrXqwV1gZiVeScDHo//wv3CR3bUauZRyNmP6Eq1Wau0Hkh4F2oFlKHZ7RT1Xmmz5P
-         a89CGTZ4rLFuFZA3NJYnSIl68QVMqOB30DKHkp1ZheHmWTddEbw34D5XlCnm6tZM2pHQ
-         MhhEBxqg9VuCORi2NYv5vdefeyV1m4pWUkTd1ymQ3vyXs1kpSeFFngn3hWqHJNwUrBeJ
-         1KaJMJwMd7vjS8rA9r2ag3Zye76wg+Rm53DUXwM4vyXcsKIOntP1uLJ0SQv6unKzTKIk
-         jN5plJJSB/qFMGHvRwrAHRryAX9gzNTpSfOsNwTgNvCUVaQzuItGskVivHOyip0zZ/Rb
-         Qvtg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=IDm7o5qShhiarlTi1RJ1f7Empdp4iZoHD3qNrssmpRE=;
+        b=OlLD8tma4WtoGnHl5rpzUKUdKEyhI8cddouiML9RKvYSxID2vOtXtElM0zYmetmUZ3
+         SU3y5OrITsvlL9o3MO3bs7FIhK3rcoVZWU1U4BTLSFMnpl/7EdndA2pfZJuj2/ogMZnK
+         dau4i6B9U8DkjWhypSLHMZUfapZ7f/xeeYesxVXdj3HiLAfVcfuHYyZbfNfPFDSiPyH6
+         Qv5fhLOC0MeiEbAdJPXIKvBO5JhSSISu/+DtpSIXXcGDCocPrSwvGMWVfgVXrr6T5ls5
+         8NNmOzDrqOD4f5ABF9EJ1SxPpxCou9cXrEcZhvHTZ2yuKrbYhdDPeNWDMi60uEK8zfsw
+         N/Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/hml4Uab6jD5E7gP/J/77ueJUFu/broUSsq48WO8zGg=;
-        b=mwhH4mKWulXPdKCjpI1+2/eVU7Yz69xtcr771YXwYeKvqVStatRDxdnj9dg9qD3eEV
-         kqIuvvq5UrXjPIFMDXdhiB/jbqwEYXAJyvLWZviUVHA20oC2/ux40KJvjuiahAmcn6Q/
-         76be5BUgRNnDkFviKbCjUUB1lyQhm0uBcfjlY5aTPOh7kdIh/7fOcBlJ33k+L1G6orEF
-         hcJO8SINM1NrZ1+/rfPrMjjypc27IuSmwnKybhTKgPbpWyHdzziA3wzn8I1kr0yDiGaT
-         8CvCdms3fqCHBo/t7PeuzeGIaKxrEOaXTs6pY4vW3rBpF3E8CHaqqd0xaPhbY15YfjxC
-         HA9g==
-X-Gm-Message-State: AOAM53043fEGdkY/gShZIXI1UHNLRBCXwtC/y8pKOkXcaH8ipRkN7S+t
-        nM4HueKmSnPoLFn2BnrPVd8=
-X-Google-Smtp-Source: ABdhPJxMZtXGqAlmcggCpBOnLntPD3E9/qKGKtO7mW7zV7SeJdRECGCQomGRlx/9CQT1nU1OQQ72yw==
-X-Received: by 2002:a05:622a:254:b0:2f3:cf9a:989d with SMTP id c20-20020a05622a025400b002f3cf9a989dmr11635250qtx.167.1653149833722;
-        Sat, 21 May 2022 09:17:13 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id g26-20020ac8469a000000b002f39b99f67bsm1478229qto.21.2022.05.21.09.17.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 May 2022 09:17:13 -0700 (PDT)
-Subject: Re: [PATCH v3 0/5] Improve MyFirstContribution's GitGitGadget section
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>
-References: <pull.1226.v2.git.1652233654.gitgitgadget@gmail.com>
- <pull.1226.v3.git.1652399017.gitgitgadget@gmail.com>
- <xmqqpmk9kxa8.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <f47761e0-bbaa-e4a5-b74e-e9c211bd8d85@gmail.com>
-Date:   Sat, 21 May 2022 12:17:12 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=IDm7o5qShhiarlTi1RJ1f7Empdp4iZoHD3qNrssmpRE=;
+        b=jQjm1zN/xqBEeLNlV9g8Ciqm9qAsZWGq7P1p3AKankdphWS53kknqQpDaOhjaUZ1tT
+         yEtDtpy33+M77Y6vtlxY8b9gYmMBu1Cocd47E74ltgLCvGCwKyP3Si0QlDD2V0ZH1Xdj
+         VLNfSCTWWJprBRotL4tBTEQ6rq1gi+vl409RFymxGMH013LPfDT2CkRNSdINrh5DwECu
+         TNzFwZWlSkSB1WVqPIePPmKViHscyaadkBrUPTXMgKg5Ke98WhWmBGddB/dksHf2WfIB
+         q8mSeu/1L390rScT0qzryIUexumkORUqiNvSzQ4Ot4oz/8jnNe21CVIPHrkx7RniLU0U
+         h6yw==
+X-Gm-Message-State: AOAM531EiMd5MUWku2C7bw9XDDOsNKtRk/wpQOl9XAAGsfC3Mf9l4oli
+        9KE7YFdQHpubM1v4cz9ZNQMJBFm2mHc=
+X-Google-Smtp-Source: ABdhPJw8tMrBqhbo1XVOw1xObIbE3CtzQYF0rHnB4HX3emmxvHcPx/nbNCvwgOqRyiATy+5Iz5dqfw==
+X-Received: by 2002:a17:907:971e:b0:6fe:b652:7d51 with SMTP id jg30-20020a170907971e00b006feb6527d51mr5899589ejc.356.1653151850798;
+        Sat, 21 May 2022 09:50:50 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id jy1-20020a170907762100b006f3ef214dfbsm4446453ejc.97.2022.05.21.09.50.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 May 2022 09:50:50 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nsSJV-002fe3-82;
+        Sat, 21 May 2022 18:50:49 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 10/15] bisect--helper: return only correct exit codes
+ in `cmd_*()`
+Date:   Sat, 21 May 2022 18:45:04 +0200
+References: <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
+ <pull.1132.v3.git.1653144546.gitgitgadget@gmail.com>
+ <1236a7319033a67befe34ed892db0eb5200490fd.1653144546.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <1236a7319033a67befe34ed892db0eb5200490fd.1653144546.git.gitgitgadget@gmail.com>
+Message-ID: <220521.864k1i25jq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqpmk9kxa8.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-Le 2022-05-19 à 17:49, Junio C Hamano a écrit :
-> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> Philippe Blain (5):
->>   MyFirstContribution: add "Anatomy of a Patch Series" section
->>   MyFirstContribution: add standalone section on cover letter
->>   MyFirstContribution: reference "The cover letter" in "Preparing Email"
->>   MyFirstContribution: reference "The cover letter" in GitGitGadget
->>     section
->>   MyFirstContribution: drop PR description for GGG single-patch
->>     contributions
-> 
-> I am planning to merge it to 'next' soonish.  Please speak up if
-> anybody has any issues.
-> 
-> Thanks.
-> 
+On Sat, May 21 2022, Johannes Schindelin via GitGitGadget wrote:
 
-I just realized that the additional/tweaked content that I added in v3 went into 2/5
-where as they should have gone into 1/5 (I'm talking about the changes 
-*before* the "The cover letter" heading in [1]). I slightly messed up my rebase
-it seems, I'm sorry... 
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Exit codes cannot be negative, but `error()` returns -1.
+>
+> Let's just go with the common pattern and call `die()` in
+> `cmd_bisect__helper()` when incorrect arguments were detected.
 
-Should I send a new version, or is it too late since it's now in 'next' ?
+This is good in that before we'd return e.g. code 255 here:
 
-Thanks,
+    $ ./git bisect--helper  --bisect-terms foo bar; echo $?
+    error: --bisect-terms requires 0 or 1 argument
+    255
 
-Philippe.
+But now say:
+    
+    $ ./git bisect--helper  --bisect-terms foo bar; echo $?
+    fatal: --bisect-terms requires 0 or 1 argument
+    128
 
-[1] https://github.com/gitgitgadget/git/pull/1226/commits/ee3238f5a9169f0c7d046089c7951791b8db3cab
+But after this patch we emit e.g. this:
+
+    $ ./git bisect--helper  --bisect-terms ; echo $?
+    error: no terms defined
+    1
+
+We should instead treat all these usage errors the same. A better fix
+would be to either use usage_msg_opt[f]() consistently instead of die().
+
+Or just this, which would narrowly fix the inconsistency and the exit
+code:
+
+    diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+    index 21a3b913ed3..e44d894e2ec 100644
+    --- a/builtin/bisect--helper.c
+    +++ b/builtin/bisect--helper.c
+    @@ -1325,7 +1325,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+                    break;
+            case BISECT_TERMS:
+                    if (argc > 1)
+    -                       return error(_("--bisect-terms requires 0 or 1 argument"));
+    +                       return -error(_("--bisect-terms requires 0 or 1 argument"));
+                    res = bisect_terms(&terms, argc == 1 ? argv[0] : NULL);
+                    break;
+            case BISECT_SKIP:
+
+But returning 129 instead of 1 or 128 is better here, as that's the exit
+code we specifically use for bad usage messages.
+
+I'll read on, but changing "error" to "fatal" and the exit code from 255
+and 1 to 128 and 1 instead of either always 129 or always 1 in these
+cases seems odd, especially as the last part of the function has this
+code:
+
+        return -res;
+
+I.e. it's expecting "res" to be e.g. -1 or 0, and to convert that to 1
+or 0.
