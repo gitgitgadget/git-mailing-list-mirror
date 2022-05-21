@@ -2,62 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6488C433F5
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 00:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECB7DC433EF
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 07:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241068AbiEUAwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 May 2022 20:52:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39714 "EHLO
+        id S1354794AbiEUHq0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 03:46:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235683AbiEUAwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 May 2022 20:52:43 -0400
-Received: from mail-vk1-xa29.google.com (mail-vk1-xa29.google.com [IPv6:2607:f8b0:4864:20::a29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 666DA1ACFA8
-        for <git@vger.kernel.org>; Fri, 20 May 2022 17:52:42 -0700 (PDT)
-Received: by mail-vk1-xa29.google.com with SMTP id 125so4822889vkw.3
-        for <git@vger.kernel.org>; Fri, 20 May 2022 17:52:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=VQZgmHxtHfPKzF+6C5Ofe26Y8KXr+WD2I7S6rHVh4Y8=;
-        b=kTHADPjz+nPxMfVymPyfiq99d9ymr9nmRXt32CwL/xy/VrHdD0mPSwTNGuSkAnshxI
-         5+O4QbaCiPw2ajUEEcryrlee13P7ew3XKMNFSlOkMIVPdYHYNL0HHNRHeWEvMoqSI6dN
-         93zdG/l7c1mRT/8SmbOztmpYSdnSFXVbuL0Fbd2llOeSEhbem2J5Z7/cJrJiVjXyFOp0
-         ufO2YJzmfhWmZPnbJsWdLQetCZ7WtI7pxR7nCrn16ZW5aNQpaXrMysq8XZdHxQEoOaY4
-         BAjURL1JKQ7IBCZwwLLdgNV+yeJdaL5Z2oGO+Z2dibWyux6h5pLlpHqHnv8BKGE0ZfYF
-         mbvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VQZgmHxtHfPKzF+6C5Ofe26Y8KXr+WD2I7S6rHVh4Y8=;
-        b=yD5BunhfaDr+rJEpAvVzsKLcrVOe4YuYdJQI2bebiuvQqmpcPMqC6/Dn7gXiKiTdrF
-         57mFNhLAIQ2FoUrYM0rxNVka0fI0YAT2z7DtaSITyF/R3rn28gynQ6lmiojR93XRAsii
-         oiO3BX63fRCwhkR+YP1fAf6SdFkC8DuV0LcAWz3X7xq+0SNmn+HQ8hlkxV24+8/b85Oq
-         MU2qZy3BCk2ZqYAb+wEtf2zkOXurLf7adzu3yfmLv/hd+xUi+WlztvvIyJjQ/aBRk/ib
-         V1tY6VzlaGpW2R4iUYnIiGEgoWjeXitJbAVuGEdJDhI19TZpVnR59q/Zf7nkOjQ0ceZR
-         HUbw==
-X-Gm-Message-State: AOAM5318MiVbdyx1VBXzXHWB4V1q2iwZG4bghnWMSzhUed+W517n9bzr
-        dot6YqXY4kn1HiLoyGcKe+2PEA+p3WZnFByJ5uQ=
-X-Google-Smtp-Source: ABdhPJw9WdRbJj9yja8Jx6qqCVPxZ9k2xo/9vS5JhCO/ZW0/Sh9k9XTajs5y5oLlk+MArhjKqFOlnsND2opLWFWVgxo=
-X-Received: by 2002:a1f:5842:0:b0:34e:7a9e:9579 with SMTP id
- m63-20020a1f5842000000b0034e7a9e9579mr5077160vkb.16.1653094361516; Fri, 20
- May 2022 17:52:41 -0700 (PDT)
+        with ESMTP id S1354876AbiEUHqP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 May 2022 03:46:15 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D876D12A97
+        for <git@vger.kernel.org>; Sat, 21 May 2022 00:46:02 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 10DCC1A0943;
+        Sat, 21 May 2022 03:46:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=3D/MzfeVu+M5qvr3qOYc09KqGSQL/t0ilmWocqI7Jdw=; b=vIWj
+        8jrHNdP+MtZ/26ir49PgjESGZoonURJCTmPLsL/wyzjHWpcDxK3YtpHtKc5INrdm
+        2jM0tfdLcFbarvO89BBZgayy0vTbLv1UznCeev0/VLSblOVOfNXOIpg+hkTqZVpo
+        siPG0hPLO/eA9zsKvYZtxUAfceHMXUAnrJ52ZUs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 09E041A0942;
+        Sat, 21 May 2022 03:46:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A2C5D1A0940;
+        Sat, 21 May 2022 03:45:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, shaoxuan.yuan02@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 08/10] sparse-index: complete partial expansion
+References: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
+        <pull.1208.v2.git.1652982758.gitgitgadget@gmail.com>
+        <ed640e3645ba4f60f06bd335b9ac7bf350dd81f9.1652982759.git.gitgitgadget@gmail.com>
+Date:   Sat, 21 May 2022 00:45:57 -0700
+Message-ID: <xmqqsfp3coqy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <9cc31276-ab78-fa8a-9fb4-b19266911211@gmail.com>
-In-Reply-To: <9cc31276-ab78-fa8a-9fb4-b19266911211@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 20 May 2022 17:52:27 -0700
-Message-ID: <CAPUEspgdAos4KC-3AwYDd5p+u0hGk73nGocBTFFSR7VB9+M5jw@mail.gmail.com>
-Subject: Re: Investigating Cirrus CI FreeBSD failures
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Ed Maste <emaste@freebsd.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0DC08AE2-D8DA-11EC-88A3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reviewed-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> +	if (pl && !pl->use_cone_patterns) {
+>  		pl = NULL;
+> +	} else {
+> +		/*
+> +		 * We might contract file entries into sparse-directory
+> +		 * entries, and for that we will need the cache tree to
+> +		 * be recomputed.
+> +		 */
+> +		cache_tree_free(&istate->cache_tree);
+> +
+> +		/*
+> +		 * If there is a problem creating the cache tree, then we
+> +		 * need to expand to a full index since we cannot satisfy
+> +		 * the current request as a sparse index.
+> +		 */
+> +		if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
+> +			pl = NULL;
+> +	}
+
+So, if the current index has some irrelevant (i.e. do not match the
+pattern list) subtrees in collapsed form, presense of an unmerged
+entry, presumably inside the cone(s) we are interested in, makes us
+lose the pattern list here, and we end up expanding everything?
+
+I suspect that is a situation that is not so uncommon.  Working
+inside a narrow cone of a wide tree, performing a merge would
+hopefully allow many subtrees that are outside of the cones of our
+interest merged without getting expanded at all (e.g. only the other
+side touched these subtrees we are not working on, so their version
+will become the merge result), while changes to some paths in the
+cone of our interest may result in true conflicts represented as
+cache entries at higher stages, needing conflict resolution
+concluded with "git add".  Having to expand these subtrees that we
+managed to merge while still collapsed, only because we have
+conflicts in some other parts of the tree, feels somewhat sad.
+
+By the way, why are we passing the "--missing-ok" option to "git
+write-tree" here?
+
+> @@ -330,11 +352,22 @@ void expand_to_pattern_list(struct index_state *istate,
+>  		struct cache_entry *ce = istate->cache[i];
+>  		struct tree *tree;
+>  		struct pathspec ps;
+> +		int dtype;
+>  
+>  		if (!S_ISSPARSEDIR(ce->ce_mode)) {
+>  			set_index_entry(full, full->cache_nr++, ce);
+>  			continue;
+>  		}
+> +
+> +		/* We now have a sparse directory entry. Should we expand? */
+> +		if (pl &&
+> +		    path_matches_pattern_list(ce->name, ce->ce_namelen,
+> +					      NULL, &dtype,
+> +					      pl, istate) == NOT_MATCHED) {
+> +			set_index_entry(full, full->cache_nr++, ce);
+> +			continue;
+> +		}
+> +
+>  		if (!(ce->ce_flags & CE_SKIP_WORKTREE))
+>  			warning(_("index entry is a directory, but not sparse (%08x)"),
+>  				ce->ce_flags);
+> @@ -360,7 +393,7 @@ void expand_to_pattern_list(struct index_state *istate,
+>  	/* Copy back into original index. */
+>  	memcpy(&istate->name_hash, &full->name_hash, sizeof(full->name_hash));
+>  	memcpy(&istate->dir_hash, &full->dir_hash, sizeof(full->dir_hash));
+> -	istate->sparse_index = 0;
+> +	istate->sparse_index = pl ? PARTIALLY_SPARSE : COMPLETELY_FULL;
+>  	free(istate->cache);
+>  	istate->cache = full->cache;
+>  	istate->cache_nr = full->cache_nr;
+> @@ -374,7 +407,7 @@ void expand_to_pattern_list(struct index_state *istate,
+>  
+>  	/* Clear and recompute the cache-tree */
+>  	cache_tree_free(&istate->cache_tree);
+> -	cache_tree_update(istate, 0);
+> +	cache_tree_update(istate, WRITE_TREE_MISSING_OK);
+
+The same question here.  We didn't say "missing trees are OK".  What
+made it OK in this change?
+
