@@ -2,111 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C9A5C433F5
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 17:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0018AC433F5
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 18:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244001AbiEURPe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 May 2022 13:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35484 "EHLO
+        id S241182AbiEUSHV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 14:07:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344022AbiEURPb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 May 2022 13:15:31 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F53366AE8
-        for <git@vger.kernel.org>; Sat, 21 May 2022 10:15:30 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id i20-20020a05600c355400b0039456976dcaso5748595wmq.1
-        for <git@vger.kernel.org>; Sat, 21 May 2022 10:15:30 -0700 (PDT)
+        with ESMTP id S232108AbiEUSHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 May 2022 14:07:20 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C1662200
+        for <git@vger.kernel.org>; Sat, 21 May 2022 11:07:16 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id c1so10164409qkf.13
+        for <git@vger.kernel.org>; Sat, 21 May 2022 11:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=26OPc/IWX8SJR7d6DqYrd4Zx4/7RJqNnYY2MrayQs5U=;
-        b=SmUhLVCAq0KvAV/U+FBaIhzfGAJRDqVkXdYFTwC2ASrS+LqpiYTWd0fSmj0h5DazJI
-         yCMzmSdZBTay6T8F60gS998cf352pED5Xv74hlkpqpxegUwb0O8AqmHalpZugKqm3+q7
-         meWyE4f3/rB1DGIAdmD/mdyvkyCFOvXek+N92v+Ngr9dLEWqbtpVcQubtX5VfeD4HEht
-         S++P/GCPmOU+lRclrD8nPKNVPXNpzhvtXYjHl5fSrZcIX1FrKHLAIN6D87KY95kyDZDj
-         W0QeCxvoAV85gX+U4BMwlo4DWwmGrfE7YKnCnxp8iza6nZxuq32Xh56l67dcHxnJLW5o
-         PiRg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=3MF11N3A4hzbfNnd0qSFaUvp9O/e/pqKMUSnB/2qyn8=;
+        b=iJR8ENdyMrfaQH0P1cVjonaFm510Sndf2kTT0cMqiBa/KU3y0xUoDFeMmYVu02tzDH
+         pbdP6r06xXYLuGEBq2nVsN0IZFAMoeYTJD4CiQd1IweY9wY/zX2qSgLUihjKSji7UQsh
+         FmkEa76Ox6uS1mIHnYC3cTfrc6hsjuHrrQy4mJqWtpJ6quHiqZ+vSHkHoXDluEVVyc2s
+         V3htU+YYx2j6W3x+Ao0ZdmfPwul+xbHk7ZQSpbji9uYY3uOmXD6J/ZWMfBnrlqXZ6iih
+         DVAq0MvJGpMW8mJvCx9X/XYYAByU1+BKyTv7Rs9S171MaUmdfFeqLUqmuKgoWK9Z6+Wt
+         RaRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=26OPc/IWX8SJR7d6DqYrd4Zx4/7RJqNnYY2MrayQs5U=;
-        b=0rTIjpXCxzkWDEfRM2QptZzrq6MPq7VDLA/qz9o+3ngSOUPZt+g2DnZT7JreVcEO+G
-         dq6msB1R6WxMpZCwlft3tiHBcGZZhO4ktFgNORsG5SlgRE3mRKmFqam5oFvehsIk/1HL
-         nqqvYzFbx0GOme4rgl/E9De9bEtJ5ovoy3JcHZHx7diwY8DejOfgSXWoZX9j189cz6ZA
-         tpiuQUt1UtoQHraN1xYekB+ptakFC3BrpCL25zkIdTDQefEqcB23DfUQpB9n0GwiaGhV
-         wjOlUtVE38/Lypq/AEMtYGnt/+mT/oNibTgUYdy1j4RY9GgpnlxEUShWk2ogzMrEs5c4
-         lzKQ==
-X-Gm-Message-State: AOAM532TnfxWzArI8bOEZ2YVTmkDFXMX+wUy4v02a89Eu+GsMYDxhOt+
-        aoJRQEfkV4AYGqR6i9eyaheU9XjoyEz9ow==
-X-Google-Smtp-Source: ABdhPJwafsXFo7CkCi3OVoqrKwrc7wuyy+cvBX+CuvFRH0w64GF0F9jTvS17SnAnh7wJIZkEv+Wv5A==
-X-Received: by 2002:a7b:cb91:0:b0:397:3225:244 with SMTP id m17-20020a7bcb91000000b0039732250244mr11585382wmi.68.1653153328313;
-        Sat, 21 May 2022 10:15:28 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b15-20020a7bc24f000000b0039736892653sm4964685wmj.27.2022.05.21.10.15.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 May 2022 10:15:21 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 5/5] cache-tree.c: use bug() and BUG_if_bug()
-Date:   Sat, 21 May 2022 19:14:42 +0200
-Message-Id: <patch-5.5-bb5a53f3b73-20220521T170939Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.1.960.g7a4e2fc85c9
-In-Reply-To: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3MF11N3A4hzbfNnd0qSFaUvp9O/e/pqKMUSnB/2qyn8=;
+        b=20eKMqO92jLWvEGYd1xBv4irAKWMnOg+ZvbnSZGdR6Z/r/KyykuAmHUv57P0aSphf9
+         OtrC5JTvjWktztFqJe/vKsEmjJkiB4FmhWygvZMLk3DTAGew85QEndBxd1pK0W7n//Oq
+         K3D7N8ACSb7aJFdwkfn6oN/eTOpscEwhMS935FFkLfx2AegXumPaqX/p00oT65cJSoIh
+         hwSO9oPAzgPjNImqobuf352iSCkWhB9aVqmNlr2P+0O2AlWQe05WwgtRkvDmAxG1kVaC
+         N1ujKu26xTq+MuKSKZCQGvmKcN3bfslF6CtCi9qDad6Z0NBWpQyp6Slh6/IKOZS83U2m
+         Gb6w==
+X-Gm-Message-State: AOAM531B2XcPidjAHvQ9xuXM3j7tJX4ZJA+IwHBApus/PunOBXqXSFqt
+        tw64dQlNf1gJwrOIIClDlMTS
+X-Google-Smtp-Source: ABdhPJxlqFj3VNpQpgNcdJKzDdM6EoXFQ0N/jR5VCv6juJ5wh4J/KNIB5K6vjzVp5L6CPhwespcuiA==
+X-Received: by 2002:a05:620a:284a:b0:67b:637d:5858 with SMTP id h10-20020a05620a284a00b0067b637d5858mr9537003qkp.572.1653156435505;
+        Sat, 21 May 2022 11:07:15 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9c4b:60f0:2f0f:a56c? ([2600:1700:e72:80a0:9c4b:60f0:2f0f:a56c])
+        by smtp.gmail.com with ESMTPSA id c14-20020a05620a268e00b0069fcf0da629sm1606323qkp.134.2022.05.21.11.07.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 May 2022 11:07:15 -0700 (PDT)
+Message-ID: <a467d972-85a6-f4b0-7ec7-184add308e25@github.com>
+Date:   Sat, 21 May 2022 14:07:14 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.0
+Subject: ds/bundle-uri (was Re: What's cooking in git.git (May 2022, #06; Fri,
+ 20))
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        avarab@gmail.com
+References: <xmqqmtfbcoaa.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqmtfbcoaa.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change "BUG" output originally added in a97e4075a16 (Keep
-rename/rename conflicts of intermediate merges while doing recursive
-merge, 2007-03-31), and later made to say it was a "BUG" in
-19c6a4f8369 (merge-recursive: do not return NULL only to cause
-segfault, 2010-01-21) to use the new bug() function.
+On 5/21/22 3:55 AM, Junio C Hamano wrote:
 
-This gets the same job done with less code, this changes the output a
-bit, but since we're emitting BUG output let's say it's OK to prefix
-every line with the "unmerged index entry" message, instead of
-optimizing for readability. doing it this way gets rid of any state
-management in the loop itself in favor of BUG_if_bug().
+> * ds/bundle-uri (2022-05-20) 32 commits
+>  - t5601: basic bundle URI tests
+>  - clone: unbundle the advertised bundles
+>  - bundle-uri: download bundles from an advertised list
+>  - bundle-uri: allow relative URLs in bundle lists
+>  - bundle-uri client: add boolean transfer.bundleURI setting
+>  - bundle-uri: serve URI advertisement from bundle.* config
+>  - bundle-uri client: add "git ls-remote-bundle-uri"
+>  - bundle-uri client: add minimal NOOP client
+>  - protocol v2: add server-side "bundle-uri" skeleton
+>  - bundle-uri: fetch a list of bundles
+>  - bundle-uri: parse bundle list in config format
+>  - bundle-uri: limit recursion depth for bundle lists
+>  - bundle-uri: unit test "key=value" parsing
+>  - bundle-uri: create "key=value" line parsing
+>  - bundle-uri: create base key-value pair parsing
+>  - bundle-uri: create bundle_list struct and helpers
+>  - clone: --bundle-uri cannot be combined with --depth
+>  - clone: add --bundle-uri option
+>  - fetch: add 'refs/bundle/' to log.excludeDecoration
+>  - fetch: add --bundle-uri option
+>  - bundle-uri: add support for http(s):// and file://
+>  - bundle-uri: create basic file-copy logic
+>  - remote-curl: add 'get' capability
+>  - docs: document bundle URI standard
+...
+>  source: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- cache-tree.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+These patches are for the combined bundle URI RFC. I
+appreciate that you're tracking them, but they aren't ready
+for full review, since they are missing a lot of tests.
+First, we need to establish that the overall design is a
+good approach. After that consensus is reached, I expect
+that this series to be split into several parts that are
+more manageable to review bit-by-bit. 
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 6752f69d515..9e96097500d 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -692,14 +692,13 @@ struct tree* write_in_core_index_as_tree(struct repository *repo) {
- 	ret = write_index_as_tree_internal(&o, index_state, was_valid, 0, NULL);
- 	if (ret == WRITE_TREE_UNMERGED_INDEX) {
- 		int i;
--		fprintf(stderr, "BUG: There are unmerged index entries:\n");
- 		for (i = 0; i < index_state->cache_nr; i++) {
- 			const struct cache_entry *ce = index_state->cache[i];
- 			if (ce_stage(ce))
--				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
--					(int)ce_namelen(ce), ce->name);
-+				bug("unmerged index entry on in-memory index write: %d %.*s",
-+				    ce_stage(ce), (int)ce_namelen(ce), ce->name);
- 		}
--		BUG("unmerged index entries when writing inmemory index");
-+		BUG_if_bug();
- 	}
- 
- 	return lookup_tree(repo, &index_state->cache_tree->oid);
--- 
-2.36.1.960.g7a4e2fc85c9
+>  - bundle.h: make "fd" version of read_bundle_header() public
+>  - remote: allow relative_url() to return an absolute url
+>  - remote: move relative_url()
+>  - http: make http_get_file() external
+>  - fetch-pack: move --keep=* option filling to a function
+>  - fetch-pack: add a deref_without_lazy_fetch_extended()
+>  - dir API: add a generalized path_match_flags() function
+>  - connect.c: refactor sending of agent & object-format
+> 
+>  source: <pull.1233.git.1652731865.gitgitgadget@gmail.com>
 
+While these are for the patches leading up to it, which
+are ready for review.
+
+I think the two should be tracked independently.
+
+Thanks,
+-Stolee
