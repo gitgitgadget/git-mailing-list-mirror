@@ -2,98 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FB65C433EF
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 22:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B43AC433F5
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 22:19:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346929AbiEUWDA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 May 2022 18:03:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54300 "EHLO
+        id S1347058AbiEUWTE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 18:19:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237130AbiEUWC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 May 2022 18:02:59 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C74F52AE36
-        for <git@vger.kernel.org>; Sat, 21 May 2022 15:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653170562;
-        bh=IZq/1DFJS6tJI+RhBQy1ECLOKwo0yvixqZeMW9buw1o=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Hs4dgboSYaKnsDpYuP5BqHo++f0Hx0iRi0MsyJfSoMqxynYhVAvNFXTrkyKSBIhb3
-         VpvJCRFbxrtntdMUQV/N6xqpRNfHmRPdyPBXPPHPSTTsadJQ/DXhrrxAcRIx7g0Qga
-         CPsBOJpj/JrdFpjJMPoh/akHp5dacJ11fB1v+lHI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlf0K-1nSn5M08Mk-00ioGv; Sun, 22
- May 2022 00:02:42 +0200
-Date:   Sun, 22 May 2022 00:02:39 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: js/use-builtin-add-i, was Re: What's cooking in git.git (May 2022,
- #06; Fri, 20)
-In-Reply-To: <xmqqmtfbcoaa.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2205212352540.352@tvgsbejvaqbjf.bet>
-References: <xmqqmtfbcoaa.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S245400AbiEUWTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 May 2022 18:19:02 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B25514EF60
+        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:00 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id w4so15875590wrg.12
+        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ychXGwGi9MKGlFm4LBv/h3HDn8TPIu/o+OfIz7tey24=;
+        b=MjX3yuMselYclC1hS8A8e5FPRj5MBq5HMIIIFy0aZ7dk/khPHh9tY0gwABOpmR/Z+Q
+         ulytuVZ/JAuJ+G9EapwwyehhgZlAMzb9vGyrJcuD5CCFQOQ29xKmdjYZ1eNtRxXcyMys
+         UNa5TdH0M0blJSWEokXOvao9EkAg0ijuRXdP8JpJ/Krxo2n6a0scSSx8UX7ztsRFfxIb
+         avArEbzJu0By8/zxr33LPBAJotqKdqYkNmUD1eAZrnoaRZIzNBqXw/Ql+TEGO8JVUG9P
+         IZAAol33/fYNt3PsDh4QFpxwUSuIlkBsNbqK+02ZU4D8WfS2w5Jl5McoJsB18T1P4Y4r
+         bwWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=ychXGwGi9MKGlFm4LBv/h3HDn8TPIu/o+OfIz7tey24=;
+        b=La8UeG0PqN/S2KXxKUDfPDY2QYgWMTB0R5p3vn7DIlJBfDa1vprfWiNLKLM3+3HJtx
+         VlZSHyJcx/5Rwk2qWlCn7nMxlT8Pc1/L7wcgxLMbr5SbLzCIDcD4xpAiBPAS1A68BvCB
+         lALQciVnQ3EPG8A5ShHony30JRev9X0aAZWPyw7aAmb+LFcLatGexNJw1Sc9BcJZuxBp
+         IPBwIE7Ze3wI7VmwWRVy+ZTfsS3lq36X//U/b5YeO4B7KxtLCiHVEsGlc0wDPuYxS93q
+         +kPgeg035M3bK379gK+0GUozzbdEi7L3L1poHSjJUS3D/KngbV2INgpLzAynWtBq0DR4
+         0MLg==
+X-Gm-Message-State: AOAM532162t6lrT4M6scxalNjwwyGU8+IK/Ihe+V46kKGFS1E0bOhHpl
+        AkEVy2+V27sg3ruHOJ8mf/39jznkOsw=
+X-Google-Smtp-Source: ABdhPJxVZPV2zLOqzZ/lDUpnwNRWRlLcWUb0AzqGzoERG8cK+wOrX06aUVOiLj4NK/UiRLnCx3lpNA==
+X-Received: by 2002:adf:cd06:0:b0:20d:a8a:c096 with SMTP id w6-20020adfcd06000000b0020d0a8ac096mr13576986wrm.637.1653171538936;
+        Sat, 21 May 2022 15:18:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m40-20020a05600c3b2800b00397381a7ae8sm5167410wms.30.2022.05.21.15.18.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 May 2022 15:18:58 -0700 (PDT)
+Message-Id: <68793fcec62dce83a972a055fee46f48cedd115a.1653171536.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
+References: <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
+        <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 21 May 2022 22:18:45 +0000
+Subject: [PATCH v3 01/12] ci: fix code style
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:66ELKooHfDn9tDS4wnfDqOeOxxu0MqU5lKI9m7acTLn3rNcjn4V
- OxDywYyE9Y6sAF4DEc2FC8TS8qXLGwPkwl3qvzKoNZizHoSRgoS6klQrVRCX/BpLu6IWzqe
- nUj06c8XyaGp3M0q+oL4qmWbNRTh3Oy/7pHRifi9Ni18E+kKfw+q7S1I35fgPDa6xqhKx/a
- S1o5SESYNcNcOtgIvWs8A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:j0yJjFAnAZ4=:TkuZPMh8w/9xosaEPBS99C
- 5iFYa95hdvolqFXZ3cZClK9aAsNRYxXQp3y7r47sb1RdY2KaMwH1RhTSsk+s4nuIl4RMV/dQZ
- w8W6HApxYegOCNak67VHUBeW4UG34mQM4wlhYtePVcGtKTNM+10JIdWqEIDO/I1RYInnd8y+7
- rAY7KKsqpIsbBc9rLMpzVFtBD1Vo4/weJN8ApzoBdecMPHE6QqmajoyXTbqEBdN0jtmgRVgLg
- 3I7ryuwtca3dxdfbWNDZrW2cpXhIYoUv1uuaqb3FV7oeYysoHsi/sNXu9qZ+8ylAE+j9+TtAg
- McOtNeg436rvSKUYMdLj9BpwI/f5/d1fht9jGoDDbRrb46c6iVROdGv5rUuvw6M+ZHAz9wLis
- IGufvWT+YQJKSVKw40rZImX+gspHH5zvZJZ0DnYuDqbl6soXv0ybAoCllZ9+8t0U5rWaY4+Xj
- HDSLJkPqq2IYti6xuBDAvtw95Ayf9PHGXoA+GjHQr4RZgMIcV7SA2hykWmzTGi07zwsjm1/iu
- 597hQsArm+QXpjznP6OCgjcTnjTBDdcjdWzSocAadAZpf/N2h28/mQiCC+npcaioraBve3N46
- 28v6sL1CUOuyN7qaByLyXVs0Z+Y7rC/0WZG9fwQ48F62rf3VOS6aWr192wX9qZV10BUkRn/cs
- v8Mzxk96BHfX9q5UOXTAckSdRxkpsZQPx/k1sVcc/HxyyZhQt0L2y7XCcedvlP//R/1sbkVKr
- p7iGO2qf4NJldr2Ow92pwnb6H9HyZUP5rFM5BcYhEDHmHjbQ87+3SUqqKuTUOhJYF7Ul59w6n
- w/tcy5mGVHgS+D+MtZ0afpUxljYv/bWA+XVmRREfIr1MOW10k7zPZge2gSclm74i7TgBfCa+8
- RXba1jq5x+TjcZr4gmAxgiBpR6uVcQCT9+FeYwS6OCB3wWSAFuST7amO712hQ5sJ1ZS0rvVOP
- aP3waxdmdTekyIQqUkayB5u3dQRKI6BgFRdwXogd9BxZQfvT2vNV9I/HB8/LLLasu96a1YwDg
- 6hXuXLH8ebEA1xBVp+syLwwdKf8inwyP1n7DxAFTn+FCNydlY0pZEpZLRpb1bgR3C0+mvd6gJ
- lKmhyYTcE9H1L+NQih8dRYbKtp8Gh1M+vGwyLuILouE9Rh+UdjnCwrqZQ==
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Sat, 21 May 2022, Junio C Hamano wrote:
+In b92cb86ea14 (travis-ci: check that all build artifacts are
+.gitignore-d, 2017-12-31), a function was introduced with a code style
+that is different from the surrounding code: it added the opening curly
+brace on its own line, when all the existing functions in the same file
+cuddle that brace on the same line as the function name.
 
-> * js/use-builtin-add-i (2021-12-01) 2 commits
->  - add -i: default to the built-in implementation
->  - t2016: require the PERL prereq only when necessary
->
->  "git add -i" was rewritten in C some time ago and has been in
->  testing; the reimplementation is now exposed to general public by
->  default.
->
->  On hold.
->
->  What's the status of the "known breakage"?
->  Are we ready to switch if we wanted to?
->  There are known breakages on macOS.
->  cf. <nycvar.QRO.7.76.6.2112021832060.63@tvgsbejvaqbjf.bet>
->  source: <pull.1087.git.1638281655.gitgitgadget@gmail.com>
+Let's make the code style consistent again.
 
-As per
-https://lore.kernel.org/git/CAPUEspg1cJC_UwjJFx-jnzWsascY++S3UgM1UCLRcnK_M=
-v2wOg@mail.gmail.com/,
-I believe that the macOS breakages have been confirmed to be addressed by
-`pw/single-key-interactive` (which was merged in 32f3ac26e03, i.e. it was
-included in v2.36.0).
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ ci/lib.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Therefore, right now might be a good time to advance the
-`js/use-builtin-add-i` series.
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 86e37da9bc5..d718f4e386d 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -69,8 +69,7 @@ skip_good_tree () {
+ 	exit 0
+ }
+ 
+-check_unignored_build_artifacts ()
+-{
++check_unignored_build_artifacts () {
+ 	! git ls-files --other --exclude-standard --error-unmatch \
+ 		-- ':/*' 2>/dev/null ||
+ 	{
+-- 
+gitgitgadget
 
-Thanks,
-Dscho
