@@ -2,124 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0018AC433F5
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 18:07:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92F00C433EF
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 18:40:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241182AbiEUSHV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 May 2022 14:07:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33550 "EHLO
+        id S1344725AbiEUSkJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 14:40:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232108AbiEUSHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 May 2022 14:07:20 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C1662200
-        for <git@vger.kernel.org>; Sat, 21 May 2022 11:07:16 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id c1so10164409qkf.13
-        for <git@vger.kernel.org>; Sat, 21 May 2022 11:07:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=3MF11N3A4hzbfNnd0qSFaUvp9O/e/pqKMUSnB/2qyn8=;
-        b=iJR8ENdyMrfaQH0P1cVjonaFm510Sndf2kTT0cMqiBa/KU3y0xUoDFeMmYVu02tzDH
-         pbdP6r06xXYLuGEBq2nVsN0IZFAMoeYTJD4CiQd1IweY9wY/zX2qSgLUihjKSji7UQsh
-         FmkEa76Ox6uS1mIHnYC3cTfrc6hsjuHrrQy4mJqWtpJ6quHiqZ+vSHkHoXDluEVVyc2s
-         V3htU+YYx2j6W3x+Ao0ZdmfPwul+xbHk7ZQSpbji9uYY3uOmXD6J/ZWMfBnrlqXZ6iih
-         DVAq0MvJGpMW8mJvCx9X/XYYAByU1+BKyTv7Rs9S171MaUmdfFeqLUqmuKgoWK9Z6+Wt
-         RaRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=3MF11N3A4hzbfNnd0qSFaUvp9O/e/pqKMUSnB/2qyn8=;
-        b=20eKMqO92jLWvEGYd1xBv4irAKWMnOg+ZvbnSZGdR6Z/r/KyykuAmHUv57P0aSphf9
-         OtrC5JTvjWktztFqJe/vKsEmjJkiB4FmhWygvZMLk3DTAGew85QEndBxd1pK0W7n//Oq
-         K3D7N8ACSb7aJFdwkfn6oN/eTOpscEwhMS935FFkLfx2AegXumPaqX/p00oT65cJSoIh
-         hwSO9oPAzgPjNImqobuf352iSCkWhB9aVqmNlr2P+0O2AlWQe05WwgtRkvDmAxG1kVaC
-         N1ujKu26xTq+MuKSKZCQGvmKcN3bfslF6CtCi9qDad6Z0NBWpQyp6Slh6/IKOZS83U2m
-         Gb6w==
-X-Gm-Message-State: AOAM531B2XcPidjAHvQ9xuXM3j7tJX4ZJA+IwHBApus/PunOBXqXSFqt
-        tw64dQlNf1gJwrOIIClDlMTS
-X-Google-Smtp-Source: ABdhPJxlqFj3VNpQpgNcdJKzDdM6EoXFQ0N/jR5VCv6juJ5wh4J/KNIB5K6vjzVp5L6CPhwespcuiA==
-X-Received: by 2002:a05:620a:284a:b0:67b:637d:5858 with SMTP id h10-20020a05620a284a00b0067b637d5858mr9537003qkp.572.1653156435505;
-        Sat, 21 May 2022 11:07:15 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:9c4b:60f0:2f0f:a56c? ([2600:1700:e72:80a0:9c4b:60f0:2f0f:a56c])
-        by smtp.gmail.com with ESMTPSA id c14-20020a05620a268e00b0069fcf0da629sm1606323qkp.134.2022.05.21.11.07.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 May 2022 11:07:15 -0700 (PDT)
-Message-ID: <a467d972-85a6-f4b0-7ec7-184add308e25@github.com>
-Date:   Sat, 21 May 2022 14:07:14 -0400
+        with ESMTP id S1344730AbiEUSkC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 May 2022 14:40:02 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89E2A4666F
+        for <git@vger.kernel.org>; Sat, 21 May 2022 11:39:59 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (unknown [138.237.15.37])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7F49B5A23B;
+        Sat, 21 May 2022 18:39:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1653158398;
+        bh=GdJ+KYNEf5qgtuUyOdu4agZhnbxemCTVkLAAyIkmCIE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=DsOZvObs+6lnhIIZqBaFHXCET8howW1mSwmFYyf4iLMd76VzFGljXthNy9iWMQDHm
+         wy9pLpaMCBLEOz7t6iznOJ5G61sijuc86Eb8xPkKvfKmb/J7xCyLuZSWdJb2xLMhHd
+         hT+21w8bJ85vPKVzVTGX0sDIQis6Qej7dS9kwJsG/n874xMmoVKp+6fDmc8fwRbH9h
+         Ns9k6kpGD9yLQyia1olml3r+gY5UVT1r8Pno/pmNo+wXOia/ZvN/bbyspX1839kYun
+         RqXOCQ/9tOkZzjtQBbkEhNxGKKzLpdSkxdFc8h/3tXH0MvhU6xz8BvwFiulh7C33Mz
+         jAUAOY3e0zaomRAz72x23AuXhP/1TLkp3fpSXCoE4MS8+jVffqEfyV43A+gcabXkyH
+         XJO9CatdjvSdjnr7QXhRhU4Xqqa35Fj5h7I26/+o9TFNosHKAzYVPtZiaRSLvB3aG4
+         CF4XJpFQIRRVz9AwSQ58cfFXfqiPcyCFY9Nr8/8eDxWLp+AxwTb
+Date:   Sat, 21 May 2022 18:39:56 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     allejo <me@allejo.io>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: bug: `git diff` implies =?utf-8?Q?fold?=
+ =?utf-8?Q?er_isn=E2=80=99t?= a git repo
+Message-ID: <Yokx/MyZHjGHRkoK@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        allejo <me@allejo.io>, git <git@vger.kernel.org>
+References: <180dfb3d8d3.12352a818142651.7062268074453572353@allejo.io>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.0
-Subject: ds/bundle-uri (was Re: What's cooking in git.git (May 2022, #06; Fri,
- 20))
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        avarab@gmail.com
-References: <xmqqmtfbcoaa.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqmtfbcoaa.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="LC4MPX8M4BGXWMdn"
+Content-Disposition: inline
+In-Reply-To: <180dfb3d8d3.12352a818142651.7062268074453572353@allejo.io>
+User-Agent: Mutt/2.2.4 (2022-04-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/21/22 3:55 AM, Junio C Hamano wrote:
 
-> * ds/bundle-uri (2022-05-20) 32 commits
->  - t5601: basic bundle URI tests
->  - clone: unbundle the advertised bundles
->  - bundle-uri: download bundles from an advertised list
->  - bundle-uri: allow relative URLs in bundle lists
->  - bundle-uri client: add boolean transfer.bundleURI setting
->  - bundle-uri: serve URI advertisement from bundle.* config
->  - bundle-uri client: add "git ls-remote-bundle-uri"
->  - bundle-uri client: add minimal NOOP client
->  - protocol v2: add server-side "bundle-uri" skeleton
->  - bundle-uri: fetch a list of bundles
->  - bundle-uri: parse bundle list in config format
->  - bundle-uri: limit recursion depth for bundle lists
->  - bundle-uri: unit test "key=value" parsing
->  - bundle-uri: create "key=value" line parsing
->  - bundle-uri: create base key-value pair parsing
->  - bundle-uri: create bundle_list struct and helpers
->  - clone: --bundle-uri cannot be combined with --depth
->  - clone: add --bundle-uri option
->  - fetch: add 'refs/bundle/' to log.excludeDecoration
->  - fetch: add --bundle-uri option
->  - bundle-uri: add support for http(s):// and file://
->  - bundle-uri: create basic file-copy logic
->  - remote-curl: add 'get' capability
->  - docs: document bundle URI standard
-...
->  source: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
+--LC4MPX8M4BGXWMdn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-These patches are for the combined bundle URI RFC. I
-appreciate that you're tracking them, but they aren't ready
-for full review, since they are missing a lot of tests.
-First, we need to establish that the overall design is a
-good approach. After that consensus is reached, I expect
-that this series to be split into several parts that are
-more manageable to review bit-by-bit. 
+On 2022-05-20 at 04:22:27, allejo wrote:
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+> Change ownership of a Git repo to require `safe.directory` behavior.
+>=20
+> What did you expect to happen? (Expected behavior)
+>=20
+> If you run `git diff --exit-code` on a non-`safe.directory`, you should g=
+et the standard error.
+>=20
+>     Error: fatal: unsafe repository ('/path/to/repo' is owned by someone =
+else)
+>=20
+> What happened instead? (Actual behavior)
+>=20
+> I get an error message saying it's not actually a git repository even tho=
+ugh it is, it's just not safe to work in.
+>=20
+>     warning: Not a git repository. Use --no-index to compare two paths ou=
+tside a working tree
+>     usage: git diff --no-index [<options>] <path> <path>
+>=20
+>     Diff output format options
+>         -p, --patch           generate patch
+>         -s, --no-patch        suppress diff output
+>         -u                    generate patch
+>         -U, --unified[=3D<n>]   generate diffs with <n> lines context
+>         -W, --function-context
+>                               generate diffs with <n> lines context
+>         --raw                 generate the diff in raw format
+>         --patch-with-raw      synonym for '-p --raw'
+>         --patch-with-stat     synonym for '-p --stat'
+>         --numstat             machine friendly --stat
+>         --shortstat           output only the last line of --stat
+>         -X, --dirstat[=3D<param1,param2>...]
+>                               output the distribution of relative amount =
+of changes for each sub-directory
+>     ...
+>=20
+> What's different between what you expected and what actually happened?
+>=20
+> One error message implies the folder isn't a Git repo while the other exp=
+licitly says it's not safe to work in and how to fix it.
 
->  - bundle.h: make "fd" version of read_bundle_header() public
->  - remote: allow relative_url() to return an absolute url
->  - remote: move relative_url()
->  - http: make http_get_file() external
->  - fetch-pack: move --keep=* option filling to a function
->  - fetch-pack: add a deref_without_lazy_fetch_extended()
->  - dir API: add a generalized path_match_flags() function
->  - connect.c: refactor sending of agent & object-format
-> 
->  source: <pull.1233.git.1652731865.gitgitgadget@gmail.com>
+While I agree this is not a good experience, let me explain why this is.
+Some programs, like git status, must always have a Git repository.
+Others, like git diff, may have a Git repository or not.  If they do
+not, some functionality is not available.
 
-While these are for the patches leading up to it, which
-are ready for review.
+The check for a Git repository happens during setup before anything
+having to do with git diff is actually invoked.  By the time git diff
+actually gets invoked, all it knows is that either (a) there is a valid
+Git repository which can be used and is properly set up or (b) there is
+not.  In this case, the answer is (b): you don't have a valid Git
+repository because the permissions are wrong.
 
-I think the two should be tracked independently.
+This could of course be changed, but it requires a bunch of retrofitting
+throughout the code to save _why_ it's not a valid Git repository and
+then print that later on, which hasn't happened yet.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Thanks,
--Stolee
+--LC4MPX8M4BGXWMdn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYokx+wAKCRB8DEliiIei
+gZ5kAP9HkM8eVq50oWRNP74WX1WxNz3epRvqxwew9/d12xQ49QEArP/eFt5w3f0h
+PWRRrTbXH2nlJR9SoErLA8M1MHDyiw4=
+=YymD
+-----END PGP SIGNATURE-----
+
+--LC4MPX8M4BGXWMdn--
