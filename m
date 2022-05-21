@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1FCBC433F5
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 22:19:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B21C433EF
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 22:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347497AbiEUWTb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 May 2022 18:19:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45324 "EHLO
+        id S1347145AbiEUWTc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 18:19:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347118AbiEUWTI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1347136AbiEUWTI (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 21 May 2022 18:19:08 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB9A4F462
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADA804F463
         for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:07 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id f2so15949280wrc.0
+Received: by mail-wr1-x435.google.com with SMTP id w4so15875590wrg.12
         for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IcC8TjxkAxolQXyBFCqHk/x+zhXALadYy+cGgGUwAt4=;
-        b=qtwofsR1WSXI6OcrMGPsQO/UWeoFPLrZfEMaDW530Kazjas06l5gw/A0ZBI30JulPK
-         GX7o2xwQBG39dXrJZnzJ4RCbj0mkFkNtkty2BV7EgHIiTqF4ePbopuvOvErh9WW22+8p
-         wvWtzVNmOq6lY8ZwQgoofhErahXQutKKVXdJRpTjr/5bC16pxCHqpYhvtSQateXUbG6f
-         xKYxauE06OTE8Kz/DgFtG5A43Zef5I25mR9WMOBd3XS+Q4tR8nc1XikYC71Wqm+NSwo8
-         RGYVUYw8CYb5ky2in68Du75xD/7Tb9RKCBZOYU1HVf2fXbqHT4ecrlPRSdPsPCNl7vhN
-         60GQ==
+        bh=36a1hEOLEFfVby9NbcdamW6LtrVu56U3T7qljbJfkeM=;
+        b=LTlfXAt00EirEDjyjOrPZ9axT3ypjzrHUPC8pmIIa91t0YAASnNhMB5OTKlSDh3cU6
+         zbOxhQpQ0V9YAEOjfDnFPOzeVuWyUiHyefWTcD8BHmB6ARLAcdPfgWLwtkmmNno8s3X4
+         JwZ+n8SaNzo4W7dh1K6PDe9MQBXadXtvvhmWzSr9Y2U2r/UYH8N3FZEdimGTYJf/Ut6d
+         iMlIhPeH7Rr+rvwurb5Pl54L7XKuMpXyYkddj9cUVhrSVBUMQuckA0IuXkCk03zH0ito
+         +vGhrQpeVLR7ACoV8fMOGuW9rkPf3JZ/oG4FbTQVDADmyC3izOs8T7x1iGiGwbIbll1K
+         Unrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IcC8TjxkAxolQXyBFCqHk/x+zhXALadYy+cGgGUwAt4=;
-        b=yyXprmWZ9N1u6ewro+aciw7y/pm9U+AmkiP1HGIP11ZO6+CRPiKTUjR6pzcSKVt6h3
-         tB1+m2ZQejcIzQ8LdE2Iz6q41jq8tXz5I/MSOeEAYVsBQGufO+PbvaifIqW6LdG2oZga
-         YbFHkwmYHBB29VXFrVCaA3NX6VLv2J4FUzZoqJmILQKLch+8JQnLa4boJMqzbJf804uM
-         xQNKw3khB1HZ1DziBrbiDLsgxbm3EFSWZVTiZDh68UIrKXeWDCBHON5TjNXC3yRGZTkx
-         hDMpU8xgijKLj9DcT8C1YvXHuL7DSeI2RixVO4TBjPrpx1fPU89tj6AgX5by82DskV8K
-         IL2w==
-X-Gm-Message-State: AOAM531mNsNSH8WplCehwvdHpISE+g4DMjDa2az/XzyK797Mx/evlIFZ
-        YY69FsEYpKhbp/yPl/II88Ukm6RGi6A=
-X-Google-Smtp-Source: ABdhPJwQtCC62Fp//uzyBdT82eCRh0FysO6GHItCZknB4V9fHeMAEg7U0iLbYLO8axZdvJZUFDoJYA==
-X-Received: by 2002:a5d:598a:0:b0:20e:7211:9681 with SMTP id n10-20020a5d598a000000b0020e72119681mr10949729wri.572.1653171545633;
-        Sat, 21 May 2022 15:19:05 -0700 (PDT)
+        bh=36a1hEOLEFfVby9NbcdamW6LtrVu56U3T7qljbJfkeM=;
+        b=QZFBtQCQI/HiBR+C8Yhi3kbwtzGrXJykNBvifwdEThdkeCg5FwqHTc3wQjdxCZin5n
+         4+l1VRPTdtamePionCR+vfF5iJxECsqBLCN1OY6FBzEXPFTl8GYqS+yFU7nY71pObM4F
+         jqLw6wGU+nnxwIwOBRMrhZ7JmYv23munrLwxGcaCX+NNXg/JzihwtfozhE1X6nJLfyeF
+         kfSasWQ2aIY3xloAISUb+qWst5vmY0Xk5AskXsJRWd8InKxjVoaXOFENmYSOoIhNbwop
+         tFu1hLdMeeu7DKk5aaW7VnsJCeJXkXmapxofTHhqS/TsEBkyKJN1yPH4j4Z9iiuEw5Gd
+         FvJw==
+X-Gm-Message-State: AOAM531ug7xRfJbFGv0G99pUo7rXRm5YpGoRNohhY8SGHSnEJ+gB2Cs2
+        63tbANsNL/rO8ZgVeuz7KvaSn8WtP08=
+X-Google-Smtp-Source: ABdhPJwXc4frFhvtokmNra9IIXc4HeSuIZ+fx26WNj0Z8putzvVKE5E41w9lyqmSPgUZlTaleJallQ==
+X-Received: by 2002:adf:dd81:0:b0:20e:5853:1762 with SMTP id x1-20020adfdd81000000b0020e58531762mr13469628wrl.447.1653171546926;
+        Sat, 21 May 2022 15:19:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k5-20020adfb345000000b0020d09f0b766sm6056937wrd.71.2022.05.21.15.19.04
+        by smtp.gmail.com with ESMTPSA id h2-20020a1ccc02000000b0039466988f6csm5179606wmb.31.2022.05.21.15.19.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 May 2022 15:19:05 -0700 (PDT)
-Message-Id: <98059b94a881485f763efc54346e8b19103ee64b.1653171536.git.gitgitgadget@gmail.com>
+        Sat, 21 May 2022 15:19:06 -0700 (PDT)
+Message-Id: <d3db5252fb8601f59c48fcac0120e1e2bcc33e03.1653171536.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
 References: <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
         <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 May 2022 22:18:51 +0000
-Subject: [PATCH v3 07/12] ci: optionally mark up output in the GitHub workflow
+Date:   Sat, 21 May 2022 22:18:52 +0000
+Subject: [PATCH v3 08/12] ci(github): skip the logs of the successful test
+ cases
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,123 +72,38 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-A couple of commands exist to spruce up the output in GitHub workflows:
-https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions
+In most instances, looking at the log of failed test cases is enough to
+identify the problem.
 
-In addition to the `::group::<label>`/`::endgroup::` commands (which we
-already use to structure the output of the build step better), we also
-use `::error::`/`::notice::` to draw the attention to test failures and
-to test cases that were expected to fail but didn't.
+In some (rare?) instances, a previous test case that was marked as
+successful actually has information pertaining to a later test case that
+fails.
 
+To allow the page to load relatively quickly, let's only show the logs
+of the failed test cases to be shown. The full logs are available for
+download as artifacts, should a deeper investigation become necessary.
+
+Co-authored-by: Victoria Dye <vdye@github.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib-functions.sh              |  4 +--
- t/test-lib-github-workflow-markup.sh | 50 ++++++++++++++++++++++++++++
- t/test-lib.sh                        |  5 ++-
- 3 files changed, 56 insertions(+), 3 deletions(-)
- create mode 100644 t/test-lib-github-workflow-markup.sh
+ t/test-lib-github-workflow-markup.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 93c03380d44..af4831a54c6 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -795,7 +795,7 @@ test_verify_prereq () {
- }
- 
- test_expect_failure () {
--	test_start_
-+	test_start_ "$@"
- 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
- 	test "$#" = 2 ||
- 	BUG "not 2 or 3 parameters to test-expect-failure"
-@@ -815,7 +815,7 @@ test_expect_failure () {
- }
- 
- test_expect_success () {
--	test_start_
-+	test_start_ "$@"
- 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
- 	test "$#" = 2 ||
- 	BUG "not 2 or 3 parameters to test-expect-success"
 diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
-new file mode 100644
-index 00000000000..d8dc969df4a
---- /dev/null
+index d8dc969df4a..1ef0fd5ba87 100644
+--- a/t/test-lib-github-workflow-markup.sh
 +++ b/t/test-lib-github-workflow-markup.sh
-@@ -0,0 +1,50 @@
-+# Library of functions to mark up test scripts' output suitable for
-+# pretty-printing it in GitHub workflows.
-+#
-+# Copyright (c) 2022 Johannes Schindelin
-+#
-+# This program is free software: you can redistribute it and/or modify
-+# it under the terms of the GNU General Public License as published by
-+# the Free Software Foundation, either version 2 of the License, or
-+# (at your option) any later version.
-+#
-+# This program is distributed in the hope that it will be useful,
-+# but WITHOUT ANY WARRANTY; without even the implied warranty of
-+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+# GNU General Public License for more details.
-+#
-+# You should have received a copy of the GNU General Public License
-+# along with this program.  If not, see http://www.gnu.org/licenses/ .
-+#
-+# The idea is for `test-lib.sh` to source this file when run in GitHub
-+# workflows; these functions will then override (empty) functions
-+# that are are called at the appropriate times during the test runs.
-+
-+start_test_output () {
-+	test -n "$GIT_TEST_TEE_OUTPUT_FILE" ||
-+	die "--github-workflow-markup requires --verbose-log"
-+	github_markup_output="${GIT_TEST_TEE_OUTPUT_FILE%.out}.markup"
-+	>$github_markup_output
-+	GIT_TEST_TEE_OFFSET=0
-+}
-+
-+# No need to override start_test_case_output
-+
-+finalize_test_case_output () {
-+	test_case_result=$1
-+	shift
-+	case "$test_case_result" in
-+	failure)
-+		echo >>$github_markup_output "::error::failed: $this_test.$test_count $1"
-+		;;
-+	fixed)
-+		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
-+		;;
-+	esac
-+	echo >>$github_markup_output "::group::$test_case_result: $this_test.$test_count $*"
-+	test-tool >>$github_markup_output path-utils skip-n-bytes \
-+		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
-+	echo >>$github_markup_output "::endgroup::"
-+}
-+
-+# No need to override finalize_test_output
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index bdb11e28eea..29640d107ca 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -204,6 +204,9 @@ parse_option () {
- 	--write-junit-xml)
- 		. "$TEST_DIRECTORY/test-lib-junit.sh"
+@@ -40,6 +40,10 @@ finalize_test_case_output () {
+ 	fixed)
+ 		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
  		;;
-+	--github-workflow-markup)
-+		. "$TEST_DIRECTORY/test-lib-github-workflow-markup.sh"
++	ok)
++		# Exit without printing the "ok" tests
++		return
 +		;;
- 	--stress)
- 		stress=t ;;
- 	--stress=*)
-@@ -1082,7 +1085,7 @@ test_start_ () {
- 	test_count=$(($test_count+1))
- 	maybe_setup_verbose
- 	maybe_setup_valgrind
--	start_test_case_output
-+	start_test_case_output "$@"
- }
- 
- test_finish_ () {
+ 	esac
+ 	echo >>$github_markup_output "::group::$test_case_result: $this_test.$test_count $*"
+ 	test-tool >>$github_markup_output path-utils skip-n-bytes \
 -- 
 gitgitgadget
 
