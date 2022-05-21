@@ -2,111 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6465C433EF
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 16:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68A80C433EF
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 17:14:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343738AbiEUQzx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 May 2022 12:55:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33958 "EHLO
+        id S238279AbiEUROy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 13:14:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242650AbiEUQzw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 May 2022 12:55:52 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E884E5F5C
-        for <git@vger.kernel.org>; Sat, 21 May 2022 09:55:50 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id rs12so9039860ejb.13
-        for <git@vger.kernel.org>; Sat, 21 May 2022 09:55:50 -0700 (PDT)
+        with ESMTP id S232331AbiEUROx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 May 2022 13:14:53 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE9E666A9
+        for <git@vger.kernel.org>; Sat, 21 May 2022 10:14:52 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id u3so15290102wrg.3
+        for <git@vger.kernel.org>; Sat, 21 May 2022 10:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Tisdl8RAwJ0Emr8AQXwnQWLg1glae50phYzmwJCKB8M=;
-        b=UYkldC1dPzG7FVWb4wghsHrwSO6ir5D4kM9V6JM7xvuK/CgD1g2hrWBHUcyeB3BlJt
-         episZ4nWHreYrapBCiONpqFWqdzDWOhOQqXew8rw1GM934yumdN5TJ2fka6hRKDrFw+X
-         tPmb5XMY3yAeK3wdeS1qAXkXK9WzsorV8Drct+kI3kODHOpts42QRH8s+PrfAKsKwYO6
-         Ag7UYYvdNEHl6c80FZsZAJkNnO/rCZghdl+RySpRzzYw53Ik9yOep/gYzfhtCGUVTbiR
-         M/OYTSeYLV6OV12UYRljEIqVg9kN7h81JqWXWtGYPSq/a70uL1Gcm29CxSjd0BDN5sjo
-         TCsA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mjKC9ahWgWMZe6zXDTSVsolaxLhiaMyZ74WUV14e92w=;
+        b=Se86RQhcvgT0V8bQKnv0/EXu/EqK8HnkUexAH1l7CnldyuPEhMPrW0idN4Ahf8YPAw
+         s4Z/Cok91poSKlEGs36MyqTekYKkWjCcGuIb5PqPzbeHw2gq/BX8Mlnb1D6CcPv5DV5e
+         DoVRXbQY4lgawfW6xCTajq8EgdcSiLEcltNrcDf9pbLryGuQNPaxvjyz02U2Lc/89QGz
+         ZO5YRn06ouxfV0YBmpgSs+i4JQ/MjGEfyi0nihDpZiVVamHSeV7We6ik73dqSCs8CmGj
+         Qf6W0bdBbOjJKcdhi1g6zy1Cbw3Mi2mWt8Im1wA5FEOxcrDD330LVeW/+jIjiWgzSiZk
+         NU1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Tisdl8RAwJ0Emr8AQXwnQWLg1glae50phYzmwJCKB8M=;
-        b=tgtKt1TbGv6Hykg7K6BE0Tvgs0+NpLFiyzPbgK+WOmM8ns9E6rq/nCGQg2fbE/hoPP
-         nUAN4jzIfeSvqMGHNKavcqirSNQz5SsETTsjkrNftxwqaR73Pyzeg0u+AU1Ct/Hcet6y
-         wxSoawUGpVw0SWvVTOA214w9Ks4kdrPkm+1iUdSgvlGzaG5Hm47fPnqpuYlAlYSU2LDe
-         5K8JCYNco28HInaFDgPQdTClDi2Syqgq6iuyWvovArdFt9nlGybTrEzF+NM5BmLp7Qxt
-         3S0zJ6OlDWknCcBZOvMvxvT/EIHfUQEXHV1RpyxlWY4NSp8AsBZYj0xaxIdRCvXkiyR9
-         4RQQ==
-X-Gm-Message-State: AOAM53270biJ3w4Bq0K/WMy5qOhUukTWOGHXn8I/26nR8yEJJwgHyzLA
-        niSwjyl3Y1KbPVeCiVjo4v4H9FuQFU4=
-X-Google-Smtp-Source: ABdhPJx8mn8XIxcw8/gG5Q+JgyaUSII9s3GiIf0/kZYEYquK9GtX9mdcbscUbsJAM6JJGhzKT3gXYA==
-X-Received: by 2002:a17:907:dab:b0:6fe:b379:ad3f with SMTP id go43-20020a1709070dab00b006feb379ad3fmr6554516ejc.223.1653152149267;
-        Sat, 21 May 2022 09:55:49 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id bf15-20020a0564021a4f00b0042a9fcd7c73sm5807340edb.46.2022.05.21.09.55.48
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mjKC9ahWgWMZe6zXDTSVsolaxLhiaMyZ74WUV14e92w=;
+        b=dIGuWLr5sVqTJEUpHhkEaEjnlpgChxmeGU0En1mXO43de5ZwZwJOvkCXr2+jECsuGs
+         HK18TDg/WWOeUq91eFQO3KgtwtDssrqa14Og7wk2m2PsqHxQ6Li8prQ9l3CWcVCQ2FP6
+         81cYgvWiC+ooy0oXjT7LeVlvXnAEuQPM8rQz2DwAZzTwg94AZx5fIqCt92iWkMRgvBcJ
+         Npy435w3+W6JQfur14aSLh7RxdZuFGAALYAEn+guQIQJFmyNM3mrzDHNjvmEd/VAptwa
+         e23AEM4RACob2TdmiuzRIGuqbMwBmhFg1XHQLrNYWAkPBvzhME+zkRSUPM1s4NX2pOSQ
+         bOyw==
+X-Gm-Message-State: AOAM531EYvpGhV6jiY7vtd1rYWEC4bveytEq3FIJ57b3aEd5/vOX2dSx
+        E6JEPdxkG4yVppUBHFOdkWSTQNLXS2z1Ww==
+X-Google-Smtp-Source: ABdhPJxKVqWOT6mG59JHz/7iSPrLJv5/3IbwXNJJYmpadP292ODpl2e1Dj960wud9sF+g0tvfp3Mww==
+X-Received: by 2002:a5d:5945:0:b0:20d:132e:7e99 with SMTP id e5-20020a5d5945000000b0020d132e7e99mr12580397wri.578.1653153290139;
+        Sat, 21 May 2022 10:14:50 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id b15-20020a7bc24f000000b0039736892653sm4964685wmj.27.2022.05.21.10.14.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 May 2022 09:55:48 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nsSOJ-002foP-KJ;
-        Sat, 21 May 2022 18:55:47 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 11/15] bisect: move even the command-line parsing to
- `bisect--helper`
-Date:   Sat, 21 May 2022 18:52:22 +0200
-References: <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
- <pull.1132.v3.git.1653144546.gitgitgadget@gmail.com>
- <4ae78d37d04789b2cadb059088e59af80a850c15.1653144546.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <4ae78d37d04789b2cadb059088e59af80a850c15.1653144546.git.gitgitgadget@gmail.com>
-Message-ID: <220521.86zgjazuy4.gmgdl@evledraar.gmail.com>
+        Sat, 21 May 2022 10:14:47 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/5] usage API: add and use a bug() + BUG_if_bug()
+Date:   Sat, 21 May 2022 19:14:37 +0200
+Message-Id: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.960.g7a4e2fc85c9
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This series adds a bug() (lower-case) function to go along with
+BUG(). As seen in 2-5/5 this makes it much easier to handle the cases
+such as parse-options.c where we'd like to call BUG(), but would like
+to first exhaustively accumulate the N issues we spot before doing so,
+and not merely BUG() out on the first one.
 
-On Sat, May 21 2022, Johannes Schindelin via GitGitGadget wrote:
+I have more fixes for parse-options.c queued up on top of this
+locally, including a fix for one (tiny) recent-ish regression, but
+found that it was much easier to do so with this new API, as we'll now
+be able to freely use normal sprintf() formats in these cases, instead
+of xstrfmt() (where we'd also memory leak).
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> On our journey to a fully built-in `git bisect`, this is the
-> one of the last steps.
->
-> Side note: The `parse-options` API is not at all set up to parse
-> subcommands such as `git bisect start`, `git bisect reset`, etc.
+Ævar Arnfjörð Bjarmason (5):
+  usage.c: add a non-fatal bug() function to go with BUG()
+  parse-options.c: use new bug() API for optbug()
+  parse-options.c: use optbug() instead of BUG() "opts" check
+  receive-pack: use bug() and BUG_if_bug()
+  cache-tree.c: use bug() and BUG_if_bug()
 
+ .../technical/api-error-handling.txt          | 17 +++++-
+ Documentation/technical/api-trace2.txt        |  4 +-
+ builtin/receive-pack.c                        | 16 +++---
+ cache-tree.c                                  |  7 ++-
+ git-compat-util.h                             | 12 +++++
+ parse-options.c                               | 50 +++++++++---------
+ t/helper/test-trace2.c                        | 21 +++++++-
+ t/t0210-trace2-normal.sh                      | 52 +++++++++++++++++++
+ trace2.c                                      |  6 +++
+ usage.c                                       | 30 +++++++++--
+ 10 files changed, 165 insertions(+), 50 deletions(-)
 
-It seems that since v2 you fixed the bug of "-h" starting a bisection
-session, as noted in :
-https://lore.kernel.org/git/220225.86ilt27uln.gmgdl@evledraar.gmail.com/
+-- 
+2.36.1.960.g7a4e2fc85c9
 
-
-But that problem seems to still be with us in other forms, e.g. just one
-thing I tried (the very first thing) was the command I was testing in
-10/15, and:
-    
-    ./git bisect--helper  --bisect-terms 1 2 ; echo $?
-    You need to start by "git bisect start"
-    
-    Do you want me to do it for you [Y/n]? ^C
-
-so that's buggy too.
-
-> Instead of fighting an up-hill battle trying to "fix" that, we simply
-> roll the same type of manual subcommand parsing as we already do e.g.
-> in `builtin/bundle.c`.
-
-This is particularly confusing because that would be a good approach (as
-I pointed out in a previous round), but the end-state here isn't at all
-like builtin/bundle.c. I.e. in that case we have a top-level strcmp()
-chain dispatching to parse_options() for the sub-command, which would
-solve your problems here...
