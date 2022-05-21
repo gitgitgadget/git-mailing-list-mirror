@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 570D0C433F5
-	for <git@archiver.kernel.org>; Sat, 21 May 2022 22:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86FBAC433EF
+	for <git@archiver.kernel.org>; Sat, 21 May 2022 22:19:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347544AbiEUWTj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 May 2022 18:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45684 "EHLO
+        id S1347804AbiEUWTn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 May 2022 18:19:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347217AbiEUWT3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1347291AbiEUWT3 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 21 May 2022 18:19:29 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC554F458
-        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:09 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id u27so15087571wru.8
-        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:09 -0700 (PDT)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D24605001C
+        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:11 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id e28so15307994wra.10
+        for <git@vger.kernel.org>; Sat, 21 May 2022 15:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4Zcmg8CXfDIdiDJgUpqdHIkQo6vuybaLwMqJMMB59IA=;
-        b=J61ATOcdijkiAKtkiTAu/t2KF7arkrP+i3B+cdW/oN1P90Lp6+1pNu4ju6lYUwIRab
-         JGin9an2Usk1FTkp6JGTfXpjKZ8k1yGeipChyOxgEzcqroj6xbs4Bxsqmo8GesE1FkAs
-         7IlzGlW/Zl2vX+Wauoyp2kWGWvWqjoWxoCaN2SOof5GvB0IsBnExUeDVlogg30vMQgT5
-         GqZmVc8NIwxjejf4gOu97FWZS3VrTsNjezHxPkvmgUBswON4v8q4Vu2c5ttW0PVXlXi3
-         g0o4EiUbvWyV/rrFd0wlBVV7kfA273EyWVB0HupDc1p1xHWOFyB/MYOYyzU9B6FW9vAi
-         ZPog==
+        bh=TkggvBoOmDn/lOOqUQE8c0jXF+pwQTw3QpqZT9FSUok=;
+        b=jSSrE2kOt9pRF5PdAeQ445lwc7hzIBx+O+Y8uPXwcfu+J/hKHV9o5WZ8ace6bE6LWQ
+         AI08j03B4Hr6qqzdki94tfBCKgqgvAzzLpNy7ViAQos+XDKatzqdYNuWU5El96qHlF4E
+         VAbpyHodbQIOHrcUa9shwPZ1U3N8V8lVSAYvcuBzS1jsRispLIHPDzlrNlEZVMIeNFgs
+         boAhqlPQFJ/fg9TLTBdslV667lJt2BO0KObIlyI8OAUptOBJituAkKNLWF9HE8SlM0g6
+         E45Ck4IQ3yDH0bQgj9Yak9wOCqrV9XgLdB3qxvRavFVmpijp9zrg787TFfhTJrTprsPU
+         1a4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4Zcmg8CXfDIdiDJgUpqdHIkQo6vuybaLwMqJMMB59IA=;
-        b=Z0ckIGts5/uM1zwBATxRUpyay/1wW17SVE0fQD7/x3/7jxNXrQvuVbO6te6p+xgMoc
-         4V0yTyfP7yzoCtGC6UI9DwreDA1+37z6w3DED1elzL3inRQe+VgLKMr+JcJpzGkP2Prc
-         UDgeVtCm4nyEwPbqtda7aOBqFpBtlnSFAnT9FtwT/D3OEoW1aUACpsaJYSyumEx5K+Qb
-         QM6K9c4GaQOlma89DYZlyIN7LLlw+ubVdA2Mpn+SYPVAFlplCbOIgOXjJyHH914QD3/O
-         M+vP2I8J45NRk2/RUHDpzQ4pgPBOna40gjB4dqIOFrkMoUcAt59NCqDkrADrps6cM5sW
-         kZPQ==
-X-Gm-Message-State: AOAM530muIbH7SA6rcjRzoRC/1hU4hB3MiZ/XRAM7BQdvCIp26HSTypq
-        8z6GW7VxqMTpheMNjNS2kh8ZPO4lK8c=
-X-Google-Smtp-Source: ABdhPJxwcuUZGKBwpQLPrZuO6shCJV7+0ggWi470VFc3T12aG9xZgswlPpEup7wPjkzQ7eBFdoLT7Q==
-X-Received: by 2002:a5d:6286:0:b0:20d:9b5:6a97 with SMTP id k6-20020a5d6286000000b0020d09b56a97mr13458965wru.165.1653171548011;
-        Sat, 21 May 2022 15:19:08 -0700 (PDT)
+        bh=TkggvBoOmDn/lOOqUQE8c0jXF+pwQTw3QpqZT9FSUok=;
+        b=pWmLQUHCgnvdpT06AEvoLiJU8Ht997PjPHg2DyaPOl0+qtpPrTIGfq7BxOeD529jwv
+         6o7FFvUAVIwanCW8k0xBqy6n3xKy5RLfFTo8IVNn2+K26St39j+yxTlpBG1xvut2eU58
+         oKh93C2D10irFmOT7oRBdWr8xdFrRfnQL9Pa/9Jq7InLOQCkghkzIfphigN9U/DEjPWI
+         Qt0l8pMErCmXaLO6eLbLD+k3ywLR1XgOTedSfvKFLUEN5VUYGEzd79XjK4SuAei77XOl
+         JGnfEOO/jsgKsH/0GaRrR2XJiYl19NDTYDKivZGGapxBaPNFndvZIZg5lVQ/R5OyF6FW
+         icWw==
+X-Gm-Message-State: AOAM533fJJBJSbPwx4KKYvE5rlJEfAUrZ+mo2vGjCkM/A6nhO14UA5ie
+        1X0HFMnwjEq7zZRb+p0YXwaj9krS1ao=
+X-Google-Smtp-Source: ABdhPJx0P5PU6XF1IP2uCq0ru1KdZUch3OZR1Aafr4quDgEpDKrZYn1U5+/A6XUvRM29gU8niicG6Q==
+X-Received: by 2002:adf:f550:0:b0:20e:69df:5f05 with SMTP id j16-20020adff550000000b0020e69df5f05mr11735912wrp.194.1653171551134;
+        Sat, 21 May 2022 15:19:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g24-20020adfa498000000b0020c5253d90csm5984742wrb.88.2022.05.21.15.19.07
+        by smtp.gmail.com with ESMTPSA id v10-20020adf8b4a000000b0020ce1c1cf31sm6368347wra.21.2022.05.21.15.19.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 May 2022 15:19:07 -0700 (PDT)
-Message-Id: <51573ef6c540abe19544e978a0110a5b51d7227d.1653171536.git.gitgitgadget@gmail.com>
+        Sat, 21 May 2022 15:19:10 -0700 (PDT)
+Message-Id: <fe355a6f03b739013957b261751b8bc3950ab533.1653171536.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
 References: <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
         <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 May 2022 22:18:53 +0000
-Subject: [PATCH v3 09/12] ci(github): avoid printing test case preamble twice
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 21 May 2022 22:18:56 +0000
+Subject: [PATCH v3 12/12] ci: call `finalize_test_case_output` a little later
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,58 +64,76 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
         Victoria Dye <vdye@github.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We want to mark up the test case preamble when presenting test output in
-Git's GitHub workflow. Let's suppress the non-marked-up version in that
-case. Any information it would contain is included in the marked-up
-variant already.
+We used to call that function already before printing the final verdict.
+However, now that we added grouping to the GitHub workflow output, we
+will want to include even that part in the collapsible group for that
+test case.
 
-Signed-off-by: Victoria Dye <vdye@github.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib-functions.sh              | 2 ++
- t/test-lib-github-workflow-markup.sh | 2 ++
- 2 files changed, 4 insertions(+)
+ t/test-lib.sh | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index af4831a54c6..89a5e146b7a 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -803,6 +803,7 @@ test_expect_failure () {
- 	export test_prereq
- 	if ! test_skip "$@"
- 	then
-+		test -n "$test_skip_test_preamble" ||
- 		say >&3 "checking known breakage of $TEST_NUMBER.$test_count '$1': $2"
- 		if test_run_ "$2" expecting_failure
- 		then
-@@ -823,6 +824,7 @@ test_expect_success () {
- 	export test_prereq
- 	if ! test_skip "$@"
- 	then
-+		test -n "$test_skip_test_preamble" ||
- 		say >&3 "expecting success of $TEST_NUMBER.$test_count '$1': $2"
- 		if test_run_ "$2"
- 		then
-diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
-index 1ef0fd5ba87..9c5339c577a 100644
---- a/t/test-lib-github-workflow-markup.sh
-+++ b/t/test-lib-github-workflow-markup.sh
-@@ -20,6 +20,8 @@
- # workflows; these functions will then override (empty) functions
- # that are are called at the appropriate times during the test runs.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 29640d107ca..9e410a5bb70 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -783,13 +783,13 @@ trap '{ code=$?; set +x; } 2>/dev/null; exit $code' INT TERM HUP
+ # the test_expect_* functions instead.
  
-+test_skip_test_preamble=t
-+
- start_test_output () {
- 	test -n "$GIT_TEST_TEE_OUTPUT_FILE" ||
- 	die "--github-workflow-markup requires --verbose-log"
+ test_ok_ () {
+-	finalize_test_case_output ok "$@"
+ 	test_success=$(($test_success + 1))
+ 	say_color "" "ok $test_count - $@"
++	finalize_test_case_output ok "$@"
+ }
+ 
+ test_failure_ () {
+-	finalize_test_case_output failure "$@"
++	failure_label=$1
+ 	test_failure=$(($test_failure + 1))
+ 	say_color error "not ok $test_count - $1"
+ 	shift
+@@ -799,18 +799,19 @@ test_failure_ () {
+ 		say_color error "1..$test_count"
+ 		_error_exit
+ 	fi
++	finalize_test_case_output failure "$failure_label" "$@"
+ }
+ 
+ test_known_broken_ok_ () {
+-	finalize_test_case_output fixed "$@"
+ 	test_fixed=$(($test_fixed+1))
+ 	say_color error "ok $test_count - $@ # TODO known breakage vanished"
++	finalize_test_case_output fixed "$@"
+ }
+ 
+ test_known_broken_failure_ () {
+-	finalize_test_case_output broken "$@"
+ 	test_broken=$(($test_broken+1))
+ 	say_color warn "not ok $test_count - $@ # TODO known breakage"
++	finalize_test_case_output broken "$@"
+ }
+ 
+ test_debug () {
+@@ -1136,10 +1137,10 @@ test_skip () {
+ 
+ 	case "$to_skip" in
+ 	t)
+-		finalize_test_case_output skip "$@"
+ 
+ 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
+ 		: true
++		finalize_test_case_output skip "$@"
+ 		;;
+ 	*)
+ 		false
 -- 
 gitgitgadget
-
