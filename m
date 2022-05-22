@@ -2,82 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43338C433EF
-	for <git@archiver.kernel.org>; Sun, 22 May 2022 18:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 984FCC433EF
+	for <git@archiver.kernel.org>; Sun, 22 May 2022 18:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240038AbiEVSlq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 May 2022 14:41:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41418 "EHLO
+        id S1347415AbiEVSsy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 May 2022 14:48:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237466AbiEVSlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 May 2022 14:41:46 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCFC01A062
-        for <git@vger.kernel.org>; Sun, 22 May 2022 11:41:44 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id n10so12155599pjh.5
-        for <git@vger.kernel.org>; Sun, 22 May 2022 11:41:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:to:from
-         :subject:content-transfer-encoding;
-        bh=T/Z4HGGUcPRs+MW8NRWtHpsqrx85MvVs0xV5589v2mg=;
-        b=kmGl8W69JOL8RGuzmd1YIXoSQQCO3HtcDxEhFl3IijQqfUh4qBG/2PyqEDb2+uCOIu
-         fGjI25aC8xptxNSufQoiWP3t+E1P8mvnsHnX8d4YfBbeTUEq9AyWYWLalrDRa5ipOU2Y
-         MYhqVmmSyI6lJ/gZWv7l4P0mtF0vYMwEaGP5/7ghau0HqxcJBBnh9NdPbKSm14kxpB03
-         24IZf2U1KmA779saIPooLdqomFvdiLTWaiesbu4KtwM/P9HKb/KzZ0KdKIHj1zRZfl5d
-         b2gvxWAgb2mgqAlV5pK4G+Go6dFXCezScTTC3dPvdJ+I8M38QVrjrf490N46K38mj28u
-         x6rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:to:from:subject:content-transfer-encoding;
-        bh=T/Z4HGGUcPRs+MW8NRWtHpsqrx85MvVs0xV5589v2mg=;
-        b=kdp5bws3749PBP8FXwI9wjwggr05fA7DGU0KzvC2LYfExBegrLSgLAKkJYP2Rrpl0q
-         oTpbsTFvWFJvhlfYFzzjUiFukl1KjUis5lFHchhNj/mGRh8CCwDQyAY1bhKIO/F+Coc2
-         AcQp3nBT1iJlDvIS1S11TqNVJpZD8LrTJXex+KVM1eb/vvg46YDVoJcixeMSgOmoANsN
-         6i4svs4WgzKW2+5gQ0sIIDpgREvAg+8ubOlrzIaZg80lSeQikmT4RWqlGp2ZPx5PL0H3
-         29ZARsn3OB5al/UP0d//w7o+0DpE80x8G8/dS9RVGgH26VpXlNSPtFAlyJextecN3oZs
-         hTjw==
-X-Gm-Message-State: AOAM532YVB5nrAoVHNpCTkP0vwlN3l3utWS+IK6+HqrYZktEt3fLFAed
-        qEw7cIISsT9xvbUs7fppS35RF8eaz/fTyQ==
-X-Google-Smtp-Source: ABdhPJw7Pqi+y/CS3g8lhDsg+wM3I6kgtCfagOZjFtwOBGwP/BTfLuZ0BNeNGpx6wpLqTn73af7GBw==
-X-Received: by 2002:a17:903:1108:b0:156:73a7:7c1 with SMTP id n8-20020a170903110800b0015673a707c1mr19248022plh.101.1653244903926;
-        Sun, 22 May 2022 11:41:43 -0700 (PDT)
-Received: from [192.168.1.6] ([171.49.247.183])
-        by smtp.gmail.com with ESMTPSA id e24-20020a637458000000b003f5e0c264bcsm3235126pgn.66.2022.05.22.11.41.42
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 May 2022 11:41:43 -0700 (PDT)
-Message-ID: <ccb312dc-c2cc-ca3a-e659-0f87ceec0d15@gmail.com>
-Date:   Mon, 23 May 2022 00:11:40 +0530
+        with ESMTP id S237466AbiEVSsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 May 2022 14:48:53 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A61F313F95
+        for <git@vger.kernel.org>; Sun, 22 May 2022 11:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1653245313;
+        bh=5jma+mRL04m8fBT04t6c0JPBQvVGqTGG2kLv9ykDpvA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WoiMBfClxfwgFZdZqHxbA2bljPtcTf+n+8uI3Gbp7RUhfAyTlRliQIL95ly6QCnVG
+         ljJESgZFBhiGLPwlJ+IzAtTmOoSwHPY1nsqultE8bZ55cKA3FgfkRtqrA88TdD2Uao
+         ZepjbHjv795sb708TXn4NuckF99lMQXokoYfphKw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Md6Qr-1nJEpO1lqt-00aFJU; Sun, 22
+ May 2022 20:48:33 +0200
+Date:   Sun, 22 May 2022 20:48:30 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Victoria Dye <vdye@github.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+In-Reply-To: <xmqq35h2cwrm.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2205222045130.352@tvgsbejvaqbjf.bet>
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>        <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>        <6b83bb83-32b9-20c9-fa02-c1c3170351c3@github.com>        <nycvar.QRO.7.76.6.2205212307090.352@tvgsbejvaqbjf.bet>
+ <xmqq35h2cwrm.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Content-Language: en-US
-To:     git@vger.kernel.org
-From:   Hrushikesh Rao <hrushikesh20thegreat@gmail.com>
-Subject: Git commands version documentation
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UqQxfNIO0xq8fA6Q6J4wafB56TKJXRrEwc5jk0C9i+F2eZSCl/5
+ phOlz8XQiTTmugL1xnioKhxP7KgjGbsBUfDVuUlvuIponqK4i4rEKPgywBQPxVfAOBU0IiG
+ z3u9ldNHgU0a39gOfHAuuSZTSj9Z5fRILh/kwjLMhhaZPGelYLOr797VNkXDe9oJlxVPRiq
+ Z6ruFnTniFWtRrbvgEXMw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UFhZEhS3cQc=:ZBRy6/4Jvgem0q3nsqoPq7
+ XpTBD6rqMn1FnRs+29CxS1wyMZwUQMXwaMGAlTG2tDz523yVobRyu507HYyaxmya8mxM6+Suh
+ wBOrQ2uwEyb524dcAt8h5tVLOr2FITnRviGsLQaYF95z0fKOWKKV6E3MOKUG/uLlqCEeceDHN
+ Mo5Mx/c+qVgM+adWhDi5F+Eaav0HTS3gcvaMOP/4Y8orJWUXmtW0cM/aPYxrcPiUfjRSMcbNU
+ XyefcSIYgy9SKy6alHXugJ1dmAcP5Vz5kNbRwtcdAYJ3gCunKAUjzOlXin8zbowCssN/sukeu
+ rddMdbwCZM9vCDUdTs+7lVP/RQwFgO1V/vHFUxb5H5pnZuLk48EJUWNuvnx70hkgHxL7yTL8M
+ iXryBIcc4yWa0BOjXb18w6l906jiAxoVb7FXfeOhQPEz3zigGQMdJKZChfwrZDqmMpTzD/Pxp
+ xoohTJyz3XSjPT+h2mvLEt0DKxbmLZjhg0EhoSX7TmOEQbWKnYvyzO5lKWiXmpyu8K/EbKjt5
+ GohlqsU4uSlfOaFNBeNYn+idjpvNjA4xbLV9SO3+ko8bTtt6wcR4uFuyHZprHMG7Q+BRX8Hxv
+ DvEORo2hx8phk3YJ+oe6HFIPd/tLWf5JJ/vSxah8TjS7dSSz5oWNrUvbDbNJtDtyjQg9ePCK4
+ +jVR4Cbs+NPFDynPxbU421Z+4bJTPxSSy9O6AndsjKTiCOha2dhz68iNhJeLiu/EcjaIHiagi
+ 97lgsSeLwlSpYBNKXH988xHTe1c1O3y0Y6+zZ3I2kqASkYgTby+hNpxH5GTVXYJQOeL93iTmk
+ kAt7VShvrsBeVamSRr4H0suCvN5/3Z/DENoCkvmRxjoXCel72u8OhjdGvumTiZLqm5uGtr4F9
+ 3yEnaJwa8kHYkpRUy+ZwYbiKadT2qzYugML4bSwWphBwmpjFUs91qe31dRXbqYyzTwAZfL0hR
+ 11XMKOSASrFh2IbWDuzd6svfh/5JM4EukHaV+NENhVu9w3jTrN+BkUSZ6WjYnm5JAqKu4g8UO
+ C/2Wk0E5PkT4qk5oV09J6kFRpHcl7WM1KG7V273+dYcX6dP/qHsIHAw3ZK2dPqAj+q5p2yM9H
+ 9KPH++1X4ZPFK7PDVWpWMq1MtZ64ZpA5yOr3Zh2NpGr6KSDF/HIkyotGA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey,
+Hi Junio,
 
-I am working on git maintenance project in Jenkins. We are using 
-git-maintenance to improve the performance of the git commands further 
-improving the build speed. Git maintenance was added in git version 
-2.30.0. The aim of the project is to also support systems having git 
-version < 2.30.0. Few git maintenance tasks very available before the 
-maintenance command was introduced i.e gc,commit-graph,gc and 
-incremental repack. Is there a way for me to find out in which version 
-these commands have been introduced? Based on this we can support legacy 
-git version.
+On Sat, 21 May 2022, Junio C Hamano wrote:
 
-Waiting for your response.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> * print the verbose logs only for the failed test cases (to massively=
+ cut
+> >>   down on the size of the log, particularly when there's only a coupl=
+e
+> >>   failures in a test file with a lot of passing tests).
+> >
+> > That's an amazingly simple trick to improve the speed by a ton, indeed=
+.
+> > Thank you for this splendid idea!
+> >
+> >> * skip printing the full text of the test in 'finalize_test_case_outp=
+ut'
+> >>   when creating the group, i.e., use '$1' instead of '$*' (in both pa=
+ssing
+> >>   and failing tests, this information is already printed via some oth=
+er
+> >>   means).
+> >>
+> >> If you wanted to make sure a user could still access the full failure=
+ logs
+> >> (i.e., including the "ok" test results), you could print a link to th=
+e
+> >> artifacts page as well - that way, all of the information we currentl=
+y
+> >> provide to users can still be found somewhere.
+> >
+> > That's a good point, I added that hint to the output (the link is
+> > unfortunately not available at the time we print that advice).
+>
+> https://github.com/git/git/runs/6539786128 shows that all in-flight
+> topics merged to 'seen', except for the ds/bundle-uri-more, passes
+> the linux-leaks job.  The ds/bundle-uri-more topic introduces some
+> leaks to commands that happen to be used in tests that are marked as
+> leak-checker clean, making the job fail.
+>
+> Which makes a great guinea pig for the CI output improvement topic.
+>
+> So, I created two variants of 'seen' with this linux-leaks breakage.
+> One is with the js/ci-github-workflow-markup topic on this thread.
+> The other one is with the ab/ci-github-workflow-markup topic (which
+> uses a preliminary clean-up ab/ci-setup-simplify topic as its base).
+> They should show the identical test results and failures.
+>
+> And here are their output:
+>
+>  - https://github.com/git/git/runs/6539835065
 
-Thank You
+I see that this is still with the previous iteration, and therefore
+exposes the same speed (or slowness) as was investigated so wonderfully by
+Victoria.
 
-Hrushikesh Rao Naidnur
+So I really do not understand why you pointed to that run, given that it
+still contains all the successful test cases' logs, which contributes in a
+major way to said slowness.
 
+Maybe you meant to refer to https://github.com/git/git/runs/6540394142
+instead, which at least for me loads much faster _and_ makes the output as
+helpful as my intention was?
+
+Ciao,
+Dscho
+
+>  - https://github.com/git/git/runs/6539900608
+>
+> If I recall correctly, the selling point of the ab/* variant over
+> js/* variant was that it would give quicker UI response compared to
+> the former, but other than that, both variants' UI are supposed to
+> be as newbie friendly as the other.
+>
+> When I tried the former, it reacted too poorly to my attempt to
+> scroll (with mouse scroll wheel, if it makes a difference) that
+> sometimes I was staring a blank dark-gray space for a few seconds
+> waiting for it to be filled by something, which was a bit jarring
+> experience.  When I tried the latter, it didn't show anything to
+> help diagnosing the details of the breakage in "run make test" step
+> and the user needed to know "print test failures" needs to be looked
+> at, which I am not sure is an inherent limitation of the approach.
+> After the single extra click, navigating the test output to find the
+> failed steps among many others that succeeded was not a very pleasant
+> experience.
+>
+> Those who are interested in UX experiment may want to visit these
+> two output to see how usable each of these is for themselves.
+>
+> Thanks.
+>
+>
+>
+>
+>
