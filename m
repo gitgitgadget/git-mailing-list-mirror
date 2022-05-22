@@ -2,88 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E28DC433EF
-	for <git@archiver.kernel.org>; Sun, 22 May 2022 05:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43338C433EF
+	for <git@archiver.kernel.org>; Sun, 22 May 2022 18:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239606AbiEVFvA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 May 2022 01:51:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43750 "EHLO
+        id S240038AbiEVSlq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 May 2022 14:41:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239368AbiEVFu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 May 2022 01:50:58 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2CE8281
-        for <git@vger.kernel.org>; Sat, 21 May 2022 22:50:52 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A82CA1A63D6;
-        Sun, 22 May 2022 01:50:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=nHEjlFcYexqz
-        N6Ilqe42wcUuFG0kDOMUXMW2hPddY80=; b=aJV36iD/sHO8V/i+K62MiFd7+Zrp
-        Bv7JG7TSN0bcY1eQlqqAN4pYV+UfhsRoFfk8gx1+A2Rr0gkX/u4XO3jIAskc0tVw
-        44VRwe943EBygHCl5gvE1ewjxLh+geM5KMHwoBDzIIJFRbNCBiSfnCbSrDzrkBi0
-        DPFnih/TV+lnjTo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A09201A63D5;
-        Sun, 22 May 2022 01:50:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5103C1A63D4;
-        Sun, 22 May 2022 01:50:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 3/7] scalar: validate the optional enlistment argument
-References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>
-        <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
-        <da9f52a82406ffc909e9c5f2b6b5e77818d972c0.1652210824.git.gitgitgadget@gmail.com>
-        <220517.867d6k6wjr.gmgdl@evledraar.gmail.com>
-        <xmqqbkvuwxps.fsf@gitster.g>
-        <220520.86fsl43bkf.gmgdl@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2205201753300.352@tvgsbejvaqbjf.bet>
-        <220521.86leuv199g.gmgdl@evledraar.gmail.com>
-Date:   Sat, 21 May 2022 22:50:47 -0700
-In-Reply-To: <220521.86leuv199g.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sat, 21 May 2022 11:54:42 +0200")
-Message-ID: <xmqqleuuazew.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S237466AbiEVSlq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 May 2022 14:41:46 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCFC01A062
+        for <git@vger.kernel.org>; Sun, 22 May 2022 11:41:44 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id n10so12155599pjh.5
+        for <git@vger.kernel.org>; Sun, 22 May 2022 11:41:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:content-language:to:from
+         :subject:content-transfer-encoding;
+        bh=T/Z4HGGUcPRs+MW8NRWtHpsqrx85MvVs0xV5589v2mg=;
+        b=kmGl8W69JOL8RGuzmd1YIXoSQQCO3HtcDxEhFl3IijQqfUh4qBG/2PyqEDb2+uCOIu
+         fGjI25aC8xptxNSufQoiWP3t+E1P8mvnsHnX8d4YfBbeTUEq9AyWYWLalrDRa5ipOU2Y
+         MYhqVmmSyI6lJ/gZWv7l4P0mtF0vYMwEaGP5/7ghau0HqxcJBBnh9NdPbKSm14kxpB03
+         24IZf2U1KmA779saIPooLdqomFvdiLTWaiesbu4KtwM/P9HKb/KzZ0KdKIHj1zRZfl5d
+         b2gvxWAgb2mgqAlV5pK4G+Go6dFXCezScTTC3dPvdJ+I8M38QVrjrf490N46K38mj28u
+         x6rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:from:subject:content-transfer-encoding;
+        bh=T/Z4HGGUcPRs+MW8NRWtHpsqrx85MvVs0xV5589v2mg=;
+        b=kdp5bws3749PBP8FXwI9wjwggr05fA7DGU0KzvC2LYfExBegrLSgLAKkJYP2Rrpl0q
+         oTpbsTFvWFJvhlfYFzzjUiFukl1KjUis5lFHchhNj/mGRh8CCwDQyAY1bhKIO/F+Coc2
+         AcQp3nBT1iJlDvIS1S11TqNVJpZD8LrTJXex+KVM1eb/vvg46YDVoJcixeMSgOmoANsN
+         6i4svs4WgzKW2+5gQ0sIIDpgREvAg+8ubOlrzIaZg80lSeQikmT4RWqlGp2ZPx5PL0H3
+         29ZARsn3OB5al/UP0d//w7o+0DpE80x8G8/dS9RVGgH26VpXlNSPtFAlyJextecN3oZs
+         hTjw==
+X-Gm-Message-State: AOAM532YVB5nrAoVHNpCTkP0vwlN3l3utWS+IK6+HqrYZktEt3fLFAed
+        qEw7cIISsT9xvbUs7fppS35RF8eaz/fTyQ==
+X-Google-Smtp-Source: ABdhPJw7Pqi+y/CS3g8lhDsg+wM3I6kgtCfagOZjFtwOBGwP/BTfLuZ0BNeNGpx6wpLqTn73af7GBw==
+X-Received: by 2002:a17:903:1108:b0:156:73a7:7c1 with SMTP id n8-20020a170903110800b0015673a707c1mr19248022plh.101.1653244903926;
+        Sun, 22 May 2022 11:41:43 -0700 (PDT)
+Received: from [192.168.1.6] ([171.49.247.183])
+        by smtp.gmail.com with ESMTPSA id e24-20020a637458000000b003f5e0c264bcsm3235126pgn.66.2022.05.22.11.41.42
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 May 2022 11:41:43 -0700 (PDT)
+Message-ID: <ccb312dc-c2cc-ca3a-e659-0f87ceec0d15@gmail.com>
+Date:   Mon, 23 May 2022 00:11:40 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 21490670-D993-11EC-AEE6-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Content-Language: en-US
+To:     git@vger.kernel.org
+From:   Hrushikesh Rao <hrushikesh20thegreat@gmail.com>
+Subject: Git commands version documentation
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hey,
 
->> Scalar is not (yet?) a Git command.
->
-> "test-tool" isn't "git" either, so I think this argument is a
-> non-starter.
->
-> As the documentation for "test_must_fail" notes the distinction is
-> whether something is "system-supplied". I.e. we're not going to test
-> whether "grep" segfaults, but we should test our own code to see if it
-> segfaults.
->
-> The scalar code is code we ship and test, so we should use the helper
-> that doesn't hide a segfault.
->
-> I don't understand why you wouldn't think that's the obvious fix here,
-> adding "scalar" to that whitelist is a one-line fix, and clearly yields
-> a more useful end result than a test silently hiding segfaults.
+I am working on git maintenance project in Jenkins. We are using 
+git-maintenance to improve the performance of the git commands further 
+improving the build speed. Git maintenance was added in git version 
+2.30.0. The aim of the project is to also support systems having git 
+version < 2.30.0. Few git maintenance tasks very available before the 
+maintenance command was introduced i.e gc,commit-graph,gc and 
+incremental repack. Is there a way for me to find out in which version 
+these commands have been introduced? Based on this we can support legacy 
+git version.
 
-FWIW, I don't, either.
+Waiting for your response.
+
+Thank You
+
+Hrushikesh Rao Naidnur
 
