@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2A10C433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16858C433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232891AbiEWUPK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 16:15:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52358 "EHLO
+        id S232895AbiEWUPN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 16:15:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233097AbiEWUNv (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233100AbiEWUNv (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 May 2022 16:13:51 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C53ACAE26E
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:24 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id e2so11281027wrc.1
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:24 -0700 (PDT)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78A26AEE1D
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:27 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id p189so9456198wmp.3
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yAYOyrQ7lGddulrPeFKr0D/52H8sH3I2rvMs5wugd2A=;
-        b=qDTQA5dU/LbPVweDO5gsfT9b9WW2hOkZP2E2hMOHKsDj7XI2mT9MB1seSCea6a9AVi
-         ygWo2fsSvv6P9w38zFMI4XLIunRQKpLTZy5PfNCIh1nRKBtpQ/pOwCHj40IbDW4Wt3xV
-         Y9rYmXC59UuWstvJVRkgTLnqVxtHRqgYOWdHCPEa3AdL0c6tU02Uqd0iGO3g75exPDk0
-         mL69dFOO7B5utFbkJYH4QwwR4kowtoulbZnHIxR7GEAtYdeo8dU83qLai4dfxVQ5C+Xn
-         35zAEzjAcVq5d3xHlvfJ5UGX0hWUhZQfY6L21UzLfy3hXXoc51vNzRd/t7Xs2oW8bmA/
-         vyBA==
+        bh=uU2/c+aPwrNZLDw5bIR3T3N2u2DdFYRmZnPeQS1ZxNA=;
+        b=azPtIJMk4u1DSZf/6M4Y18KR8OkA0CwZTSEWO6JF7wk39yHAXP9N880La8x0+FbffK
+         9Qps6M12IRzSPdOE4lfROfZWCLNwNeZ1rNzhvL0aIg8LnB6xBMl1ksjhyoIFt3hPX7kN
+         Ye6wpoYtKMicvoLEcQaS6XSiK2ZEMvYXzwcMGCohByns02RyKTS7hAYtj54DctIGi7r1
+         606eP77onsLVZrcSEnS1efSSyeFncGM89jg95N3aCnVqz97F+4olU4QN6reho9RXm+cv
+         9vZjaVkXbZ49ePWyaY3AKAH6JONvK5rYRie3dPaKCcZNOuw0AgZi+yGbvzzPYQLQLlJ2
+         Bn+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yAYOyrQ7lGddulrPeFKr0D/52H8sH3I2rvMs5wugd2A=;
-        b=g22lKNrvIgPozM6hKcBgtiDUmn+zEXFAatR6V8wspX+RzYa+UaYT1gFe4CA+MwvhXD
-         72LsL9d7eBa5ikfjH//F7tvPsMu4IRVIVyEpZ53OTQ3KBcHk/cmEr+h9//SLIMVLP6uo
-         rGHeFpxKTPHrh0BZUoYCXtY94GD2uceRCrE/SojF61APxX9LOIlLtSlZdRYI1u8pCEY4
-         iWQYB2haoc9Pt4dOIavrpad5gTVhsyhXpoNO/6DC5wsUCtIv719w9grAPaSQdOoj0m3i
-         HoSrd9BdP2LPKmbuO3OGwS6lDOpbdsdhBEZXJ4y97aSAFwR4CJCkqP2KYMclP6et32z8
-         pnrA==
-X-Gm-Message-State: AOAM530MFR9fMOi//aH2zqgjHwDPzFPs5oJwhpmhS05MStHy+SjsCb7t
-        zbmv1p146J6ozOMltQqJl2IBCKRIruM=
-X-Google-Smtp-Source: ABdhPJwjCjsCBbFdRdJDQwJOosh1qCod+VoJVFqY8DXsI5vWrhMOSoEU0b/TCR7zav8YkHCK8BfHTw==
-X-Received: by 2002:a5d:58cc:0:b0:20e:643d:e46a with SMTP id o12-20020a5d58cc000000b0020e643de46amr19673837wrf.97.1653336797629;
-        Mon, 23 May 2022 13:13:17 -0700 (PDT)
+        bh=uU2/c+aPwrNZLDw5bIR3T3N2u2DdFYRmZnPeQS1ZxNA=;
+        b=1ukbiI9+31oA7pE1mFHtbfeMZpTemGK4ON/Bm1S2J8sCR5imHtT9mwo3Tf5nTOpLFV
+         mi5PH/+E6VIJMV6MiqLoRJG/Y8Cp6gQlIUF3663cwJqQq5YB0rJ0d+DMHfHMexg3rNne
+         6lcr5xjm0JJMPhivGmrgQNSnHiMctI53Y+Ke+FxYyh97rH5Dzjp+wYo9NZaZ9R9inPeB
+         /dJc33UWGQ1nBpTQK/w1n+Tm6BipgTqc6bAeWhs4+b+nhaeu7Cb7GHqmQ6Dm8tCEc6H8
+         pfx73XY9yPw995emk6NgLMrXZRQxRuohVPdtgATLVw0//B7UTKu2N2hecryCafj770qz
+         kuCw==
+X-Gm-Message-State: AOAM532z+NL/jiVQv2npa8wtmclWjzGY/jh0cEteI/g5mvE032k3yNNg
+        m6NNvasuc2lLRZczpj63fiS8AhAb3FE=
+X-Google-Smtp-Source: ABdhPJxK2DYfx5wfh7uNMSSHLZ5/FJ2XlUlaR52GocSs8FTHeTt5kgu6iYB9BqgNkACMTdOcQPrU6Q==
+X-Received: by 2002:a05:600c:1c9b:b0:394:77fa:c7db with SMTP id k27-20020a05600c1c9b00b0039477fac7dbmr610758wms.87.1653336803975;
+        Mon, 23 May 2022 13:13:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d21-20020adf9b95000000b0020d06e7c16fsm10730877wrc.84.2022.05.23.13.13.16
+        by smtp.gmail.com with ESMTPSA id l16-20020a7bc350000000b00397470a8226sm224429wmj.15.2022.05.23.13.13.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 13:13:17 -0700 (PDT)
-Message-Id: <92f5c0d2c8b1a69aec4325ab35193fe257d481f1.1653336765.git.gitgitgadget@gmail.com>
+        Mon, 23 May 2022 13:13:23 -0700 (PDT)
+Message-Id: <9fc7c970929d025f023666ce5d8432a3bcfa1714.1653336765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
         <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 20:12:38 +0000
-Subject: [PATCH v7 23/30] fsmonitor: never set CE_FSMONITOR_VALID on
- submodules
+Date:   Mon, 23 May 2022 20:12:44 +0000
+Subject: [PATCH v7 29/30] fsmonitor--daemon: allow --super-prefix argument
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,206 +74,116 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Never set CE_FSMONITOR_VALID on the cache-entry of submodule
-directories.
+Create a test in t7527 to verify that we get a stray warning from
+`git fsmonitor--daemon start` when indirectly called from
+`git submodule absorbgitdirs`.
 
-During a client command like 'git status', we may need to recurse
-into each submodule to compute a status summary for the submodule.
-Since the purpose of the ce_flag is to let Git avoid scanning a
-cache-entry, setting the flag causes the recursive call to be
-avoided and we report incorrect (no status) for the submodule.
+Update `git fsmonitor--daemon` to take (and ignore) the `--super-prefix`
+argument to suppress the warning.
 
-We created an OS watch on the root directory of our working
-directory and we receive events for everything in the cone
-under it.  When submodules are present inside our working
-directory, we receive events for both our repo (the super) and
-any subs within it.  Since our index doesn't have any information
-for items within the submodules, we can't use those events.
+When we have:
 
-We could try to truncate the paths of those events back to the
-submodule boundary and mark the GITLINK as dirty, but that
-feels expensive since we would have to prefix compare every FS
-event that we receive against a list of submodule roots.  And
-it still wouldn't be sufficient to correctly report status on
-the submodule, since we don't have any space in the cache-entry
-to cache the submodule's status (the 'SCMU' bits in porcelain
-V2 speak).  That is, the CE_FSMONITOR_VALID bit just says that
-we don't need to scan/inspect it because we already know the
-answer -- it doesn't say that the item is clean -- and we
-don't have space in the cache-entry to store those answers.
-So we should always do the recursive scan.
+1. a submodule with a `sub/.git/` directory (rather than a `sub/.git`
+file).
 
-Therefore, we should never set the flag on GITLINK cache-entries.
+2. `core.fsmonitor` is turned on in the submodule, but the daemon is
+not yet started in the submodule.
+
+3. and someone does a `git submodule absorbgitdirs` in the super.
+
+Git will recursively invoke `git submodule--helper absorb-git-dirs`
+in the submodule.  This will read the index and may attempt to start
+the fsmonitor--daemon with the `--super-prefix` argument.
+
+`git fsmonitor--daemon start` does not accept the `--super-prefix`
+argument and causes a warning to be issued.
+
+This does not cause a problem because the `refresh_index()` code
+assumes a trivial response if the daemon does not start.
+
+The net-net is a harmelss, but stray warning.  Lets eliminate the
+warning.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fsmonitor.c                  |   2 +
- fsmonitor.h                  |  11 ++++
- t/t7527-builtin-fsmonitor.sh | 111 +++++++++++++++++++++++++++++++++++
- 3 files changed, 124 insertions(+)
+ git.c                        |  2 +-
+ t/t7527-builtin-fsmonitor.sh | 50 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 1 deletion(-)
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index e1229c289cf..57d6a483bee 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -580,6 +580,8 @@ void tweak_fsmonitor(struct index_state *istate)
- 		if (fsmonitor_enabled) {
- 			/* Mark all entries valid */
- 			for (i = 0; i < istate->cache_nr; i++) {
-+				if (S_ISGITLINK(istate->cache[i]->ce_mode))
-+					continue;
- 				istate->cache[i]->ce_flags |= CE_FSMONITOR_VALID;
- 			}
- 
-diff --git a/fsmonitor.h b/fsmonitor.h
-index 3f41f653691..edf7ce5203b 100644
---- a/fsmonitor.h
-+++ b/fsmonitor.h
-@@ -68,6 +68,15 @@ static inline int is_fsmonitor_refreshed(const struct index_state *istate)
-  * Set the given cache entries CE_FSMONITOR_VALID bit. This should be
-  * called any time the cache entry has been updated to reflect the
-  * current state of the file on disk.
-+ *
-+ * However, never mark submodules as valid.  When commands like "git
-+ * status" run they might need to recurse into the submodule (using a
-+ * child process) to get a summary of the submodule state.  We don't
-+ * have (and don't want to create) the facility to translate every
-+ * FS event that we receive and that happens to be deep inside of a
-+ * submodule back to the submodule root, so we cannot correctly keep
-+ * track of this bit on the gitlink directory.  Therefore, we never
-+ * set it on submodules.
-  */
- static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce)
- {
-@@ -75,6 +84,8 @@ static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache
- 
- 	if (fsm_mode > FSMONITOR_MODE_DISABLED &&
- 	    !(ce->ce_flags & CE_FSMONITOR_VALID)) {
-+		if (S_ISGITLINK(ce->ce_mode))
-+			return;
- 		istate->cache_changed = 1;
- 		ce->ce_flags |= CE_FSMONITOR_VALID;
- 		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
+diff --git a/git.c b/git.c
+index 3d8e48cf555..e6fdac1f8e3 100644
+--- a/git.c
++++ b/git.c
+@@ -537,7 +537,7 @@ static struct cmd_struct commands[] = {
+ 	{ "format-patch", cmd_format_patch, RUN_SETUP },
+ 	{ "fsck", cmd_fsck, RUN_SETUP },
+ 	{ "fsck-objects", cmd_fsck, RUN_SETUP },
+-	{ "fsmonitor--daemon", cmd_fsmonitor__daemon, RUN_SETUP },
++	{ "fsmonitor--daemon", cmd_fsmonitor__daemon, SUPPORT_SUPER_PREFIX | RUN_SETUP },
+ 	{ "gc", cmd_gc, RUN_SETUP },
+ 	{ "get-tar-commit-id", cmd_get_tar_commit_id, NO_PARSEOPT },
+ 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
 diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 3bc335b891d..cf4fb72c3f0 100755
+index 9edae3ed830..19edc96fd4d 100755
 --- a/t/t7527-builtin-fsmonitor.sh
 +++ b/t/t7527-builtin-fsmonitor.sh
-@@ -721,4 +721,115 @@ do
- 	'
- done
+@@ -832,6 +832,56 @@ test_expect_success 'submodule always visited' '
+ 	my_match_and_clean
+ '
  
-+# Test fsmonitor interaction with submodules.
++# If a submodule has a `sub/.git/` directory (rather than a file
++# pointing to the super's `.git/modules/sub`) and `core.fsmonitor`
++# turned on in the submodule and the daemon is not yet started in
++# the submodule, and someone does a `git submodule absorbgitdirs`
++# in the super, Git will recursively invoke `git submodule--helper`
++# to do the work and this may try to read the index.  This will
++# try to start the daemon in the submodule *and* pass (either
++# directly or via inheritance) the `--super-prefix` arg to the
++# `git fsmonitor--daemon start` command inside the submodule.
++# This causes a warning because fsmonitor--daemon does take that
++# global arg (see the table in git.c)
 +#
-+# If we start the daemon in the super, it will see FS events for
-+# everything in the working directory cone and this includes any
-+# files/directories contained *within* the submodules.
++# This causes a warning when trying to start the daemon that is
++# somewhat confusing.  It does not seem to hurt anything because
++# the fsmonitor code maps the query failure into a trivial response
++# and does the work anyway.
 +#
-+# A `git status` at top level will get events for items within the
-+# submodule and ignore them, since they aren't named in the index
-+# of the super repo.  This makes the fsmonitor response a little
-+# noisy, but it doesn't alter the correctness of the state of the
-+# super-proper.
-+#
-+# When we have submodules, `git status` normally does a recursive
-+# status on each of the submodules and adds a summary row for any
-+# dirty submodules.  (See the "S..." bits in porcelain V2 output.)
-+#
-+# It is therefore important that the top level status not be tricked
-+# by the FSMonitor response to skip those recursive calls.  That is,
-+# even if FSMonitor says that the mtime of the submodule directory
-+# hasn't changed and it could be implicitly marked valid, we must
-+# not take that shortcut.  We need to force the recusion into the
-+# submodule so that we get a summary of the status *within* the
-+# submodule.
++# It would be nice to silence the warning, however.
 +
-+create_super () {
-+	super="$1" &&
++have_t2_error_event () {
++	log=$1
++	msg="fsmonitor--daemon doesnQt support --super-prefix" &&
 +
-+	git init "$super" &&
-+	echo x >"$super/file_1" &&
-+	echo y >"$super/file_2" &&
-+	echo z >"$super/file_3" &&
-+	mkdir "$super/dir_1" &&
-+	echo a >"$super/dir_1/file_11" &&
-+	echo b >"$super/dir_1/file_12" &&
-+	mkdir "$super/dir_1/dir_2" &&
-+	echo a >"$super/dir_1/dir_2/file_21" &&
-+	echo b >"$super/dir_1/dir_2/file_22" &&
-+	git -C "$super" add . &&
-+	git -C "$super" commit -m "initial $super commit"
++	tr '\047' Q <$1 | grep -e "$msg"
 +}
 +
-+create_sub () {
-+	sub="$1" &&
-+
-+	git init "$sub" &&
-+	echo x >"$sub/file_x" &&
-+	echo y >"$sub/file_y" &&
-+	echo z >"$sub/file_z" &&
-+	mkdir "$sub/dir_x" &&
-+	echo a >"$sub/dir_x/file_a" &&
-+	echo b >"$sub/dir_x/file_b" &&
-+	mkdir "$sub/dir_x/dir_y" &&
-+	echo a >"$sub/dir_x/dir_y/file_a" &&
-+	echo b >"$sub/dir_x/dir_y/file_b" &&
-+	git -C "$sub" add . &&
-+	git -C "$sub" commit -m "initial $sub commit"
-+}
-+
-+my_match_and_clean () {
-+	git -C super --no-optional-locks status --porcelain=v2 >actual.with &&
-+	git -C super --no-optional-locks -c core.fsmonitor=false \
-+		status --porcelain=v2 >actual.without &&
-+	test_cmp actual.with actual.without &&
-+
-+	git -C super/dir_1/dir_2/sub reset --hard &&
-+	git -C super/dir_1/dir_2/sub clean -d -f
-+}
-+
-+test_expect_success 'submodule always visited' '
-+	test_when_finished "git -C super fsmonitor--daemon stop; \
-+			    rm -rf super; \
-+			    rm -rf sub" &&
++test_expect_success "stray submodule super-prefix warning" '
++	test_when_finished "rm -rf super; \
++			    rm -rf sub;   \
++			    rm super-sub.trace" &&
 +
 +	create_super super &&
 +	create_sub sub &&
 +
++	# Copy rather than submodule add so that we get a .git dir.
++	cp -R ./sub ./super/dir_1/dir_2/sub &&
++
++	git -C super/dir_1/dir_2/sub config core.fsmonitor true &&
++
 +	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
 +	git -C super commit -m "add sub" &&
 +
-+	start_daemon -C super &&
-+	git -C super config core.fsmonitor true &&
-+	git -C super update-index --fsmonitor &&
-+	git -C super status &&
++	test_path_is_dir super/dir_1/dir_2/sub/.git &&
 +
-+	# Now run pairs of commands w/ and w/o FSMonitor while we make
-+	# some dirt in the submodule and confirm matching output.
++	GIT_TRACE2_EVENT="$PWD/super-sub.trace" \
++		git -C super submodule absorbgitdirs &&
 +
-+	# Completely clean status.
-+	my_match_and_clean &&
-+
-+	# .M S..U
-+	echo z >super/dir_1/dir_2/sub/dir_x/dir_y/foobar_u &&
-+	my_match_and_clean &&
-+
-+	# .M S.M.
-+	echo z >super/dir_1/dir_2/sub/dir_x/dir_y/foobar_m &&
-+	git -C super/dir_1/dir_2/sub add . &&
-+	my_match_and_clean &&
-+
-+	# .M S.M.
-+	echo z >>super/dir_1/dir_2/sub/dir_x/dir_y/file_a &&
-+	git -C super/dir_1/dir_2/sub add . &&
-+	my_match_and_clean &&
-+
-+	# .M SC..
-+	echo z >>super/dir_1/dir_2/sub/dir_x/dir_y/file_a &&
-+	git -C super/dir_1/dir_2/sub add . &&
-+	git -C super/dir_1/dir_2/sub commit -m "SC.." &&
-+	my_match_and_clean
++	! have_t2_error_event super-sub.trace
 +'
 +
- test_done
+ # On a case-insensitive file system, confirm that the daemon
+ # notices when the .git directory is moved/renamed/deleted
+ # regardless of how it is spelled in the the FS event.
 -- 
 gitgitgadget
 
