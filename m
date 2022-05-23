@@ -1,50 +1,50 @@
 Return-Path: <git-owner@kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67BA1C433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 01:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D49C0C433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 15:23:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233407AbiEWB15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 May 2022 21:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59286 "EHLO
+        id S237823AbiEWPV5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 11:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351718AbiEWBZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 May 2022 21:25:48 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4BCA37A09
-        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:47 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id 202so5353728pfu.0
-        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:47 -0700 (PDT)
+        with ESMTP id S237795AbiEWPVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 11:21:50 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29AD11A3AB
+        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:48 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id z11so4548027pjc.3
+        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
         bh=7J6EjeIYLinlhZR5uPHnUBYktutMqgTK95EjvqUO5h8=;
-        b=l/NnUklP3Ph37lcVPy8osu3fowowA/T9L+8laRbP8YS71gqCXo70M77trW/GIkfFbk
-         m26BWmJ9djMDPLe13e3ibYcFymqHsK4eA5WNBuGG9ejbtw8eAQBHOqR4gmBrtCbo0zyu
-         DDLrFJnEW2E2htU//4bafY3XpZs+hw3OJZAbVdn2Ds+bHpdYyFqR1NiWqbyYkN1zXAcl
-         Nfysz4p8sEVVrOQGGSgjGEed31dCszuhWChhlgDuRXThZsuhCMkl3jG2Di2SkaX7y5u6
-         1vNEX+JUNbLiT3fA4ZggyVQMnKqp8G54FY13FZFmhP5hSzyQDn68oW0ix388u0GTv4cJ
-         lsfw==
+        b=dZb4tsjdbZW18Z0bKFjciwXKES3JKQHFNFhRHh/7jSFTqLzU0IZVvxak3OzuqLGf+Q
+         DOhlIPRrK0MFtfLh+WXv/tztlN2tFM5KJbk+CwScQNMgPHP4KXUjkO/2V66gZaBmK2RD
+         Jo823RAUEQNTeZi73P6zNYkhMegLJxaIEJT5o59t5TIP1obtnP3bRRXI4h2NR6OwHa2g
+         LOq3iuuwbHamk3HkCyypt5QZmEVkgzQjySex/Sope8bdr6mw7HpLserygmgMavUlX+nF
+         LqTyDE2LZYv14IQB0+9SPZUcf8MH8nKN5IYlk5CrZ3odO4qyLfF4iICMo17xiyOJ/796
+         L1Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
         bh=7J6EjeIYLinlhZR5uPHnUBYktutMqgTK95EjvqUO5h8=;
-        b=JOTQfNz6U6sQTLRiC8FsTFZR6iEyDZrN3U16B4AWwF94vkclTK9PA6qgwH+hVReb7G
-         W8zii9mTREp0i1YMbgjru73f5ZJKw3BheMSrRdDBFrivl8rwybqqsUGBSWpLVt/xsu0Z
-         Tf/YVcqVcnQdbVNxKGv6WQVB+79QqGp0FYkEWtKRGyL6oHLFCWDPhLOHQ2XCIFX+nSWh
-         NyfEiTTyeMuE6gLF6O8vFJj9mGRvFwdMoukKOd3EUeCRhUYfe9q74WcIFssNzXLyd4Ic
-         Y2pWhkS/b5b29Pd8O6SNYO50AzUnox8/j1iIbFX4YO9QsYOQcvmtd5rgcnGmyHm4aPbA
-         EjyA==
-X-Gm-Message-State: AOAM532MqgUNcloKRFankSvVrBS523QN473ajR1VnQnQL0SZVCZjzVA7
-        AsQZSBhuqfHKsxy7kXygS0s=
-X-Google-Smtp-Source: ABdhPJwr56T5bgsDU3ALlarUPfDtO70GtRw4P0F1prYPu8DkU7P6n3RRFXemTHaYdXkz3fPw7FHH1w==
-X-Received: by 2002:a63:91c3:0:b0:3f9:caa5:fa56 with SMTP id l186-20020a6391c3000000b003f9caa5fa56mr10445875pge.418.1653269146012;
-        Sun, 22 May 2022 18:25:46 -0700 (PDT)
+        b=ey42fvp8CAzMnRaO9CQQHe1zJ7ftNCYaE3QV8F3WDeWZzUB5l5JwGbB86uZGPBlF/U
+         5z2/FxGV9nuCVTUYtMv8wGziS8rrI0gzRve4JHm2TLysapnuq0PfZSt9fRPyUKhItnRT
+         GNx+Bd8oSAST8YDZSOaxgO/ivsc9T12wb4EBHNAT2j7JnPAeAtYKA5SFeE3z4t9CRE+1
+         MuPzRowliU5BIjoSrf+u9afXDU7Nl/G61WJXwdwpe17j/oXI91tq+petuHBTwG0v+HhY
+         zNB4uPyhtZ3yZGfnCYmecmzlR/YVNWaq37h7GxWDZLvNAvfGznwfDtGpCNIqfiwYVqKA
+         V7fw==
+X-Gm-Message-State: AOAM530qPqix/M4bk5fHZ5d8O4Yg+UMrAuHs6/yXHuDqTTEH96N5Qx/9
+        4bAPlJttslgB02INHf7k+cM=
+X-Google-Smtp-Source: ABdhPJz3/XsjVxi137jsue0HqjEJp5T0wK0AcT+EtTdEp1YeyAjh8U6OqG/JG8iQ4knWJe/5bvlOGQ==
+X-Received: by 2002:a17:902:bcc6:b0:15e:e60e:f3e8 with SMTP id o6-20020a170902bcc600b0015ee60ef3e8mr22754176pls.174.1653319305960;
+        Mon, 23 May 2022 08:21:45 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id n26-20020aa7985a000000b00518142f8c37sm6027566pfq.171.2022.05.22.18.25.43
+        by smtp.gmail.com with ESMTPSA id y13-20020a1709027c8d00b0015e8d4eb2cfsm5280287pll.281.2022.05.23.08.21.42
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 May 2022 18:25:45 -0700 (PDT)
+        Mon, 23 May 2022 08:21:44 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -68,12 +68,12 @@ Cc:     Jiang Xin <worldhello.net@gmail.com>,
         <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
         Yi-Jyun Pan <pan93412@gmail.com>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 5/9] po/git.pot: this is now a generated file
-Date:   Mon, 23 May 2022 09:25:27 +0800
-Message-Id: <20220523012531.4505-6-worldhello.net@gmail.com>
+Subject: [PATCH v4 5/9] po/git.pot: this is now a generated file
+Date:   Mon, 23 May 2022 23:21:24 +0800
+Message-Id: <20220523152128.26380-6-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <20220519081548.3380-1-worldhello.net@gmail.com>
-References: <20220519081548.3380-1-worldhello.net@gmail.com>
+In-Reply-To: <20220523012531.4505-1-worldhello.net@gmail.com>
+References: <20220523012531.4505-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
