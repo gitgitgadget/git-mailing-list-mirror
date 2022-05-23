@@ -2,56 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D357C433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 01:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DD85C433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 01:28:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233586AbiEWB0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 May 2022 21:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59326 "EHLO
+        id S233294AbiEWB1z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 May 2022 21:27:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232002AbiEWBZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 May 2022 21:25:53 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFB2D37A09
-        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:51 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id b135so610656pfb.12
-        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:51 -0700 (PDT)
+        with ESMTP id S1351841AbiEWBZu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 May 2022 21:25:50 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBC2137A09
+        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:49 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id a38so9524789pgl.9
+        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AnBMZKGajiLDJUky8IQbo46EnbcmE+P4rHYYKYG2YGY=;
-        b=INxwN4gYSISAd3m60Xd+WzZdvNWmmsRG3CldcGeti4ugv8611+w2wFACDrlf/YLfqY
-         ATqkSjr3KUnxZov4akzsludcQs5WDZFPW/OGpkU2ULpPfusXMV6izZw/rBjXtp5vwQ1R
-         w+0B/rVXteyfypnedMbhVTcKvAsJow1ZrX19QNBk4pnSBuwYsAPOOYtkZqXcivAHoj8q
-         81RIbWuys7YqcBjif3bApapd8XEP7fv+zz5bY4AMM3AhcKJruEkh9NSxuWkGJ5jnDRED
-         Pa82cYLVtDQTDyFZYa7IOdF5yc04lEztfl/VtAhdAekAEz9GHzSTGYNDOMYNKUa3wnmu
-         hTiA==
+        bh=vol77vTJFq6067b+UeYULbASi+cNQuUEHJ62emi0vLU=;
+        b=PzqqVuPfIGMrywOe9hx8fGu02q8t+V9fPK44pShaCCzyWSESNWsEYvZ+kq2aergrkQ
+         QRfiDgXK+eCYRIusgw928B93OLW1EW9F4xf245abKq3E5yTVsxhGE9RtunZAFl6nXyZ4
+         LDUQRQtaY+5qXCK4hPrFPIjOf/Do/PR94efms0EZxkLQEu7pUa4Vea2LzbifK3QkRtq8
+         5dIVWb/sU5m5dlKsPECuHUpl6y2uYbKgP5ziDyxE3kRtCKLvm3U++dGHJRP/UrLt37BC
+         J33jzWgpQ6h10r0RETS+n/qLF+aoQ2QzRWsEonKssFBUCcX0Wn4fdL5ScDBZd3pBFBBH
+         4QCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AnBMZKGajiLDJUky8IQbo46EnbcmE+P4rHYYKYG2YGY=;
-        b=zw6MXIvjuOPBtmj9HiriE77K38Yl7SyZMzb+Y/DlKfet5QbdRkUdDGT93kAJK6MjOe
-         4ozvT8wFsYkJLppKbt2Mcr/4mB9SYaBTj8JFm24VXhjsavRjQJn1OWIFa7CBVNBtgvDs
-         ceyM0LWgjwCnySzH5TAvi1A/36a8qKq2/DUSHeuvon4BHvoWshHAXCjpVVILlmx202HE
-         x7DJkBrshTgvkliztbYHCUk0k5y7OQs8HnjW5Ht8Tt4zeNfj2OrEcG+Qrd10mZHP/s2i
-         JXP6vmTkKtWHGXDYAWS0j2olF5C3BXSu1lO8hvX8ytjM6XHv675cgfiYJh42Nq+x5J1W
-         9Pwg==
-X-Gm-Message-State: AOAM530jTqCijl4MZpS3Xl/QAYXnYbZp5V5FuTcmEqAjNnTfFkVnDfxa
-        dYHOY+TjxK+XF/pzsCuPaZE=
-X-Google-Smtp-Source: ABdhPJwsU/umhSN1J7Sq7RXSpHoR9+WB9Du/6g5cT8DnfzaIS/Zr7JrU/GE/6WZjBV0f89h7ZKUdYA==
-X-Received: by 2002:a65:6888:0:b0:3f5:f0e3:c443 with SMTP id e8-20020a656888000000b003f5f0e3c443mr18228435pgt.396.1653269151336;
-        Sun, 22 May 2022 18:25:51 -0700 (PDT)
+        bh=vol77vTJFq6067b+UeYULbASi+cNQuUEHJ62emi0vLU=;
+        b=nBGiod19yR0uqv1sXk9eQrJMtegCtDnvo1K7p5tjY3Vtun3w2wtWG8OvkYY8z2X+kV
+         GfqZgxDhkFOT+pRVc2QyBKTe0Q+GOqSCq20HfpP/pSwbcLiDH+uogNmyIKHHV7RvDrU0
+         LvQAxRppwBHZzU4XrR9qUVT7A9stm4nJeaB4ZnIzFcr9i8H0ZIa8z3Ax9Dm9fUtVFHFw
+         0MhTOwfj7H1PAAHyd+8zohu8EWJqBvL6wynTmtczCKJyYqfGwqhek/iiUK0sJWJ284iG
+         ob7ze8PS9MbH9zNX9zkh9IIfpvZDA++PGl1e39EH9u0P19fsBtp9Lqc4rv7mnoSKt77k
+         f8dg==
+X-Gm-Message-State: AOAM532+XKtHn8shTEfybwAN3G2x1B3UDM9UAZUZneu/Nu9kiuYHzkgF
+        qaiY69i6S867TP44c68ooNo=
+X-Google-Smtp-Source: ABdhPJwdkfIu/crwKunODaEpKM90UacKA9b+9kiScO5kGdVpjTE1OtYT6XMyyTMSxoZglyu5Sz7gNQ==
+X-Received: by 2002:a63:f70d:0:b0:3f6:a9d:281 with SMTP id x13-20020a63f70d000000b003f60a9d0281mr18055242pgh.287.1653269148901;
+        Sun, 22 May 2022 18:25:48 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id n26-20020aa7985a000000b00518142f8c37sm6027566pfq.171.2022.05.22.18.25.50
+        by smtp.gmail.com with ESMTPSA id n26-20020aa7985a000000b00518142f8c37sm6027566pfq.171.2022.05.22.18.25.47
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 May 2022 18:25:50 -0700 (PDT)
+        Sun, 22 May 2022 18:25:48 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Git List <git@vger.kernel.org>
-Cc:     Alexander Shopov <ash@kambanaria.org>,
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
         Jordi Mas <jmas@softcatala.org>,
         =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
         Jimmy Angelakos <vyruss@hellug.gr>,
@@ -68,365 +69,94 @@ Cc:     Alexander Shopov <ash@kambanaria.org>,
         =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
         <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
         Yi-Jyun Pan <pan93412@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 9/9] l10n: Document the new l10n workflow
-Date:   Mon, 23 May 2022 09:25:31 +0800
-Message-Id: <20220523012531.4505-10-worldhello.net@gmail.com>
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v3 7/9] Makefile: add "po-update" rule to update po/XX.po
+Date:   Mon, 23 May 2022 09:25:29 +0800
+Message-Id: <20220523012531.4505-8-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <20220519081548.3380-1-worldhello.net@gmail.com>
 References: <20220519081548.3380-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Change the "flow" of how translators interact with the l10n repository
-at [1] to adjust it for a new workflow of not having a po/git.pot file
-in-tree at all, and to not commit line numbers to the po/*.po files
-that we do track in tree.
+Since there is no longer a "po/git.pot" file in tree, a l10n team leader
+has to run several commands to update their "po/XX.po" file:
 
-The current workflow was added in a combination of dce37b66fb0 (l10n:
-initial git.pot for 1.7.10 upcoming release, 2012-02-13) and
-271ce198cd0 (Update l10n guide, 2012-02-29).
+    $ make pot
+    $ msgmerge --add-location --backup=off -U po/XX.po po/git.pot
 
-As noted in preceding commits I think that it came about due to
-technical debt I'd left behind in how the "po/git.pot" file was
-created, and a mis-impression that the file:line comments were needed
-as anything more than a transitory translation aid.
+To make this process easier, add a new rule so that l10n team leaders
+can update their "po/XX.po" with one command. E.g.:
 
-As the updated po/README.md shows the new workflow is substantially
-the same, the difference is that translators no longer need to
-initially pull from the l10n coordinator for a new po/git.pot, they
-can simply use git.git's canonical source repository.
+    $ make po-update PO_FILE=po/zh_CN.po
 
-The l10n coordinator is still expected to announce a release to
-translate, which presumably would always be Junio's latest release
-tag. I'm not certain if this part of the process is actually
-important. I.e. the delta translation-wise between that tag and
-"master" is usually pretty small, so perhaps translators can just work
-on "master" instead.
-
-1. https://github.com/git-l10n/git-po/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- po/README.md | 230 ++++++++++++++++++++++++++-------------------------
- 1 file changed, 117 insertions(+), 113 deletions(-)
+ Makefile   | 18 ++++++++++++++++++
+ shared.mak |  1 +
+ 2 files changed, 19 insertions(+)
 
-diff --git a/po/README.md b/po/README.md
-index 19fabb4acf..74856ca5bf 100644
---- a/po/README.md
-+++ b/po/README.md
-@@ -9,8 +9,14 @@ coordinates our localization effort in the l10 coordinator repository:
+diff --git a/Makefile b/Makefile
+index 3122672263..09cbde4c2a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -571,6 +571,7 @@ TCLTK_PATH = wish
+ XGETTEXT = xgettext
+ MSGCAT = msgcat
+ MSGFMT = msgfmt
++MSGMERGE = msgmerge
+ CURL_CONFIG = curl-config
+ GCOV = gcov
+ STRIP = strip
+@@ -2716,6 +2717,7 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
+ XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
+ 	--keyword=__ --keyword=N__ --keyword="__n:1,2"
+ MSGCAT_FLAGS = --sort-by-file
++MSGMERGE_FLAGS = --add-location --backup=off --update
+ LOCALIZED_C = $(FOUND_C_SOURCES) $(FOUND_H_SOURCES) $(SCALAR_SOURCES) \
+ 	      $(GENERATED_H)
+ LOCALIZED_SH = $(SCRIPT_SH)
+@@ -2794,6 +2796,22 @@ po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO)
+ .PHONY: pot
+ pot: po/git.pot
  
-     https://github.com/git-l10n/git-po/
- 
--The two character language translation codes are defined by ISO\_639-1, as
--stated in the gettext(1) full manual, appendix A.1, Usual Language Codes.
-+We will use XX as an alias to refer to the language translation code in
-+the following paragraphs, for example we use "po/XX.po" to refer to the
-+translation file for a specific language. But this doesn't mean that
-+the language code has only two letters. The language code can be in one
-+of two forms: "ll" or "ll\_CC". Here "ll" is the ISO 639 two-letter
-+language code and "CC" is the ISO 3166 two-letter code for country names
-+and subdivisions. For example: "de" for German language code, "zh\_CN"
-+for Simplified Chinese language code.
- 
- 
- ## Contributing to an existing translation
-@@ -39,72 +45,74 @@ language, so that the l10n coordinator only needs to interact with one
- person per language.
- 
- 
--## Core translation
-+## Translation Process Flow
- 
--The core translation is the smallest set of work that must be completed
--for a new language translation. Because there are more than 5000 messages
--in the template message file "po/git.pot" that need to be translated,
--this is not a piece of cake for the contributor for a new language.
-+The overall data-flow looks like this:
- 
--The core template message file which contains a small set of messages
--will be generated in "po-core/core.pot" automatically by running a helper
--program named "git-po-helper" (described later).
-+    +-------------------+             +------------------+
-+    | Git source code   | ----(2)---> | L10n coordinator |
-+    | repository        | <---(5)---- | repository       |
-+    +-------------------+             +------------------+
-+                    |                     |    ^
-+                   (1)                   (3)  (4)
-+                    V                     v    |
-+               +----------------------------------+
-+               |        Language Team XX          |
-+               +----------------------------------+
- 
--```shell
--git-po-helper init --core XX.po
--```
-+- Translatable strings are marked in the source file.
-+- Language teams can start translation iterations at any time, even
-+  before the l10n window opens:
- 
--After translating the generated "po-core/XX.po", you can merge it to
--"po/XX.po" using the following commands:
-+  + Pull from the master branch of the source (1)
-+  + Update the message file by running "make po-update PO\_FILE=po/XX.po"
-+  + Translate the message file "po/XX.po"
- 
--```shell
--msgcat po-core/XX.po po/XX.po -s -o /tmp/XX.po
--mv /tmp/XX.po po/XX.po
--git-po-helper update XX.po
--```
-+- The L10n coordinator pulls from source and announces the l10n window
-+  open (2)
-+- Language team pulls from the l10n coordinator, starts another
-+  translation iteration against the l10n coordinator's tree (3)
- 
--Edit "po/XX.po" by hand to fix "fuzzy" messages, which may have misplaced
--translated messages and duplicate messages.
-+  + Run "git pull --rebase" from the l10n coordinator
-+  + Update the message file by running "make po-update PO\_FILE=po/XX.po"
-+  + Translate the message file "po/XX.po"
-+  + Squash trivial l10n git commits using "git rebase -i"
- 
-+- Language team sends pull request to the l10n coordinator (4)
-+- L10n coordinator checks and merges
-+- L10n coordinator asks the result to be pulled (5).
- 
--## Translation Process Flow
- 
--The overall data-flow looks like this:
-+## Dynamically generated POT files
- 
--    +-------------------+            +------------------+
--    | Git source code   | ---(1)---> | L10n coordinator |
--    | repository        | <---(4)--- | repository       |
--    +-------------------+            +------------------+
--                                          |      ^
--                                         (2)    (3)
--                                          V      |
--                                     +------------------+
--                                     | Language Team XX |
--                                     +------------------+
-+POT files are templates for l10n contributors to create or update their
-+translation files. We used to have the "po/git.pot" file which was
-+generated by the l10n coordinator, but this file had been removed from
-+the tree.
- 
--- Translatable strings are marked in the source file.
--- L10n coordinator pulls from the source (1)
--- L10n coordinator updates the message template "po/git.pot"
--- Language team pulls from L10n coordinator (2)
--- Language team updates the message file "po/XX.po"
--- L10n coordinator pulls from Language team (3)
--- L10n coordinator asks the result to be pulled (4).
-+The two POT files "po/git.pot" and "po/git-core.pot" can be created
-+dynamically when necessary.
- 
-+L10n contributors use "po/git.pot" to prepare translations for their
-+languages, but they are not expected to modify it. The "po/git.pot" file
-+can be generated manually with the following command:
- 
--## Maintaining the "po/git.pot" file
-+```shell
-+make po/git.pot
-+```
- 
--(This is done by the l10n coordinator).
-+The "po/git-core.pot" file is the template for core translations. A core
-+translation is the minimum set of work necessary to complete a
-+translation of a new language. Since there are more than 5000 messages
-+in the full set of template message file "po/git.pot" that need to be
-+translated, this is not a piece of cake for new language contributors.
- 
--The "po/git.pot" file contains a message catalog extracted from Git's
--sources. The l10n coordinator maintains it by adding new translations with
--msginit(1), or update existing ones with msgmerge(1).  In order to update
--the Git sources to extract the messages from, the l10n coordinator is
--expected to pull from the main git repository at strategic point in
--history (e.g. when a major release and release candidates are tagged),
--and then run "make pot" at the top-level directory.
-+The "core" template file "po/git-core.pot" can be generated manually
-+by running:
- 
--Language contributors use this file to prepare translations for their
--language, but they are not expected to modify it.
-+```shell
-+make po/git-core.pot
-+```
- 
- 
- ## Initializing a "XX.po" file
-@@ -115,32 +123,14 @@ If your language XX does not have translated message file "po/XX.po" yet,
- you add a translation for the first time by running:
- 
- ```shell
--msginit --locale=XX
-+make po-init PO_FILE=po/XX.po
- ```
- 
--in the "po/" directory, where XX is the locale, e.g. "de", "is", "pt\_BR",
--"zh\_CN", etc.
--
--Then edit the automatically generated copyright info in your new "XX.po"
--to be correct, e.g. for Icelandic:
--
--```diff
--@@ -1,6 +1,6 @@
---# Icelandic translations for PACKAGE package.
---# Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
---# This file is distributed under the same license as the PACKAGE package.
--+# Icelandic translations for Git.
--+# Copyright (C) 2010 Ævar Arnfjörð Bjarmason <avarab@gmail.com>
--+# This file is distributed under the same license as the Git package.
-- # Ævar Arnfjörð Bjarmason <avarab@gmail.com>, 2010.
--```
--
--And change references to PACKAGE VERSION in the PO Header Entry to
--just "Git":
-+where XX is the locale, e.g. "de", "is", "pt\_BR", "zh\_CN", etc.
- 
--```shell
--perl -pi -e 's/(?<="Project-Id-Version: )PACKAGE VERSION/Git/' XX.po
--```
-+The newly generated message file "po/XX.po" is based on the core pot
-+file "po/git-core.pot", so it contains only a minimal set of messages
-+and it's a good start for a new language contribution.
- 
- Once you are done testing the translation (see below), commit the result
- and ask the l10n coordinator to pull from you.
-@@ -153,19 +143,53 @@ and ask the l10n coordinator to pull from you.
- If you are replacing translation strings in an existing "XX.po" file to
- improve the translation, just edit the file.
- 
--If there's an existing "XX.po" file for your language, but the repository
--of the l10n coordinator has newer "po/git.pot" file, you would need to first
--pull from the l10n coordinator (see the beginning of this document for its
--URL), and then update the existing translation by running:
-+If you want to find new translatable strings in source files of upstream
-+repository and propagate them to your "po/XX.po", run command:
- 
- ```shell
--msgmerge --add-location --backup=off -U XX.po git.pot
-+make po-update PO_FILE=po/XX.po
- ```
- 
--in the "po/" directory, where "XX.po" is the file you want to update.
-+It will:
- 
--Once you are done testing the translation (see below), commit the result
--and ask the l10n coordinator to pull from you.
-+- Call "make po/git.pot" to generate new "po/git.pot" file
-+- Call "msgmerge --add-location --backup=off -U po/XX.po po/git.pot"
-+  to update your "po/XX.po"
-+- The "--add-location" option for msgmerge will add location lines,
-+  and these location lines will help translation tools to locate
-+  translation context easily.
++define check_po_file_envvar
++	$(if $(PO_FILE), \
++		$(if $(filter po/%.po,$(PO_FILE)), , \
++			$(error PO_FILE should match pattern: "po/%.po")), \
++		$(error PO_FILE is not defined))
++endef
 +
-+Once you are done testing the translation (see below), it's better
-+to commit a location-less "po/XX.po" file to save repository space
-+and make a user-friendly patch for review.
++.PHONY: po-update
++po-update: po/git.pot
++	$(check_po_file_envvar)
++	@if test ! -e $(PO_FILE); then \
++		echo >&2 "error: $(PO_FILE) does not exist"; \
++		exit 1; \
++	fi
++	$(QUIET_MSGMERGE)$(MSGMERGE) $(MSGMERGE_FLAGS) $(PO_FILE) po/git.pot
 +
-+To save a location-less "po/XX.po" automatically in repository, you
-+can:
-+
-+First define a new attribute for "po/XX.po" by appending the following
-+line in ".git/info/attributes":
-+
-+```
-+/po/XX.po filter=gettext-no-location
-+```
-+
-+Then define the driver for the "gettext-no-location" clean filter to
-+strip out both filenames and locations from the contents as follows:
-+
-+```shell
-+git config --global filter.gettext-no-location.clean \
-+           "msgcat --no-location -"
-+```
-+
-+For users who have gettext version 0.20 or higher, it is also possible
-+to define a clean filter to preserve filenames but not locations:
-+
-+```shell
-+git config --global filter.gettext-no-location.clean \
-+           "msgcat --add-location=file -"
-+```
-+
-+You're now ready to ask the l10n coordinator to pull from you.
+ .PHONY: check-pot
+ check-pot: $(LOCALIZED_ALL_GEN_PO)
  
- 
- ## Fuzzy translation
-@@ -196,6 +220,14 @@ common errors, e.g. missing printf format strings, or translated
- messages that deviate from the originals in whether they begin/end
- with a newline or not.
- 
-+L10n coordinator will check your contributions using a helper program
-+(see "PO helper" section below):
-+
-+```shell
-+git-po-helper check-po po/XX.po
-+git-po-helper check-commits <rev-list-opts>
-+```
-+
- 
- ## Marking strings for translation
- 
-@@ -370,29 +402,6 @@ l10n workflow.
- To build and install the helper program from source, see
- [git-po-helper/README][].
- 
--Usage for git-po-helper:
--
--- To start a new language translation:
--
--  ```shell
--  git-po-helper init XX.po
--  ```
--
--- To update your "XX.po" file:
--
--  ```shell
--  git-po-helper update XX.po
--  ```
--
--- To check commit log and syntax of "XX.po":
--
--  ```shell
--  git-po-helper check-po XX.po
--  git-po-helper check-commits
--  ```
--
--Run "git-po-helper" without arguments to show usage.
--
- 
- ## Conventions
- 
-@@ -436,13 +445,8 @@ additional conventions:
- - Initialize proper filename of the "XX.po" file conforming to
-   iso-639 and iso-3166.
- 
--- Must complete a minimal translation based on the "po-core/core.pot"
--  template. Using the following command to initialize the minimal
--  "po-core/XX.po" file:
--
--  ```shell
--  git-po-helper init --core <your-language>
--  ```
-+- Must complete a minimal translation based on the "Core
-+  translation". See that section above.
- 
- - Add a new entry in the "po/TEAMS" file with proper format, and check
-   the syntax of "po/TEAMS" by running the following command:
+diff --git a/shared.mak b/shared.mak
+index 50d4596f0d..8cd170a7e7 100644
+--- a/shared.mak
++++ b/shared.mak
+@@ -63,6 +63,7 @@ ifndef V
+ 	QUIET_LNCP     = @echo '   ' LN/CP $@;
+ 	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
+ 	QUIET_MSGFMT   = @echo '   ' MSGFMT $@;
++	QUIET_MSGMERGE = @echo '   ' MSGMERGE $@;
+ 	QUIET_GCOV     = @echo '   ' GCOV $@;
+ 	QUIET_SP       = @echo '   ' SP $<;
+ 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
 -- 
 2.36.0.1.g15c4090757
 
