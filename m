@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFB03C433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B6CDC433EF
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:15:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232896AbiEWUPT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 16:15:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52400 "EHLO
+        id S232911AbiEWUPV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 16:15:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233120AbiEWUNw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233121AbiEWUNw (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 May 2022 16:13:52 -0400
 Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361DFAEE16
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:26 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id e28so22291379wra.10
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:26 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EAA8AEE1C
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:27 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id e2so11281395wrc.1
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Z0XrUde5uDfFnpUippOjLw4aZcgNdzO+W6hgorgFd94=;
-        b=b0tt/a06QWRAoF3Aa/0quNTCa3GMLuFrRDAzyKYfG+d/Hzv73Ki7L3YTcPx9iKysfe
-         GbUdgYl2n6CKVv/29a5RlnbN/JSiin9VaWMYmj13Dfw1rextzlikoq74rxSdJcGuLVzp
-         t7FDjV5Ke+1LuFzqPtjDKvpxc+CuOD+X0EyPl0YMGE4CcRnujaF40rGbmuYF84vgO+0m
-         7ESkOYNGRW6tHg8jzj/U79giDxOMdLO/S6qFn9iMavbep3ePcZiEcfm7MMOhKe0WYzl0
-         i3028Y+TcgJLpBmqhzMxhP9XxzaE/g4Tgrfrm8yhqFD1He1lIOb6K869sCsXGvi97dbH
-         Eamw==
+        bh=7Z2VcCY4SpohDrJdBMGgDngNb1kXPfT8ojz6rlIKRBk=;
+        b=Y+Xac1siAkW6IkXZukDl1f2BssM4cmVJGBG0rtqNhs9Nlpty1PAogdcscJfJLTQsGZ
+         tLl02q+9hlepy9LBi/bXpnCDn+lAH5EDX9oQ8vzXrwSXWnF8B1o5IqLY0cZdCyzAeHy5
+         tYQ49D7VwSRE7D/t0FjtNZWZAK2DBKAx/8lYDQjTpnvmi4xugAsRfIxPSxJpDN96QUh1
+         9o8mp41Ywcut8qJyiXa01sFURXLLMbrD+4wLNI6RoBuhfCDHnqkbLzMzldneZJPS9d05
+         kiZzdg0suJMDtDfB7Wh875oSzUmMxnPfATp0HsaCM2l9rAaz+TCfE1205KVWYx6PcDo3
+         KgIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Z0XrUde5uDfFnpUippOjLw4aZcgNdzO+W6hgorgFd94=;
-        b=Z0TK+Sbgcm7JSTLJCM7/J9YEBJCuvAES4KKSvMjwIj8cWC5A0YoUroWkqb7y/nO6p0
-         LXbAxWZukst3mnLteXaOz3nbpO7tphRMYDSH9Wmud35mHP0PKzzy24thIx1WzGS3/gRT
-         B9DkTkx0NPe+od+/xxcLWlu5SSTCwzG5d1x+n+qQ/yc/+gmZyU7Gd9mWDKn1FdQqN25f
-         8X5Vsmai6cyQ9zCfEUpPHpKAUrAyMrzzpLbKCyJtohQL5J17eZPfE4ANCW6FagxsQFxI
-         6gL68qUvilhRN1/zgpbUMV23f/l1OUo3Tti83bwH3oLG7E4mp0N+zfvLL9d6Py+/zsll
-         4zkQ==
-X-Gm-Message-State: AOAM532XU/eSDlOrdEJAWUoaymMYsb9rNUESHWVo8tS0R9arNkA2OvLu
-        ks5sPcNUYfXTEFMcCbma1a/1B+in4L4=
-X-Google-Smtp-Source: ABdhPJwtLdBdNjgewAtgXdYccQH4pcTHFyIOga2d0974oJhuNOo5jkHDNVmkOt8sCcp2Ztz+pbOIIA==
-X-Received: by 2002:a05:6000:1f99:b0:20e:61f4:91e4 with SMTP id bw25-20020a0560001f9900b0020e61f491e4mr20303711wrb.425.1653336801773;
-        Mon, 23 May 2022 13:13:21 -0700 (PDT)
+        bh=7Z2VcCY4SpohDrJdBMGgDngNb1kXPfT8ojz6rlIKRBk=;
+        b=X7TB2KHK4FTdS5Up4WJRMxrpg+inXMogqa85t1otfRPNc8Sih6pyQQ8etqI3rNTNGy
+         DGGSSHXuFgHFITykpV+mmEpnRUzfL9KVpMFMoP1Mjc/jV4mKeKu7FVLpbpYUxDxaWlFJ
+         BIwn76zaZLZcHKWPu21km7AXnAnBmCK0wMGpPBuwBRb6oefMI+ocsA0TOvJIY9o3YXFU
+         2CfNO1YqcMXNPYEuNMyZeYe5zz9GdxsxnvYVu+D79x/I7cOHxp2Pff/9d/m9CXE2jDna
+         kZNeI4i0kd3ADeJrctzuQh6ezHUVMp2DCrO52aZ07MsV0XoPQVKIa7TWaG079LOXNTmd
+         BYDA==
+X-Gm-Message-State: AOAM533sp8f867VMkz/i/K573CbGvf+q61pW2hvgjHloYQgaHcuOBN8l
+        gStSQTEfXM62iqnt/aiEsUloWF4v4eU=
+X-Google-Smtp-Source: ABdhPJyLOOm1WBOLFM1Q6eclfFNXEUis4cKanzif7/fqlaNjLGez2TM6NLrCN3SUUW2lF6MB8afcIA==
+X-Received: by 2002:a05:6000:156d:b0:20f:c26d:dc0d with SMTP id 13-20020a056000156d00b0020fc26ddc0dmr13275350wrz.676.1653336804986;
+        Mon, 23 May 2022 13:13:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z18-20020a05600c0a1200b0039756cdc8e1sm189787wmp.37.2022.05.23.13.13.21
+        by smtp.gmail.com with ESMTPSA id p17-20020adf9591000000b0020fd392df33sm5584512wrp.29.2022.05.23.13.13.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 13:13:21 -0700 (PDT)
-Message-Id: <6a8308699543faaea760d4605babe50a0e478f41.1653336765.git.gitgitgadget@gmail.com>
+        Mon, 23 May 2022 13:13:24 -0700 (PDT)
+Message-Id: <ca833ecc7a17925d3568572f183ba4fc0833a54b.1653336765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
         <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 20:12:42 +0000
-Subject: [PATCH v7 27/30] t/lib-unicode-nfc-nfd: helper prereqs for testing
- unicode nfc/nfd
+Date:   Mon, 23 May 2022 20:12:45 +0000
+Subject: [PATCH v7 30/30] t7527: improve implicit shutdown testing in
+ fsmonitor--daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,187 +68,142 @@ Cc:     Jeff Hostetler <git@jeffhostetler.com>,
         rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+        Jeff Hostetler <jeffhostetler@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: Jeff Hostetler <jeffhostetler@github.com>
 
-Create a set of prereqs to help understand how file names
-are handled by the filesystem when they contain NFC and NFD
-Unicode characters.
+Refactor the tests that exercise implicit shutdown cases
+to make them more robust and less racy.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+The fsmonitor--daemon will implicitly shutdown in a variety
+of situations, such as when the ".git" directory is deleted
+or renamed.
+
+The existing tests would delete or rename the directory, sleep
+for one second, and then check the status of the daemon.  This
+is racy, since the client/status command has no way to sync
+with the daemon.  This was noticed occasionally on very slow
+CI build machines where it would cause a random test to fail.
+
+Replace the simple sleep with a sleep-and-retry loop.
+
+Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 ---
- t/lib-unicode-nfc-nfd.sh | 158 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 158 insertions(+)
- create mode 100755 t/lib-unicode-nfc-nfd.sh
+ t/t7527-builtin-fsmonitor.sh | 54 ++++++++++++++++++++++++++----------
+ 1 file changed, 40 insertions(+), 14 deletions(-)
 
-diff --git a/t/lib-unicode-nfc-nfd.sh b/t/lib-unicode-nfc-nfd.sh
-new file mode 100755
-index 00000000000..76c6fbc0ec2
---- /dev/null
-+++ b/t/lib-unicode-nfc-nfd.sh
-@@ -0,0 +1,158 @@
-+# Help detect how Unicode NFC and NFD are handled on the filesystem.
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 19edc96fd4d..56c0dfffea6 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -124,6 +124,36 @@ test_expect_success 'implicit daemon start' '
+ 	test_must_fail git -C test_implicit fsmonitor--daemon status
+ '
+ 
++# Verify that the daemon has shutdown.  Spin a few seconds to
++# make the test a little more robust during CI testing.
++#
++# We're looking for an implicit shutdown, such as when we delete or
++# rename the ".git" directory.  Our delete/rename will cause a file
++# system event that the daemon will see and the daemon will
++# auto-shutdown as soon as it sees it.  But this is racy with our `git
++# fsmonitor--daemon status` commands (and we cannot use a cookie file
++# here to help us).  So spin a little and give the daemon a chance to
++# see the event.  (This is primarily for underpowered CI build/test
++# machines (where it might take a moment to wake and reschedule the
++# daemon process) to avoid false alarms during test runs.)
++#
++IMPLICIT_TIMEOUT=5
 +
-+# A simple character that has a NFD form.
-+#
-+# NFC:       U+00e9 LATIN SMALL LETTER E WITH ACUTE
-+# UTF8(NFC): \xc3 \xa9
-+#
-+# NFD:       U+0065 LATIN SMALL LETTER E
-+#            U+0301 COMBINING ACUTE ACCENT
-+# UTF8(NFD): \x65  +  \xcc \x81
-+#
-+utf8_nfc=$(printf "\xc3\xa9")
-+utf8_nfd=$(printf "\x65\xcc\x81")
++verify_implicit_shutdown () {
++	r=$1 &&
 +
-+# Is the OS or the filesystem "Unicode composition sensitive"?
-+#
-+# That is, does the OS or the filesystem allow files to exist with
-+# both the NFC and NFD spellings?  Or, does the OS/FS lie to us and
-+# tell us that the NFC and NFD forms are equivalent.
-+#
-+# This is or may be independent of what type of filesystem we have,
-+# since it might be handled by the OS at a layer above the FS.
-+# Testing shows on MacOS using APFS, HFS+, and FAT32 reports a
-+# collision, for example.
-+#
-+# This does not tell us how the Unicode pathname will be spelled
-+# on disk, but rather only that the two spelling "collide".  We
-+# will examine the actual on disk spelling in a later prereq.
-+#
-+test_lazy_prereq UNICODE_COMPOSITION_SENSITIVE '
-+	mkdir trial_${utf8_nfc} &&
-+	mkdir trial_${utf8_nfd}
-+'
++	k=0 &&
++	while test "$k" -lt $IMPLICIT_TIMEOUT
++	do
++		git -C $r fsmonitor--daemon status || return 0
 +
-+# Is the spelling of an NFC pathname preserved on disk?
-+#
-+# On MacOS with HFS+ and FAT32, NFC paths are converted into NFD
-+# and on APFS, NFC paths are preserved.  As we have established
-+# above, this is independent of "composition sensitivity".
-+#
-+test_lazy_prereq UNICODE_NFC_PRESERVED '
-+	mkdir c_${utf8_nfc} &&
-+	ls | test-tool hexdump | grep "63 5f c3 a9"
-+'
++		sleep 1
++		k=$(( $k + 1 ))
++	done &&
 +
-+# Is the spelling of an NFD pathname preserved on disk?
-+#
-+test_lazy_prereq UNICODE_NFD_PRESERVED '
-+	mkdir d_${utf8_nfd} &&
-+	ls | test-tool hexdump | grep "64 5f 65 cc 81"
-+'
++	return 1
++}
 +
-+# The following _DOUBLE_ forms are more for my curiosity,
-+# but there may be quirks lurking when there are multiple
-+# combining characters in non-canonical order.
+ test_expect_success 'implicit daemon stop (delete .git)' '
+ 	test_when_finished "stop_daemon_delete_repo test_implicit_1" &&
+ 
+@@ -142,10 +172,9 @@ test_expect_success 'implicit daemon stop (delete .git)' '
+ 	#     This would make the test result dependent upon whether we
+ 	#     were using fsmonitor on our development worktree.
+ 	#
+-	sleep 1 &&
+ 	mkdir test_implicit_1/.git &&
+ 
+-	test_must_fail git -C test_implicit_1 fsmonitor--daemon status
++	verify_implicit_shutdown test_implicit_1
+ '
+ 
+ test_expect_success 'implicit daemon stop (rename .git)' '
+@@ -160,10 +189,9 @@ test_expect_success 'implicit daemon stop (rename .git)' '
+ 
+ 	# See [1] above.
+ 	#
+-	sleep 1 &&
+ 	mkdir test_implicit_2/.git &&
+ 
+-	test_must_fail git -C test_implicit_2 fsmonitor--daemon status
++	verify_implicit_shutdown test_implicit_2
+ '
+ 
+ # File systems on Windows may or may not have shortnames.
+@@ -194,13 +222,11 @@ test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~1)' '
+ 	#
+ 	mv test_implicit_1s/GIT~1 test_implicit_1s/.gitxyz &&
+ 
+-	sleep 1 &&
+-	# put it back so that our status will not crawl out to our
+-	# parent directory.
++	# See [1] above.
+ 	# this moves {.gitxyz, GITXYZ~1} to {.git, GIT~1}.
+ 	mv test_implicit_1s/.gitxyz test_implicit_1s/.git &&
+ 
+-	test_must_fail git -C test_implicit_1s fsmonitor--daemon status
++	verify_implicit_shutdown test_implicit_1s
+ '
+ 
+ # Here we first create a file with LONGNAME of "GIT~1" before
+@@ -223,12 +249,10 @@ test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~2)' '
+ 	#
+ 	mv test_implicit_1s2/GIT~2 test_implicit_1s2/.gitxyz &&
+ 
+-	sleep 1 &&
+-	# put it back so that our status will not crawl out to our
+-	# parent directory.
++	# See [1] above.
+ 	mv test_implicit_1s2/.gitxyz test_implicit_1s2/.git &&
+ 
+-	test_must_fail git -C test_implicit_1s2 fsmonitor--daemon status
++	verify_implicit_shutdown test_implicit_1s2
+ '
+ 
+ test_expect_success 'cannot start multiple daemons' '
+@@ -905,9 +929,11 @@ test_expect_success CASE_INSENSITIVE_FS 'case insensitive+preserving' '
+ 	# Rename .git using an alternate spelling to verify that that
+ 	# daemon detects it and automatically shuts down.
+ 	mv test_insensitive/.GIT test_insensitive/.FOO &&
+-	sleep 1 &&
 +
-+# Unicode also allows multiple combining characters
-+# that can be decomposed in pieces.
-+#
-+# NFC:        U+1f67 GREEK SMALL LETTER OMEGA WITH DASIA AND PERISPOMENI
-+# UTF8(NFC):  \xe1 \xbd \xa7
-+#
-+# NFD1:       U+1f61 GREEK SMALL LETTER OMEGA WITH DASIA
-+#             U+0342 COMBINING GREEK PERISPOMENI
-+# UTF8(NFD1): \xe1 \xbd \xa1  +  \xcd \x82
-+#
-+# But U+1f61 decomposes into
-+# NFD2:       U+03c9 GREEK SMALL LETTER OMEGA
-+#             U+0314 COMBINING REVERSED COMMA ABOVE
-+# UTF8(NFD2): \xcf \x89  +  \xcc \x94
-+#
-+# Yielding:   \xcf \x89  +  \xcc \x94  +  \xcd \x82
-+#
-+# Note that I've used the canonical ordering of the
-+# combinining characters.  It is also possible to
-+# swap them.  My testing shows that that non-standard
-+# ordering also causes a collision in mkdir.  However,
-+# the resulting names don't draw correctly on the
-+# terminal (implying that the on-disk format also has
-+# them out of order).
-+#
-+greek_nfc=$(printf "\xe1\xbd\xa7")
-+greek_nfd1=$(printf "\xe1\xbd\xa1\xcd\x82")
-+greek_nfd2=$(printf "\xcf\x89\xcc\x94\xcd\x82")
++	# See [1] above.
+ 	mv test_insensitive/.FOO test_insensitive/.git &&
+-	test_must_fail git -C test_insensitive fsmonitor--daemon status &&
 +
-+# See if a double decomposition also collides.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE '
-+	mkdir trial_${greek_nfc} &&
-+	mkdir trial_${greek_nfd2}
-+'
-+
-+# See if the NFC spelling appears on the disk.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_NFC_PRESERVED '
-+	mkdir c_${greek_nfc} &&
-+	ls | test-tool hexdump | grep "63 5f e1 bd a7"
-+'
-+
-+# See if the NFD spelling appears on the disk.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_NFD_PRESERVED '
-+	mkdir d_${greek_nfd2} &&
-+	ls | test-tool hexdump | grep "64 5f cf 89 cc 94 cd 82"
-+'
-+
-+# The following is for debugging. I found it useful when
-+# trying to understand the various (OS, FS) quirks WRT
-+# Unicode and how composition/decomposition is handled.
-+# For example, when trying to understand how (macOS, APFS)
-+# and (macOS, HFS) and (macOS, FAT32) compare.
-+#
-+# It is rather noisy, so it is disabled by default.
-+#
-+if test "$unicode_debug" = "true"
-+then
-+	if test_have_prereq UNICODE_COMPOSITION_SENSITIVE
-+	then
-+		echo NFC and NFD are distinct on this OS/filesystem.
-+	else
-+		echo NFC and NFD are aliases on this OS/filesystem.
-+	fi
-+
-+	if test_have_prereq UNICODE_NFC_PRESERVED
-+	then
-+		echo NFC maintains original spelling.
-+	else
-+		echo NFC is modified.
-+	fi
-+
-+	if test_have_prereq UNICODE_NFD_PRESERVED
-+	then
-+		echo NFD maintains original spelling.
-+	else
-+		echo NFD is modified.
-+	fi
-+
-+	if test_have_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE
-+	then
-+		echo DOUBLE NFC and NFD are distinct on this OS/filesystem.
-+	else
-+		echo DOUBLE NFC and NFD are aliases on this OS/filesystem.
-+	fi
-+
-+	if test_have_prereq UNICODE_DOUBLE_NFC_PRESERVED
-+	then
-+		echo Double NFC maintains original spelling.
-+	else
-+		echo Double NFC is modified.
-+	fi
-+
-+	if test_have_prereq UNICODE_DOUBLE_NFD_PRESERVED
-+	then
-+		echo Double NFD maintains original spelling.
-+	else
-+		echo Double NFD is modified.
-+	fi
-+fi
++	verify_implicit_shutdown test_insensitive &&
+ 
+ 	# Verify that events were reported using on-disk spellings of the
+ 	# directories and files that we touched.  We may or may not get a
 -- 
 gitgitgadget
-
