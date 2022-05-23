@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEF70C433F5
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 15:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 089C0C433EF
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 15:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237796AbiEWPVs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 11:21:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52228 "EHLO
+        id S237815AbiEWPVy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 11:21:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237813AbiEWPVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 11:21:44 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A06E1286F5
-        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:39 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id a13so2881852plh.6
-        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:39 -0700 (PDT)
+        with ESMTP id S237806AbiEWPVv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 11:21:51 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6454829827
+        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:50 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id w2-20020a17090ac98200b001e0519fe5a8so2486387pjt.4
+        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Q+TON87asLklkMyFlMpIqRa5MMConjy4oXRjWnS41UI=;
-        b=e/aqgUnkWk3o3cdrnjoEfsbBZf7qvAHOIs6GR+HXE/s5J992mkhqgRA8/Bko51DXKp
-         mXM4hKAQZuZSUL5lB0SpiHVKl6z8NJxIsHqrqVxu/cLMA7PqbF352eTFFkD7TnChMmDa
-         T7ulm9VcFGdH/zPHdt8/pyL/NUrd2DIhBtfwOjx5kC0r0sou7AETSau/2SXRlPWXXuFX
-         XViBTtmSt8G7nIvnzyUXUeZdyVJY4RYCFHBZbxCHP8kQ6zuAppaz/T8RS0yMYyEvLmwj
-         3QcR/OEDTa9ZtYy2iF++M08W0OMsimWkBYxrGFvn+N8xFI2BgAGW1ye95sA+4NClW2f5
-         Z3WQ==
+        bh=SaMV7BUtsmTAzjcN91ZvTykXcyiKjdC7IYjW++jNcTE=;
+        b=M77y+Q55POrYV4zX6qRE6To2nK3wAXf2wCGR/9jXvFAxQsUH/LAksoOsi4sjO1Qdxo
+         qsl8Pnx1B9exqrexHDfhsWNR/muIg2cIwx1D8SZP+LzRfJD9WxhObuO5eKJl34NQc0hm
+         ztYmv+6cI9rLztrjuy+lyuRnEgunxk412lSJBuYv5uiq3pZePsBBOlzU1rrEJKxfibo2
+         kbm75tGjjgVmNzzclRXtwBtDwvZzcIVSPh8rxfqNCSo4y/VC58jqW23c58PxWYKNpNgp
+         ADyAgACdEDa0A5BajoKtBNU4ndtkBuq0UBk98pN0u5hHrxInfecVjZrKv/nDxQwmURAZ
+         CeLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Q+TON87asLklkMyFlMpIqRa5MMConjy4oXRjWnS41UI=;
-        b=FEuAJmOPVPxBz3JLi6qqRnWVpGJSDJqTqgxm1TKHhO/brdyUUxbRY1wg/YyNzGuBZP
-         rSUiNKWlFKX/QH/O0MYhXVfZ4pjUsl/CPXvxj0KnEJTW1VuXuZVHCH5BZO4+cr872C7Y
-         d2LhH0wRV670fRyOf/hhNSYeS8f3VZeFn0lUQnPhidmKd1FhEmEtdMGVt33LOXOpgyjq
-         u1JjD+jBZXtJS/xKzbXBHqJ06hVdk8mxwffnRbk/ZfGudCAV+sKZ6I6IHr2UvWYAV4dI
-         TuwvEbJwgMqK5nUlhkqp+1MwUphULWCyUngmL6aHDevTfTIYwfY1U+tZmvZzoJTaX6DF
-         mTvA==
-X-Gm-Message-State: AOAM53120xlw5dNNnS8F7s9EI5sejQw6/3WWDfAuomq8kWjxj5i2bxYO
-        vDCZtEsuQlz/2Ck1HCeU1+o=
-X-Google-Smtp-Source: ABdhPJxTWbZhOk+RaH2exJ1x6uIHmC3/NVaqjLJwL1lJGyW6RJ0X4vlWrolp4unBIrEhh/RKEUs3Jg==
-X-Received: by 2002:a17:902:b116:b0:161:4a38:a719 with SMTP id q22-20020a170902b11600b001614a38a719mr23395100plr.90.1653319299132;
-        Mon, 23 May 2022 08:21:39 -0700 (PDT)
+        bh=SaMV7BUtsmTAzjcN91ZvTykXcyiKjdC7IYjW++jNcTE=;
+        b=kBboOc6zeQZluymhFNL/+jNGIWbk0VQhdI6MYcNG0o9H3h3cvUNHc+HmWW/9nCRY+0
+         Ld0oaMjuAHaJPAsaSaeJOAzd54nBSro3CcDJOWhorFliZh/KWauuahA0IImf8IN1I5PS
+         k8Fh9SPO2/9Y3y5nuT8aeNGrbrkKhYLSCGtcLhD1LY8GvCH2+wdqFx5K9HduWS3NmJaI
+         rFOuBVI53MXEE8gtb0u+iB7tutBCwHJ1tNQiibGQPPnm9kFwG6Ub5FO91tpbnIWMXsiu
+         HmFUJOoS+Xq4D3zSDcejGdJmiiezXOmBILNBMqmGOS57pTd4lvPA34sRBWSI1Q4tOB57
+         H3kQ==
+X-Gm-Message-State: AOAM531qM6zWe8jYfYHAw/C9uqBMmBy6B8w6cgZc11PC5eA7k3YM0DAw
+        L0fZB7WZqd7E63EAsRw9YOc=
+X-Google-Smtp-Source: ABdhPJxg1UsIYnwOB/TcrjflBQPa0sGwrsNooC+vNQ6HJT4b/Utrg0SA9/tyAr7whBnqAaIh4M5hFQ==
+X-Received: by 2002:a17:903:41d0:b0:161:bec6:b33b with SMTP id u16-20020a17090341d000b00161bec6b33bmr23076932ple.21.1653319309952;
+        Mon, 23 May 2022 08:21:49 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id y13-20020a1709027c8d00b0015e8d4eb2cfsm5280287pll.281.2022.05.23.08.21.37
+        by smtp.gmail.com with ESMTPSA id y13-20020a1709027c8d00b0015e8d4eb2cfsm5280287pll.281.2022.05.23.08.21.48
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 May 2022 08:21:38 -0700 (PDT)
+        Mon, 23 May 2022 08:21:49 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -70,9 +70,9 @@ Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
         Yi-Jyun Pan <pan93412@gmail.com>,
         Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v4 2/9] Makefile: generate "po/git.pot" from stable LOCALIZED_C
-Date:   Mon, 23 May 2022 23:21:21 +0800
-Message-Id: <20220523152128.26380-3-worldhello.net@gmail.com>
+Subject: [PATCH v4 7/9] Makefile: add "po-update" rule to update po/XX.po
+Date:   Mon, 23 May 2022 23:21:26 +0800
+Message-Id: <20220523152128.26380-8-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <20220523012531.4505-1-worldhello.net@gmail.com>
 References: <20220523012531.4505-1-worldhello.net@gmail.com>
@@ -84,46 +84,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Different users may generate a different message template file
-"po/git.pot". This is because the POT file is generated from
-"$(LOCALIZED_C)", which is supposed to list all the sources that we
-extract the strings to be translated from. But "$(LOCALIZED_C)"
-includes "$(C_OBJ)", which only lists the source files used in the
-current build for a specific platform and specific compiler
-conditions.
+Since there is no longer a "po/git.pot" file in tree, a l10n team leader
+has to run several commands to update their "po/XX.po" file:
 
-Instead of using "$(C_OBJ)", we use "$(FOUND_C_SOURCES)", which lists
-all source files we keep track of (or ship in a tarball extract), to
-form a stable "LOCALIZED_C". We also add "$(SCALAR_SOURCES)", which
-is part of "$(C_OBJ)" but not included in "$(FOUND_C_SOURCES)".
+    $ make pot
+    $ msgmerge --add-location --backup=off -U po/XX.po po/git.pot
 
-With this update, the newly generated "po/git.pot" will have 30 new
-entries coming from the following C source files:
+To make this process easier, add a new rule so that l10n team leaders
+can update their "po/XX.po" with one command. E.g.:
 
- * compat/fsmonitor/fsm-listen-win32.c
- * compat/mingw.c
- * compat/regex/regcomp.c
- * compat/simple-ipc/ipc-win32.c
+    $ make po-update PO_FILE=po/zh_CN.po
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Makefile   | 18 ++++++++++++++++++
+ shared.mak |  1 +
+ 2 files changed, 19 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 83e968e2a4..46914dcd80 100644
+index 161ebf4ff3..34a64c5fa7 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2714,7 +2714,8 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
- 	--keyword=gettextln --keyword=eval_gettextln
+@@ -571,6 +571,7 @@ TCLTK_PATH = wish
+ XGETTEXT = xgettext
+ MSGCAT = msgcat
+ MSGFMT = msgfmt
++MSGMERGE = msgmerge
+ CURL_CONFIG = curl-config
+ GCOV = gcov
+ STRIP = strip
+@@ -2716,6 +2717,7 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
  XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
  	--keyword=__ --keyword=N__ --keyword="__n:1,2"
--LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
-+LOCALIZED_C = $(FOUND_C_SOURCES) $(FOUND_H_SOURCES) $(SCALAR_SOURCES) \
-+	      $(GENERATED_H)
+ MSGCAT_FLAGS = --sort-by-file
++MSGMERGE_FLAGS = --add-location --backup=off --update
+ LOCALIZED_C = $(FOUND_C_SOURCES) $(FOUND_H_SOURCES) $(SCALAR_SOURCES) \
+ 	      $(GENERATED_H)
  LOCALIZED_SH = $(SCRIPT_SH)
- LOCALIZED_SH += git-sh-setup.sh
- LOCALIZED_PERL = $(SCRIPT_PERL)
+@@ -2794,6 +2796,22 @@ po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO)
+ .PHONY: pot
+ pot: po/git.pot
+ 
++define check_po_file_envvar
++	$(if $(PO_FILE), \
++		$(if $(filter po/%.po,$(PO_FILE)), , \
++			$(error PO_FILE should match pattern: "po/%.po")), \
++		$(error PO_FILE is not defined))
++endef
++
++.PHONY: po-update
++po-update: po/git.pot
++	$(check_po_file_envvar)
++	@if test ! -e $(PO_FILE); then \
++		echo >&2 "error: $(PO_FILE) does not exist"; \
++		exit 1; \
++	fi
++	$(QUIET_MSGMERGE)$(MSGMERGE) $(MSGMERGE_FLAGS) $(PO_FILE) po/git.pot
++
+ .PHONY: check-pot
+ check-pot: $(LOCALIZED_ALL_GEN_PO)
+ 
+diff --git a/shared.mak b/shared.mak
+index 50d4596f0d..8cd170a7e7 100644
+--- a/shared.mak
++++ b/shared.mak
+@@ -63,6 +63,7 @@ ifndef V
+ 	QUIET_LNCP     = @echo '   ' LN/CP $@;
+ 	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
+ 	QUIET_MSGFMT   = @echo '   ' MSGFMT $@;
++	QUIET_MSGMERGE = @echo '   ' MSGMERGE $@;
+ 	QUIET_GCOV     = @echo '   ' GCOV $@;
+ 	QUIET_SP       = @echo '   ' SP $<;
+ 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
 -- 
 2.36.0.1.g15c4090757
 
