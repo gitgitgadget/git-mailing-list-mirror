@@ -1,50 +1,50 @@
 Return-Path: <git-owner@kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B208EC4332F
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 08:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67BA1C433EF
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 01:28:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235293AbiESIQl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 04:16:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40214 "EHLO
+        id S233407AbiEWB15 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 May 2022 21:27:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235188AbiESIQY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 04:16:24 -0400
+        with ESMTP id S1351718AbiEWBZs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 May 2022 21:25:48 -0400
 Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAC896006F
-        for <git@vger.kernel.org>; Thu, 19 May 2022 01:16:22 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id c14so4514034pfn.2
-        for <git@vger.kernel.org>; Thu, 19 May 2022 01:16:22 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4BCA37A09
+        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:47 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id 202so5353728pfu.0
+        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lv1I7WJKSNtjd87HSuios84vGySwVKFwVjDtaG0HFvw=;
-        b=QPmRVkwyhAcjp9aUx2cLYBPNmiWKuOL27qXeFxNVZWTP0X1iBgIAta3P+UNE8Du+Ge
-         awFSlJV3X9AWrXAmglfT/YNrJTU5FnvReLk/uUktuxh1yA95E+t92Q10IHLnnSN1Z2Zw
-         aNvRLOnLmMO7U4+Ab7bp5MjS/9XDQwXLN0uIF+WZhxs/nLYXJe6XnLhlP7taJHRdSB8b
-         oCjcxYUwz+k2fh+igflbinMoSzqmeMxfJ7XKL4d7Il4cOqoMepDcguwP7eUhp/mckrjr
-         9OyfSLKuA6tdvtTLXOizPhcz4PsfZDy3GsmJwb0JV9arhGesuXLf0rJt/zOVfQFIhsMo
-         RiyQ==
+        bh=7J6EjeIYLinlhZR5uPHnUBYktutMqgTK95EjvqUO5h8=;
+        b=l/NnUklP3Ph37lcVPy8osu3fowowA/T9L+8laRbP8YS71gqCXo70M77trW/GIkfFbk
+         m26BWmJ9djMDPLe13e3ibYcFymqHsK4eA5WNBuGG9ejbtw8eAQBHOqR4gmBrtCbo0zyu
+         DDLrFJnEW2E2htU//4bafY3XpZs+hw3OJZAbVdn2Ds+bHpdYyFqR1NiWqbyYkN1zXAcl
+         Nfysz4p8sEVVrOQGGSgjGEed31dCszuhWChhlgDuRXThZsuhCMkl3jG2Di2SkaX7y5u6
+         1vNEX+JUNbLiT3fA4ZggyVQMnKqp8G54FY13FZFmhP5hSzyQDn68oW0ix388u0GTv4cJ
+         lsfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lv1I7WJKSNtjd87HSuios84vGySwVKFwVjDtaG0HFvw=;
-        b=YJShi+VC/2NVbT9YJQ/PJx75OmACaaLO0NKE5699j0WeFUQ0/j1JNZzwT8OUG4cC1W
-         7Hjer26lU8iOH6mB4bdwI65TtFrcCBKWZUZ5TvG0qO3qDIjcnqO5/jrwcMQPBdE6ATLq
-         aTanjTPchv2TkLZXlutXgSXcEoxJt8mvY6RNOZ0Q5s+Ivrv0POCplcQzfZAkH64MGf1Y
-         0OmvzdwmCe8o0/o+Y1nvkpZVaWKERGAYs28evU+OJiySq9Q8tFIkwsivZiFlgtqgr0Hp
-         BlLiF/VmJGWn3G0ubXRXNGE0n3isBBKv/r19KFenjHn8KEC1rhqkff3PUmDiacNRi+HR
-         A56g==
-X-Gm-Message-State: AOAM5305LG2cmdl6qPh6mVyOotQRG8pIDlkoBcN2fJ9xvH5uz9/eiSsz
-        LU2mImio/nyS1jMFK5dSyAU=
-X-Google-Smtp-Source: ABdhPJwxkffC8H1qatgwsgwnA1JwnFlA9fGD3dt/89lNFtUmSKBXTN0wjw1a+XIjOXmfA3ySllr1sg==
-X-Received: by 2002:aa7:84cf:0:b0:50d:d25a:5d37 with SMTP id x15-20020aa784cf000000b0050dd25a5d37mr3576473pfn.84.1652948180049;
-        Thu, 19 May 2022 01:16:20 -0700 (PDT)
+        bh=7J6EjeIYLinlhZR5uPHnUBYktutMqgTK95EjvqUO5h8=;
+        b=JOTQfNz6U6sQTLRiC8FsTFZR6iEyDZrN3U16B4AWwF94vkclTK9PA6qgwH+hVReb7G
+         W8zii9mTREp0i1YMbgjru73f5ZJKw3BheMSrRdDBFrivl8rwybqqsUGBSWpLVt/xsu0Z
+         Tf/YVcqVcnQdbVNxKGv6WQVB+79QqGp0FYkEWtKRGyL6oHLFCWDPhLOHQ2XCIFX+nSWh
+         NyfEiTTyeMuE6gLF6O8vFJj9mGRvFwdMoukKOd3EUeCRhUYfe9q74WcIFssNzXLyd4Ic
+         Y2pWhkS/b5b29Pd8O6SNYO50AzUnox8/j1iIbFX4YO9QsYOQcvmtd5rgcnGmyHm4aPbA
+         EjyA==
+X-Gm-Message-State: AOAM532MqgUNcloKRFankSvVrBS523QN473ajR1VnQnQL0SZVCZjzVA7
+        AsQZSBhuqfHKsxy7kXygS0s=
+X-Google-Smtp-Source: ABdhPJwr56T5bgsDU3ALlarUPfDtO70GtRw4P0F1prYPu8DkU7P6n3RRFXemTHaYdXkz3fPw7FHH1w==
+X-Received: by 2002:a63:91c3:0:b0:3f9:caa5:fa56 with SMTP id l186-20020a6391c3000000b003f9caa5fa56mr10445875pge.418.1653269146012;
+        Sun, 22 May 2022 18:25:46 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id u127-20020a627985000000b0050dc76281d3sm3576687pfc.173.2022.05.19.01.16.16
+        by smtp.gmail.com with ESMTPSA id n26-20020aa7985a000000b00518142f8c37sm6027566pfq.171.2022.05.22.18.25.43
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 May 2022 01:16:19 -0700 (PDT)
+        Sun, 22 May 2022 18:25:45 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -66,13 +66,14 @@ Cc:     Jiang Xin <worldhello.net@gmail.com>,
         Emir SARI <bitigchi@me.com>,
         =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
         <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [PATCH v2 5/9] po/git.pot: this is now a generated file
-Date:   Thu, 19 May 2022 16:15:44 +0800
-Message-Id: <20220519081548.3380-6-worldhello.net@gmail.com>
+        Yi-Jyun Pan <pan93412@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v3 5/9] po/git.pot: this is now a generated file
+Date:   Mon, 23 May 2022 09:25:27 +0800
+Message-Id: <20220523012531.4505-6-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <20220503132354.9567-1-worldhello.net@gmail.com>
-References: <20220503132354.9567-1-worldhello.net@gmail.com>
+In-Reply-To: <20220519081548.3380-1-worldhello.net@gmail.com>
+References: <20220519081548.3380-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,8 +81,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+We no longer keep track of the contents of this file.
 
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
  po/git.pot | 25151 ---------------------------------------------------
  1 file changed, 25151 deletions(-)
