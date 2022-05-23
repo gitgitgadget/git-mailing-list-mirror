@@ -2,210 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4CBEC433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 12:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 087DBC433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 12:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235764AbiEWMyq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 08:54:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54190 "EHLO
+        id S235822AbiEWM7G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 08:59:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235812AbiEWMyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 08:54:33 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC644D269
-        for <git@vger.kernel.org>; Mon, 23 May 2022 05:54:29 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id r23so21268956wrr.2
-        for <git@vger.kernel.org>; Mon, 23 May 2022 05:54:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=jXTm12HxJDBih8/jfOkGAZ95MUi1N+FhU9h7FNvGoFg=;
-        b=Y6Oi3rkQIzMiCU8kxCJhkvl7ENI5NQPp5KJ1RT29F4zGzQu4Sg2We3VNYfR43B6HDe
-         VPDSDqybWTfcO9tuAYomPFWwuI2mpdnoikwHd7ail1RRm4wBEIaRMmn6TAhM672+W9LJ
-         j0lMlPis084+3dPCQZcMS/6dKJLz9I7MIPuQNZ12ZcTCNkLGzJRpTNnTERncLY1UVkSo
-         cDAjG7EjrZymkHnvAB46CV4oSNdZ1Da86GLSgTpNaxnaUQL2mP/3rCBEQqZuSzI3BEWJ
-         RlJ0txtB15g6LSle/YEQo6/CscS+wNtL5XKEdYkILaY8ofkTEdK47b14EDSgLDTSKJbn
-         R/tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=jXTm12HxJDBih8/jfOkGAZ95MUi1N+FhU9h7FNvGoFg=;
-        b=lUQZxsJ26LWkNNTVBSaXx11q+W2FYqtYCbS23YPy/lBs9CZN/4L5BAD1PLCDUAgbyE
-         tQZDth2uypybrXXDIdoMakFTx7K35WiqVHKT3EyZOlOVYDwkbPf9s+KoGfuKrr5Gi6jQ
-         Oo5C/CmYgkl0dywbJ0zpfz1q1yvMHLHcx3lO/05s4FcpXmUgxFWF1wGnoICT+lHA2R2q
-         uJN6uD8JiFKXs1/N2lfZA4fCyiTf3gIqflf0AvkM9h9ExuB9YuBNYwN4JTegy874NIjS
-         B75yI0D8nf0kWnyrEWBYkznUQ+MmdJjbT/hqcn0b1dR35ulquKtmlL8kbfnmSDqp8QjM
-         Fgrw==
-X-Gm-Message-State: AOAM531jat10EVgMLfRq1XOGFzZo2QDqeqv8gcnrO6z2aqZaibGS8NI8
-        otTtW33wB50b7y22+M3PpjXkj+MNRL4=
-X-Google-Smtp-Source: ABdhPJwISQdO7yxF6WYpHYlcSrd85kf6HFlCNqkmnOzOLEf85ddSV9eVI/2mFGssoV2IPmvUJFq6kA==
-X-Received: by 2002:a5d:4302:0:b0:20e:66db:b8f5 with SMTP id h2-20020a5d4302000000b0020e66dbb8f5mr18033364wrq.320.1653310467321;
-        Mon, 23 May 2022 05:54:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05600c4f4400b003972c672859sm9004089wmq.21.2022.05.23.05.54.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 05:54:26 -0700 (PDT)
-Message-Id: <pull.1236.git.1653310466062.gitgitgadget@gmail.com>
-From:   "Carl Smedstad via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 12:54:25 +0000
-Subject: [PATCH] check-ignore: --non-matching without --verbose
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S235806AbiEWM7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 08:59:02 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 180B853A72
+        for <git@vger.kernel.org>; Mon, 23 May 2022 05:59:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1653310721;
+        bh=k/1EnOxV3B3stN8kE0R/MhiSH1VCvBq4LHLH9Qs06Fk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=YYGmmhQ2MoprOgv4sX3qPEUoKgsvyiXvxVOTpTJU7LwAXpOAxmv+gh0tG2gsNFrr+
+         UVkETPsw08QA4rGeMdbOSNEhK4t2TeF2C4qh8Ypfz4gUhDCgfKTWAh0BwWVzmDfUsm
+         x7likSQ8EcBVbwB+x3O71oYhaBODHrSsMufMT9FU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOiDX-1oDHtn3CU3-00QFbJ; Mon, 23
+ May 2022 14:58:40 +0200
+Date:   Mon, 23 May 2022 14:58:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Victoria Dye <vdye@github.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+In-Reply-To: <xmqqfsl1bcy6.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2205231455200.352@tvgsbejvaqbjf.bet>
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>        <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>        <6b83bb83-32b9-20c9-fa02-c1c3170351c3@github.com>        <nycvar.QRO.7.76.6.2205212307090.352@tvgsbejvaqbjf.bet>       
+ <xmqq35h2cwrm.fsf@gitster.g>        <nycvar.QRO.7.76.6.2205222045130.352@tvgsbejvaqbjf.bet> <xmqqfsl1bcy6.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Carl Smedstad <carl.smedstad@protonmail.com>,
-        Carl Smedstad <carl.smedstad@protonmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:o+VEyvyaEXscBsxJNbtD9s5NhcEzFOToQCMZWi3Ti8WQRkYHP1A
+ 3DxozS1ZxlpyvOlOsnQ/29pYStznBNaYNF/MLNaQEu6GH//F784xaghPEQxFeiUn2lUkUSn
+ 9H4PyR7+uv5EKnY/OlyABxq6xJQJOmS5tSXKk2jUL34eBB5P5UJYNWsfB2wHhuMs+/dRUyU
+ ltfit3RnYaiNRQb2qQLoA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0o3B195ZFX4=:dgvf6+rxlnULeSey2fn5iR
+ IIe2u+mpIoT2/88DtyZvh+EMkuCdMb0y0HJyHsHJpZSf9NQC+FIFAZAX9nhE8rexXijodSjUq
+ BF/aNi/cv5qU8aCW4mGk0DwRfImCfcTwBYqcMKRt8kgoZXmqt5RkwBWR07SklHmH2mHf7lgNQ
+ uY0NOe85zPLi3uhfxMuzmDDt5U5QXXTDDbJvbLLd7vgkRQnRmleJzTJr4RGVjfW+lBxxziQvQ
+ /c5HHv+9Cp/x/MvKgg4tYdISPbEIeVjnDP4sysEVO3xsowR34vMuUIuOKyDGyt7OBBteJJgVY
+ VvLWN8l63iNmmBeqbZpUdHNWKx8KYMPY0tF6rvqPxXFZqVujHOKKu/dAEM7YG2u3KfyMe2rUF
+ i+QjFKYKiZy86jCtiANrc0FkNMuTvDOUUNE9BHl9kJAlofSVb2cnkHu0XyQvjDWPfV5VaDb8d
+ tKQK4tge2Kq8fPd5kNNAbC8a2UnUWntetvLfCtVIsq2JSwGA5M4rRNH9ei4a6TXZNj4TRnC9y
+ F87anEs7xBTMDKcHS3ciEepMrNWMfYM7YFu+BovxiLFc/BTMAKcEfGEGn4Bx0d6BDuJmoOSOC
+ Rw8llyD90NMokjSYh/BPQ10zF+ecig9NOnMBozug3IVhRsUvN9T98awGX+mvB15aBrZxNiYPG
+ 7HqiifbMgDBxEQZqBeFGvGZKRa9yVbjABIdfxt4zNDShNzIfht6vIacypTDB/Na7Okm22kKyn
+ QcpYcoGk90MoMd99KPEFTs3iaLFz61FRrfPtF2/LxrLnQ2/wIJZu3GZeMefFo56uks4P75ZW9
+ TG7x4xgWFhUAxufJXCvLgqXnv5b6OaQ4CQa584icD70wg0x6TNhjccZKDaYWDtwehzib8meXf
+ MvpsR01ZSVMGA3caHxeyl9u4fIu+xbinpfWQISuBhxMebwwgB3qW2pwcwW9wzb+5ukHyWcaXr
+ UiSIhKAhgKJPQDcf08TNOcsPJZaXC0+gx9p2SmDY0NuoWA1ZA0qXvFVt1xH6iTyu72JY7GoGj
+ agE66fp3M8tQAQAgTvRGQnlZDPFahCZzHgZv6yZOsLfFt36eVkGW9smsz3/s+0TYy+i2ptbEx
+ 8Fcm/LQ2N/fxzfFQDQ1XBPdVeULwKkSDU4aGjZ5pMEo4it+xSY/Ym/HSw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Carl Smedstad <carl.smedstad@protonmail.com>
+Hi Junio,
 
-Allow --non-matching to be specified without the --verbose flag to make
-git only list files that are not matching any pattern. The behaviour
-when specifying both --non-matching and --verbose is unchanged.
+On Sun, 22 May 2022, Junio C Hamano wrote:
 
-The motivation for this is to use the underutilized invocation of
---non-matching without --verbose to create a shorthand for what could be
-achieved by:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > I see that this is still with the previous iteration, and therefore
+> > exposes the same speed (or slowness) as was investigated so wonderfull=
+y by
+> > Victoria.
+> >
+> > So I really do not understand why you pointed to that run, given that =
+it
+>
+> Simply because your updated version came to my tree a lot after I
+> prepared two trees that are otherwise identical for comparison to
+> write the message you are responding to.
 
-    find . |
-      git check-ignore --verbose --non-matching |
-      grep $'^::\t' |
-      sed -e 's/.*\t//'
+Oh sorry, I only noticed that your mail came in after I sent the new
+iteration, and I incorrectly thought that you had put the patch series
+into the Stalled/To-Drop pile, so I assumed that your mail was in response
+to my new iteration.
 
-Signed-off-by: Carl Smedstad <carl.smedstad@protonmail.com>
----
-    check-ignore: --non-matching without --verbose
-    
-    Allow --non-matching to be specified without the --verbose flag to make
-    git only list files that are not matching any pattern. The behaviour
-    when specifying both --non-matching and --verbose is unchanged.
-    
-    The motivation for this is to use the underutilized invocation of
-    --non-matching without --verbose to create a shorthand for what could be
-    achieved by:
-    
-    find . |
-      git check-ignore --verbose --non-matching |
-      grep $'^::\t' |
-      sed -e 's/.*\t//'
-    
-    
-    Signed-off-by: Carl Smedstad carl.smedstad@protonmail.com
+I had missed that you replied to v2 instead of to v3.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1236%2Fcarlsmedstad%2Fcheck-ignore-non-matching-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1236/carlsmedstad/check-ignore-non-matching-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1236
+> I do not appreciate that you have to always talk back to others in
+> such an aggressive tone
 
- Documentation/git-check-ignore.txt |  6 ++----
- builtin/check-ignore.c             | 15 +++++++++++----
- t/t0008-ignores.sh                 | 17 +++++++++++++++--
- 3 files changed, 28 insertions(+), 10 deletions(-)
+I apologize for that. As you might have guessed, it was not my intention
+to be aggressive in any way. I merely meant to express my puzzlement, and
+your explanation resolved that very nicely.
 
-diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-index 2892799e32f..69d12fd22e1 100644
---- a/Documentation/git-check-ignore.txt
-+++ b/Documentation/git-check-ignore.txt
-@@ -50,10 +50,8 @@ linkgit:gitignore[5].
- 	with a NUL character instead of a linefeed character.
- 
- -n, --non-matching::
--	Show given paths which don't match any pattern.	 This only
--	makes sense when `--verbose` is enabled, otherwise it would
--	not be possible to distinguish between paths which match a
--	pattern and those which don't.
-+	Only show given paths which don't match any pattern. If `--verbose` is
-+	enabled, show both paths that match a pattern and those which don't.
- 
- --no-index::
- 	Don't look in the index when undertaking the checks. This can
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 21912569650..10e8bba1057 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -113,8 +113,17 @@ static int check_ignore(struct dir_struct *dir,
- 			    pattern->flags & PATTERN_FLAG_NEGATIVE)
- 				pattern = NULL;
- 		}
--		if (!quiet && (pattern || show_non_matching))
--			output_pattern(pathspec.items[i].original, pattern);
-+		if (!quiet) {
-+			if (verbose) {
-+				if (show_non_matching || pattern)
-+					output_pattern(pathspec.items[i].original, pattern);
-+			} else {
-+				if (show_non_matching && !pattern)
-+					output_pattern(pathspec.items[i].original, pattern);
-+				if (!show_non_matching && pattern)
-+					output_pattern(pathspec.items[i].original, pattern);
-+			}
-+		}
- 		if (pattern)
- 			num_ignored++;
- 	}
-@@ -175,8 +184,6 @@ int cmd_check_ignore(int argc, const char **argv, const char *prefix)
- 		if (verbose)
- 			die(_("cannot have both --quiet and --verbose"));
- 	}
--	if (show_non_matching && !verbose)
--		die(_("--non-matching is only valid with --verbose"));
- 
- 	/* read_cache() is only necessary so we can watch out for submodules. */
- 	if (!no_index && read_cache() < 0)
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 5575dade8ee..2ea178797bc 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -90,7 +90,8 @@ test_check_ignore () {
- #   1. with -q / --quiet
- #   2. with default verbosity
- #   3. with -v / --verbose
--#   4. with -v / --verbose, *and* -n / --non-matching
-+#   4. with -n / --non-matching
-+#   5. with -v / --verbose, *and* -n / --non-matching
- #
- # expecting success each time.  Takes advantage of the fact that
- # check-ignore --verbose output is the same as normal output except
-@@ -102,7 +103,7 @@ test_check_ignore () {
- # Arguments:
- #   - (optional) prereqs for this test, e.g. 'SYMLINKS'
- #   - test name
--#   - output to expect from the fourth verbosity mode (the output
-+#   - output to expect from the fifth verbosity mode (the output
- #     from the other verbosity modes is automatically inferred
- #     from this value)
- #   - code to run (should invoke test_check_ignore)
-@@ -124,6 +125,7 @@ test_expect_success_multiple () {
- 
- 	expect_verbose=$( echo "$expect_all" | grep -v '^::	' )
- 	expect=$( echo "$expect_verbose" | sed -e 's/.*	//' )
-+	expect_non_matching=$( echo "$expect_all" | grep '^::	' | sed -e 's/.*	//')
- 
- 	test_expect_success $prereq "$testname${no_index_opt:+ with $no_index_opt}" '
- 		expect "$expect" &&
-@@ -144,6 +146,17 @@ test_expect_success_multiple () {
- 		quiet_opt=
- 	fi
- 
-+	for non_matching_opt in '-n' '--non-matching'
-+	do
-+		test_code="
-+			expect '$expect_non_matching' &&
-+			$code
-+		"
-+		opts="${no_index_opt:+$no_index_opt }$non_matching_opt"
-+		test_expect_success $prereq "$testname${opts:+ with $opts}" "$test_code"
-+	done
-+	non_matching_opt=
-+
- 	for verbose_opt in '-v' '--verbose'
- 	do
- 		for non_matching_opt in '' '-n' '--non-matching'
-
-base-commit: f9b95943b68b6b8ca5a6072f50a08411c6449b55
--- 
-gitgitgadget
+Thank you,
+Dscho
