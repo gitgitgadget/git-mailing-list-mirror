@@ -2,91 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 197B4C433FE
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 18:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAAB0C433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 19:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240547AbiEWSwR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 14:52:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39984 "EHLO
+        id S233434AbiEWTAZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 15:00:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241534AbiEWSvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 14:51:06 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08E395DA20
-        for <git@vger.kernel.org>; Mon, 23 May 2022 11:36:22 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id e17so12712227qvj.11
-        for <git@vger.kernel.org>; Mon, 23 May 2022 11:36:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=JkwIGm1g6zo15x4JU7BbDPwjDMXMG+02s8EFJ5yJqos=;
-        b=iA6NrKEgX6Lx43ROcC5TnXpfc/g7Ar+KwK2EWL0poSvVfVkGAgP1bfaLcwdIKTcQJc
-         VKZkhdkv2XWJh9nIpg02i44/RQfSWcWh9+HsZ7WBRkdZO2BG54OypaUYA/xAITxFTZdN
-         RM9XkUr9N2F2vshXinFvz/24yJTx0LBpQ7Vd95v0oc3r950hax92pl1wIyTZhF6W3XSp
-         sXrR0yH1Udg4Q0RC1v+faLQrgI7EQhvtxgDZjgEa6UCb2Re/3wrqGD+MeAlRYoqHPLlU
-         zuW3dmH6WRIKg5xoFtRjYVIMseVDJi1bABDBFDKyzMuXGMXNHiXC0PYOs2tOIHqeAKIV
-         Ax/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=JkwIGm1g6zo15x4JU7BbDPwjDMXMG+02s8EFJ5yJqos=;
-        b=0cRhglx/0uq8NbZFlgRDudafnAIxEbwVLWxxUZJLWWon0+ixKtgBTRMTOXz8cQn9zR
-         g0R+u1CqngANZUZJpK4Vpmv6bHyTb/MuyFh4v21GI8C7BffO5SJGcaDWU24qheR+VhL2
-         PoNB3Sr72Gpcy0eT045cmo/szu11qAb/G7oLsslWmg55aMh3WllRuc/bH41q40ItP4qG
-         G/cP86zwDqW4qkzIJP9InTO3cdEXc9zlgmtsC5BpfdoGI3pwrclrnLtF+U7a6NkrVfle
-         /e0FBIWdCwirkr/AI9aRoAb5HObqgMni8AUsWYAJGTj/ugelgSbQAnfNTZwB3G1Yl0Ug
-         hJBw==
-X-Gm-Message-State: AOAM5337oXF4VjPglYOhdLDyON1sWqWSVBIpMRcNaEy8Ui0fKE9rcy+J
-        FZHuxXoxwpWUS4Jwwf7K7qmK
-X-Google-Smtp-Source: ABdhPJy2JlSD82kSCNoOgMRQL3FcYCd/pGRIuNebxFd0oYSu27Py8FmEgFj+Fwq193X/aw0BUdvpDg==
-X-Received: by 2002:ad4:5948:0:b0:461:fc7d:a48d with SMTP id eo8-20020ad45948000000b00461fc7da48dmr16065151qvb.96.1653330981207;
-        Mon, 23 May 2022 11:36:21 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:71ba:8ad9:40cd:d364? ([2600:1700:e72:80a0:71ba:8ad9:40cd:d364])
-        by smtp.gmail.com with ESMTPSA id a68-20020a37b147000000b006a33fc1113csm4926326qkf.23.2022.05.23.11.36.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 11:36:20 -0700 (PDT)
-Message-ID: <75aa1726-dca2-5e4b-387e-229e1501209e@github.com>
-Date:   Mon, 23 May 2022 14:36:20 -0400
+        with ESMTP id S243270AbiEWTAB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 15:00:01 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C7575230
+        for <git@vger.kernel.org>; Mon, 23 May 2022 11:41:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1653331284;
+        bh=82jyLKZntrHl0ua2mnaYbiWRN3c3nn5BjW6O14bZ65I=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JWco/T1az7xmpQwVzvKL7QWO+2CMt7Fv6AV+7m1SIV8sJOboWhlus1XVXIAtBlpv1
+         ijGZHyM0rCFW3tLv01uQN9qFgjDX4bYasKcZhnKo3fXSNcJCVOqEHBJJQm3jg1iXCT
+         Q7Jos6rt28P/wMgDeqIe9of7B0QxjNbgkvy+Aj7g=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8GMq-1nocVg2oHQ-0148JP; Mon, 23
+ May 2022 20:41:24 +0200
+Date:   Mon, 23 May 2022 20:41:22 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+In-Reply-To: <220523.86ee0kzjix.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2205232040130.352@tvgsbejvaqbjf.bet>
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com> <6b83bb83-32b9-20c9-fa02-c1c3170351c3@github.com> <nycvar.QRO.7.76.6.2205212307090.352@tvgsbejvaqbjf.bet> <xmqq35h2cwrm.fsf@gitster.g>
+ <220523.86ee0kzjix.gmgdl@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH] Add pcre2 support for cmake build system.
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Yuyi Wang via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Yuyi Wang <Strawberry_Str@hotmail.com>
-References: <pull.1267.git.git.1652846305514.gitgitgadget@gmail.com>
- <xmqq1qwqts6w.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq1qwqts6w.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-844986294-1653331284=:352"
+X-Provags-ID: V03:K1:JiHmWZ7YL4mLtZ6MSeISoEgmsWtiqSheiIShj4Tp6BwjcYYBVx/
+ BEBO67PANFhVX8SF0QkS66GIXK179xdW/aYEW9b2mKEb0jHb84bP2CAivskQF4lXZj292Ih
+ xndHQOi4o8MgLxvbLzRxOWS12uHvzYRTXF7gQWQNO8HUNeNr70E/cPdVd2umq1mRy1ktnIF
+ P+m8uW6nckBhjrAgCsZCQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:oryzxyIkm7Y=:Q5zB+2l4yoHWSggw06o2YJ
+ Bg6PIjhQo0BmF1n0Azcj1KydZ4uugd62UR1oVKhBuOGBxRyP/qicvQjumXt4kh9OnSehCE1a3
+ P+vDY9UEks0iqZdR9zdFkt4TBHqyJ/kZ1/+88fov6Ek4Bg4ameE+PouZGi0g6CiGAwTi0Bl2/
+ tFa7EIodjNWSf3SPakS4hEqylEHZoXa8b0wpH8zzCpQGJ7PXw+IdLnO9j1OJ///YrE3ZBEHl2
+ AzW/U1PAe14tTo/1nUmIqOECfGKddYY8kl1B6X23UuQppdxrCmftJPwq2o89Pdj7obUV+IImi
+ aH/2rzrPNBMCgCF6M2oiYhflaQ7qqwGqyKKjOHTzznEjh3IOCAT0XrneTzGN4GaHAsjXey2WS
+ ID1/CNqsqWZi2fnoXSdG8WL9AFvveSyZW5uhpscpCW51JqkQqB9m6Q71KIha+lFzRpOz1DLor
+ HvUHTn62bAFzZ+wxrSqchgHhnPCZOr/Xep1JXM9725QQajm+k8ypTiRYasBUDaxzsJr0zyiYt
+ 0xiV5u4dKM39oExM7KV1YhnAbh5ZfIXoruuEmbyJ6BoNC/j4W5PwKpTMtyIaJpujR66GIEIzy
+ oItxtHx4n/ecInmVX31rFecZx/ZQaQhHW8tO3MmODp3tVpPRpfAUFeXB+BavI1K5H4wxoa5De
+ 0ZfY+JLwYg6Lg4JVNpfI10+lLcPfiDQZRO7xg2NSSspx54Ljza5tMHuyCVNNwlD7/0PUeHr9m
+ 845KtKVlokqAs7xVm2G0BfImM8FcBfpnTgJnc04/EK4uJWe8YJ8WpHEbJb41Km0/MZhi9FE1f
+ R16F6VmddlSoUwOBOoMbOozrojhKNn21uws9vL+HMXKk2aJ42GD8S5gf+OV1D3YEEzAkNLURn
+ Rh+D+9AOxzqbLQnvm7FXRRkNhCJl/qXYRYS70lMOByXeScPfIvHMBS7t+e/HoWejMpCoQuTkz
+ zbe7/uKdPn7gXj1YsW9HM/Kl4DHIhhdinFPWjE5ZgJoGGQEadPxr17uQ7AzmjX50cH5hycGFh
+ 1m348xNwy8h3uCDWCLUg7GiUeWU1KIatySFCmnErz/5LmSRepdy5c7++uEbEs7yPTIey0NjyE
+ dR6qbTzk1/PuPzaBwmRlvE0f8TUqsMyuLiHoTQDnkBc7cBOz31fkabbdw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/18/22 6:02 PM, Junio C Hamano wrote:
-> "Yuyi Wang via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Yuyi Wang <Strawberry_Str@hotmail.com>
->>
->> This commit fixes one of the TODOs listed in the CMakeLists.txt.
->>
->> There's also some small fix to ensure it builds successfully.
->>
->> Signed-off-by: Yuyi Wang <Strawberry_Str@hotmail.com>
->> ---
-> 
-> I haven't worked on the CMakeLists but is the above description
-> sufficient to tell what is going on if given to those who are
-> familiar with it (I ask because it is not clear at all to me).
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I had the same confusion. Perhaps the message could indicate
-how one could test this PCRE2 compilation so we could try it
-out ourselves?
+--8323328-844986294-1653331284=:352
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
--Stolee
+Hi =C3=86var,
+
+On Mon, 23 May 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> Re selling point & feature comparison: The point of the ab/* variant was
+> to re-roll Johannes's onto a "base" topic that made much of his
+> unnecessary, because the building up of features to emit GitHub markup
+> can be replaced by unrolling things like "make" and "make test" to the
+> top-level.
+>
+> That has its own UX benefits, e.g. you can see at a glance what command
+> was run and what the environment was, and "make" and "make test" are now
+> split up from one monolithic "build and test" step.
+>
+> But the primary intention was not to provide a prettier UX, but to show
+> that this arrangement made sense. I was hoping that Johannes would reply
+> with some variant of "ah, I see what you mean, that does make things
+> simpler!" and run with it, but alas...
+
+I believe that we share the goal to make the Git project more welcoming
+and easier to navigate for new contributors.
+
+The patch series you wanted me to look at claims to make the CI/PR
+definitions/scripts simpler. As it matters more to contributors how to
+investigate test failures, i.e. what information they are provided about
+the failures, I disagree that that patch series needs to be connected to
+my patch series in any way.
+
+Further, the result does not look like a simplification to me. For
+example, I consider it an absolute no-go to remove the remnants of Azure
+Pipelines support. As I had hinted, and as you saw on the git-security
+list, I require this support for embargoed releases. That=E2=80=99s what I=
+ did
+when working on the patches that made it into v2.35.2. In my book,
+removing such vital (if dormant) code is not a simplification, but a
+Chesterton=E2=80=99s Fence. While we do not need to use Azure Pipelines fo=
+r our
+regular CI, we definitely need it for embargoed releases. =E2=80=9CSimply =
+revert
+it back=E2=80=9D is not an excuse for removing something that should not b=
+e
+removed in the first place.
+
+As another example where I have a different concept of what constitutes
+=E2=80=9Csimple=E2=80=9D: In Git for Windows=E2=80=99 fork, we carry a pat=
+ch that integrates the
+`git-subtree` tests into the CI builds. This patch touches two places,
+`ci/run-build-and-tests.sh` and `ci/run-test-slice.sh`. These changes
+would be inherited by any CI definition that uses the scripts in `ci/`.
+With the proposed patches, there are four places to patch, and they are
+all limited to the GitHub workflow definition. Since you asked me for my
+assessment: this is de-DRYing the code, making it more cumbersome instead
+of simpler.
+
+In other words, I have fundamental objections about the approach and about
+tying it to the patches that improve the output of Git=E2=80=99s CI/PR run=
+s.
+
+> In Chrome/Firefox the time to load the page (as in the spinner stops,
+> and we "focus" on the right content) is:
+>
+>     JS: ~60s / ~80s
+>     =C3=86: ~25s / ~18s
+
+My focus is on the experience of occasional and new contributors who need
+to investigate test failures in the CI/PR runs. In this thread, we already
+discussed the balance between speed of loading the page on the one hand
+and how well the reader is guided toward the relevant parts on the other
+hand. I disagree with you that the former should be prioritized over the
+latter, on the contrary, guiding the readers along a path to success is
+much more important than optimizing for a quick page load.
+
+Most contributors who chimed in seemed to not mind a longer page load time
+anyway, as long as the result would help them identify quickly what causes
+the test failures. Besides, the page load times are only likely to become
+better anyway, as GitHub engineers continuously improve Actions.
+
+Ciao,
+Dscho
+
+--8323328-844986294-1653331284=:352--
