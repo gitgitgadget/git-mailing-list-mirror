@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF8EBC433F5
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 231E5C433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:15:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232839AbiEWUO6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 16:14:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52466 "EHLO
+        id S230465AbiEWUPB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 16:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233083AbiEWUNu (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233079AbiEWUNu (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 May 2022 16:13:50 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C86AE25B
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F9C9AE255
         for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:21 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id e28so22290975wra.10
+Received: by mail-wm1-x32b.google.com with SMTP id h205-20020a1c21d6000000b003972dda143eso222269wmh.3
         for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aGhX76dz325gkGkIrL9UlyaHr3ziBUV0IbljHMDHg+g=;
-        b=hkjXmwBhJhxdoRj8IYCL9/rLaQFXiYJOYU84ynswi0Zhqj+roy8LnXYQkcLzGHH7mi
-         3yN2tdfaaQj+RmXvOBFiGC7vk11nDS7C8wHdY67zTgzaui6/CCiykYs1afXK0aA212CF
-         IZTd89uM9SqHhBCMyscl/liqoGWJ/b83WjrQfnEUFqX85PyU7/9svEkbtYKqt7pFfYzu
-         XhsCNqloO8o+mRptwiTmtIEVlIBkaMDeh4AGus+ZoZD8nV+RegbnbdNVl+rfV/MiZzct
-         kSjbrh4Qk8Xm5jTFialaizr6WWqFPzh+jI6R0WvFFhzfS5weS7LGFjU0k3mhxjjFlW9H
-         bdQg==
+        bh=YNHaA4YYGDZmoBb7X7Sg3r2d0bTHSrICz7I5REqA2vE=;
+        b=IZss0e1OSCri9gYZbKS8LxA9RZrcylx/wzybgTgjynnirt3zBWW4NHpD4+mf5xpPl3
+         FUtvqjWn20qRWfNgy8Aw0DDI10d0Xtn0YEEvPcSy8/LNUmX3HtPjXLHGTOHmQG4rNjg8
+         7u9k/VNxhP8i1d5kIemNscQ0ah3HfUJfOrdZIDXuttZDd34ADT18qpHyAlfVsD5VZkmP
+         gbPPokACYwk0MjtPU4gfaDCnT8S1IyiKkRFq/ZpRu6MxqSqwXXnaWeqZrOBUyRo6ykkQ
+         nC0xBh4ta8aq8BgU7oxyFzG2WfJnfXtrAKUWfUVFhMUb/tjY8KExBvtQWpGiB3toHSrM
+         J7WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aGhX76dz325gkGkIrL9UlyaHr3ziBUV0IbljHMDHg+g=;
-        b=NZV7pYYTv5FQDsjEs1wq4PLBoL7pJ2eN1Oq6isOsG0R37e3/j4zFfgmb7dMM2azSlY
-         C8vS+f3F89tfnFGmhLBGBxsmqHrpxVkeE7yEkXKOQTrJrm61U/zdz7dSyDPfdHdD3dyM
-         L5BuvO8P3csUypmS8zenf9fw5Dw3QjNBqAibKa6OmH5cc28WwsqQSU+QzJJtLAznZCWn
-         pV7RrEKjjEMw40aVeBpJJY4nn29V9tA+4jRQLN7Cb8P5JfvpaVNQf3GqTaFHw0NQ2Mca
-         TKfz6z0GRW/5n/Bc5Ve9NRIIjw5OhHFugMAAt0rtNijrMdxhXC/3D3AOPF8o6cxloAgg
-         kwAQ==
-X-Gm-Message-State: AOAM531YcdGznkzE3C1VQhJTiSUU2SlFA77AUp7XUvQcho+lcgOqMRaa
-        RDsuGcB6gZ55Uc2cgiCO3uAlOkJ1Zzo=
-X-Google-Smtp-Source: ABdhPJwL/UO7+1B7D/3z2/STNp7WMaJnHt6HGEh6I0MLhnoujLGIwdYj2RVgxZYxOxv8GnsPOk/wNg==
-X-Received: by 2002:adf:dc8d:0:b0:20d:bfd:2018 with SMTP id r13-20020adfdc8d000000b0020d0bfd2018mr20154696wrj.540.1653336794121;
-        Mon, 23 May 2022 13:13:14 -0700 (PDT)
+        bh=YNHaA4YYGDZmoBb7X7Sg3r2d0bTHSrICz7I5REqA2vE=;
+        b=7W5ttd6n/k/ffxGQPQ6GzI0rCbQ6EVASqvKfrD1GMfm1MBfUR9U11z83UdMrxWI9fT
+         3894EW0CCjMHgYsNb4lGC7O0mZwKT5cMu3sUbrBYQ1xrvUf/ZdGdviRQMNqoSYcEisKj
+         y5ZwIM0/RKoBKHFIUB9e73V0Cp/Ezz/1DtXq7x56ayrBHB/Cn3AVxFemMjcWCYhFpIax
+         /bmZ0DnDhVs5ikwM5eKIo5hxZeopKkl6QpOlMc1ipv3n2bJwj5s4JNMIjjII/vrdoiA/
+         YhhZS6MgWBhRLI6uv/Bzg+G8BoMtUxhc1lC5uHyx3ISs21LJTBvidAq14eeZ/IR29KF8
+         Dnog==
+X-Gm-Message-State: AOAM53027tF5Jg+JjwP7i3pXWWVFqh1wyK5/em5yKxyVeTlbI7Yy8xFc
+        yh7fdC9hHmlDGawPM7SpMjvXgYiBTLM=
+X-Google-Smtp-Source: ABdhPJz+kvYhOiU3BjEEE4i/yboZuUvPUT6TEVhrq71u9En+TTfqi5dr9Nf1Xwgd9YpaLQZPlxsrjg==
+X-Received: by 2002:a05:600c:1986:b0:394:77a3:bfa9 with SMTP id t6-20020a05600c198600b0039477a3bfa9mr629968wmq.142.1653336800727;
+        Mon, 23 May 2022 13:13:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay9-20020a05600c1e0900b0039732f1b4a3sm245784wmb.14.2022.05.23.13.13.13
+        by smtp.gmail.com with ESMTPSA id z17-20020adfbbd1000000b0020e6470b2a7sm10791806wrg.85.2022.05.23.13.13.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 13:13:13 -0700 (PDT)
-Message-Id: <b020bfb45683c1c36b8310b6cfe9d29b8876f358.1653336765.git.gitgitgadget@gmail.com>
+        Mon, 23 May 2022 13:13:20 -0700 (PDT)
+Message-Id: <6f2e935f148e826609153378751c04807858e76c.1653336765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
         <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 20:12:35 +0000
-Subject: [PATCH v7 20/30] fsmonitor: optimize processing of directory events
+Date:   Mon, 23 May 2022 20:12:41 +0000
+Subject: [PATCH v7 26/30] t/helper/hexdump: add helper to print hexdump of
+ stdin
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,131 +68,90 @@ Cc:     Jeff Hostetler <git@jeffhostetler.com>,
         rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+        Jeff Hostetler <jeffhostetler@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: Jeff Hostetler <jeffhostetler@github.com>
 
-Teach Git to perform binary search over the cache-entries for a directory
-notification and then linearly scan forward to find the immediate children.
-
-Previously, when the FSMonitor reported a modified directory Git would
-perform a linear search on the entire cache-entry array for all
-entries matching that directory prefix and invalidate them.  Since the
-cache-entry array is already sorted, we can use a binary search to
-find the first matching entry and then only linearly walk forward and
-invalidate entries until the prefix changes.
-
-Also, the original code would invalidate anything having the same
-directory prefix.  Since a directory event should only be received for
-items that are immediately within the directory (and not within
-sub-directories of it), only invalidate those entries and not the
-whole subtree.
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 ---
- fsmonitor.c | 71 ++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 54 insertions(+), 17 deletions(-)
+ Makefile                |  1 +
+ t/helper/test-hexdump.c | 24 ++++++++++++++++++++++++
+ t/helper/test-tool.c    |  1 +
+ t/helper/test-tool.h    |  1 +
+ 4 files changed, 27 insertions(+)
+ create mode 100644 t/helper/test-hexdump.c
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 292a6742b4f..e1229c289cf 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -184,30 +184,68 @@ static int query_fsmonitor_hook(struct repository *r,
- static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
- {
- 	int i, len = strlen(name);
--	if (name[len - 1] == '/') {
-+	int pos = index_name_pos(istate, name, len);
+diff --git a/Makefile b/Makefile
+index 5f1623baadd..5afa194aac6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -729,6 +729,7 @@ TEST_BUILTINS_OBJS += test-getcwd.o
+ TEST_BUILTINS_OBJS += test-hash-speed.o
+ TEST_BUILTINS_OBJS += test-hash.o
+ TEST_BUILTINS_OBJS += test-hashmap.o
++TEST_BUILTINS_OBJS += test-hexdump.o
+ TEST_BUILTINS_OBJS += test-index-version.o
+ TEST_BUILTINS_OBJS += test-json-writer.o
+ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+diff --git a/t/helper/test-hexdump.c b/t/helper/test-hexdump.c
+new file mode 100644
+index 00000000000..f1e0a0fabf3
+--- /dev/null
++++ b/t/helper/test-hexdump.c
+@@ -0,0 +1,24 @@
++#include "test-tool.h"
++#include "git-compat-util.h"
 +
-+	trace_printf_key(&trace_fsmonitor,
-+			 "fsmonitor_refresh_callback '%s' (pos %d)",
-+			 name, pos);
- 
-+	if (name[len - 1] == '/') {
- 		/*
--		 * TODO We should binary search to find the first path with
--		 * TODO this directory prefix.  Then linearly update entries
--		 * TODO while the prefix matches.  Taking care to search without
--		 * TODO the trailing slash -- because '/' sorts after a few
--		 * TODO interesting special chars, like '.' and ' '.
-+		 * The daemon can decorate directory events, such as
-+		 * moves or renames, with a trailing slash if the OS
-+		 * FS Event contains sufficient information, such as
-+		 * MacOS.
-+		 *
-+		 * Use this to invalidate the entire cone under that
-+		 * directory.
-+		 *
-+		 * We do not expect an exact match because the index
-+		 * does not normally contain directory entries, so we
-+		 * start at the insertion point and scan.
- 		 */
-+		if (pos < 0)
-+			pos = -pos - 1;
- 
- 		/* Mark all entries for the folder invalid */
--		for (i = 0; i < istate->cache_nr; i++) {
--			if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID &&
--			    starts_with(istate->cache[i]->name, name))
--				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
-+		for (i = pos; i < istate->cache_nr; i++) {
-+			if (!starts_with(istate->cache[i]->name, name))
-+				break;
-+			istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
- 		}
--		/* Need to remove the / from the path for the untracked cache */
++/*
++ * Read stdin and print a hexdump to stdout.
++ */
++int cmd__hexdump(int argc, const char **argv)
++{
++	char buf[1024];
++	ssize_t i, len;
 +
-+		/*
-+		 * We need to remove the traling "/" from the path
-+		 * for the untracked cache.
-+		 */
- 		name[len - 1] = '\0';
-+	} else if (pos >= 0) {
-+		/*
-+		 * We have an exact match for this path and can just
-+		 * invalidate it.
-+		 */
-+		istate->cache[pos]->ce_flags &= ~CE_FSMONITOR_VALID;
- 	} else {
--		int pos = index_name_pos(istate, name, strlen(name));
--
--		if (pos >= 0) {
--			struct cache_entry *ce = istate->cache[pos];
--			ce->ce_flags &= ~CE_FSMONITOR_VALID;
-+		/*
-+		 * The path is not a tracked file -or- it is a
-+		 * directory event on a platform that cannot
-+		 * distinguish between file and directory events in
-+		 * the event handler, such as Windows.
-+		 *
-+		 * Scan as if it is a directory and invalidate the
-+		 * cone under it.  (But remember to ignore items
-+		 * between "name" and "name/", such as "name-" and
-+		 * "name.".
-+		 */
-+		pos = -pos - 1;
++	for (;;) {
++		len = xread(0, buf, sizeof(buf));
++		if (len < 0)
++			die_errno("failure reading stdin");
++		if (!len)
++			break;
 +
-+		for (i = pos; i < istate->cache_nr; i++) {
-+			if (!starts_with(istate->cache[i]->name, name))
-+				break;
-+			if ((unsigned char)istate->cache[i]->name[len] > '/')
-+				break;
-+			if (istate->cache[i]->name[len] == '/')
-+				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
- 		}
- 	}
- 
-@@ -215,7 +253,6 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
- 	 * Mark the untracked cache dirty even if it wasn't found in the index
- 	 * as it could be a new untracked file.
- 	 */
--	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s'", name);
- 	untracked_cache_invalidate_path(istate, name, 0);
- }
- 
++		for (i = 0; i < len; i++)
++			printf("%02x ", (unsigned char)buf[i]);
++	}
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 0424f7adf5d..88c4b28cdfa 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -38,6 +38,7 @@ static struct test_cmd cmds[] = {
+ 	{ "getcwd", cmd__getcwd },
+ 	{ "hashmap", cmd__hashmap },
+ 	{ "hash-speed", cmd__hash_speed },
++	{ "hexdump", cmd__hexdump },
+ 	{ "index-version", cmd__index_version },
+ 	{ "json-writer", cmd__json_writer },
+ 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index c876e8246fb..511f6251bf5 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -29,6 +29,7 @@ int cmd__genzeros(int argc, const char **argv);
+ int cmd__getcwd(int argc, const char **argv);
+ int cmd__hashmap(int argc, const char **argv);
+ int cmd__hash_speed(int argc, const char **argv);
++int cmd__hexdump(int argc, const char **argv);
+ int cmd__index_version(int argc, const char **argv);
+ int cmd__json_writer(int argc, const char **argv);
+ int cmd__lazy_init_name_hash(int argc, const char **argv);
 -- 
 gitgitgadget
 
