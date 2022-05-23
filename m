@@ -2,69 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABA32C433EF
-	for <git@archiver.kernel.org>; Sun, 22 May 2022 23:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79158C433EF
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 01:26:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344105AbiEVXfr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 May 2022 19:35:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39770 "EHLO
+        id S1349555AbiEWBZl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 May 2022 21:25:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240460AbiEVXfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 May 2022 19:35:46 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B99C387B9
-        for <git@vger.kernel.org>; Sun, 22 May 2022 16:35:45 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DE411A9524;
-        Sun, 22 May 2022 19:35:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=h2AEsJ7qiSX3Ruexd3nSWJKEIWMwkhqKx+KeJi
-        zc86E=; b=vW0S0cf26wDHQ95x4RSxP/1pbTVAeNx3uhcEGhi0MeprQEw07Hxw4P
-        VdvtB4k19HQTF0/GEuykxZxZdHysb2gWNQOkv5/fCsksU2pYOWaKAhQsSOsPEbLY
-        KXnf0fck0rkf+kIhN7aj7mUAAxlcH/ZJUBgF2GdgH3TcDviDB7/6k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 247C01A9523;
-        Sun, 22 May 2022 19:35:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9D6E51A951F;
-        Sun, 22 May 2022 19:35:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Hrushikesh Rao <hrushikesh20thegreat@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Git commands version documentation
-References: <ccb312dc-c2cc-ca3a-e659-0f87ceec0d15@gmail.com>
-        <f3814646-4763-62e1-b64e-d1aab3fdbbc8@iee.email>
-Date:   Sun, 22 May 2022 16:35:38 -0700
-In-Reply-To: <f3814646-4763-62e1-b64e-d1aab3fdbbc8@iee.email> (Philip Oakley's
-        message of "Sun, 22 May 2022 23:02:43 +0100")
-Message-ID: <xmqqr14l87jp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S240935AbiEWBZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 May 2022 21:25:40 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 580A038782
+        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:39 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id h13so6077727pfq.5
+        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hwJRpqFyGUl5kw71uc25NoZp+zgxndYNfkHDeQZIHuA=;
+        b=IGuUjC8xIPqNkJfg0x5hKAyAYwsdHSsMWEY6ld7SMnf2Jv0Y8G6RJDw1XzgRGji1zy
+         Pt2xhXTdcYas07ZrHt9PlvTfiH3WQTiyOGoHEcUOrduxSwuPm9sYcTNFwRiWVMj2dKM8
+         Zu/ByobqboqN4YgOsLrqyTmw982eATdQlQizoS3GaA1GjuEBt9x20n4PgdXWQHGPFVmo
+         W0d2MVex1zIYqH9v2MhIa/anegJDgZ1kwmW5bsGMWxZG3vPFOcIVeMrUpYjL4gU74GPE
+         KDQVW2b7dBXa5qlcPZX9Xgujx1WvB4o8tyjPz5PU3ZemezbMsZ8GayqIi7US8hEJB3OQ
+         jW5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hwJRpqFyGUl5kw71uc25NoZp+zgxndYNfkHDeQZIHuA=;
+        b=hblp05e4nNSuhqr4PQBQGmNqrV27yRRF74v1XTMMIk0Zd8ILl0rhzuq7mzRy0Mmb40
+         PF+V0CqD/evuarotnXqnUhShx94y4NgkDP2rli24OEVOBVzpOj1n8RtDff/dV5o4PVr7
+         XB27F74PONpjAyWsYFoRK62JcE5u6uero51+4YvHPy/jffonZ+d/wDApHGk21DVZuD4f
+         RmgYmFQ6yLeLT0TfqTOPcF3pZXzKMU7gnIIeljUtQJaO+tPEdjBs5N7d0mWFdRPZ5pK3
+         zA9BulCtve6bUeLHWK6uOXYpX23Nk3cj24k+7nKsnBCZsm1hNPffy+URGlxYoSNCjoTl
+         ZKkg==
+X-Gm-Message-State: AOAM531UYn9F5ES4XwykjcHVUxKeVQyBvJhK6TXAy2A1ALS3Bb+YloQv
+        868DDOwnigmFx+e8cXoCbyQ=
+X-Google-Smtp-Source: ABdhPJzgp2pHqBhxxl+uE4ExTQtgUe8sGk5q2RJkKbui0LyiIgvpUrCFJhd4xNYc8Rv+Yu0Cj9bg9Q==
+X-Received: by 2002:a62:15ca:0:b0:518:132c:22a6 with SMTP id 193-20020a6215ca000000b00518132c22a6mr21534833pfv.28.1653269138887;
+        Sun, 22 May 2022 18:25:38 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id n26-20020aa7985a000000b00518142f8c37sm6027566pfq.171.2022.05.22.18.25.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 May 2022 18:25:38 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v3 1/9] Makefile: sort "po/git.pot" by file location
+Date:   Mon, 23 May 2022 09:25:23 +0800
+Message-Id: <20220523012531.4505-2-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
+In-Reply-To: <20220519081548.3380-1-worldhello.net@gmail.com>
+References: <20220519081548.3380-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E3797CE0-DA27-11EC-997A-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-> One manual method is to look at the history (blame) for the respective
-> man pages to see when the man page was initially committed, and when
-> appropriate options were added.
->
-> Maybe use one of the hosting providers GUI if that is your choice e.g.
-> https://github.com/git/git/blame/master/Documentation/git-gc.txt
+We will feed xgettext with more C souce files and in different order in
+subsequent commit. To generate a stable "po/git.pot" regardless of the
+number and order of input source files, we add a new option
+"--sort-by-file" to xgettext program.
 
-I got an impression that blame/log is an overkill for the request,
-which asks for "what tagged version?", to which the answer would be
-to compare the manual pages for each release (or scan the release
-notes), perhaps?
+With this update, the newly generated "po/git.pot" will has the same
+entries while in a different order.
 
+With the help of a custom diff driver as shown below,
+
+    git config --global diff.gettext-fmt.textconv \
+        "msgcat --no-location --sort-by-file"
+
+and appending a new entry "*.po diff=gettext-fmt" to git attributes,
+we can see that there are no substantial changes in "po/git.pot".
+
+We won't checkin the newly generated "po/git.pot", because we will
+remove it from tree in a later commit.
+
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index f8bccfab5e..83e968e2a4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2706,6 +2706,7 @@ XGETTEXT_FLAGS = \
+ 	--force-po \
+ 	--add-comments=TRANSLATORS: \
+ 	--msgid-bugs-address="Git Mailing List <git@vger.kernel.org>" \
++	--sort-by-file \
+ 	--from-code=UTF-8
+ XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
+ 	--keyword=_ --keyword=N_ --keyword="Q_:1,2"
+-- 
+2.36.0.1.g15c4090757
 
