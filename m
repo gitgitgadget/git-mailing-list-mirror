@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54C2BC433F5
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9264AC433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232540AbiEWUOH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 16:14:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52376 "EHLO
+        id S231248AbiEWUOK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 16:14:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232763AbiEWUNs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 16:13:48 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43B1FA7770
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:07 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id p5-20020a1c2905000000b003970dd5404dso245508wmp.0
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:07 -0700 (PDT)
+        with ESMTP id S232714AbiEWUNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 16:13:46 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0C8A006E
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:04 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id h205-20020a1c21d6000000b003972dda143eso222269wmh.3
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fniMHDevgS+sy0VW9Irk7dpFWcke4CVDxXVC7jIjUKc=;
-        b=JIMQoG4KQ8T0OyekcbBhawzgJbQKIZ6bJ+MqFoGGqD2AUQVzQwD++yzrK8bsNmOnrI
-         5/OcY2WIv5ipD5VPyZy2kmQBL4X/11czqWXWO/MrMrZMLFS2/TTd9vR1uGVsMa37yOed
-         6aqhx6t7H0SYOar2XASk1Jgwxc0cmD+/WEPERrwDixZGGmUxr01ygFjTtxtcnAKjlhWk
-         JVZIqvho+d84PXtHH6Jw1B9Zr/q9w/C+NzaROYFnMIDmiK/tOP7yLJUveXi5teZu5lyC
-         XubOJ8+lRVTcQDBNuBRozVG5r2O9mdY0Oj7k07Bk5iyGcYQ2ETrOGd0UybG0/LEGcPxe
-         u9jQ==
+        bh=gagmQdnkju4spnOwYIMQ8SdkJsvAj1+kX3+WK6gVByM=;
+        b=XDx+60e6xnXxx21OKauy86Kw++5a3D8EIcA495fNDvGmEhVL1bZLjLC9aFn8Y8gkxS
+         HsHFdSfqggc9wxTW7fd/IuLxRuA1zybVgUUoPWzKPJXrZKNWNGLP7h9NouHbiWk+Sz8U
+         6RU0Cn/rw9kast0JcnxLl02jwRevQB9QSTPT7eTbUzCmurG8lrDKdTohZflvacQepdl0
+         EM8o+1SkMldheJDSXkdigcMeGMd5mn8BP9yS7TbcE/k5mCowTRiuPxgSwdY0dAWxULUT
+         uwNtEK9cZuajkUvXkIQ57M47yU3vxq3fuiVzd4vWeWfLXRjkmdSvVLZB9PiEU/h4riXE
+         Ojig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fniMHDevgS+sy0VW9Irk7dpFWcke4CVDxXVC7jIjUKc=;
-        b=dn6W3ZTv1WdaBLdaR4PyUoT/TMCOHYHhT5ZJk9AY3N5QRmzE8XzLc0ndfLnQr0n/Ze
-         YYIH4QOx3JbVfZ9Q6K6wLJkXZkTbC2feCOijeoiaGJ4343XNlGdMsqOsCxid+aAk+X7O
-         0N0yIoZ7o4TKtM55vpnLSvnOclWSen0/p60nWgJJFhXYsS3gog8aj6tZt9M5MDm4gI31
-         bLm2VuiF8zoHHC70FgdazoxNWK7dM3xQzRzZxWtlOMEcpd/OiqKIB/xKzCm/eBVU7IXa
-         OwaOfNq5zqwf5xFr1ipd3n7wtzHy9tU7pp/1c1W9AgueTsj+Lt2W1FSHu044pEA6fFS7
-         1Asw==
-X-Gm-Message-State: AOAM5332fPjeCvJRGaND8eYvg+dccbMZzf3AlZBaPlfEVByi5PrPY+OS
-        H7EYZNBCvYf2OCEvUEsd8Q1TW98FfXo=
-X-Google-Smtp-Source: ABdhPJwkI574mpiJdZgxYAtW9DLdiL817wwlvCpLskkk7BaBZDuLI6OkixhDMabnGoTHrF0f5XqPcQ==
-X-Received: by 2002:a05:600c:3641:b0:38e:4b2f:330 with SMTP id y1-20020a05600c364100b0038e4b2f0330mr639230wmq.180.1653336785918;
-        Mon, 23 May 2022 13:13:05 -0700 (PDT)
+        bh=gagmQdnkju4spnOwYIMQ8SdkJsvAj1+kX3+WK6gVByM=;
+        b=nZn0YjZ0AWLISXNzZpLPzzozaYwaxuAdMBg7t4hMYTFSP8FvfHcOzwgL7kIAhdUiXK
+         T+L97gTlHLWACGHeduB11F5QY3wPdsaSyDt5ONeLWtWL6/C+VGemT9NCnCtRQQ92Xl5d
+         vA0/sNPrzr9/q0wsbdhHmJG61Tnyeq93UB/PbwQWEb9plRYVZJiAT/9hytLEzvUF+13z
+         xwgXSsd+aET87LrYSg8/txtn1w30gZAMoGe7t5zm7xWLr2QMKNASGAtd+bnMMUowdc+S
+         YNLqqGSJtmtQmD6jC9JPgum+l4LhJh1pSBQ4hmDxazoxcD2EC9dHWe9DaMp3KR5AkIQe
+         kqLA==
+X-Gm-Message-State: AOAM532nAf+j85jarkPUDgh2aUSfz+JM6iV1bw6c3EF2+h+bEIn+ne/5
+        NMWE6TcDPYql+ZcDmcgZfMJy8nxgqNw=
+X-Google-Smtp-Source: ABdhPJy5dej6nIu8PiKMC9+uk58tGecuWfhByHGfm8eAJdetHvNWxP5J8HvAx5GrhAd2Z4S2FpNveA==
+X-Received: by 2002:a05:600c:19c8:b0:394:7cb0:717b with SMTP id u8-20020a05600c19c800b003947cb0717bmr652754wmq.136.1653336782364;
+        Mon, 23 May 2022 13:13:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l8-20020adfc788000000b0020fcc655e4asm6982702wrg.5.2022.05.23.13.13.05
+        by smtp.gmail.com with ESMTPSA id w24-20020a7bc758000000b0039747cf8354sm169203wmk.39.2022.05.23.13.13.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 13:13:05 -0700 (PDT)
-Message-Id: <427dec412a559bffab789126ff8fe34eaef346fd.1653336765.git.gitgitgadget@gmail.com>
+        Mon, 23 May 2022 13:13:01 -0700 (PDT)
+Message-Id: <9a12cc78b5d16a05d4ed76cdb2a1f634ed32ef8a.1653336765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
         <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 20:12:28 +0000
-Subject: [PATCH v7 13/30] fsmonitor--daemon: cd out of worktree root
+Date:   Mon, 23 May 2022 20:12:25 +0000
+Subject: [PATCH v7 10/30] fsmonitor-settings: NTFS and FAT32 on MacOS are
+ incompatible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,143 +75,105 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach the fsmonitor--daemon to CD outside of the worktree
-before starting up.
+On MacOS mark repos on NTFS or FAT32 volumes as incompatible.
 
-The common Git startup mechanism causes the CWD of the daemon process
-to be in the root of the worktree.  On Windows, this causes the daemon
-process to hold a locked handle on the CWD and prevents other
-processes from moving or deleting the worktree while the daemon is
-running.
+The builtin FSMonitor used Unix domain sockets on MacOS for IPC
+with clients.  These sockets are kept in the .git directory.
+Unix sockets are not supported by NTFS and FAT32, so the daemon
+cannot start up.
 
-CD to HOME before entering main event loops.
+Test for this during our compatibility checking so that client
+commands do not keep trying to start the daemon.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c         | 32 +++++++++++++++++++++++++++--
- compat/fsmonitor/fsm-listen-win32.c | 22 ++++++++++++++------
- fsmonitor--daemon.h                 |  1 +
- 3 files changed, 47 insertions(+), 8 deletions(-)
+ compat/fsmonitor/fsm-settings-darwin.c | 20 +++++++++++++++++---
+ fsmonitor-settings.c                   |  6 ++++++
+ fsmonitor-settings.h                   |  1 +
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 66b78a0353f..db297649daf 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1181,11 +1181,11 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 	 * before we need it.
- 	 */
- 	if (ipc_server_run_async(&state->ipc_server_data,
--				 fsmonitor_ipc__get_path(), &ipc_opts,
-+				 state->path_ipc.buf, &ipc_opts,
- 				 handle_client, state))
- 		return error_errno(
- 			_("could not start IPC thread pool on '%s'"),
--			fsmonitor_ipc__get_path());
-+			state->path_ipc.buf);
- 
- 	/*
- 	 * Start the fsmonitor listener thread to collect filesystem
-@@ -1220,6 +1220,7 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- static int fsmonitor_run_daemon(void)
- {
- 	struct fsmonitor_daemon_state state;
-+	const char *home;
- 	int err;
- 
- 	memset(&state, 0, sizeof(state));
-@@ -1289,6 +1290,15 @@ static int fsmonitor_run_daemon(void)
- 
- 	strbuf_addch(&state.path_cookie_prefix, '/');
- 
-+	/*
-+	 * We create a named-pipe or unix domain socket inside of the
-+	 * ".git" directory.  (Well, on Windows, we base our named
-+	 * pipe in the NPFS on the absolute path of the git
-+	 * directory.)
-+	 */
-+	strbuf_init(&state.path_ipc, 0);
-+	strbuf_addstr(&state.path_ipc, absolute_path(fsmonitor_ipc__get_path()));
-+
- 	/*
- 	 * Confirm that we can create platform-specific resources for the
- 	 * filesystem listener before we bother starting all the threads.
-@@ -1298,6 +1308,23 @@ static int fsmonitor_run_daemon(void)
- 		goto done;
- 	}
- 
-+	/*
-+	 * CD out of the worktree root directory.
-+	 *
-+	 * The common Git startup mechanism causes our CWD to be the
-+	 * root of the worktree.  On Windows, this causes our process
-+	 * to hold a locked handle on the CWD.  This prevents the
-+	 * worktree from being moved or deleted while the daemon is
-+	 * running.
-+	 *
-+	 * We assume that our FS and IPC listener threads have either
-+	 * opened all of the handles that they need or will do
-+	 * everything using absolute paths.
-+	 */
-+	home = getenv("HOME");
-+	if (home && *home && chdir(home))
-+		die_errno(_("could not cd home '%s'"), home);
-+
- 	err = fsmonitor_run_daemon_1(&state);
- 
- done:
-@@ -1310,6 +1337,7 @@ done:
- 	strbuf_release(&state.path_worktree_watch);
- 	strbuf_release(&state.path_gitdir_watch);
- 	strbuf_release(&state.path_cookie_prefix);
-+	strbuf_release(&state.path_ipc);
- 
- 	return err;
- }
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index 0a86aea3f7e..7f48306df53 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -424,12 +424,22 @@ static int recv_rdcw_watch(struct one_watch *watch)
- 	}
- 
- 	/*
--	 * NEEDSWORK: If an external <gitdir> is deleted, the above
--	 * returns an error.  I'm not sure that there's anything that
--	 * we can do here other than failing -- the <worktree>/.git
--	 * link file would be broken anyway.  We might try to check
--	 * for that and return a better error message, but I'm not
--	 * sure it is worth it.
-+	 * GetOverlappedResult() fails if the watched directory is
-+	 * deleted while we were waiting for an overlapped IO to
-+	 * complete.  The documentation did not list specific errors,
-+	 * but I observed ERROR_ACCESS_DENIED (0x05) errors during
-+	 * testing.
-+	 *
-+	 * Note that we only get notificaiton events for events
-+	 * *within* the directory, not *on* the directory itself.
-+	 * (These might be properies of the parent directory, for
-+	 * example).
-+	 *
-+	 * NEEDSWORK: We might try to check for the deleted directory
-+	 * case and return a better error message, but I'm not sure it
-+	 * is worth it.
-+	 *
-+	 * Shutdown if we get any error.
- 	 */
- 
- 	error(_("GetOverlappedResult failed on '%s' [GLE %ld]"),
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index bd09fffc176..223c2131b58 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -54,6 +54,7 @@ struct fsmonitor_daemon_state {
- 	struct fsmonitor_daemon_backend_data *backend_data;
- 
- 	struct ipc_server_data *ipc_server_data;
-+	struct strbuf path_ipc;
- };
+diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
+index fdd762bf79d..efc732c0f31 100644
+--- a/compat/fsmonitor/fsm-settings-darwin.c
++++ b/compat/fsmonitor/fsm-settings-darwin.c
+@@ -7,7 +7,7 @@
+ #include <sys/mount.h>
  
  /*
+- * Remote working directories are problematic for FSMonitor.
++ * [1] Remote working directories are problematic for FSMonitor.
+  *
+  * The underlying file system on the server machine and/or the remote
+  * mount type (NFS, SAMBA, etc.) dictates whether notification events
+@@ -40,8 +40,16 @@
+  *
+  * So (for now at least), mark remote working directories as
+  * incompatible.
++ *
++ *
++ * [2] FAT32 and NTFS working directories are problematic too.
++ *
++ * The builtin FSMonitor uses a Unix domain socket in the .git
++ * directory for IPC.  These Windows drive formats do not support
++ * Unix domain sockets, so mark them as incompatible for the daemon.
++ *
+  */
+-static enum fsmonitor_reason check_remote(struct repository *r)
++static enum fsmonitor_reason check_volume(struct repository *r)
+ {
+ 	struct statfs fs;
+ 
+@@ -60,6 +68,12 @@ static enum fsmonitor_reason check_remote(struct repository *r)
+ 	if (!(fs.f_flags & MNT_LOCAL))
+ 		return FSMONITOR_REASON_REMOTE;
+ 
++	if (!strcmp(fs.f_fstypename, "msdos")) /* aka FAT32 */
++		return FSMONITOR_REASON_NOSOCKETS;
++
++	if (!strcmp(fs.f_fstypename, "ntfs"))
++		return FSMONITOR_REASON_NOSOCKETS;
++
+ 	return FSMONITOR_REASON_OK;
+ }
+ 
+@@ -67,7 +81,7 @@ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ {
+ 	enum fsmonitor_reason reason;
+ 
+-	reason = check_remote(r);
++	reason = check_volume(r);
+ 	if (reason != FSMONITOR_REASON_OK)
+ 		return reason;
+ 
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index d2fb0141f8e..658cb79da01 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -225,6 +225,12 @@ char *fsm_settings__get_incompatible_msg(const struct repository *r,
+ 			    _("virtual repository '%s' is incompatible with fsmonitor"),
+ 			    r->worktree);
+ 		goto done;
++
++	case FSMONITOR_REASON_NOSOCKETS:
++		strbuf_addf(&msg,
++			    _("repository '%s' is incompatible with fsmonitor due to lack of Unix sockets"),
++			    r->worktree);
++		goto done;
+ 	}
+ 
+ 	BUG("Unhandled case in fsm_settings__get_incompatible_msg: '%d'",
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+index afd1b3874ac..d9c2605197f 100644
+--- a/fsmonitor-settings.h
++++ b/fsmonitor-settings.h
+@@ -20,6 +20,7 @@ enum fsmonitor_reason {
+ 	FSMONITOR_REASON_ERROR, /* FS error probing for compatibility */
+ 	FSMONITOR_REASON_REMOTE,
+ 	FSMONITOR_REASON_VFS4GIT, /* VFS for Git virtualization */
++	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
+ };
+ 
+ void fsm_settings__set_ipc(struct repository *r);
 -- 
 gitgitgadget
 
