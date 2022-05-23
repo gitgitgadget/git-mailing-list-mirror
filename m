@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9264AC433F5
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D27B5C433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:14:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231248AbiEWUOK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 16:14:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52346 "EHLO
+        id S232739AbiEWUOq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 16:14:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232714AbiEWUNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 16:13:46 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0C8A006E
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:04 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id h205-20020a1c21d6000000b003972dda143eso222269wmh.3
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:04 -0700 (PDT)
+        with ESMTP id S233024AbiEWUNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 16:13:50 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5A9FABF43
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:14 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id r23so22935717wrr.2
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gagmQdnkju4spnOwYIMQ8SdkJsvAj1+kX3+WK6gVByM=;
-        b=XDx+60e6xnXxx21OKauy86Kw++5a3D8EIcA495fNDvGmEhVL1bZLjLC9aFn8Y8gkxS
-         HsHFdSfqggc9wxTW7fd/IuLxRuA1zybVgUUoPWzKPJXrZKNWNGLP7h9NouHbiWk+Sz8U
-         6RU0Cn/rw9kast0JcnxLl02jwRevQB9QSTPT7eTbUzCmurG8lrDKdTohZflvacQepdl0
-         EM8o+1SkMldheJDSXkdigcMeGMd5mn8BP9yS7TbcE/k5mCowTRiuPxgSwdY0dAWxULUT
-         uwNtEK9cZuajkUvXkIQ57M47yU3vxq3fuiVzd4vWeWfLXRjkmdSvVLZB9PiEU/h4riXE
-         Ojig==
+        bh=pg+pIfJCewJfl3Uu7fv/1CMTNHr8lfgpM21Z9LQ/57U=;
+        b=e0qE35wZ+TT1DzjRpkVZVkAURgpzkVOPyI2+1FIb3WhAmAKfzJT5tqFAowgGRdC3KP
+         vRN0jAuGYRXeYc+Sus62Mj4IdRNSOHbkSaEuuJZQzLKa3lSHzsP+x0GJLIs7qGWp4V7T
+         QBt1izPEQUQPkO+qMKltPhsPyLar57GiyAbDjJUmvm8b6hnKns3slNpuCu7x+rp6lQEa
+         hnHEYHg07mXPCpFwjgxPUFcag82ju8WMj+b5sAH1wMJB2/EBEJK7dH6CCE2Y4LHm71FA
+         Z+ca4g56enAp51d1H0E524fX5CLvLjxVNTQu5yMeSFKCTGN6kJDSNbTl9Zsc967bbiXP
+         54kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gagmQdnkju4spnOwYIMQ8SdkJsvAj1+kX3+WK6gVByM=;
-        b=nZn0YjZ0AWLISXNzZpLPzzozaYwaxuAdMBg7t4hMYTFSP8FvfHcOzwgL7kIAhdUiXK
-         T+L97gTlHLWACGHeduB11F5QY3wPdsaSyDt5ONeLWtWL6/C+VGemT9NCnCtRQQ92Xl5d
-         vA0/sNPrzr9/q0wsbdhHmJG61Tnyeq93UB/PbwQWEb9plRYVZJiAT/9hytLEzvUF+13z
-         xwgXSsd+aET87LrYSg8/txtn1w30gZAMoGe7t5zm7xWLr2QMKNASGAtd+bnMMUowdc+S
-         YNLqqGSJtmtQmD6jC9JPgum+l4LhJh1pSBQ4hmDxazoxcD2EC9dHWe9DaMp3KR5AkIQe
-         kqLA==
-X-Gm-Message-State: AOAM532nAf+j85jarkPUDgh2aUSfz+JM6iV1bw6c3EF2+h+bEIn+ne/5
-        NMWE6TcDPYql+ZcDmcgZfMJy8nxgqNw=
-X-Google-Smtp-Source: ABdhPJy5dej6nIu8PiKMC9+uk58tGecuWfhByHGfm8eAJdetHvNWxP5J8HvAx5GrhAd2Z4S2FpNveA==
-X-Received: by 2002:a05:600c:19c8:b0:394:7cb0:717b with SMTP id u8-20020a05600c19c800b003947cb0717bmr652754wmq.136.1653336782364;
-        Mon, 23 May 2022 13:13:02 -0700 (PDT)
+        bh=pg+pIfJCewJfl3Uu7fv/1CMTNHr8lfgpM21Z9LQ/57U=;
+        b=rmrnfKKmPxH9MPNQIreJubmaoVbS19psQq20VwTy6S89/uWpGOTUXJ33jBtLkWef4n
+         ZA7uQqWJRE0UuyJv7gRh5euVa3kaYPNtuW4uGArNR5qPPLtC+fWdCj/+meylnXsbUtT1
+         t38Y1jcavV6drJj3F0ssWnalfXgtBqLIu1WJEN7gZxTSsrfPau/sJUk0yWGflf4YVA7W
+         IpTT0xS5tVA5x+i9cyGfHr4rorkbXJTTSeYLs3h429lWj6MpzWEyEnw5IXx9JezqBmAk
+         6BHiiZ6R1ELL86b37BPk0Vi07dxlBnLEv6qvl8C2N1LXZXTU5MSMMCRell3MMf8EiEW+
+         wKzw==
+X-Gm-Message-State: AOAM5333Ku7ccVfIQ2onAKYXpIdcqm57szb0ii6MxJNxdwo/99Hbo95J
+        lHRPt2PItOWK3QNSQ+yadR4oVU1Ulug=
+X-Google-Smtp-Source: ABdhPJxvu3A0KgY49Go4AHdjbMjY8aB7Hq98J9rZzZEYlwShZ578W158NrZ9D1GxAJoYjovxCWZwww==
+X-Received: by 2002:adf:f152:0:b0:20d:740:beba with SMTP id y18-20020adff152000000b0020d0740bebamr20579385wro.512.1653336791638;
+        Mon, 23 May 2022 13:13:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w24-20020a7bc758000000b0039747cf8354sm169203wmk.39.2022.05.23.13.13.01
+        by smtp.gmail.com with ESMTPSA id az39-20020a05600c602700b003942a244f54sm134297wmb.45.2022.05.23.13.13.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 13:13:01 -0700 (PDT)
-Message-Id: <9a12cc78b5d16a05d4ed76cdb2a1f634ed32ef8a.1653336765.git.gitgitgadget@gmail.com>
+        Mon, 23 May 2022 13:13:11 -0700 (PDT)
+Message-Id: <7cf1be5f8e2c644a5bce9eb4484de2f6c82af359.1653336765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
         <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 20:12:25 +0000
-Subject: [PATCH v7 10/30] fsmonitor-settings: NTFS and FAT32 on MacOS are
- incompatible
+Date:   Mon, 23 May 2022 20:12:33 +0000
+Subject: [PATCH v7 18/30] fsm-health-win32: force shutdown daemon if worktree
+ root moves
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,105 +75,207 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-On MacOS mark repos on NTFS or FAT32 volumes as incompatible.
+Force shutdown fsmonitor daemon if the worktree root directory
+is moved, renamed, or deleted.
 
-The builtin FSMonitor used Unix domain sockets on MacOS for IPC
-with clients.  These sockets are kept in the .git directory.
-Unix sockets are not supported by NTFS and FAT32, so the daemon
-cannot start up.
+Use Windows low-level GetFileInformationByHandle() to get and
+compare the Windows system unique ID for the directory with a
+cached version when we started up.  This lets us detect the
+case where someone renames the directory that we are watching
+and then creates a new directory with the original pathname.
 
-Test for this during our compatibility checking so that client
-commands do not keep trying to start the daemon.
+This is important because we are listening to a named pipe for
+requests and they are stored in the Named Pipe File System (NPFS)
+which a kernel-resident pseudo filesystem not associated with
+the actual NTFS directory.
+
+For example, if the daemon was watching "~/foo/", it would have
+a directory-watch handle on that directory and a named-pipe
+handle for "//./pipe/...foo".  Moving the directory to "~/bar/"
+does not invalidate the directory handle.  (So the daemon would
+actually be watching "~/bar" but listening on "//./pipe/...foo".
+If the user then does "git init ~/foo" and causes another daemon
+to start, the first daemon will still have ownership of the pipe
+and the second daemon instance will fail to start.  "git status"
+clients in "~/foo" will ask "//./pipe/...foo" about changes and
+the first daemon instance will tell them about "~/bar".
+
+This commit causes the first daemon to shutdown if the system unique
+ID for "~/foo" changes (changes from what it was when the daemon
+started).  Shutdown occurs after a periodic poll.  After the
+first daemon exits and releases the lock on the named pipe,
+subsequent Git commands may cause another daemon to be started
+on "~/foo".  Similarly, a subsequent Git command may cause another
+daemon to be started on "~/bar".
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/fsmonitor/fsm-settings-darwin.c | 20 +++++++++++++++++---
- fsmonitor-settings.c                   |  6 ++++++
- fsmonitor-settings.h                   |  1 +
- 3 files changed, 24 insertions(+), 3 deletions(-)
+ compat/fsmonitor/fsm-health-win32.c | 143 ++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
 
-diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
-index fdd762bf79d..efc732c0f31 100644
---- a/compat/fsmonitor/fsm-settings-darwin.c
-+++ b/compat/fsmonitor/fsm-settings-darwin.c
-@@ -7,7 +7,7 @@
- #include <sys/mount.h>
- 
- /*
-- * Remote working directories are problematic for FSMonitor.
-+ * [1] Remote working directories are problematic for FSMonitor.
-  *
-  * The underlying file system on the server machine and/or the remote
-  * mount type (NFS, SAMBA, etc.) dictates whether notification events
-@@ -40,8 +40,16 @@
-  *
-  * So (for now at least), mark remote working directories as
-  * incompatible.
-+ *
-+ *
-+ * [2] FAT32 and NTFS working directories are problematic too.
-+ *
-+ * The builtin FSMonitor uses a Unix domain socket in the .git
-+ * directory for IPC.  These Windows drive formats do not support
-+ * Unix domain sockets, so mark them as incompatible for the daemon.
-+ *
-  */
--static enum fsmonitor_reason check_remote(struct repository *r)
-+static enum fsmonitor_reason check_volume(struct repository *r)
- {
- 	struct statfs fs;
- 
-@@ -60,6 +68,12 @@ static enum fsmonitor_reason check_remote(struct repository *r)
- 	if (!(fs.f_flags & MNT_LOCAL))
- 		return FSMONITOR_REASON_REMOTE;
- 
-+	if (!strcmp(fs.f_fstypename, "msdos")) /* aka FAT32 */
-+		return FSMONITOR_REASON_NOSOCKETS;
+diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
+index 24fc612bf02..2ea08c1d4e8 100644
+--- a/compat/fsmonitor/fsm-health-win32.c
++++ b/compat/fsmonitor/fsm-health-win32.c
+@@ -29,8 +29,150 @@ struct fsm_health_data
+ 	HANDLE hHandles[1]; /* the array does not own these handles */
+ #define HEALTH_SHUTDOWN 0
+ 	int nr_handles; /* number of active event handles */
 +
-+	if (!strcmp(fs.f_fstypename, "ntfs"))
-+		return FSMONITOR_REASON_NOSOCKETS;
-+
- 	return FSMONITOR_REASON_OK;
- }
- 
-@@ -67,7 +81,7 @@ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
- {
- 	enum fsmonitor_reason reason;
- 
--	reason = check_remote(r);
-+	reason = check_volume(r);
- 	if (reason != FSMONITOR_REASON_OK)
- 		return reason;
- 
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index d2fb0141f8e..658cb79da01 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -225,6 +225,12 @@ char *fsm_settings__get_incompatible_msg(const struct repository *r,
- 			    _("virtual repository '%s' is incompatible with fsmonitor"),
- 			    r->worktree);
- 		goto done;
-+
-+	case FSMONITOR_REASON_NOSOCKETS:
-+		strbuf_addf(&msg,
-+			    _("repository '%s' is incompatible with fsmonitor due to lack of Unix sockets"),
-+			    r->worktree);
-+		goto done;
- 	}
- 
- 	BUG("Unhandled case in fsm_settings__get_incompatible_msg: '%d'",
-diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index afd1b3874ac..d9c2605197f 100644
---- a/fsmonitor-settings.h
-+++ b/fsmonitor-settings.h
-@@ -20,6 +20,7 @@ enum fsmonitor_reason {
- 	FSMONITOR_REASON_ERROR, /* FS error probing for compatibility */
- 	FSMONITOR_REASON_REMOTE,
- 	FSMONITOR_REASON_VFS4GIT, /* VFS for Git virtualization */
-+	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
++	struct wt_moved
++	{
++		wchar_t wpath[MAX_PATH + 1];
++		BY_HANDLE_FILE_INFORMATION bhfi;
++	} wt_moved;
  };
  
- void fsm_settings__set_ipc(struct repository *r);
++/*
++ * Lookup the system unique ID for the path.  This is as close as
++ * we get to an inode number, but this also contains volume info,
++ * so it is a little stronger.
++ */
++static int lookup_bhfi(wchar_t *wpath,
++		       BY_HANDLE_FILE_INFORMATION *bhfi)
++{
++	DWORD desired_access = FILE_LIST_DIRECTORY;
++	DWORD share_mode =
++		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
++	HANDLE hDir;
++
++	hDir = CreateFileW(wpath, desired_access, share_mode, NULL,
++			   OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
++	if (hDir == INVALID_HANDLE_VALUE) {
++		error(_("[GLE %ld] health thread could not open '%ls'"),
++		      GetLastError(), wpath);
++		return -1;
++	}
++
++	if (!GetFileInformationByHandle(hDir, bhfi)) {
++		error(_("[GLE %ld] health thread getting BHFI for '%ls'"),
++		      GetLastError(), wpath);
++		CloseHandle(hDir);
++		return -1;
++	}
++
++	CloseHandle(hDir);
++	return 0;
++}
++
++/*
++ * Compare the relevant fields from two system unique IDs.
++ * We use this to see if two different handles to the same
++ * path actually refer to the same *instance* of the file
++ * or directory.
++ */
++static int bhfi_eq(const BY_HANDLE_FILE_INFORMATION *bhfi_1,
++		   const BY_HANDLE_FILE_INFORMATION *bhfi_2)
++{
++	return (bhfi_1->dwVolumeSerialNumber == bhfi_2->dwVolumeSerialNumber &&
++		bhfi_1->nFileIndexHigh == bhfi_2->nFileIndexHigh &&
++		bhfi_1->nFileIndexLow == bhfi_2->nFileIndexLow);
++}
++
++/*
++ * Shutdown if the original worktree root directory been deleted,
++ * moved, or renamed?
++ *
++ * Since the main thread did a "chdir(getenv($HOME))" and our CWD
++ * is not in the worktree root directory and because the listener
++ * thread added FILE_SHARE_DELETE to the watch handle, it is possible
++ * for the root directory to be moved or deleted while we are still
++ * watching it.  We want to detect that here and force a shutdown.
++ *
++ * Granted, a delete MAY cause some operations to fail, such as
++ * GetOverlappedResult(), but it is not guaranteed.  And because
++ * ReadDirectoryChangesW() only reports on changes *WITHIN* the
++ * directory, not changes *ON* the directory, our watch will not
++ * receive a delete event for it.
++ *
++ * A move/rename of the worktree root will also not generate an event.
++ * And since the listener thread already has an open handle, it may
++ * continue to receive events for events within the directory.
++ * However, the pathname of the named-pipe was constructed using the
++ * original location of the worktree root.  (Remember named-pipes are
++ * stored in the NPFS and not in the actual file system.)  Clients
++ * trying to talk to the worktree after the move/rename will not
++ * reach our daemon process, since we're still listening on the
++ * pipe with original path.
++ *
++ * Furthermore, if the user does something like:
++ *
++ *   $ mv repo repo.old
++ *   $ git init repo
++ *
++ * A new daemon cannot be started in the new instance of "repo"
++ * because the named-pipe is still being used by the daemon on
++ * the original instance.
++ *
++ * So, detect move/rename/delete and shutdown.  This should also
++ * handle unsafe drive removal.
++ *
++ * We use the file system unique ID to distinguish the original
++ * directory instance from a new instance and force a shutdown
++ * if the unique ID changes.
++ *
++ * Since a worktree move/rename/delete/unmount doesn't happen
++ * that often (and we can't get an immediate event anyway), we
++ * use a timeout and periodically poll it.
++ */
++static int has_worktree_moved(struct fsmonitor_daemon_state *state,
++			      enum interval_fn_ctx ctx)
++{
++	struct fsm_health_data *data = state->health_data;
++	BY_HANDLE_FILE_INFORMATION bhfi;
++	int r;
++
++	switch (ctx) {
++	case CTX_TERM:
++		return 0;
++
++	case CTX_INIT:
++		if (xutftowcs_path(data->wt_moved.wpath,
++				   state->path_worktree_watch.buf) < 0) {
++			error(_("could not convert to wide characters: '%s'"),
++			      state->path_worktree_watch.buf);
++			return -1;
++		}
++
++		/*
++		 * On the first call we lookup the unique sequence ID for
++		 * the worktree root directory.
++		 */
++		return lookup_bhfi(data->wt_moved.wpath, &data->wt_moved.bhfi);
++
++	case CTX_TIMER:
++		r = lookup_bhfi(data->wt_moved.wpath, &bhfi);
++		if (r)
++			return r;
++		if (!bhfi_eq(&data->wt_moved.bhfi, &bhfi)) {
++			error(_("BHFI changed '%ls'"), data->wt_moved.wpath);
++			return -1;
++		}
++		return 0;
++
++	default:
++		die(_("unhandled case in 'has_worktree_moved': %d"),
++		    (int)ctx);
++	}
++
++	return 0;
++}
++
++
+ int fsm_health__ctor(struct fsmonitor_daemon_state *state)
+ {
+ 	struct fsm_health_data *data;
+@@ -64,6 +206,7 @@ void fsm_health__dtor(struct fsmonitor_daemon_state *state)
+  * A table of the polling functions.
+  */
+ static interval_fn *table[] = {
++	has_worktree_moved,
+ 	NULL, /* must be last */
+ };
+ 
 -- 
 gitgitgadget
 
