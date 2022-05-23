@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EFC2C433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 15:22:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B37A2C433EF
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 15:22:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237856AbiEWPWA (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S237852AbiEWPWA (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 23 May 2022 11:22:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52272 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237828AbiEWPVo (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237816AbiEWPVo (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 May 2022 11:21:44 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A560328739
-        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:42 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id gg20so14381911pjb.1
-        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:42 -0700 (PDT)
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A28928710
+        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:41 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id t11-20020a17090a6a0b00b001df6f318a8bso17812860pjj.4
+        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=p1MkEcOJYE0qwAbRsjrySvpgtKBR9qGhYIv/1dHrJ1w=;
-        b=UD9xj/7XUxM7VVLUpmFXd7jLQw6KgkXX+qfCt/NHT7R51salAt7gxS/2DnCT6LSVX4
-         ShWAjjvO0V5H+gLANDxMA5t437XgPfoQafVbPlr4OIsckbNjF0UxQ60zI4sYDljPN5Lr
-         fR17Re744PiWoLE1UK+BkwmJ2HArBA9fQHLyqqW/wM6zBfO59inoZ20YlvXoS0oiiPo2
-         pMFWUF6B9mJmfXi+ykStBaZCgga43DQFClCSTEh1rPgituUOysh7Tb4wlhjnKiiorqcW
-         p215hwvtvNkXSm4r4LH0DSJky6wAWbVGLkS6d7r/R0wNEy9X4QmUYWFaqsQIBqCQhh+x
-         IP3Q==
+        bh=J0qzDY/fFQkCzjUyNuDutWggWeDB/lHzSbnGDz1GYrM=;
+        b=oFm39Tso/4xZqqit1KWaDtkb1F/3gQIPTMr1HguLzh/PYm1fWoMegbY+/JARpKMTw1
+         AqIWRFG7MEn/1EmWZtN/GEkVtejj1hDbeLI12KpvZtMaImCMvuVGOZDsaQGceDvF6wDH
+         Ja40wD/9gvAGLhb6T+7pPPDk3LOZt7OBDXZaSOR94+Exg+qQCkjkR5n2uMQpg86wE1IM
+         ze3OYa9xAXinxI+wuukEFoJ/Rr8ihzAga19n3GJjhbqU5/bcEGD6eT7t3VQX1FKIF0Mc
+         t/qxHmUli46qZE3DkWh8FVp2/V4orL6Dglcy6LKGVP2xDIUVqaUgVoXGs9LSle4wnDJS
+         jXZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=p1MkEcOJYE0qwAbRsjrySvpgtKBR9qGhYIv/1dHrJ1w=;
-        b=ic6H+aQ4MhyKI9nfctJ06/Sv8dNc7mwJr8k9K5fwklf8R0+0dAJSNJHVz8xwSUDTUP
-         tkQBEgk1aYS94VyW0eNpHbLnlYTUjs9LLEx1ZaAG0RXDf0Nh8JOmmHvp0LTgpBA4r3X4
-         Whl8gnvY4VepMgMmhDzVQs9p8wpczzoOSaeObyqyRtipxpZpgr3mF0G2IX7noK4zE3GL
-         Ee7o3HrLsjKH+GN4z4xK0NXL5j/B6cuaq2fyM6P2WgjKifO5rb8EoY69lm6xMwBe2bXA
-         8G783nKNkoe+qozd4iJIFqPGNzQwtbzLkrZV0NxWHYe22R7QS/Updeb6K4FqfIwRUyB9
-         LixA==
-X-Gm-Message-State: AOAM5334pdRkk7VdiFpRyjJEuUziXrX9DQyVH7pTFGio510A07tIjqyI
-        8XGWKqPdBebIfOWEhHK3Vj4=
-X-Google-Smtp-Source: ABdhPJzVbj+z2gKuevifvBtV0yhNUVee/J/sPA41Izr2lFlT3uy4LwAjwvBlA8x1/jMhavrWSAkZpA==
-X-Received: by 2002:a17:90b:33c8:b0:1df:aaf7:5822 with SMTP id lk8-20020a17090b33c800b001dfaaf75822mr12176290pjb.9.1653319302150;
-        Mon, 23 May 2022 08:21:42 -0700 (PDT)
+        bh=J0qzDY/fFQkCzjUyNuDutWggWeDB/lHzSbnGDz1GYrM=;
+        b=MuptRK0gQWswjM5r0zJcC6iA6BbmxoDnGhWkcZ+Xsa9NQthzogdoLdazXShtdZ989p
+         kQMBoaIqyuUdBWUrpS0Q4DuYSoOuPJU+hyJCvKB/JOXC0dv/nS335opfrSnxAWfo8u6w
+         0rN9rzTO2ziQyZXgdZhHeR4o9p+JRv3bExG0DwsBXTT6reQ3+GNR1sSD0x9h0jM89fU2
+         SQhlr2O3BrzOlZJnVKNp2fdceSFPJmw9T7Qki+2EdtHgKkrlVfCH8pu9lljHko3PDXW1
+         ekdEIwO2/L/q1hpvdwoBVdWnYQxQg7KEC+yD34zOK3cbUhrjbE1K2nmLRs8L0S4UfuFO
+         a/Wg==
+X-Gm-Message-State: AOAM533PolUwFflVjIMZIxuUourQxJ4YosCWayeN+F4mtw2TIxi5eAEt
+        pLVnjvq7HXsrH7Es+YRQphM=
+X-Google-Smtp-Source: ABdhPJxWfOh33nKQwKHi80sbGpMIJiksCJXCjGUeOUlIKM0vO16O5m2tGrHiyL6v86J2sEDLtsPjPg==
+X-Received: by 2002:a17:902:e484:b0:161:6657:dc5b with SMTP id i4-20020a170902e48400b001616657dc5bmr23636703ple.2.1653319300668;
+        Mon, 23 May 2022 08:21:40 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id y13-20020a1709027c8d00b0015e8d4eb2cfsm5280287pll.281.2022.05.23.08.21.40
+        by smtp.gmail.com with ESMTPSA id y13-20020a1709027c8d00b0015e8d4eb2cfsm5280287pll.281.2022.05.23.08.21.39
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 May 2022 08:21:41 -0700 (PDT)
+        Mon, 23 May 2022 08:21:40 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -70,9 +70,9 @@ Cc:     Alexander Shopov <ash@kambanaria.org>,
         Yi-Jyun Pan <pan93412@gmail.com>,
         Jiang Xin <worldhello.net@gmail.com>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v4 4/9] i18n CI: stop allowing non-ASCII source messages in po/git.pot
-Date:   Mon, 23 May 2022 23:21:23 +0800
-Message-Id: <20220523152128.26380-5-worldhello.net@gmail.com>
+Subject: [PATCH v4 3/9] Makefile: have "make pot" not "reset --hard"
+Date:   Mon, 23 May 2022 23:21:22 +0800
+Message-Id: <20220523152128.26380-4-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <20220523012531.4505-1-worldhello.net@gmail.com>
 References: <20220523012531.4505-1-worldhello.net@gmail.com>
@@ -85,97 +85,254 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-In the preceding commit we moved away from using xgettext(1) to both
-generate the po/git.pot, and to merge the incrementally generated
-po/git.pot+ file as we sourced translations from C, shell and Perl.
+Before commit fc0fd5b23b (Makefile: help gettext tools to cope with our
+custom PRItime format, 2017-07-20), we'd consider source files as-is
+with gettext, but because we need to understand PRItime in the same way
+that gettext itself understands PRIuMAX, we'd first check if we had a
+clean checkout, then munge all of the processed files in-place with
+"sed", generate "po/git.pot", and then finally "reset --hard" to undo
+our changes.
 
-Doing it this way, which dates back to my initial
-implementation[1][2][3] was conflating two things: With xgettext(1)
-the --from-code both controls what encoding is specified in the
-po/git.pot's header, and what encoding we allow in source messages.
+By generating "pot" snippets in ".build/pot/po" for each source file
+and rewriting certain source files with PRItime macros to temporary
+files in ".build/pot/po", we can avoid running "make pot" by altering
+files in place and doing a "reset --hard" afterwards.
 
-We don't ever want to allow non-ASCII in *source messages*, and doing
-so has hid e.g. a buggy message introduced in
-a6226fd772b (submodule--helper: convert the bulk of cmd_add() to C,
-2021-08-10) from us, we'd warn about it before, but only when running
-"make pot", but the operation would still succeed. Now we'll error out
-on it when running "make pot".
+This speed of "make pot" is slower than before on an initial run,
+because we run "xgettext" many times (once per source file), but it
+can be boosted by parallelization. It is *much* faster for incremental
+runs, and will allow us to implement related targets in subsequent
+commits.
 
-Since the preceding Makefile changes made this easy: let's add a "make
-check-pot" target with the same prerequisites as the "po/git.pot"
-target, but without changing the file "po/git.pot". Running it as part
-of the "static-analysis" CI target will ensure that we catch any such
-issues in the future. E.g.:
+When the "pot" target was originally added in cd5513a7168 (i18n:
+Makefile: "pot" target to extract messages marked for translation,
+2011-02-22) it behaved like a "normal" target. I.e. we'd skip the
+re-generation of the po/git.pot if nothing had to be done.
 
-    $ make check-pot
-        XGETTEXT .build/pot/po/builtin/submodule--helper.c.po
-    xgettext: Non-ASCII string at builtin/submodule--helper.c:3381.
-              Please specify the source encoding through --from-code.
-    make: *** [.build/pot/po/builtin/submodule--helper.c.po] Error 1
+Then after po/git.pot was checked in in dce37b66fb0 (l10n: initial
+git.pot for 1.7.10 upcoming release, 2012-02-13) the target was broken
+until 1f31963e921 (i18n: treat "make pot" as an explicitly-invoked
+target, 2014-08-22) when it was made to depend on "FORCE". I.e. the
+Makefile's dependency resolution inherently can't handle incremental
+building when the target file may be updated by git (or something else
+external to "make"). But this case no longer applies, so FORCE is no
+longer needed.
 
-1. cd5513a7168 (i18n: Makefile: "pot" target to extract messages
-   marked for translation, 2011-02-22)
-2. adc3b2b2767 (Makefile: add xgettext target for *.sh files,
-   2011-05-14)
-3. 5e9637c6297 (i18n: add infrastructure for translating Git with
-   gettext, 2011-11-18)
+That out of the way, the main logic change here is getting rid of the
+"reset --hard":
+
+We'll generate intermediate ".build/pot/po/%.po" files from "%", which
+is handy to see at a glance what strings (if any) in a given file are
+marked for translation:
+
+	$ make .build/pot/po/pretty.c.po
+	[...]
+	$ cat .build/pot/po/pretty.c.po
+	#: pretty.c:1051
+	msgid "unable to parse --pretty format"
+	msgstr ""
+	$
+
+For these C source files which contain the PRItime macros, we will
+create temporary munged "*.c" files in a tree in ".build/pot/po"
+corresponding to our source tree, and have "xgettext" consider those.
+The rule needs to be careful to "(cd .build/pot/po && ...)", because
+otherwise the comments in the po/git.pot file wouldn't refer to the
+correct source locations (they'd be prefixed with ".build/pot/po").
+These temporary munged "*.c” files will be removed immediately after
+the corresponding po files are generated, because some development tools
+cannot ignore the duplicate source files in the ".build" directory
+according to the ".gitignore" file, and that may cause trouble.
+
+The output of the generated po/git.pot file is changed in one minor
+way: Because we're using msgcat(1) instead of xgettext(1) to
+concatenate the output we'll now disambiguate where "TRANSLATORS"
+comments come from, in cases where a message is the same in N files,
+and either only one has a "TRANSLATORS" comment, or they're
+different. E.g. for the "Your edited hunk[...]" message we'll now
+apply this change (comment content elided):
+
+	+#. #-#-#-#-#  add-patch.c.po  #-#-#-#-#
+	 #. TRANSLATORS: do not translate [y/n]
+	[...]
+	+#. #-#-#-#-#  git-add--interactive.perl.po  #-#-#-#-#
+	 #. TRANSLATORS: do not translate [y/n]
+	[...]
+	 #: add-patch.c:1253 git-add--interactive.perl:1244
+	 msgid ""
+	 "Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
+	 msgstr ""
+
+There are six such changes, and they all make the context more
+understandable, as msgcat(1) is better at handling these edge cases
+than xgettext(1)'s previously used "--join-existing" flag.
+
+But filenames in the above disambiguation lines of extracted-comments
+have an extra ".po" extension compared to the filenames at the file
+locations. While we could rename the intermediate ".build/pot/po/%.po"
+files without the ".po" extension to use more intuitive filenames in
+the disambiguation lines of extracted-comments, but that will confuse
+developer tools with lots of invalid C or other source files in
+".build/pot/po" directory.
+
+The addition of "--omit-header" option for xgettext makes the "pot"
+snippets in ".build/pot/po/*.po" smaller. But as we'll see in a
+subsequent commit this header behavior has been hiding an
+encoding-related bug from us, so let's carry it forward instead of
+re-generating it with xgettext(1).
+
+The "po/git.pot" file should have a header entry, because a proper
+header entry will increase the speed of creating a new po file using
+msginit and set a proper "POT-Creation-Date:" field in the header
+entry of a "po/XX.po" file. We use xgettext to generate a separate
+header file at ".build/pot/git.header" from "/dev/null", and use this
+header to assemble "po/git.pot".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- Makefile                    | 6 ++++--
- builtin/submodule--helper.c | 2 +-
- ci/run-static-analysis.sh   | 2 ++
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ .gitignore |  1 +
+ Makefile   | 80 ++++++++++++++++++++++++++++++++++++++++--------------
+ 2 files changed, 60 insertions(+), 21 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index e81de1063a..a452215764 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -200,6 +200,7 @@
+ *.[aos]
+ *.o.json
+ *.py[co]
++.build/
+ .depend/
+ *.gcda
+ *.gcno
 diff --git a/Makefile b/Makefile
-index 1962999c18..70d5f41c3f 100644
+index 46914dcd80..1962999c18 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2708,8 +2708,7 @@ XGETTEXT_FLAGS = \
+@@ -569,6 +569,7 @@ INSTALL = install
+ TCL_PATH = tclsh
+ TCLTK_PATH = wish
+ XGETTEXT = xgettext
++MSGCAT = msgcat
+ MSGFMT = msgfmt
+ CURL_CONFIG = curl-config
+ GCOV = gcov
+@@ -2706,6 +2707,7 @@ XGETTEXT_FLAGS = \
+ 	--force-po \
  	--add-comments=TRANSLATORS: \
  	--msgid-bugs-address="Git Mailing List <git@vger.kernel.org>" \
- 	--package-name=Git \
--	--sort-by-file \
--	--from-code=UTF-8
-+	--sort-by-file
++	--package-name=Git \
+ 	--sort-by-file \
+ 	--from-code=UTF-8
  XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
- 	--keyword=_ --keyword=N_ --keyword="Q_:1,2"
- XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
-@@ -2795,6 +2794,9 @@ po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO) FORCE
+@@ -2714,6 +2716,7 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
+ 	--keyword=gettextln --keyword=eval_gettextln
+ XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
+ 	--keyword=__ --keyword=N__ --keyword="__n:1,2"
++MSGCAT_FLAGS = --sort-by-file
+ LOCALIZED_C = $(FOUND_C_SOURCES) $(FOUND_H_SOURCES) $(SCALAR_SOURCES) \
+ 	      $(GENERATED_H)
+ LOCALIZED_SH = $(SCRIPT_SH)
+@@ -2726,34 +2729,68 @@ LOCALIZED_SH += t/t0200/test.sh
+ LOCALIZED_PERL += t/t0200/test.perl
+ endif
+ 
+-## Note that this is meant to be run only by the localization coordinator
+-## under a very controlled condition, i.e. (1) it is to be run in a
+-## Git repository (not a tarball extract), (2) any local modifications
+-## will be lost.
++## We generate intermediate .build/pot/po/%.po files containing a
++## extract of the translations we find in each file in the source
++## tree. We will assemble them using msgcat to create the final
++## "po/git.pot" file.
++LOCALIZED_ALL_GEN_PO =
++
++LOCALIZED_C_GEN_PO = $(LOCALIZED_C:%=.build/pot/po/%.po)
++LOCALIZED_ALL_GEN_PO += $(LOCALIZED_C_GEN_PO)
++
++LOCALIZED_SH_GEN_PO = $(LOCALIZED_SH:%=.build/pot/po/%.po)
++LOCALIZED_ALL_GEN_PO += $(LOCALIZED_SH_GEN_PO)
++
++LOCALIZED_PERL_GEN_PO = $(LOCALIZED_PERL:%=.build/pot/po/%.po)
++LOCALIZED_ALL_GEN_PO += $(LOCALIZED_PERL_GEN_PO)
++
+ ## Gettext tools cannot work with our own custom PRItime type, so
+ ## we replace PRItime with PRIuMAX.  We need to update this to
+ ## PRIdMAX if we switch to a signed type later.
++$(LOCALIZED_C_GEN_PO): .build/pot/po/%.po: %
++	$(call mkdir_p_parent_template)
++	$(QUIET_XGETTEXT) \
++	    if grep -q PRItime $<; then \
++		(\
++			sed -e 's|PRItime|PRIuMAX|g' <$< \
++				>.build/pot/po/$< && \
++			cd .build/pot/po && \
++			$(XGETTEXT) --omit-header \
++				-o $(@:.build/pot/po/%=%) \
++				$(XGETTEXT_FLAGS_C) $< && \
++			rm $<; \
++		); \
++	    else \
++		$(XGETTEXT) --omit-header \
++			-o $@ $(XGETTEXT_FLAGS_C) $<; \
++	    fi
+ 
+-po/git.pot: $(GENERATED_H) FORCE
+-	# All modifications will be reverted at the end, so we do not
+-	# want to have any local change.
+-	git diff --quiet HEAD && git diff --quiet --cached
++$(LOCALIZED_SH_GEN_PO): .build/pot/po/%.po: %
++	$(call mkdir_p_parent_template)
++	$(QUIET_XGETTEXT)$(XGETTEXT) --omit-header \
++		-o$@ $(XGETTEXT_FLAGS_SH) $<
+ 
+-	@for s in $(LOCALIZED_C) $(LOCALIZED_SH) $(LOCALIZED_PERL); \
+-	do \
+-		sed -e 's|PRItime|PRIuMAX|g' <"$$s" >"$$s+" && \
+-		cat "$$s+" >"$$s" && rm "$$s+"; \
+-	done
++$(LOCALIZED_PERL_GEN_PO): .build/pot/po/%.po: %
++	$(call mkdir_p_parent_template)
++	$(QUIET_XGETTEXT)$(XGETTEXT) --omit-header \
++		-o$@ $(XGETTEXT_FLAGS_PERL) $<
++
++define gen_pot_header
++$(XGETTEXT) $(XGETTEXT_FLAGS_C) \
++	-o - /dev/null | \
++sed -e 's|charset=CHARSET|charset=UTF-8|' \
++    -e 's|\(Last-Translator: \)FULL NAME <.*>|\1make by the Makefile|' \
++    -e 's|\(Language-Team: \)LANGUAGE <.*>|\1Git Mailing List <git@vger.kernel.org>|' \
++    >$@ && \
++echo '"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\\n"' >>$@
++endef
+ 
+-	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ $(XGETTEXT_FLAGS_C) $(LOCALIZED_C)
+-	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ --join-existing $(XGETTEXT_FLAGS_SH) \
+-		$(LOCALIZED_SH)
+-	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ --join-existing $(XGETTEXT_FLAGS_PERL) \
+-		$(LOCALIZED_PERL)
++.build/pot/git.header: $(LOCALIZED_ALL_GEN_PO)
++	$(call mkdir_p_parent_template)
++	$(QUIET_GEN)$(gen_pot_header)
+ 
+-	# Reverting the munged source, leaving only the updated $@
+-	git reset --hard
+-	mv $@+ $@
++po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO) FORCE
++	$(QUIET_GEN)$(MSGCAT) $(MSGCAT_FLAGS) $(filter-out FORCE,$^) >$@
+ 
  .PHONY: pot
  pot: po/git.pot
+@@ -3292,6 +3329,7 @@ cocciclean:
+ 	$(RM) contrib/coccinelle/*.cocci.patch*
  
-+.PHONY: check-pot
-+check-pot: $(LOCALIZED_ALL_GEN_PO)
-+
- ifdef NO_GETTEXT
- POFILES :=
- MOFILES :=
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 2c87ef9364..b97f02eed5 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3378,7 +3378,7 @@ static int module_add(int argc, const char **argv, const char *prefix)
- 			   N_("reference repository")),
- 		OPT_BOOL(0, "dissociate", &dissociate, N_("borrow the objects from reference repositories")),
- 		OPT_STRING(0, "name", &add_data.sm_name, N_("name"),
--			   N_("sets the submodule’s name to the given string "
-+			   N_("sets the submodule's name to the given string "
- 			      "instead of defaulting to its path")),
- 		OPT_INTEGER(0, "depth", &add_data.depth, N_("depth for shallow clones")),
- 		OPT_END()
-diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-index 65bcebda41..0d51e5ce0e 100755
---- a/ci/run-static-analysis.sh
-+++ b/ci/run-static-analysis.sh
-@@ -29,4 +29,6 @@ fi
- make hdr-check ||
- exit 1
- 
-+make check-pot
-+
- save_good_tree
+ clean: profile-clean coverage-clean cocciclean
++	$(RM) -r .build
+ 	$(RM) *.res
+ 	$(RM) $(OBJECTS)
+ 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
 -- 
 2.36.0.1.g15c4090757
 
