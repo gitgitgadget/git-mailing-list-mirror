@@ -2,57 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DD85C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72D11C433EF
 	for <git@archiver.kernel.org>; Mon, 23 May 2022 01:28:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233294AbiEWB1z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 May 2022 21:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59300 "EHLO
+        id S233319AbiEWB1y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 May 2022 21:27:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351841AbiEWBZu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 May 2022 21:25:50 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBC2137A09
-        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:49 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id a38so9524789pgl.9
-        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:49 -0700 (PDT)
+        with ESMTP id S1351844AbiEWBZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 May 2022 21:25:51 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F8138782
+        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:50 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id y199so12342531pfb.9
+        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vol77vTJFq6067b+UeYULbASi+cNQuUEHJ62emi0vLU=;
-        b=PzqqVuPfIGMrywOe9hx8fGu02q8t+V9fPK44pShaCCzyWSESNWsEYvZ+kq2aergrkQ
-         QRfiDgXK+eCYRIusgw928B93OLW1EW9F4xf245abKq3E5yTVsxhGE9RtunZAFl6nXyZ4
-         LDUQRQtaY+5qXCK4hPrFPIjOf/Do/PR94efms0EZxkLQEu7pUa4Vea2LzbifK3QkRtq8
-         5dIVWb/sU5m5dlKsPECuHUpl6y2uYbKgP5ziDyxE3kRtCKLvm3U++dGHJRP/UrLt37BC
-         J33jzWgpQ6h10r0RETS+n/qLF+aoQ2QzRWsEonKssFBUCcX0Wn4fdL5ScDBZd3pBFBBH
-         4QCQ==
+        bh=VFvm0Cs3bg+dqkeMz7Dij/QpnIKBVVAi5WT/SaeElO0=;
+        b=Mb6y8CMCTvwq+n7Y+o64koLqKu6bCr0mSKUiArhmqL7ACVagSHbCCOa3mVeB/V2R15
+         felenmrhNXwRN+C1FT+kzdlzCpvtgrJqBBH0lqIASs71sTGD6y3bd8g+mD0bkx0iQZh5
+         Tf69Ou63uPQnpAZSZ1Cbf9wycE1rzF2ab69a91ujr5GnZvl0t3PfPd9OkymV9wPOgaXW
+         AAlNKdeJh7oVKjf7/n2PDfZjTTYgDWWLY9uRfbvQyD8siThtpM5/b297I34oS387Zded
+         /gsxj/OvZIsaiIlFgISzXW4u5MKmN2TCviTlfId/pdnOYWUpWfKBiOuuCsyO+z62sLsu
+         rPKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vol77vTJFq6067b+UeYULbASi+cNQuUEHJ62emi0vLU=;
-        b=nBGiod19yR0uqv1sXk9eQrJMtegCtDnvo1K7p5tjY3Vtun3w2wtWG8OvkYY8z2X+kV
-         GfqZgxDhkFOT+pRVc2QyBKTe0Q+GOqSCq20HfpP/pSwbcLiDH+uogNmyIKHHV7RvDrU0
-         LvQAxRppwBHZzU4XrR9qUVT7A9stm4nJeaB4ZnIzFcr9i8H0ZIa8z3Ax9Dm9fUtVFHFw
-         0MhTOwfj7H1PAAHyd+8zohu8EWJqBvL6wynTmtczCKJyYqfGwqhek/iiUK0sJWJ284iG
-         ob7ze8PS9MbH9zNX9zkh9IIfpvZDA++PGl1e39EH9u0P19fsBtp9Lqc4rv7mnoSKt77k
-         f8dg==
-X-Gm-Message-State: AOAM532+XKtHn8shTEfybwAN3G2x1B3UDM9UAZUZneu/Nu9kiuYHzkgF
-        qaiY69i6S867TP44c68ooNo=
-X-Google-Smtp-Source: ABdhPJwdkfIu/crwKunODaEpKM90UacKA9b+9kiScO5kGdVpjTE1OtYT6XMyyTMSxoZglyu5Sz7gNQ==
-X-Received: by 2002:a63:f70d:0:b0:3f6:a9d:281 with SMTP id x13-20020a63f70d000000b003f60a9d0281mr18055242pgh.287.1653269148901;
-        Sun, 22 May 2022 18:25:48 -0700 (PDT)
+        bh=VFvm0Cs3bg+dqkeMz7Dij/QpnIKBVVAi5WT/SaeElO0=;
+        b=49UA/z+Fb6NinyhlqPA7nAfEYWOflGjBdEitk0I5U3S5+43Ue4YKXNTysyMmJ7Nvjg
+         1dNYGsfyx502NAI3yZHS6C8rG5Ylve3McyHra7g3QdxKBRcL3ANSJwpYK6PGdlHjbij9
+         xQMtsYpGHy1DTzhZd8wza/ZvgQMU5XVnC25Cvc82t3130aeAbRwHVIlJ+nYtu/QuIWVj
+         Mv2GtkOIQifkN5+b/Q2rwfnpXS225TJ+Az0wm8W/L7z9YmzYvkl4dVdIT48QTZMliM9I
+         wSrktK/zxLoy98kVz0Sds6wTFyLJC2bB1IMDGXjoj9W5jQ+67TFGGHh4wE7HpGb20wJ9
+         kW5A==
+X-Gm-Message-State: AOAM531OVdyZydKveYsYu+kxLbTxmOxnRjtBrPTt/f6GAew11dN6op0B
+        vx18U2QMYH7H1YWxWmWPV4s=
+X-Google-Smtp-Source: ABdhPJxqaJd77085SSQy73M1Uz2gJkiBhlVX/zgFwwCreqk/l25XRYEqHlx6v0Jo/doCh83wevyr0A==
+X-Received: by 2002:a63:8342:0:b0:3fa:7b7e:8a4 with SMTP id h63-20020a638342000000b003fa7b7e08a4mr348652pge.254.1653269150113;
+        Sun, 22 May 2022 18:25:50 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id n26-20020aa7985a000000b00518142f8c37sm6027566pfq.171.2022.05.22.18.25.47
+        by smtp.gmail.com with ESMTPSA id n26-20020aa7985a000000b00518142f8c37sm6027566pfq.171.2022.05.22.18.25.49
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 May 2022 18:25:48 -0700 (PDT)
+        Sun, 22 May 2022 18:25:49 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Git List <git@vger.kernel.org>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Alexander Shopov <ash@kambanaria.org>,
+Cc:     Alexander Shopov <ash@kambanaria.org>,
         Jordi Mas <jmas@softcatala.org>,
         =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
         Jimmy Angelakos <vyruss@hellug.gr>,
@@ -69,94 +68,132 @@ Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
         <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
         Yi-Jyun Pan <pan93412@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v3 7/9] Makefile: add "po-update" rule to update po/XX.po
-Date:   Mon, 23 May 2022 09:25:29 +0800
-Message-Id: <20220523012531.4505-8-worldhello.net@gmail.com>
+        Jiang Xin <worldhello.net@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v3 8/9] Makefile: add "po-init" rule to initialize po/XX.po
+Date:   Mon, 23 May 2022 09:25:30 +0800
+Message-Id: <20220523012531.4505-9-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <20220519081548.3380-1-worldhello.net@gmail.com>
 References: <20220519081548.3380-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-Since there is no longer a "po/git.pot" file in tree, a l10n team leader
-has to run several commands to update their "po/XX.po" file:
+The core translation is the minimum set of work that must be done for a
+new language translation.
 
-    $ make pot
-    $ msgmerge --add-location --backup=off -U po/XX.po po/git.pot
+There are over 5000 messages in the template message file "po/git.pot"
+that need to be translated. It is not a piece of cake for such a huge
+workload. So we used to define a small set of messages called "core
+translation" that a new l10n contributor must complete before sending
+pull request to the l10n coordinator.
 
-To make this process easier, add a new rule so that l10n team leaders
-can update their "po/XX.po" with one command. E.g.:
+By pulling in some parts of the git-po-helper[^1] logic, we add rule
+"core-pot" to create this core translation message "po/git-core.pot":
 
-    $ make po-update PO_FILE=po/zh_CN.po
+    make core-pot
 
+To help new l10n contributors to initialized their "po/XX.pot" from
+"po/git-core.pot", we also add new rules "po-init":
+
+    make po-init PO_FILE=po/XX.po
+
+[^1]: https://github.com/git-l10n/git-po-helper/
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Makefile   | 18 ++++++++++++++++++
- shared.mak |  1 +
- 2 files changed, 19 insertions(+)
+ Makefile      | 41 +++++++++++++++++++++++++++++++++++++++++
+ po/.gitignore |  1 +
+ shared.mak    |  1 +
+ 3 files changed, 43 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 3122672263..09cbde4c2a 100644
+index 09cbde4c2a..d3eae150de 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -571,6 +571,7 @@ TCLTK_PATH = wish
- XGETTEXT = xgettext
- MSGCAT = msgcat
- MSGFMT = msgfmt
-+MSGMERGE = msgmerge
- CURL_CONFIG = curl-config
- GCOV = gcov
- STRIP = strip
-@@ -2716,6 +2717,7 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
- XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
- 	--keyword=__ --keyword=N__ --keyword="__n:1,2"
- MSGCAT_FLAGS = --sort-by-file
-+MSGMERGE_FLAGS = --add-location --backup=off --update
- LOCALIZED_C = $(FOUND_C_SOURCES) $(FOUND_H_SOURCES) $(SCALAR_SOURCES) \
- 	      $(GENERATED_H)
- LOCALIZED_SH = $(SCRIPT_SH)
-@@ -2794,6 +2796,22 @@ po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO)
- .PHONY: pot
- pot: po/git.pot
- 
-+define check_po_file_envvar
-+	$(if $(PO_FILE), \
-+		$(if $(filter po/%.po,$(PO_FILE)), , \
-+			$(error PO_FILE should match pattern: "po/%.po")), \
-+		$(error PO_FILE is not defined))
-+endef
-+
-+.PHONY: po-update
-+po-update: po/git.pot
-+	$(check_po_file_envvar)
-+	@if test ! -e $(PO_FILE); then \
-+		echo >&2 "error: $(PO_FILE) does not exist"; \
-+		exit 1; \
-+	fi
-+	$(QUIET_MSGMERGE)$(MSGMERGE) $(MSGMERGE_FLAGS) $(PO_FILE) po/git.pot
-+
+@@ -2808,6 +2808,7 @@ po-update: po/git.pot
+ 	$(check_po_file_envvar)
+ 	@if test ! -e $(PO_FILE); then \
+ 		echo >&2 "error: $(PO_FILE) does not exist"; \
++		echo >&2 'To create an initial po file, use: "make po-init PO_FILE=po/XX.po"'; \
+ 		exit 1; \
+ 	fi
+ 	$(QUIET_MSGMERGE)$(MSGMERGE) $(MSGMERGE_FLAGS) $(PO_FILE) po/git.pot
+@@ -2815,6 +2816,46 @@ po-update: po/git.pot
  .PHONY: check-pot
  check-pot: $(LOCALIZED_ALL_GEN_PO)
  
++### TODO FIXME: Translating everything in these files is a bad
++### heuristic for "core", as we'll translate obscure error() messages
++### along with commonly seen i18n messages. A better heuristic would
++### be to e.g. use spatch to first remove error/die/warning
++### etc. messages.
++LOCALIZED_C_CORE =
++LOCALIZED_C_CORE += builtin/checkout.c
++LOCALIZED_C_CORE += builtin/clone.c
++LOCALIZED_C_CORE += builtin/index-pack.c
++LOCALIZED_C_CORE += builtin/push.c
++LOCALIZED_C_CORE += builtin/reset.c
++LOCALIZED_C_CORE += remote.c
++LOCALIZED_C_CORE += wt-status.c
++
++LOCALIZED_C_CORE_GEN_PO = $(LOCALIZED_C_CORE:%=.build/pot/po/%.po)
++
++.PHONY: core-pot
++core-pot: po/git-core.pot
++
++.build/pot/git-core.header: $(LOCALIZED_C_CORE_GEN_PO)
++	$(call mkdir_p_parent_template)
++	$(QUIET_GEN)$(gen_pot_header)
++
++po/git-core.pot: .build/pot/git-core.header $(LOCALIZED_C_CORE_GEN_PO)
++	$(QUIET_GEN)$(MSGCAT) $(MSGCAT_FLAGS) $^ >$@
++
++.PHONY: po-init
++po-init: po/git-core.pot
++	$(check_po_file_envvar)
++	@if test -e $(PO_FILE); then \
++		echo >&2 "error: $(PO_FILE) exists already"; \
++		exit 1; \
++	fi
++	$(QUIET_MSGINIT)msginit \
++		--input=$< \
++		--output=$(PO_FILE) \
++		--no-translator \
++		--locale=$(PO_FILE:po/%.po=%)
++
++## po/*.po files & their rules
+ ifdef NO_GETTEXT
+ POFILES :=
+ MOFILES :=
+diff --git a/po/.gitignore b/po/.gitignore
+index 37d1301b32..ff0e5176a6 100644
+--- a/po/.gitignore
++++ b/po/.gitignore
+@@ -1,2 +1,3 @@
+ /build
+ /git.pot
++/git-core.pot
 diff --git a/shared.mak b/shared.mak
-index 50d4596f0d..8cd170a7e7 100644
+index 8cd170a7e7..4330192e9c 100644
 --- a/shared.mak
 +++ b/shared.mak
-@@ -63,6 +63,7 @@ ifndef V
+@@ -62,6 +62,7 @@ ifndef V
+ 	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
  	QUIET_LNCP     = @echo '   ' LN/CP $@;
  	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
++	QUIET_MSGINIT  = @echo '   ' MSGINIT $@;
  	QUIET_MSGFMT   = @echo '   ' MSGFMT $@;
-+	QUIET_MSGMERGE = @echo '   ' MSGMERGE $@;
+ 	QUIET_MSGMERGE = @echo '   ' MSGMERGE $@;
  	QUIET_GCOV     = @echo '   ' GCOV $@;
- 	QUIET_SP       = @echo '   ' SP $<;
- 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
 -- 
 2.36.0.1.g15c4090757
 
