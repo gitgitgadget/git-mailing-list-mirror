@@ -2,155 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B01CBC433F5
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 01:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EADF2C433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 06:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233369AbiEWB1z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 May 2022 21:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59284 "EHLO
+        id S231148AbiEWGMy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 02:12:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351807AbiEWBZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 May 2022 21:25:48 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC03C38782
-        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:47 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id h13so6077727pfq.5
-        for <git@vger.kernel.org>; Sun, 22 May 2022 18:25:47 -0700 (PDT)
+        with ESMTP id S230435AbiEWGMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 02:12:47 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B343CA74
+        for <git@vger.kernel.org>; Sun, 22 May 2022 23:12:43 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id h5so18610952wrb.11
+        for <git@vger.kernel.org>; Sun, 22 May 2022 23:12:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=52FnXr+dJ7zVwbxWSujnMzbLmi9uays4ouHWeuOf8nQ=;
-        b=gQcDGa3sKI+/Ms41LARrJAFqApnVinMMZ7kR862iUEacQH/oLVtOlornYf7Oyj7G1/
-         2Efh1c7y6Ixi21WB1Cil3Gi8P8xud/E+/yJSaZ3GHdvKpgBmncB4f0LKpuMIGyAcr/6R
-         S2lu0DhHeKxfXugCX8SWhGZF0nyg8bVSlWV6uwYU6c6jV6WMSWJCsfZG+YWZgwM/a8IT
-         Uzl+IDqS32vB9U+AFioXBRJCnEaZLgW7INoCZgumYq9np/T8VN8nn/CnNjCuq3fmGtw/
-         G1jkbl6VfGuvUE69ubYvwi0pJ7SzgNS0iWAgb+DkvWyE7Aj9epn0vNOynZufdKIR91Hd
-         5tjA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=3UcEGHIPtAv+QKsS1Iv/Pid2bq4nRvTzdf15Lhpz05Q=;
+        b=YfRhpBnILA5JNzXamVrJ1p924vmwnkgMljP+o5yAebBu5ZnSOw41Vw6qwmAxj31tmD
+         C234Ky3OJPfAwo7R2muql0PUKRM6+ec+V6YhbI20ePCR1IBcQ0b8SFrOvUGBfKEezhl9
+         nFqoUEX7PAa22+T72V06KYaqVJdiuSfG7IRjFYKHOGO7KJlPci/oZ6DuB2BMpGdJVuAp
+         YzL//aIYer9w0cb8VctHYNXQYNA+fscJSw4Xl56/shNuiXY7cMfF16i0OuBZIrqQ0VHJ
+         BIyOOcN15VrnDH/SJdw/rr9lM+h6OPFE6JDn2Yq4obfvermjgdWCygiMSgShfjN5oeMj
+         WAaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=52FnXr+dJ7zVwbxWSujnMzbLmi9uays4ouHWeuOf8nQ=;
-        b=D2QItoZl7N0rbq17lPblE7eE+7W6dzxPS4tfSJIQz89Blb3YK0jBayi6ro+g3qUMxr
-         jROy4L96cUdTpwROxmZCUwW/QkTEoQt+YK2QHqP+wgzEhuu5bk32Rqrnf8Olu33wdKEn
-         zIeOiaNg1+uP06hJULEOuOjm/Jj/sTXDvt4OUvJBDmE50HS4eWdxZ9eVcpBYk4E5peDw
-         zmDlG3ItYQKdA/D34kNciVuI4wXyyYgSNyvXZX2DKEK4dUNOFmStY7HR/Rksg+JAnlhV
-         SVVlH5O5pqIfoe4YAHHm9lrKHcHJhkPVi6D9gZBOA78/jcmccAwkuDVgFPcnMv4xBDZZ
-         mSZA==
-X-Gm-Message-State: AOAM5321svkeSx5S3cWoMUM2tcBD6MKCpotI06EvbO5iplhmcH2/GCQZ
-        3GbwxwwZ+JfZSz/HqzyUhk4=
-X-Google-Smtp-Source: ABdhPJzy88qUzmevSmrgPVutQAWNQZpYm2QeRG27yWb/kbAlnUrnNHjnsRrsHvqUC/ubTA9pv6MPKg==
-X-Received: by 2002:a63:4401:0:b0:3fa:df3:4201 with SMTP id r1-20020a634401000000b003fa0df34201mr6547640pga.65.1653269147695;
-        Sun, 22 May 2022 18:25:47 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id n26-20020aa7985a000000b00518142f8c37sm6027566pfq.171.2022.05.22.18.25.46
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 May 2022 18:25:47 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
-Cc:     Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 6/9] po/git.pot: don't check in result of "make pot"
-Date:   Mon, 23 May 2022 09:25:28 +0800
-Message-Id: <20220523012531.4505-7-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <20220519081548.3380-1-worldhello.net@gmail.com>
-References: <20220519081548.3380-1-worldhello.net@gmail.com>
-MIME-Version: 1.0
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=3UcEGHIPtAv+QKsS1Iv/Pid2bq4nRvTzdf15Lhpz05Q=;
+        b=lO3UeKIVc8hXJcaZPDHi7ah52RDzhvAPGEYqxkQeZ022y/Zj0To+YgcjPDkA8LCIgk
+         fXwzDux90wJ91rQowH4ueG04VdU1TsOJVxrauXJamrIcZ9gBy81XmFK90wEruVUbDG/B
+         +/0X4wrv8W/NggWIugVzWKP61NI4B3o7ag9J/kxCmsVmcV41BMY6Tav1jMg17Av/j0Vk
+         wlNYaO5Bfnz/+8GLPZz3ZvxRG2d921Oz+8KeHVLlH2LIg435v6EZ/4bbzFgpwf0mspPz
+         7XBoMIXPzR4tw23RDhI9gVKJpad6COsmOl4GVjptfF/A9xDTuJKxZTdtFYcgAsulLGNl
+         DXXg==
+X-Gm-Message-State: AOAM531H+qAw+XRv7YDr3jUsXFYzvdfSg0ziLmDF7OubI6XJA9rMfD2c
+        P2KMS5XBqIbir1IpaZspUL8a5M57rUA=
+X-Google-Smtp-Source: ABdhPJy+X7qwrX8xWe5SEtma6cVQ9dxUjDkNApKcqhaGrS5EkEUf+ESqxQzBW5BE4ZR05jUbI6923g==
+X-Received: by 2002:adf:fb0d:0:b0:20d:97e:17ce with SMTP id c13-20020adffb0d000000b0020d097e17cemr17971893wrr.585.1653286346819;
+        Sun, 22 May 2022 23:12:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d10-20020adfc80a000000b0020fded972c0sm2374384wrh.45.2022.05.22.23.12.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 May 2022 23:12:26 -0700 (PDT)
+Message-Id: <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1232.git.1652649537647.gitgitgadget@gmail.com>
+References: <pull.1232.git.1652649537647.gitgitgadget@gmail.com>
+From:   "Nadav Goldstein via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 23 May 2022 06:12:23 +0000
+Subject: [PATCH v2 0/2] stash clear: added safety flag for stash clear subcommand
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Nadav Goldstein <nadav.goldstein96@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+PLAN: Add a flag to git stash clear (-i|--interactive), which prompts the
+user to confirm he indeed wants to clear the stash, otherwise it will abort.
 
-Remove the "po/git.pot" file from being tracked, which started with
-dce37b66fb0 (l10n: initial git.pot for 1.7.10 upcoming release,
-2012-02-13).
+I found it useful as a frequent stash clear user which means my terminal
+always have it in recent commands, which could mean accidental erase of
+work. This flag ensures accidental fires won't clear hard work :)
 
-The reason the po/git.pot started being checked in was because the
-po/*.po files were changed a schema where we'd generate them from a
-known-good snapshot of po/git.pot, instead of each translator running
-"make pot" themselves.
+I also thought it would be better to do it opt in, to not change the way the
+command works in prod, only add to it.
 
-This makes sense, but we don't need to carry this file in-tree just to
-achieve that aim, and doing so has resulted in a significant amount of
-"diff churn" since this method of doing it was introduced:
+Changes since v1:
 
-    $ git log -p --oneline -- po/git.pot|wc -l
-    553743
+Removed temporarily the interactive flag from stash. introduced add-menu lib
+to the project, which is simply the extracted code that responsible for
+presenting the menu in the clean command, and made the clean command use it.
 
-We can instead let l10n contributors to generate "po/git.pot" in runtime
-to update their own "po/XX.po", and the l10n coordinator can check
-pull requests using CI pipeline.
+This change was made to allow stash to use interactive as well, with the
+same style as git clean.
 
-This reverts to the schema introduced initially in cd5513a7168 (i18n:
-Makefile: "pot" target to extract messages marked for translation,
-2011-02-22).
+Before I continue the development, I would like to know what the community
+think about this refactor.
 
-The actual "git rm" of po/git.pot was in preceding commit to make this
-change easier to review, and to preempt the mailing list from blocking
-it due to it being too large.
+Thanks!
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile      | 5 +++--
- po/.gitignore | 1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+Nadav Goldstein (2):
+  add-menu: added add-menu to lib objects
+  clean: refector to the interactive part of clean
 
-diff --git a/Makefile b/Makefile
-index 70d5f41c3f..3122672263 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2788,8 +2788,8 @@ endef
- 	$(call mkdir_p_parent_template)
- 	$(QUIET_GEN)$(gen_pot_header)
- 
--po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO) FORCE
--	$(QUIET_GEN)$(MSGCAT) $(MSGCAT_FLAGS) $(filter-out FORCE,$^) >$@
-+po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO)
-+	$(QUIET_GEN)$(MSGCAT) $(MSGCAT_FLAGS) $^ >$@
- 
- .PHONY: pot
- pot: po/git.pot
-@@ -3319,6 +3319,7 @@ dist-doc: git$X
- 
- distclean: clean
- 	$(RM) configure
-+	$(RM) po/git.pot
- 	$(RM) config.log config.status config.cache
- 	$(RM) config.mak.autogen config.mak.append
- 	$(RM) -r autom4te.cache
-diff --git a/po/.gitignore b/po/.gitignore
-index 796b96d1c4..37d1301b32 100644
---- a/po/.gitignore
-+++ b/po/.gitignore
-@@ -1 +1,2 @@
- /build
-+/git.pot
+ Makefile        |   1 +
+ add-menu.c      | 353 +++++++++++++++++++++++++++++++++++++++++
+ add-menu.h      |  55 +++++++
+ builtin/clean.c | 413 ++----------------------------------------------
+ 4 files changed, 425 insertions(+), 397 deletions(-)
+ create mode 100644 add-menu.c
+ create mode 100644 add-menu.h
+
+
+base-commit: e8005e4871f130c4e402ddca2032c111252f070a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1232%2Fnadav96%2Fclear-stash-prompt-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1232/nadav96/clear-stash-prompt-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1232
+
+Range-diff vs v1:
+
+ 1:  5396a67b0ff < -:  ----------- stash: added safety flag for stash clear subcommand
+ -:  ----------- > 1:  13bc75a2b05 add-menu: added add-menu to lib objects
+ -:  ----------- > 2:  7271a285d18 clean: refector to the interactive part of clean
+
 -- 
-2.36.0.1.g15c4090757
-
+gitgitgadget
