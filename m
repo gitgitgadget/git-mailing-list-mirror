@@ -2,802 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48C9FC433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 06:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87D1AC433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 07:28:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230432AbiEWGNU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 02:13:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47674 "EHLO
+        id S230398AbiEWH2S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 03:28:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231187AbiEWGM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 02:12:59 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9011034BA6
-        for <git@vger.kernel.org>; Sun, 22 May 2022 23:12:47 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id z17so1189690wmf.1
-        for <git@vger.kernel.org>; Sun, 22 May 2022 23:12:46 -0700 (PDT)
+        with ESMTP id S230462AbiEWH1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 03:27:44 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C160E4833B
+        for <git@vger.kernel.org>; Mon, 23 May 2022 00:25:06 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id m20so26770830ejj.10
+        for <git@vger.kernel.org>; Mon, 23 May 2022 00:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WVBkdKOFWx94AlqbZkiAsQSt7Fpy76h7KbPlHrxPgdU=;
-        b=Bg3/UXHEU+9FL9xHSoSFL/x1i6kpMMjuD5V5YFcs+Lie/p0uJFc6+bbiSH7wxHBXTx
-         ZmlEf1FeGcneDVMZNycuwS51p1u75Nx0sx9kwHv0EIrTI5ptSUl9/DjA+ltetMW9cI1+
-         mXMPf6uut/ZVeLsmMXd6Dx5OqnNcxpJ9uKoHZj7/sx7sLI3qaAVg2IToa8JdyEhj3Fb3
-         JP/4eU+2wuoO58/Y9eX1GH6b51G9Zxy5cqPDtuIt9UG45Ylm6BoMF1xe/GMlC+KxOGtd
-         DlNts6bzy5GbKNQQyXo4S20ZhwwZjcxw4EIaZca8Bwp/9/cVhNS3iFHuUD6USow86qdK
-         k3yQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=aq6d9PW4F+yhQPLs6Rk4jucIs1Gw+w+ObSYrX0xDXrg=;
+        b=jfuKxNA0255i+pcffXFfGRaPH4pT8Hzh+WVyeDzkUs81l1NNELvWh4qauNrmkueyku
+         q6FmXfs4tY/hIqjai7tRDEg6MsxvN/XJK7O2otMvvJvFxIWixlQp0xyNvUgUnGGUCtsi
+         SLQuYl2GEi5mf3k4x9ug7P9bWx3r5JP7EOQ69bSPdGFJY1ibZVlZ6uiR6NXeDvY9lNYT
+         8DPYHfqaZXf3flAbAwM5o8oDYYdt12/Qx6jOwgPDJS88HacpS6ewcHDW+KqwB90kAKG6
+         XijQjCTBk4sN+w2AIE7AmHqPTmKxsa6cII0BpQ+0QmeMTAnlHjC5Duunfu/QhHNEEkoY
+         fLBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WVBkdKOFWx94AlqbZkiAsQSt7Fpy76h7KbPlHrxPgdU=;
-        b=WHvp+R1j8tdcZE5as2RZfLJIbEu7Zi9UG/SIbT03cqtT0cRWLtrhUBMgs0iFx0EP+O
-         qSnSxzIWqLH2Hy1jiSiHAzWjEIdivIBDfAmPoV3q1HpvmnjoAT11RvAVsE4KIV7lTJU/
-         KitgJF1i6yvikEne0szzphXX3ONrKpnRXhQeOpqH0ME42AXW5iZwulm8xRBj9zndeILa
-         kBwIVyXig2quM/csdTudDKoxefpQpQ26oWyRsl5OMJKNameTYP+fupswrrJCM9eqy84p
-         Qu8xlsMaYaxhY7rOGajR0I28q8W4GvZVxvUrRjwmmDqWPXvuFIf2o90QlWdDRSs6OM1t
-         jH5w==
-X-Gm-Message-State: AOAM532PexQvjm0YI8yDldPBESb5ZjcJgvlw+yHFFmPiX+xugH0iHBG4
-        ySXcXaBRg3Udmf6Y79esQ9j2TnB+Q80=
-X-Google-Smtp-Source: ABdhPJwnXEPSTv2U7L4FlRRFb0knlAioLKmm8PQeBRK5//9cS1iHHZCMilBILpeajVjENSUYcD9blQ==
-X-Received: by 2002:a05:600c:3d16:b0:394:4ff0:d818 with SMTP id bh22-20020a05600c3d1600b003944ff0d818mr18287040wmb.5.1653286349389;
-        Sun, 22 May 2022 23:12:29 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k16-20020a05600c0b5000b00395f15d993fsm8811848wmr.5.2022.05.22.23.12.28
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=aq6d9PW4F+yhQPLs6Rk4jucIs1Gw+w+ObSYrX0xDXrg=;
+        b=aeSh3B3lFIq/RtiNOyhJ881hQIw+tWN4KWCgTjZWnT+PlHAzISwmI+Qo/0ms3/N74M
+         SfpRvvWR1RhSpHoF3yPmml6/aSz2pGlvYTTzZrfRuljKnz9dQEGeH2IS/Iv3NfibLWOz
+         k9DBfXrf12Y0/oeVjjSIlw+p4DMWB/D0Y0aoLL21NK5B1j6HsIBK6mXFRt2dFe/e+f6D
+         1gETW/z3fDK82+4qlMh9dFgW6HFFksMpGomwhsEMHjRn81XxaDkOF2L99uU1U94QpdeH
+         29ZSFP6/02oZV2sHup9p7O6uidLl18c0Zir27vcwaV8Fpdz2+MGeot2FxkXc/ZwzdxGC
+         VanQ==
+X-Gm-Message-State: AOAM532alH8ZK/6svqQBICg6gE2b8LCyi7IDd1GNh5NpSf3HajPes16R
+        cPIcU6tLcjQOe53yVV+k9ys=
+X-Google-Smtp-Source: ABdhPJx0U/I6IbvOi0SbUsSB2+YRyO3W8B8K/cUKdWRAqFntN0dTZthq+DhbcM3/nNE8mIYTbtJmFg==
+X-Received: by 2002:a17:907:6d90:b0:6fe:bac0:5ba with SMTP id sb16-20020a1709076d9000b006febac005bamr8847693ejc.29.1653290705171;
+        Mon, 23 May 2022 00:25:05 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id k7-20020a1709063fc700b006feece1e053sm541656ejj.90.2022.05.23.00.25.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 May 2022 23:12:28 -0700 (PDT)
-Message-Id: <7271a285d18604bd77251d586201d31eba1287da.1653286345.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
-References: <pull.1232.git.1652649537647.gitgitgadget@gmail.com>
-        <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
-From:   "Nadav Goldstein via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 06:12:25 +0000
-Subject: [PATCH v2 2/2] clean: refector to the interactive part of clean
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 23 May 2022 00:25:03 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nt2R3-002mjC-Uw;
+        Mon, 23 May 2022 09:25:01 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH v3 0/9] Incremental po/git.pot update and new l10n workflow
+Date:   Mon, 23 May 2022 09:15:43 +0200
+References: <20220519081548.3380-1-worldhello.net@gmail.com>
+ <20220523012531.4505-1-worldhello.net@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220523012531.4505-1-worldhello.net@gmail.com>
+Message-ID: <220523.86v8twzp6a.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Nadav Goldstein <nadav.goldstein96@gmail.com>,
-        Nadav Goldstein <nadav.goldstein96@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nadav Goldstein <nadav.goldstein96@gmail.com>
 
-moved the code that responsible for presenting the menu options
-(interactive flag) to be handles by the add-menu lib that was added
-in previous commit.
+On Mon, May 23 2022, Jiang Xin wrote:
 
-Signed-off-by: Nadav Goldstein <nadav.goldstein96@gmail.com>
----
- add-menu.c      |  78 +++++----
- add-menu.h      |   8 +-
- builtin/clean.c | 413 ++----------------------------------------------
- 3 files changed, 68 insertions(+), 431 deletions(-)
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>
+> A workflow change for translators are being proposed.
+>
+> Changes since v2:
+>
+>  1. Patch 1/9: reword.
+>  2. Patch 2/9: reword.
+>  3. Patch 3/9: reword, and add "FORCE" to prerequisites of "po/git.pot".
+>  4. Patch 6/9: remove "FORCE" from prerequisites of "po/git.pot".
+>  5. Patch 8/9: reword, and reuse "$(gen_pot_header)" to prepare pot
+>                header for "po/git-core.pot".
+>  6. Patch 9/9: various updates on po/README.md.
 
-diff --git a/add-menu.c b/add-menu.c
-index 6a1c125d113..becf4956917 100644
---- a/add-menu.c
-+++ b/add-menu.c
-@@ -13,24 +13,18 @@
- #include "help.h"
- #include "prompt.h"
- 
--static int clean_use_color = -1;
--static char clean_colors[][COLOR_MAXLEN] = {
--	[CLEAN_COLOR_ERROR] = GIT_COLOR_BOLD_RED,
--	[CLEAN_COLOR_HEADER] = GIT_COLOR_BOLD,
--	[CLEAN_COLOR_HELP] = GIT_COLOR_BOLD_RED,
--	[CLEAN_COLOR_PLAIN] = GIT_COLOR_NORMAL,
--	[CLEAN_COLOR_PROMPT] = GIT_COLOR_BOLD_BLUE,
--	[CLEAN_COLOR_RESET] = GIT_COLOR_RESET,
--};
--
--
--static const char *clean_get_color(enum color_clean ix)
-+static const char *clean_get_color(enum color_clean ix, clean_color_settings *clean_colors, int *clean_use_color)
- {
--	if (want_color(clean_use_color))
--		return clean_colors[ix];
-+	if (want_color(*clean_use_color))
-+		return (*clean_colors)[ix];
- 	return "";
- }
- 
-+void clean_print_color(enum color_clean ix, clean_color_settings *clean_colors, int *clean_use_color)
-+{
-+	printf("%s", clean_get_color(ix, clean_colors, clean_use_color));
-+}
-+
- static int find_unique(const char *choice, struct menu_stuff *menu_stuff)
- {
- 	struct menu_item *menu_item;
-@@ -80,10 +74,33 @@ static int find_unique(const char *choice, struct menu_stuff *menu_stuff)
- 	return found;
- }
- 
-+/*
-+ * Parse user input, and return choice(s) for menu (menu_stuff).
-+ *
-+ * Input
-+ *     (for single choice)
-+ *         1          - select a numbered item
-+ *         foo        - select item based on menu title
-+ *                    - (empty) select nothing
-+ *
-+ *     (for multiple choice)
-+ *         1          - select a single item
-+ *         3-5        - select a range of items
-+ *         2-3,6-9    - select multiple ranges
-+ *         foo        - select item based on menu title
-+ *         -...       - unselect specified items
-+ *         *          - choose all items
-+ *                    - (empty) finish selecting
-+ *
-+ * The parse result will be saved in array **chosen, and
-+ * return number of total selections.
-+ */
- static int parse_choice(struct menu_stuff *menu_stuff,
- 			int is_single,
- 			struct strbuf input,
--			int **chosen)
-+			int **chosen,
-+			clean_color_settings *clean_colors,
-+			int *clean_use_color)
- {
- 	struct strbuf **choice_list, **ptr;
- 	int nr = 0;
-@@ -155,9 +172,9 @@ static int parse_choice(struct menu_stuff *menu_stuff,
- 
- 		if (top <= 0 || bottom <= 0 || top > menu_stuff->nr || bottom > top ||
- 		    (is_single && bottom != top)) {
--			clean_print_color(CLEAN_COLOR_ERROR);
-+			clean_print_color(CLEAN_COLOR_ERROR, clean_colors, clean_use_color);
- 			printf(_("Huh (%s)?\n"), (*ptr)->buf);
--			clean_print_color(CLEAN_COLOR_RESET);
-+			clean_print_color(CLEAN_COLOR_RESET, clean_colors, clean_use_color);
- 			continue;
- 		}
- 
-@@ -187,7 +204,7 @@ static void pretty_print_menus(struct string_list *menu_list)
- /*
-  * display menu stuff with number prefix and hotkey highlight
-  */
--static void print_highlight_menu_stuff(struct menu_stuff *stuff, int **chosen)
-+static void print_highlight_menu_stuff(struct menu_stuff *stuff, int **chosen, clean_color_settings *clean_colors, int *clean_use_color)
- {
- 	struct string_list menu_list = STRING_LIST_INIT_DUP;
- 	struct strbuf menu = STRBUF_INIT;
-@@ -210,9 +227,9 @@ static void print_highlight_menu_stuff(struct menu_stuff *stuff, int **chosen)
- 			strbuf_addf(&menu, "%s%2d: ", (*chosen)[i] ? "*" : " ", i+1);
- 			for (; *p; p++) {
- 				if (!highlighted && *p == menu_item->hotkey) {
--					strbuf_addstr(&menu, clean_get_color(CLEAN_COLOR_PROMPT));
-+					strbuf_addstr(&menu, clean_get_color(CLEAN_COLOR_PROMPT, clean_colors, clean_use_color));
- 					strbuf_addch(&menu, *p);
--					strbuf_addstr(&menu, clean_get_color(CLEAN_COLOR_RESET));
-+					strbuf_addstr(&menu, clean_get_color(CLEAN_COLOR_RESET, clean_colors, clean_use_color));
- 					highlighted = 1;
- 				} else {
- 					strbuf_addch(&menu, *p);
-@@ -242,7 +259,7 @@ static void print_highlight_menu_stuff(struct menu_stuff *stuff, int **chosen)
- 	string_list_clear(&menu_list, 0);
- }
- 
--int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, void (*prompt_help_cmd)(int))
-+int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, clean_color_settings *clean_colors, int *clean_use_color, void (*prompt_help_cmd)(int))
- {
- 	struct strbuf choice = STRBUF_INIT;
- 	int *chosen, *result;
-@@ -258,23 +275,23 @@ int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, void (*pr
- 	for (;;) {
- 		if (opts->header) {
- 			printf_ln("%s%s%s",
--				  clean_get_color(CLEAN_COLOR_HEADER),
-+				  clean_get_color(CLEAN_COLOR_HEADER, clean_colors, clean_use_color),
- 				  _(opts->header),
--				  clean_get_color(CLEAN_COLOR_RESET));
-+				  clean_get_color(CLEAN_COLOR_RESET, clean_colors, clean_use_color));
- 		}
- 
- 		/* chosen will be initialized by print_highlight_menu_stuff */
--		print_highlight_menu_stuff(stuff, &chosen);
-+		print_highlight_menu_stuff(stuff, &chosen, clean_colors, clean_use_color);
- 
- 		if (opts->flags & MENU_OPTS_LIST_ONLY)
- 			break;
- 
- 		if (opts->prompt) {
- 			printf("%s%s%s%s",
--			       clean_get_color(CLEAN_COLOR_PROMPT),
-+			       clean_get_color(CLEAN_COLOR_PROMPT, clean_colors, clean_use_color),
- 			       _(opts->prompt),
- 			       opts->flags & MENU_OPTS_SINGLETON ? "> " : ">> ",
--			       clean_get_color(CLEAN_COLOR_RESET));
-+			       clean_get_color(CLEAN_COLOR_RESET, clean_colors, clean_use_color));
- 		}
- 
- 		if (git_read_line_interactively(&choice) == EOF) {
-@@ -295,7 +312,9 @@ int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, void (*pr
- 		nr = parse_choice(stuff,
- 				  opts->flags & MENU_OPTS_SINGLETON,
- 				  choice,
--				  &chosen);
-+				  &chosen,
-+				  clean_colors,
-+				  clean_use_color);
- 
- 		if (opts->flags & MENU_OPTS_SINGLETON) {
- 			if (nr)
-@@ -331,9 +350,4 @@ int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, void (*pr
- 	free(chosen);
- 	strbuf_release(&choice);
- 	return result;
--}
--
--void clean_print_color(enum color_clean ix)
--{
--	printf("%s", clean_get_color(ix));
- }
-\ No newline at end of file
-diff --git a/add-menu.h b/add-menu.h
-index 52e5ccb1800..64f1cbdab9f 100644
---- a/add-menu.h
-+++ b/add-menu.h
-@@ -1,3 +1,7 @@
-+#include "color.h"
-+
-+typedef char clean_color_settings[][COLOR_MAXLEN];
-+
- #define MENU_OPTS_SINGLETON		01
- #define MENU_OPTS_IMMEDIATE		02
- #define MENU_OPTS_LIST_ONLY		04
-@@ -35,7 +39,7 @@ struct menu_stuff {
- 	void *stuff;
- };
- 
--void clean_print_color(enum color_clean ix);
-+void clean_print_color(enum color_clean ix, clean_color_settings *clean_colors, int *clean_use_color);
- 
- /*
-  * Implement a git-add-interactive compatible UI, which is borrowed
-@@ -48,4 +52,4 @@ void clean_print_color(enum color_clean ix);
-  *   - The array ends with EOF.
-  *   - If user pressed CTRL-D (i.e. EOF), no selection returned.
-  */
--int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, void (*prompt_help_cmd)(int));
-\ No newline at end of file
-+int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, clean_color_settings *clean_colors, int *clean_use_color, void (*prompt_help_cmd)(int));
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 5466636e666..ef220869851 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -19,6 +19,7 @@
- #include "pathspec.h"
- #include "help.h"
- #include "prompt.h"
-+#include "add-menu.h"
- 
- static int force = -1; /* unset */
- static int interactive;
-@@ -39,14 +40,6 @@ static const char *msg_warn_lstat_failed = N_("could not lstat %s\n");
- static const char *msg_skip_cwd = N_("Refusing to remove current working directory\n");
- static const char *msg_would_skip_cwd = N_("Would refuse to remove current working directory\n");
- 
--enum color_clean {
--	CLEAN_COLOR_RESET = 0,
--	CLEAN_COLOR_PLAIN = 1,
--	CLEAN_COLOR_PROMPT = 2,
--	CLEAN_COLOR_HEADER = 3,
--	CLEAN_COLOR_HELP = 4,
--	CLEAN_COLOR_ERROR = 5
--};
- 
- static const char *color_interactive_slots[] = {
- 	[CLEAN_COLOR_ERROR]  = "error",
-@@ -58,7 +51,7 @@ static const char *color_interactive_slots[] = {
- };
- 
- static int clean_use_color = -1;
--static char clean_colors[][COLOR_MAXLEN] = {
-+static clean_color_settings clean_colors = {
- 	[CLEAN_COLOR_ERROR] = GIT_COLOR_BOLD_RED,
- 	[CLEAN_COLOR_HEADER] = GIT_COLOR_BOLD,
- 	[CLEAN_COLOR_HELP] = GIT_COLOR_BOLD_RED,
-@@ -67,36 +60,8 @@ static char clean_colors[][COLOR_MAXLEN] = {
- 	[CLEAN_COLOR_RESET] = GIT_COLOR_RESET,
- };
- 
--#define MENU_OPTS_SINGLETON		01
--#define MENU_OPTS_IMMEDIATE		02
--#define MENU_OPTS_LIST_ONLY		04
--
--struct menu_opts {
--	const char *header;
--	const char *prompt;
--	int flags;
--};
--
- #define MENU_RETURN_NO_LOOP		10
- 
--struct menu_item {
--	char hotkey;
--	const char *title;
--	int selected;
--	int (*fn)(void);
--};
--
--enum menu_stuff_type {
--	MENU_STUFF_TYPE_STRING_LIST = 1,
--	MENU_STUFF_TYPE_MENU_ITEM
--};
--
--struct menu_stuff {
--	enum menu_stuff_type type;
--	int nr;
--	void *stuff;
--};
--
- define_list_config_array(color_interactive_slots);
- 
- static int git_clean_config(const char *var, const char *value, void *cb)
-@@ -130,18 +95,6 @@ static int git_clean_config(const char *var, const char *value, void *cb)
- 	return git_color_default_config(var, value, cb);
- }
- 
--static const char *clean_get_color(enum color_clean ix)
--{
--	if (want_color(clean_use_color))
--		return clean_colors[ix];
--	return "";
--}
--
--static void clean_print_color(enum color_clean ix)
--{
--	printf("%s", clean_get_color(ix));
--}
--
- static int exclude_cb(const struct option *opt, const char *arg, int unset)
- {
- 	struct string_list *exclude_list = opt->value;
-@@ -307,21 +260,9 @@ static void pretty_print_dels(void)
- 	string_list_clear(&list, 0);
- }
- 
--static void pretty_print_menus(struct string_list *menu_list)
--{
--	unsigned int local_colopts = 0;
--	struct column_options copts;
--
--	local_colopts = COL_ENABLED | COL_ROW;
--	memset(&copts, 0, sizeof(copts));
--	copts.indent = "  ";
--	copts.padding = 2;
--	print_columns(menu_list, local_colopts, &copts);
--}
--
- static void prompt_help_cmd(int singleton)
- {
--	clean_print_color(CLEAN_COLOR_HELP);
-+	clean_print_color(CLEAN_COLOR_HELP, &clean_colors, &clean_use_color);
- 	printf(singleton ?
- 		  _("Prompt help:\n"
- 		    "1          - select a numbered item\n"
-@@ -335,329 +276,7 @@ static void prompt_help_cmd(int singleton)
- 		    "-...       - unselect specified items\n"
- 		    "*          - choose all items\n"
- 		    "           - (empty) finish selecting\n"));
--	clean_print_color(CLEAN_COLOR_RESET);
--}
--
--/*
-- * display menu stuff with number prefix and hotkey highlight
-- */
--static void print_highlight_menu_stuff(struct menu_stuff *stuff, int **chosen)
--{
--	struct string_list menu_list = STRING_LIST_INIT_DUP;
--	struct strbuf menu = STRBUF_INIT;
--	struct menu_item *menu_item;
--	struct string_list_item *string_list_item;
--	int i;
--
--	switch (stuff->type) {
--	default:
--		die("Bad type of menu_stuff when print menu");
--	case MENU_STUFF_TYPE_MENU_ITEM:
--		menu_item = (struct menu_item *)stuff->stuff;
--		for (i = 0; i < stuff->nr; i++, menu_item++) {
--			const char *p;
--			int highlighted = 0;
--
--			p = menu_item->title;
--			if ((*chosen)[i] < 0)
--				(*chosen)[i] = menu_item->selected ? 1 : 0;
--			strbuf_addf(&menu, "%s%2d: ", (*chosen)[i] ? "*" : " ", i+1);
--			for (; *p; p++) {
--				if (!highlighted && *p == menu_item->hotkey) {
--					strbuf_addstr(&menu, clean_get_color(CLEAN_COLOR_PROMPT));
--					strbuf_addch(&menu, *p);
--					strbuf_addstr(&menu, clean_get_color(CLEAN_COLOR_RESET));
--					highlighted = 1;
--				} else {
--					strbuf_addch(&menu, *p);
--				}
--			}
--			string_list_append(&menu_list, menu.buf);
--			strbuf_reset(&menu);
--		}
--		break;
--	case MENU_STUFF_TYPE_STRING_LIST:
--		i = 0;
--		for_each_string_list_item(string_list_item, (struct string_list *)stuff->stuff) {
--			if ((*chosen)[i] < 0)
--				(*chosen)[i] = 0;
--			strbuf_addf(&menu, "%s%2d: %s",
--				    (*chosen)[i] ? "*" : " ", i+1, string_list_item->string);
--			string_list_append(&menu_list, menu.buf);
--			strbuf_reset(&menu);
--			i++;
--		}
--		break;
--	}
--
--	pretty_print_menus(&menu_list);
--
--	strbuf_release(&menu);
--	string_list_clear(&menu_list, 0);
--}
--
--static int find_unique(const char *choice, struct menu_stuff *menu_stuff)
--{
--	struct menu_item *menu_item;
--	struct string_list_item *string_list_item;
--	int i, len, found = 0;
--
--	len = strlen(choice);
--	switch (menu_stuff->type) {
--	default:
--		die("Bad type of menu_stuff when parse choice");
--	case MENU_STUFF_TYPE_MENU_ITEM:
--
--		menu_item = (struct menu_item *)menu_stuff->stuff;
--		for (i = 0; i < menu_stuff->nr; i++, menu_item++) {
--			if (len == 1 && *choice == menu_item->hotkey) {
--				found = i + 1;
--				break;
--			}
--			if (!strncasecmp(choice, menu_item->title, len)) {
--				if (found) {
--					if (len == 1) {
--						/* continue for hotkey matching */
--						found = -1;
--					} else {
--						found = 0;
--						break;
--					}
--				} else {
--					found = i + 1;
--				}
--			}
--		}
--		break;
--	case MENU_STUFF_TYPE_STRING_LIST:
--		string_list_item = ((struct string_list *)menu_stuff->stuff)->items;
--		for (i = 0; i < menu_stuff->nr; i++, string_list_item++) {
--			if (!strncasecmp(choice, string_list_item->string, len)) {
--				if (found) {
--					found = 0;
--					break;
--				}
--				found = i + 1;
--			}
--		}
--		break;
--	}
--	return found;
--}
--
--/*
-- * Parse user input, and return choice(s) for menu (menu_stuff).
-- *
-- * Input
-- *     (for single choice)
-- *         1          - select a numbered item
-- *         foo        - select item based on menu title
-- *                    - (empty) select nothing
-- *
-- *     (for multiple choice)
-- *         1          - select a single item
-- *         3-5        - select a range of items
-- *         2-3,6-9    - select multiple ranges
-- *         foo        - select item based on menu title
-- *         -...       - unselect specified items
-- *         *          - choose all items
-- *                    - (empty) finish selecting
-- *
-- * The parse result will be saved in array **chosen, and
-- * return number of total selections.
-- */
--static int parse_choice(struct menu_stuff *menu_stuff,
--			int is_single,
--			struct strbuf input,
--			int **chosen)
--{
--	struct strbuf **choice_list, **ptr;
--	int nr = 0;
--	int i;
--
--	if (is_single) {
--		choice_list = strbuf_split_max(&input, '\n', 0);
--	} else {
--		char *p = input.buf;
--		do {
--			if (*p == ',')
--				*p = ' ';
--		} while (*p++);
--		choice_list = strbuf_split_max(&input, ' ', 0);
--	}
--
--	for (ptr = choice_list; *ptr; ptr++) {
--		char *p;
--		int choose = 1;
--		int bottom = 0, top = 0;
--		int is_range, is_number;
--
--		strbuf_trim(*ptr);
--		if (!(*ptr)->len)
--			continue;
--
--		/* Input that begins with '-'; unchoose */
--		if (*(*ptr)->buf == '-') {
--			choose = 0;
--			strbuf_remove((*ptr), 0, 1);
--		}
--
--		is_range = 0;
--		is_number = 1;
--		for (p = (*ptr)->buf; *p; p++) {
--			if ('-' == *p) {
--				if (!is_range) {
--					is_range = 1;
--					is_number = 0;
--				} else {
--					is_number = 0;
--					is_range = 0;
--					break;
--				}
--			} else if (!isdigit(*p)) {
--				is_number = 0;
--				is_range = 0;
--				break;
--			}
--		}
--
--		if (is_number) {
--			bottom = atoi((*ptr)->buf);
--			top = bottom;
--		} else if (is_range) {
--			bottom = atoi((*ptr)->buf);
--			/* a range can be specified like 5-7 or 5- */
--			if (!*(strchr((*ptr)->buf, '-') + 1))
--				top = menu_stuff->nr;
--			else
--				top = atoi(strchr((*ptr)->buf, '-') + 1);
--		} else if (!strcmp((*ptr)->buf, "*")) {
--			bottom = 1;
--			top = menu_stuff->nr;
--		} else {
--			bottom = find_unique((*ptr)->buf, menu_stuff);
--			top = bottom;
--		}
--
--		if (top <= 0 || bottom <= 0 || top > menu_stuff->nr || bottom > top ||
--		    (is_single && bottom != top)) {
--			clean_print_color(CLEAN_COLOR_ERROR);
--			printf(_("Huh (%s)?\n"), (*ptr)->buf);
--			clean_print_color(CLEAN_COLOR_RESET);
--			continue;
--		}
--
--		for (i = bottom; i <= top; i++)
--			(*chosen)[i-1] = choose;
--	}
--
--	strbuf_list_free(choice_list);
--
--	for (i = 0; i < menu_stuff->nr; i++)
--		nr += (*chosen)[i];
--	return nr;
--}
--
--/*
-- * Implement a git-add-interactive compatible UI, which is borrowed
-- * from git-add--interactive.perl.
-- *
-- * Return value:
-- *
-- *   - Return an array of integers
-- *   - , and it is up to you to free the allocated memory.
-- *   - The array ends with EOF.
-- *   - If user pressed CTRL-D (i.e. EOF), no selection returned.
-- */
--static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
--{
--	struct strbuf choice = STRBUF_INIT;
--	int *chosen, *result;
--	int nr = 0;
--	int eof = 0;
--	int i;
--
--	ALLOC_ARRAY(chosen, stuff->nr);
--	/* set chosen as uninitialized */
--	for (i = 0; i < stuff->nr; i++)
--		chosen[i] = -1;
--
--	for (;;) {
--		if (opts->header) {
--			printf_ln("%s%s%s",
--				  clean_get_color(CLEAN_COLOR_HEADER),
--				  _(opts->header),
--				  clean_get_color(CLEAN_COLOR_RESET));
--		}
--
--		/* chosen will be initialized by print_highlight_menu_stuff */
--		print_highlight_menu_stuff(stuff, &chosen);
--
--		if (opts->flags & MENU_OPTS_LIST_ONLY)
--			break;
--
--		if (opts->prompt) {
--			printf("%s%s%s%s",
--			       clean_get_color(CLEAN_COLOR_PROMPT),
--			       _(opts->prompt),
--			       opts->flags & MENU_OPTS_SINGLETON ? "> " : ">> ",
--			       clean_get_color(CLEAN_COLOR_RESET));
--		}
--
--		if (git_read_line_interactively(&choice) == EOF) {
--			eof = 1;
--			break;
--		}
--
--		/* help for prompt */
--		if (!strcmp(choice.buf, "?")) {
--			prompt_help_cmd(opts->flags & MENU_OPTS_SINGLETON);
--			continue;
--		}
--
--		/* for a multiple-choice menu, press ENTER (empty) will return back */
--		if (!(opts->flags & MENU_OPTS_SINGLETON) && !choice.len)
--			break;
--
--		nr = parse_choice(stuff,
--				  opts->flags & MENU_OPTS_SINGLETON,
--				  choice,
--				  &chosen);
--
--		if (opts->flags & MENU_OPTS_SINGLETON) {
--			if (nr)
--				break;
--		} else if (opts->flags & MENU_OPTS_IMMEDIATE) {
--			break;
--		}
--	}
--
--	if (eof) {
--		result = xmalloc(sizeof(int));
--		*result = EOF;
--	} else {
--		int j = 0;
--
--		/*
--		 * recalculate nr, if return back from menu directly with
--		 * default selections.
--		 */
--		if (!nr) {
--			for (i = 0; i < stuff->nr; i++)
--				nr += chosen[i];
--		}
--
--		CALLOC_ARRAY(result, st_add(nr, 1));
--		for (i = 0; i < stuff->nr && j < nr; i++) {
--			if (chosen[i])
--				result[j++] = i;
--		}
--		result[j] = EOF;
--	}
--
--	free(chosen);
--	strbuf_release(&choice);
--	return result;
-+	clean_print_color(CLEAN_COLOR_RESET, &clean_colors, &clean_use_color);
- }
- 
- static int clean_cmd(void)
-@@ -681,9 +300,9 @@ static int filter_by_patterns_cmd(void)
- 		if (changed)
- 			pretty_print_dels();
- 
--		clean_print_color(CLEAN_COLOR_PROMPT);
-+		clean_print_color(CLEAN_COLOR_PROMPT, &clean_colors, &clean_use_color);
- 		printf(_("Input ignore patterns>> "));
--		clean_print_color(CLEAN_COLOR_RESET);
-+		clean_print_color(CLEAN_COLOR_RESET, &clean_colors, &clean_use_color);
- 		if (git_read_line_interactively(&confirm) == EOF)
- 			putchar('\n');
- 
-@@ -715,9 +334,9 @@ static int filter_by_patterns_cmd(void)
- 		if (changed) {
- 			string_list_remove_empty_items(&del_list, 0);
- 		} else {
--			clean_print_color(CLEAN_COLOR_ERROR);
-+			clean_print_color(CLEAN_COLOR_ERROR, &clean_colors, &clean_use_color);
- 			printf_ln(_("WARNING: Cannot find items matched by: %s"), confirm.buf);
--			clean_print_color(CLEAN_COLOR_RESET);
-+			clean_print_color(CLEAN_COLOR_RESET, &clean_colors, &clean_use_color);
- 		}
- 
- 		strbuf_list_free(ignore_list);
-@@ -744,7 +363,7 @@ static int select_by_numbers_cmd(void)
- 	menu_stuff.stuff = &del_list;
- 	menu_stuff.nr = del_list.nr;
- 
--	chosen = list_and_choose(&menu_opts, &menu_stuff);
-+	chosen = list_and_choose(&menu_opts, &menu_stuff, &clean_colors, &clean_use_color, prompt_help_cmd);
- 	items = del_list.items;
- 	for (i = 0, j = 0; i < del_list.nr; i++) {
- 		if (i < chosen[j]) {
-@@ -807,7 +426,7 @@ static int quit_cmd(void)
- 
- static int help_cmd(void)
- {
--	clean_print_color(CLEAN_COLOR_HELP);
-+	clean_print_color(CLEAN_COLOR_HELP, &clean_colors, &clean_use_color);
- 	printf_ln(_(
- 		    "clean               - start cleaning\n"
- 		    "filter by pattern   - exclude items from deletion\n"
-@@ -817,7 +436,7 @@ static int help_cmd(void)
- 		    "help                - this screen\n"
- 		    "?                   - help for prompt selection"
- 		   ));
--	clean_print_color(CLEAN_COLOR_RESET);
-+	clean_print_color(CLEAN_COLOR_RESET, &clean_colors, &clean_use_color);
- 	return 0;
- }
- 
-@@ -844,15 +463,15 @@ static void interactive_main_loop(void)
- 		menu_stuff.stuff = menus;
- 		menu_stuff.nr = sizeof(menus) / sizeof(struct menu_item);
- 
--		clean_print_color(CLEAN_COLOR_HEADER);
-+		clean_print_color(CLEAN_COLOR_HEADER, &clean_colors, &clean_use_color);
- 		printf_ln(Q_("Would remove the following item:",
- 			     "Would remove the following items:",
- 			     del_list.nr));
--		clean_print_color(CLEAN_COLOR_RESET);
-+		clean_print_color(CLEAN_COLOR_RESET, &clean_colors, &clean_use_color);
- 
- 		pretty_print_dels();
- 
--		chosen = list_and_choose(&menu_opts, &menu_stuff);
-+		chosen = list_and_choose(&menu_opts, &menu_stuff, &clean_colors, &clean_use_color, prompt_help_cmd);
- 
- 		if (*chosen != EOF) {
- 			int ret;
-@@ -860,9 +479,9 @@ static void interactive_main_loop(void)
- 			if (ret != MENU_RETURN_NO_LOOP) {
- 				FREE_AND_NULL(chosen);
- 				if (!del_list.nr) {
--					clean_print_color(CLEAN_COLOR_ERROR);
-+					clean_print_color(CLEAN_COLOR_ERROR, &clean_colors, &clean_use_color);
- 					printf_ln(_("No more files to clean, exiting."));
--					clean_print_color(CLEAN_COLOR_RESET);
-+					clean_print_color(CLEAN_COLOR_RESET, &clean_colors, &clean_use_color);
- 					break;
- 				}
- 				continue;
--- 
-gitgitgadget
+From skimming this the *.c.po v.s. *.c extension is still left in
+comments. I'm not saying you need to go for my suggestions, but it would
+be very useful in CL's to note things that were suggested but not
+changed, such as that.
+
+Right now I haven't paged that v2 discussion into my brain again, so I
+don't know if that was the only thing, it's the only thing I remember
+right now...
+
+But let's read on:
+
+> Range-diff vs v2:
+>
+>  1:  c45f34f233 !  1:  362cd0cbe1 Makefile: sort "po/git.pot" by file location
+>     @@ Metadata
+>       ## Commit message ##
+>          Makefile: sort "po/git.pot" by file location
+>      
+>     -    Before feeding xgettext with more C souce files which may be ignored
+>     -    by various compiler conditions, add new option "--sort-by-file" to
+>     -    xgettext program to create stable message template file "po/git.pot".
+>     +    We will feed xgettext with more C souce files and in different order in
+>     +    subsequent commit. To generate a stable "po/git.pot" regardless of the
+>     +    number and order of input source files, we add a new option
+>     +    "--sort-by-file" to xgettext program.
+>      
+>          With this update, the newly generated "po/git.pot" will has the same
+>     -    entries while in a different order. We won't checkin the newly generated
+>     -    "po/git.pot", because we will remove it from tree in a later commit.
+>     +    entries while in a different order.
+>     +
+>     +    With the help of a custom diff driver as shown below,
+>     +
+>     +        git config --global diff.gettext-fmt.textconv \
+>     +            "msgcat --no-location --sort-by-file"
+>     +
+>     +    and appending a new entry "*.po diff=gettext-fmt" to git attributes,
+>     +    we can see that there are no substantial changes in "po/git.pot".
+>     +
+>     +    We won't checkin the newly generated "po/git.pot", because we will
+>     +    remove it from tree in a later commit.
+
+
+Does this actually work? This seems to suggest adding a driver for *.po,
+but using it against the *.pot file. Isn't that a typo (I haven't tested
+it)>
+
+>          But it is much simpler to use variables "$(FOUND_C_SOURCES)" and
+>     -    "$(FOUND_C_SOURCES)" to form a stable "LOCALIZED_C".
+>     +    "$(FOUND_C_SOURCES)" to form a stable "LOCALIZED_C". We also add
+>     +    "$(SCALAR_SOURCES)" files, which are part of C_OBJ but not included in
+>     +    "$(FOUND_C_SOURCES)" because they are in the "contrib/" directory.
+
+Thanks, good to note that.
+
+[snipped the rest, will re-read individual commits]
