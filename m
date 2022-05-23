@@ -2,235 +2,274 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B280C433F5
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 19:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C4D2C433FE
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 19:36:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229997AbiEWT1O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 15:27:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
+        id S231551AbiEWTge (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 15:36:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229986AbiEWT05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 15:26:57 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59451BE8D
-        for <git@vger.kernel.org>; Mon, 23 May 2022 12:06:35 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D00A11D2ED;
-        Mon, 23 May 2022 15:06:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Lf8/KioMT7M0qA3Dere/Z3g5cPBT0D7TqtH2LU
-        lrItI=; b=gnIbUeDajyq3WG8EL928//AeyWLvHXADpqYJgKUJ6QqXKXYFfyaWQy
-        FqsZwLaNXyKIFut/R3HLjXRoZ89u9AkKlc1hJert7Y91h36I87jG76ps+U5NNpjW
-        YK+ERz7c8evZGRUOfVJf0Llg77VZ4vs6RUiY3zbPL5CF5hN8ncEPA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3445811D2EB;
-        Mon, 23 May 2022 15:06:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 839BD11D2EA;
-        Mon, 23 May 2022 15:06:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
-        avarab@gmail.com, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, jrnieder@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Robert Coup <robert.coup@koordinates.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] urlmatch: create fetch.credentialsInUrl config
-References: <pull.1237.git.1653329044940.gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 12:06:31 -0700
-In-Reply-To: <pull.1237.git.1653329044940.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Mon, 23 May 2022 18:04:04
-        +0000")
-Message-ID: <xmqqr14kqdag.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232303AbiEWTgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 15:36:25 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3FFA72E25
+        for <git@vger.kernel.org>; Mon, 23 May 2022 12:23:31 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id c1so13527777qkf.13
+        for <git@vger.kernel.org>; Mon, 23 May 2022 12:23:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=k776yns1r9KDyNOVJ2IwooW1PYRT2pvtpwjACFM+ffU=;
+        b=Ive/3jbvPPStjb44Q+jToO2xzfNtg40RNDKTrOSrd66EMaPrrz7VB13GgyFbOASlY9
+         pk0pGKcOk7NvW5tmjAQ1CiDwrGO4x9WHYZ1VKxyS8HYbfC7TUH1pK4N/n6nWuxqh/Yat
+         phyRaWerDSyFfSvShkZ438CD146GgHOx+YjJAsgQ5afp9T/Hc2E2+Wc6brQLLYRK5H3C
+         yV0n7cjx2MUAzzDThGACiKaqFW122oTjtqEyCKxkRC3k/b/REN2MRYn9zSRM23ZfXrcL
+         YqWX4GminnYohbFSObUqLIjdxJP17PQAKZUQ9/Vc8P0qCLfHThPlZmdIREOu3+6CREpK
+         X6VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=k776yns1r9KDyNOVJ2IwooW1PYRT2pvtpwjACFM+ffU=;
+        b=mZ2EtgXkObQ1i3ntksVqTuirpPT2Jb3A/OZgxyC7T1tWxkNn4rIqUFw65fkW6TCFvW
+         /hgq1V6YGmrp+O3tEI/7NgxvTxJ/s6woSja2lr48ywKolFKOTOqqDq+cJ2TsOPfPc1kR
+         1G9qJXmh6HeUECkbPE0UTU0Y1fxATmuZ9HJbalBxN1dFUb2pmszyUvu0cY9MQBPUygvM
+         u1VTmqK/mFmEBW+kc3pfsK3iVsZP0G/v8See+eP0fKZoHPsmhdM14lLJ6wP1xEIrhM0g
+         FsakV0gWlAnv2Pk2C2BeTdse/1rrQfokxcVLCRAlvxiRLOyCK+RJt4HkEWr18NCukTBO
+         h16w==
+X-Gm-Message-State: AOAM530p2vBtVdOLGKxhOZsbXnGthi4vSuyMT/c0I1Qh1Kf/+mN3Ny5z
+        HA87B3Mrd07Uo8bMaCsIE1S4
+X-Google-Smtp-Source: ABdhPJyCHCSx8Bqxs/NDoKfBBDwZrz79mzuVI/6XSKEEpLIoyyO0D9fmD93war9pTQnsfk11QW+69Q==
+X-Received: by 2002:a05:620a:2a11:b0:6a3:622a:8447 with SMTP id o17-20020a05620a2a1100b006a3622a8447mr7992750qkp.513.1653333811009;
+        Mon, 23 May 2022 12:23:31 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:71ba:8ad9:40cd:d364? ([2600:1700:e72:80a0:71ba:8ad9:40cd:d364])
+        by smtp.gmail.com with ESMTPSA id ca13-20020a05622a1f0d00b002f39b99f6c0sm4731280qtb.90.2022.05.23.12.23.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 May 2022 12:23:30 -0700 (PDT)
+Message-ID: <900d91cb-1982-b892-17e3-ad678e711dc9@github.com>
+Date:   Mon, 23 May 2022 15:23:29 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7577CE28-DACB-11EC-8B57-CB998F0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.1
+Subject: Re: [PATCH v2 1/2] dir: consider worktree config in path recursion
+Content-Language: en-US
+To:     Goss Geppert <gg.oss.dev@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        christian w <usebees@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <20220505203234.21586-1-ggossdev@gmail.com>
+ <20220510171527.25778-1-ggossdev@gmail.com>
+ <20220510171527.25778-2-ggossdev@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220510171527.25778-2-ggossdev@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Create a new "fetch.credentialsInUrl" config option and teach Git to
-> warn or die when seeing a URL with this kind of information. The warning
-> anonymizes the sensitive information of the URL to be clear about the
-> issue.
-
-The issue sounds vaguely familiar---I must have heard something
-similar on this list not in too distant past.
-
-> This change currently defaults the behavior to "ignore" which does
-> nothing with these URLs. We can consider changing this behavior to
-> "warn" by default if we wish. At that time, we may want to add some
-> advice about setting fetch.credentialsInUrl=ignore for users who still
-> want to follow this pattern (and not receive the warning).
-
-It sounds more like "pass" than "ignore", the latter of which can be
-read as "strip" instead of "pass it as-is".
-
-The name "warn", and its stronger form "die", both sound right.
-
-> ... Running the test suite succeeds except for the
-> explicit username:password URLs used in t5550-http-fetch-dumb.s and
-> t5541-http-push-smart.sh. This means that all other tested URLs did not
-> trigger this logic.
-
-We are not testing the form we are not encouraging, in other words ;-).
-
->     urlmatch: create fetch.credentialsInUrl config
->     
->     This is a modified version of the patch I submitted a while ago [1].
->     
->     Based on the feedback, changing the behavior to fail by default was not
->     a good approach. Further, the idea to stop storing the credentials in
->     config and redirect them to a credential manager was already considered
->     by Peff [2] but not merged.
-
-I just peeked [2] and I am not sure why we didn't X-<.  The solution
-there covers "git clone" that records the origin URL but this one
-would cover URL regardless of where the URL came from---as long as
-an insecure URL is used, we warn or die, and it is even against the
-URL that came from the command line.
-
-In a sense, I think these are more or less orthogonal.  [2]'s "clone
-can strip the user:pass from the URL it writes to the config, while
-passing user:pass to the credential API", especially if it is
-extended to "git remote add", would stop two common avenues that
-such an insecure URL can go to the configuration file.  The approach
-taken by this patch would complement it to a degree, as long as the
-user cares.
-
-I am not sure if there is a legitimate case where the user does not
-care, though.  For a script, it may be handy if a URL can contain an
-ever-changing user:pass pair, where the pass is generated by
-something like s/key, for example, and for such a command line that
-knowingly have user:pass pair, having to set the configuration to
-"ignore" may be cumbersome.
-
-> +fetch.credentialsInUrl::
-> +	A URL can contain plaintext credentials in the form
-> +	`protocol://<user>:<password>@domain/path`. Using such URLs is not
-> +	recommended as it exposes the password in multiple ways. The
-> +	`fetch.credentialsInUrl` option provides instruction for how Git
-> +	should react to seeing such a URL, with these values:
-> ++
-> +* `ignore` (default): Git will proceed with its activity without warning.
-> +* `warn`: Git will write a warning message to `stderr` when parsing a URL
-> +  with a plaintext credential.
-> +* `die`: Git will write a failure message to `stderr` when parsing a URL
-> +  with a plaintext credential.
-
-Sounds sensible (modulo I would suggest "ignore" -> "pass").
-
-> +	grep "warning: URL '\''https://username:\*\*\*\*\*\*\*\*@localhost/'\'' uses plaintext credentials" err &&
-
-Makes sure that the password part is redacted, which is good.
-
-> +	test_must_fail git -c fetch.credentialsInUrl=die clone https://username:password@localhost attempt2 2>err &&
-> +	grep "fatal: URL '\''https://username:\*\*\*\*\*\*\*\*@localhost/'\'' uses plaintext credentials" err
-
-Ditto.
-
-> diff --git a/urlmatch.c b/urlmatch.c
-> index b615adc923a..6b91fb648a7 100644
-> --- a/urlmatch.c
-> +++ b/urlmatch.c
-> @@ -1,5 +1,6 @@
->  #include "cache.h"
->  #include "urlmatch.h"
-> +#include "config.h"
-
-Yuck.  Having to do config lookups at this deep a level in the
-callchain does not look too attractive to me.
-
-I am wondering if we can make it the responsibility of the callers
-to figure out and pass down the settings of the new configuration
-variable.
-
-Offhand I do not think of an easy and clean way to do so (well,
-"easy" is easy---add one to the list of globals in environment.c;
-"clean" is the harder part).
-
->  #define URL_ALPHA "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
->  #define URL_DIGIT "0123456789"
-> @@ -106,6 +107,46 @@ static int match_host(const struct url_info *url_info,
->  	return (!url_len && !pat_len);
->  }
+On 5/10/22 1:15 PM, Goss Geppert wrote:
+> Since 8d92fb2927 (dir: replace exponential algorithm with a linear one,
+> 2020-04-01) the following no longer works:
+> 
+>     1) Initialize a repository.
+>     2) Set the `core.worktree` location to a parent directory of the
+>        default worktree.
+>     3) Add a file located in the default worktree location to the index
+>        (i.e. anywhere in the immediate parent directory of the gitdir).
+> 
+> This commit adds a check to determine whether a nested repository that
+> is encountered in recursing a path is actually `the_repository`.  If so,
+> simply treat the directory as if it doesn't contain a nested repository.
+> 
+> Prior to this commit, the `add` operation was silently ignored.
+> 
+> Signed-off-by: Goss Geppert <ggossdev@gmail.com>
+> ---
+>  dir.c                          | 22 +++++++++
+>  t/t2205-add-worktree-config.sh | 89 ++++++++++++++++++++++++++++++++++
+>  2 files changed, 111 insertions(+)
+>  create mode 100755 t/t2205-add-worktree-config.sh
+> 
+> diff --git a/dir.c b/dir.c
+> index f2b0f24210..a1886e61a3 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1893,9 +1893,31 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
 >  
-> +static void detected_credentials_in_url(const char *url, size_t scheme_len)
-> +{
-> +	char *value = NULL;
-> +	const char *at_ptr;
-> +	const char *colon_ptr;
-> +	struct strbuf anonymized = STRBUF_INIT;
+>  	if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
+>  		!(dir->flags & DIR_NO_GITLINKS)) {
+> +		/*
+> +		 * Determine if `dirname` is a nested repo by confirming that:
+> +		 * 1) we are in a nonbare repository, and
+> +		 * 2) `dirname` is not an immediate parent of `the_repository->gitdir`,
+> +		 *    which could occur if the `worktree` location was manually
+> +		 *    configured by the user; see t2205 testcases 1a-1d for examples
+> +		 *    where this matters
+> +		 */
+>  		struct strbuf sb = STRBUF_INIT;
+>  		strbuf_addstr(&sb, dirname);
+>  		nested_repo = is_nonbare_repository_dir(&sb);
 > +
-> +	/* "ignore" is the default behavior. */
-> +	if (git_config_get_string("fetch.credentialsinurl", &value) ||
-> +	    !strcasecmp("ignore", value))
-> +		goto cleanup;
-> +
-> +	at_ptr = strchr(url, '@');
-> +	colon_ptr = strchr(url + scheme_len + 3, ':');
+> +		if (nested_repo) {
+> +			char *real_dirname, *real_gitdir;
+> +			strbuf_reset(&sb);
+> +			strbuf_addstr(&sb, dirname);
+> +			strbuf_complete(&sb, '/');
+> +			strbuf_addstr(&sb, ".git");
 
-We expect that at_ptr would come after colon_ptr (i.e. in
-"scheme://<u>:<p>@host", no @ exists in <u> or <p> part) and the
-while() loop below assumes that for redacting.  Are we better off if
-we assert it here, or has the calling parser already rejected such
-cases?
+This could be strbuf_add(&sb, ".git", 4); to avoid a (minor)
+strlen() computation.
 
-> +	if (!colon_ptr)
-> +		BUG("failed to find colon in url '%s' with scheme_len %"PRIuMAX,
-> +		    url, (uintmax_t) scheme_len);
+> +			real_dirname = real_pathdup(sb.buf, 0);
+> +			real_gitdir = real_pathdup(the_repository->gitdir, 0);
+
+With regards to Junio's comment about repeating real_pathdup()
+on the_repository->gitdir, we might be able to short-circuit
+this by making real_gitdir static and only calling
+real_pathdup() if real_gitdir is NULL. It would cut the cost
+of these checks by half for big traversals.
+
 > +
-> +	/* Include everything including the colon. */
-> +	colon_ptr++;
-> +	strbuf_add(&anonymized, url, colon_ptr - url);
+> +			nested_repo = !!strcmp(real_dirname, real_gitdir);
+> +			free(real_gitdir);
+> +			free(real_dirname);
+> +		}
+...
 > +
-> +	while (colon_ptr < at_ptr) {
-> +		strbuf_addch(&anonymized, '*');
-> +		colon_ptr++;
-> +	}
+> +test_description='directory traversal respects worktree config
 > +
-> +	strbuf_addstr(&anonymized, at_ptr);
+> +This test configures the repository`s worktree to be two levels above the
+> +`.git` directory and checks whether we are able to add to the index those files
+> +that are in either (1) the manually configured worktree directory or (2) the
+> +standard worktree location with respect to the `.git` directory (i.e. ensuring
+> +that the encountered `.git` directory is not treated as belonging to a foreign
+> +nested repository)'
+
+The test description should be a single line. The longer paragraph
+could be a comment before your "setup" test case.
+
+> +. ./test-lib.sh
 > +
-> +	if (!strcasecmp("warn", value))
-> +		warning(_("URL '%s' uses plaintext credentials"), anonymized.buf);
-> +	if (!strcasecmp("die", value))
-> +		die(_("URL '%s' uses plaintext credentials"), anonymized.buf);
+> +test_expect_success '1a: setup' '
+
+Also, there is no need to number your tests in their names, as the
+testing infrastructure will apply numbers based on their order in
+the test file. These labels will grow stale if tests are removed
+or inserted into the order.
+
+> +	test_create_repo test1 &&
+> +	git --git-dir="test1/.git" config core.worktree "$(pwd)" &&
 > +
-> +cleanup:
-> +	free(value);
-> +	strbuf_release(&anonymized);
-> +}
+> +	mkdir -p outside-tracked outside-untracked &&
+> +	mkdir -p test1/inside-tracked test1/inside-untracked &&
+> +	>file-tracked &&
+> +	>file-untracked &&
+> +	>outside-tracked/file &&
+> +	>outside-untracked/file &&
+> +	>test1/file-tracked &&
+> +	>test1/file-untracked &&
+> +	>test1/inside-tracked/file &&
+> +	>test1/inside-untracked/file &&
+> +
+> +	cat >expect-tracked-unsorted <<-EOF &&
+> +	../file-tracked
+> +	../outside-tracked/file
+> +	file-tracked
+> +	inside-tracked/file
+> +	EOF
+> +
+> +	cat >expect-untracked-unsorted <<-EOF &&
+> +	../file-untracked
+> +	../outside-untracked/file
+> +	file-untracked
+> +	inside-untracked/file
+> +	EOF
+> +
+> +	cat expect-tracked-unsorted expect-untracked-unsorted >expect-all-unsorted &&
+> +
+> +	cat >.gitignore <<-EOF
+> +	.gitignore
+> +	actual-*
+> +	expect-*
+> +	EOF
+
+This use of .gitignore to ignore the helper files being used
+during the test is interesting. I was thinking it would be better
+to create isolated directories where the only activity was that
+which you were testing:
+
+	mkdir -p worktree &&
+	test_create_repo worktree/contains-git &&
+
+...or something like that. The names are more descriptive, and
+we don't need the .gitignore trick.
+
+> +'
+> +
+> +test_expect_success '1b: pre-add all' '
+> +	local parent_dir="$(pwd)" &&
+
+I was surprised by this "local". It isn't needed at this
+point in the test script. We use it for helper methods to
+be sure that we aren't stomping variables from test scripts,
+but since the test is being executed inside an eval(), this
+local isn't important.
+
+> +	(
+> +		cd test1 &&
+> +		git ls-files -o --exclude-standard "$parent_dir" >../actual-all-unsorted
+
+You can avoid the sub-shell using "git -C test1 ls-files ..."
+right?
+
+> +	) &&
+> +	sort actual-all-unsorted >actual-all &&
+> +	sort expect-all-unsorted >expect-all &&
+> +	test_cmp expect-all actual-all
+> +'
+> +
+> +test_expect_success '1c: post-add tracked' '
+> +	local parent_dir="$(pwd)" &&
+> +	(
+> +		cd test1 &&
+> +		git add file-tracked &&
+> +		git add inside-tracked &&
+> +		git add ../outside-tracked &&
+> +		git add "$parent_dir/file-tracked" &&
+> +		git ls-files "$parent_dir" >../actual-tracked-unsorted
+> +	) &&
+
+This sub-shell is important because of the relative paths
+involved. OK.
+
+This also checks to see if _any_ of these "git add"
+commands fail, as opposed to failing immediately after
+the first one fails. I think your approach is simpler and
+should be relatively simple to identify which command did
+the wrong thing by looking at the test_cmp output.
+
+> +	sort actual-tracked-unsorted >actual-tracked &&
+> +	sort expect-tracked-unsorted >expect-tracked &&
+> +	test_cmp expect-tracked actual-tracked
+> +'
+> +
+> +test_expect_success '1d: post-add untracked' '
+> +	local parent_dir="$(pwd)" &&
+> +	(
+> +		cd test1 &&
+> +		git ls-files -o --exclude-standard "$parent_dir" >../actual-untracked-unsorted
+> +	) &&
+
+Again, this one is not needed.
+
+> +	sort actual-untracked-unsorted >actual-untracked &&
+> +	sort expect-untracked-unsorted >expect-untracked &&
+> +	test_cmp expect-untracked actual-untracked
+> +'
 > +
 
-So far, looking good.
-
-> @@ -144,6 +185,7 @@ static char *url_normalize_1(const char *url, struct url_info *out_info, char al
->  	 */
->  
->  	size_t url_len = strlen(url);
-> +	const char *orig_url = url;
->  	struct strbuf norm;
->  	size_t spanned;
->  	size_t scheme_len, user_off=0, user_len=0, passwd_off=0, passwd_len=0;
-> @@ -191,6 +233,7 @@ static char *url_normalize_1(const char *url, struct url_info *out_info, char al
->  			}
->  			colon_ptr = strchr(norm.buf + scheme_len + 3, ':');
->  			if (colon_ptr) {
-> +				detected_credentials_in_url(orig_url, scheme_len);
->  				passwd_off = (colon_ptr + 1) - norm.buf;
->  				passwd_len = norm.len - passwd_off;
->  				user_len = (passwd_off - 1) - (scheme_len + 3);
->
-> base-commit: f9b95943b68b6b8ca5a6072f50a08411c6449b55
-
-Thanks.
+Thanks,
+-Stolee
