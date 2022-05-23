@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD46EC433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B47C433EF
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:14:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232969AbiEWUNx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 16:13:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52350 "EHLO
+        id S232711AbiEWUN6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 16:13:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232725AbiEWUNq (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232727AbiEWUNq (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 May 2022 16:13:46 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616DCA2072
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:05 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id p10so4267671wrg.12
-        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:05 -0700 (PDT)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E233A5004
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:06 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id i82-20020a1c3b55000000b00397391910d5so234052wma.1
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:13:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=JW5/RT2bZpq4NBqwKIrDN6AyPlqs0iGhc4xOjJM6ksI=;
-        b=nZ3mJnlbNB8UFUDi/8TsnSbIkVS9IUBMaq91pQwDfAJghZmNEz78eyvLKZezttx5Vh
-         sJlDjW+JA+13dZvAxEXJI2bLDogarsn/xJQAEochYC+IPUw7xcaBFo/f0ULG1LFDSQXF
-         VVBGkdfx1hWv4dFhrawzsof2DoFu5/zpuJE/k3Z+rlFi+/D1BRkbb+uas7qSU+9jqoiZ
-         7123ke3c6J/fWMe8h8NT3J95OynTrABQFrzW3jc+F5yqbUbwdz0o2ytv8DDCZU+GHc8a
-         MLy33NBXnBadr/3HMUD7HhcVCvo5fDNZZHJkWapz5+6wQej5JFey+B55JzaWr9sspiP7
-         TTJg==
+        bh=5W2x8t68NoDAVIFeMr0BVtQdXxzEzVw8wanSKIA/+K4=;
+        b=f+DpqLqR20G0BPrZcjZtmeYhb5ACbhFO0pfg5+zAh4RI99MHow15TK3jDS99OEtNfA
+         qyWtuqQwjQ4GlFvScJqV3Eq53eXqJES7hPK8+RZuMvuWgJUqKDpBA3F/eBxW3XMipL8I
+         /fnwX7yMmG+xQJx1TvSCWG/xOTFEYIVd9FfLCOUVPJ4mj1GKoufwVyBmsuKQ3sSUwmgw
+         LDQqgea+EiJQ7f/zz5Q0zjQjhQrhykMqeQPuOMJcuaW8rFZ20dEypz5kpzWMumvssixa
+         H/YnaV8keaH8yjQ27SVNrjLA8IAhbDm2xMo4AbkNn2lhc7h2HPl8eNqtC+NjenAOA+/u
+         J2vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JW5/RT2bZpq4NBqwKIrDN6AyPlqs0iGhc4xOjJM6ksI=;
-        b=YLhrNn75R2zISTRWzjSl7N0FqXmNMdrnnejI19dy0f7GalCYx33oPxjWRs5W4UrfYD
-         M0RBmv5b74ZzX9u2ntzyyQZdOrg5RwpRKSIwR1UKuN6zAOIRSRsfmytoyjuBMex8OlGk
-         k3rRqt8EYWC/6n197q6vljkkrdFv/NCI9S39a0EI8EfM3HyFpsWmhTmj6COTFyHZX0fM
-         MUFvlKIokUlInBW8QPqqt/LNt10EgjeFFE220k97qny1YX1u1gOGHcfXaAR+IUeJT9oH
-         9WKOKeohkrqbJjkI5CB5k1hAZTP7tS9W5QNNxhspzwDcAEeI27j18CYKyZuErlllSjkn
-         NezA==
-X-Gm-Message-State: AOAM5316fbi6kgcaaUkz7AiM7nsqMqS3nRSsQ8hauEKUW7tlrD+mF7wz
-        AxlZNtiibr4pnRXpYJsQ78CEhT+nkJk=
-X-Google-Smtp-Source: ABdhPJxeVCaFZx9Xurtak5m8tOBi/1cp0MI0ykqYQbohyKizEJMvTcTqSgxyECKfcpJDf2C+hckLiA==
-X-Received: by 2002:a05:6000:1a89:b0:20f:d0b7:ba98 with SMTP id f9-20020a0560001a8900b0020fd0b7ba98mr8479983wry.208.1653336783514;
-        Mon, 23 May 2022 13:13:03 -0700 (PDT)
+        bh=5W2x8t68NoDAVIFeMr0BVtQdXxzEzVw8wanSKIA/+K4=;
+        b=MPsQA1pGrARz55V8SsXi9rkTK6naC6OIpf9t/vW1P1SFOxKlHiMUFWhx+RKYV08kl6
+         2Lmm1Ye3J0NZDN+PR7YuurJbfSbQANiJl5wo549LDzqxRUNK/ANvT/xAqmYw27a77SnF
+         RrhMnp488Xk9sdb/EzmTFLclzYCGk4h+wAYBIJ/PGCMupE4E/nEN2tYon9T44j+83CKF
+         qsLXoHj+96vuVwkoBRiz7b9iDfu3tIqqtPV1Mw4OMYrOzhE441nClWdd+OS4Z21iCeFS
+         lADIzhhiGUmHVq1E67KaUR1N7W+Ffq1/y/pggL5iwcXas9wPqwFY7Kr004/R7DK+Y6ij
+         hNpA==
+X-Gm-Message-State: AOAM5328SvVkJcowGxjFTExe7xdvQfDL1H6ivn+uT1sa0qwc5brx8dEQ
+        +WZAqD6JcqIfKjn0yK5fwddc7OwAWaU=
+X-Google-Smtp-Source: ABdhPJxUE0eJ+VvQ1P9FigDTgYQA/1nucdWfPDWgdRPoJqOaDRSZZy6l78rJP7DSrrJcM0gb2Tqrgg==
+X-Received: by 2002:a05:600c:26d2:b0:397:49cd:2cda with SMTP id 18-20020a05600c26d200b0039749cd2cdamr621480wmv.141.1653336784563;
+        Mon, 23 May 2022 13:13:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v2-20020adfc5c2000000b0020fcd1704a4sm7113261wrg.61.2022.05.23.13.13.02
+        by smtp.gmail.com with ESMTPSA id p2-20020a05600c358200b003974ba5cacdsm180770wmq.35.2022.05.23.13.13.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 13:13:02 -0700 (PDT)
-Message-Id: <aaff000cecb43550e0974bfda117e1c065ab8203.1653336765.git.gitgitgadget@gmail.com>
+        Mon, 23 May 2022 13:13:04 -0700 (PDT)
+Message-Id: <4f2b15d3d1f10eaec8e485b84281eb4cca207a69.1653336765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
         <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 May 2022 20:12:26 +0000
-Subject: [PATCH v7 11/30] unpack-trees: initialize fsmonitor_has_run_once in
- o->result
+Date:   Mon, 23 May 2022 20:12:27 +0000
+Subject: [PATCH v7 12/30] fsm-listen-darwin: ignore FSEvents caused by xattr
+ changes on macOS
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,32 +75,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Initialize `o->result.fsmonitor_has_run_once` based upon value
-in `o->src_index->fsmonitor_has_run_once` to prevent a second
-fsmonitor query during the tree traversal and possibly getting
-a skewed view of the working directory.
+Ignore FSEvents resulting from `xattr` changes.  Git does not care about
+xattr's or changes to xattr's, so don't waste time collecting these
+events in the daemon nor transmitting them to clients.
 
-The checkout code has already talked to the fsmonitor and the
-traversal is updating the index as it traverses, so there is
-no need to query the fsmonitor.
+Various security tools add xattrs to files and/or directories, such as
+to mark them as having been downloaded.  We should ignore these events
+since it doesn't affect the content of the file/directory or the normal
+meta-data that Git cares about.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- unpack-trees.c | 1 +
- 1 file changed, 1 insertion(+)
+ compat/fsmonitor/fsm-listen-darwin.c | 34 +++++++++++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 360844bda3a..888cff81f9c 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1772,6 +1772,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 0741fe834c3..14105f45c18 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -100,7 +100,7 @@ static void log_flags_set(const char *path, const FSEventStreamEventFlags flag)
+ 	if (flag & kFSEventStreamEventFlagItemCloned)
+ 		strbuf_addstr(&msg, "ItemCloned|");
  
- 	o->result.fsmonitor_last_update =
- 		xstrdup_or_null(o->src_index->fsmonitor_last_update);
-+	o->result.fsmonitor_has_run_once = o->src_index->fsmonitor_has_run_once;
+-	trace_printf_key(&trace_fsmonitor, "fsevent: '%s', flags=%u %s",
++	trace_printf_key(&trace_fsmonitor, "fsevent: '%s', flags=0x%x %s",
+ 			 path, flag, msg.buf);
  
- 	/*
- 	 * Sparse checkout loop #1: set NEW_SKIP_WORKTREE on existing entries
+ 	strbuf_release(&msg);
+@@ -125,6 +125,31 @@ static int ef_is_dropped(const FSEventStreamEventFlags ef)
+ 		ef & kFSEventStreamEventFlagUserDropped);
+ }
+ 
++/*
++ * If an `xattr` change is the only reason we received this event,
++ * then silently ignore it.  Git doesn't care about xattr's.  We
++ * have to be careful here because the kernel can combine multiple
++ * events for a single path.  And because events always have certain
++ * bits set, such as `ItemIsFile` or `ItemIsDir`.
++ *
++ * Return 1 if we should ignore it.
++ */
++static int ef_ignore_xattr(const FSEventStreamEventFlags ef)
++{
++	static const FSEventStreamEventFlags mask =
++		kFSEventStreamEventFlagItemChangeOwner |
++		kFSEventStreamEventFlagItemCreated |
++		kFSEventStreamEventFlagItemFinderInfoMod |
++		kFSEventStreamEventFlagItemInodeMetaMod |
++		kFSEventStreamEventFlagItemModified |
++		kFSEventStreamEventFlagItemRemoved |
++		kFSEventStreamEventFlagItemRenamed |
++		kFSEventStreamEventFlagItemXattrMod |
++		kFSEventStreamEventFlagItemCloned;
++
++	return ((ef & mask) == kFSEventStreamEventFlagItemXattrMod);
++}
++
+ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			     void *ctx,
+ 			     size_t num_of_events,
+@@ -190,6 +215,13 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			continue;
+ 		}
+ 
++		if (ef_ignore_xattr(event_flags[k])) {
++			trace_printf_key(&trace_fsmonitor,
++					 "ignore-xattr: '%s', flags=0x%x",
++					 path_k, event_flags[k]);
++			continue;
++		}
++
+ 		switch (fsmonitor_classify_path_absolute(state, path_k)) {
+ 
+ 		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
 -- 
 gitgitgadget
 
