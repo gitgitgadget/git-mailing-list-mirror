@@ -2,62 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0F4FC433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 15:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD49FC433EF
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 16:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237839AbiEWPX4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 11:23:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53016 "EHLO
+        id S238382AbiEWQNU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 12:13:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237797AbiEWPVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 11:21:53 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF30F2A70E
-        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:51 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id m12so13410497plb.4
-        for <git@vger.kernel.org>; Mon, 23 May 2022 08:21:51 -0700 (PDT)
+        with ESMTP id S236486AbiEWQNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 12:13:19 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB083151C
+        for <git@vger.kernel.org>; Mon, 23 May 2022 09:13:17 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id bs17so13182210qkb.0
+        for <git@vger.kernel.org>; Mon, 23 May 2022 09:13:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZFUzfFAW6xFPRFK0IiAHdHdMUM2ECxYKp7kX5F1bqGU=;
-        b=R+chum4tqQK62gu+3IPCqPphuZh3TgggTG3MisSY6dBq9dvbx8E0b0JPu65ufLl7ny
-         QoDR0X55hDB8gC5C7fINNWANt0XHaxoPkq1gAGxA6aHYWJPgmXMxzJyPD77Y0UyVUGho
-         lkiOCWIwSyvVEGmT+RyCJznf3DkyxKsD6rHo30IhFbPU4f61FdrYDdaHO+R9sZwVZ5cn
-         cqLxBtWS8CeJ9McqJqkcyamxLNrF//EhY2jlimBUU6rcOSAxthMUrNj/Tuv5u72UPjNP
-         8rMk9c7uDShZUgCwtsx2Cj5QMali8V9l0nxofHcdC8OIiLyDRbvIYFoqPDajvXPqdWWl
-         OR0A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4tpWmKzkKKmw7amytGGC7/Bhau2++E6B+vOswvwN3Pk=;
+        b=cr1OZKGzdWWZdu+tz5kJwWvjPfLDElAFLhc8L5FpGZceRLM/JuQAjRb9f0rYLadwBV
+         k352Eb+WRE4s9eqyUk8l7S2ZmnVOGxKVyqIT4ZyhbRNhcHKB8ThDtkVBnzwKN99M6m6U
+         BkbUY4AL1yM7JT0mMs/Efn/JV0VmLD6mfCjy89b+U7eCkmwt20+OFbqCcM3rSpMvb83Q
+         YEYA/M4xi05yuKIuMRTLp3ja92vtQ4Cbiz5FNN3O7zrZaaxeEUulILq9ZApnBf7UOR37
+         TtF5ZRmE1DngjcNodHxr+XVcspMLKj/bKvlO0BfzphiPvsqYtBnpiq/+ffAu+94I1JS7
+         dsXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZFUzfFAW6xFPRFK0IiAHdHdMUM2ECxYKp7kX5F1bqGU=;
-        b=0wY+1awUpx1Vrhs2vqjMIL1HZhuWddE9trZ9uORir68ol2vO35DVXRQzNDctmNHIbB
-         dE+w4R8aD+C98Zz/BBCeg6EXGZ4DS1LaKreub4KsiEZRav5+4H8PFQVWv/P08D5YAEqM
-         5fvezqT7Bbot3qgxfoIhTL4fg0A5ye0mJZcn0NXofx2Oa5d/lLuyaEVDOm/0GmrcSQjC
-         +NYUs0NduFAUqZf3MwbZvovd+mOIA+6ot+mDSGgK6jMWumJh5su1WxL5o8afcft2v5DW
-         9ZPvOsPwxPBjc98deuSeUnqeLguAxO8ayxEhDOtpBVekvXEMOiMGtmjdsjwem3rNvmQY
-         Yq/g==
-X-Gm-Message-State: AOAM530Vs+36WUjpFdZHqi/skras0Yo9wmbDdtu795ICShHd4QOan5rH
-        eK66E816tMpdv5ZVzjau5uQ=
-X-Google-Smtp-Source: ABdhPJyAw3WzqF+euxlTuz52r6aCJbKHHu3Lh+k8x8Aomq3sDCU3zKtbgP41tRKy53/tIr8uU1Qdig==
-X-Received: by 2002:a17:90a:4148:b0:1df:6811:8633 with SMTP id m8-20020a17090a414800b001df68118633mr26762920pjg.94.1653319311369;
-        Mon, 23 May 2022 08:21:51 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id y13-20020a1709027c8d00b0015e8d4eb2cfsm5280287pll.281.2022.05.23.08.21.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 May 2022 08:21:51 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4tpWmKzkKKmw7amytGGC7/Bhau2++E6B+vOswvwN3Pk=;
+        b=r1HlurJMq1CdeksNTZRttIDiqRGrUk/oOk/wJRE9jtBg1t97rQfVAPSZjDMB/XVywG
+         5U2cpNR8JQ12bHGkkb13gGv+Bm7LmU2IvRR/UkhVi8uponk9mOFkKVFXOu0KsSCqIrWQ
+         gswHpvVRiSBgWMuvjJ39M8FNsXTqwPz/i3ZaTVSiKl0LRqJFD/OKTtXGUgcI/aYca2Wz
+         b+ezlLOaHfyahS3jDTMabls1swgnTU9RRwVP0ZqRQ9SQhqe2iBZqxmtYW/SFeVoEz3mB
+         c85ZfGV2u2YKbYvs1HGlJFM3A3zGrdQwzxJ14hlfERiQMP9696q9pn9zkT/CZs4pGlen
+         VItA==
+X-Gm-Message-State: AOAM5338v92qeyqu9oo74yT75ugGANV78I0rkGnC96sPzD1xAIxT4h3J
+        lQCUzTQ8iEnr2818atdLEQNTi0jZlVj1Qh58bqw=
+X-Google-Smtp-Source: ABdhPJyF3zf9VHqBgf21+IQkJpVtNhHQo7SXRgP0IToByiYKsFVFfXU+PoU8RLAa/V7armxNkV4+pc7mewSPq5nLdLo=
+X-Received: by 2002:ae9:e406:0:b0:6a3:86e7:88fa with SMTP id
+ q6-20020ae9e406000000b006a386e788famr3746614qkc.71.1653322396923; Mon, 23 May
+ 2022 09:13:16 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220519081548.3380-1-worldhello.net@gmail.com>
+ <20220523012531.4505-1-worldhello.net@gmail.com> <220523.86v8twzp6a.gmgdl@evledraar.gmail.com>
+ <220523.86ilpwzmne.gmgdl@evledraar.gmail.com> <CANYiYbF8NDawCijZ1Hf=2zdi329=WSdYqL05Tz8+NOyJAFgpLA@mail.gmail.com>
+ <220523.86sfp0xpoz.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220523.86sfp0xpoz.gmgdl@evledraar.gmail.com>
 From:   Jiang Xin <worldhello.net@gmail.com>
-To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
-Cc:     Alexander Shopov <ash@kambanaria.org>,
+Date:   Tue, 24 May 2022 00:13:05 +0800
+Message-ID: <CANYiYbGozxEw6i-dGPPD_Y2CNttnpsa30akstb=C1qzXrq-dfA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/9] Incremental po/git.pot update and new l10n workflow
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
         Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
         Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Alessandro Menti <alessandro.menti@alessandromenti.it>,
         Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
@@ -65,141 +70,216 @@ Cc:     Alexander Shopov <ash@kambanaria.org>,
         Dimitriy Ryazantcev <DJm00n@mail.ru>,
         Peter Krefting <peter@softwolves.pp.se>,
         Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v4 8/9] Makefile: add "po-init" rule to initialize po/XX.po
-Date:   Mon, 23 May 2022 23:21:27 +0800
-Message-Id: <20220523152128.26380-9-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <20220523012531.4505-1-worldhello.net@gmail.com>
-References: <20220523012531.4505-1-worldhello.net@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+On Mon, May 23, 2022 at 10:56 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Mon, May 23 2022, Jiang Xin wrote:
+>
+> > On Mon, May 23, 2022 at 4:19 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> >>  $(LOCALIZED_SH_GEN_PO): .build/pot/po/%.po: %
+> >>         $(call mkdir_p_parent_template)
+> >> @@ -2786,11 +2780,24 @@ sed -e 's|charset=3DCHARSET|charset=3DUTF-8|' =
+\
+> >>  echo '"Plural-Forms: nplurals=3DINTEGER; plural=3DEXPRESSION;\\n"' >>=
+$@
+> >>  endef
+> >>
+> >> -.build/pot/git.header: $(LOCALIZED_ALL_GEN_PO)
+> >> +.build/pot/git.header:
+> >
+> > No. We should rebuild the pot header if any po file need to be update,
+> > because we want to refresh the timestamp in the "POT-Creation-Date:"
+> > filed of the pot header.
+>
+> Okey, I did leave a question about this in an earlier E-Mail though,
+> i.e. does anything actually rely on this, or the header at all, or is
+> this just cargo-culting?
+>
+> I haven't found anything in our toolchain that cares about the header at
+> all (for the *.pot, not *.po!) let alone the update timestamp.
 
-The core translation is the minimum set of work that must be done for a
-new language translation.
+When creating a new po/XX.po manually using msginit from POT file with
+or without a header, the new generated po/XX.po has different header.
 
-There are over 5000 messages in the template message file "po/git.pot"
-that need to be translated. It is not a piece of cake for such a huge
-workload. So we used to define a small set of messages called "core
-translation" that a new l10n contributor must complete before sending
-pull request to the l10n coordinator.
+  $ msginit -i po/git.pot -o po/XX-with-header.po \
+      --locale=3Dja --no-translator
+  $ msginit -i po/git-headless.pot -o po/XX-without-header.po \
+      --locale=3Dja --no-translator
+  $ diff po/XX-with-header.po po/XX-without-header.po
+  1,5d0
+  < # Japanese translations for Git package.
+  < # Copyright (C) 2022 THE Git'S COPYRIGHT HOLDER
+  < # This file is distributed under the same license as the Git package.
+  < # Automatically generated, 2022.
+  < #
+  8,11c3
+  < "Project-Id-Version: Git\n"
+  < "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+  < "POT-Creation-Date: 2022-05-23 23:27+0800\n"
+  < "PO-Revision-Date: 2022-05-23 23:27+0800\n"
+  ---
+  > "Project-Id-Version: git 2.36.0.7.g31429651cf.dirty\n"
+  16c8
+  < "Content-Type: text/plain; charset=3DUTF-8\n"
+  ---
+  > "Content-Type: text/plain; charset=3DASCII\n"
 
-By pulling in some parts of the git-po-helper[^1] logic, we add rule
-"core-pot" to create this core translation message "po/git-core.pot":
+Should we ignore this change?
 
-    make core-pot
+>
+> >>         $(call mkdir_p_parent_template)
+> >>         $(QUIET_GEN)$(gen_pot_header)
+> >>
+> >> -po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO)
+> >> +# We go through this dance of having a prepared
+> >> +# e.g. .build/pot/po/grep.c.po and copying it to
+> >> +# .build/pot/to-cat/grep.c only because some IDEs (e.g. VSCode) pick
+> >> +# up on the "real" extension for the purposes of auto-completion, eve=
+n
+> >> +# if the .build directiory is in .gitignore.
+> >> +LOCALIZED_ALL_GEN_TO_CAT =3D $(LOCALIZED_ALL_GEN_PO:.build/pot/po/%.p=
+o=3D.build/pot/to-cat/%)
+> >> +ifdef AGGRESSIVE_INTERMEDIATE
+> >> +.INTERMEDIATE: $(LOCALIZED_ALL_GEN_TO_CAT)
+> >> +endif
+> >> +$(LOCALIZED_ALL_GEN_TO_CAT): .build/pot/to-cat/%: .build/pot/po/%.po
+> >> +       $(call mkdir_p_parent_template)
+> >> +       $(QUIET_GEN)cat $< >$@
+> >
+> > Copy each po file in ".build/pot/po/" to another location
+> > ".build/pot/to-cat/", but without the ".po" extension.
+> >
+> > Let's take "date.c" as an example:
+> >
+> > 1. Copy "date.c" to an intermediate C source file
+> > ".build/pot/po-munged/date.c" and replace PRItime with PRIuMAX in it.
+> >
+> > 2. Call xgettext to create  ".build/pot/po/date.c.po" from the
+> > intermediate C source file ".build/pot/po-munged/date.c".
+> >
+> > 3. Optionally remove intermediate C source files like
+> > ".build/pot/po-munged/date.c". To have two identical C source files in
+> > the same worktree is not good, some software may break. So I choose to
+> > remove them.
+> >
+> > 4. Copy the po file (".build/pot/po/date.c.po") created in step 2 to
+> > an intermediate fake C source file ".build/pot/to-cat/date.c" which is
+> > a file without the ".po" extension. Please note this intermediate fake
+> > C source file ".build/pot/to-cat/date.c" is not a valid C file, but a
+> > PO file.
+> >
+> > 5. Call msgcat to create "po/git.pot" from all the intermediate fake C
+> > source files including  ".build/pot/to-cat/date.c".
+> >
+> > 6. Optionally remove all the intermediate fake C source files in
+> > ".build/pot/to-cat/". I choose to remove them, because leave lots of
+> > invalid C source files in worktree is not good.
+> >
+> > For example, ".build/pot/po/date.c.po" was created from
+> >> +
+> >> +po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_TO_CAT)
+> >>         $(QUIET_GEN)$(MSGCAT) $(MSGCAT_FLAGS) $^ >$@
+> >
+> > 7. "po/git.pot" depends on the intermediate fake C source files. If
+> > any single C source file has been changed, will run step 6 to copy all
+> > po files in ".build/pot/po" to corresponding fake C source files in
+> > ".build/pot/to-cat/", if we choose to remove these intermediate fake C
+> > source files.
+> >
+> > This implementation is too heavy to solve a trivial issue. I think we
+> > can push forward this patch series and leave these comments in
+> > "po/git.pot":
+>
+> If you find it too "heavy" & are trying to optimize it for some reason
+> then that whole extra special-dance can be made conditional on
+> MAKE_AVOID_REAL_EXTENSIONS_IN_GITIGNORED_FILES.
+>
+> But really, it's 15MB of .build/pot in my local HEAD with this fix-up,
+> it's 1.4MB without it, but this whole thing just seems like premature
+> optimization. Especially given:
+>
+>     $ git hyperfine -r 3 -L rev origin/master,HEAD~,HEAD,avar/Makefile-in=
+cremental-po-git-pot-rule~,avar/Makefile-incremental-po-git-pot-rule -p 'gi=
+t clean -dxf; git reset --hard' 'make pot' --warmup 1
+>     Benchmark 1: make pot' in 'origin/master
+>       Time (mean =C2=B1 =CF=83):      1.970 s =C2=B1  0.014 s    [User: 1=
+.683 s, System: 0.353 s]
+>       Range (min =E2=80=A6 max):    1.955 s =E2=80=A6  1.982 s    3 runs
+>
+>     Benchmark 2: make pot' in 'HEAD~
+>       Time (mean =C2=B1 =CF=83):     931.3 ms =C2=B1   4.7 ms    [User: 3=
+358.5 ms, System: 1088.7 ms]
+>       Range (min =E2=80=A6 max):   927.0 ms =E2=80=A6 936.3 ms    3 runs
+>
+>     Benchmark 3: make pot' in 'HEAD
+>       Time (mean =C2=B1 =CF=83):      1.506 s =C2=B1  0.389 s    [User: 4=
+.655 s, System: 1.363 s]
+>       Range (min =E2=80=A6 max):    1.257 s =E2=80=A6  1.955 s    3 runs
+>
+>     Benchmark 4: make pot' in 'avar/Makefile-incremental-po-git-pot-rule~
+>       Time (mean =C2=B1 =CF=83):      1.015 s =C2=B1  0.002 s    [User: 3=
+.615 s, System: 1.224 s]
+>       Range (min =E2=80=A6 max):    1.013 s =E2=80=A6  1.017 s    3 runs
+>
+>     Benchmark 5: make pot' in 'avar/Makefile-incremental-po-git-pot-rule
+>       Time (mean =C2=B1 =CF=83):      1.014 s =C2=B1  0.008 s    [User: 3=
+.540 s, System: 1.068 s]
+>       Range (min =E2=80=A6 max):    1.007 s =E2=80=A6  1.023 s    3 runs
+>
+>     Summary
+>       'make pot' in 'HEAD~' ran
+>         1.09 =C2=B1 0.01 times faster than 'make pot' in 'avar/Makefile-i=
+ncremental-po-git-pot-rule'
+>         1.09 =C2=B1 0.01 times faster than 'make pot' in 'avar/Makefile-i=
+ncremental-po-git-pot-rule~'
+>         1.62 =C2=B1 0.42 times faster than 'make pot' in 'HEAD'
+>         2.12 =C2=B1 0.02 times faster than 'make pot' in 'origin/master'
+>
+> I.e. all of this is much faster than what we have on "master" now. My
+> 22434ef36ae (Makefile: avoid "sed" on C files that don't need it,
+> 2022-04-08) (avar/Makefile-incremental-po-git-pot-rule) is then just 10%
+> slower than the "grep or xgettext", its "~" is the corresponding
+> unoptimized.
+>
+> The HEAD here is with my fix-up, and HEAD~ is your series here.
+>
+> Anyway, if you really feel strongly about it let's go with your way of
+> doing it.
+>
+> It just sounded like you weren't actually trying top optimize anything,
+> but to work around your editor. So if we had a method to do that....
 
-To help new l10n contributors to initialized their "po/XX.pot" from
-"po/git-core.pot", we also add new rules "po-init":
+But for users who prefer to delete all the intermediate files in
+".build/pot/to-cat" and ".build/pot/po-munged/", then they will get
+performance penalty.
 
-    make po-init PO_FILE=po/XX.po
-
-[^1]: https://github.com/git-l10n/git-po-helper/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Makefile      | 43 ++++++++++++++++++++++++++++++++++++++++++-
- po/.gitignore |  1 +
- shared.mak    |  1 +
- 3 files changed, 44 insertions(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index 34a64c5fa7..a3f8446de9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2808,6 +2808,7 @@ po-update: po/git.pot
- 	$(check_po_file_envvar)
- 	@if test ! -e $(PO_FILE); then \
- 		echo >&2 "error: $(PO_FILE) does not exist"; \
-+		echo >&2 'To create an initial po file, use: "make po-init PO_FILE=po/XX.po"'; \
- 		exit 1; \
- 	fi
- 	$(QUIET_MSGMERGE)$(MSGMERGE) $(MSGMERGE_FLAGS) $(PO_FILE) po/git.pot
-@@ -2815,6 +2816,46 @@ po-update: po/git.pot
- .PHONY: check-pot
- check-pot: $(LOCALIZED_ALL_GEN_PO)
- 
-+### TODO FIXME: Translating everything in these files is a bad
-+### heuristic for "core", as we'll translate obscure error() messages
-+### along with commonly seen i18n messages. A better heuristic would
-+### be to e.g. use spatch to first remove error/die/warning
-+### etc. messages.
-+LOCALIZED_C_CORE =
-+LOCALIZED_C_CORE += builtin/checkout.c
-+LOCALIZED_C_CORE += builtin/clone.c
-+LOCALIZED_C_CORE += builtin/index-pack.c
-+LOCALIZED_C_CORE += builtin/push.c
-+LOCALIZED_C_CORE += builtin/reset.c
-+LOCALIZED_C_CORE += remote.c
-+LOCALIZED_C_CORE += wt-status.c
-+
-+LOCALIZED_C_CORE_GEN_PO = $(LOCALIZED_C_CORE:%=.build/pot/po/%.po)
-+
-+.PHONY: core-pot
-+core-pot: po/git-core.pot
-+
-+.build/pot/git-core.header: $(LOCALIZED_C_CORE_GEN_PO)
-+	$(call mkdir_p_parent_template)
-+	$(QUIET_GEN)$(gen_pot_header)
-+
-+po/git-core.pot: .build/pot/git-core.header $(LOCALIZED_C_CORE_GEN_PO)
-+	$(QUIET_GEN)$(MSGCAT) $(MSGCAT_FLAGS) $^ >$@
-+
-+.PHONY: po-init
-+po-init: po/git-core.pot
-+	$(check_po_file_envvar)
-+	@if test -e $(PO_FILE); then \
-+		echo >&2 "error: $(PO_FILE) exists already"; \
-+		exit 1; \
-+	fi
-+	$(QUIET_MSGINIT)msginit \
-+		--input=$< \
-+		--output=$(PO_FILE) \
-+		--no-translator \
-+		--locale=$(PO_FILE:po/%.po=%)
-+
-+## po/*.po files & their rules
- ifdef NO_GETTEXT
- POFILES :=
- MOFILES :=
-@@ -3350,7 +3391,7 @@ cocciclean:
- 
- clean: profile-clean coverage-clean cocciclean
- 	$(RM) -r .build
--	$(RM) po/git.pot
-+	$(RM) po/git.pot po/git-core.pot
- 	$(RM) *.res
- 	$(RM) $(OBJECTS)
- 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
-diff --git a/po/.gitignore b/po/.gitignore
-index 37d1301b32..ff0e5176a6 100644
---- a/po/.gitignore
-+++ b/po/.gitignore
-@@ -1,2 +1,3 @@
- /build
- /git.pot
-+/git-core.pot
-diff --git a/shared.mak b/shared.mak
-index 8cd170a7e7..4330192e9c 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -62,6 +62,7 @@ ifndef V
- 	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
- 	QUIET_LNCP     = @echo '   ' LN/CP $@;
- 	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
-+	QUIET_MSGINIT  = @echo '   ' MSGINIT $@;
- 	QUIET_MSGFMT   = @echo '   ' MSGFMT $@;
- 	QUIET_MSGMERGE = @echo '   ' MSGMERGE $@;
- 	QUIET_GCOV     = @echo '   ' GCOV $@;
--- 
-2.36.0.1.g15c4090757
-
+> ...except it seems you also care about making it much faster than
+> "master" (or care about <20MB of disk space), which to be blunt seems a
+> bit crazy to me :) Last I checked "make test" ended up creating ~1GB of
+> data (not all at once, but in parallel testing a lot more than 10MB is
+> often in play at once).
+>
+> As this was a pretty obscure target that I only expect CI, you,
+> translators & me to run in practice a small difference in the initial
+> run didn't seem to matter, especially as it's all an improvement over
+> "master".
+>
+> Anyway, you do whatever you think is best with that :)
+>
+> >>         $ grep '#-#' po/git.pot
+> >>         #. #-#-#-#-#  git-add--interactive.perl.po  #-#-#-#-#
+> >>         #. #-#-#-#-#  add-patch.c.po  #-#-#-#-#
+> >>         #. #-#-#-#-#  git-add--interactive.perl.po  #-#-#-#-#
+> >>         #. #-#-#-#-#  branch.c.po  #-#-#-#-#
+> >>         #. #-#-#-#-#  object-name.c.po  #-#-#-#-#
+> >>         #. #-#-#-#-#  grep.c.po  #-#-#-#-#
+>
