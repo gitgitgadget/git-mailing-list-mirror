@@ -2,105 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 087DBC433F5
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 12:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE00C433F5
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 13:14:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235822AbiEWM7G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 08:59:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35422 "EHLO
+        id S236142AbiEWNO3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 09:14:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235806AbiEWM7C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 08:59:02 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 180B853A72
-        for <git@vger.kernel.org>; Mon, 23 May 2022 05:59:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653310721;
-        bh=k/1EnOxV3B3stN8kE0R/MhiSH1VCvBq4LHLH9Qs06Fk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YYGmmhQ2MoprOgv4sX3qPEUoKgsvyiXvxVOTpTJU7LwAXpOAxmv+gh0tG2gsNFrr+
-         UVkETPsw08QA4rGeMdbOSNEhK4t2TeF2C4qh8Ypfz4gUhDCgfKTWAh0BwWVzmDfUsm
-         x7likSQ8EcBVbwB+x3O71oYhaBODHrSsMufMT9FU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOiDX-1oDHtn3CU3-00QFbJ; Mon, 23
- May 2022 14:58:40 +0200
-Date:   Mon, 23 May 2022 14:58:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Victoria Dye <vdye@github.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
- helpful
-In-Reply-To: <xmqqfsl1bcy6.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2205231455200.352@tvgsbejvaqbjf.bet>
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>        <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>        <6b83bb83-32b9-20c9-fa02-c1c3170351c3@github.com>        <nycvar.QRO.7.76.6.2205212307090.352@tvgsbejvaqbjf.bet>       
- <xmqq35h2cwrm.fsf@gitster.g>        <nycvar.QRO.7.76.6.2205222045130.352@tvgsbejvaqbjf.bet> <xmqqfsl1bcy6.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S236201AbiEWNOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 09:14:01 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5172B388E
+        for <git@vger.kernel.org>; Mon, 23 May 2022 06:13:36 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id j7so9786274ila.1
+        for <git@vger.kernel.org>; Mon, 23 May 2022 06:13:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=VvoYGNeOSE1+SKxPfw6HwD1TwWREsD48jnFS51BzPAM=;
+        b=YUkfBKX+5H/tTkYQjBS0uTnKN3+f0v07ls5YuoD9CtOhz9DDPPK3pvBMNPdLTVI+z1
+         TdyEvMMI67em7Mv4aXB1ra+1ZbWeBaDJXC+y6AnP4LxER9xARzCUin4heO6QCy8695op
+         AHTqB9ys37Gu+R1+8wUh1kg0pvD5JyaD6o7pB6AC9ysZFKsI3P4WEHBa7o/FYuEk3yva
+         7QqeGwABhL48TlB4Epp943cDlEVKTSdXV0snWhx1bOn54oZQ5qLrIv94LEYK8f5CCsmw
+         IneXg4ZNafCKBBobDk5GHRy+Gk1Y2EcqDmyp0qo2wQu7/qgL7E44ycQnyp+p4a1zVtgo
+         RpPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=VvoYGNeOSE1+SKxPfw6HwD1TwWREsD48jnFS51BzPAM=;
+        b=oLTRvHIDShL04YzoJrhuXcNq4MSJnEYFurVESrleKCNRePpEQrCC1LsdmN9qEz2fXZ
+         73ul+dcapYTctYwkrsBYQBMlRA1LyMH/+M8rKS3k2MqwSiySJq8RF4pusnBdzymP7SXO
+         OF96O8cvyeQNBusVd0Al1HIMZ85TTQoEn4JbEmp4LDaRhbe3gE6SvosGjdI4BIMU8iX0
+         bMwcHO1TexMXLRxyJhw3tRIWBpA3ap8rZ83CdWLTNB/TVLkRIfg7GH332T7gA0cBUp1p
+         WQxfJxXRliEjtg92kBP7DdWkQ3S5WllQUJ1CZ25emqZpa8K/l/C8H7HZSOxf0Smpiggi
+         uF0A==
+X-Gm-Message-State: AOAM5317ttSWf/MzkpWz44LGZb69yQlr8HE7KOeEP+p/4Oa5PctW8j/V
+        Sskxpys613vLmjAAP2B2Wx73
+X-Google-Smtp-Source: ABdhPJzH5t6Pq7pJ0zh+y2bJG8prs/32ofLu4Nd+1Tgv+hrdKvrrThc1J2rp8d2AYLMM64ICzNXZfg==
+X-Received: by 2002:a05:6e02:12e7:b0:2d1:7bcd:f7c8 with SMTP id l7-20020a056e0212e700b002d17bcdf7c8mr7514251iln.51.1653311615614;
+        Mon, 23 May 2022 06:13:35 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:4800:d130:3923:6cc0? ([2600:1700:e72:80a0:4800:d130:3923:6cc0])
+        by smtp.gmail.com with ESMTPSA id z12-20020a02ba0c000000b0032ea33f23a0sm2304405jan.95.2022.05.23.06.13.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 May 2022 06:13:35 -0700 (PDT)
+Message-ID: <5909f466-c323-0874-b175-51fe5e93dc12@github.com>
+Date:   Mon, 23 May 2022 09:13:33 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:o+VEyvyaEXscBsxJNbtD9s5NhcEzFOToQCMZWi3Ti8WQRkYHP1A
- 3DxozS1ZxlpyvOlOsnQ/29pYStznBNaYNF/MLNaQEu6GH//F784xaghPEQxFeiUn2lUkUSn
- 9H4PyR7+uv5EKnY/OlyABxq6xJQJOmS5tSXKk2jUL34eBB5P5UJYNWsfB2wHhuMs+/dRUyU
- ltfit3RnYaiNRQb2qQLoA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0o3B195ZFX4=:dgvf6+rxlnULeSey2fn5iR
- IIe2u+mpIoT2/88DtyZvh+EMkuCdMb0y0HJyHsHJpZSf9NQC+FIFAZAX9nhE8rexXijodSjUq
- BF/aNi/cv5qU8aCW4mGk0DwRfImCfcTwBYqcMKRt8kgoZXmqt5RkwBWR07SklHmH2mHf7lgNQ
- uY0NOe85zPLi3uhfxMuzmDDt5U5QXXTDDbJvbLLd7vgkRQnRmleJzTJr4RGVjfW+lBxxziQvQ
- /c5HHv+9Cp/x/MvKgg4tYdISPbEIeVjnDP4sysEVO3xsowR34vMuUIuOKyDGyt7OBBteJJgVY
- VvLWN8l63iNmmBeqbZpUdHNWKx8KYMPY0tF6rvqPxXFZqVujHOKKu/dAEM7YG2u3KfyMe2rUF
- i+QjFKYKiZy86jCtiANrc0FkNMuTvDOUUNE9BHl9kJAlofSVb2cnkHu0XyQvjDWPfV5VaDb8d
- tKQK4tge2Kq8fPd5kNNAbC8a2UnUWntetvLfCtVIsq2JSwGA5M4rRNH9ei4a6TXZNj4TRnC9y
- F87anEs7xBTMDKcHS3ciEepMrNWMfYM7YFu+BovxiLFc/BTMAKcEfGEGn4Bx0d6BDuJmoOSOC
- Rw8llyD90NMokjSYh/BPQ10zF+ecig9NOnMBozug3IVhRsUvN9T98awGX+mvB15aBrZxNiYPG
- 7HqiifbMgDBxEQZqBeFGvGZKRa9yVbjABIdfxt4zNDShNzIfht6vIacypTDB/Na7Okm22kKyn
- QcpYcoGk90MoMd99KPEFTs3iaLFz61FRrfPtF2/LxrLnQ2/wIJZu3GZeMefFo56uks4P75ZW9
- TG7x4xgWFhUAxufJXCvLgqXnv5b6OaQ4CQa584icD70wg0x6TNhjccZKDaYWDtwehzib8meXf
- MvpsR01ZSVMGA3caHxeyl9u4fIu+xbinpfWQISuBhxMebwwgB3qW2pwcwW9wzb+5ukHyWcaXr
- UiSIhKAhgKJPQDcf08TNOcsPJZaXC0+gx9p2SmDY0NuoWA1ZA0qXvFVt1xH6iTyu72JY7GoGj
- agE66fp3M8tQAQAgTvRGQnlZDPFahCZzHgZv6yZOsLfFt36eVkGW9smsz3/s+0TYy+i2ptbEx
- 8Fcm/LQ2N/fxzfFQDQ1XBPdVeULwKkSDU4aGjZ5pMEo4it+xSY/Ym/HSw==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v2 08/10] sparse-index: complete partial expansion
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, shaoxuan.yuan02@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
+ <pull.1208.v2.git.1652982758.gitgitgadget@gmail.com>
+ <ed640e3645ba4f60f06bd335b9ac7bf350dd81f9.1652982759.git.gitgitgadget@gmail.com>
+ <xmqqsfp3coqy.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqsfp3coqy.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 5/21/2022 3:45 AM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +	if (pl && !pl->use_cone_patterns) {
+>>  		pl = NULL;
+>> +	} else {
+>> +		/*
+>> +		 * We might contract file entries into sparse-directory
+>> +		 * entries, and for that we will need the cache tree to
+>> +		 * be recomputed.
+>> +		 */
+>> +		cache_tree_free(&istate->cache_tree);
+>> +
+>> +		/*
+>> +		 * If there is a problem creating the cache tree, then we
+>> +		 * need to expand to a full index since we cannot satisfy
+>> +		 * the current request as a sparse index.
+>> +		 */
+>> +		if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
+>> +			pl = NULL;
+>> +	}
+> 
+> So, if the current index has some irrelevant (i.e. do not match the
+> pattern list) subtrees in collapsed form, presense of an unmerged
+> entry, presumably inside the cone(s) we are interested in, makes us
+> lose the pattern list here, and we end up expanding everything?
+> 
+> I suspect that is a situation that is not so uncommon.  Working
+> inside a narrow cone of a wide tree, performing a merge would
+> hopefully allow many subtrees that are outside of the cones of our
+> interest merged without getting expanded at all (e.g. only the other
+> side touched these subtrees we are not working on, so their version
+> will become the merge result), while changes to some paths in the
+> cone of our interest may result in true conflicts represented as
+> cache entries at higher stages, needing conflict resolution
+> concluded with "git add".  Having to expand these subtrees that we
+> managed to merge while still collapsed, only because we have
+> conflicts in some other parts of the tree, feels somewhat sad.
 
-On Sun, 22 May 2022, Junio C Hamano wrote:
+You are correct that conflicts outside of the sparse-checkout cone will
+cause index expansion. That happens during the 'git merge' command, but
+the index will continue to fail to collapse as long as those conflicts
+still exist in the index.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > I see that this is still with the previous iteration, and therefore
-> > exposes the same speed (or slowness) as was investigated so wonderfull=
-y by
-> > Victoria.
-> >
-> > So I really do not understand why you pointed to that run, given that =
-it
->
-> Simply because your updated version came to my tree a lot after I
-> prepared two trees that are otherwise identical for comparison to
-> write the message you are responding to.
+When there are conflicts like this during the merge, then the index
+expansion is not as large of a portion of the command as normal, because
+the conflict resolution also takes some time to compute. The commands
+afterwards do take longer purely because of the expanded index.
 
-Oh sorry, I only noticed that your mail came in after I sent the new
-iteration, and I incorrectly thought that you had put the patch series
-into the Stalled/To-Drop pile, so I assumed that your mail was in response
-to my new iteration.
+However, this state is also not as common as you might think. If a user
+has a sparse-checkout cone specified, then they are unlikely to change
+files outside of the sparse-checkout cone. They would not be the reason
+that those files have a conflict. The conflicts would exist only if they
+are merging branches that had conflicts outside of the cone. Typically,
+any merge of external changes like this are of the form of "git pull" or
+"git rebase", in which case the conflicts are still "local" to the
+developer's changes.
 
-I had missed that you replied to v2 instead of to v3.
+You are right that there is additional work that could be done here,
+specifically allowing the cache tree to partially succeed and use the
+successfully generated trees to create sparse directory entries where
+possible. This was not viable before because we lacked the "partially
+expanded" index state. This series establishes the necessary vocabulary to
+do such an improvement later.
+> By the way, why are we passing the "--missing-ok" option to "git
+> write-tree" here?
+> 
+>> +	cache_tree_update(istate, WRITE_TREE_MISSING_OK);
+> 
+> The same question here.  We didn't say "missing trees are OK".  What
+> made it OK in this change?
+ 
+Both of these additions of WRITE_TREE_MISSING_OK are not needed. I
+think I added them in an earlier version, thinking they were needed
+due to something in the Scalar functional tests. I confirmed just now
+that they are not needed for that. I will remove them.
 
-> I do not appreciate that you have to always talk back to others in
-> such an aggressive tone
-
-I apologize for that. As you might have guessed, it was not my intention
-to be aggressive in any way. I merely meant to express my puzzlement, and
-your explanation resolved that very nicely.
-
-Thank you,
-Dscho
+Thanks,
+-Stolee
