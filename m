@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7446AC433EF
-	for <git@archiver.kernel.org>; Mon, 23 May 2022 19:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20EB5C433EF
+	for <git@archiver.kernel.org>; Mon, 23 May 2022 20:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230429AbiEWTpt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 15:45:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48558 "EHLO
+        id S232059AbiEWUDk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 16:03:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231658AbiEWTpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 May 2022 15:45:43 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 435721113
-        for <git@vger.kernel.org>; Mon, 23 May 2022 12:45:41 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id 11so11076223qtp.9
-        for <git@vger.kernel.org>; Mon, 23 May 2022 12:45:41 -0700 (PDT)
+        with ESMTP id S229706AbiEWUDj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 May 2022 16:03:39 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 493C720BD2
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:03:36 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id g3so13362181qtb.7
+        for <git@vger.kernel.org>; Mon, 23 May 2022 13:03:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=IpjwwxWdAp/5Yr2ymK4xhncTxQTrSf+UZkwG6ojuQ0I=;
-        b=ARmQaS9Nv5979XO6iJUk0JH2K0iFE8kiNzqRLUopjZhkPIf/vWwWJbnpkl61obOJbP
-         Vn4xuDqtP9tS6h1WH+HsdOQeRyAWY+lkpgy7LbDCsy7PMx266VkungFhjTSAue3Bpzht
-         WzAyXvMpRK/tlF9fW8vu7bamSmAj1piDm2Wh4PxwbKpVMvT4AOnRTuHG1TYEcac9altz
-         CXE4bOK4O5/nq5hGnB5Q0dY499EIAMi8tlPpdnAyTG9hOdhlInghYTLJUTHExr531snl
-         xxzVLaBWZH7Edhx1+aHjf9dW2XFW5tTT8PVxcpmx1cJvZpfCewHWJMqUB1kxAeMEsq6s
-         H6yg==
+        bh=1vaNfqFlusmwEhS7dAy6RqsYBI7Y7rwpQMYaPjBl+PQ=;
+        b=OCxJeHXfjgnKQRvIpHBPGIKfDdVB4fB1O0VCq19wiLSlM+YwYEeL6tsZS5ktBeRa3e
+         P2hT7i7W8sbgUgw9A1SO71aw8bm3CVmgUykCU3v2wK95Xr1DhKNFGp0Hu25kUl6v/bpn
+         vd2OGVUv6iILgdHmGEfKTRiTGZ62RWdPLfYvbpZbSCfARC21FfIsrnF8fMa6KjBjXz0K
+         fKLmmHbCbmFH9eHumKcp0UERyAQyiw9JWWapIMLgqpMr/Bk2WvEueSky5+W6KI4QUwD4
+         el0EO5NkzCdc8V7/gscr5LcgVOtpy/oRSK/z+z1e7WpWHVChDxlz3ZhKIuJQrOgzTb5x
+         iFzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=IpjwwxWdAp/5Yr2ymK4xhncTxQTrSf+UZkwG6ojuQ0I=;
-        b=AZWk4r/XPSu9+6ORTYj/ZjmBJ8wNJ+p4YJwwTZLWn0gBm7qLgxy0ECWOTdGZL1Nxad
-         TUiTzWYpGf46pYV1VT0hxPs0YQpDKgdqkG7lLiH/hqc8WUQMvViFUvk5no9FcKjtTuIg
-         8PX4FAbMRLdn9LWiEnuy4cw9kGZyAhb5h436A6LZblgHKx8h33rG4vCy9rJOnslt/Uqo
-         BJxdcLM5tY1Ws4/He0JqjHsg9S4cISp1F8UJgAhNLQttju91ok7oP5DMHhQQ7F+9/BvN
-         DakaBu5HC2I0bjy72FlNMOLh7w3Z51fFAiJDBzc4uWy62A/po8DOB2dPSmOeoAPvAmFY
-         ztCA==
-X-Gm-Message-State: AOAM5325Ba4X0tZNsGE5V9n2+QD0kfyH/HGYKmknEixSsgTHhyKyw1Hk
-        XUWQWFMoGi0I4hVy69TzjEcT
-X-Google-Smtp-Source: ABdhPJwNjazw0qYOCUFS2U4uCfI035mpc+/MQ4i0DaXKz/KUzL/zfkR29lf9bmTDEQP6GQSB6LIeiA==
-X-Received: by 2002:a05:622a:118a:b0:2f9:172b:c72f with SMTP id m10-20020a05622a118a00b002f9172bc72fmr15173119qtk.618.1653335140383;
-        Mon, 23 May 2022 12:45:40 -0700 (PDT)
+        bh=1vaNfqFlusmwEhS7dAy6RqsYBI7Y7rwpQMYaPjBl+PQ=;
+        b=PvqJc9HOdLJdJulcLjRD+Uc0JwJDs6YGDFhG4eAe5egJX5rGGK8eo0geLh3NUSLtXX
+         9ipe8cLHGcr5X6OGf6KijFNCQFqPeabj6qZPBU8lTddMj8veFUYemKtAxRRX6VGEzm9n
+         gnlOvk5yZqXAtd2rOWT4IewhX0mSgXqi2QX9v/tv9syZVomTxAu6RfEGhhBLCQVehzvX
+         22mMEeDW457a6YocX8boyyxcThY7pk8yKz6jlYXdWcVVlacU2lYS9692GICoT5JeaO+M
+         Q4fhCjfPWxW3k7AH7KzORXBBnY1rkdy+i8BF/hRzwAx0QsBKprVtLvQKJUbkKilD7Z5I
+         6DDw==
+X-Gm-Message-State: AOAM531QIlC+Ot8ZQD3SKuVGeVfVDFcHGSfaRJtiDXNq8uaI851Tk1zd
+        d52oAq4KWpanJAATtIINmBbO
+X-Google-Smtp-Source: ABdhPJwY3dmyGSfGocNfBaRYKTARXfhXuiP6cE1u9Jl36yJb3lD+bXQx43X7h3DmO4REMSDkTCZDiQ==
+X-Received: by 2002:ac8:5ac3:0:b0:2f7:efab:98ee with SMTP id d3-20020ac85ac3000000b002f7efab98eemr17753697qtd.104.1653336215401;
+        Mon, 23 May 2022 13:03:35 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:71ba:8ad9:40cd:d364? ([2600:1700:e72:80a0:71ba:8ad9:40cd:d364])
-        by smtp.gmail.com with ESMTPSA id u124-20020a379282000000b0069fc13ce254sm4944788qkd.133.2022.05.23.12.45.39
+        by smtp.gmail.com with ESMTPSA id s16-20020ac87590000000b002f39b99f67fsm4791277qtq.25.2022.05.23.13.03.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 12:45:40 -0700 (PDT)
-Message-ID: <a28047a1-4db2-1638-8b7e-62fcf0b57983@github.com>
-Date:   Mon, 23 May 2022 15:45:39 -0400
+        Mon, 23 May 2022 13:03:35 -0700 (PDT)
+Message-ID: <8d483e1d-1865-c475-cbe3-78fa1f7f8bfb@github.com>
+Date:   Mon, 23 May 2022 16:03:34 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH v2 2/2] clean: refector to the interactive part of clean
+Subject: Re: [PATCH v2 1/2] add-menu: added add-menu to lib objects
 Content-Language: en-US
 To:     Nadav Goldstein via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Nadav Goldstein <nadav.goldstein96@gmail.com>
 References: <pull.1232.git.1652649537647.gitgitgadget@gmail.com>
  <pull.1232.v2.git.1653286345.gitgitgadget@gmail.com>
- <7271a285d18604bd77251d586201d31eba1287da.1653286345.git.gitgitgadget@gmail.com>
+ <13bc75a2b0510f55e9a73852838b3b11683f13a2.1653286345.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <7271a285d18604bd77251d586201d31eba1287da.1653286345.git.gitgitgadget@gmail.com>
+In-Reply-To: <13bc75a2b0510f55e9a73852838b3b11683f13a2.1653286345.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -72,158 +72,103 @@ X-Mailing-List: git@vger.kernel.org
 On 5/23/22 2:12 AM, Nadav Goldstein via GitGitGadget wrote:
 > From: Nadav Goldstein <nadav.goldstein96@gmail.com>
 > 
-> moved the code that responsible for presenting the menu options
-> (interactive flag) to be handles by the add-menu lib that was added
-> in previous commit.
+> added to the lib objects the add menu module which is
+> simply extracted functions from clear.c
+> (which in the next commit will be removed and instead
+> clear will use the outsourced functions).
 
-Please see Documentation/SubmittingPatches, specifically the
-"present tense" section [1]. 
+Please rewrite according to Git style. (Mentioned in
+my reply to patch 2 with more detail.)
 
-[1] https://github.com/git/git/blob/f9b95943b68b6b8ca5a6072f50a08411c6449b55/Documentation/SubmittingPatches#L174-L179
+> diff --git a/add-menu.c b/add-menu.c
 
-> -static int clean_use_color = -1;
-> -static char clean_colors[][COLOR_MAXLEN] = {
-> -	[CLEAN_COLOR_ERROR] = GIT_COLOR_BOLD_RED,
-> -	[CLEAN_COLOR_HEADER] = GIT_COLOR_BOLD,
-> -	[CLEAN_COLOR_HELP] = GIT_COLOR_BOLD_RED,
-> -	[CLEAN_COLOR_PLAIN] = GIT_COLOR_NORMAL,
-> -	[CLEAN_COLOR_PROMPT] = GIT_COLOR_BOLD_BLUE,
-> -	[CLEAN_COLOR_RESET] = GIT_COLOR_RESET,
-> -};
-> -
-> -
-> -static const char *clean_get_color(enum color_clean ix)
-> +static const char *clean_get_color(enum color_clean ix, clean_color_settings *clean_colors, int *clean_use_color)
+I think I said something in another place that was a
+bit incorrect: I think of "git add -p" as interactive
+add, but really it's "git add -i" that is the
+equivalent. The "git add -i" menu is very similar to
+the "git clean -i" menu, as it is said in comments.
 
-I'm surprised to see changes to add-menu.c in this patch. I
-would expect that add-menu.c was written in its correct form
-in the first patch and then this patch could focus entirely
-on deleting matching code from builtin/clean.c and calling
-the API exposed in add-menu.h.
+Thus, perhaps the best thing to do would be to unify
+the two implementations, if at all possible. The one
+in builtin/clean.c is from 2013 while the one in
+add-interactive.c is much more recent.
 
-Perhaps this was just an interactive rebase issue? Fixed up
-the wrong commit? That happens to me a lot.
+The biggest test of your new API is whether it can
+support _both_ of these existing interactive menus
+before adding one to 'git stash'.
 
-There are also a lot of places that refer to "clean" when
-you want this API to be abstracted away from 'git clean'.
+> new file mode 100644
+> index 00000000000..6a1c125d113
+> --- /dev/null
+> +++ b/add-menu.c
+> @@ -0,0 +1,339 @@
+> +#include <stdio.h>
 
-> \ No newline at end of file
-> diff --git a/add-menu.h b/add-menu.h
-> index 52e5ccb1800..64f1cbdab9f 100644
-> --- a/add-menu.h
-> +++ b/add-menu.h
-> @@ -1,3 +1,7 @@
-> +#include "color.h"
-> +
-> +typedef char clean_color_settings[][COLOR_MAXLEN];
+In the Git project, the first include should either be
+"cache.h" or "git-compat-utils.h". For this API,
+git-compat-utils.h should suffice, since there should
+not be anything from the Git data model that actually
+matters here.
 
-This typedef also shouldn't reference 'git clean'.
-
-> +
->  #define MENU_OPTS_SINGLETON		01
->  #define MENU_OPTS_IMMEDIATE		02
->  #define MENU_OPTS_LIST_ONLY		04
-> @@ -35,7 +39,7 @@ struct menu_stuff {
->  	void *stuff;
->  };
->  
-> -void clean_print_color(enum color_clean ix);
-> +void clean_print_color(enum color_clean ix, clean_color_settings *clean_colors, int *clean_use_color);
->  
->  /*
->   * Implement a git-add-interactive compatible UI, which is borrowed
-> @@ -48,4 +52,4 @@ void clean_print_color(enum color_clean ix);
->   *   - The array ends with EOF.
->   *   - If user pressed CTRL-D (i.e. EOF), no selection returned.
->   */
-> -int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, void (*prompt_help_cmd)(int));
-> \ No newline at end of file
-> +int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, clean_color_settings *clean_colors, int *clean_use_color, void (*prompt_help_cmd)(int));
-
-There are a lot of instances where your lines are much too
-wide. Documentation/CodingGuidelines has a lot of style
-requirements, including trying to stay to an 80-character
-width. There are a lot of examples in the codebase that
-show how to break a method prototype across multiple lines
-with tasteful vertical alignment.
-
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> index 5466636e666..ef220869851 100644
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -19,6 +19,7 @@
->  #include "pathspec.h"
->  #include "help.h"
->  #include "prompt.h"
+> +#include "builtin.h"
 > +#include "add-menu.h"
->  
->  static int force = -1; /* unset */
->  static int interactive;
-> @@ -39,14 +40,6 @@ static const char *msg_warn_lstat_failed = N_("could not lstat %s\n");
->  static const char *msg_skip_cwd = N_("Refusing to remove current working directory\n");
->  static const char *msg_would_skip_cwd = N_("Would refuse to remove current working directory\n");
->  
-> -enum color_clean {
-> -	CLEAN_COLOR_RESET = 0,
-> -	CLEAN_COLOR_PLAIN = 1,
-> -	CLEAN_COLOR_PROMPT = 2,
-> -	CLEAN_COLOR_HEADER = 3,
-> -	CLEAN_COLOR_HELP = 4,
-> -	CLEAN_COLOR_ERROR = 5
-> -};
+> +#include "cache.h"
+> +#include "config.h"
+> +#include "dir.h"
+> +#include "parse-options.h"
+> +#include "string-list.h"
+> +#include "quote.h"
+> +#include "column.h"
+> +#include "color.h"
+> +#include "pathspec.h"
+> +#include "help.h"
+> +#include "prompt.h"
 
-This removal doesn't seem valuable. I think this color set
-should remain in the builtin, especially because it's being
-used further down.
+I doubt that these are all required. Please check to
+see what you are using from each of these includes and
+remove as necessary.
 
-Alternatively, the names can be renamed to "MENU_COLOR_..."
-to apply to all commands in the add-menu.h API.
+> +static const char *clean_get_color(enum color_clean ix)
+> +{
+> +	if (want_color(clean_use_color))
+> +		return clean_colors[ix];
+> +	return "";
+> +}
 
->  static const char *color_interactive_slots[] = {
->  	[CLEAN_COLOR_ERROR]  = "error",
-> @@ -58,7 +51,7 @@ static const char *color_interactive_slots[] = {
->  };
->  
->  static int clean_use_color = -1;
-> -static char clean_colors[][COLOR_MAXLEN] = {
-> +static clean_color_settings clean_colors = {
->  	[CLEAN_COLOR_ERROR] = GIT_COLOR_BOLD_RED,
->  	[CLEAN_COLOR_HEADER] = GIT_COLOR_BOLD,
->  	[CLEAN_COLOR_HELP] = GIT_COLOR_BOLD_RED,
-> @@ -67,36 +60,8 @@ static char clean_colors[][COLOR_MAXLEN] = {
->  	[CLEAN_COLOR_RESET] = GIT_COLOR_RESET,
->  };
->  
-> -#define MENU_OPTS_SINGLETON		01
-> -#define MENU_OPTS_IMMEDIATE		02
-> -#define MENU_OPTS_LIST_ONLY		04
-> -
-> -struct menu_opts {
-> -	const char *header;
-> -	const char *prompt;
-> -	int flags;
-> -};
-> -
+Please update the method names to not care about clean.
+This is especially true in the public API in the *.h file.
 
-Generally, the remainder of this patch is primarily
-deletions. Although, we could make it be completely
-deletions if the API method names are changed (not to
-start with "clean_" and then all these calls are
-modified in one go:
+> +void clean_print_color(enum color_clean ix)
+> +{
+> +	printf("%s", clean_get_color(ix));
+> +}
+> \ No newline at end of file
 
->  static void prompt_help_cmd(int singleton)
->  {
-> -	clean_print_color(CLEAN_COLOR_HELP);
-> +	clean_print_color(CLEAN_COLOR_HELP, &clean_colors, &clean_use_color);
+nit: please make sure the file ends with exactly one newline.
 
-Here, we would have something like "menu_print_color()"
-instead. To avoid adding too much deletion noise when
-making these important changes, we can add MAYBE_UNUSED
-to all of the static methods that become unreachable.
+One problem with this approach of adding the code to this
+new *.c file and then later removing the code from clean is
+that we lose 'git blame' or 'git log -L' history across the
+move. It's much harder to detect copies than to detect moved
+lines of code.
 
-After a patch that does that refactor, a diff that only
-deletes lines (does not add any) would be very easy to
-verify.
+I don't have a good solution in mind right now, but it's
+worth thinking about.
+
+> diff --git a/add-menu.h b/add-menu.h
+> new file mode 100644
+> index 00000000000..52e5ccb1800
+> --- /dev/null
+> +++ b/add-menu.h
+> @@ -0,0 +1,51 @@
+
+Don't forget the #ifndef __ADD_MENU__/#define __ADD_MENU__
+trick to avoid multiple declarations of these values.
+
+> +int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff, void (*prompt_help_cmd)(int));
+> \ No newline at end of file
+
+nit: newline here, too.
 
 Thanks,
 -Stolee
