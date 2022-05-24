@@ -2,104 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0648C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5F4CC433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:53:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241680AbiEXUrF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 16:47:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46990 "EHLO
+        id S237185AbiEXUxE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 16:53:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238638AbiEXUrE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 16:47:04 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC297340F7
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:47:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653425220;
-        bh=jlq6QlWqo9PIFb+4gnKBqE4li73mresq/NZDxwQHw+A=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JnWGE737pm6yg12ec6frTTqMa5Gu2HhX1Y7DlAa+QmVu1+GW3PNji2zm8hoV67Hul
-         sI2KrGUCim7FEAayLgclZp1uE7DtCrBzH+f8rS4ErhCnxxCJ0bGcNQGkjRjcIYPHqF
-         /CghxAjtqdzX3L9rpggVHwRt1oEvQQ8LDvdRi08s=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mof9F-1nVKRh1xSD-00p5PD; Tue, 24
- May 2022 22:47:00 +0200
-Date:   Tue, 24 May 2022 22:46:58 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/4] nedmalloc: avoid new compile error
-In-Reply-To: <972c3c82-0c10-ee95-9a7f-082de02a49c0@web.de>
-Message-ID: <nycvar.QRO.7.76.6.2205242239150.352@tvgsbejvaqbjf.bet>
-References: <pull.1238.git.1653351786.gitgitgadget@gmail.com> <8963c6fa625bbaf5153990939ea06742304ddcd2.1653351786.git.gitgitgadget@gmail.com> <220524.86bkvnxsm5.gmgdl@evledraar.gmail.com> <972c3c82-0c10-ee95-9a7f-082de02a49c0@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S235839AbiEXUxD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 16:53:03 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB02D737A0
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:53:01 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id f35so3002755qtb.11
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=FaNwmbOjrjDxpzNH+gZ6n8TRd+6nY3h++uQZVRd0NOE=;
+        b=n9Ppqh9+24PzHSH4BCG1ghUtggvBR9ufY404JuUIfli2fcdwEkEX2PP0BdEXqdgeSO
+         +zH4m6ojt4SGoEOCvXT3lNWNnbUMGcAuidnflsv7gAaYoAacacPrhACyzbsmRKSmzEEy
+         vvxbtNBnVVb4elSAJ73v4KS9sVYlkVTWwkoEvmlY97RAgzddCmcR4WvvUADCLTJ9B1iP
+         hcXDFae2Hu5Qq8FaZKgnoEh3/aHEh9fVOjqtKeP8XvuoUhj5X8z2srf7CGndOovEdBkD
+         PNt2qbfl/lK/8Bklm2OJN+lF7VEkScsEVP2M4q5XESJTpz6nEpiK6BgbLK1KBbc0fpBj
+         ennw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=FaNwmbOjrjDxpzNH+gZ6n8TRd+6nY3h++uQZVRd0NOE=;
+        b=lFjkcJVcMfA3q2qgs7Xnj5DEw3eILgePxbHcr+TQods2efFKNVwuv26xK2AhTczHtc
+         NyDkQqq8rjr1hbATwl1k12sgSN1BhQRVzvdHoh65yQopN0z+vCMmpX+G/UFHsm7y9Qlj
+         zfe0EynJJmZuZ+HigHcgcaJtWAPUVDJxEs48k5v0yBLXFAsdHIIdLX6Rf2d9kViqocQH
+         g4cnCEsyXWhbeH2yLKy1YNZUm901XWjbxvoyrFcF18dFKLK8RFg1y1r2OQ9gt5BCrTX/
+         MfzmrXMFbLNNNboe0R7nsCYMbxlN71YBzwEclbJ/97xpbk7F3ogtbD378WN4/T7uGcyY
+         DVBg==
+X-Gm-Message-State: AOAM531oZg6sOJB+8YgqiDG1LLvhmVMzQFf/o07G6ZU+dAn4yObAW/vL
+        3BfhM/YVdnp8rP7RqrxUMTY=
+X-Google-Smtp-Source: ABdhPJzfseZWUXyThmyv6GkhCTn6XOLMMBaXDn/WKYClWvj+G+hstPRUK/8L6SUoU04Z+D6FEPzNfQ==
+X-Received: by 2002:a05:622a:1346:b0:2f9:17ce:2f1d with SMTP id w6-20020a05622a134600b002f917ce2f1dmr18760167qtk.657.1653425581030;
+        Tue, 24 May 2022 13:53:01 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id h5-20020ac81385000000b002f3b82571b1sm265500qtj.1.2022.05.24.13.53.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 May 2022 13:53:00 -0700 (PDT)
+Subject: Re: [PATCH] ci: update Cirrus-CI image to FreeBSD 13.0
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, Ed Maste <emaste@freebsd.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
+ <20220524192026.2373nfcrs6bsa4ce@carlos-mbp.lan>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <6a3aecf1-1c0d-f4fc-7d0e-455eb0ccc92c@gmail.com>
+Date:   Tue, 24 May 2022 16:52:59 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-99894040-1653425220=:352"
-X-Provags-ID: V03:K1:W1m+0+VIr5FR9b31NujbdLciSEMGI7C27P5YOW5sg5yk/iSR5QZ
- 4T9gMuaVtyToH/ziu3wkrWwkjlGdC3ogm4ffTmfRs8+t3ST4qk0WkarlP0vY7LHbcZ/k6Ec
- s2SwhHNS3EccwzLNgOkGZy1cOXlOV13AW7LIOHIEsifQ0ZfcGh4dJd30SaQkGUlM5briiNi
- 980ONUjaY85UVxxG3ZPpw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GGcP/anjI18=:nU9FXwMABK9jJV2vvTvlM2
- qQQ6Zj1I+FX/DZ9SSdcj6A7lvb+LmPMAQ5csN8mKAHLgphQJSF0wWSSXsdzhMVwtazTUKcFNo
- UnS8DdY/fDIR/Sv/qvjQj101JOz2v+D/CWcJDY8WelM2o7QB5YyCkvsFV/U51vG+jDvQMdKgR
- xVsjiroCMns8skP94b5GJ7HCsGIIfThXx5BoPb0nYAmtEAVX3ZVPt8R/yX4/fpFXx89//oeEg
- 6TbYCJoitPLxEjf25QgBzZf6f1SdByUMYzShpKN/38pC8MPY+BT3YnCG5vyk4LZ6HPfjREWnn
- B1TBjI3Dof6thD/cHxl2vDidg4VxbU3ioyUVmIpx9dsNIdl3+DJg0fZKROQzkDdZ4WuhpNZOx
- FsENbHkpESETjDGh4C7RjnHQx0trUIy6oyQ5d0yh8YonsRdMYvlNu6m95j8xg8DWhJqUR3/kA
- gSFi3Mo8Zcaf/SZQcu0kM0k9gR0VRU+KqlVKSsqW5Ixf5UQ5kVnGeA34X2hiGXKRy3MTjUB8j
- TyVYKLFQ7ES8z3jzEbILXgFJ3zh4o79wjAcI7OfN3R2HkAcrRLDG26pJDE5FdfA7ZTBF5806g
- ghmqN2btN8Bqt/kpqKXdZ3IMTMHYeLlJfyG1yS8dotkpmwF6wX2iAjWN9XpXPMGchwZXyQR1B
- 2+jJ/sRqVMbuNOnDRsnvhrQ7jW9fLIwGkNNO4XDUQ+aPfyICPRlK+RdTVYmJO26QDo9vOvnUb
- 0loZ6SmfKGvxZe7snGk+1gkCJNd4j0AQlV6XpZrNWQsw0kR5oPY6XoOw9dGGwDJt4pxSHB+wW
- UY9tKtFvO063EwiUwbi5s8T9j8/y/iarNAofJr0itdpV5zEYBNUinEsrTQjZ7jezjwwgzKph1
- aZqLqOZOsXA/Is9exyiQ9daMoXooEEfjNh5gSe2PQ/IwB58sqYGxUj4vGr0j+cFwicwC6ljo1
- 6CYtiHsSYOLvMLGx2RrTf9lku2R1s4ip2CESGoMb6+WjRhKQ5jEmYOzk8vPzx/3mjBU9tKJHM
- 4eWT0tQVbKBiu5+GHeWSslDeMFhxEG+VrQZK8FArmg9ubdneoczcXzcyyKeD216uSVbRu413Y
- fGufKDXt9DGJdV6VJfeA+RRNX+Is25YqLct3RpYr1nsfZDG/qP1B8xKIw==
+In-Reply-To: <20220524192026.2373nfcrs6bsa4ce@carlos-mbp.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Carlo,
 
---8323328-99894040-1653425220=:352
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Le 2022-05-24 à 15:20, Carlo Marcelo Arenas Belón a écrit :
+> On Tue, May 24, 2022 at 12:58:23PM -0400, Philippe Blain wrote:
+>> The FreeBSD CI build (on Cirrus-CI) has been failing in
+>> 't9001-send-email.sh' for quite some time, with an error from the
+>> runtime linker relating to the Perl installation:
+>>
+>>     ld-elf.so.1: /usr/local/lib/perl5/5.32/mach/CORE/libperl.so.5.32: Undefined symbol "strerror_l@FBSD_1.6"
+>>
+>> The first instance is in t9001.6 but it fails similarly in several tests
+>> in this file.
+> 
+> I have to admit I never tried to use cirrus, but I verified locally that a
+> 12.3 version wouldn't fail as well (or so I think).
+> 
+> did you try to use 12.3 which should be supported for a little longer?
 
-Hi Ren=C3=A9,
+Yes, I tested 12.3 and it also works. We could switch to that and
+keep 13.0 for later.
 
-On Tue, 24 May 2022, Ren=C3=A9 Scharfe wrote:
+>  
+>> The FreeBSD image we use is FreeBSD 12.2, which is unsupported since
+>> March 31st, 2022 [1]. Switching to a supported version, 13.0,
+>> makes this error disappear [2].
+> 
+> I think 13.1 might be better, since with this change we are also implicitly
+> making a move to say that we don't really care about the old (but still
+> supported) maintenance branch, but will only look at the "latest" version
+> instead.
 
-> Am 24.05.22 um 10:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> >
-> > This seems sensible, I thought "why not submit it to upstream",
-> > i.e. see:
-> > https://github.com/ned14/nedmalloc/blob/master/nedmalloc.c#L1298
-> >
-> > But that repository was last updated in 2014, I wonder if it's just
-> > because nobody's submitted a patch since then, or if it's inactive. Ha=
-ve
-> > you tried making Njall Douglas (the nedmalloc author) aware of this
-> > issue?
-> >
->
-> https://github.com/ned14/nedmalloc says at the top: "This repository has
-> been archived by the owner. It is now read-only.".
+I agree your reasoning, but 13.1 was not listed in the list of images on Cirrus-CI [1]. They 
+say they support all Google Compute Engine images, but I could not find a public list
+of these images ([2] seems to be it but I don't want to create an account just
+to see a list!).
 
-Indeed, maintenance of nedmalloc has stopped a few years ago (see e.g.
-https://github.com/ned14/nedmalloc/issues/20#issuecomment-343432314).
+> 
+> still (and Ed might have a stronger opinion about it than me) either version
+> would be an improvement and feel free to add my Reviewed-by for what it is
+> worth.
 
-About five years ago I tried to upgrade us to the latest nedmalloc version
-but ran into a performance regression that I was unable to justify the
-time to investigate further.
+Thanks!
 
-Ciao,
-Dscho
+> 
+>>     [1] https://lore.kernel.org/git/CAPUEspgdAos4KC-3AwYDd5p+u0hGk73nGocBTFFSR7VB9+M5jw@mail.gmail.com/T/#t
+> 
+> this might had been mangled by your mailer, but will presume is the thread
+> where I replied before, and that obviously didn't stick for these round ;)
+> 
 
---8323328-99894040-1653425220=:352--
+I think it's actually on your side, as the archive shows this URL
+on a single line [3]. And when I hit "reply all" in Thunderbird to type this
+it seems to have put in back in a single line (!)
+
+Cheers,
+
+Philippe.
+
+
+[1] https://cirrus-ci.org/guide/FreeBSD/
+[2] https://console.cloud.google.com/compute/images
+[3] https://lore.kernel.org/git/20220524165823.18804-1-levraiphilippeblain@gmail.com/T/#u
