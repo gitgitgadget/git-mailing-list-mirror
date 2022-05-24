@@ -2,104 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA61C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 14:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29587C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 14:29:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237272AbiEXOHw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 10:07:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49446 "EHLO
+        id S238152AbiEXO3Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 10:29:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237682AbiEXOHv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 10:07:51 -0400
-X-Greylist: delayed 2517 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 24 May 2022 07:07:45 PDT
-Received: from weald2.air.saab.se (weald2.air.saab.se [136.163.212.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B1922BD8
-        for <git@vger.kernel.org>; Tue, 24 May 2022 07:07:45 -0700 (PDT)
-Received: from mailhub1.air.saab.se ([136.163.213.4])
-        by weald2.air.saab.se (8.14.7/8.14.7) with ESMTP id 24ODPklW027695
-        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Tue, 24 May 2022 15:25:46 +0200
-DKIM-Filter: OpenDKIM Filter v2.11.0 weald2.air.saab.se 24ODPklW027695
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=saabgroup.com;
-        s=weald2_2; t=1653398746;
-        bh=XsBHnrFRpHk+lWAcHIRH9anU0DxZde0QwGujXe33sMI=;
-        h=From:To:Subject:Date:From;
-        b=Ar4NxShxEkB7OlTPNANbOguhmoC1/9JT1OlMEyG8R6NzGt4PcMroPOXegwoIZTmXO
-         pWturaBuC1RjjEAYYngO8lKPYbioLnu1IROyw/MSoLjXpfBs58SW5CNqC3ZOyvodhO
-         VSei0b3ittZ9xNIPjdkxQaOpaOVfgOVwGRPjdSOMuyzNoSeKX/envNv4GnKbaCpxjI
-         GXsoeBxI37hDmfR0zGZYOBs7plAZzaLtCXPjsQ6yWzaDrtpPSh4CZgTmVe5AsKgSvE
-         Pq99CAHf1WgKwY3chSbHFHO440KGSmEEyULbTTtQNMHbJDAafL6tmDB4RoIdvgrOT0
-         W33pPVA0NvZKw==
-Received: from corpappl17779.corp.saab.se (corpappl17779.corp.saab.se [10.12.196.86])
-        by mailhub1.air.saab.se (8.15.2/8.15.2) with ESMTPS id 24ODPk452858698
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-        for <git@vger.kernel.org>; Tue, 24 May 2022 15:25:46 +0200
-Received: from corpappl17781.corp.saab.se (10.12.196.88) by
- corpappl17779.corp.saab.se (10.12.196.86) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.26; Tue, 24 May 2022 15:25:43 +0200
-Received: from corpappl17781.corp.saab.se ([fe80::988b:c853:94fe:90aa]) by
- corpappl17781.corp.saab.se ([fe80::988b:c853:94fe:90aa%5]) with mapi id
- 15.02.0986.026; Tue, 24 May 2022 15:25:43 +0200
-From:   Olsson John <john.olsson@saabgroup.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Error handling when giving empty command line arguments
-Thread-Topic: Error handling when giving empty command line arguments
-Thread-Index: Adhvbv33EYLm80KPScCjpHIHZomAfw==
-Date:   Tue, 24 May 2022 13:25:43 +0000
-Message-ID: <dc08a8ee5ed64850872fd6529d1462e1@saabgroup.com>
-Accept-Language: sv-SE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [136.163.101.122]
-x-tm-as-product-ver: SMEX-14.0.0.3092-9.0.1002-26912.007
-x-tm-as-result: No-10--5.887500-5.000000
-x-tmase-matchedrid: 3C+gAndgRrt4GcCqxQcAiAewBVjD2SDGlKvhkP88iXT/Gd9Sm0XpG7y5
-        zA+nB60F8sfxw8Kspfftyssmx6PkxnHPBvSspzfjGXGu0jdPFGRITEcvqjcF4Jr6aNifCis8aOV
-        lkCHubAFuf5ur5byPparP+04pA0BmxzdZUAxpvx2rm7DrUlmNkF+24nCsUSFNjaPj0W1qn0TKay
-        T/BQTiGsKRxzhjL0lRi9+dihKZ3oM4qTOLvMus50kt6DZf9h4RSz2fw9kSQzDAvpLE+mvX8g==
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--5.887500-5.000000
-x-tmase-version: SMEX-14.0.0.3092-9.0.1002-26912.007
-x-tm-snts-smtp: 440D31FE037F1D94F4869B3FC222A15E86B8E88E517460757A26317501052BA72002:B
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S231272AbiEXO3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 10:29:23 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 905076A01F
+        for <git@vger.kernel.org>; Tue, 24 May 2022 07:29:22 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id n23so23383038edy.0
+        for <git@vger.kernel.org>; Tue, 24 May 2022 07:29:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=p47X9IZ4G07fM8AeBa7n5883JoByr8WGFFqZFHP8968=;
+        b=c9MqBXozrb294SIwAhcM2tIuFFJ5nnXdtqiFCLVvZahx4e+KZbrVZs69ZP3FEKaPbT
+         5XuGnTcPMw8E3ez3KnbNa1ynerIJfAHj7WkY5Nro66l9Ua9OgzyCCnLwQen+KL95b41c
+         pkfVng/JUY4eNhiXFwak90/NfnaHo6HeNRSA/64t2eOo/s6IDo7hVrTS7r/l2B/qLbqe
+         1C7e5rHsEMswPST2KRVfdQ2LdsWioztJ4c2pNLWCPKW+B8/aNnNRHVxcYdND1iG5qsD5
+         UGOKaHrB14ZYLIWVPGb6pNx+WyJN3v36JIAt5vaRWUDujtv5sCwr/mf/7ptMS48ezATT
+         AS1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=p47X9IZ4G07fM8AeBa7n5883JoByr8WGFFqZFHP8968=;
+        b=eD+O11OVr1E9CtnUGYDxtcgTfq/FsWtDyIhEkURTH/J/nX2I51r6xiYkP2JlOEtag6
+         6vOshZ0RRc/HoNBnb8lyQiOfUDsp/omPWH/1aHdv8AH42QrBFDnkiBi3z0/1AzZgs2Os
+         Cu9J41sTfbXxWTxGgLokbvkGKQDuXLbdVSVVZoMaFE4Tt2oq8SgmEjYhcPqKAVq5FXOw
+         vW9UoK7tRhUo14B2eP4J/eFuBRxDhtkJa/OeL42e3Y5jq/TNnqVtg45kETadKVzIiBpd
+         uxbPOBwrcTXZJ6KVYgXqdY4ey3IXwOnCEM6FL3oEnP1sBZBOgA+Wuumn8QMsgACEr5fY
+         0Low==
+X-Gm-Message-State: AOAM5332zgEemZVQKNZE6Y9XxPEJyMWBW/JrRBKis+iJVurL+BR3/1IC
+        mC36tVuHtgVPu399s5nkkYxntq0fCna5/yk2raI=
+X-Google-Smtp-Source: ABdhPJxDIXRHbCmSkhbbh/Fqw2MbuC5RqMnWwydSGpXcGEZ2RAmaKaOwjDl5iK8CQSwgxweKmb6kN8PXREGBIb1qLw4=
+X-Received: by 2002:a05:6402:5210:b0:42b:7718:b6ef with SMTP id
+ s16-20020a056402521000b0042b7718b6efmr7092624edd.22.1653402561058; Tue, 24
+ May 2022 07:29:21 -0700 (PDT)
 MIME-Version: 1.0
+References: <20220505203234.21586-1-ggossdev@gmail.com> <20220510171527.25778-1-ggossdev@gmail.com>
+ <20220510171527.25778-2-ggossdev@gmail.com> <xmqq7d6sm3e0.fsf@gitster.g>
+In-Reply-To: <xmqq7d6sm3e0.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 24 May 2022 07:29:09 -0700
+Message-ID: <CABPp-BGXRzYCvyM38dEUvQ125+VtRu++7L9UiRz98u+1=Lov7A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dir: consider worktree config in path recursion
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Goss Geppert <gg.oss.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        christian w <usebees@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have so far only seen this behavior with 'git fetch' command, but it migh=
-t be more general depending on how command line parsing is implemented.
+On Wed, May 11, 2022 at 9:37 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Goss Geppert <gg.oss.dev@gmail.com> writes:
+>
+> > diff --git a/dir.c b/dir.c
+> > index f2b0f24210..a1886e61a3 100644
+> > --- a/dir.c
+> > +++ b/dir.c
+> > @@ -1893,9 +1893,31 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+>
+[...]
+>
+> > +                     real_gitdir = real_pathdup(the_repository->gitdir, 0);
+>
+> This function is repeatedly called during the traversal.
+>
+> How expensive is it to keep calling real_pathdup() on the constant
+> the_repository->gitdir just in case it might be the same as our true
+> GIT_DIR?
 
-In a Bash script I had something similar to (but more complicated than what=
- I show below)
-
-  git fetch "${force}"
-
-where $force is either an empty string or '--force'. Due to that you usuall=
-y want to expand all variables within double quotes when writing Bash scrip=
-ts I did not realize that I had made a mistake here. Instead I got this str=
-ange error message and spent a couple of hours chasing it
-
-  fatal: no path specified; see 'git help pull' for valid url syntax
-
-This problem eventually turned out to be of the trivial kind once I realize=
-d why I got it, and also very simple to reproduce. Just do
-  $ git fetch ""
-  fatal: no path specified; see 'git help pull' for valid url syntax
-  $
-
-That is, 'git fetch' does not check if the given string is an empty string =
-before writing the error message. The empty string is completely unrelated =
-to any path/URI and in this case it was not that helpful.
-
-What do you say? Wouldn't it be better with a more specific error message w=
-hen an option value/argument is an empty string? Or should perhaps empty st=
-rings be ignored by the git commands?
-
-
-/John
-
+I agree that treat_directory is called many times, but this
+real_pathdup() call is inside the "if (nested_repo)" block, so this
+new real_pathdup() invocation should occur very seldom.  Or are you
+worried about cases where users have *very* large numbers of bare
+repositories nested under the working directory?  Even in that case,
+which seems pathological to me, I'd suspect the
+is_nonbare_repository_dir() ->
+read_gitfile_gently()/is_git_directory() codepath (used to determine
+the value of nested_repo) would be much more expensive than this call
+to real_pathdup(), so would it be worth trying to optimize this
+real_pathdup() call away even in that rare case?
