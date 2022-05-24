@@ -2,85 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C43C4C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 16:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECF3FC433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 16:58:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239408AbiEXQAW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 12:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46984 "EHLO
+        id S237314AbiEXQ6a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 12:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239291AbiEXQAO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 12:00:14 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FFB99AE6B
-        for <git@vger.kernel.org>; Tue, 24 May 2022 08:59:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1653407997;
-        bh=6Ra2q8YijfGhI/mMoUKoH/FHQiKskTxQYXIhiGVsuw4=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=MNzJW10de5zis5BywmDn7BdrkVRYBIgWi315hmoeL66yStagG7v0GV+53rUZYTDHW
-         qcDvRIadYVC6SY1CJ+nylp+1Q5Vzg084ryAZdn/PJdILpdpmR362n22P5yruYJ6zbt
-         FtA7ONgdmc+NZ/5VaYK4IGHSDQ2Lq16jjRF/4HfM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mo6Jl-1nVo6I0UkV-00pM2f; Tue, 24
- May 2022 17:59:57 +0200
-Message-ID: <972c3c82-0c10-ee95-9a7f-082de02a49c0@web.de>
-Date:   Tue, 24 May 2022 17:59:56 +0200
+        with ESMTP id S232721AbiEXQ63 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 12:58:29 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABFC16E8FC
+        for <git@vger.kernel.org>; Tue, 24 May 2022 09:58:28 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id j6so15490144qkp.9
+        for <git@vger.kernel.org>; Tue, 24 May 2022 09:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FC9O2oUBpIot7IkMZFXrysqbaHb/Gn2H2EdCXp1HyZk=;
+        b=hoTBpWhrpbAwwS10f5fxwYW2cj9KaeFpYiejp32R3CFygAapJe6gbDc5oPQJgvf2HK
+         eM2dxELNXwtsoM0Re+ouzi3lxmJaqFe6HEAV/Q6JTS61GZjmZ+kvTPvrL7fQ8JGkumFu
+         WiZWvT4/0rq812swuBx7yzPgJrs3Gz7iEVFX/62MleX/J/5v55u129LugEuZmpLrCjKS
+         mh092KIw3lEFr3PEX6ws799Yy8Hs12hG73fJBvGjY21z1LAsi6WJRUFORny2p1uwV6fb
+         Zh+gr1YTscz/lG2BIyO2vIJvRvIF0dTaFoHkbqNdPKUmq34mwydfkiykDZ33tX7ZeM46
+         cu8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FC9O2oUBpIot7IkMZFXrysqbaHb/Gn2H2EdCXp1HyZk=;
+        b=Zy07yhKd/b/h4drRXNoDGfrzCqN8R4d6FDPV/h62TyAzB7kCfbVRFp36VCh9Z+Ivch
+         5aR+MvXurlgNsKxVPMjTNZSvnfewHKVvcGgliNSP0EHqBtVKVm5GzZPVhdSSivIfHX4I
+         jAG6PT8L8UMflxNzQ1LXrdmxQlp/apOyAZ5NFQu7ZCzKZUt4EARS164/QpS8Egs16IM+
+         s4Zwlws8kitKXNGn0KrfLwEbVx4iCsN+WlRQ9lBvfO+OSlCQ5LFlBCJikAakiCiXnRCj
+         Mi/6O1pbLqUj4i5Gz7StZAv3ofHCcGVZZpZlCU8zGoGg40csohmTK73fFlcnEfmQLv/L
+         yQUg==
+X-Gm-Message-State: AOAM532a49RTumb3K2zNosgRrQPyP3ktfnkF8VUJaskEgHV2sHk7SNlQ
+        fYk5C5GSh0woHJCBTpJNRiwxMpuuTTWRTg==
+X-Google-Smtp-Source: ABdhPJyDZmEnS4csrJZvDtm7gNwjQlm2tWCEGQLlrNjtvxeBnS+yCcL8gP/owwwpd2PdYt7t4GBbsA==
+X-Received: by 2002:a05:620a:2402:b0:6a5:3b28:d726 with SMTP id d2-20020a05620a240200b006a53b28d726mr3561134qkn.500.1653411507662;
+        Tue, 24 May 2022 09:58:27 -0700 (PDT)
+Received: from localhost.localdomain (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id r25-20020ac85219000000b002f942e6bd88sm1121876qtn.48.2022.05.24.09.58.26
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 24 May 2022 09:58:27 -0700 (PDT)
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Ed Maste <emaste@FreeBSD.org>
+Subject: [PATCH] ci: update Cirrus-CI image to FreeBSD 13.0
+Date:   Tue, 24 May 2022 12:58:23 -0400
+Message-Id: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH 2/4] nedmalloc: avoid new compile error
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1238.git.1653351786.gitgitgadget@gmail.com>
- <8963c6fa625bbaf5153990939ea06742304ddcd2.1653351786.git.gitgitgadget@gmail.com>
- <220524.86bkvnxsm5.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <220524.86bkvnxsm5.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:MQQOR5E7iIts9lGOrB2fOvx7bz8RJSdHd93+zlGgXr3VEzi8rcM
- BxI/8/eS4xed781fzItw3V+29KkdOHMD9NQj+cKbpIKbqP4esoq8aWGX1gIPHNi6xh8A6lu
- vV1KmbsZj+O7R/SeM5acwhgy4JymxCkLI/9PtPSKfOfgByeauc/opP8L7RVP9hUtKrhRjR0
- J91hNX80n98I0cg0CNRzQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YfAR8Gp+wno=:aQE++NmZxl9zFqeQG0/vVr
- wOiQkvEPv2cmmifPMdpspyLELeLmagkhP80aNLHOtBlSGF5Ne4JpptAlTnsMC3kZGbULkBvtR
- 26yuxN5HSnpsNl/4HNyIhRZ9xBT7VcA2igz5y89qdZpNV3bgDRzAKTGABHlxdtn8t25GP4nBH
- Im296mjAHsjKrmQxuDAtiZ+tJLL1BiZE80BDPq6wAPWFmElNw9Xhq8F7de3RGm5TwjUUj29rv
- wbPFXwiYMb8iO2NbgLuJ5IqfNZ+HUeHpwqiGstkHYndwFO0XM+ANgDFDCTOQ/r2s1vvqdxOSM
- LVxLgeK2MBIsrLvtXlzRv4oF/wZkhS6j2GMhFa5ThPnpYxbRiw2pfLSSR9vX0rdMf5hY+xXBM
- UTOc67iphXP5xTMmRInOrnQocZ4L+9FGzTH98yvN0suuNtDdu0yn/5Jvz4sYqrRMXzEi7Cidr
- /Vx8Gjqdn2dpidb90cE8qWtw824FLObKbmaKSR/H+q061c38/rOFqjuULDaN5WFiOJ5pyv2x6
- F+iRnGGigYWOpHS9tzy15fLy8SkaLyFkbJG1Hx9K4wcINe8zfoxGWUD94wN38HIeHwzOu7GbU
- MaLh+iBQa0d1CYhVWXrW1WO68fQZHEWO8vVSF5f3pGZD0M53SjOF6yWDGJpHic8pJEzkKJjwc
- hRR0dvWchjobnt3XtzGSJbZTjpX75lLovltJl/EODEpEMuD10m1A/aJn/hTWxPm74w16YUnCW
- gGtL6xLkEIMh5ygJORVRvRL42yELGFZYpTRAeQ1yc2N19G6g52+WpmqJlL5Z8zK8DhxLeiYyP
- NQuk9RybmgTJdyXUZjDhxfla0e3fGAkAcMtKNVQte4535sG4UweACo0ZkQxlRwcGAs4ztqvgm
- ypTWn3WL9d2Lq4rDEaPrDHEB8GQXXEPaJonBpzMILJRJRrsoDlx3hVuNuceghL7dVoTRVx8gK
- vgLWld9EjT7RaQCD+d26MoxEnjUSI4HFxHxP0GnjiIWefeqZj8YEbOHz5gQFRR7yui6Iway4Q
- csmFchuUZ/dSKsiqHMVjoO+3MVer38a5DA+OMAyji710q0390pE7xVdCjQlBfoYjaFj7bwLDj
- oAWTUKYif7s0twryVTFfvIcqm5BtNRdV0SA
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.05.22 um 10:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> This seems sensible, I thought "why not submit it to upstream",
-> i.e. see:
-> https://github.com/ned14/nedmalloc/blob/master/nedmalloc.c#L1298
->
-> But that repository was last updated in 2014, I wonder if it's just
-> because nobody's submitted a patch since then, or if it's inactive. Have
-> you tried making Njall Douglas (the nedmalloc author) aware of this
-> issue?
->
+The FreeBSD CI build (on Cirrus-CI) has been failing in
+'t9001-send-email.sh' for quite some time, with an error from the
+runtime linker relating to the Perl installation:
 
-https://github.com/ned14/nedmalloc says at the top: "This repository has
-been archived by the owner. It is now read-only.".
+    ld-elf.so.1: /usr/local/lib/perl5/5.32/mach/CORE/libperl.so.5.32: Undefined symbol "strerror_l@FBSD_1.6"
 
-Ren=C3=A9
+The first instance is in t9001.6 but it fails similarly in several tests
+in this file.
+
+The FreeBSD image we use is FreeBSD 12.2, which is unsupported since
+March 31st, 2022 [1]. Switching to a supported version, 13.0,
+makes this error disappear [2].
+
+Change the image we use to FreeBSD 13.0.
+
+[1] https://www.freebsd.org/security/unsupported/
+[2] https://lore.kernel.org/git/9cc31276-ab78-fa8a-9fb4-b19266911211@gmail.com/
+
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+
+    Here is a proper patch following my earlier mail [1].
+    
+    [1] https://lore.kernel.org/git/CAPUEspgdAos4KC-3AwYDd5p+u0hGk73nGocBTFFSR7VB9+M5jw@mail.gmail.com/T/#t
+
+ .cirrus.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.cirrus.yml b/.cirrus.yml
+index e114ffee1a..20c85eef81 100644
+--- a/.cirrus.yml
++++ b/.cirrus.yml
+@@ -9,7 +9,7 @@ freebsd_12_task:
+     DEFAULT_TEST_TARGET: prove
+     DEVELOPER: 1
+   freebsd_instance:
+-    image_family: freebsd-12-2
++    image_family: freebsd-13-0
+     memory: 2G
+   install_script:
+     pkg install -y gettext gmake perl5
+
+base-commit: 7a3eb286977746bc09a5de7682df0e5a7085e17c
+-- 
+2.29.2
+
