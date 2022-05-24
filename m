@@ -2,106 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A78EC433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 23:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A8A9C433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 23:24:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242543AbiEXXTP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 19:19:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43564 "EHLO
+        id S241207AbiEXXYW convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 24 May 2022 19:24:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233046AbiEXXTO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 19:19:14 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB6B77F25
-        for <git@vger.kernel.org>; Tue, 24 May 2022 16:19:13 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C32B3181F4C;
-        Tue, 24 May 2022 19:19:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=aTjEfFnKfOKq
-        vqwKr4v3ptTU52PpdNNOYcImHVxWZto=; b=GLfz3HOg521/RzvekXAdA2PNqkqf
-        gCEIk5dGdWF2Lv32mqB0Y/9ueoHevZTzW16uhvCsA0Lae4O89A4TfmiQSpac+5Sw
-        8anYeP/+grS73wPKjBFFd2S57CTesDKlAUQ7X+QI3IVda3ktr1TjKD40VW0igA6x
-        Y0zmV4+DhgGGsMI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BC0D2181F4B;
-        Tue, 24 May 2022 19:19:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7547E181F4A;
-        Tue, 24 May 2022 19:19:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
- with it
-References: <cover.1651859773.git.git@grubix.eu>
-        <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
-        <xmqqtua2jtr0.fsf@gitster.g> <xmqqczgqjr8y.fsf_-_@gitster.g>
-        <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
-        <xmqqr14jluu4.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet>
-        <xmqqa6b7lrw6.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet>
-        <xmqqleuqj1gy.fsf@gitster.g>
-        <20220524201639.2gucdkzponddk5qt@carlos-mbp.lan>
-Date:   Tue, 24 May 2022 16:19:08 -0700
-In-Reply-To: <20220524201639.2gucdkzponddk5qt@carlos-mbp.lan> ("Carlo
- Marcelo
-        Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 24 May 2022 13:16:39
- -0700")
-Message-ID: <xmqqo7zmcydv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233692AbiEXXYV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 19:24:21 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5401E5D643
+        for <git@vger.kernel.org>; Tue, 24 May 2022 16:24:20 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24ONOIFl005698
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 24 May 2022 19:24:19 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Taylor Blau'" <me@ttaylorr.com>
+Cc:     "'Jonathan Nieder'" <jrnieder@gmail.com>, <git@vger.kernel.org>,
+        <avarab@gmail.com>, <derrickstolee@github.com>,
+        <gitster@pobox.com>, <larsxschneider@gmail.com>, <tytso@mit.edu>
+References: <cover.1638224692.git.me@ttaylorr.com> <cover.1653088640.git.me@ttaylorr.com> <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com> <Yo0ysWZKFJoiCSqv@google.com> <015d01d86fa6$a10519f0$e30f4dd0$@nexbridge.com> <Yo1bUbys+Fz7g+6h@nand.local>
+In-Reply-To: <Yo1bUbys+Fz7g+6h@nand.local>
+Subject: RE: [PATCH v5 02/17] pack-mtimes: support reading .mtimes files
+Date:   Tue, 24 May 2022 19:24:14 -0400
+Organization: Nexbridge Inc.
+Message-ID: <016e01d86fc5$64ecf180$2ec6d480$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EA1DB908-DBB7-11EC-90D0-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHb/488bX7VmyGm7lOI8s5Sc6VeLQKg6TD0AnqYOkcA3OyauQHJFXHbAse5aIms00ElkA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
-
-> On Tue, May 24, 2022 at 10:15:57AM -0700, Junio C Hamano wrote:
->>=20
->> I _think_ we can even get away by not doing anything to
->> slot->finished at the end of run_active_slot(), as we are not
->> multi-threaded and the callee only returns to the caller, but if it
->> helps pleasing the warning compiler, I'd prefer the simplest
->> workaround, perhaps with an unconditional clearing there?
+On May 24, 2022 6:25 PM ,Taylor Blau write:
+>On Tue, May 24, 2022 at 03:44:00PM -0400, rsbecker@nexbridge.com wrote:
+>> I am again concerned about 32-bit time_t assumptions. time_t is 32-bit
+>> on some platforms, signed/unsigned, and sometimes 64-bit. We are
+>> talking about potentially long-persistent files, as I understand this
+>> series, so we should not be limiting times to end at 2038. That's only
+>> 16 years off and I would wager that many clones that exist today will exist then.
 >
-> Assuming that some overly clever compiler might optimize that out (eith=
-er
-> because it might think it is Undefined Behaviour or for other unknown
-> reasons) then =C3=86var's version would be better for clearing the "war=
-ning".
+>Note that we're using unsigned fields here, so we have until 2106 (see my earlier
+>response on this in https://lore.kernel.org/git/YdiXecK6fAKl8++G@nand.local/).
 
-You keep saying undefined behaviour but in this case I do not quite
-see there is anything undefined.
-
-The warning, as =C3=86var said in a message, is about storing an address
-of an object on the stack in another object whose lifetime lasts
-beyond the life of the stackframe.  If you dereference such a
-pointer _after_ we return from run_active_slot() function, the
-behaviour may indeed be undefined.
-
-But if you recall one such call trace I walked through for Dscho in
-another message this morning, we do not make such a dereferencing.
-The run_active_slot() function sets up the slot with the pointer to
-its on-stack variable in it, we make a call chain that is several
-levels deep, and at some point in the call chain, the request that
-is represented by the slot may complete and slot may be passed to
-finish_active_slot(), which would update (*slot->finished) thus
-modifying the on-stack variable of the run_active_slot() that we
-will eventually return to.
-
-Is such a use of the pointer in the structure a cause for an
-undefined behaviour?
-
+I appreciate that, but 32-bit time_t is still signed on many platforms, so when cast, it still might, at some point in another series, cause issues. Please be cautious. I expect that this is the particular hill on which I will die. 😉
+--Randall
 
