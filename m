@@ -2,128 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BE3EC433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 21:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6F73C433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 21:38:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241931AbiEXVhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 17:37:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48194 "EHLO
+        id S241966AbiEXVip (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 17:38:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbiEXVhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 17:37:32 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A547C178
-        for <git@vger.kernel.org>; Tue, 24 May 2022 14:37:31 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id f21so24280731ejh.11
-        for <git@vger.kernel.org>; Tue, 24 May 2022 14:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=4E+eyEYo8tmF1Zx2K3/ZwdWs830Fh+MyH9Ii/+gk334=;
-        b=cSEXgVFlDxVYxmrVcRwfdajyTQudRZm3HGXJV72vJHhlFFNevAS1Xf1ZbjbEQ5XUbN
-         D+GI2nazj09Tn9vARmupObWq0+1I71Kr1I4djx5GKp+FNCSIx3NgU/6IlB8IIvgzNlKC
-         NoGEj4bKVqdEmffwAqiEvWn/43Jh+sUXdtspvgViIfBd0SzBLUL4BZdnZTMwDEutZ59M
-         X4cMxuH7inpdg+EAUZBb5u+NwSfAK+E8hZTi53sfd9Ql7VNqQqf09x3yeTonzkMrDs0D
-         jvquREH4uag6vZ4YFjAB7oMpLCWgF3dOM6THp99krUMoLCXiu+zfu1mbMa22p5GwnEiI
-         GHxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=4E+eyEYo8tmF1Zx2K3/ZwdWs830Fh+MyH9Ii/+gk334=;
-        b=xQ8FFHOIQbfhKd0LhOqdgJh/kvGJYpeuqHeX1yc13y6dzjeE06pat4aT57GuwaHWGg
-         Diz4Yc44eyGPn+wWwDf2NPxqpqRY4zJgMsGbwqt08UzbbQ8QeQV8u8uVUw9pmo4ywcS3
-         /tAw7phADl3xOUzLbRxmSu8d3K81ZScY5FtCrqVgbaybk4HwePTkCy91RuoW7JZR7rf6
-         C1lZ9t6tNcUedRBPnrp+YKeFLcI1Lct60vt/dVrStlMt65hMHZ4IlRZiMvb+Z9Zlh/4h
-         a1MPqDIqy7mpmV7cbr3JEAMyItQZmch0O95rH4J+fwKctVBcsz68nfCFKgi6ypq8bkgV
-         aB5Q==
-X-Gm-Message-State: AOAM532iXQeNjeyGzTh0dmoSx1yMIN8xX3SKkN5eW0FD0AbfrSQGx6KD
-        hsti1NnAi6KThw2cQ3/v//4=
-X-Google-Smtp-Source: ABdhPJxYyELWPvM1mJMb4FIG2fg3N1iO/rQFcPzlGpBlcp8hpZR749SSE6va9ixjxvzhmugFEo0gyQ==
-X-Received: by 2002:a17:907:7396:b0:6fe:9a92:6c2b with SMTP id er22-20020a170907739600b006fe9a926c2bmr24612256ejc.113.1653428250310;
-        Tue, 24 May 2022 14:37:30 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id hs33-20020a1709073ea100b006feb71acbb3sm4543458ejc.105.2022.05.24.14.37.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 14:37:29 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ntcDZ-003bYz-AV;
-        Tue, 24 May 2022 23:37:29 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/4] nedmalloc: avoid new compile error
-Date:   Tue, 24 May 2022 23:33:33 +0200
-References: <pull.1238.git.1653351786.gitgitgadget@gmail.com>
- <8963c6fa625bbaf5153990939ea06742304ddcd2.1653351786.git.gitgitgadget@gmail.com>
- <220524.86bkvnxsm5.gmgdl@evledraar.gmail.com>
- <972c3c82-0c10-ee95-9a7f-082de02a49c0@web.de>
- <nycvar.QRO.7.76.6.2205242239150.352@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <nycvar.QRO.7.76.6.2205242239150.352@tvgsbejvaqbjf.bet>
-Message-ID: <220524.86ee0ivch2.gmgdl@evledraar.gmail.com>
+        with ESMTP id S241933AbiEXVio (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 17:38:44 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A107CB16
+        for <git@vger.kernel.org>; Tue, 24 May 2022 14:38:42 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 256D812BD9E;
+        Tue, 24 May 2022 17:38:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jBsG6sJmZb0FO+lIqyoi+zrtXv096kLLts5vcz
+        VhtuA=; b=Ahfs8AURO2jDps37UTQ/ZmpJmJgqczddzxwEPYwgLeAth8zmzpoYUR
+        GcceDFrRFxG+HzgnAyDXhhpfHZPdTHVJXd/fvd7tsiMe0ezUz2j/NejB2YT/wBMx
+        pCJS1q6vyQk+IdB68e7gItgCt9mXBxM6UeTJX8ZdtfVDgpfxmYrI4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B04F12BD9D;
+        Tue, 24 May 2022 17:38:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89D0412BD9C;
+        Tue, 24 May 2022 17:38:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, vdye@github.com, jonathantanmy@google.com
+Subject: Re: [PATCH v2 0/4] pack-objects: fix a pair of MIDX bitmap-related
+ races
+References: <cover.1652458395.git.me@ttaylorr.com>
+        <cover.1653418457.git.me@ttaylorr.com>
+Date:   Tue, 24 May 2022 14:38:39 -0700
+In-Reply-To: <cover.1653418457.git.me@ttaylorr.com> (Taylor Blau's message of
+        "Tue, 24 May 2022 14:54:18 -0400")
+Message-ID: <xmqqfskyfw68.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E09B22CA-DBA9-11EC-B257-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau <me@ttaylorr.com> writes:
 
-On Tue, May 24 2022, Johannes Schindelin wrote:
+>          verbatim reuse (c.f., `write_reused_pack_verbatim()`).
 
-> Hi Ren=C3=A9,
->
-> On Tue, 24 May 2022, Ren=C3=A9 Scharfe wrote:
->
->> Am 24.05.22 um 10:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> >
->> > This seems sensible, I thought "why not submit it to upstream",
->> > i.e. see:
->> > https://github.com/ned14/nedmalloc/blob/master/nedmalloc.c#L1298
->> >
->> > But that repository was last updated in 2014, I wonder if it's just
->> > because nobody's submitted a patch since then, or if it's inactive. Ha=
-ve
->> > you tried making Njall Douglas (the nedmalloc author) aware of this
->> > issue?
->> >
->>
->> https://github.com/ned14/nedmalloc says at the top: "This repository has
->> been archived by the owner. It is now read-only.".
->
-> Indeed, maintenance of nedmalloc has stopped a few years ago (see e.g.
-> https://github.com/ned14/nedmalloc/issues/20#issuecomment-343432314).
+Unlike "e.g." and "i.e.", I think these should all be "cf." (there
+are many others).
 
-The author says:
+>     +    This patch handles the "preferred" pack (c.f., the section
+>     +    "multi-pack-index reverse indexes" in
+>     +    Documentation/technical/pack-format.txt) specially, since pack-objects
+>     +    depends on reusing exact chunks of that pack verbatim in
+>     +    reuse_partial_packfile_from_bitmap(). So if that pack cannot be loaded,
+>     +    the utility of a bitmap is significantly diminished.
 
-    nedmalloc is pretty much EOL. Happy to accept patches, but unwilling to=
- fix.
+It explains why we care about the "preferred" pack, which is a nice
+clarification.  It hints that the other packs do not matter as much,
+and it is clearly stated that how they are handled is ...
 
-The "Happy to accept patches" seems to suggest that they're willing to
-take a PR, just not willing to do spend time on it themselves.
+>     +    Similar to dc1daacdcc, we could technically just add this check in
+>     +    reuse_partial_packfile_from_bitmap(), since it's possible to use a MIDX
+>     +    .bitmap without needing to open any of its packs. But it's simpler to do
+>     +    the check as early as possible, covering all direct uses of the
+>     +    preferred pack. Note that doing this check early requires us to call
+>     +    prepare_midx_pack() early, too, so move the relevant part of that loop
+>     +    from load_reverse_index() into open_midx_bitmap_1().
+>     +
+>     +    Subsequent patches handle the non-preferred packs in a slightly
+>     +    different fashion.
 
-Anyway, I see that we've accumulated quite a few patches on top, and
-given...
+... left for later steps.
 
-> About five years ago I tried to upgrade us to the latest nedmalloc version
-> but ran into a performance regression that I was unable to justify the
-> time to investigate further.
+Excellent write-up.
 
-...perhaps it's not worth it.
-
-Maybe someone should get to updating the readme we carry from it to
-change the first line from:
-
-    nedalloc v1.05 15th June 2008:
-
-To:
-
-    Git's (perma-)fork & local hacks on top of nedalloc v1.05 15th June 200=
-8:
-
-Or something :)
+>          Signed-off-by: Taylor Blau <me@ttaylorr.com>
+>      
+>     @@ pack-bitmap.c: static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+>      +
+>      +	preferred = bitmap_git->midx->packs[midx_preferred_pack(bitmap_git)];
+>      +	if (!is_pack_valid(preferred)) {
+>     -+		close(fd);
+>      +		warning(_("preferred pack (%s) is invalid"),
+>      +			preferred->pack_name);
+>      +		goto cleanup;
+> 2:  9adf6e1341 < -:  ---------- builtin/pack-objects.c: ensure pack validity from MIDX bitmap objects
+> -:  ---------- > 2:  2719d33f32 builtin/pack-objects.c: avoid redundant NULL check
+> -:  ---------- > 3:  cdc3265ec2 builtin/pack-objects.c: ensure included `--stdin-packs` exist
+> -:  ---------- > 4:  3fc3a95517 builtin/pack-objects.c: ensure pack validity from MIDX bitmap objects
