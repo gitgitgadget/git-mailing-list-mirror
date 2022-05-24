@@ -2,101 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6F73C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 21:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EFCDC433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 21:38:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241966AbiEXVip (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 17:38:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49314 "EHLO
+        id S235750AbiEXViy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 17:38:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241933AbiEXVio (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 17:38:44 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A107CB16
-        for <git@vger.kernel.org>; Tue, 24 May 2022 14:38:42 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 256D812BD9E;
-        Tue, 24 May 2022 17:38:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jBsG6sJmZb0FO+lIqyoi+zrtXv096kLLts5vcz
-        VhtuA=; b=Ahfs8AURO2jDps37UTQ/ZmpJmJgqczddzxwEPYwgLeAth8zmzpoYUR
-        GcceDFrRFxG+HzgnAyDXhhpfHZPdTHVJXd/fvd7tsiMe0ezUz2j/NejB2YT/wBMx
-        pCJS1q6vyQk+IdB68e7gItgCt9mXBxM6UeTJX8ZdtfVDgpfxmYrI4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B04F12BD9D;
-        Tue, 24 May 2022 17:38:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89D0412BD9C;
-        Tue, 24 May 2022 17:38:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, vdye@github.com, jonathantanmy@google.com
-Subject: Re: [PATCH v2 0/4] pack-objects: fix a pair of MIDX bitmap-related
- races
+        with ESMTP id S241985AbiEXViw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 17:38:52 -0400
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D08A77E1E1
+        for <git@vger.kernel.org>; Tue, 24 May 2022 14:38:48 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id x28-20020a4a621c000000b0040e85d338f2so1397881ooc.5
+        for <git@vger.kernel.org>; Tue, 24 May 2022 14:38:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=qNkzxjFI0eCl/VopHjcabXZeRag9J2LbokQg2EHsnjE=;
+        b=Ho/RxrThnfweVTvnBbd0CvICAUf+hBLb2dCU62BIcsfmSNRAwKEibs6DrSJz1M0Mhy
+         OLaDqbSwv3dzDiIxJSlzEJ44oZLmOaZLZKTNmzgDla0ShHtnw8P7zBivFyxDw9tpMFbT
+         47Y1rYZp/0zVwBx5FIA78FtiU6vttY++m6h7YnuUqWxpR5vvg0I5axbilZmBdQma9WbC
+         1W+o88vhwX4PVMfsfZI+IFrVhFmD/+s7e1jK4qofyCWR3TQ4pmHQYh0iPNRfbQNt6yfL
+         bw0bKq8mjx2j5F38T4ISwo28J+CQc34f8vN4I+WvMPXhXwDjPlsShTR2Ab8g/65qnTfk
+         E8lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=qNkzxjFI0eCl/VopHjcabXZeRag9J2LbokQg2EHsnjE=;
+        b=nHnMjUjtN7sXiZDhaHk3A5WHwT6x4ALO6cVK68Ykj5W/UIowAYLpwqJ3OO1jPff3qr
+         3tuGAML8mQ046qWpR5Yp+rZ5NazCFu3h1GyxEEnD8ps+EEwcoWyqL/N87b8WQEwaIZ5v
+         GgY0Yvo3oVXHjvbWNDAz2yaUTz0hJiQDIzLOk2Jt5eeoZqCmuFw6yDd6sTNcpAySTNQ8
+         HWaD39gWjjNERszt0LR7s71AVtFUARyVUbStVeJp2LlbiMqggjhjhRplzNx+aeEydup0
+         s2RYFKpp2/8HEOEM3wz4ByPU5bQKFQs1udjMA9OApkC+kwuX5IY1c7ak3SKvyajPUxCT
+         nWMg==
+X-Gm-Message-State: AOAM530kmRKudBcgOEA/cJKebVsx6TIxkI7LesfeHC4wwB/f4sT0zryL
+        EeWNzN2JpOeZduj+yJlNs0jbLg==
+X-Google-Smtp-Source: ABdhPJxKozpYa5pz8HifHJHwE/aKJ10bYuQPdi9XshWBbAiEgNVE3ltlGNVNEIzhKqNBBjl8BKor2A==
+X-Received: by 2002:a4a:7c46:0:b0:40e:5ff1:f1a3 with SMTP id v67-20020a4a7c46000000b0040e5ff1f1a3mr9115621ooc.27.1653428328163;
+        Tue, 24 May 2022 14:38:48 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id c199-20020a4a4fd0000000b0035f068e16aasm5857911oob.5.2022.05.24.14.38.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 May 2022 14:38:47 -0700 (PDT)
+Date:   Tue, 24 May 2022 17:38:45 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, jonathantanmy@google.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v2 1/4] pack-bitmap.c: check preferred pack validity when
+ opening MIDX bitmap
+Message-ID: <Yo1QZe5CyYWGGtYR@nand.local>
 References: <cover.1652458395.git.me@ttaylorr.com>
-        <cover.1653418457.git.me@ttaylorr.com>
-Date:   Tue, 24 May 2022 14:38:39 -0700
-In-Reply-To: <cover.1653418457.git.me@ttaylorr.com> (Taylor Blau's message of
-        "Tue, 24 May 2022 14:54:18 -0400")
-Message-ID: <xmqqfskyfw68.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <cover.1653418457.git.me@ttaylorr.com>
+ <618e8a6166473d238e62ce6243d9a0b2b72ee2f0.1653418457.git.me@ttaylorr.com>
+ <220524.864k1ewwh4.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E09B22CA-DBA9-11EC-B257-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220524.864k1ewwh4.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Tue, May 24, 2022 at 09:36:45PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>
+> On Tue, May 24 2022, Taylor Blau wrote:
+>
+> Just nits on the error reporting:
+>
+> > @@ -353,6 +355,20 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+> >  		warning(_("multi-pack bitmap is missing required reverse index"));
+> >  		goto cleanup;
+> >  	}
+> > +
+> > +	for (i = 0; i < bitmap_git->midx->num_packs; i++) {
+> > +		if (prepare_midx_pack(the_repository, bitmap_git->midx, i))
+> > +			die(_("could not open pack %s"),
+> > +			    bitmap_git->midx->pack_names[i]);
+>
+> Some existing API users of this & their error handling suggest that this
+> message is wrong. I.e. it's not that we couldn't open it, but that we
+> could open it and there's something wrong with it. Or perhaps their
+> messages are misleading?
 
->          verbatim reuse (c.f., `write_reused_pack_verbatim()`).
+I tried to reuse some similar message based on "git grep 'if
+(.*prepare_midx_pack'", so this was inspired by:
 
-Unlike "e.g." and "i.e.", I think these should all be "cf." (there
-are many others).
+  - the caller in midx.c::write_midx_internal(), whose error is "could
+    not load pack", and
+  - the caller in midx.c::verify_midx_file(), whose error is "failed to
+    load pack"
 
->     +    This patch handles the "preferred" pack (c.f., the section
->     +    "multi-pack-index reverse indexes" in
->     +    Documentation/technical/pack-format.txt) specially, since pack-objects
->     +    depends on reusing exact chunks of that pack verbatim in
->     +    reuse_partial_packfile_from_bitmap(). So if that pack cannot be loaded,
->     +    the utility of a bitmap is significantly diminished.
+Are you suggesting we should s/open/load here and use the above error
+message? My feeling at the time was that "load" was basically synonymous
+with "open" given the context, but if you think they're different
+enough, or have a different suggestion LMK.
 
-It explains why we care about the "preferred" pack, which is a nice
-clarification.  It hints that the other packs do not matter as much,
-and it is clearly stated that how they are handled is ...
-
->     +    Similar to dc1daacdcc, we could technically just add this check in
->     +    reuse_partial_packfile_from_bitmap(), since it's possible to use a MIDX
->     +    .bitmap without needing to open any of its packs. But it's simpler to do
->     +    the check as early as possible, covering all direct uses of the
->     +    preferred pack. Note that doing this check early requires us to call
->     +    prepare_midx_pack() early, too, so move the relevant part of that loop
->     +    from load_reverse_index() into open_midx_bitmap_1().
->     +
->     +    Subsequent patches handle the non-preferred packs in a slightly
->     +    different fashion.
-
-... left for later steps.
-
-Excellent write-up.
-
->          Signed-off-by: Taylor Blau <me@ttaylorr.com>
->      
->     @@ pack-bitmap.c: static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
->      +
->      +	preferred = bitmap_git->midx->packs[midx_preferred_pack(bitmap_git)];
->      +	if (!is_pack_valid(preferred)) {
->     -+		close(fd);
->      +		warning(_("preferred pack (%s) is invalid"),
->      +			preferred->pack_name);
->      +		goto cleanup;
-> 2:  9adf6e1341 < -:  ---------- builtin/pack-objects.c: ensure pack validity from MIDX bitmap objects
-> -:  ---------- > 2:  2719d33f32 builtin/pack-objects.c: avoid redundant NULL check
-> -:  ---------- > 3:  cdc3265ec2 builtin/pack-objects.c: ensure included `--stdin-packs` exist
-> -:  ---------- > 4:  3fc3a95517 builtin/pack-objects.c: ensure pack validity from MIDX bitmap objects
+Thanks,
+Taylor
