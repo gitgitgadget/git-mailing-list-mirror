@@ -2,207 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E3E7C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 17:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC20C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 17:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239845AbiEXRQW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 13:16:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43706 "EHLO
+        id S238644AbiEXRig (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 13:38:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239924AbiEXRQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 13:16:07 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EBF910C7
-        for <git@vger.kernel.org>; Tue, 24 May 2022 10:16:02 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AA88E17F857;
-        Tue, 24 May 2022 13:16:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ia+Oj4n2rLA1E7tlm5feFYOJdzsOtOgbq8598d
-        DSJI4=; b=s/Km/JKA0l+0QWhnhlf1PPfxdWF5pPQI0ZC2a9fT+U1L7CoMfkUxZX
-        JmjPBlbRNxIZAROzoFO3Ounh7BZEuvZufI/a2zQYGzhT4Tq/9GYS2R1Iut7ppfr+
-        QkR7NquR4adGmhzD15aKBZEBWHu2B/dTMWnN/dxCchFLNRXDy20P4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A2FB417F856;
-        Tue, 24 May 2022 13:16:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4201C17F854;
-        Tue, 24 May 2022 13:15:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
- with it
-References: <cover.1651859773.git.git@grubix.eu>
-        <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
-        <xmqqtua2jtr0.fsf@gitster.g> <xmqqczgqjr8y.fsf_-_@gitster.g>
-        <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
-        <xmqqr14jluu4.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet>
-        <xmqqa6b7lrw6.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet>
-Date:   Tue, 24 May 2022 10:15:57 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 24 May 2022 13:03:41 +0200 (CEST)")
-Message-ID: <xmqqleuqj1gy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231848AbiEXRie (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 13:38:34 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C812A1FCE5
+        for <git@vger.kernel.org>; Tue, 24 May 2022 10:38:33 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id s23so19025669iog.13
+        for <git@vger.kernel.org>; Tue, 24 May 2022 10:38:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=mb1YTOGugU1Aa/WjC/9HH0hnMG3YlkHI/zbJRGMvSQY=;
+        b=VfvUsEQLg/GysWMrEKCv2xvITrjKLLRbMAiD8qNoMuEpngyhCN/Wd/8wRx9acBYpIr
+         IP3xVhmH52m/yVyNiDng6ccQnvL2oUCuzN7rmI15uUbTKH12pHUYLYEAqTMAlf26wt2r
+         pAPTvJT4zjRdsUxYLSe50tn4elIN6LgogmEN/J5+WairBTebbAteARDeuVimgOlPrkhm
+         YzZBShLqNVnG5VUYVSgR3Z2mgcAhzDcnR8KPW8ppR/DNH9D5yU55PHsZRGRl1r9ddVPu
+         ricjPVY592pEbhbCczyR9Vka6NIDIPykbFUlu168tsvjd4laLYxA3MpGEeE0lHTNbzAc
+         O1Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=mb1YTOGugU1Aa/WjC/9HH0hnMG3YlkHI/zbJRGMvSQY=;
+        b=LreWK4TQ7CcNgyKzjBPRUHaP18e8foPG2F7EIgf8bzlUUwKOfjPav0bIVujj6LEAYx
+         cr300FiytRwlhN4BgxScls8fZpZZsWAo32M4PVpDfNXzcrwvXyIfDRtuMaAM/vzx35ME
+         kQsTs882Y9aAM57NbHgS6mRr5fbFRU/0HBnurOl9spLFR9SOaiuCo8dZjTAC0n68D0v6
+         eU47tEzwCkK6Xl/EYebWBddAylTtmn3M9DG21wqrLaaN/B0EFe9CaVsAECQfwaVJDns6
+         GIt2Ux1Ru3labqRVh0L2HvvPuZtWYCAk0GTTvbC3HuuAEclJLhdTqFAA/RlfcohwGf9q
+         cHSQ==
+X-Gm-Message-State: AOAM532sYfUrNoMXks+B4CGBv/slxctC8663WMRP8nOKcenmTO1IaTEk
+        urGx12UayoxnTkZ2NQI9GAD/
+X-Google-Smtp-Source: ABdhPJxskxBuB7fJwM6KKVV+0UoexpQatVERJx0ba9uPZ9KbT/jvBhs0V2R79YhbuC4DqZcewv84Vg==
+X-Received: by 2002:a05:6602:881:b0:665:1ebf:51c4 with SMTP id f1-20020a056602088100b006651ebf51c4mr380101ioz.104.1653413913146;
+        Tue, 24 May 2022 10:38:33 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e? ([2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e])
+        by smtp.gmail.com with ESMTPSA id z28-20020a05663822bc00b0032e30453802sm3613741jas.47.2022.05.24.10.38.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 May 2022 10:38:31 -0700 (PDT)
+Message-ID: <563606bd-551f-39b2-74f0-40547b7a0113@github.com>
+Date:   Tue, 24 May 2022 13:38:30 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2D8B0A2A-DB85-11EC-959A-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v2] setup: don't die if realpath(3) fails on getcwd(3)
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Kevin Locke <kevin@kevinlocke.name>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
+ <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
+ <1580ad10-43f6-bc73-901a-b65b1aea73ff@github.com>
+ <YozlZ9DPrRLPBTBP@kevinlocke.name>
+ <CABPp-BGZTDKorz+CFScfTfx47c+TuJaAD_Zyyo1Jj_tymYkVXQ@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CABPp-BGZTDKorz+CFScfTfx47c+TuJaAD_Zyyo1Jj_tymYkVXQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 5/24/2022 11:20 AM, Elijah Newren wrote:
+> On Tue, May 24, 2022 at 7:02 AM Kevin Locke <kevin@kevinlocke.name> wrote:
+>>
+>> On Mon, 2022-05-23 at 14:57 -0400, Derrick Stolee wrote:
+>>> On 5/21/22 9:53 AM, Kevin Locke wrote:
+>>>> +           free((char*)tmp_original_cwd);
+>>>
+>>> Hm. I'm never a fan of this casting, but it existed before. It's
+>>> because tmp_original_cwd is exposed globally in cache.h, which
+>>> is _really widely_. However, there are only two uses: setup.c,
+>>> which defines it, and common-main.c, which initializes it during
+>>> process startup.
+...>> This approach seems reasonable to me, as does casting to free().  It's
+>> not clear to me which is preferable in this case.  How to balance the
+>> trade-offs between exposing const interfaces, limiting (internal)
+>> interfaces to headers, and avoiding casts might be worth discussing
+>> and documenting a matter of project coding style.  `grep -rF 'free(('`
+>> lists about 100 casts to free, suggesting the discussion may be
+>> worthwhile.  Introducing a free_const() macro could be another option
+>> to consider.
+> 
+> I'd prefer either a free_const() as you suggest (though as a separate
+> patch from what you are submitting here), or leaving the code as-is.
+> free() could have been written to take a const void* instead of just
+> void*, since it's not going to modify what the pointer points at.  The
+> reason we call free() is because the variable isn't needed anymore,
+> and using a non-const value after freeing is just as wrong as using a
+> const one after freeing, so casting away the constness cannot really
+> cause any new problems.  So, I think the signature of free() is just
+> wrong: it should have taken a const void* all along.  Unfortunately,
+> the wrong type signature sadly makes people feel like they have to
+> choose between (a) dropping the added safety of const that the
+> compiler can enforce for you during the lifetime of the variable, or
+> (b) leaking memory you no longer need.  I think it's a bad choice and
+> you should just typecast when free'ing, but clearly others just don't
+> want to see any typecasts and are willing to dispense with const on
+> constant variables.
 
->> Not really.  An outer run_active_slot() and an inner
->> run_active_slot() have a pointer to the same slot object.
->
-> How is that possible? One of the first things that function does is to
-> assign `slot->finished = &finished`, and then run that `while (!finished)`
-> loop.
->
-> How would the outer `run_active_slot()` ever get signaled via `finished`
-> when the inner `run_active_slot()` would overwrite `slot->finished`? I am
-> puzzled why we do not see infinite loops in such outer calls all the time,
-> then.
+I mostly agree with you: if free() didn't have the const, then the
+answer would be simple. We probably wouldn't also have the convention
+of "const pointers are for memory we don't own".
 
-The idea in http subsystem goes like this.
+Specifically with 'const char *' this can sometimes point to a
+compiled string literal, so I tend to be more careful than usual
+around these kinds of casts.
 
- * Generally, we have multiple curl requests in flight.  A curlm
-   passed to curl_multi_perform() call knows about them and attempts
-   to make as much progress without blocking.
+I'm willing to concede this point as it is much messier than just
+the goals of this patch.
 
- * After calling curl_multi_perform(), we call process_curl_messages()
-   to collect the response that corresponds to the request.  This is
-   done using the slot data structure.  Once we read the response,
-   we may process it further by making a callback.
-
- * A slot, when finished, can be reused.  THe reuse is controlled by
-   its in_use member.
-
-So, let's trace a code flow, http-walker.c::fetch_object() is used
-as a sample starting point.
-
- * http-walker.c::fetch_object()
-   - pushes the object name to object_request queue.
-   - calls step_active_slots() to make progress.  This function in turn
-     - calls curl_multi_perform() repeatedly to make progress
-     - calls process_curl_messages() to possibly complete some active slots
-     - calls fill_active_slots() to fill more requests.  This function
-       calls the "fill" function repeatedly to make more requests,
-       which is http-walker.c::fill_active_slot() in this code path.  It
-       - repeatedly calls start_object_request()
-         * start_object_request() does these:
-           - calls new_http_object_request(), which prepares object-request
-             structure, in which there is a slot member that was
-	     obtained by calling get_active_slot().
-	     * get_active_slot() does many things, but all we need to know	
-	       here is that it does "in_use = 1".
-           - sets callback for the slot to process_object_response()
-           - calls start_active_slot(),
-             which adds the slot to curlm and calls curl_multi_perform()
-             to make progress on the active slots.
-     - calls run_active_slots() repeatedly.
-
-Now run_active_slots() we know about.  Before baa7b67d (HTTP slot
-reuse fixes, 2006-03-10), we used to loop on slot->in_use but to fix
-a bug we updated it to use slot->finished.
-
- * run_active_slot()
-   - takes a slot
-   - clears finished on its stack
-   - makes slot->finished point at &finished on its stack
-   - loops until "finished" is set
-     - calls step_active_slots(); what it does can be seen above,
-       but here, we need to know what process_curl_messages() it
-       calls does, in order to complete some requests.
-       * process_curl_messages() 
-         - reads the response from curl
-         - finds the slot with request that resulted in the response
-         - sets its result member
-         - calls finish_active_slot() on it, which in turn does these:
-	   - calls closedown_active_slot(), slot->in_use becomes 0
-           - sets (*slot->finished) = 1
-	   - calls slot->callback_func
-
-The callback_func was set to process_object_response() earlier in
-this code flow.
-
- * http-walker.c::process_object_response()
-   - calls process_http_object_request(), which dissociates the slot
-     from the http_object_request object.
-   - may call fetch_alternates() when the object is not found,
-     otherwise calls finish_object_request().
-
-Let's see what happens when fetch_alternates() gets called here.
-
- * http-walker.c::fetch_alternates()
-   - calls step_active_slots() to make progress
-   - calls get_active_slot() 
-   - calls start_active_slot()
-   - calls run_active_slot()
-
-Now we can see how the "slot" we used in the "outer" run_active_slot()
-can be reused for a different request.  We received response to the
-request, and in process_curl_messages(), we called finish_active_slot()
-on the slot, which did three things: (1) slot is now not-in-use, (2) the
-"finished" on the stack of the outer run_active_slot() is set to 1, and
-(3) called the process_object_response() callback.
-
-The callback then asked for an unused slot, and got the slot we just
-used, because we no longer need it (the necessary information in the
-response have been copied away to http_object_request object before
-the slot was dissociated from it, and the only one bit of
-information the outer run_active_slot() needs has already been sent
-there on its on-stack "finished" variable).  The reused slot goes
-through the usual start_active_slot() call to add it to curlm, and
-then the "inner" run_active_slot() is started on it.  Until the
-inner run_active_slot() returns, fetch_alternates() would not
-return, but once it does, the control goes back to the outer
-run_active_slot(), where it finds that its "finished" is now set to
-1.
-
-This incidentally is a good illustration why the thread-starter
-patch that did
-
-	if (&finished == slot->finished)
-		slot->finished = NULL;
-
-would be sufficient, and the "clear only ours" guard is not
-necessary, I think.  If the inner run_active_slot() did not trigger
-a callback that adds more reuse of the slot, it will clear
-slot->finished to NULL itself, with or without the guard.  And the
-outer run_active_slot() may fail to clear if the guard is there, but
-slot->finished is NULL in that case, so there is no point in clearing
-it again.
-
-And if the inner run_active_slot() did trigger a callback that ended
-up reusing the slot, then eventually the innermost one would have
-cleared slot->finished to NULL, with or without the guard, before it
-returned the control to inner run_active_slot().  The inference goes
-the same way to show that the guard is not necessary but is not
-hurting.
-
-I _think_ we can even get away by not doing anything to
-slot->finished at the end of run_active_slot(), as we are not
-multi-threaded and the callee only returns to the caller, but if it
-helps pleasing the warning compiler, I'd prefer the simplest
-workaround, perhaps with an unconditional clearing there?
-
-What did I miss?  I must be missing something, as I can explain how
-the current "(*slot->finished) = 1" with "while (finished)"
-correctly works, but I cannot quite explain why the original "while
-(slot->in_use)" would not, which is annoying.
-
-In other words, why we needed baa7b67d (HTTP slot reuse fixes,
-2006-03-10) in the first place?  It is possible that we had some
-code paths that forgot to drop in_use before the inner run_active
-returned that have been fixed in the 16 years and this fix was
-hiding that bug, but I dunno.
+Thanks,
+-Stolee
