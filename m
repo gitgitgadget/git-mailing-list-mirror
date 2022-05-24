@@ -2,118 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A08A7C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 14:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4656C433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 15:06:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235308AbiEXOvs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 10:51:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33810 "EHLO
+        id S238633AbiEXPGK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 11:06:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238401AbiEXOvp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 10:51:45 -0400
-Received: from vulcan.kevinlocke.name (vulcan.kevinlocke.name [IPv6:2001:19f0:5:727:1e84:17da:7c52:5ab4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2BAE30F7A
-        for <git@vger.kernel.org>; Tue, 24 May 2022 07:51:44 -0700 (PDT)
-Received: from kevinolos.kevinlocke.name (2600-6c67-5000-3d1b-85a3-a11a-3eda-9a0a.res6.spectrum.com [IPv6:2600:6c67:5000:3d1b:85a3:a11a:3eda:9a0a])
-        (Authenticated sender: kevin@kevinlocke.name)
-        by vulcan.kevinlocke.name (Postfix) with ESMTPSA id 391A22E78434;
-        Tue, 24 May 2022 14:51:43 +0000 (UTC)
-Received: by kevinolos.kevinlocke.name (Postfix, from userid 1000)
-        id 76480130035D; Tue, 24 May 2022 08:51:41 -0600 (MDT)
-From:   Kevin Locke <kevin@kevinlocke.name>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: [PATCH v3] setup: don't die if realpath(3) fails on getcwd(3)
-Date:   Tue, 24 May 2022 08:51:31 -0600
-Message-Id: <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
-References: <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
+        with ESMTP id S238670AbiEXPGH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 11:06:07 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EE93B53
+        for <git@vger.kernel.org>; Tue, 24 May 2022 08:06:05 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id D9DD53F481F;
+        Tue, 24 May 2022 11:06:04 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 77A923F481B;
+        Tue, 24 May 2022 11:06:04 -0400 (EDT)
+Subject: Re: [PATCH v7 27/30] t/lib-unicode-nfc-nfd: helper prereqs for
+ testing unicode nfc/nfd
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
+ <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
+ <6a8308699543faaea760d4605babe50a0e478f41.1653336765.git.gitgitgadget@gmail.com>
+ <xmqq5ylworwy.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <cef019a1-47c1-8f45-5018-bf0c2b4bfad4@jeffhostetler.com>
+Date:   Tue, 24 May 2022 11:06:03 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq5ylworwy.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prior to Git 2.35.0, git could be run from an inaccessible working
-directory so long as the git repository specified by options and/or
-environment variables was accessible.  For example:
 
-    git init repo
-    mkdir -p a/b
-    cd a/b
-    chmod u-x ..
-    git -C "${PWD%/a/b}/repo" status
 
-If this example seems a bit contrived, consider running with the
-repository owner as a substitute UID (e.g. with runuser(1) or sudo(8))
-without ensuring the working directory is accessible by that user.
+On 5/23/22 5:33 PM, Junio C Hamano wrote:
+> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +	ls | test-tool hexdump | grep "63 5f c3 a9"
+> 
+> A few comments:
+> 
+>   * Not folding output lines at arbitrary place like "od", "hd",
+>     etc. does, is a good design decision made by "hexdump" here.
+>     Depending on where in the pathname the 4-byte sequence appears,
+>     tools from other people may split the sequence across output
+>     lines, making grep ineffective.  But our hexdump would work fine
+>     here.
+> 
+>   * For the narrow purpose of the tests in this script, output that
+>     is a single long line produced by hexdump might be sufficient,
+>     but I wonder if it makes the tool more useful if we at least
+>     placed the hexified output for each line on separate output
+>     lines.
 
-The code added by e6f8861bd4 ("setup: introduce
-startup_info->original_cwd") to preserve the working directory attempts
-to normalize the path using strbuf_realpath().  If that fails, as in the
-case above, it is treated as a fatal error.
 
-This commit treats strbuf_realpath() errors as non-fatal.  If an error
-occurs, setup_original_cwd() will continue without applying removal
-prevention for cwd, resulting in the pre-2.35.0 behavior.  The risk
-should be minimal, since git will not operate on a repository with
-inaccessible ancestors, this behavior is only known to occur when cwd is
-a descendant of the repository, an ancestor of cwd is inaccessible, and
-no ancestors of the repository are inaccessible.
+Yeah, having tools arbitrarily wrap every 16 or whatever bytes
+(and including offset line prefixes) makes it difficult to use
+when looking for specific patterns that might span a boundary.
 
-Signed-off-by: Kevin Locke <kevin@kevinlocke.name>
----
+I could see having a command line option to emit a '\n' (in addition
+to or in place of) each LF in the input.  I suppose it depends on the
+type of data we are dumping. (That also gets into issues about CRLFs,
+however.)
 
-Notes:
-Changes since v2:
- * Use trace2_data_string(), rather than trace_printf(), to report
-   realpath failure.
+I'm using hexdump for unicode text here, soit could make sense.  But
+if I were using it to dump .git/index it wouldn't.
 
-Changes since v1:
- * Set startup_info->original_cwd = NULL when strbuf_realpath() fails,
-   rather than setting it to the un-normalized path.
- * Add a trace message when realpath fails to aid debugging.
- * Remove potential realpath failure cause from comment before it.
- * Improve format for reference to e6f8861bd4 in commit message.
- * Clarify when the pre-2.35.0 behavior may occur as a result of this
-   commit in the commit message.
- * Remove 'Fixes:' tag from commit message.
+So having the default be one very long line is a good start.
+We can teach it more later.
 
- setup.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+> 
+>   * Purist in us may find it a bit disturbing that exit status from
+>     test-tool is hidden by the pipe.  I do not care too deeply about
+>     it, as it is very unlikely that we care about segfault after
+>     hexdump successfully shows the substring the downstream grep is
+>     looking for, but it does make us feel dirty.
 
-diff --git a/setup.c b/setup.c
-index a7b36f3ffbf..38bd55cbac1 100644
---- a/setup.c
-+++ b/setup.c
-@@ -458,11 +458,19 @@ static void setup_original_cwd(void)
- 	 *     not startup_info->original_cwd.
- 	 */
- 
--	/* Normalize the directory */
--	strbuf_realpath(&tmp, tmp_original_cwd, 1);
--	free((char*)tmp_original_cwd);
--	tmp_original_cwd = NULL;
--	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
-+	/* Try to normalize the directory. */
-+	if (strbuf_realpath(&tmp, tmp_original_cwd, 0)) {
-+		free((char*)tmp_original_cwd);
-+		tmp_original_cwd = NULL;
-+		startup_info->original_cwd = strbuf_detach(&tmp, NULL);
-+	} else {
-+		trace2_data_string("setup", the_repository,
-+				   "realpath-path", tmp_original_cwd);
-+		trace2_data_string("setup", the_repository,
-+				   "realpath-failure", strerror(errno));
-+		tmp_original_cwd = NULL;
-+		goto no_prevention_needed;
-+	}
- 
- 	/*
- 	 * Get our worktree; we only protect the current working directory
--- 
-2.35.1
+Given the simplicity of the current version of the helper, I'm not
+really worried about such problems.  I suppose that we could do the
+usual trick of writing the hex dump to a file and grepping it, but
+I'm not sure it's worth the bother right now.
 
+> 
+> A devil's advocate suggestion is to go in the completely opposite
+> side of the spectrum.  Perhaps if we are willing to limit the tool's
+> utility to the tests done in this script file, it might be a good
+> idea to combine the latter two elements in the pipeline, i.e.
+> 
+> 	ls | test-tool hexgrep 63 5f c3 a9
+> 
+> that exits with 0 when the output from "ls" has the 4-byte sequence,
+> exits with 1 when it does not, and exits with 139 when it segfauls ;-)
+> 
+
+I was a little afraid to suggest a hex version of grep.  That would
+be interesting project to work on, but has lots of hard problems in
+it and is too much to tack on to this series.  Johannes raises some
+interesting questions in a later response in this thread that suggest
+that this could be a seriously non-trivial task.  So again, I'd like
+to not attempt this.
+
+Thanks
+Jeff
