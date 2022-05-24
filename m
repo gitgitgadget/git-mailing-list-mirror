@@ -2,108 +2,253 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4153CC433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 12:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABF80C433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 13:02:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235251AbiEXM5H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 08:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39770 "EHLO
+        id S237520AbiEXNCD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 09:02:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232013AbiEXM5G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 08:57:06 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C5EA27FF6
-        for <git@vger.kernel.org>; Tue, 24 May 2022 05:57:04 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id u3so25619817wrg.3
-        for <git@vger.kernel.org>; Tue, 24 May 2022 05:57:04 -0700 (PDT)
+        with ESMTP id S231294AbiEXNCA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 09:02:00 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 834DD4C41B
+        for <git@vger.kernel.org>; Tue, 24 May 2022 06:01:58 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id z15so1780561wrg.11
+        for <git@vger.kernel.org>; Tue, 24 May 2022 06:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=ohLXGhobcU2vqHS8m5UZwb3Ogos8LmnUjzMW7L+PSMI=;
-        b=Espo18ER5Tlk+L0ok8lkB29Z987VWTnGALxrWsuT5ctZoq6GE1kojJ0skkbeJWutUL
-         nJoFF8NdgO94+Opyvmi+UxsvdVwzeQ4dOXeB3T2lts8spC64TTsfBODLt1jabIvPs7+6
-         p4LxTfQ0aIrEmxbl3BiaRpsUgLkRVpqYpQv3VFPJEOUXPARH15Nx7RcKU2rHtPop2azp
-         gE8VOGHulMglV5+4r3AaSMF23hCrM34zr2QS+plSRceu0mHRyrPiZXGBLf7fDeFaoR1s
-         Dr+oBYWubDq2idgqoYBMz8vZ1iqMhg3VseAbUgwZSqcKfQeWVDAdREOniJso6D/rs1I/
-         cnKQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7ZTFG+cVMNsrd9+GzwysUGzrlGBSUBq8MjM/Du//I8I=;
+        b=VWI3sY5KZIoCBPsf7zgchXMX/hs76GaKxSOVSPEPBxcC/xCGghkjlwgR6LVAZaXsgC
+         FzwliHIKXyrlgKSvX7NLEJOdZVbIPhsRo9dgfSgXmjsBG8e5lz+TPajsSoq7viM8Znjg
+         +L62ucAcrYkRPcSe/b64y8lbGhHYynJ/whLcb7Mlw4Eqvd0/ng5VEZiPmRVkGtsCwjq2
+         GrmYhAuIslwL//PcvtP62D99VF19QmA38xtKN0dwUr0e4rUuRpP6OamGBi1GqfUHnFqO
+         +/78bpaFUBl4/05sfAaITEbzG2oDuFTFxuA3n13IL0lt2bYOy7oflbaHMMr/BU+fkUBV
+         xZsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ohLXGhobcU2vqHS8m5UZwb3Ogos8LmnUjzMW7L+PSMI=;
-        b=Vb7TaPuwGtb0/hQ4KXPOUWZIyQuFLlxKpfF5zPiVmCSgGtgx8T3mOVdHAEWAsLRVrz
-         4tn/I1uBA0sUylHBx1nOvRJCHVgYDwfdCfo0MXovX8jlrfTMDGUnpszvJo4SMZaCcVob
-         aapNZuowF2Mc3G7zYdk6d0MIFt9UX/9NNyJpy8Q/wSJDdRl2yT4D5qelpESSic0mfVez
-         iYwmnATqLIcHjmDG3nufrKBXZ2/VFgHkk1+z3r0733wNW9wygqJ+oNNNtLRfYdtkJVlX
-         iDW3DGIU1YzOUjJIWFrc5aIIgqT4+m8MuoCCcgl5ZLxTslPOaxojA/S2m7NNnA74/MOg
-         2Cbw==
-X-Gm-Message-State: AOAM530NbXi27nOj4+LHmyfFVqxCOpNl3fmyvw+Ei4r3kXHQO27/or4C
-        yaIOYIfEPh+PGN41szgPUz85lS+ynqk=
-X-Google-Smtp-Source: ABdhPJwCjKNW2+47rGN0Ta2ZQK0Lj+/uADTRSZ1i/BTc83gedSwJZqjnBvMrVuUNm9OkwnvFq/Y4fQ==
-X-Received: by 2002:a05:6000:1145:b0:20d:12f9:82c2 with SMTP id d5-20020a056000114500b0020d12f982c2mr23229605wrx.680.1653397022662;
-        Tue, 24 May 2022 05:57:02 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=7ZTFG+cVMNsrd9+GzwysUGzrlGBSUBq8MjM/Du//I8I=;
+        b=XS9+huwEtIViAQoRTK2G15eOql+WTuUjvHtz66nF4u3RRLpnb2U8CZJys5hfg2XyTj
+         MPZqkcrkQnzqeF31C+kJFTfIQax0hyASmtAegnKtibUpC/W2jQO0/6AuqQ81U46vVKgZ
+         NCC94e8WIy5xEHKdFvu/dFCibJ9uyNQe3x9OKOxl9ekN+humywzMG07XZg7nUvFKwiQv
+         bk56T6lNprsUs8Jhegd1cyxQHowYc3a796d2+Jadj9OLXk169CjRPD6HKlk7llp8jNXn
+         awZtcRfF68QwIJhVzQSHHl3eOK6Jfan1v004gaKoMUSAy/y1lCj1tCgfIbpUIiSZHaIC
+         bPdw==
+X-Gm-Message-State: AOAM533u1HGaUux6W3jb7jvriZ/xLUtJWLVuWc9We2nmHKbYYJCb114w
+        RXr48r5WZoJRCMAyiMkDDsivawXZkVc=
+X-Google-Smtp-Source: ABdhPJxxk32EKMPylLHW/2YE2qM9DpLT4YxdLDZtC+B65Z/SrE9vWCD+qaioRrx7zJEgdohUT7A46g==
+X-Received: by 2002:a05:6000:15c2:b0:20f:cf0a:4282 with SMTP id y2-20020a05600015c200b0020fcf0a4282mr12316071wry.248.1653397316643;
+        Tue, 24 May 2022 06:01:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r17-20020adfb1d1000000b0020c5253d926sm12430119wra.114.2022.05.24.05.57.01
+        by smtp.gmail.com with ESMTPSA id l15-20020adfbd8f000000b0020e65d7d36asm13167860wrh.11.2022.05.24.06.01.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 05:57:02 -0700 (PDT)
-Message-Id: <pull.1269.git.git.1653397021384.gitgitgadget@gmail.com>
-From:   "Yuyi Wang via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 May 2022 12:57:01 +0000
-Subject: [PATCH] Remove (_)UNICODE def on Windows in CMakeLists.txt
+        Tue, 24 May 2022 06:01:56 -0700 (PDT)
+Message-Id: <pull.1236.v2.git.1653397315122.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1236.git.1653310466062.gitgitgadget@gmail.com>
+References: <pull.1236.git.1653310466062.gitgitgadget@gmail.com>
+From:   "Carl Smedstad via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 24 May 2022 13:01:54 +0000
+Subject: [PATCH v2] check-ignore: --non-matching without --verbose
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Yuyi Wang <Strawberry_Str@hotmail.com>,
-        Yuyi Wang <Strawberry_Str@hotmail.com>
+Cc:     Carl Smedstad <carl.smedstad@protonmail.com>,
+        Carl Smedstad <carl.smedstad@protonmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Yuyi Wang <Strawberry_Str@hotmail.com>
+From: Carl Smedstad <carl.smedstad@protonmail.com>
 
-`UNICODE` and `_UNICODE` are not required when building git on Windows.
-Actually, they should not be predefined at all.
+Allow --non-matching to be specified without the --verbose flag to make
+git only list files that are not matching any pattern. The behaviour
+when specifying both --non-matching and --verbose is unchanged.
 
-There're 2 evidences that `(_)UNICODE` is supposed to be nonexist:
+The motivation for this is to use the underutilized invocation of
+--non-matching without --verbose to create a shorthand for what could be
+achieved by:
 
-compat/win32/trace2_win32_process_info.c:83: It uses jw_array_string
-which accepts pe32.szExeFile as const char*.
+    find . |
+      git check-ignore --verbose --non-matching --stdin |
+      grep $'^::\t' |
+      sed -e 's/.*\t//'
 
-t/helper/test-drop-caches.c:16: Calling to GetCurrentDirectory with
-Buffer as char*.
-
-The autotools build system never defines `UNICODE` and `_UNICODE` and
-builds on Windows well.
-
-Signed-off-by: Yuyi Wang <Strawberry_Str@hotmail.com>
+Signed-off-by: Carl Smedstad <carl.smedstad@protonmail.com>
 ---
-    Remove (_)UNICODE def on Windows in CMakeLists.txt
+    check-ignore: --non-matching without --verbose
+    
+    Changes since v1:
+    
+     * Rewrote description for --non-matching.
+     * Simplified the logic.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1269%2FBerrysoft%2Fcmake%2Fwincompat-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1269/Berrysoft/cmake/wincompat-v1
-Pull-Request: https://github.com/git/git/pull/1269
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1236%2Fcarlsmedstad%2Fcheck-ignore-non-matching-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1236/carlsmedstad/check-ignore-non-matching-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1236
 
- contrib/buildsystems/CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Range-diff vs v1:
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 185f56f414f..d52d973ab0d 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -260,7 +260,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
- 				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
- 				USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
--				UNICODE _UNICODE HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET HAVE_RTLGENRANDOM)
-+				HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET HAVE_RTLGENRANDOM)
- 	list(APPEND compat_SOURCES
- 		compat/mingw.c
- 		compat/winansi.c
+ 1:  de794d0af18 ! 1:  350a3cfea1b check-ignore: --non-matching without --verbose
+     @@ Commit message
+          achieved by:
+      
+              find . |
+     -          git check-ignore --verbose --non-matching |
+     +          git check-ignore --verbose --non-matching --stdin |
+                grep $'^::\t' |
+                sed -e 's/.*\t//'
+      
+     @@ Documentation/git-check-ignore.txt: linkgit:gitignore[5].
+      -	makes sense when `--verbose` is enabled, otherwise it would
+      -	not be possible to distinguish between paths which match a
+      -	pattern and those which don't.
+     -+	Only show given paths which don't match any pattern. If `--verbose` is
+     -+	enabled, show both paths that match a pattern and those which don't.
+     ++	If `--verbose` is enabled, list both matching and non-matching
+     ++	paths (non-matching paths along with the indicator `::`). Without
+     ++	`--verbose`, list only the paths that do not match any pattern.
+       
+       --no-index::
+       	Don't look in the index when undertaking the checks. This can
+     @@ builtin/check-ignore.c: static int check_ignore(struct dir_struct *dir,
+       				pattern = NULL;
+       		}
+      -		if (!quiet && (pattern || show_non_matching))
+     --			output_pattern(pathspec.items[i].original, pattern);
+     -+		if (!quiet) {
+     -+			if (verbose) {
+     -+				if (show_non_matching || pattern)
+     -+					output_pattern(pathspec.items[i].original, pattern);
+     -+			} else {
+     -+				if (show_non_matching && !pattern)
+     -+					output_pattern(pathspec.items[i].original, pattern);
+     -+				if (!show_non_matching && pattern)
+     -+					output_pattern(pathspec.items[i].original, pattern);
+     -+			}
+     -+		}
+     ++
+     ++		/* If --non-matching, then show if verbose or the pattern is missing. */
+     ++		if (!quiet && show_non_matching && (verbose || !pattern))
+     ++			output_pattern(pathspec.items[i].original, pattern);
+     ++
+     ++		/* If not --non-matching, then show if the pattern exists. */
+     ++		if (!quiet && !show_non_matching && pattern)
+     + 			output_pattern(pathspec.items[i].original, pattern);
+     ++
+       		if (pattern)
+       			num_ignored++;
+       	}
 
-base-commit: 7a3eb286977746bc09a5de7682df0e5a7085e17c
+
+ Documentation/git-check-ignore.txt |  7 +++----
+ builtin/check-ignore.c             | 11 ++++++++---
+ t/t0008-ignores.sh                 | 17 +++++++++++++++--
+ 3 files changed, 26 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
+index 2892799e32f..bb096875ca3 100644
+--- a/Documentation/git-check-ignore.txt
++++ b/Documentation/git-check-ignore.txt
+@@ -50,10 +50,9 @@ linkgit:gitignore[5].
+ 	with a NUL character instead of a linefeed character.
+ 
+ -n, --non-matching::
+-	Show given paths which don't match any pattern.	 This only
+-	makes sense when `--verbose` is enabled, otherwise it would
+-	not be possible to distinguish between paths which match a
+-	pattern and those which don't.
++	If `--verbose` is enabled, list both matching and non-matching
++	paths (non-matching paths along with the indicator `::`). Without
++	`--verbose`, list only the paths that do not match any pattern.
+ 
+ --no-index::
+ 	Don't look in the index when undertaking the checks. This can
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index 21912569650..46108ac8593 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -113,8 +113,15 @@ static int check_ignore(struct dir_struct *dir,
+ 			    pattern->flags & PATTERN_FLAG_NEGATIVE)
+ 				pattern = NULL;
+ 		}
+-		if (!quiet && (pattern || show_non_matching))
++
++		/* If --non-matching, then show if verbose or the pattern is missing. */
++		if (!quiet && show_non_matching && (verbose || !pattern))
++			output_pattern(pathspec.items[i].original, pattern);
++
++		/* If not --non-matching, then show if the pattern exists. */
++		if (!quiet && !show_non_matching && pattern)
+ 			output_pattern(pathspec.items[i].original, pattern);
++
+ 		if (pattern)
+ 			num_ignored++;
+ 	}
+@@ -175,8 +182,6 @@ int cmd_check_ignore(int argc, const char **argv, const char *prefix)
+ 		if (verbose)
+ 			die(_("cannot have both --quiet and --verbose"));
+ 	}
+-	if (show_non_matching && !verbose)
+-		die(_("--non-matching is only valid with --verbose"));
+ 
+ 	/* read_cache() is only necessary so we can watch out for submodules. */
+ 	if (!no_index && read_cache() < 0)
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index 5575dade8ee..2ea178797bc 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -90,7 +90,8 @@ test_check_ignore () {
+ #   1. with -q / --quiet
+ #   2. with default verbosity
+ #   3. with -v / --verbose
+-#   4. with -v / --verbose, *and* -n / --non-matching
++#   4. with -n / --non-matching
++#   5. with -v / --verbose, *and* -n / --non-matching
+ #
+ # expecting success each time.  Takes advantage of the fact that
+ # check-ignore --verbose output is the same as normal output except
+@@ -102,7 +103,7 @@ test_check_ignore () {
+ # Arguments:
+ #   - (optional) prereqs for this test, e.g. 'SYMLINKS'
+ #   - test name
+-#   - output to expect from the fourth verbosity mode (the output
++#   - output to expect from the fifth verbosity mode (the output
+ #     from the other verbosity modes is automatically inferred
+ #     from this value)
+ #   - code to run (should invoke test_check_ignore)
+@@ -124,6 +125,7 @@ test_expect_success_multiple () {
+ 
+ 	expect_verbose=$( echo "$expect_all" | grep -v '^::	' )
+ 	expect=$( echo "$expect_verbose" | sed -e 's/.*	//' )
++	expect_non_matching=$( echo "$expect_all" | grep '^::	' | sed -e 's/.*	//')
+ 
+ 	test_expect_success $prereq "$testname${no_index_opt:+ with $no_index_opt}" '
+ 		expect "$expect" &&
+@@ -144,6 +146,17 @@ test_expect_success_multiple () {
+ 		quiet_opt=
+ 	fi
+ 
++	for non_matching_opt in '-n' '--non-matching'
++	do
++		test_code="
++			expect '$expect_non_matching' &&
++			$code
++		"
++		opts="${no_index_opt:+$no_index_opt }$non_matching_opt"
++		test_expect_success $prereq "$testname${opts:+ with $opts}" "$test_code"
++	done
++	non_matching_opt=
++
+ 	for verbose_opt in '-v' '--verbose'
+ 	do
+ 		for non_matching_opt in '' '-n' '--non-matching'
+
+base-commit: f9b95943b68b6b8ca5a6072f50a08411c6449b55
 -- 
 gitgitgadget
