@@ -2,66 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50683C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 19:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ADBBC433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 19:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240784AbiEXT0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 15:26:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49946 "EHLO
+        id S240548AbiEXT1s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 15:27:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233439AbiEXT0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 15:26:17 -0400
+        with ESMTP id S235930AbiEXT1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 15:27:46 -0400
 Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7242541982
-        for <git@vger.kernel.org>; Tue, 24 May 2022 12:26:16 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id i40so24346851eda.7
-        for <git@vger.kernel.org>; Tue, 24 May 2022 12:26:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 536F56D191
+        for <git@vger.kernel.org>; Tue, 24 May 2022 12:27:45 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id s3so24305906edr.9
+        for <git@vger.kernel.org>; Tue, 24 May 2022 12:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=MiTV4kMi0QIk1S2dxHL+QeGbD7nwRO6nb+zhsmocP4o=;
-        b=MbuUG51AoV6xp4CSu6SAmvDrj4CwBMS3M1QL9GcdDI8b1fKKznNGNei8NtaL3ggpRU
-         HGgj3j0XSIofH73v1q1h9plkqRHZ1oEkTyM//1hcJUUauVLpqMyHupZRnY3bETm9ZnHU
-         EDzJVIQmZzGCEugi3yFz7H4uaVynWsWaYL2PsfVeEnl2vUdBPZBFsF6xNFPEMOUpuuhf
-         Ft4Mfcu4109AD5GpFv9DHwmEf+EhbByNQjFT3cGVyn3j0renDmF3HWFsYIJl63URdsxh
-         pzuAzLyyWEk47qBPh/nsm2D6idF4Lv/N+Z0+xaSEV38oohZRi2slh2cmZn8EUciHHPZE
-         qQZA==
+        bh=SpxOqRBhwzG54CM+3mxRTv28QiU5MzcMqkhnreNIKDA=;
+        b=bb+WXU/WgC/WOnKV6125rB9QCkCoEvfUX+a5Gaa/IBffwaXS0rcZI5370WoEns9jph
+         0OrKXmzSRFyDvgl6eeKG+IiyxQCl94CFKSLtvwTJuFvHQDHI/4QjNTvScFX2qgOjJxUY
+         BDLAN0yCvxVhiE8dtmMSu7cCs0HgLmPJILDF63SQ45BBNm3ixkchg2tP6tpQsi5QDWql
+         TUX1ufKdUHajhJcaSb40KeCxA3SpyvnDILiO6k+nayyYR2Fi47N5ApGuMI50/wwhUfJh
+         qRb5dFHVFkRrCK02BjhJIiRDHztI+VblWkV06ZgS1V31pjiXxYd7jajKD6nPfqQpEfyY
+         Cscg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=MiTV4kMi0QIk1S2dxHL+QeGbD7nwRO6nb+zhsmocP4o=;
-        b=WKPEWG71P2TlhwL70iR6jW1wcOkCa7rv08M3P5Sax0EQsPYaLyh9Sg5l6ln5U1xkL/
-         Hw8ENY9aYeAQl3niO1196CreacIEf/65rTFN5jRVJWadu5S4JBMnK2j7Pyd5tPNcj1Ea
-         RFagLJ8kDG+K50LBePj3zrnUY0jTs88btpmw3DdCms4m8MAPwCt+GmREqfBXT1tCdmy1
-         BN2ejS7wCy8VXHE3udpvs76+wiVYi8ooLbsfd6yZ/JGhyhjhronK6I8dq2dgbZTwFGnv
-         FKjNNCIcx4yGeh7Amx2pN56imhR1x6A+xxAxyNmms+LzTJy+rgEY1ElXF6FRhvDBq0Ym
-         v87Q==
-X-Gm-Message-State: AOAM531kefnbDiuMyaOBKirQIg+n5Vr5ZsPXPpPtq/O13E3cYXS54U89
-        18aLD1Evinam4TTflAUH470c2juTC9o=
-X-Google-Smtp-Source: ABdhPJwD10qq0lTi/ajK/zj0p90GnA4eDZiDoFf/2DCcK/6DxgiPGsjdQB7XV/K2/dN57JfiO7kDWg==
-X-Received: by 2002:aa7:c38a:0:b0:42a:ab63:c5a3 with SMTP id k10-20020aa7c38a000000b0042aab63c5a3mr30688026edq.303.1653420374579;
-        Tue, 24 May 2022 12:26:14 -0700 (PDT)
+        bh=SpxOqRBhwzG54CM+3mxRTv28QiU5MzcMqkhnreNIKDA=;
+        b=P/dYEwvZivxFw23CogNYSUkFgWSzpTofd/4/tQlMkjvy2PSdygmr0sb2YrGmWNImJi
+         lOCrThhTZCrz61SW/FJaa8FkMl+d8/Qs6CyHZFn54Qj+H4qJa1+w5WvTnyzafXagYpKl
+         uFSqUoLfSS5z/s6khSyU9zAbOuXkaV9Y7FmZ1CniorChQf4ilOQKtkFXOCwYvXqkgk9m
+         0FTzT4pOVA76L+hYHWOnv+0GZ8Es99qn3Rs/sjpKjrpzzpNI/dabHuYOAHm9Zp1SdUs1
+         vstCvMIJb21LFC0UomSlSPdIMmxufhlDaMyt5KGwYkqiWaJZAOWNJywWdpBl7bCyK/pO
+         QiKA==
+X-Gm-Message-State: AOAM531baqx4+SqKp5/eKlR239ztZpleujOFlghFhAkS3DGxw3ezBCNZ
+        758KMj+iHNP6Br+qcWZrcZ/bjFBYiJA=
+X-Google-Smtp-Source: ABdhPJxSVpla+BXpwwuZaw431P0MSfZWZfe3iamJr9TRk4PHujnIaN5XbPX9Y7p0Mi/9PBOCyHqUmw==
+X-Received: by 2002:a05:6402:509:b0:42a:b6c9:eac with SMTP id m9-20020a056402050900b0042ab6c90eacmr29923418edv.225.1653420463797;
+        Tue, 24 May 2022 12:27:43 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id m5-20020a17090677c500b006f3ef214e24sm7452544ejn.138.2022.05.24.12.26.14
+        by smtp.gmail.com with ESMTPSA id gc4-20020a170906c8c400b006f3ef214e0esm3205628ejb.116.2022.05.24.12.27.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 12:26:14 -0700 (PDT)
+        Tue, 24 May 2022 12:27:43 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1ntaAX-003WTY-Fb;
-        Tue, 24 May 2022 21:26:13 +0200
+        id 1ntaBy-003WXu-LE;
+        Tue, 24 May 2022 21:27:42 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Ed Maste <emaste@FreeBSD.org>
-Subject: Re: [PATCH] ci: update Cirrus-CI image to FreeBSD 13.0
-Date:   Tue, 24 May 2022 21:24:14 +0200
-References: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carl Smedstad <carl.smedstad@protonmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] check-ignore: --non-matching without --verbose
+Date:   Tue, 24 May 2022 21:26:30 +0200
+References: <pull.1236.git.1653310466062.gitgitgadget@gmail.com>
+ <xmqqilpwru9z.fsf@gitster.g>
+ <hl3lllnkPVswb8IZoaMCS62N42epy97_8rLH8qrvSGCbKoovP5_qjtq4nrot5-h-q_7KOu-JpPX4nC0f74BXm6uWdtxosa6z5niHqAJKRUw=@protonmail.com>
+ <xmqqwneahh8t.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
-Message-ID: <220524.86czg2wx4a.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqwneahh8t.fsf@gitster.g>
+Message-ID: <220524.868rqqwx1t.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -69,67 +70,28 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, May 24 2022, Philippe Blain wrote:
+On Tue, May 24 2022, Junio C Hamano wrote:
 
-> The FreeBSD CI build (on Cirrus-CI) has been failing in
-> 't9001-send-email.sh' for quite some time, with an error from the
-> runtime linker relating to the Perl installation:
+> Carl Smedstad <carl.smedstad@protonmail.com> writes:
 >
->     ld-elf.so.1: /usr/local/lib/perl5/5.32/mach/CORE/libperl.so.5.32: Undefined symbol "strerror_l@FBSD_1.6"
+>>> Not commenting on the patch itself, but ...
+>>>
+>>> > find . |
+>>> > git check-ignore --verbose --non-matching |
+>>> > grep $'^::\t' |
+>>> > sed -e 's/.*\t//'
+>>>
+>>> ... feeding grep output to sed caught my eyes. Isn't that equivalent to
+>>>
+>>> git ... |
+>>> sed -n '/^::\t/s/.*\t//p'
+>>
+>> That is indeed equivalent. TIL about regular-expression addresses in
+>> sed, thanks!
 >
-> The first instance is in t9001.6 but it fails similarly in several tests
-> in this file.
->
-> The FreeBSD image we use is FreeBSD 12.2, which is unsupported since
-> March 31st, 2022 [1]. Switching to a supported version, 13.0,
-> makes this error disappear [2].
->
-> Change the image we use to FreeBSD 13.0.
->
-> [1] https://www.freebsd.org/security/unsupported/
-> [2] https://lore.kernel.org/git/9cc31276-ab78-fa8a-9fb4-b19266911211@gmail.com/
->
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->
->     Here is a proper patch following my earlier mail [1].
->     
->     [1] https://lore.kernel.org/git/CAPUEspgdAos4KC-3AwYDd5p+u0hGk73nGocBTFFSR7VB9+M5jw@mail.gmail.com/T/#t
->
->  .cirrus.yml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/.cirrus.yml b/.cirrus.yml
-> index e114ffee1a..20c85eef81 100644
-> --- a/.cirrus.yml
-> +++ b/.cirrus.yml
-> @@ -9,7 +9,7 @@ freebsd_12_task:
->      DEFAULT_TEST_TARGET: prove
->      DEVELOPER: 1
->    freebsd_instance:
-> -    image_family: freebsd-12-2
-> +    image_family: freebsd-13-0
->      memory: 2G
->    install_script:
->      pkg install -y gettext gmake perl5
->
-> base-commit: 7a3eb286977746bc09a5de7682df0e5a7085e17c
+> I however suspect that these "\t"'s should be spelled out as an
+> actual TAB in the final production version for portability.
 
-This may or may not be a good idea, I've got no about about this CI
-setup & what FreeBSD version we'd prefer.
-
-But that you're seeing this in t9001-send-email.sh in particular
-suggests that perl isn't broken in general, as we hard depend on it in a
-bunch of places in the test suite.
-
-Rather, it's some more advanced Perl usage.
-
-So aside from this switch perhaps we'd like to have a more specific
-prereq for those send-email tests than just "PERL", which is controlled
-by our "NO_PERL" build-time setting, i.e. to actually probe if Perl
-works.
-
-The error you quote doesn't tell us anything about where it happened,
-which aside from anything else would be useful to have in the commit
-message. I.e. what command did we run when this failed, and did other
-perl commands before that (either in that test, or others) work?
+Make that a "for sure", it's a commonly unsupported feature of some
+sed's, it's actually more common that not that it isn't supported. See
+$HT in t4213-log-tabexpand.sh.
