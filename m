@@ -2,79 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D5B3C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 15:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C43C4C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 16:00:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239108AbiEXPzB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 11:55:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40120 "EHLO
+        id S239408AbiEXQAW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 12:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234881AbiEXPzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 11:55:00 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4925B91549
-        for <git@vger.kernel.org>; Tue, 24 May 2022 08:54:59 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id AE2BB3F414D;
-        Tue, 24 May 2022 11:54:58 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 7D30A3F412C;
-        Tue, 24 May 2022 11:54:58 -0400 (EDT)
-Subject: Re: [PATCH 0/4] ci: fix windows-build with GCC v12.x
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1238.git.1653351786.gitgitgadget@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <a9062373-5347-4bfc-226a-fc9e892384f2@jeffhostetler.com>
-Date:   Tue, 24 May 2022 11:54:57 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S239291AbiEXQAO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 12:00:14 -0400
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FFB99AE6B
+        for <git@vger.kernel.org>; Tue, 24 May 2022 08:59:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1653407997;
+        bh=6Ra2q8YijfGhI/mMoUKoH/FHQiKskTxQYXIhiGVsuw4=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=MNzJW10de5zis5BywmDn7BdrkVRYBIgWi315hmoeL66yStagG7v0GV+53rUZYTDHW
+         qcDvRIadYVC6SY1CJ+nylp+1Q5Vzg084ryAZdn/PJdILpdpmR362n22P5yruYJ6zbt
+         FtA7ONgdmc+NZ/5VaYK4IGHSDQ2Lq16jjRF/4HfM=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mo6Jl-1nVo6I0UkV-00pM2f; Tue, 24
+ May 2022 17:59:57 +0200
+Message-ID: <972c3c82-0c10-ee95-9a7f-082de02a49c0@web.de>
+Date:   Tue, 24 May 2022 17:59:56 +0200
 MIME-Version: 1.0
-In-Reply-To: <pull.1238.git.1653351786.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.1
+Subject: Re: [PATCH 2/4] nedmalloc: avoid new compile error
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1238.git.1653351786.gitgitgadget@gmail.com>
+ <8963c6fa625bbaf5153990939ea06742304ddcd2.1653351786.git.gitgitgadget@gmail.com>
+ <220524.86bkvnxsm5.gmgdl@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <220524.86bkvnxsm5.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:MQQOR5E7iIts9lGOrB2fOvx7bz8RJSdHd93+zlGgXr3VEzi8rcM
+ BxI/8/eS4xed781fzItw3V+29KkdOHMD9NQj+cKbpIKbqP4esoq8aWGX1gIPHNi6xh8A6lu
+ vV1KmbsZj+O7R/SeM5acwhgy4JymxCkLI/9PtPSKfOfgByeauc/opP8L7RVP9hUtKrhRjR0
+ J91hNX80n98I0cg0CNRzQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YfAR8Gp+wno=:aQE++NmZxl9zFqeQG0/vVr
+ wOiQkvEPv2cmmifPMdpspyLELeLmagkhP80aNLHOtBlSGF5Ne4JpptAlTnsMC3kZGbULkBvtR
+ 26yuxN5HSnpsNl/4HNyIhRZ9xBT7VcA2igz5y89qdZpNV3bgDRzAKTGABHlxdtn8t25GP4nBH
+ Im296mjAHsjKrmQxuDAtiZ+tJLL1BiZE80BDPq6wAPWFmElNw9Xhq8F7de3RGm5TwjUUj29rv
+ wbPFXwiYMb8iO2NbgLuJ5IqfNZ+HUeHpwqiGstkHYndwFO0XM+ANgDFDCTOQ/r2s1vvqdxOSM
+ LVxLgeK2MBIsrLvtXlzRv4oF/wZkhS6j2GMhFa5ThPnpYxbRiw2pfLSSR9vX0rdMf5hY+xXBM
+ UTOc67iphXP5xTMmRInOrnQocZ4L+9FGzTH98yvN0suuNtDdu0yn/5Jvz4sYqrRMXzEi7Cidr
+ /Vx8Gjqdn2dpidb90cE8qWtw824FLObKbmaKSR/H+q061c38/rOFqjuULDaN5WFiOJ5pyv2x6
+ F+iRnGGigYWOpHS9tzy15fLy8SkaLyFkbJG1Hx9K4wcINe8zfoxGWUD94wN38HIeHwzOu7GbU
+ MaLh+iBQa0d1CYhVWXrW1WO68fQZHEWO8vVSF5f3pGZD0M53SjOF6yWDGJpHic8pJEzkKJjwc
+ hRR0dvWchjobnt3XtzGSJbZTjpX75lLovltJl/EODEpEMuD10m1A/aJn/hTWxPm74w16YUnCW
+ gGtL6xLkEIMh5ygJORVRvRL42yELGFZYpTRAeQ1yc2N19G6g52+WpmqJlL5Z8zK8DhxLeiYyP
+ NQuk9RybmgTJdyXUZjDhxfla0e3fGAkAcMtKNVQte4535sG4UweACo0ZkQxlRwcGAs4ztqvgm
+ ypTWn3WL9d2Lq4rDEaPrDHEB8GQXXEPaJonBpzMILJRJRrsoDlx3hVuNuceghL7dVoTRVx8gK
+ vgLWld9EjT7RaQCD+d26MoxEnjUSI4HFxHxP0GnjiIWefeqZj8YEbOHz5gQFRR7yui6Iway4Q
+ csmFchuUZ/dSKsiqHMVjoO+3MVer38a5DA+OMAyji710q0390pE7xVdCjQlBfoYjaFj7bwLDj
+ oAWTUKYif7s0twryVTFfvIcqm5BtNRdV0SA
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 24.05.22 um 10:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+> This seems sensible, I thought "why not submit it to upstream",
+> i.e. see:
+> https://github.com/ned14/nedmalloc/blob/master/nedmalloc.c#L1298
+>
+> But that repository was last updated in 2014, I wonder if it's just
+> because nobody's submitted a patch since then, or if it's inactive. Have
+> you tried making Njall Douglas (the nedmalloc author) aware of this
+> issue?
+>
 
+https://github.com/ned14/nedmalloc says at the top: "This repository has
+been archived by the owner. It is now read-only.".
 
-On 5/23/22 8:23 PM, Johannes Schindelin via GitGitGadget wrote:
-> A recent update of GCC in Git for Windows' SDK (a subset of which is used in
-> Git's CI/PR builds) broke the build.
-> 
-> These patches address that, and they are based on maint-2.34 (earlier
-> maintenance tracks would have a trivial merge conflict due to 013c7e2b070
-> (http: drop support for curl < 7.16.0, 2021-07-30) removing support for
-> USE_CURL_MULTI).
-> 
-> Johannes Schindelin (4):
->    compat/win32/syslog: fix use-after-realloc
->    nedmalloc: avoid new compile error
->    http.c: avoid danging pointer to local variable `finished`
->    dir.c: avoid "exceeds maximum object size" error with GCC v12.x
-> 
->   compat/nedmalloc/nedmalloc.c |  1 -
->   compat/win32/syslog.c        |  2 ++
->   dir.c                        |  9 +++++++++
->   http-walker.c                |  4 ----
->   http.c                       | 15 +++++++--------
->   http.h                       |  2 +-
->   6 files changed, 19 insertions(+), 14 deletions(-)
-> 
-> 
-> base-commit: 2f0dde7852b7866bb044926f73334ff3fc30654b
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1238%2Fdscho%2Ffix-win-build-with-gcc-12-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1238/dscho/fix-win-build-with-gcc-12-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1238
-> 
-
-This looks good to me.  I reviewed it earlier in one of our
-downstream forks.
-
-Jeff
+Ren=C3=A9
