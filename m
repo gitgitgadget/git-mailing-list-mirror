@@ -2,169 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 208C1C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 19:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12A2BC433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 19:52:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241022AbiEXTt6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 15:49:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32976 "EHLO
+        id S241054AbiEXTwL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 15:52:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239067AbiEXTt5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 15:49:57 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 580897892E
-        for <git@vger.kernel.org>; Tue, 24 May 2022 12:49:56 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id f21so23793316ejh.11
-        for <git@vger.kernel.org>; Tue, 24 May 2022 12:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=rpyO5MxuNg2gr1mN/HWzvPmpc6yOUyOmaKlo0a6QzVU=;
-        b=EN/4ZXo+DtUY6CUiO+tIMRartfllYgYoIcj1KjWhifJwljq4jNPH28NIz/DroQpCy+
-         djtilXSlUWGX+7h5DMIYl0x79Ra/uTa73kD/DFMJQDCHt+9YQxKTgw5nSdKnI1G6Rcyy
-         2eh5yVhNa5Zk+2EtU6eXgGApAKk7ADKZm13gdOEr/quYJQ1gCuI8n47gxrfTLw92/I13
-         ssFpp4Dban1VXZQy0w+nr+hrPHdtU+VBLYdQKJxxPVgfI5IPQJTZM3UiEn4R3iBSKIIA
-         YQhGw2xJbnkF70pNpgThrTf23h8QG4PJ0iu7PVZsgy376F/T4VbVI9Njgx81skiwjNkf
-         x6uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=rpyO5MxuNg2gr1mN/HWzvPmpc6yOUyOmaKlo0a6QzVU=;
-        b=Alj7pOexUaol6Dfh/LwM0EHMD+pr8v4Rrhjt3WxzJ+w0FCt2usv9jKuJLhAS6nUcmQ
-         pFaczvKKLssuPLcFGvsW+IdGMvnDvkwlIAmNbEGnRMeOyTvfjU8TT/vuWGmtoJar7fFU
-         QEy2C2HXEpBTTnqwlWxXIB3ButBwdFr/4x15+V2qoAB/nzsZGvOIOElkSaviL7lfhIcn
-         +CaUohZTMbOj2obw1tvYRtfAuRCeK030FCvObyXlppVNa4W0jd97b2jVMxP2ubzkAy0k
-         vfKGENo0eWXId6c9NmipkWQL9nY1LEOBRg/5TtmeWwc49aKeTB9v3Ic98tQfnfMEkCAe
-         oL/w==
-X-Gm-Message-State: AOAM532dl4MWxU+OrGYBGOVjlImm8ZnjYhcCN2ynoYL+6dGLo7xBWaHN
-        KqYzlnCpa7tlz6nI0Aq5BrU=
-X-Google-Smtp-Source: ABdhPJz4hMnKf892bjgsBZoUCeVuvYRXucTaziHxDvQQOKkKwzQfxQ83JAP5Sw+7wdRjQjpDmyco/A==
-X-Received: by 2002:a17:907:3dac:b0:6fe:c707:94e7 with SMTP id he44-20020a1709073dac00b006fec70794e7mr13132469ejc.268.1653421794809;
-        Tue, 24 May 2022 12:49:54 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id 23-20020a17090600d700b006f4b2aab627sm7461530eji.222.2022.05.24.12.49.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 12:49:54 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ntaXR-003XTn-Le;
-        Tue, 24 May 2022 21:49:53 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, vdye@github.com, jonathantanmy@google.com,
-        gitster@pobox.com
-Subject: Re: [PATCH v2 3/4] builtin/pack-objects.c: ensure included
- `--stdin-packs` exist
-Date:   Tue, 24 May 2022 21:46:09 +0200
-References: <cover.1652458395.git.me@ttaylorr.com>
- <cover.1653418457.git.me@ttaylorr.com>
- <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
-Message-ID: <220524.86zgj6vhge.gmgdl@evledraar.gmail.com>
+        with ESMTP id S235969AbiEXTwJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 15:52:09 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D1B36E01
+        for <git@vger.kernel.org>; Tue, 24 May 2022 12:52:08 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7650A1809CE;
+        Tue, 24 May 2022 15:52:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NoLSnFraw1ydy52onAuh4WxEhysCpH3B4PU8zW
+        NjVyg=; b=Alwab2dCOxV71pYHsXqMVRAWMHfoTjxxGtzh9mEPVIZXSK0UiVwt2v
+        ufzZ2yT+7V0Oxrapo12YHnfAJnFFBpvX7jDU0N9vs7gniAK6LpEdhj4Myf+MzjOP
+        b2O3wSPqerEOxdQhRXq1ZxMNOOtpXBmE+Vk3XkqvYwzpQIAVWQAM0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6DD7C1809CD;
+        Tue, 24 May 2022 15:52:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 192771809CC;
+        Tue, 24 May 2022 15:52:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH v7 26/30] t/helper/hexdump: add helper to print hexdump
+ of stdin
+References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
+        <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
+        <6f2e935f148e826609153378751c04807858e76c.1653336765.git.gitgitgadget@gmail.com>
+        <xmqqk0acosks.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2205241415040.352@tvgsbejvaqbjf.bet>
+Date:   Tue, 24 May 2022 12:52:03 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2205241415040.352@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 24 May 2022 14:16:07 +0200 (CEST)")
+Message-ID: <xmqqbkvmhfoc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: FC9CD8C4-DB9A-11EC-B582-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, May 24 2022, Taylor Blau wrote:
+> Do you know of any `grep` implementation that has problems with text
+> missing the usual trailing newlines?
 
-> -	struct rev_info *revs = _data;
-> -	struct object_info oi = OBJECT_INFO_INIT;
->  	off_t ofs;
-> -	enum object_type type;
-> +	enum object_type type = OBJ_NONE;
->  
->  	display_progress(progress_state, ++nr_seen);
->  
-> @@ -3215,20 +3213,25 @@ static int add_object_entry_from_pack(const struct object_id *oid,
->  	if (!want_object_in_pack(oid, 0, &p, &ofs))
->  		return 0;
->  
-> -	oi.typep = &type;
-> -	if (packed_object_info(the_repository, p, ofs, &oi) < 0)
-> -		die(_("could not get type of object %s in pack %s"),
-> -		    oid_to_hex(oid), p->pack_name);
-> -	else if (type == OBJ_COMMIT) {
-> -		/*
-> -		 * commits in included packs are used as starting points for the
-> -		 * subsequent revision walk
-> -		 */
-> -		add_pending_oid(revs, NULL, oid, 0);
-> +	if (p) {
-> +		struct rev_info *revs = _data;
-> +		struct object_info oi = OBJECT_INFO_INIT;
-> +
-> +		oi.typep = &type;
-> +		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
-> +			die(_("could not get type of object %s in pack %s"),
-> +			    oid_to_hex(oid), p->pack_name);
-> +		} else if (type == OBJ_COMMIT) {
-> +			/*
-> +			 * commits in included packs are used as starting points for the
-> +			 * subsequent revision walk
-> +			 */
-> +			add_pending_oid(revs, NULL, oid, 0);
-> +		}
-> +
-> +		stdin_packs_found_nr++;
->  	}
->  
-> -	stdin_packs_found_nr++;
-> -
->  	create_object_entry(oid, type, 0, 0, 0, p, ofs);
+I recall that we had reports on BSD variants, but please do not
+quote me on that.  Perhaps all the BSD variants are good now, or
+perhaps some aren't.
 
-Not rhetorical, since I have no idea: Is the behavior change here to
-make create_object_entry with type=OBJ_NONE desired? I.e. do we actually
-want to create object entries for OBJ_NONE?
+In any case, I do not take the "if it works on Windows and Linux, we
+do not care about the rest of the world" world view, so finding the
+answer to that question unfortunately does not give much input to
+the issue in either way.
 
-If that is the case I for one would find this a bit easier to follow
-like this, even if it has some minor duplication, i.e. the intent is
-clearer:
-	
-	diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-	index ffeaecd1d84..a447f6d5164 100644
-	--- a/builtin/pack-objects.c
-	+++ b/builtin/pack-objects.c
-	@@ -3202,7 +3202,6 @@ static int add_object_entry_from_pack(const struct object_id *oid,
-	 				      void *_data)
-	 {
-	 	off_t ofs;
-	-	enum object_type type = OBJ_NONE;
-	 
-	 	display_progress(progress_state, ++nr_seen);
-	 
-	@@ -3216,6 +3215,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
-	 	if (p) {
-	 		struct rev_info *revs = _data;
-	 		struct object_info oi = OBJECT_INFO_INIT;
-	+		enum object_type type;
-	 
-	 		oi.typep = &type;
-	 		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
-	@@ -3230,9 +3230,11 @@ static int add_object_entry_from_pack(const struct object_id *oid,
-	 		}
-	 
-	 		stdin_packs_found_nr++;
-	-	}
-	 
-	-	create_object_entry(oid, type, 0, 0, 0, p, ofs);
-	+		create_object_entry(oid, type, 0, 0, 0, p, ofs);
-	+	} else  {
-	+		create_object_entry(oid, OBJ_NONE, 0, 0, 0, p, ofs);
-	+	}
-	 
-	 	return 0;
-	 }
+And in this particular case, it is much simpler to mak sure that the
+file does not end in an incomplete line than us exchanging e-mails
+back and forth, so that would be the most economical solution I
+would prefer.
 
-Or the same with adding "type = OBJ_NONE" to the "else" branch, leaving
-the initial "type" uninitialized"?
+Thanks.
 
-Or perhaps this is a bug? I see some OBJ_NONE mentions in the code, but
-do packfiles really have "none" objects in some fashion as far as
-add_object_entry_from_pack() is concerned? (I'm not familiar enough with
-this part of the codebase to know).
