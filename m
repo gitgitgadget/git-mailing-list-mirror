@@ -2,137 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E285C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 833ABC433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234807AbiEXUaX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 16:30:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47814 "EHLO
+        id S241551AbiEXUkV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 16:40:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234130AbiEXUaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 16:30:22 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF74962BDB
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:30:21 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id m20so37626842ejj.10
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:30:21 -0700 (PDT)
+        with ESMTP id S229503AbiEXUkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 16:40:19 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16DA46C575
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:40:19 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id p12-20020a9d4e0c000000b00606b40860a3so13040182otf.11
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:40:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=qmjML5Foe9pSR9f4gkCpyBLvTEt5FQtsSiwcCH1zqho=;
-        b=BS4lrUvbsOIPbw82/S+H9K8D8HiiRQU6XL680uDxfrSfzZs5aMqSJSDR0aayymEkZJ
-         /cUVY7qau3UFEEpULfiXJeZ1ddmsWzoO5qY74J31GLEOMu8PMCL3kbUVLUc9vuFIH4wP
-         lNW72dqh5YPCp7yaQFtXMxUY7eKmxZUSJxaugpZMsvNVczlHCiOI6ADc4CiM/J9gJoeS
-         6Y40iGSyHHPsEUImc0rsJ8PxQYKwO4DBELe/fhsKcfUZl50AtjqT5kTjIMiBiytTu6oI
-         A3oMC8iUGnmuUPk6ZGUZqYhbcgSgvyBsMz0GkU1Et0uoEMIXSImlOfB5GmvB4QiHZopz
-         tvqg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=MUGb7LOYbq6wNsz3eC6qPMXI9J8UvjjNHbqyJaGdRUw=;
+        b=LQyFL2/g/Wj9+7GzP+OLDbiI7ohm9H1Qn0bmPuS8FERTAbv+zujaSMcgoJl3gHdMQA
+         BlZW7TvZEZBXKkyAgxIHncDs3GeBS8eXUxNmWrPt3RxUDQhw7aVSUAd76Wkx3nRIRiGw
+         +LGeqms4Nao58ESqFfYbdPqqq+u4xG/4ymfUA1V9PRLRBZYGpW9y9GtGIUjsMFFbnk1s
+         8cXN+qQbGCUNkFdtcnieIi1IfiOjSGiDRNZnk/MZZCqNucPl3k6xHRMKULUS9F7exPeZ
+         m4hcCzaxDodhXVdrCIIm++RfqB9mYuv5AapNYJlGUZ7eoWYTIer4jmvA2m5WOFX8ozYG
+         5MfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=qmjML5Foe9pSR9f4gkCpyBLvTEt5FQtsSiwcCH1zqho=;
-        b=VHISml+hLqutQ94bzqDa2fG0NiiaRBGC3hHdIOMDX8u6i+7U/j0nFrCOvBKWGNgFIg
-         fm5cM6y72g/ROEUvtBivgUWDj9sahGbEv20FXY3hlOT9AQV4MqAlbFYT9x0VkRi+J2NM
-         xBmkoZFYfJonWocouU/t+MF/yKz1Fcmj2CzNAMXdvE99qiWe60d6QS7tV5/kTCNZDEsm
-         HAJfMBEKIwd2isdAAhogM3DDEeZ0Np9l0tzvf7kOIZKmV+MIq9rTP8Pwl5GQZ0MRBTRi
-         SRbOBxz06GfduvpexgvhffvmztAHRfOezXb9if0LjbejWUVHoWcak23rgj4rRKOVc/yc
-         ZiUg==
-X-Gm-Message-State: AOAM531BaWtyjJRajfchky0MhBIhVxE+Gx/r2oPr9pXhQBSxNl1SKabG
-        E0lByZBhLJX/qayTV0Xs11Tcqbt3xkQ=
-X-Google-Smtp-Source: ABdhPJzOA1FIqcB9dmFp5OsjXDNa8LAl5q56ua2lJ0aKaJiPhlx66oONMgzLciS+UZLohACxs17i3Q==
-X-Received: by 2002:a17:907:96ab:b0:6ff:127:65a9 with SMTP id hd43-20020a17090796ab00b006ff012765a9mr5413498ejc.603.1653424220083;
-        Tue, 24 May 2022 13:30:20 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id jz10-20020a17090775ea00b006f3ef214e0asm7419160ejc.112.2022.05.24.13.30.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 13:30:19 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ntbAY-003Yxl-Vj;
-        Tue, 24 May 2022 22:30:18 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-Subject: Re: [PATCH] diff: fix a segfault in >2 tree -I<regex> and
- --output=<file>
-Date:   Tue, 24 May 2022 22:17:24 +0200
-References: <a6a14213-bc82-d6fb-43dd-5a423c40a4f8@web.de>
-        <patch-1.1-f7fd645468c-20220523T182954Z-avarab@gmail.com>
-        <xmqqleusqaff.fsf@gitster.g>
-        <220524.86leurw3my.gmgdl@evledraar.gmail.com>
-        <xmqqmtf6hgae.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqmtf6hgae.fsf@gitster.g>
-Message-ID: <220524.86v8tuvfl1.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=MUGb7LOYbq6wNsz3eC6qPMXI9J8UvjjNHbqyJaGdRUw=;
+        b=BEwo5KbG55md5NKTs04aUar4wa9hdI3HE4HHuFELbaGQUlV/hGtURfLst0zZfXhLMV
+         +ldVn0eCYdHIRnEU6PgXB62D318sA4tPU24VZtfzJOLFCDQWi2wFRqEHttgzEMYDxp2u
+         RwJcWeM2lpi/VejriX92i4QRYYC3iqOYAQJFtRIUPyxvGIIb9yUsuKiWN4/1i93wR3+q
+         BhPP9k+yvHAJHm3PBlkDqeJQ2nM2cKOKYuctbDs9bFDdDecU2ATCzpgZkryi0emwoPQe
+         1TNhgV802UnTsFbGES0L6KK5L9/YhPi/joqGAwpiLylgliIrKyOBecyGtwf33jtkqwio
+         o/Mg==
+X-Gm-Message-State: AOAM531k7jFxRQrBqAO6uWCD15i08A30sjgDLJmA4yKulkqIywnytJ4f
+        DtA6bkf1P3dN6HhFIwUnFCrG
+X-Google-Smtp-Source: ABdhPJyyN9fwbelfyFuMZ3DCwIgI8oTppFW5n3yYL1Qg9Fq0cMNmKG/7aUaxKpv8T/8Z3zm94fUZUw==
+X-Received: by 2002:a05:6830:54d:b0:606:a7d6:f809 with SMTP id l13-20020a056830054d00b00606a7d6f809mr11569297otb.139.1653424818388;
+        Tue, 24 May 2022 13:40:18 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e? ([2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e])
+        by smtp.gmail.com with ESMTPSA id l6-20020a056871068600b000e686d1389esm5515738oao.56.2022.05.24.13.40.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 May 2022 13:40:18 -0700 (PDT)
+Message-ID: <e311a560-0606-e5f7-0c41-a6b0f42062cf@github.com>
+Date:   Tue, 24 May 2022 16:40:17 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v4] setup: don't die if realpath(3) fails on getcwd(3)
+Content-Language: en-US
+To:     Kevin Locke <kevin@kevinlocke.name>, git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
+ <8b20840014d214023c50ee62439147f798e6f9cc.1653419993.git.kevin@kevinlocke.name>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <8b20840014d214023c50ee62439147f798e6f9cc.1653419993.git.kevin@kevinlocke.name>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 5/24/2022 3:20 PM, Kevin Locke wrote:
+> Changes since v3:
+>  * Free tmp_original_cwd in both codepaths.
+>  * Return after strbuf_realpath() fails, rather than jumping to
+>    no_prevention_needed, to avoid unnecessary free(NULL) and NULL
+>    reassignment.
+>  * Invert the condition and remove the else block to match the
+>    return-on-error code style for better readability.
+>  * Stop adding "Try" to comment, since strbuf_realpath() hasn't
+>    been optional since v1.
 
-On Tue, May 24 2022, Junio C Hamano wrote:
+...
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> I.e. the "right" thing to do in this case would require a much more
->> involved fix. We've somehow ended up not supporting --output=3D<file>, -I
->> and probably many other options in the combined-diff mode, which both in
->> testing and in this part of the implementation seems to have become an
->> afterthought.
->
-> OK, a hopefully final question.
->
-> How much less involved is it to add a new code (without doing
-> anything in this patch)
+>  	/* Normalize the directory */
+> -	strbuf_realpath(&tmp, tmp_original_cwd, 1);
+> +	if (!strbuf_realpath(&tmp, tmp_original_cwd, 0)) {
+> +		trace2_data_string("setup", the_repository,
+> +				   "realpath-path", tmp_original_cwd);
+> +		trace2_data_string("setup", the_repository,
+> +				   "realpath-failure", strerror(errno));
+> +		free((char*)tmp_original_cwd);
+> +		tmp_original_cwd = NULL;
+> +		return;
+> +	}
 
-...yeah, I think for this one it makes sense to narrowly focus on the
-segfault...
+This is much easier to reason about.
 
-> to detect and die on the combination of
-> combined-diff with these two options, so that we can document the
-> fact that we do not support them?  It would give us much better way
-> forward than leaving the command silently ignore and give result
-> that is not in line with what was asked, wouldn't it?  That way, the
-> much more involved "fix" will turn into a change to add a missing
-> feature.
+>  	free((char*)tmp_original_cwd);
+>  	tmp_original_cwd = NULL;
+>  	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
+I had considered trying to remove this duplicate code freeing
+temp_original_cwd. It requires adding a variable storing the
+return from strbuf_realpath() _or_ knowing that tmp will have
+zero length if strbuf_realpath() fails. It would look gross,
+though:
 
-I think not much, it's rather trivial for the case where we invoke "git
-diff", I.e. just adding something to the "builtin_diff_combined()"
-branch in builtin/diff.c to detect these two cases specifically.
+	strbuf_realpath(&tmp, tmp_original_cwd, 0);
 
-I haven't looked in any depth into how we might reach code in
-combine-diff.c through other means, and if any of it can set these two
-indirectly somewhere else (i.e. other things that take diff options).
+	if (!tmp->len) {
+		trace2_data_string("setup", the_repository,
+				   "realpath-path", tmp_original_cwd);
+		trace2_data_string("setup", the_repository,
+				   "realpath-failure", strerror(errno));
+	}
+	free((char*)tmp_original_cwd);
+	tmp_original_cwd = NULL;
+	if (!tmp->len)
+		return;
 
-I also wonder if I'm just wrong in my assessment that it's a Bad Thing
-that we take some of these without ever doing anything with them in some
-modes, e.g.:
+	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
 
-	git log --oneline -I foo
+...and that doesn't look very good at all. Thus, I think your v4
+is ready to merge. Thanks for working on it!
 
-This will never do anything with that "-I foo" by definition, but would
-as soon as you add -p, should we error without -p (or other diff-showing
-options).
-
-The same goes for range-diff, format-patch, --remerge-diff and any
-number of other things where we take the full set of options, but only
-do something with a limited subset of them.
-
-It is helpful in some cases if we were more anal about it, e.g. when I
-was wondering why -I didn't do anything with the combined diff, but also
-handy for scripting and one-liners if you can tweak the command-line
-back & forth without it being so strict.
-
-So I don't know. Maybe I'm just trying to talk myself out of pulling on
-that (bound to be long) thread, but I'm coming more around to this just
-being a non-issue beyond the narrow and needed fix for diff_free() in
-particular.
-
-I.e. the more general approach of chasing down options that don't do
-anything for a given "diff mode". We might still want to error on some
-particular ones, such as -I with the combined diff (but not with
---oneline, or whatever).
+Thanks,
+-Stolee
