@@ -2,97 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEFC8C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 19:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA85C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 19:20:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240804AbiEXTUa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 15:20:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39632 "EHLO
+        id S240298AbiEXTUh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 15:20:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbiEXTU3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 15:20:29 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3277364D25
-        for <git@vger.kernel.org>; Tue, 24 May 2022 12:20:28 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-f2bb84f9edso322589fac.10
-        for <git@vger.kernel.org>; Tue, 24 May 2022 12:20:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=vEsYdGd75o21tFCiD7gcnCr8dQHcxDpj9mfcF4vw8vs=;
-        b=KnnS64wDsrWQbwqiQNn6+Mcratij4iUK3T7E1u+7DBp3uuaE6cND+SkRvQ08zcAa0M
-         tFXxs24zuip0DbAKM7DB5dmuhYaC2G7VXPpipvnvS7RpAU7UV+hS4Ii+SSgeRee1a0Jj
-         K8zTwURl1qcL5i8HAbtOpijjNmqE7PzrH5WnTdsuQuenNWFc1XHWlUCE0sayyUGqbL4y
-         ZFnQXrj1AsGIVwNmETaA2YgOoOLZrnhvE2GM18sHQlfbzHmhdd+9ywI5smVqFqO8I5ow
-         j36KNevUQnIO1JZYKX/Y2ogaZwXHaf9Ru3YHXx44yR8ScfIh4Y64zxXPxeuuD6oz29J7
-         9rLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=vEsYdGd75o21tFCiD7gcnCr8dQHcxDpj9mfcF4vw8vs=;
-        b=TyYSbi9gHOO/GAvKasEtMSS2psROnPH2ZZ0VAB/7ORc6vV4w3o8T4GhSVikFrB0x9A
-         zujpWmLgE46Su7S0XxVSIgI4gAN3Lq7PxH2aHhBC/5VBhhATO9BFE13cqK7xaXQuCIx8
-         TrPdnzS4oO70xmB9HDq52voV/TcICeNjnP5DLnpm2r8h0gq6fUmgxJzgxHz1yrxNisV1
-         FZb2emkrEE/Ubxg6KoEGfmmhBTjAt023fnac7noD7E8X4vb29W6fGLwfdxfBU7wkGA0n
-         8V36jp/jYdgaYkxfWdgXHB0nkHhl0YU08LthMcPSXgEPN8T83mf5QIfeTcQoYHiZYvfT
-         XeOw==
-X-Gm-Message-State: AOAM531O9bEmXWFhPSYtno4dWqjqodPmALBHWlrWXhugMnkI9rChq/LN
-        BY6M0TlO7bZqYXv7frmIRyY=
-X-Google-Smtp-Source: ABdhPJwei9PsVfe5aGNL0ppeqO2Wrc8FAULGXB76H16XDOSQj1QThN4xr+mFV5D8ubAGzexzy5XQcQ==
-X-Received: by 2002:a05:6870:e316:b0:f2:b38f:1fe7 with SMTP id z22-20020a056870e31600b000f2b38f1fe7mr1199415oad.181.1653420027470;
-        Tue, 24 May 2022 12:20:27 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id k17-20020a9d1991000000b0060b0b638583sm3255067otk.13.2022.05.24.12.20.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 12:20:27 -0700 (PDT)
-Date:   Tue, 24 May 2022 12:20:26 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org, Ed Maste <emaste@freebsd.org>
-Subject: Re: [PATCH] ci: update Cirrus-CI image to FreeBSD 13.0
-Message-ID: <20220524192026.2373nfcrs6bsa4ce@carlos-mbp.lan>
-References: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
+        with ESMTP id S240801AbiEXTUc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 15:20:32 -0400
+X-Greylist: delayed 19081 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 24 May 2022 12:20:31 PDT
+Received: from vulcan.kevinlocke.name (vulcan.kevinlocke.name [107.191.43.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1727864BCA
+        for <git@vger.kernel.org>; Tue, 24 May 2022 12:20:30 -0700 (PDT)
+Received: from kevinolos.kevinlocke.name (unknown [69.145.56.143])
+        (Authenticated sender: kevin@kevinlocke.name)
+        by vulcan.kevinlocke.name (Postfix) with ESMTPSA id CC9462E78E8B;
+        Tue, 24 May 2022 19:20:28 +0000 (UTC)
+Received: by kevinolos.kevinlocke.name (Postfix, from userid 1000)
+        id 0C061130055D; Tue, 24 May 2022 13:20:17 -0600 (MDT)
+From:   Kevin Locke <kevin@kevinlocke.name>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: [PATCH v4] setup: don't die if realpath(3) fails on getcwd(3)
+Date:   Tue, 24 May 2022 13:20:12 -0600
+Message-Id: <8b20840014d214023c50ee62439147f798e6f9cc.1653419993.git.kevin@kevinlocke.name>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
+References: <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 24, 2022 at 12:58:23PM -0400, Philippe Blain wrote:
-> The FreeBSD CI build (on Cirrus-CI) has been failing in
-> 't9001-send-email.sh' for quite some time, with an error from the
-> runtime linker relating to the Perl installation:
-> 
->     ld-elf.so.1: /usr/local/lib/perl5/5.32/mach/CORE/libperl.so.5.32: Undefined symbol "strerror_l@FBSD_1.6"
-> 
-> The first instance is in t9001.6 but it fails similarly in several tests
-> in this file.
+Prior to Git 2.35.0, git could be run from an inaccessible working
+directory so long as the git repository specified by options and/or
+environment variables was accessible.  For example:
 
-I have to admit I never tried to use cirrus, but I verified locally that a
-12.3 version wouldn't fail as well (or so I think).
+    git init repo
+    mkdir -p a/b
+    cd a/b
+    chmod u-x ..
+    git -C "${PWD%/a/b}/repo" status
 
-did you try to use 12.3 which should be supported for a little longer?
+If this example seems a bit contrived, consider running with the
+repository owner as a substitute UID (e.g. with runuser(1) or sudo(8))
+without ensuring the working directory is accessible by that user.
+
+The code added by e6f8861bd4 ("setup: introduce
+startup_info->original_cwd") to preserve the working directory attempts
+to normalize the path using strbuf_realpath().  If that fails, as in the
+case above, it is treated as a fatal error.
+
+This commit treats strbuf_realpath() errors as non-fatal.  If an error
+occurs, setup_original_cwd() will continue without applying removal
+prevention for cwd, resulting in the pre-2.35.0 behavior.  The risk
+should be minimal, since git will not operate on a repository with
+inaccessible ancestors, this behavior is only known to occur when cwd is
+a descendant of the repository, an ancestor of cwd is inaccessible, and
+no ancestors of the repository are inaccessible.
+
+Signed-off-by: Kevin Locke <kevin@kevinlocke.name>
+---
+
+Changes since v3:
+ * Free tmp_original_cwd in both codepaths.
+ * Return after strbuf_realpath() fails, rather than jumping to
+   no_prevention_needed, to avoid unnecessary free(NULL) and NULL
+   reassignment.
+ * Invert the condition and remove the else block to match the
+   return-on-error code style for better readability.
+ * Stop adding "Try" to comment, since strbuf_realpath() hasn't
+   been optional since v1.
+
+Changes since v2:
+ * Use trace2_data_string(), rather than trace_printf(), to report
+   realpath failure.
+
+Changes since v1:
+ * Set startup_info->original_cwd = NULL when strbuf_realpath() fails,
+   rather than setting it to the un-normalized path.
+ * Add a trace message when realpath fails to aid debugging.
+ * Remove potential realpath failure cause from comment before it.
+ * Improve format for reference to e6f8861bd4 in commit message.
+ * Clarify when the pre-2.35.0 behavior may occur as a result of this
+   commit in the commit message.
+ * Remove 'Fixes:' tag from commit message.
+
+ setup.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/setup.c b/setup.c
+index a7b36f3ffbf..e0a99df512f 100644
+--- a/setup.c
++++ b/setup.c
+@@ -459,7 +459,16 @@ static void setup_original_cwd(void)
+ 	 */
  
-> The FreeBSD image we use is FreeBSD 12.2, which is unsupported since
-> March 31st, 2022 [1]. Switching to a supported version, 13.0,
-> makes this error disappear [2].
+ 	/* Normalize the directory */
+-	strbuf_realpath(&tmp, tmp_original_cwd, 1);
++	if (!strbuf_realpath(&tmp, tmp_original_cwd, 0)) {
++		trace2_data_string("setup", the_repository,
++				   "realpath-path", tmp_original_cwd);
++		trace2_data_string("setup", the_repository,
++				   "realpath-failure", strerror(errno));
++		free((char*)tmp_original_cwd);
++		tmp_original_cwd = NULL;
++		return;
++	}
++
+ 	free((char*)tmp_original_cwd);
+ 	tmp_original_cwd = NULL;
+ 	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
+-- 
+2.35.1
 
-I think 13.1 might be better, since with this change we are also implicitly
-making a move to say that we don't really care about the old (but still
-supported) maintenance branch, but will only look at the "latest" version
-instead.
-
-still (and Ed might have a stronger opinion about it than me) either version
-would be an improvement and feel free to add my Reviewed-by for what it is
-worth.
-
->     [1] https://lore.kernel.org/git/CAPUEspgdAos4KC-3AwYDd5p+u0hGk73nGocBTFFSR7VB9+M5jw@mail.gmail.com/T/#t
-
-this might had been mangled by your mailer, but will presume is the thread
-where I replied before, and that obviously didn't stick for these round ;)
-
-Carlo
