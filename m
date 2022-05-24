@@ -2,133 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA66AC433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 06:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10CF8C4332F
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 06:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232801AbiEXGjA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 02:39:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36536 "EHLO
+        id S233726AbiEXGkJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 02:40:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232770AbiEXGiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 02:38:55 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3295D79394
-        for <git@vger.kernel.org>; Mon, 23 May 2022 23:38:54 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id k30so24223549wrd.5
-        for <git@vger.kernel.org>; Mon, 23 May 2022 23:38:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=KeherYkL96JuUfB8U+hNx+ZYpmvHBL6l0fr+7XQLM1o=;
-        b=p9iRLtEBA6caTy8IgbmBOTzHOye4Tcpo8obJtinNp+au1Ypjvbiw4dToAe+MzYa3Kl
-         FvIuvxtbVZqPhX1MHMmDeT5vh+NHNi+GVTmGUKuDfZ6FlQFjzE27WiNYXI6l6e9uukGb
-         iNg0IEIM2n4gTJVRDdggI6CVzi0nqu3oQvOzYRdU0z9PMbcvoBuesW9KmCrmZ9/LldPG
-         cM7vOigXSnGjB6aobmytZWKsOdGrrEzmEl8bOJf39euckS/RLJtjCyGo1MhHeJaR1AxM
-         2ANFVoizxdHguujPh7qGzGBR5/xSSTlr8MuPaYhW7zbbkjo5X8D5Hbvs9Qbro9Xwdl/V
-         hYqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KeherYkL96JuUfB8U+hNx+ZYpmvHBL6l0fr+7XQLM1o=;
-        b=UWAYckIOTKCusnKPd/bakmDrihrEm72y5DClRuYCk/w7giFuNG+5hP7kTBkI+3Ervy
-         8eLHXMkQYSU9G1jrfJMWannn5wCXxGcm6D5nLv71aMwJc15zINhJYsF/PHF5jN2tTGE+
-         FOGmBNtiqOQwkYMETyuQV00YcGGGok6srK781+sVf5HU9wmqCIlaVbWkE9PhNBdWXTzV
-         rmoowMIrC/aJiBNcQkyVGs52++D55JOSuk6dCzyQ6pVOjADTYBuzTmDvtGE4ZelBGN/L
-         4imJM4SY3wA6OLndaWdRsaqwtA0XVsXClVp4tHgcX1CxJAsjOrZrXwUFW16JcVWRFQMd
-         hNxg==
-X-Gm-Message-State: AOAM531Bg7CUHbjW9PeoHxsI/bB3FUNLD1zMYjtBhAvBCnBQkViAKsL7
-        XHabLybExNQK47EmjmJ92Jv/ikc5oz0=
-X-Google-Smtp-Source: ABdhPJxP6SY5gEIaNJJsasqHGrYvGKppMAHWiaDJz+/El8HARsfgPNsswyLu4SFai+BHrIK1bCiLBw==
-X-Received: by 2002:a05:6000:15c5:b0:20c:ff53:e24a with SMTP id y5-20020a05600015c500b0020cff53e24amr22489809wry.396.1653374332403;
-        Mon, 23 May 2022 23:38:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u22-20020adfa196000000b0020c5253d8dcsm12186560wru.40.2022.05.23.23.38.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 23:38:51 -0700 (PDT)
-Message-Id: <b828585b2050b3ce114abf304a60bb7eaecd8b14.1653374328.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1267.v2.git.git.1653374328.gitgitgadget@gmail.com>
-References: <pull.1267.git.git.1652846305514.gitgitgadget@gmail.com>
-        <pull.1267.v2.git.git.1653374328.gitgitgadget@gmail.com>
-From:   "Yuyi Wang via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 May 2022 06:38:48 +0000
-Subject: [PATCH v2 2/2] Add pcre2 support for cmake build system.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S233019AbiEXGkF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 02:40:05 -0400
+X-Greylist: delayed 485 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 23 May 2022 23:40:02 PDT
+Received: from silly.haxx.se (silly.haxx.se [159.253.31.95])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFFC497282
+        for <git@vger.kernel.org>; Mon, 23 May 2022 23:40:02 -0700 (PDT)
+Received: by silly.haxx.se (Postfix, from userid 1001)
+        id CD3D961F1B; Tue, 24 May 2022 08:31:55 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by silly.haxx.se (Postfix) with ESMTP id CC6E78035F;
+        Tue, 24 May 2022 08:31:55 +0200 (CEST)
+Date:   Tue, 24 May 2022 08:31:55 +0200 (CEST)
+From:   Daniel Stenberg <daniel@haxx.se>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
+ with it
+In-Reply-To: <xmqqa6b7lrw6.fsf@gitster.g>
+Message-ID: <q274s3nn-pp38-4sn-53ro-o2q63447r341@unkk.fr>
+References: <cover.1651859773.git.git@grubix.eu>        <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>        <xmqqtua2jtr0.fsf@gitster.g> <xmqqczgqjr8y.fsf_-_@gitster.g>        <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
+        <xmqqr14jluu4.fsf@gitster.g>        <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet> <xmqqa6b7lrw6.fsf@gitster.g>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Yuyi Wang <Strawberry_Str@hotmail.com>,
-        Yuyi Wang <Strawberry_Str@hotmail.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Yuyi Wang <Strawberry_Str@hotmail.com>
+On Mon, 23 May 2022, Junio C Hamano wrote:
 
-This commit fixes one of the TODOs listed in the CMakeLists.txt.
+>> It calls into cURL, which I suspect has a multi-threaded mode of
+>> operation,
+>
+> https://curl.se/libcurl/c/threadsafe.html ;-)
+>
+> My understanding is that what we have is pretty much select() driven 
+> single-threaded multi-fd transfer.
 
-As pcre2 doesn't provide cmake find module, we find it with pkgconf.
-This patch also works with vcpkg on Windows, with pkgconf and pcre2
-installed.
+Confirmed. libcurl *can* use threads (if built that way), but the only use it 
+has for such subthreads is for resolving host names. libcurl, its API and its 
+callbacks etc always operate in the same single thread.
 
-Pkgconf and pcre2 is detected automatically just like curl, expat
-and iconv. The output of CMake indicates whether pcre2 is found.
-
-Signed-off-by: Yuyi Wang <Strawberry_Str@hotmail.com>
----
- contrib/buildsystems/CMakeLists.txt | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 7f333e303c2..2844dd6c88d 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -108,7 +108,6 @@ project(git
- 
- #TODO gitk git-gui gitweb
- #TODO Enable NLS on windows natively
--#TODO Add pcre support
- 
- #macros for parsing the Makefile for sources and scripts
- macro(parse_makefile_for_sources list_var regex)
-@@ -160,6 +159,14 @@ if(NOT (WIN32 AND (CMAKE_C_COMPILER_ID STREQUAL "MSVC" OR CMAKE_C_COMPILER_ID ST
- 	find_package(Intl)
- endif()
- 
-+find_package(PkgConfig)
-+if(PkgConfig_FOUND)
-+	pkg_check_modules(PCRE2 libpcre2-8)
-+	if(PCRE2_FOUND)
-+		add_compile_definitions(USE_LIBPCRE2)
-+	endif()
-+endif()
-+
- if(NOT Intl_FOUND)
- 	add_compile_definitions(NO_GETTEXT)
- 	if(NOT Iconv_FOUND)
-@@ -180,6 +187,9 @@ endif()
- if(Intl_FOUND)
- 	include_directories(SYSTEM ${Intl_INCLUDE_DIRS})
- endif()
-+if(PCRE2_FOUND)
-+	include_directories(SYSTEM ${PCRE2_INCLUDE_DIRS})
-+endif()
- 
- 
- if(WIN32 AND NOT MSVC)#not required for visual studio builds
-@@ -700,6 +710,10 @@ endif()
- if(Iconv_FOUND)
- 	target_link_libraries(common-main ${Iconv_LIBRARIES})
- endif()
-+if(PCRE2_FOUND)
-+	target_link_libraries(common-main ${PCRE2_LIBRARIES})
-+	target_link_directories(common-main PUBLIC ${PCRE2_LIBRARY_DIRS})
-+endif()
- if(WIN32)
- 	target_link_libraries(common-main ws2_32 ntdll ${CMAKE_BINARY_DIR}/git.res)
- 	add_dependencies(common-main git-rc)
 -- 
-gitgitgadget
+
+  / daniel.haxx.se
