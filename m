@@ -2,102 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 864AEC433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E285C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:30:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241433AbiEXUQn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 16:16:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51356 "EHLO
+        id S234807AbiEXUaX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 16:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231410AbiEXUQm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 16:16:42 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60FDC17E18
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:16:41 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-f16a3e0529so23683474fac.2
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:16:41 -0700 (PDT)
+        with ESMTP id S234130AbiEXUaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 16:30:22 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF74962BDB
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:30:21 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id m20so37626842ejj.10
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:30:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=S2Gf6kpK9seCoOm8LuIWsunh8V8+UGloEvSUGPGNNIU=;
-        b=Cgk+M8/coFqbtVY9zGwV2k/zjqksxXCt6YFOooGCV8GBu9MMuSyoV02iznVvoJ7HWD
-         4T2FmrRRpQXuk7bf8qH4egZBidn3DBPPthEDn2W4mS8ZOB4SEAiCAuLKA6/+8he6L7/f
-         ZWywxcIMF8DMwYYVKjHEJGh5ROYh3fLyhuXfSd+3h82WvbxsMR8OKXQscpBvG1Y+RSac
-         TiAPptj23IVY3CIU8ObYc000sRBKf8ZHJJP1Jzwy8uz1d2fqIXZhaRMx89GrlBwuddB9
-         mRCYQB1iAZhmbu8wumL1TXd8Fl5Zsa1OWgR5B1bRgSKFNR+jgUXGf5Zp+OhkVHQFiBws
-         qxTw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=qmjML5Foe9pSR9f4gkCpyBLvTEt5FQtsSiwcCH1zqho=;
+        b=BS4lrUvbsOIPbw82/S+H9K8D8HiiRQU6XL680uDxfrSfzZs5aMqSJSDR0aayymEkZJ
+         /cUVY7qau3UFEEpULfiXJeZ1ddmsWzoO5qY74J31GLEOMu8PMCL3kbUVLUc9vuFIH4wP
+         lNW72dqh5YPCp7yaQFtXMxUY7eKmxZUSJxaugpZMsvNVczlHCiOI6ADc4CiM/J9gJoeS
+         6Y40iGSyHHPsEUImc0rsJ8PxQYKwO4DBELe/fhsKcfUZl50AtjqT5kTjIMiBiytTu6oI
+         A3oMC8iUGnmuUPk6ZGUZqYhbcgSgvyBsMz0GkU1Et0uoEMIXSImlOfB5GmvB4QiHZopz
+         tvqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=S2Gf6kpK9seCoOm8LuIWsunh8V8+UGloEvSUGPGNNIU=;
-        b=qAETLU6ddkUwvKMKEvbdGgJxqYb5KQU8garV2/gqO4LGvr7fLurNMU5LrvtrHDUv3P
-         GfP5dsBtLtZ4ItQb8B52DB9wnckm5hcwlXu5m/lL7dN452PEI6X9RYAwXtOjPgUPKgTp
-         WdSFWFHuLsBN8e5Sjn7DSyxfUaYpOfiXG56tuh3MEdBbOZbU+Kll9nwgpm/LKcRBHx2J
-         qr0nhRpQTCMj6IHlFg14DKSTmll81Ng2PElwKKM7pT2mINCdSdnDwODRFGCiL7guDe6R
-         ZcYeowKB8uQ0EEguQ+ebmSnaUQzvrNXVYTi0gzvgd1P41ENELtvuUGbxH16PQTHMK+/q
-         fR4A==
-X-Gm-Message-State: AOAM533DQotXnCMuQSkREjBeskPJEpaHPYQTrZUAMNu/sFkSLM6TxrZc
-        ObdXayfNmtFpoEwi8KpZ7lY=
-X-Google-Smtp-Source: ABdhPJxTPYce6w9UZsSy+2W64ZD5b4m4vMs6U/In0+RSNp0PfYeRd/C55BQGm38hVmJDx8vOYOyGRA==
-X-Received: by 2002:a05:6870:889d:b0:e6:170e:a37b with SMTP id m29-20020a056870889d00b000e6170ea37bmr3535383oam.38.1653423400591;
-        Tue, 24 May 2022 13:16:40 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id q3-20020a9d6643000000b0060b128b935csm2595481otm.39.2022.05.24.13.16.39
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=qmjML5Foe9pSR9f4gkCpyBLvTEt5FQtsSiwcCH1zqho=;
+        b=VHISml+hLqutQ94bzqDa2fG0NiiaRBGC3hHdIOMDX8u6i+7U/j0nFrCOvBKWGNgFIg
+         fm5cM6y72g/ROEUvtBivgUWDj9sahGbEv20FXY3hlOT9AQV4MqAlbFYT9x0VkRi+J2NM
+         xBmkoZFYfJonWocouU/t+MF/yKz1Fcmj2CzNAMXdvE99qiWe60d6QS7tV5/kTCNZDEsm
+         HAJfMBEKIwd2isdAAhogM3DDEeZ0Np9l0tzvf7kOIZKmV+MIq9rTP8Pwl5GQZ0MRBTRi
+         SRbOBxz06GfduvpexgvhffvmztAHRfOezXb9if0LjbejWUVHoWcak23rgj4rRKOVc/yc
+         ZiUg==
+X-Gm-Message-State: AOAM531BaWtyjJRajfchky0MhBIhVxE+Gx/r2oPr9pXhQBSxNl1SKabG
+        E0lByZBhLJX/qayTV0Xs11Tcqbt3xkQ=
+X-Google-Smtp-Source: ABdhPJzOA1FIqcB9dmFp5OsjXDNa8LAl5q56ua2lJ0aKaJiPhlx66oONMgzLciS+UZLohACxs17i3Q==
+X-Received: by 2002:a17:907:96ab:b0:6ff:127:65a9 with SMTP id hd43-20020a17090796ab00b006ff012765a9mr5413498ejc.603.1653424220083;
+        Tue, 24 May 2022 13:30:20 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id jz10-20020a17090775ea00b006f3ef214e0asm7419160ejc.112.2022.05.24.13.30.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 13:16:40 -0700 (PDT)
-Date:   Tue, 24 May 2022 13:16:39 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+        Tue, 24 May 2022 13:30:19 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1ntbAY-003Yxl-Vj;
+        Tue, 24 May 2022 22:30:18 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
- with it
-Message-ID: <20220524201639.2gucdkzponddk5qt@carlos-mbp.lan>
-References: <cover.1651859773.git.git@grubix.eu>
- <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
- <xmqqtua2jtr0.fsf@gitster.g>
- <xmqqczgqjr8y.fsf_-_@gitster.g>
- <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
- <xmqqr14jluu4.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet>
- <xmqqa6b7lrw6.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet>
- <xmqqleuqj1gy.fsf@gitster.g>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
+Subject: Re: [PATCH] diff: fix a segfault in >2 tree -I<regex> and
+ --output=<file>
+Date:   Tue, 24 May 2022 22:17:24 +0200
+References: <a6a14213-bc82-d6fb-43dd-5a423c40a4f8@web.de>
+        <patch-1.1-f7fd645468c-20220523T182954Z-avarab@gmail.com>
+        <xmqqleusqaff.fsf@gitster.g>
+        <220524.86leurw3my.gmgdl@evledraar.gmail.com>
+        <xmqqmtf6hgae.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqmtf6hgae.fsf@gitster.g>
+Message-ID: <220524.86v8tuvfl1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqleuqj1gy.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 24, 2022 at 10:15:57AM -0700, Junio C Hamano wrote:
-> 
-> I _think_ we can even get away by not doing anything to
-> slot->finished at the end of run_active_slot(), as we are not
-> multi-threaded and the callee only returns to the caller, but if it
-> helps pleasing the warning compiler, I'd prefer the simplest
-> workaround, perhaps with an unconditional clearing there?
 
-Assuming that some overly clever compiler might optimize that out (either
-because it might think it is Undefined Behaviour or for other unknown
-reasons) then Ævar's version would be better for clearing the "warning".
+On Tue, May 24 2022, Junio C Hamano wrote:
 
-But your patch fixed the "bug" that a probably overeager compiler was
-"detecting".
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> I.e. the "right" thing to do in this case would require a much more
+>> involved fix. We've somehow ended up not supporting --output=3D<file>, -I
+>> and probably many other options in the combined-diff mode, which both in
+>> testing and in this part of the implementation seems to have become an
+>> afterthought.
+>
+> OK, a hopefully final question.
+>
+> How much less involved is it to add a new code (without doing
+> anything in this patch)
 
-> What did I miss?  I must be missing something, as I can explain how
-> the current "(*slot->finished) = 1" with "while (finished)"
-> correctly works, but I cannot quite explain why the original "while
-> (slot->in_use)" would not, which is annoying.
+...yeah, I think for this one it makes sense to narrowly focus on the
+segfault...
 
-My guess is that there is a curl version somewhere that is patched to use
-threads more extensible than upstream and where this code is stil needed.
-I think it is also safe to assume (like you did) that this is a 16 year bug
-that was already fixed and reverting that code would be an alternative too.
+> to detect and die on the combination of
+> combined-diff with these two options, so that we can document the
+> fact that we do not support them?  It would give us much better way
+> forward than leaving the command silently ignore and give result
+> that is not in line with what was asked, wouldn't it?  That way, the
+> much more involved "fix" will turn into a change to add a missing
+> feature.
 
-Carlo
+I think not much, it's rather trivial for the case where we invoke "git
+diff", I.e. just adding something to the "builtin_diff_combined()"
+branch in builtin/diff.c to detect these two cases specifically.
+
+I haven't looked in any depth into how we might reach code in
+combine-diff.c through other means, and if any of it can set these two
+indirectly somewhere else (i.e. other things that take diff options).
+
+I also wonder if I'm just wrong in my assessment that it's a Bad Thing
+that we take some of these without ever doing anything with them in some
+modes, e.g.:
+
+	git log --oneline -I foo
+
+This will never do anything with that "-I foo" by definition, but would
+as soon as you add -p, should we error without -p (or other diff-showing
+options).
+
+The same goes for range-diff, format-patch, --remerge-diff and any
+number of other things where we take the full set of options, but only
+do something with a limited subset of them.
+
+It is helpful in some cases if we were more anal about it, e.g. when I
+was wondering why -I didn't do anything with the combined diff, but also
+handy for scripting and one-liners if you can tweak the command-line
+back & forth without it being so strict.
+
+So I don't know. Maybe I'm just trying to talk myself out of pulling on
+that (bound to be long) thread, but I'm coming more around to this just
+being a non-issue beyond the narrow and needed fix for diff_free() in
+particular.
+
+I.e. the more general approach of chasing down options that don't do
+anything for a given "diff mode". We might still want to error on some
+particular ones, such as -I with the combined diff (but not with
+--oneline, or whatever).
