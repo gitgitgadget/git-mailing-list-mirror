@@ -2,286 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7B78C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 21:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E5ACC433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 21:34:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241900AbiEXVb6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 17:31:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
+        id S241301AbiEXVeC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 17:34:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230110AbiEXVb4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 17:31:56 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0873A4198E
-        for <git@vger.kernel.org>; Tue, 24 May 2022 14:31:54 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id gh17so24892487ejc.6
-        for <git@vger.kernel.org>; Tue, 24 May 2022 14:31:53 -0700 (PDT)
+        with ESMTP id S229710AbiEXVeB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 17:34:01 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340307B9E0
+        for <git@vger.kernel.org>; Tue, 24 May 2022 14:34:00 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id 30-20020a9d0121000000b0060ae97b9967so10101265otu.7
+        for <git@vger.kernel.org>; Tue, 24 May 2022 14:34:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=W0p5RKE8tXKzyg1gViViC7ALnHNEM9aSox3UTOiCDQ4=;
-        b=Z1lkCKWW6rv4cgbx/xl6qvucBvUOxLo8QPXlN4uiW5n2kEvgwRUg/3I0ZIPhGmIKL6
-         OZjTqOs4JgSsbfthuGT0YYEXZnio3MaiF2R5fwaBVtjqsrNtDziJiXWgC4FbdgrrFiJA
-         1Mijabz7UREstzCiG2qeeiS+HOARpcSq/FzPtB3PqQxi9L5CWlFMiDcqVXtHKS41YyEg
-         P9oz+7PUyZQAd/lRcjaTsTy/qnlMXIJaTpDZeDoHAT+t4stGjGJSqUmcWd1yR1sAAig6
-         fZ/yAAtZ3rTU0yzbJ/rBU+YG3HmFhmAbNvv6Vrks8DJxdZHpFj+txewZevdQijnHv+75
-         tZTA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=lsKQGhaVet+DrWDtVYswq+i2Mbfv81P9kaMUWTIul8E=;
+        b=L2MqG4KvCv4oWJkdSzYDgfUOpFiA2Z/dW9ZkGUvP8HkGV/GB7eb76fPb8lbzW8qcQX
+         HVwR1Wah/J9QWwABZeBJxlbSyJQpMT7f0rOKRHXeFFXpbCRND/7OvNJ1DTmxINKh6RS3
+         wnoW7HLALYP89w0zTXS0GFLJ/JU5Brfwmaaiy/F9w0f83E7KorKP6QNqeaZT/Q/2CdlD
+         pC30ccIbTVeXnudR8xbgfYf71ca7XqWVx1PQh/ud5gCJwC4LX6pn9myQXAKdc3cPl4AL
+         TxKKa0OLtVe9ilT/CbSwlJOTCbMP2Er0w6RK9PiJK88GHFsAvkaHSAp39PMPePAWVY1+
+         DppA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=W0p5RKE8tXKzyg1gViViC7ALnHNEM9aSox3UTOiCDQ4=;
-        b=5P/VxzB9/5dB25HbfTY6guUZPnCiQi3R1DR9d23gElnyOQEhWoFcsXrX0vcXwFi5C/
-         UjGtYAsaztr78RQyfuMJOErLMvrNspiRRAS5hxwtgB1FuMw08SYylZlRYA2tIBZRyEl1
-         byHbVls57ZaVFQqLhSvFhjHggL2lSgiUmNhNpTZNoBJqW7QQzzj+1MvDhdI4U+B9dvC6
-         HlPkivkvEpG/q3QS0qEh7byiptxDLRqU+DDcnf7JVERai6dSCaDdqsdLFsqkW1tk5TK+
-         5S2aBDBmvWIsmoHITx3y/+r0lNjwAyTzfMuxNDMOQj2WtbL80+bDwriRv05AoS1QxDJb
-         03qg==
-X-Gm-Message-State: AOAM530EUB/qlx4xSYc8HxwJmUoeLV3ew/J3tAzP4JHd6eD5vJBSfQYe
-        1hqgfEMuWSYRMqLlARJPexpgj55FGds=
-X-Google-Smtp-Source: ABdhPJzeOKsvEqtZpQBVJxhFy8NM/j7LPLXgKKBXu3Kg5yu58ikkEVmpN3lDz+EQHQbJH1Jd9Ls6oA==
-X-Received: by 2002:a17:907:7243:b0:6f4:1ce5:4ac4 with SMTP id ds3-20020a170907724300b006f41ce54ac4mr25574593ejc.198.1653427912403;
-        Tue, 24 May 2022 14:31:52 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id my9-20020a1709065a4900b006fe8d8c54a7sm7069001ejc.87.2022.05.24.14.31.51
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=lsKQGhaVet+DrWDtVYswq+i2Mbfv81P9kaMUWTIul8E=;
+        b=YVJvfPG6ulbTt7vaeLLw1bsQoSSl2KwCtT9fAUN0YmRfwIy97xcFkXYWuNl6a1hJuM
+         CmkkFBi17gIP5ylTBeYyoFzgK0FJX81BKYkhsenmHT/78Ddgy9Tpgg5cp61FGyKXpqk1
+         Ujmpm8Ol04/QvEtJ46MChcwlw2wSqv/9mYzVUJ0fc6XrgDlFHkw4B+8ajFi/j9Txdo+o
+         RgiJZ8aM3UGMDs8hWiMTYZN8Unl0G5VcFXWn1N1VHGagKzkPo4E1W5UrJX8ThbWcobbZ
+         5DhFp9i1XpGH00In3CldGs90oC8vuvh4b0ESh/5FcU7caQl3WFpUpdY/XsfzToUXrc27
+         b7CA==
+X-Gm-Message-State: AOAM530DhgTEp4ldaL/yxsAqY4uGh2G4ki6dyaaGbfd6gAgB+KMllaVT
+        iXJ0nBWI/l7SxbqZpWcyc9eXjg==
+X-Google-Smtp-Source: ABdhPJwMNDQ6ODXLe8tP4wjm2boiEFU+MPTfpKgliXFdVqQ+NHDHX2RF0FSIIKjMIthKIEHxVzGncA==
+X-Received: by 2002:a9d:6f1a:0:b0:60b:20fd:ca75 with SMTP id n26-20020a9d6f1a000000b0060b20fdca75mr2446659otq.126.1653428039454;
+        Tue, 24 May 2022 14:33:59 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i23-20020a4addd7000000b0035eb4e5a6bdsm5823755oov.19.2022.05.24.14.33.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 14:31:51 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ntc87-003bKW-1W;
-        Tue, 24 May 2022 23:31:51 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        me@ttaylorr.com, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, jrnieder@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Robert Coup <robert.coup@koordinates.com>
-Subject: Re: [PATCH] urlmatch: create fetch.credentialsInUrl config
-Date:   Tue, 24 May 2022 23:01:35 +0200
-References: <pull.1237.git.1653329044940.gitgitgadget@gmail.com>
-        <220524.8635gzxr9h.gmgdl@evledraar.gmail.com>
-        <0dc38d46-7c5a-5532-c843-ef3c8b6cfa28@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <0dc38d46-7c5a-5532-c843-ef3c8b6cfa28@github.com>
-Message-ID: <220524.86ilpuvcqh.gmgdl@evledraar.gmail.com>
+        Tue, 24 May 2022 14:33:59 -0700 (PDT)
+Date:   Tue, 24 May 2022 17:33:56 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, jonathantanmy@google.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v2 3/4] builtin/pack-objects.c: ensure included
+ `--stdin-packs` exist
+Message-ID: <Yo1PRKUGgIyeDGKp@nand.local>
+References: <cover.1652458395.git.me@ttaylorr.com>
+ <cover.1653418457.git.me@ttaylorr.com>
+ <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
+ <220524.86zgj6vhge.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220524.86zgj6vhge.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, May 24 2022, Derrick Stolee wrote:
-
-> On 5/24/2022 4:18 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Mon, May 23 2022, Derrick Stolee via GitGitGadget wrote:
->>=20
->>> +fetch.credentialsInUrl::
->>> +	A URL can contain plaintext credentials in the form
->>> +	`protocol://<user>:<password>@domain/path`. Using such URLs is not
->>> +	recommended as it exposes the password in multiple ways. The
->>> +	`fetch.credentialsInUrl` option provides instruction for how Git
->>> +	should react to seeing such a URL, with these values:
->>=20
->> Re the previous discussion about this (in the v1 patch /
->> https://lore.kernel.org/git/pull.945.git.1619807844627.gitgitgadget@gmai=
-l.com/):
->> In what ways?
->>=20
->> That's rhetorical, the point being: Let's adjust this documentation to
->> discuss exactly why this is thought to be bad, what we're mitigating for
->> the user etc., are there situations where running git like this is
->> perfectly fine & not thought to be an issue? E.g. no password manager
->> and you trust your FS permission? Let's cover those cases too.
+On Tue, May 24, 2022 at 09:46:09PM +0200, Ævar Arnfjörð Bjarmason wrote:
 >
-> This documentation is not the proper place to tell the user "do this
-> and you can trust your plaintext creds in the filesystem" because that
-> is asking for problems. I'd rather leave a vague warning and let users
-> go against the recommended behavior only after they have done sufficient
-> work to be confident in taking on that risk.
-
-I don't mean that we need to cover the full divergent views on different
-approaches to local password management, but not leave the user hanging
-with the rather scary "exposes the password in multiple ways".
-
-I.e. if I read that for any software whose implementation I wasn't very
-familiar with I'd be very afraid, and in git's case for no reason.
-
-Does in mean that git has some scary git-specific feature that would
-expose it. perhaps there's a local log that's unsecured where attempted
-URLs are logged, or perhaps we send the raw requested URL to the server
-so it can suggest alternatives for us. We do neither, but even a
-generally knowledgeable user won't know that about git in particular.
-
-Whereas what I think you actually mean and are targeting here is better
-explained by:
-
-    Git is careful to avoid exposing passwords in URLs on its own,
-    e.g. they won't be logged in trace2 logs. This setting is intended
-    for those who'd like to discourage (warn) or enforce (die) the use
-    of the password helper infrastructure over hardcoded passwords.
-
-All of which I *think* is correct, but maybe I've missed something you
-know about, as that "in multiple ways" is doing a lot of work.
-
-I also wonder if this wouldn't be even more useful if we took some
-lessons from ssh's book. I.e. per "git config -l --show-origin" we know
-the original of all config. We could be even more useful (and more
-aggressive about warning about) cases where we have passwords in config
-files that we detect don't have restrictive permissions, as OpenSSH does
-with your private key.
-
-Ditto perhaps when the origin is "command line", as we do nothing to
-hide that from the process list on shared systems (and that would be
-racy whatever we did).
-
->>> ++
->>> +* `ignore` (default): Git will proceed with its activity without warni=
-ng.
->>> +* `warn`: Git will write a warning message to `stderr` when parsing a =
-URL
->>> +  with a plaintext credential.
->>> +* `die`: Git will write a failure message to `stderr` when parsing a U=
-RL
->>> +  with a plaintext credential.
->>=20
->> You're implementing this with strcasecmp, so we also support DIE, DiE
->> etc. Let's not do that and use strcmp() instead.
+> On Tue, May 24 2022, Taylor Blau wrote:
 >
-> Sure.
+> > -	struct rev_info *revs = _data;
+> > -	struct object_info oi = OBJECT_INFO_INIT;
+> >  	off_t ofs;
+> > -	enum object_type type;
+> > +	enum object_type type = OBJ_NONE;
+> >
+> >  	display_progress(progress_state, ++nr_seen);
+> >
+> > @@ -3215,20 +3213,25 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+> >  	if (!want_object_in_pack(oid, 0, &p, &ofs))
+> >  		return 0;
+> >
+> > -	oi.typep = &type;
+> > -	if (packed_object_info(the_repository, p, ofs, &oi) < 0)
+> > -		die(_("could not get type of object %s in pack %s"),
+> > -		    oid_to_hex(oid), p->pack_name);
+> > -	else if (type == OBJ_COMMIT) {
+> > -		/*
+> > -		 * commits in included packs are used as starting points for the
+> > -		 * subsequent revision walk
+> > -		 */
+> > -		add_pending_oid(revs, NULL, oid, 0);
+> > +	if (p) {
+> > +		struct rev_info *revs = _data;
+> > +		struct object_info oi = OBJECT_INFO_INIT;
+> > +
+> > +		oi.typep = &type;
+> > +		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
+> > +			die(_("could not get type of object %s in pack %s"),
+> > +			    oid_to_hex(oid), p->pack_name);
+> > +		} else if (type == OBJ_COMMIT) {
+> > +			/*
+> > +			 * commits in included packs are used as starting points for the
+> > +			 * subsequent revision walk
+> > +			 */
+> > +			add_pending_oid(revs, NULL, oid, 0);
+> > +		}
+> > +
+> > +		stdin_packs_found_nr++;
+> >  	}
+> >
+> > -	stdin_packs_found_nr++;
+> > -
+> >  	create_object_entry(oid, type, 0, 0, 0, p, ofs);
 >
->>> +static void detected_credentials_in_url(const char *url, size_t scheme=
-_len)
->>> +{
->>=20
->> Just generally: This is only=20
+> Not rhetorical, since I have no idea: Is the behavior change here to
+> make create_object_entry with type=OBJ_NONE desired? I.e. do we actually
+> want to create object entries for OBJ_NONE?
+
+This is intentional. OBJ_NONE tells create_object_entry() "we don't know
+the type of this object yet", and then `check_object()` (which does the
+bulk of the work in the "Counting objects" phase) goes through and fills
+in any missing type information.
+
+The caller in `builtin/pack-objects.c::read_object_list_from_stdin()` is
+a good example of this (all of the objects created this way start out
+with OBJ_NONE).
+
+> If that is the case I for one would find this a bit easier to follow
+> like this, even if it has some minor duplication, i.e. the intent is
+> clearer:
 >
-> Did you intend to say more here?
-
-Probably, but if I did I forgot about it, by now. Sorry.
-
->>> +	char *value =3D NULL;
->>=20
->> This init to NULL should be removedd, as we....
->>=20
->>> +	const char *at_ptr;
->>> +	const char *colon_ptr;
->>> +	struct strbuf anonymized =3D STRBUF_INIT;
->>=20
->> nit: Just call this "sb"? The's at least one line below over 79
->> characters that's within the bounds with a shorter variable name, and in
->> this case it's obvious what we're doing here...
+> 	diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> 	index ffeaecd1d84..a447f6d5164 100644
+> 	--- a/builtin/pack-objects.c
+> 	+++ b/builtin/pack-objects.c
+> 	@@ -3202,7 +3202,6 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+> 	 				      void *_data)
+> 	 {
+> 	 	off_t ofs;
+> 	-	enum object_type type = OBJ_NONE;
 >
-> I will not change this name to be less descriptive.
-
-Sure, just a suggestion. The other way is to just re-wrap that one
-line... :)
-
-In the end I don't care, "just a nit", but just as one datapoint from
-reading this code: I find this varibale name in particular to be the
-polar opposite of descriptive, we're explicitly not anonymizing the URL
-in this function, since we're not stripping the username part.
-
-Wouldn't descriptive be something more like uri_redacted_password or
-uri_no_password in this case?
-
->>> +
->>> +	/* "ignore" is the default behavior. */
->>> +	if (git_config_get_string("fetch.credentialsinurl", &value) ||
->>=20
->> ...initialize it here, and if we didn't the compiler would have a chance
->> to spot that if we were getting it wrong.
+> 	 	display_progress(progress_state, ++nr_seen);
 >
-> We do not necessarily initialize it here. The compiler doesn't notice
-> it and the free(value) below segfaults.
-
-Yes, sorry I meant in combination with the *_tmp() variant below...
-
->>> +	    !strcasecmp("ignore", value))
->>> +		goto cleanup;
->>> +
->>> +	at_ptr =3D strchr(url, '@');
->>> +	colon_ptr =3D strchr(url + scheme_len + 3, ':');
->>> +
->>> +	if (!colon_ptr)
->>> +		BUG("failed to find colon in url '%s' with scheme_len %"PRIuMAX,
->>> +		    url, (uintmax_t) scheme_len);
->>> +
->>> +	/* Include everything including the colon. */
->>> +	colon_ptr++;
->>> +	strbuf_add(&anonymized, url, colon_ptr - url);
->>> +
->>> +	while (colon_ptr < at_ptr) {
->>> +		strbuf_addch(&anonymized, '*');
->>> +		colon_ptr++;
->>> +	}
->>=20
->> Could we share code with 88e9b1e3fcb (fetch-pack: redact packfile urls
->> in traces, 2021-11-10), or for consistency note this as <redacted>
->> instead of stripping it out, as we do for that related URL-part
->> redaction?
+> 	@@ -3216,6 +3215,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+> 	 	if (p) {
+> 	 		struct rev_info *revs = _data;
+> 	 		struct object_info oi = OBJECT_INFO_INIT;
+> 	+		enum object_type type;
 >
-> I'm happy to replace the asterisks with <redacted>. Otherwise, I don't
-> see anything we can do to share across these methods.
-
-Yes, I just meant adding a "<redacted>". I briefly looked at whether it
-made sense to share the implementation, but I think probably not.
-
-I didn't think of this at the time but your implementation also leaks
-the length of the password, which <redacted> will solve in any case.
-
-Just for the implementation: It's slightly more wasteful, but in this
-case we don't care about performance, so perhaps a strbuf_splice()
-variant is easier here? I.e. add the full URL, find : and @, then
-strbuf_splice() it. It gets rid of much of the pointer juggling here &
-adding things incrementally.
-
-> Specifically,
-> the test in that commit seems to indicate that the redacted portion is
-> only the packfile name (the $HTTPD_URL is not filtered).
-
-By HTTPD_URL it means "the path", i.e. it's the equivalent of stripping
-CURLUPART_{PATH,QUERY,FRAGMENT}.
-
-So a hypothetical shared implementation would just be a matter of
-searching for the '/' once we're past the (optional) '@', but better to
-leave it for now.
-
->>> +	strbuf_addstr(&anonymized, at_ptr);
->>=20
->> Maybe not worth it, but I wondered if we couldn't just use curl for
->> this, turns out it has an API for it:
->> https://curl.se/libcurl/c/libcurl-url.html
->>=20
->> But it's too new for us to rely on unconditionally, but we could add
->> that to git-curl-compat.h and ifdef it, then we'll eventually drop this
->> custom code for ryling on the well-tested library.
->>=20
->> I think doing that would be worth it, to show future authors that curl
->> can do this, so maybe we can start relying on that eventually...
+> 	 		oi.typep = &type;
+> 	 		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
+> 	@@ -3230,9 +3230,11 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+> 	 		}
 >
-> Since we can't rely on it, I'll leave that to another (you, perhaps?)
-> to do that ifdef work. I don't think it's worth it right now.
-
-Yeah, probably not.
-
->>> +	if (!strcasecmp("warn", value))
->>> +		warning(_("URL '%s' uses plaintext credentials"), anonymized.buf);
->>> +	if (!strcasecmp("die", value))
->>> +		die(_("URL '%s' uses plaintext credentials"), anonymized.buf);
->>> +
->>> +cleanup:
->>> +	free(value);
->>=20
->> I think you can also just use git_config_get_string_tmp() here and avoid
->> the alloc/free. That's safe as long as you're not calling other config
->> API in-between, which you're not.
+> 	 		stdin_packs_found_nr++;
+> 	-	}
 >
-> OK. And that also avoids the need for initialization you mentioned.
+> 	-	create_object_entry(oid, type, 0, 0, 0, p, ofs);
+> 	+		create_object_entry(oid, type, 0, 0, 0, p, ofs);
+> 	+	} else  {
+> 	+		create_object_entry(oid, OBJ_NONE, 0, 0, 0, p, ofs);
+> 	+	}
+>
+> 	 	return 0;
+> 	 }
+>
+> Or the same with adding "type = OBJ_NONE" to the "else" branch, leaving
+> the initial "type" uninitialized"?
 
-*nod*
+I'd be fine with that (and don't really have a very strong opinion
+either way). Let's see if anybody else has thoughts about it, and then
+I'm happy to change it in a subsequent version.
+
+Thanks,
+Taylor
