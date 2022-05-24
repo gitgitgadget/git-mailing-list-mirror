@@ -2,100 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05D69C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 864AEC433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238285AbiEXUQN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 16:16:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49336 "EHLO
+        id S241433AbiEXUQn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 16:16:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231410AbiEXUQL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 16:16:11 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B35B5FE8
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:16:10 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id y15so11299298qtx.4
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:16:10 -0700 (PDT)
+        with ESMTP id S231410AbiEXUQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 16:16:42 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60FDC17E18
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:16:41 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-f16a3e0529so23683474fac.2
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=tyYlaNBHaXLs3qLTtWxaYq84JFJCypmq6Bu5zSJhRZA=;
-        b=IYCeVuAmoNQXdqRoIiskYFGqXu56gVzWj6ZeigsltiJ+yXtB7BiUHpt9ycaGyaa2Zo
-         5K6RvzDAfbMAgrKq8t2cD0hqQZT7SEGy7+uzbgCfFfqaY2Z8dUcr/CHOPIbxSVd4eUvo
-         6wi7uhU1mcHcfnB4AjxWmB/gawFPVx7xTr3YgWer+y5KJuQYuxFD+dS4IixkS7UC135/
-         MURlNCAIJazK1L1VyqwYR6Q4D+S4uanO/BziEB+tpGsqXJArt55gQR6nthpaCWZcXBzu
-         OmGD8oaUc17wBt0XLZGvg7orVPJ40ETehEsZfFKRv0bFUrIRE4zx1Ev2ljWTDSYR6mLU
-         nX7A==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=S2Gf6kpK9seCoOm8LuIWsunh8V8+UGloEvSUGPGNNIU=;
+        b=Cgk+M8/coFqbtVY9zGwV2k/zjqksxXCt6YFOooGCV8GBu9MMuSyoV02iznVvoJ7HWD
+         4T2FmrRRpQXuk7bf8qH4egZBidn3DBPPthEDn2W4mS8ZOB4SEAiCAuLKA6/+8he6L7/f
+         ZWywxcIMF8DMwYYVKjHEJGh5ROYh3fLyhuXfSd+3h82WvbxsMR8OKXQscpBvG1Y+RSac
+         TiAPptj23IVY3CIU8ObYc000sRBKf8ZHJJP1Jzwy8uz1d2fqIXZhaRMx89GrlBwuddB9
+         mRCYQB1iAZhmbu8wumL1TXd8Fl5Zsa1OWgR5B1bRgSKFNR+jgUXGf5Zp+OhkVHQFiBws
+         qxTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=tyYlaNBHaXLs3qLTtWxaYq84JFJCypmq6Bu5zSJhRZA=;
-        b=EpOoWs3tz2gr2y+VzRVP9uvaRyzonPRobC1mIazmykHoeKHe8RfPwmkUu/Y6Tgz6Dm
-         hhoUCSE/WHNEXLpC3xt6ESLuoRW6c2BhaKLqIFqTIDmGrV84T0Pp5FdRLntQYEkdTJCZ
-         KVsSgrsccIvmv2gKD6WAuMcLW8fprLNtWplc959gwRz+CHeXykPRZgoc3BHG2/usObf8
-         y23krxB34+OfNk9TXVY1Itl4ACDJ5l/f59PKKpr47JZ3QVYklz2eq+Jsmb3anZ64bnsn
-         fGbF8OqKI+s+HoL9qGfHeu/35AxCQZfqK88M5F8i+IEQJ+bOSRtryjPj7VG4oUswIMzj
-         gf2Q==
-X-Gm-Message-State: AOAM530HmMShI5CijdXzqzsAcP6AG0RjBwQoVpzDdCx59FMzyCGE7nij
-        sbeXDiIxWptKO/VdbNIBF6cV
-X-Google-Smtp-Source: ABdhPJwyNWsjOPDEHOfe04IuonP0mCinzunniH86kiOsJ/oMFivTdq07MMtn+lQoYc4PJGsbftnl3g==
-X-Received: by 2002:a05:622a:1489:b0:2f3:e404:f707 with SMTP id t9-20020a05622a148900b002f3e404f707mr21530548qtx.414.1653423369358;
-        Tue, 24 May 2022 13:16:09 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e? ([2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e])
-        by smtp.gmail.com with ESMTPSA id g21-20020ae9e115000000b006a371ba1fa5sm135490qkm.32.2022.05.24.13.16.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 May 2022 13:16:09 -0700 (PDT)
-Message-ID: <14f71d47-e2c1-2a43-6434-af6f23d18754@github.com>
-Date:   Tue, 24 May 2022 16:16:08 -0400
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=S2Gf6kpK9seCoOm8LuIWsunh8V8+UGloEvSUGPGNNIU=;
+        b=qAETLU6ddkUwvKMKEvbdGgJxqYb5KQU8garV2/gqO4LGvr7fLurNMU5LrvtrHDUv3P
+         GfP5dsBtLtZ4ItQb8B52DB9wnckm5hcwlXu5m/lL7dN452PEI6X9RYAwXtOjPgUPKgTp
+         WdSFWFHuLsBN8e5Sjn7DSyxfUaYpOfiXG56tuh3MEdBbOZbU+Kll9nwgpm/LKcRBHx2J
+         qr0nhRpQTCMj6IHlFg14DKSTmll81Ng2PElwKKM7pT2mINCdSdnDwODRFGCiL7guDe6R
+         ZcYeowKB8uQ0EEguQ+ebmSnaUQzvrNXVYTi0gzvgd1P41ENELtvuUGbxH16PQTHMK+/q
+         fR4A==
+X-Gm-Message-State: AOAM533DQotXnCMuQSkREjBeskPJEpaHPYQTrZUAMNu/sFkSLM6TxrZc
+        ObdXayfNmtFpoEwi8KpZ7lY=
+X-Google-Smtp-Source: ABdhPJxTPYce6w9UZsSy+2W64ZD5b4m4vMs6U/In0+RSNp0PfYeRd/C55BQGm38hVmJDx8vOYOyGRA==
+X-Received: by 2002:a05:6870:889d:b0:e6:170e:a37b with SMTP id m29-20020a056870889d00b000e6170ea37bmr3535383oam.38.1653423400591;
+        Tue, 24 May 2022 13:16:40 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id q3-20020a9d6643000000b0060b128b935csm2595481otm.39.2022.05.24.13.16.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 May 2022 13:16:40 -0700 (PDT)
+Date:   Tue, 24 May 2022 13:16:39 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
+ with it
+Message-ID: <20220524201639.2gucdkzponddk5qt@carlos-mbp.lan>
+References: <cover.1651859773.git.git@grubix.eu>
+ <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
+ <xmqqtua2jtr0.fsf@gitster.g>
+ <xmqqczgqjr8y.fsf_-_@gitster.g>
+ <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
+ <xmqqr14jluu4.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet>
+ <xmqqa6b7lrw6.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet>
+ <xmqqleuqj1gy.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH] urlmatch: create fetch.credentialsInUrl config
-Content-Language: en-US
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        me@ttaylorr.com, avarab@gmail.com, christian.couder@gmail.com,
-        jrnieder@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Robert Coup <robert.coup@koordinates.com>
-References: <pull.1237.git.1653329044940.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2205241339440.352@tvgsbejvaqbjf.bet>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <nycvar.QRO.7.76.6.2205241339440.352@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqleuqj1gy.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/24/2022 7:42 AM, Johannes Schindelin wrote:
-> Hi Stolee,
+On Tue, May 24, 2022 at 10:15:57AM -0700, Junio C Hamano wrote:
 > 
-> On Mon, 23 May 2022, Derrick Stolee via GitGitGadget wrote:
->> +	at_ptr = strchr(url, '@');
->> +	colon_ptr = strchr(url + scheme_len + 3, ':');
-> 
-> How certain are we that `url + scheme_len + 3` is still inside the
-> NUL-separated `url`?
+> I _think_ we can even get away by not doing anything to
+> slot->finished at the end of run_active_slot(), as we are not
+> multi-threaded and the callee only returns to the caller, but if it
+> helps pleasing the warning compiler, I'd prefer the simplest
+> workaround, perhaps with an unconditional clearing there?
 
-I'll update the method comment to make this clear.
- 
->> +
->> +	if (!colon_ptr)
->> +		BUG("failed to find colon in url '%s' with scheme_len %"PRIuMAX,
->> +		    url, (uintmax_t) scheme_len);
-> 
-> Wouldn't this mean that `https://github.com/git/git` with a `scheme_len`
-> of 5 would hit that `BUG()` code path?
+Assuming that some overly clever compiler might optimize that out (either
+because it might think it is Undefined Behaviour or for other unknown
+reasons) then Ævar's version would be better for clearing the "warning".
 
-Yes. The method is about what to do once we've detected a URL
-with a "username:password@" combination after the scheme. I
-mentioned in a different reply, but I'll make this clear with
-a comment.
+But your patch fixed the "bug" that a probably overeager compiler was
+"detecting".
 
-Thanks,
--Stolee
+> What did I miss?  I must be missing something, as I can explain how
+> the current "(*slot->finished) = 1" with "while (finished)"
+> correctly works, but I cannot quite explain why the original "while
+> (slot->in_use)" would not, which is annoying.
+
+My guess is that there is a curl version somewhere that is patched to use
+threads more extensible than upstream and where this code is stil needed.
+I think it is also safe to assume (like you did) that this is a 16 year bug
+that was already fixed and reverting that code would be an alternative too.
+
+Carlo
