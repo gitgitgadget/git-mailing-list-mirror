@@ -2,148 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF6CAC433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 21:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C844DC433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 21:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241829AbiEXVFl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 17:05:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53492 "EHLO
+        id S240213AbiEXVQJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 17:16:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238504AbiEXVFk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 17:05:40 -0400
+        with ESMTP id S234686AbiEXVQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 17:16:08 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 485516220C
-        for <git@vger.kernel.org>; Tue, 24 May 2022 14:05:38 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B699025D
+        for <git@vger.kernel.org>; Tue, 24 May 2022 14:16:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653426337;
-        bh=u1IFCxrz5vgEYiw2GU0HkYLTMOzzuq78wMzsuys+D28=;
+        s=badeba3b8450; t=1653426960;
+        bh=KZg0xrs/QUU5nZimmW/l8n9VrjuXAYfXr79vpJ4BP10=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LoLxiNF8tXfPbC8xXfNDrDXzl8YpPyEJ5KXBkMjgmeF9MboV+5gvvakEogKjMc5Aw
-         3u23kR2yRQnhiGw6LoLgv9zmUoxISf9J1H/iZmuXH4F2xGco83fBtkslRXwvlUL96W
-         p+bFD12CKA3e9EM/iEWbZtGsgfHy2LuNLVEFAY/c=
+        b=bkh/C7RQUwaqcXynLklq7FI6HffAgszrzkhXgg+4e3PEEpB6grNoQnojcta2Kb8ms
+         a5xD9tA9vTgZFxoRDT0/VAOFekTaaZGEq+v8eIrMAQy06YRtD7JB0dE8SditFIZ68I
+         3tjAGziTscSTHQcdzQV7qRvN1bjUH8R6r941874E=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mnps0-1nW8ni3pOs-00pOPq; Tue, 24
- May 2022 23:05:37 +0200
-Date:   Tue, 24 May 2022 23:05:35 +0200 (CEST)
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M7sDg-1nyZhN44Cw-0051H2; Tue, 24
+ May 2022 23:16:00 +0200
+Date:   Tue, 24 May 2022 23:15:58 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 4/4] dir.c: avoid "exceeds maximum object size" error
- with GCC v12.x
-In-Reply-To: <220524.86k0abxyqa.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2205242302020.352@tvgsbejvaqbjf.bet>
-References: <pull.1238.git.1653351786.gitgitgadget@gmail.com> <365889ee96e37dc9dcbe60d98880eb256dae90ee.1653351786.git.gitgitgadget@gmail.com> <220524.86k0abxyqa.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 3/4] http.c: avoid danging pointer to local variable
+ `finished`
+In-Reply-To: <xmqq35gyhf11.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2205242309160.352@tvgsbejvaqbjf.bet>
+References: <pull.1238.git.1653351786.gitgitgadget@gmail.com>        <4a4e0aa0a49a54eea88f9c2d8e1db6a697012718.1653351786.git.gitgitgadget@gmail.com>        <220524.86fskzxsvq.gmgdl@evledraar.gmail.com> <xmqq35gyhf11.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-593497758-1653426336=:352"
-X-Provags-ID: V03:K1:va2Q4oAT17RX/nYTuiF4vvInYCYLpRJg2iPdbWE1T+IDYHAWQPS
- IRfBoCfUAW8L11nqhU4N4MaRzbYpYJbyre/cPHaiVIQDK8aTQqElTZwldOOKCbw/IP9/BkH
- Adf66x/toPI0Edvgrzua6fDl+TWX6etgfFmyYrzvT3Gcc00nBAawmDvawyxNtGHS3ePGgO9
- CLw4ztqyVpQWKUcgF+l/g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EnaxAdf0i+Y=:46eWpiNXV5kJa7h7bpYV81
- M/hPl0KtzjPwbqPN9SFAI/720RS+PZkOhbeM8PHlWPbuNIPvl4yTu3fD8iNmVjvbhHkDCdz+a
- VpwYGzjdG6QznVzU72bIMCzqSIFeVa9njbP1GDpVqq2dnom0+Ge5Juckr0tQZYNwvMyWWGr0L
- jyChBnEwH9ehsNPcROlMGxrjzV0rXR3YFdA1NYiaV1Caiw9Bo6y/lOnQK/wWTpBiLfBGNlhbu
- zPVi8PA0Okj64yGA4HClUM7uY0x9skjxDjGaZ7SW6ds6blQfa4U1jFkO/YxW0rIi2LzfC31wa
- MzZyioOzl7BZlEnOmenryx6DXPROBvO3ZftPcDJxFEXl4A80g9WSpLupLXNm8167OMM2KTHCk
- +LQYEnCP+Z8UrJ0EnaQMVYo8mfboWVfD76IqK8NW0ayONefC0Dxarx2BVKGpiy8JlvjLaE0yS
- L8sALHCTUDaXyV/qeZz0t/5BsCyBA8Q2qR9CKCyoUtDck99ohfsMq0o21UXys1+20zp6nP9xF
- 7NarKIzT0qZHAMcMm+X3jXk0UtdbPgUQtt+e+/1ctjTfnnW5Z+fA4UGs3Zo6ao5S0DVy05F7r
- ghjwlNpPpuhl7GnLtr+W8FGAuPE0rivfHXvxUPOvmqZUlUWM/n3dGi75b4DC8hLpwxiR5uH1h
- t5Bm+5H3uoNAqz2gVm7DD8zzAuUnzbU1xQylR6rU4N82Oyr5Db9yWF5Ar7GdvqZiwjEea3ulE
- YEax5Ad/ZRC6gq0LLviwvtfj+xOBVVyJAZmYu/DmFqWZBHSH4Bv6SZMK0FpupJOkqBAhAgpso
- 6FpUeRtFPNrou4cAso810EEf+kEzrmYUNQ/ZXOZUsjqaMd2NEVE6gcJims2JkDlDh+oFiCg5h
- qICPpM+P7qDmSe9wsplZ+RWYNIWYwI8+38GG2fIPgRkHBjE3zSAuahFCzala8i7ya4PP6EU4S
- zla7kAR/hFOPpTvQtrWwGpSWCsI/7mIJQFLzh2tcXMH4zhPad/mNO0ZoXqiTdPNTdgnfEcob9
- hQUJta4ixADvMN31dArlSn24crfB0tIWAoDoU/yuSAZjfEAA+HG2gxRVrTtIJ1mq2ifDhX0TQ
- DQHoFj7W59O9QTzjvy3OvGUia41YA5/ZaEWe854HE3giy5AalfVajDC/w==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:vQSVoM1QQPFcwx8YRbqSvpi+bW5V1VEk5Xsaiyx0/OD/SULFjQa
+ qg9elv2WafESYVuCDDhfuYbsI4Du7AaXZpyrRY09OqISZoRjNYXAPQe8zHdINi0RX9GBw6W
+ 9AeFiTfn8NAc/VumJEt6pbrgA4oGx1si3eEBIUHshbRpXTEghh3+4DZNQw8uWiUskTW6wIO
+ ka3oPu7NlsEPurothr8pw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:23vbHXoZoxw=:CkT8KJA5HG+q5e/3tqk8IH
+ hzjdW37Xsamd8jFjPG4tbVeNyzeBCJRvsNhqbC75UhOGtR82s7BajxGw5qquLgdNSO+We4gJU
+ QMwBaCoM0axdfHCFGXxBv0YpygGTV+k3iTES3cWxzL8o/3wg7NFDeMnvWToczQRpu0vxoKgjI
+ /+3hglKTYz/9fjYessCNNyGrqA8cCjqpWo8oQJUotmuJdt2QsO7K1eiiDv01b+R3glvmGP4PE
+ sBBjI55jcNd3wBTKH1PKsdL3gn0aVFZCsRPYGq1a4Mqig0XAC7HO4pEVdgU4rHppyV9IfwlT/
+ TjQKrTFkj54wiurXxzVSiGAOGAilzcnppBfn9pyGTKorsA3dVjjZF9KIxHzJMB5ifjl2a5BTe
+ +UbIFs9VsDdfNb0pI8N5VYIDbKcJGqV7lqmBNgM4jnCGwfUIAVvtyEgnOV0Apt7uQb+CL6tlp
+ GxaPDwsvfUQ7bUahNsHrIF+Y//b78GPO28pNhqsD+BN1r+/MkM90ZLjXaCQvEBHThbnOTk/Bq
+ n5N0usfxydUfg4ORuaGmAGdGzRW1WiMAnnWCN7sBMwNAjQQWmr+hPBqDlI+Sdq7XeIll7okBB
+ a/QzYcc1x8aqV1Tl5qNEM5tzZEbP2k+/4KEzf+ogisWys58nMqsKRTUDR6+jUlo/SWqZZRaV1
+ l8nsD2L0vZ7NZD0ZSoi9/TgMkOV14XKkClYxePKRd1s4FBYmCJTLoPWelazXL5JvQV/cNCIny
+ WYNVUIJpINZPVDf4httgbL+lxG/ELmFGMeOWW/6va313DKNXncNvLUpnsvzxLJC2/lwu1e6/y
+ j+gCg5sIEjCinbgzjSO9LZnT7RCPljyG8WgQt6Q+a7Z3AI3n7xuEUwSHZecVtsSBhHreaJpI/
+ XifY9iq4kcx5CR2HujA3g6rbzdWk4GhUt5L6FEfOMbGzhbB21EQFcbWnNiXHBZuCtCZiMHnHi
+ K2ofG80Jn193wzFtF4GQEEYD6m9rUjrL7kFhFPbSuxwgoogszcZ/2EvTwq35YA97sZT43x7cO
+ DLHUjnrVGVQkm24fw2rNCZRioQkZ3bnAH5aA7ssC1hlDxLbcPklfqZnfNukmHsyjzh9obFavv
+ EFTHvxmLHhYg74tC28T17NUDiNJ+02TW3iY4Hksy8xIykLkWQQkaOM0qA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-593497758-1653426336=:352
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 24 May 2022, Junio C Hamano wrote:
 
-Hi =C3=86var,
+> The "clear slot->finished", by the way, is what I think is the right
+> thing to do, especially that the objective is to squelch the false
+> positive warning from a new compiler.  If there is a way to annotate
+> the line for the compiler to tell it not to warn about it, that would
+> have been even better.
 
-On Tue, 24 May 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+We could do something like this:
 
->
-> On Tue, May 24 2022, Johannes Schindelin via GitGitGadget wrote:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Technically, the pointer difference `end - start` _could_ be negative,
-> > and when cast to an (unsigned) `size_t` that would cause problems. In
-> > this instance, the symptom is:
-> >
-> > dir.c: In function 'git_url_basename':
-> > dir.c:3087:13: error: 'memchr' specified bound [9223372036854775808, 0=
-]
-> >        exceeds maximum object size 9223372036854775807
-> >        [-Werror=3Dstringop-overread]
-> >     CC ewah/bitmap.o
-> >  3087 |         if (memchr(start, '/', end - start) =3D=3D NULL
-> >       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >
-> > While it is a bit far-fetched to think that `end` (which is defined as
-> > `repo + strlen(repo)`) and `start` (which starts at `repo` and never
-> > steps beyond the NUL terminator) could result in such a negative
-> > difference, GCC has no way of knowing that.
-> >
-> > See also https://gcc.gnu.org/bugzilla//show_bug.cgi?id=3D85783.
-> >
-> > Let's just add a safety check, primarily for GCC's benefit.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  dir.c | 9 +++++++++
-> >  1 file changed, 9 insertions(+)
-> >
-> > diff --git a/dir.c b/dir.c
-> > index 5aa6fbad0b7..ea78f606230 100644
-> > --- a/dir.c
-> > +++ b/dir.c
-> > @@ -3076,6 +3076,15 @@ char *git_url_basename(const char *repo, int is=
-_bundle, int is_bare)
-> >  			end--;
-> >  	}
-> >
-> > +	/*
-> > +	 * It should not be possible to overflow `ptrdiff_t` by passing in a=
-n
-> > +	 * insanely long URL, but GCC does not know that and will complain
-> > +	 * without this check.
-> > +	 */
-> > +	if (end - start < 0)
-> > +		die(_("No directory name could be guessed.\n"
->
-> This should start with a lower-case letter, see CodingGuidelines.
+=2D- snip --
+diff --git a/http.c b/http.c
+index b08795715f8a..2ac8d51d3668 100644
+=2D-- a/http.c
++++ b/http.c
+@@ -1365,7 +1365,14 @@ void run_active_slot(struct active_request_slot *sl=
+ot)
+ 	struct timeval select_timeout;
+ 	int finished =3D 0;
 
-This message is copied from existing code later in the same function.
-Since it is a translateable message, I do not want to edit it because that
-would cause unnecessary work of the translators. Especially given that we
-do not even expect this message to be shown, ever, but we only add this
-hunk for GCC's benefit.
++#if __GNUC__ >=3D 12
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wdangling-pointer"
++#endif
+ 	slot->finished =3D &finished;
++#if __GNUC__ >=3D 12
++#pragma GCC diagnostic pop
++#endif
+ 	while (!finished) {
+ 		step_active_slots();
+=2D- snap --
 
-Thank you,
-Johannes
+That's quite ugly, though. And what's worse, it is pretty unreadable, too.
 
->
-> > +		      "Please specify a directory on the command line"));
-> > +
-> >  	/*
-> >  	 * Strip trailing port number if we've got only a
-> >  	 * hostname (that is, there is no dir separator but a
->
->
-
---8323328-593497758-1653426336=:352--
+Ciao,
+Dscho
