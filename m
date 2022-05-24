@@ -2,108 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2B0CC433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 12:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C46FFC433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 12:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237223AbiEXM37 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 08:29:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43926 "EHLO
+        id S237363AbiEXMba (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 08:31:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237117AbiEXM35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 08:29:57 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0528294198
-        for <git@vger.kernel.org>; Tue, 24 May 2022 05:29:53 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id v11so14917926qkf.1
-        for <git@vger.kernel.org>; Tue, 24 May 2022 05:29:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EGRM0SwHk7R1LM95nWW3XZGjZh5geUh7ozxQyi9I5W8=;
-        b=T8kAfzMPR1usulY00+0LwQjBI1lKuOBTD9L8xrHhN5ilAgZ7dgaU6idTzLel36IFTM
-         t0MxfbnV8WTlNZ0wbhHTt7Fis3huJtCsVG0ohr+BzOgD+Wfuky3451d8NbNIhzUsPFtF
-         a4O42nHzi6Q2u0qxyh5qCwPUHkrLwJzJCdLb++XkdEkuEpfb2z+K/syMIYG27s+aCR7P
-         QISL7p2NkMGvB8N7cF06v9S3PCNkYwJ/nTTVm5IdO0cKmfa/gK2sVZy+mcMavIQNIdiW
-         VdKkHBb2ZkROTX/cwL5HEF6D9leeAMMw9XOt9+9C98ON4/mv81eg8cw+z0mqn5v3W7HI
-         /Vcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EGRM0SwHk7R1LM95nWW3XZGjZh5geUh7ozxQyi9I5W8=;
-        b=d0SxrGp/vVgI/dSObDeaTuwz9VoRQOQz0WqpuyZWa50x25mBXHrc6XsC0FXQKKUISN
-         eJc6aITKXWuZoyBWb/0NHv4gvj+ofgRqTCxYEdP4QAvriVhbbE9eY46aoByHW1JFPpXZ
-         jt1Dh/14f/m9O8eS/vuCUgd4UdKdv+DVO3s3Vgp2igBQ9JPHtAY2xspCUMIKHt/AaCZf
-         4pkL+4pOPgMQtasqqExfWcvvhwkF6iCSBK2u9ZSadUJplF/pd/j/fG34O/aB+wdVe6tF
-         2ujbwzJX5tXN5NIber/uFq4OCu/MN8amgdzdxfM6ZMaFdAhlcUzv7i4IHZL0OfPIs1K9
-         IM5g==
-X-Gm-Message-State: AOAM530xoElZ+2RKboun+ZgaH1qiwKCwLg5Ficz72mV2Ial9a8BOFZmD
-        eCge+uT/8Qhi4J70/FnmSEA=
-X-Google-Smtp-Source: ABdhPJwBwCW0+MLB+FHxSFYFBUNJEl3GumtPjHEmIytqkpmv+vQ6AoqMobhx8Iug/RiNg8P32bCw8w==
-X-Received: by 2002:a37:a6d5:0:b0:6a3:4872:32fb with SMTP id p204-20020a37a6d5000000b006a3487232fbmr14123931qke.588.1653395393048;
-        Tue, 24 May 2022 05:29:53 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id w11-20020a05620a148b00b006a39e915252sm2546883qkj.97.2022.05.24.05.29.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 May 2022 05:29:52 -0700 (PDT)
-Subject: Re: [PATCH v3 0/5] Improve MyFirstContribution's GitGitGadget section
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>
-References: <pull.1226.v2.git.1652233654.gitgitgadget@gmail.com>
- <pull.1226.v3.git.1652399017.gitgitgadget@gmail.com>
- <xmqqpmk9kxa8.fsf@gitster.g> <f47761e0-bbaa-e4a5-b74e-e9c211bd8d85@gmail.com>
- <xmqqy1yubb8j.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <0a2ab37e-58c0-378e-bc43-a935c8ebecec@gmail.com>
-Date:   Tue, 24 May 2022 08:29:51 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        with ESMTP id S237389AbiEXMb2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 08:31:28 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1A82BC11
+        for <git@vger.kernel.org>; Tue, 24 May 2022 05:31:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1653395469;
+        bh=DuXa+ZX7ixclJ8QcM/0iiVsVK4onI4w0dMtPPPLzsaE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=jUW74u7s4ByhzN1dLp+pp9HFUkx5NOylcC5wnchWkHM2Nn2TubfTuvpQggJXxfUtA
+         pORxI08yt/B2gFXl/bRWY9RaO24+kVs1vAChcSiWQGyS3Y8HaeKTAvQ+1cEpSL/U8o
+         nvkVFN70aPHP8jGbeOUB1Gxf7fEel5AJoM3mtqys=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7zBR-1npib02NNL-0150Wd; Tue, 24
+ May 2022 14:31:09 +0200
+Date:   Tue, 24 May 2022 14:31:06 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     neerajsi@microsoft.com
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        nksingh85@gmail.com, gitgitgadget@gmail.com, avarab@gmail.com,
+        bagasdotme@gmail.com, jeffhost@microsoft.com, ps@pks.im,
+        worldhello.net@gmail.com
+Subject: Re: [PATCH v6 00/12] core.fsyncmethod: add 'batch' mode for faster
+ fsyncing of multiple objects
+In-Reply-To: <fb1f2c8c-b749-85d9-b472-587f51dea8a8@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2205241425570.352@tvgsbejvaqbjf.bet>
+References: <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com> <20220405052018.11247-1-neerajsi@microsoft.com> <xmqq7d82x8a9.fsf@gitster.g> <xmqqtu9lkxe5.fsf@gitster.g> <fb1f2c8c-b749-85d9-b472-587f51dea8a8@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy1yubb8j.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-375719175-1653395469=:352"
+X-Provags-ID: V03:K1:9IfLc0vghJXuCH3s5je/UGxrKRBnMrVsbOAIbVginABXAA38w3l
+ qP+qLM7CU+F4Nlwk8G9c4AIoWCxg5EZh9Mr74yanNNx5eLTufJLhlNmBQ/OEtfUhw4G6V8s
+ B4Um+TjmiDIY9tkS1gCxaK+QcomvQHKl3ZZ0Y66tPxjzEki9iGb6o8UEI3IxpakCutck3oD
+ ebrSbwUltolX0JEoOBtnw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qU5hvoI0vAA=:OXV1+flkCaG9iY/V2Hn6Kf
+ fE/Ob/Pj/2gG2m/KKBqJF3IOOvlGiGW9BuK6GsOZ61l6bMxKMVnWtdxXQSBUAcBXTvH15yeoE
+ 7BJDRjHv4ThpkjL3XNIl8u/jiwCGUqx5fDVd3fwyMh8yhvVgJG7P0urDkLTqoaJ8h1xN0/RGg
+ G07UPIqEHGlFTcGhG/5uxmQQ2gaE740a0L5ouv9bjpvv+csxiyraJf3FXURt489BYm+a77hax
+ Y8a4O3pN25dff8QBjWy8KkONMxsbaWgArUbJ6x3lHPIkACcjLJz00BV7Esz2Urf+XZEHQGHgZ
+ fF028OmkChDIpLfQNxVDu/06XfalRBUx9bvpqFYhdroeuQMk45deCB9wIP0QYYFo3qFqI/0Z7
+ pqJSHGdQiuesZhUhEgRpj1dMcjQNgYK7q7ktb81oRmelyrcFF8jVtUbiUZWzZUIxpfwJjs5wF
+ ok5vN0Pwf9vrR/phjmJmxVO30k+ipOPNTRQhqNHmZYSmXl4nKxYxdSZmaOoFYLMkS8wKWqhII
+ vR2ZOTVuR2003xlWx3mbnixgG8uRm86rNea1OnbMcJ25OPNY1lgol6MAKhfk7KfZ7XjNTwPDQ
+ HO96Cpny5xlp/acf68bqwbTvP1eGSMRQxbadiGb9KN2PyKT6KfKeMBwMMz386h8K20/czkVyw
+ IW3p66NSwhUByOpwx79IGMnX7cGEmQwM+T2n45dcwRAsKB1DjJW7rdbcUXkd6jUXmpl4JDaL9
+ R1/WkaiEaaaurl13YmesVeYdL4RLjUpwLF7gA09TI9arklunTCrpcRwCPm6R9XTi2AihbKtwG
+ yCbl+pFQkRVGWMxKwn/HsrYYraar0wboiNOy+5ScPeQFUen4BYULfiEpWrYKmm5BfSgoVypha
+ /n/8Ty2jDTMKueBD7FJYdhQkSBBq43k0FBqb2e1O9YcLNTRLTcSHaPfIJgpg+A2E1ego7vCA7
+ U1b+25hVAkjWeaRY7n9nBmNB36uJKBICvnrueBlh53cTC2sGI+GyRr2vvAC5ZWzeSdDHwoaME
+ XQ7zwRMRBD3HTGEfLf9UzEQBO/uy6G9hddd98fxHXkZ9TVWRZWx85RMA9tPYZDzK4890j6UJh
+ UPEfn+x9nOqToUfDxGlR+ZU+xS8HxMe/crHYjpAW6mImYcbMIbl3QiibQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Le 2022-05-21 à 21:35, Junio C Hamano a écrit :
-> Philippe Blain <levraiphilippeblain@gmail.com> writes:
-> 
->>>> Philippe Blain (5):
->>>>   MyFirstContribution: add "Anatomy of a Patch Series" section
->>>>   MyFirstContribution: add standalone section on cover letter
->>>>   MyFirstContribution: reference "The cover letter" in "Preparing Email"
->>>>   MyFirstContribution: reference "The cover letter" in GitGitGadget
->>>>     section
->>>>   MyFirstContribution: drop PR description for GGG single-patch
->>>>     contributions
->> I just realized that the additional/tweaked content that I added in v3 went into 2/5
->> where as they should have gone into 1/5 (I'm talking about the changes 
->> *before* the "The cover letter" heading in [1]). I slightly messed up my rebase
->> it seems, I'm sorry... 
->>
->> Should I send a new version, or is it too late since it's now in 'next' ?
-> 
-> Thanks for letting me know, and sorry about the confusion.
-> 
-> Could you please send an incremental fix to be queued on top of
-> these 5 patches?
+--8323328-375719175-1653395469=:352
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I can't really send an incremental fix because the final content
-as it is in 'next' already is OK; it's just that some content which was added
-in patch 2/5 should have been added in 1/5 instead.
+Hi Neeraj,
 
-It's that too big of a deal, I just wanted to let you know.
+On Thu, 19 May 2022, Neeraj Singh wrote:
 
-Thanks,
-Philippe.
+> On 5/19/2022 2:47 PM, Junio C Hamano wrote:
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> > > nksingh85@gmail.com writes:
+> > >
+> > > > From: Neeraj Singh <neerajsi@microsoft.com>
+> > > >
+> > > > GGG closed this series erroneously, so I'm trying out
+> > > > git-send-email. Apologies for any mistakes.
+> > > >
+> > > > This series is also available at
+> > > > https://github.com/neerajsi-msft/git/git.git ns/batched-fsync-v6.
+> > > >
+> > > > V6 changes:
+> >
+> > We haven't heard anything on this topic from anybody for this round.
+> > I am planning to merge it to 'next' soonish.
+> >
+> > Please speak up if anybody has concerns.
+> >
+> > Thanks.
+> >
+>
+> No updates on my end. I'll keep my eyes out for any reports of regressio=
+n.
+
+I asked a colleague to have a go with these patches and the only concern I
+heard back was that with ext4's new `fast_commit` feature, the `fsync`
+seems not to actually flush all metadata. They indicated that they'd be
+happy with merely documenting this issue, and also pointed out that the
+`fast_commit` feature seems still not to be considered ready for
+production workloads.
+
+So: =F0=9F=91=8D from my side.
+
+Ciao,
+Dscho
+
+--8323328-375719175-1653395469=:352--
