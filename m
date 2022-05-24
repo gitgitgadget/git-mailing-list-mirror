@@ -2,99 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01C6EC433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 19:45:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 208C1C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 19:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241004AbiEXTpn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 15:45:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51798 "EHLO
+        id S241022AbiEXTt6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 15:49:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239067AbiEXTpl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 15:45:41 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A0F26898A
-        for <git@vger.kernel.org>; Tue, 24 May 2022 12:45:40 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 387EE1269E6;
-        Tue, 24 May 2022 15:45:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5a/nSa7aqEZAIqsXAMt3Nd67Dyq0+lW0cPgsdb
-        HGn9w=; b=Ip12EgS3Kh7c7666zH5SmQym7CDArBR7XricDw0H31j8LHR26XP3+B
-        V2KsVpdgMNtVPTHqHul2De5BcKWSE/Vl0UQJ0rtbsR0K775GR1IrVCWf71W/3M34
-        OKo1Y9jApgSpJGjgtmPV4FsvjRlazRT8rw4crQb03sR/qL0iWp68g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E2871269E5;
-        Tue, 24 May 2022 15:45:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 93C671269E4;
-        Tue, 24 May 2022 15:45:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Goss Geppert <gg.oss.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        christian w <usebees@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 1/2] dir: consider worktree config in path recursion
-References: <20220505203234.21586-1-ggossdev@gmail.com>
-        <20220510171527.25778-1-ggossdev@gmail.com>
-        <20220510171527.25778-2-ggossdev@gmail.com>
-        <xmqq7d6sm3e0.fsf@gitster.g>
-        <CABPp-BGXRzYCvyM38dEUvQ125+VtRu++7L9UiRz98u+1=Lov7A@mail.gmail.com>
-Date:   Tue, 24 May 2022 12:45:37 -0700
-In-Reply-To: <CABPp-BGXRzYCvyM38dEUvQ125+VtRu++7L9UiRz98u+1=Lov7A@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 24 May 2022 07:29:09 -0700")
-Message-ID: <xmqqilpuhfz2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S239067AbiEXTt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 15:49:57 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 580897892E
+        for <git@vger.kernel.org>; Tue, 24 May 2022 12:49:56 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id f21so23793316ejh.11
+        for <git@vger.kernel.org>; Tue, 24 May 2022 12:49:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=rpyO5MxuNg2gr1mN/HWzvPmpc6yOUyOmaKlo0a6QzVU=;
+        b=EN/4ZXo+DtUY6CUiO+tIMRartfllYgYoIcj1KjWhifJwljq4jNPH28NIz/DroQpCy+
+         djtilXSlUWGX+7h5DMIYl0x79Ra/uTa73kD/DFMJQDCHt+9YQxKTgw5nSdKnI1G6Rcyy
+         2eh5yVhNa5Zk+2EtU6eXgGApAKk7ADKZm13gdOEr/quYJQ1gCuI8n47gxrfTLw92/I13
+         ssFpp4Dban1VXZQy0w+nr+hrPHdtU+VBLYdQKJxxPVgfI5IPQJTZM3UiEn4R3iBSKIIA
+         YQhGw2xJbnkF70pNpgThrTf23h8QG4PJ0iu7PVZsgy376F/T4VbVI9Njgx81skiwjNkf
+         x6uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=rpyO5MxuNg2gr1mN/HWzvPmpc6yOUyOmaKlo0a6QzVU=;
+        b=Alj7pOexUaol6Dfh/LwM0EHMD+pr8v4Rrhjt3WxzJ+w0FCt2usv9jKuJLhAS6nUcmQ
+         pFaczvKKLssuPLcFGvsW+IdGMvnDvkwlIAmNbEGnRMeOyTvfjU8TT/vuWGmtoJar7fFU
+         QEy2C2HXEpBTTnqwlWxXIB3ButBwdFr/4x15+V2qoAB/nzsZGvOIOElkSaviL7lfhIcn
+         +CaUohZTMbOj2obw1tvYRtfAuRCeK030FCvObyXlppVNa4W0jd97b2jVMxP2ubzkAy0k
+         vfKGENo0eWXId6c9NmipkWQL9nY1LEOBRg/5TtmeWwc49aKeTB9v3Ic98tQfnfMEkCAe
+         oL/w==
+X-Gm-Message-State: AOAM532dl4MWxU+OrGYBGOVjlImm8ZnjYhcCN2ynoYL+6dGLo7xBWaHN
+        KqYzlnCpa7tlz6nI0Aq5BrU=
+X-Google-Smtp-Source: ABdhPJz4hMnKf892bjgsBZoUCeVuvYRXucTaziHxDvQQOKkKwzQfxQ83JAP5Sw+7wdRjQjpDmyco/A==
+X-Received: by 2002:a17:907:3dac:b0:6fe:c707:94e7 with SMTP id he44-20020a1709073dac00b006fec70794e7mr13132469ejc.268.1653421794809;
+        Tue, 24 May 2022 12:49:54 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id 23-20020a17090600d700b006f4b2aab627sm7461530eji.222.2022.05.24.12.49.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 May 2022 12:49:54 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1ntaXR-003XTn-Le;
+        Tue, 24 May 2022 21:49:53 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, vdye@github.com, jonathantanmy@google.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v2 3/4] builtin/pack-objects.c: ensure included
+ `--stdin-packs` exist
+Date:   Tue, 24 May 2022 21:46:09 +0200
+References: <cover.1652458395.git.me@ttaylorr.com>
+ <cover.1653418457.git.me@ttaylorr.com>
+ <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
+Message-ID: <220524.86zgj6vhge.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 163D9BB6-DB9A-11EC-BF1F-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
 
-> On Wed, May 11, 2022 at 9:37 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Goss Geppert <gg.oss.dev@gmail.com> writes:
->>
->> > diff --git a/dir.c b/dir.c
->> > index f2b0f24210..a1886e61a3 100644
->> > --- a/dir.c
->> > +++ b/dir.c
->> > @@ -1893,9 +1893,31 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->>
-> [...]
->>
->> > +                     real_gitdir = real_pathdup(the_repository->gitdir, 0);
->>
->> This function is repeatedly called during the traversal.
->>
->> How expensive is it to keep calling real_pathdup() on the constant
->> the_repository->gitdir just in case it might be the same as our true
->> GIT_DIR?
->
-> I agree that treat_directory is called many times, but this
-> real_pathdup() call is inside the "if (nested_repo)" block, so this
-> new real_pathdup() invocation should occur very seldom.  Or are you
-> worried about cases where users have *very* large numbers of bare
-> repositories nested under the working directory?
+On Tue, May 24 2022, Taylor Blau wrote:
 
-No.  I wasn't worried about anything in particular.  I just wanted
-to get the feel of how deep a thought the patch was backed by by
-spot checking what was and what was not taken into account when
-designing the change.
+> -	struct rev_info *revs = _data;
+> -	struct object_info oi = OBJECT_INFO_INIT;
+>  	off_t ofs;
+> -	enum object_type type;
+> +	enum object_type type = OBJ_NONE;
+>  
+>  	display_progress(progress_state, ++nr_seen);
+>  
+> @@ -3215,20 +3213,25 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+>  	if (!want_object_in_pack(oid, 0, &p, &ofs))
+>  		return 0;
+>  
+> -	oi.typep = &type;
+> -	if (packed_object_info(the_repository, p, ofs, &oi) < 0)
+> -		die(_("could not get type of object %s in pack %s"),
+> -		    oid_to_hex(oid), p->pack_name);
+> -	else if (type == OBJ_COMMIT) {
+> -		/*
+> -		 * commits in included packs are used as starting points for the
+> -		 * subsequent revision walk
+> -		 */
+> -		add_pending_oid(revs, NULL, oid, 0);
+> +	if (p) {
+> +		struct rev_info *revs = _data;
+> +		struct object_info oi = OBJECT_INFO_INIT;
+> +
+> +		oi.typep = &type;
+> +		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
+> +			die(_("could not get type of object %s in pack %s"),
+> +			    oid_to_hex(oid), p->pack_name);
+> +		} else if (type == OBJ_COMMIT) {
+> +			/*
+> +			 * commits in included packs are used as starting points for the
+> +			 * subsequent revision walk
+> +			 */
+> +			add_pending_oid(revs, NULL, oid, 0);
+> +		}
+> +
+> +		stdin_packs_found_nr++;
+>  	}
+>  
+> -	stdin_packs_found_nr++;
+> -
+>  	create_object_entry(oid, type, 0, 0, 0, p, ofs);
 
-I do not care too much when there are very large numbers of things
-that cause this codepath to be exercised.  Strange situations can be
-left for later optimization only when they turn up in the real world
-and prove to be a problem.
+Not rhetorical, since I have no idea: Is the behavior change here to
+make create_object_entry with type=OBJ_NONE desired? I.e. do we actually
+want to create object entries for OBJ_NONE?
 
-By the way, where is a bare repository involved?  did you mean
-non-bare aka worktree-full repository?
+If that is the case I for one would find this a bit easier to follow
+like this, even if it has some minor duplication, i.e. the intent is
+clearer:
+	
+	diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+	index ffeaecd1d84..a447f6d5164 100644
+	--- a/builtin/pack-objects.c
+	+++ b/builtin/pack-objects.c
+	@@ -3202,7 +3202,6 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+	 				      void *_data)
+	 {
+	 	off_t ofs;
+	-	enum object_type type = OBJ_NONE;
+	 
+	 	display_progress(progress_state, ++nr_seen);
+	 
+	@@ -3216,6 +3215,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+	 	if (p) {
+	 		struct rev_info *revs = _data;
+	 		struct object_info oi = OBJECT_INFO_INIT;
+	+		enum object_type type;
+	 
+	 		oi.typep = &type;
+	 		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
+	@@ -3230,9 +3230,11 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+	 		}
+	 
+	 		stdin_packs_found_nr++;
+	-	}
+	 
+	-	create_object_entry(oid, type, 0, 0, 0, p, ofs);
+	+		create_object_entry(oid, type, 0, 0, 0, p, ofs);
+	+	} else  {
+	+		create_object_entry(oid, OBJ_NONE, 0, 0, 0, p, ofs);
+	+	}
+	 
+	 	return 0;
+	 }
+
+Or the same with adding "type = OBJ_NONE" to the "else" branch, leaving
+the initial "type" uninitialized"?
+
+Or perhaps this is a bug? I see some OBJ_NONE mentions in the code, but
+do packfiles really have "none" objects in some fashion as far as
+add_object_entry_from_pack() is concerned? (I'm not familiar enough with
+this part of the codebase to know).
