@@ -2,143 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B961AC433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 14:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA61C433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 14:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238090AbiEXOCd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 10:02:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40478 "EHLO
+        id S237272AbiEXOHw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 10:07:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238089AbiEXOCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 10:02:31 -0400
-Received: from vulcan.kevinlocke.name (vulcan.kevinlocke.name [IPv6:2001:19f0:5:727:1e84:17da:7c52:5ab4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B502C62CC3
-        for <git@vger.kernel.org>; Tue, 24 May 2022 07:02:30 -0700 (PDT)
-Received: from kevinolos.kevinlocke.name (unknown [69.145.56.143])
-        (Authenticated sender: kevin@kevinlocke.name)
-        by vulcan.kevinlocke.name (Postfix) with ESMTPSA id 4EA602E7836D;
-        Tue, 24 May 2022 14:02:28 +0000 (UTC)
-Received: by kevinolos.kevinlocke.name (Postfix, from userid 1000)
-        id F1E28130035B; Tue, 24 May 2022 08:02:15 -0600 (MDT)
-Date:   Tue, 24 May 2022 08:02:15 -0600
-From:   Kevin Locke <kevin@kevinlocke.name>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] setup: don't die if realpath(3) fails on getcwd(3)
-Message-ID: <YozlZ9DPrRLPBTBP@kevinlocke.name>
-Mail-Followup-To: Kevin Locke <kevin@kevinlocke.name>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
- <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
- <1580ad10-43f6-bc73-901a-b65b1aea73ff@github.com>
+        with ESMTP id S237682AbiEXOHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 10:07:51 -0400
+X-Greylist: delayed 2517 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 24 May 2022 07:07:45 PDT
+Received: from weald2.air.saab.se (weald2.air.saab.se [136.163.212.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B1922BD8
+        for <git@vger.kernel.org>; Tue, 24 May 2022 07:07:45 -0700 (PDT)
+Received: from mailhub1.air.saab.se ([136.163.213.4])
+        by weald2.air.saab.se (8.14.7/8.14.7) with ESMTP id 24ODPklW027695
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Tue, 24 May 2022 15:25:46 +0200
+DKIM-Filter: OpenDKIM Filter v2.11.0 weald2.air.saab.se 24ODPklW027695
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=saabgroup.com;
+        s=weald2_2; t=1653398746;
+        bh=XsBHnrFRpHk+lWAcHIRH9anU0DxZde0QwGujXe33sMI=;
+        h=From:To:Subject:Date:From;
+        b=Ar4NxShxEkB7OlTPNANbOguhmoC1/9JT1OlMEyG8R6NzGt4PcMroPOXegwoIZTmXO
+         pWturaBuC1RjjEAYYngO8lKPYbioLnu1IROyw/MSoLjXpfBs58SW5CNqC3ZOyvodhO
+         VSei0b3ittZ9xNIPjdkxQaOpaOVfgOVwGRPjdSOMuyzNoSeKX/envNv4GnKbaCpxjI
+         GXsoeBxI37hDmfR0zGZYOBs7plAZzaLtCXPjsQ6yWzaDrtpPSh4CZgTmVe5AsKgSvE
+         Pq99CAHf1WgKwY3chSbHFHO440KGSmEEyULbTTtQNMHbJDAafL6tmDB4RoIdvgrOT0
+         W33pPVA0NvZKw==
+Received: from corpappl17779.corp.saab.se (corpappl17779.corp.saab.se [10.12.196.86])
+        by mailhub1.air.saab.se (8.15.2/8.15.2) with ESMTPS id 24ODPk452858698
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Tue, 24 May 2022 15:25:46 +0200
+Received: from corpappl17781.corp.saab.se (10.12.196.88) by
+ corpappl17779.corp.saab.se (10.12.196.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.26; Tue, 24 May 2022 15:25:43 +0200
+Received: from corpappl17781.corp.saab.se ([fe80::988b:c853:94fe:90aa]) by
+ corpappl17781.corp.saab.se ([fe80::988b:c853:94fe:90aa%5]) with mapi id
+ 15.02.0986.026; Tue, 24 May 2022 15:25:43 +0200
+From:   Olsson John <john.olsson@saabgroup.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Error handling when giving empty command line arguments
+Thread-Topic: Error handling when giving empty command line arguments
+Thread-Index: Adhvbv33EYLm80KPScCjpHIHZomAfw==
+Date:   Tue, 24 May 2022 13:25:43 +0000
+Message-ID: <dc08a8ee5ed64850872fd6529d1462e1@saabgroup.com>
+Accept-Language: sv-SE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [136.163.101.122]
+x-tm-as-product-ver: SMEX-14.0.0.3092-9.0.1002-26912.007
+x-tm-as-result: No-10--5.887500-5.000000
+x-tmase-matchedrid: 3C+gAndgRrt4GcCqxQcAiAewBVjD2SDGlKvhkP88iXT/Gd9Sm0XpG7y5
+        zA+nB60F8sfxw8Kspfftyssmx6PkxnHPBvSspzfjGXGu0jdPFGRITEcvqjcF4Jr6aNifCis8aOV
+        lkCHubAFuf5ur5byPparP+04pA0BmxzdZUAxpvx2rm7DrUlmNkF+24nCsUSFNjaPj0W1qn0TKay
+        T/BQTiGsKRxzhjL0lRi9+dihKZ3oM4qTOLvMus50kt6DZf9h4RSz2fw9kSQzDAvpLE+mvX8g==
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--5.887500-5.000000
+x-tmase-version: SMEX-14.0.0.3092-9.0.1002-26912.007
+x-tm-snts-smtp: 440D31FE037F1D94F4869B3FC222A15E86B8E88E517460757A26317501052BA72002:B
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1580ad10-43f6-bc73-901a-b65b1aea73ff@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2022-05-23 at 14:57 -0400, Derrick Stolee wrote:
-> On 5/21/22 9:53 AM, Kevin Locke wrote:
-> > +		free((char*)tmp_original_cwd);
-> 
-> Hm. I'm never a fan of this casting, but it existed before. It's
-> because tmp_original_cwd is exposed globally in cache.h, which
-> is _really widely_. However, there are only two uses: setup.c,
-> which defines it, and common-main.c, which initializes it during
-> process startup.
-> 
-> The following diff could apply before your commit, removing this
-> use of "const char *", but maybe it doesn't fit normal Git
-> coding guidelines (putting the extern directly in a *.c file):
-> 
-> --- >8 ---
-> 
-> diff --git a/cache.h b/cache.h
-> index aaf334e2aa4..ce9cd6fa3f0 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1797,7 +1797,6 @@ struct startup_info {
->  	const char *original_cwd;
->  };
->  extern struct startup_info *startup_info;
-> -extern const char *tmp_original_cwd;
->  
->  /* merge.c */
->  struct commit_list;
-> diff --git a/common-main.c b/common-main.c
-> index 29fb7452f8a..e472258b83b 100644
-> --- a/common-main.c
-> +++ b/common-main.c
-> @@ -23,6 +23,8 @@ static void restore_sigpipe_to_default(void)
->  	signal(SIGPIPE, SIG_DFL);
->  }
->  
-> +extern char *tmp_original_cwd;
-> +
->  int main(int argc, const char **argv)
->  {
->  	int result;
-> diff --git a/setup.c b/setup.c
-> index 04ce33cdcd4..86986317490 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -12,7 +12,7 @@ static int work_tree_config_is_bogus;
->  
->  static struct startup_info the_startup_info;
->  struct startup_info *startup_info = &the_startup_info;
-> -const char *tmp_original_cwd;
-> +char *tmp_original_cwd;
->  
->  /*
->   * The input parameter must contain an absolute path, and it must already be
-> @@ -459,7 +459,7 @@ static void setup_original_cwd(void)
->  
->  	/* Normalize the directory */
->  	strbuf_realpath(&tmp, tmp_original_cwd, 1);
-> -	free((char*)tmp_original_cwd);
-> +	free(tmp_original_cwd);
->  	tmp_original_cwd = NULL;
->  	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
->  
-> --- >8 ---
+I have so far only seen this behavior with 'git fetch' command, but it migh=
+t be more general depending on how command line parsing is implemented.
 
-This approach seems reasonable to me, as does casting to free().  It's
-not clear to me which is preferable in this case.  How to balance the
-trade-offs between exposing const interfaces, limiting (internal)
-interfaces to headers, and avoiding casts might be worth discussing
-and documenting a matter of project coding style.  `grep -rF 'free(('`
-lists about 100 casts to free, suggesting the discussion may be
-worthwhile.  Introducing a free_const() macro could be another option
-to consider.
+In a Bash script I had something similar to (but more complicated than what=
+ I show below)
 
->> +		tmp_original_cwd = NULL;
->> +		startup_info->original_cwd = strbuf_detach(&tmp, NULL);
->> +	} else {
->> +		trace_printf("realpath(cwd) failed: %s\n", strerror(errno));
-> 
-> It could also be helpful to include a trace2 output, since
-> most modern tracing uses that mechanism:
-> 
-> 		trace2_data_string("setup", the_repository,
-> 				   "realpath-path", tmp_original_cwd);
-> 		trace2_data_string("setup", the_repository,
-> 				   "realpath-failure", strerror(errno));
-> 
-> But this is also unlikely to be necessary. We can instruct
-> a user to rerun their command with GIT_TRACE=1 if we see
-> this error in the wild.
+  git fetch "${force}"
 
-That's a great idea.  I hadn't realized the difference between the
-trace_* and trace2_* APIs until investigating as a result of your
-suggestion.  Trace2 seems preferable for many reasons.  I'll send an
-updated patch shortly.
+where $force is either an empty string or '--force'. Due to that you usuall=
+y want to expand all variables within double quotes when writing Bash scrip=
+ts I did not realize that I had made a mistake here. Instead I got this str=
+ange error message and spent a couple of hours chasing it
 
-Thanks for the review and feedback Stolee!
+  fatal: no path specified; see 'git help pull' for valid url syntax
 
-Cheers,
-Kevin
+This problem eventually turned out to be of the trivial kind once I realize=
+d why I got it, and also very simple to reproduce. Just do
+  $ git fetch ""
+  fatal: no path specified; see 'git help pull' for valid url syntax
+  $
+
+That is, 'git fetch' does not check if the given string is an empty string =
+before writing the error message. The empty string is completely unrelated =
+to any path/URI and in this case it was not that helpful.
+
+What do you say? Wouldn't it be better with a more specific error message w=
+hen an option value/argument is an empty string? Or should perhaps empty st=
+rings be ignored by the git commands?
+
+
+/John
+
