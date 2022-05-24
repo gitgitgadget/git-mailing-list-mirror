@@ -2,30 +2,30 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBAE1C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 11:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAC5DC433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 11:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237021AbiEXLxM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 07:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41886 "EHLO
+        id S237048AbiEXLyA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 07:54:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236667AbiEXLxL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 07:53:11 -0400
+        with ESMTP id S237054AbiEXLx6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 07:53:58 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04065C772
-        for <git@vger.kernel.org>; Tue, 24 May 2022 04:53:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B305E5D1A1
+        for <git@vger.kernel.org>; Tue, 24 May 2022 04:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653393174;
-        bh=v+0au89zmdAr9bB+RPZ6nu26jNu4K6C17Cn0CpJKdRg=;
+        s=badeba3b8450; t=1653393221;
+        bh=JpoWVEvckukLAaudBkrg2AknWME0XKwtKEa5ymJ7VPs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c+FYIpxIUbeqtiZifroykHG477dIwNb/VjziDEkcowBT7pc7NXzwt2nfWTYo6YLR9
-         Aerf78D3JhcrGBwIkkv+6XoCbnJAm2gK7DW24K/y1vW3+tCpjnzUhTVLTzWoQk2+1n
-         dmcu3sL4JDOG6rfKu7/DDB4p3gpBw6C8imear5vc=
+        b=SHj1Q0WoPaGN0EAKdn0ILor2LXlRl8W3K9SYxGbbI3SBj9rfMajjS12W12DMWmkY+
+         wfgHu7oljVS8MzaTSIdztNjMe17fpuOc7J+0Vq9j/HgkeSWBBGa4m7JSEuNHAAICj/
+         0rhqEbRP8T6ic1aBTneU+xwbfJeagNLX1/igvZLk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M9FjR-1nxbQ90tkN-006S1e; Tue, 24
- May 2022 13:52:54 +0200
-Date:   Tue, 24 May 2022 13:52:51 +0200 (CEST)
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEUzA-1o54lr0wYM-00G48s; Tue, 24
+ May 2022 13:53:41 +0200
+Date:   Tue, 24 May 2022 13:53:38 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff Hostetler <git@jeffhostetler.com>
@@ -35,35 +35,36 @@ cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
         <avarab@gmail.com>, Torsten B??gershausen <tboegi@web.de>,
         rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 16/28] fsmonitor--daemon: stub in health thread
-In-Reply-To: <d2c909df-44f6-bc2c-ebbc-13ea51cf62fe@jeffhostetler.com>
-Message-ID: <nycvar.QRO.7.76.6.2205241352130.352@tvgsbejvaqbjf.bet>
-References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com> <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <32fc6ba74378cda7a5060d63066d16333765973a.1650662994.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2205121622030.352@tvgsbejvaqbjf.bet>
- <d2c909df-44f6-bc2c-ebbc-13ea51cf62fe@jeffhostetler.com>
+Subject: Re: [PATCH v6 20/28] fsmonitor: optimize processing of directory
+ events
+In-Reply-To: <c716b1d6-a0a8-6d03-dfe5-70613e4ed942@jeffhostetler.com>
+Message-ID: <nycvar.QRO.7.76.6.2205241353030.352@tvgsbejvaqbjf.bet>
+References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com> <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <48af0813deccab924d3591b4df025b17bf309260.1650662994.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2205121708400.352@tvgsbejvaqbjf.bet>
+ <c716b1d6-a0a8-6d03-dfe5-70613e4ed942@jeffhostetler.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HFNCovYDrAtN6m6eZKqWz4lJ4x0zhA7iaOgJYTM3591a0jMz2uE
- JPMWXpdZmtDIzhrh2m5116M3JBGCzVabvH70Mc8IBjiTG8v8wfRHNY6g93egBovTYq+uxKk
- XqmSsI71Ci/vT1D7nBeOy5riCpAnqCU666rPQrznF4Rac0cEr4JSrPdan2lT7WLEHTpiDrs
- QtcWrDGv3IqoKRU2P5ROQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Bl8Tkdw42do=:ssBWmVKpFo/KW8OOHCrqSE
- V+rTC4VTai+qSaUef4a3aySBuiVe9iOW4PAwjikZzqFkzOwslz2KRfiEggHXN+stMHrLMw5dd
- dhffmnYWbrCW8jq1zzPP7EwaflUrPuUj381W9cpZpGdvFnuvl1dDaal9Jaq53Lgmgu2/JgEPG
- 6UVm6bUkXN1UcRit0c7H80YERcZ+Jo9ri5+tWML8h9dr1lq4I9BhSmsWYvfU75kt31dRLdU8l
- aeU5ARDTX3A4tb0WYdLa3XOVXxHckEfonVFZbZztw4405NMt4xKruVdbgaxNXwnJHwse0i9vk
- 1wPbD5DD1oac0l/YLmv+kqwgcqHjy3JtpIiru3a6VCvQV3JCjJMOwyjPV+e5yeUSlR8UElLHv
- LyhTgNEprfLWAOZH8HQiYgbat/Cj511VMHQq46SPIZ5juHTYfoJsHtarI+Iw68YvkTkmg3X+t
- v2RSJcgn9Yd0fzSuE3DBziQftW022Mukxd41R3cCBrBHgx5G8n5c3sYVOARqkZOXud7vk3G3t
- 3y9/m1+WaLhZbiCXZT9BpFXZ/XdviFQ8D6+DJZ1GUqPsF2B1rJ8A1twllBFr1NyysmHxO6vLb
- JjkEbYnsWA6CzW0WoBtAQ8SGeay+0avz/uDcCTB9/5egXXU8PVcWPM6tWWJX+/tSDiaW/Gtz/
- Vc0pDftlAKHSd7ActKt0Iv5/MBUqzW1X1qZq8bt9jcGSwiLKQO2eIHQuHGqQBZKro1aJXrvT5
- qmG0F55r2GsHGysO1UMhvyd2sHlHCWSPTa65Du54INVA3QsaKlepSBPu3TNVqi87vtEx2RV9E
- 0fkByNs5wUfaIcmYKkpwnM8ls1grKx04nnYhAbBlmb2cXAxKbsCgVotv+7YmpWucT62oU/+yL
- A5OAvQa2ep11NUq3/tRXR7/tA+KKSvVrC3a2Sf2lyVNurqlYsQJ0tWkPzp0eS99rklv4Cq/jR
- pyKYqRMYeTX1C9f/MpzccXQUCvJlyqmu4+ePf7e966jFur1c3INeYFsmY+KUn8Z9G22ZA4yUM
- mxM3inBnYCKjcjr4NqDl3y7Yoa225cgAqA8N4ubX6mR6xl3c/yIWlDWYjUldibG7112XVl2W/
- nO7NX822K0hzgoRVIAOI9I38E6g9ixVSlH5BqN0P9jntxbHuK+PZgXnDw==
+X-Provags-ID: V03:K1:nlH5DdUP2F9xcLq7+tzAcIFOV34yDcDcugwLT+VUAzgChI5IGza
+ Y+f52tbiSfWJF9iO/3tQv/iKlAnNLCzhcFKegz0+7bCPF61Qox8YPgP+j81w2oQGXq6X9iC
+ ZqYHABIyeoCq12yCqmi2o/n7L2dNgTO/ab07LbcamHRaR8QNEOtc+cqpRUkKYYpNW9t3rRW
+ OYidKwxymw9bQgZk4yW0Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:E0/qHnZ/xPQ=:ht4C55bUMXr8tQ0kSvrtn7
+ vAFtyMG8jbt1AqJ+BOZt0l1hlUEu9dPSVLyJ1/9IfUjj94yw0vN1AoelhM1qX4AFcldXg8L+k
+ zBTqMV1OX6mqDhrzOEHHq9dnHP+IymyKB0NpEfqTXbasHzumpW8vSBP2fg6/ybx9jUJU9fB71
+ bKGdDT8KKhR+53Jak7g7eNgJAaGFxfUGqMHs4FMmA/QVZeDmmgpER5o7BKPpFtvGZILvOSkWL
+ v3VBjJvb7k1wh1zMGSD6F+ZFrWhiBxZ8JF5Zq1GPhp92t/CMFkrYt7hyGplumi8FJoV5yCqXE
+ fC6r1TchYlZs2VgtEcINES5qh9M0RHbtXd89YEjqps2u7x+ec1wYYMjeu8RtT4n5LARuAZArW
+ yezuYzX9RxmwPOIiGsciWImMQ+Sn6aXbviiviUFoVBIAR0H9h9Wh9wAtdcHYrktPFUzojt8Ti
+ V7yX5ZggGlq0Mk9WR+mEYfGeT0q1qm9sTCQSqGm5WOWF41aRAkkons/LE/7XoldtV10DjHEDh
+ YMNuqnUE2XrzeRL3MMetPAgBdOlkiSgIug3BFdNVF6QvI2MbRf5+2om2rH1vr1dVc2cNkB+Ij
+ 3ZSu6FXI7BOiy43+czca/ds/y0D5VVMPwOKREHL06PcWLGjWkBoSMApUW0ietotyMCTqfSSbe
+ jGuCKyJNQIWUCpPpDvdsb08I95owTRTBYcAqleigPSWc7b/yXLIIwfXuyHAaToA8foLlG7WNr
+ Mm4e02f+KX0voxpy7yFCCeWASq5MLsPRoXuhUAj5im1Dy5ESoRy4YFjU/pjSp5On/eSv9HCCh
+ 5LjDnYEQkDcHr5CGVvkTSClDHUxaXQWJ1lCfeEaUukY8fCjNMdVdcBuSxNhJno7e82+4qqxsU
+ GcrcVFubw99HOBejvf3uNcyEkn0QxHwHXsKha04FRegLQGJB7ne1xoG7kYegpfoiKSgCI1Idw
+ q++v9c+eMvW86eYlOT8j92pl6oGHTNEAVE+BdGnRv+kRdbOGPY39VD1bG0NqdU/643NCvNBAd
+ 9Jevigrdn+Tb12+PrJNWh5kuqYQpBWS/Xf0me+sQ0cxb78UbXT+boxp6kne7wdOuVtDMCdu0y
+ E3Aaly9rSojezW96e49h1g3lKUItCyxsPtittD9Wr4RuTEzGgRpGqUT9w==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,64 +74,58 @@ Hi Jeff,
 
 On Tue, 17 May 2022, Jeff Hostetler wrote:
 
-> On 5/12/22 11:05 AM, Johannes Schindelin wrote:
+> On 5/12/22 11:08 AM, Johannes Schindelin wrote:
 > >
 > > On Fri, 22 Apr 2022, Jeff Hostetler via GitGitGadget wrote:
 > >
 > > > From: Jeff Hostetler <jeffhost@microsoft.com>
 > > >
-> > > Create another thread to watch over the daemon process and
-> > > automatically shut it down if necessary.
+> > > Teach Git to perform binary search over the cache-entries for a dire=
+ctory
+> > > notification and then linearly scan forward to find the immediate
+> > > children.
 > > >
 > [...]
 >
-> > > The platform-specific code for Windows sets up enough of the
-> > > WaitForMultipleObjects() machinery to watch for system and/or custom
-> > > events.  Currently, the set of wait handles only includes our custom
-> > > shutdown event (sent from our other theads).  Later commits in this
-> > > series will extend the set of wait handles to monitor other
-> > > conditions.
+> > >   static void fsmonitor_refresh_callback(struct index_state *istate,=
+ char
+> > >   *name)
+> > >   {
+> > >   	int i, len =3D strlen(name);
+> > > -	if (name[len - 1] =3D=3D '/') {
+> > > +	int pos =3D index_name_pos(istate, name, len);
+> > > +
+> > > +	trace_printf_key(&trace_fsmonitor,
+> > > +			 "fsmonitor_refresh_callback '%s' (pos %d)",
+> > > +			 name, pos);
+> > >
 > [...]
 >
-> > > diff --git a/compat/fsmonitor/fsm-health-win32.c
-> > > b/compat/fsmonitor/fsm-health-win32.c
-> > > new file mode 100644
-> > > index 00000000000..94b1d020f25
-> > > --- /dev/null
-> > > +++ b/compat/fsmonitor/fsm-health-win32.c
-> > > @@ -0,0 +1,72 @@
-> > > +#include "cache.h"
-> > > +#include "config.h"
-> > > +#include "fsmonitor.h"
-> > > +#include "fsm-health.h"
-> > > +#include "fsmonitor--daemon.h"
-> > > +
-> > > +struct fsm_health_data
-> > > +{
-> > > +	HANDLE hEventShutdown;
-> > > +
-> > > +	HANDLE hHandles[1]; /* the array does not own these handles */
-> > > +#define HEALTH_SHUTDOWN 0
+> > > +	if (name[len - 1] =3D=3D '/') {
+> [...]
+> > >    }
+>
+> > > @@ -215,7 +253,6 @@ static void fsmonitor_refresh_callback(struct
+> > > index_state *istate, char *name)
+> > >     * Mark the untracked cache dirty even if it wasn't found in the =
+index
+> > >     * as it could be a new untracked file.
+> > >     */
+> > > -	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s=
+'",
+> > > name);
 > >
-> > How about defining `HANDLE hHandles[HEALTH_SHUTDOWN + 1]` to indicate =
-that
-> > the constant is used as an offset into `hHandles`?
-> >
-> > > +	int nr_handles; /* number of active event handles */
+> > Did you mean to remove this statement in this patch? Not a big issue, =
+but
+> > I wonder what the rationale for it is, and since I have an inquisitive
+> > mind, I figured I'd just ask.
 >
-> I think I'd like to keep this one as is.  It matches the style that
-> I used in `fsm-listen-win32.c` where I have 3 listener handles.
->
-> Granted, it does look a little odd when there is only 1 handle in the
-> array.  But the idea was to allow new handles to be added as we want
-> to watch more things.
->
-> It might be clearer (in both of them) to define the array in
-> terms of an enum rather than a local list of #define's.
-> But I'm not sure it matters.
+> I just moved it to the top of the function.  That lets me see `name`
+> before it is modified in one of the else arms (it was helpful to see
+> whether the daemon sent a trailing slash or not).  And I also wanted
+> to see the computed value of `pos` (before the "-pos - 1" tricks).
 
-Your explanation makes sense to me, I have no objections against keeping
-the code as-is.
+Oh, I missed that it was moved rather than removed. Sorry for that!
 
-Thanks,
+Thank you,
 Dscho
