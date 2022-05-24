@@ -2,91 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE5D1C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 00:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94C68C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 00:23:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232382AbiEXAXW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 May 2022 20:23:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44184 "EHLO
+        id S230383AbiEXAX1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 May 2022 20:23:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232440AbiEXAXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232372AbiEXAXQ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 May 2022 20:23:16 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62CCE880E1
-        for <git@vger.kernel.org>; Mon, 23 May 2022 17:23:09 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id p10so4857834wrg.12
-        for <git@vger.kernel.org>; Mon, 23 May 2022 17:23:09 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E2558A314
+        for <git@vger.kernel.org>; Mon, 23 May 2022 17:23:10 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id r23so23524059wrr.2
+        for <git@vger.kernel.org>; Mon, 23 May 2022 17:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=6xMSmo6M30HSPzFcK3W7Y/bHJDNC9xksuq4h7tWXPws=;
-        b=jA+UvkUU+Qzm8GGp+AL2T6jsnx5KIg72FZq2cVTQMyEbjOdlbfpTnfhR55Z0veOd+B
-         bQEDXUjjvKFHV8jSsl5CInx9H4VAsyeycm+mxFqzf/XC3LCAVyAe0yZPJN43kMAdHsSm
-         k7JHGBgragO2NY73akqhXlPNfzQrgL6pH6siX3yg4yfCHPggTHWdd+pSEdOHsWvXmr+j
-         jUGJvcNYU6sz9Xk1/r05Rr/b4OT6/kNUUoPFExLK4MzrKiK4aiHmN++h0msbXwZztO7m
-         2HR2zLQ7g2jpNf1acsICUbgnuW7+3aRxTJY86EwCb5YsnFbbkpBicfs13RjlDGFKcZSp
-         j5nQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=aRwHZX8lhlkBqqYp0nk9o1igfA9fQ8ZPDtMgHEJ9wj8=;
+        b=giZKKQAUVWt1NWFUlwjtwGU80yRGqEi1+NFzYhv9n4LJuXGq82x/+dg8svQp5pApga
+         zA3cUOI31ZixA5D3sQKltmyRqz3jn0pQbAss8hddi8D4wUFzLMORm0SWahQE2RhrEz0U
+         X0CAfBjwZdzNVw++IEBhbGgdyo9jlP25scIGvN1EgLqa+8h9VX1ic/7qXDSaXPlyKQma
+         cFJcCpOWLSaOYSZW0fpngBMTBFusNUr/0DV4iEfe2eyty7gRBt7l5sKO1fqruCjyDTZ3
+         2UncFjAa9DYNfcCPEyFlvRvYvjW1dZE7gIkEewJBnRK0p1jrdzcCrpxwj2oq+rqTiXpL
+         L3Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6xMSmo6M30HSPzFcK3W7Y/bHJDNC9xksuq4h7tWXPws=;
-        b=Sbgs82Y3GjD+qRqjjNVwJqlkIuWdFHAkEiAGB5AZd5T45pg5RJeUak+e0WUr3yoEBW
-         Is89G7Q9NCEXKJmJ0d4Kc34btRguNWpqYQD4PU1oHQrLPELV9GjmpCyurVmhwqwVy8eK
-         FnpvHQkoPlTgsajjNW9/1641VXr0inI6+1F6wNzsHIuWTtIDgZ1zniRxZTo24u6pr4FC
-         Ev7XhZRWduo4loNDddRwT67NjevvMusJOwv2kzTxj6T/36RNtFEfxH3noP26sZi3REWK
-         w9bkmv7PydN9yfX3DU9QW0ayXaV0+RnPUcrhSumHMxTmBj/j3kQCznapuW79BpP8acRn
-         g8qQ==
-X-Gm-Message-State: AOAM531HNYXG88CVATydlT6EkkG15ZhshZ8w8HqyJWdhX+feINjyi0I4
-        eoUcTOzeiyTrd51uXz2ZMee6p3gzWQY=
-X-Google-Smtp-Source: ABdhPJw9TGa3roWFlRE+GU1mWOYm+5GlIj/ZtclSUuktItdFkIcdS0w+46El+G97L3jJXqJuEGXlcg==
-X-Received: by 2002:adf:9d83:0:b0:20d:129f:6544 with SMTP id p3-20020adf9d83000000b0020d129f6544mr20752810wre.568.1653351787582;
-        Mon, 23 May 2022 17:23:07 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=aRwHZX8lhlkBqqYp0nk9o1igfA9fQ8ZPDtMgHEJ9wj8=;
+        b=o8RCRcVWTYpDx09zaRXHJ87YYaW7ad2I7WQyv7L+0fFsA79HAln1OBxylv5bQBOnaV
+         TUP4k8hg1/5UKm4WV784tschVNimw89pWcJvBM8lULSiwN9ztL8ZEGHArZNd+IdFQWNs
+         wEfHqHMmXUeYF6g755lasNSeqLMR3ZUaOVr933yoqmhM9B0PoBXbJmZJKk8ajRH8KFOT
+         HOPUjoXbj7/sLO4Mmb5NCpwFxD9iIWzJe87pSMSP8Jb8+a6lhhz10zTTjI7iN3KGhu21
+         zIr8jZ2Y4bdWhiUR9kcD3aWA5fdCCdyJ7ccIsMtyn5b0juq1PIlQHDtfK+m3l+Hw9sl/
+         PrwQ==
+X-Gm-Message-State: AOAM532XgwwUlOZEevuEo9qH4UQ0t5BXtVSyDUz3QLQIKTa53H3xZL+9
+        XLO409nHwgXph5vZoS6Mq7bMo0IYSpY=
+X-Google-Smtp-Source: ABdhPJxkuLkMcVr/bqW/fFMwkPchVrxcY76tkx7rKohD/+81CK36TpBQ8+JAC4ZUbGITXS+tzy8X4A==
+X-Received: by 2002:adf:d1cf:0:b0:20f:d7f1:9b49 with SMTP id b15-20020adfd1cf000000b0020fd7f19b49mr7146451wrd.369.1653351788608;
+        Mon, 23 May 2022 17:23:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id be7-20020a05600c1e8700b003942a244ee6sm535974wmb.43.2022.05.23.17.23.07
+        by smtp.gmail.com with ESMTPSA id o30-20020a05600c511e00b00394351e35edsm600164wms.26.2022.05.23.17.23.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 17:23:07 -0700 (PDT)
-Message-Id: <pull.1238.git.1653351786.gitgitgadget@gmail.com>
+        Mon, 23 May 2022 17:23:08 -0700 (PDT)
+Message-Id: <d0ade6531bc77b654c28cf7b1bfa42523150c015.1653351786.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1238.git.1653351786.gitgitgadget@gmail.com>
+References: <pull.1238.git.1653351786.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 May 2022 00:23:02 +0000
-Subject: [PATCH 0/4] ci: fix windows-build with GCC v12.x
+Date:   Tue, 24 May 2022 00:23:03 +0000
+Subject: [PATCH 1/4] compat/win32/syslog: fix use-after-realloc
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A recent update of GCC in Git for Windows' SDK (a subset of which is used in
-Git's CI/PR builds) broke the build.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-These patches address that, and they are based on maint-2.34 (earlier
-maintenance tracks would have a trivial merge conflict due to 013c7e2b070
-(http: drop support for curl < 7.16.0, 2021-07-30) removing support for
-USE_CURL_MULTI).
+Git for Windows' SDK recently upgraded to GCC v12.x which points out
+that the `pos` variable might be used even after the corresponding
+memory was `realloc()`ed and therefore potentially no longer valid.
 
-Johannes Schindelin (4):
-  compat/win32/syslog: fix use-after-realloc
-  nedmalloc: avoid new compile error
-  http.c: avoid danging pointer to local variable `finished`
-  dir.c: avoid "exceeds maximum object size" error with GCC v12.x
+Since a subset of this SDK is used in Git's CI/PR builds, we need to fix
+this to continue to be able to benefit from the CI/PR runs.
 
- compat/nedmalloc/nedmalloc.c |  1 -
- compat/win32/syslog.c        |  2 ++
- dir.c                        |  9 +++++++++
- http-walker.c                |  4 ----
- http.c                       | 15 +++++++--------
- http.h                       |  2 +-
- 6 files changed, 19 insertions(+), 14 deletions(-)
+Note: This bug has been with us since 2a6b149c64f6 (mingw: avoid using
+strbuf in syslog, 2011-10-06), and while it looks tempting to replace
+the hand-rolled string manipulation with a `strbuf`-based one, that
+commit's message explains why we cannot do that: The `syslog()` function
+is called as part of the function in `daemon.c` which is set as the
+`die()` routine, and since `strbuf_grow()` can call that function if it
+runs out of memory, this would cause a nasty infinite loop that we do
+not want to re-introduce.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/win32/syslog.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-base-commit: 2f0dde7852b7866bb044926f73334ff3fc30654b
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1238%2Fdscho%2Ffix-win-build-with-gcc-12-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1238/dscho/fix-win-build-with-gcc-12-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1238
+diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
+index 161978d720a..1f8d8934cc9 100644
+--- a/compat/win32/syslog.c
++++ b/compat/win32/syslog.c
+@@ -43,6 +43,7 @@ void syslog(int priority, const char *fmt, ...)
+ 	va_end(ap);
+ 
+ 	while ((pos = strstr(str, "%1")) != NULL) {
++		size_t offset = pos - str;
+ 		char *oldstr = str;
+ 		str = realloc(str, st_add(++str_len, 1));
+ 		if (!str) {
+@@ -50,6 +51,7 @@ void syslog(int priority, const char *fmt, ...)
+ 			warning_errno("realloc failed");
+ 			return;
+ 		}
++		pos = str + offset;
+ 		memmove(pos + 2, pos + 1, strlen(pos));
+ 		pos[1] = ' ';
+ 	}
 -- 
 gitgitgadget
+
