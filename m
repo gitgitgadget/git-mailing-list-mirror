@@ -2,130 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAC5DC433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 11:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9701C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 12:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237048AbiEXLyA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 07:54:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
+        id S237100AbiEXMAV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 08:00:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237054AbiEXLx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 07:53:58 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B305E5D1A1
-        for <git@vger.kernel.org>; Tue, 24 May 2022 04:53:57 -0700 (PDT)
+        with ESMTP id S237099AbiEXMAT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 08:00:19 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4937D62CC0
+        for <git@vger.kernel.org>; Tue, 24 May 2022 05:00:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653393221;
-        bh=JpoWVEvckukLAaudBkrg2AknWME0XKwtKEa5ymJ7VPs=;
+        s=badeba3b8450; t=1653393602;
+        bh=VTqn2tLY9NzaP+d8BBMRwT41YxUvLm/hPunEG0NKHis=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SHj1Q0WoPaGN0EAKdn0ILor2LXlRl8W3K9SYxGbbI3SBj9rfMajjS12W12DMWmkY+
-         wfgHu7oljVS8MzaTSIdztNjMe17fpuOc7J+0Vq9j/HgkeSWBBGa4m7JSEuNHAAICj/
-         0rhqEbRP8T6ic1aBTneU+xwbfJeagNLX1/igvZLk=
+        b=bHZVKiBKvAaTmR+uUuBll/qQv9aT+8+7cAat+ae8EMObGG76hSq+/nXbaWLVeuUgC
+         bSPopRuaTmp+jZt3xdJ3No+Zs3yxvKhpfZoAs9W7Ffl4+pM9LK6XOh92AG/PR9orUx
+         8LhIAtnPXrc34OPk3a3a2FV4LiWBh25L0WygN3oI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEUzA-1o54lr0wYM-00G48s; Tue, 24
- May 2022 13:53:41 +0200
-Date:   Tue, 24 May 2022 13:53:38 +0200 (CEST)
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MqJm5-1nYDI10t7b-00nRlU; Tue, 24
+ May 2022 14:00:02 +0200
+Date:   Tue, 24 May 2022 14:00:00 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler <git@jeffhostetler.com>
-cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>, Torsten B??gershausen <tboegi@web.de>,
         rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 20/28] fsmonitor: optimize processing of directory
- events
-In-Reply-To: <c716b1d6-a0a8-6d03-dfe5-70613e4ed942@jeffhostetler.com>
-Message-ID: <nycvar.QRO.7.76.6.2205241353030.352@tvgsbejvaqbjf.bet>
-References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com> <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <48af0813deccab924d3591b4df025b17bf309260.1650662994.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2205121708400.352@tvgsbejvaqbjf.bet>
- <c716b1d6-a0a8-6d03-dfe5-70613e4ed942@jeffhostetler.com>
+Subject: Re: [PATCH v7 00/30] Builtin FSMonitor Part 3
+In-Reply-To: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2205241357410.352@tvgsbejvaqbjf.bet>
+References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:nlH5DdUP2F9xcLq7+tzAcIFOV34yDcDcugwLT+VUAzgChI5IGza
- Y+f52tbiSfWJF9iO/3tQv/iKlAnNLCzhcFKegz0+7bCPF61Qox8YPgP+j81w2oQGXq6X9iC
- ZqYHABIyeoCq12yCqmi2o/n7L2dNgTO/ab07LbcamHRaR8QNEOtc+cqpRUkKYYpNW9t3rRW
- OYidKwxymw9bQgZk4yW0Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:E0/qHnZ/xPQ=:ht4C55bUMXr8tQ0kSvrtn7
- vAFtyMG8jbt1AqJ+BOZt0l1hlUEu9dPSVLyJ1/9IfUjj94yw0vN1AoelhM1qX4AFcldXg8L+k
- zBTqMV1OX6mqDhrzOEHHq9dnHP+IymyKB0NpEfqTXbasHzumpW8vSBP2fg6/ybx9jUJU9fB71
- bKGdDT8KKhR+53Jak7g7eNgJAaGFxfUGqMHs4FMmA/QVZeDmmgpER5o7BKPpFtvGZILvOSkWL
- v3VBjJvb7k1wh1zMGSD6F+ZFrWhiBxZ8JF5Zq1GPhp92t/CMFkrYt7hyGplumi8FJoV5yCqXE
- fC6r1TchYlZs2VgtEcINES5qh9M0RHbtXd89YEjqps2u7x+ec1wYYMjeu8RtT4n5LARuAZArW
- yezuYzX9RxmwPOIiGsciWImMQ+Sn6aXbviiviUFoVBIAR0H9h9Wh9wAtdcHYrktPFUzojt8Ti
- V7yX5ZggGlq0Mk9WR+mEYfGeT0q1qm9sTCQSqGm5WOWF41aRAkkons/LE/7XoldtV10DjHEDh
- YMNuqnUE2XrzeRL3MMetPAgBdOlkiSgIug3BFdNVF6QvI2MbRf5+2om2rH1vr1dVc2cNkB+Ij
- 3ZSu6FXI7BOiy43+czca/ds/y0D5VVMPwOKREHL06PcWLGjWkBoSMApUW0ietotyMCTqfSSbe
- jGuCKyJNQIWUCpPpDvdsb08I95owTRTBYcAqleigPSWc7b/yXLIIwfXuyHAaToA8foLlG7WNr
- Mm4e02f+KX0voxpy7yFCCeWASq5MLsPRoXuhUAj5im1Dy5ESoRy4YFjU/pjSp5On/eSv9HCCh
- 5LjDnYEQkDcHr5CGVvkTSClDHUxaXQWJ1lCfeEaUukY8fCjNMdVdcBuSxNhJno7e82+4qqxsU
- GcrcVFubw99HOBejvf3uNcyEkn0QxHwHXsKha04FRegLQGJB7ne1xoG7kYegpfoiKSgCI1Idw
- q++v9c+eMvW86eYlOT8j92pl6oGHTNEAVE+BdGnRv+kRdbOGPY39VD1bG0NqdU/643NCvNBAd
- 9Jevigrdn+Tb12+PrJNWh5kuqYQpBWS/Xf0me+sQ0cxb78UbXT+boxp6kne7wdOuVtDMCdu0y
- E3Aaly9rSojezW96e49h1g3lKUItCyxsPtittD9Wr4RuTEzGgRpGqUT9w==
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:WjHE03xfKZe55QIDagfGSojPLlazufzX0ajGIEwjqZTcC/3FkE7
+ e6vzYoW/wP5wRmQ/pJ0DKwzbdXfSuedgU2PGukWHzNrd3PToiGcutvbarsLeSukLwfIJe5i
+ HvDdxQaQCjZClEMDm8cuaLGo68UP2Lz/pUIrT8yP3NQdUk3vr57slRMxt30ZvIBmgKw2BYk
+ RKxI0bucy/seEnXDMcZxg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GfAhXBI6czg=:1+4kcoq+M9HK8TGeMhmWgW
+ dCX+AX4NYaXOKQXl4lpQyBFXiyhVateBvWHS3hQqjCwtEu4eI6X4KgMPMarjCfBPJZD5COu8p
+ BgQKYkOGxQ1SstxbZ47xfie+G254+Mw7q+YkpagyE18pblM795c+odb//PVkKd1moqJg9yAfp
+ sJEfLhrziOjXocf5bsr8qjq9kvpnVmAoCrg2NWrVlAhuOZ/hwiat3EiBHyvgHE1rUVXzzk503
+ U6kHVGL43V/WRg1k5Nl3Tt+d5Ks/IduaVACIRvASkXfrM8oWH4kd6EtNVsWoUkvllZ7rm7e+8
+ A/fTrEP8mUzbT2JUSGU/ctIRo4oiZ/RGWGkiZz4SOGfHIrQH6IQqUwzp0v9c8233VcYIKZ7ue
+ N7fjHqWm+GcwTl0MInqx8i+jZUstYgZ81/6BduimHYCNdPIwfhSlP2lVQl28p4b/l8Qc7Es9e
+ c74IDWZIfg31wYTXTGUjzSiMhhCcwS+BPMAiR9Rh//SLwC8s0kuVz+6IwonmgJwWXIxxU6YEf
+ 1uoq496sdf6DfZNHdnyySNf7DxyTUkR7nxbo5boGPS3687FzVMU/C045a4t3141hiGZlR8g/t
+ wSs5k0vKRH0KZda8ncsXFDcQp2/2TCD0PLJ9TDkW0ViVVzcP3S4SbYGRdw9pnPMxrK4cRGA4y
+ +oFu5tTUV57zRVeZ5fQx4m52J4bxfwiPelv2ortEhOqorZ862xVAqm0zkW+1Zli1td8qyc/tg
+ w0mej1+sq4nFd4p+fFoxlRf56WhVPVHmZBnYi517tUYjonhQhiNlc53W3k73MQPuZeEcsFNGG
+ qCChgynKhNZ9w4+hLeHA8ff7M9m43qHeT2i4O9HcfbK8lfolXAQPRgbglS9PYLkZtY4plGn9U
+ 7HmzLH8fVvCTz16sAxlphbIAJSbXwKKqxxkIGxyWKAfZKiD/PacIOEitBarjHKszRlGIKgPNM
+ NHU/kgPpQWZXLV9rRWpZ9sKRXe1Ppu6gdGPqbF9rajXGDWkNsw21Yf932dDH5+PSji2vweqU4
+ uQGRjIQv6eZD2hBNMNsjtDiXcFbwyogbCDEQnd0r7NMfZ0UQdIsVFAs979vw/8DpSVLxVe4Yq
+ piz8IKMGu0cRsFd4zFZMKYOg6ICj0aFMwXMlysNmq1JqW/RSfJ1ZeF5Rw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Hi Jeff,
 
-On Tue, 17 May 2022, Jeff Hostetler wrote:
+On Mon, 23 May 2022, Jeff Hostetler via GitGitGadget wrote:
 
-> On 5/12/22 11:08 AM, Johannes Schindelin wrote:
-> >
-> > On Fri, 22 Apr 2022, Jeff Hostetler via GitGitGadget wrote:
-> >
-> > > From: Jeff Hostetler <jeffhost@microsoft.com>
-> > >
-> > > Teach Git to perform binary search over the cache-entries for a dire=
-ctory
-> > > notification and then linearly scan forward to find the immediate
-> > > children.
-> > >
-> [...]
->
-> > >   static void fsmonitor_refresh_callback(struct index_state *istate,=
- char
-> > >   *name)
-> > >   {
-> > >   	int i, len =3D strlen(name);
-> > > -	if (name[len - 1] =3D=3D '/') {
-> > > +	int pos =3D index_name_pos(istate, name, len);
-> > > +
-> > > +	trace_printf_key(&trace_fsmonitor,
-> > > +			 "fsmonitor_refresh_callback '%s' (pos %d)",
-> > > +			 name, pos);
-> > >
-> [...]
->
-> > > +	if (name[len - 1] =3D=3D '/') {
-> [...]
-> > >    }
->
-> > > @@ -215,7 +253,6 @@ static void fsmonitor_refresh_callback(struct
-> > > index_state *istate, char *name)
-> > >     * Mark the untracked cache dirty even if it wasn't found in the =
-index
-> > >     * as it could be a new untracked file.
-> > >     */
-> > > -	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s=
-'",
-> > > name);
-> >
-> > Did you mean to remove this statement in this patch? Not a big issue, =
-but
-> > I wonder what the rationale for it is, and since I have an inquisitive
-> > mind, I figured I'd just ask.
->
-> I just moved it to the top of the function.  That lets me see `name`
-> before it is modified in one of the else arms (it was helpful to see
-> whether the daemon sent a trailing slash or not).  And I also wanted
-> to see the computed value of `pos` (before the "-pos - 1" tricks).
+>  1:  8b7c5f4e23 !  1:  26144c5865 fsm-listen-win32: handle shortnames
+>       [...]
+>     @@ compat/fsmonitor/fsm-listen-win32.c: static int normalize_path_in_utf8(FILE_NOTI
+>      +{
+>      +  wchar_t buf_in[MAX_PATH + 1];
+>      +  wchar_t buf_out[MAX_PATH + 1];
+>     -+  wchar_t *last_slash = NULL;
+>     -+  wchar_t *last_bslash = NULL;
+>      +  wchar_t *last;
+>     ++  wchar_t *p;
+>      +
+>      +  /* build L"<wt-root-path>/.git" */
+>     -+  wcscpy(buf_in, watch->wpath_longname);
+>     -+  wcscpy(buf_in + watch->wpath_longname_len, L".git");
+>     ++  swprintf(buf_in, ARRAY_SIZE(buf_in) - 1, L"%s.git",
+>     ++           watch->wpath_longname);
+>      +
+>     -+  if (!GetShortPathNameW(buf_in, buf_out, MAX_PATH))
+>     ++  if (!GetShortPathNameW(buf_in, buf_out, ARRAY_SIZE(buf_out)))
 
-Oh, I missed that it was moved rather than removed. Sorry for that!
+Nice touch using `ARRAY_SIZE()` here!
 
-Thank you,
+The changes look good to me, from my side this is good to go.
+
+Thank you so much!
 Dscho
