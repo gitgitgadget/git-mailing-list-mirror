@@ -2,134 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6958C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0648C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240712AbiEXUo4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 16:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42276 "EHLO
+        id S241680AbiEXUrF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 16:47:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238638AbiEXUoy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 16:44:54 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD49719CE
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:44:53 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id j28so24498702eda.13
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=aeY3gv363qF4x2gL9wtaa50MbSlUco+Jcb6hMlhi+FM=;
-        b=PRPTKQM1FQdsDx9ZEIc+0IxlEcnsIpeN4LZ2cG55z+WZ87xW/8FUL8/Iy/UtoxK5Js
-         x11T2IllHOmRLs27BvoPpgAyuZHKdwwc2AcTaC4UzmrxyFNHb8P8O1j5vvtTqONwdD4z
-         HQHVAwFChMBy66F1Pf3iCDweF4PGsgNy8qcl0NhDelWDyO6K7UD1+fDolf5qYfOvzRYw
-         HVZwROhN+aGTtubpjXdkEN02GTOaT7a1LCucRT5kCUi3eIo6EjLs5sT3/uVmj93wf7nj
-         pzl3OScfqSfvdzAmCtIWx9nmAcPZ4oq/mpxHaZdaM+Mf2u9MgTEnMG73BOk+0Fj3cgoC
-         SZJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=aeY3gv363qF4x2gL9wtaa50MbSlUco+Jcb6hMlhi+FM=;
-        b=2mOe59lh39LaiV4K7yiAt3W96yfNJMbT2atszRK0mVGjVK0iUtzCgF79MV2uI4MJiB
-         dqbFVZ1/bzBH5ciYMCoBfLx3VdCDi51Xihr7Dzh857oi1D+h4gzqtIShMxli4L7zes69
-         5XtHnxVFxO0ntXgWJtJJTXFqPInqzjexlNj/aCO8/9P1tbYCGq3BAmcfvP/yev3iK9fg
-         bmSX6/5NsxVG3GgsoisVWgsVjgFkKtGPOMsu7x3GJK45cbNAnc9a2dDhtm23tfM+F8v5
-         JIQiDfqCF1b2uXpjP6kP+ag69OuKVR084OuDVU5dVFiofuFPTZ3F+chBEONcIu5o+Ndn
-         H51A==
-X-Gm-Message-State: AOAM532IAzCfjzfGclssEumzESY8qt4vUd6QVGIlshouU+xNHcHRgNSb
-        FPLmLvi5LZKoRFjZEGijqsiFN39YfyM=
-X-Google-Smtp-Source: ABdhPJwG3DGDFt6RuqfipTvF9xmPEmxW6pbYdE2w03fk5cmwvJs5yohpCbS2nzxJNkKXIONCr0HHbg==
-X-Received: by 2002:a05:6402:3593:b0:42b:550e:ddb with SMTP id y19-20020a056402359300b0042b550e0ddbmr16622517edc.403.1653425092199;
-        Tue, 24 May 2022 13:44:52 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id c21-20020aa7c995000000b0042aaacd4edasm9973821edt.26.2022.05.24.13.44.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 13:44:51 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ntbOc-003ZX2-Us;
-        Tue, 24 May 2022 22:44:50 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
- with it
-Date:   Tue, 24 May 2022 22:38:30 +0200
-References: <cover.1651859773.git.git@grubix.eu>
-        <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
-        <xmqqtua2jtr0.fsf@gitster.g> <xmqqczgqjr8y.fsf_-_@gitster.g>
-        <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
-        <xmqqr14jluu4.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet>
-        <xmqqa6b7lrw6.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet>
-        <xmqqleuqj1gy.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqleuqj1gy.fsf@gitster.g>
-Message-ID: <220524.86r14ivewt.gmgdl@evledraar.gmail.com>
+        with ESMTP id S238638AbiEXUrE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 16:47:04 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC297340F7
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:47:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1653425220;
+        bh=jlq6QlWqo9PIFb+4gnKBqE4li73mresq/NZDxwQHw+A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JnWGE737pm6yg12ec6frTTqMa5Gu2HhX1Y7DlAa+QmVu1+GW3PNji2zm8hoV67Hul
+         sI2KrGUCim7FEAayLgclZp1uE7DtCrBzH+f8rS4ErhCnxxCJ0bGcNQGkjRjcIYPHqF
+         /CghxAjtqdzX3L9rpggVHwRt1oEvQQ8LDvdRi08s=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mof9F-1nVKRh1xSD-00p5PD; Tue, 24
+ May 2022 22:47:00 +0200
+Date:   Tue, 24 May 2022 22:46:58 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/4] nedmalloc: avoid new compile error
+In-Reply-To: <972c3c82-0c10-ee95-9a7f-082de02a49c0@web.de>
+Message-ID: <nycvar.QRO.7.76.6.2205242239150.352@tvgsbejvaqbjf.bet>
+References: <pull.1238.git.1653351786.gitgitgadget@gmail.com> <8963c6fa625bbaf5153990939ea06742304ddcd2.1653351786.git.gitgitgadget@gmail.com> <220524.86bkvnxsm5.gmgdl@evledraar.gmail.com> <972c3c82-0c10-ee95-9a7f-082de02a49c0@web.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-99894040-1653425220=:352"
+X-Provags-ID: V03:K1:W1m+0+VIr5FR9b31NujbdLciSEMGI7C27P5YOW5sg5yk/iSR5QZ
+ 4T9gMuaVtyToH/ziu3wkrWwkjlGdC3ogm4ffTmfRs8+t3ST4qk0WkarlP0vY7LHbcZ/k6Ec
+ s2SwhHNS3EccwzLNgOkGZy1cOXlOV13AW7LIOHIEsifQ0ZfcGh4dJd30SaQkGUlM5briiNi
+ 980ONUjaY85UVxxG3ZPpw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GGcP/anjI18=:nU9FXwMABK9jJV2vvTvlM2
+ qQQ6Zj1I+FX/DZ9SSdcj6A7lvb+LmPMAQ5csN8mKAHLgphQJSF0wWSSXsdzhMVwtazTUKcFNo
+ UnS8DdY/fDIR/Sv/qvjQj101JOz2v+D/CWcJDY8WelM2o7QB5YyCkvsFV/U51vG+jDvQMdKgR
+ xVsjiroCMns8skP94b5GJ7HCsGIIfThXx5BoPb0nYAmtEAVX3ZVPt8R/yX4/fpFXx89//oeEg
+ 6TbYCJoitPLxEjf25QgBzZf6f1SdByUMYzShpKN/38pC8MPY+BT3YnCG5vyk4LZ6HPfjREWnn
+ B1TBjI3Dof6thD/cHxl2vDidg4VxbU3ioyUVmIpx9dsNIdl3+DJg0fZKROQzkDdZ4WuhpNZOx
+ FsENbHkpESETjDGh4C7RjnHQx0trUIy6oyQ5d0yh8YonsRdMYvlNu6m95j8xg8DWhJqUR3/kA
+ gSFi3Mo8Zcaf/SZQcu0kM0k9gR0VRU+KqlVKSsqW5Ixf5UQ5kVnGeA34X2hiGXKRy3MTjUB8j
+ TyVYKLFQ7ES8z3jzEbILXgFJ3zh4o79wjAcI7OfN3R2HkAcrRLDG26pJDE5FdfA7ZTBF5806g
+ ghmqN2btN8Bqt/kpqKXdZ3IMTMHYeLlJfyG1yS8dotkpmwF6wX2iAjWN9XpXPMGchwZXyQR1B
+ 2+jJ/sRqVMbuNOnDRsnvhrQ7jW9fLIwGkNNO4XDUQ+aPfyICPRlK+RdTVYmJO26QDo9vOvnUb
+ 0loZ6SmfKGvxZe7snGk+1gkCJNd4j0AQlV6XpZrNWQsw0kR5oPY6XoOw9dGGwDJt4pxSHB+wW
+ UY9tKtFvO063EwiUwbi5s8T9j8/y/iarNAofJr0itdpV5zEYBNUinEsrTQjZ7jezjwwgzKph1
+ aZqLqOZOsXA/Is9exyiQ9daMoXooEEfjNh5gSe2PQ/IwB58sqYGxUj4vGr0j+cFwicwC6ljo1
+ 6CYtiHsSYOLvMLGx2RrTf9lku2R1s4ip2CESGoMb6+WjRhKQ5jEmYOzk8vPzx/3mjBU9tKJHM
+ 4eWT0tQVbKBiu5+GHeWSslDeMFhxEG+VrQZK8FArmg9ubdneoczcXzcyyKeD216uSVbRu413Y
+ fGufKDXt9DGJdV6VJfeA+RRNX+Is25YqLct3RpYr1nsfZDG/qP1B8xKIw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, May 24 2022, Junio C Hamano wrote:
+--8323328-99894040-1653425220=:352
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> [...]
-> This incidentally is a good illustration why the thread-starter
-> patch that did
+Hi Ren=C3=A9,
+
+On Tue, 24 May 2022, Ren=C3=A9 Scharfe wrote:
+
+> Am 24.05.22 um 10:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> >
+> > This seems sensible, I thought "why not submit it to upstream",
+> > i.e. see:
+> > https://github.com/ned14/nedmalloc/blob/master/nedmalloc.c#L1298
+> >
+> > But that repository was last updated in 2014, I wonder if it's just
+> > because nobody's submitted a patch since then, or if it's inactive. Ha=
+ve
+> > you tried making Njall Douglas (the nedmalloc author) aware of this
+> > issue?
+> >
 >
-> 	if (&finished == slot->finished)
-> 		slot->finished = NULL;
->
-> would be sufficient, and the "clear only ours" guard is not
-> necessary, I think.  If the inner run_active_slot() did not trigger
-> a callback that adds more reuse of the slot, it will clear
-> slot->finished to NULL itself, with or without the guard.  And the
-> outer run_active_slot() may fail to clear if the guard is there, but
-> slot->finished is NULL in that case, so there is no point in clearing
-> it again.
->
-> And if the inner run_active_slot() did trigger a callback that ended
-> up reusing the slot, then eventually the innermost one would have
-> cleared slot->finished to NULL, with or without the guard, before it
-> returned the control to inner run_active_slot().  The inference goes
-> the same way to show that the guard is not necessary but is not
-> hurting.
->
-> I _think_ we can even get away by not doing anything to
-> slot->finished at the end of run_active_slot(), as we are not
-> multi-threaded and the callee only returns to the caller, but if it
-> helps pleasing the warning compiler, I'd prefer the simplest
-> workaround, perhaps with an unconditional clearing there?
+> https://github.com/ned14/nedmalloc says at the top: "This repository has
+> been archived by the owner. It is now read-only.".
 
-I'll admit I haven't fully looked into this again, but does anything in
-the subsequent analysis suggest that my original patch wouldn't be a
-working solution to this, still:
-https://lore.kernel.org/git/patch-1.1-1cec367e805-20220126T212921Z-avarab@gmail.com/ ?
+Indeed, maintenance of nedmalloc has stopped a few years ago (see e.g.
+https://github.com/ned14/nedmalloc/issues/20#issuecomment-343432314).
 
-The advantage of it over any small and narrow fix like your hunk quoted
-above is that it doesn't make the end result look as though we care
-about e.g. thread races, which evidently is something more than one
-person looking at this has (needlessly) ended up worrying about.
+About five years ago I tried to upgrade us to the latest nedmalloc version
+but ran into a performance regression that I was unable to justify the
+time to investigate further.
 
-> What did I miss?  I must be missing something, as I can explain how
-> the current "(*slot->finished) = 1" with "while (finished)"
-> correctly works, but I cannot quite explain why the original "while
-> (slot->in_use)" would not, which is annoying.
+Ciao,
+Dscho
 
-Perhaps that change was also worried about thread safety? I only briefly
-re-looked at this again, but I don't think I ever found exactly what
-that 2006-era fix was meant to fix, specifically.
-
-> In other words, why we needed baa7b67d (HTTP slot reuse fixes,
-> 2006-03-10) in the first place?  It is possible that we had some
-> code paths that forgot to drop in_use before the inner run_active
-> returned that have been fixed in the 16 years and this fix was
-> hiding that bug, but I dunno.
-
-I haven't found that out either, either back in January or just now.
+--8323328-99894040-1653425220=:352--
