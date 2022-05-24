@@ -2,125 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 833ABC433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C468DC433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 20:43:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241551AbiEXUkV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 16:40:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60678 "EHLO
+        id S231136AbiEXUnZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 16:43:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbiEXUkT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 16:40:19 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16DA46C575
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:40:19 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id p12-20020a9d4e0c000000b00606b40860a3so13040182otf.11
-        for <git@vger.kernel.org>; Tue, 24 May 2022 13:40:19 -0700 (PDT)
+        with ESMTP id S229962AbiEXUnY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 16:43:24 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B4A4712E6
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:43:23 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id p19so2839577wmg.2
+        for <git@vger.kernel.org>; Tue, 24 May 2022 13:43:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=MUGb7LOYbq6wNsz3eC6qPMXI9J8UvjjNHbqyJaGdRUw=;
-        b=LQyFL2/g/Wj9+7GzP+OLDbiI7ohm9H1Qn0bmPuS8FERTAbv+zujaSMcgoJl3gHdMQA
-         BlZW7TvZEZBXKkyAgxIHncDs3GeBS8eXUxNmWrPt3RxUDQhw7aVSUAd76Wkx3nRIRiGw
-         +LGeqms4Nao58ESqFfYbdPqqq+u4xG/4ymfUA1V9PRLRBZYGpW9y9GtGIUjsMFFbnk1s
-         8cXN+qQbGCUNkFdtcnieIi1IfiOjSGiDRNZnk/MZZCqNucPl3k6xHRMKULUS9F7exPeZ
-         m4hcCzaxDodhXVdrCIIm++RfqB9mYuv5AapNYJlGUZ7eoWYTIer4jmvA2m5WOFX8ozYG
-         5MfQ==
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=AvjMCpxQsEa13sCuc0GJMJHyHjexwDXsJFXB7PzuI2w=;
+        b=e0e+3tiYyq2FT8kFdmfiJMVGZaMm5Ty4H5Cu+LvsILt7mooaW5HrkHSPTkceMRfyXm
+         5x9A1EYe5zu7yVArXMhfq9NlkGyKZUArk2Vq0w8wozenSgagHjMTn6r7ujoInl6Zfjhn
+         oB6fHhcz8neuBaiee3+0jMZtPcJ7IejqZch/GbMbHi/fAvsdj0SKFM897wmt4kmB2osd
+         vPXFudUIKVhiKmQBcB8Cf6jg/62BvUyuO4HAaMEkO52+TsG7xrC6/QCUgn29PZpw5YYA
+         VXMD1RDyMsixuV0FOtw8J9+xpXpcQJRM/NMsZu9ceJx/xbXUpvGDlmvYOB/ZQwSpcsdH
+         wllA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=MUGb7LOYbq6wNsz3eC6qPMXI9J8UvjjNHbqyJaGdRUw=;
-        b=BEwo5KbG55md5NKTs04aUar4wa9hdI3HE4HHuFELbaGQUlV/hGtURfLst0zZfXhLMV
-         +ldVn0eCYdHIRnEU6PgXB62D318sA4tPU24VZtfzJOLFCDQWi2wFRqEHttgzEMYDxp2u
-         RwJcWeM2lpi/VejriX92i4QRYYC3iqOYAQJFtRIUPyxvGIIb9yUsuKiWN4/1i93wR3+q
-         BhPP9k+yvHAJHm3PBlkDqeJQ2nM2cKOKYuctbDs9bFDdDecU2ATCzpgZkryi0emwoPQe
-         1TNhgV802UnTsFbGES0L6KK5L9/YhPi/joqGAwpiLylgliIrKyOBecyGtwf33jtkqwio
-         o/Mg==
-X-Gm-Message-State: AOAM531k7jFxRQrBqAO6uWCD15i08A30sjgDLJmA4yKulkqIywnytJ4f
-        DtA6bkf1P3dN6HhFIwUnFCrG
-X-Google-Smtp-Source: ABdhPJyyN9fwbelfyFuMZ3DCwIgI8oTppFW5n3yYL1Qg9Fq0cMNmKG/7aUaxKpv8T/8Z3zm94fUZUw==
-X-Received: by 2002:a05:6830:54d:b0:606:a7d6:f809 with SMTP id l13-20020a056830054d00b00606a7d6f809mr11569297otb.139.1653424818388;
-        Tue, 24 May 2022 13:40:18 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e? ([2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e])
-        by smtp.gmail.com with ESMTPSA id l6-20020a056871068600b000e686d1389esm5515738oao.56.2022.05.24.13.40.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 May 2022 13:40:18 -0700 (PDT)
-Message-ID: <e311a560-0606-e5f7-0c41-a6b0f42062cf@github.com>
-Date:   Tue, 24 May 2022 16:40:17 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v4] setup: don't die if realpath(3) fails on getcwd(3)
-Content-Language: en-US
-To:     Kevin Locke <kevin@kevinlocke.name>, git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
- <8b20840014d214023c50ee62439147f798e6f9cc.1653419993.git.kevin@kevinlocke.name>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <8b20840014d214023c50ee62439147f798e6f9cc.1653419993.git.kevin@kevinlocke.name>
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=AvjMCpxQsEa13sCuc0GJMJHyHjexwDXsJFXB7PzuI2w=;
+        b=MpNQowJiIOVGL2h0y+JQmTkO7rvidSsQNJiDo8vXDLWXbsA+7dSC9s3MGX5GlMZp5m
+         RMYvCOUW/zad8bkZBOVRCOnzYBTEOFhBdFNBxdAChoPqUNsz+g68k3bMg8J1yWSHjwyF
+         Z3dd/TTMyl5tlYRoQxFqvGLrpeVayihSxcS2RLo5Duq9u4OoTOVQIx2efFh1xRy0Oezb
+         8rtdvADVknN+mV75Qi9wyRHhkeKc4ezhzZEwvfE0qRiyBIa5zRR2gAcr5/gK8NuL9Quk
+         C0AlNz6HNrjvnaZF/G5Wy6mST5Ja52dK0VD6u7HbBuS4IGCy6DydkBHUbsb5Wc4bEtQS
+         nZGA==
+X-Gm-Message-State: AOAM532ch2LFRQIMck6t9IVG6u6ewZ8TLxxpFiTiKYdZOa9bkkTHdbEq
+        pGHbNLjej2IccdUbrNc8NCJZ39DY988=
+X-Google-Smtp-Source: ABdhPJx5dJnoJkBYAg01VRztAGM/Z/hVgGxjZl5CdyXKDr/P0DbEOzCRQcZdH2JDYh6lLHHwVQ0TdA==
+X-Received: by 2002:a05:600c:1e8e:b0:397:4770:11f5 with SMTP id be14-20020a05600c1e8e00b00397477011f5mr5309015wmb.50.1653425001133;
+        Tue, 24 May 2022 13:43:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j37-20020a05600c1c2500b0039746638d6esm213772wms.33.2022.05.24.13.43.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 May 2022 13:43:20 -0700 (PDT)
+Message-Id: <pull.1241.git.1653424998869.gitgitgadget@gmail.com>
+From:   "Shao-Ce SUN via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 24 May 2022 20:43:18 +0000
+Subject: [PATCH] Fix wrong info in `INSTALL`
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Shao-Ce SUN <sunshaoce@iscas.ac.cn>,
+        Shao-Ce SUN <sunshaoce@iscas.ac.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/24/2022 3:20 PM, Kevin Locke wrote:
-> Changes since v3:
->  * Free tmp_original_cwd in both codepaths.
->  * Return after strbuf_realpath() fails, rather than jumping to
->    no_prevention_needed, to avoid unnecessary free(NULL) and NULL
->    reassignment.
->  * Invert the condition and remove the else block to match the
->    return-on-error code style for better readability.
->  * Stop adding "Try" to comment, since strbuf_realpath() hasn't
->    been optional since v1.
+From: Shao-Ce SUN <sunshaoce@iscas.ac.cn>
 
-...
+The user prompt should be `$` instead of `#`.
 
->  	/* Normalize the directory */
-> -	strbuf_realpath(&tmp, tmp_original_cwd, 1);
-> +	if (!strbuf_realpath(&tmp, tmp_original_cwd, 0)) {
-> +		trace2_data_string("setup", the_repository,
-> +				   "realpath-path", tmp_original_cwd);
-> +		trace2_data_string("setup", the_repository,
-> +				   "realpath-failure", strerror(errno));
-> +		free((char*)tmp_original_cwd);
-> +		tmp_original_cwd = NULL;
-> +		return;
-> +	}
+Signed-off-by: Shao-Ce SUN <sunshaoce@iscas.ac.cn>
+---
+    Fix wrong info in INSTALL
+    
+    The user prompt should be $ instead of #.
 
-This is much easier to reason about.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1241%2Fsunshaoce%2Finstall-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1241/sunshaoce/install-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1241
 
->  	free((char*)tmp_original_cwd);
->  	tmp_original_cwd = NULL;
->  	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
-I had considered trying to remove this duplicate code freeing
-temp_original_cwd. It requires adding a variable storing the
-return from strbuf_realpath() _or_ knowing that tmp will have
-zero length if strbuf_realpath() fails. It would look gross,
-though:
+ INSTALL | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-	strbuf_realpath(&tmp, tmp_original_cwd, 0);
+diff --git a/INSTALL b/INSTALL
+index 4140a3f5c8b..7bb3f48311d 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -5,8 +5,8 @@ Normally you can just do "make" followed by "make install", and that
+ will install the git programs in your own ~/bin/ directory.  If you want
+ to do a global install, you can do
+ 
+-	$ make prefix=/usr all doc info ;# as yourself
+-	# make prefix=/usr install install-doc install-html install-info ;# as root
++	$ make prefix=/usr all doc info ; $ as yourself
++	# make prefix=/usr install install-doc install-html install-info ; # as root
+ 
+ (or prefix=/usr/local, of course).  Just like any program suite
+ that uses $prefix, the built results have some paths encoded,
+@@ -20,10 +20,10 @@ config.mak file.
+ Alternatively you can use autoconf generated ./configure script to
+ set up install paths (via config.mak.autogen), so you can write instead
+ 
+-	$ make configure ;# as yourself
+-	$ ./configure --prefix=/usr ;# as yourself
+-	$ make all doc ;# as yourself
+-	# make install install-doc install-html;# as root
++	$ make configure ; $ as yourself
++	$ ./configure --prefix=/usr ; $ as yourself
++	$ make all doc ; $ as yourself
++	# make install install-doc install-html; # as root
+ 
+ If you're willing to trade off (much) longer build time for a later
+ faster git you can also do a profile feedback build with
 
-	if (!tmp->len) {
-		trace2_data_string("setup", the_repository,
-				   "realpath-path", tmp_original_cwd);
-		trace2_data_string("setup", the_repository,
-				   "realpath-failure", strerror(errno));
-	}
-	free((char*)tmp_original_cwd);
-	tmp_original_cwd = NULL;
-	if (!tmp->len)
-		return;
-
-	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
-
-...and that doesn't look very good at all. Thus, I think your v4
-is ready to merge. Thanks for working on it!
-
-Thanks,
--Stolee
+base-commit: 7a3eb286977746bc09a5de7682df0e5a7085e17c
+-- 
+gitgitgadget
