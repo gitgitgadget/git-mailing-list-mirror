@@ -2,124 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC20C433F5
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 17:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67635C433EF
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 17:41:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238644AbiEXRig (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 13:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57528 "EHLO
+        id S240072AbiEXRlU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 13:41:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231848AbiEXRie (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 13:38:34 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C812A1FCE5
-        for <git@vger.kernel.org>; Tue, 24 May 2022 10:38:33 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id s23so19025669iog.13
-        for <git@vger.kernel.org>; Tue, 24 May 2022 10:38:33 -0700 (PDT)
+        with ESMTP id S240061AbiEXRlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 13:41:16 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EAB8AE42
+        for <git@vger.kernel.org>; Tue, 24 May 2022 10:41:15 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id s23so19032859iog.13
+        for <git@vger.kernel.org>; Tue, 24 May 2022 10:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=mb1YTOGugU1Aa/WjC/9HH0hnMG3YlkHI/zbJRGMvSQY=;
-        b=VfvUsEQLg/GysWMrEKCv2xvITrjKLLRbMAiD8qNoMuEpngyhCN/Wd/8wRx9acBYpIr
-         IP3xVhmH52m/yVyNiDng6ccQnvL2oUCuzN7rmI15uUbTKH12pHUYLYEAqTMAlf26wt2r
-         pAPTvJT4zjRdsUxYLSe50tn4elIN6LgogmEN/J5+WairBTebbAteARDeuVimgOlPrkhm
-         YzZBShLqNVnG5VUYVSgR3Z2mgcAhzDcnR8KPW8ppR/DNH9D5yU55PHsZRGRl1r9ddVPu
-         ricjPVY592pEbhbCczyR9Vka6NIDIPykbFUlu168tsvjd4laLYxA3MpGEeE0lHTNbzAc
-         O1Xw==
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=kz0AT/EzElZu3m47qBL9aYvF3Nu55bpGo5kAd7InzGQ=;
+        b=Z4XAe6Nb+qZOYbVnTr1n9VIzJKSO5L4caN+6ADcVSOke175nAuEmpHfKEuS/6HgLUF
+         fW35w2x9xzUTDlXDHMrSLkhFTXXb4SncDe00j1VzWAnwUhAUb63znAWsd8Yxw7PGTqB4
+         zF1N9m4xCTOrwqm6L+2PkPNM6WwFTjTtgwnnyhiJg1ebWiQ59meJ3C6r5KwcDCBvuAGD
+         REnMKxCXrMM9INFaA+CsxhvuY3s7Sh0EwdCgzusDiBPw3IB45veiwrerai3wPgygEg1x
+         y1pvSu5W1skYGQTF/tOAXV+7qhLwRTOGYcEw72IcrrMi/zpNFJGpe0uxcUY1MsTQ+Mgq
+         txWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=mb1YTOGugU1Aa/WjC/9HH0hnMG3YlkHI/zbJRGMvSQY=;
-        b=LreWK4TQ7CcNgyKzjBPRUHaP18e8foPG2F7EIgf8bzlUUwKOfjPav0bIVujj6LEAYx
-         cr300FiytRwlhN4BgxScls8fZpZZsWAo32M4PVpDfNXzcrwvXyIfDRtuMaAM/vzx35ME
-         kQsTs882Y9aAM57NbHgS6mRr5fbFRU/0HBnurOl9spLFR9SOaiuCo8dZjTAC0n68D0v6
-         eU47tEzwCkK6Xl/EYebWBddAylTtmn3M9DG21wqrLaaN/B0EFe9CaVsAECQfwaVJDns6
-         GIt2Ux1Ru3labqRVh0L2HvvPuZtWYCAk0GTTvbC3HuuAEclJLhdTqFAA/RlfcohwGf9q
-         cHSQ==
-X-Gm-Message-State: AOAM532sYfUrNoMXks+B4CGBv/slxctC8663WMRP8nOKcenmTO1IaTEk
-        urGx12UayoxnTkZ2NQI9GAD/
-X-Google-Smtp-Source: ABdhPJxskxBuB7fJwM6KKVV+0UoexpQatVERJx0ba9uPZ9KbT/jvBhs0V2R79YhbuC4DqZcewv84Vg==
-X-Received: by 2002:a05:6602:881:b0:665:1ebf:51c4 with SMTP id f1-20020a056602088100b006651ebf51c4mr380101ioz.104.1653413913146;
-        Tue, 24 May 2022 10:38:33 -0700 (PDT)
+        bh=kz0AT/EzElZu3m47qBL9aYvF3Nu55bpGo5kAd7InzGQ=;
+        b=EzxBHWzm6Jj45TeOSr/zlg83LbZORalA+BU13YAWBp4xHUFQuUAbbKwwj8RYQsBgj+
+         j37tIPObDZa7IGgS5j+FNBmCCxqkfeOPKLXYzZAHAjenKZOeaXKx0BWsO42yXbbH1C4A
+         yFhfBJc8rwQ2bAyoPlG0HSx1DKrVr8A1iNCsxAF8uAU5OdfV7seZc1YRPWIMrNvbCVjM
+         RO+dTW3GZYgRAzlZ+al6p6EDBTIKrBjVOHOftU05D6wKw81kSGRm3onmQNdlkKENqRrP
+         pXgBJ8y953ExAXk8Nt9T+3bYQwvcqYJCsE9DjWt/q7nlvOarGc5x+xsdoXHhHOsS0LP9
+         Yl0g==
+X-Gm-Message-State: AOAM533E0pdWKK1dxRHfYbbwFzPpha+uX6OyEcKhZQkrb5BEaSGYP7JO
+        lbFCEkZGWzsJPqMp9S1uC4w+
+X-Google-Smtp-Source: ABdhPJxzdtACpMsoDb2emVoxYdOd35utsLDhuK4cixM8Vul4yfhiUMy61CjQcw6CIG4Y9B85vZLYtQ==
+X-Received: by 2002:a05:6602:3344:b0:660:d2cf:4aa4 with SMTP id c4-20020a056602334400b00660d2cf4aa4mr7314894ioz.190.1653414074778;
+        Tue, 24 May 2022 10:41:14 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e? ([2600:1700:e72:80a0:9dd7:2c4b:2dbd:828e])
-        by smtp.gmail.com with ESMTPSA id z28-20020a05663822bc00b0032e30453802sm3613741jas.47.2022.05.24.10.38.31
+        by smtp.gmail.com with ESMTPSA id r8-20020a924408000000b002d19bb6082fsm2250701ila.43.2022.05.24.10.41.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 May 2022 10:38:31 -0700 (PDT)
-Message-ID: <563606bd-551f-39b2-74f0-40547b7a0113@github.com>
-Date:   Tue, 24 May 2022 13:38:30 -0400
+        Tue, 24 May 2022 10:41:14 -0700 (PDT)
+Message-ID: <dafc8178-d213-ffd0-9e2a-32ac88307b39@github.com>
+Date:   Tue, 24 May 2022 13:41:12 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-Subject: Re: [PATCH v2] setup: don't die if realpath(3) fails on getcwd(3)
+Subject: Re: [PATCH v3] setup: don't die if realpath(3) fails on getcwd(3)
 Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Kevin Locke <kevin@kevinlocke.name>,
-        Git Mailing List <git@vger.kernel.org>,
+To:     Kevin Locke <kevin@kevinlocke.name>, git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-References: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
- <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
- <1580ad10-43f6-bc73-901a-b65b1aea73ff@github.com>
- <YozlZ9DPrRLPBTBP@kevinlocke.name>
- <CABPp-BGZTDKorz+CFScfTfx47c+TuJaAD_Zyyo1Jj_tymYkVXQ@mail.gmail.com>
+References: <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
+ <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BGZTDKorz+CFScfTfx47c+TuJaAD_Zyyo1Jj_tymYkVXQ@mail.gmail.com>
+In-Reply-To: <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/24/2022 11:20 AM, Elijah Newren wrote:
-> On Tue, May 24, 2022 at 7:02 AM Kevin Locke <kevin@kevinlocke.name> wrote:
->>
->> On Mon, 2022-05-23 at 14:57 -0400, Derrick Stolee wrote:
->>> On 5/21/22 9:53 AM, Kevin Locke wrote:
->>>> +           free((char*)tmp_original_cwd);
->>>
->>> Hm. I'm never a fan of this casting, but it existed before. It's
->>> because tmp_original_cwd is exposed globally in cache.h, which
->>> is _really widely_. However, there are only two uses: setup.c,
->>> which defines it, and common-main.c, which initializes it during
->>> process startup.
-...>> This approach seems reasonable to me, as does casting to free().  It's
->> not clear to me which is preferable in this case.  How to balance the
->> trade-offs between exposing const interfaces, limiting (internal)
->> interfaces to headers, and avoiding casts might be worth discussing
->> and documenting a matter of project coding style.  `grep -rF 'free(('`
->> lists about 100 casts to free, suggesting the discussion may be
->> worthwhile.  Introducing a free_const() macro could be another option
->> to consider.
-> 
-> I'd prefer either a free_const() as you suggest (though as a separate
-> patch from what you are submitting here), or leaving the code as-is.
-> free() could have been written to take a const void* instead of just
-> void*, since it's not going to modify what the pointer points at.  The
-> reason we call free() is because the variable isn't needed anymore,
-> and using a non-const value after freeing is just as wrong as using a
-> const one after freeing, so casting away the constness cannot really
-> cause any new problems.  So, I think the signature of free() is just
-> wrong: it should have taken a const void* all along.  Unfortunately,
-> the wrong type signature sadly makes people feel like they have to
-> choose between (a) dropping the added safety of const that the
-> compiler can enforce for you during the lifetime of the variable, or
-> (b) leaking memory you no longer need.  I think it's a bad choice and
-> you should just typecast when free'ing, but clearly others just don't
-> want to see any typecasts and are willing to dispense with const on
-> constant variables.
+On 5/24/2022 10:51 AM, Kevin Locke wrote:> -	/* Normalize the directory */
+> -	strbuf_realpath(&tmp, tmp_original_cwd, 1);
+> -	free((char*)tmp_original_cwd);
+> -	tmp_original_cwd = NULL;
+> -	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
+> +	/* Try to normalize the directory. */
+> +	if (strbuf_realpath(&tmp, tmp_original_cwd, 0)) {
+> +		free((char*)tmp_original_cwd);
+> +		tmp_original_cwd = NULL;
+> +		startup_info->original_cwd = strbuf_detach(&tmp, NULL);
+> +	} else {
+> +		trace2_data_string("setup", the_repository,
+> +				   "realpath-path", tmp_original_cwd);
+> +		trace2_data_string("setup", the_repository,
+> +				   "realpath-failure", strerror(errno));
+> +		tmp_original_cwd = NULL;
 
-I mostly agree with you: if free() didn't have the const, then the
-answer would be simple. We probably wouldn't also have the convention
-of "const pointers are for memory we don't own".
+I didn't catch this in v2, but should this line instead be
 
-Specifically with 'const char *' this can sometimes point to a
-compiled string literal, so I tend to be more careful than usual
-around these kinds of casts.
+		startup_info->original_cwd = NULL;
 
-I'm willing to concede this point as it is much messier than just
-the goals of this patch.
+? Especially based on this comment:
+
+> Changes since v1:
+>  * Set startup_info->original_cwd = NULL when strbuf_realpath() fails,
+>    rather than setting it to the un-normalized path.
 
 Thanks,
 -Stolee
