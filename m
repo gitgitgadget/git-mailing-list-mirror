@@ -2,81 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FF87C433EF
-	for <git@archiver.kernel.org>; Tue, 24 May 2022 17:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 907E2C433F5
+	for <git@archiver.kernel.org>; Tue, 24 May 2022 18:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240051AbiEXRpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 13:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38048 "EHLO
+        id S240113AbiEXSAt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 14:00:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240043AbiEXRpQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 13:45:16 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4ACE5B3E8
-        for <git@vger.kernel.org>; Tue, 24 May 2022 10:45:13 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 112C717FB8B;
-        Tue, 24 May 2022 13:45:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=57WKUgaJ3iTzGLKQ3ioUCmR8ZcWlas9RgrV5O4p0Rsk=; b=whp+
-        sGdDOtCyDa6ywNqi53/ilVLzfMIElZ6FZvZZ19tXPw4LNMlwrYqlfw9M9LkFKLQe
-        YmfxVkQ35YTC7OXQcflo1dusiDJ+gV8ejNsU1VgsQmVgU86xa2gSJzn7IYOBRUga
-        KDmYgQ659hYrsS/2txT2cTe4uKXGPXDhlnSX9bU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0A08017FB89;
-        Tue, 24 May 2022 13:45:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B745717FB88;
-        Tue, 24 May 2022 13:45:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Daniel Stenberg <daniel@haxx.se>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
- with it
-References: <cover.1651859773.git.git@grubix.eu>
-        <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
-        <xmqqtua2jtr0.fsf@gitster.g> <xmqqczgqjr8y.fsf_-_@gitster.g>
-        <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
-        <xmqqr14jluu4.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet>
-        <xmqqa6b7lrw6.fsf@gitster.g>
-        <q274s3nn-pp38-4sn-53ro-o2q63447r341@unkk.fr>
-Date:   Tue, 24 May 2022 10:45:08 -0700
-Message-ID: <xmqqa6b6j04b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S240111AbiEXSAr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 14:00:47 -0400
+Received: from vulcan.kevinlocke.name (vulcan.kevinlocke.name [IPv6:2001:19f0:5:727:1e84:17da:7c52:5ab4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB64B62A1D
+        for <git@vger.kernel.org>; Tue, 24 May 2022 11:00:46 -0700 (PDT)
+Received: from kevinolos.kevinlocke.name (2600-6c67-5000-3d1b-52a1-fd46-87d2-f3d9.res6.spectrum.com [IPv6:2600:6c67:5000:3d1b:52a1:fd46:87d2:f3d9])
+        (Authenticated sender: kevin@kevinlocke.name)
+        by vulcan.kevinlocke.name (Postfix) with ESMTPSA id E0EE32E78ABF;
+        Tue, 24 May 2022 18:00:44 +0000 (UTC)
+Received: by kevinolos.kevinlocke.name (Postfix, from userid 1000)
+        id 5CA9C130012B; Tue, 24 May 2022 12:00:43 -0600 (MDT)
+Date:   Tue, 24 May 2022 12:00:43 -0600
+From:   Kevin Locke <kevin@kevinlocke.name>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] setup: don't die if realpath(3) fails on getcwd(3)
+Message-ID: <Yo0dS550l2NCmx9O@kevinlocke.name>
+Mail-Followup-To: Kevin Locke <kevin@kevinlocke.name>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
+ <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
+ <dafc8178-d213-ffd0-9e2a-32ac88307b39@github.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4181CD62-DB89-11EC-A0C8-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dafc8178-d213-ffd0-9e2a-32ac88307b39@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Stenberg <daniel@haxx.se> writes:
+On Tue, 2022-05-24 at 13:41 -0400, Derrick Stolee wrote:
+> On 5/24/2022 10:51 AM, Kevin Locke wrote:> -	/* Normalize the directory */
+>> -	strbuf_realpath(&tmp, tmp_original_cwd, 1);
+>> -	free((char*)tmp_original_cwd);
+>> -	tmp_original_cwd = NULL;
+>> -	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
+>> +	/* Try to normalize the directory. */
+>> +	if (strbuf_realpath(&tmp, tmp_original_cwd, 0)) {
+>> +		free((char*)tmp_original_cwd);
+>> +		tmp_original_cwd = NULL;
+>> +		startup_info->original_cwd = strbuf_detach(&tmp, NULL);
+>> +	} else {
+>> +		trace2_data_string("setup", the_repository,
+>> +				   "realpath-path", tmp_original_cwd);
+>> +		trace2_data_string("setup", the_repository,
+>> +				   "realpath-failure", strerror(errno));
+>> +		tmp_original_cwd = NULL;
+> 
+> I didn't catch this in v2, but should this line instead be
+> 
+> 		startup_info->original_cwd = NULL;
+> 
+> ? Especially based on this comment:
 
-> On Mon, 23 May 2022, Junio C Hamano wrote:
->
->>> It calls into cURL, which I suspect has a multi-threaded mode of
->>> operation,
->>
->> https://curl.se/libcurl/c/threadsafe.html ;-)
->>
->> My understanding is that what we have is pretty much select() driven
->> single-threaded multi-fd transfer.
->
-> Confirmed. libcurl *can* use threads (if built that way), but the only
-> use it has for such subthreads is for resolving host names. libcurl,
-> its API and its callbacks etc always operate in the same single
-> thread.
+No worries.  It's a good question.  Setting startup_info->original_cwd
+to NULL is handled by the no_prevention_needed label.  But I just
+realized it's not actually required in this case, since original_cwd
+is NULL when setup_original_cwd() is called.  I should probably return
+rather than jumping to no_prevention_needed from the else block to
+avoid the unnecessary free(NULL) and assignment.
 
-Thanks.  
+Your comment made me realize that v2 and later neglect to free
+tmp_original_cwd when strbuf_realpath() fails.  How embarrassing.
 
-It always is nice to have the authority/expert readily answering our
-stupid questions ;-)
+I'll send an update to fix both those issues shortly.
 
+Thanks again,
+Kevin
