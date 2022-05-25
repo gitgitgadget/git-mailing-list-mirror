@@ -2,181 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C59DEC433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 21:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6050EC433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 21:13:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238747AbiEYVLX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 17:11:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55110 "EHLO
+        id S1345124AbiEYVNj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 17:13:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229831AbiEYVLX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 17:11:23 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C1B935AA3
-        for <git@vger.kernel.org>; Wed, 25 May 2022 14:11:15 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EE74D18ABEF;
-        Wed, 25 May 2022 17:11:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9e0YFYH+LP+CcQygJy+P7LSmOv/xLkz+mAN9qS
-        Q01Cw=; b=iGLi+XA36bGkVmmPg+moOebKdj6ECfN9jjZ2ijmocFDy87tRfmoohA
-        9FlIBhjrKEV8PcW9MnuvQIZbKN5RNGNzjeBlr7Ri94ZHla1J9tqz7DfaJGr1Pmmh
-        P8WOEalQ9rb+kvBu/ItvL8RJisEBW7JFSNhtgGMqwF40CXaky+D7w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E6EDC18ABEC;
-        Wed, 25 May 2022 17:11:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9A13C18ABEB;
-        Wed, 25 May 2022 17:11:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v6 1/7] archive: optionally add "virtual" files
-References: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
-        <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
-        <0005cfae31d52a157d4df5ba3db9f9f5b2167ddc.1653145696.git.gitgitgadget@gmail.com>
-Date:   Wed, 25 May 2022 14:11:10 -0700
-In-Reply-To: <0005cfae31d52a157d4df5ba3db9f9f5b2167ddc.1653145696.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Sat, 21 May 2022
-        15:08:10 +0000")
-Message-ID: <xmqqfskx5ndd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232167AbiEYVNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 17:13:37 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE6F668FBF
+        for <git@vger.kernel.org>; Wed, 25 May 2022 14:13:34 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id d21so909810qtj.5
+        for <git@vger.kernel.org>; Wed, 25 May 2022 14:13:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Qvu6q1mEjraehGVQ6g6tYlKDmTn0tySdA0uiE7nYCzg=;
+        b=IQZIBxYSBy+AxsEoB0UEyzEc3x5omLvNScgLSZ59Zt6hnLTW6VSSDqO1ZHY+DPQS80
+         a8LOVss2Cf5RheegBgaJ85sxx767DW/rDNrEdwEdzxKNy+LwJkrfZPH/4hgaoi+eIsYJ
+         mPnN1ERRIETZekZsjgzH2jx9QMa43rUtxsGymAzdPmE029MnutMthoPtBedwoeyWEzvA
+         /GEnI+mLozCsPp4q2ssHFN5Jzz+Dwj0Jap+q/QmrRsb+ilFBbEXsmLVPuDAJwzrQiM3Q
+         +sCV4PlmwI04gmFBweKK42TxKnHlAWb66Ilv9essIl8Vog5heujDYwNEp4zEUO8G2eco
+         z0dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Qvu6q1mEjraehGVQ6g6tYlKDmTn0tySdA0uiE7nYCzg=;
+        b=1S12BUNgg117Z5svnA1XTzAoKj+Fc4Z6NfmlK/IpwbQtVmg/EidVTsXcrGc1V8aejc
+         TNfzpS2lfkXeLZzfXgHwIPNPOeAf3Uuua5d0+A5xsWizoVuS88p1VGgPrWmJ9B7U5zOU
+         oHC8omkZwUUVIiM22bO9ZiI5X1DzS/9b04oqctlw1uv2Zfs2VB8askY8BqeET09UVYwE
+         vHk+STmptgZslIuXVkdSduzmTrcbpoElBHxgl9xT0ZzdLDRRk1qvKPFWeCJWZ42664LL
+         QYyvvAKUndqwhY1K/98J5+NAa7CGddJmRySbnezwDloYgQMaSYGKuv41VboipOmPbo7F
+         xFdw==
+X-Gm-Message-State: AOAM532fFCw+5mxI0CbiLU0RbqoaVnMWrFB4pU0mcGZuRWaROShQbV6i
+        ceOinbI19WcXkOa2I7BA5sMsb6+OIZFpwQ==
+X-Google-Smtp-Source: ABdhPJwIWLfHThj4Vu+6VYbNxlheQrbyRZvv4SOdAJiGuFhMymzIbVlMg5INDtImCbFANmFyj7UmJg==
+X-Received: by 2002:ac8:7f0a:0:b0:2f3:ec89:ee23 with SMTP id f10-20020ac87f0a000000b002f3ec89ee23mr26458312qtk.448.1653513214007;
+        Wed, 25 May 2022 14:13:34 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id b17-20020ae9eb11000000b006a34a22bc60sm29496qkg.9.2022.05.25.14.13.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 May 2022 14:13:33 -0700 (PDT)
+Date:   Wed, 25 May 2022 17:13:31 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        rsbecker@nexbridge.com, 'Jonathan Nieder' <jrnieder@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
+        tytso@mit.edu
+Subject: Re: adding new 32-bit on-disk (unsigned) timestamp formats (was:
+ [PATCH v5 02/17] pack-mtimes: support reading .mtimes files)
+Message-ID: <Yo6b+8sixGAqMm/x@nand.local>
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <cover.1653088640.git.me@ttaylorr.com>
+ <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
+ <Yo0ysWZKFJoiCSqv@google.com>
+ <015d01d86fa6$a10519f0$e30f4dd0$@nexbridge.com>
+ <Yo1bUbys+Fz7g+6h@nand.local>
+ <016e01d86fc5$64ecf180$2ec6d480$@nexbridge.com>
+ <Yo1zW7ntTuNakpOD@nand.local>
+ <220525.86o7zmt0l0.gmgdl@evledraar.gmail.com>
+ <32db3720-e9c8-e192-6278-c55855ce1d3e@github.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 342D0F5A-DC6F-11EC-9C74-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <32db3720-e9c8-e192-6278-c55855ce1d3e@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, May 25, 2022 at 09:30:55AM -0400, Derrick Stolee wrote:
+> On 5/25/2022 5:11 AM, Ævar Arnfjörð Bjarmason wrote:
+> > I must say that I really don't like this part of the format. Is it
+> > really necessary to optimize the storage space here in a way that leaves
+> > open questions about future time_t compatibility, and having to
+> > introduce the first use of unsigned 32 bit timestamps to git's codebase?
+>
+> The commit-graph file format uses unsigned 34-bit timestamps (packed
+> with 30-bit topological levels in the CDAT chunk), so this "not-64-bit
+> signed timestamps" thing is something we've done before.
+>
+> > Yes, this is its own self-contained format, so we don't *need* time_t
+> > here, but it's also really handy if we can eventually consistently use
+> > 64 time_t everywhere and not worry about any compatibility issues, or
+> > unsigned v.s. signed, or to create our own little ext4-like signed 32
+> > bit timestamp format.
+>
+> We can also use a new file format version when it is necessary. We
+> have a lot of time to add that detail without overly complicating the
+> format right now.
+>
+> > If we really are trying to micro-optimize storage space here I'm willing
+> > to bet that this is still a bad/premature optimization. There's much
+> > better ways to store this sort of data in a compact way if that's the
+> > concern. E.g. you'd store a 64 bit "base" timestamp in the header for
+> > the first entry, and have smaller (signed) "delta" timestamps storing
+> > offsets from that "base" timestamp.
+>
+> This is a good idea for a v2 format when that is necessary.
 
-> @@ -61,6 +61,17 @@ OPTIONS
->  	by concatenating the value for `--prefix` (if any) and the
->  	basename of <file>.
->  
-> +--add-virtual-file=<path>:<content>::
-> +	Add the specified contents to the archive.  Can be repeated to add
-> +	multiple files.  The path of the file in the archive is built
-> +	by concatenating the value for `--prefix` (if any) and the
-> +	basename of <file>.
+I agree here.
 
-This sentence was copy-pasted from --add-file without adjusting.
-There is no <file>; this new feature gives <path>.
+I'm not opposed to such a change (or even being the one to work on it!),
+but I would encourage us to pursue that change outside of this series,
+since it can easily be done on top.
 
-Also, I suspect that the feature is losing end-user supplied
-information without a good reason.  --add-file=<file> may have
-prepared an input in a randomly named temporary directory and it
-would make quite a lot of sense to strip the leading directory
-components from <file> and use only the basename part.  But the
-<path> given to "--add-virtual-file" does not refer to anything on
-the filesystem.  Its ONLY use is to be used as the path in the
-archive to store the content.  There is no justification why we
-would discard the leading path components from it.  I am not
-decided, but I am inclined to say that we should not honor
-"--prefix".
+Of course, if we ever did decide to implement 64-bit mtimes, we would
+have to maintain support for reading both the 32-bit and 64-bit values.
+But I think the code is well-equipped to do that, and it could be done
+on top without significant additional complexity.
 
-   $ git archive --prefix=2.36.0 v2.36.0
-
-would be a way to create a single directory and put everything in
-the tree-ish in there, but there probably are cases where the user
-of an "extra file" feature wants to add untracked cruft _in_ that
-directory, and there are other cases where an extra file wants to go
-to the top-level next to the 2.36.0 directory.  A user can use the
-same string as --prefix=<base> in front of <path> if the extra file
-should go next to the top-level of the tree-ish, or without such
-prefixing to place the extra file at the top-level.
-
-Hence
-
-	Add the specified contents to the archive.  Can be repeated
-	to add multiple files.  `<path>` is used as the path of the
-	file in the archive.
-	
-would be what I would expect in a version of this feature that is
-reasonably designed.
-
-> ++
-> +The `<path>` cannot contain any colon, the file mode is limited to
-> +a regular file, and the option may be subject to platform-dependent
-> +command-line limits. For non-trivial cases, write an untracked file
-> +and use `--add-file` instead.
-
-OK.
-
-> diff --git a/archive.c b/archive.c
-> index a3bbb091256..d20e16fa819 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -263,6 +263,7 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
->  struct extra_file_info {
->  	char *base;
->  	struct stat stat;
-> +	void *content;
->  };
->  
->  int write_archive_entries(struct archiver_args *args,
-> @@ -337,7 +338,13 @@ int write_archive_entries(struct archiver_args *args,
->  		strbuf_addstr(&path_in_archive, basename(path));
->  
->  		strbuf_reset(&content);
-> -		if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
-> +		if (info->content)
-
-We ended up with the problematic "leading <path> components are
-discarded" design only because the implementation reuses the logic
-path_in_archive computation (the last line is seen in precontext),
-which is a bit unfortunate.  I think we could rewrite the inside of
-that "for each extra file" loop like so, instead:
-
-	for (i = 0; i < args->extra_files.nr; i++) {
-		struct string_list_item *item = args->extra_files.items + i;
-		char *path = item->string;
-		struct extra_file_info *info = item->util;
-
-		put_be64(fake_oid.hash, i + 1);
-
-		if (!info->content) {
-			strbuf_reset(&path_in_archive);
-			if (info->base)
-				strbuf_addstr(&path_in_archive, info->base);
-			strbuf_addstr(&path_in_archive, basename(path));
-
-			strbuf_reset(&content);
-			if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
-				err = error_errno(_("could not read '%s'"), path);
-			else
-				err = write_entry(args, &fake_oid, path_in_archive.buf,
-						  path_in_archive.len,
-						  info->stat.st_mode,
-						  content.buf, content.len);
-		} else {
-			err = write_entry(args, &fake_oid,
-					  path, strlen(path),
-					  info->stat.st_mode,
-					  info->content, info->stat.st_size);
-		}
-
-		if (err)
-			break;
-	}
-
-The first half is the original code for "--add-file", which clears
-info->content to NULL.  We mangle the filename to come up with the
-name in the archive (i.e. take basename and prefix with info->base).
-
-The "else" side is the new code.  "--add-virtual-file" has the
-"<path>" thing in item->string, and info has the contents, so we
-just write it out.
+Thanks,
+Taylor
