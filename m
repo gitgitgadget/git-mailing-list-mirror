@@ -2,127 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53858C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 11:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A040C433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 11:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242695AbiEYL1Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 07:27:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47010 "EHLO
+        id S242954AbiEYLbh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 07:31:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242752AbiEYL1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 07:27:09 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 844379D06A
-        for <git@vger.kernel.org>; Wed, 25 May 2022 04:26:35 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id f2so29728298wrc.0
-        for <git@vger.kernel.org>; Wed, 25 May 2022 04:26:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=thZVf6MKYkaJJgdigsPgYcmUAKUx/udFInC3x63gneg=;
-        b=gBLDpvvoqXDcY6W17Zh3PJAYm1vfFpLFY/x1/lGfRJAJvnn8RzZtRMfmxD6J3/JA9K
-         sMvjDuXg/zRtrPncpi9bWxN0K+DbXH05Q68C5zrd3+Vi+APJi/w1emUfU/pmJYY5L1SM
-         WrCkHyZL+wYtCoyH3c0a1f7zKgfiy4IyaAYxyeNXhOP0oRmKM5GT10ckPlIXw5ydFqFA
-         4m0Qt0DSeUURLGkHKyAFIqf0ZmlmdyIj9KBuyz+9v/2E+5B0PF8TksskvCTxSPn3f+R6
-         ejAAAGxkdJ9DIxtko/NI5iPgiBANb7GuSqNvS2pAwsscWw16ZSNuugqS390gSe9U6Udi
-         AiIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=thZVf6MKYkaJJgdigsPgYcmUAKUx/udFInC3x63gneg=;
-        b=GYOvcfgAtB0UgDEFs41vdIVY4IuYw8Qgg9HI907PMjzh5+DMDglluXm9PY81goRRob
-         mEBMz+Dkh3dFzhWnO8XlOmLl+XaC+HZKvvh/kXcri2F/2b3bdPG63NPwgwABHN7Iln/x
-         D+KC7ISwhWqG2aqDVMLvJ3UPxvLJPewS6dshk3W5Qa2QTJJtuaXGXsgf35f71oSJrO4Y
-         dOWZ6qvqIVkkfUH6z6kanbgUZf14xHpO99Y1EbF6S4tcmATmMLH9I8KKMDz+x77I5kQu
-         fWsSRUmn0BZ04IFwLUJYDtU+M4FhLq3uEoyKZSO/VhcOgNerZ2Co1NzKEnw+nmarVkB5
-         ZYQg==
-X-Gm-Message-State: AOAM531leiFKmbVgXbUK9bzGEJApnLxyioNuuylIrsSxXww0N0G6o6O/
-        Qfo3ite6NXu75yXJ8hZDgwZIGu+8+iQCfQ==
-X-Google-Smtp-Source: ABdhPJyndS8VZAbJKorR9DSpWnTao0qzL6Ycz1uVV8MjTVfK/4q92Y61UyaNPB0JpdMFU7pfsJ35zw==
-X-Received: by 2002:a5d:620f:0:b0:20c:c1ba:cf8e with SMTP id y15-20020a5d620f000000b0020cc1bacf8emr26188881wru.426.1653477993756;
-        Wed, 25 May 2022 04:26:33 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z13-20020adfd0cd000000b0020d0dfcd10asm1851095wrh.65.2022.05.25.04.26.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 04:26:33 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        with ESMTP id S237620AbiEYLbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 07:31:33 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D5D77F34
+        for <git@vger.kernel.org>; Wed, 25 May 2022 04:31:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1653478262;
+        bh=JHbpluIsTVylPigkl4RxjexyZWt+eBoNM3drFmMPp3Q=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gklpIx4IzoNr0Z6jkKD+WtJ1+HedhIPBADILRpg9A0gY+EFZhAOMU9cnkYmlFN5Mx
+         /EiX9UY+vkfSQEjiCof8DQaz5ynuNXSb7rujcWkl4kTWGtY+VXrRBE5r10QXCaei4o
+         C0+f7dS/34CjsE6cjPsVEGMDX7ME5OjQZLi6aQJ4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWAOW-1oLxuu1Vrm-00Xav4; Wed, 25
+ May 2022 13:31:02 +0200
+Date:   Wed, 25 May 2022 13:30:58 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v6 14/14] CI: make the --github-workflow-markup "github" output the default
-Date:   Wed, 25 May 2022 13:26:03 +0200
-Message-Id: <patch-v6-14.14-0b02b186c87-20220525T100743Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.1.1045.gf356b5617dd
-In-Reply-To: <cover-v6-00.14-00000000000-20220525T100743Z-avarab@gmail.com>
-References: <RFC-cover-v5-00.10-00000000000-20220421T183001Z-avarab@gmail.com> <cover-v6-00.14-00000000000-20220525T100743Z-avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Anthony Sottile <asottile@umich.edu>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 0/8] hook API: connect hooks to the TTY again, fixes
+ a v2.36.0 regression
+In-Reply-To: <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2205251308381.352@tvgsbejvaqbjf.bet>
+References: <cover-0.6-00000000000-20220421T122108Z-avarab@gmail.com> <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-715222152-1653478262=:352"
+X-Provags-ID: V03:K1:bPNg3QAGZgbUaxipn4YcFiR/4JJw5kg3DorWbcTvGvJDHvVYQ3H
+ YVHJ0ZD3J63d2jFY2TVJU4vd1TrcE//Zrjrw4bR8lYJM2VVJxyl5Aqn8RR4yGRCBJNAZcWW
+ zkdfWnr4+q5qAvfTdzuzjKjDxriGnN3Qh+qdm6/F78DcoPcI9UW1xMZC2emrjTySzroi8bD
+ 71symnn3GzBV3t5w3F3uA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:aw7W+myHjSg=:Auvo2bjF4ZT5oL9iDDHFgC
+ y2aGLRsEeaJg2RoQiMAO+e+MmeokDI7C+r7ttMpIFB8pbEKMchD5jqLwxHNBmKvd+e922lEkT
+ vmI+0E79TO5j4wkjRWo6HwEYvoA2z7RCz1HqbVik6bJncYw3G2j/2Nnf6LIn1OPOAmA83awVR
+ r8uYqSQ2bX8XGFlb36sNCE+MZM8xE4I8W72//M6jLFpbNus4KwyPEXLfKCK+TfnEoAD4KuFVn
+ MuleIV6WHvLtxZEciJXNWEK1p5WZX1wE3meKFwHGQLyvy+L/TGygcIUm0IyaqrHujw99XIk+K
+ l5J/LvIYGDT70KZVBuawfwdyAxFEqVzK6rq7SM5fCcV14biGAR7u1g+7ydFdlD3UqIq8IP6LV
+ KNYcTnyYd10z9z3KrLVEK+6yq+qH+MC92UJ6yoK6M5DgQeJlNdVU+3ZNMAld1IQS52ZsWumAj
+ raLZf3VoM30fcnzxzZuU4mjGWtgKJIF/DbASBOr0fg0orKlXVZcC+dCM9n+Sjay8U6Jn2dPJy
+ Fmw7nJjg5BWBOSfJU7uxkFrJdanKvUTNw73ffU0Dc2mjSIAo0LbgAE6Oh6s2IFAnsoAu9gCTc
+ 0CgoZExtCiQ05qqSOYmTZOWxARp3jI5Zoj4uOdpgNWQKXTm7U5Gbg+N4j4hQ58+4b22ot8He8
+ h58qsX2D2p5ydhmQVgyNyhYonxKKZkO5Q2+m3djsqcRY0q53CxcUiIt7PI78Q9Y2cNGVHsWdx
+ cZTUrLmDQr3tpeT3Octuv7QS1X0E1Wby1nIcwCaqNi3XFANQkS6vdxEaW9/6x7dQ+qmN1NWru
+ 8In0ilg0D79DeU5gYyf6nRjHzi26GxFrDeGxtECNbFbqWwJTydP4fveqlELXFK1zjBaXOy8FL
+ EbAaZz0drPMeGmj+kuyEg0xomvMQ91QHN/HlKHTfRPsuW40rAfrXN5n4Uwb8fXv3yQjKs+rdE
+ XrrtF95xVwi41e9p51nJIl0eVdsBGbMmu4SO103RKw8VD90WBEejyklAbWPotSazaqJXSncDw
+ CTioVe/RuizFrsg1qnADGBAEx9zgHcrRCN4V3Toew3VYBSm/Xv/+e44k2MWipdXMY8VU5BMmk
+ BVuQfA7x8hnLIf92goyEXY0pCQjfpIqL2tylPZC0E6D+fYf/AZmkc/IGQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As noted in the preceding commit there's outstanding issues with this
-output target over the "raw" one, but let's flip the default so that
-the end-state of this series matches that of [1]. If we'd like we can
-now easily revert back.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-My ci/config/print-test-failures-output-type on my "ci-config" branch
-is currently the following script, which allows for naming branches
-with _CI_OUT_{GITHUB,RAW} suffixes to force a given output type:
+--8323328-715222152-1653478262=:352
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-	#!/bin/sh
+Hi =C3=86var,
 
-	set -ex
+as promised in the Git IRC Standup [*1*], a review.
 
-	ref=$1
-	shift
-	echo "ref: $ref" >&2
-	echo "arguments: $@" >&2
+On Wed, 18 May 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-	case "$ref" in
-	*_CI_OUT_GITHUB)
-		echo github
-		;;
-	*_CI_OUT_RAW)
-		echo raw
-		;;
-	esac
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (8):
+>   run-command tests: change if/if/... to if/else if/else
+>   run-command API: use "opts" struct for run_processes_parallel{,_tr2}()
+>   run-command tests: test stdout of run_command_parallel()
+>   run-command.c: add an initializer for "struct parallel_processes"
+>   run-command: add an "ungroup" option to run_process_parallel()
+>   hook tests: fix redirection logic error in 96e7225b310
+>   hook API: don't redundantly re-set "no_stdin" and "stdout_to_stderr"
+>   hook API: fix v2.36.0 regression: hooks should be connected to a TTY
 
-1. https://lore.kernel.org/git/pull.1117.v3.git.1653171536.gitgitgadget@gmail.com/
+I started reviewing the patches individually, but have some higher-level
+concerns that put my per-patch review on hold.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- .github/workflows/main.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Keeping in mind that the intention is to fix a regression that was
+introduced by way of refactoring (most of our recent regressions seem to
+share that trait [*2*]), I strongly advise against another round of
+refactoring [*3*], especially against tying it to fix a regression.
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 4195f37c1ba..39675cbdd60 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -26,7 +26,7 @@ jobs:
-       - id: print-test-failures-output-type
-         name: check what output type ci/print-test-failures.sh uses
-         run: |
--          type_default=raw
-+          type_default=github
-           type=$type_default
- 
-           if test -x config-repo/ci/config/print-test-failures-output-type
--- 
-2.36.1.1045.gf356b5617dd
+In this instance, it would be very easy to fix the bug without any
+refactoring. In a nutshell, the manifestation of the bug amplifies this
+part of the commit message of 96e7225b310 (hook: add 'run' subcommand,
+2021-12-22):
 
+    Some of the implementation here, such as a function being named
+    run_hooks_opt() when it's tasked with running one hook, to using the
+    run_processes_parallel_tr2() API to run with jobs=3D1 is somewhere
+    between a bit odd and and an overkill for the current features of this
+    "hook run" command and the hook.[ch] API.
+
+It is this switch to `run_processes_parallel()` that is the root cause of
+the regression.
+
+The current iteration of the patch series does not fix that.
+
+In the commit message from which I quoted, the plan is laid out to
+eventually run more than one hook. If that is still the plan, we will be
+presented with the unfortunate choice to either never running them in
+parallel, or alternatively reintroducing the regression where the hooks
+run detached from stdin/stdout/stderr.
+
+It is pretty clear that there is no actual choice, and the hooks will
+never be able to run in parallel. Therefore, the fix should move
+`run_hooks_opt()` away from calling `run_processes_parallel()`.
+
+In any case, regression fixes should not be mixed with refactorings unless
+the latter make the former easier, which is not the case here.
+
+Ciao,
+Johannes
+
+Footnote *1*:
+https://colabti.org/irclogger/irclogger_log/git-devel?date=3D2022-05-23#l4=
+4
+
+Footnote *2*: I say "seem" because it would take a proper retro to analyze
+what was the reason for the uptick in regressions, and even more
+importantly to analyze what we can learn from the experience.
+
+Footnote *3*: The refactoring, as Junio suspected, might very well go a
+bit over board. Even if a new variation of the `run_processes_parallel()`
+function that takes a struct should be necessary, it would be easy -- and
+desirable -- to keep the current function signatures unchanged and simply
+turn them into shims that then call the new variant. That would make the
+refactoring much easier to review, and in turn it would make it less
+likely to introduce another regression.
+
+--8323328-715222152-1653478262=:352--
