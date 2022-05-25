@@ -2,311 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 802C8C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B072EC433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240832AbiEYKHb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 06:07:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59328 "EHLO
+        id S237918AbiEYKIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:08:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242116AbiEYKFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 06:05:09 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD0A868FB0
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:07 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id u3so29410403wrg.3
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DBaSE9xs/DJloVTK+2kFOfNhxCA9fEHIoPLLlR9YFp0=;
-        b=UjlXXOIYOp3IJRqjaY9KvQq/MTkciQWDLMuWsfRExlyiZkrN25WH0s0e+cedx0JIFU
-         2UAL7c92CMpKZzLtZX+dlOcVX5FatAKRhTq56ENBARagGeroD5Xse9PwglvsLDHUjkCW
-         0Jl/ioUlszYxgR5SscIiq+KbLQpGfdy2CJ2wiyjYIl4Vx84+2K/zokZU6ikPTcRgqZB7
-         ZTF18DqZ4luGNCes3md5MZHtdkWF0L5TX4A7iX/dhnGyTLpPlR064TS1b67m+QgkwXms
-         HHpiMiuavPFQYV2Y6/qXBCew3cN0NH2V/FV+gLWUpMetC/dnD1A66EHdUzJTnkrvqtmM
-         gnrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DBaSE9xs/DJloVTK+2kFOfNhxCA9fEHIoPLLlR9YFp0=;
-        b=cdHUDZQOkzkU743OiilwV/v5q6ASDa4cyCQhKgnZKlcjejQDZ8edrRIN+JHpk1D+4W
-         ALzUZdA5aZLlt7YJEY80UEgEF3b/irrHr0tuZtLUJLDxF4uI7LrSbaMVMnhNcM+VstKm
-         RnxBNu29nouk+xvTZZVFMA9010V3SYsUfSNVN7bOU8RE4B2iKIvSIpgIaAQZbKZBpMEO
-         Cslz1uQRG+Khf0Ilkt3bui1gCtgxqhA5txmndZKRjNmvd5Kn0gSjl4oWiy1SpVdeYoBE
-         KXNqd5DL7uLXKR3FWma8HjJJOHkLjJ5tHxNj7iBJSe2d9fWdfOwZld9LxGVznxxa6Y0i
-         H2pw==
-X-Gm-Message-State: AOAM533tOcczLKp21EYHN3aaLA62KtUi4YD6AkKQCmcxiQu4aCcrNvkU
-        0Ddr/7BFFJslZ+wQmVI8bTnGcdg4M/SnfQ==
-X-Google-Smtp-Source: ABdhPJwKGMN3dpjSlYU2Icy95SLekJkB2DuACoPwndfmaREUaiscEEzBnmnRIc0T/SDZT3mCKSvQvg==
-X-Received: by 2002:a5d:4e08:0:b0:210:297:7d4b with SMTP id p8-20020a5d4e08000000b0021002977d4bmr894290wrt.112.1653473106061;
-        Wed, 25 May 2022 03:05:06 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.05.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 03:05:05 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v6 23/29] CI: narrow down variable definitions in --build and --test
-Date:   Wed, 25 May 2022 12:04:02 +0200
-Message-Id: <patch-v6-23.29-e2b3bf032d6-20220525T094123Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.1.1045.gf356b5617dd
-In-Reply-To: <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
-References: <cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com> <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
+        with ESMTP id S241554AbiEYKII (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 06:08:08 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF2BA7C15B
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:08:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1653473269;
+        bh=PsWXygbXkvRVQSjE7oDa3WNwdMcrQz+eNYBMG3HPzJs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JHvBtVRuniuOctzqCyt2Bxze9syc4MJJ8FSoEQ4jSuig1PaX2T4+n2Z6J72s3Ecyi
+         ttN0J+QE7AqnltFQrlMXyrrtMOPqskgzZgWF2vMirG7PDeBLoM5hoq9rvHjD6xyTMI
+         L0t1wF76Ws2Hz7+j7NmpaZhmlF31pGFoX0Tiju+I=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MeU4y-1nJMeH2L9I-00aU3u; Wed, 25
+ May 2022 12:07:49 +0200
+Date:   Wed, 25 May 2022 12:07:45 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
+ with it
+In-Reply-To: <xmqqleuqefa4.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2205251111300.352@tvgsbejvaqbjf.bet>
+References: <cover.1651859773.git.git@grubix.eu> <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu> <xmqqtua2jtr0.fsf@gitster.g> <xmqqczgqjr8y.fsf_-_@gitster.g> <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet> <xmqqr14jluu4.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet> <xmqqa6b7lrw6.fsf@gitster.g> <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet> <xmqqleuqj1gy.fsf@gitster.g> <220524.86r14ivewt.gmgdl@evledraar.gmail.com> <xmqqleuqefa4.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-309445249-1653473269=:352"
+X-Provags-ID: V03:K1:p+ZvolB3bzycK8MibXvTnHRIAELxRvpEEgaLHQdKrqksLvTzte6
+ WJDcvzi/gCtbqQeZr/0ufy1xqna4QteJsHwtuOAnvZa6uEDaah9AlQcW1jhuy5RoJNkpJlh
+ 8mEB6rUK9Nk8H2cgEfd986ona4q3zdO0R7qN0nZeSAjJYVbj+R6bOvw79LAHn1JKajF7IeW
+ lKkegSuuOuiFPpVrZRd6g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:05YSD00GbyA=:a9QDDcs19BKFG33QoFgZ1L
+ ba0eVwLrA438ZU0ROYZHjouAgvXRkJfRTLfmXC9VgSvfceMR21fBB8gR54l7PyzCSCy/sVvdu
+ W7PuqBAX121+RbrTtdJF4+LbV8owwgVsPZ4dmRHsC5Iyc7Hg1kH03R9V8n2SdmKu3H8cLyocY
+ 8DKqkwa4Fw9UEKhssKhSh/41uFJaueMYte8pmOSrmGVFrCZ8/CyYnnZ6AqCbEVK+ARyTKwHf/
+ HO5o2Zc1KhhT0TN18w9Fl+aIYz5MnM0DxD40zTpuioQyNQ3sqPtG3YpM/w/JQM9xQe2Sh7Bvr
+ bftRQybIAX9crlDTqiB5lY4pAm69+8VxDV5gffpgb5e5iYvNy9wYvfKvIFqM15nTFDz5T3UWP
+ 2sTY2WReGaHMHxYD4AlRdFXYC08j+1rOQvC9TAXN87xNx+sAS/JRIv5q44CKARPwCEcLehhUx
+ SdZ4+gYTvrjF11JxFDroOwdcZ71vICUfy0DxNtD8K1/6OOkqYFR0JmSQ8VObJaK0/p2GGyuMQ
+ /LR48IZTw7ZWY3agLV4Vfx+8iXSt/s7Tfi6ZLCVJ3UQ500zK6UUjRp+faVdVOh48OIV9gb7yA
+ Zi6apDA8TNuBPAdCR2x3sHKm4pw+xWB549i4jy/FUGESX/Hq6+xvhdAJ+gBqU7ecbeW+PDbJM
+ dYAboCumxeYoz3QklJuQC2mW6BmlcwbVMiF65OlqkeUCwjTP2rH7wWJ3NQHGqjUyzOjGDTq1F
+ f2GeUT6PWgS/LKKCFaxFZH3MRrvN2ZjbpKDxBJVCKhiR1z1UhH2f3BhnOs+JlCiVkWjDNxazC
+ XHTsMqd0CCOGz7nI/L5C33eobFDblFEBX0zCFhsIL3XazyG55n7KAViNOAxSILPL0e+2aLET6
+ 4pbsSvgf0oSekbkSEjJGVCuVRnzjLDP+E2Y+4RoN2rj9tf2FyELbP3YNnvwJI5xaEkkla0vG4
+ YwPiKT4nPlmawpfFe2LhPSv/NFr67CyOojjhVknA3QRhMYE44VicmIhCz7t74gWnoAoMQBTK+
+ 74977VQvqK+IpYxPeVBo25MflW+aGhXdWQDxKsfvGTZkjy8Q1b0td+zmxyXpbHM4V2tqD3Udq
+ DN4+Ne2NHcB5njfCeCNhlusQXCmAujGD1+q1bYMDEKDiFCtOdOTxkcCEg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a preceding step the "setvar" function was made to take a
-"--build", "--test" or "--all" argument to indicate where the
-variables it sets were used.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Let's make use of that by having the relevant parts of
-".github/workflows/main.yml" invoke "ci/lib.sh" with those options.
+--8323328-309445249-1653473269=:352
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-By doing this the set of variables shown in build-only steps will be
-fewer, which makes diagnosing anything going on there easier, as we
-won't have to look at a deluge of e.g. GIT_TEST_* variables.
+Hi Junio,
 
-For the "pedantic" job (which has no test phase) we won't run the
-"ci/lib.sh --test" step, which will be clearly visible as a skipped
-step in the UX.
+On Tue, 24 May 2022, Junio C Hamano wrote:
 
-Since we'll now always run "--build" for "make" and "--test" for "make
-test" we can stop setting the "fat" MAKEFLAGS entirely on the "test"
-steps, i.e. the one with PYTHON_PATH, CC etc. These will all be
-carried over from the earlier --build step.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+> >> I _think_ we can even get away by not doing anything to
+> >> slot->finished at the end of run_active_slot(), as we are not
+> >> multi-threaded and the callee only returns to the caller, but if it
+> >> helps pleasing the warning compiler, I'd prefer the simplest
+> >> workaround, perhaps with an unconditional clearing there?
+> >
+> > I'll admit I haven't fully looked into this again, but does anything i=
+n
+> > the subsequent analysis suggest that my original patch wouldn't be a
+> > working solution to this, still:
+> > https://lore.kernel.org/git/patch-1.1-1cec367e805-20220126T212921Z-ava=
+rab@gmail.com/ ?
+>
+> I traced _one_ code path as a demonstration to show why the current
+> "slot->finished =3D &finished" based solution works.
+>
+> But I think what we need is to demonstrate a code path in the old
+> version that shows why the old slot->in_use would not have worked
+> and the slot->finished was needed, and demonstrate why it NO LONGER
+> is the case in today's code.  Without that, especially with the
+> latter, I cannot take the "just revert 16-year old bugfix because a
+> new compiler throws a warning related to multi-threaded code to it,
+> even though we are strictly single-threaded" as a serious solution.
+>
+> And because I do not think I've seen anybody has done that necessary
+> digging, I would still prefer the "if the compiler somehow cares,
+> then let's clear the finished member once we are done with it" much
+> better than "we do not know why but we somehow think we can do
+> without this bugfix, even though we wouldn't be making noises about
+> this piece of code if a new compiler did not start emitting a
+> warning".
 
-That won't be true in the case of the "windows-test" and "vs-test"
-jobs, since they run separately from the corresponding "build"
-step. So we'll need to make sure that we have the --jobs=N argument
-for those.
+The commit in question is baa7b67d091 (HTTP slot reuse fixes, 2006-03-10),
+and I did look around in the Git mailing list archives for mails that were
+sent around the same date, but did not see much that would help understand
+the context, except that the patch series clearly talks about `http-push`:
+https://lore.kernel.org/git/20060311041749.GB3997@reactrix.com/
 
-This doesn't matter that much, as we'll still have --jobs=N in
-GIT_PROVE_OPTS. So the only thing we'll use it for is parallelism in
-the t/Makefile before we get to running "prove". Still, it's good to
-be consistent for good measure, and to run the t/Makefile itself in
-parallel.
+The thing about `http-push` is that it adds a "fill function" that is
+executed in `fill_active_slots()`, which is called in turn by
+`step_active_slots()`, which, as you will recall, is called within that
+busy loop in `run_active_slot()`.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- .github/workflows/main.yml | 21 ++++++++-------
- ci/lib.sh                  | 52 +++++++++++++++++++++++++++++++++++---
- 2 files changed, 60 insertions(+), 13 deletions(-)
+And that "fill function" is where it starts to get interesting.
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 83e0aa1f469..bb62b4ff725 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -84,7 +84,7 @@ jobs:
-     steps:
-     - uses: actions/checkout@v2
-     - uses: git-for-windows/setup-git-for-windows-sdk@v1
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --build
-       shell: bash
-     - name: build
-       shell: bash
-@@ -122,7 +122,7 @@ jobs:
-       shell: bash
-       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
-     - uses: git-for-windows/setup-git-for-windows-sdk@v1
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --test
-       shell: bash
-     - name: select tests
-       run: . /etc/profile && ci/select-test-slice.sh ${{matrix.nr}} 10
-@@ -169,7 +169,7 @@ jobs:
-     - name: copy dlls to root
-       shell: cmd
-       run: compat\vcbuild\vcpkg_copy_dlls.bat release
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --build
-       shell: bash
-     - name: generate Visual Studio solution
-       shell: bash
-@@ -211,7 +211,7 @@ jobs:
-     - name: extract tracked files and build artifacts
-       shell: bash
-       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --test
-       shell: bash
-     - name: select tests
-       run: . /etc/profile && ci/select-test-slice.sh ${{matrix.nr}} 10
-@@ -275,8 +275,9 @@ jobs:
-     steps:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --build
-     - run: make
-+    - run: ci/lib.sh --test
-     - run: make test
-       if: success()
-     - run: ci/print-test-failures.sh
-@@ -310,8 +311,10 @@ jobs:
-     steps:
-     - uses: actions/checkout@v1
-     - run: ci/install-dependencies.sh
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --build
-     - run: make
-+    - run: ci/lib.sh --test
-+      if: success() && matrix.vector.skip-tests != 'yes'
-     - run: make test
-       if: success() && matrix.vector.skip-tests != 'yes'
-     - run: ci/print-test-failures.sh
-@@ -331,7 +334,7 @@ jobs:
-     steps:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --build
-     - run: make ci-static-analysis
-   sparse:
-     needs: ci-config
-@@ -352,7 +355,7 @@ jobs:
-     - uses: actions/checkout@v2
-     - name: Install other dependencies
-       run: ci/install-dependencies.sh
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --build
-     - run: make sparse
-   documentation:
-     name: documentation
-@@ -364,7 +367,7 @@ jobs:
-     steps:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
--    - run: ci/lib.sh
-+    - run: ci/lib.sh --build
-     - run: make check-docs
-     - run: "make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
-       shell: bash
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 15a0011f6aa..96919882c11 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -4,6 +4,30 @@ set -ex
- # Helper libraries
- . ${0%/*}/lib-ci-type.sh
- 
-+# Parse options
-+mode_build=
-+mode_test=
-+while test $# != 0
-+do
-+	case "$1" in
-+	--build)
-+		mode_build=t
-+		;;
-+	--test)
-+		mode_test=t
-+		;;
-+	-*)
-+		echo "error: invalid option: $1" >&2
-+		exit 1
-+		;;
-+	*)
-+		echo "error: invalid argument: $1" >&2
-+		exit 1
-+		;;
-+	esac
-+	shift
-+done
-+
- # Starting assertions
- if test -z "$jobname"
- then
-@@ -11,16 +35,28 @@ then
- 	exit 1
- fi
- 
-+if test "$mode_test$mode_build" != "t"
-+then
-+	echo "error: need one mode, e.g. --build or --test" >&2
-+	exit 1
-+fi
-+
- # Helper functions
- setenv () {
- 	while test $# != 0
- 	do
- 		case "$1" in
- 		--build)
-+			if test -z "$mode_build"
-+			then
-+				return 0
-+			fi
- 			;;
- 		--test)
--			;;
--		--all)
-+			if test -z "$mode_test"
-+			then
-+				return 0
-+			fi
- 			;;
- 		-*)
- 			echo "BUG: bad setenv() option '$1'" >&2
-@@ -46,8 +82,12 @@ setenv () {
- # How many jobs to run in parallel?
- NPROC=10
- 
-+# For "--test" we carry the MAKEFLAGS over from earlier steps, except
-+# in stand-alone jobs which will use $COMMON_MAKEFLAGS.
-+COMMON_MAKEFLAGS=--jobs=$NPROC
-+
- # Clear MAKEFLAGS that may come from the outside world.
--MAKEFLAGS=--jobs=$NPROC
-+MAKEFLAGS=$COMMON_MAKEFLAGS
- 
- case "$CI_TYPE" in
- github-actions)
-@@ -101,6 +141,9 @@ windows-build)
- 	setenv --build NO_PERL NoThanks
- 	setenv --build ARTIFACTS_DIRECTORY artifacts
- 	;;
-+windows-test)
-+	setenv --test MAKEFLAGS "$COMMON_MAKEFLAGS"
-+	;;
- vs-build)
- 	setenv --build NO_PERL NoThanks
- 	setenv --build NO_GETTEXT NoThanks
-@@ -117,6 +160,7 @@ vs-build)
- 	;;
- vs-test)
- 	setenv --test NO_SVN_TESTS YesPlease
-+	setenv --test MAKEFLAGS "$COMMON_MAKEFLAGS"
- 	;;
- linux-gcc)
- 	setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME main
-@@ -162,4 +206,4 @@ linux-leaks)
- 	;;
- esac
- 
--setenv --all MAKEFLAGS "$MAKEFLAGS CC=${CC:-cc}"
-+setenv --build MAKEFLAGS "$MAKEFLAGS CC=${CC:-cc}"
--- 
-2.36.1.1045.gf356b5617dd
+It's called `fill_active_slot()`:
+https://github.com/git/git/blob/v2.36.1/http-push.c#L604-L625
 
+This function starts requests, such as fetching loose objects, starting a
+PUT or a MKCOL. Notably, though, `fill_active_slot()` does not wait for
+the request to finish. In other words, it will potentially reuse the
+current slot if it was _just_ marked as no longer in use, and then the
+code flow will eventually return to that loop in `run_active_slot()`, with
+any reused slot still being marked as `in_use`.
+
+So yes, reverting that commit would reintroduce the regression, and I am
+very happy that we now have a grip on this Chesterton's Fence.
+
+This same analysis, of course, also puts a nail into the coffin of the
+`reserved_for_use` idea because while it would fix the reuse bug, it would
+unnecessarily squat on slots that might well be needed.
+
+Ciao,
+Dscho
+
+--8323328-309445249-1653473269=:352--
