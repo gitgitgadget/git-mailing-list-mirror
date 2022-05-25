@@ -2,84 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFEA2C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BD5EC433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:22:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238482AbiEYKRt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 06:17:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40286 "EHLO
+        id S241843AbiEYKWQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:22:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231129AbiEYKRr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 06:17:47 -0400
+        with ESMTP id S229453AbiEYKWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 06:22:14 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8DDD93990
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:17:46 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E47A8A056
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653473862;
-        bh=8r/wvZRW1KG2TZ8pdR4KAKEmZBS2gvyPNsXbaQ7PMPY=;
+        s=badeba3b8450; t=1653474108;
+        bh=PTYyslefO3PoXwdCfTcc7RiRsBOFHHOYOqaITi/lC5c=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=R3b4WVRf0DkC45+IConpNDLneX3U5YI1E5zxFqQafdYW5ScPwLdrFY8B9pYp4wmK1
-         SDt7wGI76AXAgvWvsW0L6mRU1iA9JAiUWDzCZmiRmpCCf65BYEMKHFYlLLz/vP1qe9
-         6RjrbIIgl74WdwJAyybQsy1JPBMCmNIP9OZnUX1E=
+        b=NQiSYPY5CEBN/tCM23gHmp+XUUvNif7AWV8e6GuuVdrORX4hAkAkrdGNvP3A1GjJh
+         RDoHFDRvv1ZeUvgPHN0fxg53NWmlg8+7GECDrpLPg2YHMUPMP0z97QY5xTp1CoKJWY
+         IVW/5HrVFU4DxMCM15Xz24ezKqwSCGLPoP/0NNyc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1My36N-1ndGht1ewx-00zVkr; Wed, 25
- May 2022 12:17:42 +0200
-Date:   Wed, 25 May 2022 12:17:41 +0200 (CEST)
+Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwwZX-1neMad2gLj-00yUWx; Wed, 25
+ May 2022 12:21:48 +0200
+Date:   Wed, 25 May 2022 12:21:45 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Yuyi Wang <Strawberry_Str@hotmail.com>
-cc:     git@vger.kernel.org, gitgitgadget@gmail.com,
-        sibisiddharthan.github@gmail.com
-Subject: Re: [PATCH] Remove (_)UNICODE def on Windows in CMakeLists.txt
-In-Reply-To: <OSYP286MB0262561439C0C7F0265A749FF8D79@OSYP286MB0262.JPNP286.PROD.OUTLOOK.COM>
-Message-ID: <nycvar.QRO.7.76.6.2205251216510.352@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2205242046470.352@tvgsbejvaqbjf.bet> <OSYP286MB0262561439C0C7F0265A749FF8D79@OSYP286MB0262.JPNP286.PROD.OUTLOOK.COM>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH v7 26/30] t/helper/hexdump: add helper to print hexdump
+ of stdin
+In-Reply-To: <xmqqbkvmhfoc.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2205251220260.352@tvgsbejvaqbjf.bet>
+References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com> <6f2e935f148e826609153378751c04807858e76c.1653336765.git.gitgitgadget@gmail.com> <xmqqk0acosks.fsf@gitster.g> <nycvar.QRO.7.76.6.2205241415040.352@tvgsbejvaqbjf.bet>
+ <xmqqbkvmhfoc.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:MT1Hzf/8WqR7cH/QThaBnHW++vagmcKyq4EflS4G/l+zIeb6Stv
- 3wmVp7SANbbUdaqsD4YUM+Vl/T0KSplDbOYh5p77weqc9kLQqDzsQSXiEHtF2EtYD3U09OM
- /O0dei31tNyqV6QZHDg+r+t/gfuoeMQeg3xYKuwscEmzPN45eX4OT/fhqmVdPOLKJnw1gGe
- 40sd8g05rY62t0yfdIv0Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UtI3R04qRlM=:naKWIf8dsXrjwHXqd71ALH
- rgZZ4TJUcVsSka0pAitVqIC0oGMqXHm3dVROW1/3cAqC8m9IVWyf59vsQZMvUSsLTbPg6VBOp
- 095Jphf8j+fR561Mqj/WbTWIZKqNqDtv6Wk/Mht1IenGZx/ehpgHIbXnsxScf0iUfMPuXl2E0
- HBs1E12LDMlasbh1MhugwgjN5kNbe0GbB39xUMVhAG46Gjvqa4q1OLKChXouqU+HMKa7pd4sZ
- Of3H2RC/H83z0D7ydX7KugDgH5QB1MgYmTb4TfP86pWRwtGh4aR33/NQFoISNybFIGmsEmArO
- tSDWdj9850x7VwjdHPK9hztMmB8SDhDdRdbp62i1Qo6ChanLwD7twj3ZCKx8vpdDSd9lTdEcZ
- bDN+4zRtESll5APf2w5uYeibSFUneJWgFbGcNE+/93bmoZf1aPvf2W3NpT2ADN5OGRF8A6EAC
- qOMstXN466oh58FgUgvLWFHAxVIED6/WdFtCeuiXQYa0VhQKH9y17izFMv9Uvzl6s9s8cnpVU
- 3FcA+0j3rewG6URMt4d6eSqftHHbkqb6xnF3hGY5eB5x16qHWK5tC+WM0HssuN4lTADC/2lyb
- S3a+LV04y2BQD8IHK3vWwsmEy2YiBTkQHdmtfdrMq9z79d4K9u34wShEZSHRrJXAVEZIhQXP+
- 57BCIj+Uo87mHEFJH1FywfQYkMyZcTfv1VjkqXBiUF2qKEalMYHy33ahsV5JpIDarBxgb3ufP
- R25yI4jNOURqOrTcBPX/HGYr33Dc7t3gD/494i66zNl8LYO5TAmKvcTFTaytmTrjU6k8O6Rk2
- +PFOqMcmtXiA+9zbKvFVSCH94M3qLfWP3+gmJBIxp/Fu42qSeiW8TmLfLYphhKXHJ8SJBTahN
- AJdX1TqOMom8lISQKFzfx1qWdCyzKOuznYEhX6Ow54wE1usPSKYKGyYKTX+4kxzXOojqbmeRJ
- qo60IqKIW9MAehWqavvqpoe8T28zFFOzaY9hg7TkApuBVlcKBIbuglwrfd+n4GZ8TtACbqf8i
- XqR/uLq7c6tiDHq1b1/7uZKMlGcQwEsQRk7GN1HHLC//T9DIDTKFuHLmEC+rtGaHK4jtaQWIj
- A89sHTUyRXtoH/FDMttE3LY1+OL11gcNQ5NI+y1In/2nenEfGyMprBh4Q==
+X-Provags-ID: V03:K1:IwQhka53ztTnaWoL6BgFuhe+w1k2ienEHkFE3ASfj46aemxlp9x
+ HnVBjkv3d9sHN1V3AkHN01kkpXFd5ZynlImkNCdkida5wmimdThhP06WFUOhmKOefyPF4vk
+ qrPPWVZ+XsFVIi4ij66U+a9ynokuAvqVV9HMrC7f56GozS3aV+Pfk3sLiFTvMAa4vh7Aa9T
+ K8Nxk/hi9xYVvvPaU3gFA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:w09Fl4b4gbo=:0JqJDjbeQtvz2ncdClpCmZ
+ emb2GgPqZvW3hZ1yXaZQ6qAVI75jBpuXuHyfpzIM+1/G+mVS15493fK2U2grY5V+jdz2YnTPc
+ vsX1wmCYZ/R/rAnEdafL2pk3aJfzQHUvRPbR1LzMFUTCJqjCIDRcy6MFtmyBTZCxqrr+46tK3
+ 1qifyI6eLSgEOZHjf9ZIP7dU36NhrVvI1mW80aFTgmF5rS+WrhWf2GfLZ8jzSYB5iLtxzDfYr
+ DznhLJOgP+HuQ2LEFHFuxKb3NXGjepGg7HLxR5n0ZhqJOWK+T/IW7JejhX0+A0hBeOnQlC03X
+ qpeEcnZSItw0ZqLHhIxATh17bCeNnyeVKvaHPYXA4oLugwqT2J3cr9EsuX+CDa5YA8aWSAnZs
+ Lwbps5F2/iVMK+sLDv+aZtLp89a9NOhqlS4x61PkHHoGplsYqxih2tzCNwoQdKlAaUlhbWMcS
+ VE9O21xMnTZV2vkFStuGGAA9e1ae0avHyyfg1biUbpRwt0xtHLo4MNd8eYN8CkrVa4eJsdXrS
+ 10DpQWokNDLlPzY3gRMqjn+UO1jXUX7ERNrzlfeZctOCFQE2U5P2QOlcC+TmvlqPFoXP0BSQI
+ cDvcH3F8YVjVxaIaWQ5os2e4pIy+cy/gMKl6MasbnAQcPUfWzyyHLS4xkGXi6NQm164GP34Q5
+ BR1Hcwb11nFKjrIb9P6ZDgKR8uJtChmcYl/adA1OGiH1KlVrK/QB5t59lWERFpXiTLHOIS5SO
+ C+86E9yFkWTfjtrHCu8mvN2Fgb48NtqYTeF6/Kh1NpBTKCLo/Iogq9saPPxKpsPP3RtsVx5DF
+ lKO7zjl1OD3RHG5TnBkojlx+u3qnuJEZ6F2+Ss4j58yf6ojrQ6trl4RUzq5VdHt2572UXrZ1w
+ ermBytt1mLGXjr6hSTXT7TdpvFEvAIFD/E5Uh3g+tesuGNtLaL8bqernYfJWjlS7cEuOntmDX
+ GzhNhXKL3fQXxdijLYdAiF3NJkoI8nXeYASDUqG34T6Ab1vs06TGvYEVxVM0N58j+4SGzlkjy
+ SWSdQD+ERusoUCLVywKsuCYBHTNCmT90dXPT0/jtMvTSz9UADb0/PmX7vMOMFq3l5r6FPPCeF
+ CsWQF9FHViSEyWOb5DGUkW3QSjq0mRrG1Qh9dHYOTzKWf8qGY5LLlGJKA==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-On Wed, 25 May 2022, Yuyi Wang wrote:
+On Tue, 24 May 2022, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> > P.S.: Please note that the Git mailing list silently drops all mails f=
-rom
-> > @hotmail.com addresses, as far as I remember. Therefore, if you reply,=
- it
-> > may never reach the list.
+> > Do you know of any `grep` implementation that has problems with text
+> > missing the usual trailing newlines?
 >
-> Thanks for your remind! However, it seems that my reply reaches the list
-> successfully with hotmail address.
+> I recall that we had reports on BSD variants, but please do not
+> quote me on that.  Perhaps all the BSD variants are good now, or
+> perhaps some aren't.
 
-Oh, that's good news! I am glad that this was fixed.
+I did not recall any such reports, but take your word for it.
 
-Thanks,
+> In any case, I do not take the "if it works on Windows and Linux, we
+> do not care about the rest of the world" world view,
+
+Just in case it was unclear to you: we're on the same page here.
+
+> so finding the answer to that question unfortunately does not give much
+> input to the issue in either way.
+>
+> And in this particular case, it is much simpler to mak sure that the
+> file does not end in an incomplete line than us exchanging e-mails
+> back and forth, so that would be the most economical solution I
+> would prefer.
+
+Indeed, the trailing newline is easily added and fixes a known issue, so
+I'm all for it.
+
+Ciao,
 Dscho
