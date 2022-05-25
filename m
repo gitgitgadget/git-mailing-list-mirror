@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BBD8C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 15:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6957C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 15:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244979AbiEYPBa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 11:01:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39432 "EHLO
+        id S245021AbiEYPBh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 11:01:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244159AbiEYPBG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 11:01:06 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22EE3AEE3E
-        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:05 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id v4-20020a1cac04000000b00397001398c0so1256931wme.5
-        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:05 -0700 (PDT)
+        with ESMTP id S244924AbiEYPBI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 11:01:08 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 846622E4
+        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:06 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id n124-20020a1c2782000000b003972dfca96cso3513233wmn.4
+        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=V2qiF7m8aSYTil3cDpJgcVX4oQxYDeEfetoj3qel4cE=;
-        b=RCl+ie3uB/wxB9tc3Z2xxviaGnMoqLWVy0PiU1aOicU7MFFUTl4s+Yz04HC6Xd9xgM
-         f2Khz6ig0DV3PVPIrEjDN8Zk4IZ+xbQrofcIzfshL25utS1Xm55OBm+CAIsVcnrl7PWq
-         CGnnbmRNmDP7cDh3hWcvvLmEkHp1plF5yD/GTOYzjAI/Od62rN9152xBjlR9zU2j4i8U
-         0vxvZy5V6pb0Uo6YUpgotbsvukejeX1+CX9JadtQyf6Px06NSwrq+mP7oEFfm1BMJ6sF
-         t90HbOM5+t/mFut3KWdQvwqjz5XI2qXdnBy6e8hOtjscbIdO35fm2vIMlFfZ+bavCKuu
-         +XvA==
+        bh=KflqYF0+S7RB9kOFxgFWU4lLQFA5eX5O/Scn3B7vbzU=;
+        b=n08b//KAOZrttEBN+2A7dqXh6nbWbBaBcKA4z/1zviqTWQ8/dZGsjPIFprdNwQhoZx
+         4hQ1xi0W08QSV45VPK3I47VGt+g3xOKX4AsSHM4+AdWjO9KkOuThvlPTcoFTdGMUT0Yk
+         FIMHd4HlBd8e7gn53Wr6SJRn5pLHco9MJA7JhyoaJiTq6T1LdMcdqBVevWJ0x9GAovFc
+         ibkM64rRNsWMUVdp+7+gyvA1z24jGJmEEYGQMsRJzRh55ZlxpSmdjWWKdvM6Z7a9WGqV
+         d9NESC9bOVYByyr/L9j0fFdE3ST/fADuFMfDhEQANNiw9WcKrXkJlF6Ho+6wUZMT55Uy
+         sLsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=V2qiF7m8aSYTil3cDpJgcVX4oQxYDeEfetoj3qel4cE=;
-        b=trxiFHW+7tbxTRuCA92YWs5Ky4HpsUqh3d/2ThrnY+4lU1HMqJPIE855vrCw+VHwOq
-         KxTfZDC7lX4kBhm35Y97PpRRkPXzvZFxeDz7xQJzDuRpVnHpXCtRY03JqeW4M5y05yaL
-         tsTUDVOLSmyb0GxxCTPD1WSLV7FtITm1Mo6tfgFYLInMuXMPRO70O8USJlAx4xGYSPSP
-         d7AO5a9cTdYxE6edXpVOEwxNRNsqkMdTxPXAyM24XOCLqyqYGM9mVjOHf4VB7Mi61jDi
-         tfBJx1xWgrogsL9KnZ64SquVY9sVBNZLUyr/ndHkqoEqAKlo5FAcgfuus/yoLHs0n2xU
-         +ZMA==
-X-Gm-Message-State: AOAM532pjVCdRZi7y6HBjo4Yx2tniWyI+oTi/jfidiTqxl6GV5gVY/8V
-        qbCVnkGfrm55+l7L/4Fj5/fOPkt/uyc=
-X-Google-Smtp-Source: ABdhPJzwXCbkpZibU1OfMg1Aokmo04UCPP/OPpHTX1wIAeOtsxcITtPWfctDUVS8nv+P2ok5aCbWWw==
-X-Received: by 2002:a7b:c451:0:b0:397:4c13:1873 with SMTP id l17-20020a7bc451000000b003974c131873mr8554954wmi.151.1653490863033;
-        Wed, 25 May 2022 08:01:03 -0700 (PDT)
+        bh=KflqYF0+S7RB9kOFxgFWU4lLQFA5eX5O/Scn3B7vbzU=;
+        b=qU8yBVelPwV60KiL/gkjAJ4mxvtQJCm8TitspBP8j6rIPpJ+1vB/yRINBWXfGjSiUs
+         AYCUyz4ioCwkCRTNKNTdvjFlkE5uc2neVQ4WBNu9/m7NDSMfY7h5Ff9Jmi2dCiD9XcM3
+         azXJXHn3ed/UhUsVC8r72vZBf5rkLDfjyHZUE9+4qLPIz2LFrJp6+OeY7fojiomiFoK8
+         ovEnQEV+OzEeM2v/TkOJHjES1o+WAe5ILe9SalphHipZxDy+jMt/TJlvcpJnAtVfqZOW
+         xq/sM9D74KMUnRqHXrmtmuUvKFFDqxh8TY+mC71sFFKSm17dBJu+7empmp4xF8n1eDXn
+         E9Bw==
+X-Gm-Message-State: AOAM532n3c0uhF/httkqunyRDgbLgMut5J8gGghe2n2Ja33aXfJUWlE+
+        wZuA0KMlTz3pvpMSVNF7y4n6hv1UUGQ=
+X-Google-Smtp-Source: ABdhPJzB6aWkpwbUdD/8Nq1sXnIOKYWIp94WlSLWKBQ6VIN352BlHHdKqJN8tSaFtCUnvaGyKWxlJQ==
+X-Received: by 2002:a05:600c:3ba4:b0:397:49b8:262 with SMTP id n36-20020a05600c3ba400b0039749b80262mr8582179wms.77.1653490864660;
+        Wed, 25 May 2022 08:01:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m6-20020a7bce06000000b003944821105esm2385853wmc.2.2022.05.25.08.01.01
+        by smtp.gmail.com with ESMTPSA id t22-20020a1c7716000000b00397381a7ae8sm1960053wmi.30.2022.05.25.08.01.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 08:01:02 -0700 (PDT)
-Message-Id: <7cb0180a1ed95f9ebecc605cd1d968bced46d375.1653490852.git.gitgitgadget@gmail.com>
+        Wed, 25 May 2022 08:01:04 -0700 (PDT)
+Message-Id: <9774faddc45cd33362aeb1e3ea80125bc496cbc9.1653490852.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
 References: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
         <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 25 May 2022 15:00:27 +0000
-Subject: [PATCH v8 05/30] fsmonitor-settings: stub in Win32-specific
- incompatibility checking
+Date:   Wed, 25 May 2022 15:00:28 +0000
+Subject: [PATCH v8 06/30] fsmonitor-settings: VFS for Git virtual repos are
+ incompatible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,160 +75,113 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Extend generic incompatibility checkout with platform-specific
-mechanism.  Stub in Win32 version.
+VFS for Git virtual repositories are incompatible with FSMonitor.
 
-In the existing fsmonitor-settings code we have a way to mark
-types of repos as incompatible with fsmonitor (whether via the
-hook and IPC APIs).  For example, we do this for bare repos,
-since there are no files to watch.
+VFS for Git is a downstream fork of Git.  It contains its own custom
+file system watcher that is aware of the virtualization.  If a working
+directory is being managed by VFS for Git, we should not try to watch
+it because we may get incomplete results.
 
-Extend this exclusion mechanism for platform-specific reasons.
-This commit just creates the framework and adds a stub for Win32.
+We do not know anything about how VFS for Git works, but we do
+know that VFS for Git working directories contain a well-defined
+config setting.  If it is set, mark the working directory as
+incompatible.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile                              | 13 +++++++++++++
- compat/fsmonitor/fsm-settings-win32.c |  9 +++++++++
- config.mak.uname                      |  4 ++++
- contrib/buildsystems/CMakeLists.txt   |  3 +++
- fsmonitor-settings.c                  | 10 ++++++++++
- fsmonitor-settings.h                  | 13 +++++++++++++
- 6 files changed, 52 insertions(+)
- create mode 100644 compat/fsmonitor/fsm-settings-win32.c
+ compat/fsmonitor/fsm-settings-win32.c | 26 ++++++++++++++++++++++++++
+ fsmonitor-settings.c                  |  6 ++++++
+ fsmonitor-settings.h                  |  1 +
+ t/t7519-status-fsmonitor.sh           |  9 +++++++++
+ 4 files changed, 42 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index daa21bed6c3..93604fe8ef7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -475,6 +475,11 @@ all::
- # `compat/fsmonitor/fsm-listen-<name>.c` that implements the
- # `fsm_listen__*()` routines.
- #
-+# If your platform has OS-specific ways to tell if a repo is incompatible with
-+# fsmonitor (whether the hook or IPC daemon version), set FSMONITOR_OS_SETTINGS
-+# to the "<name>" of the corresponding `compat/fsmonitor/fsm-settings-<name>.c`
-+# that implements the `fsm_os_settings__*()` routines.
-+#
- # Define DEVELOPER to enable more compiler warnings. Compiler version
- # and family are auto detected, but could be overridden by defining
- # COMPILER_FEATURES (see config.mak.dev). You can still set
-@@ -1979,6 +1984,11 @@ ifdef FSMONITOR_DAEMON_BACKEND
- 	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
- endif
- 
-+ifdef FSMONITOR_OS_SETTINGS
-+	COMPAT_CFLAGS += -DHAVE_FSMONITOR_OS_SETTINGS
-+	COMPAT_OBJS += compat/fsmonitor/fsm-settings-$(FSMONITOR_OS_SETTINGS).o
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-@@ -2901,6 +2911,9 @@ GIT-BUILD-OPTIONS: FORCE
- ifdef FSMONITOR_DAEMON_BACKEND
- 	@echo FSMONITOR_DAEMON_BACKEND=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_DAEMON_BACKEND)))'\' >>$@+
- endif
-+ifdef FSMONITOR_OS_SETTINGS
-+	@echo FSMONITOR_OS_SETTINGS=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_OS_SETTINGS)))'\' >>$@+
-+endif
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
- endif
 diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
-new file mode 100644
-index 00000000000..7fce32a3c5b
---- /dev/null
+index 7fce32a3c5b..ee78bba38e3 100644
+--- a/compat/fsmonitor/fsm-settings-win32.c
 +++ b/compat/fsmonitor/fsm-settings-win32.c
-@@ -0,0 +1,9 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "repository.h"
-+#include "fsmonitor-settings.h"
-+
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+@@ -3,7 +3,33 @@
+ #include "repository.h"
+ #include "fsmonitor-settings.h"
+ 
++/*
++ * VFS for Git is incompatible with FSMonitor.
++ *
++ * Granted, core Git does not know anything about VFS for Git and we
++ * shouldn't make assumptions about a downstream feature, but users
++ * can install both versions.  And this can lead to incorrect results
++ * from core Git commands.  So, without bringing in any of the VFS for
++ * Git code, do a simple config test for a published config setting.
++ * (We do not look at the various *_TEST_* environment variables.)
++ */
++static enum fsmonitor_reason check_vfs4git(struct repository *r)
 +{
++	const char *const_str;
++
++	if (!repo_config_get_value(r, "core.virtualfilesystem", &const_str))
++		return FSMONITOR_REASON_VFS4GIT;
++
 +	return FSMONITOR_REASON_OK;
 +}
-diff --git a/config.mak.uname b/config.mak.uname
-index 501970902da..cf224768ad6 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -450,6 +450,8 @@ ifeq ($(uname_S),Windows)
- 	# These are always available, so we do not have to conditionally
- 	# support it.
- 	FSMONITOR_DAEMON_BACKEND = win32
-+	FSMONITOR_OS_SETTINGS = win32
 +
- 	NO_SVN_TESTS = YesPlease
- 	RUNTIME_PREFIX = YesPlease
- 	HAVE_WPGMPTR = YesWeDo
-@@ -639,6 +641,8 @@ ifeq ($(uname_S),MINGW)
- 	# These are always available, so we do not have to conditionally
- 	# support it.
- 	FSMONITOR_DAEMON_BACKEND = win32
-+	FSMONITOR_OS_SETTINGS = win32
+ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ {
++	enum fsmonitor_reason reason;
 +
- 	RUNTIME_PREFIX = YesPlease
- 	HAVE_WPGMPTR = YesWeDo
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index ee0d7257b77..16705da2000 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -289,6 +289,9 @@ if(SUPPORTS_SIMPLE_IPC)
- 	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
-+
-+		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
-+		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-win32.c)
- 	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
- 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index 7d3177d441a..f67db913f57 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -23,6 +23,16 @@ static enum fsmonitor_reason check_for_incompatible(struct repository *r)
- 		return FSMONITOR_REASON_BARE;
- 	}
- 
-+#ifdef HAVE_FSMONITOR_OS_SETTINGS
-+	{
-+		enum fsmonitor_reason reason;
-+
-+		reason = fsm_os__incompatible(r);
-+		if (reason != FSMONITOR_REASON_OK)
-+			return reason;
-+	}
-+#endif
++	reason = check_vfs4git(r);
++	if (reason != FSMONITOR_REASON_OK)
++		return reason;
 +
  	return FSMONITOR_REASON_OK;
  }
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index f67db913f57..600ae165ab1 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -207,6 +207,12 @@ char *fsm_settings__get_incompatible_msg(const struct repository *r,
+ 			    _("bare repository '%s' is incompatible with fsmonitor"),
+ 			    xgetcwd());
+ 		goto done;
++
++	case FSMONITOR_REASON_VFS4GIT:
++		strbuf_addf(&msg,
++			    _("virtual repository '%s' is incompatible with fsmonitor"),
++			    r->worktree);
++		goto done;
+ 	}
  
+ 	BUG("Unhandled case in fsm_settings__get_incompatible_msg: '%d'",
 diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index 8d9331c0c0a..6cb0d8e7d9f 100644
+index 6cb0d8e7d9f..a48802cde9c 100644
 --- a/fsmonitor-settings.h
 +++ b/fsmonitor-settings.h
-@@ -34,4 +34,17 @@ char *fsm_settings__get_incompatible_msg(const struct repository *r,
+@@ -17,6 +17,7 @@ enum fsmonitor_reason {
+ 	FSMONITOR_REASON_UNTESTED = 0,
+ 	FSMONITOR_REASON_OK, /* no incompatibility or when disabled */
+ 	FSMONITOR_REASON_BARE,
++	FSMONITOR_REASON_VFS4GIT, /* VFS for Git virtualization */
+ };
  
- struct fsmonitor_settings;
+ void fsm_settings__set_ipc(struct repository *r);
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 9a8e21c5608..156895f9437 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -78,6 +78,15 @@ test_expect_success FSMONITOR_DAEMON 'run fsmonitor-daemon in bare repo' '
+ 	grep "bare repository .* is incompatible with fsmonitor" actual
+ '
  
-+#ifdef HAVE_FSMONITOR_OS_SETTINGS
-+/*
-+ * Ask platform-specific code whether the repository is incompatible
-+ * with fsmonitor (both hook and ipc modes).  For example, if the working
-+ * directory is on a remote volume and mounted via a technology that does
-+ * not support notification events, then we should not pretend to watch it.
-+ *
-+ * fsm_os__* routines should considered private to fsm_settings__
-+ * routines.
-+ */
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r);
-+#endif /* HAVE_FSMONITOR_OS_SETTINGS */
++test_expect_success MINGW,FSMONITOR_DAEMON 'run fsmonitor-daemon in virtual repo' '
++	test_when_finished "rm -rf ./fake-virtual-clone actual" &&
++	git init fake-virtual-clone &&
++	test_must_fail git -C ./fake-virtual-clone \
++			   -c core.virtualfilesystem=true \
++			   fsmonitor--daemon run 2>actual &&
++	grep "virtual repository .* is incompatible with fsmonitor" actual
++'
 +
- #endif /* FSMONITOR_SETTINGS_H */
+ test_expect_success 'setup' '
+ 	mkdir -p .git/hooks &&
+ 	: >tracked &&
 -- 
 gitgitgadget
 
