@@ -2,103 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03606C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 21:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAAF5C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 21:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343776AbiEYVPA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 17:15:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56492 "EHLO
+        id S1345324AbiEYVPO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 17:15:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232167AbiEYVO7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 17:14:59 -0400
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC426BA56A
-        for <git@vger.kernel.org>; Wed, 25 May 2022 14:14:57 -0700 (PDT)
-Received: by mail-io1-f54.google.com with SMTP id d198so17630302iof.12
-        for <git@vger.kernel.org>; Wed, 25 May 2022 14:14:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cjC7KFQGgXGEOWwlj2xnh+cll7UIpO3ZRXVwnBXr6Cs=;
-        b=nQhQMfquUC5vd2BPMlZ3Zx5cfEqLdNBS95JwnMhLbD5aS3oYss1EtYPg1/aTxwA/iy
-         vqjn35//lSOnwcz/hlWa8q6Ajkp+W4ZLNliAVO1fwN36HR78Q564hL36VbVw24vR6+oI
-         LuTnSeFaIhDoJVBcjFyz/EuqSWnBFHrobP1mgujhU215EJQVLIzKYr3x+W/YgejI+PCT
-         3m6rklMtokibyu/Om0YRuTMohlef4yZWQAMloAywdjZBo4Qlu+63iCJnyazHs4wQJI98
-         FD1xCzbuVtiHdMsxHZOlQOr6uqu4bgykeTs7fKLSvrMEYe4TJg5zX7BtsBn2gmwiw+7W
-         B7bQ==
-X-Gm-Message-State: AOAM530UPcpWd1BakcwLNvx6+r9RueurzgxNZHrI8C2ehAdu5mNIu7Lw
-        BUmMOIr01Wq1FSBOM/S48SsIYxo2zwYVKGeuQGQW+yx57sU=
-X-Google-Smtp-Source: ABdhPJwaZxmq8Uorx0+yyaRW4MWZGfwDMqQpRxSXJaRW20fFusbZdFuJZZlAyCGi9Y8nkfYA2+k/0iQX5f6U2tLdD5A=
-X-Received: by 2002:a05:6638:1687:b0:330:b377:40a0 with SMTP id
- f7-20020a056638168700b00330b37740a0mr2106965jat.50.1653513297034; Wed, 25 May
- 2022 14:14:57 -0700 (PDT)
+        with ESMTP id S1343905AbiEYVPL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 17:15:11 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C26BBA989
+        for <git@vger.kernel.org>; Wed, 25 May 2022 14:15:10 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 20A09196825;
+        Wed, 25 May 2022 17:15:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=Z00BUtuDp6jHYO+UxoxtJX8JR
+        rpB+ZS0GVvOyAEYDsY=; b=iX6T57x+otQKLxtNElC28z58EZZiat03Y6UXtq+es
+        wBGLI5jUu3krA4b+rnDn0hBEVtYFmCnqhK4Wi86Sgra44uQX/NHs8dm2fEoFlvPA
+        tCud9a0pKcvWx+cipzGnLcA1RIDdjvnxM40Y2qz8ZiPhla6w3wxArf1Rms90MZiG
+        eI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 19789196824;
+        Wed, 25 May 2022 17:15:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BD554196823;
+        Wed, 25 May 2022 17:15:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH 4/5] receive-pack: use bug() and BUG_if_bug()
+References: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
+        <patch-4.5-c590f4273c0-20220521T170939Z-avarab@gmail.com>
+Date:   Wed, 25 May 2022 14:15:05 -0700
+Message-ID: <xmqqa6b55n6u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
-In-Reply-To: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Wed, 25 May 2022 23:14:17 +0200
-Message-ID: <CA+JQ7M_OmfJVJpnYc1h=L226nZqo0A=5USCEJAgrK2EKPRsW4w@mail.gmail.com>
-Subject: Re: About GIT Internals
-To:     Aman <amanmatreja@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C054EE80-DC6F-11EC-902E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 25, 2022 at 10:14 PM Aman <amanmatreja@gmail.com> wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+> Amend code added in a6a84319686 (receive-pack.c: shorten the
+> execute_commands loop over all commands, 2015-01-07) and amended to
+> hard die in b6a4788586d (receive-pack.c: die instead of error in case
+> of possible future bug, 2015-01-07) to the new bug() function instead.
 >
-> And if I am being completely honest, I didn't understand most of it.
+> Let's also rename the warn_if_*() function that code is in to
+> BUG_if_*(), its name became outdated in b6a4788586d.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  builtin/receive-pack.c | 16 ++++++----------
+>  1 file changed, 6 insertions(+), 10 deletions(-)
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index ad20b41e3c8..d1b3e5c419e 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -1810,21 +1810,17 @@ static int should_process_cmd(struct command *c=
+md)
+>  	return !cmd->error_string && !cmd->skip_update;
+>  }
+> =20
+> -static void warn_if_skipped_connectivity_check(struct command *command=
+s,
+> +static void BUG_if_skipped_connectivity_check(struct command *commands=
+,
+>  					       struct shallow_info *si)
+>  {
+>  	struct command *cmd;
+> -	int checked_connectivity =3D 1;
+> =20
+>  	for (cmd =3D commands; cmd; cmd =3D cmd->next) {
+> -		if (should_process_cmd(cmd) && si->shallow_ref[cmd->index]) {
+> -			error("BUG: connectivity check has not been run on ref %s",
+> -			      cmd->ref_name);
+> -			checked_connectivity =3D 0;
+> -		}
+> +		if (!should_process_cmd(cmd) && si->shallow_ref[cmd->index])
+> +			bug("connectivity check has not been run on ref %s",
+> +			    cmd->ref_name);
 
-You are not alone, there are many that struggle with understanding how
-git works internally.
+OK.
 
-> (I am a high school student, and really want to learn more about how
-> all the great software and hardware around us work - which so many of
-> us take for granted)
+>  	}
+> -	if (!checked_connectivity)
+> -		BUG("connectivity check skipped???");
+> +	BUG_if_bug();
 
-Perhaps not a good resource, depending on your familiarity with
-computer science but
-https://eagain.net/articles/git-for-computer-scientists/
-is an article that is often recommended.
+This is why I brought up the "shouldn't the concluding step allow
+its own message?" earlier.  I suspect that the one in 5/5 shares the
+same.
 
-I think for me, the hardest part of understanding Git was the
-difficulty conceptualizing it.
-But at its core Git is very simple.
-
-You can think of it as a folder of files that you can "save" (commit)
-whenever you want.
-Each time you "save" (commit), all files and folders are "copied" to
-another folder (the local repository).
-That means that if you ever want to look at a previous version of a
-file, it's there.
-For simplicity's sake you can think of this as being unchangeable.
-Once a file is saved it's saved forever.
-
-Just having a messy pile of every single version of a file is not useful,
-so the rest of git consists of making this manageable.
-For example by remembering who saved it, when and why (by making them
-write a message when they save).
-
-The main thing however is that Git orders saves.
-This order is not necessarily one version after another, sorted by
-when they were saved.
-Instead, order is manually controlled by saving files in different
-places (branches).
-In its simplest form, a branch is several saves, one after another.
-
-Because of how Git orders saves, I can work on files, save them and
-give them to you.
-You can keep working on those files and make your own saves.
-But I don't have to wait for you to send your work back to me.
-I can keep working on the same files and making my own saves.
-
-When you're done you can put your saves in a "shared folder" (a remote
-repository).
-Later, when I'm done, I can get your saves and Git can help me figure
-out which parts of the files that you changed that I didn't and copy
-both of our work into new files (merging).
-
-This is a bit of an oversimplification and Git allows users to do more
-advanced things but the gist is basically this.
+>  }
+> =20
+>  static void execute_commands_non_atomic(struct command *commands,
+> @@ -2005,7 +2001,7 @@ static void execute_commands(struct command *comm=
+ands,
+>  		execute_commands_non_atomic(commands, si);
+> =20
+>  	if (shallow_update)
+> -		warn_if_skipped_connectivity_check(commands, si);
+> +		BUG_if_skipped_connectivity_check(commands, si);
+>  }
+> =20
+>  static struct command **queue_command(struct command **tail,
