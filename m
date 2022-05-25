@@ -2,93 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D43C433F5
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 16:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8DCDC433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 16:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243995AbiEYQkw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 12:40:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49032 "EHLO
+        id S245422AbiEYQtr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 12:49:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239407AbiEYQku (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 12:40:50 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 101DA57B2D
-        for <git@vger.kernel.org>; Wed, 25 May 2022 09:40:49 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8B553188CB4;
-        Wed, 25 May 2022 12:40:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=7vpbgLxras+eeswKFktHCa5IvrDjevdqPPbB7QIEvCg=; b=KSlb
-        S2ozlrOgzkt+A1R6bR4o8G2AulJEUlp8xT5JC73TyVKtMe/6mduwVoKNb4EmpC9k
-        1nJM7oPvxNtee3DR3+WjrXZAYl1IO5fNeSvaN6bg4ZJcg/eAIiUFqFFUy4melYhV
-        QgKtfxBpTXdQVFy0WrrCSlJvb6u6KUU213QmZiQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85645188CB2;
-        Wed, 25 May 2022 12:40:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 83857188CB1;
-        Wed, 25 May 2022 12:40:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
- with it
-References: <cover.1651859773.git.git@grubix.eu>
-        <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
-        <xmqqtua2jtr0.fsf@gitster.g> <xmqqczgqjr8y.fsf_-_@gitster.g>
-        <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
-        <xmqqr14jluu4.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet>
-        <xmqqa6b7lrw6.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet>
-        <xmqqleuqj1gy.fsf@gitster.g>
-        <220524.86r14ivewt.gmgdl@evledraar.gmail.com>
-        <xmqqleuqefa4.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205251111300.352@tvgsbejvaqbjf.bet>
-Date:   Wed, 25 May 2022 09:40:43 -0700
-Message-ID: <xmqqr14h8t10.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233647AbiEYQtp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 12:49:45 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 314541145C
+        for <git@vger.kernel.org>; Wed, 25 May 2022 09:49:44 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 1so11790861ljh.8
+        for <git@vger.kernel.org>; Wed, 25 May 2022 09:49:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=plZVkNyI9FaSOKIhqEm7Aybf+RvoYXxqP26UGQCuzzY=;
+        b=kQj/8iropzvTDkq6k8snhRE2Qiq+EDTSvt4KyCW72bXxnOUSwWVkTOb2On/q4zqIDQ
+         Y4f4oGvjiXNYKyIVBLNr9Zj5uc4w6VUwWS//SepwonF0sBqZ5DQw+vsoNQRJHmR7egsZ
+         E++j314ZMD2MmBVmCP2k316Vdd2un/qLPHBa4YQ2LWUL5F+0JUw6aVyxNIDsGepfQ1df
+         yLUPrcRYcDvnRyDgYenXyhBk5aT1qmurjl5KZhBBqnqTPaVVWHco/9hisUFmLZTBxNyo
+         xrQLD09yalEwwd4jmYtn76HD19IlSLcPtdTxk8WOzGfK8BSbl11dLMDHfaHRXK4vlpyM
+         zkUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=plZVkNyI9FaSOKIhqEm7Aybf+RvoYXxqP26UGQCuzzY=;
+        b=rB71qJLz3qWIaaqSejeo5+eqGkg+BPLojs+nWuEPM5S+2VKJUe6op4wIp0KlCx1Pb4
+         Tr481/w5+iYAegK0HTzjy+1zHip4r64n7k4TbLxCM1O23LCRoDTCEMJdbUB6Sk2owgsi
+         jik+tlFBmYpiVwD497+JOlI7/TtRAJhEgRu9w7wI1G/2/H7EJTPmr/92RMuT1gwMIY9r
+         RFUH+dYsTBEa1fpx7DkDLRgx+m4y1vyDYusSMOskKpvVlWdEXXfCKIwxcahQpKQeSi5Z
+         PPjc02iP6H5g6KgWE89Mg08+bOk3SXXVQCLnhXyeWm/9Qrp37Y9P8rnEcp6+qKG+BOlF
+         wv1A==
+X-Gm-Message-State: AOAM533E543onGAvYzeZZu8FHr6stHf5RkX7YUzG/sIE55YoxBn3KV1j
+        5yrmHeeb6rGabDpsPJ27uRea14r8NVpk36Jk4xcp8WMiHu2/QQ==
+X-Google-Smtp-Source: ABdhPJxW7nBY/tx9QVemkHT2gC9hwb1rqHIiCOHk5Or4JMHbXs1FQ+1ecaJEPVpXkUSvr6Nd9mRM6EX6kQWgn+/ece4=
+X-Received: by 2002:a05:651c:506:b0:254:1a3a:803c with SMTP id
+ o6-20020a05651c050600b002541a3a803cmr458832ljp.88.1653497380741; Wed, 25 May
+ 2022 09:49:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6C132C04-DC49-11EC-AADC-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+References: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
+In-Reply-To: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
+From:   Emily Shaffer <emilyshaffer@google.com>
+Date:   Wed, 25 May 2022 09:49:29 -0700
+Message-ID: <CAJoAoZmtzRakZB2Pgez9YW7URXaxTF3RZ2-ZWrRHMhbj81u2yA@mail.gmail.com>
+Subject: Re: About GIT Internals
+To:     Aman <amanmatreja@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, May 25, 2022 at 9:11 AM Aman <amanmatreja@gmail.com> wrote:
+>
+> Hello there,
+>
+> I have recently been reading The Architecture for Open Source
+> Applications book - and read the chapters dedicated to GIT internals.
+> And if I am being completely honest, I didn't understand most of it.
+>
+> Could someone please assist - in sharing some resources - which I
+> could go through, to better understand GIT software internals.
 
-> This same analysis, of course, also puts a nail into the coffin of the
-> `reserved_for_use` idea because while it would fix the reuse bug, it would
-> unnecessarily squat on slots that might well be needed.
+I am really excited you asked! This puts you firmly on the road to
+being the person who can help unstick all your friends when they get
+into Git messes later on. ;)
 
-It is like that an in-kernel structure that represents a process has
-to stay around in the zombie state until its exit status is culled.
-With s/reserved_for_use/zombie/ the name of the new member would
-make more sense ;-)
+https://docs.google.com/presentation/d/1IQCRPHEIX-qKo7QFxsD3V62yhyGA9_5YsYXFOiBpgkk/edit?usp=sharing
+<- This is a really great intro to the internals which I love. I
+pretty much always recommend it as the place to start for someone
+curious about learning how Git works.
+https://www.youtube.com/watch?v=5Gq3KVvcfDk <- This covers much of the
+same territory but has a nice video to go through it, in case it's
+easier for you to learn that way instead of reading slides.
 
-With the "slot->finished" trick, compared to the approach to delay
-the reuse, we can reuse them a bit earlier, but because I do not
-think we accumulate unbounded number of these zombie requests, and
-when we run out the active slots in the active queue, and because
-get_active_slot() will allocate a new one, the wastage might not be
-too bad.
+If you have additional questions about the technical design of Git
+following one or both of those presentations above, I think you could
+get far starting with Git's own design documentation:
+https://github.com/git/git/tree/master/Documentation/technical
 
-So, I am not sure if it is that bad to be called a nail in the
-coffin.
+From there I think the list will be the best place for specific
+followup questions you might have.
 
-In any case, https://github.com/git/git/actions/runs/2381379417 is
-the run with the single liner "clear slot->finished before leaving"
-with your other 3 gcc12 fixes.  The tests are not clean because we
-have linux-leaks complaining on ds/bundle-uri-more RFC patches and
-win test (9) seems to have issues with t7527 (fsmonitor), but I am
-taking the fact that any of the "win test" jobs even start as an
-evidence that we have pleased gcc12 enough to get there?
+Happy learning!
 
-Thanks.
+ - Emily
