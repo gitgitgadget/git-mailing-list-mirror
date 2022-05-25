@@ -2,128 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F38CDC433F5
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 21:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 086F4C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 21:58:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235808AbiEYVm5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 17:42:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37974 "EHLO
+        id S241396AbiEYV66 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 25 May 2022 17:58:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbiEYVm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 17:42:56 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E47E92FE47
-        for <git@vger.kernel.org>; Wed, 25 May 2022 14:42:54 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F068D1305FE;
-        Wed, 25 May 2022 17:42:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rBG/iAfWHVXhCd+FJ0i9+ojHWhQdAyQoJ+qz5A
-        FNvL4=; b=xg+E9qfmKIj4IciU3f1WRqUboCM+E1y5EMeetruo4lfMszl+B1qsw2
-        h6yLImoyZn1ITIAwsZSX3BhnSy5YZBec4BwlZxuVXyhOFcUudWkhcmW4p+MhCWf7
-        qCYQzi92r+VN6wLnYjE9xdpOaBSMm6YStGWCro26SwBqYcHB8B00Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6ED11305FD;
-        Wed, 25 May 2022 17:42:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FCE61305FC;
-        Wed, 25 May 2022 17:42:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v6 2/7] archive --add-virtual-file: allow paths
- containing colons
-References: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
-        <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
-        <7eebcf27b45eb13541d4abae70a374a0e35ab6b8.1653145696.git.gitgitgadget@gmail.com>
-        <xmqq5ylt7473.fsf@gitster.g>
-Date:   Wed, 25 May 2022 14:42:52 -0700
-In-Reply-To: <xmqq5ylt7473.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        25 May 2022 13:22:24 -0700")
-Message-ID: <xmqq4k1d5lwj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230147AbiEYV64 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 17:58:56 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB97B8BFA
+        for <git@vger.kernel.org>; Wed, 25 May 2022 14:58:55 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24PLwrGY082276
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 25 May 2022 17:58:54 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Taylor Blau'" <me@ttaylorr.com>,
+        "'Jonathan Nieder'" <jrnieder@gmail.com>
+Cc:     <git@vger.kernel.org>, <avarab@gmail.com>,
+        <derrickstolee@github.com>, <gitster@pobox.com>,
+        <larsxschneider@gmail.com>, <tytso@mit.edu>
+References: <cover.1638224692.git.me@ttaylorr.com> <cover.1653088640.git.me@ttaylorr.com> <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com> <Yo0ysWZKFJoiCSqv@google.com> <Yo1aaLDmPKJ5/rh5@nand.local> <Yo3fZkpkCLPbAC8B@google.com> <Yo6hcOjIlYglqdxs@nand.local>
+In-Reply-To: <Yo6hcOjIlYglqdxs@nand.local>
+Subject: RE: [PATCH v5 02/17] pack-mtimes: support reading .mtimes files
+Date:   Wed, 25 May 2022 17:58:49 -0400
+Organization: Nexbridge Inc.
+Message-ID: <01df01d87082$a0757020$e1605060$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A1B6CDFA-DC73-11EC-B3C5-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHb/488bX7VmyGm7lOI8s5Sc6VeLQKg6TD0AnqYOkcA3OyauQIQpadJAa1sKgUCM5uXrazJtL4g
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> But in _this_ particular case, the "defensive" measure necessary is
-> merely just to quote the shell variables properly, which nobody
-> sensible would say too onerous.  I couldn't come up with anything
-> remotely plausible to fill "for such and such reasons" myself when I
-> tried to justify leaving the variables unquoted.
+On May 25, 2022 5:37 PM, Taylor Blau wrote:
+>On Wed, May 25, 2022 at 12:48:54AM -0700, Jonathan Nieder wrote:
+>> >> What does mtimes_map contain?  A comment would help.
+>> >
+>> > It contains a pointer at the beginning of the mmapped region of the
+>> > .mtimes file, similar to revindex_map above it.
+>>
+>> To be clear, in cases like this by "comment" I mean "in-code comment".
+>> I.e., my interest is not that _I_ find out the answer but that the
+>> code becomes more maintainable via the answer becoming easier to find.
 >
-> Regardless of the quoting issue, we probably want to comment on what
-> value exactly is in PATHNAME before the assignment, by the way.
+>OK. I'll add a comment in the fixup! patch which I'm about to send.
 >
-> E.g.
+>> [...]
+>> >> This seems simple enough that it's not obvious we need more code
+>> >> sharing.  Do you agree?  If so, I'd suggest just removing the
+>> >> NEEDSWORK comment.
+>> >
+>> > Yeah, it is conceptually simple, though it feels like the sort of
+>> > thing that could benefit from not having to be written once for each
+>> > extension (hence the comment).
+>>
+>> The reason I asked is that the NEEDSWORK here actually got in the way
+>> of comprehension for me --- it made me wonder "is there some
+>> complexity here I'm missing?"
+>>
+>> That's why I'd suggest one of
+>> - removing the NEEDSWORK comment
+>> - going ahead and implementing the code sharing you mean, or
+>> - fleshing out the NEEDSWORK comment so the reader can wonder less
 >
-> 	# The PATHNAME variable holds a filename encoded like a
-> 	# string constant in C language (e.g. "\060" is digit "0")
-> 	if test_have_prereq FUNNYNAMES
-> 	then
-> 		PATHNAME=quoted:colon:\\060zero
-> 	else
-> 		PATHNAME=quoted\\060zero
-> 	fi
+>I am a little sad to remove it, since I thought it was useful as-is. But I can just as
+>easily remember to come back to this myself in the future, so if it is distracting to
+>you in the meantime, then I don't mind holding onto it in my own head.
 >
-> That would not just protect only one aspect (i.e. we can pass a
-> colon into the resulting filename) this change but the path goes
-> through the c-unquoting rules.
+>> >>> +
+>> >>> +#define MTIMES_HEADER_SIZE (12)
+>> >>> +#define MTIMES_MIN_SIZE (MTIMES_HEADER_SIZE + (2 *
+>> >>> +the_hash_algo->rawsz))
+>> >>
+>> >> Hm, the all-caps name makes this feel like a compile-time constant
+>> >> but it contains a reference to the_hash_algo.  Could it be an
+>> >> inline function instead?
+>> >
+>> > Yes, it could be an inline function, but I don't think there is
+>> > necessarily anything wrong with it being a #define'd macro. There
+>> > are some other examples, e.g., RIDX_MIN_SIZE, MIDX_MIN_SIZE,
+>> > GRAPH_DATA_WIDTH, and PACK_SIZE_THRESHOLD (to name a few) which
+>also
+>> > use the_hash_algo on the right-hand side of a `#define`.
+>>
+>> Those are due to an incomplete migration from use of the true constant
+>> GIT_SHA1_RAWSZ to use of the dynamic value the_hash_algo->rawsz, no?
+>> In other words, "other examples do it wrong" doesn't feel like a great
+>> justification for making it worse in new code.
+>
+>Fair point. I can imagine reasons for the existing pattern, but updating it to handle
+>the variable rawsz is easy to do (and it probably should have been that way since
+>the beginning).
+>
+>> [...]
+>> >>> +static int load_pack_mtimes_file(char *mtimes_file,
+>> >>> +				 uint32_t num_objects,
+>> >>> +				 const uint32_t **data_p, size_t *len_p)
+>> >>
+>> >> What does this function do?  A comment would help.
+>> >
+>> > I know that I'm biased as the author of this code, but I think the
+>> > signature is clear here. At least, I'm not sure what information a
+>> > comment would add that the function name and its arguments don't
+>> > already convey.
+>>
+>> Ah, thanks for this point of clarification.  What isn't clear from the
+>> signature is
+>> - when should I call this function?
+>> - what does its return value represent?
+>> - how does it handle errors?
+>>
+>> I agree that the parameters are self-explanatory.
+>
+>I'm hesitant to over-document a static function with a single caller, but when
+>looking at this, I think there is an opportunity to document _its_ caller
+>(`load_pack_mtimes()`) which isn't static, but was also missing documentation.
+>
+>> >>> +cleanup:
+>> >>> +	if (ret) {
+>> >>> +		if (data)
+>> >>> +			munmap(data, mtimes_size);
+>> >>> +	} else {
+>> >>> +		*len_p = mtimes_size;
+>> >>> +		*data_p = (const uint32_t *)data;
+>> >>
+>> >> Do we know that 'data' is uint32_t aligned?  Casting earlier in the
+>> >> function could make that more obvious.
+>> >
+>> > `data` is definitely uint32_t aligned, but this is a tradeoff, since
+>> > if we wrote:
+>> >
+>> >     uint32_t *data = xmmap(...);
+>> >
+>> > then I think we would have to change the case where ret is non-zero to be:
+>> >
+>> >     if (data)
+>> >         munmap((void*)data, ...);
+>> >
+>> > and likewise, data_p is const.
+>>
+>> Doing it that way sounds great to me.  That way, the type contains the
+>> information we need up-front and the safety of the cast is obvious in
+>> the place where the cast is needed.
+>>
+>> (Although my understanding is also that in C it's fine to pass a
+>> uint32_t* to a function expecting a void*, so the second cast would
+>> also not be needed.)
 
-Actually, I _think_ that pushes us beyond the "reasonably defensive
-for the current need".  We'd need to prepare how the pathname is
-expected to be unquoted for the later test
+I do not think c99 allows this in 100% of cases - specifically if there a const void * involved. gcc does not care. I do not think c89 cares either. I will watch out for it when this is merged.
+--Randall
 
-	test_path_is_file "$PATHNAME"
-
-to work.  So here is what I queued as a fixup for this step on top
-of the series.
-
- t/t5003-archive-zip.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git c/t/t5003-archive-zip.sh w/t/t5003-archive-zip.sh
-index 3a5a052e8c..6addb6c684 100755
---- c/t/t5003-archive-zip.sh
-+++ w/t/t5003-archive-zip.sh
-@@ -209,19 +209,19 @@ check_added with_untracked untracked untracked
- test_expect_success UNZIP 'git archive --format=zip --add-virtual-file' '
- 	if test_have_prereq FUNNYNAMES
- 	then
--		PATHNAME=quoted:colon
-+		PATHNAME="pathname with : colon"
- 	else
--		PATHNAME=quoted
-+		PATHNAME="pathname without colon"
- 	fi &&
- 	git archive --format=zip >with_file_with_content.zip \
--		--add-virtual-file=\"$PATHNAME\": \
-+		--add-virtual-file=\""$PATHNAME"\": \
- 		--add-virtual-file=hello:world $EMPTY_TREE &&
- 	test_when_finished "rm -rf tmp-unpack" &&
- 	mkdir tmp-unpack && (
- 		cd tmp-unpack &&
- 		"$GIT_UNZIP" ../with_file_with_content.zip &&
- 		test_path_is_file hello &&
--		test_path_is_file $PATHNAME &&
-+		test_path_is_file "$PATHNAME" &&
- 		test world = $(cat hello)
- 	)
- '
