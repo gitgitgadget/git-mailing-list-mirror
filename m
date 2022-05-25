@@ -2,107 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74B20C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96E2AC433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:38:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242247AbiEYKbi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 06:31:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46222 "EHLO
+        id S238570AbiEYKiB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:38:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239770AbiEYKbg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 06:31:36 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF57B6EC4C
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:31:35 -0700 (PDT)
+        with ESMTP id S230223AbiEYKiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 06:38:00 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA403980BF
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:37:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653474677;
-        bh=+fuNuFE8c5hlncC7zaCdKQg9Pvkra2+UpKmF5Ly6IlE=;
+        s=badeba3b8450; t=1653475068;
+        bh=aOqlD959IogzbYjKBSed7LWFW+wXKB6REg4ADtOvnrw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=X1BG0Htv+wSq7CUM+HqaNWm6gfjyDaBhK3//lLrE+kisr2c4xvkujjMQCzg3QkgDU
-         kE1jkxz2UzwlswAIYUH8+Tf3yM/5/+3GGiVHJszjVg6zEoRrI/WeFCcTycfHWM6Uh7
-         31qGO32f1E+eLAHTKqyXJ052GO6veuUbDcrZY0as=
+        b=e/2hTNDu9dUFNUU4mAgjB4dFePfh4dOY+w7tAmWOxpLyKfgV9m82EyCP6V/a3aPQp
+         amKXlPVQ6DnnPvlu23y0hnQHtZLwgsSKn1omEK6y0NIanOYd8hxYOAFncsrQaH/DTS
+         whPS+ENULd6Zo55czdml3yh8rPNTKFEH2NfW4xxA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3lcJ-1ntXJW0twR-000wiu; Wed, 25
- May 2022 12:31:17 +0200
-Date:   Wed, 25 May 2022 12:31:14 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5VD8-1nmvRe26Wo-016uGM; Wed, 25
+ May 2022 12:37:48 +0200
+Date:   Wed, 25 May 2022 12:37:47 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 3/7] scalar: validate the optional enlistment
- argument
-In-Reply-To: <xmqqsfoyhgqe.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2205251224560.352@tvgsbejvaqbjf.bet>
-References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>        <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>        <da9f52a82406ffc909e9c5f2b6b5e77818d972c0.1652210824.git.gitgitgadget@gmail.com>        <220517.867d6k6wjr.gmgdl@evledraar.gmail.com>
-        <xmqqbkvuwxps.fsf@gitster.g>        <220520.86fsl43bkf.gmgdl@evledraar.gmail.com>        <nycvar.QRO.7.76.6.2205201753300.352@tvgsbejvaqbjf.bet>        <220521.86leuv199g.gmgdl@evledraar.gmail.com>        <xmqqleuuazew.fsf@gitster.g>       
- <nycvar.QRO.7.76.6.2205241423260.352@tvgsbejvaqbjf.bet>        <220524.86h75ex01s.gmgdl@evledraar.gmail.com> <xmqqsfoyhgqe.fsf@gitster.g>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        Ed Maste <emaste@FreeBSD.org>
+Subject: Re: [PATCH] ci: update Cirrus-CI image to FreeBSD 13.0
+In-Reply-To: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2205251236380.352@tvgsbejvaqbjf.bet>
+References: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/mQlcWKsvhfysCRCMZjNOGmGFygmP0DxX1sXJYlXb6ZRVivfIno
- qUG1IV8Mb/aRBn28TCrkpU38YYhQkSCF6X8cpDYOSaLmmciHybDS9gphBVnuKzqskJ0Jz5c
- KRSB6XcQDJtOLfE1vXUKlFaODWlky8nVvzxJC3RP/Gh3t8xLFGZx1ly3lgRKGs7a2uVHO7k
- 7F0XYHRINlaCyPQK8D/xA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PuXg+SgG9D4=:Epo1lNQOGvQwXNUjDRhxy8
- qg7I14QHZ4BI/f4yUR4BzY4meGxgCc4kHI/SbOjY1FI/lNSgjY6JaqiiPcUR/14cHuS3Q03x8
- LDCL/j98IsyxkwZJDJBeLBmNP12LbkSuFIlIlF/8sWkrBPP5xsxqc3RmAnXsGvLHfbghOLnJf
- oDugzopISG3hwcL9uiticbEtxGZEtrOSfFPTJz+qhwg+4mrMrsD4S7WzE+J0t7GhdWB/1Oq8K
- Rv9MNY0qSStpKMMO03sk5lyn/azh3SgJDjgfInr02m6/bfPjY0qFVAonXg15i2NHNNJfqhK19
- lj1VOKgFlO5LkzofCXdow7M1ya206c+2d/8zQrfe2m/zUTTL7v6yhHDLIm1gEnFMSGpgIWKJa
- PoBlFfj7zaYsY/VafBajQs9o9+7u/TR/TFrDB6mOFWDw+3/NeRXQDO+V4t74gwbpnpOvU4mEr
- MKf7sExaD++yaaVk7P3KUTj6mdCoeVduFbeLeOrqQMprKcSZ9tJR2wAsA6rpI631ycj8HuoFb
- Z2ZN2b+fdvwmK3OzhU5D1Vpjfx97w2RUASQyAq4OAOCkkLQdu1x7bRyZ0SJR9LkARgwTmkust
- ar6VWdSLxeFge/U40Gebc5jbA5tXMBOHB818kAb5yZFQtBVW+5j/9iBnLRO8eCQrSqebGlwzj
- uWbHxv6ikOk44mlVP2u3LddnC22PLQiboauj8LyKEiHjnLSOY9E9OAWpPnR7SbL9DcENUc327
- My2PJkwqxLsUvzwccWP7onC1N3523iODhY5FVPVRYu/Y/yvEivJ1sEpJ87vxAWSHV/ZOvH0yp
- S4yc8G/C9P3Y05Z7B/SY0XX4IfAgoMBoDq1VvrIvaWPrE86gjsLLdL5gj2Tpsu1xOPpl0l7U2
- F/dSGxYjpPVXbKdG5RwUMDxDudXOWPW8zLUVTiSncKTHX4tvj6WqB+6KpSswj9yYDu/M6FAtb
- yMq1tTcS9i81KBFznsNZSMwfSmkZWPbHNOmsNiJwZBFF4IGQCUEZaa7/dSdMoqgc1VT7439so
- h8zQZGUhu8sarktgNJq0STCEB2cXs+oBN7qoi6tcMMtj85QiTfJ5mcz0Na2fT/OgRaeKFwFjn
- tU/XiZZsY+JyiFGYW+Rbj5PTHL+vuqHI3WMUrAmp98RTTOOcuyguMxFpA==
+X-Provags-ID: V03:K1:rkJ0H/rprD95QPyc18KWdM8zm6074OyP9kCVGLqt342lTnTLkkY
+ 3C0UX5HMduIckTM8ICuZSrQIUStHJSYsvJDNT9bS999ZCViOGeGKasQSO0HPX3mQXWYku7K
+ 5GbIG8u8ptXGDD6ImJzR4Mq/UaMh01OFS9rV+p9crmoHtH38sdXRAS8g5ypiW9abcJdWTtG
+ C8si370c90P7MAZYyL6YQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XZ8UY7Z5MPQ=:jUIegST6oqftieTtB3xm8C
+ HVZSEP3hTnVrB28WvyzQz7nBu2bczPYxFoUNgTAwJg/6UNTHnlC2CUV2C9nHpRn95xEAPofZi
+ /EWz2XVdutD8sisReI7bW8q9UBE4Gof6zlPprDtpQOV4Kv0OpEKlGVbKYla/yMP2i4B1AKrDx
+ kmT+HCcYFnHFcPhrA262vJhK6RHDUBRutMqlJoC/tkK3OIpx6jMhln9+P4GBUkp4zH2Zx1wOw
+ ye2VrimAgd2ZAMfa2u0CqTjE4VdWGEdWheM4r4X5wxxnkBNCAKV3kqgudM12p+BLPEaARP/Yi
+ mu+ggLZ1TTKhvN2MsXPfuQ7/Py3lxnsXH5GDItTZTmgUqniRFxfL8vvFahcshWZ83XgBGX4/C
+ tTI8VTtuB+IZwavvMmTadsztjCuqPQCr76DmEVs23ciIO4/Sf1ky/nD3c828DJZbN29egDGmk
+ qmI+oNG4PJz6bmI3WLx/nak/yWtsxCI2/MBJsAFxenXeWjQCgmuaA+I1oJtR0fq7T66NaOM2p
+ dYhYhBRnUaaOCOLPUgB34NjXemV0SfR75j5qSUVNE5SWkYhfZeE4SGy1akZAL0Qx8SAvoowp8
+ I+QqvPNJUlgWTQ1Ds+uUKE2pm+HYy9MwzQTvuY7IpSnUk/3eerTuQLngQZ/Tx7oCjbN0NOZ5L
+ Y4qL4S7zwWp40vniwNQsO4bG0LUFdCrupPRGgbLK4YiNoufJz4soUomZfqQbNXOkHh0bRhr31
+ gqtyBBzSSEOl+TSj4q7Y1tHZi260AXbtHAq892R2owSPbu8eSpMeUVOPsTIt68rZ9x77miHQr
+ JkqyF5FksQGONf86kcXeMXoVw8lfp6DfZejZumTVRBWvbjioBFV57e+qca6lAZzPsDhmntNWy
+ 3ru+NPPuvZ7u3VScHS6okrSw/P9hH/6EEAgkAvNLphynIWyqHRAJ2++8eYkXZyX1WkXfSGXRo
+ OM6S6ssqk3QhZLbLVro7V1WlbnLXqv/aJuNbNI9js8VqCYLkcm9or4ET5qIxfz3LZP7ev4PJ5
+ 3kn2zMfdBWHcwiMMg3xkkOhbbzEzyLQ//WIEBI8YFsjKcP+ou1dnhx3CyLa/vrTOYtoQvDSsG
+ iP3ydCkSkAKrbAfTnF6eTYwwdbm2Z5jmnMqBZ7kf2A1F7ihmHDeleIw2Q==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Philippe,
 
-On Tue, 24 May 2022, Junio C Hamano wrote:
+On Tue, 24 May 2022, Philippe Blain wrote:
 
-> We can stop arguing and instead send in a reroll that squashes in
-> something like this, which shouldn't be controversial, I would say.
+> The FreeBSD CI build (on Cirrus-CI) has been failing in
+> 't9001-send-email.sh' for quite some time, with an error from the
+> runtime linker relating to the Perl installation:
 >
->  t/test-lib-functions.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git i/t/test-lib-functions.sh w/t/test-lib-functions.sh
-> index 93c03380d4..8899eaabed 100644
-> --- i/t/test-lib-functions.sh
-> +++ w/t/test-lib-functions.sh
-> @@ -1106,7 +1106,7 @@ test_must_fail_acceptable () {
->  	fi
->
->  	case "$1" in
-> -	git|__git*|test-tool|test_terminal)
-> +	git|__git*|scalar|test-tool|test_terminal)
->  		return 0
->  		;;
->  	*)
->
->
->
->
+>     ld-elf.so.1: /usr/local/lib/perl5/5.32/mach/CORE/libperl.so.5.32: Un=
+defined symbol "strerror_l@FBSD_1.6"
 
-It is still wrong to adjust Git's test suite for a user that is not part
-of Git proper. But if your pragmatism says that this is the only way we
-can venture on to more productive venues, I won't argue against that :-)
+Thank you for taking care of this. It has been bugging other GitGitGadget
+users as well.
 
-Ciao,
+>
+> The first instance is in t9001.6 but it fails similarly in several tests
+> in this file.
+>
+> The FreeBSD image we use is FreeBSD 12.2, which is unsupported since
+> March 31st, 2022 [1]. Switching to a supported version, 13.0,
+> makes this error disappear [2].
+>
+> Change the image we use to FreeBSD 13.0.
+
+I like this minimal fix, and would be fine with using 12.3 instead (as
+Carlo suggested), too.
+
+Thank you!
 Dscho
