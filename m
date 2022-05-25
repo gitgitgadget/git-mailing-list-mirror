@@ -2,67 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEE79C433FE
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 07:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D5BEC433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 07:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244169AbiEYHtI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 03:49:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32830 "EHLO
+        id S231315AbiEYHyH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 03:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231888AbiEYHs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 03:48:58 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6399B7A810
-        for <git@vger.kernel.org>; Wed, 25 May 2022 00:48:57 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id gk22so544017pjb.1
-        for <git@vger.kernel.org>; Wed, 25 May 2022 00:48:57 -0700 (PDT)
+        with ESMTP id S229645AbiEYHyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 03:54:03 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C37057C162
+        for <git@vger.kernel.org>; Wed, 25 May 2022 00:54:02 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id r71so18314055pgr.0
+        for <git@vger.kernel.org>; Wed, 25 May 2022 00:54:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5EztO6NT6S9gS4QZlUqQ9zIawps0Bt1Jm80NRz458oc=;
-        b=ZTzzcwNbSv7rMkF0MBj4SuuhVvojyQx4hJk9LHrhmT5BRq0f6K12PU143EcyuI5hPz
-         iCLRQG46R1m1XVePlSp3GziNecbKaB9KaW1hWsJFvWrwaGbyjfxb0x4P0rYPK/2sfiPU
-         Ef+sp8NmG60kTij5mz6oKWuc6wOdbiurisBf6hDFz0nkDVzzH9MiUwonyNavjWHoCTKz
-         kjLNIBp86YCPb04b/mKvNAKVtjD00gdMr7s6crVoQDVQdfCU2UFxnDfu1rYyyc13fBaX
-         VPmfJqZ9p8SZxPgLFbx+O0IeoZ58J3UBIFl7Brty7mWqQLxn6B/MelwyST/4Shvy9ziv
-         8sAg==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=po+vVlmqDRrn3lCTQVM9smkLcJ9MahLxh1lt6bpl328=;
+        b=KTKsfoRnHONXl5Ye4HFeqZexFwre5HJFO7IyInOZI8gfhH65q0tOfgy4HdNXgD1w2o
+         lMAjtMLjR6aDSH30NW2FtmsnuuGUEfkUWyN/g9faMIwh4z9V90bqsnucL7QDip4Wksj7
+         kwQ8bVvVi4kMGhscUQvL7UA/EWyk7B02WdAnGSVOCwYfwe1ybOVDZ+xXMdHMYdAKHvZS
+         2ywONAD9rwrMiAjfhXfjGfIPnd+nufGv1OOUDOPAeEESWIikG4p86DfVN8WP7lfBBltS
+         bXsk2FPUjKnNiMlamVf1mpzfq21pgNt37zwdlRvusQCX7VVrh9TXffPQxi3mR92kXthD
+         JwfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5EztO6NT6S9gS4QZlUqQ9zIawps0Bt1Jm80NRz458oc=;
-        b=Xy4zWcRvfa0+ev7ZV0aC4vaLh3KmZDsFNZ1JCf+7gDIS6irqooGms7qXgth0PlmmpD
-         ++34ggrGZQkWVNZDyc7mBK2Ah7EJf3IThf/x2fsvw/SMAKzs5/0mDm7c2m4I3IcGIIYp
-         GbfMvFA1j1DJutkpWHqSvBODQ9TP2Yg08qHgwrCIFIh9rBWBjplbjuicWDQi0MaI7hfL
-         KzRFc+pbuoZVg50jqLxxNjV8u4YMH/BKmHWw5uHOnhAVAgKLqoRoRNUyPpRhuLLfgH1X
-         GxpPUgMxVKvcGMGE3tAgKIH84Cun/5hycVeAdmrb4r4ogKmJz9BymmRKIh0xuJGqgl3w
-         0dDg==
-X-Gm-Message-State: AOAM531kg584QZIPmaePLBHuHJg0iMIHCXQxSATZAha6y1srw4WbGdku
-        EqUmoVsbYbBZnE+MfhPNtno=
-X-Google-Smtp-Source: ABdhPJwKRIBYqDmt3Qz52kOm178TNJgNLTt0vJfGyvNtVdsOlef9Ps/t1JfGa9YnygygPS0i4z4CQA==
-X-Received: by 2002:a17:902:d483:b0:161:b6a3:4dba with SMTP id c3-20020a170902d48300b00161b6a34dbamr32158762plg.155.1653464936679;
-        Wed, 25 May 2022 00:48:56 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=po+vVlmqDRrn3lCTQVM9smkLcJ9MahLxh1lt6bpl328=;
+        b=RT0nuG8zJkUZET9kBylK1HbPVtEtquV0i3A57d0pnUifJTvmm3NDoMDxK0a9xF8O3o
+         9PPNUWySVvUbS7CkSWsfY953C8adpAhCL6Pnbi1DuR9tTCH8iDtWI9uX20q6OVwVpwA1
+         Pa8tqek4s57rvjZmGKF9IG5+9OX2zeIzu4CXk2Z2VzOc30ygwb3lUCStqqS5zFs9pt5G
+         JGVasTVMgTgXeC42cmzeISAt6gdCP0L0xFRa/mNBJOBuWP7kXn3gy0UjGvyByb1tXDSG
+         CI0Fa2Dx2LVybYroLfXtNan+ejqDjFtM7gmZagqH0uWUaAgOVuJjmkqyNWTyd85psJEF
+         ECBw==
+X-Gm-Message-State: AOAM533tUCvgke7yYlgoffUwg8l3V8vq8ryPR/wWBCrZ+PXddePiTu60
+        RT1PxiWU2/4dqTQksx4HZ2c=
+X-Google-Smtp-Source: ABdhPJwllSnpaGgQK0B0eGy/GaQApMYVtuFeWGGrIobu2ltTpDXZjhgiDSYvTXAzPN6hM1KhS7c0Gw==
+X-Received: by 2002:a63:2026:0:b0:3fa:cefb:e408 with SMTP id g38-20020a632026000000b003facefbe408mr3137447pgg.57.1653465242159;
+        Wed, 25 May 2022 00:54:02 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:52ba:872d:8735:1c87])
-        by smtp.gmail.com with ESMTPSA id x64-20020a628643000000b0050e006279bfsm10568391pfd.137.2022.05.25.00.48.55
+        by smtp.gmail.com with ESMTPSA id ig12-20020a17090b154c00b001df54afccb3sm1076431pjb.6.2022.05.25.00.54.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 00:48:56 -0700 (PDT)
-Date:   Wed, 25 May 2022 00:48:54 -0700
+        Wed, 25 May 2022 00:54:01 -0700 (PDT)
+Date:   Wed, 25 May 2022 00:53:59 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, derrickstolee@github.com,
-        gitster@pobox.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: Re: [PATCH v5 02/17] pack-mtimes: support reading .mtimes files
-Message-ID: <Yo3fZkpkCLPbAC8B@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
+        larsxschneider@gmail.com, tytso@mit.edu
+Subject: Re: [PATCH v5 00/17] cruft packs
+Message-ID: <Yo3gl5Wv82mTZQb2@google.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1653088640.git.me@ttaylorr.com>
- <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
- <Yo0ysWZKFJoiCSqv@google.com>
- <Yo1aaLDmPKJ5/rh5@nand.local>
+ <220521.868rqv15tj.gmgdl@evledraar.gmail.com>
+ <Yo00X0NEu8N0MnZV@google.com>
+ <Yo1TIQqvlxhvLZ58@nand.local>
+ <220525.86sfoytwjn.gmgdl@evledraar.gmail.com>
+ <Yo1YZM2dI6t+RsWv@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Yo1aaLDmPKJ5/rh5@nand.local>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Yo1YZM2dI6t+RsWv@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -70,141 +75,33 @@ X-Mailing-List: git@vger.kernel.org
 Hi,
 
 Taylor Blau wrote:
-> On Tue, May 24, 2022 at 12:32:01PM -0700, Jonathan Nieder wrote:
+> On Tue, May 24, 2022 at 11:55:02PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
->> Makes sense.  Does this intend to produce any functional change?  I'm
->> guessing not (and the lack of tests agrees), but the commit message
->> doesn't say so.
-[...]
-> This does not produce a functional change, no. This commit in isolation
-> adds a bunch of dead code that will be used (and tested) in the
-> following patches.
-[...]
->> What does mtimes_map contain?  A comment would help.
->
-> It contains a pointer at the beginning of the mmapped region of the
-> .mtimes file, similar to revindex_map above it.
+>>> Moreover, I can't seem to find any formats that _don't_ use that
+>>> convention.
+>>
+>> It's used in the reftable format.
 
-To be clear, in cases like this by "comment" I mean "in-code comment".
-I.e., my interest is not that _I_ find out the answer but that the
-code becomes more maintainable via the answer becoming easier to find.
+It's also used in the formats described in
+Documentation/technical/hash-function-transition.
 
 [...]
->> This seems simple enough that it's not obvious we need more code
->> sharing.  Do you agree?  If so, I'd suggest just removing the
->> NEEDSWORK comment.
->
-> Yeah, it is conceptually simple, though it feels like the sort of thing
-> that could benefit from not having to be written once for each
-> extension (hence the comment).
+> Sounds good. Unless others have a very strong opinion, let's leave it as
+> is.
 
-The reason I asked is that the NEEDSWORK here actually got in the way
-of comprehension for me --- it made me wonder "is there some
-complexity here I'm missing?"
+File formats are one of those things where a little time early can save
+a lot of work later.  If there were a strong reason to use "1" and "2"
+here then I'd be okay with living with it --- I'm a pragmatic person.
+But in general, using the magic numbers instead of a sequential value is
+really helpful both in making the file formats more self-explanatory and
+in making it possible to experiment with multiple new hash_algos at the
+same time.
 
-That's why I'd suggest one of
-- removing the NEEDSWORK comment
-- going ahead and implementing the code sharing you mean, or
-- fleshing out the NEEDSWORK comment so the reader can wonder less
+The main argument I'm hearing for using "1" and "2" is "because some
+other formats got that wrong".  That reason is the opposite of
+compelling to me: it makes me suspect that as a project we should more
+eagerly break the old bad habits and form new ones.  I guess this
+qualifies as a very strong opinion.
 
->>> +
->>> +#define MTIMES_HEADER_SIZE (12)
->>> +#define MTIMES_MIN_SIZE (MTIMES_HEADER_SIZE + (2 * the_hash_algo->rawsz))
->>
->> Hm, the all-caps name makes this feel like a compile-time constant but
->> it contains a reference to the_hash_algo.  Could it be an inline
->> function instead?
->
-> Yes, it could be an inline function, but I don't think there is
-> necessarily anything wrong with it being a #define'd macro. There are
-> some other examples, e.g., RIDX_MIN_SIZE, MIDX_MIN_SIZE,
-> GRAPH_DATA_WIDTH, and PACK_SIZE_THRESHOLD (to name a few) which also use
-> the_hash_algo on the right-hand side of a `#define`.
-
-Those are due to an incomplete migration from use of the true constant
-GIT_SHA1_RAWSZ to use of the dynamic value the_hash_algo->rawsz, no?
-In other words, "other examples do it wrong" doesn't feel like a great
-justification for making it worse in new code.
-
-[...]
->>> +static int load_pack_mtimes_file(char *mtimes_file,
->>> +				 uint32_t num_objects,
->>> +				 const uint32_t **data_p, size_t *len_p)
->>
->> What does this function do?  A comment would help.
->
-> I know that I'm biased as the author of this code, but I think the
-> signature is clear here. At least, I'm not sure what information a
-> comment would add that the function name and its arguments don't already
-> convey.
-
-Ah, thanks for this point of clarification.  What isn't clear from the
-signature is
-- when should I call this function?
-- what does its return value represent?
-- how does it handle errors?
-
-I agree that the parameters are self-explanatory.
-
->>> +cleanup:
->>> +	if (ret) {
->>> +		if (data)
->>> +			munmap(data, mtimes_size);
->>> +	} else {
->>> +		*len_p = mtimes_size;
->>> +		*data_p = (const uint32_t *)data;
->>
->> Do we know that 'data' is uint32_t aligned?  Casting earlier in the
->> function could make that more obvious.
->
-> `data` is definitely uint32_t aligned, but this is a tradeoff, since if
-> we wrote:
->
->     uint32_t *data = xmmap(...);
->
-> then I think we would have to change the case where ret is non-zero to be:
->
->     if (data)
->         munmap((void*)data, ...);
->
-> and likewise, data_p is const.
-
-Doing it that way sounds great to me.  That way, the type contains the
-information we need up-front and the safety of the cast is obvious in
-the place where the cast is needed.
-
-(Although my understanding is also that in C it's fine to pass a
-uint32_t* to a function expecting a void*, so the second cast would
-also not be needed.)
-
-[...]
->>> +int load_pack_mtimes(struct packed_git *p)
->>
->> This could use a doc comment in the header file.  For example, what
->> requirements do we have on what the caller passes as 'p'?
->>
->> [...]
->>> +uint32_t nth_packed_mtime(struct packed_git *p, uint32_t pos)
->>
->> Likewise.
->
-> Sure. I wonder when we should do that, though. I'm not trying to be
-> impatient to get this merged, but iterating on the documentation feels
-> like it could be done on top without having to re-send the substantive
-> parts of this series over and over.
-
-In terms of re-sending patches, sending a "fixup!" patch with the
-minor changes you want to make doesn't seem too problematic to me.  In
-general a major benefit of code review is getting others' eyes on new
-code from the standpoint of readability and maintainability; including
-comments like this up front doesn't seem like a huge amount to ask
-(versus getting those comments to be perfect, which would be
-unreasonable to expect since it's not hard to update them over time).
-
-> Thanks,
-> Taylor
-
-Thanks for looking it through.
-
-Sincerely,
+Thanks,
 Jonathan
