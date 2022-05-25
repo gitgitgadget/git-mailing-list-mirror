@@ -2,190 +2,405 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E16A4C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 09:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CEC5C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231750AbiEYJhW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 05:37:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45578 "EHLO
+        id S239221AbiEYKE2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:04:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236350AbiEYJhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 05:37:19 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F77C5F4D
-        for <git@vger.kernel.org>; Wed, 25 May 2022 02:37:18 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id rs12so28756199ejb.13
-        for <git@vger.kernel.org>; Wed, 25 May 2022 02:37:17 -0700 (PDT)
+        with ESMTP id S230033AbiEYKE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 06:04:27 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 371576D84B
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:04:24 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id c9-20020a7bc009000000b0039750ec5774so3007827wmb.5
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=aaeXsdCSpLJ3JyviIVjc+xSyhtty0G1C7UUiHqh2K14=;
-        b=RKWesmGLwsVgRQcQjQTIbNhznQg8pgthvzve2kqdtOEGTbG7LpMxlrJ1tgNEfV9ZBs
-         DdyX0Rmn5jr5Ga3+3RW+q3ufBQmy18zVxJ3+9JQpGJIsRVfTTj2MuWvUNQNl3nURhd3E
-         tRv/uqE/S/sywwLx7/7VUVVuhqz/c+hlBDoXx8WBD1Gfs9qBaqOZjyfQBBT7itJ0wXTl
-         fpqAiOWgo/Cp8+HT9GMpy0KN36dFhfxC3DWQFTpY3xsnJ2LhjgwJ4NVLhCMBE+M5Mvm/
-         W1q1VpWC/WIuG/UhPQw11Lip+Aottj+eVvx6nJ20LHbZBih4MaEwirOAHliJVbYtJlNh
-         UX4g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2ns6obRq4kNkwGpc/+ioHIGMKVirKKf+Je0HKhrnH+4=;
+        b=J9k6M6i7rl4z09nyC3JYmcjgYbHRo9uo65N8c+5br5K7Z1Rq927K3uzMlY7mjLyo4j
+         38e8eoGjr2Lb9aEBVuVatUmPZOc2jwWf5Yp8aMVqy/3ct2uOWVv26adv1tr5O+8Cwkj1
+         /uyhFi4K/Yk6mvSoc4iFAJVXEYDB+ArySTGyS/FyYTxvyC8jv4rITIzCuKrSZeWaaIlu
+         d1dOCeVVLeoZysB72DGFkVYl4AA439qBMjAIueooVa80p0IiSjrDsVpni654NFxdcrfX
+         dGWEa6rwmywomlfTWYSafYJ9u297q56OMAvw2oUmDsVUhcnaE13Sq4EtZTvcM3qQDQ0Q
+         K2kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=aaeXsdCSpLJ3JyviIVjc+xSyhtty0G1C7UUiHqh2K14=;
-        b=6INg4QqgtmokAnzfuUYhFVryKwYukI+aHvjWZYufQ/xU71mTzYUPvHU+zwDMj66MPW
-         GTovM7OULuVNeBhtY4GrqWCIpRhKc8koZonRYvcQ7zLV08AH9g1QRQ89prAdd8sbZHlB
-         9yUAcZvEqNnBRVAjSRaCnXL6sYVl0BlpyY5rWmIEAbJBHxNPlUPBkHvaz3cfZCHqrT9V
-         qeyoPg7tgF6W1tpZNLAwPVq/VrOAIbI3hIfOey+f27DJtSLsSJyZ1CqOuF931qgEK+yB
-         3jDxK3mRRKz9BYnNm91XCgal137rueLi4VADe4Wc7ro8L7sxHwG41Y2E/vNXz7b//lFe
-         wlJw==
-X-Gm-Message-State: AOAM533VQJXhSkD90o6EMiz0k8OrubeNSy6l7jzVycfWmB7zS1i0wan1
-        vrlnT1EBH9jdTcqS+uqcJfE=
-X-Google-Smtp-Source: ABdhPJx2mnO1Hl516qdT1XwG+eKw6/2O6IAkzSEU/xSHYdkZy/wr4oDyeReTAA5QZADHtaKPLy4t3w==
-X-Received: by 2002:a17:907:7245:b0:6ff:18be:3db6 with SMTP id ds5-20020a170907724500b006ff18be3db6mr218356ejc.198.1653471436409;
-        Wed, 25 May 2022 02:37:16 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id fg22-20020a1709069c5600b006feb002a620sm5384800ejc.1.2022.05.25.02.37.15
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2ns6obRq4kNkwGpc/+ioHIGMKVirKKf+Je0HKhrnH+4=;
+        b=5Sz5aloIhLPmvWS/FGeDinX9hNZzZTpxQwWHwDyidqChCsrjZEjL5FnlDxMblUSnMP
+         SLG9NXaXMIH1eTENFkanA/XZFAPIvl9i9ageRX1QgCOOfRtsHeWfK8W4FvfSoOMTjmur
+         3apUrWzOV5SXERrir3aNC4+NrPSBRuasYjvG1y/cjWd4a8DSAM7yNptYXqnRu5nz56th
+         V6GB/nR5n2OrLz3sAiHGtINhc+JnuLyV/o/1qFFUwJB5OSt5VU4xE8Jsz5E0HNGixFFI
+         dcPLZDSQXMaOMbpMKuueK33aK89ktkErtIPlywRmWxJkIUVDT37s3gdApTK0OiMvbx+b
+         9Ilg==
+X-Gm-Message-State: AOAM533rMT+qXviJGL5JksdyWvXU4Q5hlPc0xfK/HpQoP0voNTJAILI7
+        SNvwgui+LN49In/KTXc7EOSpB9P+wYivOw==
+X-Google-Smtp-Source: ABdhPJwMA1+wR1nDubhAE8R+nv2JM7MNPpuKF59avi88SDsrGXv/oASKLNPK0osoehxHwDkKS/+FyQ==
+X-Received: by 2002:a7b:c109:0:b0:397:43ef:b66f with SMTP id w9-20020a7bc109000000b0039743efb66fmr7355122wmi.44.1653473051817;
+        Wed, 25 May 2022 03:04:11 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.04.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 02:37:15 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ntnS7-003hOr-5n;
-        Wed, 25 May 2022 11:37:15 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     rsbecker@nexbridge.com, 'Jonathan Nieder' <jrnieder@gmail.com>,
-        git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
-        larsxschneider@gmail.com, tytso@mit.edu
-Subject: adding new 32-bit on-disk (unsigned) timestamp formats (was: [PATCH
- v5 02/17] pack-mtimes: support reading .mtimes files)
-Date:   Wed, 25 May 2022 11:11:05 +0200
-References: <cover.1638224692.git.me@ttaylorr.com>
-        <cover.1653088640.git.me@ttaylorr.com>
-        <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
-        <Yo0ysWZKFJoiCSqv@google.com>
-        <015d01d86fa6$a10519f0$e30f4dd0$@nexbridge.com>
-        <Yo1bUbys+Fz7g+6h@nand.local>
-        <016e01d86fc5$64ecf180$2ec6d480$@nexbridge.com>
-        <Yo1zW7ntTuNakpOD@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <Yo1zW7ntTuNakpOD@nand.local>
-Message-ID: <220525.86o7zmt0l0.gmgdl@evledraar.gmail.com>
+        Wed, 25 May 2022 03:04:11 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v6 00/29] CI: run "make" in CI "steps", improve UX
+Date:   Wed, 25 May 2022 12:03:39 +0200
+Message-Id: <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1045.gf356b5617dd
+In-Reply-To: <cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com>
+References: <cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This series changes CI "step" targets that are shellscripts that do N
+things to instead be single command invocations at the "step" level,
+driven by the CI recipe itself.
 
-On Tue, May 24 2022, Taylor Blau wrote:
+To do that we need to pass state that we previously re-setup for every
+"step" via $GITHUB_ENV, whose state we then helpfully show (this is just
+a standard GitHub CI feature) in a drop-down at the start of every
+"step".
 
-> On Tue, May 24, 2022 at 07:24:14PM -0400, rsbecker@nexbridge.com wrote:
->> On May 24, 2022 6:25 PM ,Taylor Blau write:
->> >On Tue, May 24, 2022 at 03:44:00PM -0400, rsbecker@nexbridge.com wrote:
->> >> I am again concerned about 32-bit time_t assumptions. time_t is 32-bit
->> >> on some platforms, signed/unsigned, and sometimes 64-bit. We are
->> >> talking about potentially long-persistent files, as I understand this
->> >> series, so we should not be limiting times to end at 2038. That's only
->> >> 16 years off and I would wager that many clones that exist today will=
- exist then.
->> >
->> >Note that we're using unsigned fields here, so we have until 2106 (see =
-my earlier
->> >response on this in https://lore.kernel.org/git/YdiXecK6fAKl8++G@nand.l=
-ocal/).
->>
->> I appreciate that, but 32-bit time_t is still signed on many
->> platforms, so when cast, it still might, at some point in another
->> series, cause issues. Please be cautious. I expect that this is the
->> particular hill on which I will die. =F0=9F=98=89
->> --Randall
->
-> Yes, definitely. There is only one spot that we turn the result of
-> nth_packed_mtime() into a time_t, and that's in
-> add_object_in_unpacked_pack(). The code there is something like:
->
->     time_t mtime;
->     if (pack->is_cruft)
->       mtime =3D nth_packed_mtime(pack, object_pos);
->     else
->       mtime =3D pack->mtime;
->
->     ...
->
->     add_cruft_object_entry(oid, ..., mtime);
->
-> ...and the reason mtime is a time_t is because that's the type of
-> pack->mtime.
->
-> And we quickly convert that back to a uint32_t in
-> add_cruft_object_entry(). If time_t is signed, then we'll truncate any
-> values beyond 2106, and pre-epoch values will become large positive
-> values. That means our error is one-sided in the favorable direction,
-> i.e., that we'll keep objects around for longer instead of pruning
-> something that we shouldn't have.
+I.e. at the tip of this series you can reliably look at that
+$GITHUB_ENV view to see what the full and relevant environment was for
+that "make", "make test" or whatever.
 
-I must say that I really don't like this part of the format. Is it
-really necessary to optimize the storage space here in a way that leaves
-open questions about future time_t compatibility, and having to
-introduce the first use of unsigned 32 bit timestamps to git's codebase?
+The only changes since v5 are to rebase this on an updated "master",
+which had some small fixes in the ci/ directory. For the last
+iteration see:
+https://lore.kernel.org/git/cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com/
 
-Yes, this is its own self-contained format, so we don't *need* time_t
-here, but it's also really handy if we can eventually consistently use
-64 time_t everywhere and not worry about any compatibility issues, or
-unsigned v.s. signed, or to create our own little ext4-like signed 32
-bit timestamp format.
+I'll follow this up with a re-roll of
+https://lore.kernel.org/git/RFC-cover-v5-00.10-00000000000-20220421T183001Z-avarab@gmail.com/
+which is a replacement for
+https://lore.kernel.org/git/pull.1117.v3.git.1653171536.gitgitgadget@gmail.com/
+based on this topic.
 
-Once we hit 2038 (or near that date) this would be the only part of our
-codebase & on-disk formats that I'm aware of that would differ from
-time_t's signedness, but perhaps there's some I've missed.
+To view the CI output differences this topic makes see these two runs:
 
-If there isn't a demonstrable reason (as in some real numbers, or
-accompanying benchmark etc.) to special-snowflake this I really think we
-should just go for signed 64 bit here, i.e. matching time_t on 64 bit
-systems.
+  master: https://github.com/avar/git/actions/runs/2377697338
+  this: https://github.com/avar/git/actions/runs/2377257487
 
-If we really are trying to micro-optimize storage space here I'm willing
-to bet that this is still a bad/premature optimization. There's much
-better ways to store this sort of data in a compact way if that's the
-concern. E.g. you'd store a 64 bit "base" timestamp in the header for
-the first entry, and have smaller (signed) "delta" timestamps storing
-offsets from that "base" timestamp.
+These runs have a commit on top to trigger CI build and test failures
+in various areas. One example is here:
 
-This would take advantage of the fact that when we find loose objects
-we're vanishingly unlikely to have them splayed over more than a
-days/weeks/months or in the worst case small number of years from the
-"base" (and if we ever do we could simply shrug and leave such objects
-out of the pack entirely).
+ master: https://github.com/avar/git/runs/6573059000?check_suite_focus=true
+ this: https://github.com/avar/git/runs/6571804790?check_suite_focus=true
 
-We could thus keep the 32 bit second-resolution timestamps you have
-here, they'd just be signed deltas to the 64 bit signed "base" in a
-header.
+This shows that we fail on "make" instead of a monolothic
+"ci/run-build-and-test.sh" step. Furthermore we can see that a
+preceding "ci/lib.sh --build" step has been added to set & export (via
+$GITHUB_ENV) the full set of variables "make" will use in the failing
+step. Those are then visible at (click to expand it):
 
-Even better (again, if micro-optimizing this is really needed) would be
-to store a 64 bit signed base and a table of 16 bit signed offsets.
+  https://github.com/avar/git/runs/6571804790?check_suite_focus=true#step:5:1
 
-We'd simply declare that for our expiry times we'd "snap" any such
-values to the next day. Our current GC config exposes down-to-the-second
-expiry times, but in practice nobody needs that. A 16 bit signed "day
-offset" would give you 2^15/365 =3D 89 years +/- of day-resolution expiry
-for objects. To avoid thundering herds we could even fake up an exact
-down-to-the-second expiry on the computed day by combining the expiry
-time & the first few bits of the OID.
+For every step we now do the same, i.e. it's immediately obvious what
+parameters go into running that step. The last step in this series
+then makes it easy to run builds and tests "like CI" using the same
+tooling:
 
-=3D=3D BREAK
+	$ ci/lib.sh 
+	error: must set a CI jobname in the environment
+	usage: jobname=<job-name> [runs_on_pool=<pool-name>] ci/lib.sh (--build | --test)
 
-Aside about time_t being signed v.s. unsigned. This is edited from an
-older off-list E-Mail of mine (from git-security): For time_t itself no
-standard says that time_t must be signed, but in practice it's
-ubiquitous
+	Running ci/lib.sh outside of CI? You can use ci/lib.sh to set up your
+	environment like a given CI job. E.g.:
 
-This thread is informative
-http://mm.icann.org/pipermail/tz/2004-July/012503.html it continues the
-month after: http://mm.icann.org/pipermail/tz/2004-August/thread.html
+	        # run "make all test" like the "linux-leaks" job
+	        (eval $(jobname=linux-leaks ci/lib.sh --all) && make test)
 
-Summary: Yeah it can be unsigned in theory, but it seems like nobody's
-been crazy enough to try it, so it's de-facto standardized to
-signed. Everyone has a Y2038 problem, nobody has a Y2106 problem. Well,
-with time_t, e.g. Linux filesystems tend to use unsigned 32 bit epochs:
-https://kernelnewbies.org/y2038/vfs
+	        # run "make all test" like the "linux-musl" job
+	        (eval $(jobname=linux-musl ci/lib.sh --all) && make test)
+
+	        # run "make test" like the "linux-TEST-vars" job (uses various GIT_TEST_* modes)
+	        make && (eval $(jobname=linux-TEST-vars ci/lib.sh --test) && make test)
+
+	        # run "make test" like the "linux-sha256" job
+	        make && (eval $(jobname=linux-sha256 ci/lib.sh --test) && make test)
+
+	Note that some of these (e.g. the linux-musl one) may not work as
+	expected due to the CI job configuring a platform that may not match
+	yours.
+
+As noted in the usage this can then be directly eval'd:
+
+	$ jobname=osx-gcc ci/lib.sh --build 2>/dev/null 
+	MAKEFLAGS="j8 DEVELOPER=1 SKIP_DASHED_BUILT_INS=YesPlease PYTHON_PATH=/usr/bin/python3 CC=gcc"
+	export MAKEFLAGS
+
+Of course YMMV when doing so, running that on my Linux box won't
+magically give me an OSX environment. But it's very useful to be able
+to to e.g.:
+
+	jobname=linux-TEST-vars ci/lib.sh --test
+
+Which allows myself and others to tweak our local build scripts to
+test things locally with setups that mirror these CI setups as far as
+GIT_TEST_* etc. parameters are concerned.
+
+Ævar Arnfjörð Bjarmason (29):
+  CI: run "set -ex" early in ci/lib.sh
+  CI: make "$jobname" explicit, remove fallback
+  CI: remove more dead Travis CI support
+  CI: remove dead "tree skipping" code
+  CI: remove unused Azure ci/* code
+  CI/lib.sh: stop adding leading whitespace to $MAKEFLAGS
+  CI: don't have "git grep" invoke a pager in tree content check
+  CI: have "static-analysis" run a "make ci-static-analysis" target
+  CI: have "static-analysis" run "check-builtins", not "documentation"
+  CI: move p4 and git-lfs variables to ci/install-dependencies.sh
+  CI: consistently use "export" in ci/lib.sh
+  CI: export variables via a wrapper
+  CI: remove "run-build-and-tests.sh", run "make [test]" directly
+  CI: make ci/{lib,install-dependencies}.sh POSIX-compatible
+  CI: check ignored unignored build artifacts in "win[+VS] build" too
+  CI: invoke "make artifacts-tar" directly in windows-build
+  CI: split up and reduce "ci/test-documentation.sh"
+  CI: combine ci/install{,-docker}-dependencies.sh
+  CI: move "env" definitions into ci/lib.sh
+  ci/run-test-slice.sh: replace shelling out with "echo"
+  CI: pre-select test slice in Windows & VS tests
+  CI: only invoke ci/lib.sh as "steps" in main.yml
+  CI: narrow down variable definitions in --build and --test
+  CI: add more variables to MAKEFLAGS, except under vs-build
+  CI: set CC in MAKEFLAGS directly, don't add it to the environment
+  CI: set SANITIZE=leak in MAKEFLAGS directly
+  CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
+  CI: don't use "set -x" in "ci/lib.sh" output
+  CI: make it easy to use ci/*.sh outside of CI
+
+ .github/workflows/main.yml            | 101 +++---
+ Makefile                              |  31 +-
+ ci/check-directional-formatting.bash  |   2 +-
+ ci/check-unignored-build-artifacts.sh |  20 ++
+ ci/install-dependencies.sh            |  82 +++--
+ ci/install-docker-dependencies.sh     |  22 --
+ ci/lib-ci-type.sh                     |   6 +
+ ci/lib-online_cpus.sh                 |  26 ++
+ ci/lib-tput.sh                        |   5 +
+ ci/lib.sh                             | 424 ++++++++++++++++----------
+ ci/make-test-artifacts.sh             |  12 -
+ ci/mount-fileshare.sh                 |  25 --
+ ci/print-test-failures.sh             |  53 +---
+ ci/run-build-and-tests.sh             |  54 ----
+ ci/run-docker-build.sh                |  66 ----
+ ci/run-docker.sh                      |  47 ---
+ ci/run-static-analysis.sh             |  32 --
+ ci/run-test-slice.sh                  |  17 --
+ ci/select-test-slice.sh               |  13 +
+ ci/test-documentation.sh              |  37 +--
+ ci/util/extract-trash-dirs.sh         |  50 ---
+ shared.mak                            |   1 +
+ 22 files changed, 508 insertions(+), 618 deletions(-)
+ create mode 100755 ci/check-unignored-build-artifacts.sh
+ delete mode 100755 ci/install-docker-dependencies.sh
+ create mode 100644 ci/lib-ci-type.sh
+ create mode 100644 ci/lib-online_cpus.sh
+ create mode 100644 ci/lib-tput.sh
+ delete mode 100755 ci/make-test-artifacts.sh
+ delete mode 100755 ci/mount-fileshare.sh
+ delete mode 100755 ci/run-build-and-tests.sh
+ delete mode 100755 ci/run-docker-build.sh
+ delete mode 100755 ci/run-docker.sh
+ delete mode 100755 ci/run-static-analysis.sh
+ delete mode 100755 ci/run-test-slice.sh
+ create mode 100755 ci/select-test-slice.sh
+ delete mode 100755 ci/util/extract-trash-dirs.sh
+
+Range-diff against v5:
+ 1:  84d8098e365 =  1:  25cb08ad06c CI: run "set -ex" early in ci/lib.sh
+ 2:  3f5c071b0f6 =  2:  1be7910c728 CI: make "$jobname" explicit, remove fallback
+ 3:  c64845a4efb !  3:  234e248e831 CI: remove more dead Travis CI support
+    @@ ci/lib.sh: then
+     -	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
+     -	CI_REPO_SLUG="$GITHUB_REPOSITORY"
+      	CI_JOB_ID="$GITHUB_RUN_ID"
+    - 	CC="${CC:-gcc}"
+    + 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+      	DONT_SKIP_TAGS=t
+     @@ ci/lib.sh: then
+      	export GIT_PROVE_OPTS="--timer --jobs 10"
+ 4:  45856e67d5d !  4:  36a6287ee9b CI: remove dead "tree skipping" code
+    @@ ci/lib.sh: then
+     -	CI_BRANCH="$GITHUB_REF"
+     -	CI_COMMIT="$GITHUB_SHA"
+     -	CI_JOB_ID="$GITHUB_RUN_ID"
+    - 	CC="${CC:-gcc}"
+    + 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+     -	DONT_SKIP_TAGS=t
+     -
+     -	cache_dir="$HOME/none"
+ 5:  d4671148eb7 !  5:  66b0a383daf CI: remove unused Azure ci/* code
+    @@ ci/install-dependencies.sh: macos-latest)
+     -	test -z "$BREW_INSTALL_PACKAGES" ||
+     -	brew install $BREW_INSTALL_PACKAGES
+      	brew link --force gettext
+    - 	brew install --cask --no-quarantine perforce || {
+    - 		# Update the definitions and try again
+    + 	mkdir -p $HOME/bin
+    + 	(
+     @@ ci/install-dependencies.sh: Documentation)
+      	sudo apt-get -q update
+      	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make
+    @@ ci/lib.sh: export TERM=${TERM:-dumb}
+     +if test "$GITHUB_ACTIONS" = "true"
+      then
+      	CI_TYPE=github-actions
+    - 	CC="${CC:-gcc}"
+    + 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+     
+      ## ci/mount-fileshare.sh (deleted) ##
+     @@
+ 6:  45ea80d0495 !  6:  d96333c1bd8 CI/lib.sh: stop adding leading whitespace to $MAKEFLAGS
+    @@ ci/lib.sh: check_unignored_build_artifacts ()
+      if test "$GITHUB_ACTIONS" = "true"
+      then
+      	CI_TYPE=github-actions
+    - 	CC="${CC:-gcc}"
+    + 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+      
+     -	export GIT_PROVE_OPTS="--timer --jobs 10"
+     +	export GIT_PROVE_OPTS="--timer --jobs $NPROC"
+ 7:  a264b40ba0d =  7:  d0780ab4a96 CI: don't have "git grep" invoke a pager in tree content check
+ 8:  4a58f7be8d4 =  8:  84e368736e2 CI: have "static-analysis" run a "make ci-static-analysis" target
+ 9:  78c0c81af43 =  9:  1a9c98b909c CI: have "static-analysis" run "check-builtins", not "documentation"
+10:  07e36035a1e ! 10:  e208a9ab1e2 CI: move p4 and git-lfs variables to ci/install-dependencies.sh
+    @@ ci/install-dependencies.sh
+      
+      . ${0%/*}/lib.sh
+      
+    --P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
+    +-P4WHENCE=https://cdist2.perforce.com/perforce/r$LINUX_P4_VERSION
+     -LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
+      UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
+       tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
+    @@ ci/install-dependencies.sh
+     +	GIT_LFS_PATH="$HOME/custom/git-lfs"
+     +	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
+     +
+    -+	P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
+    ++	P4WHENCE=https://cdist2.perforce.com/perforce/r$LINUX_P4_VERSION
+     +	LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
+     +
+      	sudo apt-get -q update
+11:  272bd590a95 ! 11:  9655bae9e21 CI: consistently use "export" in ci/lib.sh
+    @@ ci/lib.sh: export TERM=${TERM:-dumb}
+      if test "$GITHUB_ACTIONS" = "true"
+      then
+     @@ ci/lib.sh: then
+    - 	CC="${CC:-gcc}"
+    + 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+      
+      	export GIT_PROVE_OPTS="--timer --jobs $NPROC"
+     -	export GIT_TEST_OPTS="--verbose-log -x"
+12:  ea35327e24c ! 12:  2da0aa1d40e CI: export variables via a wrapper
+    @@ ci/lib.sh: check_unignored_build_artifacts ()
+      NPROC=10
+     @@ ci/lib.sh: then
+      	CI_TYPE=github-actions
+    - 	CC="${CC:-gcc}"
+    + 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+      
+     -	export GIT_PROVE_OPTS="--timer --jobs $NPROC"
+     +	setenv --test GIT_PROVE_OPTS "--timer --jobs $NPROC"
+13:  f6ff81f48ab ! 13:  6e97633652e CI: remove "run-build-and-tests.sh", run "make [test]" directly
+    @@ ci/install-dependencies.sh: ubuntu-latest)
+     +		echo "$PATH" >>"$GITHUB_PATH"
+     +	fi
+      
+    - 	P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
+    + 	P4WHENCE=https://cdist2.perforce.com/perforce/r$LINUX_P4_VERSION
+      	LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
+     
+      ## ci/lib.sh ##
+14:  533dbc50c4f = 14:  0488e29859b CI: make ci/{lib,install-dependencies}.sh POSIX-compatible
+15:  6044c2b383f = 15:  f7ac6c33044 CI: check ignored unignored build artifacts in "win[+VS] build" too
+16:  4d1a9f88c32 = 16:  f89346f11eb CI: invoke "make artifacts-tar" directly in windows-build
+17:  5c8f464a60f = 17:  7fa9c69e3ca CI: split up and reduce "ci/test-documentation.sh"
+18:  a218be76819 ! 18:  7925b2610fc CI: combine ci/install{,-docker}-dependencies.sh
+    @@ ci/install-dependencies.sh: linux-gcc-default)
+     +	;;
+      esac
+      
+    - if type p4d >/dev/null && type p4 >/dev/null
+    + if type p4d >/dev/null 2>&1 && type p4 >/dev/null 2>&1
+     
+      ## ci/install-docker-dependencies.sh (deleted) ##
+     @@
+19:  83e21b4f501 = 19:  b00abc07637 CI: move "env" definitions into ci/lib.sh
+20:  fd0e1610577 = 20:  bb5960355fe ci/run-test-slice.sh: replace shelling out with "echo"
+21:  0c7cd9d64ba = 21:  1eeb2e8e7f0 CI: pre-select test slice in Windows & VS tests
+22:  1b077665352 ! 22:  39979d9887d CI: only invoke ci/lib.sh as "steps" in main.yml
+    @@ ci/lib.sh: setenv () {
+     -	CI_TYPE=github-actions
+     +case "$CI_TYPE" in
+     +github-actions)
+    - 	CC="${CC:-gcc}"
+    + 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+      
+      	setenv --test GIT_PROVE_OPTS "--timer --jobs $NPROC"
+     @@ ci/lib.sh: then
+23:  1867da7eddb = 23:  e2b3bf032d6 CI: narrow down variable definitions in --build and --test
+24:  a4e3a9d2c28 ! 24:  c6f47d52823 CI: add more variables to MAKEFLAGS, except under vs-build
+    @@ ci/lib.sh: COMMON_MAKEFLAGS=--jobs=$NPROC
+     +
+      case "$CI_TYPE" in
+      github-actions)
+    - 	CC="${CC:-gcc}"
+    + 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+     @@ ci/lib.sh: github-actions)
+      	;;
+      esac
+25:  48d99cee809 ! 25:  377460e8024 CI: set CC in MAKEFLAGS directly, don't add it to the environment
+    @@ ci/install-dependencies.sh: UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl
+      ubuntu-latest)
+      	# The Linux build installs the defined dependency versions below.
+     @@ ci/install-dependencies.sh: macos-latest)
+    - 	} ||
+    - 	brew install homebrew/cask/perforce
+    + 	PATH="$PATH:${HOME}/bin"
+    + 	export PATH
+      
+     -	if test -n "$CC_PACKAGE"
+     +	if test -n "$BREW_CC_PACKAGE"
+    @@ ci/lib.sh: MAKEFLAGS="$MAKEFLAGS SKIP_DASHED_BUILT_INS=$SKIP_DASHED_BUILT_INS"
+      
+      case "$CI_TYPE" in
+      github-actions)
+    --	CC="${CC:-gcc}"
+    +-	CC="${CC_PACKAGE:-${CC:-gcc}}"
+     -
+      	setenv --test GIT_PROVE_OPTS "--timer --jobs $NPROC"
+      	GIT_TEST_OPTS="--verbose-log -x"
+26:  07a6c087297 = 26:  98e320d5e67 CI: set SANITIZE=leak in MAKEFLAGS directly
+27:  50f21ffdffe = 27:  282b7c89a4f CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
+28:  e35dff2bef3 = 28:  7a208927819 CI: don't use "set -x" in "ci/lib.sh" output
+29:  13d8c6997c3 = 29:  4d8a8f3be07 CI: make it easy to use ci/*.sh outside of CI
+-- 
+2.36.1.1045.gf356b5617dd
+
