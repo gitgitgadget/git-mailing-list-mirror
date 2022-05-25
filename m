@@ -2,106 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D5BEC433F5
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 07:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A001BC433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 09:17:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231315AbiEYHyH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 03:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36310 "EHLO
+        id S231327AbiEYJRa convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 25 May 2022 05:17:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbiEYHyD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 03:54:03 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C37057C162
-        for <git@vger.kernel.org>; Wed, 25 May 2022 00:54:02 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id r71so18314055pgr.0
-        for <git@vger.kernel.org>; Wed, 25 May 2022 00:54:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=po+vVlmqDRrn3lCTQVM9smkLcJ9MahLxh1lt6bpl328=;
-        b=KTKsfoRnHONXl5Ye4HFeqZexFwre5HJFO7IyInOZI8gfhH65q0tOfgy4HdNXgD1w2o
-         lMAjtMLjR6aDSH30NW2FtmsnuuGUEfkUWyN/g9faMIwh4z9V90bqsnucL7QDip4Wksj7
-         kwQ8bVvVi4kMGhscUQvL7UA/EWyk7B02WdAnGSVOCwYfwe1ybOVDZ+xXMdHMYdAKHvZS
-         2ywONAD9rwrMiAjfhXfjGfIPnd+nufGv1OOUDOPAeEESWIikG4p86DfVN8WP7lfBBltS
-         bXsk2FPUjKnNiMlamVf1mpzfq21pgNt37zwdlRvusQCX7VVrh9TXffPQxi3mR92kXthD
-         JwfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=po+vVlmqDRrn3lCTQVM9smkLcJ9MahLxh1lt6bpl328=;
-        b=RT0nuG8zJkUZET9kBylK1HbPVtEtquV0i3A57d0pnUifJTvmm3NDoMDxK0a9xF8O3o
-         9PPNUWySVvUbS7CkSWsfY953C8adpAhCL6Pnbi1DuR9tTCH8iDtWI9uX20q6OVwVpwA1
-         Pa8tqek4s57rvjZmGKF9IG5+9OX2zeIzu4CXk2Z2VzOc30ygwb3lUCStqqS5zFs9pt5G
-         JGVasTVMgTgXeC42cmzeISAt6gdCP0L0xFRa/mNBJOBuWP7kXn3gy0UjGvyByb1tXDSG
-         CI0Fa2Dx2LVybYroLfXtNan+ejqDjFtM7gmZagqH0uWUaAgOVuJjmkqyNWTyd85psJEF
-         ECBw==
-X-Gm-Message-State: AOAM533tUCvgke7yYlgoffUwg8l3V8vq8ryPR/wWBCrZ+PXddePiTu60
-        RT1PxiWU2/4dqTQksx4HZ2c=
-X-Google-Smtp-Source: ABdhPJwllSnpaGgQK0B0eGy/GaQApMYVtuFeWGGrIobu2ltTpDXZjhgiDSYvTXAzPN6hM1KhS7c0Gw==
-X-Received: by 2002:a63:2026:0:b0:3fa:cefb:e408 with SMTP id g38-20020a632026000000b003facefbe408mr3137447pgg.57.1653465242159;
-        Wed, 25 May 2022 00:54:02 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:52ba:872d:8735:1c87])
-        by smtp.gmail.com with ESMTPSA id ig12-20020a17090b154c00b001df54afccb3sm1076431pjb.6.2022.05.25.00.54.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 00:54:01 -0700 (PDT)
-Date:   Wed, 25 May 2022 00:53:59 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
-        larsxschneider@gmail.com, tytso@mit.edu
-Subject: Re: [PATCH v5 00/17] cruft packs
-Message-ID: <Yo3gl5Wv82mTZQb2@google.com>
-References: <cover.1638224692.git.me@ttaylorr.com>
- <cover.1653088640.git.me@ttaylorr.com>
- <220521.868rqv15tj.gmgdl@evledraar.gmail.com>
- <Yo00X0NEu8N0MnZV@google.com>
- <Yo1TIQqvlxhvLZ58@nand.local>
- <220525.86sfoytwjn.gmgdl@evledraar.gmail.com>
- <Yo1YZM2dI6t+RsWv@nand.local>
+        with ESMTP id S231676AbiEYJRT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 05:17:19 -0400
+X-Greylist: delayed 537 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 25 May 2022 02:17:16 PDT
+Received: from mailproxy07.manitu.net (mailproxy07.manitu.net [IPv6:2a00:1828:1000:1112::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12C658DDC3
+        for <git@vger.kernel.org>; Wed, 25 May 2022 02:17:15 -0700 (PDT)
+Received: from localhost (nb-ana002.math.uni-hannover.de [130.75.46.4])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: michael@grubix.eu)
+        by mailproxy07.manitu.net (Postfix) with ESMTPSA id 4D272C882E;
+        Wed, 25 May 2022 11:08:04 +0200 (CEST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Yo1YZM2dI6t+RsWv@nand.local>
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <xmqqh75eef0f.fsf@gitster.g>
+References: <cover.1651859773.git.git@grubix.eu> <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet> <xmqqr14jluu4.fsf@gitster.g> <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet> <xmqqa6b7lrw6.fsf@gitster.g> <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet> <xmqqleuqj1gy.fsf@gitster.g> <20220524201639.2gucdkzponddk5qt@carlos-mbp.lan> <220524.86mtf6ve89.gmgdl@evledraar.gmail.com> <xmqqh75eef0f.fsf@gitster.g>
+Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done with it
+From:   Michael J Gruber <git@grubix.eu>
+Cc:     Carlo Marcelo Arenas =?utf-8?q?Bel=C3=B3n?= <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>
+Message-ID: <165346968167.4313.13200529030347354219.git@grubix.eu>
+Date:   Wed, 25 May 2022 11:08:01 +0200
+User-Agent: alot/0.10
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Junio C Hamano venit, vidit, dixit 2022-05-25 00:34:40:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> 
+> > It doesn't mean that GCC has additionally proved that we'll later used
+> > it in a way that will have a meaningful impact on the behavior of our
+> > program, or even that it's tried to do that. See an excerpt from the GCC
+> > code (a comment) in [1].
+> 
+> But that means the warning just as irrelevant as "you stored 438 to
+> this integer variable".  Sure, there may be cases where that integer
+> variable should not exceed 400 and if the compiler can tell us that,
+> that would be a valuable help to developers. 
 
-Taylor Blau wrote:
-> On Tue, May 24, 2022 at 11:55:02PM +0200, Ævar Arnfjörð Bjarmason wrote:
+An integer can hold 438 perfectly, without any help by carefully
+designed code.
 
->>> Moreover, I can't seem to find any formats that _don't_ use that
->>> convention.
->>
->> It's used in the reftable format.
+> But "you stored an
+> address of an object that can go out of scope in another object
+> whose lifetime lasts beyond the scope" alone is not, without "and
+> the caller that passed the latter object later dereferences that
+> address here".  We certainly shouldn't -Werror on such a warning
+> and bend our code because of it.
 
-It's also used in the formats described in
-Documentation/technical/hash-function-transition.
+A global variable cannot hold a meaningful pointer to a local variable,
+unless the carefully designed code helps. So that "analogy" rather
+highlights the essential difference, unless you think about a pointer
+as "just some number" rather than "something that can be dereferenced".
 
-[...]
-> Sounds good. Unless others have a very strong opinion, let's leave it as
-> is.
+[read global as outer scope, local as inner scope for simplicity]
 
-File formats are one of those things where a little time early can save
-a lot of work later.  If there were a strong reason to use "1" and "2"
-here then I'd be okay with living with it --- I'm a pragmatic person.
-But in general, using the magic numbers instead of a sequential value is
-really helpful both in making the file formats more self-explanatory and
-in making it possible to experiment with multiple new hash_algos at the
-same time.
+Common practice is not necessarily good practice. In a traditional C
+mindset, everything around pointers and memory management is doomed to
+boom unless the code is designed carefully and "you know what you are
+doing". I'm not indicating that you do not - on the contrary, you very
+well do, as your detailed analysis of the code flow shows. At the same
+time, it shows that we cannot be certain about that piece of code
+without that detailed expert analysis.
 
-The main argument I'm hearing for using "1" and "2" is "because some
-other formats got that wrong".  That reason is the opposite of
-compelling to me: it makes me suspect that as a project we should more
-eagerly break the old bad habits and form new ones.  I guess this
-qualifies as a very strong opinion.
+C is not C++ nor rust, nor should it be; but the warnings and errors in
+newer standards typically try to avoid those pitfalls by making sure
+that, e.g., pointers do not go stale for "obvious reasons". They might
+missflag cases where this is preempted for non-obvious reasons, but forcing
+you to be explicit (more obvious) in your code is a good thing,
+especially for maintainability of the code base.
 
-Thanks,
-Jonathan
+Pointing from outer scope to memory in an inner scope should be a no-go;
+that's what this error is about. Unsetting that pointer (by setting the
+pointer to NULL) right before the inner scope ends is exactly the
+right solution. If this "breaks" the code, the code is broken already.
+
+Ironically, my original one line patch seems to work here, as your
+detailed analysis shows. Truth in advertising: I arrived at that patch
+after a considerably less detailed analysis ;)
+
+Michael
