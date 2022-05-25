@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33EF6C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B10CAC433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:05:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241540AbiEYKF0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 06:05:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59354 "EHLO
+        id S242315AbiEYKF2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242154AbiEYKFK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242153AbiEYKFK (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 May 2022 06:05:10 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B61D36D970
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:09 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id f2so29435607wrc.0
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:09 -0700 (PDT)
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C476B6D94A
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:08 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id i20-20020a05600c355400b0039456976dcaso2270460wmq.1
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4srXT5BHtJZZxKgsAR5TATfiegFgKI2HbOM+OwQefac=;
-        b=Zad+jgWLmXpPRI866JeZiVNuCh/d+uinqHHOo1WX8nKFj44wxeh+9ClLpqhiki65L/
-         uAGurOG+Ei7mnvSRI2QKBMEwi1rTqD8Lde2uMxXvfriASzXXTL4eHdeS/Frzn0t11ff6
-         1Dly12FjvoZsswwHzCCgCAYKS9Rj09zmG7Q12AUF39TQd+XMalLJkrjaDfvOKSW/m5NM
-         52x0sGK+hByEy7DqXxS/MgJsTcQ4exc55GhvcR/2e5658csJTQ3QhqtDR5dGaXT/OXrn
-         RtNzmQOUT/ZkB72U8S8KPSainAMTd7bZJmSRdOU7fDLLrhI+4bq5hWJtF2DKB2OtYCxU
-         xuQQ==
+        bh=DBl2S8ZK0TYIowZNmFyVVner8SL3mzEtlRBS7yrc8L0=;
+        b=XnfKJ236G1bP6iymelT+eHiAEymL8hZlt1fZfrHBWe8dvPgSLAMzZCd3w8hPfdE9ZR
+         H4uyAeL1ganLQ/aOedmqEZvnnZtL4KQCgnzF7vduKgqMQwA+GEPYUj0nLALyFjH6p1Q0
+         P9Vu6vnIM9U77+dsiwguXjFpBe1eiC4d3TcV3ZaqtnngXOVWrlKjvG4KHC0SevzNF9dU
+         yUD7l9ELtY1OIDMFhcA0nlFBYEsm822w2zEhahYA62E52tBerK5d18T4NCQl11KxWS6o
+         49SiXiRItzlzw6pAvSlXiaXwffsfmXC2AcpnmQFyj5+omLTdBFx7aJJH5ZmHQBazjgUM
+         pJVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4srXT5BHtJZZxKgsAR5TATfiegFgKI2HbOM+OwQefac=;
-        b=i6EIFQl4HYVVG1Tu1wkGa5p1nQMcBA5PLYExg/wooxwwaTbDOT65qFs4F9rrRhCdl+
-         fbvKcs8YaaEOrnSGKudqy3kLBWy9Pg+iokdQf0MbkCK5iwv07w+toVpCUhlZFzFTQ634
-         jENJeAUVizs9rpFjqJu/avfxmOwKgxAFZ6WYlH5oKisZTdQdFGG7SdULeKme601cqKZO
-         zA6yit2+KtPgxs1PvPSP52RZLN0NxFs0UpD48H2VEnkimPB19i7BQe0JkcrpIPIlcojJ
-         1oX9Zqzs+62Tt13Ry3GLhJniqHk5GZSuAe1mBK7sfr3E/3/OC3jjb359N6KG0NHBtFU3
-         GWPA==
-X-Gm-Message-State: AOAM533x1EhYRcLhf41qlIhOASGduw0fqS5D/qkIfkSK5vmfMzWbOkSI
-        o64OOMpHcc0GnKYa4L4CaN7PERx31ufr7Q==
-X-Google-Smtp-Source: ABdhPJxoyEbXzfhc7U6Rr149CP2Kbvb1Emdewq7KSNdCJaj37bit7wCAm2UUzMfnaN2YulLkiVAgPg==
-X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id b13-20020adff90d000000b0020cde324d35mr25916294wrr.583.1653473109042;
-        Wed, 25 May 2022 03:05:09 -0700 (PDT)
+        bh=DBl2S8ZK0TYIowZNmFyVVner8SL3mzEtlRBS7yrc8L0=;
+        b=HuN2SVlz7KeckZGo7HVXpBPt+YShBr1D864fWVpXV9w5z7Dm3WY8eY+XrEqEiSs1Rh
+         LRiNIUn5F935PDLvpnjqq9ErGRmlol+Aktgzu87XvSqf8MIVUFNuZ0LtSH0GH/REmk8A
+         TeuALpO5a39EAPazC/DoIb/Ar9gvmTgjtWntLm03TjyW0QujTa0nEQ3xkl1Yyrnp1K+d
+         jKGcNqt54VfUnD3Gem/4MAglbE52lXdBr98LxM7uDf6ut+V5TDZEBz9m6UF4XH0kYQod
+         eWQco1aOli/ztD2mS4Ryb7RtoSglO/NRiEQteo713MIcbTHu2q4Xq4yIcPLKChysdQEr
+         uqtA==
+X-Gm-Message-State: AOAM532O9FNP40i4EcoO1vYwmhDkO3GLsT1ceiHAMhY70pLE7uneN7Ll
+        /ZRj5FXml4k9hNpaTXWrHN8k+5rXPVlyzg==
+X-Google-Smtp-Source: ABdhPJyjV2e2wrWU058Db/5b68BfszOZpBBVF5hsZWA0F6EcMAFt9tKX2S9JHAf01tLMwBs1C1h4Cw==
+X-Received: by 2002:a7b:cf11:0:b0:397:33e3:87b2 with SMTP id l17-20020a7bcf11000000b0039733e387b2mr7411768wmg.152.1653473107148;
+        Wed, 25 May 2022 03:05:07 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.05.08
+        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.05.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 03:05:08 -0700 (PDT)
+        Wed, 25 May 2022 03:05:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 26/29] CI: set SANITIZE=leak in MAKEFLAGS directly
-Date:   Wed, 25 May 2022 12:04:05 +0200
-Message-Id: <patch-v6-26.29-98e320d5e67-20220525T094123Z-avarab@gmail.com>
+Subject: [PATCH v6 24/29] CI: add more variables to MAKEFLAGS, except under vs-build
+Date:   Wed, 25 May 2022 12:04:03 +0200
+Message-Id: <patch-v6-24.29-c6f47d52823-20220525T094123Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1045.gf356b5617dd
 In-Reply-To: <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
 References: <cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com> <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
@@ -76,29 +76,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As in the preceding commit's change to do likewise for CC, let's not
-set SANITIZE in the environment. When I added the "linux-leaks" job in
-in 956d2e4639b (tests: add a test mode for SANITIZE=leak, run it in
-CI, 2021-09-23) I missed that I could do that.
+It's clearer that "DEVELOPER" is a flag that affects the Makefile
+itself in particular if it's put into "MAKEFLAGS than" if it
+generically sits in the environment. Let's move both it and
+"SKIP_DASHED_BUILT_INS" to "MAKEFLAGS".
+
+We can't do this under vs-build, since that invokes cmake. Let's have
+only that job set these in the environment.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ci/lib.sh | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 8d19ca5ced8..b6e7a6647bb 100755
+index 96919882c11..16bac966d76 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -225,7 +225,7 @@ linux-musl)
- 	;;
- linux-leaks)
- 	CC=gcc
--	setenv --build SANITIZE leak
-+	MAKEFLAGS="$MAKEFLAGS SANITIZE=leak"
- 	setenv --test GIT_TEST_PASSING_SANITIZE_LEAK true
+@@ -89,6 +89,13 @@ COMMON_MAKEFLAGS=--jobs=$NPROC
+ # Clear MAKEFLAGS that may come from the outside world.
+ MAKEFLAGS=$COMMON_MAKEFLAGS
+ 
++# Use common options for "make" (cmake in "vs-build" below uses the
++# intermediate variables directly)
++DEVELOPER=1
++MAKEFLAGS="$MAKEFLAGS DEVELOPER=$DEVELOPER"
++SKIP_DASHED_BUILT_INS=YesPlease
++MAKEFLAGS="$MAKEFLAGS SKIP_DASHED_BUILT_INS=$SKIP_DASHED_BUILT_INS"
++
+ case "$CI_TYPE" in
+ github-actions)
+ 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+@@ -105,10 +112,8 @@ github-actions)
  	;;
  esac
+ 
+-setenv --build DEVELOPER 1
+ setenv --test DEFAULT_TEST_TARGET prove
+ setenv --test GIT_TEST_CLONE_2GB true
+-setenv --build SKIP_DASHED_BUILT_INS YesPlease
+ 
+ case "$runs_on_pool" in
+ ubuntu-latest)
+@@ -145,6 +150,9 @@ windows-test)
+ 	setenv --test MAKEFLAGS "$COMMON_MAKEFLAGS"
+ 	;;
+ vs-build)
++	setenv --build DEVELOPER $DEVELOPER
++	setenv --build SKIP_DASHED_BUILT_INS $SKIP_DASHED_BUILT_INS
++
+ 	setenv --build NO_PERL NoThanks
+ 	setenv --build NO_GETTEXT NoThanks
+ 	setenv --build ARTIFACTS_DIRECTORY artifacts
 -- 
 2.36.1.1045.gf356b5617dd
 
