@@ -2,83 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64FBBC433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 05:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A02BC433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 05:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243104AbiEYFLk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 01:11:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58426 "EHLO
+        id S243976AbiEYFaH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 01:30:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237251AbiEYFLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 01:11:39 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE4013E94
-        for <git@vger.kernel.org>; Tue, 24 May 2022 22:11:38 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C95712F15B;
-        Wed, 25 May 2022 01:11:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SNhIWbiYM0eTWyHznr2RABbWEWJ+zLoQuXtKHE
-        6f8d0=; b=u6T2hnHZ0SBziYpmLMEWH8QRmTMlzkzihCPlRP3x++EhykY53QzZCO
-        MaK9IqPFjhhX8N6Jq45PdlO4kRbI0tLzHOst6VfuDNhx2ZoYwCEUHfiWsvAhIK4s
-        wHmbG3gt5TA0TCpzl5F1tY62cV7nuGgoOXiNHsiYtJ1QLKXZATaSw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33A4A12F15A;
-        Wed, 25 May 2022 01:11:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A67B12F159;
-        Wed, 25 May 2022 01:11:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Kevin Locke <kevin@kevinlocke.name>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v4] setup: don't die if realpath(3) fails on getcwd(3)
-References: <68c66aef7ca4dba53faec9e6d2f3b70fe58ac33e.1653403877.git.kevin@kevinlocke.name>
-        <8b20840014d214023c50ee62439147f798e6f9cc.1653419993.git.kevin@kevinlocke.name>
-        <xmqqk0aafwsd.fsf@gitster.g>
-        <CABPp-BHZQXt-=XtTk7Ez463rhbcQQBNGUVkbbWiavZT+Rsjn_A@mail.gmail.com>
-Date:   Tue, 24 May 2022 22:11:35 -0700
-In-Reply-To: <CABPp-BHZQXt-=XtTk7Ez463rhbcQQBNGUVkbbWiavZT+Rsjn_A@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 24 May 2022 20:51:50 -0700")
-Message-ID: <xmqq7d6ab3i0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S237184AbiEYFaF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 01:30:05 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C5E5522B
+        for <git@vger.kernel.org>; Tue, 24 May 2022 22:30:03 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id z7so13171064ybf.7
+        for <git@vger.kernel.org>; Tue, 24 May 2022 22:30:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9NjEJ7Ee25R/C9OMq7JmJ+mhFL5b/rp0JjdfynG06Ro=;
+        b=gAbMYGUtbEp6dg9V76IXKxRduHP+WkOWMIJq3U1sa3EBbDFQzvgoCJYzOcMmr0WYHf
+         SIKVLaf14YGNM8+3KXdVRJYL6tHY0cvTbowCSux96xHAyBTgAxndmn3/dzfGhB79xJW7
+         ytXMRuEzKkPl0zpzhtRG1vNAocU6RSADNHj9SOwjdyX3Xpst5rdtZAJLT/84BynItn+K
+         tDPAj7dajIy6G+ZauT62M4ZCX7Mr6b/nodyh8xuAC8g5Kb4uCwazNWGzSq4dxQ1CsjT/
+         NSuQ6FtTSjww1oOeqRQykKN7Y2w4Gb+LHkrgx1Qt8ZAJzinGc01X/OCLZNGNpZZjFGUR
+         P30g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9NjEJ7Ee25R/C9OMq7JmJ+mhFL5b/rp0JjdfynG06Ro=;
+        b=sEZJV7Wgf/fe/kFDqwshQCqJsXYsPm7yBu8UjAON6n2o2P7VV4WsH7ZwGHOAXS1AQK
+         avVVUMZBPEmzcme4mPEuWzURFc2DTDfON/YfAjEJHpBKyGHSwauLE1nF8RmIbisMs4p+
+         yZishBTxZ29gYHX6njPhsxBfZNqv0vxaQBmoSYnYbxLvMHwQsV8X5jhLJkfTac1T4oCV
+         dAyA3KFPC/mSVtuvCBRrTxw/cTJSeShKZCgQ6Y7YMVMeJudZt+1XhCejk2GD59i7MCmq
+         OsXNxCXzHZLy6HBsndvg6uqkcSE9cNdJdBKENg5HjBp79UX22Pj5psfg/hVc+xX/xIbR
+         HiYw==
+X-Gm-Message-State: AOAM530eH5BTB/g4/1TvqMpF/1ZxiYSJ5vcWze+fRyz7t4T7Asi/4DlZ
+        tJA9PVvqvJgKAMiBmPW33AKM5AqiMPPmIWs6+f0=
+X-Google-Smtp-Source: ABdhPJyx7YcsSeNnHDhY1zRvP79pwxdktp4RIKOY29OpVNFcaXWp48jXhimUiJC3VP9Ie9xD29E463NF2uppbLs1qDU=
+X-Received: by 2002:a05:6902:1242:b0:64f:9d9c:eaab with SMTP id
+ t2-20020a056902124200b0064f9d9ceaabmr17850815ybu.346.1653456602422; Tue, 24
+ May 2022 22:30:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 26CE262C-DBE9-11EC-8F4E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <pull.1241.git.1653424998869.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1241.git.1653424998869.gitgitgadget@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 25 May 2022 07:29:50 +0200
+Message-ID: <CAP8UFD2BS3OuJD7xhb6M+bX3ojLqM8ZuXK_h4w0CvdYRfmzVqg@mail.gmail.com>
+Subject: Re: [PATCH] Fix wrong info in `INSTALL`
+To:     Shao-Ce SUN via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Shao-Ce SUN <sunshaoce@iscas.ac.cn>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
->> diff --git i/git-compat-util.h w/git-compat-util.h
->> index 58fd813bd0..56c6c48461 100644
->> --- i/git-compat-util.h
->> +++ w/git-compat-util.h
->> @@ -976,7 +976,7 @@ int xstrncmpz(const char *s, const char *t, size_t len);
->>   * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
->>   * that ptr is used twice, so don't pass e.g. ptr++.
->>   */
->> -#define FREE_AND_NULL(p) do { free(p); (p) = NULL; } while (0)
->> +#define FREE_AND_NULL(p) do { free((void*)p); (p) = NULL; } while (0)
->>
->>  #define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
->>  #define CALLOC_ARRAY(x, alloc) (x) = xcalloc((alloc), sizeof(*(x)))
+On Wed, May 25, 2022 at 6:35 AM Shao-Ce SUN via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> I also like this change, even if it feels like it should be part of a
-> separate patch.
+> From: Shao-Ce SUN <sunshaoce@iscas.ac.cn>
+>
+> The user prompt should be `$` instead of `#`.
 
-Sorry, but I did fail to make it clear that I didn't mean the above
-to be anything related to Kevin's patch.  It was "if FREE_AND_NULL()
-were defined like this, then we could have used it".  I didn't mean
-to say "let's update FREE_AND_NULL() this way so that we can use
-it".
+On the following lines:
 
-Thanks.
+$ make prefix=/usr all doc info ;# as yourself
+# make prefix=/usr install install-doc install-html install-info ;# as root
+
+the '$' or '#' before "make" is indeed a prompt, but the '#' before
+"as" starts a single line comment. So there is no need to change it
+into a '$'.
+
+See for example:
+
+https://tldp.org/LDP/abs/html/abs-guide.html#SPECIAL-CHARS
+
+One issue with the above lines could be that there is no space
+character before the '#' that starts the comments. The ';' is a
+command separator character though, and I think that when a new
+command starts with '#' it's considered a comment.
+
+So we could perhaps get rid of the ';', but on the other hand ";#"
+should make it extra clear that the command before it ended and that
+the rest of the line is a comment.
+
+> Signed-off-by: Shao-Ce SUN <sunshaoce@iscas.ac.cn>
+> ---
+>     Fix wrong info in INSTALL
+
+Instead of "info" you could say something more specific like "prompt character".
+
+Also we start commit subjects with the area of the code, so maybe
+"INSTALL: fix wrong prompt character".
+
+> diff --git a/INSTALL b/INSTALL
+> index 4140a3f5c8b..7bb3f48311d 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -5,8 +5,8 @@ Normally you can just do "make" followed by "make install", and that
+>  will install the git programs in your own ~/bin/ directory.  If you want
+>  to do a global install, you can do
+>
+> -       $ make prefix=/usr all doc info ;# as yourself
+> -       # make prefix=/usr install install-doc install-html install-info ;# as root
+> +       $ make prefix=/usr all doc info ; $ as yourself
+
+Here a '#' is changed into a '$' but also a space character is
+inserted before the '$' without any explanation.
+
+> +       # make prefix=/usr install install-doc install-html install-info ; # as root
+
+Here only a space character is inserted before the second '#' without
+any explanation.
