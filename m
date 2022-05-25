@@ -2,93 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8DCDC433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 16:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DECAC433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 16:58:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245422AbiEYQtr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 12:49:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43510 "EHLO
+        id S241262AbiEYQ6I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 12:58:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233647AbiEYQtp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 12:49:45 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 314541145C
-        for <git@vger.kernel.org>; Wed, 25 May 2022 09:49:44 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 1so11790861ljh.8
-        for <git@vger.kernel.org>; Wed, 25 May 2022 09:49:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=plZVkNyI9FaSOKIhqEm7Aybf+RvoYXxqP26UGQCuzzY=;
-        b=kQj/8iropzvTDkq6k8snhRE2Qiq+EDTSvt4KyCW72bXxnOUSwWVkTOb2On/q4zqIDQ
-         Y4f4oGvjiXNYKyIVBLNr9Zj5uc4w6VUwWS//SepwonF0sBqZ5DQw+vsoNQRJHmR7egsZ
-         E++j314ZMD2MmBVmCP2k316Vdd2un/qLPHBa4YQ2LWUL5F+0JUw6aVyxNIDsGepfQ1df
-         yLUPrcRYcDvnRyDgYenXyhBk5aT1qmurjl5KZhBBqnqTPaVVWHco/9hisUFmLZTBxNyo
-         xrQLD09yalEwwd4jmYtn76HD19IlSLcPtdTxk8WOzGfK8BSbl11dLMDHfaHRXK4vlpyM
-         zkUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=plZVkNyI9FaSOKIhqEm7Aybf+RvoYXxqP26UGQCuzzY=;
-        b=rB71qJLz3qWIaaqSejeo5+eqGkg+BPLojs+nWuEPM5S+2VKJUe6op4wIp0KlCx1Pb4
-         Tr481/w5+iYAegK0HTzjy+1zHip4r64n7k4TbLxCM1O23LCRoDTCEMJdbUB6Sk2owgsi
-         jik+tlFBmYpiVwD497+JOlI7/TtRAJhEgRu9w7wI1G/2/H7EJTPmr/92RMuT1gwMIY9r
-         RFUH+dYsTBEa1fpx7DkDLRgx+m4y1vyDYusSMOskKpvVlWdEXXfCKIwxcahQpKQeSi5Z
-         PPjc02iP6H5g6KgWE89Mg08+bOk3SXXVQCLnhXyeWm/9Qrp37Y9P8rnEcp6+qKG+BOlF
-         wv1A==
-X-Gm-Message-State: AOAM533E543onGAvYzeZZu8FHr6stHf5RkX7YUzG/sIE55YoxBn3KV1j
-        5yrmHeeb6rGabDpsPJ27uRea14r8NVpk36Jk4xcp8WMiHu2/QQ==
-X-Google-Smtp-Source: ABdhPJxW7nBY/tx9QVemkHT2gC9hwb1rqHIiCOHk5Or4JMHbXs1FQ+1ecaJEPVpXkUSvr6Nd9mRM6EX6kQWgn+/ece4=
-X-Received: by 2002:a05:651c:506:b0:254:1a3a:803c with SMTP id
- o6-20020a05651c050600b002541a3a803cmr458832ljp.88.1653497380741; Wed, 25 May
- 2022 09:49:40 -0700 (PDT)
+        with ESMTP id S244377AbiEYQ6F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 12:58:05 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 145FC9D07A
+        for <git@vger.kernel.org>; Wed, 25 May 2022 09:58:03 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A8B52134295;
+        Wed, 25 May 2022 12:58:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=PeYoLzj2FxbdcMVDpboZlTsrd
+        UMem7NwtKzyf9ekU4w=; b=BtsquTWQG/tTSfGF1afW8DCkXeRX+p8nmC1wCKR25
+        DwKpIoJWjjITs1D2UvqoQsc4qpwRImzs01HSIHT9Hp5gtI0ggncepuMKkvgeS6b8
+        H2IgYM5CIFWJQGfdtZBkDNMXqn5u7AV16A8VeEOoQV1RrADxr8mH/rum+gJSG8I6
+        3k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6EA16134293;
+        Wed, 25 May 2022 12:58:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D587134292;
+        Wed, 25 May 2022 12:58:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Anthony Sottile <asottile@umich.edu>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 0/8] hook API: connect hooks to the TTY again, fixes
+ a v2.36.0 regression
+References: <cover-0.6-00000000000-20220421T122108Z-avarab@gmail.com>
+        <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
+        <nycvar.QRO.7.76.6.2205251308381.352@tvgsbejvaqbjf.bet>
+Date:   Wed, 25 May 2022 09:57:59 -0700
+Message-ID: <xmqqbkvl8s88.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
-In-Reply-To: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
-From:   Emily Shaffer <emilyshaffer@google.com>
-Date:   Wed, 25 May 2022 09:49:29 -0700
-Message-ID: <CAJoAoZmtzRakZB2Pgez9YW7URXaxTF3RZ2-ZWrRHMhbj81u2yA@mail.gmail.com>
-Subject: Re: About GIT Internals
-To:     Aman <amanmatreja@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D5FF4736-DC4B-11EC-A9B5-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 25, 2022 at 9:11 AM Aman <amanmatreja@gmail.com> wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Keeping in mind that the intention is to fix a regression that was
+> introduced by way of refactoring (most of our recent regressions seem t=
+o
+> share that trait [*2*]), I strongly advise against another round of
+> refactoring [*3*], especially against tying it to fix a regression.
+
+I share this sentiment.
+
+> In this instance, it would be very easy to fix the bug without any
+> refactoring. In a nutshell, the manifestation of the bug amplifies this
+> part of the commit message of 96e7225b310 (hook: add 'run' subcommand,
+> 2021-12-22):
 >
-> Hello there,
+>     Some of the implementation here, such as a function being named
+>     run_hooks_opt() when it's tasked with running one hook, to using th=
+e
+>     run_processes_parallel_tr2() API to run with jobs=3D1 is somewhere
+>     between a bit odd and and an overkill for the current features of t=
+his
+>     "hook run" command and the hook.[ch] API.
 >
-> I have recently been reading The Architecture for Open Source
-> Applications book - and read the chapters dedicated to GIT internals.
-> And if I am being completely honest, I didn't understand most of it.
+> It is this switch to `run_processes_parallel()` that is the root cause =
+of
+> the regression.
 >
-> Could someone please assist - in sharing some resources - which I
-> could go through, to better understand GIT software internals.
+> The current iteration of the patch series does not fix that.
 
-I am really excited you asked! This puts you firmly on the road to
-being the person who can help unstick all your friends when they get
-into Git messes later on. ;)
+True.
 
-https://docs.google.com/presentation/d/1IQCRPHEIX-qKo7QFxsD3V62yhyGA9_5YsYXFOiBpgkk/edit?usp=sharing
-<- This is a really great intro to the internals which I love. I
-pretty much always recommend it as the place to start for someone
-curious about learning how Git works.
-https://www.youtube.com/watch?v=5Gq3KVvcfDk <- This covers much of the
-same territory but has a nice video to go through it, in case it's
-easier for you to learn that way instead of reading slides.
+> In the commit message from which I quoted, the plan is laid out to
+> eventually run more than one hook. If that is still the plan, we will b=
+e
+> presented with the unfortunate choice to either never running them in
+> parallel, or alternatively reintroducing the regression where the hooks
+> run detached from stdin/stdout/stderr.
 
-If you have additional questions about the technical design of Git
-following one or both of those presentations above, I think you could
-get far starting with Git's own design documentation:
-https://github.com/git/git/tree/master/Documentation/technical
+I had a similar impression before I reviewed the code after the
+regression report, but if I read the code before the breakage
+correctly, I think we didn't change the handling of the standard
+input stream with the series from Emily/=C3=86var that broke the hooks.
 
-From there I think the list will be the best place for specific
-followup questions you might have.
+The regression is the output streams are no longer _directly_
+connected to the outside world, and instead to our internal relay
+that buffers.  The run_hook_ve() helper did set .no_stdin to 1
+before doing run_command() in Git 2.35.  The series with regression
+does the same in pick_next_hook() callback in hook.c.  Both also set
+.stdout_to_stderr to 1, so the apparent output should not change.
 
-Happy learning!
+> It is pretty clear that there is no actual choice, and the hooks will
+> never be able to run in parallel. Therefore, the fix should move
+> `run_hooks_opt()` away from calling `run_processes_parallel()`.
 
- - Emily
+My take on it is slightly different.
+
+I personally do not think we should run hooks in parallel ourselves,
+but if hook-like things, which Emily and =C3=86var want, want run in
+parallel, we can safely allow them to do so.  No current users have
+ever seen such hook-like things specified in their configuration
+files---as long as it is clearly documented that these hook-like
+things are not connected to the original standard output or error,
+and they may run in parallel and whatever inter-process coordination
+is their responsibility, there is no regression.  It is a brand new
+feature.
+
+The mechanism that supports that hook-like things should have a
+compatibility mode, if it ever wants to take responsibility of
+running the traditional hooks as part of its offering.  I think the
+right way to do so is follows:
+
+ - Unless each hook-like thing explicitly asks, it does not run in
+   parallel with other hook-like things, and its output stream is
+   connected directly to the original output stream.  They can run
+   without involving the run_processes_parallel() at all.
+
+ - When the traditional on-disk hooks are treated as if it is one of
+   these hook-like things, the compatibility mode should be set to
+   on for them without any user interaction.
+
+ - Only the new stuff written specifically to be used as these shiny
+   new hook-like things would explicitly ask to run in parallel and
+   emit to the output multiplexer.
+
+Doing things that way would pave the way forward to allow new stuff
+to work differently, without breaking existing stuff people have,
+wouldn't it?
+
+> In any case, regression fixes should not be mixed with refactorings unl=
+ess
+> the latter make the former easier, which is not the case here.
+
+Absolutely.  I wonder how involved is would be to revert the merge
+of the whole thing from 'master'.  It may give us a clean slate to
+rethink the whole mess and redo it without breaking the existing
+users' hooks.
