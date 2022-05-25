@@ -2,118 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD0ADC433FE
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 07:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEE79C433FE
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 07:49:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244343AbiEYHcr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 03:32:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51728 "EHLO
+        id S244169AbiEYHtI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 03:49:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231773AbiEYHci (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 03:32:38 -0400
-Received: from weald.air.saab.se (weald.air.saab.se [136.163.212.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D836D3C720
-        for <git@vger.kernel.org>; Wed, 25 May 2022 00:32:34 -0700 (PDT)
-Received: from mailhub1.air.saab.se ([136.163.213.4])
-        by weald.air.saab.se (8.14.7/8.14.7) with ESMTP id 24P7WR42092237
-        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 25 May 2022 09:32:27 +0200
-DKIM-Filter: OpenDKIM Filter v2.11.0 weald.air.saab.se 24P7WR42092237
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=saabgroup.com;
-        s=weald_2; t=1653463947;
-        bh=BVJBC5eYhAkkZ84SyMC4qpZm48g/TQPhxYXBDYFNCo4=;
-        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
-        b=sQbdFiWCB7IpwCz/RLtXqjiWl0rQtUuqMOo0NY2EMB7GwUc0W+lqwbMe/LSwZkpgd
-         1oA1IyE5320mVQkpIfj6/Ey0Y6G3tdeext+nUWmWA5udXk89msTVJYxvPQx01tNjZ0
-         VkGSrneM73t8gnSo4regSHQA4uwrXWR6a+LtaKNDuuhAzQVIn2zev1mWNesvedov0e
-         Bjnek+9Fbp/hLtIh2Kw+jBmkKZjhpzeSGUG/RzlmYb3AYlFlp8/spSOaFKk3zt6+BQ
-         d9FsT2ZhKkwSUeMYznM5iYHEPRXNxSTb+S2LDEHEgjxQi7gg8wuVOaLvKpkaU0u31C
-         STKB6J9oVoRag==
-Received: from corpappl17772.corp.saab.se (corpappl17772.corp.saab.se [10.12.196.79])
-        by mailhub1.air.saab.se (8.15.2/8.15.2) with ESMTPS id 24P7WRiS3155943
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 25 May 2022 09:32:27 +0200
-Received: from corpappl17781.corp.saab.se (10.12.196.88) by
- corpappl17772.corp.saab.se (10.12.196.79) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.26; Wed, 25 May 2022 09:32:18 +0200
-Received: from corpappl17781.corp.saab.se ([fe80::988b:c853:94fe:90aa]) by
- corpappl17781.corp.saab.se ([fe80::988b:c853:94fe:90aa%5]) with mapi id
- 15.02.0986.026; Wed, 25 May 2022 09:32:18 +0200
-From:   Olsson John <john.olsson@saabgroup.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [EXTERNAL] Re: Error handling when giving empty command line
- arguments
-Thread-Topic: [EXTERNAL] Re: Error handling when giving empty command line
- arguments
-Thread-Index: Adhvbv33EYLm80KPScCjpHIHZomAfwAUeVDZABEtmIA=
-Date:   Wed, 25 May 2022 07:32:18 +0000
-Message-ID: <8767dbe0c22540a4ab3e18684aa7e030@saabgroup.com>
-References: <dc08a8ee5ed64850872fd6529d1462e1@saabgroup.com>
- <xmqq35gyee7r.fsf@gitster.g>
-In-Reply-To: <xmqq35gyee7r.fsf@gitster.g>
-Accept-Language: sv-SE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [136.163.101.124]
-x-tm-as-product-ver: SMEX-14.0.0.3092-9.0.1002-26914.006
-x-tm-as-result: No-10--4.660200-5.000000
-x-tmase-matchedrid: oTBA/+sdKabK19rKCr/Ovgrcxrzwsv5uXPK9y3z82Gs+KSDQ9ztlrSc+
-        QrY0Pxmfb0fmCWHRknFucftoZZ+9SvnlySD+8Ss5L7p//vLv4bN2LVAkzutP5Pmt2wtrXQjMBk0
-        sRysFrTCzWVOWI+JSh5I49Eva7YXhf7OyDqSnYLfGsO9QyW2iBNhQO8CvZj/XDwPOPApEJd3MoA
-        Jfsjm0TgURjmNRpEDiEzvXiPvr1j6McUzJS3sH3Rd8ENHLtW0zfS0Ip2eEHnxlgn288nW9IAuTL
-        po5HEc1joczmuoPCq0Tvm/lD9MJOzlhzJ/6CMuFjaSt38wKx3R5q2Xb951x/QVGr+mzk8ohaWST
-        rU8OKnI4JWMU/YGbDPCa3UIfT4sCJA5tg53RUuMorPY7HEKSnM0bQv3yPxsy+toqr+8ptZ9j6l0
-        ihn9/SoywwyXyfWbHlExlQIQeRG0=
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--4.660200-5.000000
-x-tmase-version: SMEX-14.0.0.3092-9.0.1002-26914.006
-x-tm-snts-smtp: BC69E0ACC68EF8C74C7F413A106D83FAEBC1BB0FA53DC6C3E42D1C9506C6A84E2002:B
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S231888AbiEYHs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 03:48:58 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6399B7A810
+        for <git@vger.kernel.org>; Wed, 25 May 2022 00:48:57 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id gk22so544017pjb.1
+        for <git@vger.kernel.org>; Wed, 25 May 2022 00:48:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5EztO6NT6S9gS4QZlUqQ9zIawps0Bt1Jm80NRz458oc=;
+        b=ZTzzcwNbSv7rMkF0MBj4SuuhVvojyQx4hJk9LHrhmT5BRq0f6K12PU143EcyuI5hPz
+         iCLRQG46R1m1XVePlSp3GziNecbKaB9KaW1hWsJFvWrwaGbyjfxb0x4P0rYPK/2sfiPU
+         Ef+sp8NmG60kTij5mz6oKWuc6wOdbiurisBf6hDFz0nkDVzzH9MiUwonyNavjWHoCTKz
+         kjLNIBp86YCPb04b/mKvNAKVtjD00gdMr7s6crVoQDVQdfCU2UFxnDfu1rYyyc13fBaX
+         VPmfJqZ9p8SZxPgLFbx+O0IeoZ58J3UBIFl7Brty7mWqQLxn6B/MelwyST/4Shvy9ziv
+         8sAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5EztO6NT6S9gS4QZlUqQ9zIawps0Bt1Jm80NRz458oc=;
+        b=Xy4zWcRvfa0+ev7ZV0aC4vaLh3KmZDsFNZ1JCf+7gDIS6irqooGms7qXgth0PlmmpD
+         ++34ggrGZQkWVNZDyc7mBK2Ah7EJf3IThf/x2fsvw/SMAKzs5/0mDm7c2m4I3IcGIIYp
+         GbfMvFA1j1DJutkpWHqSvBODQ9TP2Yg08qHgwrCIFIh9rBWBjplbjuicWDQi0MaI7hfL
+         KzRFc+pbuoZVg50jqLxxNjV8u4YMH/BKmHWw5uHOnhAVAgKLqoRoRNUyPpRhuLLfgH1X
+         GxpPUgMxVKvcGMGE3tAgKIH84Cun/5hycVeAdmrb4r4ogKmJz9BymmRKIh0xuJGqgl3w
+         0dDg==
+X-Gm-Message-State: AOAM531kg584QZIPmaePLBHuHJg0iMIHCXQxSATZAha6y1srw4WbGdku
+        EqUmoVsbYbBZnE+MfhPNtno=
+X-Google-Smtp-Source: ABdhPJwKRIBYqDmt3Qz52kOm178TNJgNLTt0vJfGyvNtVdsOlef9Ps/t1JfGa9YnygygPS0i4z4CQA==
+X-Received: by 2002:a17:902:d483:b0:161:b6a3:4dba with SMTP id c3-20020a170902d48300b00161b6a34dbamr32158762plg.155.1653464936679;
+        Wed, 25 May 2022 00:48:56 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:52ba:872d:8735:1c87])
+        by smtp.gmail.com with ESMTPSA id x64-20020a628643000000b0050e006279bfsm10568391pfd.137.2022.05.25.00.48.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 May 2022 00:48:56 -0700 (PDT)
+Date:   Wed, 25 May 2022 00:48:54 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, derrickstolee@github.com,
+        gitster@pobox.com, larsxschneider@gmail.com, tytso@mit.edu
+Subject: Re: [PATCH v5 02/17] pack-mtimes: support reading .mtimes files
+Message-ID: <Yo3fZkpkCLPbAC8B@google.com>
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <cover.1653088640.git.me@ttaylorr.com>
+ <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
+ <Yo0ysWZKFJoiCSqv@google.com>
+ <Yo1aaLDmPKJ5/rh5@nand.local>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yo1aaLDmPKJ5/rh5@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The user is not giving enough information to Git to allow it to tell if "=
-git fetch ''" it got came from any of these with unset variable:
+Hi,
+
+Taylor Blau wrote:
+> On Tue, May 24, 2022 at 12:32:01PM -0700, Jonathan Nieder wrote:
+
+>> Makes sense.  Does this intend to produce any functional change?  I'm
+>> guessing not (and the lack of tests agrees), but the commit message
+>> doesn't say so.
+[...]
+> This does not produce a functional change, no. This commit in isolation
+> adds a bunch of dead code that will be used (and tested) in the
+> following patches.
+[...]
+>> What does mtimes_map contain?  A comment would help.
 >
->	$ git fetch "$path"
->	$ git fetch "$url"
->	$ git fetch "$force"
+> It contains a pointer at the beginning of the mmapped region of the
+> .mtimes file, similar to revindex_map above it.
+
+To be clear, in cases like this by "comment" I mean "in-code comment".
+I.e., my interest is not that _I_ find out the answer but that the
+code becomes more maintainable via the answer becoming easier to find.
+
+[...]
+>> This seems simple enough that it's not obvious we need more code
+>> sharing.  Do you agree?  If so, I'd suggest just removing the
+>> NEEDSWORK comment.
 >
-> because all Git sees is an empty string.
+> Yeah, it is conceptually simple, though it feels like the sort of thing
+> that could benefit from not having to be written once for each
+> extension (hence the comment).
+
+The reason I asked is that the NEEDSWORK here actually got in the way
+of comprehension for me --- it made me wonder "is there some
+complexity here I'm missing?"
+
+That's why I'd suggest one of
+- removing the NEEDSWORK comment
+- going ahead and implementing the code sharing you mean, or
+- fleshing out the NEEDSWORK comment so the reader can wonder less
+
+>>> +
+>>> +#define MTIMES_HEADER_SIZE (12)
+>>> +#define MTIMES_MIN_SIZE (MTIMES_HEADER_SIZE + (2 * the_hash_algo->rawsz))
+>>
+>> Hm, the all-caps name makes this feel like a compile-time constant but
+>> it contains a reference to the_hash_algo.  Could it be an inline
+>> function instead?
 >
-> It is unfair to complain "is completely unrelated".  The user didn't give=
- enough information to even allow Git to tell if it is or is not related.
+> Yes, it could be an inline function, but I don't think there is
+> necessarily anything wrong with it being a #define'd macro. There are
+> some other examples, e.g., RIDX_MIN_SIZE, MIDX_MIN_SIZE,
+> GRAPH_DATA_WIDTH, and PACK_SIZE_THRESHOLD (to name a few) which also use
+> the_hash_algo on the right-hand side of a `#define`.
 
-That is exactly my point! I was thinking along the lines that perhaps the G=
-it command(s) could complain about that it got an empty string as an argume=
-nt since that is probably a mistake by the user due to that an empty string=
- is neither a path, a URL/URI, or an option. It is thus an error case of it=
-s own.
+Those are due to an incomplete migration from use of the true constant
+GIT_SHA1_RAWSZ to use of the dynamic value the_hash_algo->rawsz, no?
+In other words, "other examples do it wrong" doesn't feel like a great
+justification for making it worse in new code.
 
+[...]
+>>> +static int load_pack_mtimes_file(char *mtimes_file,
+>>> +				 uint32_t num_objects,
+>>> +				 const uint32_t **data_p, size_t *len_p)
+>>
+>> What does this function do?  A comment would help.
+>
+> I know that I'm biased as the author of this code, but I think the
+> signature is clear here. At least, I'm not sure what information a
+> comment would add that the function name and its arguments don't already
+> convey.
 
-The git checkout command actually complains about the case when you give it=
- an empty string
+Ah, thanks for this point of clarification.  What isn't clear from the
+signature is
+- when should I call this function?
+- what does its return value represent?
+- how does it handle errors?
 
-$ git checkout "" feature/foobar
-fatal: empty string is not a valid pathspec. please use . instead if you wa=
-nt to match all paths
+I agree that the parameters are self-explanatory.
 
+>>> +cleanup:
+>>> +	if (ret) {
+>>> +		if (data)
+>>> +			munmap(data, mtimes_size);
+>>> +	} else {
+>>> +		*len_p = mtimes_size;
+>>> +		*data_p = (const uint32_t *)data;
+>>
+>> Do we know that 'data' is uint32_t aligned?  Casting earlier in the
+>> function could make that more obvious.
+>
+> `data` is definitely uint32_t aligned, but this is a tradeoff, since if
+> we wrote:
+>
+>     uint32_t *data = xmmap(...);
+>
+> then I think we would have to change the case where ret is non-zero to be:
+>
+>     if (data)
+>         munmap((void*)data, ...);
+>
+> and likewise, data_p is const.
 
-When it comes to git fetch it could assume that the given empty string is e=
-ither a path or a URL/URI and write a similar error message. For instance
+Doing it that way sounds great to me.  That way, the type contains the
+information we need up-front and the safety of the cast is obvious in
+the place where the cast is needed.
 
-$ git fetch ""
-fatal: empty string is not a valid pathspec or URL; see 'git help fetch' fo=
-r valid syntax
+(Although my understanding is also that in C it's fine to pass a
+uint32_t* to a function expecting a void*, so the second cast would
+also not be needed.)
 
-For me there is an important distinction between "no path specified" and "e=
-mpty string". The former says that an argument is missing and the latter sa=
-ys that an argument is indeed given but it is an empty string.
+[...]
+>>> +int load_pack_mtimes(struct packed_git *p)
+>>
+>> This could use a doc comment in the header file.  For example, what
+>> requirements do we have on what the caller passes as 'p'?
+>>
+>> [...]
+>>> +uint32_t nth_packed_mtime(struct packed_git *p, uint32_t pos)
+>>
+>> Likewise.
+>
+> Sure. I wonder when we should do that, though. I'm not trying to be
+> impatient to get this merged, but iterating on the documentation feels
+> like it could be done on top without having to re-send the substantive
+> parts of this series over and over.
 
+In terms of re-sending patches, sending a "fixup!" patch with the
+minor changes you want to make doesn't seem too problematic to me.  In
+general a major benefit of code review is getting others' eyes on new
+code from the standpoint of readability and maintainability; including
+comments like this up front doesn't seem like a huge amount to ask
+(versus getting those comments to be perfect, which would be
+unreasonable to expect since it's not hard to update them over time).
+
+> Thanks,
+> Taylor
+
+Thanks for looking it through.
+
+Sincerely,
+Jonathan
