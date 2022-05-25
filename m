@@ -2,68 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC029C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 16:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEF88C433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 16:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237879AbiEYQLM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 12:11:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
+        id S245471AbiEYQca (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 12:32:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235590AbiEYQLK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 12:11:10 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A74F0B41F2
-        for <git@vger.kernel.org>; Wed, 25 May 2022 09:11:05 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id x2so36742158ybi.8
-        for <git@vger.kernel.org>; Wed, 25 May 2022 09:11:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=QXqAcD0z3dxfQVDn4gdL1YkCG5ZpVXCcVkccVVlX2aE=;
-        b=iDaxTuL8zNXCLSP5v3EqQiEOju6i6QG2K3UJ0xz7WMSv3mkb63FQ8kgb0wL/po+IwV
-         P235GvxBGV34CmcfCmwkm12A7pJ9EeHnu8iq9B+FntpFUoV+qQi+diRUWOVLMoEocAO0
-         smf3K+bpUWuW5AvzBGyhgJrV6xQuH2P+uX2/pk++aU6nxYbhsLLEz4/v9H1Tuf0GkNl/
-         RrKhLDx1XXvscDnAIL19gXdAnuRHojXDJr27pnNXMZZeiy/L4bjqPyhg4O0oXU9VCjUf
-         Pw0ppY0Sp+Ss5KGSEAArgbkJUuT/PDV4SanLbmC9x9OKjqystrACnciqN98tjdcRzaDV
-         k7gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=QXqAcD0z3dxfQVDn4gdL1YkCG5ZpVXCcVkccVVlX2aE=;
-        b=dZJDpVAF6CYQ/SEcW0eNgDKyjuIYpPJbsjskS5a137AbSZlYL+o+HZZ3jTYurOUzei
-         kKtZx+a/BeiqsEz4bbWSWo1RfErnJuGtd/7b1EfVQdG31yzkmkoGWOj+CDJXe/sQmtHa
-         94fxs6lCYe9xKTn4g13QIGjsAg7fohmfOUI/3DV8YBw9pzVjPdzyjy4TSiDNDqtoAapR
-         k4wSFURu7a5XH196q6KU6qOJ5MynhVAudoheoGaRMkCLm4Ig6JjCeBVPkSCZF6fQaJko
-         xIxKB/pnrCd6h6KwEMR8NYO7htkbtxe6vBmet1XFvETXAqZ5YVXq7Msn6OdGXu1/tZM4
-         lDAA==
-X-Gm-Message-State: AOAM532HGnJMENkWpLsE0/TAIvaSNzOryRXr3ien+7Irtir3EMrKr9UZ
-        Djytr2BHZ781uIKcDKYppA9hwKQ6Y/FQZ7gXGGONdFXjjoqOkw==
-X-Google-Smtp-Source: ABdhPJzdfIVmzgW4BwE6i2b0Zh4LNx/3mYdNr6BwKnjw6sgerHLsjzPOSGphRaSGSPlNus9lr1AyvS363MKAjvnyaxI=
-X-Received: by 2002:a05:6902:120e:b0:634:6f29:6b84 with SMTP id
- s14-20020a056902120e00b006346f296b84mr32302129ybu.604.1653495064503; Wed, 25
- May 2022 09:11:04 -0700 (PDT)
+        with ESMTP id S230014AbiEYQc2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 12:32:28 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22B2037A35
+        for <git@vger.kernel.org>; Wed, 25 May 2022 09:32:28 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 82329188BFA;
+        Wed, 25 May 2022 12:32:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9Shh+un6LLOglyXzNcdHh5i/pBsHPpO7u8MLQk
+        Sfy9s=; b=FFpQ+QSGNAtsfKd+7MytO17YM494vWOuhHmNSws2222uVRlsHFnJ3u
+        G8bPXcZltyrAmlhDVeydONqfeDd8ioOw9lGiJsdTOJaOblI3DVV+EEiuIaGf6/rc
+        n6fifpSOw12c4SGfLRtw6ADIDNSF/tOuknNzizEXGDUZm/ainw7W8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7AF10188BF9;
+        Wed, 25 May 2022 12:32:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2DEEB188BF8;
+        Wed, 25 May 2022 12:32:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, vdye@github.com, shaoxuan.yuan02@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 08/10] sparse-index: complete partial expansion
+References: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
+        <pull.1208.v2.git.1652982758.gitgitgadget@gmail.com>
+        <ed640e3645ba4f60f06bd335b9ac7bf350dd81f9.1652982759.git.gitgitgadget@gmail.com>
+        <xmqqsfp3coqy.fsf@gitster.g>
+        <5909f466-c323-0874-b175-51fe5e93dc12@github.com>
+        <xmqqv8tvlvao.fsf@gitster.g>
+        <f0327fd6-f2b3-64b6-3a34-2a7bbad20a01@github.com>
+Date:   Wed, 25 May 2022 09:32:23 -0700
+In-Reply-To: <f0327fd6-f2b3-64b6-3a34-2a7bbad20a01@github.com> (Derrick
+        Stolee's message of "Wed, 25 May 2022 10:26:41 -0400")
+Message-ID: <xmqq35gxa7zc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Aman <amanmatreja@gmail.com>
-Date:   Wed, 25 May 2022 21:40:42 +0530
-Message-ID: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
-Subject: About GIT Internals
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 41D718F2-DC48-11EC-94C9-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello there,
+Derrick Stolee <derrickstolee@github.com> writes:
 
-I have recently been reading The Architecture for Open Source
-Applications book - and read the chapters dedicated to GIT internals.
-And if I am being completely honest, I didn't understand most of it.
+> If a user is in a conflict state and modifies their sparse-checkout
+> cone, then we will hit this "recompute the cache-tree" state, fail,
+> and cause full index expansion. I think that combination (have a
+> conflict AND modify sparse-checkout cone) is rare enough to not
+> optimize for (yet).
+>
+> Does that make the situation more clear?
 
-Could someone please assist - in sharing some resources - which I
-could go through, to better understand GIT software internals.
+Yes.  "AND modify sparse-checkout cone" part was what I was missing.
+I didn't see it because it wasn't there at all in the code that was
+removed or added---it comes from the fact that the user is running
+the "sparse-checkout" command in the first place, and that was what
+I missed.
 
-(I am a high school student, and really want to learn more about how
-all the great software and hardware around us work - which so many of
-us take for granted)
-
-Regards,
+Thanks.
