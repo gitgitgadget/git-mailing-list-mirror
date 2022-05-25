@@ -2,296 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D1B7C433F5
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 19:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A95B9C433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 19:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232569AbiEYTGH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 15:06:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46066 "EHLO
+        id S1344161AbiEYT7a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 15:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230026AbiEYTGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 15:06:05 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74103F79
-        for <git@vger.kernel.org>; Wed, 25 May 2022 12:06:01 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id r3-20020a9d5cc3000000b0060ae1789875so12561984oti.13
-        for <git@vger.kernel.org>; Wed, 25 May 2022 12:06:01 -0700 (PDT)
+        with ESMTP id S1344338AbiEYT72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 15:59:28 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA6B28718
+        for <git@vger.kernel.org>; Wed, 25 May 2022 12:59:27 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id j6so1166709ilk.11
+        for <git@vger.kernel.org>; Wed, 25 May 2022 12:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ostif-org.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=QKC+yv6iIjpxUnJjlKm+pJuOsYz4rIoUGcU+vHdMM2g=;
-        b=HkTf9Nkk9fBbbrUL6EOc1ufVwHgEdk52Odj12dZAv6NWh/O+2k2pd32ZyuvifNXUUu
-         HqQi3RvyN0Y4B9FzWY/rzF9boUbRmrLKH9kdXN8cYLNhwskQKidgsGOWECdm1Vp2zMpY
-         oOswQgb360rzyJCkXCoxUFocjK/c0McOK8HwYVasKMEHXCmouBAGYymGQtZUmTJuLICq
-         X/Z5gNEkMOokoEMdUhqGxypCieppaJYC1akvux0bcCz6ruRxtQF2PZ968TNG8gKHp9oJ
-         2Em88J+Zn/A/kqryei8f6DBziExLijUk5cmMzYsxDr6NEQ/NGRr63FQDXhOqnz6OFo93
-         nMgA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=84/GEavKSPBmYsw66aWALkZmDs3rPiQAKxmORaD0YsE=;
+        b=SSVl32AgZ3lOTrtI9dfHM6/kX2yEFrSmo+OUdVCN8h+5/Tp+wU7PSrvqzJkMD787mp
+         h896nDduKVC4wSwcDefgZ1OCseiQfP76lu+nWzki2KRKS/vXEE1hT21nB+jOMphFSl/i
+         1WAyPYz9ePHmDkTnaqilmN1gXohVHwVcVhbs8P2aYGs1/888XI05pVbwq4O00/yDrqYi
+         mNPviEZlcoYEj96JexmNt13BGfXkwGzvpVGSDW37o6OJxBJQMc/R/Wt7R5dX1mUnL2ly
+         qGzFbW0Jx7ESmkCh6DLrClPD/SibRKOGeUmhT9wHzKB2E27ATTap2VQeCYazzkAYJwuP
+         sreA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=QKC+yv6iIjpxUnJjlKm+pJuOsYz4rIoUGcU+vHdMM2g=;
-        b=3fzy8eI2WkgIXxWg4QJeMUq+youv3adwPNTLlqkUI3+Un+YDpNm2ebKP5YU8cRZCxW
-         VtZrfHwDfsUkhEnKOKJ2NEYZcoKt8vpVSV4z05rmWZJERH5fCCJ4njOuCkZai2uuxcU9
-         V/DyipggLjPSWpldAFab5PJn/IC2dNh9powRrE4GVHYE5kari0tp8YVthklbwezIchxQ
-         f2PTuH5UGhjQ+3g8z6pBkbyDlXR2ENCDiAO59mYazXrybWejR9QwAuFXdnhdB/jrdLzm
-         s5iFBMpZVRlM+K8gT8fehVm7/tGcW31FgrhuGS0g36/nrgqZXYjx1ZiULH3QGRjGxOzk
-         ESbw==
-X-Gm-Message-State: AOAM531g/+FR4ucmlQGHPJ/AjsZUg/K03jopy6G5Ppzz5+UGG7S6b4cd
-        4l+7jUizogueoqh1D6szSc8s8BQ9M4gGIVio+/+216NXwbEWD+Gj
-X-Google-Smtp-Source: ABdhPJwcdtT2kxTnw3wCLQM3D4a5UNSR4TDeVOKpu/t1BEy1CniPXZjy+A2atHThY/IsGmk00p9KBOhM1VMy/a7kdmw=
-X-Received: by 2002:a9d:798f:0:b0:60b:298c:8bcc with SMTP id
- h15-20020a9d798f000000b0060b298c8bccmr2994935otm.176.1653505560489; Wed, 25
- May 2022 12:06:00 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=84/GEavKSPBmYsw66aWALkZmDs3rPiQAKxmORaD0YsE=;
+        b=p6V7D82kkPVlR9OCZVZet0bKtUsngKeQfT4rtv6vTsLdvs4A1oGq/ItpAS0hTho6X4
+         oWYp1VykmcwwUjEmriseJeTI3FiMYhLvsS2HrC41YpOff8oIX/Kyyz/1g2RNgv2PbRX+
+         aOLmTaWocPdtSZAOx66M8sfjb3zeSUo6ykmUbDxdIVSRPBg+k8wACRKHRWXbkNc2CI4i
+         ZQvhDl5e2l0x5x+ixzB5q2YgC5JLP9+bYRJM5/iC+6M7wuhXUVIJE34/eY2xBzMPJQEC
+         jXvvH9cYltTcfqB0KGNhTQQJreMwmPkx4l1etVovb1eXThZM3B0PPbsIFM5UugxbT7fT
+         J7zA==
+X-Gm-Message-State: AOAM530PrAY3iQmzMr8UfP0r6Xt1ghchUNBTCwcr2DaGDmflb8Ko36ba
+        KYuYXRPvsCSH2WfhQGxwX25E
+X-Google-Smtp-Source: ABdhPJzJ8Y57wGOJONYseCkLTj05Tdd6qe4GUlNzHtp6+n4s9Sg+DnGkwwyLLwmjJd01Ln3QzBBB+g==
+X-Received: by 2002:a05:6e02:18cc:b0:2d1:8475:2f50 with SMTP id s12-20020a056e0218cc00b002d184752f50mr13597860ilu.91.1653508766914;
+        Wed, 25 May 2022 12:59:26 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:fc7b:47ed:5937:b714? ([2600:1700:e72:80a0:fc7b:47ed:5937:b714])
+        by smtp.gmail.com with ESMTPSA id z3-20020a05660229c300b0065a47e16f4esm4555185ioq.32.2022.05.25.12.59.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 May 2022 12:59:26 -0700 (PDT)
+Message-ID: <7f5a6a6a-c554-c659-72a8-404bc39e08c7@github.com>
+Date:   Wed, 25 May 2022 15:59:24 -0400
 MIME-Version: 1.0
-References: <CAJY0qZJ1A68kXOW5rzov-R4zXY-ssaqNn9OPRvQ=KhO835L=Pw@mail.gmail.com>
- <CALokGq-i9JgwejE+SbEVbY0GHAR1NTQx-Ngj__nw5wibve2FdA@mail.gmail.com>
- <CAJY0qZ+9o_B1XWVwwBRRih6ob6MVVMs4M-9MxF=-n8aUdHD79Q@mail.gmail.com>
- <CAG=8VoB3TRgFxdj7+QnYhUoJ-hw1f7G6-f=9c2CaHz66TJqxZA@mail.gmail.com>
- <CADKuG0vB=J+nQpRTWYH5MrK5=9R+unzLoP6DYQHmuvbRAKJ0mg@mail.gmail.com>
- <CADKuG0vngAk1RDV7COUfeGUzRLETHdV1WJFRTUiqp7CgSw3AFA@mail.gmail.com>
- <CAHhjvvnYf38XB8ECpT1GBWRL5MzPSoxsvmvtNuYC0zm-EcGp2Q@mail.gmail.com> <CADKuG0vBcXp4GYECUUfYqc14LXjReudp1+UnJ+k=81pe9XuHUw@mail.gmail.com>
-In-Reply-To: <CADKuG0vBcXp4GYECUUfYqc14LXjReudp1+UnJ+k=81pe9XuHUw@mail.gmail.com>
-From:   Amir Montazery <amir@ostif.org>
-Date:   Wed, 25 May 2022 14:05:49 -0500
-Message-ID: <CADKuG0ukPErr75yd-bdosuxgkyALFqGqkWFJTLaM+npBzwEWFg@mail.gmail.com>
-Subject: Fwd: Syncing up team members for the comprehensive security review of Git
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v5 00/17] cruft packs
+Content-Language: en-US
+To:     Jonathan Nieder <jrnieder@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
+        tytso@mit.edu
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <cover.1653088640.git.me@ttaylorr.com>
+ <220521.868rqv15tj.gmgdl@evledraar.gmail.com> <Yo00X0NEu8N0MnZV@google.com>
+ <Yo1TIQqvlxhvLZ58@nand.local> <220525.86sfoytwjn.gmgdl@evledraar.gmail.com>
+ <Yo1YZM2dI6t+RsWv@nand.local> <Yo3gl5Wv82mTZQb2@google.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <Yo3gl5Wv82mTZQb2@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello git mailing list! The purpose of this email is to inform you of
-the coordinated security effort for git, and hopefully source some
-contacts for questions and follow up. An overview of the effort is as
-follows. It is broken up into three work packages. It would be great
-to have at least one contact/maintainer for each work package.
-
-Work Package 1: git source code review and threat modeling: This will
-be done by the team at x41-dsec with a Gitlab team.
-
-Work Package 2: Supply chain security / CI infrastructure review with
-Chainguard and Gitlab team.
-
-Work Package 3: A new setup of CodeQL for git with Xavier and his team
-from Github.
-
-Please let me know if you have any questions. Thank you in advance! We
-are aiming to start the week of June 13th 2022.
-
-- Amir
-
-Amir Montazery
-Managing Director
-Open Source Technology Improvement Fund
-https://ostif.org/
-https://calendly.com/ostif
-
-
----------- Forwarded message ---------
-From: Amir Montazery <amir@ostif.org>
-Date: Wed, May 25, 2022 at 1:38 PM
-Subject: Re: Syncing up team members for the comprehensive security
-review of Git
-To: Xavier Ren=C3=A9-Corail <xcorail@github.com>, Markus Vervier
-<markus.vervier@x41-dsec.de>, Eric Sesterhenn
-<eric.sesterhenn@x41-dsec.de>
-Cc: Dennis Appelt <dappelt@gitlab.com>, Derek Zimmer
-<derek@ostif.org>, Joern Schneeweisz <jschneeweisz@gitlab.com>, Eddie
-Zaneski <eddiezane@chainguard.dev>, Adolfo Veytia
-<puerco@chainguard.dev>, Tracy Miranda <tracy@chainguard.dev>, Ethan
-Strike <estrike@gitlab.com>
-
-
-Adding +Markus Vervier and +Eric Sesterhenn  to the thread. Sorry, I
-got my threads mixed up.
-
-On Wed, May 25, 2022 at 12:38 PM Xavier Ren=C3=A9-Corail <xcorail@github.co=
-m> wrote:
->
-> Hey Amir,
->
-> Sorry for the late reply, busy times here. I am trying to find the best p=
-ersons on our side an will let you know ASAP.
->
-> --
-> Cheers
-> Xavier
->
->
-> On Tue, May 24, 2022 at 1:18 PM Amir Montazery <amir@ostif.org> wrote:
->>
->> Hello all,
->>
->> Please see the following doc. The next steps are as follows:
->>
->> Confirm information is accurate.
->> Confirm who else, in anyone, should be engaged as part of this effort.
->> Schedule intro meetings.
->>
->> Please let us know your thoughts and feedback! Thank you in advance!
->>
->> Link to doc: https://docs.google.com/document/d/1kRLVuvOFkXS1Jt_voDLBVZV=
-QMpgfXUOCJQpnNXDZhQo
->>
->>
->> On Tue, May 24, 2022 at 3:00 PM Amir Montazery <amir@ostif.org> wrote:
+On 5/25/2022 3:53 AM, Jonathan Nieder wrote:
+> Taylor Blau wrote:
+>> On Tue, May 24, 2022 at 11:55:02PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+>>>> Moreover, I can't seem to find any formats that _don't_ use that
+>>>> convention.
 >>>
->>> Wonderful. Thank you everyone! We are finalizing a doc that will help g=
-uide the work and keep everyone informed. Once that is shared, we can confi=
-rm the info is accurate and move forward with scheduling a sync.
->>>
->>> Thank you,
->>> Amir
->>>
->>> On Mon, May 16, 2022 at 6:56 AM Dennis Appelt <dappelt@gitlab.com> wrot=
-e:
->>>>
->>>> Hi Derek - sounds good. Looking forward to learning more about the eff=
-ort.
->>>>
->>>> On Fri, May 13, 2022 at 6:13 PM Derek Zimmer <derek@ostif.org> wrote:
->>>>>
->>>>> Nice to meet you Dennis!
->>>>>
->>>>> The supply chain side is Eddie, Tracy, and Adolfo. I believe they are=
- all going to Kubecon so it will be sometime after that.
->>>>>
->>>>> Derek Zimmer
->>>>> Executive Director
->>>>> Open Source Technology Improvement Fund
->>>>>
->>>>>
->>>>> On Thu, May 12, 2022 at 8:16 AM Joern Schneeweisz <jschneeweisz@gitla=
-b.com> wrote:
->>>>>>
->>>>>> Hi all,
->>>>>>
->>>>>> sorry for just replying to a subset here, but I didn't want to spam =
-everyone with scheduling questions.
->>>>>>
->>>>>> Regarding:
->>>>>>
->>>>>> > -Supply chain security / CI infrastructure review with Chainguard =
-and Joern from Gitlab (if he so chooses to assist).
->>>>>>
->>>>>> My colleague Dennis (in cc:) is interested in joining this effort as=
- he did quite some research in the supply chain field.
->>>>>> For our scheduling and to decide how we can join the review we'd nee=
-d to know the timeline for the supply chain and CI infra review.
->>>>>>
->>>>>> Thanks and looking forward to collaborate
->>>>>>
->>>>>> joern
->>>>>>
->>>>>>
->>>>>>
->>>>>> On Wed, May 11, 2022 at 6:54 PM Derek Zimmer <derek@ostif.org> wrote=
-:
->>>>>>>
->>>>>>> Hello everyone,
->>>>>>>
->>>>>>> We've had all of our initial meetings with the stakeholders on this=
- project and I'm here to fill us all in on communication channels and respo=
-nsibilities. If I've missed anyone that is participating from any of the or=
-gs involved, please add them to this email so that we can all get on the sa=
-me page and have all of the required contacts.
->>>>>>>
->>>>>>> Because of the wide scope of this project there will be some overla=
-p between the work of the teams, and it is crucial that we ensure that ever=
-yone has access to the information that they need to make this work as frui=
-tful as possible.
->>>>>>>
->>>>>>> We have three main work packages that we are executing:
->>>>>>> -Git source code review and threat modeling: This will be done by t=
-he team at x41-dsec with Joern from Gitlab.
->>>>>>> -Supply chain security / CI infrastructure review with Chainguard a=
-nd Joern from Gitlab (if he so chooses to assist).
->>>>>>> -A new setup of CodeQL for git with Xavier and his team from Github=
-.
->>>>>>>
->>>>>>> Because Git is an enormous project with hundreds of contributors, w=
-e've been directed by the maintainers to refer questions to the mailing lis=
-t. If we get no response or need some specific responses or access, OSTIF c=
-an reach out to the maintainers directly to find the people required (if th=
-e mailing list fails to produce results). The mailing list is at git@vger.k=
-ernel.org (PLAIN TEXT EMAIL ONLY, ANYTHING ELSE IS AUTOMATICALLY REJECTED).
->>>>>>>
->>>>>>> Our next step is to find everyone's availability so that we can gen=
-erally set expectations about who is doing work and when. These projects do=
- not have to happen simultaneously as each work package has different end-g=
-oals, but we should share relevant information between teams to prevent red=
-undant work and wasted resources.
->>>>>>>
->>>>>>> So the questions to answer:
->>>>>>>
->>>>>>> Do we have everyone here?
->>>>>>> Is everyone's role understood?
->>>>>>> When can your respective teams begin?
->>>>>>>
->>>>>>>
->>>>>>> Thank you all for participating in this! I'm confident that this ef=
-fort is going to help secure all of open source!
->>>>>>>
->>>>>>> All the best,
->>>>>>>
->>>>>>> Derek Zimmer
->>>>>>> Executive Director
->>>>>>> Open Source Technology Improvement Fund
->>>>>>
->>>>>>
->>>>>>
->>>>>> --
->>>>>> Joern SchneeweiszStaff Security Engineer, Security Research | GitLab
->>>>>>
->>>>>> GitLab GmbH
->>>>>>
->>>>>> Elsenheimerstra=C3=9Fe 7
->>>>>> c/o RPI Roehm + Partner 80687 M=C3=BCnchen
->>>>>> Registergericht: Amtsgericht M=C3=BCnchen, HRB 237630
->>>>>> Gesch=C3=A4ftsf=C3=BChrer: Sytse Rients Sijbrandij
->>>>
->>>>
->>>>
->>>> --
->>>>
->>>> Dennis Appelt Security Engineer | GitLab
->>>
->>>
->>>
->>> --
->>> Amir Montazery
->>> Managing Director
->>> Open Source Technology Improvement Fund
->>> https://ostif.org/
->>> https://calendly.com/ostif
->>>
->>
->>
->> --
->> Amir Montazery
->> Managing Director
->> Open Source Technology Improvement Fund
->> https://ostif.org/
->> https://calendly.com/ostif
->>
+>>> It's used in the reftable format.
 
+The use in reftable is the only one I can find and that implementation
+is not idiomatic. Specifically, the way the four-byte header was
+implemented is not easy to extract and share in other formats.
 
---=20
-Amir Montazery
-Managing Director
-Open Source Technology Improvement Fund
-https://ostif.org/
-https://calendly.com/ostif
+This series does the good work of extracting oid_version() as a
+common method across these formats so it is easier to share.
 
+> It's also used in the formats described in
+> Documentation/technical/hash-function-transition.
 
+It documents things that have not been implemented, such as the v3
+pack-index format:
 
---=20
-Amir Montazery
-Managing Director
-Open Source Technology Improvement Fund
-https://ostif.org/
-https://calendly.com/ostif
+  Pack index (.idx) files use a new v3 format that supports multiple
+  hash functions. They have the following format (all integers are in
+  network byte order):
+(...)
+  * 4-byte number of object formats in this pack index: 2
+  * For each object format:
+    ** 4-byte format identifier (e.g., 'sha1' for SHA-1)
+    ** 4-byte length in bytes of shortened object names. This is the
+      shortest possible length needed to make names in the shortened
+      object name table unambiguous.
+    ** 4-byte integer, recording where tables relating to this format
+      are stored in this index file, as an offset from the beginning.
+
+This was added in your 752414ae431 (technical doc: add a design doc
+for hash function transition, 2017-09-27), but has not been acted upon
+yet.
+
+> [...]
+>> Sounds good. Unless others have a very strong opinion, let's leave it as
+>> is.
+> 
+> File formats are one of those things where a little time early can save
+> a lot of work later.  If there were a strong reason to use "1" and "2"
+> here then I'd be okay with living with it --- I'm a pragmatic person.
+> But in general, using the magic numbers instead of a sequential value is
+> really helpful both in making the file formats more self-explanatory and
+> in making it possible to experiment with multiple new hash_algos at the
+> same time.
+> 
+> The main argument I'm hearing for using "1" and "2" is "because some
+> other formats got that wrong".  That reason is the opposite of
+> compelling to me: it makes me suspect that as a project we should more
+> eagerly break the old bad habits and form new ones.  I guess this
+> qualifies as a very strong opinion.
+
+Either way, these are magic numbers. One happens to somewhat spell
+out something when looking at the file in a hex editor with ASCII
+previews, but that doesn't change the fact that it is most important
+that the hash function is correctly indicated by the file format and
+parsed by the Git executable (not a human).
+
+I'd much rather have a consistent and proven way of specifying the
+hash value (using the oid_version() helper) than to try and make a
+new mechanism.
+
+Thanks,
+-Stolee
