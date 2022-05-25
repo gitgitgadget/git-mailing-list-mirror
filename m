@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 803FAC433FE
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 15:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E91AC433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 15:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243034AbiEYPCX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 11:02:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39820 "EHLO
+        id S229468AbiEYPCZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 11:02:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244999AbiEYPBb (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237514AbiEYPBb (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 May 2022 11:01:31 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11A94AF318
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 967BCAF31B
         for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:30 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 206-20020a1c02d7000000b00397345f2c6fso837629wmc.4
-        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:29 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id p10so11874924wrg.12
+        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3IAiMHgRwhfbvkUdsr17fwV8M0Qk+EnCGfvQEEa+RAk=;
-        b=aOWSf7fUwb/p7Rs1hSVUTNg/6ck4Nk5UeuE8sDGfYrORsHHp7R/US4pJ4fSuCmrOut
-         uVoUUnXgT7o9FilbNeLgwFW61oVSrGRk0ufglkA1BFM6dDykTmhnwjCxpZeql2ZUDD5y
-         mnaYaA+/mYisJwsw3xHDIihe6r0ugrI+GbDGo94UkrWbomKZYYqWGO75HDivM4UdGjw8
-         /joJlGfxubUAOL/ENFL6kcTDdTpYLndmVks7pwKvQOiHcB+4C3uDkuPujD5fFxlyWQSf
-         sWUeHhZWnDRvBDh9xGKdXtURSBPmTzgRu2R2U3FaCer6XQnrNAVrf3VA0ksmOYAQuliC
-         vaVA==
+        bh=yAYOyrQ7lGddulrPeFKr0D/52H8sH3I2rvMs5wugd2A=;
+        b=hAExHOMPMEp8S/ZX98vqf/GkoeMHfZdbcJByy0yNQuRry5mHaONs9cwIxrFgyVcDb9
+         hoQsdeDy911iB1KBC+seJxXXq/It0+t9AVEDuyDWMCHt2ZgVFmk5PkxCN+KylMmQc7Wh
+         qbIKyX0QqEAqwLkMhzv1MZRNUyVT+dvRsOyZcvxVMUBbT5UH1XAs0ZP0V5O4LNrreerF
+         /VOhudhpINufcmy/iNdVR/3AC5v8wOQ7Mi/YyV2XHuEb++xL1myBUEmEy1qd8b8sMhtN
+         0xMn4kegr6hX2b53Xlqdtsos2P7/R0hoUbi+DEPiIcS5nF4FQA4hEnvt/h7WXCtk4hut
+         0QNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3IAiMHgRwhfbvkUdsr17fwV8M0Qk+EnCGfvQEEa+RAk=;
-        b=zqiN8erDEoR1fQyF1Pw+CedCv3rhEF8gNcFMMrdKIen0K+0QeRGeWykrEBgFp8qsZc
-         093R2I5dAKWKO8w25Vt3YX+oFI6U3PtxC3Q+PMOZQggyvct/S1OE1eGXKk3ceoQzrTkQ
-         80mnNsbVa8yL6KLpPR30HSaRuiBUxBlv9vR40DE0lT3Y/+bxzvsmENgP9rOIef+V+JQC
-         /+wG9I6mwkoA0ab8v0ypRoTngvKZ5PeGvGMqWpVuIpgsqZAo1kCj/T0pxNUl+spgyIwK
-         WgmtvEfEJKyJ8ZjXpbYUXhaOoX6jFzxi045US5eZvDYAFvGRpWyDHesxowYJUWVEVv+3
-         YVjQ==
-X-Gm-Message-State: AOAM532QI9dwDumILEZRJEujce4I24krgJol5/7IWKBqBFD/i+qQ+Fa4
-        UEmd1tbcYanNPDPmYw0LZaxfoaysYb0=
-X-Google-Smtp-Source: ABdhPJxOqJ3wtqCdVip6+iZJ8dJsdpnzbK4UGp6abkDmz3hRvVnCUOYuJThQHHImv6PEMlA0nUJ3Kg==
-X-Received: by 2002:a05:600c:1e17:b0:397:3a41:dbb0 with SMTP id ay23-20020a05600c1e1700b003973a41dbb0mr8370930wmb.7.1653490888047;
-        Wed, 25 May 2022 08:01:28 -0700 (PDT)
+        bh=yAYOyrQ7lGddulrPeFKr0D/52H8sH3I2rvMs5wugd2A=;
+        b=lYXbyskLMagphYZ/W1nGLRiLbCqz4mMt+EyEKb3miXd3/bnU7IsT5Jmmfs2JlATuwD
+         zvT7Z3+UlNs587T29ZV4ABono5Vy2xztZijlzJJBfk70kahVzzu8c99bx7tyZ0diLYsA
+         DhS3MeaOab4106oJ+WJHjGPxfvsRvqnluf3aDi1dLW3dVQCpHAOqtISO9/ddV8eYXnxp
+         c1lhKt3HqWjpqh7MChoWd2uKGBH5WIFGtjCqdap5bE8LIXZ5HaYNYSD0R1uwF+rNUBVi
+         mPPfVoYiqZyKQsp7c9T/WjUV3pekFEg9bXvZoSauVmCWq2Oi2HG5/cbYPOr1FgYEz96k
+         ZQRQ==
+X-Gm-Message-State: AOAM530wC+5LkLKzyFS3CpuN0+EwIvaIUQnMLzwo3/kgjK9XVNWV38KX
+        0e2vVxLdRizbW3LZ/sC0xlnWrrDMQvE=
+X-Google-Smtp-Source: ABdhPJzouX8eII1r0fsLXMAnAQypEYGUHu7nJXusXd//Faa1+YybUuvsf/4+TIACBlP/qGTr01gUow==
+X-Received: by 2002:adf:e710:0:b0:210:347:8dd4 with SMTP id c16-20020adfe710000000b0021003478dd4mr1804923wrm.295.1653490889471;
+        Wed, 25 May 2022 08:01:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z26-20020a05600c221a00b003974a3af623sm2270066wml.17.2022.05.25.08.01.27
+        by smtp.gmail.com with ESMTPSA id j20-20020a5d6e54000000b0020e5d8dbbb8sm2412755wrz.56.2022.05.25.08.01.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 08:01:27 -0700 (PDT)
-Message-Id: <f5dac2868124b57a68a5b7594f02e934c63f7e95.1653490853.git.gitgitgadget@gmail.com>
+        Wed, 25 May 2022 08:01:28 -0700 (PDT)
+Message-Id: <92f5c0d2c8b1a69aec4325ab35193fe257d481f1.1653490853.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
 References: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
         <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 25 May 2022 15:00:44 +0000
-Subject: [PATCH v8 22/30] t/perf/p7527: add perf test for builtin FSMonitor
+Date:   Wed, 25 May 2022 15:00:45 +0000
+Subject: [PATCH v8 23/30] fsmonitor: never set CE_FSMONITOR_VALID on
+ submodules
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,275 +75,206 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Never set CE_FSMONITOR_VALID on the cache-entry of submodule
+directories.
+
+During a client command like 'git status', we may need to recurse
+into each submodule to compute a status summary for the submodule.
+Since the purpose of the ce_flag is to let Git avoid scanning a
+cache-entry, setting the flag causes the recursive call to be
+avoided and we report incorrect (no status) for the submodule.
+
+We created an OS watch on the root directory of our working
+directory and we receive events for everything in the cone
+under it.  When submodules are present inside our working
+directory, we receive events for both our repo (the super) and
+any subs within it.  Since our index doesn't have any information
+for items within the submodules, we can't use those events.
+
+We could try to truncate the paths of those events back to the
+submodule boundary and mark the GITLINK as dirty, but that
+feels expensive since we would have to prefix compare every FS
+event that we receive against a list of submodule roots.  And
+it still wouldn't be sufficient to correctly report status on
+the submodule, since we don't have any space in the cache-entry
+to cache the submodule's status (the 'SCMU' bits in porcelain
+V2 speak).  That is, the CE_FSMONITOR_VALID bit just says that
+we don't need to scan/inspect it because we already know the
+answer -- it doesn't say that the item is clean -- and we
+don't have space in the cache-entry to store those answers.
+So we should always do the recursive scan.
+
+Therefore, we should never set the flag on GITLINK cache-entries.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/p7527-builtin-fsmonitor.sh | 257 ++++++++++++++++++++++++++++++
- 1 file changed, 257 insertions(+)
- create mode 100755 t/perf/p7527-builtin-fsmonitor.sh
+ fsmonitor.c                  |   2 +
+ fsmonitor.h                  |  11 ++++
+ t/t7527-builtin-fsmonitor.sh | 111 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 124 insertions(+)
 
-diff --git a/t/perf/p7527-builtin-fsmonitor.sh b/t/perf/p7527-builtin-fsmonitor.sh
-new file mode 100755
-index 00000000000..9338b9ea008
---- /dev/null
-+++ b/t/perf/p7527-builtin-fsmonitor.sh
-@@ -0,0 +1,257 @@
-+#!/bin/sh
+diff --git a/fsmonitor.c b/fsmonitor.c
+index e1229c289cf..57d6a483bee 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -580,6 +580,8 @@ void tweak_fsmonitor(struct index_state *istate)
+ 		if (fsmonitor_enabled) {
+ 			/* Mark all entries valid */
+ 			for (i = 0; i < istate->cache_nr; i++) {
++				if (S_ISGITLINK(istate->cache[i]->ce_mode))
++					continue;
+ 				istate->cache[i]->ce_flags |= CE_FSMONITOR_VALID;
+ 			}
+ 
+diff --git a/fsmonitor.h b/fsmonitor.h
+index 3f41f653691..edf7ce5203b 100644
+--- a/fsmonitor.h
++++ b/fsmonitor.h
+@@ -68,6 +68,15 @@ static inline int is_fsmonitor_refreshed(const struct index_state *istate)
+  * Set the given cache entries CE_FSMONITOR_VALID bit. This should be
+  * called any time the cache entry has been updated to reflect the
+  * current state of the file on disk.
++ *
++ * However, never mark submodules as valid.  When commands like "git
++ * status" run they might need to recurse into the submodule (using a
++ * child process) to get a summary of the submodule state.  We don't
++ * have (and don't want to create) the facility to translate every
++ * FS event that we receive and that happens to be deep inside of a
++ * submodule back to the submodule root, so we cannot correctly keep
++ * track of this bit on the gitlink directory.  Therefore, we never
++ * set it on submodules.
+  */
+ static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce)
+ {
+@@ -75,6 +84,8 @@ static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache
+ 
+ 	if (fsm_mode > FSMONITOR_MODE_DISABLED &&
+ 	    !(ce->ce_flags & CE_FSMONITOR_VALID)) {
++		if (S_ISGITLINK(ce->ce_mode))
++			return;
+ 		istate->cache_changed = 1;
+ 		ce->ce_flags |= CE_FSMONITOR_VALID;
+ 		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 3bc335b891d..cf4fb72c3f0 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -721,4 +721,115 @@ do
+ 	'
+ done
+ 
++# Test fsmonitor interaction with submodules.
++#
++# If we start the daemon in the super, it will see FS events for
++# everything in the working directory cone and this includes any
++# files/directories contained *within* the submodules.
++#
++# A `git status` at top level will get events for items within the
++# submodule and ignore them, since they aren't named in the index
++# of the super repo.  This makes the fsmonitor response a little
++# noisy, but it doesn't alter the correctness of the state of the
++# super-proper.
++#
++# When we have submodules, `git status` normally does a recursive
++# status on each of the submodules and adds a summary row for any
++# dirty submodules.  (See the "S..." bits in porcelain V2 output.)
++#
++# It is therefore important that the top level status not be tricked
++# by the FSMonitor response to skip those recursive calls.  That is,
++# even if FSMonitor says that the mtime of the submodule directory
++# hasn't changed and it could be implicitly marked valid, we must
++# not take that shortcut.  We need to force the recusion into the
++# submodule so that we get a summary of the status *within* the
++# submodule.
 +
-+test_description="Perf test for the builtin FSMonitor"
++create_super () {
++	super="$1" &&
 +
-+. ./perf-lib.sh
++	git init "$super" &&
++	echo x >"$super/file_1" &&
++	echo y >"$super/file_2" &&
++	echo z >"$super/file_3" &&
++	mkdir "$super/dir_1" &&
++	echo a >"$super/dir_1/file_11" &&
++	echo b >"$super/dir_1/file_12" &&
++	mkdir "$super/dir_1/dir_2" &&
++	echo a >"$super/dir_1/dir_2/file_21" &&
++	echo b >"$super/dir_1/dir_2/file_22" &&
++	git -C "$super" add . &&
++	git -C "$super" commit -m "initial $super commit"
++}
 +
-+if ! test_have_prereq FSMONITOR_DAEMON
-+then
-+	skip_all="fsmonitor--daemon is not supported on this platform"
-+	test_done
-+fi
++create_sub () {
++	sub="$1" &&
 +
-+test_lazy_prereq UNTRACKED_CACHE '
-+	{ git update-index --test-untracked-cache; ret=$?; } &&
-+	test $ret -ne 1
++	git init "$sub" &&
++	echo x >"$sub/file_x" &&
++	echo y >"$sub/file_y" &&
++	echo z >"$sub/file_z" &&
++	mkdir "$sub/dir_x" &&
++	echo a >"$sub/dir_x/file_a" &&
++	echo b >"$sub/dir_x/file_b" &&
++	mkdir "$sub/dir_x/dir_y" &&
++	echo a >"$sub/dir_x/dir_y/file_a" &&
++	echo b >"$sub/dir_x/dir_y/file_b" &&
++	git -C "$sub" add . &&
++	git -C "$sub" commit -m "initial $sub commit"
++}
++
++my_match_and_clean () {
++	git -C super --no-optional-locks status --porcelain=v2 >actual.with &&
++	git -C super --no-optional-locks -c core.fsmonitor=false \
++		status --porcelain=v2 >actual.without &&
++	test_cmp actual.with actual.without &&
++
++	git -C super/dir_1/dir_2/sub reset --hard &&
++	git -C super/dir_1/dir_2/sub clean -d -f
++}
++
++test_expect_success 'submodule always visited' '
++	test_when_finished "git -C super fsmonitor--daemon stop; \
++			    rm -rf super; \
++			    rm -rf sub" &&
++
++	create_super super &&
++	create_sub sub &&
++
++	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
++	git -C super commit -m "add sub" &&
++
++	start_daemon -C super &&
++	git -C super config core.fsmonitor true &&
++	git -C super update-index --fsmonitor &&
++	git -C super status &&
++
++	# Now run pairs of commands w/ and w/o FSMonitor while we make
++	# some dirt in the submodule and confirm matching output.
++
++	# Completely clean status.
++	my_match_and_clean &&
++
++	# .M S..U
++	echo z >super/dir_1/dir_2/sub/dir_x/dir_y/foobar_u &&
++	my_match_and_clean &&
++
++	# .M S.M.
++	echo z >super/dir_1/dir_2/sub/dir_x/dir_y/foobar_m &&
++	git -C super/dir_1/dir_2/sub add . &&
++	my_match_and_clean &&
++
++	# .M S.M.
++	echo z >>super/dir_1/dir_2/sub/dir_x/dir_y/file_a &&
++	git -C super/dir_1/dir_2/sub add . &&
++	my_match_and_clean &&
++
++	# .M SC..
++	echo z >>super/dir_1/dir_2/sub/dir_x/dir_y/file_a &&
++	git -C super/dir_1/dir_2/sub add . &&
++	git -C super/dir_1/dir_2/sub commit -m "SC.." &&
++	my_match_and_clean
 +'
 +
-+# Lie to perf-lib and ask for a new empty repo and avoid
-+# the complaints about GIT_PERF_REPO not being big enough
-+# the perf hit when GIT_PERF_LARGE_REPO is copied into
-+# the trash directory.
-+#
-+# NEEDSWORK: It would be nice if perf-lib had an option to
-+# "borrow" an existing large repo (especially for gigantic
-+# monorepos) and use it in-place.  For now, fake it here.
-+#
-+test_perf_fresh_repo
-+
-+
-+# Use a generated synthetic monorepo.  If it doesn't exist, we will
-+# generate it.  If it does exist, we will put it in a known state
-+# before we start our timings.
-+#
-+PARAM_D=5
-+PARAM_W=10
-+PARAM_F=9
-+
-+PARAMS="$PARAM_D"."$PARAM_W"."$PARAM_F"
-+
-+BALLAST_BR=p0006-ballast
-+export BALLAST_BR
-+
-+TMP_BR=tmp_br
-+export TMP_BR
-+
-+REPO=../repos/gen-many-files-"$PARAMS".git
-+export REPO
-+
-+if ! test -d $REPO
-+then
-+	(cd ../repos; ./many-files.sh -d $PARAM_D -w $PARAM_W -f $PARAM_F)
-+fi
-+
-+
-+enable_uc () {
-+	git -C $REPO config core.untrackedcache true
-+	git -C $REPO update-index --untracked-cache
-+	git -C $REPO status >/dev/null 2>&1
-+}
-+
-+disable_uc () {
-+	git -C $REPO config core.untrackedcache false
-+	git -C $REPO update-index --no-untracked-cache
-+	git -C $REPO status >/dev/null 2>&1
-+}
-+
-+start_fsm () {
-+	git -C $REPO fsmonitor--daemon start
-+	git -C $REPO fsmonitor--daemon status
-+	git -C $REPO config core.fsmonitor true
-+	git -C $REPO update-index --fsmonitor
-+	git -C $REPO status >/dev/null 2>&1
-+}
-+
-+stop_fsm () {
-+	git -C $REPO config --unset core.fsmonitor
-+	git -C $REPO update-index --no-fsmonitor
-+	test_might_fail git -C $REPO fsmonitor--daemon stop 2>/dev/null
-+	git -C $REPO status >/dev/null 2>&1
-+}
-+
-+
-+# Ensure that FSMonitor is turned off on the borrowed repo.
-+#
-+test_expect_success "Setup borrowed repo (fsm+uc)" "
-+	stop_fsm &&
-+	disable_uc
-+"
-+
-+# Also ensure that it starts in a known state.
-+#
-+# Because we assume that $GIT_PERF_REPEAT_COUNT > 1, we are not going to time
-+# the ballast checkout, since only the first invocation does any work and the
-+# subsequent ones just print "already on branch" and quit, so the reported
-+# time is not useful.
-+#
-+# Create a temp branch and do all work relative to it so that we don't
-+# accidentially alter the real ballast branch.
-+#
-+test_expect_success "Setup borrowed repo (temp ballast branch)" "
-+	test_might_fail git -C $REPO checkout $BALLAST_BR &&
-+	test_might_fail git -C $REPO reset --hard &&
-+	git -C $REPO clean -d -f &&
-+	test_might_fail git -C $REPO branch -D $TMP_BR &&
-+	git -C $REPO branch $TMP_BR $BALLAST_BR &&
-+	git -C $REPO checkout $TMP_BR
-+"
-+
-+
-+echo Data >data.txt
-+
-+# NEEDSWORK: We assume that $GIT_PERF_REPEAT_COUNT > 1.  With
-+# FSMonitor enabled, we can get a skewed view of status times, since
-+# the index MAY (or may not) be updated after the first invocation
-+# which will update the FSMonitor Token, so the subsequent invocations
-+# may get a smaller response from the daemon.
-+#
-+do_status () {
-+	msg=$1
-+
-+	test_perf "$msg" "
-+		git -C $REPO status >/dev/null 2>&1
-+	"
-+}
-+
-+do_matrix () {
-+	uc=$1
-+	fsm=$2
-+
-+	t="[uc $uc][fsm $fsm]"
-+	MATRIX_BR="$TMP_BR-$uc-$fsm"
-+
-+	test_expect_success "$t Setup matrix branch" "
-+		git -C $REPO clean -d -f &&
-+		git -C $REPO checkout $TMP_BR &&
-+		test_might_fail git -C $REPO branch -D $MATRIX_BR &&
-+		git -C $REPO branch $MATRIX_BR $TMP_BR &&
-+		git -C $REPO checkout $MATRIX_BR
-+	"
-+
-+	if test $uc = true
-+	then
-+		enable_uc
-+	else
-+		disable_uc
-+	fi
-+
-+	if test $fsm = true
-+	then
-+		start_fsm
-+	else
-+		stop_fsm
-+	fi
-+
-+	do_status "$t status after checkout"
-+
-+	# Modify many files in the matrix branch.
-+	# Stage them.
-+	# Commit them.
-+	# Rollback.
-+	#
-+	test_expect_success "$t modify tracked files" "
-+		find $REPO -name file1 -exec cp data.txt {} \\;
-+	"
-+
-+	do_status "$t status after big change"
-+
-+	# Don't bother timing the "add" because _REPEAT_COUNT
-+	# issue described above.
-+	#
-+	test_expect_success "$t add all" "
-+		git -C $REPO add -A
-+	"
-+
-+	do_status "$t status after add all"
-+
-+	test_expect_success "$t add dot" "
-+		git -C $REPO add .
-+	"
-+
-+	do_status "$t status after add dot"
-+
-+	test_expect_success "$t commit staged" "
-+		git -C $REPO commit -a -m data
-+	"
-+
-+	do_status "$t status after commit"
-+
-+	test_expect_success "$t reset HEAD~1 hard" "
-+		git -C $REPO reset --hard HEAD~1 >/dev/null 2>&1
-+	"
-+
-+	do_status "$t status after reset hard"
-+
-+	# Create some untracked files.
-+	#
-+	test_expect_success "$t create untracked files" "
-+		cp -R $REPO/ballast/dir1 $REPO/ballast/xxx1
-+	"
-+
-+	do_status "$t status after create untracked files"
-+
-+	# Remove the new untracked files.
-+	#
-+	test_expect_success "$t clean -df" "
-+		git -C $REPO clean -d -f
-+	"
-+
-+	do_status "$t status after clean"
-+
-+	if test $fsm = true
-+	then
-+		stop_fsm
-+	fi
-+}
-+
-+# Begin testing each case in the matrix that we care about.
-+#
-+uc_values="false"
-+test_have_prereq UNTRACKED_CACHE && uc_values="false true"
-+
-+fsm_values="false true"
-+
-+for uc_val in $uc_values
-+do
-+	for fsm_val in $fsm_values
-+	do
-+		do_matrix $uc_val $fsm_val
-+	done
-+done
-+
-+cleanup () {
-+	uc=$1
-+	fsm=$2
-+
-+	MATRIX_BR="$TMP_BR-$uc-$fsm"
-+
-+	test_might_fail git -C $REPO branch -D $MATRIX_BR
-+}
-+
-+
-+# We're borrowing this repo.  We should leave it in a clean state.
-+#
-+test_expect_success "Cleanup temp and matrix branches" "
-+	git -C $REPO clean -d -f &&
-+	test_might_fail git -C $REPO checkout $BALLAST_BR &&
-+	test_might_fail git -C $REPO branch -D $TMP_BR &&
-+	for uc_val in $uc_values
-+	do
-+		for fsm_val in $fsm_values
-+		do
-+			cleanup $uc_val $fsm_val
-+		done
-+	done
-+"
-+
-+test_done
+ test_done
 -- 
 gitgitgadget
 
