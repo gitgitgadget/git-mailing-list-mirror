@@ -2,110 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFBCBC433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 03:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8178C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 03:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243422AbiEYDrQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 23:47:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45366 "EHLO
+        id S242739AbiEYDsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 23:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235282AbiEYDrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 23:47:14 -0400
+        with ESMTP id S235282AbiEYDsH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 23:48:07 -0400
 Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6938F579A1
-        for <git@vger.kernel.org>; Tue, 24 May 2022 20:47:12 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id wh22so38982088ejb.7
-        for <git@vger.kernel.org>; Tue, 24 May 2022 20:47:12 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E0846D97A
+        for <git@vger.kernel.org>; Tue, 24 May 2022 20:48:00 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id q21so18923363ejm.1
+        for <git@vger.kernel.org>; Tue, 24 May 2022 20:48:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=+oUK/pY3zCElLLzDjcdDcsmMrap/xV56M76a6RYWeDk=;
-        b=S6/UnQRW5x5UG58BtNmjQx2BmOV8YdRgcYA3buryJq4cV2/E17Ig70tLs2ypJ4wlJn
-         N0DJzZhsvWBYUjFlaG/zwz0TyoOBqnJE/t840I6aotFyHneWOjXLCz72FZxXSN/wOLET
-         YCkaGxG81E6wRTmq5bFlAaXQ+68EFg095IHmHZ4qII5vPtd3apGdLtlJ/3Y6XVBijkHo
-         e0sy/VRnrvqiI82X4iy30r/cSNXkT8Q55PvgaBX6ZxZCM8ISa9Bsxkacng+OPEABJq4g
-         VkaCB30ZWNhgA728OEVgWn0xF9xGgsejV52UhSrXzn2qqVb5nJo2VJ/pgPMMnY3ZPHkE
-         h9Sg==
+        bh=M/Ca29YhbeABDwLQKj5WpQbNG6+rc+fKAXAJf3QK4x8=;
+        b=n3fx5itiidVdZByhs/EgmzNb6Cp2S+pHoMxNKQJID+g1xclnnSU/CdXPUHl2KIiMC+
+         YaOvI79jvN19OMnMu8pipOIL75VKz+B5Ob2QlAPCKpcQcgb+ygB7649dj0gk1hWh4zLh
+         jtJF+thWVpzlxRVFQPy5b83/JJPYXzFS0n4ULRp27xHmRD6EiQbOfjlaurDjhzQR8IhL
+         PPpKg2h3PnTZ7TEeutlvEYgNyfDnU0Qkyxt9zmhWXEkFT7iitLA/+o/lCdqgW7pKwNQZ
+         TACt56xMHuaIKLQZNSD/d0hXGru279DX72bQRE8pS6ukuQXJUs9B5k0WIOqh39rP7Ws2
+         rygQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+oUK/pY3zCElLLzDjcdDcsmMrap/xV56M76a6RYWeDk=;
-        b=i8URPdYiap4hSlgY/NeuXDnLgNF1NO/6TPwGF9YlNWFhyvNp+2y3qHCzYL3yd6OU3f
-         DBq/2lskTftM1ce8vqXLl+YRB3AQZac0Zhs1ZjH7cJgnMkGYTufKDf0FHwM5d0kG15WS
-         RLlM6qFBIgu9Q1zNrfwvQN2ZlqtiwZDwCejtJYsg8J/Z3PrvlLunvYZS23cewXWD3cs0
-         wM8slEyZSLKNGekyJaHMkcfUMT6huC+bxWQvoIw7jSfU7uc30YyjJowguQebWVLZxzED
-         deyQAnasT3n5SHjX0On7xQEszBMXu97hC/3AAv9rrI8isV3y5R6gevaXkJmRL3alUSpq
-         QVhQ==
-X-Gm-Message-State: AOAM530RFiz0Q/8E8otes6UP/+sPsgtWhkTTV9h/o5PpCUoAWUca/0bz
-        qIGqrfmdB/PggJPYD9Z3V1YGIQ16X0aqRNkukQeYvOSm
-X-Google-Smtp-Source: ABdhPJwYmPABk31nt1PodQT1D+em/4gY5QTMjOL0KP4s1Cp8RGKgfUMC5IoC0/FpRkH4nEexXyanre1AMv7mMpKhREA=
-X-Received: by 2002:a17:907:7ea9:b0:6fe:d412:ec2c with SMTP id
- qb41-20020a1709077ea900b006fed412ec2cmr13417755ejc.613.1653450430915; Tue, 24
- May 2022 20:47:10 -0700 (PDT)
+        bh=M/Ca29YhbeABDwLQKj5WpQbNG6+rc+fKAXAJf3QK4x8=;
+        b=vdYgyivZvYfImJsYSVOtjagMGVkwvACMyrawDQkLCtOPdVL45kyyfXeXw97QSd5SzM
+         yr+/K9tBHleuBtvHbYG/S+DDtHJCWGh0Vt3XjqPmkTKtvmEavSoYg6yd/kAPba3l0tNP
+         tuOi90ukkHcNGSNEeP9W4NNphrV0Od9c2mVuYzW6jPvJRwT7lcDdTye78ksVLnPErB3Z
+         30sAllMj0rJfd4fJeco52gyw9LYuwjfra0ejVsYJd9C6lxjOBKL0UNTiTDXEcOAsf0fR
+         Cx2NpGX8CmtJlMK17x+srW67z8+3ESPefsMJ1DjLImwnJbfIVzjz41MXfnUolRg/AM+T
+         ZiCQ==
+X-Gm-Message-State: AOAM531n/tDNzbbyhVDxqiv1/p7Sm/apcO+V2B1KJ2vep8BNO3rl+b6/
+        zpjOVAbtJsbZbXJ+ijMYgJ6MAU1tP3qqNArwCow=
+X-Google-Smtp-Source: ABdhPJxj3NDYOkYi/cl62lhUho5aNd/7VSi4h5RvVWJ/uFG0iIo8hCp3HzF7oUorGOqupjpDVuOJLu9oiBP3KtD2K+4=
+X-Received: by 2002:a17:906:5783:b0:6fe:a263:f648 with SMTP id
+ k3-20020a170906578300b006fea263f648mr22622605ejq.493.1653450479115; Tue, 24
+ May 2022 20:47:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220505203234.21586-1-ggossdev@gmail.com> <20220510171527.25778-1-ggossdev@gmail.com>
- <20220510171527.25778-2-ggossdev@gmail.com> <xmqq7d6sm3e0.fsf@gitster.g>
- <CABPp-BGXRzYCvyM38dEUvQ125+VtRu++7L9UiRz98u+1=Lov7A@mail.gmail.com> <xmqqilpuhfz2.fsf@gitster.g>
-In-Reply-To: <xmqqilpuhfz2.fsf@gitster.g>
+References: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
+ <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
+ <1580ad10-43f6-bc73-901a-b65b1aea73ff@github.com> <YozlZ9DPrRLPBTBP@kevinlocke.name>
+ <CABPp-BGZTDKorz+CFScfTfx47c+TuJaAD_Zyyo1Jj_tymYkVXQ@mail.gmail.com> <563606bd-551f-39b2-74f0-40547b7a0113@github.com>
+In-Reply-To: <563606bd-551f-39b2-74f0-40547b7a0113@github.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 24 May 2022 20:46:59 -0700
-Message-ID: <CABPp-BHHyouFfJ4OC=xShxFASTdBL=7qxnvwS7pDQ+xO6iTW2w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dir: consider worktree config in path recursion
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Goss Geppert <gg.oss.dev@gmail.com>,
+Date:   Tue, 24 May 2022 20:47:47 -0700
+Message-ID: <CABPp-BHCC2WkSTpnucZRSriYbhXyGQCGKKKuOFbLU-Odf_2UtA@mail.gmail.com>
+Subject: Re: [PATCH v2] setup: don't die if realpath(3) fails on getcwd(3)
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Kevin Locke <kevin@kevinlocke.name>,
         Git Mailing List <git@vger.kernel.org>,
-        christian w <usebees@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 24, 2022 at 12:45 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, May 24, 2022 at 10:38 AM Derrick Stolee
+<derrickstolee@github.com> wrote:
 >
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Wed, May 11, 2022 at 9:37 AM Junio C Hamano <gitster@pobox.com> wrote:
+> On 5/24/2022 11:20 AM, Elijah Newren wrote:
+> > On Tue, May 24, 2022 at 7:02 AM Kevin Locke <kevin@kevinlocke.name> wrote:
 > >>
-> >> Goss Geppert <gg.oss.dev@gmail.com> writes:
-> >>
-> >> > diff --git a/dir.c b/dir.c
-> >> > index f2b0f24210..a1886e61a3 100644
-> >> > --- a/dir.c
-> >> > +++ b/dir.c
-> >> > @@ -1893,9 +1893,31 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
-> >>
-> > [...]
-> >>
-> >> > +                     real_gitdir = real_pathdup(the_repository->gitdir, 0);
-> >>
-> >> This function is repeatedly called during the traversal.
-> >>
-> >> How expensive is it to keep calling real_pathdup() on the constant
-> >> the_repository->gitdir just in case it might be the same as our true
-> >> GIT_DIR?
+> >> On Mon, 2022-05-23 at 14:57 -0400, Derrick Stolee wrote:
+> >>> On 5/21/22 9:53 AM, Kevin Locke wrote:
+> >>>> +           free((char*)tmp_original_cwd);
+> >>>
+> >>> Hm. I'm never a fan of this casting, but it existed before. It's
+> >>> because tmp_original_cwd is exposed globally in cache.h, which
+> >>> is _really widely_. However, there are only two uses: setup.c,
+> >>> which defines it, and common-main.c, which initializes it during
+> >>> process startup.
+> ...>> This approach seems reasonable to me, as does casting to free().  It's
+> >> not clear to me which is preferable in this case.  How to balance the
+> >> trade-offs between exposing const interfaces, limiting (internal)
+> >> interfaces to headers, and avoiding casts might be worth discussing
+> >> and documenting a matter of project coding style.  `grep -rF 'free(('`
+> >> lists about 100 casts to free, suggesting the discussion may be
+> >> worthwhile.  Introducing a free_const() macro could be another option
+> >> to consider.
 > >
-> > I agree that treat_directory is called many times, but this
-> > real_pathdup() call is inside the "if (nested_repo)" block, so this
-> > new real_pathdup() invocation should occur very seldom.  Or are you
-> > worried about cases where users have *very* large numbers of bare
-> > repositories nested under the working directory?
+> > I'd prefer either a free_const() as you suggest (though as a separate
+> > patch from what you are submitting here), or leaving the code as-is.
+> > free() could have been written to take a const void* instead of just
+> > void*, since it's not going to modify what the pointer points at.  The
+> > reason we call free() is because the variable isn't needed anymore,
+> > and using a non-const value after freeing is just as wrong as using a
+> > const one after freeing, so casting away the constness cannot really
+> > cause any new problems.  So, I think the signature of free() is just
+> > wrong: it should have taken a const void* all along.  Unfortunately,
+> > the wrong type signature sadly makes people feel like they have to
+> > choose between (a) dropping the added safety of const that the
+> > compiler can enforce for you during the lifetime of the variable, or
+> > (b) leaking memory you no longer need.  I think it's a bad choice and
+> > you should just typecast when free'ing, but clearly others just don't
+> > want to see any typecasts and are willing to dispense with const on
+> > constant variables.
 >
-> No.  I wasn't worried about anything in particular.  I just wanted
-> to get the feel of how deep a thought the patch was backed by by
-> spot checking what was and what was not taken into account when
-> designing the change.
+> I mostly agree with you: if free() didn't have the const, then the
+> answer would be simple. We probably wouldn't also have the convention
+> of "const pointers are for memory we don't own".
 >
-> I do not care too much when there are very large numbers of things
-> that cause this codepath to be exercised.  Strange situations can be
-> left for later optimization only when they turn up in the real world
-> and prove to be a problem.
+> Specifically with 'const char *' this can sometimes point to a
+> compiled string literal, so I tend to be more careful than usual
+> around these kinds of casts.
 
-Ah, gotcha.
+Ah, fair enough.
 
-> By the way, where is a bare repository involved?  did you mean
-> non-bare aka worktree-full repository?
 
-Yes, sorry, I meant non-bare repository.
+> I'm willing to concede this point as it is much messier than just
+> the goals of this patch.
+
+:-)
