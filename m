@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB0EAC433F5
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 706BCC433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241259AbiEYKEs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 06:04:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57468 "EHLO
+        id S241477AbiEYKEy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:04:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230033AbiEYKEq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 06:04:46 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8E216D4EB
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:04:45 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id z15so5563734wrg.11
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:04:45 -0700 (PDT)
+        with ESMTP id S241336AbiEYKEw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 06:04:52 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40FBA6E8C3
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:04:49 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id e2so17781523wrc.1
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mGq2G6LCbUodDDDwZ4xSVV0PavCX1b3/qP5KUC2Weu4=;
-        b=RpdrqbBPnX0zYisRHTJi/uH6COpOZV3KQu1wBGfqL0In80IkQ8C6+dLVjLgh9hTEKm
-         1pncBXG/s7+rwiIvxBSVq8Fkz5z0JMwGvn/iqJ7Xjut/ajT32tmOfxQbISyQRxLBdwpT
-         11xiDInGX5vIyjAn5r7densGrIWDxcQ0cjxd5aCbxbbevrZiiFz2qIzzbQ3hxskiCHht
-         iOc7Vq95IabBHkeECdfzaLV7AamglrtC5t49YVsnikiAo6DgwL5LqzFYMBmEOVXuXSQE
-         vZ2YMCmAGPJj1Jpa2kWVZaQYzXNZQCLzCHEEXeovjs0FD/GI7VtRn18mV07HMEzoGkv+
-         kHhw==
+        bh=JmiK0IZ8ftEe9QrndmCy4xy1TM6BpU5EDxYQfhy4NiI=;
+        b=DWjiocseQ8qImwcTGRr+5epZucMQ/MqTq23xOwR5oE5uj6T88mnIAO6SWN/8mEuCnF
+         4YC2WCt3XdYowD6NztQ8iBOIURezgvj/E8fcvH6ionSCRwwtXOg9ZimeULkTa6mbsmB2
+         3xfS36QHvGXupqvoAHblZ6xOssEElyOU+xVODXrUM3yuqwMmeYh3m21+CPCZvqc2QM6f
+         dakOZy92FTz72CYSDzHD7dNbE8lzCuUr1kCkb18zxZv4bK8D+bumL6XWnaKuYpSW84/J
+         7xCjGTBcTmMSmBS+ZegaPGhBVd3jRadGlQSCHmfFcjDrMjpX5U8BOTDYt60vE6v/6DnN
+         3ICg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mGq2G6LCbUodDDDwZ4xSVV0PavCX1b3/qP5KUC2Weu4=;
-        b=aeQ5XETs4iToCpVQtEP6nD/bK1uAjPWQ7DGn1t2w4xOg4a/+YXHbZzTfAAou85KDRG
-         0xiz0hBOVNpsY1TQ0XyQUdUvGKem6WnM0roMzgu4UwdSbNxbeUMefwyuHxY3hBDQufW6
-         JHfOPeN7xBJBzy9vgzt7wKVZRrPOAzRN7YBaCTXgaSbW7YWwmU8oWzDlqHX7HVfferJw
-         pcuugs7yrCidOJLL+HwT6+BLJWpBNpPU+RJOqCDPdm7zZvUyyIAXWvi5MT/084v2W66E
-         JByFbP/cE7O5sAwOETxs09G9rKxpyT+tDyJ9mP0AXUn4TzvTuq1AKl1hi5hHXomJIGnJ
-         uz+A==
-X-Gm-Message-State: AOAM5337SiX8FWxfqogS2hCqxPT4FJEvA1payRtViZeIfRAHECpwpxRx
-        HkBZPRCfBvRW673vopGcwb3kBrUdnKHSDA==
-X-Google-Smtp-Source: ABdhPJz9fTNqjQgOLh86xBvf83gbOLfieVCzIjlf5A4dVlbZJPXsE/ATLBEBTT4r4FDmTeyI266Ggg==
-X-Received: by 2002:adf:d1e9:0:b0:20f:d6b4:56a9 with SMTP id g9-20020adfd1e9000000b0020fd6b456a9mr13004488wrd.169.1653473083803;
-        Wed, 25 May 2022 03:04:43 -0700 (PDT)
+        bh=JmiK0IZ8ftEe9QrndmCy4xy1TM6BpU5EDxYQfhy4NiI=;
+        b=hGKzpPvEiOUTL7VM/Njxe5X2EOB04HxbDU70vkm8txJ1Gofwo0kW+oMjDPm3/t1LLw
+         rQa5zuwPWOLrhnk9pydLLIlRGkiwZ+KTfCItoYRsyVbSFHAN9kHFcDfa/Eu/PRXewWec
+         Kz73jYM2QM27ekzPDbaPllT6amjItdKp8g9DGqgyFM9r4dq9Lvea+W+2DZTeKi8RF3BA
+         3lGgL55vyZVsv8IBIt9Mzan6WDqBUMg9OWrwr2rIF1Ld9oooaJsqvCdwNmXExq40zuce
+         rpsFkd7XcSvDo4ULI3I6hdGltRMEPvDFUR2ukM81mIgj2aDyS7kNUG4mfbqp7Cgyg1du
+         NyKA==
+X-Gm-Message-State: AOAM532Sv0Hha5/i89yefM2KBlpDhBcvpUjXcncjMgJ66vJCOhjhFDiR
+        B2l7UiJ1fGz0rAYQP8+5fb/kxlVMA82EkA==
+X-Google-Smtp-Source: ABdhPJx/c6GUuqjusbN1pEwyEeEzRiqMvVt2svXzhXqCy/597Hoqpn7AWD5jflkhQjPfIKW0cLHtmQ==
+X-Received: by 2002:adf:fc01:0:b0:20c:ff9a:2c53 with SMTP id i1-20020adffc01000000b0020cff9a2c53mr25987204wrr.142.1653473087259;
+        Wed, 25 May 2022 03:04:47 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.04.42
+        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.04.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 03:04:43 -0700 (PDT)
+        Wed, 25 May 2022 03:04:46 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 02/29] CI: make "$jobname" explicit, remove fallback
-Date:   Wed, 25 May 2022 12:03:41 +0200
-Message-Id: <patch-v6-02.29-1be7910c728-20220525T094123Z-avarab@gmail.com>
+Subject: [PATCH v6 05/29] CI: remove unused Azure ci/* code
+Date:   Wed, 25 May 2022 12:03:44 +0200
+Message-Id: <patch-v6-05.29-66b0a383daf-20220525T094123Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1045.gf356b5617dd
 In-Reply-To: <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
 References: <cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com> <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
@@ -76,102 +76,129 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the $jobname fallback last adjusted in b011fabd6e0 (ci/lib.sh:
-encapsulate Travis-specific things, 2019-01-27).
+Remove Azure-specific code that's been unused since 6081d3898fe (ci:
+retire the Azure Pipelines definition, 2020-04-11). As noted in a
+larger removal of all of the Azure-supporting code in [1] (although
+that missed some of this) there is more of it in-tree, but let's focus
+on only the ci/* code for now.
 
-This makes all of our CI jobs have an explicit $jobname, and removes
-the special-case of the Windows jobs implicitly setting one (that they
-don't currently use). In subsequent commits we'll use this new
-$jobname explicitly.
+This is needed because in subsequent commits this unused code would
+either need to be changed to accommodate changes in ci/*, or be
+removed.
 
-This is a follow-up to my 25715419bf4 (CI: don't run "make test" twice
-in one job, 2021-11-23), since then all the jobs except the Windows
-jobs have had an explicit $jobname.
+As we'll see in those subsequent commits the end-state we're heading
+towards will actually make it easier to add new CI types in the
+future, even though the only one we're left with now is the GitHub
+CI. I.e. the "ci/*" framework will be made to do less, not more. We'll
+be offloading more of what it does to our generic build and test
+system.
 
-In the case of the Windows jobs we were using a jobname of windows-gcc
-for both, due to picking "gcc" as a default fallback for "$CC" in
-ci/lib.sh.
+While I'm at it (since the line needs to be touched anyway) change an
+odd 'if test true == "$GITHUB_ACTIONS"' to the more usual style used
+in other places of 'if test "$GITHUB_ACTIONS" = "true"'.
 
-Since we'll need this to run ci/lib.sh it makes sense to move the
-check to the top of the file. Subsequent commits will add more such
-assertions to it.
+1. https://lore.kernel.org/git/patch-1.1-eec0a8c3164-20211217T000418Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml |  8 ++++++++
- ci/lib.sh                  | 12 +++++++-----
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ ci/install-dependencies.sh |  3 ---
+ ci/lib.sh                  | 13 +------------
+ ci/mount-fileshare.sh      | 25 -------------------------
+ ci/print-test-failures.sh  |  4 ----
+ 4 files changed, 1 insertion(+), 44 deletions(-)
+ delete mode 100755 ci/mount-fileshare.sh
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index c35200defb9..309b9141249 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -79,6 +79,8 @@ jobs:
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 107757a1fea..4fa3e282dda 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -34,8 +34,6 @@ macos-latest)
+ 	export HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1
+ 	# Uncomment this if you want to run perf tests:
+ 	# brew install gnu-time
+-	test -z "$BREW_INSTALL_PACKAGES" ||
+-	brew install $BREW_INSTALL_PACKAGES
+ 	brew link --force gettext
+ 	mkdir -p $HOME/bin
+ 	(
+@@ -71,7 +69,6 @@ Documentation)
+ 	sudo apt-get -q update
+ 	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make
  
-   windows-build:
-     name: win build
-+    env:
-+      jobname: windows-build
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-     runs-on: windows-latest
-@@ -100,6 +102,8 @@ jobs:
-         path: artifacts
-   windows-test:
-     name: win test
-+    env:
-+      jobname: windows-test
-     runs-on: windows-latest
-     needs: [windows-build]
-     strategy:
-@@ -131,6 +135,8 @@ jobs:
-         path: ${{env.FAILED_TEST_ARTIFACTS}}
-   vs-build:
-     name: win+VS build
-+    env:
-+      jobname: vs-build
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-     env:
-@@ -183,6 +189,8 @@ jobs:
-         path: artifacts
-   vs-test:
-     name: win+VS test
-+    env:
-+      jobname: vs-test
-     runs-on: windows-latest
-     needs: vs-build
-     strategy:
+-	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
+ 	sudo gem install --version 1.5.8 asciidoctor
+ 	;;
+ linux-gcc-default)
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 57121dd664a..3061de96d8f 100755
+index e04b53b428d..ebb9461ff42 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -6,6 +6,13 @@
- # and installing dependencies.
- set -ex
+@@ -29,18 +29,7 @@ export TERM=${TERM:-dumb}
+ # Clear MAKEFLAGS that may come from the outside world.
+ export MAKEFLAGS=
  
-+# Starting assertions
-+if test -z "$jobname"
-+then
-+	echo "error: must set a CI jobname in the environment" >&2
-+	exit 1
-+fi
-+
- skip_branch_tip_with_tag () {
- 	# Sometimes, a branch is pushed at the same time the tag that points
- 	# at the same commit as the tip of the branch is pushed, and building
-@@ -146,11 +153,6 @@ test -n "${DONT_SKIP_TAGS-}" ||
- skip_branch_tip_with_tag
- skip_good_tree
- 
--if test -z "$jobname"
+-if test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
 -then
--	jobname="$CI_OS_NAME-$CC"
--fi
+-	CI_TYPE=azure-pipelines
+-	# We are running in Azure Pipelines
+-	CC="${CC:-gcc}"
 -
- export DEVELOPER=1
- export DEFAULT_TEST_TARGET=prove
- export GIT_TEST_CLONE_2GB=true
+-	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
+-	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
+-	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+-	test Windows_NT != "$AGENT_OS" ||
+-	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+-elif test true = "$GITHUB_ACTIONS"
++if test "$GITHUB_ACTIONS" = "true"
+ then
+ 	CI_TYPE=github-actions
+ 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+diff --git a/ci/mount-fileshare.sh b/ci/mount-fileshare.sh
+deleted file mode 100755
+index 26b58a80960..00000000000
+--- a/ci/mount-fileshare.sh
++++ /dev/null
+@@ -1,25 +0,0 @@
+-#!/bin/sh
+-
+-die () {
+-	echo "$*" >&2
+-	exit 1
+-}
+-
+-test $# = 4 ||
+-die "Usage: $0 <share> <username> <password> <mountpoint>"
+-
+-mkdir -p "$4" || die "Could not create $4"
+-
+-case "$(uname -s)" in
+-Linux)
+-	sudo mount -t cifs -o vers=3.0,username="$2",password="$3",dir_mode=0777,file_mode=0777,serverino "$1" "$4"
+-	;;
+-Darwin)
+-	pass="$(echo "$3" | sed -e 's/\//%2F/g' -e 's/+/%2B/g')" &&
+-	mount -t smbfs,soft "smb://$2:$pass@${1#//}" "$4"
+-	;;
+-*)
+-	die "No support for $(uname -s)"
+-	;;
+-esac ||
+-die "Could not mount $4"
+diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+index 740ebb7c529..47e2ea1ad10 100755
+--- a/ci/print-test-failures.sh
++++ b/ci/print-test-failures.sh
+@@ -30,10 +30,6 @@ do
+ 		test_name="${test_name##*/}"
+ 		trash_dir="trash directory.$test_name"
+ 		case "$CI_TYPE" in
+-		azure-pipelines)
+-			mkdir -p failed-test-artifacts
+-			mv "$trash_dir" failed-test-artifacts
+-			;;
+ 		github-actions)
+ 			mkdir -p failed-test-artifacts
+ 			echo "FAILED_TEST_ARTIFACTS=t/failed-test-artifacts" >>$GITHUB_ENV
 -- 
 2.36.1.1045.gf356b5617dd
 
