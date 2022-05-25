@@ -2,75 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86348C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 07:13:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD0ADC433FE
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 07:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238372AbiEYHN5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 03:13:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33200 "EHLO
+        id S244343AbiEYHcr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 03:32:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233656AbiEYHN4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 03:13:56 -0400
-Received: from weald2.air.saab.se (weald2.air.saab.se [136.163.212.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E279F3D
-        for <git@vger.kernel.org>; Wed, 25 May 2022 00:04:08 -0700 (PDT)
+        with ESMTP id S231773AbiEYHci (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 03:32:38 -0400
+Received: from weald.air.saab.se (weald.air.saab.se [136.163.212.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D836D3C720
+        for <git@vger.kernel.org>; Wed, 25 May 2022 00:32:34 -0700 (PDT)
 Received: from mailhub1.air.saab.se ([136.163.213.4])
-        by weald2.air.saab.se (8.14.7/8.14.7) with ESMTP id 24P746rY015107
+        by weald.air.saab.se (8.14.7/8.14.7) with ESMTP id 24P7WR42092237
         (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 25 May 2022 09:04:06 +0200
-DKIM-Filter: OpenDKIM Filter v2.11.0 weald2.air.saab.se 24P746rY015107
+        Wed, 25 May 2022 09:32:27 +0200
+DKIM-Filter: OpenDKIM Filter v2.11.0 weald.air.saab.se 24P7WR42092237
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=saabgroup.com;
-        s=weald2_2; t=1653462246;
-        bh=u7Q91263cnDN2jXGuVY3z2PxEdU/yFxz+r7rSYGvZyM=;
+        s=weald_2; t=1653463947;
+        bh=BVJBC5eYhAkkZ84SyMC4qpZm48g/TQPhxYXBDYFNCo4=;
         h=From:To:CC:Subject:Date:References:In-Reply-To:From;
-        b=eCO0rRY2QMbvplRbq43C3XbOzjCnFQVBFC8fTfz3O9PrJ7rqU9oafSGq+Pz7WDojK
-         SwceETv3Z8+QklrMHZ6NXh1WszEbQD17oN0v62gNOCQilt8qAVb0ml0iJ2xGnMjQbh
-         tpp3wIkPy5a59he08sh9SDMPyhsyF1CA2MCEDFBuoJ86fisNc6fmA/f6qvXuxAdvwg
-         R5aMsKS2J2L1Xx38QU23Am0PKaYWfyFAx/OPHkeEjJW3BQJwS2i9f7s8XjRZeDogoa
-         EhN38XBooi0h2/o0ZsulKcS7v+ka3KCgnzhFYjfDG1AuWe/NDIEa8tTta+x86PRDne
-         wH5SsmNN2HjKw==
-Received: from corpappl17775.corp.saab.se (corpappl17775.corp.saab.se [10.12.196.82])
-        by mailhub1.air.saab.se (8.15.2/8.15.2) with ESMTPS id 24P7460W3136491
+        b=sQbdFiWCB7IpwCz/RLtXqjiWl0rQtUuqMOo0NY2EMB7GwUc0W+lqwbMe/LSwZkpgd
+         1oA1IyE5320mVQkpIfj6/Ey0Y6G3tdeext+nUWmWA5udXk89msTVJYxvPQx01tNjZ0
+         VkGSrneM73t8gnSo4regSHQA4uwrXWR6a+LtaKNDuuhAzQVIn2zev1mWNesvedov0e
+         Bjnek+9Fbp/hLtIh2Kw+jBmkKZjhpzeSGUG/RzlmYb3AYlFlp8/spSOaFKk3zt6+BQ
+         d9FsT2ZhKkwSUeMYznM5iYHEPRXNxSTb+S2LDEHEgjxQi7gg8wuVOaLvKpkaU0u31C
+         STKB6J9oVoRag==
+Received: from corpappl17772.corp.saab.se (corpappl17772.corp.saab.se [10.12.196.79])
+        by mailhub1.air.saab.se (8.15.2/8.15.2) with ESMTPS id 24P7WRiS3155943
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 25 May 2022 09:04:06 +0200
+        Wed, 25 May 2022 09:32:27 +0200
 Received: from corpappl17781.corp.saab.se (10.12.196.88) by
- corpappl17775.corp.saab.se (10.12.196.82) with Microsoft SMTP Server
+ corpappl17772.corp.saab.se (10.12.196.79) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.26; Wed, 25 May 2022 09:03:51 +0200
+ 15.2.986.26; Wed, 25 May 2022 09:32:18 +0200
 Received: from corpappl17781.corp.saab.se ([fe80::988b:c853:94fe:90aa]) by
  corpappl17781.corp.saab.se ([fe80::988b:c853:94fe:90aa%5]) with mapi id
- 15.02.0986.026; Wed, 25 May 2022 09:03:51 +0200
+ 15.02.0986.026; Wed, 25 May 2022 09:32:18 +0200
 From:   Olsson John <john.olsson@saabgroup.com>
-To:     Kevin Daudt <me@ikke.info>
+To:     Junio C Hamano <gitster@pobox.com>
 CC:     "git@vger.kernel.org" <git@vger.kernel.org>
 Subject: RE: [EXTERNAL] Re: Error handling when giving empty command line
  arguments
 Thread-Topic: [EXTERNAL] Re: Error handling when giving empty command line
  arguments
-Thread-Index: Adhvbv33EYLm80KPScCjpHIHZomAfwAcfUuAAAjvWvA=
-Date:   Wed, 25 May 2022 07:03:50 +0000
-Message-ID: <8940ab846c1a4b8385a4def64a905bc3@saabgroup.com>
+Thread-Index: Adhvbv33EYLm80KPScCjpHIHZomAfwAUeVDZABEtmIA=
+Date:   Wed, 25 May 2022 07:32:18 +0000
+Message-ID: <8767dbe0c22540a4ab3e18684aa7e030@saabgroup.com>
 References: <dc08a8ee5ed64850872fd6529d1462e1@saabgroup.com>
- <Yo2zfxP4hII+iwfb@alpha>
-In-Reply-To: <Yo2zfxP4hII+iwfb@alpha>
+ <xmqq35gyee7r.fsf@gitster.g>
+In-Reply-To: <xmqq35gyee7r.fsf@gitster.g>
 Accept-Language: sv-SE, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
 x-originating-ip: [136.163.101.124]
 x-tm-as-product-ver: SMEX-14.0.0.3092-9.0.1002-26914.006
-x-tm-as-result: No-10--14.260300-5.000000
-x-tmase-matchedrid: VfovoVrt/obK19rKCr/Ovgrcxrzwsv5uXPK9y3z82Gsli8Y5a0svL6YD
-        xfmcVMRm9jB17ZyEjRpSVS5utHGcmoCoSWHZmQrD8eSmTJSmEv0ZskwWqoib3C5SnAtH4tjp3aC
-        KrnFF0wt78BsGsXGHoY+Yc8GmOXzD9RYy+aTqMwXwgrvJFY9E0aTzJo0CZl8hFQeLCdFhgJrVvs
-        ynKEaYxfw1tRrx5LTocg8WiKFz7npEmmhct6O0TUcvveJlm0fmBGvINcfHqhcwAYdq1VTXozKaj
-        G44eqIMhns1b54F+qhftuJwrFEhTbew1twePJJB3QfwsVk0Ubv+efAnnZBiL8z+Ba7+nv3uJm/K
-        g8WbE+UqgyDLSFqRiZM7zv28zJwOyE+dit6U4uR+3BndfXUhXQ==
+x-tm-as-result: No-10--4.660200-5.000000
+x-tmase-matchedrid: oTBA/+sdKabK19rKCr/Ovgrcxrzwsv5uXPK9y3z82Gs+KSDQ9ztlrSc+
+        QrY0Pxmfb0fmCWHRknFucftoZZ+9SvnlySD+8Ss5L7p//vLv4bN2LVAkzutP5Pmt2wtrXQjMBk0
+        sRysFrTCzWVOWI+JSh5I49Eva7YXhf7OyDqSnYLfGsO9QyW2iBNhQO8CvZj/XDwPOPApEJd3MoA
+        Jfsjm0TgURjmNRpEDiEzvXiPvr1j6McUzJS3sH3Rd8ENHLtW0zfS0Ip2eEHnxlgn288nW9IAuTL
+        po5HEc1joczmuoPCq0Tvm/lD9MJOzlhzJ/6CMuFjaSt38wKx3R5q2Xb951x/QVGr+mzk8ohaWST
+        rU8OKnI4JWMU/YGbDPCa3UIfT4sCJA5tg53RUuMorPY7HEKSnM0bQv3yPxsy+toqr+8ptZ9j6l0
+        ihn9/SoywwyXyfWbHlExlQIQeRG0=
 x-tm-as-user-approved-sender: No
 x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--14.260300-5.000000
+x-tmase-result: 10--4.660200-5.000000
 x-tmase-version: SMEX-14.0.0.3092-9.0.1002-26914.006
-x-tm-snts-smtp: 9FCBD666FAAF1D29377D38BFC9813E8E4841C7F5649D5897D88B80B61F1F706C2002:B
+x-tm-snts-smtp: BC69E0ACC68EF8C74C7F413A106D83FAEBC1BB0FA53DC6C3E42D1C9506C6A84E2002:B
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
@@ -78,74 +79,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> You are running into this issue because you use "$(force}" instead of ${f=
-orce}. In the latter case, if $force is empty, the shell will not pass an e=
-mpty string as an argument to git.
+> The user is not giving enough information to Git to allow it to tell if "=
+git fetch ''" it got came from any of these with unset variable:
+>
+>	$ git fetch "$path"
+>	$ git fetch "$url"
+>	$ git fetch "$force"
+>
+> because all Git sees is an empty string.
+>
+> It is unfair to complain "is completely unrelated".  The user didn't give=
+ enough information to even allow Git to tell if it is or is not related.
 
-Yes, I know. I'm so used to always expanding variables within double quotes=
- to avoid word splitting. And it doesn't help that I'm using shellcheck tog=
-ether with flycheck in Emacs so it constantly nags me about the danger of e=
-xpanding variables without using double quotes. ;)
+That is exactly my point! I was thinking along the lines that perhaps the G=
+it command(s) could complain about that it got an empty string as an argume=
+nt since that is probably a mistake by the user due to that an empty string=
+ is neither a path, a URL/URI, or an option. It is thus an error case of it=
+s own.
 
 
-> This does mean that it is subject to word splitting, but that can be an a=
-dvantage as well if you decide you need more arguments than just '--force'.=
- You should only use that in case you control what $force contains.
+The git checkout command actually complains about the case when you give it=
+ an empty string
 
-Yes, I agree with you here.
+$ git checkout "" feature/foobar
+fatal: empty string is not a valid pathspec. please use . instead if you wa=
+nt to match all paths
 
------Original Message-----
-From: Kevin Daudt <me@ikke.info>=20
-Sent: den 25 maj 2022 06:42
-To: Olsson John <john.olsson@saabgroup.com>
-Cc: git@vger.kernel.org
-Subject: [EXTERNAL] Re: Error handling when giving empty command line argum=
-ents
 
-On Tue, May 24, 2022 at 01:25:43PM +0000, Olsson John wrote:
-> I have so far only seen this behavior with 'git fetch' command, but it mi=
-ght be more general depending on how command line parsing is implemented.
->=20
-> In a Bash script I had something similar to (but more complicated than=20
-> what I show below)
->=20
->   git fetch "${force}"
->=20
-> where $force is either an empty string or '--force'. Due to that you=20
-> usually want to expand all variables within double quotes when writing=20
-> Bash scripts I did not realize that I had made a mistake here. Instead=20
-> I got this strange error message and spent a couple of hours chasing=20
-> it
->=20
->   fatal: no path specified; see 'git help pull' for valid url syntax
->=20
-> This problem eventually turned out to be of the trivial kind once I reali=
-zed why I got it, and also very simple to reproduce. Just do
->   $ git fetch ""
->   fatal: no path specified; see 'git help pull' for valid url syntax
->   $
->=20
-> That is, 'git fetch' does not check if the given string is an empty strin=
-g before writing the error message. The empty string is completely unrelate=
-d to any path/URI and in this case it was not that helpful.
->=20
-> What do you say? Wouldn't it be better with a more specific error message=
- when an option value/argument is an empty string? Or should perhaps empty =
-strings be ignored by the git commands?
->=20
->=20
-> /John
->=20
+When it comes to git fetch it could assume that the given empty string is e=
+ither a path or a URL/URI and write a similar error message. For instance
 
-Hello John,
+$ git fetch ""
+fatal: empty string is not a valid pathspec or URL; see 'git help fetch' fo=
+r valid syntax
 
-You are running into this issue because you use "$(force}" instead of ${for=
-ce}. In the latter case, if $force is empty, the shell will not pass an emp=
-ty string as an argument to git.
+For me there is an important distinction between "no path specified" and "e=
+mpty string". The former says that an argument is missing and the latter sa=
+ys that an argument is indeed given but it is an empty string.
 
-This does mean that it is subject to word splitting, but that can be an adv=
-antage as well if you decide you need more arguments than just '--force'. Y=
-ou should only use that in case you control what $force contains.
-
-Hope this helps,
-Kevin
