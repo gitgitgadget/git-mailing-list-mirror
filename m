@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 227E6C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 15:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A08D3C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 15:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245042AbiEYPCm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 11:02:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39896 "EHLO
+        id S245106AbiEYPCo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 11:02:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239593AbiEYPBz (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S245041AbiEYPBz (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 May 2022 11:01:55 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF40AFAF5
-        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:39 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id c5-20020a1c3505000000b0038e37907b5bso1291056wma.0
-        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:39 -0700 (PDT)
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B53EAFB0E
+        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:41 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id t13so11327304wrg.9
+        for <git@vger.kernel.org>; Wed, 25 May 2022 08:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cTk9CmwWw4iGOz0CS3tNgQG+VGNLJ2QH91BcLkMnKNg=;
-        b=Y98LTZv//k2BcgOifNdzpbjF8yV1FAn5+PziKkhoZ4nxJJFFVkfVrxcyOLyRDVk4Si
-         e2IYWhA1o+cXQHwn3JCKnVe175koP9VbSqP1DHh18j/sSnCYDdNBM6ZjY5s8WQNoPH2s
-         AdJJR6NS/8tr4vfoAcJZwC9pK9r0x3U6pSVI9Md/lOwwYaf8mraSz1dtSFD9U55Z+otb
-         njkEH962W/fhG8iEEArZZs5O8g7N2zVG6d43kj19e/dZaN6Jr3J7S27L9Vndbv3vX3LS
-         4xaFpcj3TOYpI5hH2rX1oLKiPoiMMf+q3rhXr42QeewtVzfKDoazXPPmHDEViEDba4bv
-         TU0w==
+        bh=U8ZqUfuZDEUFYGsmHGxhn6kU6MMzXdTmjRg0f11rgdE=;
+        b=Au3wWMdASe8FUYvbkRRxdAZphsu2fnCo1wICNkZ8H8Pt0crUWHUwBzQaPNYggE13ab
+         xpX+C4CLxCMmG2OlcWWle9lQ9yrf+Y0UM/iA6MMW2ubxgsGY1FgBYiMnnhUrO5lhcyN9
+         z6CPvEjkl5cEOQ1Er67buSyifr1Pg7igL8vh+PcvvgDa5tn74YAwX8FzDXE2Un+JspMm
+         KmSchKI9Fl+on0RntQKa6rYO+hYgiGD7yBTQseDfjiPI8sS8bdcTu59/lku/5tsn54np
+         mFPIRbauKFdz1QweIc13asI02YD8EMJ7BIFsBz8xi5lUHIQGNR9PJVvS2WLGb1csyPdu
+         XnFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cTk9CmwWw4iGOz0CS3tNgQG+VGNLJ2QH91BcLkMnKNg=;
-        b=YZ26i212SBj8tVz5/b/iCTdf75FdgAux/gAFlXYygc8SJwZRhosO238VjPARMAo1tV
-         bLUlJu1CNR2jUFeXWWFbdFqu6Z1JjIfpJLKBy0joVvkAHGuDQWEKkZPRtwUju1ITzc7S
-         iHQXEECgm2Qrp4ntiwVbtMWoptJ1qwsgjNQXSK5BNVC7BbZ+gi6tNEU1Y+mgt2hwSsda
-         GSm6m7VEkRuhVc70zeSwqrnAhdZzSCWQFOzobOszxqQah4JHWXaQRO9TER2NHPfgvJdx
-         1By8NkKEDQCgHOQg0E1dYpIPCT2TEFKlY0rpUeXXgZv5LCexqMHPpnQLsS0ISQiwaY5i
-         mCnw==
-X-Gm-Message-State: AOAM532/RCdmFwJ7s7XGc2QSw+k5YZBLpoNIaTDmmzjh7Z6t66LyzBtg
-        xh4nN3O11Z/+pEBIPHp2bvR1zp9VGNI=
-X-Google-Smtp-Source: ABdhPJwLNY7ZYEoTjya/hBKolT7Penq9Xhf4xRcHAktq4y8pV0mOSVbijgcigLFOwH12mSPGHj0Zzg==
-X-Received: by 2002:a05:600c:b53:b0:397:335b:546e with SMTP id k19-20020a05600c0b5300b00397335b546emr8798154wmr.177.1653490897654;
-        Wed, 25 May 2022 08:01:37 -0700 (PDT)
+        bh=U8ZqUfuZDEUFYGsmHGxhn6kU6MMzXdTmjRg0f11rgdE=;
+        b=FwA0+kYOEYUGbqh5/OUG6q63Zp+LRY/R8d+zDDWvtAsvY6luvk0wAeAQlT4WIBbwRM
+         0mNs7UBCfiMByC7lWET5OmeUcGat9JX//RjHbPss+CnImLGdR0pye6EGHjAy5u5lL2y4
+         3sABkDG+8Ge2ppKKtLORCT9H+i9HLFz1y2+cbDhRcEO3rPPeXjbBO8Jq07loDkyEakgg
+         nOxHAbtNCtuwtfeSHjimEK6aurelAOf5ZwIRSTLQ1Vnt4YNqN23nJWfCMjQe1P1vu6jC
+         jHReKzPLsfnyL7inho8CePaKLhpPwnNLkG42KPTiQk1zWi2S4rAE0Vy03x6uYnmPztJy
+         /Oog==
+X-Gm-Message-State: AOAM530+k7oSS8ghKMnadwAypc9vgRP+B2nFI2BJKCJLB4DCp5DeMtRe
+        4ncpgvYNxrDl+bvxmdr5jg6Kk5J8aec=
+X-Google-Smtp-Source: ABdhPJwf6+3bRr9CEPwfaTJ+VWSyzK9FQW2xjt5q9j35EpfhEWVbsS/zf8DtcpcjDwSZfu3I1Kg9Ig==
+X-Received: by 2002:a05:6000:1867:b0:20f:ca21:7813 with SMTP id d7-20020a056000186700b0020fca217813mr17880242wri.100.1653490895681;
+        Wed, 25 May 2022 08:01:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x8-20020a7bc208000000b0039765a7add4sm1996432wmi.29.2022.05.25.08.01.36
+        by smtp.gmail.com with ESMTPSA id c4-20020adfc6c4000000b0020e5d2a9d0bsm2799442wrh.54.2022.05.25.08.01.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 08:01:36 -0700 (PDT)
-Message-Id: <25c6066eddc725c7d4c233620fca82d3638b394e.1653490853.git.gitgitgadget@gmail.com>
+        Wed, 25 May 2022 08:01:33 -0700 (PDT)
+Message-Id: <66a01db47395a86cce6c0e427779c75d02c37757.1653490853.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
 References: <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com>
         <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 25 May 2022 15:00:49 +0000
-Subject: [PATCH v8 27/30] t/lib-unicode-nfc-nfd: helper prereqs for testing
- unicode nfc/nfd
+Date:   Wed, 25 May 2022 15:00:48 +0000
+Subject: [PATCH v8 26/30] t/helper/hexdump: add helper to print hexdump of
+ stdin
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,184 +75,89 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create a set of prereqs to help understand how file names
-are handled by the filesystem when they contain NFC and NFD
-Unicode characters.
-
+Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/lib-unicode-nfc-nfd.sh | 162 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 162 insertions(+)
- create mode 100755 t/lib-unicode-nfc-nfd.sh
+ Makefile                |  1 +
+ t/helper/test-hexdump.c | 30 ++++++++++++++++++++++++++++++
+ t/helper/test-tool.c    |  1 +
+ t/helper/test-tool.h    |  1 +
+ 4 files changed, 33 insertions(+)
+ create mode 100644 t/helper/test-hexdump.c
 
-diff --git a/t/lib-unicode-nfc-nfd.sh b/t/lib-unicode-nfc-nfd.sh
-new file mode 100755
-index 00000000000..22232247efc
+diff --git a/Makefile b/Makefile
+index 5f1623baadd..5afa194aac6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -729,6 +729,7 @@ TEST_BUILTINS_OBJS += test-getcwd.o
+ TEST_BUILTINS_OBJS += test-hash-speed.o
+ TEST_BUILTINS_OBJS += test-hash.o
+ TEST_BUILTINS_OBJS += test-hashmap.o
++TEST_BUILTINS_OBJS += test-hexdump.o
+ TEST_BUILTINS_OBJS += test-index-version.o
+ TEST_BUILTINS_OBJS += test-json-writer.o
+ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+diff --git a/t/helper/test-hexdump.c b/t/helper/test-hexdump.c
+new file mode 100644
+index 00000000000..811e89c1bcb
 --- /dev/null
-+++ b/t/lib-unicode-nfc-nfd.sh
-@@ -0,0 +1,162 @@
-+# Help detect how Unicode NFC and NFD are handled on the filesystem.
++++ b/t/helper/test-hexdump.c
+@@ -0,0 +1,30 @@
++#include "test-tool.h"
++#include "git-compat-util.h"
 +
-+# A simple character that has a NFD form.
-+#
-+# NFC:       U+00e9 LATIN SMALL LETTER E WITH ACUTE
-+# UTF8(NFC): \xc3 \xa9
-+#
-+# NFD:       U+0065 LATIN SMALL LETTER E
-+#            U+0301 COMBINING ACUTE ACCENT
-+# UTF8(NFD): \x65  +  \xcc \x81
-+#
-+utf8_nfc=$(printf "\xc3\xa9")
-+utf8_nfd=$(printf "\x65\xcc\x81")
++/*
++ * Read stdin and print a hexdump to stdout.
++ */
++int cmd__hexdump(int argc, const char **argv)
++{
++	char buf[1024];
++	ssize_t i, len;
++	int have_data = 0;
 +
-+# Is the OS or the filesystem "Unicode composition sensitive"?
-+#
-+# That is, does the OS or the filesystem allow files to exist with
-+# both the NFC and NFD spellings?  Or, does the OS/FS lie to us and
-+# tell us that the NFC and NFD forms are equivalent.
-+#
-+# This is or may be independent of what type of filesystem we have,
-+# since it might be handled by the OS at a layer above the FS.
-+# Testing shows on MacOS using APFS, HFS+, and FAT32 reports a
-+# collision, for example.
-+#
-+# This does not tell us how the Unicode pathname will be spelled
-+# on disk, but rather only that the two spelling "collide".  We
-+# will examine the actual on disk spelling in a later prereq.
-+#
-+test_lazy_prereq UNICODE_COMPOSITION_SENSITIVE '
-+	mkdir trial_${utf8_nfc} &&
-+	mkdir trial_${utf8_nfd}
-+'
++	for (;;) {
++		len = xread(0, buf, sizeof(buf));
++		if (len < 0)
++			die_errno("failure reading stdin");
++		if (!len)
++			break;
 +
-+# Is the spelling of an NFC pathname preserved on disk?
-+#
-+# On MacOS with HFS+ and FAT32, NFC paths are converted into NFD
-+# and on APFS, NFC paths are preserved.  As we have established
-+# above, this is independent of "composition sensitivity".
-+#
-+test_lazy_prereq UNICODE_NFC_PRESERVED '
-+	mkdir c_${utf8_nfc} &&
-+	ls | test-tool hexdump >dump &&
-+	grep "63 5f c3 a9" dump
-+'
++		have_data = 1;
 +
-+# Is the spelling of an NFD pathname preserved on disk?
-+#
-+test_lazy_prereq UNICODE_NFD_PRESERVED '
-+	mkdir d_${utf8_nfd} &&
-+	ls | test-tool hexdump >dump &&
-+	grep "64 5f 65 cc 81" dump
-+'
++		for (i = 0; i < len; i++)
++			printf("%02x ", (unsigned char)buf[i]);
++	}
 +
-+# The following _DOUBLE_ forms are more for my curiosity,
-+# but there may be quirks lurking when there are multiple
-+# combining characters in non-canonical order.
++	if (have_data)
++		putchar('\n');
 +
-+# Unicode also allows multiple combining characters
-+# that can be decomposed in pieces.
-+#
-+# NFC:        U+1f67 GREEK SMALL LETTER OMEGA WITH DASIA AND PERISPOMENI
-+# UTF8(NFC):  \xe1 \xbd \xa7
-+#
-+# NFD1:       U+1f61 GREEK SMALL LETTER OMEGA WITH DASIA
-+#             U+0342 COMBINING GREEK PERISPOMENI
-+# UTF8(NFD1): \xe1 \xbd \xa1  +  \xcd \x82
-+#
-+# But U+1f61 decomposes into
-+# NFD2:       U+03c9 GREEK SMALL LETTER OMEGA
-+#             U+0314 COMBINING REVERSED COMMA ABOVE
-+# UTF8(NFD2): \xcf \x89  +  \xcc \x94
-+#
-+# Yielding:   \xcf \x89  +  \xcc \x94  +  \xcd \x82
-+#
-+# Note that I've used the canonical ordering of the
-+# combinining characters.  It is also possible to
-+# swap them.  My testing shows that that non-standard
-+# ordering also causes a collision in mkdir.  However,
-+# the resulting names don't draw correctly on the
-+# terminal (implying that the on-disk format also has
-+# them out of order).
-+#
-+greek_nfc=$(printf "\xe1\xbd\xa7")
-+greek_nfd1=$(printf "\xe1\xbd\xa1\xcd\x82")
-+greek_nfd2=$(printf "\xcf\x89\xcc\x94\xcd\x82")
-+
-+# See if a double decomposition also collides.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE '
-+	mkdir trial_${greek_nfc} &&
-+	mkdir trial_${greek_nfd2}
-+'
-+
-+# See if the NFC spelling appears on the disk.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_NFC_PRESERVED '
-+	mkdir c_${greek_nfc} &&
-+	ls | test-tool hexdump >dump &&
-+	grep "63 5f e1 bd a7" dump
-+'
-+
-+# See if the NFD spelling appears on the disk.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_NFD_PRESERVED '
-+	mkdir d_${greek_nfd2} &&
-+	ls | test-tool hexdump >dump &&
-+	grep "64 5f cf 89 cc 94 cd 82" dump
-+'
-+
-+# The following is for debugging. I found it useful when
-+# trying to understand the various (OS, FS) quirks WRT
-+# Unicode and how composition/decomposition is handled.
-+# For example, when trying to understand how (macOS, APFS)
-+# and (macOS, HFS) and (macOS, FAT32) compare.
-+#
-+# It is rather noisy, so it is disabled by default.
-+#
-+if test "$unicode_debug" = "true"
-+then
-+	if test_have_prereq UNICODE_COMPOSITION_SENSITIVE
-+	then
-+		echo NFC and NFD are distinct on this OS/filesystem.
-+	else
-+		echo NFC and NFD are aliases on this OS/filesystem.
-+	fi
-+
-+	if test_have_prereq UNICODE_NFC_PRESERVED
-+	then
-+		echo NFC maintains original spelling.
-+	else
-+		echo NFC is modified.
-+	fi
-+
-+	if test_have_prereq UNICODE_NFD_PRESERVED
-+	then
-+		echo NFD maintains original spelling.
-+	else
-+		echo NFD is modified.
-+	fi
-+
-+	if test_have_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE
-+	then
-+		echo DOUBLE NFC and NFD are distinct on this OS/filesystem.
-+	else
-+		echo DOUBLE NFC and NFD are aliases on this OS/filesystem.
-+	fi
-+
-+	if test_have_prereq UNICODE_DOUBLE_NFC_PRESERVED
-+	then
-+		echo Double NFC maintains original spelling.
-+	else
-+		echo Double NFC is modified.
-+	fi
-+
-+	if test_have_prereq UNICODE_DOUBLE_NFD_PRESERVED
-+	then
-+		echo Double NFD maintains original spelling.
-+	else
-+		echo Double NFD is modified.
-+	fi
-+fi
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 0424f7adf5d..88c4b28cdfa 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -38,6 +38,7 @@ static struct test_cmd cmds[] = {
+ 	{ "getcwd", cmd__getcwd },
+ 	{ "hashmap", cmd__hashmap },
+ 	{ "hash-speed", cmd__hash_speed },
++	{ "hexdump", cmd__hexdump },
+ 	{ "index-version", cmd__index_version },
+ 	{ "json-writer", cmd__json_writer },
+ 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index c876e8246fb..511f6251bf5 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -29,6 +29,7 @@ int cmd__genzeros(int argc, const char **argv);
+ int cmd__getcwd(int argc, const char **argv);
+ int cmd__hashmap(int argc, const char **argv);
+ int cmd__hash_speed(int argc, const char **argv);
++int cmd__hexdump(int argc, const char **argv);
+ int cmd__index_version(int argc, const char **argv);
+ int cmd__json_writer(int argc, const char **argv);
+ int cmd__lazy_init_name_hash(int argc, const char **argv);
 -- 
 gitgitgadget
 
