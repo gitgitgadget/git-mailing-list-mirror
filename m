@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DEABC433FE
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 482BDC433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241657AbiEYKHI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 06:07:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58624 "EHLO
+        id S230132AbiEYKHL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:07:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241800AbiEYKFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 06:05:03 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC97E703C1
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:00 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 206-20020a1c02d7000000b00397345f2c6fso365559wmc.4
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:00 -0700 (PDT)
+        with ESMTP id S241902AbiEYKFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 06:05:04 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B26D6E8FE
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:02 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id s28so29254562wrb.7
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=E+RORJLNVcruhzmElFkl0dR0vyiJrvvxEsEmgxzfHyc=;
-        b=GzGehHhPyF5dqR5Wu7+Z22NyFxzgLZNmodDKhpiDgQebngwzaQO7zEDuI+PyvhXZLd
-         LGZoygjNtEROaVX3dth42jLvMKQJx4zfmz6n5VjXd7A+l0rb/Ah9vT6jS3BFRHYoraeH
-         Wrdl7ckFQHpXrp28OgT9h/80WrrD8ywDFAqzGkjoZB3sBDpFvQRKNmQvoeHB+5eDPXfC
-         TKKnNdTQbLpmr6Aaw4t1CGBkntf61vaH9IvXGhtYMjB5ne64OXGB9cnnx9/Uv/BCzntV
-         OEIUNtId7sjiqvvLQPRpp8x7jL7oZxWIGMUrtpkW+EzR6kW56RuGtXOLVaSKKttRGxxc
-         5m1Q==
+        bh=JpJIpnNMNCEnGQxKxI7826SyALKsnBXTM1S8FbHNPUM=;
+        b=C1LqAZ0ospXLppVVshNdqwGCrFF1+ZqDJEERWwZy6IhcVpivB2WyLMURcVKPtfEfcu
+         fDQhzd504sq1EWuNGyO8Y5GN5FigDlG/JGj7KeCFMmlTw2WvnPuP7aM5FsIZ49uL8It8
+         8AQ8R4URvyvPUkjX/UfvKPqNG/JOSE9d0l5S3cIOMV04TN8LyEUm9N3G7rDL6Y8bJyRC
+         wcglaf6QF2/Bb/v9EnrS2piMcFRGIiCPubx9O5IokkYxegaPh/hlVKuBqz+Q/JWBKjj0
+         FFX2R9pQhRV3/0KwPlkUqPi8VIwUggHpvSXZEkYTuQYCRp1Vx+6vaHdooyZrB32BNrqP
+         jRww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=E+RORJLNVcruhzmElFkl0dR0vyiJrvvxEsEmgxzfHyc=;
-        b=HENTKFGAUA27oRPmTfglt95Z/B1QMh4oB3MatmBpY7Nv4CmMElPkKCabpT/XjklONH
-         UE944Ttu681+gwI3LzybcEFjMQbT357D/aG999zTcJZigT5V8Y1mxVd8IcoxsXlfhR5L
-         6Zj3+3V7/uMe8w3wXauWkLsgkB/AY0SiDuP4Dbu9JUyS+70x3WidNDy6Eyhbz6DMATCw
-         6hHR0DpcxQYdj7rarGcigi/7SwshnMGly0U9GWk1nADSnODAiMyq3YVR2PkER1fajaYt
-         LHLTStVIxFoT4thDfKJoL72RYeLjxi+T6ZrbGsgfiZZeYMCU92jtqCYUpG1Gu6ZfwOQv
-         It5Q==
-X-Gm-Message-State: AOAM532uvSERXA6szKwi1wUWEDrcA/XIZKjwo1FyQzPsQQp63iZ7eS7r
-        s9MU0A0Hk0WqHm+ZEAZHsu9VhDHo40MF0w==
-X-Google-Smtp-Source: ABdhPJy30RbYhu7AyK1y13hfBLA+zwL91o7nBCcSJ8E3g//DUjqKYPib1dtrljlQkC12kc6qwa01Hw==
-X-Received: by 2002:a05:600c:4e41:b0:397:104:b1d3 with SMTP id e1-20020a05600c4e4100b003970104b1d3mr7339156wmq.101.1653473098820;
-        Wed, 25 May 2022 03:04:58 -0700 (PDT)
+        bh=JpJIpnNMNCEnGQxKxI7826SyALKsnBXTM1S8FbHNPUM=;
+        b=KK3aL1RP5kkCT6J9RCyc09DPmJi8uiISbNFFc6W8i5m331ovKHXT0TKh7HE2qwfKa/
+         TstCE4n04zUkqSDr+Ch/G2lbUHgRdA0lkfr0ngb+dPHQlrrLE2nkEStnQoQFXpUCwSPH
+         HGX8BvAIDfKL6PNTamjy+r1uMg4/HEmYqoMvXt+s3Y76qHE9wFflcvQocIBjJJ/J52o3
+         X48agDKAauiXGdfbjiJIJYNxgF/Mf5G8oUyriPS2E1d7G+8CqgGctEePLteNofbH1Wsl
+         x2Lmo8jZvJV0qudrTJD806lKcTDOAAuiAe5AC+qHMp6k6lD49wcI7OBrHWTeVIbMVm1o
+         MDEQ==
+X-Gm-Message-State: AOAM530v8x+hGfb5SCVz/tqUFQ8sLP3zR9kSEtChJchYDp6w0RZzJSeg
+        W1oZch0yscJ82xUxK/P2wyBsUv4vNvP5Ew==
+X-Google-Smtp-Source: ABdhPJz+3eTi/i0bpzcWb4A38bKLNiOEQ/IpZB0tMF84Z8VA+cBXSW4jfY+6yBSu6uiJ8fOx9soYtw==
+X-Received: by 2002:a5d:52ce:0:b0:20c:e030:b05a with SMTP id r14-20020a5d52ce000000b0020ce030b05amr25872386wrv.174.1653473100818;
+        Wed, 25 May 2022 03:05:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.04.57
+        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.04.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 03:04:58 -0700 (PDT)
+        Wed, 25 May 2022 03:05:00 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 16/29] CI: invoke "make artifacts-tar" directly in windows-build
-Date:   Wed, 25 May 2022 12:03:55 +0200
-Message-Id: <patch-v6-16.29-f89346f11eb-20220525T094123Z-avarab@gmail.com>
+Subject: [PATCH v6 18/29] CI: combine ci/install{,-docker}-dependencies.sh
+Date:   Wed, 25 May 2022 12:03:57 +0200
+Message-Id: <patch-v6-18.29-7925b2610fc-20220525T094123Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1045.gf356b5617dd
 In-Reply-To: <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
 References: <cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com> <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
@@ -76,66 +76,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the windows-build job to invoke the "make artifacts-tar" step
-directly, instead of calling a "ci/make-test-artifacts.sh" script.
+Combine the "ci/install-dependencies.sh" and
+"ci/install-docker-dependencies.sh" into one script. The "case"
+statement in the latter only cared about "$jobname", and can be folded
+into the same "case" statement in the former.
 
-The script was needed because "ci/lib.sh" would set up various
-environment variables for us, but now we can instead use the
-"ci/lib.sh" in its script mode.
+The reason they split up is historical, until a preceding commit
+"ci/lib.sh" required "bash", which might not have been available in
+"docker".
 
-The "mkdir -p" added in b819f1d2cec (ci: parallelize testing on
-Windows, 2019-01-29) isn't needed, the same commit added that "mkdir
--p" to the "artifacts-tar" rule itself, so we can have "make" create
-the directory for us.
-
-This also has the benefit of making the "build" step less chatty,
-since it won't start with the verbose "set -x" output, that's now
-contained in the "ci/lib.sh" step.
+This also fixes issue in "ci/install-docker-dependencies.sh" where
+we'd hide errors due to not using "set -e". Now that we include
+"ci/lib.sh" we won't have that potential issue.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml |  5 ++++-
- ci/make-test-artifacts.sh  | 10 ----------
- 2 files changed, 4 insertions(+), 11 deletions(-)
- delete mode 100755 ci/make-test-artifacts.sh
+ .github/workflows/main.yml        |  2 +-
+ ci/install-dependencies.sh        | 15 +++++++++++++++
+ ci/install-docker-dependencies.sh | 22 ----------------------
+ 3 files changed, 16 insertions(+), 23 deletions(-)
+ delete mode 100755 ci/install-docker-dependencies.sh
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index c97fbd0f0b3..ca993afd098 100644
+index 88eb2ef2dad..42944020436 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -87,12 +87,15 @@ jobs:
+@@ -311,7 +311,7 @@ jobs:
+     container: ${{matrix.vector.image}}
      steps:
-     - uses: actions/checkout@v2
-     - uses: git-for-windows/setup-git-for-windows-sdk@v1
-+    - run: ci/lib.sh
-+      shell: bash
-     - name: build
-       shell: bash
-       env:
-         HOME: ${{runner.workspace}}
-         NO_PERL: 1
--      run: . /etc/profile && ci/make-test-artifacts.sh artifacts
-+      run: . /etc/profile && make artifacts-tar ARTIFACTS_DIRECTORY=artifacts
-+      if: success()
-     - run: ci/check-unignored-build-artifacts.sh
-       if: success()
-       shell: bash
-diff --git a/ci/make-test-artifacts.sh b/ci/make-test-artifacts.sh
+     - uses: actions/checkout@v1
+-    - run: ci/install-docker-dependencies.sh
++    - run: ci/install-dependencies.sh
+     - run: ci/lib.sh
+     - run: make
+     - run: make test
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 3e05d38d4ab..cc7fd3bd7f8 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -99,6 +99,21 @@ linux-gcc-default)
+ 	sudo apt-get -q update
+ 	sudo apt-get -q -y install $UBUNTU_COMMON_PKGS
+ 	;;
++linux32)
++	linux32 --32bit i386 sh -c '
++		apt update >/dev/null &&
++		apt install -y build-essential libcurl4-openssl-dev \
++			libssl-dev libexpat-dev gettext python >/dev/null
++	'
++	;;
++linux-musl)
++	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
++		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
++	;;
++pedantic)
++	dnf -yq update >/dev/null &&
++	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
++	;;
+ esac
+ 
+ if type p4d >/dev/null 2>&1 && type p4 >/dev/null 2>&1
+diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependencies.sh
 deleted file mode 100755
-index 45298562982..00000000000
---- a/ci/make-test-artifacts.sh
+index 78b7e326da6..00000000000
+--- a/ci/install-docker-dependencies.sh
 +++ /dev/null
-@@ -1,10 +0,0 @@
+@@ -1,22 +0,0 @@
 -#!/bin/sh
 -#
--# Build Git and store artifacts for testing
+-# Install dependencies required to build and test Git inside container
 -#
 -
--mkdir -p "$1" # in case ci/lib.sh decides to quit early
--
--. ${0%/*}/lib.sh
--
--make artifacts-tar ARTIFACTS_DIRECTORY="$1"
+-case "$jobname" in
+-linux32)
+-	linux32 --32bit i386 sh -c '
+-		apt update >/dev/null &&
+-		apt install -y build-essential libcurl4-openssl-dev \
+-			libssl-dev libexpat-dev gettext python >/dev/null
+-	'
+-	;;
+-linux-musl)
+-	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
+-		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
+-	;;
+-pedantic)
+-	dnf -yq update >/dev/null &&
+-	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+-	;;
+-esac
 -- 
 2.36.1.1045.gf356b5617dd
 
