@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DCC0C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF6E0C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:05:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242273AbiEYKFe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 06:05:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59366 "EHLO
+        id S242294AbiEYKFh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:05:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242178AbiEYKFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 06:05:11 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E26476D966
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:10 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id u3so29410403wrg.3
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:10 -0700 (PDT)
+        with ESMTP id S242234AbiEYKFO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 06:05:14 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373526D965
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:13 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id u3so29410747wrg.3
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mStoIdNkwfQz/HeoGy0QNWkorleVJjQCBXdp7Pi1pTg=;
-        b=OekiTj+GusXiO/gXyZmoxgxF22L+CuIbifeUTz5FKSW59lthxbXF/Yf+zPugtJN269
-         fsqL/+Mbq6UqojTPGgagC9gqNTNqCnIS+R4MBD2gKrX36Pow6Co0W8QCLd1syctMqquL
-         3S6Ti2BUppm0xnKenmW441ha9rrL9/GAgBvTNcADHum7ou8slXhKfMQSbXcSl/9d9+Zf
-         cCuXnrIQrEkN/sSc4FcjZqpQjjdN1ObbPSGLK8EM86w3vfCOMH9xRFxWKXWhYMPfT/Tt
-         kmN9dJae4f6RJukY28W+B6PDrhB9N/Avgzd/vEqauYBVeP14diCmkdOvfKn6honC4lTo
-         u8Ig==
+        bh=dmXO/rolLNsURpmIJrB/NpDYwTwLGCY+Fd7CvzKlmRg=;
+        b=YrNczV9x+sLFKHwWfmkL22NHOoIYnGpRYOln0jLdroi3IY58DZYPwImPrTln0lDbs5
+         Ib5+E/izoguEI5Uf989b4pr5eCtzoo690tkCXl3kLiZvvX5qUVsaD5NBmcpWLtggYpvh
+         UOIBvRoLCJm5tB2KfTHd9yRMr6G6hQciRTcpt/ZBt61mKOu34frQUY5cxyaMG+HgMose
+         O9DMyV8AI4VPsl4aX6H4n0d5JxjFJ7p1Wu04+l0gAr1/AC2FEZbabChz1gLonoDQ1Hwg
+         ArZT+9EFD9y+EVsxYfIaDsaCJKdi1qrhUklZtkEJ1HLOuQoRfat7zrKtFewuaYTOMvYb
+         36rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mStoIdNkwfQz/HeoGy0QNWkorleVJjQCBXdp7Pi1pTg=;
-        b=drk0GuiLFDfxxA0occc2IZlwuV03b+FDjZLYMLkgIm+NyfH7H9pRvUdCYevOdiBbp8
-         wlMIqFmHzsCpC/kWJ18iWhNVqKf/ndx/NGo4Jdtga47KucTN7qP1GE+Hs8LAIVvaAkKv
-         eWwt+BWE0+rw1QeVBcbdTF3pj4ak7up2w3MKQeeDfPrrcftYBuui2QlW/41A92ddeVJ7
-         569NGNNQdkU7j5HSK7VRXVylNXqmVf7MP/09uFZPde9ez1Q0XlTQ4OcoUayXWfSRS27l
-         uF8ikZfr+RJQzanAdwlKLoKp6x4YM9PNaxslvIVSjfnXsvw052AMSN3JW2G8E59bTcfA
-         5IUQ==
-X-Gm-Message-State: AOAM530Kn6avS3WFBJGoaN5JThvQkGzVvMBAse7cWYklejXQXQCeD44i
-        uJu2lii61ssg06L+k81DXjb1y1fm+an9iA==
-X-Google-Smtp-Source: ABdhPJwdp9MpDdywr3VdaFjf/Mdteh5RD5AAjfTulCKAt2pq1hi70IS/msDssRq/LCzidBeLdjEJxw==
-X-Received: by 2002:a5d:588d:0:b0:20f:f290:ed83 with SMTP id n13-20020a5d588d000000b0020ff290ed83mr5681821wrf.588.1653473110209;
-        Wed, 25 May 2022 03:05:10 -0700 (PDT)
+        bh=dmXO/rolLNsURpmIJrB/NpDYwTwLGCY+Fd7CvzKlmRg=;
+        b=x7wnl887gcoZNm7/GNHTfDy+y2O1ncMLFluzFweEXH2rjJ3/XhTCEOWPeDjgWx6kJ+
+         3hhCVQg205LKTIy8YDdFfuIrgs00Hf5lpBmCdKtg0oZNR/N7eN2U2GaXmyeaRFTo2Bxv
+         VYWPuPZ07Y+gYOQrzkw7Zfwxq/30RShoJHG0MmITkmdrQCCVANfffVje0cTy5yJvlG/A
+         ZNXJr9UQKKBDSxxk8jax1AGIHTz1LgcDhtrVJCa7ZQyGCc6KFd+jPbCd1wK+kU3NG4sN
+         ru6xQEcKz2Pj0v0rT5Yubz24HR3IJP5zevc7O458h7MyfcCXrADyXD68/wJPK2L/yh+O
+         V0rQ==
+X-Gm-Message-State: AOAM5316cEU+8Cq2Uz8UmXoau5BMDvCGgqwvI2yetqBSz3WLAIn24A24
+        +VFx5dp2492Aq4FxZi5YRzfTMh4KTKgOEw==
+X-Google-Smtp-Source: ABdhPJyVR60QlE450CMMX0PZ7ORO1C/tZHbqAxjmhMTzICiJTLYY0psQZDlb3OdjmLJkF/7dpEpviw==
+X-Received: by 2002:adf:fc01:0:b0:20c:ff9a:2c53 with SMTP id i1-20020adffc01000000b0020cff9a2c53mr25988875wrr.142.1653473111403;
+        Wed, 25 May 2022 03:05:11 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.05.09
+        by smtp.gmail.com with ESMTPSA id o4-20020a05600002c400b0020d0cdbf7eesm1649452wry.111.2022.05.25.03.05.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 03:05:09 -0700 (PDT)
+        Wed, 25 May 2022 03:05:10 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 27/29] CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
-Date:   Wed, 25 May 2022 12:04:06 +0200
-Message-Id: <patch-v6-27.29-282b7c89a4f-20220525T094123Z-avarab@gmail.com>
+Subject: [PATCH v6 28/29] CI: don't use "set -x" in "ci/lib.sh" output
+Date:   Wed, 25 May 2022 12:04:07 +0200
+Message-Id: <patch-v6-28.29-7a208927819-20220525T094123Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1045.gf356b5617dd
 In-Reply-To: <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
 References: <cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com> <cover-v6-00.29-00000000000-20220525T094123Z-avarab@gmail.com>
@@ -76,49 +76,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the setting of "PYTHON_PATH=[...]" to the "$jobname" case
-statement. This partially backs out of my 707d2f2fe86 (CI: use
-"$runs_on_pool", not "$jobname" to select packages & config,
-2021-11-23), now that we have a "osx-{clang,gcc}" anyway for setting
-"$CC" we might as well do away with this part of the "$runs_on_pool"
-case.
+Remove the "set -x" from the "ci/lib.sh" output. Before preceding
+commits the logic in that file was much more complex, and likely to
+fail in some scenarios.
+
+Now we only task "ci/lib.sh" with setting various variables for
+subsequent steps in our jobs, so we can start emitting more tailored
+debugging output, which makes what it's doing easier to read.
+
+This change also changes the output of the "ci/print-test-failures.sh"
+script, since it's the only other user of "ci/lib-ci-type.sh". In that
+case it's also helpful to know what "$CI_TYPE" we're using, as that
+script doesn't "set -x" and will act differently depending on the
+$CI_TYPE.
+
+It's useful when developing this script to see what variables
+it *doesn't* set, but such output isn't useful to users, so let's hide
+the "SKIP" output behind a --debug option.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/lib.sh | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ ci/lib.sh | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
 
 diff --git a/ci/lib.sh b/ci/lib.sh
-index b6e7a6647bb..f2f75901a9c 100755
+index f2f75901a9c..9e38c893890 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -132,14 +132,6 @@ ubuntu-latest)
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+-set -ex
++set -e
  
- 	setenv --test GIT_TEST_HTTPD true
- 	;;
--macos-latest)
--	if test "$jobname" = osx-gcc
--	then
--		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
--	else
--		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
--	fi
--	;;
- esac
+ # Helper libraries
+ . ${0%/*}/lib-ci-type.sh
+@@ -7,15 +7,22 @@ set -ex
+ # Parse options
+ mode_build=
+ mode_test=
++mode_debug=
+ while test $# != 0
+ do
+ 	case "$1" in
+ 	--build)
++		echo "MODE: $1" >&2
+ 		mode_build=t
+ 		;;
+ 	--test)
++		echo "MODE: $1" >&2
+ 		mode_test=t
+ 		;;
++	--debug)
++		echo "DEBUG: $1" >&2
++		mode_debug=t
++		;;
+ 	-*)
+ 		echo "error: invalid option: $1" >&2
+ 		exit 1
+@@ -41,21 +48,32 @@ then
+ 	exit 1
+ fi
  
- case "$jobname" in
-@@ -195,9 +187,11 @@ linux-TEST-vars)
- 	setenv --test GIT_TEST_CHECKOUT_WORKERS 2
- 	;;
- osx-gcc)
-+	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
- 	CC=gcc
- 	;;
- osx-clang)
-+	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
- 	CC=clang
- 	;;
- linux-clang)
++# Show our configuration
++echo "CONFIG: CI_TYPE=$CI_TYPE" >&2
++echo "CONFIG: jobname=$jobname" >&2
++echo "CONFIG: runs_on_pool=$runs_on_pool" >&2
++if test -n "$GITHUB_ENV"
++then
++	echo "CONFIG: GITHUB_ENV=$GITHUB_ENV" >&2
++fi
++echo >&2
++
+ # Helper functions
+ setenv () {
++	skip=
+ 	while test $# != 0
+ 	do
+ 		case "$1" in
+ 		--build)
+ 			if test -z "$mode_build"
+ 			then
+-				return 0
++				skip=t
+ 			fi
+ 			;;
+ 		--test)
+ 			if test -z "$mode_test"
+ 			then
+-				return 0
++				skip=t
+ 			fi
+ 			;;
+ 		-*)
+@@ -73,10 +91,21 @@ setenv () {
+ 	val=$2
+ 	shift 2
+ 
++	if test -n "$skip"
++	then
++		if test -n "$mode_debug"
++		then
++			echo "SKIP: '$key=$val'" >&2
++		fi
++		return 0
++	fi
++
+ 	if test -n "$GITHUB_ENV"
+ 	then
+ 		echo "$key=$val" >>"$GITHUB_ENV"
+ 	fi
++
++	echo "SET: '$key=$val'" >&2
+ }
+ 
+ # Clear variables that may come from the outside world.
 -- 
 2.36.1.1045.gf356b5617dd
 
