@@ -2,111 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F129C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 20:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76B17C433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 20:57:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245325AbiEYUzN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 16:55:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44368 "EHLO
+        id S1344033AbiEYU5D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 16:57:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230343AbiEYUzM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 16:55:12 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DAB0B41F9
-        for <git@vger.kernel.org>; Wed, 25 May 2022 13:55:11 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79CB013013D;
-        Wed, 25 May 2022 16:55:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=5FPDK064pxTgnPVMburFzywlI
-        g5pNFK/gpqMrlrF5Bw=; b=VNrmWnrbfTqpEaSurK2tQeC1E+z5p1ltnEKlk6zqg
-        ha8IdVLfXtSRTbfzetKp9rcTZ0x+unp68ltIzFG1vg7z0YVo9rPcwwmuOwtPmXFi
-        x6+DQuewhVty5+PtP4ONra2eAdlZ8A/6QYEtc2qCb6wPaB4km9Qza9FgIyta3dM8
-        Zw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37CB313013A;
-        Wed, 25 May 2022 16:55:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8512130132;
-        Wed, 25 May 2022 16:55:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH 1/5] usage.c: add a non-fatal bug() function to go with
- BUG()
-References: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
-        <patch-1.5-faa1c708a79-20220521T170939Z-avarab@gmail.com>
-Date:   Wed, 25 May 2022 13:55:05 -0700
-Message-ID: <xmqqpmk15o46.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230314AbiEYU5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 16:57:00 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49775A0D04
+        for <git@vger.kernel.org>; Wed, 25 May 2022 13:56:59 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id f21so30336085ejh.11
+        for <git@vger.kernel.org>; Wed, 25 May 2022 13:56:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FoqTAz8lHBxmaFw+BrM8snYtQ/v4aTAPC4XzApZrm0Q=;
+        b=h3DaWkBOuqKIqVoaJJqrXjXN+1cDVMYf4VrGXww+Zw6myaZY2YGWPejes/TlOay9MU
+         b3Ya8LoR0bh4UxoCB9JLNcEEedrE/pQUjJyl537ew53tEqMYTXGpAb1o7uT2sUP5aq7H
+         eKLNMAz3r8VCNUayJ4O3QFTen/t8gyvssZ7EGj7mGMAWmeZIjAns7p/yc3+7S9NvD4eD
+         KRhZetVWTOtkGqrXaNV/b5v7p6dJzD+Ko7zhOqxtH30G3MpdUcqy3YGlv14pU4b2oqxg
+         LFJ+Bt49X/JFvhM7uKoTz1l6hHCA+SrZqq4aJOBN05ycmJ24NtpaOdTj8v8o4l40bWtz
+         dClQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FoqTAz8lHBxmaFw+BrM8snYtQ/v4aTAPC4XzApZrm0Q=;
+        b=WBgQP/aoBI2L9z/9oW+NSUqF6PCRz4rye65N+7IplIEVK9ZY7faEKDUu2qnVFkzr6O
+         RZ9dTIqjR+qCZGEJVT3A+mgaTAJu9xW+OwBNqxHMM6kgGDpaHCt4QLFYLSV58v72dMwF
+         bpbBdRNtuB9OKypO5vRwxcGi4JKzsiQv3QF/ORapmOP5PETLTGKI61KaUn1KW4FeEHjr
+         XIptKhgaeCJ9EExjGE7e9f1rO8ZMNzH45u8e9GVcarEfU4+Eoe9QH9UwYO0yZbbciwGD
+         kUy4Rmy44l6B3WRMyVS1cCUeXpMPxJcU+e6zcbmnJ94OIZf549BgL7wVZl+mHXWMOwJf
+         G7AA==
+X-Gm-Message-State: AOAM531zbYCh6U0R+UEUZu91QyEkk6zg9oe88XmdratzF+NkRaQ5o8DU
+        5ObHC55R+oHRSQ6lrGaNEgXWLt4rGJ4=
+X-Google-Smtp-Source: ABdhPJx5HqWADdsG9RBDQ8WaH+3qhsD1rJUVdfEJxbleVk9DrjOx2Djlqr420vej5jX/5UkV9Wo0dA==
+X-Received: by 2002:a17:907:a0c8:b0:6f7:492e:e74c with SMTP id hw8-20020a170907a0c800b006f7492ee74cmr30169833ejc.670.1653512217746;
+        Wed, 25 May 2022 13:56:57 -0700 (PDT)
+Received: from buzz.local (84-236-78-147.pool.digikabel.hu. [84.236.78.147])
+        by smtp.gmail.com with ESMTPSA id v2-20020a17090651c200b006f3ef214e20sm8534274ejk.134.2022.05.25.13.56.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 May 2022 13:56:56 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] Makefile: build 'gitweb' in the default target
+Date:   Wed, 25 May 2022 22:56:51 +0200
+Message-Id: <20220525205651.825669-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.36.1.427.gb7c35dfc0c
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F5258424-DC6C-11EC-82E8-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Our Makefile's default target used to build 'gitweb', though
+indirectly: the 'all' target depended on 'git-instaweb', which in turn
+depended on 'gitweb'.  Then e25c7cc146 (Makefile: drop dependency
+between git-instaweb and gitweb, 2015-05-29) removed the latter
+dependency, and for good reasons (quoting its commit message):
 
-> Any caller to bug() should follow up such calls with BUG_if_bug(),
-> which will BUG() out (i.e. abort()) if there were any preceding calls
-> to bug(). As the tests and documentation here show we'll catch missing
-> BUG_if_bug() invocations in our exit() wrapper.
+  "1. git-instaweb has no build-time dependency on gitweb; it
+      is a run-time dependency
 
-...
+   2. gitweb is a directory that we want to recursively make
+      in. As a result, its recipe is marked .PHONY, which
+      causes "make" to rebuild git-instaweb every time it is
+      run."
 
-> +- `bug` (lower-case, not `BUG`) is supposed to be used like `BUG` but
-> +  prints a "BUG" message instead of calling `abort()`. We then expect
-> +  `BUG_if_bug()` to be called to `abort()` if there were any calls to
-> +  `bug()`. If there weren't any a call to `BUG_if_bug()` is a NOOP.
+Since then a simple 'make' doesn't build 'gitweb'.
 
-OK.  So the expected pattern would be a series of calls to bug(),
-each guarded by its own condition, concluded by a call to BUG_if_bug()
+Luckily, installing 'gitweb' is not broken: although 'make install'
+doesn't depend on the 'gitweb' target, it runs 'make -C gitweb
+install' unconditionally, which does generate all the necessary files
+for 'gitweb' and installs them.  However, if someone runs 'make &&
+sudo make install', then those files in the 'gitweb' directory will be
+generated and owned by root, which is not nice.
 
-	if (condition1)
-		bug(...);
-	if (condition2)
-		bug(...);
-	...
-	BUG_if_bug();
+List 'gitweb' as a direct dependency of the default target, so a plain
+'make' will build it.
 
-and when none of the guard conditions fired, BUG_if_bug() will
-become a no-op.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> +/* usage.c: if bug() is called we should have a BUG_if_bug() afterward=
-s */
-> +extern int bug_called_must_BUG;
+diff --git a/Makefile b/Makefile
+index f8bccfab5e..ee74892b33 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2188,6 +2188,8 @@ ifneq (,$X)
+ 	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMANDS_TO_INSTALL) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
+ endif
+ 
++all:: gitweb
++
+ all::
+ ifndef NO_TCLTK
+ 	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir='$(gitexec_instdir_SQ)' all
+-- 
+2.36.1.427.gb7c35dfc0c
 
-I am not sure about the name, but in essense, each call to bug()
-ensures that this becomes true, so BUG_if_bug() can use it to see
-if it should abort(), right?
-
->  __attribute__((format (printf, 3, 4))) NORETURN
->  void BUG_fl(const char *file, int line, const char *fmt, ...);
->  #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
-> +__attribute__((format (printf, 3, 4)))
-> +void bug_fl(const char *file, int line, const char *fmt, ...);
-> +#define bug(...) bug_fl(__FILE__, __LINE__, __VA_ARGS__)
-> +#define BUG_if_bug() do { \
-> +	if (bug_called_must_BUG) { \
-> +		bug_called_must_BUG =3D 0; \
-> +		BUG_fl(__FILE__, __LINE__, "see bug() output above"); \
-> +	} \
-> +} while (0)
-
-I have a feeling that "see bug() output above" should come from the
-caller of BUG_if_bug().  These bug() calls that are grouped together
-must have a shared overall theme, which may want to be stated in
-that final message.
-
-Other than these two small points, this does not look too bad ;-)
-
-Thanks.
