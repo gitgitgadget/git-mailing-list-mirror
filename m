@@ -2,118 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D429C4332F
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 00:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E562C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 00:14:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242834AbiEYAID (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 May 2022 20:08:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60798 "EHLO
+        id S242854AbiEYAO5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 May 2022 20:14:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230022AbiEYAIC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 May 2022 20:08:02 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01FE96C0C4
-        for <git@vger.kernel.org>; Tue, 24 May 2022 17:08:00 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id q8so23269102oif.13
-        for <git@vger.kernel.org>; Tue, 24 May 2022 17:08:00 -0700 (PDT)
+        with ESMTP id S230022AbiEYAO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 May 2022 20:14:56 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66CFC64BD0
+        for <git@vger.kernel.org>; Tue, 24 May 2022 17:14:55 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id n2-20020a9d6f02000000b0060b22af84d4so2146323otq.1
+        for <git@vger.kernel.org>; Tue, 24 May 2022 17:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=DvQtZ2XGUahVn0OmCgLQuom82YhA4is7N8udSsK/hOY=;
-        b=5TK4L4dthRH7fDG54I5o89vT5UGHUHJ+Eu6VwTDe/NFSKlqoTSBvyeUtyfbtheDHsX
-         vdRXQPxrDY1WQ+1lKey43/jNAgZ4XfVc7JSuNy5uTfRg0SjWrKHkjmKb0FqGSji1mgg0
-         EBUtg4lfdxMyawFz6MVEDdsQW+ToZiFJcj1yzQ9eOpLA51ECA1USoy/Y3jKM9zvUbIsk
-         oVfTwAFZxaSMC9nX5aRCSHhf+iHTuIBVW1sQ1Dwhu9WBf/K4iEPb2NaK1W7iCFIzErSh
-         oHdVBIlbtTYEvnufDmeglU89SU3GcS+fVb9llkDg0enMmLoon60vBIzVaR60intV/F4I
-         4iBQ==
+         :content-disposition:in-reply-to;
+        bh=GL/b+eVr/HygwKHZ0G/+x7Mv/y/vB0VNOyyB8tZrP9k=;
+        b=uqlwfigv+KvTEq2t2FdtQk1Agxw7D5MAz/y1oT8loffhrXQqhhzffXe/qCcVRSQPR5
+         +rVKokPYuRyqfgAunvwVBdY1+Z0ZC2FuIK2TLef08f6B7BMWZFgScBAiq7uo4bfC7Em/
+         Qo523b3Iwww8UOwNlqnkC5LRk1bt5OBVUW/R1NYzpiUBdN/IQl28jb+Cadq6wVNF+tRX
+         jvVuyjZR7DfQjUC3iuvav3DeJ7Ez+v0w3FjWPGA3iqEOaSWHAuyy+B4MXFOdX6u7etQ9
+         jKTMV9f5ak35TirVq9EJKtVV/S/oU8GyHYekMJXNjDk2HgVAsbfIhLuhAo+wml1A7D04
+         OI1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=DvQtZ2XGUahVn0OmCgLQuom82YhA4is7N8udSsK/hOY=;
-        b=NDntV4lZ1kuS8H2GPpcN9smTuLRMD1lORuNWzYRmcZKmudCXmQNXC64RsNx0ylH+jg
-         JyU0R314390+zX+nVNSMbcb1oR6nrihTdD3ojrmXqFg5sw/0ILYQUpvqGEnU3Ica1i2F
-         AApz/b5izi2cuKTLLuXLpD9+wR09UUOvuHy1WTQUI/OaUhhrAEvEPH7uXE3A0s49vvAL
-         FsvHRGK3Oxtq9d0gep1M+ViRKPctTTreWrknAuJo/s6ftR96LkRUOyudeCrNyEcdTCPt
-         f4iFZdS+xqh0IecFZLvk55XQ/+AJQRqRZ7KdnfzqXHB3ZNLy04VG7eTovo0VKEgNs5sH
-         SALg==
-X-Gm-Message-State: AOAM531M50LX6B57pLMDQRql1G9eE0J/Sk+0E+7j13HxTWJGyu0yxNmy
-        vZQZcICx60YHo194iFfS11SKuA==
-X-Google-Smtp-Source: ABdhPJzwgXowSFPsxzCEGc05XVojN2MEeQu0L88WoVrE6R3xhlMpeM75hx69ilflzrY5P0h+GLApFQ==
-X-Received: by 2002:a05:6808:1703:b0:2f9:cd2d:41c5 with SMTP id bc3-20020a056808170300b002f9cd2d41c5mr3891951oib.77.1653437278889;
-        Tue, 24 May 2022 17:07:58 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to;
+        bh=GL/b+eVr/HygwKHZ0G/+x7Mv/y/vB0VNOyyB8tZrP9k=;
+        b=l4ph0sQVlWhdXvcOsd+a7UFCbsq/yrEwqeZLdaHDb9XKOBrzQcXjdHtigWyXTlMtnA
+         7AF0cTMQ1hDHFo0ifDo99O+bkP2QNnZTMNhAwDBvaANFeP9aaZnMmxFO970J4FXLj3Yc
+         XLUCm/22zMUq2xTRJfJpbFNm0MoPnPhdg2tfkhB2U2vbhiAiLf6MqFIfkCjeZ/BKzV3p
+         RgW+7zoISOMu3ymDOzwfeGh7Wo43igAZL7c+/EQv+VjIZ6shEgim8/x+uuimGrle4Jf5
+         Lw9YRoABz59B/qAGZN9o8o9GQtEoFBUDwaYHXe4uGdZzFSmGhC73ZVQDgJ69kI8nCa8y
+         APAA==
+X-Gm-Message-State: AOAM5307km2i50rEao5FTcWB8fN2ff9ZVQJjjf+/SQaPXcBwOnq+WHiy
+        oLh3LTT4ocVcqz6t7cf3ac0jcA==
+X-Google-Smtp-Source: ABdhPJxlPu61i7fLvwLePvVvPFPbaHyCxuehJonTEolK/KKv7N0zsrrja+AdG6Te/aedxlMpFcoozg==
+X-Received: by 2002:a05:6830:44a7:b0:606:6bcc:f4c7 with SMTP id r39-20020a05683044a700b006066bccf4c7mr11354241otv.198.1653437694678;
+        Tue, 24 May 2022 17:14:54 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l7-20020a4ab2c7000000b0035ef3da8387sm5976570ooo.4.2022.05.24.17.07.57
+        by smtp.gmail.com with ESMTPSA id e205-20020a4a55d6000000b0035eb4e5a6ccsm6039214oob.34.2022.05.24.17.14.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 17:07:57 -0700 (PDT)
-Date:   Tue, 24 May 2022 20:07:55 -0400
+        Tue, 24 May 2022 17:14:54 -0700 (PDT)
+Date:   Tue, 24 May 2022 20:14:52 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     rsbecker@nexbridge.com
-Cc:     'Taylor Blau' <me@ttaylorr.com>,
-        'Jonathan Nieder' <jrnieder@gmail.com>, git@vger.kernel.org,
-        avarab@gmail.com, derrickstolee@github.com, gitster@pobox.com,
-        larsxschneider@gmail.com, tytso@mit.edu
-Subject: Re: [PATCH v5 02/17] pack-mtimes: support reading .mtimes files
-Message-ID: <Yo1zW7ntTuNakpOD@nand.local>
-References: <cover.1638224692.git.me@ttaylorr.com>
- <cover.1653088640.git.me@ttaylorr.com>
- <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
- <Yo0ysWZKFJoiCSqv@google.com>
- <015d01d86fa6$a10519f0$e30f4dd0$@nexbridge.com>
- <Yo1bUbys+Fz7g+6h@nand.local>
- <016e01d86fc5$64ecf180$2ec6d480$@nexbridge.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, vdye@github.com, jonathantanmy@google.com
+Subject: Re: [PATCH v2 3/4] builtin/pack-objects.c: ensure included
+ `--stdin-packs` exist
+Message-ID: <Yo10/KlseGJeY6uQ@nand.local>
+References: <cover.1652458395.git.me@ttaylorr.com>
+ <cover.1653418457.git.me@ttaylorr.com>
+ <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
+ <xmqq1qwifv1c.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <016e01d86fc5$64ecf180$2ec6d480$@nexbridge.com>
+In-Reply-To: <xmqq1qwifv1c.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 24, 2022 at 07:24:14PM -0400, rsbecker@nexbridge.com wrote:
-> On May 24, 2022 6:25 PM ,Taylor Blau write:
-> >On Tue, May 24, 2022 at 03:44:00PM -0400, rsbecker@nexbridge.com wrote:
-> >> I am again concerned about 32-bit time_t assumptions. time_t is 32-bit
-> >> on some platforms, signed/unsigned, and sometimes 64-bit. We are
-> >> talking about potentially long-persistent files, as I understand this
-> >> series, so we should not be limiting times to end at 2038. That's only
-> >> 16 years off and I would wager that many clones that exist today will exist then.
-> >
-> >Note that we're using unsigned fields here, so we have until 2106 (see my earlier
-> >response on this in https://lore.kernel.org/git/YdiXecK6fAKl8++G@nand.local/).
+On Tue, May 24, 2022 at 03:03:11PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> I appreciate that, but 32-bit time_t is still signed on many
-> platforms, so when cast, it still might, at some point in another
-> series, cause issues. Please be cautious. I expect that this is the
-> particular hill on which I will die. 😉
-> --Randall
+> > Calling `is_pack_valid()` early on makes it substantially less likely
+> > that we will have to deal with a pack going away, since we'll have an
+> > open file descriptor on its contents much earlier.
+>
+> Sorry for asking a stupid question (or two), but I am confused.
 
-Yes, definitely. There is only one spot that we turn the result of
-nth_packed_mtime() into a time_t, and that's in
-add_object_in_unpacked_pack(). The code there is something like:
+No such thing as a stupid question, so your apology is not necessary in
+the slightest :).
 
-    time_t mtime;
-    if (pack->is_cruft)
-      mtime = nth_packed_mtime(pack, object_pos);
-    else
-      mtime = pack->mtime;
+> This does make sure that we can read and use the contents of the
+> packfile even when somebody else removes it from the disk by
+> ensuring that
+>
+>  (1) we have an open file descriptor to it, so that we could open
+>      mmap window into it at will; or
+>
+>  (2) we have a mmap window that covers all of it (this should be the
+>      norm on platforms with vast address space); or
+>
+>  (3) we are in the same state as (1) by opening the packfile to
+>      validate the pack right now.
+>
+> and during the pack-object we are running (aka "repack"), we can
+> continue to read from that pack that may have already disappeared
+> from the disk.
+>
+> But is that sufficient?  Are we writing the resulting new pack(s)
+> out in such a way that the repository is healthy without the pack
+> we noticed is disappearing?  How do we ensure that?
 
-    ...
-
-    add_cruft_object_entry(oid, ..., mtime);
-
-...and the reason mtime is a time_t is because that's the type of
-pack->mtime.
-
-And we quickly convert that back to a uint32_t in
-add_cruft_object_entry(). If time_t is signed, then we'll truncate any
-values beyond 2106, and pre-epoch values will become large positive
-values. That means our error is one-sided in the favorable direction,
-i.e., that we'll keep objects around for longer instead of pruning
-something that we shouldn't have.
+It's sufficient in the sense that we're writing out all of the objects
+we were asked to (from pack-objects's perspective). Of course, if the
+"simultaneous writer" is just removing packs right after they are
+opened, that will produce an obviously-broken state. But assuming that
+repack isn't removing objects it shouldn't (which I think is a safe
+assumption from pack-objects' perspective, since all it cares about is
+writing packs that contain the desired set of objects), then we are OK.
 
 Thanks,
 Taylor
