@@ -2,106 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C803DC433F5
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 23:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 730A2C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 23:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235997AbiEYXAB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 19:00:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34880 "EHLO
+        id S242382AbiEYXCJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 19:02:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238729AbiEYW7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 18:59:54 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8336899E
-        for <git@vger.kernel.org>; Wed, 25 May 2022 15:59:53 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id d21so457643qtj.5
-        for <git@vger.kernel.org>; Wed, 25 May 2022 15:59:53 -0700 (PDT)
+        with ESMTP id S238277AbiEYXCI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 19:02:08 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C485B55367
+        for <git@vger.kernel.org>; Wed, 25 May 2022 16:02:05 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id em1so509421qvb.7
+        for <git@vger.kernel.org>; Wed, 25 May 2022 16:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=86fx9JUviOLnOIIvq9Ns4mtXK/znDAF3CXA9CZUOSzg=;
-        b=tgDNe4marcrF/DnkZB+Xq6DbOjcxkAFOL8Vfp/+iPgg2L7JlEFCIV1Fc94NVuierDf
-         c31Kq8DyKvcvupOvxYdyySEwQtUW92ZDrmZapbxmpW//ChG0S3+OBab+Nvakfz+8+vT4
-         QCFXn/HhaUuXIzavNd4QyIUdv3s4INXjFPPAdJl+jlzpUWzadkMZiacPUmrCmN8ZjmGs
-         82T3Asc+DoH0+z+DAncVvy7ljHxbuKjUnJfxjHBlJxDdKmFlmrKsG3NQkWLqMz85IcZN
-         7F2FnemtOJmHVo/AXTuV8iuSYiIDlPtZMcR0OZ6oPQya5Ki55oejWxye93xHqptso0b2
-         QYkA==
+        bh=B0+eCmltMMRwyrAbkXieHS61vMbtlHFXefFffX6D8yI=;
+        b=KqRu3i+0qSPeGsP1oiP/RX4TOQYyX1nIIXrE0BdlBtrywDl8HbVU1NQTu9ySYkhQEZ
+         c6ldThUMSzVAGubztA1WhOoGFZy1tEYvIqEQkNZclNZgwkD920VBzwlj2cDTjcOtHPDC
+         jBGBw9O2A8lihGmDtVaE5RiLIfWcmXvSrcS4rTRRIDC7Bjz8AMY97lN6ZvYhi5luYq3T
+         ZM09WwlE7eeRDEPrEotnVNj/uK9C7CwkMIrNxVg2bUgu9A01CwQURLJUiQjBn+QdaEv8
+         wAquWznkzY8ppklOS7htZLV5t+DZQuF9ItOdKFlCiXkkCtc+HHpYoPYf4w+Jo9/07Wt+
+         hNvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=86fx9JUviOLnOIIvq9Ns4mtXK/znDAF3CXA9CZUOSzg=;
-        b=z0b0D2Z01FzHQYGXe9zSJKPiGUc1zex7HN4xCrNuPuZLqnxzn3TIG/yqsOXZgGXmf2
-         zKEZyHOshLAySyj6uu6S9I6FrAUQ04VfHFxe3tAaOxZPYqal1oiz22AqmOtWRdQTV9fQ
-         WRj5o6hOFB9dX/T64JMxg76EU7CCZRXIfXmYoB9E+VwJdYITNDae77sJPiqsW5QSPgSv
-         /nlkbu288vyqSruZTIPEcgmx+3CwIHI/Jjjtz1ylZA+Mvy34dXicp+pJsYMo5N/9yXNr
-         NA4USnUQOqF3rbOgpN27tATr8l6FniWU7qUSt67V17NriApNQ0pDRC1ppIpCBSyD7EF0
-         8g6g==
-X-Gm-Message-State: AOAM533osKXX5/wx/NFYqfkDixZ6oJqMYy7VnK5DaKqBnc1GxVZC4lDy
-        P8hX+AYcCNicGvjEeK81qHXuSw==
-X-Google-Smtp-Source: ABdhPJzVPNzaQABQS/EHfu/XneTOUmhptHwXGJzPiT0pKfjGw5pC5GWcf5g93+P0J1XuSmDxp8GBLQ==
-X-Received: by 2002:ac8:5b53:0:b0:2f3:f26b:3d25 with SMTP id n19-20020ac85b53000000b002f3f26b3d25mr26676694qtw.357.1653519592713;
-        Wed, 25 May 2022 15:59:52 -0700 (PDT)
+        bh=B0+eCmltMMRwyrAbkXieHS61vMbtlHFXefFffX6D8yI=;
+        b=UWx0607LoMuZS/6CfnT7h3PC8wPXjEEjKqHNrCjaK3sb057KS0OTpx9gOHp0vSNiMj
+         HoQuGCXdRB02DvwLduikAdDgLi9nbl5wiYzbwBfs9yuCwdyTwnrtkVitdCTq2EIkU1Tc
+         +fy48P35V/bsR/buQ+jwZCQ6SWNGxQf1vYCOJWvgGcL0zhsLMNZ9UQB6SS/DXaY8rTG3
+         7MHiesDUqhVVdBAJ/Cux4JpMB36AqfLnpQYiv29+6mIQ42PNsocwh+7oaiBH+RlEMhzc
+         5xGqhvSutyqCfHEJoFOCvs6+LeN+N1mpvBs2Db4JMfdXVWWV7oPp/xZUigNglgj7rwRc
+         uksg==
+X-Gm-Message-State: AOAM530vD6yydl/fvtEebXnJYJHWG2qZQdXKcMtK2ZBDaH7rI9p/Q9RQ
+        s0xoOgbBHVJiFp1sC3TuInoMkA==
+X-Google-Smtp-Source: ABdhPJz/aeLcoojDPiWND17g5765WpamPvfhPofUMTsxU8EY0cU0TwmO/RoNRpLYAT/bxVCglpuXWg==
+X-Received: by 2002:ad4:5aed:0:b0:461:caa6:81f8 with SMTP id c13-20020ad45aed000000b00461caa681f8mr27636835qvh.49.1653519724877;
+        Wed, 25 May 2022 16:02:04 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t26-20020ac8739a000000b002f39b99f692sm2130725qtp.44.2022.05.25.15.59.51
+        by smtp.gmail.com with ESMTPSA id l21-20020a37a215000000b006a377a015d4sm167563qke.39.2022.05.25.16.02.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 15:59:51 -0700 (PDT)
-Date:   Wed, 25 May 2022 18:59:50 -0400
+        Wed, 25 May 2022 16:02:04 -0700 (PDT)
+Date:   Wed, 25 May 2022 19:02:02 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     rsbecker@nexbridge.com
-Cc:     'Jonathan Nieder' <jrnieder@gmail.com>, git@vger.kernel.org,
-        avarab@gmail.com, derrickstolee@github.com, gitster@pobox.com,
-        larsxschneider@gmail.com, tytso@mit.edu
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, derrickstolee@github.com,
+        gitster@pobox.com, jrnieder@gmail.com, larsxschneider@gmail.com,
+        tytso@mit.edu
 Subject: Re: [PATCH v5 02/17] pack-mtimes: support reading .mtimes files
-Message-ID: <Yo605oy4gfQmJ+VE@nand.local>
+Message-ID: <Yo61aqaQ/tXh+moi@nand.local>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1653088640.git.me@ttaylorr.com>
  <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
- <Yo0ysWZKFJoiCSqv@google.com>
- <Yo1aaLDmPKJ5/rh5@nand.local>
- <Yo3fZkpkCLPbAC8B@google.com>
- <Yo6hcOjIlYglqdxs@nand.local>
- <01df01d87082$a0757020$e1605060$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <01df01d87082$a0757020$e1605060$@nexbridge.com>
+In-Reply-To: <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 25, 2022 at 05:58:49PM -0400, rsbecker@nexbridge.com wrote:
-> >> > `data` is definitely uint32_t aligned, but this is a tradeoff, since
-> >> > if we wrote:
-> >> >
-> >> >     uint32_t *data = xmmap(...);
-> >> >
-> >> > then I think we would have to change the case where ret is non-zero to be:
-> >> >
-> >> >     if (data)
-> >> >         munmap((void*)data, ...);
-> >> >
-> >> > and likewise, data_p is const.
-> >>
-> >> Doing it that way sounds great to me.  That way, the type contains the
-> >> information we need up-front and the safety of the cast is obvious in
-> >> the place where the cast is needed.
-> >>
-> >> (Although my understanding is also that in C it's fine to pass a
-> >> uint32_t* to a function expecting a void*, so the second cast would
-> >> also not be needed.)
->
-> I do not think c99 allows this in 100% of cases - specifically if
-> there a const void * involved. gcc does not care. I do not think c89
-> cares either. I will watch out for it when this is merged.
+Junio,
 
-Thanks for the heads up. I looked through the results of "git grep '=
-xmmap'" to see if we had contemporary examples of either assigning to a
-non-'void *', or passing a non-'void *' variable to munmap.
+On Fri, May 20, 2022 at 07:17:35PM -0400, Taylor Blau wrote:
+> To store the individual mtimes of objects in a cruft pack, introduce a
+> new `.mtimes` format that can optionally accompany a single pack in the
+> repository.
 
-Luckily, we have both, so this shouldn't cause a problem. fixup! patch
-incoming shortly...
+Like I mentioned in this sub-thread, here is a small fixup! to apply on
+top of this patch when queueing. I'm hoping this will be easier than
+reapplying the dozen+ or so patches in this series (the rest of which
+are unchanged). But if it isn't, please let me know and I can send you a
+reroll of the whole thing.
 
-Thanks,
-Taylor
+In the meantime, here's the fixup...
+
+--- 8< ---
+Subject: [PATCH] fixup! pack-mtimes: support reading .mtimes files
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ object-store.h |  5 +++++
+ pack-mtimes.c  | 35 +++++++++++++++++++----------------
+ pack-mtimes.h  | 11 +++++++++++
+ 3 files changed, 35 insertions(+), 16 deletions(-)
+
+diff --git a/object-store.h b/object-store.h
+index 2c4671ed7a..05cc9a33ed 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -122,6 +122,11 @@ struct packed_git {
+ 	const uint32_t *revindex_data;
+ 	const uint32_t *revindex_map;
+ 	size_t revindex_size;
++	/*
++	 * mtimes_map points at the beginning of the memory mapped region of
++	 * this pack's corresponding .mtimes file, and mtimes_size is the size
++	 * of that .mtimes file
++	 */
+ 	const uint32_t *mtimes_map;
+ 	size_t mtimes_size;
+ 	/* something like ".git/objects/pack/xxxxx.pack" */
+diff --git a/pack-mtimes.c b/pack-mtimes.c
+index 46ad584af1..0e0aafdcb0 100644
+--- a/pack-mtimes.c
++++ b/pack-mtimes.c
+@@ -1,3 +1,4 @@
++#include "git-compat-util.h"
+ #include "pack-mtimes.h"
+ #include "object-store.h"
+ #include "packfile.h"
+@@ -7,12 +8,10 @@ static char *pack_mtimes_filename(struct packed_git *p)
+ 	size_t len;
+ 	if (!strip_suffix(p->pack_name, ".pack", &len))
+ 		BUG("pack_name does not end in .pack");
+-	/* NEEDSWORK: this could reuse code from pack-revindex.c. */
+ 	return xstrfmt("%.*s.mtimes", (int)len, p->pack_name);
+ }
+
+ #define MTIMES_HEADER_SIZE (12)
+-#define MTIMES_MIN_SIZE (MTIMES_HEADER_SIZE + (2 * the_hash_algo->rawsz))
+
+ struct mtimes_header {
+ 	uint32_t signature;
+@@ -26,10 +25,9 @@ static int load_pack_mtimes_file(char *mtimes_file,
+ {
+ 	int fd, ret = 0;
+ 	struct stat st;
+-	void *data = NULL;
+-	size_t mtimes_size;
++	uint32_t *data = NULL;
++	size_t mtimes_size, expected_size;
+ 	struct mtimes_header header;
+-	uint32_t *hdr;
+
+ 	fd = git_open(mtimes_file);
+
+@@ -44,21 +42,16 @@ static int load_pack_mtimes_file(char *mtimes_file,
+
+ 	mtimes_size = xsize_t(st.st_size);
+
+-	if (mtimes_size < MTIMES_MIN_SIZE) {
++	if (mtimes_size < MTIMES_HEADER_SIZE) {
+ 		ret = error(_("mtimes file %s is too small"), mtimes_file);
+ 		goto cleanup;
+ 	}
+
+-	if (mtimes_size - MTIMES_MIN_SIZE != st_mult(sizeof(uint32_t), num_objects)) {
+-		ret = error(_("mtimes file %s is corrupt"), mtimes_file);
+-		goto cleanup;
+-	}
++	data = xmmap(NULL, mtimes_size, PROT_READ, MAP_PRIVATE, fd, 0);
+
+-	data = hdr = xmmap(NULL, mtimes_size, PROT_READ, MAP_PRIVATE, fd, 0);
+-
+-	header.signature = ntohl(hdr[0]);
+-	header.version = ntohl(hdr[1]);
+-	header.hash_id = ntohl(hdr[2]);
++	header.signature = ntohl(data[0]);
++	header.version = ntohl(data[1]);
++	header.hash_id = ntohl(data[2]);
+
+ 	if (header.signature != MTIMES_SIGNATURE) {
+ 		ret = error(_("mtimes file %s has unknown signature"), mtimes_file);
+@@ -77,13 +70,23 @@ static int load_pack_mtimes_file(char *mtimes_file,
+ 		goto cleanup;
+ 	}
+
++
++	expected_size = MTIMES_HEADER_SIZE;
++	expected_size = st_add(expected_size, st_mult(sizeof(uint32_t), num_objects));
++	expected_size = st_add(expected_size, 2 * (header.hash_id == 1 ? GIT_SHA1_RAWSZ : GIT_SHA256_RAWSZ));
++
++	if (mtimes_size != expected_size) {
++		ret = error(_("mtimes file %s is corrupt"), mtimes_file);
++		goto cleanup;
++	}
++
+ cleanup:
+ 	if (ret) {
+ 		if (data)
+ 			munmap(data, mtimes_size);
+ 	} else {
+ 		*len_p = mtimes_size;
+-		*data_p = (const uint32_t *)data;
++		*data_p = data;
+ 	}
+
+ 	close(fd);
+diff --git a/pack-mtimes.h b/pack-mtimes.h
+index 38ddb9f893..cc957b3e85 100644
+--- a/pack-mtimes.h
++++ b/pack-mtimes.h
+@@ -8,8 +8,19 @@
+
+ struct packed_git;
+
++/*
++ * Loads the .mtimes file corresponding to "p", if any, returning zero
++ * on success.
++ */
+ int load_pack_mtimes(struct packed_git *p);
+
++/* Returns the mtime associated with the object at position "pos" (in
++ * lexicographic/index order) in pack "p".
++ *
++ * Note that it is a BUG() to call this function if either (a) "p" does
++ * not have a corresponding .mtimes file, or (b) it does, but it hasn't
++ * been loaded
++ */
+ uint32_t nth_packed_mtime(struct packed_git *p, uint32_t pos);
+
+ #endif
+--
+2.36.1.94.gb0d54bedca
+
+--- >8 ---
