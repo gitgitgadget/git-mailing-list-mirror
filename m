@@ -2,83 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DCF1C43219
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 15:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6A46C433FE
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 16:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245358AbiEYPue (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 11:50:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40280 "EHLO
+        id S245405AbiEYQFp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 12:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245312AbiEYPu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 11:50:29 -0400
+        with ESMTP id S245391AbiEYQFm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 12:05:42 -0400
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87A6AE24B
-        for <git@vger.kernel.org>; Wed, 25 May 2022 08:50:26 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06C87B41F8
+        for <git@vger.kernel.org>; Wed, 25 May 2022 09:05:35 -0700 (PDT)
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EDD7A194269;
-        Wed, 25 May 2022 11:50:25 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6BA901943EA;
+        Wed, 25 May 2022 12:05:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XgIvdIijsmB9d/x/jd5ojGQqejr6Wd/n8MQhIG
-        px2lY=; b=LrBLcQ3oJoUkg9KRV7ZUjaKhZ6i0RAqX4c7LRa5s+kJA1u/rKBYzGM
-        h6APwzQkz268NkN4TkTolkSD+fJ2055qMeB+HlFXZi12X2NXiBEhoaLpKPPysKip
-        9DKJC1gh2lV9AnUNqBqMKcXlMsEbNYxR2tba3atmXHROEtFfzTASk=
+        :content-type; s=sasl; bh=jMZYmrPczCpdsquhybspI3g0l5nyji4Ep5ON2u
+        PYTh4=; b=VM2d5HGmi8v3Nd2A4Y+V3ItcjCwUL0TR1B+L3hACyd3ls6atdn8OP8
+        IfH5qk/KPUQ2MZQ18PVcYBcbdc0am5y+gjHwcGSN74EUH9sb7qEMKY8XZ/Q22Xh6
+        nyEzB6/oticxE/PXLZ9MzLi1c2VEcgBJqcIGYxqLIIm66GXe1yIgI=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E664E194268;
-        Wed, 25 May 2022 11:50:25 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 631481943E9;
+        Wed, 25 May 2022 12:05:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7DFBD194266;
-        Wed, 25 May 2022 11:50:22 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1633519439F;
+        Wed, 25 May 2022 12:05:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Ed Maste <emaste@FreeBSD.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] ci: update Cirrus-CI image to FreeBSD 12.3
-References: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
-        <20220525125112.86954-1-levraiphilippeblain@gmail.com>
-Date:   Wed, 25 May 2022 08:50:21 -0700
-In-Reply-To: <20220525125112.86954-1-levraiphilippeblain@gmail.com> (Philippe
-        Blain's message of "Wed, 25 May 2022 08:51:12 -0400")
-Message-ID: <xmqqsfoxa9xe.fsf@gitster.g>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Shao-Ce SUN via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Shao-Ce SUN <sunshaoce@iscas.ac.cn>
+Subject: Re: [PATCH] Fix wrong info in `INSTALL`
+References: <pull.1241.git.1653424998869.gitgitgadget@gmail.com>
+        <CAP8UFD2BS3OuJD7xhb6M+bX3ojLqM8ZuXK_h4w0CvdYRfmzVqg@mail.gmail.com>
+Date:   Wed, 25 May 2022 09:05:30 -0700
+In-Reply-To: <CAP8UFD2BS3OuJD7xhb6M+bX3ojLqM8ZuXK_h4w0CvdYRfmzVqg@mail.gmail.com>
+        (Christian Couder's message of "Wed, 25 May 2022 07:29:50 +0200")
+Message-ID: <xmqqo7zla985.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 62CF0ACA-DC42-11EC-80C6-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 80F4EF72-DC44-11EC-995D-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> The FreeBSD CI build (on Cirrus-CI) has been failing in
-> 't9001-send-email.sh' for quite some time, with an error from the
-> runtime linker relating to the Perl installation:
->
->     $ GIT_SEND_EMAIL_NOTTY=1 git send-email \
->     '--from=Example <from@example.com>' '--to=nobody@example.com' \
->     '--smtp-server=/tmp/cirrus-ci-build/t/trash directory.t9001-send-email/fake.sendmail' \
->     --compose '--subject=foo' 0001-Second.patch
->     ld-elf.so.1: /usr/local/lib/perl5/5.32/mach/CORE/libperl.so.5.32: Undefined symbol "strerror_l@FBSD_1.6"
+> So we could perhaps get rid of the ';', but on the other hand ";#"
+> should make it extra clear that the command before it ended and that
+> the rest of the line is a comment.
 
-It does sound like the image has a broken build of Perl.  Is that
-something FreeBSD folks might care about, or they already know but
-they are happy with newer versions they support already?
+True.  In modern shells, ";" in the ";#" sequence may not be
+necessary, but consistently writing ";#" as if it were a single
+token would probably be a good idea in the documentation.
 
-> This first instance is in t9001.6 but it fails similarly in several tests
-> in this file.
->
-> The FreeBSD image we use is FreeBSD 12.2, which is unsupported since
-> March 31st, 2022 [1]. Switching to a supported version, 12.3,
-> makes this error disappear [2].
->
-> Change the image we use to FreeBSD 12.3.
+Of course, if we can declare that the usefulness of the monospace
+plain text document does not matter, we could do without ";#" and
+typeset the comment (and the prompt) in different font and/or color.
+It would make it easier to see which part of the line is what is to
+be typed verbatim.
 
-Thanks.  Will queue.
+Thanks.
+
