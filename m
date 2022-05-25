@@ -2,107 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BD5EC433F5
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC09C433F5
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 10:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241843AbiEYKWQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 06:22:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42708 "EHLO
+        id S242075AbiEYKYH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 06:24:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiEYKWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 06:22:14 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E47A8A056
-        for <git@vger.kernel.org>; Wed, 25 May 2022 03:22:13 -0700 (PDT)
+        with ESMTP id S229453AbiEYKYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 06:24:06 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F102E8A056
+        for <git@vger.kernel.org>; Wed, 25 May 2022 03:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653474108;
-        bh=PTYyslefO3PoXwdCfTcc7RiRsBOFHHOYOqaITi/lC5c=;
+        s=badeba3b8450; t=1653474229;
+        bh=xmkRyubfGVFntvm9Fsn5DY2n6Pcia4QsR3H4QqJvN6E=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NQiSYPY5CEBN/tCM23gHmp+XUUvNif7AWV8e6GuuVdrORX4hAkAkrdGNvP3A1GjJh
-         RDoHFDRvv1ZeUvgPHN0fxg53NWmlg8+7GECDrpLPg2YHMUPMP0z97QY5xTp1CoKJWY
-         IVW/5HrVFU4DxMCM15Xz24ezKqwSCGLPoP/0NNyc=
+        b=XMUt/4CXzGo4W7FDN5Wl8qImQL3OiXcuW9ZoPJ8Uy/FjOXK/MwDaLzbcIwURp6GnI
+         GDgYlEtx3zytVTd5Jf9n3IaERz6zGjRSmUisS32m1L5GpOzEPL55+AsGWPtlSfFCpB
+         YzhzmlNdCtX+Vqk245AwFyS5hbfoACHJwaVBoguI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwwZX-1neMad2gLj-00yUWx; Wed, 25
- May 2022 12:21:48 +0200
-Date:   Wed, 25 May 2022 12:21:45 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MF3HU-1o4rr31Q7c-00FPrv; Wed, 25
+ May 2022 12:23:49 +0200
+Date:   Wed, 25 May 2022 12:23:48 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
 cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        <avarab@gmail.com>, Torsten B??gershausen <tboegi@web.de>,
         rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH v7 26/30] t/helper/hexdump: add helper to print hexdump
- of stdin
-In-Reply-To: <xmqqbkvmhfoc.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2205251220260.352@tvgsbejvaqbjf.bet>
-References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com> <6f2e935f148e826609153378751c04807858e76c.1653336765.git.gitgitgadget@gmail.com> <xmqqk0acosks.fsf@gitster.g> <nycvar.QRO.7.76.6.2205241415040.352@tvgsbejvaqbjf.bet>
- <xmqqbkvmhfoc.fsf@gitster.g>
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7 00/30] Builtin FSMonitor Part 3
+In-Reply-To: <dc1bd9f6-f83f-5cb1-9b0c-68d28a4cc216@jeffhostetler.com>
+Message-ID: <nycvar.QRO.7.76.6.2205251223180.352@tvgsbejvaqbjf.bet>
+References: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <pull.1143.v7.git.1653336765.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2205241357410.352@tvgsbejvaqbjf.bet> <dc1bd9f6-f83f-5cb1-9b0c-68d28a4cc216@jeffhostetler.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:IwQhka53ztTnaWoL6BgFuhe+w1k2ienEHkFE3ASfj46aemxlp9x
- HnVBjkv3d9sHN1V3AkHN01kkpXFd5ZynlImkNCdkida5wmimdThhP06WFUOhmKOefyPF4vk
- qrPPWVZ+XsFVIi4ij66U+a9ynokuAvqVV9HMrC7f56GozS3aV+Pfk3sLiFTvMAa4vh7Aa9T
- K8Nxk/hi9xYVvvPaU3gFA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:w09Fl4b4gbo=:0JqJDjbeQtvz2ncdClpCmZ
- emb2GgPqZvW3hZ1yXaZQ6qAVI75jBpuXuHyfpzIM+1/G+mVS15493fK2U2grY5V+jdz2YnTPc
- vsX1wmCYZ/R/rAnEdafL2pk3aJfzQHUvRPbR1LzMFUTCJqjCIDRcy6MFtmyBTZCxqrr+46tK3
- 1qifyI6eLSgEOZHjf9ZIP7dU36NhrVvI1mW80aFTgmF5rS+WrhWf2GfLZ8jzSYB5iLtxzDfYr
- DznhLJOgP+HuQ2LEFHFuxKb3NXGjepGg7HLxR5n0ZhqJOWK+T/IW7JejhX0+A0hBeOnQlC03X
- qpeEcnZSItw0ZqLHhIxATh17bCeNnyeVKvaHPYXA4oLugwqT2J3cr9EsuX+CDa5YA8aWSAnZs
- Lwbps5F2/iVMK+sLDv+aZtLp89a9NOhqlS4x61PkHHoGplsYqxih2tzCNwoQdKlAaUlhbWMcS
- VE9O21xMnTZV2vkFStuGGAA9e1ae0avHyyfg1biUbpRwt0xtHLo4MNd8eYN8CkrVa4eJsdXrS
- 10DpQWokNDLlPzY3gRMqjn+UO1jXUX7ERNrzlfeZctOCFQE2U5P2QOlcC+TmvlqPFoXP0BSQI
- cDvcH3F8YVjVxaIaWQ5os2e4pIy+cy/gMKl6MasbnAQcPUfWzyyHLS4xkGXi6NQm164GP34Q5
- BR1Hcwb11nFKjrIb9P6ZDgKR8uJtChmcYl/adA1OGiH1KlVrK/QB5t59lWERFpXiTLHOIS5SO
- C+86E9yFkWTfjtrHCu8mvN2Fgb48NtqYTeF6/Kh1NpBTKCLo/Iogq9saPPxKpsPP3RtsVx5DF
- lKO7zjl1OD3RHG5TnBkojlx+u3qnuJEZ6F2+Ss4j58yf6ojrQ6trl4RUzq5VdHt2572UXrZ1w
- ermBytt1mLGXjr6hSTXT7TdpvFEvAIFD/E5Uh3g+tesuGNtLaL8bqernYfJWjlS7cEuOntmDX
- GzhNhXKL3fQXxdijLYdAiF3NJkoI8nXeYASDUqG34T6Ab1vs06TGvYEVxVM0N58j+4SGzlkjy
- SWSdQD+ERusoUCLVywKsuCYBHTNCmT90dXPT0/jtMvTSz9UADb0/PmX7vMOMFq3l5r6FPPCeF
- CsWQF9FHViSEyWOb5DGUkW3QSjq0mRrG1Qh9dHYOTzKWf8qGY5LLlGJKA==
+X-Provags-ID: V03:K1:/YHFn1ktFQGqMPDrsI7y9gLIUbXrhkCts0zoBKry4nqKpFJfmba
+ w8vXEvhBvTSH1mXIf7h7C4KMnSYgfnVu7Nba0tiCSY4QApuUAX6s7vQd5nyoltTB4j0QcHQ
+ CUbmpq0AKQSj5ph/FzcQk5EBZfsrtG4bPq2c8cOM/nBRVsBxgbMlCCPKpjMVgzzSG5b4M6u
+ iUNTjV2w8Pk3UE1QsDpew==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fW2OiOuTldI=:EkknT0zGS1n9dDmRN+C2gl
+ y+DRS8bw9SSaMicgboj525oav4gy97vvWko6LNcUlIG+mEALs0dEE81+gTemvRgTDtw7sdALa
+ JNCdxIT3Lcmo+AJbn9D7/YYOoxovhobtd2CLy1dXt+xCokNGtCSf+cyuggUdMWgmxjmePvAvz
+ o9B270NQ03a+aYyuFGKkFXeI/MFHuaRmalsJy5WJ9NVzXpEAIBeGIinItFz29ztEZz9mnyO9g
+ AJN9GvZKYpq+MiC0vdfmeE7TpCJS8QSIrEVltZzsu1opvA6xKxXnsFaUpadu0edNMEEqH9I9j
+ +bKMcwwMqXThDAUFXdzFRpTLLW6+k3OzBe19Z525SQLOZmCFihs+10H9ku1tQLSUUO1YAeHtQ
+ Q2WFqH5cKD4iEPpWM4uAEQXcgBn+/mEiiXCw7/Cb/VXkjLICXnM8RrFna0zF/L3EWHwIMNgxW
+ VuKt/hoh4OZEj5Lm62IjQzVbhqYLbSJP69kmXRytYH6AwNaaMDdeuxJXzgUFdm5qkTZDadU5V
+ 9gmp9b9M7Cp/7sEukrfThOWIm2pywv+e7nSSBeyAMZFW714/wGdy4jap9mc+BPD83vkOf6OVn
+ jNLp2hHH59ux9+LWABppeVAfhQ43GpqDpekGO+LLNe6JhZ3F6XjFXKsPP1D+wiTEq9RgQkfdY
+ sSO1czeYpZtFGwVOkSWq6nq9nxjtRSig0tsaOSXV270VhJDX5iiJQCaw9sA8MnBQujrqNStqo
+ kx2r0WNCwm67GzCAtooP83ZZ9rmWAuAdwWupEqZVcCfUd7hFskNf14pEuzL4KgeuFqbs4r3N6
+ IH9gMx8Zrk3EdGY7BMLK4zhdHiQ2GgffB/PZqGWxkAUwXfD17zjFwXaIcG5AbRwboVDJNoCGZ
+ nld4AA0mfNvjQYjNeJCGW5EJjYH4DbXQU9BIYagM6l2/iXXiaXWuxvNkZanoz0X66hZxotJ8Q
+ IX5KWliZq1588xRatqmrLUJJe9zDG8MmKMkjhad/Ccj7+eC+lPe5xqu9igywjhKPIiyqq+ftx
+ qaZFI2EZkGTJdMdzyi9YQPBX7eiLsdHWrIgpy3BG7Py1OwEge+aMB45DbyaAlzIW6SHjrprFA
+ ojBtMinxxYsPrCPq40INxBZdioAVXx7UfqUFG/ghyHThZ0nkwDCgTJgtw==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Jeff,
 
-On Tue, 24 May 2022, Junio C Hamano wrote:
+On Tue, 24 May 2022, Jeff Hostetler wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On 5/24/22 8:00 AM, Johannes Schindelin wrote:
+> >
+> > On Mon, 23 May 2022, Jeff Hostetler via GitGitGadget wrote:
+> >
+> > >   1:  8b7c5f4e23 !  1:  26144c5865 fsm-listen-win32: handle shortnam=
+es
+> > >        [...]
+> > >      @@ compat/fsmonitor/fsm-listen-win32.c: static int
+> > >      normalize_path_in_utf8(FILE_NOTI
+> > >       +{
+> > >       +  wchar_t buf_in[MAX_PATH + 1];
+> > >       +  wchar_t buf_out[MAX_PATH + 1];
+> > >      -+  wchar_t *last_slash =3D NULL;
+> > >      -+  wchar_t *last_bslash =3D NULL;
+> > >      +  wchar_t *last;
+> > >      ++  wchar_t *p;
+> > >       +
+> > >       +  /* build L"<wt-root-path>/.git" */
+> > >      -+  wcscpy(buf_in, watch->wpath_longname);
+> > >      -+  wcscpy(buf_in + watch->wpath_longname_len, L".git");
+> > >      ++  swprintf(buf_in, ARRAY_SIZE(buf_in) - 1, L"%s.git",
+> > >      ++           watch->wpath_longname);
+> > >      +
+> > >      -+  if (!GetShortPathNameW(buf_in, buf_out, MAX_PATH))
+> > >      ++  if (!GetShortPathNameW(buf_in, buf_out, ARRAY_SIZE(buf_out)=
+))
+> >
+> > Nice touch using `ARRAY_SIZE()` here!
 >
-> > Do you know of any `grep` implementation that has problems with text
-> > missing the usual trailing newlines?
->
-> I recall that we had reports on BSD variants, but please do not
-> quote me on that.  Perhaps all the BSD variants are good now, or
-> perhaps some aren't.
+> Thanks.  And hopefully it will make the GFW downstream MAX_LONG_PATH
+> fixups easier too.
 
-I did not recall any such reports, but take your word for it.
+As a matter of fact, it already did!
 
-> In any case, I do not take the "if it works on Windows and Linux, we
-> do not care about the rest of the world" world view,
-
-Just in case it was unclear to you: we're on the same page here.
-
-> so finding the answer to that question unfortunately does not give much
-> input to the issue in either way.
->
-> And in this particular case, it is much simpler to mak sure that the
-> file does not end in an incomplete line than us exchanging e-mails
-> back and forth, so that would be the most economical solution I
-> would prefer.
-
-Indeed, the trailing newline is easily added and fixes a known issue, so
-I'm all for it.
-
-Ciao,
+Thank you,
 Dscho
