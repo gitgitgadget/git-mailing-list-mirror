@@ -2,107 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A60E3C433F5
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 13:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60238C433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 13:31:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234340AbiEYNa7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 09:30:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55418 "EHLO
+        id S240206AbiEYNbG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 09:31:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232261AbiEYNa6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 09:30:58 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F07A35843
-        for <git@vger.kernel.org>; Wed, 25 May 2022 06:30:57 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id q10so25014948oia.9
-        for <git@vger.kernel.org>; Wed, 25 May 2022 06:30:57 -0700 (PDT)
+        with ESMTP id S237091AbiEYNbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 09:31:02 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1D336173
+        for <git@vger.kernel.org>; Wed, 25 May 2022 06:31:01 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id gi33so33214858ejc.3
+        for <git@vger.kernel.org>; Wed, 25 May 2022 06:31:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kXCKlRp9Q0BM46+oHeXuksKT53rT0dpjGHIrL7Cl+zo=;
-        b=TvxWJMUEygw0B0Z7ld6SeR/0YnoYhd3oH5XOYezy6isK2j6Q4hw3IATHW/0bDnTr6+
-         wFWtxVdPkybyshFzE4afoRnYKBEqmEYTa9Y9d5CJ5gr0mDrkHBVPYSnPrJaNNHucape6
-         sY0kgzxiwdmgyKaZMBj1e+ofBS8aPqfmjqMzMLMly4vvnO3iC9HVnRD7iUQyOwFpYkCm
-         nhkHusMDsIkqUBsbDNUo/c/9zGis6Gi1RZ6p/orn6l+x7lHa9TLTn7tTV2nQ6NEENNDP
-         CxmAeCQftkDqU10hD+uQJDKcl2PHDQQPmoSisSoaPhoJ/yZdKxEzBUIoBrkbAChqLBsf
-         m9lg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=BsaIM01oAWaqr04stjCLz16R4xZWIuIrdn1F2meS9Y4=;
+        b=MA+DQaCh/TFjcM0bbCGCjtrBBENt9Vi/YL6UcfA5vPTh9lQS5fDwtNGfuwsMsYjuf2
+         bgcq0Merx0BIwle1ZIQOLdf9fn0V/4YY1sjhq5YVGd8rw5V0SWcC7V0ZpKBogsH2IdZB
+         1kAfN8FFNgwLT4A6vIN2VGGvVcoUnYdIKBzXKX161jPWFxk7FZjq7pxuET51cNckKOCq
+         +tv3bsLkun6f47J6XEo1Ws9oJpMkgTvVHo1h7VsuiP2C/N01qNRjz5BAvdhHFTAL00Ml
+         0Q6dBOZKJmrKh8lxmsBdFHJIWqI5zXQfq1j2JVGGyJFWtbrD3QcK0/VALQGilLZdj2Jd
+         4jdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=kXCKlRp9Q0BM46+oHeXuksKT53rT0dpjGHIrL7Cl+zo=;
-        b=wnqQFmkpoH1PZATWuENZ7ObB4s55OJLGwkW268lniH1cTUAHl60QW5c6r5UILolrT/
-         Px76zw6WElU6ALYxN+Kq3ZVNtRjVfIVQHFhVVM6f5zBZ2p8RqbXmOMaVl1AgK/YX21IX
-         RsFoonfdbmbk1B2O7jUsfnBfO1tKHzZ7o4Pf1C/IAPhCVnmRlLU9/OM/i8gsErcvVOm/
-         2XjAb1zFtFkswC2TXpWc7EUgtZCQtOMTlmVk8jfPSNnQTBk6DoIoEOCFOLmOjR06heC8
-         /PAkSykXR0N9CvUtZh8Ho2qjkAM4JGUtHeNuGgIlD/hmZ6M/gs18lnjQ/oohy5rWTI1e
-         gNCg==
-X-Gm-Message-State: AOAM532AkOaihjM2lnm/XVsOGCgBBayCP4xxM5wKMYA5QsbBWAQ4nt3Y
-        samuMvEsgy3Ue4D3QbDRdENE
-X-Google-Smtp-Source: ABdhPJzQWjusU1/JcF6UuIyj3rVOmcoVPVdwkYprU9Q3N9deD9RCfMJNxXXGiM4xv7zZwfrn3viMaw==
-X-Received: by 2002:a05:6808:2212:b0:32b:653c:3b85 with SMTP id bd18-20020a056808221200b0032b653c3b85mr4985932oib.57.1653485456666;
-        Wed, 25 May 2022 06:30:56 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:b144:5f1c:7ca1:15fd? ([2600:1700:e72:80a0:b144:5f1c:7ca1:15fd])
-        by smtp.gmail.com with ESMTPSA id w19-20020a056870431300b000f26a4e2cdfsm3292949oah.18.2022.05.25.06.30.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 May 2022 06:30:56 -0700 (PDT)
-Message-ID: <32db3720-e9c8-e192-6278-c55855ce1d3e@github.com>
-Date:   Wed, 25 May 2022 09:30:55 -0400
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=BsaIM01oAWaqr04stjCLz16R4xZWIuIrdn1F2meS9Y4=;
+        b=34Yc2lj1MeEA6XJU4d0DbwDgffi1DFtrvcY0fgLFKEE+rVHhAQ5udfsLKKlXKLMDAW
+         PefSKFmNody91AZzB8IuF7yf2w2S57n3c32NbYctHFuT24yI5qTrlkp+9+WZdNzudVqd
+         KvRZucqlEKsrtpJMQbGLNkoWCjgY3bHnatmtPDHMQWKY3//UsqTC1wzwFnfuz1HC5kJf
+         roTrmhpBDa/7OdUzk6owHvUzUQcz8rHmV4JRdMT5BzALGQev5j9qLmcwy3Bwl6Ymzj3D
+         qYxsj+zd77jllipZOI7VvBb0J20H+znrdSvcwIw/GR9T5lhc7DCx6yNKvkVX4TZgRCVO
+         T+hQ==
+X-Gm-Message-State: AOAM533LD9uqiZ8Pr4aEUrGLNkd9RpvfsIQSjbVc9+IYPcsdNxLKGhQ/
+        oJ7nwCeOVKYdXy3ZEbp1+b0=
+X-Google-Smtp-Source: ABdhPJyvw666Q9WKDiQt8IE6jG3Gc0Idxxi0aeIIDWcmKKdHFkPDXlO2yQ7Pkz1/zdjvT1RxwmxbkQ==
+X-Received: by 2002:a17:907:3e86:b0:6f5:917:10cc with SMTP id hs6-20020a1709073e8600b006f5091710ccmr27945803ejc.53.1653485459713;
+        Wed, 25 May 2022 06:30:59 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id j16-20020a1709066dd000b006fec69696a0sm4018160ejt.220.2022.05.25.06.30.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 May 2022 06:30:58 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1ntr6I-003oZ8-7O;
+        Wed, 25 May 2022 15:30:58 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
+ with it
+Date:   Wed, 25 May 2022 15:27:57 +0200
+References: <cover.1651859773.git.git@grubix.eu>
+        <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
+        <xmqqtua2jtr0.fsf@gitster.g> <xmqqczgqjr8y.fsf_-_@gitster.g>
+        <nycvar.QRO.7.76.6.2205232248360.352@tvgsbejvaqbjf.bet>
+        <xmqqr14jluu4.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2205240124280.352@tvgsbejvaqbjf.bet>
+        <xmqqa6b7lrw6.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2205241258510.352@tvgsbejvaqbjf.bet>
+        <xmqqleuqj1gy.fsf@gitster.g>
+        <20220524201639.2gucdkzponddk5qt@carlos-mbp.lan>
+        <220524.86mtf6ve89.gmgdl@evledraar.gmail.com>
+        <xmqqh75eef0f.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqh75eef0f.fsf@gitster.g>
+Message-ID: <220525.86bkvlu4bx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: adding new 32-bit on-disk (unsigned) timestamp formats (was:
- [PATCH v5 02/17] pack-mtimes: support reading .mtimes files)
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     rsbecker@nexbridge.com, 'Jonathan Nieder' <jrnieder@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
-        tytso@mit.edu
-References: <cover.1638224692.git.me@ttaylorr.com>
- <cover.1653088640.git.me@ttaylorr.com>
- <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
- <Yo0ysWZKFJoiCSqv@google.com> <015d01d86fa6$a10519f0$e30f4dd0$@nexbridge.com>
- <Yo1bUbys+Fz7g+6h@nand.local> <016e01d86fc5$64ecf180$2ec6d480$@nexbridge.com>
- <Yo1zW7ntTuNakpOD@nand.local> <220525.86o7zmt0l0.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220525.86o7zmt0l0.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/25/2022 5:11 AM, Ævar Arnfjörð Bjarmason wrote:
-> I must say that I really don't like this part of the format. Is it
-> really necessary to optimize the storage space here in a way that leaves
-> open questions about future time_t compatibility, and having to
-> introduce the first use of unsigned 32 bit timestamps to git's codebase?
 
-The commit-graph file format uses unsigned 34-bit timestamps (packed
-with 30-bit topological levels in the CDAT chunk), so this "not-64-bit
-signed timestamps" thing is something we've done before.
- 
-> Yes, this is its own self-contained format, so we don't *need* time_t
-> here, but it's also really handy if we can eventually consistently use
-> 64 time_t everywhere and not worry about any compatibility issues, or
-> unsigned v.s. signed, or to create our own little ext4-like signed 32
-> bit timestamp format.
+On Tue, May 24 2022, Junio C Hamano wrote:
 
-We can also use a new file format version when it is necessary. We
-have a lot of time to add that detail without overly complicating the
-format right now.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> It doesn't mean that GCC has additionally proved that we'll later used
+>> it in a way that will have a meaningful impact on the behavior of our
+>> program, or even that it's tried to do that. See an excerpt from the GCC
+>> code (a comment) in [1].
+>
+> But that means the warning just as irrelevant as "you stored 438 to
+> this integer variable".  Sure, there may be cases where that integer
+> variable should not exceed 400 and if the compiler can tell us that,
+> that would be a valuable help to developers.  But "you stored an
+> address of an object that can go out of scope in another object
+> whose lifetime lasts beyond the scope" alone is not, without "and
+> the caller that passed the latter object later dereferences that
+> address here".  We certainly shouldn't -Werror on such a warning
+> and bend our code because of it.
 
-> If we really are trying to micro-optimize storage space here I'm willing
-> to bet that this is still a bad/premature optimization. There's much
-> better ways to store this sort of data in a compact way if that's the
-> concern. E.g. you'd store a 64 bit "base" timestamp in the header for
-> the first entry, and have smaller (signed) "delta" timestamps storing
-> offsets from that "base" timestamp.
+I think it says something that 1) we had exactly one of these in our
+codebase 2) as we've discussed the pointer isn't actually *needed*
+outside the scope of the function, it's just left-over.
 
-This is a good idea for a v2 format when that is necessary.
+Now, if it were used, e.g. let's say we had some code that took the
+struct and inspected its members we'd likely have a segfault here, or
+worse it would "work", but only on the platforms we'd test at first.
 
-Thanks,
--Stolee
+Which isn't the case with a leftover "int finished" holding a 438.
+
+The point of this warning, like so many others, is to ask "hey, do you
+really need to be running around with this particular pair of
+scissors?".
+
