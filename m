@@ -2,148 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A040C433EF
-	for <git@archiver.kernel.org>; Wed, 25 May 2022 11:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37CF5C433EF
+	for <git@archiver.kernel.org>; Wed, 25 May 2022 12:51:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242954AbiEYLbh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 07:31:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50934 "EHLO
+        id S234450AbiEYMv3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 08:51:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237620AbiEYLbd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 07:31:33 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D5D77F34
-        for <git@vger.kernel.org>; Wed, 25 May 2022 04:31:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1653478262;
-        bh=JHbpluIsTVylPigkl4RxjexyZWt+eBoNM3drFmMPp3Q=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gklpIx4IzoNr0Z6jkKD+WtJ1+HedhIPBADILRpg9A0gY+EFZhAOMU9cnkYmlFN5Mx
-         /EiX9UY+vkfSQEjiCof8DQaz5ynuNXSb7rujcWkl4kTWGtY+VXrRBE5r10QXCaei4o
-         C0+f7dS/34CjsE6cjPsVEGMDX7ME5OjQZLi6aQJ4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.214.24]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWAOW-1oLxuu1Vrm-00Xav4; Wed, 25
- May 2022 13:31:02 +0200
-Date:   Wed, 25 May 2022 13:30:58 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Anthony Sottile <asottile@umich.edu>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 0/8] hook API: connect hooks to the TTY again, fixes
- a v2.36.0 regression
-In-Reply-To: <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2205251308381.352@tvgsbejvaqbjf.bet>
-References: <cover-0.6-00000000000-20220421T122108Z-avarab@gmail.com> <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S233685AbiEYMv2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 08:51:28 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2900C94192
+        for <git@vger.kernel.org>; Wed, 25 May 2022 05:51:27 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id b11so7655080qvv.4
+        for <git@vger.kernel.org>; Wed, 25 May 2022 05:51:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=nbbHd7gjhZxzlm9Svnj4J2ohyEaGs0KXt4u/SP3qxlw=;
+        b=p6+yxp5hejMx7YoTtHdq/Rr0N4+9Aj7Zv4TrAQRJkAZwY+iL8dLc87F3RsPTUF1LsC
+         LFszz1g4xjnzDiHYrTYHZxDEgMyInkHBU3nIwyrhSE40OG349IDb3b8onfVud3XSLHN7
+         ZNTC1EcscRfCoe7FkW2HpxyuCqql+lYo9GS6teChFtjlcbcmCunfYCu9Wkl7BCzKkIG5
+         tSGnFowr7YqOlwblb47PVrOSaku90og7qEQZf1WlYzw/Fkl4LgssJzBgaqcZhYOfUHck
+         AoWYdNXq4Wfa4TBqGrXBdr0nFt0aShd4uRXjJRyaeJyyGZRhmNeb21G1O5jVUklhz5vs
+         bpKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=nbbHd7gjhZxzlm9Svnj4J2ohyEaGs0KXt4u/SP3qxlw=;
+        b=tA0Nx9URP6gepfbJ0IJNUxjjpZF5VF2Qt5utltX64GhPHmrgxI0RO9wt9Ez3Twu1v0
+         0MgS+D8nAt5Bdxc6kakZcU96+iUTUhdm0dV5ZRDl8ypYh6FToYnyumvcGCkgI9HRc8jy
+         b8cGlXusy7UtvSo4MyumIbJe+jyva/jsL+KJKV4dejGLazKp1Lm8swsAN3DupdI953zN
+         QHUmTjwz9rlcoSmim8xgK0IsJvlJtsNMt0m8mePf6UDh3tdL5xE5PeeIkTrEkUCrnkt4
+         xyqH/nsOh6b6IUGJwi9kkUqX/sd17ZYPwEIkdzffF8wANb0wpdrLNH2tR6ZZmGjPZe3C
+         IC/g==
+X-Gm-Message-State: AOAM5314hjqV+ME38/K8qz+CkFe36rvXyn8+82SSOrla3DhhgEh/3Pau
+        0cn9nYduuNumSiZmOQ4uJHQvEnNoofBWng==
+X-Google-Smtp-Source: ABdhPJwi+znhh3lsqBEJfil43mRAO7SsVYqlVcLAk36up6frVDtaHOcSnC1iUMUkr7MR35pprLm0DQ==
+X-Received: by 2002:a05:6214:d6f:b0:462:446a:df0b with SMTP id 15-20020a0562140d6f00b00462446adf0bmr10839327qvs.111.1653483086013;
+        Wed, 25 May 2022 05:51:26 -0700 (PDT)
+Received: from localhost.localdomain (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id z193-20020a3765ca000000b0069fc13ce207sm1168410qkb.56.2022.05.25.05.51.25
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 25 May 2022 05:51:25 -0700 (PDT)
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Ed Maste <emaste@FreeBSD.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v2] ci: update Cirrus-CI image to FreeBSD 12.3
+Date:   Wed, 25 May 2022 08:51:12 -0400
+Message-Id: <20220525125112.86954-1-levraiphilippeblain@gmail.com>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
+References: <20220524165823.18804-1-levraiphilippeblain@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-715222152-1653478262=:352"
-X-Provags-ID: V03:K1:bPNg3QAGZgbUaxipn4YcFiR/4JJw5kg3DorWbcTvGvJDHvVYQ3H
- YVHJ0ZD3J63d2jFY2TVJU4vd1TrcE//Zrjrw4bR8lYJM2VVJxyl5Aqn8RR4yGRCBJNAZcWW
- zkdfWnr4+q5qAvfTdzuzjKjDxriGnN3Qh+qdm6/F78DcoPcI9UW1xMZC2emrjTySzroi8bD
- 71symnn3GzBV3t5w3F3uA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:aw7W+myHjSg=:Auvo2bjF4ZT5oL9iDDHFgC
- y2aGLRsEeaJg2RoQiMAO+e+MmeokDI7C+r7ttMpIFB8pbEKMchD5jqLwxHNBmKvd+e922lEkT
- vmI+0E79TO5j4wkjRWo6HwEYvoA2z7RCz1HqbVik6bJncYw3G2j/2Nnf6LIn1OPOAmA83awVR
- r8uYqSQ2bX8XGFlb36sNCE+MZM8xE4I8W72//M6jLFpbNus4KwyPEXLfKCK+TfnEoAD4KuFVn
- MuleIV6WHvLtxZEciJXNWEK1p5WZX1wE3meKFwHGQLyvy+L/TGygcIUm0IyaqrHujw99XIk+K
- l5J/LvIYGDT70KZVBuawfwdyAxFEqVzK6rq7SM5fCcV14biGAR7u1g+7ydFdlD3UqIq8IP6LV
- KNYcTnyYd10z9z3KrLVEK+6yq+qH+MC92UJ6yoK6M5DgQeJlNdVU+3ZNMAld1IQS52ZsWumAj
- raLZf3VoM30fcnzxzZuU4mjGWtgKJIF/DbASBOr0fg0orKlXVZcC+dCM9n+Sjay8U6Jn2dPJy
- Fmw7nJjg5BWBOSfJU7uxkFrJdanKvUTNw73ffU0Dc2mjSIAo0LbgAE6Oh6s2IFAnsoAu9gCTc
- 0CgoZExtCiQ05qqSOYmTZOWxARp3jI5Zoj4uOdpgNWQKXTm7U5Gbg+N4j4hQ58+4b22ot8He8
- h58qsX2D2p5ydhmQVgyNyhYonxKKZkO5Q2+m3djsqcRY0q53CxcUiIt7PI78Q9Y2cNGVHsWdx
- cZTUrLmDQr3tpeT3Octuv7QS1X0E1Wby1nIcwCaqNi3XFANQkS6vdxEaW9/6x7dQ+qmN1NWru
- 8In0ilg0D79DeU5gYyf6nRjHzi26GxFrDeGxtECNbFbqWwJTydP4fveqlELXFK1zjBaXOy8FL
- EbAaZz0drPMeGmj+kuyEg0xomvMQ91QHN/HlKHTfRPsuW40rAfrXN5n4Uwb8fXv3yQjKs+rdE
- XrrtF95xVwi41e9p51nJIl0eVdsBGbMmu4SO103RKw8VD90WBEejyklAbWPotSazaqJXSncDw
- CTioVe/RuizFrsg1qnADGBAEx9zgHcrRCN4V3Toew3VYBSm/Xv/+e44k2MWipdXMY8VU5BMmk
- BVuQfA7x8hnLIf92goyEXY0pCQjfpIqL2tylPZC0E6D+fYf/AZmkc/IGQ==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The FreeBSD CI build (on Cirrus-CI) has been failing in
+'t9001-send-email.sh' for quite some time, with an error from the
+runtime linker relating to the Perl installation:
 
---8323328-715222152-1653478262=:352
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+    $ GIT_SEND_EMAIL_NOTTY=1 git send-email \
+    '--from=Example <from@example.com>' '--to=nobody@example.com' \
+    '--smtp-server=/tmp/cirrus-ci-build/t/trash directory.t9001-send-email/fake.sendmail' \
+    --compose '--subject=foo' 0001-Second.patch
+    ld-elf.so.1: /usr/local/lib/perl5/5.32/mach/CORE/libperl.so.5.32: Undefined symbol "strerror_l@FBSD_1.6"
 
-Hi =C3=86var,
+This first instance is in t9001.6 but it fails similarly in several tests
+in this file.
 
-as promised in the Git IRC Standup [*1*], a review.
+The FreeBSD image we use is FreeBSD 12.2, which is unsupported since
+March 31st, 2022 [1]. Switching to a supported version, 12.3,
+makes this error disappear [2].
 
-On Wed, 18 May 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Change the image we use to FreeBSD 12.3.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (8):
->   run-command tests: change if/if/... to if/else if/else
->   run-command API: use "opts" struct for run_processes_parallel{,_tr2}()
->   run-command tests: test stdout of run_command_parallel()
->   run-command.c: add an initializer for "struct parallel_processes"
->   run-command: add an "ungroup" option to run_process_parallel()
->   hook tests: fix redirection logic error in 96e7225b310
->   hook API: don't redundantly re-set "no_stdin" and "stdout_to_stderr"
->   hook API: fix v2.36.0 regression: hooks should be connected to a TTY
+[1] https://www.freebsd.org/security/unsupported/
+[2] https://lore.kernel.org/git/9cc31276-ab78-fa8a-9fb4-b19266911211@gmail.com/
 
-I started reviewing the patches individually, but have some higher-level
-concerns that put my per-patch review on hold.
+Reviewed-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+    Changes since v1:
+    - switch to FreeBSD 12.3 instead of 13.0
+    - add the invocation triggering the error to the commit message
+    - add Carlo's reviewed-by
+    
+    v1:
+    Here is a proper patch following my earlier mail [1].
+    
+    [1] https://lore.kernel.org/git/CAPUEspgdAos4KC-3AwYDd5p+u0hGk73nGocBTFFSR7VB9+M5jw@mail.gmail.com/T/#t
 
-Keeping in mind that the intention is to fix a regression that was
-introduced by way of refactoring (most of our recent regressions seem to
-share that trait [*2*]), I strongly advise against another round of
-refactoring [*3*], especially against tying it to fix a regression.
+ .cirrus.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In this instance, it would be very easy to fix the bug without any
-refactoring. In a nutshell, the manifestation of the bug amplifies this
-part of the commit message of 96e7225b310 (hook: add 'run' subcommand,
-2021-12-22):
+diff --git a/.cirrus.yml b/.cirrus.yml
+index e114ffee1a..4860bebd32 100644
+--- a/.cirrus.yml
++++ b/.cirrus.yml
+@@ -9,7 +9,7 @@ freebsd_12_task:
+     DEFAULT_TEST_TARGET: prove
+     DEVELOPER: 1
+   freebsd_instance:
+-    image_family: freebsd-12-2
++    image_family: freebsd-12-3
+     memory: 2G
+   install_script:
+     pkg install -y gettext gmake perl5
 
-    Some of the implementation here, such as a function being named
-    run_hooks_opt() when it's tasked with running one hook, to using the
-    run_processes_parallel_tr2() API to run with jobs=3D1 is somewhere
-    between a bit odd and and an overkill for the current features of this
-    "hook run" command and the hook.[ch] API.
+base-commit: 7a3eb286977746bc09a5de7682df0e5a7085e17c
+-- 
+2.29.2
 
-It is this switch to `run_processes_parallel()` that is the root cause of
-the regression.
-
-The current iteration of the patch series does not fix that.
-
-In the commit message from which I quoted, the plan is laid out to
-eventually run more than one hook. If that is still the plan, we will be
-presented with the unfortunate choice to either never running them in
-parallel, or alternatively reintroducing the regression where the hooks
-run detached from stdin/stdout/stderr.
-
-It is pretty clear that there is no actual choice, and the hooks will
-never be able to run in parallel. Therefore, the fix should move
-`run_hooks_opt()` away from calling `run_processes_parallel()`.
-
-In any case, regression fixes should not be mixed with refactorings unless
-the latter make the former easier, which is not the case here.
-
-Ciao,
-Johannes
-
-Footnote *1*:
-https://colabti.org/irclogger/irclogger_log/git-devel?date=3D2022-05-23#l4=
-4
-
-Footnote *2*: I say "seem" because it would take a proper retro to analyze
-what was the reason for the uptick in regressions, and even more
-importantly to analyze what we can learn from the experience.
-
-Footnote *3*: The refactoring, as Junio suspected, might very well go a
-bit over board. Even if a new variation of the `run_processes_parallel()`
-function that takes a struct should be necessary, it would be easy -- and
-desirable -- to keep the current function signatures unchanged and simply
-turn them into shims that then call the new variant. That would make the
-refactoring much easier to review, and in turn it would make it less
-likely to introduce another regression.
-
---8323328-715222152-1653478262=:352--
