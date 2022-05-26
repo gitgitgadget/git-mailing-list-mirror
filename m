@@ -2,135 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2874C433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 00:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32650C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 00:27:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344465AbiEZAM2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 20:12:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47442 "EHLO
+        id S243842AbiEZA1S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 20:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239908AbiEZAMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 20:12:23 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9A06391
-        for <git@vger.kernel.org>; Wed, 25 May 2022 17:12:21 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id a15so110229ilq.12
-        for <git@vger.kernel.org>; Wed, 25 May 2022 17:12:21 -0700 (PDT)
+        with ESMTP id S243117AbiEZA1R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 20:27:17 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD79628992
+        for <git@vger.kernel.org>; Wed, 25 May 2022 17:27:15 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id g20so3388560edj.10
+        for <git@vger.kernel.org>; Wed, 25 May 2022 17:27:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=89OiuFQnicJwoau4JoQIbZKggYWCNo5Yfy/ttsfgYIY=;
-        b=FNnbTIlM5en4q4iTpeYEd6Yf5lThB0FER9V6bAZKtfNlkYSvMgWFFSFRkGb9RVTEPb
-         0CHoS3r2YYEUYJ9UqXmJDszHE2gj5PHmiFhSI0Ilp4I3ZUB70kuSxLwTFNaHac15QMl9
-         ElBlGjc1Zg7VBFuAwCjZJkXaMJrUfyeXlLobisrNDJpXEWPdJAqcwcajDj6oX8LVvqr7
-         eUsV4Jf0ATtdgCaeQ0vZPOsjwxuDHw+wU1sdVNwqAc/M1Wk5MEoa8h4Hs8t1eNxylVik
-         UPU5asegSQsIKnQs7Lffo21TIdaB2XNfvB8g3/arCwghV7U4BRQoXe8RDCGGs4FL+0mK
-         1VQQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=oUVOrxAGZL+h9YPpMRJcV1HJItLIYgSLIJRH+4c11Nw=;
+        b=WsDUFyWRI1CJA4T2bTqSomfM4BFuTMqBFn8XittBIuBJ8SKZHcFNN2N7huQPllMIJh
+         XFTh4a4UXyKZGL8AzDUcZc8EaVFnKDchlvaoccIk7k+iVHd1nTw2i/8Mdqd4xjYV+ym+
+         492p9qzS/NSgyYHHzuH1QC+Fd2LXhYxZo68J6wWogcfYKkWLG4gifOY0+TVuhQ0JnbYX
+         R4gGUiNTNTmKLCiwd29EcBqznAQTyr1K9dPis3s4dsv3d+dWozzkN18S7sS3BuZqP9AM
+         0nBNHaEBIIpcAbsgzHfG9XaEX581zrK1ZQG8EGeXPx1EfQcLzQP5XbgiE0KWt10PR1UZ
+         2CDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=89OiuFQnicJwoau4JoQIbZKggYWCNo5Yfy/ttsfgYIY=;
-        b=XVJGxL+ErcYOtgaZJ41ACBgzwoXwCgY1/gWFE/oVBt4OqfbPvpJlNAN+asUS3KjWFC
-         /4uqFLwbAOC3QKRKK9IzJePUJ2e82etprW6mDFefurcZwPCR3BUerwuIyNezl0UUBh6K
-         bctRNQPfjVSCI/2Pd1C6Sx2J3DYTifNSx8sXPjUWY+wvhytkeImcW/fHa9GMyQMlza2+
-         dIKGesZdp36G6Yt6y/NRwb5wVWHDMQTTYBH2SjUro5kZSn2k7ofT/o0RnTIFfvGplQRM
-         Wf9oDiFZnVE+ltP1IQ9jVkIkaL2nTYYMa0VxpcJRQJiksRxNfkGrUC5pKLKwXR7L0moP
-         FIEg==
-X-Gm-Message-State: AOAM530ZLAQtH440D2RqlA9gdxoMnyKHiwsH4Gye5p0W3rRjN1xYfnh5
-        XH/lDyHaEgHx50kJjDecdBsMd8kjYJ81pQ==
-X-Google-Smtp-Source: ABdhPJynAnBjcEdGlUT+naHNFjWkfIoFYPRUFa1J/LBBNSCA2jqqbh6lkBx3vJsIKUWA1WOzssBQBg==
-X-Received: by 2002:a92:d5cf:0:b0:2d1:d9b0:d5b1 with SMTP id d15-20020a92d5cf000000b002d1d9b0d5b1mr3324584ilq.252.1653523940887;
-        Wed, 25 May 2022 17:12:20 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a19-20020a924453000000b002d19523981csm107850ilm.16.2022.05.25.17.12.20
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=oUVOrxAGZL+h9YPpMRJcV1HJItLIYgSLIJRH+4c11Nw=;
+        b=qYwlo45Gnvy4+Mc5eKCfLXQuSPqSGOm3MXjFj8ijyKbzfogpUJ1BfUqkb/Q8Np6DCr
+         5aw9gGvKP5AjCsq+IbxCd/0KSKOtbI/IHV6PJDLTlK72jWUnOsBcVjX1K3jZz+MC75Yz
+         BUsSQSJpZEOZDdAN7xN22+bS/AjXmSDwqOQ3viruYPcLL9Fe8jDlbqZ2xBGb/KWL2hJ3
+         SigyeTY0m/2LFX4gAqAkMa632H8N+T/3I9f+HOigue/fb2MSM3YbqHcOIN6Xe+TZpPez
+         hVhT5XC/J131uWSSciRfesbW7v1bs+u7leYFv9o0NRy0G76DlCH2nZSWeutjZ8LQv0Ww
+         uM9Q==
+X-Gm-Message-State: AOAM532Q5j3hHRHWw9LDm9KL3uu6SFPpIhqN7mblzqgWTg+TBuUBRenW
+        NfhtBL10XlTq+eIWvFGh7eCRu4cli0ISDQ==
+X-Google-Smtp-Source: ABdhPJzKRHpo2uaSRdUFNU2Gq2iGmOKQKFvtTnTEPg1nwyP9lgguTYJ8FeJMpOmCCkJ1ycxxWT33Xw==
+X-Received: by 2002:aa7:de8a:0:b0:42a:b51a:554c with SMTP id j10-20020aa7de8a000000b0042ab51a554cmr37994221edv.318.1653524834302;
+        Wed, 25 May 2022 17:27:14 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id z19-20020a170906715300b006f3ef214e0esm28152ejj.116.2022.05.25.17.27.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 17:12:20 -0700 (PDT)
-Date:   Wed, 25 May 2022 20:12:18 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        rsbecker@nexbridge.com, 'Jonathan Nieder' <jrnieder@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
-        tytso@mit.edu
-Subject: Re: adding new 32-bit on-disk (unsigned) timestamp formats (was:
- [PATCH v5 02/17] pack-mtimes: support reading .mtimes files)
-Message-ID: <Yo7F4tj8aGMvwM7/@nand.local>
-References: <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
- <Yo0ysWZKFJoiCSqv@google.com>
- <015d01d86fa6$a10519f0$e30f4dd0$@nexbridge.com>
- <Yo1bUbys+Fz7g+6h@nand.local>
- <016e01d86fc5$64ecf180$2ec6d480$@nexbridge.com>
- <Yo1zW7ntTuNakpOD@nand.local>
- <220525.86o7zmt0l0.gmgdl@evledraar.gmail.com>
- <32db3720-e9c8-e192-6278-c55855ce1d3e@github.com>
- <Yo6b+8sixGAqMm/x@nand.local>
- <220526.86sfox6tvp.gmgdl@evledraar.gmail.com>
+        Wed, 25 May 2022 17:27:13 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nu1LN-0007iV-7D;
+        Thu, 26 May 2022 02:27:13 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: build 'gitweb' in the default target
+Date:   Thu, 26 May 2022 02:14:33 +0200
+References: <20220525205651.825669-1-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220525205651.825669-1-szeder.dev@gmail.com>
+Message-ID: <220526.86k0a96sv2.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220526.86sfox6tvp.gmgdl@evledraar.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 26, 2022 at 02:02:39AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> >> > If we really are trying to micro-optimize storage space here I'm willing
-> >> > to bet that this is still a bad/premature optimization. There's much
-> >> > better ways to store this sort of data in a compact way if that's the
-> >> > concern. E.g. you'd store a 64 bit "base" timestamp in the header for
-> >> > the first entry, and have smaller (signed) "delta" timestamps storing
-> >> > offsets from that "base" timestamp.
-> >>
-> >> This is a good idea for a v2 format when that is necessary.
-> >
-> > I agree here.
-> >
-> > I'm not opposed to such a change (or even being the one to work on it!),
-> > but I would encourage us to pursue that change outside of this series,
-> > since it can easily be done on top.
-> >
-> > Of course, if we ever did decide to implement 64-bit mtimes, we would
-> > have to maintain support for reading both the 32-bit and 64-bit values.
-> > But I think the code is well-equipped to do that, and it could be done
-> > on top without significant additional complexity.
+
+On Wed, May 25 2022, SZEDER G=C3=A1bor wrote:
+
+> Our Makefile's default target used to build 'gitweb', though
+> indirectly: the 'all' target depended on 'git-instaweb', which in turn
+> depended on 'gitweb'.  Then e25c7cc146 (Makefile: drop dependency
+> between git-instaweb and gitweb, 2015-05-29) removed the latter
+> dependency, and for good reasons (quoting its commit message):
 >
-> Do you mean "on top" in the sense that we'd expect that before the next
-> release, so that we wouldn't need to deal with bumping the format, and
-> have some phase-out period for the older version etc.
+>   "1. git-instaweb has no build-time dependency on gitweb; it
+>       is a run-time dependency
 >
-> Or that we would need to treat what's landing here as something we'll
-> need to support going forward?
+>    2. gitweb is a directory that we want to recursively make
+>       in. As a result, its recipe is marked .PHONY, which
+>       causes "make" to rebuild git-instaweb every time it is
+>       run."
+>
+> Since then a simple 'make' doesn't build 'gitweb'.
+>
+> Luckily, installing 'gitweb' is not broken: although 'make install'
+> doesn't depend on the 'gitweb' target, it runs 'make -C gitweb
+> install' unconditionally, which does generate all the necessary files
+> for 'gitweb' and installs them.  However, if someone runs 'make &&
+> sudo make install', then those files in the 'gitweb' directory will be
+> generated and owned by root, which is not nice.
+>
+> List 'gitweb' as a direct dependency of the default target, so a plain
+> 'make' will build it.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>  Makefile | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/Makefile b/Makefile
+> index f8bccfab5e..ee74892b33 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2188,6 +2188,8 @@ ifneq (,$X)
+>  	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMAN=
+DS_TO_INSTALL) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
+>  endif
+>=20=20
+> +all:: gitweb
+> +
+>  all::
+>  ifndef NO_TCLTK
+>  	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir=3D'$(gitexec_instdi=
+r_SQ)' all
 
-My plan is to treat what will hopefully land here as something we're
-going to support.
+In various recent patches & some upcoming ones I plan to submit I've
+been trying to get the runtime of a noop "make" runs down, which really
+helps e.g. with "git rebase -x make ..." running faster on a large
+series.
 
-I meant "on top" in the sense that the format implemented here does not
-restrict us against making changes (like adding support for wider
-records) in the future. IOW, I did not mean to suggest that we should
-expect more patches from me in this cycle to deprecate parts of the v1
-format.
+While you're right that this wasn't intentional to begin with, we have
+lacked the "gitweb" as part of the default target since v2.4.5 now, and
+adding it back is a major performance regression on noop "make" runs:
+=09
+	$ git hyperfine -L rev HEAD~1,HEAD~0 -L t Y, -s 'make' 'make NO_TCLTK=3D{t=
+}' --warmup 1 -r 5
+	Benchmark 1: make NO_TCLTK=3DY' in 'HEAD~1
+	  Time (mean =C2=B1 =CF=83):     103.6 ms =C2=B1   1.1 ms    [User: 83.8 m=
+s, System: 32.1 ms]
+	  Range (min =E2=80=A6 max):   102.2 ms =E2=80=A6 105.2 ms    5 runs
+=09=20
+	Benchmark 2: make NO_TCLTK=3DY' in 'HEAD~0
+	  Time (mean =C2=B1 =CF=83):     191.4 ms =C2=B1   1.6 ms    [User: 151.0 =
+ms, System: 60.5 ms]
+	  Range (min =E2=80=A6 max):   189.2 ms =E2=80=A6 193.3 ms    5 runs
+=09=20
+	Benchmark 3: make NO_TCLTK=3D' in 'HEAD~1
+	  Time (mean =C2=B1 =CF=83):     272.0 ms =C2=B1   5.0 ms    [User: 206.3 =
+ms, System: 83.3 ms]
+	  Range (min =E2=80=A6 max):   266.7 ms =E2=80=A6 277.3 ms    5 runs
+=09=20
+	Benchmark 4: make NO_TCLTK=3D' in 'HEAD~0
+	  Time (mean =C2=B1 =CF=83):     358.3 ms =C2=B1   1.4 ms    [User: 282.7 =
+ms, System: 104.0 ms]
+	  Range (min =E2=80=A6 max):   356.6 ms =E2=80=A6 360.0 ms    5 runs
+=09=20
+	Summary
+	  'make NO_TCLTK=3DY' in 'HEAD~1' ran
+	    1.85 =C2=B1 0.02 times faster than 'make NO_TCLTK=3DY' in 'HEAD~0'
+	    2.63 =C2=B1 0.06 times faster than 'make NO_TCLTK=3D' in 'HEAD~1'
+	    3.46 =C2=B1 0.04 times faster than 'make NO_TCLTK=3D' in 'HEAD~0'
 
-In other words (again ;-)), I would like to see us ship this format with
-the existing 32-bit records.
+I.e. this is with your patch here applied as HEAD~0 and HEAD~1 being
+'master'.
 
-> I think if a format change is worthwhile doing at all that it's worth
-> just doing it now if it's going to be the latter of those, as changing
-> file formats before they're in the wild is easy, but after that it's at
-> best a bit tedious. E.g. we'll need testing to see how we deal with
-> mixed new/old format files etc. etc.
+I think given that that a better solution would be to just declare this
+as a feature at this point, especially as gitweb/INSTALL notes that the
+way to install it is:
 
-I can understand where you're coming from, though as I noted earlier in
-the thread, I don't think changing the format in the manner you suggest
-would be that difficult in practice.
+        $ make prefix=3D/usr gitweb                            ;# as yourse=
+lf
+        # make gitwebdir=3D/var/www/cgi-bin install-gitweb     ;# as root
 
-But in the meantime, the existing format is useful and works, and I
-don't think we should go back to the drawing board for something that we
-can do later if we decide to.
-
-Thanks,
-Taylor
+Or we could just fold gitweb/Makefile into the main Makefile, unlike
+gitk and git-gui it's not externally maintained, and most of it is
+shimmying to work around not being part of the main Makefile (which it
+strongly inter-depends on anyway).
