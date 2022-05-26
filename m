@@ -2,195 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C6E7C433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 21:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D8B4C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 21:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346588AbiEZVdM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 17:33:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52002 "EHLO
+        id S241358AbiEZVtI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 17:49:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233244AbiEZVdL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 17:33:11 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F268A075
-        for <git@vger.kernel.org>; Thu, 26 May 2022 14:33:10 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id ck4so5252992ejb.8
-        for <git@vger.kernel.org>; Thu, 26 May 2022 14:33:10 -0700 (PDT)
+        with ESMTP id S233541AbiEZVtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 17:49:06 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7608160C9
+        for <git@vger.kernel.org>; Thu, 26 May 2022 14:49:04 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id f2so3696330wrc.0
+        for <git@vger.kernel.org>; Thu, 26 May 2022 14:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Y1zF2+FYKRkG7mgM8mDwtluw5WQTuHsQZc+8FQ+q2Jg=;
-        b=kk8xNOdrJFg3QQD2pNULqMsZnurKo8H4sdeLBGc4UFLDELMz3OKRf6rtKN246tzyXj
-         lAmQ7WbZDKYj5Fw9xNbJtJQYTTs6PrPaXjVoLFwUKnrP11p3i26zUQdwlE1pD85iTzMO
-         u0qFgpwqbSKBPxztj0Deb6XnoNxuCXeAO3nd042ExLogCz0yOfJQ0dAXBqzrNQCtJGLE
-         p9bAAh8WwPPZC2c4zDzXXoSHjzMKLww6GlImu91BS0pGKKf4yC6hgyFO6OnqsPXOJ4Cw
-         0V63fbNe+W6eMOMNU56mUwkl+VUBOm4KBqZQqeXI5fGOt9wrfPaalky88xZP/9deZ+Ui
-         VIjA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cMUdbXNk105KsFz3ylqaJRxzsyCSvZy2oM9y02SnAPQ=;
+        b=HSo/avmiTJTHUTzL0PhmTMD2VHubnGfK3gT/T/lUivPdpWDuABkTZ3NFTaBBCr4mLa
+         TFBYSNiz7DkG0QKxszH/zfb5xk60mLRekmRDsUgDrsV7z3GyqvnJlh9G5gsTT2PuoV75
+         MOIidbgrnukw0lLfWht+No+xVYwUAo0SN+SOnjldIa9Wm1SLUS4JFbYv4pTZ9+eMlJ4A
+         a0rM8kA3qM0pzIfgz9Rx35vBoC5UbVpRTfZrrgEXN/nzBdXTkAda1FBL0ljDSwcgX1zx
+         XA5prlaXeJxPVR/VSMDdfKQJccUJ2P6sFEOTTGxkRQWOlAXUiQxMU6NEi9ZcmrulXiMj
+         s1HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Y1zF2+FYKRkG7mgM8mDwtluw5WQTuHsQZc+8FQ+q2Jg=;
-        b=botIEFh9fCpHoDsgM277tfaY364unqL4XB2kmUhhMDxW9Ok8xAh42UjXPLEp7ksB+l
-         A/OvSavtjQEABI+OIRpQ5CPsDk3UGbfzvieYR0rVJYIrRcWhx+s9qQ8hzfos0E42KYHZ
-         xFDfV7F89Ap77tudPeCAuiqLga9T2rm4AYvtZzyPDDaiMSzKP2lGiYtCUXQFJi4raNeD
-         mB/Ky1PXCAzXz10Ywo2VLfnhg/QGyiAHrdwreSeTAB/CSEeGxl004C/EMhs6Rpz+mDAS
-         1Q9R1un3NTEiOdJyX3pScuj2fdA4FPqMbiSLQzqGP/MbQmG77MjMXMWeO932hrrREZgu
-         z4/g==
-X-Gm-Message-State: AOAM533d30ZMujhffl2cGnxQpZR41e26mm3Y0Wfew5emyWWKdgH57WjX
-        FHWvrSj8ioLk+SBRgG2jJ34qTbsnRf8=
-X-Google-Smtp-Source: ABdhPJxuH0MDYsi4AXn2YllPXUDU1jg38A0sIuXp192+JH6En5o3iYmhP/QP1W16l+xMUh1VBM/CfA==
-X-Received: by 2002:a17:906:fa85:b0:6fe:a2b8:ed3d with SMTP id lt5-20020a170906fa8500b006fea2b8ed3dmr30313907ejb.440.1653600788652;
-        Thu, 26 May 2022 14:33:08 -0700 (PDT)
-Received: from localhost (84-236-78-147.pool.digikabel.hu. [84.236.78.147])
-        by smtp.gmail.com with ESMTPSA id wh21-20020a170906fd1500b006fedcc56b0bsm844900ejb.170.2022.05.26.14.33.06
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=cMUdbXNk105KsFz3ylqaJRxzsyCSvZy2oM9y02SnAPQ=;
+        b=xDKkWcHn6rDOZ74Hw+xOPrPpWvsk6qT6bVmOkPV03etUJhCBKeKqv55KqjSjYRF3D1
+         VzJCZ9FjmfZCR6xQIwBvrUNPocwSE6dDVY41z8I4Xa4Q22RfUFag9XPsWmqIlxwmvkxp
+         OnMS/uRSaNvdO7meQDR43DwDTmNQy7EFj0kEUmmVYVfuO0eEloHKmUhTkFK6dv8usm5Y
+         hnGmTge/IBN1ct16JPD6I7LLJIddZcrElcVklKiHO1XI7BuAD6hBFAnU3PPeendczAVx
+         bjhJl7wp/NsyXEiMQhmHggq8yn9MS53x0Bw5vJ8GdB9nKU+I/7rHQAaoOBbta6ZQh9ZS
+         jAAQ==
+X-Gm-Message-State: AOAM533gVJEuYNC5iuhR/UMuTWUQD9LwHpxSIGknXHId6uMEJeQuuIgT
+        uBWwpwnyAUWMAn47cty0i4tkP/gczbA=
+X-Google-Smtp-Source: ABdhPJylCm1rQzkZaK1+sYBQAwkCv5YthH0O8aXtirRUno/pjbW++jVQkSaYX1966+Nnve7tRNAiOg==
+X-Received: by 2002:a5d:5984:0:b0:20f:dad8:7b6a with SMTP id n4-20020a5d5984000000b0020fdad87b6amr19432265wri.207.1653601738388;
+        Thu, 26 May 2022 14:48:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f2-20020a0560001b0200b0020ffb018d21sm174477wrz.110.2022.05.26.14.47.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 14:33:07 -0700 (PDT)
-Date:   Thu, 26 May 2022 23:33:05 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Makefile: build 'gitweb' in the default target
-Message-ID: <20220526213305.GA1707@szeder.dev>
-References: <20220525205651.825669-1-szeder.dev@gmail.com>
- <220526.86k0a96sv2.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Thu, 26 May 2022 14:47:59 -0700 (PDT)
+Message-Id: <pull.1143.v9.git.1653601644.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
+References: <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 26 May 2022 21:46:54 +0000
+Subject: [PATCH v9 00/30] Builtin FSMonitor Part 3
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220526.86k0a96sv2.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>,
+        Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 26, 2022 at 02:14:33AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, May 25 2022, SZEDER Gábor wrote:
-> 
-> > Our Makefile's default target used to build 'gitweb', though
-> > indirectly: the 'all' target depended on 'git-instaweb', which in turn
-> > depended on 'gitweb'.  Then e25c7cc146 (Makefile: drop dependency
-> > between git-instaweb and gitweb, 2015-05-29) removed the latter
-> > dependency, and for good reasons (quoting its commit message):
-> >
-> >   "1. git-instaweb has no build-time dependency on gitweb; it
-> >       is a run-time dependency
-> >
-> >    2. gitweb is a directory that we want to recursively make
-> >       in. As a result, its recipe is marked .PHONY, which
-> >       causes "make" to rebuild git-instaweb every time it is
-> >       run."
-> >
-> > Since then a simple 'make' doesn't build 'gitweb'.
-> >
-> > Luckily, installing 'gitweb' is not broken: although 'make install'
-> > doesn't depend on the 'gitweb' target, it runs 'make -C gitweb
-> > install' unconditionally, which does generate all the necessary files
-> > for 'gitweb' and installs them.  However, if someone runs 'make &&
-> > sudo make install', then those files in the 'gitweb' directory will be
-> > generated and owned by root, which is not nice.
-> >
-> > List 'gitweb' as a direct dependency of the default target, so a plain
-> > 'make' will build it.
-> >
-> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> > ---
-> >  Makefile | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/Makefile b/Makefile
-> > index f8bccfab5e..ee74892b33 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -2188,6 +2188,8 @@ ifneq (,$X)
-> >  	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMANDS_TO_INSTALL) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
-> >  endif
-> >  
-> > +all:: gitweb
-> > +
-> >  all::
-> >  ifndef NO_TCLTK
-> >  	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir='$(gitexec_instdir_SQ)' all
-> 
-> In various recent patches & some upcoming ones I plan to submit I've
-> been trying to get the runtime of a noop "make" runs down, which really
-> helps e.g. with "git rebase -x make ..." running faster on a large
-> series.
-> 
-> While you're right that this wasn't intentional to begin with, we have
-> lacked the "gitweb" as part of the default target since v2.4.5 now, and
-> adding it back is a major performance regression on noop "make" runs:
+Here is version 9 of part 3 of FSMonitor.
 
-I think that generating stuff, potentially as root, during 'make
-install' is a more severe regression, than this noop make slowdown,
-which in practice tends to be lost in the noise anyway.  Even in an
-unrealistic case (it doesn't modify any C source files explicitly, let
-alone a frequently included header file) like this:
+This version addresses the test failure on t7527.[56] when deleting/renaming
+the .git directory using the "GIT~1" spelling. Between v6 and v7, I changed
+the way check_for_shortnames() constructed the wchar_t path to .git from a
+pair of wcscpy() calls to a swprintf() call. However, I used a "%s" by
+mistake rather than a "%ls".
 
-  $ git checkout fddc3b420f^
-  $ make
-  [...]
-  $ for i in {1..10} ; do git commit --allow-empty -q -m $i ; done
-  $ time git rebase -x 'make -j8 NO_TCLTK=Y >/dev/null' HEAD~10
-  [...]
-  real	0m31.026s
-  user	0m46.897s
-  sys	0m11.492s
-  $ git checkout fddc3b420f
-  $ for i in {1..10} ; do git commit --allow-empty -q -m $i ; done
-  $ time git rebase -x 'make -j8 NO_TCLTK=Y >/dev/null' HEAD~10
-  [...]
-  real	0m30.865s
-  user	0m48.315s
-  sys	0m12.125s
+This caused a non-portable behavior. The tests passed with MSVC and with GCC
+10.1.0 on my laptop, but failed under GCC on one of the CI build machines.
 
-Hrm, it actually ended up slightly faster.
+This was partially hidden by CI machines that have GCC 12 and that fail to
+compile Git without the fixes for GCC 12.x.
 
-> 	$ git hyperfine -L rev HEAD~1,HEAD~0 -L t Y, -s 'make' 'make NO_TCLTK={t}' --warmup 1 -r 5
-> 	Benchmark 1: make NO_TCLTK=Y' in 'HEAD~1
-> 	  Time (mean ± σ):     103.6 ms ±   1.1 ms    [User: 83.8 ms, System: 32.1 ms]
-> 	  Range (min … max):   102.2 ms … 105.2 ms    5 runs
-> 	 
-> 	Benchmark 2: make NO_TCLTK=Y' in 'HEAD~0
-> 	  Time (mean ± σ):     191.4 ms ±   1.6 ms    [User: 151.0 ms, System: 60.5 ms]
-> 	  Range (min … max):   189.2 ms … 193.3 ms    5 runs
-> 	 
-> 	Benchmark 3: make NO_TCLTK=' in 'HEAD~1
-> 	  Time (mean ± σ):     272.0 ms ±   5.0 ms    [User: 206.3 ms, System: 83.3 ms]
-> 	  Range (min … max):   266.7 ms … 277.3 ms    5 runs
-> 	 
-> 	Benchmark 4: make NO_TCLTK=' in 'HEAD~0
-> 	  Time (mean ± σ):     358.3 ms ±   1.4 ms    [User: 282.7 ms, System: 104.0 ms]
-> 	  Range (min … max):   356.6 ms … 360.0 ms    5 runs
-> 	 
-> 	Summary
-> 	  'make NO_TCLTK=Y' in 'HEAD~1' ran
-> 	    1.85 ± 0.02 times faster than 'make NO_TCLTK=Y' in 'HEAD~0'
-> 	    2.63 ± 0.06 times faster than 'make NO_TCLTK=' in 'HEAD~1'
-> 	    3.46 ± 0.04 times faster than 'make NO_TCLTK=' in 'HEAD~0'
-> 
-> I.e. this is with your patch here applied as HEAD~0 and HEAD~1 being
-> 'master'.
-> 
-> I think given that that a better solution would be to just declare this
-> as a feature at this point
+Jeff Hostetler (30):
+  fsm-listen-win32: handle shortnames
+  t7527: test FSMonitor on repos with Unicode root paths
+  t/helper/fsmonitor-client: create stress test
+  fsmonitor-settings: bare repos are incompatible with FSMonitor
+  fsmonitor-settings: stub in Win32-specific incompatibility checking
+  fsmonitor-settings: VFS for Git virtual repos are incompatible
+  fsmonitor-settings: stub in macOS-specific incompatibility checking
+  fsmonitor-settings: remote repos on macOS are incompatible
+  fsmonitor-settings: remote repos on Windows are incompatible
+  fsmonitor-settings: NTFS and FAT32 on MacOS are incompatible
+  unpack-trees: initialize fsmonitor_has_run_once in o->result
+  fsm-listen-darwin: ignore FSEvents caused by xattr changes on macOS
+  fsmonitor--daemon: cd out of worktree root
+  fsmonitor--daemon: prepare for adding health thread
+  fsmonitor--daemon: rename listener thread related variables
+  fsmonitor--daemon: stub in health thread
+  fsm-health-win32: add polling framework to monitor daemon health
+  fsm-health-win32: force shutdown daemon if worktree root moves
+  fsm-listen-darwin: shutdown daemon if worktree root is moved/renamed
+  fsmonitor: optimize processing of directory events
+  t7527: FSMonitor tests for directory moves
+  t/perf/p7527: add perf test for builtin FSMonitor
+  fsmonitor: never set CE_FSMONITOR_VALID on submodules
+  t7527: test FSMonitor on case insensitive+preserving file system
+  fsmonitor: on macOS also emit NFC spelling for NFD pathname
+  t/helper/hexdump: add helper to print hexdump of stdin
+  t/lib-unicode-nfc-nfd: helper prereqs for testing unicode nfc/nfd
+  t7527: test Unicode NFC/NFD handling on MacOS
+  fsmonitor--daemon: allow --super-prefix argument
+  t7527: improve implicit shutdown testing in fsmonitor--daemon
 
-As long as 'make install' installs 'gitweb', I don't think that's an
-option.
+ Makefile                               |  20 +-
+ builtin/fsmonitor--daemon.c            | 116 ++++++-
+ builtin/update-index.c                 |  16 +
+ compat/fsmonitor/fsm-health-darwin.c   |  24 ++
+ compat/fsmonitor/fsm-health-win32.c    | 278 ++++++++++++++++
+ compat/fsmonitor/fsm-health.h          |  47 +++
+ compat/fsmonitor/fsm-listen-darwin.c   | 122 ++++++-
+ compat/fsmonitor/fsm-listen-win32.c    | 436 ++++++++++++++++++++-----
+ compat/fsmonitor/fsm-listen.h          |   2 +-
+ compat/fsmonitor/fsm-settings-darwin.c |  89 +++++
+ compat/fsmonitor/fsm-settings-win32.c  | 137 ++++++++
+ config.mak.uname                       |   5 +
+ contrib/buildsystems/CMakeLists.txt    |   8 +
+ fsmonitor--daemon.h                    |  11 +-
+ fsmonitor-settings.c                   | 167 ++++++++--
+ fsmonitor-settings.h                   |  33 ++
+ fsmonitor.c                            |  73 ++++-
+ fsmonitor.h                            |  11 +
+ git.c                                  |   2 +-
+ t/helper/test-fsmonitor-client.c       | 106 ++++++
+ t/helper/test-hexdump.c                |  30 ++
+ t/helper/test-tool.c                   |   1 +
+ t/helper/test-tool.h                   |   1 +
+ t/lib-unicode-nfc-nfd.sh               | 162 +++++++++
+ t/perf/p7527-builtin-fsmonitor.sh      | 257 +++++++++++++++
+ t/t7519-status-fsmonitor.sh            |  32 ++
+ t/t7527-builtin-fsmonitor.sh           | 401 ++++++++++++++++++++++-
+ unpack-trees.c                         |   1 +
+ 28 files changed, 2439 insertions(+), 149 deletions(-)
+ create mode 100644 compat/fsmonitor/fsm-health-darwin.c
+ create mode 100644 compat/fsmonitor/fsm-health-win32.c
+ create mode 100644 compat/fsmonitor/fsm-health.h
+ create mode 100644 compat/fsmonitor/fsm-settings-darwin.c
+ create mode 100644 compat/fsmonitor/fsm-settings-win32.c
+ create mode 100644 t/helper/test-hexdump.c
+ create mode 100755 t/lib-unicode-nfc-nfd.sh
+ create mode 100755 t/perf/p7527-builtin-fsmonitor.sh
 
-> especially as gitweb/INSTALL notes that the
-> way to install it is:
-> 
->         $ make prefix=/usr gitweb                            ;# as yourself
->         # make gitwebdir=/var/www/cgi-bin install-gitweb     ;# as root
 
-Or are you suggesting not to install 'gitweb' during 'make install'?
-I'm fine with that, but I doubt I will argue about it convincingly in
-a commit message.
+base-commit: 5eb696daba2fe108d4d9ba2ccf4b357447ef9946
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1143%2Fjeffhostetler%2Fbuiltin-fsmonitor-part3-v9
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1143/jeffhostetler/builtin-fsmonitor-part3-v9
+Pull-Request: https://github.com/gitgitgadget/git/pull/1143
 
-> Or we could just fold gitweb/Makefile into the main Makefile, unlike
-> gitk and git-gui it's not externally maintained, and most of it is
-> shimmying to work around not being part of the main Makefile (which it
-> strongly inter-depends on anyway).
+Range-diff vs v8:
+
+  1:  26144c58659 !  1:  9353e5863dc fsm-listen-win32: handle shortnames
+     @@ compat/fsmonitor/fsm-listen-win32.c: normalize:
+      +	wchar_t *p;
+      +
+      +	/* build L"<wt-root-path>/.git" */
+     -+	swprintf(buf_in, ARRAY_SIZE(buf_in) - 1, L"%s.git",
+     ++	swprintf(buf_in, ARRAY_SIZE(buf_in) - 1, L"%ls.git",
+      +		 watch->wpath_longname);
+      +
+      +	if (!GetShortPathNameW(buf_in, buf_out, ARRAY_SIZE(buf_out)))
+  2:  1bf2e36b6ad =  2:  2ae8a02ebe0 t7527: test FSMonitor on repos with Unicode root paths
+  3:  4bca494bb22 =  3:  6f8baf5b723 t/helper/fsmonitor-client: create stress test
+  4:  663deabc3f6 =  4:  195f90cc9ef fsmonitor-settings: bare repos are incompatible with FSMonitor
+  5:  7cb0180a1ed =  5:  0b182569e11 fsmonitor-settings: stub in Win32-specific incompatibility checking
+  6:  9774faddc45 =  6:  06d49b0f230 fsmonitor-settings: VFS for Git virtual repos are incompatible
+  7:  f7ef7dcffc8 =  7:  2b6e8b0b241 fsmonitor-settings: stub in macOS-specific incompatibility checking
+  8:  dc2dfd67931 =  8:  8068b3bebee fsmonitor-settings: remote repos on macOS are incompatible
+  9:  5627038aaa3 =  9:  a5c40a4464d fsmonitor-settings: remote repos on Windows are incompatible
+ 10:  9a12cc78b5d = 10:  d2569ed3211 fsmonitor-settings: NTFS and FAT32 on MacOS are incompatible
+ 11:  aaff000cecb = 11:  27f360b3336 unpack-trees: initialize fsmonitor_has_run_once in o->result
+ 12:  4f2b15d3d1f = 12:  ad8f65efe0d fsm-listen-darwin: ignore FSEvents caused by xattr changes on macOS
+ 13:  427dec412a5 = 13:  7e302958cd4 fsmonitor--daemon: cd out of worktree root
+ 14:  51b266b06e1 = 14:  6b271866f67 fsmonitor--daemon: prepare for adding health thread
+ 15:  594e0ae243d = 15:  df1061c0ff5 fsmonitor--daemon: rename listener thread related variables
+ 16:  c2b5c02ed38 = 16:  e255a5b7104 fsmonitor--daemon: stub in health thread
+ 17:  46a5ae2a635 = 17:  f710d305dd4 fsm-health-win32: add polling framework to monitor daemon health
+ 18:  7cf1be5f8e2 = 18:  b3f5a945d3e fsm-health-win32: force shutdown daemon if worktree root moves
+ 19:  95cf1299d44 = 19:  d8949ab5df6 fsm-listen-darwin: shutdown daemon if worktree root is moved/renamed
+ 20:  b020bfb4568 = 20:  8fa7f4fa9be fsmonitor: optimize processing of directory events
+ 21:  d058d7e0c08 = 21:  6976f1d45ea t7527: FSMonitor tests for directory moves
+ 22:  f5dac286812 = 22:  81559df45ab t/perf/p7527: add perf test for builtin FSMonitor
+ 23:  92f5c0d2c8b = 23:  d0c8fecd1a0 fsmonitor: never set CE_FSMONITOR_VALID on submodules
+ 24:  40b80adbb31 = 24:  41f8cbc2ae4 t7527: test FSMonitor on case insensitive+preserving file system
+ 25:  ea19a06e8cb = 25:  c8c4c22360c fsmonitor: on macOS also emit NFC spelling for NFD pathname
+ 26:  66a01db4739 = 26:  1612dcba503 t/helper/hexdump: add helper to print hexdump of stdin
+ 27:  25c6066eddc = 27:  e5a7f05d9d4 t/lib-unicode-nfc-nfd: helper prereqs for testing unicode nfc/nfd
+ 28:  fc3a0e7847f = 28:  b27dc48a650 t7527: test Unicode NFC/NFD handling on MacOS
+ 29:  25676ca4ec2 = 29:  2905b3bb59e fsmonitor--daemon: allow --super-prefix argument
+ 30:  d70d2545a5a = 30:  2f0dea304f0 t7527: improve implicit shutdown testing in fsmonitor--daemon
+
+-- 
+gitgitgadget
