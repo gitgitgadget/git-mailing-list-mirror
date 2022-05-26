@@ -2,111 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC2EC433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 03:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ADB7C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 04:03:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244609AbiEZDEJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 23:04:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41396 "EHLO
+        id S238409AbiEZEDJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 00:03:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233100AbiEZDEG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 23:04:06 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED622A5006
-        for <git@vger.kernel.org>; Wed, 25 May 2022 20:04:05 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id a17so374724plb.4
-        for <git@vger.kernel.org>; Wed, 25 May 2022 20:04:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=MCTS8ASco0NBBSMh0ZQME7z7D0UBZLEQnExiSF8b9Q0=;
-        b=cVDVe9UhSwepzH17f5Nj0xLYugSUmJN1iENelALW52kDHTct1XlcEi2gBT7ETW6SJF
-         oD7eAgZ3BoHY+r4S7rBztk6VZFaw9NUdmWDZWmtlaXM5V019xRoDTdQDw+ZDUPZbTYpG
-         rq6E3205pqmyoRcm2xcr2hLNKhiin3UiLxxZqwsMeS+Y3GOZ1C8t+rCO0WLd8DbGtyeq
-         AHta7NB58Wzc0WpNyenjL7Xw1CWqzJruX3dsXQYiIAq81ME18dlI0hDsCjt9C3SdMf74
-         P678bl/4J6H4cz+WW407SII5stm+1Q/RuQImwj7Ct9ZlBbC4xZW1UqGEj9CG5BiRZcsf
-         yb7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=MCTS8ASco0NBBSMh0ZQME7z7D0UBZLEQnExiSF8b9Q0=;
-        b=XT1aS2Mw/76h9SLlb2eLkpyEjaK9rjgIQHsd3/RAde0oqD39w+Ma/HPaVm2/L1zJ4/
-         iLlvBUJ41ecCwp/H/Le41pWJiMqD33IX+EuGE5CPWaA+Qcc4LwRUgValInFvXJYTkTPP
-         WPqRcaH6nL01JcYphpduY15/+KhN7acNSmx29+eZKVaQOEv/i3+dgDGUeNxcMvthgAot
-         YdWCbn4z44csVa6rrIqqnEq1HD1rgdLXbi5sqNu2xtZ8QPl5tIHgf6hEKkaycVyfEgP+
-         n2uc+1yBSIMfnA/2jgz+nVq1qbmWZlfaqwfSAM6EKfmWbKbXzIKlmdPsJogfmhqRoVm7
-         54rA==
-X-Gm-Message-State: AOAM533613/BjRV+AM/to7va+6EG9zSClC20yKOaS8S5pfWW7BPcCoUU
-        aB6pI4tQShXT+9qF8DrHIxo=
-X-Google-Smtp-Source: ABdhPJw/L6iSGgtKFvHdYfPd7pH8+8M1WwsJBfMzDUrtIr7JssvMfhQRKPWpKIg6JZnV2AzQNn/+0Q==
-X-Received: by 2002:a17:90a:e7cb:b0:1df:8481:9469 with SMTP id kb11-20020a17090ae7cb00b001df84819469mr282055pjb.195.1653534245420;
-        Wed, 25 May 2022 20:04:05 -0700 (PDT)
-Received: from localhost (subs03-180-214-233-8.three.co.id. [180.214.233.8])
-        by smtp.gmail.com with ESMTPSA id e24-20020aa78c58000000b005184031963bsm136039pfd.85.2022.05.25.20.04.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 20:04:04 -0700 (PDT)
-Date:   Thu, 26 May 2022 10:04:00 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>, John Cai <johncai86@gmail.com>
-Subject: Re: [RFC PATCH 3/3] trace2: emit "signal" events after calling BUG()
-Message-ID: <Yo7uIG6JOx2lHOqE@debian.me>
-References: <RFC-cover-0.3-00000000000-20220525T234908Z-avarab@gmail.com>
- <RFC-patch-3.3-b099a3a4a96-20220525T234908Z-avarab@gmail.com>
+        with ESMTP id S231209AbiEZEDF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 00:03:05 -0400
+Received: from pb-sasl-trial20.pobox.com (pb-sasl-trial20.pobox.com [173.228.157.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE9D6C038B
+        for <git@vger.kernel.org>; Wed, 25 May 2022 21:03:03 -0700 (PDT)
+Received: from pb-sasl-trial20.pobox.com (localhost.local [127.0.0.1])
+        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 5CF4B2F35B;
+        Thu, 26 May 2022 00:03:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tb9Ll6b5xy8BxzYQv0IuwecH5lQ=; b=NGwpdk
+        PL1xgFmsda/yN4y2mutjBMeRvxTuorV/MStsqeVUOqyfb9oYuWIGxOHltjq+3Eo/
+        YrWOYgIgwIcPGp1Uov1hQFfKypOzAZxpb3/lWc4QUaZz/J0hpGmKW2dtlrUakf+4
+        91gaFDkLQlVFcUzoJ35naT/I8e46cqkHRyix8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tahx3IIW9uhCk+R3Rig1RNcN4brML59j
+        71zvSGlUNpgFwqv8Cjee36SzTnH86YVLB8ghq1R1VgwGwmBPlMUzBevG0yBYNq7I
+        EJtIF5WL8PuYeyoDbOiijny+Qc6PvBG0LmbP4qdKNdbCcaZjIB9MvH93eFlqoFKQ
+        H6+UKCLXPKg=
+Received: from pb-smtp21.sea.icgroup.com (pb-smtp21.pobox.com [10.110.30.21])
+        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 408D22F35A;
+        Thu, 26 May 2022 00:03:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CA7C619915A;
+        Thu, 26 May 2022 00:02:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH] Makefile: dedup git-ls-files output to prevent
+ duplicate targets
+References: <xmqqtu9d45f7.fsf@gitster.g>
+        <20220526021540.2812-1-worldhello.net@gmail.com>
+Date:   Wed, 25 May 2022 21:02:57 -0700
+In-Reply-To: <20220526021540.2812-1-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Thu, 26 May 2022 10:15:40 +0800")
+Message-ID: <xmqqo7zl2b66.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <RFC-patch-3.3-b099a3a4a96-20220525T234908Z-avarab@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BAD09EB2-DCA8-11EC-AF65-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 26, 2022 at 02:30:44AM +0200, Ævar Arnfjörð Bjarmason wrote:
->  `"exit"`::
-> -	This event is emitted when git calls `exit()`.
-> +	This event is emitted when git calls `exit()`. This event will
-> +	be produced for all regular ending of the git process, but it
-> +	might also exit via a "signal".
->  +
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-The second 'this' can be elided, thus says "This event is emitted ...
-and will be produced ...".
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>
+> If there are unresolved conflicts left in the working tree, "make" may
+> report warnings as follows:
+>
+>     Makefile:xxxx: target '.build/pot/po/FOO.c.po' given more than once
+>                    in the same rule
+>
+> The duplicate targets are introduced by the following pattern rule we
+> added in the preceding commit for incremental build of "po/git.pot",
+>
+>     $(LOCALIZED_C_GEN_PO): .build/pot/po/%.po: %
+>
+> and the duplicate entries in $(LOCALIZED_C_GEN_PO) come from the
+> "git ls-files" command in SOURCES_CMD.
+>
+> We can pass the option "--deduplicate" to git-ls-files to suppress
+> duplicate entries for unresolved conflicts.
 
->  ------------
->  {
-> @@ -435,7 +437,7 @@ only present on the "start" and "atexit" events.
->  `"atexit"`::
->  	This event is emitted by the Trace2 `atexit` routine during
->  	final shutdown.  It should be the last event emitted by the
-> -	process.
-> +	process, unless it was aborted (see "signal").
->  +
+Thanks for a quick response.
 
-Looks OK.
+We certainly can say "your SOURCES_CMD MUST NOT produce duplicates"
+and passing the --deduplicate option is one valid way to fix this
+specific case.
 
-> @@ -452,8 +454,11 @@ completed.)
->  
->  `"signal"`::
->  	This event is emitted when the program is terminated by a user
-> -	signal.  Depending on the platform, the signal event may
-> -	prevent the "atexit" event from being generated.
-> +	signal, which includes git itself calling abort(3). Depending
-> +	on the platform, the signal event may prevent the "exit"
-> +	and/or "atexit" events from being generated. E.g. if BUG() was
-> +	invoked we'll emit an "error" event followed by a "signal"
-> +	event, and nothing else.
->  +
+But I wonder if a more future-proof solution is to dedup the output
+of the SOURCES_CMD ourselves on the Makefile side.  That way, even
+if we update SOURCES_CMD in a way that could contain duplicates, we
+won't have to worry about duplicates.
 
-So in case of BUG() trigger, there may not be exit event due to user
-signal right? I'm expecting system (not user) signal in that case.
+---
 
--- 
-An old man doll... just what I always wanted! - Clara
+It feels way overkill to "sort" the list just to dedup its elements,
+but that is what GNU Make documentation info page recommends us to
+do, and we already do use it for deduplication in our Makefile
+twice.
+
+'$(sort LIST)'
+     Sorts the words of LIST in lexical order, removing duplicate words.
+     The output is a list of words separated by single spaces.  Thus,
+
+          $(sort foo bar lose)
+
+     returns the value 'bar foo lose'.
+
+     Incidentally, since 'sort' removes duplicate words, you can use it
+     for this purpose even if you don't care about the sort order.
+
+
+diff --git i/Makefile w/Makefile
+index 2b61f66259..1d3d3deba1 100644
+--- i/Makefile
++++ w/Makefile
+@@ -860,7 +860,7 @@ SOURCES_CMD = ( \
+ 		-o \( -name '*.sh' -type f -print \) \
+ 		| sed -e 's|^\./||' \
+ 	)
+-FOUND_SOURCE_FILES := $(shell $(SOURCES_CMD))
++FOUND_SOURCE_FILES := $(sort $(shell $(SOURCES_CMD)))
+ 
+ FOUND_C_SOURCES = $(filter %.c,$(FOUND_SOURCE_FILES))
+ FOUND_H_SOURCES = $(filter %.h,$(FOUND_SOURCE_FILES))
+
