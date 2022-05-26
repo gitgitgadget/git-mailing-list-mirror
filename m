@@ -2,132 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A52B7C433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 09:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71043C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 09:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346835AbiEZJJs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 05:09:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56566 "EHLO
+        id S1345918AbiEZJVK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 05:21:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239996AbiEZJJp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 05:09:45 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DE111FCC0
-        for <git@vger.kernel.org>; Thu, 26 May 2022 02:09:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1653556157;
-        bh=63HbYwbaiYE7eEjEXLzqOp0J76EIVn025mRXs/z6IDQ=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=j5MvL4011wKnc6h3uyXHCIr+ZK+p14E1ZiO+3+6JpmPo5gyG0E9WcP8YPWcJzjfrC
-         lGxvDVYs74Ldjf/DW9wKw6hV3Bu2phToZmR188F+KF4SU6htmbI+V6ZHmzOdDAqPGs
-         6Ge1OD9JUk3H6Ue8SNQ5cOLrW8VDd5ezLqcjrbMs=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N79NA-1nmaLh2JBM-017J0G; Thu, 26
- May 2022 11:09:17 +0200
-Message-ID: <7815a07a-da2f-d348-4179-6dc5b1d5fee6@web.de>
-Date:   Thu, 26 May 2022 11:09:15 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH v6 1/7] archive: optionally add "virtual" files
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
- <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
- <0005cfae31d52a157d4df5ba3db9f9f5b2167ddc.1653145696.git.gitgitgadget@gmail.com>
- <xmqqfskx5ndd.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqfskx5ndd.fsf@gitster.g>
+        with ESMTP id S1346858AbiEZJVJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 05:21:09 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFE6C6E5B
+        for <git@vger.kernel.org>; Thu, 26 May 2022 02:21:08 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id e28so1356560wra.10
+        for <git@vger.kernel.org>; Thu, 26 May 2022 02:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=3YN9KS8+rMJOYSsWrB98cjmYylZ/4PHa3tlTcQC9Abs=;
+        b=WNHzcR45EgR4qcfOSQk+T9KoQ0HDSn0BJA1RJrWinEnxP1OXjELm85lsO6B29BYRdC
+         W0rQJus7p1OzLo89rLTSSSRWqZzUVLqCcDStc4mY5+b6d6eWm5EPbBhjgG8pTtlBELLl
+         2T669K67hJvugVpTdvIWPkPMOIH4X0MlWS6wZugD/cP1uGgimIbXGxqXPkRpQf782UbD
+         4jLPfv4TxLzbvfK4NVGedzSGRF554NqpXZfJwu4TRvIy/8iupal7kfKZV13+kOb8elfL
+         +l5owNJTJADzg45sOSzA4Tf+XFJOHCFbSJzAnPjCnXdeyMWFmnXEQSu0Fs1aeWT1jt3T
+         czgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=3YN9KS8+rMJOYSsWrB98cjmYylZ/4PHa3tlTcQC9Abs=;
+        b=lIdnZ/9OLuHbNkPduvcBjDzfzehRgrN3lWE4+iKu7BLIfvdgcJJv3xxz7/TTr3eH3D
+         xiqWOLdGpyegZ4Lw+Zhtkcg59EC/MmaOwU8Da1VsHaabwKTyzGmpCX3jrObvaH5g/L6j
+         2ziRehqe2j8r/iN34wNBLjtytJZzOpiRwIRQBMRxx9XSvR+0svBmo8cr86G+p4lUfjN5
+         f5qtvJbJT0T57nVYZncnsuoI+p+WwFkUn+kRN3eWAU6wQKh5q0I1ckAKawAGrnPRopbX
+         1oIwrAyncWun+0Pd0ak6YESv8BpRvDfOQI5lpx84Y41WdxlhewX1l/AkGszMzmxqddIB
+         9d7g==
+X-Gm-Message-State: AOAM530kGpaVRPBoru9jicrRExlvxKW0eXU0Z0cSS7tZCcxRs2fz0Vez
+        WTY+S+63jC3qfkJVq1CE311nS7ZCnBI=
+X-Google-Smtp-Source: ABdhPJwGXvfBBU60h69qQWXfPTXJR5fgjkyQLRYb3KsnDeo6u1p1AlEzBchKgr+3feuwQdf/pDULCQ==
+X-Received: by 2002:a5d:414d:0:b0:210:531:81f9 with SMTP id c13-20020a5d414d000000b00210053181f9mr3480308wrq.67.1653556866229;
+        Thu, 26 May 2022 02:21:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j3-20020a05600c410300b0039732f1b4a3sm1436078wmi.14.2022.05.26.02.21.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 May 2022 02:21:05 -0700 (PDT)
+Message-Id: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
+From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 26 May 2022 09:21:02 +0000
+Subject: [PATCH 0/3] Die preserve ggg
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ADdXO4uJrmwpV6aojqE8GViOyJxYJHi32PDZzVb/7sR1OYC/cYa
- R0xXiv47tznAJrF3Ejg1TrJPUMCX6MIivxwQ+rjt0uciihHJC1WdAEfvzVXEeEJntdm9QF+
- pDayQiWIrXXPH5kJioTijhthKop1tHgqX03ibrydtwtZfhIAE3fb9ipFiZQApoqbhzRaNOR
- i0oxpwqPUuwiDjDP9s3Qg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:44ZjoqnEjJ4=:IVDIazG6W+gV3o7T4eDN2Y
- 0VlKC93rvIduQTEGxrQpADn+iT5m1SrxnE+Pk63aarT6nMd1cELaO82RAShPuiv3jK+mvYvPP
- 2kCCHtcNJBQJ9DxaHl2pKTruCijD2LIVEKBcOPAC8py/8Y96XBT5uD1Eh6mLdZLKPc1xWYf9B
- r8a8wV1h69O4LfFZzKywhp3/lH790uJzBttg2Y6OSMOh81RT6NVt+DjDYr7vrGPAAJMKUOIlG
- XGfre4H1me640cLM+06To35A+Luer/V8G+mmiwqtRuMR8GLD4xwjEM709MixwHpfhLKoCPmXn
- 20uBdll8ixQzrHbVRMdwPHrAnGhXv2fub0ajdPE0N+ZHbYiszfxQBtbWQ62OD3HZMM3kXMdM2
- ccnXSDAvlcG8gIpMo9DZRFfyFnsaoD2oqFuwKqvmLnInfgR2O+Y6/9L0H5Cu7yb6jB0+Xkjca
- Ec6NrPT3BsLPFa/G2CUXe3yZ2yjlSQCe8U+EGRxKF+KYaTU8h5vOsPCRUnXSp88Kkci6Tv+aQ
- g/X4ujDoE4Ump9N1UE5uSFr3nuxDP0CjkqcU7lvs5kK9jDmjPjOkDqaj8ToarTMVCvwDqv7XB
- PLfCh3K2ZSs60jCGQS+XpJZ2uMsGERrzwD1Wm/gBNy/VnYs9HqdcYrtIx7WMW2YJQcC1DLBUi
- l9LV5lQ3Y5irJBomwx+nDHFi4EOpEcQj4SPoG8NzZJJR30/6IGk3E1id6bqqlXAnRxMWAybtQ
- TPisM2lK2TIwigUqB0JtCVPbdcz2qt04yPDavo0cnvs7x9MXXG2rRxcbqUmHBNzgPK1cIHpbq
- OhGx/b5eMGJAanMsLsOgXgbNyixHz5tOwYloPE4ZbkSaBLBM8Unaudkt7R3vQV7gpI3m3lrCt
- rQGE6ayzLRIVWiRZaF7WFHQC0CIpFjGUTKQ4+RxNupJYQ1ezgvwjlbFxxJ9P79JLHm9i7E4y7
- pgo13SGOYp9mr+s+Klz7XmAvhXlIssuFqbVDSs7T6ssvhj2DW+4ks8JupRDqpP/o0JQRMbCoR
- qnhaHkVZGDBLEmuiScHZMwCEhp1OqV+OqmyWsz4a/tyDWyE59Mu1SB2xmSOv2cEsJda/IbvLn
- VXFz/WkaGXHs1C4OXuZqdSQMqe32GiYx5aX
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Philip Oakley <philipoakley@iee.email>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.05.22 um 23:11 schrieb Junio C Hamano:
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
->> @@ -61,6 +61,17 @@ OPTIONS
->>  	by concatenating the value for `--prefix` (if any) and the
->>  	basename of <file>.
->>
->> +--add-virtual-file=3D<path>:<content>::
->> +	Add the specified contents to the archive.  Can be repeated to add
->> +	multiple files.  The path of the file in the archive is built
->> +	by concatenating the value for `--prefix` (if any) and the
->> +	basename of <file>.
->
-> This sentence was copy-pasted from --add-file without adjusting.
-> There is no <file>; this new feature gives <path>.
->
-> Also, I suspect that the feature is losing end-user supplied
-> information without a good reason.  --add-file=3D<file> may have
-> prepared an input in a randomly named temporary directory and it
-> would make quite a lot of sense to strip the leading directory
-> components from <file> and use only the basename part.  But the
-> <path> given to "--add-virtual-file" does not refer to anything on
-> the filesystem.  Its ONLY use is to be used as the path in the
-> archive to store the content.  There is no justification why we
-> would discard the leading path components from it.
+This short series is a follow up to GitGitGadget "Update the die()
+preserve-merges messages to help some users (PR #1155)" [1].
 
-Good point.
+The first patch is a tidy up of the --preserve option to highlight that it
+is now Deleted, rather than Deprecated.
 
->  I am not
-> decided, but I am inclined to say that we should not honor
-> "--prefix".
->
->    $ git archive --prefix=3D2.36.0 v2.36.0
->
-> would be a way to create a single directory and put everything in
-> the tree-ish in there, but there probably are cases where the user
-> of an "extra file" feature wants to add untracked cruft _in_ that
-> directory, and there are other cases where an extra file wants to go
-> to the top-level next to the 2.36.0 directory.  A user can use the
-> same string as --prefix=3D<base> in front of <path> if the extra file
-> should go next to the top-level of the tree-ish, or without such
-> prefixing to place the extra file at the top-level.
+In response to Avar's comments that the former error message merely
+'tantilised without telling' the user what to do, it became obvious that the
+underling problem was that the user was unable to git rebase --abort which
+was also fatal, when a preserve-rebase was in progress.
 
-If the prefix is applied then a prefix-less extra file can by had by
-using --prefix=3D or --no-prefix for it and --prefix=3D... for the tree,
-e.g.:
+Thus the main update is to allow the rebase --abort command, even when a
+--preserve is in progress, to proceed. The --abort code was unchanged by the
+removal of the preserve option, as the resetting and clean up of internal
+state is common to the other rebase options.
 
-   $ git archive --add-file=3Dextra --prefix=3Ddir/ v2.36.0
+The user facing fatal message now simply advises to abort, or downgrade to a
+version that has preserve-merges to complete the rebase.
 
-puts "extra" at the root and the rest under "dir".  The order of
-arguments matters here, and the default prefix is the empty string.
+The final patch highlights that some IDEs still allow the setting of the
+preserve-merges option as a pull config setup.
 
-So extra files can be put anywhere even if --prefix is honored.
+Philip Oakly
 
-Keeping the whole path from --add-virtual-file makes sense to me; I
-slightly prefer applying --prefix on top of that for consistency.
+[1] GitLore ref pull.1155.git.1645526016.gitgitgadget@gmail.com
+https://lore.kernel.org/git/pull.1155.git.1645526016.gitgitgadget@gmail.com/
 
-Ren=C3=A9
+Philip Oakley (3):
+  rebase.c: state preserve-merges has been removed
+  rebase: help users when dying with `preserve-merges`
+  rebase: note `preserve` merges may be a pull config option
+
+ builtin/rebase.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+
+base-commit: c4f0e309ae745751d08727f24e8ff55e56355755
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1242%2FPhilipOakley%2Fdie_preserve_ggg-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1242/PhilipOakley/die_preserve_ggg-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1242
+-- 
+gitgitgadget
