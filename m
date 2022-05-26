@@ -2,96 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33980C433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 09:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35B8AC433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 09:43:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346875AbiEZJVf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 05:21:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34580 "EHLO
+        id S242664AbiEZJnY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 05:43:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346876AbiEZJVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 05:21:24 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9657AC6E69
-        for <git@vger.kernel.org>; Thu, 26 May 2022 02:21:11 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id z17so670044wmf.1
-        for <git@vger.kernel.org>; Thu, 26 May 2022 02:21:11 -0700 (PDT)
+        with ESMTP id S232937AbiEZJnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 05:43:23 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 746E2C1EF0
+        for <git@vger.kernel.org>; Thu, 26 May 2022 02:43:22 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id jx22so1870493ejb.12
+        for <git@vger.kernel.org>; Thu, 26 May 2022 02:43:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=i1fcypi1lc5gMfS/KDkqEFX5k2mvQoZzcsQsTX7NiCI=;
-        b=HD8tJPTaDvshDtVMjKqRaqR2nOJtbD929qKsuMO6EJ/UAVpNhFPk72MzsOnknn8yMs
-         v0QN1Rrbhtk/VnZZu2Cv2sk5OO+PjPHcgvdq27HLjdszmVWOBmG8EmMs5kOEGbhvi9kZ
-         cmPAqW6qv8OYXo6ACczxdos3s0Yhcgy8oQvkNtVlUW3WWlfLqyNh9y0/ncroFsr2AwEH
-         XDLsh+u9QryFiguiC2tWN0rtf8slPnu55zWl6xPZHmvjFubzFCkXMi/sD9GWaWBOloix
-         xmEZ+9E2cpyB7dqcjXrbe/DSjv6snXWfxOKFwqE4MzpA9uj5u1dtPYprqJPHQK4h18RP
-         MgAw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=BfSGVbOotNhpNwoVQYFymzHe2Wgd9I7knXbbSfCtFTQ=;
+        b=cVMOnBSKNIPIMMiSFFiuQ8u2ILaE986Mzi5Yiq9M6RemCfhCR56fC6TWFjZr5ua4lx
+         jy6A4sAhbCWK0FJegF6KRsiWNaxiIaK8GPJ9GirTshUyYaOaslECHH1qNosedBgTbdDH
+         8dYl6H9+0RFp3AtCEYF4OO5KrWZPKQw8mTrYJEYkEP7G6OTXkQ8lWY/+/dF95/pfPkEP
+         tpOJ04HiYw+b+D3XAk3iJlR0iHf/+B2B5zKZo50gua8UhwxovDRCJy045PV/kxHDkP5K
+         iOP+utOLcg/jpsq9Mi8ccCWge+1i8c6L/2P5gQKPJ99kxnBsTnAhxBjsuebgOC/wF2ed
+         11fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=i1fcypi1lc5gMfS/KDkqEFX5k2mvQoZzcsQsTX7NiCI=;
-        b=KmeIthTG+IxP/h1ilL0dDPSdr0KmUFD641W4iL+lI1aeF9lvGRlc4/exJ1MG4OjN9T
-         itsyY2o9BBCUo5VsAwoyEMq6kqKq/kunDcYjZgR1ftB2+nFF3Fo/kegqQxIFnvJWLJtI
-         EEB1AO0R8sBlCwN3Pnlzfss3yD+cKuY/a9gMzCXeSmWqyp0MIyicjOx86IakDg0itB9Q
-         n0iruBpjtVOkUmKyYctBJlwXZbMJKk3nvgy6aIlL2JVGRCUXuC//wRPAwfF6b1PI5Vmf
-         SStBfCR4w6AByCqGU9ZiGsCwBfl71gYotsS1CIikkNPNYmeL1uA3/fcDAEYEXFLHZTgX
-         tN5A==
-X-Gm-Message-State: AOAM533uBXCLN2tIXdkgq2HLdZ/9JV9sVaHMQSTEk9LCM1IV7nNT7jOO
-        /qwGvPIRiiRUGiGEcWjqKles7vBeI24=
-X-Google-Smtp-Source: ABdhPJzE9jfAf6qtZthG81rtpVCYFebu5I/QEkjb9RLu9XqNdifv81kCMHieB8Tp/Sq/0JjcVXwhIg==
-X-Received: by 2002:a7b:c451:0:b0:397:4c13:1873 with SMTP id l17-20020a7bc451000000b003974c131873mr1382182wmi.151.1653556869874;
-        Thu, 26 May 2022 02:21:09 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s10-20020adff80a000000b0020c5253d8besm1182699wrp.10.2022.05.26.02.21.09
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=BfSGVbOotNhpNwoVQYFymzHe2Wgd9I7knXbbSfCtFTQ=;
+        b=MNkmdagiKjRa6PrPQjz0g+FZ+kAqBA29cRnppFPwY3rXpkcc4q3ZX7EpTHFSF5Wk1M
+         /EsQPRIM90UFYfPyalX8Wt3uhEPSy3EhsS93rg/ctNaaGbMTYfeLT9KchgpE1G8EjVfr
+         PI+PraWKxL5dMbh71vzNefCghpxv5KE8ZOCL9gPJ3Mdzmj6lxQAr9xtbNoFGAj4a8MBM
+         pJRkAfpTaYu2Cdq7/wPb3TSOjeYKhqw16xQgkkmi7etlcHMu0BVkbLv16/3zkl50WlvY
+         sF9rHGajSiEep0FwAfiQxb2AjU/98iJw58Bfe9qb4vF10MzzAXdl3itP9EnvaDq0OuWm
+         DOHA==
+X-Gm-Message-State: AOAM533JosT3R1I0CBN64o8/wmAI6ZVWVOTgJVZ4q13s5t4y/KeDhFAS
+        aQV1/orhmlJ+SM/aH3CdmO0=
+X-Google-Smtp-Source: ABdhPJynjnzqbRGo6U5uJBLkr2svCIBhe1pXuPUcYMjPrMxu3e+Kz7jveMY4OfrGahlYcm3w+t7Plg==
+X-Received: by 2002:a17:906:7949:b0:6ff:27a9:f024 with SMTP id l9-20020a170906794900b006ff27a9f024mr1335898ejo.277.1653558200909;
+        Thu, 26 May 2022 02:43:20 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id u26-20020a50c2da000000b0042a9fcd7c73sm565316edf.46.2022.05.26.02.43.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 02:21:09 -0700 (PDT)
-Message-Id: <ece3eecdc4de44cdec1b6efa9079930721db85ad.1653556865.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
+        Thu, 26 May 2022 02:43:20 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nuA1X-000Aux-PQ;
+        Thu, 26 May 2022 11:43:19 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH 1/3] rebase.c: state preserve-merges has been removed
+Date:   Thu, 26 May 2022 11:40:42 +0200
 References: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
-From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 May 2022 09:21:05 +0000
-Subject: [PATCH 3/3] rebase: note `preserve` merges may be a pull config
- option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <0a4c81d8cafdc048fa89c24fcfa4e2715a17d176.1653556865.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <0a4c81d8cafdc048fa89c24fcfa4e2715a17d176.1653556865.git.gitgitgadget@gmail.com>
+Message-ID: <220526.86bkvk7hoo.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.email>
 
-The `--preserve-merges` option was removed by v2.35.0. However
-users may not be aware that it is also a Pull option, and it is
-still offered by major IDE vendors such as Visual Studio.
+On Thu, May 26 2022, Philip Oakley via GitGitGadget wrote:
 
-Extend the `--preserve-merges` die message to also direct users to
-the use of the `preserve` option in the `pull` config.
+> From: Philip Oakley <philipoakley@iee.email>
+>
+> Since feebd2d256 (rebase: hide --preserve-merges option, 2019-10-18)
+> this option is now removed as stated in the subsequent release notes.
+>
+> Fix the option tip.
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.email>
+> ---
+>  builtin/rebase.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 7ab50cda2ad..6ce7e98a6f1 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1110,7 +1110,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+>  			parse_opt_interactive),
+>  		OPT_SET_INT_F('p', "preserve-merges", &preserve_merges_selected,
+> -			      N_("(DEPRECATED) try to recreate merges instead of "
+> +			      N_("(REMOVED) try to recreate merges instead of "
+>  				 "ignoring them"),
+>  			      1, PARSE_OPT_HIDDEN),
+>  		OPT_RERERE_AUTOUPDATE(&options.allow_rerere_autoupdate),
 
-Signed-off-by: Philip Oakley <philipoakley@iee.email>
----
- builtin/rebase.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I have some local patches for this more generally, but for
+PARSE_OPT_HIDDEN options we never do anything with the "argh" field,
+i.e. it's only used for showing the "git <cmd> -h" output, and if it's
+hidden it won't be there.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index aada25a8870..6fc0aaebbb8 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1205,7 +1205,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			     builtin_rebase_usage, 0);
- 
- 	if (preserve_merges_selected)
--		die(_("--preserve-merges was replaced by --rebase-merges"));
-+		die(_("--preserve-merges was replaced by --rebase-merges\n"
-+			"Your `pull` configuration, may also invoke this option."));
- 
- 	if (action != ACTION_NONE && total_argc != 2) {
- 		usage_with_options(builtin_rebase_usage,
--- 
-gitgitgadget
+So there's no point in changing this string, nor to have translators
+focus on it, it'll never be used.
+
+This series shouldn't fix the general issue (which parse-options.c
+should really be BUG()-ing about, after fixing the existing
+occurances. But For this one we could just set this to have a string of
+"" or something, only the string you're changing in 3/3 will be seen by
+anyone.
