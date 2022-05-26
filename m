@@ -2,202 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B987C433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 18:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1661C433F5
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 19:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348649AbiEZS6U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 14:58:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59328 "EHLO
+        id S1348393AbiEZTAh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 15:00:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231196AbiEZS6S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 14:58:18 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D6DCC169
-        for <git@vger.kernel.org>; Thu, 26 May 2022 11:58:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1653591472;
-        bh=YC//nQJVtJMG/TFQtM0HOEqpNHKZ58KRjp8JeoHEwsw=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=MXQjkQWc0asKJ8H5pL+2+YoZMmqCn35wwpsTYPSlf18wE9+cMhkpJtaM98WmdQcf1
-         ORmnwll+9gy4DDlBkF7us1pkQRMSOAuM6aUH5JgbmTSGHM7xmrlHTeLQIXTKQ1hIrS
-         rtD07kFoCEnxpd3gxvFCu1xW15LZwu/NPPM9PjA0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M6HK6-1nwVbM1w9A-006yu6; Thu, 26
- May 2022 20:57:52 +0200
-Message-ID: <ed95b26a-2fa3-d1f7-3142-05719a44a8f7@web.de>
-Date:   Thu, 26 May 2022 20:57:49 +0200
+        with ESMTP id S231196AbiEZTAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 15:00:37 -0400
+Received: from pb-sasl-trial20.pobox.com (pb-sasl-trial20.pobox.com [173.228.157.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E206CFE24
+        for <git@vger.kernel.org>; Thu, 26 May 2022 12:00:35 -0700 (PDT)
+Received: from pb-sasl-trial20.pobox.com (localhost.local [127.0.0.1])
+        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id B12BB320E0;
+        Thu, 26 May 2022 15:00:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=YtZafFMt7ESd
+        9AFhVmYyUW9bPhY=; b=ac89Whh79UGPQtzoLo+Bx6x7OwRvTXTwB42/uB6v0QvR
+        khysQRBnDAu0hh3XG+PrEYXw90v2P1jda5pemSKfjT5OKZfJWSfFN+b0tEGavOYL
+        sr3W+cvHDeDfqJXCubQoen7FY1Pb0ytxL0s+Yd6WszjqrdzQO08pGmDQRmC/ZVE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=lPxZn5
+        wsRfeUPEeUnYGpSyTiDaSK2jz5DelA1GipmAYJFtvCnmABk0Uq6Qi61ACFPEE1Fd
+        hLGqCXcmljftQfV46UYkY2wBdHeZZt9FMEQrGVXBQP3MKfCm0JwdPBu6j6AXQMq+
+        VfX82weqIUmm/1lW18+i/0/ANyKmF7DYujjZU=
+Received: from pb-smtp20.sea.icgroup.com (pb-smtp20.pobox.com [10.110.30.20])
+        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 95518320DD;
+        Thu, 26 May 2022 15:00:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2A458192E5B;
+        Thu, 26 May 2022 15:00:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH] Makefile: dedup git-ls-files output to prevent
+ duplicate targets
+References: <xmqqtu9d45f7.fsf@gitster.g>
+        <20220526021540.2812-1-worldhello.net@gmail.com>
+        <xmqqo7zl2b66.fsf@gitster.g>
+        <CANYiYbEcNJ7+7XW-8-v+p8q=aiOP9RJYvST8ethVjxVdNugR5Q@mail.gmail.com>
+        <xmqq5yls3j8i.fsf@gitster.g>
+        <CANYiYbGn08N_9bOw+ss6L4U_iTomc-08_961bk40eq1BnEstiw@mail.gmail.com>
+        <220526.86tu9c625s.gmgdl@evledraar.gmail.com>
+        <xmqq8rqo1ad3.fsf@gitster.g>
+        <220526.86czg05ert.gmgdl@evledraar.gmail.com>
+Date:   Thu, 26 May 2022 12:00:29 -0700
+In-Reply-To: <220526.86czg05ert.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 26 May 2022 20:25:57 +0200")
+Message-ID: <xmqqh75cyv8y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH v6 1/7] archive: optionally add "virtual" files
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
- <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
- <0005cfae31d52a157d4df5ba3db9f9f5b2167ddc.1653145696.git.gitgitgadget@gmail.com>
- <xmqqfskx5ndd.fsf@gitster.g> <7815a07a-da2f-d348-4179-6dc5b1d5fee6@web.de>
- <xmqqee0g1aoz.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqee0g1aoz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1CB7E1A8-DD26-11EC-BE2D-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ijM2SRby7GGnw4YkkdwewEfgIzHOwrCY/bgsaD19LR99sVaugUd
- Fn3rEZTiXmrhy5T5JC8tigZOx2INBOtNbelVDpFAUEIZI+l7UBDsI9w+EmyrXEM4yM3K99r
- xQ0Lks6QVBftj/7KLI/VZThs+VM/olghTNVk+Uhe9fPbE7nurMgxbnl9KEIyQGPEus2skkK
- nSQxUxJPq0gQd/DJmebgA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6mpa4igplXs=:PRk4y2y2W5Ur3GK1DpHyKw
- lbz8GNhqWaucRW5v7ckdU2LuFeWjyshKDVuZKMqlcfvbA4tmMRUhwAXXH3XzyZePXy5E6YXnS
- suQtk+m5S1Se10IrqBnhG9UY3L4ADewNak4y5efzOlr68nvNjbn8tjtJVtRQoQ376Br+zGftk
- xH7jDQ3Phro/ovlq0UO1fCAf1/VouRK0YE5sx5ikHScSWC2g3lVS2wx4XobliUzPfquILEf7T
- jkFla+/xT0/mmRCApVCNfQBYSQ7dAeskUA+TiqgUjxO5kQH0Uas83i7gRUHjwBr7ls4reRtPP
- ueoJIuFVgruuMAVDp73zYWdndkBt0DNQUuLEki0w3Oz4nNG+5poZGHVtUQVhurNnipvZweJlL
- pexQFmkz1/L7Ms0sHZkyM71LJ16Y2mEs5Ci3aPTZMyDrqaIBaGiWCXJhBOLPQnPDVU/rOXhow
- vPnHKoGhr5UtcdGZ2CWJykXKjzkrf81m7rXxzWe9pZ0PQVKvPqOx8rAo0Ny9lO8/Nhsj3EODc
- RcEnHWjZGoAXdf3ebHYPJPoF1ZJ+rasEMQHwwZNO/fMc3Sy5U5k8bloCVrGS4LCg41qbrDhAP
- uLtta0TdC+kUhnESc1/h5AtdrMLk/D5CAtWF9gXIq3K+vHevPndMXVbCu1wBoQObxkDLgWl6Z
- f6hLiEBUqSBk6nImYZkq08kFni6w5Hb5X66SRgx/+X9im16Hnmyt0SHo63eEnuuYP9Ghv5QBb
- DcZ7PsnTiORB6PKmP4GkQOAxu29Pp8Tg7ZuTaE5GJ42tDeOplMlmqd1gFhX7tvJ3ZD+Gs5VXE
- 2WYCz6K5ZMaR0bB0ZAlq4I8f0wb1Im+VzPGcws2BvGmCQDIgpUrhwlWZYMs4qp5KYCYp//CLr
- YwMWEE/KzEvdIjd08Bx1Zk2QzWpmUGIbs7aO75w7DMtPEX90yKvbqqbciacc1EA6f9wkh1T7P
- Q6wW5M5/YEZV3nIGIN5mCeB7aLaruZb1zs6cJFH4zNo3YPPJaRYQ31DNM4zg2Srl8rjmESRou
- WD5q5pdj9SHhWtq6qFXwmcXySMglubXKO5+O1ourkGMbnDaCx0isl7llBLJqSicpe3oE3TMal
- ZMM9Dd1BZ/tNt+/g/Dkr+sVemTLc6bk9NsN
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.05.22 um 19:10 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> If the prefix is applied then a prefix-less extra file can by had by
->> using --prefix=3D or --no-prefix for it and --prefix=3D... for the tree=
-,
->> e.g.:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+>> Does "--sort-by-file" really mean that?
 >>
->>    $ git archive --add-file=3Dextra --prefix=3Ddir/ v2.36.0
+>> The option is documented to sort output by file location, but does
+>> it mean without the option (i.e. default), there is no guarantee in
+>> the output order?  Or are we sure that the output is sorted by the
+>> order of input files, and that is guaranteed to hold in the future?
 >>
->> puts "extra" at the root and the rest under "dir".  The order of
->> arguments matters here, and the default prefix is the empty string.
->
-> This was the part of the design for the original "--add-file" that I
-> was moderately unhappy with.  If "--add-file" were the only feature
-> that used "--prefix", I wouldn't have been unhappy, but this rule:
->
->         The value of "--prefix" most recently seen at the point of
->         "--add-file" is prepended.  (By the way, it is not clearly
->         documented what happens when you give multiple prefix and
->         when you give prefix before or after add-file)
-
-Regarding documentation: I wonder what's missing; a guess is below.
-
->
-> makes the original use of "--prefix":
->
-> 	The value given to "--prefix" is prepended to each filename
-> 	in the archive.  (IOW "git archive --prefix=3Dgit-2.36.0/
-> 	v2.36.0" is a way to prefix each and every path in the
-> 	tree-ish with the given prefix)
->
-> confusing.  Does
->
-> 	git archive --prefix=3Dbonus-files/ --add-file=3Dextra v2.36.0
->
-> place the main part of the archive also in bonus-files/ or at the
-> top level?  One reasonable interpretation is "yes", if we imagine
-> that each invocation of --add-file will consume and reset the prefix.
-> Another reasonable interpretation is "no", if we imagine that the
-> prefix last specified will stay around and equally affect both extra
-> ones and main part of the archive.
->
-> Unfortunately what the implmentation does is the latter, and those
-> who want to put the main part of the archive at the top-level must
-> add "--prefix=3D''" at the end (before the tree-ish).
-
-A one-shot --prefix would be surprising -- usually options keep their
-value until they are specified again with a different value or negated
-(--no-...).  That surprise could be documented away by using a
-different name like --next-prefix or --single-use-prefix.  But a
-sub-option to a single option like that would probably be better baked
-into that option, e.g. allow --add-file=3D<path_in_archive>:<path_in_fs>.
-
->
-> Because of this potential for confusion ...
->
->> So extra files can be put anywhere even if --prefix is honored.
+>> If we are depending on certain ordering of the output produced by
+>> gettext suite of programs, I would keep the option, regardless of
+>> what we do to the input to them, if I were running the i18n part of
+>> this project.
 >>
->> Keeping the whole path from --add-virtual-file makes sense to me; I
->> slightly prefer applying --prefix on top of that for consistency.
+>> But I am not, so I would not complain if --sort-by-file is dropped
+>> against my advice ;-)
 >
-> ... I was hoping that we can releave users from having to worry
-> about the interaction between "prefix" and contents coming from
-> outside the tree-ish by ignoring the "prefix".
+> The gettext docs are pretty light on the subject, but the default "sort
+> order" is none at all. I.e. it'll just inhale source and spew out
+> translations in the order you feed them to xgettext.
 >
-> But either is fine by me.
+> So in order of input files, and then in order they're seen in the
+> program.
+>
+> I don't think that's ever going to change.
 
-The unusual thing about the current --prefix implementation is that its
-current value is captured along the way instead of just using its
-right-most value.  Not sure ignoring it for one of the three archive
-content sources helps.  (Really, it's hard for me to put me in the shoes
-of someone who doesn't know how these options are supposed to be used.)
+OK, so as long as make's notion of $(sort) and gettext suite's
+notion of --sort-by-file are the same, we didn't make any change,
+and even if they were different, since there is no version of Git
+that uses "--sort-by-file" while preparing the po and pot files, it
+still is OK.  As long as make's $(sort) is as stable as gettext
+suite's "--sort-by-file" across developer locales (and our filenames
+are ascii-only and hopefully will stay that way), everybody will get
+the messages in the same order either way (or we would have the same
+problem so switching from --sort-by-file to $(sort) is not making
+anything worse).
 
 
-=2D-- >8 ---
-Subject: [PATCH] archive: improve documentation of --prefix
-
-Document the interaction between --add-file and --prefix by giving an
-example.
-
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- Documentation/git-archive.txt | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index bc4e76a783..10a48ab5f8 100644
-=2D-- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -49,7 +49,9 @@ OPTIONS
- 	Report progress to stderr.
-
- --prefix=3D<prefix>/::
--	Prepend <prefix>/ to each filename in the archive.
-+	Prepend <prefix>/ to each filename in the archive.  Can be
-+	specified multiple times; the last one seen when reading from
-+	left to right is applied.
-
- -o <file>::
- --output=3D<file>::
-@@ -58,8 +60,8 @@ OPTIONS
- --add-file=3D<file>::
- 	Add a non-tracked file to the archive.  Can be repeated to add
- 	multiple files.  The path of the file in the archive is built
--	by concatenating the value for `--prefix` (if any) and the
--	basename of <file>.
-+	by concatenating the current value for `--prefix` (if any) and
-+	the basename of <file>.
-
- --worktree-attributes::
- 	Look for attributes in .gitattributes files in the working tree
-@@ -194,6 +196,12 @@ EXAMPLES
- 	commit on the current branch. Note that the output format is
- 	inferred by the extension of the output file.
-
-+`git archive -o latest.tar --prefix=3Dbuild/ --add-file=3Dconfigure --pre=
-fix=3D HEAD`::
-+
-+	Creates a tar archive that contains the contents of the latest
-+	commit on the current branch with no prefix and the untracked
-+	file 'configure' with the prefix 'build/'.
-+
- `git config tar.tar.xz.command "xz -c"`::
-
- 	Configure a "tar.xz" format for making LZMA-compressed tarfiles.
-=2D-
-2.35.3
