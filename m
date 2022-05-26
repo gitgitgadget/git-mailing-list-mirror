@@ -2,120 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7CD1C433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 16:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3443C433FE
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 16:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243761AbiEZQCd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 12:02:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34570 "EHLO
+        id S1348201AbiEZQgk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 12:36:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231881AbiEZQCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 12:02:31 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB995FA3
-        for <git@vger.kernel.org>; Thu, 26 May 2022 09:02:30 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id pq9-20020a17090b3d8900b001df622bf81dso2052324pjb.3
-        for <git@vger.kernel.org>; Thu, 26 May 2022 09:02:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=omEq7OMbl6CKshq7RIeHmLBGO7PLf3JRaj++vyGlgSw=;
-        b=OToQ/lbhpZ4lovstWflFba/GmKQukd57Ehj0lqkpPa3zGukhdZefOWhWlTuNvEnYsy
-         NtmqfryWcHFzdtwnyLssANAdJxFsx87eFVNWV9uSd8qw2frSn1x50hxMP1cyxH9FeoOu
-         7BN17er4A9ByLUG3aVZme9mmB+gC0hWmxD1ubKfq6fn4q34McjbleJhHnUyri821J3Ao
-         74sPUaHOzj6fr9qKH2EcQ8kiygP26ZAYLLmgPkgMs3U1pL8049SUVErxkyEoFbAIVu26
-         4j5jXyYs1eJ4/JVpTS9yeeWgyvrxVnlDxxVGpnQrvgo7vjVukiVShsn+BIDgSWYejyVN
-         zERw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=omEq7OMbl6CKshq7RIeHmLBGO7PLf3JRaj++vyGlgSw=;
-        b=1y84OYHxKnssqBovM2hKmy8r2KG813FnSGbicUqWII/3HBbNKBlwdcDkWmY6USxZ2x
-         gJBcTzONahHYzZT7OMAuCtzrNkCFwYdSasNgC7uc8MMdW847JO/vPAobEzwiat2OeXMc
-         aroChFCoeSntZKNQ6tib8xCsepljP1vtrJkqf68puQO8IZt7ssSNxUUmFDTlC3sFESod
-         rJySVOixhH3cFdg2VGUqdtRKpUE+3AKoa+sqApZO1ehIQXoo2EYMPgq15LCG6c7W1QFg
-         Rm5QCjIzUtWzng3/7lBe9Om8FzUTBO+MNM0jhl8WM4vUA9I/HWkvQHKVkJ1t7uwC/bIO
-         k7kw==
-X-Gm-Message-State: AOAM532kfkD/h0W13SiJaQuveLaDIxalOOUlnSCGiA8a1R6vy8cFy5jd
-        08lMDm9e6uKZjMI+fwqkRzIe
-X-Google-Smtp-Source: ABdhPJz7wYnDZR/9GfMNFj0omb5Gakb6VGl3foDQ2i7Yac4lrgCw6OzEvhTShN27v1HxPoLKcD0r2Q==
-X-Received: by 2002:a17:90b:4f8e:b0:1e0:2916:daae with SMTP id qe14-20020a17090b4f8e00b001e02916daaemr3371171pjb.140.1653580949598;
-        Thu, 26 May 2022 09:02:29 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id o13-20020a170903210d00b0015e8d4eb213sm1724233ple.93.2022.05.26.09.02.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 May 2022 09:02:29 -0700 (PDT)
-Message-ID: <df44b0cd-bba7-19f0-4e45-c0988239cc4d@github.com>
-Date:   Thu, 26 May 2022 09:02:27 -0700
+        with ESMTP id S1348187AbiEZQgh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 12:36:37 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF1A4D9F0
+        for <git@vger.kernel.org>; Thu, 26 May 2022 09:36:24 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD711124C9E;
+        Thu, 26 May 2022 12:36:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=kLfOT+coTOkr
+        +/p2R2NTH51Is8H9Twxh98xYs/LY/bE=; b=PD4E1NG6Fs0nrYvoNgv/AwAmNx9S
+        eNW6+r5cIaB65s+4vUizTTsevK3gtBTtnErYXmIxLMuig2pTKQHMEMaePoDQUnU0
+        GOQNs/65x3Na4Ws19OsF3aPzKIhxR+S4qKRZlT6CkDXvpKZnHHkLayCQx+r1bqpn
+        K7idZF8nP4xoPng=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A82E0124C99;
+        Thu, 26 May 2022 12:36:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F1A62124C98;
+        Thu, 26 May 2022 12:36:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Anthony Sottile <asottile@umich.edu>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 0/8] hook API: connect hooks to the TTY again, fixes
+ a v2.36.0 regression
+References: <cover-0.6-00000000000-20220421T122108Z-avarab@gmail.com>
+        <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
+        <nycvar.QRO.7.76.6.2205251308381.352@tvgsbejvaqbjf.bet>
+        <xmqqbkvl8s88.fsf@gitster.g> <xmqqczg13xpy.fsf@gitster.g>
+        <220526.86pmk060xa.gmgdl@evledraar.gmail.com>
+Date:   Thu, 26 May 2022 09:36:20 -0700
+In-Reply-To: <220526.86pmk060xa.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 26 May 2022 12:16:23 +0200")
+Message-ID: <xmqqpmk01caj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: What's cooking in git.git (May 2022, #07; Wed, 25)
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <xmqqzgj41ya2.fsf@gitster.g>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <xmqqzgj41ya2.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F9FF3828-DD11-11EC-A0C2-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> * js/ci-github-workflow-markup (2022-05-21) 12 commits
->  - ci: call `finalize_test_case_output` a little later
->  - ci(github): mention where the full logs can be found
->  - ci: use `--github-workflow-markup` in the GitHub workflow
->  - ci(github): avoid printing test case preamble twice
->  - ci(github): skip the logs of the successful test cases
->  - ci: optionally mark up output in the GitHub workflow
->  - ci/run-build-and-tests: add some structure to the GitHub workflow output
->  - ci: make it easier to find failed tests' logs in the GitHub workflow
->  - ci/run-build-and-tests: take a more high-level view
->  - test(junit): avoid line feeds in XML attributes
->  - tests: refactor --write-junit-xml code
->  - ci: fix code style
-> 
->  Update the GitHub workflow support to make it quicker to get to the
->  failing test.
-> 
->  Will merge to 'next'?
->  source: <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
-> 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-The latest version of this nicely addressed the feedback I originally had,
-particularly in improving page loading time. It's still slower than before
-this series, but IMO it's manageable (especially taking into account the
-improved information accessibility). 
+> The current proposal is large by line count, but it's relatively easy t=
+o
+> skim it and assure oneself that a new parameter is being passed in, and
+> that all the proposed behavior change applies only to the one caller
+> that passes in that new parameter.
+>
+> Whereas switching to a new non-callback based API will require carefull=
+y
+> going over the parallel API line-by-line, assuring oneself that the
+> non-callback version is really doing the same thing etc.
 
-I don't see (or have) any other unaddressed concerns, so I'm in favor of
-moving it to 'next'.
+I was worried about something like that when I wrote (admittedly
+unfairly, in a somewhat frustrated state) that the series was
+designed to be hard to revert.  The reverting itself was reasonably
+easy if the "did we invoke the hook, really?" topic is discarded at
+the same time, but if was done with too much rearchitecting, it is
+understandable to become cumbersome to review X-<.
 
-> * ds/sparse-sparse-checkout (2022-05-23) 10 commits
->  - sparse-checkout: integrate with sparse index
->  - p2000: add test for 'git sparse-checkout [add|set]'
->  - sparse-index: complete partial expansion
->  - sparse-index: partially expand directories
->  - sparse-checkout: --no-sparse-index needs a full index
->  - cache-tree: implement cache_tree_find_path()
->  - sparse-index: introduce partially-sparse indexes
->  - sparse-index: create expand_index()
->  - t1092: stress test 'git sparse-checkout set'
->  - t1092: refactor 'sparse-index contents' test
-> 
->  "sparse-checkout" learns to work well with the sparse-index
->  feature.
-> 
->  Will merge to 'next'?
->  source: <pull.1208.v3.git.1653313726.gitgitgadget@gmail.com>
-> 
+I wonder if rebuilding from scratch is easier to review, then?  The
+first three patches of such a series would be
 
-Likewise here - V2 handled all of my nits, and V3 made some helpful
-improvements to variable naming & documentation. There's nothing else I'm
-waiting for on this, so I'd be happy to see it merge to 'next'.
+ - Revert cb3b3974 (Merge branch 'ab/racy-hooks', 2022-03-30)
+ - Revert 7431379a (Merge branch 'ab/racy-hooks', 2022-03-16)
+ - Revert c70bc338 (Merge branch 'ab/config-based-hooks-2', 2022-02-09)
+
+and then the rest would rebuild what used to be in the original
+series on top.  There will be a lot of duplicate patches between
+that "the rest" and the patches in the original series (e.g. I would
+imagine that the resulting hook.h would look more or less
+identical), but "git range-diff" may be able to trim it down by
+comparing between "the rest" and "c70bc338^..c70bc338^2" (aka
+ab/config-based-hooks-2).  I dunno.
+
+Thanks.
