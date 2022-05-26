@@ -2,106 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DF70C433F5
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 21:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C6E7C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 21:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238288AbiEZV11 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 17:27:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48360 "EHLO
+        id S1346588AbiEZVdM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 17:33:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbiEZV1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 17:27:24 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B47719D07A
-        for <git@vger.kernel.org>; Thu, 26 May 2022 14:27:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1653600425;
-        bh=//lTQZbm2+jtFWoetDj+ompMHPf5YLZ8NIGSqrozNtE=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=cs9cEXyjpRktbsUy0F5Q0ZXVvmrWhwaMLtQTvYnXIWBJAqN+CVOVYIt2fSuyi6Yva
-         W2pU3zsb8+rEBDmZFkbaU/AhXtRZpVnb9ULOlsQCI3TXi4gUEk84TeMKnPw4zJkjYA
-         pxxVThos947Te9suQxRGo+cTGXC2CQqzQnX+kwfA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M5j1c-1nvyuA3LBq-007h7v; Thu, 26
- May 2022 23:27:04 +0200
-Message-ID: <32e5088b-35a1-4e8c-098e-18c465a0a0bb@web.de>
-Date:   Thu, 26 May 2022 23:27:01 +0200
+        with ESMTP id S233244AbiEZVdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 17:33:11 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F268A075
+        for <git@vger.kernel.org>; Thu, 26 May 2022 14:33:10 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id ck4so5252992ejb.8
+        for <git@vger.kernel.org>; Thu, 26 May 2022 14:33:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Y1zF2+FYKRkG7mgM8mDwtluw5WQTuHsQZc+8FQ+q2Jg=;
+        b=kk8xNOdrJFg3QQD2pNULqMsZnurKo8H4sdeLBGc4UFLDELMz3OKRf6rtKN246tzyXj
+         lAmQ7WbZDKYj5Fw9xNbJtJQYTTs6PrPaXjVoLFwUKnrP11p3i26zUQdwlE1pD85iTzMO
+         u0qFgpwqbSKBPxztj0Deb6XnoNxuCXeAO3nd042ExLogCz0yOfJQ0dAXBqzrNQCtJGLE
+         p9bAAh8WwPPZC2c4zDzXXoSHjzMKLww6GlImu91BS0pGKKf4yC6hgyFO6OnqsPXOJ4Cw
+         0V63fbNe+W6eMOMNU56mUwkl+VUBOm4KBqZQqeXI5fGOt9wrfPaalky88xZP/9deZ+Ui
+         VIjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Y1zF2+FYKRkG7mgM8mDwtluw5WQTuHsQZc+8FQ+q2Jg=;
+        b=botIEFh9fCpHoDsgM277tfaY364unqL4XB2kmUhhMDxW9Ok8xAh42UjXPLEp7ksB+l
+         A/OvSavtjQEABI+OIRpQ5CPsDk3UGbfzvieYR0rVJYIrRcWhx+s9qQ8hzfos0E42KYHZ
+         xFDfV7F89Ap77tudPeCAuiqLga9T2rm4AYvtZzyPDDaiMSzKP2lGiYtCUXQFJi4raNeD
+         mB/Ky1PXCAzXz10Ywo2VLfnhg/QGyiAHrdwreSeTAB/CSEeGxl004C/EMhs6Rpz+mDAS
+         1Q9R1un3NTEiOdJyX3pScuj2fdA4FPqMbiSLQzqGP/MbQmG77MjMXMWeO932hrrREZgu
+         z4/g==
+X-Gm-Message-State: AOAM533d30ZMujhffl2cGnxQpZR41e26mm3Y0Wfew5emyWWKdgH57WjX
+        FHWvrSj8ioLk+SBRgG2jJ34qTbsnRf8=
+X-Google-Smtp-Source: ABdhPJxuH0MDYsi4AXn2YllPXUDU1jg38A0sIuXp192+JH6En5o3iYmhP/QP1W16l+xMUh1VBM/CfA==
+X-Received: by 2002:a17:906:fa85:b0:6fe:a2b8:ed3d with SMTP id lt5-20020a170906fa8500b006fea2b8ed3dmr30313907ejb.440.1653600788652;
+        Thu, 26 May 2022 14:33:08 -0700 (PDT)
+Received: from localhost (84-236-78-147.pool.digikabel.hu. [84.236.78.147])
+        by smtp.gmail.com with ESMTPSA id wh21-20020a170906fd1500b006fedcc56b0bsm844900ejb.170.2022.05.26.14.33.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 May 2022 14:33:07 -0700 (PDT)
+Date:   Thu, 26 May 2022 23:33:05 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: build 'gitweb' in the default target
+Message-ID: <20220526213305.GA1707@szeder.dev>
+References: <20220525205651.825669-1-szeder.dev@gmail.com>
+ <220526.86k0a96sv2.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH 1/3] rebase.c: state preserve-merges has been removed
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
-References: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
- <0a4c81d8cafdc048fa89c24fcfa4e2715a17d176.1653556865.git.gitgitgadget@gmail.com>
- <220526.86bkvk7hoo.gmgdl@evledraar.gmail.com>
- <19baf95d-67d4-d7ed-72a6-96d098171d3a@web.de> <xmqq5ylsxccw.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq5ylsxccw.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:/cSev8i7uFAe43+RufCyodbL+hNsyrUsm9aGrwUgs0VkdTY7Ia+
- 9ZDqnliKHdWVOJcYeAoMtuH1q/4KVhmWd2/qG+vqhpjqbCWsyBf+ldb/t5ptzAqQmqYwExm
- NLIdkU2QpppMy3l/MgCFRZeguwvsqD7ClNgoMh0NVTzl2ICGDiIndmkJZNj9upa0cCb+OHB
- Z5nXcLbnZQYb5Poox8gGg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OWnWapr2FuI=:xzvLXrchzomHl7CGy541zH
- Z73O70b4nYoCioXWbbXCmsQqocNTPU0bnCnSp1dBCRaoYEymwMDSwaVn1pSZujV3iW4DC3kM8
- s0Hd7E//ct9Y2uTtWpHfTggB8nugS9W6p9pCQGTOq4fMCJrJfy9D/ML+wz3IjN0+ciiixYzCS
- wo/9Gq3G3eodoAiCjKt/6ZYRPh8PKnUFJyW7LujWat/1CpXnHhyifEX/PIYOCl1jE5vMSGgBz
- VDiWLiF1GTY1fuFkDmFU5+1w6PwfVO9Zz8FyCbv5TPmaS4IHwph6o38ptlbFAJi5LLCYAc0o2
- dyb2IOOrYJoYJk5mHrk0J92Uv5CQpw23NLFzX5givrwGCweHVoUehXS33pVeyKuf+q1bdkuHn
- WUgzgOsGnPsSy4RVAAPGhNEiVFFEMD7g9jf0y9BS3sHERh3dIyUsFvpi56/xwYMCOOLnbk4QC
- SsqPdVKUuACJjnwRP6eAgGiLN0a/MLiq/Bv8a0hbJr9s0mN0FF2H5OGMHF+y79RWSEIWZPC1K
- a022GL6/LEVAg9xvOzV8tSfOp2i7R0Na//TF83H2NgYSfl32NqZAaoRyHeoBfa45txLEqERnQ
- bHzpuya6cZHYM0+meZpHUAVS/SmzeQrmxLPwqa0NX/D0l7Q4TVD4XemQHNCZP6hnp/2FiTnzg
- s8rUGSJPG1gRddCZun1qzBKuOetsAA0ipLFAXud0zW73Ec7AhV6lkjnWXea+uo93r5r71feXp
- +VjH2I/m9V7WlVZK/ZRPtfBlR6HpqlL2IioGFtDghnUyHAEccUNmyOMzujtc9VvCYTBoSne7O
- dDei98BD4yYbfO4sR+z7QbN2ll/Xfx7NveOXBNSkTcVoWW/d+xHE0v3WfI8ts6C+rv92aIco9
- mlk3By80PKFzNxAjiCWYLk4JZahTgLXqzyNaXWZMADURmjuleJ0eenx5cIGZqbtHUA15dG8IW
- NJDciXZ3zTif60/i58iB68Zi6su9X4M+S9dZ6tvFH7GSLwiwp6Db96MiwX16DV7pZwuYuI3Om
- d83bDQ1WGtBeoTAQG5Hy0ye9zNHyN2/Fl7jHkTCOi+4fZscn5GtKJmUzDFwoPMZS+ybQdyf+o
- Oiwx2EC1IkZDiPa3ABJErZwvcsCm9Z+nnDV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220526.86k0a96sv2.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.05.22 um 22:33 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->>>>  		OPT_SET_INT_F('p', "preserve-merges", &preserve_merges_selected,
->>>> -			      N_("(DEPRECATED) try to recreate merges instead of "
->>>> +			      N_("(REMOVED) try to recreate merges instead of "
->>>>  				 "ignoring them"),
->>>>  			      1, PARSE_OPT_HIDDEN),
->>>>  		OPT_RERERE_AUTOUPDATE(&options.allow_rerere_autoupdate),
+On Thu, May 26, 2022 at 02:14:33AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, May 25 2022, SZEDER Gábor wrote:
+> 
+> > Our Makefile's default target used to build 'gitweb', though
+> > indirectly: the 'all' target depended on 'git-instaweb', which in turn
+> > depended on 'gitweb'.  Then e25c7cc146 (Makefile: drop dependency
+> > between git-instaweb and gitweb, 2015-05-29) removed the latter
+> > dependency, and for good reasons (quoting its commit message):
+> >
+> >   "1. git-instaweb has no build-time dependency on gitweb; it
+> >       is a run-time dependency
+> >
+> >    2. gitweb is a directory that we want to recursively make
+> >       in. As a result, its recipe is marked .PHONY, which
+> >       causes "make" to rebuild git-instaweb every time it is
+> >       run."
+> >
+> > Since then a simple 'make' doesn't build 'gitweb'.
+> >
+> > Luckily, installing 'gitweb' is not broken: although 'make install'
+> > doesn't depend on the 'gitweb' target, it runs 'make -C gitweb
+> > install' unconditionally, which does generate all the necessary files
+> > for 'gitweb' and installs them.  However, if someone runs 'make &&
+> > sudo make install', then those files in the 'gitweb' directory will be
+> > generated and owned by root, which is not nice.
+> >
+> > List 'gitweb' as a direct dependency of the default target, so a plain
+> > 'make' will build it.
+> >
+> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> > ---
+> >  Makefile | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/Makefile b/Makefile
+> > index f8bccfab5e..ee74892b33 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -2188,6 +2188,8 @@ ifneq (,$X)
+> >  	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMANDS_TO_INSTALL) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
+> >  endif
+> >  
+> > +all:: gitweb
+> > +
+> >  all::
+> >  ifndef NO_TCLTK
+> >  	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir='$(gitexec_instdir_SQ)' all
+> 
+> In various recent patches & some upcoming ones I plan to submit I've
+> been trying to get the runtime of a noop "make" runs down, which really
+> helps e.g. with "git rebase -x make ..." running faster on a large
+> series.
+> 
+> While you're right that this wasn't intentional to begin with, we have
+> lacked the "gitweb" as part of the default target since v2.4.5 now, and
+> adding it back is a major performance regression on noop "make" runs:
 
->> Anyway, the new help text explaining what the option once did is a bit
->> confusing.  It would be better to focus on what it's doing now (nothing=
-)
->> and/or why we still have it (for backward compatibility), I think.
->
-> Do you mean that we should say "this option used to do such and such
-> but it is now a no-op" after "(REMOVED)" label, instead of the above
-> "this option does such and such"?  I think "(REMOVED)" is a strong
-> enough hint that lets us get away without saying "used to" and "but
-> it is now a no-op", so I can accept both.
->
-> Or do you mean we should say "(REMOVED) for backward compatibility,
-> does nothing but errors out"?  I would be less in faviour, then.
-> Those who are curious enough to ask --help-all would find it more
-> helpful if we said what it used to do.  Otherwise they wouldn't be
-> asking --help-all in the first place, no?
+I think that generating stuff, potentially as root, during 'make
+install' is a more severe regression, than this noop make slowdown,
+which in practice tends to be lost in the noise anyway.  Even in an
+unrealistic case (it doesn't modify any C source files explicitly, let
+alone a frequently included header file) like this:
 
-When I see an option labeled "REMOVED" then I get confused because a
-thing that says it no longer exists is obviously lying -- a removed
-option would simply not be listed.  Here the feature is gone and its
-option remains, but only reports an educational message now.
+  $ git checkout fddc3b420f^
+  $ make
+  [...]
+  $ for i in {1..10} ; do git commit --allow-empty -q -m $i ; done
+  $ time git rebase -x 'make -j8 NO_TCLTK=Y >/dev/null' HEAD~10
+  [...]
+  real	0m31.026s
+  user	0m46.897s
+  sys	0m11.492s
+  $ git checkout fddc3b420f
+  $ for i in {1..10} ; do git commit --allow-empty -q -m $i ; done
+  $ time git rebase -x 'make -j8 NO_TCLTK=Y >/dev/null' HEAD~10
+  [...]
+  real	0m30.865s
+  user	0m48.315s
+  sys	0m12.125s
 
-Perhaps a better option help text would be something like "no longer
-supported, consider using --rebase-merges instead"?
+Hrm, it actually ended up slightly faster.
 
-Ren=C3=A9
+> 	$ git hyperfine -L rev HEAD~1,HEAD~0 -L t Y, -s 'make' 'make NO_TCLTK={t}' --warmup 1 -r 5
+> 	Benchmark 1: make NO_TCLTK=Y' in 'HEAD~1
+> 	  Time (mean ± σ):     103.6 ms ±   1.1 ms    [User: 83.8 ms, System: 32.1 ms]
+> 	  Range (min … max):   102.2 ms … 105.2 ms    5 runs
+> 	 
+> 	Benchmark 2: make NO_TCLTK=Y' in 'HEAD~0
+> 	  Time (mean ± σ):     191.4 ms ±   1.6 ms    [User: 151.0 ms, System: 60.5 ms]
+> 	  Range (min … max):   189.2 ms … 193.3 ms    5 runs
+> 	 
+> 	Benchmark 3: make NO_TCLTK=' in 'HEAD~1
+> 	  Time (mean ± σ):     272.0 ms ±   5.0 ms    [User: 206.3 ms, System: 83.3 ms]
+> 	  Range (min … max):   266.7 ms … 277.3 ms    5 runs
+> 	 
+> 	Benchmark 4: make NO_TCLTK=' in 'HEAD~0
+> 	  Time (mean ± σ):     358.3 ms ±   1.4 ms    [User: 282.7 ms, System: 104.0 ms]
+> 	  Range (min … max):   356.6 ms … 360.0 ms    5 runs
+> 	 
+> 	Summary
+> 	  'make NO_TCLTK=Y' in 'HEAD~1' ran
+> 	    1.85 ± 0.02 times faster than 'make NO_TCLTK=Y' in 'HEAD~0'
+> 	    2.63 ± 0.06 times faster than 'make NO_TCLTK=' in 'HEAD~1'
+> 	    3.46 ± 0.04 times faster than 'make NO_TCLTK=' in 'HEAD~0'
+> 
+> I.e. this is with your patch here applied as HEAD~0 and HEAD~1 being
+> 'master'.
+> 
+> I think given that that a better solution would be to just declare this
+> as a feature at this point
+
+As long as 'make install' installs 'gitweb', I don't think that's an
+option.
+
+> especially as gitweb/INSTALL notes that the
+> way to install it is:
+> 
+>         $ make prefix=/usr gitweb                            ;# as yourself
+>         # make gitwebdir=/var/www/cgi-bin install-gitweb     ;# as root
+
+Or are you suggesting not to install 'gitweb' during 'make install'?
+I'm fine with that, but I doubt I will argue about it convincingly in
+a commit message.
+
+> Or we could just fold gitweb/Makefile into the main Makefile, unlike
+> gitk and git-gui it's not externally maintained, and most of it is
+> shimmying to work around not being part of the main Makefile (which it
+> strongly inter-depends on anyway).
