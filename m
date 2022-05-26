@@ -2,156 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F11FAC433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 19:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B96C433F5
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 19:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236740AbiEZTV1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 15:21:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40566 "EHLO
+        id S238184AbiEZTVx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 15:21:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231302AbiEZTVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 15:21:25 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A7EDFF54
-        for <git@vger.kernel.org>; Thu, 26 May 2022 12:21:22 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id rq11so4823793ejc.4
-        for <git@vger.kernel.org>; Thu, 26 May 2022 12:21:22 -0700 (PDT)
+        with ESMTP id S231145AbiEZTVv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 15:21:51 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD25DFF6B
+        for <git@vger.kernel.org>; Thu, 26 May 2022 12:21:50 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id u12-20020a17090a1d4c00b001df78c7c209so5237302pju.1
+        for <git@vger.kernel.org>; Thu, 26 May 2022 12:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=TQRm8RwzlkzHyg/NLGPZYxSynGKWdY2y8cid+W9QBbc=;
-        b=MsC1brU9j4bEGhqthtxu7nnpQsZKWIkdAUYXIKtPxWK5faYHkefpuLLBsPDDzd8WVj
-         rkceAHQBXr51Db4b0nsKjlZanP8L+kfBzOqUBgRqwttEtT0wr/PpigQ6TeU2qWiJtXKX
-         NwmdRrUBexnC3ZPzVfgy6SRBJSeNf0zT4g8jVJEegWO20gTQ26abck1fSzyZhEg9XyG3
-         cO8RPh8e2Fj7DKePhJMozLj005cbQW1Gj2oBfQVDC4FHDbl56b01OeL64N0wiIW9PQ1F
-         FS5/qjgnweIRJtbaq/vFocF7naeqKCBURwPoyEt1x2m3m14S1LIqC4+F17cnZCqVX7iP
-         piXg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=puGnolQGgKfgDGv0yqNypz2hUITZVWY+agpwdhUTwQ0=;
+        b=TowzicKuSG3FMONfmS0gT+BWF/AKqMlYv6O4ksHkpqTtzMR8JTzNs3s8bkkiG6O3rZ
+         cb8Z2ZIC/g9B/p99sCFx8SMGQUNkXEsNyPgJ9atESZjYA0YONHVsDTBbxyM0jFJN0ozS
+         RbDMyrEbcXc9cQ+tE8fXuTAL6B35jRbPbQvGRhMoWf+H5l05cTGhg+dx5U8UDMK788O/
+         pYeXXquOV21T9grolXESC4YSaWoqMkzvU1RZ0vxdCYZnEmmiUMeT0hCp++EsMMgng0bs
+         eGWVSBd7LUM0oyh6fsZ37FxsX6dz3r+7t3gqonMtShPIjK/hoAsaaJ2HxsoA8DYT9NMZ
+         vm+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=TQRm8RwzlkzHyg/NLGPZYxSynGKWdY2y8cid+W9QBbc=;
-        b=DtP8N2ZQ0xIRtUKvY33T976h9qEmGp4bd1CQ6ckf74r5k9icgTOk65oi1APZPhXlM2
-         d6VBErFN8GDewxlDBNKGKqrRGF1iFm82F4CwH8QH6MMe0XYxy2OPBuEvVQoWzGpKWVOl
-         nqkrCNOuPh1Fmq5Rze29CrHejmiNdqnvVNdYoccxTEnXy70tnSSbutcdpE8zAWjU4FIO
-         xzr4IIujpq9gljuEXa4o7VbZasRalP0VEe8LFJF4Z6PCTlBmaNv4uPbbjTP8r8Uh6nGl
-         OEGOAylAU7FZTbwuOMhdopLIhZKjUqjQ+68KlrDKikJPun/azV9PaYz8Mk+dLIybS1Z4
-         yQ1A==
-X-Gm-Message-State: AOAM530hxVqPPLL/NNkXmI6UShv2f6OSlo2+f1vTz7CI+zrSH3f8FIXq
-        oHKj0csr29Ce3JiH3zQa1S8=
-X-Google-Smtp-Source: ABdhPJyhy4rlb8MI+AdJlc9AeyEEWoYcm5E6PEgkp6wVp4b5g/1PqR2Q9oCrPnlEpSOnZ47+fSl6Hg==
-X-Received: by 2002:a17:907:98ee:b0:6fe:a657:171d with SMTP id ke14-20020a17090798ee00b006fea657171dmr30007494ejc.34.1653592881353;
-        Thu, 26 May 2022 12:21:21 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id k25-20020a508ad9000000b0042bcc931c84sm1096380edk.56.2022.05.26.12.21.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 12:21:20 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nuJ2t-000GlA-En;
-        Thu, 26 May 2022 21:21:19 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Christopher =?utf-8?Q?D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Subject: Re: [PATCH] Makefile: dedup git-ls-files output to prevent
- duplicate targets
-Date:   Thu, 26 May 2022 21:17:59 +0200
-References: <xmqqtu9d45f7.fsf@gitster.g>
-        <20220526021540.2812-1-worldhello.net@gmail.com>
-        <xmqqo7zl2b66.fsf@gitster.g>
-        <CANYiYbEcNJ7+7XW-8-v+p8q=aiOP9RJYvST8ethVjxVdNugR5Q@mail.gmail.com>
-        <xmqq5yls3j8i.fsf@gitster.g>
-        <CANYiYbGn08N_9bOw+ss6L4U_iTomc-08_961bk40eq1BnEstiw@mail.gmail.com>
-        <220526.86tu9c625s.gmgdl@evledraar.gmail.com>
-        <xmqq8rqo1ad3.fsf@gitster.g>
-        <220526.86czg05ert.gmgdl@evledraar.gmail.com>
-        <xmqqh75cyv8y.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqh75cyv8y.fsf@gitster.g>
-Message-ID: <220526.86a6b43xsg.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=puGnolQGgKfgDGv0yqNypz2hUITZVWY+agpwdhUTwQ0=;
+        b=K8nBkfP+WhlweoRG3f+YijvgD2h0vVZRohzDcuOaGmO0v0nrYQWQcThR10MZHgxZ1l
+         rqVRpYQHImVxihdwvXs5i+H3fhj8N9pBD3giZn6y6XW7H2EoX6ZtLLhXyqyTB8PQlbVV
+         Gc6A4sFUAeRwzZENQJ/uD4cR2P4yZWZyz9PikbqA/J9NEI6TaxuJWKbj46BbaVReBkmx
+         kIrzPD5k0uVt9V91iY4eVWKetnTVAJ2pWVHo8YF4UJ8fkKCZfvkQVjWMDtuyd241/AAY
+         GnO6w8Or/Q7fQE0n+4fbojaLp3BPsbmtjXvuA9ymzl92+HiGoliidnloR51GIii6RsnK
+         rZAQ==
+X-Gm-Message-State: AOAM5315RIuqPkEX2S4b9VQCbqFO/hKSlP9F5zkSHZwmdmvgr8km5bc6
+        nz3+NE0AwP/dwwuqBPmscbDr
+X-Google-Smtp-Source: ABdhPJzYQACZ+Sq7S5M9gaxbDSj/cJW35SlaiU6WkCny8IfGBaOj6oOPCBUm8ybtXk9vzD98hKEsFQ==
+X-Received: by 2002:a17:902:b698:b0:158:faee:442f with SMTP id c24-20020a170902b69800b00158faee442fmr40261080pls.75.1653592910003;
+        Thu, 26 May 2022 12:21:50 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id 16-20020a056a00071000b0050dc7628146sm1855084pfl.32.2022.05.26.12.21.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 May 2022 12:21:49 -0700 (PDT)
+Message-ID: <f8509b71-1951-58fe-c12d-3ced30e4ed79@github.com>
+Date:   Thu, 26 May 2022 12:21:48 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.1
+Subject: Re: [PATCH v2 3/4] builtin/pack-objects.c: ensure included
+ `--stdin-packs` exist
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     jonathantanmy@google.com, gitster@pobox.com
+References: <cover.1652458395.git.me@ttaylorr.com>
+ <cover.1653418457.git.me@ttaylorr.com>
+ <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau wrote:
+> A subsequent patch will teach `want_object_in_pack()` to set its
+> `*found_pack` and `*found_offset` poitners to NULL when the provided
 
-On Thu, May 26 2022, Junio C Hamano wrote:
+s/poitners/pointers
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>> Does "--sort-by-file" really mean that?
->>>
->>> The option is documented to sort output by file location, but does
->>> it mean without the option (i.e. default), there is no guarantee in
->>> the output order?  Or are we sure that the output is sorted by the
->>> order of input files, and that is guaranteed to hold in the future?
->>>
->>> If we are depending on certain ordering of the output produced by
->>> gettext suite of programs, I would keep the option, regardless of
->>> what we do to the input to them, if I were running the i18n part of
->>> this project.
->>>
->>> But I am not, so I would not complain if --sort-by-file is dropped
->>> against my advice ;-)
->>
->> The gettext docs are pretty light on the subject, but the default "sort
->> order" is none at all. I.e. it'll just inhale source and spew out
->> translations in the order you feed them to xgettext.
->>
->> So in order of input files, and then in order they're seen in the
->> program.
->>
->> I don't think that's ever going to change.
->
-> OK, so as long as make's notion of $(sort) and gettext suite's
-> notion of --sort-by-file are the same.
+> pack does not pass the `is_pack_valid()` check.
+> 
+> The `--stdin-packs` mode of `pack-objects` is not quite prepared to
+> handle this. To prepare it for this change, do the following two things:
+> 
+>   - Ensure provided packs pass the `is_pack_valid()` check when
+>     collecting the caller-provided packs into the "included" and
+>     "excluded" lists.
+> 
 
-They're not, I mean $(sort) and xgettext's *default* behavior are the
-same, but the --sort-by-file is not only a sort by file, it also affects
-intra-line-number sorting, although that's an admittedly obscure case
-(we have <10 messages where it matters, I think).
+Is the 'is_pack_valid()' check happening for the "excluded" packs? It looks
+like you only added it for the packs in the "included" list in this patch.
 
-> , we didn't make any change, and even if they were different, since
-> there is no version of Git that uses "--sort-by-file" while preparing
-> the po and pot files, it still is OK.
+>   - Gracefully handle any _invalid_ packs being passed to
+>     `want_object_in_pack()`.
+> 
+> Calling `is_pack_valid()` early on makes it substantially less likely
+> that we will have to deal with a pack going away, since we'll have an
+> open file descriptor on its contents much earlier.
+> 
+> But even packs with open descriptors can become invalid in the future if
+> we (a) hit our open descriptor limit, forcing us to close some open
+> packs, and (b) one of those just-closed packs has gone away in the
+> meantime.
+> 
+> `add_object_entry_from_pack()` depends on having a non-NULL
+> `*found_pack`, since it passes that pointer to `packed_object_info()`,
+> meaning that we would SEGV if the pointer became NULL (like we propose
+> to do in `want_object_in_pack()` in the following patch).
+> 
+> But avoiding calling `packed_object_info()` entirely is OK, too, since
+> its only purpose is to identify which objects in the included packs are
+> commits, so that they can form the tips of the advisory traversal used
+> to discover the object namehashes.
+> 
+> Failing to do this means that at worst we will produce lower-quality
+> deltas, but it does not prevent us from generating the pack as long as
+> we can find a copy of each object from the disappearing pack in some
+> other part of the repository.
+> 
 
-Well, it would be OK in any case, this is just how we prepare the
-git.pot file, but it does affect diff churn eventually in the *.po
-files.
+The rest of this makes sense and (as far as I can tell) lines up with the
+implementation below.
 
-> As long as make's $(sort) is as stable as gettext
-> suite's "--sort-by-file" across developer locales (and our filenames
-> are ascii-only and hopefully will stay that way), everybody will get
-> the messages in the same order either way (or we would have the same
-> problem so switching from --sort-by-file to $(sort) is not making
-> anything worse).
+> Co-authored-by: Victoria Dye <vdye@github.com>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  builtin/pack-objects.c | 35 ++++++++++++++++++++---------------
+>  1 file changed, 20 insertions(+), 15 deletions(-)
+> 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index ec3193fd95..ffeaecd1d8 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -3201,10 +3201,8 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+>  				      uint32_t pos,
+>  				      void *_data)
+>  {
+> -	struct rev_info *revs = _data;
+> -	struct object_info oi = OBJECT_INFO_INIT;
+>  	off_t ofs;
+> -	enum object_type type;
+> +	enum object_type type = OBJ_NONE;
+>  
+>  	display_progress(progress_state, ++nr_seen);
+>  
+> @@ -3215,20 +3213,25 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+>  	if (!want_object_in_pack(oid, 0, &p, &ofs))
+>  		return 0;
+>  
+> -	oi.typep = &type;
+> -	if (packed_object_info(the_repository, p, ofs, &oi) < 0)
+> -		die(_("could not get type of object %s in pack %s"),
+> -		    oid_to_hex(oid), p->pack_name);
+> -	else if (type == OBJ_COMMIT) {
+> -		/*
+> -		 * commits in included packs are used as starting points for the
+> -		 * subsequent revision walk
+> -		 */
+> -		add_pending_oid(revs, NULL, oid, 0);
+> +	if (p) {
+> +		struct rev_info *revs = _data;
+> +		struct object_info oi = OBJECT_INFO_INIT;
+> +
+> +		oi.typep = &type;
+> +		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
+> +			die(_("could not get type of object %s in pack %s"),
+> +			    oid_to_hex(oid), p->pack_name);
+> +		} else if (type == OBJ_COMMIT) {
+> +			/*
+> +			 * commits in included packs are used as starting points for the
+> +			 * subsequent revision walk
+> +			 */
+> +			add_pending_oid(revs, NULL, oid, 0);
+> +		}
+> +
+> +		stdin_packs_found_nr++;
+>  	}
+>  
+> -	stdin_packs_found_nr++;
+> -
+>  	create_object_entry(oid, type, 0, 0, 0, p, ofs);
+>  
+>  	return 0;
+> @@ -3346,6 +3349,8 @@ static void read_packs_list_from_stdin(void)
+>  		struct packed_git *p = item->util;
+>  		if (!p)
+>  			die(_("could not find pack '%s'"), item->string);
+> +		if (!is_pack_valid(p))
+> +			die(_("packfile %s cannot be accessed"), p->pack_name);
+>  	}
+>  
+>  	/*
 
-FWIW we can't in the general case rely on the Makefile's $(sort) working
-the same way across our platforms, but I don't think it matters in this
-case. IIRC there's versions of one Windows setup or another (this was
-via CI) where "-" at least (the purely ASCII one) sorts differently.
-
-I ran into that in some Makefile experiments where I wanted to use
-$(sort) to assert that our various hardcoded lists were in sorted order
-already.
