@@ -2,108 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DA0EC433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 20:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E146EC433F5
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 20:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244324AbiEZUF4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 16:05:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54058 "EHLO
+        id S1346528AbiEZUQK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 16:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232230AbiEZUFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 16:05:55 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409DE5E764
-        for <git@vger.kernel.org>; Thu, 26 May 2022 13:05:54 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id hh4so2801171qtb.10
-        for <git@vger.kernel.org>; Thu, 26 May 2022 13:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9e+1rKZH6Onth7P2Py3+VskZgWgFiazBjUvYFuxrWuU=;
-        b=ToePpkzUw5dKrys6v3mWagyKKxLKtmm2SgXuCQ76gB/THU9o4smQf+BSgK7FwrW6Ll
-         HJx6oImcCEoLyR9ab4nSex+qeUAGBaM17GEMUmfbx5sNRSfmT4FOc9CRenR0cQxExz+K
-         6b9CwSR/Z5i+Oip75fRWp9go1jTePEzsduQunllsUGsZfTIM/TIyR7MdKFOfctCzoOgB
-         Qi2T0r4s/oKzauZTYwE8vXuQ5CZk0h8HOQkK7kSmLlf/sqdteYeAKRD6xS9lXou2NqdW
-         SqyiCYBXsPKw2s3ze0Ot/F1j3MIpPrteAb0LxeRAJ+9Q91fAIKxkuKsPD9jAUubbyPhn
-         QhJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9e+1rKZH6Onth7P2Py3+VskZgWgFiazBjUvYFuxrWuU=;
-        b=DmdVbLrqt9QvbmxW0cLal5YQ3AdyWfzImBo/uJV/KxpUmmU755mU8vt/BU9BpYDmOJ
-         h35VL5px8XgpKfIwCpsV37Zv1ot5wATa/ZZaQohF1b3RZ1NN5TZ4BKgohrDLbyMrItZF
-         eRY3phCXLkbYZMVSOBsEPTC4iu1GQUKqu/MqjKrtYaL5rTKXo23KNpJ3vFyiVs67iVgY
-         EzKB4jU8k53QWwLBoM+rY/TvWAesGiYC5XHj5zOyb+e1wZeRz5cP+qtqZ26imE2Boq1z
-         KQ1/1AFcnLjLlr66wlhzUTQHDvTUa4KmtpCh9DQoVfOf/nHRcbP3HXZ5ADuLiu7YBgdT
-         BJOA==
-X-Gm-Message-State: AOAM533XbcZOxoGnF8wF//HtsBFLlOJxAbcAj+daklMQq7uLvRcYhi2L
-        wwI3ZR2WYvUcal90SnRAWONCwQ==
-X-Google-Smtp-Source: ABdhPJzIN3jnYyqtCbilolqF4eTNwxng4aNyB98uCfZSwkv9PjaJcXMmIE6Cf73JHbc+tIPG0cj/0w==
-X-Received: by 2002:ac8:5a4f:0:b0:2f3:ddac:fe60 with SMTP id o15-20020ac85a4f000000b002f3ddacfe60mr30688873qta.90.1653595553397;
-        Thu, 26 May 2022 13:05:53 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id cj18-20020a05622a259200b002f940d5ab2csm1462309qtb.74.2022.05.26.13.05.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 13:05:52 -0700 (PDT)
-Date:   Thu, 26 May 2022 16:05:50 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        jonathantanmy@google.com, gitster@pobox.com
-Subject: Re: [PATCH v2 3/4] builtin/pack-objects.c: ensure included
- `--stdin-packs` exist
-Message-ID: <Yo/dnnz8DPbUKDnX@nand.local>
-References: <cover.1652458395.git.me@ttaylorr.com>
- <cover.1653418457.git.me@ttaylorr.com>
- <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
- <f8509b71-1951-58fe-c12d-3ced30e4ed79@github.com>
+        with ESMTP id S233384AbiEZUQJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 16:16:09 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 313CFC5DB9
+        for <git@vger.kernel.org>; Thu, 26 May 2022 13:16:08 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 202D1138229;
+        Thu, 26 May 2022 16:16:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=WDjgg8au581c
+        BvygvxIkptMWzpAD+fzIZT635QfNJwY=; b=DtpdgIEUPptJ7kLwU2GJmlo/ZfM3
+        fcEyb1axy9sjvX/tBVR244GqVcjmaIA83pAhz+foWfQSmWzShns3VRY5mPG2TK7K
+        aLD674BiY2jmZYSO4rwX32FP3waq1NHcU+nrXXvn+nwtujhhA4t09QuUn15Krmtl
+        bhj+eDGq8In4w1c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 16661138228;
+        Thu, 26 May 2022 16:16:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 08C96138225;
+        Thu, 26 May 2022 16:16:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v6 1/7] archive: optionally add "virtual" files
+References: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
+        <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
+        <0005cfae31d52a157d4df5ba3db9f9f5b2167ddc.1653145696.git.gitgitgadget@gmail.com>
+        <xmqqfskx5ndd.fsf@gitster.g>
+        <7815a07a-da2f-d348-4179-6dc5b1d5fee6@web.de>
+        <xmqqee0g1aoz.fsf@gitster.g>
+        <ed95b26a-2fa3-d1f7-3142-05719a44a8f7@web.de>
+Date:   Thu, 26 May 2022 13:16:04 -0700
+In-Reply-To: <ed95b26a-2fa3-d1f7-3142-05719a44a8f7@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Thu, 26 May 2022 20:57:49 +0200")
+Message-ID: <xmqqfskwxd6j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f8509b71-1951-58fe-c12d-3ced30e4ed79@github.com>
+X-Pobox-Relay-ID: AC4E096E-DD30-11EC-9960-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 26, 2022 at 12:21:48PM -0700, Victoria Dye wrote:
-> > pack does not pass the `is_pack_valid()` check.
-> >
-> > The `--stdin-packs` mode of `pack-objects` is not quite prepared to
-> > handle this. To prepare it for this change, do the following two things:
-> >
-> >   - Ensure provided packs pass the `is_pack_valid()` check when
-> >     collecting the caller-provided packs into the "included" and
-> >     "excluded" lists.
-> >
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+
+> diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.=
+txt
+> index bc4e76a783..10a48ab5f8 100644
+> --- a/Documentation/git-archive.txt
+> +++ b/Documentation/git-archive.txt
+> @@ -49,7 +49,9 @@ OPTIONS
+>  	Report progress to stderr.
 >
-> Is the 'is_pack_valid()' check happening for the "excluded" packs? It looks
-> like you only added it for the packs in the "included" list in this patch.
+>  --prefix=3D<prefix>/::
+> -	Prepend <prefix>/ to each filename in the archive.
+> +	Prepend <prefix>/ to each filename in the archive.  Can be
+> +	specified multiple times; the last one seen when reading from
+> +	left to right is applied.
 
-You're right that we don't do it explicitly. That's OK, since we won't
-use any objects in excluded packs, and thus don't need to eagerly grab
-an descriptor on it to prevent against the race we're handling here.
+That can be read to mean that we will use C consistently,
 
-(In practice, we do end up calling is_pack_valid() on excluded packs
-later on, via
+$ cmd --prefix=3DA other-args --prefix=3DB other-args --prefix=3DC other-=
+args
 
-  - want_found_object() (or one of its many callers), which itself calls
-  - has_object_kept_pack(), which calls
-  - find_kept_pack_entry(), which calls
-  - fill_pack_entry(), which calls
-  - is_pack_valid(), which calls
+which was what I am worried to be a source of confusion.
 
-but that's a side-effect that doesn't help or hurt us.)
+>  -o <file>::
+>  --output=3D<file>::
+> @@ -58,8 +60,8 @@ OPTIONS
+>  --add-file=3D<file>::
+>  	Add a non-tracked file to the archive.  Can be repeated to add
+>  	multiple files.  The path of the file in the archive is built
+> -	by concatenating the value for `--prefix` (if any) and the
+> -	basename of <file>.
+> +	by concatenating the current value for `--prefix` (if any) and
+> +	the basename of <file>.
 
-We _do_ need to be able to open the .idx (which happens in
-`fill_pack_entry() -> find_pack_entry_one() -> open_pack_index()` , but
-we'll fail appropriately when the index cannot be located.
+"the current value for `--prefix` (if any)" would work well once we
+somehow make the reader form a mental model that there is "the
+current" for the "prefix", which starts with an empty string, and
+gets updated every time the "--prefix=3D<prefix>/" option is given.
 
-> The rest of this makes sense and (as far as I can tell) lines up with the
-> implementation below.
+So, perhaps with
 
-Thanks for taking a look!
+	--prefix=3D<prefix>/::
+		The paths of the files in the tree being archived,
+		and untracked contents added via the `--add-file`
+		and `--add-virtual-file` options, can be modified by
+		prepending the "prefix" value that is in effect when
+		these options or the tree object is seen on the
+		command line.  The "prefix" value initially starts
+		as an empty string, and it gets updated every time
+		this option is given on the command line.
 
-Thanks,
-Taylor
+or something like that, with something like
+
+> +	by concatenating the current value for "prefix" (see `--prefix`
+> +	above) and the basename of <file>.
+
+here, it might make it less misunderstanding-prone, hopefully?
+
+> +`git archive -o latest.tar --prefix=3Dbuild/ --add-file=3Dconfigure --=
+prefix=3D HEAD`::
+> +
+> +	Creates a tar archive that contains the contents of the latest
+> +	commit on the current branch with no prefix and the untracked
+> +	file 'configure' with the prefix 'build/'.
+
+Great to have this example.
+
+Thanks.
