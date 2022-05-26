@@ -2,72 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C91B2C433F5
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 19:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F11FAC433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 19:21:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242910AbiEZTP5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 15:15:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37572 "EHLO
+        id S236740AbiEZTV1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 15:21:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229896AbiEZTPz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 15:15:55 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49256DFF46
-        for <git@vger.kernel.org>; Thu, 26 May 2022 12:15:54 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id v15so496178edl.9
-        for <git@vger.kernel.org>; Thu, 26 May 2022 12:15:54 -0700 (PDT)
+        with ESMTP id S231302AbiEZTVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 15:21:25 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A7EDFF54
+        for <git@vger.kernel.org>; Thu, 26 May 2022 12:21:22 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id rq11so4823793ejc.4
+        for <git@vger.kernel.org>; Thu, 26 May 2022 12:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=urHg7alqDGVuc0oPvbeKNdyKFWBS5IHe5dlVgEEcPco=;
-        b=MH4GP2Jw8WuWYiJ9UtJXw2E5m7ai99RM11WgoRHS3BImPcNuXsFC2AgS8TlVLB7q+6
-         8DM0OIf8UrfgV4BPjwmRbXW6BOGJBySOXgE4wcozmeSfjw2EBWYCMjYZFdJtn52DZ+Dw
-         EbSMwbHZITfod7O4DEzA2gYeLTttwvTREYzD6CapERt7ea/Lv0ZtoVorufaat4BojqPL
-         z3J5FBPnpkv12tmR3TZw6LnHvu1jPgY0dkOxjnjg8uvLFYIO47PH3intXDCZ6PLoGIMK
-         30MIXJfMakmTThe0WKR5nXOp/VTlu5ttyrEdLbNt7UuCjkW+UlKRvT2zBglNhW3YeoeL
-         ow8w==
+        bh=TQRm8RwzlkzHyg/NLGPZYxSynGKWdY2y8cid+W9QBbc=;
+        b=MsC1brU9j4bEGhqthtxu7nnpQsZKWIkdAUYXIKtPxWK5faYHkefpuLLBsPDDzd8WVj
+         rkceAHQBXr51Db4b0nsKjlZanP8L+kfBzOqUBgRqwttEtT0wr/PpigQ6TeU2qWiJtXKX
+         NwmdRrUBexnC3ZPzVfgy6SRBJSeNf0zT4g8jVJEegWO20gTQ26abck1fSzyZhEg9XyG3
+         cO8RPh8e2Fj7DKePhJMozLj005cbQW1Gj2oBfQVDC4FHDbl56b01OeL64N0wiIW9PQ1F
+         FS5/qjgnweIRJtbaq/vFocF7naeqKCBURwPoyEt1x2m3m14S1LIqC4+F17cnZCqVX7iP
+         piXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=urHg7alqDGVuc0oPvbeKNdyKFWBS5IHe5dlVgEEcPco=;
-        b=djySo5IHXcWKJEo7fQ+qIB5S24mZskLynUg7dLgD42G37dG2dTSFcT+xNnzDN3xj7+
-         50AHGX2Qc4lHU4Q52E3xkYNfnlRVODnvx85O/HkjKnPJtrRXHhPmT4ct5hebq9PZQLD6
-         6n3faZQ8KJwjYnd7p7Zb0C2Xv0W74UDbeR3FWcdliD5OQ5vCm4SElOhH+gFC2g9EA33W
-         C6G2Qccp9prv5/nYTk/7k6OLX1zwEnX4HLa68hU0po4EQ/A2vWZ6NiKrDUPrjeXXaH0S
-         0V/Rof30JSyx8gKPIOZyoR1HLOGPbyvSL5i5IAv9m/vrXEcGnxM6zjgczM3a1G6F466G
-         9Eig==
-X-Gm-Message-State: AOAM533OfRO80kUQHqkILu6YZClmcFxJGDWggfCUMbWlW0LJfh7dveMs
-        2ry0soMBRqiGOQqeFbr2ZQ0ByvMMDHE8eA==
-X-Google-Smtp-Source: ABdhPJxdb0iugvzXyAzNxJ5AxYXzWmiPKda/FZ18v+JypCwp41TK5GBRS5ns6PgHXFN+xehMwD+JBw==
-X-Received: by 2002:a50:d48b:0:b0:42b:da11:4827 with SMTP id s11-20020a50d48b000000b0042bda114827mr4980541edi.216.1653592552783;
-        Thu, 26 May 2022 12:15:52 -0700 (PDT)
+        bh=TQRm8RwzlkzHyg/NLGPZYxSynGKWdY2y8cid+W9QBbc=;
+        b=DtP8N2ZQ0xIRtUKvY33T976h9qEmGp4bd1CQ6ckf74r5k9icgTOk65oi1APZPhXlM2
+         d6VBErFN8GDewxlDBNKGKqrRGF1iFm82F4CwH8QH6MMe0XYxy2OPBuEvVQoWzGpKWVOl
+         nqkrCNOuPh1Fmq5Rze29CrHejmiNdqnvVNdYoccxTEnXy70tnSSbutcdpE8zAWjU4FIO
+         xzr4IIujpq9gljuEXa4o7VbZasRalP0VEe8LFJF4Z6PCTlBmaNv4uPbbjTP8r8Uh6nGl
+         OEGOAylAU7FZTbwuOMhdopLIhZKjUqjQ+68KlrDKikJPun/azV9PaYz8Mk+dLIybS1Z4
+         yQ1A==
+X-Gm-Message-State: AOAM530hxVqPPLL/NNkXmI6UShv2f6OSlo2+f1vTz7CI+zrSH3f8FIXq
+        oHKj0csr29Ce3JiH3zQa1S8=
+X-Google-Smtp-Source: ABdhPJyhy4rlb8MI+AdJlc9AeyEEWoYcm5E6PEgkp6wVp4b5g/1PqR2Q9oCrPnlEpSOnZ47+fSl6Hg==
+X-Received: by 2002:a17:907:98ee:b0:6fe:a657:171d with SMTP id ke14-20020a17090798ee00b006fea657171dmr30007494ejc.34.1653592881353;
+        Thu, 26 May 2022 12:21:21 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id y8-20020a056402358800b0042617ba63b3sm1198224edc.61.2022.05.26.12.15.52
+        by smtp.gmail.com with ESMTPSA id k25-20020a508ad9000000b0042bcc931c84sm1096380edk.56.2022.05.26.12.21.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 12:15:52 -0700 (PDT)
+        Thu, 26 May 2022 12:21:20 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nuIxb-000Gb0-9L;
-        Thu, 26 May 2022 21:15:51 +0200
+        id 1nuJ2t-000GlA-En;
+        Thu, 26 May 2022 21:21:19 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Anthony Sottile <asottile@umich.edu>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 0/8] hook API: connect hooks to the TTY again, fixes
- a v2.36.0 regression
-Date:   Thu, 26 May 2022 21:13:50 +0200
-References: <cover-0.6-00000000000-20220421T122108Z-avarab@gmail.com>
- <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
- <nycvar.QRO.7.76.6.2205251308381.352@tvgsbejvaqbjf.bet>
- <xmqqbkvl8s88.fsf@gitster.g> <xmqqczg13xpy.fsf@gitster.g>
- <220526.86pmk060xa.gmgdl@evledraar.gmail.com> <xmqqpmk01caj.fsf@gitster.g>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH] Makefile: dedup git-ls-files output to prevent
+ duplicate targets
+Date:   Thu, 26 May 2022 21:17:59 +0200
+References: <xmqqtu9d45f7.fsf@gitster.g>
+        <20220526021540.2812-1-worldhello.net@gmail.com>
+        <xmqqo7zl2b66.fsf@gitster.g>
+        <CANYiYbEcNJ7+7XW-8-v+p8q=aiOP9RJYvST8ethVjxVdNugR5Q@mail.gmail.com>
+        <xmqq5yls3j8i.fsf@gitster.g>
+        <CANYiYbGn08N_9bOw+ss6L4U_iTomc-08_961bk40eq1BnEstiw@mail.gmail.com>
+        <220526.86tu9c625s.gmgdl@evledraar.gmail.com>
+        <xmqq8rqo1ad3.fsf@gitster.g>
+        <220526.86czg05ert.gmgdl@evledraar.gmail.com>
+        <xmqqh75cyv8y.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqpmk01caj.fsf@gitster.g>
-Message-ID: <220526.86ee0g3y1k.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqh75cyv8y.fsf@gitster.g>
+Message-ID: <220526.86a6b43xsg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,45 +100,58 @@ On Thu, May 26 2022, Junio C Hamano wrote:
 
 > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->> The current proposal is large by line count, but it's relatively easy to
->> skim it and assure oneself that a new parameter is being passed in, and
->> that all the proposed behavior change applies only to the one caller
->> that passes in that new parameter.
+>>> Does "--sort-by-file" really mean that?
+>>>
+>>> The option is documented to sort output by file location, but does
+>>> it mean without the option (i.e. default), there is no guarantee in
+>>> the output order?  Or are we sure that the output is sorted by the
+>>> order of input files, and that is guaranteed to hold in the future?
+>>>
+>>> If we are depending on certain ordering of the output produced by
+>>> gettext suite of programs, I would keep the option, regardless of
+>>> what we do to the input to them, if I were running the i18n part of
+>>> this project.
+>>>
+>>> But I am not, so I would not complain if --sort-by-file is dropped
+>>> against my advice ;-)
 >>
->> Whereas switching to a new non-callback based API will require carefully
->> going over the parallel API line-by-line, assuring oneself that the
->> non-callback version is really doing the same thing etc.
+>> The gettext docs are pretty light on the subject, but the default "sort
+>> order" is none at all. I.e. it'll just inhale source and spew out
+>> translations in the order you feed them to xgettext.
+>>
+>> So in order of input files, and then in order they're seen in the
+>> program.
+>>
+>> I don't think that's ever going to change.
 >
-> I was worried about something like that when I wrote (admittedly
-> unfairly, in a somewhat frustrated state) that the series was
-> designed to be hard to revert.  The reverting itself was reasonably
-> easy if the "did we invoke the hook, really?" topic is discarded at
-> the same time, but if was done with too much rearchitecting, it is
-> understandable to become cumbersome to review X-<.
->
-> I wonder if rebuilding from scratch is easier to review, then?  The
-> first three patches of such a series would be
->
->  - Revert cb3b3974 (Merge branch 'ab/racy-hooks', 2022-03-30)
->  - Revert 7431379a (Merge branch 'ab/racy-hooks', 2022-03-16)
->  - Revert c70bc338 (Merge branch 'ab/config-based-hooks-2', 2022-02-09)
->
-> and then the rest would rebuild what used to be in the original
-> series on top.  There will be a lot of duplicate patches between
-> that "the rest" and the patches in the original series (e.g. I would
-> imagine that the resulting hook.h would look more or less
-> identical), but "git range-diff" may be able to trim it down by
-> comparing between "the rest" and "c70bc338^..c70bc338^2" (aka
-> ab/config-based-hooks-2).  I dunno.
+> OK, so as long as make's notion of $(sort) and gettext suite's
+> notion of --sort-by-file are the same.
 
-I'm still happy to and planning to send a re-roll of this to try to
-address outstanding comments/concerns, but am holding off for now
-because it's not clear to me if you're already planning to discard any
-such re-roll in favor of a revert.
+They're not, I mean $(sort) and xgettext's *default* behavior are the
+same, but the --sort-by-file is not only a sort by file, it also affects
+intra-line-number sorting, although that's an admittedly obscure case
+(we have <10 messages where it matters, I think).
 
-Or do you mean to create a point release with such revert(s) and have
-master free to move forward with a fix for the outstanding issue, but
-not to use that for a point release?
+> , we didn't make any change, and even if they were different, since
+> there is no version of Git that uses "--sort-by-file" while preparing
+> the po and pot files, it still is OK.
 
+Well, it would be OK in any case, this is just how we prepare the
+git.pot file, but it does affect diff churn eventually in the *.po
+files.
 
+> As long as make's $(sort) is as stable as gettext
+> suite's "--sort-by-file" across developer locales (and our filenames
+> are ascii-only and hopefully will stay that way), everybody will get
+> the messages in the same order either way (or we would have the same
+> problem so switching from --sort-by-file to $(sort) is not making
+> anything worse).
 
+FWIW we can't in the general case rely on the Makefile's $(sort) working
+the same way across our platforms, but I don't think it matters in this
+case. IIRC there's versions of one Windows setup or another (this was
+via CI) where "-" at least (the purely ASCII one) sorts differently.
+
+I ran into that in some Makefile experiments where I wanted to use
+$(sort) to assert that our various hardcoded lists were in sorted order
+already.
