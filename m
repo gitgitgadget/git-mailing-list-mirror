@@ -2,150 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFDEDC433F5
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 18:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 036D7C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 18:31:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241892AbiEZS3R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 14:29:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35508 "EHLO
+        id S236835AbiEZSbf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 14:31:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346111AbiEZS3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 14:29:14 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B02FA4BFDA
-        for <git@vger.kernel.org>; Thu, 26 May 2022 11:29:13 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id o28so2811875edi.1
-        for <git@vger.kernel.org>; Thu, 26 May 2022 11:29:13 -0700 (PDT)
+        with ESMTP id S1348900AbiEZSax (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 14:30:53 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8414F4BFDA
+        for <git@vger.kernel.org>; Thu, 26 May 2022 11:30:52 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id f18so2176528plg.0
+        for <git@vger.kernel.org>; Thu, 26 May 2022 11:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=4iKxqgXkpDPyr02mVWUnPWqFeqh9Q3h/Z9r0iQd/waI=;
-        b=oTLtuIqcQXH9lTofjxztHRF5IZ7SvEqbEbbHQlUmwgkaOm6zUrD5QtGjWuFZm80hgN
-         0HS5d+fyVAsb4ebqyEPnwJSOKrXbBpe8CXDdda/nhwGUKhdk4lIA/Yc0Q7hRE33skSZ6
-         4Qts7QuY+aqaE5VLU0x+NJyFKwBJm2lqDlnNjICf1BAgfC1bYzE6gjR0j2B8m4aUahTv
-         GXtuRf6vR5/YNKzgzcQ5c7urwpxnsA55HHqrNGn2nKMZ8r9xBkXZr3pKThc8p3RznAXg
-         Q2JoQ+ayfySkl98kABn1EgibzpaVWfgZRCf7DjeWLWAsJfP5reCekPNjHxw2VWcZMITO
-         KvAg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=iqwpJrN0lC2Tsui/IlbyBiYQztNw6nfDjD/iKJhFh4Y=;
+        b=KtrPdIoJG8OrFTVK/MwnRED0vN2JawuLhT7RB9OkWXkQ5kbs10hsAsE0W2JOuM81ms
+         D/njllrc6MTqLi8PsM6X8lfWJO5ArZCEjlu4Rq0SaMIPybSz1455lilqwTMccg9oCaUP
+         UDM1E8ml044m53XuGWlnrbQdPbqDxlWipfyghKQ7lJYRahq7l9QrE6JHlZ5iFd4MiHWW
+         TV/z5V1erORnTqIxPjoWLP87xj5EnNCD6EtHe12LTEdNoblWNEYHvYiOc3JENSdy9L/w
+         jCpihZfSMqNuOrSOWcAK3cnPUTDiSE+s3iGPQjIxoKvjL0bMW+uBevcpBvTZvoFfGPZX
+         s42Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=4iKxqgXkpDPyr02mVWUnPWqFeqh9Q3h/Z9r0iQd/waI=;
-        b=adCF8p9oSOmVbxJWusGKoihIPCW26Nx02KPR06CVM4c99+qaVLWO8yyTtSf952IxeS
-         wD6l1WM4NHXp1pDySUK+pMtoBdhOyXpNS4PTPbSBtcSGnSAz0x17q2vQ1gzSnh3/KZgj
-         LpS1LK0OAkiwt/m3G52ZhM0IB3ZmcyRerUdXjmKH4mNELCYYflZAH8/ZfX7Uqu6BV8qR
-         OqXlx55yLnoveX2jtziocHRh9SeBsk7ymdG76qFav1diOmLKFGTbIVS6XNtgDH3+vH8t
-         BUyJgNy/ixMaBJEuDhwBPm/rGI8pghfidqForLpLeG3NPjv2AMLzEOLthOyFDXsNQ3kS
-         oIBw==
-X-Gm-Message-State: AOAM533DwbeqHswpSwaFg72IrYyOw5n9O+lQLxAFH0ZLLndrwDL3vPpo
-        zh2pdRHdnXnBN1NBCX5tciw=
-X-Google-Smtp-Source: ABdhPJzBpNnxZxqBc58KyZiZOLQ0AXZunEWdq+q4LXQ5phXdUmiRJ6X3L8GZTgsNM7n2lOQGt7GwpA==
-X-Received: by 2002:a05:6402:1d4a:b0:42b:73bc:28d7 with SMTP id dz10-20020a0564021d4a00b0042b73bc28d7mr20414395edb.78.1653589752042;
-        Thu, 26 May 2022 11:29:12 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ga11-20020a170906b84b00b006fec56a80a8sm704401ejb.115.2022.05.26.11.29.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 11:29:11 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nuIEQ-000EzM-IY;
-        Thu, 26 May 2022 20:29:10 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Christopher =?utf-8?Q?D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Subject: Re: [PATCH] Makefile: dedup git-ls-files output to prevent
- duplicate targets
-Date:   Thu, 26 May 2022 20:25:57 +0200
-References: <xmqqtu9d45f7.fsf@gitster.g>
- <20220526021540.2812-1-worldhello.net@gmail.com>
- <xmqqo7zl2b66.fsf@gitster.g>
- <CANYiYbEcNJ7+7XW-8-v+p8q=aiOP9RJYvST8ethVjxVdNugR5Q@mail.gmail.com>
- <xmqq5yls3j8i.fsf@gitster.g>
- <CANYiYbGn08N_9bOw+ss6L4U_iTomc-08_961bk40eq1BnEstiw@mail.gmail.com>
- <220526.86tu9c625s.gmgdl@evledraar.gmail.com> <xmqq8rqo1ad3.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqq8rqo1ad3.fsf@gitster.g>
-Message-ID: <220526.86czg05ert.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=iqwpJrN0lC2Tsui/IlbyBiYQztNw6nfDjD/iKJhFh4Y=;
+        b=BG7dt1Y0I+L51BsDgR1Qu/gvySUGuSYRM1DrSBspKo2YIaBT8m6duX4MLjzo5aH/WN
+         bHvaAPVfVsXdJfMiQLLZtK8joSWiUK1Ls/eWPj5sit/BpMALTM5ickjyuj/54ny5sbYJ
+         SEv5ze4jsAdqB9pXyFihifn6ZS+5DTae20ZZ9prmtiyIk0HHXRxC3Lwp+qmvx5Mw+yCG
+         4DEbGNFDJ3ziyOJOTTaQPINF4P2N7wuRLTIo53/o7njEQeecRknz8dGbTG5NvtcfE7PR
+         BTsOFMKCMkc5vBHQMdi99kniLC3o2xUcuhgloTJZ3p1/EO5CPhLUG1zeSP72HrnV8Xdn
+         0Ekw==
+X-Gm-Message-State: AOAM53158Y276m2vLsfEwKuPebzyoELvio7Z+hBVzwgwY4AKT5OkPCVm
+        eY4XV7rNSguiq1am9q+BbTzk
+X-Google-Smtp-Source: ABdhPJyxRYxXGR5dE6OQtXlZmN8iErSddmXl6C5hoN/yE3RIIpGfSq56xrMwHGXUI8viZ0GKXPZ7yA==
+X-Received: by 2002:a17:902:f652:b0:156:701b:9a2a with SMTP id m18-20020a170902f65200b00156701b9a2amr39091982plg.14.1653589852019;
+        Thu, 26 May 2022 11:30:52 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id m5-20020a63f605000000b003faebbb772esm1872808pgh.25.2022.05.26.11.30.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 May 2022 11:30:51 -0700 (PDT)
+Message-ID: <8b57f907-3db1-9fe1-d582-e2d05acbe5ce@github.com>
+Date:   Thu, 26 May 2022 11:30:49 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.1
+Subject: Re: What's cooking in git.git (May 2022, #07; Wed, 25)
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <xmqqzgj41ya2.fsf@gitster.g>
+ <df44b0cd-bba7-19f0-4e45-c0988239cc4d@github.com>
+ <xmqq4k1c1a34.fsf@gitster.g>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqq4k1c1a34.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, May 26 2022, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> I pointed out then that with --sort-by-file added we:
+Junio C Hamano wrote:
+> Victoria Dye <vdye@github.com> writes:
+> 
+>>> * js/ci-github-workflow-markup (2022-05-21) 12 commits
+>>>  - ci: call `finalize_test_case_output` a little later
+>>>  - ci(github): mention where the full logs can be found
+>>>  - ci: use `--github-workflow-markup` in the GitHub workflow
+>>>  - ci(github): avoid printing test case preamble twice
+>>>  - ci(github): skip the logs of the successful test cases
+>>>  - ci: optionally mark up output in the GitHub workflow
+>>>  - ci/run-build-and-tests: add some structure to the GitHub workflow output
+>>>  - ci: make it easier to find failed tests' logs in the GitHub workflow
+>>>  - ci/run-build-and-tests: take a more high-level view
+>>>  - test(junit): avoid line feeds in XML attributes
+>>>  - tests: refactor --write-junit-xml code
+>>>  - ci: fix code style
+>>>
+>>>  Update the GitHub workflow support to make it quicker to get to the
+>>>  failing test.
+>>>
+>>>  Will merge to 'next'?
+>>>  source: <pull.1117.v3.git.1653171536.gitgitgadget@gmail.com>
 >>
->>  * Don't group the translations by C/SH/Perl anymore
->>  * Change the sort order within files, to be line/sorted instead of
->>    line/order (i.e. first occurring translations first)
+>> The latest version of this nicely addressed the feedback I originally had,
+>> particularly in improving page loading time. It's still slower than before
+>> this series, but IMO it's manageable (especially taking into account the
+>> improved information accessibility). 
 >>
->> I suggested then to just use $(sort) on the respective lists.
->>
->> So why not just:
->>
->>  1. Switch to the $(FOUND_C_SOURCES) (good)
->>  2. Filter that by C/Perl/SH as before (just a simple $(filter)
->>  3. $(sort) that (which as noted, also de-dupes it)
->>
->> Then we don't have any of the behavior change of --sort-by-file, and we
->> don't have to carefully curate the ls-files/find commands to not include
->> duplicates (although as seen here that seems to have been a useful
->> canary in the "find" case).
->
-> Does "--sort-by-file" really mean that?
->
-> The option is documented to sort output by file location, but does
-> it mean without the option (i.e. default), there is no guarantee in
-> the output order?  Or are we sure that the output is sorted by the
-> order of input files, and that is guaranteed to hold in the future?
->
-> If we are depending on certain ordering of the output produced by
-> gettext suite of programs, I would keep the option, regardless of
-> what we do to the input to them, if I were running the i18n part of
-> this project.
->
-> But I am not, so I would not complain if --sort-by-file is dropped
-> against my advice ;-)
+>> I don't see (or have) any other unaddressed concerns, so I'm in favor of
+>> moving it to 'next'.
+> 
+> I see Ævar sent another reroll of "rebuild the base" and "then
+> rebase a (hopefully) equivalent of this series on top", but I think
+> it is unhealthy to keep doing that.  Does the latest "rebuild the
+> base" part look unsalvageably and fundamentally bad that it is not
+> worth our time to consider joining forces to polish it sufficiently
+> and then build this on top?
+> 
 
-The gettext docs are pretty light on the subject, but the default "sort
-order" is none at all. I.e. it'll just inhale source and spew out
-translations in the order you feed them to xgettext.
+My impression of 'ab/ci-setup-simplify' is that its core changes are either
+unrelated to, or at least not mutually exclusive with, the
+'js/ci-github-workflow-markup' series. While Ævar has sent an example/RFC
+with one series rebased on top of the other, I don't see the two as
+inextricably linked, or even really comparable. Because of that, I don't
+think it would be fair to either series if we continued to hold up *both*
+because of different levels of consensus, review, etc.
 
-So in order of input files, and then in order they're seen in the
-program.
+As for my thoughts on each series, I do still think
+'js/ci-github-workflow-markup' is ready for 'next' (for the reasons I sent
+earlier). I think 'ab/ci-setup-simplify' needs more review - especially
+given its length and the variety of changes - to ensure it doesn't introduce
+regressions or hurt developer quality-of-life. I've personally had a
+difficult time making sense of the series enough to review it, so I can't
+confidently judge it one way or another myself.
 
-I don't think that's ever going to change.
+> If that is the case, then I am OK to merge this to 'next' to cast it
+> in stone, and then the let "rebuild the base" part once die, to be
+> reborn as many "tweak the way things work to (clarify|optimize) X"
+> follow-up topics.
+> 
 
-The --sort-output and and --sort-by-file then re-sort that.
+I'm not sure 'ab/ci-setup-simplify' would need to "die", more that it would
+be adjusted to rebase on top of an updated 'next' (including
+'js/ci-github-workflow-markup'). That said, a re-sent version focusing on
+its own optimizations/improvements (rather than a comparisons against an IMO
+largely unrelated series) would almost certainly benefit both the series and
+its readers.
 
-AFAICT the --sort-by-file could be more accurately named
---sort-by-file-then-line-number-then-by-msgid.
-
-I.e. the semantics seem to be to sort by file, then emit messages in the
-order they appear in the file *by line*, but within a line act as though
---sort-output was given. I don't know if that's intentional or not.
+> Thanks.
 
