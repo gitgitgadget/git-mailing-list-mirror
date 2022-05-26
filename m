@@ -2,113 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6FEAC433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 20:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A42B8C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 20:42:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232609AbiEZUd7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 16:33:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38902 "EHLO
+        id S1348262AbiEZUml (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 16:42:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230111AbiEZUd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 16:33:57 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC18AFAFA
-        for <git@vger.kernel.org>; Thu, 26 May 2022 13:33:56 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7D9BE193872;
-        Thu, 26 May 2022 16:33:55 -0400 (EDT)
+        with ESMTP id S1349033AbiEZUmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 16:42:32 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626DA617F
+        for <git@vger.kernel.org>; Thu, 26 May 2022 13:42:22 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A7C111383A2;
+        Thu, 26 May 2022 16:42:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NKAuu1tyHMSV
-        bME0JJ98Q+y89rqiJ65NdBS2J6/5MK4=; b=MaLGZFFReQvgHEivQS1z6Oky8/Nw
-        mw7PC9OICE5gMbVVbpaDTCoynaATUYfyniS0UOvOdOOSwPYWv9CZgMkAVWBspbC0
-        IbX1Kw1Nl8l67/jmfvZktcnxiaBcQ7VMpm0kFiGErjwcf8MNgYYMOZ5H2UHQRCBS
-        iPdRzBnicxIoqhU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75D47193871;
-        Thu, 26 May 2022 16:33:55 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=Hbc3dnnvFjza
+        l9QCQZag8ZeIugEo+/qcmTE0eq8bsF0=; b=LYps6ndlrP+/urkpfK0vMRPQI2y8
+        FxLGSo7EFvuoyXOCpj+w3wcTki+NE5gfawEV4NiLseRxjv6Ufnj5zU6aMWx2L7ds
+        WMUlOeGEqKEgMQiLMiNaZGskDipTpIMjholmKnhQgDqyjYZxQMm4hg6uWHYg4E3S
+        F/h1WyhsjlZd7K4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 93A731383A1;
+        Thu, 26 May 2022 16:42:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 22C35193870;
-        Thu, 26 May 2022 16:33:52 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 077691383A0;
+        Thu, 26 May 2022 16:42:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+To:     Philip Oakley <philipoakley@iee.email>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH 1/3] rebase.c: state preserve-merges has been removed
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/3] rebase: help users when dying with `preserve-merges`
 References: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
-        <0a4c81d8cafdc048fa89c24fcfa4e2715a17d176.1653556865.git.gitgitgadget@gmail.com>
-        <220526.86bkvk7hoo.gmgdl@evledraar.gmail.com>
-        <19baf95d-67d4-d7ed-72a6-96d098171d3a@web.de>
-Date:   Thu, 26 May 2022 13:33:51 -0700
-In-Reply-To: <19baf95d-67d4-d7ed-72a6-96d098171d3a@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 26 May 2022 15:02:29 +0200")
-Message-ID: <xmqq5ylsxccw.fsf@gitster.g>
+        <d0fb54105940f19809eeb5d5e156bf3889d16b0c.1653556865.git.gitgitgadget@gmail.com>
+        <220526.867d687hd5.gmgdl@evledraar.gmail.com>
+        <00229772-f075-0b0c-7810-7debf6b971bc@iee.email>
+Date:   Thu, 26 May 2022 13:42:19 -0700
+In-Reply-To: <00229772-f075-0b0c-7810-7debf6b971bc@iee.email> (Philip Oakley's
+        message of "Thu, 26 May 2022 12:44:49 +0100")
+Message-ID: <xmqq1qwgxbys.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 27BFB60E-DD33-11EC-97CA-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 57129092-DD34-11EC-B153-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Philip Oakley <philipoakley@iee.email> writes:
 
->>>  		OPT_SET_INT_F('p', "preserve-merges", &preserve_merges_selected,
->>> -			      N_("(DEPRECATED) try to recreate merges instead of "
->>> +			      N_("(REMOVED) try to recreate merges instead of "
->>>  				 "ignoring them"),
->>>  			      1, PARSE_OPT_HIDDEN),
->>>  		OPT_RERERE_AUTOUPDATE(&options.allow_rerere_autoupdate),
+>>> Make the `rebase --abort` option available to allow users to remove
+>>> traces of any preserve-merges rebase, even if they had upgraded
+>>> during a rebase.
+
+This patch does not make it "available", though. =20
+
+	Suggest using `--abort` to get out of the situation after a
+	failed preserve-rebase and remove traces of ...
+
+perhaps?
+
+I do think the suggestion is worth doing if a user ever gets into
+the situation, but how likely does it happen?  A user has to start
+"rebase -p" with older Git, wait until Git gets updated to a future
+version of Git that includes this change, and then say "rebase -p
+--continue"?
+
+>>>  	} else if (is_directory(merge_dir())) {
+>>>  		strbuf_reset(&buf);
+>>>  		strbuf_addf(&buf, "%s/rewritten", merge_dir());
+>>> -		if (is_directory(buf.buf)) {
+>>> -			die("`rebase -p` is no longer supported");
+>>> +		if (is_directory(buf.buf) && !(action =3D=3D ACTION_ABORT)) {
+>>> +			die("`rebase --preserve-merges` (-p) is no longer supported.\n"
+>>> +			"Use `git rebase --abort` to terminate current rebase.\n"
+>>> +			"Or downgrade to v2.33, or earlier, to complete the rebase.\n");
+>>>  		} else {
+>>>  			strbuf_reset(&buf);
+>>>  			strbuf_addf(&buf, "%s/interactive", merge_dir());
+>> Existing issue: No _(), shouldn't we add it?
+> This `strbuf_addf` is forming a path for internal use. It just happens
+> to look like legible English ;-)
+
+I do not think =C3=86var meant "%s/interactive"; the enhanced message
+above that you inherited from the original "no longer supported"
+that was not marked for translation.
+
+>> I wonder if we should use die_message() + advise() in these cases,
+>> i.e. stick to why we died in die_message() and have the advise() make
+>> suggestions, as e4921d877ab (tracking branches: add advice to ambiguou=
+s
+>> refspec error, 2022-04-01) does.
 >
-> Hidden options are shown if you use --help-all instead of -h.
->
-> OPT_SET_INT_F always sets the struct option member "argh" to NULL.  The
-> string changed above is the "help" member, not "argh".
+> Ah, maybe it's my message.. that needs translating.
 
-Good points.  I do think it is OK to say REMOVED in case --help-all
-asks us to show everything, even though I wonder if we can leave it
-there until we remove the "support" of noticing the user asking for
-a now-removed feature.
+Yup.
 
->> So there's no point in changing this string, nor to have translators
->> focus on it, it'll never be used.
->>
->> This series shouldn't fix the general issue (which parse-options.c
->> should really be BUG()-ing about, after fixing the existing
->> occurances. But For this one we could just set this to have a string o=
-f
->> "" or something, only the string you're changing in 3/3 will be seen b=
-y
->> anyone.
->
-> What is the general issue?
+This whole '-p' business will go away in a few releases down, so a
+longer message give to the existing die() should be sufficient and
+there is no need for the choice between "yes, I am still weaning
+myself off of rebase -p and want to keep seeing the advice" and
+"thanks, I saw the message often enough, you no longer need to tell
+me how to get out", I would think.
 
-I am afraid to ask, after having learned to be worried about those
-large rearchitecting projects =C3=86var talks about X-<.
-
-> Anyway, the new help text explaining what the option once did is a bit
-> confusing.  It would be better to focus on what it's doing now (nothing=
-)
-> and/or why we still have it (for backward compatibility), I think.
-
-Do you mean that we should say "this option used to do such and such
-but it is now a no-op" after "(REMOVED)" label, instead of the above
-"this option does such and such"?  I think "(REMOVED)" is a strong
-enough hint that lets us get away without saying "used to" and "but
-it is now a no-op", so I can accept both.
-
-Or do you mean we should say "(REMOVED) for backward compatibility,
-does nothing but errors out"?  I would be less in faviour, then.
-Those who are curious enough to ask --help-all would find it more
-helpful if we said what it used to do.  Otherwise they wouldn't be
-asking --help-all in the first place, no?
-
-
+Thanks.
