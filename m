@@ -2,104 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB50BC433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 00:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2874C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 00:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348061AbiEZAJP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 May 2022 20:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34788 "EHLO
+        id S1344465AbiEZAM2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 May 2022 20:12:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348011AbiEZAI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 May 2022 20:08:56 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D5B5A3389
-        for <git@vger.kernel.org>; Wed, 25 May 2022 17:08:55 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id wh22so131685ejb.7
-        for <git@vger.kernel.org>; Wed, 25 May 2022 17:08:55 -0700 (PDT)
+        with ESMTP id S239908AbiEZAMX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 May 2022 20:12:23 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9A06391
+        for <git@vger.kernel.org>; Wed, 25 May 2022 17:12:21 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id a15so110229ilq.12
+        for <git@vger.kernel.org>; Wed, 25 May 2022 17:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=+KFcoEoarRDbAW0jISjUt6n7FeovnAsEi9sHoIXbv/A=;
-        b=klL6LVn/4QsSItKOIxS3nAZmVKuITI7KiRzR25yp2LvTQAmvSji+AmvJM/pHSsqfho
-         BUiibkp+JN/IhzzAwvV842QOGN0safD1hin9exFvfhiyw2o3QV0dI3eiLnaS/67JJGMo
-         TDtP1gx8CX9I9quM8wxIkbe3VFNCGGQ8RXkcHjIVY/fgBFrDOxNMYma8M9YEy25jeJDI
-         q+ufc0VHhsXGDiwiJKfp1s2Q69e4RTUvHDhG1fiqWmkrTWua10u1HQUGpSM1g3GKVw6G
-         F/ip4HMqL9SrfN+7C5AyiumH7Eoswh9izeygD4Ng5dMBUv3yBnaPhC5O5Pwm6GWjJnYW
-         T0ZA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=89OiuFQnicJwoau4JoQIbZKggYWCNo5Yfy/ttsfgYIY=;
+        b=FNnbTIlM5en4q4iTpeYEd6Yf5lThB0FER9V6bAZKtfNlkYSvMgWFFSFRkGb9RVTEPb
+         0CHoS3r2YYEUYJ9UqXmJDszHE2gj5PHmiFhSI0Ilp4I3ZUB70kuSxLwTFNaHac15QMl9
+         ElBlGjc1Zg7VBFuAwCjZJkXaMJrUfyeXlLobisrNDJpXEWPdJAqcwcajDj6oX8LVvqr7
+         eUsV4Jf0ATtdgCaeQ0vZPOsjwxuDHw+wU1sdVNwqAc/M1Wk5MEoa8h4Hs8t1eNxylVik
+         UPU5asegSQsIKnQs7Lffo21TIdaB2XNfvB8g3/arCwghV7U4BRQoXe8RDCGGs4FL+0mK
+         1VQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=+KFcoEoarRDbAW0jISjUt6n7FeovnAsEi9sHoIXbv/A=;
-        b=NXRYHGr9i9TeqrP0HGBUqzPEJmq3kg5JOhxguzAbZQmaVAZN4f+aNghk7fBfrSOK4i
-         7LcPXiO1dfXAvWINfAPF1ddudTDCV/hsy0sE6JCSWaV+GgkUldPh+8zX45/2ol00q25I
-         eR44scViR9i5agig3N1pN8dm9cS6x71Ynl5LagSjjzwHDY20la89D5H2nOxPw+AEd7aZ
-         jiZ9mLK09b9RoxhmPKGFUuIKIzFmo84zEVoYmIaILwB/nhbsUyYzp9CBOZma4mThTT+z
-         3Tie4y/Jiek9INUaEWZor8XTiL38A6Umhy5LwFlWSUJwAYzfIeBWFgbqpyxRtO1ZcQ4X
-         U1hg==
-X-Gm-Message-State: AOAM531SphE1ikCOC6h/bfEs8QIPCG+D1vIGVrIQosEvq0guZWHSgmdl
-        bi6znRQcjwKrmTFh5nrTxqzFZIm4O1bUcw==
-X-Google-Smtp-Source: ABdhPJwX9cHE8oJOM3WMxF/YHYJKd3zgm+r6WF/HUnMsPpoXujT+s2SV8A2K/DSZlbmoMhNLX3df0g==
-X-Received: by 2002:a17:907:2cc3:b0:6fa:55f:8805 with SMTP id hg3-20020a1709072cc300b006fa055f8805mr31808008ejc.46.1653523733190;
-        Wed, 25 May 2022 17:08:53 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id s16-20020a056402521000b0042bd6630a14sm14331edd.87.2022.05.25.17.08.52
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=89OiuFQnicJwoau4JoQIbZKggYWCNo5Yfy/ttsfgYIY=;
+        b=XVJGxL+ErcYOtgaZJ41ACBgzwoXwCgY1/gWFE/oVBt4OqfbPvpJlNAN+asUS3KjWFC
+         /4uqFLwbAOC3QKRKK9IzJePUJ2e82etprW6mDFefurcZwPCR3BUerwuIyNezl0UUBh6K
+         bctRNQPfjVSCI/2Pd1C6Sx2J3DYTifNSx8sXPjUWY+wvhytkeImcW/fHa9GMyQMlza2+
+         dIKGesZdp36G6Yt6y/NRwb5wVWHDMQTTYBH2SjUro5kZSn2k7ofT/o0RnTIFfvGplQRM
+         Wf9oDiFZnVE+ltP1IQ9jVkIkaL2nTYYMa0VxpcJRQJiksRxNfkGrUC5pKLKwXR7L0moP
+         FIEg==
+X-Gm-Message-State: AOAM530ZLAQtH440D2RqlA9gdxoMnyKHiwsH4Gye5p0W3rRjN1xYfnh5
+        XH/lDyHaEgHx50kJjDecdBsMd8kjYJ81pQ==
+X-Google-Smtp-Source: ABdhPJynAnBjcEdGlUT+naHNFjWkfIoFYPRUFa1J/LBBNSCA2jqqbh6lkBx3vJsIKUWA1WOzssBQBg==
+X-Received: by 2002:a92:d5cf:0:b0:2d1:d9b0:d5b1 with SMTP id d15-20020a92d5cf000000b002d1d9b0d5b1mr3324584ilq.252.1653523940887;
+        Wed, 25 May 2022 17:12:20 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a19-20020a924453000000b002d19523981csm107850ilm.16.2022.05.25.17.12.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 17:08:52 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nu13b-00076q-VP;
-        Thu, 26 May 2022 02:08:51 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: Re: [PATCH v5 00/17] cruft packs
-Date:   Thu, 26 May 2022 02:06:09 +0200
-References: <cover.1638224692.git.me@ttaylorr.com>
-        <cover.1653088640.git.me@ttaylorr.com>
-        <220521.868rqv15tj.gmgdl@evledraar.gmail.com>
-        <Yo00X0NEu8N0MnZV@google.com> <Yo1TIQqvlxhvLZ58@nand.local>
-        <220525.86sfoytwjn.gmgdl@evledraar.gmail.com>
-        <Yo1YZM2dI6t+RsWv@nand.local> <Yo3gl5Wv82mTZQb2@google.com>
-        <7f5a6a6a-c554-c659-72a8-404bc39e08c7@github.com>
-        <Yo6bDC8uivC3gM2o@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <Yo6bDC8uivC3gM2o@nand.local>
-Message-ID: <220526.86o7zl6tpo.gmgdl@evledraar.gmail.com>
+        Wed, 25 May 2022 17:12:20 -0700 (PDT)
+Date:   Wed, 25 May 2022 20:12:18 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        rsbecker@nexbridge.com, 'Jonathan Nieder' <jrnieder@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
+        tytso@mit.edu
+Subject: Re: adding new 32-bit on-disk (unsigned) timestamp formats (was:
+ [PATCH v5 02/17] pack-mtimes: support reading .mtimes files)
+Message-ID: <Yo7F4tj8aGMvwM7/@nand.local>
+References: <91a9d21b0b7d99023083c0bbb6f91ccdc1782736.1653088640.git.me@ttaylorr.com>
+ <Yo0ysWZKFJoiCSqv@google.com>
+ <015d01d86fa6$a10519f0$e30f4dd0$@nexbridge.com>
+ <Yo1bUbys+Fz7g+6h@nand.local>
+ <016e01d86fc5$64ecf180$2ec6d480$@nexbridge.com>
+ <Yo1zW7ntTuNakpOD@nand.local>
+ <220525.86o7zmt0l0.gmgdl@evledraar.gmail.com>
+ <32db3720-e9c8-e192-6278-c55855ce1d3e@github.com>
+ <Yo6b+8sixGAqMm/x@nand.local>
+ <220526.86sfox6tvp.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220526.86sfox6tvp.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, May 25 2022, Taylor Blau wrote:
-
-> On Wed, May 25, 2022 at 03:59:24PM -0400, Derrick Stolee wrote:
->> I'd much rather have a consistent and proven way of specifying the
->> hash value (using the oid_version() helper) than to try and make a
->> new mechanism.
+On Thu, May 26, 2022 at 02:02:39AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> >> > If we really are trying to micro-optimize storage space here I'm willing
+> >> > to bet that this is still a bad/premature optimization. There's much
+> >> > better ways to store this sort of data in a compact way if that's the
+> >> > concern. E.g. you'd store a 64 bit "base" timestamp in the header for
+> >> > the first entry, and have smaller (signed) "delta" timestamps storing
+> >> > offsets from that "base" timestamp.
+> >>
+> >> This is a good idea for a v2 format when that is necessary.
+> >
+> > I agree here.
+> >
+> > I'm not opposed to such a change (or even being the one to work on it!),
+> > but I would encourage us to pursue that change outside of this series,
+> > since it can easily be done on top.
+> >
+> > Of course, if we ever did decide to implement 64-bit mtimes, we would
+> > have to maintain support for reading both the 32-bit and 64-bit values.
+> > But I think the code is well-equipped to do that, and it could be done
+> > on top without significant additional complexity.
 >
-> To be clear, I absolutely don't think any of us should have the attitude
-> of repeating past bad decisions for the sake of consistency.
+> Do you mean "on top" in the sense that we'd expect that before the next
+> release, so that we wouldn't need to deal with bumping the format, and
+> have some phase-out period for the older version etc.
 >
-> As best I can tell, our (Jonathan and I's) disagreement is on whether
-> using "1" and "2" to identify which hash function is used by the .mtimes
-> file is OK or not. I happen to think that it is acceptable, so the
-> choice to continue to adopt this pattern was motivated by being
-> consistent with a pattern that is good and works.
+> Or that we would need to treat what's landing here as something we'll
+> need to support going forward?
 
-I don't have a strong opinion on whether we "bless" that or not, and say
-that we should just use 1, 2 etc. going forward or not.
+My plan is to treat what will hopefully land here as something we're
+going to support.
 
-But I do think that us doing so initially wasn't intentional, and has
-been in opposition to a strongly worded claim in a comment in hash.h
-(which I modified in my earlier related RFC series).
+I meant "on top" in the sense that the format implemented here does not
+restrict us against making changes (like adding support for wider
+records) in the future. IOW, I did not mean to suggest that we should
+expect more patches from me in this cycle to deprecate parts of the v1
+format.
 
-So maybe not part of this series, but it seems prudent if you feel
-strongly about using this for new formats over what hash.h is currently
-recommending that we have some patch sooner than later to update it
-accordingly.
+In other words (again ;-)), I would like to see us ship this format with
+the existing 32-bit records.
+
+> I think if a format change is worthwhile doing at all that it's worth
+> just doing it now if it's going to be the latter of those, as changing
+> file formats before they're in the wild is easy, but after that it's at
+> best a bit tedious. E.g. we'll need testing to see how we deal with
+> mixed new/old format files etc. etc.
+
+I can understand where you're coming from, though as I noted earlier in
+the thread, I don't think changing the format in the manner you suggest
+would be that difficult in practice.
+
+But in the meantime, the existing format is useful and works, and I
+don't think we should go back to the drawing board for something that we
+can do later if we decide to.
+
+Thanks,
+Taylor
