@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D8B4C433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 21:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABD68C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 21:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241358AbiEZVtI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 17:49:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
+        id S1345495AbiEZVtO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 17:49:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233541AbiEZVtG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 17:49:06 -0400
+        with ESMTP id S233541AbiEZVtJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 17:49:09 -0400
 Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7608160C9
-        for <git@vger.kernel.org>; Thu, 26 May 2022 14:49:04 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id f2so3696330wrc.0
-        for <git@vger.kernel.org>; Thu, 26 May 2022 14:49:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE5D60C9
+        for <git@vger.kernel.org>; Thu, 26 May 2022 14:49:07 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id i9so3622924wrc.13
+        for <git@vger.kernel.org>; Thu, 26 May 2022 14:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cMUdbXNk105KsFz3ylqaJRxzsyCSvZy2oM9y02SnAPQ=;
-        b=HSo/avmiTJTHUTzL0PhmTMD2VHubnGfK3gT/T/lUivPdpWDuABkTZ3NFTaBBCr4mLa
-         TFBYSNiz7DkG0QKxszH/zfb5xk60mLRekmRDsUgDrsV7z3GyqvnJlh9G5gsTT2PuoV75
-         MOIidbgrnukw0lLfWht+No+xVYwUAo0SN+SOnjldIa9Wm1SLUS4JFbYv4pTZ9+eMlJ4A
-         a0rM8kA3qM0pzIfgz9Rx35vBoC5UbVpRTfZrrgEXN/nzBdXTkAda1FBL0ljDSwcgX1zx
-         XA5prlaXeJxPVR/VSMDdfKQJccUJ2P6sFEOTTGxkRQWOlAXUiQxMU6NEi9ZcmrulXiMj
-         s1HA==
+        bh=3fMnl2cEeHCrUE9zlpcwbmoH1oKNbjRGl03PNcUKONM=;
+        b=OA1DhVDJL55zZZFiUx3vgMm5AgsIkyr08fX/3R2ZFei7TwztNaG2keVUohP4Ghhm1m
+         etSFjL7lC9A8FdzTRF1jJQbTICZi5USfp5ZRSDnhifYi3/Y4emd8Y+/Am3gRVV4pun9D
+         YZ3FmIX9Qa5KtoiHJ7NV1ZIYcrm/1QKNGE/uJE0aZ83iZNQaUTj0PV00wM6EWkHk0iJP
+         6kome1812Lz33sefoebIBmvraf+ls7eZLIC2jEWyLwo6aCYK0sDUb8F4YCLE3YAk8f/r
+         jw0RHPVNzPLEFqY+DjsX1gJygm+0/0i4lU5xImjuvOFhVSiRr2iO0Q7kNfkvehIPvDSU
+         5JxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cMUdbXNk105KsFz3ylqaJRxzsyCSvZy2oM9y02SnAPQ=;
-        b=xDKkWcHn6rDOZ74Hw+xOPrPpWvsk6qT6bVmOkPV03etUJhCBKeKqv55KqjSjYRF3D1
-         VzJCZ9FjmfZCR6xQIwBvrUNPocwSE6dDVY41z8I4Xa4Q22RfUFag9XPsWmqIlxwmvkxp
-         OnMS/uRSaNvdO7meQDR43DwDTmNQy7EFj0kEUmmVYVfuO0eEloHKmUhTkFK6dv8usm5Y
-         hnGmTge/IBN1ct16JPD6I7LLJIddZcrElcVklKiHO1XI7BuAD6hBFAnU3PPeendczAVx
-         bjhJl7wp/NsyXEiMQhmHggq8yn9MS53x0Bw5vJ8GdB9nKU+I/7rHQAaoOBbta6ZQh9ZS
-         jAAQ==
-X-Gm-Message-State: AOAM533gVJEuYNC5iuhR/UMuTWUQD9LwHpxSIGknXHId6uMEJeQuuIgT
-        uBWwpwnyAUWMAn47cty0i4tkP/gczbA=
-X-Google-Smtp-Source: ABdhPJylCm1rQzkZaK1+sYBQAwkCv5YthH0O8aXtirRUno/pjbW++jVQkSaYX1966+Nnve7tRNAiOg==
-X-Received: by 2002:a5d:5984:0:b0:20f:dad8:7b6a with SMTP id n4-20020a5d5984000000b0020fdad87b6amr19432265wri.207.1653601738388;
-        Thu, 26 May 2022 14:48:58 -0700 (PDT)
+        bh=3fMnl2cEeHCrUE9zlpcwbmoH1oKNbjRGl03PNcUKONM=;
+        b=sHTaqkyeLWmHWTKFVU6ZhlOvJsNWhIYNT167bwtmZeiiCZN7Th8i7dVDsYK4cubo/k
+         vM5UyMaBUiYuMgZ8uMYOiNSxczN1nx7oCUSIlICi5i9zaOcWXEObiZha7buugMfGUfr5
+         1YSnafKRJ9ndqwAbosHk2ZH6hFGi+QL23O93QzHsUulkmq/UjKClzl/ijTKbWaaOTUeL
+         Z1+ZquV+LczTZNNhY/wckK82lAaTKgi9KBrfJniYiKDbPFUz6muuxLkXsSomPyO/2vdl
+         VyGvJc4LjE8NY8CLWxa6yowJHEldkwhShVChAHUByK9pi75FVbNIfCWolVn4Qia3FfH5
+         aJ2A==
+X-Gm-Message-State: AOAM531xynPCEWmxxcXouJ83i7Yfa2oq55Ilo4hrGr9iZTYWfgDMzz+Q
+        4Qat8V+q24mf9kSwBcPVXHzwaBLB39U=
+X-Google-Smtp-Source: ABdhPJySorufQ/Lk9LKc5+xscKqU6pC5pPY4+5VTjV3fqnzMvZxJVJF0sTmFLS+a1PG4e4PkHNHYPg==
+X-Received: by 2002:a5d:5984:0:b0:20f:dad8:7b6a with SMTP id n4-20020a5d5984000000b0020fdad87b6amr19432506wri.207.1653601745176;
+        Thu, 26 May 2022 14:49:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f2-20020a0560001b0200b0020ffb018d21sm174477wrz.110.2022.05.26.14.47.25
+        by smtp.gmail.com with ESMTPSA id n20-20020a05600c501400b0039736892653sm284313wmr.27.2022.05.26.14.48.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 14:47:59 -0700 (PDT)
-Message-Id: <pull.1143.v9.git.1653601644.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
+        Thu, 26 May 2022 14:49:04 -0700 (PDT)
+Message-Id: <9353e5863dc758bba4e23825b67e462373246a42.1653601644.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1143.v9.git.1653601644.gitgitgadget@gmail.com>
 References: <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com>
+        <pull.1143.v9.git.1653601644.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 May 2022 21:46:54 +0000
-Subject: [PATCH v9 00/30] Builtin FSMonitor Part 3
+Date:   Thu, 26 May 2022 21:46:55 +0000
+Subject: [PATCH v9 01/30] fsm-listen-win32: handle shortnames
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,142 +66,628 @@ Cc:     Jeff Hostetler <git@jeffhostetler.com>,
         Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>,
         rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is version 9 of part 3 of FSMonitor.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This version addresses the test failure on t7527.[56] when deleting/renaming
-the .git directory using the "GIT~1" spelling. Between v6 and v7, I changed
-the way check_for_shortnames() constructed the wchar_t path to .git from a
-pair of wcscpy() calls to a swprintf() call. However, I used a "%s" by
-mistake rather than a "%ls".
+Teach FSMonitor daemon on Windows to recognize shortname paths as
+aliases of normal longname paths.  FSMonitor clients, such as `git
+status`, should receive the longname spelling of changed files (when
+possible).
 
-This caused a non-portable behavior. The tests passed with MSVC and with GCC
-10.1.0 on my laptop, but failed under GCC on one of the CI build machines.
+Sometimes we receive FS events using the shortname, such as when a CMD
+shell runs "RENAME GIT~1 FOO" or "RMDIR GIT~1".  The FS notification
+arrives using whatever combination of long and shortnames were used by
+the other process.  (Shortnames do seem to be case normalized,
+however.)
 
-This was partially hidden by CI machines that have GCC 12 and that fail to
-compile Git without the fixes for GCC 12.x.
+Use Windows GetLongPathNameW() to try to map the pathname spelling in
+the notification event into the normalized longname spelling.  (This
+can fail if the file/directory is deleted, moved, or renamed, because
+we are asking the FS for the mapping in response to the event and
+after it has already happened, but we try.)
 
-Jeff Hostetler (30):
-  fsm-listen-win32: handle shortnames
-  t7527: test FSMonitor on repos with Unicode root paths
-  t/helper/fsmonitor-client: create stress test
-  fsmonitor-settings: bare repos are incompatible with FSMonitor
-  fsmonitor-settings: stub in Win32-specific incompatibility checking
-  fsmonitor-settings: VFS for Git virtual repos are incompatible
-  fsmonitor-settings: stub in macOS-specific incompatibility checking
-  fsmonitor-settings: remote repos on macOS are incompatible
-  fsmonitor-settings: remote repos on Windows are incompatible
-  fsmonitor-settings: NTFS and FAT32 on MacOS are incompatible
-  unpack-trees: initialize fsmonitor_has_run_once in o->result
-  fsm-listen-darwin: ignore FSEvents caused by xattr changes on macOS
-  fsmonitor--daemon: cd out of worktree root
-  fsmonitor--daemon: prepare for adding health thread
-  fsmonitor--daemon: rename listener thread related variables
-  fsmonitor--daemon: stub in health thread
-  fsm-health-win32: add polling framework to monitor daemon health
-  fsm-health-win32: force shutdown daemon if worktree root moves
-  fsm-listen-darwin: shutdown daemon if worktree root is moved/renamed
-  fsmonitor: optimize processing of directory events
-  t7527: FSMonitor tests for directory moves
-  t/perf/p7527: add perf test for builtin FSMonitor
-  fsmonitor: never set CE_FSMONITOR_VALID on submodules
-  t7527: test FSMonitor on case insensitive+preserving file system
-  fsmonitor: on macOS also emit NFC spelling for NFD pathname
-  t/helper/hexdump: add helper to print hexdump of stdin
-  t/lib-unicode-nfc-nfd: helper prereqs for testing unicode nfc/nfd
-  t7527: test Unicode NFC/NFD handling on MacOS
-  fsmonitor--daemon: allow --super-prefix argument
-  t7527: improve implicit shutdown testing in fsmonitor--daemon
+Special case the shortname spelling of ".git" to avoid under-reporting
+these events.
 
- Makefile                               |  20 +-
- builtin/fsmonitor--daemon.c            | 116 ++++++-
- builtin/update-index.c                 |  16 +
- compat/fsmonitor/fsm-health-darwin.c   |  24 ++
- compat/fsmonitor/fsm-health-win32.c    | 278 ++++++++++++++++
- compat/fsmonitor/fsm-health.h          |  47 +++
- compat/fsmonitor/fsm-listen-darwin.c   | 122 ++++++-
- compat/fsmonitor/fsm-listen-win32.c    | 436 ++++++++++++++++++++-----
- compat/fsmonitor/fsm-listen.h          |   2 +-
- compat/fsmonitor/fsm-settings-darwin.c |  89 +++++
- compat/fsmonitor/fsm-settings-win32.c  | 137 ++++++++
- config.mak.uname                       |   5 +
- contrib/buildsystems/CMakeLists.txt    |   8 +
- fsmonitor--daemon.h                    |  11 +-
- fsmonitor-settings.c                   | 167 ++++++++--
- fsmonitor-settings.h                   |  33 ++
- fsmonitor.c                            |  73 ++++-
- fsmonitor.h                            |  11 +
- git.c                                  |   2 +-
- t/helper/test-fsmonitor-client.c       | 106 ++++++
- t/helper/test-hexdump.c                |  30 ++
- t/helper/test-tool.c                   |   1 +
- t/helper/test-tool.h                   |   1 +
- t/lib-unicode-nfc-nfd.sh               | 162 +++++++++
- t/perf/p7527-builtin-fsmonitor.sh      | 257 +++++++++++++++
- t/t7519-status-fsmonitor.sh            |  32 ++
- t/t7527-builtin-fsmonitor.sh           | 401 ++++++++++++++++++++++-
- unpack-trees.c                         |   1 +
- 28 files changed, 2439 insertions(+), 149 deletions(-)
- create mode 100644 compat/fsmonitor/fsm-health-darwin.c
- create mode 100644 compat/fsmonitor/fsm-health-win32.c
- create mode 100644 compat/fsmonitor/fsm-health.h
- create mode 100644 compat/fsmonitor/fsm-settings-darwin.c
- create mode 100644 compat/fsmonitor/fsm-settings-win32.c
- create mode 100644 t/helper/test-hexdump.c
- create mode 100755 t/lib-unicode-nfc-nfd.sh
- create mode 100755 t/perf/p7527-builtin-fsmonitor.sh
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ compat/fsmonitor/fsm-listen-win32.c | 386 ++++++++++++++++++++++++----
+ t/t7527-builtin-fsmonitor.sh        |  65 +++++
+ 2 files changed, 397 insertions(+), 54 deletions(-)
 
-
-base-commit: 5eb696daba2fe108d4d9ba2ccf4b357447ef9946
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1143%2Fjeffhostetler%2Fbuiltin-fsmonitor-part3-v9
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1143/jeffhostetler/builtin-fsmonitor-part3-v9
-Pull-Request: https://github.com/gitgitgadget/git/pull/1143
-
-Range-diff vs v8:
-
-  1:  26144c58659 !  1:  9353e5863dc fsm-listen-win32: handle shortnames
-     @@ compat/fsmonitor/fsm-listen-win32.c: normalize:
-      +	wchar_t *p;
-      +
-      +	/* build L"<wt-root-path>/.git" */
-     -+	swprintf(buf_in, ARRAY_SIZE(buf_in) - 1, L"%s.git",
-     ++	swprintf(buf_in, ARRAY_SIZE(buf_in) - 1, L"%ls.git",
-      +		 watch->wpath_longname);
-      +
-      +	if (!GetShortPathNameW(buf_in, buf_out, ARRAY_SIZE(buf_out)))
-  2:  1bf2e36b6ad =  2:  2ae8a02ebe0 t7527: test FSMonitor on repos with Unicode root paths
-  3:  4bca494bb22 =  3:  6f8baf5b723 t/helper/fsmonitor-client: create stress test
-  4:  663deabc3f6 =  4:  195f90cc9ef fsmonitor-settings: bare repos are incompatible with FSMonitor
-  5:  7cb0180a1ed =  5:  0b182569e11 fsmonitor-settings: stub in Win32-specific incompatibility checking
-  6:  9774faddc45 =  6:  06d49b0f230 fsmonitor-settings: VFS for Git virtual repos are incompatible
-  7:  f7ef7dcffc8 =  7:  2b6e8b0b241 fsmonitor-settings: stub in macOS-specific incompatibility checking
-  8:  dc2dfd67931 =  8:  8068b3bebee fsmonitor-settings: remote repos on macOS are incompatible
-  9:  5627038aaa3 =  9:  a5c40a4464d fsmonitor-settings: remote repos on Windows are incompatible
- 10:  9a12cc78b5d = 10:  d2569ed3211 fsmonitor-settings: NTFS and FAT32 on MacOS are incompatible
- 11:  aaff000cecb = 11:  27f360b3336 unpack-trees: initialize fsmonitor_has_run_once in o->result
- 12:  4f2b15d3d1f = 12:  ad8f65efe0d fsm-listen-darwin: ignore FSEvents caused by xattr changes on macOS
- 13:  427dec412a5 = 13:  7e302958cd4 fsmonitor--daemon: cd out of worktree root
- 14:  51b266b06e1 = 14:  6b271866f67 fsmonitor--daemon: prepare for adding health thread
- 15:  594e0ae243d = 15:  df1061c0ff5 fsmonitor--daemon: rename listener thread related variables
- 16:  c2b5c02ed38 = 16:  e255a5b7104 fsmonitor--daemon: stub in health thread
- 17:  46a5ae2a635 = 17:  f710d305dd4 fsm-health-win32: add polling framework to monitor daemon health
- 18:  7cf1be5f8e2 = 18:  b3f5a945d3e fsm-health-win32: force shutdown daemon if worktree root moves
- 19:  95cf1299d44 = 19:  d8949ab5df6 fsm-listen-darwin: shutdown daemon if worktree root is moved/renamed
- 20:  b020bfb4568 = 20:  8fa7f4fa9be fsmonitor: optimize processing of directory events
- 21:  d058d7e0c08 = 21:  6976f1d45ea t7527: FSMonitor tests for directory moves
- 22:  f5dac286812 = 22:  81559df45ab t/perf/p7527: add perf test for builtin FSMonitor
- 23:  92f5c0d2c8b = 23:  d0c8fecd1a0 fsmonitor: never set CE_FSMONITOR_VALID on submodules
- 24:  40b80adbb31 = 24:  41f8cbc2ae4 t7527: test FSMonitor on case insensitive+preserving file system
- 25:  ea19a06e8cb = 25:  c8c4c22360c fsmonitor: on macOS also emit NFC spelling for NFD pathname
- 26:  66a01db4739 = 26:  1612dcba503 t/helper/hexdump: add helper to print hexdump of stdin
- 27:  25c6066eddc = 27:  e5a7f05d9d4 t/lib-unicode-nfc-nfd: helper prereqs for testing unicode nfc/nfd
- 28:  fc3a0e7847f = 28:  b27dc48a650 t7527: test Unicode NFC/NFD handling on MacOS
- 29:  25676ca4ec2 = 29:  2905b3bb59e fsmonitor--daemon: allow --super-prefix argument
- 30:  d70d2545a5a = 30:  2f0dea304f0 t7527: improve implicit shutdown testing in fsmonitor--daemon
-
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index 5b928ab66e5..4f46bd1d0a6 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -25,6 +25,9 @@ struct one_watch
+ 	DWORD count;
+ 
+ 	struct strbuf path;
++	wchar_t wpath_longname[MAX_PATH + 1];
++	DWORD wpath_longname_len;
++
+ 	HANDLE hDir;
+ 	HANDLE hEvent;
+ 	OVERLAPPED overlapped;
+@@ -34,6 +37,21 @@ struct one_watch
+ 	 * need to later call GetOverlappedResult() and possibly CancelIoEx().
+ 	 */
+ 	BOOL is_active;
++
++	/*
++	 * Are shortnames enabled on the containing drive?  This is
++	 * always true for "C:/" drives and usually never true for
++	 * other drives.
++	 *
++	 * We only set this for the worktree because we only need to
++	 * convert shortname paths to longname paths for items we send
++	 * to clients.  (We don't care about shortname expansion for
++	 * paths inside a GITDIR because we never send them to
++	 * clients.)
++	 */
++	BOOL has_shortnames;
++	BOOL has_tilde;
++	wchar_t dotgit_shortname[16]; /* for 8.3 name */
+ };
+ 
+ struct fsmonitor_daemon_backend_data
+@@ -51,17 +69,18 @@ struct fsmonitor_daemon_backend_data
+ };
+ 
+ /*
+- * Convert the WCHAR path from the notification into UTF8 and
+- * then normalize it.
++ * Convert the WCHAR path from the event into UTF8 and normalize it.
++ *
++ * `wpath_len` is in WCHARS not bytes.
+  */
+-static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
++static int normalize_path_in_utf8(wchar_t *wpath, DWORD wpath_len,
+ 				  struct strbuf *normalized_path)
+ {
+ 	int reserve;
+ 	int len = 0;
+ 
+ 	strbuf_reset(normalized_path);
+-	if (!info->FileNameLength)
++	if (!wpath_len)
+ 		goto normalize;
+ 
+ 	/*
+@@ -70,12 +89,12 @@ static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
+ 	 * sequence of 2 UTF8 characters.  That should let us
+ 	 * avoid ERROR_INSUFFICIENT_BUFFER 99.9+% of the time.
+ 	 */
+-	reserve = info->FileNameLength + 1;
++	reserve = 2 * wpath_len + 1;
+ 	strbuf_grow(normalized_path, reserve);
+ 
+ 	for (;;) {
+-		len = WideCharToMultiByte(CP_UTF8, 0, info->FileName,
+-					  info->FileNameLength / sizeof(WCHAR),
++		len = WideCharToMultiByte(CP_UTF8, 0,
++					  wpath, wpath_len,
+ 					  normalized_path->buf,
+ 					  strbuf_avail(normalized_path) - 1,
+ 					  NULL, NULL);
+@@ -83,9 +102,7 @@ static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
+ 			goto normalize;
+ 		if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
+ 			error(_("[GLE %ld] could not convert path to UTF-8: '%.*ls'"),
+-			      GetLastError(),
+-			      (int)(info->FileNameLength / sizeof(WCHAR)),
+-			      info->FileName);
++			      GetLastError(), (int)wpath_len, wpath);
+ 			return -1;
+ 		}
+ 
+@@ -98,6 +115,173 @@ normalize:
+ 	return strbuf_normalize_path(normalized_path);
+ }
+ 
++/*
++ * See if the worktree root directory has shortnames enabled.
++ * This will help us decide if we need to do an expensive shortname
++ * to longname conversion on every notification event.
++ *
++ * We do not want to create a file to test this, so we assume that the
++ * root directory contains a ".git" file or directory.  (Our caller
++ * only calls us for the worktree root, so this should be fine.)
++ *
++ * Remember the spelling of the shortname for ".git" if it exists.
++ */
++static void check_for_shortnames(struct one_watch *watch)
++{
++	wchar_t buf_in[MAX_PATH + 1];
++	wchar_t buf_out[MAX_PATH + 1];
++	wchar_t *last;
++	wchar_t *p;
++
++	/* build L"<wt-root-path>/.git" */
++	swprintf(buf_in, ARRAY_SIZE(buf_in) - 1, L"%ls.git",
++		 watch->wpath_longname);
++
++	if (!GetShortPathNameW(buf_in, buf_out, ARRAY_SIZE(buf_out)))
++		return;
++
++	/*
++	 * Get the final filename component of the shortpath.
++	 * We know that the path does not have a final slash.
++	 */
++	for (last = p = buf_out; *p; p++)
++		if (*p == L'/' || *p == '\\')
++			last = p + 1;
++
++	if (!wcscmp(last, L".git"))
++		return;
++
++	watch->has_shortnames = 1;
++	wcsncpy(watch->dotgit_shortname, last,
++		ARRAY_SIZE(watch->dotgit_shortname));
++
++	/*
++	 * The shortname for ".git" is usually of the form "GIT~1", so
++	 * we should be able to avoid shortname to longname mapping on
++	 * every notification event if the source string does not
++	 * contain a "~".
++	 *
++	 * However, the documentation for GetLongPathNameW() says
++	 * that there are filesystems that don't follow that pattern
++	 * and warns against this optimization.
++	 *
++	 * Lets test this.
++	 */
++	if (wcschr(watch->dotgit_shortname, L'~'))
++		watch->has_tilde = 1;
++}
++
++enum get_relative_result {
++	GRR_NO_CONVERSION_NEEDED,
++	GRR_HAVE_CONVERSION,
++	GRR_SHUTDOWN,
++};
++
++/*
++ * Info notification paths are relative to the root of the watch.
++ * If our CWD is still at the root, then we can use relative paths
++ * to convert from shortnames to longnames.  If our process has a
++ * different CWD, then we need to construct an absolute path, do
++ * the conversion, and then return the root-relative portion.
++ *
++ * We use the longname form of the root as our basis and assume that
++ * it already has a trailing slash.
++ *
++ * `wpath_len` is in WCHARS not bytes.
++ */
++static enum get_relative_result get_relative_longname(
++	struct one_watch *watch,
++	const wchar_t *wpath, DWORD wpath_len,
++	wchar_t *wpath_longname, size_t bufsize_wpath_longname)
++{
++	wchar_t buf_in[2 * MAX_PATH + 1];
++	wchar_t buf_out[MAX_PATH + 1];
++	DWORD root_len;
++	DWORD out_len;
++
++	/*
++	 * Build L"<wt-root-path>/<event-rel-path>"
++	 * Note that the <event-rel-path> might not be null terminated
++	 * so we avoid swprintf() constructions.
++	 */
++	root_len = watch->wpath_longname_len;
++	if (root_len + wpath_len >= ARRAY_SIZE(buf_in)) {
++		/*
++		 * This should not happen.  We cannot append the observed
++		 * relative path onto the end of the worktree root path
++		 * without overflowing the buffer.  Just give up.
++		 */
++		return GRR_SHUTDOWN;
++	}
++	wcsncpy(buf_in, watch->wpath_longname, root_len);
++	wcsncpy(buf_in + root_len, wpath, wpath_len);
++	buf_in[root_len + wpath_len] = 0;
++
++	/*
++	 * We don't actually know if the source pathname is a
++	 * shortname or a longname.  This Windows routine allows
++	 * either to be given as input.
++	 */
++	out_len = GetLongPathNameW(buf_in, buf_out, ARRAY_SIZE(buf_out));
++	if (!out_len) {
++		/*
++		 * The shortname to longname conversion can fail for
++		 * various reasons, for example if the file has been
++		 * deleted.  (That is, if we just received a
++		 * delete-file notification event and the file is
++		 * already gone, we can't ask the file system to
++		 * lookup the longname for it.  Likewise, for moves
++		 * and renames where we are given the old name.)
++		 *
++		 * Since deleting or moving a file or directory by its
++		 * shortname is rather obscure, I'm going ignore the
++		 * failure and ask the caller to report the original
++		 * relative path.  This seems kinder than failing here
++		 * and forcing a resync.  Besides, forcing a resync on
++		 * every file/directory delete would effectively
++		 * cripple monitoring.
++		 *
++		 * We might revisit this in the future.
++		 */
++		return GRR_NO_CONVERSION_NEEDED;
++	}
++
++	if (!wcscmp(buf_in, buf_out)) {
++		/*
++		 * The path does not have a shortname alias.
++		 */
++		return GRR_NO_CONVERSION_NEEDED;
++	}
++
++	if (wcsncmp(buf_in, buf_out, root_len)) {
++		/*
++		 * The spelling of the root directory portion of the computed
++		 * longname has changed.  This should not happen.  Basically,
++		 * it means that we don't know where (without recomputing the
++		 * longname of just the root directory) to split out the
++		 * relative path.  Since this should not happen, I'm just
++		 * going to let this fail and force a shutdown (because all
++		 * subsequent events are probably going to see the same
++		 * mismatch).
++		 */
++		return GRR_SHUTDOWN;
++	}
++
++	if (out_len - root_len >= bufsize_wpath_longname) {
++		/*
++		 * This should not happen.  We cannot copy the root-relative
++		 * portion of the path into the provided buffer without an
++		 * overrun.  Just give up.
++		 */
++		return GRR_SHUTDOWN;
++	}
++
++	/* Return the worktree root-relative portion of the longname. */
++
++	wcscpy(wpath_longname, buf_out + root_len);
++	return GRR_HAVE_CONVERSION;
++}
++
+ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ {
+ 	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
+@@ -111,7 +295,9 @@ static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
+ 	DWORD share_mode =
+ 		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
+ 	HANDLE hDir;
+-	wchar_t wpath[MAX_PATH];
++	DWORD len_longname;
++	wchar_t wpath[MAX_PATH + 1];
++	wchar_t wpath_longname[MAX_PATH + 1];
+ 
+ 	if (xutftowcs_path(wpath, path) < 0) {
+ 		error(_("could not convert to wide characters: '%s'"), path);
+@@ -128,6 +314,21 @@ static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
+ 		return NULL;
+ 	}
+ 
++	len_longname = GetLongPathNameW(wpath, wpath_longname,
++					ARRAY_SIZE(wpath_longname));
++	if (!len_longname) {
++		error(_("[GLE %ld] could not get longname of '%s'"),
++		      GetLastError(), path);
++		CloseHandle(hDir);
++		return NULL;
++	}
++
++	if (wpath_longname[len_longname - 1] != L'/' &&
++	    wpath_longname[len_longname - 1] != L'\\') {
++		wpath_longname[len_longname++] = L'/';
++		wpath_longname[len_longname] = 0;
++	}
++
+ 	CALLOC_ARRAY(watch, 1);
+ 
+ 	watch->buf_len = sizeof(watch->buffer); /* assume full MAX_RDCW_BUF */
+@@ -135,6 +336,9 @@ static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
+ 	strbuf_init(&watch->path, 0);
+ 	strbuf_addstr(&watch->path, path);
+ 
++	wcscpy(watch->wpath_longname, wpath_longname);
++	watch->wpath_longname_len = len_longname;
++
+ 	watch->hDir = hDir;
+ 	watch->hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+ 
+@@ -258,6 +462,62 @@ static void cancel_rdcw_watch(struct one_watch *watch)
+ 	watch->is_active = FALSE;
+ }
+ 
++/*
++ * Process a single relative pathname event.
++ * Return 1 if we should shutdown.
++ */
++static int process_1_worktree_event(
++	struct string_list *cookie_list,
++	struct fsmonitor_batch **batch,
++	const struct strbuf *path,
++	enum fsmonitor_path_type t,
++	DWORD info_action)
++{
++	const char *slash;
++
++	switch (t) {
++	case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
++		/* special case cookie files within .git */
++
++		/* Use just the filename of the cookie file. */
++		slash = find_last_dir_sep(path->buf);
++		string_list_append(cookie_list,
++				   slash ? slash + 1 : path->buf);
++		break;
++
++	case IS_INSIDE_DOT_GIT:
++		/* ignore everything inside of "<worktree>/.git/" */
++		break;
++
++	case IS_DOT_GIT:
++		/* "<worktree>/.git" was deleted (or renamed away) */
++		if ((info_action == FILE_ACTION_REMOVED) ||
++		    (info_action == FILE_ACTION_RENAMED_OLD_NAME)) {
++			trace2_data_string("fsmonitor", NULL,
++					   "fsm-listen/dotgit",
++					   "removed");
++			return 1;
++		}
++		break;
++
++	case IS_WORKDIR_PATH:
++		/* queue normal pathname */
++		if (!*batch)
++			*batch = fsmonitor_batch__new();
++		fsmonitor_batch__add_path(*batch, path->buf);
++		break;
++
++	case IS_GITDIR:
++	case IS_INSIDE_GITDIR:
++	case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
++	default:
++		BUG("unexpected path classification '%d' for '%s'",
++		    t, path->buf);
++	}
++
++	return 0;
++}
++
+ /*
+  * Process filesystem events that happen anywhere (recursively) under the
+  * <worktree> root directory.  For a normal working directory, this includes
+@@ -274,6 +534,7 @@ static int process_worktree_events(struct fsmonitor_daemon_state *state)
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+ 	struct fsmonitor_batch *batch = NULL;
+ 	const char *p = watch->buffer;
++	wchar_t wpath_longname[MAX_PATH + 1];
+ 
+ 	/*
+ 	 * If the kernel gets more events than will fit in the kernel
+@@ -306,54 +567,64 @@ static int process_worktree_events(struct fsmonitor_daemon_state *state)
+ 	 */
+ 	for (;;) {
+ 		FILE_NOTIFY_INFORMATION *info = (void *)p;
+-		const char *slash;
++		wchar_t *wpath = info->FileName;
++		DWORD wpath_len = info->FileNameLength / sizeof(WCHAR);
+ 		enum fsmonitor_path_type t;
++		enum get_relative_result grr;
++
++		if (watch->has_shortnames) {
++			if (!wcscmp(wpath, watch->dotgit_shortname)) {
++				/*
++				 * This event exactly matches the
++				 * spelling of the shortname of
++				 * ".git", so we can skip some steps.
++				 *
++				 * (This case is odd because the user
++				 * can "rm -rf GIT~1" and we cannot
++				 * use the filesystem to map it back
++				 * to ".git".)
++				 */
++				strbuf_reset(&path);
++				strbuf_addstr(&path, ".git");
++				t = IS_DOT_GIT;
++				goto process_it;
++			}
+ 
+-		strbuf_reset(&path);
+-		if (normalize_path_in_utf8(info, &path) == -1)
+-			goto skip_this_path;
+-
+-		t = fsmonitor_classify_path_workdir_relative(path.buf);
+-
+-		switch (t) {
+-		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
+-			/* special case cookie files within .git */
+-
+-			/* Use just the filename of the cookie file. */
+-			slash = find_last_dir_sep(path.buf);
+-			string_list_append(&cookie_list,
+-					   slash ? slash + 1 : path.buf);
+-			break;
+-
+-		case IS_INSIDE_DOT_GIT:
+-			/* ignore everything inside of "<worktree>/.git/" */
+-			break;
++			if (watch->has_tilde && !wcschr(wpath, L'~')) {
++				/*
++				 * Shortnames on this filesystem have tildes
++				 * and the notification path does not have
++				 * one, so we assume that it is a longname.
++				 */
++				goto normalize_it;
++			}
+ 
+-		case IS_DOT_GIT:
+-			/* "<worktree>/.git" was deleted (or renamed away) */
+-			if ((info->Action == FILE_ACTION_REMOVED) ||
+-			    (info->Action == FILE_ACTION_RENAMED_OLD_NAME)) {
+-				trace2_data_string("fsmonitor", NULL,
+-						   "fsm-listen/dotgit",
+-						   "removed");
++			grr = get_relative_longname(watch, wpath, wpath_len,
++						    wpath_longname,
++						    ARRAY_SIZE(wpath_longname));
++			switch (grr) {
++			case GRR_NO_CONVERSION_NEEDED: /* use info buffer as is */
++				break;
++			case GRR_HAVE_CONVERSION:
++				wpath = wpath_longname;
++				wpath_len = wcslen(wpath);
++				break;
++			default:
++			case GRR_SHUTDOWN:
+ 				goto force_shutdown;
+ 			}
+-			break;
++		}
+ 
+-		case IS_WORKDIR_PATH:
+-			/* queue normal pathname */
+-			if (!batch)
+-				batch = fsmonitor_batch__new();
+-			fsmonitor_batch__add_path(batch, path.buf);
+-			break;
++normalize_it:
++		if (normalize_path_in_utf8(wpath, wpath_len, &path) == -1)
++			goto skip_this_path;
+ 
+-		case IS_GITDIR:
+-		case IS_INSIDE_GITDIR:
+-		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
+-		default:
+-			BUG("unexpected path classification '%d' for '%s'",
+-			    t, path.buf);
+-		}
++		t = fsmonitor_classify_path_workdir_relative(path.buf);
++
++process_it:
++		if (process_1_worktree_event(&cookie_list, &batch, &path, t,
++					     info->Action))
++			goto force_shutdown;
+ 
+ skip_this_path:
+ 		if (!info->NextEntryOffset)
+@@ -382,6 +653,9 @@ force_shutdown:
+  * Note that we DO NOT get filesystem events on the external <gitdir>
+  * itself (it is not inside something that we are watching).  In particular,
+  * we do not get an event if the external <gitdir> is deleted.
++ *
++ * Also, we do not care about shortnames within the external <gitdir>, since
++ * we never send these paths to clients.
+  */
+ static int process_gitdir_events(struct fsmonitor_daemon_state *state)
+ {
+@@ -403,8 +677,10 @@ static int process_gitdir_events(struct fsmonitor_daemon_state *state)
+ 		const char *slash;
+ 		enum fsmonitor_path_type t;
+ 
+-		strbuf_reset(&path);
+-		if (normalize_path_in_utf8(info, &path) == -1)
++		if (normalize_path_in_utf8(
++			    info->FileName,
++			    info->FileNameLength / sizeof(WCHAR),
++			    &path) == -1)
+ 			goto skip_this_path;
+ 
+ 		t = fsmonitor_classify_path_gitdir_relative(path.buf);
+@@ -538,6 +814,8 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ 	if (!data->watch_worktree)
+ 		goto failed;
+ 
++	check_for_shortnames(data->watch_worktree);
++
+ 	if (state->nr_paths_watching > 1) {
+ 		data->watch_gitdir = create_watch(state,
+ 						  state->path_gitdir_watch.buf);
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index bd0c952a116..1be21785162 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -166,6 +166,71 @@ test_expect_success 'implicit daemon stop (rename .git)' '
+ 	test_must_fail git -C test_implicit_2 fsmonitor--daemon status
+ '
+ 
++# File systems on Windows may or may not have shortnames.
++# This is a volume-specific setting on modern systems.
++# "C:/" drives are required to have them enabled.  Other
++# hard drives default to disabled.
++#
++# This is a crude test to see if shortnames are enabled
++# on the volume containing the test directory.  It is
++# crude, but it does not require elevation like `fsutil`.
++#
++test_lazy_prereq SHORTNAMES '
++	mkdir .foo &&
++	test -d "FOO~1"
++'
++
++# Here we assume that the shortname of ".git" is "GIT~1".
++test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~1)' '
++	test_when_finished "stop_daemon_delete_repo test_implicit_1s" &&
++
++	git init test_implicit_1s &&
++
++	start_daemon -C test_implicit_1s &&
++
++	# renaming the .git directory will implicitly stop the daemon.
++	# this moves {.git, GIT~1} to {.gitxyz, GITXYZ~1}.
++	# the rename-from FS Event will contain the shortname.
++	#
++	mv test_implicit_1s/GIT~1 test_implicit_1s/.gitxyz &&
++
++	sleep 1 &&
++	# put it back so that our status will not crawl out to our
++	# parent directory.
++	# this moves {.gitxyz, GITXYZ~1} to {.git, GIT~1}.
++	mv test_implicit_1s/.gitxyz test_implicit_1s/.git &&
++
++	test_must_fail git -C test_implicit_1s fsmonitor--daemon status
++'
++
++# Here we first create a file with LONGNAME of "GIT~1" before
++# we create the repo.  This will cause the shortname of ".git"
++# to be "GIT~2".
++test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~2)' '
++	test_when_finished "stop_daemon_delete_repo test_implicit_1s2" &&
++
++	mkdir test_implicit_1s2 &&
++	echo HELLO >test_implicit_1s2/GIT~1 &&
++	git init test_implicit_1s2 &&
++
++	test_path_is_file test_implicit_1s2/GIT~1 &&
++	test_path_is_dir  test_implicit_1s2/GIT~2 &&
++
++	start_daemon -C test_implicit_1s2 &&
++
++	# renaming the .git directory will implicitly stop the daemon.
++	# the rename-from FS Event will contain the shortname.
++	#
++	mv test_implicit_1s2/GIT~2 test_implicit_1s2/.gitxyz &&
++
++	sleep 1 &&
++	# put it back so that our status will not crawl out to our
++	# parent directory.
++	mv test_implicit_1s2/.gitxyz test_implicit_1s2/.git &&
++
++	test_must_fail git -C test_implicit_1s2 fsmonitor--daemon status
++'
++
+ test_expect_success 'cannot start multiple daemons' '
+ 	test_when_finished "stop_daemon_delete_repo test_multiple" &&
+ 
 -- 
 gitgitgadget
+
