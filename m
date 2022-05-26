@@ -2,91 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61784C433F5
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 04:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B84C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 06:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244779AbiEZERV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 00:17:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37642 "EHLO
+        id S1345331AbiEZGHu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 02:07:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235088AbiEZERT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 00:17:19 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C69B41C3
-        for <git@vger.kernel.org>; Wed, 25 May 2022 21:17:17 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0678919936A;
-        Thu, 26 May 2022 00:17:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jFVKVzhmNHFde1rNevsaMi/Gcs3CHumHwegDld
-        xV6cI=; b=x/btBm0q5W8n9jlZWZZj3OMxofHXHzt39bzzXMttardzi47wRjFsUk
-        FZzOWwRYNa7m2gdNlxmiczoUjE6H+OljrTx4pHQNTTnjibTwmHeidTl8zubzim9t
-        R3Uoy5SZRmhTBkfRRCIonmdZxaJEuDXdW70GKNxDMCKla2I7BPaP8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F41BC199369;
-        Thu, 26 May 2022 00:17:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A6D49199368;
-        Thu, 26 May 2022 00:17:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH 1/5] usage.c: add a non-fatal bug() function to go with
- BUG()
-References: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
-        <patch-1.5-faa1c708a79-20220521T170939Z-avarab@gmail.com>
-        <xmqqpmk15o46.fsf@gitster.g>
-Date:   Wed, 25 May 2022 21:17:12 -0700
-In-Reply-To: <xmqqpmk15o46.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        25 May 2022 13:55:05 -0700")
-Message-ID: <xmqqh75d2aif.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1346061AbiEZGHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 02:07:46 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0B13BCEB3
+        for <git@vger.kernel.org>; Wed, 25 May 2022 23:07:45 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id dm17so1036705qvb.2
+        for <git@vger.kernel.org>; Wed, 25 May 2022 23:07:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hJRwaopOHhwAAZvUgS5lAhF3Lkfu4fzp3SPiGSu+34s=;
+        b=O3lCQs0r9uC9tq9PXh9bJ7gDvJozE8M0sWh2QhN2Oux0v8aXwzGw/T5lMEb0DG9p3o
+         EaLp9BqXtljP+WAFmZdEYqGTZIT1ULdPRR5LalF2xNcZL6lBxwhJ7ktxejcft3bfxhqF
+         +OiCvoGpqwfr5bIG32jtwEZGqsnWYc2k/3YjlGXQ+jEV5Xk0S2dRtp0pApF7mJ5vpvei
+         G7SAc3G6787ZoJjDJLMmIGYTpfPcH0jHIxKSISP5l9gC9L9m10FTt8PTK+cFkfN5vLsk
+         KIB6ZQCZkV31Z6j080ZLwS+sU+TF5d9X9QRMdnfk0b5jygEGCEYvamD3I0DeLtN5amAp
+         0ayg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hJRwaopOHhwAAZvUgS5lAhF3Lkfu4fzp3SPiGSu+34s=;
+        b=gRZQ47Sq3oudLlgcE4LHjVvY0wXaIgDRmwGqCwQcyJF4YIDZ+UwRljyItsn8RWl1+Y
+         TCD9OYEEGod79hTZOOyn55BmeEqLvpplRSJmTQSdCfeCbfFuQVC3dVuVFw3lhM8AQj6q
+         GsazkD+/2J4Ox46fF9sl3fwyCLcCAhG9YBJe7Gb8ZzDYgH6VyHu4xJjoYP1T6jKH8nZ/
+         +2D4A5DZH4DvieRgmN+ugU4R0s+n/hliICff0YoJ4rwf2ROkTf1HQiU9yuXS734tqfPA
+         TcZDD3n9rGde5svbo0oEMtD7IMRmhnZMaQiF/MdWGc0a4TB/BI+0x2YWB5E0cYmFyjnE
+         IV7Q==
+X-Gm-Message-State: AOAM531RgsRkmZAU1kN0yX5JCkBzrMZNcgDyaCWT3RhrGnCam7hci7sZ
+        jA0Q8Qej3loMllzjDOrHbVeTiOdu3COGwLQ+KqE=
+X-Google-Smtp-Source: ABdhPJwO7fu5KMhtNUiJQ7LEKMu2nfXuWFS6VCiKzp8BrqAYb/BsFVRUeHoBxFRQQu8kZHzomuJcZJ7AsT5Td5AkCjs=
+X-Received: by 2002:ad4:5fc9:0:b0:462:698c:772c with SMTP id
+ jq9-20020ad45fc9000000b00462698c772cmr2943120qvb.28.1653545264857; Wed, 25
+ May 2022 23:07:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B8584FF2-DCAA-11EC-9D97-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <xmqqtu9d45f7.fsf@gitster.g> <20220526021540.2812-1-worldhello.net@gmail.com>
+ <xmqqo7zl2b66.fsf@gitster.g>
+In-Reply-To: <xmqqo7zl2b66.fsf@gitster.g>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Thu, 26 May 2022 14:06:54 +0800
+Message-ID: <CANYiYbEcNJ7+7XW-8-v+p8q=aiOP9RJYvST8ethVjxVdNugR5Q@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: dedup git-ls-files output to prevent duplicate targets
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->> +/* usage.c: if bug() is called we should have a BUG_if_bug() afterwards */
->> +extern int bug_called_must_BUG;
+On Thu, May 26, 2022 at 12:03 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I am not sure about the name, ...
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > If there are unresolved conflicts left in the working tree, "make" may
+> > report warnings as follows:
+> >
+> >     Makefile:xxxx: target '.build/pot/po/FOO.c.po' given more than once
+> >                    in the same rule
+> >
+> > The duplicate targets are introduced by the following pattern rule we
+> > added in the preceding commit for incremental build of "po/git.pot",
+> >
+> >     $(LOCALIZED_C_GEN_PO): .build/pot/po/%.po: %
+> >
+> > and the duplicate entries in $(LOCALIZED_C_GEN_PO) come from the
+> > "git ls-files" command in SOURCES_CMD.
+> >
+> > We can pass the option "--deduplicate" to git-ls-files to suppress
+> > duplicate entries for unresolved conflicts.
+>
+> Thanks for a quick response.
+>
+> We certainly can say "your SOURCES_CMD MUST NOT produce duplicates"
+> and passing the --deduplicate option is one valid way to fix this
+> specific case.
+>
+> But I wonder if a more future-proof solution is to dedup the output
+> of the SOURCES_CMD ourselves on the Makefile side.  That way, even
+> if we update SOURCES_CMD in a way that could contain duplicates, we
+> won't have to worry about duplicates.
+>
+> ---
+>
+> It feels way overkill to "sort" the list just to dedup its elements,
+> but that is what GNU Make documentation info page recommends us to
+> do, and we already do use it for deduplication in our Makefile
+> twice.
+>
+> '$(sort LIST)'
+>      Sorts the words of LIST in lexical order, removing duplicate words.
+>      The output is a list of words separated by single spaces.  Thus,
+>
+>           $(sort foo bar lose)
+>
+>      returns the value 'bar foo lose'.
+>
+>      Incidentally, since 'sort' removes duplicate words, you can use it
+>      for this purpose even if you don't care about the sort order.
+>
+>
+> diff --git i/Makefile w/Makefile
+> index 2b61f66259..1d3d3deba1 100644
+> --- i/Makefile
+> +++ w/Makefile
+> @@ -860,7 +860,7 @@ SOURCES_CMD = ( \
+>                 -o \( -name '*.sh' -type f -print \) \
+>                 | sed -e 's|^\./||' \
+>         )
+> -FOUND_SOURCE_FILES := $(shell $(SOURCES_CMD))
+> +FOUND_SOURCE_FILES := $(sort $(shell $(SOURCES_CMD)))
+>
+>  FOUND_C_SOURCES = $(filter %.c,$(FOUND_SOURCE_FILES))
+>  FOUND_H_SOURCES = $(filter %.h,$(FOUND_SOURCE_FILES))
+>
 
-I finally figured out why I found this name so disturbing.  This is
-written from the viewpoint of somebody who is trying to catch a
-programmer's error of calling bug() without calling BUG_if_bug();
-it is not named to help the users of API to understand it better.
+If I disabled the git-ls-files command like below,
 
-I wonder if it makes sense to make the call to BUG_if_bug() totally
-optional.  The rule becomes slightly different:
+    @@ -846,7 +846,7 @@ generated-hdrs: $(GENERATED_H)
+     ## Exhaustive lists of our source files, either dynamically generated,
+     ## or hardcoded.
+     SOURCES_CMD = ( \
+    -       git ls-files --deduplicate \
+    +       git bad-ls-files --deduplicate \
+                    '*.[hcS]' \
+                    '*.sh' \
+                    ':!*[tp][0-9][0-9][0-9][0-9]*' \
 
- * You can call bug() zero or more times.  It issues a fatal error
-   message, and internally remembers the fact that we detected a
-   programming error that invalidates the execution of this program,
-   without immediately terminating the program.
+, and run "make", will display the following warnings:
 
- * When you exit() from the program, the runtime consults that "did
-   we call bug()?" record and makes the program exit with known exit
-   code (we could arrange it to abort() just like BUG, but I'd
-   prefer controlled crash).
+    Makefile:2751: target `.build/pot/po/command-list.h.po' given more
+than once in the same rule.
+    Makefile:2751: target `.build/pot/po/config-list.h.po' given more
+than once in the same rule.
+    Makefile:2751: target `.build/pot/po/hook-list.h.po' given more
+than once in the same rule.
 
- * But it is inconvenient to always keep going, after you may have
-   called one or more bug(), to the normal program completion.  So
-   there is a helper exit_if_called_bug(), which is an equivalent to
-   checking the "did we call bug()?" record and calling exit().
+This is because the three generated header files (defined in
+$(GENERATED_H)) are also included in the result of "SOURCES_CMD". We
+can fix this by sorting LOCALIZED_C:
 
-By making BUG_if_bug() optional, we can lose a handful of lines from
-the test helper, because it makes it a non-issue to exit the program
-without calling it.
+    -LOCALIZED_C = $(FOUND_C_SOURCES) $(FOUND_H_SOURCES) $(SCALAR_SOURCES) \
+    -             $(GENERATED_H)
+    +LOCALIZED_C = $(sort $(FOUND_C_SOURCES) $(FOUND_H_SOURCES)
+$(SCALAR_SOURCES) \
+    +               $(GENERATED_H))
 
-Hmm?
+Will send v2 patch.
