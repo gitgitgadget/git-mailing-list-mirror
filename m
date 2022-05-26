@@ -2,190 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B96C433F5
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 19:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8623C433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 19:37:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238184AbiEZTVx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 15:21:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41056 "EHLO
+        id S1346417AbiEZThj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 15:37:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231145AbiEZTVv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 15:21:51 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD25DFF6B
-        for <git@vger.kernel.org>; Thu, 26 May 2022 12:21:50 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id u12-20020a17090a1d4c00b001df78c7c209so5237302pju.1
-        for <git@vger.kernel.org>; Thu, 26 May 2022 12:21:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=puGnolQGgKfgDGv0yqNypz2hUITZVWY+agpwdhUTwQ0=;
-        b=TowzicKuSG3FMONfmS0gT+BWF/AKqMlYv6O4ksHkpqTtzMR8JTzNs3s8bkkiG6O3rZ
-         cb8Z2ZIC/g9B/p99sCFx8SMGQUNkXEsNyPgJ9atESZjYA0YONHVsDTBbxyM0jFJN0ozS
-         RbDMyrEbcXc9cQ+tE8fXuTAL6B35jRbPbQvGRhMoWf+H5l05cTGhg+dx5U8UDMK788O/
-         pYeXXquOV21T9grolXESC4YSaWoqMkzvU1RZ0vxdCYZnEmmiUMeT0hCp++EsMMgng0bs
-         eGWVSBd7LUM0oyh6fsZ37FxsX6dz3r+7t3gqonMtShPIjK/hoAsaaJ2HxsoA8DYT9NMZ
-         vm+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=puGnolQGgKfgDGv0yqNypz2hUITZVWY+agpwdhUTwQ0=;
-        b=K8nBkfP+WhlweoRG3f+YijvgD2h0vVZRohzDcuOaGmO0v0nrYQWQcThR10MZHgxZ1l
-         rqVRpYQHImVxihdwvXs5i+H3fhj8N9pBD3giZn6y6XW7H2EoX6ZtLLhXyqyTB8PQlbVV
-         Gc6A4sFUAeRwzZENQJ/uD4cR2P4yZWZyz9PikbqA/J9NEI6TaxuJWKbj46BbaVReBkmx
-         kIrzPD5k0uVt9V91iY4eVWKetnTVAJ2pWVHo8YF4UJ8fkKCZfvkQVjWMDtuyd241/AAY
-         GnO6w8Or/Q7fQE0n+4fbojaLp3BPsbmtjXvuA9ymzl92+HiGoliidnloR51GIii6RsnK
-         rZAQ==
-X-Gm-Message-State: AOAM5315RIuqPkEX2S4b9VQCbqFO/hKSlP9F5zkSHZwmdmvgr8km5bc6
-        nz3+NE0AwP/dwwuqBPmscbDr
-X-Google-Smtp-Source: ABdhPJzYQACZ+Sq7S5M9gaxbDSj/cJW35SlaiU6WkCny8IfGBaOj6oOPCBUm8ybtXk9vzD98hKEsFQ==
-X-Received: by 2002:a17:902:b698:b0:158:faee:442f with SMTP id c24-20020a170902b69800b00158faee442fmr40261080pls.75.1653592910003;
-        Thu, 26 May 2022 12:21:50 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id 16-20020a056a00071000b0050dc7628146sm1855084pfl.32.2022.05.26.12.21.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 May 2022 12:21:49 -0700 (PDT)
-Message-ID: <f8509b71-1951-58fe-c12d-3ced30e4ed79@github.com>
-Date:   Thu, 26 May 2022 12:21:48 -0700
+        with ESMTP id S1345069AbiEZThh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 15:37:37 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07B961055D
+        for <git@vger.kernel.org>; Thu, 26 May 2022 12:37:34 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DF820126380;
+        Thu, 26 May 2022 15:37:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=7ksPgQX287nc
+        OB+hOVraZ5Ee6uQ7c21U2kPlsUy2oOI=; b=Dk5WQiQT22V4Wba4ksEdmYHu1feZ
+        59T3cgzTLpTNWm3DJC+lAEGF5O1wLpwglG/4HSvCk/AdqtcftRN5448TprSfBfPb
+        QIgwKNsYtUfqLmvtX49DZdy8RxC97NSH7axOTebqwAZfXF8Lw8lL/Max+GyWx0FX
+        QVCgbqeN1C/fEBk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D68C512637F;
+        Thu, 26 May 2022 15:37:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F0E3412637D;
+        Thu, 26 May 2022 15:37:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re* jc/http-clear-finished-pointer
+References: <xmqqzgj41ya2.fsf@gitster.g>
+        <220526.86v8ts3z2k.gmgdl@evledraar.gmail.com>
+Date:   Thu, 26 May 2022 12:37:31 -0700
+In-Reply-To: <220526.86v8ts3z2k.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 26 May 2022 20:51:23 +0200")
+Message-ID: <xmqq7d68ytj8.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH v2 3/4] builtin/pack-objects.c: ensure included
- `--stdin-packs` exist
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     jonathantanmy@google.com, gitster@pobox.com
-References: <cover.1652458395.git.me@ttaylorr.com>
- <cover.1653418457.git.me@ttaylorr.com>
- <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <cdc3265ec27f04accc433d9e4e54ac0edc3b3746.1653418457.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 499DD664-DD2B-11EC-BD1E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau wrote:
-> A subsequent patch will teach `want_object_in_pack()` to set its
-> `*found_pack` and `*found_offset` poitners to NULL when the provided
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-s/poitners/pointers
+> On Thu, May 26 2022, Junio C Hamano wrote:
+>
+>> * jc/http-clear-finished-pointer (2022-05-24) 1 commit
+>>  - http.c: clear the 'finished' member once we are done with it
+>>
+>>  Meant to go with js/ci-gcc-12-fixes
+>>
+>>  Will merge to 'next'?
+>>  source: <xmqqczgqjr8y.fsf_-_@gitster.g>
+>
+> The end of the proposed commit message says:
+>
+>     [...]Clear the finished member before the control leaves the
+>     function, which has a side effect of unconfusing compilers like
+>     recent GCC 12 that is over-eager to warn against such an assignment=
+.
+>
+> I cannot reproduce this suppressing the warning as noted in past
+> exchanges, it's not affected by this "clear if we set it" pattern. It
+> needs to be unconditionally cleared.
 
-> pack does not pass the `is_pack_valid()` check.
-> 
-> The `--stdin-packs` mode of `pack-objects` is not quite prepared to
-> handle this. To prepare it for this change, do the following two things:
-> 
->   - Ensure provided packs pass the `is_pack_valid()` check when
->     collecting the caller-provided packs into the "included" and
->     "excluded" lists.
-> 
+Interesting.  I still have conditional clearing in the tree, though
+I was reasonably sure I got rid of the conditional and made it
+always clear, when I rewrote that part of the log message.  After
+all, I ran "commit --amend" so that I do not forget the issue after
+sending https://lore.kernel.org/git/xmqqleurlt31.fsf@gitster.g/ X-<.
 
-Is the 'is_pack_valid()' check happening for the "excluded" packs? It looks
-like you only added it for the packs in the "included" list in this patch.
+Thanks for catching.  What is queued is not what I intended to
+queue.
 
->   - Gracefully handle any _invalid_ packs being passed to
->     `want_object_in_pack()`.
-> 
-> Calling `is_pack_valid()` early on makes it substantially less likely
-> that we will have to deal with a pack going away, since we'll have an
-> open file descriptor on its contents much earlier.
-> 
-> But even packs with open descriptors can become invalid in the future if
-> we (a) hit our open descriptor limit, forcing us to close some open
-> packs, and (b) one of those just-closed packs has gone away in the
-> meantime.
-> 
-> `add_object_entry_from_pack()` depends on having a non-NULL
-> `*found_pack`, since it passes that pointer to `packed_object_info()`,
-> meaning that we would SEGV if the pointer became NULL (like we propose
-> to do in `want_object_in_pack()` in the following patch).
-> 
-> But avoiding calling `packed_object_info()` entirely is OK, too, since
-> its only purpose is to identify which objects in the included packs are
-> commits, so that they can form the tips of the advisory traversal used
-> to discover the object namehashes.
-> 
-> Failing to do this means that at worst we will produce lower-quality
-> deltas, but it does not prevent us from generating the pack as long as
-> we can find a copy of each object from the disappearing pack in some
-> other part of the repository.
-> 
+But there is one thing that is puzzling.  Ever since this, together
+with the three patches from Dscho for gcc12, got included in 'seen',
+the branch started passing the Windows build that used to complain
+and did not work, so at least with the version of gcc12 used over
+there, it apparently is sufficient to clear only when we are
+responsible for placing an address that is about to become invalid,
+while leaving the pointer we didn't stuff in unmodified.
 
-The rest of this makes sense and (as far as I can tell) lines up with the
-implementation below.
+As far as I understand, with the most recent analysis by Dscho on
+the http-push codepath, we can return to the loop while the slot is
+holding a different request that is unrelated to ours that has
+already finished without recursively calling run_active_slot(), and
+with the current *(slot->finished)=3D1 trick, it will successfully
+notify our loop that our request is done, even though slot->in_use
+is set to true back again when it happens.  But by definition, at
+that point, slot->finished is not used by anybody (obviously not by
+us, but also not by the request that is currently using the slot,
+because it hasn't used run_active_slot() and slot->finished is not
+touched by it), so it is safe to unconditionally clear the member.
 
-> Co-authored-by: Victoria Dye <vdye@github.com>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  builtin/pack-objects.c | 35 ++++++++++++++++++++---------------
->  1 file changed, 20 insertions(+), 15 deletions(-)
-> 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index ec3193fd95..ffeaecd1d8 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -3201,10 +3201,8 @@ static int add_object_entry_from_pack(const struct object_id *oid,
->  				      uint32_t pos,
->  				      void *_data)
->  {
-> -	struct rev_info *revs = _data;
-> -	struct object_info oi = OBJECT_INFO_INIT;
->  	off_t ofs;
-> -	enum object_type type;
-> +	enum object_type type = OBJ_NONE;
->  
->  	display_progress(progress_state, ++nr_seen);
->  
-> @@ -3215,20 +3213,25 @@ static int add_object_entry_from_pack(const struct object_id *oid,
->  	if (!want_object_in_pack(oid, 0, &p, &ofs))
->  		return 0;
->  
-> -	oi.typep = &type;
-> -	if (packed_object_info(the_repository, p, ofs, &oi) < 0)
-> -		die(_("could not get type of object %s in pack %s"),
-> -		    oid_to_hex(oid), p->pack_name);
-> -	else if (type == OBJ_COMMIT) {
-> -		/*
-> -		 * commits in included packs are used as starting points for the
-> -		 * subsequent revision walk
-> -		 */
-> -		add_pending_oid(revs, NULL, oid, 0);
-> +	if (p) {
-> +		struct rev_info *revs = _data;
-> +		struct object_info oi = OBJECT_INFO_INIT;
-> +
-> +		oi.typep = &type;
-> +		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
-> +			die(_("could not get type of object %s in pack %s"),
-> +			    oid_to_hex(oid), p->pack_name);
-> +		} else if (type == OBJ_COMMIT) {
-> +			/*
-> +			 * commits in included packs are used as starting points for the
-> +			 * subsequent revision walk
-> +			 */
-> +			add_pending_oid(revs, NULL, oid, 0);
-> +		}
-> +
-> +		stdin_packs_found_nr++;
->  	}
->  
-> -	stdin_packs_found_nr++;
-> -
->  	create_object_entry(oid, type, 0, 0, 0, p, ofs);
->  
->  	return 0;
-> @@ -3346,6 +3349,8 @@ static void read_packs_list_from_stdin(void)
->  		struct packed_git *p = item->util;
->  		if (!p)
->  			die(_("could not find pack '%s'"), item->string);
-> +		if (!is_pack_valid(p))
-> +			die(_("packfile %s cannot be accessed"), p->pack_name);
->  	}
->  
->  	/*
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+Subject: [PATCH v3] http.c: clear the 'finished' member once we are done =
+with it
 
+In http.c, the run_active_slot() function allows the given "slot" to
+make progress by calling step_active_slots() in a loop repeatedly,
+and the loop is not left until the request held in the slot
+completes.
+
+Ages ago, we used to use the slot->in_use member to get out of the
+loop, which misbehaved when the request in "slot" completes (at
+which time, the result of the request is copied away from the slot,
+and the in_use member is cleared, making the slot ready to be
+reused), and the "slot" gets reused to service a different request
+(at which time, the "slot" becomes in_use again, even though it is
+for a different request).  The loop terminating condition mistakenly
+thought that the original request has yet to be completed.
+
+Today's code, after baa7b67d (HTTP slot reuse fixes, 2006-03-10)
+fixed this issue, uses a separate "slot->finished" member that is
+set in run_active_slot() to point to an on-stack variable, and the
+code that completes the request in finish_active_slot() clears the
+on-stack variable via the pointer to signal that the particular
+request held by the slot has completed.  It also clears the in_use
+member (as before that fix), so that the slot itself can safely be
+reused for an unrelated request.
+
+One thing that is not quite clean in this arrangement is that,
+unless the slot gets reused, at which point the finished member is
+reset to NULL, the member keeps the value of &finished, which
+becomes a dangling pointer into the stack when run_active_slot()
+returns.  Clear the finished member before the control leaves the
+function, which has a side effect of unconfusing compilers like
+recent GCC 12 that is over-eager to warn against such an assignment.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ http.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/http.c b/http.c
+index 229da4d148..9a98372f74 100644
+--- a/http.c
++++ b/http.c
+@@ -1367,6 +1367,32 @@ void run_active_slot(struct active_request_slot *s=
+lot)
+ 			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
+ 		}
+ 	}
++
++	/*
++	 * The value of slot->finished we set before the loop was used
++	 * to set our "finished" variable when our request completed.
++	 *
++	 * 1. The slot may not have been reused for another requst
++	 *    yet, in which case it still has &finished.
++	 *
++	 * 2. The slot may already be in-use to serve another request,
++	 *    which can further be divided into two cases:
++	 *
++	 * (a) If call run_active_slot() hasn't been called for that
++	 *     other request, slot->finished may still have the
++	 *     address of our &finished.
++	 *
++	 * (b) If the request did call run_active_slot(), then the
++	 *     call would have updated slot->finished at the beginning
++	 *     of this function, and with the clearing of the member
++	 *     below, we would find that slot->finished is now NULL.
++	 *
++	 * In all cases, slot->finished has no useful information to
++	 * anybody at this point.  Some compilers warn us for
++	 * attempting to smuggle a pointer that is about to become
++	 * invalid, i.e. &finished.  We clear it here to assure them.
++	 */
++	slot->finished =3D NULL;
+ }
+=20
+ static void release_active_slot(struct active_request_slot *slot)
+--=20
+2.36.1-306-g0dbcc0e187
