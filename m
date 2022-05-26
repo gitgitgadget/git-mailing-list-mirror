@@ -2,105 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1063C433FE
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 18:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7241EC433F5
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 18:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348571AbiEZS4F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 14:56:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57900 "EHLO
+        id S1348676AbiEZS41 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 14:56:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237777AbiEZS4C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 14:56:02 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DFB8C965E
-        for <git@vger.kernel.org>; Thu, 26 May 2022 11:56:00 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9FA2D19E8DE;
-        Thu, 26 May 2022 14:55:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TpzNYdwqqsoM
-        3tZsDc6oOPwg91z+cIf6bjAfrcTEt6Y=; b=gCQz8U41xE+8zdMcvPWbRVTPPfM6
-        /FQEdi5AjeKmFRrbw3Q/NJcQ6UZD8X1fS6VvNx+wobVnXBzDiA1kaypXLnUwDKhR
-        FGGNlaEescOXonmeNmuZl9i1B2quPRiQLiIpZHBXlAf9CiB1CYbvImRpGwpTfzG0
-        HEt5gE7Myi33Uas=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9899A19E8DD;
-        Thu, 26 May 2022 14:55:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4FFB819E8DC;
-        Thu, 26 May 2022 14:55:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH 1/5] usage.c: add a non-fatal bug() function to go with
- BUG()
-References: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
-        <patch-1.5-faa1c708a79-20220521T170939Z-avarab@gmail.com>
-        <xmqqpmk15o46.fsf@gitster.g> <xmqqh75d2aif.fsf@gitster.g>
-        <220526.86fskw7mbv.gmgdl@evledraar.gmail.com>
-        <xmqqleuo1beq.fsf@gitster.g>
-        <220526.868rqo5enf.gmgdl@evledraar.gmail.com>
-Date:   Thu, 26 May 2022 11:55:55 -0700
-In-Reply-To: <220526.868rqo5enf.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 26 May 2022 20:29:20 +0200")
-Message-ID: <xmqqmtf4yvgk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1348727AbiEZS4X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 14:56:23 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7031A994FE
+        for <git@vger.kernel.org>; Thu, 26 May 2022 11:56:15 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id ck4so4613490ejb.8
+        for <git@vger.kernel.org>; Thu, 26 May 2022 11:56:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=PoOvQRPl1g+6wY4egd3uRzRLE2m2m8Ce1BAOTJGpKig=;
+        b=Ad8CAGCJucM0mv4HAQtTB2hu68r+Xlj5xELbR8YkDdvcnIRVwlUKl46G53bQ92Vpnr
+         1qPsUeZG4igeRTlqvgFh8GVNfnnAfZJiDmT8KSMb6sCAj7hwvVjYa65Qn5GwFVrxgjA0
+         fJYi5P680sZlSSxj5fjgaHt0Qxakd72FGtTCWGaV86gtmM1sGddIHZjqKZ/N+a9x8+OB
+         Rj3RA3MhoY2qlA7BoSoEBZG/EWXmgDoNtq9acplkMgJsetL2yHIb+R65Wuh9TeC1QYzp
+         m5N54GJxGFDeCE8/XO6n8C+SheCs7a3KYoZzz4mBrlLSCZAGPYQ22dpK68xlSXrO2B/X
+         zVcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=PoOvQRPl1g+6wY4egd3uRzRLE2m2m8Ce1BAOTJGpKig=;
+        b=exfhI8ccswgLl413gFnp/a1tj4fJlF8+MiXniTp9MNVrtDZ55d9icXXxJGgdVkkKmh
+         ggw5vGbiWsmbdQJnv5CqCcthWCo+6qm651Criqmh5jwRcCaf3vwybWfsWh0h5kO0508F
+         2GgQZKsAPEkSCirAsteZE3Zj5lwSbxCc4gscDRhFQou1jyTylSFCC5G5u4tzJswfemwQ
+         VrIUVtNanJTwQCRkfdN6fJmYGgqzuB/OKUd2qRvI1fwKy9Em8y6+3jL4dhgtssUIx7Hi
+         KC7DnEifE4jn+rieyDXKB6EaBCLw7B5/SZKENyhNlf0Swgnwczy9AcwO8E7CKVrcvUhW
+         7Fsg==
+X-Gm-Message-State: AOAM530auLsTE+scX3uDaa5MHLsjXPMcHInWHl8uuU4dTzaZss0Nzyk8
+        iS5Lsj5MLkFZFUiek4ASZ0cKc8kNFhs6IA==
+X-Google-Smtp-Source: ABdhPJzSFruCNdY8qFheqn57hG83SjpuywHtHeX6MDknlDOpfCLp4QAdYdEVXSTeprHoXQicBqxIYQ==
+X-Received: by 2002:a17:907:3f1c:b0:6ff:2bc2:6ac2 with SMTP id hq28-20020a1709073f1c00b006ff2bc26ac2mr2733162ejc.696.1653591373963;
+        Thu, 26 May 2022 11:56:13 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id o3-20020a170906774300b006f3ef214db7sm759360ejn.29.2022.05.26.11.56.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 May 2022 11:56:13 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nuIeb-000FuV-1w;
+        Thu, 26 May 2022 20:56:13 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: js/bisect-in-c (was: What's cooking in git.git (May 2022, #07; Wed,
+ 25))
+Date:   Thu, 26 May 2022 20:54:36 +0200
+References: <xmqqzgj41ya2.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqzgj41ya2.fsf@gitster.g>
+Message-ID: <220526.86r14g3yya.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 797D5266-DD25-11EC-B3BD-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Thu, May 26 2022, Junio C Hamano wrote:
->
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->>> I don't think we should do it like that and keep it a BUG() not to ca=
-ll
->>> BUG_if_bug() when we hit exit(), because e.g. in the case of
->>> parse-options.c once we have the a bad "struct options" we don't want=
- to
->>> continue, as we might segfault, or have other bad behavior etc. So we=
-'d
->>> like to BUG() out as soon as possible.
->>
->> Oh, there is no question about that.  When we detect that the
->> program is in an inconsistent and unexpected state, we would want to
->> bug out instead of continuing at some point, and that is why we would
->> want to have BUG_if_bug(), or exit_if_called_bug(), as I called in
->> the message you are reponding to.
->>
->> What I am getting at is that the code often or usually calls
->> BUG_if_bug() is not a reason to require it to be called, especially
->> if there are conditional calls to bug() near the end of the program.
->> Imagine a program, after finishing to respond to the end-user
->> request, before the end of the program, performing some self sanity
->> checks with a series of "if (condition) bug()", and there is no more
->> thing that needs to be done other than exiting after such check.  I
->> would have added such a call to sanity_check_refcnt() at the end of
->> "git blame", for example, if the facility existed.
->
-> But you wouldn't want to just stick BUG_if_bug() at the end of those
-> sanity checks?
->
-> I suppose I can drop the paranoia of requiring it, but since all
-> existing callers want to act that way, and I couldn't imagine a case
-> where you didn't want that I made it act that way.
+On Thu, May 26 2022, Junio C Hamano wrote:
 
-It just is one more thing that needs testing.  But in any case, that
-was more or less a tongue-in-cheek suggestion and not a serious
-counter proposal.  Let's drop it now and stop wasting our time.
+> * js/bisect-in-c (2022-05-21) 15 commits
+>  - bisect: no longer try to clean up left-over `.git/head-name` files
+>  - bisect: remove Cogito-related code
+>  - Turn `git bisect` into a full built-in
+>  - bisect: teach the `bisect--helper` command to show the correct usage strings
+>  - bisect: move even the command-line parsing to `bisect--helper`
+>  - bisect--helper: return only correct exit codes in `cmd_*()`
+>  - bisect--helper: move the `BISECT_STATE` case to the end
+>  - bisect--helper: make `--bisect-state` optional
+>  - bisect--helper: align the sub-command order with git-bisect.sh
+>  - bisect--helper: using `--bisect-state` without an argument is a bug
+>  - bisect--helper: really retire `--bisect-autostart`
+>  - bisect--helper: really retire --bisect-next-check
+>  - bisect--helper: retire the --no-log option
+>  - bisect: avoid double-quoting when printing the failed command
+>  - bisect run: fix the error message
+>
+>  Final bits of "git bisect.sh" have been rewritten in C.
+>
+>  Will merge to 'next'?
+>  source: <pull.1132.v3.git.1653144546.gitgitgadget@gmail.com>
 
-Thanks.
+This topic has outstanding regressions in CLI parsing. I.e. we'll now
+offer to start bisection where we previously errored out on invalid
+command usage. See my replies in that thread.
