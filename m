@@ -2,68 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46973C433EF
-	for <git@archiver.kernel.org>; Thu, 26 May 2022 12:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A14ECC433EF
+	for <git@archiver.kernel.org>; Thu, 26 May 2022 12:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238587AbiEZMp6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 May 2022 08:45:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44402 "EHLO
+        id S1345008AbiEZM5n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 May 2022 08:57:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbiEZMpz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 May 2022 08:45:55 -0400
-Received: from fallback12.mail.ru (fallback12.mail.ru [94.100.179.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76CB06CAB9
-        for <git@vger.kernel.org>; Thu, 26 May 2022 05:45:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=5klvwHcFc3WK21k/Ks5daMPqceOWlL7angC1nIvk9aU=;
-        t=1653569152;x=1654174552; 
-        b=M8uNYRy+DeNxDvoD9OmYGOfCIFfH2y1pEAueMpUuXpHrMRTE4ZITq6FZ3XB/uXBKCtXKgO6qEN9ZwwTM9b2NyqcKRHCe/aGI3hRfgYJ0rM6nyF7NSaNEb1HDlhz0NMmgh24Z2btJcICWyATW7LQ9Sgq1mhqVSCx5Bl1BNgVyhw8=;
-Received: from [10.161.25.37] (port=58770 helo=smtp60.i.mail.ru)
-        by fallback12.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
-        id 1nuCsA-0003Vo-66
-        for git@vger.kernel.org; Thu, 26 May 2022 15:45:50 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=5klvwHcFc3WK21k/Ks5daMPqceOWlL7angC1nIvk9aU=;
-        t=1653569150;x=1654174550; 
-        b=OiZ49kIzrDCmGWq3h/woTq0zPsvnkaAqkRJtyMXWxiBMeahGnF3xIOsDPu/C3dDKHf0ALCq1DLrFyjirrSihS+sXNQG4uM8+kBBVzw/PYh+Zqgcvp/o85YiFHmw2Tsg8W4LCA6SDhpnxHekA3rT/srSJx1HgwMMtzuY+WGx7A00=;
-Received: by smtp60.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1nuCs7-0006il-Er; Thu, 26 May 2022 15:45:47 +0300
-Date:   Thu, 26 May 2022 15:45:47 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Aman <amanmatreja@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: About GIT Internals
-Message-ID: <20220526124547.5txalnlophx7b57l@carbon>
+        with ESMTP id S230475AbiEZM5m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 May 2022 08:57:42 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC49C522C6
+        for <git@vger.kernel.org>; Thu, 26 May 2022 05:57:41 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nuD3c-000AVt-6t;
+        Thu, 26 May 2022 13:57:40 +0100
+Message-ID: <b794f028-97be-beb8-b815-4d9b8aa8b643@iee.email>
+Date:   Thu, 26 May 2022 13:57:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD959DE7DA6C9DEA5D5D19AD1ED5BF4B119DAE2489EFE476F57182A05F538085040FEA0FE6054B3020A3ED280369F4AA1E3E465F481BD29CA57DB18352639D24FCF
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7FEAC828D2BF6EC3CEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006379BF04B24BEB7B2D58638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D83D6C277F68DDBCA80F941BFADFE622F9117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCF1175FABE1C0F9B6A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD18C26CFBAC0749D213D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE902A1BE408319B298FBB52F5C7ECD1BBD8FC6C240DEA7642DBF02ECDB25306B2B78CF848AE20165D0A6AB1C7CE11FEE367F1C1C3ABB44F3A03F1AB874ED89028C4224003CC836476EA7A3FFF5B025636E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F79006377870F476E0DB9443EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
-X-8FC586DF: 6EFBBC1D9D64D975
-X-C1DE0DAB: 0D63561A33F958A56A3A604E428375BB9AE04C997CD04633DC5885AC4765E8ABD59269BC5F550898D99A6476B3ADF6B4886A5961035A09600383DAD389E261318FB05168BE4CE3AF
-X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34A08F09726D78E07B8D20B5A38364C5E08D884C279CB78F3380B1534788D31BC5D5AECB2080DE48661D7E09C32AA3244CC3B8C9A1FCA665F0F7630478D249CA3F3A76366E8A9DE7CA729B2BEF169E0186
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXgjai2OJ4fWMb0LjJHf0CXE
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD13843B12C7EE60DEEE5D008E6EB429DF3E7868BF0B7D181033113BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-7564579A: B8F34718100C35BD
-X-77F55803: 6242723A09DB00B4595CF023D9147FF6B239CBEEC555166888AE9F3A9F35871368F3CF0E9FE49B6965BCD10965C62D05BAE9BF51F6187CBD31E5C10A594419592AEC42820FAC7D0A
-X-7FA49CB5: 0D63561A33F958A5A29B29281D2BD82CD5477D9F06533560E95A866B274017E58941B15DA834481FA18204E546F3947C60910C30DCD593B1F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F790063758C4D2C2836A4C79389733CBF5DBD5E9B5C8C57E37DE458BD9DD9810294C998ED8FC6C240DEA76428AA50765F790063776C4598447C51BFFD81D268191BDAD3DBD4B6F7A4D31EC0BEA7A3FFF5B025636AAAE862A0553A39223F8577A6DFFEA7CB59C7783CC88FA9643847C11F186F3C59DAA53EE0834AAEE
-X-C1DE0DAB: 0D63561A33F958A5A29B29281D2BD82CD5477D9F06533560DCD2534EFB52E149D59269BC5F550898D99A6476B3ADF6B4886A5961035A09600383DAD389E261318FB05168BE4CE3AF
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojXnflq/26yj1doOc2nyrcig==
-X-Mailru-MI: 8000000000000800
-X-Mras: Ok
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH 0/3] Die preserve ggg
+Content-Language: en-GB
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
+ <220526.86y1yo62jl.gmgdl@evledraar.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <220526.86y1yo62jl.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In addition to what others have said, I would recommend to start with "The Git
-Parable" [1] - which is an ideal gentle, non-technical introduction to the
-concept of distributed version control systems, - and then read "Git from the
-Bottom Up" [2] and "Git for Computer Scientists" which has already been
-mentioned.
-
- 1. https://tom.preston-werner.com/2009/05/19/the-git-parable.html
- 2. https://jwiegley.github.io/git-from-the-bottom-up/
-
+On 26/05/2022 10:54, Ævar Arnfjörð Bjarmason wrote:
+> On Thu, May 26 2022, Philip Oakley via GitGitGadget wrote:
+>
+>> This short series is a follow up to GitGitGadget "Update the die()
+>> preserve-merges messages to help some users (PR #1155)" [1].
+>>
+>> The first patch is a tidy up of the --preserve option to highlight that it
+>> is now Deleted, rather than Deprecated.
+>>
+>> In response to Avar's comments that the former error message merely
+>> 'tantilised without telling' the user what to do, it became obvious that the
+>> underling problem was that the user was unable to git rebase --abort which
+>> was also fatal, when a preserve-rebase was in progress.
+> Thanks a lot for following up on this, this all looks OK to me. I had
+> some minor comments about maybe tweaking this & that, but as far as I'm
+> concerned this could go in as-is, depending on whether you think it
+> needs a re-roll in response to my comments + others.
+Thanks, I am a bit busy with family issues, so I'd rather use as-is,
+unless other feel that the tweaks will be worth it.
+I'm effectively off-line for the next 5-6 days anyway.
+--
+Philip
