@@ -2,440 +2,295 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25EFAC433F5
-	for <git@archiver.kernel.org>; Fri, 27 May 2022 09:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E5E4C433EF
+	for <git@archiver.kernel.org>; Fri, 27 May 2022 09:47:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244824AbiE0JOt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 May 2022 05:14:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35680 "EHLO
+        id S1350460AbiE0JrR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 May 2022 05:47:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238483AbiE0JOl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 May 2022 05:14:41 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DE4AA
-        for <git@vger.kernel.org>; Fri, 27 May 2022 02:14:39 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id f23-20020a7bcc17000000b003972dda143eso4211285wmh.3
-        for <git@vger.kernel.org>; Fri, 27 May 2022 02:14:39 -0700 (PDT)
+        with ESMTP id S233600AbiE0JrQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 May 2022 05:47:16 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CFAA106342
+        for <git@vger.kernel.org>; Fri, 27 May 2022 02:47:14 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id gh17so7718017ejc.6
+        for <git@vger.kernel.org>; Fri, 27 May 2022 02:47:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=V933hJCSIU5YwFcb9Q4OvtM4jxB+oT5V1pmz25/nJeU=;
-        b=dODKdiMPDMh6ffHA+9IIEugoyLaq23ykCMzEaTmOjcXB21lV1chVzWhFqJ5P79u5GT
-         fWStnecKBM2v4nGfvvJJ2mnyhn/lfFaCkuaYol0RplY1gX/IrqBDc/uBjdtqRYxDD6pZ
-         cFZcvUSjLJQFq5Xg3i6FBc1hs+PUmay2j1qioDF1/IkkiW3fm4L0ifDpm6SuKuH5X6wr
-         OCHDCusjJ6dduy3xwBP0lrYQEhvEBJzT3VSXWcbDD6gru6YNHGZPhgRd+6W8F6vmEYvv
-         vjd733CzQlQM3jeW+ZyJfS75qk1WeA1PrL/NrfZgA2w7VXtirh5a9IQx+HmVypPLKEtY
-         CmzA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=bZDVCAw/5b7G/IQNG9Ime2redwy/cowABnvzm+/XzBA=;
+        b=P+wO+tY5Z28utrqVPSPdsjVzQwmdrJaN3I3+abEytzp7umXeqXo7zl8vhHwhzxdcDn
+         QwEM0NNcIXPO39notuD2DrjgGgukSutIxlJJdM6X9axfXIXw78+ii/PbCzK6+3gFINvi
+         OUl4PbDpdhJQlm9Pg1ReTfkMJC1P0qzDnI+rl0adGCiDTDE3oMf9BCcy84D5Bm1DpCh1
+         +yka7DsyhMy6yh0vD3AN5ENVnaodzZMYuqICSavICpMyVqVfOprklYxP5ByBvl0tELJF
+         wM5eoiYOnqAUB1hCVLkzdCJxrT3Rlb78nHIHPvr5uGZ5ltBNHibuh4Gq9GqqNe2yAoWp
+         JcNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=V933hJCSIU5YwFcb9Q4OvtM4jxB+oT5V1pmz25/nJeU=;
-        b=ZbkCjaz3yktLJfM1B+DusYXCYpYWsrMapU/sx/RyDESWJ2tiWnH7ifXSkz4MLivVQ3
-         er8V3KcItgufB/TyK31pXN3aRssR9cEPX6QEJ6LECn0IVMrPKdHcJ0RIbfQ9ntEoaPu6
-         0qTLwc5BHZi85vjDeZPDI7RXd77XDoVvL2SCzP/GyUE/ceYU/+FhYkNl7Qd9QuE+eLXN
-         Yxa2xvKLn1MmkUmJ48f0gjyA3ChNYs+EszqoWEyYv1WgPau488Ptqg0uyzeoF/DjR/T4
-         1CAPkDeYLfYWh0MmK9IfcJXi4PlRzehFoye89bSEBKrQZx7tl23kuBKqPsjxaJhM2jRQ
-         B5XQ==
-X-Gm-Message-State: AOAM533l6HS3o7cIRT4Me/brs40scKV+o8johBMU6vVH353JM1OrBiui
-        p63MqBZbgjIEWbDUOjcc+7h+0uURSFFrlQ==
-X-Google-Smtp-Source: ABdhPJyI9Pc8tVwMuaHiB4I2cVlIW7W4+eSV5v1DbLKxTZ4MC2ipcOW8u4tISh0y1Tn6Pr+fZmewtQ==
-X-Received: by 2002:a05:600c:209:b0:397:4a0f:7 with SMTP id 9-20020a05600c020900b003974a0f0007mr5993414wmi.91.1653642877950;
-        Fri, 27 May 2022 02:14:37 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d11-20020a05600c3acb00b003942a244ecbsm1551466wms.16.2022.05.27.02.14.36
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=bZDVCAw/5b7G/IQNG9Ime2redwy/cowABnvzm+/XzBA=;
+        b=tzX4nNPm1xapgtcCx+yUnKzEHVTcWQ4eehT8ShtDaKtUeZzhe35x0TPZFIca8iEyuS
+         jxGLUoLv+TGGDYeWEz6SRBTfWp9iWCASnn0eRN0rAa2M+BCSwmdzPEYF9RBq53f5HVPj
+         bGYfZROQeGKxUtlhSnURnukLcJB9wSm1XRSF9Z+/CDX+9ykkBYdIsh5pW1uCxcfKwreT
+         IZIuNPv9JXsIeTHpwZc1ut/HDTqA4ItATn7jDaV4zKYjzU9inrfYbptbmHXiPqnGut5c
+         rDgeWJTgpTMTyjKA6NKV5RSXc7KQQLcfbJgDvEQtOvdo2VDdAcQz7SzskdmGP7a4yF1I
+         W3QA==
+X-Gm-Message-State: AOAM531uUH1h08BMlLmO3l+SU42q8uHEoDr/f31v02mNkp1132pKQCAd
+        s6D4qHYiBETWUPyFGeJ9mGUqPLacof9eDw==
+X-Google-Smtp-Source: ABdhPJzW6BUZSiVWhF2sPo3uHbK7czCwhwDMFv87b+Oa9UlZ9idVCJYWDO3Rpa4YKNqsYk5S4duQOg==
+X-Received: by 2002:a17:906:4787:b0:6ff:34ea:d811 with SMTP id cw7-20020a170906478700b006ff34ead811mr2427991ejc.461.1653644832704;
+        Fri, 27 May 2022 02:47:12 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id j20-20020a1709062a1400b006f3ef214dcdsm1293377eje.51.2022.05.27.02.47.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 May 2022 02:14:37 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Anthony Sottile <asottile@umich.edu>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 0/2] hook API: connect hooks to the TTY again, fixes a v2.36.0 regression
-Date:   Fri, 27 May 2022 11:14:29 +0200
-Message-Id: <cover-v3-0.2-00000000000-20220527T090618Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.1.1046.g586767a6996
-In-Reply-To: <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
-References: <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
+        Fri, 27 May 2022 02:47:12 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nuWYp-000NOF-CQ;
+        Fri, 27 May 2022 11:47:11 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: build 'gitweb' in the default target
+Date:   Fri, 27 May 2022 11:23:29 +0200
+References: <20220525205651.825669-1-szeder.dev@gmail.com>
+ <220526.86k0a96sv2.gmgdl@evledraar.gmail.com>
+ <20220526213305.GA1707@szeder.dev>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220526213305.GA1707@szeder.dev>
+Message-ID: <220527.861qwf489s.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A re-roll of [1] which aims to address the concerns about the previous
-8-part series being too large to fix a release regression. "If it
-isn't bolted down, throw it overboard!".
 
-The main change here is:
+On Thu, May 26 2022, SZEDER G=C3=A1bor wrote:
 
- * The new "ungroup" parameter is now passed via an "extern" parameter.
- * Tests for existing run-command.c behavior (not narrowly needed for
-   the regression fix) are gone.
- * Adding an INIT macro is gone, instead we explicitly  initialize to NULL.
- * Stray bugfix for existing hook test is gone.
+> On Thu, May 26, 2022 at 02:14:33AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>> On Wed, May 25 2022, SZEDER G=C3=A1bor wrote:
+>>=20
+>> > Our Makefile's default target used to build 'gitweb', though
+>> > indirectly: the 'all' target depended on 'git-instaweb', which in turn
+>> > depended on 'gitweb'.  Then e25c7cc146 (Makefile: drop dependency
+>> > between git-instaweb and gitweb, 2015-05-29) removed the latter
+>> > dependency, and for good reasons (quoting its commit message):
+>> >
+>> >   "1. git-instaweb has no build-time dependency on gitweb; it
+>> >       is a run-time dependency
+>> >
+>> >    2. gitweb is a directory that we want to recursively make
+>> >       in. As a result, its recipe is marked .PHONY, which
+>> >       causes "make" to rebuild git-instaweb every time it is
+>> >       run."
+>> >
+>> > Since then a simple 'make' doesn't build 'gitweb'.
+>> >
+>> > Luckily, installing 'gitweb' is not broken: although 'make install'
+>> > doesn't depend on the 'gitweb' target, it runs 'make -C gitweb
+>> > install' unconditionally, which does generate all the necessary files
+>> > for 'gitweb' and installs them.  However, if someone runs 'make &&
+>> > sudo make install', then those files in the 'gitweb' directory will be
+>> > generated and owned by root, which is not nice.
+>> >
+>> > List 'gitweb' as a direct dependency of the default target, so a plain
+>> > 'make' will build it.
+>> >
+>> > Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>> > ---
+>> >  Makefile | 2 ++
+>> >  1 file changed, 2 insertions(+)
+>> >
+>> > diff --git a/Makefile b/Makefile
+>> > index f8bccfab5e..ee74892b33 100644
+>> > --- a/Makefile
+>> > +++ b/Makefile
+>> > @@ -2188,6 +2188,8 @@ ifneq (,$X)
+>> >  	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COM=
+MANDS_TO_INSTALL) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
+>> >  endif
+>> >=20=20
+>> > +all:: gitweb
+>> > +
+>> >  all::
+>> >  ifndef NO_TCLTK
+>> >  	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir=3D'$(gitexec_ins=
+tdir_SQ)' all
+>>=20
+>> In various recent patches & some upcoming ones I plan to submit I've
+>> been trying to get the runtime of a noop "make" runs down, which really
+>> helps e.g. with "git rebase -x make ..." running faster on a large
+>> series.
+>>=20
+>> While you're right that this wasn't intentional to begin with, we have
+>> lacked the "gitweb" as part of the default target since v2.4.5 now, and
+>> adding it back is a major performance regression on noop "make" runs:
+>
+> I think that generating stuff, potentially as root, during 'make
+> install' is a more severe regression, than this noop make slowdown,
+> which in practice tends to be lost in the noise anyway.
 
-etc. I think all of those still make sense, but they're something I
-can rebase on this topic once it (hopefully) lands. In the meantime
-the updated commit messages for the remaining two (see start of the
-range-diff below) argue for this being a a safe API change, even if
-the interface is a bit nasty.
+It really isn't lost in the noise, e.g. a common use-case of mine is to
+have let's say a 10 patch series that I want to frequently run a spot
+check like this on:
 
-1. https://lore.kernel.org/git/cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com
+    git rebase -i -x 'make'
 
-Ævar Arnfjörð Bjarmason (2):
-  run-command: add an "ungroup" option to run_process_parallel()
-  hook API: fix v2.36.0 regression: hooks should be connected to a TTY
+On my system before your patch (this is with my config.mak, so it has
+e.g. NO_TCLTK=3DY) it's ~105ms per run, with your change ~200ms[1].
+=09
+So that's 1s before of "make" overhead, now 2s. Is it the end of the
+world? No, but it does add up. In particular with ccache we can end up
+mostly spending time on make itself deciding what it's going to do.
 
- hook.c                      |  1 +
- run-command.c               | 88 ++++++++++++++++++++++++++++---------
- run-command.h               | 31 ++++++++++---
- t/helper/test-run-command.c | 19 ++++++--
- t/t0061-run-command.sh      | 35 +++++++++++++++
- t/t1800-hook.sh             | 37 ++++++++++++++++
- 6 files changed, 181 insertions(+), 30 deletions(-)
+For comparison running EDITOR=3Dcat git rebase -i -x 'echo make' HEAD~10
+takes around 100ms in total for me.
 
-Range-diff against v2:
-1:  26a81eff267 < -:  ----------- run-command tests: change if/if/... to if/else if/else
-2:  5f0a6e9925f < -:  ----------- run-command API: use "opts" struct for run_processes_parallel{,_tr2}()
-3:  a8e1fc07b65 < -:  ----------- run-command tests: test stdout of run_command_parallel()
-4:  663936fb4ad < -:  ----------- run-command.c: add an initializer for "struct parallel_processes"
-5:  c2e015ed840 ! 1:  aabd99de680 run-command: add an "ungroup" option to run_process_parallel()
-    @@ Commit message
-         user, i.e. they'd typically use one mode or the other, and would know
-         whether they'd provided "ungroup" or not.
-     
-    +    We could also avoid the strbuf_init() for "buffered_output" by having
-    +    "struct parallel_processes" use a static PARALLEL_PROCESSES_INIT
-    +    initializer, but let's leave that cleanup for later.
-    +
-    +    Using a global "run_processes_parallel_ungroup" variable to enable
-    +    this option is rather nasty, but is being done here to produce as
-    +    minimal of a change as possible for a subsequent regression fix. This
-    +    change is extracted from a larger initial version[1] which ends up
-    +    with a better end-state for the API, but in doing so needed to modify
-    +    all existing callers of the API. Let's defer that for now, and
-    +    narrowly focus on what we need for fixing the regression in the
-    +    subsequent commit.
-    +
-    +    It's safe to do this with a global variable because:
-    +
-    +     A) hook.c is the only user of it that sets it to non-zero, and before
-    +        we'll get any other API users we'll refactor away this method of
-    +        passing in the option, i.e. re-roll [1].
-    +
-    +     B) Even if hook.c wasn't the only user we don't have callers of this
-    +        API that concurrently invoke this parallel process starting API
-    +        itself in parallel.
-    +
-    +    As noted above "A" && "B" are rather nasty, and we don't want to live
-    +    with those caveats long-term, but for now they should be an acceptable
-    +    compromise.
-    +
-    +    1. https://lore.kernel.org/git/cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com/
-    +
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## run-command.c ##
-    @@ run-command.c: int pipe_command(struct child_process *cmd,
-     +	GIT_CP_WAIT_CLEANUP, /* only for !ungroup */
-      };
-      
-    ++int run_processes_parallel_ungroup;
-      struct parallel_processes {
-    + 	void *data;
-    + 
-     @@ run-command.c: struct parallel_processes {
-      	struct pollfd *pfd;
-      
-    @@ run-command.c: struct parallel_processes {
-      
-      	int output_owner;
-      	struct strbuf buffered_output; /* of finished children */
-    +@@ run-command.c: static void pp_init(struct parallel_processes *pp,
-    + 		    get_next_task_fn get_next_task,
-    + 		    start_failure_fn start_failure,
-    + 		    task_finished_fn task_finished,
-    +-		    void *data)
-    ++		    void *data,  const int ungroup)
-    + {
-    + 	int i;
-    + 
-     @@ run-command.c: static void pp_init(struct parallel_processes *pp,
-      	pp->nr_processes = 0;
-      	pp->output_owner = 0;
-      	pp->shutdown = 0;
-    -+	pp->ungroup = opts->ungroup;
-    ++	pp->ungroup = ungroup;
-      	CALLOC_ARRAY(pp->children, n);
-     -	CALLOC_ARRAY(pp->pfd, n);
-    -+	if (!pp->ungroup)
-    ++	if (pp->ungroup)
-    ++		pp->pfd = NULL;
-    ++	else
-     +		CALLOC_ARRAY(pp->pfd, n);
-    + 	strbuf_init(&pp->buffered_output, 0);
-      
-      	for (i = 0; i < n; i++) {
-      		strbuf_init(&pp->children[i].err, 0);
-    @@ run-command.c: static int pp_collect_finished(struct parallel_processes *pp)
-      			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
-      			strbuf_reset(&pp->children[i].err);
-      		} else {
-    -@@ run-command.c: int run_processes_parallel(struct run_process_parallel_opts *opts)
-    +@@ run-command.c: int run_processes_parallel(int n,
-    + 	int output_timeout = 100;
-    + 	int spawn_cap = 4;
-    + 	struct parallel_processes pp;
-    ++	const int ungroup = run_processes_parallel_ungroup;
-    + 
-    +-	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb);
-    ++	/* unset for the next API user */
-    ++	run_processes_parallel_ungroup = 0;
-    ++
-    ++	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb,
-    ++		ungroup);
-    + 	while (1) {
-    + 		for (i = 0;
-    + 		    i < spawn_cap && !pp.shutdown &&
-    +@@ run-command.c: int run_processes_parallel(int n,
-      		}
-      		if (!pp.nr_processes)
-      			break;
-     -		pp_buffer_stderr(&pp, output_timeout);
-     -		pp_output(&pp);
-    -+		if (opts->ungroup) {
-    ++		if (ungroup) {
-     +			pp_mark_working_for_cleanup(&pp);
-     +		} else {
-     +			pp_buffer_stderr(&pp, output_timeout);
-    @@ run-command.h: typedef int (*start_failure_fn)(struct strbuf *out,
-       * pp_cb is the callback cookie as passed into run_processes_parallel,
-       * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-     @@ run-command.h: typedef int (*task_finished_fn)(int result,
-    -  *
-    -  * jobs: see 'n' in run_processes_parallel() below.
-    -  *
-    -+ * ungroup: Ungroup output. Output is printed as soon as possible and
-    -+ * bypasses run-command's internal processing. This may cause output
-    -+ * from different commands to be mixed.
-    -+ *
-    -  * *_fn & data: see run_processes_parallel() below.
-    -  */
-    - struct run_process_parallel_opts
-    -@@ run-command.h: struct run_process_parallel_opts
-    - 	const char *tr2_label;
-    - 
-    - 	int jobs;
-    -+	unsigned int ungroup:1;
-    - 
-    - 	get_next_task_fn get_next_task;
-    - 	start_failure_fn start_failure;
-    -@@ run-command.h: struct run_process_parallel_opts
-       *
-       * The children started via this function run in parallel. Their output
-       * (both stdout and stderr) is routed to stderr in a manner that output
-    @@ run-command.h: struct run_process_parallel_opts
-     + * NULL "struct strbuf *out" parameter, and are responsible for
-     + * emitting their own output, including dealing with any race
-     + * conditions due to writing in parallel to stdout and stderr.
-    ++ * The "ungroup" option can be enabled by setting the global
-    ++ * "run_processes_parallel_ungroup" to "1" before invoking
-    ++ * run_processes_parallel(), it will be set back to "0" as soon as the
-    ++ * API reads that setting.
-       */
-    - int run_processes_parallel(struct run_process_parallel_opts *opts);
-    - 
-    ++extern int run_processes_parallel_ungroup;
-    + int run_processes_parallel(int n,
-    + 			   get_next_task_fn,
-    + 			   start_failure_fn,
-     
-      ## t/helper/test-run-command.c ##
-     @@ t/helper/test-run-command.c: static int parallel_next(struct child_process *cp,
-    @@ t/helper/test-run-command.c: static int task_finished(int result,
-      }
-      
-     @@ t/helper/test-run-command.c: int cmd__run_command(int argc, const char **argv)
-    - 	opts.jobs = jobs;
-    - 	opts.data = &proc;
-    + 	strvec_clear(&proc.args);
-    + 	strvec_pushv(&proc.args, (const char **)argv + 3);
-      
-    --	if (!strcmp(argv[1], "run-command-parallel")) {
-    -+	if (!strcmp(argv[1], "run-command-parallel") ||
-    -+	    !strcmp(argv[1], "run-command-parallel-ungroup")) {
-    - 		next_fn = parallel_next;
-    --	} else if (!strcmp(argv[1], "run-command-abort")) {
-    -+	} else if (!strcmp(argv[1], "run-command-abort") ||
-    -+		   !strcmp(argv[1], "run-command-abort-ungroup")) {
-    - 		next_fn = parallel_next;
-    - 		finished_fn = task_finished;
-    --	} else if (!strcmp(argv[1], "run-command-no-jobs")) {
-    -+	} else if (!strcmp(argv[1], "run-command-no-jobs") ||
-    -+		   !strcmp(argv[1], "run-command-no-jobs-ungroup")) {
-    - 		next_fn = no_job;
-    - 		finished_fn = task_finished;
-    - 	} else {
-    -@@ t/helper/test-run-command.c: int cmd__run_command(int argc, const char **argv)
-    - 		return 1;
-    - 	}
-    - 
-    -+	opts.ungroup = ends_with(argv[1], "-ungroup");
-    - 	opts.get_next_task = next_fn;
-    - 	opts.task_finished = finished_fn;
-    - 	exit(run_processes_parallel(&opts));
-    ++	if (getenv("RUN_PROCESSES_PARALLEL_UNGROUP"))
-    ++		run_processes_parallel_ungroup = 1;
-    ++
-    + 	if (!strcmp(argv[1], "run-command-parallel"))
-    + 		exit(run_processes_parallel(jobs, parallel_next,
-    + 					    NULL, NULL, &proc));
-     
-      ## t/t0061-run-command.sh ##
-     @@ t/t0061-run-command.sh: test_expect_success 'run_command runs in parallel with more jobs available than
-    - 	test_cmp expect err
-    + 	test_cmp expect actual
-      '
-      
-     +test_expect_success 'run_command runs ungrouped in parallel with more jobs available than tasks' '
-    -+	test-tool run-command run-command-parallel-ungroup 5 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-    ++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
-    ++	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-     +	test_line_count = 8 out &&
-     +	test_line_count = 4 err
-     +'
-     +
-      test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
-    - 	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-    - 	test_must_be_empty out &&
-    - 	test_cmp expect err
-    + 	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-    + 	test_cmp expect actual
-      '
-      
-     +test_expect_success 'run_command runs ungrouped in parallel with as many jobs as tasks' '
-    -+	test-tool run-command run-command-parallel-ungroup 4 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-    ++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
-    ++	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-     +	test_line_count = 8 out &&
-     +	test_line_count = 4 err
-     +'
-     +
-      test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
-    - 	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-    - 	test_must_be_empty out &&
-    - 	test_cmp expect err
-    + 	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-    + 	test_cmp expect actual
-      '
-      
-     +test_expect_success 'run_command runs ungrouped in parallel with more tasks than jobs available' '
-    -+	test-tool run-command run-command-parallel-ungroup 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-    ++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
-    ++	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-     +	test_line_count = 8 out &&
-     +	test_line_count = 4 err
-     +'
-    @@ t/t0061-run-command.sh: test_expect_success 'run_command runs in parallel with m
-      preloaded output of a child
-      asking for a quick stop
-     @@ t/t0061-run-command.sh: test_expect_success 'run_command is asked to abort gracefully' '
-    - 	test_cmp expect err
-    + 	test_cmp expect actual
-      '
-      
-     +test_expect_success 'run_command is asked to abort gracefully (ungroup)' '
-    -+	test-tool run-command run-command-abort-ungroup 3 false >out 2>err &&
-    ++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
-    ++	test-tool run-command run-command-abort 3 false >out 2>err &&
-     +	test_must_be_empty out &&
-     +	test_line_count = 6 err
-     +'
-    @@ t/t0061-run-command.sh: test_expect_success 'run_command is asked to abort grace
-      no further jobs available
-      EOF
-     @@ t/t0061-run-command.sh: test_expect_success 'run_command outputs ' '
-    - 	test_cmp expect err
-    + 	test_cmp expect actual
-      '
-      
-     +test_expect_success 'run_command outputs (ungroup) ' '
-    -+	test-tool run-command run-command-no-jobs-ungroup 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-    ++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
-    ++	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-     +	test_must_be_empty out &&
-     +	test_cmp expect err
-     +'
-6:  84e92c6f7c7 < -:  ----------- hook tests: fix redirection logic error in 96e7225b310
-7:  bf7d871565f < -:  ----------- hook API: don't redundantly re-set "no_stdin" and "stdout_to_stderr"
-8:  238155fcb9d ! 2:  ec27e3906e1 hook API: fix v2.36.0 regression: hooks should be connected to a TTY
-    @@ Commit message
-                   './git hook run seq-hook' in 'HEAD~0' ran
-                     1.30 ± 0.02 times faster than './git hook run seq-hook' in 'origin/master'
-     
-    -    In the preceding commit we removed the "stdout_to_stderr=1" assignment
-    -    as being redundant. This change brings it back as with ".ungroup=1"
-    -    the run_process_parallel() function doesn't provide them for us
-    -    implicitly.
-    -
-    -    As an aside omitting the stdout_to_stderr=1 here would have all tests
-    -    pass, except those that test "git hook run" itself in
-    -    t1800-hook.sh. But our tests passing is the result of another test
-    -    blind spot, as was the case with the regression being fixed here. The
-    -    "stdout_to_stderr=1" for hooks is long-standing behavior, see
-    -    e.g. 1d9e8b56fe3 (Split back out update_hook handling in receive-pack,
-    -    2007-03-10) and other follow-up commits (running "git log" with
-    -    "--reverse -p -Gstdout_to_stderr" is a good start).
-    -
-         1. https://lore.kernel.org/git/CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com/
-     
-         Reported-by: Anthony Sottile <asottile@umich.edu>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## hook.c ##
-    -@@ hook.c: static int pick_next_hook(struct child_process *cp,
-    - 		return 0;
-    - 
-    - 	strvec_pushv(&cp->env_array, hook_cb->options->env.v);
-    -+	cp->stdout_to_stderr = 1; /* because of .ungroup = 1 */
-    - 	cp->trace2_hook_name = hook_cb->hook_name;
-    - 	cp->dir = hook_cb->options->dir;
-    - 
-     @@ hook.c: int run_hooks_opt(const char *hook_name, struct run_hooks_opt *options)
-    - 		.tr2_label = hook_name,
-    - 
-    - 		.jobs = jobs,
-    -+		.ungroup = jobs == 1,
-    - 
-    - 		.get_next_task = pick_next_hook,
-    - 		.start_failure = notify_start_failure,
-    -@@ hook.c: int run_hooks_opt(const char *hook_name, struct run_hooks_opt *options)
-    - 	if (!options)
-    - 		BUG("a struct run_hooks_opt must be provided to run_hooks");
-    - 
-    -+	if (jobs != 1 || !run_opts.ungroup)
-    -+		BUG("TODO: think about & document order & interleaving of parallel hook output");
-    -+
-    - 	if (options->invoked_hook)
-    - 		*options->invoked_hook = 0;
-    + 		cb_data.hook_path = abs_path.buf;
-    + 	}
-      
-    ++	run_processes_parallel_ungroup = 1;
-    + 	run_processes_parallel_tr2(jobs,
-    + 				   pick_next_hook,
-    + 				   notify_start_failure,
-     
-      ## t/t1800-hook.sh ##
-     @@ t/t1800-hook.sh: test_description='git-hook command'
--- 
-2.36.1.1046.g586767a6996
+> unrealistic case (it doesn't modify any C source files explicitly, let
+> alone a frequently included header file) like this:
 
+Yeah that's fair, of course no-op runs are where it matters the
+most. But e.g. for forcing a hook.c change (including re-linking "git")
+it's 10% slower[2] overall if we use ccache.
+
+>   $ git checkout fddc3b420f^
+>   $ make
+>   [...]
+>   $ for i in {1..10} ; do git commit --allow-empty -q -m $i ; done
+>   $ time git rebase -x 'make -j8 NO_TCLTK=3DY >/dev/null' HEAD~10
+>   [...]
+>   real	0m31.026s
+>   user	0m46.897s
+>   sys	0m11.492s
+>   $ git checkout fddc3b420f
+>   $ for i in {1..10} ; do git commit --allow-empty -q -m $i ; done
+>   $ time git rebase -x 'make -j8 NO_TCLTK=3DY >/dev/null' HEAD~10
+>   [...]
+>   real	0m30.865s
+>   user	0m48.315s
+>   sys	0m12.125s
+>
+> Hrm, it actually ended up slightly faster.
+
+I should have said that I create a "version" file in my checkout dir,
+e.g.: 2.36.GIT-dev
+
+Otherwise you end up with a guarnteed recompile-re-link every time HEAD
+changes, so it's likely lost in that noise.
+
+I just run this (via a script):
+
+    echo $(/usr/bin/git grep -h -o -P '(?<=3D^DEF_VER=3Dv).*' 'HEAD:GIT-VER=
+SION-GEN')-dev
+
+And echo it to the top-level "version". Aside from what we're discussing
+here you might want to try that, your "git version" won't be correct,
+but for that low cost (I do generate it for the version I actually
+install) you'll get actual no-op runs in the case of e.g. only modifying
+tests.
+
+>> 	$ git hyperfine -L rev HEAD~1,HEAD~0 -L t Y, -s 'make' 'make NO_TCLTK=
+=3D{t}' --warmup 1 -r 5
+>> 	Benchmark 1: make NO_TCLTK=3DY' in 'HEAD~1
+>> 	  Time (mean =C2=B1 =CF=83):     103.6 ms =C2=B1   1.1 ms    [User: 83.=
+8 ms, System: 32.1 ms]
+>> 	  Range (min =E2=80=A6 max):   102.2 ms =E2=80=A6 105.2 ms    5 runs
+>>=20=09=20
+>> 	Benchmark 2: make NO_TCLTK=3DY' in 'HEAD~0
+>> 	  Time (mean =C2=B1 =CF=83):     191.4 ms =C2=B1   1.6 ms    [User: 151=
+.0 ms, System: 60.5 ms]
+>> 	  Range (min =E2=80=A6 max):   189.2 ms =E2=80=A6 193.3 ms    5 runs
+>>=20=09=20
+>> 	Benchmark 3: make NO_TCLTK=3D' in 'HEAD~1
+>> 	  Time (mean =C2=B1 =CF=83):     272.0 ms =C2=B1   5.0 ms    [User: 206=
+.3 ms, System: 83.3 ms]
+>> 	  Range (min =E2=80=A6 max):   266.7 ms =E2=80=A6 277.3 ms    5 runs
+>>=20=09=20
+>> 	Benchmark 4: make NO_TCLTK=3D' in 'HEAD~0
+>> 	  Time (mean =C2=B1 =CF=83):     358.3 ms =C2=B1   1.4 ms    [User: 282=
+.7 ms, System: 104.0 ms]
+>> 	  Range (min =E2=80=A6 max):   356.6 ms =E2=80=A6 360.0 ms    5 runs
+>>=20=09=20
+>> 	Summary
+>> 	  'make NO_TCLTK=3DY' in 'HEAD~1' ran
+>> 	    1.85 =C2=B1 0.02 times faster than 'make NO_TCLTK=3DY' in 'HEAD~0'
+>> 	    2.63 =C2=B1 0.06 times faster than 'make NO_TCLTK=3D' in 'HEAD~1'
+>> 	    3.46 =C2=B1 0.04 times faster than 'make NO_TCLTK=3D' in 'HEAD~0'
+>>=20
+>> I.e. this is with your patch here applied as HEAD~0 and HEAD~1 being
+>> 'master'.
+>>=20
+>> I think given that that a better solution would be to just declare this
+>> as a feature at this point
+>
+> As long as 'make install' installs 'gitweb', I don't think that's an
+> option.
+
+Yes, I'm not saying that we shouldn't fix this no matter what, but just
+suggesting that perhaps we come up with a better solution.
+
+>> especially as gitweb/INSTALL notes that the
+>> way to install it is:
+>>=20
+>>         $ make prefix=3D/usr gitweb                            ;# as you=
+rself
+>>         # make gitwebdir=3D/var/www/cgi-bin install-gitweb     ;# as root
+>
+> Or are you suggesting not to install 'gitweb' during 'make install'?
+> I'm fine with that, but I doubt I will argue about it convincingly in
+> a commit message.
+
+We could also:
+
+ * $(error out if install is in MAKECMDGOALS and we don't have those
+   generated files, that's a few-line ifdef change to the Makefile,
+   "build it first".
+
+ * Just fold gitweb/Makefile into the top-level Makefile
+
+>> Or we could just fold gitweb/Makefile into the main Makefile, unlike
+>> gitk and git-gui it's not externally maintained, and most of it is
+>> shimmying to work around not being part of the main Makefile (which it
+>> strongly inter-depends on anyway).
+
+1.
+	$ git hyperfine  -L rev HEAD~1,HEAD~0 -s 'make' 'make'
+	Benchmark 1: make' in 'HEAD~1
+	  Time (mean =C2=B1 =CF=83):     106.9 ms =C2=B1   1.3 ms    [User: 86.0 m=
+s, System: 33.1 ms]
+	  Range (min =E2=80=A6 max):   105.3 ms =E2=80=A6 110.2 ms    27 runs
+=09
+	Benchmark 2: make' in 'HEAD~0
+	  Time (mean =C2=B1 =CF=83):     199.6 ms =C2=B1   2.5 ms    [User: 162.7 =
+ms, System: 57.3 ms]
+	  Range (min =E2=80=A6 max):   197.4 ms =E2=80=A6 207.4 ms    15 runs
+=09
+	Summary
+	  'make' in 'HEAD~1' ran
+	    1.87 =C2=B1 0.03 times faster than 'make' in 'HEAD~0'
+2.
+=09
+	$ git hyperfine -L rev HEAD~1,HEAD~0 -s 'make' 'make -W hook.c NO_TCLTK=3D=
+Y CC=3D"ccache cc"' --warmup 1 -r 5
+	Benchmark 1: make -W hook.c NO_TCLTK=3DY CC=3D"ccache cc"' in 'HEAD~1
+	  Time (mean =C2=B1 =CF=83):     742.7 ms =C2=B1   7.1 ms    [User: 1965.5=
+ ms, System: 561.6 ms]
+	  Range (min =E2=80=A6 max):   730.3 ms =E2=80=A6 748.2 ms    5 runs
+=09=20
+	Benchmark 2: make -W hook.c NO_TCLTK=3DY CC=3D"ccache cc"' in 'HEAD~0
+	  Time (mean =C2=B1 =CF=83):     819.2 ms =C2=B1   7.4 ms    [User: 2013.9=
+ ms, System: 583.3 ms]
+	  Range (min =E2=80=A6 max):   811.0 ms =E2=80=A6 830.0 ms    5 runs
+=09=20
+	Summary
+	  'make -W hook.c NO_TCLTK=3DY CC=3D"ccache cc"' in 'HEAD~1' ran
+	    1.10 =C2=B1 0.01 times faster than 'make -W hook.c NO_TCLTK=3DY CC=3D"=
+ccache cc"' in 'HEAD~0'
+=09
