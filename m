@@ -2,295 +2,394 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E5E4C433EF
-	for <git@archiver.kernel.org>; Fri, 27 May 2022 09:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A3C6C433F5
+	for <git@archiver.kernel.org>; Fri, 27 May 2022 10:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350460AbiE0JrR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 May 2022 05:47:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38468 "EHLO
+        id S236151AbiE0KIS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 May 2022 06:08:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233600AbiE0JrQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 May 2022 05:47:16 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CFAA106342
-        for <git@vger.kernel.org>; Fri, 27 May 2022 02:47:14 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id gh17so7718017ejc.6
-        for <git@vger.kernel.org>; Fri, 27 May 2022 02:47:14 -0700 (PDT)
+        with ESMTP id S230152AbiE0KIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 May 2022 06:08:16 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A15ED1269A9
+        for <git@vger.kernel.org>; Fri, 27 May 2022 03:08:14 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id 137so3541927pgb.5
+        for <git@vger.kernel.org>; Fri, 27 May 2022 03:08:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=bZDVCAw/5b7G/IQNG9Ime2redwy/cowABnvzm+/XzBA=;
-        b=P+wO+tY5Z28utrqVPSPdsjVzQwmdrJaN3I3+abEytzp7umXeqXo7zl8vhHwhzxdcDn
-         QwEM0NNcIXPO39notuD2DrjgGgukSutIxlJJdM6X9axfXIXw78+ii/PbCzK6+3gFINvi
-         OUl4PbDpdhJQlm9Pg1ReTfkMJC1P0qzDnI+rl0adGCiDTDE3oMf9BCcy84D5Bm1DpCh1
-         +yka7DsyhMy6yh0vD3AN5ENVnaodzZMYuqICSavICpMyVqVfOprklYxP5ByBvl0tELJF
-         wM5eoiYOnqAUB1hCVLkzdCJxrT3Rlb78nHIHPvr5uGZ5ltBNHibuh4Gq9GqqNe2yAoWp
-         JcNQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ignwZ4onfsZNln+dp4z93OpZxmkdRdOqh92zpX8t0H0=;
+        b=XDljsNRsqHPsSxalhgDDjnc1gYnRBUHtc6xbsLZ81AJmW2Trs37Y/watDUgt/wnCCC
+         J9kpMUo9IU7xdQkXvEuK8xJIbU2A55YttcTDnTOZrwNqpj1ZEeD2/Z9N60eU3ZCERTWf
+         iOpJfGFeZhqeSb/IL59jmMjZBLDYrgA1slX8SdM2/EucGnY1ANkm9iBAJ56PgbOJzV8M
+         Y/Mt4ywJpr1P7czh5pEENrIwWfOMFlAjiAMiNKSIG2n3yRbNXp7RndMSeK/ec5ZzCLm6
+         A6OnXzhdOx1HTpqzvDWe5M1OgGU41tQXgYLyoRLrIcMKP3YfIRJVIYGYwzF+k2woALau
+         NUyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=bZDVCAw/5b7G/IQNG9Ime2redwy/cowABnvzm+/XzBA=;
-        b=tzX4nNPm1xapgtcCx+yUnKzEHVTcWQ4eehT8ShtDaKtUeZzhe35x0TPZFIca8iEyuS
-         jxGLUoLv+TGGDYeWEz6SRBTfWp9iWCASnn0eRN0rAa2M+BCSwmdzPEYF9RBq53f5HVPj
-         bGYfZROQeGKxUtlhSnURnukLcJB9wSm1XRSF9Z+/CDX+9ykkBYdIsh5pW1uCxcfKwreT
-         IZIuNPv9JXsIeTHpwZc1ut/HDTqA4ItATn7jDaV4zKYjzU9inrfYbptbmHXiPqnGut5c
-         rDgeWJTgpTMTyjKA6NKV5RSXc7KQQLcfbJgDvEQtOvdo2VDdAcQz7SzskdmGP7a4yF1I
-         W3QA==
-X-Gm-Message-State: AOAM531uUH1h08BMlLmO3l+SU42q8uHEoDr/f31v02mNkp1132pKQCAd
-        s6D4qHYiBETWUPyFGeJ9mGUqPLacof9eDw==
-X-Google-Smtp-Source: ABdhPJzW6BUZSiVWhF2sPo3uHbK7czCwhwDMFv87b+Oa9UlZ9idVCJYWDO3Rpa4YKNqsYk5S4duQOg==
-X-Received: by 2002:a17:906:4787:b0:6ff:34ea:d811 with SMTP id cw7-20020a170906478700b006ff34ead811mr2427991ejc.461.1653644832704;
-        Fri, 27 May 2022 02:47:12 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id j20-20020a1709062a1400b006f3ef214dcdsm1293377eje.51.2022.05.27.02.47.11
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ignwZ4onfsZNln+dp4z93OpZxmkdRdOqh92zpX8t0H0=;
+        b=kvHrXQYbRH5SvM2nZYOZk+AdN/2InmloXUnBWPSb9NCefMbnMT3anA0ZKUG1k08Zio
+         Q2uA+3RV5Qay4/d89Y5RPJcGPVeLDp8X5gCPT5ixixXy3en0Y96k2Nz9zZJRBiW/9+D5
+         kdvsGKscn8yQNGD5Dn8F1PzgiSGb5svJ4ANsKB8wbEFfoNWHgf3Cxqw+HZU8KlpA5UcS
+         gOK2Jc8a5zE9yVodAV1FDGAHasRXRxd5mipLzUXOdv1SPEi4/dOdkwzlaMI5gJqSP1DX
+         R9OwRevZLgCzDfof2NpoHlcVn7Q2TXKQphzJ9F8qH+xLNLYt0JwBkWiGvWMB9DJPK/x5
+         wbHg==
+X-Gm-Message-State: AOAM5303LYyt0oyJPqGtht+cOeyrAaT8mX7tqvbEZqP1PZbc4E6neGdT
+        AxN1XmbVRlO3jbgD0FmbEqhL7FFmr8hzrA==
+X-Google-Smtp-Source: ABdhPJzbXki8hMgxzXQyWxuyf63HUR2CU4pfuo3+dpxTaABAfL0NvlY3JfL2LlJD6lDh/+SD/4hxNg==
+X-Received: by 2002:aa7:8149:0:b0:518:f2e:220d with SMTP id d9-20020aa78149000000b005180f2e220dmr42932716pfn.65.1653646093705;
+        Fri, 27 May 2022 03:08:13 -0700 (PDT)
+Received: from ffyuanda.localdomain ([119.131.142.42])
+        by smtp.gmail.com with ESMTPSA id p26-20020a056a0026da00b005184640c939sm2994262pfw.207.2022.05.27.03.08.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 May 2022 02:47:12 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nuWYp-000NOF-CQ;
-        Fri, 27 May 2022 11:47:11 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Makefile: build 'gitweb' in the default target
-Date:   Fri, 27 May 2022 11:23:29 +0200
-References: <20220525205651.825669-1-szeder.dev@gmail.com>
- <220526.86k0a96sv2.gmgdl@evledraar.gmail.com>
- <20220526213305.GA1707@szeder.dev>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220526213305.GA1707@szeder.dev>
-Message-ID: <220527.861qwf489s.gmgdl@evledraar.gmail.com>
+        Fri, 27 May 2022 03:08:13 -0700 (PDT)
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+To:     git@vger.kernel.org
+Cc:     vdye@github.com, derrickstolee@github.com, gitster@pobox.com,
+        newren@gmail.com, Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Subject: [WIP v2 0/5] mv: fix out-of-cone file/directory move logic
+Date:   Fri, 27 May 2022 18:07:59 +0800
+Message-Id: <20220527100804.209890-1-shaoxuan.yuan02@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
+References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+## Changes since WIP v1 ##
 
-On Thu, May 26 2022, SZEDER G=C3=A1bor wrote:
+1. Move t7002 tests to the front and turn corresponding tests to 
+   test_expect_success along with corresponding commits.
 
-> On Thu, May 26, 2022 at 02:14:33AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>=20
->> On Wed, May 25 2022, SZEDER G=C3=A1bor wrote:
->>=20
->> > Our Makefile's default target used to build 'gitweb', though
->> > indirectly: the 'all' target depended on 'git-instaweb', which in turn
->> > depended on 'gitweb'.  Then e25c7cc146 (Makefile: drop dependency
->> > between git-instaweb and gitweb, 2015-05-29) removed the latter
->> > dependency, and for good reasons (quoting its commit message):
->> >
->> >   "1. git-instaweb has no build-time dependency on gitweb; it
->> >       is a run-time dependency
->> >
->> >    2. gitweb is a directory that we want to recursively make
->> >       in. As a result, its recipe is marked .PHONY, which
->> >       causes "make" to rebuild git-instaweb every time it is
->> >       run."
->> >
->> > Since then a simple 'make' doesn't build 'gitweb'.
->> >
->> > Luckily, installing 'gitweb' is not broken: although 'make install'
->> > doesn't depend on the 'gitweb' target, it runs 'make -C gitweb
->> > install' unconditionally, which does generate all the necessary files
->> > for 'gitweb' and installs them.  However, if someone runs 'make &&
->> > sudo make install', then those files in the 'gitweb' directory will be
->> > generated and owned by root, which is not nice.
->> >
->> > List 'gitweb' as a direct dependency of the default target, so a plain
->> > 'make' will build it.
->> >
->> > Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
->> > ---
->> >  Makefile | 2 ++
->> >  1 file changed, 2 insertions(+)
->> >
->> > diff --git a/Makefile b/Makefile
->> > index f8bccfab5e..ee74892b33 100644
->> > --- a/Makefile
->> > +++ b/Makefile
->> > @@ -2188,6 +2188,8 @@ ifneq (,$X)
->> >  	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COM=
-MANDS_TO_INSTALL) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
->> >  endif
->> >=20=20
->> > +all:: gitweb
->> > +
->> >  all::
->> >  ifndef NO_TCLTK
->> >  	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir=3D'$(gitexec_ins=
-tdir_SQ)' all
->>=20
->> In various recent patches & some upcoming ones I plan to submit I've
->> been trying to get the runtime of a noop "make" runs down, which really
->> helps e.g. with "git rebase -x make ..." running faster on a large
->> series.
->>=20
->> While you're right that this wasn't intentional to begin with, we have
->> lacked the "gitweb" as part of the default target since v2.4.5 now, and
->> adding it back is a major performance regression on noop "make" runs:
->
-> I think that generating stuff, potentially as root, during 'make
-> install' is a more severe regression, than this noop make slowdown,
-> which in practice tends to be lost in the noise anyway.
+2. Add two tests to t7002.
 
-It really isn't lost in the noise, e.g. a common use-case of mine is to
-have let's say a 10 patch series that I want to frequently run a spot
-check like this on:
+3. Update check_dir_in_index() and added corresponding documentation.
 
-    git rebase -i -x 'make'
+4. Turn update_mode into enum flags.
 
-On my system before your patch (this is with my config.mak, so it has
-e.g. NO_TCLTK=3DY) it's ~105ms per run, with your change ~200ms[1].
-=09
-So that's 1s before of "make" overhead, now 2s. Is it the end of the
-world? No, but it does add up. In particular with ccache we can end up
-mostly spending time on make itself deciding what it's going to do.
+5. Use update_sparsity() to replace advise*() function after touching
+   sparse contents (this change is INCOMPLETE, NEED FIX).
 
-For comparison running EDITOR=3Dcat git rebase -i -x 'echo make' HEAD~10
-takes around 100ms in total for me.
+6. Fix some format issues.
 
-> unrealistic case (it doesn't modify any C source files explicitly, let
-> alone a frequently included header file) like this:
+## Limitations ##
 
-Yeah that's fair, of course no-op runs are where it matters the
-most. But e.g. for forcing a hook.c change (including re-linking "git")
-it's 10% slower[2] overall if we use ccache.
+This series has not considered moving file from in-cone area to out-of-cone
+area *yet*. Moving from in-cone to out-of-cone has not been covered/tested. The
+plan is to add the "in-cone to out-of-cone" functionality later, since this 
+series is WIP for now.
 
->   $ git checkout fddc3b420f^
->   $ make
->   [...]
->   $ for i in {1..10} ; do git commit --allow-empty -q -m $i ; done
->   $ time git rebase -x 'make -j8 NO_TCLTK=3DY >/dev/null' HEAD~10
->   [...]
->   real	0m31.026s
->   user	0m46.897s
->   sys	0m11.492s
->   $ git checkout fddc3b420f
->   $ for i in {1..10} ; do git commit --allow-empty -q -m $i ; done
->   $ time git rebase -x 'make -j8 NO_TCLTK=3DY >/dev/null' HEAD~10
->   [...]
->   real	0m30.865s
->   user	0m48.315s
->   sys	0m12.125s
->
-> Hrm, it actually ended up slightly faster.
+Shaoxuan Yuan (5):
+  t7002: add tests for moving out-of-cone file/directory
+  mv: check if out-of-cone file exists in index with SKIP_WORKTREE bit
+  mv: check if <destination> exists in index to handle overwriting
+  mv: add check_dir_in_index() and solve general dir check issue
+  mv: use update_sparsity() after touching sparse contents
 
-I should have said that I create a "version" file in my checkout dir,
-e.g.: 2.36.GIT-dev
+ builtin/mv.c                  | 104 +++++++++++++++++++++++++++++--
+ t/t7002-mv-sparse-checkout.sh | 114 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 212 insertions(+), 6 deletions(-)
 
-Otherwise you end up with a guarnteed recompile-re-link every time HEAD
-changes, so it's likely lost in that noise.
+Range-diff against v1:
+4:  1dd2fcb234 ! 1:  485d1e9102 t7002: add tests for moving out-of-cone file/directory
+    @@ Commit message
+         * 'can move out-of-cone directory with --sparse'
+         * 'refuse to move out-of-cone file without --sparse'
+         * 'can move out-of-cone file with --sparse'
+    +    * 'refuse to move sparse file to existing destination'
+    +    * 'move sparse file to existing destination with --force and --sparse'
+     
+         Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+     
+    @@ t/t7002-mv-sparse-checkout.sh: test_expect_success 'refuse to move file to non-s
+      	test_cmp expect stderr
+      '
+      
+    -+test_expect_success 'refuse to move out-of-cone directory without --sparse' '
+    ++test_expect_failure 'refuse to move out-of-cone directory without --sparse' '
+     +	git sparse-checkout disable &&
+     +	git reset --hard &&
+     +	mkdir folder1 &&
+    @@ t/t7002-mv-sparse-checkout.sh: test_expect_success 'refuse to move file to non-s
+     +	test_cmp expect stderr
+     +'
+     +
+    -+test_expect_success 'can move out-of-cone directory with --sparse' '
+    ++test_expect_failure 'can move out-of-cone directory with --sparse' '
+     +	git sparse-checkout disable &&
+     +	git reset --hard &&
+     +	mkdir folder1 &&
+    @@ t/t7002-mv-sparse-checkout.sh: test_expect_success 'refuse to move file to non-s
+     +
+     +	git mv --sparse folder1 sub 1>actual 2>stderr &&
+     +	test_must_be_empty stderr &&
+    -+	echo "Please use \"git sparse-checkout reapply\" to reapply the sparsity."\
+    -+	>expect &&
+    -+	test_cmp actual expect &&
+     +
+     +	git sparse-checkout reapply &&
+     +	test_path_is_dir sub/folder1 &&
+     +	test_path_is_file sub/folder1/file1
+     +'
+     +
+    -+test_expect_success 'refuse to move out-of-cone file without --sparse' '
+    ++test_expect_failure 'refuse to move out-of-cone file without --sparse' '
+     +	git sparse-checkout disable &&
+     +	git reset --hard &&
+     +	mkdir folder1 &&
+    @@ t/t7002-mv-sparse-checkout.sh: test_expect_success 'refuse to move file to non-s
+     +	test_cmp expect stderr
+     +'
+     +
+    -+test_expect_success 'can move out-of-cone file with --sparse' '
+    ++test_expect_failure 'can move out-of-cone file with --sparse' '
+     +	git sparse-checkout disable &&
+     +	git reset --hard &&
+     +	mkdir folder1 &&
+    @@ t/t7002-mv-sparse-checkout.sh: test_expect_success 'refuse to move file to non-s
+     +
+     +	git mv --sparse folder1/file1 sub 1>actual 2>stderr &&
+     +	test_must_be_empty stderr &&
+    -+	echo "Please use \"git sparse-checkout reapply\" to reapply the sparsity."\
+    -+	>expect &&
+    -+	test_cmp actual expect &&
+     +
+     +	git sparse-checkout reapply &&
+     +	! test_path_is_dir sub/folder1 &&
+     +	test_path_is_file sub/file1
+     +'
+    ++
+    ++test_expect_failure 'refuse to move sparse file to existing destination' '
+    ++	git sparse-checkout disable &&
+    ++	git reset --hard &&
+    ++	mkdir folder1 &&
+    ++	touch folder1/file1 &&
+    ++	touch sub/file1 &&
+    ++	git add folder1 sub/file1 &&
+    ++	git sparse-checkout init --cone &&
+    ++	git sparse-checkout set sub &&
+    ++
+    ++	test_must_fail git mv --sparse folder1/file1 sub 2>stderr &&
+    ++	echo "fatal: destination exists, source=folder1/file1, destination=sub/file1" >expect &&
+    ++	test_cmp expect stderr
+    ++'
+    ++
+    ++test_expect_failure 'move sparse file to existing destination with --force and --sparse' '
+    ++	git sparse-checkout disable &&
+    ++	git reset --hard &&
+    ++	mkdir folder1 &&
+    ++	touch folder1/file1 &&
+    ++	touch sub/file1 &&
+    ++	echo "overwrite" >folder1/file1 &&
+    ++	git add folder1 sub/file1 &&
+    ++	git sparse-checkout init --cone &&
+    ++	git sparse-checkout set sub &&
+    ++
+    ++	git mv --sparse --force folder1/file1 sub 2>stderr &&
+    ++	test_must_be_empty stderr &&
+    ++	echo "overwrite" >expect &&
+    ++	test_cmp expect sub/file1
+    ++'
+     +
+      test_done
+1:  5cf6b860e3 ! 2:  c99df4fc1a mv: check if out-of-cone file exists in index with SKIP_WORKTREE bit
+    @@ builtin/mv.c: int cmd_mv(int argc, const char **argv, const char *prefix)
+      				bad = _("bad source");
+      		} else if (!strncmp(src, dst, length) &&
+      				(dst[length] == 0 || dst[length] == '/')) {
+    +
+    + ## t/t7002-mv-sparse-checkout.sh ##
+    +@@ t/t7002-mv-sparse-checkout.sh: test_expect_failure 'can move out-of-cone directory with --sparse' '
+    + 	test_path_is_file sub/folder1/file1
+    + '
+    + 
+    +-test_expect_failure 'refuse to move out-of-cone file without --sparse' '
+    ++test_expect_success 'refuse to move out-of-cone file without --sparse' '
+    + 	git sparse-checkout disable &&
+    + 	git reset --hard &&
+    + 	mkdir folder1 &&
+    +@@ t/t7002-mv-sparse-checkout.sh: test_expect_failure 'refuse to move out-of-cone file without --sparse' '
+    + 	test_cmp expect stderr
+    + '
+    + 
+    +-test_expect_failure 'can move out-of-cone file with --sparse' '
+    ++test_expect_success 'can move out-of-cone file with --sparse' '
+    + 	git sparse-checkout disable &&
+    + 	git reset --hard &&
+    + 	mkdir folder1 &&
+-:  ---------- > 3:  8f1193188b mv: check if <destination> exists in index to handle overwriting
+2:  7b3c931f3f ! 4:  e195bfbc73 mv: add check_dir_in_index() and solve general dir check issue
+    @@ Commit message
+         errors out with "bad source".
+     
+         Add a helper check_dir_in_index() function to see if a directory
+    -    name exists in the index. Also add a SPARSE_DIRECTORY bit to mark
+    +    name exists in the index. Also add a SKIP_WORKTREE_DIR bit to mark
+         such directories.
+     
+         Change the checking logic, so that such <source> directory makes
+    @@ Commit message
+         instead of "bad source"; also user now can supply a "--sparse" flag so
+         this operation can be carried out successfully.
+     
+    +    Also, as suggested by Derrick [1],
+    +    move the in-line definition of "enum update_mode" to the top
+    +    of the file and make it use "flags" mode (each state is a different
+    +    bit in the word).
+    +
+    +    [1] https://lore.kernel.org/git/22aadea2-9330-aa9e-7b6a-834585189144@github.com/
+    +
+         Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+     
+      ## builtin/mv.c ##
+    +@@ builtin/mv.c: static const char * const builtin_mv_usage[] = {
+    + 	NULL
+    + };
+    + 
+    ++enum update_mode {
+    ++	BOTH = 0,
+    ++	WORKING_DIRECTORY = (1 << 1),
+    ++	INDEX = (1 << 2),
+    ++	SPARSE = (1 << 3),
+    ++	SKIP_WORKTREE_DIR = (1 << 4),
+    ++};
+    ++
+    + #define DUP_BASENAME 1
+    + #define KEEP_TRAILING_SLASH 2
+    + 
+     @@ builtin/mv.c: static int index_range_of_same_dir(const char *src, int length,
+      	return last - first;
+      }
+      
+    -+static int check_dir_in_index(const char *dir)
+    ++/*
+    ++ * Check if an out-of-cone directory should be in the index. Imagine this case
+    ++ * that all the files under a directory are marked with 'CE_SKIP_WORKTREE' bit
+    ++ * and thus the directory is sparsified.
+    ++ *
+    ++ * Return 0 if such directory exist (i.e. with any of its contained files not
+    ++ * marked with CE_SKIP_WORKTREE, the directory would be present in working tree).
+    ++ * Return 1 otherwise.
+    ++ */
+    ++static int check_dir_in_index(const char *name, int namelen)
+     +{
+    -+	int ret = 0;
+    -+	int length = sizeof(dir) + 1;
+    -+	char *substr = malloc(length);
+    ++	int ret = 1;
+    ++	const char *with_slash = add_slash(name);
+    ++	int length = namelen + 1;
+     +
+    -+	for (int i = 0; i < the_index.cache_nr; i++) {
+    -+		memcpy(substr, the_index.cache[i]->name, length);
+    -+		memset(substr + length - 1, 0, 1);
+    ++	int pos = cache_name_pos(with_slash, length);
+    ++	const struct cache_entry *ce;
+     +
+    -+		if (strcmp(dir, substr) == 0) {
+    -+			ret = 1;
+    ++	if (pos < 0) {
+    ++		pos = -pos - 1;
+    ++		if (pos >= the_index.cache_nr)
+     +			return ret;
+    -+		}
+    ++		ce = active_cache[pos];
+    ++		if (strncmp(with_slash, ce->name, length))
+    ++			return ret;
+    ++		if (ce_skip_worktree(ce))
+    ++			return ret = 0;
+     +	}
+    -+	free(substr);
+     +	return ret;
+     +}
+     +
+    @@ builtin/mv.c: int cmd_mv(int argc, const char **argv, const char *prefix)
+      	};
+      	const char **source, **destination, **dest_path, **submodule_gitfile;
+     -	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX, SPARSE } *modes;
+    -+	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX, SPARSE,
+    -+	SPARSE_DIRECTORY } *modes;
+    ++	enum update_mode *modes;
+      	struct stat st;
+      	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
+      	struct lock_file lock_file = LOCK_INIT;
+     @@ builtin/mv.c: int cmd_mv(int argc, const char **argv, const char *prefix)
+    - 			 */
+    + 		if (lstat(src, &st) < 0) {
+      
+      			int pos = cache_name_pos(src, length);
+     +			const char *src_w_slash = add_slash(src);
+    @@ builtin/mv.c: int cmd_mv(int argc, const char **argv, const char *prefix)
+      				else
+      					bad = _("bad source");
+      			}
+    -+			else if (check_dir_in_index(src_w_slash) &&
+    -+			!path_in_sparse_checkout(src_w_slash, &the_index)) {
+    -+				modes[i] = SPARSE_DIRECTORY;
+    ++			else if (!check_dir_in_index(src, length) &&
+    ++					 !path_in_sparse_checkout(src_w_slash, &the_index)) {
+    ++				modes[i] = SKIP_WORKTREE_DIR;
+     +				goto dir_check;
+     +			}
+      			/* only error if existence is expected. */
+    @@ builtin/mv.c: int cmd_mv(int argc, const char **argv, const char *prefix)
+      
+     -				modes[i] = WORKING_DIRECTORY;
+     +				if (!modes[i])
+    -+					modes[i] = WORKING_DIRECTORY;
+    ++					modes[i] |= WORKING_DIRECTORY;
+      				n = argc + last - first;
+      				REALLOC_ARRAY(source, n);
+      				REALLOC_ARRAY(destination, n);
+    @@ builtin/mv.c: int cmd_mv(int argc, const char **argv, const char *prefix)
+      		if (show_only)
+      			continue;
+     -		if (mode != INDEX && mode != SPARSE && rename(src, dst) < 0) {
+    -+		if (mode != INDEX && mode != SPARSE && mode != SPARSE_DIRECTORY &&
+    -+		 rename(src, dst) < 0) {
+    ++		if (!(mode & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
+    ++		 	rename(src, dst) < 0) {
+      			if (ignore_errors)
+      				continue;
+      			die_errno(_("renaming '%s' failed"), src);
+    @@ builtin/mv.c: int cmd_mv(int argc, const char **argv, const char *prefix)
+      		}
+      
+     -		if (mode == WORKING_DIRECTORY)
+    -+		if (mode == WORKING_DIRECTORY || mode == SPARSE_DIRECTORY)
+    ++		if (mode & (WORKING_DIRECTORY | SKIP_WORKTREE_DIR))
+      			continue;
+      
+      		pos = cache_name_pos(src, strlen(src));
+    +
+    + ## t/t7002-mv-sparse-checkout.sh ##
+    +@@ t/t7002-mv-sparse-checkout.sh: test_expect_success 'refuse to move file to non-skip-worktree sparse path' '
+    + 	test_cmp expect stderr
+    + '
+    + 
+    +-test_expect_failure 'refuse to move out-of-cone directory without --sparse' '
+    ++test_expect_success 'refuse to move out-of-cone directory without --sparse' '
+    + 	git sparse-checkout disable &&
+    + 	git reset --hard &&
+    + 	mkdir folder1 &&
+    +@@ t/t7002-mv-sparse-checkout.sh: test_expect_failure 'refuse to move out-of-cone directory without --sparse' '
+    + 	test_cmp expect stderr
+    + '
+    + 
+    +-test_expect_failure 'can move out-of-cone directory with --sparse' '
+    ++test_expect_success 'can move out-of-cone directory with --sparse' '
+    + 	git sparse-checkout disable &&
+    + 	git reset --hard &&
+    + 	mkdir folder1 &&
+3:  4be4c4f34d < -:  ---------- mv: add advise_to_reapply hint for moving file into cone
+-:  ---------- > 5:  aa82ba56b0 mv: use update_sparsity() after touching sparse contents
+-- 
+2.35.1
 
-I just run this (via a script):
-
-    echo $(/usr/bin/git grep -h -o -P '(?<=3D^DEF_VER=3Dv).*' 'HEAD:GIT-VER=
-SION-GEN')-dev
-
-And echo it to the top-level "version". Aside from what we're discussing
-here you might want to try that, your "git version" won't be correct,
-but for that low cost (I do generate it for the version I actually
-install) you'll get actual no-op runs in the case of e.g. only modifying
-tests.
-
->> 	$ git hyperfine -L rev HEAD~1,HEAD~0 -L t Y, -s 'make' 'make NO_TCLTK=
-=3D{t}' --warmup 1 -r 5
->> 	Benchmark 1: make NO_TCLTK=3DY' in 'HEAD~1
->> 	  Time (mean =C2=B1 =CF=83):     103.6 ms =C2=B1   1.1 ms    [User: 83.=
-8 ms, System: 32.1 ms]
->> 	  Range (min =E2=80=A6 max):   102.2 ms =E2=80=A6 105.2 ms    5 runs
->>=20=09=20
->> 	Benchmark 2: make NO_TCLTK=3DY' in 'HEAD~0
->> 	  Time (mean =C2=B1 =CF=83):     191.4 ms =C2=B1   1.6 ms    [User: 151=
-.0 ms, System: 60.5 ms]
->> 	  Range (min =E2=80=A6 max):   189.2 ms =E2=80=A6 193.3 ms    5 runs
->>=20=09=20
->> 	Benchmark 3: make NO_TCLTK=3D' in 'HEAD~1
->> 	  Time (mean =C2=B1 =CF=83):     272.0 ms =C2=B1   5.0 ms    [User: 206=
-.3 ms, System: 83.3 ms]
->> 	  Range (min =E2=80=A6 max):   266.7 ms =E2=80=A6 277.3 ms    5 runs
->>=20=09=20
->> 	Benchmark 4: make NO_TCLTK=3D' in 'HEAD~0
->> 	  Time (mean =C2=B1 =CF=83):     358.3 ms =C2=B1   1.4 ms    [User: 282=
-.7 ms, System: 104.0 ms]
->> 	  Range (min =E2=80=A6 max):   356.6 ms =E2=80=A6 360.0 ms    5 runs
->>=20=09=20
->> 	Summary
->> 	  'make NO_TCLTK=3DY' in 'HEAD~1' ran
->> 	    1.85 =C2=B1 0.02 times faster than 'make NO_TCLTK=3DY' in 'HEAD~0'
->> 	    2.63 =C2=B1 0.06 times faster than 'make NO_TCLTK=3D' in 'HEAD~1'
->> 	    3.46 =C2=B1 0.04 times faster than 'make NO_TCLTK=3D' in 'HEAD~0'
->>=20
->> I.e. this is with your patch here applied as HEAD~0 and HEAD~1 being
->> 'master'.
->>=20
->> I think given that that a better solution would be to just declare this
->> as a feature at this point
->
-> As long as 'make install' installs 'gitweb', I don't think that's an
-> option.
-
-Yes, I'm not saying that we shouldn't fix this no matter what, but just
-suggesting that perhaps we come up with a better solution.
-
->> especially as gitweb/INSTALL notes that the
->> way to install it is:
->>=20
->>         $ make prefix=3D/usr gitweb                            ;# as you=
-rself
->>         # make gitwebdir=3D/var/www/cgi-bin install-gitweb     ;# as root
->
-> Or are you suggesting not to install 'gitweb' during 'make install'?
-> I'm fine with that, but I doubt I will argue about it convincingly in
-> a commit message.
-
-We could also:
-
- * $(error out if install is in MAKECMDGOALS and we don't have those
-   generated files, that's a few-line ifdef change to the Makefile,
-   "build it first".
-
- * Just fold gitweb/Makefile into the top-level Makefile
-
->> Or we could just fold gitweb/Makefile into the main Makefile, unlike
->> gitk and git-gui it's not externally maintained, and most of it is
->> shimmying to work around not being part of the main Makefile (which it
->> strongly inter-depends on anyway).
-
-1.
-	$ git hyperfine  -L rev HEAD~1,HEAD~0 -s 'make' 'make'
-	Benchmark 1: make' in 'HEAD~1
-	  Time (mean =C2=B1 =CF=83):     106.9 ms =C2=B1   1.3 ms    [User: 86.0 m=
-s, System: 33.1 ms]
-	  Range (min =E2=80=A6 max):   105.3 ms =E2=80=A6 110.2 ms    27 runs
-=09
-	Benchmark 2: make' in 'HEAD~0
-	  Time (mean =C2=B1 =CF=83):     199.6 ms =C2=B1   2.5 ms    [User: 162.7 =
-ms, System: 57.3 ms]
-	  Range (min =E2=80=A6 max):   197.4 ms =E2=80=A6 207.4 ms    15 runs
-=09
-	Summary
-	  'make' in 'HEAD~1' ran
-	    1.87 =C2=B1 0.03 times faster than 'make' in 'HEAD~0'
-2.
-=09
-	$ git hyperfine -L rev HEAD~1,HEAD~0 -s 'make' 'make -W hook.c NO_TCLTK=3D=
-Y CC=3D"ccache cc"' --warmup 1 -r 5
-	Benchmark 1: make -W hook.c NO_TCLTK=3DY CC=3D"ccache cc"' in 'HEAD~1
-	  Time (mean =C2=B1 =CF=83):     742.7 ms =C2=B1   7.1 ms    [User: 1965.5=
- ms, System: 561.6 ms]
-	  Range (min =E2=80=A6 max):   730.3 ms =E2=80=A6 748.2 ms    5 runs
-=09=20
-	Benchmark 2: make -W hook.c NO_TCLTK=3DY CC=3D"ccache cc"' in 'HEAD~0
-	  Time (mean =C2=B1 =CF=83):     819.2 ms =C2=B1   7.4 ms    [User: 2013.9=
- ms, System: 583.3 ms]
-	  Range (min =E2=80=A6 max):   811.0 ms =E2=80=A6 830.0 ms    5 runs
-=09=20
-	Summary
-	  'make -W hook.c NO_TCLTK=3DY CC=3D"ccache cc"' in 'HEAD~1' ran
-	    1.10 =C2=B1 0.01 times faster than 'make -W hook.c NO_TCLTK=3DY CC=3D"=
-ccache cc"' in 'HEAD~0'
-=09
