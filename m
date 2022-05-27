@@ -2,304 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BBEFC433EF
-	for <git@archiver.kernel.org>; Fri, 27 May 2022 06:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E40D0C433F5
+	for <git@archiver.kernel.org>; Fri, 27 May 2022 08:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243932AbiE0GBy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 May 2022 02:01:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37994 "EHLO
+        id S234183AbiE0ICd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 May 2022 04:02:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241641AbiE0GBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 May 2022 02:01:49 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 974DDFC7
-        for <git@vger.kernel.org>; Thu, 26 May 2022 23:01:44 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 14D2912A330;
-        Fri, 27 May 2022 02:01:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=994V6HXQQarWHZaOPkDeFlOcbLAM7RO3lWA74b
-        qOuZE=; b=YaK/VZBuH8SA6GeKS7bDYouFsixxrIaxg6GZCzrYOL7wwF53yUqM/A
-        PekPx5RQvk2OpAKv5Jgl4l9HG6i4WfI9uLLmv0CTB1DoLFHIPcZpW8nOy+rWMyfG
-        NVZOgYO3XyvQ+aZUMjZW3C/miPbiccuHVhw8SYNbRVH+aoXz3ROdI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3B6F12A32F;
-        Fri, 27 May 2022 02:01:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 556CB12A32E;
-        Fri, 27 May 2022 02:01:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v3] revert: optionally refer to commit in the "reference"
- format
-References: <xmqqsfp2b30k.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2205231507350.352@tvgsbejvaqbjf.bet>
-        <xmqq35gzn9vk.fsf@gitster.g>
-Date:   Thu, 26 May 2022 23:01:39 -0700
-In-Reply-To: <xmqq35gzn9vk.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        23 May 2022 15:48:31 -0700")
-Message-ID: <xmqq8rqn7buk.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230336AbiE0IC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 May 2022 04:02:27 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A556644D9
+        for <git@vger.kernel.org>; Fri, 27 May 2022 01:02:26 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id c93so3145818edf.7
+        for <git@vger.kernel.org>; Fri, 27 May 2022 01:02:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=FbECyR5XwFQpb70BBI5OdZ8uecyaJkXcF5ZJMy3CEhk=;
+        b=UWw6le3HiOcYWGrlcl113GJG/5fBjTzhv+CW94XV7TFL/FXXXvt8Ae2g5yK+VnkluL
+         R8a3nsuypjNmEoEUZYLV7QEo2Lenjxi5dFn+BY1DEf00yQ42K+1GZztr1J0GSakWHbRL
+         mMyoCoKILfczaKPNxcAQktMqSVFpvK3xzqd1qK75csrghRgrcRDewHUaX0dmYkUiTTBY
+         rnfnXjghEeaiVlmodXscJkiYsgj+yyT8oOZJJ9KGmwOJMfKY1VFwRmXBeQZxZyP/fJEP
+         /NLDeTRchjgwbfdFG1n8coBiFOEmZdyRzRE0sA/0Rqji+bhTGNOg05by7b0GqAAD24p6
+         jaGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=FbECyR5XwFQpb70BBI5OdZ8uecyaJkXcF5ZJMy3CEhk=;
+        b=qOa8F4ndyplZsaU2PaMbaBqsLgtrjAX4Wigpv8eRo7P2OO2t0ykOBJQCy7xOivlSZM
+         zmvVpCZKpjy4UmaqvHb4Sqm4kY+ffwsDRbwUQ4ACI6u8IVo70E5+6Qd5zGGJkfYzM2A6
+         IOmVnUtIiL8GwNGBmWD7FS17xCbIZukq84pBnV+iIMaYfGF8bmhWSnBHICXWkS/VwVEY
+         cOM2K9tpbHVz9Wcf2vgjqEu8rSFnI5AWsg0PiuMmZUXdvuhzCSe/d4AIvy4ES+cmbf86
+         1qwghcmPIvuWIpDQP2pSlkpW6LnekHkYhfBnaYfuOx39z3voRHaH8jl2ud+rY8Qof9W3
+         ExQQ==
+X-Gm-Message-State: AOAM532tuIVCI+4PbhAxeJ5eqAMVkN+OAnaV96OqQsr+FR5zOlUFMFUs
+        YyZoQaSSnrJquLll1CTFDp0=
+X-Google-Smtp-Source: ABdhPJyNEyf4BbBSb0fAkLcwT4JHSlFQBcRZ1Br/R5lUClie7WF5FvwqaMT3PEFBNTrE+ffvDt27uQ==
+X-Received: by 2002:a05:6402:27cc:b0:42b:42eb:d50c with SMTP id c12-20020a05640227cc00b0042b42ebd50cmr31663910ede.16.1653638544514;
+        Fri, 27 May 2022 01:02:24 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id o17-20020a056402439100b0042aa5a74598sm1868958edc.52.2022.05.27.01.02.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 May 2022 01:02:23 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nuUvP-000K5K-9v;
+        Fri, 27 May 2022 10:02:23 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Kevin Locke <kevin@kevinlocke.name>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] setup: don't die if realpath(3) fails on getcwd(3)
+Date:   Fri, 27 May 2022 09:48:43 +0200
+References: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
+ <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
+ <1580ad10-43f6-bc73-901a-b65b1aea73ff@github.com>
+ <YozlZ9DPrRLPBTBP@kevinlocke.name>
+ <CABPp-BGZTDKorz+CFScfTfx47c+TuJaAD_Zyyo1Jj_tymYkVXQ@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <CABPp-BGZTDKorz+CFScfTfx47c+TuJaAD_Zyyo1Jj_tymYkVXQ@mail.gmail.com>
+Message-ID: <220527.865ylr4d4g.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7A949D96-DD82-11EC-9BAD-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A typical "git revert" commit uses the full title of the original
-commit in its title, and starts its body of the message with:
 
-    This reverts commit 8fa7f667cf61386257c00d6e954855cc3215ae91.
+On Tue, May 24 2022, Elijah Newren wrote:
 
-This does not encourage the best practice of describing not just
-"what" (i.e. "Revert X" on the title says what we did) but "why"
-(i.e. and it does not say why X was undesirable).
+> [...] So, I think the signature of free() is just
+> wrong: it should have taken a const void* all along.  Unfortunately,
+> the wrong type signature sadly makes people feel like they have to
+> choose between (a) dropping the added safety of const that the
+> compiler can enforce for you during the lifetime of the variable, or
+> (b) leaking memory you no longer need.
 
-We can instead phrase this first line of the body to be more like
+Hrm, don't you mean that it would be better as:
 
-    This reverts commit 8fa7f667 (do this and that, 2022-04-25)
+	void free(void *const ptr);
 
-so that the title does not have to be
+Not:
 
-    Revert "do this and that"
+	void free(const void *ptr);
 
-We can instead use the title to describe "why" we are reverting the
-original commit.
+But standard C doesn't make much (any?) use of the former form for its
+library functions by convention.
 
-Introduce the "--reference" option to "git revert", and also the
-revert.reference configuration variable, which defaults to false, to
-tweak the title and the first line of the draft commit message for
-when creating a "revert" commit.
+c.f.:
 
-When this option is in use, the first line of the pre-filled editor
-buffer becomes a comment line that tells the user to say _why_.  If
-the user exits the editor without touching this line by mistake,
-what we prepare to become the first line of the body, i.e. "This
-reverts commit 8fa7f667 (do this and that, 2022-04-25)", ends up to
-be the title of the resulting commit.  This behaviour is designed to
-help such a user to identify such a revert in "git log --oneline"
-easily so that it can be further reworded with "git rebase -i" later.
+	cdecl> explain const void *var
+	declare var as pointer to const void
+	cdecl> explain void *const var
+	declare var as const pointer to void
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+I.e. the whole point of malloc() is to give us a pointer to memory that
+isn't "const". If we stored that in a variable that was "void *const"
+we'd save ourselves from some amount of foot-guns, but you're rarely
+doing pointer arithmetic accidentally, so probably not really.
 
- * The only difference since the second one is that the first line of
-   the log message template is commented out and has asterisks to
-   draw more attention.  The last paragraph (new) in the proposed
-   log message explains the rationale behind this design.
+But yeah, we really should have this documented somewhere, i.e. the
+cases where we "lie" and expose a "const char *" which is really (as far
+as the machine is concerned) mutable.
 
-   Third-time a charm, hopefully.
-
-Range-diff against v2:
-1:  4152fc2092 ! 1:  f4325a503a revert: optionally refer to commit in the "reference" format
-    @@ Commit message
-         tweak the title and the first line of the draft commit message for
-         when creating a "revert" commit.
-     
-    +    When this option is in use, the first line of the pre-filled editor
-    +    buffer becomes a comment line that tells the user to say _why_.  If
-    +    the user exits the editor without touching this line by mistake,
-    +    what we prepare to become the first line of the body, i.e. "This
-    +    reverts commit 8fa7f667 (do this and that, 2022-04-25)", ends up to
-    +    be the title of the resulting commit.  This behaviour is designed to
-    +    help such a user to identify such a revert in "git log --oneline"
-    +    easily so that it can be further reworded with "git rebase -i" later.
-    +
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-      ## Documentation/config/revert.txt (new) ##
-    @@ sequencer.c: static int do_pick_commit(struct repository *r,
-     -		strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
-     -		strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
-     +		if (opts->commit_use_reference) {
-    -+			strbuf_addstr(&msgbuf, "DESCRIBE WHY WE ARE REVERTING HERE");
-    ++			strbuf_addstr(&msgbuf,
-    ++				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-     +		} else {
-     +			strbuf_addstr(&msgbuf, "Revert \"");
-     +			strbuf_addstr(&msgbuf, msg.subject);
-
- Documentation/config/revert.txt |  3 +++
- Documentation/git-revert.txt    |  9 +++++++++
- builtin/revert.c                |  2 ++
- sequencer.c                     | 33 ++++++++++++++++++++++++++++-----
- sequencer.h                     |  1 +
- t/t3501-revert-cherry-pick.sh   | 31 +++++++++++++++++++++++++++++++
- 6 files changed, 74 insertions(+), 5 deletions(-)
- create mode 100644 Documentation/config/revert.txt
-
-diff --git a/Documentation/config/revert.txt b/Documentation/config/revert.txt
-new file mode 100644
-index 0000000000..797bfb6d62
---- /dev/null
-+++ b/Documentation/config/revert.txt
-@@ -0,0 +1,3 @@
-+revert.reference::
-+	Setting this variable to true makes `git revert` to behave
-+	as if the `--reference` option is given.
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index bb92a4a451..8463fe9cf7 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -117,6 +117,15 @@ effect to your index in a row.
- 	Allow the rerere mechanism to update the index with the
- 	result of auto-conflict resolution if possible.
- 
-+--reference::
-+	Instead of starting the body of the log message with "This
-+	reverts <full object name of the commit being reverted>.",
-+	refer to the commit using "--pretty=reference" format
-+	(cf. linkgit:git-log[1]).  The `revert.reference`
-+	configuration variable can be used to enable this option by
-+	default.
-+
-+
- SEQUENCER SUBCOMMANDS
- ---------------------
- include::sequencer.txt[]
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 51776abea6..ada51e46b9 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -116,6 +116,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
- 			N_("option for merge strategy"), option_parse_x),
- 		{ OPTION_STRING, 'S', "gpg-sign", &opts->gpg_sign, N_("key-id"),
- 		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
-+		OPT_BOOL(0, "reference", &opts->commit_use_reference,
-+			 N_("use the 'reference' format to refer to commits")),
- 		OPT_END()
- 	};
- 	struct option *options = base_options;
-diff --git a/sequencer.c b/sequencer.c
-index a5f678f452..96fec6ef6d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -221,6 +221,9 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
- 		return ret;
- 	}
- 
-+	if (!strcmp(k, "revert.reference"))
-+		opts->commit_use_reference = git_config_bool(k, v);
-+
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
- 		return status;
-@@ -2059,6 +2062,20 @@ static int should_edit(struct replay_opts *opts) {
- 	return opts->edit;
- }
- 
-+static void refer_to_commit(struct replay_opts *opts,
-+			    struct strbuf *msgbuf, struct commit *commit)
-+{
-+	if (opts->commit_use_reference) {
-+		struct pretty_print_context ctx = {
-+			.abbrev = DEFAULT_ABBREV,
-+			.date_mode.type = DATE_SHORT,
-+		};
-+		format_commit_message(commit, "%h (%s, %ad)", msgbuf, &ctx);
-+	} else {
-+		strbuf_addstr(msgbuf, oid_to_hex(&commit->object.oid));
-+	}
-+}
-+
- static int do_pick_commit(struct repository *r,
- 			  struct todo_item *item,
- 			  struct replay_opts *opts,
-@@ -2167,14 +2184,20 @@ static int do_pick_commit(struct repository *r,
- 		base_label = msg.label;
- 		next = parent;
- 		next_label = msg.parent_label;
--		strbuf_addstr(&msgbuf, "Revert \"");
--		strbuf_addstr(&msgbuf, msg.subject);
--		strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
--		strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
-+		if (opts->commit_use_reference) {
-+			strbuf_addstr(&msgbuf,
-+				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-+		} else {
-+			strbuf_addstr(&msgbuf, "Revert \"");
-+			strbuf_addstr(&msgbuf, msg.subject);
-+			strbuf_addstr(&msgbuf, "\"");
-+		}
-+		strbuf_addstr(&msgbuf, "\n\nThis reverts commit ");
-+		refer_to_commit(opts, &msgbuf, commit);
- 
- 		if (commit->parents && commit->parents->next) {
- 			strbuf_addstr(&msgbuf, ", reversing\nchanges made to ");
--			strbuf_addstr(&msgbuf, oid_to_hex(&parent->object.oid));
-+			refer_to_commit(opts, &msgbuf, parent);
- 		}
- 		strbuf_addstr(&msgbuf, ".\n");
- 	} else {
-diff --git a/sequencer.h b/sequencer.h
-index da64473636..698599fe4e 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -49,6 +49,7 @@ struct replay_opts {
- 	int reschedule_failed_exec;
- 	int committer_date_is_author_date;
- 	int ignore_date;
-+	int commit_use_reference;
- 
- 	int mainline;
- 
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 8617efaaf1..a386ae9e88 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -159,6 +159,7 @@ test_expect_success 'cherry-pick works with dirty renamed file' '
- '
- 
- test_expect_success 'advice from failed revert' '
-+	test_when_finished "git reset --hard" &&
- 	test_commit --no-tag "add dream" dream dream &&
- 	dream_oid=$(git rev-parse --short HEAD) &&
- 	cat <<-EOF >expected &&
-@@ -174,4 +175,34 @@ test_expect_success 'advice from failed revert' '
- 	test_must_fail git revert HEAD^ 2>actual &&
- 	test_cmp expected actual
- '
-+
-+test_expect_success 'identification of reverted commit (default)' '
-+	test_commit to-ident &&
-+	test_when_finished "git reset --hard to-ident" &&
-+	git checkout --detach to-ident &&
-+	git revert --no-edit HEAD &&
-+	git cat-file commit HEAD >actual.raw &&
-+	grep "^This reverts " actual.raw >actual &&
-+	echo "This reverts commit $(git rev-parse HEAD^)." >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'identification of reverted commit (--reference)' '
-+	git checkout --detach to-ident &&
-+	git revert --reference --no-edit HEAD &&
-+	git cat-file commit HEAD >actual.raw &&
-+	grep "^This reverts " actual.raw >actual &&
-+	echo "This reverts commit $(git show -s --pretty=reference HEAD^)." >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'identification of reverted commit (revert.reference)' '
-+	git checkout --detach to-ident &&
-+	git -c revert.reference=true revert --no-edit HEAD &&
-+	git cat-file commit HEAD >actual.raw &&
-+	grep "^This reverts " actual.raw >actual &&
-+	echo "This reverts commit $(git show -s --pretty=reference HEAD^)." >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.36.1-331-g1b5d92e060
-
+The confusion being that we're seeking to overlay our own "no, this
+isn't mutable" on the basis of our desired API boundaries, not just to
+use it to inform us & the compiler about the "real" nature of the
+underlying data.
