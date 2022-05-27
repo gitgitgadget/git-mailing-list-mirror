@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFA98C433EF
-	for <git@archiver.kernel.org>; Fri, 27 May 2022 10:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C3C1C433F5
+	for <git@archiver.kernel.org>; Fri, 27 May 2022 10:08:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350824AbiE0KIe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 May 2022 06:08:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37070 "EHLO
+        id S1350861AbiE0KIr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 May 2022 06:08:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242503AbiE0KI3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 May 2022 06:08:29 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A9D1269B6
-        for <git@vger.kernel.org>; Fri, 27 May 2022 03:08:27 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id l7-20020a17090aaa8700b001dd1a5b9965so3946827pjq.2
-        for <git@vger.kernel.org>; Fri, 27 May 2022 03:08:27 -0700 (PDT)
+        with ESMTP id S1350835AbiE0KIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 May 2022 06:08:32 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEC921271B1
+        for <git@vger.kernel.org>; Fri, 27 May 2022 03:08:30 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id z11so4163418pjc.3
+        for <git@vger.kernel.org>; Fri, 27 May 2022 03:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QZmjuihcNWWsGDxDuSUPfFBIdSba7nNQKjNBUFU+wsI=;
-        b=cdlTVJwKmQnUa6PuWdeBckhg1MAkRvOVsC9ZI+tOyv9tHuhQ0Zfc8ZNOMY2N2pZvTF
-         bwtRM1uO8PgHiD629tZ2PO4Ds4LU6y71zUMJLiLZnkzIyWB9/M/ppdMCRMbAtnX3PDSV
-         1IIqoiG2auSPSL9SJ+YwYak/1bvRCX2qRBf5HCQHcD1sZNzOhm3v4wN3i6an847zv81u
-         DlLC8PWw2nsaAb3jlJ1gBKGi7kh2U0TJW2FKFl0RGtfomqe+C2QPEuAYa+N/A2B7tgGu
-         FebjDkeQx/+beP64l64sYw2TQINU/CnVtWS6KQgtTrVEDElq/r4BwmPXgF1Ya3kpJEJq
-         Bwmg==
+        bh=+gC6e6S67vceQBgW0gDAauSnuDIu9RHshbM++lf6J+4=;
+        b=gOg3JGzNSac7ttHjFvNGu3SbiKw6INLjr0HkRkjuWQqaubUKEiTOPoStDCvSZw5LYD
+         dYfuEh6z83Z3q1p1YrfKoee1sCovjinLcvg0SwQD9nEwUzQRWIGoIxnhCJ+VP0O444qG
+         KPd1F7VCWbKzkNuCwHUk5SX8wcjJw08U0tBNSkA57N6GTN9GONKuWoXX2EaXT5fntumM
+         70pUxXPMa2TJ/iFzqOrOi2l+Z987ePTis/7ngT4zpJ4kXZf3K2OQUbG6X6R6NlR22Ohg
+         /fTK2Mds6qkJ0AeGBTtPOQi3pUn+QmodDJzLodPtxcvdIQmfx0/G2UX6cYJ3KKVv7QfC
+         RtCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QZmjuihcNWWsGDxDuSUPfFBIdSba7nNQKjNBUFU+wsI=;
-        b=eNAcZCZ6cj/VsgOuiFhCbKlk9UHAZHHoPkyZoytDSZWH2vHVHemT9gng6pHmBZNVQY
-         VODNkVADmsrU6TITxAwbEC8w5pQdoPU95PSp28uEEWc7BpYCMXYLKH6EWcwSsKKwfQZl
-         /B7K/QWXN76925CmLtIbaFCTajK+H4whlP7f2va4QmIf5MkSzoB52H+2k4E6XduML6P8
-         7HJkM37kqtnBpZVoQ0Kb6h4NVi8sN9jcOayk09YB3BZeQtGVB5es4rXMbCMSZMKxQH7P
-         tpeEn9Fo8EYRc/4T7i/ad9ErN7h/SMUlRQjTgXyolTNwtkq9Qh4qPrjN7PShPvweLAPh
-         KPtA==
-X-Gm-Message-State: AOAM531UT/RVvBCCzLROoskqwmGXb1E1D6lbhrwHvbWPDupPsRk9ZFHG
-        g1sPXt5N8Lz5KpdfWmlqdcValBWNERJflg==
-X-Google-Smtp-Source: ABdhPJwmj4Du6DPTmQ4ApjR4sHVoVUXPRiHvNwT7nquvIccc2B/MtiFek07vsuQt/SEmuJFG/0NQPw==
-X-Received: by 2002:a17:902:ef45:b0:156:1858:71fc with SMTP id e5-20020a170902ef4500b00156185871fcmr41507950plx.23.1653646106860;
-        Fri, 27 May 2022 03:08:26 -0700 (PDT)
+        bh=+gC6e6S67vceQBgW0gDAauSnuDIu9RHshbM++lf6J+4=;
+        b=XU0Zo6m6SE5FjW30DTe6rK1w9IG91wLDH1tTvD1HOx94u5TJB37t0jv82o9od18xJY
+         GqkThQ/svxYxIBI0GtkNKd5zYr2r0dZmZJrNTzPYdV7pU7qjpuTxWYdqyKALgfeKBhqp
+         nVI9J70LycXQjcJ81qUbooePA8kt92Y2DxBeQXY2TRVCqtjm7D1fepXPstsrTRduzEEN
+         5g+Y94sbKjVPQhNqH3rVzou826/mm9D9iAnZ+RQUv+1BrsQ9cQqocXFnbYN7hYm6lYVo
+         TwX+LW1XHrT56niMwagiIIecHCPjL7W8ifGZktBAk29v9PnRDmlzlnCJUaXJQqvraW+L
+         6Hlg==
+X-Gm-Message-State: AOAM532/zXU1TUDSXiHpJ8DiA+wy2ebF/cbX5C6F3kUndP9OsKO017JD
+        BDjhUgmAGwQegG6QPQdMqQAuOLZpjD6/lw==
+X-Google-Smtp-Source: ABdhPJz7hXeGJTZBHbit2qjMgIIwZrs5ejwx0tujaww/mGrMr0H0cE0ajZJe4hBDL0to04qXWsucyg==
+X-Received: by 2002:a17:90a:8005:b0:1df:ecbc:bd2c with SMTP id b5-20020a17090a800500b001dfecbcbd2cmr7496666pjn.10.1653646110056;
+        Fri, 27 May 2022 03:08:30 -0700 (PDT)
 Received: from ffyuanda.localdomain ([119.131.142.42])
-        by smtp.gmail.com with ESMTPSA id p26-20020a056a0026da00b005184640c939sm2994262pfw.207.2022.05.27.03.08.23
+        by smtp.gmail.com with ESMTPSA id p26-20020a056a0026da00b005184640c939sm2994262pfw.207.2022.05.27.03.08.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 May 2022 03:08:26 -0700 (PDT)
+        Fri, 27 May 2022 03:08:29 -0700 (PDT)
 From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 To:     git@vger.kernel.org
 Cc:     vdye@github.com, derrickstolee@github.com, gitster@pobox.com,
         newren@gmail.com, Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [WIP v2 4/5] mv: add check_dir_in_index() and solve general dir check issue
-Date:   Fri, 27 May 2022 18:08:03 +0800
-Message-Id: <20220527100804.209890-5-shaoxuan.yuan02@gmail.com>
+Subject: [WIP v2 5/5] mv: use update_sparsity() after touching sparse contents
+Date:   Fri, 27 May 2022 18:08:04 +0800
+Message-Id: <20220527100804.209890-6-shaoxuan.yuan02@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220527100804.209890-1-shaoxuan.yuan02@gmail.com>
 References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
@@ -64,181 +64,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Originally, moving a <source> directory which is not on-disk due
-to its existence outside of sparse-checkout cone, "giv mv" command
-errors out with "bad source".
+Originally, "git mv" a sparse file/directory from out/in-cone to
+in/out-cone does not update the sparsity following the sparse-checkout
+patterns.
 
-Add a helper check_dir_in_index() function to see if a directory
-name exists in the index. Also add a SKIP_WORKTREE_DIR bit to mark
-such directories.
-
-Change the checking logic, so that such <source> directory makes
-"giv mv" command warns with "advise_on_updating_sparse_paths()"
-instead of "bad source"; also user now can supply a "--sparse" flag so
-this operation can be carried out successfully.
-
-Also, as suggested by Derrick [1],
-move the in-line definition of "enum update_mode" to the top
-of the file and make it use "flags" mode (each state is a different
-bit in the word).
-
-[1] https://lore.kernel.org/git/22aadea2-9330-aa9e-7b6a-834585189144@github.com/
+Use update_sparsity() after touching sparse contents, so the sparsity
+will be updated after the move.
 
 Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 ---
- builtin/mv.c                  | 60 ++++++++++++++++++++++++++++++++---
- t/t7002-mv-sparse-checkout.sh |  4 +--
- 2 files changed, 57 insertions(+), 7 deletions(-)
+ builtin/mv.c                  | 19 +++++++++++++++++++
+ t/t7002-mv-sparse-checkout.sh | 16 ++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
 diff --git a/builtin/mv.c b/builtin/mv.c
-index 62284e3f86..e64f251a69 100644
+index e64f251a69..2c02120941 100644
 --- a/builtin/mv.c
 +++ b/builtin/mv.c
-@@ -19,6 +19,14 @@ static const char * const builtin_mv_usage[] = {
- 	NULL
- };
+@@ -13,6 +13,7 @@
+ #include "string-list.h"
+ #include "parse-options.h"
+ #include "submodule.h"
++#include "unpack-trees.h"
  
-+enum update_mode {
-+	BOTH = 0,
-+	WORKING_DIRECTORY = (1 << 1),
-+	INDEX = (1 << 2),
-+	SPARSE = (1 << 3),
-+	SKIP_WORKTREE_DIR = (1 << 4),
-+};
-+
- #define DUP_BASENAME 1
- #define KEEP_TRAILING_SLASH 2
- 
-@@ -115,6 +123,37 @@ static int index_range_of_same_dir(const char *src, int length,
- 	return last - first;
- }
- 
-+/*
-+ * Check if an out-of-cone directory should be in the index. Imagine this case
-+ * that all the files under a directory are marked with 'CE_SKIP_WORKTREE' bit
-+ * and thus the directory is sparsified.
-+ *
-+ * Return 0 if such directory exist (i.e. with any of its contained files not
-+ * marked with CE_SKIP_WORKTREE, the directory would be present in working tree).
-+ * Return 1 otherwise.
-+ */
-+static int check_dir_in_index(const char *name, int namelen)
-+{
-+	int ret = 1;
-+	const char *with_slash = add_slash(name);
-+	int length = namelen + 1;
-+
-+	int pos = cache_name_pos(with_slash, length);
-+	const struct cache_entry *ce;
-+
-+	if (pos < 0) {
-+		pos = -pos - 1;
-+		if (pos >= the_index.cache_nr)
-+			return ret;
-+		ce = active_cache[pos];
-+		if (strncmp(with_slash, ce->name, length))
-+			return ret;
-+		if (ce_skip_worktree(ce))
-+			return ret = 0;
-+	}
-+	return ret;
-+}
-+
- int cmd_mv(int argc, const char **argv, const char *prefix)
+ static const char * const builtin_mv_usage[] = {
+ 	N_("git mv [<options>] <source>... <destination>"),
+@@ -158,6 +159,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
  {
  	int i, flags, gitmodules_modified = 0;
-@@ -129,7 +168,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
- 	const char **source, **destination, **dest_path, **submodule_gitfile;
--	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX, SPARSE } *modes;
-+	enum update_mode *modes;
- 	struct stat st;
- 	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
- 	struct lock_file lock_file = LOCK_INIT;
-@@ -187,6 +226,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		if (lstat(src, &st) < 0) {
- 
- 			int pos = cache_name_pos(src, length);
-+			const char *src_w_slash = add_slash(src);
-+
- 			if (pos >= 0) {
- 				const struct cache_entry *ce = active_cache[pos];
- 
-@@ -208,6 +249,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				else
- 					bad = _("bad source");
- 			}
-+			else if (!check_dir_in_index(src, length) &&
-+					 !path_in_sparse_checkout(src_w_slash, &the_index)) {
-+				modes[i] = SKIP_WORKTREE_DIR;
-+				goto dir_check;
-+			}
- 			/* only error if existence is expected. */
- 			else if (modes[i] != SPARSE)
- 				bad = _("bad source");
-@@ -218,7 +264,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				&& lstat(dst, &st) == 0)
- 			bad = _("cannot move directory over file");
- 		else if (src_is_dir) {
--			int first = cache_name_pos(src, length), last;
-+			int first, last;
-+dir_check:
-+			first = cache_name_pos(src, length);
- 
- 			if (first >= 0)
- 				prepare_move_submodule(src, first,
-@@ -229,7 +277,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			else { /* last - first >= 1 */
- 				int j, dst_len, n;
- 
--				modes[i] = WORKING_DIRECTORY;
-+				if (!modes[i])
-+					modes[i] |= WORKING_DIRECTORY;
- 				n = argc + last - first;
- 				REALLOC_ARRAY(source, n);
- 				REALLOC_ARRAY(destination, n);
-@@ -331,7 +380,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	int verbose = 0, show_only = 0, force = 0, ignore_errors = 0, ignore_sparse = 0;
++	int sparse_moved = 0;
+ 	struct option builtin_mv_options[] = {
+ 		OPT__VERBOSE(&verbose, N_("be verbose")),
+ 		OPT__DRY_RUN(&show_only, N_("dry run")),
+@@ -376,6 +378,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 		const char *src = source[i], *dst = destination[i];
+ 		enum update_mode mode = modes[i];
+ 		int pos;
++		if (!sparse_moved && mode & (SPARSE | SKIP_WORKTREE_DIR))
++			sparse_moved = 1;
+ 		if (show_only || verbose)
  			printf(_("Renaming %s to %s\n"), src, dst);
  		if (show_only)
- 			continue;
--		if (mode != INDEX && mode != SPARSE && rename(src, dst) < 0) {
-+		if (!(mode & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
-+		 	rename(src, dst) < 0) {
- 			if (ignore_errors)
- 				continue;
- 			die_errno(_("renaming '%s' failed"), src);
-@@ -345,7 +395,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 							      1);
- 		}
+@@ -403,6 +407,21 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 		rename_cache_entry_at(pos, dst);
+ 	}
  
--		if (mode == WORKING_DIRECTORY)
-+		if (mode & (WORKING_DIRECTORY | SKIP_WORKTREE_DIR))
- 			continue;
++	if (sparse_moved) {
++		struct unpack_trees_options o;
++		memset(&o, 0, sizeof(o));
++		o.verbose_update = isatty(2);
++		o.update = 1;
++		o.head_idx = -1;
++		o.src_index = &the_index;
++		o.dst_index = &the_index;
++		o.skip_sparse_checkout = 0;
++		o.pl = the_index.sparse_checkout_patterns;
++		setup_unpack_trees_porcelain(&o, "mv");
++		update_sparsity(&o);
++		clear_unpack_trees_porcelain(&o);
++	}
++
+ 	if (gitmodules_modified)
+ 		stage_updated_gitmodules(&the_index);
  
- 		pos = cache_name_pos(src, strlen(src));
 diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-index 2c9008573a..cf2f5dc46f 100755
+index cf2f5dc46f..1fd3e3c0fc 100755
 --- a/t/t7002-mv-sparse-checkout.sh
 +++ b/t/t7002-mv-sparse-checkout.sh
-@@ -206,7 +206,7 @@ test_expect_success 'refuse to move file to non-skip-worktree sparse path' '
+@@ -287,6 +287,22 @@ test_expect_success 'refuse to move sparse file to existing destination' '
  	test_cmp expect stderr
  '
  
--test_expect_failure 'refuse to move out-of-cone directory without --sparse' '
-+test_expect_success 'refuse to move out-of-cone directory without --sparse' '
++# Need fix.
++#
++# The *expected* behavior:
++#
++# Using --sparse to accept a sparse file, --force to overwrite the destination.
++# The folder1/file1 should replace the sub/file1 without error.
++#
++# The *actual* behavior:
++#
++# It emits a warning:
++#
++# warning: Path ' sub/file1
++# ' already present; will not overwrite with sparse update.
++# After fixing the above paths, you may want to run `git sparse-checkout
++# reapply`.
++
+ test_expect_failure 'move sparse file to existing destination with --force and --sparse' '
  	git sparse-checkout disable &&
  	git reset --hard &&
- 	mkdir folder1 &&
-@@ -222,7 +222,7 @@ test_expect_failure 'refuse to move out-of-cone directory without --sparse' '
- 	test_cmp expect stderr
- '
- 
--test_expect_failure 'can move out-of-cone directory with --sparse' '
-+test_expect_success 'can move out-of-cone directory with --sparse' '
- 	git sparse-checkout disable &&
- 	git reset --hard &&
- 	mkdir folder1 &&
 -- 
 2.35.1
 
