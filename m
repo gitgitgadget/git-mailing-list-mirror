@@ -2,97 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86732C433EF
-	for <git@archiver.kernel.org>; Fri, 27 May 2022 17:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8F49C433EF
+	for <git@archiver.kernel.org>; Fri, 27 May 2022 17:55:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345750AbiE0RRJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 May 2022 13:17:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57570 "EHLO
+        id S244739AbiE0Rzw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 May 2022 13:55:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237226AbiE0RRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 May 2022 13:17:07 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4F9F387B9
-        for <git@vger.kernel.org>; Fri, 27 May 2022 10:17:06 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B4AF19A938;
-        Fri, 27 May 2022 13:17:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4b0imGemDDst
-        CaRC5QXyWpUgK+uXd+85Qar5FA36hVQ=; b=e6v+tJ1hVZuO9Qbn1Y8TBQ3YveUx
-        inHRNGugMmXjVnbnCvmj1x/JgZoD/W6aZ/fbGSwDjQIpurgaWG7p3uygYo7KT3Y4
-        UKuhgaE12sXTE1ziB3nfkTkNue7Gd5kiwUpmqDvV91FEUKX13FTnOQ4D4MqFaQOP
-        GrRij5dRVVvQ5lw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0402A19A937;
-        Fri, 27 May 2022 13:17:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S234833AbiE0Rzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 May 2022 13:55:50 -0400
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62065D9E88
+        for <git@vger.kernel.org>; Fri, 27 May 2022 10:55:47 -0700 (PDT)
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9811519A934;
-        Fri, 27 May 2022 13:17:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Anthony Sottile <asottile@umich.edu>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 0/2] hook API: connect hooks to the TTY again, fixes
- a v2.36.0 regression
-References: <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
-        <cover-v3-0.2-00000000000-20220527T090618Z-avarab@gmail.com>
-Date:   Fri, 27 May 2022 10:17:01 -0700
-In-Reply-To: <cover-v3-0.2-00000000000-20220527T090618Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 27 May
- 2022 11:14:29
-        +0200")
-Message-ID: <xmqqa6b2520i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4L8ssq32vwz9snt
+        for <git@vger.kernel.org>; Fri, 27 May 2022 19:55:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=m-reimer.de; s=MBO0001;
+        t=1653674143;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=FBLLis+RwyR/5a8zR6ezdUajxn/u0VwxCT/kXfUZt3Q=;
+        b=mPRkam38JAicDUsmukiQFSOw9fOMIx/C5bL9ZnZzHV1RUlFR9o7saIbpREpb+A3pVQ448k
+        FUafa+WqIaDATfyG+i8JngpPd/Qzw2v1TRoONB+jGnPmccXJjxz842u8vnvH+pGFpEFZu1
+        Bbz4bugnkpsPJ7IaQqG5TBRHlpaqIu4NaYqsoQJqAxZ2EjxU/WR5cX3DEIW9ttid5u5Zma
+        ICq8zYa35I3iEqRSePwC5aYesllQl193YdMkRPyBld0dFBvhS42JylkcSiLotmvFyQiK26
+        Ev6Xa8h5IBYRcZNp7jk02HteTGsa+yTYuheALnTX3750xiWITrux+VAHAVdKeQ==
+Message-ID: <393b5026-e861-b5b1-a474-5d56464dba91@m-reimer.de>
+Date:   Fri, 27 May 2022 19:55:42 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D323CA14-DDE0-11EC-8C94-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: How to properly use git-subtree (and prevent it from adding merge
+ commits)?
+Content-Language: en-US
+From:   Manuel Reimer <mail+git@m-reimer.de>
+To:     git@vger.kernel.org
+References: <3DEED6A1-6344-472C-9E03-39ADF3076B2D@m-reimer.de>
+In-Reply-To: <3DEED6A1-6344-472C-9E03-39ADF3076B2D@m-reimer.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4L8ssq32vwz9snt
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hello,
 
-> A re-roll of [1] which aims to address the concerns about the previous
-> 8-part series being too large to fix a release regression. "If it
-> isn't bolted down, throw it overboard!".
->
-> The main change here is:
->
->  * The new "ungroup" parameter is now passed via an "extern" parameter.
->  * Tests for existing run-command.c behavior (not narrowly needed for
->    the regression fix) are gone.
->  * Adding an INIT macro is gone, instead we explicitly  initialize to N=
-ULL.
->  * Stray bugfix for existing hook test is gone.
->
-> etc. I think all of those still make sense, but they're something I
-> can rebase on this topic once it (hopefully) lands. In the meantime
-> the updated commit messages for the remaining two (see start of the
-> range-diff below) argue for this being a a safe API change, even if
-> the interface is a bit nasty.
+I tried the "subtree push" and now the merge commit did not get pushed. 
+I'm sure it was when I still had my old subtree repo before rebuilding.
 
-So the approach taken here is that we assume the reported one is the
-only regression and keep going with run_process_parallel() API.
+So probably the reason why git went crazy was because the initial 
+subtree repo was created based on one of my projects repositories by 
+filtering the commits down to just the files I wanted to extract.
 
-I still share the sentiment with Dscho that it is generally a bad
-idea, when dealing with a regression, to double-down and dig in
-your heels to keep the change that caused a regression with paper
-over patches, but too much time has passed since the release, and a
-patch or two on top does look like a quicker way forward.
+So probably some internal references matched when pushing. I recreated 
+this subtree repo from scratch now and imported all relevant commits 
+using "git am". I hope this guarantees that I don't get unwanted 
+references from the source repository.
 
-I left a few comments on the implementation, but modulo these small
-details, the code looks OK (provided that the assumption holds true,
-that is, of course).
+What will happen if I get a pull request which covers both, project 
+files and subtree files and then "subtree push" the changes? Will this 
+cause the merge commit to get pushed to my subtree repo?
 
-Thanks.
+Thanks
+
+Manuel
+
+On 27.05.22 16:54, Manuel Reimer wrote:
+> Hello,
+> 
+> maybe it's a bug in later GIT versions (2.36.1 here) but I kind of struggle to get git-subtree to work properly.
+> 
+> I even recreated the repo, I use for the subtree, from scratch to get sure there are no backreferences to the repo I've added the subtree to.
+> 
+> This is the repo, I want to have as "subtree" in other repos:
+> 
+> https://github.com/M-Reimer/webext-utils
+> 
+> I now pulled this into two projects as subtree using the command
+> 
+> https://github.com/M-Reimer/undoclosetab
+> https://github.com/M-Reimer/savescreenshot
+> 
+> For both projects I used the command:
+> 
+> git subtree add --prefix utils git@github.com:M-Reimer/webext-utils.git master
+> 
+> In the first project (undoclosetab) I then added a new commit ("Add managed preference support") and pushed this back to the "subtree repo" using:
+> 
+> git subtree push --prefix utils git@github.com:M-Reimer/webext-utils.git master
+> 
+> If I now try to pull this into my second project (savescreenshot), then git creates a merge commit for no reason.
+> 
+> 
+> git subtree pull --prefix utils "git@github.com:M-Reimer/webext-utils.git" master
+> remote: Enumerating objects: 5, done.
+> remote: Counting objects: 100% (5/5), done.
+> remote: Compressing objects: 100% (2/2), done.
+> Unpacking objects: 100% (3/3), 1.94 KiB | 497.00 KiB/s, done.
+> remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+>  From github.com:M-Reimer/webext-utils
+>   * branch            master     -> FETCH_HEAD
+> Merge made by the 'ort' strategy.
+>   utils/storage.js | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 56 insertions(+), 1 deletion(-)
+> 
+> 
+> Why does this happen? As soon as I have this merge commit a following "subtree push" also pushes this merge commit to the subtree repo and also pushes tags that are not relevant there.
+> 
+> I'm out of ideas now.
+> 
+> What I want to do: I want to be able to develop on modules, I have in the "subtree repo" in every project I want and then push the changes to the subtree repo for pulling into the other projects. That's why I don't want to use "squash" as I don't want to do development only in the subtree repo directly.
+> 
+> Thanks for any hints.
+> 
+> Manuel
 
