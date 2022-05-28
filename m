@@ -2,178 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96133C433EF
-	for <git@archiver.kernel.org>; Sat, 28 May 2022 23:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BBA3C433EF
+	for <git@archiver.kernel.org>; Sat, 28 May 2022 23:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230151AbiE1XLu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 May 2022 19:11:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46450 "EHLO
+        id S230154AbiE1XLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 May 2022 19:11:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230140AbiE1XLl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 May 2022 19:11:41 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 714AC51318
-        for <git@vger.kernel.org>; Sat, 28 May 2022 16:11:40 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B47E911962C;
-        Sat, 28 May 2022 19:11:39 -0400 (EDT)
+        with ESMTP id S230136AbiE1XLh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 May 2022 19:11:37 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF1644A3C
+        for <git@vger.kernel.org>; Sat, 28 May 2022 16:11:36 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 16FCE19054B;
+        Sat, 28 May 2022 19:11:36 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=RCeX1vHy1MXHvwvOXEMKBqGQA
-        Q2VQFAWGTj2A/SBRog=; b=HFfFtOSFGj4MnWIyBJ9lFuTAqkuYgSMRZbLaQMxsM
-        Efhzjf0PyBwRRBZDD1npL3HY0kcFNfuSDXf9zvf4BPxBKzWpvpr8TJAgc92E8BLi
-        c6yChG5fnMj4ddRDpjBRwlw35cLTK89FBPPjcqSumBnwJBhTDQRH6dWjYkLtotY6
-        B4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA93811962B;
-        Sat, 28 May 2022 19:11:39 -0400 (EDT)
+        :content-transfer-encoding; s=sasl; bh=30Qpeo1GSvoWk37nIvW8zDG5S
+        EZiSiooYMYvuADFTVY=; b=NhTZGibo7kwyip3lWNoQidmueDyvxKSe6AFAYArqE
+        9vG6L0JoXDEosBrSifLORTylAvXG7BGh1AcFpIqQq+rncd2n/ThXS5BgamTI7juH
+        h9L3XuFE4f5VlFeeaT2ftU/wZmyQ7zB3UhZEcEHb24MiEzL0CFuqb2vz41aCEGjL
+        aw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 101C119054A;
+        Sat, 28 May 2022 19:11:36 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18642119629;
-        Sat, 28 May 2022 19:11:39 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B1F3A190549;
+        Sat, 28 May 2022 19:11:32 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Matthew John Cheetham <mjcheetham@outlook.com>
-Subject: [PATCH v6+ 7/7] scalar: teach `diagnose` to gather loose objects information
-Date:   Sat, 28 May 2022 16:11:18 -0700
-Message-Id: <20220528231118.3504387-8-gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v6+ 5/7] scalar diagnose: include disk space information
+Date:   Sat, 28 May 2022 16:11:16 -0700
+Message-Id: <20220528231118.3504387-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.36.1-385-g60203f3fdb
 In-Reply-To: <20220528231118.3504387-1-gitster@pobox.com>
 References: <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
  <20220528231118.3504387-1-gitster@pobox.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 875231D8-DEDB-11EC-8744-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 8385BC14-DEDB-11EC-84B8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew John Cheetham <mjcheetham@outlook.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When operating at the scale that Scalar wants to support, certain data
-shapes are more likely to cause undesirable performance issues, such as
-large numbers of loose objects.
+When analyzing problems with large worktrees/repositories, it is useful
+to know how close to a "full disk" situation Scalar/Git operates. Let's
+include this information.
 
-By including statistics about this, `scalar diagnose` now makes it
-easier to identify such scenarios.
-
-Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- contrib/scalar/scalar.c          | 59 ++++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh |  5 ++-
- 2 files changed, 63 insertions(+), 1 deletion(-)
+ contrib/scalar/scalar.c          | 53 ++++++++++++++++++++++++++++++++
+ contrib/scalar/t/t9099-scalar.sh |  1 +
+ 2 files changed, 54 insertions(+)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index f745519038..28176914e5 100644
+index a1e05a2146..f06a2f3576 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -618,6 +618,60 @@ static int dir_file_stats(struct object_directory *o=
-bject_dir, void *data)
- 	return 0;
+@@ -302,6 +302,58 @@ static int add_directory_to_archiver(struct strvec *=
+archiver_args,
+ 	return res;
  }
 =20
-+static int count_files(char *path)
++#ifndef WIN32
++#include <sys/statvfs.h>
++#endif
++
++static int get_disk_info(struct strbuf *out)
 +{
-+	DIR *dir =3D opendir(path);
-+	struct dirent *e;
-+	int count =3D 0;
++#ifdef WIN32
++	struct strbuf buf =3D STRBUF_INIT;
++	char volume_name[MAX_PATH], fs_name[MAX_PATH];
++	DWORD serial_number, component_length, flags;
++	ULARGE_INTEGER avail2caller, total, avail;
 +
-+	if (!dir)
-+		return 0;
++	strbuf_realpath(&buf, ".", 1);
++	if (!GetDiskFreeSpaceExA(buf.buf, &avail2caller, &total, &avail)) {
++		error(_("could not determine free disk size for '%s'"),
++		      buf.buf);
++		strbuf_release(&buf);
++		return -1;
++	}
 +
-+	while ((e =3D readdir(dir)) !=3D NULL)
-+		if (!is_dot_or_dotdot(e->d_name) && e->d_type =3D=3D DT_REG)
-+			count++;
++	strbuf_setlen(&buf, offset_1st_component(buf.buf));
++	if (!GetVolumeInformationA(buf.buf, volume_name, sizeof(volume_name),
++				   &serial_number, &component_length, &flags,
++				   fs_name, sizeof(fs_name))) {
++		error(_("could not get info for '%s'"), buf.buf);
++		strbuf_release(&buf);
++		return -1;
++	}
++	strbuf_addf(out, "Available space on '%s': ", buf.buf);
++	strbuf_humanise_bytes(out, avail2caller.QuadPart);
++	strbuf_addch(out, '\n');
++	strbuf_release(&buf);
++#else
++	struct strbuf buf =3D STRBUF_INIT;
++	struct statvfs stat;
 +
-+	closedir(dir);
-+	return count;
++	strbuf_realpath(&buf, ".", 1);
++	if (statvfs(buf.buf, &stat) < 0) {
++		error_errno(_("could not determine free disk size for '%s'"),
++			    buf.buf);
++		strbuf_release(&buf);
++		return -1;
++	}
++
++	strbuf_addf(out, "Available space on '%s': ", buf.buf);
++	strbuf_humanise_bytes(out, st_mult(stat.f_bsize, stat.f_bavail));
++	strbuf_addf(out, " (mount flags 0x%lx)\n", stat.f_flag);
++	strbuf_release(&buf);
++#endif
++	return 0;
 +}
 +
-+static void loose_objs_stats(struct strbuf *buf, const char *path)
-+{
-+	DIR *dir =3D opendir(path);
-+	struct dirent *e;
-+	int count;
-+	int total =3D 0;
-+	unsigned char c;
-+	struct strbuf count_path =3D STRBUF_INIT;
-+	size_t base_path_len;
-+
-+	if (!dir)
-+		return;
-+
-+	strbuf_addstr(buf, "Object directory stats for ");
-+	strbuf_add_absolute_path(buf, path);
-+	strbuf_addstr(buf, ":\n");
-+
-+	strbuf_add_absolute_path(&count_path, path);
-+	strbuf_addch(&count_path, '/');
-+	base_path_len =3D count_path.len;
-+
-+	while ((e =3D readdir(dir)) !=3D NULL)
-+		if (!is_dot_or_dotdot(e->d_name) &&
-+		    e->d_type =3D=3D DT_DIR && strlen(e->d_name) =3D=3D 2 &&
-+		    !hex_to_bytes(&c, e->d_name, 1)) {
-+			strbuf_setlen(&count_path, base_path_len);
-+			strbuf_addstr(&count_path, e->d_name);
-+			total +=3D (count =3D count_files(count_path.buf));
-+			strbuf_addf(buf, "%s : %7d files\n", e->d_name, count);
-+		}
-+
-+	strbuf_addf(buf, "Total: %d loose objects", total);
-+
-+	strbuf_release(&count_path);
-+	closedir(dir);
-+}
-+
- static int cmd_diagnose(int argc, const char **argv)
+ /* printf-style interface, expects `<key>=3D<value>` argument */
+ static int set_config(const char *fmt, ...)
  {
- 	struct option options[] =3D {
-@@ -686,6 +740,11 @@ static int cmd_diagnose(int argc, const char **argv)
- 	foreach_alt_odb(dir_file_stats, &buf);
- 	strvec_push(&archiver_args, buf.buf);
+@@ -598,6 +650,7 @@ static int cmd_diagnose(int argc, const char **argv)
+ 	get_version_info(&buf, 1);
 =20
-+	strbuf_reset(&buf);
-+	strbuf_addstr(&buf, "--add-virtual-file=3Dobjects-local.txt:");
-+	loose_objs_stats(&buf, ".git/objects");
-+	strvec_push(&archiver_args, buf.buf);
-+
- 	if ((res =3D add_directory_to_archiver(&archiver_args, ".git", 0)) ||
- 	    (res =3D add_directory_to_archiver(&archiver_args, ".git/hooks", 0)=
-) ||
- 	    (res =3D add_directory_to_archiver(&archiver_args, ".git/info", 0))=
- ||
+ 	strbuf_addf(&buf, "Enlistment root: %s\n", the_repository->worktree);
++	get_disk_info(&buf);
+ 	write_or_die(stdout_fd, buf.buf, buf.len);
+ 	strvec_pushf(&archiver_args,
+ 		     "--add-virtual-file=3Ddiagnostics.log:%.*s",
 diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-sc=
 alar.sh
-index 2603e2278f..10b1172a8a 100755
+index fbb1df2049..6e52088919 100755
 --- a/contrib/scalar/t/t9099-scalar.sh
 +++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -103,6 +103,7 @@ test_expect_success UNZIP 'scalar diagnose' '
+@@ -102,6 +102,7 @@ SQ=3D"'"
+ test_expect_success UNZIP 'scalar diagnose' '
  	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	git repack &&
- 	echo "$(pwd)/.git/objects/" >>cloned/src/.git/objects/info/alternates &=
-&
-+	test_commit -C cloned/src loose &&
  	scalar diagnose cloned >out 2>err &&
- 	grep "Available space" out &&
++	grep "Available space" out &&
  	sed -n "s/.*$SQ\\(.*\\.zip\\)$SQ.*/\\1/p" <err >zip_path &&
-@@ -114,7 +115,9 @@ test_expect_success UNZIP 'scalar diagnose' '
- 	unzip -p "$zip_path" diagnostics.log >out &&
- 	test_file_not_empty out &&
- 	unzip -p "$zip_path" packs-local.txt >out &&
--	grep "$(pwd)/.git/objects" out
-+	grep "$(pwd)/.git/objects" out &&
-+	unzip -p "$zip_path" objects-local.txt >out &&
-+	grep "^Total: [1-9]" out
- '
-=20
- test_done
+ 	zip_path=3D$(cat zip_path) &&
+ 	test -n "$zip_path" &&
 --=20
 2.36.1-385-g60203f3fdb
 
