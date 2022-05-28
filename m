@@ -2,133 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8529EC433EF
-	for <git@archiver.kernel.org>; Sat, 28 May 2022 00:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06AE9C433FE
+	for <git@archiver.kernel.org>; Sat, 28 May 2022 01:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355321AbiE1A7O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 May 2022 20:59:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56336 "EHLO
+        id S1351512AbiE1B2I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 May 2022 21:28:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344639AbiE1A7N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 May 2022 20:59:13 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B49546542D
-        for <git@vger.kernel.org>; Fri, 27 May 2022 17:59:12 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EAF013104C;
-        Fri, 27 May 2022 20:59:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XuosH1/bv0+h1lM81szOWVPIsFkU9wx3T4Zx4z
-        ichVY=; b=ST+YiAq+q+/e6XWVaKpinL8MXuKUQBkEBWDyaqFZo0h04HTg0agyG8
-        Ut/WgjDTPJKkdI+t8gCA7w4zS14gGQxgIgTx9KDumWVPuENk3bD9ZZgYOHQzxT6U
-        KvZsqU9JOcvR+NcKALJU8NfcM9IY4gDzdG1qyoUZKS1czZR+yh0tI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9490313104B;
-        Fri, 27 May 2022 20:59:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D2FC13104A;
-        Fri, 27 May 2022 20:59:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v3 3/5] setup.c: create `discovery.bare`
-References: <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com>
-        <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com>
-        <d5a3e9f98450a0d602cf21790b988c1259a3466d.1653685761.git.gitgitgadget@gmail.com>
-Date:   Fri, 27 May 2022 17:59:10 -0700
-In-Reply-To: <d5a3e9f98450a0d602cf21790b988c1259a3466d.1653685761.git.gitgitgadget@gmail.com>
-        (Glen Choo via GitGitGadget's message of "Fri, 27 May 2022 21:09:19
-        +0000")
-Message-ID: <xmqqy1ymzd41.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232546AbiE1B2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 May 2022 21:28:06 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930D01269BB
+        for <git@vger.kernel.org>; Fri, 27 May 2022 18:28:02 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id f21so11492155ejh.11
+        for <git@vger.kernel.org>; Fri, 27 May 2022 18:28:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=baMf0qsdI5x4Wr92IxgKSOW+clgyw6b4wCY4snVvBnQ=;
+        b=XhibdrS/fh709hYWY4RZIXnlNFKX4/OCQXLn9Jf0gBkE/8p6HDoMMNIBdHptely/p5
+         5xx1xl1moKCPvkZE6C+3A0VdF9w8XqZfjJFpIkcTWJ53FtqCHWjxVDK9sGlEoHXUmFuF
+         P7skQspHjWWuOO73IvOLvi+C59V87gs8uDIvZRgUktwQP/ouOPz3boyM6ECLhOh2GB6t
+         P/fW8qEwrBuRFx0cRSP7cdCutlmsDaaqjG3pwiLXjuC/t2+AwL8YyW3k4jlja+JohhK7
+         VOGtMpDLnoauXnT6EiRddFm20L6O0ivtXxqGlKodtsHBGbvnpUWLVJjqV260XaKu0ma3
+         Bzjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=baMf0qsdI5x4Wr92IxgKSOW+clgyw6b4wCY4snVvBnQ=;
+        b=HsdgvVBwJyj6JGLb9Eu2d5rKpZ9OsuZHeyc/K2H79VZHL3ezF0adnCG9lajf35jCVz
+         95RUPJpJ2AT1U0wtaDt3cq+q5b2UTtweEz/8sKU4q0iEOfyPiLuMTKW0uA2q7s1IPq76
+         tp+4Xz4tL0e2kcAQ5w3/aS7smFrWx6whd7LgktVSXbvRhk0ExKoKxkLub2L9ffF2kvJ7
+         MNMNMFXxL8HOx/gJLFZrf1pzQy6jfLPSGTivlzTs3flBMxB3uOfMPWVkDIHSbZsLG354
+         b5E9ebqx26Dj6nnduPteTT08xq8bwXJ49mwmKYIdArVMssPjcm5Xf0vp10SsP1wOISAt
+         4dtg==
+X-Gm-Message-State: AOAM531PvPl+ihQWGJbM/rP1ZwNx2cUDvE9My9rWHZD/0JfPHs6+U1+R
+        MApZk2ZWY8AgodcVA9+N7BmHYGzP36gFsGQHT4o=
+X-Google-Smtp-Source: ABdhPJy9V67MBUTvpmr/COehbs4ujAAdZ6HwUMqOWVW8dm/g9yI5blpQV97lJg/t/bkqGN9lrLFezD6WBq6CScxKmjk=
+X-Received: by 2002:a17:907:97c9:b0:6fe:bcb1:661d with SMTP id
+ js9-20020a17090797c900b006febcb1661dmr29988311ejc.269.1653701281028; Fri, 27
+ May 2022 18:28:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6292A68A-DE21-11EC-B42D-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <80eeba2b2a58af2a5497f398beb5c03447c41f61.1653003552.git.kevin@kevinlocke.name>
+ <7c064f43ed426c9e3b54e1ae5313d6b9332a47cb.1653141169.git.kevin@kevinlocke.name>
+ <1580ad10-43f6-bc73-901a-b65b1aea73ff@github.com> <YozlZ9DPrRLPBTBP@kevinlocke.name>
+ <CABPp-BGZTDKorz+CFScfTfx47c+TuJaAD_Zyyo1Jj_tymYkVXQ@mail.gmail.com> <220527.865ylr4d4g.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220527.865ylr4d4g.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 27 May 2022 18:27:48 -0700
+Message-ID: <CABPp-BEd9bRuh9ruaDN32RUUT8ZtdQGPefVmiB+HM-gFCdnZ7A@mail.gmail.com>
+Subject: Re: [PATCH v2] setup: don't die if realpath(3) fails on getcwd(3)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Kevin Locke <kevin@kevinlocke.name>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, May 27, 2022 at 1:02 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Tue, May 24 2022, Elijah Newren wrote:
+>
+> > [...] So, I think the signature of free() is just
+> > wrong: it should have taken a const void* all along.  Unfortunately,
+> > the wrong type signature sadly makes people feel like they have to
+> > choose between (a) dropping the added safety of const that the
+> > compiler can enforce for you during the lifetime of the variable, or
+> > (b) leaking memory you no longer need.
+>
+> Hrm, don't you mean that it would be better as:
+>
+>         void free(void *const ptr);
+>
+> Not:
+>
+>         void free(const void *ptr);
 
-> +enum discovery_bare_config {
-> +	DISCOVERY_BARE_UNKNOWN = -1,
-> +	DISCOVERY_BARE_NEVER = 0,
-> +	DISCOVERY_BARE_ALWAYS,
-> +};
-> +static enum discovery_bare_config discovery_bare_config =
-> +	DISCOVERY_BARE_UNKNOWN;
+Nope, I definitely meant the latter; the stuff pointed to is const,
+not the pointer itself.
 
-Can discovery_bare come from anywhere other than config?
+In fact, I don't see any point at all in the former; with the free()
+that exists today:
 
-I am wondering if both the variable and the type should be called
-"discovery_bare_allowed" instead.  That it comes from the config is
-not the more important part.  That it determines if it is allowed
-is.
+    void free(void *ptr)
 
-> +static int check_bare_repo_allowed(void)
-> +{
-> +	if (discovery_bare_config == DISCOVERY_BARE_UNKNOWN) {
-> +		discovery_bare_config = DISCOVERY_BARE_ALWAYS;
-> +		git_protected_config(discovery_bare_cb, NULL);
-> +	}
+I can pass it a "void * const myptr" already without problems, because
+free's ptr parameter will be a copy of myptr, and thus modifying ptr
+cannot affect myptr.  So such a call signature change could not
+possibly provide any benefit to the outside caller.  But that call
+signature change could hinder the actual implementation of free() for
+some folks (particularly if a given implementation of free() keeps
+extra data near the allocated block with information about the size of
+the block and the next allocated block in the list).
 
-OK, so the thing is initialized to "unknown", and the first time we
-want to use the value of it, we read from the file (or default to
-"always").  Makes sense.
-
-And then ...
-
-> +	switch (discovery_bare_config) {
-> +	case DISCOVERY_BARE_NEVER:
-> +		return 0;
-> +	case DISCOVERY_BARE_ALWAYS:
-> +		return 1;
-> +	case DISCOVERY_BARE_UNKNOWN:
-> +		BUG("invalid discovery_bare_config %d", discovery_bare_config);
-
-... this is being defensive; we know discovery_bare_cb() won't give
-UNKNOWN, but we want to make sure.
-
-> +	}
-> +	return 0;
-> +}
-> +
-> +static const char *discovery_bare_config_to_string(void)
-> +{
-
-But this one feels strangely asymmetrical, as there is no inherent
-reason why one must be called before the other.  I would expect it
-to either
-
- * take a parameter of type "enum discovery_bare" and return
-   "never", "always", or "unset", without calling any BUG().
-
-or
-
- * have the same "we lazily figure out the discovery_bare_config
-   variable on demand" logic.
-
-As both of these functions are file-scope static, we can live with
-it, though.
-
-> +	switch (discovery_bare_config) {
-> +	case DISCOVERY_BARE_NEVER:
-> +		return "never";
-> +	case DISCOVERY_BARE_ALWAYS:
-> +		return "always";
-> +	case DISCOVERY_BARE_UNKNOWN:
-> +		BUG("invalid discovery_bare_config %d", discovery_bare_config);
-> +	}
-> +	return NULL;
-> +}
-
+In contrast, I cannot pass a "const void *myptr" or "const char
+*myptr" to free(), but only because of the current type signature;
+free() doesn't actually modify any of the contents the pointer points
+to.  (And if you want to claim that free effectively does modify what
+myptr points to because someone else could allocate that same memory,
+remember that use-after-free is undefined regardless of whether the
+data pointed to is const or not, and thus you cannot access that data
+after free with or without the const.)  So, free()'s real type that it
+acts on is a const void *.  Sadly, the declared type signature is
+rather void *, which unnecessarily forces users to cast their types
+when calling.
