@@ -2,95 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CC78C433EF
-	for <git@archiver.kernel.org>; Sat, 28 May 2022 16:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4325C433F5
+	for <git@archiver.kernel.org>; Sat, 28 May 2022 17:24:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238602AbiE1QnA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 May 2022 12:43:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53168 "EHLO
+        id S239076AbiE1RYY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 May 2022 13:24:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233265AbiE1Qm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 May 2022 12:42:58 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BA4B15727
-        for <git@vger.kernel.org>; Sat, 28 May 2022 09:42:57 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id b200so7898681qkc.7
-        for <git@vger.kernel.org>; Sat, 28 May 2022 09:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=R5laYPyyxo3PJEAyAnVu5nOKc/bB5lK+jvAvTWU6zis=;
-        b=i47yrvPQL4X++qE9vpOdpGEJSN7lvXU2thHEQSXvgFraEeCjn9cBj0kOoU/9U1G1ed
-         qhu3ChMmJuhIHlCzwFgx3V6mAijdzssqdobOLm4dYaaOHymAltgre9SbHwdYoGUH4Zxs
-         09W7M5VJ/u0bk5YZBiOfaD/zsNv4FO9KoMKExXKMz88ZY4w84mmuz2wco6+pGUJd82M6
-         fEZ+rgjRvhCwNXNgwITPbLUYBWxMCJxA274IUO4c5iXTh3isbtvHmSHwzQHEdP0EtQvZ
-         1GA4zjhlRH1gfvXi9RbN/UErxCgFb8NAX5Zb7Xv/QPl3q5JN2QIsxEfidZu9CLKHnPMB
-         eq8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=R5laYPyyxo3PJEAyAnVu5nOKc/bB5lK+jvAvTWU6zis=;
-        b=BDhW17dcawfUNYlr9ex7w2IMsay3sHL6mQpfa+Lpt3WhOCZd03btjuH4cevvrj9vJp
-         CUl+HTXNg73m0iyuUNRWm8gnHsTjAHfhG/jdCcfGg457xu+td//Twqe377O3ImPmFKKF
-         L9qlbTCuK/UOnGP0zdEhX2tM0pcEitNs3vVmr51sCV/1eDCFGEuhePRG0tOTfM5h8xjQ
-         WTYZMTrz/7bj92ou6LPYeWsNNwBElk+svS737yuoFS7Ga97D3rH2LHI9OALvea2WXrga
-         9pRjuAZP5vt1obCer4mp2BnO4YlVEIxiqSk7rh8wBsMIBuQW+0gH/aHr+kihMDHjOYqu
-         ql1g==
-X-Gm-Message-State: AOAM532OHIBHslJcd4vsemp9WsIiNLCI8zeFwEMHjSkQzJDZusoF7dwm
-        tKr/5o+9GaElfOTmSGMh35Dz/XKbt7pNgg==
-X-Google-Smtp-Source: ABdhPJxXdZk/WIPrkfEROfq3YaTphkvZIMvEajOWwumiXgChlDROaNqFKSerK3slHsZP/FRI1dxwYw==
-X-Received: by 2002:a37:2d44:0:b0:6a3:2bf1:a6b3 with SMTP id t65-20020a372d44000000b006a32bf1a6b3mr31012918qkh.293.1653756176661;
-        Sat, 28 May 2022 09:42:56 -0700 (PDT)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id v11-20020a05622a014b00b002f918680d80sm4648646qtw.78.2022.05.28.09.42.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 28 May 2022 09:42:56 -0700 (PDT)
-From:   John Cai <johncai86@gmail.com>
-To:     =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        with ESMTP id S231777AbiE1RYV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 May 2022 13:24:21 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9C0311A29
+        for <git@vger.kernel.org>; Sat, 28 May 2022 10:24:20 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F2E6E18E4D7;
+        Sat, 28 May 2022 13:24:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=kPYITT1WliDK
+        UOyMPBIO3swAOW8l1FD7ubAn7eYCkc8=; b=YHs+hCK8HQ5hkybGnTAdLfwYWFr+
+        r1oYuNj4Ll0BQ8s46FqRp4kaLJiehGGITzu5FufjuwuPTI5wXUIdLWlhxpsvOC33
+        dHTTsdN4lx67zJe6aK36H2n4dt7QtdqvAIVc8kBAg2V8VUsYLt1PF8bY3tjDQkEU
+        QfiUbUJjuKl7tPU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EBA4318E4D6;
+        Sat, 28 May 2022 13:24:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9265F18E4D4;
+        Sat, 28 May 2022 13:24:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        John Cai <johncai86@gmail.com>
 Subject: Re: [PATCH] hook: provide GIT_HOOK for all hooks
-Date:   Sat, 28 May 2022 12:42:55 -0400
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <4B161C12-4D12-4403-9C92-1A969A859E8F@gmail.com>
-In-Reply-To: <220528.86bkvh3b3q.gmgdl@evledraar.gmail.com>
 References: <pull.1271.git.git.1653684771998.gitgitgadget@gmail.com>
- <220528.86bkvh3b3q.gmgdl@evledraar.gmail.com>
+        <220528.86bkvh3b3q.gmgdl@evledraar.gmail.com>
+Date:   Sat, 28 May 2022 10:24:15 -0700
+In-Reply-To: <220528.86bkvh3b3q.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 28 May 2022 17:53:35 +0200")
+Message-ID: <xmqqr14dzi2o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0038DC2C-DEAB-11EC-9598-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On 28 May 2022, at 11:53, Ævar Arnfjörð Bjarmason wrote:
-
-> On Fri, May 27 2022, John Cai via GitGitGadget wrote:
->
->> From: John Cai <johncai86@gmail.com>
->>
->> In order to allow users to use one executable for multiple hooks,
->> provide a GIT_HOOK variable that is set to the hook event that triggered
->> it.
->
-> You can use one executable for multiple hooks already, I've written such
-> dispatchers that just look at the argv of the process.
->
-> What we will need something like this for is for the config-based hooks,
-> and I think it makes sense to have a facility that's portable across
-> both methods of hook invocations.
-
-Ah yes, thanks for pointing this out. I will re-roll the commit message as we
-as clarity the documentation.
-
->
-> I really don't mind this change, and I think it's a good one to
-> make.
->
 > But the commit message & documentation here really should be updated to
 > reflect that this is currently superfluous to inspecting argv in the
 > hook process, and that we're providing this anyway for XYZ reason.
+
+Or this probably is better added as part of the series that actually
+adds the mechanism to trigger hooks defined in the configuration
+file. =20
+
+Then "we do not need it now, but we will in the future because we
+will do XYZ" does not have to be said, which is a huge plus.
+
+Thanks.
