@@ -2,140 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0BE6C433F5
-	for <git@archiver.kernel.org>; Fri, 27 May 2022 23:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4901FC433EF
+	for <git@archiver.kernel.org>; Sat, 28 May 2022 00:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352505AbiE0XaB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 May 2022 19:30:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49908 "EHLO
+        id S1355208AbiE1AMi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 May 2022 20:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbiE0X3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 May 2022 19:29:54 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1701D80236
-        for <git@vger.kernel.org>; Fri, 27 May 2022 16:29:53 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2AC3719CD75;
-        Fri, 27 May 2022 19:29:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=W/3Sku+0bllnHi44LTZocbuT/V5RVHCu59YOog
-        qyhlA=; b=QZDYtqSO2XlS4E06dcSF1CKQVaBw37c9wWPju3ujQWW0pBxWZAthnL
-        7nuLmawxrBLr4dyivzv91J8s0BQ566n3UV+3O9qqEGVOO+TIha7/EgVWXaIVEIQW
-        PDlwt/e+FRHrovk5Gen6v0K9oiI3BmrwAELTiyR220hdLjAEVsQPA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 226F019CD74;
-        Fri, 27 May 2022 19:29:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A084819CD73;
-        Fri, 27 May 2022 19:29:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v3 1/5] Documentation: define protected configuration
-References: <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com>
-        <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com>
-        <575676c760d9a2ce4a59d50e93aa0f45d54620ab.1653685761.git.gitgitgadget@gmail.com>
-Date:   Fri, 27 May 2022 16:29:46 -0700
-In-Reply-To: <575676c760d9a2ce4a59d50e93aa0f45d54620ab.1653685761.git.gitgitgadget@gmail.com>
-        (Glen Choo via GitGitGadget's message of "Fri, 27 May 2022 21:09:17
-        +0000")
-Message-ID: <xmqqh75a1rmd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E5BD021A-DE14-11EC-A894-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+        with ESMTP id S1353713AbiE1AMg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 May 2022 20:12:36 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA4B8126985
+        for <git@vger.kernel.org>; Fri, 27 May 2022 17:12:34 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id d12-20020a17090a628c00b001dcd2efca39so3221681pjj.2
+        for <git@vger.kernel.org>; Fri, 27 May 2022 17:12:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=6ldz4ken6BkEr84lqzis6HhReV7Iil/MXxrQLcCozdA=;
+        b=dSFZ+BZCLbGL7ce6HqTKVGOPxRr+6vkhe2lXXmev4vuDpqoe4bwiF8byH8nDMfEOAm
+         E/tXJZp0Lyh2Kk+7lAd2Y7BmiO2xMODsCb7iejUH1Duk5Wgk4q/C5LapgmPuJrZMbUHl
+         1Sys4Gw+e0ppyL98R4zQEpc3rbCI6mMILXnWnL3TqY7jF1b5qIAuJ5UKBUcFiDLDNMes
+         GV8cGzhm9G/cYiM+STIpT1FKFYeksGJUFzXCFNP/KLDzaViBPApCRUqtEj/Hgok+Pps+
+         MqMrpzSrL8/GYMtCgO1RsGAY9dclumy809XrCxWhqY0M2hJXgPUKeQn78GeewJSypxe2
+         CPPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=6ldz4ken6BkEr84lqzis6HhReV7Iil/MXxrQLcCozdA=;
+        b=DA8RfNoAUTa2oaAAZ/tdMoK45kKAaPjjw4zbz5qTpzrcAFWiW0dtnd1t66gwC3DOwi
+         SKttJmq5ETsrkrDY2tqoqLYR1nPgh4pZIKz5lour+795jfdVmy/bA5PFQvoX8oZe7615
+         usC4SUJbRMDukP8YpmbuLopSJT7S2iPT3cdLKuxgzZ7wQIBugxU0ZzFaAInSBgbfAYAU
+         HTTpeR8xDLJm4YrcZdc8qcbbNcwKgEu0XnC9vlXSzKvqBbOkV4roPGehpXJXFLk20lAE
+         X9ZLI4q6qK0HT3gKKxCAqnQWY+ISMs4SgnBBpnaoyTO5CepIAVcMUHKtumVZWSFFwUVa
+         PZxA==
+X-Gm-Message-State: AOAM532JcRpK73hWhC6sA8Y4BblD045yoNYPocE+EIrN7u5oKAguxDOb
+        /0qpC06UWNeIydZgjjuupqDjOLLk9vv78w==
+X-Google-Smtp-Source: ABdhPJzWs29hYbR+ub1sS1bAPJSYlVUlCzMGG0kNGjBi2qCfcbT5x+Lndp39hHbKyR/BBXJseiWSCUzLlSLuAw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:d5c1:b0:162:64e:8c21 with SMTP id
+ g1-20020a170902d5c100b00162064e8c21mr33896398plh.34.1653696754261; Fri, 27
+ May 2022 17:12:34 -0700 (PDT)
+Date:   Fri, 27 May 2022 17:12:25 -0700
+In-Reply-To: <YoXqmrOTxD5MiDU1@coredump.intra.peff.net>
+Message-Id: <kl6lh75ams5y.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <24f547-6285e280-59-40303580@48243747> <YoXqmrOTxD5MiDU1@coredump.intra.peff.net>
+Subject: Re: Bug - remote.c:236: hashmap_put overwrote entry after hashmap_get
+ returned NULL
+From:   Glen Choo <chooglen@google.com>
+To:     Jeff King <peff@peff.net>,
+        "Ing. Martin Prantl Ph.D." <perry@ntis.zcu.cz>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Thanks for taking a look! (and welcome back :))
 
->  safe.directory::
-> -	These config entries specify Git-tracked directories that are
-> -	considered safe even if they are owned by someone other than the
-> -	current user. By default, Git will refuse to even parse a Git
-> -	config of a repository owned by someone else, let alone run its
-> -	hooks, and this config setting allows users to specify exceptions,
-> -	e.g. for intentionally shared repositories (see the `--shared`
-> -	option in linkgit:git-init[1]).
-> +	'(Protected config only) ' These config entries specify
+Jeff King <peff@peff.net> writes:
 
-What's the SP in "only) '" doing?
+> On Thu, May 19, 2022 at 08:23:25AM +0200, Ing. Martin Prantl Ph.D. wrote:
+>
+>> file:.git/config    branch..remote=origin
+>> file:.git/config    branch..merge=refs/heads/
+>> [...]
+>> 
+>> git ls-remote
+>> BUG: remote.c:236: hashmap_put overwrote entry after hashmap_get returned NULL
+>
+> Those branch entries with an empty subsection are the culprit. I'm not
+> sure how they got there, but they should be safe to remove, which will
+> make your immediate problem go away.
+>
+> It looks like handling of such bogus keys regressed in 4a2dcb1a08
+> (remote: die if branch is not found in repository, 2021-11-17). In
+> make_branch(), the call to find_branch() gets confused by the 0-length
+> "len" parameter, and instead uses strlen() on the partial string
+> containing the rest of the config key. So it tries to look up branch
+> ".remote" for the first key, and ".merge" for the second. Since neither
+> exist, in both cases it then tries to add a new entry, but this time
+> correctly using the 0-length string. Which will confusingly already be
+> present when handling the second key.
 
-> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-> index aa2f41f5e70..a669983abd6 100644
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -483,6 +483,24 @@ exclude;;
->  	head ref. If the remote <<def_head,head>> is not an
->  	ancestor to the local head, the push fails.
->  
-> +[[def_protected_config]]protected configuration::
-> +	Protected configuration is configuration that Git considers more
-> +	trustworthy because it is unlikely to be tampered with by an
-> +	attacker. For security reasons, some configuration variables are
-> +	only respected when they are defined in protected configuration.
-> ++
-> +Protected configuration includes:
-> ++
-> +- system-level config, e.g. `/etc/git/config`
-> +- global config, e.g. `$XDG_CONFIG_HOME/git/config` and
-> +  `$HOME/.gitconfig`
-> +Protected configuration excludes:
-> ++
-> +- repository config, e.g. `$GIT_DIR/config` and
-> +  `$GIT_DIR/config.worktree`
-> +- the command line option `-c` and its equivalent environment variables
+It wasn't obvious to me before what the regression was (since a 0-length
+branch name is nonsense, right?). Turns out that we used to just ignore
+the 0-length branch name, but now we BUG(), so yeah this needs fixing.
 
-The description is a bit unclear what "protected configuration"
-refers.
+Interestingly, this 'name=".remote" and len=0 confusion' pre-dates that
+commit, but it got exposed when that commit introduced the confused hash
+map.
 
-If it is the scopes (as in "git config --show-scope") Git can trust
-more, in other words, a statement like this
+I can get the old behavior by getting rid of the strlen() fallback (I
+think I will, it doesn't provide any benefit AFAICT), but...
 
-    safe.directory is honored only when it comes from a protected
-    configuration.
+> Either find_branch() needs to become more careful about distinguishing
+> the two cases, or perhaps 0-length names should be rejected earlier (I
+> don't think they could ever be useful).
 
-is what you want to make easier to write by introducing a new
-phrase, perhaps use the word "scope" for more consistency?  E.g.
+I think this is even better. Warning the user about their bad config
+sounds like a good thing.
 
-    Only safe.directory that is defined in a trusted scope is
-    honored.
+We would have to be careful not to reject an empty 'name', because this
+might be a non-subsection branch config, e.g. branch.autoSetupRebase.
+Something like..
 
-I dunno.
+diff --git a/remote.c b/remote.c
+index a1463aefb7..d3ae1445a4 100644
+--- a/remote.c
++++ b/remote.c
+@@ -351,8 +351,12 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 	struct remote_state *remote_state = cb;
+ 
+ 	if (parse_config_key(key, "branch", &name, &namelen, &subkey) >= 0) {
++		/* There is no subsection. */
+ 		if (!name)
+ 			return 0;
++		/* There is a subsection, but it is empty. */
++		if (!namelen)
++			return -1;
+ 		branch = make_branch(remote_state, name, namelen);
+ 		if (!strcmp(subkey, "remote")) {
+ 			return git_config_string(&branch->remote_name, key, value);
 
-It would make sense to give a rationale behind the seemingly
-arbitrary choice of what is and what is not "protected".  Not
-necessarily in the glossary, but in the proposed log message of the
-commit that makes the decision.  The rationale must help readers to
-be able to answer the following questions.
-
- - The system level is "protected" because?  Is it because we do not
-   even try to protect ourselves from those who can write anywhere
-   in /etc/ or other system directories?
-
- - The per-user config is "protected" because?  Is it because our
-   primary interest in "protection" is to protect individual users
-   from landmines laid in the filesystem by other users, and those
-   who can already write into $HOME are not we try to guard against?
-
- - The per-repo config is not "protected" (i.e. "trusted"), because?
-   If we are not honoring a configuration in the repository, why are
-   we working in that repository in the first place?
-
- - The per invocation config is not "protected" (i.e. "trusted"),
-   because?  If we cannot trusting our own command line, what
-   prevents an attacker from mucking with our command line to say
-   "sudo whatever" using the same attack vector?
-
-Thanks.
