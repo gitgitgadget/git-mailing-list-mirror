@@ -2,148 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 976F9C433EF
-	for <git@archiver.kernel.org>; Sat, 28 May 2022 04:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 535B1C433EF
+	for <git@archiver.kernel.org>; Sat, 28 May 2022 06:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229756AbiE1E0q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 May 2022 00:26:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37518 "EHLO
+        id S240603AbiE1G6V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 May 2022 02:58:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiE1E0p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 May 2022 00:26:45 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 631185BE41
-        for <git@vger.kernel.org>; Fri, 27 May 2022 21:26:43 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id j14so5980258qvo.3
-        for <git@vger.kernel.org>; Fri, 27 May 2022 21:26:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=rbC/BW/4FhKbHXdeMSski26xLwwm2T03NY5zvEQ9fHw=;
-        b=fbsCbbs9gTOTu5GN07ljfmGPyiOFGile77eUGwBygq5ZNO1/7KmWZkOs62SX9WZC1J
-         aBZcUVgfL47temKOF+UG1Kr0xt10rWkeYfwbDwDlK/RVCWBx+P4CBTFAJIUcXIZcLV9X
-         BO2XzAQiBuHURDjEr35LMM1f+pakiR5TUw3ZYionw97/5N+ARMmPMt7Tlmm5c5+DdSJa
-         kHZ5aD0A63FWd7Uog+jTw/UYN72glyDswrkmYT6T5KK7eXp7VU7OkcYbBYbVTSAiB2IU
-         3Ahqo9RtEz89TqjUTFDYKw6UiDAdkMisiBtaBO7/qlrOxadRniYctIXabY2zgQxsmVXN
-         E30g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=rbC/BW/4FhKbHXdeMSski26xLwwm2T03NY5zvEQ9fHw=;
-        b=2IPAeTVtEBYhpKzQh3UN7O2a3uGSZIYgPJkl6GjI6SQHCYZDnPgY0K40O+89FoBqmy
-         oYRrJcLb89GV1FPcrVnAMz+SoiU7bKaxmhoZnXDwW/Phuyfc8Z0UZqhSNTL4G1SNmc2d
-         ra6zIbR0DGCpNXHAbOGFGpKwse2TzNGRqWPMPEpRhw7Z9z/fYzY8aGiABK0D9lne/Okt
-         wKn5gOM0UUu6owP6hr/Bnmflc06nw3iAXWKqSHoj1lLoOdXnXC6EVz7axx4Fzcb7hb/r
-         gtq/QIJJ6I9mayY01bxxdM05ok/8nrKFpMs56/MuHJUhPtignZ/0iVglSFu+sKDOKDel
-         mneg==
-X-Gm-Message-State: AOAM531h1gpIj9M2DFUXBaxCDO9xtmkxZac18QoHkZkDzMS+nqC/cfrI
-        3QDFnnJVnynrdmEJv/czx+7w5sPYVWJ8OQ==
-X-Google-Smtp-Source: ABdhPJzmQZhhsvMiLamaU8+8uVD3CVIRFFaQdn4k807w7MuwvBDZ8TFz9JUAuI/SR8HDBZVTZP7YFQ==
-X-Received: by 2002:a0c:c206:0:b0:461:d481:b54b with SMTP id l6-20020a0cc206000000b00461d481b54bmr38025472qvh.65.1653712002491;
-        Fri, 27 May 2022 21:26:42 -0700 (PDT)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id h19-20020a05620a401300b006a10c8d5d96sm4201403qko.3.2022.05.27.21.26.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 May 2022 21:26:41 -0700 (PDT)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH] hook: provide GIT_HOOK for all hooks
-Date:   Sat, 28 May 2022 00:26:40 -0400
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <E0D2A9A0-FB95-47ED-B672-93AAFE798CD9@gmail.com>
-In-Reply-To: <xmqqzgj21xm4.fsf@gitster.g>
-References: <pull.1271.git.git.1653684771998.gitgitgadget@gmail.com>
- <xmqqzgj21xm4.fsf@gitster.g>
+        with ESMTP id S242410AbiE1G6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 May 2022 02:58:18 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F78183A5
+        for <git@vger.kernel.org>; Fri, 27 May 2022 23:58:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1653721069;
+        bh=CKghe6N1+QakRBnOZhxYDjO2q35CDjK2Qz72l7aS2tg=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=V6OnDG22Pyi6JyPMyfd/nbHFZ7Mx4c+LcmvumMWsG4tjvVH16H83aIBGqyEk7x4oZ
+         o8u/AKnPIPVvmokVXeWSeAC58sXsuwoXxdXiKljmuo4gcee7xwkRW58wLqQ60uDUw7
+         Fh6SIdpoG5gVQEF3+Bxp72/adiY65BcWoa2uRsD8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MEUWM-1o23Fv0GSo-00GSqo; Sat, 28
+ May 2022 08:57:49 +0200
+Message-ID: <6ef7f836-45f6-8386-03c0-dc18b125ec67@web.de>
+Date:   Sat, 28 May 2022 08:57:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.1
+Subject: Re: [PATCH v6 1/7] archive: optionally add "virtual" files
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
+ <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
+ <0005cfae31d52a157d4df5ba3db9f9f5b2167ddc.1653145696.git.gitgitgadget@gmail.com>
+ <xmqqfskx5ndd.fsf@gitster.g> <7815a07a-da2f-d348-4179-6dc5b1d5fee6@web.de>
+ <xmqqee0g1aoz.fsf@gitster.g> <ed95b26a-2fa3-d1f7-3142-05719a44a8f7@web.de>
+ <xmqqfskwxd6j.fsf@gitster.g> <71ae5983-6ef8-fe28-46ab-1675e819ce8b@web.de>
+ <xmqqh75a3imc.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqh75a3imc.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:q0xm3oDczUUYzpeBxDDxI6TrA8LB1dUhRdnLz+1uWBUexW+WMv/
+ E+yEUoL4U2050BaXxCMH4GxFmcg/ScS+wmbUGPqIFBsz6mS3wOyVhXlMQAOSVr8Sk0TdARx
+ +DKfSMaXKKgiuxKi9bvR7eA47u6uEjROHjWsdN5qSlik0eYG2E4dvDk4zDDecf6MoHVgyca
+ aH0CHelsdf6SHf5y2XPjw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uRp22xjf7Dc=:PMtx9wy/fCbnnPFJX32N3V
+ fcS2v/TId2tCS4VlGhaiPxfM80JW6xidpd8iDZy7V54xjo/tKaRC5GAzeV+Mlse5WIN8yDrOH
+ 6DonxLYh1/vK8v4fbtl/92xYyDkP/3ON5UfPygsgt12gCK9T3gfvi4YYvCIG9jXNpL1kwFj3w
+ QwLyvIDRIsxZSbRtz39TA17byS8u1Z8htM//biwx8BC+s5VZyhC4pjpZwrzlRnajN03EeEYpt
+ 7PMXAaA0uOMw/tSkbGScsCQ2z8vvobn/gZgcPWxWfutlg6S7uZMpflOELx63TGRfhWKNZkyTz
+ 7IxY1xSJxuf4XfaI5VZfXYuyI9UnFqa4V4eGySQfllCYByWLjMvNnHjEiQ6Odebbn7kgzJ3NL
+ xaCx/hhIZrmKfLqECmh/tEeshPPvrtZsH9kuEkG97tUEr5Iq0ojY7LVNZoJIQ4ZsSDSUKAWz1
+ nXIlC9+m3EyWa3J4C+BwvUj9bPtc8yvoE+o2IhgOzgQEQ+TnrDSjU0uVzU+5RcblBZ65KIP6S
+ TlldmvkOwlgG9rsnKG/fI/TYxDUL0MM4R514b/L3H8vGnyTu+dk8hGyIN2m+/v5ee7DadGCt2
+ mMiO+epgfzPLV8OC7xE5dHbVi0ZXROEe20MowzYWGXBWaVEgn7eXDeraEp+WbeChbcqE3O86M
+ zNV1De9kYypovxm0Wb+zNRJ1XwaxUYcF83MT0BEwhBNMzcXiIvPO6HwTGoXaOXHxyD3Can4Xs
+ B/hg2k3v+VoQJknIe9wYjktOgciCcmoN3xOxMe+7ZJqSa7iprXwwjMakAk0WUIiLm0lqK6W0N
+ IB6W+GAZ6IFgFzxjPhvfMTfv3s0NYJ2CoZOoS+J55O/iTEMuM/jxueyFhlZ+Qgn9EfEf70ke2
+ dBftwFyTxrkA4nbRvcWSOr0wKtL8BgKMaKaVhTDnCJctWiH8EGoxZ70k9rTCDkOn4tOadxg6E
+ wWXrdz+yQcrEagjDMRL2d4duQ6vPQoqS4yHpFLe/qHf/2ByWlTdH6ZugRJBA8yoiSiDKXIBRR
+ zNRYrgzx6Sr/px/lhwokErli76/4Y6begRlTyJvYe//TfMJzYa+bxMkvkocUUroHrya4HFr+4
+ WWfgT/3RENF+b7IGnTWV9YhaD+gNJ9uutl/
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
-
-On 27 May 2022, at 17:20, Junio C Hamano wrote:
-
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Am 27.05.22 um 21:01 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
->> From: John Cai <johncai86@gmail.com>
+>>  --prefix=3D<prefix>/::
+>> -	Prepend <prefix>/ to each filename in the archive.
+>> +	Prepend <prefix>/ to paths in the archive.  Can be repeated; its
+>> +	leftmost value is used for all tracked files.  See below which
+>> +	value gets used by `--add-file`.
+>
+> Doesn't "the last one wins" take the rightmost one?
+
+Ha ha!  Classic mistake, I do that all the time, especially when in a
+hurry. >_<
+
+>
+>> @@ -58,8 +60,9 @@ OPTIONS
+>>  --add-file=3D<file>::
+>>  	Add a non-tracked file to the archive.  Can be repeated to add
+>>  	multiple files.  The path of the file in the archive is built
+>> -	by concatenating the value for `--prefix` (if any) and the
+>> -	basename of <file>.
+>> +	by concatenating the value of the leftmost `--prefix` option to
+>> +	the right of this `--add-file` (if any) and the basename of
+>> +	<file>.
+>
+> It is not what archive.c::add_file_cb() seems to be doing, though
+>
+> It is passed the pointer to "base" that is on-stack of
+> parse_archive_args(), which is the same variable that is used to
+> remember the latest value that was given to "--prefix".  Then it
+> concatenates the argument it received after that base value, so
+>
+>     by concatenating the value of the last "--prefix" seen on the
+>     command line (if any) before this `--add-file` and the basename
+>     of <file>.
+>
+> probably.  I always get my left and right mixed up X-<.
+
+You too?  So yeah, avoiding the terms is appealing.
+
+>
+>> @@ -194,6 +197,12 @@ EXAMPLES
+>>  	commit on the current branch. Note that the output format is
+>>  	inferred by the extension of the output file.
 >>
->> In order to allow users to use one executable for multiple hooks,
->> provide a GIT_HOOK variable that is set to the hook event that triggered
->> it.
->
-> I agree it would be handy to give hooks to play multiple roles by
-> dispatching on its name, just like our "git" potty can dispatch
-> built-ins when called "git-foo".
->
-> I do not think GIT_HOOK is a good name for the environment variable
-> that is used for that purpose, though.  It is easily mistaken as if
-> end users can set GIT_HOOK environment themselves to point at a
-> program and cause "git" to run it whenever it may want to run any
-> hook, for example.  IOW, the name is overly broad.
-
-Yes, I see what you mean. It would be good to pick a more specific variable.
-
->
-> How about calling it with a name with "HOOK" and "NAME" in it?
-
-For lack of imagination, would GIT_HOOK_NAME still be too broad?
-
->
->> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
->> index 26ed5e11bc8..a22c1a82a5e 100755
->> --- a/t/t1800-hook.sh
->> +++ b/t/t1800-hook.sh
->> @@ -38,6 +38,18 @@ test_expect_success 'git hook run: basic' '
->>  	test_cmp expect actual
->>  '
+>> +`git archive -o latest.tar --prefix=3Dbuild/ --add-file=3Dconfigure --=
+prefix=3D HEAD`::
+>> +
+>> +	Creates a tar archive that contains the contents of the latest
+>> +	commit on the current branch with no prefix and the untracked
+>> +	file 'configure' with the prefix 'build/'.
+>> +
+>>  `git config tar.tar.xz.command "xz -c"`::
 >>
->> +test_expect_success 'git hook run: $GIT_HOOK' '
->> +	test_hook test-hook <<-EOF &&
->> +	printenv GIT_HOOK
->> +	EOF
+>>  	Configure a "tar.xz" format for making LZMA-compressed tarfiles.
 >
-> This will introduce the first hit from "git grep printenv".
+> Thanks.
 >
-> It is not even in POSIX.  Do we absolutely need to?
+> This patch probably needs to come before the "scalar diagnose"
+> series, which we haven't heard much about recently (no, I am not
+> complaining---we all heard that Dscho is busy).
+>
+>
 
-certainly not, I'll change this.
+=2D-- >8 ---
+Subject: [PATCH v3] archive: improve documentation of --prefix
 
->
-> Perhaps
->
->     echo "$GIT_HOOK"
->
-> is sufficient, or if you want to distinguish an unset and set to
-> empty string:
->
->     if test "${GIT_HOOK+set}" = "set"
->     then
->         echo "GIT_HOOK is set to '$GIT_HOOK'"
->     else
->         echo "GIT_HOOK is unset"
-> 	exit 1
->     fi
->
-> may be another way.
->
->> +	cat >expect <<-\EOF &&
->> +	test-hook
->> +	EOF
->
-> For one-liner,
->
-> 	echo test-hook >expect &&
->
-> should be a more compact and equally understandable way to write this.
+Document the interaction between --add-file and --prefix by giving an
+example.
 
-good point!
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ Documentation/git-archive.txt | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
->
->> +	git hook run test-hook 2>actual &&
->> +	test_cmp expect actual
->> +'
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index bc4e76a783..94519aae23 100644
+=2D-- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -49,7 +49,9 @@ OPTIONS
+ 	Report progress to stderr.
+
+ --prefix=3D<prefix>/::
+-	Prepend <prefix>/ to each filename in the archive.
++	Prepend <prefix>/ to paths in the archive.  Can be repeated; its
++	rightmost value is used for all tracked files.  See below which
++	value gets used by `--add-file`.
+
+ -o <file>::
+ --output=3D<file>::
+@@ -57,9 +59,9 @@ OPTIONS
+
+ --add-file=3D<file>::
+ 	Add a non-tracked file to the archive.  Can be repeated to add
+-	multiple files.  The path of the file in the archive is built
+-	by concatenating the value for `--prefix` (if any) and the
+-	basename of <file>.
++	multiple files.  The path of the file in the archive is built by
++	concatenating the value of the last `--prefix` option (if any)
++	before this `--add-file` and the basename of <file>.
+
+ --worktree-attributes::
+ 	Look for attributes in .gitattributes files in the working tree
+@@ -194,6 +196,12 @@ EXAMPLES
+ 	commit on the current branch. Note that the output format is
+ 	inferred by the extension of the output file.
+
++`git archive -o latest.tar --prefix=3Dbuild/ --add-file=3Dconfigure --pre=
+fix=3D HEAD`::
++
++	Creates a tar archive that contains the contents of the latest
++	commit on the current branch with no prefix and the untracked
++	file 'configure' with the prefix 'build/'.
++
+ `git config tar.tar.xz.command "xz -c"`::
+
+ 	Configure a "tar.xz" format for making LZMA-compressed tarfiles.
+=2D-
+2.35.3
