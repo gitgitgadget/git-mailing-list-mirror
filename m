@@ -2,103 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D085C433EF
-	for <git@archiver.kernel.org>; Sun, 29 May 2022 18:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C38A7C433F5
+	for <git@archiver.kernel.org>; Sun, 29 May 2022 21:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231642AbiE2Sm6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 May 2022 14:42:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40628 "EHLO
+        id S231829AbiE2VPa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 May 2022 17:15:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229960AbiE2Sm5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 May 2022 14:42:57 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D73213E04
-        for <git@vger.kernel.org>; Sun, 29 May 2022 11:42:56 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5423213CBC2;
-        Sun, 29 May 2022 14:42:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0z6tzI0Clbrn0YJ8VP+Ky5VMUpzWKp1L4wLpUf
-        ggdXg=; b=tGbRU5+4vduxactCbLnEA/SeyFKyXnhTqcRWO8jq5rQpnS/8LKXu9U
-        LwvEpZe07wZeotITGMIO9Ko/T12TRvhx8cvvmt2gzLaJJaKjZM4+CMTuTVNljQZl
-        6xJIC5QylPxosKtOAYDAPmW1rfDPKaz/RidnEKWCrX2L79k6ckU8E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D0DE13CBC1;
-        Sun, 29 May 2022 14:42:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B848213CBC0;
-        Sun, 29 May 2022 14:42:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: Excluding paths with wildcard not working with add -p
-References: <CAHd499D81VN=aGsM6kaNLF2ZMg-Zg10U=qU-j7gQ7uXnqqfdqg@mail.gmail.com>
-        <xmqqh758yz4u.fsf@gitster.g>
-Date:   Sun, 29 May 2022 11:42:53 -0700
-In-Reply-To: <xmqqh758yz4u.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-        29 May 2022 11:25:37 -0700")
-Message-ID: <xmqq8rqkyyc2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230326AbiE2VP3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 May 2022 17:15:29 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB5F520BDF
+        for <git@vger.kernel.org>; Sun, 29 May 2022 14:15:27 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id x137so16199743ybg.5
+        for <git@vger.kernel.org>; Sun, 29 May 2022 14:15:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:sender:from:date:message-id
+         :subject:to:cc;
+        bh=bVvsvzkPB1AyUvXh5B/W6sMXzF0BKa5AgWUoUTy5kkU=;
+        b=enBB4RCky1GTTiEwsVyhRRS/kTVlJ0833EOgEBaFKJ3JDtKG0j9ulML5OsZxiwpLc7
+         9GMV8/O1pOA8KMH7WTLpcsJt8ZiMhKkgGpUT8PEm9XNXCs9KBM7e2AvyFB99w+UaKYVl
+         wIwSmSj7EhTDXKNXEPnHiWiUF+mY24E2lXj67Hol5XO5oxM8Z2eZzCPAEibFtYm1x3d0
+         pJKhabxzEaMMTxNhL0KeQqu5U6KTeC8C+0JnLcDXYoiWgI7PxgHD07xl5odOPs9K+qR9
+         xLYlQ/QMhYjB8dxfJalY/UKzyFoecxFuL8TRrREJ3j9TJ9Dz7G5HA8HIfG0DfxeRNOM8
+         Ta+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
+         :date:message-id:subject:to:cc;
+        bh=bVvsvzkPB1AyUvXh5B/W6sMXzF0BKa5AgWUoUTy5kkU=;
+        b=ZmbTITbJzEdxKqUwh2+SfrpmI7YgMew1PcS7vRJqJuuqipwFLR7uIRGzqvYKze+5aZ
+         ArJbOsTA9G3Da0vRnzpWloHKWYCahaxpoUf0p/SslgtvCY1crsENPQBlMgVSWUD/kGim
+         xHtXmfsVXkkC9XnluAu8wi7p+iaI7fjIop8q3r5fb7Yu1/8FVmCViPMub22s5DtP8vVN
+         /ckoPotm8WqG8vXKXUM1CIuz2SQMlN+/vEUeN3NwGowoWLnkAufvtRkmT3NltrWL/ten
+         2KJxOMPmL2psF2rLTnD+cuoQL83QjxWDbKWZhgam8EkNaecyAiHxBvvX1x/Gj53oO9/+
+         2r2g==
+X-Gm-Message-State: AOAM531x+2NJxUoTcIKL1mKdDpGRdj5pEE2vBHklIrLomEjeSxPJtjli
+        kJl0nd+Zy3v54dpST2RghkmDdPtRu9e4hqYWzKz0RVnt
+X-Google-Smtp-Source: ABdhPJxh3bsW9bIWkw+hAwrigdIhmoLdQGuyQzkmKB5NCu2BKPIWRasTL9yw1TjIfiDeBv2UKnvpL+QxDhNJT2Fbnms=
+X-Received: by 2002:a25:5503:0:b0:65c:5bcb:bb83 with SMTP id
+ j3-20020a255503000000b0065c5bcbbb83mr8980803ybb.405.1653858926964; Sun, 29
+ May 2022 14:15:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 26E01AFA-DF7F-11EC-AB47-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <CAHd499D81VN=aGsM6kaNLF2ZMg-Zg10U=qU-j7gQ7uXnqqfdqg@mail.gmail.com>
+ <xmqqh758yz4u.fsf@gitster.g>
+In-Reply-To: <xmqqh758yz4u.fsf@gitster.g>
+Sender: rcdailey@gmail.com
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Sun, 29 May 2022 16:15:16 -0500
+X-Google-Sender-Auth: JSu7hNgZYYmJKOjBPMQV_mE77-M
+Message-ID: <CAHd499BX_8fP=BdJW8cuZnwJFoqxrsiLCZ45Ke12MOsaj7M-Dw@mail.gmail.com>
+Subject: Re: Excluding paths with wildcard not working with add -p
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Sun, May 29, 2022 at 1:25 PM Junio C Hamano <gitster@pobox.com> wrote:
 > Does this command
 >
 >     git add -p -- . ':^*.cs'
 >
 > work as you expect?
 
-We used to error out when you give a pathspec with only negative
-elements in it, like the one you gave above.  Later, we tweaked this
-logic at 859b7f1d (pathspec: don't error out on all-exclusionary
-pathspec patterns, 2017-02-07) so that we add an empty string as an
-extra element when your pathspec has only negative elements.
-
-At around the same time, we were migrating from "an empty string is
-a valid pathspec element that matches everything" to "either a dot
-or ":/" is used for that purpose, and an empty string is rejected",
-between d426430e (pathspec: warn on empty strings as pathspec,
-2016-06-22) and 9e4e8a64 (pathspec: die on empty strings as
-pathspec, 2017-06-06).  I think 9e4e8a64 was not careful enough to
-turn the empty string 859b7f1d added to either a dot or ":/"
-
-For the purpose of "add -p", I _think_ adding a "dot" is correct,
-but depending on the command, the code needs to add ":/".
-
-Here is a quick trial patch, which seems to compile and pass all the
-tests we have, but the fact that this lingered with us for the past
-5 years is a strong sign that we lack coverage in this area, so it
-may be breaking something else in a big way.
-
- pathspec.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git c/pathspec.c w/pathspec.c
-index ddeeba7911..1b0ae51aa4 100644
---- c/pathspec.c
-+++ w/pathspec.c
-@@ -628,8 +628,10 @@ void parse_pathspec(struct pathspec *pathspec,
- 	 * that matches everything. We allocated an extra one for this.
- 	 */
- 	if (nr_exclude == n) {
--		int plen = (!(flags & PATHSPEC_PREFER_CWD)) ? 0 : prefixlen;
--		init_pathspec_item(item + n, 0, prefix, plen, "");
-+		if (!(flags & PATHSPEC_PREFER_CWD))
-+			init_pathspec_item(item + n, 0, NULL, 0, ":/");
-+		else
-+			init_pathspec_item(item + n, 0, prefix, prefixlen, ".");
- 		pathspec->nr++;
- 	}
- 
+yes I can confirm this works.
