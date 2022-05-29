@@ -2,154 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BBA3C433EF
-	for <git@archiver.kernel.org>; Sat, 28 May 2022 23:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B998CC433EF
+	for <git@archiver.kernel.org>; Sun, 29 May 2022 17:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230154AbiE1XLx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 May 2022 19:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46030 "EHLO
+        id S231367AbiE2R1s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 May 2022 13:27:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230136AbiE1XLh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 May 2022 19:11:37 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF1644A3C
-        for <git@vger.kernel.org>; Sat, 28 May 2022 16:11:36 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 16FCE19054B;
-        Sat, 28 May 2022 19:11:36 -0400 (EDT)
-        (envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=30Qpeo1GSvoWk37nIvW8zDG5S
-        EZiSiooYMYvuADFTVY=; b=NhTZGibo7kwyip3lWNoQidmueDyvxKSe6AFAYArqE
-        9vG6L0JoXDEosBrSifLORTylAvXG7BGh1AcFpIqQq+rncd2n/ThXS5BgamTI7juH
-        h9L3XuFE4f5VlFeeaT2ftU/wZmyQ7zB3UhZEcEHb24MiEzL0CFuqb2vz41aCEGjL
-        aw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 101C119054A;
-        Sat, 28 May 2022 19:11:36 -0400 (EDT)
-        (envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B1F3A190549;
-        Sat, 28 May 2022 19:11:32 -0400 (EDT)
-        (envelope-from gitster@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v6+ 5/7] scalar diagnose: include disk space information
-Date:   Sat, 28 May 2022 16:11:16 -0700
-Message-Id: <20220528231118.3504387-6-gitster@pobox.com>
-X-Mailer: git-send-email 2.36.1-385-g60203f3fdb
-In-Reply-To: <20220528231118.3504387-1-gitster@pobox.com>
-References: <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
- <20220528231118.3504387-1-gitster@pobox.com>
+        with ESMTP id S229533AbiE2R1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 May 2022 13:27:46 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDBFD42A0D
+        for <git@vger.kernel.org>; Sun, 29 May 2022 10:27:45 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id l204so5016995ybf.10
+        for <git@vger.kernel.org>; Sun, 29 May 2022 10:27:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=5eM7qYdApuLm/+wUzQpo3CLrYzNrLfiwI8BKjfzJo6U=;
+        b=QQj+XqbSmJ5EfbxYBf9RFAT/Rf58PFspxu3guP8F2eTakRnnAYVtjsZl4Kdl5Uh5lj
+         U2TvhAO19J4Ny76aa39T6Mha8iuj8wb7FD/uH4KU93OpCS1YSXAdbWN8HeHqJIGPORpZ
+         etLPREzXMXvdgmGUCMZWxLF1at3I+tij6Ei12gQxAtkd0h+ZduyBRSAZP759DZ+Y5Bso
+         rHcw8gsAoRnf7B6x1Mfocp3Nt3FKHSC8O+pSeBFpB8dGMgzHogpI0A2tJLyKQul4BzFk
+         L8r+W6Zk/sxkEkqh2IyvPcgOLn+Z+OEJPa5khJYeZpJBeRcEXJhJxxzwicb4tuxMsHL/
+         HgTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=5eM7qYdApuLm/+wUzQpo3CLrYzNrLfiwI8BKjfzJo6U=;
+        b=iUxzUzUStuY3DjEeZiNv9Tj4xz+oIxOiixtSelQBx6154Nx447QvV8q8UQEgL+wx3D
+         UEcGruKgoFPlXWHchsnLZSapihZSvl+V/6SAMDQcisw1gMFTpiXr16hsF3sz73I3lazN
+         Q41d4XeGdnS9fwS/Vl+WO50f1SSDBnkdwnmD+qsBMFczjMh28VJJ119DYX8lk8X7yxsG
+         A972esHOb8e0H35p8otwOuArF2+hxUS4NhNCXSgd31/yHZCXRwcHdYugnUEpAjmTQAjV
+         HPI4fKFyaXyiCVGtLGxW2rjpKqOBEqhQzSwRTRDtsItjy70dBD2RQJuglKFactiDBmU2
+         gV9w==
+X-Gm-Message-State: AOAM533KE0W5bg0VKzZItEwamhIpxCPqdaUAYBzvddP1qgiMaijcUHyI
+        Z5bZL79qB/2wQrWHtTDzl8gKNumPpmBfJ4TGphb/B2J5E5U=
+X-Google-Smtp-Source: ABdhPJyjpukZhEoEryaXUniKwnoq+16YwkekoR5BJ6nFYthwyXHHQdjMWbHNbhXweHhdm8QjrDSSyEoJYS0DZIQBva4=
+X-Received: by 2002:a05:6902:1242:b0:64f:9d9c:eaab with SMTP id
+ t2-20020a056902124200b0064f9d9ceaabmr38707917ybu.346.1653845264931; Sun, 29
+ May 2022 10:27:44 -0700 (PDT)
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 8385BC14-DEDB-11EC-84B8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Sender: rcdailey@gmail.com
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Sun, 29 May 2022 12:27:33 -0500
+X-Google-Sender-Auth: _tKRD1uQXXV3GSZJOQ8miU8kUTk
+Message-ID: <CAHd499D81VN=aGsM6kaNLF2ZMg-Zg10U=qU-j7gQ7uXnqqfdqg@mail.gmail.com>
+Subject: Excluding paths with wildcard not working with add -p
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+If I run the command:
 
-When analyzing problems with large worktrees/repositories, it is useful
-to know how close to a "full disk" situation Scalar/Git operates. Let's
-include this information.
+    git add -p -- ':^*.cs'
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/scalar/scalar.c          | 53 ++++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh |  1 +
- 2 files changed, 54 insertions(+)
+I get an error:
 
-diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index a1e05a2146..f06a2f3576 100644
---- a/contrib/scalar/scalar.c
-+++ b/contrib/scalar/scalar.c
-@@ -302,6 +302,58 @@ static int add_directory_to_archiver(struct strvec *=
-archiver_args,
- 	return res;
- }
-=20
-+#ifndef WIN32
-+#include <sys/statvfs.h>
-+#endif
-+
-+static int get_disk_info(struct strbuf *out)
-+{
-+#ifdef WIN32
-+	struct strbuf buf =3D STRBUF_INIT;
-+	char volume_name[MAX_PATH], fs_name[MAX_PATH];
-+	DWORD serial_number, component_length, flags;
-+	ULARGE_INTEGER avail2caller, total, avail;
-+
-+	strbuf_realpath(&buf, ".", 1);
-+	if (!GetDiskFreeSpaceExA(buf.buf, &avail2caller, &total, &avail)) {
-+		error(_("could not determine free disk size for '%s'"),
-+		      buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+
-+	strbuf_setlen(&buf, offset_1st_component(buf.buf));
-+	if (!GetVolumeInformationA(buf.buf, volume_name, sizeof(volume_name),
-+				   &serial_number, &component_length, &flags,
-+				   fs_name, sizeof(fs_name))) {
-+		error(_("could not get info for '%s'"), buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+	strbuf_addf(out, "Available space on '%s': ", buf.buf);
-+	strbuf_humanise_bytes(out, avail2caller.QuadPart);
-+	strbuf_addch(out, '\n');
-+	strbuf_release(&buf);
-+#else
-+	struct strbuf buf =3D STRBUF_INIT;
-+	struct statvfs stat;
-+
-+	strbuf_realpath(&buf, ".", 1);
-+	if (statvfs(buf.buf, &stat) < 0) {
-+		error_errno(_("could not determine free disk size for '%s'"),
-+			    buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+
-+	strbuf_addf(out, "Available space on '%s': ", buf.buf);
-+	strbuf_humanise_bytes(out, st_mult(stat.f_bsize, stat.f_bavail));
-+	strbuf_addf(out, " (mount flags 0x%lx)\n", stat.f_flag);
-+	strbuf_release(&buf);
-+#endif
-+	return 0;
-+}
-+
- /* printf-style interface, expects `<key>=3D<value>` argument */
- static int set_config(const char *fmt, ...)
- {
-@@ -598,6 +650,7 @@ static int cmd_diagnose(int argc, const char **argv)
- 	get_version_info(&buf, 1);
-=20
- 	strbuf_addf(&buf, "Enlistment root: %s\n", the_repository->worktree);
-+	get_disk_info(&buf);
- 	write_or_die(stdout_fd, buf.buf, buf.len);
- 	strvec_pushf(&archiver_args,
- 		     "--add-virtual-file=3Ddiagnostics.log:%.*s",
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-sc=
-alar.sh
-index fbb1df2049..6e52088919 100755
---- a/contrib/scalar/t/t9099-scalar.sh
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -102,6 +102,7 @@ SQ=3D"'"
- test_expect_success UNZIP 'scalar diagnose' '
- 	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	scalar diagnose cloned >out 2>err &&
-+	grep "Available space" out &&
- 	sed -n "s/.*$SQ\\(.*\\.zip\\)$SQ.*/\\1/p" <err >zip_path &&
- 	zip_path=3D$(cat zip_path) &&
- 	test -n "$zip_path" &&
---=20
-2.36.1-385-g60203f3fdb
+fatal: empty string is not a valid pathspec. please use . instead if
+you meant to match all paths
+Cannot close git diff-index --cached --numstat --summary HEAD --
+:(exclude,prefix:0)*.cs  () at C:/Program
+Files/Git/mingw64/libexec/git-core\git-add--interactive line 242.
 
+However, it works if I remove `-p`. Also observed this works too:
+
+    git add -p -- ':*.cs'
+
+So it looks like we have a corner case where I can't do a patch add
+while excluding files. Is this intentional?
