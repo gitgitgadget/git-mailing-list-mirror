@@ -2,67 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C43DC43219
-	for <git@archiver.kernel.org>; Mon, 30 May 2022 14:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 971E8C433EF
+	for <git@archiver.kernel.org>; Mon, 30 May 2022 15:13:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241563AbiE3OXj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 May 2022 10:23:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40738 "EHLO
+        id S236042AbiE3PNE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 May 2022 11:13:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241946AbiE3OSO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 May 2022 10:18:14 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0FA79CF36
-        for <git@vger.kernel.org>; Mon, 30 May 2022 06:48:42 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id v25so5543173eda.6
-        for <git@vger.kernel.org>; Mon, 30 May 2022 06:48:42 -0700 (PDT)
+        with ESMTP id S239391AbiE3PMP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 May 2022 11:12:15 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2133A19C758
+        for <git@vger.kernel.org>; Mon, 30 May 2022 07:10:26 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id er5so13674911edb.12
+        for <git@vger.kernel.org>; Mon, 30 May 2022 07:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=6Yd54vyyyWYTe9V4mYTnCS5kg7ZIZclqpXT8N+Xp99I=;
-        b=p2RVjmZaos5I4eLsLa76YPPrVXcngdPLUEmQ0ZxFsErFj4Yj8KmfBH8m4seWa9bJ3K
-         reFxdZFlQ1CEWDlIdu5OfgDtqJ3YeBr8hrEEQS7IFkz1QC8JOOwZ0wzsfsDxUpZyZOuR
-         hMWunBYtzij/vHYTWXGxnfbGY4vuJ+N6/VrdsU1E4Dhkvx5MtmngW2BFJ0SugslI7e7L
-         Ax89OZCWhB2bW9xQ+rq5oQmHDsBHPzroujUV8E0mE1QMiCA1cxIgzM/cij8PZgji8JCi
-         VLYEqjlc4Z5XK2yxOVe6GWU5s41JBg4OxZF5cRwikJNvyrb/snuZmvPVZIs+k59GnGCF
-         NbCQ==
+        bh=m8qB24BfqP52I0zgvxNrOLjQFV7+Rq9qYnnfqsIXKss=;
+        b=OA2C84HkQwqZuHzCU+1y9F+mEULdG3rls/GJwlYvVlXoCbpV0TqNmPcD6NI/8KrKNu
+         oBx/D117gxtpDizPcofx+X00/wjnARDUJ4VuDltUVPkd0xloVVUAnHK7YPovOZ7UKUvA
+         ZAr3q2uDbKobeptmsaA6t66fc9meH04XVCZFZ+3iUu8yDnQwf3AkkxG3YPtmtg4vtN+G
+         YRSfc9TxnQFk2ThluGYKkIKqRPPEbS/Yy71lAJLRvj1xQPPb0+KTtv+HK1NA80sG3MY/
+         PqL9dl1SbrQgUyus1uiMr5uJeKQUynvjuzBWbjQO98nNWuLQQP0cMI2PRGyAgFBeM/l8
+         Tasg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=6Yd54vyyyWYTe9V4mYTnCS5kg7ZIZclqpXT8N+Xp99I=;
-        b=J/jpJpTw23+nAT5xF65f6Vy5jcxsiSZgy15U+/DxjctMAq25crzCqsxwKJOd/hAmOG
-         okznCQGveqWp6gsw72+2z6hIToHoo1oBH8hgZ5gkdcSYMk1D9AORxEU3efoCB00bwi+5
-         1LbI30xqIq+1Ga00+aieTUDo5c7tPHakmaSmB/DpichjcckHNH0TRZihG4xBq/fd573A
-         9jFogKKhQ2H1sx93OO+2tP+ceO7Q1YggbfpwkXxjcPJAR5to50DB/S1LKdYbyEo+qPUd
-         YBxgK9EtxUewINUAPHFUZdIx96OQ2uAGfapTEbUBgBVdFz/1xYi9Jrbn1Q1yuh1hbM5Z
-         nhag==
-X-Gm-Message-State: AOAM530EGdJCXH2H19mH4pF9PjQuN3bvME2xBC6pgjRgX89RXjnhBfMx
-        Csa+x1DmNGnwcAeX9zvzxgO+T78GR2Y=
-X-Google-Smtp-Source: ABdhPJwocRiCJf6EmRfZFmgqu/ycSiOdgQ5PIpuN+bghuAJRDm/62gl086zADBG3LWo/PKcpwrPFLw==
-X-Received: by 2002:a05:6402:3046:b0:42b:505a:4f26 with SMTP id bs6-20020a056402304600b0042b505a4f26mr44631204edb.183.1653918520919;
-        Mon, 30 May 2022 06:48:40 -0700 (PDT)
+        bh=m8qB24BfqP52I0zgvxNrOLjQFV7+Rq9qYnnfqsIXKss=;
+        b=wDwhazBj8IXaBeKF65Apo+bjk3FFGBYqYzcKGT+Y9XZosYntCt3J8Sj5zvZV/HgXxB
+         z3YvGk7pI3zQoq1FynIBr3+j4FabdESIdoRSzfDjF0jOE90t9xIX2MN2l5XhaZu53vBV
+         PtYoJd43bk34SONKKXAX9JUaYu+JyYKbB86QIvW1rmBTDvGqJUW76iAXn1suv32mYrt5
+         Er1fpU0v1JI6iK53eBkpvZXNaRi+vBAs5M06y4jhJp8hg8ojPZ5/te0PVDO+BP5lUYwE
+         TI4Br+HGRVRH+4zG9kc8OkFjU91dKkNkR/nhISdNEXo9WNDVQVqRj5Ha3bhpwvLUfWJy
+         Y4DQ==
+X-Gm-Message-State: AOAM5304FZooYM4ubsrY9OPSV+KjMAa3omWd3YdajDFoegB9pBM8/1YL
+        eZBsN9l0pjeBQx0+lwRx16s=
+X-Google-Smtp-Source: ABdhPJwfH1g4aFPKvxj9WecZ8/8c3Yf3A0YQxJKE4JM+Wy0sFbm6aA+5kS66+eq/ZYNpajmAm1DChg==
+X-Received: by 2002:a05:6402:4c1:b0:42b:e03f:d940 with SMTP id n1-20020a05640204c100b0042be03fd940mr20728697edw.235.1653919824445;
+        Mon, 30 May 2022 07:10:24 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id c2-20020a17090603c200b006fea59ef3a5sm4084233eja.32.2022.05.30.06.48.39
+        by smtp.gmail.com with ESMTPSA id n25-20020a1709062bd900b006febc1e9fc8sm4099680ejg.47.2022.05.30.07.10.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 May 2022 06:48:40 -0700 (PDT)
+        Mon, 30 May 2022 07:10:23 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nvfl9-000g9W-9v;
-        Mon, 30 May 2022 15:48:39 +0200
+        id 1nvg6A-000gk4-SJ;
+        Mon, 30 May 2022 16:10:22 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] range-diff: show submodule changes irrespective of
- diff.submodule
-Date:   Mon, 30 May 2022 15:46:22 +0200
-References: <pull.1244.git.1653916145441.gitgitgadget@gmail.com>
+To:     Konstantin Khomoutov <kostix@bswap.ru>
+Cc:     "Kerry, Richard" <richard.kerry@atos.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Aman <amanmatreja@gmail.com>, Git List <git@vger.kernel.org>,
+        "git-vger@eldondev.com" <git-vger@eldondev.com>
+Subject: Re: About GIT Internals
+Date:   Mon, 30 May 2022 15:50:54 +0200
+References: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
+        <Yo68+kjAeP6tnduW@invalid>
+        <8adba93c-7671-30d8-5a4c-4ad6e1084a22@iee.email>
+        <CACMKQb3exv13sYN5uEP_AG-JYu1rmVj4HDxjdw8_Y-+maJPwGg@mail.gmail.com>
+        <0201db28-d788-4458-e31d-c6cdedf5c9cf@iee.email>
+        <AS8PR02MB730274D473C2BC3846D9FA3F9CDD9@AS8PR02MB7302.eurprd02.prod.outlook.com>
+        <20220530115339.3torgv5c2zw75okg@carbon>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <pull.1244.git.1653916145441.gitgitgadget@gmail.com>
-Message-ID: <220530.867d632kso.gmgdl@evledraar.gmail.com>
+In-reply-to: <20220530115339.3torgv5c2zw75okg@carbon>
+Message-ID: <220530.8635gr2jsh.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -70,131 +76,113 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, May 30 2022, Philippe Blain via GitGitGadget wrote:
+On Mon, May 30 2022, Konstantin Khomoutov wrote:
 
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
+> On Mon, May 30, 2022 at 09:49:57AM +0000, Kerry, Richard wrote:
 >
-> After generating diffs for each range to be compared using a 'git log'
-> invocation, range-diff.c::read_patches looks for the "diff --git" header
-> in those diffs to recognize the beginning of a new change.
+> [...]
+>> > > 1. I haven't had the experience of working with other (perhaps even
+>> > > older) version control systems, like subversion. So when refering to
+>> > > the "control" aspect,
+>> > 
+>> > The "control" aspect was from whoever was the 'manager' that limited
+>> > access to the version system (i.e. acting like a museum curator), and deciding
+>> > if your masterpiece was worthy of inclusion as a significant example of your
+>> > craft, whether that was an engineering drawing or some software code.
+>> 
+>> I'm not sure I get that idea.  I worked using server-based Version Control
+>> systems from the mid 80s until about 5 years ago when the team moved from
+>> Subversion to Git.  There was never a "curator" who controlled what went
+>> into VC.  You did your work, developed files, and committed when you thought
+>> it necessary.  When a build was to be done there would then be some
+>> consideration of what from VC would go into the build. That is all still
+>> there nowadays using a distributed system (ie Git).  Those doing Open source
+>> work might operate a bit differently, as there is of necessity distribution
+>> of control of what gets into a release. But those of us who are developing
+>> proprietary software are still going through the same sort of release
+>> process.  And that's even if there isn't actually a separate person actively
+>> manipulating the contents of a release, it's just up to you to do what's
+>> necessary (actually there are others involved in dividing what will be in,
+>> but in our case they don't actively manipulate a repository).
 >
-> In a project with submodules, and with 'diff.submodule=log' set in the
-> config, this header is missing for the diff of a changed submodule, so
-> any submodule changes are quietly ignored in the range-diff.
->
-> When 'diff.submodule=diff' is set in the config, the "diff --git" header
-> is also missing for the submodule itself, but is shown for submodule
-> content changes, which can easily confuse 'git range-diff' and lead to
-> errors such as:
->
->     error: git apply: bad git-diff - inconsistent old filename on line 1
->     error: could not parse git header 'diff --git path/to/submodule/and/some/file/within
->     '
->     error: could not parse log for '@{u}..@{1}'
->
-> Force the submodule diff format to its default ("short") when invoking
-> 'git log' to generate the patches for each range, such that submodule
-> changes are always shown.
->
-> Note that the test must use '--creation-factor=100' to force the second
-> commit in the range not to be considered a complete rewrite.
->
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->     range-diff: show submodule changes irrespective of diff.submodule
->     
->     This fixes a bug that I reported last summer [1].
->     
->     [1]
->     https://lore.kernel.org/git/e469038c-d78c-cd4b-0214-7094746b9281@gmail.com/
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1244%2Fphil-blain%2Frange-diff-submodule-diff-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1244/phil-blain/range-diff-submodule-diff-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1244
->
->  range-diff.c          |  2 +-
->  t/t3206-range-diff.sh | 44 +++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 45 insertions(+), 1 deletion(-)
+> I think, the "inversion of control" brought in by DVCS-es about a bit
+> differet set of things.
 
-Thanks for picking this up again, and nice to have a test on this
-iteration!
+Re the "I'm not sure I get that idea" from Richard I think his point
+stands that some of the stories we carry around about the VCS v.s. DVCS
+in free/open source software was more particular to how things were done
+in those online communities, and not really about the implicit
+constraints of centralized VCS per-se.
 
-> diff --git a/range-diff.c b/range-diff.c
-> index b72eb9fdbee..068bf214544 100644
-> --- a/range-diff.c
-> +++ b/range-diff.c
-> @@ -44,7 +44,7 @@ static int read_patches(const char *range, struct string_list *list,
->  
->  	strvec_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
->  		     "--reverse", "--date-order", "--decorate=no",
-> -		     "--no-prefix",
-> +		     "--no-prefix", "--submodule=short",
->  		     /*
->  		      * Choose indicators that are not used anywhere
->  		      * else in diffs, but still look reasonable
-> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> index e30bc48a290..ac848c42536 100755
-> --- a/t/t3206-range-diff.sh
-> +++ b/t/t3206-range-diff.sh
-> @@ -772,4 +772,48 @@ test_expect_success '--left-only/--right-only' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'submodule changes are shown irrespective of diff.submodule' '
-> +	git init sub-repo &&
-> +	test_commit -C sub-repo sub-first &&
-> +	sub_oid1=$(git -C sub-repo rev-parse HEAD) &&
-> +	test_commit -C sub-repo sub-second &&
-> +	sub_oid2=$(git -C sub-repo rev-parse HEAD) &&
-> +	test_commit -C sub-repo sub-third &&
-> +	sub_oid3=$(git -C sub-repo rev-parse HEAD) &&
-> +
-> +	git checkout -b main-sub topic &&
-> +	git submodule add ./sub-repo sub &&
-> +	git -C sub checkout --detach sub-first &&
-> +	git add sub &&
-> +	git commit -m "add sub" &&
-> +	sup_oid1=$(git rev-parse --short HEAD) &&
-> +	git checkout -b topic-sub &&
-> +	git -C sub checkout sub-second &&
-> +	git add sub &&
-> +	git commit -m "change sub" &&
-> +	sup_oid2=$(git rev-parse --short HEAD) &&
-> +	git checkout -b modified-sub main-sub &&
-> +	git -C sub checkout sub-third &&
-> +	git add sub &&
-> +	git commit -m "change sub" &&
-> +	sup_oid3=$(git rev-parse --short HEAD) &&
-> +
-> +	test_config diff.submodule log &&
-> +	git range-diff --creation-factor=100 topic topic-sub modified-sub >actual &&
-> +	cat >expect <<-EOF &&
-> +	1:  $sup_oid1 = 1:  $sup_oid1 add sub
-> +	2:  $sup_oid2 ! 2:  $sup_oid3 change sub
-> +	    @@ Commit message
-> +	      ## sub ##
-> +	     @@
-> +	     -Subproject commit $sub_oid1
-> +	    -+Subproject commit $sub_oid2
-> +	    ++Subproject commit $sub_oid3
-> +	EOF
-> +	test_cmp expect actual &&
-> +	test_config diff.submodule diff &&
-> +	git range-diff --creation-factor=100 topic topic-sub modified-sub >actual &&
-> +	test_cmp expect actual
-> +'
-> +
+Partly those two mix: It was quite common for free software projects not
+to have any public VCS (usually CVS) access at all, some did, but it was
+quite a hassle to set up, and not part of your "normal" workflow (as
+opposed setting up a hoster git repository, which everyone uses) that
+many just didn't do it.
 
-I'd find this much easier to follow if this were a two-part where we do
-most of this test code in the 1st commit, and assert the current
-(failing) behavior with a test_expect_failure.
+> I would say it is connected to F/OSS and the way most projects have been
+> hosted before the DVCS-es over: usually each project had a single repository
+> (say, on Sourceforge or elsewhere), and it was "truly central" in the sense
+> that if anyone were to decide to work on that project, they would need to
+> contact whoever were in charge of that project and ask them to set up
+> permissions allowing commits - may be not to "the trunk", but anyway the
+> commit access was required because in centralized VCS commits are made on the
+> server side.
 
-Then this commit would narrowly be the bugfix itself.
+We may have tried this in different eras, but from what I recall it was
+a crapshoot whether there was any public VCS access at all. Some
+projects were quite good about it, and sourceforge managed to push that
+to more of them early on by making anonymous CVS access something you
+could get by default.
 
-I also see that the --creation-factor=100 isn't necessary and seems
-somewhat orthagonal, i.e. we'd like to test this *without* that option
-and see how we behave, i.e. we'll emit the "full replacement".
+But a lot of projects simply didn't have it at all, you'll still find
+some of them today, i.e. various bits of "infrastructure" code that the
+maintainers are (presumably) still manually managing with zip snapshots
+and manually applied patches.
 
-Why not compare the output without --creation-factor=100, and then just
-have another --creation-factor=100 test to show what we emit if we "look
-into" those commits and diff their contents?
+> (Of course, there were projects where you could mail your patchset to a
+> maintainer, but maintaining such patchset was not convenient: you would either
+> need to host your own fully private VCS or use a tool like Quilt [1].
+> Also note that certain high-profile projects such as Linux and Git use mailing
+> lists for submission and review of patch series; this workflow coexists with
+> the concept of DVCS just fine.)
+
+I'd add though that this isn't really "co-existing" with DVSC so much as
+using patches on a ML as an indirect transport protocol for "git push".
+
+I.e. if you contributed to some similar projects "back in the day" you
+could expect to effectively send your patche into a black-hole until the
+next release, the maintainer would apply them locally, you wouldn't be
+able to pull them back down via the DVCS.
+
+Perhaps there would be development releases, but those could be weeks or
+even months apart, and a "real" release might be once every 1-2 years.
+
+Whereas both Junio and Linus (and other linux maintainers) publish their
+version of the patches they do integrate fairly quickly.
+
+> [...] it also has possible
+> downsides; one of a more visible is that when an original project becomes
+> dormant for some reason, its users might have hard time understanding which
+> one of competing forks to switch to, and there are cases when multiple
+> competing forks implement different features and bugfixes, in parallel.
+> One of the guys behind Subversion expressed his concerns about this back then
+> wgen Git was in its relative infancy [2].
+>
+>  1. https://en.wikipedia.org/wiki/Quilt_(software)
+>  2. http://blog.red-bean.com/sussman/?p=20
+
+It's interesting that this aspect of what proponents of centralized VCS
+were fearful of when it came to DVCS turned out to be the exact
+opposite:
+
+    Notice what this user is now able to do: he wants to to crawl off
+    into a cave, work for weeks on a complex feature by himself, then
+    present it as a polished result to the main codebase. And this is
+    exactly the sort of behavior that I think is bad for open source
+    communities.
+
+I.e. lowering the cost to publish early and often has had the effect
+that people are less likely to "crawl off into a cave" and work on
+something for a long time without syncing up with other parallel
+development.
