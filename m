@@ -2,97 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB01FC433EF
-	for <git@archiver.kernel.org>; Mon, 30 May 2022 17:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D67BAC433EF
+	for <git@archiver.kernel.org>; Mon, 30 May 2022 17:45:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229790AbiE3Rhz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 May 2022 13:37:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43918 "EHLO
+        id S236570AbiE3RpY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 May 2022 13:45:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240245AbiE3Rhv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 May 2022 13:37:51 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63031562EC
-        for <git@vger.kernel.org>; Mon, 30 May 2022 10:37:49 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BEC52197196;
-        Mon, 30 May 2022 13:37:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=yD/+cvZTONdp
-        F32fJTLK5Ru07GDXcFoNuVSmgzYz7/Q=; b=rlsDeawcNYnEegN5leLtXu/1tmTf
-        IW6Mx5QixB/ux9cWO9naE+kqxXwSadoJzxS63OId670LZDshRmh8VjWHXZLMVMK3
-        w//5jJ56g5xiBrcktKpNKnxJmES//LwKsI2q2L99RK+rJOSxvKPXq0mSmY/NYO0j
-        +/AqtvOFMDiHX98=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B75C1197195;
-        Mon, 30 May 2022 13:37:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5DC83197194;
-        Mon, 30 May 2022 13:37:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v6+ 0/7] js/scalar-diagnose rebased
-References: <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
-        <20220528231118.3504387-1-gitster@pobox.com>
-        <nycvar.QRO.7.76.6.2205301205450.349@tvgsbejvaqbjf.bet>
-Date:   Mon, 30 May 2022 10:37:43 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2205301205450.349@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 30 May 2022 12:12:46 +0200 (CEST)")
-Message-ID: <xmqqwne2x6oo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231549AbiE3RpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 May 2022 13:45:20 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D1D99C2D7
+        for <git@vger.kernel.org>; Mon, 30 May 2022 10:45:18 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id e2so15659331wrc.1
+        for <git@vger.kernel.org>; Mon, 30 May 2022 10:45:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=MeFQDd/vMIq3sQTe/EpHZmNwHjtDbeiSDoIWpfAEIb4=;
+        b=DPAIWcPWRNlM3n8e+lSgC8ZYIq6YqiE/WvkoDOuqF28TyxsXVbdfrtkwL5aTVb6OSG
+         egbC8AjADCWGpb2WQ1FkPcldGh72uc3XKXzyxAdIulnGvTlioZvBO6IOxno3RCLGQ5/n
+         EQBqQZIN0bFatPgXa2ANsKZ6sRs3y3VKPWO+hrUaOBdLBa/0kNApPnsfTIpOrowt8nBe
+         mpqFYewCueq/KECA2xwTbLS8ywP3hsFowjrek0qNzZ/k5HAiozOCKDEcS5KEt4NCCrI9
+         kENBl3k1KQJ+r+J3utgk/Ta84z9meqUxJ0XHSYr6m5FEY0hjxCSnHi8EyX81s4scFwQH
+         RkcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MeFQDd/vMIq3sQTe/EpHZmNwHjtDbeiSDoIWpfAEIb4=;
+        b=uj047csQyBB9ZFwNdtF5SchJwgEOSyH2N6IiUGs2pgFJq19HXQ/ZAj7cX3shm9qFK8
+         QyWLmBjroLVpAM4KYNUUvnonyWHFenzfKiLTIFUAG8Sr0xXPHSc3C31u3C+TfZgh6rPL
+         qCQyFfeZyrU1kZwCU932amKyiAu021jp80PXNwT7grrGJEZQmXMp4NxughmuKQ/cUq0w
+         57r2wwrVQTECIzxFpEO6FSa69RhMbuyzyw4GoshGdsch4kqJ7kqyCFcVOWkWkJSKuP0+
+         yKwqHXQkXIKj/PrjALg96v+fJZnqBKW9DRhczJRRD6VUW6LYs9YV7uMWzyjfH25EVDdF
+         NJ9g==
+X-Gm-Message-State: AOAM5336fYZZ4dib4QKYcao/0Hf47AUeClcU8QJZctbjGSEWB8+EThbF
+        zp483A6Gt/XUEHeGQYGqCxQjYnStsrk=
+X-Google-Smtp-Source: ABdhPJzcSIUaELtrCgOKnKArisNq3SICoTZhDbmuBfrJI2pNWMlcEf29NgT6KVjct9OB5dOcsMu42Q==
+X-Received: by 2002:a05:6000:15c1:b0:20f:c1d3:8a89 with SMTP id y1-20020a05600015c100b0020fc1d38a89mr40930812wry.287.1653932706382;
+        Mon, 30 May 2022 10:45:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f8-20020a056000128800b002102b16b9a4sm6094840wrx.110.2022.05.30.10.45.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 May 2022 10:45:05 -0700 (PDT)
+Message-Id: <pull.1272.git.git.1653932705097.gitgitgadget@gmail.com>
+From:   "Andy Lindeman via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 30 May 2022 17:45:04 +0000
+Subject: [PATCH] ssh signing: Support ECDSA as literal SSH keys
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 371F5118-E03F-11EC-B4B1-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Fabian Stelzer <fs@gigacodes.de>, Andy Lindeman <andy@lindeman.io>,
+        Andy Lindeman <andy@lindeman.io>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Andy Lindeman <andy@lindeman.io>
 
->> Recent document clarification on the "--prefix" option of the "git
->> archive" command from Ren=C3=A9 serves as a good basis for the
->> documentation of the "--add-virtual-file" option added by this
->> series, so here is my attempt to rebase js/scalar-diagnose topic
->> on it to hopefully help reduce Dscho's workload ;-)
->
-> I usually frown upon sending patches on other people's behalf without
-> obtaining their consent first [*1*], but in this case I have to admit t=
-hat
-> I appreciate your help very much.
+Keys generated using `ssh-keygen -t ecdsa` or similar are being rejected
+as literal SSH keys because the prefix is `ecdsa-sha2-nistp256`,
+`ecdsa-sha2-nistp384` or `ecdsa-sha2-nistp521`.
 
-I understand what you mean.
+This was acknowledged as an issue [1] in the past, but hasn't yet been
+fixed.
 
-Consider this as an extended form of the usual notes I send to a
-thread to say "ok, based on the discussion I saw on the list, I'll
-tweak OP's patch <this way> while queuing; thank you all for
-contributing."  The way I try to convey <this way> can range from
-words (e.g. when a reviewer points out a typo) to a fixup patch
-(e.g. when the necessary update is a bit more involved), and this
-time it took a full series with interdiff form.  Of course I do not
-have to do any of the above and just leave it up to the OP to pick
-up ideas from the discussion while sending updates, but sometimes
-it is quicker to skip round-trips.
+[1]: https://github.com/git/git/pull/1041#issuecomment-971425601
 
-I do not say "Please holler if I misunderstood the discussion and
-correct me, and the OP can always update/override with a rerolled
-series." when I send out such a "here is how the version queued
-would be different from the original" notice, but I always mean
-that, this time included ;-).
+Signed-off-by: Andy Lindeman <andy@lindeman.io>
+---
+    ssh signing: Support ECDSA as literal SSH keys
+    
+    Keys generated using ssh-keygen -t ecdsa or similar will currently be
+    rejected as literal SSH keys because the prefix is ecdsa-sha2-nistp256,
+    ecdsa-sha2-nistp384 or ecdsa-sha2-nistp521.
+    
+    This was acknowledged as an issue in the past, but hasn't yet been
+    fixed.
+    
+    https://github.com/git/git/pull/1041#issuecomment-971425601
 
-Your "frowning upon" is understandable in that it can become a
-hostile behaviour towards others, including the maintainer who is
-forced to ignore or pick.  It is never fun to be in the position to
-always exclude half of the patches posted to the list by
-contributors who are competing instead of cooperating, and resending
-a tweaked patch to show "here is how I would imagine is a better
-version of your series" needs to be done with care.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1272%2Falindeman%2Fecdsa-sha2-keys-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1272/alindeman/ecdsa-sha2-keys-v1
+Pull-Request: https://github.com/git/git/pull/1272
 
-Thanks.
+ gpg-interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 280f1fa1a58..086bd03b51d 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -779,7 +779,7 @@ static int is_literal_ssh_key(const char *string, const char **key)
+ {
+ 	if (skip_prefix(string, "key::", key))
+ 		return 1;
+-	if (starts_with(string, "ssh-")) {
++	if (starts_with(string, "ssh-") || starts_with(string, "ecdsa-sha2-")) {
+ 		*key = string;
+ 		return 1;
+ 	}
+
+base-commit: 8ddf593a250e07d388059f7e3f471078e1d2ed5c
+-- 
+gitgitgadget
