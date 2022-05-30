@@ -2,201 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B59DDC433EF
-	for <git@archiver.kernel.org>; Mon, 30 May 2022 09:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D5BCC433F5
+	for <git@archiver.kernel.org>; Mon, 30 May 2022 09:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234777AbiE3Jct (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 May 2022 05:32:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58474 "EHLO
+        id S235004AbiE3Ju2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 May 2022 05:50:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233729AbiE3Jcr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 May 2022 05:32:47 -0400
-X-Greylist: delayed 64 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 30 May 2022 02:32:45 PDT
-Received: from smarthost2.atos.net (smtppost.atos.net [193.56.114.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A50F25C5A
-        for <git@vger.kernel.org>; Mon, 30 May 2022 02:32:45 -0700 (PDT)
+        with ESMTP id S234855AbiE3JuC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 May 2022 05:50:02 -0400
+Received: from smarthost4.atos.net (smtppost.atos.net [193.56.114.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF4F35DD5
+        for <git@vger.kernel.org>; Mon, 30 May 2022 02:50:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=atos.net; i=@atos.net; q=dns/txt; s=mail2022;
-  t=1653903166; x=1685439166;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=vXssRfEUxDSa4jVaxDGezV0+nPFeRN9Dmc+RZX7p00o=;
-  b=jDZBPANrPchAfljhlBuFcGxAg6IYD+X8NdQ5ngZ72JFUgeQDdmsMe4/G
-   M9PoxpiBranAOENJYtZgsHO6cveuWV2CrYCpLgPrRontnp5He8m9nBVcr
-   t/O5jt9yAtvd+9Py+L6re9VwUhQ0UWE/eDWBrDMosg48kWapvZZyJof9x
-   aT/YLgM6dOnga8c/O4N37GhuMB+1Mn6ZLRebHINVH2Mo+ScdZCMfJN//B
-   JgSuJ9p6zsIQoSua4LmyOvZmxTTyUuIw41bsJUt8IKlkmHmy/mmpnVfrZ
-   mz+ZhLVJJEhC3OIsOTfqFPL0ySfpnQL8ytY3dXvZCsJR3md+BLE7mfiFM
-   g==;
+  t=1653904201; x=1685440201;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=PVkOnIQjH7nMt3pjDDNjBGfViYj+G/Q7Ip9rCxbcRGA=;
+  b=NwgIS0IMViTlsu5XKc+U3IcE0H8794lcXE9jH3Ldkrw1dY2MjJvZ0Ns6
+   iDkyWxTV58eUiRXZ0EVBtILkWz66UsllVRAXRJf3a9I1jB0C4hBDBRiEQ
+   xXlRK4LexNkVwO862lLxVa1WT1acn9oZur0pXnO1CkJFBSkpCP/bKIKHm
+   f8atoTuUQ3JaUtmCupJHi4+QrsbkYyDftbk77nnoNKB0+ebD4/6TqnpYU
+   /wlVphrdSPbrTdKTN68aBzitiHnqGWJxrri/tr9Ek1rzOdyJC9xbPUPFg
+   OzvyCm12STw1z/D2aiOLMFvLWF8qhIYR0R1q882MfzPktcE9VpTDMc976
+   w==;
 X-IronPort-AV: E=Sophos;i="5.91,262,1647298800"; 
-   d="scan'208";a="357026037"
-X-MGA-submission: =?us-ascii?q?MDFWo2Kl18wGXuhYSrSd5vfrEoU6COzqxR4wvX?=
- =?us-ascii?q?eB2FUkWQaQ9WlKpgiYeXxhL7ayvnpbR7w2rV828cCNVzWvRoWcnjEbTq?=
- =?us-ascii?q?L6dD5rRbT/Vt3RfLC1qZdXn7amC02ugaGG1UxH7D66G3QQFYUahU7SH2?=
- =?us-ascii?q?hF?=
-Received: from mail.sis.atos.net (HELO GITEXCPRDMB21.ww931.my-it-solutions.net) ([10.89.29.131])
-  by smarthost2.atos.net with ESMTP/TLS/AES256-GCM-SHA384; 30 May 2022 11:31:40 +0200
-Received: from GITEXCPRDMB24.ww931.my-it-solutions.net (10.89.29.134) by
- GITEXCPRDMB21.ww931.my-it-solutions.net (10.89.29.131) with Microsoft SMTP
+   d="scan'208";a="363312771"
+X-MGA-submission: =?us-ascii?q?MDEDaVVeNCwTeejbgdEQ/Io2S565YjfP4L66KP?=
+ =?us-ascii?q?114wzL2mCi9/hvg9WSqCtCpZ6h5jEVeEoqNhHBKoUKie10rDzpfiQ1wD?=
+ =?us-ascii?q?N73R9VpGgN92zwO2weJ4N2s810UFlF4DXBbPubvCL7aqxCWhWVecTKLZ?=
+ =?us-ascii?q?8b?=
+Received: from mail.sis.atos.net (HELO GITEXCPRDMB22.ww931.my-it-solutions.net) ([10.89.29.132])
+  by smarthost4.atos.net with ESMTP/TLS/AES256-GCM-SHA384; 30 May 2022 11:49:59 +0200
+Received: from GITEXCPRDMB23.ww931.my-it-solutions.net (10.89.29.133) by
+ GITEXCPRDMB22.ww931.my-it-solutions.net (10.89.29.132) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Mon, 30 May 2022 11:31:39 +0200
-Received: from EUR04-VI1-obe.outbound.protection.outlook.com (172.16.214.170)
- by GITEXCPRDMB24.ww931.my-it-solutions.net (10.89.29.134) with Microsoft SMTP
+ 15.1.2375.24; Mon, 30 May 2022 11:49:59 +0200
+Received: from EUR04-DB3-obe.outbound.protection.outlook.com (172.16.214.169)
+ by GITEXCPRDMB23.ww931.my-it-solutions.net (10.89.29.133) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24 via Frontend Transport; Mon, 30 May 2022 11:31:39 +0200
+ 15.1.2375.24 via Frontend Transport; Mon, 30 May 2022 11:49:59 +0200
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WEnOuRKmdlf8HrrVHOYBJM2hy9WLrS/qOiZ2gvT8Dg+KsDMl/EryIGDpN0fuA+yHIS5e9KYIuYL1USjDJXxR6Rh3bYwXS34YWXrMpjedeHZke4p06s2wcPobEJmVXQh8vkfMzlFYCjEIESEHSCI89iGaPi36Cx3YtxAvEiu22exfSYbQvYn19tXA9f8B/JWkty97rrP/dh2l8A+bIwbR9lyqmkDmcAquxG933fzilpnOzSYDD3Y1AZySBTJmo3oV1Pt6lKlQM6fXU1okQm8fDwAp9Gh5vQUet6ZxtTLdvSsC5m97gMMj8LgbH89dnG0nXVaPIhRNeIXB59lQ+++6pg==
+ b=Cudl/DYGv/VB49HlYLZoEJSMLeFjw6bF/5AnNO0t3BkgjiHTXiPQLPJldTVpGBNlPDmeZNg5AGAfq+ak3lw/gomC7P85yluoZ1gl6MXKvPYpi78F9XkIE1SjA+lkmIuHINjNZ03JnlHEzhYenNXgG+d2QnGfZlF6cQB/InnwV8yuW1LmswHzXedlgEVOzIEF1y6j5i6EJq3iEqXJcJfsja5bb0oi6fRXXaUQJI46jhxIDV5DIMFQZN5crtT7JpD48voMEOb/lBD7L23GvO88j7iRngLCTaD3QA599Y/nXxKQJCsX1S1im7TkvZPYxOd1CR2awYSIPEjJ6LRD4gDrWQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vXssRfEUxDSa4jVaxDGezV0+nPFeRN9Dmc+RZX7p00o=;
- b=JoIcVI29Abephncn+3f7LCDIw5o24YnnLKfTxQSNHKX+eFfWnuPBmuwx9ojc7mR6ved8viODwsq/of103wTEbJawG8EVg4g7ct1GDRSn4TE1zHUiQbK6PYiOq4ipWvRsEabyLp8WXl2B08MpYGex3TVpyDQOXl7M6PMTSS0NOyf/0jMpiomQ0pcHXVuyod38dyUhFsENyt0iVYIUKVxC42cqb03dGcA7U8FZ9Zqu/6Q7BeUHCSkyoddNGg9CODgbg1vIMhWuf3lfN03a1a4bi7QRIDoAKHR/2PYomIUdnHbFzejcVq7NXQlrPlXozPJdnKZhxVCHis65Czs7TqkApg==
+ bh=PVkOnIQjH7nMt3pjDDNjBGfViYj+G/Q7Ip9rCxbcRGA=;
+ b=kV2Zr2qvBWw/Q7sD3GdpJE1e0b1BvXOwd01ErXJUi/C6Zfbki5IpxKbZEAN/rBwHwp5wWDBK04md9r3AbUhAYuIo/b/9T1HxQvUVisOUOr3qfEDlbC6Hu2PX7z7BzaoDrJqsu10uyj8+0HP2tb9VQNm/UwGfplSSOdX8kL5vQ4Xx0HvqqvU6sPYJ7moZrv34VKuHDfUuBH9CANu57ZniYw3JeR8kYq3OgzmUVBcOo9mEJ7WzSCQ2VzPTRyuD5qqSxLFRuJhtW7hqY8DWBg76SpFJS3JTsahofdjr7lCnxkXDiaeO3IQtkxFmv8HJBDbdRh0cWOQDBhBFZ81oM1jsBA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=atos.net; dmarc=pass action=none header.from=atos.net;
  dkim=pass header.d=atos.net; arc=none
 Received: from AS8PR02MB7302.eurprd02.prod.outlook.com (2603:10a6:20b:3f8::19)
- by DB7PR02MB4043.eurprd02.prod.outlook.com (2603:10a6:10:43::12) with
+ by AM0PR02MB5684.eurprd02.prod.outlook.com (2603:10a6:208:164::19) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5293.16; Mon, 30 May
- 2022 09:31:38 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5293.19; Mon, 30 May
+ 2022 09:49:58 +0000
 Received: from AS8PR02MB7302.eurprd02.prod.outlook.com
  ([fe80::75d2:ba70:2c4c:4aff]) by AS8PR02MB7302.eurprd02.prod.outlook.com
  ([fe80::75d2:ba70:2c4c:4aff%7]) with mapi id 15.20.5293.019; Mon, 30 May 2022
- 09:31:38 +0000
+ 09:49:57 +0000
 From:   "Kerry, Richard" <richard.kerry@atos.net>
-To:     "Graham.Menhennitt@c4i.com" <Graham.Menhennitt@c4i.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: request for development/build workflow suggestion/fix
-Thread-Topic: request for development/build workflow suggestion/fix
-Thread-Index: AdhzxrAHCd1doVchRB28GYAVqQ2qtgAPLRbg
-Date:   Mon, 30 May 2022 09:31:37 +0000
-Message-ID: <AS8PR02MB7302BAA142824332D1BE24939CDD9@AS8PR02MB7302.eurprd02.prod.outlook.com>
-References: <BN2P110MB17460C18D525E831A63C4376C5DD9@BN2P110MB1746.NAMP110.PROD.OUTLOOK.COM>
-In-Reply-To: <BN2P110MB17460C18D525E831A63C4376C5DD9@BN2P110MB1746.NAMP110.PROD.OUTLOOK.COM>
+To:     Philip Oakley <philipoakley@iee.email>,
+        Aman <amanmatreja@gmail.com>
+CC:     Git List <git@vger.kernel.org>,
+        "git-vger@eldondev.com" <git-vger@eldondev.com>
+Subject: RE: About GIT Internals
+Thread-Topic: About GIT Internals
+Thread-Index: AQHYcFJeSlQVuDSUyE+Bj+ahqalDva0wP0IAgACamYCAAfU7l4AEYLEQ
+Date:   Mon, 30 May 2022 09:49:57 +0000
+Message-ID: <AS8PR02MB730274D473C2BC3846D9FA3F9CDD9@AS8PR02MB7302.eurprd02.prod.outlook.com>
+References: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
+ <Yo68+kjAeP6tnduW@invalid> <8adba93c-7671-30d8-5a4c-4ad6e1084a22@iee.email>
+ <CACMKQb3exv13sYN5uEP_AG-JYu1rmVj4HDxjdw8_Y-+maJPwGg@mail.gmail.com>
+ <0201db28-d788-4458-e31d-c6cdedf5c9cf@iee.email>
+In-Reply-To: <0201db28-d788-4458-e31d-c6cdedf5c9cf@iee.email>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
 msip_labels: MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Enabled=true;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2022-05-30T09:31:36Z;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2022-05-30T09:49:56Z;
  MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Method=Standard;
  MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Name=All Employees_2;
  MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=c7b750ee-7d65-4da9-b321-bce1a1eba6db;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=ae3cbb81-2b12-4992-8a89-25c27118c3d7;
  MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ContentBits=0
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 37502e6b-1fe2-4d39-334e-08da421f322a
-x-ms-traffictypediagnostic: DB7PR02MB4043:EE_
-x-microsoft-antispam-prvs: <DB7PR02MB4043AC5C2AF96DC9EA0296BD9CDD9@DB7PR02MB4043.eurprd02.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: cb73cd09-857a-427c-3f5c-08da4221c1cf
+x-ms-traffictypediagnostic: AM0PR02MB5684:EE_
+x-microsoft-antispam-prvs: <AM0PR02MB5684B4D0DDA35C66EBDA788C9CDD9@AM0PR02MB5684.eurprd02.prod.outlook.com>
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Q3IqeBdNOYNk7Q8zxUTk7O9nnueYk1El/E29IWvxHz2atiQDNVlblxWDqvA2EJEOHuiu12/B17uQUYqNLXDdR5iYzfeq6NW5/dtyvq3RdOUr11b02atGXf36esiCces6AAXgeMNgYigqYN6+lyPgMxH/NA1ECv2IKIhDGlDGS8wt6R9MWErPlsWDpsg5wrByZtT+ZX3IWAFMRS3Vs5GigeLXcNf/XVUVUw5fP6Dznk8z1pf0HkSCswHCXeP1KWl1T1aKazCaHFLIJxKm5VnrOVITq30C4qmfWXJtKQ+2NZXHi3a/CQ5A/GtFyGSQK+2T581rd9q8FeVHYak9W0RzLFLNNhpGdOhIG7tH4JlX/CBHko9bYz0hfKPrcP6SOK8aQBUqEPmFisbh6VKLlRUzMGvsqPCNxkbAsjnvTzPTA8uZCkUX0P8j2eIEkf0rK4I3RIdtomdnmD/R6tn0I4bLgNN5Ekm8jEG5JqtSDVoR1yPTBaVZAui8e8yUguWq3F/pFNZsiXsVbHSOIQPhWbjy+ywcjBJo5HHp0xS7JrCk1qV5x48oa5BEEzBjcADdSFAN1/Z/zstQS97Ac0618hPsH0VJZc79A/XkiCuJJbo8Z9lPWfmZci6M9KDLxDKeBM+7pv51wJq+iv/QRFnyPHKE4hwSldjZO5bm+kWOMrpN0zB6onnkJtUboNIJNogmr6q1HjtN3BR2SrHK8/pWefLObQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR02MB7302.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(508600001)(38100700002)(71200400001)(316002)(33656002)(110136005)(55016003)(38070700005)(186003)(2906002)(82960400001)(76116006)(66946007)(8676002)(66556008)(66476007)(66446008)(64756008)(86362001)(5660300002)(8936002)(122000001)(52536014)(83380400001)(6506007)(26005)(53546011)(9686003)(55236004)(7696005);DIR:OUT;SFP:1102;
+x-microsoft-antispam-message-info: F/ZkGcaqoXEOazb8R32Dy5jO0QTBF+UoXfMaSPhNvx6GcXIV147bFWsqfr4uV5iOnCbyxxI92Da64i9EtuvfNaiXsJ6UUS4mMAM3KHpgldnbD5SarKqCp0Fo3SJ9sR30vw99U5GXL4Lfq3fMe//b+2zh7yym9/EwsjgCEcWSUOvSXc1N6WvCforqcL+G9Ljh+kc0RKU/+bE6CXa73WOz1Pvn5dgfY58B11RbCx/V02CV6V2/wOBEp/Zav61RXwGIzZ9surq3ICXK4X1/KJ4QQuW38k3Q50bHh1AglW6ddmW1nUsEAI4QpVtWxMzTrdZ/cWZHS/VYAjg4hoDSX2PMv7UMR+Iww6NcwZUflIGUwyMfNuNQC2QClGHjJ1XLKw2wiYR+nU+/YH0uWzIGaltJUzRYEjxIfUAAyLCOwJq9FWyCcAWEfbv6OF4jDlEGDLQ2x+DK4cVWN+zR9RpZstqI5EhG6fV/jy9AJyjnoovr2jL2S5trmKNLAAq/ro95bw66m2O+6HZI/G+i1G79wZbCM3fweaQdVfVpsnyNYEOTQL5F21zv0IZvi+EipKfbL57CvWXzLnx3Sf/dK0H2Q3AMt4urzd0OIt+FDet/fnEBy9voByKJs2wzZAF+mA0fXjQgTcdxAJ//GVFk2sKdKm4oasQCbOCWZnfFUyF0nxFRFvQcfSgvsTxiVRuPoMsN1Xl9IukWDALM07E4xqi6JkGW7w==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR02MB7302.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(508600001)(5660300002)(33656002)(64756008)(53546011)(52536014)(66556008)(66946007)(8936002)(7696005)(6506007)(86362001)(55236004)(9686003)(26005)(2906002)(71200400001)(82960400001)(3480700007)(122000001)(38100700002)(55016003)(186003)(38070700005)(83380400001)(110136005)(316002)(54906003)(4326008)(7116003)(8676002)(66446008)(76116006)(66476007);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?LggcxQPt5gEM7i7b8SJiZ0cQ4ys0lAVFhxXC7GEkKEHGsRwDrUltWP/WHht5?=
- =?us-ascii?Q?Ar90hZga+ac+dqtMeU80PBUfBVQjv05cQKUxo12QGscI5kmYUBiZMmdQJTXD?=
- =?us-ascii?Q?1N7gCipq0PTFRydup0sQv0mnhTnkKPOOYBYwpe/vfYVhAk72659o2ec4jOAB?=
- =?us-ascii?Q?em9vCFe8XtQbSev4CWBAW7xiemlPGEFsE3a53yEwST6IZHzD+nM8bQnnX35f?=
- =?us-ascii?Q?1BIAT1tme0KWnLFYLLmYyX2PdVOgqFlApcfEWaq543xVnz5lq6YDyAq0WGVO?=
- =?us-ascii?Q?yRiF8aEuA7Zb9fYU9SOaFcUwDyXdR/hIZnjPMfu/iJRtQeI9eOL9rhueXXwT?=
- =?us-ascii?Q?4ji2OUi8tPTMzem6ecc/iWURrBUvHMM6AUUO28sRaz6I9gSxu1oqIsBsHDLX?=
- =?us-ascii?Q?d32YW22d6cPDzK7ike7yes+2FS4Tqy9WjJoWCoLxiIdmN4jmc/9OZpfzGQZz?=
- =?us-ascii?Q?0Efx1/KMAs+LWnPP0Iiv/mktG5CjvuiG3CNXLUurT37FphoU4ErRtsKV2FCJ?=
- =?us-ascii?Q?7QnKhem8gNfbbU80eGZdw5zrQSFHPxp8h4r0kfejqdQD6B25Y6K1HZFl1Dds?=
- =?us-ascii?Q?tmXr2xIcoDU/7bOBosSDDsP5Ow7y8YxlUDW75axAMX+SByOJ9jiwivuPsXVv?=
- =?us-ascii?Q?20G0MyU+uUHF+fY7ZKmUtWBZuNFZwYIT4/vvN/l35MRgenlAicscDJseQlWV?=
- =?us-ascii?Q?7POVx9jxVTyGg3ImFciYFsVM7XBw3/Xkc66SNcdWRDrdDmipfLjqmTkb03Nt?=
- =?us-ascii?Q?5HL5MksmvSp8sFrYjAwADbQHC18xzeRwXjmL/CU++CQanaJygMFZpTMcmC3z?=
- =?us-ascii?Q?UvRVds0rPmGodEdn+BLKARdpoM8i9ni4y+z1GTOftHgqYEWJ9t68LrRRVyV7?=
- =?us-ascii?Q?+TDrWZsghCcxDWt43F1192aUmJinOfqXOegc8RztDYc62vCr7dJqdqOm1aB8?=
- =?us-ascii?Q?UEEp53PsjUBBbZjsR34li9FBJAvL/qdwn5hRsOKkCt1yMNzWU3NWyYrt1Ksr?=
- =?us-ascii?Q?pWXVovIfGSKNFKlkMK0U6cQVSUjp6OMhEOeBfcPMSycH1Z6CT1LHurXkZR1i?=
- =?us-ascii?Q?dExSZERj/eONZU1lXtk0tIW8QyWZJ+7fwBHdy5KOO/IAtPJzz6NcnXg6IQVL?=
- =?us-ascii?Q?CAOsGq/7rbCdp+BT0lC345kEvVg39+1qhyFnpsJ6uuyBEHA60SfkfdhmmvvK?=
- =?us-ascii?Q?sUhHWCKHKi0f6Oh+fEESdGa65G5Fjvs1/XZEuk7BKy79clQQpdclnsOYw8jl?=
- =?us-ascii?Q?xQcbpRL/W5xjK+UTSeU8C+csvgHOlZaek3sB9s+ScqX+ZZ5f0COD/cLJD4Wo?=
- =?us-ascii?Q?8qBtsjzL9+HqwF4jZuvgJnudVkZ8hOx8CLZsK5MzrEpoZyzmQICnQfrLl0QY?=
- =?us-ascii?Q?s2u5KwjPEHnrgOrnUOAvCqZAr7eaDFEnpSbMupmIWpZyJPLpPldJasREkmHZ?=
- =?us-ascii?Q?KSl0HKZ/G0xtAhfu/trKLZ7eh6THZv0xtTMrsKYkjZANLTmMv4azc5Lh9p4f?=
- =?us-ascii?Q?vBsJ+uSQn9hcEckX4xiNthz+3Vhd9sjZTu/pV4GzeDdbSfBftJj7L4HH+Soe?=
- =?us-ascii?Q?Qh4hq7eTL2LGws0IdwopbuvtV6iWcThMBuMua4QpbxKp+Ed7DRMG3Hr1figO?=
- =?us-ascii?Q?weKlc7lFRjNI9ds5IUb+pL7oUJ0Hd8Oloj5ewIQxVpjcnvIiBK9CIuV61Z2q?=
- =?us-ascii?Q?KxL8yt7wazSYsLrQJM7dYAH6iLV9KDAWMXFRIL/GJwZskhA84/Es9V1qMMZ0?=
- =?us-ascii?Q?blgkfhqT3A=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?eiXANmkWOqDuqgS4cRWaAX8M21ox+/MITOhluEAF/NWMVNSEwhQQJAhuD/3e?=
+ =?us-ascii?Q?3Xd+IYLRms6Nx8zLcUjN9lzrScQ8LL0TOTvp5Ya9wSAF6U/yoXS3LzrsFs+b?=
+ =?us-ascii?Q?n0/lz6CxfwLnGr3T+j3aa1779grjBtuFfRnrLaQa2JF55+wxNC+vqrqCad1/?=
+ =?us-ascii?Q?WbC3iPbQ226UA4hDcecJIZl4XEqtXAQAEunp5HjhblxcWdnxj0XlzN9buFJG?=
+ =?us-ascii?Q?ZvmFk/nhaCgJRhkbFp4URBdyUDbk7dVD2VLaB2k2+Vw0Q+eZsdm/Z0mIQCae?=
+ =?us-ascii?Q?Ao4GQCQ3W10FbqkI3xDoxNZG6aymRvZh7o7f3wLe+p5nS6D0gfm2Ogt9AVL5?=
+ =?us-ascii?Q?nlzyZneVJ2fEy6wJkDTdsucFFU6ne0IrF/KgujHKkm/FjufW2J2Wc7KHvOBU?=
+ =?us-ascii?Q?s0wOAWIc+ctuygglfBtfV/3JNoDglwRMa7o4VCrXOCWfQ/9PFNs4OQpwZGGD?=
+ =?us-ascii?Q?68WF2muENNH51CrKBTZe2gEg658oAAjkxGe9O+k8a/aKL/oFZCtIKKd7wXhJ?=
+ =?us-ascii?Q?M41DlnQkuGEaPuAnmfXRDqGoo9ZvShIQZdcJKP+zBYbo+TWBpfGxRmtshYCp?=
+ =?us-ascii?Q?60ZWh8jPBqdZ/tE33s0cXYEBC53DDFaFIwWMn0cZYFsbjGKI6v4eyPQ+hfbA?=
+ =?us-ascii?Q?2Hk90z38ErNM2xaVMJ88vcfgKZINV6oCjYQ6ltyh2ipkxfvk+ZyrbshIPGqe?=
+ =?us-ascii?Q?n7cCBLQKRoZvlRBPX7MC0c8FQLxqAvWDELj695xqIYOg7tNoVSwKzykqNty3?=
+ =?us-ascii?Q?QM7cv8hiFPld9b4Z7krsHn7xbEWu8vwGT8dIC3L56njq5P7roRtTMpnBzWsj?=
+ =?us-ascii?Q?seDOR0cx4LcBCdewbd4Hb/cQEsXAfTEkkp/opYuXMn3yG3Bx7TOBp6h3Jleb?=
+ =?us-ascii?Q?tLZAz1RYpURPt+st2tVF3gEreohgg+01exNXK3m7sPgUAVFjHL5zyPemOhcG?=
+ =?us-ascii?Q?f+Ch0d2Q7EjO6J6Sz507p3x+gQL6j/OaW4pfJMQUEYSyqHVs432cj9MHbFdn?=
+ =?us-ascii?Q?qDcN6bXHvnFXmTyCIAXoPIrBfWbV3nXxm81dx9GvQa5jzoLYC53iXL5AbxFZ?=
+ =?us-ascii?Q?T5T9EJ9NdHUi/iGoiC2ZfRWldRemWEcUM3X3kLBm0v1/GflcywMdfzQ23hFT?=
+ =?us-ascii?Q?mFrb4LF0srToIZcBc+Y1HOgr1LDabi7irbjRXZq/tdssHdwvrQcL8RhqZHAw?=
+ =?us-ascii?Q?1SKyw7gsxFY7hfoXzMdXVrmMbfkkxeK+G8NjeWGlth5mEwCsedTgwI4Fmr8p?=
+ =?us-ascii?Q?qZE7KPfK3UTlr5f1sDLmsOpbEGXZ+Lpo2QpHAsRDku6CdBqfTR+y2t3SY08F?=
+ =?us-ascii?Q?7GHJAfXbSVgha1ujpauzL/ILSTJ+P2g68opE4GLjV+tjErW37nL32kU/sYgH?=
+ =?us-ascii?Q?dAdz5Z8ST9HShs2iFcyKTRsNEjdxMSSUtofR0+0hZRPovn2qqjv0mf18TCdR?=
+ =?us-ascii?Q?Zq/xk/S04fa1lGZC0b8C5lXNPVL4WzrjAWEmAGCHMYLohcvsY8qtSmAVObe/?=
+ =?us-ascii?Q?tihsE3wVoENRn5vHqEwGH2fpjCwowxVr7wuWEgAZjpglbgwYIl3tSec3JY0T?=
+ =?us-ascii?Q?rA7684oHTNZo9RfGw4JIqddHAgywFibjO/l2aJxejEeK/rgUyMnwPRSJiKcv?=
+ =?us-ascii?Q?z2m+2+52034oHaLEhO1YqGUn4vH3L52eqC+q/+RUacgeMKPWNxwbRaDWObPf?=
+ =?us-ascii?Q?IUNdKjCWw8+AbfdoYs583DKJMMOASmvAnViWM7KMMIwP9qaxu04DpkmVMjvP?=
+ =?us-ascii?Q?eisQUpP83g=3D=3D?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: AS8PR02MB7302.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37502e6b-1fe2-4d39-334e-08da421f322a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 May 2022 09:31:37.9236
+X-MS-Exchange-CrossTenant-Network-Message-Id: cb73cd09-857a-427c-3f5c-08da4221c1cf
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 May 2022 09:49:57.9129
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Sv9VU3HNQjYNrKwhZPNlPJB8yps2cQfuwFiwzo+GnMaYb6O6tMK4tNnOeM+/HR9x4WdwsWJ8S7/pFKMZpmYBqg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7PR02MB4043
+X-MS-Exchange-CrossTenant-userprincipalname: baw/4+Xymm/v0TDTTroR1BfTaDZtnPSpPIwaY/NHffzdA3QMIK2l8Kzl43ogb8vD4BRAja541PHy0wKY30HPxA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR02MB5684
 X-OriginatorOrg: atos.net
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+
+
 > -----Original Message-----
-> From: Graham.Menhennitt@c4i.com <Graham.Menhennitt@c4i.com>
-> Sent: 30 May 2022 02:45
-> To: git@vger.kernel.org
-> Subject: request for development/build workflow suggestion/fix
+> From: Philip Oakley <philipoakley@iee.email>
+> Sent: 27 May 2022 15:40
+> To: Aman <amanmatreja@gmail.com>
+> Cc: Git List <git@vger.kernel.org>; git-vger@eldondev.com
+> Subject: Re: About GIT Internals
 >=20
+> > Just a  follow up questions- if you don't mind:
+> >
+> > 1. I haven't had the experience of working with other (perhaps even
+> > older) version control systems, like subversion. So when refering to
+> > the "control" aspect,
+>=20
+> The "control" aspect was from whoever was the 'manager' that limited
+> access to the version system (i.e. acting like a museum curator), and dec=
+iding
+> if your masterpiece was worthy of inclusion as a significant example of y=
+our
+> craft, whether that was an engineering drawing or some software code.
 
-> Our (simplified) development workflow for fixing a bug or adding
-> functionality:
-> - clone the repo and create a private branch off the Integration branch
-> - fix the bug or develop the functionality (and test)
-> - merge the private branch to Integration
-> - create a tag to identify the fix
->=20
-> Our build system:
-> - clone the repo's Integration branch
-> - edit a 'version' file in the repo that contains the current build numbe=
-r and
-> increment that number
-> - build the software
-> - commit the edited version file
-> - create a tag identifying the build number
-> - produce a list of changes since the previous build by diffing between t=
-he
-> newly created tag and the previous build tag
->=20
-> The problem:
-> - if a developer merges to Integration and creates a tag while the build =
-is in
-> progress, his tag gets included in the diffs even though his changes aren=
-'t
-> actually included in the build.
-=20
-> So, my question: can anybody please suggest an improvement to our
-> development or build workflows to fix/avoid the problem? The obvious
-> change of omitting the pulls before pushing from buildClone doesn't work =
--
-> git won't allow the push.
->=20
-> Many thanks in advance for any suggestions.
-> 	Graham
->=20
+I'm not sure I get that idea.  I worked using server-based Version Control =
+systems from the mid 80s until about 5 years ago when the team moved from S=
+ubversion to Git.  There was never a "curator" who controlled what went int=
+o VC.  You did your work, developed files, and committed when you thought i=
+t necessary.  When a build was to be done there would then be some consider=
+ation of what from VC would go into the build.
+That is all still there nowadays using a distributed system (ie Git).  Thos=
+e doing Open source work might operate a bit differently, as there is of ne=
+cessity distribution of control of what gets into a release. But those of u=
+s who are developing proprietary software are still going through the same =
+sort of release process.  And that's even if there isn't actually a separat=
+e person actively manipulating the contents of a release, it's just up to y=
+ou to do what's necessary (actually there are others involved in dividing w=
+hat will be in, but in our case they don't actively manipulate a repository=
+).
 
-Don't merge to the integration branch, commit to the development branch (ie=
- the trunk)
-At the moment when a build is to be started, branch it generating a new int=
-egration branch (maybe also tag its start point).  Build from that.
-Thus at that point in time it is frozen.  No-one commits to it.
 
-Integration manager creates the integration branch and is then in control o=
-f what may be merged to it.  The rest of the team can commit to the develop=
-ment branch and their work will not hit integration without something being=
- done explicitly to put it there.
+> >>> Chapter 10 is about git internals. It is important to realize that,
+> >>> unlike many other version control systems, git works effectively on
+> >>> files locally on your computer, without any server or other shared
+> >>> resources to manage. Also, one good way to learn may be to form a
+> >>> question that you want to answer first. "How do I ...." or "what
+> >>> happens when I ....". Since git works locally, it is possible to
+> >>> create a git repo, look at the files contained in the .git
+> >>> directory, take action with git, and then look at the files again.
+> >>>
+> >>>
+> >> Another Git feature, compared to older version control systems, is
+> >> that it flips the 'control' aspect on its head. (who controls what
+> >> you can
+> >> store?)
 
-Maybe,
+Again, I don't really recognize that.  You store what you want, probably wi=
+th some sort of arrangement with the others on the team.  The important bit=
+ is determining what will go into the release.  Ie in choosing what, from e=
+verything that is stored, will be released.
+
+> >> Hence Git _Distributes Control_ - you no longer need permission to
+> >> keep versioned copies of your work. This was, in my mind, a core
+> >> element of its success.
+
+Maybe you do.  If you're working with others there will probably be "permis=
+sion" in some sense involved.  I can store what I like locally, but then I =
+miss out on some protection of my work, against a technical fault locally t=
+hat might cause a loss of the whole repository.  If there is a remote serve=
+r then I am probably only allowed to store company work to the company serv=
+er.
+
+A lot of this discussion seems to be more about the differences between the=
+ nature of Git and its client-server rivals.  I thought the original query =
+was about how its internals worked, which would seem to be a slightly diffe=
+rent question.
+
+Regards,
 Richard.
+(Not old enough to remember the smell of blue prints, but old enough to kno=
+w of the term)
+
 
 
