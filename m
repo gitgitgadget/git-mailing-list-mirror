@@ -2,96 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 509E5C433EF
-	for <git@archiver.kernel.org>; Sun, 29 May 2022 23:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 923A3C433EF
+	for <git@archiver.kernel.org>; Mon, 30 May 2022 00:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231835AbiE2XBU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 May 2022 19:01:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58704 "EHLO
+        id S231880AbiE3AQ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 May 2022 20:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230417AbiE2XBT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 May 2022 19:01:19 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97A8977F3B
-        for <git@vger.kernel.org>; Sun, 29 May 2022 16:01:18 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24TN1F10029556
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 29 May 2022 19:01:16 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-Cc:     "'Robert Dailey'" <rcdailey.lists@gmail.com>
-References: <CAHd499D81VN=aGsM6kaNLF2ZMg-Zg10U=qU-j7gQ7uXnqqfdqg@mail.gmail.com>        <xmqqh758yz4u.fsf@gitster.g> <xmqq8rqkyyc2.fsf@gitster.g> <xmqqpmjwx8so.fsf_-_@gitster.g>
-In-Reply-To: <xmqqpmjwx8so.fsf_-_@gitster.g>
-Subject: RE: [PATCH] pathspec: correct an empty string used as a pathspec element
-Date:   Sun, 29 May 2022 19:01:11 -0400
-Organization: Nexbridge Inc.
-Message-ID: <032f01d873b0$008c1b50$01a451f0$@nexbridge.com>
+        with ESMTP id S230465AbiE3AQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 May 2022 20:16:24 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA4430F42
+        for <git@vger.kernel.org>; Sun, 29 May 2022 17:16:22 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A567719822B;
+        Sun, 29 May 2022 20:16:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Gdxla7oKBgOiLEtCSkNSSPguRFt3NEJ1hipiTb
+        ntNNQ=; b=Bjm1uVSZYTzJu7hN/UiE/bnJzo9KyDbTy7s/J/CBy1Bd4MU5s6UEut
+        8kv8sO+8rAOEJ21UGEYaXsSoqyxqqnBXlQit8l1JjMBkJFkxJXqvqDmn6YHaHMpZ
+        XaiYZJkrdDR/Yc3hqDkDqRAyc95N5KY4/guh5K+yBEG1KgRHM37og=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C07A19822A;
+        Sun, 29 May 2022 20:16:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 416A8198227;
+        Sun, 29 May 2022 20:16:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
+        avarab@gmail.com, christian.couder@gmail.com,
+        johannes.schindelin@gmx.de, jrnieder@gmail.com,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Robert Coup <robert.coup@koordinates.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2] urlmatch: create fetch.credentialsInUrl config
+References: <pull.1237.git.1653329044940.gitgitgadget@gmail.com>
+        <pull.1237.v2.git.1653658034086.gitgitgadget@gmail.com>
+Date:   Sun, 29 May 2022 17:16:17 -0700
+In-Reply-To: <pull.1237.v2.git.1653658034086.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Fri, 27 May 2022 13:27:13
+        +0000")
+Message-ID: <xmqqilpnyiwe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQG6E7/pl8aSL2yTpEd+SDptqXjLEAJqmxulAgGg4c0BqCTZAq1ClSMQ
+Content-Type: text/plain
+X-Pobox-Relay-ID: B9E68E64-DFAD-11EC-9518-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 29, 2022 6:40 PM, Junio C Hamano wrote:
->Pathspecs with only negative elements did not work with some commands that
->pass the pathspec along to a subprocess.  For instance,
->
->    $ git add -p -- ':!*.txt'
->
->should add everything except for paths ending in ".txt", but it gets
-complaint from
->underlying "diff-index" and aborts.
->
->We used to error out when a pathspec with only negative elements in it,
-like the
->one in the above example.  Later, 859b7f1d (pathspec:
->don't error out on all-exclusionary pathspec patterns, 2017-02-07) updated
-the
->logic to add an empty string as an extra element.  The intention was to let
-the
->extra element to match everything and let the negative ones given by the
-user to
->subtract from it.
->
->At around the same time, we were migrating from "an empty string is a valid
->pathspec element that matches everything" to "either a dot or ":/" is used
-to
->match all, and an empty string is rejected", between d426430e (pathspec:
-warn on
->empty strings as pathspec,
->2016-06-22) and 9e4e8a64 (pathspec: die on empty strings as pathspec,
-2017-06-
->06).  I think 9e4e8a64, which happened long after 859b7f1d happened, was
-not
->careful enough to turn the empty string 859b7f1d added to either a dot or
-":/".
->
->A care should be taken as the definition of "everything" depends on
->subcommand.  For the purpose of "add -p", adding a "." to add everything in
-the
->current directory is the right thing to do.  But for some other commands,
-":/" (i.e.
->really really everything, even things outside the current subdirectory) is
-the right
->choice.
->
->We would break commands in a big way if we get this wrong, so add a handful
-of
->test pieces to make sure the resulting code still excludes the paths that
-are
->expected and includes "everything" else.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks for the heads up. I have to check into this for some scripting. Not
-worried but glad to know.
-Thanks,
---Randall
+> Create a new "fetch.credentialsInUrl" config option and teach Git to
+> warn or die when seeing a URL with this kind of information. The warning
+> anonymizes the sensitive information of the URL to be clear about the
+> issue.
+>
+> This change currently defaults the behavior to "allow" which does
+> nothing with these URLs. We can consider changing this behavior to
+> "warn" by default if we wish. At that time, we may want to add some
+> advice about setting fetch.credentialsInUrl=ignore for users who still
+> want to follow this pattern (and not receive the warning).
+
+Can we make this die in a bit more controlled way?
+
+e.g. https://github.com/git/git/runs/6646450422 seems to show that
+depending on the timing, the call to die() on the "git clone" side
+may cause us stop reading early enough to kill the other side with
+SIGPIPE.  The nicely prepared warning message seems to be lost.
+
 
