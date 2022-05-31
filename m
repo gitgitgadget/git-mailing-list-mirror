@@ -2,159 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DF1DC433EF
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 16:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24214C433F5
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 16:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346135AbiEaQZG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 12:25:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46982 "EHLO
+        id S236198AbiEaQxl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 12:53:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346133AbiEaQZE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 12:25:04 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5805395DC9
-        for <git@vger.kernel.org>; Tue, 31 May 2022 09:25:02 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id gh17so27704699ejc.6
-        for <git@vger.kernel.org>; Tue, 31 May 2022 09:25:02 -0700 (PDT)
+        with ESMTP id S232657AbiEaQxk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 12:53:40 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C020E8B0A9
+        for <git@vger.kernel.org>; Tue, 31 May 2022 09:53:38 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id h19so10258880edj.0
+        for <git@vger.kernel.org>; Tue, 31 May 2022 09:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+WID8AmPWhtM27N9DNnfDiSDsUmirgqUtrYvRJFz9Sk=;
-        b=YTZJ3IlnPay9NLE6iyHrsLoxLMsCGFN62RboRWr8CNRP4Bbl/tUtsYiZxbw8qB4bjZ
-         uKasw4I6cW1tA0yJkT0U6OREjVL6jB/dFa4cyGaeTirnhyBJCz6zyDVMZf7Pdm/H8wCw
-         jBuJ+AA4t6PvgxPtlwqTw74/4aerAzUR/HtApp8savjnVVXSBkWp2a9bqDpncyUSTF6a
-         0mvjKBTKYqwgWhFoZ9dGjchwJEx3gK8GyYtbkOv7M9TrT2j5hy1QxzTWS51/Iq2tkSSa
-         3NnnPNE2Iupdmku8sLlt1x8Vgf7bi256DNHuu2M7DAY8QY2dUAbnQKTYCCt9EtU8so1u
-         /l2w==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=0YgkGOGvp1OzTXwcLdv8I1xFEpKFiWGc5R+/9FQFPuw=;
+        b=BRPmfGvIkzUPQSeVJWS40q2SnSFpvfaIELyqwRev+92BjXkwbFWpuQSbIqqywtoYpn
+         4jEJfYsqVG+K2GuwnumxWrMxnE/QwCSQAfk5SMjiqaYg40oMxA4REg4ozXpUnBMYDtkX
+         kJhNygj0rB/KzL4afyn+miotO2PcYE2+Ls1jSzSE1W4OE3ZzaogQI+G80qQeqUWVzjrO
+         G9o0v3okE2g5F4tl4TT7SzlZI9oIzGOQNSDS4SS2mIyVBPOAXfTC4WUC6gIoKf85sdWW
+         qU5eTW5y7g/hU0s2JIT5FClJtgHQd8hsBM2LI6de1E1DLKEMzW4tkHooGM/M4I5ka4RV
+         uPnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+WID8AmPWhtM27N9DNnfDiSDsUmirgqUtrYvRJFz9Sk=;
-        b=XD4qCTk64gGm3suA3zQQvI6cter1L8mg/Vp58M5E+K5vpTczUJUAhYMwmO++PTOkAB
-         kC7KipecumXDCKjLDWzHD6pI8JpfJr3hDpkG9b1vZnS+Xb4rXXtGFZV8ejf0kGTr97EJ
-         QUnTqTQFRbwj1AKtmynxkEIKqINxBMMENknfomtXWeMN5LiqgDXueDQb8/7Mdbhrzmkz
-         k0L8/kD0Qea34NJHo31tF4iIDoNhSoDAvQX60u9x/vAJ1W93POti8T9Ox0w+xMdXzE38
-         ph1b9cIVjSlReVoR7kQr3JMe87+euvurhH48wT2KLFwfMFmarPo8zTabNRH/dUt7wnJZ
-         qmlQ==
-X-Gm-Message-State: AOAM531MwBUC6/R1RdCn+AjxXoRSiplPMhNlgnEQl8G/U6zzyp6kv9EG
-        YovbrX/W5tHoRVYMKoqZk4G3m78EJ+Z0jcqiUQ==
-X-Google-Smtp-Source: ABdhPJyBV6+SQ4C7us1YF/CopKrAEky0MKKEgDgrj1SwrUxkqx0IVMS6UJlEpavifVnww343cztWDnCUucr/Inb9c9w=
-X-Received: by 2002:a17:907:7e88:b0:6fa:55f:881a with SMTP id
- qb8-20020a1709077e8800b006fa055f881amr53684062ejc.476.1654014300750; Tue, 31
- May 2022 09:25:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=0YgkGOGvp1OzTXwcLdv8I1xFEpKFiWGc5R+/9FQFPuw=;
+        b=kK5EC84oeVTQyk2RsXr+OH+I6ce4AxqYKN2oRKyS5eeNXZ0WC1c9eumsIHD0ouVoRP
+         Cvl/fKZcyiGTx3yyQ7SBZ8HE7ASASpAr5IN2XOgoatbkiWE5f/X557DKTTOgUq4JjfTo
+         543WvIRbjA4TRkDpc0kX6p6p5/y8JxeEjeqD5Tfll5Glk6119MPNvDWd2MuiyPKUJhTG
+         sScrNxEHi7KwRYOj21YsxztMnVZTT19wyyBYUE6vArp6igYn3jGA/Y8Vkqc8HKJoyVUO
+         JMGT6af4na8UNaPEOL6VaAS00tiRZsUXoOoGanMexry8H7tx9Oo6VcfcGme0VXTerSfy
+         7uPA==
+X-Gm-Message-State: AOAM530lcQdKgZOxyApY3lSXafvKuavl9ob6zPs0MT7WtEXDHqatdE8o
+        RpHIrmUFLZNqz6dNb/bXikU=
+X-Google-Smtp-Source: ABdhPJxuGg1bCqsxyRP0dT6p9FEhoZhMf79zDP6vLSBVoyfVDWFV2uUaVtv+FMfEx3PQH6wr7TKg+Q==
+X-Received: by 2002:a05:6402:f17:b0:42d:d3f3:244c with SMTP id i23-20020a0564020f1700b0042dd3f3244cmr10539693eda.52.1654016017172;
+        Tue, 31 May 2022 09:53:37 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id y8-20020a50f1c8000000b0042dccb44e88sm4958439edl.23.2022.05.31.09.53.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 May 2022 09:53:35 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nw57e-000wpG-Fg;
+        Tue, 31 May 2022 18:53:34 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH 1/5] usage.c: add a non-fatal bug() function to go with
+ BUG()
+Date:   Tue, 31 May 2022 18:52:14 +0200
+References: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
+ <patch-1.5-faa1c708a79-20220521T170939Z-avarab@gmail.com>
+ <xmqqpmk15o46.fsf@gitster.g> <xmqqh75d2aif.fsf@gitster.g>
+ <220526.86fskw7mbv.gmgdl@evledraar.gmail.com> <xmqqleuo1beq.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqleuo1beq.fsf@gitster.g>
+Message-ID: <220531.86tu951w4x.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CALOmtcX4+ON7+J7K9X4rSYfWYnkciJdFE=v=Oeb7rUqwRt8_JA@mail.gmail.com>
- <CA+CkUQ8hf5m0GZEwcyqLgxMw1vavYey_R4P7oq8=OXc7iAj6MA@mail.gmail.com>
- <CALOmtcW=2skmUPXpnano=21i38b7sq2MEWQjH5yF2jLacZ8sQw@mail.gmail.com>
- <CA+CkUQ9ZnBXU8E=XKTk95hwM4qtZ1M_nX3LTCr5q5njPG3Es5Q@mail.gmail.com>
- <CALOmtcX7amyw3cAuthMPuagUVzJghybHFNy8ciB50yC5SCUwow@mail.gmail.com>
- <CA+CkUQ-YgmRa7ysP30GbkX07Cu_=EM5X66w3Vk=TpshP9xoi_w@mail.gmail.com>
- <CAP8UFD2uUFveiGDAbxObDOh_krmexuLe860Gu397e9KddH0UCg@mail.gmail.com>
- <CALOmtcVN8K59Zkv7XKM7w2zFCbdWKfKr=97-E3306nQHm4Zw=A@mail.gmail.com>
- <CAP8UFD1kinAwq7AL68QXqFR_dxkNFaTp2vP_DUU0KKqkbsXCDQ@mail.gmail.com>
- <CALOmtcWaQgrPTkRA6F8bL3Hp64cOxYrB4xHUa1WC+P34ZdFEbw@mail.gmail.com>
- <CAP8UFD1HGbbmJWB_TksGVLa-7nNBz5pdFi59Y7LP3EODF9Lztg@mail.gmail.com>
- <CALOmtcWFwfV11Vxf1xd_fC=HYGPNO1PtKT=E=-A104cGnAbv4g@mail.gmail.com>
- <CAP8UFD29NgffUBz0CMKyt901Z7Bj5osoBT-4Mfxfp0h_4Qo+Qw@mail.gmail.com>
- <CALOmtcWTw=bo=AqGBN8z9Hf602Peu9AVngwKUZZsCt0cr8jbDg@mail.gmail.com> <CAP8UFD3CppGBFeWjM32AmxNs=SsVcH+tyTC3VJNXb4V-=V9EXQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD3CppGBFeWjM32AmxNs=SsVcH+tyTC3VJNXb4V-=V9EXQ@mail.gmail.com>
-From:   Tapasweni Pathak <tapaswenipathak@gmail.com>
-Date:   Tue, 31 May 2022 21:54:24 +0530
-Message-ID: <CALOmtcWX0QZYXSH-_+RMwi804bgsC6aENJE8bmgv7+1NGT4Jng@mail.gmail.com>
-Subject: Re: Unify ref-filter formats with other pretty formats: GSoC'22
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
 
-On Tue, Apr 26, 2022 at 3:25 PM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi Tapasweni,
->
-> On Fri, Apr 22, 2022 at 12:29 PM Tapasweni Pathak
-> <tapaswenipathak@gmail.com> wrote:
-> > On Fri, Apr 22, 2022 at 2:44 PM Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> > > On Wed, Apr 20, 2022 at 1:49 PM Tapasweni Pathak
-> > > <tapaswenipathak@gmail.com> wrote:
->
-> > > > I would like to work on this with a planner, separately, we can see
-> > > > what should be adapted in mine to have everything go smooth and
-> > > > GSoC'22 project especially.
-> > >
-> > > As you seem interested in other things too, I think it's better to
-> > > avoid this one for now. It could be a bad experience as it's a really
-> > > difficult subject, and I think it would be much better for you to
-> > > start with something easier and smaller.
-> >
-> > I must insist; would be interested in a planner and document prep for
-> > the project, I can see some details
-> > - https://git.github.io/SoC-2021-Ideas/
-> > - https://lore.kernel.org/git/pull.989.git.1625155693.gitgitgadget@gmail.com/
-> > - https://docs.google.com/document/d/119k-Xa4CKOt5rC1gg1cqPr6H3MvdgTUizndJGAo1Erk/edit
-> > - https://github.blog/2021-11-15-highlights-from-git-2-34/
-> > - https://lore.kernel.org/git/CAOLTT8S8TxuTmddGp2WGoPtTc3gwGXzizBfVzKd87otRw7Dpiw@mail.gmail.com/
-> >
-> > to set things for the next steps, let me know if you strongly feel to
-> > not take up the problem right away.
->
-> I am not sure what "planner" and "document prep" mean exactly to you,
-> and what "the problem" is. I replied to your other email and I hope it
-> helps, but maybe in my replies here and to your other email I am
-> missing something. In this case please let me know.
+On Thu, May 26 2022, Junio C Hamano wrote:
 
-GSoC Timeline. :)
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> We are ok to describe projects in a few sentences or paragraphs, like
-> in https://git.github.io/SoC-2021-Ideas/ where we describe the
-> projects we propose, but for GSoC and Outreachy, applicants interested
-> in a project are those who actually write the proposals which usually
-> include a timeline.
+>> I don't think we should do it like that and keep it a BUG() not to call
+>> BUG_if_bug() when we hit exit(), because e.g. in the case of
+>> parse-options.c once we have the a bad "struct options" we don't want to
+>> continue, as we might segfault, or have other bad behavior etc. So we'd
+>> like to BUG() out as soon as possible.
 >
-> I am sure not, but it looks to me like you would like us (not you) to
-> write a full proposal including a timeline.
+> Oh, there is no question about that.  When we detect that the
+> program is in an inconsistent and unexpected state, we would want to
+> bug out instead of continuing at some point, and that is why we would
+> want to have BUG_if_bug(), or exit_if_called_bug(), as I called in
+> the message you are reponding to.
+>
+> What I am getting at is that the code often or usually calls
+> BUG_if_bug() is not a reason to require it to be called, especially
+> if there are conditional calls to bug() near the end of the program.
+> Imagine a program, after finishing to respond to the end-user
+> request, before the end of the program, performing some self sanity
+> checks with a series of "if (condition) bug()", and there is no more
+> thing that needs to be done other than exiting after such check.  I
+> would have added such a call to sanity_check_refcnt() at the end of
+> "git blame", for example, if the facility existed.
 
-No, no. not. at. all.
->
-> For example the proposal in
-> https://docs.google.com/document/d/119k-Xa4CKOt5rC1gg1cqPr6H3MvdgTUizndJGAo1Erk/edit
-> which includes a timeline was fully writen by ZheNing Hu, and was then
-> accepted by us, so that ZheNing Hu could then participate in the GSoC
-> 2021 and start the actual work.
->
-> https://lore.kernel.org/git/pull.989.git.1625155693.gitgitgadget@gmail.com/
-> shows some of the work he did and sent to the mailing list as part of
-> the GSoC.
->
-> https://github.blog/2021-11-15-highlights-from-git-2-34/ is not
-> especially related to any GSoC.
->
-> https://lore.kernel.org/git/CAOLTT8S8TxuTmddGp2WGoPtTc3gwGXzizBfVzKd87otRw7Dpiw@mail.gmail.com/
-> is a discussion about the Outreachy Winter 2021-2022 round (not GSoC)
-> where ZheNing Hu accepted to co-mentor with me someone who would work
-> on continuing Hariom's GSoC 2020 "Unify ref-filter formats with other
-> \-\-pretty formats" project. As there were no Outreachy applicants
-> interested in working on this, we proposed this same project to the
-> upcoming GSoC.
->
-> So I don't see any problem that we should take up with the links you
-> listed. If someone would have it write a full proposal and a detailed
-> timeline it would be you, not us. Of course, as you propose to work
-> outside GSoC and Outreachy, we don't require that from you, because
-> you would not be part of any such official program and wouldn't get
-> paid.
->
-> I hope I don't misunderstand what you said.
+I'm re-rolling this and FWIW came up with this on top of the re-roll,
+but didn't include it. It could also call the find_alignment() and
+output(), but for this it seemed just leaving it at the bug() calls was
+sufficient:
 
-I will update will a timeline in the next few weeks (June).
+diff --git a/blame.c b/blame.c
+index da1052ac94b..84c112f76bd 100644
+--- a/blame.c
++++ b/blame.c
+@@ -1155,21 +1155,15 @@ static int compare_commits_by_reverse_commit_date(c=
+onst void *a,
+  */
+ static void sanity_check_refcnt(struct blame_scoreboard *sb)
+ {
+-	int baa =3D 0;
+ 	struct blame_entry *ent;
+=20
+-	for (ent =3D sb->ent; ent; ent =3D ent->next) {
++	for (ent =3D sb->ent; ent; ent =3D ent->next)
+ 		/* Nobody should have zero or negative refcnt */
+-		if (ent->suspect->refcnt <=3D 0) {
+-			fprintf(stderr, "%s in %s has negative refcnt %d\n",
+-				ent->suspect->path,
+-				oid_to_hex(&ent->suspect->commit->object.oid),
+-				ent->suspect->refcnt);
+-			baa =3D 1;
+-		}
+-	}
+-	if (baa)
+-		sb->on_sanity_fail(sb, baa);
++		if (ent->suspect->refcnt <=3D 0)
++			bug("%s in %s has negative refcnt %d",
++			    ent->suspect->path,
++			    oid_to_hex(&ent->suspect->commit->object.oid),
++			    ent->suspect->refcnt);
+ }
+=20
+ /*
+diff --git a/blame.h b/blame.h
+index 38bde535b3d..f110bf3c40e 100644
+--- a/blame.h
++++ b/blame.h
+@@ -154,7 +154,6 @@ struct blame_scoreboard {
+ 	int debug;
+=20
+ 	/* callbacks */
+-	void(*on_sanity_fail)(struct blame_scoreboard *, int);
+ 	void(*found_guilty_entry)(struct blame_entry *, void *);
+=20
+ 	void *found_guilty_entry_data;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index e33372c56b0..70f31e94d38 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -655,14 +655,6 @@ static void find_alignment(struct blame_scoreboard *sb=
+, int *option)
+ 		abbrev =3D auto_abbrev + 1;
+ }
+=20
+-static void sanity_check_on_fail(struct blame_scoreboard *sb, int baa)
+-{
+-	int opt =3D OUTPUT_SHOW_SCORE | OUTPUT_SHOW_NUMBER | OUTPUT_SHOW_NAME;
+-	find_alignment(sb, &opt);
+-	output(sb, opt);
+-	die("Baa %d!", baa);
+-}
+-
+ static unsigned parse_score(const char *arg)
+ {
+ 	char *end;
+@@ -1151,7 +1143,6 @@ int cmd_blame(int argc, const char **argv, const char=
+ *prefix)
+ 		sb.copy_score =3D blame_copy_score;
+=20
+ 	sb.debug =3D DEBUG_BLAME;
+-	sb.on_sanity_fail =3D &sanity_check_on_fail;
+=20
+ 	sb.show_root =3D show_root;
+ 	sb.xdl_opts =3D xdl_opts;
 
-Thank you for the information.
+
