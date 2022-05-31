@@ -2,156 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E686C433F5
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 20:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26D8CC433F5
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 21:11:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347711AbiEaUZw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 16:25:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50582 "EHLO
+        id S244295AbiEaVLp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 17:11:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241749AbiEaUZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 16:25:51 -0400
-X-Greylist: delayed 411 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 31 May 2022 13:25:48 PDT
-Received: from blitiri.xlumurb.eu (blitiri.xlumurb.eu [51.159.35.77])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E62562E7
-        for <git@vger.kernel.org>; Tue, 31 May 2022 13:25:48 -0700 (PDT)
-Message-ID: <eb2d8ce45e556afd81216746f190bc5c883cdb81.camel@xlumurb.eu>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xlumurb.eu; s=mail;
-        t=1654028334; bh=vyK8wG+QNMVeSiVKvJHMQGtbc95ApZemKmnNLmX6Gu0=;
-        h=Subject:From:To:Date;
-        b=mVnM0ISiUf4AXVJ9Syz29u3byXXg0QsTP1ynKZj8f0dHDKYII2v/5MPCS+xPGnWYq
-         3AZaRVdSqE1sBZNKJIOTV3TpFg8Hh6p1O6hxr3XXi6AFEGoFyd/wwkxn8dzlK9Omnq
-         HLv32aN87JdTPQ9HQ9Ay2or15JG97LDfSvc6p1po=
-Subject: git pull --recurse-submodules wipes uncommitted submodule changes
- without warning
-From:   Guillaume Girol <symphorien@xlumurb.eu>
-To:     git@vger.kernel.org
-Date:   Tue, 31 May 2022 22:18:54 +0200
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S1347910AbiEaVLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 17:11:43 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CB76CD1
+        for <git@vger.kernel.org>; Tue, 31 May 2022 14:11:41 -0700 (PDT)
+Received: from 224.222.9.51.dyn.plus.net ([51.9.222.224] helo=[192.168.1.75])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nw99O-000AJx-Bp;
+        Tue, 31 May 2022 22:11:39 +0100
+Message-ID: <44fe5991-3027-5ca7-bd3b-fd005d337caa@iee.email>
+Date:   Tue, 31 May 2022 22:11:37 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: Files with \r\n\n line endings can result in needing to
+ renormalize twice, after deleting checked out file and restoring from repo
+Content-Language: en-US
+To:     "Philip, Bevan" <Bevan.Philip@softwareag.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <AM0PR02MB56357CC96B702244F3271014E8DC9@AM0PR02MB5635.eurprd02.prod.outlook.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <AM0PR02MB56357CC96B702244F3271014E8DC9@AM0PR02MB5635.eurprd02.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your
-issue)
+On 31/05/2022 15:24, Philip, Bevan wrote:
+> Hello all,
+>
+> I've experienced an odd bug/limitation with `git add --renormalize`, requiring me to run the command twice on a specific file. Here is a bug report.
+>
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> #!/bin/bash -x
+> printf "Test\\r\\r\\nTest Another Line\\r\\r\\nFinal Line\\r\\r\\n\\r\\r\\n" > git.bdf
+> printf "* text=auto\\n*.bdf text" > .gitattributes
+> mkdir test1
+> cd test1
+> git init
+> cp ../git.bdf .
+> git add .
+> git status
+> git commit -m "Add file git.bdf"
+> cp ../.gitattributes .
+> git add .gitattributes
+> git add --renormalize .
+> git status
+> git commit -m "Renormalize git.bdf"
+> git add --renormalize .
+> git status
+> rm git.bdf
+> git restore .
+> git add --renormalize .
+> git status
+>
+> What did you expect to happen? (Expected behavior)
+> Only needing to renormalize the file once.
 
-The repository has a submodule bar.
-In the current checkout, bar has new commits, but this is not commited:
+That sounds like an obvious expectation, ...
+> What happened instead? (Actual behavior)
+> Renormalize the file once, then renormalize again after deleting the file that is checked out on disk and restoring it from the object stored within the Git repo.
+>
+> What's different between what you expected and what actually happened?
+> Needed to run the renormalize step again, after deleting the file checked out on disk and restoring the file from the object stored within the Git repo.
+>
+> Anything else you want to add:
+> This only occurs for files with \r\r\n line endings (and possibly also ending the file with \r\r\n\r\n)
 
-----------------------------
+... however, if I remember the design discussion correctly, 
+normalisation was decided to be just the conversion of the Windows style 
+EOL = `\r\n` to the Linux/*nix style EOL =`\n`, and any other characters 
+(utf8 / ascii bytes) were to be unchanged, including random '\r' 
+characters. So in that respect I think it is working as initially designed.
 
-$ git status
-On branch master
-Your branch is behind 'origin/master' by 1 commit, and can be fast-
-forwarded.
-  (use "git pull" to update your local branch)
+> The file is in three states:
+> - Initial state: \r\r\n line endings within Git object
+> - Initial renormalization state: \r\n line endings within Git object
+> - Second renormalization state: \n line endings within Git object
+>
+> Happens on both Windows and Linux (replicated on a fresh install of Git for Windows within Windows Sandbox). Additionally, tested with `next` trunk on Linux.
+> System info is for a Windows build where it does happen.
+>
+> Directory, and file names should be irrelevant.
+>
+> We encountered this naturally, with some files within a SVN repo we're migrating.
 
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   bar (new commits)
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	git-bugreport-2022-05-31-2142.txt
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-----------------------------
-
-There is one commit to pull. It affects a file in the superproject, but
-not the submodule.
-
-The issue arises with:
-
-$ git pull --recurse-submodule=3Don-demand --no-rebase
-
-What did you expect to happen? (Expected behavior)
-
-The file affected by the pulled commit is modified, but the submodule
-is left untouched.
-The output of git status should look like:
-
-----------------------------
-
-$ git status
-On branch master
-Your branch up to date with 'origin/master'.
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   bar (new commits)
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	git-bugreport-2022-05-31-2142.txt
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-----------------------------
-
-What happened instead? (Actual behavior)
-
---------------------------
-
-$  git pull --recurse-submodule=3Don-demand --no-rebase
-Updating 67627dd..80f5c51
-Fast-forward
- foo | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-Submodule path 'bar': checked out
-'ef3c0711fedca48b0b43aadfd01b7bb94b519a13'
-
-$  git status
-On branch master
-Your branch is up to date with 'origin/master'.
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	git-bugreport-2022-05-31-2142.txt
-
-nothing added to commit but untracked files present (use "git add" to
-track)
-
------------------------
-
-my uncommitted changes to the submodule have been wiped, and the commit
-of the pulled revision was checked out.
-
-What's different between what you expected and what actually happened?
-
-When there are uncommitted changes to a file foo in a repo, and that I
-`git pull` a commit that does not affect this file foo, git pull does
-not wipe my changes to `foo`. I expect the same for submodules. If
-there is a conflict, I am told about it and nothing is wiped either.
-
-
-Anything else you want to add:
-
-git pull is able to detect conflicts on submodules, so why not non-
-conflicts on submodules?
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.36.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /nix/store/0d3wgx8x6dxdb2cpnq105z23hah07z7l-bash-5.1-
-p16/bin/bash
-uname: Linux 5.15.39 #1-NixOS SMP Thu May 12 10:30:34 UTC 2022 x86_64
-compiler info: gnuc: 11.3
-libc info: glibc: 2.34
-$SHELL (typically, interactive shell): /run/current-system/sw/bin/zsh
-
-
-[Enabled Hooks]
-
+Do you have any information on how the mixed EOL styles (extra \r etc) 
+came about?
+Should those extra \r characters also be separate EOLs? (and how to 
+decide..?)
+Are the docs missing anything that would have helped clarify the issue 
+earlier?
+>
+> [System Info]
+> git version:
+> git version 2.36.1.windows.1
+> cpu: x86_64
+> built from commit: e2ff68a2d1426758c78d023f863bfa1e03cbc768
+> sizeof-long: 4
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> feature: fsmonitor--daemon
+> uname: Windows 10.0 19043
+> compiler info: gnuc: 11.3
+> libc info: no libc information available
+> $SHELL (typically, interactive shell): <unset>
+>
+>
+--
+Philip
