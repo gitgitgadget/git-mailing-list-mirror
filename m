@@ -2,263 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1105C433EF
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 17:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55E8AC433EF
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 17:39:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346575AbiEaRfH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 13:35:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45914 "EHLO
+        id S1346578AbiEaRjD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 13:39:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346600AbiEaRdS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 13:33:18 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D1FF972B3
-        for <git@vger.kernel.org>; Tue, 31 May 2022 10:33:07 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id e2so19665009wrc.1
-        for <git@vger.kernel.org>; Tue, 31 May 2022 10:33:07 -0700 (PDT)
+        with ESMTP id S238878AbiEaRjA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 13:39:00 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3811162BE5
+        for <git@vger.kernel.org>; Tue, 31 May 2022 10:38:59 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id n8so13483837plh.1
+        for <git@vger.kernel.org>; Tue, 31 May 2022 10:38:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fLTf0iVqno38kf8saKgzPpsTE1dJDhFli51C1T7NWLQ=;
-        b=dJTkesI71JpRqr2zl8n5vMy+mA7W4fPWXnjYwMddnY90xL72OIwu9zpqS77Gu3gNCK
-         gXmwd4ByrlmzmyEYMKJMcx4AiSliMcPt5ooS26bgTjf+zhjOoxg0sdIqd/Oz2a/IOIib
-         NEbMXm8oA2Tpjpb5zAobffJ7VXwPLYnl9AkjCx+WtZrtjeVSWsNdTb14cRVsuVK7hpB7
-         VxUBPEob18ihSgz/cM0VmYuDR3r+spUVSNufDCtEGIzuHtwKGo9lHG2XMCmtTYclk9g/
-         jWNwXB7WvZz2FHQDRARY1mjOOnTdM+px00FlwAcGWPVUNyZxTw2YJFLrBEaqgW92Ng6+
-         jdFA==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=RhAsFGibtqRI0b4uJWA0Rxkvj705lZhgdz8Bl3zqM2M=;
+        b=eLweM3cvnqBQr9ZodOqOEIX7SETbmq5G17vbcCXLiDSwXziUqC4tEygloCE/x42uMb
+         9r3K+m/CaYw2KLplmi+T8+WvU7eFRg1bvMHzOhc+VNbLQF2Mwfu6mZ3ZfRcf1SJK7q8N
+         XUou3Bqes7w2i2DIlUG4JThz1sax2aaD7l5d+/aAyWXbPSIyDNT/UMXds45iRZ1f/Vb/
+         //DoXh2hH5evUf6pwfXxsdQNq6pI458us5nLZX99+k0Dftv8FF9e3C4TIP2NIBIXUPJD
+         IIyhK+DylsagidD2KBs+XuLKthqBV06Uh44qo6L1ECGtN58XqeJ5CLfM+duzgva4uL9h
+         tDKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fLTf0iVqno38kf8saKgzPpsTE1dJDhFli51C1T7NWLQ=;
-        b=q7LYcJg7E62ghN+FrGFU36IeetgNIEW++cjI7cjmb8vbSrhw6Hr6/3lSopcEDqHZD5
-         wZ0GWEGfoR/R93/p7laRDlW+hjUeHmGcE8Z8NgwJ0gymHR+g4TbrBAZrhHmKY2LnCPfk
-         bWExQ92rFq0IzYC0jQD2RxN7wD6dP2YBPY6zbXyWeI1MnWYgsXlPxODKXbmpt2UMZks5
-         tpjrrGUsCe1jEpz/IAmzl5Nz51Rccs+I3QoVc67JWGb4ZDfoimQS5YqBXuP17y6fRcyN
-         lEM+v3CgAvC2PGcn1v/Mhh//NorHZjbfUkjbHtkn95txnbGZ5vjIL7A4VKidNRxE0beY
-         EK2A==
-X-Gm-Message-State: AOAM533c16rXA/pOZDM+TjXOHtMHsci7YloKk2GB+kcTo2JrS4nR65QO
-        8BbxO/8ZYPTTAKKJ/KDH6M/8Icq85/8Fsw==
-X-Google-Smtp-Source: ABdhPJz99y/uVNWS3cu0SR0dxUDyQCDebFZEu9FlpmnrCcQowOvbYm1W/UT3PuTFA8lD9jvr2lh0jQ==
-X-Received: by 2002:a5d:5281:0:b0:20c:d5be:331c with SMTP id c1-20020a5d5281000000b0020cd5be331cmr50271351wrv.9.1654018385472;
-        Tue, 31 May 2022 10:33:05 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v21-20020a05600c215500b003973e8a227dsm2637941wml.46.2022.05.31.10.33.04
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=RhAsFGibtqRI0b4uJWA0Rxkvj705lZhgdz8Bl3zqM2M=;
+        b=O6Hd4LMsHI3dXognLUmpaDpI7hQx4x/GwUPoq/xDpbf13LXyFYNxuf27po/l6lv5Om
+         nLihhvZ5A+eWEtdhKcbJFnq9OZugn0Q4qy6ehU9EgPRmwD22tSIb5eE3lwGBFrT0fsg0
+         VfPHf22uyxq+L1ViPXg/KjmRmYhxgZzIoRQ3aLF8siW0iDl/IUzuCU5g5C8yyS7bZ6ow
+         p6oIT1oWkDZp/3hbCpV/sJVXMcd8SqmATIKrcJkjY6eQRfKbWeH4Rco00nKZFaluLucX
+         pF08XGdXa3oLjWm4YNOWx/nSMlayklvBHNbIrOg1xYE/bEcHWO8v8im99Oe0wRquYUAT
+         JU2A==
+X-Gm-Message-State: AOAM532mFnj2ndQqVSQSO3YUjIeUME6UpWDE130Hbvj1ewRIWtSLa14F
+        qTT8fZoJkcFzRMSwgwHr94ftlK6pF9cm5w==
+X-Google-Smtp-Source: ABdhPJxpDen2lnIfAyAGFtdQH5q5ikS0BvQMiRQTvBMk4/NatKCWAK4+evSqBbOz165/f0Lo2CKG2Q==
+X-Received: by 2002:a17:902:da8e:b0:164:537:d910 with SMTP id j14-20020a170902da8e00b001640537d910mr4354454plx.75.1654018738529;
+        Tue, 31 May 2022 10:38:58 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:42f:67e0:2ed2:1f46])
+        by smtp.gmail.com with ESMTPSA id z3-20020a17090a8b8300b001e2afd35791sm2213675pjn.18.2022.05.31.10.38.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 10:33:04 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Anthony Sottile <asottile@umich.edu>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 0/2] hook API: connect hooks to the TTY again, fixes a v2.36.0 regression
-Date:   Tue, 31 May 2022 19:32:57 +0200
-Message-Id: <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.1.1103.g036c05811b0
-In-Reply-To: <cover-v3-0.2-00000000000-20220527T090618Z-avarab@gmail.com>
-References: <cover-v3-0.2-00000000000-20220527T090618Z-avarab@gmail.com>
+        Tue, 31 May 2022 10:38:57 -0700 (PDT)
+Date:   Tue, 31 May 2022 10:38:52 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v2 4/6] parse-options.c: use optbug() instead of BUG()
+ "opts" check
+Message-ID: <YpZSrNM/bZ3i6Yvu@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Glen Choo <chooglen@google.com>, Andrei Rybak <rybak.a.v@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com>
+ <cover-v2-0.6-00000000000-20220531T164806Z-avarab@gmail.com>
+ <patch-v2-4.6-47d384d0ae5-20220531T164806Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v2-4.6-47d384d0ae5-20220531T164806Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A re-roll of [1] fixing issues pointed out by Junio in the last re-roll:
+On 2022.05.31 18:58, Ævar Arnfjörð Bjarmason wrote:
+> Change the assertions added in bf3ff338a25 (parse-options: stop
+> abusing 'callback' for lowlevel callbacks, 2019-01-27) to use optbug()
+> instead of BUG(). At this point we're looping over individual options,
+> so if we encounter any issues we'd like to report the offending option.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  parse-options.c | 31 ++++++++++++++++++++-----------
+>  1 file changed, 20 insertions(+), 11 deletions(-)
+> 
+> diff --git a/parse-options.c b/parse-options.c
+> index 78b46ae9698..243016ae30f 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -473,21 +473,30 @@ static void parse_options_check(const struct option *opts)
+>  				optbug(opts, "should not accept an argument");
+>  			break;
+>  		case OPTION_CALLBACK:
+> -			if (!opts->callback && !opts->ll_callback)
+> -				BUG("OPTION_CALLBACK needs one callback");
+> -			if (opts->callback && opts->ll_callback)
+> -				BUG("OPTION_CALLBACK can't have two callbacks");
+> +			if (!opts->callback && !opts->ll_callback) {
+> +				optbug(opts, "OPTION_CALLBACK needs one callback");
+> +				break;
+> +			}
+> +			if (opts->callback && opts->ll_callback) {
+> +				optbug(opts, "OPTION_CALLBACK can't have two callbacks");
+> +				break;
+> +			}
+>  			break;
+>  		case OPTION_LOWLEVEL_CALLBACK:
+> -			if (!opts->ll_callback)
+> -				BUG("OPTION_LOWLEVEL_CALLBACK needs a callback");
+> -			if (opts->callback)
+> -				BUG("OPTION_LOWLEVEL_CALLBACK needs no high level callback");
+> +			if (!opts->ll_callback) {
+> +				optbug(opts, "OPTION_LOWLEVEL_CALLBACK needs a callback");
+> +				break;
+> +			}
+> +			if (opts->callback) {
+> +				optbug(opts, "OPTION_LOWLEVEL_CALLBACK needs no high level callback");
+> +				break;
+> +			}
+>  			break;
 
- * A minor whitespace parameter fix.
+A minor point, but I'm not sure I understand why we're adding breaks for
+the two cases above. In the OPTION_CALLBACK case, the if conditions are
+mutually exclusive and are followed by an unconditional break, so adding
+additional breaks seems unnecessary. For the OPTION_LOWLEVEL_CALLBACK
+case, the conditions are not mutually exclusive, but isn't this exactly
+the issue that optbug() is intended to address? I.e., wouldn't the
+caller want to see both optbug()s if both are relevant?
 
- * Clear up confusion about GIT_CP_WAIT_CLEANUP, and remove the
-   duplicate "mark ungroup children as GIT_CP_WAIT_CLEANUP" code.
-
- * Droped a conditional strbuf_write() on an always-empty string under
-   "ungroup".
-
- * Correct "err" parameter name to "out" in the new API docs.
-
- * Replace assert() with BUG().
-
- * Address other minor issues noted by Junio.
-
-Ã†var ArnfjÃ¶rÃ° Bjarmason (2):
-  run-command: add an "ungroup" option to run_process_parallel()
-  hook API: fix v2.36.0 regression: hooks should be connected to a TTY
-
- hook.c                      |  1 +
- run-command.c               | 83 +++++++++++++++++++++++++++++--------
- run-command.h               | 30 ++++++++++----
- t/helper/test-run-command.c | 19 +++++++--
- t/t0061-run-command.sh      | 35 ++++++++++++++++
- t/t1800-hook.sh             | 37 +++++++++++++++++
- 6 files changed, 177 insertions(+), 28 deletions(-)
-
-Range-diff against v3:
-1:  aabd99de680 ! 1:  f1170b02553 run-command: add an "ungroup" option to run_process_parallel()
-    @@ Commit message
-         Signed-off-by: Ã†var ArnfjÃ¶rÃ° Bjarmason <avarab@gmail.com>
-     
-      ## run-command.c ##
-    -@@ run-command.c: int pipe_command(struct child_process *cmd,
-    - enum child_state {
-    - 	GIT_CP_FREE,
-    - 	GIT_CP_WORKING,
-    --	GIT_CP_WAIT_CLEANUP,
-    -+	GIT_CP_WAIT_CLEANUP, /* only for !ungroup */
-    +@@ run-command.c: enum child_state {
-    + 	GIT_CP_WAIT_CLEANUP,
-      };
-      
-     +int run_processes_parallel_ungroup;
-    @@ run-command.c: static void pp_init(struct parallel_processes *pp,
-      		    start_failure_fn start_failure,
-      		    task_finished_fn task_finished,
-     -		    void *data)
-    -+		    void *data,  const int ungroup)
-    ++		    void *data, const int ungroup)
-      {
-      	int i;
-      
-    @@ run-command.c: static void pp_init(struct parallel_processes *pp,
-      		pp->pfd[i].events = POLLIN | POLLHUP;
-      		pp->pfd[i].fd = -1;
-      	}
-    -@@ run-command.c: static void pp_cleanup(struct parallel_processes *pp)
-    - 	 * When get_next_task added messages to the buffer in its last
-    - 	 * iteration, the buffered output is non empty.
-    - 	 */
-    --	strbuf_write(&pp->buffered_output, stderr);
-    -+	if (!pp->ungroup)
-    -+		strbuf_write(&pp->buffered_output, stderr);
-    - 	strbuf_release(&pp->buffered_output);
-    - 
-    - 	sigchain_pop_common();
-     @@ run-command.c: static void pp_cleanup(struct parallel_processes *pp)
-       */
-      static int pp_start_one(struct parallel_processes *pp)
-    @@ run-command.c: static int pp_start_one(struct parallel_processes *pp)
-      	return 0;
-      }
-      
-    -+static void pp_mark_working_for_cleanup(struct parallel_processes *pp)
-    ++static void pp_mark_ungrouped_for_cleanup(struct parallel_processes *pp)
-     +{
-     +	int i;
-     +
-    ++	if (!pp->ungroup)
-    ++		BUG("only reachable if 'ungrouped'");
-    ++
-     +	for (i = 0; i < pp->max_processes; i++)
-    -+		if (pp->children[i].state == GIT_CP_WORKING)
-    -+			pp->children[i].state = GIT_CP_WAIT_CLEANUP;
-    ++		pp->children[i].state = GIT_CP_WAIT_CLEANUP;
-     +}
-     +
-      static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
-      {
-      	int i;
-      
-    -+	assert(!pp->ungroup);
-    ++	if (pp->ungroup)
-    ++		BUG("unreachable with 'ungrouped'");
-     +
-      	while ((i = poll(pp->pfd, pp->max_processes, output_timeout)) < 0) {
-      		if (errno == EINTR)
-    @@ run-command.c: static void pp_buffer_stderr(struct parallel_processes *pp, int o
-      {
-      	int i = pp->output_owner;
-     +
-    -+	assert(!pp->ungroup);
-    ++	if (pp->ungroup)
-    ++		BUG("unreachable with 'ungrouped'");
-     +
-      	if (pp->children[i].state == GIT_CP_WORKING &&
-      	    pp->children[i].err.len) {
-    @@ run-command.c: static void pp_output(struct parallel_processes *pp)
-      	int i, code;
-      	int n = pp->max_processes;
-      	int result = 0;
-    - 
-    -+	if (ungroup)
-    -+		for (i = 0; i < pp->max_processes; i++)
-    -+			pp->children[i].state = GIT_CP_WAIT_CLEANUP;
-    -+
-    - 	while (pp->nr_processes > 0) {
-    - 		for (i = 0; i < pp->max_processes; i++)
-    - 			if (pp->children[i].state == GIT_CP_WAIT_CLEANUP)
-     @@ run-command.c: static int pp_collect_finished(struct parallel_processes *pp)
-      		code = finish_command(&pp->children[i].process);
-      
-    @@ run-command.c: int run_processes_parallel(int n,
-     -		pp_buffer_stderr(&pp, output_timeout);
-     -		pp_output(&pp);
-     +		if (ungroup) {
-    -+			pp_mark_working_for_cleanup(&pp);
-    ++			pp_mark_ungrouped_for_cleanup(&pp);
-     +		} else {
-     +			pp_buffer_stderr(&pp, output_timeout);
-     +			pp_output(&pp);
-    @@ run-command.h: void check_pipe(int err);
-       * pp_cb is the callback cookie as passed to run_processes_parallel.
-       * You can store a child process specific callback cookie in pp_task_cb.
-       *
-    -+ * The "struct strbuf *err" parameter is either a pointer to a string
-    -+ * to write errors to, or NULL if the "ungroup" option was
-    -+ * provided. See run_processes_parallel() below.
-    ++ * See run_processes_parallel() below for a discussion of the "struct
-    ++ * strbuf *out" parameter.
-     + *
-       * Even after returning 0 to indicate that there are no more processes,
-       * this function will be called again until there are no more running
-    @@ run-command.h: typedef int (*get_next_task_fn)(struct child_process *cp,
-     - * You must not write to stdout or stderr in this function. Add your
-     - * message to the strbuf out instead, which will be printed without
-     - * messing up the output of the other parallel processes.
-    -+ * The "struct strbuf *err" parameter is either a pointer to a string
-    -+ * to write errors to, or NULL if the "ungroup" option was
-    -+ * provided. See run_processes_parallel() below.
-    ++ * See run_processes_parallel() below for a discussion of the "struct
-    ++ * strbuf *out" parameter.
-       *
-       * pp_cb is the callback cookie as passed into run_processes_parallel,
-       * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-    @@ run-command.h: typedef int (*start_failure_fn)(struct strbuf *out,
-     - * You must not write to stdout or stderr in this function. Add your
-     - * message to the strbuf out instead, which will be printed without
-     - * messing up the output of the other parallel processes.
-    -+ * The "struct strbuf *err" parameter is either a pointer to a string
-    -+ * to write errors to, or NULL if the "ungroup" option was
-    -+ * provided. See run_processes_parallel() below.
-    ++ * See run_processes_parallel() below for a discussion of the "struct
-    ++ * strbuf *out" parameter.
-       *
-       * pp_cb is the callback cookie as passed into run_processes_parallel,
-       * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-    @@ run-command.h: typedef int (*task_finished_fn)(int result,
-       * The children started via this function run in parallel. Their output
-       * (both stdout and stderr) is routed to stderr in a manner that output
-     - * from different tasks does not interleave.
-    -+ * from different tasks does not interleave (but see "ungroup" above).
-    ++ * from different tasks does not interleave (but see "ungroup" below).
-       *
-       * start_failure_fn and task_finished_fn can be NULL to omit any
-       * special handling.
-     + *
-    -+ * If the "ungroup" option isn't specified the callbacks will get a
-    -+ * pointer to a "struct strbuf *out", and must not write to stdout or
-    ++ * If the "ungroup" option isn't specified, the API will set the
-    ++ * "stdout_to_stderr" parameter in "struct child_process" and provide
-    ++ * the callbacks with a "struct strbuf *out" parameter to write output
-    ++ * to. In this case the callbacks must not write to stdout or
-     + * stderr as such output will mess up the output of the other parallel
-     + * processes. If "ungroup" option is specified callbacks will get a
-     + * NULL "struct strbuf *out" parameter, and are responsible for
-2:  ec27e3906e1 = 2:  8ab09f28729 hook API: fix v2.36.0 regression: hooks should be connected to a TTY
--- 
-2.36.1.1103.g036c05811b0
-
+>  		case OPTION_ALIAS:
+> -			BUG("OPT_ALIAS() should not remain at this point. "
+> -			    "Are you using parse_options_step() directly?\n"
+> -			    "That case is not supported yet.");
+> +			optbug(opts, "OPT_ALIAS() should not remain at this point. "
+> +			       "Are you using parse_options_step() directly?\n"
+> +			       "That case is not supported yet.");
+> +			break;
+>  		default:
+>  			; /* ok. (usually accepts an argument) */
+>  		}
+> -- 
+> 2.36.1.1100.g16130010d07
+> 
