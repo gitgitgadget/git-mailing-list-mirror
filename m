@@ -2,200 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A21B5C433F5
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 08:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6289C433F5
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 08:07:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244701AbiEaIGY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 04:06:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57192 "EHLO
+        id S244704AbiEaIHQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 04:07:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237948AbiEaIGW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 04:06:22 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78B3491559
-        for <git@vger.kernel.org>; Tue, 31 May 2022 01:06:21 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id w3so12162260plp.13
-        for <git@vger.kernel.org>; Tue, 31 May 2022 01:06:21 -0700 (PDT)
+        with ESMTP id S237948AbiEaIHP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 04:07:15 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1CA4FC55
+        for <git@vger.kernel.org>; Tue, 31 May 2022 01:07:13 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id gi33so25063216ejc.3
+        for <git@vger.kernel.org>; Tue, 31 May 2022 01:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cCj6AO0n4mEpMCWzIUXfM2inCX3IxdGIyTKxZWCz5a0=;
-        b=JWnQDB5SWMgEFbiVZDm83NxpxIT5ocj+ipJw4ZgiIiA5Enezy3+zSTgiyWRM8piLY6
-         LWbeqizcT+RikWQDSctol2IeAzvs22RQ1u7dZ6ew+VBm7lBwMEHATk12snWqIvHM/znq
-         1aSb5tphrWXWSKYvrSi6kqAMpSqgTAXXarpsBbeNyJFiKZI6FsDH/ou55F/qboKg/tfJ
-         Notte+aTmgtJPGWl1DlHxVmn9M3wj7BYCYdGlyn00i6ZG956xNAaZydxD7olt4WGBOH3
-         h41maczJRt8YF793AcZfoIDt6PjiW3xeFWC8ZwXEFc3UI2Hr24ilxuH7rWys3PfJfJ5E
-         nPWA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=Acr0QYppMT/fQ6WWGet4NWpmnmOl+OI5zfMk8ycbs8A=;
+        b=UFsJq/7vsZZhKA/zSSN3Cxn5cg5esGKXT4L/ubJPLg6utoufiiMgehGXu0h74j+Xxo
+         aUE6ByWwwPAYG27O1BLAk/AClI9p5+LEjhrtzaHwFPSbnr/iLyCgUk0paOeXCJLMGqLb
+         PUky/hopVhDlcmAw7BveBplvvdOJNXZsBfHxyJmS1LDHvbbTe/GEdsi7DjjxzlJC5u37
+         ACyf/JHfh/YNwX1tG3XYqNy4RbAVTY3ds3wMHU5xr7n+cWL83Ck8nYlpCIfNtchjZwhW
+         w97p2+nWpWIXk7Rof8wu1QU8+BORzzbbVlozFN9IasRyerJR9AR4ti6XODFERwTdRECU
+         zJoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cCj6AO0n4mEpMCWzIUXfM2inCX3IxdGIyTKxZWCz5a0=;
-        b=SWmNfOELKLhIPC2LgQRlqG9stPKBZVM4VP04SLc5O/B0ch6PZmO0dJysLryy4ZqqF8
-         vpPVaK5Nfwt7wy2mXBLu5wnl6bNR3yqLMLmjdKe/u4f7Kh0WFXOAfwh99RcrbPg/Q/Hd
-         DRSFUZoajKVhz3SRUfADpkBRRkTwIKN5IJpPM7VX6r7bspCFFcPWfpLYBQUwptZai0Ue
-         Fy2YTfR1+lY79nOUnjDMGvL0ZKd6tHNKVVR4GXSz3G6hDur43IccFECrki/OQ93hPLHv
-         VRNtyv3YraU2BfuMmu90l61/qnDz7nzIamqm3kfd5w/9ViDCje3V6bqYlGHGzFIv1PBH
-         +fyg==
-X-Gm-Message-State: AOAM531AiZBzxCJh7fHj5K7FJyDs1BA3uKqKeaXY8HEC1taszWOrcnnH
-        gZSCV5jWwxZkmOzL2iSf8rPN/ZoChKxFRBMHjUCnCiYJvZM=
-X-Google-Smtp-Source: ABdhPJwqPHaNUcQkVltZf7FidQK8MBUxXTTXUF28Q5XteMBo591sYVbohPsABJTBOjI2FCMd2BJaUuTVvoTMtYwrmeU=
-X-Received: by 2002:a17:90a:de15:b0:1df:63dd:9cfc with SMTP id
- m21-20020a17090ade1500b001df63dd9cfcmr27719961pjv.200.1653984380938; Tue, 31
- May 2022 01:06:20 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=Acr0QYppMT/fQ6WWGet4NWpmnmOl+OI5zfMk8ycbs8A=;
+        b=eyrdmIJBH1G7ciPDpL1eLViuf11dxjkjcUEyaR1WwSo4HOEQCTUSga9/PY/ekPohyZ
+         6RTKdO8+qK4UFTr4MRKcojgHCV1Zy4NJbqOFKL/U+7pT59i3IIQKp3btQIWlqfDIMfJf
+         f47iOqQrLti/8pn1e8SCd8x+taovXPTPNePNDXXXWHDO5D0UaACxRRGATdY8gBiR5VW2
+         ljOnJUOg49gPp9PSuHJqP2BMyuAu4+VA5ND0sbmIYMFJhKOY2AhyfhejHrW0vDSa2SJK
+         6GR8YD2irgICDwbAdxx5leqQ8PhOHjPY5oPXcBL/ZUqSaHZEI30XWuOWt1Qptlg7SmDQ
+         gGjg==
+X-Gm-Message-State: AOAM530y4oTaIJOWTKrwYywJkS6r4O4vU+a0AdYh71Gb0VDS0RM2Mk60
+        W6zmTsuj49hSiQcKCozI03g=
+X-Google-Smtp-Source: ABdhPJyyACxMmArD4xRFfZj52JGZ5Za3RkvtLd1fcEtNEh9HaTy7VzgaVSFKJP5hAJpO8WSzazaL6Q==
+X-Received: by 2002:a17:907:3e15:b0:6fe:f10e:6337 with SMTP id hp21-20020a1709073e1500b006fef10e6337mr36010114ejc.209.1653984431866;
+        Tue, 31 May 2022 01:07:11 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id h17-20020a05640250d100b0042bd6f745fasm8099867edb.92.2022.05.31.01.07.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 May 2022 01:07:11 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nvwuE-000n82-QV;
+        Tue, 31 May 2022 10:07:10 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Side effects in Git's test suite, was Re: [PATCH] revert:
+ optionally refer to commit in the "reference" format
+Date:   Tue, 31 May 2022 10:03:42 +0200
+References: <xmqqsfp2b30k.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2205231507350.352@tvgsbejvaqbjf.bet>
+ <xmqq35gzn9vk.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2205301840410.349@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <nycvar.QRO.7.76.6.2205301840410.349@tvgsbejvaqbjf.bet>
+Message-ID: <220531.86y1yi15xt.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
- <20220527100804.209890-1-shaoxuan.yuan02@gmail.com> <20220527100804.209890-3-shaoxuan.yuan02@gmail.com>
- <0884b97b-0745-5cad-3034-a679be5d6c3a@github.com>
-In-Reply-To: <0884b97b-0745-5cad-3034-a679be5d6c3a@github.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Tue, 31 May 2022 16:06:08 +0800
-Message-ID: <CAJyCBORP74=nC1cB5r41MqS+WD-JfNX+8AOv7jqevN9FZGWdSw@mail.gmail.com>
-Subject: Re: [WIP v2 2/5] mv: check if out-of-cone file exists in index with
- SKIP_WORKTREE bit
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, vdye@github.com, gitster@pobox.com,
-        newren@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 27, 2022 at 11:13 PM Derrick Stolee
-<derrickstolee@github.com> wrote:
-> > diff --git a/builtin/mv.c b/builtin/mv.c
-> > index 83a465ba83..32ad4d5682 100644
-> > --- a/builtin/mv.c
-> > +++ b/builtin/mv.c
-> > @@ -185,8 +185,32 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >
-> >               length = strlen(src);
-> >               if (lstat(src, &st) < 0) {
-> > +                     /*
-> > +                      * TODO: for now, when you try to overwrite a <destination>
-> > +                      * with your <source> as a sparse file, if you supply a "--sparse"
-> > +                      * flag, then the action will be done without providing "--force"
-> > +                      * and no warning.
-> > +                      *
-> > +                      * This is mainly because the sparse <source>
-> > +                      * is not on-disk, and this if-else chain will be cut off early in
-> > +                      * this check, thus the "--force" check is ignored. Need fix.
-> > +                      */
->
-> I wonder if this is worth the comment here, or if we'd rather see
-> the mention in the commit message. You have documented tests that
-> fail in this case, so we already have something that marks this
-> as "TODO" in a more discoverable place.
 
-This comment was added during my local development, it should be
-removed.
+On Mon, May 30 2022, Johannes Schindelin wrote:
 
-> > +                     int pos = cache_name_pos(src, length);
-> > +                     if (pos >= 0) {
-> > +                             const struct cache_entry *ce = active_cache[pos];
-> > +
-> > +                             if (ce_skip_worktree(ce)) {
-> > +                                     if (!ignore_sparse)
-> > +                                             string_list_append(&only_match_skip_worktree, src);
-> > +                                     else
-> > +                                             modes[i] = SPARSE;
+> Hi Junio,
 >
+> On Mon, 23 May 2022, Junio C Hamano wrote:
 >
-> > +                             }
-> > +                             else
-> > +                                     bad = _("bad source");
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>> >> +test_expect_success 'identification of reverted commit (reference)' '
+>> >> +	git checkout --detach to-ident &&
+>> >> +	git revert --reference --no-edit HEAD &&
+>> >> +	git cat-file commit HEAD >actual.raw &&
+>> >> +	grep "^This reverts " actual.raw >actual &&
+>> >> +	echo "This reverts commit $(git show -s --pretty=reference HEAD^)." >expect &&
+>> >> +	test_cmp expect actual
+>> >> +'
+>> >
+>> > If it was up to me, I would combine these three test cases, if only to
+>> > help the `--run=<single-number>` case (the latter two depend on the
+>> > side effect of the first one to create a `to-ident` tag).
+>>
+>> I wonder if our prereq infrastructure is lightweight and scalable enough
+>> so that we can easily add a support a pseudo-prerequisite PREVIOUS that
+>> lets us say
+>>
+>> 	test_expect_success PREVIOUS "identification ..." '
+>> 		...
+>> 	'
+>>
+>> to mean that this test requires the previous test has not been
+>> skipped.
 >
-> style nit:
+> In theory, this sounds good to me.
 >
->         } else {
->                 bad = _("bad source");
->         }
+> In practice, however, side effects are awful and make everything harder,
+> from developing code to debugging to helping new contributors. I wish we
+> would do away with them altogether and have something more akin to the
+> before/after constructs known from e.g. TestNG (think `@BeforeTest` and
+> `@BeforeClass`).
 >
-> > +                     }
-> >                       /* only error if existence is expected. */
-> > -                     if (modes[i] != SPARSE)
-> > +                     else if (modes[i] != SPARSE)
-> >                               bad = _("bad source");
->
-> For this one, the comment makes it difficult to connect the 'else
-> if' to its corresponding 'if'. Perhaps:
->
->         } else if (modes[i] != SPARSE) {
->                 /* only error if existence is expected. */
->                 bad = _("bad source");
->         }
->
-> >               } else if (!strncmp(src, dst, length) &&
-> >                               (dst[length] == 0 || dst[length] == '/')) {
->
-> In general, I found this if/else-if chain hard to grok, and
-> a lot of it is because we have "simple" cases at the end
-> and the complicated parts have ever-increasing nesting. This
-> is mostly due to the existing if/else-if chain in this method.
->
-> Here is a diff that replaces that if/else-if chain with a
-> 'goto' trick to jump ahead, allowing some code to decrease in
-> tabbing:
->
-> ---- >8 ----
+> One option would be to mark `setup` steps completely differently, sort of
+> imitating the prereq infrastructure instead of using
+> `test_expect_success`. Kind of prereqs, but required to pass.
 
-[cutting the proposed refactor for space]
+I've suggested a test_expect_setup before:
+https://lore.kernel.org/git/8735vrvg39.fsf@evledraar.gmail.com/;
+basically a test_expect_success that ignores GIT_SKIP_TESTS and --run.
 
-> ---- >8 ----
->
-> But mostly the reason for this refactor is that the following
-> diff should be equivalent to yours:
->
-> ---- >8 ----
->
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index d8b5c24fb5..add48e23b4 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -185,11 +185,28 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
->
->                 length = strlen(src);
->                 if (lstat(src, &st) < 0) {
-> -                       /* only error if existence is expected. */
-> -                       if (modes[i] != SPARSE) {
-> +                       int pos;
-> +                       const struct cache_entry *ce;
-> +
-> +                       pos = cache_name_pos(src, length);
-> +                       if (pos < 0) {
-> +                               /* only error if existence is expected. */
-> +                               if (modes[i] != SPARSE)
-> +                                       bad = _("bad source");
-> +                               goto act_on_entry;
-> +                       }
-> +
-> +                       ce = active_cache[pos];
-> +                       if (!ce_skip_worktree(ce)) {
->                                 bad = _("bad source");
->                                 goto act_on_entry;
->                         }
-> +
-> +                       if (!ignore_sparse)
-> +                               string_list_append(&only_match_skip_worktree, src);
-> +                       else
-> +                               modes[i] = SPARSE;
-> +                       goto act_on_entry;
->                 }
->                 if (!strncmp(src, dst, length) &&
->                     (dst[length] == 0 || dst[length] == '/')) {
-> ---- >8 ---
->
-> To me, this is a bit easier to parse, since we find the error
-> cases and jump to the action before continuing on the "happy
-> path". It does involve that first big refactor first, so I'd
-> like to hear opinions of other contributors before you jump to
-> taking this suggestion.
+I think that even if we could imagine much more complex relationships
+(up to and including writing these tests as Makefiles instead) it's
+better to just have the simpler "this is a setup".
 
-True. I also find it easier to read. Though Victoria mentioned the
-goto hazard, the gotos here decouples the huge chain and that
-brings clarity and makes it easier to extend.
+Then for everything more complex be more eager to split up tests.
 
--- 
-Thanks & Regards,
-Shaoxuan
+> This could potentially allow us to randomize the order in which the test
+> cases are run, to identify and fix (unintended) side effects.
+
+Yes, a "chaos monkey" mode similar to --stress would be nice.
+
+> A complication is that we have nothing in the way of `@AfterClass`, i.e.
+> we do not have a way to, say, run an Apache instance for the lifecycle of
+> a given test script _and tear it down at the end_.
+
+I think this is generally a feature in that if you find yourself needing
+this you should split the test up so that the Apache setup is in only
+one file.
+
+E.g. in the case of some http tests we have a prereq on something for
+git:// and a different thing (apache) for http:// tests, so that
+depending on what combination you have we might end up needlessly
+skipping tests.
+
+> Another, rather obvious complication is that we have 17 years of commit
+> history introducing side effects left and right :laughing:
+
