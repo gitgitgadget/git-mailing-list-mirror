@@ -2,169 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6369C433F5
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 17:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF3C5C433F5
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 17:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346630AbiEaRnZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 13:43:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33066 "EHLO
+        id S1346637AbiEaRqV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 13:46:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238878AbiEaRnX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 13:43:23 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98DE92A253
-        for <git@vger.kernel.org>; Tue, 31 May 2022 10:43:22 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id c14-20020a17090a1d0e00b001e328238e7eso1711884pjd.4
-        for <git@vger.kernel.org>; Tue, 31 May 2022 10:43:22 -0700 (PDT)
+        with ESMTP id S234837AbiEaRqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 13:46:19 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17478985B6
+        for <git@vger.kernel.org>; Tue, 31 May 2022 10:46:17 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id u3so19667050wrg.3
+        for <git@vger.kernel.org>; Tue, 31 May 2022 10:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=/0hbb2nQ8qLOSX43QfBq0AO60VqrSoR4REXu4GQwUqw=;
-        b=LUsm3w4I10jZ03x0DexY7sn6TkZ2Z6pSXXHoaqgiJIxrxk1iC6m6lGPRGY3vKiBv51
-         2+KajwWxMxxpf4pAlEPiy9T8cZtoXQsDNbT343X/QHN/RHjI7xIgq1eUKLPIiqXLl4M+
-         I+/057mmH0RFUQzRd3IRJslXljk7KWZjh3QXT2CxnW5A/I0Oo7GMZg8v5dghU9uGKeAE
-         aHCH607Z1Ou1eYZyWx6DlX82Hipq/eGO6/3Ntod6faCXOZpa6yBX7nWVcJ/oZQf5vxH2
-         LKe11dOk2/4g8ayVFYSPqyvVdGNTAfSpGknOoVk/8La770cptO8XJTEkBe20dsReXqWw
-         w7wA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=N08A60A/ws1ot8Zrmi4UbjX/QCYfvgihV9sugKyTtH8=;
+        b=JgbaFur3fOOdHPrOQuSAAtPnd5cW+niPbe68mRP+K1nT7ZItY6uIcz6Rp/m5elL6iZ
+         RYz3QFjQIG1LW4bcgsKzHsX+5c0U2MtN+Hg25N8WJDBNMMLNlWFuWGjaIsXv/rHbbF5q
+         zPLWoesNsbQHc8/1ThJWME/NnYd1UCiek3deM83XECm3dr7sBbjDYpRfXc/Y+MMBS26s
+         bn/5JFwINpISyx8CJSdBK9XgQCanIMbjWo45KTu8ZGunjFat8A/5IkqcyS0PENORcEUV
+         azzgURV8/h08NZNdAfXSeoZBBI/nhsUt5dDDuqOHsY5IBbNdk3qew/gCAYBQ4zS4r+ZN
+         tfQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=/0hbb2nQ8qLOSX43QfBq0AO60VqrSoR4REXu4GQwUqw=;
-        b=LRpB1OhoS/SHBxat1N3qem56PL7H7z0XFI08pnsH1CQV4vMH+RsQS3ChkL2m/q6r0P
-         9AzQp0y/cjHQRV6GesZWMFFBcwKTziYWndWzq3uU3igM3YEIWDkWNeiosxjgjkxkGdtm
-         i6BUVIGsTWX6HLW0GbNqRdxgU95QYmA4IxS2lfsJHhxMZVVAF8TWk+k82AevUR70MwEC
-         q1GAc268w6r7/P97ku2K003EfyxQTmdmmln6erJwps01PmjPbd8pJYdULs/JB2a8wxf3
-         96NzdCD9WrVSBu9zIIBL5BMRRczfvE2Y8ZsyV9NZVVe4/TNQMrJxqwxXvV+JcNaBmL0s
-         fzLA==
-X-Gm-Message-State: AOAM5330Fazx7CK+ipRGjCAt5iZZuWIDlHdYmIMyrRXiNE786aFOj5Ew
-        hqjTqceawdXQIJXADw99brjYh/oH3n0rYg==
-X-Google-Smtp-Source: ABdhPJwQ+IOqJ3v1OyJoVc0v3YdcvvRq45ekBJo/e4LGz4w7xi4JpSlLmtfViOzMhjTj/nMExqSS9po5h4+0mw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:2348:b0:163:fc70:a4cd with SMTP
- id c8-20020a170903234800b00163fc70a4cdmr6191709plh.89.1654019001365; Tue, 31
- May 2022 10:43:21 -0700 (PDT)
-Date:   Tue, 31 May 2022 10:43:15 -0700
-In-Reply-To: <xmqqbkvi1owx.fsf@gitster.g>
-Message-Id: <kl6lv8tlegy4.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com>
- <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com> <7499a2809615d42eaf3649e1c33f38d099d27c1a.1653685761.git.gitgitgadget@gmail.com>
- <xmqqbkvi1owx.fsf@gitster.g>
-Subject: Re: [PATCH v3 2/5] config: read protected config with `git_protected_config()`
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=N08A60A/ws1ot8Zrmi4UbjX/QCYfvgihV9sugKyTtH8=;
+        b=6p/puqIm4eO4utbniiJ/uJnNxKVvh5ZyIEk/JFdih05+Gzguh5Kb3bxxJApKpKzeeq
+         vpSCfqFIGA48WCeq3ehj9hlBpKC3/EEgIO09iSfZg+0agnOn3vEmVzMwOv8/BJ7fPS3R
+         gBabSZWSugCHZrx4RYhjWwwKF5H3vUX+1mKBVqOKGFwTLXMhOLpDWgz7GCOZNAqU1ahW
+         ebyl3Qk2hVUpuYYCdj36W688lYY/cHIHlnJo9lYN4BG7WaTeJag1bRJgPMI/tE1YudTq
+         KQlBT4jonUol2wUWMcH/kDZjkhKGyeEMRgbUjIbgZF7WbnHwT0bMWze8wCf9VOEs2Edj
+         tk8A==
+X-Gm-Message-State: AOAM531apvn0SAlfW4KVv2gf7vPXSFJHCL+F3Jbi1AdT4OUiYQv//qr0
+        UBrzdXln7ItGlB0Qg8oA9eXUBrkypwwW9w==
+X-Google-Smtp-Source: ABdhPJyVbajsrFlwbnsFkHR7CHt79gp2kA+cuvXwoshPuArayX+ymPoF4PuqSdmXPRJeJx82+Li/Pw==
+X-Received: by 2002:a5d:5917:0:b0:210:353b:db0e with SMTP id v23-20020a5d5917000000b00210353bdb0emr8636532wrd.469.1654019175343;
+        Tue, 31 May 2022 10:46:15 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id j26-20020a05600c1c1a00b003973e27b789sm3826656wms.27.2022.05.31.10.46.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 May 2022 10:46:14 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/7] gitweb/Makefile: define all .PHONY prerequisites inline
+Date:   Tue, 31 May 2022 19:45:54 +0200
+Message-Id: <patch-v2-1.7-14361617ca6-20220531T173805Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1103.g036c05811b0
+In-Reply-To: <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
+References: <220527.861qwf489s.gmgdl@evledraar.gmail.com> <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Move the '.PHONY' definition so that it's split up and accompanies the
+relevant as they're defined. This will make a subsequent diff smaller
+as we'll remove some of these, and won't need to re-edit the
+now-removed '.PHONY' line.
 
->> Protected config is read using `read_very_early_config()`, which has
->> several downsides:
->>
->> - Every call to `read_very_early_config()` parses global and
->>   system-level config files anew, but this can be optimized by just
->>   parsing them once [1].
->> - Protected variables should respect "-c" because we can reasonably
->>   assume that it comes from the user. But, `read_very_early_config()`
->>   can't use "-c" because it is called so early that it does not have
->>   access to command line arguments.
->
-> Now we are talking about protected "variable".  Is that a synonym
-> for "config", or are there some distinctions between them?
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ gitweb/Makefile | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-Sorry, that's an old term I was toying with (this somehow snuck through
-my proofreading). I just meant "variable that is only read from
-protected config", aka a "protected config only variable".
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index f13e23c4de4..abb5c9f9ab6 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -1,5 +1,6 @@
+ # The default target of this Makefile is...
+ all::
++.PHONY: all
+ 
+ # Define V=1 to have a more verbose compile.
+ #
+@@ -45,6 +46,7 @@ HIGHLIGHT_BIN = highlight
+ -include config.mak
+ 
+ # determine version
++.PHONY: .FORCE-GIT-VERSION-FILE
+ ../GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	$(QUIET_SUBDIR0)../ $(QUIET_SUBDIR1) GIT-VERSION-FILE
+ 
+@@ -152,6 +154,7 @@ GITWEB_REPLACE = \
+ 	-e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
+ 	-e 's|++HIGHLIGHT_BIN++|$(HIGHLIGHT_BIN)|g'
+ 
++.PHONY: FORCE
+ GITWEB-BUILD-OPTIONS: FORCE
+ 	@rm -f $@+
+ 	@echo "x" '$(PERL_PATH_SQ)' $(GITWEB_REPLACE) "$(JSMIN)|$(CSSMIN)" >$@+
+@@ -171,15 +174,18 @@ static/gitweb.js: $(GITWEB_JSLIB_FILES)
+ 
+ ### Testing rules
+ 
++.PHONY: test
+ test:
+ 	$(MAKE) -C ../t gitweb-test
+ 
++.PHONY: test-installed
+ test-installed:
+ 	GITWEB_TEST_INSTALLED='$(DESTDIR_SQ)$(gitwebdir_SQ)' \
+ 		$(MAKE) -C ../t gitweb-test
+ 
+ ### Installation rules
+ 
++.PHONY: install
+ install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+ 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+@@ -188,10 +194,8 @@ install: all
+ 
+ ### Cleaning rules
+ 
++.PHONY: clean
+ clean:
+ 	$(RM) gitweb.cgi static/gitweb.js \
+ 		static/gitweb.min.js static/gitweb.min.css \
+ 		GITWEB-BUILD-OPTIONS
+-
+-.PHONY: all clean install test test-installed .FORCE-GIT-VERSION-FILE FORCE
+-
+-- 
+2.36.1.1103.g036c05811b0
 
-A goal in this version was to introduce as little jargon as possible, so
-- "protected config" refers to the set of config sources, and
-- "protected config only" refers to config variables/settings that are
-  only read from protected config.
-
->> - Protected config is stored in `the_repository` so that we don't need
->>   to statically allocate it. But this might be confusing since protected
->>   config ignores repository config by definition.
->
-> Yes, it indeed is.  Is it because we were over-eager when we
-> introduced the "struct repository *repo" parameter to many functions
-> and the configuration system wants you to have some repository, even
-> when you know you are not reading from any repository?  
-
-Ah no, I was just trying to avoid yet-another global variable (since
-IIRC we want to move towards a more lib-like Git), and the_repository
-was a convenient global variable to (ab)use.
-
-> I am wondering if it is a cleaner solution *not* to hang the
-> protected config as a configset in the_repository, but keep the
-> configset as a separate global variable, perhaps static to config.c
-> and is meant to be only accessed via git_protected_config() and the
-> like.
-
-I think your suggestion to use a global variable is better, as much as I
-want to avoid another global variable. Protected config would affect any
-repositories that we work with in-core, so using a global sounds ok.
-
-environment.c might be a better place since we already make a concerted
-effort to put global config variables there instead of config.c.
-
-As an aside, I wonder how we could get rid of all of the globals in
-environment.c in the long term. Maybe we would have yet-another all
-encompassing global, the_environment, and then figure out which
-variables belong to the repository and which belong to the environment.
-
->> @@ -295,6 +295,11 @@ void repo_clear(struct repository *repo)
->>  		FREE_AND_NULL(repo->remote_state);
->>  	}
->>  
->> +	if (repo->protected_config) {
->> +		git_configset_clear(repo->protected_config);
->> +		FREE_AND_NULL(repo->protected_config);
->> +	}
->> +
->
-> This becomes necessary only because each repository instance has
-> protected_config, even though we need only one instance, no matter
-> how many repositories we are accessing in this single invocation of
-> Git, no?
-
-Yes.
-
-> How should "git config -l" interact with "protected config" and
-> "protected variables", by the way?  Should a user be able to tell
-> which ones are coming from protected scope?  Should we gain, next to
-> --global, --system, etc., --protected option to list only the
-> protected config/variable?
-
-I'll have to think about this some more. My initial thoughts are that we
-should do this if we formalize 'protected' as a scope-like concept, but
-I don't see the lack of "--protected" as a significant hindrance to
-users because they can use "--global" and "--system" (albeit in two
-invocations instead of one).
-
-> This is another thing that I find iffy on terminology.  Should a
-> random variable, like user.name, be a "protected config", if it is
-> found in $HOME/.gitconfig?  If it comes from there, surely we can
-> trust its value, but unlike things like safe.directory, there is no
-> code that wants to enforce that we pay attention only to user.name
-> that came from trusted scopes.  Should such a variable be called
-> "protected variable"?
-
-Ah.. I think it would be best to pretend that the "Protected variable"
-typo never happened. That term was destined to be confusing and
-meaningless.
-
-Instead, we can use "protected config" to refer to the config and
-"protected config only" to refer to variables. Since "protected config"
-is defined as (global + system + CLI) config, then yes, we would say
-that it is "protected config". But since we do not enforce that
-"user.name" _must_ come from only protected config, it is not "protected
-config only".
