@@ -2,180 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47EF0C433FE
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 07:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A21B5C433F5
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 08:06:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244546AbiEaHfP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 03:35:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53930 "EHLO
+        id S244701AbiEaIGY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 04:06:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235204AbiEaHe7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 03:34:59 -0400
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2067.outbound.protection.outlook.com [40.107.21.67])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E2A474DC9
-        for <git@vger.kernel.org>; Tue, 31 May 2022 00:34:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lNpdpgH1D5OjYv4YoVY7nB/ifHNvGnX2ZtmuAO5FL2LbxBtqnZd3JKGw4I86PMOaMCT47iivb6ZbrrO6+/GEROFclv0z/GvAqevLkbPqE0OVBCK0s02k4I5kFgPkcA+iGQifs/drkeEz92H4Na520Jmh5+9jNaaMgO+teSdHNxexsXDzVprfPTjOZPo2bqW7QgAbHn/IgbOH30s2iWnjyvsM0B6Ijs6VRlUhrtkpVxnTTOx20LLD7JjVggmgWqF8jVSTRi8S2kZntdgmn4mz9/rBCvx80rsM5jNuOOm1F2WQx5W1jclzo5KE/6C99laT3j+9hF75kukMNB0TqxyWMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CAtLSIlUfu08wRWffbQu8R1MG5YXoz89o9tip39/z2E=;
- b=NRN5GeTbozthVwtUIV+//jhjrgy1lF/CDF4z5CY+fO6v7f+WCCsTlbfHF+iGx+KeTldP76ryq5vgBeCtTqNo5KJR9sG4SLq2Z2vcdRQx/AkQY/OM87RtR8c8/RuxZM1oL2xbruucYz02d8a+l+wLyeaHBs+BS3xwVd+omae9M729B48063gazTJVKKA5mMNiS06Vbh8i3NGxcVGj3yLAA/9Do2XU8mFx7FXrH2rzRBYd7REczywID3tdCWVU7Wokd5YubvXTf8zVTXHmGCQJaowXKI6KipPP8C/ocK4dTjfca2ERnzoI7QJeWDd/XRWfzp+CI0tA8SttFvYBMDfnNA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CAtLSIlUfu08wRWffbQu8R1MG5YXoz89o9tip39/z2E=;
- b=sXtZmXUne2K/D7fKqO+ebMnHWJj1UANAPwv/5mBylC5HNHCPFcezx8Zrf2t3xU82yS2W5cpTHPUnxJJSiZtRhX/mgvCbJ/tvPiguezz1ye/LkbP4uhVOri8s64zLMaNubAZK2k1ESg1HfZ8+NUN3CbVLOBf4RR/312oq47//O/g=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB4189.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:ad::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5293.13; Tue, 31 May
- 2022 07:34:46 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::b4dd:8ff5:e52f:a55f]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::b4dd:8ff5:e52f:a55f%8]) with mapi id 15.20.5293.019; Tue, 31 May 2022
- 07:34:46 +0000
-Date:   Tue, 31 May 2022 09:34:45 +0200
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Andy Lindeman via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Andy Lindeman <andy@lindeman.io>
-Subject: Re: [PATCH] ssh signing: Support ECDSA as literal SSH keys
-Message-ID: <20220531073445.iuovy634ufp5xims@fs>
-References: <pull.1272.git.git.1653932705097.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <pull.1272.git.git.1653932705097.gitgitgadget@gmail.com>
-X-ClientProxiedBy: AS9PR04CA0088.eurprd04.prod.outlook.com
- (2603:10a6:20b:50e::8) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        with ESMTP id S237948AbiEaIGW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 04:06:22 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78B3491559
+        for <git@vger.kernel.org>; Tue, 31 May 2022 01:06:21 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id w3so12162260plp.13
+        for <git@vger.kernel.org>; Tue, 31 May 2022 01:06:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cCj6AO0n4mEpMCWzIUXfM2inCX3IxdGIyTKxZWCz5a0=;
+        b=JWnQDB5SWMgEFbiVZDm83NxpxIT5ocj+ipJw4ZgiIiA5Enezy3+zSTgiyWRM8piLY6
+         LWbeqizcT+RikWQDSctol2IeAzvs22RQ1u7dZ6ew+VBm7lBwMEHATk12snWqIvHM/znq
+         1aSb5tphrWXWSKYvrSi6kqAMpSqgTAXXarpsBbeNyJFiKZI6FsDH/ou55F/qboKg/tfJ
+         Notte+aTmgtJPGWl1DlHxVmn9M3wj7BYCYdGlyn00i6ZG956xNAaZydxD7olt4WGBOH3
+         h41maczJRt8YF793AcZfoIDt6PjiW3xeFWC8ZwXEFc3UI2Hr24ilxuH7rWys3PfJfJ5E
+         nPWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cCj6AO0n4mEpMCWzIUXfM2inCX3IxdGIyTKxZWCz5a0=;
+        b=SWmNfOELKLhIPC2LgQRlqG9stPKBZVM4VP04SLc5O/B0ch6PZmO0dJysLryy4ZqqF8
+         vpPVaK5Nfwt7wy2mXBLu5wnl6bNR3yqLMLmjdKe/u4f7Kh0WFXOAfwh99RcrbPg/Q/Hd
+         DRSFUZoajKVhz3SRUfADpkBRRkTwIKN5IJpPM7VX6r7bspCFFcPWfpLYBQUwptZai0Ue
+         Fy2YTfR1+lY79nOUnjDMGvL0ZKd6tHNKVVR4GXSz3G6hDur43IccFECrki/OQ93hPLHv
+         VRNtyv3YraU2BfuMmu90l61/qnDz7nzIamqm3kfd5w/9ViDCje3V6bqYlGHGzFIv1PBH
+         +fyg==
+X-Gm-Message-State: AOAM531AiZBzxCJh7fHj5K7FJyDs1BA3uKqKeaXY8HEC1taszWOrcnnH
+        gZSCV5jWwxZkmOzL2iSf8rPN/ZoChKxFRBMHjUCnCiYJvZM=
+X-Google-Smtp-Source: ABdhPJwqPHaNUcQkVltZf7FidQK8MBUxXTTXUF28Q5XteMBo591sYVbohPsABJTBOjI2FCMd2BJaUuTVvoTMtYwrmeU=
+X-Received: by 2002:a17:90a:de15:b0:1df:63dd:9cfc with SMTP id
+ m21-20020a17090ade1500b001df63dd9cfcmr27719961pjv.200.1653984380938; Tue, 31
+ May 2022 01:06:20 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 5301ba66-d812-4352-321e-08da42d80961
-X-MS-TrafficTypeDiagnostic: PR3PR10MB4189:EE_
-X-Microsoft-Antispam-PRVS: <PR3PR10MB4189F51B35DC49DE4C47049EB6DC9@PR3PR10MB4189.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: PRpdn5l3OVhrCIrCr5DEV5n4Fsf79VfcVvrvT4xX1s3cbwMyaScrxudBAbJLxct1NscuWVtcN5PO+0N0QmEfBqqTW3+g8oIzBYmO1Bi5Qv3DfOPzFHZ1SwVaDCnrS5u+lXxbeoUi0rERdzTqr9yFORYL+m6IbC7erc4kkLzb49Uiswn2atBsT13zfYCHMvSzbUVJnxNMjkyt1/iZtFJiGT3ydOTKpKvG02NRWcBVIDjjl6IC/JW0FNoLmKk4mPvdzluCAeK82Pdf9SBe/mT1ueLuS4LioOSd6LGMAg2RjZX4WWG0wM30p565aPrhriIAYMatiRwhEdbyYeOyV81bLHVKa7laGfjjLAwR6hjY2j/A1Du1U62jnu9PBcs+oDmcJAdjW6MFd4nb73YbVMEIxbCSxQBjhQEw7V1GAAowiLdjOYqYClPPFmSCo3hBGAb3CFl3Pt1eWQAe3bh/dmsLOQK6BlKl5LVOPAFoV/9TdKTRfHHX5/kgpgM/l8uEERHQAt43Mv/J6y0syLbJ+tW84VkveJRDY/C2Evq1A0wQKCrURRBPTubzrDa0HkHug4mqeJG4exSSivQxmPrLsyGySYaVv/FIXRYmP3DF5K6WHdKdM4Ek4F3AOVwKK+hQXLhP23xxDLHBKIIVSGl9o5OSYdos4hkzVRDD+K4gH1pKqNpjAFhssi0D9Kn4U8ZK4/g6+0rCzBi9otg6kscE+rId6PQtAlmCeE1fbZ3eAnyLmTs=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(4636009)(7916004)(396003)(39830400003)(376002)(136003)(366004)(346002)(316002)(33716001)(38100700002)(66476007)(4326008)(8676002)(6486002)(66946007)(66556008)(508600001)(8936002)(5660300002)(86362001)(966005)(53546011)(2906002)(83380400001)(1076003)(41300700001)(9686003)(26005)(6512007)(6916009)(6506007)(186003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RE5iNTNXMmFQSmJGMGU5d1d6V0s0cEdlc3dPUTRiTDA2Y2xTUU9iSm1GcW4y?=
- =?utf-8?B?VERCbTNxQXcyMGp5T2VsR0xMcExHUTM4SDV4c1VBdEpQZDkrM0xLb1lVRGxs?=
- =?utf-8?B?OGFRc1FoSkc5clNPSTFEZ1g5U0JzWk5LK0g1Z0hUV041bDlxcUlUamNtVlc4?=
- =?utf-8?B?RFNtYXhLUVpxSEhURE1MU3BWSmErNFE1RCszVGZ5S2dHOExhWFhINm8wV2NQ?=
- =?utf-8?B?SE9QQWM0cnBjUWRnL2d3Y2hVaXlOSnNCT2NqYzNxOGVublhKVXl0WDg4WkxG?=
- =?utf-8?B?U0VpTEhTTDVzZ09lSHNPVUJHUVBKU0xMMlBZRDIwK2ErclZDSUJzSmVKOGlI?=
- =?utf-8?B?Szd3bEw0SC9zZDhyc3U4UFhkMFBNelNmTk9nZnE4dEZlR1dNb3NwNjJBLzVx?=
- =?utf-8?B?dzh0NHU2LzZNUmhRZzFIWC9pUERab3lkT3RYaDhJS2xTcm1iTlZJdzNVTGRk?=
- =?utf-8?B?RW1oNUtucXFoYzloeW56YkNPTFRpZmVuQVo5TFdpZDJEdURKZnZRc2xlL3Fi?=
- =?utf-8?B?N2JIblQzTHowRjF0bSs4Tlh0TlJZbVc3WVhJZWVkOVl6NXpwQVhSWDFNU1RL?=
- =?utf-8?B?ZUhhOTZ0eERoNzFuak9VaTB2N0FWaTR3aFJTZlNQOXkyR3lTbmNvRW1uL2lq?=
- =?utf-8?B?WTUwOEI0QnBOV2NLaXo3eVlHVHBTUWVGL1NQVXRvSERwMEpJZEhTckZSZEN6?=
- =?utf-8?B?TUhFZkFLWXhZbTRkRUNNZ1N6c3FFNEJvOGdKdkdBSUhFMFhuc0w2RTJNZklR?=
- =?utf-8?B?QmpYbVlDU1pVN1Znc0s0eExRdTdPNHA1bXFMMmRGM2pqT3RLQVd6WWNNb3M1?=
- =?utf-8?B?WjlzSFVBRUxJTWxuSURia2k2bHhIL0dia3U3UE1EenI5eSt0c1dDK2V0eGhG?=
- =?utf-8?B?OURNaTJPUGxlQlQ1czdTQUZIdmZ5TlhaQjFpQlB0bC9DKzBFUzkwd1hzUSsx?=
- =?utf-8?B?S0gvZndVWXB0MUtrWnVsdXZEV290WmQ2ODdTdnBJODlSdVQzcU5OcllHaEh0?=
- =?utf-8?B?WmNiQVFhZTBhOXJoL0FLOVBoRlNQS1FkcmE2ZktsdFZHYjY0bmNDVWVsRU95?=
- =?utf-8?B?R3RCdnRSNDI0NWVESndlQnRMd2x1cW96b2FUR3hKeTdGWG1FYm43eWZ4N1VH?=
- =?utf-8?B?cXpkVi9wU2g3S2V1OFpQbHZMNDNkT0xvbkcrb3V3WWdUK3BHeHpFN1IxdStl?=
- =?utf-8?B?dE9TWHVPQTBIV2VhYU54cTdpQlFCTll1NDlqak5IMDFJOVhpbmtITFNaUmNE?=
- =?utf-8?B?OW5zWHA1N044V3oyWWthSWNpZlBTUzgwWUlRbnJpRmdYSTVId05zWU9kWFFn?=
- =?utf-8?B?SG1HV0pNbHBmcDZPeDYrODhTQmVabk5OeTlZN2N3QmR1c2hGS0dic3lGUk9C?=
- =?utf-8?B?aEltTFBWY0RLVWh5ZFk5czZVREY2c2REU1Bza3NpVWpmUkQ4SnVLT1hjNVBo?=
- =?utf-8?B?My9HWHJndmNPMEl2TVFJejNFRWdZUDdCaks0aWkwQzFmOExucndKSDFUOEQ2?=
- =?utf-8?B?K3pjTGtlNVh5c29NM09aTE5vUnZyWGRmeEgrbWpmYzNiUmVUTUFDZUtQeWpR?=
- =?utf-8?B?cjdiVG5DM0FYdGFWbVR3Y1ArWjBsUDFQZTFGYWUwVXorL0EwbFg2bUh1Qm8w?=
- =?utf-8?B?Q1prTmlaNVJFZWVvMkpuaFZndUY1VG1ueVVBR2xsRXE1ZjBCamVneE1NMTF2?=
- =?utf-8?B?d2lYYzI1L2VzRkJIS3BkRkVScjRNVkw5MjdSOVVjc2g2WnJYUVBwT0dTcWFH?=
- =?utf-8?B?NjhIU3JVUFJqUUwyWXpBLzRodG16MDFpdXpxVjJrSTc3bm9wbC9iS0ZIMXoz?=
- =?utf-8?B?Sk1GTm5jMCswblN3R09OY2FsaEFuZlhQelFoZ0kwM3QvaUJ0bWtLL21pb28v?=
- =?utf-8?B?SnhTbjdJSEc1QnV4Sko2TUdzWkNvazI0NWQ5UmphWXVzWjZrRkRFRTlXNUVx?=
- =?utf-8?B?eTVGalIyOWg5Z2JneG1vcmRJUHNBMVBmR0dZYWt2K2x3QmFHU0pyKzdyUzYy?=
- =?utf-8?B?ODZoM2E2b0lmKzF5cFROQmtEWDA0TUd6M3hUYnQ0UUV4dXJndHNZM2ltR0tq?=
- =?utf-8?B?cndrZDBMSkNwTzdXN0QrUFkxN0FuSkFvUUhWVGdyWklPOW9jRGZUcWpEZjEy?=
- =?utf-8?B?b3pJMG1PNHRYa2h0ZUxiM2lWamZHQ01vVjFoSHp3akNkbVVlMy9TeEpHODZy?=
- =?utf-8?B?R2JOL3FHUlg0YWxYZnVrek1haUJhamt3ZEJaNlBieVpxOUswTnFQR1E3eGJ6?=
- =?utf-8?B?b3NIZDF1eWxEUkJBTUprTUJSZHdxUFJQdXRCZW9PWHJPMlJVdlZuMnZDR21q?=
- =?utf-8?B?dkwyRW9ib0RCakUyYThPVndGVDQwMXdBaXU1Z1pVbENNMDkwckJSdlh1OGhW?=
- =?utf-8?Q?vLvH6+c6KJRF+uo8=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5301ba66-d812-4352-321e-08da42d80961
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 May 2022 07:34:46.5173
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XuRIgYsWUImH+gAJP+VgfHUu33eM/KdEQcl3/U8zH5QyGPopAJWE6VL0rEpadUhV1NnJt8aBo1DP0GYmPfQv1EPf8soF2eRp93iJT3IMwrQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4189
+References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
+ <20220527100804.209890-1-shaoxuan.yuan02@gmail.com> <20220527100804.209890-3-shaoxuan.yuan02@gmail.com>
+ <0884b97b-0745-5cad-3034-a679be5d6c3a@github.com>
+In-Reply-To: <0884b97b-0745-5cad-3034-a679be5d6c3a@github.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Date:   Tue, 31 May 2022 16:06:08 +0800
+Message-ID: <CAJyCBORP74=nC1cB5r41MqS+WD-JfNX+8AOv7jqevN9FZGWdSw@mail.gmail.com>
+Subject: Re: [WIP v2 2/5] mv: check if out-of-cone file exists in index with
+ SKIP_WORKTREE bit
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, vdye@github.com, gitster@pobox.com,
+        newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30.05.2022 17:45, Andy Lindeman via GitGitGadget wrote:
->From: Andy Lindeman <andy@lindeman.io>
+On Fri, May 27, 2022 at 11:13 PM Derrick Stolee
+<derrickstolee@github.com> wrote:
+> > diff --git a/builtin/mv.c b/builtin/mv.c
+> > index 83a465ba83..32ad4d5682 100644
+> > --- a/builtin/mv.c
+> > +++ b/builtin/mv.c
+> > @@ -185,8 +185,32 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+> >
+> >               length = strlen(src);
+> >               if (lstat(src, &st) < 0) {
+> > +                     /*
+> > +                      * TODO: for now, when you try to overwrite a <destination>
+> > +                      * with your <source> as a sparse file, if you supply a "--sparse"
+> > +                      * flag, then the action will be done without providing "--force"
+> > +                      * and no warning.
+> > +                      *
+> > +                      * This is mainly because the sparse <source>
+> > +                      * is not on-disk, and this if-else chain will be cut off early in
+> > +                      * this check, thus the "--force" check is ignored. Need fix.
+> > +                      */
 >
->Keys generated using `ssh-keygen -t ecdsa` or similar are being rejected
->as literal SSH keys because the prefix is `ecdsa-sha2-nistp256`,
->`ecdsa-sha2-nistp384` or `ecdsa-sha2-nistp521`.
->
->This was acknowledged as an issue [1] in the past, but hasn't yet been
->fixed.
+> I wonder if this is worth the comment here, or if we'd rather see
+> the mention in the commit message. You have documented tests that
+> fail in this case, so we already have something that marks this
+> as "TODO" in a more discoverable place.
 
-Hi Andy,
-thanks for your report. We have decided in the past to not explicitly cater 
-to every key prefix and instead use `key::` for literal keys.
-See 
-https://git-scm.com/docs/git-config#Documentation/git-config.txt-usersigningKey
+This comment was added during my local development, it should be
+removed.
 
-`For backward compatibility, a raw key which begins with "ssh-", such as 
-"ssh-rsa XXXXXX identifier", is treated as "key::ssh-rsa XXXXXX identifier", 
-but this form is deprecated; use the key:: form instead.`
+> > +                     int pos = cache_name_pos(src, length);
+> > +                     if (pos >= 0) {
+> > +                             const struct cache_entry *ce = active_cache[pos];
+> > +
+> > +                             if (ce_skip_worktree(ce)) {
+> > +                                     if (!ignore_sparse)
+> > +                                             string_list_append(&only_match_skip_worktree, src);
+> > +                                     else
+> > +                                             modes[i] = SPARSE;
+>
+>
+> > +                             }
+> > +                             else
+> > +                                     bad = _("bad source");
+>
+> style nit:
+>
+>         } else {
+>                 bad = _("bad source");
+>         }
+>
+> > +                     }
+> >                       /* only error if existence is expected. */
+> > -                     if (modes[i] != SPARSE)
+> > +                     else if (modes[i] != SPARSE)
+> >                               bad = _("bad source");
+>
+> For this one, the comment makes it difficult to connect the 'else
+> if' to its corresponding 'if'. Perhaps:
+>
+>         } else if (modes[i] != SPARSE) {
+>                 /* only error if existence is expected. */
+>                 bad = _("bad source");
+>         }
+>
+> >               } else if (!strncmp(src, dst, length) &&
+> >                               (dst[length] == 0 || dst[length] == '/')) {
+>
+> In general, I found this if/else-if chain hard to grok, and
+> a lot of it is because we have "simple" cases at the end
+> and the complicated parts have ever-increasing nesting. This
+> is mostly due to the existing if/else-if chain in this method.
+>
+> Here is a diff that replaces that if/else-if chain with a
+> 'goto' trick to jump ahead, allowing some code to decrease in
+> tabbing:
+>
+> ---- >8 ----
 
+[cutting the proposed refactor for space]
+
+> ---- >8 ----
 >
->[1]: https://github.com/git/git/pull/1041#issuecomment-971425601
+> But mostly the reason for this refactor is that the following
+> diff should be equivalent to yours:
 >
->Signed-off-by: Andy Lindeman <andy@lindeman.io>
->---
->    ssh signing: Support ECDSA as literal SSH keys
+> ---- >8 ----
 >
->    Keys generated using ssh-keygen -t ecdsa or similar will currently be
->    rejected as literal SSH keys because the prefix is ecdsa-sha2-nistp256,
->    ecdsa-sha2-nistp384 or ecdsa-sha2-nistp521.
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index d8b5c24fb5..add48e23b4 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -185,11 +185,28 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
 >
->    This was acknowledged as an issue in the past, but hasn't yet been
->    fixed.
+>                 length = strlen(src);
+>                 if (lstat(src, &st) < 0) {
+> -                       /* only error if existence is expected. */
+> -                       if (modes[i] != SPARSE) {
+> +                       int pos;
+> +                       const struct cache_entry *ce;
+> +
+> +                       pos = cache_name_pos(src, length);
+> +                       if (pos < 0) {
+> +                               /* only error if existence is expected. */
+> +                               if (modes[i] != SPARSE)
+> +                                       bad = _("bad source");
+> +                               goto act_on_entry;
+> +                       }
+> +
+> +                       ce = active_cache[pos];
+> +                       if (!ce_skip_worktree(ce)) {
+>                                 bad = _("bad source");
+>                                 goto act_on_entry;
+>                         }
+> +
+> +                       if (!ignore_sparse)
+> +                               string_list_append(&only_match_skip_worktree, src);
+> +                       else
+> +                               modes[i] = SPARSE;
+> +                       goto act_on_entry;
+>                 }
+>                 if (!strncmp(src, dst, length) &&
+>                     (dst[length] == 0 || dst[length] == '/')) {
+> ---- >8 ---
 >
->    https://github.com/git/git/pull/1041#issuecomment-971425601
->
->Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1272%2Falindeman%2Fecdsa-sha2-keys-v1
->Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1272/alindeman/ecdsa-sha2-keys-v1
->Pull-Request: https://github.com/git/git/pull/1272
->
-> gpg-interface.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/gpg-interface.c b/gpg-interface.c
->index 280f1fa1a58..086bd03b51d 100644
->--- a/gpg-interface.c
->+++ b/gpg-interface.c
->@@ -779,7 +779,7 @@ static int is_literal_ssh_key(const char *string, const char **key)
-> {
-> 	if (skip_prefix(string, "key::", key))
-> 		return 1;
->-	if (starts_with(string, "ssh-")) {
->+	if (starts_with(string, "ssh-") || starts_with(string, "ecdsa-sha2-")) {
-> 		*key = string;
-> 		return 1;
-> 	}
->
->base-commit: 8ddf593a250e07d388059f7e3f471078e1d2ed5c
->-- 
->gitgitgadget
+> To me, this is a bit easier to parse, since we find the error
+> cases and jump to the action before continuing on the "happy
+> path". It does involve that first big refactor first, so I'd
+> like to hear opinions of other contributors before you jump to
+> taking this suggestion.
+
+True. I also find it easier to read. Though Victoria mentioned the
+goto hazard, the gotos here decouples the huge chain and that
+brings clarity and makes it easier to extend.
+
+-- 
+Thanks & Regards,
+Shaoxuan
