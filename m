@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF3C5C433F5
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 17:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 717E0C433F5
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 17:46:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346637AbiEaRqV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 13:46:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36142 "EHLO
+        id S1346641AbiEaRqY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 13:46:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234837AbiEaRqT (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1345621AbiEaRqT (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 31 May 2022 13:46:19 -0400
 Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17478985B6
-        for <git@vger.kernel.org>; Tue, 31 May 2022 10:46:17 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id u3so19667050wrg.3
-        for <git@vger.kernel.org>; Tue, 31 May 2022 10:46:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED13E2AC7C
+        for <git@vger.kernel.org>; Tue, 31 May 2022 10:46:15 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id k19so11493962wrd.8
+        for <git@vger.kernel.org>; Tue, 31 May 2022 10:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=N08A60A/ws1ot8Zrmi4UbjX/QCYfvgihV9sugKyTtH8=;
-        b=JgbaFur3fOOdHPrOQuSAAtPnd5cW+niPbe68mRP+K1nT7ZItY6uIcz6Rp/m5elL6iZ
-         RYz3QFjQIG1LW4bcgsKzHsX+5c0U2MtN+Hg25N8WJDBNMMLNlWFuWGjaIsXv/rHbbF5q
-         zPLWoesNsbQHc8/1ThJWME/NnYd1UCiek3deM83XECm3dr7sBbjDYpRfXc/Y+MMBS26s
-         bn/5JFwINpISyx8CJSdBK9XgQCanIMbjWo45KTu8ZGunjFat8A/5IkqcyS0PENORcEUV
-         azzgURV8/h08NZNdAfXSeoZBBI/nhsUt5dDDuqOHsY5IBbNdk3qew/gCAYBQ4zS4r+ZN
-         tfQA==
+        bh=L1gDy6BT3mRSIv8neCnRVmBuRVPHWPiOX4dyXD1RAL8=;
+        b=Rj1nfBnx0eDzj7rCxY1vMMgDYMFY3ahR9A6WoN9uLzkvLzAOsSv7PGuV42nP7+pDIq
+         nM7O5PGpy8u5D5E/r+lj1GMjQy5ffaXb0QACZmHDnNcEJTUVn8fP3JOr5BRiMDEZEE2A
+         00ddeKzVXXg6Ib6k5GR8HC7hlUB30sbY8GnGFJ9soJ7X69y+yOhgUlKKU9hBUz0wDTRc
+         kK8iGlXhVWyObU6w79CIh+iJZYER2zTKbeqnNz5lBNk2N0oLRsmu8Ti3xCvxnlYQ0uWp
+         GTOzDlslzBM8TKJda9cuaYY7PdRz0tcbOuMAOfs6Aka7777sz6zssKIt0n9fQZ2XQH3x
+         6akw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=N08A60A/ws1ot8Zrmi4UbjX/QCYfvgihV9sugKyTtH8=;
-        b=6p/puqIm4eO4utbniiJ/uJnNxKVvh5ZyIEk/JFdih05+Gzguh5Kb3bxxJApKpKzeeq
-         vpSCfqFIGA48WCeq3ehj9hlBpKC3/EEgIO09iSfZg+0agnOn3vEmVzMwOv8/BJ7fPS3R
-         gBabSZWSugCHZrx4RYhjWwwKF5H3vUX+1mKBVqOKGFwTLXMhOLpDWgz7GCOZNAqU1ahW
-         ebyl3Qk2hVUpuYYCdj36W688lYY/cHIHlnJo9lYN4BG7WaTeJag1bRJgPMI/tE1YudTq
-         KQlBT4jonUol2wUWMcH/kDZjkhKGyeEMRgbUjIbgZF7WbnHwT0bMWze8wCf9VOEs2Edj
-         tk8A==
-X-Gm-Message-State: AOAM531apvn0SAlfW4KVv2gf7vPXSFJHCL+F3Jbi1AdT4OUiYQv//qr0
-        UBrzdXln7ItGlB0Qg8oA9eXUBrkypwwW9w==
-X-Google-Smtp-Source: ABdhPJyVbajsrFlwbnsFkHR7CHt79gp2kA+cuvXwoshPuArayX+ymPoF4PuqSdmXPRJeJx82+Li/Pw==
-X-Received: by 2002:a5d:5917:0:b0:210:353b:db0e with SMTP id v23-20020a5d5917000000b00210353bdb0emr8636532wrd.469.1654019175343;
-        Tue, 31 May 2022 10:46:15 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j26-20020a05600c1c1a00b003973e27b789sm3826656wms.27.2022.05.31.10.46.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=L1gDy6BT3mRSIv8neCnRVmBuRVPHWPiOX4dyXD1RAL8=;
+        b=phwRkn9GlCuSaATwAZAEJWcXeZl2xl6vpyvCGwdCLXCEN3zqOtXGAKy5tkQ+aImasv
+         EKMg4KwC8qEOQzu9dn0bA1Yor94+gyZEtnezSB+kpg7JJPqUBxMV6IkGzgjJ0D7kCaW0
+         W/dp1kU9UIycJgxS5UXxNEX0T6gD9/kRPGTlB17nSCT5MnG9GFckhcw1tGqONpTI84Re
+         t4I6orbiE5lMh8gzRDyXDm0yYNdkKZLJa2tbmppDyTgCf2HeGX7yUQZN9ncW7HwEkWtQ
+         pMuP/SgtkO2cLutDnUgHWYdDa5AtIVJn+rn3kla9uUGxgXDNjPDkemaIVP0POKYzVGll
+         ydmQ==
+X-Gm-Message-State: AOAM533Msa/7A47E8tJeKcohDwjXb0FRASSPTwTfizofKlq8hLzgIyDO
+        gLazny1SL00NuCw6V6wMVhs1g3YpLr1tqA==
+X-Google-Smtp-Source: ABdhPJz3r7qHUK+UzloZP0WAnlofm8lhV92a3h/tG+6ABSmXXKTiZTfn21KPTLv2zUvZDCYp1YhRYQ==
+X-Received: by 2002:a5d:4c86:0:b0:210:2e6e:3a93 with SMTP id z6-20020a5d4c86000000b002102e6e3a93mr11709545wrs.185.1654019174227;
         Tue, 31 May 2022 10:46:14 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id j26-20020a05600c1c1a00b003973e27b789sm3826656wms.27.2022.05.31.10.46.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 May 2022 10:46:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,12 +55,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/7] gitweb/Makefile: define all .PHONY prerequisites inline
-Date:   Tue, 31 May 2022 19:45:54 +0200
-Message-Id: <patch-v2-1.7-14361617ca6-20220531T173805Z-avarab@gmail.com>
+Subject: [PATCH v2 0/7] gitweb: fix "make" not including "gitweb" without NOOP run slowdowns
+Date:   Tue, 31 May 2022 19:45:53 +0200
+Message-Id: <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1103.g036c05811b0
-In-Reply-To: <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
-References: <220527.861qwf489s.gmgdl@evledraar.gmail.com> <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
+In-Reply-To: <220527.861qwf489s.gmgdl@evledraar.gmail.com>
+References: <220527.861qwf489s.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,74 +68,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the '.PHONY' definition so that it's split up and accompanies the
-relevant as they're defined. This will make a subsequent diff smaller
-as we'll remove some of these, and won't need to re-edit the
-now-removed '.PHONY' line.
+The $subject is a proposed re-roll of SZEDER's
+https://lore.kernel.org/git/20220525205651.825669-1-szeder.dev@gmail.com;
+As noted downthread of that fix having the Makefile invoke "make -C
+gitweb" again would slow us down on NOOP runs by quite a bit.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- gitweb/Makefile | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+This series fixes the same regression with an amended 7/7 version of
+SZEDER's fix, but starts out by having the top-level Makefile include
+the gitweb/Makefile.
 
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index f13e23c4de4..abb5c9f9ab6 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -1,5 +1,6 @@
- # The default target of this Makefile is...
- all::
-+.PHONY: all
- 
- # Define V=1 to have a more verbose compile.
- #
-@@ -45,6 +46,7 @@ HIGHLIGHT_BIN = highlight
- -include config.mak
- 
- # determine version
-+.PHONY: .FORCE-GIT-VERSION-FILE
- ../GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
- 	$(QUIET_SUBDIR0)../ $(QUIET_SUBDIR1) GIT-VERSION-FILE
- 
-@@ -152,6 +154,7 @@ GITWEB_REPLACE = \
- 	-e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
- 	-e 's|++HIGHLIGHT_BIN++|$(HIGHLIGHT_BIN)|g'
- 
-+.PHONY: FORCE
- GITWEB-BUILD-OPTIONS: FORCE
- 	@rm -f $@+
- 	@echo "x" '$(PERL_PATH_SQ)' $(GITWEB_REPLACE) "$(JSMIN)|$(CSSMIN)" >$@+
-@@ -171,15 +174,18 @@ static/gitweb.js: $(GITWEB_JSLIB_FILES)
- 
- ### Testing rules
- 
-+.PHONY: test
- test:
- 	$(MAKE) -C ../t gitweb-test
- 
-+.PHONY: test-installed
- test-installed:
- 	GITWEB_TEST_INSTALLED='$(DESTDIR_SQ)$(gitwebdir_SQ)' \
- 		$(MAKE) -C ../t gitweb-test
- 
- ### Installation rules
- 
-+.PHONY: install
- install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
- 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
-@@ -188,10 +194,8 @@ install: all
- 
- ### Cleaning rules
- 
-+.PHONY: clean
- clean:
- 	$(RM) gitweb.cgi static/gitweb.js \
- 		static/gitweb.min.js static/gitweb.min.css \
- 		GITWEB-BUILD-OPTIONS
--
--.PHONY: all clean install test test-installed .FORCE-GIT-VERSION-FILE FORCE
--
+This series is smaller than it looks, most of the commits preceding
+5-6/7 are there to make that diff smaller and easier to read, by
+splitting up earlier changes into non-functional changes.
+
+For this re-roll the equivalent of the "git hyperfine" command I
+posted in [2] will return;
+
+	Summary
+	  'make NO_TCLTK=Y' in 'origin/master' ran
+	    1.00 ± 0.11 times faster than 'make NO_TCLTK=Y' in 'HEAD~0'
+	    2.64 ± 0.26 times faster than 'make NO_TCLTK=' in 'origin/master'
+	    2.64 ± 0.24 times faster than 'make NO_TCLTK=' in 'HEAD~0'
+
+I.e. we are no slower or faster than before, but now "make && sudo
+make install-gitweb" will only copy already-generated files from the
+"make" command in the "sudo" step, as intended.
+
+1. https://lore.kernel.org/git/20220525205651.825669-1-szeder.dev@gmail.com
+2. https://lore.kernel.org/git/220526.86k0a96sv2.gmgdl@evledraar.gmail.com/
+
+SZEDER Gábor (1):
+  Makefile: build 'gitweb' in the default target
+
+Ævar Arnfjörð Bjarmason (6):
+  gitweb/Makefile: define all .PHONY prerequisites inline
+  gitweb/Makefile: add a $(GITWEB_ALL) variable
+  gitweb/Makefile: clear up and de-duplicate the gitweb.{css,js} vars
+  gitweb/Makefile: prepare to merge into top-level Makefile
+  gitweb: remove "test" and "test-installed" targets
+  gitweb/Makefile: include in top-level Makefile
+
+ Makefile        |  24 ++++----
+ gitweb/Makefile | 143 +++++++++++++++---------------------------------
+ t/Makefile      |   4 --
+ 3 files changed, 59 insertions(+), 112 deletions(-)
+
+Range-diff against v1:
+1:  1bbffa8a2b6 < -:  ----------- Makefile: build 'gitweb' in the default target
+-:  ----------- > 1:  14361617ca6 gitweb/Makefile: define all .PHONY prerequisites inline
+-:  ----------- > 2:  7d920a13518 gitweb/Makefile: add a $(GITWEB_ALL) variable
+-:  ----------- > 3:  e14a5b73061 gitweb/Makefile: clear up and de-duplicate the gitweb.{css,js} vars
+-:  ----------- > 4:  02e26ca8ce2 gitweb/Makefile: prepare to merge into top-level Makefile
+-:  ----------- > 5:  caf376f3dd9 gitweb: remove "test" and "test-installed" targets
+-:  ----------- > 6:  b423cd58f6b gitweb/Makefile: include in top-level Makefile
+-:  ----------- > 7:  69428540886 Makefile: build 'gitweb' in the default target
 -- 
 2.36.1.1103.g036c05811b0
 
