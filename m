@@ -2,65 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B125DC433F5
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 17:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 014C8C433F5
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 17:33:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346510AbiEaRWE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 13:22:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60234 "EHLO
+        id S1346584AbiEaRd3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 13:33:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346513AbiEaRWD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 13:22:03 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA45366FAE
-        for <git@vger.kernel.org>; Tue, 31 May 2022 10:22:00 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id q21so8407006wra.2
-        for <git@vger.kernel.org>; Tue, 31 May 2022 10:22:00 -0700 (PDT)
+        with ESMTP id S1346606AbiEaRdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 13:33:20 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DCDC9399D
+        for <git@vger.kernel.org>; Tue, 31 May 2022 10:33:10 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id 129-20020a1c0287000000b003974edd7c56so1651598wmc.2
+        for <git@vger.kernel.org>; Tue, 31 May 2022 10:33:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Uh3lO7OT5wPwvxXROkgzGB+QEyPqQV4uf6dpblBNZP8=;
-        b=kZMFbpaUpWbPL+VISfP7avNgI2rOT+BnTg4Q1nhy0evYBDpest/2r5pBFVyBx2pGor
-         VqYyEoP1qrnKO2wi0fI3xp28Kq8a+t4HuHEEXdI8jvBvTlNpnSnrcXxgGPLR8KnEJwPv
-         QTwSrjdMreqV4ofX5dXvflU/C6vg21x91NYguJwt8zfK2pMZ+x9NaEupVwQ1x43FZn6V
-         sfh1/Re5tiZis66MpAI+S1xvgv65SRxwKDskL8dGX3zMalcWXfyqO6E+4T3+DrThrpIP
-         KrwgtEy2gSFpgPAUv146Rc8Lhf3/L2z+OvAf9w5gZfzEmwGQK4pSuoVSfSmz+vk4yZF5
-         2oGg==
+        bh=ZRNQcXgDjU4PygpokCTVbolOoeOqxl4urTsF47WBo1U=;
+        b=i4UMwFVebJkCACfkfbbRhHaOYuNYRuEroAwp5iJngT7esndvfCMP42YCCHouN21k1w
+         ewpKi0l7QnxOgqrHfh7x1iBaqGKaS8dM4nv0+nhcd0DgUo0RxRzyFP14iFfzu2hPRvDS
+         ZZjOl3zTbZZsVAsPFN4oppBPKMqL846Jh/MpCinx89yXkiJU4YISyP9I1EK+GFGESmO1
+         bRe2VgXXqe0/+Q0dsU3m/UlvuoLSjEGoGEK7cWE+IN2KIxNA+w5LoOFTP/GChN5jbBrv
+         6iyS6A0twPRnsiXBT83Du4nauOHijBt3UcaedMxUs+sFlgbbhc0hvl5zYe+kXXttkDJy
+         q62A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Uh3lO7OT5wPwvxXROkgzGB+QEyPqQV4uf6dpblBNZP8=;
-        b=e5dWXTliBPYYtUGuKJEg++727+U/I7+sbySGi7HaA8W71ftmmMVwZg90+cw3aFw/TF
-         p/4Ba97+g72pmSY21iakXt8ZFsupA2vEsDAR6a0X3iOJK/ug+e8Ac5zqpsblOcNeLc9k
-         qr+IWDC7wTY/WVvurFgnC68YYSBgK/xfXSiAhxfFkxkZbtzpZGL1KQAj0nfkiM8pfXui
-         WeT5mAbSpCu5yiFc1f4zkvA8x7JQ5b87P+/N0MGeFN2TedyDDr6YUOd97NjAIq6Q4nty
-         MiRsoPE7lcmK6KlX3pDQc1M/NKgc/07KBEbslyPFJd8+ULi0oZxfHixBWWSIDCYCPC+1
-         Nqtw==
-X-Gm-Message-State: AOAM530UIhH8DlT4LQsedaFuW6psy9gBqpw5gfWXu4qUQ31AoyetSORt
-        q9m6mpzfgEhRKbrBOJjl+oQeZhDzp9xc9Q==
-X-Google-Smtp-Source: ABdhPJx4GGXrGxtK7CaCGiW9VeuhvTTOU+8gj7JhVEZ0b4+UMgog+iKzcdxd3H4iKrN33IRla9mmUw==
-X-Received: by 2002:a05:6000:717:b0:20e:6160:39dd with SMTP id bs23-20020a056000071700b0020e616039ddmr51252250wrb.331.1654017718640;
-        Tue, 31 May 2022 10:21:58 -0700 (PDT)
+        bh=ZRNQcXgDjU4PygpokCTVbolOoeOqxl4urTsF47WBo1U=;
+        b=k/pmbsbzFyWJI9pRQYqoUUUCPiJNHyUiJCpuNe/4QAH10sMuOWAs/agh/4aUEGJyKe
+         ce82TWHFRJjXJYC/UWnmK9Pu++iwJrlfnpE9dq5ggXKI92lXIwkIonoRX7njtYcPsls0
+         lLOIG/FpTGxFopFjcdkl0tLMLGI5vT1L45Z5NzFwVbMPeXp90PD3vKKu/WEdspaSLxIi
+         2rIqdljCSDH9Sjk9EaDvstGcUCarR92mehGGPO06BTiJmunn49OBEvGHsA1sdFcKeQfI
+         afOj3Nadoz2sBZuVt31bfQWbTWP9zv48qC/qCO/bj6V22KnCCJr++0ErfNSgXCHT+Jp5
+         3/fw==
+X-Gm-Message-State: AOAM531G1LatQqBhtxPjYi1+HUd/HUjpEzFsAYkJQxWsHl7mW4DKSe2o
+        aYAxvM+bWmz6lcP/VSkUA8FxIfQ6q8Wy2Q==
+X-Google-Smtp-Source: ABdhPJxEqq5l56x8EUsmPrs2gc6Mz2kA7Ca76tIcE9A3CBpbJq4dy+kH6z7RT+n6RRa2eenNCrtOgA==
+X-Received: by 2002:a05:600c:4e16:b0:397:6d34:76a4 with SMTP id b22-20020a05600c4e1600b003976d3476a4mr24772285wmq.0.1654018388358;
+        Tue, 31 May 2022 10:33:08 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m8-20020a05600c4f4800b003942a244f51sm3350521wmq.42.2022.05.31.10.21.57
+        by smtp.gmail.com with ESMTPSA id v21-20020a05600c215500b003973e8a227dsm2637941wml.46.2022.05.31.10.33.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 10:21:57 -0700 (PDT)
+        Tue, 31 May 2022 10:33:07 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
-        dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com
-Subject: [PATCH] ls-tree: test for the regression in 9c4d58ff2c3
-Date:   Tue, 31 May 2022 19:21:54 +0200
-Message-Id: <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.1.1100.g16130010d07
-In-Reply-To: <xmqqee28spni.fsf@gitster.g>
-References: <xmqqee28spni.fsf@gitster.g>
+        Anthony Sottile <asottile@umich.edu>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 1/2] run-command: add an "ungroup" option to run_process_parallel()
+Date:   Tue, 31 May 2022 19:32:58 +0200
+Message-Id: <patch-v4-1.2-f1170b02553-20220531T173005Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1103.g036c05811b0
+In-Reply-To: <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com>
+References: <cover-v3-0.2-00000000000-20220527T090618Z-avarab@gmail.com> <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,751 +70,483 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test for the regression introduced in my 9c4d58ff2c3 (ls-tree:
-split up "fast path" callbacks, 2022-03-23) and fixed in
-350296cc789 (ls-tree: `-l` should not imply recursive listing,
-2022-04-04), and test for the test of ls-tree option/mode combinations
-to make sure we don't have other blind spots.
+Extend the parallel execution API added in c553c72eed6 (run-command:
+add an asynchronous parallel child processor, 2015-12-15) to support a
+mode where the stdout and stderr of the processes isn't captured and
+output in a deterministic order, instead we'll leave it to the kernel
+and stdio to sort it out.
 
-The setup for these tests can be shared with those added in the
-1041d58b4d9 (Merge branch 'tl/ls-tree-oid-only', 2022-04-04) topic, so
-let's create a new t/lib-t3100.sh to help them share data.
+This gives the API same functionality as GNU parallel's --ungroup
+option. As we'll see in a subsequent commit the main reason to want
+this is to support stdout and stderr being connected to the TTY in the
+case of jobs=1, demonstrated here with GNU parallel:
 
-The existing tests in "t3104-ls-tree-format.sh" didn't deal with a
-submodule, which they'll now encounter with as the
-setup_basic_ls_tree_data() sets one up.
+	$ parallel --ungroup 'test -t {} && echo TTY || echo NTTY' ::: 1 2
+	TTY
+	TTY
+	$ parallel 'test -t {} && echo TTY || echo NTTY' ::: 1 2
+	NTTY
+	NTTY
 
-This extensive testing should give us confidence that there were no
-further regressions in this area. The lack of testing was noted back
-in [1], but unfortunately we didn't cover that blind-spot before
-9c4d58ff2c3.
+Another is as GNU parallel's documentation notes a potential for
+optimization. Our results will be a bit different, but in cases where
+you want to run processes in parallel where the exact order isn't
+important this can be a lot faster:
 
-1. https://lore.kernel.org/git/211115.86o86lqe3c.gmgdl@evledraar.gmail.com/
+	$ hyperfine -r 3 -L o ,--ungroup 'parallel {o} seq ::: 10000000 >/dev/null '
+	Benchmark 1: parallel  seq ::: 10000000 >/dev/null
+	  Time (mean ± σ):     220.2 ms ±   9.3 ms    [User: 124.9 ms, System: 96.1 ms]
+	  Range (min … max):   212.3 ms … 230.5 ms    3 runs
+
+	Benchmark 2: parallel --ungroup seq ::: 10000000 >/dev/null
+	  Time (mean ± σ):     154.7 ms ±   0.9 ms    [User: 136.2 ms, System: 25.1 ms]
+	  Range (min … max):   153.9 ms … 155.7 ms    3 runs
+
+	Summary
+	  'parallel --ungroup seq ::: 10000000 >/dev/null ' ran
+	    1.42 ± 0.06 times faster than 'parallel  seq ::: 10000000 >/dev/null '
+
+A large part of the juggling in the API is to make the API safer for
+its maintenance and consumers alike.
+
+For the maintenance of the API we e.g. avoid malloc()-ing the
+"pp->pfd", ensuring that SANITIZE=address and other similar tools will
+catch any unexpected misuse.
+
+For API consumers we take pains to never pass the non-NULL "out"
+buffer to an API user that provided the "ungroup" option. The
+resulting code in t/helper/test-run-command.c isn't typical of such a
+user, i.e. they'd typically use one mode or the other, and would know
+whether they'd provided "ungroup" or not.
+
+We could also avoid the strbuf_init() for "buffered_output" by having
+"struct parallel_processes" use a static PARALLEL_PROCESSES_INIT
+initializer, but let's leave that cleanup for later.
+
+Using a global "run_processes_parallel_ungroup" variable to enable
+this option is rather nasty, but is being done here to produce as
+minimal of a change as possible for a subsequent regression fix. This
+change is extracted from a larger initial version[1] which ends up
+with a better end-state for the API, but in doing so needed to modify
+all existing callers of the API. Let's defer that for now, and
+narrowly focus on what we need for fixing the regression in the
+subsequent commit.
+
+It's safe to do this with a global variable because:
+
+ A) hook.c is the only user of it that sets it to non-zero, and before
+    we'll get any other API users we'll refactor away this method of
+    passing in the option, i.e. re-roll [1].
+
+ B) Even if hook.c wasn't the only user we don't have callers of this
+    API that concurrently invoke this parallel process starting API
+    itself in parallel.
+
+As noted above "A" && "B" are rather nasty, and we don't want to live
+with those caveats long-term, but for now they should be an acceptable
+compromise.
+
+1. https://lore.kernel.org/git/cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
+ run-command.c               | 83 +++++++++++++++++++++++++++++--------
+ run-command.h               | 30 ++++++++++----
+ t/helper/test-run-command.c | 19 +++++++--
+ t/t0061-run-command.sh      | 35 ++++++++++++++++
+ 4 files changed, 139 insertions(+), 28 deletions(-)
 
-On Thu, Apr 07 2022, Junio C Hamano wrote:
-
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->>>>> Let's not go too cute like this.  This forces the caller to remember
->>>>> which among 6, 7, and 8 corresponds to which option.  It is too ugly
->>>>> to live.
->>>>
->>>> I think it's rather elegant actually, but to be fair it would, per:
->>>>
->>>>    git grep '<&[1-9]| [1-9]<<-'
->>>>
->>>> Be the user with the most FD's using this sort of pattern.
->>>
->>> Please give a clear explanation why "-d" has to be 6, "-r" 7 and
->>> "-t" 8, that can be used by developers as a memory aid to help them
->>> write new tests using the helper.
->>
->> It's documented when test-lib.sh does the redirection, since Fabian
->> Stelzer's a6714088e0c (test-lib: make BAIL_OUT() work in tests and
->> prereq, 2021-12-01).
->
-> Sorry, but that is not what I asked.  I know what we use lower file
-> descriptors for, and I didn't ask why we start from 6 (as opposed to
-> 3).
->
-> The updated helper forces our developers to know that the expected
-> result for "-d" has to go to #6 (not #7 or #8), and "-r" to #7 (not
-> #6 or #8), etc., in order to write new tests using it, and in order
-> to spot a mistake while reviewing such new tests.
->
-> It is an invitation to unmaintainable mess.  Don't encourage it.
-
-I came up with this at the time, but didn't submit it since we were in
-the rc period.
-
-But since we're past that I think it makes sense to have a test for
-the regression we fixed, the below is a lot less magical, but larger
-by line count. I think this alternate test implementation should
-address the concerns you had.
-
-Range-diff:
-1:  ed83b3b74ab ! 1:  0fdfec624eb ls-tree: fix --long implying -r regression in 9c4d58ff2c3
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    ls-tree: fix --long implying -r regression in 9c4d58ff2c3
-    +    ls-tree: test for the regression in 9c4d58ff2c3
-     
-    -    Fix a regression introduced in 9c4d58ff2c3 (ls-tree: split up "fast
-    -    path" callbacks, 2022-03-23), and improve the tests added in the
-    -    1041d58b4d9 (Merge branch 'tl/ls-tree-oid-only', 2022-04-04) topic it
-    -    was merged as part of to test the full expected output of various
-    -    "ls-tree" options with and without -r.
-    +    Add a test for the regression introduced in my 9c4d58ff2c3 (ls-tree:
-    +    split up "fast path" callbacks, 2022-03-23) and fixed in
-    +    350296cc789 (ls-tree: `-l` should not imply recursive listing,
-    +    2022-04-04), and test for the test of ls-tree option/mode combinations
-    +    to make sure we don't have other blind spots.
-     
-    -    Let's fix it, and also add tests not only for that blindspot, but also
-    -    any other potential blindspots. To that end test the "modes" of -d, -r
-    -    and -t (as well as "no mode") against all of the format options.
-    +    The setup for these tests can be shared with those added in the
-    +    1041d58b4d9 (Merge branch 'tl/ls-tree-oid-only', 2022-04-04) topic, so
-    +    let's create a new t/lib-t3100.sh to help them share data.
-     
-    -    These tests all pass with that topic reverted (except those that would
-    -    fail because they're testing the new --object-only feature introduced
-    -    in that topic), which should give us confidence that there were no
-    -    further regressions in this area.
-    +    The existing tests in "t3104-ls-tree-format.sh" didn't deal with a
-    +    submodule, which they'll now encounter with as the
-    +    setup_basic_ls_tree_data() sets one up.
-    +
-    +    This extensive testing should give us confidence that there were no
-    +    further regressions in this area. The lack of testing was noted back
-    +    in [1], but unfortunately we didn't cover that blind-spot before
-    +    9c4d58ff2c3.
-    +
-    +    1. https://lore.kernel.org/git/211115.86o86lqe3c.gmgdl@evledraar.gmail.com/
-     
-    -    Reported-By: Josh Steadmon <steadmon@google.com>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    - ## builtin/ls-tree.c ##
-    -@@ builtin/ls-tree.c: static int show_tree_long(const struct object_id *oid, struct strbuf *base,
-    - 	printf("%06o %s %s %7s\t", data.mode, type_name(data.type),
-    - 	       find_unique_abbrev(data.oid, abbrev), size_text);
-    - 	show_tree_common_default_long(base, pathname, data.base->len);
-    --	return 1;
-    -+	return recurse;
-    - }
-    - 
-    - static int show_tree_name_only(const struct object_id *oid, struct strbuf *base,
-    + ## t/lib-t3100.sh (new) ##
-    +@@
-    ++#!/bin/sh
-    ++
-    ++setup_basic_ls_tree_data () {
-    ++	mkdir dir &&
-    ++	test_commit dir/sub-file &&
-    ++	test_commit top-file &&
-    ++	git clone . submodule &&
-    ++	git submodule add ./submodule &&
-    ++	git commit -m"add submodule"
-    ++}
-     
-      ## t/t3104-ls-tree-format.sh ##
-    -@@ t/t3104-ls-tree-format.sh: test_ls_tree_format () {
-    - 	fmtopts=$3 &&
-    - 	shift 2 &&
-    +@@ t/t3104-ls-tree-format.sh: test_description='ls-tree --format'
-    + 
-    + TEST_PASSES_SANITIZE_LEAK=true
-    + . ./test-lib.sh
-    ++. "$TEST_DIRECTORY"/lib-t3100.sh
-    + 
-    + test_expect_success 'ls-tree --format usage' '
-    + 	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
-    +@@ t/t3104-ls-tree-format.sh: test_expect_success 'ls-tree --format usage' '
-    + '
-    + 
-    + test_expect_success 'setup' '
-    +-	mkdir dir &&
-    +-	test_commit dir/sub-file &&
-    +-	test_commit top-file
-    ++	setup_basic_ls_tree_data
-    + '
-      
-    + test_ls_tree_format () {
-    +
-    + ## t/t3105-ls-tree-output.sh (new) ##
-    +@@
-    ++#!/bin/sh
-    ++
-    ++test_description='ls-tree output'
-    ++
-    ++TEST_PASSES_SANITIZE_LEAK=true
-    ++. ./test-lib.sh
-    ++. "$TEST_DIRECTORY"/lib-t3100.sh
-    ++
-    ++test_expect_success 'ls-tree --format usage' '
-    ++	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
-    ++	test_expect_code 129 git ls-tree --format=fmt --name-only HEAD &&
-    ++	test_expect_code 129 git ls-tree --format=fmt --name-status HEAD
-    ++'
-    ++
-    ++test_expect_success 'setup' '
-    ++	setup_basic_ls_tree_data
-    ++'
-    ++
-    ++test_ls_tree_format_mode_output () {
-    ++	local opts=$1 &&
-    ++	shift &&
-     +	cat >expect &&
-    -+	cat <&6 >expect.-d &&
-    -+	cat <&7 >expect.-r &&
-    -+	cat <&8 >expect.-t &&
-     +
-    -+	for opt in '' '-d' '-r' '-t'
-    ++	while test $# -gt 0
-     +	do
-    -+		test_expect_success "'ls-tree $opts${opt:+ $opt}' output" '
-    -+			git ls-tree ${opt:+$opt }$opts $opt HEAD >actual &&
-    -+			test_cmp expect${opt:+.$opt} actual
-    ++		local mode="$1" &&
-    ++		shift &&
-    ++
-    ++		test_expect_success "'ls-tree $opts${mode:+ $mode}' output" '
-    ++			git ls-tree ${mode:+$mode }$opts HEAD >actual &&
-    ++			test_cmp expect actual
-     +		'
-    ++
-    ++		case "$opts" in
-    ++		--full-tree)
-    ++			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir, fails)" '
-    ++				test_must_fail git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../
-    ++			'
-    ++			;;
-    ++		*)
-    ++			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir)" '
-    ++				git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../ >actual &&
-    ++				test_cmp expect actual
-    ++			'
-    ++			;;
-    ++		esac
-     +	done
-    ++}
-     +
-    - 	test_expect_success "ls-tree '--format=<$format>' is like options '$opts $fmtopts'" '
-    - 		git ls-tree $opts -r HEAD >expect &&
-    - 		git ls-tree --format="$format" -r $fmtopts HEAD >actual &&
-    -@@ t/t3104-ls-tree-format.sh: test_ls_tree_format () {
-    - 
-    - test_ls_tree_format \
-    - 	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-    --	""
-    -+	"" \
-    -+	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	OUT_D
-    -+	100644 blob $(git rev-parse HEAD:dir/sub-file.t)	dir/sub-file.t
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT_R
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT_T
-    - 
-    - test_ls_tree_format \
-    - 	"%(objectmode) %(objecttype) %(objectname) %(objectsize:padded)%x09%(path)" \
-    --	"--long"
-    -+	"--long" \
-    -+	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
-    -+	040000 tree $(git rev-parse HEAD:dir)       -	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)       9	top-file.t
-    -+	OUT
-    -+	040000 tree $(git rev-parse HEAD:dir)       -	dir
-    -+	OUT_D
-    -+	100644 blob $(git rev-parse HEAD:dir/sub-file.t)      13	dir/sub-file.t
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)       9	top-file.t
-    -+	OUT_R
-    -+	040000 tree $(git rev-parse HEAD:dir)       -	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)       9	top-file.t
-    -+	OUT_T
-    - 
-    - test_ls_tree_format \
-    - 	"%(path)" \
-    --	"--name-only"
-    -+	"--name-only" \
-    -+	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
-    ++# test exact output of option (none, --long, ...) and mode (none and
-    ++# -d, -r -t) and combinations
-    ++test_expect_success 'setup: HEAD_* variables' '
-    ++	HEAD_gitmodules=$(git rev-parse HEAD:.gitmodules) &&
-    ++	HEAD_dir=$(git rev-parse HEAD:dir) &&
-    ++	HEAD_top_file=$(git rev-parse HEAD:top-file.t) &&
-    ++	HEAD_submodule=$(git rev-parse HEAD:submodule) &&
-    ++	HEAD_dir_sub_file=$(git rev-parse HEAD:dir/sub-file.t)
-    ++'
-    ++## opt =
-    ++test_ls_tree_format_mode_output "" "" "-t" <<-EOF
-    ++	100644 blob $HEAD_gitmodules	.gitmodules
-    ++	040000 tree $HEAD_dir	dir
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	100644 blob $HEAD_top_file	top-file.t
-    ++	EOF
-    ++test_ls_tree_format_mode_output "" "-d" <<-EOF
-    ++	040000 tree $HEAD_dir	dir
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	EOF
-    ++test_ls_tree_format_mode_output "" "-r" <<-EOF
-    ++	100644 blob $HEAD_gitmodules	.gitmodules
-    ++	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	100644 blob $HEAD_top_file	top-file.t
-    ++	EOF
-    ++## opt = --long
-    ++test_ls_tree_format_mode_output "--long" "" "-t" <<-EOF
-    ++	100644 blob $HEAD_gitmodules      61	.gitmodules
-    ++	040000 tree $HEAD_dir       -	dir
-    ++	160000 commit $HEAD_submodule       -	submodule
-    ++	100644 blob $HEAD_top_file       9	top-file.t
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--long" "-d" <<-EOF
-    ++	040000 tree $HEAD_dir       -	dir
-    ++	160000 commit $HEAD_submodule       -	submodule
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--long" "-r" <<-EOF
-    ++	100644 blob $HEAD_gitmodules      61	.gitmodules
-    ++	100644 blob $HEAD_dir_sub_file      13	dir/sub-file.t
-    ++	160000 commit $HEAD_submodule       -	submodule
-    ++	100644 blob $HEAD_top_file       9	top-file.t
-    ++	EOF
-    ++## opt = --name-only
-    ++test_ls_tree_format_mode_output "--name-only" "" "-t" <<-EOF
-    ++	.gitmodules
-     +	dir
-    ++	submodule
-     +	top-file.t
-    -+	OUT
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--name-only" "-d" <<-EOF
-     +	dir
-    -+	OUT_D
-    ++	submodule
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--name-only" "-r" <<-EOF
-    ++	.gitmodules
-     +	dir/sub-file.t
-    ++	submodule
-     +	top-file.t
-    -+	OUT_R
-    -+	dir
-    -+	top-file.t
-    -+	OUT_T
-    - 
-    - test_ls_tree_format \
-    - 	"%(objectname)" \
-    --	"--object-only"
-    -+	"--object-only" \
-    -+	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
-    -+	$(git rev-parse HEAD:dir)
-    -+	$(git rev-parse HEAD:top-file.t)
-    -+	OUT
-    -+	$(git rev-parse HEAD:dir)
-    -+	OUT_D
-    -+	$(git rev-parse HEAD:dir/sub-file.t)
-    -+	$(git rev-parse HEAD:top-file.t)
-    -+	OUT_R
-    -+	$(git rev-parse HEAD:dir)
-    -+	$(git rev-parse HEAD:top-file.t)
-    -+	OUT_T
-    - 
-    - test_ls_tree_format \
-    - 	"%(objectname)" \
-    - 	"--object-only --abbrev" \
-    --	"--abbrev"
-    -+	"--abbrev" \
-    -+	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
-    -+	$(git rev-parse HEAD:dir | test_copy_bytes 7)
-    -+	$(git rev-parse HEAD:top-file.t| test_copy_bytes 7)
-    -+	OUT
-    -+	$(git rev-parse HEAD:dir | test_copy_bytes 7)
-    -+	OUT_D
-    -+	$(git rev-parse HEAD:dir/sub-file.t | test_copy_bytes 7)
-    -+	$(git rev-parse HEAD:top-file.t | test_copy_bytes 7)
-    -+	OUT_R
-    -+	$(git rev-parse HEAD:dir | test_copy_bytes 7)
-    -+	$(git rev-parse HEAD:top-file.t | test_copy_bytes 7)
-    -+	OUT_T
-    - 
-    - test_ls_tree_format \
-    - 	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-    - 	"-t" \
-    --	"-t"
-    -+	"-t" \
-    -+	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	OUT_D
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:dir/sub-file.t)	dir/sub-file.t
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT_R
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT_T
-    - 
-    - test_ls_tree_format \
-    - 	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-    - 	"--full-name" \
-    --	"--full-name"
-    -+	"--full-name" \
-    -+	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	OUT_D
-    -+	100644 blob $(git rev-parse HEAD:dir/sub-file.t)	dir/sub-file.t
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT_R
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT_T
-    - 
-    - test_ls_tree_format \
-    - 	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-    - 	"--full-tree" \
-    --	"--full-tree"
-    -+	"--full-tree" \
-    -+	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	OUT_D
-    -+	100644 blob $(git rev-parse HEAD:dir/sub-file.t)	dir/sub-file.t
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT_R
-    -+	040000 tree $(git rev-parse HEAD:dir)	dir
-    -+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
-    -+	OUT_T
-    - 
-    - test_done
-    ++	EOF
-    ++## opt = --object-only
-    ++test_ls_tree_format_mode_output "--object-only" "" "-t" <<-EOF
-    ++	$HEAD_gitmodules
-    ++	$HEAD_dir
-    ++	$HEAD_submodule
-    ++	$HEAD_top_file
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--object-only" "-d" <<-EOF
-    ++	$HEAD_dir
-    ++	$HEAD_submodule
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--object-only" "-r" <<-EOF
-    ++	$HEAD_gitmodules
-    ++	$HEAD_dir_sub_file
-    ++	$HEAD_submodule
-    ++	$HEAD_top_file
-    ++	EOF
-    ++## opt = --object-only --abbrev
-    ++test_expect_success 'setup: HEAD_short_* variables' '
-    ++	HEAD_short_gitmodules=$(git rev-parse --short HEAD:.gitmodules) &&
-    ++	HEAD_short_dir=$(git rev-parse --short HEAD:dir) &&
-    ++	HEAD_short_top_file=$(git rev-parse --short HEAD:top-file.t) &&
-    ++	HEAD_short_submodule=$(git rev-parse --short HEAD:submodule) &&
-    ++	HEAD_short_dir_sub_file=$(git rev-parse --short HEAD:dir/sub-file.t)
-    ++'
-    ++test_ls_tree_format_mode_output "--object-only --abbrev" "" "-t" <<-EOF
-    ++	$HEAD_short_gitmodules
-    ++	$HEAD_short_dir
-    ++	$HEAD_short_submodule
-    ++	$HEAD_short_top_file
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--object-only --abbrev" "-d" <<-EOF
-    ++	$HEAD_short_dir
-    ++	$HEAD_short_submodule
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--object-only --abbrev" "-r" <<-EOF
-    ++	$HEAD_short_gitmodules
-    ++	$HEAD_short_dir_sub_file
-    ++	$HEAD_short_submodule
-    ++	$HEAD_short_top_file
-    ++	EOF
-    ++## opt = --full-name
-    ++test_ls_tree_format_mode_output "--full-name" "" <<-EOF
-    ++	100644 blob $HEAD_gitmodules	.gitmodules
-    ++	040000 tree $HEAD_dir	dir
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	100644 blob $HEAD_top_file	top-file.t
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--full-name" "-d" <<-EOF
-    ++	040000 tree $HEAD_dir	dir
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--full-name" "-r" <<-EOF
-    ++	100644 blob $HEAD_gitmodules	.gitmodules
-    ++	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	100644 blob $HEAD_top_file	top-file.t
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--full-name" "-t" <<-EOF
-    ++	100644 blob $HEAD_gitmodules	.gitmodules
-    ++	040000 tree $HEAD_dir	dir
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	100644 blob $HEAD_top_file	top-file.t
-    ++	EOF
-    ++## opt = --full-tree
-    ++test_ls_tree_format_mode_output "--full-tree" "" "-t" <<-EOF
-    ++	100644 blob $HEAD_gitmodules	.gitmodules
-    ++	040000 tree $HEAD_dir	dir
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	100644 blob $HEAD_top_file	top-file.t
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--full-tree" "-d" <<-EOF
-    ++	040000 tree $HEAD_dir	dir
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	EOF
-    ++test_ls_tree_format_mode_output "--full-tree" "-r" <<-EOF
-    ++	100644 blob $HEAD_gitmodules	.gitmodules
-    ++	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-    ++	160000 commit $HEAD_submodule	submodule
-    ++	100644 blob $HEAD_top_file	top-file.t
-    ++	EOF
-    ++
-    ++test_done
-
- t/lib-t3100.sh            |  10 ++
- t/t3104-ls-tree-format.sh |   5 +-
- t/t3105-ls-tree-output.sh | 192 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 204 insertions(+), 3 deletions(-)
- create mode 100644 t/lib-t3100.sh
- create mode 100755 t/t3105-ls-tree-output.sh
-
-diff --git a/t/lib-t3100.sh b/t/lib-t3100.sh
-new file mode 100644
-index 00000000000..eabb5fd8034
---- /dev/null
-+++ b/t/lib-t3100.sh
-@@ -0,0 +1,10 @@
-+#!/bin/sh
-+
-+setup_basic_ls_tree_data () {
-+	mkdir dir &&
-+	test_commit dir/sub-file &&
-+	test_commit top-file &&
-+	git clone . submodule &&
-+	git submodule add ./submodule &&
-+	git commit -m"add submodule"
-+}
-diff --git a/t/t3104-ls-tree-format.sh b/t/t3104-ls-tree-format.sh
-index 0769a933d69..383896667b6 100755
---- a/t/t3104-ls-tree-format.sh
-+++ b/t/t3104-ls-tree-format.sh
-@@ -4,6 +4,7 @@ test_description='ls-tree --format'
+diff --git a/run-command.c b/run-command.c
+index a8501e38ceb..324e9548469 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1471,6 +1471,7 @@ enum child_state {
+ 	GIT_CP_WAIT_CLEANUP,
+ };
  
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-t3100.sh
++int run_processes_parallel_ungroup;
+ struct parallel_processes {
+ 	void *data;
  
- test_expect_success 'ls-tree --format usage' '
- 	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
-@@ -12,9 +13,7 @@ test_expect_success 'ls-tree --format usage' '
- '
+@@ -1494,6 +1495,7 @@ struct parallel_processes {
+ 	struct pollfd *pfd;
  
- test_expect_success 'setup' '
--	mkdir dir &&
--	test_commit dir/sub-file &&
--	test_commit top-file
-+	setup_basic_ls_tree_data
- '
+ 	unsigned shutdown : 1;
++	unsigned ungroup : 1;
  
- test_ls_tree_format () {
-diff --git a/t/t3105-ls-tree-output.sh b/t/t3105-ls-tree-output.sh
-new file mode 100755
-index 00000000000..29511d9331b
---- /dev/null
-+++ b/t/t3105-ls-tree-output.sh
-@@ -0,0 +1,192 @@
-+#!/bin/sh
+ 	int output_owner;
+ 	struct strbuf buffered_output; /* of finished children */
+@@ -1537,7 +1539,7 @@ static void pp_init(struct parallel_processes *pp,
+ 		    get_next_task_fn get_next_task,
+ 		    start_failure_fn start_failure,
+ 		    task_finished_fn task_finished,
+-		    void *data)
++		    void *data, const int ungroup)
+ {
+ 	int i;
+ 
+@@ -1559,13 +1561,19 @@ static void pp_init(struct parallel_processes *pp,
+ 	pp->nr_processes = 0;
+ 	pp->output_owner = 0;
+ 	pp->shutdown = 0;
++	pp->ungroup = ungroup;
+ 	CALLOC_ARRAY(pp->children, n);
+-	CALLOC_ARRAY(pp->pfd, n);
++	if (pp->ungroup)
++		pp->pfd = NULL;
++	else
++		CALLOC_ARRAY(pp->pfd, n);
+ 	strbuf_init(&pp->buffered_output, 0);
+ 
+ 	for (i = 0; i < n; i++) {
+ 		strbuf_init(&pp->children[i].err, 0);
+ 		child_process_init(&pp->children[i].process);
++		if (!pp->pfd)
++			continue;
+ 		pp->pfd[i].events = POLLIN | POLLHUP;
+ 		pp->pfd[i].fd = -1;
+ 	}
+@@ -1606,6 +1614,7 @@ static void pp_cleanup(struct parallel_processes *pp)
+  */
+ static int pp_start_one(struct parallel_processes *pp)
+ {
++	const int ungroup = pp->ungroup;
+ 	int i, code;
+ 
+ 	for (i = 0; i < pp->max_processes; i++)
+@@ -1615,24 +1624,30 @@ static int pp_start_one(struct parallel_processes *pp)
+ 		BUG("bookkeeping is hard");
+ 
+ 	code = pp->get_next_task(&pp->children[i].process,
+-				 &pp->children[i].err,
++				 ungroup ? NULL : &pp->children[i].err,
+ 				 pp->data,
+ 				 &pp->children[i].data);
+ 	if (!code) {
+-		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
+-		strbuf_reset(&pp->children[i].err);
++		if (!ungroup) {
++			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
++			strbuf_reset(&pp->children[i].err);
++		}
+ 		return 1;
+ 	}
+-	pp->children[i].process.err = -1;
+-	pp->children[i].process.stdout_to_stderr = 1;
++	if (!ungroup) {
++		pp->children[i].process.err = -1;
++		pp->children[i].process.stdout_to_stderr = 1;
++	}
+ 	pp->children[i].process.no_stdin = 1;
+ 
+ 	if (start_command(&pp->children[i].process)) {
+-		code = pp->start_failure(&pp->children[i].err,
++		code = pp->start_failure(ungroup ? NULL : &pp->children[i].err,
+ 					 pp->data,
+ 					 pp->children[i].data);
+-		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
+-		strbuf_reset(&pp->children[i].err);
++		if (!ungroup) {
++			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
++			strbuf_reset(&pp->children[i].err);
++		}
+ 		if (code)
+ 			pp->shutdown = 1;
+ 		return code;
+@@ -1640,14 +1655,29 @@ static int pp_start_one(struct parallel_processes *pp)
+ 
+ 	pp->nr_processes++;
+ 	pp->children[i].state = GIT_CP_WORKING;
+-	pp->pfd[i].fd = pp->children[i].process.err;
++	if (pp->pfd)
++		pp->pfd[i].fd = pp->children[i].process.err;
+ 	return 0;
+ }
+ 
++static void pp_mark_ungrouped_for_cleanup(struct parallel_processes *pp)
++{
++	int i;
 +
-+test_description='ls-tree output'
++	if (!pp->ungroup)
++		BUG("only reachable if 'ungrouped'");
 +
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-t3100.sh
-+
-+test_expect_success 'ls-tree --format usage' '
-+	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --name-only HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --name-status HEAD
-+'
-+
-+test_expect_success 'setup' '
-+	setup_basic_ls_tree_data
-+'
-+
-+test_ls_tree_format_mode_output () {
-+	local opts=$1 &&
-+	shift &&
-+	cat >expect &&
-+
-+	while test $# -gt 0
-+	do
-+		local mode="$1" &&
-+		shift &&
-+
-+		test_expect_success "'ls-tree $opts${mode:+ $mode}' output" '
-+			git ls-tree ${mode:+$mode }$opts HEAD >actual &&
-+			test_cmp expect actual
-+		'
-+
-+		case "$opts" in
-+		--full-tree)
-+			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir, fails)" '
-+				test_must_fail git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../
-+			'
-+			;;
-+		*)
-+			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir)" '
-+				git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../ >actual &&
-+				test_cmp expect actual
-+			'
-+			;;
-+		esac
-+	done
++	for (i = 0; i < pp->max_processes; i++)
++		pp->children[i].state = GIT_CP_WAIT_CLEANUP;
 +}
 +
-+# test exact output of option (none, --long, ...) and mode (none and
-+# -d, -r -t) and combinations
-+test_expect_success 'setup: HEAD_* variables' '
-+	HEAD_gitmodules=$(git rev-parse HEAD:.gitmodules) &&
-+	HEAD_dir=$(git rev-parse HEAD:dir) &&
-+	HEAD_top_file=$(git rev-parse HEAD:top-file.t) &&
-+	HEAD_submodule=$(git rev-parse HEAD:submodule) &&
-+	HEAD_dir_sub_file=$(git rev-parse HEAD:dir/sub-file.t)
-+'
-+## opt =
-+test_ls_tree_format_mode_output "" "" "-t" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "" "-d" <<-EOF
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	EOF
-+test_ls_tree_format_mode_output "" "-r" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+## opt = --long
-+test_ls_tree_format_mode_output "--long" "" "-t" <<-EOF
-+	100644 blob $HEAD_gitmodules      61	.gitmodules
-+	040000 tree $HEAD_dir       -	dir
-+	160000 commit $HEAD_submodule       -	submodule
-+	100644 blob $HEAD_top_file       9	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--long" "-d" <<-EOF
-+	040000 tree $HEAD_dir       -	dir
-+	160000 commit $HEAD_submodule       -	submodule
-+	EOF
-+test_ls_tree_format_mode_output "--long" "-r" <<-EOF
-+	100644 blob $HEAD_gitmodules      61	.gitmodules
-+	100644 blob $HEAD_dir_sub_file      13	dir/sub-file.t
-+	160000 commit $HEAD_submodule       -	submodule
-+	100644 blob $HEAD_top_file       9	top-file.t
-+	EOF
-+## opt = --name-only
-+test_ls_tree_format_mode_output "--name-only" "" "-t" <<-EOF
-+	.gitmodules
-+	dir
-+	submodule
-+	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--name-only" "-d" <<-EOF
-+	dir
-+	submodule
-+	EOF
-+test_ls_tree_format_mode_output "--name-only" "-r" <<-EOF
-+	.gitmodules
-+	dir/sub-file.t
-+	submodule
-+	top-file.t
-+	EOF
-+## opt = --object-only
-+test_ls_tree_format_mode_output "--object-only" "" "-t" <<-EOF
-+	$HEAD_gitmodules
-+	$HEAD_dir
-+	$HEAD_submodule
-+	$HEAD_top_file
-+	EOF
-+test_ls_tree_format_mode_output "--object-only" "-d" <<-EOF
-+	$HEAD_dir
-+	$HEAD_submodule
-+	EOF
-+test_ls_tree_format_mode_output "--object-only" "-r" <<-EOF
-+	$HEAD_gitmodules
-+	$HEAD_dir_sub_file
-+	$HEAD_submodule
-+	$HEAD_top_file
-+	EOF
-+## opt = --object-only --abbrev
-+test_expect_success 'setup: HEAD_short_* variables' '
-+	HEAD_short_gitmodules=$(git rev-parse --short HEAD:.gitmodules) &&
-+	HEAD_short_dir=$(git rev-parse --short HEAD:dir) &&
-+	HEAD_short_top_file=$(git rev-parse --short HEAD:top-file.t) &&
-+	HEAD_short_submodule=$(git rev-parse --short HEAD:submodule) &&
-+	HEAD_short_dir_sub_file=$(git rev-parse --short HEAD:dir/sub-file.t)
-+'
-+test_ls_tree_format_mode_output "--object-only --abbrev" "" "-t" <<-EOF
-+	$HEAD_short_gitmodules
-+	$HEAD_short_dir
-+	$HEAD_short_submodule
-+	$HEAD_short_top_file
-+	EOF
-+test_ls_tree_format_mode_output "--object-only --abbrev" "-d" <<-EOF
-+	$HEAD_short_dir
-+	$HEAD_short_submodule
-+	EOF
-+test_ls_tree_format_mode_output "--object-only --abbrev" "-r" <<-EOF
-+	$HEAD_short_gitmodules
-+	$HEAD_short_dir_sub_file
-+	$HEAD_short_submodule
-+	$HEAD_short_top_file
-+	EOF
-+## opt = --full-name
-+test_ls_tree_format_mode_output "--full-name" "" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--full-name" "-d" <<-EOF
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	EOF
-+test_ls_tree_format_mode_output "--full-name" "-r" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--full-name" "-t" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+## opt = --full-tree
-+test_ls_tree_format_mode_output "--full-tree" "" "-t" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--full-tree" "-d" <<-EOF
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	EOF
-+test_ls_tree_format_mode_output "--full-tree" "-r" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
+ static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
+ {
+ 	int i;
+ 
++	if (pp->ungroup)
++		BUG("unreachable with 'ungrouped'");
 +
-+test_done
+ 	while ((i = poll(pp->pfd, pp->max_processes, output_timeout)) < 0) {
+ 		if (errno == EINTR)
+ 			continue;
+@@ -1674,6 +1704,10 @@ static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
+ static void pp_output(struct parallel_processes *pp)
+ {
+ 	int i = pp->output_owner;
++
++	if (pp->ungroup)
++		BUG("unreachable with 'ungrouped'");
++
+ 	if (pp->children[i].state == GIT_CP_WORKING &&
+ 	    pp->children[i].err.len) {
+ 		strbuf_write(&pp->children[i].err, stderr);
+@@ -1683,6 +1717,7 @@ static void pp_output(struct parallel_processes *pp)
+ 
+ static int pp_collect_finished(struct parallel_processes *pp)
+ {
++	const int ungroup = pp->ungroup;
+ 	int i, code;
+ 	int n = pp->max_processes;
+ 	int result = 0;
+@@ -1697,8 +1732,8 @@ static int pp_collect_finished(struct parallel_processes *pp)
+ 		code = finish_command(&pp->children[i].process);
+ 
+ 		code = pp->task_finished(code,
+-					 &pp->children[i].err, pp->data,
+-					 pp->children[i].data);
++					 ungroup ? NULL : &pp->children[i].err,
++					 pp->data, pp->children[i].data);
+ 
+ 		if (code)
+ 			result = code;
+@@ -1707,10 +1742,13 @@ static int pp_collect_finished(struct parallel_processes *pp)
+ 
+ 		pp->nr_processes--;
+ 		pp->children[i].state = GIT_CP_FREE;
+-		pp->pfd[i].fd = -1;
++		if (pp->pfd)
++			pp->pfd[i].fd = -1;
+ 		child_process_init(&pp->children[i].process);
+ 
+-		if (i != pp->output_owner) {
++		if (ungroup) {
++			; /* no strbuf_*() work to do here */
++		} else if (i != pp->output_owner) {
+ 			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
+ 			strbuf_reset(&pp->children[i].err);
+ 		} else {
+@@ -1748,8 +1786,13 @@ int run_processes_parallel(int n,
+ 	int output_timeout = 100;
+ 	int spawn_cap = 4;
+ 	struct parallel_processes pp;
++	const int ungroup = run_processes_parallel_ungroup;
+ 
+-	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb);
++	/* unset for the next API user */
++	run_processes_parallel_ungroup = 0;
++
++	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb,
++		ungroup);
+ 	while (1) {
+ 		for (i = 0;
+ 		    i < spawn_cap && !pp.shutdown &&
+@@ -1766,8 +1809,12 @@ int run_processes_parallel(int n,
+ 		}
+ 		if (!pp.nr_processes)
+ 			break;
+-		pp_buffer_stderr(&pp, output_timeout);
+-		pp_output(&pp);
++		if (ungroup) {
++			pp_mark_ungrouped_for_cleanup(&pp);
++		} else {
++			pp_buffer_stderr(&pp, output_timeout);
++			pp_output(&pp);
++		}
+ 		code = pp_collect_finished(&pp);
+ 		if (code) {
+ 			pp.shutdown = 1;
+diff --git a/run-command.h b/run-command.h
+index 5bd0c933e80..bf4236f1164 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -405,6 +405,9 @@ void check_pipe(int err);
+  * pp_cb is the callback cookie as passed to run_processes_parallel.
+  * You can store a child process specific callback cookie in pp_task_cb.
+  *
++ * See run_processes_parallel() below for a discussion of the "struct
++ * strbuf *out" parameter.
++ *
+  * Even after returning 0 to indicate that there are no more processes,
+  * this function will be called again until there are no more running
+  * child processes.
+@@ -423,9 +426,8 @@ typedef int (*get_next_task_fn)(struct child_process *cp,
+  * This callback is called whenever there are problems starting
+  * a new process.
+  *
+- * You must not write to stdout or stderr in this function. Add your
+- * message to the strbuf out instead, which will be printed without
+- * messing up the output of the other parallel processes.
++ * See run_processes_parallel() below for a discussion of the "struct
++ * strbuf *out" parameter.
+  *
+  * pp_cb is the callback cookie as passed into run_processes_parallel,
+  * pp_task_cb is the callback cookie as passed into get_next_task_fn.
+@@ -441,9 +443,8 @@ typedef int (*start_failure_fn)(struct strbuf *out,
+ /**
+  * This callback is called on every child process that finished processing.
+  *
+- * You must not write to stdout or stderr in this function. Add your
+- * message to the strbuf out instead, which will be printed without
+- * messing up the output of the other parallel processes.
++ * See run_processes_parallel() below for a discussion of the "struct
++ * strbuf *out" parameter.
+  *
+  * pp_cb is the callback cookie as passed into run_processes_parallel,
+  * pp_task_cb is the callback cookie as passed into get_next_task_fn.
+@@ -464,11 +465,26 @@ typedef int (*task_finished_fn)(int result,
+  *
+  * The children started via this function run in parallel. Their output
+  * (both stdout and stderr) is routed to stderr in a manner that output
+- * from different tasks does not interleave.
++ * from different tasks does not interleave (but see "ungroup" below).
+  *
+  * start_failure_fn and task_finished_fn can be NULL to omit any
+  * special handling.
++ *
++ * If the "ungroup" option isn't specified, the API will set the
++ * "stdout_to_stderr" parameter in "struct child_process" and provide
++ * the callbacks with a "struct strbuf *out" parameter to write output
++ * to. In this case the callbacks must not write to stdout or
++ * stderr as such output will mess up the output of the other parallel
++ * processes. If "ungroup" option is specified callbacks will get a
++ * NULL "struct strbuf *out" parameter, and are responsible for
++ * emitting their own output, including dealing with any race
++ * conditions due to writing in parallel to stdout and stderr.
++ * The "ungroup" option can be enabled by setting the global
++ * "run_processes_parallel_ungroup" to "1" before invoking
++ * run_processes_parallel(), it will be set back to "0" as soon as the
++ * API reads that setting.
+  */
++extern int run_processes_parallel_ungroup;
+ int run_processes_parallel(int n,
+ 			   get_next_task_fn,
+ 			   start_failure_fn,
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index f3b90aa834a..6405c9a076a 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -31,7 +31,11 @@ static int parallel_next(struct child_process *cp,
+ 		return 0;
+ 
+ 	strvec_pushv(&cp->args, d->args.v);
+-	strbuf_addstr(err, "preloaded output of a child\n");
++	if (err)
++		strbuf_addstr(err, "preloaded output of a child\n");
++	else
++		fprintf(stderr, "preloaded output of a child\n");
++
+ 	number_callbacks++;
+ 	return 1;
+ }
+@@ -41,7 +45,10 @@ static int no_job(struct child_process *cp,
+ 		  void *cb,
+ 		  void **task_cb)
+ {
+-	strbuf_addstr(err, "no further jobs available\n");
++	if (err)
++		strbuf_addstr(err, "no further jobs available\n");
++	else
++		fprintf(stderr, "no further jobs available\n");
+ 	return 0;
+ }
+ 
+@@ -50,7 +57,10 @@ static int task_finished(int result,
+ 			 void *pp_cb,
+ 			 void *pp_task_cb)
+ {
+-	strbuf_addstr(err, "asking for a quick stop\n");
++	if (err)
++		strbuf_addstr(err, "asking for a quick stop\n");
++	else
++		fprintf(stderr, "asking for a quick stop\n");
+ 	return 1;
+ }
+ 
+@@ -411,6 +421,9 @@ int cmd__run_command(int argc, const char **argv)
+ 	strvec_clear(&proc.args);
+ 	strvec_pushv(&proc.args, (const char **)argv + 3);
+ 
++	if (getenv("RUN_PROCESSES_PARALLEL_UNGROUP"))
++		run_processes_parallel_ungroup = 1;
++
+ 	if (!strcmp(argv[1], "run-command-parallel"))
+ 		exit(run_processes_parallel(jobs, parallel_next,
+ 					    NULL, NULL, &proc));
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index ee281909bc3..69ccaa8d298 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -134,16 +134,37 @@ test_expect_success 'run_command runs in parallel with more jobs available than
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'run_command runs ungrouped in parallel with more jobs available than tasks' '
++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
++	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
++	test_line_count = 8 out &&
++	test_line_count = 4 err
++'
++
+ test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
+ 	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'run_command runs ungrouped in parallel with as many jobs as tasks' '
++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
++	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
++	test_line_count = 8 out &&
++	test_line_count = 4 err
++'
++
+ test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
+ 	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'run_command runs ungrouped in parallel with more tasks than jobs available' '
++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
++	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
++	test_line_count = 8 out &&
++	test_line_count = 4 err
++'
++
+ cat >expect <<-EOF
+ preloaded output of a child
+ asking for a quick stop
+@@ -158,6 +179,13 @@ test_expect_success 'run_command is asked to abort gracefully' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'run_command is asked to abort gracefully (ungroup)' '
++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
++	test-tool run-command run-command-abort 3 false >out 2>err &&
++	test_must_be_empty out &&
++	test_line_count = 6 err
++'
++
+ cat >expect <<-EOF
+ no further jobs available
+ EOF
+@@ -167,6 +195,13 @@ test_expect_success 'run_command outputs ' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'run_command outputs (ungroup) ' '
++	RUN_PROCESSES_PARALLEL_UNGROUP=1 \
++	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
++	test_must_be_empty out &&
++	test_cmp expect err
++'
++
+ test_trace () {
+ 	expect="$1"
+ 	shift
 -- 
-2.36.1.1100.g16130010d07
+2.36.1.1103.g036c05811b0
 
