@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EE14C433F5
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 16:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF435C4332F
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 16:59:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346300AbiEaQ73 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 12:59:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44634 "EHLO
+        id S1346259AbiEaQ7b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 12:59:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242736AbiEaQ7L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 12:59:11 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A607E6A041
-        for <git@vger.kernel.org>; Tue, 31 May 2022 09:59:10 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id e25so8896702wra.11
-        for <git@vger.kernel.org>; Tue, 31 May 2022 09:59:10 -0700 (PDT)
+        with ESMTP id S1346263AbiEaQ7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 12:59:13 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B611B6AA42
+        for <git@vger.kernel.org>; Tue, 31 May 2022 09:59:11 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id d26so13918997wrb.13
+        for <git@vger.kernel.org>; Tue, 31 May 2022 09:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=easQ+hH+2Z/kvl70QBP/w04fPNgR0dc5NV1I0jkPKYA=;
-        b=A1IRiAQ2XDYt4ik1W0ba/+2lgzJXz99+HyKHKCvaOjy7nmIaOeHJFgQ3aR8TqMHUaZ
-         IKCTm/2E3e0l7OKwaL2H4kTrsZ137PlyreB+Qmo2efOC7xaU7REyKXYn6gXodUDLNjfC
-         2PwAqrhgb9uhVZ3Iq79oJiNEgnDIDGDClYUcLGxNgGR+2riBTsST5+70TP79LPu/z9yL
-         tWj6N7xs8O27hjPPyRCGENi04D3UChzvwABj3oRPvA1VC2gsY67w+0iO1kMtZ7Eb1xj9
-         1ywMbBud/NU/8ynhPcU74YD6tK7JvAZhVFxWYTDyPQqnS6NmewYme1slwxXyHOhYCTSk
-         v8tg==
+        bh=FdiSWKYP7uWYwexFewK1EHJ4E+JOC0Qkc6qzkNqKMfc=;
+        b=GqwKpfScZAs0rqllh8xMNDPaGFwq5FDdeMqyG3XABPXWdEra6n7uhjcQNO3JRc7yRI
+         dtirYMjw9A4mikkkTHDNb/jhHgvnirGmSozCtsppR9mvcciY2Ye8teBRnjJwYqqvYcY2
+         dTCowzOScqTzGMVvtpDiNzmZjK830ZFJylw+maJSYMJia5AL7DLSVa+7fQM1KXi++Tc0
+         bkHlchMU2f35DbVEKlROvLbbBXvkcs7Xnhdsjhk5a2CbBM4HFcm6YRsbjznpceYsAPwL
+         /6hPXqex9U8IWQ5tg9hWC+v7FoY/adH0UofyH/v2ZkZy68SS/11Hj+2b1Jg1NgH4gL/R
+         fCow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=easQ+hH+2Z/kvl70QBP/w04fPNgR0dc5NV1I0jkPKYA=;
-        b=XnuYX5qkk3kr5dwQNHHh/owgcNE1t0mkV0dgodp2vKRTUinv129ZD6mNZYfuD8wzk2
-         Ugk23chfsYXODU5UP8EDckt12+H/8iekfjN+DRVjiJUSpU5gW+dIiPT9sxU0R42T7ni8
-         HIm5zoJWgP2D3s4g2MiIY1bKXC3kTT1D+j+KsymiogiFIy2c3PIwiIXlNVCGKko3bLHH
-         4HojMF/SI5eSdKWK7QiiZaNGKvi8x8HzB6mofFJlldED+QCTZHc/Xp4/FcBkKS9JlaGa
-         NQOm1JAmphgufRTWeVXVRnxfVKHyVbfGiQbyVuXlErI5GAXBi2ejTNDBuuIMjUpsI3g1
-         KahQ==
-X-Gm-Message-State: AOAM533RDbpsMUeWDBQ9fTtu76vP97ncv7JfuiUGs/KFE/uHrMfI8tDD
-        cr6yzXUjczA31e/B/A/fhKyFUckFZ9Jolw==
-X-Google-Smtp-Source: ABdhPJzFRLIbpp3XdM3xAHeB3ks5Xa7fN5bGQYSt/ifAq9pt8DS62UROgFTcX7FAjgHEgKq/UD8sMA==
-X-Received: by 2002:a05:6000:2a2:b0:20f:d7ca:476 with SMTP id l2-20020a05600002a200b0020fd7ca0476mr37688803wry.501.1654016348773;
-        Tue, 31 May 2022 09:59:08 -0700 (PDT)
+        bh=FdiSWKYP7uWYwexFewK1EHJ4E+JOC0Qkc6qzkNqKMfc=;
+        b=BhQJrY8l2O5SwUnQ6bJy1whMg8PZXCofWXVfH1B2AvR8lMBWpvihO17JUoC3t/kqAN
+         fdfeHfRSlL8T5Wqv68hzk8txZoTXoFlRM+n56bjqqhWbpbsP6tKKVKCvLtxYJQ5qYcbD
+         6w6hFGP7RdDRX5DIPAlR55mQPiFquKd7+TQsI4qZGNdgL4WfsHWP/OxWo0M/z1f330FY
+         fi0RcdCZI5TjnUJbz+Fwdg8XX7hliJGuP48+mzztX4lP+L1/ZGzYCklsE4WeQUHtCRqo
+         C7hHToe2wKs5pja5CF62SGEjrQsnhPCXa4fsIgr4uIgV2AVGOfyViGrsxielm3URyQLb
+         lB1g==
+X-Gm-Message-State: AOAM5321J//dDSIHrhJIQfc0PMIne7mtq4us150PP8g1JgEdJrQuDxrL
+        KT2m2NCj70Ie98STxLLw/pC+5M+nCQta9g==
+X-Google-Smtp-Source: ABdhPJxXi619KisjzMS3UU+TfZBt+j8jGrXiONP6Q2zWMjIh30nJ7wEIGmfOg0I2H/3GMAgqrhKCzQ==
+X-Received: by 2002:a5d:4450:0:b0:210:e8b:7896 with SMTP id x16-20020a5d4450000000b002100e8b7896mr21930810wrr.490.1654016349941;
+        Tue, 31 May 2022 09:59:09 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o3-20020a5d47c3000000b0020d0cdbf7eesm12829820wrc.111.2022.05.31.09.59.07
+        by smtp.gmail.com with ESMTPSA id o3-20020a5d47c3000000b0020d0cdbf7eesm12829820wrc.111.2022.05.31.09.59.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 09:59:07 -0700 (PDT)
+        Tue, 31 May 2022 09:59:09 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 5/6] receive-pack: use bug() and BUG_if_bug()
-Date:   Tue, 31 May 2022 18:58:47 +0200
-Message-Id: <patch-v2-5.6-fe5c3926675-20220531T164806Z-avarab@gmail.com>
+Subject: [PATCH v2 6/6] cache-tree.c: use bug() and BUG_if_bug()
+Date:   Tue, 31 May 2022 18:58:48 +0200
+Message-Id: <patch-v2-6.6-cbbe0276966-20220531T164806Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1100.g16130010d07
 In-Reply-To: <cover-v2-0.6-00000000000-20220531T164806Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20220521T170939Z-avarab@gmail.com> <cover-v2-0.6-00000000000-20220531T164806Z-avarab@gmail.com>
@@ -72,60 +72,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend code added in a6a84319686 (receive-pack.c: shorten the
-execute_commands loop over all commands, 2015-01-07) and amended to
-hard die in b6a4788586d (receive-pack.c: die instead of error in case
-of possible future bug, 2015-01-07) to use the new bug() function
-instead.
+Change "BUG" output originally added in a97e4075a16 (Keep
+rename/rename conflicts of intermediate merges while doing recursive
+merge, 2007-03-31), and later made to say it was a "BUG" in
+19c6a4f8369 (merge-recursive: do not return NULL only to cause
+segfault, 2010-01-21) to use the new bug() function.
 
-Let's also rename the warn_if_*() function that code is in to
-BUG_if_*(), its name became outdated in b6a4788586d.
+This gets the same job done with slightly less code, as we won't need
+to prefix lines with "BUG: ". More importantly we'll now log the full
+set of messages via trace2, before this we'd only log the one BUG()
+invocation.
+
+While we're at it let's replace "There" with "there" in the message,
+i.e. not start a message with a capital letter, per the
+CodingGuidelines.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/receive-pack.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ cache-tree.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index daa153d0446..4a62327dee9 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1810,21 +1810,17 @@ static int should_process_cmd(struct command *cmd)
- 	return !cmd->error_string && !cmd->skip_update;
- }
- 
--static void warn_if_skipped_connectivity_check(struct command *commands,
-+static void BUG_if_skipped_connectivity_check(struct command *commands,
- 					       struct shallow_info *si)
- {
- 	struct command *cmd;
--	int checked_connectivity = 1;
- 
- 	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (should_process_cmd(cmd) && si->shallow_ref[cmd->index]) {
--			error("BUG: connectivity check has not been run on ref %s",
--			      cmd->ref_name);
--			checked_connectivity = 0;
--		}
-+		if (should_process_cmd(cmd) && si->shallow_ref[cmd->index])
-+			bug("connectivity check has not been run on ref %s",
-+			    cmd->ref_name);
+diff --git a/cache-tree.c b/cache-tree.c
+index 6752f69d515..b91995af602 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -692,14 +692,14 @@ struct tree* write_in_core_index_as_tree(struct repository *repo) {
+ 	ret = write_index_as_tree_internal(&o, index_state, was_valid, 0, NULL);
+ 	if (ret == WRITE_TREE_UNMERGED_INDEX) {
+ 		int i;
+-		fprintf(stderr, "BUG: There are unmerged index entries:\n");
++		bug("there are unmerged index entries:");
+ 		for (i = 0; i < index_state->cache_nr; i++) {
+ 			const struct cache_entry *ce = index_state->cache[i];
+ 			if (ce_stage(ce))
+-				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
+-					(int)ce_namelen(ce), ce->name);
++				bug("%d %.*s", ce_stage(ce),
++				    (int)ce_namelen(ce), ce->name);
+ 		}
+-		BUG("unmerged index entries when writing inmemory index");
++		bug("unmerged index entries when writing inmemory index");
  	}
--	if (!checked_connectivity)
--		BUG("connectivity check skipped???");
-+	BUG_if_bug("connectivity check skipped???");
- }
  
- static void execute_commands_non_atomic(struct command *commands,
-@@ -2005,7 +2001,7 @@ static void execute_commands(struct command *commands,
- 		execute_commands_non_atomic(commands, si);
- 
- 	if (shallow_update)
--		warn_if_skipped_connectivity_check(commands, si);
-+		BUG_if_skipped_connectivity_check(commands, si);
- }
- 
- static struct command **queue_command(struct command **tail,
+ 	return lookup_tree(repo, &index_state->cache_tree->oid);
 -- 
 2.36.1.1100.g16130010d07
 
