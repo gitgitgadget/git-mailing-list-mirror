@@ -2,147 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6289C433F5
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 08:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42005C433EF
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 09:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244704AbiEaIHQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 04:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59618 "EHLO
+        id S244931AbiEaJ4R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 05:56:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237948AbiEaIHP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 04:07:15 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1CA4FC55
-        for <git@vger.kernel.org>; Tue, 31 May 2022 01:07:13 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id gi33so25063216ejc.3
-        for <git@vger.kernel.org>; Tue, 31 May 2022 01:07:13 -0700 (PDT)
+        with ESMTP id S237657AbiEaJ4Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 05:56:16 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD53215A2B
+        for <git@vger.kernel.org>; Tue, 31 May 2022 02:56:15 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id v15so12349867pgk.11
+        for <git@vger.kernel.org>; Tue, 31 May 2022 02:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Acr0QYppMT/fQ6WWGet4NWpmnmOl+OI5zfMk8ycbs8A=;
-        b=UFsJq/7vsZZhKA/zSSN3Cxn5cg5esGKXT4L/ubJPLg6utoufiiMgehGXu0h74j+Xxo
-         aUE6ByWwwPAYG27O1BLAk/AClI9p5+LEjhrtzaHwFPSbnr/iLyCgUk0paOeXCJLMGqLb
-         PUky/hopVhDlcmAw7BveBplvvdOJNXZsBfHxyJmS1LDHvbbTe/GEdsi7DjjxzlJC5u37
-         ACyf/JHfh/YNwX1tG3XYqNy4RbAVTY3ds3wMHU5xr7n+cWL83Ck8nYlpCIfNtchjZwhW
-         w97p2+nWpWIXk7Rof8wu1QU8+BORzzbbVlozFN9IasRyerJR9AR4ti6XODFERwTdRECU
-         zJoA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KRM3YI0O0bhO0taML6lNLSc9TTTFuOYqOyj1SoebtNM=;
+        b=B3ONcd+AuORRrseXkxcPyapcZpACJ1rLvuVxjRVYiGOB2lZv4NIK1bKbHjN/h73/T3
+         2XBlGI9IMP4bLxDPYxatVkD2m5uOzCHlTa30erMl4autc0YgnaOOB49h3gkhLP7RTo1G
+         95znUcM3nQBkEeOC9qf/PEx3ThqRAEwuW0OXl3sMrYoqsFy0YGMJgVqZ+XAU1ITDYBWv
+         QXYrN/2ZF3nPtSoPBWO4ci/rL2kFXAFSXh63EKT51TiVyyPrugGfYUVePpI9dx9ELDZh
+         HsxxgG91N+ByAoyQZq/039qomsbnTgk6389f60Lv1PeonHZBjc8HuqBMKhiKUvSL7NLz
+         rWGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Acr0QYppMT/fQ6WWGet4NWpmnmOl+OI5zfMk8ycbs8A=;
-        b=eyrdmIJBH1G7ciPDpL1eLViuf11dxjkjcUEyaR1WwSo4HOEQCTUSga9/PY/ekPohyZ
-         6RTKdO8+qK4UFTr4MRKcojgHCV1Zy4NJbqOFKL/U+7pT59i3IIQKp3btQIWlqfDIMfJf
-         f47iOqQrLti/8pn1e8SCd8x+taovXPTPNePNDXXXWHDO5D0UaACxRRGATdY8gBiR5VW2
-         ljOnJUOg49gPp9PSuHJqP2BMyuAu4+VA5ND0sbmIYMFJhKOY2AhyfhejHrW0vDSa2SJK
-         6GR8YD2irgICDwbAdxx5leqQ8PhOHjPY5oPXcBL/ZUqSaHZEI30XWuOWt1Qptlg7SmDQ
-         gGjg==
-X-Gm-Message-State: AOAM530y4oTaIJOWTKrwYywJkS6r4O4vU+a0AdYh71Gb0VDS0RM2Mk60
-        W6zmTsuj49hSiQcKCozI03g=
-X-Google-Smtp-Source: ABdhPJyyACxMmArD4xRFfZj52JGZ5Za3RkvtLd1fcEtNEh9HaTy7VzgaVSFKJP5hAJpO8WSzazaL6Q==
-X-Received: by 2002:a17:907:3e15:b0:6fe:f10e:6337 with SMTP id hp21-20020a1709073e1500b006fef10e6337mr36010114ejc.209.1653984431866;
-        Tue, 31 May 2022 01:07:11 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id h17-20020a05640250d100b0042bd6f745fasm8099867edb.92.2022.05.31.01.07.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 01:07:11 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nvwuE-000n82-QV;
-        Tue, 31 May 2022 10:07:10 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Side effects in Git's test suite, was Re: [PATCH] revert:
- optionally refer to commit in the "reference" format
-Date:   Tue, 31 May 2022 10:03:42 +0200
-References: <xmqqsfp2b30k.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2205231507350.352@tvgsbejvaqbjf.bet>
- <xmqq35gzn9vk.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2205301840410.349@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <nycvar.QRO.7.76.6.2205301840410.349@tvgsbejvaqbjf.bet>
-Message-ID: <220531.86y1yi15xt.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KRM3YI0O0bhO0taML6lNLSc9TTTFuOYqOyj1SoebtNM=;
+        b=pD/xuM57kyrqt0DSxgb0ihewhokWXhHKTc1TAiNSqAJgq3oyqKLal5xr/Af8/8yDNo
+         0jQEKLloLYdsGmGsMbnrGXI93cJv9TAf9evVi0w+ZFCHEVRk2txzG/PHOXveiv2BdRsk
+         kxpFiFB9THFjTuJJMPqDgb2xXmX464SltOygUMy+hTUZYSpGyRbudgOmy1KoU7r0hNl/
+         ZPE7sB4n7q39wKYynNgipdOSMC7lkZocAsTPOFQ8Io4YqVqZCiMPCuJxyua9UBurfW9v
+         UeScHQGlks02RPMO+Sqm/L7Op6WfLJhQV/W2oUD/97F19wLLffoBFYkvC1AEJ/V7pLXM
+         EjVw==
+X-Gm-Message-State: AOAM532DnrX+gj/nQ1Jv4UIRKJms5rAv31/rAbjirWDf1pxXQ9mBPMWd
+        x/RnjSLYdPr2LbIClDNCoBCR3awKHNPW4dk5fzM=
+X-Google-Smtp-Source: ABdhPJzBlUvJrAFqMbhInv1w3aTCyC5+eavBhP3JUe0RbSx6siaXm0E4hdzrQTHNZLArqcyu6lNihZClPeAr4nsUAQU=
+X-Received: by 2002:a05:6a00:16cb:b0:517:c8ff:6ff6 with SMTP id
+ l11-20020a056a0016cb00b00517c8ff6ff6mr60377804pfc.46.1653990975226; Tue, 31
+ May 2022 02:56:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
+ <20220527100804.209890-1-shaoxuan.yuan02@gmail.com> <20220527100804.209890-5-shaoxuan.yuan02@gmail.com>
+ <bc51f198-629f-0b68-a8e4-8135f61c0d03@github.com>
+In-Reply-To: <bc51f198-629f-0b68-a8e4-8135f61c0d03@github.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Date:   Tue, 31 May 2022 17:56:01 +0800
+Message-ID: <CAJyCBORo-x4jbKhtn+vUE=1TxpM83_3JWj5cvJEJJHHsv2Q0bg@mail.gmail.com>
+Subject: Re: [WIP v2 4/5] mv: add check_dir_in_index() and solve general dir
+ check issue
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, vdye@github.com, gitster@pobox.com,
+        newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, May 30 2022, Johannes Schindelin wrote:
-
-> Hi Junio,
+On Fri, May 27, 2022 at 11:27 PM Derrick Stolee
+<derrickstolee@github.com> wrote:
 >
-> On Mon, 23 May 2022, Junio C Hamano wrote:
+> On 5/27/2022 6:08 AM, Shaoxuan Yuan wrote:
+> > +/*
+> > + * Check if an out-of-cone directory should be in the index. Imagine this case
+> > + * that all the files under a directory are marked with 'CE_SKIP_WORKTREE' bit
+> > + * and thus the directory is sparsified.
+> > + *
+> > + * Return 0 if such directory exist (i.e. with any of its contained files not
+> > + * marked with CE_SKIP_WORKTREE, the directory would be present in working tree).
+> > + * Return 1 otherwise.
+> > + */
+> > +static int check_dir_in_index(const char *name, int namelen)
+> > +{
+> > +     int ret = 1;
+> > +     const char *with_slash = add_slash(name);
+> > +     int length = namelen + 1;
+> > +
+> > +     int pos = cache_name_pos(with_slash, length);
+> > +     const struct cache_entry *ce;
+> > +
+> > +     if (pos < 0) {
+> > +             pos = -pos - 1;
+> > +             if (pos >= the_index.cache_nr)
+> > +                     return ret;
+> > +             ce = active_cache[pos];
+> > +             if (strncmp(with_slash, ce->name, length))
+> > +                     return ret;
+> > +             if (ce_skip_worktree(ce))
+> > +                     return ret = 0;
 >
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->> >> +test_expect_success 'identification of reverted commit (reference)' '
->> >> +	git checkout --detach to-ident &&
->> >> +	git revert --reference --no-edit HEAD &&
->> >> +	git cat-file commit HEAD >actual.raw &&
->> >> +	grep "^This reverts " actual.raw >actual &&
->> >> +	echo "This reverts commit $(git show -s --pretty=reference HEAD^)." >expect &&
->> >> +	test_cmp expect actual
->> >> +'
->> >
->> > If it was up to me, I would combine these three test cases, if only to
->> > help the `--run=<single-number>` case (the latter two depend on the
->> > side effect of the first one to create a `to-ident` tag).
->>
->> I wonder if our prereq infrastructure is lightweight and scalable enough
->> so that we can easily add a support a pseudo-prerequisite PREVIOUS that
->> lets us say
->>
->> 	test_expect_success PREVIOUS "identification ..." '
->> 		...
->> 	'
->>
->> to mean that this test requires the previous test has not been
->> skipped.
+> This appears to check if the _first_ entry under the directory
+> is sparse, but not if _all_ entries are sparse. These are not
+> the same thing, even in cone-mode sparse-checkout. The t1092
+> test directory has files like "folder1/0/0/a" but if
+> "folder1/1" is in the sparse-checkout cone, then that first
+> entry has the skip-worktree bit, but "folder1/1/a" and "folder1/a"
+> do not.
+
+Yes, it is checking the first entry and this would not work without the
+lstat in the front. But I think the "lstat < 0" makes sure that this directory
+cannot be partially sparsified.
+
+It is either missing both in the worktree and index, or missing in the worktree
+but present in index (with all its content sparsified). And because of that,
+I think only the first entry needs to be checked.
+
+> > +     }
+> > +     return ret;
 >
-> In theory, this sounds good to me.
+> At the moment, it doesn't seem like we need 'ret' since the
+> only place you set it is in "return ret = 0;" (which could
+> just be "return 0;" while the others are "return 1;"). But,
+> perhaps you intended to create a loop over 'pos' while
+> with_slash is a prefix of the cache entry?
+
+I agree that this variable is redundant. But I fail to understand
+the logical relation between before "But," and after "But,". Please
+elaborate on that?
+
+> > +                     else if (!check_dir_in_index(src, length) &&
+> > +                                      !path_in_sparse_checkout(src_w_slash, &the_index)) {
 >
-> In practice, however, side effects are awful and make everything harder,
-> from developing code to debugging to helping new contributors. I wish we
-> would do away with them altogether and have something more akin to the
-> before/after constructs known from e.g. TestNG (think `@BeforeTest` and
-> `@BeforeClass`).
+> style-nit: You'll want to align the different parts of your
+> logical statement to agree with the end of the "else if (",
 >
-> One option would be to mark `setup` steps completely differently, sort of
-> imitating the prereq infrastructure instead of using
-> `test_expect_success`. Kind of prereqs, but required to pass.
+>         else if (A &&
+>                  B) {
+>
 
-I've suggested a test_expect_setup before:
-https://lore.kernel.org/git/8735vrvg39.fsf@evledraar.gmail.com/;
-basically a test_expect_success that ignores GIT_SKIP_TESTS and --run.
+This one is interesting because it appears just alright in my VSCode editor.
+Later I found that it is because git-diff is using a tab size of 8 or something,
+but my VSCode uses tab size of 4. After I configured the git-diff tab rendering
+size, it looks alright. Same for another style nit down below.
 
-I think that even if we could imagine much more complex relationships
-(up to and including writing these tests as Makefiles instead) it's
-better to just have the simpler "this is a setup".
+> > +                             modes[i] = SKIP_WORKTREE_DIR;
+>
+> If we are moving to a flags-based model, should we convert all
+> "modes[i] =" to "modes[i] |=" as a first step (before adding the
+> SKIP_WORTKREE_DIR flag)?
+>
+> > +                             goto dir_check;
+>
+> Hm. While I did recommend using 'goto' to jump to a common end
+> place in the loop body, I'm not sure about jumping into another
+> else-if statement. This might be a good time to extract the
+> code from "else if (src_is_dir)" below into a helper method that
+> can be used in both places.
 
-Then for everything more complex be more eager to split up tests.
+Right, this is suspicious. I wasn't familiar at all with C/C++, and being able
+to do this inter-if-else jump also startled me.
+I agree that it should be something more legitimate, like extracting a
+method for it.
 
-> This could potentially allow us to randomize the order in which the test
-> cases are run, to identify and fix (unintended) side effects.
+> > +                     }
+> >                       /* only error if existence is expected. */
+> >                       else if (modes[i] != SPARSE)
+> >                               bad = _("bad source");
+> > @@ -218,7 +264,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+> >                               && lstat(dst, &st) == 0)
+> >                       bad = _("cannot move directory over file");
+> >               else if (src_is_dir) {
+> > -                     int first = cache_name_pos(src, length), last;
+> > +                     int first, last;
+> > +dir_check:
+> > +                     first = cache_name_pos(src, length);
+> >
+> >                       if (first >= 0)
+> >                               prepare_move_submodule(src, first,
+> > @@ -229,7 +277,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+> >                       else { /* last - first >= 1 */
+> >                               int j, dst_len, n;
+> >
+> > -                             modes[i] = WORKING_DIRECTORY;
+> > +                             if (!modes[i])
+> > +                                     modes[i] |= WORKING_DIRECTORY;
+>
+> This appears to only add the WORKING_DIRECTORY flag if modes[i] is
+> already zero. This maybe implies that we wouldn't understand
+> "WORKING_DIRECTORY | SKIP_WORKTREE_DIR" as a value.
 
-Yes, a "chaos monkey" mode similar to --stress would be nice.
+At this point, I cannot think of the reason for writing it this way. And yes,
+this does not make sense...
 
-> A complication is that we have nothing in the way of `@AfterClass`, i.e.
-> we do not have a way to, say, run an Apache instance for the lifecycle of
-> a given test script _and tear it down at the end_.
+> >                               n = argc + last - first;
+> >                               REALLOC_ARRAY(source, n);
+> >                               REALLOC_ARRAY(destination, n);
+> > @@ -331,7 +380,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+> >                       printf(_("Renaming %s to %s\n"), src, dst);
+> >               if (show_only)
+> >                       continue;
+> > -             if (mode != INDEX && mode != SPARSE && rename(src, dst) < 0) {
+> > +             if (!(mode & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
+> > +                     rename(src, dst) < 0) {
+>
+> style-nit: align your logical statements.
+>
+> >                       if (ignore_errors)
+> >                               continue;
+> >                       die_errno(_("renaming '%s' failed"), src);
+> > @@ -345,7 +395,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+> >                                                             1);
+> >               }
+> >
+> > -             if (mode == WORKING_DIRECTORY)
+> > +             if (mode & (WORKING_DIRECTORY | SKIP_WORKTREE_DIR))
+> >                       continue;
+>
+> Ok, here you check if _either_ mode is enabled, which is good. Maybe
+> you don't need the "if (!mode[i])" part above.
+>
+> Thanks,
+> -Stolee
 
-I think this is generally a feature in that if you find yourself needing
-this you should split the test up so that the Apache setup is in only
-one file.
-
-E.g. in the case of some http tests we have a prereq on something for
-git:// and a different thing (apache) for http:// tests, so that
-depending on what combination you have we might end up needlessly
-skipping tests.
-
-> Another, rather obvious complication is that we have 17 years of commit
-> history introducing side effects left and right :laughing:
-
+-- 
+Thanks & Regards,
+Shaoxuan
