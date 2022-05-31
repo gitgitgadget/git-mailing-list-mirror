@@ -2,50 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D0BC433EF
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 16:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DF1DC433EF
+	for <git@archiver.kernel.org>; Tue, 31 May 2022 16:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346122AbiEaQWd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 12:22:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45926 "EHLO
+        id S1346135AbiEaQZG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 12:25:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346132AbiEaQWb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 12:22:31 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8228995DC9
-        for <git@vger.kernel.org>; Tue, 31 May 2022 09:22:29 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id o10so1869411edi.1
-        for <git@vger.kernel.org>; Tue, 31 May 2022 09:22:29 -0700 (PDT)
+        with ESMTP id S1346133AbiEaQZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 12:25:04 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5805395DC9
+        for <git@vger.kernel.org>; Tue, 31 May 2022 09:25:02 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id gh17so27704699ejc.6
+        for <git@vger.kernel.org>; Tue, 31 May 2022 09:25:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Sz+MPXRJ/BwzfyjtkRYay+8h1BVi2YSoI0R/+1t0/bI=;
-        b=L6I5IXi9/Ji0jDxr2yliDniKM0ZU5GPdCrDIhgXBzzZ3DA3PPh6slgj7sPxYI2wFrT
-         b/DT9gQ8IkjKzElR4GcxVQKVz9vNG3prrxxVtgjMt6CyjEiYjmeQmYZvopL8FExhkWgm
-         ut0eXyqZHE3mFsUXfZSo8jKRWHvF5X7EVRxk62U6e7+Pe5NIiWlvTWEgfpEGV3LTAUGo
-         l8sdzR6cBNU2jaZS6xGpT6MLtUBgUgMl5965DX4qfO3OCkMsD09DjhTgbK72CbiEmCne
-         IJep11cTmk3JGKFZS8tc3WZDXsDHrTRLOlK4SSscEgbEhIyytbGgjtJof8EpIxk+CfSJ
-         siqg==
+        bh=+WID8AmPWhtM27N9DNnfDiSDsUmirgqUtrYvRJFz9Sk=;
+        b=YTZJ3IlnPay9NLE6iyHrsLoxLMsCGFN62RboRWr8CNRP4Bbl/tUtsYiZxbw8qB4bjZ
+         uKasw4I6cW1tA0yJkT0U6OREjVL6jB/dFa4cyGaeTirnhyBJCz6zyDVMZf7Pdm/H8wCw
+         jBuJ+AA4t6PvgxPtlwqTw74/4aerAzUR/HtApp8savjnVVXSBkWp2a9bqDpncyUSTF6a
+         0mvjKBTKYqwgWhFoZ9dGjchwJEx3gK8GyYtbkOv7M9TrT2j5hy1QxzTWS51/Iq2tkSSa
+         3NnnPNE2Iupdmku8sLlt1x8Vgf7bi256DNHuu2M7DAY8QY2dUAbnQKTYCCt9EtU8so1u
+         /l2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Sz+MPXRJ/BwzfyjtkRYay+8h1BVi2YSoI0R/+1t0/bI=;
-        b=7P37K2C80InkAFH8J6XmC66TGF7Evhqdri8gAE0gS4Q6aQ+kR9B0c6ngjCSH4ewMLE
-         LdiCIzGdpvZeIAX86czQjjqFv1NfrHidHCVZyhwfuHJUq8Q/fLcDts9i8eQjn4xfoi68
-         d5DSs0TF9v2thHI7OH4FtMicQEWQVuGhg5mDfC545Uy4Qy7TMHZvTkBXIQyN8FcFkyGY
-         VoQ/LydpMvP+b/9Pfhx3Kp0EoTnQOfFrp71mzhru6TC8d/LBKHk0S3/QyGZFuR5Pi9e2
-         iLsaNmwSZBCKC3iUwIjqkkktG/GCM35NK/CmeGaOAWrmTC2AW7NtZIvRsaLadQHhTSOE
-         V7xg==
-X-Gm-Message-State: AOAM532PQYSfPfENYoFUS/w+I5sucOGN+93fnRYh0alXlMDCIXoA/IW6
-        xmeakNZvtrE5lavdIVCxYsQzjTX9hUXQ+g9pGA==
-X-Google-Smtp-Source: ABdhPJwEYDJ21mkFsO2MFbQ0umYI1l6k/yhLYF7ynwAIYyQ9+BqxbTnOPToL42+3iUQori7b8Nyt/ImlpZCx+AkZIWo=
-X-Received: by 2002:a05:6402:1cc7:b0:42d:9ab5:a984 with SMTP id
- ds7-20020a0564021cc700b0042d9ab5a984mr19038816edb.307.1654014148004; Tue, 31
- May 2022 09:22:28 -0700 (PDT)
+        bh=+WID8AmPWhtM27N9DNnfDiSDsUmirgqUtrYvRJFz9Sk=;
+        b=XD4qCTk64gGm3suA3zQQvI6cter1L8mg/Vp58M5E+K5vpTczUJUAhYMwmO++PTOkAB
+         kC7KipecumXDCKjLDWzHD6pI8JpfJr3hDpkG9b1vZnS+Xb4rXXtGFZV8ejf0kGTr97EJ
+         QUnTqTQFRbwj1AKtmynxkEIKqINxBMMENknfomtXWeMN5LiqgDXueDQb8/7Mdbhrzmkz
+         k0L8/kD0Qea34NJHo31tF4iIDoNhSoDAvQX60u9x/vAJ1W93POti8T9Ox0w+xMdXzE38
+         ph1b9cIVjSlReVoR7kQr3JMe87+euvurhH48wT2KLFwfMFmarPo8zTabNRH/dUt7wnJZ
+         qmlQ==
+X-Gm-Message-State: AOAM531MwBUC6/R1RdCn+AjxXoRSiplPMhNlgnEQl8G/U6zzyp6kv9EG
+        YovbrX/W5tHoRVYMKoqZk4G3m78EJ+Z0jcqiUQ==
+X-Google-Smtp-Source: ABdhPJyBV6+SQ4C7us1YF/CopKrAEky0MKKEgDgrj1SwrUxkqx0IVMS6UJlEpavifVnww343cztWDnCUucr/Inb9c9w=
+X-Received: by 2002:a17:907:7e88:b0:6fa:55f:881a with SMTP id
+ qb8-20020a1709077e8800b006fa055f881amr53684062ejc.476.1654014300750; Tue, 31
+ May 2022 09:25:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <CALOmtcX7amyw3cAuthMPuagUVzJghybHFNy8ciB50yC5SCUwow@mail.gmail.com>
+References: <CALOmtcX4+ON7+J7K9X4rSYfWYnkciJdFE=v=Oeb7rUqwRt8_JA@mail.gmail.com>
+ <CA+CkUQ8hf5m0GZEwcyqLgxMw1vavYey_R4P7oq8=OXc7iAj6MA@mail.gmail.com>
+ <CALOmtcW=2skmUPXpnano=21i38b7sq2MEWQjH5yF2jLacZ8sQw@mail.gmail.com>
+ <CA+CkUQ9ZnBXU8E=XKTk95hwM4qtZ1M_nX3LTCr5q5njPG3Es5Q@mail.gmail.com>
+ <CALOmtcX7amyw3cAuthMPuagUVzJghybHFNy8ciB50yC5SCUwow@mail.gmail.com>
  <CA+CkUQ-YgmRa7ysP30GbkX07Cu_=EM5X66w3Vk=TpshP9xoi_w@mail.gmail.com>
  <CAP8UFD2uUFveiGDAbxObDOh_krmexuLe860Gu397e9KddH0UCg@mail.gmail.com>
  <CALOmtcVN8K59Zkv7XKM7w2zFCbdWKfKr=97-E3306nQHm4Zw=A@mail.gmail.com>
@@ -54,93 +58,103 @@ References: <CALOmtcX7amyw3cAuthMPuagUVzJghybHFNy8ciB50yC5SCUwow@mail.gmail.com>
  <CAP8UFD1HGbbmJWB_TksGVLa-7nNBz5pdFi59Y7LP3EODF9Lztg@mail.gmail.com>
  <CALOmtcWFwfV11Vxf1xd_fC=HYGPNO1PtKT=E=-A104cGnAbv4g@mail.gmail.com>
  <CAP8UFD29NgffUBz0CMKyt901Z7Bj5osoBT-4Mfxfp0h_4Qo+Qw@mail.gmail.com>
- <CAP8UFD1f6KCO+=+ZoUFr06XUgEZYOZi8G0V+QKCK=bNbAE9VrQ@mail.gmail.com> <Ymc2Y+U4HQpgD7PE@nand.local>
-In-Reply-To: <Ymc2Y+U4HQpgD7PE@nand.local>
+ <CALOmtcWTw=bo=AqGBN8z9Hf602Peu9AVngwKUZZsCt0cr8jbDg@mail.gmail.com> <CAP8UFD3CppGBFeWjM32AmxNs=SsVcH+tyTC3VJNXb4V-=V9EXQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD3CppGBFeWjM32AmxNs=SsVcH+tyTC3VJNXb4V-=V9EXQ@mail.gmail.com>
 From:   Tapasweni Pathak <tapaswenipathak@gmail.com>
-Date:   Tue, 31 May 2022 21:51:51 +0530
-Message-ID: <CALOmtcWhFp8th3-Kuwtcs7MoB95UjhttxC-JnN7PKBqR1zxv8g@mail.gmail.com>
+Date:   Tue, 31 May 2022 21:54:24 +0530
+Message-ID: <CALOmtcWX0QZYXSH-_+RMwi804bgsC6aENJE8bmgv7+1NGT4Jng@mail.gmail.com>
 Subject: Re: Unify ref-filter formats with other pretty formats: GSoC'22
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>, git <git@vger.kernel.org>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-.++git <git@vger.kernel.org>.
+Hi Christian,
 
-Hi Taylor,
-
-On Tue, Apr 26, 2022 at 5:31 AM Taylor Blau <me@ttaylorr.com> wrote:
+On Tue, Apr 26, 2022 at 3:25 PM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> Hi Tapasweni, Christian,
+> Hi Tapasweni,
 >
-> On Fri, Apr 22, 2022 at 11:21:37AM +0200, Christian Couder wrote:
-> > Taylor and Junio,
+> On Fri, Apr 22, 2022 at 12:29 PM Tapasweni Pathak
+> <tapaswenipathak@gmail.com> wrote:
+> > On Fri, Apr 22, 2022 at 2:44 PM Christian Couder
+> > <christian.couder@gmail.com> wrote:
+> > > On Wed, Apr 20, 2022 at 1:49 PM Tapasweni Pathak
+> > > <tapaswenipathak@gmail.com> wrote:
+>
+> > > > I would like to work on this with a planner, separately, we can see
+> > > > what should be adapted in mine to have everything go smooth and
+> > > > GSoC'22 project especially.
+> > >
+> > > As you seem interested in other things too, I think it's better to
+> > > avoid this one for now. It could be a bad experience as it's a really
+> > > difficult subject, and I think it would be much better for you to
+> > > start with something easier and smaller.
 > >
-> > For some context, Tapasweni is willing to work outside the GSoC (as it
-> > looks like she is not eligible for GSoC as she is not a beginner in
-> > open source) on some Git related project as long as she gets some
-> > mentorship.
+> > I must insist; would be interested in a planner and document prep for
+> > the project, I can see some details
+> > - https://git.github.io/SoC-2021-Ideas/
+> > - https://lore.kernel.org/git/pull.989.git.1625155693.gitgitgadget@gmail.com/
+> > - https://docs.google.com/document/d/119k-Xa4CKOt5rC1gg1cqPr6H3MvdgTUizndJGAo1Erk/edit
+> > - https://github.blog/2021-11-15-highlights-from-git-2-34/
+> > - https://lore.kernel.org/git/CAOLTT8S8TxuTmddGp2WGoPtTc3gwGXzizBfVzKd87otRw7Dpiw@mail.gmail.com/
 > >
-> > Tapasweni, please correct me if I am wrong.
+> > to set things for the next steps, let me know if you strongly feel to
+> > not take up the problem right away.
 >
-> Terrific!
->
-I just thought about what could be better with current GSoC
-eligibility guidelines and open source in general. Says, I'm not a
-beginner.
+> I am not sure what "planner" and "document prep" mean exactly to you,
+> and what "the problem" is. I replied to your other email and I hope it
+> helps, but maybe in my replies here and to your other email I am
+> missing something. In this case please let me know.
 
-(something to deep think about)
-
-> Tapasweni: a good summary of the current state of git-scm.com can be
-> found in an email I sent here:
+GSoC Timeline. :)
 >
->     https://lore.kernel.org/git/YkcmtqcFaO7v1jW5@nand.local/
+> We are ok to describe projects in a few sentences or paragraphs, like
+> in https://git.github.io/SoC-2021-Ideas/ where we describe the
+> projects we propose, but for GSoC and Outreachy, applicants interested
+> in a project are those who actually write the proposals which usually
+> include a timeline.
 >
-> , and I think the section that will be most relevant to you begins with
-> "Convert the Rails application into a static site [...]".
+> I am sure not, but it looks to me like you would like us (not you) to
+> write a full proposal including a timeline.
+
+No, no. not. at. all.
 >
-> In that email, I suggested GitHub Pages as one such hosting provider
-> that might suit our needs. But I am not the only decision-maker there,
-> that should come from the community. It would be ideal if the service we
-> chose was free, or near-free.
+> For example the proposal in
+> https://docs.google.com/document/d/119k-Xa4CKOt5rC1gg1cqPr6H3MvdgTUizndJGAo1Erk/edit
+> which includes a timeline was fully writen by ZheNing Hu, and was then
+> accepted by us, so that ZheNing Hu could then participate in the GSoC
+> 2021 and start the actual work.
 >
-> It's possible that some providers may want to sponsor git-scm.com's
-> hosting as an open-source project. But that's a discussion for another
-> day :-).
+> https://lore.kernel.org/git/pull.989.git.1625155693.gitgitgadget@gmail.com/
+> shows some of the work he did and sent to the mailing list as part of
+> the GSoC.
 >
-> In the meantime, if you are interested in converting git-scm.com to a
-> static site, let me know. As far as I can think, there are only a
-> handful of components that aren't static and would need to be replaced.
-> Those are: the search bar functionality, some light database work, and
-> automatic rebuilding of Git's own documentation. The site's Rakefile is
-> a good jumping off point to figure out what some of the non-static parts
-> are.
+> https://github.blog/2021-11-15-highlights-from-git-2-34/ is not
+> especially related to any GSoC.
 >
-> If you're interested, let me know. I'm not fully versed in every corner
-> of the site's architecture, but I have a general idea of how things work
-> and would be happy to fill in any gaps on your end, and/or explore
-> together :-).
-I have drafted this for the merger of:
-https://paper.dropbox.com/doc/git-scm.com--Bihq4Cxzo3AzCrZqgScRkRo5AQ-LBbrQXZfwvrTMnhdEwhl8
-
-1. Git SCM: https://git-scm.com/
-2. Git Developer Pages: https://git.github.io/
-3. Git Reference: http://git.github.io/git-reference/
-
-If this looks good, i.e., Jekyll and GitHub Pages (with maybe a new
-org? git-scm?), I will fill in the timeline. I have tried to add and
-cover all suggestions while working on git-scm w/ Heroku.
-
-Please let me know what everyone thinks.  Let me know if you prefer
-Google Doc, paper.dropbox.com requires a signup/sign in.
-
-(This email is to complete the draft document to have a concrete plan)
-
-
+> https://lore.kernel.org/git/CAOLTT8S8TxuTmddGp2WGoPtTc3gwGXzizBfVzKd87otRw7Dpiw@mail.gmail.com/
+> is a discussion about the Outreachy Winter 2021-2022 round (not GSoC)
+> where ZheNing Hu accepted to co-mentor with me someone who would work
+> on continuing Hariom's GSoC 2020 "Unify ref-filter formats with other
+> \-\-pretty formats" project. As there were no Outreachy applicants
+> interested in working on this, we proposed this same project to the
+> upcoming GSoC.
 >
-> Thanks,
-> Taylor
+> So I don't see any problem that we should take up with the links you
+> listed. If someone would have it write a full proposal and a detailed
+> timeline it would be you, not us. Of course, as you propose to work
+> outside GSoC and Outreachy, we don't require that from you, because
+> you would not be part of any such official program and wouldn't get
+> paid.
+>
+> I hope I don't misunderstand what you said.
+
+I will update will a timeline in the next few weeks (June).
+
+Thank you for the information.
