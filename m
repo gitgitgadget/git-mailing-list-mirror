@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86D58C433EF
-	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 01:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E5DDC433F5
+	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 01:16:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348958AbiFABQW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 21:16:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57590 "EHLO
+        id S1348965AbiFABQ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 21:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242700AbiFABQT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 21:16:19 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2367095A3A
-        for <git@vger.kernel.org>; Tue, 31 May 2022 18:16:18 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id f7-20020a1c3807000000b0039c1a10507fso231121wma.1
-        for <git@vger.kernel.org>; Tue, 31 May 2022 18:16:18 -0700 (PDT)
+        with ESMTP id S240650AbiFABQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 21:16:20 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 467B695A0F
+        for <git@vger.kernel.org>; Tue, 31 May 2022 18:16:19 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id q21so265320wra.2
+        for <git@vger.kernel.org>; Tue, 31 May 2022 18:16:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9eK8PZg8l3NFpr8IrakVwLNX+pYFHen6iIQPixLIBKI=;
-        b=bHyn7wot9zEhAtfnrN+hMclCGbEs2PstNdCLJXsNR/FWsW2Nx5hQNt4e8rS1L15PXm
-         veE7nBenS7iFRkkutlhIQE9J51ywJXFpwivRmo0GXAtSmbr/znuuBnsnae6qKsRjLp0E
-         anOnAY40Tet1gR4PHXdFhAJJ3ihUYqIEDpmIED6zgNVvA1LLN5dsB6PGORhxrm4UHPX/
-         /qixBV9mgnTVLHeczfFTh8bHhyVB9WUCJKb7bFzDaEQGMFf9qMrUUOotb5sxjK3HnDQe
-         +8CbizYw8f3xobnc56/u8yUScSwQOQcoRNsl57BE4ejOzQVj5puQsjpd+/xhbCdNKVDo
-         ucwQ==
+        bh=ySYb0bPh5yBgtNR4vNC6nrsO4qrJWXNlTwKc+e1X43Y=;
+        b=HZekNoRGjNlpHHHzM6LEwxsLC1EhWFJ78Iv30uIlFFEkhvjey99lMi8IDtGiAPm/3A
+         ErOUs/c9NxauSg0nIP1JsUKCRcB52cWpJIlfibgDorAQzAIOo9E623aFFH7aOxdLiG1z
+         5L1MTxQEbsPH/t6UK56GG0MGisQnteZgm8C3DqGHiKLUF86GoRZvQX7UD8fo1oyrxdUx
+         Xsg4kW2cesBgguE7dX1yNnFksbj9ND3WEN7DKCBniS9j/AnV3OP7hl3DQDdzVsepGXPt
+         /8iEl23h+DGJyqmidFezAsDEFqWTAXDjVqxKX5gBiH8onst2+2OEag/H5WAcmgzyz8/P
+         Ddrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9eK8PZg8l3NFpr8IrakVwLNX+pYFHen6iIQPixLIBKI=;
-        b=IvhRZCj88dyAwyxIwSyyPj9YIUU42cHwYxyPHcwGudobLXtW57vdjqisEcTXt15xVd
-         dwI+wTa1njTNwWv9dU20z77Nt+dNTZy9Z82dTQiipktohzSSgANB94IIqCJZmvWfrgnb
-         QPa3stibTxT8R8x/HRVPhSbSL4MHA2OLNOFl0tIXDvxAy7/bzyT+BHv9bERA8GMt8G4j
-         nKio1zw8QbVKdgEwpnumd1Gea/T2NpF4NPwOxaYfttRkH7bLJV9S1vExiR7acdJyBsTd
-         Bp3w1SsvzJoFBOurb6nL3Avz3U15JK9DdkUKfxMwSC1SqIx9pF6003t7VbKrlPcPhnJa
-         mqKw==
-X-Gm-Message-State: AOAM533N+HMxseyq+xymHBPbRr9XCwq3OV8vZ7vmLUF9qvmOmaFqKGCC
-        RpUhB+LYSMKOKwV0X89QEY60kARvY8s=
-X-Google-Smtp-Source: ABdhPJxfy0m9VQGxnBK40T+WOoATQ62kp7MuwpK95ElMeeHlqhr+CrGq+CfQ+ZlUqoBvaTvm4PeHiQ==
-X-Received: by 2002:a05:600c:251:b0:397:47d6:ade8 with SMTP id 17-20020a05600c025100b0039747d6ade8mr26148942wmj.50.1654046176249;
-        Tue, 31 May 2022 18:16:16 -0700 (PDT)
+        bh=ySYb0bPh5yBgtNR4vNC6nrsO4qrJWXNlTwKc+e1X43Y=;
+        b=Ib5Za0elt0VhEEJT4VIa596Ai1Tu9BS2/C7BTyBVavs4xnn2DmgZFJSaZs3sH49rmg
+         tE2zPp3PrDR36pSMK0YrHfLKA/lRNknYyrD8bJeWsNfCprHVqdzJKK3lvWYdZ+XdsHl9
+         J0VZDq9wQerndJ64yrEDrLhCNOf0XlVu0bVQKh/57AyYOvn1o1hYFCdu5+whUNEgatRn
+         V6OldI0JRMuU94fyy6TSz8R1Avez2d9Yde34VAUaNw1omXh4SC9JO18J+EUCLaTwOw0W
+         KaQIG5VC236pC+QEbtrqbxKvcAc0mSP20NJJNDwgLEmTltdOaWjJlCI9B0goG7ZC9YRd
+         VfGw==
+X-Gm-Message-State: AOAM5318GI8c0Ox7eOY35OC5tnlnnKFh8pm/NXoG19XGsSuZXiSA6634
+        cwdQY0JE73f/qL6ipyvp4gPG71h2Uuc=
+X-Google-Smtp-Source: ABdhPJx5JtXDaPQ1VBxW14yE3poyWMP9QblLmpCEAVq1N5bKwO2in/BCkib7ct1g33G3dS63qW4KvQ==
+X-Received: by 2002:a05:6000:160c:b0:210:2a80:195 with SMTP id u12-20020a056000160c00b002102a800195mr14854070wrb.251.1654046177442;
+        Tue, 31 May 2022 18:16:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y3-20020a7bcd83000000b0039747cf8354sm282147wmj.39.2022.05.31.18.16.14
+        by smtp.gmail.com with ESMTPSA id h42-20020a05600c49aa00b003973d425a7fsm318346wmp.41.2022.05.31.18.16.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 18:16:15 -0700 (PDT)
-Message-Id: <083a918e9b1474eff0d51c4502b6d54de9b63764.1654046173.git.gitgitgadget@gmail.com>
+        Tue, 31 May 2022 18:16:16 -0700 (PDT)
+Message-Id: <8e29ac807c6a0cf94ea3a44ee3304011c2ad159c.1654046173.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1237.v3.git.1654046173.gitgitgadget@gmail.com>
 References: <pull.1237.v2.git.1653658034086.gitgitgadget@gmail.com>
         <pull.1237.v3.git.1654046173.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 01 Jun 2022 01:16:12 +0000
-Subject: [PATCH v3 1/2] remote: create fetch.credentialsInUrl config
+Date:   Wed, 01 Jun 2022 01:16:13 +0000
+Subject: [PATCH v3 2/2] usage: add warn_once() helper for repeated warnings
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,168 +72,109 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Users sometimes provide a "username:password" combination in their
-plaintext URLs. Since Git stores these URLs in plaintext in the
-.git/config file, this is a very insecure way of storing these
-credentials. Credential managers are a more secure way of storing this
-information.
+The previous change added a warning when valid_remote() detects
+credentials in the URL. Since remotes are validated multiple times per
+process, this causes multiple warnings to print.
 
-System administrators might want to prevent this kind of use by users on
-their machines.
+To avoid these kinds of repeated, advisory warnings, create a new
+warn_once() helper that behaves the same as warning(), but only after
+formatting the output string and adding it to a strset. If that addition
+signals that the string already exists in the strset, then do not print
+the warning.
 
-Create a new "fetch.credentialsInUrl" config option and teach Git to
-warn or die when seeing a URL with this kind of information. The warning
-anonymizes the sensitive information of the URL to be clear about the
-issue.
-
-This change currently defaults the behavior to "allow" which does
-nothing with these URLs. We can consider changing this behavior to
-"warn" by default if we wish. At that time, we may want to add some
-advice about setting fetch.credentialsInUrl=ignore for users who still
-want to follow this pattern (and not receive the warning).
-
-An earlier version of this change injected the logic into
-url_normalize() in urlmatch.c. While most code paths that parse URLs
-eventually normalize the URL, that normalization does not happen early
-enough in the stack to avoid attempting connections to the URL first. By
-inserting a check into the remote validation, we identify the issue
-before making a connection. In the old code path, this was revealed by
-testing the new t5601-clone.sh test under --stress, resulting in an
-instance where the return code was 13 (SIGPIPE) instead of 128 from the
-die().
-
-Since we are not deep within url_normalize(), we need to do our own
-parsing to detect if there is a "username:password@domain" section. We
-begin by detecting the first '@' symbol in the URL. We then detect if
-there is a scheme such as "https://" by finding the first slash. If that
-slash does not exist or is after the first '@' symbol, then we consider
-the scheme to be complete before the URL. Finally, we look for a colon
-between the scheme and the '@' symbol, indicating a "username:password"
-string. Replace the password with "<redacted>" when writing the error
-message.
-
-As an attempt to ensure the parsing logic did not catch any
-unintentional cases, I modified this change locally to to use the "die"
-option by default. Running the test suite succeeds except for the
-explicit username:password URLs used in t5550-http-fetch-dumb.sh and
-t5541-http-push-smart.sh. This means that all other tested URLs did not
-trigger this logic.
+In the case of the credentials in a URL, the existing test demonstrates
+this per-process limitation: 'git clone' runs 'git-remote-curl' as a
+child process, giving two messages. This is an improvement over the
+previous six messages.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/config/fetch.txt | 14 ++++++++++
- remote.c                       | 48 ++++++++++++++++++++++++++++++++++
- t/t5601-clone.sh               | 14 ++++++++++
- 3 files changed, 76 insertions(+)
+ git-compat-util.h |  1 +
+ remote.c          |  2 +-
+ t/t5601-clone.sh  |  5 ++++-
+ usage.c           | 22 ++++++++++++++++++++++
+ 4 files changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-index cd65d236b43..0db7fe85bb8 100644
---- a/Documentation/config/fetch.txt
-+++ b/Documentation/config/fetch.txt
-@@ -96,3 +96,17 @@ fetch.writeCommitGraph::
- 	merge and the write may take longer. Having an updated commit-graph
- 	file helps performance of many Git commands, including `git merge-base`,
- 	`git push -f`, and `git log --graph`. Defaults to false.
-+
-+fetch.credentialsInUrl::
-+	A URL can contain plaintext credentials in the form
-+	`<protocol>://<user>:<password>@<domain>/<path>`. Using such URLs
-+	is not recommended as it exposes the password in multiple ways,
-+	including Git storing the URL as plaintext in the repository config.
-+	The `fetch.credentialsInUrl` option provides instruction for how Git
-+	should react to seeing such a URL, with these values:
-++
-+* `allow` (default): Git will proceed with its activity without warning.
-+* `warn`: Git will write a warning message to `stderr` when parsing a URL
-+  with a plaintext credential.
-+* `die`: Git will write a failure message to `stderr` when parsing a URL
-+  with a plaintext credential.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 58fd813bd01..776a5f660aa 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -526,6 +526,7 @@ int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++void warn_once(const char *warn, ...) __attribute__((format (printf, 1, 2)));
+ 
+ #ifndef NO_OPENSSL
+ #ifdef APPLE_COMMON_CRYPTO
 diff --git a/remote.c b/remote.c
-index 42a4e7106e1..accf08bf51f 100644
+index accf08bf51f..72fffd0d968 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -22,8 +22,56 @@ struct counted_string {
- 	const char *s;
- };
+@@ -60,7 +60,7 @@ static void check_if_creds_in_url(const char *url)
+ 		      "<redacted>", 10);
  
-+/*
-+ * Check if the given URL is of the following form:
-+ *
-+ *     scheme://username:password@domain[:port][/path]
-+ *
-+ * Specifically, see if the ":password@" section of the URL appears.
-+ *
-+ * The fetch.credentialsInUrl config indicates what to do on such a URL,
-+ * either ignoring, warning, or erroring. The latter two modes write a
-+ * redacted URL to stderr.
-+ */
-+static void check_if_creds_in_url(const char *url)
-+{
-+	const char *value, *scheme_ptr, *colon_ptr, *at_ptr;
-+	struct strbuf redacted = STRBUF_INIT;
-+
-+	/* "allow" is the default behavior. */
-+	if (git_config_get_string_tmp("fetch.credentialsinurl", &value) ||
-+	    !strcmp("allow", value))
-+		return;
-+
-+	if (!(at_ptr = strchr(url, '@')))
-+		return;
-+
-+	if (!(scheme_ptr = strchr(url, '/')) ||
-+	    scheme_ptr > at_ptr)
-+		scheme_ptr = url;
-+
-+	if (!(colon_ptr = strchr(scheme_ptr, ':')))
-+		return;
-+
-+	/* Include the colon when creating the redacted URL. */
-+	colon_ptr++;
-+	strbuf_addstr(&redacted, url);
-+	strbuf_splice(&redacted, colon_ptr - url, at_ptr - colon_ptr,
-+		      "<redacted>", 10);
-+
-+	if (!strcmp("warn", value))
-+		warning(_("URL '%s' uses plaintext credentials"), redacted.buf);
-+	if (!strcmp("die", value))
-+		die(_("URL '%s' uses plaintext credentials"), redacted.buf);
-+
-+	strbuf_release(&redacted);
-+}
-+
- static int valid_remote(const struct remote *remote)
- {
-+	for (int i = 0; i < remote->url_nr; i++)
-+		check_if_creds_in_url(remote->url[i]);
-+
- 	return (!!remote->url) || (!!remote->foreign_vcs);
- }
+ 	if (!strcmp("warn", value))
+-		warning(_("URL '%s' uses plaintext credentials"), redacted.buf);
++		warn_once(_("URL '%s' uses plaintext credentials"), redacted.buf);
+ 	if (!strcmp("die", value))
+ 		die(_("URL '%s' uses plaintext credentials"), redacted.buf);
  
 diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 4a61f2c901e..cba3553b7c4 100755
+index cba3553b7c4..6ae3eec9eb6 100755
 --- a/t/t5601-clone.sh
 +++ b/t/t5601-clone.sh
-@@ -71,6 +71,20 @@ test_expect_success 'clone respects GIT_WORK_TREE' '
- 
+@@ -75,7 +75,10 @@ test_expect_success 'clone warns or fails when using username:password' '
+ 	test_must_fail git -c fetch.credentialsInUrl=allow clone https://username:password@localhost attempt1 2>err &&
+ 	! grep "URL '\''https://username:<redacted>@localhost'\'' uses plaintext credentials" err &&
+ 	test_must_fail git -c fetch.credentialsInUrl=warn clone https://username:password@localhost attempt1 2>err &&
+-	grep "warning: URL '\''https://username:<redacted>@localhost'\'' uses plaintext credentials" err &&
++	grep "warning: URL '\''https://username:<redacted>@localhost'\'' uses plaintext credentials" err >warnings &&
++	# The warning is printed twice, for the two processes:
++	# "git clone" and "git-remote-curl".
++	test_line_count = 2 warnings &&
+ 	test_must_fail git -c fetch.credentialsInUrl=die clone https://username:password@localhost attempt2 2>err &&
+ 	grep "fatal: URL '\''https://username:<redacted>@localhost'\'' uses plaintext credentials" err
  '
+diff --git a/usage.c b/usage.c
+index b738dd178b3..242633c5f8d 100644
+--- a/usage.c
++++ b/usage.c
+@@ -5,6 +5,7 @@
+  */
+ #include "git-compat-util.h"
+ #include "cache.h"
++#include "strmap.h"
  
-+test_expect_success 'clone warns or fails when using username:password' '
-+	test_must_fail git -c fetch.credentialsInUrl=allow clone https://username:password@localhost attempt1 2>err &&
-+	! grep "URL '\''https://username:<redacted>@localhost'\'' uses plaintext credentials" err &&
-+	test_must_fail git -c fetch.credentialsInUrl=warn clone https://username:password@localhost attempt1 2>err &&
-+	grep "warning: URL '\''https://username:<redacted>@localhost'\'' uses plaintext credentials" err &&
-+	test_must_fail git -c fetch.credentialsInUrl=die clone https://username:password@localhost attempt2 2>err &&
-+	grep "fatal: URL '\''https://username:<redacted>@localhost'\'' uses plaintext credentials" err
-+'
-+
-+test_expect_success 'clone does not detect username:password when it is https://username@domain:port/' '
-+	test_must_fail git -c fetch.credentialsInUrl=warn clone https://username@localhost:8080 attempt3 2>err &&
-+	! grep "uses plaintext credentials" err
-+'
-+
- test_expect_success 'clone from hooks' '
+ static void vreportf(const char *prefix, const char *err, va_list params)
+ {
+@@ -287,6 +288,27 @@ void warning(const char *warn, ...)
+ 	va_end(params);
+ }
  
- 	test_create_repo r0 &&
++static struct strset prev_warnings = STRSET_INIT;
++
++void warn_once(const char *warn, ...)
++{
++	char buf[1024];
++	va_list params;
++	va_start(params, warn);
++
++	if (vsnprintf(buf, sizeof(buf), warn, params) >= 0) {
++		if (!strset_add(&prev_warnings, buf)) {
++			va_end(params);
++			return;
++		}
++	}
++	va_end(params);
++
++	va_start(params, warn);
++	warn_routine(warn, params);
++	va_end(params);
++}
++
+ /* Only set this, ever, from t/helper/, when verifying that bugs are caught. */
+ int BUG_exit_code;
+ 
 -- 
 gitgitgadget
-
