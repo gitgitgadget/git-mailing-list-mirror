@@ -2,96 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A4BDC433EF
-	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 16:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66476C43334
+	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 16:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353775AbiFAQyI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jun 2022 12:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49912 "EHLO
+        id S1354061AbiFAQ4G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jun 2022 12:56:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238676AbiFAQyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jun 2022 12:54:06 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D40D3336E
-        for <git@vger.kernel.org>; Wed,  1 Jun 2022 09:54:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1654102432;
-        bh=3mikgHoSaHZR7vjDmeSToN4IlZZyBRRhXFk7rIxcZbA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=b1FPBcvVR4Oaj4PPQcFR2g//adhoyf9Q+EY9C2RQPvx1X2rZQl/zvhFVRLTSWkRmK
-         dgpbgqlfZ6umhFBoy6R02uso9fm/0hsfUwyU0LVwkrypVmLRrwQg6xyxPu48lqbq2X
-         r+ULCKkdrkof1/nldxzFobq25ZQDojE51KeTEpBE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.206.165] ([89.1.212.145]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7b6b-1nsqZp34sH-007zw9; Wed, 01
- Jun 2022 18:53:52 +0200
-Date:   Wed, 1 Jun 2022 18:53:51 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Anthony Sottile <asottile@umich.edu>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v4 0/2] hook API: connect hooks to the TTY again, fixes
- a v2.36.0 regression
-In-Reply-To: <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2206011850460.349@tvgsbejvaqbjf.bet>
-References: <cover-v3-0.2-00000000000-20220527T090618Z-avarab@gmail.com> <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-29050784-1654102432=:349"
-X-Provags-ID: V03:K1:yqqKxj23SpVuEsCHBkFHMaxOmbEg1QQI0VM4OsgBAJQD+cLVZkI
- G1chBw1kOGZZLyTCpjnt0QrYmVne7AMVz96fGt3m67UnWMoNj28rDU7ycDI48wDqqbYCj71
- 3Yb8dDsd688oSNS8NAH5AkuItLMORCgkTzidEwVejVOdQY9hvxrBP6Y2c2YC2S5babNR1x6
- jRPtQ/QKi3EFqo6qZt+hw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vysw+JIg6BQ=:6ZrYeIf+EWdVxOCvnNfENO
- LV0+TjkFsUOKrritJ2ZhOs0fun5LrMX/HZXGgSzMPjuyDO4oGaG9sYoHOcFCAqdGfoAPazdgf
- G/24kfuj8y6nYldrKI+nzVW+av8/rJCJPDOqIzhEXj74JFCn58/JvUa+NOPSoSvCOH+/jWQWL
- j5EoMYogf94yVhQu5KG0L2GpGXgBwITEQIeej913pnZ68N8xVBw10Kb6CwmPky/SC218Q1fEu
- 1OEwYRCL12XbCkImo9PJ4ssA0awJbFpLGGh/EhPrpiNWtk2O+jHWG2LCxQYLBJy8SQZPi/48b
- ritwLjL0GOPN+/glO74Eh1xYuXwg68ZG7wW5SYcI6ngDfI6GzV1/zfcxvopvaGqPTEK/zQl9Y
- aCA3VZ/bk+p/sT2ImMDboJa6KAe8Skvqd2Q0ZwtUPXu2ffPIjJS1wye3cPVsTsVZ7PRcBeYGR
- 8Sh3k2daZtHNcS1UFg62w5VV0FONlbND+w/J55S9evGaeU7W7ugBFwD/YF6Qoo5eOZLWJviFk
- /CAvoGpmDZm0K5SY54t4j2C9Jk/1opc7TJh0pFiToFU7Y6FengmX37qJdF4An8j+MrJ40NDn9
- FKW6RIv8p1NFoFUSXD7NEJbQ2YdjqEz8VImFTW34vdYvqdT4DG8GD/fSl36iiE8S+QnFEfgck
- WN6VPym5/W4C1f7zSlbA7oj8Wh2vSiLIlUiqYSz1VFSQmI0imUCcDpto9cr18CYXHcEctkD9p
- c+Zbk/iaI/ojA4gDzpC1xBEYAp1A9Iw7APe/PbIN3KoNiwzN8x1asTLbxnB5kN38aWBz2h5eK
- nabxQbNyJSy9H3kaaHV1p+sVbBkHkLijqacGbMoNYaqzCAo1dy6SimPN2RzocE/UugeN5IyUp
- XTpkRUvITsnzgCO9HhoWQ+aME8nBZXSCL3BxUFWbjGaj/54mV5QXwSrx5qkEXiNIkALLsRhoA
- k9i7YPOGGpYfF83T3ZZJRpf6aP++5I64wQ/1ypyaM0Y86WW6EQavEOoxge2M/nGQOzF/0eJ7X
- aSnVHoVObZoi18DvisPhY9+UjJvcGvn8ms2sSELX3kZ9N72/m3y9l7/AvK6XNNYYbP9TaNRvS
- Axlc3otyqQPLvJnXct2Mn6ZiPlcwEDY7b3WA97/UoGNoZmzLDpPOmvi0A==
+        with ESMTP id S1354159AbiFAQ4D (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jun 2022 12:56:03 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B476EA33A6
+        for <git@vger.kernel.org>; Wed,  1 Jun 2022 09:56:00 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id z18-20020a656112000000b003fa0ac4b723so1249554pgu.5
+        for <git@vger.kernel.org>; Wed, 01 Jun 2022 09:56:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=Q4asNi5ftrkq/C+iMWpxVYKgtHZjvbf3yOyUy/8TnoU=;
+        b=OiIBzQwDB43bAPhNSqjzO7VAHZpPobovCjrMeCP3Y3TeKg3h5OO2hJRck98g4ficZ+
+         D+OcAL4rCuGFyxJDsPYmZrdLAEvQunrxS2mVtnzJP7kX/OWamitAmeLBahEHkJEKz6pI
+         W3llUV1RP1zMbp/jgT8ZhBVibRJMoa7XvMV0Hk0J3cMoZ0Xe8Eodmlfct2qWWZhYXCIe
+         LUpxb5y3PtIBxYf33Ucv8vwUxd9QK05VJr5S5Zm3G/mZLjdtCu+U+zVCdRu7UE8INb0f
+         Ysv9lqhNZbYDFrDFHYIfgcmuJfKH8sCYjnC4hoBhsUC3AR1ptnQWcNWs/LifUpGUDXMJ
+         tf2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=Q4asNi5ftrkq/C+iMWpxVYKgtHZjvbf3yOyUy/8TnoU=;
+        b=A9VDSln27868P6Oj5+t2H+6fmZVUqxrSUMmxnewDnUA5o41GpTW28/npYdf35colN7
+         zIrnknvdez62anConAMUDGrKUk8FF+it/3zGzowuG4/XtVvnBYfsceN+IXuvZyfGLyUv
+         fvYBEMd64HY/8imH5xMV5cVq4V3gGHZhD2GcIGuXZODprQvtLThtIn/iWcAi7iKH7OS5
+         5GxcjgEf6Fxccbjz7k97NZTwACD1QvV9Tk9EL2QawXQtoLdRyyIWWkyQvYI7B1zLGqOZ
+         /M7UoAc8+eoYvk3jBUEB89mTWds6GD0r+wgQ3P0NvE63N4SH9vJnGL42Z2NFe315TGVO
+         1UZw==
+X-Gm-Message-State: AOAM532uCtNARJPRMvf3Fs7KPxrpRbfhSM0OB6fVJStumJLHooO6Fwj3
+        D/2EaBob9KczIDCh8ptry6ZukpjyEW6zTA==
+X-Google-Smtp-Source: ABdhPJzFzJ8F8EZwOgWAbBpy832z/eyzkly6SeBZ2VKbzgHRdGx/A6a1ibfH9exkTfnnlEEb/jKw3PBoyKsHEw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:903:246:b0:153:84fe:a9b0 with SMTP id
+ j6-20020a170903024600b0015384fea9b0mr327426plh.163.1654102560066; Wed, 01 Jun
+ 2022 09:56:00 -0700 (PDT)
+Date:   Wed, 01 Jun 2022 09:55:57 -0700
+In-Reply-To: <220601.86leug261j.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6lilpke31e.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1273.git.git.1654038754.gitgitgadget@gmail.com>
+ <f947cf221c0b5320d0b7438b88a0d94a5bd3a70b.1654038754.git.gitgitgadget@gmail.com>
+ <220601.86leug261j.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 2/2] remote.c: reject 0-length branch names
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "Ing. Martin Prantl Ph.D." <perry@ntis.zcu.cz>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
---8323328-29050784-1654102432=:349
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> On Tue, May 31 2022, Glen Choo via GitGitGadget wrote:
+>
+>> From: Glen Choo <chooglen@google.com>
+>>
+>> Branch names can't be empty, so config keys with an empty branch name,
+>> e.g. "branch..remote", are silently ignored.
+>>
+>> Since these config keys will never be useful, make it a fatal error when
+>> remote.c finds a key that starts with "branch." and has an empty
+>> subsection.
+>
+> Perhaps this is fine, but I think this commit message (and I checked the
+> CL too) really needs to work a bit harder to convince us that this is
+> safe to do.
 
-Hi =C3=86var,
+Fair.
 
-On Tue, 31 May 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> Are we confident that this is just bizarro config that nobody would have
+> had in practice? In that case I think it's fine to start dying on it.
+>
+> But as I understand we previously just ignored this, then if there's any
+> doubt about that perhaps we should start with a warning?
+>
+> Or are we really confident that this is an edge case not worth worrying
+> about in that way, and that we can go straight to die()?
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
->   run-command: add an "ungroup" option to run_process_parallel()
->   hook API: fix v2.36.0 regression: hooks should be connected to a TTY
+The case I want to make is even stronger than that - this is an edge
+case that _we_ shouldn't worry about, and we should tell the _user_ that
+their config is bogus.
 
-As I mentioned in the review of the first patch, this introduces a feature
-with enough code that it is quite easy for more regressions to lurk in
-there.
+It truly makes no sense because `branch..remote` fits the schema of
+`branch.<name>.remote` where <name> is "", but "" isn't a valid branch
+name (and it never has been AFAIK). So such a key would never be useful
+to Git, and it would be extremely hacky for a non-Git tool to use such
+a key.
 
-One thing that is notably missing from the cover letter is a discussion
-how the current approach compares to either reverting the patches that
-introduced the regression or alternatively patching the code in `hook.c`
-to avoid using the `run_processes_parallel()` API altogether.
+I'm not sure how a user would generate such a key in the wild (e.g.
+[1]). Maybe it was a typo, but more worryingly (I don't have evidence
+for this, but it could happen), it might be misbehavior from `git
+[branch|config]` that we never noticed because the bogus keys have flown
+under the radar. If there really is a bug elsewhere, erroring out when
+we see such keys might also alert us to the bug.
 
-Ciao,
-Johannes
+Perhaps I need to capture all of this in the commit message?
 
---8323328-29050784-1654102432=:349--
+[1] https://lore.kernel.org/git/24f547-6285e280-59-40303580@48243747/
