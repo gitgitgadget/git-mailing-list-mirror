@@ -2,220 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CD57C433FE
-	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 10:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4822C433EF
+	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 10:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350404AbiFAKKk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jun 2022 06:10:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60612 "EHLO
+        id S236151AbiFAKLB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jun 2022 06:11:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352008AbiFAKJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jun 2022 06:09:58 -0400
-Received: from EUR01-VE1-obe.outbound.protection.outlook.com (mail-eopbgr140048.outbound.protection.outlook.com [40.107.14.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A79F351E53
-        for <git@vger.kernel.org>; Wed,  1 Jun 2022 03:07:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WQgLD7bCcJagC/73+pBTR8Bkd1kM+/+oVKoSBpPjV5cZqXFd1xK7v9EKl8NvhT+iQwcpa+9L6JKyOFwoiTjfxT1RV6DmDH1H9RO2qObxNptRP8x2M9ChBoC4/4JWaoRSuisPo6G0aa2iEkLYiaAz9ueRgrk6o+5ftGeXG144qEhrIGNkz5o9LtEYQYyKBvoXIbeDJDBYeIilS6Oa7DBebdbH8cYMwAdlaf3Bpvu8yDnl5KHZriFghVSX2Sk1LtnHX6Ysbj5ASY7YYc7bmG5GgyhNe3yR7U3IXyOd9NMUn6sP64LYoJzRHjq8Akzr9CpOJkvK1Ahe7IVmEqiLBgS8uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MU+JRCv+j+nq39ZRyGb4WT2uY/9h6fBoCGj4vUDC0Io=;
- b=Lyu8BTmEzjK2lJIixn+0hl5SuK4qabShyJ8pjMgu35oEQhNUBup6DkbuDKr34gahrQ0KlledHPqie4Ag/XWFICR85IMTKd3pjZPglBB+uf/6Txgx7FAIXogXMuVSjvVInCIyi2KYd3hAZ2RsVyCwsXmrEO47YSzoGOhxKWyVaYB3AvyQNXFHED+tf49I3r5bxJrcInNJY2tAnV5rJc9fq6MCAB7squnQvB+KBoIec8l4XuC999iShnerOza4F3bPP/SJT00H4YGHSDzoSlZXagL/M82srOWGx9ryPEDG0IuOWWX/C0nO7yOMQs/E5haScTQbt4b/p2wKSDX00Dat8A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=softwareag.com; dmarc=pass action=none
- header.from=softwareag.com; dkim=pass header.d=softwareag.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=softwareag.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MU+JRCv+j+nq39ZRyGb4WT2uY/9h6fBoCGj4vUDC0Io=;
- b=V2amVeIW9gM+FhZS20Id35Geic8znT1/D+QsGWNWH6QpUj0mxPenjWmgXdis0VZsnobVPeccvZTx2kakHiWcH5fGLSL26A4DGbpzFJ4fOoCEYR5Z1FW1t/kLJI9Nctj1PA+00orIOKWmIvkfJkoGZDAOMya8Vmti7vHpTqSgQwQ=
-Received: from AM0PR02MB5635.eurprd02.prod.outlook.com (2603:10a6:208:15d::11)
- by AM6PR02MB5221.eurprd02.prod.outlook.com (2603:10a6:20b:85::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5293.19; Wed, 1 Jun
- 2022 10:07:11 +0000
-Received: from AM0PR02MB5635.eurprd02.prod.outlook.com
- ([fe80::f021:da15:ae53:34fd]) by AM0PR02MB5635.eurprd02.prod.outlook.com
- ([fe80::f021:da15:ae53:34fd%4]) with mapi id 15.20.5314.013; Wed, 1 Jun 2022
- 10:07:11 +0000
-From:   "Philip, Bevan" <Bevan.Philip@softwareag.com>
-To:     Philip Oakley <philipoakley@iee.email>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Files with \r\n\n line endings can result in needing to
- renormalize twice, after deleting checked out file and restoring from repo
-Thread-Topic: Files with \r\n\n line endings can result in needing to
- renormalize twice, after deleting checked out file and restoring from repo
-Thread-Index: Adh0+ba2lvEh2aeaSzKNKrxP3MqN7AAOUzKAABmRmKA=
-Date:   Wed, 1 Jun 2022 10:07:10 +0000
-Message-ID: <AM0PR02MB5635C34CA2415C4FB2164B91E8DF9@AM0PR02MB5635.eurprd02.prod.outlook.com>
-References: <AM0PR02MB56357CC96B702244F3271014E8DC9@AM0PR02MB5635.eurprd02.prod.outlook.com>
- <44fe5991-3027-5ca7-bd3b-fd005d337caa@iee.email>
-In-Reply-To: <44fe5991-3027-5ca7-bd3b-fd005d337caa@iee.email>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_ee9ddd37-01c2-47a1-893c-5c0bdc1f6d39_ActionId=2250a666-e316-4290-805a-c959364a26a6;MSIP_Label_ee9ddd37-01c2-47a1-893c-5c0bdc1f6d39_ContentBits=0;MSIP_Label_ee9ddd37-01c2-47a1-893c-5c0bdc1f6d39_Enabled=true;MSIP_Label_ee9ddd37-01c2-47a1-893c-5c0bdc1f6d39_Method=Standard;MSIP_Label_ee9ddd37-01c2-47a1-893c-5c0bdc1f6d39_Name=Public;MSIP_Label_ee9ddd37-01c2-47a1-893c-5c0bdc1f6d39_SetDate=2022-06-01T09:23:43Z;MSIP_Label_ee9ddd37-01c2-47a1-893c-5c0bdc1f6d39_SiteId=d9662eb9-ad98-4e74-a8a2-04ed5d544db6;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=softwareag.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 2cd327a9-04b1-467e-450e-08da43b67e70
-x-ms-traffictypediagnostic: AM6PR02MB5221:EE_
-x-microsoft-antispam-prvs: <AM6PR02MB5221514E3AA3DB64589DD6ABE8DF9@AM6PR02MB5221.eurprd02.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: byhwpZxlgUatXGHRR9/5yHu55PozGhL7q/oPOuUO0kRuW6ocVfsm0nKD/xKPttI4dcdiyMf+zQUgeGDPxKEOyeQ4HqL0n7eQL/mwaaDoYqd78F3U0Bt5BpyxQi5jayWVj2D2NWSV7kiMnmABbNs5ym6ULvHjqxFYreTYS8Hu1sHlQC3gZRDF7+Tr+V2actc41Tgih6Q7pqCz7JD2VUEuDHjwZCTMpdRzuhYnKH47XErtx5+MZBOSaQgZn9vgSacYU3egWbYt7jbqQOlh2opI4PamsehMcb4Yx5VzdbJCUsIeDL8S8JERfGGV0Twe0A0SpTDppSvY0ebYLoI4Syi2QF055Ztq7nrt7momxvSls4JTwOVljxj0ryT4+uQOD3WAf09bIyjmK0sLFBPksjYnVNR8xVTFvoyKBdGrQDOSwJt9h0ED0dfS12JDMz7VwwIp85sN+kJxalPszKN+UNs8OvNDOdnRNdfxvrE3MgFnP1/iZ8ZoR4KXdGXqQGkZ2kVPKisQDdioel98CjBsvyHB/JFHyRMFtEv6eKE5IFSe8eFuq4gt8IjhKpOF5m3/MfEBwGCtiLeeREZkLCUzhEaPBpK9XLZCMMu8lxhLy9hQL9jkDr77ZNnLRGz88dix4LZEofRp3kRy2QaITiE42d1KbKfQuxk6dY0RPqxuVnIgkOuWWeWkmPeFQGGZg8R7aP34vi8wkudPPRSRLKtg1YeGlg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR02MB5635.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(66476007)(508600001)(8936002)(38100700002)(66556008)(8676002)(52536014)(64756008)(66446008)(86362001)(76116006)(66946007)(966005)(71200400001)(5660300002)(53546011)(55016003)(186003)(26005)(83380400001)(122000001)(33656002)(6506007)(9686003)(38070700005)(7696005)(316002)(110136005)(2906002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?M0ZPN1M4RmV5RlRuM2R3UVVybGRvVmFSM0NINjU4WDJUNHd3SnlsK01sL3lR?=
- =?utf-8?B?R0JnQnFrcXdsc0hQeDk0dzF5OEg5Y1d4Vnk4OU1pL1BRTlFydlZNb0xlVTcz?=
- =?utf-8?B?Qyt5UEpOMnBFUDRVNmY1L0VXTFVTd2E1eFE1cGxCNk9lODVOUHVVQXZKMXJ4?=
- =?utf-8?B?dGRyYUdJYjg5cEdnUlJXN3pITXd5Y1MyY0ExQ1R2c3ZaUFJzWnJVS3E1WS83?=
- =?utf-8?B?OUttbHVTZ1FIdUlkMEUrZ1RNVSs3ZlJEczlaVm5jZklhT0s3eTVUR00yVmxH?=
- =?utf-8?B?Y2VuR3FaL1dMdVlwRENMZGtiQmpFd3JIaXc2cmN6MFZHZkpFTkkwUUtBL280?=
- =?utf-8?B?SDNCeU53eG9RMXEvNjVYSFRxakZ2YzZBcEhkNzNmZDBrOHdubFFIMFdGYXo2?=
- =?utf-8?B?dk0ycDMwcVUxTXFEM2VkSVRVNWZjQ0k5S2krRnNSSzBUcXo3YjBUVTNlc280?=
- =?utf-8?B?ZS9DUnBWTktMZmtsSEJaVFMwRzhFL1hSL3JaWHQ0UGVYeDBGaGtqbkE5VUdy?=
- =?utf-8?B?U01DMldUWTk5V2NPMTBUbDFaNEFqc3JLdGpSUlFpNEpRNE1vM2tYZndRMWpQ?=
- =?utf-8?B?eHpFU2g0TTRQV1g5cCtLcEpEcGg1UmY1S3Y1VEd3TElMbGtRNURkK0RSem1k?=
- =?utf-8?B?aS9iaC94anhSZE9ESHVBelY2TEtyK0dZZDR1WG9GODBXWUhsT1pwSUZOVWFr?=
- =?utf-8?B?ZjlaeTM4S2haTVpBRk1TYWFXV1RUcy92a2ZMam9Oenl1MkpoNDV4NmJ1c2F3?=
- =?utf-8?B?TGlNd3hZdG9ieFltcGxBWnYzeG5EUklnM0hmQUllQUxNNWhqWjRra1daQlg4?=
- =?utf-8?B?YnNyZ2hBSHRZRjVrUG9hYkpxUi9Bd3ZhNFExanJPeVlyWDZ6dTA0ZTRFS2hx?=
- =?utf-8?B?eGp5R2RtSVZhSmVkYytha2pMUFk4MGh4N2llR1RlYUNmY0J2T3R5MGV6cEp4?=
- =?utf-8?B?ZkJkTXR3K3V6ZkJQQmtSRENsYmEwUUJHZDgzQ1BvYkxrWCt4eUo1ZCsrc3U1?=
- =?utf-8?B?dlY3VDdFd3pDVWowYkxyc2dJL3djRlZKcVpTS1l2TXR0TU1CaTdra1pwdkRv?=
- =?utf-8?B?WlFjT0NkdVdVSmxhcGtqMzhYeHVraEJqNWx2MVNlTmJRSWhNR0NYZjZWSDVZ?=
- =?utf-8?B?bU9iTHovQ2grWVBQaW5UWXhKenFPeGZLN1Zxb29tQWFUZ2FJdjNiRHk5MVF5?=
- =?utf-8?B?L0N0UVhSb2RvUWptb2RWczQzdVhBR3VVWnJycUdNc1JNNVFzbGdVYnE1NXJ1?=
- =?utf-8?B?Z25JZlV5cFZwSG5jSXpNeitNR3BQMFIzU0VYaWdoRm5mV0FWbEVOc1BCcFJy?=
- =?utf-8?B?Y1lraEsyY2hXZThCNVkremRVT3UvWjdIaHJBTlUrOTJmK1dYRlJEQTZMT1NN?=
- =?utf-8?B?L1ZzK2crWnBxL0J1dXdhc0o2a2hhWGl0SkgyL1hoa1Jxa2NBajB4aTcrYVZ1?=
- =?utf-8?B?d2JKVmx5RldtWFErVkdGYUlYYmdLY09IM08zUmN1RVVKRDIyWmNSZndxQmZk?=
- =?utf-8?B?RldQRGZpZ2diQm1Nczc3a2NIcXdSVlZaalBpYnVVSlB2RytOMlpNaXIxK2dX?=
- =?utf-8?B?KzlkUXEzNFFzNHJBUjgzZi96cWcrNnV3NzdqZFZ6SVpUOEZudHg2c3h0d0hB?=
- =?utf-8?B?Z3hldFFzdFNqWlFDazJZRHEyL0xSK2dmUjRSdGgyWUVJOGZTeW1JVDN0Qlkw?=
- =?utf-8?B?NXFwaExJRGNGc1dSczdmQ01PRXJpYTI4aEdZZHVkdHZnc0RoUGpkN3NEUjNG?=
- =?utf-8?B?cno1eE9wczVMbHhudDFSay80VnVxZU5pRkZHN01lQ1N6Y0czMkJtY2xBVnJJ?=
- =?utf-8?B?Vm1Cb0NsOUVjMXFiZ3dEOUk1UVhIOTlhdnJWVU1TNkt6STNZOVEvMXkvc25L?=
- =?utf-8?B?T2l4bEVGU0JmNThPS2JQNDBZcmRHdGpwa1RYY1dERlJYRUhzUlRhUlBlN3JU?=
- =?utf-8?B?WXpxSHQ0dUZlRjh1c3VONHg3SWtublV1YW5RenJoTk9CTnR4aDlYWVZPVUsw?=
- =?utf-8?B?RkNMWTlSaEc1ZHZ2bEYvc1hXenZ6SnRya1lRbm41OFAzZ0Q4TTlEcDl0Y1ZC?=
- =?utf-8?B?SUxmTU5SRG5IZFB0VDFTS2xrVi95WWxvUTFpUllJZjNSWlJ3S2Z4UXhnZkMy?=
- =?utf-8?B?a21nWVVmWERGelRoajZ5NkI3MjREcHFobERZNVFGVldTZ3ZOa01MOVFYY1RC?=
- =?utf-8?B?cEh4UWxnaVRPWHJMMld0YnJOcWIrVlJlSEpqUjlBUHhGdHFCeWVFRGRDUm0y?=
- =?utf-8?B?L1IrUDNrTVJZbUFIRnpxTm80N2VYcW5aU3A3bEhVSVVBcHp5Q2tCVjVvOE5s?=
- =?utf-8?B?MEV1eUZIRTF4VENBa1NyUWhHS2FqQ0JVQjlrMWc4WHB4Y2V6dW9XZz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S1352393AbiFAKKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jun 2022 06:10:34 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93348AE250
+        for <git@vger.kernel.org>; Wed,  1 Jun 2022 03:09:43 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id me5so2174557ejb.2
+        for <git@vger.kernel.org>; Wed, 01 Jun 2022 03:09:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=gt+jmpmfQ1Z5XQAnL9Zg/u99ThiE2sZgNSSFzgf/kNo=;
+        b=TdmNs5I75JROYN4xaIUNR6uo//nrRMK0pD9jjieSGxTN5IGKQr6NmtOUeU0OxVzLj2
+         nAUvkqPirSsLiMv9T9Gx2R7p7X4WNkNspVDMQJvbjNPmjV5yspVadDP0nYeIR82MGQg2
+         Pyo/19FO2wf5EQV3Obn+Kuy1kV97xHBp9jpWMO94J2kSSjnvHop6c3FTeULHm9kn14Pj
+         KroqfmdmUVTPx+g1W0ywQ4GOwtVgSKEfnjFxkQEpbiG8m8fsiNzpg1x86tJp5CcH53VU
+         W2etrlqZIWG3Ly2WIeRMrx9q1qX/M9stoGwrfB3i2PNktwdEiliCOruwJNzpR/AUAM0i
+         s7KQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=gt+jmpmfQ1Z5XQAnL9Zg/u99ThiE2sZgNSSFzgf/kNo=;
+        b=nm/Fvo40FsDNE7OwrPnnRQkGAhuacIjFZht6k59KC7ePZk+Sgaawmi1xRkyPKrmr28
+         6hoq4BmibTgOfHztj5DVAqoNdzUOpqdxsOxr8VoTXC8nxUsfrOnViNC8u5ukqizPAN8f
+         /k2gFPX/SsPRcOxwlt/9lCTv64YdOzqldzOHss489HQsapBc6NOqlG7OMLDjtK2LgAd9
+         DCN9UanEVbZwUmayijzAVHDey71o0anhYi0DQ9uZGV3QEu5aI1n1XVF+CQ3rbWjW+KMY
+         z/pevge0RlLdwIQADVOW/maTSUbtkPNt44tucVOOlBCzoYIKHQ6O4Hs8bSTiEQeftjUE
+         NC7Q==
+X-Gm-Message-State: AOAM531W7BOB+Gl6nc66MqwKns9Z7FswsfTHsF2NWKmiM9FQymYo+ccN
+        ur0j/RJh1QETRICgO/nCMERkHOSIgAsgTw==
+X-Google-Smtp-Source: ABdhPJzTE5+VGJOGUwIi1qPaDuwSup1l//5XOyctZXnyZ9GawFq6e9W2jOBXgHjuX8b7Z+rWXkdiXA==
+X-Received: by 2002:a17:907:2d29:b0:6fe:c413:d9a4 with SMTP id gs41-20020a1709072d2900b006fec413d9a4mr45213290ejc.694.1654078181748;
+        Wed, 01 Jun 2022 03:09:41 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id i22-20020a05640200d600b0042dcf600231sm721466edu.41.2022.06.01.03.09.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jun 2022 03:09:41 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nwLIK-00172g-Ki;
+        Wed, 01 Jun 2022 12:09:40 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/2] merge-ort: fix small memory leak in
+ detect_and_process_renames()
+Date:   Wed, 01 Jun 2022 12:00:25 +0200
+References: <pull.1152.git.1645290601.gitgitgadget@gmail.com>
+ <pull.1152.v2.git.1645320591.gitgitgadget@gmail.com>
+ <f1f7fc97fe2fe5079365bb91c71fb7033378995d.1645320592.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <f1f7fc97fe2fe5079365bb91c71fb7033378995d.1645320592.git.gitgitgadget@gmail.com>
+Message-ID: <220601.86h7541yqj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: softwareag.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR02MB5635.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2cd327a9-04b1-467e-450e-08da43b67e70
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2022 10:07:11.0586
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: d9662eb9-ad98-4e74-a8a2-04ed5d544db6
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /qQaz2lF8k9aH6e+QxTjtfxCjSf2Yq0JCb7lHGLcTp7opHx8C9kigYhzjdc2e9kbP/CKOUetB8DUoOuqoPXgSA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB5221
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGV5IFBoaWxpcCwNCg0KVGhhbmtzIGZvciB0aGUgcmVzcG9uc2UhDQoNCj4gLi4uIGhvd2V2ZXIs
-IGlmIEkgcmVtZW1iZXIgdGhlIGRlc2lnbiBkaXNjdXNzaW9uIGNvcnJlY3RseSwgbm9ybWFsaXNh
-dGlvbiB3YXMgZGVjaWRlZCB0byBiZSBqdXN0IHRoZSBjb252ZXJzaW9uIG9mIHRoZSBXaW5kb3dz
-IHN0eWxlIEVPTCA9IGBcclxuYCB0byB0aGUgTGludXgvKm5peCBzdHlsZSBFT0wgPWBcbmAsIGFu
-ZCBhbnkgb3RoZXIgY2hhcmFjdGVycw0KPiAodXRmOCAvIGFzY2lpIGJ5dGVzKSB3ZXJlIHRvIGJl
-IHVuY2hhbmdlZCwgaW5jbHVkaW5nIHJhbmRvbSAnXHInDQo+IGNoYXJhY3RlcnMuIFNvIGluIHRo
-YXQgcmVzcGVjdCBJIHRoaW5rIGl0IGlzIHdvcmtpbmcgYXMgaW5pdGlhbGx5IGRlc2lnbmVkLg0K
-DQpUaGlzIG1ha2VzIHNlbnNlLg0KDQo+IERvIHlvdSBoYXZlIGFueSBpbmZvcm1hdGlvbiBvbiBo
-b3cgdGhlIG1peGVkIEVPTCBzdHlsZXMgKGV4dHJhIFxyIGV0YykgY2FtZSBhYm91dD8NCg0KSSB3
-aXNoIEkga25ldyBob3cgdGhpcyBmaWxlIGNhbWUgYWJvdXQsIGJ1dCB0aGUgcGVvcGxlIHRoYXQg
-cHV0IHRoZXNlIGZpbGVzIGluIG91ciBWQ1MgaGF2ZSBsb25nIGxlZnQuIEkgc3VzcGVjdCBzb21l
-IGJyb2tlbiBnZW5lcmF0aW9uIHRvb2wuDQoNCj4gU2hvdWxkIHRob3NlIGV4dHJhIFxyIGNoYXJh
-Y3RlcnMgYWxzbyBiZSBzZXBhcmF0ZSBFT0xzPyAoYW5kIGhvdyB0bw0KPiBkZWNpZGUuLj8pDQoN
-Ck1vc3QgdG9vbGluZyBJIHVzZSBzZWVtcyB0byBkbyB0aGlzLCBidXQgSSBhZ3JlZSB0aGF0IHRo
-aXMgaXMgYW4gYW1iaWd1b3VzIHRvcGljLg0KDQo+IEFyZSB0aGUgZG9jcyBtaXNzaW5nIGFueXRo
-aW5nIHRoYXQgd291bGQgaGF2ZSBoZWxwZWQgY2xhcmlmeSB0aGUgaXNzdWUgZWFybGllcj8NCg0K
-QSBicmllZiBub3RlIG9uIHRoZSBsaW1pdGF0aW9ucyBvZiByZW5vcm1hbGl6YXRpb24gbWlnaHQg
-aGF2ZSBwcm92ZW4gaGVscGZ1bCAtIGluIHBhcnRpY3VsYXIsIHRoZSBiaXQgdGhhdCB0cmlwcGVk
-IG1lIHVwIHdhcyB0aGUgcmVxdWlyZW1lbnQgdG8gcmVtb3ZlIGFuZCByZXN0b3JlIHRoZSBmaWxl
-cyBmcm9tIHRoZSBHaXQgcmVwb3NpdG9yeSBpdHNlbGYuIEl0IHdhc24ndCBvYnZpb3VzIHRvIG1l
-IHRoYXQgdGhpcyB3b3VsZCBoYXZlIGFueSBpbXBhY3Qgb24gcmVub3JtYWxpemF0aW9uLiBBZGRp
-dGlvbmFsbHksIGEgbm90ZSBhYm91dCB0aGUgcmVzdHJpY3Rpb24gb24gY29udmVydGluZyBvbmx5
-IFxyXG4gdG8gXG4gbWlnaHQgYWxzbyBoYXZlIHByb3ZlbiB1c2VmdWwuDQoNClRoYW5rcywNCkJl
-dmFuDQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IFBoaWxpcCBPYWtsZXkg
-PHBoaWxpcG9ha2xleUBpZWUuZW1haWw+DQpTZW50OiAzMSBNYXkgMjAyMiAyMjoxMg0KVG86IFBo
-aWxpcCwgQmV2YW4gPEJldmFuLlBoaWxpcEBzb2Z0d2FyZWFnLmNvbT47IGdpdEB2Z2VyLmtlcm5l
-bC5vcmcNClN1YmplY3Q6IFJlOiBGaWxlcyB3aXRoIFxyXG5cbiBsaW5lIGVuZGluZ3MgY2FuIHJl
-c3VsdCBpbiBuZWVkaW5nIHRvIHJlbm9ybWFsaXplIHR3aWNlLCBhZnRlciBkZWxldGluZyBjaGVj
-a2VkIG91dCBmaWxlIGFuZCByZXN0b3JpbmcgZnJvbSByZXBvDQoNCk9uIDMxLzA1LzIwMjIgMTU6
-MjQsIFBoaWxpcCwgQmV2YW4gd3JvdGU6DQo+IEhlbGxvIGFsbCwNCj4NCj4gSSd2ZSBleHBlcmll
-bmNlZCBhbiBvZGQgYnVnL2xpbWl0YXRpb24gd2l0aCBgZ2l0IGFkZCAtLXJlbm9ybWFsaXplYCwg
-cmVxdWlyaW5nIG1lIHRvIHJ1biB0aGUgY29tbWFuZCB0d2ljZSBvbiBhIHNwZWNpZmljIGZpbGUu
-IEhlcmUgaXMgYSBidWcgcmVwb3J0Lg0KPg0KPiBXaGF0IGRpZCB5b3UgZG8gYmVmb3JlIHRoZSBi
-dWcgaGFwcGVuZWQ/IChTdGVwcyB0byByZXByb2R1Y2UgeW91cg0KPiBpc3N1ZSkNCj4NCj4gIyEv
-YmluL2Jhc2ggLXgNCj4gcHJpbnRmICJUZXN0XFxyXFxyXFxuVGVzdCBBbm90aGVyIExpbmVcXHJc
-XHJcXG5GaW5hbA0KPiBMaW5lXFxyXFxyXFxuXFxyXFxyXFxuIiA+IGdpdC5iZGYgcHJpbnRmICIq
-IHRleHQ9YXV0b1xcbiouYmRmIHRleHQiID4NCj4gLmdpdGF0dHJpYnV0ZXMgbWtkaXIgdGVzdDEg
-Y2QgdGVzdDEgZ2l0IGluaXQgY3AgLi4vZ2l0LmJkZiAuDQo+IGdpdCBhZGQgLg0KPiBnaXQgc3Rh
-dHVzDQo+IGdpdCBjb21taXQgLW0gIkFkZCBmaWxlIGdpdC5iZGYiDQo+IGNwIC4uLy5naXRhdHRy
-aWJ1dGVzIC4NCj4gZ2l0IGFkZCAuZ2l0YXR0cmlidXRlcw0KPiBnaXQgYWRkIC0tcmVub3JtYWxp
-emUgLg0KPiBnaXQgc3RhdHVzDQo+IGdpdCBjb21taXQgLW0gIlJlbm9ybWFsaXplIGdpdC5iZGYi
-DQo+IGdpdCBhZGQgLS1yZW5vcm1hbGl6ZSAuDQo+IGdpdCBzdGF0dXMNCj4gcm0gZ2l0LmJkZg0K
-PiBnaXQgcmVzdG9yZSAuDQo+IGdpdCBhZGQgLS1yZW5vcm1hbGl6ZSAuDQo+IGdpdCBzdGF0dXMN
-Cj4NCj4gV2hhdCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBiZWhhdmlvcikg
-T25seSBuZWVkaW5nIHRvDQo+IHJlbm9ybWFsaXplIHRoZSBmaWxlIG9uY2UuDQoNClRoYXQgc291
-bmRzIGxpa2UgYW4gb2J2aW91cyBleHBlY3RhdGlvbiwgLi4uDQo+IFdoYXQgaGFwcGVuZWQgaW5z
-dGVhZD8gKEFjdHVhbCBiZWhhdmlvcikgUmVub3JtYWxpemUgdGhlIGZpbGUgb25jZSwNCj4gdGhl
-biByZW5vcm1hbGl6ZSBhZ2FpbiBhZnRlciBkZWxldGluZyB0aGUgZmlsZSB0aGF0IGlzIGNoZWNr
-ZWQgb3V0IG9uIGRpc2sgYW5kIHJlc3RvcmluZyBpdCBmcm9tIHRoZSBvYmplY3Qgc3RvcmVkIHdp
-dGhpbiB0aGUgR2l0IHJlcG8uDQo+DQo+IFdoYXQncyBkaWZmZXJlbnQgYmV0d2VlbiB3aGF0IHlv
-dSBleHBlY3RlZCBhbmQgd2hhdCBhY3R1YWxseSBoYXBwZW5lZD8NCj4gTmVlZGVkIHRvIHJ1biB0
-aGUgcmVub3JtYWxpemUgc3RlcCBhZ2FpbiwgYWZ0ZXIgZGVsZXRpbmcgdGhlIGZpbGUgY2hlY2tl
-ZCBvdXQgb24gZGlzayBhbmQgcmVzdG9yaW5nIHRoZSBmaWxlIGZyb20gdGhlIG9iamVjdCBzdG9y
-ZWQgd2l0aGluIHRoZSBHaXQgcmVwby4NCj4NCj4gQW55dGhpbmcgZWxzZSB5b3Ugd2FudCB0byBh
-ZGQ6DQo+IFRoaXMgb25seSBvY2N1cnMgZm9yIGZpbGVzIHdpdGggXHJcclxuIGxpbmUgZW5kaW5n
-cyAoYW5kIHBvc3NpYmx5IGFsc28NCj4gZW5kaW5nIHRoZSBmaWxlIHdpdGggXHJcclxuXHJcbikN
-Cg0KLi4uIGhvd2V2ZXIsIGlmIEkgcmVtZW1iZXIgdGhlIGRlc2lnbiBkaXNjdXNzaW9uIGNvcnJl
-Y3RseSwgbm9ybWFsaXNhdGlvbiB3YXMgZGVjaWRlZCB0byBiZSBqdXN0IHRoZSBjb252ZXJzaW9u
-IG9mIHRoZSBXaW5kb3dzIHN0eWxlIEVPTCA9IGBcclxuYCB0byB0aGUgTGludXgvKm5peCBzdHls
-ZSBFT0wgPWBcbmAsIGFuZCBhbnkgb3RoZXIgY2hhcmFjdGVycw0KKHV0ZjggLyBhc2NpaSBieXRl
-cykgd2VyZSB0byBiZSB1bmNoYW5nZWQsIGluY2x1ZGluZyByYW5kb20gJ1xyJw0KY2hhcmFjdGVy
-cy4gU28gaW4gdGhhdCByZXNwZWN0IEkgdGhpbmsgaXQgaXMgd29ya2luZyBhcyBpbml0aWFsbHkg
-ZGVzaWduZWQuDQoNCj4gVGhlIGZpbGUgaXMgaW4gdGhyZWUgc3RhdGVzOg0KPiAtIEluaXRpYWwg
-c3RhdGU6IFxyXHJcbiBsaW5lIGVuZGluZ3Mgd2l0aGluIEdpdCBvYmplY3QNCj4gLSBJbml0aWFs
-IHJlbm9ybWFsaXphdGlvbiBzdGF0ZTogXHJcbiBsaW5lIGVuZGluZ3Mgd2l0aGluIEdpdCBvYmpl
-Y3QNCj4gLSBTZWNvbmQgcmVub3JtYWxpemF0aW9uIHN0YXRlOiBcbiBsaW5lIGVuZGluZ3Mgd2l0
-aGluIEdpdCBvYmplY3QNCj4NCj4gSGFwcGVucyBvbiBib3RoIFdpbmRvd3MgYW5kIExpbnV4IChy
-ZXBsaWNhdGVkIG9uIGEgZnJlc2ggaW5zdGFsbCBvZiBHaXQgZm9yIFdpbmRvd3Mgd2l0aGluIFdp
-bmRvd3MgU2FuZGJveCkuIEFkZGl0aW9uYWxseSwgdGVzdGVkIHdpdGggYG5leHRgIHRydW5rIG9u
-IExpbnV4Lg0KPiBTeXN0ZW0gaW5mbyBpcyBmb3IgYSBXaW5kb3dzIGJ1aWxkIHdoZXJlIGl0IGRv
-ZXMgaGFwcGVuLg0KPg0KPiBEaXJlY3RvcnksIGFuZCBmaWxlIG5hbWVzIHNob3VsZCBiZSBpcnJl
-bGV2YW50Lg0KPg0KPiBXZSBlbmNvdW50ZXJlZCB0aGlzIG5hdHVyYWxseSwgd2l0aCBzb21lIGZp
-bGVzIHdpdGhpbiBhIFNWTiByZXBvIHdlJ3JlIG1pZ3JhdGluZy4NCg0KRG8geW91IGhhdmUgYW55
-IGluZm9ybWF0aW9uIG9uIGhvdyB0aGUgbWl4ZWQgRU9MIHN0eWxlcyAoZXh0cmEgXHIgZXRjKSBj
-YW1lIGFib3V0Pw0KU2hvdWxkIHRob3NlIGV4dHJhIFxyIGNoYXJhY3RlcnMgYWxzbyBiZSBzZXBh
-cmF0ZSBFT0xzPyAoYW5kIGhvdyB0bw0KZGVjaWRlLi4/KQ0KQXJlIHRoZSBkb2NzIG1pc3Npbmcg
-YW55dGhpbmcgdGhhdCB3b3VsZCBoYXZlIGhlbHBlZCBjbGFyaWZ5IHRoZSBpc3N1ZSBlYXJsaWVy
-Pw0KPg0KPiBbU3lzdGVtIEluZm9dDQo+IGdpdCB2ZXJzaW9uOg0KPiBnaXQgdmVyc2lvbiAyLjM2
-LjEud2luZG93cy4xDQo+IGNwdTogeDg2XzY0DQo+IGJ1aWx0IGZyb20gY29tbWl0OiBlMmZmNjhh
-MmQxNDI2NzU4Yzc4ZDAyM2Y4NjNiZmExZTAzY2JjNzY4DQo+IHNpemVvZi1sb25nOiA0DQo+IHNp
-emVvZi1zaXplX3Q6IDgNCj4gc2hlbGwtcGF0aDogL2Jpbi9zaA0KPiBmZWF0dXJlOiBmc21vbml0
-b3ItLWRhZW1vbg0KPiB1bmFtZTogV2luZG93cyAxMC4wIDE5MDQzDQo+IGNvbXBpbGVyIGluZm86
-IGdudWM6IDExLjMNCj4gbGliYyBpbmZvOiBubyBsaWJjIGluZm9ybWF0aW9uIGF2YWlsYWJsZSAk
-U0hFTEwgKHR5cGljYWxseSwNCj4gaW50ZXJhY3RpdmUgc2hlbGwpOiA8dW5zZXQ+DQo+DQo+DQot
-LQ0KUGhpbGlwDQpUaGlzIGNvbW11bmljYXRpb24gY29udGFpbnMgaW5mb3JtYXRpb24gd2hpY2gg
-aXMgY29uZmlkZW50aWFsIGFuZCBtYXkgYWxzbyBiZSBwcml2aWxlZ2VkLiBJdCBpcyBmb3IgdGhl
-IGV4Y2x1c2l2ZSB1c2Ugb2YgdGhlIGludGVuZGVkIHJlY2lwaWVudChzKS4gSWYgeW91IGFyZSBu
-b3QgdGhlIGludGVuZGVkIHJlY2lwaWVudChzKSwgcGxlYXNlIG5vdGUgdGhhdCBhbnkgZGlzdHJp
-YnV0aW9uLCBjb3B5aW5nLCBvciB1c2Ugb2YgdGhpcyBjb21tdW5pY2F0aW9uIG9yIHRoZSBpbmZv
-cm1hdGlvbiBpbiBpdCwgaXMgc3RyaWN0bHkgcHJvaGliaXRlZC4gSWYgeW91IGhhdmUgcmVjZWl2
-ZWQgdGhpcyBjb21tdW5pY2F0aW9uIGluIGVycm9yIHBsZWFzZSBub3RpZnkgdXMgYnkgZS1tYWls
-IGFuZCB0aGVuIGRlbGV0ZSB0aGUgZS1tYWlsIGFuZCBhbnkgY29waWVzIG9mIGl0Lg0KU29mdHdh
-cmUgQUcgKFVLKSBMaW1pdGVkIFJlZ2lzdGVyZWQgaW4gRW5nbGFuZCAmIFdhbGVzIDEzMTA3NDAg
-LSBodHRwOi8vd3d3LnNvZnR3YXJlYWcuY29tL3VrDQo=
+
+On Sun, Feb 20 2022, Elijah Newren via GitGitGadget wrote:
+
+> From: Elijah Newren <newren@gmail.com>
+>
+> detect_and_process_renames() detects renames on both sides of history
+> and then combines these into a single diff_queue_struct.  The combined
+> diff_queue_struct needs to be able to hold the renames found on either
+> side, and since it knows the (maximum) size it needs, it pre-emptively
+> grows the array to the appropriate size:
+>
+> 	ALLOC_GROW(combined.queue,
+> 		   renames->pairs[1].nr + renames->pairs[2].nr,
+> 		   combined.alloc);
+>
+> It then collects the items from each side:
+>
+> 	collect_renames(opt, &combined, MERGE_SIDE1, ...)
+> 	collect_renames(opt, &combined, MERGE_SIDE2, ...)
+>
+> Note, though, that collect_renames() sometimes determines that some
+> pairs are unnecessary and does not include them in the combined array.
+> When it is done, detect_and_process_renames() frees this memory:
+>
+> 	if (combined.nr) {
+>                 ...
+> 		free(combined.queue);
+>         }
+>
+> The problem is that sometimes even when there are pairs, none of them
+> are necessary.  Instead of checking combined.nr, just remove the
+> if-check; free() knows to skip NULL pointers.  This change fixes the
+> following memory leak, as reported by valgrind:
+>
+> =3D=3DPID=3D=3D 192 bytes in 1 blocks are definitely lost in loss record =
+107 of 134
+> =3D=3DPID=3D=3D    at 0xADDRESS: malloc
+> =3D=3DPID=3D=3D    by 0xADDRESS: realloc
+> =3D=3DPID=3D=3D    by 0xADDRESS: xrealloc (wrapper.c:126)
+> =3D=3DPID=3D=3D    by 0xADDRESS: detect_and_process_renames (merge-ort.c:=
+3134)
+> =3D=3DPID=3D=3D    by 0xADDRESS: merge_ort_nonrecursive_internal (merge-o=
+rt.c:4610)
+> =3D=3DPID=3D=3D    by 0xADDRESS: merge_ort_internal (merge-ort.c:4709)
+> =3D=3DPID=3D=3D    by 0xADDRESS: merge_incore_recursive (merge-ort.c:4760)
+> =3D=3DPID=3D=3D    by 0xADDRESS: merge_ort_recursive (merge-ort-wrappers.=
+c:57)
+> =3D=3DPID=3D=3D    by 0xADDRESS: try_merge_strategy (merge.c:753)
+> =3D=3DPID=3D=3D    by 0xADDRESS: cmd_merge (merge.c:1676)
+> =3D=3DPID=3D=3D    by 0xADDRESS: run_builtin (git.c:461)
+> =3D=3DPID=3D=3D    by 0xADDRESS: handle_builtin (git.c:713)
+> =3D=3DPID=3D=3D    by 0xADDRESS: run_argv (git.c:780)
+> =3D=3DPID=3D=3D    by 0xADDRESS: cmd_main (git.c:911)
+> =3D=3DPID=3D=3D    by 0xADDRESS: main (common-main.c:52)
+>
+> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  merge-ort.c | 15 +++++----------
+>  1 file changed, 5 insertions(+), 10 deletions(-)
+>
+> diff --git a/merge-ort.c b/merge-ort.c
+> index d85b1cd99e9..3d7f9feb6f7 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -3086,12 +3086,11 @@ static int detect_and_process_renames(struct merg=
+e_options *opt,
+>  				      struct tree *side1,
+>  				      struct tree *side2)
+>  {
+> -	struct diff_queue_struct combined;
+> +	struct diff_queue_struct combined =3D { 0 };
+>  	struct rename_info *renames =3D &opt->priv->renames;
+> -	int need_dir_renames, s, clean =3D 1;
+> +	int need_dir_renames, s, i, clean =3D 1;
+>  	unsigned detection_run =3D 0;
+>=20=20
+> -	memset(&combined, 0, sizeof(combined));
+>  	if (!possible_renames(renames))
+>  		goto cleanup;
+>=20=20
+> @@ -3175,13 +3174,9 @@ simple_cleanup:
+>  		free(renames->pairs[s].queue);
+>  		DIFF_QUEUE_CLEAR(&renames->pairs[s]);
+>  	}
+> -	if (combined.nr) {
+> -		int i;
+> -		for (i =3D 0; i < combined.nr; i++)
+> -			pool_diff_free_filepair(&opt->priv->pool,
+> -						combined.queue[i]);
+> -		free(combined.queue);
+> -	}
+> +	for (i =3D 0; i < combined.nr; i++)
+> +		pool_diff_free_filepair(&opt->priv->pool, combined.queue[i]);
+> +	free(combined.queue);
+>=20=20
+>  	return clean;
+>  }
+
