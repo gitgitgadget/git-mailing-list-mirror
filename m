@@ -2,130 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C02FCC433EF
-	for <git@archiver.kernel.org>; Tue, 31 May 2022 23:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FF29C433F5
+	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 00:14:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348638AbiEaXMo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 May 2022 19:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46374 "EHLO
+        id S1343957AbiFAAOJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 May 2022 20:14:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348629AbiEaXMl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 May 2022 19:12:41 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CEB58FF9C
-        for <git@vger.kernel.org>; Tue, 31 May 2022 16:12:40 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id q7so21456wrg.5
-        for <git@vger.kernel.org>; Tue, 31 May 2022 16:12:40 -0700 (PDT)
+        with ESMTP id S244193AbiFAAOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 May 2022 20:14:05 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEEF7286D0
+        for <git@vger.kernel.org>; Tue, 31 May 2022 17:14:03 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id y15-20020a17090a16cf00b001e03ac27c30so213386pje.5
+        for <git@vger.kernel.org>; Tue, 31 May 2022 17:14:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=3ibAYxxmwqdF47KI1epRuVZR6ZM02+XIW9ONctatoZk=;
-        b=L2P2CttkPIPJNCGM40Y5NwHqQijDaxuqGBDUIRQHZe/rN4WVyuQlFGkDMoLNIMt9Cj
-         Q00Fy1pgcpmRjXe3gsz2ZR7aIHFBQpArnDRq9uEqa0UwQygV0+Vhec3VBVDV155rDEVx
-         Z4+xQYp/MXnt4M1mdOvcFtH8qqbGhzXm4KDzCUA0R/nqbM8rySLtKVR8fI9RceXN13nI
-         IEJ8v7WGbQPadhIHGGWC8EJ3VVtOSNeS3720tQBoa0AMn+VMyezwXOFYsSBUXBwfkPQ0
-         TbwIIgTRLP0YGSFsjmyCy0Ln9lXn+pF/vWHXHeUwxPouUdltbUZzUxaW+MUN8GRRklYe
-         HtIg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=9NRnEVJTtyZ9tbcoI4dOnCnw+gf7h1p3+2+F8DEx650=;
+        b=L92iQohJqBrU8RNZRFkpdFSBcNRL8v+K0nA9AkKOGiWisK7ZBcIsIB5Khr3XAA5KtA
+         vL0bQ9ZU+Uq7quYhlOh3S7U23DJUQBeLTvIK/aKpYE2PJd7So8f8U+8oGkv0t68Tiy5i
+         7ryQIzOGJvWyI8NvO1eQuLtJKLhqPO2h/alFVMXa8MuZcHMUwy2eXrRkBatsyzygOqxg
+         gwVnaS6btWxzVCNdCFvxKbRE2W6PvkIwMyO70ff52b7pbAlIR99WwhpCrgcxkFBXFdCg
+         LgbEU6CXTZGS84z3MIBM/JYLhZ/58MokE+grcC5vbaTxpNRpSMHgwhBGUAZheA28Zpje
+         cT1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3ibAYxxmwqdF47KI1epRuVZR6ZM02+XIW9ONctatoZk=;
-        b=C56JGQy08gaQfDm0CPCCn7wObMusTEwdVII2cwTZPPXYmHkWRP63PGz9UfJUQFj0UA
-         3MrJZn+FmUiak4lplyMOjVE2kNGk0V4LinrPV9UgHKaZSZbZDgFMDzEyJ1949dnVSsoM
-         pKEkPhfIF4oU/ELgbN5Y9RakOnBuEGSDOBAHIyz/pmSfjAm1aOeRGULrZ25v18BfpLEQ
-         qEFC1qhHuJlA+VmJ64kuGOd3cnrL0wLjznkoF+lvpwz56FvGWxVNGUoXsCFn2vQUIql1
-         xoFEcdUgrPbO1uvxAUmEGUK22XHnryyw65VjlN/Pt7MBwSO29u1DjEL7yQG6v781amZc
-         F0fA==
-X-Gm-Message-State: AOAM531k+mZicDNJJ9BL6P3P+NJIt6HQbVRmSJVdCcpwUnyEDxhNPhWj
-        Rqb/ua3LiaGfxKtcExPMIwHFIixlsBk=
-X-Google-Smtp-Source: ABdhPJzQrMstw27rXp3YLCN8hZyeLVQovEHL4Z3btGXsBMlULc3rDtmiqdsGv4o8ehkE8I8wXiK6WA==
-X-Received: by 2002:a05:6000:1e0a:b0:210:32e1:3b03 with SMTP id bj10-20020a0560001e0a00b0021032e13b03mr11256766wrb.642.1654038758796;
-        Tue, 31 May 2022 16:12:38 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l9-20020a7bc349000000b0039746638d6esm102739wmj.33.2022.05.31.16.12.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 16:12:38 -0700 (PDT)
-Message-Id: <f947cf221c0b5320d0b7438b88a0d94a5bd3a70b.1654038754.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1273.git.git.1654038754.gitgitgadget@gmail.com>
-References: <pull.1273.git.git.1654038754.gitgitgadget@gmail.com>
-From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 31 May 2022 23:12:34 +0000
-Subject: [PATCH 2/2] remote.c: reject 0-length branch names
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        "Ing. Martin Prantl Ph.D." <perry@ntis.zcu.cz>,
-        Glen Choo <chooglen@google.com>,
-        Glen Choo <chooglen@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=9NRnEVJTtyZ9tbcoI4dOnCnw+gf7h1p3+2+F8DEx650=;
+        b=IN8ODJGe5GTE3QgUew/JEDk3Jo/72tNHCvb4GSijUGwxHsEhRmi9oVC64h9K5UKr0f
+         JWS+G9MdimI/X/57ir0luA1Dy7u3Mqu4IPswnlE0BmO9a63qUwAgWuDbzVRMIPO1HqbW
+         uoOy9kkcTKB+ZAGFtcQFkaj6RpHMK/V/iEXNvxFm63MlCI2ILEYuhErFPrXS/zXm+3Rk
+         rVuy1KIzHJ2Q4qsd+VgeUM2rq9i+J21Gp+IDpRj9OFu4/dUYW3AoGwiCnIWk66669L+G
+         zQL8y2zPwNb4ZGkVneUGlHn7ZSz1EWNdD26c9bVrR+sU0UfWiZq3X9GWodgCQhZ1bm19
+         SzyQ==
+X-Gm-Message-State: AOAM530UaUpZOn1ko34sRZhHrYxSLJgt31GGZyqsKjJzzxQnDklrI6k6
+        KXoF9EAytHAROHNDdV99WI3tw0XPNWq4FA==
+X-Google-Smtp-Source: ABdhPJx0LC12SA2M+uGaGD9dEnnphCT5ucIqLLyySo9late9lHWLvCxqLzlxorzKUv5wVpDesVbnrCk59GXW5A==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:2389:b0:518:be44:f3c8 with SMTP
+ id f9-20020a056a00238900b00518be44f3c8mr40633443pfc.8.1654042443109; Tue, 31
+ May 2022 17:14:03 -0700 (PDT)
+Date:   Tue, 31 May 2022 17:13:54 -0700
+In-Reply-To: <eb2d8ce45e556afd81216746f190bc5c883cdb81.camel@xlumurb.eu>
+Message-Id: <kl6lleuhdyv1.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <eb2d8ce45e556afd81216746f190bc5c883cdb81.camel@xlumurb.eu>
+Subject: Re: git pull --recurse-submodules wipes uncommitted submodule changes
+ without warning
+From:   Glen Choo <chooglen@google.com>
+To:     Guillaume Girol <symphorien@xlumurb.eu>, git@vger.kernel.org
+Cc:     Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Glen Choo <chooglen@google.com>
 
-Branch names can't be empty, so config keys with an empty branch name,
-e.g. "branch..remote", are silently ignored.
+Thanks for the report!
 
-Since these config keys will never be useful, make it a fatal error when
-remote.c finds a key that starts with "branch." and has an empty
-subsection.
+Guillaume Girol <symphorien@xlumurb.eu> writes:
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- remote.c              |  4 ++++
- t/t5516-fetch-push.sh | 12 +++++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+> What did you do before the bug happened? (Steps to reproduce your
+> issue)
+>
+> The repository has a submodule bar.
+> In the current checkout, bar has new commits, but this is not commited:
+>
+> ----------------------------
+>
+> $ git status
+> On branch master
+> Your branch is behind 'origin/master' by 1 commit, and can be fast-
+> forwarded.
+>   (use "git pull" to update your local branch)
+>
+> Changes not staged for commit:
+>   (use "git add <file>..." to update what will be committed)
+>   (use "git restore <file>..." to discard changes in working directory)
+> 	modified:   bar (new commits)
+>
+> Untracked files:
+>   (use "git add <file>..." to include in what will be committed)
+> 	git-bugreport-2022-05-31-2142.txt
+>
+> no changes added to commit (use "git add" and/or "git commit -a")
+>
+> ----------------------------
+>
+> There is one commit to pull. It affects a file in the superproject, but
+> not the submodule.
+>
+> The issue arises with:
+>
+> $ git pull --recurse-submodule=on-demand --no-rebase
+>
+> What did you expect to happen? (Expected behavior)
+>
+> The file affected by the pulled commit is modified, but the submodule
+> is left untouched.
+> The output of git status should look like:
+>
+> ----------------------------
+>
+> $ git status
+> On branch master
+> Your branch up to date with 'origin/master'.
+>
+> Changes not staged for commit:
+>   (use "git add <file>..." to update what will be committed)
+>   (use "git restore <file>..." to discard changes in working directory)
+> 	modified:   bar (new commits)
+>
+> Untracked files:
+>   (use "git add <file>..." to include in what will be committed)
+> 	git-bugreport-2022-05-31-2142.txt
+>
+> no changes added to commit (use "git add" and/or "git commit -a")
+>
+> ----------------------------
+>
+> What happened instead? (Actual behavior)
+>
+> --------------------------
+>
+> $  git pull --recurse-submodule=on-demand --no-rebase
+> Updating 67627dd..80f5c51
+> Fast-forward
+>  foo | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> Submodule path 'bar': checked out
+> 'ef3c0711fedca48b0b43aadfd01b7bb94b519a13'
+>
+> $  git status
+> On branch master
+> Your branch is up to date with 'origin/master'.
+>
+> Untracked files:
+>   (use "git add <file>..." to include in what will be committed)
+> 	git-bugreport-2022-05-31-2142.txt
+>
+> nothing added to commit but untracked files present (use "git add" to
+> track)
+>
+> -----------------------
+>
+> my uncommitted changes to the submodule have been wiped, and the commit
+> of the pulled revision was checked out.
 
-diff --git a/remote.c b/remote.c
-index cf7015ae8ab..a3888dd789c 100644
---- a/remote.c
-+++ b/remote.c
-@@ -352,8 +352,12 @@ static int handle_config(const char *key, const char *value, void *cb)
- 	struct remote_state *remote_state = cb;
- 
- 	if (parse_config_key(key, "branch", &name, &namelen, &subkey) >= 0) {
-+		/* There is no subsection. */
- 		if (!name)
- 			return 0;
-+		/* There is a subsection, but it is empty. */
-+		if (!namelen)
-+			return -1;
- 		branch = make_branch(remote_state, name, namelen);
- 		if (!strcmp(subkey, "remote")) {
- 			return git_config_string(&branch->remote_name, key, value);
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index a05268952e9..e99c31f8c35 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -598,13 +598,23 @@ test_expect_success 'branch.*.pushremote config order is irrelevant' '
- 	check_push_result two_repo $the_commit heads/main
- '
- 
--test_expect_success 'push ignores empty branch name entries' '
-+test_expect_success 'push rejects empty branch name entries' '
- 	mk_test one_repo heads/main &&
- 	test_config remote.one.url one_repo &&
- 	test_config branch..remote one &&
- 	test_config branch..merge refs/heads/ &&
- 	test_config branch.main.remote one &&
- 	test_config branch.main.merge refs/heads/main &&
-+	test_must_fail git push 2>err &&
-+	grep "bad config variable .branch\.\." err
-+'
-+
-+test_expect_success 'push ignores "branch." config without subsection' '
-+	mk_test one_repo heads/main &&
-+	test_config remote.one.url one_repo &&
-+	test_config branch.autoSetupMerge true &&
-+	test_config branch.main.remote one &&
-+	test_config branch.main.merge refs/heads/main &&
- 	git push
- '
- 
--- 
-gitgitgadget
+This is very clear, thank you.
+
+So basically, because you made a commit in your submodule but did not
+commit it back to the superproject, you have 'uncommitted changes'. When
+doing "git pull --recurse-submodules", you expect your 'uncommitted
+changes' to be left alone, but instead, your submodule has now checked
+out an older version.
+
+i.e. your starting state and desired end state is:
+
+  superproject                submodule 
+  B (origin/master)           D (HEAD)
+  | \                         |
+  |  \                        |
+  |   ---------               |
+  |            \              |
+  A (master) ---------------- C
+
+Where you had submodule commit D checked out and it stays checked out.
+
+However your actual end state is:
+
+  superproject                submodule 
+  B (origin/master)           D
+  | \                         |
+  |  \                        |
+  |   ---------               |
+  |            \              |
+  A (master) ---------------- C (HEAD)
+
+where you've checked out submodule commit C, and submodule commit D has
+been 'abandoned'.
+
+"checkout --recurse-submodules" is known to abandon commits in a similar
+way; the same thing can happen if you had done "git fetch && git
+checkout --recurse-submodules origin/master". This is because we only
+check for uncommitted changes in the _submodule_, even though the
+submodule itself is not committed to the superproject.
+
+But oddly enough, "pull --recurse-submodules" actually abandons the
+commits in a _different_ way. After fetching (recursively) and merging
+(non-recursively), "git pull" updates the submodules using "git
+submodule update --recursive --checkout". This makes each submodule do a
+"git checkout <version in merged superproject commit>" (in the example
+above, this is commit C). This obviously doesn't actually merge
+anything, and presumably we only do this because we want to update the
+submodule working tree at the end of "git pull" (see
+t/t5572-pull-submodule.sh for examples of how this works).
+
+One way we _might_ be able fix this is to teach "git submodule update"
+to notice if the submodule has changed and to abort the checkout if so
+(maybe the option could be named --no-abandon?)
+
+> Anything else you want to add:
+>
+> git pull is able to detect conflicts on submodules, so why not non-
+> conflicts on submodules?
+
+IIUC, part of the problem is that we do a very basic job of merging
+submodules:
+
+- we check to if the two superproject commits point to the same
+  submodule commit
+- if they are the same, there is no conflict
+- if they are different, there is a merge conflict
+
+In your case, the submodule is not changed (both superproject commits
+point to submodule commit C), so there is no merge conflict.
+
+I don't see why we couldn't tighten up our submodule conflict detection
+though. This is like a fast-forward/two-way merge, but when we do a
+two-way merge, we also check the index to make sure we don't abandon any
+local changes. We could do the same for submodules to make sure we don't
+abandon any new submodule commits.
+
+What's nice about this idea is that we might be able to reuse this
+two-way merge logic to teach "git checkout" not to abandon submodule
+commits.
