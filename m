@@ -2,139 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 061E3C433EF
-	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 14:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82217CCA473
+	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 15:03:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353434AbiFAOtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jun 2022 10:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37420 "EHLO
+        id S1354089AbiFAPDJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jun 2022 11:03:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233844AbiFAOtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jun 2022 10:49:40 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCD835DBFA
-        for <git@vger.kernel.org>; Wed,  1 Jun 2022 07:49:38 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id b8so2512988edf.11
-        for <git@vger.kernel.org>; Wed, 01 Jun 2022 07:49:38 -0700 (PDT)
+        with ESMTP id S231872AbiFAPDG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jun 2022 11:03:06 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC5B03ED3A
+        for <git@vger.kernel.org>; Wed,  1 Jun 2022 08:03:04 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 67-20020a1c1946000000b00397382b44f4so1256473wmz.2
+        for <git@vger.kernel.org>; Wed, 01 Jun 2022 08:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=rttvl6QHLs1ZkUoiwb1j5YXscFnYjaEC+46PYb7oOO8=;
-        b=GQD//tWIwrnI3UUIJrBkVLjnOPNof56LaHk027Q9Vzcvc/S2Aeo8WWytdY8oqpyXmQ
-         d/7FczpgJCbU0K/6zzupDhcAke8OXYDcW9JDW/kg8D+vD4wNfthcw6mN4tU9yfmVNn15
-         JkyQwfIgGph7GGO8KcgbStvxsrXsH5BdOemEdYi4sf73IzYk90sSqKog2HHEvoLOC48g
-         F9SzIi0+0kkOLkXuewyOUPmv4Ct1JGiO313QM5GkmTtp8eZaP70PcUS03FfhdmoYh2EX
-         yG7i2vDwFfra8jx0SdlhGFc20RiRkT0QByAcwK19yKdLP51+bO9Sy2K/6O271BnkNzac
-         IX4Q==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=W9r7bmOuLC3snhqvNbJ45RjzouQIa0buIhPBpOqVqxo=;
+        b=PpBi0URbZhHrbGdZ2nz92Otuk2bycGZGuwDXaubNI03156ltWjBCt5T8PNwL1w4X40
+         ZhHTEZkmQfkYNrOydKUqCfOzwmNTHfnW1XGqSIw1VWTFDlqAf/GvbBr/1eKNaCkX69l9
+         evcYlRiWCLhtGUE5rogJWXrEEeVyOITp0j2Qa1PRD/dQRa24HWT+3/BUFossrNxxX6Zj
+         o2IjQkd4HeObfMU/VwCY2BuuutiR2dmlye7yVq7GrLJTiBT2pFFnIBYRpNTF0r4E/T1A
+         7ebAKan1+/9kgilCQrDgSoRjtVPn3U20FCPuoapwJUo/TFgpqfcXWK3A0GGwIFi64mvw
+         Rg+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=rttvl6QHLs1ZkUoiwb1j5YXscFnYjaEC+46PYb7oOO8=;
-        b=MVpZuc9zutZltemth6OkUSOKXCXgBc+kld8vkyK65ChqcztgFxfno4/iUJ6NfQBZ7C
-         9NOevFY1ikhcnm1AymQSp13Y265b7pIiwb+D5MgWLBhWF/9ILPWtP4/1bR5DeeCPf3/8
-         IuQgr3dFh2tNpGP9FJrBAcUuf/WDmJrfy3SJF78x55Lu0WGspXE5DBzUlUlK9jX/iJot
-         v/9S0YmTpxxElFJojWwAWF3pOaApkfltRf3ZYaUZU3j+gpaE6p8r8mX3q9T7+AmzI2K9
-         RnQigDkxnv+7GrdDSsreAWkRWvZnn44CzoJVovziY9SmGbYzNJci217dmsn0LCWdi+kw
-         jkDw==
-X-Gm-Message-State: AOAM531knxc9CfpMkMmCZ5Em5/bMMzGWKiL4hjlDpmChYWSO1emgDiRx
-        68Ah+Y+8obTxVm6mbZTHG8Ul1db4v3dxDQ==
-X-Google-Smtp-Source: ABdhPJzKVOHZ+D/SSuXKmiD1AYPDVjTECSJZTh0JpbRgQ17jo7Vy/F/4MzJHOtcZDdocpQsJSvYTjA==
-X-Received: by 2002:a05:6402:1941:b0:413:2555:53e3 with SMTP id f1-20020a056402194100b00413255553e3mr74855edz.164.1654094977292;
-        Wed, 01 Jun 2022 07:49:37 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id a23-20020aa7cf17000000b0042dc882c823sm1114089edy.70.2022.06.01.07.49.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 07:49:36 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nwPfD-001ECV-KD;
-        Wed, 01 Jun 2022 16:49:35 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Joakim Petersen <joak-pet@online.no>
-Cc:     git@vger.kernel.org, Justin Donnelly <justinrdonnelly@gmail.com>
-Subject: Re: [RFC PATCH] git-prompt: make colourization consistent
-Date:   Wed, 01 Jun 2022 16:47:46 +0200
-References: <20220601134414.66825-1-joak-pet@online.no>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220601134414.66825-1-joak-pet@online.no>
-Message-ID: <220601.864k141ls0.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=W9r7bmOuLC3snhqvNbJ45RjzouQIa0buIhPBpOqVqxo=;
+        b=Cn6Q39s0+VAP8qKfzGYxkDnIUs9Nz4rETAIVvVU4gom0kKKj+M59eVUZQU3WGbqZuX
+         XUUfO0uQY/GkubSbIqaBFO0KVksnJdlQTZqGqATVg+pSwUCgE8JTaI/+C3nvFhb4Z/hU
+         MZFC821fdNLkO84/CFECaFZXFmb6ubV+AMHawJ4JDKL0C0TTfcOpvlqN4ykstML41Sop
+         Ok3vuYPgaEOT+1I0bYR0uqZYdiKaO8qKPmogQ5HFsP9b+ZmZicr7KgNjZpnnjJ5JWqC8
+         AYt7wi6rFcyJ0bPwMEaVjEfrWOUKmIIK11isbTYrV+E1f6H6FR2Cnmv+R4vcFLf+BWMY
+         Rj+g==
+X-Gm-Message-State: AOAM532wz8KDH92y7X0sqqk6Sv7i+0j1+E05SUY+ytUheo75sVi07lIG
+        J/EPL06R7BDZvD4t8CV6Hg0=
+X-Google-Smtp-Source: ABdhPJwDlrZ5ko7bmADv2mI8y5FVK3OTeRDKLiypo96PxseJhpYYXnrR4w7ky6w0uI5nuaW2/dLVCA==
+X-Received: by 2002:a05:600c:1ca9:b0:397:55d1:de81 with SMTP id k41-20020a05600c1ca900b0039755d1de81mr29230475wms.175.1654095783160;
+        Wed, 01 Jun 2022 08:03:03 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id d7-20020a5d4f87000000b0020ffa2799f4sm1743680wru.73.2022.06.01.08.03.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jun 2022 08:03:02 -0700 (PDT)
+Message-ID: <c0635170-5a52-c426-8231-d7291a79fa2c@gmail.com>
+Date:   Wed, 1 Jun 2022 16:03:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3] revert: optionally refer to commit in the "reference"
+ format
+Content-Language: en-GB-large
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <xmqqsfp2b30k.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2205231507350.352@tvgsbejvaqbjf.bet>
+ <xmqq35gzn9vk.fsf@gitster.g> <xmqq8rqn7buk.fsf_-_@gitster.g>
+ <479d97af-eef1-ce86-19f7-afcc0e6ecf30@gmail.com> <xmqqfskpuh2w.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqfskpuh2w.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio
 
-On Wed, Jun 01 2022, Joakim Petersen wrote:
+On 01/06/2022 05:45, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> I think the changes to the template message are good. We're still
+>> adding "--reference" as a valid option to cherry-pick though which I
+>> don't think is a good idea (though in the future we may want to allow
+>> "cherry-pick -x --reference")
+> 
+> I love when people notice mistakes that the original author and
+> other people missed, many eyes making all bugs shallow.
+> 
+> I am inclined to apply the following on top.  How does it look?
 
-> The short upstream state indicator inherits the colour of the last short
-> state indicator before it (if there is one), and the sparsity state
-> indicator inherits this colour as well. Make the colourization of these
-> state indicators consistent by clearing any colour before printing the
-> short upstream state indicator, as this immediately follows the last
-> coloured indicator.
->
-> Signed-off-by: Joakim Petersen <joak-pet@online.no>
+It looks good to me.
+
+Best Wishes
+
+Phillip
+
+> Thanks.
+> 
+> ----- >8 --------- >8 --------- >8 --------- >8 -----
+> Subject: [PATCH] revert: --reference should apply only to 'revert', not 'cherry-pick'
+> 
+> As 'revert' and 'cherry-pick' share a lot of code, it is easy to
+> modify the behaviour of one command and inadvertently affect the
+> other.  An earlier change to teach the '--reference' option and the
+> 'revert.reference' configuration variable to the former was not
+> careful enough and 'cherry-pick --reference' wasn't rejected as an
+> error.
+> 
+> It is possible to think 'cherry-pick -x' might benefit from the
+> '--reference' option, but it is fundamentally different from
+> 'revert' in at least two ways to make it questionable:
+> 
+>   - 'revert' names a commit that is ancestor of the resulting commit,
+>     so an abbreviated object name with human readable title is
+>     sufficient to identify the named commit uniquely without using
+>     the full object name.  On the other hand, 'cherry-pick'
+>     usually [*] picks a commit that is not an ancestor.  It might be
+>     even picking a private commit that never becomes part of the
+>     public history.
+> 
+>   - The whole commit message of 'cherry-pick' is a copy of the
+>     original commit, and there is nothing gained to repeat only the
+>     title part on 'cherry-picked from' message.
+> 
+> [*] well, you could revert and then you can pick the original that
+>      was reverted to get back to where you were, but then you can
+>      revert the revert to do the same thing.
+> 
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
-> As of 0ec7c23cdc6bde5af3039c59e21507adf7579a99, colourization of the
-> output of __git_ps1 has changed such that the short upstream state
-> indicator inherits the colour of the last short state indicator before
-> it (if there is one), while before this change it was white/the default
-> text colour. Some examples of what I mean are (assuming all indicators
-> are enabled):
->  * If the local tree is clean and there is something in the stash, both
->    the '$' and the short upstream state indicator following it will be
->    blue.
->  * If the local tree has new, untracked files, both the '%' and the
->    short upstream state indicator will be red.
->  * If all local changes are added to the index and the stash is empty,
->    both the '+' and the short upstream state indicator following it will
->    be green.
->  * If the local tree is clean and there is nothing in the stash, the
->    short upstream state indicator will be white/${default text colour}.
->
-> This appears to be an unintended side-effect of the change, and makes
-> little sense semantically (e.g. why is it bad to be in sync with
-> upstream when you have uncommitted local changes?). The cause of the
-> change is that previously, the short upstream state indicator appeared
-> immediately after the rebase/revert/bisect/merge state indicator, which
-> is prepended with the clear colour code, while it now follows the
-> sequence of colourized indicators, without any clearing of colour.
-> However, adding a clearing of colour before the short upstream state
-> indicator will change how the sparsity state indicator is colourized,
-> as it currently inherits (and before the change referenced also
-> inherited) the colour of the last short state indicator before it.
-> Reading the commit message of the change that introduced the sparsity
-> state indicator, it appears this colourization also was unintended.
->
->  contrib/completion/git-prompt.sh | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 87b2b916c0..dfd6cef35f 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -286,6 +286,7 @@ __git_ps1_colorize_gitstring ()
->  	if [ -n "$u" ]; then
->  		u="$bad_color$u"
->  	fi
-> +	p="$c_clear$p"
->  	r="$c_clear$r"
->  }
->  
->
-> base-commit: e54793a95afeea1e10de1e5ad7eab914e7416250
-
-This seems to make sense to me, but I haven't looked deeply into it. But
-let's CC the author of 0ec7c23cdc6 (git-prompt: make upstream state
-indicator location consistent, 2022-02-27) (which I've done here).
-
-For a non-RFC patch I think a rephrasing of most of what yo uhave below
-"--" should be part of the message. Note how I referred to the
-0ec... commit above, you should reference the commit like that (see
-SubmittingPatches).
-
-Thanks for working on this fix!
- 
+>   builtin/revert.c              | 9 +++++++--
+>   sequencer.c                   | 2 +-
+>   t/t3501-revert-cherry-pick.sh | 6 ++++++
+>   3 files changed, 14 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index ada51e46b9..f84c253f4c 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -116,8 +116,6 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>   			N_("option for merge strategy"), option_parse_x),
+>   		{ OPTION_STRING, 'S', "gpg-sign", &opts->gpg_sign, N_("key-id"),
+>   		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> -		OPT_BOOL(0, "reference", &opts->commit_use_reference,
+> -			 N_("use the 'reference' format to refer to commits")),
+>   		OPT_END()
+>   	};
+>   	struct option *options = base_options;
+> @@ -132,6 +130,13 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>   			OPT_END(),
+>   		};
+>   		options = parse_options_concat(options, cp_extra);
+> +	} else if (opts->action == REPLAY_REVERT) {
+> +		struct option cp_extra[] = {
+> +			OPT_BOOL(0, "reference", &opts->commit_use_reference,
+> +				 N_("use the 'reference' format to refer to commits")),
+> +			OPT_END(),
+> +		};
+> +		options = parse_options_concat(options, cp_extra);
+>   	}
+>   
+>   	argc = parse_options(argc, argv, NULL, options, usage_str,
+> diff --git a/sequencer.c b/sequencer.c
+> index 96fec6ef6d..4b66a1f79c 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -221,7 +221,7 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
+>   		return ret;
+>   	}
+>   
+> -	if (!strcmp(k, "revert.reference"))
+> +	if (opts->action == REPLAY_REVERT && !strcmp(k, "revert.reference"))
+>   		opts->commit_use_reference = git_config_bool(k, v);
+>   
+>   	status = git_gpg_config(k, v, NULL);
+> diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+> index a386ae9e88..fb4466599b 100755
+> --- a/t/t3501-revert-cherry-pick.sh
+> +++ b/t/t3501-revert-cherry-pick.sh
+> @@ -205,4 +205,10 @@ test_expect_success 'identification of reverted commit (revert.reference)' '
+>   	test_cmp expect actual
+>   '
+>   
+> +test_expect_success 'cherry-pick is unaware of --reference (for now)' '
+> +	test_when_finished "git reset --hard" &&
+> +	test_must_fail git cherry-pick --reference HEAD 2>actual &&
+> +	grep "^usage: git cherry-pick" actual
+> +'
+> +
+>   test_done
