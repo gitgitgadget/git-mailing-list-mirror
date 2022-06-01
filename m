@@ -2,70 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C377C43334
-	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 21:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66568C433EF
+	for <git@archiver.kernel.org>; Wed,  1 Jun 2022 21:52:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231754AbiFAVk0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jun 2022 17:40:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36906 "EHLO
+        id S231964AbiFAVwz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jun 2022 17:52:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231710AbiFAVkY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jun 2022 17:40:24 -0400
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C058D5D183
-        for <git@vger.kernel.org>; Wed,  1 Jun 2022 14:40:23 -0700 (PDT)
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        with ESMTP id S231799AbiFAVwx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jun 2022 17:52:53 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAADB1C929
+        for <git@vger.kernel.org>; Wed,  1 Jun 2022 14:52:51 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58D0D1A8681;
+        Wed,  1 Jun 2022 17:52:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=cK8g7l6iklA4
+        Zyv49AGT+TO8xBepRV7/83gVBdnv/v4=; b=oPg7nzy++bQ1oZoGg12Wlk1s7Lcu
+        cGqQ1StNx3gATr85Atzkc5WhmiK7bTu0lxq/yjmuCihWMHdLqzI8bkWkAzE8ogUP
+        p9cej5sAiHW1qAPxV46xSCQCSjM25OGXiC4QVTL5+lSbmXbJZ+lapaditSGzs8Mf
+        TgtxXx+w1dFCvkI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 510411A8680;
+        Wed,  1 Jun 2022 17:52:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 835A63F5EE
-        for <git@vger.kernel.org>; Wed,  1 Jun 2022 21:40:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1654119621;
-        bh=dGb1MAgWhycV59e3Ov0gYSbnOS6Q24rTaywdrSt6fc4=;
-        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-         To:Cc:Content-Type;
-        b=phQRTfqn5ktYS4EyUpHjuz4nsOnOxbinillK8U0keqvBKGO4yGJ6GkXjNy+t1vRRY
-         B2O0eWiMYGz+RaZhQ7vXUgNEPyMkeDg8JSwZlsalfkoRjiewDKJMsIXpu3A/fqLh1q
-         CtQXI/ejnPMttJEjx5yb7tlXMLkZpy/WVcc5373O2N9XSJd8gwd1EgdBm6vwT6WSSx
-         kw4yMMXKtzojAKTxbYB6y02GWAtHH6wKJXFuoAf7VJ6DHjZqkDwkxDf1JZCM5wbBed
-         2zmc0QZl19VjKxqL/rgDwNTunjkxTqUG/MOdKbbbv0eFdhWiZCUgPIbU2Ap3c9XChs
-         0LS/TJMtwH+ug==
-Received: by mail-oo1-f71.google.com with SMTP id z81-20020a4a4954000000b0040eafb31c81so1570199ooa.18
-        for <git@vger.kernel.org>; Wed, 01 Jun 2022 14:40:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dGb1MAgWhycV59e3Ov0gYSbnOS6Q24rTaywdrSt6fc4=;
-        b=6W6f1bbnHOkRXBwlYcGltUr4o+ndm7aXxj0VGoE0bbv/WD/rjBgHGRA7Mj3R3k1kww
-         HHSBuDn4ZyYoUT9yU9BiPpjyBgknnyPMKCLluhPg2/iZNgfH9RbWR9480IzmOpKM+6mK
-         6lk1I/ntJWiMuGeUnvvr683C7XalFUitwh3pbud77rqvaYdbCEpFYigExx0kAQ4bnlD/
-         94P7LWPJM/fxWNVpvWZAvbfSjwSxe5YtltN9fGJP99B9uhfbrYz49WiX7NRvgiGLnrv1
-         VZGA6kxiosQ/hu+NyQMz3oYuOVTK1GwA0MU7FZKoUYex8O9QFy9U2xX8UG0FSSMQtCsX
-         fZ7Q==
-X-Gm-Message-State: AOAM533KnCIR8jhY0MfYxShaab47wKgFgtT3SXXOLb6NlymAPqEUnRag
-        4QWDcWIWw7wD0no7PUSmfU6W4QdTnPbHg0y1YGOMUKda8ReHdoS2reqndJ3jaVVrPF81nKDw+UQ
-        CasSsVEDsC+LZ+hewIZhRJD0vPhRCphQCjEIZtfN8dY3KSg==
-X-Received: by 2002:a05:6870:1686:b0:f4:2cf8:77b3 with SMTP id j6-20020a056870168600b000f42cf877b3mr990888oae.210.1654119620135;
-        Wed, 01 Jun 2022 14:40:20 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxPLG4ri5pJTiREQRl0HqwU7ICuDpS4BtDpIUpG1IT3DSkWbq0MqNUljVR3qaF5NqkL/yZKrc9GdvR6hvLSMW8=
-X-Received: by 2002:a05:6870:1686:b0:f4:2cf8:77b3 with SMTP id
- j6-20020a056870168600b000f42cf877b3mr990883oae.210.1654119620016; Wed, 01 Jun
- 2022 14:40:20 -0700 (PDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7BD011A867A;
+        Wed,  1 Jun 2022 17:52:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3] revert: optionally refer to commit in the
+ "reference" format
+References: <xmqqsfp2b30k.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2205231507350.352@tvgsbejvaqbjf.bet>
+        <xmqq35gzn9vk.fsf@gitster.g> <xmqq8rqn7buk.fsf_-_@gitster.g>
+        <220601.86zgiwz9uk.gmgdl@evledraar.gmail.com>
+Date:   Wed, 01 Jun 2022 14:52:46 -0700
+In-Reply-To: <220601.86zgiwz9uk.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 01 Jun 2022 17:14:41 +0200")
+Message-ID: <xmqqmtewoxu9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAJ=HsVKX-NXePKU1G0UKRcFT5He8AjS_TQEirb3hN3chGFz9TA@mail.gmail.com>
- <xmqq4k14qe9g.fsf@gitster.g>
-In-Reply-To: <xmqq4k14qe9g.fsf@gitster.g>
-From:   Mark Esler <mark.esler@canonical.com>
-Date:   Wed, 1 Jun 2022 16:40:09 -0500
-Message-ID: <CAJ=HsV+DEP6WqyBpQq8ACsMM-KixN9-JRAMXNjML8AcjWosChA@mail.gmail.com>
-Subject: Re: CVE-2022-24975
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2CB99442-E1F5-11EC-B003-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Junio!
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> I think a good solution to that would be to e.g. emit:
+>
+>     # *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
+>
+>     Reverts commit <git reference>
+>
+>     This revert of a merge reverts changes made to <git reference 2>.
+>
+> Instead of what you have, which is:
+>
+>     # *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
+>
+>     This reverts commit <git reference>, reversing
+>     changes made to <git reference 2>.
+>
+> It's sharing a bit less code between the two, but I think the message i=
+s
+> suffering for it now.
+
+We shouldn't be making it inconvenient for our primary intended
+audience.
+
+The real first line is designed to be usable without editing for
+them.  Those who forgets to write the title and ends up with "This
+reverts ..." as the title can still identify such a commit for the
+purpose of "rebase -i" and "commit --fixup", and that is good enough
+for them.
+
+But your version will force the intended audience to remove the
+"Reverts ..." line, that strikes the balance at the wrong place.
+
+>> +test_expect_success 'identification of reverted commit (revert.refere=
+nce)' '
+>> +	git checkout --detach to-ident &&
+>> +	git -c revert.reference=3Dtrue revert --no-edit HEAD &&
+>> +	git cat-file commit HEAD >actual.raw &&
+>> +	grep "^This reverts " actual.raw >actual &&
+>> +	echo "This reverts commit $(git show -s --pretty=3Dreference HEAD^).=
+" >expect &&
+>> +	test_cmp expect actual
+>
+> Also (probably mentioned) I'd find this much easier to read/review if i=
+t
+> was using test_cmp, now you need to carefully parse the code to see wha=
+t
+> the outputs are like exactly, but if we compared the full output...
+
+We are using test_cmp.  'actual' has what we care about (i.e. what
+does the line that begin with "This reverts " say?) and compares it
+with what we expect to see in 'expect'.
