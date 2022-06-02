@@ -2,134 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62263C43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 13:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CFAEC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 13:28:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235118AbiFBNSU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 09:18:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34126 "EHLO
+        id S235320AbiFBN2i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 09:28:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231612AbiFBNST (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 09:18:19 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 114BA1E2241
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 06:18:18 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id y12so4756447ior.7
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 06:18:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PJJoHMTe9GlFPMrKhBsZftllvkQlvS8+STd0SlbLpFk=;
-        b=LbK3k7mIp33ETBGJ++4Sy0ISC1FTUhUOQ6l7MQnau3zlYdL8rdB6wXPsgNi8wZg0oe
-         P9mirM9q9Pe8PfwsfEO+qIPSM2btDwDeBoIodmRdmGmc+GXXrJHl0BqNdl4zKnIfjUE2
-         UC81TbEryHumFB7J6r5f1BdwsGwF70d6UVUvmIWBsifMiQAHUVkkzMIQ5ipLLRV6HhZK
-         mldJdDoc5V0D23cJBx29KfNtZ6T4M5LIKktPgOPP4PCLnrhuiesICSJ5qon/G358eGiu
-         m3+AIhjftwSv/5s0zAGJ+b8VsStE9NTZTchOQWvkXdWeREQ3jhF0ps8wqFWI26f0NIwM
-         IQ/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=PJJoHMTe9GlFPMrKhBsZftllvkQlvS8+STd0SlbLpFk=;
-        b=OLkPMXIcP8tKsz7orwc1GVlj4u/SZhmv5BXPBoHkZs6ctioP8xba+t9c1AH7ciCDXj
-         dpHHldMeq3d49BA5oM5OpOQfrCUnzQGP5Llm3cLuiUcDHEC0l2XzfJxAwopi9sEULKH9
-         LsdlXMoO8jOjI0vYHmMohEokmxreJLQ0VyUvq0lttWO0FFCV8jEvE4/ZaM0HqkO8zXz5
-         VQED68YzmBsOYCOhsZCjNlTNvqSs/1YVGNF7Am46BrH1xTOOfQiKV6zlfpUsQhgLIHvr
-         BSVPNNTlzMHB6iyjEF1kUZC+FmZCK922QcRwUYXCx2V7ecWRJnP2HxsVNhVtvfhtLZI5
-         P4/w==
-X-Gm-Message-State: AOAM5326AppTsI644GIA4qt2s3nWIVtTMy/tfEvfCA3wPS9DnrIyqflr
-        W1EjXUHwFBELuZpfjdWOS5QW+yS6oPNW
-X-Google-Smtp-Source: ABdhPJwTnZyDszz9BUfCpfvaH17ZMzrRH4WL61GNelneeQMVi4wsPW6hNRa3CiPZ6IOH1d9QLX/O0A==
-X-Received: by 2002:a05:6638:338f:b0:330:f1e9:c1cd with SMTP id h15-20020a056638338f00b00330f1e9c1cdmr2934003jav.260.1654175897487;
-        Thu, 02 Jun 2022 06:18:17 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:9cc9:fda3:3ddf:6700? ([2600:1700:e72:80a0:9cc9:fda3:3ddf:6700])
-        by smtp.gmail.com with ESMTPSA id s8-20020a92ae08000000b002d149ec2606sm1353526ilh.65.2022.06.02.06.18.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jun 2022 06:18:17 -0700 (PDT)
-Message-ID: <3873f70e-0dd6-e469-5d0e-0f6847136f0a@github.com>
-Date:   Thu, 2 Jun 2022 09:18:16 -0400
+        with ESMTP id S231926AbiFBN2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 09:28:37 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C6C31523
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 06:28:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1654176511;
+        bh=+UyErzQTrqWMPmOEbiCImctI/0MT8P3QqwtzL7RNMq8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FYZ9oGzTxhVp2qF9xjnu5dGLrGnCzIVSabqI7fl+6Tnuu/pS5ssYOlWjxq45YilYh
+         BodsDMsopI+DY5GRyGZ8Iq15mInZT0Zvcy6/Wy8O17DC0J13ARAHkaGHMFCdE/jVrW
+         dSJx19Mf7axGVeJaHmECYdsrdrSj+gcmylCjJg4k=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.206.165] ([89.1.212.145]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtwUw-1ndyy31AJI-00uGbq; Thu, 02
+ Jun 2022 15:28:31 +0200
+Date:   Thu, 2 Jun 2022 15:28:29 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Benedek Kozma <cyberbeni@gmail.com>
+cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: Bug: fsmonitor--daemon doesn't pick up submodule changes
+In-Reply-To: <CAN8jHOhn+tNn2cR7X_fPyyLF-ADiScD2gymKY9H2ZFb+UdkJSw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2206021525430.349@tvgsbejvaqbjf.bet>
+References: <CAN8jHOhn+tNn2cR7X_fPyyLF-ADiScD2gymKY9H2ZFb+UdkJSw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 5/5] upload-pack: make uploadpack.packObjectsHook
- protected
-Content-Language: en-US
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>
-References: <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com>
- <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com>
- <e25d5907cd1e3894f19ffbfb3310175fd660563b.1653685761.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <e25d5907cd1e3894f19ffbfb3310175fd660563b.1653685761.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7sNFCVEqRzpeOLPU2lHUp6hyvo+5L4W1OxYd+TyBQdaoFtdBp+a
+ nVYKqUsvli4b6/Jji1Gy5+ni9Zh3qJcdR1MYM7ZCkozNZCRTFdGzgrv3KLAj5WFdlPDibSY
+ IL9GguDmRYHw2AujN5ZUP3P7rmqkZhdjAi2SLMi7fGhhsyoBmIt+Q34PlLyvswDmHYFKZbN
+ nTCVoX4BSvKSGX3rqh0qQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HNobJUudNtQ=:n3LoIB1otvyxKvi320gHW2
+ tbpaKbTEdO8qOb649rYyaLiGdWQ/rAnZFsxfUERAobiPtOK8ouczWx4LQ7PtQiSQMmgeSmBKm
+ CmKx6boMsCZsqRE4n1MKIpQuT0lUv92Cpk+DMdXD1NXfM1It0UJpwRgtvYrzQSho+K0Wyj6zf
+ 1HBbJQqagPFeOlBIbCsDbFiz6NVKRYtkylcLL0QDTvq8FkCfqoqRQMf7dOimzB+DgvRkBzDcn
+ XJn9mzqUd6fJVoc9VkR7Qr4mDUXvxb/jcCs9QTQJOor4txjbC/71fCYNEx1ZWz23nkWR7fi9j
+ R2QupJuNDy0VsE1yZdjTZkJtHcZKxCaVG0U2rBlsqc+1XapkIoe0/D+Euq/v3TvfIOVzJxYMX
+ JoRMDseh6hgoMRki9+kQU/ucInf057xwUYLk75dYVkzuen74dfV2gxd2D0GLJnCgp+8DgcUtR
+ 4HYl0t1efjdTqivo461kC0T0I2za3oPOnEyv7kZLB7HSv02C8QwI/DxvTXkJg7f+VV9ZY+XwC
+ WMHV5AqNo7ihvIoPRefkarF+z80wXV8SXIyywb6FkEQFz1zYBkpNjEhtV/S8rQO6ZnH/DhyGI
+ uYpDopycpjkf/W8JShd/mJ90K87rBjWc/UOHB4dLvpgK5aq9HGysrNEEV2aciFzJrKVLIealp
+ pJmtPc96Q3iQPKbXdrDrHj3pp2Ei+oUxzvj9LG5xxW1AYu7kW742etHpGtJx6c9gykphfQcbP
+ 26sQRHTmPUBPqZDrsTKmUCuoeSU7GUiHXPav/nhZznlp4SBVqaqrO/3KujC0/AtBuJR76DsDq
+ +vE8OdBqSdKuF2dlokaC8MUHItVu5fWFz/x2yyEQY6SGn7fBlz0stcsgnGpKjOIk3IWqgnU+M
+ jZ1hWbbLlfrWD/ok4bjSuspvB5cNn/ZfBb3Y2hylxafJGw3QySnHFHlshKPNs22MrITgUf8zU
+ NVPC5GOLDngwb/1QGP9dl/BoWLhWDisvwSNzoJakm4zQUf3ai8ye5m+DPUheO5W6/K2tReXY/
+ 0y3FZoUXAgJnqkmw960jyLf496b3/KeAMtTkWBJDNyYpVVJ29KChOJDFBAKnnq5IawLvY1EyU
+ colhkFxtic1rFT6Vhk7wKJNMlIXFORRAwkpQuh7BikvWz9CigEgstuj+Q==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/27/2022 5:09 PM, Glen Choo via GitGitGadget wrote:
-> From: Glen Choo <chooglen@google.com>
-> 
-> Now that protected config includes "-c", "uploadpack.packObjectsHook"
-> behaves identically to a 'Protected config only' variable. Refactor it
-> to use git_protected_config() and mark it 'Protected config only'.
+Hi Benedek,
 
-I'm really glad to see this simplification at the end of your series.
+On Tue, 31 May 2022, Benedek Kozma wrote:
 
-> @@ -1321,18 +1321,21 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
->  		data->advertise_sid = git_config_bool(var, value);
->  	}
->  
-> -	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
-> -	    current_config_scope() != CONFIG_SCOPE_WORKTREE) {
-> -		if (!strcmp("uploadpack.packobjectshook", var))
-> -			return git_config_string(&data->pack_objects_hook, var, value);
-> -	}
-> -
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> git status
+> cd submodule
+> git checkout origin/HEAD
+> cd ..
+> git status
+>
+> What did you expect to happen? (Expected behavior)
+> the second git status showing that a submodule changed
+>
+> What happened instead? (Actual behavior)
+> second git status also shows up to date
 
-...
+I believe that this should be fixed by one of the active FSMonitor patches
+that are lined up for getting merged into Git:
+https://lore.kernel.org/git/d0c8fecd1a0d622b1a6cce0aa79fdcdc2771db1d.16536=
+01644.git.gitgitgadget@gmail.com/
 
-> +static int upload_pack_protected_config(const char *var, const char *value, void *cb_data)
-> +{
-> +	struct upload_pack_data *data = cb_data;
-> +
-> +	if (!strcmp("uploadpack.packobjectshook", var))
-> +		return git_config_string(&data->pack_objects_hook, var, value);
-> +	return 0;
-> +}
-> +
-
-This is much cleaner.
-
-> @@ -1342,6 +1345,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
->  	upload_pack_data_init(&data);
->  
->  	git_config(upload_pack_config, &data);
-> +	git_protected_config(upload_pack_protected_config, &data);
->  
->  	data.stateless_rpc = stateless_rpc;
->  	data.timeout = timeout;
-> @@ -1697,6 +1701,7 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
->  	data.use_sideband = LARGE_PACKET_MAX;
->  
->  	git_config(upload_pack_config, &data);
-> +	git_protected_config(upload_pack_protected_config, &data);
-
-It's unfortunate that there are two places that need this change.
-Is it worth adding a static helper that executes these?
-
-static void get_upload_pack_config(void *data)
-{
-	git_config(upload_pack_config, data);
-	git_protected_config(upload_pack_protected_config, data);
-}
+Do you have a setup where you could apply this patch and build Git so that
+you can verify whether this fixes the bug you reported?
 
 Thanks,
--Stolee
+Johannes
