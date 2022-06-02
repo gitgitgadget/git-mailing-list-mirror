@@ -2,92 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8DC1C433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 09:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EDCBC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 09:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232330AbiFBJFr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 05:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34314 "EHLO
+        id S232754AbiFBJFs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 05:05:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232757AbiFBJFk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 05:05:40 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17A112A80E7
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 02:05:39 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id u8so1260709wrm.13
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 02:05:39 -0700 (PDT)
+        with ESMTP id S231613AbiFBJFm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 05:05:42 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F51C2A80F1
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 02:05:40 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id q7so5596988wrg.5
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 02:05:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=onpJG5WJdt6yyY5S7KFY6puYCw2HAgTbSYrtdL8/h9s=;
-        b=RhTYUkvH2xVczuj713wfiEFUPLKX21eX444IpypC2hu3uzyx88mO917Em4Q/dbfMul
-         RRNOy2c/75/wsWEz2+0c+oIYrNdJJFakqE0E/81KEnNmsCQhD6pr1F4TmbZ27q/JJpVC
-         4nuiB6+7ZBQ58bK5k7x1G7q9INQ/WxUVbmwXbf7lGL3WUH9bOwzWYOTkp7rrt3eGBswx
-         ZKXAfMSPQ53KE1imWrc2wYBndjGjcxUwPIvkkip3dYmqWG3LjcZaWVblEM4AwlrmiUjF
-         i/A9JmRtOqCAypzCi4qneY6wJTcCGnUpJJ/Ol9NyuGe08RoT7Qm8LQb9fcywhj0QIhfG
-         XS/g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cCiB9TBHF350f1MiVfzAb5UnlPREDQAdUy45fCto+Bk=;
+        b=Ejkojn43JqR3w3XCMMcKHBv8L7IE7MAjziXd1p8ejr46jDDocVtiZPQgP+RuKP9jyO
+         c/MjdPpGK3FcCFbX+oUr9vHJzrNzV1oHuI/0sKOd1jqgxoLUTyIJMOLQb5aDevAdk/tD
+         K5TluvsN+9WH92lYTDAZVKPJnUq/idTMsdIwN2O7Irc5HPGl3MWz0b1j/B9zvCOT4YHL
+         8gLJdluS8D4Cp+MJDHOU3ZW/i9l3Jx2eH6bJTADXGU6qi2SfS2oiWZffrgzTLl30JxD0
+         0nHCZTOkq3tUIykoPqISsp2wcMfcrn++KvuTiL48zlPiAMvqMNpHFb+tu1zg6MPEDH7p
+         ZsLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=onpJG5WJdt6yyY5S7KFY6puYCw2HAgTbSYrtdL8/h9s=;
-        b=hfsmPQ3Cq7LAf6n2TZBFh9Xal8mbsEB7CC3A+aAIO8B3ujzUOTXSy2d//PZO3/ib/S
-         r1sA163CBaN4oQVa5/6j+N0WRF+s+kyE8jTqMuVMEgrLhBk4PJGu/L0SqdfZaJ10auYZ
-         998upJ0nncLodbdaQX3+sWiJgDdIO8UUxFWzcrYbrhWcHzFNb4ooYN1Z1z98jsql9sfw
-         ZvB+H+WRLvFkt9PF/vcTdMTRUBzgsRdYcsLR9XgKMYsjeQJEAMKSz/Y85MjvW0TUM+H2
-         e014sUpRopQ57Sx7+A2pfzgMVSGYu+MFHSzGFr5o4E0USbxLyjQL97V0nBlrY2PQBVl6
-         OzgA==
-X-Gm-Message-State: AOAM531RtZF1W7NkuocFcq5muVuB3wISTFoQl6nPYKq0LtwtJZMDEL6i
-        24Qt56t+SJOZAsz5kNB5SubttiVrHjg=
-X-Google-Smtp-Source: ABdhPJyK+xIlN1sDkva/H3uvwAg3w4keqeGluM+GLOjL0hAGtG37h4M18/N5V6q0IyIIiM22BjyhhA==
-X-Received: by 2002:a5d:6091:0:b0:210:3e16:c600 with SMTP id w17-20020a5d6091000000b002103e16c600mr2714037wrt.456.1654160737121;
-        Thu, 02 Jun 2022 02:05:37 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=cCiB9TBHF350f1MiVfzAb5UnlPREDQAdUy45fCto+Bk=;
+        b=daM0nyGBOpLVMM846gFAFkqtQX2zVPARj1IUWZCiWA+L2eQJICW8dVCX5TVCqill1O
+         ff1SzZxlroTiOLN3iD6BcZMaRAjUOhWh7w1zBSJV3tHTV03rWD7bROK6tYJWHz8jKYS0
+         ST2HLVSvDLdiSsgpcktOmppMzl4aJyT9cZ1l+kirrGC4LGEq2YvQ0PcKsOLSmE4J/44T
+         FhFn8VpPi+pQkNz4IfHzkCooAQV4R7vs1JwmXah5HcDS3+rIooYSitN6TZ3K9mdYGObd
+         ybg8/xp+ip//N/QJqkwWwyjdIBdrXTq7TltWxsQyGYMOBvBzFGWdMrR38M7om2r0bJpr
+         6PlA==
+X-Gm-Message-State: AOAM530WgI3epuhWnKMYjuRrtBvRYaGJDlG4fjm6WFVCbEQbxOppb7Yw
+        jNfp4sanpUZcMQ3zjYc/j06WYTyuTC4=
+X-Google-Smtp-Source: ABdhPJxjADynnKXABDa/i0IofrRg9zEt14FhaCPl7b2nZpSspQJNNL7q50WanQrIOngphuAV2XXjkQ==
+X-Received: by 2002:a05:6000:1f19:b0:20f:ff31:7f38 with SMTP id bv25-20020a0560001f1900b0020fff317f38mr2816718wrb.496.1654160738505;
+        Thu, 02 Jun 2022 02:05:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m15-20020a05600c3b0f00b003974ca9fa6dsm10555114wms.2.2022.06.02.02.05.35
+        by smtp.gmail.com with ESMTPSA id l13-20020a05600c4f0d00b0039c3055a63dsm1295617wmq.36.2022.06.02.02.05.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 02:05:36 -0700 (PDT)
-Message-Id: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+        Thu, 02 Jun 2022 02:05:37 -0700 (PDT)
+Message-Id: <c155cadfa309e856f13ea7d005870dab706a74ce.1654160735.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+References: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 02 Jun 2022 09:05:33 +0000
-Subject: [PATCH 0/2] Integrate Scalar into the CI builds
+Date:   Thu, 02 Jun 2022 09:05:34 +0000
+Subject: [PATCH 1/2] cmake: optionally build `scalar`, too
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During the review of the initial Scalar patch series, it was suggested to
-include Scalar in Git's CI builds. Due to some conflicts, this was postponed
-to a later patch series: This patch series.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Note that the changes to the GitHub workflow are somewhat transient in
-nature: Based on the feedback I received on the Git mailing list, I see some
-appetite for turning Scalar into a full-fledged top-level command in Git,
-similar to gitk. Therefore my current plan is to do exactly that in the end
-(and I already have patches lined up to that end). This will essentially
-revert the ci/run-build-and-tests.sh change in this patch series.
+Unlike the `Makefile`-based build, the CMake configuration unfortunately
+does not let us easily encapsulate Scalar's build definition in the
+`contrib/scalar/` subdirectory: The `scalar` executable needs to link in
+`libgit.a` and `common-main.o`, for example.
 
-This patch series is based on js/scalar-diagnose.
+Also, `scalar.c` includes Git's header files, which means that
+`scalar.c` needs to be compiled with the very same flags as `libgit.a`
+lest `scalar.o` and `libgit.a` have different ideas of, say,
+`platform_SHA_CTX`, which would naturally lead to memory corruption,
+crashes and quite tricky debugging (talking from experience).
 
-Johannes Schindelin (2):
-  cmake: optionally build `scalar`, too
-  ci: also run the `scalar` tests
+To alleviate that lack of encapsulation somewhat, we guard the Scalar
+parts in `CMakeLists.txt` via the `INCLUDE_SCALAR` environment variable.
+This not only allows the CMake-based build to exclude Scalar by default,
+but also gives better visual cues as to which sections are related to
+Scalar.
 
- .github/workflows/main.yml          | 15 +++++++++++++++
- ci/run-build-and-tests.sh           |  2 ++
- ci/run-test-slice.sh                |  5 +++++
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  contrib/buildsystems/CMakeLists.txt | 14 ++++++++++++++
- 4 files changed, 36 insertions(+)
+ 1 file changed, 14 insertions(+)
 
-
-base-commit: 15d8adccab9a3146b760b089df59ce3e7ca2b451
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1129%2Fdscho%2Fscalar-and-ci-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1129/dscho/scalar-and-ci-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1129
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 185f56f414f..c8a802463ba 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -753,6 +753,13 @@ if(CURL_FOUND)
+ 	endif()
+ endif()
+ 
++if(DEFINED ENV{INCLUDE_SCALAR} AND NOT ENV{INCLUDE_SCALAR} STREQUAL "")
++	add_executable(scalar ${CMAKE_SOURCE_DIR}/contrib/scalar/scalar.c)
++	target_link_libraries(scalar common-main)
++	set_target_properties(scalar PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/contrib/scalar)
++	set_target_properties(scalar PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/contrib/scalar)
++endif()
++
+ parse_makefile_for_executables(git_builtin_extra "BUILT_INS")
+ 
+ option(SKIP_DASHED_BUILT_INS "Skip hardlinking the dashed versions of the built-ins")
+@@ -980,6 +987,13 @@ string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
+ string(REPLACE "@@PROG@@" "git-cvsserver" content "${content}")
+ file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
+ 
++if(DEFINED ENV{INCLUDE_SCALAR} AND NOT ENV{INCLUDE_SCALAR} STREQUAL "")
++	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
++	string(REPLACE "@@PROG@@" "contrib/scalar/scalar${EXE_EXTENSION}" content "${content}")
++	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/scalar ${content})
++endif()
++
+ #options for configuring test options
+ option(PERL_TESTS "Perform tests that use perl" ON)
+ option(PYTHON_TESTS "Perform tests that use python" ON)
 -- 
 gitgitgadget
+
