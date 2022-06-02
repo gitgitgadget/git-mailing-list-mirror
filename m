@@ -2,79 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D461BC43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 01:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CBDCC433EF
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 03:18:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233097AbiFBBQL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jun 2022 21:16:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44580 "EHLO
+        id S233540AbiFBDSy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jun 2022 23:18:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233088AbiFBBQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jun 2022 21:16:10 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 810EF290BE6
-        for <git@vger.kernel.org>; Wed,  1 Jun 2022 18:16:09 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id oa9-20020a17090b1bc900b001e67bbd7f83so788559pjb.4
-        for <git@vger.kernel.org>; Wed, 01 Jun 2022 18:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=d9Xy0qkCTV3Qn3y8g5A2+mHUi5fLYRgi8u8ykdAUNgo=;
-        b=DYm1CLBV/qhxpiGOZqO7YBkP7xOKr5ZFAxEf5k8Y5TFj72tGxwgTRCvhvM+AMzCqkl
-         7ppx2oTiOMsBWJv0lUPUy8kiObE8jSGgDIF0bGu+X3eHp+nWzEiATdy/i/V0HqA5yQkw
-         hPTB20U3Hx0DlM2dEfCunWS8HmgGrORxH2rYy+CcyEYZGTLB4aWW+B3IB3sa6GpVRYs2
-         Mj9gorv10VtCWuosxBE/aL8OXnt/zAFADCP8jw4AGEddXwoZFEjyR5ZCtFpiuhM+Oxmu
-         2qzrXWTf7/5mTAieO2u7fu2SmysEH6vpyIia00dZ1YHivE7Hmd9fExIdclEIGkulcjLl
-         J/WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=d9Xy0qkCTV3Qn3y8g5A2+mHUi5fLYRgi8u8ykdAUNgo=;
-        b=1ic8aI7zSKLj2NZS0sgPN5OrZGEqILfM6pyF56D5qttUHllsTjKel1NRin3A7ODYTq
-         36hmeZen0HL3p1fmVLzgTNbD9fbWXVMXvFmr6HKoPhPw6B+l62yVs5OXWd1+WosyuXqj
-         TvZkTsv2AK52ImxTSyR4f95O01jsh1gQs6SGYbRDtoCgufsZ9aNCtYlk03L4V83iwM/D
-         Tc5Pw0X11XLMz98QzO7NtxO41xrBmvh7vK9//tqw1H+Ytd3Skp9awSG0hgzS1qXmzyWV
-         IRb3kKiOFNaylgfiiNIAb18KFNC9bfEA1UEJrPUXCOndJyMH4Iliyo5lPy80LFqaLKu0
-         vnOw==
-X-Gm-Message-State: AOAM531G+JqSye2A9PnQlnugVFKjwHwBb3vXEkgFdR2920Mi+97PYLpA
-        TI/rj/crqENB0hQR1cOb1OJ4WuCMMQxW+w==
-X-Google-Smtp-Source: ABdhPJxyOpgmfFimB0mq/Ls9j73r3oIpa9RaVPqH+D2nSYoK90sklV7AKGObGYv5VwDEnPoQdD68lirM9IjQOw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:dac5:b0:164:13b2:4916 with SMTP
- id q5-20020a170902dac500b0016413b24916mr2272423plx.32.1654132568918; Wed, 01
- Jun 2022 18:16:08 -0700 (PDT)
-Date:   Wed, 01 Jun 2022 18:16:00 -0700
-In-Reply-To: <xmqqee07q3xc.fsf@gitster.g>
-Message-Id: <kl6lfskneugf.fsf@chooglen-macbookpro.roam.corp.google.com>
+        with ESMTP id S233532AbiFBDSx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jun 2022 23:18:53 -0400
+Received: from out28-170.mail.aliyun.com (out28-170.mail.aliyun.com [115.124.28.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F628154B2F
+        for <git@vger.kernel.org>; Wed,  1 Jun 2022 20:18:44 -0700 (PDT)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07263833|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.02187-0.00391942-0.974211;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047206;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=2;RT=2;SR=0;TI=SMTPD_---.NxdQ2cd_1654139901;
+Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.NxdQ2cd_1654139901)
+          by smtp.aliyun-inc.com(33.13.201.118);
+          Thu, 02 Jun 2022 11:18:22 +0800
+Date:   Thu, 2 Jun 2022 11:18:22 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     git <git@vger.kernel.org>
+Cc:     "Junio C Hamano" <gitster@pobox.com>
+Subject: protocol: add Accept-Language header if possible
+X-Priority: 3
+X-GUID: 675325F1-8340-44BC-98A8-A5B92B3249AF
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
 Mime-Version: 1.0
-References: <xmqqee07q3xc.fsf@gitster.g>
-Subject: gc/zero-length-branch-config-fix (was Re: What's cooking in git.git
- (Jun 2022, #01; Wed, 1))
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <2022060211034177301214@oschina.cn>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+R2l0IHNlcnZlciBlbmQncyBhYmlsaXR5IHRvIGFjY2VwdCBBY2NlcHQtTGFuZ3VhZ2UgaGVhZGVy
+IHdhcyBpbnRyb2R1Y2VkIGluwqBmMTg2MDRiYmYyKGh0dHA6IGFkZCBBY2NlcHQtTGFuZ3VhZ2Ug
+aGVhZGVyIGlmIHBvc3NpYmxlKQpidXQgaXQgc2VlbXMgdGhhdCBvbmx5IHJlZnMgZGlzY292ZXJp
+bmcgc3RhZ2UgaGFzIHRoaXMgYWJpbGl0eToKIgrilbDilIAkIEdJVF9DVVJMX1ZFUkJPU0U9MSBn
+aXQgbHMtcmVtb3RlCi4uLgoxMDo0MjozNi45MzkxMDggaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDC
+oCDCoCDCoD0+IFNlbmQgaGVhZGVyOiBHRVQgL29wZW5zb3VyY2UvdGVzdC5naXQvaW5mby9yZWZz
+P3NlcnZpY2U9Z2l0LXVwbG9hZC1wYWNrIEhUVFAvMS4xCjEwOjQyOjM2LjkzOTExMiBodHRwLmM6
+NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEhvc3Q6IGdpdGVlLmNvbQox
+MDo0MjozNi45MzkxMTQgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVh
+ZGVyOiBVc2VyLUFnZW50OiBnaXQvMi4zNS4xLjEwMi5nMmI5YzEyMDk3MAoxMDo0MjozNi45Mzkx
+MTYgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVhZGVyOiBBY2NlcHQ6
+ICovKgoxMDo0MjozNi45MzkxMTcgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNl
+bmQgaGVhZGVyOiBBY2NlcHQtRW5jb2Rpbmc6IGRlZmxhdGUsIGd6aXAKMTA6NDI6MzYuOTM5MTE4
+IGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9PiBTZW5kIGhlYWRlcjogQWNjZXB0LUxh
+bmd1YWdlOiBlbi1VUywgKjtxPTAuOQoxMDo0MjozNi45MzkxMjAgaHR0cC5jOjYyMyDCoCDCoCDC
+oCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVhZGVyOiBQcmFnbWE6IG5vLWNhY2hlCjEwOjQyOjM2Ljkz
+OTEyMSBodHRwLmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEdpdC1Q
+cm90b2NvbDogdmVyc2lvbj0yCjEwOjQyOjM2LjkzOTEyMyBodHRwLmM6NjIzIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6Ci4uLgoxMDo0MjozNi45OTkwMTIgaHR0cC5jOjYxMSDC
+oCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVhZGVyLCAwMDAwMDAwMzAyIGJ5dGVzICgweDAw
+MDAwMTJlKQoxMDo0MjozNi45OTkwMzQgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+
+IFNlbmQgaGVhZGVyOiBHRVQgL29wZW5zb3VyY2UvdGVzdC5naXQvaW5mby9yZWZzP3NlcnZpY2U9
+Z2l0LXVwbG9hZC1wYWNrIEhUVFAvMS4xCjEwOjQyOjM2Ljk5OTAzOSBodHRwLmM6NjIzIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEhvc3Q6IGdpdGVlLmNvbQoxMDo0MjozNi45
+OTkwNDEgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVhZGVyOiBBdXRo
+b3JpemF0aW9uOiBCYXNpYyA8cmVkYWN0ZWQ+CjEwOjQyOjM2Ljk5OTA0MiBodHRwLmM6NjIzIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IFVzZXItQWdlbnQ6IGdpdC8yLjM1LjEu
+MTAyLmcyYjljMTIwOTcwCjEwOjQyOjM2Ljk5OTA0NCBodHRwLmM6NjIzIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgPT4gU2VuZCBoZWFkZXI6IEFjY2VwdDogKi8qCjEwOjQyOjM2Ljk5OTA2MyBodHRwLmM6
+NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEFjY2VwdC1FbmNvZGluZzog
+ZGVmbGF0ZSwgZ3ppcAoxMDo0MjozNi45OTkwODEgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDC
+oCDCoD0+IFNlbmQgaGVhZGVyOiBBY2NlcHQtTGFuZ3VhZ2U6IGVuLVVTLCAqO3E9MC45CjEwOjQy
+OjM2Ljk5OTEwMSBodHRwLmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6
+IFByYWdtYTogbm8tY2FjaGUKMTA6NDI6MzYuOTk5MTA1IGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAg
+wqAgwqAgwqA9PiBTZW5kIGhlYWRlcjogR2l0LVByb3RvY29sOiB2ZXJzaW9uPTIKMTA6NDI6MzYu
+OTk5MTA2IGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9PiBTZW5kIGhlYWRlcjoKLi4u
+CjEwOjQyOjM3LjA5ODMyNSBodHRwLmM6NjExIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBo
+ZWFkZXIsIDAwMDAwMDAzNDEgYnl0ZXMgKDB4MDAwMDAxNTUpCjEwOjQyOjM3LjA5ODM2OCBodHRw
+LmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IFBPU1QgL29wZW5zb3Vy
+Y2UvdGVzdC5naXQvZ2l0LXVwbG9hZC1wYWNrIEhUVFAvMS4xCjEwOjQyOjM3LjA5ODM3NyBodHRw
+LmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEhvc3Q6IGdpdGVlLmNv
+bQoxMDo0MjozNy4wOTgzODEgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQg
+aGVhZGVyOiBBdXRob3JpemF0aW9uOiBCYXNpYyA8cmVkYWN0ZWQ+CjEwOjQyOjM3LjA5ODM4NCBo
+dHRwLmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IFVzZXItQWdlbnQ6
+IGdpdC8yLjM1LjEuMTAyLmcyYjljMTIwOTcwCjEwOjQyOjM3LjA5ODM4NyBodHRwLmM6NjIzIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEFjY2VwdC1FbmNvZGluZzogZGVmbGF0
+ZSwgZ3ppcAoxMDo0MjozNy4wOTg0MTcgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+
+IFNlbmQgaGVhZGVyOiBDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL3gtZ2l0LXVwbG9hZC1wYWNr
+LXJlcXVlc3QKMTA6NDI6MzcuMDk4NDIxIGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9
+PiBTZW5kIGhlYWRlcjogQWNjZXB0OiBhcHBsaWNhdGlvbi94LWdpdC11cGxvYWQtcGFjay1yZXN1
+bHQKMTA6NDI6MzcuMDk4NDI1IGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9PiBTZW5k
+IGhlYWRlcjogR2l0LVByb3RvY29sOiB2ZXJzaW9uPTIKMTA6NDI6MzcuMDk4NDI4IGh0dHAuYzo2
+MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9PiBTZW5kIGhlYWRlcjogQ29udGVudC1MZW5ndGg6IDEx
+OAoxMDo0MjozNy4wOTg0MzEgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQg
+aGVhZGVyOgouLi4KIgpXaHnCoGdpdC11cGxvYWQtcGFjay9naXQtcmVjZWl2ZS1wYWNrIHN0YWdl
+IGRvZXNuJ3QgZW5hYmxlIHRoaXMgYWJpbGl0eT8KCgotLS0tLS0tLS0tLS0tLQpsaWxpbmNoYW9A
+b3NjaGluYS5jbg==
 
-> * gc/zero-length-branch-config-fix (2022-06-01) 2 commits
->  - remote.c: reject 0-length branch names
->  - remote.c: don't BUG() on 0-length branch names
->
->  A misconfigured 'branch..remote' led to a bug in configuration
->  parsing.
->
->  Will merge to 'next'?
->  source: <pull.1273.git.git.1654038754.gitgitgadget@gmail.com>
-
-I'm happy to see this go to 'next' if =C3=86var doesn't have any lingering
-concerns over the commit message [1].
-
-[1] https://lore.kernel.org/git/kl6lilpke31e.fsf@chooglen-macbookpro.roam.c=
-orp.google.com
