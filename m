@@ -2,161 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA0CC43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 12:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6612EC433EF
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 12:25:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234970AbiFBMZF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 08:25:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57132 "EHLO
+        id S233006AbiFBMZ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 08:25:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234811AbiFBMZE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 08:25:04 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 505969E9EB
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 05:25:03 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id n28so6036024edb.9
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 05:25:03 -0700 (PDT)
+        with ESMTP id S232440AbiFBMZZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 08:25:25 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 220EBFD375
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 05:25:24 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id f35so3216642qtb.11
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 05:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8dyjZ9TcMP/G8nu4kDkK7GqpMBpyXOr+a6Qpyl5MR9U=;
-        b=EAZh9AdBDIkeMnQCl2z8i+jgzQPXk8XeuGLF0jkJ8D2O5rxMcyuHmNLpBsXhKBnqVX
-         RAHwOFEPzOVSUu/7iZbmRjCsHXR6ru8gKh+HzVS3Ib0fDMkpuFoFs9iyuaAuZ88T3U8y
-         FGM0wK1NrsoA5Fg9+kPimzQ7DX3hDMzIljb5KPyCbqGC/pe+SOGzHwh3u8PT1RQCtL/u
-         b2TCKnxKnlBj908qixBxutHGCt/wD2rrCdwgT+q6id++9d5zzYjZWiW+ItpW7P95A+hu
-         qWMrDvb2lWv9JZ6t1yRmMiTtIn0rysKPAsy95xGF3Z/ld5W5tpOWhNjYuLQFy0o2DS2d
-         CTWQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=RNj5Ol7nLbB9WR4aEO9ptQJbTJXUQRqtDvSoVCR7PJY=;
+        b=bc20e5RNgPIV2FDwRR8/55r4Cxr9f+mhoJzrD9npUABD/tLMwa5M+xVsSqxGKsXBJZ
+         nbSU5Hry3pByeZLZhGSB6vgMdV2AFKmTwMkQfavzL3sYkmZjO4k4IbvE7JGRSXyxyKGC
+         jh10qhAi9dqG1DGa+f6X8Ya28HDPfjHqfjMo11/A1hjhVmJqwPOM34c+7cCfISzL3shA
+         h7kRLfMKSx9VxumUvg22w67NPiDz4sLqfwR7NfdDcQQ//dL7quVATdTBg3/vvKFDFhPo
+         syfZi+wsKLph4OAXGoAWNGHzQrL0BbODqi2NEIMcZ8bzPEZRp+cPCfHFrZPM+sBMkvZF
+         PrnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8dyjZ9TcMP/G8nu4kDkK7GqpMBpyXOr+a6Qpyl5MR9U=;
-        b=7f3U43QDTUmXT55BvezEN4QhmrmuqVWMcBXgVnDyJenmS/9i/QRo5X2KlZ4/bsUc/9
-         Y4KCH79gCfaQxL5vJiJs7OzzqGq9rYbUJcarXTm+04hWNtBKw3GWGcPjln6r4357hp8W
-         NuTFY9NQqxcxzHBCX9gre/ShaDqT9Snolhi53fuBsyIyvVTMegmJiZinoeWd4AClxnd1
-         aAPRbjpTYCGAARnV1gWqhms8xOLNqun5nH6HL+Dqf6ETBuFyWcI0/osfa4ADt0REdMrf
-         l2QoOJywuQj9RYj9CK9Nmpb0+C3KgmBJM1AXGE3hF+FZgsiH9ieZb0gjqXEwgQRqz1mZ
-         vGeg==
-X-Gm-Message-State: AOAM531Pq7zp+tYFBJfGT53csogYEd21UXyCWd6AHfLLmhBDoX5ryv/m
-        cMO/Geq33Rl/qR0hrKmu2fj6wA7HqSId9d8hGiwGMSmdVa8=
-X-Google-Smtp-Source: ABdhPJyunB0qD/GEvGHB8vDIB33zS4N/ziJ69Rvc2+yYxBQua/++28b/iwhpeRHj41avhbDYMoeKo8BZmExHlke43QA=
-X-Received: by 2002:aa7:c508:0:b0:42d:cc6b:df80 with SMTP id
- o8-20020aa7c508000000b0042dcc6bdf80mr5080754edq.393.1654172701485; Thu, 02
- Jun 2022 05:25:01 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=RNj5Ol7nLbB9WR4aEO9ptQJbTJXUQRqtDvSoVCR7PJY=;
+        b=EX0iO2anMlTHVjWvA9oyO7vDpr9Rvp+5748+Bq2i2wpc1/29VFV6OSDxrXhkMpE3z1
+         /8mVTGNGPIpG3FgJO6fuIi3VY2AMzILQEGvyYcsG13csq2Mn5DPpadbDBAo+wA6GeT3j
+         iuxKBV1r84gl8nK9/4WKE9ltLtIF5i1r0NwCvDNLtPnNkxkL1PoALb1zI0cKFWQIiAMB
+         u9itxu+314mcLqoLhmyc39Wef9P2f+cz1J25QRtIKLg1HcUMzudm0n0gk8LmAxnFQcmC
+         B1SdjuzY8lM4i7VovOg1Jp9iR5d+S92Dr9GS4i9QNZY1VtxwFG+QpdyEY6KL1J9AAFuY
+         zZDA==
+X-Gm-Message-State: AOAM5329IRTSVTbWgDpkJ22ATT8oTcDuFQTIh1xybdq8eL1QyMKZfgn1
+        BYEX4qUiPExth+kC/CkVyO88
+X-Google-Smtp-Source: ABdhPJypPpuSRvWbGsNoxcPLyB4ORAazjEXxtWJGg09296VK7CMSrx6bmIsQztZW3nQH3Xnlsn1k9w==
+X-Received: by 2002:a05:622a:50a:b0:304:d2e9:c197 with SMTP id l10-20020a05622a050a00b00304d2e9c197mr1604673qtx.141.1654172723256;
+        Thu, 02 Jun 2022 05:25:23 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9cc9:fda3:3ddf:6700? ([2600:1700:e72:80a0:9cc9:fda3:3ddf:6700])
+        by smtp.gmail.com with ESMTPSA id v186-20020a3793c3000000b0069fc13ce1f3sm2979082qkd.36.2022.06.02.05.25.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jun 2022 05:25:22 -0700 (PDT)
+Message-ID: <383beb65-d507-18f2-24e4-f4bf23e7d99e@github.com>
+Date:   Thu, 2 Jun 2022 08:25:22 -0400
 MIME-Version: 1.0
-References: <CAHHcNoe12h5E9OmkZy03-i7miFg2hLiT04BF3_t9C2bcmduR5Q@mail.gmail.com>
- <CAPx1GvfQLP3q-SvW38=VOxoAmQpMMau_UfXXXQiZSV3NOJCs0w@mail.gmail.com> <CAHHcNodnB8gnaLgxW-vr6PxHh_YjCOAf7CTuot-CJsonb1mdnA@mail.gmail.com>
-In-Reply-To: <CAHHcNodnB8gnaLgxW-vr6PxHh_YjCOAf7CTuot-CJsonb1mdnA@mail.gmail.com>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Thu, 2 Jun 2022 05:24:50 -0700
-Message-ID: <CAPx1GveKYjEoAnhJLkGOo9Esd5-vhkFkbz2Uwy10j5fxR_W9Bw@mail.gmail.com>
-Subject: Re: BUG? git stash and immediate git apply results in conflict
-To:     Akos Vandra-Meyer <axos88@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: What's cooking in git.git (Jun 2022, #01; Wed, 1)
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <xmqqee07q3xc.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqee07q3xc.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 2, 2022 at 4:31 AM Akos Vandra-Meyer <axos88@gmail.com> wrote:
-> Hi Chris,
->
-> Thanks for getting back to me on this.
-> My use case is the following:
->
-> I made a bunch of (loosely related) changes to my code, but I have
-> been asked to submit them as separate commits, so I need to separate
-> the changes to dependent files relating to the first and second
-> feature.
+On 6/1/2022 8:55 PM, Junio C Hamano wrote:
 
-I snipped the rest of this because I *dislike* and *recommend against*
-the use of `git stash` in the first place. If you want to use it that way, I am
-sure it is possible, but I recommend doing something else entirely.
-The rest of this message is all opinion! You seem to be looking for
-a recommended method, so I'm recommending mine.
+> * ds/bundle-uri-more (2022-05-20) 24 commits
+>  . t5601: basic bundle URI tests
+>  . clone: unbundle the advertised bundles
+>  . bundle-uri: download bundles from an advertised list
+>  . bundle-uri: allow relative URLs in bundle lists
+>  . bundle-uri client: add boolean transfer.bundleURI setting
+>  . bundle-uri: serve URI advertisement from bundle.* config
+>  . bundle-uri client: add "git ls-remote-bundle-uri"
+>  . bundle-uri client: add minimal NOOP client
+>  . protocol v2: add server-side "bundle-uri" skeleton
+>  . bundle-uri: fetch a list of bundles
+>  . bundle-uri: parse bundle list in config format
+>  . bundle-uri: limit recursion depth for bundle lists
+>  . bundle-uri: unit test "key=value" parsing
+>  . bundle-uri: create "key=value" line parsing
+>  . bundle-uri: create base key-value pair parsing
+>  . bundle-uri: create bundle_list struct and helpers
+>  . clone: --bundle-uri cannot be combined with --depth
+>  . clone: add --bundle-uri option
+>  . fetch: add 'refs/bundle/' to log.excludeDecoration
+>  . fetch: add --bundle-uri option
+>  . bundle-uri: add support for http(s):// and file://
+>  . bundle-uri: create basic file-copy logic
+>  . remote-curl: add 'get' capability
+>  . docs: document bundle URI standard
+>  (this branch uses ds/bundle-uri.)
+> 
+>  RFC/ seems to trigger errors in linux-leaks CI job
+>  source: <pull.1234.git.1653072042.gitgitgadget@gmail.com>
 
-Let's say for concreteness that your current branch is named "topic".
-Here is what I would do (though I might change strategies and use
-various short-cuts depending on various sub-scenarios; this is meant
-for illustrating how to do what you want, in a way that provides the
-most clarity):
+I'm not surprised about failing the linux-leaks job, but I'm
+sorry that it is causing noise. Please eject from 'seen' to
+reduce the noise here.
 
-git add (files as needed)
-git commit -m "final version, to be split up"
-git branch -m not-final-topic
+I also haven't had any feedback on this RFC series, so I plan
+to break out the first few patches and clean them up for full
+submission soon. I've seen more feedback on topics that might
+be candidates for merging.
 
-Then:
-
-# create a new topic branch
-git checkout -b new-topic <start-point>
-
-# get a view of commits
-git log HEAD..topic
-
-# copy some commits, up until some point
-git cherry-pick <some of those commits as desired>
-
-# begin splitting a commit:
-git cherry-pick -n <hash>
-
-# split it up: use a mix of the following:
-git reset / git add -p / git reset -p
-                # as needed here to take part of the commit)
-
-# observe what's to be committed
-git diff --cached
-git commit      # and write a commit message
-
-git add -p ...  # as needed again
-git diff --cached
-git commit      # repeat until satisfied with broken up commit(s)
-
-# make sure final result matches - optional: use the same
-# hash here as for the `git cherry-pick -n` command
-git diff HEAD <hash>
-
-# repeat copying whole and partial commits:
-
-git cherry-pick ...     # add more whole commits as desired
-git cherry-pick -n ...  # add commit that is to be split up
-                        # repeat the split-up process
-
-# When finally done, ensure that new-topic and not-final-topic
-# have the same contents. If they do, the split-up was successful.
-git diff not-final-topic HEAD
-
-Note that there is no longer any branch named "topic" at this
-point: we have instead "not-final-topic" and "new-topic". We
-can now rename "new-topic" to "topic" and use `git push -f`
-or whatever else is appropriate for whatever review system(s)
-you may be using.
-
-The entire process above can often be done with a single `git
-rebase -i` command, but that obscures the fundamental nature of
-what you're really doing. The repeated cherry-pick, reset, add
--p, and/or reset -p sequence is what you're really doing: you are
-taking some set of existing commits, which are *close* to the
-commits you'd like to have, and rebuilding them to make a new set
-of commits (with different hash IDs) that represent what you
-really do want.
-
-In the end, you will have Git *find* your commits by name: the
-name "topic" will name the last commit in a chain of commits.
-The names here are up to you, and you can change any name at
-any time using `git branch -m`. Both Git and any review system
-you use is going to use the *commits*, with their scary looking
-hash IDs, but like you they will *find* these commits by starting
-from a branch name: so by changing the hash ID stored in the
-branch name, you change the set of commits they (and you) find.
-
-What `git stash` does is make several commits that are not on
-*any* branch. These commits are a little weird, requiring the
-use of the `git stash` command to access them. Ordinary commits
-on ordinary branches are not weird and do not need any special
-access, so that's what I prefer.  But the fact that the stash commits
-are on *no* branch makes it easy to slide them from one branch to
-another without having to think about hash IDs; that's one reason
-some people prefer `git stash`. I'm just not one of those people.
-
-Chris
+Thanks,
+-Stolee
