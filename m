@@ -2,123 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70750C43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 11:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8C4EC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 11:43:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbiFBLbs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 07:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59276 "EHLO
+        id S234112AbiFBLn6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 07:43:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231533AbiFBLbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 07:31:46 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5243BD6D
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 04:31:45 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id h137so572354iof.8
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 04:31:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hBu3yZAkWdyxZLsbLNqA4zrMOTf8KdojudSxkiXrq4I=;
-        b=m13SlWh6/7aqUDbWwWoSQmkBY1vrZuVucbS8wRXwhpdqhceoo39DKIJnbcZJv8jYEo
-         SETtuccuEoatoHEsPhJcGoaEEuIftqhDS1xUbYywVJshKQGfjpb7UwbgRxdBqImNHPpt
-         6Am9zbeJfFkTMewh9aFixO8dOwKPZmBa8O5/yztxRnEVvcjeUOtRacuFmTXbt0JxLMaL
-         Z2JGroy2KWnYh2LR6lsrMmaDnK0MIvMG5lMOoU+J4v83RVSURwWUYdBwuhqMdrBcfMjs
-         ffTrTXSFKK5He8pJn+miFiwyeyiKIYtHpnLYAt1yto82Sneq/sHxCfR2QshD8jebafvl
-         WnqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hBu3yZAkWdyxZLsbLNqA4zrMOTf8KdojudSxkiXrq4I=;
-        b=k5vvIGx1KyRXfyPic4lDZrUfZlxJ7TAKLcp2DzPGD4Efp7HnDRep9iKBiW66O9+xdJ
-         VM2CJqh22JqlomrD9Gg+7psJOsyZyWMy5U82QjlP/Xc9yMqDgEyu035TrdVLvemdn0U2
-         YnN9Tl3HQfEuHbM/wzcXRkQIcVFuV0bfwwSPU989J/gDEn+J62+xck/lOfiA3/sxSCx5
-         /Li/98kADsKx4alLV3QQmsyMNnVGjUmdqZAIXW3lkcPBbFU5rIvfl3yQNGhcgl03mgTB
-         GiUqACed+gShE0k3e9+iJDOLGmt4yrsXXZ904lMvszvsDc/lrBsHj/QV/UTT74xXMfgG
-         P/OQ==
-X-Gm-Message-State: AOAM530JzeZYmJVtYS+ZMmOCsxuqbpK/VV/lRebmRauuU4tkGCY9qCs9
-        Egbc1l6gdQj6PxkEaAu77RzdJG3gxuJ+gyavMvbEWjGrURo=
-X-Google-Smtp-Source: ABdhPJxxnUC8Cks86sNTmAuZmjz4XeOi+FAHAl8zaK2yRpJFaP8O3B99APY26l19wMq/tcOEITSwS6qQ/126T27Tfic=
-X-Received: by 2002:a05:6602:248f:b0:65a:fb17:7a6b with SMTP id
- g15-20020a056602248f00b0065afb177a6bmr2267220ioe.79.1654169504702; Thu, 02
- Jun 2022 04:31:44 -0700 (PDT)
+        with ESMTP id S233689AbiFBLn4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 07:43:56 -0400
+Received: from box.jasonyundt.email (box.jasonyundt.email [206.189.182.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86AD51207CE
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 04:43:55 -0700 (PDT)
+Received: from authenticated-user (box.jasonyundt.email [206.189.182.84])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.jasonyundt.email (Postfix) with ESMTPSA id AB32D7E67E;
+        Thu,  2 Jun 2022 07:43:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jasonyundt.email;
+        s=mail; t=1654170232;
+        bh=cbtWKOssdfIScTdSmgdxAxnqGTqwYh6NdmKu70Ku9yI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Rn3O1mhBQThxpoSjX0BW3y6xOwXlh9eZ+ek5sqvbSJSo0FV8htdiq3MqDRJEdk6/R
+         C6AXLzdWeRuHYO9V1YMyIgJoAFqm7DKD/lVkQ4IAl73m3nnYueaDC/aTdqpwZAbHKH
+         fZ6Ah28VOsJjCMXdoWACqFJZKlYyf0gbImiAytAd0kpH8LQHGs7RQQXYU78kQOy93a
+         a/lebi7DgByadD/k8hiMVwIZ22mRlDKpdFUhZ6MM2POJP1OMGVY1gMcItPtGbyljrx
+         9u87ApLEMi53y42jxuWdWeth8rBqObPNHf1tVityv4oa1m2XjvvrT6vp4EEO6whLg3
+         tGK9q79bitGhg==
+From:   Jason Yundt <jason@jasonyundt.email>
+To:     git@vger.kernel.org
+Cc:     Jason Yundt <jason@jasonyundt.email>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH v2] gitweb: switch to an XHTML5 DOCTYPE
+Date:   Thu,  2 Jun 2022 07:43:05 -0400
+Message-Id: <20220602114305.5915-1-jason@jasonyundt.email>
+In-Reply-To: <20220601012647.1439480-1-jason@jasonyundt.email>
+References: <20220601012647.1439480-1-jason@jasonyundt.email>
 MIME-Version: 1.0
-References: <CAHHcNoe12h5E9OmkZy03-i7miFg2hLiT04BF3_t9C2bcmduR5Q@mail.gmail.com>
- <CAPx1GvfQLP3q-SvW38=VOxoAmQpMMau_UfXXXQiZSV3NOJCs0w@mail.gmail.com>
-In-Reply-To: <CAPx1GvfQLP3q-SvW38=VOxoAmQpMMau_UfXXXQiZSV3NOJCs0w@mail.gmail.com>
-From:   Akos Vandra-Meyer <axos88@gmail.com>
-Date:   Thu, 2 Jun 2022 13:31:33 +0200
-Message-ID: <CAHHcNodnB8gnaLgxW-vr6PxHh_YjCOAf7CTuot-CJsonb1mdnA@mail.gmail.com>
-Subject: Re: BUG? git stash and immediate git apply results in conflict
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chris,
+According to the HTML Standard FAQ:
 
-Thanks for getting back to me on this.
-My use case is the following:
+	“What is the DOCTYPE for modern HTML documents?
 
-I made a bunch of (loosely related) changes to my code, but I have
-been asked to submit them as separate commits, so I need to separate
-the changes to dependent files relating to the first and second
-feature.
+	In text/html documents:
 
-So I need to separate the changes in my workdir into two commits
-(let's call them two features). Turns out the first feature needs a
-dependent file changed in one way, and the second feature improves on
-it, so it needs it changed in another way - normally this would result
-in a conflict if they would have been done separately in different
-branches.
+		<!DOCTYPE html>
 
-I start off by stashing everything except stuff directly relating to
-the first feature and stashing everything else. Check for build
-errors, unstage, and incrementally staging more stuff that need to be
-added in order to make the first feature build correctly. At some
-point I reach the file that has to be changed differently, so I will
-have a set of changes staged for that file, while another set of
-changes remain unstaged - the changes that will be required by the
-second feature.
+	In documents delivered with an XML media type: no DOCTYPE is required
+	and its use is generally unnecessary. However, you may use one if you
+	want (see the following question). Note that the above is well-formed
+	XML.”
 
-At this point you pointed out that apparantly I'm misusing git, but I
-am confused on how to correctly stash the unstaged changes to check if
-the code would build with the staged changes only, and unstage them
-and add more stuff if not?
+	Source: [1]
 
-Thanks,
-  Akos
+Gitweb uses an XHTML 1.0 DOCTYPE:
 
+	<!DOCTYPE html PUBLIC
+	"-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
+While that DOCTYPE is still valid [2], it has several disadvantages:
 
+1. It’s misleading. If an XML parser uses the DTD at the given link,
+   then the entities &nbsp; and &sdot; won’t get declared. Instead, the
+   parser has to use a DTD from the HTML Standard that has nothing to do
+   with XHTML 1.0 [2].
+2. It’s obsolete. XHTML 1.0 was last revised in 2002 and was superseded in
+   2018 [3].
+3. It’s unreliable. Gitweb uses &nbsp; and &sdot; but lets an external file
+   define them. “[…U]using entity references for characters in XML documents
+   is unsafe if they are defined in an external file (except for &lt;, &gt;,
+   &amp;, &quot;, and &apos;).” [4]
 
+[1]: <https://github.com/whatwg/html/blob/main/FAQ.md#what-is-the-doctype-for-modern-html-documents>
+[2]: <https://html.spec.whatwg.org/multipage/xhtml.html#parsing-xhtml-documents>
+[3]: <https://www.w3.org/TR/xhtml1/#xhtml>
+[4]: <https://html.spec.whatwg.org/multipage/xhtml.html#writing-xhtml-documents>
 
-On Thu, 2 Jun 2022 at 08:32, Chris Torek <chris.torek@gmail.com> wrote:
->
-> On Wed, Jun 1, 2022 at 2:11 PM Akos Vandra-Meyer <axos88@gmail.com> wrote:
-> >  git stash -ku
-> >  git stash pop
->
-> This is not a bug in `git stash` itself, but rather in the way you're using it.
->
-> There are two mistakes on your part here:
->
-> 1: You are using `-k`, aka `--keep-index`. This flag is intended for usages
-> that are not yours here.
->
-> 2. You are *not* using `--index` in your `git pop`.  The `--index` flag is
-> intended for the kind of thing you are doing here.
->
-> It's a bit unfortunate (and perhaps worth some work in the documentation)
-> that the `--keep-index` and `--index` flags sound so similar, and yet are so
-> different.  The documentation could use some examples here, I think.
->
-> Note that if you *do* want to use `--keep-index` during the `git stash` step,
-> you will need a `git reset --hard` before your `git stash apply --index &&
-> git stash drop` step (aka `git stash pop --index`).
->
-> Chris
+Signed-off-by: Jason Yundt <jason@jasonyundt.email>
+---
+Compared to the first version of this patch, this version:
+1. makes it clear that XML parsers may used the linked DTD like brian
+   mentioned.
+2. mentions HTML5 like Bagas suggested.
+
+ gitweb/gitweb.perl                        |  5 ++++-
+ t/t9502-gitweb-standalone-parse-output.sh | 14 ++++++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 606b50104c..1835487ab2 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4219,7 +4219,10 @@ sub git_header_html {
+ 	my $mod_perl_version = $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : '';
+ 	print <<EOF;
+ <?xml version="1.0" encoding="utf-8"?>
+-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
++<!DOCTYPE html [
++	<!ENTITY nbsp "&#xA0;">
++	<!ENTITY sdot "&#x22C5;">
++]>
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+ <!-- git web interface version $version, (C) 2005-2006, Kay Sievers <kay.sievers\@vrfy.org>, Christian Gierke -->
+ <!-- git core binaries version $git_version -->
+diff --git a/t/t9502-gitweb-standalone-parse-output.sh b/t/t9502-gitweb-standalone-parse-output.sh
+index 8cb582f0e6..81d5625557 100755
+--- a/t/t9502-gitweb-standalone-parse-output.sh
++++ b/t/t9502-gitweb-standalone-parse-output.sh
+@@ -220,4 +220,18 @@ test_expect_success 'no http-equiv="content-type" in XHTML' '
+ 	no_http_equiv_content_type "p=.git;a=tree"
+ '
+ 
++proper_doctype() {
++	gitweb_run "$@" &&
++	grep -F "<!DOCTYPE html [" gitweb.body &&
++	grep "<!ENTITY nbsp" gitweb.body &&
++	grep "<!ENTITY sdot" gitweb.body
++}
++
++test_expect_success 'Proper DOCTYPE with entity declarations' '
++	proper_doctype &&
++	proper_doctype "p=.git" &&
++	proper_doctype "p=.git;a=log" &&
++	proper_doctype "p=.git;a=tree"
++'
++
+ test_done
+-- 
+2.36.1
+
