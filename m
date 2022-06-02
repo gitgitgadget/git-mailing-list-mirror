@@ -2,121 +2,279 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97135CCA47E
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 20:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61C02C43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 21:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239087AbiFBUFp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 16:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44762 "EHLO
+        id S234229AbiFBVVI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 17:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239364AbiFBUFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 16:05:21 -0400
+        with ESMTP id S229852AbiFBVVH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 17:21:07 -0400
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 841A313EB2
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 13:05:19 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79F0B36E14
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 14:21:02 -0700 (PDT)
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9345124AB1;
-        Thu,  2 Jun 2022 16:05:18 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5C1D1253C9;
+        Thu,  2 Jun 2022 17:21:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1mBzHXI4Icfr
-        CxP0xMcxniP9Q9IImfuDhwP0uy9iwdI=; b=LUiVFwBVAqTzjgWkfnSqiafKBjlI
-        SJlgLeAeW4dngRfdtiL0GlfMymNZanJsno+4cdHXrEoDSw75zYLy+KcQwHdxVLNC
-        vnaSUSTT9CDONaTEakLTUwiK7TcvZ6N7qNRrps7W3s7Xy6pUqrttCDLG44l0zSrZ
-        aMX2cmPfUHxNdx8=
+        :content-type; s=sasl; bh=Dqd2BuPc+zYF6mJMG2neVVm2zdHYY3NGoq1xI1
+        y5Rj4=; b=TgQL5sZ6+DHObK5a3a6Z+P1MVdouKjg28oIhZxwznvehHVAj/iCUj0
+        UAI5Vk1ocL30rqibnnPNwQJwB479nOapzKP3TwS3iXxgf9VGgWgNDjqLLYZZzD1r
+        jqMiswe0iHW8S3qt76btNKqh24DI/QPuteCz+RVW+whMe3wVavgBw=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1673124AB0;
-        Thu,  2 Jun 2022 16:05:18 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9C92F1253C8;
+        Thu,  2 Jun 2022 17:21:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 17B97124AAF;
-        Thu,  2 Jun 2022 16:05:18 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C6DFD1253C7;
+        Thu,  2 Jun 2022 17:21:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Anthony Sottile <asottile@umich.edu>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 0/2] hook API: connect hooks to the TTY again, fixes
- a v2.36.0 regression
-References: <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com>
-        <cover-v5-0.2-00000000000-20220602T131858Z-avarab@gmail.com>
-Date:   Thu, 02 Jun 2022 13:05:16 -0700
-In-Reply-To: <cover-v5-0.2-00000000000-20220602T131858Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 2 Jun
- 2022 16:07:55
-        +0200")
-Message-ID: <xmqq7d5yn85f.fsf@gitster.g>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
+        avarab@gmail.com, christian.couder@gmail.com,
+        johannes.schindelin@gmx.de, jrnieder@gmail.com,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Robert Coup <robert.coup@koordinates.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v4] remote: create fetch.credentialsInUrl config
+References: <pull.1237.v3.git.1654046173.gitgitgadget@gmail.com>
+        <pull.1237.v4.git.1654190434908.gitgitgadget@gmail.com>
+Date:   Thu, 02 Jun 2022 14:20:59 -0700
+In-Reply-To: <pull.1237.v4.git.1654190434908.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Thu, 02 Jun 2022 17:20:34
+        +0000")
+Message-ID: <xmqq35gmkbic.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 52FD39DC-E2AF-11EC-A6B7-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E6AE2808-E2B9-11EC-8320-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This series fixes a v2.36.0 regression[1]. See [2] for the v4. The
-> reasons for why a regression needs this relatively large change to
-> move forward is discussed in past rounds, e.g. around [3]. CI at
-> https://github.com/avar/git/actions/runs/2428475773
->
-> Changes since v4, mainly to address comments by Johannes (thanks for
-> the review!):
+> +static void validate_remote_url(struct remote *remote)
+> +{
+> +	int i;
+> +	const char *value;
+> +	struct strbuf redacted = STRBUF_INIT;
+> +
+> +	if (git_config_get_string_tmp("fetch.credentialsinurl", &value) ||
+> +	    !strcmp("allow", value))
+> +		return;
+> +
+> +	for (i = 0; i < remote->url_nr; i++) {
+> +		struct url_info url_info = { NULL };
 
-This version looks good to me.
+The initializer should be "= { 0 }" not "= { NULL }".  In other
+words, we shouldn't have to care if the first member in the struct
+happens to be of a pointer type, and we shouldn't have to change
+between 0 and NULL whenever the type of the first member changes.
 
->     @@ run-command.c: static void pp_init(struct parallel_processes *pp=
-,
->       	for (i =3D 0; i < n; i++) {
->       		strbuf_init(&pp->children[i].err, 0);
->       		child_process_init(&pp->children[i].process);
->     -+		if (!pp->pfd)
->     -+			continue;
->     - 		pp->pfd[i].events =3D POLLIN | POLLHUP;
->     - 		pp->pfd[i].fd =3D -1;
->     +-		pp->pfd[i].events =3D POLLIN | POLLHUP;
->     +-		pp->pfd[i].fd =3D -1;
->     ++		if (pp->pfd) {
->     ++			pp->pfd[i].events =3D POLLIN | POLLHUP;
->     ++			pp->pfd[i].fd =3D -1;
->     ++		}
->       	}
+Even though it frowns upon assigning 0 to a pointer variable or a
+pointer member in a struct, sparse knows that such an initializer is
+OK.
 
-This change is merely a personal taste---it does not match mine but
-that is Meh ;-)
+cf. https://lore.kernel.org/git/YVJSwuqjolz28+mG@coredump.intra.peff.net/
 
->     -@@ run-command.c: static void pp_cleanup(struct parallel_processes=
- *pp)
->     -  */
->     - static int pp_start_one(struct parallel_processes *pp)
->     - {
->     -+	const int ungroup =3D pp->ungroup;
+Please have a blank line after the variable decl. 
 
-It may have made the resulting code easier to read if the local
-variable was kept as a synonym as "pp->" is short enough but is
-repeated often, but what is written is good enough and I do not see
-a need to flip-flop.
+> +		url_normalize(remote->url[i], &url_info);
 
->     -+static void pp_mark_ungrouped_for_cleanup(struct parallel_process=
-es *pp)
->     -+{
->     -+	int i;
->     -+
->     -+	if (!pp->ungroup)
->     -+		BUG("only reachable if 'ungrouped'");
->     -+
->     -+	for (i =3D 0; i < pp->max_processes; i++)
->     -+		pp->children[i].state =3D GIT_CP_WAIT_CLEANUP;
->     -+}
+url_normalize() returns "char *", and you get NULL when parsing
+fails; out_info->err may also help when it happens, but I think we
+will call url_normalize() again later in the existing caller, and
+it will give whatever error message we need to give appropriately,
+so it is OK to silently jump to the loop_cleanup label from here.
 
-Good to see this inlined.  I find the caller easier to follow
-without it.
+> +		if (!url_info.passwd_len)
+> +			goto loop_cleanup;
 
-Thanks for a quick succession of rerolling.  Will queue.
+I wonder what should happen to "https://username:@localhost" (i.e.
+an empty string is used as a password).  I am fine if we allow it as
+an obvious "this is like an anonymous ftp; anybody can connect" use
+case, but I do not know how useful it would be in practice.  
+
+I am also fine if certain authentication scheme needs username and
+password, the latter of which is never used because the "real thing"
+like Kerberos kicks in when the real authentication happens but
+becasue something needs to be there to "trigger" the authentication,
+and that is why we deliberately allow an empty string case unwarned.
+But if this is a deliberate thing, we'd need to caution future
+developers about it.
+
+I do not think passwd_ofs can ever be 0 if we have an embedded
+password in the URL, so checking it may be a better approach, if we
+care about an empty-string case.  I can be persuaded either way.
+
+> +
+> +		strbuf_add(&redacted, url_info.url, url_info.passwd_off);
+> +		strbuf_addstr(&redacted, "<redacted>");
+> +		strbuf_addstr(&redacted, url_info.url + url_info.passwd_off + url_info.passwd_len);
+> +
+> +		if (!strcmp("warn", value))
+> +			warning(_("URL '%s' uses plaintext credentials"), redacted.buf);
+> +		if (!strcmp("die", value))
+> +			die(_("URL '%s' uses plaintext credentials"), redacted.buf);
+
+We obviously could introduce another local variable that is set
+based on the "value" before we enter the loop to "optimize", but
+this is an error codepath, so I do not mind repeated strcmp() on the
+constant value in the loop.
+
+I do have to wonder what we should do when value is none of the
+three we know about.  Right now, it makes the function an expensive
+noop, so upfront at the beginning of the function, we might need
+something like
+
+	int to_warn_not_die;
+
+	if (git_config_get_string_tmp(..."))
+ 		return;
+	if (!strcmp("warn", value))
+		to_warn_not_die = 1;
+	else if (!strcmp("die", value))
+		to_warn_not_die = 0;
+	else
+		return;
+
+anyway, in which case we would also do
+
+	if (to_warn_not_die)
+		warning(...);
+	else
+		die(...);
+
+in the loop, perhaps?  I dunno.
+
+I wonder if die_message() may want to report all the offending URL
+for a given remote (with a concluding die() after the loop).  I am
+OK with dying at the first offence, though.  In the worst case, the
+end user experience would be:
+
+    $ git fetch there
+    die() about the first URL for the nickname
+    $ edit .git/config
+    $ git fetch there
+    die() about the second URL for the nickname
+
+The user will learn after getting the same error message twice and
+scan through the other URLs when editing .git/config for the second
+time to fix the second URL.  If I were writing this patch, I would
+probably play lazy and die on the first offender.
+
+> +test_expect_success 'fetch warns or fails when using username:password' '
+> +	message="URL '\''https://username:<redacted>@localhost/'\'' uses plaintext credentials" &&
+> +	test_must_fail git -c fetch.credentialsInUrl=allow fetch https://username:password@localhost 2>err &&
+> +	! grep "$message" err &&
+> +
+> +	test_must_fail git -c fetch.credentialsInUrl=warn fetch https://username:password@localhost 2>err &&
+> +	grep "warning: $message" err >warnings &&
+> +	test_line_count = 3 warnings &&
+> +
+> +	test_must_fail git -c fetch.credentialsInUrl=die fetch https://username:password@localhost 2>err &&
+> +	grep "fatal: $message" err >warnings &&
+> +	test_line_count = 1 warnings
+
+Reusing warnings file for die messages is probably OK ;-)
+
+An extra test with an empty string as a password would have caught
+the differences between using passwd_off and passwd_len to detect
+the presence of a password here.
+
+Taking all together, I'll queue the following on top as a separate
+fix-up patch, but I may well be giving (some) bad pieces of advice,
+so I will wait for others to comment.
+
+Thanks.
+
+ remote.c              | 26 ++++++++++++++++++--------
+ t/t5516-fetch-push.sh |  4 ++++
+ t/t5601-clone.sh      |  4 ++++
+ 3 files changed, 26 insertions(+), 8 deletions(-)
+
+diff --git c/remote.c w/remote.c
+index 59b6839445..2cdc064fa8 100644
+--- c/remote.c
++++ w/remote.c
+@@ -619,25 +619,35 @@ static void validate_remote_url(struct remote *remote)
+ 	int i;
+ 	const char *value;
+ 	struct strbuf redacted = STRBUF_INIT;
++	int warn_not_die;
+ 
+-	if (git_config_get_string_tmp("fetch.credentialsinurl", &value) ||
+-	    !strcmp("allow", value))
++	if (git_config_get_string_tmp("fetch.credentialsinurl", &value))
+ 		return;
+ 
++	if (!strcmp("warn", value))
++		warn_not_die = 1;
++	else if (!strcmp("die", value))
++		warn_not_die = 0;
++	else if (!strcmp("allow", value))
++		return;
++	else
++		die(_("unrecognized value fetch.credentialsInURL: '%s'"), value);
++
+ 	for (i = 0; i < remote->url_nr; i++) {
+-		struct url_info url_info = { NULL };
+-		url_normalize(remote->url[i], &url_info);
++		struct url_info url_info = { 0 };
+ 
+-		if (!url_info.passwd_len)
++		if (!url_normalize(remote->url[i], &url_info) ||
++		    !url_info.passwd_off)
+ 			goto loop_cleanup;
+ 
+ 		strbuf_add(&redacted, url_info.url, url_info.passwd_off);
+ 		strbuf_addstr(&redacted, "<redacted>");
+-		strbuf_addstr(&redacted, url_info.url + url_info.passwd_off + url_info.passwd_len);
++		strbuf_addstr(&redacted,
++			      url_info.url + url_info.passwd_off + url_info.passwd_len);
+ 
+-		if (!strcmp("warn", value))
++		if (warn_not_die)
+ 			warning(_("URL '%s' uses plaintext credentials"), redacted.buf);
+-		if (!strcmp("die", value))
++		else
+ 			die(_("URL '%s' uses plaintext credentials"), redacted.buf);
+ 
+ loop_cleanup:
+diff --git c/t/t5516-fetch-push.sh w/t/t5516-fetch-push.sh
+index afb9236bee..a67acc3263 100755
+--- c/t/t5516-fetch-push.sh
++++ w/t/t5516-fetch-push.sh
+@@ -1821,6 +1821,10 @@ test_expect_success 'fetch warns or fails when using username:password' '
+ 
+ 	test_must_fail git -c fetch.credentialsInUrl=die fetch https://username:password@localhost 2>err &&
+ 	grep "fatal: $message" err >warnings &&
++	test_line_count = 1 warnings &&
++
++	test_must_fail git -c fetch.credentialsInUrl=die fetch https://username:@localhost 2>err &&
++	grep "fatal: $message" err >warnings &&
+ 	test_line_count = 1 warnings
+ '
+ 
+diff --git c/t/t5601-clone.sh w/t/t5601-clone.sh
+index ddc4cc7ec2..cf0a3ef3f4 100755
+--- c/t/t5601-clone.sh
++++ w/t/t5601-clone.sh
+@@ -82,6 +82,10 @@ test_expect_success 'clone warns or fails when using username:password' '
+ 
+ 	test_must_fail git -c fetch.credentialsInUrl=die clone https://username:password@localhost attempt3 2>err &&
+ 	grep "fatal: $message" err >warnings &&
++	test_line_count = 1 warnings &&
++
++	test_must_fail git -c fetch.credentialsInUrl=die clone https://username:@localhost attempt3 2>err &&
++	grep "fatal: $message" err >warnings &&
+ 	test_line_count = 1 warnings
+ '
+ 
