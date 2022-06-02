@@ -2,116 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 192BDC43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 15:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A6ABC433EF
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 15:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236305AbiFBPCO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 11:02:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60714 "EHLO
+        id S231757AbiFBPS7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 11:18:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234002AbiFBPCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 11:02:14 -0400
-Received: from nmsh6.e.nsc.no (nmsh6.e.nsc.no [148.123.160.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1361268F8D
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 08:02:12 -0700 (PDT)
-Received: from Lorule.wifi.realnett.no (unknown [194.19.73.58])
-        (Authenticated sender: joak-pet@online.no)
-        by nmsh6.e.nsc.no (smtp.online.no) with ESMTPA id 23EF11D4138;
-        Thu,  2 Jun 2022 17:02:09 +0200 (CEST)
-From:   Joakim Petersen <joak-pet@online.no>
-To:     git@vger.kernel.org
-Cc:     Joakim Petersen <joak-pet@online.no>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Justin Donnelly <justinrdonnelly@gmail.com>
-Subject: [PATCH v2] git-prompt: make colourization consistent
-Date:   Thu,  2 Jun 2022 16:59:35 +0200
-Message-Id: <20220602145935.10512-1-joak-pet@online.no>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220601134414.66825-1-joak-pet@online.no>
-References: <20220601134414.66825-1-joak-pet@online.no>
+        with ESMTP id S229899AbiFBPS6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 11:18:58 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F044526270F
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 08:18:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1654183098;
+        bh=c1RVpUguBlEVBfs8ia5uQRHPkSqFYSHDM8BDHKuYbIY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=flNrDOn/JWrtCNP5BbZLI1Qn0M86+6Q6g1ZfmjL2EmFNfwzDi2j2XfZeNX8DWe/o/
+         edkXdPokTKZKnG/mLnr5U1um+S0the8tRKGAaGREYOWKjrnmVQrwzZV4xRARhVIgzO
+         hfQtLT/jYMaEKs3GvLFd06aNP3IqeNsAaNDD4eu0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.206.165] ([89.1.212.145]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mr9G2-1nTVlf3zeg-00oCVq; Thu, 02
+ Jun 2022 17:18:18 +0200
+Date:   Thu, 2 Jun 2022 17:18:13 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Josh Steadmon <steadmon@google.com>, congdanhqx@gmail.com,
+        dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH] ls-tree: test for the regression in 9c4d58ff2c3
+In-Reply-To: <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2206021703110.349@tvgsbejvaqbjf.bet>
+References: <xmqqee28spni.fsf@gitster.g> <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Source-IP: 194.19.73.58
-X-Scanned-By: MIMEDefang 2.84 on 10.123.160.200
+Content-Type: multipart/mixed; boundary="8323328-1960034853-1654183098=:349"
+X-Provags-ID: V03:K1:rxh8JlGx4YWUwA/G3hEskGnETg3wrqqpg1VX+OP5MG9Ns7jtDDO
+ 4ZXJXtzXdP2vmjArWiLT/6hAv13ISAjqL9nyMYh3Mf0fK3CuE7oPBk7jCsNwnguca/2H4NO
+ e3vle3gKolGiUkjrgvg94PymJbkf7e9G7IeyrOOAISUFmniH42Mk1MZ3OTxtqx65hLPwI6m
+ z/l6KYKOMOVdTCQzCWCSw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Gfeqsn8vU7Y=:KiUpBt3IcZYxJTZiQZY1UZ
+ G765nzY+M4tz3nNSpm/R907utPm/ZgW4/oOiqi08yO7gmfupAuBqAgJbSMVQGOHVtO543lufq
+ nEASa4GnrHo7WfYtHKiMSAeSF68HhZ6IJPkzMW8JF3DVHQoxYiSNFu24hiC9S7cYHx7HoL4E7
+ UyeuUdkqwoYxVltISqMBrAAOL5dPp+z+vMDi5kYDHU26AkyeTDNRoWdbumVglHGMEXfBbj+G7
+ KmZlZS2H5HGCsPK8kOiAsAnMLg70mC9TWMPm8QTjn+LEWgQ5qZwmvK/3knKIXDirY99R+Dwcy
+ vNTUsQw92Z4pql/v8oOvNY3Sb6nh5Y80sBAxabK4GfKxpSPo8o+/BLgEhCAP6fTf71EC/kRNS
+ /eh76rmmjamVXjKNYEuYbgkSfcHxLafFBJnwGGxJFgo4LT4KzrCj3DUIFdp0kIEK4BvFuiJb8
+ yLP7PsXgZdkXA8h+XmXG3NGmtk2tL05DbtIKHyWx3maFxE8qexuTtapwRHSqLqaZV78MzncIc
+ nEjqo7KZ5pXmZVwcwRqEvreUqJsXZFngaX7rsAfcQTA7W95m2ltGS96x4W1bp/o03x2YbPz0I
+ duJEbIKLVy4vf8vG+oClEFysZO4xL0oyQRmcmbBu7GmTWb1K++oMk8ma7vROqWEPZ3yODfUk8
+ 9aOpIL4JQfN20c+raaWH4++LBmqNyhlVMGAsrvbhNo8PIF9D2qQToiP6UBdLcJEWdlhYPnVDe
+ /SVvTdazPOJTnhytFHVZoDMjxZpov1cC3m90FqlWMqwvp+wQoqjMkaBqOhP+cBg8BhC6Ph1Pk
+ 8gMyH59SZIp3Qi70EqzAqpnLmiyYaxXjCCX/Isi++bXvNt1XB6dX9dC2cRDocTc7rLw/OliDz
+ bB1YGh095RTUvHXMnn1moONYuuVma4kkllogWgtwQHVPwWsy1PgWcPG4Aen6DNWj8TEEbzDNZ
+ yBv7w78cbx1szfD1hDFci1t8UEVYuHv9B0WbWQQP2UVNP2C5xwMOohxsN4oeyPo9nY+uO9pia
+ YisNwassiq/H/rcvvctl6wm7+vTVe87rgFoa43IBZQ0GmaxPuGDfc3Ty44lSZl3Ssd0fZYUqP
+ l/je9K/3ZZLpurP9So1fHwY434Fx3GIN0UyNdkaPeXakEn3NoxwZu61Pw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The short upstream state indicator inherits the colour of the last short
-state indicator before it (if there is one), and the sparsity state
-indicator inherits this colour as well. Make the colourization of these
-state indicators consistent by clearing any colour before printing the
-short upstream state indicator, as this immediately follows the last
-coloured indicator.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-As of 0ec7c23cdc6 (git-prompt: make upstream state indicator location
-consistent, 2022-02-27), colourization in the output of __git_ps1 has
-changed such that the short upstream state indicator inherits the colour
-of the last short state indicator before it (if there is one), while
-before this change it was white/the default text colour. Some examples
-to illustrate this behaviour (assuming all indicators are enabled and
-colourization is on):
- * If the local tree is clean and there is something in the stash, both
-   the '$' and the short upstream state indicator following it will be
-   blue.
- * If the local tree has new, untracked files, both the '%' and the
-   short upstream state indicator will be red.
- * If all local changes are added to the index and the stash is empty,
-   both the '+' and the short upstream state indicator following it will
-   be green.
- * If the local tree is clean and there is nothing in the stash, the
-   short upstream state indicator will be white/${default text colour}.
+--8323328-1960034853-1654183098=:349
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-This appears to be an unintended side-effect of the change, and makes
-little sense semantically (e.g. why is it bad to be in sync with
-upstream when you have uncommitted local changes?). The cause of the
-change is that previously, the short upstream state indicator appeared
-immediately after the rebase/revert/bisect/merge state indicator (note
-the position of $p in $gitstring):
+Hi =C3=86var,
 
-	local f="$h$w$i$s$u"
-	local gitstring="$c$b${f:+$z$f}${sparse}$r$p"
-	
-Said indicator is prepended with the clear colour code, and the short
-upstream state indicator is thus also uncoloured. Now, the short
-upstream state indicator follows the sequence of colourized indicators,
-without any clearing of colour (again note the position of $p, now in
-$f):
+On Tue, 31 May 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-	local f="$h$w$i$s$u$p"
-	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}"
+> Add a test for the regression introduced in my 9c4d58ff2c3 (ls-tree:
+> split up "fast path" callbacks, 2022-03-23) and fixed in
+> 350296cc789 (ls-tree: `-l` should not imply recursive listing,
+> 2022-04-04), and test for the test of ls-tree option/mode combinations
+> to make sure we don't have other blind spots.
 
-However, adding a clearing of colour before the short upstream state
-indicator will change how the sparsity state indicator is colourized,
-as it currently inherits (and before the change referenced also
-inherited) the colour of the last short state indicator before it.
-Reading the commit message of the change that introduced the sparsity
-state indicator, afda36dbf3b (git-prompt: include sparsity state as
-well, 2020-06-21), it appears this colourization also was unintended,
-so clearing the colour for said indicator further increases consistency.
+That's adding a lot of new test cases, which is not free of cost.
 
-Signed-off-by: Joakim Petersen <joak-pet@online.no>
----
+> Range-diff:
+> [... 433 lines, essentially a rewrite...]
 
-Range-diff against v1:
-1:  e235caa7a8 = 1:  e235caa7a8 git-prompt: make colourization consistent
+Pasting 443 lines of range-diff also is not free of cost.
 
- contrib/completion/git-prompt.sh | 1 +
- 1 file changed, 1 insertion(+)
+> diff --git a/t/t3105-ls-tree-output.sh b/t/t3105-ls-tree-output.sh
+> new file mode 100755
+> index 00000000000..29511d9331b
+> --- /dev/null
+> +++ b/t/t3105-ls-tree-output.sh
+> @@ -0,0 +1,192 @@
+> +#!/bin/sh
+> +
+> +test_description=3D'ls-tree output'
+> +
+> [...]
+> +'
+> +
+> +test_ls_tree_format_mode_output () {
+> +	local opts=3D$1 &&
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 87b2b916c0..dfd6cef35f 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -286,6 +286,7 @@ __git_ps1_colorize_gitstring ()
- 	if [ -n "$u" ]; then
- 		u="$bad_color$u"
- 	fi
-+	p="$c_clear$p"
- 	r="$c_clear$r"
- }
- 
--- 
-2.36.1
+This line does not quote `$1`, but...
 
+> +	shift &&
+> +	cat >expect &&
+> +
+> +	while test $# -gt 0
+> +	do
+> +		local mode=3D"$1" &&
+> +		shift &&
+> +
+> +		test_expect_success "'ls-tree $opts${mode:+ $mode}' output" '
+> +			git ls-tree ${mode:+$mode }$opts HEAD >actual &&
+> +			test_cmp expect actual
+> +		'
+> +
+> +		case "$opts" in
+> +		--full-tree)
+> +			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subd=
+ir, fails)" '
+> +				test_must_fail git -C dir ls-tree --full-name ${mode:+$mode }$opts =
+HEAD -- ../
+> +			'
+> +			;;
+> +		*)
+> +			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subd=
+ir)" '
+> +				git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../ >ac=
+tual &&
+> +				test_cmp expect actual
+> +			'
+> +			;;
+> +		esac
+> +	done
+> +}
+> +
+> [...]
+> +## opt =3D --object-only --abbrev
+> +test_expect_success 'setup: HEAD_short_* variables' '
+> +	HEAD_short_gitmodules=3D$(git rev-parse --short HEAD:.gitmodules) &&
+> +	HEAD_short_dir=3D$(git rev-parse --short HEAD:dir) &&
+> +	HEAD_short_top_file=3D$(git rev-parse --short HEAD:top-file.t) &&
+> +	HEAD_short_submodule=3D$(git rev-parse --short HEAD:submodule) &&
+> +	HEAD_short_dir_sub_file=3D$(git rev-parse --short HEAD:dir/sub-file.t)
+> +'
+> +test_ls_tree_format_mode_output "--object-only --abbrev" "" "-t" <<-EOF
+
+... this line passes a first argument that contains spaces. Hence the
+tests fail in CI:
+https://github.com/git/git/runs/6703333447?check_suite_focus=3Dtrue
+
+Further, since this failure is outside of any `test_expect_success` or
+`test_expect_failure`, the error message about this is not even included
+in the weblogs (but of course it is included in the full logs that are
+included in the build artifacts). For the record, here is the error
+message:
+
+	[...]
+
+	ok 35 - 'ls-tree --object-only -r' output (via subdir)
+	+ git rev-parse --short HEAD:.gitmodules
+	+ HEAD_short_gitmodules=3D6da7993
+	+ git rev-parse --short HEAD:dir
+	+ HEAD_short_dir=3Daba57e0
+	+ git rev-parse --short HEAD:top-file.t
+	+ HEAD_short_top_file=3D02dad95
+	+ git rev-parse --short HEAD:submodule
+	+ HEAD_short_submodule=3D61a63ac
+	+ git rev-parse --short HEAD:dir/sub-file.t
+	+ HEAD_short_dir_sub_file=3Da150abd
+
+	ok 36 - setup: HEAD_short_* variables
+	t3105-ls-tree-output.sh: 20: local: --abbrev: bad variable name
+	FATAL: Unexpected exit with code 2
+
+Note: I am only pointing out why the CI/PR run fails, I have not formed
+any opinion on the actual code other than noticing a lot of what might be
+repetitive lines and suspecting that adding this many new test cases
+increases the runtime of the test suite and thereby adds to developer
+friction and the benefit (namely, to catch future regressions) might not
+justify that. But again, I have not fully formed an opinion about this
+patch.
+
+Ciao,
+Johannes
+
+--8323328-1960034853-1654183098=:349--
