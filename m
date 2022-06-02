@@ -2,223 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2969C433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 13:53:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8A21CCA47C
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 14:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235605AbiFBNxB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 09:53:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34724 "EHLO
+        id S235684AbiFBOA3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 10:00:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235564AbiFBNww (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 09:52:52 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BF901AA173
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 06:52:51 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id z17so2630727wmf.1
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 06:52:51 -0700 (PDT)
+        with ESMTP id S235649AbiFBOA1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 10:00:27 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD892296300
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 07:00:26 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id 2so4861103iou.5
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 07:00:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=lQUV46032B+RDVGoe9w/TiOva8DdwMfNUVNzl1mBHU0=;
-        b=hIMiNnnn5c5hORC2SCaM/J1zuF1OfvYcYyKyERAEGoasdlbTk2Zb4HliWyAFK6Zqi/
-         jwP6n4VLGid2Hxur8fmtvvkyk1JWXHhabkmTjYn+5tLudUaayWPYNF/ssPioAF/dZNa4
-         RKqtfyaiXsoApxopcZgQeHrIkIIvIcUJYpG8+Rmtke9noxpg0pBKIhbJQUB+q6ByYH8o
-         c3bzPrbE65w+W8TsCUcZe2EMHeYSx0T0N9ILxzxg2bX9Oj6SMM0Fy6kwQ6w9TtwAXhzm
-         A/58x6jGIF3uyMixDaB6+2OH7za19F5c0deUVKNPkjnvLlt7DhVx7LMFfuqzmw9CH4JE
-         7k3g==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=WicDmpoOsrzukFjkitbC66HoMUYDfsF7MSRgjslMc/Q=;
+        b=ccQ0riz9Ov3OLn+FduafAGwhQzz4Q2LaxUwKM/fauY4m0BUowCSt8RvRdRbUi7655a
+         vFfwwRBn1FU0WWohsACz02N//jZ/GnvDn68hE0OPAHpaL5coyxAiXkZieRleD4sY/YKH
+         y34FpsfoWqkFkBF7C6dijrjwcM4LtNkkiVA47kkPrQ5fG67O0sawA7peXskfITexv6In
+         cOBiYHekQt6CQj6T4hieoKJH5BiqF4OWTOWXjfMJXrkYAcprp3OK9VizvDJL7nfkFNAc
+         DLKDhCSP0ANWUuNF/7jIcOipacW7JxflOrKVu30fWrNVqA5gLiSV4MptB959s8vjpB0v
+         iG5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lQUV46032B+RDVGoe9w/TiOva8DdwMfNUVNzl1mBHU0=;
-        b=Vbxgr7yXmtgqqroGXpIuxrsvBY3spffos7bUi37I8OQMDAXGl5gkWitzVWyGlyqSBz
-         OO7dzy8n7a+5d7DRRmjE3x5o1wWRxjTrE1lp4Pd7oC1xIrlaVwkOALZQRDm8bhi4iYUd
-         hUvGxsSu0GfSz0fu+eHVSI3rTzlc4wdPVkbOCOjqHTzXwn8oE/o7va86wDyfDzWJfZ2v
-         uW9uuoFb5A+0dQUwZpExXVgUzfJLz/LBHq0C9/aItzLJOKwilVP7bH5rFys6y9DsrxR7
-         g5DHR+VfjHNTRLAFNtdlsbRcSS2Noq3uVJzL0H7Ipqi2J9I66IAtrJKWI2CZmwOWIFW4
-         mQuQ==
-X-Gm-Message-State: AOAM531BgWabGKqOC/st0A0OfAez8GGaZw0T5b3GZ3tLxcqw08/E6K53
-        IGquBMHZrSJG+oU793rofLl/sRkmgnUM9PdQ
-X-Google-Smtp-Source: ABdhPJzd26I2nQM3bs4Ph0N9l9++Wp0Q73UHDgI6iEV5x9cInw2iXAobhiB2AIf4h2/JrK/9ea8HHA==
-X-Received: by 2002:a05:600c:3646:b0:397:326d:eac7 with SMTP id y6-20020a05600c364600b00397326deac7mr4211437wmq.43.1654177969450;
-        Thu, 02 Jun 2022 06:52:49 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x8-20020adff0c8000000b00210a6bd8019sm4209695wro.8.2022.06.02.06.52.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 06:52:48 -0700 (PDT)
-Message-Id: <976361e624a3dd58c8f291358d42f4e4c66eb266.1654177966.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1246.git.1654177966.gitgitgadget@gmail.com>
-References: <pull.1246.git.1654177966.gitgitgadget@gmail.com>
-From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 02 Jun 2022 13:52:45 +0000
-Subject: [PATCH 1/2] bitmap-format.txt: fix some formatting issues
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=WicDmpoOsrzukFjkitbC66HoMUYDfsF7MSRgjslMc/Q=;
+        b=mtf6tayqOYw5yf2DmN9g7DwnWwfuITVeX1NTg0LUBv2KB+bFXIro5kOsk52N3kdk/2
+         HzY5GBmx1Ok98o5OAEUtUWXtFO1R2uvzeLFu/CQOQNO8ViM6WEVO7n3Rhz7BwcOoFIcj
+         mGiAi/TsoPEKZBUHtZ3VjabOpBGuJLp2t9rSwZP8JtbeebILi70pgpTee/kt0wkxQ+ft
+         cOPxRJDR1ff+Q4gD2ZRX3hA91WnLbzil9RBGNArp+7hGZgIkNAQtXydsAxlU3x3cSKXC
+         1RQjg8msbVrBWU5+ONdbTxI4+KBa47EKZYrSYBXXwqjvr9Q28ZtAGRnp9Vhck+4JiKmx
+         IhCA==
+X-Gm-Message-State: AOAM532DpmOMQ6A1VFw0pu0obHSi5Cxot/foJjD7E/qnHjYHhl0aJT35
+        khD+/6yaGi4ZNLYTS8eXi9LY
+X-Google-Smtp-Source: ABdhPJxdLZBkFlIKIMT0zC7oOeSeB53DuwFDIo7hz+q/Iq1Db79yktvg9mtBIB30LpY/HNQAHkkpMg==
+X-Received: by 2002:a05:6638:b81:b0:32e:5009:192d with SMTP id b1-20020a0566380b8100b0032e5009192dmr3076525jad.28.1654178426153;
+        Thu, 02 Jun 2022 07:00:26 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9cc9:fda3:3ddf:6700? ([2600:1700:e72:80a0:9cc9:fda3:3ddf:6700])
+        by smtp.gmail.com with ESMTPSA id d11-20020a92d78b000000b002d3a77b2b40sm1420095iln.11.2022.06.02.07.00.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jun 2022 07:00:25 -0700 (PDT)
+Message-ID: <d0448d28-b33c-3f42-901d-3cd7f4201c78@github.com>
+Date:   Thu, 2 Jun 2022 10:00:24 -0400
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 0/2] Integrate Scalar into the CI builds
+Content-Language: en-US
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+On 6/2/2022 5:05 AM, Johannes Schindelin via GitGitGadget wrote:
+> During the review of the initial Scalar patch series, it was suggested to
+> include Scalar in Git's CI builds. Due to some conflicts, this was postponed
+> to a later patch series: This patch series.
 
-The asciidoc generated html for `Documentation/technical/bitmap-
-format.txt` is broken. This is mainly because `-` is used for nested
-lists (which is not allowed in asciidoc) instead of `*`.
+It's good to start running Scalar builds and tests during CI before
+moving from contrib/. We can establish a pattern that the code is
+not causing build failures, and demonstrate that the tests succeed
+consistently. Better to do that while still in the mode where we can
+easily reverse course.
+ 
+> Note that the changes to the GitHub workflow are somewhat transient in
+> nature: Based on the feedback I received on the Git mailing list, I see some
+> appetite for turning Scalar into a full-fledged top-level command in Git,
+> similar to gitk. Therefore my current plan is to do exactly that in the end
+> (and I already have patches lined up to that end). This will essentially
+> revert the ci/run-build-and-tests.sh change in this patch series.
 
-Fix these and also reformat it (e.g. removing some blank lines) for
-better readability of the html page.
+I expect that this won't be a full remote, since we will still want to
+exclude Scalar from the build without INCLUDE_SCALAR enabled.
 
-Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
----
- Documentation/technical/bitmap-format.txt | 96 +++++++++++------------
- 1 file changed, 45 insertions(+), 51 deletions(-)
-
-diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
-index 04b3ec21785..110d7ddf8ed 100644
---- a/Documentation/technical/bitmap-format.txt
-+++ b/Documentation/technical/bitmap-format.txt
-@@ -39,7 +39,7 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
- 
- == On-disk format
- 
--	- A header appears at the beginning:
-+	* A header appears at the beginning:
- 
- 		4-byte signature: {'B', 'I', 'T', 'M'}
- 
-@@ -48,35 +48,30 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
- 			of the bitmap index (the same one as JGit).
- 
- 		2-byte flags (network byte order)
--
- 			The following flags are supported:
--
--			- BITMAP_OPT_FULL_DAG (0x1) REQUIRED
--			This flag must always be present. It implies that the
--			bitmap index has been generated for a packfile or
--			multi-pack index (MIDX) with full closure (i.e. where
--			every single object in the packfile/MIDX can find its
--			parent links inside the same packfile/MIDX). This is a
--			requirement for the bitmap index format, also present in
--			JGit, that greatly reduces the complexity of the
--			implementation.
--
--			- BITMAP_OPT_HASH_CACHE (0x4)
--			If present, the end of the bitmap file contains
--			`N` 32-bit name-hash values, one per object in the
--			pack/MIDX. The format and meaning of the name-hash is
--			described below.
-+				- BITMAP_OPT_FULL_DAG (0x1) REQUIRED
-+				This flag must always be present. It implies that the
-+				bitmap index has been generated for a packfile or
-+				multi-pack index (MIDX) with full closure (i.e. where
-+				every single object in the packfile/MIDX can find its
-+				parent links inside the same packfile/MIDX). This is a
-+				requirement for the bitmap index format, also present in
-+				JGit, that greatly reduces the complexity of the
-+				implementation.
-+				- BITMAP_OPT_HASH_CACHE (0x4)
-+				If present, the end of the bitmap file contains
-+				`N` 32-bit name-hash values, one per object in the
-+				pack/MIDX. The format and meaning of the name-hash is
-+				described below.
- 
- 		4-byte entry count (network byte order)
--
- 			The total count of entries (bitmapped commits) in this bitmap index.
- 
- 		20-byte checksum
--
- 			The SHA1 checksum of the pack/MIDX this bitmap index
- 			belongs to.
- 
--	- 4 EWAH bitmaps that act as type indexes
-+	* 4 EWAH bitmaps that act as type indexes
- 
- 		Type indexes are serialized after the hash cache in the shape
- 		of four EWAH bitmaps stored consecutively (see Appendix A for
-@@ -84,7 +79,6 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
- 
- 		There is a bitmap for each Git object type, stored in the following
- 		order:
--
- 			- Commits
- 			- Trees
- 			- Blobs
-@@ -97,39 +91,39 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
- 		in a full set (all bits set), and the AND of all 4 bitmaps will
- 		result in an empty bitmap (no bits set).
- 
--	- N entries with compressed bitmaps, one for each indexed commit
-+	* N entries with compressed bitmaps, one for each indexed commit
- 
- 		Where `N` is the total amount of entries in this bitmap index.
- 		Each entry contains the following:
- 
--		- 4-byte object position (network byte order)
--			The position **in the index for the packfile or
--			multi-pack index** where the bitmap for this commit is
--			found.
--
--		- 1-byte XOR-offset
--			The xor offset used to compress this bitmap. For an entry
--			in position `x`, a XOR offset of `y` means that the actual
--			bitmap representing this commit is composed by XORing the
--			bitmap for this entry with the bitmap in entry `x-y` (i.e.
--			the bitmap `y` entries before this one).
--
--			Note that this compression can be recursive. In order to
--			XOR this entry with a previous one, the previous entry needs
--			to be decompressed first, and so on.
--
--			The hard-limit for this offset is 160 (an entry can only be
--			xor'ed against one of the 160 entries preceding it). This
--			number is always positive, and hence entries are always xor'ed
--			with **previous** bitmaps, not bitmaps that will come afterwards
--			in the index.
--
--		- 1-byte flags for this bitmap
--			At the moment the only available flag is `0x1`, which hints
--			that this bitmap can be re-used when rebuilding bitmap indexes
--			for the repository.
--
--		- The compressed bitmap itself, see Appendix A.
-+			** 4-byte object position (network byte order)
-+				The position **in the index for the packfile or
-+				multi-pack index** where the bitmap for this commit is
-+				found.
-+
-+			** 1-byte XOR-offset
-+				The xor offset used to compress this bitmap. For an entry
-+				in position `x`, a XOR offset of `y` means that the actual
-+				bitmap representing this commit is composed by XORing the
-+				bitmap for this entry with the bitmap in entry `x-y` (i.e.
-+				the bitmap `y` entries before this one).
-+
-+				Note that this compression can be recursive. In order to
-+				XOR this entry with a previous one, the previous entry needs
-+				to be decompressed first, and so on.
-+
-+				The hard-limit for this offset is 160 (an entry can only be
-+				xor'ed against one of the 160 entries preceding it). This
-+				number is always positive, and hence entries are always xor'ed
-+				with **previous** bitmaps, not bitmaps that will come afterwards
-+				in the index.
-+
-+			** 1-byte flags for this bitmap
-+				At the moment the only available flag is `0x1`, which hints
-+				that this bitmap can be re-used when rebuilding bitmap indexes
-+				for the repository.
-+
-+			** The compressed bitmap itself, see Appendix A.
- 
- == Appendix A: Serialization format for an EWAH bitmap
- 
--- 
-gitgitgadget
-
+Thanks,
+-Stolee
