@@ -2,115 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4C17C433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 07:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD9D1C43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 08:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231715AbiFBH06 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 03:26:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39852 "EHLO
+        id S232406AbiFBIis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 04:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231169AbiFBH04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 03:26:56 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB9DC28B5C1
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 00:26:50 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id j7so4162996pjn.4
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 00:26:50 -0700 (PDT)
+        with ESMTP id S232324AbiFBIiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 04:38:46 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B6529A628
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 01:38:44 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id s12so1348844ejx.3
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 01:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kkYo7Mr+AlZm7eYxF5aHpNZUVxf95ZBUq5Od4TLvSMQ=;
-        b=ppVqZ/9YkQkBvpaTluoc8ihvA9ZR8ZpOPQT8EODbDvdWBxTM3L7pHCa/UfvZ8tYjt2
-         VyvqwWjB27qsEWg8x3UN3UFCLtqZPfoOIjR/SL0IkGWKU9OIKv197OBKw6bZd0q4+z//
-         xwOfpTJ4UoCqxrlUATLEutZAks98hxTsK93HoldRTpIgKVMlUZcajAMLpLeg1XyTVhmv
-         GkhMCYJeP4hGaQlxeP7QdhxGwLR1FSHgWTc5rIX35xbn+dYg82TvxgLG/AoKT8nEzJep
-         te8QSNLWNsZtLS0A6SXluzgcjustbR4+n0Q2djJ6vp8vBmhpYt9jaSNzjUlwElKbQXDP
-         Nkxg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=sdRIeGhRWY2aEfU+qdkUIxO6Qx601KR4vb/EjLwTcyI=;
+        b=lS7Xqbt0BbciQxzQst1l2PEgRqmYcor0t5w8+GgSwwBShi0DZzOksirt9lB9dtHpIw
+         mdf9gO4qPLWFLRxpKDn4x3VBDzzJDaWqzp7cMwnv4m2EQGZ8rmP8gNabex69HhvAlbfm
+         hsdEVKlxf1UyVjqUdf7NlS7Pf5eSawZyIZwfOUl8Rl9z5m/eA4x+uzYNFcIcYlRQyZXS
+         OgGHt8ztios8D9MavL4AMTseS6DAws34pXPhX9tb88GnxvlURRBqyt3Q/ujM8GqnnADI
+         sogLtyYq+0ydZEykeU1e+wBj4S0gz8TJtMZC3dDCc8pXXTYv5MEQSsFzQJHpPXR6MWfT
+         RJhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=kkYo7Mr+AlZm7eYxF5aHpNZUVxf95ZBUq5Od4TLvSMQ=;
-        b=l26TkxlhG9w8DQ/cz25yKR7j9S1hKGIHmTQc7FQVeB35xgexZZn7i7HR0oIODbcnyq
-         i1ZSaXCyvrWtU1EnEhVo4VYBJGVwNpHoKfQLsPbc1P+pmB63YUNLQ53O0ezqKHeMW9Oi
-         Lh8+pzeKETS/py5yRZZPtANmzMlwAxFW8JaZ4qKsImyceZISdtbZ1FHIYAgsT2TWOAeG
-         682wOVVfvsUDVGYRrR02JPZczWV+CUBDaYAxMFqejKINQVcBcaqfbcyUxyMJbJWOFxwP
-         WMiPLmaoMH7RS4o2QLiHgYzxhF5ZnwwdsxjoFoU5PTTde1qKdbhGVeLr2TO28dR2renF
-         nUsg==
-X-Gm-Message-State: AOAM5310KvxkImZDSgKUqJUD18ViI0CdpQwjvRmLgkBNpKtk7F5saU70
-        Miluxs+ulET/LzkZzK905y4=
-X-Google-Smtp-Source: ABdhPJzgNmi8Vrd3Xa/92AwgNqmR3bJV7uOHLlb+Idt9LtIdFGGhekCeawpyFL7JOBFQNqYZxRX41Q==
-X-Received: by 2002:a17:902:e94e:b0:158:91e6:501 with SMTP id b14-20020a170902e94e00b0015891e60501mr3544967pll.29.1654154810403;
-        Thu, 02 Jun 2022 00:26:50 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-21.three.co.id. [180.214.233.21])
-        by smtp.gmail.com with ESMTPSA id i20-20020a635414000000b003f60a8d7dadsm2548473pgb.15.2022.06.02.00.26.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jun 2022 00:26:49 -0700 (PDT)
-Message-ID: <530f7bb4-9f12-f681-0188-878054c4efbf@gmail.com>
-Date:   Thu, 2 Jun 2022 14:26:43 +0700
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=sdRIeGhRWY2aEfU+qdkUIxO6Qx601KR4vb/EjLwTcyI=;
+        b=aRL+C8VNEeuDvXyuryulpJakdr8v+I41WadblzM1/1MhN60HOomtPEeet8Pnm+yDfY
+         0xxFoOsHUcDUOSXy3umZ48yjpjUgtFkFhxmFK8vJbiSfjL60cwu+wta01peSyQwe6RVP
+         5vinKyAwk54mpHy32Wuz5j/OhtBwUM+S5mQkFDfPrQfaPSR6oGD5tFIOfozZGgsxVLnp
+         P1Jr17qJm9eRGsa5D11L67bNehey4d6LynGFurxsAYpTMTPMy7YgSJIRdNWjkJjHV0Pt
+         XAmaNKGl99gLa0ck3g/OU67hQGPvnRyDthT/i2Wm7OHKyHIzUyu7I/jbMAk6qwb785VO
+         2BeA==
+X-Gm-Message-State: AOAM530BUIfRrEX40/FDuYzZGlf8TS5RqAOt6mzEoeRZx7twFa+XUz03
+        uUgxAiBxdKJt0IMIbQD9QstWu633OsA=
+X-Google-Smtp-Source: ABdhPJzoTHR42RM0T/65a0P9IBsl9MKKiIuwPwEyxNpIi2C7VZdfGaRcxT8/w3bOuYQd8nbRn2ao0g==
+X-Received: by 2002:a17:907:1c8d:b0:6f2:eb2:1cd6 with SMTP id nb13-20020a1709071c8d00b006f20eb21cd6mr3130591ejc.568.1654159122955;
+        Thu, 02 Jun 2022 01:38:42 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id t20-20020a1709066bd400b006fea3702e56sm1523654ejs.79.2022.06.02.01.38.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 01:38:42 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nwgLo-001Ndm-P8;
+        Thu, 02 Jun 2022 10:38:40 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: gc/zero-length-branch-config-fix (was Re: What's cooking in
+ git.git (Jun 2022, #01; Wed, 1))
+Date:   Thu, 02 Jun 2022 10:37:39 +0200
+References: <xmqqee07q3xc.fsf@gitster.g>
+ <kl6lfskneugf.fsf@chooglen-macbookpro.roam.corp.google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <kl6lfskneugf.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220602.86mtevzchb.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH] gitweb: switch to a modern DOCTYPE
-Content-Language: en-US
-To:     Jason Yundt <jason@jasonyundt.email>, git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20220601012647.1439480-1-jason@jasonyundt.email>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <20220601012647.1439480-1-jason@jasonyundt.email>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/1/22 08:26, Jason Yundt wrote:
-> According to the HTML Standard FAQ:
-> 
-> 	“What is the DOCTYPE for modern HTML documents?
-> 
-> 	In text/html documents:
-> 
-> 		<!DOCTYPE html>
-> 
-> 	In documents delivered with an XML media type: no DOCTYPE is required
-> 	and its use is generally unnecessary. However, you may use one if you
-> 	want (see the following question). Note that the above is well-formed
-> 	XML.”
-> 
-> 	Source: [1]
-> 
-> Gitweb uses an XHTML 1.0 DOCTYPE:
-> 
-> 	<!DOCTYPE html PUBLIC
-> 	"-//W3C//DTD XHTML 1.0 Strict//EN"
-> 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-> 
-> While that DOCTYPE is still valid [2], it has several disadvantages:
-> 
-> 1. It’s misleading. The DTD that browsers are supposed to use with that
->    DOCTYPE has nothing to do with XHTML 1.0 and isn’t available at the URL
->    that is given [2].
-> 2. It’s obsolete. XHTML 1.0 was last revised in 2002 and was superseded in
->    2018 [3].
-> 3. It’s unreliable. Gitweb uses &nbsp; and &sdot; but lets an external file
->    define them. “[…U]using entity references for characters in XML documents
->    is unsafe if they are defined in an external file (except for &lt;, &gt;,
->    &amp;, &quot;, and &apos;).” [4]
-> 
-> [1]: <https://github.com/whatwg/html/blob/main/FAQ.md#what-is-the-doctype-for-modern-html-documents>
-> [2]: <https://html.spec.whatwg.org/multipage/xhtml.html#parsing-xhtml-documents>
-> [3]: <https://www.w3.org/TR/xhtml1/#xhtml>
-> [4]: <https://html.spec.whatwg.org/multipage/xhtml.html#writing-xhtml-documents>
-> 
-> Signed-off-by: Jason Yundt <jason@jasonyundt.email>
 
-So basically what this patch does is switch to HTML5, right? That is because
-I can see DOCTYPE "upgrade" to use "<!DOCTYPE html>", which is the DOCTYPE
-for HTML5. If it does, then mention HTML5 in v2.
+On Wed, Jun 01 2022, Glen Choo wrote:
 
--- 
-An old man doll... just what I always wanted! - Clara
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> * gc/zero-length-branch-config-fix (2022-06-01) 2 commits
+>>  - remote.c: reject 0-length branch names
+>>  - remote.c: don't BUG() on 0-length branch names
+>>
+>>  A misconfigured 'branch..remote' led to a bug in configuration
+>>  parsing.
+>>
+>>  Will merge to 'next'?
+>>  source: <pull.1273.git.git.1654038754.gitgitgadget@gmail.com>
+>
+> I'm happy to see this go to 'next' if =C3=86var doesn't have any lingering
+> concerns over the commit message [1].
+>
+> [1] https://lore.kernel.org/git/kl6lilpke31e.fsf@chooglen-macbookpro.roam=
+.corp.google.com
+
+I'm happy to have it advance to "next" as-is. I just had a question
+about if we thought this config existed in the wild, but that & the
+answer can just live in the ML archive. Thanks.
