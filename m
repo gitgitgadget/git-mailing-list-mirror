@@ -2,98 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26804C43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 06:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56A8AC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 06:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230403AbiFBGLA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 02:11:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60562 "EHLO
+        id S231180AbiFBGdB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 02:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230106AbiFBGK7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 02:10:59 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760111DA0B6
-        for <git@vger.kernel.org>; Wed,  1 Jun 2022 23:10:58 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AED2418B25B;
-        Thu,  2 Jun 2022 02:10:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ht3P2+dVcMl1
-        Hx3WEAMhf5c9acR6M8Up+7WA1X85BX0=; b=iaYiAI0sqk+/vIgCLTaR2WF61BYB
-        4KaXNcJ107Gj7Tx+C34I5tftf4BMHPccM+6JxGEzNXeT9ipNxn41FnFtNSbjYZRc
-        LDwOFlQ8KGPheuStowtUhGU3asgcDRPv5KiHX9iC8xz6wjX6CHDWsYuMnmxFzu/O
-        USbjgZeSxs18IZE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4D3418B25A;
-        Thu,  2 Jun 2022 02:10:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4D41818B255;
-        Thu,  2 Jun 2022 02:10:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Jason Yundt <jason@jasonyundt.email>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] gitweb: switch to a modern DOCTYPE
-References: <20220601012647.1439480-1-jason@jasonyundt.email>
-        <YpgHUm93840oBtib@camp.crustytoothpaste.net>
-Date:   Wed, 01 Jun 2022 23:10:53 -0700
-In-Reply-To: <YpgHUm93840oBtib@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Thu, 2 Jun 2022 00:41:54 +0000")
-Message-ID: <xmqqa6avppci.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230462AbiFBGc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 02:32:59 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9FB31203E3
+        for <git@vger.kernel.org>; Wed,  1 Jun 2022 23:32:57 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id z7so4945857edm.13
+        for <git@vger.kernel.org>; Wed, 01 Jun 2022 23:32:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tkePSHpkrh7PQXG31Qtq0DfMARI+3i1pC93HIiLxpnI=;
+        b=BnSDwwBbUmtkceKGim+ByuJKvyNWIk9hOcVrsku8dZn3jaLBwQYMLiwzimeEU7EATn
+         gPeCmEmo6ErOBOuaKep1Rl+rq6P12s+hS02Mk2cfokTYoNQme/SYVAfhG6UYty5DnMNG
+         Dsd967QGrGZkK0sggbjZBbfn0iaPicdAWf4X4YRgwa+BdLHwGCxMTViNwP3aaIMMIuOs
+         wMBh2WLfeGP+4DM2FQnR+82R7KdSjpql74mVeQM7B1SZrZkULKGe2qsW5dt9cUnD7lnb
+         XEdreSERHPx34HWhtOcd2OuH/APEYcYknRdwazTLrFm1r68Q7YDi4HzfX7hnq13cWTRT
+         ZyMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tkePSHpkrh7PQXG31Qtq0DfMARI+3i1pC93HIiLxpnI=;
+        b=HwWjgyvVmiBxd6wL8KsqeRUhOhuwR518Xyzg/L8YP2rZPNOMdRzFjnLR927XVFDgnX
+         UKcfzSxIkTEUc6/jmvOqRblOYCGvYDQ1b4eNPFC9d5vkCOXqT6IopSJ+w1PNIKbiEzFC
+         adFAty+kxHSdYuBQi3LvzYAXmFf8Gk766bH5DvUByjHOVPusn5RoxolEuKZwlc3DAnOf
+         2XHSru2pTUIo4dnd6xSaVJMv4Gl7TsvPKXL0hpMfjizupd9XTY4WDLueXAdq2fl98TLt
+         XEioK/hUjpzEhKpqcT9JSlZ5kItLDHAkEkup9ISodvS2NaWHBbiNPhMJ80H8k8EiWdj3
+         aSXA==
+X-Gm-Message-State: AOAM531fVq/m7lXAWo/ECkwZkP//J4kRUmT8ULdtiD8khW/SXNg0hyrD
+        YDsM8w7tvcg+TdPGMnvWCk87X5kuECUUc3NeY90=
+X-Google-Smtp-Source: ABdhPJwGxTrCJ09iFqIevFN5znHhxXFzJG4tBGCbw8ZBNaoPHGpP0PhBDlHBoAqEbxs9+QfJKSlW8p85KB+/gnOxWCg=
+X-Received: by 2002:aa7:cac7:0:b0:42a:b00a:eeb2 with SMTP id
+ l7-20020aa7cac7000000b0042ab00aeeb2mr3653266edt.60.1654151576368; Wed, 01 Jun
+ 2022 23:32:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C2A6343E-E23A-11EC-8E7B-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CAHHcNoe12h5E9OmkZy03-i7miFg2hLiT04BF3_t9C2bcmduR5Q@mail.gmail.com>
+In-Reply-To: <CAHHcNoe12h5E9OmkZy03-i7miFg2hLiT04BF3_t9C2bcmduR5Q@mail.gmail.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Wed, 1 Jun 2022 23:32:45 -0700
+Message-ID: <CAPx1GvfQLP3q-SvW38=VOxoAmQpMMau_UfXXXQiZSV3NOJCs0w@mail.gmail.com>
+Subject: Re: BUG? git stash and immediate git apply results in conflict
+To:     Akos Vandra-Meyer <axos88@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Wed, Jun 1, 2022 at 2:11 PM Akos Vandra-Meyer <axos88@gmail.com> wrote:
+>  git stash -ku
+>  git stash pop
 
->> While that DOCTYPE is still valid [2], it has several disadvantages:
->>=20
->> 1. It=E2=80=99s misleading. The DTD that browsers are supposed to use =
-with that
->>    DOCTYPE has nothing to do with XHTML 1.0 and isn=E2=80=99t availabl=
-e at the URL
->>    that is given [2].
->
-> While the WHATWG may claim that, an XML parser is absolutely within its
-> rights to refer to and use that DTD, and in fact should do so unless it=
-s
-> catalog directs it elsewhere.  It may be that some browsers use an
-> internal catalog that refers to a different DTD, however.
->
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index 606b50104c..1835487ab2 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -4219,7 +4219,10 @@ sub git_header_html {
->>  	my $mod_perl_version =3D $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : ''=
-;
->>  	print <<EOF;
->>  <?xml version=3D"1.0" encoding=3D"utf-8"?>
->> -<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.=
-w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
->> +<!DOCTYPE html [
->> +	<!ENTITY nbsp "&#xA0;">
->> +	<!ENTITY sdot "&#x22C5;">
->> +]>
->
-> I think this should be fine.  It defines the entities we need and
-> appears to be valid XML.  I don't think there should be any problem
-> upgrading to XHTML 5 here.
+This is not a bug in `git stash` itself, but rather in the way you're using it.
 
-OK, so in short, the patch text looks OK and the proposed log
-message needs a bit more work?
+There are two mistakes on your part here:
 
-Thanks.
+1: You are using `-k`, aka `--keep-index`. This flag is intended for usages
+that are not yours here.
 
+2. You are *not* using `--index` in your `git pop`.  The `--index` flag is
+intended for the kind of thing you are doing here.
 
+It's a bit unfortunate (and perhaps worth some work in the documentation)
+that the `--keep-index` and `--index` flags sound so similar, and yet are so
+different.  The documentation could use some examples here, I think.
+
+Note that if you *do* want to use `--keep-index` during the `git stash` step,
+you will need a `git reset --hard` before your `git stash apply --index &&
+git stash drop` step (aka `git stash pop --index`).
+
+Chris
