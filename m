@@ -2,95 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CBDCC433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 03:18:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26804C43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 06:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233540AbiFBDSy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jun 2022 23:18:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44064 "EHLO
+        id S230403AbiFBGLA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 02:11:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233532AbiFBDSx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jun 2022 23:18:53 -0400
-Received: from out28-170.mail.aliyun.com (out28-170.mail.aliyun.com [115.124.28.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F628154B2F
-        for <git@vger.kernel.org>; Wed,  1 Jun 2022 20:18:44 -0700 (PDT)
-X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07263833|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.02187-0.00391942-0.974211;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047206;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=2;RT=2;SR=0;TI=SMTPD_---.NxdQ2cd_1654139901;
-Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.NxdQ2cd_1654139901)
-          by smtp.aliyun-inc.com(33.13.201.118);
-          Thu, 02 Jun 2022 11:18:22 +0800
-Date:   Thu, 2 Jun 2022 11:18:22 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     git <git@vger.kernel.org>
-Cc:     "Junio C Hamano" <gitster@pobox.com>
-Subject: protocol: add Accept-Language header if possible
-X-Priority: 3
-X-GUID: 675325F1-8340-44BC-98A8-A5B92B3249AF
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-Message-ID: <2022060211034177301214@oschina.cn>
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S230106AbiFBGK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 02:10:59 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760111DA0B6
+        for <git@vger.kernel.org>; Wed,  1 Jun 2022 23:10:58 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AED2418B25B;
+        Thu,  2 Jun 2022 02:10:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ht3P2+dVcMl1
+        Hx3WEAMhf5c9acR6M8Up+7WA1X85BX0=; b=iaYiAI0sqk+/vIgCLTaR2WF61BYB
+        4KaXNcJ107Gj7Tx+C34I5tftf4BMHPccM+6JxGEzNXeT9ipNxn41FnFtNSbjYZRc
+        LDwOFlQ8KGPheuStowtUhGU3asgcDRPv5KiHX9iC8xz6wjX6CHDWsYuMnmxFzu/O
+        USbjgZeSxs18IZE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4D3418B25A;
+        Thu,  2 Jun 2022 02:10:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4D41818B255;
+        Thu,  2 Jun 2022 02:10:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jason Yundt <jason@jasonyundt.email>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] gitweb: switch to a modern DOCTYPE
+References: <20220601012647.1439480-1-jason@jasonyundt.email>
+        <YpgHUm93840oBtib@camp.crustytoothpaste.net>
+Date:   Wed, 01 Jun 2022 23:10:53 -0700
+In-Reply-To: <YpgHUm93840oBtib@camp.crustytoothpaste.net> (brian m. carlson's
+        message of "Thu, 2 Jun 2022 00:41:54 +0000")
+Message-ID: <xmqqa6avppci.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C2A6343E-E23A-11EC-8E7B-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-R2l0IHNlcnZlciBlbmQncyBhYmlsaXR5IHRvIGFjY2VwdCBBY2NlcHQtTGFuZ3VhZ2UgaGVhZGVy
-IHdhcyBpbnRyb2R1Y2VkIGluwqBmMTg2MDRiYmYyKGh0dHA6IGFkZCBBY2NlcHQtTGFuZ3VhZ2Ug
-aGVhZGVyIGlmIHBvc3NpYmxlKQpidXQgaXQgc2VlbXMgdGhhdCBvbmx5IHJlZnMgZGlzY292ZXJp
-bmcgc3RhZ2UgaGFzIHRoaXMgYWJpbGl0eToKIgrilbDilIAkIEdJVF9DVVJMX1ZFUkJPU0U9MSBn
-aXQgbHMtcmVtb3RlCi4uLgoxMDo0MjozNi45MzkxMDggaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDC
-oCDCoCDCoD0+IFNlbmQgaGVhZGVyOiBHRVQgL29wZW5zb3VyY2UvdGVzdC5naXQvaW5mby9yZWZz
-P3NlcnZpY2U9Z2l0LXVwbG9hZC1wYWNrIEhUVFAvMS4xCjEwOjQyOjM2LjkzOTExMiBodHRwLmM6
-NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEhvc3Q6IGdpdGVlLmNvbQox
-MDo0MjozNi45MzkxMTQgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVh
-ZGVyOiBVc2VyLUFnZW50OiBnaXQvMi4zNS4xLjEwMi5nMmI5YzEyMDk3MAoxMDo0MjozNi45Mzkx
-MTYgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVhZGVyOiBBY2NlcHQ6
-ICovKgoxMDo0MjozNi45MzkxMTcgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNl
-bmQgaGVhZGVyOiBBY2NlcHQtRW5jb2Rpbmc6IGRlZmxhdGUsIGd6aXAKMTA6NDI6MzYuOTM5MTE4
-IGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9PiBTZW5kIGhlYWRlcjogQWNjZXB0LUxh
-bmd1YWdlOiBlbi1VUywgKjtxPTAuOQoxMDo0MjozNi45MzkxMjAgaHR0cC5jOjYyMyDCoCDCoCDC
-oCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVhZGVyOiBQcmFnbWE6IG5vLWNhY2hlCjEwOjQyOjM2Ljkz
-OTEyMSBodHRwLmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEdpdC1Q
-cm90b2NvbDogdmVyc2lvbj0yCjEwOjQyOjM2LjkzOTEyMyBodHRwLmM6NjIzIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6Ci4uLgoxMDo0MjozNi45OTkwMTIgaHR0cC5jOjYxMSDC
-oCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVhZGVyLCAwMDAwMDAwMzAyIGJ5dGVzICgweDAw
-MDAwMTJlKQoxMDo0MjozNi45OTkwMzQgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+
-IFNlbmQgaGVhZGVyOiBHRVQgL29wZW5zb3VyY2UvdGVzdC5naXQvaW5mby9yZWZzP3NlcnZpY2U9
-Z2l0LXVwbG9hZC1wYWNrIEhUVFAvMS4xCjEwOjQyOjM2Ljk5OTAzOSBodHRwLmM6NjIzIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEhvc3Q6IGdpdGVlLmNvbQoxMDo0MjozNi45
-OTkwNDEgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQgaGVhZGVyOiBBdXRo
-b3JpemF0aW9uOiBCYXNpYyA8cmVkYWN0ZWQ+CjEwOjQyOjM2Ljk5OTA0MiBodHRwLmM6NjIzIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IFVzZXItQWdlbnQ6IGdpdC8yLjM1LjEu
-MTAyLmcyYjljMTIwOTcwCjEwOjQyOjM2Ljk5OTA0NCBodHRwLmM6NjIzIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgPT4gU2VuZCBoZWFkZXI6IEFjY2VwdDogKi8qCjEwOjQyOjM2Ljk5OTA2MyBodHRwLmM6
-NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEFjY2VwdC1FbmNvZGluZzog
-ZGVmbGF0ZSwgZ3ppcAoxMDo0MjozNi45OTkwODEgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDC
-oCDCoD0+IFNlbmQgaGVhZGVyOiBBY2NlcHQtTGFuZ3VhZ2U6IGVuLVVTLCAqO3E9MC45CjEwOjQy
-OjM2Ljk5OTEwMSBodHRwLmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6
-IFByYWdtYTogbm8tY2FjaGUKMTA6NDI6MzYuOTk5MTA1IGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAg
-wqAgwqAgwqA9PiBTZW5kIGhlYWRlcjogR2l0LVByb3RvY29sOiB2ZXJzaW9uPTIKMTA6NDI6MzYu
-OTk5MTA2IGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9PiBTZW5kIGhlYWRlcjoKLi4u
-CjEwOjQyOjM3LjA5ODMyNSBodHRwLmM6NjExIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBo
-ZWFkZXIsIDAwMDAwMDAzNDEgYnl0ZXMgKDB4MDAwMDAxNTUpCjEwOjQyOjM3LjA5ODM2OCBodHRw
-LmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IFBPU1QgL29wZW5zb3Vy
-Y2UvdGVzdC5naXQvZ2l0LXVwbG9hZC1wYWNrIEhUVFAvMS4xCjEwOjQyOjM3LjA5ODM3NyBodHRw
-LmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEhvc3Q6IGdpdGVlLmNv
-bQoxMDo0MjozNy4wOTgzODEgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQg
-aGVhZGVyOiBBdXRob3JpemF0aW9uOiBCYXNpYyA8cmVkYWN0ZWQ+CjEwOjQyOjM3LjA5ODM4NCBo
-dHRwLmM6NjIzIMKgIMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IFVzZXItQWdlbnQ6
-IGdpdC8yLjM1LjEuMTAyLmcyYjljMTIwOTcwCjEwOjQyOjM3LjA5ODM4NyBodHRwLmM6NjIzIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgPT4gU2VuZCBoZWFkZXI6IEFjY2VwdC1FbmNvZGluZzogZGVmbGF0
-ZSwgZ3ppcAoxMDo0MjozNy4wOTg0MTcgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+
-IFNlbmQgaGVhZGVyOiBDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL3gtZ2l0LXVwbG9hZC1wYWNr
-LXJlcXVlc3QKMTA6NDI6MzcuMDk4NDIxIGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9
-PiBTZW5kIGhlYWRlcjogQWNjZXB0OiBhcHBsaWNhdGlvbi94LWdpdC11cGxvYWQtcGFjay1yZXN1
-bHQKMTA6NDI6MzcuMDk4NDI1IGh0dHAuYzo2MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9PiBTZW5k
-IGhlYWRlcjogR2l0LVByb3RvY29sOiB2ZXJzaW9uPTIKMTA6NDI6MzcuMDk4NDI4IGh0dHAuYzo2
-MjMgwqAgwqAgwqAgwqAgwqAgwqAgwqA9PiBTZW5kIGhlYWRlcjogQ29udGVudC1MZW5ndGg6IDEx
-OAoxMDo0MjozNy4wOTg0MzEgaHR0cC5jOjYyMyDCoCDCoCDCoCDCoCDCoCDCoCDCoD0+IFNlbmQg
-aGVhZGVyOgouLi4KIgpXaHnCoGdpdC11cGxvYWQtcGFjay9naXQtcmVjZWl2ZS1wYWNrIHN0YWdl
-IGRvZXNuJ3QgZW5hYmxlIHRoaXMgYWJpbGl0eT8KCgotLS0tLS0tLS0tLS0tLQpsaWxpbmNoYW9A
-b3NjaGluYS5jbg==
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+>> While that DOCTYPE is still valid [2], it has several disadvantages:
+>>=20
+>> 1. It=E2=80=99s misleading. The DTD that browsers are supposed to use =
+with that
+>>    DOCTYPE has nothing to do with XHTML 1.0 and isn=E2=80=99t availabl=
+e at the URL
+>>    that is given [2].
+>
+> While the WHATWG may claim that, an XML parser is absolutely within its
+> rights to refer to and use that DTD, and in fact should do so unless it=
+s
+> catalog directs it elsewhere.  It may be that some browsers use an
+> internal catalog that refers to a different DTD, however.
+>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 606b50104c..1835487ab2 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -4219,7 +4219,10 @@ sub git_header_html {
+>>  	my $mod_perl_version =3D $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : ''=
+;
+>>  	print <<EOF;
+>>  <?xml version=3D"1.0" encoding=3D"utf-8"?>
+>> -<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+>> +<!DOCTYPE html [
+>> +	<!ENTITY nbsp "&#xA0;">
+>> +	<!ENTITY sdot "&#x22C5;">
+>> +]>
+>
+> I think this should be fine.  It defines the entities we need and
+> appears to be valid XML.  I don't think there should be any problem
+> upgrading to XHTML 5 here.
+
+OK, so in short, the patch text looks OK and the proposed log
+message needs a bit more work?
+
+Thanks.
+
 
