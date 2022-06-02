@@ -2,91 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CFAEC43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 13:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94FE1CCA47C
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 13:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235320AbiFBN2i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 09:28:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46278 "EHLO
+        id S231596AbiFBNgA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 09:36:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231926AbiFBN2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 09:28:37 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C6C31523
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 06:28:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1654176511;
-        bh=+UyErzQTrqWMPmOEbiCImctI/0MT8P3QqwtzL7RNMq8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FYZ9oGzTxhVp2qF9xjnu5dGLrGnCzIVSabqI7fl+6Tnuu/pS5ssYOlWjxq45YilYh
-         BodsDMsopI+DY5GRyGZ8Iq15mInZT0Zvcy6/Wy8O17DC0J13ARAHkaGHMFCdE/jVrW
-         dSJx19Mf7axGVeJaHmECYdsrdrSj+gcmylCjJg4k=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.206.165] ([89.1.212.145]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtwUw-1ndyy31AJI-00uGbq; Thu, 02
- Jun 2022 15:28:31 +0200
-Date:   Thu, 2 Jun 2022 15:28:29 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Benedek Kozma <cyberbeni@gmail.com>
-cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: Bug: fsmonitor--daemon doesn't pick up submodule changes
-In-Reply-To: <CAN8jHOhn+tNn2cR7X_fPyyLF-ADiScD2gymKY9H2ZFb+UdkJSw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2206021525430.349@tvgsbejvaqbjf.bet>
-References: <CAN8jHOhn+tNn2cR7X_fPyyLF-ADiScD2gymKY9H2ZFb+UdkJSw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S235406AbiFBNf5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 09:35:57 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F8B46FA02
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 06:35:56 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id d3so3392562ilr.10
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 06:35:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Zpu51Z3qHofI76RN9hKIQ1qgMrx2S3MJEnTGHFcQMvQ=;
+        b=gE2TMHKZuPAj7EmWtDCw2Wzz24BnXFjXddYLQZYdsomwkQU7ReTneedlhkAQTpnWrk
+         /EFomhmdmZJQYe2YxhMQb96jO3NkfgHfFfg07NIsDmmarGEfU0CVQ2bmoiPjKDGBsW9c
+         DqLVO1qsIrtOUJvalOujfYfXHpjfg8NoZQUhSb7Pz0BgHDugZ5dyWm4ZPHKbDjCWLgrD
+         mvEwYiSXU+vuLtPQ8XAXDZ5LCmvD+w7IXEQiY3e6X0LY0oAgqaPpDAwr+qYx2J5DqxTn
+         VUMAxKzN7iHBt83v6JIQCfVUExdeoB0FnnEqJvQhJkV1+r4JvdRR6b/CRbc//o5755jv
+         +E3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Zpu51Z3qHofI76RN9hKIQ1qgMrx2S3MJEnTGHFcQMvQ=;
+        b=1DIe4D6L+OrX+sUTw1/SorUz8VqceTSzvo5D1PqD2Qva5F7fJSrb6uyGceUEXCuKC2
+         EIfE5LaCTjrw61PJrhyRArFhNvNGiM50tt+8LfqHtQwcUsPL0uA2wqm1OfOymHjyTaeJ
+         mEYdyzYt4EFjnqgsD07EUid+QlbNqsswSo/4cm0GrGm/v47Y4yaFKNse5O77WZkdMaZS
+         8m1VaqC8zAJVRQ601RKf1Fp0wT4Y6j6L0GsyXEOi+f4zRz7n1HPf+oOS70303tMivXxZ
+         MlU+hJt38DsGNgyX/3Pn/UJvoVkuep/Oj/6FL9qEpdzLzkhEyJ2CZzJwg1I3qGcvXHF2
+         KzwA==
+X-Gm-Message-State: AOAM530ZZwQx8BKsm0O7brgrZ2aEDaBiialM2E/A59tYyHzmxxpB0NzL
+        fNbwvtKn/nlXAzFs8z+3VnyJqq1vosOu
+X-Google-Smtp-Source: ABdhPJz/lDDXLaFOmKo5NQR8vQHULNEKSVthDAGlN3ZexolgKgNmu8YNFlR6sTsEOOD+kq1GBC5E1A==
+X-Received: by 2002:a92:ddcb:0:b0:2cd:95b6:bede with SMTP id d11-20020a92ddcb000000b002cd95b6bedemr3074234ilr.280.1654176955976;
+        Thu, 02 Jun 2022 06:35:55 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9cc9:fda3:3ddf:6700? ([2600:1700:e72:80a0:9cc9:fda3:3ddf:6700])
+        by smtp.gmail.com with ESMTPSA id g10-20020a02a08a000000b003314eada5b9sm1200095jah.14.2022.06.02.06.35.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jun 2022 06:35:55 -0700 (PDT)
+Message-ID: <3c6d4a5c-8b39-8771-f578-0ea3c5b57869@github.com>
+Date:   Thu, 2 Jun 2022 09:35:54 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7sNFCVEqRzpeOLPU2lHUp6hyvo+5L4W1OxYd+TyBQdaoFtdBp+a
- nVYKqUsvli4b6/Jji1Gy5+ni9Zh3qJcdR1MYM7ZCkozNZCRTFdGzgrv3KLAj5WFdlPDibSY
- IL9GguDmRYHw2AujN5ZUP3P7rmqkZhdjAi2SLMi7fGhhsyoBmIt+Q34PlLyvswDmHYFKZbN
- nTCVoX4BSvKSGX3rqh0qQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HNobJUudNtQ=:n3LoIB1otvyxKvi320gHW2
- tbpaKbTEdO8qOb649rYyaLiGdWQ/rAnZFsxfUERAobiPtOK8ouczWx4LQ7PtQiSQMmgeSmBKm
- CmKx6boMsCZsqRE4n1MKIpQuT0lUv92Cpk+DMdXD1NXfM1It0UJpwRgtvYrzQSho+K0Wyj6zf
- 1HBbJQqagPFeOlBIbCsDbFiz6NVKRYtkylcLL0QDTvq8FkCfqoqRQMf7dOimzB+DgvRkBzDcn
- XJn9mzqUd6fJVoc9VkR7Qr4mDUXvxb/jcCs9QTQJOor4txjbC/71fCYNEx1ZWz23nkWR7fi9j
- R2QupJuNDy0VsE1yZdjTZkJtHcZKxCaVG0U2rBlsqc+1XapkIoe0/D+Euq/v3TvfIOVzJxYMX
- JoRMDseh6hgoMRki9+kQU/ucInf057xwUYLk75dYVkzuen74dfV2gxd2D0GLJnCgp+8DgcUtR
- 4HYl0t1efjdTqivo461kC0T0I2za3oPOnEyv7kZLB7HSv02C8QwI/DxvTXkJg7f+VV9ZY+XwC
- WMHV5AqNo7ihvIoPRefkarF+z80wXV8SXIyywb6FkEQFz1zYBkpNjEhtV/S8rQO6ZnH/DhyGI
- uYpDopycpjkf/W8JShd/mJ90K87rBjWc/UOHB4dLvpgK5aq9HGysrNEEV2aciFzJrKVLIealp
- pJmtPc96Q3iQPKbXdrDrHj3pp2Ei+oUxzvj9LG5xxW1AYu7kW742etHpGtJx6c9gykphfQcbP
- 26sQRHTmPUBPqZDrsTKmUCuoeSU7GUiHXPav/nhZznlp4SBVqaqrO/3KujC0/AtBuJR76DsDq
- +vE8OdBqSdKuF2dlokaC8MUHItVu5fWFz/x2yyEQY6SGn7fBlz0stcsgnGpKjOIk3IWqgnU+M
- jZ1hWbbLlfrWD/ok4bjSuspvB5cNn/ZfBb3Y2hylxafJGw3QySnHFHlshKPNs22MrITgUf8zU
- NVPC5GOLDngwb/1QGP9dl/BoWLhWDisvwSNzoJakm4zQUf3ai8ye5m+DPUheO5W6/K2tReXY/
- 0y3FZoUXAgJnqkmw960jyLf496b3/KeAMtTkWBJDNyYpVVJ29KChOJDFBAKnnq5IawLvY1EyU
- colhkFxtic1rFT6Vhk7wKJNMlIXFORRAwkpQuh7BikvWz9CigEgstuj+Q==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 2/2] ci: also run the `scalar` tests
+Content-Language: en-US
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+ <6ad0d3d401da7787d0e7afb3f804b705731bf2dd.1654160735.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <6ad0d3d401da7787d0e7afb3f804b705731bf2dd.1654160735.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Benedek,
+On 6/2/2022 5:05 AM, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> Since Scalar depends on `libgit.a`, it makes sense to ensure in the CI
+> and the PR builds that it does not get broken in case of industrious
+> refactorings of the core Git code (speaking from experience here).
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  .github/workflows/main.yml | 15 +++++++++++++++
+>  ci/run-build-and-tests.sh  |  2 ++
+>  ci/run-test-slice.sh       |  5 +++++
+>  3 files changed, 22 insertions(+)
+> 
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index c35200defb9..785222aa7b3 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -91,6 +91,13 @@ jobs:
+>          HOME: ${{runner.workspace}}
+>          NO_PERL: 1
+>        run: . /etc/profile && ci/make-test-artifacts.sh artifacts
+> +    - name: build Scalar
+> +      shell: bash
+> +      run: |
+> +        make -C contrib/scalar &&
+> +        mkdir -p artifacts/bin-wrappers artifacts/contrib/scalar &&
+> +        cp contrib/scalar/scalar.exe artifacts/contrib/scalar/ &&
+> +        cp bin-wrappers/scalar artifacts/bin-wrappers/
 
-On Tue, 31 May 2022, Benedek Kozma wrote:
+I see later you have a "copy Scalar" step which has some duplication
+here. The only difference is that you have "make -C contrib/scalar".
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> git status
-> cd submodule
-> git checkout origin/HEAD
-> cd ..
-> git status
->
-> What did you expect to happen? (Expected behavior)
-> the second git status showing that a submodule changed
->
-> What happened instead? (Actual behavior)
-> second git status also shows up to date
+Doesn't Scalar get built in our basic "make" build when the
+environment includes INCLUDE_SCALAR=YesPlease? So, for that reason I
+expected the environment to change, but not need this "make -C ..."
 
-I believe that this should be fixed by one of the active FSMonitor patches
-that are lined up for getting merged into Git:
-https://lore.kernel.org/git/d0c8fecd1a0d622b1a6cce0aa79fdcdc2771db1d.16536=
-01644.git.gitgitgadget@gmail.com/
+>      - name: zip up tracked files
+>        run: git archive -o artifacts/tracked.tar.gz HEAD
+>      - name: upload tracked files and build artifacts
+> @@ -161,6 +168,8 @@ jobs:
+>        run: compat\vcbuild\vcpkg_copy_dlls.bat release
+>      - name: generate Visual Studio solution
+>        shell: bash
+> +      env:
+> +        INCLUDE_SCALAR: YesPlease
 
-Do you have a setup where you could apply this patch and build Git so that
-you can verify whether this fixes the bug you reported?
+This is a bit isolated. Is there a way to specify the environment
+more generally?
+
+>        run: |
+>          cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows \
+>          -DNO_GETTEXT=YesPlease -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
+> @@ -174,6 +183,12 @@ jobs:
+>        run: |
+>          mkdir -p artifacts &&
+>          eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts NO_GETTEXT=YesPlease 2>&1 | grep ^tar)"
+> +    - name: copy Scalar
+> +      shell: bash
+> +      run: |
+> +        mkdir -p artifacts/bin-wrappers artifacts/contrib/scalar &&
+> +        cp contrib/scalar/scalar.exe artifacts/contrib/scalar/ &&
+> +        cp bin-wrappers/scalar artifacts/bin-wrappers/
+>      - name: zip up tracked files
+>        run: git archive -o artifacts/tracked.tar.gz HEAD
+>      - name: upload tracked files and build artifacts
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> index 280dda7d285..661edb85d1b 100755
+> --- a/ci/run-build-and-tests.sh
+> +++ b/ci/run-build-and-tests.sh
+> @@ -51,4 +51,6 @@ esac
+>  make $MAKE_TARGETS
+>  check_unignored_build_artifacts
+>  
+> +make -C contrib/scalar $MAKE_TARGETS
+> +
+
+Again, this should "just work" when using INCLUDE_SCALAR in the
+environment, right?
+
+>  save_good_tree
+> diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
+> index f8c2c3106a2..b741fd8f361 100755
+> --- a/ci/run-test-slice.sh
+> +++ b/ci/run-test-slice.sh
+> @@ -14,4 +14,9 @@ make --quiet -C t T="$(cd t &&
+>  	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
+>  	tr '\n' ' ')"
+>  
+> +if test 0 = "$1"
+> +then
+> +	make -C contrib/scalar test
+> +fi
+> +
+
+This is still necessary for now.
 
 Thanks,
-Johannes
+-Stolee
