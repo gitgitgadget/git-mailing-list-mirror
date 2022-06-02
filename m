@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BE3BC43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 14:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD94AC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 14:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235719AbiFBOII (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 10:08:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37430 "EHLO
+        id S235723AbiFBOIL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 10:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235709AbiFBOIG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235714AbiFBOIG (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 2 Jun 2022 10:08:06 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D91424DE6E
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 07:08:04 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id v4-20020a1cac04000000b00397001398c0so4834512wme.5
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 07:08:04 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51DBA24E017
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 07:08:05 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id k16so6624937wrg.7
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 07:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Qy4YZlKEU05/Vxre+uZsRPFlOKeVmePqumkJQzHVM90=;
-        b=R66QV/3X+4Vr282bKL2zPmcvxDB1DezE9THi3S8QEDiuWqmy/g2Ga6VHtY97duZy5a
-         1W+DyahNNVnmfcVxc3V7TApo+w8cxBBX+P5+MZ44XeZCCXy2p6KWIvj9XsvJTdLN/Qat
-         x+LuFIA6wq6eVNFZQiTSZzND3KYuvsdWU7rhRvtF17rA/D31wj9L811MDIUK7JzZHQGw
-         2Q9kPILhPBWkbwEBl1vMrh6a36Rzw4fQIeqIdUC5nyt88DQza4m7IGm7zKISSC53sVzu
-         R8gPydA8iU6yyWAjSYhMkcmxDkhAymu7Jv46yBoGd3iLw16Dkbf3yhCZR96Q+wZ3V/Nc
-         73tg==
+        bh=9Dcz9zgLfq/HGW4BSRWkNt0Qw3TRvaz6YQLvKz2u8pA=;
+        b=O9O41a5iffJDqPEtGLHi7+M/HZP+WJQvWm0uxHalA/yEGp871+seAYEs3uiX/pUdaQ
+         7tG9VkQHWm0/oddrX2WUtnnkES+UY/PqMqJh4J7sDWK8IO37wZKDVaRu6Sb0WBhGre62
+         OzjsDAl+/b8BJBI6c9+UvT/Il5RQbtvZ7EKvingH1492Fczoo97D0g1jaS1J47d7ciRX
+         FMHTdNd2eI8WN0rBRuNZjHW74ZKxH50nNiAIyUH7bQ4+Xf6fTKnMFq9axVkzVTFUKY3X
+         C5rQDM6rELaNcMph1QJb5+svMbsCj1rcp0bo3oC7Pn1aizq0awOKBHQRLPPLWUerlZkF
+         ImFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Qy4YZlKEU05/Vxre+uZsRPFlOKeVmePqumkJQzHVM90=;
-        b=7QiAdm9Cdv7pCVi7z3cP82KwUNX+fY+5QNatrr7ChhX2OIyIDdtMLyd0yaXQfIE/3l
-         GGg6ii+YLqq6HcklBQg29n5a/n/RlUPwqvotNR9tWl4Wd2yvLLbAPAQ/Nr1i4lwwooMd
-         UCh1cDzA1I3/DYZ4j30hjqqtGD/CdFa51PsADsVTDe4iv8gX6SqymtvNVSfn3m0qU6Ad
-         cIbHgRZCddsAreK5UUw6JizcABUx44CppuDeBV109CBbvHhj0L6IacmW1h+98cy+TrCy
-         tz1GcZYSNMaYNP4tOM/SzT9HbsxKUiflwjzS3ZWqlnaLyNWuCe3Wy42fbSaXz1qSg6kd
-         O0Qg==
-X-Gm-Message-State: AOAM53246lN2JI+wUQyvSwBhGE3Y6A6yBVXwhzfBT946KnPOWNjH3mcV
-        N2EHkT1m5iFHEBStrAYA/Nq4Y/81SXCoNA==
-X-Google-Smtp-Source: ABdhPJw8Tm6J1XRtKDJcLYTCEVC5mKSHPPuCL0/3cMF+WJ5D8G3koArj1WeFfAJ1pm539WLwT/EAyQ==
-X-Received: by 2002:a05:600c:2e47:b0:39c:37f5:cd74 with SMTP id q7-20020a05600c2e4700b0039c37f5cd74mr293873wmf.32.1654178882224;
-        Thu, 02 Jun 2022 07:08:02 -0700 (PDT)
+        bh=9Dcz9zgLfq/HGW4BSRWkNt0Qw3TRvaz6YQLvKz2u8pA=;
+        b=628kdfhnOOlexIrXPqqgIkLj7imZDC8wp8EaOc0DUEvjjS9YLQot1xXRBtG6/KC53A
+         BYGpMvTfLflcW6BKP5W+hnCYxgYQ7xRexe6aS3a9SoHRJ/DkVG0KytOMUwG4n1R5aRh2
+         h8E2KGmdeE2ujbfVl25JkzR/gyeFgUogjjJr6319dGJ81sfF5Hiy3ahRvTEb+ZlMmu9R
+         xuM9Tb6yuzZ4huN32IG9vLBOakFRntHIb8Y6pIBP7GjokzeU3FT4o8NCdLicJMgrUjMP
+         fpoF+zrgGLeSYNJDx9mqmmsLj1XOH9dIhpkkU55U1Q9Ex1f5OMXEj2tn5SIjRE1bCLRB
+         Vz2Q==
+X-Gm-Message-State: AOAM530xJTJN65P4O/nLSqhmmrufVTBVj1y+yK/Ey1lyn62KokLDUMwC
+        DX6AxTDkaYorDd4KVAY6WIr01yWe9Q2XvQ==
+X-Google-Smtp-Source: ABdhPJxsnoloIWXaS+LN4pfaLSxVQ0pzLsliivCP2m18jd336YUHzbvz2ykxq+dh04VlSTPeCf3qDA==
+X-Received: by 2002:a5d:6daf:0:b0:20f:f1e7:c720 with SMTP id u15-20020a5d6daf000000b0020ff1e7c720mr3844582wrs.584.1654178883406;
+        Thu, 02 Jun 2022 07:08:03 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05600c4fd200b0039744bd664esm9271514wmq.13.2022.06.02.07.08.01
+        by smtp.gmail.com with ESMTPSA id o18-20020a05600c4fd200b0039744bd664esm9271514wmq.13.2022.06.02.07.08.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 07:08:01 -0700 (PDT)
+        Thu, 02 Jun 2022 07:08:02 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 1/2] run-command: add an "ungroup" option to run_process_parallel()
-Date:   Thu,  2 Jun 2022 16:07:56 +0200
-Message-Id: <patch-v5-1.2-d018b7c4441-20220602T131858Z-avarab@gmail.com>
+Subject: [PATCH v5 2/2] hook API: fix v2.36.0 regression: hooks should be connected to a TTY
+Date:   Thu,  2 Jun 2022 16:07:57 +0200
+Message-Id: <patch-v5-2.2-b0f0dc7492a-20220602T131858Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1103.gb3ecdfb3e6a
 In-Reply-To: <cover-v5-0.2-00000000000-20220602T131858Z-avarab@gmail.com>
 References: <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com> <cover-v5-0.2-00000000000-20220602T131858Z-avarab@gmail.com>
@@ -70,449 +70,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extend the parallel execution API added in c553c72eed6 (run-command:
-add an asynchronous parallel child processor, 2015-12-15) to support a
-mode where the stdout and stderr of the processes isn't captured and
-output in a deterministic order, instead we'll leave it to the kernel
-and stdio to sort it out.
+Fix a regression reported[1] against f443246b9f2 (commit: convert
+{pre-commit,prepare-commit-msg} hook to hook.h, 2021-12-22): Due to
+using the run_process_parallel() API in the earlier 96e7225b310 (hook:
+add 'run' subcommand, 2021-12-22) we'd capture the hook's stderr and
+stdout, and thus lose the connection to the TTY in the case of
+e.g. the "pre-commit" hook.
 
-This gives the API same functionality as GNU parallel's --ungroup
-option. As we'll see in a subsequent commit the main reason to want
-this is to support stdout and stderr being connected to the TTY in the
-case of jobs=1, demonstrated here with GNU parallel:
+As a preceding commit notes GNU parallel's similar --ungroup option
+also has it emit output faster. While we're unlikely to have hooks
+that emit truly massive amounts of output (or where the performance
+thereof matters) it's still informative to measure the overhead. In a
+similar "seq" test we're now ~30% faster:
 
-	$ parallel --ungroup 'test -t {} && echo TTY || echo NTTY' ::: 1 2
-	TTY
-	TTY
-	$ parallel 'test -t {} && echo TTY || echo NTTY' ::: 1 2
-	NTTY
-	NTTY
+	$ cat .git/hooks/seq-hook; git hyperfine -L rev origin/master,HEAD~0 -s 'make CFLAGS=-O3' './git hook run seq-hook'
+	#!/bin/sh
 
-Another is as GNU parallel's documentation notes a potential for
-optimization. As demonstrated in next commit our results with "git
-hook run" will be similar, but generally speaking this shows that if
-you want to run processes in parallel where the exact order isn't
-important this can be a lot faster:
+	seq 100000000
+	Benchmark 1: ./git hook run seq-hook' in 'origin/master
+	  Time (mean ± σ):     787.1 ms ±  13.6 ms    [User: 701.6 ms, System: 534.4 ms]
+	  Range (min … max):   773.2 ms … 806.3 ms    10 runs
 
-	$ hyperfine -r 3 -L o ,--ungroup 'parallel {o} seq ::: 10000000 >/dev/null '
-	Benchmark 1: parallel  seq ::: 10000000 >/dev/null
-	  Time (mean ± σ):     220.2 ms ±   9.3 ms    [User: 124.9 ms, System: 96.1 ms]
-	  Range (min … max):   212.3 ms … 230.5 ms    3 runs
-
-	Benchmark 2: parallel --ungroup seq ::: 10000000 >/dev/null
-	  Time (mean ± σ):     154.7 ms ±   0.9 ms    [User: 136.2 ms, System: 25.1 ms]
-	  Range (min … max):   153.9 ms … 155.7 ms    3 runs
+	Benchmark 2: ./git hook run seq-hook' in 'HEAD~0
+	  Time (mean ± σ):     603.4 ms ±   1.6 ms    [User: 573.1 ms, System: 30.3 ms]
+	  Range (min … max):   601.0 ms … 606.2 ms    10 runs
 
 	Summary
-	  'parallel --ungroup seq ::: 10000000 >/dev/null ' ran
-	    1.42 ± 0.06 times faster than 'parallel  seq ::: 10000000 >/dev/null '
+	  './git hook run seq-hook' in 'HEAD~0' ran
+	    1.30 ± 0.02 times faster than './git hook run seq-hook' in 'origin/master'
 
-A large part of the juggling in the API is to make the API safer for
-its maintenance and consumers alike.
+1. https://lore.kernel.org/git/CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com/
 
-For the maintenance of the API we e.g. avoid malloc()-ing the
-"pp->pfd", ensuring that SANITIZE=address and other similar tools will
-catch any unexpected misuse.
-
-For API consumers we take pains to never pass the non-NULL "out"
-buffer to an API user that provided the "ungroup" option. The
-resulting code in t/helper/test-run-command.c isn't typical of such a
-user, i.e. they'd typically use one mode or the other, and would know
-whether they'd provided "ungroup" or not.
-
-We could also avoid the strbuf_init() for "buffered_output" by having
-"struct parallel_processes" use a static PARALLEL_PROCESSES_INIT
-initializer, but let's leave that cleanup for later.
-
-Using a global "run_processes_parallel_ungroup" variable to enable
-this option is rather nasty, but is being done here to produce as
-minimal of a change as possible for a subsequent regression fix. This
-change is extracted from a larger initial version[1] which ends up
-with a better end-state for the API, but in doing so needed to modify
-all existing callers of the API. Let's defer that for now, and
-narrowly focus on what we need for fixing the regression in the
-subsequent commit.
-
-It's safe to do this with a global variable because:
-
- A) hook.c is the only user of it that sets it to non-zero, and before
-    we'll get any other API users we'll refactor away this method of
-    passing in the option, i.e. re-roll [1].
-
- B) Even if hook.c wasn't the only user we don't have callers of this
-    API that concurrently invoke this parallel process starting API
-    itself in parallel.
-
-As noted above "A" && "B" are rather nasty, and we don't want to live
-with those caveats long-term, but for now they should be an acceptable
-compromise.
-
-1. https://lore.kernel.org/git/cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com/
-
+Reported-by: Anthony Sottile <asottile@umich.edu>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- run-command.c               | 70 +++++++++++++++++++++++++++----------
- run-command.h               | 30 ++++++++++++----
- t/helper/test-run-command.c | 22 ++++++++++--
- t/t0061-run-command.sh      | 30 ++++++++++++++++
- 4 files changed, 123 insertions(+), 29 deletions(-)
+ hook.c          |  1 +
+ t/t1800-hook.sh | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/run-command.c b/run-command.c
-index a8501e38ceb..7ab2dd28f3c 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1471,6 +1471,7 @@ enum child_state {
- 	GIT_CP_WAIT_CLEANUP,
- };
- 
-+int run_processes_parallel_ungroup;
- struct parallel_processes {
- 	void *data;
- 
-@@ -1494,6 +1495,7 @@ struct parallel_processes {
- 	struct pollfd *pfd;
- 
- 	unsigned shutdown : 1;
-+	unsigned ungroup : 1;
- 
- 	int output_owner;
- 	struct strbuf buffered_output; /* of finished children */
-@@ -1537,7 +1539,7 @@ static void pp_init(struct parallel_processes *pp,
- 		    get_next_task_fn get_next_task,
- 		    start_failure_fn start_failure,
- 		    task_finished_fn task_finished,
--		    void *data)
-+		    void *data, int ungroup)
- {
- 	int i;
- 
-@@ -1559,15 +1561,21 @@ static void pp_init(struct parallel_processes *pp,
- 	pp->nr_processes = 0;
- 	pp->output_owner = 0;
- 	pp->shutdown = 0;
-+	pp->ungroup = ungroup;
- 	CALLOC_ARRAY(pp->children, n);
--	CALLOC_ARRAY(pp->pfd, n);
-+	if (pp->ungroup)
-+		pp->pfd = NULL;
-+	else
-+		CALLOC_ARRAY(pp->pfd, n);
- 	strbuf_init(&pp->buffered_output, 0);
- 
- 	for (i = 0; i < n; i++) {
- 		strbuf_init(&pp->children[i].err, 0);
- 		child_process_init(&pp->children[i].process);
--		pp->pfd[i].events = POLLIN | POLLHUP;
--		pp->pfd[i].fd = -1;
-+		if (pp->pfd) {
-+			pp->pfd[i].events = POLLIN | POLLHUP;
-+			pp->pfd[i].fd = -1;
-+		}
+diff --git a/hook.c b/hook.c
+index 1d51be3b77a..7451205657a 100644
+--- a/hook.c
++++ b/hook.c
+@@ -144,6 +144,7 @@ int run_hooks_opt(const char *hook_name, struct run_hooks_opt *options)
+ 		cb_data.hook_path = abs_path.buf;
  	}
  
- 	pp_for_signal = pp;
-@@ -1615,24 +1623,31 @@ static int pp_start_one(struct parallel_processes *pp)
- 		BUG("bookkeeping is hard");
++	run_processes_parallel_ungroup = 1;
+ 	run_processes_parallel_tr2(jobs,
+ 				   pick_next_hook,
+ 				   notify_start_failure,
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 26ed5e11bc8..0b8370d1573 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -4,6 +4,7 @@ test_description='git-hook command'
  
- 	code = pp->get_next_task(&pp->children[i].process,
--				 &pp->children[i].err,
-+				 pp->ungroup ? NULL : &pp->children[i].err,
- 				 pp->data,
- 				 &pp->children[i].data);
- 	if (!code) {
--		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
--		strbuf_reset(&pp->children[i].err);
-+		if (!pp->ungroup) {
-+			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
-+			strbuf_reset(&pp->children[i].err);
-+		}
- 		return 1;
- 	}
--	pp->children[i].process.err = -1;
--	pp->children[i].process.stdout_to_stderr = 1;
-+	if (!pp->ungroup) {
-+		pp->children[i].process.err = -1;
-+		pp->children[i].process.stdout_to_stderr = 1;
-+	}
- 	pp->children[i].process.no_stdin = 1;
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
  
- 	if (start_command(&pp->children[i].process)) {
--		code = pp->start_failure(&pp->children[i].err,
-+		code = pp->start_failure(pp->ungroup ? NULL :
-+					 &pp->children[i].err,
- 					 pp->data,
- 					 pp->children[i].data);
--		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
--		strbuf_reset(&pp->children[i].err);
-+		if (!pp->ungroup) {
-+			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
-+			strbuf_reset(&pp->children[i].err);
-+		}
- 		if (code)
- 			pp->shutdown = 1;
- 		return code;
-@@ -1640,7 +1655,8 @@ static int pp_start_one(struct parallel_processes *pp)
- 
- 	pp->nr_processes++;
- 	pp->children[i].state = GIT_CP_WORKING;
--	pp->pfd[i].fd = pp->children[i].process.err;
-+	if (pp->pfd)
-+		pp->pfd[i].fd = pp->children[i].process.err;
- 	return 0;
- }
- 
-@@ -1674,6 +1690,7 @@ static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
- static void pp_output(struct parallel_processes *pp)
- {
- 	int i = pp->output_owner;
-+
- 	if (pp->children[i].state == GIT_CP_WORKING &&
- 	    pp->children[i].err.len) {
- 		strbuf_write(&pp->children[i].err, stderr);
-@@ -1696,7 +1713,7 @@ static int pp_collect_finished(struct parallel_processes *pp)
- 
- 		code = finish_command(&pp->children[i].process);
- 
--		code = pp->task_finished(code,
-+		code = pp->task_finished(code, pp->ungroup ? NULL :
- 					 &pp->children[i].err, pp->data,
- 					 pp->children[i].data);
- 
-@@ -1707,10 +1724,13 @@ static int pp_collect_finished(struct parallel_processes *pp)
- 
- 		pp->nr_processes--;
- 		pp->children[i].state = GIT_CP_FREE;
--		pp->pfd[i].fd = -1;
-+		if (pp->pfd)
-+			pp->pfd[i].fd = -1;
- 		child_process_init(&pp->children[i].process);
- 
--		if (i != pp->output_owner) {
-+		if (pp->ungroup) {
-+			; /* no strbuf_*() work to do here */
-+		} else if (i != pp->output_owner) {
- 			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
- 			strbuf_reset(&pp->children[i].err);
- 		} else {
-@@ -1747,9 +1767,14 @@ int run_processes_parallel(int n,
- 	int i, code;
- 	int output_timeout = 100;
- 	int spawn_cap = 4;
-+	int ungroup = run_processes_parallel_ungroup;
- 	struct parallel_processes pp;
- 
--	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb);
-+	/* unset for the next API user */
-+	run_processes_parallel_ungroup = 0;
-+
-+	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb,
-+		ungroup);
- 	while (1) {
- 		for (i = 0;
- 		    i < spawn_cap && !pp.shutdown &&
-@@ -1766,8 +1791,15 @@ int run_processes_parallel(int n,
- 		}
- 		if (!pp.nr_processes)
- 			break;
--		pp_buffer_stderr(&pp, output_timeout);
--		pp_output(&pp);
-+		if (ungroup) {
-+			int i;
-+
-+			for (i = 0; i < pp.max_processes; i++)
-+				pp.children[i].state = GIT_CP_WAIT_CLEANUP;
-+		} else {
-+			pp_buffer_stderr(&pp, output_timeout);
-+			pp_output(&pp);
-+		}
- 		code = pp_collect_finished(&pp);
- 		if (code) {
- 			pp.shutdown = 1;
-diff --git a/run-command.h b/run-command.h
-index 5bd0c933e80..bf4236f1164 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -405,6 +405,9 @@ void check_pipe(int err);
-  * pp_cb is the callback cookie as passed to run_processes_parallel.
-  * You can store a child process specific callback cookie in pp_task_cb.
-  *
-+ * See run_processes_parallel() below for a discussion of the "struct
-+ * strbuf *out" parameter.
-+ *
-  * Even after returning 0 to indicate that there are no more processes,
-  * this function will be called again until there are no more running
-  * child processes.
-@@ -423,9 +426,8 @@ typedef int (*get_next_task_fn)(struct child_process *cp,
-  * This callback is called whenever there are problems starting
-  * a new process.
-  *
-- * You must not write to stdout or stderr in this function. Add your
-- * message to the strbuf out instead, which will be printed without
-- * messing up the output of the other parallel processes.
-+ * See run_processes_parallel() below for a discussion of the "struct
-+ * strbuf *out" parameter.
-  *
-  * pp_cb is the callback cookie as passed into run_processes_parallel,
-  * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-@@ -441,9 +443,8 @@ typedef int (*start_failure_fn)(struct strbuf *out,
- /**
-  * This callback is called on every child process that finished processing.
-  *
-- * You must not write to stdout or stderr in this function. Add your
-- * message to the strbuf out instead, which will be printed without
-- * messing up the output of the other parallel processes.
-+ * See run_processes_parallel() below for a discussion of the "struct
-+ * strbuf *out" parameter.
-  *
-  * pp_cb is the callback cookie as passed into run_processes_parallel,
-  * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-@@ -464,11 +465,26 @@ typedef int (*task_finished_fn)(int result,
-  *
-  * The children started via this function run in parallel. Their output
-  * (both stdout and stderr) is routed to stderr in a manner that output
-- * from different tasks does not interleave.
-+ * from different tasks does not interleave (but see "ungroup" below).
-  *
-  * start_failure_fn and task_finished_fn can be NULL to omit any
-  * special handling.
-+ *
-+ * If the "ungroup" option isn't specified, the API will set the
-+ * "stdout_to_stderr" parameter in "struct child_process" and provide
-+ * the callbacks with a "struct strbuf *out" parameter to write output
-+ * to. In this case the callbacks must not write to stdout or
-+ * stderr as such output will mess up the output of the other parallel
-+ * processes. If "ungroup" option is specified callbacks will get a
-+ * NULL "struct strbuf *out" parameter, and are responsible for
-+ * emitting their own output, including dealing with any race
-+ * conditions due to writing in parallel to stdout and stderr.
-+ * The "ungroup" option can be enabled by setting the global
-+ * "run_processes_parallel_ungroup" to "1" before invoking
-+ * run_processes_parallel(), it will be set back to "0" as soon as the
-+ * API reads that setting.
-  */
-+extern int run_processes_parallel_ungroup;
- int run_processes_parallel(int n,
- 			   get_next_task_fn,
- 			   start_failure_fn,
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index f3b90aa834a..34cce45b584 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -31,7 +31,11 @@ static int parallel_next(struct child_process *cp,
- 		return 0;
- 
- 	strvec_pushv(&cp->args, d->args.v);
--	strbuf_addstr(err, "preloaded output of a child\n");
-+	if (err)
-+		strbuf_addstr(err, "preloaded output of a child\n");
-+	else
-+		fprintf(stderr, "preloaded output of a child\n");
-+
- 	number_callbacks++;
- 	return 1;
- }
-@@ -41,7 +45,10 @@ static int no_job(struct child_process *cp,
- 		  void *cb,
- 		  void **task_cb)
- {
--	strbuf_addstr(err, "no further jobs available\n");
-+	if (err)
-+		strbuf_addstr(err, "no further jobs available\n");
-+	else
-+		fprintf(stderr, "no further jobs available\n");
- 	return 0;
- }
- 
-@@ -50,7 +57,10 @@ static int task_finished(int result,
- 			 void *pp_cb,
- 			 void *pp_task_cb)
- {
--	strbuf_addstr(err, "asking for a quick stop\n");
-+	if (err)
-+		strbuf_addstr(err, "asking for a quick stop\n");
-+	else
-+		fprintf(stderr, "asking for a quick stop\n");
- 	return 1;
- }
- 
-@@ -407,6 +417,12 @@ int cmd__run_command(int argc, const char **argv)
- 	if (!strcmp(argv[1], "run-command"))
- 		exit(run_command(&proc));
- 
-+	if (!strcmp(argv[1], "--ungroup")) {
-+		argv += 1;
-+		argc -= 1;
-+		run_processes_parallel_ungroup = 1;
-+	}
-+
- 	jobs = atoi(argv[2]);
- 	strvec_clear(&proc.args);
- 	strvec_pushv(&proc.args, (const char **)argv + 3);
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index ee281909bc3..7b5423eebda 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -134,16 +134,34 @@ test_expect_success 'run_command runs in parallel with more jobs available than
+ test_expect_success 'git hook usage' '
+ 	test_expect_code 129 git hook &&
+@@ -120,4 +121,40 @@ test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'run_command runs ungrouped in parallel with more jobs available than tasks' '
-+	test-tool run-command --ungroup run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-+	test_line_count = 8 out &&
-+	test_line_count = 4 err
++test_hook_tty() {
++	local fd="$1" &&
++
++	cat >expect &&
++
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++
++	test_hook -C repo pre-commit <<-EOF &&
++	{
++		test -t 1 && echo >&$fd STDOUT TTY || echo >&$fd STDOUT NO TTY &&
++		test -t 2 && echo >&$fd STDERR TTY || echo >&$fd STDERR NO TTY
++	} $fd>actual
++	EOF
++
++	test_commit -C repo A &&
++	test_commit -C repo B &&
++	git -C repo reset --soft HEAD^ &&
++	test_terminal git -C repo commit -m"B.new" &&
++	test_cmp expect repo/actual
++}
++
++test_expect_success TTY 'git hook run: stdout and stderr are connected to a TTY: STDOUT redirect' '
++	test_hook_tty 1 <<-\EOF
++	STDOUT NO TTY
++	STDERR TTY
++	EOF
 +'
 +
- test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
- 	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'run_command runs ungrouped in parallel with as many jobs as tasks' '
-+	test-tool run-command --ungroup run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-+	test_line_count = 8 out &&
-+	test_line_count = 4 err
++test_expect_success TTY 'git hook run: stdout and stderr are connected to a TTY: STDERR redirect' '
++	test_hook_tty 2 <<-\EOF
++	STDOUT TTY
++	STDERR NO TTY
++	EOF
 +'
 +
- test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
- 	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'run_command runs ungrouped in parallel with more tasks than jobs available' '
-+	test-tool run-command --ungroup run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-+	test_line_count = 8 out &&
-+	test_line_count = 4 err
-+'
-+
- cat >expect <<-EOF
- preloaded output of a child
- asking for a quick stop
-@@ -158,6 +176,12 @@ test_expect_success 'run_command is asked to abort gracefully' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'run_command is asked to abort gracefully (ungroup)' '
-+	test-tool run-command --ungroup run-command-abort 3 false >out 2>err &&
-+	test_must_be_empty out &&
-+	test_line_count = 6 err
-+'
-+
- cat >expect <<-EOF
- no further jobs available
- EOF
-@@ -167,6 +191,12 @@ test_expect_success 'run_command outputs ' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'run_command outputs (ungroup) ' '
-+	test-tool run-command --ungroup run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-+	test_must_be_empty out &&
-+	test_cmp expect err
-+'
-+
- test_trace () {
- 	expect="$1"
- 	shift
+ test_done
 -- 
 2.36.1.1103.gb3ecdfb3e6a
 
