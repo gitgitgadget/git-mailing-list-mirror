@@ -2,140 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8C4EC43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 11:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD4AC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 12:14:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234112AbiFBLn6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 07:43:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49636 "EHLO
+        id S234866AbiFBMOl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 08:14:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233689AbiFBLn4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 07:43:56 -0400
-Received: from box.jasonyundt.email (box.jasonyundt.email [206.189.182.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86AD51207CE
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 04:43:55 -0700 (PDT)
-Received: from authenticated-user (box.jasonyundt.email [206.189.182.84])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.jasonyundt.email (Postfix) with ESMTPSA id AB32D7E67E;
-        Thu,  2 Jun 2022 07:43:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jasonyundt.email;
-        s=mail; t=1654170232;
-        bh=cbtWKOssdfIScTdSmgdxAxnqGTqwYh6NdmKu70Ku9yI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Rn3O1mhBQThxpoSjX0BW3y6xOwXlh9eZ+ek5sqvbSJSo0FV8htdiq3MqDRJEdk6/R
-         C6AXLzdWeRuHYO9V1YMyIgJoAFqm7DKD/lVkQ4IAl73m3nnYueaDC/aTdqpwZAbHKH
-         fZ6Ah28VOsJjCMXdoWACqFJZKlYyf0gbImiAytAd0kpH8LQHGs7RQQXYU78kQOy93a
-         a/lebi7DgByadD/k8hiMVwIZ22mRlDKpdFUhZ6MM2POJP1OMGVY1gMcItPtGbyljrx
-         9u87ApLEMi53y42jxuWdWeth8rBqObPNHf1tVityv4oa1m2XjvvrT6vp4EEO6whLg3
-         tGK9q79bitGhg==
-From:   Jason Yundt <jason@jasonyundt.email>
-To:     git@vger.kernel.org
-Cc:     Jason Yundt <jason@jasonyundt.email>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH v2] gitweb: switch to an XHTML5 DOCTYPE
-Date:   Thu,  2 Jun 2022 07:43:05 -0400
-Message-Id: <20220602114305.5915-1-jason@jasonyundt.email>
-In-Reply-To: <20220601012647.1439480-1-jason@jasonyundt.email>
-References: <20220601012647.1439480-1-jason@jasonyundt.email>
+        with ESMTP id S234511AbiFBMOk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 08:14:40 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE8E1DC843
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 05:14:34 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id rs12so9542576ejb.13
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 05:14:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=UOGjZjYONU95nTkqhbvKS56Cq60933fwgG7eUJn6+1o=;
+        b=cjowokyYAjzqL77WoDFlZFRua1uMo1eMFfbLP0J2r//Oy1DalqYThwc81QSaIlJkZo
+         D9/wKsnmGU0g9SFCyyYYPCjzmFX6IKSd3pYdUTIo7nZ6uXnqlltxCZckTyQLn/CMyq/g
+         Tgplp3dp4e8PaUupeYw7Rvb54EgO8HT7WB9+rlTTFhKD2QMe3hKpoiKt/mZZd+xXcT8t
+         wCYsY7HSJd8CnnIr4u803jLadz6erP6nQHh0yjQ0Td19MpDigS7td0mp+UBs407LkWk3
+         Wb0tKWoZNo3lEHiEWhE6CtEKC84NnKV9zHod9GFLSj6qDFKui53+UtWdslfrIK2jhDQr
+         lGRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=UOGjZjYONU95nTkqhbvKS56Cq60933fwgG7eUJn6+1o=;
+        b=OGnMjWSoz/UA6WWKfrCDqpJZ5RxFGbCFKBYtco273IkNvAnlX/z9T2O2LoJl3yCtIo
+         ZtW8sytoYiO8XdKRLTuWK9EgB+KiA5kQOzou/7Zc1CoEWRJgRCtWExRmqyTZBCIBTX+r
+         84gQh4I7I3S0gp/K9jK0AUkP0Ia4vocnp6SYkMD2zuhaijW4Q/PuWfd10cDdzmA/8h/3
+         D+ppyUHYIfTf+SfHy2KzxVwsFlbIdD/j+3hDOSuiPKLYVXuVuwgu9AwQ8kdxjaitG+3C
+         k/bQUAmBnUiKI5P2Q3AmWkppYXKGxWvNKTJn7Q3ZW4E1Nab41Q73mT//nuFfC1HRnqQ+
+         lR6A==
+X-Gm-Message-State: AOAM532Iav4sDAIthviQ4Wahm6cwL2zfN8WVDXeQ18ucvvw7atRCc2Oy
+        V2ftYhyOL3HYHj/t65djB0Cj/3D0uYn8NA==
+X-Google-Smtp-Source: ABdhPJzCrKldSFOFfPkBdr83wB6wYV8o3izbtmPu5HYzfbQR235miSB+YJ+oP+8FcDXKTHL/JPCZrA==
+X-Received: by 2002:a17:907:9494:b0:6fa:78f3:eb9b with SMTP id dm20-20020a170907949400b006fa78f3eb9bmr3905863ejc.704.1654172073162;
+        Thu, 02 Jun 2022 05:14:33 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id d22-20020a50fb16000000b0042617ba6389sm2377989edq.19.2022.06.02.05.14.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 05:14:32 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nwjih-001RWi-Bg;
+        Thu, 02 Jun 2022 14:14:31 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: ab/env-array (was: What's cooking in git.git (Jun 2022, #01; Wed, 1))
+Date:   Thu, 02 Jun 2022 14:13:31 +0200
+References: <xmqqee07q3xc.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqee07q3xc.fsf@gitster.g>
+Message-ID: <220602.86a6avz2hk.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-According to the HTML Standard FAQ:
 
-	“What is the DOCTYPE for modern HTML documents?
+On Wed, Jun 01 2022, Junio C Hamano wrote:
 
-	In text/html documents:
+> * ab/env-array (2022-05-20) 4 commits
+>  - run-command API users: use "env" not "env_array" in comments & names
+>  - cocci: remove env_array -> env migration
+>  - run-command API: rename "env_array" to "env"
+>  - cocci: add a rename of "struct child_process"'s "env_array" to "env"
+>
+>  Rename .env_array member to .env in the child_process structure.
+>
+>  Expecting a (hopefully final) reroll, before merging it to 'next'.
+>  cf. <xmqqilq0jhk2.fsf@gitster.g>
+>  source: <cover-v2-0.4-00000000000-20220520T072122Z-avarab@gmail.com>
 
-		<!DOCTYPE html>
-
-	In documents delivered with an XML media type: no DOCTYPE is required
-	and its use is generally unnecessary. However, you may use one if you
-	want (see the following question). Note that the above is well-formed
-	XML.”
-
-	Source: [1]
-
-Gitweb uses an XHTML 1.0 DOCTYPE:
-
-	<!DOCTYPE html PUBLIC
-	"-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-While that DOCTYPE is still valid [2], it has several disadvantages:
-
-1. It’s misleading. If an XML parser uses the DTD at the given link,
-   then the entities &nbsp; and &sdot; won’t get declared. Instead, the
-   parser has to use a DTD from the HTML Standard that has nothing to do
-   with XHTML 1.0 [2].
-2. It’s obsolete. XHTML 1.0 was last revised in 2002 and was superseded in
-   2018 [3].
-3. It’s unreliable. Gitweb uses &nbsp; and &sdot; but lets an external file
-   define them. “[…U]using entity references for characters in XML documents
-   is unsafe if they are defined in an external file (except for &lt;, &gt;,
-   &amp;, &quot;, and &apos;).” [4]
-
-[1]: <https://github.com/whatwg/html/blob/main/FAQ.md#what-is-the-doctype-for-modern-html-documents>
-[2]: <https://html.spec.whatwg.org/multipage/xhtml.html#parsing-xhtml-documents>
-[3]: <https://www.w3.org/TR/xhtml1/#xhtml>
-[4]: <https://html.spec.whatwg.org/multipage/xhtml.html#writing-xhtml-documents>
-
-Signed-off-by: Jason Yundt <jason@jasonyundt.email>
----
-Compared to the first version of this patch, this version:
-1. makes it clear that XML parsers may used the linked DTD like brian
-   mentioned.
-2. mentions HTML5 like Bagas suggested.
-
- gitweb/gitweb.perl                        |  5 ++++-
- t/t9502-gitweb-standalone-parse-output.sh | 14 ++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 606b50104c..1835487ab2 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -4219,7 +4219,10 @@ sub git_header_html {
- 	my $mod_perl_version = $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : '';
- 	print <<EOF;
- <?xml version="1.0" encoding="utf-8"?>
--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-+<!DOCTYPE html [
-+	<!ENTITY nbsp "&#xA0;">
-+	<!ENTITY sdot "&#x22C5;">
-+]>
- <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
- <!-- git web interface version $version, (C) 2005-2006, Kay Sievers <kay.sievers\@vrfy.org>, Christian Gierke -->
- <!-- git core binaries version $git_version -->
-diff --git a/t/t9502-gitweb-standalone-parse-output.sh b/t/t9502-gitweb-standalone-parse-output.sh
-index 8cb582f0e6..81d5625557 100755
---- a/t/t9502-gitweb-standalone-parse-output.sh
-+++ b/t/t9502-gitweb-standalone-parse-output.sh
-@@ -220,4 +220,18 @@ test_expect_success 'no http-equiv="content-type" in XHTML' '
- 	no_http_equiv_content_type "p=.git;a=tree"
- '
- 
-+proper_doctype() {
-+	gitweb_run "$@" &&
-+	grep -F "<!DOCTYPE html [" gitweb.body &&
-+	grep "<!ENTITY nbsp" gitweb.body &&
-+	grep "<!ENTITY sdot" gitweb.body
-+}
-+
-+test_expect_success 'Proper DOCTYPE with entity declarations' '
-+	proper_doctype &&
-+	proper_doctype "p=.git" &&
-+	proper_doctype "p=.git;a=log" &&
-+	proper_doctype "p=.git;a=tree"
-+'
-+
- test_done
--- 
-2.36.1
-
+I think it should be ready with the v3 I sent today:
+https://lore.kernel.org/git/cover-v3-0.2-00000000000-20220602T090745Z-avarab@gmail.com/
