@@ -2,87 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D2ECC433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 14:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 192BDC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 15:02:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236173AbiFBOsb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 10:48:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35182 "EHLO
+        id S236305AbiFBPCO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 11:02:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236161AbiFBOs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 10:48:29 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC78F74BA
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 07:48:28 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id q21so10464400ejm.1
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 07:48:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ZhBEqSe2ktcBAxRFu3G3PX0xFVp7vwOkQ0Ts1bjdi8Y=;
-        b=JeEntJKGk5Jten7soHZB++wRTxWaKdYgoc6nmOFbqp9PjLrEVeb5YVc5sL47TTE5qZ
-         dQlledaZFl70doSWAr7levGQ8gJLH7H5kCfU0gsdyApp/6yxUcY5pWuWDIBDS9Vxu2gv
-         uKaCYkohRifiljSpjMQqo/J/GZplnJ6bm6gnTh1aKpLAZ9WOZbRrNjVIdRBwc8+b4mXS
-         vidZv4lqLzOBs8yIfTTrJNx6iN5AjGZmsA0pOf3I+4pKHQ3hPoLS4y/74zVTD91Ac3l8
-         AwwOpTV+dvlIXYVUTNtH+OLwXAxVOYjdonUxhD8gKhsNxTPF5UuwIrFpZRASaEqt6Lpa
-         BBgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ZhBEqSe2ktcBAxRFu3G3PX0xFVp7vwOkQ0Ts1bjdi8Y=;
-        b=2O/0XTAcx/CsvwsRRVJk0dJiqAOgQjGDYAp9gLAdFRtLNq90nUiBiDDKqBkknLLzMd
-         Z3wUjw5tvr7pjVo5gzkURov0SKcP70De+BFiLNk95uId3UjQFUAVG8qvLqTMRZw8sx0A
-         Kk1b88pgxZbXlxDD4K3l6MCW0oOAJw1BFBGuPyx+xo0csFryICgQuscOiD/sQ02yZC1Z
-         cqSuUwK/fxXZpkfRfY7wyEmeWztBQ2yFGYNpV6GNpLwg6e1WwgBhcfDTx2hX3ee1uXsq
-         vpbVoA3UQRPvLNtlPKPJ3hl6nhDmKZcc97pYNUJkK5RhIH7Y63pf1A8umtHTP0BRlCuk
-         n1Iw==
-X-Gm-Message-State: AOAM530j1Rm5opQx6sA22djvmsXXFQxYIDffrLoU1LNXhZU1Fo50+n6t
-        6DiYwiixolUxl/JwJVqn2tMIsv2+5//Etw==
-X-Google-Smtp-Source: ABdhPJzKYa9O56uXsX3S0oVcrrovfLDFWivK6guHpfaxsBQKl+uOqXvcbJzFGO+KlaWWCiMggePoQg==
-X-Received: by 2002:a17:907:1623:b0:6f6:e9ce:9926 with SMTP id hb35-20020a170907162300b006f6e9ce9926mr4563924ejc.360.1654181307263;
-        Thu, 02 Jun 2022 07:48:27 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id o2-20020aa7dd42000000b0042dc460bda6sm2585969edw.18.2022.06.02.07.48.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 07:48:26 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nwm7e-001X4L-AX;
-        Thu, 02 Jun 2022 16:48:26 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ab/hooks-regression-fix (was: What's cooking in git.git (Jun 2022,
- #01; Wed, 1))
-Date:   Thu, 02 Jun 2022 16:47:55 +0200
-References: <xmqqee07q3xc.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqee07q3xc.fsf@gitster.g>
-Message-ID: <220602.86wndzxgsl.gmgdl@evledraar.gmail.com>
+        with ESMTP id S234002AbiFBPCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 11:02:14 -0400
+Received: from nmsh6.e.nsc.no (nmsh6.e.nsc.no [148.123.160.200])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1361268F8D
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 08:02:12 -0700 (PDT)
+Received: from Lorule.wifi.realnett.no (unknown [194.19.73.58])
+        (Authenticated sender: joak-pet@online.no)
+        by nmsh6.e.nsc.no (smtp.online.no) with ESMTPA id 23EF11D4138;
+        Thu,  2 Jun 2022 17:02:09 +0200 (CEST)
+From:   Joakim Petersen <joak-pet@online.no>
+To:     git@vger.kernel.org
+Cc:     Joakim Petersen <joak-pet@online.no>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Justin Donnelly <justinrdonnelly@gmail.com>
+Subject: [PATCH v2] git-prompt: make colourization consistent
+Date:   Thu,  2 Jun 2022 16:59:35 +0200
+Message-Id: <20220602145935.10512-1-joak-pet@online.no>
+X-Mailer: git-send-email 2.36.1
+In-Reply-To: <20220601134414.66825-1-joak-pet@online.no>
+References: <20220601134414.66825-1-joak-pet@online.no>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Source-IP: 194.19.73.58
+X-Scanned-By: MIMEDefang 2.84 on 10.123.160.200
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The short upstream state indicator inherits the colour of the last short
+state indicator before it (if there is one), and the sparsity state
+indicator inherits this colour as well. Make the colourization of these
+state indicators consistent by clearing any colour before printing the
+short upstream state indicator, as this immediately follows the last
+coloured indicator.
 
-On Wed, Jun 01 2022, Junio C Hamano wrote:
+As of 0ec7c23cdc6 (git-prompt: make upstream state indicator location
+consistent, 2022-02-27), colourization in the output of __git_ps1 has
+changed such that the short upstream state indicator inherits the colour
+of the last short state indicator before it (if there is one), while
+before this change it was white/the default text colour. Some examples
+to illustrate this behaviour (assuming all indicators are enabled and
+colourization is on):
+ * If the local tree is clean and there is something in the stash, both
+   the '$' and the short upstream state indicator following it will be
+   blue.
+ * If the local tree has new, untracked files, both the '%' and the
+   short upstream state indicator will be red.
+ * If all local changes are added to the index and the stash is empty,
+   both the '+' and the short upstream state indicator following it will
+   be green.
+ * If the local tree is clean and there is nothing in the stash, the
+   short upstream state indicator will be white/${default text colour}.
 
-> * ab/hooks-regression-fix (2022-06-01) 2 commits
->  - hook API: fix v2.36.0 regression: hooks should be connected to a TTY
->  - run-command: add an "ungroup" option to run_process_parallel()
->
->  In Git 2.36 we revamped the way how hooks are invoked.  One change
->  that is end-user visible is that the output of a hook is no longer
->  directly connected to the standard output of "git" that spawns the
->  hook, which was noticed post release.  This is getting corrected.
->
->  Under discussion.
->  source: <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com>
+This appears to be an unintended side-effect of the change, and makes
+little sense semantically (e.g. why is it bad to be in sync with
+upstream when you have uncommitted local changes?). The cause of the
+change is that previously, the short upstream state indicator appeared
+immediately after the rebase/revert/bisect/merge state indicator (note
+the position of $p in $gitstring):
 
-Re-rolled
-https://lore.kernel.org/git/cover-v5-0.2-00000000000-20220602T131858Z-avarab@gmail.com/
-which (hopefully) addresses the outstanding comments, allowing this to
-move forward.
+	local f="$h$w$i$s$u"
+	local gitstring="$c$b${f:+$z$f}${sparse}$r$p"
+	
+Said indicator is prepended with the clear colour code, and the short
+upstream state indicator is thus also uncoloured. Now, the short
+upstream state indicator follows the sequence of colourized indicators,
+without any clearing of colour (again note the position of $p, now in
+$f):
+
+	local f="$h$w$i$s$u$p"
+	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}"
+
+However, adding a clearing of colour before the short upstream state
+indicator will change how the sparsity state indicator is colourized,
+as it currently inherits (and before the change referenced also
+inherited) the colour of the last short state indicator before it.
+Reading the commit message of the change that introduced the sparsity
+state indicator, afda36dbf3b (git-prompt: include sparsity state as
+well, 2020-06-21), it appears this colourization also was unintended,
+so clearing the colour for said indicator further increases consistency.
+
+Signed-off-by: Joakim Petersen <joak-pet@online.no>
+---
+
+Range-diff against v1:
+1:  e235caa7a8 = 1:  e235caa7a8 git-prompt: make colourization consistent
+
+ contrib/completion/git-prompt.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 87b2b916c0..dfd6cef35f 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -286,6 +286,7 @@ __git_ps1_colorize_gitstring ()
+ 	if [ -n "$u" ]; then
+ 		u="$bad_color$u"
+ 	fi
++	p="$c_clear$p"
+ 	r="$c_clear$r"
+ }
+ 
+-- 
+2.36.1
+
