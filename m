@@ -2,94 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81254C433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 16:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86E73C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 16:54:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237151AbiFBQk0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 12:40:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33630 "EHLO
+        id S237327AbiFBQyG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 12:54:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236745AbiFBQkX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 12:40:23 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 173E913C1F1
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 09:40:22 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id rq11so11062691ejc.4
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 09:40:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=89yMiHLp5i8h0Y3NzAEviCtCZkrcIMp4uiTBFAeuap0=;
-        b=LZXpz4Nb6yIqUzblu1v9cxYvHezkcAUCMjQwmCWY9Bakg11pNtmtiJhTeWNhY0H0ym
-         xFzgfDLEt3xjpfmKVUtT3zc9sUFWSzJBoauSZ/SR6EF0gfGY/aBlR0Nuri3IXdDDYcDw
-         WS7lyjjYPjQ+0KzYX9Lt7FBrg2Xuo4NIFW7fw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=89yMiHLp5i8h0Y3NzAEviCtCZkrcIMp4uiTBFAeuap0=;
-        b=mmt01jqXpc2d2cvl7c9C4GvwIuVZw+nrnvt/CXg+azE2euj5g9AC41JBFBwXJTu2hk
-         t9jd+Fam3uIEINhHC8JXaRBDIc5HR2+5SemOxIm3uZL3GVV7BrqlKRcXjU3OlEX1Qxlv
-         HA7MkPPGQHREtA9AYejRMUTVnd6rYidoD8DOh6yIV5TlZk0Dg3I7jyS2mSSFB4m+70X3
-         i+lWtwN7NTwda97nRiLBHliQKy2Fm7ncwgrl7WR5/srS/mvfPt7ktWzvYgzNZex8Q2W6
-         3UguzFHHknQPEpdeugLDW6JhUkk7XwGFlfQgsGNaMqv7mBQ0s6g5qKXYvZhP2ODQOS0U
-         juvQ==
-X-Gm-Message-State: AOAM530DV7F1pAsYW6tSd7XO5Oz46DhyrNOXTYI+SyZXYyEqkED7gcCS
-        A4AOQTgrQFP1JBI0Z0n87NxKwlK/Lc7hLTiWL7NIBesqRINMV54O
-X-Google-Smtp-Source: ABdhPJxWmyHHz1iHSo29xpDPh1w3m74GJVfhszidm1fah5Wcl2G7YrsR/pu0wJ8mhA4Jqxmcss07HsgRmC+aKLIAX2M=
-X-Received: by 2002:a17:907:6e20:b0:6ff:1541:8d34 with SMTP id
- sd32-20020a1709076e2000b006ff15418d34mr4932165ejc.447.1654188020305; Thu, 02
- Jun 2022 09:40:20 -0700 (PDT)
+        with ESMTP id S236085AbiFBQyE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 12:54:04 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC2252A68BB
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 09:54:03 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 13F9C18F31A;
+        Thu,  2 Jun 2022 12:54:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=BBCR3cwKjoss
+        GgpO9JIctI7CxCIbHZhPYk/dzrOYlhE=; b=w0Josbst3hZN1p+Rm/DOEanxTV9o
+        kEOJWagWS7bOpOFhcceUtMpwkYborCGf/inJqgg3Rsm4E+mA5Mn7hs7TY08Gv7po
+        kAcO0x21eIejC3/O6QM9RcEMSk27io2xH6iHZdcPRGgJfZRs8mS+GZqwa1eqX6ZP
+        REsqH2X54XzKWiA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0BD9018F318;
+        Thu,  2 Jun 2022 12:54:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9DB1818F314;
+        Thu,  2 Jun 2022 12:53:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v3 1/5] Documentation: define protected configuration
+References: <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com>
+        <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com>
+        <575676c760d9a2ce4a59d50e93aa0f45d54620ab.1653685761.git.gitgitgadget@gmail.com>
+        <xmqqh75a1rmd.fsf@gitster.g>
+        <2ed00ece-f8bb-c84c-0684-494692a71da2@github.com>
+Date:   Thu, 02 Jun 2022 09:53:58 -0700
+In-Reply-To: <2ed00ece-f8bb-c84c-0684-494692a71da2@github.com> (Derrick
+        Stolee's message of "Thu, 2 Jun 2022 08:42:30 -0400")
+Message-ID: <xmqq35gnovkp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 2 Jun 2022 18:40:09 +0200
-Message-ID: <CAPMMpohvKSgcL=X=Z=Wf7zHRr_Ghex5oZ4iUTgZL7XhHSWFi8g@mail.gmail.com>
-Subject: Introduce "git stash --continue" and "git stash --abort"?
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 994C92FE-E294-11EC-931F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+Derrick Stolee <derrickstolee@github.com> writes:
 
-I've spent a little time trying to understand how git stash behaves,
-and understanding the differences wrt how a "naive user" (eg me?)
-would expect it to.
+>> It would make sense to give a rationale behind the seemingly
+>> arbitrary choice of what is and what is not "protected".  Not
+>> necessarily in the glossary, but in the proposed log message of the
+>> commit that makes the decision.  The rationale must help readers to
+>> be able to answer the following questions.
+>>=20
+>>  - The system level is "protected" because?  Is it because we do not
+>>    even try to protect ourselves from those who can write anywhere
+>>    in /etc/ or other system directories?
+>>=20
+>>  - The per-user config is "protected" because?  Is it because our
+>>    primary interest in "protection" is to protect individual users
+>>    from landmines laid in the filesystem by other users, and those
+>>    who can already write into $HOME are not we try to guard against?
+>
+> I think the answers to these two questions is "yes", so they can
+> be turned into an affirmative sentence:
+>
+> 	We do not event try to protect ourselves from those who can
+> 	write anywhere...
 
-So far most of the differences are about defaults, eg:
-* I would expect "git stash push" (or "git stash") to
-"--include-untracked" by default
-* I would expect "git stash pop" to include "--index" by default
-* I would expect "git checkout" (or at least "git switch") to have an
-"--autostash" option like "git rebase" and "git merge" do
+s/event/even/.
 
-There's one "bigger" thing though, that sounds like a whole project:
-The behavior of "stash pop" in the case of conflicts is somewhat
-traumatizing:
+>
+>>  - The per-repo config is not "protected" (i.e. "trusted"), because?
+>>    If we are not honoring a configuration in the repository, why are
+>>    we working in that repository in the first place?
+>
+> This requires an example:
+>
+> 	Some workflows use repositories stored in shared directories,
+> 	which are writable by multiple unprivileged users.
 
-* My worktree is left in a "conflicted" state, and the only way to
-"back out" seems to be some sort of "reset" (but good luck figuring
-out which one, or how to revert the stash-based changes without
-impacting any other uncommitted changes that I had in my worktree)
+Hmph, "... and we do not trust these colleagues"?  It might be true,
+but sounds a bit weak rationale, at least to me.  A natural reaction
+coming form a devil's advocate na=C3=AFve me would be "well, then I would
+not be directly interacting with such a repository; I'd work in a
+clone of it of my own, and pull and push as needed".
 
-* If I "forge on", resolve the conflicts, and stage the conflicted
-files... my stash stack still contains something that I didn't intend
-it to, until/unless I remember to "git stash drop"... which is an
-unsafe (non-idempotent / not-easily-reversible) operation...
+Isn't the reason more like "users may go spelunking random places in
+the filesystem, with PS1 settings and the like that causes some
+"git" command invoked automatically in their current directory, and
+we want to protect these users from getting harmed by a random
+repository with hostile contents in their configuration and hooks
+without even realizing they have wandered into such a repository"?
 
-I would expect that some sort of merge- or rebase-like "--continue or
---abort" facility would make this much easier to understand... but of
-course I have no idea how one would go about doing that. I assume the
-closest existing pattern would be "git cherry-pick", but I imagine I'm
-missing lots of subtleties.
+>>  - The per invocation config is not "protected" (i.e. "trusted"),
+>>    because?  If we cannot trusting our own command line, what
+>>    prevents an attacker from mucking with our command line to say
+>>    "sudo whatever" using the same attack vector?
+>
+> With this argument, I agree that -c config can be considered
+> protected. At the very least, it is visible to the user when they
+> are running a command. This would unify our expectations with
+> uploadPack.packObjectsHook, too.
 
-I understand Brian M. Carlson has been working on big changes around
-stash export, and Victoria Dye has been working on Sparse Index
-support, but I'm not aware of any other major ongoing work from
-skimming the mailing list in the past months.
+Yup, that matches my understanding.
 
-Is this kind of direction one that's been considered before? Are there
-reasons why it's a bad idea?
+In any case, I'd prefer to see not just the definition but the
+reasoning behind the decision that made some "protected" while
+leaving others not-"protected" clearly documented to help users.
 
-Thanks,
-Tao
+Thanks.
