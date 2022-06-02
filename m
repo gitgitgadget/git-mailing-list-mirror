@@ -2,96 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99620C43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 14:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A56A0C43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 14:24:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235768AbiFBORH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 10:17:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43174 "EHLO
+        id S235669AbiFBOYY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 10:24:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235135AbiFBORF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 10:17:05 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 103481FCE3
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 07:17:04 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id jx22so10199891ejb.12
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 07:17:03 -0700 (PDT)
+        with ESMTP id S235808AbiFBOYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 10:24:22 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D84BA1A7
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 07:24:21 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id n145so4949121iod.3
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 07:24:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=CvLLXgqy1vcWOz9M49Qh+EH7rqWf1bCKMVmOIu+o14I=;
-        b=RX4Z7eBfCzDFgU1sF/g2QcBfvlnFVpXpTWdzHsgj5mpd31/KB6FDIU/iGlEXKr7vib
-         C1oGG7+xEfIat/0fkI5ll8Pl5efq537QWJGaDxaT3xcQMeOM7j8EbLmpnvqHcfQ82rr8
-         /F2XLUMWkO9Yd/Kdolc9wPQD+ZhiP7/S8A5EGdkXIpYUUV/p1CRf8ib5p1cV2cAkEicp
-         NRHFDR5mWHfFK0E4odJuAgM2v47o8LP3SD4r/ZTW62FlnJV3kPdmSvo08ki2dbVecaJu
-         RhhUSupxPd5WsNtJsHaT57k6FXm3bUhYXbSISG5R4snef/DbEtKNlDfiZJTZduzahxgs
-         8nZQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QphnEX1yCm3h/zKEhJXwhDrzy5Vg6Hw5YMC8OA5f7R0=;
+        b=gOlujCoxRRNFCLldtUMsqc9VnnuzZO4P0lfJ74+x7kCL4arQViJPfX5orNyHOLtiXp
+         i21BpFDOesA+lkQRBwJSDGXg/cRtNoCeeVz6ihr43pTWZPHSc3m3UEbLPV5tO6P6hXOO
+         sweDbLzKlN+I5gOpJ4BK/VD/1LyhmxW9NoIPh4wkz6vqD/NqH2csHnLu1B22CxrBdfq9
+         KvchTcnBfjegEk2hESVgzhLVyZWMzyeA1h27wmlDMqVMTRII6P/Sb2n7pjAabEiRm5TO
+         Ycxr40L7KW8qZdXAb6puhLN7n+c3Y8yv5TRFK87CiGGfEmIJVqz4pEihEn4kxr9SAiub
+         QwBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=CvLLXgqy1vcWOz9M49Qh+EH7rqWf1bCKMVmOIu+o14I=;
-        b=lB/cuhV4TOFStClwO/fyFazV9UyoBQHOXBOm6JglaHQtJjlShnrLo1zNEjCvYjVBfH
-         Si6KGimyx2lTQNR/UVN+cc4c5PvOi8epp4lFcAYL2STeCRPXpUAqXZwZZZeH+GskGNsw
-         G6MX3vZjyUPHSJpp0Nl52P7dFbZUKRYgglRAh5NrbHd45iMR7XoEE4iL1kvlqdGnt/fV
-         zAxvMJE4EmCzgVms4R8RQZaKzwRYt4yJ9wL0ELK/kAa9916jMAPZIXv2PeRvTIIkgQ0+
-         KP9IlmiKLSdPV6q5aiBdNq5xsNP0pYoIhKo/X0VTjMn9o8Hv9NmP2VXuqQ0l77bhB4en
-         aX3Q==
-X-Gm-Message-State: AOAM531/PURVbOVIUTn2Hy0ScjzFAKWFBymoVewEo38DzGeVJxp8L7KO
-        DIyJx3jLDAfnOr/s7OYEPRM=
-X-Google-Smtp-Source: ABdhPJy/bmIOexs7HY4F7pDd2jgpe5U2FDy3qw5nEr4pfJyuoQIhJU77Ll3iY+xYsRTSoEwr2ANoyQ==
-X-Received: by 2002:a17:906:d550:b0:704:7ba6:9854 with SMTP id cr16-20020a170906d55000b007047ba69854mr4400268ejc.579.1654179422376;
-        Thu, 02 Jun 2022 07:17:02 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id rn13-20020a170906d92d00b006f3ef214df2sm1739933ejb.88.2022.06.02.07.17.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 07:17:01 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nwldE-001VzE-Ri;
-        Thu, 02 Jun 2022 16:17:00 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] Integrate Scalar into the CI builds
-Date:   Thu, 02 Jun 2022 16:13:54 +0200
-References: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
- <d0448d28-b33c-3f42-901d-3cd7f4201c78@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <d0448d28-b33c-3f42-901d-3cd7f4201c78@github.com>
-Message-ID: <220602.865yljywtf.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QphnEX1yCm3h/zKEhJXwhDrzy5Vg6Hw5YMC8OA5f7R0=;
+        b=Pzq3V1eft2z8nRvLGMSbhnqIym+cz1AaJLCBPUzdI58u2qHr2OrWpyDsmJPUGkydku
+         +CoohZd3TzZTzXwO+puYxwCjSqX5vqAOlDENWpS0W0w2A/kxIZsecXB205d3rVRoJYmw
+         o2AAAw9DD2LXPlK4pz5X+ozSUjG4u07DZM0Z+WYEWArKELUZYo0CAYcTLk7ZzZmPcPZ/
+         L4t2p6ZDbuSdwlpd2MfpIYctXdYS1gFefCVTs5ft4UxNbkNgIlGPkFFN6DJs/7iom6jD
+         agx9NSF4hYOuAu2YbqaIvsxBvYO4P4VSBNRbf59kGeW961LY51TZG4JNPnQLpfJcLZRn
+         IF9w==
+X-Gm-Message-State: AOAM531Wc/gbnvvFvb6h4bbmDsbsSQv3WCqg6IrAE6/PyaeBeaaRe+Nr
+        dUmk8nlM/UBOTxQ+2OyVFbD1wS2jud00/g0=
+X-Google-Smtp-Source: ABdhPJxRqdDTtqjhivMdUVb/ORSMaL9Op4rt108/xNpZLDNKcXVBHTmStreuVAo+BnQmkXKXYY1JIA==
+X-Received: by 2002:a02:5488:0:b0:32e:e4ec:4aae with SMTP id t130-20020a025488000000b0032ee4ec4aaemr3303665jaa.161.1654179860438;
+        Thu, 02 Jun 2022 07:24:20 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9cc9:fda3:3ddf:6700? ([2600:1700:e72:80a0:9cc9:fda3:3ddf:6700])
+        by smtp.gmail.com with ESMTPSA id c8-20020a023f48000000b0032e1a07228asm1249372jaf.26.2022.06.02.07.24.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jun 2022 07:24:19 -0700 (PDT)
+Message-ID: <376e65b1-3001-9bf8-8d08-dcfd9c6a8caf@github.com>
+Date:   Thu, 2 Jun 2022 10:24:18 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3 2/2] usage: add warn_once() helper for repeated
+ warnings
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
+        christian.couder@gmail.com, johannes.schindelin@gmx.de,
+        jrnieder@gmail.com,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Robert Coup <robert.coup@koordinates.com>
+References: <pull.1237.v2.git.1653658034086.gitgitgadget@gmail.com>
+ <pull.1237.v3.git.1654046173.gitgitgadget@gmail.com>
+ <8e29ac807c6a0cf94ea3a44ee3304011c2ad159c.1654046173.git.gitgitgadget@gmail.com>
+ <220601.868rqg1qo2.gmgdl@evledraar.gmail.com>
+ <8f96563b-87c5-2a8c-fe35-19fd0cc3c7d2@github.com>
+ <xmqq35gorv7c.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq35gorv7c.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 6/1/2022 4:21 PM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
+> 
+>> We could certainly investigate this more, but it seems like a more
+>> problematic approach than the one taken here. We could add a "is_valid"
+>> bit to struct remote, but then could some code path modify that struct
+>> after it was validated?
+> 
+> Two separate parser parsing the same string to produce (supposedly)
+> equivalent parse results is a bit disturbing, and I am not sure if
+> "is_valid" bit helps that.
+> 
+> Adding "user" and "password" members to the struct, and retire the
+> existing "parser" (instead it would just use the pre-parsed
+> components stored in the struct) would.  It would be a much more
+> involved change, and it is something more than we would want to do
+> in a regression fix patch.
+> 
+> But this series is a new feature development, so...
 
-On Thu, Jun 02 2022, Derrick Stolee wrote:
+Yes, you're right. I should use the output 'struct url_inf' from
+url_normalize() to construct the redacted URL. It has the downside
+that the output URL can be slightly different from the input URL,
+but a user should still be able to diagnose how to resolve the
+situation.
 
-> On 6/2/2022 5:05 AM, Johannes Schindelin via GitGitGadget wrote:
->> Note that the changes to the GitHub workflow are somewhat transient in
->> nature: Based on the feedback I received on the Git mailing list, I see some
->> appetite for turning Scalar into a full-fledged top-level command in Git,
->> similar to gitk. Therefore my current plan is to do exactly that in the end
->> (and I already have patches lined up to that end). This will essentially
->> revert the ci/run-build-and-tests.sh change in this patch series.
->
-> I expect that this won't be a full remote, since we will still want to
-> exclude Scalar from the build without INCLUDE_SCALAR enabled.
-
-"a full remote"?
-
-Scalar (well, scalar.o, not scalar the binary) has been included in the
-default build (including CI) for a while now.
-
-What we haven't been doing until this series it to link it with libgit.a
-or running its tests.
-
-So perhaps that's what you mean, but in an earlier series it wasn't
-building scalar.o, and I remember there being some confusion on this
-point in the past, seemingly based on a mental model of the scalar
-patches that pre-dated the re-roll that eventually got merged.
+Thanks,
+-Stolee
