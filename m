@@ -2,125 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97EC1C43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 21:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D67DC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 21:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239492AbiFBVsG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 17:48:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58140 "EHLO
+        id S239526AbiFBV4J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 17:56:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239489AbiFBVsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 17:48:04 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66BE61DA6C
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 14:48:03 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        with ESMTP id S233569AbiFBV4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 17:56:07 -0400
+Received: from nmsh6.e.nsc.no (nmsh6.e.nsc.no [148.123.160.200])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 918BC2716D
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 14:56:05 -0700 (PDT)
+Received: from epost.telenor.no (owweb1.e.nsc.no [193.213.121.36])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 5534A5A26C;
-        Thu,  2 Jun 2022 21:48:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1654206482;
-        bh=eJSjrkyUEOLAXx0w2HZ5YI+X69f2zwMnj/HZtp1s/E4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=syx7MKuFPVoGLajZ/PxaXPF6GW5X9aX73OhriTdN+7h5HdvReXcsLQWs42e9LiW06
-         W0nVO5CxIj9V9y+lqyJsF/+A1Cpedxp07VqaCO4wx+qm/WgtvoVWcfsl1qN2EzIpVO
-         sfhqEUFVzngA28l1SLOp+jbJebUTdo/r6XvYjLHi+Jj+FrcRmbJCDJfi+MO7BOWBCM
-         +tq/+VbjLYbDdiFDB5wflVI4WTXCEl+vlnP5loKWdKraGC5H1n6cbQVeq0ZMR/gxf1
-         M4lHxi+MgnzqiKgfN396/eyuowoBODkbzP5EofA389m1YdkS3RFDziPoNDyGlZuNAI
-         wZZwtWIiyD5ZGfh13cM08Lb83B8HHl7WGRqYedkKaVCjdMLgq87HhjnoK3S298/iEG
-         Q15O3K+ob0y+i6Txv4MhetXkixK3H6ZkwzM/98TKb7y97FIMGGHg8mpJLAPdepxfUB
-         6UJJUVBiisNv+mJ9v8v4OBE7uIrA7lJ3NT3DH/6vjzgJ/YYEUuc
-Date:   Thu, 2 Jun 2022 21:47:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jason Yundt <jason@jasonyundt.email>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2] gitweb: switch to an XHTML5 DOCTYPE
-Message-ID: <YpkwD1op18MY/qBa@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jason Yundt <jason@jasonyundt.email>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-References: <20220601012647.1439480-1-jason@jasonyundt.email>
- <20220602114305.5915-1-jason@jasonyundt.email>
- <xmqqv8tinblc.fsf@gitster.g>
+        (Authenticated sender: joak-pet@online.no)
+        by nmsh6.e.nsc.no (smtp.online.no) with ESMTPSA id 2567D1D409F;
+        Thu,  2 Jun 2022 23:56:02 +0200 (CEST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3d90jXFZAaahC8W9"
-Content-Disposition: inline
-In-Reply-To: <xmqqv8tinblc.fsf@gitster.g>
-User-Agent: Mutt/2.2.4 (2022-04-30)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 02 Jun 2022 23:56:02 +0200
+From:   joak-pet@online.no
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Justin Donnelly <justinrdonnelly@gmail.com>
+Subject: Re: [PATCH v2] git-prompt: make colourization consistent
+In-Reply-To: <20220602145935.10512-1-joak-pet@online.no>
+References: <20220601134414.66825-1-joak-pet@online.no>
+ <20220602145935.10512-1-joak-pet@online.no>
+Message-ID: <db1c01f8413fbbfa3e19755afdec4f71@online.no>
+X-Sender: joak-pet@online.no
+User-Agent: Online Webmail
+X-Source-IP: 193.213.121.36
+X-Scanned-By: MIMEDefang 2.84 on 10.123.160.200
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 02/06/2022 16:59, Joakim Petersen wrote:
+> The short upstream state indicator inherits the colour of the last 
+> short
+> state indicator before it (if there is one), and the sparsity state
+> indicator inherits this colour as well. Make the colourization of these
+> state indicators consistent by clearing any colour before printing the
+> short upstream state indicator, as this immediately follows the last
+> coloured indicator.
+> 
+> As of 0ec7c23cdc6 (git-prompt: make upstream state indicator location
+> consistent, 2022-02-27), colourization in the output of __git_ps1 has
+> changed such that the short upstream state indicator inherits the 
+> colour
+> of the last short state indicator before it (if there is one), while
+> before this change it was white/the default text colour. Some examples
+> to illustrate this behaviour (assuming all indicators are enabled and
+> colourization is on):
+>  * If the local tree is clean and there is something in the stash, both
+>    the '$' and the short upstream state indicator following it will be
+>    blue.
+>  * If the local tree has new, untracked files, both the '%' and the
+>    short upstream state indicator will be red.
+>  * If all local changes are added to the index and the stash is empty,
+>    both the '+' and the short upstream state indicator following it 
+> will
+>    be green.
+>  * If the local tree is clean and there is nothing in the stash, the
+>    short upstream state indicator will be white/${default text colour}.
+> 
+> This appears to be an unintended side-effect of the change, and makes
+> little sense semantically (e.g. why is it bad to be in sync with
+> upstream when you have uncommitted local changes?). The cause of the
+> change is that previously, the short upstream state indicator appeared
+> immediately after the rebase/revert/bisect/merge state indicator (note
+> the position of $p in $gitstring):
+> 
+> 	local f="$h$w$i$s$u"
+> 	local gitstring="$c$b${f:+$z$f}${sparse}$r$p"
+> 
+> Said indicator is prepended with the clear colour code, and the short
+> upstream state indicator is thus also uncoloured. Now, the short
+> upstream state indicator follows the sequence of colourized indicators,
+> without any clearing of colour (again note the position of $p, now in
+> $f):
+> 
+> 	local f="$h$w$i$s$u$p"
+> 	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}"
+> 
+> However, adding a clearing of colour before the short upstream state
+> indicator will change how the sparsity state indicator is colourized,
+> as it currently inherits (and before the change referenced also
+> inherited) the colour of the last short state indicator before it.
+> Reading the commit message of the change that introduced the sparsity
+> state indicator, afda36dbf3b (git-prompt: include sparsity state as
+> well, 2020-06-21), it appears this colourization also was unintended,
+> so clearing the colour for said indicator further increases 
+> consistency.
+> 
+> Signed-off-by: Joakim Petersen <joak-pet@online.no>
+> ---
+> 
+> Range-diff against v1:
+> 1:  e235caa7a8 = 1:  e235caa7a8 git-prompt: make colourization 
+> consistent
+> 
+>  contrib/completion/git-prompt.sh | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/contrib/completion/git-prompt.sh 
+> b/contrib/completion/git-prompt.sh
+> index 87b2b916c0..dfd6cef35f 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -286,6 +286,7 @@ __git_ps1_colorize_gitstring ()
+>  	if [ -n "$u" ]; then
+>  		u="$bad_color$u"
+>  	fi
+> +	p="$c_clear$p"
+>  	r="$c_clear$r"
+>  }
 
---3d90jXFZAaahC8W9
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I just realized I forgot to write what changed between the RFC patch
+and v2:
 
-On 2022-06-02 at 18:50:55, Junio C Hamano wrote:
-> Jason Yundt <jason@jasonyundt.email> writes:
->=20
-> > Subject: Re: [PATCH v2] gitweb: switch to an XHTML5 DOCTYPE
-> >
-> > According to the HTML Standard FAQ:
-> >
-> > 	=E2=80=9CWhat is the DOCTYPE for modern HTML documents?
-> > ...
-> > Compared to the first version of this patch, this version:
-> > 1. makes it clear that XML parsers may used the linked DTD like brian
-> >    mentioned.
-> > 2. mentions HTML5 like Bagas suggested.
->=20
-> So, is it XHTML5, or HTML5, we want to see on the title?
-
-It's XHTML 5.  Technically, it's the XML syntax of HTML 5, so I don't
-think we care much about the nit here.
-
-> > +proper_doctype() {
-> > +	gitweb_run "$@" &&
-> > +	grep -F "<!DOCTYPE html [" gitweb.body &&
-> > +	grep "<!ENTITY nbsp" gitweb.body &&
-> > +	grep "<!ENTITY sdot" gitweb.body
-> > +}
->=20
-> Hmph, this test does not care what other cruft appears in the file,
-> does not care in what order the three lines that match the patterns
-> appear, and the second and third patterns are even allowed to match
-> the same line.  I think that is OK (we do not even mind if the two
-> ENTITY definitions get squashed on the same line).
-
-Yeah, that should be fine because IIRC this syntax isn't going to be
-allowed elsewhere in the file.  If it did appear elsewhere, then the
-user would receive an XML parsing error.
-
-We _could_ make this check for beginning of file, the XML declaration,
-and then the specified lines (e.g., with head(1)), but I don't really
-think that's necessary. We should be fine here for now, and if we decide
-we need that in the future, we can add it.  I'd be happy with this as it
-stands.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---3d90jXFZAaahC8W9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYpkwDgAKCRB8DEliiIei
-gd7tAQCSERmkQOupIuEWzufb5MsG1RqaxulJ25F1boiJ4eRQ9gD/fZSQ7xBMGFkG
-Sq2FgQR+Py4e0S6QhVY9bs+9csniAgU=
-=BGN6
------END PGP SIGNATURE-----
-
---3d90jXFZAaahC8W9--
+  * Clarify the reason why 0ec7c23cdc6 (git-prompt: make upstream state
+    indicator location consistent, 2022-02-27) changed the colourization
+    of the short upstream state indicator.
+  * Explain the rationale for changing the sparsity state colourization.
+  * Include examples of how the short upstream state indicator is
+    currently colourized
