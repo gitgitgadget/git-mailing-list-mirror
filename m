@@ -2,101 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C305C43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 09:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3FF7C43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 10:23:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232396AbiFBJ5C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 05:57:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45262 "EHLO
+        id S233693AbiFBKX2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 06:23:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231293AbiFBJ5A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 05:57:00 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9F6CE1
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 02:56:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1654163799;
-        bh=ueeRawPwSKQRcMUCr7RWXV2T7y4x22p94UxuMxk14U4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NHEB7qKXUnPL94XPbQJauifk50vXBPsJQc8EDXqxpSK8HrFe8Oyl3e4Yee7aybphi
-         XY8Cey1GyfeSQdBq6GA1xtXA8aZE1gV+zzdX/+R1QZt7EtD6yfcw6rwtArOdhWOPov
-         mC6wulk3XXi1kKL49v5qPVlQ3F2JGt8Ua/DpxEOU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.206.165] ([89.1.212.145]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4s0j-1nydF331XT-0021RK; Thu, 02
- Jun 2022 11:56:38 +0200
-Date:   Thu, 2 Jun 2022 11:56:36 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Torsten B??gershausen <tboegi@web.de>,
-        rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v9 00/30] Builtin FSMonitor Part 3
-In-Reply-To: <pull.1143.v9.git.1653601644.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2206021155070.349@tvgsbejvaqbjf.bet>
-References: <pull.1143.v8.git.1653490852.gitgitgadget@gmail.com> <pull.1143.v9.git.1653601644.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S233683AbiFBKXW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 06:23:22 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2C4215E40
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 03:23:20 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id x62so5647142ede.10
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 03:23:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=IEph0e+xxtFLayitwHJZjqZwvOuWOf9D2Hg1SctPgmE=;
+        b=j0q3lz5deSWB37ktpiMYzS3d2xzFn/eWqQ+ERmFSSJKRQfXCi0tt2xFg8BaZk3DJwF
+         KC8umWebdt8Y/lyWiHI+w2hinph9Ca+X0m9IllC6ekYu3MXgkDb80w0cONwSuRPOL4Aa
+         cioKc1TNz2E0VlM56lTdedXlUzK3QJgtYqZp6SlyeWFGABF7CqEv8sDlDIhU90tiLsB7
+         XCKkRozgugfhHBXTyYl7q2zoIvJXjuBAU4gNAt6odu8gwj01Vqsc4iSOR2Qo5My3RKfB
+         ZdD2YMPWVZUBtKmdL0WEAlqN1uc55AlecKpn9kn29gCNimzlA13of/IgVu6seuZxi3YG
+         3keA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=IEph0e+xxtFLayitwHJZjqZwvOuWOf9D2Hg1SctPgmE=;
+        b=tpeNnzm0wJbnyjp3GngrifVnyl46Eu7njN7zdkjMiUASXDcrDr8qnVL8rbGUrGG+B0
+         vfQAyR/bCAyfYljY8Emq5q1n7FAakG3LA++JJoraq9rVeNUzty81I6g6QqapHWKx/5sN
+         6tJskDEZMClKlvkYAyjbeD/pMH8Aas1DocY674CwLFrrElAhgsZxEx/o9ceNn59InRv8
+         3Pes64mvKecmFa4e3GdSG2HXp8EUasBByjqgcpZUF/g0QPMBqL7jhHSTj5WEniZe7+TE
+         dG6YkkyjcRWgxIP8n0dhbv/FNc0BbzwXy56jAULJTHga5eP3+0S9Zi58qC31Mb2Cy/g3
+         bKvQ==
+X-Gm-Message-State: AOAM530q4Y9rCsu3cKnNB5TNISf/nRo4/j1EEIo2NAQStPSMMYgqBcBk
+        sP6X0YivQNWcE22Iu6GOBMc=
+X-Google-Smtp-Source: ABdhPJwWwA2PkwLkOd2SMgMHiGVIrOIYBe18DV1wqGrzncCiczD6wMkO6P/16apByHSaqas0QwkoHw==
+X-Received: by 2002:a05:6402:1907:b0:42d:e90e:337 with SMTP id e7-20020a056402190700b0042de90e0337mr4558614edz.405.1654165398602;
+        Thu, 02 Jun 2022 03:23:18 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id w14-20020a170906d20e00b006fed93bf71fsm1661838ejz.18.2022.06.02.03.23.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 03:23:17 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nwhz2-001QSG-K7;
+        Thu, 02 Jun 2022 12:23:16 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] cmake: optionally build `scalar`, too
+Date:   Thu, 02 Jun 2022 12:18:21 +0200
+References: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+ <c155cadfa309e856f13ea7d005870dab706a74ce.1654160735.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <c155cadfa309e856f13ea7d005870dab706a74ce.1654160735.git.gitgitgadget@gmail.com>
+Message-ID: <220602.86ilpjz7mz.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:WTRB2XQP2srG44JwIlzPbB6oF9hVwJGU/1WU5Nd5lZr3cWlqYUF
- 8Q03ZGkYpgyDUEHZTr+4X0H7CUcGUD27LF5RbHOdnaeo3MN36MxQxx6Oq/5Zz0BVfnAVmKK
- edfqEVGrVJr/2aChe0EhvSM76BjRjJcduXrODiGHcb3GWrCb8ygED9E+5K8Lca1Ayg++mKq
- xGlBrINgHr/Fx7JNVx3nA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NgKyer5NjmE=:aul3YCvNCnEHKITdlMlJAG
- sgU4uGi2yDsHmSYoHyzdaHvSD29J8D2fohE+HC5smitf5hRfS+HeDvRVlQpy5hHdYpBMHIKy4
- bUPpSCB0WLQ0nq1C2bcREtZ8UxMa/huTAXRMhZkVw82x6AO6MjTXap5ditPwXeQGN3/U+GnDo
- UR5uh4SDZSMMSl7CbqXeysEdb9hZfdzohiH90aMXr3959hA5f55qr9MfmuL4aX2LlyVplGiqt
- PrgFM59vChOrF5Mfjt7FBsXcBq7ndascEVCxS6gTBwsqRoTWucWiY/vfO/tqDLQEIGGL+BG0a
- /bNR05m5UWpwCgPN4Wm2YCc6PjhMnXzn994oQ/l4GPc1rEep8CLAMww0k7bz6p9N1zkorjcgt
- pijQmmCpQnV/FLXaqFY3yDB2aqT7/F5q4KhFtvf9HHuoH/UNF5x0yjxTLszinkw7GP9VwV6yx
- XoDGVNrwPP3EUsVM+VPT95Ho94Gb/FbipcQ7Ftt4rpCBp6SH9xkoBzDlsc4ywO1w34+RMtjYv
- lTrYRgsRbv0asiCVkviZNO5wLWJZJETa35rI4lg/5SpO4d1jKrJIQc5eeL9y0AgC1FEnZ4Rs2
- R9Wldc/LXQkWMqR04GvgDhHK5wLrOFhqtVC899NCU+L2FrgMWza3xwMXI+j4hZq9mQcCMb9Dx
- oD/6uy5Fj4zSeGTc9cwPuk4I9aZA3a/BWGcHUbMNYSjWMKXdA+AYZrPWMsvsUkvrZDlBOyw+Z
- IZjxVVY8WdIonCc25lyhBAbRpxNOw1yYjc021a7yq+Xx8ZzHgXB1zgYe0TB/ruUHTxtCppmNo
- Ujg1QT1VnUJMNaB5Yxpm6oaI2qs35Y+E58o/ypgkcsDQoWiOGgPPD1GfSERlRPkRgA9c7Ma3Q
- PWf5gyt8OCua7jDxzEKjmTnh8Usps9Nm13lIMY8Kg8GTjpVbBICf3YSBywpbaap6+jbtmPAbN
- +aWkUg9S9B0XwyOQsnsqqLmdONixJKKpYOAMFnAVPJyW0h1Kf+pEqZYD/nr8xzVPaIPvpam89
- yaD396E2O7QRDxfaSz5qlPUdJVc9Ej/U4ejPXIlc/2rmu256a00KyzJzzu74QwYviJ9YCbsSf
- iFXYVH9JXnPt/KnvvBr38MvQhuEUWaOJBUEBS+EXoIKq6CF8CDfjVe7Hg==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
 
-On Thu, 26 May 2022, Jeff Hostetler via GitGitGadget wrote:
+On Thu, Jun 02 2022, Johannes Schindelin via GitGitGadget wrote:
 
-> Here is version 9 of part 3 of FSMonitor.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> This version addresses the test failure on t7527.[56] when deleting/rena=
-ming
-> the .git directory using the "GIT~1" spelling. Between v6 and v7, I chan=
-ged
-> the way check_for_shortnames() constructed the wchar_t path to .git from=
- a
-> pair of wcscpy() calls to a swprintf() call. However, I used a "%s" by
-> mistake rather than a "%ls".
+> Unlike the `Makefile`-based build, the CMake configuration unfortunately
+> does not let us easily encapsulate Scalar's build definition in the
+> `contrib/scalar/` subdirectory: The `scalar` executable needs to link in
+> `libgit.a` and `common-main.o`, for example.
+
+Are you using "encapsulation" here synonymously with "[mostly] lives in
+a different file"? If not I don't really see what distinction you're
+trying to draw here.
+
+The contrib/scalar/Makefile "shells out" to the top-level MAkefile to
+build libgit.a & common-main.o, as well as scalar.o itself.
+
+> To alleviate that lack of encapsulation somewhat, we guard the Scalar
+> parts in `CMakeLists.txt` via the `INCLUDE_SCALAR` environment variable.
+> This not only allows the CMake-based build to exclude Scalar by default,
+> but also gives better visual cues as to which sections are related to
+> Scalar.
 >
-> This caused a non-portable behavior. The tests passed with MSVC and with=
- GCC
-> 10.1.0 on my laptop, but failed under GCC on one of the CI build machine=
-s.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  contrib/buildsystems/CMakeLists.txt | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 >
-> This was partially hidden by CI machines that have GCC 12 and that fail =
-to
-> compile Git without the fixes for GCC 12.x.
+> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+> index 185f56f414f..c8a802463ba 100644
+> --- a/contrib/buildsystems/CMakeLists.txt
+> +++ b/contrib/buildsystems/CMakeLists.txt
+> @@ -753,6 +753,13 @@ if(CURL_FOUND)
+>  	endif()
+>  endif()
+>  
+> +if(DEFINED ENV{INCLUDE_SCALAR} AND NOT ENV{INCLUDE_SCALAR} STREQUAL "")
+> +	add_executable(scalar ${CMAKE_SOURCE_DIR}/contrib/scalar/scalar.c)
+> +	target_link_libraries(scalar common-main)
+> +	set_target_properties(scalar PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/contrib/scalar)
+> +	set_target_properties(scalar PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/contrib/scalar)
+> +endif()
+> +
+>  parse_makefile_for_executables(git_builtin_extra "BUILT_INS")
+>  
+>  option(SKIP_DASHED_BUILT_INS "Skip hardlinking the dashed versions of the built-ins")
+> @@ -980,6 +987,13 @@ string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
+>  string(REPLACE "@@PROG@@" "git-cvsserver" content "${content}")
+>  file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
+>  
+> +if(DEFINED ENV{INCLUDE_SCALAR} AND NOT ENV{INCLUDE_SCALAR} STREQUAL "")
+> +	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
+> +	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
+> +	string(REPLACE "@@PROG@@" "contrib/scalar/scalar${EXE_EXTENSION}" content "${content}")
+> +	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/scalar ${content})
+> +endif()
 
-I was already happy with the range-diff you showed in v7, and I am even
-happier with the `hexdump` changes you introduced in v8 and with the
-`swprintf()` format fix in v9.
+We've been over this before direction we should take to fully integrate
+scalar (see [1]), but leaving that aside this seems by any definition to
+be more "encapsulated" than what we have in Makefile &
+contrib/scalar/Makefile. I.e. this is isolated in its own sections,
+whereas in the Makefile case we have the top-level building scalar,
+contrib/scalar/Makefile shelling out to it, and then adding its own
+behavior etc.
 
-=46rom my side, this patch series is ready for `next`.
+I don't think there's much point to re-visit the discussions around the
+time of [1], clearly you feel differently,
 
-Thank you,
-Dscho
+But just on the commit message it seems to have been drafted from some
+earlier version.
+
+Perhaps it was based on the earlier version of the scalar series before
+I'd pointed out the Makefile dependency issues around scalar.o (which
+led you to have contrib/scalar/MAkefile "shell out")?
+
+1. https://lore.kernel.org/git/patch-1.1-86fb8d56307-20211028T185016Z-avarab@gmail.com/
+
