@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7278C433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 12:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88044C43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 13:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235084AbiFBM5H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 08:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35618 "EHLO
+        id S235237AbiFBNLh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 09:11:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231722AbiFBM5G (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 08:57:06 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D665123D5CA
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 05:56:59 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id b4so4670984iog.11
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 05:56:59 -0700 (PDT)
+        with ESMTP id S234085AbiFBNLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 09:11:36 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20DB713C4EF
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 06:11:33 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id y8so4715190iof.10
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 06:11:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QbrDhwgkqN0z5UaBay75bi4GSX9h3wwjPbt/JrpOIvk=;
-        b=XyT080CvEqEM6yE429iynz5iEUfPWnm2GoEf6rwdVT2eWt4c9mczH5LSL/iSEyxTd1
-         pBQgl6vCyM5x3nTZd8sI3taHKtLtNwAOxwpBNv3n/cT/ESr+OHZngl1fpxl2mtOoH1iF
-         Ez30iIyPfd4KtCNMD8ds2ZViYAanlNNdQEivgMtNZMUuOBDGWh07hQyMWbqO4XlIwpd4
-         wkQnl9uDznO1HkFCHMiac6+Cy1pTfpXyUc33VDBG6rNNXNAjV0UvC/H4V9OFumv9qi/s
-         pl2VQlqcmAUdzApLpX1R6X8KF3DuXSQk010HnOgczNE4yWvS97M+C3tg3IBSGoYL1TOh
-         9oOw==
+        bh=wx38kQnbUn69zvvDHGhkFruoCwt7iOi+nyyrxsOJG0I=;
+        b=cTmh/2CvFLeyA6mYYS4oPVs85hLtzGbGxuJOzk+vM0xrorrhiPo8SuY8fA7QQJ20Ka
+         l5CvYfzO62zMW21VZZv+eVCKrrcvW04jC/3ksrb2QEC2yw7CnhXzRXc2ptz94MZL5yPG
+         6/r8hQGSoKBdbCv2682Z1m6LiNHcfCZB8ivPkcW7aglha4vHDJVDluS4b/tiy3OFVEN1
+         VOyfKKj641sdbi/NQ/M6bbWfSxHGTTKP76dgGwM4eBUkzSDxiDozeJsgxmz33DEGiDGa
+         sevzB0LKqM+O9lLJpQpbfgDhZ5F36gwTMq9g3MO/8hp8JWFbFUwmrZiAZoKwV63jv3t3
+         +beg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=QbrDhwgkqN0z5UaBay75bi4GSX9h3wwjPbt/JrpOIvk=;
-        b=gILNqAy0sr00X1O47MMA2xnjAXb3rcahzGhcdnJ5uWO/0wZXHpxbFGYQZg8LV7txJs
-         2TbFKRXNN8TKG4WZ6hfoGDWYUUY1AbAsZySalwemWAB18pncw8P6N/pEY46n7s980Llm
-         BkCmUiww+kpG+2enif34lIsYao2vTghDwTepnb73yY18iw8vhI44wCL498VNndPbqVvw
-         L6YDkAm3L8n0R9dhkb/qXi3zW4FaEiHecgpk6s6P2RoBtr/cqfq1TU0gsKbl/+P1q0TR
-         v8s1PAjqHsV7zDJyBgoZNBL5/8qx90C/RNpNAF98flsK+juC8QOmg5qb9qu9nox4um6c
-         fNzA==
-X-Gm-Message-State: AOAM533bPof2qQAFcTEs30QpFzngTY9eX/ordIk4AC01juBDRLY7MJLN
-        7BjmfjFBjiLD7CJ8vFILt+HRxVq37zs8
-X-Google-Smtp-Source: ABdhPJxRxMZthI1UrNYPoIdWWOmxIx31yqQbZ5tKQyQ7pWd7iyYT+qcqs6rETwDmrTy1JxR4eHI+cw==
-X-Received: by 2002:a5e:8419:0:b0:65e:4ea1:243d with SMTP id h25-20020a5e8419000000b0065e4ea1243dmr2340587ioj.70.1654174618341;
-        Thu, 02 Jun 2022 05:56:58 -0700 (PDT)
+        bh=wx38kQnbUn69zvvDHGhkFruoCwt7iOi+nyyrxsOJG0I=;
+        b=mlui4Gi4INTvOwi0ZSLHqEyYJrBwC4rAXUM6sN0L5sa4YrSXsOPRkOcchhC+xdDfqe
+         sRQ7ghsKPSHBLYV64au+Q3eQfc19xgfWUEOOIbok5tXXn95Jj+NzuRj/o4H+uA4ErHjL
+         OqKt2CabBNuanZbVG/gIoBXo4rUeOCb88a1J4Okgj4bhNd6bDiJoFoIFXiSvV0Le4Kbg
+         CE3cHtwmH1YFqoST86YzYzdw6cBREfINMA+8RJaRYsxoH8RtxQa1wPoFrqKBDZIk3p5l
+         XiO8iGIhbTEUgvtRf4sylXrt/nnPxbxQAa7bbp97A2W7vCUSdX3BOJ4RYewnQD22Eh0x
+         Ihsg==
+X-Gm-Message-State: AOAM531t+mDb+ypw5kr2SRH5z4/wAAG/ihApAzuFlFQYn5PuPM2ROv1U
+        R0+t/lxzQEHgG/dXrCKhs/Ri
+X-Google-Smtp-Source: ABdhPJyjI4DCeO/L5Y8cpP5qHtlwROGg0OaeA9JyILz7/xdd73CzVwQs90gYWZOyuX3oXtXfqGwxCQ==
+X-Received: by 2002:a05:6638:2392:b0:330:b264:edf1 with SMTP id q18-20020a056638239200b00330b264edf1mr2924076jat.103.1654175492505;
+        Thu, 02 Jun 2022 06:11:32 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:9cc9:fda3:3ddf:6700? ([2600:1700:e72:80a0:9cc9:fda3:3ddf:6700])
-        by smtp.gmail.com with ESMTPSA id q3-20020a022443000000b0032e798bc927sm1162878jae.133.2022.06.02.05.56.57
+        by smtp.gmail.com with ESMTPSA id az6-20020a056638418600b00330a4ed20d6sm1168649jab.115.2022.06.02.06.11.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jun 2022 05:56:57 -0700 (PDT)
-Message-ID: <802c3541-3301-43fc-c39e-edd44e61a4eb@github.com>
-Date:   Thu, 2 Jun 2022 08:56:56 -0400
+        Thu, 02 Jun 2022 06:11:31 -0700 (PDT)
+Message-ID: <7b37f3b7-58c5-1ac5-46eb-d995dc3cc33b@github.com>
+Date:   Thu, 2 Jun 2022 09:11:30 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v3 2/5] config: read protected config with
- `git_protected_config()`
+Subject: Re: [PATCH v3 3/5] setup.c: create `discovery.bare`
 Content-Language: en-US
 To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -65,9 +64,9 @@ Cc:     Taylor Blau <me@ttaylorr.com>,
         Glen Choo <chooglen@google.com>
 References: <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com>
  <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com>
- <7499a2809615d42eaf3649e1c33f38d099d27c1a.1653685761.git.gitgitgadget@gmail.com>
+ <d5a3e9f98450a0d602cf21790b988c1259a3466d.1653685761.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <7499a2809615d42eaf3649e1c33f38d099d27c1a.1653685761.git.gitgitgadget@gmail.com>
+In-Reply-To: <d5a3e9f98450a0d602cf21790b988c1259a3466d.1653685761.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -75,119 +74,173 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 5/27/2022 5:09 PM, Glen Choo via GitGitGadget wrote:
-> From: Glen Choo <chooglen@google.com>
-> 
-> Protected config is read using `read_very_early_config()`, which has
-> several downsides:
-> 
-> - Every call to `read_very_early_config()` parses global and
->   system-level config files anew, but this can be optimized by just
->   parsing them once [1].
-> - Protected variables should respect "-c" because we can reasonably
->   assume that it comes from the user. But, `read_very_early_config()`
->   can't use "-c" because it is called so early that it does not have
->   access to command line arguments.
-> 
-> Introduce `git_protected_config()`, which reads protected config and
-> caches the values in `the_repository.protected_config`. Then, refactor
-> `safe.directory` to use `git_protected_config()`.
-> 
-> This implementation can still be improved, however:
-> 
-> - `git_protected_config()` iterates through every variable in
->   `the_repository.protected_config`, which may still be too expensive to
->   be called in every "git" invocation. There exist constant time lookup
->   functions for non-protected config (repo_config_get_*()), but for
->   simplicity, this commit does not implement similar functions for
->   protected config.
+> +enum discovery_bare_config {
+> +	DISCOVERY_BARE_UNKNOWN = -1,
+> +	DISCOVERY_BARE_NEVER = 0,
+> +	DISCOVERY_BARE_ALWAYS,
+> +};
+> +static enum discovery_bare_config discovery_bare_config =
+> +	DISCOVERY_BARE_UNKNOWN;
 
-I originally thought that we should jump to that "right" solution, but
-the existing logic in ensure_valid_ownership() uses the iterator method,
-mostly because it uses a multi-valued string. There are helpers that
-allow iterating over a specific multi-valued key, but there is no reason
-to complicate the current patch with that amount of refactoring. That
-can be handled as a completely separate topic.
- 
-> - Protected config is stored in `the_repository` so that we don't need
->   to statically allocate it. But this might be confusing since protected
->   config ignores repository config by definition.
+Using this static global is fine, I think.
 
-I agree with Junio's suggestion of keeping this as a static global in
-config.c, accessible only by the public methods from config.h. A future
-where we have "the_world" might be nice for inventory on all these
-globals. Definitely not something to hold up this series.
-
-> +/* Read protected config into the_repository->protected_config. */
-> +static void read_protected_config(void)
+> +static int discovery_bare_cb(const char *key, const char *value, void *d)
 > +{
-> +	char *xdg_config = NULL, *user_config = NULL, *system_config = NULL;
+> +	if (strcmp(key, "discovery.bare"))
+> +		return 0;
 > +
-> +	CALLOC_ARRAY(the_repository->protected_config, 1);
-> +	git_configset_init(the_repository->protected_config);
-> +
-> +	system_config = git_system_config();
-> +	git_global_config(&user_config, &xdg_config);
-> +
-> +	git_configset_add_file(the_repository->protected_config, system_config);
-> +	git_configset_add_file(the_repository->protected_config, xdg_config);
-> +	git_configset_add_file(the_repository->protected_config, user_config);
-> +
-> +	free(system_config);
-> +	free(xdg_config);
-> +	free(user_config);
-> +}
-
-This loads the config from three files, including the xdg_config, which
-I wasn't thinking about before.
-
-This implementation does not use the -c config yet, which you listed as
-a downside of read_very_early_config(). I see that you include that in
-your patch 4, but the commit message for this patch could list that as a
-step that will be handled by a later change.
-
-(You could also do that as patch 3 and add a test near the existing
-safe.directory tests instead of waiting for discovery.bare.)
-
-> +
-> +/* Ensure that the_repository->protected_config has been initialized. */
-> +static void git_protected_config_check_init(void)
-> +{
-> +	if (the_repository->protected_config &&
-> +	    the_repository->protected_config->hash_initialized)
-> +		return;
-> +	read_protected_config();
-> +}
-> +
-> +void git_protected_config(config_fn_t fn, void *data)
-> +{
-> +	git_protected_config_check_init();
-> +	configset_iter(the_repository->protected_config, fn, data);
-> +}
-
-These two methods are clearly correct.
-
-..._check_init() is an OK name. I've seen us use "prepare_...()" in
-other areas as a way of making sure that we have the proper state
-(see prepare_packed_git() and the like), so maybe a rename here to
-match would be worthwhile. Feel free to ignore.
-
-> +	if (repo->protected_config) {
-> +		git_configset_clear(repo->protected_config);
-> +		FREE_AND_NULL(repo->protected_config);
+> +	if (!strcmp(value, "never")) {
+> +		discovery_bare_config = DISCOVERY_BARE_NEVER;
+> +		return 0;
 > +	}
+> +	if (!strcmp(value, "always")) {
+> +		discovery_bare_config = DISCOVERY_BARE_ALWAYS;
+> +		return 0;
+> +	}
+> +	return -1;
+> +}
 
-This will have no equivalent when protected_config is left as a
-static global, but that is fine. It only goes out of scope with
-the end of the process, anyway.
+However, I do think that this _cb method could benefit from interpreting
+the 'd' pointer as a 'enum discovery_bare_config *' and assigning the
+value at the pointer. We can then pass the global to the
+git_protected_config() call below.
 
-> @@ -1128,7 +1128,7 @@ static int ensure_valid_ownership(const char *path)
->  	    is_path_owned_by_current_user(path))
->  		return 1;
->  
-> -	read_very_early_config(safe_directory_cb, &data);
-> +	git_protected_config(safe_directory_cb, &data);
+This is probably over-defensive future-proofing, but this kind of change
+would be necessary if we ever wanted to return the enum instead of
+simply an integer, as below:
 
-Nice to have a very simple conversion here.
+> +
+> +static int check_bare_repo_allowed(void)
+> +{
+> +	if (discovery_bare_config == DISCOVERY_BARE_UNKNOWN) {
+> +		discovery_bare_config = DISCOVERY_BARE_ALWAYS;
+> +		git_protected_config(discovery_bare_cb, NULL);
+> +	}
+> +	switch (discovery_bare_config) {
+> +	case DISCOVERY_BARE_NEVER:
+> +		return 0;
+> +	case DISCOVERY_BARE_ALWAYS:
+> +		return 1;
+> +	case DISCOVERY_BARE_UNKNOWN:
+> +		BUG("invalid discovery_bare_config %d", discovery_bare_config);
+> +	}
+> +	return 0;
+> +}
+
+With the recommended change to the _cb method, we could rewrite this as
+
+static enum discovery_bare_config get_discovery_bare(void)
+{
+	enum discovery_bare_config result = DISCOVERY_BARE_ALWAYS;
+	git_protected_config(discovery_bare_cb, &result);
+	return result;
+}
+
+With this, we can drop the UNKNOWN and let the caller treat the response
+as a simple boolean.
+
+I think this is simpler overall, but also makes it easier to extend in the
+future to have "discovery.bare=non-embedded" by adding a new mode and
+adjusting the consumer in setup_git_directory_gently_1() to use a switch()
+on the resurned enum.
+
+> +
+> +static const char *discovery_bare_config_to_string(void)
+> +{
+> +	switch (discovery_bare_config) {
+> +	case DISCOVERY_BARE_NEVER:
+> +		return "never";
+> +	case DISCOVERY_BARE_ALWAYS:
+> +		return "always";
+> +	case DISCOVERY_BARE_UNKNOWN:
+> +		BUG("invalid discovery_bare_config %d", discovery_bare_config);
+
+This case should be a "default:" in case somehow an arbitrary integer
+value was placed in the variable. This could also take an enum as a
+parameter, to avoid being coupled to the global.
+
+> +++ b/t/t0035-discovery-bare.sh
+> @@ -0,0 +1,64 @@
+> +#!/bin/sh
+> +
+> +test_description='verify discovery.bare checks'
+> +
+> +. ./test-lib.sh
+> +
+> +pwd="$(pwd)"
+> +
+> +expect_rejected () {
+> +	test_must_fail git rev-parse --git-dir 2>err &&
+> +	grep "discovery.bare" err
+> +}
+
+Should we make a simple "expect_accepted" helper in case we ever
+want to replace the "git rev-parse --git-dir" with anything else?
+
+> +
+> +test_expect_success 'setup bare repo in worktree' '
+> +	git init outer-repo &&
+> +	git init --bare outer-repo/bare-repo
+> +'
+> +
+> +test_expect_success 'discovery.bare unset' '
+> +	(
+> +		cd outer-repo/bare-repo &&
+> +		git rev-parse --git-dir
+> +	)
+> +'
+> +
+> +test_expect_success 'discovery.bare=always' '
+> +	git config --global discovery.bare always &&
+> +	(
+> +		cd outer-repo/bare-repo &&
+> +		git rev-parse --git-dir
+> +	)
+> +'
+> +
+> +test_expect_success 'discovery.bare=never' '
+> +	git config --global discovery.bare never &&
+> +	(
+> +		cd outer-repo/bare-repo &&
+> +		expect_rejected
+> +	)
+> +'
+> +
+> +test_expect_success 'discovery.bare in the repository' '
+> +	(
+> +		cd outer-repo/bare-repo &&
+> +		# Temporarily set discovery.bare=always, otherwise git
+> +		# config fails with "fatal: not in a git directory"
+> +		# (like safe.directory)
+> +		git config --global discovery.bare always &&
+> +		git config discovery.bare always &&
+> +		git config --global discovery.bare never &&
+> +		expect_rejected
+> +	)
+> +'
+> +
+> +test_expect_success 'discovery.bare on the command line' '
+> +	git config --global discovery.bare never &&> +	(
+> +		cd outer-repo/bare-repo &&
+> +		test_must_fail git -c discovery.bare=always rev-parse --git-dir 2>err &&
+> +		grep "discovery.bare" err
+> +	)
+
+Ok, at the current place in the series, this test_must_fail matches
+expectation. If you reorder to have this patch after your current patch 4,
+then we can write this test immediately as a successful case.
+
+We could also reuse some information from the expect_rejected helper by
+adding this:
+
+expect_rejected () {
+	test_must_fail git $* rev-parse --git-dir 2>err &&
+	grep "discovery.bare" err
+}
+
+Then you can test the -c options in the tests as
+
+	expect_rejected -c discovery.bare=always
 
 Thanks,
 -Stolee
