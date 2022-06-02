@@ -2,127 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BEA4C43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 19:52:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72428C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 19:55:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238957AbiFBTwh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 15:52:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53484 "EHLO
+        id S237499AbiFBTzM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 15:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238383AbiFBTwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 15:52:36 -0400
-Received: from box.jasonyundt.email (box.jasonyundt.email [206.189.182.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9030B1FCD1
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 12:52:33 -0700 (PDT)
-Received: from authenticated-user (box.jasonyundt.email [206.189.182.84])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        with ESMTP id S239156AbiFBTy6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 15:54:58 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD472AE04
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 12:54:56 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD35F1249D2;
+        Thu,  2 Jun 2022 15:54:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=2DaTCh7qQkc/
+        YFSsV0sUI9Zb/vzB5ZSPZPUaIWAFwSU=; b=Yz6XO6Aduc+7viBbYxWa5Z8ySfoM
+        5XT1iOleAuqftU+r4m7U84ZBuv+yd+A2TA1cgTUkTVZWq37ys0ZH7RfTJk171hNA
+        Lw1HoBqJGCNT/VLynoaCwFl0G4BP6KNvP/BYIJvjR3kVehCvWde2LF7il4wUa8lt
+        DKwWQh/SrxwEHq8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D3B311249D1;
+        Thu,  2 Jun 2022 15:54:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by box.jasonyundt.email (Postfix) with ESMTPSA id 938087E744;
-        Thu,  2 Jun 2022 15:51:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jasonyundt.email;
-        s=mail; t=1654199521;
-        bh=JBDFb8IPeJLyknX11hcmFubTQK+0BhlUgO58b38L5os=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=M7Vk6sr7FBfSGur/z3e0Y3rAHA1rST8EmbW3EhzePmaJ/LmepoOg7VVDeZKKHNVd4
-         hdi4gVgWyOKa0wIt8Eq7LaFwY6l+Xbb0SkkooTLUtNhROuCkWhBwkTBJBhMXzr1JcT
-         vvFL1Av9lQoS2iTKf+WRjr/vr9fde/jUY2o3B1Z+/A5uaHllJFgnpF4pFDIydPVBEt
-         T6UKH3EyR5H1ahXPorJzAoLjYfza5F1DhdkdgsC4wFUDhXuZxTA95KzlyZSHCNMuHl
-         bUqzZ3dBZzT77wHo/nJUSbF1VkGB4Fly9J6kBs7i8MBDMPrLb4H+rLp9oU7o8uNYnp
-         tl0YnILxLU6yw==
-From:   Jason Yundt <jason@jasonyundt.email>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2] gitweb: switch to an XHTML5 DOCTYPE
-Date:   Thu, 02 Jun 2022 15:51:38 -0400
-Message-ID: <3180470.44csPzL39Z@jason-lemur-pro>
-In-Reply-To: <xmqqv8tinblc.fsf@gitster.g>
-References: <20220601012647.1439480-1-jason@jasonyundt.email> <20220602114305.5915-1-jason@jasonyundt.email> <xmqqv8tinblc.fsf@gitster.g>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 455051249D0;
+        Thu,  2 Jun 2022 15:54:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Glen Choo <chooglen@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v3 6/6] cache-tree.c: use bug() and BUG_if_bug()
+References: <cover-v2-0.6-00000000000-20220531T164806Z-avarab@gmail.com>
+        <cover-v3-0.6-00000000000-20220602T122106Z-avarab@gmail.com>
+        <patch-v3-6.6-754a66be365-20220602T122106Z-avarab@gmail.com>
+Date:   Thu, 02 Jun 2022 12:54:53 -0700
+In-Reply-To: <patch-v3-6.6-754a66be365-20220602T122106Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 2 Jun
+ 2022 14:25:37
+        +0200")
+Message-ID: <xmqqilpin8mq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DFC442E0-E2AD-11EC-B0EE-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday, June 2, 2022 2:50:55 PM EDT Junio C Hamano wrote:
-> Jason Yundt <jason@jasonyundt.email> writes:
-> > Subject: Re: [PATCH v2] gitweb: switch to an XHTML5 DOCTYPE
-> >=20
-> > According to the HTML Standard FAQ:
-> > 	=E2=80=9CWhat is the DOCTYPE for modern HTML documents?
-> >=20
-> > ...
-> > Compared to the first version of this patch, this version:
-> > 1. makes it clear that XML parsers may used the linked DTD like brian
-> >=20
-> >    mentioned.
-> >=20
-> > 2. mentions HTML5 like Bagas suggested.
->=20
-> So, is it XHTML5, or HTML5, we want to see on the title?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-I chose XHTML5 since I didn=E2=80=99t think that it was accurate to say =E2=
-=80=9CHTML5=20
-DOCTYPE=E2=80=9D. The DOCTYPE that this patch uses is valid in the XML synt=
-ax, but not=20
-the HTML syntax.
+> Change "BUG" output originally added in a97e4075a16 (Keep
+> rename/rename conflicts of intermediate merges while doing recursive
+> merge, 2007-03-31), and later made to say it was a "BUG" in
+> 19c6a4f8369 (merge-recursive: do not return NULL only to cause
+> segfault, 2010-01-21) to use the new bug() function.
+>
+> This gets the same job done with slightly less code, as we won't need
+> to prefix lines with "BUG: ". More importantly we'll now log the full
+> set of messages via trace2, before this we'd only log the one BUG()
+> invocation.
+>
+> We don't replace the last "BUG()" invocation with "BUG_if_bug()", as
+> in this case we're sure that we called bug() earlier, so there's no
+> need to make it a conditional.
+>
+> While we're at it let's replace "There" with "there" in the message,
+> i.e. not start a message with a capital letter, per the
+> CodingGuidelines.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  cache-tree.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 6752f69d515..63953bf7772 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -692,12 +692,12 @@ struct tree* write_in_core_index_as_tree(struct r=
+epository *repo) {
+>  	ret =3D write_index_as_tree_internal(&o, index_state, was_valid, 0, N=
+ULL);
+>  	if (ret =3D=3D WRITE_TREE_UNMERGED_INDEX) {
+>  		int i;
+> -		fprintf(stderr, "BUG: There are unmerged index entries:\n");
+> +		bug("there are unmerged index entries:");
+>  		for (i =3D 0; i < index_state->cache_nr; i++) {
+>  			const struct cache_entry *ce =3D index_state->cache[i];
+>  			if (ce_stage(ce))
+> -				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
+> -					(int)ce_namelen(ce), ce->name);
+> +				bug("%d %.*s", ce_stage(ce),
+> +				    (int)ce_namelen(ce), ce->name);
+>  		}
+>  		BUG("unmerged index entries when writing inmemory index");
 
-> > +proper_doctype() {
-> > +	gitweb_run "$@" &&
-> > +	grep -F "<!DOCTYPE html [" gitweb.body &&
-> > +	grep "<!ENTITY nbsp" gitweb.body &&
-> > +	grep "<!ENTITY sdot" gitweb.body
-> > +}
->=20
-> Hmph, this test does not care what other cruft appears in the file,
-> does not care in what order the three lines that match the patterns
-> appear, and the second and third patterns are even allowed to match
-> the same line.  I think that is OK (we do not even mind if the two
-> ENTITY definitions get squashed on the same line).
+"git grep inmemory" shows no hits on the non-word.  We say "in-core"
+often, and it is even in the name of the function this new messages
+is added ;-)
 
-While I was writing this patch, I was thinking something similar. Grep is n=
-ot=20
-a good tool for validating (X)HTML. I thought about creating a test that us=
-es=20
-the Nu Html Checker [1] to validate pages that Gitweb generates, but I deci=
-ded=20
-that that should be the topic of a separate patch.
+Will tweak as this is a new message.
 
-> > +test_expect_success 'Proper DOCTYPE with entity declarations' '
-> > +	proper_doctype &&
-> > +	proper_doctype "p=3D.git" &&
-> > +	proper_doctype "p=3D.git;a=3Dlog" &&
-> > +	proper_doctype "p=3D.git;a=3Dtree"
-> > +'
->=20
-> As far as I can tell, git_header_html() is the only helper that
-> deals with DOCTYPE, and responses to any request must call
-> git_header_html() to produce the header (or the handler for a
-> particular request type is buggy), but I do not think it is part of
-> this topic's job to ensure that all request handlers call the
-> git_header_html().  So we _could_ do with just a single test without
-> trying different request types if we wanted to, as long as there are
-> existing tests that make sure everybody uses git_header_html().
->=20
-> Was there a particular reason why these four requests were chosen?
-> Do they have different entry points and show the doctype from
-> different codepath?
-
-Not really. When I created a262585d81 (gitweb: remove invalid http-
-equiv=3D"content-type", 2022-03-08), I chose those requests by running git=
-=20
-instaweb and then clicking on the first four links I saw. For this patch, I=
-=20
-just copied what I had done previously. I don=E2=80=99t know if they use di=
-fferent=20
-codepaths (I don=E2=80=99t understand Perl very well).
-
-> Thanks.
-
-[1]: <https://validator.w3.org/nu/>
-
-
+Thanks.
 
