@@ -2,89 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50E13C433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 17:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C171C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 17:39:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237514AbiFBRgy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 13:36:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44016 "EHLO
+        id S237583AbiFBRjs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 13:39:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232302AbiFBRgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 13:36:52 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92607FCB
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 10:36:49 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AA76218F75A;
-        Thu,  2 Jun 2022 13:36:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QxNRBR61masEFhbz9EdteUHrhpO3uvoDkjHxy1
-        ytfic=; b=io8oSac6WHjtO7QQkbOJqYlnV1jQ7Gy+pHtEltPSSlUZAh1xLB3DjQ
-        g9Mur0HX65g6gmX/LB3ZACM8QxgoENs52gvdXJMIynwIpd5A9gHWjBW9tuBU9Wg+
-        CgrSBu7dSAtAZIVRgObEzCay+q3vibg7G7wfsnpbEQTFD7HQ2R/t8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A33D818F759;
-        Thu,  2 Jun 2022 13:36:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 481EA18F758;
-        Thu,  2 Jun 2022 13:36:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] range-diff: show submodule changes irrespective of
- diff.submodule
-References: <pull.1244.git.1653916145441.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.2206021724240.349@tvgsbejvaqbjf.bet>
-Date:   Thu, 02 Jun 2022 10:36:44 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2206021724240.349@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 2 Jun 2022 17:36:40 +0200 (CEST)")
-Message-ID: <xmqqwndznf0z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 928BC6A0-E29A-11EC-A902-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+        with ESMTP id S232767AbiFBRjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 13:39:47 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B0515906A
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 10:39:46 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id e18-20020a170902ef5200b0016153d857a6so3008196plx.5
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 10:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=FqA/LWNX6Lv8HzfSaumDlC8Antpou2btU+cUVUmrN+E=;
+        b=DxmWg6WTRCJaTz3PJjz4FGIQcUWHOcki8FmxZbNMdZrCVSOS9GSlgVSivyagF4/V0h
+         mwNz4wVxB7EQDZhSQlOaWEQv8iF2+2m0riPkqKffzgiOAW/sVWi3Vszp/CvjlClcWPBT
+         aAfWJHKpq9mnMbYiFazCdItGxNxHEHAnePw2t9z0IYB5LAjZZ3VL5ecZAgEC+KuI6YB3
+         3AxE/vsWwna/Oc0BpNabicJppKEROt3Y9LpOsG1KGMMFvuRMEJ2+BHPFhmx/B7pfHTuQ
+         fEggoITuEh41YdA9waF7U8zo2/odBBAq0qkTZfVifvAvPIfy6zyphfaMksZni04a2BWE
+         Om5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=FqA/LWNX6Lv8HzfSaumDlC8Antpou2btU+cUVUmrN+E=;
+        b=pCVAX9CmdfmwJiA+My3/dgRB+ANS55AuHgBrA6Kk7PhAocBBzl8ihXQ2lOONwIRoOj
+         PqmBKLhK2C9DRlAYoLBVj4cR0o11O+ALWmGiXIDaPurDMWrtHYSvEiZ+p0qZfDAj8UvK
+         IEijEQK6yDVyToMdJnLYzf1nVltsHNGmZnEbxnxCmSV0LXqP2f/CsPyBe0aZ1GsIkUgB
+         pjsWdDvmCkKhGlbX39qYuDWTjlxCrOmeFYucg290WRD5CEvfvriqN7uszkNnVekUY+Ak
+         +kYd/hW0Wz1V8kMQFgDy7HcVeuAycNQAfwk2P0u4dtoudpQywnZXO2ieun4O9rwKTazA
+         pSCQ==
+X-Gm-Message-State: AOAM530X4ooq1Wlls+sF9GbrkSWe9+47nKUf4yN/B7l5uD77YvMtN0Z2
+        7IGEt9HlwOYmL1fgs08UOKOwheXPY/aueQ==
+X-Google-Smtp-Source: ABdhPJwXwNtR5v/rxmSKEuyDc+V8RrnZvpW86VxnPrV2mAUeBnCEkP8/BuRSD1CH99jZ7Su9+qpyt5zexnVtPQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1305:b0:512:ebab:3b20 with SMTP
+ id j5-20020a056a00130500b00512ebab3b20mr6105547pfu.82.1654191585940; Thu, 02
+ Jun 2022 10:39:45 -0700 (PDT)
+Date:   Thu, 02 Jun 2022 10:39:38 -0700
+In-Reply-To: <xmqq35gnovkp.fsf@gitster.g>
+Message-Id: <kl6la6avdkx1.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com>
+ <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com> <575676c760d9a2ce4a59d50e93aa0f45d54620ab.1653685761.git.gitgitgadget@gmail.com>
+ <xmqqh75a1rmd.fsf@gitster.g> <2ed00ece-f8bb-c84c-0684-494692a71da2@github.com>
+ <xmqq35gnovkp.fsf@gitster.g>
+Subject: Re: [PATCH v3 1/5] Documentation: define protected configuration
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Force the submodule diff format to its default ("short") when invoking
->> 'git log' to generate the patches for each range, such that submodule
->> changes are always shown.
+> Derrick Stolee <derrickstolee@github.com> writes:
+>>>  - The per-repo config is not "protected" (i.e. "trusted"), because?
+>>>    If we are not honoring a configuration in the repository, why are
+>>>    we working in that repository in the first place?
+>>
+>> This requires an example:
+>>
+>> 	Some workflows use repositories stored in shared directories,
+>> 	which are writable by multiple unprivileged users.
 >
-> Full disclosure: I do not see much value in range-diffs in the presence of
-> submodules. Nothing in the design of range-diffs is prepared for
-> submodules.
->
-> But since `--submodules=short` does not change anything when running
-> `range-diff` in repositories without submodules, I don't mind this change.
+> Isn't the reason more like "users may go spelunking random places in
+> the filesystem, with PS1 settings and the like that causes some
+> "git" command invoked automatically in their current directory, and
+> we want to protect these users from getting harmed by a random
+> repository with hostile contents in their configuration and hooks
+> without even realizing they have wandered into such a repository"?
 
-IOW, "I wrote it for the purpose of doing X, I do not care those who
-have been using it for doing Y, I am OK with changing behaviour on
-them".
-
-Philippe, do you have a good guess on other users and workflows that
-may benefit from the current behaviour?  I suspect in the longer term
-this might have to become configurable, and I am having a hard time
-judging if (1) a temporary regression (to them) is acceptable or (2)
-the new feature to also show submodule changes is not urgent enough
-that it may be better to make it configurable from day one, instead
-of using a different hardcoded and only setting like this patch does.
-
-> This test case is very clear and concise, even without my suggested
-> changes. Therefore, if you want to keep the patch as-is, I am fine with
-> that, too.
->
-> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-Thanks for a review.
-
-Will queue.
+Hm, this is my understanding as well, i.e. `safe.directory` is meant to
+protect you from shared repositories that you didn't expect, but it lets
+you trust the shared repositories that you need (and there is no
+protection once you decide to trust the repo).
