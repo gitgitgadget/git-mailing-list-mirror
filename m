@@ -2,84 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD4AC43334
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 12:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA0CC43334
+	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 12:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234866AbiFBMOl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 08:14:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39986 "EHLO
+        id S234970AbiFBMZF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 08:25:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234511AbiFBMOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 08:14:40 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE8E1DC843
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 05:14:34 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id rs12so9542576ejb.13
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 05:14:34 -0700 (PDT)
+        with ESMTP id S234811AbiFBMZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 08:25:04 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 505969E9EB
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 05:25:03 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id n28so6036024edb.9
+        for <git@vger.kernel.org>; Thu, 02 Jun 2022 05:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=UOGjZjYONU95nTkqhbvKS56Cq60933fwgG7eUJn6+1o=;
-        b=cjowokyYAjzqL77WoDFlZFRua1uMo1eMFfbLP0J2r//Oy1DalqYThwc81QSaIlJkZo
-         D9/wKsnmGU0g9SFCyyYYPCjzmFX6IKSd3pYdUTIo7nZ6uXnqlltxCZckTyQLn/CMyq/g
-         Tgplp3dp4e8PaUupeYw7Rvb54EgO8HT7WB9+rlTTFhKD2QMe3hKpoiKt/mZZd+xXcT8t
-         wCYsY7HSJd8CnnIr4u803jLadz6erP6nQHh0yjQ0Td19MpDigS7td0mp+UBs407LkWk3
-         Wb0tKWoZNo3lEHiEWhE6CtEKC84NnKV9zHod9GFLSj6qDFKui53+UtWdslfrIK2jhDQr
-         lGRg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8dyjZ9TcMP/G8nu4kDkK7GqpMBpyXOr+a6Qpyl5MR9U=;
+        b=EAZh9AdBDIkeMnQCl2z8i+jgzQPXk8XeuGLF0jkJ8D2O5rxMcyuHmNLpBsXhKBnqVX
+         RAHwOFEPzOVSUu/7iZbmRjCsHXR6ru8gKh+HzVS3Ib0fDMkpuFoFs9iyuaAuZ88T3U8y
+         FGM0wK1NrsoA5Fg9+kPimzQ7DX3hDMzIljb5KPyCbqGC/pe+SOGzHwh3u8PT1RQCtL/u
+         b2TCKnxKnlBj908qixBxutHGCt/wD2rrCdwgT+q6id++9d5zzYjZWiW+ItpW7P95A+hu
+         qWMrDvb2lWv9JZ6t1yRmMiTtIn0rysKPAsy95xGF3Z/ld5W5tpOWhNjYuLQFy0o2DS2d
+         CTWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=UOGjZjYONU95nTkqhbvKS56Cq60933fwgG7eUJn6+1o=;
-        b=OGnMjWSoz/UA6WWKfrCDqpJZ5RxFGbCFKBYtco273IkNvAnlX/z9T2O2LoJl3yCtIo
-         ZtW8sytoYiO8XdKRLTuWK9EgB+KiA5kQOzou/7Zc1CoEWRJgRCtWExRmqyTZBCIBTX+r
-         84gQh4I7I3S0gp/K9jK0AUkP0Ia4vocnp6SYkMD2zuhaijW4Q/PuWfd10cDdzmA/8h/3
-         D+ppyUHYIfTf+SfHy2KzxVwsFlbIdD/j+3hDOSuiPKLYVXuVuwgu9AwQ8kdxjaitG+3C
-         k/bQUAmBnUiKI5P2Q3AmWkppYXKGxWvNKTJn7Q3ZW4E1Nab41Q73mT//nuFfC1HRnqQ+
-         lR6A==
-X-Gm-Message-State: AOAM532Iav4sDAIthviQ4Wahm6cwL2zfN8WVDXeQ18ucvvw7atRCc2Oy
-        V2ftYhyOL3HYHj/t65djB0Cj/3D0uYn8NA==
-X-Google-Smtp-Source: ABdhPJzCrKldSFOFfPkBdr83wB6wYV8o3izbtmPu5HYzfbQR235miSB+YJ+oP+8FcDXKTHL/JPCZrA==
-X-Received: by 2002:a17:907:9494:b0:6fa:78f3:eb9b with SMTP id dm20-20020a170907949400b006fa78f3eb9bmr3905863ejc.704.1654172073162;
-        Thu, 02 Jun 2022 05:14:33 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id d22-20020a50fb16000000b0042617ba6389sm2377989edq.19.2022.06.02.05.14.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 05:14:32 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nwjih-001RWi-Bg;
-        Thu, 02 Jun 2022 14:14:31 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ab/env-array (was: What's cooking in git.git (Jun 2022, #01; Wed, 1))
-Date:   Thu, 02 Jun 2022 14:13:31 +0200
-References: <xmqqee07q3xc.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqee07q3xc.fsf@gitster.g>
-Message-ID: <220602.86a6avz2hk.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8dyjZ9TcMP/G8nu4kDkK7GqpMBpyXOr+a6Qpyl5MR9U=;
+        b=7f3U43QDTUmXT55BvezEN4QhmrmuqVWMcBXgVnDyJenmS/9i/QRo5X2KlZ4/bsUc/9
+         Y4KCH79gCfaQxL5vJiJs7OzzqGq9rYbUJcarXTm+04hWNtBKw3GWGcPjln6r4357hp8W
+         NuTFY9NQqxcxzHBCX9gre/ShaDqT9Snolhi53fuBsyIyvVTMegmJiZinoeWd4AClxnd1
+         aAPRbjpTYCGAARnV1gWqhms8xOLNqun5nH6HL+Dqf6ETBuFyWcI0/osfa4ADt0REdMrf
+         l2QoOJywuQj9RYj9CK9Nmpb0+C3KgmBJM1AXGE3hF+FZgsiH9ieZb0gjqXEwgQRqz1mZ
+         vGeg==
+X-Gm-Message-State: AOAM531Pq7zp+tYFBJfGT53csogYEd21UXyCWd6AHfLLmhBDoX5ryv/m
+        cMO/Geq33Rl/qR0hrKmu2fj6wA7HqSId9d8hGiwGMSmdVa8=
+X-Google-Smtp-Source: ABdhPJyunB0qD/GEvGHB8vDIB33zS4N/ziJ69Rvc2+yYxBQua/++28b/iwhpeRHj41avhbDYMoeKo8BZmExHlke43QA=
+X-Received: by 2002:aa7:c508:0:b0:42d:cc6b:df80 with SMTP id
+ o8-20020aa7c508000000b0042dcc6bdf80mr5080754edq.393.1654172701485; Thu, 02
+ Jun 2022 05:25:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAHHcNoe12h5E9OmkZy03-i7miFg2hLiT04BF3_t9C2bcmduR5Q@mail.gmail.com>
+ <CAPx1GvfQLP3q-SvW38=VOxoAmQpMMau_UfXXXQiZSV3NOJCs0w@mail.gmail.com> <CAHHcNodnB8gnaLgxW-vr6PxHh_YjCOAf7CTuot-CJsonb1mdnA@mail.gmail.com>
+In-Reply-To: <CAHHcNodnB8gnaLgxW-vr6PxHh_YjCOAf7CTuot-CJsonb1mdnA@mail.gmail.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Thu, 2 Jun 2022 05:24:50 -0700
+Message-ID: <CAPx1GveKYjEoAnhJLkGOo9Esd5-vhkFkbz2Uwy10j5fxR_W9Bw@mail.gmail.com>
+Subject: Re: BUG? git stash and immediate git apply results in conflict
+To:     Akos Vandra-Meyer <axos88@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Jun 01 2022, Junio C Hamano wrote:
-
-> * ab/env-array (2022-05-20) 4 commits
->  - run-command API users: use "env" not "env_array" in comments & names
->  - cocci: remove env_array -> env migration
->  - run-command API: rename "env_array" to "env"
->  - cocci: add a rename of "struct child_process"'s "env_array" to "env"
+On Thu, Jun 2, 2022 at 4:31 AM Akos Vandra-Meyer <axos88@gmail.com> wrote:
+> Hi Chris,
 >
->  Rename .env_array member to .env in the child_process structure.
+> Thanks for getting back to me on this.
+> My use case is the following:
 >
->  Expecting a (hopefully final) reroll, before merging it to 'next'.
->  cf. <xmqqilq0jhk2.fsf@gitster.g>
->  source: <cover-v2-0.4-00000000000-20220520T072122Z-avarab@gmail.com>
+> I made a bunch of (loosely related) changes to my code, but I have
+> been asked to submit them as separate commits, so I need to separate
+> the changes to dependent files relating to the first and second
+> feature.
 
-I think it should be ready with the v3 I sent today:
-https://lore.kernel.org/git/cover-v3-0.2-00000000000-20220602T090745Z-avarab@gmail.com/
+I snipped the rest of this because I *dislike* and *recommend against*
+the use of `git stash` in the first place. If you want to use it that way, I am
+sure it is possible, but I recommend doing something else entirely.
+The rest of this message is all opinion! You seem to be looking for
+a recommended method, so I'm recommending mine.
+
+Let's say for concreteness that your current branch is named "topic".
+Here is what I would do (though I might change strategies and use
+various short-cuts depending on various sub-scenarios; this is meant
+for illustrating how to do what you want, in a way that provides the
+most clarity):
+
+git add (files as needed)
+git commit -m "final version, to be split up"
+git branch -m not-final-topic
+
+Then:
+
+# create a new topic branch
+git checkout -b new-topic <start-point>
+
+# get a view of commits
+git log HEAD..topic
+
+# copy some commits, up until some point
+git cherry-pick <some of those commits as desired>
+
+# begin splitting a commit:
+git cherry-pick -n <hash>
+
+# split it up: use a mix of the following:
+git reset / git add -p / git reset -p
+                # as needed here to take part of the commit)
+
+# observe what's to be committed
+git diff --cached
+git commit      # and write a commit message
+
+git add -p ...  # as needed again
+git diff --cached
+git commit      # repeat until satisfied with broken up commit(s)
+
+# make sure final result matches - optional: use the same
+# hash here as for the `git cherry-pick -n` command
+git diff HEAD <hash>
+
+# repeat copying whole and partial commits:
+
+git cherry-pick ...     # add more whole commits as desired
+git cherry-pick -n ...  # add commit that is to be split up
+                        # repeat the split-up process
+
+# When finally done, ensure that new-topic and not-final-topic
+# have the same contents. If they do, the split-up was successful.
+git diff not-final-topic HEAD
+
+Note that there is no longer any branch named "topic" at this
+point: we have instead "not-final-topic" and "new-topic". We
+can now rename "new-topic" to "topic" and use `git push -f`
+or whatever else is appropriate for whatever review system(s)
+you may be using.
+
+The entire process above can often be done with a single `git
+rebase -i` command, but that obscures the fundamental nature of
+what you're really doing. The repeated cherry-pick, reset, add
+-p, and/or reset -p sequence is what you're really doing: you are
+taking some set of existing commits, which are *close* to the
+commits you'd like to have, and rebuilding them to make a new set
+of commits (with different hash IDs) that represent what you
+really do want.
+
+In the end, you will have Git *find* your commits by name: the
+name "topic" will name the last commit in a chain of commits.
+The names here are up to you, and you can change any name at
+any time using `git branch -m`. Both Git and any review system
+you use is going to use the *commits*, with their scary looking
+hash IDs, but like you they will *find* these commits by starting
+from a branch name: so by changing the hash ID stored in the
+branch name, you change the set of commits they (and you) find.
+
+What `git stash` does is make several commits that are not on
+*any* branch. These commits are a little weird, requiring the
+use of the `git stash` command to access them. Ordinary commits
+on ordinary branches are not weird and do not need any special
+access, so that's what I prefer.  But the fact that the stash commits
+are on *no* branch makes it easy to slide them from one branch to
+another without having to think about hash IDs; that's one reason
+some people prefer `git stash`. I'm just not one of those people.
+
+Chris
