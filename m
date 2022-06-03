@@ -2,143 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FC06C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 13:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96DDEC433EF
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 13:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244666AbiFCNh6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 09:37:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53950 "EHLO
+        id S244673AbiFCNiG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 09:38:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229958AbiFCNh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 09:37:57 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BF5811820
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 06:37:56 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id r129so4106552wmr.3
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 06:37:56 -0700 (PDT)
+        with ESMTP id S244662AbiFCNh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 09:37:59 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 651641276B
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 06:37:58 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id q7so10453108wrg.5
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 06:37:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=oyORqSxHe4hhfKmm3m7xn02p7TCI9TNWlAQ0Vfz4W/o=;
-        b=HrPm7R0XNe8/1AWjiKausEFvHvb+PAvxHy8xoT4EeXlFCFGNw4sanebQfNyarTj2hZ
-         51oZLkw/+KeMrnkLgTjQL4HC7FM7PnVd66CyC8Q4mr7NPQuQZQrk4M9wKLPJNIM5ynFG
-         Je3R3wpvAsn5cUgh5IEVZOcVX11h9CWmu/aSralHy4ihY2uIJMUbViffDI3xgnLjSiMi
-         1RMycQKQAbtwiCEm9oZFYgUz8PutKUJLxS4uSE14drNHc6i9ofQJisg+QfIlbJMyds2q
-         FKqIUSbmhFJLfiUj+lAMayWQNZwkBfihJDdCdTZX3hvBAK+dBxVEWhBBZduF4q5lBSQr
-         U2Bg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=GZXWE3ow9ADaKIj0DAE4htB4Ma746HVMJhy/AKVLrMg=;
+        b=e//ND44HNBhyMeCqb9e67+f+0zQ5jK9bfjfatYRsnXIomigcD6ZbRMLviA/iNHfh/B
+         Vfbm/VPA+V5vrGhlu/xDsaoOs80JTCjWZba9iyUPzS51SVVYZ2KBWT3+QcU3vrf2MaLs
+         +xAG6eloO1YIdEpwL01iW+Ho7ZobK7AkBhdBs+4Mt2ePHDxaM90RgN3ImjgEwKlU9VF6
+         jUFG+9DnTr5yWLa+fGkRud66qB+UHn6gR5MAjGu8rnsVsovEQ2Zce2Z1lIlCcPaXXNWg
+         GZzDmDkb33RPBIZPp7l7ZSnsL4jXx0UyZeORM/PZ225WyCisM90wtwEtxhVubPYG9t9r
+         579g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=oyORqSxHe4hhfKmm3m7xn02p7TCI9TNWlAQ0Vfz4W/o=;
-        b=znjzEt4kKOIamx4UXaq2oWah6881jEdTSGUm1xCHZ0VZNA6AZpPDFz9L993okTHx3M
-         03aGGusYR9IHk6rMGwrP+cvz4FHGZ04bSBMECIa9Bi7/MoYnkIJaj2/2z+s//cte+SHr
-         cekMIvH8Ck/RQAJbMFjoR9THGpulvS4wDASAUA3Fm0FCbmaHfaCUurSekb3KD+bxH08M
-         sVnVfLfVVm6L152s94JFEQT7XJjk9EdFm0c/YPfl4xROyrkZnMkTcEeXk5l0xuxXiMCM
-         TSKM5ZJefA0tbLvhez/pcR3H8sx1XvqXOuvKJQJ4z2klwq8eXOyEzCi0xueCacxPmhJz
-         L/Bw==
-X-Gm-Message-State: AOAM532alTDx35FcWIz8KjqJIvoW63M3PLVm/5odccwPVFVHJWG1ht9F
-        FqIB9GHvW6BdNVZ0e8vlLEP5GOUOC8XhCod6
-X-Google-Smtp-Source: ABdhPJwwK3CxIIIhIStJzC73uSg/ajyZSCBDiRxqsU9BfBW7rngllogmIYUhhfPWPIJ9a2yptAiVbg==
-X-Received: by 2002:a7b:cd17:0:b0:397:82ce:b2d8 with SMTP id f23-20020a7bcd17000000b0039782ceb2d8mr8947991wmj.20.1654263474145;
-        Fri, 03 Jun 2022 06:37:54 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=GZXWE3ow9ADaKIj0DAE4htB4Ma746HVMJhy/AKVLrMg=;
+        b=UCMtgsVu1SI8gqdfonj4kYkpr7UBwbRvWy+RJRT+DztLgk4+mWQeWa0itcldCQ2/4h
+         PLTrrBAAe18nx/6v2NxiH9L2qWZgFUTa8Rr0ZfP/uOggTA31GbRWQPm7eVoccHeyfegD
+         O10Cg80nLKWcjLha3lyiuGZtV+EBaFe3yuNV4QSinudUSZ0vh3ZubMSIym9PtlFfJH2S
+         iq4ZnQ5LogQsIjLhbW+l3zquzVW2pq4sRJJfLvDOs1MBBOkUrYm2bYBAFEgxx211GRrQ
+         FMQ4nggeFjVdQi3x44pAZjWpL19GrDNkArkxXPVTxNWJjwvwpcL/C15N5CO1KTxYG8Hq
+         wPug==
+X-Gm-Message-State: AOAM5304alfmyu26H98tTwWfPPQ2cL0LDvRW6CH18YxPokNYrTggaWvd
+        xF7hOQ01v4iO7EwRlBgc9q4vOPVVxRkQ6ZDT
+X-Google-Smtp-Source: ABdhPJwU9X9NZ3NjPnNF+k7cZb7JMOnGuv1OpeJvUCtrdLR4bxNYsA6s2dZisHVztwv5iygSVhov1g==
+X-Received: by 2002:a5d:5903:0:b0:210:316f:7f40 with SMTP id v3-20020a5d5903000000b00210316f7f40mr8329157wrd.624.1654263476663;
+        Fri, 03 Jun 2022 06:37:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e29-20020a5d595d000000b00213b93cff5fsm2846591wri.98.2022.06.03.06.37.52
+        by smtp.gmail.com with ESMTPSA id k14-20020a5d518e000000b0021350f7b22esm4522458wrv.109.2022.06.03.06.37.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 06:37:53 -0700 (PDT)
-Message-Id: <pull.1247.git.1654263472.gitgitgadget@gmail.com>
+        Fri, 03 Jun 2022 06:37:56 -0700 (PDT)
+Message-Id: <5f54766e1032ebf3a331516a6dd696b997bdfdd8.1654263472.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1247.git.1654263472.gitgitgadget@gmail.com>
+References: <pull.1247.git.1654263472.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Jun 2022 13:37:48 +0000
-Subject: [PATCH 0/4] rebase: update branches in multi-part topic
+Date:   Fri, 03 Jun 2022 13:37:50 +0000
+Subject: [PATCH 2/4] branch: add branch_checked_out() helper
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a feature I've wanted for quite a while. When working on the sparse
-index topic, I created a long RFC that actually broke into three topics for
-full review upstream. These topics were sequential, so any feedback on an
-earlier one required updates to the later ones. I would work on the full
-feature and use interactive rebase to update the full list of commits.
-However, I would need to update the branches pointing to those sub-topics.
+From: Derrick Stolee <derrickstolee@github.com>
 
-This series adds a new --update-refs option to 'git rebase' (along with a
-rebase.updateRefs config option) that adds 'git update-ref' commands into
-the TODO list. This is powered by the commit decoration machinery.
+The validate_new_branchname() method contains a check to see if a branch
+is checked out in any non-bare worktree. This is intended to prevent a
+force push that will mess up an existing checkout. This helper is not
+suitable to performing just that check, because the method will die()
+when the branch is checked out instead of returning an error code.
 
-As an example, here is my in-progress bundle URI RFC split into subtopics as
-they appear during the TODO list of a git rebase -i --update-refs:
+Extract branch_checked_out() and use it within
+validate_new_branchname(). Another caller will be added in a coming
+change.
 
-pick 2d966282ff3 docs: document bundle URI standard
-pick 31396e9171a remote-curl: add 'get' capability
-pick 54c6ab70f67 bundle-uri: create basic file-copy logic
-pick 96cb2e35af1 bundle-uri: add support for http(s):// and file://
-pick 6adaf842684 fetch: add --bundle-uri option
-pick 6c5840ed77e fetch: add 'refs/bundle/' to log.excludeDecoration
-exec git update-ref refs/heads/bundle-redo/fetch HEAD 6c5840ed77e1bc41c1fe6fb7c894ceede1b8d730
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ branch.c | 24 ++++++++++++++++--------
+ branch.h |  8 ++++++++
+ 2 files changed, 24 insertions(+), 8 deletions(-)
 
-pick 1e3f6546632 clone: add --bundle-uri option
-pick 9e4a6fe9b68 clone: --bundle-uri cannot be combined with --depth
-exec git update-ref refs/heads/bundle-redo/clone HEAD 9e4a6fe9b68a8455b427c9ac8cdbff30c96653b4
-
-pick 5451cb6599c bundle-uri: create bundle_list struct and helpers
-pick 3029c3aca15 bundle-uri: create base key-value pair parsing
-pick a8b2de79ce8 bundle-uri: create "key=value" line parsing
-pick 92625a47673 bundle-uri: unit test "key=value" parsing
-pick a8616af4dc2 bundle-uri: limit recursion depth for bundle lists
-pick 9d6809a8d53 bundle-uri: parse bundle list in config format
-pick 287a732b54c bundle-uri: fetch a list of bundles
-exec git update-ref refs/heads/bundle-redo/list HEAD 287a732b54c4d95e7f410b3b36ef90d8a19cd346
-
-pick b09f8226185 protocol v2: add server-side "bundle-uri" skeleton
-pick 520204dcd1c bundle-uri client: add minimal NOOP client
-pick 62e8b457b48 bundle-uri client: add "git ls-remote-bundle-uri"
-pick 00eae925043 bundle-uri: serve URI advertisement from bundle.* config
-pick 4277440a250 bundle-uri client: add boolean transfer.bundleURI setting
-pick caf4599a81d bundle-uri: allow relative URLs in bundle lists
-pick df255000b7e bundle-uri: download bundles from an advertised list
-pick d71beabf199 clone: unbundle the advertised bundles
-pick c9578391976 t5601: basic bundle URI tests
-# Ref refs/heads/bundle-redo/rfc-3 checked out at '/home/stolee/_git/git-bundles'
-
-exec git update-ref refs/heads/bundle-redo/advertise HEAD c9578391976ab9899c4e4f9b5fa2827650097305
-
-
-The first two patches are helpers that are needed, but the full logic of the
---update-refs option is introduced in patch 3. The config option is
-available in patch 4.
-
-Thanks, -Stolee
-
-Derrick Stolee (4):
-  log-tree: create for_each_decoration()
-  branch: add branch_checked_out() helper
-  rebase: add --update-refs option
-  rebase: add rebase.updateRefs config option
-
- Documentation/config/rebase.txt |   3 +
- Documentation/git-rebase.txt    |  11 ++++
- branch.c                        |  24 ++++---
- branch.h                        |   8 +++
- builtin/rebase.c                |  10 +++
- log-tree.c                      | 111 ++++++++++++++++++++++----------
- log-tree.h                      |   4 ++
- sequencer.c                     |  99 ++++++++++++++++++++++++++++
- sequencer.h                     |   1 +
- t/t3404-rebase-interactive.sh   |  34 ++++++++++
- 10 files changed, 262 insertions(+), 43 deletions(-)
-
-
-base-commit: 2668e3608e47494f2f10ef2b6e69f08a84816bcb
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1247%2Fderrickstolee%2Frebase-keep-decorations-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1247/derrickstolee/rebase-keep-decorations-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1247
+diff --git a/branch.c b/branch.c
+index 2d6569b0c62..2e6419cdfa5 100644
+--- a/branch.c
++++ b/branch.c
+@@ -369,6 +369,19 @@ int validate_branchname(const char *name, struct strbuf *ref)
+ 	return ref_exists(ref->buf);
+ }
+ 
++int branch_checked_out(const char *refname, char **path)
++{
++	struct worktree **worktrees = get_worktrees();
++	const struct worktree *wt = find_shared_symref(worktrees, "HEAD", refname);
++	int result = wt && !wt->is_bare;
++
++	if (result && path)
++		*path = xstrdup(wt->path);
++
++	free_worktrees(worktrees);
++	return result;
++}
++
+ /*
+  * Check if a branch 'name' can be created as a new branch; die otherwise.
+  * 'force' can be used when it is OK for the named branch already exists.
+@@ -377,9 +390,7 @@ int validate_branchname(const char *name, struct strbuf *ref)
+  */
+ int validate_new_branchname(const char *name, struct strbuf *ref, int force)
+ {
+-	struct worktree **worktrees;
+-	const struct worktree *wt;
+-
++	char *path;
+ 	if (!validate_branchname(name, ref))
+ 		return 0;
+ 
+@@ -387,13 +398,10 @@ int validate_new_branchname(const char *name, struct strbuf *ref, int force)
+ 		die(_("a branch named '%s' already exists"),
+ 		    ref->buf + strlen("refs/heads/"));
+ 
+-	worktrees = get_worktrees();
+-	wt = find_shared_symref(worktrees, "HEAD", ref->buf);
+-	if (wt && !wt->is_bare)
++	if (branch_checked_out(ref->buf, &path))
+ 		die(_("cannot force update the branch '%s' "
+ 		      "checked out at '%s'"),
+-		    ref->buf + strlen("refs/heads/"), wt->path);
+-	free_worktrees(worktrees);
++		    ref->buf + strlen("refs/heads/"), path);
+ 
+ 	return 1;
+ }
+diff --git a/branch.h b/branch.h
+index 560b6b96a8f..5ea93d217b1 100644
+--- a/branch.h
++++ b/branch.h
+@@ -101,6 +101,14 @@ void create_branches_recursively(struct repository *r, const char *name,
+ 				 const char *tracking_name, int force,
+ 				 int reflog, int quiet, enum branch_track track,
+ 				 int dry_run);
++
++/*
++ * Returns true if the branch at 'refname' is checked out at any
++ * non-bare worktree. The path of the worktree is stored in the
++ * given 'path', if provided.
++ */
++int branch_checked_out(const char *refname, char **path);
++
+ /*
+  * Check if 'name' can be a valid name for a branch; die otherwise.
+  * Return 1 if the named branch already exists; return 0 otherwise.
 -- 
 gitgitgadget
+
