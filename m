@@ -2,154 +2,359 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C01DDC43334
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 10:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34CA4C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 10:23:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243035AbiFCKUe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 06:20:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45330 "EHLO
+        id S243674AbiFCKXa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 06:23:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243774AbiFCKUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 06:20:18 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CCCE3B3C3
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 03:20:15 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 25so9272192edw.8
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 03:20:15 -0700 (PDT)
+        with ESMTP id S243669AbiFCKX1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 06:23:27 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74443B3E1
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 03:23:17 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id t13so9801592wrg.9
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 03:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=IezzVea0Bl5VlsJm+YhxcHeQ01cHcj8ywFVz1dTsUjU=;
-        b=prym6bigyeGCK0D6/CK3k+5UF2mb36jINdLPC1/eqGuxUPPNRqUXjS2oLVUa6b7X+u
-         L+DHw3uqod/e3Y+SHXLmBwpnuYcTQ0VouT7mouI2zbtkgboKxsI6/bdEyvd7z8Ht0srU
-         Vp5d/oH14vpoaS40wwDO4JoTMHHRJMQPu+JVKvgzNMkNc9W4eixTeu/jFRBK+AtKn/CC
-         eqjzhvhKWD//FkWgaKMIiWHkym47k82rNXA/XmrsWOh+ZQNHkJz/gN5cwA8a0MPs7jt5
-         GMJ5W1tQjpad1YGuK3bRKHODUaSH1DL5Al4nxwbjee5WcdUPJOmNodsMGCg80Du1jWBZ
-         tfew==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=THEr+e4S14ymmfWHoely5LfPrPiC5p+LGvc/M8laIhU=;
+        b=UKmteARD2Tb4t2p9kirkZqqAvkX/3zdvgi34iDSH9O5e7VXJ43NbrB9YtRz6zYxPoC
+         7n8pABOb8E9R4mjiYwgAMKCZP4tm/TpDJusJ+Nk7Y+HlVRYvEDwB4n9FAQcFsG61kxBx
+         jnRaI97ZN2seAVuXYY8tkIYhjzJMt30SXpTRUiDPfmvCgi3nkUcgiFw4+yaJAbWUCrzd
+         /BCH//20vyTERfGrfXQnW0MSJCuiDMoCBPm+vJTrA2dk63rfp3TwW1JQ43kuwoNNNSjL
+         r+XfmMKnHAnx/EuVTasUEGRnnCMiPecCyPo0LIl/hzCu3AeQESzEuvpp7Ys5hH/FYky8
+         aCWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=IezzVea0Bl5VlsJm+YhxcHeQ01cHcj8ywFVz1dTsUjU=;
-        b=6/ETo4ZbmpZ14gX0QdK597M6FTtdrnVqGkqISU3D5Odab7/kOw0RrJRkyESN5MOYtO
-         uIXmp2CAKMEEGyFX+ZCbpk5cLhU2l9Piv9IXxjvh3pHT5uU+o3hAdL2TkQq14/KrpcJe
-         f4LhPu9ZbYjkD/JpD+ncboVPEi921WR/yhIPqhcgAFBKyOErEnx52uWGU107AtT0XbG2
-         1mXAXeNBQUm6t2gbEEA5xoTSDZgLO2INWGbKxlm03ZYkU2QCUq7ZmPrgPqpq2k2aOy+N
-         Bo8mUEOxJ6VLEcC7OIWQ0hx/mqGOZbAYUq6xWshkP6d8r8WOt/fAo7dW6w5ntAEXBjME
-         hfYw==
-X-Gm-Message-State: AOAM533kssplKP2IoujGBVBWpxDK/smYIPrJ0hCHximTchlIVmPY0SWY
-        LKCiB5aRcUZ/+eKTAyfb7lY=
-X-Google-Smtp-Source: ABdhPJyCWy6WLRzLSdxyRnVZk8qdnnzSm++1dDZB+t/+cR3yZETAgJFsqpycXcLXpJqgP8MgmmByog==
-X-Received: by 2002:a05:6402:f:b0:42e:561:a1c0 with SMTP id d15-20020a056402000f00b0042e0561a1c0mr9872515edu.309.1654251613946;
-        Fri, 03 Jun 2022 03:20:13 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id c10-20020a170906154a00b006f3ef214de7sm2689258ejd.77.2022.06.03.03.20.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=THEr+e4S14ymmfWHoely5LfPrPiC5p+LGvc/M8laIhU=;
+        b=iJ7czNZe3z3PvzeicEMOXBi2pt8sYivXIbgQLV9T9/rW9tZV/Gg24+Nm9ylKCyvq0j
+         FHmFjzv9pFXZZTwGCZCewKctHrf7/fSKI57lQvbXgmbBGGQnjMt1MCMIW0AkZa338edO
+         3sPycpAQWxtyzAN/PEtL1N37+Ou4EnkB9oDFYShdUawVQaix5OGytmB5MUjgqNxT+Js7
+         cuY1IHLMHDXflS878Bsc2W2FJ/DRF5Xq0QNqKzY4fSlATB2Zi9qTuacKIkyMrcy/JVAY
+         CPc4+sah+IuYsYs8Di79JtD00AX93L7r2LqTgqb/1+onJiz94P8lsRl/2NGtV+NldFA5
+         VoSQ==
+X-Gm-Message-State: AOAM530ublUzc8vtRfYgr6kZ8BaaYYtZsd3pbzePCOcGA9xP7Y84wK+B
+        QCkb6HZ5TWd6JcA7fUeAxF0Ht9iHFiTc4A==
+X-Google-Smtp-Source: ABdhPJxPfDfJE4PL1++ng94QSMaSEreKfFl5GP90x6xMDFbQ1sC5l9TPe4mRdnfJej6WiR+gB3oEWA==
+X-Received: by 2002:a5d:6085:0:b0:213:b9b5:d985 with SMTP id w5-20020a5d6085000000b00213b9b5d985mr3356482wrt.113.1654251796005;
+        Fri, 03 Jun 2022 03:23:16 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id a21-20020a05600c349500b003958af7d0c8sm7985082wmq.45.2022.06.03.03.23.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 03:20:13 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nx4Pc-001bo7-Ik;
-        Fri, 03 Jun 2022 12:20:12 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>, congdanhqx@gmail.com,
+        Fri, 03 Jun 2022 03:23:15 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
         dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
         tenglong.tl@alibaba-inc.com
-Subject: js/ci-github-workflow-markup output regression (was: [PATCH]
- ls-tree: test for the regression in 9c4d58ff2c3)
-Date:   Fri, 03 Jun 2022 11:54:31 +0200
-References: <xmqqee28spni.fsf@gitster.g>
- <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
- <nycvar.QRO.7.76.6.2206021703110.349@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <nycvar.QRO.7.76.6.2206021703110.349@tvgsbejvaqbjf.bet>
-Message-ID: <220603.86fskmxd43.gmgdl@evledraar.gmail.com>
+Subject: [PATCH v2] ls-tree: test for the regression in 9c4d58ff2c3
+Date:   Fri,  3 Jun 2022 12:23:10 +0200
+Message-Id: <patch-v2-1.1-f2beb02dd29-20220603T102148Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1119.g5a713b43bd4
+In-Reply-To: <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
+References: <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a test for the regression introduced in my 9c4d58ff2c3 (ls-tree:
+split up "fast path" callbacks, 2022-03-23) and fixed in
+350296cc789 (ls-tree: `-l` should not imply recursive listing,
+2022-04-04), and test for the test of ls-tree option/mode combinations
+to make sure we don't have other blind spots.
 
-On Thu, Jun 02 2022, Johannes Schindelin wrote:
+The setup for these tests can be shared with those added in the
+1041d58b4d9 (Merge branch 'tl/ls-tree-oid-only', 2022-04-04) topic, so
+let's create a new t/lib-t3100.sh to help them share data.
 
-> On Tue, 31 May 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> [...]
->> +test_ls_tree_format_mode_output () {
->> +	local opts=3D$1 &&
->
-> This line does not quote `$1`, but...
+The existing tests in "t3104-ls-tree-format.sh" didn't deal with a
+submodule, which they'll now encounter with as the
+setup_basic_ls_tree_data() sets one up.
 
-Well spotted, thanks, I don't know how I missed that, will fix it &
-re-roll, but per changed $subject...
+This extensive testing should give us confidence that there were no
+further regressions in this area. The lack of testing was noted back
+in [1], but unfortunately we didn't cover that blind-spot before
+9c4d58ff2c3.
 
-> [...]
-> ... this line passes a first argument that contains spaces. Hence the
-> tests fail in CI:
-> https://github.com/git/git/runs/6703333447?check_suite_focus=3Dtrue
->
-> Further, since this failure is outside of any `test_expect_success` or
-> `test_expect_failure`, the error message about this is not even included
-> in the weblogs (but of course it is included in the full logs that are
-> included in the build artifacts). For the record, here is the error
-> message:
+1. https://lore.kernel.org/git/211115.86o86lqe3c.gmgdl@evledraar.gmail.com/
 
-...this part of it though seems like a pretty bad regression in your
-merged-to-next js/ci-github-workflow-markup topic, which just happens to
-be unearthed by this CI failure.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-On top of master this patch will get this CI failure:
-https://github.com/avar/git/runs/6675920732?check_suite_focus=3Dtrue#step:5=
-:598;
-Ending in ("[...]" edit is mine):
-=09
-	 ok 35 - 'ls-tree --object-only -r' output (via subdir)
-	+ git rev-parse --short HEAD:.gitmodules
-	[...]
-	+ HEAD_short_dir_sub_file=3Da150abd
-=09
-	ok 36 - setup: HEAD_short_* variables
-	t3105-ls-tree-output.sh: 20: local: --abbrev: bad variable name
-	FATAL: Unexpected exit with code 2
+Fix a quoting issue in v1 that made CI fail, now passes:
+https://github.com/avar/git/tree/avar/ls-tree-rewrite-regression-test-2
 
-So here we see that we got to test 36, and then got this error. All of
-which is after the step we focused on to begin with would have shown:
-=09
-	 Test Summary Report
-	-------------------
-	t3105-ls-tree-output.sh                          (Wstat: 256 Tests: 36 Fai=
-led: 0)
-	  Non-zero exit status: 1
-	  Parse errors: No plan found in TAP output
+I usually check the CI before submitting, but I don't know how that
+slipped through in this case, sorry, and thanks for the quick
+review/diagnosis.
 
-I.e. telling us we had a TAP parse error, so something like this was
-going on.
+Range-diff against v1:
+1:  0fdfec624eb ! 1:  f2beb02dd29 ls-tree: test for the regression in 9c4d58ff2c3
+    @@ t/t3105-ls-tree-output.sh (new)
+     +'
+     +
+     +test_ls_tree_format_mode_output () {
+    -+	local opts=$1 &&
+    ++	local opts="$1" &&
+     +	shift &&
+     +	cat >expect &&
+     +
 
-But now we'll instead get ("=3D>" edit is mine, it didn't copy/paste):
+ t/lib-t3100.sh            |  10 ++
+ t/t3104-ls-tree-format.sh |   5 +-
+ t/t3105-ls-tree-output.sh | 192 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 204 insertions(+), 3 deletions(-)
+ create mode 100644 t/lib-t3100.sh
+ create mode 100755 t/t3105-ls-tree-output.sh
 
-	=3D> Run tests
-	=3D=3D=3D Failed test: t3105-ls-tree-output =3D=3D=3D
-	The full logs are in the artifacts attached to this run.
-	Error: Process completed with exit code 1.
+diff --git a/t/lib-t3100.sh b/t/lib-t3100.sh
+new file mode 100644
+index 00000000000..eabb5fd8034
+--- /dev/null
++++ b/t/lib-t3100.sh
+@@ -0,0 +1,10 @@
++#!/bin/sh
++
++setup_basic_ls_tree_data () {
++	mkdir dir &&
++	test_commit dir/sub-file &&
++	test_commit top-file &&
++	git clone . submodule &&
++	git submodule add ./submodule &&
++	git commit -m"add submodule"
++}
+diff --git a/t/t3104-ls-tree-format.sh b/t/t3104-ls-tree-format.sh
+index 0769a933d69..383896667b6 100755
+--- a/t/t3104-ls-tree-format.sh
++++ b/t/t3104-ls-tree-format.sh
+@@ -4,6 +4,7 @@ test_description='ls-tree --format'
+ 
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-t3100.sh
+ 
+ test_expect_success 'ls-tree --format usage' '
+ 	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
+@@ -12,9 +13,7 @@ test_expect_success 'ls-tree --format usage' '
+ '
+ 
+ test_expect_success 'setup' '
+-	mkdir dir &&
+-	test_commit dir/sub-file &&
+-	test_commit top-file
++	setup_basic_ls_tree_data
+ '
+ 
+ test_ls_tree_format () {
+diff --git a/t/t3105-ls-tree-output.sh b/t/t3105-ls-tree-output.sh
+new file mode 100755
+index 00000000000..ce2391e28be
+--- /dev/null
++++ b/t/t3105-ls-tree-output.sh
+@@ -0,0 +1,192 @@
++#!/bin/sh
++
++test_description='ls-tree output'
++
++TEST_PASSES_SANITIZE_LEAK=true
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-t3100.sh
++
++test_expect_success 'ls-tree --format usage' '
++	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
++	test_expect_code 129 git ls-tree --format=fmt --name-only HEAD &&
++	test_expect_code 129 git ls-tree --format=fmt --name-status HEAD
++'
++
++test_expect_success 'setup' '
++	setup_basic_ls_tree_data
++'
++
++test_ls_tree_format_mode_output () {
++	local opts="$1" &&
++	shift &&
++	cat >expect &&
++
++	while test $# -gt 0
++	do
++		local mode="$1" &&
++		shift &&
++
++		test_expect_success "'ls-tree $opts${mode:+ $mode}' output" '
++			git ls-tree ${mode:+$mode }$opts HEAD >actual &&
++			test_cmp expect actual
++		'
++
++		case "$opts" in
++		--full-tree)
++			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir, fails)" '
++				test_must_fail git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../
++			'
++			;;
++		*)
++			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir)" '
++				git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../ >actual &&
++				test_cmp expect actual
++			'
++			;;
++		esac
++	done
++}
++
++# test exact output of option (none, --long, ...) and mode (none and
++# -d, -r -t) and combinations
++test_expect_success 'setup: HEAD_* variables' '
++	HEAD_gitmodules=$(git rev-parse HEAD:.gitmodules) &&
++	HEAD_dir=$(git rev-parse HEAD:dir) &&
++	HEAD_top_file=$(git rev-parse HEAD:top-file.t) &&
++	HEAD_submodule=$(git rev-parse HEAD:submodule) &&
++	HEAD_dir_sub_file=$(git rev-parse HEAD:dir/sub-file.t)
++'
++## opt =
++test_ls_tree_format_mode_output "" "" "-t" <<-EOF
++	100644 blob $HEAD_gitmodules	.gitmodules
++	040000 tree $HEAD_dir	dir
++	160000 commit $HEAD_submodule	submodule
++	100644 blob $HEAD_top_file	top-file.t
++	EOF
++test_ls_tree_format_mode_output "" "-d" <<-EOF
++	040000 tree $HEAD_dir	dir
++	160000 commit $HEAD_submodule	submodule
++	EOF
++test_ls_tree_format_mode_output "" "-r" <<-EOF
++	100644 blob $HEAD_gitmodules	.gitmodules
++	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
++	160000 commit $HEAD_submodule	submodule
++	100644 blob $HEAD_top_file	top-file.t
++	EOF
++## opt = --long
++test_ls_tree_format_mode_output "--long" "" "-t" <<-EOF
++	100644 blob $HEAD_gitmodules      61	.gitmodules
++	040000 tree $HEAD_dir       -	dir
++	160000 commit $HEAD_submodule       -	submodule
++	100644 blob $HEAD_top_file       9	top-file.t
++	EOF
++test_ls_tree_format_mode_output "--long" "-d" <<-EOF
++	040000 tree $HEAD_dir       -	dir
++	160000 commit $HEAD_submodule       -	submodule
++	EOF
++test_ls_tree_format_mode_output "--long" "-r" <<-EOF
++	100644 blob $HEAD_gitmodules      61	.gitmodules
++	100644 blob $HEAD_dir_sub_file      13	dir/sub-file.t
++	160000 commit $HEAD_submodule       -	submodule
++	100644 blob $HEAD_top_file       9	top-file.t
++	EOF
++## opt = --name-only
++test_ls_tree_format_mode_output "--name-only" "" "-t" <<-EOF
++	.gitmodules
++	dir
++	submodule
++	top-file.t
++	EOF
++test_ls_tree_format_mode_output "--name-only" "-d" <<-EOF
++	dir
++	submodule
++	EOF
++test_ls_tree_format_mode_output "--name-only" "-r" <<-EOF
++	.gitmodules
++	dir/sub-file.t
++	submodule
++	top-file.t
++	EOF
++## opt = --object-only
++test_ls_tree_format_mode_output "--object-only" "" "-t" <<-EOF
++	$HEAD_gitmodules
++	$HEAD_dir
++	$HEAD_submodule
++	$HEAD_top_file
++	EOF
++test_ls_tree_format_mode_output "--object-only" "-d" <<-EOF
++	$HEAD_dir
++	$HEAD_submodule
++	EOF
++test_ls_tree_format_mode_output "--object-only" "-r" <<-EOF
++	$HEAD_gitmodules
++	$HEAD_dir_sub_file
++	$HEAD_submodule
++	$HEAD_top_file
++	EOF
++## opt = --object-only --abbrev
++test_expect_success 'setup: HEAD_short_* variables' '
++	HEAD_short_gitmodules=$(git rev-parse --short HEAD:.gitmodules) &&
++	HEAD_short_dir=$(git rev-parse --short HEAD:dir) &&
++	HEAD_short_top_file=$(git rev-parse --short HEAD:top-file.t) &&
++	HEAD_short_submodule=$(git rev-parse --short HEAD:submodule) &&
++	HEAD_short_dir_sub_file=$(git rev-parse --short HEAD:dir/sub-file.t)
++'
++test_ls_tree_format_mode_output "--object-only --abbrev" "" "-t" <<-EOF
++	$HEAD_short_gitmodules
++	$HEAD_short_dir
++	$HEAD_short_submodule
++	$HEAD_short_top_file
++	EOF
++test_ls_tree_format_mode_output "--object-only --abbrev" "-d" <<-EOF
++	$HEAD_short_dir
++	$HEAD_short_submodule
++	EOF
++test_ls_tree_format_mode_output "--object-only --abbrev" "-r" <<-EOF
++	$HEAD_short_gitmodules
++	$HEAD_short_dir_sub_file
++	$HEAD_short_submodule
++	$HEAD_short_top_file
++	EOF
++## opt = --full-name
++test_ls_tree_format_mode_output "--full-name" "" <<-EOF
++	100644 blob $HEAD_gitmodules	.gitmodules
++	040000 tree $HEAD_dir	dir
++	160000 commit $HEAD_submodule	submodule
++	100644 blob $HEAD_top_file	top-file.t
++	EOF
++test_ls_tree_format_mode_output "--full-name" "-d" <<-EOF
++	040000 tree $HEAD_dir	dir
++	160000 commit $HEAD_submodule	submodule
++	EOF
++test_ls_tree_format_mode_output "--full-name" "-r" <<-EOF
++	100644 blob $HEAD_gitmodules	.gitmodules
++	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
++	160000 commit $HEAD_submodule	submodule
++	100644 blob $HEAD_top_file	top-file.t
++	EOF
++test_ls_tree_format_mode_output "--full-name" "-t" <<-EOF
++	100644 blob $HEAD_gitmodules	.gitmodules
++	040000 tree $HEAD_dir	dir
++	160000 commit $HEAD_submodule	submodule
++	100644 blob $HEAD_top_file	top-file.t
++	EOF
++## opt = --full-tree
++test_ls_tree_format_mode_output "--full-tree" "" "-t" <<-EOF
++	100644 blob $HEAD_gitmodules	.gitmodules
++	040000 tree $HEAD_dir	dir
++	160000 commit $HEAD_submodule	submodule
++	100644 blob $HEAD_top_file	top-file.t
++	EOF
++test_ls_tree_format_mode_output "--full-tree" "-d" <<-EOF
++	040000 tree $HEAD_dir	dir
++	160000 commit $HEAD_submodule	submodule
++	EOF
++test_ls_tree_format_mode_output "--full-tree" "-r" <<-EOF
++	100644 blob $HEAD_gitmodules	.gitmodules
++	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
++	160000 commit $HEAD_submodule	submodule
++	100644 blob $HEAD_top_file	top-file.t
++	EOF
++
++test_done
+-- 
+2.36.1.1119.g5a713b43bd4
 
-Where expanding the "=3D>" in "Run tests" will get us the "Test summary
-report" from before, but now we have no "ci/print-test-failures.sh" step
-to emit the output we got from the test, and we just get a cryptic error
-about t3105 having failed *somewhere*.
-
-As noted in the breadcrumb trail leading from "[2]" in [1] this is a
-fundamental limitation of the approach you picked for
---github-workflow-markup. You're tasking the test-lib.sh to emit
-well-formed output, but as shown here we can die prematurely on "eval"
-failures.
-
-But this does look easy to "solve" with a quicker fix, just bringing
-back the "ci/print-test-failures.sh" step so you can at least expand it,
-and not have to go to the "summary" and download the *.zip of the log
-itself. As that shows we still have the raw log there, it just didn't
-make it to the new GitHub Markdown formatting mechanism.
-
-1. https://lore.kernel.org/git/220324.8635j7nyvw.gmgdl@evledraar.gmail.com/
