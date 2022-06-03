@@ -2,359 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34CA4C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 10:23:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 012B0C43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 10:34:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243674AbiFCKXa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 06:23:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
+        id S243698AbiFCKeD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 06:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243669AbiFCKX1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 06:23:27 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74443B3E1
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 03:23:17 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id t13so9801592wrg.9
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 03:23:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=THEr+e4S14ymmfWHoely5LfPrPiC5p+LGvc/M8laIhU=;
-        b=UKmteARD2Tb4t2p9kirkZqqAvkX/3zdvgi34iDSH9O5e7VXJ43NbrB9YtRz6zYxPoC
-         7n8pABOb8E9R4mjiYwgAMKCZP4tm/TpDJusJ+Nk7Y+HlVRYvEDwB4n9FAQcFsG61kxBx
-         jnRaI97ZN2seAVuXYY8tkIYhjzJMt30SXpTRUiDPfmvCgi3nkUcgiFw4+yaJAbWUCrzd
-         /BCH//20vyTERfGrfXQnW0MSJCuiDMoCBPm+vJTrA2dk63rfp3TwW1JQ43kuwoNNNSjL
-         r+XfmMKnHAnx/EuVTasUEGRnnCMiPecCyPo0LIl/hzCu3AeQESzEuvpp7Ys5hH/FYky8
-         aCWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=THEr+e4S14ymmfWHoely5LfPrPiC5p+LGvc/M8laIhU=;
-        b=iJ7czNZe3z3PvzeicEMOXBi2pt8sYivXIbgQLV9T9/rW9tZV/Gg24+Nm9ylKCyvq0j
-         FHmFjzv9pFXZZTwGCZCewKctHrf7/fSKI57lQvbXgmbBGGQnjMt1MCMIW0AkZa338edO
-         3sPycpAQWxtyzAN/PEtL1N37+Ou4EnkB9oDFYShdUawVQaix5OGytmB5MUjgqNxT+Js7
-         cuY1IHLMHDXflS878Bsc2W2FJ/DRF5Xq0QNqKzY4fSlATB2Zi9qTuacKIkyMrcy/JVAY
-         CPc4+sah+IuYsYs8Di79JtD00AX93L7r2LqTgqb/1+onJiz94P8lsRl/2NGtV+NldFA5
-         VoSQ==
-X-Gm-Message-State: AOAM530ublUzc8vtRfYgr6kZ8BaaYYtZsd3pbzePCOcGA9xP7Y84wK+B
-        QCkb6HZ5TWd6JcA7fUeAxF0Ht9iHFiTc4A==
-X-Google-Smtp-Source: ABdhPJxPfDfJE4PL1++ng94QSMaSEreKfFl5GP90x6xMDFbQ1sC5l9TPe4mRdnfJej6WiR+gB3oEWA==
-X-Received: by 2002:a5d:6085:0:b0:213:b9b5:d985 with SMTP id w5-20020a5d6085000000b00213b9b5d985mr3356482wrt.113.1654251796005;
-        Fri, 03 Jun 2022 03:23:16 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a21-20020a05600c349500b003958af7d0c8sm7985082wmq.45.2022.06.03.03.23.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 03:23:15 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
-        dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com
-Subject: [PATCH v2] ls-tree: test for the regression in 9c4d58ff2c3
-Date:   Fri,  3 Jun 2022 12:23:10 +0200
-Message-Id: <patch-v2-1.1-f2beb02dd29-20220603T102148Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.1.1119.g5a713b43bd4
-In-Reply-To: <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
-References: <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
+        with ESMTP id S241739AbiFCKeB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 06:34:01 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48FE33BA74
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 03:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1654252437;
+        bh=KwdRB5TEMULI94BSFzj9ag6/nDarKmKPVXfANGfGb8k=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=k7XIFVshX7l9+VeMmI2rg6xbcd+YO6sKSk9GqHQSNS6ceDTms1Ap/Lj1xE+e9JuDa
+         d1PQLqOuJQx/NeRjAEYLPfHi2C/7MUphTZB4YugpEiw+iJULx0ASpzqGsPPOqjMLai
+         uCUXlHkrcoOLNS6hPPlBxzh6W7mLwxUeyIF+aXbc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.206.165] ([213.196.213.247]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlw3N-1nWm6I0Xjv-00j5p8; Fri, 03
+ Jun 2022 12:33:57 +0200
+Date:   Fri, 3 Jun 2022 12:33:55 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee <derrickstolee@github.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] ci: also run the `scalar` tests
+In-Reply-To: <3c6d4a5c-8b39-8771-f578-0ea3c5b57869@github.com>
+Message-ID: <nycvar.QRO.7.76.6.2206031204470.349@tvgsbejvaqbjf.bet>
+References: <pull.1129.git.1654160735.gitgitgadget@gmail.com> <6ad0d3d401da7787d0e7afb3f804b705731bf2dd.1654160735.git.gitgitgadget@gmail.com> <3c6d4a5c-8b39-8771-f578-0ea3c5b57869@github.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Dmyy7zqc9jdwn4T01jg9uYbjk/1X4sFKMK6eqPsx4q2RJGpgGyM
+ 9D++xrRF5nMfAnOa2OVVPAq5v5r8B40uphDz2Wj8skxOH8vJz6Ujt9kmANJWdmcv3j/3QFm
+ 8yLAXOQWA3Pco6kcL/9SELxL6FMQEWngnFfYoDtVX9pRXD0XWqrHPIYc87NU3PNH0ud0Jxi
+ jXpFHYpAvV93LZXvRSn/A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:exdq7QrdOAs=:Dr3R7fFeKrJbk34KyQXPKB
+ 9I+CJuKaBt7oBkvXDcy+IMFsmDREGL49QZvewcIDUTZlJYrZRi2Qux36AS5FHd4jIik6gQdiW
+ UIi76FxSiHTnjBCH57n5nmApjUqh9yVQ4m3drrW+nOSB2ujGn2F5ENQ6EK8YYYMiGJBnV3BbW
+ L+PFs4ilWDsMXHtkZdN9nixCbx4FWXigc7LSFlAS+wB9L6Ck5SIQAVCPnzDjq5DF4mSrE6/ay
+ AoJWXINxE6qitc51NaOOcD1L1ahmVwobdncp1q1ghipaFQIeaNu4HyVO0kLUd07R48yOtjPRQ
+ sz8dcygj0UJAcKTDFwDm596YDdJIG9y4FbRQsRGN5i3MKGsQ4NwdPok+ZdbTKLlXi08O9Du+Q
+ 5ZPpYYZqQAR7h+mnB/t92fmO7TlJ5kNRs1BPLPlLxDisxQEZFmVtbtt4ZSaPNjIBNQ34W9gIW
+ UwH3GMIMkQQdX+NjHIGC9tA0zv/tXd7Kk9/vD1D2O1zsre0QubmpzOXy9ZmP4WPwZu/fEzTpr
+ XG/QOTM6VNu69gRMV1qfX1Qi0DiA2K2NDcv1qkvYuLHqr4A2ku3FZ0QL4uL1w7TY6aczHyGCX
+ CyBNEqT41mK10J4CZKKhO6+hvUmbbIFq6NiN8UULPgrhHe/9d3RW/Y2IL3by+w7KDw+umP8U9
+ NMV1u5oG9zuu3sj3l7zqmRAzjNCXjr7tIScsR2/aVFh/+Ygs8su4mBU1bB1ZPx5dEXSU8ttdc
+ 8ROM7ejno++dNcrRwlX/ll2TAzdPoopVpi8AdgdZLxEqCKRsEl68J2X6hlhfqaLuuDOCvXCfl
+ iu1vSMG0Yggbyx5FoyfMwdeHjxS1eYBKThfKbI/ID4zZFvmdEO0IAMpSN2U1vt3qezNc7LCjr
+ 77Y4MSiZW/w2DUH/awiXxsTu9/Fgol7kJZGwUlGAM7rHZDveaY6MIyqc8l9yY8/jklVYn1tAp
+ 63T2QXQ77lbR9VK4pQmQ7uKcMIZq0j/qCiRylsBY0uqjShbMZoaPTHbFFYzu2OLR/ZW7vbvwx
+ d4gJJ8UAqNSOqEUymzhfSSVH9EmX7HRkrHVHNLfVqMtsyDVzaqmq+YMhFo12QsvcLReZ+Uhi5
+ Mc472eopcigaSrIjawSkzw7i90tQtne5NVx7P7IqrOHoj9T3OIhKj0+yA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test for the regression introduced in my 9c4d58ff2c3 (ls-tree:
-split up "fast path" callbacks, 2022-03-23) and fixed in
-350296cc789 (ls-tree: `-l` should not imply recursive listing,
-2022-04-04), and test for the test of ls-tree option/mode combinations
-to make sure we don't have other blind spots.
+Hi Stolee,
 
-The setup for these tests can be shared with those added in the
-1041d58b4d9 (Merge branch 'tl/ls-tree-oid-only', 2022-04-04) topic, so
-let's create a new t/lib-t3100.sh to help them share data.
+On Thu, 2 Jun 2022, Derrick Stolee wrote:
 
-The existing tests in "t3104-ls-tree-format.sh" didn't deal with a
-submodule, which they'll now encounter with as the
-setup_basic_ls_tree_data() sets one up.
+> On 6/2/2022 5:05 AM, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Since Scalar depends on `libgit.a`, it makes sense to ensure in the CI
+> > and the PR builds that it does not get broken in case of industrious
+> > refactorings of the core Git code (speaking from experience here).
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  .github/workflows/main.yml | 15 +++++++++++++++
+> >  ci/run-build-and-tests.sh  |  2 ++
+> >  ci/run-test-slice.sh       |  5 +++++
+> >  3 files changed, 22 insertions(+)
+> >
+> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> > index c35200defb9..785222aa7b3 100644
+> > --- a/.github/workflows/main.yml
+> > +++ b/.github/workflows/main.yml
+> > @@ -91,6 +91,13 @@ jobs:
+> >          HOME: ${{runner.workspace}}
+> >          NO_PERL: 1
+> >        run: . /etc/profile && ci/make-test-artifacts.sh artifacts
+> > +    - name: build Scalar
+> > +      shell: bash
+> > +      run: |
+> > +        make -C contrib/scalar &&
+> > +        mkdir -p artifacts/bin-wrappers artifacts/contrib/scalar &&
+> > +        cp contrib/scalar/scalar.exe artifacts/contrib/scalar/ &&
+> > +        cp bin-wrappers/scalar artifacts/bin-wrappers/
+>
+> I see later you have a "copy Scalar" step which has some duplication
+> here. The only difference is that you have "make -C contrib/scalar".
+>
+> Doesn't Scalar get built in our basic "make" build when the
+> environment includes INCLUDE_SCALAR=3DYesPlease? So, for that reason I
+> expected the environment to change, but not need this "make -C ..."
 
-This extensive testing should give us confidence that there were no
-further regressions in this area. The lack of testing was noted back
-in [1], but unfortunately we didn't cover that blind-spot before
-9c4d58ff2c3.
+I originally did it that way, but somewhere along the refactoring, I
+removed that `INCLUDE_SCALAR` conditional (except in the CMake
+definition).
 
-1. https://lore.kernel.org/git/211115.86o86lqe3c.gmgdl@evledraar.gmail.com/
+Hmm.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+Now that you mention it, I guess it would be a good idea to reinstate it.
+Let me play with that for a bit.
 
-Fix a quoting issue in v1 that made CI fail, now passes:
-https://github.com/avar/git/tree/avar/ls-tree-rewrite-regression-test-2
+> >      - name: zip up tracked files
+> >        run: git archive -o artifacts/tracked.tar.gz HEAD
+> >      - name: upload tracked files and build artifacts
+> > @@ -161,6 +168,8 @@ jobs:
+> >        run: compat\vcbuild\vcpkg_copy_dlls.bat release
+> >      - name: generate Visual Studio solution
+> >        shell: bash
+> > +      env:
+> > +        INCLUDE_SCALAR: YesPlease
+>
+> This is a bit isolated. Is there a way to specify the environment more
+> generally?
 
-I usually check the CI before submitting, but I don't know how that
-slipped through in this case, sorry, and thanks for the quick
-review/diagnosis.
+I did that on purpose, to limit the scope as much as possible.
 
-Range-diff against v1:
-1:  0fdfec624eb ! 1:  f2beb02dd29 ls-tree: test for the regression in 9c4d58ff2c3
-    @@ t/t3105-ls-tree-output.sh (new)
-     +'
-     +
-     +test_ls_tree_format_mode_output () {
-    -+	local opts=$1 &&
-    ++	local opts="$1" &&
-     +	shift &&
-     +	cat >expect &&
-     +
+It would of course be an option to set that environment variable for the
+entire `vs-build` job. Or even for the entire workflow.
 
- t/lib-t3100.sh            |  10 ++
- t/t3104-ls-tree-format.sh |   5 +-
- t/t3105-ls-tree-output.sh | 192 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 204 insertions(+), 3 deletions(-)
- create mode 100644 t/lib-t3100.sh
- create mode 100755 t/t3105-ls-tree-output.sh
+But I thought there was value in keeping the scope focused, so that
+contributors who investigate failing builds could figure out quickly, say,
+how to reproduce the issue locally.
 
-diff --git a/t/lib-t3100.sh b/t/lib-t3100.sh
-new file mode 100644
-index 00000000000..eabb5fd8034
---- /dev/null
-+++ b/t/lib-t3100.sh
-@@ -0,0 +1,10 @@
-+#!/bin/sh
-+
-+setup_basic_ls_tree_data () {
-+	mkdir dir &&
-+	test_commit dir/sub-file &&
-+	test_commit top-file &&
-+	git clone . submodule &&
-+	git submodule add ./submodule &&
-+	git commit -m"add submodule"
-+}
-diff --git a/t/t3104-ls-tree-format.sh b/t/t3104-ls-tree-format.sh
-index 0769a933d69..383896667b6 100755
---- a/t/t3104-ls-tree-format.sh
-+++ b/t/t3104-ls-tree-format.sh
-@@ -4,6 +4,7 @@ test_description='ls-tree --format'
- 
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-t3100.sh
- 
- test_expect_success 'ls-tree --format usage' '
- 	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
-@@ -12,9 +13,7 @@ test_expect_success 'ls-tree --format usage' '
- '
- 
- test_expect_success 'setup' '
--	mkdir dir &&
--	test_commit dir/sub-file &&
--	test_commit top-file
-+	setup_basic_ls_tree_data
- '
- 
- test_ls_tree_format () {
-diff --git a/t/t3105-ls-tree-output.sh b/t/t3105-ls-tree-output.sh
-new file mode 100755
-index 00000000000..ce2391e28be
---- /dev/null
-+++ b/t/t3105-ls-tree-output.sh
-@@ -0,0 +1,192 @@
-+#!/bin/sh
-+
-+test_description='ls-tree output'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-t3100.sh
-+
-+test_expect_success 'ls-tree --format usage' '
-+	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --name-only HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --name-status HEAD
-+'
-+
-+test_expect_success 'setup' '
-+	setup_basic_ls_tree_data
-+'
-+
-+test_ls_tree_format_mode_output () {
-+	local opts="$1" &&
-+	shift &&
-+	cat >expect &&
-+
-+	while test $# -gt 0
-+	do
-+		local mode="$1" &&
-+		shift &&
-+
-+		test_expect_success "'ls-tree $opts${mode:+ $mode}' output" '
-+			git ls-tree ${mode:+$mode }$opts HEAD >actual &&
-+			test_cmp expect actual
-+		'
-+
-+		case "$opts" in
-+		--full-tree)
-+			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir, fails)" '
-+				test_must_fail git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../
-+			'
-+			;;
-+		*)
-+			test_expect_success "'ls-tree $opts${mode:+ $mode}' output (via subdir)" '
-+				git -C dir ls-tree --full-name ${mode:+$mode }$opts HEAD -- ../ >actual &&
-+				test_cmp expect actual
-+			'
-+			;;
-+		esac
-+	done
-+}
-+
-+# test exact output of option (none, --long, ...) and mode (none and
-+# -d, -r -t) and combinations
-+test_expect_success 'setup: HEAD_* variables' '
-+	HEAD_gitmodules=$(git rev-parse HEAD:.gitmodules) &&
-+	HEAD_dir=$(git rev-parse HEAD:dir) &&
-+	HEAD_top_file=$(git rev-parse HEAD:top-file.t) &&
-+	HEAD_submodule=$(git rev-parse HEAD:submodule) &&
-+	HEAD_dir_sub_file=$(git rev-parse HEAD:dir/sub-file.t)
-+'
-+## opt =
-+test_ls_tree_format_mode_output "" "" "-t" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "" "-d" <<-EOF
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	EOF
-+test_ls_tree_format_mode_output "" "-r" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+## opt = --long
-+test_ls_tree_format_mode_output "--long" "" "-t" <<-EOF
-+	100644 blob $HEAD_gitmodules      61	.gitmodules
-+	040000 tree $HEAD_dir       -	dir
-+	160000 commit $HEAD_submodule       -	submodule
-+	100644 blob $HEAD_top_file       9	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--long" "-d" <<-EOF
-+	040000 tree $HEAD_dir       -	dir
-+	160000 commit $HEAD_submodule       -	submodule
-+	EOF
-+test_ls_tree_format_mode_output "--long" "-r" <<-EOF
-+	100644 blob $HEAD_gitmodules      61	.gitmodules
-+	100644 blob $HEAD_dir_sub_file      13	dir/sub-file.t
-+	160000 commit $HEAD_submodule       -	submodule
-+	100644 blob $HEAD_top_file       9	top-file.t
-+	EOF
-+## opt = --name-only
-+test_ls_tree_format_mode_output "--name-only" "" "-t" <<-EOF
-+	.gitmodules
-+	dir
-+	submodule
-+	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--name-only" "-d" <<-EOF
-+	dir
-+	submodule
-+	EOF
-+test_ls_tree_format_mode_output "--name-only" "-r" <<-EOF
-+	.gitmodules
-+	dir/sub-file.t
-+	submodule
-+	top-file.t
-+	EOF
-+## opt = --object-only
-+test_ls_tree_format_mode_output "--object-only" "" "-t" <<-EOF
-+	$HEAD_gitmodules
-+	$HEAD_dir
-+	$HEAD_submodule
-+	$HEAD_top_file
-+	EOF
-+test_ls_tree_format_mode_output "--object-only" "-d" <<-EOF
-+	$HEAD_dir
-+	$HEAD_submodule
-+	EOF
-+test_ls_tree_format_mode_output "--object-only" "-r" <<-EOF
-+	$HEAD_gitmodules
-+	$HEAD_dir_sub_file
-+	$HEAD_submodule
-+	$HEAD_top_file
-+	EOF
-+## opt = --object-only --abbrev
-+test_expect_success 'setup: HEAD_short_* variables' '
-+	HEAD_short_gitmodules=$(git rev-parse --short HEAD:.gitmodules) &&
-+	HEAD_short_dir=$(git rev-parse --short HEAD:dir) &&
-+	HEAD_short_top_file=$(git rev-parse --short HEAD:top-file.t) &&
-+	HEAD_short_submodule=$(git rev-parse --short HEAD:submodule) &&
-+	HEAD_short_dir_sub_file=$(git rev-parse --short HEAD:dir/sub-file.t)
-+'
-+test_ls_tree_format_mode_output "--object-only --abbrev" "" "-t" <<-EOF
-+	$HEAD_short_gitmodules
-+	$HEAD_short_dir
-+	$HEAD_short_submodule
-+	$HEAD_short_top_file
-+	EOF
-+test_ls_tree_format_mode_output "--object-only --abbrev" "-d" <<-EOF
-+	$HEAD_short_dir
-+	$HEAD_short_submodule
-+	EOF
-+test_ls_tree_format_mode_output "--object-only --abbrev" "-r" <<-EOF
-+	$HEAD_short_gitmodules
-+	$HEAD_short_dir_sub_file
-+	$HEAD_short_submodule
-+	$HEAD_short_top_file
-+	EOF
-+## opt = --full-name
-+test_ls_tree_format_mode_output "--full-name" "" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--full-name" "-d" <<-EOF
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	EOF
-+test_ls_tree_format_mode_output "--full-name" "-r" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--full-name" "-t" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+## opt = --full-tree
-+test_ls_tree_format_mode_output "--full-tree" "" "-t" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+test_ls_tree_format_mode_output "--full-tree" "-d" <<-EOF
-+	040000 tree $HEAD_dir	dir
-+	160000 commit $HEAD_submodule	submodule
-+	EOF
-+test_ls_tree_format_mode_output "--full-tree" "-r" <<-EOF
-+	100644 blob $HEAD_gitmodules	.gitmodules
-+	100644 blob $HEAD_dir_sub_file	dir/sub-file.t
-+	160000 commit $HEAD_submodule	submodule
-+	100644 blob $HEAD_top_file	top-file.t
-+	EOF
-+
-+test_done
--- 
-2.36.1.1119.g5a713b43bd4
+>
+> >        run: |
+> >          cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=3D`pwd`=
+/compat/vcbuild/vcpkg/installed/x64-windows \
+> >          -DNO_GETTEXT=3DYesPlease -DPERL_TESTS=3DOFF -DPYTHON_TESTS=3D=
+OFF -DCURL_NO_CURL_CMAKE=3DON
+> > @@ -174,6 +183,12 @@ jobs:
+> >        run: |
+> >          mkdir -p artifacts &&
+> >          eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=3DYes=
+Please ARTIFACTS_DIRECTORY=3Dartifacts NO_GETTEXT=3DYesPlease 2>&1 | grep =
+^tar)"
+> > +    - name: copy Scalar
+> > +      shell: bash
+> > +      run: |
+> > +        mkdir -p artifacts/bin-wrappers artifacts/contrib/scalar &&
+> > +        cp contrib/scalar/scalar.exe artifacts/contrib/scalar/ &&
+> > +        cp bin-wrappers/scalar artifacts/bin-wrappers/
+> >      - name: zip up tracked files
+> >        run: git archive -o artifacts/tracked.tar.gz HEAD
+> >      - name: upload tracked files and build artifacts
+> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> > index 280dda7d285..661edb85d1b 100755
+> > --- a/ci/run-build-and-tests.sh
+> > +++ b/ci/run-build-and-tests.sh
+> > @@ -51,4 +51,6 @@ esac
+> >  make $MAKE_TARGETS
+> >  check_unignored_build_artifacts
+> >
+> > +make -C contrib/scalar $MAKE_TARGETS
+> > +
+>
+> Again, this should "just work" when using INCLUDE_SCALAR in the
+> environment, right?
+>
+> >  save_good_tree
+> > diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
+> > index f8c2c3106a2..b741fd8f361 100755
+> > --- a/ci/run-test-slice.sh
+> > +++ b/ci/run-test-slice.sh
+> > @@ -14,4 +14,9 @@ make --quiet -C t T=3D"$(cd t &&
+> >  	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
+> >  	tr '\n' ' ')"
+> >
+> > +if test 0 =3D "$1"
+> > +then
+> > +	make -C contrib/scalar test
+> > +fi
+> > +
+>
+> This is still necessary for now.
 
+Thank you for your review! I will play around with the idea to modify the
+top-level `Makefile` so that a `make INCLUDE_SCALAR=3DYepOfCourse` would
+automatically include Scalar. I am just concerned that this would already
+open the discussion about taking Scalar out of `contrib/`, and I do want
+to discourage this discussion before the remaining upstreamable patches
+from https://github.com/microsoft/git/pull/479/commits made it into Git's
+main branch (except of course the patch to move Scalar out of `contrib`,
+https://github.com/microsoft/git/pull/479/commits/0e7b7653b29a).
+
+Thanks,
+Dscho
