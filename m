@@ -2,141 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5378C43334
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 11:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92AFBC43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 11:15:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243919AbiFCLFP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 07:05:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51892 "EHLO
+        id S242004AbiFCLPe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 07:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243922AbiFCLFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 07:05:12 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD3D3BFB6
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 04:05:10 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id me5so14706822ejb.2
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 04:05:10 -0700 (PDT)
+        with ESMTP id S229563AbiFCLPd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 07:15:33 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 860713C483
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 04:15:31 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id z17so3936736wmf.1
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 04:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=vEWpEx1DRGpJiqSxIzl5ZYiHg+OJPzX29BXYKF+R8G0=;
-        b=G37/aAvWta+EKDpNmM9oIC7SEDIxy1kxyZUU+qoJtg9kHYJ/nkf801SacGOQhFYzPn
-         Cvz6jwW1YRqTMxML38aHGsV5GwED6aFbjQtKrXmBs49rbKZC931EgI45jJ8aRzzxqWCI
-         Zd1npFWOHKmkvhN7QfnQ0RVr1Txl0AwbjI373wkz3YSRJ70w0t5w3YdPElqmXxp2vsuT
-         sxy7PVeCtjWpeCOjW3oGT8vyVFnvNC5Wk8zw8Q1B5t9F9ka2iXsaO9F/UDM5wPK5ri9Z
-         ACCNMYg/iIJlV5FDvUs3crCBxbx9iD/EM50idoSqvzIC2ftWPypp0d+RCk8ObCXsOCFb
-         2yvA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hDmT55ebS6fRkVsOXwqqzrIScwW+g3Ko4kpAsXhWcvI=;
+        b=QchZpArrTaLHOx1aeUGWFrNxNMMwfhiQNWCuCWG+UQ0Fhjs1SghazKJyOywzr67PrN
+         e9ZYIDJXHmKCxE13Rysfn6e6P2VjsiieALtnd1qv3hrJal0mpaPdlAsTvIkiAxZpxFJh
+         BYoVg5Gx7fmk/NyVYHBjdfjnlwd9sNseQ8Zgm+h83i6kk69WtHwN59ucK5Gf4w42uyMi
+         BVpPFiTTWN3g4DVcleHR4cEkWIn7+ricSw7bi2z5bFArPN7MlJrFw+OkzJNsmCAv2ciZ
+         3ZkiqEzVRLcGohcBLXoXJKAYvAS4jjL20kbm3uUwnOyqgo8+Jo7Z6A7zbKkuEANH95jL
+         AjnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=vEWpEx1DRGpJiqSxIzl5ZYiHg+OJPzX29BXYKF+R8G0=;
-        b=vWZJOul1+AaJTJjbwQPFWDwzNYVavRmuAMUg80d+KerdAHSci2RWRCL+1oJYouLtZP
-         IYSbgmTWteihAejx92Nwz/lZz6wDs3MD4DQZp+m5qXolvnRZWUAzqO2u+1FoB2XrODV/
-         XfswVDR87RNOk753tZDiJzj+B2Bb1BTt60xuSQrKbkWCzg2OcKz6eLr3ZIv83UMNEUfJ
-         BFbiHd0DnN1Lu6mRyhMnu4WzIMgZcz/xkZKc4nnZXoUuxRY1uSSNMNsGmdB1C67ihdDd
-         WG9HZczpC939mWFcYshbdXt+3Zvv/5CjT9wSRdu64nz/8Dp7CG3P3KBu4f46LuoRWHwQ
-         +KNA==
-X-Gm-Message-State: AOAM531L8gm9/6/eo9GFxZwRq95bqKE8o0xgf/ZkxpVjQahoj+i06/N5
-        BIzK42G3+HwoprClNQNKz14=
-X-Google-Smtp-Source: ABdhPJwnZL01Hzo3Gc7/doTQG37YhjneSfnRt93IKoVViwoso7RXuSiCFRQQTvuRTTfkr8e2Jxi6Ww==
-X-Received: by 2002:a17:906:1c04:b0:708:a007:5a77 with SMTP id k4-20020a1709061c0400b00708a0075a77mr8325080ejg.566.1654254309184;
-        Fri, 03 Jun 2022 04:05:09 -0700 (PDT)
-Received: from localhost (78-131-17-130.pool.digikabel.hu. [78.131.17.130])
-        by smtp.gmail.com with ESMTPSA id s23-20020a170906501700b006fefd1d5c2bsm2763190ejj.148.2022.06.03.04.05.08
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hDmT55ebS6fRkVsOXwqqzrIScwW+g3Ko4kpAsXhWcvI=;
+        b=lWxIW9BIo7t20KemnFK0eAfLmPqIbqx0661Anlyo9vyjZSQ+kCtIfexzp1OZ6OFrHM
+         ACi3FYy07x9IhkAFEd2GxRkFiZ3JIbcamLq17TZZICXZhRUhxnVkEXEWI9KiLj+r3x/A
+         wp0wGeH49MInV46s2g/mkV2Tva0zBEYsCtkyem0oGh6SbzjO3uUgEdtAmrVFZRvMaZ9E
+         mnPDYZCxV5z56svzXsiodMft5bNcxT5o2qR/wlposeCoQdExwpa8tfPKxY9fXucUyzox
+         5knDXNPJCMI4Q6QkatjDWtBbq32mzLnX3icfIGJAxVG2rO8s5vxL26BPUDe6zFEk1bg8
+         sslQ==
+X-Gm-Message-State: AOAM5338Fslm1r1FP0ZWfyrnOwSaUdwTaW55qc41STlx9uqAF+YNa5bE
+        F+KnH2kBGd0JtymGnF6+A5e8my+0dgwoYw==
+X-Google-Smtp-Source: ABdhPJyR8Rp9SGFks15RkYioGtSh1Q74SllGIOHujI8LAjE1JLme6VnpJ1o2Sl4Ox3eq4bPoLhRasQ==
+X-Received: by 2002:a05:600c:3552:b0:398:3e9c:30f4 with SMTP id i18-20020a05600c355200b003983e9c30f4mr30657110wmq.37.1654254929695;
+        Fri, 03 Jun 2022 04:15:29 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id h24-20020adfa4d8000000b0020d0a57af5esm7184357wrb.79.2022.06.03.04.15.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 04:05:08 -0700 (PDT)
-Date:   Fri, 3 Jun 2022 13:05:07 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, bagasdotme@gmail.com,
-        johannes.Schindelin@gmx.de, Guy Maurel <guy.j@maurel.de>,
-        Randall Becker <rsbecker@nexbridge.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 2/4] git-compat-util: avoid failing dir ownership
- checks if running privileged
-Message-ID: <20220603110507.GA1749@szeder.dev>
-References: <20220510174616.18629-1-carenas@gmail.com>
- <20220513010020.55361-1-carenas@gmail.com>
- <20220513010020.55361-3-carenas@gmail.com>
+        Fri, 03 Jun 2022 04:15:29 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/7] t0008: don't rely on default ".git/info/exclude"
+Date:   Fri,  3 Jun 2022 13:15:03 +0200
+Message-Id: <patch-v2-1.7-21927e21832-20220603T110506Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1119.g5a713b43bd4
+In-Reply-To: <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
+References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com> <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220513010020.55361-3-carenas@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 12, 2022 at 06:00:18PM -0700, Carlo Marcelo Arenas Belón wrote:
-> bdc77d1d685 (Add a function to determine whether a path is owned by the
-> current user, 2022-03-02) checks for the effective uid of the running
-> process using geteuid() but didn't account for cases where that user was
-> root (because git was invoked through sudo or a compatible tool) and the
-> original uid that repository trusted for its config was no longer known,
-> therefore failing the following otherwise safe call:
-> 
->   guy@renard ~/Software/uncrustify $ sudo git describe --always --dirty
->   [sudo] password for guy:
->   fatal: unsafe repository ('/home/guy/Software/uncrustify' is owned by someone else)
-> 
-> Attempt to detect those cases by using the environment variables that
-> those tools create to keep track of the original user id, and do the
-> ownership check using that instead.
+Change a test added in 368aa52952d (add git-check-ignore sub-command,
+2013-01-06) to clobber .git/info/exclude rather than append to
+it.
 
-Thanks for working on this!
+These tests would break if the "templates/info--exclude" file added in
+d3af621b147 (Redo the templates generation and installation.,
+2005-08-06) wasn't exactly 6 lines (of only comments).
 
-Unfortunately, I haven't been able to follow the discussion on this
-patch series at all, but by a cursory look now I didn't notice any
-discussion about what should happen if someone were to use 'sudo' to
-access a repository owned by root.  I think it should work, and it did
-in fact work in the past, even after bdc77d1d685, but this patch
-broke it.
+Let's instead clobber the default .git/info/excludes file, and test
+only our own expected content. This is not strictly needed for
+anything in this series, but is a good cleanup while we're at it.
 
-Case in point are tools like 'etckeeper', which keeps track of '/etc'
-in a root-owned Git repository, and hooks into package managers to
-automatically create a commit when a package installation/update
-changes something in '/etc'.  After this patch when 'sudo apt install
-<pkg>' invokes 'etckeeper', it complains about the unsafe repository
-in '/etc', and doesn't make that commit.
+As discussed in the preceding commit a lot of things depend on the
+"info" directory being created, but this was the only test that relied
+on the specific content in the "templates/info--exclude" file.
 
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t0008-ignores.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
->  static inline int is_path_owned_by_current_uid(const char *path)
->  {
->  	struct stat st;
-> +	uid_t euid;
-> +
->  	if (lstat(path, &st))
->  		return 0;
-> -	return st.st_uid == geteuid();
-> +
-> +	euid = geteuid();
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index 5575dade8ee..c3655a0c53e 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -225,7 +225,7 @@ test_expect_success 'setup' '
+ 		!globaltwo
+ 		globalthree
+ 	EOF
+-	cat <<-\EOF >>.git/info/exclude
++	cat <<-\EOF >.git/info/exclude
+ 		per-repo
+ 	EOF
+ '
+@@ -543,9 +543,9 @@ test_expect_success_multi 'submodule from subdirectory' '' '
+ 
+ test_expect_success 'global ignore not yet enabled' '
+ 	expect_from_stdin <<-\EOF &&
+-		.git/info/exclude:7:per-repo	per-repo
++		.git/info/exclude:1:per-repo	per-repo
+ 		a/.gitignore:2:*three	a/globalthree
+-		.git/info/exclude:7:per-repo	a/per-repo
++		.git/info/exclude:1:per-repo	a/per-repo
+ 	EOF
+ 	test_check_ignore "-v globalone per-repo a/globalthree a/per-repo not-ignored a/globaltwo"
+ '
+@@ -566,10 +566,10 @@ test_expect_success 'global ignore with -v' '
+ 	enable_global_excludes &&
+ 	expect_from_stdin <<-EOF &&
+ 		$global_excludes:1:globalone	globalone
+-		.git/info/exclude:7:per-repo	per-repo
++		.git/info/exclude:1:per-repo	per-repo
+ 		$global_excludes:3:globalthree	globalthree
+ 		a/.gitignore:2:*three	a/globalthree
+-		.git/info/exclude:7:per-repo	a/per-repo
++		.git/info/exclude:1:per-repo	a/per-repo
+ 		$global_excludes:2:!globaltwo	globaltwo
+ 	EOF
+ 	test_check_ignore "-v globalone per-repo globalthree a/globalthree a/per-repo not-ignored globaltwo"
+-- 
+2.36.1.1119.g5a713b43bd4
 
-Perhaps all we'd need is just a simple condition here:
-
-        if (st.st_uid == euid)
-                return 1;
-
-which does make it work again in my manual tests, e.g.:
-
-  $ id -u
-  1000
-  $ sudo ./git -C /etc/ rev-parse --absolute-git-dir
-  /etc/.git
-
-Alas, I couldn't get 't0034-root-safe-directory.sh' work for me at
-all, so I'm not sure it doesn't break something else.
-
-And it would also allow 'sudo -u somebody git ...' to access a
-repository owned by that somebody, which, I think, should work as
-well.
-
-> +	if (euid == ROOT_UID)
-> +		extract_id_from_env("SUDO_UID", &euid);
-> +
-> +	return st.st_uid == euid;
->  }
->  
->  #define is_path_owned_by_current_user is_path_owned_by_current_uid
