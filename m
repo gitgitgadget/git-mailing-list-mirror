@@ -2,87 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 880B8C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 12:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ED04C43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 13:14:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244441AbiFCMzC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 08:55:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38008 "EHLO
+        id S244534AbiFCNOX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 09:14:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233094AbiFCMyv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 08:54:51 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F29536E19
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 05:54:50 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id j8so2646620qtn.13
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 05:54:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=MwZW3rfEgKBFRmpDsnwOMG/wdJp1gDImQE8RwYP1CiI=;
-        b=ZwR3P06dMEMUJhESGbypDnpjtENyYbuvMCuG+PxwO1OB7XHDCX68gGlvogavbowREn
-         PjG00ZztAjm8tj4etjT7+dc4L8peVxkgoFGRTbJUVZPq9QEv2fU0b6rJbzN/sFQysiYD
-         dpb+moD1s9xpwwrQgz0jAkr9qNfe2sJ5fZm8CHiMWDmmm0aKoDddDEHi+buD5aOKTVEi
-         ju4o6dBsYsd5ygmftH5t5yzv8KVBzEU6HiSyZdBAfnEyu4/yKX9LfMtlsuTrXpUkyEs6
-         BxFla7vPHwtbq5NveApYwe4YZm4KF4KNvG2kdKUfZ0uavEoXEJSJ+xVsc58rZEeixTTO
-         LhuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=MwZW3rfEgKBFRmpDsnwOMG/wdJp1gDImQE8RwYP1CiI=;
-        b=WkxmmX4RK3CKNZZjt6c7+XLshDIrXwOHdKTwBgz597MXlahqKZK3RR3qKea0TcFGk4
-         TVEwWmtAaEF6u/9qCj02QRCrHcUfZDts0iCqqn5Js3U2eaxZyugeTITH+3/TpOlk6tod
-         077BqvKBwi/Mm7qPbSJknZphXXldWKG2+aFBg8qUZW59VcgUR4yiHXoWn/ls71/jhM+j
-         /czpdqZOCtV+3K9QKpHK7VLhHdvvOFMYJ0EmFX0Rsf2nx97LRcWNlDfC9UyR+m1Qb8m3
-         Xu03+98rQhxG9uBDQfpvEPG/HAL05F3pl+1tw0QPyQAdSmCWuly8WCpTxi2ffoY6t06K
-         U7NA==
-X-Gm-Message-State: AOAM532kxrAg/0sKwarGKG5abKGm41BCCraQMARp3V4MvYoDY9Fe9HO9
-        QadCKCgXuDfFDw7bh9RVCbLf
-X-Google-Smtp-Source: ABdhPJw3tpzxMrc5fs6mUMxCdLt9BIgYedRP4zE1ls76Q10Xldp+17VdhO3NnKwbvbDfifF6dhMi6Q==
-X-Received: by 2002:ac8:5cd5:0:b0:302:9b2:dab0 with SMTP id s21-20020ac85cd5000000b0030209b2dab0mr7430820qta.432.1654260889710;
-        Fri, 03 Jun 2022 05:54:49 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:e12d:e22a:252a:6357? ([2600:1700:e72:80a0:e12d:e22a:252a:6357])
-        by smtp.gmail.com with ESMTPSA id ey19-20020a05622a4c1300b002f39b99f69esm4608160qtb.56.2022.06.03.05.54.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jun 2022 05:54:48 -0700 (PDT)
-Message-ID: <c414de1f-b742-0880-09e6-446f1212e3bd@github.com>
-Date:   Fri, 3 Jun 2022 08:54:47 -0400
+        with ESMTP id S241257AbiFCNOW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 09:14:22 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B2222DA89
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 06:14:20 -0700 (PDT)
+Received: from host-89-242-71-63.as13285.net ([89.242.71.63] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nx785-00065M-7q;
+        Fri, 03 Jun 2022 14:14:18 +0100
+Message-ID: <525ed195-2a6f-1c43-3139-06134d3bb7e7@iee.email>
+Date:   Fri, 3 Jun 2022 14:14:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v4] remote: create fetch.credentialsInUrl config
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
-        avarab@gmail.com, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, jrnieder@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Robert Coup <robert.coup@koordinates.com>
-References: <pull.1237.v3.git.1654046173.gitgitgadget@gmail.com>
- <pull.1237.v4.git.1654190434908.gitgitgadget@gmail.com>
- <xmqq35gmkbic.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq35gmkbic.fsf@gitster.g>
+ Thunderbird/91.9.1
+Subject: Re: Files with \r\n\n line endings can result in needing to
+ renormalize twice, after deleting checked out file and restoring from repo
+Content-Language: en-GB
+To:     "Philip, Bevan" <Bevan.Philip@softwareag.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <AM0PR02MB56357CC96B702244F3271014E8DC9@AM0PR02MB5635.eurprd02.prod.outlook.com>
+ <44fe5991-3027-5ca7-bd3b-fd005d337caa@iee.email>
+ <AM0PR02MB5635C34CA2415C4FB2164B91E8DF9@AM0PR02MB5635.eurprd02.prod.outlook.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <AM0PR02MB5635C34CA2415C4FB2164B91E8DF9@AM0PR02MB5635.eurprd02.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/2/2022 5:20 PM, Junio C Hamano wrote:
-...
-> Taking all together, I'll queue the following on top as a separate
-> fix-up patch, but I may well be giving (some) bad pieces of advice,
-> so I will wait for others to comment.
+On 01/06/2022 11:07, Philip, Bevan wrote:
+> Hey Philip,
+>
+> Thanks for the response!
+>
+>> ... however, if I remember the design discussion correctly, normalisation was decided to be just the conversion of the Windows style EOL = `\r\n` to the Linux/*nix style EOL =`\n`, and any other characters
+>> (utf8 / ascii bytes) were to be unchanged, including random '\r'
+>> characters. So in that respect I think it is working as initially designed.
+> This makes sense.
+>
+>> Do you have any information on how the mixed EOL styles (extra \r etc) came about?
+> I wish I knew how this file came about, but the people that put these files in our VCS have long left. I suspect some broken generation tool.
 
-I cut all of your commentary because it was universally good and
-the fixup you provided does a great job of solving those issues.
+I vaguely remember tales that early Macs use \r as their EOL character,
+so may have been that.
+>
+>> Should those extra \r characters also be separate EOLs? (and how to
+>> decide..?)
+> Most tooling I use seems to do this, but I agree that this is an ambiguous topic.
+maybe an extra `sed` invocation changing all the \r to \n in such cases!
+>
+>> Are the docs missing anything that would have helped clarify the issue earlier?
+> A brief note on the limitations of renormalization might have proven helpful
+I'll maybe add that to my list of todo's (though it's a bit long and
+aspirational;-)
 
-Please give yourself co-authorship on the squashed commit.
+>  - in particular, the bit that tripped me up was the requirement to remove and restore the files from the Git repository itself.
+I think it's just a checkout and then an `add` of the renormalised files
+`git add --renormalize . ` (not forgetting the all important `dot`),
+though some may have termed the checkout as the files being 'removed'.
 
-Thanks,
--Stolee
+I did notice (when cross checking a few points) that there is also a
+`merge.renormalize` config option that will then make sure that when
+branches are merged you get the required re-normalisation (check the man
+pages ..).
+
+>  It wasn't obvious to me that this would have any impact on renormalization. Additionally, a note about the restriction on converting only \r\n to \n might also have proven useful.
+
+OK.
+
+PS, in-line replies preferred on the list.
+>
+> Thanks,
+> Bevan
+>
+>
+> -----Original Message-----
+> From: Philip Oakley <philipoakley@iee.email>
+> Sent: 31 May 2022 22:12
+> To: Philip, Bevan <Bevan.Philip@softwareag.com>; git@vger.kernel.org
+> Subject: Re: Files with \r\n\n line endings can result in needing to renormalize twice, after deleting checked out file and restoring from repo
+>
+> On 31/05/2022 15:24, Philip, Bevan wrote:
+>> Hello all,
+>>
+>> I've experienced an odd bug/limitation with `git add --renormalize`, requiring me to run the command twice on a specific file. Here is a bug report.
+>>
+>> What did you do before the bug happened? (Steps to reproduce your
+>> issue)
+>>
+>> #!/bin/bash -x
+>> printf "Test\\r\\r\\nTest Another Line\\r\\r\\nFinal
+>> Line\\r\\r\\n\\r\\r\\n" > git.bdf printf "* text=auto\\n*.bdf text" >
+>> .gitattributes mkdir test1 cd test1 git init cp ../git.bdf .
+>> git add .
+>> git status
+>> git commit -m "Add file git.bdf"
+>> cp ../.gitattributes .
+>> git add .gitattributes
+>> git add --renormalize .
+>> git status
+>> git commit -m "Renormalize git.bdf"
+>> git add --renormalize .
+>> git status
+>> rm git.bdf
+>> git restore .
+>> git add --renormalize .
+>> git status
+>>
+>> What did you expect to happen? (Expected behavior) Only needing to
+>> renormalize the file once.
+> That sounds like an obvious expectation, ...
+>> What happened instead? (Actual behavior) Renormalize the file once,
+>> then renormalize again after deleting the file that is checked out on disk and restoring it from the object stored within the Git repo.
+>>
+>> What's different between what you expected and what actually happened?
+>> Needed to run the renormalize step again, after deleting the file checked out on disk and restoring the file from the object stored within the Git repo.
+>>
+>> Anything else you want to add:
+>> This only occurs for files with \r\r\n line endings (and possibly also
+>> ending the file with \r\r\n\r\n)
+> ... however, if I remember the design discussion correctly, normalisation was decided to be just the conversion of the Windows style EOL = `\r\n` to the Linux/*nix style EOL =`\n`, and any other characters
+> (utf8 / ascii bytes) were to be unchanged, including random '\r'
+> characters. So in that respect I think it is working as initially designed.
+>
+>> The file is in three states:
+>> - Initial state: \r\r\n line endings within Git object
+>> - Initial renormalization state: \r\n line endings within Git object
+>> - Second renormalization state: \n line endings within Git object
+>>
+>> Happens on both Windows and Linux (replicated on a fresh install of Git for Windows within Windows Sandbox). Additionally, tested with `next` trunk on Linux.
+>> System info is for a Windows build where it does happen.
+>>
+>> Directory, and file names should be irrelevant.
+>>
+>> We encountered this naturally, with some files within a SVN repo we're migrating.
+> Do you have any information on how the mixed EOL styles (extra \r etc) came about?
+> Should those extra \r characters also be separate EOLs? (and how to
+> decide..?)
+> Are the docs missing anything that would have helped clarify the issue earlier?
+>> [System Info]
+>> git version:
+>> git version 2.36.1.windows.1
+>> cpu: x86_64
+>> built from commit: e2ff68a2d1426758c78d023f863bfa1e03cbc768
+>> sizeof-long: 4
+>> sizeof-size_t: 8
+>> shell-path: /bin/sh
+>> feature: fsmonitor--daemon
+>> uname: Windows 10.0 19043
+>> compiler info: gnuc: 11.3
+>> libc info: no libc information available $SHELL (typically,
+>> interactive shell): <unset>
+>>
+>>
+> --
+> Philip
+> This communication contains information which is confidential and may also be privileged. It is for the exclusive use of the intended recipient(s). If you are not the intended recipient(s), please note that any distribution, copying, or use of this communication or the information in it, is strictly prohibited. If you have received this communication in error please notify us by e-mail and then delete the e-mail and any copies of it.
+> Software AG (UK) Limited Registered in England & Wales 1310740 - http://www.softwareag.com/uk
+
