@@ -2,170 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E229C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 07:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BD07C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 08:30:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240578AbiFCHqi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 03:46:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56514 "EHLO
+        id S240300AbiFCIaE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 04:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233674AbiFCHqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 03:46:37 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 312FF3703C
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 00:46:36 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id c2so9083531edf.5
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 00:46:36 -0700 (PDT)
+        with ESMTP id S242846AbiFCIaA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 04:30:00 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD74327179
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 01:29:58 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id h23so3465615ejj.12
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 01:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=klerks.biz; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=mhG56XCeGENnt8trduMFEVmk/zFp1vdmOUu+Fx8VhQ4=;
-        b=Hl8BxgdGfmJL17FRSk7s9esiQlGM4Qdi3nZe7qMR6c2IqC0tgJ2VAQUfr+7PLYW+CJ
-         2S6BKMgkdXgWqEVHWJq8Q40f7KlviqZ8kT7M9XMtfv8nqrst08UCXU8IuKWczHMQ09J2
-         YX4/KptICbEoWwZOxsHiCS5uKRuKoJbaoKyuI=
+        bh=bC73XocJkUqtrb7b+ytwOZ7emB/yz7W0aq0ULFSFrIo=;
+        b=HxAA+ApOJQ4+xtdR5j5YenbnHe+ywUP7VivwSyHaurl+rompHm6foxpc3ocdNXdHPM
+         seJ0H9gWq67M+teh6ld1ZF9a6OwTu1vIAoa6SSsgD4BYKw2PtQJuj04hR56YibhNz6o6
+         x2snqA/3oKP60hnnszx8o4Dz/tc3gpn0oATW8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=mhG56XCeGENnt8trduMFEVmk/zFp1vdmOUu+Fx8VhQ4=;
-        b=c0iqszGdaUqrXuaVRE9M1zadyq6fVS/r9RGnyF4ULPgYQYB5UtMKVW2kww8N9n7Bgk
-         6LOdrfXm6XQiIkssD1p2WH8lm6Mb3v3a+TIH4mW9q69ew1CmUivJEPBNYD1p3lekp4bR
-         hn0IwYcPuwQodbkD8p0gtiKuDKc4TFvDIWVXTXe+ixh3NPXAJTPc3mfNVhBKJ5wGNGd4
-         Axu59BU+/1iZtTloKoMk2R3EoAHaexbjMl/TbvOTQcPXxEQc4QTbR4g7xasYqC7vPwa2
-         gJJYkk3V+DC+p9Sfh6hsnrhT3h5dWGLasMFkcWvD1aFrnqJqfl6RZUKCrTh35YQuSrv/
-         DiQg==
-X-Gm-Message-State: AOAM532ck593g8dBgFViRlu8mBGU/yTuF4HKVd4F5w70J9n1ru/G9Eyj
-        SEFtuKDiSCHH4Bl+ZXz9Dn2WCVpz9EZnAAvRKoqsDyxTiC8YdA==
-X-Google-Smtp-Source: ABdhPJwXOkeeqUzm3N2ZjEiU6UfiHP929EziBxevm3DqQSYTdE85Mr/x7lH6vosDvkwWkf6ZrOMPa6e3/Fd8kwXbTf8=
-X-Received: by 2002:a05:6402:1857:b0:42d:bcd6:3a88 with SMTP id
- v23-20020a056402185700b0042dbcd63a88mr9417904edy.6.1654242394603; Fri, 03 Jun
- 2022 00:46:34 -0700 (PDT)
+        bh=bC73XocJkUqtrb7b+ytwOZ7emB/yz7W0aq0ULFSFrIo=;
+        b=7gFppu1mjqOsuzD8lp4jNwaUrKSUEyOoU96YZvwxOGN5DsMOcrWiKGtJL46ErAkNlg
+         Bj3lcrhCvWDkIE7LK04y31bkKzUcH4P2CKKUNSoAXDYCs/tC0oIDpNEoDUM/naaBuDxW
+         RKQ5YCvHRpeo04pP4YIk6+SL1HgGwhhNeAoWrKAfIzpT/JYUAzRCVsLM3KSEXLgppqIN
+         wIaxE+BZUMqD+H5FDbQ0xBLNAYZvCKdS38KiVjlEvUeYPlFp6xO2QyR6VJR55Bz5Cq5p
+         lG3qrAnKpNDTnvsDENJNh0OaB6zksLpCK6v5K6urTaNNAXlKDZugtnzPMGGbJ0Cjp0wC
+         A6dQ==
+X-Gm-Message-State: AOAM532eictJyrIa91UZgotx28ffDU2/qBnEBB4LxJGzDjSPsGjBj5dK
+        sGSCvdB5LUVKT2PDXWJlwzLCSh1K37ZrmKYattzfEAEQFjlyKEPh
+X-Google-Smtp-Source: ABdhPJzNi8z8KTbbOgQy9JhsowqiNd+c3DaoRVp1ZTB9O+1EDfuzMkYLlfyH2MUiAV36bJHYKN2norTXdlT1MlpFbdA=
+X-Received: by 2002:a17:906:eb54:b0:708:99d6:83e with SMTP id
+ mc20-20020a170906eb5400b0070899d6083emr7366994ejb.745.1654244997286; Fri, 03
+ Jun 2022 01:29:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAPMMpoj8CyhB=g0=HD2Y2w6+mkGVRsgoq6zsb5XCTt95uDELog@mail.gmail.com>
- <CABPp-BF4kD8uieZ1QWLbzejhuhaZA7rYfDR+8dGrteL_4UhkHQ@mail.gmail.com>
-In-Reply-To: <CABPp-BF4kD8uieZ1QWLbzejhuhaZA7rYfDR+8dGrteL_4UhkHQ@mail.gmail.com>
+References: <CAPMMpohvKSgcL=X=Z=Wf7zHRr_Ghex5oZ4iUTgZL7XhHSWFi8g@mail.gmail.com>
+ <xmqq5ylior3l.fsf@gitster.g>
+In-Reply-To: <xmqq5ylior3l.fsf@gitster.g>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Fri, 3 Jun 2022 09:46:23 +0200
-Message-ID: <CAPMMpoiKR1LRYO4zpJb09n3-pUzcZfpWCm_trRq=ZhTawN7aEw@mail.gmail.com>
-Subject: Re: Cherry-Pick without affecting working tree / index?
-To:     Elijah Newren <newren@gmail.com>
+Date:   Fri, 3 Jun 2022 10:29:45 +0200
+Message-ID: <CAPMMpojDoyJ+prLHKATnH2rVBVX=x0ES__6rvAZyq7GNiwutHw@mail.gmail.com>
+Subject: Re: Introduce "git stash --continue" and "git stash --abort"?
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 3, 2022 at 1:52 AM Elijah Newren <newren@gmail.com> wrote:
+On Thu, Jun 2, 2022 at 8:30 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Thu, Jun 2, 2022 at 10:08 AM Tao Klerks <tao@klerks.biz> wrote:
-> >
-<snip>
-> >
-> > It *seems* as though I could enact something functionally equivalent
-> > to a cherry-pick by first creating a (temporary) "--ours" merge commit
-> > on the target branch, pretending to have merged the parent commit of
-> > the cherry-pickable one, and then merging the cherry-pick commit
-> > itself on top of that. The resulting tree could be used as the basis
-> > for a final commit on top of the original tip of the target branch, if
-> > that merge were clean, and otherwise fail saying "there are conflicts,
-> > go do things properly in a working tree pls".
-> >
-> > I'm not sure whether this is the right way to conceive of
-> > cherry-picking, however, or whether it makes more sense to conceive of
-> > it as a single-commit rebase.
+> Tao Klerks <tao@klerks.biz> writes:
 >
-> The merge --ours stuff is going down a weird path that I don't
-> recommend, but thinking of it as a single-commit rebase is good.  In
-> fact, the default rebase backend was originally written by calling
-> cherry-pick for each commit in question.
+> > I would expect that some sort of merge- or rebase-like "--continue or
+> > --abort" facility would make this much easier to understand... but of
+> > course I have no idea how one would go about doing that. I assume the
+> > closest existing pattern would be "git cherry-pick", but I imagine I'm
+> > missing lots of subtleties.
+> > ...
+> > Is this kind of direction one that's been considered before? Are there
+> > reasons why it's a bad idea?
 >
-
-Thanks so much for your fast feedback!
-
-When you say "The merge --ours stuff is going down a weird path that I
-don't recommend", I would love to understand better what you mean.
-
-My testing so far is basic at best, and I had a typo (I meant "git
-merge -s ours" rather than "git merge --ours"), but in principle what
-I described does seem to *work* in most cases?
-
-For example, imagine I want to cherry-pick Johannes Schindelin's
-commit b44855743b1674caf3bd4f42814473771b129c48 onto current master in
-Junio's repo - I can do it the simple way:
-
-git checkout origin/master
-git cherry-pick b44855743b1674caf3bd4f42814473771b129c48
-
-Or I can do it the "the only tool I have available is merge, so I need
-to play with the merge base" way:
-
-git checkout origin/master
-TARGET_COMMIT=b44855743b1674caf3bd4f42814473771b129c48
-git merge $TARGET_COMMIT~1 -s ours -m whatever
-git merge $TARGET_COMMIT -m whateverelse
-git log --format=%B -1 $TARGET_COMMIT | \
-GIT_AUTHOR_NAME="$(git log --format=%an -1 $TARGET_COMMIT)" \
-GIT_AUTHOR_EMAIL="$(git log --format=%ae -1 $TARGET_COMMIT)" \
-GIT_AUTHOR_DATE="$(git log --format=%at -1 $TARGET_COMMIT)" \
-git commit-tree -p origin/master `git rev-parse HEAD^{tree}`
-#and do something with the resulting commit, eg branch -f
-
-One limitation here is that it doesn't work to "cherry-pick" commits
-that are already in the history of the target branch (which could be
-solved with a temporary shallow graft? :D ). Maybe more important is
-that it's a crazy-convoluted way of doing things...
-
-Is there something "theoretically" wrong with this way of thinking
-about it, or is your concern more that this is like using a stick of
-dynamite to kill a fly? (likely effective, but not recommended?)
-
-Please note, having read the thread below, I understand you have some
-hard-won experience around the use of scripting approaches for the
-implementation of actual git commands - I never stated this explicitly
-above, but I'm asking partially as an intellectual exercise, partially
-wrt something I might implement in custom tooling for specific
-workflows in a specific context. At no point am I suggesting the above
-would be the right way for an official (new?) git command to do its
-work.
-
-> > Is there a relationship between
-> > git-merge-tree and rebases?
+> I saw a few exchange on the intended use of "stash" on another
+> thread in the past days, but I think the reason why the current
+> set of defaults and behaviour are appropriate for "stash" is related
+> to it.
 >
-> The patches I submitted do not have the ability for rebases to be
-> built from git-merge-tree.  There's a debate over whether my series
-> should be tweaked to enable it.  Peruse the thread over at
-> https://lore.kernel.org/git/xmqqh78nj0q0.fsf@gitster.g/ if you want to
-> read some of the discussion, as well as see discussion of how merging
-> and cherry-picks/rebases are related.
+> The intended use of "stash" is to clear the deck as quickly as
+> possible to deal with "emergencies", and its behaviour comes from
+> the need to support that use case effectively.
+
+Makes sense, with you so far!
+
+> Untracked cruft are
+> often useful even when you do a "quick context switch" (aka "the
+> boss suddenly appears and asks you to do something different real
+> quick"), hence "-u" is not the default, for example.
+
+I don't understand this statement - I would argue the exact opposite
+is true in all the day-to-day usage of git that I have come across.
+
+When I have an untracked file in my working tree, it's normally
+because I've created a new script, a new java class, or something like
+that. It's normally part of what I'm working on - eg I added a file,
+and another might well be referencing it.
+
+If I have "untracked cruft" that doesn't logically belong in my
+working code / shouldn't be checked in / doesn't affect the
+compilability of my project, then I would typically consider this a
+bug in my workflow - either there's a pattern missing in my
+".gitignore", or I accidentally redirected some command output into a
+temp file in my working folder instead of a more sensible place. I
+understand a large segment of the *test suite* relies on git's
+"untracked files don't get in the way" behavior, but I don't think
+that's representative of real-world usage.
+
+Obviously this is a "personal" thing, but it seems to me that git
+would benefit from supporting this worldview - *allowing* stash to
+default to -u, and similarly allowing "git commit -a" to refer to
+untracked files also, which it does not today.
+
+Anyway, sorry, I'm reacting to the perspective and statement about the
+role of untracked files in git working trees here, rather than
+anything specific about stashes, I guess this is off-topic.
+
+> "stash pop"
+> was the primary way to go back to where you were before the
+> interruption, and such going back is expected to be done after the
+> crisis is over when you can be more relaxed, and was expected to be
+> done _after_ you "reset --hard" and/or "git switch" out of the
+> crisis mode.
+
+Yep, makes sense - except this perspective is at odds of course with
+the stashes being a stack, and with the idea of attempting to export
+stashes at all. I understand these are the *primary* usecases, and
+those that need to be best-served, absolutely.
+
+> And the natural way to recover from "eh, I moved back
+> to a different commit---I wanted to go to the commit I was when I
+> saved the stash" was "reset --hard" that would not lose anything new
+> (and "stash branch" was later added to make the last one easier to
+> do), for another example.
+
+This explains why stash was implemented to behave the way it does,
+sure - it made narrow assumptions about the likely context in which a
+stash would be popped; my concern with that is that it does not
+enforce those assumptions, so its actual usage in the wild might well
+differ significantly from those assumptions, and *when* it does, it
+can leave your working tree in a messed up state (a mix of staged and
+unstaged changes that had nothing to do with the stash, some staged or
+unstaged changes successfully "popped" and some stash-popped conflicts
+that you cannot easily "undo" without carefully picking apart the
+stash-popped bits from the previously present bits).
+
 >
+> Users are better off doing any large scale "I made a mess in the
+> working tree with mixed changes, and I want to take time to separate
+> them out" on separate (possibly temporary) branches, instead of
+> using "stash save" + "stash pop".
 
-Thanks very much! I guess it's a little late to chime in on that
-thread, but for what it's worth, I agree with Junio that it would be
-ideal if "merge-tree" were able to do that "gimme (arbitrary) trees
-and I'll merge'em" operation - not that I would expect any official
-git commands to invoke this recursively (I understand the concerns
-over poor design / unnecessary complexity driven by a scripting
-approach), but that would be a powerful tool for people who want to
-script their own crazy use cases - eg a less-bad version of what I
-outlined above, without the need for the "git merge -s ours" commit
-establishing the desired merge base.
+I agree with this, especially given that stash pop doesn't give you
+any opportunity to "partially pop".
 
-That said, I get lost in the discussion of what the right set of
-commands / distribution of responsibility should be; given the *name*,
-I would expect "gimme three trees and I'll give you a fourth with
-conflict data" to be an operation that fits in that existing command,
-and I would expect "do a server-side merge or a server-side rebase
-through to a new (set of) merge or rebased commit(s)" to be separate
-(new?) commands.
+In the usecase that I describe (where you "stash pop" into a working
+tree that *already* has unrelated staged or unstaged changes), the
+intention is not to use stash to help resolve a mess you made - it's
+just to "bring back" that stuff you stashed earlier. Stash pop isn't
+being used to fix anything - it is accidentally *creating* a problem
+if/when the stash pop encounters conflicts. It is this problem that I
+believe could be solved with an --abort/--continue model for stash
+conflicts.
 
-> > Is there an aspiration to develop "server
-> > side rebase" also at some stage?
->
-> Yes, already in progress and possibly usable for simple cases.
-> Haven't had some time to work on it for a while (~4 months, sigh), but
-> will definitely get some time in late June/early July to carry it on.
-> You can check out the "replay" branch of github.com/newren/git if
-> you're curious.
+> Any change that would make it
+> more cumbersome for the primary intended purpose of "quick save"
+> would be very much unwelcome, I would have to say.
 
-Thank you, will look!
+That makes complete sense, I agree!
+
+I believe introducing --abort/--continue on *conflictive*
+stash-popping would absolutely not make those intended uses any more
+cumbersome - if anything, it would make them much cleaner/smoother
+with a simpler, more consistent and safer "exit" from the conflict in
+either direction: if the conflict is resolved, "stash --continue" will
+drop the stash without risk of dropping anything else you had in the
+stash. If you reconsider, "stash --abort" gets you back to where you
+were, without having to think about how safe or dangerous the
+operation might be.
+
+It might well not be worthwhile, because stash is so hard to use at
+the moment that the standing advice I see around is "don't do it -
+you're better off learning how to manage branches and commits in a
+sufficiently agile fashion that you never worry about stash, and just
+create & drop local branches instead". If stash is rarely used, or
+only used by people who already know exactly when it works well and
+avoid using it in situations where it causes problems, then it might
+not be worth investing in. However, if stash is to graduate to a
+simple to use and reasonably safe facility, then I would expect this
+to make sense from a functional perspective.
+
+On the other hand, I understand that each --abort/--continue
+conflict-management flow probably requires/implies another
+special/dedicated "working tree state" that tools (eg git-prompt), git
+commands, third-party git libraries, and GUI clients need to know
+about, so I'm guessing the overhead on something like this is
+prohibitive? When was the last time something like this was done?
+
+Thanks,
+Tao
