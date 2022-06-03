@@ -2,108 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DB8DC433EF
-	for <git@archiver.kernel.org>; Thu,  2 Jun 2022 23:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB09C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 00:37:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239879AbiFBXwv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jun 2022 19:52:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34616 "EHLO
+        id S229970AbiFCAhn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jun 2022 20:37:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230134AbiFBXwt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jun 2022 19:52:49 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91CBD6380
-        for <git@vger.kernel.org>; Thu,  2 Jun 2022 16:52:47 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id s12so5684707ejx.3
-        for <git@vger.kernel.org>; Thu, 02 Jun 2022 16:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EoZ6MI6qSAPVklyhff/R2699QS5xYNMVCjNLT7hTEBY=;
-        b=O2I2IpXiksSpKLzQ8bHoXWokVZDUse0zuQKTsEacVoWKFUgtJmILGjndXPphQO0nCb
-         eMVYiXn4wvrp1rSZRqTCbBY1dWbkqAUshlPlaZmLQBrcKSqFUuqrt14/qsLdWQg5YBK0
-         Zopw7RkkyKDKmz7Y3WWDIhVFiwXmj+6K2eunZLZzhx+jYuNdE/w5KqjbQ8xd5GgeKjxx
-         GeXQVmvyqySyIr+KozSQFD596kb3VRP+DQ/RBSCzjoZXLIG8GCRuf2lc/uimbnGXfY2J
-         ghm1Wg3D3Io2gnRiW1cC0x+LTExVCpQxax4Icxr+yUL0YR1JMivDmk3yxNXzclfZvzq2
-         PiEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EoZ6MI6qSAPVklyhff/R2699QS5xYNMVCjNLT7hTEBY=;
-        b=gKIWRfezFuD9yRfmoQruBuJwWqHKg+KvMveczelm6//Ao5UWAsMLdDzNk39330KsOU
-         bLbapDZtuEN1MnoubMKBHMVvdkslJikvdHsvtcZduRKavSs9xwSrxqHutUMVn+9G/w1F
-         rib/jHy/zGAWyens0unbcGmCJH3zGmBlrZVb66YBaxQgMs4q3lEP3kUvlKZMcwFWyFU6
-         ZpapDQipYZqyoSNoYQQReGv4ECYWW6Bs3RYSUAysvyECNCSH2hD6cH0bnW36ynk9ik3p
-         Q1XyCHxDjGygXos4/1R1qnlQs8nJdfRkqTR/JOKJsoMDZlewhZOcxSLSqhayio3Ab+/7
-         Y7JQ==
-X-Gm-Message-State: AOAM530ULeX6Xu6kq/OL8VcKIoV5vnb4bWIlJr0OApNmkYsBuHCS8lpT
-        zF5sogqCuuUQcN/n8L5/LvOORRgfNuVGmBC2+rp+kW1Gquc=
-X-Google-Smtp-Source: ABdhPJzWX/U1NRtWn6w5Cya7BGmZW4Z++6zsNA23O3W1MFZ8mbW1qe2ymTtWE0gevKxkmB9s8gX8NvGnO/tGhpgTxFM=
-X-Received: by 2002:a17:906:7049:b0:70c:a5fe:d4f8 with SMTP id
- r9-20020a170906704900b0070ca5fed4f8mr2760612ejj.493.1654213965973; Thu, 02
- Jun 2022 16:52:45 -0700 (PDT)
+        with ESMTP id S229493AbiFCAhe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jun 2022 20:37:34 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 844661009
+        for <git@vger.kernel.org>; Thu,  2 Jun 2022 17:37:28 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BF666126C3C;
+        Thu,  2 Jun 2022 20:37:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=r7OmKlUUgOlzw+SficfMIUVCa
+        Uw+Gh6eEO8AqcPNyRk=; b=ggLihFE8bYsZzcNbs1p2aXP7OyRSB1GkrC8boRQh0
+        YAYgSyVPOGgzMvGmPyx7EmYl0hSlFAGWaESz+1nWwZYLNK+ewbkOVIm1W3lFeIPZ
+        d2vMuS5O0uXFDFCkhZnO6fUzOYZyoxDTrUl5p1tNUe/3cVbkWRih3gFS5Y+Sa5HY
+        bY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5D96126C3B;
+        Thu,  2 Jun 2022 20:37:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F1797126C37;
+        Thu,  2 Jun 2022 20:37:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Enzo Matsumiya <ematsumiya@suse.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/2] run-command API: rename "env_array" to "env"
+References: <cover-v2-0.4-00000000000-20220520T072122Z-avarab@gmail.com>
+        <cover-v3-0.2-00000000000-20220602T090745Z-avarab@gmail.com>
+        <patch-v3-1.2-80ef05d5b0a-20220602T090745Z-avarab@gmail.com>
+Date:   Thu, 02 Jun 2022 17:37:25 -0700
+Message-ID: <xmqqczfqinui.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAPMMpoj8CyhB=g0=HD2Y2w6+mkGVRsgoq6zsb5XCTt95uDELog@mail.gmail.com>
-In-Reply-To: <CAPMMpoj8CyhB=g0=HD2Y2w6+mkGVRsgoq6zsb5XCTt95uDELog@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 2 Jun 2022 16:52:34 -0700
-Message-ID: <CABPp-BF4kD8uieZ1QWLbzejhuhaZA7rYfDR+8dGrteL_4UhkHQ@mail.gmail.com>
-Subject: Re: Cherry-Pick without affecting working tree / index?
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 57C4BD16-E2D5-11EC-AA48-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 2, 2022 at 10:08 AM Tao Klerks <tao@klerks.biz> wrote:
->
-> Hi folks,
->
-> I'm wondering whether it's possible to perform a (non-conflicting)
-> cherry pick without impacting the working tree (or index).
->
-> I understand Elijah Newren has been working on git-merge-tree changes
-> that would allow for simulating (and even saving) merge commits
-> without affecting the index or working tree, and I could imagine
-> that's a piece of how such a thing could/should work, but I'm not
-> terribly clear on the relationship between merges and cherry-picks.
->
-> It *seems* as though I could enact something functionally equivalent
-> to a cherry-pick by first creating a (temporary) "--ours" merge commit
-> on the target branch, pretending to have merged the parent commit of
-> the cherry-pickable one, and then merging the cherry-pick commit
-> itself on top of that. The resulting tree could be used as the basis
-> for a final commit on top of the original tip of the target branch, if
-> that merge were clean, and otherwise fail saying "there are conflicts,
-> go do things properly in a working tree pls".
->
-> I'm not sure whether this is the right way to conceive of
-> cherry-picking, however, or whether it makes more sense to conceive of
-> it as a single-commit rebase.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-The merge --ours stuff is going down a weird path that I don't
-recommend, but thinking of it as a single-commit rebase is good.  In
-fact, the default rebase backend was originally written by calling
-cherry-pick for each commit in question.
+> The rest of this is all a result of applying [1]:
+>
+>  * make contrib/coccinelle/run_command.cocci.patch
+>  * patch -p1 <contrib/coccinelle/run_command.cocci.patch
+>  * git add -u
+>
+> 1. cat contrib/coccinelle/run_command.pending.cocci
+>    @@
+>    struct child_process E;
+>    @@
+>    - E.env_array
+>    + E.env
+>
+>    @@
+>    struct child_process *E;
+>    @@
+>    - E->env_array
+>    + E->env
 
-> Is there a relationship between
-> git-merge-tree and rebases?
+It makes sense to have this in the log message for documentation
+purposes.  We have plenty of examples of renaming a symbol to
+another, like the simple ones in object_id.cocci, so adding this to
+the collection in contrib/coccinelle would not add much value.
 
-The patches I submitted do not have the ability for rebases to be
-built from git-merge-tree.  There's a debate over whether my series
-should be tweaked to enable it.  Peruse the thread over at
-https://lore.kernel.org/git/xmqqh78nj0q0.fsf@gitster.g/ if you want to
-read some of the discussion, as well as see discussion of how merging
-and cherry-picks/rebases are related.
-
-> Is there an aspiration to develop "server
-> side rebase" also at some stage?
-
-Yes, already in progress and possibly usable for simple cases.
-Haven't had some time to work on it for a while (~4 months, sigh), but
-will definitely get some time in late June/early July to carry it on.
-You can check out the "replay" branch of github.com/newren/git if
-you're curious.
+Will replace.  Thanks.
