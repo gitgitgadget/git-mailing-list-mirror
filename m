@@ -2,67 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A130C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 14:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12C2AC433EF
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 14:40:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245115AbiFCOhJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 10:37:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58886 "EHLO
+        id S244584AbiFCOk4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 10:40:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244966AbiFCOhH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 10:37:07 -0400
+        with ESMTP id S231258AbiFCOkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 10:40:55 -0400
 Received: from mail101.atlas-elektronik.com (mail101.atlas-elektronik.com [194.156.172.85])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DA06140AD
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 07:37:04 -0700 (PDT)
-X-IPAS-Result: =?us-ascii?q?A2EKAQDHG5pi/zfHxApaHQEBAQEJARIBBQUBQAmBNQUBC?=
- =?us-ascii?q?wGDIYFYhE+RDQOCI5pXgWgLAQEBAQEBAQEBBwEBQgQBAYUCAhaFMiY3Bg4BA?=
- =?us-ascii?q?gQBAQEBAwIDAQEBAQEBAwEBAQUBAQEBAQEGAwECAoEYhS9GhkwGIxFVAgEVD?=
- =?us-ascii?q?QImAgICMBUQAgQBEgiCda8BeoExGmeEbYURgREsgWaFWYckglCEfWmDQYNwg?=
- =?us-ascii?q?mUElngdOwNONBKBIXEBCAYGBwoFMgYCDBgUBAIDEBJTHQISDAocDlQZDA8DE?=
- =?us-ascii?q?gMRAQcCCxIIFSwIAwIDCAMCAy4CAxcJBwoDHQgKHBIQFAIEBg0eCwgDGR8tC?=
- =?us-ascii?q?QIEDgNDCAsKAxEEAxMYCxYIEAQGAwkvDSgLAwUPDwEGAwYCBQUBAyADFAMFJ?=
- =?us-ascii?q?wcDIQcLJg0NBCMdAwMFJgMCAhsHAgIDAgYXBgICcQooDQgECAQcHSUQBQIHM?=
- =?us-ascii?q?QUELwIeBAUGEQkCFgIGBAUCBAQWAgISCAIIJxsHFjYZAQVdBgsJIRwpEQUGF?=
- =?us-ascii?q?gMjcQVIDyk0ATggCAEfARuaCkxcHyozk0uDH6sKB6NNLhWDdYw+hisbA5Fel?=
- =?us-ascii?q?mggpmoCBAIEBQIWgXeCAHBQgmhRGZx/dTsCBgEKAQEDCZAUAQE?=
-IronPort-Data: A9a23:x9522qDzOUUKwRVW/4Hhw5YqxClBgxIJ4kV8jS/XYbTApDh31DQBm
- zFNCmjQOa2OYGWnKt0kPdvioBsPu8WDnd5kTANkpHpgZkwRpJueD7x1DKtQ0wB+jyHnZBg6h
- ynLQoCYdKjYaFeC+k/1WlTGhSAkjv/WLlbEILeYfHg3H2eIcQ954f5Zs7dRbrVA3J7oWmthh
- fuo+5eFYAH9gGYuWo4pw/vrRC1H7ayaVAww4wRWicBj5DcyQFFMUfrzjYnoR5fJatE88tySH
- o4v/5nglo/txCrBP/v++lrNnu3mdZaJVeSGoiI+t6FPGXGurARqukowHKJ0hUu6F1xlNj2+o
- TlAncXYdOsnAkHDsMI0Sh1SFh1lAYsYpOLNf3Xuv/Wx6VKTJhMAw902ZK03FaE12swuJ0R2r
- aZeISwJZwvGiua7w66hTe9thYIoK8yD0IE34ykmlGCHS693ENaeHs0m5vcBtNs0rttSEPjXY
- YwfYDdwYTzJfxlGIRIaDJ89gP2vgHj8NTZfrTp5oIJuvzmOlFcvuFTrGNnyYfLRfstMonjGn
- 3LK4VnmDDoIbMPKnFJp9Vrp3IcjhxjTV4MOPKO3++Qsg1CJwGEXThoMWjOGTeKR0xb4AoMBb
- RVFq2xz8MDe6XCWczU0ZDXgyFbsg/LWc4M4/zESgO1V9pfp3g==
-IronPort-HdrOrdr: A9a23:zBaRjaEwisrlD91vpLqEN8eALOsnbusQ8zAXPhhKOHpom7+j5r
- mTdZMgpGLJYVcqKQsdcL+7Scu9qB/nmqKdpLNhWotKPzOWxFdATrsSiLcKqgeIc0aVm4JgPO
- VbAsxD4bbLbGSS+PyKgzVQZOxB/DDoys6VrNab4FsodAdua6txqydVYzzrbXGeDzM2fabRXK
- DsnfZ6mw==
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0678D48E59
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 07:40:53 -0700 (PDT)
+X-IPAS-Result: =?us-ascii?q?A2FrBAAfHZpi/zfHxApaHAEBAQEBAQcBARIBAQQEAQFAC?=
+ =?us-ascii?q?YFGAoMggViET5EQgiOcPwsBAQEBAQEBAQEHAQFCBAEBhQICFoUyJjkFDQECB?=
+ =?us-ascii?q?AEBAQEDAgMBAQEBAQEDAQEBBQEBAQEBAQYDAQICgRiFL0aGTAYjEVUCARUNA?=
+ =?us-ascii?q?iYCAgIwFRACBAESCLJzgTEaZ4RthRGBESwBgWWFWYckglCBFYNohCyDboJlB?=
+ =?us-ascii?q?JZ7HTsDTjQSgSFxAQgGBgcKBTIGAgwYFAQCAxASUx0CEgwKHA5UGQwPAxIDE?=
+ =?us-ascii?q?QEHAgsSCBUsCAMCAwgDAgMuAgMXCQcKAx0IChwSEBQCBBMeCwgDGR8tCQIED?=
+ =?us-ascii?q?gNDCAsKAxEEAxMYCxYIEAQGAwkvDSgLAwUPDwEGAwYCBQUBAyADFAMFJwcDI?=
+ =?us-ascii?q?QcLJg0NBCMdAwMFJgMCAhsHAgIDAgYXBgICcQooDQgECAQcHSUQBQIHMQUEL?=
+ =?us-ascii?q?wIeBAUGEQkCFgIGBAUCBAQWAgISCAIIJxsHFjYZAQVdBgsJIRwpEQUGFgMjc?=
+ =?us-ascii?q?QVIDyk0ATgkCAEfARuZPFGBKASXYqsKB6NNLhWDdYw+hisbA5FelmggpmoCB?=
+ =?us-ascii?q?AIEBQIWgXmBfnBQgmhRGZx/dTsCBgEKAQEDCZAUAQE?=
+IronPort-Data: A9a23:j3Dg8arjY+exCihEn5RsgJavDqVeBmKwZxIvgKrLsJaIsI4StFCzt
+ garIBmCOfaDZzT9cookaYi0pxgB6p+GyINrHVZtrSk0Qi9B9JacVYWSI27OZC7DdceroGCLT
+ yk9hngsCOhuExcwcz/0auCJQV9Ui/3QHtIQL8adYnsvG2eIcA941VQ73bRRbrdA2bBVOSvU0
+ T/Ji5CZaQbNNwJcaDpOsfrd8Eg35pwehRtB1rAATaET1LPhvyRNZH4vDfnZw6zQG9Q88kaSH
+ o4v/Znhlo/r105F5uCNy94XRnY3rov6ZmBivJb2t5+K2XCurgRqukoy2WF1hU1/011llPgpo
+ DlBWADZpa7E8cQglcxEOyS0HR2SMoVa5Yf6I1ORvPe+7G+WTSavmfk2MWsfaNhwFuZfWQmi9
+ NQ0BRAnNzamv7rshrunTuB3w8knIcr3JoQZu3ImxjbcZRokacmbBfybu5kBjWZ2250m8fX2P
+ qL1bRJ0cBnOahsJPF4aF58Wlfusj2K6fjlVq06Poqw24C7YywkZPL3FaYaEJ4TWGK25mG7Ao
+ E7I8TmiGCgWatqwk2Cs73mMj+3QyHaTtIU6UefQGuRRqFKS2kQNBxAME1i2u/+0jgi5Qd03F
+ qAP0nN26/FjqgryH4i7AkDQTGO4gyPwkuF4S4USgDxhAIKNi+pFLgDolgJ8VeE=
+IronPort-HdrOrdr: A9a23:lM9rTaD1udshqKblHelz55DYdb4zR+YMi2TDj3oBLyC9Afbo7v
+ xG+85rqCMc6QxhIk3I9urwWpVoLUmyyXcx2/h3AV7AZnibhILLFvAG0WKK+VSJcEeSmtK1l5
+ 0QF5SWY+eQMbEOt7eY3ODOKbYdKbe8npyAtKPw4zNVSwRrYbElzyoRMHflLqQ8fng/OXNwLu
+ vm2vZ6
 Received: from unknown (HELO DEHB1NMP02.atlas-elektronik.com) ([10.196.199.55])
-  by MGW101FE.atlas.de with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 03 Jun 2022 16:37:02 +0200
-Received: from mgw201partner.atlas.de ([10.206.101.60])
-        by DEHB1NMP02.atlas-elektronik.com  with ESMTP id 253Eb29O006561-253Eb29Q006561
+  by MGW101FE.atlas.de with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 03 Jun 2022 16:40:23 +0200
+Received: from mgw202partner.atlas.de ([10.206.101.61])
+        by DEHB1NMP02.atlas-elektronik.com  with ESMTP id 253EeNwo006590-253EeNwq006590
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=CAFAIL)
-        for <git@vger.kernel.org>; Fri, 3 Jun 2022 16:37:02 +0200
-Received: from dehb1pex06.atlas.de ([10.248.64.143])
-  by mgw201data.atlas.de with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 03 Jun 2022 16:37:02 +0200
-Received: from DEHB1PEX04.atlas.de (10.248.64.139) by DEHB1PEX06.atlas.de
- (10.248.64.143) with Microsoft SMTP Server (version=TLS1_2,
+        for <git@vger.kernel.org>; Fri, 3 Jun 2022 16:40:23 +0200
+Received: from dehb1pex03.atlas.de ([10.248.64.138])
+  by mgw202data.atlas.de with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 03 Jun 2022 16:40:22 +0200
+Received: from DEHB1PEX04.atlas.de (10.248.64.139) by DEHB1PEX03.atlas.de
+ (10.248.64.138) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Fri, 3 Jun 2022
- 16:36:59 +0200
+ 16:40:22 +0200
 Received: from DEHB1PEX04.atlas.de ([fe80::e9bf:575b:6bb5:cc2f]) by
  DEHB1PEX04.atlas.de ([fe80::e9bf:575b:6bb5:cc2f%5]) with mapi id
- 15.02.0986.015; Fri, 3 Jun 2022 16:36:59 +0200
+ 15.02.0986.015; Fri, 3 Jun 2022 16:40:22 +0200
 From:   <stefan.naewe@atlas-elektronik.com>
 To:     <git-ian@mnementh.co.uk>, <git@vger.kernel.org>
-Subject: AW: BUG report: git-gui does not show commit message templates
-Thread-Topic: BUG report: git-gui does not show commit message templates
-Thread-Index: AQHYd1Sv1X+g8yIpvkmeOLl5kkhdGq09v5Dg
-Date:   Fri, 3 Jun 2022 14:36:59 +0000
-Message-ID: <dfec506780af46639ed67be364cd43cb@atlas-elektronik.com>
-References: <870137b1-9134-5791-d9fa-4826687e0781@mnementh.co.uk>
-In-Reply-To: <870137b1-9134-5791-d9fa-4826687e0781@mnementh.co.uk>
+Subject: AW: git log on bare repository fails if the default branch is not
+ called master
+Thread-Topic: git log on bare repository fails if the default branch is not
+ called master
+Thread-Index: AQHYd1VVYXxgmACa8kCLA95QcgD4tK09wNjg
+Date:   Fri, 3 Jun 2022 14:40:22 +0000
+Message-ID: <48bcd99afbca4c73b938c3ed4e104c64@atlas-elektronik.com>
+References: <a1830e79-9503-3fd9-8c50-a2856206e219@mnementh.co.uk>
+In-Reply-To: <a1830e79-9503-3fd9-8c50-a2856206e219@mnementh.co.uk>
 Accept-Language: de-DE, en-US
 Content-Language: de-DE
 X-MS-Has-Attach: 
@@ -77,19 +79,17 @@ X-Mailing-List: git@vger.kernel.org
 
 DQoNCj4gLS0tLS1VcnNwcsO8bmdsaWNoZSBOYWNocmljaHQtLS0tLQ0KPiBWb246IElhbiBNb2x0
 b24gPGdpdC1pYW5AbW5lbWVudGguY28udWs+DQo+IEdlc2VuZGV0OiBGcmVpdGFnLCAzLiBKdW5p
-IDIwMjIgMTU6NTgNCj4gQW46IGdpdEB2Z2VyLmtlcm5lbC5vcmcNCj4gQ2M6IElhbiBNb2x0b24g
-PGdpdC1pYW5AbW5lbWVudGguY28udWs+DQo+IEJldHJlZmY6IEJVRyByZXBvcnQ6IGdpdC1ndWkg
-ZG9lcyBub3Qgc2hvdyBjb21taXQgbWVzc2FnZSB0ZW1wbGF0ZXMNCj4gDQo+IEhpLA0KPiANCj4g
-UGxlYXNlIENDOiBtZSBpbiByZXBsaWVzLCBJJ20gbm90IGEgbGlzdCBtZW1iZXIuDQo+IA0KPiBJ
-J3ZlIGp1c3QgZm91bmQgdGhhdCBnaXQtZ3VpIGRvZXMgbm90IHNob3cgY29tbWl0IHRlbXBsYXRl
-cy4NCj4gDQo+IEkndmUgY2hlY2tlZCBhbmQgZm91bmQgdGhpcyBjb21taXQ6DQo+IDYyN2M4N2Y4
-NGMxNTc4ODVkNTg3MTI1Y2YwYzczNTkxYTBlM2VlN2ENCj4gDQo+IHdoaWNoIHN1Z2dlc3RzIHRv
-IG1lIHRoYXQgdGhlIGlzc3VlIHNob3VsZCBoYXZlIGJlZW4gZml4ZWQsIGJ1dCBpdCBjbGVhcmx5
-IGhhcyBub3QuDQo+IA0KPiBJJ3ZlIHJlbW92ZWQgZ2l0LWd1aSBmcm9tIHRoZSBzeXN0ZW0gKFVi
-dW50dSBwYWNrYWdlKSwgYW5kIGNvbXBpbGVkIHRoZSBsYXRlc3QNCj4gbWFpbmxpbmUgZ2l0LWd1
-aSAoYXMgb2YgdG9kYXkpLCBhbmQgdGhlIHByb2JsZW0gcmVtYWlucy4NCg0KSXQgc2VlbXMgdGhh
-dCBnaXQgZ3VpIHdhbnRzIHRvIGxvYWQgdGhlIHRlbXBsYXRlIGZpbGUgZnJvbSAob3IgcmVsYXRp
-dmUgdG8pIHRoZSAuZ2l0IGRpcmVjdG9yeS4NCg0KDQo+IChJbiBmYWN0LCB3b3JzZSwgaXRzIG5v
-dyBhdXRvLWZpbGxpbmcgaW4gbXkgc2lnbmVkLW9mZi1ieTogbGluZSByYXRoZXIgdGhhbiBsZWF2
-aW5nIHRoZQ0KPiBjb21taXQgbWVzc2FnZSBibGFuayAob3IgcHJlZmVyYWJseSwgc2hvd2luZyB0
-aGUgdGVtcGxhdGUpLg0KDQpTdGVmYW4NCg==
+IDIwMjIgMTY6MjINCj4gQW46IGdpdEB2Z2VyLmtlcm5lbC5vcmcNCj4gQ2M6IElhbiBNb2x0b24g
+PGdpdC1pYW5AbW5lbWVudGguY28udWs+DQo+IEJldHJlZmY6IEJVRzogZ2l0IGxvZyBvbiBiYXJl
+IHJlcG9zaXRvcnkgZmFpbHMgaWYgdGhlIGRlZmF1bHQgYnJhbmNoIGlzIG5vdCBjYWxsZWQNCj4g
+bWFzdGVyDQo+IA0KPiBIaSwNCj4gDQo+IFBsZWFzZSBDQyBtZSBpbiByZXBsaWVzLCBJJ20gbm90
+IG9uIHRoZSBsaXN0Lg0KPiANCj4gSSd2ZSBub3RpY2VkIHRoYXQgZ2l0IGxvZyBhc3N1bWVzIHRo
+ZSBkZWZhdWx0IGJyYW5jaCBpcyBtYXN0ZXIsIGV2ZW4gaWYgaXQgZG9lc24ndA0KPiBleGlzdC4u
+Lg0KPiANCj4gTXkgbGF0ZXN0IHJlcG8gaGFzIGl0IHNldCB0byAibWFpbmxpbmUiIGFuZCBhbGwg
+d2FzIHdlbGwgdW50aWwgSSBwdXNoZWQgaXQgdG8gYSBiYXJlDQo+IHJlcG8gb24gbXkgc2VydmVy
+Lg0KPiANCj4gRXhwZWN0YXRpb246DQo+IA0KPiBJZiBJIHJ1bg0KPiANCj4gZ2l0IGxvZw0KPiAN
+Cj4gaW4gdGhlIGJhcmUgcmVwbywgaXQgc2hvdWxkIGxvZyB0aGUgZGVmYXVsdCAob3Igb25seSEp
+IGJyYW5jaC4NCj4gDQo+IFJlYWxpdHk6DQo+IA0KPiBnaXQgbG9nDQo+ICMgZmF0YWw6IHlvdXIg
+Y3VycmVudCBicmFuY2ggJ21hc3RlcicgZG9lcyBub3QgaGF2ZSBhbnkgY29tbWl0cyB5ZXQNCg0K
+SSBiZXQgdGhlIEhFQUQgZmlsZSBpbiB5b3VyIGJhcmUgcmVwb3NpdG9yeSBwb2ludHMgdG8gcmVm
+cy9oZWFkcy9tYXN0ZXIuLi4NCg0KDQpTdGVmYW4NCg==
