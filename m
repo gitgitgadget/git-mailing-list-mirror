@@ -2,171 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ED04C43334
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 13:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0359EC43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 13:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244534AbiFCNOX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 09:14:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60906 "EHLO
+        id S244587AbiFCNVj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 09:21:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241257AbiFCNOW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 09:14:22 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B2222DA89
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 06:14:20 -0700 (PDT)
-Received: from host-89-242-71-63.as13285.net ([89.242.71.63] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1nx785-00065M-7q;
-        Fri, 03 Jun 2022 14:14:18 +0100
-Message-ID: <525ed195-2a6f-1c43-3139-06134d3bb7e7@iee.email>
-Date:   Fri, 3 Jun 2022 14:14:17 +0100
+        with ESMTP id S244582AbiFCNVi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 09:21:38 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A252DD67
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 06:21:36 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 67-20020a1c1946000000b00397382b44f4so4337672wmz.2
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 06:21:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=PE2cKpiKQrOuqngcGeDYfemHA3SsO28/rBS4WqlDB7M=;
+        b=qSyA34pp0nXHZ83wM3y+GvEQdAFlm54WCqtN++W947icfsUk85DVGYmbM/0z9JgKpo
+         IBsLqNLEu5tmlUC5D8+xMz7DpgxaDRMdTOTkQBxoqiCWiM3HCoKbTCAs+fiRVhE/sj7n
+         EHRERoKHFnTeV0w/SKmdTXJukfXzaNtgjvYx1gyl9WJBd4iJRCyJj81XAWHBuUx4HJje
+         23KEIMCKNQUxwdnn5lLq/rUXJg1lK44BEdtn/IxzODGepatZ0UlK+c2VBmHUzN7VKfPU
+         bLOms4JUhaBjXaKzhcaNoBlgNB4gKHycnEE1FkAXS4lsvvPYhUFo5XPEeEefZ+ZzigoL
+         dxAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=PE2cKpiKQrOuqngcGeDYfemHA3SsO28/rBS4WqlDB7M=;
+        b=5S8vMiYeyjahiJ1VB1GwhjiPCsNEQOLiunq1LryQs3wJPGY42YkkWFqy8hlloxHCVn
+         qwVvKTH0L4pZYff8tZPmXQQKMFO98rJeDzca3BBoHkEgtR9zebsKJLzuz65hFO9KrJlG
+         up1wYl1iB1L/kIK70EQJ7AyTBs9oqEd7UKzBqjCjTm95ePgH3I7SNRIN+V2cvHxTSrut
+         dps4iuP//HyCSW/XPUBql4KmfNKKSsLCMR7QPOEQ72zWRnpDaoWbquvhdoyrP1ispiUO
+         Xe2edceRJFihwukp+hU2nvDqDFGqHOKDf3ukYUTb1X326SNsTBsnRHTRPt/fOmRM7HRR
+         036g==
+X-Gm-Message-State: AOAM533zhb8Ks7Zd/TAFpi6vYHF3ROkoaheZBRgdnu+eWJzbyoSUV61Y
+        RP5bV/KFJQs9OlToMtRSEoJtdWgyXm8=
+X-Google-Smtp-Source: ABdhPJy8wU7M3HUVti9rXrK7WE9WAda3qzaYdUg1XXV0auU604fu9u90ocCPiZkP9i31x2Ex8dDxgg==
+X-Received: by 2002:a05:600c:2312:b0:397:7647:2ac4 with SMTP id 18-20020a05600c231200b0039776472ac4mr8661428wmo.125.1654262494897;
+        Fri, 03 Jun 2022 06:21:34 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id l65-20020a1c2544000000b00397393419e3sm11754454wml.28.2022.06.03.06.21.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jun 2022 06:21:34 -0700 (PDT)
+Message-ID: <993aff66-01b7-4aa3-78ae-0027c9c04ea8@gmail.com>
+Date:   Fri, 3 Jun 2022 14:21:31 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: Files with \r\n\n line endings can result in needing to
- renormalize twice, after deleting checked out file and restoring from repo
-Content-Language: en-GB
-To:     "Philip, Bevan" <Bevan.Philip@softwareag.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <AM0PR02MB56357CC96B702244F3271014E8DC9@AM0PR02MB5635.eurprd02.prod.outlook.com>
- <44fe5991-3027-5ca7-bd3b-fd005d337caa@iee.email>
- <AM0PR02MB5635C34CA2415C4FB2164B91E8DF9@AM0PR02MB5635.eurprd02.prod.outlook.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <AM0PR02MB5635C34CA2415C4FB2164B91E8DF9@AM0PR02MB5635.eurprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/2] hook API: connect hooks to the TTY again, fixes a
+ v2.36.0 regression
+Content-Language: en-GB-large
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Anthony Sottile <asottile@umich.edu>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover-v4-0.2-00000000000-20220531T173005Z-avarab@gmail.com>
+ <cover-v5-0.2-00000000000-20220602T131858Z-avarab@gmail.com>
+ <6e98dfe9-5df2-caab-ed3a-81f07b0bb6bc@gmail.com>
+ <220603.86o7zaxfhf.gmgdl@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <220603.86o7zaxfhf.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/06/2022 11:07, Philip, Bevan wrote:
-> Hey Philip,
->
-> Thanks for the response!
->
->> ... however, if I remember the design discussion correctly, normalisation was decided to be just the conversion of the Windows style EOL = `\r\n` to the Linux/*nix style EOL =`\n`, and any other characters
->> (utf8 / ascii bytes) were to be unchanged, including random '\r'
->> characters. So in that respect I think it is working as initially designed.
-> This makes sense.
->
->> Do you have any information on how the mixed EOL styles (extra \r etc) came about?
-> I wish I knew how this file came about, but the people that put these files in our VCS have long left. I suspect some broken generation tool.
+Hi Ævar
 
-I vaguely remember tales that early Macs use \r as their EOL character,
-so may have been that.
->
->> Should those extra \r characters also be separate EOLs? (and how to
->> decide..?)
-> Most tooling I use seems to do this, but I agree that this is an ambiguous topic.
-maybe an extra `sed` invocation changing all the \r to \n in such cases!
->
->> Are the docs missing anything that would have helped clarify the issue earlier?
-> A brief note on the limitations of renormalization might have proven helpful
-I'll maybe add that to my list of todo's (though it's a bit long and
-aspirational;-)
+On 03/06/2022 10:20, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Jun 03 2022, Phillip Wood wrote:
+> 
+>> Hi Ævar
+>>
+>> On 02/06/2022 15:07, Ævar Arnfjörð Bjarmason wrote:
+>>> This series fixes a v2.36.0 regression[1]. See [2] for the v4. The
+>>> reasons for why a regression needs this relatively large change to
+>>> move forward is discussed in past rounds, e.g. around [3]. CI at
+>>> https://github.com/avar/git/actions/runs/2428475773
+>>> Changes since v4, mainly to address comments by Johannes (thanks for
+>>> the review!):
+>>>    * First, some things like renaming "ungroup" to something else &
+>>>      rewriting the tests I didn't do because I thought keeping the
+>>>      inter/range-diff down in size outweighed re-arranging or changing
+>>>      the code at this late stage.
+>>>      In the case of the suggested shorter test in
+>>>      https://lore.kernel.org/git/nycvar.QRO.7.76.6.2206011827300.349@tvgsbejvaqbjf.bet/
+>>>      the replacement wasn't testing the same thing. I.e. we don't see
+>>>      what's connected to a TTY if we redirect one of stdout or stderr
+>>>      anymore, which is important to get right.
+>>
+>> I'm a bit confused by this, the proposed test uses this hook script
+>>
+>> 	write_script .git/hooks/pre-commit <<-EOF
+>> 	test -t 1 && echo "stdout is a TTY" >out
+>> 	test -t 2 && echo "stderr is a TTY" >>out
+>> 	EOF
+>>
+>> if either of stderr or stdout is redirected then the corresponding
+>> "test -t" should fail and so we will detect that it is not a tty.
+> 
+> Yes, exactly, but the proposed test doesn't test that, in that case both
+> of them are connected, the test in 2/2 does test that case.
 
->  - in particular, the bit that tripped me up was the requirement to remove and restore the files from the Git repository itself.
-I think it's just a checkout and then an `add` of the renormalised files
-`git add --renormalize . ` (not forgetting the all important `dot`),
-though some may have termed the checkout as the files being 'removed'.
+I think I must be missing something. As I understand it we want to check 
+that the hook can see a tty on stdout and stderr. In the test above 
+we'll get a line printed for each fd that is a tty. Your test always 
+redirects one of stdout and stderr - why is it important to test that? - 
+it feels like it is testing the shell's redirection code rather than git.
 
-I did notice (when cross checking a few points) that there is also a
-`merge.renormalize` config option that will then make sure that when
-branches are merged you get the required re-normalisation (check the man
-pages ..).
+I was concerned that we had also regressed the handling of stdin but 
+looking at (the now deleted) run_hook_ve() it used to set .no_stdin = 1 
+so that is unchanged in the new code.
 
->  It wasn't obvious to me that this would have any impact on renormalization. Additionally, a note about the restriction on converting only \r\n to \n might also have proven useful.
+Best Wishes
 
-OK.
+Phillip
 
-PS, in-line replies preferred on the list.
->
-> Thanks,
-> Bevan
->
->
-> -----Original Message-----
-> From: Philip Oakley <philipoakley@iee.email>
-> Sent: 31 May 2022 22:12
-> To: Philip, Bevan <Bevan.Philip@softwareag.com>; git@vger.kernel.org
-> Subject: Re: Files with \r\n\n line endings can result in needing to renormalize twice, after deleting checked out file and restoring from repo
->
-> On 31/05/2022 15:24, Philip, Bevan wrote:
->> Hello all,
->>
->> I've experienced an odd bug/limitation with `git add --renormalize`, requiring me to run the command twice on a specific file. Here is a bug report.
->>
->> What did you do before the bug happened? (Steps to reproduce your
->> issue)
->>
->> #!/bin/bash -x
->> printf "Test\\r\\r\\nTest Another Line\\r\\r\\nFinal
->> Line\\r\\r\\n\\r\\r\\n" > git.bdf printf "* text=auto\\n*.bdf text" >
->> .gitattributes mkdir test1 cd test1 git init cp ../git.bdf .
->> git add .
->> git status
->> git commit -m "Add file git.bdf"
->> cp ../.gitattributes .
->> git add .gitattributes
->> git add --renormalize .
->> git status
->> git commit -m "Renormalize git.bdf"
->> git add --renormalize .
->> git status
->> rm git.bdf
->> git restore .
->> git add --renormalize .
->> git status
->>
->> What did you expect to happen? (Expected behavior) Only needing to
->> renormalize the file once.
-> That sounds like an obvious expectation, ...
->> What happened instead? (Actual behavior) Renormalize the file once,
->> then renormalize again after deleting the file that is checked out on disk and restoring it from the object stored within the Git repo.
->>
->> What's different between what you expected and what actually happened?
->> Needed to run the renormalize step again, after deleting the file checked out on disk and restoring the file from the object stored within the Git repo.
->>
->> Anything else you want to add:
->> This only occurs for files with \r\r\n line endings (and possibly also
->> ending the file with \r\r\n\r\n)
-> ... however, if I remember the design discussion correctly, normalisation was decided to be just the conversion of the Windows style EOL = `\r\n` to the Linux/*nix style EOL =`\n`, and any other characters
-> (utf8 / ascii bytes) were to be unchanged, including random '\r'
-> characters. So in that respect I think it is working as initially designed.
->
->> The file is in three states:
->> - Initial state: \r\r\n line endings within Git object
->> - Initial renormalization state: \r\n line endings within Git object
->> - Second renormalization state: \n line endings within Git object
->>
->> Happens on both Windows and Linux (replicated on a fresh install of Git for Windows within Windows Sandbox). Additionally, tested with `next` trunk on Linux.
->> System info is for a Windows build where it does happen.
->>
->> Directory, and file names should be irrelevant.
->>
->> We encountered this naturally, with some files within a SVN repo we're migrating.
-> Do you have any information on how the mixed EOL styles (extra \r etc) came about?
-> Should those extra \r characters also be separate EOLs? (and how to
-> decide..?)
-> Are the docs missing anything that would have helped clarify the issue earlier?
->> [System Info]
->> git version:
->> git version 2.36.1.windows.1
->> cpu: x86_64
->> built from commit: e2ff68a2d1426758c78d023f863bfa1e03cbc768
->> sizeof-long: 4
->> sizeof-size_t: 8
->> shell-path: /bin/sh
->> feature: fsmonitor--daemon
->> uname: Windows 10.0 19043
->> compiler info: gnuc: 11.3
->> libc info: no libc information available $SHELL (typically,
->> interactive shell): <unset>
->>
->>
-> --
-> Philip
-> This communication contains information which is confidential and may also be privileged. It is for the exclusive use of the intended recipient(s). If you are not the intended recipient(s), please note that any distribution, copying, or use of this communication or the information in it, is strictly prohibited. If you have received this communication in error please notify us by e-mail and then delete the e-mail and any copies of it.
-> Software AG (UK) Limited Registered in England & Wales 1310740 - http://www.softwareag.com/uk
-
+> Can that snippet bebe made to work? Sure, but I know the test I have
+> works, and that proposed replacement didn't even pass chainlint
+> (i.e. hasn't been run even once in our test suite). So I didn't think
+> that trying to micro-optimize the test length was worth it in this case.
+> 
+> It's also getting much of that length reduction e.g. by not cleaning up
+> after itself, which the test in 2/2 does.
+> 
