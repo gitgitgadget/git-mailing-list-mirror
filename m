@@ -2,137 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD939C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 13:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FC06C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 13:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244628AbiFCNaL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 09:30:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41580 "EHLO
+        id S244666AbiFCNh6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 09:37:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244645AbiFCN36 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 09:29:58 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A35325EB2
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 06:29:58 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id f7so6536516ilr.5
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 06:29:58 -0700 (PDT)
+        with ESMTP id S229958AbiFCNh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 09:37:57 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BF5811820
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 06:37:56 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id r129so4106552wmr.3
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 06:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=sMTXo63PyMLC+vi2y1q2lhIgap5bKHoIdJvEKZ/H7sA=;
-        b=VPLQ3FK25edigHoQGXCuonlG19g2UNSdCEKMZR8n5qcSBMLEOP2MmtVRu+sWRbk01b
-         5/N/9rUv2jJEBQjF63qpeZBn/G+khm8qhJAuMLTg4fUoYywrHcR/rwdbCYC0eK4uUVil
-         yL8K1eE+0w5cfiVevjnFQMVgflIuGk6VbVJ+Q3mhDJf1pjawDcnjP5ki79iWykQ05MET
-         K17r1wbfKVqIKv8GUJ0OLAddbfOjt6OC4cB1c0OzcQr0NzByYmGDJPKWM7SN5RkhhVVh
-         YMZV7ZH4G8jKy94SZH6rNJ5Ee+h5kSJUan/jqur9NgonHvz4Zucktuy3fq4OiE21i+u7
-         DPrQ==
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=oyORqSxHe4hhfKmm3m7xn02p7TCI9TNWlAQ0Vfz4W/o=;
+        b=HrPm7R0XNe8/1AWjiKausEFvHvb+PAvxHy8xoT4EeXlFCFGNw4sanebQfNyarTj2hZ
+         51oZLkw/+KeMrnkLgTjQL4HC7FM7PnVd66CyC8Q4mr7NPQuQZQrk4M9wKLPJNIM5ynFG
+         Je3R3wpvAsn5cUgh5IEVZOcVX11h9CWmu/aSralHy4ihY2uIJMUbViffDI3xgnLjSiMi
+         1RMycQKQAbtwiCEm9oZFYgUz8PutKUJLxS4uSE14drNHc6i9ofQJisg+QfIlbJMyds2q
+         FKqIUSbmhFJLfiUj+lAMayWQNZwkBfihJDdCdTZX3hvBAK+dBxVEWhBBZduF4q5lBSQr
+         U2Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=sMTXo63PyMLC+vi2y1q2lhIgap5bKHoIdJvEKZ/H7sA=;
-        b=SVo+M6nkJXBpm663d4OLsMllSvo7ncy4LbHVod+krpKx/7uHV92CqcaNLdW3fRimTA
-         KD8ZoRdRuoewOy1jsS6xz52bI2sJqP/s6mXJhS4WY6dDlNr0V/ag9kXNU3TOzv15DKk8
-         PdlqP+EaJ6OFMWbHfR93eeyQ3cjuHE4sRHjLISOByvN6slPiclgjqY3ovU7a/e7ZMwoo
-         9jbu+aFs9cmlisuvGlP8cAE479tNmXkKH+rZAdbDk9ru/2tcLcz5rlKvj99BwTtTF9xn
-         JOts9Vp7K07q8sVS5uSs6pse7kiqVKtYT1YkqIBW8jBXTMfBrxy6R2NxshPZ+Ype9YiP
-         E2/A==
-X-Gm-Message-State: AOAM530gS+pBEPxyK0JQOS2tKNaQs5CAgZ9zLNLyP2fS8FS+hRlUhHsV
-        2DChWg6EC3pU6MFqFSECDoUB
-X-Google-Smtp-Source: ABdhPJzz9udK6MJdydJHL3Gzxse72CpucoIlYTl28OYtO8yo24mpRVmLEXH6TE7Y2Xz8YqMh0hygiw==
-X-Received: by 2002:a05:6e02:d4b:b0:2d3:b2a6:e94b with SMTP id h11-20020a056e020d4b00b002d3b2a6e94bmr5721107ilj.135.1654262997502;
-        Fri, 03 Jun 2022 06:29:57 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:e12d:e22a:252a:6357? ([2600:1700:e72:80a0:e12d:e22a:252a:6357])
-        by smtp.gmail.com with ESMTPSA id j14-20020a92200e000000b002d191911e59sm2770331ile.52.2022.06.03.06.29.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jun 2022 06:29:57 -0700 (PDT)
-Message-ID: <394c054e-e1d2-41a5-a655-2ad3cb7219e0@github.com>
-Date:   Fri, 3 Jun 2022 09:29:55 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v2] commit,shallow: unparse commits if grafts changed
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
-        bagasdotme@gmail.com
-References: <20220323210803.1130790-1-jonathantanmy@google.com>
- <20220602231145.310564-1-jonathantanmy@google.com>
- <220603.86k09yxf4z.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220603.86k09yxf4z.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=oyORqSxHe4hhfKmm3m7xn02p7TCI9TNWlAQ0Vfz4W/o=;
+        b=znjzEt4kKOIamx4UXaq2oWah6881jEdTSGUm1xCHZ0VZNA6AZpPDFz9L993okTHx3M
+         03aGGusYR9IHk6rMGwrP+cvz4FHGZ04bSBMECIa9Bi7/MoYnkIJaj2/2z+s//cte+SHr
+         cekMIvH8Ck/RQAJbMFjoR9THGpulvS4wDASAUA3Fm0FCbmaHfaCUurSekb3KD+bxH08M
+         sVnVfLfVVm6L152s94JFEQT7XJjk9EdFm0c/YPfl4xROyrkZnMkTcEeXk5l0xuxXiMCM
+         TSKM5ZJefA0tbLvhez/pcR3H8sx1XvqXOuvKJQJ4z2klwq8eXOyEzCi0xueCacxPmhJz
+         L/Bw==
+X-Gm-Message-State: AOAM532alTDx35FcWIz8KjqJIvoW63M3PLVm/5odccwPVFVHJWG1ht9F
+        FqIB9GHvW6BdNVZ0e8vlLEP5GOUOC8XhCod6
+X-Google-Smtp-Source: ABdhPJwwK3CxIIIhIStJzC73uSg/ajyZSCBDiRxqsU9BfBW7rngllogmIYUhhfPWPIJ9a2yptAiVbg==
+X-Received: by 2002:a7b:cd17:0:b0:397:82ce:b2d8 with SMTP id f23-20020a7bcd17000000b0039782ceb2d8mr8947991wmj.20.1654263474145;
+        Fri, 03 Jun 2022 06:37:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e29-20020a5d595d000000b00213b93cff5fsm2846591wri.98.2022.06.03.06.37.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jun 2022 06:37:53 -0700 (PDT)
+Message-Id: <pull.1247.git.1654263472.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 03 Jun 2022 13:37:48 +0000
+Subject: [PATCH 0/4] rebase: update branches in multi-part topic
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/3/2022 5:30 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Jun 02 2022, Jonathan Tan wrote:
-> 
->> diff --git a/commit.c b/commit.c
->> index 59b6c3e455..1537ea73d0 100644
->> --- a/commit.c
->> +++ b/commit.c
->> @@ -120,6 +120,17 @@ int commit_graft_pos(struct repository *r, const struct object_id *oid)
->>  		       commit_graft_oid_access);
->>  }
->>  
->> +static void unparse_commit(struct repository *r, const struct object_id *oid)
->> +{
->> +	struct commit *c = lookup_commit(r, oid);
->> +
->> +	if (!c->object.parsed)
->> +		return;
->> +	free_commit_list(c->parents);
->> +	c->parents = NULL;
->> +	c->object.parsed = 0;
->> +}
+This is a feature I've wanted for quite a while. When working on the sparse
+index topic, I created a long RFC that actually broke into three topics for
+full review upstream. These topics were sequential, so any feedback on an
+earlier one required updates to the later ones. I would work on the full
+feature and use interactive rebase to update the full list of commits.
+However, I would need to update the branches pointing to those sub-topics.
 
-This looks good. I took a quick inventory of 'struct commit' and
-agree that this is all we need. There is no need to clear the date
-or maybe_tree members. The commit_graph_data slab might have some
-information if there were no grafts before (but are now), but the
-existence of grafts should clear the commit-graph already and stop
-that slab from being used.
+This series adds a new --update-refs option to 'git rebase' (along with a
+rebase.updateRefs config option) that adds 'git update-ref' commands into
+the TODO list. This is powered by the commit decoration machinery.
 
->>  int register_commit_graft(struct repository *r, struct commit_graft *graft,
->>  			  int ignore_dups)
->>  {
->> @@ -145,6 +156,7 @@ int register_commit_graft(struct repository *r, struct commit_graft *graft,
->>  			(r->parsed_objects->grafts_nr - pos - 1) *
->>  			sizeof(*r->parsed_objects->grafts));
->>  	r->parsed_objects->grafts[pos] = graft;
->> +	unparse_commit(r, &graft->oid);
->>  	return 0;
->>  }
->>  
->> @@ -253,8 +265,10 @@ void reset_commit_grafts(struct repository *r)
->>  {
->>  	int i;
->>  
->> -	for (i = 0; i < r->parsed_objects->grafts_nr; i++)
->> +	for (i = 0; i < r->parsed_objects->grafts_nr; i++) {
->> +		unparse_commit(r, &r->parsed_objects->grafts[i]->oid);
->>  		free(r->parsed_objects->grafts[i]);
->> +	}
->>  	r->parsed_objects->grafts_nr = 0;
->>  	r->parsed_objects->commit_graft_prepared = 0;
->>  }
-> 
-> Are we going to have the same issue with tags, c.f. parse_tag() and
-> there being no unparse_tag()?
-> 
-> (I don't know offhand, just asking)
+As an example, here is my in-progress bundle URI RFC split into subtopics as
+they appear during the TODO list of a git rebase -i --update-refs:
 
-Grafts are only on commits. You cannot replace what a tag is pointing
-at with a graft. Replace-objects is a different thing and changes it at
-the OID level (and I don't think this can happen during the process
-without concurrent external changes to the filesystem).
+pick 2d966282ff3 docs: document bundle URI standard
+pick 31396e9171a remote-curl: add 'get' capability
+pick 54c6ab70f67 bundle-uri: create basic file-copy logic
+pick 96cb2e35af1 bundle-uri: add support for http(s):// and file://
+pick 6adaf842684 fetch: add --bundle-uri option
+pick 6c5840ed77e fetch: add 'refs/bundle/' to log.excludeDecoration
+exec git update-ref refs/heads/bundle-redo/fetch HEAD 6c5840ed77e1bc41c1fe6fb7c894ceede1b8d730
 
-Thanks,
--Stolee
+pick 1e3f6546632 clone: add --bundle-uri option
+pick 9e4a6fe9b68 clone: --bundle-uri cannot be combined with --depth
+exec git update-ref refs/heads/bundle-redo/clone HEAD 9e4a6fe9b68a8455b427c9ac8cdbff30c96653b4
+
+pick 5451cb6599c bundle-uri: create bundle_list struct and helpers
+pick 3029c3aca15 bundle-uri: create base key-value pair parsing
+pick a8b2de79ce8 bundle-uri: create "key=value" line parsing
+pick 92625a47673 bundle-uri: unit test "key=value" parsing
+pick a8616af4dc2 bundle-uri: limit recursion depth for bundle lists
+pick 9d6809a8d53 bundle-uri: parse bundle list in config format
+pick 287a732b54c bundle-uri: fetch a list of bundles
+exec git update-ref refs/heads/bundle-redo/list HEAD 287a732b54c4d95e7f410b3b36ef90d8a19cd346
+
+pick b09f8226185 protocol v2: add server-side "bundle-uri" skeleton
+pick 520204dcd1c bundle-uri client: add minimal NOOP client
+pick 62e8b457b48 bundle-uri client: add "git ls-remote-bundle-uri"
+pick 00eae925043 bundle-uri: serve URI advertisement from bundle.* config
+pick 4277440a250 bundle-uri client: add boolean transfer.bundleURI setting
+pick caf4599a81d bundle-uri: allow relative URLs in bundle lists
+pick df255000b7e bundle-uri: download bundles from an advertised list
+pick d71beabf199 clone: unbundle the advertised bundles
+pick c9578391976 t5601: basic bundle URI tests
+# Ref refs/heads/bundle-redo/rfc-3 checked out at '/home/stolee/_git/git-bundles'
+
+exec git update-ref refs/heads/bundle-redo/advertise HEAD c9578391976ab9899c4e4f9b5fa2827650097305
+
+
+The first two patches are helpers that are needed, but the full logic of the
+--update-refs option is introduced in patch 3. The config option is
+available in patch 4.
+
+Thanks, -Stolee
+
+Derrick Stolee (4):
+  log-tree: create for_each_decoration()
+  branch: add branch_checked_out() helper
+  rebase: add --update-refs option
+  rebase: add rebase.updateRefs config option
+
+ Documentation/config/rebase.txt |   3 +
+ Documentation/git-rebase.txt    |  11 ++++
+ branch.c                        |  24 ++++---
+ branch.h                        |   8 +++
+ builtin/rebase.c                |  10 +++
+ log-tree.c                      | 111 ++++++++++++++++++++++----------
+ log-tree.h                      |   4 ++
+ sequencer.c                     |  99 ++++++++++++++++++++++++++++
+ sequencer.h                     |   1 +
+ t/t3404-rebase-interactive.sh   |  34 ++++++++++
+ 10 files changed, 262 insertions(+), 43 deletions(-)
+
+
+base-commit: 2668e3608e47494f2f10ef2b6e69f08a84816bcb
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1247%2Fderrickstolee%2Frebase-keep-decorations-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1247/derrickstolee/rebase-keep-decorations-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1247
+-- 
+gitgitgadget
