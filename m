@@ -2,115 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 096A0C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 23:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1555AC43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 23:26:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349605AbiFCXOq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 19:14:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57834 "EHLO
+        id S1345743AbiFCX0W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 19:26:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349596AbiFCXOo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 19:14:44 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9111727CF8
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 16:14:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1654298052;
-        bh=01bEjogA+hXfYe9N2z9GzzUVA5qLN1tDL6qgOaeu0rs=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=mUFmTZtad1wyK2K/2NYHsaxBBjdt2sVRafD4EPJcQOnFFszIWmjRT9VAOD0poEHjk
-         Jy7s5ar00rPpekq8j1u4rfQu2Yvv4zUJiYbpZOUsCPov1rlOJVUou+PrbOp8Ug73Vw
-         dbZhCGIzKHy0sA/444QihyFTL+uhJVnk/B+GWmP8=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MfKxV-1nH2zf0qmh-00gTvo; Sat, 04
- Jun 2022 01:14:12 +0200
-Message-ID: <5b3e0d7c-e507-2edc-0cbc-5dd54883a8b3@web.de>
-Date:   Sat, 4 Jun 2022 01:14:11 +0200
+        with ESMTP id S230239AbiFCX0V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 19:26:21 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CAA61F620
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 16:26:18 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id c2so11998362edf.5
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 16:26:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=4VvF2MNNF/OTQmk/UNk9DyHx/21aptijv2di8I8viFU=;
+        b=d8xG0hBoNbo0k8QDqFRbl1+1qjU8S88K+CAl/VWX4RaBGtknTBr2ABYH4/JRmTLM2n
+         NFPGZ5RPwPwgIJJXjeagGCNt6Cjdg9KiS65CvtoXo8NPrwOqgQfIEsgmZa6sFPeiNHLg
+         8GEWe9zzS35oT962hRr1j4Q+DBgKryeTD042cyafQzyM7e9gVgpsdCmCVVwVc6KzmRA6
+         wyMjDD3FVic0BFYf9+3BDPlBLjU+3DD4dlBEzYaZ2g0RVEHMIDE+XgPwDowqz3j6S/BC
+         BCoeWqZSwQJNm9reYhgP6rq4b4S5QewYFWPRKLfwlcEphvKGZ9aug1ux/iWPbTVAspup
+         f4ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=4VvF2MNNF/OTQmk/UNk9DyHx/21aptijv2di8I8viFU=;
+        b=xPX2uO7qL0dWJPYTmP+ocjDLnCLCBDYy+We+EPjafrTNep3CTk9WfA0LnRiWpUIwHG
+         WDw0qPlhGVlMaZIJD1OtHc4QCobZ6gXie3p5slY33i3nb0frAGOaYCfTShWjh8Jaikw9
+         uv0N59bJyWjBJjimNxqIMPkAh6FoxWpI6zM6zIvDaS9Abeq2OXZgCQtxjHJ9jJF8Xf0q
+         3JivFqqZQhcd1HCKZ+/eU/+bEknVJN6MI3M1yxRFE/XOu9ysfkF1gqmFVeblpNe+byEn
+         L+n8E3dIP2LSsKN0zqh7BCr1hg61SODgsnju5FeCLiq9b6WunGTjQ3euZODssbQMxywn
+         BxPA==
+X-Gm-Message-State: AOAM531nirw/2W9TtNSbnc2Vcw3cpTSB29ix4PP89Ucv5qH9DDT0NQAp
+        P3kAyoiqoAOA1zDezBVe26A=
+X-Google-Smtp-Source: ABdhPJzyZozaMcZs3KNTFfeIn5vaCPu1v8bBYEelJre4juMUeQ2M9u1H1AxM/0au/0AK+QmnNH55Vg==
+X-Received: by 2002:a05:6402:1449:b0:42d:d250:e504 with SMTP id d9-20020a056402144900b0042dd250e504mr13325214edx.213.1654298776570;
+        Fri, 03 Jun 2022 16:26:16 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id g1-20020a170906348100b00702d8b37a03sm3410352ejb.17.2022.06.03.16.26.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jun 2022 16:26:15 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nxGgI-001v0H-TR;
+        Sat, 04 Jun 2022 01:26:14 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+        congdanhqx@gmail.com, dyroneteng@gmail.com, martin.agren@gmail.com,
+        peff@peff.net, tenglong.tl@alibaba-inc.com
+Subject: Re: js/ci-github-workflow-markup output regression
+Date:   Sat, 04 Jun 2022 01:13:08 +0200
+References: <xmqqee28spni.fsf@gitster.g>
+        <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
+        <nycvar.QRO.7.76.6.2206021703110.349@tvgsbejvaqbjf.bet>
+        <220603.86fskmxd43.gmgdl@evledraar.gmail.com>
+        <xmqqpmjpeedq.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqpmjpeedq.fsf@gitster.g>
+Message-ID: <220604.86y1ydwcq1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [RFC PATCH 05/15] refs/packed-backend.c: add a BUG() if iter is
- NULL
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jinoh Kang <luke1337@theori.io>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Glen Choo <chooglen@google.com>, Paul Tan <pyokagan@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>, Taylor Blau <me@ttaylorr.com>
-References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
- <RFC-patch-05.15-46e0c307941-20220603T183608Z-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <RFC-patch-05.15-46e0c307941-20220603T183608Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:g0d8Pa4Qyk001yhQNkj0gTm+X7aVPRW1ZW3NxLEkk9DBlSuklfk
- SyVxbtqVc83d8Z2Vy/xkEP7qki0Mh82Oe8hQGGo7qjsX6REFbioJflOg8sSndM4zWIDGjwG
- bg2yYANix8jmTjfkNUoGOj5jAtifktVH0QVJMjiE5S/yu/jEg8tJrJ09+ZQXCFG2K2Dk7jF
- v+qSxM51tp7hJLz4BKvOA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:C4LkhsHR/5Y=:SrnTtU+qiHNe9yeOh387oX
- QomL/Y+cXxUdN/nSq+oPiA+CclbEBbmOwDq1OTdiNJb5+ULSfn+yT2hugPE+AWaT3kxADw5MH
- sLNkfCSywUguf60ZuIfZrlYECt8r88L0LZh1aopcnwBTxDNAPZ7kabUE0U+9dTdgYHd3iNcq6
- 5Z2hLfr+rzq05xMbsGW1RKeBbRjBE0DMUNfEyzfF6WyW8aNxFWf23OQlS4fKMKAfP4rQtKA2R
- clpGz6nMqRrtO2xVwYtApqFEX4jBDLtPFRbLqMRjJF+oI+l5+JC5OrxT1idW/9Q7uxyQwGnCE
- dePZldDyz0W4GDKT2OcgBr6gZ/t8f35XsLwhD4vq1bAjOscw1HQpAo1OXaub5Eyx5+yzNGYkE
- 5D4r/OPsU9iJuTF9dOIA4gGuA01bgw/xMGUhk17s9fmHdN90EYyzGbTj74ztjziljkGqFYkvY
- NcznCKmes3RxI5PVrEdcH5YHOY7HvoTeXnP1h8mvJdIA2qqFwUTkgoN/rzn7sZYTZcV21Hj3I
- RaDlwXPm9BoWMrL2idH6SVzfMIEzkgArG3MXgBJjwIwsFUzp6naAqHtkY+pcyAqbfQCIuajWJ
- W+pdzkEHklU3qfu+N7VYVmvdRQt6YIdeZfoh2WIL/c/sGqGUa/OzUSsCJqlh2hTkNuelkl5Wh
- kThtN2/NMcFyAs/LHmAl2Cx7XjxAeUio6x8rBXpKLvnngFVKqrLvVPR2gQrU0Uvfuuoe7QmIf
- 9kO3u5OzAlzszBih7wEJ1/BMBdlhlbyM+QlrcGyduwaG4gMH7R+LoewtnvnvhSo//tcWLbvVM
- iOToFM4pg+KqLie+JdOtvNt8fx/c33Cgr9sMbm8nHkhH85ytYZ6JNovPOIXWP8zEdX9fUTDke
- 1yiSJ4nmdjMtMBoIDanvsWiLHiZBQXDRIDcFdJQRhVR9qWKYb5m1TQpy63Kt6wajtwvhjyDP8
- MpO++2gO9io8RPdKIHMiADQC84aht8/6Ge+N5utmluVbcU53QrHKBSALjB2vXTbYiUUxkIIPX
- Zw4I7c3HmXxpESW/tBf1UiNgjogVmxFU3siQPsM/HalQnQ1SECrgbCYLVx6OXoFgMpsYEqzDn
- nj32YhTaD8lYNIkxcIqRqe3YdUwRjZ80xvS
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.06.22 um 20:37 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Adjust code added in 2775d8724d7 (packed_ref_store: implement
-> reference transactions, 2017-09-08) to BUG() out in a case there GCC
-> v12's -fanalyzer flagged that the "iter->oid" seen in the context was
-> reachable where iter was NULL.
+
+On Fri, Jun 03 2022, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  refs/packed-backend.c | 2 ++
->  1 file changed, 2 insertions(+)
+>>> Further, since this failure is outside of any `test_expect_success` or
+>>> `test_expect_failure`, the error message about this is not even included
+>>> in the weblogs (but of course it is included in the full logs that are
+>>> included in the build artifacts). For the record, here is the error
+>>> message:
+>>
+>> ...this part of it though seems like a pretty bad regression in your
+>> merged-to-next js/ci-github-workflow-markup topic, which just happens to
+>> be unearthed by this CI failure.
 >
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index 97b68377673..65991bbcaf5 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1226,6 +1226,8 @@ static int write_with_updates(struct packed_ref_st=
-ore *refs,
->  			struct object_id peeled;
->  			int peel_error =3D ref_iterator_peel(iter, &peeled);
-
-Some peel backends dereference iter, e.g. packed_ref_iterator_peel() from
-the same file.
-
+> Indeed it makes it impossible to figure it out things like this
+> case.  But ...
 >
-> +			if (!iter)
-> +				BUG("must have iter if cmp < 0");
+>> But this does look easy to "solve" with a quicker fix, just bringing
+>> back the "ci/print-test-failures.sh" step so you can at least expand it,
+>> and not have to go to the "summary" and download the *.zip of the log
+>> itself. As that shows we still have the raw log there, it just didn't
+>> make it to the new GitHub Markdown formatting mechanism.
+>
+> ... it seems a solution is possible?  Care to send in a patch (or
+> perhaps Dscho already has a counter-proposal)?
 
-So if iter can be NULL at this point, then it must be checked before the
-ref_iterator_peel() call above, no?
+The only thing I have at the moment is:
 
-*Can* it be NULL, though?  The code in question is a bit complicated and
-it's late around here, but I cannot see how cmp < 0 and !iter can both
-be true at this place in the code.  An optimizing compiler will probably
-optimize out the added check and string.  Mine does (clang 13); you can
-check if yours does the same using:
+    1. git revert -m 1 bd37e9e41f5
+    2. merge: https://lore.kernel.org/git/cover-v6-00.29-00000000000-202205=
+25T094123Z-avarab@gmail.com/
+    3. merge: https://lore.kernel.org/git/cover-v6-00.14-00000000000-202205=
+25T100743Z-avarab@gmail.com/
 
-  $ make refs/packed-backend.o && grep "must have" refs/packed-backend.o
+I.e. to pick this in the sequence I'd proposed doing & have tested
+thoroughly.
 
->  			if (write_packed_entry(out, iter->refname,
->  					       iter->oid,
->  					       peel_error ? NULL : &peeled))
+It also addresses other noted some other regressions in "next", but as
+noted e.g. in [A] there's other issues in "next", e.g. that even the
+"raw" trace logs are altered as a side-effect of running with
+--github-workflow-markup, and of course the major UX slowdowns.
+
+So I think the better way forward would be to do that & leave out [B],
+i.e. make the new output format optional, and wait until outstanding
+issues are fixed until we flip the default.
+
+But do I have something that neatly fixes the issue(s) on top of "next"
+without a revert & re-apply? No, sorry.
+
+In case you want to go for that the resolution for [2] is [C], and a
+"git rm ci/run-build-and-tests.sh ci/run-static-analysis.sh".
+
+A. https://lore.kernel.org/git/patch-v6-13.14-fbe0d99c6b3-20220525T100743Z-=
+avarab@gmail.com/
+B. https://lore.kernel.org/git/patch-v6-14.14-0b02b186c87-20220525T100743Z-=
+avarab@gmail.com/
+C.=20
+	diff --git a/Makefile b/Makefile
+	index 19f3756f7eb..c2b0a728df5 100644
+	--- a/Makefile
+	+++ b/Makefile
+	@@ -3618,3 +3618,4 @@ ci-static-analysis: ci-check-directional-formatting
+	 ci-static-analysis: check-builtins
+	 ci-static-analysis: check-coccicheck
+	 ci-static-analysis: hdr-check
+	+ci-static-analysis: check-pot
+	diff --git a/ci/lib.sh b/ci/lib.sh
+	index 80e89f89b7f..9c54c1330e6 100755
+	--- a/ci/lib.sh
+	+++ b/ci/lib.sh
+	@@ -270,7 +270,7 @@ linux-TEST-vars)
+	        setenv --test GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS 1
+	        setenv --test GIT_TEST_MULTI_PACK_INDEX 1
+	        setenv --test GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP 1
+	-       setenv --test GIT_TEST_ADD_I_USE_BUILTIN 1
+	+       setenv --test GIT_TEST_ADD_I_USE_BUILTIN 0
+	        setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME master
+	        setenv --test GIT_TEST_WRITE_REV_INDEX 1
+	        setenv --test GIT_TEST_CHECKOUT_WORKERS 2
+=09
