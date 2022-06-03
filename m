@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67C81C43334
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 11:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37556C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 11:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242808AbiFCLPt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 07:15:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45098 "EHLO
+        id S243960AbiFCLPy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 07:15:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242116AbiFCLPg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242706AbiFCLPg (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 3 Jun 2022 07:15:36 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149633C481
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 04:15:34 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id p10so9966918wrg.12
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 04:15:34 -0700 (PDT)
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F83C3C483
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 04:15:35 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id d5-20020a05600c34c500b0039776acee62so4658076wmq.1
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 04:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cJqkjexwNzfVsVthgMgQghaTp0864lPorwG3hKAcsVQ=;
-        b=aUuaq5Dba0b0Yg5Hqn3HkAh3nuB5CgCaP3rHjUUpaR11wTruBozLK4Pyrcd20/L0CE
-         5hVLwkJ4F46WFdf/7ipRMBxfGRoixAKXlDiQtYGluc1dY7B+LydpN886oyqPl3CfxezD
-         2owqkXpY7djj21UzfMczPq2W2/aZctFJdb+oYYTJCitSuqimYfh0bqQ31bjKViPzbPNo
-         aLHG7AccZhGpb0aWtx53R3iAZILCWUZB0n6bMtlncJo5KNASlWknZqWW2MfwkicSn0o9
-         TtG/vGpZwrHO8o9wdp4VNO86APVPbzdzsdvKjomQe3oksD++7JB6S/+KD5/pjkfuu9iW
-         m8nw==
+        bh=EkpR+QQ+khwjP7C/sfiYkep4cDRqQOpIr9XF0Qv72R8=;
+        b=cEEnspcTorJ9zlIQ/Xygb5lKR/GK1l78TK7rR9Q6CATqgqphyTTvedTvjuST3Hjgrx
+         4F8MDBMANWDxxc4fRleCFcw8URCbA1ZGGnZm/vcFRCrY/h0/bnR8ir8Done1wlauMVdP
+         FHOmqB5eSYQC6e8NpgTek70lN2S0jCnWdXW9gbXl8FJMw2LGVNafWBl8ALGd8LpFxxkK
+         rDUTnc2w5Vg/IVzvJavsfVesFP7kR2JiZmfatXqhhMdGKdailoRY/z4nVPBZN/BxxCgk
+         teupAmKlSk/WbDyzCjYcgnF9NwfqwnRGGoR6S2a9iK8IWkGtqQtq9HC9G7cCG/BhaMMo
+         2A0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cJqkjexwNzfVsVthgMgQghaTp0864lPorwG3hKAcsVQ=;
-        b=lyWSBx/WAWUrrTM6WzMjKA21G6fhIcDPYPRTl/yYfr99AMfY6JdOLiQHh4ASTFajUH
-         EmKJaoIuAMyDYvzQGW0kArFgYTuWOsN6ZEVA5S4eqz16qqz1NXZfGlpHvak5WJBBORS/
-         2Q/Qfq3LADr7NxL8Tra7erAs+Ix0WkHSF5W65vtIF/l9Su9L3QFiCCkcevkwodB4fY6d
-         ZAcqgyDiIBCkjBv80d5xb7Owaqviq1mwgdLgiyBS29S+xXM+IJeciDcwOKxFnp9pKyBp
-         Q194+UZHZRAoTqTidX1uHk1eWZG/4CxECs/FXcFVkCQ8xDqu1aKpjvF3IcJecUdPRCj4
-         gwlQ==
-X-Gm-Message-State: AOAM533ZUgi/zuKvos2Wl7Yiq/ZUKvTE1JDllm+VpK3igwSFrjon/CHq
-        Nx2Ucvb/BCswlgca9u5hB54zeRSQjhRXjw==
-X-Google-Smtp-Source: ABdhPJyhrNmUMSpMnYpvkmQK+qqRdqaYims08kn7vtgcXbmas9OVeOqYgfsg474eLiS65dFf1DtdYQ==
-X-Received: by 2002:adf:dd02:0:b0:215:99d0:8031 with SMTP id a2-20020adfdd02000000b0021599d08031mr181173wrm.675.1654254932224;
-        Fri, 03 Jun 2022 04:15:32 -0700 (PDT)
+        bh=EkpR+QQ+khwjP7C/sfiYkep4cDRqQOpIr9XF0Qv72R8=;
+        b=w/61lzvV5qpVBhlDps13QlSnQSbuDfgtk002NfYsHyvS09GawXbuCzF6Gc21ZOm7NP
+         aGzchUGx71RQlebjnRDcuOpF/RTaavZyLz/dz7hQMTLJdfmC2IiAwXOLiEN+qQjQVgid
+         hTyQHLjC6KMHTzEkgUiDfdIlZznd/kU+XETq7lgJePOqd5uDlY48IXll5FXnKtBBAeQe
+         pybh3Yfcv1UOs+tKWan0jcV4NwwYw74NSq8wW/8tLbLIWdDk8gHVE7lK89FWjpKbyGpz
+         VfELzuBs61xotjtWersr4N1CEqQTGnDe0NGL1M5OE1lknXYMH/XTnGiuauauymIE3cHF
+         eaYQ==
+X-Gm-Message-State: AOAM530m5ZJ2fHDnVzWSxQqs7w2qj8iBMyEg5rdMUoSbVXQi0QD3vR2a
+        2Pg4gyhbojvhBZx4YsXAsHPHdAO8uKVeFw==
+X-Google-Smtp-Source: ABdhPJwg45h1Cgbly5IMoCoX4UXvoZogZ+Wv5AYnnB6HSOW9OwNBurc/zepixe5XlMqfPi3cgcpoxw==
+X-Received: by 2002:a1c:29c3:0:b0:350:9797:b38f with SMTP id p186-20020a1c29c3000000b003509797b38fmr37892010wmp.22.1654254933346;
+        Fri, 03 Jun 2022 04:15:33 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h24-20020adfa4d8000000b0020d0a57af5esm7184357wrb.79.2022.06.03.04.15.30
+        by smtp.gmail.com with ESMTPSA id h24-20020adfa4d8000000b0020d0a57af5esm7184357wrb.79.2022.06.03.04.15.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 04:15:31 -0700 (PDT)
+        Fri, 03 Jun 2022 04:15:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/7] tests: don't assume a .git/info for .git/info/grafts
-Date:   Fri,  3 Jun 2022 13:15:05 +0200
-Message-Id: <patch-v2-3.7-967762b4670-20220603T110506Z-avarab@gmail.com>
+Subject: [PATCH v2 4/7] tests: don't assume a .git/info for .git/info/attributes
+Date:   Fri,  3 Jun 2022 13:15:06 +0200
+Message-Id: <patch-v2-4.7-64292c20c84-20220603T110506Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1119.g5a713b43bd4
 In-Reply-To: <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
 References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com> <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
@@ -71,166 +71,247 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Change those tests that assumed that a .git/info directory would be
-created for them when writing .git/info/grafts to explicitly create
-the directory.
+created for them when writing .git/info/attributes to explicitly
+create the directory by setting "TEST_CREATE_REPO_NO_TEMPLATE=1"
+before sourcing test-lib.sh, and using the "--template=" argument to
+"git clone".
 
-Do this using the new "TEST_CREATE_REPO_NO_TEMPLATE" facility, and use
-"mkdir" instead of "mkdir -p" to assert that we don't have the
-.git/info already. An exception to this is the "with grafts" test in
-"t6001-rev-list-graft.sh". There we're modifying our ".git" state in a
-for-loop, in lieu of refactoring that more extensively let's use
-"mkdir -p" there.
+The change here in here in t7814-grep-recurse-submodules.sh would
+continue "succeeding" with only the "TEST_CREATE_REPO_NO_TEMPLATE=1"
+part of this change. That's because those tests use
+"test_expect_failure", so they'd "pass" without this change, as
+"test_expect_failure" by design isn't discerning about what failure
+conditions it'll accept.
+
+But as we're fixing these sorts of issues across the test suite let's
+fix this one too. This issue was spotted with a local merge with
+another topic of mine[1], which introduces a stricter alternative to
+"test_expect_failure".
+
+1. https://lore.kernel.org/git/cover-0.7-00000000000-20220318T002951Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/annotate-tests.sh          | 3 ++-
- t/t2400-worktree-add.sh      | 4 ++++
- t/t5318-commit-graph.sh      | 3 ++-
- t/t6001-rev-list-graft.sh    | 1 +
- t/t6101-rev-parse-parents.sh | 2 ++
- t/t8001-annotate.sh          | 1 +
- t/t8002-blame.sh             | 1 +
- t/t8012-blame-colors.sh      | 1 +
- 8 files changed, 14 insertions(+), 2 deletions(-)
+ t/t0003-attributes.sh              | 5 ++++-
+ t/t0028-working-tree-encoding.sh   | 2 ++
+ t/t5000-tar-tree.sh                | 5 ++++-
+ t/t5001-archive-attr.sh            | 5 ++++-
+ t/t5002-archive-attr-pattern.sh    | 5 ++++-
+ t/t5003-archive-zip.sh             | 5 ++++-
+ t/t7814-grep-recurse-submodules.sh | 8 ++++++--
+ 7 files changed, 28 insertions(+), 7 deletions(-)
 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index cc01d891504..f1b9a6ce4da 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -153,7 +153,7 @@ test_expect_success 'blame evil merge' '
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 143f1005179..f7ee2f2ff0e 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -3,6 +3,7 @@
+ test_description=gitattributes
  
- test_expect_success 'blame huge graft' '
- 	test_when_finished "git checkout branch2" &&
--	test_when_finished "rm -f .git/info/grafts" &&
-+	test_when_finished "rm -rf .git/info" &&
- 	graft= &&
- 	for i in 0 1 2
- 	do
-@@ -168,6 +168,7 @@ test_expect_success 'blame huge graft' '
- 			graft="$graft$commit " || return 1
- 		done
- 	done &&
-+	mkdir .git/info &&
- 	printf "%s " $graft >.git/info/grafts &&
- 	check_count -h 00 01 1 10 1
- '
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 2f564d533d0..f3242fef6b6 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -5,6 +5,7 @@ test_description='test git worktree add'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
+ TEST_PASSES_SANITIZE_LEAK=true
 +TEST_CREATE_REPO_NO_TEMPLATE=1
  . ./test-lib.sh
  
- . "$TEST_DIRECTORY"/lib-rebase.sh
-@@ -229,6 +230,7 @@ test_expect_success 'checkout with grafts' '
- 	SHA1=$(git rev-parse HEAD) &&
- 	test_commit def &&
- 	test_commit xyz &&
-+	mkdir .git/info &&
- 	echo "$(git rev-parse HEAD) $SHA1" >.git/info/grafts &&
- 	cat >expected <<-\EOF &&
- 	xyz
-@@ -559,6 +561,8 @@ test_expect_success 'git worktree --no-guess-remote option overrides config' '
+ attr_check_basic () {
+@@ -284,7 +285,7 @@ test_expect_success 'using --git-dir and --work-tree' '
  '
  
- post_checkout_hook () {
-+	test_when_finished "rm -rf .git/hooks" &&
-+	mkdir .git/hooks &&
- 	test_hook -C "$1" post-checkout <<-\EOF
- 	{
- 		echo $*
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index fbf0d64578c..be0b5641ffc 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -361,13 +361,14 @@ test_expect_success 'replace-objects invalidates commit-graph' '
- test_expect_success 'commit grafts invalidate commit-graph' '
- 	cd "$TRASH_DIRECTORY" &&
- 	test_when_finished rm -rf graft &&
--	git clone full graft &&
-+	git clone --template= full graft &&
+ test_expect_success 'setup bare' '
+-	git clone --bare . bare.git
++	git clone --template= --bare . bare.git
+ '
+ 
+ test_expect_success 'bare repository: check that .gitattribute is ignored' '
+@@ -315,6 +316,7 @@ test_expect_success 'bare repository: check that --cached honors index' '
+ test_expect_success 'bare repository: test info/attributes' '
  	(
- 		cd graft &&
- 		git commit-graph write --reachable &&
- 		test_path_is_file .git/objects/info/commit-graph &&
- 		H1=$(git rev-parse --verify HEAD~1) &&
- 		H3=$(git rev-parse --verify HEAD~3) &&
-+		mkdir .git/info &&
- 		echo "$H1 $H3" >.git/info/grafts &&
- 		git -c core.commitGraph=false log >expect &&
- 		git -c core.commitGraph=true log >actual &&
-diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
-index 7294147334a..16635ecc33e 100755
---- a/t/t6001-rev-list-graft.sh
-+++ b/t/t6001-rev-list-graft.sh
-@@ -99,6 +99,7 @@ do
- 	"
+ 		cd bare.git &&
++		mkdir info &&
+ 		(
+ 			echo "f	test=f" &&
+ 			echo "a/i test=a/i"
+@@ -360,6 +362,7 @@ test_expect_success SYMLINKS 'symlinks respected in core.attributesFile' '
  
- 	test_expect_success 'with grafts' "
-+		mkdir -p .git/info &&
- 		echo '$B0 $A2' >.git/info/grafts &&
- 		check $type $B2 -- $B2 $B1 $B0 $A2 $A1 $A0
- 	"
-diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
-index c571fa51797..5f55ab98d35 100755
---- a/t/t6101-rev-parse-parents.sh
-+++ b/t/t6101-rev-parse-parents.sh
-@@ -8,6 +8,7 @@ test_description='Test git rev-parse with different parent options'
+ test_expect_success SYMLINKS 'symlinks respected in info/attributes' '
+ 	test_when_finished "rm .git/info/attributes" &&
++	mkdir .git/info &&
+ 	ln -s ../../attr .git/info/attributes &&
+ 	attr_check file set
+ '
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index 82905a2156f..7140960e1a3 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -5,6 +5,7 @@ test_description='working-tree-encoding conversion via gitattributes'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_CREATE_REPO_NO_TEMPLATE=1
  . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-encoding.sh"
  
- test_cmp_rev_output () {
-@@ -25,6 +26,7 @@ test_expect_success 'setup' '
- 	git merge -m next --allow-unrelated-histories start2 &&
- 	test_commit final &&
+@@ -69,6 +70,7 @@ test_expect_success 'check $GIT_DIR/info/attributes support' '
+ 	test_when_finished "rm -f test.utf32.git" &&
+ 	test_when_finished "git reset --hard HEAD" &&
  
 +	mkdir .git/info &&
- 	test_seq 40 |
- 	while read i
- 	do
-diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
-index a536a621b24..d7167f55397 100755
---- a/t/t8001-annotate.sh
-+++ b/t/t8001-annotate.sh
-@@ -4,6 +4,7 @@ test_description='git annotate'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 	echo "*.utf32 text working-tree-encoding=utf-32" >.git/info/attributes &&
+ 	git add test.utf32 &&
+ 
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 7f8d2ab0a72..de192b52c47 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -24,6 +24,7 @@ commit id embedding:
+ 
+ '
  
 +TEST_CREATE_REPO_NO_TEMPLATE=1
  . ./test-lib.sh
  
- PROG='git annotate'
-diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-index ee4fdd8f18d..0147de304b4 100755
---- a/t/t8002-blame.sh
-+++ b/t/t8002-blame.sh
-@@ -4,6 +4,7 @@ test_description='git blame'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ SUBSTFORMAT=%H%n
+@@ -143,6 +144,7 @@ test_expect_success 'populate workdir' '
+ test_expect_success \
+     'add ignored file' \
+     'echo ignore me >a/ignored &&
++     mkdir .git/info &&
+      echo ignored export-ignore >.git/info/attributes'
+ 
+ test_expect_success 'add files to repository' '
+@@ -157,7 +159,8 @@ test_expect_success 'setup export-subst' '
+ '
+ 
+ test_expect_success 'create bare clone' '
+-	git clone --bare . bare.git &&
++	git clone --template= --bare . bare.git &&
++	mkdir bare.git/info &&
+ 	cp .git/info/attributes bare.git/info/attributes
+ '
+ 
+diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
+index 712ae522994..2f6eef5e372 100755
+--- a/t/t5001-archive-attr.sh
++++ b/t/t5001-archive-attr.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git archive attribute tests'
  
 +TEST_CREATE_REPO_NO_TEMPLATE=1
  . ./test-lib.sh
  
- PROG='git blame -c'
-diff --git a/t/t8012-blame-colors.sh b/t/t8012-blame-colors.sh
-index 90c75dbb283..c3a5f6d01ff 100755
---- a/t/t8012-blame-colors.sh
-+++ b/t/t8012-blame-colors.sh
-@@ -4,6 +4,7 @@ test_description='colored git blame'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ SUBSTFORMAT='%H (%h)%n'
+@@ -20,6 +21,7 @@ extract_tar_to_dir () {
+ 
+ test_expect_success 'setup' '
+ 	echo ignored >ignored &&
++	mkdir .git/info &&
+ 	echo ignored export-ignore >>.git/info/attributes &&
+ 	git add ignored &&
+ 
+@@ -46,7 +48,8 @@ test_expect_success 'setup' '
+ 
+ 	git commit -m. &&
+ 
+-	git clone --bare . bare &&
++	git clone --template= --bare . bare &&
++	mkdir bare/info &&
+ 	cp .git/info/attributes bare/info/attributes
+ '
+ 
+diff --git a/t/t5002-archive-attr-pattern.sh b/t/t5002-archive-attr-pattern.sh
+index a66b5ba27e8..78ab75f1bc2 100755
+--- a/t/t5002-archive-attr-pattern.sh
++++ b/t/t5002-archive-attr-pattern.sh
+@@ -3,6 +3,7 @@
+ test_description='git archive attribute pattern tests'
+ 
+ TEST_PASSES_SANITIZE_LEAK=true
++TEST_CREATE_REPO_NO_TEMPLATE=1
+ . ./test-lib.sh
+ 
+ test_expect_exists() {
+@@ -15,6 +16,7 @@ test_expect_missing() {
+ 
+ test_expect_success 'setup' '
+ 	echo ignored >ignored &&
++	mkdir .git/info &&
+ 	echo ignored export-ignore >>.git/info/attributes &&
+ 	git add ignored &&
+ 
+@@ -54,7 +56,8 @@ test_expect_success 'setup' '
+ 
+ 	git commit -m. &&
+ 
+-	git clone --bare . bare &&
++	git clone --template= --bare . bare &&
++	mkdir bare/info &&
+ 	cp .git/info/attributes bare/info/attributes
+ '
+ 
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index d726964307c..a7bbfcb7f75 100755
+--- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git archive --format=zip test'
  
 +TEST_CREATE_REPO_NO_TEMPLATE=1
  . ./test-lib.sh
  
- PROG='git blame -c'
+ SUBSTFORMAT=%H%n
+@@ -121,6 +122,7 @@ test_expect_success 'prepare file list' '
+ test_expect_success \
+     'add ignored file' \
+     'echo ignore me >a/ignored &&
++     mkdir .git/info &&
+      echo ignored export-ignore >.git/info/attributes'
+ 
+ test_expect_success 'add files to repository' '
+@@ -139,7 +141,8 @@ test_expect_success 'setup export-subst and diff attributes' '
+ '
+ 
+ test_expect_success 'create bare clone' '
+-	git clone --bare . bare.git &&
++	git clone --template= --bare . bare.git &&
++	mkdir bare.git/info &&
+ 	cp .git/info/attributes bare.git/info/attributes &&
+ 	# Recreate our changes to .git/config rather than just copying it, as
+ 	# we do not want to clobber core.bare or other settings.
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index a4476dc4922..3ad80526c4c 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -6,6 +6,7 @@ This test verifies the recurse-submodules feature correctly greps across
+ submodules.
+ '
+ 
++TEST_CREATE_REPO_NO_TEMPLATE=1
+ . ./test-lib.sh
+ 
+ GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
+@@ -471,8 +472,10 @@ test_expect_failure 'grep --textconv: superproject .gitattributes (from index) d
+ test_expect_failure 'grep --textconv: superproject .git/info/attributes does not affect submodules' '
+ 	reset_and_clean &&
+ 	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
+-	super_attr="$(git rev-parse --git-path info/attributes)" &&
++	super_info="$(git rev-parse --git-path info)" &&
++	super_attr="$super_info/attributes" &&
+ 	test_when_finished "rm -f \"$super_attr\"" &&
++	mkdir "$super_info" &&
+ 	echo "a diff=d2x" >"$super_attr" &&
+ 
+ 	cat >expect <<-\EOF &&
+@@ -516,7 +519,8 @@ test_expect_failure 'grep --textconv correctly reads submodule .git/info/attribu
+ 	reset_and_clean &&
+ 	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
+ 
+-	submodule_attr="$(git -C submodule rev-parse --path-format=absolute --git-path info/attributes)" &&
++	submodule_info="$(git -C submodule rev-parse --path-format=absolute --git-path info)" &&
++	submodule_attr="$submodule_info/attributes" &&
+ 	test_when_finished "rm -f \"$submodule_attr\"" &&
+ 	echo "a diff=d2x" >"$submodule_attr" &&
+ 
 -- 
 2.36.1.1119.g5a713b43bd4
 
