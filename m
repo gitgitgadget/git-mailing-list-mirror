@@ -2,200 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 012B0C43334
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 10:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24F71C43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 10:47:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243698AbiFCKeD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 06:34:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55014 "EHLO
+        id S243824AbiFCKrP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 06:47:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241739AbiFCKeB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 06:34:01 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48FE33BA74
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 03:33:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1654252437;
-        bh=KwdRB5TEMULI94BSFzj9ag6/nDarKmKPVXfANGfGb8k=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=k7XIFVshX7l9+VeMmI2rg6xbcd+YO6sKSk9GqHQSNS6ceDTms1Ap/Lj1xE+e9JuDa
-         d1PQLqOuJQx/NeRjAEYLPfHi2C/7MUphTZB4YugpEiw+iJULx0ASpzqGsPPOqjMLai
-         uCUXlHkrcoOLNS6hPPlBxzh6W7mLwxUeyIF+aXbc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.206.165] ([213.196.213.247]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlw3N-1nWm6I0Xjv-00j5p8; Fri, 03
- Jun 2022 12:33:57 +0200
-Date:   Fri, 3 Jun 2022 12:33:55 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee <derrickstolee@github.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        with ESMTP id S243861AbiFCKrK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 06:47:10 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9256BAE65
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 03:47:06 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id b8so9593009edf.11
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 03:47:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=0StBg+tEmDov/dPcAAnSTYho4JaIkwDWmhqwjo6+m1o=;
+        b=YPFAHoXf1tuk8l7TDyqsP2LoEfVjzypkm+nz9KE7ABPfBFAxfCT7oN8MMqgL9XGcnN
+         HTETiMGiNCiCN2pRF9V2TBF7TsEAx6p1DchuXvRBoq8kuw+rH7OJQe8xPpQF86y+ix9M
+         M/RuxrrQ8NQ6goQzgpwS2jQmvGq81kqbJAJMSL5G9ykWvmZFNSoJQ752OhTNZPdtRS8A
+         VB+NZQCa1338AE0K3TXMrrUmfTLslczFOv4IAXlJeGaZzywXqfhkA3Z4ShFSoD8BDsym
+         TuUZlC3K7ls0YkNhddbZZpA95OlhtqKD/p467dF0zs7MJCkIySQbqWvd/KrTW9FMy8BL
+         xeGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=0StBg+tEmDov/dPcAAnSTYho4JaIkwDWmhqwjo6+m1o=;
+        b=pZnCmJvPM9c3hrN/dVtibLwhK9oIIF7hobcUfe3uvnmpSUKwsuI6jsRCfni28An+fp
+         p2DM5SjEfP9tzof/89yCnPCb+sVIBmpVKVoULaPX++mJlqOwSvANAAmdiTmmdVt8qf4x
+         H9ME1u1wP4FxdFx+JVJoorY+4g+N0EJ/KCbfy3y/Q3vnyVDupXp/OcKnYpbNG+ENT04z
+         agbe1LEGsd4CriwWTyEPqcbPJnwVWERzkB6mWVQcY7LpN/vCws7LLL7s0WgOgbk/yuMh
+         3L2qFjLgIrZmKztzfZNkHBfSBwwl0EzIYvuocMWurQ6qhEytT0M8uoAxhsAmRYjGfklU
+         0LTA==
+X-Gm-Message-State: AOAM532abz7bUBxRzzoaxMTAZJLtq78YI6eiFHXklErZRPPLwVo3kuNH
+        Em8ec9uOXVEv9OhsqIiNxb0=
+X-Google-Smtp-Source: ABdhPJxS6nkKELPHSh5GwTzLYAWugpuw8giSHWgi+rU0SAvEBsDQHRLymgRI6kLSkDIbsLPLv9Pbbg==
+X-Received: by 2002:a05:6402:2925:b0:42d:d019:1716 with SMTP id ee37-20020a056402292500b0042dd0191716mr10118539edb.110.1654253224405;
+        Fri, 03 Jun 2022 03:47:04 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id o7-20020a50fd87000000b0042dc25fdf5bsm3707934edt.29.2022.06.03.03.47.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jun 2022 03:47:03 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nx4pb-001clM-3t;
+        Fri, 03 Jun 2022 12:47:03 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 2/2] ci: also run the `scalar` tests
-In-Reply-To: <3c6d4a5c-8b39-8771-f578-0ea3c5b57869@github.com>
-Message-ID: <nycvar.QRO.7.76.6.2206031204470.349@tvgsbejvaqbjf.bet>
-References: <pull.1129.git.1654160735.gitgitgadget@gmail.com> <6ad0d3d401da7787d0e7afb3f804b705731bf2dd.1654160735.git.gitgitgadget@gmail.com> <3c6d4a5c-8b39-8771-f578-0ea3c5b57869@github.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Subject: Re: [PATCH 0/2] Integrate Scalar into the CI builds
+Date:   Fri, 03 Jun 2022 12:36:42 +0200
+References: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+ <d0448d28-b33c-3f42-901d-3cd7f4201c78@github.com>
+ <220602.865yljywtf.gmgdl@evledraar.gmail.com>
+ <d59b51fb-029f-8232-9dd8-2f7f1b410aa7@github.com>
+ <nycvar.QRO.7.76.6.2206031147220.349@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <nycvar.QRO.7.76.6.2206031147220.349@tvgsbejvaqbjf.bet>
+Message-ID: <220603.86bkvaxbvc.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Dmyy7zqc9jdwn4T01jg9uYbjk/1X4sFKMK6eqPsx4q2RJGpgGyM
- 9D++xrRF5nMfAnOa2OVVPAq5v5r8B40uphDz2Wj8skxOH8vJz6Ujt9kmANJWdmcv3j/3QFm
- 8yLAXOQWA3Pco6kcL/9SELxL6FMQEWngnFfYoDtVX9pRXD0XWqrHPIYc87NU3PNH0ud0Jxi
- jXpFHYpAvV93LZXvRSn/A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:exdq7QrdOAs=:Dr3R7fFeKrJbk34KyQXPKB
- 9I+CJuKaBt7oBkvXDcy+IMFsmDREGL49QZvewcIDUTZlJYrZRi2Qux36AS5FHd4jIik6gQdiW
- UIi76FxSiHTnjBCH57n5nmApjUqh9yVQ4m3drrW+nOSB2ujGn2F5ENQ6EK8YYYMiGJBnV3BbW
- L+PFs4ilWDsMXHtkZdN9nixCbx4FWXigc7LSFlAS+wB9L6Ck5SIQAVCPnzDjq5DF4mSrE6/ay
- AoJWXINxE6qitc51NaOOcD1L1ahmVwobdncp1q1ghipaFQIeaNu4HyVO0kLUd07R48yOtjPRQ
- sz8dcygj0UJAcKTDFwDm596YDdJIG9y4FbRQsRGN5i3MKGsQ4NwdPok+ZdbTKLlXi08O9Du+Q
- 5ZPpYYZqQAR7h+mnB/t92fmO7TlJ5kNRs1BPLPlLxDisxQEZFmVtbtt4ZSaPNjIBNQ34W9gIW
- UwH3GMIMkQQdX+NjHIGC9tA0zv/tXd7Kk9/vD1D2O1zsre0QubmpzOXy9ZmP4WPwZu/fEzTpr
- XG/QOTM6VNu69gRMV1qfX1Qi0DiA2K2NDcv1qkvYuLHqr4A2ku3FZ0QL4uL1w7TY6aczHyGCX
- CyBNEqT41mK10J4CZKKhO6+hvUmbbIFq6NiN8UULPgrhHe/9d3RW/Y2IL3by+w7KDw+umP8U9
- NMV1u5oG9zuu3sj3l7zqmRAzjNCXjr7tIScsR2/aVFh/+Ygs8su4mBU1bB1ZPx5dEXSU8ttdc
- 8ROM7ejno++dNcrRwlX/ll2TAzdPoopVpi8AdgdZLxEqCKRsEl68J2X6hlhfqaLuuDOCvXCfl
- iu1vSMG0Yggbyx5FoyfMwdeHjxS1eYBKThfKbI/ID4zZFvmdEO0IAMpSN2U1vt3qezNc7LCjr
- 77Y4MSiZW/w2DUH/awiXxsTu9/Fgol7kJZGwUlGAM7rHZDveaY6MIyqc8l9yY8/jklVYn1tAp
- 63T2QXQ77lbR9VK4pQmQ7uKcMIZq0j/qCiRylsBY0uqjShbMZoaPTHbFFYzu2OLR/ZW7vbvwx
- d4gJJ8UAqNSOqEUymzhfSSVH9EmX7HRkrHVHNLfVqMtsyDVzaqmq+YMhFo12QsvcLReZ+Uhi5
- Mc472eopcigaSrIjawSkzw7i90tQtne5NVx7P7IqrOHoj9T3OIhKj0+yA==
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
 
-On Thu, 2 Jun 2022, Derrick Stolee wrote:
+On Fri, Jun 03 2022, Johannes Schindelin wrote:
 
-> On 6/2/2022 5:05 AM, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Since Scalar depends on `libgit.a`, it makes sense to ensure in the CI
-> > and the PR builds that it does not get broken in case of industrious
-> > refactorings of the core Git code (speaking from experience here).
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  .github/workflows/main.yml | 15 +++++++++++++++
-> >  ci/run-build-and-tests.sh  |  2 ++
-> >  ci/run-test-slice.sh       |  5 +++++
-> >  3 files changed, 22 insertions(+)
-> >
-> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> > index c35200defb9..785222aa7b3 100644
-> > --- a/.github/workflows/main.yml
-> > +++ b/.github/workflows/main.yml
-> > @@ -91,6 +91,13 @@ jobs:
-> >          HOME: ${{runner.workspace}}
-> >          NO_PERL: 1
-> >        run: . /etc/profile && ci/make-test-artifacts.sh artifacts
-> > +    - name: build Scalar
-> > +      shell: bash
-> > +      run: |
-> > +        make -C contrib/scalar &&
-> > +        mkdir -p artifacts/bin-wrappers artifacts/contrib/scalar &&
-> > +        cp contrib/scalar/scalar.exe artifacts/contrib/scalar/ &&
-> > +        cp bin-wrappers/scalar artifacts/bin-wrappers/
+> Hi Stolee,
 >
-> I see later you have a "copy Scalar" step which has some duplication
-> here. The only difference is that you have "make -C contrib/scalar".
+> On Thu, 2 Jun 2022, Derrick Stolee wrote:
 >
-> Doesn't Scalar get built in our basic "make" build when the
-> environment includes INCLUDE_SCALAR=3DYesPlease? So, for that reason I
-> expected the environment to change, but not need this "make -C ..."
-
-I originally did it that way, but somewhere along the refactoring, I
-removed that `INCLUDE_SCALAR` conditional (except in the CMake
-definition).
-
-Hmm.
-
-Now that you mention it, I guess it would be a good idea to reinstate it.
-Let me play with that for a bit.
-
-> >      - name: zip up tracked files
-> >        run: git archive -o artifacts/tracked.tar.gz HEAD
-> >      - name: upload tracked files and build artifacts
-> > @@ -161,6 +168,8 @@ jobs:
-> >        run: compat\vcbuild\vcpkg_copy_dlls.bat release
-> >      - name: generate Visual Studio solution
-> >        shell: bash
-> > +      env:
-> > +        INCLUDE_SCALAR: YesPlease
+>> On 6/2/2022 10:13 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> >
+>> > On Thu, Jun 02 2022, Derrick Stolee wrote:
+>> >
+>> >> On 6/2/2022 5:05 AM, Johannes Schindelin via GitGitGadget wrote:
+>> >>> Note that the changes to the GitHub workflow are somewhat transient =
+in
+>> >>> nature: Based on the feedback I received on the Git mailing list, I =
+see some
+>> >>> appetite for turning Scalar into a full-fledged top-level command in=
+ Git,
+>> >>> similar to gitk. Therefore my current plan is to do exactly that in =
+the end
+>> >>> (and I already have patches lined up to that end). This will essenti=
+ally
+>> >>> revert the ci/run-build-and-tests.sh change in this patch series.
+>> >>
+>> >> I expect that this won't be a full remote, since we will still want to
+>> >> exclude Scalar from the build without INCLUDE_SCALAR enabled.
 >
-> This is a bit isolated. Is there a way to specify the environment more
-> generally?
-
-I did that on purpose, to limit the scope as much as possible.
-
-It would of course be an option to set that environment variable for the
-entire `vs-build` job. Or even for the entire workflow.
-
-But I thought there was value in keeping the scope focused, so that
-contributors who investigate failing builds could figure out quickly, say,
-how to reproduce the issue locally.
-
+> We had this `INCLUDE_SCALAR` condition in microsoft/git for a while but
+> since I got the sense that many regulars were in favor of treating
+> `scalar` like a top-level command (similar to `gitk`), I've since changed
+> the over-all course to compiling it unconditionally.
 >
-> >        run: |
-> >          cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=3D`pwd`=
-/compat/vcbuild/vcpkg/installed/x64-windows \
-> >          -DNO_GETTEXT=3DYesPlease -DPERL_TESTS=3DOFF -DPYTHON_TESTS=3D=
-OFF -DCURL_NO_CURL_CMAKE=3DON
-> > @@ -174,6 +183,12 @@ jobs:
-> >        run: |
-> >          mkdir -p artifacts &&
-> >          eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=3DYes=
-Please ARTIFACTS_DIRECTORY=3Dartifacts NO_GETTEXT=3DYesPlease 2>&1 | grep =
-^tar)"
-> > +    - name: copy Scalar
-> > +      shell: bash
-> > +      run: |
-> > +        mkdir -p artifacts/bin-wrappers artifacts/contrib/scalar &&
-> > +        cp contrib/scalar/scalar.exe artifacts/contrib/scalar/ &&
-> > +        cp bin-wrappers/scalar artifacts/bin-wrappers/
-> >      - name: zip up tracked files
-> >        run: git archive -o artifacts/tracked.tar.gz HEAD
-> >      - name: upload tracked files and build artifacts
-> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> > index 280dda7d285..661edb85d1b 100755
-> > --- a/ci/run-build-and-tests.sh
-> > +++ b/ci/run-build-and-tests.sh
-> > @@ -51,4 +51,6 @@ esac
-> >  make $MAKE_TARGETS
-> >  check_unignored_build_artifacts
-> >
-> > +make -C contrib/scalar $MAKE_TARGETS
-> > +
+> The only remnant is the CMake definition, and only in the transitory phase
+> while Scalar is still in `contrib/scalar/`, and only because I could not
+> find a better way to encapsulate it.
 >
-> Again, this should "just work" when using INCLUDE_SCALAR in the
-> environment, right?
+> But yes, if we decide to go with the `INCLUDE_SCALAR` approach, it won't
+> be a full remove/revert.
 >
-> >  save_good_tree
-> > diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
-> > index f8c2c3106a2..b741fd8f361 100755
-> > --- a/ci/run-test-slice.sh
-> > +++ b/ci/run-test-slice.sh
-> > @@ -14,4 +14,9 @@ make --quiet -C t T=3D"$(cd t &&
-> >  	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
-> >  	tr '\n' ' ')"
-> >
-> > +if test 0 =3D "$1"
-> > +then
-> > +	make -C contrib/scalar test
-> > +fi
-> > +
+>> > Scalar (well, scalar.o, not scalar the binary) has been included in the
+>> > default build (including CI) for a while now.
+>>
+>> I'm talking about scalar the binary being important. I'm glad that
+>> scalar.o has been built already.
 >
-> This is still necessary for now.
+> These are the raw logs of the `linux-gcc` job of the most recent CI build
+> of `seen`, as of time of writing:
+>
+> https://github.com/git/git/commit/7f1978ce8bfe41074df4fc96ff7f2a28e5807fd=
+1/checks/6718714644/logs
+>
+> When I download those logs and then let my browser search for the term
+> "scalar", it comes up empty, even if, say, "range-diff.o" is found. Which
+> is exactly according to my plan: no part of Scalar is to be built unless
+> explicitly asked for.
+>
+> The only job that touches it is the `static-analysis` job, which is a bit
+> unfortunate. But I cannot justify the complexity of the patch it would
+> take to address that.
+>
+> In other words: The statement that `scalar.o` is included in the default
+> build, without any qualifying note about `static-analysis`, is quite
+> misleading.
 
-Thank you for your review! I will play around with the idea to modify the
-top-level `Makefile` so that a `make INCLUDE_SCALAR=3DYepOfCourse` would
-automatically include Scalar. I am just concerned that this would already
-open the discussion about taking Scalar out of `contrib/`, and I do want
-to discourage this discussion before the remaining upstreamable patches
-from https://github.com/microsoft/git/pull/479/commits made it into Git's
-main branch (except of course the patch to move Scalar out of `contrib`,
-https://github.com/microsoft/git/pull/479/commits/0e7b7653b29a).
+As the person making that claim: Yes that is really misleading, sorry.
 
-Thanks,
-Dscho
+I was under the false recollection that since we added it to $(OBJECTS)
+we built it by default, as in "make" was building it.
+
+It *is* of course built my "make objects" etc., but due to how our
+dependency tree works not to create "git", or even "libgit.a" (the
+dependency relationship there being the other way around).
+
+But an you point out (and I'd missed this, but it make sense in
+retrospect) I was (accidentally!) right in the "CI" part of that since
+we're including it in "make sparse", which is because we create *.sp
+files from everything we have a *.o for.
+
+As an aside re the "justify the complexity" the patch to "fix" that
+would be rather trivial:
+
+	diff --git a/Makefile b/Makefile
+	index 18ca6744a50..aae16d140a5 100644
+	--- a/Makefile
+	+++ b/Makefile
+	@@ -2966,7 +2966,7 @@ t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(G=
+ITLIBS) $(REFTABLE_TEST_LIB)
+	 check-sha1:: t/helper/test-tool$X
+	 	t/helper/test-sha1.sh
+=09=20
+	-SP_OBJ =3D $(patsubst %.o,%.sp,$(C_OBJ))
+	+SP_OBJ =3D $(patsubst %.o,%.sp,$(filter-out $(SCALAR_OBJECTS),$(C_OBJ)))
+=09=20
+	 $(SP_OBJ): %.sp: %.c %.o
+	 	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
+
+But (and I've noted this before) I think the better fix is to just
+properly integrate scalar.
+
+We (accidentally) have been building it by default, which the patches to
+integrate it sought to explictly avoid to avoid bothering anyone.
+
+But ... nobody's been bothered, so I think if anything this should be a
+data point suggesting that we're being overly careful in this case.
+
+I.e. that we don't need the many intermediate steps of adding
+special-cases to various components, when there seems to be unanimous
+agreement on the end-goal. Can't we just skip to that already?
+
+:)
