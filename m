@@ -2,221 +2,251 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10F76C43334
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 12:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 189C5C43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 12:18:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244179AbiFCMM3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 08:12:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44424 "EHLO
+        id S244277AbiFCMSa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 08:18:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240041AbiFCMM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 08:12:28 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10679248FD
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 05:12:26 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id v1so4850504ejg.13
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 05:12:26 -0700 (PDT)
+        with ESMTP id S242164AbiFCMS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 08:18:29 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B65A926ADB
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 05:18:26 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-2ec42eae76bso80198887b3.10
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 05:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Lf8rMKVMqFQ458Yh92cCBcJ/ZRngvw+JWJC41tcGIbg=;
-        b=YQlS81v8ha+NSy5x/HoxLf6d2G2Vzq+/yev2cP+QDANuvODNOHGlOXn0PHeUvD3ToD
-         m/LWBQBprOTuq/3B1vg/00Nsf08F1FFX2Fb4e62UnUXu3blAd6An6VPV+/3b6kph6yPZ
-         fX7AYdCSZgNwdznd3+5uUj+xIqHCrVyPBgjUyB1HARcDN3TviViPIeo2ue6AqoIGQVsS
-         wHGlpzDwQR/sgf8ahsc6ZyBUII+yMNFMkcmx6g1OxQDgY6wSSjtkM0TTZMQ7rkmkuTyA
-         QjSVe26cJ+qI/QzoaHjqNrbjLlaAT7OmyxF4yQo9drmbnwWHuy5w3brNwjYVuULRwt44
-         RBPg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Gjx4elszOhThlg8Xgtlqs0lyaNIg/XsuqsjAZR9W6DI=;
+        b=HajTny6cbL5Vs7ohMPUUi81GeKSUA3G3Er23ipyALqKiwQO2AU1I4olgj0S5wOA4vA
+         oM05+g+ouHCJHnsFYUaE7OnDY385mlUnmXMx75o+QHDVuVnwHS34TsQm1erppCR7Uvqx
+         Cx6rgCvfsnId5ZSPfDn2TlNleFcm2RIRLYgz4T6cHlX/QG+SS2pz8AMDP+edUsUUzHHT
+         qMk9QoT6uV2PebrD9Rzw+tFWAsPQGRJDOpqlHa0BMcdCvsibTSlWsQoewj2QZ/VM+B7I
+         ChIWNc6ThMQWzxj6byu7UyhOuU8M4G+64yFL3SorQ12Tj12E80ojqaw/y75cAifZ/3TY
+         3DTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Lf8rMKVMqFQ458Yh92cCBcJ/ZRngvw+JWJC41tcGIbg=;
-        b=lxQDDpwXHcputExa7LjFFboo8m9lT/2ECBOcgqBz7v4K1RKAhOD2nEq61gecjd6kea
-         EAoKq0uhgRIqvuDGAmldRmEtnAZRrlMq6PmZHx+7WS+3q2IhW5GdmFUi/7X5GYtjiX5U
-         WmZUfl0rhZ7Pyb/3uh32fe0ZI8bL07KEfx5TZihXyC8UZwZDWQhOkRurKgyrVE0v6yFh
-         MHdxzXq95+9mjwucJ2RemYULf46yzR9h4jqv292EugsLV/vT6Jsnx8wtreUViIPwtmIe
-         C5gueNhCZjtLl1VpXIg5mv550RKwkpPofxU5CheZsIl/lVsnC4QqNkYEUrnhLhHroKXN
-         Ut/A==
-X-Gm-Message-State: AOAM530aBOP561gD/oKZ15RhdKssPjb8JSCng4ieOpkO7TniKucTaNWl
-        hQVdCJkev8TZvnT3LnLgE9I=
-X-Google-Smtp-Source: ABdhPJzTkUCdJpl1pu6yvDHGSsQBVIkxQWI+JCbMJpUMsLsTXB2coUZ7py7AxeVsJO2ZiaPcdSkZDA==
-X-Received: by 2002:a17:907:1ca8:b0:70c:68ce:dade with SMTP id nb40-20020a1709071ca800b0070c68cedademr5279306ejc.723.1654258345453;
-        Fri, 03 Jun 2022 05:12:25 -0700 (PDT)
-Received: from localhost (78-131-17-130.pool.digikabel.hu. [78.131.17.130])
-        by smtp.gmail.com with ESMTPSA id z14-20020a170906074e00b006fecf62536asm488747ejb.188.2022.06.03.05.12.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 05:12:24 -0700 (PDT)
-Date:   Fri, 3 Jun 2022 14:12:23 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, bagasdotme@gmail.com,
-        johannes.Schindelin@gmx.de,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 1/4] t: regression git needs safe.directory when using
- sudo
-Message-ID: <20220603121223.GB1749@szeder.dev>
-References: <20220510174616.18629-1-carenas@gmail.com>
- <20220513010020.55361-1-carenas@gmail.com>
- <20220513010020.55361-2-carenas@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Gjx4elszOhThlg8Xgtlqs0lyaNIg/XsuqsjAZR9W6DI=;
+        b=2SQVX1duiAPwOPq5OuqXQyhKRmJWLABHzFWpPb5sMA5yl6KxJrwk/7MU3ObWHR7KgU
+         sIRcBAnrTv88pw/RJ78qInhYHwikRc3JTyDqQSg76Y5P52JsPTKOAzrW3hQauOn9Hfjr
+         OFZnbEbcRjTZXUCH/sT13abJe3oVw2esqoUnAbC3qrdvxX7PlO5s0jSm7UVEoM1WehQg
+         CYBa2GvTaeHZFLkgSizhrdO7Zd4Soc8Ht+iXuhXRUDI1npAVbE+R6sM6xyzfZ3Fp9Gmo
+         HD5jeubgW8t1qU+OPPtrkd28UWPg92RrzyXI4DipSl9AN5LyUe2NKVWOHFM6NJXNt7lJ
+         tU8Q==
+X-Gm-Message-State: AOAM532peYfgFz7y0dRjTv3p/gCt/yI2SVK7DpQyNJpI2LluNcTl0NxA
+        nkXvdijk8N+FI5HP3uTJO8wMCUFiGadWRn+ueIXs+YdtoDfSgg==
+X-Google-Smtp-Source: ABdhPJxJt+YClRlpZhvUmv36Pbpe52oVu8ty5p/mU/YtFT2Ju5YL8qUWiRJroLhr8Ww62xYAKRz3RMYP+SgPvLf6Wvc=
+X-Received: by 2002:a81:5d42:0:b0:2ff:152d:2a2e with SMTP id
+ r63-20020a815d42000000b002ff152d2a2emr10902806ywb.302.1654258705693; Fri, 03
+ Jun 2022 05:18:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220513010020.55361-2-carenas@gmail.com>
+References: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
+ <Yo68+kjAeP6tnduW@invalid> <8adba93c-7671-30d8-5a4c-4ad6e1084a22@iee.email>
+ <CACMKQb3exv13sYN5uEP_AG-JYu1rmVj4HDxjdw8_Y-+maJPwGg@mail.gmail.com>
+ <0201db28-d788-4458-e31d-c6cdedf5c9cf@iee.email> <AS8PR02MB730274D473C2BC3846D9FA3F9CDD9@AS8PR02MB7302.eurprd02.prod.outlook.com>
+ <20220530115339.3torgv5c2zw75okg@carbon> <220530.8635gr2jsh.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220530.8635gr2jsh.gmgdl@evledraar.gmail.com>
+From:   Aman <amanmatreja@gmail.com>
+Date:   Fri, 3 Jun 2022 17:48:14 +0530
+Message-ID: <CACMKQb3_j+iFcf5trZEcWoU7vAsscKv+_sLaEqg_qfazBPTo+Q@mail.gmail.com>
+Subject: Re: About GIT Internals
+To:     Git List <git@vger.kernel.org>
+Cc:     Konstantin Khomoutov <kostix@bswap.ru>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        "git-vger@eldondev.com" <git-vger@eldondev.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 12, 2022 at 06:00:17PM -0700, Carlo Marcelo Arenas Belón wrote:
-> Originally reported after release of v2.35.2 (and other maint branches)
-> for CVE-2022-24765 and blocking otherwise harmless commands that were
-> done using sudo in a repository that was owned by the user.
-> 
-> Add a new test script with very basic support to allow running git
-> commands through sudo, so a reproduction could be implemented and that
-> uses only `git status` as a proxy of the issue reported.
-> 
-> Note that because of the way sudo interacts with the system, a much
-> more complete integration with the test framework will require a lot
-> more work and that was therefore intentionally punted for now.
-> 
-> The current implementation requires the execution of a special cleanup
-> function which should always be kept as the last "test" or otherwise
-> the standard cleanup functions will fail because they can't remove
-> the root owned directories that are used.  This also means that if
-> failures are found while running, the specifics of the failure might
-> not be kept for further debugging and if the test was interrupted, it
-> will be necessary to clean the working directory manually before
-> restarting by running:
-> 
->   $ sudo rm -rf trash\ directory.t0034-root-safe-directory/
-> 
-> The test file also uses at least one initial "setup" test that creates
-> a parallel execution directory under the "root" sub directory, which
-> should be used as top level directory for all repositories that are
-> used in this test file.  Unlike all other tests the repository provided
-> by the test framework should go unused.
-> 
-> Special care should be taken when invoking commands through sudo, since
-> the environment is otherwise independent from what the test framework
-> setup and might have changed the values for HOME, SHELL and dropped
-> several relevant environment variables for your test.  Indeed `git status`
-> was used as a proxy because it doesn't even require commits in the
-> repository to work and usually doesn't require much from the environment
-> to run, but a future patch will add calls to `git init` and that will
-> fail to honor the default branch name, unless that setting is NOT
-> provided through an environment variable (which means even a CI run
-> could fail that test if enabled incorrectly).
-> 
-> A new SUDO prerequisite is provided that does some sanity checking
-> to make sure the sudo command that will be used allows for passwordless
-> execution as root without restrictions and doesn't mess with git's
-> execution path.  This matches what is provided by the macOS agents that
-> are used as part of GitHub actions and probably nowhere else.
-> 
-> Most of those characteristics make this test mostly only suitable for
-> CI, but it might be executed locally if special care is taken to provide
-> for all of them in the local configuration and maybe making use of the
-> sudo credential cache by first invoking sudo, entering your password if
-> needed, and then invoking the test with:
-> 
->   $ GIT_TEST_ALLOW_SUDO=YES ./t0034-root-safe-directory.sh
-> 
-> If it fails to run, then it means your local setup wouldn't work for the
-> test because of the configuration sudo has or other system settings, and
-> things that might help are to comment out sudo's secure_path config, and
-> make sure that the account you are using has no restrictions on the
-> commands it can run through sudo, just like is provided for the user in
-> the CI.
-> 
-> For example (assuming a username of marta for you) something probably
-> similar to the following entry in your /etc/sudoers (or equivalent) file:
-> 
->   marta	ALL=(ALL:ALL) NOPASSWD: ALL
-> 
-> Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/t0034-root-safe-directory.sh | 44 ++++++++++++++++++++++++++++++++++
->  1 file changed, 44 insertions(+)
->  create mode 100755 t/t0034-root-safe-directory.sh
-> 
-> diff --git a/t/t0034-root-safe-directory.sh b/t/t0034-root-safe-directory.sh
-> new file mode 100755
-> index 00000000000..f6a5d63ff41
-> --- /dev/null
-> +++ b/t/t0034-root-safe-directory.sh
-> @@ -0,0 +1,44 @@
-> +#!/bin/sh
-> +
-> +test_description='verify safe.directory checks while running as root'
-> +
-> +. ./test-lib.sh
-> +
-> +if [ "$GIT_TEST_ALLOW_SUDO" != "YES" ]
-> +then
-> +	skip_all="You must set env var GIT_TEST_ALLOW_SUDO=YES in order to run this test"
-> +	test_done
-> +fi
-> +
-> +test_lazy_prereq SUDO '
-> +	sudo -n id -u >u &&
-> +	id -u root >r &&
-> +	test_cmp u r &&
-> +	command -v git >u &&
-> +	sudo command -v git >r &&
+Hello everyone. I sent out an email here last week, asking for a list
+of resources, so I could better understand the workings and design of
+git. I really appreciate everyone, who gave the links and their
+advice.
 
-'command' is a shell builtin, thus it's not something 'sudo' can
-execute, so this prereq fails with:
+I have been reading about GIT for some time now, and have looked at
+almost all of the resources plus some others. I think I could say, I
+now have a decent conceptual understanding of how GIT  works
+internally.
 
-  [...]
-  + command -v git
-  + sudo command -v git
-  sudo: command: command not found
-  error: last command exited with $?=1
-  prerequisite SUDO not satisfied
-  ok 1 # skip setup (missing SUDO)
+(Also, I understood the chapter about git I read in the book I am
+reading, Architecture of Open Source Applications: Volume 2, which I
+didn't understand at all, the reason I started this thread). Although
+there must definitely be a lot of details and subtle things I may not
+understand yet (like branches are nothing but pointers to commits,
+wow! btw)
 
-Changing it to:
+Now, continuing this discussion, and talking about the implementation
+and engineering side of things, I wanted to ask another question and
+hence wanted some advice.
 
-  sudo sh -c "command -v git" >r &&
+Though I may understand the internal design and high-level
+implementation of GIT, I really want to know how it's implemented and
+was made, which means reading the SOURCE CODE.
 
-makes it work, but then it lists the path of the system git binary
-instead of the one that's supposed to be tested, so the prereq is
-still not satisfied (this is why the commit message suggested
-adjusting that secure_path config, right?  I haven't got that far
-yet.)
+1. I don't know how absurd of a quest this is, please enlighten me.
+2. How do I do it? Where do I start? It's such a BIG repository - and
+I am not guessing it's going to be easy.
+3. Would someone advise, perhaps, to have a look at an older version
+of the source code? rather than the latest one, for some reason.
 
-> +	test_cmp u r
-> +'
-> +
-> +test_expect_success SUDO 'setup' '
-> +	sudo rm -rf root &&
-> +	mkdir -p root/r &&
-> +	(
-> +		cd root/r &&
-> +		git init
-> +	)
-> +'
-> +
-> +test_expect_failure SUDO 'sudo git status as original owner' '
-> +	(
-> +		cd root/r &&
-> +		git status &&
-> +		sudo git status
-> +	)
-> +'
-> +
-> +# this MUST be always the last test
-> +test_expect_success SUDO 'cleanup' '
-> +	sudo rm -rf root
-> +'
-> +
-> +test_done
-> -- 
-> 2.36.1.371.g0fb0ef0c8d
-> 
+
+Again, I would really appreciate it if someone could give their
+thoughts on this.
+
+Thank you,
+
+Regards,
+Aman
+
+
+On Mon, May 30, 2022 at 7:40 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Mon, May 30 2022, Konstantin Khomoutov wrote:
+>
+> > On Mon, May 30, 2022 at 09:49:57AM +0000, Kerry, Richard wrote:
+> >
+> > [...]
+> >> > > 1. I haven't had the experience of working with other (perhaps eve=
+n
+> >> > > older) version control systems, like subversion. So when refering =
+to
+> >> > > the "control" aspect,
+> >> >
+> >> > The "control" aspect was from whoever was the 'manager' that limited
+> >> > access to the version system (i.e. acting like a museum curator), an=
+d deciding
+> >> > if your masterpiece was worthy of inclusion as a significant example=
+ of your
+> >> > craft, whether that was an engineering drawing or some software code=
+.
+> >>
+> >> I'm not sure I get that idea.  I worked using server-based Version Con=
+trol
+> >> systems from the mid 80s until about 5 years ago when the team moved f=
+rom
+> >> Subversion to Git.  There was never a "curator" who controlled what we=
+nt
+> >> into VC.  You did your work, developed files, and committed when you t=
+hought
+> >> it necessary.  When a build was to be done there would then be some
+> >> consideration of what from VC would go into the build. That is all sti=
+ll
+> >> there nowadays using a distributed system (ie Git).  Those doing Open =
+source
+> >> work might operate a bit differently, as there is of necessity distrib=
+ution
+> >> of control of what gets into a release. But those of us who are develo=
+ping
+> >> proprietary software are still going through the same sort of release
+> >> process.  And that's even if there isn't actually a separate person ac=
+tively
+> >> manipulating the contents of a release, it's just up to you to do what=
+'s
+> >> necessary (actually there are others involved in dividing what will be=
+ in,
+> >> but in our case they don't actively manipulate a repository).
+> >
+> > I think, the "inversion of control" brought in by DVCS-es about a bit
+> > differet set of things.
+>
+> Re the "I'm not sure I get that idea" from Richard I think his point
+> stands that some of the stories we carry around about the VCS v.s. DVCS
+> in free/open source software was more particular to how things were done
+> in those online communities, and not really about the implicit
+> constraints of centralized VCS per-se.
+>
+> Partly those two mix: It was quite common for free software projects not
+> to have any public VCS (usually CVS) access at all, some did, but it was
+> quite a hassle to set up, and not part of your "normal" workflow (as
+> opposed setting up a hoster git repository, which everyone uses) that
+> many just didn't do it.
+>
+> > I would say it is connected to F/OSS and the way most projects have bee=
+n
+> > hosted before the DVCS-es over: usually each project had a single repos=
+itory
+> > (say, on Sourceforge or elsewhere), and it was "truly central" in the s=
+ense
+> > that if anyone were to decide to work on that project, they would need =
+to
+> > contact whoever were in charge of that project and ask them to set up
+> > permissions allowing commits - may be not to "the trunk", but anyway th=
+e
+> > commit access was required because in centralized VCS commits are made =
+on the
+> > server side.
+>
+> We may have tried this in different eras, but from what I recall it was
+> a crapshoot whether there was any public VCS access at all. Some
+> projects were quite good about it, and sourceforge managed to push that
+> to more of them early on by making anonymous CVS access something you
+> could get by default.
+>
+> But a lot of projects simply didn't have it at all, you'll still find
+> some of them today, i.e. various bits of "infrastructure" code that the
+> maintainers are (presumably) still manually managing with zip snapshots
+> and manually applied patches.
+>
+> > (Of course, there were projects where you could mail your patchset to a
+> > maintainer, but maintaining such patchset was not convenient: you would=
+ either
+> > need to host your own fully private VCS or use a tool like Quilt [1].
+> > Also note that certain high-profile projects such as Linux and Git use =
+mailing
+> > lists for submission and review of patch series; this workflow coexists=
+ with
+> > the concept of DVCS just fine.)
+>
+> I'd add though that this isn't really "co-existing" with DVSC so much as
+> using patches on a ML as an indirect transport protocol for "git push".
+>
+> I.e. if you contributed to some similar projects "back in the day" you
+> could expect to effectively send your patche into a black-hole until the
+> next release, the maintainer would apply them locally, you wouldn't be
+> able to pull them back down via the DVCS.
+>
+> Perhaps there would be development releases, but those could be weeks or
+> even months apart, and a "real" release might be once every 1-2 years.
+>
+> Whereas both Junio and Linus (and other linux maintainers) publish their
+> version of the patches they do integrate fairly quickly.
+>
+> > [...] it also has possible
+> > downsides; one of a more visible is that when an original project becom=
+es
+> > dormant for some reason, its users might have hard time understanding w=
+hich
+> > one of competing forks to switch to, and there are cases when multiple
+> > competing forks implement different features and bugfixes, in parallel.
+> > One of the guys behind Subversion expressed his concerns about this bac=
+k then
+> > wgen Git was in its relative infancy [2].
+> >
+> >  1. https://en.wikipedia.org/wiki/Quilt_(software)
+> >  2. http://blog.red-bean.com/sussman/?p=3D20
+>
+> It's interesting that this aspect of what proponents of centralized VCS
+> were fearful of when it came to DVCS turned out to be the exact
+> opposite:
+>
+>     Notice what this user is now able to do: he wants to to crawl off
+>     into a cave, work for weeks on a complex feature by himself, then
+>     present it as a polished result to the main codebase. And this is
+>     exactly the sort of behavior that I think is bad for open source
+>     communities.
+>
+> I.e. lowering the cost to publish early and often has had the effect
+> that people are less likely to "crawl off into a cave" and work on
+> something for a long time without syncing up with other parallel
+> development.
