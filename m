@@ -2,177 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53904C43334
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 21:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53F84C43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 22:12:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345395AbiFCVzm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 17:55:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60798 "EHLO
+        id S1349275AbiFCWML (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 18:12:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348110AbiFCVzl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 17:55:41 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A415A5AA45
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 14:55:39 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id f35so6645068qtb.11
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 14:55:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :content-transfer-encoding;
-        bh=e36bNG+uU3yfnUQvY+SCxW2F+Lw1wJf4PY+061BqMyg=;
-        b=AGmQwkN12LmXjdMnXhUkTB388mI9rX/cyv4lysH52KSu8tVxY+4PmuPgAk5z20gGT0
-         sFdo1GkkuEISgTRh2r9QF+WFCmIawlDWFihdOqPJZvdt9IjuuGXa16ymYxyOFkaBpJlZ
-         hNGrq/K5R5zWeuetvzuJReN3GXwULXWhEfZRar3NpQaAwEtaFPHpzAsavRZGbyCEiX70
-         en0E02qWn71lbsDU8phQEeSQbVlL1W5sQGcayS6wfYb6f/YItTdyoG3dTdzpzwiiObfd
-         kCUzw3j7KRLyOGjv0FrP2uLQhg3zs1pyBvszJ79h18pKFX8sKxM4W3LfFt5E+HSJj7Q5
-         3HqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:content-transfer-encoding;
-        bh=e36bNG+uU3yfnUQvY+SCxW2F+Lw1wJf4PY+061BqMyg=;
-        b=qzHru8zo8y9Cutq/WcF/OxZEy9hZVjeK5gmecKVfdDHtu7zfFka+1IgY0f/TNxU0L/
-         50x3FdHuzNzfp80ATPYaKfE5s3myK1t2pRRwC2RUp7a2C5G2agXDlUezV8ICmeIcC/d7
-         aCqDH7RCorMNwcq7EAXh1t+UYVU47S1f91DKp7fkYMwGzIZjlBcng8ou+ci8ibarOpDT
-         2jj7a2Phf0mIvievL+8dDFf9XPdbWThLD0lHUd0Eb+rtcUsPj4WwVYlTtMsd2xhdcBQJ
-         uSbIkdWW5irDyfiPRRyy8nMpzeJIc4RQzqRv21KAJ2FtzHNK+i5F0VeWBZAzZXMYi3rF
-         Ux6Q==
-X-Gm-Message-State: AOAM531XiiZeMc5dqaY7M9rQkamTAj7Gdva3FVauyPKDmKwyW72fnOXf
-        nP9W2bT8uTqQ2Ugz2dcAp7kebd5NHwM3bgbb
-X-Google-Smtp-Source: ABdhPJx/X7APd2hMtk+Xq9JceUI4GDUY/ajKmPjXxrnMk7Ws3+tQbLpLGixP9L4s0OzyqOkqe2dm3A==
-X-Received: by 2002:a05:622a:40b:b0:304:e4be:65a with SMTP id n11-20020a05622a040b00b00304e4be065amr475314qtx.309.1654293338546;
-        Fri, 03 Jun 2022 14:55:38 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g22-20020ac870d6000000b00304e0245d88sm1565960qtp.48.2022.06.03.14.55.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 14:55:38 -0700 (PDT)
-Date:   Fri, 3 Jun 2022 17:55:36 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH] builtin/show-ref.c: avoid over-iterating with --heads, --tags
-Message-ID: <3fa6932641f18d78156bbf60b1571383f2cb5046.1654293264.git.me@ttaylorr.com>
+        with ESMTP id S232802AbiFCWMK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 18:12:10 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE8642BCD
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 15:12:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1654294319;
+        bh=9Y+6IPXF583Egl8vzI/UKmrTYXO+s9ahvofcfO+olao=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bTc13gsZYEd9Lmerpxnc8VLTbDsXMIZ8MwrMbP8sKSuEzQbxMkELmOraIMIPx7Gy/
+         PRgAvzJxjZ6PZTI+6WW1hNPjE3LnE3eyChSryuCem7V/z6/RzQqOUcIm72X1Y76hNx
+         8Um4GOoaMG0EHVt+cXoR+k5KXpXvT1ez+i2gZ3ek=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.206.165] ([213.196.213.247]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N9dwj-1nlP462u4j-015dXY; Sat, 04
+ Jun 2022 00:11:59 +0200
+Date:   Sat, 4 Jun 2022 00:11:58 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Sixt <j6t@kdbg.org>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
+ helper function
+In-Reply-To: <CABPp-BHQPrun3xhXBhbBnZ9cAy1sV7_r-kGsQhC-YsRMvoERmw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2206032359210.349@tvgsbejvaqbjf.bet>
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com> <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com> <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet> <CABPp-BFG_05RyVVyiHzOkuoT8=9NftJGp_W+DXd7ktqC5UfvwQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202251726500.11118@tvgsbejvaqbjf.bet> <CABPp-BGnqXdFBNAyKRXgvCHv+aUZTMg-CgcQf95dKAR-e1zSjQ@mail.gmail.com> <nycvar.QRO.7.76.6.2203071718090.11118@tvgsbejvaqbjf.bet> <CABPp-BGW39_5r8Lbt3ymR+F_=hWJcf=2e7O75vFNJ=3CEL5s=g@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2203101546110.357@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2205131220200.352@tvgsbejvaqbjf.bet> <CABPp-BHQPrun3xhXBhbBnZ9cAy1sV7_r-kGsQhC-YsRMvoERmw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:J+sbcGxv5erM+/zeJO7qqaMlYDDmjWzRGPTCykD1SSTxQNZ8k38
+ 9LNMWdxGfInTBKENTIaNPLY9cFEQ4ADV+43F0Ujfl03ywwFJXDQCTs/Y85EjTy49QR1Aaax
+ o7WAdDC5JlDlHp85HhAjSqmcmqofA5T73gBlYdCfHuUmE/fnfRBy3jtlLQhup53eZVjFL9N
+ PBS2/pNJ0lcoUrsobq5zA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:V3q5+cPs1kg=:3zMbCq2p16ZHPMawf/SAPd
+ 9jaD1An13A+TGmZcjgTUqhQniYuo6JevxAEBRercVDZkOUvYNa9Xhl2Z9wulZQSRdvcI6gIO1
+ p0p94bkc4s5xYU+oAJJ3hGLHzLR958aNvUJ3sRF1vIt4tvcxv+NSjBTy9Skk8WT0CT1WVnZ4E
+ UA2p0F8E1vcP8lbIm6ziUi5y1JDiwPJnJhpie8Oy+dr78uhiS5oL5DAayJMFLhjVqzF+b4u9u
+ 5DnxkXbXyeStHP/pgs9g0+vClgqYndDav64kN22Kyj9b3mS4BBT1OqJHJDpVgCSfAqfAklUUz
+ X5Fpvq6dl/TLEIp7/UC78KKtLjLMelhcZsOnme2f37DhwSyctnlPtjAcs1E84+PHaVlZdOI2C
+ se7AkPbL9j3efDnsQUlXEUZyrPTlOuURobngqTsTPNg1Ih0mxNa2xF5A9TiQrxOuA9icFtx4l
+ RIQmMAKtYK5JZ2eyEURR2QOriPgSfWuJH1vOpQMtPXaG6cFyephr8Y40sanI+xIeBlxHeVFEv
+ aitbSUYI80d5RExCflREy7LuMJrTD/VJlw1nse3S6NzAKfSqCKs7PCqZ8tHyEgxNPcJdtmcMf
+ uJIztTwoC9T5q5J0p3S6EleRpRuAUEngFS5pOkrQKweVoRrj20BLMh8l6wkp+N8k1sgH9e5Qy
+ YJFPTUkYqL9WlhS8mT93mPP3Ghxy5RYsWtFH61YdZKjw2Y0OjQrZcyKY+sDwupsRKTj3dzgq5
+ Xf/2qmm53QEx126cTJPoRGUFObc6SPvqPw8sRu2a63ico4/aWUWF1s/me3rdI6ts6nayrB+q4
+ C7YH78UUTsjP5qCKdwzXaFeQVuYcz+lH2dLjlVYQg+gjBfgeyN9JagwoUq/l0pLzkVT8Shxbl
+ oQkekd9SEC65D4cy7Q+raUnbaTo8AOx+cZ60ssRJJ5J1m5nU38SrzmulhsUG1R4bsvC6UixLM
+ Dc/7qfAHAeO+L1jZMJPxGShGai75+LrDfL2FDS6Dt8IPQdGYV/P3ZDMxy6DMYUClHuK3GRtqL
+ DRPToJSq8Z+66h2o4c5XRzAd0G8busaz+NX7puHKbKspue0TLCptsSPMIxMbvlJR4r0houplq
+ 71aDhBkrKKrK4z65RqxjTwj2ubTmRcbbknmHGOuM0IHJ9RDyDRBbvlGUw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `show-ref` is combined with the `--heads` or `--tags` options, it
-can avoid iterating parts of a repository's references that it doesn't
-care about.
+Hi Elijah,
 
-But it doesn't take advantage of this potential optimization. When this
-command was introduced back in 358ddb62cf (Add "git show-ref" builtin
-command, 2006-09-15), `for_each_ref_in()` did exist. But since most
-repositories don't have many (any?) references that aren't branches or
-tags already, this makes little difference in practice.
+On Tue, 17 May 2022, Elijah Newren wrote:
 
-Though for repositories with a large imbalance of branches and tags (or,
-more likely in the case of server operators, many hidden references),
-this can make quite a difference. Take, for example, a repository with
-500,000 "hidden" references (all of the form "refs/__hidden__/N"), and
-a single branch:
+> On Fri, May 13, 2022 at 3:21 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Thu, 10 Mar 2022, Johannes Schindelin wrote:
+> >
+> > > On Tue, 8 Mar 2022, Elijah Newren wrote:
+> > >
+> > > > So, this is one series where even if everyone else says to merge i=
+t
+> > > > already, I'd like to wait a bit longer on it until I feel confiden=
+t we
+> > > > have a solution that handles at least the current usecases.
+> > >
+> > > Fair enough, you're in charge of this series, and I really like what=
+ you
+> > > came up with.
+> > >
+> > > My thinking was driven more by the users' side, as I am relatively e=
+ager
+> > > to integrate this into production, but am loathe to do that with an =
+early
+> > > iteration of `en/merge-tree` that might be substantially revamped, s=
+till.
+> >
+> > I've been bogged down with things elsewhere, but should now have time =
+to
+> > help on this end.
+> >
+> > Elijah, _is_ there anything I can help with?
+>
+> Yeah, I've been bogged down with other things too; the little Git time
+> I've had has been spent responding to review requests or other things
+> folks manually were asking for my input on.
+>
+> I think I got a fair amount of this implemented about a month or so
+> ago.  I just pushed up what I have to the wip-for-in-core-merge-tree
+> branch of newren/git.
 
-    git commit --allow-empty -m "base" &&
-    seq 1 500000 | sed 's,\(.*\),create refs/__hidden__/\1 HEAD,' |
-      git update-ref --stdin &&
-    git pack-refs --all
+Thank you so much!
 
-Outputting the existence of that single branch currently takes on the
-order of ~50ms on my machine. The vast majority of this time is wasted
-iterating through references that we know we're going to discard.
+I worked a few hours on this and pushed up my changes under the same
+branch name to dscho/git.
 
-Instead, teach `show-ref` that it can iterate just "refs/heads" and/or
-"refs/tags" when given `--heads` and/or `--tags`, respectively. A few
-small interesting things to note:
+> Some notes:
+>
+>   * A big "WIP" commit that needs to be broken up
 
-  - When given either option, we can avoid the general-purpose
-    for_each_ref() call altogether, since we know that it won't give us
-    any references that we wouldn't filter out already.
+I did not yet start on that.
 
-  - We can make two separate calls to `for_each_fullref_in()` (and
-    avoid, say, the more specialized `for_each_fullref_in_prefixes()`,
-    since we know that the set of references enumerated by each is
-    disjoint, so we'll never see the same reference appear in both
-    calls.
+>   * The previous "output" member of merge_result, containing a strmap
+> of conflict and informational messages (basically a mapping of
+> filename -> strbuf) now needs to be replaced by a strmap "conflicts",
+> which is now a mapping of primary_filename -> logical_conflicts, and
+> logical_conflicts is an array of logical_conflict, and
+> logical_conflict has a type, array of paths, and message.
+>   * Since "output" is no longer part of merge_result, the new
+> remerge-diff functionality is going to need to be modified since it
+> used that field, and instead iterate on "conflicts" to get the same
+> information
 
-  - We have to use the "fullref" variant (instead of just
-    `for_each_branch_ref()` and `for_each_tag_ref()`), since we expect
-    fully-qualified reference names to appear in `show-ref`'s output.
+I punted on that for now, recreating an `output`-style strmap and storing
+it as `path_messages` attribute.
 
-When either of `heads_only` or `tags_only` is set, we can eliminate the
-strcmp() calls in `builtin/show-ref.c::show_ref()` altogether, since we
-know that `show_ref()` will never see a non-branch or tag reference.
+>   * I have some FIXME comments in a couple places where I need to
+> figure out how I want to pass the variable number of arguments (in a
+> function already accepting a variable number of arguments for other
+> reasons, making the function in a way have to variable length lists of
+> arguments)
 
-Unfortunately, we can't use `for_each_fullref_in_prefixes()` to enhance
-`show-ref`'s pattern matching, since `show-ref` patterns match on the
-_suffix_ (e.g., the pattern "foo" shows "refs/heads/foo",
-"refs/tags/foo", and etc, not "foo/*").
+In my WIP fixups, I refactored this into a version that takes varargs and
+another version that takes a string_list.
 
-Nonetheless, in our synthetic example above, this provides a significant
-speed-up ("git" is roughly v2.36, "git.compile" is this patch):
+However, after getting all this to compile and t4301 to pass, I think we
+actually only need a version that takes up to two "other" paths, and a
+version that takes a string_list with those "other" paths, where the
+former constructs a temporary string_list and then calls the latter.
 
-    $ hyperfine -N 'git show-ref --heads' 'git.compile show-ref --heads'
-    Benchmark 1: git show-ref --heads
-      Time (mean ± σ):      49.9 ms ±   6.2 ms    [User: 45.6 ms, System: 4.1 ms]
-      Range (min … max):    46.1 ms …  73.6 ms    43 runs
+>   * The new enums and structs I added to merge-ort.c really have to be
+> added to merge-ort.h and become part of the API.  Feels a little
+> unfortunate since it'll make the API _much_ more involved, but I don't
+> see any other way to solve your usecase.
 
-    Benchmark 2: git.compile show-ref --heads
-      Time (mean ± σ):       2.8 ms ±   0.4 ms    [User: 1.4 ms, System: 1.2 ms]
-      Range (min … max):     1.3 ms …   5.6 ms    957 runs
+I agree, but I did not do that yet ;-)
 
-    Summary
-      'git.compile show-ref --heads' ran
-       18.03 ± 3.38 times faster than 'git show-ref --heads'
+Another thing I noticed is that we can probably ensure consistency between
+the `conflict_and_info_types` enum and the `type_short_descriptions` array
+by using the same C99 construct we're already using in the
+`advice_setting` array in advice.c:
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-This is obviously a little extreme of an example for most use-cases,
-but it does come up more often than not within GitHub, where we have
-many repositories with lots of hidden references that we're wasting time
-enumerating with `show-ref`.
+	static const char *type_short_descriptions[NB_CONFLICT_TYPES] =3D {
+		/*** "Simple" conflicts and informational messages ***/
+		[INFO_AUTO_MERGING] =3D "Auto-merging",
+		[CONFLICT_CONTENTS] =3D "CONFLICT (contents)",
+	[...]
 
- builtin/show-ref.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+> If you want to take a stab at the above, or even see if my changes
+> make sense (sorry for it all being squashed into one big commit and
+> not having good commit messages, but, you know...you did ask), that'd
+> be great.
 
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 7f8a5332f8..5fa207a044 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -52,14 +52,6 @@ static int show_ref(const char *refname, const struct object_id *oid,
- 	if (show_head && !strcmp(refname, "HEAD"))
- 		goto match;
+Yes, I did ask, and I did receive ;-)
 
--	if (tags_only || heads_only) {
--		int match;
--
--		match = heads_only && starts_with(refname, "refs/heads/");
--		match |= tags_only && starts_with(refname, "refs/tags/");
--		if (!match)
--			return 0;
--	}
- 	if (pattern) {
- 		int reflen = strlen(refname);
- 		const char **p = pattern, *m;
-@@ -216,7 +208,14 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+Thank you so much! It would be great if you could have a quick look over
+the commits I added on top of your branch, to see whether things make more
+or less sense to you. But if you're too busy elsewhere, I am one of the
+best persons to understand that, too.
 
- 	if (show_head)
- 		head_ref(show_ref, NULL);
--	for_each_ref(show_ref, NULL);
-+	if (heads_only || tags_only) {
-+		if (heads_only)
-+			for_each_fullref_in("refs/heads/", show_ref, NULL);
-+		if (tags_only)
-+			for_each_fullref_in("refs/tags/", show_ref, NULL);
-+	} else {
-+		for_each_ref(show_ref, NULL);
-+	}
- 	if (!found_match) {
- 		if (verify && !quiet)
- 			die("No match");
---
-2.36.1.94.gb0d54bedca
+Thanks!
+Dscho
