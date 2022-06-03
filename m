@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7D71C43334
-	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 11:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67C81C43334
+	for <git@archiver.kernel.org>; Fri,  3 Jun 2022 11:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243935AbiFCLPo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jun 2022 07:15:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45082 "EHLO
+        id S242808AbiFCLPt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 07:15:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239758AbiFCLPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 07:15:34 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF4E73C484
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 04:15:32 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id p5-20020a1c2905000000b003970dd5404dso4184017wmp.0
-        for <git@vger.kernel.org>; Fri, 03 Jun 2022 04:15:32 -0700 (PDT)
+        with ESMTP id S242116AbiFCLPg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 07:15:36 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149633C481
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 04:15:34 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id p10so9966918wrg.12
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 04:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=88x2QsLj5/nAjPYcWAsIRM1UYqn9yuuLON7teCmH9vs=;
-        b=cL9c+3v5l0rAPLsE+5X0kEmMeahi9MhJRYO8KiHVViZ/uvQBIdQxJTNvNwhWZiV/dz
-         Y32F5KPNcU4Xex8X26G8jvbHa2H+H8E9cy43mcU5/Hk90ZxE/x8fUBGHzf65Fe9Ruyuy
-         Y8/jxCyURdPjD/qVQYzHev2jk6AitvZlg+YAraXsi9nfKwuSZrYOY115POlNHt0hY4GK
-         OL3MoCdCMolTO0NPgtm7wDLnsOXbo8AP9EqMPCDFJEhw2yL0nqhdAWtFgr0h38PfSFPN
-         qQtUG8uzNAmdbPUktwQ6Od8YaKnwU7SeXiG5+4AiYYwqn6Y67qDerblNM+cZFAcz5fsk
-         bIVg==
+        bh=cJqkjexwNzfVsVthgMgQghaTp0864lPorwG3hKAcsVQ=;
+        b=aUuaq5Dba0b0Yg5Hqn3HkAh3nuB5CgCaP3rHjUUpaR11wTruBozLK4Pyrcd20/L0CE
+         5hVLwkJ4F46WFdf/7ipRMBxfGRoixAKXlDiQtYGluc1dY7B+LydpN886oyqPl3CfxezD
+         2owqkXpY7djj21UzfMczPq2W2/aZctFJdb+oYYTJCitSuqimYfh0bqQ31bjKViPzbPNo
+         aLHG7AccZhGpb0aWtx53R3iAZILCWUZB0n6bMtlncJo5KNASlWknZqWW2MfwkicSn0o9
+         TtG/vGpZwrHO8o9wdp4VNO86APVPbzdzsdvKjomQe3oksD++7JB6S/+KD5/pjkfuu9iW
+         m8nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=88x2QsLj5/nAjPYcWAsIRM1UYqn9yuuLON7teCmH9vs=;
-        b=kOrsQNvjIEfOki1Zp5LqDQD7BQ3FXG58G6u9eI2eZO7TbZlQFSglrmv+9xAakTWuHF
-         0xJFgqjbbzcMZo6vt1agqzGtpHqXdazetYj5Ea7OfdwmuzowElQrDPgsAW9g33PmS3x0
-         mmAIo3exsMBat1V0yuAMyT9Nghb1jM3iZphrpDXgMWDkAJgOl/ua/2DIUYJ/IwD1Al5B
-         HYLBEPaZhxpRLQvIQ7g+hh1oUnD85j4P7zK/wabcp5a1mcKm9Q4XRhgJgRj+LHaR92Tf
-         YC6rB1jLAGN7ZPK+fWYlMXBlvIPFgvq0ZWQRGJNODu6jC2+tnIvMEocOUxZhbbh3RHwD
-         lkHg==
-X-Gm-Message-State: AOAM5300qYduaSXx87VWFN3EIcd7RbaNZJXHQnKHNZaP+ecAAvPFfKUA
-        CVzpbVY8m9evvj4+b8wRQnkUwXyGW7dKpA==
-X-Google-Smtp-Source: ABdhPJwpM5ewRinzzOWm6jbeztiK9GVKjE6M3Hq6yfJipood2PalI0L62jQV3OIOkdRRd/k+7ux8lQ==
-X-Received: by 2002:a7b:c041:0:b0:394:44a9:b017 with SMTP id u1-20020a7bc041000000b0039444a9b017mr8272788wmc.169.1654254930720;
-        Fri, 03 Jun 2022 04:15:30 -0700 (PDT)
+        bh=cJqkjexwNzfVsVthgMgQghaTp0864lPorwG3hKAcsVQ=;
+        b=lyWSBx/WAWUrrTM6WzMjKA21G6fhIcDPYPRTl/yYfr99AMfY6JdOLiQHh4ASTFajUH
+         EmKJaoIuAMyDYvzQGW0kArFgYTuWOsN6ZEVA5S4eqz16qqz1NXZfGlpHvak5WJBBORS/
+         2Q/Qfq3LADr7NxL8Tra7erAs+Ix0WkHSF5W65vtIF/l9Su9L3QFiCCkcevkwodB4fY6d
+         ZAcqgyDiIBCkjBv80d5xb7Owaqviq1mwgdLgiyBS29S+xXM+IJeciDcwOKxFnp9pKyBp
+         Q194+UZHZRAoTqTidX1uHk1eWZG/4CxECs/FXcFVkCQ8xDqu1aKpjvF3IcJecUdPRCj4
+         gwlQ==
+X-Gm-Message-State: AOAM533ZUgi/zuKvos2Wl7Yiq/ZUKvTE1JDllm+VpK3igwSFrjon/CHq
+        Nx2Ucvb/BCswlgca9u5hB54zeRSQjhRXjw==
+X-Google-Smtp-Source: ABdhPJyhrNmUMSpMnYpvkmQK+qqRdqaYims08kn7vtgcXbmas9OVeOqYgfsg474eLiS65dFf1DtdYQ==
+X-Received: by 2002:adf:dd02:0:b0:215:99d0:8031 with SMTP id a2-20020adfdd02000000b0021599d08031mr181173wrm.675.1654254932224;
+        Fri, 03 Jun 2022 04:15:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h24-20020adfa4d8000000b0020d0a57af5esm7184357wrb.79.2022.06.03.04.15.29
+        by smtp.gmail.com with ESMTPSA id h24-20020adfa4d8000000b0020d0a57af5esm7184357wrb.79.2022.06.03.04.15.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 04:15:29 -0700 (PDT)
+        Fri, 03 Jun 2022 04:15:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/7] tests: don't depend on template-created .git/branches
-Date:   Fri,  3 Jun 2022 13:15:04 +0200
-Message-Id: <patch-v2-2.7-c4d0e6c684b-20220603T110506Z-avarab@gmail.com>
+Subject: [PATCH v2 3/7] tests: don't assume a .git/info for .git/info/grafts
+Date:   Fri,  3 Jun 2022 13:15:05 +0200
+Message-Id: <patch-v2-3.7-967762b4670-20220603T110506Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1119.g5a713b43bd4
 In-Reply-To: <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
 References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com> <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
@@ -70,176 +70,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As noted in c8a58ac5a52 (Revert "Don't create the $GIT_DIR/branches
-directory on init", 2009-10-31) there was an attempt long ago in
-0cc5691a8b0 (Don't create the $GIT_DIR/branches directory on init,
-2009-10-30) to get rid of the legacy "branches" directory.
+Change those tests that assumed that a .git/info directory would be
+created for them when writing .git/info/grafts to explicitly create
+the directory.
 
-We should probably get rid of its creation by removing the
-"templates/branches--" file. But whatever our default behavior, our
-tests should be tightened up to explicitly create the .git/branches
-directory if they rely on our default templates, to make the
-dependency on those templates clear.
-
-So let's amend the two tests that would fail if .git/branches wasn't
-created. To do this introduce a new "TEST_CREATE_REPO_NO_TEMPLATE"
-variable, which we'll set before sourcing test-lib.sh, and change the
-"git clone" and "git init" commands in the tests themselves to
-explicitly pass "--template=".
-
-This way they won't get a .git/branches in either their top-level
-.git, or in the ones they create. We can then amend the tests that
-rely on the ".git/branches" directory existing to create it
-explicitly, and to remove it after its creation.
-
-This new "TEST_CREATE_REPO_NO_TEMPLATE" variable is a less
-heavy-handed version of the "NO_SET_GIT_TEMPLATE_DIR" variable. See
-a94d305bf80 (t/t0001-init.sh: add test for 'init with init.templatedir
-set', 2010-02-26) for its implementation.
-
-Unlike "TEST_CREATE_REPO_NO_TEMPLATE", this new
-"TEST_CREATE_REPO_NO_TEMPLATE" variable is narrowly scoped to what the
-"git init" in test-lib.sh does, as opposed to the global effect of
-"NO_SET_GIT_TEMPLATE_DIR" and the setting of "GIT_TEMPLATE_DIR" in
-wrap-for-bin.sh.
-
-I experimented with adding a new "GIT_WRAP_FOR_BIN_VIA_TEST_LIB"
-variable set in test-lib.sh, which would cause wrap-for-bin.sh to not
-set GIT_TEMPLATE_DIR, GITPERLLIB etc, as we set those in
-test-lib.sh. I think that's a viable approach, but it would interact
-e.g. with the appending feature of GITPERLLIB added in
-8bade1e12e2 (wrap-for-bin: make bin-wrappers chainable, 2013-07-04).
-
-Doing so would allow us to convert the tests in t0001-init.sh that now
-use "NO_SET_GIT_TEMPLATE_DIR" to simply unset "GIT_TEMPLATE_DIR" in a
-sub-shell before invoking "git init" or "git clone". I think that
-approach is worth pursuing, but let's table it for now. Some future
-wrap-for-bin.sh refactoring can try to address it.
+Do this using the new "TEST_CREATE_REPO_NO_TEMPLATE" facility, and use
+"mkdir" instead of "mkdir -p" to assert that we don't have the
+.git/info already. An exception to this is the "with grafts" test in
+"t6001-rev-list-graft.sh". There we're modifying our ".git" state in a
+for-loop, in lieu of refactoring that more extensively let's use
+"mkdir -p" there.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5505-remote.sh     |  6 ++++--
- t/t5516-fetch-push.sh | 16 ++++++++++++++--
- t/test-lib.sh         |  4 +++-
- 3 files changed, 21 insertions(+), 5 deletions(-)
+ t/annotate-tests.sh          | 3 ++-
+ t/t2400-worktree-add.sh      | 4 ++++
+ t/t5318-commit-graph.sh      | 3 ++-
+ t/t6001-rev-list-graft.sh    | 1 +
+ t/t6101-rev-parse-parents.sh | 2 ++
+ t/t8001-annotate.sh          | 1 +
+ t/t8002-blame.sh             | 1 +
+ t/t8012-blame-colors.sh      | 1 +
+ 8 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index fff14e13ed4..cfb47509e3f 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -957,11 +957,12 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/remotes' '
- '
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index cc01d891504..f1b9a6ce4da 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -153,7 +153,7 @@ test_expect_success 'blame evil merge' '
  
- test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
--	git clone one six &&
-+	git clone --template= one six &&
- 	origin_url=$(pwd)/one &&
- 	(
- 		cd six &&
- 		git remote rm origin &&
-+		mkdir .git/branches &&
- 		echo "$origin_url#main" >.git/branches/origin &&
- 		git remote rename origin origin &&
- 		test_path_is_missing .git/branches/origin &&
-@@ -972,10 +973,11 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
+ test_expect_success 'blame huge graft' '
+ 	test_when_finished "git checkout branch2" &&
+-	test_when_finished "rm -f .git/info/grafts" &&
++	test_when_finished "rm -rf .git/info" &&
+ 	graft= &&
+ 	for i in 0 1 2
+ 	do
+@@ -168,6 +168,7 @@ test_expect_success 'blame huge graft' '
+ 			graft="$graft$commit " || return 1
+ 		done
+ 	done &&
++	mkdir .git/info &&
+ 	printf "%s " $graft >.git/info/grafts &&
+ 	check_count -h 00 01 1 10 1
  '
- 
- test_expect_success 'migrate a remote from named file in $GIT_DIR/branches (2)' '
--	git clone one seven &&
-+	git clone --template= one seven &&
- 	(
- 		cd seven &&
- 		git remote rm origin &&
-+		mkdir .git/branches &&
- 		echo "quux#foom" > .git/branches/origin &&
- 		git remote rename origin origin &&
- 		test_path_is_missing .git/branches/origin &&
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 4dfb080433e..5d3054eeb89 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -17,6 +17,7 @@ This test checks the following functionality:
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 2f564d533d0..f3242fef6b6 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -5,6 +5,7 @@ test_description='test git worktree add'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_CREATE_REPO_NO_TEMPLATE=1
  . ./test-lib.sh
  
- D=$(pwd)
-@@ -25,7 +26,8 @@ mk_empty () {
- 	repo_name="$1"
- 	test_when_finished "rm -rf \"$repo_name\"" &&
- 	test_path_is_missing "$repo_name" &&
--	git init "$repo_name" &&
-+	git init --template= "$repo_name" &&
-+	mkdir "$repo_name"/.git/hooks &&
- 	git -C "$repo_name" config receive.denyCurrentBranch warn
- }
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+@@ -229,6 +230,7 @@ test_expect_success 'checkout with grafts' '
+ 	SHA1=$(git rev-parse HEAD) &&
+ 	test_commit def &&
+ 	test_commit xyz &&
++	mkdir .git/info &&
+ 	echo "$(git rev-parse HEAD) $SHA1" >.git/info/grafts &&
+ 	cat >expected <<-\EOF &&
+ 	xyz
+@@ -559,6 +561,8 @@ test_expect_success 'git worktree --no-guess-remote option overrides config' '
+ '
  
-@@ -77,7 +79,7 @@ mk_test_with_hooks() {
- 
- mk_child() {
- 	test_when_finished "rm -rf \"$2\"" &&
--	git clone "$1" "$2"
-+	git clone --template= "$1" "$2"
- }
- 
- check_push_result () {
-@@ -916,6 +918,7 @@ test_expect_success 'fetch with branches' '
- 	mk_empty testrepo &&
- 	git branch second $the_first_commit &&
- 	git checkout second &&
-+	mkdir testrepo/.git/branches &&
- 	echo ".." > testrepo/.git/branches/branch1 &&
+ post_checkout_hook () {
++	test_when_finished "rm -rf .git/hooks" &&
++	mkdir .git/hooks &&
+ 	test_hook -C "$1" post-checkout <<-\EOF
+ 	{
+ 		echo $*
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index fbf0d64578c..be0b5641ffc 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -361,13 +361,14 @@ test_expect_success 'replace-objects invalidates commit-graph' '
+ test_expect_success 'commit grafts invalidate commit-graph' '
+ 	cd "$TRASH_DIRECTORY" &&
+ 	test_when_finished rm -rf graft &&
+-	git clone full graft &&
++	git clone --template= full graft &&
  	(
- 		cd testrepo &&
-@@ -929,6 +932,7 @@ test_expect_success 'fetch with branches' '
+ 		cd graft &&
+ 		git commit-graph write --reachable &&
+ 		test_path_is_file .git/objects/info/commit-graph &&
+ 		H1=$(git rev-parse --verify HEAD~1) &&
+ 		H3=$(git rev-parse --verify HEAD~3) &&
++		mkdir .git/info &&
+ 		echo "$H1 $H3" >.git/info/grafts &&
+ 		git -c core.commitGraph=false log >expect &&
+ 		git -c core.commitGraph=true log >actual &&
+diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
+index 7294147334a..16635ecc33e 100755
+--- a/t/t6001-rev-list-graft.sh
++++ b/t/t6001-rev-list-graft.sh
+@@ -99,6 +99,7 @@ do
+ 	"
  
- test_expect_success 'fetch with branches containing #' '
- 	mk_empty testrepo &&
-+	mkdir testrepo/.git/branches &&
- 	echo "..#second" > testrepo/.git/branches/branch2 &&
- 	(
- 		cd testrepo &&
-@@ -943,7 +947,11 @@ test_expect_success 'fetch with branches containing #' '
- test_expect_success 'push with branches' '
- 	mk_empty testrepo &&
- 	git checkout second &&
-+
-+	test_when_finished "rm -rf .git/branches" &&
-+	mkdir .git/branches &&
- 	echo "testrepo" > .git/branches/branch1 &&
-+
- 	git push branch1 &&
- 	(
- 		cd testrepo &&
-@@ -955,7 +963,11 @@ test_expect_success 'push with branches' '
+ 	test_expect_success 'with grafts' "
++		mkdir -p .git/info &&
+ 		echo '$B0 $A2' >.git/info/grafts &&
+ 		check $type $B2 -- $B2 $B1 $B0 $A2 $A1 $A0
+ 	"
+diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
+index c571fa51797..5f55ab98d35 100755
+--- a/t/t6101-rev-parse-parents.sh
++++ b/t/t6101-rev-parse-parents.sh
+@@ -8,6 +8,7 @@ test_description='Test git rev-parse with different parent options'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- test_expect_success 'push with branches containing #' '
- 	mk_empty testrepo &&
-+
-+	test_when_finished "rm -rf .git/branches" &&
-+	mkdir .git/branches &&
- 	echo "testrepo#branch3" > .git/branches/branch2 &&
-+
- 	git push branch2 &&
- 	(
- 		cd testrepo &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 8ba5ca15345..144f14cc142 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1529,7 +1529,9 @@ remove_trash_directory "$TRASH_DIRECTORY" || {
- remove_trash=t
- if test -z "$TEST_NO_CREATE_REPO"
- then
--	git init "$TRASH_DIRECTORY" >&3 2>&4 ||
-+	git init \
-+	    ${TEST_CREATE_REPO_NO_TEMPLATE:+--template=} \
-+	    "$TRASH_DIRECTORY" >&3 2>&4 ||
- 	error "cannot run git init"
- else
- 	mkdir -p "$TRASH_DIRECTORY"
++TEST_CREATE_REPO_NO_TEMPLATE=1
+ . ./test-lib.sh
+ 
+ test_cmp_rev_output () {
+@@ -25,6 +26,7 @@ test_expect_success 'setup' '
+ 	git merge -m next --allow-unrelated-histories start2 &&
+ 	test_commit final &&
+ 
++	mkdir .git/info &&
+ 	test_seq 40 |
+ 	while read i
+ 	do
+diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
+index a536a621b24..d7167f55397 100755
+--- a/t/t8001-annotate.sh
++++ b/t/t8001-annotate.sh
+@@ -4,6 +4,7 @@ test_description='git annotate'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_CREATE_REPO_NO_TEMPLATE=1
+ . ./test-lib.sh
+ 
+ PROG='git annotate'
+diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+index ee4fdd8f18d..0147de304b4 100755
+--- a/t/t8002-blame.sh
++++ b/t/t8002-blame.sh
+@@ -4,6 +4,7 @@ test_description='git blame'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_CREATE_REPO_NO_TEMPLATE=1
+ . ./test-lib.sh
+ 
+ PROG='git blame -c'
+diff --git a/t/t8012-blame-colors.sh b/t/t8012-blame-colors.sh
+index 90c75dbb283..c3a5f6d01ff 100755
+--- a/t/t8012-blame-colors.sh
++++ b/t/t8012-blame-colors.sh
+@@ -4,6 +4,7 @@ test_description='colored git blame'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_CREATE_REPO_NO_TEMPLATE=1
+ . ./test-lib.sh
+ 
+ PROG='git blame -c'
 -- 
 2.36.1.1119.g5a713b43bd4
 
