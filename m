@@ -2,141 +2,306 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23319C43334
-	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 16:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3EFEC43334
+	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 17:31:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237397AbiFDQfK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jun 2022 12:35:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33336 "EHLO
+        id S239193AbiFDRbY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jun 2022 13:31:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238573AbiFDQfD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jun 2022 12:35:03 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB1D4EA15
-        for <git@vger.kernel.org>; Sat,  4 Jun 2022 09:35:02 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id s12so14114495ejx.3
-        for <git@vger.kernel.org>; Sat, 04 Jun 2022 09:35:02 -0700 (PDT)
+        with ESMTP id S234420AbiFDRbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jun 2022 13:31:23 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B055F33350
+        for <git@vger.kernel.org>; Sat,  4 Jun 2022 10:31:21 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-30c2f288f13so109458577b3.7
+        for <git@vger.kernel.org>; Sat, 04 Jun 2022 10:31:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=iwqhYQCjOJ1/jBKtwQDHNj7hymae4XmERKiu+Zk7OEQ=;
-        b=XmRvGsZjfSUYeBxsNr6QTQXW8iYv8GRtj6hnyB7+emA+jUQj1Nwv/hMurt/0CKBi9b
-         +XeZKW88oUGU+SuhxRdiCWN41Wgt6sP35GdpfNO6IV/rWQhVoTBnmdNjDVjayj9LzuR7
-         Lr0d58NAl6ZkWWprsya8mvrRHMQgPL9eBhnsip+Ohv2M0QE5HOu0i3Z64zNM6kh155z6
-         YBUserTgZQaFhSYkBCVpNVrIDlj6kDBPHjJAA+wwLowYWgHAtIHW5rgiDrDDUoQrkmVn
-         Eq79svdNiWwuIS/gXeBCQvayz0iNW1vdju+dmwwfM1WEMO6DpeZULSFq46+ow0Y5nHJE
-         qtQQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HeuJ/WKKyCubDReFZp4XragLYo7jlV95qrF1iOitKJY=;
+        b=MHGj9bz+I4reiIKrKiRQ1hYynW4ZX5oDELKs48rwoIi8h5N5yT12Wlss8zNx3WXjB7
+         vOVHDqPZ1jXyRq8WXK5Iyf3Ikz6hVlFcS/yCpvM9Ib8c303Zjz/elgxP1f9pQ7MO32bo
+         7jyCELWVOpMsj4f+yjXVE9kwDJPpan2UDC21f/jtJeH7XIFC/TQHdbi1XuQfnQPkF1WK
+         PD1/wymlasMlZI68m6u2gcYJ+8HJdJWqRem7m+HI5Oy4Gi1ng8Zn4WraNQ7Xpc0DriBP
+         uhJhdxtzkJi0Pgy8y2XfgJtYhutenuOidtv+brcvv9Mc8szQf3wNFEd/MnwM6wK1qa55
+         dAEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=iwqhYQCjOJ1/jBKtwQDHNj7hymae4XmERKiu+Zk7OEQ=;
-        b=sim2KT5ZPfZqddf1DxUZR2SR6wkuyZitL+bWybhrCzPmb4iTOtycuaYQi2T/J4Hweu
-         EZvDW0misCEu0+Gk1bUAfmtWxHlEOlZNpvYRVYE6wt3g5V8okaob+/nSri0k+kEMRX0a
-         pSjQHkITje6UtFMo4SZPkTnZsI2dC/3Rkx5w2qlEKAwog4+MkMKJOMHPZncPcbZyx0Kt
-         g4nQB0ag+6a2U10yn1VjtD/rr6OHL6s7SCL3EH2OjU7I/sE6i5L04FZCEVzFqTxc8dmz
-         z9SPyFU4iTY06m5qj/SYtSD/y0eYbBrCz5imengAGL3qs4i9/Bnx90azfE+yKnEfNSGE
-         JMdA==
-X-Gm-Message-State: AOAM530fffN8NGLElaySr5XzeTyc7fJRTNWpF2V+Qpt+Iepo1r8q5ydC
-        kYOwzP0EcVidRMmaPkhTdj0=
-X-Google-Smtp-Source: ABdhPJyOFhU1nwKbfbqupHuvzLCTgxNHLEZHxxfZfr22+8mm+5atmIwlk6bHmzi14uuhFKVDxLv/gw==
-X-Received: by 2002:a17:906:1492:b0:70e:294c:c37e with SMTP id x18-20020a170906149200b0070e294cc37emr7916343ejc.574.1654360500959;
-        Sat, 04 Jun 2022 09:35:00 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id y22-20020aa7ca16000000b0042dcbc3f302sm5614919eds.36.2022.06.04.09.35.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Jun 2022 09:35:00 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nxWjr-0020Sm-Jg;
-        Sat, 04 Jun 2022 18:34:59 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jinoh Kang <luke1337@theori.io>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Glen Choo <chooglen@google.com>, Paul Tan <pyokagan@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [RFC PATCH 03/15] reftable: don't memset() a NULL from failed
- malloc()
-Date:   Sat, 04 Jun 2022 18:23:13 +0200
-References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
- <RFC-patch-03.15-0b570d112fc-20220603T183608Z-avarab@gmail.com>
- <693ed3c3-535e-9eae-9fd7-ca612ebf6943@web.de>
- <220604.86pmjpw8h0.gmgdl@evledraar.gmail.com>
- <1de74bf7-0e75-8ae3-6ea7-62939b540061@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <1de74bf7-0e75-8ae3-6ea7-62939b540061@web.de>
-Message-ID: <220604.868rqcwfnw.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HeuJ/WKKyCubDReFZp4XragLYo7jlV95qrF1iOitKJY=;
+        b=a72kP3pdHj4yTqH60+EnycYS89CyFikmJaBzuNP2DEcaquzx7ya/IIRiN5Dt9S2ENl
+         l4+4BNkpdW4tMeHGG/6mNuHHByRiH/pSSDgLjkZsjmSF5tLqAX0g7/PozVFcbOGinF26
+         j/Ju/ZsTi6stfAjJRtujfu3T51Fjc4wPlHxzTry9C4WLDS1PxImVBrH5tKYmS3Y4ZfUt
+         J7CltR0GovoMMUXia2IrCE4mw5Hx2lHXE1Zjdz+341GDvGrJQdPKjJ9uf2liucKONFWc
+         nOElRtewHDsZhFhyDfirGdvTIrDKvMil2EG94/zyTS6EexBu6Gcb6AFWlorEMBLDObGj
+         NyTg==
+X-Gm-Message-State: AOAM531bXBcAFs/lyfL6XoremNLaf9NFgzGxbVHHRCAozgW3Khc6yqcz
+        OyPudBUEmd8s+RB/P19mRfRGVC1XhTvHfp07YQw=
+X-Google-Smtp-Source: ABdhPJz4sEvy4c5UrkIWfkewHAcD4gXvak7hLDhskAfkkz4kICAc+PQRm1bOfLtRRKq22EKy9DC81thCd0UHW+HqLDg=
+X-Received: by 2002:a81:1989:0:b0:30c:214e:f0ea with SMTP id
+ 131-20020a811989000000b0030c214ef0eamr17484336ywz.517.1654363880873; Sat, 04
+ Jun 2022 10:31:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20220603142521.42863-1-joak-pet@online.no> <20220604161333.54627-1-joak-pet@online.no>
+In-Reply-To: <20220604161333.54627-1-joak-pet@online.no>
+From:   Justin Donnelly <justinrdonnelly@gmail.com>
+Date:   Sat, 4 Jun 2022 13:30:45 -0400
+Message-ID: <CAGTqyRxS9aBitVivSTqojX_C_VBdgrD7JkUKgKSE6apjabzvQg@mail.gmail.com>
+Subject: Re: [PATCH v4] git-prompt: make colourization consistent
+To:     Joakim Petersen <joak-pet@online.no>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Sat, Jun 04 2022, Ren=C3=A9 Scharfe wrote:
-
-> Am 04.06.22 um 02:54 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>
->> To your comment here & some others (e.g. FREE_AND_NULL()): I was really
->> trying to focus on narrowly addressing these -fanalyzer issues without
->> digressing into the larger topics "what is this code *really* doing, and
->> does it make sense?". It was pretty unavoidable in 13/15 though.
->>
->> Which isn't to say that I shouldn't fix some of it, e.g. your
->> s/return/BUG()/ suggestion, but I think it's best to view these patches
->> with an eye towards us already having these issues, and in most cases
->> making -fanalyzer happy is a small cost.
->>
->> And by doing so and getting a "clean build" we'll be able to turn it on
->> in CI, and thus notice when we run into new -fanalyzer issues.
+On Sat, Jun 4, 2022 at 12:13 PM Joakim Petersen <joak-pet@online.no> wrote:
 >
-> Future analyzer reports are likely of the same quality as the current
-> ones.  If the goal is to shush them then we should just not use the
-> analyzer.  If reports contain a helpful signal, e.g. pointing to a real
-> bug or to overly complicated code, then we better address these issues.
+> The short upstream state indicator inherits the colour of the last short
+> state indicator before it (if there is one), and the sparsity state
+> indicator inherits this colour as well. Make the colourization of these
+> state indicators consistent by making all colourized indicators clear
+> their own colour.
 >
-> We can think about automating the analyzer once we have a certain number
-> of commits with improvements that would not have been made without it.
+> As of 0ec7c23cdc6 (git-prompt: make upstream state indicator location
+> consistent, 2022-02-27), colourization in the output of __git_ps1 has
+> changed such that the short upstream state indicator inherits the colour
+> of the last short state indicator before it (if there is one), while
+> before this change it was white/the default text colour. Some examples
+> to illustrate this behaviour (assuming all indicators are enabled and
+> colourization is on):
+>  * If there is something in the stash, both the '$' and the short
+>    upstream state indicator following it will be blue.
+>  * If the local tree has new, untracked files and there is nothing in
+>    the stash, both the '%' and the    short upstream state indicator
+>    will be red.
+>  * If all local changes are added to the index and the stash is empty,
+>    both the '+' and the short upstream state indicator following it will
+>    be green.
+>  * If the local tree is clean and there is nothing in the stash, the
+>    short upstream state indicator will be white/${default text colour}.
+>
+> This appears to be an unintended side-effect of the change, and makes
+> little sense semantically (e.g. why is it bad to be in sync with
+> upstream when you have uncommitted local changes?). The cause of the
+> change is that previously, the short upstream state indicator appeared
+> immediately after the rebase/revert/bisect/merge state indicator (note
+> the position of $p in $gitstring):
+>
+>         local f="$h$w$i$s$u"
+>         local gitstring="$c$b${f:+$z$f}${sparse}$r$p"
+>
+> Said indicator is prepended with the clear colour code, and the short
+> upstream state indicator is thus also uncoloured. Now, the short
+> upstream state indicator follows the sequence of colourized indicators,
+> without any clearing of colour (again note the position of $p, now in
+> $f):
+>
+>         local f="$h$w$i$s$u$p"
+>         local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}"
+>
+> If the user is in a sparse checkout, the sparsity state indicator
+> follows a similar pattern to the short upstream state indicator.
+> However, clearing colour of the colourized indicators changes how the
+> sparsity state indicator is colourized , as it currently inherits (and
+> before the change referenced also inherited) the colour of the last
+> short state indicator before it. Reading the commit message of the
+> change that introduced the sparsity state indicator, afda36dbf3b
+> (git-prompt: include sparsity state as well, 2020-06-21), it appears
+> this colourization also was unintended, so clearing the colour for said
+> indicator further increases consistency.
+>
+> Colouring of $c was made dependent on it not being empty, as it is no
+> longer being used to colour the branch name. Removal of $b's prefix was
+> moved to before the colourization so it gets cleared properly now that
+> colour codes are inserted into it.
+>
+> Due to colour clearing being moved into the variables for each coloured
+> indicator, the tests for the coloured Bash prompt had to be changed:
+>  * All colour tests now have the colour codes around the expected
+>    content of the expanded $__git_ps1_branch_name variable instead of
+>    the unexpanded variable in the string.
+>  * The test with two indicators had a clear-colour code inserted after
+>    the symbol for the first indicator, since all indicators clear their
+>    own colours now.
+>
+> Signed-off-by: Joakim Petersen <joak-pet@online.no>
+> ---
+> Changes since v3:
+>  * All colourized variables now also clear their own colour.
+>  * Variables are only coloured if they are not empty, except $b (branch
+>    name), which is not an optional indicator.
+>  * Updated tests to reflect the new colourization behaviour.
+>  * Fixed a mistake in two of the examples; the stash indicator is the
+>    last of the short state indicators preceding the short upstream state
+>    indicator.
+>
+> Range-diff against v3:
+> 1:  0e107d0496 < -:  ---------- git-prompt: make colourization consistent
+> -:  ---------- > 1:  98ce78ddc5 git-prompt: make colourization consistent
+>
+>  contrib/completion/git-prompt.sh | 20 +++++++++++---------
+>  t/t9903-bash-prompt.sh           | 18 +++++++++---------
+>  2 files changed, 20 insertions(+), 18 deletions(-)
+>
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index 87b2b916c0..32bb98bb8d 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -245,7 +245,8 @@ __git_ps1_show_upstream ()
+>
+>  # Helper function that is meant to be called from __git_ps1.  It
+>  # injects color codes into the appropriate gitstring variables used
+> -# to build a gitstring.
+> +# to build a gitstring. Colored variables are responsible for clearing
+> +# their own color.
+>  __git_ps1_colorize_gitstring ()
+>  {
+>         if [[ -n ${ZSH_VERSION-} ]]; then
+> @@ -271,22 +272,23 @@ __git_ps1_colorize_gitstring ()
+>         else
+>                 branch_color="$bad_color"
+>         fi
+> -       c="$branch_color$c"
+> +       if [ -n "$c" ]; then
+> +               c="$branch_color$c$c_clear"
+> +       fi
+> +       b="$branch_color$b$c_clear"
+>
+> -       z="$c_clear$z"
+>         if [ "$w" = "*" ]; then
+> -               w="$bad_color$w"
+> +               w="$bad_color$w$c_clear"
+>         fi
+>         if [ -n "$i" ]; then
+> -               i="$ok_color$i"
+> +               i="$ok_color$i$c_clear"
+>         fi
+>         if [ -n "$s" ]; then
+> -               s="$flags_color$s"
+> +               s="$flags_color$s$c_clear"
+>         fi
+>         if [ -n "$u" ]; then
+> -               u="$bad_color$u"
+> +               u="$bad_color$u$c_clear"
+>         fi
+> -       r="$c_clear$r"
+>  }
+>
+>  # Helper function to read the first line of a file into a variable.
+> @@ -554,6 +556,7 @@ __git_ps1 ()
+>                 fi
+>         fi
+>
+> +       b=${b##refs/heads/}
+>         local z="${GIT_PS1_STATESEPARATOR-" "}"
+>
+>         # NO color option unless in PROMPT_COMMAND mode or it's Zsh
+> @@ -563,7 +566,6 @@ __git_ps1 ()
+>                 fi
+>         fi
+>
+> -       b=${b##refs/heads/}
+>         if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+>                 __git_ps1_branch_name=$b
+>                 b="\${__git_ps1_branch_name}"
+> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+> index bbd513bab0..abd82eec35 100755
+> --- a/t/t9903-bash-prompt.sh
+> +++ b/t/t9903-bash-prompt.sh
+> @@ -541,7 +541,7 @@ test_expect_success 'prompt - pc mode' '
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - branch name' '
+> -       printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmain" >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_green}main${c_clear}" >expected &&
+>         (
+>                 GIT_PS1_SHOWCOLORHINTS=y &&
+>                 __git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
+> @@ -551,7 +551,7 @@ test_expect_success 'prompt - bash color pc mode - branch name' '
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - detached head' '
+> -       printf "BEFORE: (${c_red}\${__git_ps1_branch_name}${c_clear}):AFTER\\n(%s...)" $(git log -1 --format="%h" b1^) >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_red}(%s...)"${c_clear} $(git log -1 --format="%h" b1^) >expected &&
+>         git checkout b1^ &&
+>         test_when_finished "git checkout main" &&
+>         (
+> @@ -563,7 +563,7 @@ test_expect_success 'prompt - bash color pc mode - detached head' '
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty worktree' '
+> -       printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmain" >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}*${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
+>         echo "dirty" >file &&
+>         test_when_finished "git reset --hard" &&
+>         (
+> @@ -576,7 +576,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index' '
+> -       printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmain" >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name} ${c_green}+${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
+>         echo "dirty" >file &&
+>         test_when_finished "git reset --hard" &&
+>         git add -u &&
+> @@ -590,7 +590,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index and worktree' '
+> -       printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmain" >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}*${c_clear}${c_green}+${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
+>         echo "dirty index" >file &&
+>         test_when_finished "git reset --hard" &&
+>         git add -u &&
+> @@ -605,7 +605,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - dirty status indicator - before root commit' '
+> -       printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmain" >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name} ${c_green}#${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
+>         (
+>                 GIT_PS1_SHOWDIRTYSTATE=y &&
+>                 GIT_PS1_SHOWCOLORHINTS=y &&
+> @@ -617,7 +617,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - befo
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - inside .git directory' '
+> -       printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nGIT_DIR!" >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_green}GIT_DIR!${c_clear}" >expected &&
+>         echo "dirty" >file &&
+>         test_when_finished "git reset --hard" &&
+>         (
+> @@ -631,7 +631,7 @@ test_expect_success 'prompt - bash color pc mode - inside .git directory' '
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - stash status indicator' '
+> -       printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmain" >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name} ${c_lblue}\$${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
+>         echo 2 >file &&
+>         git stash &&
+>         test_when_finished "git stash drop" &&
+> @@ -645,7 +645,7 @@ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
+>  '
+>
+>  test_expect_success 'prompt - bash color pc mode - untracked files status indicator' '
+> -       printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmain" >expected &&
+> +       printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}%%${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
+>         (
+>                 GIT_PS1_SHOWUNTRACKEDFILES=y &&
+>                 GIT_PS1_SHOWCOLORHINTS=y &&
+> --
+> 2.36.1
+>
 
-We might decide not to go with -fanalyzer in CI or whatever, but I
-really think that your line of reasoning here is just the wrong way to
-evaluate the cost/benefit of -fanalyzer, a new warning or whatever.
-
-There's ~15 commits in this series addressing things -fanalyzer brought
-up, and it would be ~20 if the remaining issues I punted on were
-addressed.
-
-The question shouldn't be whether those things in particular were worth
-the effort, but whether the added safety of getting the new diagnostic
-going forward is worth the one-time cost.
-
-Some of these commits are fixing issues going back to 2007-ish, $(git
-log --no-merges --oneline -- '*.[ch]' | wc -l) is ~25k lines. And
-looking at it like that 20/25K isn't that bad of a ratio :)
-
-FWIW I spotted a couple of bugs in my own unsubmitted code from running
-all of it through -fanalyzer, and that POV is also worth thinking about,
-i.e. it's not just about improving git's current code, or even commits
-that might land in git.git in the future.
-
-But also to provide a development aid so that when we're writing patches
-we spot issues earlier, even if they're ones we might spot before we
-send the patch, or in review before it gets applied.
-
-It's also a much faster way of spotting certain issues, if you take into
-account that we've already been spotting some of these with the likes of
-SANITIZE=3Daddress, valgrind runs, or coverity.
-
-I find the warning output from -fanalyzer to be *really useful*. It's
-scarily verbose at first, but it's basically doing most of the work for
-you in terms of exhaustively describing how the control flow got to a
-given location. With e.g. SANITIZE=3Daddress and valgrind (to the extent
-that they overlap) you might get a stacktrace or two, but you generally
-have to chase all that down yourself.
-
+I like this solution. This isn't new, but does anybody know if there
+is a reason why `$w` is compared for equality to "*" as opposed to
+just checking whether it's a nonempty value (`-n`)? I think I'd
+generally prefer it to be consistent with the others, which has the
+added benefit of continuing to work if the asterisk is ever changed to
+something else.
