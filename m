@@ -2,99 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7D9AC43334
-	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 12:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF706C433EF
+	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 12:47:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236053AbiFDMZJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jun 2022 08:25:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42642 "EHLO
+        id S245051AbiFDMrl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jun 2022 08:47:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231445AbiFDMZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jun 2022 08:25:07 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F2A1CB13
-        for <git@vger.kernel.org>; Sat,  4 Jun 2022 05:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1654345472;
-        bh=7RdO+hDis5+pdKARTbucxjcETUcquVvO7rzURjcqxqA=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=ZutmWEm43/d3d5CqeqaVtnd2VWC4PSNX3d2motC0tHqPvyUqmEyaxzGYPA8aMs9GU
-         DZ6PJ7dT8/RqZpF/NXafio3GXZhNLWFrS54paj0BfvIL7TQDhvunWCrUJKCaBxn+cz
-         2B0nFIPP3mV8XhuyfZA2wOvelmmyLmRusj5YVWEw=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1McIgY-1nNI8S2Gku-00ct4U; Sat, 04
- Jun 2022 14:24:32 +0200
-Message-ID: <1de74bf7-0e75-8ae3-6ea7-62939b540061@web.de>
-Date:   Sat, 4 Jun 2022 14:24:30 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.10.0
-Subject: Re: [RFC PATCH 03/15] reftable: don't memset() a NULL from failed
- malloc()
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        with ESMTP id S241052AbiFDMrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jun 2022 08:47:40 -0400
+X-Greylist: delayed 60 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 04 Jun 2022 05:47:36 PDT
+Received: from smtp-out-5.talktalk.net (smtp-out-5.talktalk.net [62.24.135.69])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD8F13E26
+        for <git@vger.kernel.org>; Sat,  4 Jun 2022 05:47:36 -0700 (PDT)
+Received: from app-12.app.tt.ham.xion.oxcs.net ([185.74.64.161])
+        by smtp.talktalk.net with SMTP
+        id xTAnnA0RKoOuUxTAnnmwH3; Sat, 04 Jun 2022 13:46:34 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1654346794;
+        bh=M0w3oxPfExCs1qwV5CJmD8kn4iRHtAqtHVAVHKmWDUI=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject;
+        b=oZLQeDT3kESYyqnCOJgVMPPDTPXZWJj/dSkTZReW5RQ0aZzRqrH5iCXcQ7ejQbUfL
+         y5kM2NiiqMEO9YsMaIK1pG2Oh80HaghGJDGebYVohphBApfne2O3XBVAVIse/pqfGh
+         KEE4eSUsVjCvGwdFV1jTSOBOK9u8f6je4MpoSaT4=
+Date:   Sat, 4 Jun 2022 13:46:33 +0100 (BST)
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
         Jinoh Kang <luke1337@theori.io>,
-        Phillip Wood <phillip.wood@talktalk.net>,
         Glen Choo <chooglen@google.com>, Paul Tan <pyokagan@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         Jeff Smith <whydoubt@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Message-ID: <870925774.539833.1654346793623@apps.talktalk.co.uk>
+In-Reply-To: <RFC-patch-07.15-cf1a5f3ed0f-20220603T183608Z-avarab@gmail.com>
 References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
- <RFC-patch-03.15-0b570d112fc-20220603T183608Z-avarab@gmail.com>
- <693ed3c3-535e-9eae-9fd7-ca612ebf6943@web.de>
- <220604.86pmjpw8h0.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <220604.86pmjpw8h0.gmgdl@evledraar.gmail.com>
+ <RFC-patch-07.15-cf1a5f3ed0f-20220603T183608Z-avarab@gmail.com>
+Subject: Re: [RFC PATCH 07/15] strbuf.c: placate -fanalyzer in strbuf_grow()
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NCXjWMU3qW95OmIG+5WFI4CY5DjANCL/cw00FMINcHBEQDXDbq1
- Pxj8k7LWTIF8uIJwQjMB0xlG7I2TQrRS2w7usbldgLPzZKNWl0KciDx3VZtlBWHyAo4Yr+f
- sfhddk32KVjkr02BsWDZq7claKdedf/88AYH/IX7PhIPkvHPf3ocQGuiMzvTSeTDA2mGEgK
- 6WJmfjLc01zl4OOIUk9zQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lxWsNZ/Y0VE=:n76HCICn9oBW8rgYqQ18bm
- 0DGj9wtXJMxWGgSPe8JlDiaTECFXoP3pGmoth75O+dCEIirVanJzSvu/1lrjbYpUZJ/PeOKwk
- VntWC6sWS+jAHHb2VGwaA467Tj0/SD41jfUeL76v9WJUUHHlnzYiQqVdjHSLeBq98MRqDnQCW
- o+irRoEosbHeYd1aBiS3FVTUpANFnxHXeWKiCdVJhdJSqKw0XbtQ9U21RErAYQHnqFsjmbTaP
- MjkeVy2egkqmnyCWsq5+e1uiT6iCssvgPt+/LrweL9QoQfd/+v7K8fXEkoFJM/tfxRJLnRIxX
- d1Dl9kzlo/wN+lM2Ia1rtR0W/Jk23FdFfbBtChBEGBegDeAXOsJQXhvbBqtLP26IFWNL3YYzp
- BDGKyo2ljvjuEnwUPAgFwOsQizWV/O+4rWJ6Tm5Dry5gxXpTCtFgfCQOdhAYkln1f+SpKtnm0
- LErvkOfGiFo0ng8Pcp7A9+re/t6dQsCgM9knX/V3WjulXPwSgijsgsd4UWdTAbqF1qRfJzo9w
- UP2HE1zlto51UGwt0+ESieHYJxRdHDj7EF+eXZV6zbQquQ1hjt6m2cF4O/qaH4dUhlXPHtpYL
- OStO3v+1R9vKXqhBbAYniQlORM6Gy5sJP05OfecMEp38EVPjFXDevdsLQ95lc+7eAM+v8AQxo
- FkY256YDG4x1helerAq5oP8s+IvQ9zcrhdA7vyP6PyCLGU9v8GL6uGaSJUgk9sfce7g365EMO
- MRORJowOBn4VPpMd14qjYNYkW+AGRh1Bzp9Uy6fCYxVcJdrOE673JiyBzIsc8ViBMJabGBOnK
- xWD2MzsOfG98pH8e9EFSLy9R6zIxTla7krtixDeCS/8vTmfCtO1GQbNAbiuBPOAMH5pdb5dvh
- rUueIBRTJ9ou8S6Ri6BKehIWOYahMoZarlJxYHvuwhBvX0L80hrKlps9dWqqYn5b6K6kbjefK
- mAMOLXRFTvRkNo5QMD1MnUn0lCYihUuDxyt08YfsFxeMpolte/vF1PHesyiIIX7WVkBKGXhkI
- hvH/TgEyR7QeMx3yIkp9kD0iZNJ97zUlLWxjNgl1lrLGCBgbJo3vToVU0n85b9eu2blznpa3v
- M0bSuoiGrELkFna+4ATawNU0OY4kpJ/jZJ1
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.8.4-Rev79
+X-Originating-IP: 31.185.185.192
+X-Originating-Client: open-xchange-appsuite
+X-CMAE-Envelope: MS4wfFyD10ycq2PfD720Fr9543WWWj+yWVi6+sBKsEzT0zsism7IpbaoqghrgVUzGDSStuGywWO1lDQt5mfwUOJ1sP1RhG3GX4hVwV1Xbjvmt0a/w0xn1wY/
+ 8hYgCWdOYddeDbJXYWcL5S28RTAs3qBTeErNmiZpq86huXguTt9R8xm7NeiX8yHUui2G0vlLhSIfBW1kVNAxbySLXgSnL4o77tFLlTl/YbSlIBzHGs7XSD5j
+ PogEBBXopgiRA3jDXMHSfGVIYO2rjjp65OHVGZ1wgbJ3GkIReGZn62HUM6l+uitUkZvZq9qRud+VtSQWz9CXhN7Qf1DtW+SBlHtR/aarih1kShr5xvLfv/db
+ vfl783AkcIb5yJw1w4nrOi9k7oYYr29B/7JlGZydFzyF3BMeCowqrR7gYtc+Txmtrn6DTNXPKY4ppJDT/qXWUDXPEHA3GGVvm4/2FMlCh63ROn10lvtobzbI
+ 1ZiavumVBk9HM9Bp
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.06.22 um 02:54 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> To your comment here & some others (e.g. FREE_AND_NULL()): I was really
-> trying to focus on narrowly addressing these -fanalyzer issues without
-> digressing into the larger topics "what is this code *really* doing, and
-> does it make sense?". It was pretty unavoidable in 13/15 though.
->
-> Which isn't to say that I shouldn't fix some of it, e.g. your
-> s/return/BUG()/ suggestion, but I think it's best to view these patches
-> with an eye towards us already having these issues, and in most cases
-> making -fanalyzer happy is a small cost.
->
-> And by doing so and getting a "clean build" we'll be able to turn it on
-> in CI, and thus notice when we run into new -fanalyzer issues.
+Hi =C3=86var
 
-Future analyzer reports are likely of the same quality as the current
-ones.  If the goal is to shush them then we should just not use the
-analyzer.  If reports contain a helpful signal, e.g. pointing to a real
-bug or to overly complicated code, then we better address these issues.
+[This is an old address that I only have webmail access to, please use phil=
+lip.wood@dunelm.org.uk when cc'ing me]
 
-We can think about automating the analyzer once we have a certain number
-of commits with improvements that would not have been made without it.
+> On 03 June 2022 at 19:37 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
+mail.com> wrote:
+>=20
+>=20
+> Change the strbuf_grow() function so that GCC v12's -fanalyze doesn't
+> yell at us about sb->buf[0] dereferencing NULL, this also makes this
+> code easier to follow.
+>=20
+> This BUG() should be unreachable since the state of our "sb->buf" and
+> "sb->alloc" goes hand-in-hand, but -fanalyzer isn't smart enough to
+> know that, and adding the BUG() also makes it clearer to human readers
+> that that's what happens here.
+>=20
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  strbuf.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>=20
+> diff --git a/strbuf.c b/strbuf.c
+> index dd9eb85527a..61c4630aeeb 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -97,6 +97,8 @@ void strbuf_grow(struct strbuf *sb, size_t extra)
+>  =09if (new_buf)
+>  =09=09sb->buf =3D NULL;
+>  =09ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
+> +=09if (new_buf && !sb->buf)
+> +=09=09BUG("for a new buffer ALLOC_GROW() should always do work!");
 
-Ren=C3=A9
+This is a bit ugly, have you tried adding
+__attribute__((malloc (free), returns_nonnull))
+to xmalloc() and xrealloc() ?
+
+Best Wishes
+
+Phillip
+
+>  =09if (new_buf)
+>  =09=09sb->buf[0] =3D '\0';
+>  }
+> --=20
+> 2.36.1.1124.g577fa9c2ebd
+>
