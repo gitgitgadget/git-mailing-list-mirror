@@ -2,201 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F98C43334
-	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 13:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65E34C43334
+	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 15:24:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236395AbiFDN2E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jun 2022 09:28:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46826 "EHLO
+        id S237700AbiFDPYY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jun 2022 11:24:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232046AbiFDN2C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jun 2022 09:28:02 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37863201AE
-        for <git@vger.kernel.org>; Sat,  4 Jun 2022 06:27:59 -0700 (PDT)
-Received: from host-89-242-71-63.as13285.net ([89.242.71.63] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1nxToq-000AMB-FR;
-        Sat, 04 Jun 2022 14:27:57 +0100
-Message-ID: <b767ee9f-5c93-0c82-f551-7c1673adcc62@iee.email>
-Date:   Sat, 4 Jun 2022 14:27:54 +0100
+        with ESMTP id S234064AbiFDPYY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jun 2022 11:24:24 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587244ECF0
+        for <git@vger.kernel.org>; Sat,  4 Jun 2022 08:24:23 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-2ff90e0937aso108081487b3.4
+        for <git@vger.kernel.org>; Sat, 04 Jun 2022 08:24:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oQFrVpMkBFWAm7DsLlfNLtDKqFxlX+29DvFl8ZLQmSw=;
+        b=QloDTCwp1fuKDBRhtUYItrQOTmY5SyDVZx1S1rvz+LmoLX5GCsMxVPEJQCarNrtevS
+         BR3UC2un6OijNYQ1UM30CgYs+EvCx7Kyj9poPMOR7+98o3ZkDx+/5VX+zSH1Ph5pQ2rF
+         pXOFAvJ57LR2CPzwcq/vJ07yTzHa1L6QFt2pOiQjmup2x9Kug3txe4DV4Gf52C+lOgIL
+         tG6EErZ7bnt4foMo7DVVAaFT9dpO3QLkUlIOxYAsWmb8PCDIiQJA/o5Zc8d4CJc8N6gL
+         +FDKwCmgXpLBZdpwz3JhNpcoevp3Bf8dg/Ott4/R/JpYKmes7wE08FMvA5eeqzy9zuok
+         cZBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oQFrVpMkBFWAm7DsLlfNLtDKqFxlX+29DvFl8ZLQmSw=;
+        b=VN03K0zD0/jbUUlPUwIsIi++O5vZC66By5rkldobxKsyv7Wljvcvz+3QDWLXAO0eZZ
+         81auIorgtyayNu6yWVLFd+DngbA2OEGdhLL5D1QWTkoQnD0CGXpzryy3DUVbXHVr+/EJ
+         Ntw0aOY0FmjAz5t1q488pL93xo6ZkqiR9ryqEPr2b2s/j1x5eSKvYKvVTAneX7sNQwnw
+         3dPkhSINQf+8gtWk0PSwJqvQyJvU6P3sKcbZxGWCSWEfd/2Ugh21WUF940hIZKohAw4V
+         0sZSioB3ijLwTMI7O6EmObIv01nC7/QC0IEkhjO6ZKQBAbN0FgF7NSmkqN+E4Jd7+vLW
+         e28g==
+X-Gm-Message-State: AOAM531vVZXhlGVLJw/PJZI+xeCDAyTQNwBH5QIcFZQDuX76kRYPQqc7
+        sO+icsCriPTQu8ZgKRq0hzgOWGbXT7WZn6KH/4k=
+X-Google-Smtp-Source: ABdhPJwoAJnrDMOj5KlAKP6tbi8iZQe2uDzXzUF8PIoUzbLF6XL6Dv91fx8PCvjha0TrG/sNqCHA7u2urifV47MACDA=
+X-Received: by 2002:a05:690c:298:b0:2eb:564a:34b with SMTP id
+ bf24-20020a05690c029800b002eb564a034bmr17173217ywb.258.1654356262526; Sat, 04
+ Jun 2022 08:24:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [FR] supporting submodules with alternate version control systems
- (new contributor)
-Content-Language: en-GB
-To:     rsbecker@nexbridge.com, 'Addison Klinke' <addison@baller.tv>
-Cc:     'Jason Pyeron' <jpyeron@pdinc.us>,
-        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-        'Addison Klinke' <agk38@case.edu>
-References: <CAE9CXuhvqfhARrqz2=oS1=9BF=iNhGbJv7y3HmYs1tddn8ndiQ@mail.gmail.com>
- <xmqq4k1x8gqj.fsf@gitster.g> <01e601d86492$43bb70b0$cb325210$@pdinc.us>
- <271b6a9a-a5f4-0336-51b8-860ad07f2609@iee.email>
- <CAE9CXuiTDjbncEzWJpHN5N0CukcmXbhxQJtzDDhuy0er4Se2DA@mail.gmail.com>
- <547b245d-bdb2-5833-fe4d-15222ae32b57@iee.email>
- <000301d877b7$0fb1ca20$2f155e60$@nexbridge.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <000301d877b7$0fb1ca20$2f155e60$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <CACMKQb0Mz4zBoSX2CdXkeF51z_mh3had7359J=LmXGzJM1WYLg@mail.gmail.com>
+ <Yo68+kjAeP6tnduW@invalid> <8adba93c-7671-30d8-5a4c-4ad6e1084a22@iee.email>
+ <CACMKQb3exv13sYN5uEP_AG-JYu1rmVj4HDxjdw8_Y-+maJPwGg@mail.gmail.com>
+ <0201db28-d788-4458-e31d-c6cdedf5c9cf@iee.email> <AS8PR02MB730274D473C2BC3846D9FA3F9CDD9@AS8PR02MB7302.eurprd02.prod.outlook.com>
+ <20220530115339.3torgv5c2zw75okg@carbon> <220530.8635gr2jsh.gmgdl@evledraar.gmail.com>
+ <CACMKQb3_j+iFcf5trZEcWoU7vAsscKv+_sLaEqg_qfazBPTo+Q@mail.gmail.com> <20220603152301.olqbjtt5j2kqyc3e@carbon>
+In-Reply-To: <20220603152301.olqbjtt5j2kqyc3e@carbon>
+From:   Aman <amanmatreja@gmail.com>
+Date:   Sat, 4 Jun 2022 20:54:10 +0530
+Message-ID: <CACMKQb3gYwdyfRSLWO4FWb6+Kxrk-WURpLayrgFsszCKMhWONw@mail.gmail.com>
+Subject: Re: About GIT Internals
+To:     Konstantin Khomoutov <kostix@bswap.ru>
+Cc:     Git List <git@vger.kernel.org>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        "git-vger@eldondev.com" <git-vger@eldondev.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Randall,
+On Fri, Jun 3, 2022, at 8:53 PM Konstantin Khomoutov <kostix@bswap.ru> wrote:
 
-On 04/06/2022 03:01, rsbecker@nexbridge.com wrote:
-> On June 3, 2022 7:07 PM, Philip Oakley wrote:
->> On 01/06/2022 13:44, Addison Klinke wrote:
->>>> rsbecker: move code into a submodule from your own VCS system
->>> into a git repository and the work with the submodule without the git
->>> code-base knowing about this
->>>
->>>> Philip: uses a proper sub-module that within it then has
->>> the single 'large' file git-lfs style that hosts the hash reference
->>> for the data VCS
->>>
->>> The downside I see with both of these approaches is that translating
->>> the native data VCS to git (or LFS) negates all the benefits of having
->>> a VCS purpose-built for data. That's why the majority of data
->>> versioning tools exist - because git (or LFS) are not ideal for
->>> handling machine learning datasets
->> The key aspect is deciding which of the two storage systems (the Data & the Code)
->> will be the overall lead system that contains the linked reference to the other
->> storage system to ensure the needed integrity.
->> That is not really a technical question. Rather its somewhat of a social discussion
->> (workflows, trust, style of integration, etc).
->>
->> It maybe that one of the systems does have less long-term integrity, as has been
->> seen in many versioning systems over the last century (both manual and
->> computer), but the UI is also important.
->>
->> IIRC Junio did note that having a suitable API to access the other storage system
->> (to know its status, etc.) is likely to be core to the ability to combine the two. It
->> may  be that a top level 'gui' is used control both systems and ensure
->> synchronisation to hide the complexities of both systems.
->>
->> I'm still thinking that the "git-lfs like" style could be the one to use, but that is very
->> dependant on the API that is available for capturing the Data state into the git
->> entry that records that state, whether that is a file (git-lfs like) or a 'sub-module'
->> (directory as state ) style.  Either way it still need reifying (i.e. coded to make the
->> abstract concept into a concrete implementation).
->>
->> Which ever route is chosen, it still sounds to me like a worthwhile enterprise. It's
->> all still very abstract.
->>> On Tue, May 10, 2022 at 2:54 PM Philip Oakley <philipoakley@iee.email> wrote:
->>>> On 10/05/2022 18:20, Jason Pyeron wrote:
->>>>>> -----Original Message-----
->>>>>> From: Junio C Hamano
->>>>>> Sent: Tuesday, May 10, 2022 1:01 PM
->>>>>> To: Addison Klinke <addison@baller.tv>
->>>>>>
->>>>>> Addison Klinke <addison@baller.tv> writes:
->>>>>>
->>>>>>> Is something along these lines feasible?
->>>>>> Offhand, I only think of one thing that could make it fundamentally
->>>>>> infeasible.
->>>>>>
->>>>>> When you bind an external repository (be it stored in Git or
->>>>>> somebody else's system) as a submodule, each commit in the
->>>>>> superproject records which exact commit in the submodule is used
->>>>>> with the rest of the superproject tree.  And that is done by
->>>>>> recording the object name of the commit in the submodule.
->>>>>>
->>>>>> What it means for the foreign system that wants to "plug into" a
->>>>>> superproject in Git as a submodule?  It is required to do two
->>>>>> things:
->>>>>>
->>>>>>   * At the time "git commit" is run at the superproject level, the
->>>>>>     foreign system has to be able to say "the version I have to be
->>>>>>     used in the context of this superproject commit is X", with X
->>>>>>     that somehow can be stored in the superproject's tree object
->>>>>>     (which is sized 20-byte for SHA-1 repositories; in SHA-256
->>>>>>     repositories, it is a bit wider).
->>>>>>
->>>>>>   * At the time "git chekcout" is run at the superproject level, the
->>>>>>     superproject will learn the above X (i.e. the version of the
->>>>>>     submodule that goes with the version of the superproject being
->>>>>>     checked out).  The foreign system has to be able to perform a
->>>>>>     "checkout" given that X.
->>>>>>
->>>>>> If a foreign system cannot do the above two, then it fundamentally
->>>>>> would be incapable of participating in such a "superproject and
->>>>>> submodule" relationship.
->>>> The sub-modules already have that problem if the user forgets publish
->>>> their sub-module (see notes in the docs ;-).
->>>>> The submodule "type" could create an object (hashed and stored) that
->> contains the needed "translation" details. The object would be hashed using SHA1
->> or SHA256 depending on the git config. The format of the object's contents would
->> be defined by the submodule's "code".
->>>> Another way of looking at the issue is via a variant of Git-LFS with
->>>> a smudge/clean style filter. I.e. the DataVCS would be treated as a 'file'.
->>>>
->>>> The LFS already uses the .gitattributes to define a 'type', while the
->>>> submodules don't yet have that capability. There is just a single
->>>> special type within a tree object of "sub-module"  being a mode 16000
->>>> commit (see https://longair.net/blog/2010/06/02/git-submodules-explained/).
->>>>
->>>> One thought is that one uses a proper sub-module that within it then
->>>> has the single 'large' file git-lfs style that hosts the hash
->>>> reference for the data VCS
->>>> (https://github.com/git-lfs/git-lfs/blob/main/docs/spec.md). It would
->>>> be the regular sub-modules .gitattributes file that handles the data
->>>> conversion.
->>>>
->>>> It may be converting an X-Y problem into an X-Y-Z solution, or just
->>>> extending the problem.
-> The most salient issue I have with this is that signatures cannot be validated across VCS systems. 
+> Well, depends on what you mean when talking about the two mentioned designs.
+> I mean, there's the design of the approach to manage data and there's the
+> design of the software package (which Git is).
 
-I think I disagree, but let's be sure we are talking about the same
-'signature' aspect, I think there are (at least) three different
-signatures we could be talking about
+That's a good perspective on the distinction between the designs. I am
+not familiar yet, with the design of GIT as a software package, and I
+am guessing most people who'll be learning about GIT internals won't
+be.
 
-1. The hash verification 'signature' that can cascade down the trees. We
-verify against a given hash.
-2. The 'Signed-off-by:' legal/copyright signature - important, but I
-don't think that's the one being discussed.
-3. The (e.g.) PGP signature of a tag or commit. This provides a (web of)
-trust mechanism for the _given_ hash in 1. Important in 'open systems',
-less so in more closed systems where trust, and the _given_, is via side
-channels.
+> If you do also understand the latter - that is, understanding that Git is an
+> assortment of CLI tools combined into two layers called "plumbing" and
+> "porcelain", - then you should have no difficulty starting to read the code:
+> basically locate the source code of the entry point Git binary (which is,
+> well, "git", or "git.exe" on Windows) and start reading it.
 
-Note the shift from using a hash to using the PGP for the 'signature'.
-
-
-> Within git, a submodule commit can be signed. This ensures that the contents of the commit in the super-project can also be signed. If someone hacks an underlying VCS that is not git, either:
-Submodules are a remote VCS, it just happens to have the same hash
-validation software as the super-project, which is nice.
->
-> a) git can never sign a commit from an underlying VCS, or
-Git-LFS is a similar hand off, though many accept it's capability.
->
-> b) git can never trust a commit from an underlying VCS.
->
-> This pollutes a fundamental capability of git, being multiple signers the contents of a commit, and invalidates the integrity of the Merkel tree that underlies git contents.
-
-The main issue is how to confirm the integrity the other VCS. Many of
-the Data VCS systems are based on Git and it's hash integrity approach,
-so as long as the DATA VCS has similar integrity guarantees, we maintain
-the level of trust in the security of the whole system.
-
->
-> I do not see that this concept contributes positively to the ecosystem. I do feel strongly about this and hope my points are understood.
-
-I'd agree that there is a need to work out how to integrate the code VCS
-and data VCS in a consistent way. Ignoring the Data VCS problem doesn't
-make it go away.
-
-Maybe if Addison was able to identify one or two lead contenders as the
-Data VCS and how it/they offer their levels of security and integrity,
-then it would be easier to see where in the Git model that may fit. Or
-whether Git is the underling VCS (because it has programmable API), and
-the Data VCS (esp because of scale and non-distributed nature) becomes
-the "authority", even if that has less capability!
->
-> Sincerely,
-> Randall
->
-Philip
+How do I do that?  What do you mean by the "entry point" of the git binary?
