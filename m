@@ -2,162 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92A6BC43334
-	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 02:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35BE5C43334
+	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 02:33:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347655AbiFDCCI convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 3 Jun 2022 22:02:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56124 "EHLO
+        id S232213AbiFDCd4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jun 2022 22:33:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345631AbiFDCCG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jun 2022 22:02:06 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E522DFF4
-        for <git@vger.kernel.org>; Fri,  3 Jun 2022 19:02:04 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 25421p3K034317
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 3 Jun 2022 22:01:51 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Philip Oakley'" <philipoakley@iee.email>,
-        "'Addison Klinke'" <addison@baller.tv>
-Cc:     "'Jason Pyeron'" <jpyeron@pdinc.us>,
-        "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
-        "'Addison Klinke'" <agk38@case.edu>
-References: <CAE9CXuhvqfhARrqz2=oS1=9BF=iNhGbJv7y3HmYs1tddn8ndiQ@mail.gmail.com> <xmqq4k1x8gqj.fsf@gitster.g> <01e601d86492$43bb70b0$cb325210$@pdinc.us> <271b6a9a-a5f4-0336-51b8-860ad07f2609@iee.email> <CAE9CXuiTDjbncEzWJpHN5N0CukcmXbhxQJtzDDhuy0er4Se2DA@mail.gmail.com> <547b245d-bdb2-5833-fe4d-15222ae32b57@iee.email>
-In-Reply-To: <547b245d-bdb2-5833-fe4d-15222ae32b57@iee.email>
-Subject: RE: [FR] supporting submodules with alternate version control systems (new contributor)
-Date:   Fri, 3 Jun 2022 22:01:47 -0400
-Organization: Nexbridge Inc.
-Message-ID: <000301d877b7$0fb1ca20$2f155e60$@nexbridge.com>
+        with ESMTP id S232124AbiFDCdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jun 2022 22:33:54 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D1565997A
+        for <git@vger.kernel.org>; Fri,  3 Jun 2022 19:33:51 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id r3so8638314ilt.8
+        for <git@vger.kernel.org>; Fri, 03 Jun 2022 19:33:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=hq36R5dp9tvhrvor2dkTGJrl0E4kMk4zm/CCbKab/BI=;
+        b=CTq9jQ2Oo9K9DRWsWP3/XlOIbc19+pQDH1ot6rFA/V1EG6ZhIPK6OZinwuLJ2n0Mr9
+         oIWLzZ5oQRE5ofKETF9YGR2zMFo4MvW0/OeJcvryxPHYDQbDhoPJ135Fpgr7AIXcZX5S
+         GYnu0CO17EBtiKcOQWotaj5uWDkSF+j2LJwrwB/m6omOxLla4dXkO3+CGeMtoXmZb8B+
+         Tf+//WbLXRTtsyRHjteFyo5PQsaZ6AmDbkgistjPl8kJrob16o00wRaMLSuGmjoeNdHP
+         VRtyxyoc2MQWEyQ/TrLJ3EOvSgakvlNS9RNgS0+qYXzOSyfdiV9Bow6oNjMAzALsc0rX
+         HeKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hq36R5dp9tvhrvor2dkTGJrl0E4kMk4zm/CCbKab/BI=;
+        b=KB7R+8u2Jm4piJe0Vn2NZh7zNqV8TDpfU3kM3hcZVqatPsN9I8aTpwyDyw1jLCRmrJ
+         N6cvDGGMhvrjNIyvrat/0OPCWT+9QtmtyAQ90Ljxi2JgzqAFqK23FPpbzgkaPhfoPUvG
+         F8RE4LScxc94lOTvweyufAxbjaj4wvarv9MlI4+pgQK+5qfDRcAVUdq0XaYEyI2nDGyn
+         z2T8bhRkTVg7J2+PTZrrLkyG09I27Jjk8pTuaxwAhybgXwi/rx9FWQ1VOGbSBFmXxA0Y
+         i+4E1UV9uWVpykWT9KZ6Er1c6XPiIzNYgaaLZkBXMw4ekHBWJ1X4gMcvgAgea/2WCmt8
+         +c9Q==
+X-Gm-Message-State: AOAM532dDtCG22lnCXyL7t3MGJavUz4hEwN8afWP8YdL3AsEUMOKxQ7B
+        E9XLyfXi3v46kvH4lmOrevYP
+X-Google-Smtp-Source: ABdhPJyNl92B29v6ZCCWdG0H4o2YiD6Zy9KVOpA7t9/YYf3/HF8lEl/yGYffZo6diSsBw08bGjTy5w==
+X-Received: by 2002:a05:6e02:198e:b0:2d3:f382:bbc1 with SMTP id g14-20020a056e02198e00b002d3f382bbc1mr5145510ilf.129.1654310030696;
+        Fri, 03 Jun 2022 19:33:50 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:258a:4978:615e:2484? ([2600:1700:e72:80a0:258a:4978:615e:2484])
+        by smtp.gmail.com with ESMTPSA id f12-20020a02a04c000000b0032e5205f4e7sm3179529jah.4.2022.06.03.19.33.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jun 2022 19:33:50 -0700 (PDT)
+Message-ID: <af32aefc-8184-94ff-fd80-76221dc313b4@github.com>
+Date:   Fri, 3 Jun 2022 22:33:47 -0400
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQMmAUfbvsYWpozP57O9QeLcqWKlogGoVhkBAX3yDo8Bs8WvSgKxxeoYAcbmxQmqWNRzsA==
-Content-Language: en-ca
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH] builtin/show-ref.c: avoid over-iterating with --heads,
+ --tags
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com
+References: <3fa6932641f18d78156bbf60b1571383f2cb5046.1654293264.git.me@ttaylorr.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <3fa6932641f18d78156bbf60b1571383f2cb5046.1654293264.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On June 3, 2022 7:07 PM, Philip Oakley wrote:
->On 01/06/2022 13:44, Addison Klinke wrote:
->>> rsbecker: move code into a submodule from your own VCS system
->> into a git repository and the work with the submodule without the git
->> code-base knowing about this
->>
->>> Philip: uses a proper sub-module that within it then has
->> the single 'large' file git-lfs style that hosts the hash reference
->> for the data VCS
->>
->> The downside I see with both of these approaches is that translating
->> the native data VCS to git (or LFS) negates all the benefits of having
->> a VCS purpose-built for data. That's why the majority of data
->> versioning tools exist - because git (or LFS) are not ideal for
->> handling machine learning datasets
->
->The key aspect is deciding which of the two storage systems (the Data & the Code)
->will be the overall lead system that contains the linked reference to the other
->storage system to ensure the needed integrity.
->That is not really a technical question. Rather its somewhat of a social discussion
->(workflows, trust, style of integration, etc).
->
->It maybe that one of the systems does have less long-term integrity, as has been
->seen in many versioning systems over the last century (both manual and
->computer), but the UI is also important.
->
->IIRC Junio did note that having a suitable API to access the other storage system
->(to know its status, etc.) is likely to be core to the ability to combine the two. It
->may  be that a top level 'gui' is used control both systems and ensure
->synchronisation to hide the complexities of both systems.
->
->I'm still thinking that the "git-lfs like" style could be the one to use, but that is very
->dependant on the API that is available for capturing the Data state into the git
->entry that records that state, whether that is a file (git-lfs like) or a 'sub-module'
->(directory as state ) style.  Either way it still need reifying (i.e. coded to make the
->abstract concept into a concrete implementation).
->
->Which ever route is chosen, it still sounds to me like a worthwhile enterprise. It's
->all still very abstract.
->>
->> On Tue, May 10, 2022 at 2:54 PM Philip Oakley <philipoakley@iee.email> wrote:
->>> On 10/05/2022 18:20, Jason Pyeron wrote:
->>>>> -----Original Message-----
->>>>> From: Junio C Hamano
->>>>> Sent: Tuesday, May 10, 2022 1:01 PM
->>>>> To: Addison Klinke <addison@baller.tv>
->>>>>
->>>>> Addison Klinke <addison@baller.tv> writes:
->>>>>
->>>>>> Is something along these lines feasible?
->>>>> Offhand, I only think of one thing that could make it fundamentally
->>>>> infeasible.
->>>>>
->>>>> When you bind an external repository (be it stored in Git or
->>>>> somebody else's system) as a submodule, each commit in the
->>>>> superproject records which exact commit in the submodule is used
->>>>> with the rest of the superproject tree.  And that is done by
->>>>> recording the object name of the commit in the submodule.
->>>>>
->>>>> What it means for the foreign system that wants to "plug into" a
->>>>> superproject in Git as a submodule?  It is required to do two
->>>>> things:
->>>>>
->>>>>   * At the time "git commit" is run at the superproject level, the
->>>>>     foreign system has to be able to say "the version I have to be
->>>>>     used in the context of this superproject commit is X", with X
->>>>>     that somehow can be stored in the superproject's tree object
->>>>>     (which is sized 20-byte for SHA-1 repositories; in SHA-256
->>>>>     repositories, it is a bit wider).
->>>>>
->>>>>   * At the time "git chekcout" is run at the superproject level, the
->>>>>     superproject will learn the above X (i.e. the version of the
->>>>>     submodule that goes with the version of the superproject being
->>>>>     checked out).  The foreign system has to be able to perform a
->>>>>     "checkout" given that X.
->>>>>
->>>>> If a foreign system cannot do the above two, then it fundamentally
->>>>> would be incapable of participating in such a "superproject and
->>>>> submodule" relationship.
->>> The sub-modules already have that problem if the user forgets publish
->>> their sub-module (see notes in the docs ;-).
->>>> The submodule "type" could create an object (hashed and stored) that
->contains the needed "translation" details. The object would be hashed using SHA1
->or SHA256 depending on the git config. The format of the object's contents would
->be defined by the submodule's "code".
->>>>
->>> Another way of looking at the issue is via a variant of Git-LFS with
->>> a smudge/clean style filter. I.e. the DataVCS would be treated as a 'file'.
->>>
->>> The LFS already uses the .gitattributes to define a 'type', while the
->>> submodules don't yet have that capability. There is just a single
->>> special type within a tree object of "sub-module"  being a mode 16000
->>> commit (see https://longair.net/blog/2010/06/02/git-submodules-explained/).
->>>
->>> One thought is that one uses a proper sub-module that within it then
->>> has the single 'large' file git-lfs style that hosts the hash
->>> reference for the data VCS
->>> (https://github.com/git-lfs/git-lfs/blob/main/docs/spec.md). It would
->>> be the regular sub-modules .gitattributes file that handles the data
->>> conversion.
->>>
->>> It may be converting an X-Y problem into an X-Y-Z solution, or just
->>> extending the problem.
+On 6/3/2022 5:55 PM, Taylor Blau wrote:
+> When `show-ref` is combined with the `--heads` or `--tags` options, it
+> can avoid iterating parts of a repository's references that it doesn't
+> care about.
+> 
+> But it doesn't take advantage of this potential optimization. When this
+> command was introduced back in 358ddb62cf (Add "git show-ref" builtin
+> command, 2006-09-15), `for_each_ref_in()` did exist. But since most
+> repositories don't have many (any?) references that aren't branches or
+> tags already, this makes little difference in practice.
+...
+> Nonetheless, in our synthetic example above, this provides a significant
+> speed-up ("git" is roughly v2.36, "git.compile" is this patch):
+> 
+>     $ hyperfine -N 'git show-ref --heads' 'git.compile show-ref --heads'
+>     Benchmark 1: git show-ref --heads
+>       Time (mean ± σ):      49.9 ms ±   6.2 ms    [User: 45.6 ms, System: 4.1 ms]
+>       Range (min … max):    46.1 ms …  73.6 ms    43 runs
+> 
+>     Benchmark 2: git.compile show-ref --heads
+>       Time (mean ± σ):       2.8 ms ±   0.4 ms    [User: 1.4 ms, System: 1.2 ms]
+>       Range (min … max):     1.3 ms …   5.6 ms    957 runs
+> 
+>     Summary
+>       'git.compile show-ref --heads' ran
+>        18.03 ± 3.38 times faster than 'git show-ref --heads'
 
-The most salient issue I have with this is that signatures cannot be validated across VCS systems. Within git, a submodule commit can be signed. This ensures that the contents of the commit in the super-project can also be signed. If someone hacks an underlying VCS that is not git, either:
+Excellent speedup.
 
-a) git can never sign a commit from an underlying VCS, or
+> -	for_each_ref(show_ref, NULL);
+> +	if (heads_only || tags_only) {
+> +		if (heads_only)
+> +			for_each_fullref_in("refs/heads/", show_ref, NULL);
+> +		if (tags_only)
+> +			for_each_fullref_in("refs/tags/", show_ref, NULL);
 
-b) git can never trust a commit from an underlying VCS.
+This looks a little silly if these were truly "only" (they
+could not both be true), but indeed they could both be true
+and the names are just slightly misleading.
 
-This pollutes a fundamental capability of git, being multiple signers the contents of a commit, and invalidates the integrity of the Merkel tree that underlies git contents.
+Indeed, t1403-show-ref.sh tests all combinations of these
+options.
 
-I do not see that this concept contributes positively to the ecosystem. I do feel strongly about this and hope my points are understood.
+> +	} else {
+> +		for_each_ref(show_ref, NULL);
+> +	}
 
-Sincerely,
-Randall
-
+Thanks for finding this!
+-Stolee
