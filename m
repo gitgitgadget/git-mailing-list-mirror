@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9164C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA1A3C43334
 	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 11:18:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235159AbiFDLSE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jun 2022 07:18:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52410 "EHLO
+        id S235134AbiFDLSC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jun 2022 07:18:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234825AbiFDLR5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234999AbiFDLR5 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 4 Jun 2022 07:17:57 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1D51F620
-        for <git@vger.kernel.org>; Sat,  4 Jun 2022 04:17:56 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id u8so9056092wrm.13
-        for <git@vger.kernel.org>; Sat, 04 Jun 2022 04:17:56 -0700 (PDT)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1032F1D30E
+        for <git@vger.kernel.org>; Sat,  4 Jun 2022 04:17:55 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id u8so9056048wrm.13
+        for <git@vger.kernel.org>; Sat, 04 Jun 2022 04:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0JP3vqFd04HuLyUor0tZpNkGmwQPKOs/mYUhfcjqENk=;
-        b=ThKtTRn5WsrM3tW3AityUg1HwqQLrExCnMpnYK1kiV6Gl76M+ZL76TMa2BJ5R1GZTf
-         OkXtMEqNnvHcgQi2L5Nt2kIPz676b5VZJBofi2d5fes229ZuipWE3QTGTJ/dohVivJZU
-         KHVjFt21ca7lV475qXrxv+NgYv7MDyl4RkcnYbby8ckDMPRNSWE0ZImvJD+MWjhFP0Np
-         FV0e+HX6nHldcLdOKux+4TrTCwqHv2apKFtQ1yM09RCuRkZ6cCkIKXuG6vnH962nzwvV
-         hbnmzaWqHpm8+ko9nUkrQqS6xQR9AerVHUkWQJwa3b9L+DXG9IqDlfb9H8mdMkQ2PR78
-         Si+A==
+        bh=SB5BD0xi1BgeKYveuZXRwolzoUpagPJ9nSfk/TvDhRI=;
+        b=CV0u5qAnrB7VtQMb//m42uagcKSlaqQmkj28bs9QWwAJZAX9EK4ztObX0onHELyoof
+         7iRy+v3fyJmQET0PVKCKV4Zt5jshQpFMGaNHcR3Fww8voVc2n1o+1oI+x/8V4buxQTwo
+         d5Ds6AbdS6M0Q/JIBwmuA07CswftmeB4YEZ8aj7EWtLG3uKSdLWlTDtcwTPykKYq6WgZ
+         P8AQFxyVdOXTD4l6r11033s1JHFYXmN11J4DwpBjrM5amj0BV3xnIAVeGYmYsaGg1tia
+         w8c+ShE8/415I/fyOBvBUF4/Et5rhb8YqyQp0eHmGvMojsGE4A5N5+UW2N3KDBSz4McO
+         EUkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0JP3vqFd04HuLyUor0tZpNkGmwQPKOs/mYUhfcjqENk=;
-        b=Iyg4wlTbjR/mYpTVnQ/N5ZTIDTvCl+lEpv7H5cIV1ubWzdTNQPVCYu2a9a6ftxq6ap
-         fLjpQkuaYhh1zWaZLrjWD2AADmQN7XROhLKi4mcedVPPq83MZvRT8e+tR+nn5HnxXl38
-         UbLqOfa8s7KaJIPXT24MPUjZO6AJCm/qZa3O7Fex+H8KHU7WnX7yhZZT7VaLCO7vXJqx
-         8Jfybd2q4JO1gXnHA7dxJWEoBQksgzxA/Fq7nAEtfeJD0K2e6S6U1rXZyh40+0K9nNYs
-         DcpCXDoDFLsj9UEa2tA7uKyei/yKfFkqv/RMdo07Xjcoz/nr4LS0y0+PqZ5uJ/ycuo3h
-         v7hA==
-X-Gm-Message-State: AOAM530AbSTVAbGs8+e4S0o5BzMMkjpJLjF0kTyZAbYLwAVNoZcOtG84
-        8YwR3awMuGG/jwVcI7q2F43l2qYtQA8VGnat
-X-Google-Smtp-Source: ABdhPJzxvg6J2qyviZ6qCc0PMNu/outTVy66isyWTgMRiUntqaxnQtG/CGdoG/V8U3d8T4sNdhEEig==
-X-Received: by 2002:adf:c64c:0:b0:20f:e8f0:be4c with SMTP id u12-20020adfc64c000000b0020fe8f0be4cmr12383083wrg.614.1654341474473;
-        Sat, 04 Jun 2022 04:17:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g19-20020a05600c4ed300b0039c4506bd25sm2971473wmq.14.2022.06.04.04.17.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=SB5BD0xi1BgeKYveuZXRwolzoUpagPJ9nSfk/TvDhRI=;
+        b=Me1tBftyifamIDKsQjmm/XKN08E3Qw1BTaZEE7vy2HZZBbiODHTRu8jpREovPUOySw
+         TxfMbuDCTwubzz0wQjC/mYW+Q4KMjaqqvunf1HQ3FlptP5hDq7GReHHrQ3As7ps36SWx
+         NTgZl0ogHVeV5eKusgB9Nv8xdmChcIIAltq21SZ542+MHdM8Ujg/ZGHTavGeZRt6ZTOg
+         /SObiqmTqVUsd03Gn6LXtuGECAYdcsR7iZCfpgaiO4+FUKVhnL4ftCyYd1x5DUr7tolW
+         PqgYXzxF2WUhkQ8Byv+mas0g3PvgCy0SRH+KTCKFQY8U+/4qtDb7DpyYZKzxCPoOZtR2
+         hzig==
+X-Gm-Message-State: AOAM531OsNDtSxaqxVzc683cFU2gOZ4oZF1uzhxEeMim84MolFX+7pCE
+        wspUCQwySkKF5uOOEsAyz0PBkEY40zf4wyS3
+X-Google-Smtp-Source: ABdhPJx3jCbo7ZoR6dC7kx64o49hww8dURyUSdCKas9LFI7SdVPmRYKck52SLaO9Qm2jF5/v255aCg==
+X-Received: by 2002:a05:6000:1f0e:b0:20e:6f3e:d882 with SMTP id bv14-20020a0560001f0e00b0020e6f3ed882mr11917178wrb.370.1654341473246;
         Sat, 04 Jun 2022 04:17:53 -0700 (PDT)
-Message-Id: <fe000f062078e544361c87c319830cd36aabbc91.1654341469.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k5-20020adff285000000b002101ed6e70fsm5806121wro.37.2022.06.04.04.17.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Jun 2022 04:17:52 -0700 (PDT)
+Message-Id: <47f271875291d24666c5a3cec895421ab646f1f3.1654341469.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1242.v2.git.1654341469.gitgitgadget@gmail.com>
 References: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
         <pull.1242.v2.git.1654341469.gitgitgadget@gmail.com>
 From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 04 Jun 2022 11:17:48 +0000
-Subject: [PATCH v2 3/4] rebase: note `preserve` merges may be a pull config
- option
+Date:   Sat, 04 Jun 2022 11:17:47 +0000
+Subject: [PATCH v2 2/4] rebase: help users when dying with `preserve-merges`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,34 +70,42 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philip Oakley <philipoakley@iee.email>
 
-The `--preserve-merges` option was removed by v2.34.0. However
-users may not be aware that it is also a Pull configuration option,
-which is still offered by major IDE vendors such as Visual Studio.
+Git would die if a "rebase --preserve-merges" was in progress.
+Users could neither --quit, --abort, nor --continue the rebase.
 
-Extend the `--preserve-merges` die message to also direct users to
-the possible use of the `preserve` option in the `pull.rebase` config.
-This is an additional 'belt and braces' information statement.
+Make the `rebase --abort` option available to allow users to remove
+traces of any preserve-merges rebase, even if they had upgraded
+during a rebase.
+
+One trigger case was an unexpectedly difficult to resolve conflict, as
+reported on the `git-users` group.
+(https://groups.google.com/g/git-for-windows/c/3jMWbBlXXHM)
+
+Other potential use-cases include git-experts using the portable
+'Git on a stick' to help users with an older git version.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.email>
 ---
- builtin/rebase.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ builtin/rebase.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 17cc776b4b1..5f8921551e1 100644
+index bad95d98adf..17cc776b4b1 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -1205,7 +1205,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			     builtin_rebase_usage, 0);
- 
- 	if (preserve_merges_selected)
--		die(_("--preserve-merges was replaced by --rebase-merges"));
-+		die(_("--preserve-merges was replaced by --rebase-merges\n"
-+			"Note: Your `pull.rebase` configuration may also be  set to 'preserve',\n"
-+			"which is no longer supported; use 'merges' instead"));
- 
- 	if (action != ACTION_NONE && total_argc != 2) {
- 		usage_with_options(builtin_rebase_usage,
+@@ -1182,8 +1182,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	} else if (is_directory(merge_dir())) {
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "%s/rewritten", merge_dir());
+-		if (is_directory(buf.buf)) {
+-			die("`rebase -p` is no longer supported");
++		if (!(action == ACTION_ABORT) && is_directory(buf.buf)) {
++			die("`rebase --preserve-merges` (-p) is no longer supported.\n"
++			"Use `git rebase --abort` to terminate current rebase.\n"
++			"Or downgrade to v2.33, or earlier, to complete the rebase.");
+ 		} else {
+ 			strbuf_reset(&buf);
+ 			strbuf_addf(&buf, "%s/interactive", merge_dir());
 -- 
 gitgitgadget
 
