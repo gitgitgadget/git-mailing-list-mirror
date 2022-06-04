@@ -2,46 +2,45 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFBC2C43334
-	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 12:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E02F6C43334
+	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 13:05:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236178AbiFDMvN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jun 2022 08:51:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35886 "EHLO
+        id S1346529AbiFDNEv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jun 2022 09:04:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236162AbiFDMvK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jun 2022 08:51:10 -0400
-Received: from smtp-out-5.talktalk.net (smtp-out-5.talktalk.net [62.24.135.69])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FA98366A7
-        for <git@vger.kernel.org>; Sat,  4 Jun 2022 05:51:09 -0700 (PDT)
+        with ESMTP id S236189AbiFDNEu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jun 2022 09:04:50 -0400
+Received: from smtp-out-1.talktalk.net (smtp-out-1.talktalk.net [62.24.135.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E61B517D0
+        for <git@vger.kernel.org>; Sat,  4 Jun 2022 06:04:44 -0700 (PDT)
 Received: from app-12.app.tt.ham.xion.oxcs.net ([185.74.64.161])
         by smtp.talktalk.net with SMTP
-        id xTFDnA0pXoOuUxTFDnmwMa; Sat, 04 Jun 2022 13:51:08 +0100
+        id xTSLnghrSBJ1LxTSMnsKVT; Sat, 04 Jun 2022 14:04:43 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1654347068;
-        bh=6tV9IJzJPAsORKqIxdb10fPkR8GNL5wB0kJ8lsXcdc0=;
+        s=cmr1711; t=1654347883;
+        bh=MiYPRzOzMFnykua6HvlLyE6pmCMdunZYH+FBes/1Dz0=;
         h=Date:From:To:Cc:In-Reply-To:References:Subject;
-        b=RQEQfFLrxYKPquGg9GgKjPqS3FECRAeXU0n7o9AJELNbMo8+N1vahIwAwHG86x9QB
-         9MHbuegRM+ZR3jmbAV2+dwlNrMUXXhMIMQKRETRzkVnQL4NxtN2Kc4o4jnh/Z2bOQ/
-         4YceM6M0GLz7czmmIb4sKam8xuXG5+MfjaHBIw48=
-Date:   Sat, 4 Jun 2022 13:51:07 +0100 (BST)
+        b=Enq6MFimSOOiLP10DEuPZjyQ4iOD/KnzUVD6dGja8Fj1ShzHHqjWRTLm7RcdzlJ83
+         fuGqkjQZeggVHPBmgO0L4ELSsXse8spUeEu0aS3nqRjjpoe/0VRf/reAK9HLnDA4fI
+         nRNfbnjor2uQfwfQ0Qu9EAEWvoJ+b71bIzUlnsC8=
+Date:   Sat, 4 Jun 2022 14:04:41 +0100 (BST)
 From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
         Jinoh Kang <luke1337@theori.io>,
         Glen Choo <chooglen@google.com>, Paul Tan <pyokagan@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         Jeff Smith <whydoubt@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Message-ID: <2064938784.539963.1654347067250@apps.talktalk.co.uk>
-In-Reply-To: <0c296c0e-bbd4-57a6-1cab-3b98c3bc8927@web.de>
+Message-ID: <1848899554.540227.1654347881891@apps.talktalk.co.uk>
+In-Reply-To: <RFC-patch-09.15-de0f7722608-20220603T183608Z-avarab@gmail.com>
 References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
- <RFC-patch-01.15-b3a678d934a-20220603T183608Z-avarab@gmail.com>
- <0c296c0e-bbd4-57a6-1cab-3b98c3bc8927@web.de>
-Subject: Re: [RFC PATCH 01/15] remote.c: don't dereference NULL in freeing
- loop
+ <RFC-patch-09.15-de0f7722608-20220603T183608Z-avarab@gmail.com>
+Subject: Re: [RFC PATCH 09/15] add-patch: assert parse_diff() expectations
+ with BUG()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -50,47 +49,70 @@ Importance: Medium
 X-Mailer: Open-Xchange Mailer v7.8.4-Rev79
 X-Originating-IP: 31.185.185.192
 X-Originating-Client: open-xchange-appsuite
-X-CMAE-Envelope: MS4wfN5EB1gtDFonIWHL4fLhyJwGiPvSAAwWCw/sJ5UpCAYNg0zP+IE2oEQnHaWGbnTNwpsBsBWj0GfJ0np32rjr4B/YvWhiYqTprEDyf6qklaee0AJ1Ru0z
- Xc/bUusnlbBopI8XznvDOwRYV4XBCeiXDRi1T170Wf8G/DsK67f90rB2eMGitp5igGJoeM2BgyCqNVQC8NY8bb1+TXeZ+1nCqQQHpcpqEA31r8nvJ24Xzp+U
- HSKr/JRgHb8f+7yQ4zZvt2TnVFx4suaRBgLRrnYdmlJDIGaluo3HDOMnT6Sn9/+SKjYJx5dR2lbXoCmbYaIdIREda1ORj6YyyUgqfntXrrKQcs2U+cv6b0CJ
- YklhrKtgmCQXeFHRbUG3uIZrcnvb1avKToC4dIBQYGD+PgkteXP5Ya5ApTF492z68ACu2p8to9Z05gM0PxqvbVhjAtjJcwmuxonUGAmoBVntfRUzt1VAssUV
- x7S+BW33mJ0ixxS0
+X-CMAE-Envelope: MS4wfMANZRIWB3zgK6utFIoC1Xrea49okfUTxWbPPxqdJ3jlKf1rwzwUC3wIqMccBnS34KlfFijCWQU360Cvf4PcIrOF0l0GJPQ7cPRb4C2heqN1QAhk4h8r
+ M4Gw/LC35pKzE4QYAvD+rzSePKxNdWI3mWS2aYwHnMTj8GFsU0ziT1vvSitoPq6mfrFVFe26XDs30V/Cj6WNP8SPRJcgCMIyuUTH/2cwQYz4sI2Bp7f9ysWG
+ BbS42Trcb4eBf36rB2tNoeU6v+fhf84SLiSFCkU5d3hbs1HdhRJZ0tVI+YQKvKQhXLXAc2ueP91jWjAwvMTYHn/K+S8M5efBJEhO8+HZlrEo6mkTfsRBOksp
+ cZJULCxOcunKiyrXfUnGajq0XTiJiewH8TCMR1acMUb8HvzJwSPa0CH737JGM4PJe2vTDysLFp+cyuo21eGY9Sov6B2xhpdikA70Nv+5IJfTVrc1T4LQe7Ur
+ dAXpazKPH0Rkhn2l
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi =C3=86var
 
-> On 03 June 2022 at 22:07 Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> On 03 June 2022 at 19:37 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
+mail.com> wrote:
 >=20
 >=20
-> Am 03.06.22 um 20:37 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> > Fix a bug in fd3cb0501e1 (remote: move static variables into
-> > per-repository struct, 2021-11-17) where we'd free(remote->pushurl[i])
-> > after having NULL'd out remote->pushurl. itself.
-> >
-> > While we're at it let's get rid of the redundant braces per the
-> > CodingGuidelines, which also serves to show in the diff context that
-> > we were doing a FREE_AND_NULL(remote->pushurl) afterwards too, let's
-> > keep that one.
+> Assert that this code added in [1], [2] and other related commits
+> expects that once we see a "diff " line we should have a non-NULL
+> "file_diff" and "hunk".
 >=20
-> The extended context is helping, but the brace removal makes this change
-> harder to read.
+> In practice this would have always been the case, as we are parsing
+> our own "diff" output, but e.g. GCC v12's -fanalyzer doesn't know
+> that, and will alert us that in the "else if" and below in this
+> function we could be dereferencing NULL if we were processing anything
+> except our expected input.
 
-Indeed, a small style fix in a larger change is one thing but here at least=
- 80% of the changed lines are unrelated to the bugfix. I'm afraid my heart =
-has started to sink when I see the phrase "while we're at it" in a commit m=
-essage.
-
-> [...]
-> >  =09FREE_AND_NULL(remote->pushurl);
->=20
-> Why set pushurl to NULL after release?  This results in an invalid state
-> unless pushurl_nr und pushurl_alloc are reset to zero.  Same goes for
-> the url array above -- either a simple free(3) call suffices or url_nr
-> and url_alloc need to be cleared as well.
-
-That's a good point
+If we're only doing this to keep -fanalyzer quiet then would it be better t=
+o use the macro you introduce at the end of this series instead?
 
 Best Wishes
 
 Phillip
+
+> 1. f6aa7ecc343 (built-in add -i: start implementing the `patch`
+>    functionality in C, 2019-12-13)
+> 2. 80399aec5ab (built-in add -p: support multi-file diffs, 2019-12-13)
+>=20
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  add-patch.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/add-patch.c b/add-patch.c
+> index 55d719f7845..087bf317b07 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -478,11 +478,16 @@ static int parse_diff(struct add_p_state *s, const =
+struct pathspec *ps)
+>  =09while (p !=3D pend) {
+>  =09=09char *eol =3D memchr(p, '\n', pend - p);
+>  =09=09const char *deleted =3D NULL, *mode_change =3D NULL;
+> +=09=09const char *const diff_l =3D "diff ";
+> +=09=09int is_diff_line =3D starts_with(p, diff_l);
+> =20
+>  =09=09if (!eol)
+>  =09=09=09eol =3D pend;
+> =20
+> -=09=09if (starts_with(p, "diff ")) {
+> +=09=09if (!is_diff_line && (!file_diff || !hunk))
+> +=09=09=09BUG("expected '%s' line to follow a '%s' line", p, diff_l);
+> +
+> +=09=09if (is_diff_line) {
+>  =09=09=09complete_file(marker, hunk);
+>  =09=09=09ALLOC_GROW_BY(s->file_diff, s->file_diff_nr, 1,
+>  =09=09=09=09   file_diff_alloc);
+> --=20
+> 2.36.1.1124.g577fa9c2ebd
+>
