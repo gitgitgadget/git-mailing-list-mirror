@@ -2,45 +2,46 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF706C433EF
-	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 12:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFBC2C43334
+	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 12:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245051AbiFDMrl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jun 2022 08:47:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54802 "EHLO
+        id S236178AbiFDMvN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jun 2022 08:51:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241052AbiFDMrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jun 2022 08:47:40 -0400
-X-Greylist: delayed 60 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 04 Jun 2022 05:47:36 PDT
+        with ESMTP id S236162AbiFDMvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jun 2022 08:51:10 -0400
 Received: from smtp-out-5.talktalk.net (smtp-out-5.talktalk.net [62.24.135.69])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD8F13E26
-        for <git@vger.kernel.org>; Sat,  4 Jun 2022 05:47:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FA98366A7
+        for <git@vger.kernel.org>; Sat,  4 Jun 2022 05:51:09 -0700 (PDT)
 Received: from app-12.app.tt.ham.xion.oxcs.net ([185.74.64.161])
         by smtp.talktalk.net with SMTP
-        id xTAnnA0RKoOuUxTAnnmwH3; Sat, 04 Jun 2022 13:46:34 +0100
+        id xTFDnA0pXoOuUxTFDnmwMa; Sat, 04 Jun 2022 13:51:08 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1654346794;
-        bh=M0w3oxPfExCs1qwV5CJmD8kn4iRHtAqtHVAVHKmWDUI=;
+        s=cmr1711; t=1654347068;
+        bh=6tV9IJzJPAsORKqIxdb10fPkR8GNL5wB0kJ8lsXcdc0=;
         h=Date:From:To:Cc:In-Reply-To:References:Subject;
-        b=oZLQeDT3kESYyqnCOJgVMPPDTPXZWJj/dSkTZReW5RQ0aZzRqrH5iCXcQ7ejQbUfL
-         y5kM2NiiqMEO9YsMaIK1pG2Oh80HaghGJDGebYVohphBApfne2O3XBVAVIse/pqfGh
-         KEE4eSUsVjCvGwdFV1jTSOBOK9u8f6je4MpoSaT4=
-Date:   Sat, 4 Jun 2022 13:46:33 +0100 (BST)
+        b=RQEQfFLrxYKPquGg9GgKjPqS3FECRAeXU0n7o9AJELNbMo8+N1vahIwAwHG86x9QB
+         9MHbuegRM+ZR3jmbAV2+dwlNrMUXXhMIMQKRETRzkVnQL4NxtN2Kc4o4jnh/Z2bOQ/
+         4YceM6M0GLz7czmmIb4sKam8xuXG5+MfjaHBIw48=
+Date:   Sat, 4 Jun 2022 13:51:07 +0100 (BST)
 From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
         Jinoh Kang <luke1337@theori.io>,
         Glen Choo <chooglen@google.com>, Paul Tan <pyokagan@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         Jeff Smith <whydoubt@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Message-ID: <870925774.539833.1654346793623@apps.talktalk.co.uk>
-In-Reply-To: <RFC-patch-07.15-cf1a5f3ed0f-20220603T183608Z-avarab@gmail.com>
+Message-ID: <2064938784.539963.1654347067250@apps.talktalk.co.uk>
+In-Reply-To: <0c296c0e-bbd4-57a6-1cab-3b98c3bc8927@web.de>
 References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
- <RFC-patch-07.15-cf1a5f3ed0f-20220603T183608Z-avarab@gmail.com>
-Subject: Re: [RFC PATCH 07/15] strbuf.c: placate -fanalyzer in strbuf_grow()
+ <RFC-patch-01.15-b3a678d934a-20220603T183608Z-avarab@gmail.com>
+ <0c296c0e-bbd4-57a6-1cab-3b98c3bc8927@web.de>
+Subject: Re: [RFC PATCH 01/15] remote.c: don't dereference NULL in freeing
+ loop
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -49,60 +50,47 @@ Importance: Medium
 X-Mailer: Open-Xchange Mailer v7.8.4-Rev79
 X-Originating-IP: 31.185.185.192
 X-Originating-Client: open-xchange-appsuite
-X-CMAE-Envelope: MS4wfFyD10ycq2PfD720Fr9543WWWj+yWVi6+sBKsEzT0zsism7IpbaoqghrgVUzGDSStuGywWO1lDQt5mfwUOJ1sP1RhG3GX4hVwV1Xbjvmt0a/w0xn1wY/
- 8hYgCWdOYddeDbJXYWcL5S28RTAs3qBTeErNmiZpq86huXguTt9R8xm7NeiX8yHUui2G0vlLhSIfBW1kVNAxbySLXgSnL4o77tFLlTl/YbSlIBzHGs7XSD5j
- PogEBBXopgiRA3jDXMHSfGVIYO2rjjp65OHVGZ1wgbJ3GkIReGZn62HUM6l+uitUkZvZq9qRud+VtSQWz9CXhN7Qf1DtW+SBlHtR/aarih1kShr5xvLfv/db
- vfl783AkcIb5yJw1w4nrOi9k7oYYr29B/7JlGZydFzyF3BMeCowqrR7gYtc+Txmtrn6DTNXPKY4ppJDT/qXWUDXPEHA3GGVvm4/2FMlCh63ROn10lvtobzbI
- 1ZiavumVBk9HM9Bp
+X-CMAE-Envelope: MS4wfN5EB1gtDFonIWHL4fLhyJwGiPvSAAwWCw/sJ5UpCAYNg0zP+IE2oEQnHaWGbnTNwpsBsBWj0GfJ0np32rjr4B/YvWhiYqTprEDyf6qklaee0AJ1Ru0z
+ Xc/bUusnlbBopI8XznvDOwRYV4XBCeiXDRi1T170Wf8G/DsK67f90rB2eMGitp5igGJoeM2BgyCqNVQC8NY8bb1+TXeZ+1nCqQQHpcpqEA31r8nvJ24Xzp+U
+ HSKr/JRgHb8f+7yQ4zZvt2TnVFx4suaRBgLRrnYdmlJDIGaluo3HDOMnT6Sn9/+SKjYJx5dR2lbXoCmbYaIdIREda1ORj6YyyUgqfntXrrKQcs2U+cv6b0CJ
+ YklhrKtgmCQXeFHRbUG3uIZrcnvb1avKToC4dIBQYGD+PgkteXP5Ya5ApTF492z68ACu2p8to9Z05gM0PxqvbVhjAtjJcwmuxonUGAmoBVntfRUzt1VAssUV
+ x7S+BW33mJ0ixxS0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi =C3=86var
 
-[This is an old address that I only have webmail access to, please use phil=
-lip.wood@dunelm.org.uk when cc'ing me]
+> On 03 June 2022 at 22:07 Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>=20
+>=20
+> Am 03.06.22 um 20:37 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> > Fix a bug in fd3cb0501e1 (remote: move static variables into
+> > per-repository struct, 2021-11-17) where we'd free(remote->pushurl[i])
+> > after having NULL'd out remote->pushurl. itself.
+> >
+> > While we're at it let's get rid of the redundant braces per the
+> > CodingGuidelines, which also serves to show in the diff context that
+> > we were doing a FREE_AND_NULL(remote->pushurl) afterwards too, let's
+> > keep that one.
+>=20
+> The extended context is helping, but the brace removal makes this change
+> harder to read.
 
-> On 03 June 2022 at 19:37 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com> wrote:
->=20
->=20
-> Change the strbuf_grow() function so that GCC v12's -fanalyze doesn't
-> yell at us about sb->buf[0] dereferencing NULL, this also makes this
-> code easier to follow.
->=20
-> This BUG() should be unreachable since the state of our "sb->buf" and
-> "sb->alloc" goes hand-in-hand, but -fanalyzer isn't smart enough to
-> know that, and adding the BUG() also makes it clearer to human readers
-> that that's what happens here.
->=20
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  strbuf.c | 2 ++
->  1 file changed, 2 insertions(+)
->=20
-> diff --git a/strbuf.c b/strbuf.c
-> index dd9eb85527a..61c4630aeeb 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -97,6 +97,8 @@ void strbuf_grow(struct strbuf *sb, size_t extra)
->  =09if (new_buf)
->  =09=09sb->buf =3D NULL;
->  =09ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
-> +=09if (new_buf && !sb->buf)
-> +=09=09BUG("for a new buffer ALLOC_GROW() should always do work!");
+Indeed, a small style fix in a larger change is one thing but here at least=
+ 80% of the changed lines are unrelated to the bugfix. I'm afraid my heart =
+has started to sink when I see the phrase "while we're at it" in a commit m=
+essage.
 
-This is a bit ugly, have you tried adding
-__attribute__((malloc (free), returns_nonnull))
-to xmalloc() and xrealloc() ?
+> [...]
+> >  =09FREE_AND_NULL(remote->pushurl);
+>=20
+> Why set pushurl to NULL after release?  This results in an invalid state
+> unless pushurl_nr und pushurl_alloc are reset to zero.  Same goes for
+> the url array above -- either a simple free(3) call suffices or url_nr
+> and url_alloc need to be cleared as well.
+
+That's a good point
 
 Best Wishes
 
 Phillip
-
->  =09if (new_buf)
->  =09=09sb->buf[0] =3D '\0';
->  }
-> --=20
-> 2.36.1.1124.g577fa9c2ebd
->
