@@ -2,72 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C39BCC433EF
-	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 16:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23319C43334
+	for <git@archiver.kernel.org>; Sat,  4 Jun 2022 16:35:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238143AbiFDQXB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jun 2022 12:23:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54976 "EHLO
+        id S237397AbiFDQfK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jun 2022 12:35:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232413AbiFDQW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jun 2022 12:22:59 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 399A2107
-        for <git@vger.kernel.org>; Sat,  4 Jun 2022 09:22:58 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id m20so21253876ejj.10
-        for <git@vger.kernel.org>; Sat, 04 Jun 2022 09:22:58 -0700 (PDT)
+        with ESMTP id S238573AbiFDQfD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jun 2022 12:35:03 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB1D4EA15
+        for <git@vger.kernel.org>; Sat,  4 Jun 2022 09:35:02 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id s12so14114495ejx.3
+        for <git@vger.kernel.org>; Sat, 04 Jun 2022 09:35:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=11F6gQUhp1kKIDEfmZlpR183dfwS1D/ACFByfcMV0oM=;
-        b=UuszWYkZMreMDzgl32KOzY5VZj66JIw966hPnKk46aYDhmq1dIO5Fa5uyn/iAWAHQK
-         Q/qnG3m6U3SyZusE0EMtKSqUaz+P5X9eEtvfuJd9YWGY4X1t2EjhpGFAxZibsw0+umnY
-         vwlH6U/j7Ju6MsXN6Xk1dlqyWYKM8xxzqZ3S7Do+CXNBTIumJAUHuFvh629JtnNaRTFc
-         ESzFgy548Q++NAg6xWcJt92aCsq/BuFLVQE0bAIrXh6UZxnOFe9WQPW+RFL9t8znnsET
-         pzxdu4b0oKG9sp0A7t8KIMKIuQdjbYJfiDZLD5qxbk5lpOoPQQjumzzS4zyQx2fRUNUY
-         E38A==
+        bh=iwqhYQCjOJ1/jBKtwQDHNj7hymae4XmERKiu+Zk7OEQ=;
+        b=XmRvGsZjfSUYeBxsNr6QTQXW8iYv8GRtj6hnyB7+emA+jUQj1Nwv/hMurt/0CKBi9b
+         +XeZKW88oUGU+SuhxRdiCWN41Wgt6sP35GdpfNO6IV/rWQhVoTBnmdNjDVjayj9LzuR7
+         Lr0d58NAl6ZkWWprsya8mvrRHMQgPL9eBhnsip+Ohv2M0QE5HOu0i3Z64zNM6kh155z6
+         YBUserTgZQaFhSYkBCVpNVrIDlj6kDBPHjJAA+wwLowYWgHAtIHW5rgiDrDDUoQrkmVn
+         Eq79svdNiWwuIS/gXeBCQvayz0iNW1vdju+dmwwfM1WEMO6DpeZULSFq46+ow0Y5nHJE
+         qtQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=11F6gQUhp1kKIDEfmZlpR183dfwS1D/ACFByfcMV0oM=;
-        b=dt9l2CWzYmkXz6A6uFYKj1rl8baJYOCTn3AlRSVWOcb7Al6K4Ac3jmRc7HG0EIJcHN
-         5LZv116gN4Qhiuw+3tLUbZzZ5aGBrdo9jGT50LcQIjpsydrSBEQ6VNjdEhLhjnEx4BbT
-         lFYAZ5B/g6lUwfcew/n8cgOi2KuQU31vJzRdM5shR6hQp7YoNlJsgKfH8YQ805m+RD7J
-         e3q0lufqoka3K92yVLXsySUcRYtHAvVRuYBCeL2aHMrnVU/Jrn3CnTKZDlO7eQT9StXl
-         PVtGj4JVevy381qtwnv0kvuVYfOCYPrf5oGdhulBdFUSh4GnzTGJPFvfRgXHsj4o7pw8
-         gVLQ==
-X-Gm-Message-State: AOAM5328XU1UbsM0Xa/kJK5bwDcl7LYmMXtr3nJiNPadUfFaloXq9q4h
-        /NRaCsrqhY+f5ZO6MqzYJ20=
-X-Google-Smtp-Source: ABdhPJxe1XzPPEwwKT5MK3LRxomdigooM9+fz01+ConZhYtO5EQuqnB/J2yosKgNkvUmwJuNzsx0ig==
-X-Received: by 2002:a17:907:7b95:b0:6f4:ff03:981a with SMTP id ne21-20020a1709077b9500b006f4ff03981amr13797410ejc.653.1654359776793;
-        Sat, 04 Jun 2022 09:22:56 -0700 (PDT)
+        bh=iwqhYQCjOJ1/jBKtwQDHNj7hymae4XmERKiu+Zk7OEQ=;
+        b=sim2KT5ZPfZqddf1DxUZR2SR6wkuyZitL+bWybhrCzPmb4iTOtycuaYQi2T/J4Hweu
+         EZvDW0misCEu0+Gk1bUAfmtWxHlEOlZNpvYRVYE6wt3g5V8okaob+/nSri0k+kEMRX0a
+         pSjQHkITje6UtFMo4SZPkTnZsI2dC/3Rkx5w2qlEKAwog4+MkMKJOMHPZncPcbZyx0Kt
+         g4nQB0ag+6a2U10yn1VjtD/rr6OHL6s7SCL3EH2OjU7I/sE6i5L04FZCEVzFqTxc8dmz
+         z9SPyFU4iTY06m5qj/SYtSD/y0eYbBrCz5imengAGL3qs4i9/Bnx90azfE+yKnEfNSGE
+         JMdA==
+X-Gm-Message-State: AOAM530fffN8NGLElaySr5XzeTyc7fJRTNWpF2V+Qpt+Iepo1r8q5ydC
+        kYOwzP0EcVidRMmaPkhTdj0=
+X-Google-Smtp-Source: ABdhPJyOFhU1nwKbfbqupHuvzLCTgxNHLEZHxxfZfr22+8mm+5atmIwlk6bHmzi14uuhFKVDxLv/gw==
+X-Received: by 2002:a17:906:1492:b0:70e:294c:c37e with SMTP id x18-20020a170906149200b0070e294cc37emr7916343ejc.574.1654360500959;
+        Sat, 04 Jun 2022 09:35:00 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id g15-20020aa7dc4f000000b0042defe37a42sm5518055edu.16.2022.06.04.09.22.55
+        by smtp.gmail.com with ESMTPSA id y22-20020aa7ca16000000b0042dcbc3f302sm5614919eds.36.2022.06.04.09.35.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Jun 2022 09:22:55 -0700 (PDT)
+        Sat, 04 Jun 2022 09:35:00 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nxWYB-00203s-0g;
-        Sat, 04 Jun 2022 18:22:55 +0200
+        id 1nxWjr-0020Sm-Jg;
+        Sat, 04 Jun 2022 18:34:59 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>,
         Jinoh Kang <luke1337@theori.io>,
+        Phillip Wood <phillip.wood@talktalk.net>,
         Glen Choo <chooglen@google.com>, Paul Tan <pyokagan@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         Jeff Smith <whydoubt@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [RFC PATCH 07/15] strbuf.c: placate -fanalyzer in strbuf_grow()
-Date:   Sat, 04 Jun 2022 18:21:53 +0200
+Subject: Re: [RFC PATCH 03/15] reftable: don't memset() a NULL from failed
+ malloc()
+Date:   Sat, 04 Jun 2022 18:23:13 +0200
 References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
- <RFC-patch-07.15-cf1a5f3ed0f-20220603T183608Z-avarab@gmail.com>
- <870925774.539833.1654346793623@apps.talktalk.co.uk>
+ <RFC-patch-03.15-0b570d112fc-20220603T183608Z-avarab@gmail.com>
+ <693ed3c3-535e-9eae-9fd7-ca612ebf6943@web.de>
+ <220604.86pmjpw8h0.gmgdl@evledraar.gmail.com>
+ <1de74bf7-0e75-8ae3-6ea7-62939b540061@web.de>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <870925774.539833.1654346793623@apps.talktalk.co.uk>
-Message-ID: <220604.86czfowg81.gmgdl@evledraar.gmail.com>
+In-reply-to: <1de74bf7-0e75-8ae3-6ea7-62939b540061@web.de>
+Message-ID: <220604.868rqcwfnw.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,53 +79,64 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Jun 04 2022, Phillip Wood wrote:
+On Sat, Jun 04 2022, Ren=C3=A9 Scharfe wrote:
 
-> Hi =C3=86var
+> Am 04.06.22 um 02:54 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>
+>> To your comment here & some others (e.g. FREE_AND_NULL()): I was really
+>> trying to focus on narrowly addressing these -fanalyzer issues without
+>> digressing into the larger topics "what is this code *really* doing, and
+>> does it make sense?". It was pretty unavoidable in 13/15 though.
+>>
+>> Which isn't to say that I shouldn't fix some of it, e.g. your
+>> s/return/BUG()/ suggestion, but I think it's best to view these patches
+>> with an eye towards us already having these issues, and in most cases
+>> making -fanalyzer happy is a small cost.
+>>
+>> And by doing so and getting a "clean build" we'll be able to turn it on
+>> in CI, and thus notice when we run into new -fanalyzer issues.
 >
-> [This is an old address that I only have webmail access to, please use
-> phillip.wood@dunelm.org.uk when cc'ing me]
-
-Hrm, I just grabbed it from an old commit of yours I found. Consider
-sending in a patch to update .mailmap :)
-
->> On 03 June 2022 at 19:37 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@=
-gmail.com> wrote:
->>=20
->>=20
->> Change the strbuf_grow() function so that GCC v12's -fanalyze doesn't
->> yell at us about sb->buf[0] dereferencing NULL, this also makes this
->> code easier to follow.
->>=20
->> This BUG() should be unreachable since the state of our "sb->buf" and
->> "sb->alloc" goes hand-in-hand, but -fanalyzer isn't smart enough to
->> know that, and adding the BUG() also makes it clearer to human readers
->> that that's what happens here.
->>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  strbuf.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>=20
->> diff --git a/strbuf.c b/strbuf.c
->> index dd9eb85527a..61c4630aeeb 100644
->> --- a/strbuf.c
->> +++ b/strbuf.c
->> @@ -97,6 +97,8 @@ void strbuf_grow(struct strbuf *sb, size_t extra)
->>  	if (new_buf)
->>  		sb->buf =3D NULL;
->>  	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
->> +	if (new_buf && !sb->buf)
->> +		BUG("for a new buffer ALLOC_GROW() should always do work!");
+> Future analyzer reports are likely of the same quality as the current
+> ones.  If the goal is to shush them then we should just not use the
+> analyzer.  If reports contain a helpful signal, e.g. pointing to a real
+> bug or to overly complicated code, then we better address these issues.
 >
-> This is a bit ugly, have you tried adding
-> __attribute__((malloc (free), returns_nonnull))
-> to xmalloc() and xrealloc() ?
->
+> We can think about automating the analyzer once we have a certain number
+> of commits with improvements that would not have been made without it.
 
-Will try to experiment with that, perhaps GCC can be massaged to grok
-this somehow.
+We might decide not to go with -fanalyzer in CI or whatever, but I
+really think that your line of reasoning here is just the wrong way to
+evaluate the cost/benefit of -fanalyzer, a new warning or whatever.
 
-I do vaguely remember (but couldn't track down where it was) that we
-have some config for coverity for this function, due to it also having
-trouble with it.
+There's ~15 commits in this series addressing things -fanalyzer brought
+up, and it would be ~20 if the remaining issues I punted on were
+addressed.
+
+The question shouldn't be whether those things in particular were worth
+the effort, but whether the added safety of getting the new diagnostic
+going forward is worth the one-time cost.
+
+Some of these commits are fixing issues going back to 2007-ish, $(git
+log --no-merges --oneline -- '*.[ch]' | wc -l) is ~25k lines. And
+looking at it like that 20/25K isn't that bad of a ratio :)
+
+FWIW I spotted a couple of bugs in my own unsubmitted code from running
+all of it through -fanalyzer, and that POV is also worth thinking about,
+i.e. it's not just about improving git's current code, or even commits
+that might land in git.git in the future.
+
+But also to provide a development aid so that when we're writing patches
+we spot issues earlier, even if they're ones we might spot before we
+send the patch, or in review before it gets applied.
+
+It's also a much faster way of spotting certain issues, if you take into
+account that we've already been spotting some of these with the likes of
+SANITIZE=3Daddress, valgrind runs, or coverity.
+
+I find the warning output from -fanalyzer to be *really useful*. It's
+scarily verbose at first, but it's basically doing most of the work for
+you in terms of exhaustively describing how the control flow got to a
+given location. With e.g. SANITIZE=3Daddress and valgrind (to the extent
+that they overlap) you might get a stacktrace or two, but you generally
+have to chase all that down yourself.
+
