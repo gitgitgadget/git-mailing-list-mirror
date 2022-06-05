@@ -2,258 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB8B2C43334
-	for <git@archiver.kernel.org>; Sun,  5 Jun 2022 10:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C258C433EF
+	for <git@archiver.kernel.org>; Sun,  5 Jun 2022 10:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245533AbiFEKUp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Jun 2022 06:20:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38080 "EHLO
+        id S240780AbiFEK4B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Jun 2022 06:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245251AbiFEKUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Jun 2022 06:20:42 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A014BB82
-        for <git@vger.kernel.org>; Sun,  5 Jun 2022 03:20:41 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id x17so16035012wrg.6
-        for <git@vger.kernel.org>; Sun, 05 Jun 2022 03:20:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=WC4MBkvakbV4FbXOL8tlaeiAQZyh+m5agPZgxrfTNUk=;
-        b=UkFQkiWWV1lerTs9oM2uk0WLHB2ka/2KBuT+QkOWtZ1xzFl2N6usDjdg8zKPjJdRiW
-         wPaVicZaW9MLS4MXSQ/dvviLgFaG2wl7ZAHcARgGO5PwOs8C8jBYFEsWDarG1B0sfTpY
-         G9YAVcZBSO/+y+p1fxy9SjSuTqzcjCuxe9S0PPn2UAYq+BpqjsFQSjDNXRHBhGs/ATYP
-         NDnLunq2tk0NVOOyis00dkDs05Zs0qJPSfDX8tBLpXvJkwMLgqmg/ft/16kwpbYeKwMs
-         PLIxFurMx7QbW2iN1m7+tovidR/2WHO9R8n0/ynjGEO39INzR17YoFP+V+7XtFyLLN79
-         tYbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=WC4MBkvakbV4FbXOL8tlaeiAQZyh+m5agPZgxrfTNUk=;
-        b=p6nuzWAM1JTAS0iLrKpZWVeVeVY9XfhK6f/SRbIgBJ2L5JHKS2gVpiXec8Txkhf+3C
-         jMNVrnIfJKz71vpWy/bF3CK2W+oOq8fk2IDoF4C/GVmbddreFCV/ZNUxs4u/WYyVakj6
-         5yg4DA9G+pX/qkZdyS8aoTuDe3BaUnPXoXA4nhGPJ4etBS+6kalPPAxcNM39ujuNvsDA
-         ZwPhW9sXy54XU1w3rh0AegNlYMskFfad1iOIiAJciIXTkaFNJwZVji+YZnrwlJCkHJaV
-         6AGi6yNjDQ9xzGKEiy8x93EFMDRgWZ4oPj2r2BplB+R2t2gXdDL3zVjFt73Le0KMT2Wz
-         eEwA==
-X-Gm-Message-State: AOAM530cX6Z5cB5QHQfEEPoqbdu9vyzCZUksR+y3EFA8mwkf9UJgPVTd
-        vMFdpVdTCkaxVYGTc+u8EyM=
-X-Google-Smtp-Source: ABdhPJzJy9v1HdYX8apMn6arLtBj+j20g12ZW0mDFkE25tDTld04zS5TrY/DadNonQ2Pj3VIBj4TBg==
-X-Received: by 2002:adf:f706:0:b0:20e:6788:c2b6 with SMTP id r6-20020adff706000000b0020e6788c2b6mr16701332wrp.633.1654424439587;
-        Sun, 05 Jun 2022 03:20:39 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.192])
-        by smtp.googlemail.com with ESMTPSA id t12-20020a5d49cc000000b00210352bf36fsm12171953wrs.33.2022.06.05.03.20.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Jun 2022 03:20:38 -0700 (PDT)
-Message-ID: <bcbdd8db-763e-b910-3fe7-a5f11d3ff39b@gmail.com>
-Date:   Sun, 5 Jun 2022 11:20:37 +0100
+        with ESMTP id S232695AbiFEKz7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Jun 2022 06:55:59 -0400
+Received: from eggs.gnu.org (eggs.gnu.org [IPv6:2001:470:142:3::10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C574A906
+        for <git@vger.kernel.org>; Sun,  5 Jun 2022 03:55:57 -0700 (PDT)
+Received: from fencepost.gnu.org ([2001:470:142:3::e]:41560)
+        by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <tsdh@gnu.org>)
+        id 1nxnvI-0003eC-96; Sun, 05 Jun 2022 06:55:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
+        s=fencepost-gnu-org; h=MIME-Version:In-reply-to:Date:Subject:To:From:
+        References; bh=tcAAVGnJPFtkmLxKliPjWyl17LGsdimy2OouLfbgrrc=; b=M5TpkSGGcZrjLY
+        8LGd2Nuuc1Wy8ULgufGH0jVTgv9g3H0uqg8I96827z+Sgg43mNEUS6v6xF1eZdeGoPp9O9iM5kXhJ
+        7CvvdkpO0jCujg+tkYCJfckLwtUI+QsNP/e7tMULcsGtLGO/SgXPULsCTm79L7hl/nQb+wcFZ7A97
+        NRbXCUMl6ChvhgvEHEkUAM4GAd8fQaQEakyqzHUeZIeTqnJlmnuJrpqfzB+kf/W48nIyOKvxFm8zK
+        nMgFOqSD7bg/NAAEPcSMtAzKnwrvsS5DD2bCwlJ9z30XUqgHuW5uyM+98V09CjrwkC7W6aiF9ZrIA
+        ZKqE3G0T0h8XGKjWskew==;
+Received: from auth1-smtp.messagingengine.com ([66.111.4.227]:44027)
+        by fencepost.gnu.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.90_1)
+        (envelope-from <tsdh@gnu.org>)
+        id 1nxnvG-00057K-VS; Sun, 05 Jun 2022 06:55:55 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailauth.nyi.internal (Postfix) with ESMTP id DCB7327C0054;
+        Sun,  5 Jun 2022 06:55:53 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Sun, 05 Jun 2022 06:55:53 -0400
+X-ME-Sender: <xms:uYucYqLzV2UbdJJ-O6TbKudOWmOoM40_KYF5oN4DTNO4pR_BVpM9Ug>
+    <xme:uYucYiJkpIis8pqTP2Oa_sTofxTXrf714QSps4BJrODLQiUlsJccYsipBsNGXS5Md
+    evECkLVZJ39aw>
+X-ME-Received: <xmr:uYucYquGraLfji2L2bXG9NbreZSXqbQw5aptO1uawqS2YrAYQrHTo3hN-Hk6q3rJLkDjMgs7OJpmK7UqJvUq7gnvzCkt_A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedruddttddgfeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpehffgfhvfevufffjgfkgggtsehttd
+    ertddtredtnecuhfhrohhmpefvrghsshhilhhoucfjohhrnhcuoehtshguhhesghhnuhdr
+    ohhrgheqnecuggftrfgrthhtvghrnhepueegteeugeeuvdefhfeklefgueeikeeiveelff
+    ekkeekudduhefhteefkedthffhnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehthhhorhhnod
+    hmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdekieejfeekjeekgedqieefhedv
+    leekqdhtshguhheppehgnhhurdhorhhgsehfrghsthhmrghilhdrfhhm
+X-ME-Proxy: <xmx:uYucYvZkZ9_WCvfZSPnWXMEJjVdI03eOCyBgZ27wVBdNyk9L6lZBIA>
+    <xmx:uYucYhbFxqakwFXTXWvjDaoRke3xnH_w3Fzl2u69X67q2VZfa11xlA>
+    <xmx:uYucYrBK4tzLvgCl4d-TEMoQfg-Vlmre8NxoXCTlpJjaMEJVHHxhbg>
+    <xmx:uYucYiCuBpPyVaqyM7SVTwyPl8BfZno6U_AscaSrGbZhRdXKxQ6DQg>
+Feedback-ID: ib2b94485:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 5 Jun 2022 06:55:53 -0400 (EDT)
+References: <87h750q1b9.fsf@gnu.org>
+ <CAPMMpohzqKo-+q-tOcXymmzGxuOY-mf2NPRviHURm8-+3MPjZg@mail.gmail.com>
+User-agent: mu4e 1.7.26; emacs 29.0.50
+From:   Tassilo Horn <tsdh@gnu.org>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG?] Major performance issue with some commands on our repo's
+ master branch
+Date:   Sun, 05 Jun 2022 12:46:15 +0200
+In-reply-to: <CAPMMpohzqKo-+q-tOcXymmzGxuOY-mf2NPRviHURm8-+3MPjZg@mail.gmail.com>
+Message-ID: <87y1yb2xc8.fsf@gnu.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 07/15] strbuf.c: placate -fanalyzer in strbuf_grow()
-Content-Language: en-US
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jinoh Kang <luke1337@theori.io>,
-        Glen Choo <chooglen@google.com>, Paul Tan <pyokagan@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>, Taylor Blau <me@ttaylorr.com>
-References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
- <RFC-patch-07.15-cf1a5f3ed0f-20220603T183608Z-avarab@gmail.com>
- <870925774.539833.1654346793623@apps.talktalk.co.uk>
- <220604.86czfowg81.gmgdl@evledraar.gmail.com>
- <8a5cdd7a-13bf-b091-e947-657aeb094c38@web.de>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <8a5cdd7a-13bf-b091-e947-657aeb094c38@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/06/2022 21:37, René Scharfe wrote:
-> Am 04.06.22 um 18:21 schrieb Ævar Arnfjörð Bjarmason:
->>
->> On Sat, Jun 04 2022, Phillip Wood wrote:
->>
->>> Hi Ævar
->>>
->>> [This is an old address that I only have webmail access to, please use
->>> phillip.wood@dunelm.org.uk when cc'ing me]
->>
->> Hrm, I just grabbed it from an old commit of yours I found. Consider
->> sending in a patch to update .mailmap :)
->>
->>>> On 03 June 2022 at 19:37 Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
->>>>
->>>>
->>>> Change the strbuf_grow() function so that GCC v12's -fanalyze doesn't
->>>> yell at us about sb->buf[0] dereferencing NULL, this also makes this
->>>> code easier to follow.
->>>>
->>>> This BUG() should be unreachable since the state of our "sb->buf" and
->>>> "sb->alloc" goes hand-in-hand, but -fanalyzer isn't smart enough to
->>>> know that, and adding the BUG() also makes it clearer to human readers
->>>> that that's what happens here.
->>>>
->>>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->>>> ---
->>>>   strbuf.c | 2 ++
->>>>   1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/strbuf.c b/strbuf.c
->>>> index dd9eb85527a..61c4630aeeb 100644
->>>> --- a/strbuf.c
->>>> +++ b/strbuf.c
->>>> @@ -97,6 +97,8 @@ void strbuf_grow(struct strbuf *sb, size_t extra)
->>>>   	if (new_buf)
->>>>   		sb->buf = NULL;
->>>>   	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
->>>> +	if (new_buf && !sb->buf)
->>>> +		BUG("for a new buffer ALLOC_GROW() should always do work!");
->>>
->>> This is a bit ugly, have you tried adding
->>> __attribute__((malloc (free), returns_nonnull))
->>> to xmalloc() and xrealloc() ?
->>>
->>
->> Will try to experiment with that, perhaps GCC can be massaged to grok
->> this somehow.
->>
->> I do vaguely remember (but couldn't track down where it was) that we
->> have some config for coverity for this function, due to it also having
->> trouble with it.
-> 
-> Good idea, but this attribute doesn't seem to help here.
+Tao Klerks <tao@klerks.biz> writes:
 
-Indeed, I was tricked by the misleading BUG message, the analyzer is not 
-complaining that xrealloc() may return NULL, it is taking a path where 
-it does not reallocate the buffer. I've copied the full output at the 
-end of the message if anyone wants to see the whole thing but the 
-relevant part is
+Hi Tao,
 
-            |cache.h:727:20:
-            |  727 |                 if ((nr) > alloc) { \
-            |      |                    ^
-            |      |                    |
-            |      |                    (10) following ‘false’ branch...
-strbuf.c:99:9: note: in expansion of macro ‘ALLOC_GROW’
-            |   99 |         ALLOC_GROW(sb->buf, sb->len + extra + 1, 
-sb->alloc);
-            |      |         ^~~~~~~~~~
+thanks for your response.
 
-> The following helps, but I don't know why it would be needed -- if alloc
-> is 0 then any strbuf_grow() call will give a nr of at least 1 (for the
-> NUL character):
+> All this to say: I haven't understood your branch setup, but I'm
+> guessing that you're regularly integrating work from "far-behind"
+> branches, and most or all of your commits on master are therefore
+> merges with large diffs wrt the second parent, and those large diffs
+> wrt the second parent are what's "getting worse".
 
-Yes it seems to be ignoring the result of our overflow checks and 
-assuming that sb->len + extra + 1 can overflow to zero. Having seen the 
-number of false positives I'm inclined to think we should take the bug 
-fixes and punt the rest of these patches. Maybe after a couple more gcc 
-releases the false positive rate will be more manageable. (I tired 
-running gcc 11 with -fanalyzer a few months ago and gave up looking at 
-the output before I found a single real bug so it has certainly improved 
-in gcc 12)
+That's exactly correct.
 
-Best Wishes
+> I haven't attempted to debug this, and personally have little
+> incentive to do, as switching to "git log" and accepting the process
+> overheads solved *my* problem.
 
-Phillip
+And I'm happy to report it solves *my* problem as well.  There's a PR
+for the Magit git porcelain replacing "git show" with an equivalent "git
+log" incarnation which makes the 30seconds "refresh status buffer"
+operation instant.
 
-strbuf.c: In function ‘strbuf_grow’:
-strbuf.c:101:28: warning: dereference of NULL ‘0’ [CWE-476] 
-[-Wanalyzer-null-dereference]
-   101 |                 sb->buf[0] = '\0';
-       |                 ~~~~~~~~~~~^~~~~~
-   ‘strbuf_normalize_path’: events 1-2
-     |
-     | 1156 | int strbuf_normalize_path(struct strbuf *src)
-     |      |     ^~~~~~~~~~~~~~~~~~~~~
-     |      |     |
-     |      |     (1) entry to ‘strbuf_normalize_path’
-     |......
-     | 1160 |         strbuf_grow(&dst, src->len);
-     |      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     |      |         |
-     |      |         (2) calling ‘strbuf_grow’ from ‘strbuf_normalize_path’
-     |
-     +--> ‘strbuf_grow’: events 3-4
-            |
-            |   91 | void strbuf_grow(struct strbuf *sb, size_t extra)
-            |      |      ^~~~~~~~~~~
-            |      |      |
-            |      |      (3) entry to ‘strbuf_grow’
-            |......
-            |   94 |         if (unsigned_add_overflows(extra, 1) ||
-            |      |            ~
-            |      |            |
-            |      |            (4) following ‘false’ branch (when 
-‘extra != 18446744073709551615’)...
-            |
-          ‘strbuf_grow’: event 5
-            |
-            |   95 |             unsigned_add_overflows(sb->len, extra + 1))
-git-compat-util.h:128:7: note: in definition of macro 
-‘unsigned_add_overflows’
-            |  128 |     ((b) > maximum_unsigned_value_of_type(a) - (a))
-            |      |       ^
-            |
-          ‘strbuf_grow’: events 6-9
-            |
-            |strbuf.c:94:46:
-            |   94 |         if (unsigned_add_overflows(extra, 1) ||
-            |......
-            |   97 |         if (new_buf)
-            |      |         ~~ ~
-            |      |         |  |
-            |      |         |  (8) following ‘true’ branch...
-            |      |         (7) ...to here
-            |   98 |                 sb->buf = NULL;
-            |      |                 ~~
-            |      |                 |
-            |      |                 (9) ...to here
-            |
-          ‘strbuf_grow’: event 10
-            |
-            |cache.h:727:20:
-            |  727 |                 if ((nr) > alloc) { \
-            |      |                    ^
-            |      |                    |
-            |      |                    (10) following ‘false’ branch...
-strbuf.c:99:9: note: in expansion of macro ‘ALLOC_GROW’
-            |   99 |         ALLOC_GROW(sb->buf, sb->len + extra + 1, 
-sb->alloc);
-            |      |         ^~~~~~~~~~
-            |
-          ‘strbuf_grow’: event 11
-            |
-            |cache.h:726:12:
-            |  726 |         do { \
-            |      |            ^
-            |      |            |
-            |      |            (11) ...to here
-strbuf.c:99:9: note: in expansion of macro ‘ALLOC_GROW’
-            |   99 |         ALLOC_GROW(sb->buf, sb->len + extra + 1, 
-sb->alloc);
-            |      |         ^~~~~~~~~~
-            |
-          ‘strbuf_grow’: events 12-15
-            |
-            |  100 |         if (new_buf)
-            |      |            ^
-            |      |            |
-            |      |            (12) following ‘true’ branch...
-            |  101 |                 sb->buf[0] = '\0';
-            |      |                 ~~~~~~~~~~~~~~~~~
-            |      |                 | |        |
-            |      |                 | |        (15) dereference of NULL 
-‘*sb.buf’
-            |      |                 | (14) ‘dst.buf’ is NULL
-            |      |                 (13) ...to here
+  https://github.com/magit/magit/issues/4702
+  https://github.com/magit/magit/compare/km/show-to-log
 
+Still maybe someone might want to have a look at the "git show" issue to
+double-check if the performance burden in this specific case (no diff
+should be generated) is warranted.  But at least I can work again with
+no coffee-break long pauses, so I'm all satisfied. :-)
+
+Thanks a lot for your insights.
+
+Bye,
+Tassilo
