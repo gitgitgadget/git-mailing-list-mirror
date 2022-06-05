@@ -2,103 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA68AC433EF
-	for <git@archiver.kernel.org>; Sun,  5 Jun 2022 13:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6119DC433EF
+	for <git@archiver.kernel.org>; Sun,  5 Jun 2022 13:57:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232143AbiFENhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Jun 2022 09:37:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34146 "EHLO
+        id S1350289AbiFEN5V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Jun 2022 09:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbiFENhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Jun 2022 09:37:32 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B3892253A
-        for <git@vger.kernel.org>; Sun,  5 Jun 2022 06:37:31 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id q15so3211398wmj.2
-        for <git@vger.kernel.org>; Sun, 05 Jun 2022 06:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=6B8QfVINBugm9XRqjG7W3DyOBSmzhL97w0SqhZMuy80=;
-        b=SRSSV5e2FcliWwjodvibcccEps4ZSVbxy7R7PlaqzW3IM22RXXiu8DrEcE0VnNeJ3H
-         oJ739LHWM0hIJM6x3B6eaxx5o7KN4CCR4v9FLOp4jEl/RlP4oWNUf+8twwP5aKozClmR
-         +ByHaTJU4xuRmCWZGJ6T14gWwisLerZsDnNJ4G0y10l3iUXHQfXu0uuqWr170YwUMARq
-         2WLUnYh7+RW6c+XQXdt7spAHY4mGIOC1xSlg+Lj1cMk3M/rNCVecpJXzTy51mXOzNmW/
-         V8u/2OlZNZhnEu6ejAUtxi/yx1t8Z1E9pABVdlu/Dg/R0faJvOuep9apTqKU3I4fSj2c
-         hE7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6B8QfVINBugm9XRqjG7W3DyOBSmzhL97w0SqhZMuy80=;
-        b=x0ImYCVjeHe9Ki+d2LPHxurdcaXg3WqxsQqlWo5XVzOxwfoAtu5GfbWdtKhWUSxOhl
-         9PSFiRYtjiQKUFMXWskjYzBx47JBJ4dqMofSkbOLFf4UDPGcYX75veTp7Aw1axEx6ltK
-         wCIuftukl5/qYQEcAEcR5G8KW+SHVArvUGhlsgnaQGYfrYCfZkZINjoM/9XbTQmgr/iP
-         EfuDcO0Gp872BuICEkPXJqO5nEXZqEj5WH40Bzhqy1r7Vlx2jm1bz78X1wThnhKE6Tw7
-         woeXXdp7/v3LIxeAIWeuqvV5tUWx92nQnTw/dUPkT4J9+BvkBDjZoEkbKjqmBp85EHHs
-         AQkQ==
-X-Gm-Message-State: AOAM5300f7y2SVxK7yflVTqodGcyepAh0JLEvUqt0xHDLFAHMLhS0xrM
-        D0BFRJTfWYh14XbEx1GPTVhnk88kVCx2+JDU
-X-Google-Smtp-Source: ABdhPJzxxJMVHSPdScuptazwb2Hpe3wMurZ6r7mvsqRgo+iIYXuYWMBscvzo5pTKFkd6baQ9woGG8Q==
-X-Received: by 2002:a05:600c:1d9f:b0:397:4192:4302 with SMTP id p31-20020a05600c1d9f00b0039741924302mr46889398wms.193.1654436249612;
-        Sun, 05 Jun 2022 06:37:29 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h6-20020adfa4c6000000b0020fe61acd09sm13311999wrb.12.2022.06.05.06.37.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jun 2022 06:37:28 -0700 (PDT)
-Message-Id: <pull.1249.git.1654436248249.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 05 Jun 2022 13:37:28 +0000
-Subject: [PATCH] read-cache.c: reduce unnecessary cache entry name copying
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1351078AbiFEN4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Jun 2022 09:56:55 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E32610FF6
+        for <git@vger.kernel.org>; Sun,  5 Jun 2022 06:55:37 -0700 (PDT)
+Received: from host-89-242-71-63.as13285.net ([89.242.71.63] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nxqiz-00053Z-Ev;
+        Sun, 05 Jun 2022 14:55:26 +0100
+Message-ID: <9765fe38-7857-8e02-d559-b0d24ec45562@iee.email>
+Date:   Sun, 5 Jun 2022 14:55:25 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: Files with \r\n\n line endings can result in needing to
+ renormalize twice, after deleting checked out file and restoring from repo
+Content-Language: en-GB
+From:   Philip Oakley <philipoakley@iee.email>
+To:     "Philip, Bevan" <Bevan.Philip@softwareag.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <AM0PR02MB56357CC96B702244F3271014E8DC9@AM0PR02MB5635.eurprd02.prod.outlook.com>
+ <44fe5991-3027-5ca7-bd3b-fd005d337caa@iee.email>
+ <AM0PR02MB5635C34CA2415C4FB2164B91E8DF9@AM0PR02MB5635.eurprd02.prod.outlook.com>
+ <525ed195-2a6f-1c43-3139-06134d3bb7e7@iee.email>
+In-Reply-To: <525ed195-2a6f-1c43-3139-06134d3bb7e7@iee.email>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+On 03/06/2022 14:14, Philip Oakley wrote:
+> On 01/06/2022 11:07, Philip, Bevan wrote:
+>> Hey Philip,
+>>
+>> Thanks for the response!
+>>
+>>> ... however, if I remember the design discussion correctly, normalisation was decided to be just the conversion of the Windows style EOL = `\r\n` to the Linux/*nix style EOL =`\n`, and any other characters
+>>> (utf8 / ascii bytes) were to be unchanged, including random '\r'
+>>> characters. So in that respect I think it is working as initially designed.
+>> This makes sense.
+>>
+>>> Do you have any information on how the mixed EOL styles (extra \r etc) came about?
+>> I wish I knew how this file came about, but the people that put these files in our VCS have long left. I suspect some broken generation tool.
+> I vaguely remember tales that early Macs use \r as their EOL character,
+> so may have been that.
+>>> Should those extra \r characters also be separate EOLs? (and how to
+>>> decide..?)
+>> Most tooling I use seems to do this, but I agree that this is an ambiguous topic.
+> maybe an extra `sed` invocation changing all the \r to \n in such cases!
 
-In function create_from_disk, we have already copy the cache
-entries name from disk or previous cache entry, we can reduce
-unnecessary copy before that.
+It looks like StackOverflow has an answer
+https://stackoverflow.com/a/42914886/717355
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    read-cache.c: reduce unnecessary cache entry name copying
-    
-    Index cache entries name are copied twice wrongly, so reduce the first
-    one to fix it.
+$ sed -i 's/\r/\n/g; s/\n$//' for the all-at-once conversion filter
+using sed (with explanation!). I believe its idempotent (great word to
+know ;-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1249%2Fadlternative%2Fzh%2Frm-ce-copy-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1249/adlternative/zh/rm-ce-copy-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1249
-
- read-cache.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 96ce489c7c5..e61af3a3d4d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1944,8 +1944,6 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
- 	ce->ce_namelen = len;
- 	ce->index = 0;
- 	oidread(&ce->oid, ondisk->data);
--	memcpy(ce->name, name, len);
--	ce->name[len] = '\0';
- 
- 	if (expand_name_field) {
- 		if (copy_len)
-
-base-commit: ab336e8f1c8009c8b1aab8deb592148e69217085
--- 
-gitgitgadget
+>>> Are the docs missing anything that would have helped clarify the issue earlier?
+>> A brief note on the limitations of renormalization might have proven helpful
+> I'll maybe add that to my list of todo's (though it's a bit long and
+> aspirational;-)
+>
+>>  - in particular, the bit that tripped me up was the requirement to remove and restore the files from the Git repository itself.
+> I think it's just a checkout and then an `add` of the renormalised files
+> `git add --renormalize . ` (not forgetting the all important `dot`),
+> though some may have termed the checkout as the files being 'removed'.
+>
+> I did notice (when cross checking a few points) that there is also a
+> `merge.renormalize` config option that will then make sure that when
+> branches are merged you get the required re-normalisation (check the man
+> pages ..).
+>
+>>  It wasn't obvious to me that this would have any impact on renormalization. Additionally, a note about the restriction on converting only \r\n to \n might also have proven useful.
+> OK.
+>
+> PS, in-line replies preferred on the list.
+>> Thanks,
+>> Bevan
+>>
+>>
+>> -----Original Message-----
+>> From: Philip Oakley <philipoakley@iee.email>
+>> Sent: 31 May 2022 22:12
+>> To: Philip, Bevan <Bevan.Philip@softwareag.com>; git@vger.kernel.org
+>> Subject: Re: Files with \r\n\n line endings can result in needing to renormalize twice, after deleting checked out file and restoring from repo
+>>
+>> On 31/05/2022 15:24, Philip, Bevan wrote:
+>>> Hello all,
+>>>
+>>> I've experienced an odd bug/limitation with `git add --renormalize`, requiring me to run the command twice on a specific file. Here is a bug report.
+>>>
+>>> What did you do before the bug happened? (Steps to reproduce your
+>>> issue)
+>>>
+>>> #!/bin/bash -x
+>>> printf "Test\\r\\r\\nTest Another Line\\r\\r\\nFinal
+>>> Line\\r\\r\\n\\r\\r\\n" > git.bdf printf "* text=auto\\n*.bdf text" >
+>>> .gitattributes mkdir test1 cd test1 git init cp ../git.bdf .
+>>> git add .
+>>> git status
+>>> git commit -m "Add file git.bdf"
+>>> cp ../.gitattributes .
+>>> git add .gitattributes
+>>> git add --renormalize .
+>>> git status
+>>> git commit -m "Renormalize git.bdf"
+>>> git add --renormalize .
+>>> git status
+>>> rm git.bdf
+>>> git restore .
+>>> git add --renormalize .
+>>> git status
+>>>
+>>> What did you expect to happen? (Expected behavior) Only needing to
+>>> renormalize the file once.
+>> That sounds like an obvious expectation, ...
+>>> What happened instead? (Actual behavior) Renormalize the file once,
+>>> then renormalize again after deleting the file that is checked out on disk and restoring it from the object stored within the Git repo.
+>>>
+>>> What's different between what you expected and what actually happened?
+>>> Needed to run the renormalize step again, after deleting the file checked out on disk and restoring the file from the object stored within the Git repo.
+>>>
+>>> Anything else you want to add:
+>>> This only occurs for files with \r\r\n line endings (and possibly also
+>>> ending the file with \r\r\n\r\n)
+>> ... however, if I remember the design discussion correctly, normalisation was decided to be just the conversion of the Windows style EOL = `\r\n` to the Linux/*nix style EOL =`\n`, and any other characters
+>> (utf8 / ascii bytes) were to be unchanged, including random '\r'
+>> characters. So in that respect I think it is working as initially designed.
+>>
+>>> The file is in three states:
+>>> - Initial state: \r\r\n line endings within Git object
+>>> - Initial renormalization state: \r\n line endings within Git object
+>>> - Second renormalization state: \n line endings within Git object
+>>>
+>>> Happens on both Windows and Linux (replicated on a fresh install of Git for Windows within Windows Sandbox). Additionally, tested with `next` trunk on Linux.
+>>> System info is for a Windows build where it does happen.
+>>>
+>>> Directory, and file names should be irrelevant.
+>>>
+>>> We encountered this naturally, with some files within a SVN repo we're migrating.
+>> Do you have any information on how the mixed EOL styles (extra \r etc) came about?
+>> Should those extra \r characters also be separate EOLs? (and how to
+>> decide..?)
+>> Are the docs missing anything that would have helped clarify the issue earlier?
