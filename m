@@ -2,207 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0456C43334
-	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 15:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24B3EC433EF
+	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 15:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240409AbiFFPLR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jun 2022 11:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36210 "EHLO
+        id S240103AbiFFPMw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jun 2022 11:12:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240406AbiFFPLP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jun 2022 11:11:15 -0400
-Received: from mail1.bemta35.messagelabs.com (mail1.bemta35.messagelabs.com [67.219.250.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C5B7136EA2
-        for <git@vger.kernel.org>; Mon,  6 Jun 2022 08:11:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=breadfinancial.com;
-        s=selectorSC; t=1654528272; i=@breadfinancial.com;
-        bh=wm8wOPutfcM53zdriLcIrajZ1OigqU3iAU88D/oLBYQ=;
-        h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-         Content-Type:Content-Transfer-Encoding:MIME-Version;
-        b=eUWBR3E2rI5ySRwvdOz/9SIaNugpvXbq9J8sbLrJw0Q/t5NqU5N1tIwz/qjUYP2o5
-         MIWvpDGl0WPUOQJ71/1LhOm//CFg0ArtATs2YqksVMnyf+Ex5zms5XecvxkL5ofocL
-         mOfP46bjMFyVipiRwNuFypp/pXj+02PMpzFESBKNxsdE9nFhexO+70zyV5rMvas4C9
-         W7Lpb2bFu59Uc+942n77mKk3Be/AiBH4wbuCh6kJ4r7/QsGQ2KAwmnw3FZCbR8n4lo
-         1RB3O/h8nKBCxVK3zELH/TIis2T3NjdABzPGKg1HLM1URq749UBWDcqlsHGfOEWQ1S
-         pQiL57oCiZc8Q==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJJsWRWlGSWpSXmKPExsWSoe+kpSsgOS/
-  JYNk9TouuK91MFg29V5gtrh3rZXVg9pjV0MvmcfGSssfnTXIBzFGsmXlJ+RUJrBkrNq9nLvgh
-  VPGn9yt7A+MNoS5GLg5GgaXMEl0zGpggnEWsEnNmLmKBcE4ySpxdO48NxGER2MciMf/OE3YQR
-  0hgGpPEunc72SCca4wSHT+mAjmcHGwCxhKzF7Sxg9giAr4Sq/ecArOZBfQlPv05wARiCwtIS0
-  z5f5IJokZG4nHHfhYI20pi1615rCA2i4CKxNYT7WAzeQUiJda9PgBWIySQL/F85QmwmZwCmhJ
-  t8+YzgtiMAmIS30+tYYLYJS5x68l8MFtCQEBiyZ7zzBC2qMTLx/9YIWxpic9th9ggemskPv1f
-  BlUvK3FpfjcjhO0r8XvGC6AaDiBbX+LvZQ2IcI7E042PocbISazqfcgCYctLTFv0nh3ClpF4c
-  GM7OHwkBC6wSXzYfAhq5jtmiWubYyFsA4l5346wTWDUm4Xk7FlA65iBXlu/Sx8irCgxpfsh+y
-  xwSAhKnJz5hGUBI8sqRqukosz0jJLcxMwcXUMDA11DQxNdSzNdEwO9xCrdRL3SYt3y1OISXSO
-  9xPJivdTiYr3iytzknBS9vNSSTYzANJRSlKCxg7Gn/6feIUZJDiYlUd4CvnlJQnxJ+SmVGYnF
-  GfFFpTmpxYcYZTg4lCR4V4HkBItS01Mr0jJzgCkRJi3BwaMkwntYACjNW1yQmFucmQ6ROsVoz
-  3Fl2969zBwPTpwEkvfX3ACS19Yv2McsxJKXn5cqJc67UByoTQCkLaM0D24oLIVfYpSVEuZlZG
-  BgEOIpSC3KzSxBlX/FKM7BqCTMuwxkCk9mXgnc7ldAZzEBneXzYA7IWSWJCCmpBqZkh4/rfZa
-  pddzpPRpSwZXzxJ/b83R7fZLx013VTwoyJDL6Lu136H957VTSilfre3J0XEPt1bi5dgqfYdm5
-  e+fdws7vqQ5XxZ5Kfim3UEoROjbxZMmUXdb8rWyvfpZ2zlsbZLvlKfe9/lPNptd4T9ywMXjoq
-  J60lkNwtbA8W32gWWzwF6lWj3bZfQdu2/97wvjupvEshsZb/66ZT10gOKPhf/5lm0u2CWdq5z
-  qsv2PGc7dV4I9Gg087m3F4d0+4s8vaeJb9QTEXT2fNzk84Pu/Dfb0s5Uf8AVt04ngdXiyuE3t
-  +9wUjp/zJzU2qxz4u2/xm1aRDWY+dmM7dCfJU28zLt/pild3895s35wf7BiixFGckGmoxFxUn
-  AgCIk6eoXAQAAA==
-X-Env-Sender: Edwin.Dyer@breadfinancial.com
-X-Msg-Ref: server-2.tower-642.messagelabs.com!1654528271!115!1
-X-Originating-IP: [104.47.66.42]
-X-SYMC-ESS-Client-Auth: mailfrom-relay-check=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.86.7; banners=breadfinancial.com,-,-
-X-VirusChecked: Checked
-Received: (qmail 19616 invoked from network); 6 Jun 2022 15:11:12 -0000
-Received: from mail-mw2nam12lp2042.outbound.protection.outlook.com (HELO NAM12-MW2-obe.outbound.protection.outlook.com) (104.47.66.42)
-  by server-2.tower-642.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP; 6 Jun 2022 15:11:12 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ffy9WTSxgwoaS5UtDjN0S+vmwR5ejOtlNuakfPj1LydTh5v+wTWBcjDJd0livVvNVKWsxQ80suGinukErw0JBhDPD4TUKkuTrOnsQUab35J270ZGwle/fP1hcLI3Il9BJ6sjjoPJ3iLwyzizSKNqyyK1qTXH6Tlg0aWuMgF/BSFwtFxsDO7ZUWPO0qKLZaApJNCc/+6OhgxVCG05Klv7KQZ6E+gYlzhEloiru4GYyGgTM12P+pvgTZ8EwXzkkIjAl+Thn6BdK74cZjHS+vgGr/gJV98gyRTZuysVvB1+d6glm78Sv3tbrIv0FuFx52TGvTdavzDp9QGCMu+Q8uUVeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9ziZbXmGcZXnhlofjO2iMEoqZS+LHv4cgIOWRy1eHVM=;
- b=O5PU4oyu1ltu25s//q87BPPUH0o3ZUtR3792e3jx5xlUrROkZMWpPY6ADAjHEKscDyY9/nt4brtLLLG/rK6NXbYTA5si3x+sFDxQqEyVwlKD2l/koBJZIP74k9Wj/MKJYwUx9V0xBA7b7vbFgl/01ede3qMdkEMtg6jVTUfGi11SoVNI9yk0/KQpk/irhQnki+yAJ9Xb/PbcnX+TIunF19Ao8NVfzu10ctZmFyogs7yLvR2fBgshWapfBVe0bpGb+QAIINufPQxfSUQMf40l1q2/t84KYmK6pYDe6zf84+15l/+8YnmYpReg+8XMTLhoTqAzlmQ/pgGJcgQwMsFoOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=breadfinancial.com; dmarc=pass action=none
- header.from=breadfinancial.com; dkim=pass header.d=breadfinancial.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=breadfinancial.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9ziZbXmGcZXnhlofjO2iMEoqZS+LHv4cgIOWRy1eHVM=;
- b=FpCD0cwTT5ChZ8qr8kcDuu8/DZmfoEjvmikqj7ntRrrl5ql0ckzcxvbtiMXq+EeW3FChmE1yAafNuz8IhnH2rHTXIFQS3CtvQXfa5dZibhvPNSt2Q7pN7+XF8ibEcoTVB4Zm1rM27yMqqKSAGaW45r10YYmn/gUPQrznrNLGh28oE4Dv/5JXweOf51UF33CGe8yY3h9/ytzgzeEgkj7hpByf4sce+z8+HPn2si3Q5xJ5UUdzEoAF0MFnihp5VCPKrjlBr2iPSFhR0DJMgDDXTNeWxqHOXsaj60r6Hu96duqACahSVMpL0Ou1rubo+RU1jLeYtTd3xsRfs30lLM55Vw==
-Received: from DM6PR01MB5978.prod.exchangelabs.com (2603:10b6:5:1df::26) by
- BN6PR0101MB3108.prod.exchangelabs.com (2603:10b6:405:2d::18) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5314.12; Mon, 6 Jun 2022 15:11:09 +0000
-Received: from DM6PR01MB5978.prod.exchangelabs.com
- ([fe80::2df6:d87f:5187:7fe3]) by DM6PR01MB5978.prod.exchangelabs.com
- ([fe80::2df6:d87f:5187:7fe3%7]) with mapi id 15.20.5314.019; Mon, 6 Jun 2022
- 15:11:09 +0000
-From:   "Dyer, Edwin" <Edwin.Dyer@breadfinancial.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Mark Esler <mark.esler@canonical.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: CVE-2022-24975
-Thread-Topic: CVE-2022-24975
-Thread-Index: AQHYdfpy6LQNuRXpNUyi8qUUnWy9w607DQVcgAd1meA=
-Date:   Mon, 6 Jun 2022 15:11:09 +0000
-Message-ID: <DM6PR01MB597862CFD285C837EA61E690F9A29@DM6PR01MB5978.prod.exchangelabs.com>
-References: <CAJ=HsVKX-NXePKU1G0UKRcFT5He8AjS_TQEirb3hN3chGFz9TA@mail.gmail.com>
- <xmqq4k14qe9g.fsf@gitster.g>
-In-Reply-To: <xmqq4k14qe9g.fsf@gitster.g>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-processedbytemplafy: true
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 79034788-04a6-4ba5-0130-08da47cec971
-x-ms-traffictypediagnostic: BN6PR0101MB3108:EE_
-x-microsoft-antispam-prvs: <BN6PR0101MB31081EDE80C967DD413C0D4CF9A29@BN6PR0101MB3108.prod.exchangelabs.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: +w/2OG6q36Ny74lNwoqJY/vfcJ9GYeulxpVUe2A8QDkpNOp/KkfiBzdbR5PsAhb8QXfsiSqcvrH28UGcmUPc6dSihKD7Pe7FRXKCQtq+Y4esR+S51bGu36IF41Ajo/RR4B4yIZ8SOJbsEZTBItPj0IMEBmHB9bs7LVVjMFXGATKBvzBsHB6ni6jNJX3xSphMdSBNvpb6OGniEslYCC2L//FYaHqgiZ0g+9Iv4obuFsnQRWJKMtA2GySO/NNdm2AG0phyD3sjV2wK66KDSXFXJeaQo4IXPkoF/E7PrNEkxnxpfiYwkHAVyjNm8OZdMqHln0C71nPhUHOVhJOJg/TnTE8d4mjNkK9EHB2j/sCbiG0WgOrw2k2ABfnLGnAFvZjuMEB9nl8IFXUpnpXeP4T3S6BlYEbOpXKc70wC0zdFIC1nVRlnrf2LuXtoQ+oonF9hQtFMixX+9FlmPN4fL+Um3fR8geDf4epk8NpyvJHiz0Gtut6qnXpgVExUgTH7Lu7EL7XFy/yowmKRcaXi9fZkXiyS32j0bzDr2eggmdgsb3c1+ud2kSSMmXreC6P/fdMoO8Mn4iP/U0ArK9Qp9Qaels0DTDGHcr0072Bjs4tAVqRkk+oKahBlNr+CINqhdejc5hLTUlqk61v1+v+uVOujJlarUaQ6mzBNeM3Vtd1RX66CDnKO82jo/CfDTbnA25kGPw3KKTxsYPAgHRrIjf+1iy3WaFSFOu+CJTQXob+zTuB7gC0AqMNOaw9zp5BLHCNgg++zWKOfYQmlYHpPaTMJrdy84YWd70uu7VQWhHVZias=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR01MB5978.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(8936002)(6506007)(83380400001)(76116006)(53546011)(66946007)(66556008)(66446008)(9686003)(38100700002)(122000001)(186003)(508600001)(966005)(26005)(52536014)(38070700005)(55016003)(5660300002)(4326008)(8676002)(110136005)(316002)(2906002)(66476007)(71200400001)(86362001)(33656002)(64756008)(7696005);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bGtYdFZNRGIwQkhhSzdDT1IwZG81MXpzRlNMWThyeTljdlBTZW8yTEVWOUQz?=
- =?utf-8?B?Vk41MTR1bXMrc3BDZ2FTTUZGUVJHOU1GVXlGTytGZGp0UDZxOUNCdmpFWUgr?=
- =?utf-8?B?cFRudi92TjMwWG5XUktBKzJRdnNsNk43bG5nTC93QVdhdFQvcUFkc3hFREs4?=
- =?utf-8?B?cU1zYWFxM1RZSUsrRlpJbzlUTjk0SUhtb1c2UWJ6VnVpRGd1YVZ1bkF0MGor?=
- =?utf-8?B?cXVISkg5SFNmakl3ZExLT1V3eDVoSk1Tcm5CM1p0RDR2aU1nYnlMZWxLNHVP?=
- =?utf-8?B?eGg5alRPZmVPbUN4bkZCU2lIeDRHZlB4K3BUQW9iL2pCRXVBclFOK25ja3lI?=
- =?utf-8?B?VkM3bmJjKzBOdzIyUi9JdWRSYkcvTGVYcHFQdnhuQTJhS3M1U1laVitKam9I?=
- =?utf-8?B?TlZXUWFPWDNXbjc4Yms4cFdlM0NDSzNSM2ZPZzFGNlFHQ2VvVWJlVkw5Mm41?=
- =?utf-8?B?QUVNR2tleTUxYVo2YXNIaTN5N3ljcXdPR2NpUHFqeVpnbFdkTis5L1M4aE9X?=
- =?utf-8?B?UjQzRTRuT1FtdWNsdHQ1aGtpS2hSM0VsUmRtQlhWckgwT3lFbUliMFZUT0pG?=
- =?utf-8?B?QWhaN2lDVGhiMFpob0RPanFsRWwzV0UzSGxXK0JqbGYyd1g4V0lkWUVDeGp4?=
- =?utf-8?B?a3QwcHp6UUlZdFk2MXlhWEhSV0NwTlJaUUFTTGtXelFnVVJDRkZpcGwwWS9w?=
- =?utf-8?B?djRUT3RMM05kUitjeXdkeEg4RGsxTU5raUVzTXVLUmJHZ2gxeUpyWEhXakMx?=
- =?utf-8?B?VWRsRHpEdm44b3R4NXU5dEgwWGRRRXd4WnRyNDMvYzloMzZieHo2VmhwcWVE?=
- =?utf-8?B?b3dGRVRpNG4yNkN2aVBESE5PeG8yT1BDdEw2aU9wbUQ1MjJEaytEdGZzNXVZ?=
- =?utf-8?B?dDRBdld3L3dnNytNdXh1T3ZuUUJLdlBBVmJCNjZzS1Z6ckNWaGpEWkluV1RZ?=
- =?utf-8?B?TVdOdnVLWmdnd0hRZEVlQjhuUzN6dzlhUXhKaWprSDRnWUUyclRSMlpYNytW?=
- =?utf-8?B?bDJZSUNIS090dnM5cCtaRGEvdXg4Mkk1T0xpRU5NMk9SSURJR1YyYWVzYzhR?=
- =?utf-8?B?OWpWN0dDR0tKb2haQ1NCNDljWTdIKzRIM1IyUXZML3hIVSttaWlmL2JtTWRo?=
- =?utf-8?B?UzkvQXp0ZnROanZkZy9EM0lOSjU5WGFzOEdlRzJBVTJDZ2xNeU1VMW9kMzZH?=
- =?utf-8?B?cjVOUVN5SUl4WVJqbEIrWlBKTTE5RjRKN2hpRkc4SmJJZE5lK3IwTERMWDFt?=
- =?utf-8?B?ellvZWtVMG5NaUdkL2FVcm9meGxCZWp2MWdVUEtLRmI3cG1abmV6TVhPeEJk?=
- =?utf-8?B?TTVjeW8yODUweW81Z20vRFlhNytKNFA1cnVleHFHMitiY2QzUmdialBkN3FW?=
- =?utf-8?B?VExEaFpyZXRDUXpVZGUrTVJlTEEwOUZZVkRqS2VtSTJnSE9KaitNeHh3dFgr?=
- =?utf-8?B?UmQwMHVnUWc3UFpraFVvV3VRQWUzb1Nnckd1R05Gd0ltMkY1dFlsdVd0MHIx?=
- =?utf-8?B?TGpYajl4cEhtV0NQVHR5a3Q5MEV2UWtyRXVvbWszSGFyQy9hR0hNeFFtSnpO?=
- =?utf-8?B?UW9rNStvZURWNnZFSGEybWxoVGZyTWtqN1o1R1pJQ0w0L21oaVRZd3RUWG5t?=
- =?utf-8?B?emVXUHcxZnpSSVphMVlrSnc0bG4xcHp3SElYQkp5SkROL0VDRVR0MlYrQnhu?=
- =?utf-8?B?VHl6cmtwNjQ3NUtXeEhKYlEvQXRFQzZRaCtYVTYvb2JMbm9qb09pUlZNQjNE?=
- =?utf-8?B?SGNzZGxpeEpZdjRNd2hOVjZETTN3OVM3TzlxWWs4WEhwSHYxVmVpaTBNeDUz?=
- =?utf-8?B?dnVQRmRDUVpzMjZqWlo3MTVTWExmTDBtWXVnc2QrSi92bitkLzJ5SHY2UkQr?=
- =?utf-8?B?VlBtYzRoNDdqaWw5Z0xPMVp0Y3JpdXllTVdCN1JYd2RFK3dzbk9ZdjdYVmp2?=
- =?utf-8?B?blJPWkFpczI5ZExSME5WazROSllXdS90bHBsZzM3ZTdlL290L28yZkxDZ2Uz?=
- =?utf-8?B?MVlhZUVOdFBqV1FXNzRHOWJYdWFJbmJ1cVd1Y0FDTUVucXBGQmEwbGR0MVVY?=
- =?utf-8?B?d2pUSCtmV3J5R0RIeEJKVTJhVENCVk1vZ2dqZDNUYmpKaVZFRzNZRjQ2OE1M?=
- =?utf-8?B?QTVyN2ZIWDJQZEVlOUpzZUpWMnRPS0FBc3dUcmMzSWdnV1NxMm92SHNjdXhG?=
- =?utf-8?B?bG1CeXBKNkhvMWcwZForT2ttZ0tiTzBVZVNzb01XZVR0Y3hCMnNaY3pUd1dk?=
- =?utf-8?B?UW9sbVRKZmJ1YWZrK1VaTjVqNUVENkJUV1p5MGtuSkw5Ny9oWjFkdHdTdFFK?=
- =?utf-8?B?V0RtNXQxNEJ4VHBGbk5UTDFZd1V4c1NPa2gwd09yUGpCRkgwMnZrZz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S240100AbiFFPMt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jun 2022 11:12:49 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A962C26124
+        for <git@vger.kernel.org>; Mon,  6 Jun 2022 08:12:48 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id s26so2607123ioa.3
+        for <git@vger.kernel.org>; Mon, 06 Jun 2022 08:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=qbX04HPMpcMPB5hY/h9VfXBnhRWMWR62FMY/X8Q1104=;
+        b=Fd8rwuP5cr28pOhO2UXdF26pTah5wPdQNFy/3U329dgtIF+8chZqxlZstYDZisX9QI
+         X92WTa5xMtYHetO2CzoE/fp87GH1fQZw19ZZ5dX2Hn/rJbAHb+vj5OrDKx0JJ7vkDJk0
+         E3Mthsb1n5/vSJ2o+hOuNAhzfvd74cNodtmrke/iQT5lKb0xou7XP3MB4BM2hQquNvP4
+         YvBFGTHXDUPzL/wegQlPrPF/G8HNOAzs0/dHRE6AGQCQ+20wCnVdXauC8t3mdMqzNwBk
+         TCgfdWCSFLM/omPDxCnuEK7+Zx9XpBynYZj7OzreU+oC3HoErGtjJjMHPdNcO/RHYd0h
+         gOOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=qbX04HPMpcMPB5hY/h9VfXBnhRWMWR62FMY/X8Q1104=;
+        b=H45VxvMLZYlGtvnZ5BPAm2BhUvzeG/oL0cYRkDR3GR4nfCb/kpT5hVWQopppu6g9Mr
+         EygXMhK4WI91mTs4zmXR8cnlQRyOR/Q6pDLDwjYkwp+4z4Jo2Uh1a6HCKAWFQPYM9P71
+         19SgpfBDD2xgfIqcjoSgaeKXOJx7pG+a54bWNGa0ixvtEIRRiIlYmh1gj/KxchLs4HuB
+         SelQeZHj4OQeS8Q0B6KYvEE413J1p2xtqKKxSxYajvs+iRaNsjjqKsfw0/dPQjbwmOrX
+         wKIX3k9spz3mj5eENNr0Co6Cygwqkdy8gHINetpaFm1neoWgMsCCMR1hJyGFhyAygXmI
+         YKZA==
+X-Gm-Message-State: AOAM530lPB29/jM2QMfQwynRIWgfHZAxFbJ4E+VYXsUFwU4FwsMiTRzr
+        7YDUCCxsoiM8vN3EnBTQYcj0
+X-Google-Smtp-Source: ABdhPJwDkBazM3FdZX03sjV1EkI4rqI5VYvOkWrNWqg7d6OTYuSAcYbsuxWNjyvIYW5/gr4jsQ0BMQ==
+X-Received: by 2002:a05:6638:1350:b0:331:9b1:e917 with SMTP id u16-20020a056638135000b0033109b1e917mr13637192jad.131.1654528367977;
+        Mon, 06 Jun 2022 08:12:47 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9db2:3a78:7e97:ec18? ([2600:1700:e72:80a0:9db2:3a78:7e97:ec18])
+        by smtp.gmail.com with ESMTPSA id s13-20020a02c50d000000b00331563be3ecsm5768088jam.121.2022.06.06.08.12.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jun 2022 08:12:47 -0700 (PDT)
+Message-ID: <3bb8baa2-e3e0-5cf1-aace-b0ba3ec6eb77@github.com>
+Date:   Mon, 6 Jun 2022 11:12:46 -0400
 MIME-Version: 1.0
-X-OriginatorOrg: breadfinancial.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5978.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 79034788-04a6-4ba5-0130-08da47cec971
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jun 2022 15:11:09.4339
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7a24eae8-33b9-449a-83f5-361634c821ce
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: aexT6Ibg7Id/YggeCRSO/EKjPSGbGkoDd99kAxSI3wjX6t9vhIG4cNiN9PUK6tFGSHoeNJw81y1DBP7/OP3vAgwOq3wp0NdmD2iVVLwOlAA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR0101MB3108
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 0/4] rebase: update branches in multi-part topic
+Content-Language: en-US
+To:     phillip.wood@dunelm.org.uk, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de
+References: <pull.1247.git.1654263472.gitgitgadget@gmail.com>
+ <YppSl4rOvVciLuXE@nand.local>
+ <a63cba6e-d25a-ee6d-57f0-9562b6235d3b@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <a63cba6e-d25a-ee6d-57f0-9562b6235d3b@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-R3JlZXRpbmdzOgoKSWYgaXQgaGVscHMsIFF1YWx5cyBpc24ndCBmbGFnZ2luZyB0aGlzIENWRSBh
-cyB3ZSB1c2UgR2l0IGluIHNldmVyYWwgdmVyc2lvbnMuIEkgY2hlY2tlZCBvdXIgbWFpbiBHaXQg
-Ym94IGFuZCBuYXJ5IGEgZmxhZyBmb3IgaXQuCgpFZCBEeWVyCkRldk9wcyBFbmdpbmVlcgoKTWFs
-dW0gQ29uc2lsaXVtIFF1b2QgTXV0YXJpIE5vbiBQb3Rlc3QKCi0tLS0tT3JpZ2luYWwgTWVzc2Fn
-ZS0tLS0tCkZyb206IEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVyQHBvYm94LmNvbT4gClNlbnQ6IFdl
-ZG5lc2RheSwgSnVuZSAxLCAyMDIyIDU6MTMgUE0KVG86IE1hcmsgRXNsZXIgPG1hcmsuZXNsZXJA
-Y2Fub25pY2FsLmNvbT4KQ2M6IGdpdEB2Z2VyLmtlcm5lbC5vcmcKU3ViamVjdDogUmU6IENWRS0y
-MDIyLTI0OTc1CgpbRVhURVJOQUwgRU1BSUxdIOKAkyBUaGluayBTZWN1cml0eSEKCk1hcmsgRXNs
-ZXIgPG1hcmsuZXNsZXJAY2Fub25pY2FsLmNvbT4gd3JpdGVzOgoKPiBIZWxsbywKPgo+IENvdWxk
-IHRoZSBnaXQgZGV2ZWxvcGVycyBzdGF0ZSB0aGVpciBwb3NpdGlvbiBvbiBDVkUtMjAyMi0yNDk3
-NT8gSXMgaXQgCj4gZGlzcHV0ZWQgb3Igd2lsbCBpdCBiZSBhZGRyZXNzZWQgYnkgdXBzdHJlYW0/
-Cj4KPiBBcyBJIHJlYWQgdGhlIGRvY3VtZW50YXRpb24sIC0tbWlycm9yIGlzIHdvcmtpbmcgYXMg
-c3RhdGVkIGFuZCBNSVRSRSAKPiBzaG91bGQgcmVtb3ZlIHRoZSBDVkUuCj4KPiBUaGFuayB5b3Us
-Cj4gTWFyayBFc2xlcgoKSXQgdG9vayBtZSBhIHdoaWxlIHRvIEdvb2dsZSBmb3IgImdpdGJsZWVk
-IiBhcyBJIGdvdCB0b25zIG9mIEdJIGJsZWVkIGJ1dCBubyBHaXRibGVlZCwgc28gYSBxdWljayBj
-b25jbHVzaW9uIGlzIHRoZXJlIGlzIG5vIHN1Y2ggY3JlZGlibGUgdGhpbmcgY2FsbGVkIGdpdGJs
-ZWVkIDstKQoKSm9rZXMgYXNpZGUgKHllcywgSSBrbm93IGFib3V0IFsqXSkuCgpBcyB5b3Ugc2Fp
-ZCwgIkEgcmVwb3NpdG9yeSBjYW4gaGF2ZSBtb3JlIHRoYW4gd2hhdCBicmFuY2ggaGVhZHMgYW5k
-IHRhZ3MgY2FuIHJlYWNoLCBhbmQgdGhlIC0tbWlycm9yIG9wdGlvbiBpcyBhIHdheSB0byBjb3B5
-IGFsbCB0aGUgdGhpbmdzIHRoYXQgYXJlIHJlYWNoYWJsZSBmcm9tIG90aGVyIHJlZnMuICBJdCBp
-cyAxMDAlIHdvcmtpbmcgYXMgaW50ZW5kZWQuIgoKRHVyaW5nIHRoZSBkaXNjdXNzaW9uIGFib3V0
-IFsqXSBvbiBnaXQtc2VjdXJpdHlAIG1haWxpbmcgbHNpdCwgZXZlcnlib2R5IHNhaWQgdGhhdCBp
-dCBpcyBkdWJpb3VzIHRoYXQgQ1ZFIGlzIHdhcnJhbnRlZC4gIEkgYW0gbm90IHN1cmUgdGhlcmUg
-aXMgYW55dGhpbmcgbW9yZSBmb3IgdXMgdG8gZG8uCgoKW1JlZmVyZW5jZV0KCiogaHR0cHM6Ly93
-d3dzLm5pZ2h0d2F0Y2hjeWJlcnNlY3VyaXR5LmNvbS8yMDIyLzAyLzExL2dpdGJsZWVkLwoKICB0
-aGUgYXV0aG9yIG9mIHdoaWNoIGFza2VkIGdpdC1zZWN1cml0eUAgbGlzdCBhbmQgYWZ0ZXIgZ2V0
-dGluZwogIHRoaW5ncyBleHBsYWluZWQsIGFjY2VwdGVkIHRoYXQgdGhpcyBpcyBhICJ3b3JraW5n
-IGFzIGludGVuZGVkIgogIGZ1bmN0aW9uYWxpdHkgYW5kIHByb21pc2VkIHRvIGFkanVzdCB0aGUg
-YmxvZyBwb3N0IGVudHJ5IG5vdCB0bwogIGltcGx5IHRoYXQgdGhlIGVudGlyZSByZXBvc2l0b3J5
-IGNhbiBiZSBjb3BpZWQuICBJIGRvIG5vdCBrbm93IGhvdwogIG11Y2ggY29ycmVjdGlvbiB3YXMg
-YWN0dWFsbHkgbWFkZSBzaW5jZSB0aGVuLCB0aG91Z2guCgpfX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fClRoZSBpbmZv
-cm1hdGlvbiBjb250YWluZWQgaW4gdGhpcyBlLW1haWwgbWVzc2FnZSBhbmQgYW55IGF0dGFjaG1l
-bnRzIG1heSBiZSBwcml2aWxlZ2VkIGFuZCBjb25maWRlbnRpYWwuIElmIHRoZSByZWFkZXIgb2Yg
-dGhpcyBtZXNzYWdlIGlzIG5vdCB0aGUgaW50ZW5kZWQgcmVjaXBpZW50IG9yIGFuIGFnZW50IHJl
-c3BvbnNpYmxlIGZvciBkZWxpdmVyaW5nIGl0IHRvIHRoZSBpbnRlbmRlZCByZWNpcGllbnQsIHlv
-dSBhcmUgaGVyZWJ5IG5vdGlmaWVkIHRoYXQgYW55IHJldmlldywgZGlzc2VtaW5hdGlvbiwgZGlz
-dHJpYnV0aW9uIG9yIGNvcHlpbmcgb2YgdGhpcyBjb21tdW5pY2F0aW9uIGlzIHN0cmljdGx5IHBy
-b2hpYml0ZWQuIElmIHlvdSBoYXZlIHJlY2VpdmVkIHRoaXMgY29tbXVuaWNhdGlvbiBpbiBlcnJv
-ciwgcGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0ZWx5IGJ5IHJlcGx5aW5nIHRvIHRo
-aXMgZS1tYWlsIGFuZCBkZWxldGUgdGhlIG1lc3NhZ2UgYW5kIGFueSBhdHRhY2htZW50cyBmcm9t
-IHlvdXIgY29tcHV0ZXIuCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX18K
+On 6/4/2022 11:28 AM, Phillip Wood wrote:
+> On 03/06/2022 19:27, Taylor Blau wrote:
+>> On Fri, Jun 03, 2022 at 01:37:48PM +0000, Derrick Stolee via GitGitGadget wrote:
+>>> This is a feature I've wanted for quite a while. When working on the sparse
+>>> index topic, I created a long RFC that actually broke into three topics for
+>>> full review upstream. These topics were sequential, so any feedback on an
+>>> earlier one required updates to the later ones. I would work on the full
+>>> feature and use interactive rebase to update the full list of commits.
+>>> However, I would need to update the branches pointing to those sub-topics.
+>>
+>> This is really exciting. I'm glad that you're working on it, because I
+>> have also wanted this feature a handful of times over the years.
+> 
+> Yes, thank you Stolee. I agree this will be useful, but I wonder if users
+> will be confused that --update-refs only updates the branch heads that happen
+> to be in the todo list, rather than updating all the branches that contain a
+> rewritten commit. I think the latter is something we should try to add in the
+> future and so we should take care to design this topic so that is possible.
 
+At the moment, the design adds a comment to the TODO list, showing which
+branches are not possible to move because they are checked out at another
+worktree (or is currently checked out and will be updated by the rebase
+itself). That seems like a good place to insert alternative logic in the
+future if we see a need for better behavior here.
+
+Unless: am I misunderstanding something about your concern here? Are you
+worried about refs outside of refs/heads/*? Are you concerned about it
+being _all_ refs/heads/* that we find?
+
+One potential way to extend this (in the future) is to make --update-refs
+take an optional string argument containing a refspec. This would replace
+the default refspec of refs/heads/*.
+ 
+>> This definitely would have come in handy when writing MIDX bitmaps,
+>> where I was often editing a local branch pointing at the final topic,
+>> and then trying to reconstruct all of the intermediate branches after
+>> each rebase. Not ever having to do that again sounds like a delight ;-).
+>>
+>>> pick 2d966282ff3 docs: document bundle URI standard
+>>> pick 31396e9171a remote-curl: add 'get' capability
+>>> pick 54c6ab70f67 bundle-uri: create basic file-copy logic
+>>> pick 96cb2e35af1 bundle-uri: add support for http(s):// and file://
+>>> pick 6adaf842684 fetch: add --bundle-uri option
+>>> pick 6c5840ed77e fetch: add 'refs/bundle/' to log.excludeDecoration
+>>> exec git update-ref refs/heads/bundle-redo/fetch HEAD 6c5840ed77e1bc41c1fe6fb7c894ceede1b8d730
+>>
+>> But I wonder if we can or should delay these update-refs as long as
+>> possible. In particular: what happens if I get past this "exec" line (so
+>> that I've already updated my bundle-redo/fetch branch to point at the
+>> new thing), but decide at some later point to abort the rebase?
+> 
+> Absolutely! There is also the question of what to do if a user skips a
+> commit that is a branch head. It is not obvious if they just want to drop> that commit from the branch or if they want to skip updating the ref as> well (I guess they can edit the todo list for the latter case).
+
+>> I think users will expect us to restore bundle-redo/fetch to where it
+>> was before if we end up in that case. Recovering from it manually sounds
+>> like kind of a headache.
+>>
+>> What if instead we created labels here, and then delayed all ref updates
+>> to the end by replacing this with:
+>>
+>>      label bundle-redo/fetch
+> 
+> Instead of using 'label' and 'exec' I'd prefer a new todo list command
+> ('update-ref' or 'update-branch'?) used in place of 'label' that takes a
+> branch name and updates the branch ref at the end of the rebase. That
+> would make it easy to do all the updates in a single transaction as you
+> suggested. Adding exec lines to do this makes the todo list messy and we
+> have been trying to stop rebase forking all the time.
+
+Thanks. Yes, a new 'update-refs' step at the end would be good to make
+it clear we want to rewrite the refs in one go without a possible
+interruption from the user.
+
+Thanks,
+-Stolee
