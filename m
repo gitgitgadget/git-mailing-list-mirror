@@ -2,136 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B4DC43334
-	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 19:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47EB5CCA473
+	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 19:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229893AbiFFTvG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jun 2022 15:51:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48242 "EHLO
+        id S232839AbiFFTzh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jun 2022 15:55:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbiFFTvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jun 2022 15:51:04 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0081A65D1
-        for <git@vger.kernel.org>; Mon,  6 Jun 2022 12:51:03 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1064019FDB4;
-        Mon,  6 Jun 2022 15:51:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZHRUk+WoBWze
-        AAauidAMZWT67LWrLW4cLGcSqMO5fyk=; b=sHGNZPz4vTCWO1xMHLSI+L5F9CQB
-        1+zKkhrxHAtaGeiQVMxSdBz8/jBEQzJqL5SwWXyFFTfG9+dF78tUUWyPz8RzTUtY
-        gBN9nM/BtlMrFYb3JK5q7tjWfJMankxIsMoNxvYzxXFplMF4OJWLxNOCTAGcRrl3
-        IaIHlOzzVjikF+I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F29F619FDB3;
-        Mon,  6 Jun 2022 15:51:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 710B019FDAE;
-        Mon,  6 Jun 2022 15:50:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Han Xin <chiyutianyi@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v13 6/7] core doc: modernize core.bigFileThreshold
- documentation
-References: <cover-v12-0.8-00000000000-20220329T135446Z-avarab@gmail.com>
-        <cover-v13-0.7-00000000000-20220604T095113Z-avarab@gmail.com>
-        <patch-v13-6.7-5ed79c58b18-20220604T095113Z-avarab@gmail.com>
-Date:   Mon, 06 Jun 2022 12:50:58 -0700
-In-Reply-To: <patch-v13-6.7-5ed79c58b18-20220604T095113Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 4 Jun
- 2022 12:10:27
-        +0200")
-Message-ID: <xmqqpmjl6065.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232840AbiFFTz3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jun 2022 15:55:29 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABE31A834
+        for <git@vger.kernel.org>; Mon,  6 Jun 2022 12:55:28 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id p10so21221872wrg.12
+        for <git@vger.kernel.org>; Mon, 06 Jun 2022 12:55:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=um0pHlFDlPXQvry7GVWW0ZvUYGXtnh++KQClsj3pm6s=;
+        b=Nx7jZEVl4v/uN8idqeyoIySCY64piD1EV0NXU4nfdhT5P2HPZ/8yUcWxW310cdOupN
+         GPcmZvl+76/0sZ/a7aP8fSczNG/w10UfHfy/b3MdJwx7qkfY6MmDvBGFjJCeDs8lDfuG
+         Sw/xlQd6rHR8S7fhM+gC/AYcy+yT1WGnW4vTR0r7tc01AAHJpODjdggtLurr93dQ0U5+
+         l+GfKpdaCgqmow1oLQzN0qM+10Z9T0Mq7ZHmiXuYt69WXJFzN6+ArRr5Bj/0ovNIz3WT
+         nRT+lQbIueliLeQuixk94ZY8vIEMcVO9+CWbubWs0uVD/4DLBhVKdbsaYZMHcteVkF4m
+         4z2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=um0pHlFDlPXQvry7GVWW0ZvUYGXtnh++KQClsj3pm6s=;
+        b=aNzQhDNeovnujQ/HbyL1YbYvADyV5ZQZuWtFo6INor1Z+9z9EnUIzRzD67IEnzvf0U
+         meYfeipcD1RX6hcDfTjtUZGBLB1aGcOFL88y2ED5vnfnQMxEQYtAJOyktbBrghof7d1H
+         y4rMXOsww1lqzCc/hBAU8eGV00jlc8C19S3QBzOFQEjuxGkvKMxnXTlg+LGUopw8CKJx
+         WlgviiBIO6sCTsEMgGvJtGmUjrOJaElEdLot0HhploukBANod3Q0Zc0Xh7r4ip1GUmVv
+         jPMkoKxK/If7ri7J7kgsZhUelWGctScD55Co1NEeEX/ZQYnngPIUXKuNj6fNkCX6+uYN
+         wamw==
+X-Gm-Message-State: AOAM533tG5cjV7en9XTHf7GNPmoVOqSMm/Y772wQXpE4/00Gv0UKKAz0
+        WSDdyT+FaxHcrhDLiB+TosTkfOrblMFOD488
+X-Google-Smtp-Source: ABdhPJyor2vv/c7+5yz66pVyUrGtMFHpq/gpB184aTEgOA25lZ/LW3Z3iDT1i7PzFw060ZcYhOjOWQ==
+X-Received: by 2002:a5d:47c9:0:b0:20f:e7da:6a48 with SMTP id o9-20020a5d47c9000000b0020fe7da6a48mr23932350wrc.315.1654545326651;
+        Mon, 06 Jun 2022 12:55:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c4-20020a05600c0ac400b0039c4f53c4fdsm4685078wmr.45.2022.06.06.12.55.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jun 2022 12:55:26 -0700 (PDT)
+Message-Id: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 06 Jun 2022 19:55:19 +0000
+Subject: [PATCH 0/6] bundle URIs: design doc and initial git fetch --bundle-uri implementation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FCDAAAA0-E5D1-11EC-B689-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+This is the first of series towards building the bundle URI feature as
+discussed in previous RFCs, specifically pulled directly out of [5]:
 
-> So let's attempt to summarize 12 years of changes in behavior, which
-> can be seen with:
->
->     git log --oneline -Gbig_file_thre 5eef828bc03.. -- '*.c'
->
-> To do that turn this into a bullet-point list. The summary Han Xin
-> produced in [1] helped a lot, but is a bit too detailed for
-> documentation aimed at users. Let's instead summarize how
-> user-observable behavior differs, and generally describe how we tend
-> to stream these files in various commands.
+[1]
+https://lore.kernel.org/git/RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com/
+[2]
+https://lore.kernel.org/git/cover-0.3-00000000000-20211025T211159Z-avarab@gmail.com/
+[3]
+https://lore.kernel.org/git/pull.1160.git.1645641063.gitgitgadget@gmail.com
+[4]
+https://lore.kernel.org/git/RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com/
+[5]
+https://lore.kernel.org/git/pull.1234.git.1653072042.gitgitgadget@gmail.com
 
-Nicely studied.  Very much appreciated.
+The first patch details the long-term design and goals of the bundle URI
+feature, including complicated features such as the bundle-uri protocol v2
+verb and bundle lists with heuristics.
 
->  core.bigFileThreshold::
-> -	Files larger than this size are stored deflated, without
-> -	attempting delta compression.  Storing large files without
-> -	delta compression avoids excessive memory usage, at the
-> -	slight expense of increased disk usage. Additionally files
-> -	larger than this size are always treated as binary.
-> +	The size of files considered "big", which as discussed below
-> +	changes the behavior of numerous git commands, as well as how
-> +	such files are stored within the repository. The default is
-> +	512 MiB. Common unit suffixes of 'k', 'm', or 'g' are
-> +	supported.
->  +
-> -Default is 512 MiB on all platforms.  This should be reasonable
-> -for most projects as source code and other text files can still
-> -be delta compressed, but larger binary media files won't be.
-> +Files above the configured limit will be:
->  +
-> -Common unit suffixes of 'k', 'm', or 'g' are supported.
-> +* Stored deflated, without attempting delta compression.
+However, then intention is to start small with the simplest features that
+allow user benefit as soon as possible. In that direction, the rest of this
+series creates the ability to run 'git fetch --bundle-uri=' to skip fetching
+from any remote and instead download the file at the given . Currently, that
+data is expected to be a bundle, which Git will then unbundle and modify the
+refs to be in the 'refs/bundle/' namespace.
 
-"even in packfiles" (with or without "even") is better be there in
-the sentence---loose objects are always stored deflated anyway.
+Currently, the can be a literal filename, a file:// URI, or an http[s]://
+URI. Tests are added for both of these cases.
 
-> +The default limit is primarily set with this use-case in mind. With it
-> +most projects will have their source code and other text files delta
-> +compressed, but not larger binary media files.
-> ++
-> +Storing large files without delta compression avoids excessive memory
-> +usage, at the slight expense of increased disk usage.
+As outlined in [5], the next steps after this are:
 
-> +* Will be treated as if though they were labeled "binary" (see
-> +  linkgit:gitattributes[5]). This means that e.g. linkgit:git-log[1]
-> +  and linkgit:git-diff[1] will not diffs for files above this limit.
+ 1. Add 'git clone --bundle-uri=' to run this 'git fetch --bundle-uri=' step
+    before doing a fetch negotiation with the origin remote.
+ 2. Allow parsing a bundle list as a config file at the given URI. The
+    key-value format is unified with the protocol v2 verb (coming in (3)).
+ 3. Implement the protocol v2 verb, re-using the bundle list logic from (2).
+    Use this to auto-discover bundle URIs during 'git clone' (behind a
+    config option).
+ 4. Implement the 'timestamp' heuristic, allowing incremental 'git fetch'
+    commands to download a bundle list from a configured URI, and only
+    download bundles that are new based on the timestamp values.
 
-Good.  You can lose three words "This means that" and the sentence
-means the same thing, so lose them (I always recommend people to
-reread the sentence when they write "This means that" with an eye to
-rewrite it better---it often is a sign that either the previous
-sentence is insufficiently clear, in which case it can be discarded
-and description after the three words can be enhanced to a better
-result).
+As mentioned in the design document, this is not all that is possible. For
+instance, Ævar's suggestion to download only the bundle headers can be used
+as a second heuristic (and as an augmentation of the timestamp heuristic).
 
-> +* Will be generally be streamed when written, which avoids excessive
-> +memory usage, at the cost of some fixed overhead. Commands that make
-> +use of this include linkgit:git-archive[1],
-> +linkgit:git-fast-import[1], linkgit:git-index-pack[1] and
-> +linkgit:git-fsck[1].
+Thanks, -Stolee
 
-Nice.  And this series adds unpack-objects to the mix.
+Derrick Stolee (6):
+  docs: document bundle URI standard
+  remote-curl: add 'get' capability
+  bundle-uri: create basic file-copy logic
+  fetch: add --bundle-uri option
+  bundle-uri: add support for http(s):// and file://
+  fetch: add 'refs/bundle/' to log.excludeDecoration
 
->  core.excludesFile::
->  	Specifies the pathname to the file that contains patterns to
+ Documentation/fetch-options.txt        |   6 +
+ Documentation/git-fetch.txt            |   1 +
+ Documentation/gitremote-helpers.txt    |   9 +
+ Documentation/technical/bundle-uri.txt | 475 +++++++++++++++++++++++++
+ Makefile                               |   1 +
+ builtin/fetch.c                        |  10 +
+ bundle-uri.c                           | 166 +++++++++
+ bundle-uri.h                           |  14 +
+ remote-curl.c                          |  33 ++
+ t/t5557-http-get.sh                    |  37 ++
+ t/t5558-fetch-bundle-uri.sh            |  77 ++++
+ transport-helper.c                     |   5 +-
+ 12 files changed, 833 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/technical/bundle-uri.txt
+ create mode 100644 bundle-uri.c
+ create mode 100644 bundle-uri.h
+ create mode 100755 t/t5557-http-get.sh
+ create mode 100755 t/t5558-fetch-bundle-uri.sh
 
-Excellent.
 
-Thanks.
+base-commit: 89c6e450fe4a919ecb6fa698005a935531c732cf
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1248%2Fderrickstolee%2Fbundle-redo%2Ffetch-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1248/derrickstolee/bundle-redo/fetch-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1248
+-- 
+gitgitgadget
