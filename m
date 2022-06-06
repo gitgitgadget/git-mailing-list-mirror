@@ -2,234 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D9F4C43334
-	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 15:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B2D0C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 16:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241188AbiFFP4A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jun 2022 11:56:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53796 "EHLO
+        id S241438AbiFFQEQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jun 2022 12:04:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240974AbiFFPz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jun 2022 11:55:58 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E0232383DF
-        for <git@vger.kernel.org>; Mon,  6 Jun 2022 08:55:57 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 56A5B12DD83;
-        Mon,  6 Jun 2022 11:55:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=We4bVDh2Brl3M6pK5E0dRH04dxYRUgopELOcOL
-        LyBCk=; b=I3DxgMRFoEGqmdGX9L0FjynqC+pg3GOpOO1Db+DBrF7lgR9vawLScf
-        FybC00JqtLqCx0junqGycusQO0rXPEvGJHNDToHGokqPHzeom6UEFzymhaL01nWU
-        6oIfolbvSijbsbp0caKvEhICdnaT1l/FoZfaAv1RfR3i4KpxmPpRQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D56412DD81;
-        Mon,  6 Jun 2022 11:55:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A1AF812DD80;
-        Mon,  6 Jun 2022 11:55:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Vicent Marti <tanoku@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/2] bitmap-format.txt: fix some formatting issues
-References: <pull.1246.git.1654177966.gitgitgadget@gmail.com>
-        <976361e624a3dd58c8f291358d42f4e4c66eb266.1654177966.git.gitgitgadget@gmail.com>
-Date:   Mon, 06 Jun 2022 08:55:54 -0700
-In-Reply-To: <976361e624a3dd58c8f291358d42f4e4c66eb266.1654177966.git.gitgitgadget@gmail.com>
-        (Abhradeep Chakraborty via GitGitGadget's message of "Thu, 02 Jun 2022
-        13:52:45 +0000")
-Message-ID: <xmqqsfohbxbp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S241420AbiFFQEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jun 2022 12:04:15 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C2215897F
+        for <git@vger.kernel.org>; Mon,  6 Jun 2022 09:04:14 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id h23so18774760ejj.12
+        for <git@vger.kernel.org>; Mon, 06 Jun 2022 09:04:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:content-language:from:to
+         :subject:content-transfer-encoding;
+        bh=LZhsBs3bCQr/yQmzM92Esa4DT3yB5CXywiIyNAiRmD0=;
+        b=qbCesXVAdP4vdIsO3bguy2bREwq9HMrcLyC5pZgOYRJCfV+QcMs+5kuA+0zYoEwA8X
+         lTLH0blw0mm6KodOcOGDwfr61kW7I0arbrm9xjIJHavWByFSJqdsGMsX6nIc+1+teTXk
+         57JHCoxrDqkVf9ve7MWTCxAUob6Qw7ruPKb55FALCZT8+f0fYJ5VgHcl9jmd4oSeSU+Y
+         5U5ov78FrSu66BXXQgfG2rm8/TPELoTD3m3Acl//VK6+4T6aQlg9GBN7yoPDkXU31jey
+         ELBADI+r9AyNU43xesxX+wKv16crkEvOf4keo5/HnjbDKFYK85ejT+B96wiu+GBrCqSl
+         1Qqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:from:to:subject:content-transfer-encoding;
+        bh=LZhsBs3bCQr/yQmzM92Esa4DT3yB5CXywiIyNAiRmD0=;
+        b=wncmh+HkWNDX+32874QaudETPMjLC99c3tYoX8RZzfte1Zeg4inmiBkBwTxtjjS5uN
+         7KIb+wP45fzfuuyrc/fj+qWTQkDQ19p/v+skeWzqw+9HCMs0vpOzkuP8kM+KPowTc1y5
+         0sp1BZLhjwBwn6yB4SuBxvPV11TJ07Gd6BTclWSSd2BZwGg4K6i5JdPLSBC/lpfEUD0F
+         vZI5lY8EtQpCK6jebhQeWpFKH361WcfD7gmtTzltnSvT6Mvn73jYM5SIARC7Tj65K2i8
+         7JHweBxC0l3/D6PtEffzghzGRGwbx9nDJ3vJNTX/OekXolT7ayhXM0XDlPvqdS1eLKt0
+         iy0w==
+X-Gm-Message-State: AOAM533MvDVP0U28KcIqjwFKKpBModSbmx65HgMfeHlcmoU1CtdMskhA
+        2WKF7T9B2WLJQCubRRb/ss/mQ0Z6nPk=
+X-Google-Smtp-Source: ABdhPJxxUPJVt4qFUnHZpaOSt7gx/LWiMuoHF0nWAhWeWuuOt0hEd4mr2KBqtZWG7DdTaVKzggMuKA==
+X-Received: by 2002:a17:907:9494:b0:6fa:78f3:eb9b with SMTP id dm20-20020a170907949400b006fa78f3eb9bmr21667424ejc.704.1654531453002;
+        Mon, 06 Jun 2022 09:04:13 -0700 (PDT)
+Received: from [192.168.115.146] (55d48e4e.access.ecotel.net. [85.212.142.78])
+        by smtp.gmail.com with ESMTPSA id ge16-20020a170907909000b00709e786c7b2sm5581245ejb.213.2022.06.06.09.04.12
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jun 2022 09:04:12 -0700 (PDT)
+Message-ID: <68627d29-8ffd-2e22-46ca-c28c9e980177@gmail.com>
+Date:   Mon, 6 Jun 2022 18:04:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 26564018-E5B1-11EC-A1E8-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Content-Language: en-GB
+From:   "R. Diez" <rdiez1999@gmail.com>
+To:     git@vger.kernel.org
+Subject: How to watch files in a Git repository
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi all:
 
-> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-> Cc: git@vger.kernel.org,  Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+I would like to get a notification e-mail when certain files or directories change in a Git repository.
 
-Identify those who may have input with "git log --no-merges" and add
-them here, perhaps?
+In the good old CVS days, you could just 'watch' a file with your favourite CVS GUI.
 
-> The asciidoc generated html for `Documentation/technical/bitmap-
-> format.txt` is broken. This is mainly because `-` is used for nested
-> lists (which is not allowed in asciidoc) instead of `*`.
+Some online services like GitHub offer their own notification mechanism, but I would like something generic. I am not looking for a hook solution, because the Git repositories may not be mine, so I may only have read access.
 
-Are we missing another step that must come much earlier than this
-patch?  It seems to me that Documentation/Makefile does not even
-consider that we should feed this file to AsciiDoc.
+The idea is that I can set up a cron job to periodically pull a repository, and run a script to generate the e-mails from the commit history. Any new commits which match the desired branch and modify the desired files and/or directories would trigger the notifications.
 
-> Fix these and also reformat it (e.g. removing some blank lines) for
-> better readability of the html page.
+I've searched the Web, but couldn't find anything straightforward.
 
-Do these blank lines hurt very badly how the end-result is formatted
-in HTML?  Does the extra indentation between the line with "The
-following flags are supported" on it and the two bullet items in the
-header make the output better in significant way?
+If there is nothing of the sort, I could write my own script in Bash or Perl. I can handle cron and sending e-mails, but I do not know much about Git's internals. Could someone provide a few pointers about how to code this? I would expect there is some command to list commits, and all files touched by a particular commit. And there would be some way to interface with Bash or Perl, which does not need parsing complicated text output from Git.
 
-These changes make the input text much harder to read, and are not
-very welcome, so unless they are part of "fixing generated HTML is
-broken", please omit them.  As evidenced by the lack of HTML output
-in the build system, a lot more folks read this document in text than
-in HTML, and readability of the source matters.
-
-Thanks.
-
-> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-> ---
->  Documentation/technical/bitmap-format.txt | 96 +++++++++++------------
->  1 file changed, 45 insertions(+), 51 deletions(-)
->
-> diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
-> index 04b3ec21785..110d7ddf8ed 100644
-> --- a/Documentation/technical/bitmap-format.txt
-> +++ b/Documentation/technical/bitmap-format.txt
-> @@ -39,7 +39,7 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
->  
->  == On-disk format
->  
-> -	- A header appears at the beginning:
-> +	* A header appears at the beginning:
->  
->  		4-byte signature: {'B', 'I', 'T', 'M'}
->  
-> @@ -48,35 +48,30 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
->  			of the bitmap index (the same one as JGit).
->  
->  		2-byte flags (network byte order)
-> -
->  			The following flags are supported:
-> -
-> -			- BITMAP_OPT_FULL_DAG (0x1) REQUIRED
-> -			This flag must always be present. It implies that the
-> -			bitmap index has been generated for a packfile or
-> -			multi-pack index (MIDX) with full closure (i.e. where
-> -			every single object in the packfile/MIDX can find its
-> -			parent links inside the same packfile/MIDX). This is a
-> -			requirement for the bitmap index format, also present in
-> -			JGit, that greatly reduces the complexity of the
-> -			implementation.
-> -
-> -			- BITMAP_OPT_HASH_CACHE (0x4)
-> -			If present, the end of the bitmap file contains
-> -			`N` 32-bit name-hash values, one per object in the
-> -			pack/MIDX. The format and meaning of the name-hash is
-> -			described below.
-> +				- BITMAP_OPT_FULL_DAG (0x1) REQUIRED
-> +				This flag must always be present. It implies that the
-> +				bitmap index has been generated for a packfile or
-> +				multi-pack index (MIDX) with full closure (i.e. where
-> +				every single object in the packfile/MIDX can find its
-> +				parent links inside the same packfile/MIDX). This is a
-> +				requirement for the bitmap index format, also present in
-> +				JGit, that greatly reduces the complexity of the
-> +				implementation.
-> +				- BITMAP_OPT_HASH_CACHE (0x4)
-> +				If present, the end of the bitmap file contains
-> +				`N` 32-bit name-hash values, one per object in the
-> +				pack/MIDX. The format and meaning of the name-hash is
-> +				described below.
->  
->  		4-byte entry count (network byte order)
-> -
->  			The total count of entries (bitmapped commits) in this bitmap index.
->  
->  		20-byte checksum
-> -
->  			The SHA1 checksum of the pack/MIDX this bitmap index
->  			belongs to.
->  
-> -	- 4 EWAH bitmaps that act as type indexes
-> +	* 4 EWAH bitmaps that act as type indexes
->  
->  		Type indexes are serialized after the hash cache in the shape
->  		of four EWAH bitmaps stored consecutively (see Appendix A for
-> @@ -84,7 +79,6 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
->  
->  		There is a bitmap for each Git object type, stored in the following
->  		order:
-> -
->  			- Commits
->  			- Trees
->  			- Blobs
-> @@ -97,39 +91,39 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
->  		in a full set (all bits set), and the AND of all 4 bitmaps will
->  		result in an empty bitmap (no bits set).
->  
-> -	- N entries with compressed bitmaps, one for each indexed commit
-> +	* N entries with compressed bitmaps, one for each indexed commit
->  
->  		Where `N` is the total amount of entries in this bitmap index.
->  		Each entry contains the following:
->  
-> -		- 4-byte object position (network byte order)
-> -			The position **in the index for the packfile or
-> -			multi-pack index** where the bitmap for this commit is
-> -			found.
-> -
-> -		- 1-byte XOR-offset
-> -			The xor offset used to compress this bitmap. For an entry
-> -			in position `x`, a XOR offset of `y` means that the actual
-> -			bitmap representing this commit is composed by XORing the
-> -			bitmap for this entry with the bitmap in entry `x-y` (i.e.
-> -			the bitmap `y` entries before this one).
-> -
-> -			Note that this compression can be recursive. In order to
-> -			XOR this entry with a previous one, the previous entry needs
-> -			to be decompressed first, and so on.
-> -
-> -			The hard-limit for this offset is 160 (an entry can only be
-> -			xor'ed against one of the 160 entries preceding it). This
-> -			number is always positive, and hence entries are always xor'ed
-> -			with **previous** bitmaps, not bitmaps that will come afterwards
-> -			in the index.
-> -
-> -		- 1-byte flags for this bitmap
-> -			At the moment the only available flag is `0x1`, which hints
-> -			that this bitmap can be re-used when rebuilding bitmap indexes
-> -			for the repository.
-> -
-> -		- The compressed bitmap itself, see Appendix A.
-> +			** 4-byte object position (network byte order)
-> +				The position **in the index for the packfile or
-> +				multi-pack index** where the bitmap for this commit is
-> +				found.
-> +
-> +			** 1-byte XOR-offset
-> +				The xor offset used to compress this bitmap. For an entry
-> +				in position `x`, a XOR offset of `y` means that the actual
-> +				bitmap representing this commit is composed by XORing the
-> +				bitmap for this entry with the bitmap in entry `x-y` (i.e.
-> +				the bitmap `y` entries before this one).
-> +
-> +				Note that this compression can be recursive. In order to
-> +				XOR this entry with a previous one, the previous entry needs
-> +				to be decompressed first, and so on.
-> +
-> +				The hard-limit for this offset is 160 (an entry can only be
-> +				xor'ed against one of the 160 entries preceding it). This
-> +				number is always positive, and hence entries are always xor'ed
-> +				with **previous** bitmaps, not bitmaps that will come afterwards
-> +				in the index.
-> +
-> +			** 1-byte flags for this bitmap
-> +				At the moment the only available flag is `0x1`, which hints
-> +				that this bitmap can be re-used when rebuilding bitmap indexes
-> +				for the repository.
-> +
-> +			** The compressed bitmap itself, see Appendix A.
->  
->  == Appendix A: Serialization format for an EWAH bitmap
+Thanks in advance,
+   rdiez
