@@ -2,80 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B2D0C433EF
-	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 16:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA8D1C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 16:13:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241438AbiFFQEQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jun 2022 12:04:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34226 "EHLO
+        id S241560AbiFFQNY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jun 2022 12:13:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241420AbiFFQEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jun 2022 12:04:15 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C2215897F
-        for <git@vger.kernel.org>; Mon,  6 Jun 2022 09:04:14 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id h23so18774760ejj.12
-        for <git@vger.kernel.org>; Mon, 06 Jun 2022 09:04:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:from:to
-         :subject:content-transfer-encoding;
-        bh=LZhsBs3bCQr/yQmzM92Esa4DT3yB5CXywiIyNAiRmD0=;
-        b=qbCesXVAdP4vdIsO3bguy2bREwq9HMrcLyC5pZgOYRJCfV+QcMs+5kuA+0zYoEwA8X
-         lTLH0blw0mm6KodOcOGDwfr61kW7I0arbrm9xjIJHavWByFSJqdsGMsX6nIc+1+teTXk
-         57JHCoxrDqkVf9ve7MWTCxAUob6Qw7ruPKb55FALCZT8+f0fYJ5VgHcl9jmd4oSeSU+Y
-         5U5ov78FrSu66BXXQgfG2rm8/TPELoTD3m3Acl//VK6+4T6aQlg9GBN7yoPDkXU31jey
-         ELBADI+r9AyNU43xesxX+wKv16crkEvOf4keo5/HnjbDKFYK85ejT+B96wiu+GBrCqSl
-         1Qqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:from:to:subject:content-transfer-encoding;
-        bh=LZhsBs3bCQr/yQmzM92Esa4DT3yB5CXywiIyNAiRmD0=;
-        b=wncmh+HkWNDX+32874QaudETPMjLC99c3tYoX8RZzfte1Zeg4inmiBkBwTxtjjS5uN
-         7KIb+wP45fzfuuyrc/fj+qWTQkDQ19p/v+skeWzqw+9HCMs0vpOzkuP8kM+KPowTc1y5
-         0sp1BZLhjwBwn6yB4SuBxvPV11TJ07Gd6BTclWSSd2BZwGg4K6i5JdPLSBC/lpfEUD0F
-         vZI5lY8EtQpCK6jebhQeWpFKH361WcfD7gmtTzltnSvT6Mvn73jYM5SIARC7Tj65K2i8
-         7JHweBxC0l3/D6PtEffzghzGRGwbx9nDJ3vJNTX/OekXolT7ayhXM0XDlPvqdS1eLKt0
-         iy0w==
-X-Gm-Message-State: AOAM533MvDVP0U28KcIqjwFKKpBModSbmx65HgMfeHlcmoU1CtdMskhA
-        2WKF7T9B2WLJQCubRRb/ss/mQ0Z6nPk=
-X-Google-Smtp-Source: ABdhPJxxUPJVt4qFUnHZpaOSt7gx/LWiMuoHF0nWAhWeWuuOt0hEd4mr2KBqtZWG7DdTaVKzggMuKA==
-X-Received: by 2002:a17:907:9494:b0:6fa:78f3:eb9b with SMTP id dm20-20020a170907949400b006fa78f3eb9bmr21667424ejc.704.1654531453002;
-        Mon, 06 Jun 2022 09:04:13 -0700 (PDT)
-Received: from [192.168.115.146] (55d48e4e.access.ecotel.net. [85.212.142.78])
-        by smtp.gmail.com with ESMTPSA id ge16-20020a170907909000b00709e786c7b2sm5581245ejb.213.2022.06.06.09.04.12
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jun 2022 09:04:12 -0700 (PDT)
-Message-ID: <68627d29-8ffd-2e22-46ca-c28c9e980177@gmail.com>
-Date:   Mon, 6 Jun 2022 18:04:11 +0200
+        with ESMTP id S241505AbiFFQNX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jun 2022 12:13:23 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA80310053B
+        for <git@vger.kernel.org>; Mon,  6 Jun 2022 09:13:21 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A04B12E06B;
+        Mon,  6 Jun 2022 12:13:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wMu+cNXZumTqzgqimFlBqXOXU+tSEsLaxZxn6y
+        Ov8X4=; b=pF6abKmty+JcVjxt+6swQ550E5Sge3h+2udCibxA3BI6sIUguX+/Jr
+        SZqR7X0A9R9To2r8I/WdInuJgY01Vhv95s0ZJWmFwbiZIpOJvGbwju9WAi6AKrHj
+        r3Uno3kQLmKnOw+hRYbnlQ8S4M+Oe4P3Gd4t3bt+NpL0vFdQx5bvI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 221CD12E06A;
+        Mon,  6 Jun 2022 12:13:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89D7512E069;
+        Mon,  6 Jun 2022 12:13:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Joakim Petersen <joak-pet@online.no>
+Cc:     Justin Donnelly <justinrdonnelly@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3] git-prompt: make colourization consistent
+References: <20220602145935.10512-1-joak-pet@online.no>
+        <20220603142521.42863-1-joak-pet@online.no>
+        <xmqqy1ydhfcc.fsf@gitster.g>
+        <7d391d82-b15e-4a31-5207-c4037fec0bf9@online.no>
+        <9fa34f22-3404-7bf8-6985-642c80634bf8@online.no>
+        <CAGTqyRxkiGt7CRggV7VeXNRK2VmDMxDX3EpOr5cPcc5AdH8ZaA@mail.gmail.com>
+        <xmqqwndxcuru.fsf@gitster.g>
+        <ed7d78a5-3c70-df5a-81c3-bdb631271700@online.no>
+Date:   Mon, 06 Jun 2022 09:13:19 -0700
+In-Reply-To: <ed7d78a5-3c70-df5a-81c3-bdb631271700@online.no> (Joakim
+        Petersen's message of "Sat, 4 Jun 2022 11:42:54 +0200")
+Message-ID: <xmqq7d5tbwio.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Content-Language: en-GB
-From:   "R. Diez" <rdiez1999@gmail.com>
-To:     git@vger.kernel.org
-Subject: How to watch files in a Git repository
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 95255A40-E5B3-11EC-A3CE-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all:
+Joakim Petersen <joak-pet@online.no> writes:
 
-I would like to get a notification e-mail when certain files or directories change in a Git repository.
+> There might be something I'm not seeing, but having it so each element
+> counters whatever colour left by the preceding element seems less
+> intuitive when adding or moving elements in the final $gitstring. Adding
+> an element will then require going into __git_ps1_colorize_gitstring,
+> even when it is not intended to be colourized. All existing uncoloured
+> elements will also need to be prefixed to protect against colour bleed
+> from being moved around. I'm partial to the idea of each coloured
+> element clearing its own colour.
 
-In the good old CVS days, you could just 'watch' a file with your favourite CVS GUI.
+I think that each makes sense in its own way.  Depending on what
+assumption we can make on the use of terminal attributes, one can
+produce shorter output than the other.
 
-Some online services like GitHub offer their own notification mechanism, but I would like something generic. I am not looking for a hook solution, because the Git repositories may not be mine, so I may only have read access.
+For example, if you have 3 things, A, B, and C, that are shown in
+this order, the "clear after yourselves" scheme would give
 
-The idea is that I can set up a cron job to periodically pull a repository, and run a script to generate the e-mails from the commit history. Any new commits which match the desired branch and modify the desired files and/or directories would trigger the notifications.
+	gitstring=<red>A<clear><blue>B<clear><green>C<clear>
 
-I've searched the Web, but couldn't find anything straightforward.
+while "clear the slate for yourself before you draw, the framework
+will clear the effect of the last one" scheme can give
 
-If there is nothing of the sort, I could write my own script in Bash or Perl. I can handle cron and sending e-mails, but I do not know much about Git's internals. Could someone provide a few pointers about how to code this? I would expect there is some command to list commits, and all files touched by a particular commit. And there would be some way to interface with Bash or Perl, which does not need parsing complicated text output from Git.
+	gitstring=<red>A<blue>B<green>C<clear>
 
-Thanks in advance,
-   rdiez
+if we know that no additive terminal attributes are used, and the
+latter gives a shorter output.
+
+If we need to support some additive ones (like "reverse"), on the
+other hand, and if each element is independent (i.e. "clear the
+slate for me" cannot use the knowledge of what the previous one
+did), then we have to write
+
+	gitstring=<red>A<clear><blue>B<clear><green>C<clear>
+
+for the latter, which becomes more verbose (but is the same as the
+"each is on its own, clear after yourselves" version).
+
+I have no strong preference either way myself.  "each on its own"
+might be conceptually simpler and easier to understand and explain
+what is going on.
+
+Thanks.
