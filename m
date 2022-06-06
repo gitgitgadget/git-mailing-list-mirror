@@ -2,271 +2,265 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 539F9C433EF
-	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 17:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB435C43334
+	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 17:54:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbiFFRuy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jun 2022 13:50:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43602 "EHLO
+        id S230109AbiFFRyp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jun 2022 13:54:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230148AbiFFRuv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jun 2022 13:50:51 -0400
-Received: from nmsh7.e.nsc.no (nmsh7.e.nsc.no [148.123.160.201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B281D6B7D4
-        for <git@vger.kernel.org>; Mon,  6 Jun 2022 10:50:48 -0700 (PDT)
-Received: from Lorule.wifi.realnett.no (unknown [194.19.73.58])
-        (Authenticated sender: joak-pet@online.no)
-        by nmsh7.e.nsc.no (smtp.online.no) with ESMTPA id C3E1AE60A4;
-        Mon,  6 Jun 2022 19:50:46 +0200 (CEST)
-From:   Joakim Petersen <joak-pet@online.no>
+        with ESMTP id S229999AbiFFRyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jun 2022 13:54:43 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22B852F9AD7
+        for <git@vger.kernel.org>; Mon,  6 Jun 2022 10:54:42 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id lw3-20020a17090b180300b001e31fad7d5aso12387809pjb.6
+        for <git@vger.kernel.org>; Mon, 06 Jun 2022 10:54:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=zE7mR/vFtOCJ4k2mHp4GJfPgTPP87f/5FyBUhl0YnW4=;
+        b=dUJQnvaRbTxnnFQPgQ/tlnLjOran+Pt0ZTVAGf/MZa3rG5tDq5VXCevhqlX5ljusoq
+         ygtDI0WX8T5ItzL0k2FS/NR9s2U/s076PcrzD/Ejjl0psQ2LUP6QIWWf4kR7cn9TEHNi
+         qkV82pdGAls691UDdnFE7mz06TxY1U+te5HNPLU4Nq6K70nCNJOFXGNhSwI4vj7wOYRh
+         hOZT7z7ccWgycSPH4iZSYjo4WXfnT0HodWNaSSiB42GWxFnqCie1eggZwK7K7dXQgZmq
+         7vw02mNKlduobrAVBioIL6N1bRmOTu/DF8WzFfyu8N5NNacgp2pgWkQFuZDbFrpnit7U
+         JXsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=zE7mR/vFtOCJ4k2mHp4GJfPgTPP87f/5FyBUhl0YnW4=;
+        b=akXMuGj4/oHEq4sAHxdJdYCviSvz/MBvY5VzjRDTXqLwl7Dk9RBATjQB+AW8/CikA5
+         N4p7omfB4xOx8tlZ2ty3CcBA7uDmGfIKj9aSHpfoZI24exHW7H7lKGMk+Kx9JaNjs/WN
+         WawGVmLexeehibCQHXnrhd0qkCoUzMLGuuJZ/5BweTPymIoJN3tmwLSMH8CzD3Xy2jIQ
+         9/3Pm3H5Bx+os+PB6Zxxnu20Kn2rh2iXMfSCFG4m1GQ8I9ECc18NUZ5hkYWOW797gv3z
+         TiIAsi/mPehaxEusS/NOL+tjkQbQT62NbGl0N9GR8GADdokKl48IP9BQDEEB9Vn39zM7
+         wYdQ==
+X-Gm-Message-State: AOAM5332wPKxsKLjSYR2yirb/VKkNuTM0RpOjYBuYOiI9ZDXUpHQLpBY
+        Vh16BYyFclFZNfSmMV3q1oP7gPdp2SzVbiVjGanl73WJn7tNCVWFIW1Cm/NVZDZqiEmTGQA0brs
+        cLHQrXog245zDGNEda7dKJWFpzAJJEg2UDlLWo75vlL5BW9OGp0uFaxOomuMEBFw43m+6Z8QkdW
+        Yx
+X-Google-Smtp-Source: ABdhPJzfyhXfNLZKIeAR0IFsumK928tpVv+OmfKG4QUb2ZFBBsIVxKapXLuF7ZajBvXr0faHa36NdseXdfi/31sBG6ug
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:e8e:b0:518:287c:ce82 with
+ SMTP id bo14-20020a056a000e8e00b00518287cce82mr25227948pfb.4.1654538081347;
+ Mon, 06 Jun 2022 10:54:41 -0700 (PDT)
+Date:   Mon,  6 Jun 2022 10:54:37 -0700
+In-Reply-To: <20220323210803.1130790-1-jonathantanmy@google.com>
+Message-Id: <20220606175437.1740447-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20220323210803.1130790-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.36.1.255.ge46751e96f-goog
+Subject: [PATCH v3] commit,shallow: unparse commits if grafts changed
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Joakim Petersen <joak-pet@online.no>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Justin Donnelly <justinrdonnelly@gmail.com>
-Subject: [PATCH v6] git-prompt: make colourization consistent
-Date:   Mon,  6 Jun 2022 19:50:22 +0200
-Message-Id: <20220606175022.8410-1-joak-pet@online.no>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220604192606.176023-1-joak-pet@online.no>
-References: <20220604192606.176023-1-joak-pet@online.no>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Source-IP: 194.19.73.58
-X-Scanned-By: MIMEDefang 2.84 on 10.123.160.201
+Cc:     Jonathan Tan <jonathantanmy@google.com>, avarab@gmail.com,
+        derrickstolee@github.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The short upstream state indicator inherits the colour of the last short
-state indicator before it (if there is one), and the sparsity state
-indicator inherits this colour as well. Make the colourization of these
-state indicators consistent by making all colourized indicators clear
-their own colour.
+When a commit is parsed, it pretends to have a different (possibly
+empty) list of parents if there is graft information for that commit.
+But there is a bug that could occur when a commit is parsed, the graft
+information is updated (for example, when a shallow file is rewritten),
+and the same commit is subsequently used: the parents of the commit do
+not conform to the updated graft information, but the information at the
+time of parsing.
 
-As of 0ec7c23cdc6 (git-prompt: make upstream state indicator location
-consistent, 2022-02-27), colourization in the output of __git_ps1 has
-changed such that the short upstream state indicator inherits the colour
-of the last short state indicator before it (if there is one), while
-before this change it was white/the default text colour. Some examples
-to illustrate this behaviour (assuming all indicators are enabled and
-colourization is on):
- * If there is something in the stash, both the '$' and the short
-   upstream state indicator following it will be blue.
- * If the local tree has new, untracked files and there is nothing in
-   the stash, both the '%' and the short upstream state indicator
-   will be red.
- * If all local changes are added to the index and the stash is empty,
-   both the '+' and the short upstream state indicator following it will
-   be green.
- * If the local tree is clean and there is nothing in the stash, the
-   short upstream state indicator will be white/${default text colour}.
+This is usually not an issue, as a commit is usually introduced into the
+repository at the same time as its graft information. That means that
+when we try to parse that commit, we already have its graft information.
 
-This appears to be an unintended side-effect of the change, and makes
-little sense semantically (e.g. why is it bad to be in sync with
-upstream when you have uncommitted local changes?). The cause of the
-change in colourization is that previously, the short upstream state
-indicator appeared immediately after the rebase/revert/bisect/merge
-state indicator (note the position of $p in $gitstring):
+But it is an issue when fetching a shallow point directly into a
+repository with submodules. The function
+assign_shallow_commits_to_refs() parses all sought objects (including
+the shallow point, which we are directly fetching). In update_shallow()
+in fetch-pack.c, assign_shallow_commits_to_refs() is called before
+commit_shallow_file(), which means that the shallow point would have
+been parsed before graft information is updated. Once a commit is
+parsed, it is no longer sensitive to any graft information updates. This
+parsed commit is subsequently used when we do a revision walk to search
+for submodules to fetch, meaning that the commit is considered to have
+parents even though it is a shallow point (and therefore should be
+treated as having no parents).
 
-	local f="$h$w$i$s$u"
-	local gitstring="$c$b${f:+$z$f}${sparse}$r$p"
-	
-Said indicator is prepended with the clear colour code, and the short
-upstream state indicator is thus also uncoloured. Now, the short
-upstream state indicator follows the sequence of colourized indicators,
-without any clearing of colour (again note the position of $p, now in
-$f):
+Therefore, whenever graft information is updated, mark the commits that
+were previously grafts and the commits that are newly grafts as
+unparsed.
 
-	local f="$h$w$i$s$u$p"
-	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}"
-
-If the user is in a sparse checkout, the sparsity state indicator
-follows a similar pattern to the short upstream state indicator.
-However, clearing colour of the colourized indicators changes how the
-sparsity state indicator is colourized, as it currently inherits (and
-before the change referenced also inherited) the colour of the last
-short state indicator before it. Reading the commit message of the
-change that introduced the sparsity state indicator, afda36dbf3b
-(git-prompt: include sparsity state as well, 2020-06-21), it appears
-this colourization also was unintended, so clearing the colour for said
-indicator further increases consistency.
-
-Teach indicators to clear their own colours. Make colouring of $c
-dependent on it not being empty, as it is no longer being used to colour
-the branch name. Move clearing of $b's prefix to before colourization so
-it gets cleared properly when colour codes are inserted into it.
-
-Change coloured Bash prompt tests to reflect the colourization changes:
- * Move the colour codes to wrap the expected content of the expanded
-   $__git_ps1_branch_name in all tests.
- * Insert a clear-colour code after the symbol for the first indicator
-   in "prompt - bash color pc mode - dirty status indicator - dirty
-   index and worktree", to reflect that all indicators should clear
-   their own colour.
-
-Signed-off-by: Joakim Petersen <joak-pet@online.no>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
-Changes since v5:
- * Rephrase the explanation of what this patch does to be in the
-   imperative mood and add a clear summarizing statement of what the
-   patch does.
- * Fixed the long space and removed another stray space.
+Thanks everyone for your reviews. I've updated the test following =C3=86var=
+'s
+suggestion.
+---
+Range-diff against v2:
+1:  368e40d660 ! 1:  a22cc1b02b commit,shallow: unparse commits if grafts c=
+hanged
+    @@ Commit message
+         unparsed.
+    =20
+         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+    +    ---
+    +    Thanks everyone for your reviews. I've updated the test following =
+=C3=86var's
+    +    suggestion.
+    =20
+      ## commit.c ##
+     @@ commit.c: int commit_graft_pos(struct repository *r, const struct o=
+bject_id *oid)
+    @@ shallow.c: int commit_shallow_file(struct repository *r, struct shal=
+low_lock *lk
+     =20
+    =20
+      ## t/t5537-fetch-shallow.sh ##
+    -@@ t/t5537-fetch-shallow.sh: test_expect_success 'fetch --update-shall=
+ow into a repo with submodules' '
+    +@@ t/t5537-fetch-shallow.sh: test_expect_success 'fetch --update-shall=
+ow' '
+    + test_expect_success 'fetch --update-shallow into a repo with submodul=
+es' '
+    + 	git init a-submodule &&
+    + 	test_commit -C a-submodule foo &&
+    ++
+    ++	test_when_finished "rm -rf repo-with-sub" &&
+    + 	git init repo-with-sub &&
+    + 	git -C repo-with-sub submodule add ../a-submodule a-submodule &&
+    + 	git -C repo-with-sub commit -m "added submodule" &&
+      	git -C repo-with-sub fetch --update-shallow ../shallow/.git refs/hea=
+ds/*:refs/remotes/shallow/*
+      '
+     =20
+     +test_expect_success 'fetch --update-shallow a commit that is also a s=
+hallow point into a repo with submodules' '
+    -+	git init repo-with-unreachable-upstream-shallow &&
+    -+	git -C repo-with-unreachable-upstream-shallow submodule add ../a-sub=
+module a-submodule &&
+    -+	git -C repo-with-unreachable-upstream-shallow commit -m "added submo=
+dule" &&
+    ++	test_when_finished "rm -rf repo-with-sub" &&
+    ++	git init repo-with-sub &&
+    ++	git -C repo-with-sub submodule add ../a-submodule a-submodule &&
+    ++	git -C repo-with-sub commit -m "added submodule" &&
+     +
+     +	SHALLOW=3D$(cat shallow/.git/shallow) &&
+    -+	git -C repo-with-unreachable-upstream-shallow fetch --update-shallow=
+ ../shallow/.git "$SHALLOW":refs/heads/a-shallow
+    ++	git -C repo-with-sub fetch --update-shallow ../shallow/.git "$SHALLO=
+W":refs/heads/a-shallow
+     +'
+     +
+      test_expect_success 'fetch --update-shallow (with fetch.writeCommitGr=
+aph)' '
 
-Range-diff against v5:
-1:  fffef5f73d = 1:  50765eeb95 git-prompt: make colourization consistent
+ commit.c                 | 16 +++++++++++++++-
+ shallow.c                |  7 +++++++
+ t/t5537-fetch-shallow.sh | 12 ++++++++++++
+ 3 files changed, 34 insertions(+), 1 deletion(-)
 
- contrib/completion/git-prompt.sh | 22 ++++++++++++----------
- t/t9903-bash-prompt.sh           | 18 +++++++++---------
- 2 files changed, 21 insertions(+), 19 deletions(-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 87b2b916c0..cb01c2fd5d 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -245,7 +245,8 @@ __git_ps1_show_upstream ()
- 
- # Helper function that is meant to be called from __git_ps1.  It
- # injects color codes into the appropriate gitstring variables used
--# to build a gitstring.
-+# to build a gitstring. Colored variables are responsible for clearing
-+# their own color.
- __git_ps1_colorize_gitstring ()
- {
- 	if [[ -n ${ZSH_VERSION-} ]]; then
-@@ -271,22 +272,23 @@ __git_ps1_colorize_gitstring ()
- 	else
- 		branch_color="$bad_color"
- 	fi
--	c="$branch_color$c"
-+	if [ -n "$c" ]; then
-+		c="$branch_color$c$c_clear"
-+	fi
-+	b="$branch_color$b$c_clear"
- 
--	z="$c_clear$z"
--	if [ "$w" = "*" ]; then
--		w="$bad_color$w"
-+	if [ -n "$w" ]; then
-+		w="$bad_color$w$c_clear"
- 	fi
- 	if [ -n "$i" ]; then
--		i="$ok_color$i"
-+		i="$ok_color$i$c_clear"
- 	fi
- 	if [ -n "$s" ]; then
--		s="$flags_color$s"
-+		s="$flags_color$s$c_clear"
- 	fi
- 	if [ -n "$u" ]; then
--		u="$bad_color$u"
-+		u="$bad_color$u$c_clear"
- 	fi
--	r="$c_clear$r"
+diff --git a/commit.c b/commit.c
+index 59b6c3e455..1537ea73d0 100644
+--- a/commit.c
++++ b/commit.c
+@@ -120,6 +120,17 @@ int commit_graft_pos(struct repository *r, const struc=
+t object_id *oid)
+ 		       commit_graft_oid_access);
  }
- 
- # Helper function to read the first line of a file into a variable.
-@@ -554,6 +556,7 @@ __git_ps1 ()
- 		fi
- 	fi
- 
-+	b=${b##refs/heads/}
- 	local z="${GIT_PS1_STATESEPARATOR-" "}"
- 
- 	# NO color option unless in PROMPT_COMMAND mode or it's Zsh
-@@ -563,7 +566,6 @@ __git_ps1 ()
- 		fi
- 	fi
- 
--	b=${b##refs/heads/}
- 	if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
- 		__git_ps1_branch_name=$b
- 		b="\${__git_ps1_branch_name}"
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index bbd513bab0..abd82eec35 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -541,7 +541,7 @@ test_expect_success 'prompt - pc mode' '
+=20
++static void unparse_commit(struct repository *r, const struct object_id *o=
+id)
++{
++	struct commit *c =3D lookup_commit(r, oid);
++
++	if (!c->object.parsed)
++		return;
++	free_commit_list(c->parents);
++	c->parents =3D NULL;
++	c->object.parsed =3D 0;
++}
++
+ int register_commit_graft(struct repository *r, struct commit_graft *graft=
+,
+ 			  int ignore_dups)
+ {
+@@ -145,6 +156,7 @@ int register_commit_graft(struct repository *r, struct =
+commit_graft *graft,
+ 			(r->parsed_objects->grafts_nr - pos - 1) *
+ 			sizeof(*r->parsed_objects->grafts));
+ 	r->parsed_objects->grafts[pos] =3D graft;
++	unparse_commit(r, &graft->oid);
+ 	return 0;
+ }
+=20
+@@ -253,8 +265,10 @@ void reset_commit_grafts(struct repository *r)
+ {
+ 	int i;
+=20
+-	for (i =3D 0; i < r->parsed_objects->grafts_nr; i++)
++	for (i =3D 0; i < r->parsed_objects->grafts_nr; i++) {
++		unparse_commit(r, &r->parsed_objects->grafts[i]->oid);
+ 		free(r->parsed_objects->grafts[i]);
++	}
+ 	r->parsed_objects->grafts_nr =3D 0;
+ 	r->parsed_objects->commit_graft_prepared =3D 0;
+ }
+diff --git a/shallow.c b/shallow.c
+index 8ad5f22832..cf289a4c6d 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -97,6 +97,13 @@ int commit_shallow_file(struct repository *r, struct sha=
+llow_lock *lk)
+ {
+ 	int res =3D commit_lock_file(&lk->lock);
+ 	reset_repository_shallow(r);
++
++	/*
++	 * Update in-memory data structures with the new shallow information,
++	 * including unparsing all commits that now have grafts.
++	 */
++	is_repository_shallow(r);
++
+ 	return res;
+ }
+=20
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index 92948de7a0..10e9a7ff26 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -164,12 +164,24 @@ test_expect_success 'fetch --update-shallow' '
+ test_expect_success 'fetch --update-shallow into a repo with submodules' '
+ 	git init a-submodule &&
+ 	test_commit -C a-submodule foo &&
++
++	test_when_finished "rm -rf repo-with-sub" &&
+ 	git init repo-with-sub &&
+ 	git -C repo-with-sub submodule add ../a-submodule a-submodule &&
+ 	git -C repo-with-sub commit -m "added submodule" &&
+ 	git -C repo-with-sub fetch --update-shallow ../shallow/.git refs/heads/*:=
+refs/remotes/shallow/*
  '
- 
- test_expect_success 'prompt - bash color pc mode - branch name' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmain" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_green}main${c_clear}" >expected &&
+=20
++test_expect_success 'fetch --update-shallow a commit that is also a shallo=
+w point into a repo with submodules' '
++	test_when_finished "rm -rf repo-with-sub" &&
++	git init repo-with-sub &&
++	git -C repo-with-sub submodule add ../a-submodule a-submodule &&
++	git -C repo-with-sub commit -m "added submodule" &&
++
++	SHALLOW=3D$(cat shallow/.git/shallow) &&
++	git -C repo-with-sub fetch --update-shallow ../shallow/.git "$SHALLOW":re=
+fs/heads/a-shallow
++'
++
+ test_expect_success 'fetch --update-shallow (with fetch.writeCommitGraph)'=
+ '
  	(
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
-@@ -551,7 +551,7 @@ test_expect_success 'prompt - bash color pc mode - branch name' '
- '
- 
- test_expect_success 'prompt - bash color pc mode - detached head' '
--	printf "BEFORE: (${c_red}\${__git_ps1_branch_name}${c_clear}):AFTER\\n(%s...)" $(git log -1 --format="%h" b1^) >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_red}(%s...)"${c_clear} $(git log -1 --format="%h" b1^) >expected &&
- 	git checkout b1^ &&
- 	test_when_finished "git checkout main" &&
- 	(
-@@ -563,7 +563,7 @@ test_expect_success 'prompt - bash color pc mode - detached head' '
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty worktree' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmain" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}*${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	(
-@@ -576,7 +576,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmain" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name} ${c_green}+${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
-@@ -590,7 +590,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index and worktree' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmain" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}*${c_clear}${c_green}+${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
- 	echo "dirty index" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
-@@ -605,7 +605,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - before root commit' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmain" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name} ${c_green}#${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
-@@ -617,7 +617,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - befo
- '
- 
- test_expect_success 'prompt - bash color pc mode - inside .git directory' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nGIT_DIR!" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_green}GIT_DIR!${c_clear}" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	(
-@@ -631,7 +631,7 @@ test_expect_success 'prompt - bash color pc mode - inside .git directory' '
- '
- 
- test_expect_success 'prompt - bash color pc mode - stash status indicator' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmain" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name} ${c_lblue}\$${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
- 	echo 2 >file &&
- 	git stash &&
- 	test_when_finished "git stash drop" &&
-@@ -645,7 +645,7 @@ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
- '
- 
- test_expect_success 'prompt - bash color pc mode - untracked files status indicator' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmain" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}%%${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
- 	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
--- 
-2.36.1
+ 	cd shallow &&
+--=20
+2.36.1.255.ge46751e96f-goog
 
