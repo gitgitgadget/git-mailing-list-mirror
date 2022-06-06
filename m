@@ -2,120 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6D55C43334
-	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 17:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05727C43334
+	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 17:10:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230110AbiFFRAn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jun 2022 13:00:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39710 "EHLO
+        id S229574AbiFFRKw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jun 2022 13:10:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbiFFRAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jun 2022 13:00:24 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E72DDA7E3E
-        for <git@vger.kernel.org>; Mon,  6 Jun 2022 09:53:25 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D4C8E19E5A6;
-        Mon,  6 Jun 2022 12:53:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=a2DlvrcEnDC0
-        0/yvUvLvBiUv3nonSl9vw9F6OszO6qw=; b=cIw2znQgtttUHp2KXrs67efHfn9i
-        lnJ+dosHrdK/Wn8VjeV2e9lXmYkehMC9Mv2w8sR68qH/BE/qoSAxB6XSm0H0Z44R
-        wQWLwJuNu9VruaSJhRVDB/iTh5smOb/cfeywY0ktN6toU7LEzGkd7uvO4GMTYjvy
-        x+DhZgeRhRjpbCY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CCA4219E5A4;
-        Mon,  6 Jun 2022 12:53:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6D0BC19E5A2;
-        Mon,  6 Jun 2022 12:53:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
-        Jinoh Kang <luke1337@theori.io>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Glen Choo <chooglen@google.com>, Paul Tan <pyokagan@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [RFC PATCH 03/15] reftable: don't memset() a NULL from failed
- malloc()
-References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
-        <RFC-patch-03.15-0b570d112fc-20220603T183608Z-avarab@gmail.com>
-        <693ed3c3-535e-9eae-9fd7-ca612ebf6943@web.de>
-        <220604.86pmjpw8h0.gmgdl@evledraar.gmail.com>
-        <1de74bf7-0e75-8ae3-6ea7-62939b540061@web.de>
-        <220604.868rqcwfnw.gmgdl@evledraar.gmail.com>
-Date:   Mon, 06 Jun 2022 09:53:11 -0700
-In-Reply-To: <220604.868rqcwfnw.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sat, 04 Jun 2022 18:23:13 +0200")
-Message-ID: <xmqq7d5tag3s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 276A9B68-E5B9-11EC-8492-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+        with ESMTP id S229614AbiFFRJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jun 2022 13:09:23 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9285D316
+        for <git@vger.kernel.org>; Mon,  6 Jun 2022 09:57:21 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id a127-20020a621a85000000b0051bc393dcb4so6693327pfa.6
+        for <git@vger.kernel.org>; Mon, 06 Jun 2022 09:57:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :content-transfer-encoding;
+        bh=JDkXATLcG7tN0t/e4abovwCMpo1vKcysMLSc2Or5G2A=;
+        b=iAiJ03A9F7AMVJsGwSLvM43oPhACPTadOMq7TO1efwHaDqtII8iV4bgahqhwxNdMjP
+         fpsvbOvDiaCDZtT32fF8pUdXoLAcBcobjTsEAeWOBU8ycnR67k9jGztdmq39CuFlbYD4
+         A3YBcT9gHfoWkljPS/8ncVZfXv7XFs4Ot6ZHvJUiFFdX+s+591U/icPy4BgYG/i2jlRL
+         DAF8QRwtH5S8vZGdkmmUhrWNAvRInp5oijjbdzzS3DQnUNffky9BjGK/VXe8QF60FLs4
+         cONE4xg8TVRoUOPZDXQYEq0MylOtshBPnzIJcXT875XUw4Q62CqvdpcEfqC1ZJBx6aXI
+         P+AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:content-transfer-encoding;
+        bh=JDkXATLcG7tN0t/e4abovwCMpo1vKcysMLSc2Or5G2A=;
+        b=zo1d4k4X+9NMKmLh8UmuBLrTV5CtsoIFKjb+o39shqN+Y3Xccq3QJ30LtSxEMUTjXd
+         NfZG/OHgKrrGwIWczw1vFNRbeiVN1R90ONjQd1uOJtqttZvLz/UPIIqDRu8VuGA1D0Yn
+         4hE7KZtLSHMhj1GG//KbRvcBwDcgjeFZ0Ll0GVumW13g02mr+eXjs9uAyyIgrOOT/KKU
+         FVUe5Rn1i5mIbuYRdb+t2nDhR2YuUpGZWBSvV25eY2MqZXqaJryzAVFX7c73Fcwkga23
+         M01ho1Ay2CeFSQdacoekycU5xHijXPtkzm635yHkUU03n7Mq8WTl23D2lgYKeMX/PrLb
+         xvlQ==
+X-Gm-Message-State: AOAM530LfEccqCl2TXJB8jkvMVztiTFqsZVMUHQsROXT7hG6bpvnMS+p
+        Ezm1+ZUJIgXQdYmjsYIYVhu912IzxYhP9A==
+X-Google-Smtp-Source: ABdhPJybiEA84z0nKA5pUHt5cpF2hHNE5B7C1eSz+Ig0053KjJTCeX0mCuEPKwl/RUjjxWVZLJpwVfBZUbsUQQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:ce07:b0:1e3:50eb:64d with SMTP id
+ f7-20020a17090ace0700b001e350eb064dmr34622437pju.22.1654534640949; Mon, 06
+ Jun 2022 09:57:20 -0700 (PDT)
+Date:   Mon, 06 Jun 2022 09:57:18 -0700
+In-Reply-To: <24022c08-ed58-8157-6036-6a4c6a49f195@web.de>
+Message-Id: <kl6ly1y9d91t.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <e308be58-a399-8e5c-36a8-96d3d58caff3@sprangle.com> <24022c08-ed58-8157-6036-6a4c6a49f195@web.de>
+Subject: Re: git bug: Including a git repository in a directory
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?Q?Ren=C3=A9?= Scharfe" <l.s.r@web.de>,
+        Steven Jonn Edlefsen <steve@sprangle.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hi!
 
->> Future analyzer reports are likely of the same quality as the current
->> ones.  If the goal is to shush them then we should just not use the
->> analyzer.  If reports contain a helpful signal, e.g. pointing to a rea=
-l
->> bug or to overly complicated code, then we better address these issues=
-.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+
+> Am 06.06.22 um 07:43 schrieb Steven Jonn Edlefsen:
+>> Git cannot commit/push a directory with a git repository in
+>> a sub-directory.
 >>
->> We can think about automating the analyzer once we have a certain numb=
-er
->> of commits with improvements that would not have been made without it.
+>> The sub-directory with the git repository and the directories below
+>> are set to the =E2=80=9Cmaster=E2=80=9D branch, while the directories ab=
+ove remain
+>> set to the new branch.
+>>
+>> When the top directory is committed, the sub-directory with the
+>> git repository appears as an empty file.
+>>
+>> Even when the subdirectory branch name is changed from master
+>> to the new branch and the top directory is re-commited/pushed,
+>> the same problem occurs.
+>>
+>> When the git repository in the sub-directory is removed, e.g.
+>> the .git file is removed, and top directory is committed/pushed,
+>> the subdirectory has all the sub-directories and files.
 >
-> We might decide not to go with -fanalyzer in CI or whatever, but I
-> really think that your line of reasoning here is just the wrong way to
-> evaluate the cost/benefit of -fanalyzer, a new warning or whatever.
+> This is intended behavior.  A repository inside another one needs
+> special handling.  Git provides the submodule feature for that.  A
+> simpler alternative for some use cases is called subtree.
 
-To me, your priorities look much less in line with this project's
-than what Rt R=C3=A9ne gave us above.
+As Ren=C3=A9 described, this is intended behavior - repositories cannot
+contain entire repositories with `.git` inside them [1]. As far as I
+know, this is security feature because `.git` can contain sensitive
+files that you wouldn't want to clone down, e.g. .git/config can make
+"git" execute arbitrary code.
 
-> The question shouldn't be whether those things in particular were worth
-> the effort, but whether the added safety of getting the new diagnostic
-> going forward is worth the one-time cost.
+What happened in your case is that Git noticed that the subdirectory is
+a repository and automatically 'sanitizes' it for you by converting it
+into (what is essentially) a submodule [2]. When a subdirectory is a
+submodule, Git stores a single commit id for the entire subdirectory -
+you you can no longer change individual files inside the subdirectory.
 
-Workarounds for false positives are hardly one-time cost.  They have
-to stay with us until the -fanalyzer gets corrected, somebody needs
-to remember to occasionally check if that happened, and revert the
-workaround to bring the code into their more natural form.  What has
-been good and readable for human programmers for a long time does
-not need to be touched just to work around a false positive bug in a
-new tool.
+To demonstrate this "single commit id" behavior, this is what happens if
+you tried to `git init` a subdirectory in an existing project:
 
-> I find the warning output from -fanalyzer to be *really useful*.
+  $ git init foo
+  Initialized empty Git repository in /Users/chooglen/Code/repo/foo/.git/
+  $ git add foo
+  error: 'foo/' does not have a commit checked out
 
-I do not mind if you add -fanalyzer during your build via your own
-config.mak file, and you would help them improve the analyzer by
-reporting false positive bugs while finding possible bugs in the
-code we have (like you did in a few patches in this series) and the
-code you are writing.  You are capable enough to keep your own set
-of patches to work around their false positive bugs locally.
+Notice the line above! We can't add `foo` because it has been converted
+into a (pseudo) submodule [2].
 
-But if you have to send in 15 patches with more workaround changes
-than real fix, then it is premature for us to bear the cost to have
-workaround for the tool.
+  $ (cd foo && git commit -m "foo" --allow-empty) # create a commit
+  [main (root-commit) 9e27581] foo
+  $ git add foo
+  warning: adding embedded git repository: foo
+  hint: You've added another git repository inside your current repository.
+  hint: Clones of the outer repository will not contain the contents of
+  hint: the embedded repository and will not know how to obtain it.
+  hint: If you meant to add a submodule, use:
+  hint:
+  hint:   git submodule add <url> foo
+  hint:
+  hint: If you added this path by mistake, you can remove it from the
+  hint: index with:
+  hint:
+  hint:   git rm --cached foo
+  hint:
+  hint: See "git help submodule" for more information.
+  $ git diff HEAD=20
+  diff --git a/foo b/foo
+  new file mode 160000
+  index 0000000..9e27581
+  --- /dev/null
+  +++ b/foo
+  @@ -0,0 +1 @@
+  +Subproject commit 9e27581b9eb91c0f1699eb18a2e81d758de9209d
 
-There are folks who use our codebase as a suitably-sized guinea pig
-to improve their tool, and we should not make it harder for them to
-do so, but our priority is to improve the product of this project.
+Now that there is a commit in the subdirectory repository we can `git
+add` it, but only as an entire commit. We cannot just add individual
+files.
 
-Come to think of it, adding unnecessary workarounds is a hostile act
-to those who are trying to improve -fanalyzer, I guess, too.  They
-may want to fix problems in their tool, but workarounds hide them.
+If you truly need a repository inside of another repository. You may
+want to consider submodules/subtrees as Ren=C3=A9 mentioned.
 
+[1] A repository can contain a "bare" repository because a bare
+repository does not have `.git`, but that isn`t relevant to the
+discussion here.
+[2] A submodule technically also has to have an entry in the .gitmodules
+file.
