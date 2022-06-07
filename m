@@ -2,124 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB23C43334
-	for <git@archiver.kernel.org>; Tue,  7 Jun 2022 17:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62D5ACCA47E
+	for <git@archiver.kernel.org>; Tue,  7 Jun 2022 17:20:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345381AbiFGRIc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jun 2022 13:08:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33218 "EHLO
+        id S1345857AbiFGRUn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jun 2022 13:20:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344603AbiFGRI1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jun 2022 13:08:27 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 828CB5A175
-        for <git@vger.kernel.org>; Tue,  7 Jun 2022 10:08:25 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 86B9C1A7188;
-        Tue,  7 Jun 2022 13:08:25 -0400 (EDT)
+        with ESMTP id S240037AbiFGRUi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jun 2022 13:20:38 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BD231053DD
+        for <git@vger.kernel.org>; Tue,  7 Jun 2022 10:20:36 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EEB46198706;
+        Tue,  7 Jun 2022 13:20:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=9oqShsbGQoqT
-        fpd48zVfvY78XaE34YpcqdgLjwySbwY=; b=BkcVHzNnRnecCC2PL+am4UxWUnu8
-        RfX9kaw1B63Gy8jlvLheivtB1A2n30CXy5fD67EIYnwZI/sX+JIbC1KF7sHFsEH9
-        2EILcPl5o7hy1PnTA17mAS1IArWmu7GYwEX5zScuEVjr9RHo9AZ7AE/Q3n8A7Y2N
-        RSWgQn2IxPRwHI4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F1851A7187;
-        Tue,  7 Jun 2022 13:08:25 -0400 (EDT)
+        :content-type; s=sasl; bh=r0lCPIT5Z0Ir9meg55+SyLIXMSVnoWl9KuDcPm
+        wv0lI=; b=Y/WPqGs13lhJaZrfj5VntpPms7yy4xWNrvrUPNL28O2jv08J7kaoX5
+        pU5qDHba5Mpq9gJtZIjARy+cXgnwUiedBqOAZBTL6oSfonPQd5DFUBGScO7rcQLq
+        fHuUZi9K4ub1sFFVDSMSJx48VfoRtM95bYZg9dT5gis/Nx2J7mAVw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E5DA5198705;
+        Tue,  7 Jun 2022 13:20:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2F7BA1A7186;
-        Tue,  7 Jun 2022 13:08:22 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4A271198704;
+        Tue,  7 Jun 2022 13:20:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Anthony Sottile <asottile@umich.edu>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 2/2] hook API: fix v2.36.0 regression: hooks should
- be connected to a TTY
-References: <cover-v5-0.2-00000000000-20220602T131858Z-avarab@gmail.com>
-        <cover-v6-0.2-00000000000-20220606T170356Z-avarab@gmail.com>
-        <patch-v6-2.2-503ef241a52-20220606T170356Z-avarab@gmail.com>
-Date:   Tue, 07 Jun 2022 10:08:21 -0700
-In-Reply-To: <patch-v6-2.2-503ef241a52-20220606T170356Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 7 Jun
- 2022 10:48:20
-        +0200")
-Message-ID: <xmqq7d5sz9iy.fsf@gitster.g>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Andy Lindeman <andy@lindeman.io>,
+        Andy Lindeman via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] ssh signing: Support ECDSA as literal SSH keys
+References: <pull.1272.git.git.1653932705097.gitgitgadget@gmail.com>
+        <20220531073445.iuovy634ufp5xims@fs>
+        <CA+vJLfu1WyqP4V44iyZj+Fyr8O7JSB8tSJfOmS1SeSZ65fXh0w@mail.gmail.com>
+        <20220531144703.jbawf3tkypt7se2i@fs> <xmqqa6awvp60.fsf@gitster.g>
+        <20220607085226.g6sjcmoiimcvqknx@fs>
+Date:   Tue, 07 Jun 2022 10:20:31 -0700
+In-Reply-To: <20220607085226.g6sjcmoiimcvqknx@fs> (Fabian Stelzer's message of
+        "Tue, 7 Jun 2022 10:52:26 +0200")
+Message-ID: <xmqqtu8wxue8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6F7BFA34-E684-11EC-8432-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 22A96050-E686-11EC-8912-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Fabian Stelzer <fs@gigacodes.de> writes:
 
-> @@ -120,4 +121,34 @@ test_expect_success 'git -c core.hooksPath=3D<PATH=
-> hook run' '
->  	test_cmp expect actual
->  '
-> =20
-> +test_hook_tty() {
+> On 01.06.2022 00:05, Junio C Hamano wrote:
+>>Fabian Stelzer <fs@gigacodes.de> writes:
+>>
+>>>>Thanks for replying, Fabian.
+>>>>
+>>>>My main issue is that ecdsa-sha2-* keys currently seem incompatible
+>>>>with `gpg.ssh.defaultKeyCommand = "ssh-add -L"`
+>>>>
+>>>>The git-config documentation of `gpg.ssh.defaultKeyCommand` says:
+>>>>
+>>>>> To automatically use the first available key from your ssh-agent set this to "ssh-add -L".
+>>
+>>This is puzzling.  One chooses the key to use when signing, and the
+>>key should go to the gpg.ssh.defaultkey, and also "ssh-add" is told
+>>about the key for convenient access.
+>
+> I think you mean `user.siningKey` but yes, this is the best way to do this.
 
-Style.
+Thanks for seeing my intention through my mistake.
 
-> +	cat >expect <<-\EOF
-> +	STDOUT TTY
-> +	STDERR TTY
-> +	EOF
-> +
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +
-> +	test_commit -C repo A &&
-> +	test_commit -C repo B &&
-> +	git -C repo reset --soft HEAD^ &&
-> +
-> +	test_hook -C repo pre-commit <<-EOF &&
-> +	test -t 1 && echo STDOUT TTY >>actual || echo STDOUT NO TTY >>actual =
-&&
-> +	test -t 2 && echo STDERR TTY >>actual || echo STDERR NO TTY >>actual
-> +	EOF
+>> Asking "ssh-add -L" about the
+>>keys it knows about and randomly pick the first one it happens to
+>>tell you about sounds totally backwards to me.
+>>
+>>I may have a key I use to sign, and one key each to go to various
+>>destinations, all of which "ssh-add -L" may know about.  It alone
+>>cannot fundamentally tell because it does not know what you intend
+>>to use each key for.
+>> ...
+>>In any case, perhaps we should extend the documentation a bit.  It
+>>generally is not sensible to just use "ssh-add -L" and pick one
+>>random key out of it, so we shouldn't be encouraging such a use, I
+>>suspect.
+>
+> Yes, I think that reasonable. The script can do some advanced decision
+> making / key lookup if needed.
 
-So, when this hook is run, we'd see if STDOUT and STDERR are
-connected to a tty in the "actual" file.
+OK.
+
+> The use-case for me was to enforce/encourage use of the correct
+> users keys on a shared development server in a corporate
+> environment (i have a global directory of all the users keys and
+> want to make sure everyone uses their correct one when signing).
+
+I actually wanted to hear more about the reasoning along that line.
+
+IOW, "sure, theoretically, you should start from 'this is the key I
+want to use' and you shouldn't be asking 'ssh-add -L' about it, but
+here is a real-world workflow that makes it cumbersome" was what I
+wanted to see, both in the discussion *and* in the documentation
+update.
+
+For example, there may be corporate environment where key is
+frequently rotated, e.g. every morning an employee may have to "corp
+login" to talk to a central key server and get the ssh key stored in
+their hardware token refreshed.  In such an environment, it would
+not be surprising if the employee does not even know what the
+fingerprint or the public part of the key looks like before asking
+'ssh-add -L' to query the hardware token, so it may be impractical
+to follow the "set your key to user.signingKey and add that to the
+agent".  Asking the agent about the key may make perfect sense (but
+you'd probably need to find which key among its output lines) in
+such a case.
 
 
-> +	test_terminal git "$@" &&
 
-And we run the test and see=20
 
-> +	test_cmp expect repo/actual
 
-what happens.  The test_cmp knows that the git command runs in
-"repo" by hardcoding repo/actual, and this helper is full of the
-same knowledge, so it would be easier to see what is going on if
-you removed "-C repo" from the two callers (below) and instead added
-it to where you run "git" under test_terminal (above).
-
-> +}
-> +
-> +test_expect_success TTY 'git hook run: stdout and stderr are connected=
- to a TTY' '
-> +	test_hook_tty -C repo hook run pre-commit
-> +'
-> +
-> +test_expect_success TTY 'git commit: stdout and stderr are connected t=
-o a TTY' '
-> +	test_hook_tty -C repo commit -m"B.new"
-> +'
-> +
->  test_done
-
-Other than that, looking good.
-
-Thanks.
