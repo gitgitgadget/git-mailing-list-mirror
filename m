@@ -2,254 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1BD0CCA48B
-	for <git@archiver.kernel.org>; Tue,  7 Jun 2022 18:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7109AC433EF
+	for <git@archiver.kernel.org>; Tue,  7 Jun 2022 19:28:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349106AbiFGSHF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jun 2022 14:07:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55936 "EHLO
+        id S1352267AbiFGT2o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jun 2022 15:28:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350861AbiFGSB2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jun 2022 14:01:28 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5E4E14CDF4
-        for <git@vger.kernel.org>; Tue,  7 Jun 2022 10:43:39 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id u8so20831847wrm.13
-        for <git@vger.kernel.org>; Tue, 07 Jun 2022 10:43:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=D6hD3m6PowZoAZL+Tm8S0b9XjLwEJNmoaRZAgDNrnbM=;
-        b=KFvxivCi5UtO3DN2+Upc6EXqn9Nx7S6lq118WcrJmpEIJ0eGvxOlWe+26sRjJLNGly
-         Ne9HEsb3oKlzZIL8ydcjoZYj0yO/2VyANsCI3FScA+L55JEKYjsd7Duk5T1J4opzbQvV
-         AeHt4ajZA71pYlivb2rAOi319KZ2nzXsOpDOf9q7eaEx452XhFo6rUGdbnJV3OEByUMf
-         aDky40LGJBDZe9iPu/wjoACpDKmAx3YN/NnqGTuQytRBR3kgvcIyImvzJ1lBl5Ry9NOj
-         Tz7ie2BMl/SN3XuyYWrxQiiUpvMd11r12MbDP2m9zloVpNjxwSfJPQQW9aBAR9EzJKnV
-         eM6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=D6hD3m6PowZoAZL+Tm8S0b9XjLwEJNmoaRZAgDNrnbM=;
-        b=7+21dGjiSwvpC2MFQxRRfuVI9g4vEzgtt5/uJFvDYLf/RLF1beAo2WBnapjl8w18oi
-         2VgB2o4BoD18BdagcVBPnvP2tkF1tFLPbFe5hQUZ/IFUk0z8Z/8CH8X3yaa/1kcHOcZc
-         oTWqQYUdRnM5TQDPQqDSd2LrlYLoDTPI2+W5k8uj3ptoXHbbAoJRi86LR1QqLra/quXL
-         UaVIy7giB2OsBmTy71qUY6gwEOqZA/6MTXL58sKIC65T72vln4JDJtrCAQx6cvYv7JdC
-         7Dc/UnUmTkm/d8dPzfj+tBAqN/wUlGtn7kf/wIZuleNr84/nkA9O+366aQ9GdKV19deJ
-         NM2g==
-X-Gm-Message-State: AOAM533r8tiJCDeao3KSJmSAIG2iSWz09TUOz+pZ1B+CzE1XKrDlrfkB
-        hOxE5ah3eZ5i6ei3NzQlKmaNNJDhKLXt7KOC
-X-Google-Smtp-Source: ABdhPJzseanFNrW5Kv/XBpRUAD0+dp3ePfXlnCpt3cxsMxu41av76Wg0VciacEnqo7s9NHNBAgsVJQ==
-X-Received: by 2002:adf:f80b:0:b0:217:88ff:eb6f with SMTP id s11-20020adff80b000000b0021788ffeb6fmr14499770wrp.489.1654623816254;
-        Tue, 07 Jun 2022 10:43:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o5-20020a05600c4fc500b0039c5a765388sm2950660wmq.28.2022.06.07.10.43.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 10:43:35 -0700 (PDT)
-Message-Id: <pull.1246.v2.git.1654623814.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1246.git.1654177966.gitgitgadget@gmail.com>
-References: <pull.1246.git.1654177966.gitgitgadget@gmail.com>
-From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Jun 2022 17:43:31 +0000
-Subject: [PATCH v2 0/3] bitmap-format.txt: fix some formatting issues and include checksum info
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1356406AbiFGT1m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jun 2022 15:27:42 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E431A0045
+        for <git@vger.kernel.org>; Tue,  7 Jun 2022 11:09:51 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A3B3E198B23;
+        Tue,  7 Jun 2022 14:09:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IPyXUko23UTqbuektbGVrDmal5dhlMIr+6ZngY
+        w0/No=; b=AymFRortNFEkDmdtyssrTZuksQrCzZ3ZpDed/xJECWKUqf1Db9WSIC
+        AIJ7sorknO+ihpwLA3rdqDsql22qiJh8F+7xCpEI7lXwH+YNVGx+1omVYKpECFvO
+        H3xcC/YwL/zVHlQQC2BRq/owqD0G4hjzcrQU59R408zYk/MrLOKho=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BECD198B22;
+        Tue,  7 Jun 2022 14:09:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4C66E198B1F;
+        Tue,  7 Jun 2022 14:09:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood@talktalk.net>
+Subject: Re: [PATCH 3/3] remote API: don't buggily FREE_AND_NULL(), free()
+ instead
+References: <RFC-cover-00.15-00000000000-20220603T183608Z-avarab@gmail.com>
+        <cover-0.3-00000000000-20220607T154520Z-avarab@gmail.com>
+        <patch-3.3-062fb3f454e-20220607T154520Z-avarab@gmail.com>
+        <kl6lv8tccspo.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Tue, 07 Jun 2022 11:09:45 -0700
+In-Reply-To: <kl6lv8tccspo.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Tue, 07 Jun 2022 10:02:27 -0700")
+Message-ID: <xmqqsfogwdjq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Vicent Marti <tanoku@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 03FBE98C-E68D-11EC-A30C-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are some issues in the bitmap-format html page. For example, some
-nested lists are shown as top-level lists (e.g. [1]- Here
-BITMAP_OPT_FULL_DAG (0x1) and BITMAP_OPT_HASH_CACHE (0x4) are shown as
-top-level list). There is also a need of adding info about trailing checksum
-in the docs.
+Glen Choo <chooglen@google.com> writes:
 
-Changes since v1:
+> I suppose the question of whether or not to free() in the 'destructor'
+> depends on whether we expect the struct to be reusable? I don't expect
+> that "struct remote_state" needs to be reused, so free()-ing it is ok to
+> me.
+>
+> The API is not _that_ odd though ;) As you noted, my initial use of
+> FREE_AND_NULL() is for consistency reasons with the rest of
+> repo_clear(), which looks like this:
+>
+> 	if (repo->config) {
+> 		git_configset_clear(repo->config);
+> 		FREE_AND_NULL(repo->config);
 
- * a new commit addressing bitmap-format.txt html page generation is added
- * Remove extra indentation from the previous change
- * elaborate more about the trailing checksum (as suggested by Kaartic)
+So git_configset_clear() does clear but does not free.
 
-initial version:
+> 	}
+>
+> 	if (repo->submodule_cache) {
+> 		submodule_cache_free(repo->submodule_cache);
 
- * first commit fixes some formatting issues
- * information about trailing checksum in the bitmap file is added in the
-   bitmap-format doc.
+submodule_cache_free() does (probably clear and) free.
 
-[1] https://git-scm.com/docs/bitmap-format#_on_disk_format
+> 		repo->submodule_cache = NULL;
+> 	}
+>
+> 	if (repo->index) {
+> 		discard_index(repo->index);
 
-Abhradeep Chakraborty (3):
-  bitmap-format.txt: feed the file to asciidoc to generate html
-  bitmap-format.txt: fix some formatting issues
-  bitmap-format.txt: add information for trailing checksum
+discard_index() does not free.
 
- Documentation/Makefile                    |  1 +
- Documentation/technical/bitmap-format.txt | 24 +++++++++++------------
- 2 files changed, 12 insertions(+), 13 deletions(-)
+> 		if (repo->index != &the_index)
+> 			FREE_AND_NULL(repo->index);
+> 	}
+>
+> 	if (repo->promisor_remote_config) {
+> 		promisor_remote_clear(repo->promisor_remote_config);
+
+promisor_remote_clear() does not free.
+
+> 		FREE_AND_NULL(repo->promisor_remote_config);
+> 	}
+>
+> 	if (repo->remote_state) {
+> 		remote_state_clear(repo->remote_state);
+>  -	FREE_AND_NULL(repo->remote_state);
+>  +	repo->remote_state = NULL;
+> 	}
+>
+> promisor_remote_clear(), discard_index(), and git_configset_clear()
+> don't free() the struct, so it makes sense for them to use
+> FREE_AND_NULL(). AFAICT, these structs are meant to be reused, so it
+> makes sense that we "clear" it without freeing the struct pointer
+> itself.
+>
+> On the other hand, submodule_cache_free() _does_ free() the struct, and
+> so we just use "= NULL". I noticed that this uses the verb "free", and
+> not "clear".
+>
+> So now that remote_state_clear() *does* free() the struct, it is
+> perfectly fine to use "= NULL" here as well, though it uses the verb
+> "clear".
+>
+> I'm not sure if we have a style around clear/free. Feel free to ignore
+> if there isn't one.
+
+It does bother me.  Changing _clear() that did not free the
+container resource to free it, without changing the name to free or
+release or whatever, smells like leaving a source of confusion for
+future developers.
 
 
-base-commit: 2668e3608e47494f2f10ef2b6e69f08a84816bcb
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1246%2FAbhra303%2Ffix-doc-formatting-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1246/Abhra303/fix-doc-formatting-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1246
-
-Range-diff vs v1:
-
- -:  ----------- > 1:  a1b9bd9af90 bitmap-format.txt: feed the file to asciidoc to generate html
- 1:  976361e624a ! 2:  cb919513c14 bitmap-format.txt: fix some formatting issues
-     @@ Documentation/technical/bitmap-format.txt: MIDXs, both the bit-cache and rev-cac
-      -
-       			The following flags are supported:
-      -
-     --			- BITMAP_OPT_FULL_DAG (0x1) REQUIRED
-     --			This flag must always be present. It implies that the
-     --			bitmap index has been generated for a packfile or
-     --			multi-pack index (MIDX) with full closure (i.e. where
-     --			every single object in the packfile/MIDX can find its
-     --			parent links inside the same packfile/MIDX). This is a
-     --			requirement for the bitmap index format, also present in
-     --			JGit, that greatly reduces the complexity of the
-     --			implementation.
-     + 			- BITMAP_OPT_FULL_DAG (0x1) REQUIRED
-     + 			This flag must always be present. It implies that the
-     + 			bitmap index has been generated for a packfile or
-     +@@ Documentation/technical/bitmap-format.txt: MIDXs, both the bit-cache and rev-cache extensions are required.
-     + 			requirement for the bitmap index format, also present in
-     + 			JGit, that greatly reduces the complexity of the
-     + 			implementation.
-      -
-     --			- BITMAP_OPT_HASH_CACHE (0x4)
-     --			If present, the end of the bitmap file contains
-     --			`N` 32-bit name-hash values, one per object in the
-     --			pack/MIDX. The format and meaning of the name-hash is
-     --			described below.
-     -+				- BITMAP_OPT_FULL_DAG (0x1) REQUIRED
-     -+				This flag must always be present. It implies that the
-     -+				bitmap index has been generated for a packfile or
-     -+				multi-pack index (MIDX) with full closure (i.e. where
-     -+				every single object in the packfile/MIDX can find its
-     -+				parent links inside the same packfile/MIDX). This is a
-     -+				requirement for the bitmap index format, also present in
-     -+				JGit, that greatly reduces the complexity of the
-     -+				implementation.
-     -+				- BITMAP_OPT_HASH_CACHE (0x4)
-     -+				If present, the end of the bitmap file contains
-     -+				`N` 32-bit name-hash values, one per object in the
-     -+				pack/MIDX. The format and meaning of the name-hash is
-     -+				described below.
-     + 			- BITMAP_OPT_HASH_CACHE (0x4)
-     + 			If present, the end of the bitmap file contains
-     + 			`N` 32-bit name-hash values, one per object in the
-     +@@ Documentation/technical/bitmap-format.txt: MIDXs, both the bit-cache and rev-cache extensions are required.
-     + 			described below.
-       
-       		4-byte entry count (network byte order)
-      -
-     @@ Documentation/technical/bitmap-format.txt: MIDXs, both the bit-cache and rev-cac
-       		Each entry contains the following:
-       
-      -		- 4-byte object position (network byte order)
-     --			The position **in the index for the packfile or
-     --			multi-pack index** where the bitmap for this commit is
-     --			found.
-     --
-     ++		** 4-byte object position (network byte order)
-     + 			The position **in the index for the packfile or
-     + 			multi-pack index** where the bitmap for this commit is
-     + 			found.
-     + 
-      -		- 1-byte XOR-offset
-     --			The xor offset used to compress this bitmap. For an entry
-     --			in position `x`, a XOR offset of `y` means that the actual
-     --			bitmap representing this commit is composed by XORing the
-     --			bitmap for this entry with the bitmap in entry `x-y` (i.e.
-     --			the bitmap `y` entries before this one).
-     --
-     --			Note that this compression can be recursive. In order to
-     --			XOR this entry with a previous one, the previous entry needs
-     --			to be decompressed first, and so on.
-     --
-     --			The hard-limit for this offset is 160 (an entry can only be
-     --			xor'ed against one of the 160 entries preceding it). This
-     --			number is always positive, and hence entries are always xor'ed
-     --			with **previous** bitmaps, not bitmaps that will come afterwards
-     --			in the index.
-     --
-     ++		** 1-byte XOR-offset
-     + 			The xor offset used to compress this bitmap. For an entry
-     + 			in position `x`, a XOR offset of `y` means that the actual
-     + 			bitmap representing this commit is composed by XORing the
-     +@@ Documentation/technical/bitmap-format.txt: MIDXs, both the bit-cache and rev-cache extensions are required.
-     + 			with **previous** bitmaps, not bitmaps that will come afterwards
-     + 			in the index.
-     + 
-      -		- 1-byte flags for this bitmap
-     --			At the moment the only available flag is `0x1`, which hints
-     --			that this bitmap can be re-used when rebuilding bitmap indexes
-     --			for the repository.
-     --
-     ++		** 1-byte flags for this bitmap
-     + 			At the moment the only available flag is `0x1`, which hints
-     + 			that this bitmap can be re-used when rebuilding bitmap indexes
-     + 			for the repository.
-     + 
-      -		- The compressed bitmap itself, see Appendix A.
-     -+			** 4-byte object position (network byte order)
-     -+				The position **in the index for the packfile or
-     -+				multi-pack index** where the bitmap for this commit is
-     -+				found.
-     -+
-     -+			** 1-byte XOR-offset
-     -+				The xor offset used to compress this bitmap. For an entry
-     -+				in position `x`, a XOR offset of `y` means that the actual
-     -+				bitmap representing this commit is composed by XORing the
-     -+				bitmap for this entry with the bitmap in entry `x-y` (i.e.
-     -+				the bitmap `y` entries before this one).
-     -+
-     -+				Note that this compression can be recursive. In order to
-     -+				XOR this entry with a previous one, the previous entry needs
-     -+				to be decompressed first, and so on.
-     -+
-     -+				The hard-limit for this offset is 160 (an entry can only be
-     -+				xor'ed against one of the 160 entries preceding it). This
-     -+				number is always positive, and hence entries are always xor'ed
-     -+				with **previous** bitmaps, not bitmaps that will come afterwards
-     -+				in the index.
-     -+
-     -+			** 1-byte flags for this bitmap
-     -+				At the moment the only available flag is `0x1`, which hints
-     -+				that this bitmap can be re-used when rebuilding bitmap indexes
-     -+				for the repository.
-     -+
-     -+			** The compressed bitmap itself, see Appendix A.
-     ++		** The compressed bitmap itself, see Appendix A.
-       
-       == Appendix A: Serialization format for an EWAH bitmap
-       
- 2:  ba534b5d486 ! 3:  2171d31fb2b bitmap-format.txt: add information for trailing checksum
-     @@ Commit message
-       ## Documentation/technical/bitmap-format.txt ##
-      @@ Documentation/technical/bitmap-format.txt: MIDXs, both the bit-cache and rev-cache extensions are required.
-       
-     - 			** The compressed bitmap itself, see Appendix A.
-     + 		** The compressed bitmap itself, see Appendix A.
-       
-      +	* TRAILER:
-      +
-     -+		Index checksum of the above contents.
-     ++		Index checksum of the above contents. It is a 20-byte SHA1 checksum.
-      +
-       == Appendix A: Serialization format for an EWAH bitmap
-       
-
--- 
-gitgitgadget
