@@ -2,108 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26E55CCA47C
-	for <git@archiver.kernel.org>; Tue,  7 Jun 2022 19:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C7CAC43334
+	for <git@archiver.kernel.org>; Tue,  7 Jun 2022 20:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356571AbiFGTyX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jun 2022 15:54:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50078 "EHLO
+        id S1359072AbiFGUID (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jun 2022 16:08:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358666AbiFGTwt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jun 2022 15:52:49 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8554149C91
-        for <git@vger.kernel.org>; Tue,  7 Jun 2022 11:22:00 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id j11-20020a05690212cb00b006454988d225so15632450ybu.10
-        for <git@vger.kernel.org>; Tue, 07 Jun 2022 11:22:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=MN1yQdLKDZs/vQEzI9xhZlRNP5e7QpSsqtJE7NzHvqQ=;
-        b=MWgoZ2tobZV/dYlWUEYv8P5DvfsginRrcn/JWX0uds50J9Y1BPEeICorEpQDXeKGOU
-         UAzxPg0mPdpqd3Cj9p/ZicwKiKxIJCmHMJm+a9SwElROgymDTA50p0fUr3nAt6tCEa/p
-         tqCX9p1JarsGTuDUXFVgTzuUpzz1m2etgJV7Jsw/piBJkGQVITy4uJGlRhapj1gjwS9z
-         WgSNpqJRgkAJsyGVRjHuugzlX7YvjtUx9wHQr/nfVwKxyd01X4PWcyCeSf3LXFNcrunI
-         LV8fJCOww/WneB1huRRUzsFKJJ2JwAAkdnTyUmlS0XA0T200O4K0/Y5jlZI9sE51UCVu
-         h2pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=MN1yQdLKDZs/vQEzI9xhZlRNP5e7QpSsqtJE7NzHvqQ=;
-        b=K0Os2qerpP04S4DFMlRgsMWNygX9/JnJKL17lv0Zqq13of+LJOgVrAq/IMZZJAxmsU
-         SR5lh+S1xLC559Uv+btlPwi8XfI4dnw7pnuEtZqvX1WGyynDs0Y9iqZDCBixciLTai60
-         iR4M5zKvnEMBx/JzGZkRFM+5J56M+r9xklg2jVfgw+M5RR8kaEkRBmX9CA2/hWgFx3wT
-         5jSTCcKd1lnNMscRmSb8YxrRPva0iPDi7QhmuN5to4ba8Uqd9v3u1HTiE/OvALV0cTYN
-         NC9E00Bl8X45peU6bykPfYjezATxmIymrJxMkbp15UP9a7PCaMC8UfcLXWhGRyp46gDb
-         5YIw==
-X-Gm-Message-State: AOAM531x+s1MiyMiAT4lUluXntmjnX76ms6fz6bCu4p26LDmIvSGcu+/
-        yWJaeuqEZUQJvZYe0Z6TUQLZS0kUYGhaeUrXhTYcTBuXYB2oGmJe2hMx4EX0OoYAv3V6keCdNYs
-        OiWqSQgcK9mX2rohznmtmD8pP229OvcoXZytv3+vpX6DhvHdvfa/oJ3z37GD4eGM=
-X-Google-Smtp-Source: ABdhPJzJosS/0+Jiu1pQ0ejw+IM0fwhMS76W91lKN29YS2R8bFfb2HEfyyjIMCy9OYXaqMaOjQoheN6I/TDiRw==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:f2b8:26fd:5644:ff19])
- (user=steadmon job=sendgmr) by 2002:a81:70c8:0:b0:313:350e:8a7e with SMTP id
- l191-20020a8170c8000000b00313350e8a7emr5767109ywc.491.1654626119599; Tue, 07
- Jun 2022 11:21:59 -0700 (PDT)
-Date:   Tue,  7 Jun 2022 11:21:57 -0700
-In-Reply-To: <4616d09ffa632bd2c9e308a713c4bdf2a1328c3c.1651179450.git.steadmon@google.com>
-Message-Id: <50d872a057a558fa5519856b95abd048ddb514dc.1654625626.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <4616d09ffa632bd2c9e308a713c4bdf2a1328c3c.1651179450.git.steadmon@google.com>
-X-Mailer: git-send-email 2.36.1.255.ge46751e96f-goog
-Subject: [PATCH v2] run-command: don't spam trace2_child_exit()
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, git@jeffhostetler.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S1359079AbiFGUGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jun 2022 16:06:32 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF051C4245
+        for <git@vger.kernel.org>; Tue,  7 Jun 2022 11:25:54 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BFFB124E9E;
+        Tue,  7 Jun 2022 14:25:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=eBgsQ+Bk/fcU
+        YVulFUlWhAcjWBmcBXD9ROvECjCqgjc=; b=Zq0XONENb5dM02nCy6IGT6hpZIZ4
+        dffyBx8DO6Mr0GY8z0UKbS/cKk3aZ5cKnprvD1Um+kJ83Bnq1OQFUQChPbUY72K7
+        4Lhl8pPgg+ie7Qbt14o9NeUuR7vO/GLbwj05tuww9Kp3IvyZb7/rUmuMKLByG6V6
+        tJf7nWM2TAzKJqE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0DDB0124E9C;
+        Tue,  7 Jun 2022 14:25:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6B242124E9B;
+        Tue,  7 Jun 2022 14:25:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+        congdanhqx@gmail.com, dyroneteng@gmail.com, martin.agren@gmail.com,
+        peff@peff.net, tenglong.tl@alibaba-inc.com
+Subject: Re: js/ci-github-workflow-markup output regression
+References: <xmqqee28spni.fsf@gitster.g>
+        <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
+        <nycvar.QRO.7.76.6.2206021703110.349@tvgsbejvaqbjf.bet>
+        <220603.86fskmxd43.gmgdl@evledraar.gmail.com>
+        <xmqqpmjpeedq.fsf@gitster.g>
+        <220604.86y1ydwcq1.gmgdl@evledraar.gmail.com>
+Date:   Tue, 07 Jun 2022 11:25:51 -0700
+In-Reply-To: <220604.86y1ydwcq1.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 04 Jun 2022 01:13:08 +0200")
+Message-ID: <xmqqo7z4wcsw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 433F22C4-E68F-11EC-BA64-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In rare cases[1], wait_or_whine() cannot determine a child process's
-status (and will return -1 in this case). This can cause Git to issue
-trace2 child_exit events despite the fact that the child may still be
-running. In pathological cases, we've seen > 80 million exit events in
-our trace logs for a single child process.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Fix this by only issuing trace2 events in finish_command_in_signal() if
-we get a value other than -1 from wait_or_whine(). This can lead to
-missing child_exit events in such a case, but that is preferable to
-duplicating events on a scale that threatens to fill the user's
-filesystem with invalid trace logs.
+> On Fri, Jun 03 2022, Junio C Hamano wrote:
+>
+>> Indeed it makes it impossible to figure it out things like this
+>> case.  But ...
+>>
+>>> But this does look easy to "solve" with a quicker fix, just bringing
+>>> back the "ci/print-test-failures.sh" step so you can at least expand =
+it,
+>>> and not have to go to the "summary" and download the *.zip of the log
+>>> itself. As that shows we still have the raw log there, it just didn't
+>>> make it to the new GitHub Markdown formatting mechanism.
+>>
+>> ... it seems a solution is possible?  Care to send in a patch (or
+>> perhaps Dscho already has a counter-proposal)?
+>
+> The only thing I have at the moment is:
+>
+>     1. git revert -m 1 bd37e9e41f5
+>     2. merge: https://lore.kernel.org/git/cover-v6-00.29-00000000000-20=
+220525T094123Z-avarab@gmail.com/
+>     3. merge: https://lore.kernel.org/git/cover-v6-00.14-00000000000-20=
+220525T100743Z-avarab@gmail.com/
+>
+> I.e. to pick this in the sequence I'd proposed doing & have tested
+> thoroughly.
 
-[1]: This can happen when:
+I know you two have difference in opinions, but throwing away
+everything the other party did and forcing your stuff in is not a
+very effective way to work together.
 
-* waitpid() returns -1 and errno != EINTR
-* waitpid() returns an invalid PID
-* the status set by waitpid() has neither the WIFEXITED() nor
-  WIFSIGNALED() flags
+> It also addresses other noted some other regressions in "next", but as
+> noted e.g. in [A] there's other issues in "next", e.g. that even the
+> "raw" trace logs are altered as a side-effect of running with
+> --github-workflow-markup, and of course the major UX slowdowns.
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
-Updated the commit message with more details about when wait_or_whine()
-can fail.
-
- run-command.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/run-command.c b/run-command.c
-index a8501e38ce..e0fe2418a2 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -983,7 +983,8 @@ int finish_command(struct child_process *cmd)
- int finish_command_in_signal(struct child_process *cmd)
- {
- 	int ret = wait_or_whine(cmd->pid, cmd->args.v[0], 1);
--	trace2_child_exit(cmd, ret);
-+	if (ret != -1)
-+		trace2_child_exit(cmd, ret);
- 	return ret;
- }
- 
-
-base-commit: faa21c10d44184f616d391c158dcbb13b9c72ef3
--- 
-2.36.1.255.ge46751e96f-goog
+Dscho?  I know you do not care about the UX slowdown as much as
+others, but I am sure you do not consider what is in 'next' is
+perfect. It seems to need further work to go back to the feature
+parity with what it replaced.
 
