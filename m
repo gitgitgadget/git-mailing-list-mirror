@@ -2,215 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58728C43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 03:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E82CCCA481
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 03:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231292AbiFHD0a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jun 2022 23:26:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45978 "EHLO
+        id S233065AbiFHDgl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jun 2022 23:36:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233962AbiFHDZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jun 2022 23:25:05 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12EA538BED
-        for <git@vger.kernel.org>; Tue,  7 Jun 2022 12:53:34 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id v11-20020a17090a4ecb00b001e2c5b837ccso21791534pjl.3
-        for <git@vger.kernel.org>; Tue, 07 Jun 2022 12:53:34 -0700 (PDT)
+        with ESMTP id S234045AbiFHDfN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jun 2022 23:35:13 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D58222AE48
+        for <git@vger.kernel.org>; Tue,  7 Jun 2022 14:32:07 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id n10so37778610ejk.5
+        for <git@vger.kernel.org>; Tue, 07 Jun 2022 14:32:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=+nyE53ZhG+rMiBIIMTh0y6iSgKl+jgsnFYxYeWeuFr4=;
-        b=gDolq+5Yw3H3jfvLYHkNMc/oycWoG/ruHWhQcAWkd+/bR0NKbE73asAxEw5bbXpjrg
-         lDU81HYcapnIzKLv4Q8OgWD1MO3nbwIjJ49ewquGQbFdSm4Q6o3o4e44s9eVWwPTSnLT
-         AkgAbxCbmwk7n8RfX565oqb7cCFw0rDrqweVXAx/txO0OIsom61jR4qySuEwohMzkQ5J
-         cLaWjohT+lnSINmFb8busMfAhF/ZDVtrUJsPFQzwbchPSGd6k158Qe0raBGBN5DvmEbV
-         n6VO7e9kIKN1EJjJh9iuAkirSq3BhFrkf1O+0CdAQj3XQvyRe545wh8evPHX7JipQL0Z
-         dcIA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=7hCbTDPpzeq36YuCfI3MbGVPwiYPka4G5/58yWphV4s=;
+        b=p59KDT1OryBcYbgLjtZ/EGrU0TSdzlmgalSinPNgr+YCHz7Bf2+cASE6QLuNHGA4C/
+         E2quQhEX21M2Z6jNalFe0INjesXKqsg0v3wtU7SU2uooKYCcSF/cL3lF++iUnI96VXf4
+         SYH9ZIZo8NkcywN0OzFVkPB36mYZ5x0RoYR6rlayyu5C+YCGNZ0NqEw2cJnLew6Vh3dS
+         rPqjBAHBlyoA3kVaSlI2Z55ebLLrs7TAwY6ETTDf6oDJv/mQndCXu0twkOoVzFs2sTyZ
+         5Uj1xcYc5CFvX/iQDLJPTvOq6LgDC85htqqnVsRt+q889rRZBLeoiJ3FJK2jU1PynIdE
+         Le1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=+nyE53ZhG+rMiBIIMTh0y6iSgKl+jgsnFYxYeWeuFr4=;
-        b=UMbr0zdaUxj6epBiIfMgYtgpbuHiByezfYdkTnU7Wf5cXZ1o1zT1RZGpBDjbzKfebj
-         NjIOoweB6fs+eAHlYsYL7RQ4p5n95Q4G1YFbwaKOSfwVwEuO07rqKZPw1LxOvjtyRBM4
-         iS3wfVpRFDSi/8Quzlf3rizReqEQlCTr8F6uFiUzwFRG5c7U214Fq4dJ3H9EITSUH5ku
-         GTXmU2OgcHi/apJwu2rBKkhm+5JXurjzIro2AQT5ECVl9QCs/vglBZz8GziGBgSYdTWU
-         9VCuaUxjN/NCXHKgYl9trlyLyUOeB4Lv3S37MHD0uM/bDR9dlewNrqqCRq9jmm6mWvVJ
-         Lrqw==
-X-Gm-Message-State: AOAM5301zrwLWBKCXF/P0nsa7R6IigWHCnSdy051eurUwtR9YsTQ2sHb
-        YKLCL6InHqWfBGVRJExXSZo=
-X-Google-Smtp-Source: ABdhPJxwjgF6QBPiwZEHbT4GFGahl3S9ccyUksr6749D2CE9Kje+ZzQPuM0k6xh2yt3u9wYVg6FmLQ==
-X-Received: by 2002:a17:902:7202:b0:167:79d1:f with SMTP id ba2-20020a170902720200b0016779d1000fmr12633937plb.3.1654631613910;
-        Tue, 07 Jun 2022 12:53:33 -0700 (PDT)
-Received: from [192.168.1.164] (c-24-56-226-231.customer.broadstripe.net. [24.56.226.231])
-        by smtp.gmail.com with ESMTPSA id i13-20020a170902c94d00b0016362da9a03sm12981637pla.245.2022.06.07.12.53.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jun 2022 12:53:33 -0700 (PDT)
-Message-ID: <7ba4858a-d1cc-a4eb-b6d6-4c04a5dd6ce7@gmail.com>
-Date:   Tue, 7 Jun 2022 12:53:31 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=7hCbTDPpzeq36YuCfI3MbGVPwiYPka4G5/58yWphV4s=;
+        b=wAzg/Ef0lbk9nn/3SyiItjwF8WrRCTJ69Kfk9Zmw62D+L2wDzHZKKWMylpK5mHKaah
+         acqM46llkg+Hd/jtEqvpgc9UN7yVIAfoDhTMwnZEDF9OIt8zwNgrfKfzgiEulhwlSrk/
+         EWAoOxW6l7G1w+2kde9PzQeicDV7xLqcnoOxi2WVlEyGJ70wEnSsUt38Sa5PVGI90FCO
+         63PDNUbgDPm9XjaKj9RUo4Q8UJ9QyJMvi3PWCz8eCUWlExHIhs54PBh0nU6ThI9B6QL5
+         /A4tI7Uo6qlLOuansl5lRbBXmbq+PnrcmdlqnKITz4zMiFdiKO4RQiljkrSy8Zg7+eAl
+         qOmQ==
+X-Gm-Message-State: AOAM532xiokqC0YZwL6JYJTQq8o1jK0zAu7B2UryX9DniNhVihSpkAn5
+        EtuTqFJIWQxgPrrGGU+IlAs=
+X-Google-Smtp-Source: ABdhPJw5uLPfVa4SwOQ026ba7mNms51DjpAiH162JE0e6XOH0xeKjcj80U6S9TzRy156IcS4I0z6bg==
+X-Received: by 2002:a17:907:7b95:b0:6f4:ff03:981a with SMTP id ne21-20020a1709077b9500b006f4ff03981amr28807093ejc.653.1654637525196;
+        Tue, 07 Jun 2022 14:32:05 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id g15-20020aa7dc4f000000b0042defe37a42sm10807443edu.16.2022.06.07.14.32.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jun 2022 14:32:04 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nygnz-002fft-Pb;
+        Tue, 07 Jun 2022 23:32:03 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com
+Subject: Re: [PATCH 2/2] builtin/show-ref.c: limit output with `--count`
+Date:   Tue, 07 Jun 2022 23:31:28 +0200
+References: <cover.1654552560.git.me@ttaylorr.com>
+ <3fcf1f555715e925385d37712ffe880bb869741e.1654552560.git.me@ttaylorr.com>
+ <220607.86r140vqc4.gmgdl@evledraar.gmail.com>
+ <Yp+/eXNg4tjiCn5a@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <Yp+/eXNg4tjiCn5a@nand.local>
+Message-ID: <220607.86y1y8tb1o.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v13 5/7] object-file.c: add "stream_loose_object()" to
- handle large object
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han Xin <chiyutianyi@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        Elijah Newren <newren@gmail.com>,
-        Han Xin <hanxin.hx@alibaba-inc.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-References: <cover-v12-0.8-00000000000-20220329T135446Z-avarab@gmail.com>
- <cover-v13-0.7-00000000000-20220604T095113Z-avarab@gmail.com>
- <patch-v13-5.7-0b07b29836b-20220604T095113Z-avarab@gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-In-Reply-To: <patch-v13-5.7-0b07b29836b-20220604T095113Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/4/2022 3:10 AM, Ævar Arnfjörð Bjarmason wrote:
-> From: Han Xin <hanxin.hx@alibaba-inc.com>
-> 
-> If we want unpack and write a loose object using "write_loose_object",
-> we have to feed it with a buffer with the same size of the object, which
-> will consume lots of memory and may cause OOM. This can be improved by
-> feeding data to "stream_loose_object()" in a stream.
-> 
-> Add a new function "stream_loose_object()", which is a stream version of
-> "write_loose_object()" but with a low memory footprint. We will use this
-> function to unpack large blob object in later commit.
-> 
-> Another difference with "write_loose_object()" is that we have no chance
-> to run "write_object_file_prepare()" to calculate the oid in advance.
-> In "write_loose_object()", we know the oid and we can write the
-> temporary file in the same directory as the final object, but for an
-> object with an undetermined oid, we don't know the exact directory for
-> the object.
-> 
-> Still, we need to save the temporary file we're preparing
-> somewhere. We'll do that in the top-level ".git/objects/"
-> directory (or whatever "GIT_OBJECT_DIRECTORY" is set to). Once we've
-> streamed it we'll know the OID, and will move it to its canonical
-> path.
-> 
 
-I think this new logic doesn't play well with batched-fsync. Even 
-through we don't know the final OID, we should still call 
-prepare_loose_object_bulk_checkin to potentially create the bulk checkin 
-objdir.
+On Tue, Jun 07 2022, Taylor Blau wrote:
 
+> On Tue, Jun 07, 2022 at 10:07:32AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>
+>> On Mon, Jun 06 2022, Taylor Blau wrote:
+>>
+>> > diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-r=
+ef.txt
+>> > index ab4d271925..28256c04dd 100644
+>> > --- a/Documentation/git-show-ref.txt
+>> > +++ b/Documentation/git-show-ref.txt
+>> > @@ -10,7 +10,7 @@ SYNOPSIS
+>> >  [verse]
+>> >  'git show-ref' [-q|--quiet] [--verify] [--head] [-d|--dereference]
+>> >  	     [-s|--hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]
+>> > -	     [--heads] [--] [<pattern>...]
+>> > +	     [--heads] [--count=3D<n>] [--] [<pattern>...]
+>>
+>> In addition to what Junio noted, the SYNOPSIS is now inaccurate per your
+>> documentation. I.e. if this option is incompatible with --verify and
+>> --exclude-existing we should use "|" to indicate that, e.g.:
+>>
+>> 	[ [--verify] [--exclude-existing] | --count=3D<n> ]
+>
+> Good catch. Should this be squashed into the first example in the
+> SYNOPSIS, the second, or a new one?
 
-> diff --git a/object-file.c b/object-file.c
-> index 7946fa5e088..9fd449693c4 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -2119,6 +2119,106 @@ static int freshen_packed_object(const struct object_id *oid)
->   	return 1;
->   }
->   
-> +int stream_loose_object(struct input_stream *in_stream, size_t len,
-> +			struct object_id *oid)
-> +{
-> +	int fd, ret, err = 0, flush = 0;
-> +	unsigned char compressed[4096];
-> +	git_zstream stream;
-> +	git_hash_ctx c;
-> +	struct strbuf tmp_file = STRBUF_INIT;
-> +	struct strbuf filename = STRBUF_INIT;
-> +	int dirlen;
-> +	char hdr[MAX_HEADER_LEN];
-> +	int hdrlen;
-> +
-> +	/* Since oid is not determined, save tmp file to odb path. */
-> +	strbuf_addf(&filename, "%s/", get_object_directory());
-> +	hdrlen = format_object_header(hdr, sizeof(hdr), OBJ_BLOB, len);
-> +
-> +	/*
-> +	 * Common steps for write_loose_object and stream_loose_object to
-> +	 * start writing loose objects:
-> +	 *
-> +	 *  - Create tmpfile for the loose object.
-> +	 *  - Setup zlib stream for compression.
-> +	 *  - Start to feed header to zlib stream.
-> +	 */
-> +	fd = start_loose_object_common(&tmp_file, filename.buf, 0,
-> +				       &stream, compressed, sizeof(compressed),
-> +				       &c, hdr, hdrlen);
-> +	if (fd < 0) {
-> +		err = -1;
-> +		goto cleanup;
-> +	}
-> +
-> +	/* Then the data itself.. */
-> +	do {
-> +		unsigned char *in0 = stream.next_in;
-> +
-> +		if (!stream.avail_in && !in_stream->is_finished) {
-> +			const void *in = in_stream->read(in_stream, &stream.avail_in);
-> +			stream.next_in = (void *)in;
-> +			in0 = (unsigned char *)in;
-> +			/* All data has been read. */
-> +			if (in_stream->is_finished)
-> +				flush = 1;
-> +		}
-> +		ret = write_loose_object_common(&c, &stream, flush, in0, fd,
-> +						compressed, sizeof(compressed));
-> +		/*
-> +		 * Unlike write_loose_object(), we do not have the entire
-> +		 * buffer. If we get Z_BUF_ERROR due to too few input bytes,
-> +		 * then we'll replenish them in the next input_stream->read()
-> +		 * call when we loop.
-> +		 */
-> +	} while (ret == Z_OK || ret == Z_BUF_ERROR);
-> +
-> +	if (stream.total_in != len + hdrlen)
-> +		die(_("write stream object %ld != %"PRIuMAX), stream.total_in,
-> +		    (uintmax_t)len + hdrlen);
-> +
-> +	/* Common steps for write_loose_object and stream_loose_object to
-> +	 * end writing loose oject:
-> +	 *
-> +	 *  - End the compression of zlib stream.
-> +	 *  - Get the calculated oid.
-> +	 */
-> +	if (ret != Z_STREAM_END)
-> +		die(_("unable to stream deflate new object (%d)"), ret);
-> +	ret = end_loose_object_common(&c, &stream, oid);
-> +	if (ret != Z_OK)
-> +		die(_("deflateEnd on stream object failed (%d)"), ret);
-> +	close_loose_object(fd, tmp_file.buf);
-> +
+Personally I really don't care if the end-state is good :)
 
-If batch fsync is enabled, the close_loose_object call will refrain from 
-syncing the tmp file.
+>> > +	if (max_count) {
+>> > +		int compatible =3D 0;
+>> > +
+>> > +		if (max_count < 0)
+>> > +			error(_("invalid --count argument: (`%d' < 0)"),
+>> > +			      max_count);
+>> > +		else if (verify)
+>> > +			error(_("--count is incompatible with %s"), "--verify");
+>> > +		else if (exclude_arg)
+>> > +			error(_("--count is incompatible with %s"),
+>> > +			      "--exclude-existing");
+>> > +		else
+>> > +			compatible =3D 1;
+>> > +
+>> > +		if (!compatible)
+>> > +			usage_with_options(show_ref_usage, show_ref_options);
+>>
+>> Instead of this "int compatible" and if/else-if" just use usage_msg_optf=
+().
+>>
+>> That or die_for_incompatible_opt4(), at least the new _() messages
+>> should make use of the same translations. I.e. we recently made these
+>> parameterized.
+>
+> Good catch again. I wasn't aware of usage_msg_optf(), but it's exactly
+> what I'm looking for here. It does mean that we'd only print one warning
+> at a time, but I think that's a fair tradeoff, and unlikely to matter in
+> practice anyways.
 
-> +	if (freshen_packed_object(oid) || freshen_loose_object(oid)) {
-> +		unlink_or_warn(tmp_file.buf);
-> +		goto cleanup;
-> +	}
-> +
-> +	loose_object_path(the_repository, &filename, oid);
-> +
+Yeah, I think that should be OK. We do that in other cases.
 
-We expect this loose_object_path call to return a path in the bulk fsync 
-object directory. It might not do so if we don't call 
-prepare_loose_object_bulk_checkin.
+> And I must have dropped the parameterized msgids on the floor when
+> preparing this patch, since I definitely have it locally. Oops, fixed.
 
-In the new test case introduced in (7/7), we seem to be getting lucky
-in that there are some small objects (commits) earlier in the packfile,
-so we go through write_loose_object first.
+*nod*
 
-Thanks for including me on the review!
+>> > +	}
+>> > +
+>> >  	if (exclude_arg)
+>> >  		return exclude_existing(exclude_existing_arg);
+>> >
+>> > diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+>> > index 9252a581ab..b79e114c1e 100755
+>> > --- a/t/t1403-show-ref.sh
+>> > +++ b/t/t1403-show-ref.sh
+>> > @@ -196,4 +196,25 @@ test_expect_success 'show-ref --verify with dangl=
+ing ref' '
+>> >  	)
+>> >  '
+>> >
+>> > +test_expect_success 'show-ref --count limits relevant output' '
+>> > +	git show-ref --heads --count=3D1 >out &&
+>> > +	test_line_count =3D 1 out
+>> > +'
+>> > +
+>> > +test_expect_success 'show-ref --count rejects invalid input' '
+>> > +	test_must_fail git show-ref --count=3D-1 2>err &&
+>> > +	grep "invalid ..count argument: (.-1. < 0)" err
+>>
+>> The use of .. here seems odd...
+>>
+>> > +'
+>> > +
+>> > +test_expect_success 'show-ref --count incompatible with --verify' '
+>> > +	test_must_fail git show-ref --count=3D1 --verify HEAD 2>err &&
+>> > +	grep "..count is incompatible with ..verify" err
+>>
+>> ...i.e. this looks like a way to avoid "--" at the beginning, but then
+>> why use it in the middle of the regex?
+>
+> Muscle memory ;).
+>
+>> > +test_expect_success 'show-ref --count incompatible with --exclude-exi=
+sting' '
+>> > +	echo "refs/heads/main" >in &&
+>> > +	test_must_fail git show-ref --count=3D1 --exclude-existing <in 2>err=
+ &&
+>> > +	grep "..count is incompatible with ..exclude.existing" err
+>>
+>> Seems like you could avoid it entirely by escaping it, e.g. "[-]-" at
+>> the beginning, or in this case I think "test_expect_code 129" would be
+>> more than sufficient, we use that to test "had usage spewed at us"
+>> elsewhere.
+>
+> I like having the extra test to ensure the error we got made sense, but
+> I agree either would work. I modified the grep expressions to replace
+> leading "."'s with "[-]", and "."'s in the middle of the expression with
+> "-".
 
--Neeraj
+Yeah, fair enough, thanks!
