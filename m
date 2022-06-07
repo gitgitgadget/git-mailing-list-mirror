@@ -2,124 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6958AC43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 01:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43A81C43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 01:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229490AbiFHBUo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jun 2022 21:20:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42912 "EHLO
+        id S237145AbiFHBVB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jun 2022 21:21:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1587768AbiFGXxk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jun 2022 19:53:40 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2954324099
-        for <git@vger.kernel.org>; Tue,  7 Jun 2022 15:49:31 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4AF0619A991;
-        Tue,  7 Jun 2022 18:49:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QGHTZ7aSzmx7tAJgyZTMI4W4RkMvWBHwxBbGR8
-        3k97g=; b=NAvyR9P3kwNtjnK30Ds4hcVUukVom5ZiL0HszX+YPGHU5X2arGd0CC
-        O6fsWjx/8mboPCJ0Oysu/G+lYdBfXwzWgWV0qzC0LBbAwG8iRl3isj2oJWqNDW2d
-        lUSiFCtdYGpH4meIEwzQ50P6tURe8GkBs1ezSjcsGmKwG1g75b4kU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 43DF219A990;
-        Tue,  7 Jun 2022 18:49:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E49F619A98F;
-        Tue,  7 Jun 2022 18:49:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        with ESMTP id S1444494AbiFHBBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jun 2022 21:01:51 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963E939C11B
+        for <git@vger.kernel.org>; Tue,  7 Jun 2022 13:56:12 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id cv1so13165533qvb.5
+        for <git@vger.kernel.org>; Tue, 07 Jun 2022 13:56:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=VyyGQe+pl8q/XbAEfoRlK27+ViQfikXnKZyy2zXKGC0=;
+        b=MCEvFwOYDKBPM+5r8o0lDWmX1kWobMT0N2RxGmcY+GQj7QFFT7doTlC4Hp0vNpgX12
+         O0QZ9OK6bD12gBi3g13ZKb/MIMMOsD+GmF5v8BJ6pGdtuGiR/4eNJk4e33XVKjIHYOUg
+         OtVw0a61ruQUuiM3R4ZZlJZJDDrtIFGlp0hY+Zv+h7xGlDXzY4OL1C+Q+NKIzaDHtY/z
+         W16hKnwhxbvFVt0pBJYU1Kcxka7PKX0e0dwIhunfghV1ofnGhM/yRICg4exWDVzl+VVe
+         PtDgTSJU34FWf2BZkmoXkQ/3rf0oLUA/+T1HaiqiYfYI9VwF3y44u/rwgscim81COcyO
+         6M8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VyyGQe+pl8q/XbAEfoRlK27+ViQfikXnKZyy2zXKGC0=;
+        b=jsbh7gaM8Fsquow5Jak/rULS6z0y9/1lpl/rpWsBG6wiaLeZjl6HR3h/4IcHjinHM8
+         aUS9d2I58JhRV4zrwttnqNz+GOJVA6QKvbu9IrgBg1Qb8YFNi1fNyob0p+wlzMvIIY25
+         Db50FAuXf1lYG7STM8gz9uAtbb3yONH8iq7pirzxPwR9YZg6v/gT8bEL7ojCemi2J01Q
+         /z5gCdlyit0CMFLqaRtCrrgXB9wHP1tUNGQpz5zYPq28RYRl0+sGvLReKoCBP43SQM0Z
+         Ctj7jjFHbF7cAObNVIJF/cjISFqMdo/u6DKZc4nXFAxIvFPn8P3XBoH8xrjDl5OQePO7
+         0/Lw==
+X-Gm-Message-State: AOAM531r2TX2WpxUvZdsRuD0Eyu02PuowVAmhvt2ygjC4FIF4/sElvVH
+        t0LjfdpiMdc22MdSrKS1NyU4gw==
+X-Google-Smtp-Source: ABdhPJw42zRQgb9//5SUAIUzGiF3auO7Kuu5hHtptQXykhVdjb7yNO8yZxRECh3hyCoLBFRTmt16+Q==
+X-Received: by 2002:a05:6214:1948:b0:464:4c88:dafa with SMTP id q8-20020a056214194800b004644c88dafamr37954032qvk.12.1654635370451;
+        Tue, 07 Jun 2022 13:56:10 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id bq33-20020a05620a46a100b006a649e42962sm15232976qkb.70.2022.06.07.13.56.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jun 2022 13:56:09 -0700 (PDT)
+Date:   Tue, 7 Jun 2022 16:56:09 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Vicent Marti <tanoku@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v4 3/5] config: read protected config with
- `git_protected_config()`
-References: <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com>
-        <pull.1261.v4.git.git.1654635432.gitgitgadget@gmail.com>
-        <94b40907e66b2f6e0874ab49f8b73fdd58eb06d5.1654635432.git.gitgitgadget@gmail.com>
-Date:   Tue, 07 Jun 2022 15:49:26 -0700
-In-Reply-To: <94b40907e66b2f6e0874ab49f8b73fdd58eb06d5.1654635432.git.gitgitgadget@gmail.com>
-        (Glen Choo via GitGitGadget's message of "Tue, 07 Jun 2022 20:57:10
-        +0000")
-Message-ID: <xmqqbkv4t7gp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        Junio C Hamano <gitster@pobox.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH v2 3/3] bitmap-format.txt: add information for trailing
+ checksum
+Message-ID: <Yp+7aXdaCX3Fh9SE@nand.local>
+References: <pull.1246.git.1654177966.gitgitgadget@gmail.com>
+ <pull.1246.v2.git.1654623814.gitgitgadget@gmail.com>
+ <2171d31fb2b783371bdc31ba54856dea8224de65.1654623814.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1604571E-E6B4-11EC-A7CD-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2171d31fb2b783371bdc31ba54856dea8224de65.1654623814.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 3a851b36066..09f48317b02 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -1321,18 +1321,27 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
->  		data->advertise_sid = git_config_bool(var, value);
->  	}
->  
-> -	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
-> -	    current_config_scope() != CONFIG_SCOPE_WORKTREE) {
-> -		if (!strcmp("uploadpack.packobjectshook", var))
-> -			return git_config_string(&data->pack_objects_hook, var, value);
-> -	}
-> -
-
-The lossage of this block is because this general git_config()
-callback routine that is used to read from any scope is no longer
-used to pick up the sensitive variable.  Instead, we need to get it
-with a different API, namely, git_protected_config().
-
-It is probably is good that in the new code we are not encouraging
-folks to write random comparisons on current_config_scope(), and
-instead uniformly use a git_protected_config().  That may promote
-consistency.
-
-An obvious alternative to achieve the same consistency would be to
-introduce a helper, and rewrite (instead of removing) the above part
-like so:
-
-	if (in_protected_scope()) {
-		... parse sensitive variable ...
-	}
-
-We would not need any other change to this file in this patch if we
-go that route, I suspect.
-
->  	if (parse_object_filter_config(var, value, data) < 0)
->  		return -1;
->  
->  	return parse_hide_refs_config(var, value, "uploadpack");
->  }
->  
-> +static int upload_pack_protected_config(const char *var, const char *value, void *cb_data)
-> +{
-> +	struct upload_pack_data *data = cb_data;
+On Tue, Jun 07, 2022 at 05:43:34PM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
+> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+>
+> Bitmap file has a trailing checksum at the end of the file. However
+> there is no information in the bitmap-format documentation about it.
+>
+> Add a trailer section to include the trailing checksum info in the
+> `Documentation/technical/bitmap-format.txt` file.
+>
+> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+> ---
+>  Documentation/technical/bitmap-format.txt | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
+> index f22669b5916..a43d2fe2bbf 100644
+> --- a/Documentation/technical/bitmap-format.txt
+> +++ b/Documentation/technical/bitmap-format.txt
+> @@ -125,6 +125,10 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
+>
+>  		** The compressed bitmap itself, see Appendix A.
+>
+> +	* TRAILER:
 > +
-> +	if (!strcmp("uploadpack.packobjectshook", var))
-> +		return git_config_string(&data->pack_objects_hook, var, value);
-> +	return 0;
-> +}
+> +		Index checksum of the above contents. It is a 20-byte SHA1 checksum.
 > +
-> +static void get_upload_pack_config(struct upload_pack_data *data)
-> +{
-> +	git_config(upload_pack_config, data);
-> +	git_protected_config(upload_pack_protected_config, data);
-> +}
 
-Where we used to just do git_config(upload_pack_config), we now need
-to do a separate git_protected_config().  It feels a bit wasteful to
-iterate over the same configset twice, but it is not like we are
-doing the IO and text file parsing multiple times.  This looks quite
-straight-forward.
+I assume by "Index checksum" you are referring to a checksum of the
+bitmap _index_'s contents. That term is used a little throughout
+pack-format.txt, but it's foreign to me. Assuming that's how you meant
+it, a more conventional term (I think) would be just "trailing
+checksum".
+
+It is also not guaranteed to be a SHA-1 checksum, if the repository
+which wrote the bitmap is in SHA-256 mode. So I would suggest that this
+addition just read:
+
+    * TRAILER:
+
+      Trailing checksum of the preceding contents.
+
+Thanks,
+Taylor
