@@ -2,219 +2,270 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE542C43334
-	for <git@archiver.kernel.org>; Mon,  6 Jun 2022 23:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40E19C43334
+	for <git@archiver.kernel.org>; Tue,  7 Jun 2022 00:34:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235411AbiFFXzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jun 2022 19:55:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49180 "EHLO
+        id S235460AbiFGAeH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jun 2022 20:34:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235380AbiFFXzW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jun 2022 19:55:22 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D9F062FD
-        for <git@vger.kernel.org>; Mon,  6 Jun 2022 16:55:21 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id b9-20020a656689000000b003f672946300so7630269pgw.16
-        for <git@vger.kernel.org>; Mon, 06 Jun 2022 16:55:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=rOnI6UMJ9Bfvu2ciXRNHB2m+D82MwziGxjBUbzAA690=;
-        b=J6SYAS/6m+qPtbq3FPn/jJUpjENW4Mpo3S2itfqHSARt4pCiJa4z69UD7yCzf9eKjW
-         H4RLcUQMFeE696YxMqt4061zkcH4xk7wFy7E3YucclNr2b+zvD6xZChwIOK7L/MQ0vq4
-         QpyiEzvhcJNLSeZ3vrOHFdITAMncSuDZkE9UaAL0IO9LaGm1U5HqUYRa5KOgoZvJhLqF
-         Osk9+NNk4FeRC480qBvfmx7EOBqviurHKXPVrSPGz3RJdfn4LcgZix7ylEIYRtJzZyYj
-         rNygZIN9gtQodzYtBDiawFLd7rD7Q1GdJjh3zlDB2/yLL6pj4o+Axmd/PYmksuuzsOpd
-         cTqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=rOnI6UMJ9Bfvu2ciXRNHB2m+D82MwziGxjBUbzAA690=;
-        b=IK60CIuEByWHVK3SAYUJdR2wCBkKyEaZYWh99UIds/t5K/DCow5tersoLkKSDYRmni
-         qygzgz2lx9aFONj7ptjjB+FSiIXfX3qpFzyoekzVanYYHfPIl+MCsluH9LNnLDPnvpIk
-         feZ4dwyH3cY5psoPl5kdh/bY+CR7YvqS4D3XZkFP/GzRDLJ9Iv+I475iPsztYTTpR3+C
-         ZFNnkm/acmkfN1OuPir4kPdoe0BZAtJxk2uYDQzEzuOesizdCH1hww7Vqhd5ZdEeDzIn
-         jW45Z8AqXO83WTVO5kRoHaLzOCqI0QJKVPtSq8Fnqxpi/TzIRFuo7TKHbJJvdfRyKnHk
-         lWDw==
-X-Gm-Message-State: AOAM531JX89M0k+HKU3QUGuCSdf+aAW9txV7NnYz3OdYNT9BvuJbeEia
-        lJNZsCjf+VWjhUS/E5m5XcJ7AZHX9lVWQnZ5iHSlg1lw1G/ZjSVHeuV+2ffFZlAFyTuYwUc0Wjr
-        VGFhQrtG2KCRCUB1htPcOQ44cUmlYRH4WZHa1r5wmiwZBhYUlrNvCuH2xygUeAtRshw==
-X-Google-Smtp-Source: ABdhPJy22f/0qpqcoNqzLtpyg+uD2tzZFOkVeW1Z4ZEMUeWNnkZVbw54gv7Wh9luRxDIw/nR/N8Y16Hy55bYlqM=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a17:90b:3907:b0:1e8:57f9:dadb with SMTP
- id ob7-20020a17090b390700b001e857f9dadbmr15550892pjb.137.1654559720318; Mon,
- 06 Jun 2022 16:55:20 -0700 (PDT)
-Date:   Mon,  6 Jun 2022 23:54:49 +0000
-Message-Id: <20220606235449.2890858-1-calvinwan@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.36.1.255.ge46751e96f-goog
-Subject: [PATCH] submodule merge: update conflict error message
-From:   Calvin Wan <calvinwan@google.com>
-To:     git@vger.kernel.org
-Cc:     chooglen@google.com, Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S235397AbiFGAeG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jun 2022 20:34:06 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4AC06A41F
+        for <git@vger.kernel.org>; Mon,  6 Jun 2022 17:34:04 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D0B5F1A1954;
+        Mon,  6 Jun 2022 20:34:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WGZwrGyvmgP57TJzXg0lnU4sftbJEL9bPHyrf1
+        gczEY=; b=OmR8S5yEwHPjwvZjjAddiotdbzCraOF6s5moDt69t3oU0a9fHO0GWW
+        BVGA5NMSU7S608Wwd4iepYhjg0nV47OKiguF3gH+HoJzEG7V9UbwdE+efZ22E6aV
+        WDAdbCNwR8kQv+XsV6JkD9pBUAJ+b3g0SLu7rzzUAMZyWE7oJ3e+o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C973C1A1953;
+        Mon,  6 Jun 2022 20:34:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 413C11A1950;
+        Mon,  6 Jun 2022 20:34:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/6] docs: document bundle URI standard
+References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
+        <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
+Date:   Mon, 06 Jun 2022 17:33:59 -0700
+In-Reply-To: <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Mon, 06 Jun 2022
+        19:55:20 +0000")
+Message-ID: <xmqqtu8x1fd4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8634A536-E5F9-11EC-890E-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When attempting to do a non-fast-forward merge in a project with
-conflicts in the submodules, the merge fails and git prints the
-following error:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Failed to merge submodule <submodules>
-CONFLICT (submodule):Merge conflict in <submodule>
-Automatic merge failed; fix conflicts and then commit the result.
+> +Cloning with Bundle URIs
+> +------------------------
+> +
+> +The primary need for bundle URIs is to speed up clones. The Git client
+> +will interact with bundle URIs according to the following flow:
+> +
+> +1. The user specifies a bundle URI with the `--bundle-uri` command-line
+> +   option _or_ the client discovers a bundle list advertised by the
+> +   Git server.
+> +
+> +2. If the downloaded data from a bundle URI is a bundle, then the client
+> +   inspects the bundle headers to check that the negative commit OIDs are
 
-Git is left in a conflicted state, which requires the user to:
- 1. abort the merge
- 2. merge submodules
- 3. merge superproject
-These steps are non-obvious for newer submodule users to figure out
-based on the error message and neither `git submodule status` nor `git
-status` provide any useful pointers. 
+Although "negative" would be understandable to pros, the commits
+required to unbundle a bundle file are officially called
+"prerequisite commits" (cf. "git bundle --help"), so that may be
+easier to understand by ordinary readers.
 
-Update error message to the following when attempting to do a
-non-fast-forward merge in a project with conflicts in the submodules.
-The error message is based off of what would happen when `merge
---recurse-submodules` is eventually supported
+> +   present in the client repository. If some are missing, then the client
+> +   delays unbundling until other bundles have been unbundled, making those
+> +   OIDs present. When all required OIDs are present, the client unbundles
+> +   that data using a refspec. The default refspec is
+> +   `+refs/heads/*:refs/bundles/*`, but this can be configured.
 
-Failed to merge submodule <submodule>
-CONFLICT (submodule): Merge conflict in <submodule>
-Automatic merge failed; recursive merging with submodules is currently
-not supported. To manually merge, the following steps are recommended:
- - abort the current merge
- - merge submodules individually
- - merge superproject
+The refs/bundles/ appear in the document only here, and it is
+unclear why we even want it (I am assuming this is against gc while
+"git clone" is still running) or how we are going to retire it, if
+ever.  If there are multiple bundle files involved in this "git clone",
+to anchor objects that are necessary against "gc", don't we need to use
+refs/bundles/<i>/* or something like that, where <i> is uniquely assigned
+number locally?
 
-I considered automatically aborting the merge if git detects the merge
-failed because of a submodule conflict, however, doing so causes a
-significant amount of tests in `t7610-mergetool.sh` (and some other test
-scripts as well) to fail, suggesting users have come to expect this
-state and have their workarounds with `git mergetool`
+> +3. If the file is instead a bundle list, then the client inspects the
+> +   `bundle.list.mode` to see if the list is of the `all` or `any` form.
 
-Signed-off-by: Calvin Wan <calvinwan@google.com>
+If the downloaded file is not a bundle (e.g. "git bundle list-heads"
+barfs on it) and it is not parseable with our configuration parser,
+do we error out, or do we pretend as if that bundle file or the TOC
+did not exist (if the bundle list with mode=any at the higher level
+has appropriate alternatives)?
 
----
- builtin/merge.c            | 12 +++++++++++-
- merge-ort.c                |  4 +++-
- merge-recursive.c          |  4 +++-
- merge-recursive.h          |  1 +
- t/t6437-submodule-merge.sh |  5 ++++-
- 5 files changed, 22 insertions(+), 4 deletions(-)
+> +   a. If `bundle.list.mode=all`, then the client considers all bundle
+> +      URIs. The list is reduced based on the `bundle.<id>.filter` options
+> +      matching the client repository's partial clone filter.
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index f178f5a3ee..39f5ee66d6 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -88,6 +88,7 @@ static const char *sign_commit;
- static int autostash;
- static int no_verify;
- static char *into_name;
-+static int submodule_conflict = 0;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  NO_TRIVIAL },
-@@ -757,6 +758,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 		else
- 			clean = merge_recursive(&o, head, remoteheads->item,
- 						reversed, &result);
-+		if (o.submodule_conflict)
-+			submodule_conflict = 1;
- 		if (clean < 0)
- 			exit(128);
- 		if (write_locked_index(&the_index, &lock,
-@@ -973,7 +976,14 @@ static int suggest_conflicts(void)
- 	strbuf_release(&msgbuf);
- 	fclose(fp);
- 	repo_rerere(the_repository, allow_rerere_auto);
--	printf(_("Automatic merge failed; "
-+	if (submodule_conflict)
-+		printf(_("Automatic merge failed; recursive merging with submodules is currently\n"
-+			"not supported. To manually merge, the following steps are recommended:\n"
-+			" - abort the current merge\n"
-+			" - merge submodules individually\n"
-+			" - merge superproject\n"));
-+	else
-+		printf(_("Automatic merge failed; "
- 			"fix conflicts and then commit the result.\n"));
- 	return 1;
- }
-diff --git a/merge-ort.c b/merge-ort.c
-index 0d3f42592f..205d6658bc 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3866,8 +3866,10 @@ static void process_entry(struct merge_options *opt,
- 			const char *reason = _("content");
- 			if (ci->filemask == 6)
- 				reason = _("add/add");
--			if (S_ISGITLINK(merged_file.mode))
-+			if (S_ISGITLINK(merged_file.mode)) {
- 				reason = _("submodule");
-+				opt->submodule_conflict = 1;
-+			}
- 			path_msg(opt, path, 0,
- 				 _("CONFLICT (%s): Merge conflict in %s"),
- 				 reason, path);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index fd1bbde061..535b8cc758 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3149,8 +3149,10 @@ static int handle_content_merge(struct merge_file_info *mfi,
- 	}
- 
- 	if (!mfi->clean) {
--		if (S_ISGITLINK(mfi->blob.mode))
-+		if (S_ISGITLINK(mfi->blob.mode)) {
- 			reason = _("submodule");
-+			opt->submodule_conflict = 1;
-+		}
- 		output(opt, 1, _("CONFLICT (%s): Merge conflict in %s"),
- 				reason, path);
- 		if (ci && !df_conflict_remains)
-diff --git a/merge-recursive.h b/merge-recursive.h
-index b88000e3c2..6fd31644ad 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -51,6 +51,7 @@ struct merge_options {
- 
- 	/* internal fields used by the implementation */
- 	struct merge_options_internal *priv;
-+	unsigned submodule_conflict : 1;
- };
- 
- void init_merge_options(struct merge_options *opt, struct repository *repo);
-diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
-index 178413c22f..bfcc81cd06 100755
---- a/t/t6437-submodule-merge.sh
-+++ b/t/t6437-submodule-merge.sh
-@@ -141,6 +141,7 @@ test_expect_success 'merging should conflict for non fast-forward' '
- 		test_must_fail git merge c 2> actual
- 	  fi &&
- 	 grep $(cat expect) actual > /dev/null &&
-+	 test_i18ngrep "recursive merging with submodules is currently" actual &&
- 	 git reset --hard)
- '
- 
-@@ -167,6 +168,7 @@ test_expect_success 'merging should fail for ambiguous common parent' '
- 	 fi &&
- 	grep $(cat expect1) actual > /dev/null &&
- 	grep $(cat expect2) actual > /dev/null &&
-+	test_i18ngrep "recursive merging with submodules is currently" actual &&
- 	git reset --hard)
- '
- 
-@@ -205,7 +207,8 @@ test_expect_success 'merging should fail for changes that are backwards' '
- 	git commit -a -m "f" &&
- 
- 	git checkout -b test-backward e &&
--	test_must_fail git merge f)
-+	test_must_fail git merge f >actual &&
-+	test_i18ngrep "recursive merging with submodules is currently" actual)
- '
- 
- 
+OK, this answers my earlier question nicely.  It probably means that
+either the presentation order needs a bit of rethinking, or "we
+group by .filter" needs to be mentioned a lot earlier.
 
-base-commit: ab336e8f1c8009c8b1aab8deb592148e69217085
--- 
-2.36.1.255.ge46751e96f-goog
+> Then, all
+> +      bundle URIs are requested. If the `bundle.<id>.timestamp` heuristic
+> +      is provided, then the bundles are downloaded in reverse-
+> +      chronological order, stopping when a bundle has all required OIDs.
 
+Stop as soon as just one bundle has all the prerequisite objects, or
+should we keep going until all bundles have their prerequisites
+satisfied?  I presume it is the latter.
+
+> +      The bundles can then be unbundled in chronological order. The client
+> +      stores the latest timestamp as a heuristic for avoiding future
+> +      downloads if the bundle list does not advertise newer bundles.
+
+So we see a list, we start grabbing from new to old.  Newer ones
+that are based on older ones may have dependencies, so we do not
+unbndle until we have all the prerequisites for them.  The bundles
+that satisfy their prerequisites are unbundled---that would give us
+enough objects to play with.  What happens to the refs recorded in
+them, though?
+
+Is the timestamp per the serving host, or per the CDN host that
+serve us bundle files, or...?  I guess it is premature to discuss it
+here. "git clone" bootstraps from the advertisement made only by a
+single serving host, so the single newest timestamp among the
+bundles used from the bundle list is what we store here.  How that
+timestamp is used is primarily of interest in future fetching, which
+would be discussed later.
+
+> +Fetching with Bundle URIs
+> +-------------------------
+> +
+> +When the client fetches new data, it can decide to fetch from bundle
+> +servers before fetching from the origin remote. This could be done via a
+> +command-line option, but it is more likely useful to use a config value
+> +such as the one specified during the clone.
+> +
+> +The fetch operation follows the same procedure to download bundles from a
+> +bundle list (although we do _not_ want to use parallel downloads here). We
+> +expect that the process will end when all negative commit OIDs in a thin
+> +bundle are already in the object database.
+
+I do not see why we do not want to use parallel download, though.
+If our last bundle download was last month, and they have two newer
+bundles since then, don't we want to grab both at the same time?
+Wasn't that the point of recording the newest timestamp when "git
+clone" grabbed bundles?
+
+> +Error Conditions
+> +----------------
+> +
+> +If the Git client discovers something unexpected while downloading
+> +information according to a bundle URI or the bundle list found at that
+> +location, then Git can ignore that data and continue as if it was not
+> +given a bundle URI. The remote Git server is the ultimate source of truth,
+> +not the bundle URI.
+> +
+> +Here are a few example error conditions:
+> +
+> +* The client fails to connect with a server at the given URI or a connection
+> +  is lost without any chance to recover.
+> +
+> +* The client receives a response other than `200 OK` (such as `404 Not Found`,
+> +  `401 Not Authorized`, or `500 Internal Server Error`). The client should
+> +  use the `credential.helper` to attempt authentication after the first
+> +  `401 Not Authorized` response, but a second such response is a failure.
+> +
+> +* The client receives data that is not parsable as a bundle or table of
+> +  contents.
+
+Is it an error if bundle.<id>.list and the contents disagree?
+
+It is fine to call the possibility other than "a bundle file" "table
+of contents", but then let's do so consistently throughout the document.
+When we explain bundle.<id>.list, we should not call the other
+possibility "list" but "table of contents", for example.
+
+> +* The bundle list describes a directed cycle in the
+> +  `bundle.<id>.requires` links.
+> +
+> +* A bundle includes a filter that does not match expectations.
+
+Does this refer to a mismatch between the filter recorded in a
+bundle and bundle.<id>.filter entry that described the bundle?
+
+> +* The client cannot unbundle the bundles because the negative commit OIDs
+> +  are not in the object database and there are no more
+> +  `bundle.<id>.requires` links to follow.
+
+Is a .requires link mandatory?  In a mode=all table of contents, we
+should not have to have .requires at all.  In the above description
+on how bundle files are downloaded and in what order in Clone and
+Fetch operations, I didn't see any mention of .requires at all, but
+I think there should be.  For example, the timestamp heuristics may
+say the bundle A is the latest.  In a mode=any table of contents,
+shouldn't bundles that contain prerequisite commits of the bundle A
+be pointed by A's .requires fields?
+
+> +4. Allow the client to understand the `bundle.list.forFetch` configuration
+> +   and the `bundle.<id>.timestamp` heuristic. When `git clone` discovers a
+> +   bundle URI with `bundle.list.forFetch=true`, it configures the client
+> +   repository to check that bundle URI during later `git fetch <remote>`
+> +   commands.
+
+So bundle.list.forFetch is, unlike everything else we saw that
+looked like a configuration variable in this document, a
+configuration variable whose value is boolean?
+
+Ah, no.  You mean the "git clone" sees a bundle URI, grabs it and
+sees a table of contents, and in it, finds "bundle.forFetch" is set
+to true?  Then "git fetch <remote>" is configured to also use bundle
+URI?
+
+It is unclear to me (with the information given here so far), why we
+want this.  Isn't this something the responder to "git fetch" can
+advertise over the wire?  If we leave a permanent record in the
+resulting repository to do the bundle URI during 'fetch', wouldn't
+it become more cumbersome to cancel (iow "no, you no longer want to
+talk to me with bundle URI feature") from the server side?
+
+> +5. Allow clients to discover bundle URIs during `git fetch` and configure
+> +   a bundle URI for later fetches if `bundle.list.forFetch=true`.
+> +
+> +6. Implement the "inspect headers" heuristic to reduce data downloads when
+> +   the `bundle.<id>.timestamp` heuristic is not available.
+
+Sounds sensible, even though I do not offhand see why the "peek
+header and stop" is any less useful when the timestamp heurisitc is
+available.
+
+> +A major downside to this mechanism is that the origin server needs to know
+> +_exactly_ what is in those packfiles, and the packfiles need to be available
+> +to the user for some time after the server has responded. This coupling
+> +between the origin and the packfile data is difficult to manage.
+
+Hmph.  I strongly suspect that there are Googlers on the list who
+have been managing such JGit server installations.  Has this
+"coupling" been difficult to manage for you guys in the real world?
+
+> +Further, this implementation is extremely hard to make work with fetches.
+
+IOW, they do this only for clones and not fetches?
+
+> +Related Work: GVFS Cache Servers
+> +--------------------------------
+> ...
+> +During a `git fetch`, a hook requests the prefetch endpoint using the
+> +most-recent timestamp from a previously-downloaded prefetch packfile.
+> +Only the list of packfiles with later timestamps are downloaded.
+
+That sounds quite straight-forward.  Do you envision that their
+incremental snapshot packfile chains can somehow be shared with the
+bundle URI implementations?  Doesn't it make it more cumbersome that
+this proposal uses the bundles as the encapsulation format, rather
+than packfiles?  As you are sending extra pieces of information on
+top of the payload in the form of table-of-contents already, I
+wonder if bundle.<id>.uri should point at a bare packfile (instead
+of a bundle), while multi-valued bundle.<id>.prerequisite give the
+prerequisite objects?  The machinery that is already generating the
+prefetch packfiles already know which packfile has what
+prerequisites in it, so it rather looks simpler if the solution did
+not involve bundles.
+
+Thanks.  Here ends my two-part review on the doc.
