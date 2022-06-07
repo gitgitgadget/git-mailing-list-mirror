@@ -2,161 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53FA3C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 01:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6958AC43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 01:21:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347820AbiFHBUi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jun 2022 21:20:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48784 "EHLO
+        id S229490AbiFHBUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jun 2022 21:20:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443900AbiFHBBC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jun 2022 21:01:02 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FD451EEBA0
-        for <git@vger.kernel.org>; Tue,  7 Jun 2022 13:42:55 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id o37-20020a05600c512500b0039c4ba4c64dso4333994wms.2
-        for <git@vger.kernel.org>; Tue, 07 Jun 2022 13:42:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=GZXWE3ow9ADaKIj0DAE4htB4Ma746HVMJhy/AKVLrMg=;
-        b=YrYSKjhh7hE2nbU0QmFWgb62Q/XfUU9v1aVXY5i1g6H4GlsZ2DlA+WcDrFmWKlb9D/
-         XOUf3J6zN8ZX1MvoGm1WSYA9Qh3aUco4o3r9ndRvh+74WXI/o0kbBxWKT3aahahT1ty6
-         Wbp6/FgW4CGEpD3tTr73uf9B6/IxdrjvZ+CcqnkgDgblQljhFgDuSRaOuXpWPyl8BR7Y
-         yquA93i2qPgXNLnYvDsFDQHB5cBdiyYmPpdqQp7Y6q0MSlUnnFBNNWkJ6i2giym3CCKM
-         jjJKCh9dt5ddRqFH4OFeokLVhePUuHN8/uRTPv3zNAloOQNZ4hny+Z40nFhDes2iACWe
-         0TvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GZXWE3ow9ADaKIj0DAE4htB4Ma746HVMJhy/AKVLrMg=;
-        b=nORoYJdnGEGgIsfstpPIB+q6PNDJjKX8Ybgi0CUGJsaXZROf2WPUJerpeIVQcYO1hn
-         88ORDJbg34eT4PDp8bURRdW+I5PV321Z0joUoPNUw6JOT9/avAgGyy4UdFoP0p3WsPfh
-         n/U5b09dPWOn1Ol5SuLwo9e9KOCU1tGsDD9gdhrlHTj62QIegd8sLoAmpMO8jb8cWCnQ
-         Aj6RNRMu+KY8Jz5W3BXVBpaLSi/czB8DSyP1NSeKdagA1DYZTmnLiQ6CVek2/wWLv/Ol
-         5OCl/6zVbeWHm8Glh5EBEOtvB3BI552D9yNejwf9EWMLsYWbVWq6HwQ954560KmK5v9Z
-         cvlQ==
-X-Gm-Message-State: AOAM5307wHanq7aKMJsYowoUnYr9wk460+85+6lyODAEEe19JTnmYG2x
-        Xu/lSkRFB1z2lMXrgMB/JQAsxHXPjqTCP9+c
-X-Google-Smtp-Source: ABdhPJx8PKhhItJj/KVDkdzfZXVSE7pA0/BxRJWQlMZuKGv9u1AIxWTmEAnILGjADrlzeSVK3dhEbw==
-X-Received: by 2002:a05:600c:4e94:b0:397:62ab:f88f with SMTP id f20-20020a05600c4e9400b0039762abf88fmr59818247wmq.63.1654634573744;
-        Tue, 07 Jun 2022 13:42:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o12-20020a5d58cc000000b0020c6b78eb5asm19257060wrf.68.2022.06.07.13.42.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 13:42:53 -0700 (PDT)
-Message-Id: <5f54766e1032ebf3a331516a6dd696b997bdfdd8.1654634569.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
-References: <pull.1247.git.1654263472.gitgitgadget@gmail.com>
-        <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Jun 2022 20:42:44 +0000
-Subject: [PATCH v2 2/7] branch: add branch_checked_out() helper
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
+        with ESMTP id S1587768AbiFGXxk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jun 2022 19:53:40 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2954324099
+        for <git@vger.kernel.org>; Tue,  7 Jun 2022 15:49:31 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4AF0619A991;
+        Tue,  7 Jun 2022 18:49:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QGHTZ7aSzmx7tAJgyZTMI4W4RkMvWBHwxBbGR8
+        3k97g=; b=NAvyR9P3kwNtjnK30Ds4hcVUukVom5ZiL0HszX+YPGHU5X2arGd0CC
+        O6fsWjx/8mboPCJ0Oysu/G+lYdBfXwzWgWV0qzC0LBbAwG8iRl3isj2oJWqNDW2d
+        lUSiFCtdYGpH4meIEwzQ50P6tURe8GkBs1ezSjcsGmKwG1g75b4kU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 43DF219A990;
+        Tue,  7 Jun 2022 18:49:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E49F619A98F;
+        Tue,  7 Jun 2022 18:49:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
         Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v4 3/5] config: read protected config with
+ `git_protected_config()`
+References: <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com>
+        <pull.1261.v4.git.git.1654635432.gitgitgadget@gmail.com>
+        <94b40907e66b2f6e0874ab49f8b73fdd58eb06d5.1654635432.git.gitgitgadget@gmail.com>
+Date:   Tue, 07 Jun 2022 15:49:26 -0700
+In-Reply-To: <94b40907e66b2f6e0874ab49f8b73fdd58eb06d5.1654635432.git.gitgitgadget@gmail.com>
+        (Glen Choo via GitGitGadget's message of "Tue, 07 Jun 2022 20:57:10
+        +0000")
+Message-ID: <xmqqbkv4t7gp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1604571E-E6B4-11EC-A7CD-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The validate_new_branchname() method contains a check to see if a branch
-is checked out in any non-bare worktree. This is intended to prevent a
-force push that will mess up an existing checkout. This helper is not
-suitable to performing just that check, because the method will die()
-when the branch is checked out instead of returning an error code.
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 3a851b36066..09f48317b02 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -1321,18 +1321,27 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
+>  		data->advertise_sid = git_config_bool(var, value);
+>  	}
+>  
+> -	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
+> -	    current_config_scope() != CONFIG_SCOPE_WORKTREE) {
+> -		if (!strcmp("uploadpack.packobjectshook", var))
+> -			return git_config_string(&data->pack_objects_hook, var, value);
+> -	}
+> -
 
-Extract branch_checked_out() and use it within
-validate_new_branchname(). Another caller will be added in a coming
-change.
+The lossage of this block is because this general git_config()
+callback routine that is used to read from any scope is no longer
+used to pick up the sensitive variable.  Instead, we need to get it
+with a different API, namely, git_protected_config().
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- branch.c | 24 ++++++++++++++++--------
- branch.h |  8 ++++++++
- 2 files changed, 24 insertions(+), 8 deletions(-)
+It is probably is good that in the new code we are not encouraging
+folks to write random comparisons on current_config_scope(), and
+instead uniformly use a git_protected_config().  That may promote
+consistency.
 
-diff --git a/branch.c b/branch.c
-index 2d6569b0c62..2e6419cdfa5 100644
---- a/branch.c
-+++ b/branch.c
-@@ -369,6 +369,19 @@ int validate_branchname(const char *name, struct strbuf *ref)
- 	return ref_exists(ref->buf);
- }
- 
-+int branch_checked_out(const char *refname, char **path)
-+{
-+	struct worktree **worktrees = get_worktrees();
-+	const struct worktree *wt = find_shared_symref(worktrees, "HEAD", refname);
-+	int result = wt && !wt->is_bare;
-+
-+	if (result && path)
-+		*path = xstrdup(wt->path);
-+
-+	free_worktrees(worktrees);
-+	return result;
-+}
-+
- /*
-  * Check if a branch 'name' can be created as a new branch; die otherwise.
-  * 'force' can be used when it is OK for the named branch already exists.
-@@ -377,9 +390,7 @@ int validate_branchname(const char *name, struct strbuf *ref)
-  */
- int validate_new_branchname(const char *name, struct strbuf *ref, int force)
- {
--	struct worktree **worktrees;
--	const struct worktree *wt;
--
-+	char *path;
- 	if (!validate_branchname(name, ref))
- 		return 0;
- 
-@@ -387,13 +398,10 @@ int validate_new_branchname(const char *name, struct strbuf *ref, int force)
- 		die(_("a branch named '%s' already exists"),
- 		    ref->buf + strlen("refs/heads/"));
- 
--	worktrees = get_worktrees();
--	wt = find_shared_symref(worktrees, "HEAD", ref->buf);
--	if (wt && !wt->is_bare)
-+	if (branch_checked_out(ref->buf, &path))
- 		die(_("cannot force update the branch '%s' "
- 		      "checked out at '%s'"),
--		    ref->buf + strlen("refs/heads/"), wt->path);
--	free_worktrees(worktrees);
-+		    ref->buf + strlen("refs/heads/"), path);
- 
- 	return 1;
- }
-diff --git a/branch.h b/branch.h
-index 560b6b96a8f..5ea93d217b1 100644
---- a/branch.h
-+++ b/branch.h
-@@ -101,6 +101,14 @@ void create_branches_recursively(struct repository *r, const char *name,
- 				 const char *tracking_name, int force,
- 				 int reflog, int quiet, enum branch_track track,
- 				 int dry_run);
-+
-+/*
-+ * Returns true if the branch at 'refname' is checked out at any
-+ * non-bare worktree. The path of the worktree is stored in the
-+ * given 'path', if provided.
-+ */
-+int branch_checked_out(const char *refname, char **path);
-+
- /*
-  * Check if 'name' can be a valid name for a branch; die otherwise.
-  * Return 1 if the named branch already exists; return 0 otherwise.
--- 
-gitgitgadget
+An obvious alternative to achieve the same consistency would be to
+introduce a helper, and rewrite (instead of removing) the above part
+like so:
 
+	if (in_protected_scope()) {
+		... parse sensitive variable ...
+	}
+
+We would not need any other change to this file in this patch if we
+go that route, I suspect.
+
+>  	if (parse_object_filter_config(var, value, data) < 0)
+>  		return -1;
+>  
+>  	return parse_hide_refs_config(var, value, "uploadpack");
+>  }
+>  
+> +static int upload_pack_protected_config(const char *var, const char *value, void *cb_data)
+> +{
+> +	struct upload_pack_data *data = cb_data;
+> +
+> +	if (!strcmp("uploadpack.packobjectshook", var))
+> +		return git_config_string(&data->pack_objects_hook, var, value);
+> +	return 0;
+> +}
+> +
+> +static void get_upload_pack_config(struct upload_pack_data *data)
+> +{
+> +	git_config(upload_pack_config, data);
+> +	git_protected_config(upload_pack_protected_config, data);
+> +}
+
+Where we used to just do git_config(upload_pack_config), we now need
+to do a separate git_protected_config().  It feels a bit wasteful to
+iterate over the same configset twice, but it is not like we are
+doing the IO and text file parsing multiple times.  This looks quite
+straight-forward.
