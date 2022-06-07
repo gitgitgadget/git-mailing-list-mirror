@@ -2,94 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AD9BCCA47F
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 00:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C99B5CCA486
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 00:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351965AbiFHAX7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jun 2022 20:23:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53210 "EHLO
+        id S1382691AbiFHA0m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jun 2022 20:26:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1451844AbiFGXNM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jun 2022 19:13:12 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D4418B16C
-        for <git@vger.kernel.org>; Tue,  7 Jun 2022 13:58:38 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id p8so13551746qtx.9
-        for <git@vger.kernel.org>; Tue, 07 Jun 2022 13:58:38 -0700 (PDT)
+        with ESMTP id S1451388AbiFGXMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jun 2022 19:12:37 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9E9B3A15DD
+        for <git@vger.kernel.org>; Tue,  7 Jun 2022 13:57:26 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id q26so15362991wra.1
+        for <git@vger.kernel.org>; Tue, 07 Jun 2022 13:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Vs3O0xOxRuGlgZpyevO9Vog7XjRz4bzW2oCQOIMtFnc=;
-        b=GNFs28ZcEHqlFsCUaix675mxctZjuKMtCOliABwFta3S45zM5HVAnp0KhB9oY9LEOz
-         sHC5zi3IvvlbBGRYX0TNwmOu/1XYH15xAuWFW+7gw9FGpY3OK4cnh0/B5fiw2g8lu6Ib
-         j3Z36pCxGbK9OkWCHIhLCU340QV4NjMFLHH8lK3OKUhKuANiCHOR8+8cewcgxpNZOmHh
-         Kn2fTh6Kt1eOsq3iN4CT8e0RGUu+oN74FmywVj3fE0hoBYlfS2JQrJTTWLbod9vR3Qvv
-         cgemU56ceOw1svUXrGssHEz88jLNntqb7Pc0piBOhLQZIF4tdD4rR5wWdZjor9UEB/RG
-         +Kbg==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4Eexds/wtUWaNlzD4CckNK+1vjkrUR5m5mCaAu4Jc1A=;
+        b=XIILYelvghoJss8Wr7Z+Q7jufK/dtCFoqkS6shIRf+jT/nnAGGWd+Ctf9I2ai6sX7G
+         eQ4EXktpEzk2Ogq3Ie6mO8IQyWG3Vnjzca391uuzlL4xnerE7MwJBwT2WwK96rnG/Dzr
+         D1Dlf0gPV6vwxiZCP28o6lZzY/Wqtn6MiANt26FSfqL6jfU/+ZrmTioAmAN2fVcxf90Z
+         8tlR0bYqb17DeaakRDwymjJhHTVole7qM1qeJL9gxaU2QjjhhO4cwP7S5aQwWFNn39wq
+         uyqBA7u8gEO9x12S5zecI421ClW54JTqDoMK4dy9q9JdPT+1R+NRgcxv1c6QVYQJdm5y
+         gs5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Vs3O0xOxRuGlgZpyevO9Vog7XjRz4bzW2oCQOIMtFnc=;
-        b=raiU02IcaCQPcX/Z4zR9XbaF4cXlLKx/5AEUdD9EF5J3/3Nm7YzI19MOqDFyj5GKtW
-         WyFoGwCr31w3byKEtdh40PN3P1M3Lq1EXrnSLBYmvbIhMJs3i/Mbo8xN4IE4RdnSjSCb
-         79QM6kH8dFCrcfSXwC7MEmFtrDmBtf7HbqneoGIDuUpIvzg6M/MqUfGYkGU72w8NulmP
-         iUCHErfqAbm72ucRfxoOvg8UwRVVnKBNvt5Aak7409PuTIgj9Q/6EA2dZcSg86nsSg5b
-         r6AYEUScyLXjisic5XvoMXTOR+tIrKVNt/w9bmaqeUuM4a33qShkVbCY6kUjcJGmBmaj
-         NnBw==
-X-Gm-Message-State: AOAM531MqfsHt4LWEkcymAmBNJO01R+vdO3EBECACegN7mikEfFkfOs2
-        0vliEN0XGzPEWBBol7Ts98A/jA==
-X-Google-Smtp-Source: ABdhPJwMrFtAAyy2rl9NPLeZXoe92nIqGhftkuv+v+cpm2RU+Iux+a0P/EaOZaIePlgp7fQzNWdaLw==
-X-Received: by 2002:a05:622a:387:b0:304:e67e:815c with SMTP id j7-20020a05622a038700b00304e67e815cmr14724906qtx.337.1654635514409;
-        Tue, 07 Jun 2022 13:58:34 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v10-20020a05620a440a00b0069fc13ce217sm2316887qkp.72.2022.06.07.13.58.34
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4Eexds/wtUWaNlzD4CckNK+1vjkrUR5m5mCaAu4Jc1A=;
+        b=xfUIGceBz4QyVFXz81ICW3zJpOstm97heqqMz8gdkov8P5mFBGkU1f0jnLJq1kzhee
+         4BS1UjWzun92xK/62mtWj5WRml0nOr271tX85CVnB3KdDsmi2m1PIg1gjNngsfNLdfeN
+         Yt7eqxA5Of+mtrdDVulINhluj+QoQMt8xCb6x3SHQDH1QXhHw0z0rCc+6dt7cTVOOlOK
+         UvA+umWt2CQLrln/SQJXQIYqcW+U4TVj2MaHsrpgmHIcDQldgwzacqU/rjlVlq2O6SED
+         FaCt0J8vlUZVh9GAagYcCPtkug9/DtDxR45Gx0g4MQZAF5KSTVQSI9cn6rTI5rjvjjjq
+         vMNg==
+X-Gm-Message-State: AOAM532LSfBnqPnZ2qjcVcnSF4pfH1JiV+eHdwH0X/Mwzn64A1B+bv1E
+        qhW1bT2lDQ6AOt1jNdFpigvsLlQKRi6sG6pZ
+X-Google-Smtp-Source: ABdhPJxgL9x0uShpNQK8CfOircCzgzb9sToZFrNn3xR/gTXSQin9JClLvswVBplS8PGCtyrwFO0FPA==
+X-Received: by 2002:a5d:47a1:0:b0:218:423a:de8f with SMTP id 1-20020a5d47a1000000b00218423ade8fmr11684058wrb.420.1654635439478;
+        Tue, 07 Jun 2022 13:57:19 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z2-20020adff1c2000000b0020c5253d8dcsm18084468wro.40.2022.06.07.13.57.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 13:58:34 -0700 (PDT)
-Date:   Tue, 7 Jun 2022 16:58:33 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Vicent Marti <tanoku@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH v2 0/3] bitmap-format.txt: fix some formatting issues and
- include checksum info
-Message-ID: <Yp+7+QV4HDT3eY53@nand.local>
-References: <pull.1246.git.1654177966.gitgitgadget@gmail.com>
- <pull.1246.v2.git.1654623814.gitgitgadget@gmail.com>
- <xmqqfskgwcou.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Tue, 07 Jun 2022 13:57:18 -0700 (PDT)
+Message-Id: <156817966fa87e0e3b94a1e8468ecfc6683b1946.1654635432.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1261.v4.git.git.1654635432.gitgitgadget@gmail.com>
+References: <pull.1261.v3.git.git.1653685761.gitgitgadget@gmail.com>
+        <pull.1261.v4.git.git.1654635432.gitgitgadget@gmail.com>
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 07 Jun 2022 20:57:11 +0000
+Subject: [PATCH v4 4/5] safe.directory: use git_protected_config()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqfskgwcou.fsf@gitster.g>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>,
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 07, 2022 at 11:28:17AM -0700, Junio C Hamano wrote:
-> Will take a look (and audiences are requested to do so, too).
+From: Glen Choo <chooglen@google.com>
 
-I think this is on a good track. The rendered HTML still has much of its
-content inside of <pre> elements, but that may be an acceptable
-trade-off to maintain readability of the source material.
+Use git_protected_config() to read `safe.directory` instead of
+read_very_early_config(), making it 'protected config only'. As a
+result, `safe.directory` now respects "-c", so update the tests and docs
+accordingly.
 
-If there's a way to make the rendered page more appealing without
-compromising on the readability of the source, I'd be in favor of that.
-But I trust Abhradeep's judgement here, so if there isn't, I'd be happy
-with the series (mostly) as-is.
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ Documentation/config/safe.txt |  6 +++---
+ setup.c                       |  2 +-
+ t/t0033-safe-directory.sh     | 24 ++++++++++--------------
+ 3 files changed, 14 insertions(+), 18 deletions(-)
 
-I left a textual suggestion on the third patch, which I'd like to adopt
-before picking this up (this will also give Abhradeep a chance to
-investigate the formatting improvements on patch 2/3).
+diff --git a/Documentation/config/safe.txt b/Documentation/config/safe.txt
+index ae0e2e3bdb4..2a7d2324250 100644
+--- a/Documentation/config/safe.txt
++++ b/Documentation/config/safe.txt
+@@ -12,9 +12,9 @@ via `git config --add`. To reset the list of safe directories (e.g. to
+ override any such directories specified in the system config), add a
+ `safe.directory` entry with an empty value.
+ +
+-This config setting is only respected when specified in a system or global
+-config, not when it is specified in a repository config, via the command
+-line option `-c safe.directory=<path>`, or in environment variables.
++This config setting is only respected in protected configuration (see
++<<SCOPES>>). This prevents the untrusted repository from tampering with this
++value.
+ +
+ The value of this setting is interpolated, i.e. `~/<path>` expands to a
+ path relative to the home directory and `%(prefix)/<path>` expands to a
+diff --git a/setup.c b/setup.c
+index f818dd858c6..847d47f9195 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1128,7 +1128,7 @@ static int ensure_valid_ownership(const char *path)
+ 	    is_path_owned_by_current_user(path))
+ 		return 1;
+ 
+-	read_very_early_config(safe_directory_cb, &data);
++	git_protected_config(safe_directory_cb, &data);
+ 
+ 	return data.is_safe;
+ }
+diff --git a/t/t0033-safe-directory.sh b/t/t0033-safe-directory.sh
+index 238b25f91a3..5a1cd0d0947 100755
+--- a/t/t0033-safe-directory.sh
++++ b/t/t0033-safe-directory.sh
+@@ -16,24 +16,20 @@ test_expect_success 'safe.directory is not set' '
+ 	expect_rejected_dir
+ '
+ 
+-test_expect_success 'ignoring safe.directory on the command line' '
+-	test_must_fail git -c safe.directory="$(pwd)" status 2>err &&
+-	grep "unsafe repository" err
++test_expect_success 'safe.directory on the command line' '
++	git -c safe.directory="$(pwd)" status
+ '
+ 
+-test_expect_success 'ignoring safe.directory in the environment' '
+-	test_must_fail env GIT_CONFIG_COUNT=1 \
+-		GIT_CONFIG_KEY_0="safe.directory" \
+-		GIT_CONFIG_VALUE_0="$(pwd)" \
+-		git status 2>err &&
+-	grep "unsafe repository" err
++test_expect_success 'safe.directory in the environment' '
++	env GIT_CONFIG_COUNT=1 \
++	    GIT_CONFIG_KEY_0="safe.directory" \
++	    GIT_CONFIG_VALUE_0="$(pwd)" \
++	    git status
+ '
+ 
+-test_expect_success 'ignoring safe.directory in GIT_CONFIG_PARAMETERS' '
+-	test_must_fail env \
+-		GIT_CONFIG_PARAMETERS="${SQ}safe.directory${SQ}=${SQ}$(pwd)${SQ}" \
+-		git status 2>err &&
+-	grep "unsafe repository" err
++test_expect_success 'safe.directory in GIT_CONFIG_PARAMETERS' '
++	env GIT_CONFIG_PARAMETERS="${SQ}safe.directory${SQ}=${SQ}$(pwd)${SQ}" \
++	    git status
+ '
+ 
+ test_expect_success 'ignoring safe.directory in repo config' '
+-- 
+gitgitgadget
 
-In the meantime, it's probably safe to drop Vicent Martí from the CC
-list, since he is no longer working on Git (though I miss him very
-much!).
-
-Thanks,
-Taylor
