@@ -2,78 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4D8EC43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 19:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B540C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 19:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235416AbiFHT1L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 15:27:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53162 "EHLO
+        id S232897AbiFHTdN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 15:33:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235412AbiFHT1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 15:27:09 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A75BD3183
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 12:27:06 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B393D1A17B2;
-        Wed,  8 Jun 2022 15:27:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7bBGY9ZbXMLt0U+q+XfH23756nlpoK7NqrXg47
-        OsBlQ=; b=uyItg8C2wHKhbFfay6EEOAU3YrVknkrXxHa6oK+Tep4+RzC0/QjWgX
-        GXHdEsLf1Hw14mAketqz+Sr6jpAKUUbcP7QNb2dsN6BdrSDq3UjSohuTvGvB78TL
-        60Y2sSwgHfZYCQt8e9IHuw6LgRFGQz+Po1Nmrahgu0TyRZCwDLRcw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AB5601A17B1;
-        Wed,  8 Jun 2022 15:27:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 567A81A17AF;
-        Wed,  8 Jun 2022 15:27:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH 1/6] docs: document bundle URI standard
-References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
-        <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
-        <xmqqsfoh4ery.fsf@gitster.g>
-        <9244644f-2c80-f23d-f054-3f0c961696af@github.com>
-Date:   Wed, 08 Jun 2022 12:27:01 -0700
-In-Reply-To: <9244644f-2c80-f23d-f054-3f0c961696af@github.com> (Derrick
-        Stolee's message of "Wed, 8 Jun 2022 15:20:45 -0400")
-Message-ID: <xmqqo7z3q7lm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232089AbiFHTdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 15:33:12 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 671DA1E73F4
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 12:33:11 -0700 (PDT)
+Received: (qmail 4848 invoked by uid 109); 8 Jun 2022 19:33:10 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jun 2022 19:33:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Date:   Wed, 8 Jun 2022 15:33:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>
+Subject: commit-graph overflow generation chicken and egg
+Message-ID: <YqD5dgalb9EPnz85@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F9198720-E760-11EC-9341-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+I hadn't touched my git.git repository for a while, so I upgraded to the
+most recent version of Git (v2.36.1) and was met with this:
 
->> How does a client tell which one it got?  Do we register mimetype
->> with iana to use for these two types of files, and have the HTTP
->> downloader to use the information?
->
-> My implementation is much dumber than that: it first attempts to
-> parse the file as a bundle (looking for a bundle header) and then
-> attempts to parse it as a config file after that. If neither
-> succeed, then an error is thrown.
+  $ git rev-list --all
+  fatal: commit-graph requires overflow generation data but has none
 
-I think that is probably the best implementation after all.
+Not very friendly, but OK, maybe my commit graph is out of date. Let's
+regenerate it:
 
-We cannot trust what the other side tells us.  "They claimed that
-this is a bundle file and not a table-of-contents, and it does look
-like one, but it may be corrupt or even malicious file that may look
-like a bundle file on surface, so let's carefully examine it" ought
-to be the attitude the receiving side has towards the incoming data.
+  $ git gc
+  fatal: commit-graph requires overflow generation data but has none
+  fatal: failed to run repack
 
-Thanks.
+OK, we can't get far enough in the gc to rebuild the commit graph. Let's
+try doing it manually:
 
+  $ git commit-graph write --reachable
+  fatal: commit-graph requires overflow generation data but has none
+  $ git commit-graph write
+  fatal: commit-graph requires overflow generation data but has none
+
+Yikes. Here's where it happens within the write process:
+
+  $ GIT_PROGRESS_DELAY=0 git commit-graph write
+  Finding commits for commit graph among packed objects: 100% (360229/360229), done.
+  Loading known commits in commit graph: 100% (78366/78366), done.
+  Expanding reachable commits in commit graph: 78366, done.
+  Clearing commit marks in commit graph: 100% (78366/78366), done.
+  Finding extra edges in commit graph: 100% (78366/78366), done.
+  Computing commit graph topological levels: 100% (78366/78366), done.
+  Computing commit graph generation numbers: 100% (78366/78366), done.
+  fatal: commit-graph requires overflow generation data but has none
+
+Now being the enterprising fellow that I am, I was able to get out of it
+like this:
+
+  $ rm -f objects/info/commit-graph
+  $ git gc
+
+But I wonder if this is a foot-gun waiting for some other user. I'm not
+sure how I got into the broken state exactly. The repo was last touched
+in December using a version of Git running 'next'. It worked fine with
+versions of Git prior to 6dbf4b8172 (commit-graph: declare bankruptcy on
+GDAT chunks, 2022-03-02). It's entirely possible that the bad state was
+generated by a version of Git that wasn't ever released, and this isn't
+a problem that normal humans would ever run into. It does feel a bit
+unfriendly that neither gc nor commit-graph could unstick things,
+though. Especially because 6dbf4b8172 says:
+
+  [...]a previous version of Git wrote possibly erroneous data in these
+  chunks with the IDs "GDAT" and "GDOV". By changing the IDs, newer
+  versions of Git will silently ignore those older chunks[...]
+
+Presumably we _are_ ignoring those chunks, but some other part of the
+commit-graph file has a dependency on them (and of course we don't have
+the new GDA2/GDO2 chunks to read in their place). If that's true, then
+the solution may be a more graceful "we can't use this commit graph"
+error return rather than the "fatal:" message seen above.
+
+I have a copy of the broken repo state if anybody would care to look at
+it.
+
+-Peff
