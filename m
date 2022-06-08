@@ -2,128 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5131CCA47B
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 16:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE060C43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 16:07:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245032AbiFHQDr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 12:03:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55082 "EHLO
+        id S245094AbiFHQHB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 12:07:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244799AbiFHQD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 12:03:28 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB5A2506F2
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 09:03:26 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 566D41907A0;
-        Wed,  8 Jun 2022 12:03:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yqVjmGiyFN7K1RnkXjT8S7S/D9CUX0m7oVGg+8
-        5nEH0=; b=kV8Cw2ixvU3V2IWMmkEflHItLDULEOimElNUZlNWQGhAAu5QOIVfV2
-        5ihnWlMstHDu+jYi2uZd0XxKNCMUXchrJHjoluYMMogWvdvf8ERGgtiaCG+BmkDU
-        ki3FWRlf1BLFx3X5yORETkE2i0nA44RMRhTi1+T/5o8UetWdqRIYM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4B62319079F;
-        Wed,  8 Jun 2022 12:03:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A3C9E19079D;
-        Wed,  8 Jun 2022 12:03:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     phillip.wood@dunelm.org.uk, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, johannes.schindelin@gmx.de
-Subject: Re: [PATCH 0/4] rebase: update branches in multi-part topic
-References: <pull.1247.git.1654263472.gitgitgadget@gmail.com>
-        <YppSl4rOvVciLuXE@nand.local>
-        <a63cba6e-d25a-ee6d-57f0-9562b6235d3b@gmail.com>
-        <3bb8baa2-e3e0-5cf1-aace-b0ba3ec6eb77@github.com>
-        <90ccd923-3552-fe88-5d6d-869def7f1aeb@gmail.com>
-        <9354d1d3-c1b7-3baf-215f-30659ad48b22@github.com>
-Date:   Wed, 08 Jun 2022 09:03:20 -0700
-In-Reply-To: <9354d1d3-c1b7-3baf-215f-30659ad48b22@github.com> (Derrick
-        Stolee's message of "Tue, 7 Jun 2022 15:39:37 -0400")
-Message-ID: <xmqqbkv3rvlj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S245098AbiFHQG7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 12:06:59 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 873765DA4E
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 09:06:55 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id s135so3678231pgs.10
+        for <git@vger.kernel.org>; Wed, 08 Jun 2022 09:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JVOzOZ/yuCD/n3SdZNSGWmnYeQjCRY+kXz3nMiydQDE=;
+        b=i8bSaaC/y8IzPQgNdJwpD52mK96Ljv5JeK7Fxu+f8u/o1RWTgyUjFJZWAb07O4kxDS
+         cxlY/Eupban6R0Wqu5yu1S8GGu3l/+U0IiyAdbMiok2qzVGawZW6H8Zk/5V8piVifH3d
+         Psw3V786FV3vx0sA8kEcG6lZu9bT01/QMn6agTGaL6VIUc92FfXZx4Cxn9fGNJAOMRtR
+         e+VCKgw/+/cYvOetQA5j8Q7YfX2baPsiT9XwfL+HjrlyxDbkbrfh9FVCTVF9u/LX40ch
+         ggTwKjVZVAz98HMdj/q1i7+oPaDMQEhjsEbnXYcRF9I4SExlSBwN4fJa81Mo+VrNU92W
+         6soA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JVOzOZ/yuCD/n3SdZNSGWmnYeQjCRY+kXz3nMiydQDE=;
+        b=44th1gdMCOMyyfpV/wuBBQqIdsWra0dqtL1jmT0FHW35BEg98QkY29fi75lsBBouwV
+         fupQgp3fFSuQIDN8Ps633VUNEJZl9xoQ/niHYmmaLkfm6zrHH7lKeinrcVYoc2U78qv5
+         iNpAYoKOm8p8LHhieOmA5yQ4FZZ9r2XElmZbTtJ39+DEZMhRvhhs8Iq9YU5sGSn6Gf6l
+         Z+HtNXaXqkp+pyqnaUjPhDdvwU2lZNTVID2a2sFYJ+dCFHolbR6mrnKJ8d+ox8cV7M8v
+         wfJMhkHlvBB4N7+BdsTJiiP725I69z2jhMB26zepq0Ss5yDj+UgnwHLz+oB+0+ieQOCc
+         BVgg==
+X-Gm-Message-State: AOAM531xrrL1GlKoF8LXATJrg8FmgSmIBqLK23maQAFbNaM3uIJ2kfve
+        KjS6LU5ACMp8KXgxZExhoKQ=
+X-Google-Smtp-Source: ABdhPJxXfn2nLV8eOiH9Q0rsQfX+lYh9gJXnoJ72Cv+WpiDp+Qn6sAgP0ZUpDljyb0GABjHHrChnaQ==
+X-Received: by 2002:a65:404c:0:b0:3c6:4018:ffbf with SMTP id h12-20020a65404c000000b003c64018ffbfmr30884779pgp.408.1654704414847;
+        Wed, 08 Jun 2022 09:06:54 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4061:2d90:e070:30c2:fb1b:2653:5119])
+        by smtp.gmail.com with ESMTPSA id w24-20020a1709027b9800b00163d4c3ffabsm14865358pll.304.2022.06.08.09.06.50
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 08 Jun 2022 09:06:54 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 2/3] bitmap-format.txt: fix some formatting issues
+Date:   Wed,  8 Jun 2022 21:36:26 +0530
+Message-Id: <20220608160626.10332-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <xmqq1qw0uo7l.fsf@gitster.g>
+References: <xmqq1qw0uo7l.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8500C4AA-E744-11EC-9B52-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
 
->> I think the question of whether to update branches that are checked out in
->> another worktree is a question of whether it is less inconvenient to the user
->> to skip the ref update and leave the user to manually update the branch or to
->> update the ref and leave the worktree in a potentially awkward state if the
->> user was half way through building a commit. The answer probably depends on
->> the preferences of the user.
+> True.  Unless we are going to revamp the text in some major way so
+> that we produce "true" HTML, not just the text source enclosed in a
+> <pre></pre> pair, I would think we are better off keeping it not
+> passed to AsciiDoc and leaving it in text format.  After all, modern
+> browsers, which I presume those who want HTML output files would
+> read them with, can display plain text files just fine, don't they?
 
-To some degree, it might be true, but I think the recent thinking is
-that by default any refs being worked on by the user must be kept
-intact.  "switch" does not let you check out a branch that is
-already checked out elsewhere, "fetch" does not let you overwrite
-the branch that is currently checked out without "--update-head-ok",
-etc.
+I am not sure whether that's a good idea or not. As I come from web
+dev background, I know that people get bored if they need to read
+a plain-text long article. SEO optimisation also need some beautiful
+designing of articles so that people can spend more time with visual
+ease.
 
-> I think that their 'git status' will look strange no matter what: their
-> working directory and index could look significantly different from what
-> the branch at HEAD is reporting. For this situation, I would rather continue
-> preventing these ref updates from underneath worktrees.
->  
->> I've been using a script that updates the refs for all the branches being
->> rewritten for a while and have found it preferable to always update the ref
->> rather than have to do it manually. My script also updates the worktree
->> checkout to the new HEAD if there are no uncommitted changes which I have
->> found very convenient. My preference is probably because I tend not to have
->> uncommitted changes lying around in the worktrees whose branches get updated.
->
-> Actually updating the worktree to match seems like an interesting twist, which
-> we would want to consider if we go this route in the future.
+Of course, git doesn't need any SEO optimisation as it is very much
+popular. But readers want some visual satisfaction while reading
+Docs. That's why some people complain about GNU sites (git's site is
+beautiful by the way).
 
-Usually I caution against adding "features" that can complicate the
-end-user experience like this, but in this case, the potential for
-extra conflicts coming from such updates to the working trees may
-not be too bad.
+Obviously, here I am using `people` to refer non git developers who are
+curious about git internals.
 
-It all depends on why the user has these intermediate branches and
-how they are used, but in order to see any conflicts happen after
-rebasing a branch here, before you start that rebase, you need to
-have in different working trees that had these intermediate branches
-checked out and had local modifications on top of them.
-
-I would say that you deserve it if conflicts resulting from such a
-set-up hurts you ;-)  If you are using these intermediate branches
-so that you can work on steps in the middle of the larger whole,
-then the proposed "rebase --update-refs" is not for you.  Having
-local modification in these separate working trees that check out
-the intermediate branches is OK, but once you create a commit on
-such a branch, the commit that is in the larger topic is no longer
-at the tip, so "rebase --update-refs" would not notice it anyway.
-
-Rather, if you have the intermediate branches, you'd probably want
-to work on each of them to make them stable, and rebase them on top
-of each other in an appropriate order.  "rebase --update-refs" that
-runs on the larger topic does not have enough information to rebuild
-it with tips of intermediate branches that are updated elsewhere.
-
-Which means that anybody sane who uses "rebase --update-refs" would
-not modify these intermediate branches outside the context of the
-larger topic, and those who do not follow this rule can keep both
-halves of their history ;-)
-
-FWIW a complementary tool that would work in the other direction, to
-expect the user to have worked on smaller branches and rebuild the
-larger branch that contains them, is also missing from our tool set.
-Those who check out these smaller branches in separate working trees
-would want to use such a tool, not "rebase --update-ref".
-
-Thanks.
+Thanks :)
