@@ -2,382 +2,217 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDA56C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 19:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B00D3C43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 20:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234686AbiFHTq6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 15:46:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58360 "EHLO
+        id S231691AbiFHUIL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 16:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229725AbiFHTq4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 15:46:56 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56B8A3BF8B
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 12:46:54 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id v7so17351801ilo.3
-        for <git@vger.kernel.org>; Wed, 08 Jun 2022 12:46:54 -0700 (PDT)
+        with ESMTP id S232166AbiFHUIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 16:08:09 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B2187CDDA
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 13:08:07 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id y12so20094831ior.7
+        for <git@vger.kernel.org>; Wed, 08 Jun 2022 13:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=SgwD5U6HPKvY4F46TchmNPcR27feaDM87PCAcrw+yq0=;
-        b=YuuNpPIAqpWl50lDh3bskZghz6lYTNqlOqoW46UmqyLva/HdSQ4h3Ls3KQ6kbwjTJ5
-         jumb1Lmr8sUVL6gBBgiuUkxBJy/+g1gbq6UVfd0zhK2P6wNt1wjyB3ZGwh8IhnVwTzB0
-         kGy9ftcgHdDgqxQ+Xow2hIok1349yuKtNSvmGAVKAsz4ODxf2/qw1XqOefsPJ2CSHN85
-         Wzzzyqu9ofjE1RNME2FcAWwvTnlvStCMZ0o0E/AwKKwxLQlksPUI4ukp8uFwQWJg3GMe
-         E2RA2+ZThx34Ei6uaYhpBYgRPBSN7Bax1tRi5DlsEq55pkto4e0a43UUQkgg+wQ/GXTY
-         3VWQ==
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=rlAgE+WmCqhjHihrPhlUZ51JERrk+u9TY2niYF7+4mw=;
+        b=ahzBu+e0vwtBEgjy/XfdlusGPEbzTfMnLuAUxNrUqG8aH7C2yZWR0ntzonolnTC51s
+         +MdXCF/YETkOp9NsSv019CoeSOM7NQgXOPOzF2eMY2eR2IpB9zSWPPX8lWtyxb6wdURr
+         avk7bnpwbU0qebMly1dtUMBVAUYdxGt4/uqEINU2gUZmzngFS9P84meB73OY5m2ht0Wr
+         hnTYPmOAMqU1gaDKMm9UNxFANl+nPSvfV+GsPEulko4EUGnJcHMC4mRPMzztVQf/lx30
+         ib1wZrX/dL35Om65V8NeRhHQLuH9OUBpTDIHXbrGf3lbFzPeZUseqXSNJGd13j+sA0hk
+         0jAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=SgwD5U6HPKvY4F46TchmNPcR27feaDM87PCAcrw+yq0=;
-        b=APvbxLJWZOcCeoGa+aZJt2bckmqV+upPofLK5ItsGf6VF+x56uXjUuUUa+Y89OBVZS
-         Vl7HAvmwmAFFnybKc4XkApdMkw/jb9vNBoXE2PTB2ZYzkJbvmdXEhyq1AAqsrxY4xvWb
-         lBNVxSEzlkG4+aMEJhKuny/xD9gWw2FA12EykgFKmkC6YM7r9+7cvon5GYDI5n0Ttv1f
-         rkkXYjgFRW25EecZPVWdeSbuX8F75GioGJ8ylPB6+HRPSdh4PKoYsbMLpCCzFOecoLtf
-         DtO2Em+GUrHGD4AkhVQJGn5LqfmRAJaLOqaxfwhi5upGY/Gm0TaHQsUe6/DbCYfPDJda
-         sG8A==
-X-Gm-Message-State: AOAM530kTGKFl+3tDfIGC9ES0HkzHSnIpmyinr+5vjL9NaQIRm5Td36i
-        /lw/MR6GJFsVlmBUTCmYBei8
-X-Google-Smtp-Source: ABdhPJwpd9Vsoi2SQa+jMYyiavIOiMe8OSIipUcSXEJWvJNAeuizuvZcTHICPd7ehbtQhoAlzIbC/Q==
-X-Received: by 2002:a92:ca4b:0:b0:2d3:931c:cc76 with SMTP id q11-20020a92ca4b000000b002d3931ccc76mr21830552ilo.210.1654717613541;
-        Wed, 08 Jun 2022 12:46:53 -0700 (PDT)
+        bh=rlAgE+WmCqhjHihrPhlUZ51JERrk+u9TY2niYF7+4mw=;
+        b=u0+0oCYa2+Kq5eprCWKVhs3mCpIXawvmADy961Qe9fxkbdXKjzDkpgjWePhgbZ/Ulp
+         XGlSL4KkL+YP7v15XjWyfrncYuc23La5TJUR+NQ1oSrk8IfSP22iDFeWn/tms9sX9iQP
+         wRcC7fSRJOPj206D2CJu9QF1AGe9TMSeI0II7ga27mD+S7a+65l1J/4tSPaGPjvjD27r
+         qFzUhxiWYSx6dnEFutwgKLF0cTCL3ueJfpEuqcYxPAa0EIf3xlnJGELB6KQo5Y3DpyCZ
+         5bryyJ9Ggs6XxurHmua1Qec1IIqJkMvIZ+Z1oxcMylypTFySM92ECPp2wpf5oczWG89I
+         lWZw==
+X-Gm-Message-State: AOAM533RC/60pO11C47eLUTjKQeAkATZgD5aJhVdrZGiFvGE9RIAjncB
+        NhW+C8vFWfI+DEzU1ViXfmMdhoKYP+A+
+X-Google-Smtp-Source: ABdhPJx05+O6vACIj6oXNhrCzzeO/HVmSdJPPWW9TVNZ093BPkOQyKctg5NJXILlYOgjSYQUAIPSpg==
+X-Received: by 2002:a02:c809:0:b0:331:4d19:d070 with SMTP id p9-20020a02c809000000b003314d19d070mr19633505jao.92.1654718886842;
+        Wed, 08 Jun 2022 13:08:06 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:90ef:16b:eb19:f653? ([2600:1700:e72:80a0:90ef:16b:eb19:f653])
-        by smtp.gmail.com with ESMTPSA id y5-20020a920905000000b002cf28d7ad23sm2073079ilg.51.2022.06.08.12.46.52
+        by smtp.gmail.com with ESMTPSA id g6-20020a056e020d0600b002d3b759dc7fsm9218507ilj.77.2022.06.08.13.08.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jun 2022 12:46:53 -0700 (PDT)
-Message-ID: <48e722dc-f860-f7a6-36d0-b0106087aef4@github.com>
-Date:   Wed, 8 Jun 2022 15:46:50 -0400
+        Wed, 08 Jun 2022 13:08:05 -0700 (PDT)
+Message-ID: <581c7ef2-3de4-eb8a-bfbb-d4bca3522a2d@github.com>
+Date:   Wed, 8 Jun 2022 16:08:03 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 1/6] docs: document bundle URI standard
+Subject: Re: commit-graph overflow generation chicken and egg
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de
-References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
- <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
- <xmqqtu8x1fd4.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <YqD5dgalb9EPnz85@coredump.intra.peff.net>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqtu8x1fd4.fsf@gitster.g>
+In-Reply-To: <YqD5dgalb9EPnz85@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/6/2022 8:33 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 6/8/2022 3:33 PM, Jeff King wrote:
+> I hadn't touched my git.git repository for a while, so I upgraded to the
+> most recent version of Git (v2.36.1) and was met with this:
 > 
->> +Cloning with Bundle URIs
->> +------------------------
->> +
->> +The primary need for bundle URIs is to speed up clones. The Git client
->> +will interact with bundle URIs according to the following flow:
->> +
->> +1. The user specifies a bundle URI with the `--bundle-uri` command-line
->> +   option _or_ the client discovers a bundle list advertised by the
->> +   Git server.
->> +
->> +2. If the downloaded data from a bundle URI is a bundle, then the client
->> +   inspects the bundle headers to check that the negative commit OIDs are
+>   $ git rev-list --all
+>   fatal: commit-graph requires overflow generation data but has none
 > 
-> Although "negative" would be understandable to pros, the commits
-> required to unbundle a bundle file are officially called
-> "prerequisite commits" (cf. "git bundle --help"), so that may be
-> easier to understand by ordinary readers.
-
-Ok. I can work to replace this language throughout.
- 
->> +   present in the client repository. If some are missing, then the client
->> +   delays unbundling until other bundles have been unbundled, making those
->> +   OIDs present. When all required OIDs are present, the client unbundles
->> +   that data using a refspec. The default refspec is
->> +   `+refs/heads/*:refs/bundles/*`, but this can be configured.
+> Not very friendly, but OK, maybe my commit graph is out of date. Let's
+> regenerate it:
 > 
-> The refs/bundles/ appear in the document only here, and it is
-> unclear why we even want it (I am assuming this is against gc while
-> "git clone" is still running) or how we are going to retire it, if
-> ever.  If there are multiple bundle files involved in this "git clone",
-> to anchor objects that are necessary against "gc", don't we need to use
-> refs/bundles/<i>/* or something like that, where <i> is uniquely assigned
-> number locally?
-
-The real reason to keep them in refs/bundles/ is because then those
-refs can be used in the incremental 'git fetch' after downloading the
-bundles (in perpetuity) while not stomping refs/heads or refs/remotes/
-
->> +3. If the file is instead a bundle list, then the client inspects the
->> +   `bundle.list.mode` to see if the list is of the `all` or `any` form.
+>   $ git gc
+>   fatal: commit-graph requires overflow generation data but has none
+>   fatal: failed to run repack
 > 
-> If the downloaded file is not a bundle (e.g. "git bundle list-heads"
-> barfs on it) and it is not parseable with our configuration parser,
-> do we error out, or do we pretend as if that bundle file or the TOC
-> did not exist (if the bundle list with mode=any at the higher level
-> has appropriate alternatives)?
-
-I think the best thing to do would be to fail as gracefully as
-possible here. In particular: give a warning that the remote did not
-give anything helpful, but continue with the normal fetching from the
-remote without help from bundles.
-
->> +   a. If `bundle.list.mode=all`, then the client considers all bundle
->> +      URIs. The list is reduced based on the `bundle.<id>.filter` options
->> +      matching the client repository's partial clone filter.
+> OK, we can't get far enough in the gc to rebuild the commit graph. Let's
+> try doing it manually:
 > 
-> OK, this answers my earlier question nicely.  It probably means that
-> either the presentation order needs a bit of rethinking, or "we
-> group by .filter" needs to be mentioned a lot earlier.
-
-Ok. It may even need to be _implemented_ a lot earlier, looking at my
-current outline of future changes.
-
->> Then, all
->> +      bundle URIs are requested. If the `bundle.<id>.timestamp` heuristic
->> +      is provided, then the bundles are downloaded in reverse-
->> +      chronological order, stopping when a bundle has all required OIDs.
+>   $ git commit-graph write --reachable
+>   fatal: commit-graph requires overflow generation data but has none
+>   $ git commit-graph write
+>   fatal: commit-graph requires overflow generation data but has none
 > 
-> Stop as soon as just one bundle has all the prerequisite objects, or
-> should we keep going until all bundles have their prerequisites
-> satisfied?  I presume it is the latter.
-
-True. We keep going until all have their required OIDs. With a .requires
-chain of "1 requires 2" and "2 requires 3", it is possible that "1"
-has a prerequisite commit that actually exists in "3", but somehow the
-bundle "2" can unbundle in the client's repository.
-
-One could argue that the "1" bundle should have a direct .requires
-relationship on "3" (in addition to "2"), but for simplicity I think
-it is OK to imply "transitive requires".
-
-Using "all" here should make it clearer.
-
->> +      The bundles can then be unbundled in chronological order. The client
->> +      stores the latest timestamp as a heuristic for avoiding future
->> +      downloads if the bundle list does not advertise newer bundles.
+> Yikes. Here's where it happens within the write process:
 > 
-> So we see a list, we start grabbing from new to old.  Newer ones
-> that are based on older ones may have dependencies, so we do not
-> unbndle until we have all the prerequisites for them.  The bundles
-> that satisfy their prerequisites are unbundled---that would give us
-> enough objects to play with.  What happens to the refs recorded in
-> them, though?
-
-Those refs are translated into refs/bundles/. If multiple bundles
-have the same refs/heads/ included, then the newest ones would
-overwite those refs in refs/bundles/.
-
-> Is the timestamp per the serving host, or per the CDN host that
-> serve us bundle files, or...?  I guess it is premature to discuss it
-> here. "git clone" bootstraps from the advertisement made only by a
-> single serving host, so the single newest timestamp among the
-> bundles used from the bundle list is what we store here.  How that
-> timestamp is used is primarily of interest in future fetching, which
-> would be discussed later.
-
-The bundle provider is responsible for making the timestamps make
-sense as an opaque increasing token.
-
->> +Fetching with Bundle URIs
->> +-------------------------
->> +
->> +When the client fetches new data, it can decide to fetch from bundle
->> +servers before fetching from the origin remote. This could be done via a
->> +command-line option, but it is more likely useful to use a config value
->> +such as the one specified during the clone.
->> +
->> +The fetch operation follows the same procedure to download bundles from a
->> +bundle list (although we do _not_ want to use parallel downloads here). We
->> +expect that the process will end when all negative commit OIDs in a thin
->> +bundle are already in the object database.
+>   $ GIT_PROGRESS_DELAY=0 git commit-graph write
+>   Finding commits for commit graph among packed objects: 100% (360229/360229), done.
+>   Loading known commits in commit graph: 100% (78366/78366), done.
+>   Expanding reachable commits in commit graph: 78366, done.
+>   Clearing commit marks in commit graph: 100% (78366/78366), done.
+>   Finding extra edges in commit graph: 100% (78366/78366), done.
+>   Computing commit graph topological levels: 100% (78366/78366), done.
+>   Computing commit graph generation numbers: 100% (78366/78366), done.
+>   fatal: commit-graph requires overflow generation data but has none
 > 
-> I do not see why we do not want to use parallel download, though.
-> If our last bundle download was last month, and they have two newer
-> bundles since then, don't we want to grab both at the same time?
-> Wasn't that the point of recording the newest timestamp when "git
-> clone" grabbed bundles?
-
-In theory, we have also been fetching from the origin, so we might have
-already received all of the objects in that second (or first!) bundle.
-By going in reverse-chronological order, we minimize the amount of data
-downloaded (assuming that is the most expensive part of the operation).
-
-This is something where we have room to experiment. With Ævar's idea of
-downloading only the headers, we could download all headers in parallel
-and halt the download for any bundles where we have all of the ref tips.
-
->> +Error Conditions
->> +----------------
->> +
->> +If the Git client discovers something unexpected while downloading
->> +information according to a bundle URI or the bundle list found at that
->> +location, then Git can ignore that data and continue as if it was not
->> +given a bundle URI. The remote Git server is the ultimate source of truth,
->> +not the bundle URI.
->> +
->> +Here are a few example error conditions:
->> +
->> +* The client fails to connect with a server at the given URI or a connection
->> +  is lost without any chance to recover.
->> +
->> +* The client receives a response other than `200 OK` (such as `404 Not Found`,
->> +  `401 Not Authorized`, or `500 Internal Server Error`). The client should
->> +  use the `credential.helper` to attempt authentication after the first
->> +  `401 Not Authorized` response, but a second such response is a failure.
->> +
->> +* The client receives data that is not parsable as a bundle or table of
->> +  contents.
+> Now being the enterprising fellow that I am, I was able to get out of it
+> like this:
 > 
-> Is it an error if bundle.<id>.list and the contents disagree?
-
-I think this can be flexible. It is not difficult to treat the .list
-value as advisory, so we can ignore disagreements. If we start making
-decisions that hinge on the value of .list, then we can start treating
-it as an error.
-
-Or: maybe the .list value is so "advisory" that it is useless, and I
-should just drop it from the schema.
-
-> It is fine to call the possibility other than "a bundle file" "table
-> of contents", but then let's do so consistently throughout the document.
-> When we explain bundle.<id>.list, we should not call the other
-> possibility "list" but "table of contents", for example.
-
-Sorry, I had intended to find-and-replace all of these instances, but
-missed some that cross line breaks.
-
->> +* The bundle list describes a directed cycle in the
->> +  `bundle.<id>.requires` links.
->> +
->> +* A bundle includes a filter that does not match expectations.
+>   $ rm -f objects/info/commit-graph
+>   $ git gc
 > 
-> Does this refer to a mismatch between the filter recorded in a
-> bundle and bundle.<id>.filter entry that described the bundle?
-
-Yes. I can make that more explicit.
-
->> +* The client cannot unbundle the bundles because the negative commit OIDs
->> +  are not in the object database and there are no more
->> +  `bundle.<id>.requires` links to follow.
+> But I wonder if this is a foot-gun waiting for some other user. I'm not
+> sure how I got into the broken state exactly. The repo was last touched
+> in December using a version of Git running 'next'. It worked fine with
+> versions of Git prior to 6dbf4b8172 (commit-graph: declare bankruptcy on
+> GDAT chunks, 2022-03-02). It's entirely possible that the bad state was
+> generated by a version of Git that wasn't ever released, and this isn't
+> a problem that normal humans would ever run into. It does feel a bit
+> unfriendly that neither gc nor commit-graph could unstick things,
+> though. Especially because 6dbf4b8172 says:
 > 
-> Is a .requires link mandatory?  In a mode=all table of contents, we
-> should not have to have .requires at all.  In the above description
-> on how bundle files are downloaded and in what order in Clone and
-> Fetch operations, I didn't see any mention of .requires at all, but
-> I think there should be.  For example, the timestamp heuristics may
-> say the bundle A is the latest.  In a mode=any table of contents,
-> shouldn't bundles that contain prerequisite commits of the bundle A
-> be pointed by A's .requires fields?
+>   [...]a previous version of Git wrote possibly erroneous data in these
+>   chunks with the IDs "GDAT" and "GDOV". By changing the IDs, newer
+>   versions of Git will silently ignore those older chunks[...]
 
-It could be considered useful for the .timestamp heuristic, or we
-could infer the .requires value as "the next most-recent bundle" in
-that heuristic. (So maybe we remove it from the schema.)
+You've done enough homework to discover exactly what's going on here,
+including talking about the commit that I was going to point out.
 
-With "all" but no heuristic, then we need everything without knowing
-where to "start" and trying to minimize downloads.
-
->> +4. Allow the client to understand the `bundle.list.forFetch` configuration
->> +   and the `bundle.<id>.timestamp` heuristic. When `git clone` discovers a
->> +   bundle URI with `bundle.list.forFetch=true`, it configures the client
->> +   repository to check that bundle URI during later `git fetch <remote>`
->> +   commands.
+> Presumably we _are_ ignoring those chunks, but some other part of the
+> commit-graph file has a dependency on them (and of course we don't have
+> the new GDA2/GDO2 chunks to read in their place). If that's true, then
+> the solution may be a more graceful "we can't use this commit graph"
+> error return rather than the "fatal:" message seen above.
 > 
-> So bundle.list.forFetch is, unlike everything else we saw that
-> looked like a configuration variable in this document, a
-> configuration variable whose value is boolean?
-> 
-> Ah, no.  You mean the "git clone" sees a bundle URI, grabs it and
-> sees a table of contents, and in it, finds "bundle.forFetch" is set
-> to true?  Then "git fetch <remote>" is configured to also use bundle
-> URI?
+> I have a copy of the broken repo state if anybody would care to look at
+> it.
 
-Yes. The bundle provider is advertising "I'm working hard to help you
-with your 'git fetches' after your initial clone."
+I'd love to see the full binary, but for the sake of sharing on the
+list, could you give the following output?
 
-> It is unclear to me (with the information given here so far), why we
-> want this.  Isn't this something the responder to "git fetch" can
-> advertise over the wire?  If we leave a permanent record in the
-> resulting repository to do the bundle URI during 'fetch', wouldn't
-> it become more cumbersome to cancel (iow "no, you no longer want to
-> talk to me with bundle URI feature") from the server side?
+	xxd .git/objects/info/commit-graph | head
 
-I've tried very hard to make the bundle provider as independent from
-the origin Git server as possible (including no relationship at all).
-Even if the origin Git server knows about a bundle provider at a
-given URI, it does not necessarily know if _at this moment_ the
-provider is bundling for fetches.
+or any other command that shows the first few hex bytes along with
+their ASCII equivalents. Here is one that used Git 2.34.0:
 
->> +5. Allow clients to discover bundle URIs during `git fetch` and configure
->> +   a bundle URI for later fetches if `bundle.list.forFetch=true`.
->> +
->> +6. Implement the "inspect headers" heuristic to reduce data downloads when
->> +   the `bundle.<id>.timestamp` heuristic is not available.
-> 
-> Sounds sensible, even though I do not offhand see why the "peek
-> header and stop" is any less useful when the timestamp heurisitc is
-> available.
+00000000: 4347 5048 0101 0500 4f49 4446 0000 0000  CGPH....OIDF....
+00000010: 0000 0050 4f49 444c 0000 0000 0000 0450  ...POIDL.......P
+00000020: 4344 4154 0000 0000 002d cf0c 4744 4154  CDAT.....-..GDAT
+00000030: 0000 0000 0080 3bf8 4544 4745 0000 0000  ......;.EDGE....
+00000040: 0089 6484 0000 0000 0000 0000 0089 6660  ..d...........f`
+00000050: 0000 0246 0000 0498 0000 06c8 0000 0908  ...F............
+00000060: 0000 0b4b 0000 0d58 0000 0f9e 0000 1207  ...K...X........
+00000070: 0000 1423 0000 168e 0000 18d3 0000 1b36  ...#...........6
+00000080: 0000 1d67 0000 1f9b 0000 2219 0000 2456  ...g......"...$V
+00000090: 0000 26a2 0000 2908 0000 2b5c 0000 2d96  ..&...)...+\..-.
 
-Yes, it is still helpful with the heuristic. I can remove that
-phrasing. (This functionality is _required_ to help incremental
-fetches when a heuristic is not provided.)
+and here is one with latest master:
 
->> +A major downside to this mechanism is that the origin server needs to know
->> +_exactly_ what is in those packfiles, and the packfiles need to be available
->> +to the user for some time after the server has responded. This coupling
->> +between the origin and the packfile data is difficult to manage.
-> 
-> Hmph.  I strongly suspect that there are Googlers on the list who
-> have been managing such JGit server installations.  Has this
-> "coupling" been difficult to manage for you guys in the real world?
->
->> +Further, this implementation is extremely hard to make work with fetches.
-> 
-> IOW, they do this only for clones and not fetches?
+00000000: 4347 5048 0101 0500 4f49 4446 0000 0000  CGPH....OIDF....
+00000010: 0000 0050 4f49 444c 0000 0000 0000 0450  ...POIDL.......P
+00000020: 4344 4154 0000 0000 002e 20b0 4744 4132  CDAT...... .GDA2
+00000030: 0000 0000 0081 2090 4544 4745 0000 0000  ...... .EDGE....
+00000040: 008a 5970 0000 0000 0000 0000 008a 5b4c  ..Yp..........[L
+00000050: 0000 024c 0000 04a1 0000 06d6 0000 091a  ...L............
+00000060: 0000 0b60 0000 0d70 0000 0fbb 0000 1229  ...`...p.......)
+00000070: 0000 1448 0000 16b6 0000 1905 0000 1b6c  ...H...........l
+00000080: 0000 1da3 0000 1fd9 0000 225b 0000 249d  .........."[..$.
+00000090: 0000 26f0 0000 2956 0000 2bac 0000 2dea  ..&...)V..+...-.
 
-The last time I spoke with Googlers about this subject, what I heard
-from them was "Yes, this is hard to get right for incremental fetches,
-but the benefit for clones is big enough that we are happy with just
-that." If advancements have come about since then to work with
-incremental fetches, then I'd love to hear about it.
- 
->> +Related Work: GVFS Cache Servers
->> +--------------------------------
->> ...
->> +During a `git fetch`, a hook requests the prefetch endpoint using the
->> +most-recent timestamp from a previously-downloaded prefetch packfile.
->> +Only the list of packfiles with later timestamps are downloaded.
-> 
-> That sounds quite straight-forward.  Do you envision that their
-> incremental snapshot packfile chains can somehow be shared with the
-> bundle URI implementations?  Doesn't it make it more cumbersome that
-> this proposal uses the bundles as the encapsulation format, rather
-> than packfiles?  As you are sending extra pieces of information on
-> top of the payload in the form of table-of-contents already, I
-> wonder if bundle.<id>.uri should point at a bare packfile (instead
-> of a bundle), while multi-valued bundle.<id>.prerequisite give the
-> prerequisite objects?  The machinery that is already generating the
-> prefetch packfiles already know which packfile has what
-> prerequisites in it, so it rather looks simpler if the solution did
-> not involve bundles.
+If you have a GDA2 chunk, then we are somehow incorrectly writing the
+offset there. However, I don't see this happening in the latest code.
 
-The prefetch packfiles could be replaced with bundle URIs, if desired.
+We have this macro in commit.h:
 
-The reason bundles were not needed for the GVFS protocol was that
-all other object data not in those prefetch packfiles is downloaded
-via direct requests (one object per request or a batch of objects
-requested from a list of OIDs) and not from an incremental fetch. The
-VFS for Git clients only talk to the origin server for the ref
-advertisement and talk to the cache servers for the objects necessary
-to satisfy the client's Git command. (Also: the client pushes directly
-to the origin server.)
+#define GENERATION_NUMBER_V2_OFFSET_MAX ((1ULL << 31) - 1)
 
-So in this world, the bundle URIs could be used as a replacement for
-downloading these prefetch packfiles (bundles with filter=blob:none)
-but the bundled refs become useless to the client.
+and this in commit-graph.c:
+
+#define CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW (1ULL << 31)
+
+being used here:
+
+static int write_graph_chunk_generation_data(struct hashfile *f,
+					     void *data)
+{
+	struct write_commit_graph_context *ctx = data;
+	int i, num_generation_data_overflows = 0;
+
+	for (i = 0; i < ctx->commits.nr; i++) {
+		struct commit *c = ctx->commits.list[i];
+		timestamp_t offset;
+		repo_parse_commit(ctx->r, c);
+		offset = commit_graph_data_at(c)->generation - c->date;
+		display_progress(ctx->progress, ++ctx->progress_cnt);
+
+		if (offset > GENERATION_NUMBER_V2_OFFSET_MAX) {
+			offset = CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW | num_generation_data_overflows;
+			num_generation_data_overflows++;
+		}
+
+		hashwrite_be32(f, offset);
+	}
+
+	return 0;
+}
+
+But this hasn't been changed since eb9071912f (commit-graph: anonymize
+data in chunk_write_fn, 2021-02-05) and 90cb1c47c7 (commit-graph: always
+parse before commit_graph_data_at(), 2021-02-01) which were not meaningfully
+different from the first implementation in e8b63005c4 (commit-graph:
+implement generation data chunk, 2021-01-16).
+
+However, the lack of the large offset chunk could be due to the bug fixed by
+75979d9460 (commit-graph: fix ordering bug in generation numbers,
+2022-03-01). Perhaps that was the thing that was missing from your version?
+
+But otherwise, I'm stumped. I'd be very interested to see a repro from a
+fresh repository. That is: what situation do we need to be in to write such
+an offset without including the large offset chunk?
 
 Thanks,
 -Stolee
