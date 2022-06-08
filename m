@@ -2,99 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48DCBC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 15:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5131CCA47B
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 16:03:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244511AbiFHPlF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 11:41:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34594 "EHLO
+        id S245032AbiFHQDr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 12:03:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244495AbiFHPlE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 11:41:04 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040FF4C434
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 08:41:02 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id 129so19255783pgc.2
-        for <git@vger.kernel.org>; Wed, 08 Jun 2022 08:41:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vCDhHunyKMebGCjse5X+sioYXo8GLXaB5Th+JirPEds=;
-        b=W9nHrM4aUqGbLkrOkh3t8ZqmN4/blfBnmTo9DhwNEqGddfHwjMo2rw6G7ZaGfuqMG6
-         vF7mg2Oc7DQiDesOTWVUyZh3lkp5DgmUrc0kp1Hs7U+1/yzozkMq78vdyzze3V6NwB3j
-         Hcgyk/gyT5eGgqQXudcBkfbXrPgtPeyN9ghrBl9VizEzl2zLecAcZuIY5eAGEaUTqmc9
-         e7IlCc71xQGgd3g/5NzH0gpWZMT09cY8/hYp/Yjw+N8KWFQnUJWKAu6wKLzTqith3eXe
-         e8tmwUsBhBd8JZOOP6yztCVEGs7Y0hf5vXz5TObSHPCatw88+yXwCNo0Bwa3/6bGk+/P
-         5aSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vCDhHunyKMebGCjse5X+sioYXo8GLXaB5Th+JirPEds=;
-        b=2xmOL/e0hkNzM0Y34qJatOkUrzZ5Bv8pyZsxf74cfMX4XeQK2x1XWNNm/WJlyzG8gT
-         kU1H6N3Be+8YT4kW5FRisgkjuJZn9YbhYxb0N4ZZOgnheU05Cl1vRIv9P80ip/Z/8C42
-         oIAXk4oD0i1h0QIG7bJK7IgWiGADJu7OEhLtVALwvxgmWPnTc7RzZAHE7k/DuXXHPzJ/
-         whPkfhOg67UgVRHB7wDdX3ZIX27BFBFHCvXrMghYQsl7Mnsp6ybSE+5+CNBxDQBLG/zE
-         wLbHz1Vq1s02NQcSEZ8YTw9agtxUvB4rfdjWX8qvFvpvVyZluo4a7dex6lVhomN5mMvi
-         TwZg==
-X-Gm-Message-State: AOAM532aEGwyrIVgBYmkokc14cnhH8Q1+9PM2pYBkOUKlU37RExDDjFm
-        b0RaDGSAzH8mBCSafjhDDgI=
-X-Google-Smtp-Source: ABdhPJy4AVRvE9X6+QJ0ol/XZX6m02O36SR3rE0UqS2pMZljoZ4pdGn9vIHDg+B6Ao01+3kQ9DytlA==
-X-Received: by 2002:a62:1dc7:0:b0:51b:a56e:35c3 with SMTP id d190-20020a621dc7000000b0051ba56e35c3mr40525673pfd.45.1654702861310;
-        Wed, 08 Jun 2022 08:41:01 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4061:2d90:e070:30c2:fb1b:2653:5119])
-        by smtp.gmail.com with ESMTPSA id d10-20020a170902e14a00b00166d8100b7bsm11126573pla.176.2022.06.08.08.40.57
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 08 Jun 2022 08:41:00 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 2/3] bitmap-format.txt: fix some formatting issues
-Date:   Wed,  8 Jun 2022 21:10:50 +0530
-Message-Id: <20220608154050.10278-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <Yp+6WU+k2OwHDB1b@nand.local>
-References: <Yp+6WU+k2OwHDB1b@nand.local>
+        with ESMTP id S244799AbiFHQD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 12:03:28 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB5A2506F2
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 09:03:26 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 566D41907A0;
+        Wed,  8 Jun 2022 12:03:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yqVjmGiyFN7K1RnkXjT8S7S/D9CUX0m7oVGg+8
+        5nEH0=; b=kV8Cw2ixvU3V2IWMmkEflHItLDULEOimElNUZlNWQGhAAu5QOIVfV2
+        5ihnWlMstHDu+jYi2uZd0XxKNCMUXchrJHjoluYMMogWvdvf8ERGgtiaCG+BmkDU
+        ki3FWRlf1BLFx3X5yORETkE2i0nA44RMRhTi1+T/5o8UetWdqRIYM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4B62319079F;
+        Wed,  8 Jun 2022 12:03:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A3C9E19079D;
+        Wed,  8 Jun 2022 12:03:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     phillip.wood@dunelm.org.uk, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, johannes.schindelin@gmx.de
+Subject: Re: [PATCH 0/4] rebase: update branches in multi-part topic
+References: <pull.1247.git.1654263472.gitgitgadget@gmail.com>
+        <YppSl4rOvVciLuXE@nand.local>
+        <a63cba6e-d25a-ee6d-57f0-9562b6235d3b@gmail.com>
+        <3bb8baa2-e3e0-5cf1-aace-b0ba3ec6eb77@github.com>
+        <90ccd923-3552-fe88-5d6d-869def7f1aeb@gmail.com>
+        <9354d1d3-c1b7-3baf-215f-30659ad48b22@github.com>
+Date:   Wed, 08 Jun 2022 09:03:20 -0700
+In-Reply-To: <9354d1d3-c1b7-3baf-215f-30659ad48b22@github.com> (Derrick
+        Stolee's message of "Tue, 7 Jun 2022 15:39:37 -0400")
+Message-ID: <xmqqbkv3rvlj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8500C4AA-E744-11EC-9B52-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> wrote:
+Derrick Stolee <derrickstolee@github.com> writes:
 
-> Hmm. When I render the HTML for this page and view it in my browser, the
-> removed blank lines makes the contents of the section "2-byte flags
-> (network byte order)" run together, and I think it hurts readability
-> IMHO.
+>> I think the question of whether to update branches that are checked out in
+>> another worktree is a question of whether it is less inconvenient to the user
+>> to skip the ref update and leave the user to manually update the branch or to
+>> update the ref and leave the worktree in a potentially awkward state if the
+>> user was half way through building a commit. The answer probably depends on
+>> the preferences of the user.
 
-Honestly I agree with you. I also felt the same but then I thought it
-is still better than the currently broken page.
+To some degree, it might be true, but I think the recent thinking is
+that by default any refs being worked on by the user must be kept
+intact.  "switch" does not let you check out a branch that is
+already checked out elsewhere, "fetch" does not let you overwrite
+the branch that is currently checked out without "--update-head-ok",
+etc.
 
-> Is there a way to keep those line breaks without significantly
-> reformatting the source of this file?
+> I think that their 'git status' will look strange no matter what: their
+> working directory and index could look significantly different from what
+> the branch at HEAD is reporting. For this situation, I would rather continue
+> preventing these ref updates from underneath worktrees.
+>  
+>> I've been using a script that updates the refs for all the branches being
+>> rewritten for a while and have found it preferable to always update the ref
+>> rather than have to do it manually. My script also updates the worktree
+>> checkout to the new HEAD if there are no uncommitted changes which I have
+>> found very convenient. My preference is probably because I tend not to have
+>> uncommitted changes lying around in the worktrees whose branches get updated.
+>
+> Actually updating the worktree to match seems like an interesting twist, which
+> we would want to consider if we go this route in the future.
 
-I have a limited knowledge on asciidoc. I removed those blank lines
-only because it generates weird html output. I didn't find any other
-way to fix that (with minimum source code changes).
+Usually I caution against adding "features" that can complicate the
+end-user experience like this, but in this case, the potential for
+extra conflicts coming from such updates to the working trees may
+not be too bad.
 
-> This isn't new from your patch, but I wonder if now is a good
-> opportunity to make some light use of the formatting options that
-> ASCIIDoc gives us to make the page read a little bit more easily when
-> rendered as HTML.
+It all depends on why the user has these intermediate branches and
+how they are used, but in order to see any conflicts happen after
+rebasing a branch here, before you start that rebase, you need to
+have in different working trees that had these intermediate branches
+checked out and had local modifications on top of them.
 
-Yeah, quite sensible. I will surely look for better way.
+I would say that you deserve it if conflicts resulting from such a
+set-up hurts you ;-)  If you are using these intermediate branches
+so that you can work on steps in the middle of the larger whole,
+then the proposed "rebase --update-refs" is not for you.  Having
+local modification in these separate working trees that check out
+the intermediate branches is OK, but once you create a commit on
+such a branch, the commit that is in the larger topic is no longer
+at the tip, so "rebase --update-refs" would not notice it anyway.
 
-> I don't want to compromise too much on the readability of the .txt file,
-> though, so if there isn't a good way to strike this balance, then I
-> trust you and think we should leave it as you have modified things here.
+Rather, if you have the intermediate branches, you'd probably want
+to work on each of them to make them stable, and rebase them on top
+of each other in an appropriate order.  "rebase --update-refs" that
+runs on the larger topic does not have enough information to rebuild
+it with tips of intermediate branches that are updated elsewhere.
 
-This is one of the main reason why I removed those blank lines and other
-stuff. It is the minimum change to fix the html doc. But I will look more
-into it.
+Which means that anybody sane who uses "rebase --update-refs" would
+not modify these intermediate branches outside the context of the
+larger topic, and those who do not follow this rule can keep both
+halves of their history ;-)
 
-Thanks :)
+FWIW a complementary tool that would work in the other direction, to
+expect the user to have worked on smaller branches and rebuild the
+larger branch that contains them, is also missing from our tool set.
+Those who check out these smaller branches in separate working trees
+would want to use such a tool, not "rebase --update-ref".
+
+Thanks.
