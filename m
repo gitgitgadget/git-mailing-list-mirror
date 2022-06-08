@@ -2,96 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F29A0C43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 20:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8050AC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 20:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229614AbiFHUSH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 16:18:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35070 "EHLO
+        id S232316AbiFHUgP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 16:36:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbiFHUSF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 16:18:05 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A793289AA
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 13:18:04 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id s26so10234053ioa.3
-        for <git@vger.kernel.org>; Wed, 08 Jun 2022 13:18:04 -0700 (PDT)
+        with ESMTP id S232274AbiFHUgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 16:36:14 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C837928E34
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 13:36:13 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id o6-20020a17090a0a0600b001e2c6566046so24974897pjo.0
+        for <git@vger.kernel.org>; Wed, 08 Jun 2022 13:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=Akm3qXm7Ub0J2V1nJ2rwHqKjFkYwHIRfGCoi7sOni4g=;
-        b=ILAegfLcB6Nr7MmU6vgh37/HZvaAF51/OoPHRWXrZ4//l37mqfaKWAc0NIiBsQrrdL
-         +d634uQOhfasqG7oWwcuu+ewZb4fSnlwMn0CNa2orIUtuJNlRPxC7hC46gilFb2ZDRUS
-         va5eGD00/GjQIratpdGj8BvX6y9lpC/0fQFvEKBTZlFMmZPldzF8bQn49iDWqKsjR2QD
-         4kVGK7+En1p1Sm86a2lR5EfbUac8vtpxZ6uKVWo/X99SKeK27gGbZmFsalTFWrw+aqsc
-         0hMFn9IO4I8GZZsINttWb2Kh977VsB9wVs89j+dby5klHcg5V9e0MHW2ToQkH8iyC9Xl
-         fKgg==
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=KNTM1q9CQmrkcYZal2XpmGrgIA1lTa7tUhqDWgBT0ps=;
+        b=W5HJcAqIOGa6QNvAxVxk9pbAjuNrnYUSXjPYgj+STnQcGbYORZ3oggJAngIVHDPvzU
+         7bWpwl8XeKTLjXs6/yF61AyjYWu0osa+7l3fFg7QEvH6pSkAF6V7gX58el7f0T6MCrV9
+         zF+dVC7dk8S0mvUxRyonNa+271oxwQJ0yg5vf/la1NbnlYLtCQD6RxsMY//pAzQfb3xl
+         KWwIRkMm3oJwt24eIDKeSiutS5DV/WUFffKdk8S9jN7ibrK/ClBLsYFkNzyvW4FyjHO2
+         JMAqeQkqbm0iH4aTtAwCuNc9SlPUn5IurtRwqb4d3POLKfKPb52QduhjmjFA4ysa/MyJ
+         wDGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Akm3qXm7Ub0J2V1nJ2rwHqKjFkYwHIRfGCoi7sOni4g=;
-        b=hGR9RAP4tOvwvBfZ0f1QKuxMKeogOx9IfYSURDv+JzUDWnEUUkWt+YFGS53k6V9wq4
-         bku+c+EP2LNwcuZ798WCyrSnz8yqAnLC5VmpqKcAAm6sBe3LqKQ4R5gG/zWcWZ43AkHP
-         6QqgejGaj1pR/3PyOXas/p1IjSep4mpzupHW9DZKo5JGv/TWQYpdZF8Tw/fJnvbdtXcv
-         jd36AvTVOHL2t0Ynz0JXx0Wr7ivg94oovsXxv+qhdLO/FqON+uIA/BX4jmF2u0FUJiUB
-         n4dhk6RdxddCnSuAX01snajwnfoKeZ+jBKDrKowD7vepueS9Ipfxp5usVoW2nz2gIe2q
-         Ooew==
-X-Gm-Message-State: AOAM533wbODGueNg8eKetjitSUYdPtFjBr2/LKltjeRJMO09c9/hoGwj
-        oGgZElrFHbMuUIDGm3FG/QV2
-X-Google-Smtp-Source: ABdhPJzLj2AiIF5o7BDTremdFj6sUgLB9f8TgInuzZcFcBUHJUpru+bSMSFNliCXryu0eKoFE3+IGA==
-X-Received: by 2002:a05:6638:371e:b0:331:bc34:c3b1 with SMTP id k30-20020a056638371e00b00331bc34c3b1mr7631335jav.68.1654719483782;
-        Wed, 08 Jun 2022 13:18:03 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:90ef:16b:eb19:f653? ([2600:1700:e72:80a0:90ef:16b:eb19:f653])
-        by smtp.gmail.com with ESMTPSA id v3-20020a5d9403000000b0066579afd3cbsm8627012ion.50.2022.06.08.13.18.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jun 2022 13:18:03 -0700 (PDT)
-Message-ID: <42863c70-0cc5-ce64-f8b9-a75cb6e1343c@github.com>
-Date:   Wed, 8 Jun 2022 16:18:01 -0400
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=KNTM1q9CQmrkcYZal2XpmGrgIA1lTa7tUhqDWgBT0ps=;
+        b=Uas1r/z5DBxnST5TC+Z3FYNH26eM/sl9q6YrxWkn2XjwzzPN3nHONAnRSsdDTNleGE
+         /fyt7si6X6R5kZftJZK/rRMbBihzpd5j025aH8r9nsF99vIub90wPscot1cgTWJdBUel
+         iM+cCalOmLEcoH+ZPHl6Zm4cjJwgKkzXk72ExKgvHNsROrNCro1aArptGhR6w1T5PrP+
+         dRTnYkUgqB851dudwq48iRTNFhqkzSMdYoj0dfD5wVxqFvl+YO6JKuK79m31vh9sSVTQ
+         9radD06YDdmkEx8wIvNU+Uislm7MCGNjYQngw69nWQi6GScamxFt5TMpPUm4Y269qsqV
+         7SIg==
+X-Gm-Message-State: AOAM532nuo20Cw+8DZDgK2R2pNaAbDMjirWSwTh41cDdEAoDkeZd3xc/
+        Z7ZxytfRFRqHg6ct1/+Em5RyBdA69zNlZQCwZlR0ihf7ti4=
+X-Google-Smtp-Source: ABdhPJzWUnU0I+ObMcJ3as4ApNWLFmab0UFo3gnsR5xScbt6wrNgvMis3kuhiXpw2czSyBHn793TsECf1SD481DSyp8=
+X-Received: by 2002:a17:902:d409:b0:167:7425:caa8 with SMTP id
+ b9-20020a170902d40900b001677425caa8mr18824518ple.72.1654720573131; Wed, 08
+ Jun 2022 13:36:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: ds/rebase-update-refs (was Re: What's cooking in git.git (Jun 2022,
- #02; Tue, 7))
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <xmqqwndsrm99.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqwndsrm99.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From:   Rodrigo Silva Mendoza <rodrigosilvamendoza3@gmail.com>
+Date:   Wed, 8 Jun 2022 13:36:02 -0700
+Message-ID: <CANWRddN4R6AceeaOyZm1vs8AXBNv3J+cE5MOyrhKVhcqddjUOA@mail.gmail.com>
+Subject: Best way to update `HEAD` in mirrored repos
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/7/2022 9:12 PM, Junio C Hamano wrote:
+Hi all,
 
-> * ds/rebase-update-refs (2022-06-07) 7 commits
->  - rebase: add rebase.updateRefs config option
->  - sequencer: implement 'update-refs' command
->  - rebase: add --update-refs option
->  - sequencer: add update-refs command
->  - sequencer: define array with enum values
->  - branch: add branch_checked_out() helper
->  - log-tree: create for_each_decoration()
-> 
->  "git rebase" learns "--update-refs" to update the refs that point
->  at commits being rewritten so that they point at the corresponding
->  commits in the rewritten history.
-> 
->  source: <3d7d3f656b4e93e8caa0d18d29c318ede956d1d7.1654634569.git.gitgitgadget@gmail.com>
+Given a repo cloned like so:
+`git clone --mirror someRemote`
 
-One patch here generated enough subtleties to justify its own
-topic [1]. In addition, Philip's feedback presented interesting
-motivation to change the direction of this feature.
+And then with its origin updated like so
+`git remote set-url origin someRemote`
 
-[1] https://lore.kernel.org/git/pull.1254.git.1654718942.gitgitgadget@gmail.com
+What would be the best way to update the `HEAD` ref in the clone, if
+some change happens to the remote HEAD? Like say, the default branch
+changing from `main` to `dev` or being renamed from `main` to
+`main_2`.
 
-I recommend ejecting this topic. I'll come back with a new
-version of it (based on [1]) after the 2.37.0 release window.
+What I've got that I think works
+1. Get the ref from the origin that points to `HEAD`. Extract the ref
+from the output.
+2. Manually update the `HEAD` ref with the extracted output prior step
 
-Thanks,
--Stolee
+Like so:
+```
+$ git ls-remote --symref origin HEAD
+ref: refs/heads/good_main_3     HEAD
+0666a519f94b8500ab6f14bdf7c9c2e5ca7d5821        HEAD
+
+$ git symbolic-ref HEAD refs/heads/good_main_3
+```
+
+Does this make sense?
+
+The following are some of the things I've tried - they all fail to
+update the `HEAD` file, or fail for some other reason.
+`git fetch -p`
+`git fetch -p -a`
+`get fetch -p -a -u`
+`git remote set-head origin -a`
+   Fails with "error: Not a valid ref:
+refs/remotes/origin/good_main_3". The ref it fails with is whatever
+the remote HEAD is.
+`git remote update --prune`
+
+And my use case:
+I have a set of git repos cloned/mirrored. They are then indexed for
+search, using the `HEAD` ref. The indexer runs periodically, and
+before indexing it always runs `get fetch -p` to update repos. For
+each repo, to get the latest commit to index, I use the libgit2
+equivalent of `git rev-parse HEAD^0`. Right now, previously cloned
+repos whose HEAD is updated after the initial clone will fail at this
+step, which causes them to not get indexed. Here's an example run, all
+for the same repo `x`.
+
+1. `git clone & set origin for repo x` (indexer first clones repo if
+it doesn't exist)
+2. `git rev-parse HEAD^0` - successfully outputs some commit sha
+3. Github default branch is renamed from `main` to `main_3`
+4. `git fetch -p` - indexer runs this to update
+5. `git rev-parse HEAD^0` - now outputs "fatal: ambiguous argument
+'HEAD^0': unknown revision or path not in the working tree."
+
+Thanks for your time,
+
+Rodrigo
