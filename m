@@ -2,72 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADF58C43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 23:14:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D7EDC43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 23:17:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231311AbiFHXOb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 19:14:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55812 "EHLO
+        id S230391AbiFHXRl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 19:17:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231176AbiFHXO2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 19:14:28 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E67D537BC7
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 16:14:24 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DACA1410FE;
-        Wed,  8 Jun 2022 19:14:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=M8R+AzB9Yb6FCH0oISxfVsR0owHbLuUPk529lR
-        HELs4=; b=PmYIrQxJ+oNB/OE/PuE6ifojvgNlKoFiq3yvJNEkx14yWChL9NYyQo
-        m8bxdRRmHnK2SoCRVvQFo0HKbX86OgnCMZM9oOwaKE/G03Z9YmEuzIwKVi+nV6df
-        8ygggia92/8hQY/FAC0nRo0EJppuZ9NEJ5yZP2AScenI9fjDD7kUI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 659E81410FD;
-        Wed,  8 Jun 2022 19:14:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF6131410FC;
-        Wed,  8 Jun 2022 19:14:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci(github): bring back the 'print test failures' step
-References: <pull.1252.git.1654684998599.gitgitgadget@gmail.com>
-Date:   Wed, 08 Jun 2022 16:14:22 -0700
-In-Reply-To: <pull.1252.git.1654684998599.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Wed, 08 Jun 2022 10:43:18
-        +0000")
-Message-ID: <xmqqtu8uoii9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229690AbiFHXRl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 19:17:41 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0221631347
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 16:17:39 -0700 (PDT)
+Received: (qmail 6107 invoked by uid 109); 8 Jun 2022 23:17:39 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jun 2022 23:17:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Date:   Wed, 8 Jun 2022 19:17:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org
+Subject: Re: commit-graph overflow generation chicken and egg
+Message-ID: <YqEuE2iAmMVLlUSu@coredump.intra.peff.net>
+References: <YqD5dgalb9EPnz85@coredump.intra.peff.net>
+ <581c7ef2-3de4-eb8a-bfbb-d4bca3522a2d@github.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BC10F028-E780-11EC-AFCA-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <581c7ef2-3de4-eb8a-bfbb-d4bca3522a2d@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Jun 08, 2022 at 04:08:03PM -0400, Derrick Stolee wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Git now shows better information in the GitHub workflow runs when a test
-> case failed. However, when a test case was implemented incorrectly and
-> therefore does not even run, nothing is shown.
->
-> Let's bring back the step that prints the full logs of the failed tests,
-> and to improve the user experience, print out an informational message
-> for readers so that they do not have to know/remember where to see the
-> full logs.
+> I'd love to see the full binary, but for the sake of sharing on the
+> list, could you give the following output?
+> 
+> 	xxd .git/objects/info/commit-graph | head
+> 
+> or any other command that shows the first few hex bytes along with
+> their ASCII equivalents. Here is one that used Git 2.34.0:
+> [...]
 
-Makes quite a lot of sense.  Not all test gotchas are caught by
-test-lint locally, and something like this would still be needed.
+Interesting. My earlier email was a bit misleading. I do in fact have a
+GDA2 chunk. And looking at the timestamp on the commit-graph file, it's
+from May 24th. I hadn't been keeping the repo up to date regularly, but
+I did occasionally pull and rebuild. So I think it was a much more
+recent version of Git that built the problematic file, though it's
+possible it was carrying forward bad data.
 
-Will queue.
+So 6dbf4b8172ef may be a bit of a red herring, if the file has a GDA2
+section that was simply ignored before that commit.
+
+Looking at my reflog, my best guess for the version of Git that produced
+the file is e46751e96fa.
+
+> However, the lack of the large offset chunk could be due to the bug fixed by
+> 75979d9460 (commit-graph: fix ordering bug in generation numbers,
+> 2022-03-01). Perhaps that was the thing that was missing from your version?
+
+So I _think_ I would have had that, though there's a good chance that an
+older version of the commit-graph file was written using a version of
+Git without it.
+
+> But otherwise, I'm stumped. I'd be very interested to see a repro from a
+> fresh repository. That is: what situation do we need to be in to write such
+> an offset without including the large offset chunk?
+
+Not exactly a fresh reproduction, but you can grab my broken file from:
+
+  https://peff.net/tmp/broken-commit-graph
+
+Dropping it into a fresh clone of git.git shows the problem.
+
+I tried a few obvious from-scratch reproductions like building a file
+with 75979d9460^ (so with the generation number bug), and then jumping
+forward to e46751e96fa (so bug fixed, but now we write GDA2), but
+couldn't get it to trigger.
+
+It may not be worth spending too much time on, if this is a weird
+one-off caused by a mix of buggy unreleased versions of Git. If real
+users aren't seeing it, and we know the nuclear option is "rm
+commit-graph", then that may be enough.
+
+-Peff
