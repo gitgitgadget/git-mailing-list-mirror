@@ -2,139 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AFE5C43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 20:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F29A0C43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 20:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232839AbiFHUJW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 16:09:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48624 "EHLO
+        id S229614AbiFHUSH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 16:18:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232166AbiFHUJM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 16:09:12 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 288ADDE8
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 13:09:11 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id p10so29721000wrg.12
-        for <git@vger.kernel.org>; Wed, 08 Jun 2022 13:09:11 -0700 (PDT)
+        with ESMTP id S229481AbiFHUSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 16:18:05 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A793289AA
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 13:18:04 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id s26so10234053ioa.3
+        for <git@vger.kernel.org>; Wed, 08 Jun 2022 13:18:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=p7+AIWYTu3atPQftovOCI7nQNMiowZwBtLWmOsZeL0o=;
-        b=Ly1q1K8mEBiEDCP5WgRVkOVWiDWDYuk5YqNaT0Kyiiy3qPa1AjQIgpURHx5w2FN5o4
-         N0yY7TU4nOw5xflni/5lW6LNCujvR4+H9ayywWXPZBWMiM8uUl33uAzXlI2Caai5i1vT
-         nNkFM2JD9KaVtNfqI+SkCN0B0qcccLbBCuM/jj0D/NM2AwFJ+UtRlj1j7q+CRWcg1ZHf
-         xYhEL3R0Htm+2O1u1YOiibRuk0jOPsbto/qZ9ZsrAW6kaYvwXx3HfrnxeNH18Ld9dm2k
-         QccKLVh5wnuG80/03ZtE+PQMBKvaVWeHSXLW9klbRhJAa2lkYGkToocqI1pUgpOKj3at
-         /EzA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=Akm3qXm7Ub0J2V1nJ2rwHqKjFkYwHIRfGCoi7sOni4g=;
+        b=ILAegfLcB6Nr7MmU6vgh37/HZvaAF51/OoPHRWXrZ4//l37mqfaKWAc0NIiBsQrrdL
+         +d634uQOhfasqG7oWwcuu+ewZb4fSnlwMn0CNa2orIUtuJNlRPxC7hC46gilFb2ZDRUS
+         va5eGD00/GjQIratpdGj8BvX6y9lpC/0fQFvEKBTZlFMmZPldzF8bQn49iDWqKsjR2QD
+         4kVGK7+En1p1Sm86a2lR5EfbUac8vtpxZ6uKVWo/X99SKeK27gGbZmFsalTFWrw+aqsc
+         0hMFn9IO4I8GZZsINttWb2Kh977VsB9wVs89j+dby5klHcg5V9e0MHW2ToQkH8iyC9Xl
+         fKgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p7+AIWYTu3atPQftovOCI7nQNMiowZwBtLWmOsZeL0o=;
-        b=pP4+Z1zqAgJl2CPRF0MDv8mCSTorqZANaomFjmvH2xQsLgCDuJ2XcFHKw2aZNWCR1A
-         +moz+JNQyj20yjOyrXGq8cDs8Jlx+XWBpHyI6wHHkprcsTUFvroo8wzOC/8z8ZOVbArI
-         N7+iruzQ54vRNVWzgIZbDNHGHhFyXIxu4vYZQUkH8Khl9hDaCFNVqi4FpZjKXpwzmdkQ
-         VD5K2tHZn7Ki2pLcXQIjNw5q5lp7gKmdFuLoCRQZ6DqAYKrfHa1+QkEsMz8nhTzrc6Wt
-         P2IxA44GsVtvlIZuTO2axLRJnHPaqyyEuiICRtMAQld4oCz7Y3RdUXfqAOoDE0DnCMRn
-         NPIA==
-X-Gm-Message-State: AOAM533rl000N6XAJle0SQlFtd4U1vXMqLycB/IHdU9eUuc+N+mzNp+S
-        cYOzjAsM+vAzFj6e+0CYZPzw3k3TksFaRSSk
-X-Google-Smtp-Source: ABdhPJxUL/0JqY2hyHbIJDq7wc0pzqziTvO5aDtazeDM2eRFJ/tcPkTea4zbhkdXKAzZ/Q3fZFVbzw==
-X-Received: by 2002:adf:d0c3:0:b0:218:4f53:5823 with SMTP id z3-20020adfd0c3000000b002184f535823mr10804488wrh.132.1654718949320;
-        Wed, 08 Jun 2022 13:09:09 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bg30-20020a05600c3c9e00b0039c5497deccsm371408wmb.1.2022.06.08.13.09.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 13:09:08 -0700 (PDT)
-Message-Id: <af645b43032e8b138da3aae1732047208b3b2890.1654718942.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
-References: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Jun 2022 20:09:02 +0000
-Subject: [PATCH 4/4] branch: use branch_checked_out() when deleting refs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Akm3qXm7Ub0J2V1nJ2rwHqKjFkYwHIRfGCoi7sOni4g=;
+        b=hGR9RAP4tOvwvBfZ0f1QKuxMKeogOx9IfYSURDv+JzUDWnEUUkWt+YFGS53k6V9wq4
+         bku+c+EP2LNwcuZ798WCyrSnz8yqAnLC5VmpqKcAAm6sBe3LqKQ4R5gG/zWcWZ43AkHP
+         6QqgejGaj1pR/3PyOXas/p1IjSep4mpzupHW9DZKo5JGv/TWQYpdZF8Tw/fJnvbdtXcv
+         jd36AvTVOHL2t0Ynz0JXx0Wr7ivg94oovsXxv+qhdLO/FqON+uIA/BX4jmF2u0FUJiUB
+         n4dhk6RdxddCnSuAX01snajwnfoKeZ+jBKDrKowD7vepueS9Ipfxp5usVoW2nz2gIe2q
+         Ooew==
+X-Gm-Message-State: AOAM533wbODGueNg8eKetjitSUYdPtFjBr2/LKltjeRJMO09c9/hoGwj
+        oGgZElrFHbMuUIDGm3FG/QV2
+X-Google-Smtp-Source: ABdhPJzLj2AiIF5o7BDTremdFj6sUgLB9f8TgInuzZcFcBUHJUpru+bSMSFNliCXryu0eKoFE3+IGA==
+X-Received: by 2002:a05:6638:371e:b0:331:bc34:c3b1 with SMTP id k30-20020a056638371e00b00331bc34c3b1mr7631335jav.68.1654719483782;
+        Wed, 08 Jun 2022 13:18:03 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:90ef:16b:eb19:f653? ([2600:1700:e72:80a0:90ef:16b:eb19:f653])
+        by smtp.gmail.com with ESMTPSA id v3-20020a5d9403000000b0066579afd3cbsm8627012ion.50.2022.06.08.13.18.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jun 2022 13:18:03 -0700 (PDT)
+Message-ID: <42863c70-0cc5-ce64-f8b9-a75cb6e1343c@github.com>
+Date:   Wed, 8 Jun 2022 16:18:01 -0400
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: ds/rebase-update-refs (was Re: What's cooking in git.git (Jun 2022,
+ #02; Tue, 7))
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <xmqqwndsrm99.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqwndsrm99.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+On 6/7/2022 9:12 PM, Junio C Hamano wrote:
 
-This is the last current use of find_shared_symref() that can easily be
-replaced by branch_checked_out(). The benefit of this switch is that the
-code is a bit simpler, but also it is faster on repeated calls.
+> * ds/rebase-update-refs (2022-06-07) 7 commits
+>  - rebase: add rebase.updateRefs config option
+>  - sequencer: implement 'update-refs' command
+>  - rebase: add --update-refs option
+>  - sequencer: add update-refs command
+>  - sequencer: define array with enum values
+>  - branch: add branch_checked_out() helper
+>  - log-tree: create for_each_decoration()
+> 
+>  "git rebase" learns "--update-refs" to update the refs that point
+>  at commits being rewritten so that they point at the corresponding
+>  commits in the rewritten history.
+> 
+>  source: <3d7d3f656b4e93e8caa0d18d29c318ede956d1d7.1654634569.git.gitgitgadget@gmail.com>
 
-The remaining uses of find_shared_symref() are non-trivial to remove, so
-we probably should not continue in that direction:
+One patch here generated enough subtleties to justify its own
+topic [1]. In addition, Philip's feedback presented interesting
+motivation to change the direction of this feature.
 
-* builtin/notes.c uses find_shared_symref() with "NOTES_MERGE_REF"
-  instead of "HEAD", so it doesn't have an immediate analogue with
-  branch_checked_out(). Perhaps we should consider extending it to
-  include that symref in addition to HEAD, BISECT_HEAD, and
-  REBASE_HEAD.
+[1] https://lore.kernel.org/git/pull.1254.git.1654718942.gitgitgadget@gmail.com
 
-* receive-pack.c checks to see if a worktree has a checkout for the ref
-  that is being updated. The tricky part is that it can actually decide
-  to update the worktree directly instead of just skipping the update.
-  This all depends on the receive.denyCurrentBranch config option. The
-  implementation currenty cares about receiving the worktree in the
-  result, so the current branch_checked_out() prototype is insufficient
-  currently. This is something to investigate later, though, since a
-  large number of refs could be updated at the same time and using the
-  strmap implementation of branch_checked_out() could be beneficial.
+I recommend ejecting this topic. I'll come back with a new
+version of it (based on [1]) after the 2.37.0 release window.
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- builtin/branch.c          | 8 ++++----
- t/t2407-worktree-heads.sh | 5 ++++-
- 2 files changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 5d00d0b8d32..8e11e433840 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -253,12 +253,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		name = mkpathdup(fmt, bname.buf);
- 
- 		if (kinds == FILTER_REFS_BRANCHES) {
--			const struct worktree *wt =
--				find_shared_symref(worktrees, "HEAD", name);
--			if (wt) {
-+			char *path;
-+			if (branch_checked_out(name, &path)) {
- 				error(_("Cannot delete branch '%s' "
- 					"checked out at '%s'"),
--				      bname.buf, wt->path);
-+				      bname.buf, path);
-+				free(path);
- 				ret = 1;
- 				continue;
- 			}
-diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
-index f3f8b0b2b79..6dcc0d39a2d 100755
---- a/t/t2407-worktree-heads.sh
-+++ b/t/t2407-worktree-heads.sh
-@@ -26,7 +26,10 @@ test_expect_success 'refuse to overwrite: checked out in worktree' '
- 	for i in 1 2 3 4
- 	do
- 		test_must_fail git branch -f wt-$i HEAD 2>err
--		grep "cannot force update the branch" err || return 1
-+		grep "cannot force update the branch" err &&
-+
-+		test_must_fail git branch -D wt-$i 2>err
-+		grep "Cannot delete branch" err || return 1
- 	done
- '
- 
--- 
-gitgitgadget
+Thanks,
+-Stolee
