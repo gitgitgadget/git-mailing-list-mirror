@@ -2,103 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D65DC43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 22:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0989C43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 22:27:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231620AbiFHWDn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 18:03:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51378 "EHLO
+        id S232597AbiFHW1P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 18:27:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiFHWDk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 18:03:40 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FD1ABE156
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 15:03:38 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A9B612FCE9;
-        Wed,  8 Jun 2022 18:03:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GAEbkoOlSvME9UZQYLkJB7YlWi/cqSQ5CfsMGs
-        VcvrA=; b=U+5c05AO3AOeOgzkYZ1fRapO/d7fEvO5vBRpV2M1/JSriXJW/5ceeH
-        YziY9czxcHq1KETb+PVPzrDuuCH5RfVeHtg+dGrBD1qzTBXxs5VT42ukQo2wU2uS
-        3FyfL7eqg3JnA/lnQEUBDyI15JU4MsyzF2KgtvGtcZv7ppwsr9rtE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E3A112FCE8;
-        Wed,  8 Jun 2022 18:03:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S229759AbiFHW1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 18:27:14 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D5C140AB
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 15:27:12 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 690B812FCE5;
-        Wed,  8 Jun 2022 18:03:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 2/4] branch: check for bisects and rebases
-References: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
-        <18bad9b0c496fc0ceab1e567aee83f2160ae5d75.1654718942.git.gitgitgadget@gmail.com>
-Date:   Wed, 08 Jun 2022 15:03:35 -0700
-In-Reply-To: <18bad9b0c496fc0ceab1e567aee83f2160ae5d75.1654718942.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Wed, 08 Jun 2022
-        20:09:00 +0000")
-Message-ID: <xmqqsfoeq0co.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 952755A26C;
+        Wed,  8 Jun 2022 22:27:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1654727231;
+        bh=xOViX7froc6Dg+unBozvaKJSs1sTjxr5z/2JTScb1nM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=S5WWw3TxEGhX/pJsCRuCYtj5uk+18m3oM+6W24N/23i8rw+aRr8Qq/cXJkgK4esMh
+         gIk2V30sj6emI4JtHylt7lQAKhHY12MSItyQMkMJkMf/4mlVKjEgcuw+5n4u1L2gfk
+         i55UVdk2PhvkUAdqQi+YieDFZgU3b2lCv4hSswa5N6ADWbv5cxLP9okjU6N1Xo4039
+         8tC7PZl7AR7oqxnxy0I6FWnKjeWTttPo4hiRRxKDhOkpcD14GqQLEYXQaz7jl+Jddx
+         t8FsaSB/YvAMaIfuAqyT6egNcZfSxnbjahla2ClCuO8vhwmxWpBWb/qYyc8fBsCl2c
+         LeOURH2rWJD8RVmuzFsk0sF4mxKQYm8GaT+kfdkbgqSI1ezb6fD2gJ0liFEt5Sznbl
+         IJTw/QHqyu0tPSvepp9srYHp64KcaifHY3wF0UTpfLc4bnLwRDhf9PdznPTv8ngEb4
+         xxJznLyuHA1pTOLccQilcSwqcAkTaD4Z5IJwcRNz7aGn7nkv4yi
+Date:   Wed, 8 Jun 2022 22:27:09 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Git apply fails on case-only rename on case-insensitive
+ filesystem
+Message-ID: <YqEiPf/JR/MEc3C/@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
+References: <CAPMMpojwV+f=z9sgc_GaUOTFBCUVdbrGW8WjatWWmC3WTcsoXw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D9003F2C-E776-11EC-AE65-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="1NidnHMId5GvKQkc"
+Content-Disposition: inline
+In-Reply-To: <CAPMMpojwV+f=z9sgc_GaUOTFBCUVdbrGW8WjatWWmC3WTcsoXw@mail.gmail.com>
+User-Agent: Mutt/2.2.4 (2022-04-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
-> index dd905dc1a5c..12faca7f655 100755
-> --- a/t/t2407-worktree-heads.sh
-> +++ b/t/t2407-worktree-heads.sh
-> @@ -21,4 +21,33 @@ test_expect_success 'refuse to overwrite: checked out in worktree' '
->  	done
->  '
->  
-> +test_expect_success 'refuse to overwrite: worktree in bisect' '
-> +	test_when_finished test_might_fail git -C wt-4 bisect reset &&
-> +
-> +	(
-> +		git -C wt-4 bisect start &&
-> +		git -C wt-4 bisect bad HEAD &&
-> +		git -C wt-4 bisect good HEAD~3
-> +	) &&
-> +
-> +	test_must_fail git branch -f wt-4 HEAD 2>err &&
-> +	grep "cannot force update the branch '\''wt-4'\'' checked out at" err
-> +'
-> +
-> +. "$TEST_DIRECTORY"/lib-rebase.sh
-> +
-> +test_expect_success 'refuse to overwrite: worktree in rebase' '
-> +	test_when_finished test_might_fail git -C wt-4 rebase --abort &&
-> +
-> +	(
-> +		set_fake_editor &&
-> +		FAKE_LINES="edit 1 2 3" \
-> +			git -C wt-4 rebase -i HEAD~3 >rebase &&
-> +		git -C wt-4 status
-> +	) &&
-> +
-> +	test_must_fail git branch -f wt-4 HEAD 2>err &&
-> +	grep "cannot force update the branch '\''wt-4'\'' checked out at" err
-> +'
-> +
->  test_done
+--1NidnHMId5GvKQkc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Nice to see that each additional feature corresponds to each
-additional test.
+On 2022-06-08 at 13:07:05, Tao Klerks wrote:
+> Hi folks,
+>=20
+> I just found out that "git apply" has a faulty existence check on
+> case-insensitive filesystems (or, at least, windows?).
+>=20
+> Simplest repro I could come up with:
+>=20
+> git init renamefun
+> cd renamefun
+> echo "Test" > file1
+> git add .
+> git commit -m "first commit"
+> git mv file1 File1
+> git commit -m "second commit"
+> git checkout master~1
+> git diff master~1..master | git apply
+>=20
+> -> error:
+> error: File1: already exists in working directory
 
-Thanks.
+Your problem here is that the file does already exist.  To Windows
+"file1" and "File1" are the same file.  Git wants to create the new
+file before deleting the old one, but it already exists.
+
+> (on linux, the same sequence of commands completes correctly)
+>=20
+> I was able to work around this for my purposes by avoiding rename
+> detection on the diff, and only passing the "Add" (and "Modify")
+> operations through to the "apply", after having separately/manually
+> handled the deletions.
+>=20
+> Is this a known issue that someone might be working on, or worth
+> digging into / trying to fix?
+
+As I explained to someone else just today, the rules for case-folding on
+Windows differ based on the version of the tool that was used to format
+the file system and cannot be inspected without reading the raw file
+system.  (This is also true of macOS.)  Thus, we cannot know ahead of
+time whether two files differ only in case.
+
+The way we could determine this on Unix would be to stat both files and
+compare device and inode data when we get EEXIST, but I don't think our
+Windows stat emulation supports that.  Having said that, for
+case-insensitive macOS, I think the rename detection could be fixed here
+using that technique.  I don't think anyone's working on such a thing at
+the moment, though.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--1NidnHMId5GvKQkc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYqEiPQAKCRB8DEliiIei
+gQSOAQDoIJyyyhhb3TvEXltl/vyXyT1bJkh2GYddJWCwr/S5bwEA/rB+rlkMPX/C
+fTUGkSYShMWRSYfj1zpkK3H1twTaSAk=
+=e/nt
+-----END PGP SIGNATURE-----
+
+--1NidnHMId5GvKQkc--
