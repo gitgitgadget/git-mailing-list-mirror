@@ -2,66 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16A9FC43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 23:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C67BC43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 23:55:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbiFHXgm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 19:36:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51396 "EHLO
+        id S233852AbiFHXxh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 19:53:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229883AbiFHXgl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 19:36:41 -0400
+        with ESMTP id S231240AbiFHXxf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 19:53:35 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20C46149ABE
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 16:36:40 -0700 (PDT)
-Received: (qmail 6261 invoked by uid 109); 8 Jun 2022 23:36:39 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A5A839E487
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 16:55:26 -0700 (PDT)
+Received: (qmail 6375 invoked by uid 109); 8 Jun 2022 23:55:25 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jun 2022 23:36:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jun 2022 23:55:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Date:   Wed, 8 Jun 2022 19:36:39 -0400
+Date:   Wed, 8 Jun 2022 19:55:25 -0400
 From:   Jeff King <peff@peff.net>
-To:     Tassilo Horn <tsdh@gnu.org>
-Cc:     Tao Klerks <tao@klerks.biz>, git@vger.kernel.org
-Subject: Re: [BUG?] Major performance issue with some commands on our repo's
- master branch
-Message-ID: <YqEyh5opAaJxph2+@coredump.intra.peff.net>
-References: <87h750q1b9.fsf@gnu.org>
- <CAPMMpohzqKo-+q-tOcXymmzGxuOY-mf2NPRviHURm8-+3MPjZg@mail.gmail.com>
- <87y1yb2xc8.fsf@gnu.org>
+To:     "R. Diez" <rdiez1999@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: How to watch files in a Git repository
+Message-ID: <YqE27RU45kjNRwxf@coredump.intra.peff.net>
+References: <68627d29-8ffd-2e22-46ca-c28c9e980177@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87y1yb2xc8.fsf@gnu.org>
+In-Reply-To: <68627d29-8ffd-2e22-46ca-c28c9e980177@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 05, 2022 at 12:46:15PM +0200, Tassilo Horn wrote:
+On Mon, Jun 06, 2022 at 06:04:11PM +0200, R. Diez wrote:
 
-> Still maybe someone might want to have a look at the "git show" issue to
-> double-check if the performance burden in this specific case (no diff
-> should be generated) is warranted.  But at least I can work again with
-> no coffee-break long pauses, so I'm all satisfied. :-)
+> If there is nothing of the sort, I could write my own script in Bash
+> or Perl. I can handle cron and sending e-mails, but I do not know much
+> about Git's internals. Could someone provide a few pointers about how
+> to code this? I would expect there is some command to list commits,
+> and all files touched by a particular commit. And there would be some
+> way to interface with Bash or Perl, which does not need parsing
+> complicated text output from Git.
 
-I suspect the issue may be quite subtle. Even you asked for
-"--no-patch", the underlying diff may still be used for other things.
-For example, simplifying away TREESAME commits. I.e., ones which did not
-change anything from their parents after applying path restrictions,
-diff-filters, etc. There may be other cases, too (e.g., --follow).
+This sounds kind of like git-multimail:
 
-I think the code could be written to realize that none of those features
-are in use, and disable the diff entirely in favor of checking whether
-the two trees has the same object id. That would yield _mostly_ the same
-behavior, though there are probably corner cases (e.g., a tree with an
-odd mode entry, say, may get parsed so as to produce an empty diff, even
-though it's not byte for byte identical). That may be an acceptable
-tradeoff. But I think the code would be a bit brittle (it needs to know
-about all the cases where a diff might matter, and we may add more
-later).
+  https://github.com/git-multimail/git-multimail
 
-In general, I think Git assumes that tree-level diffs aren't too painful
-to produce. "git log" will do them, too, but just doesn't tickle your
-particular case because it doesn't look at merges. So probably setting
-diff.renamelimit correctly is not that bad a solution.
+That's usually triggered from a hook, I think, but it would not be hard
+to trigger it with arbitrary segments of history.
+
+You'd probably want to keep a "seen" ref of processed commits, and move
+from that, like:
+
+  # assuming you just care about one branch on the remote, but this
+  # concept can be extended to several
+  branch=refs/remotes/origin/main
+  seen=refs/heads/seen
+
+  git fetch
+
+  # I don't know what git-multimail expects, but this is similar to what
+  # a server-side receive hook would show
+  echo "$(git rev-parse $seen) $(git rev-parse $branch) $branch" |
+  some-git-multimail-command
+
+  # now move your pointer forward for next time
+  git update-ref $seen $branch
+
+If multimail doesn't do what you want, then you can probably just script
+around:
+
+  git rev-list $seen..$branch -- $paths_you_care_about |
+  git diff-tree --stdin -r --name-only --format="Commit %h touched: " -- $paths_you_care_about
+
+depending how you want to format things.
 
 -Peff
