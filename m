@@ -2,90 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE060C43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 16:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94057C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 16:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245094AbiFHQHB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 12:07:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42184 "EHLO
+        id S244971AbiFHQJa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 12:09:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245098AbiFHQG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 12:06:59 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 873765DA4E
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 09:06:55 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id s135so3678231pgs.10
-        for <git@vger.kernel.org>; Wed, 08 Jun 2022 09:06:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JVOzOZ/yuCD/n3SdZNSGWmnYeQjCRY+kXz3nMiydQDE=;
-        b=i8bSaaC/y8IzPQgNdJwpD52mK96Ljv5JeK7Fxu+f8u/o1RWTgyUjFJZWAb07O4kxDS
-         cxlY/Eupban6R0Wqu5yu1S8GGu3l/+U0IiyAdbMiok2qzVGawZW6H8Zk/5V8piVifH3d
-         Psw3V786FV3vx0sA8kEcG6lZu9bT01/QMn6agTGaL6VIUc92FfXZx4Cxn9fGNJAOMRtR
-         e+VCKgw/+/cYvOetQA5j8Q7YfX2baPsiT9XwfL+HjrlyxDbkbrfh9FVCTVF9u/LX40ch
-         ggTwKjVZVAz98HMdj/q1i7+oPaDMQEhjsEbnXYcRF9I4SExlSBwN4fJa81Mo+VrNU92W
-         6soA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JVOzOZ/yuCD/n3SdZNSGWmnYeQjCRY+kXz3nMiydQDE=;
-        b=44th1gdMCOMyyfpV/wuBBQqIdsWra0dqtL1jmT0FHW35BEg98QkY29fi75lsBBouwV
-         fupQgp3fFSuQIDN8Ps633VUNEJZl9xoQ/niHYmmaLkfm6zrHH7lKeinrcVYoc2U78qv5
-         iNpAYoKOm8p8LHhieOmA5yQ4FZZ9r2XElmZbTtJ39+DEZMhRvhhs8Iq9YU5sGSn6Gf6l
-         Z+HtNXaXqkp+pyqnaUjPhDdvwU2lZNTVID2a2sFYJ+dCFHolbR6mrnKJ8d+ox8cV7M8v
-         wfJMhkHlvBB4N7+BdsTJiiP725I69z2jhMB26zepq0Ss5yDj+UgnwHLz+oB+0+ieQOCc
-         BVgg==
-X-Gm-Message-State: AOAM531xrrL1GlKoF8LXATJrg8FmgSmIBqLK23maQAFbNaM3uIJ2kfve
-        KjS6LU5ACMp8KXgxZExhoKQ=
-X-Google-Smtp-Source: ABdhPJxXfn2nLV8eOiH9Q0rsQfX+lYh9gJXnoJ72Cv+WpiDp+Qn6sAgP0ZUpDljyb0GABjHHrChnaQ==
-X-Received: by 2002:a65:404c:0:b0:3c6:4018:ffbf with SMTP id h12-20020a65404c000000b003c64018ffbfmr30884779pgp.408.1654704414847;
-        Wed, 08 Jun 2022 09:06:54 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4061:2d90:e070:30c2:fb1b:2653:5119])
-        by smtp.gmail.com with ESMTPSA id w24-20020a1709027b9800b00163d4c3ffabsm14865358pll.304.2022.06.08.09.06.50
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 08 Jun 2022 09:06:54 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 2/3] bitmap-format.txt: fix some formatting issues
-Date:   Wed,  8 Jun 2022 21:36:26 +0530
-Message-Id: <20220608160626.10332-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <xmqq1qw0uo7l.fsf@gitster.g>
-References: <xmqq1qw0uo7l.fsf@gitster.g>
+        with ESMTP id S244756AbiFHQJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 12:09:28 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A881F700E
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 09:09:27 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5942D12D503;
+        Wed,  8 Jun 2022 12:09:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wPpLlA7xoW4/MfYOLpS3FdeeXMohJcMveIKKLo
+        eVKvU=; b=Vuo/sRaM66G3dETw8YZuSrbwJPrN+AMwrwOslZUlHTkrZBPWLnDWCG
+        WK5AZp700oeNC7Jt2PmuD5IB69h7dvmij3LjauZGGEO7uBaQJnb/Fk1K0290Q41I
+        9CBHwPAHau3z6X0X868By1bYpwc8jchCyuV7PQxppuKBkEXaABDRw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E02712D502;
+        Wed,  8 Jun 2022 12:09:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9941F12D4FF;
+        Wed,  8 Jun 2022 12:09:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] ls-files.c: add --only-object-name option
+References: <pull.1250.git.1654509678718.gitgitgadget@gmail.com>
+        <220606.86zgipvg7e.gmgdl@evledraar.gmail.com>
+        <CAOLTT8Sz3q2db1fRcHp7Exnarw4sMCnUfAF6bot+pwYxmXJjiw@mail.gmail.com>
+Date:   Wed, 08 Jun 2022 09:09:24 -0700
+In-Reply-To: <CAOLTT8Sz3q2db1fRcHp7Exnarw4sMCnUfAF6bot+pwYxmXJjiw@mail.gmail.com>
+        (ZheNing Hu's message of "Wed, 8 Jun 2022 22:38:47 +0800")
+Message-ID: <xmqq7d5rrvbf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5DF1423A-E745-11EC-8A86-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
+ZheNing Hu <adlternative@gmail.com> writes:
 
-> True.  Unless we are going to revamp the text in some major way so
-> that we produce "true" HTML, not just the text source enclosed in a
-> <pre></pre> pair, I would think we are better off keeping it not
-> passed to AsciiDoc and leaving it in text format.  After all, modern
-> browsers, which I presume those who want HTML output files would
-> read them with, can display plain text files just fine, don't they?
+>> But in any case shouldn't this be called --name-only to go with "git
+>> ls-tree"'s version of this? Or is there some subtle difference I'm
+>> missing...?
+>
+> Eh, git ls-tree --name-only will only show file paths, so maybe
+> --only-object-name will be better than --object-name-only in git
+> ls-files.
 
-I am not sure whether that's a good idea or not. As I come from web
-dev background, I know that people get bored if they need to read
-a plain-text long article. SEO optimisation also need some beautiful
-designing of articles so that people can spend more time with visual
-ease.
+Yeah, it is not "--name-only" which is about paths, but
+"--object-name-only" would be more correct but it is a tad long.
 
-Of course, git doesn't need any SEO optimisation as it is very much
-popular. But readers want some visual satisfaction while reading
-Docs. That's why some people complain about GNU sites (git's site is
-beautiful by the way).
+I think ls-tree learned "--object-only" for that fairly recently.
+When in doubt, always check the documentation of a similar command
+for inspiration.
 
-Obviously, here I am using `people` to refer non git developers who are
-curious about git internals.
-
-Thanks :)
+Thanks.
