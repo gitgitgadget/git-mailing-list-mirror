@@ -2,68 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F07DC43334
-	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 23:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AD01C43334
+	for <git@archiver.kernel.org>; Wed,  8 Jun 2022 23:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231744AbiFHXYt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 19:24:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34158 "EHLO
+        id S231266AbiFHX1m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 19:27:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231710AbiFHXYr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 19:24:47 -0400
+        with ESMTP id S229481AbiFHX1l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 19:27:41 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48F2A3BC3D0
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 16:24:17 -0700 (PDT)
-Received: (qmail 6167 invoked by uid 109); 8 Jun 2022 23:24:17 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF7DC213ADD
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 16:27:40 -0700 (PDT)
+Received: (qmail 6196 invoked by uid 109); 8 Jun 2022 23:27:40 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jun 2022 23:24:17 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jun 2022 23:27:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Date:   Wed, 8 Jun 2022 19:24:16 -0400
+Date:   Wed, 8 Jun 2022 19:27:39 -0400
 From:   Jeff King <peff@peff.net>
-To:     Glen Choo <chooglen@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, "Ing. Martin Prantl Ph.D." <perry@ntis.zcu.cz>
-Subject: Re: [PATCH 2/2] remote.c: reject 0-length branch names
-Message-ID: <YqEvoB3Bskpykh1w@coredump.intra.peff.net>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        "Ing. Martin Prantl Ph.D." <perry@ntis.zcu.cz>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH 1/2] remote.c: don't BUG() on 0-length branch names
+Message-ID: <YqEwa37mNBqT7M+X@coredump.intra.peff.net>
 References: <pull.1273.git.git.1654038754.gitgitgadget@gmail.com>
- <f947cf221c0b5320d0b7438b88a0d94a5bd3a70b.1654038754.git.gitgitgadget@gmail.com>
- <220601.86leug261j.gmgdl@evledraar.gmail.com>
- <kl6lilpke31e.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <df6e4db6072e90afc92505a73792cf3c3221d5e4.1654038754.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <kl6lilpke31e.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <df6e4db6072e90afc92505a73792cf3c3221d5e4.1654038754.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 01, 2022 at 09:55:57AM -0700, Glen Choo wrote:
+On Tue, May 31, 2022 at 11:12:33PM +0000, Glen Choo via GitGitGadget wrote:
 
-> > Are we confident that this is just bizarro config that nobody would have
-> > had in practice? In that case I think it's fine to start dying on it.
-> >
-> > But as I understand we previously just ignored this, then if there's any
-> > doubt about that perhaps we should start with a warning?
-> >
-> > Or are we really confident that this is an edge case not worth worrying
-> > about in that way, and that we can go straight to die()?
-> 
-> The case I want to make is even stronger than that - this is an edge
-> case that _we_ shouldn't worry about, and we should tell the _user_ that
-> their config is bogus.
+> Fix the bug by removing the convenience strlen functionality, so that
+> 0 means that the string is 0-length. We still insert a bogus branch name
+> into the hash map, but this will be fixed in a later commit.
 
-It's a tradeoff, isn't it? We don't know how the user ended up with this
-config, what they were trying to do, nor how common it is. Clearly the
-config makes no sense and is broken, but by alerting the user, we are:
+I think this is a good change, regardless of whether we take the second
+commit or not. These kind of "automagically run strlen() sometimes"
+interfaces are subtle, and I think have bitten us before.
 
-  - maybe doing some good, because now they know that whatever they were
-    trying to do didn't work, and can clean up the broken config
+> diff --git a/remote.c b/remote.c
+> index 42a4e7106e1..cf7015ae8ab 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -195,9 +195,6 @@ static struct branch *find_branch(struct remote_state *remote_state,
+>  	struct branches_hash_key lookup;
+>  	struct hashmap_entry lookup_entry, *e;
+>  
+> -	if (!len)
+> -		len = strlen(name);
+> -
+>  	lookup.str = name;
+>  	lookup.len = len;
+>  	hashmap_entry_init(&lookup_entry, memhash(name, len));
 
-  - maybe doing some bad, because it was not (and is not) hurting
-    anything to have config that nobody bothers to do anything with. But
-    if we die, now the user is presented with a situation that they know
-    nothing about, and must resolve it before continuing with their
-    unrelated work.
+This changes the behavior of find_branch() without changing its
+signature. So any topics in flight that use it might be subtly broken. I
+think that's probably OK in this instance, since it's a file-local
+static, and was added relatively recently (i.e., the blast radius is
+pretty small and unlikely).
 
 -Peff
