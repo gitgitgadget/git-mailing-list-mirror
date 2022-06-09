@@ -2,142 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7407C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 17:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 939FBC433EF
+	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 18:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343774AbiFIR4p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 13:56:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58308 "EHLO
+        id S1344299AbiFISFI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 14:05:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243228AbiFIR4o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 13:56:44 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68EA514E946
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 10:56:42 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E3B9199060;
-        Thu,  9 Jun 2022 13:56:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=pEa2Fn4fF/IX
-        HAv+eNNdhNfIFGFscmrAOtHVMAdsa2U=; b=Cd6ML8APh8HOD9puImQTkU/rkn1o
-        2TX6np9kJ5vO4SH2qnFJKfzKkm8GhPyG75D4YSSJfZkEfPHEK/EqHxMAG4zIlIwO
-        UexeuIu8sWmsTD2Mivv3Yj8YhHb+ggqX5StzWoaoG9azQBEOEHtuSWktEb1zSq79
-        qUulBeCXRuU5P2k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2585F19905F;
-        Thu,  9 Jun 2022 13:56:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BAF2B19905E;
-        Thu,  9 Jun 2022 13:56:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH 1/6] docs: document bundle URI standard
-References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
-        <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
-        <xmqqtu8x1fd4.fsf@gitster.g>
-        <48e722dc-f860-f7a6-36d0-b0106087aef4@github.com>
-        <xmqq5ylarhsg.fsf@gitster.g>
-        <3d67b69b-fac8-3171-92dc-303ea672efbf@github.com>
-Date:   Thu, 09 Jun 2022 10:56:37 -0700
-In-Reply-To: <3d67b69b-fac8-3171-92dc-303ea672efbf@github.com> (Derrick
-        Stolee's message of "Thu, 9 Jun 2022 12:00:27 -0400")
-Message-ID: <xmqqk09plnze.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S238630AbiFISFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 14:05:07 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B687F21912B
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 11:05:04 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id u12so49045969eja.8
+        for <git@vger.kernel.org>; Thu, 09 Jun 2022 11:05:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=t4PbWFNXknS3NH8uFMhd8ZLEKOfyT0jMcvuV5EoAdbA=;
+        b=UL3poum2DTPne3nsIJtOvrZnEJF97/a/bN8Ymp9eKbNjiwoyuxrJ2APyo7rnd8G1a0
+         d55iqaQQQtEVzTuwWaNs1r+jqBYsAaqnKsYEU5vCUMZf0vLwMuLm0bFZcpNEloTg/VSR
+         8b7Byzs+AmsRuBBmFHxi1qxGYFic/WrWWA/Gwr35XHoBogsZUmQx1SbwrYB2aa3G+d8Y
+         S9k4JlvNyQtkE62QAoW1zz1revAgOiijKL1oUupi2glOuyFrcc+v/BrhZdx8ztkEaIKg
+         /P4pGQLe/YG3spPu1mvCbt7Fy0W2gEeR3udgt+/GA17RShPKwTC6JssIP+6SaAwtJQAK
+         UtcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=t4PbWFNXknS3NH8uFMhd8ZLEKOfyT0jMcvuV5EoAdbA=;
+        b=OO/xZ8qZVfSHlKg0JMTFL00Wwd/pRuqKZrwFRtwB6BC8TQBRltk/CsuwQy7cbV9kIU
+         W9PTLP6Y/vhZhLNAPRdtCX3qJlAQDcA85ok8gUdk5JAt5VzipUUrdiddw2LO4Bm6I1a0
+         HtHGWb2o/7FCd67IkyiNj//1/oVR5Qz+NaY37fFTK4VvnEQz3y5rafN5FeyKoeVTLiBN
+         kUYZJmc0vtFXl1Aiez6iAlimvqx+nGvINDxZ9UMr7a0QYjGnDQcH5NkCXUbVXgifvr+w
+         XHVtv+0w/AgsfjOKkSKvGyH3tDfWmPs6RM84B/DC8D/Lqv1fgDjJZQXB/7NF72Omnh2i
+         rzJA==
+X-Gm-Message-State: AOAM533kPpl8tl8cW4O6ABEkSWY0kwqoDvmBpv8qZEjUAIhq2b5/VPcW
+        Q/CS19uYOXe/lWPvdHGEdj4CYWuhjg0=
+X-Google-Smtp-Source: ABdhPJxi6cCeoZUGakmmKDUZJree35PqSHDcLSXpyvVDrIhXMhK73VXGKtwuk1iS1tJB82PHNylCCA==
+X-Received: by 2002:a17:906:2885:b0:711:4611:95cc with SMTP id o5-20020a170906288500b00711461195ccmr25270175ejd.38.1654797902647;
+        Thu, 09 Jun 2022 11:05:02 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id q6-20020a1709060f8600b00711edab7622sm3473826ejj.40.2022.06.09.11.05.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jun 2022 11:05:02 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nzMWj-0031dN-GB;
+        Thu, 09 Jun 2022 20:05:01 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] connected: distinguish local/remote bad objects
+Date:   Thu, 09 Jun 2022 20:00:05 +0200
+References: <20220608210537.185094-1-jonathantanmy@google.com>
+ <xmqqwndpn5dz.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqwndpn5dz.fsf@gitster.g>
+Message-ID: <220609.86zgilsofm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 82CD5818-E81D-11EC-90CE-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
 
-> =C3=86var's observation that bundles also add ref tips to the packfile =
-is
-> the key to breaking down this concern: these ref tips give us a way
-> to negotiate the difference between what the client already has
-> (including the bundles downloaded from a bundle provider) and what it
-> wants from the origin Git server. This all happens without any change
-> necessary to the origin Git server.
+On Thu, Jun 09 2022, Junio C Hamano wrote:
+
+> Jonathan Tan <jonathantanmy@google.com> writes:
 >
-> And thus, this bundle URI design came about. It takes all of the best
-> things about the GVFS Cache Server but then layers refs on top of the
-> time-based prefetch packfiles so a normal Git client can do that
-> "catch-up fetch" afterwards.
-
-Yup.  My observation was that (1) you would need ref tips in some
-way, (2) you are conveying not just "here are the set of bundle
-files", but "this bundle file has these associated attributes" (like
-.timestamp, and .uri to fetch it from), in the table-of-contents the
-clients are expected to obtain anyway, hence (3) you could, but you
-do not need to, use bundle as a way to convey "packfile contents
-plus refs" to the clients (iow, instead you can use packfile and
-then report these refs information in the table-of-contents as more
-"associated attributes" to the items listed in the table-of-contents).
-
-> I could imagine updating GVFS Cache Servers to generate bundles
-> instead (or also) and updating the VFS for Git clients to use the
-> bundle URI feature to download the data.
-
-I could, too, but I do not think that would buy us anything.  If an
-existing system is happily working, I do not see a point in switching
-it to use bundle.  What I was imagining is going the other way.  A
-new thing being written, instead of basing it on bundles, can be
-based on packfiles, and that would allow you to share the on-disk
-packfiles between the two systems.
-
-> However, you seem to be hinting at "the GVFS Cache Servers seem to
-> work just fine, so why do we need bundles?" but I think that the
-> constraints of what is expected at the end of "git clone" or "git
-> fetch" require us to not "catch up later" and instead complete the
-> full download during the process. The refs in the bundles are critical
-> to making that work.
-
-The refs are critical.  They do not have to be recorded in a bundle.
-
-> I see two major issues with that:
+>>  builtin/fetch.c              |  2 +-
+>>  connected.c                  |  1 +
+>>  revision.c                   | 16 ++++++++++++--
+>>  revision.h                   |  3 +++
+>>  t/t5518-fetch-exit-status.sh | 43 ++++++++++++++++++++++++++++++++++++
+>>  5 files changed, 62 insertions(+), 3 deletions(-)
 >
-> 1. We don't have a way to add that metadata directly into packfiles,
->    so we would need to update the file standard or update the
->    packfile-URI protocol to include that metadata.
+> This seems to break linux-leaks CI job by making 5518, which was
+> marked in some topic in flight to expect to be leak-free, fail.
 >
-> 2. The only source of packfile-URI listings come as a response to the
->    "git fetch" request to the origin Git server, so there is no way
->    to allow an independent server to provide that data.
+> Because of the way linux-leaks test framework is done, it is not
+> easy to tell if the code changes essential to this topic introduced
+> new leaks, in which case we would want to fix that.
 
-It might be end up being the same thing at the end, but I was
-thinking about starting from the "bundle URI standard" document.  I
-am not yet interested in discussing "packfile URI" feature that
-independently exists already in this discussion (but going this
-route we _might_ be able to share data and some code with it---but
-that was not where I am coming from).
+I think this is just an existing leak that happens to be exposed by a
+new (in this file) test, i.e. transport_get() leaks via an xmalloc() for
+transport_helper.
 
-Starting from "bundle URI standard" document at the beginning of the
-thread, if we replace all the mentions of "bundle file" with
-"packfile" in it, and then add .positiveRefs and .negativeRefs to
-each "packfile" (renamed from "bundle file") as additional
-"packfile.<id>.*" (renamed from "bundle.<id>.*") attributes, without
-changing anything else, the result would be feature equivalent to
-the original "bundle URI standard", I would think, but without
-having to wrap a packfile in a bundle file?
+> Note that this may not the fault of the code changes in this patch.
+> If the tests added by the patch started using git commands that are
+> known to leak (i.e. not ready to be subjected to the "leaks" test)
+> in order to prepare the scenario or to inspect the result, even if
+> the code changes in this topic did not introduce any leak, we can
+> see the same breakage in linux-leaks CI job.  An easy way out would
+> be to disable leak-check CI for the entire 5518, but that is not
+> very satisfactory, as the earlier part of that script should still
+> be leak-free.
 
-> I hope I am going in the right direction here, but I likely
-> misunderstood some of your proposed alternatives.
+I think doing that would be fine in this case. It will get easier to fix
+leaks now that "struct rev_info" is out of the way (and I've got a lot
+of pending patches), but I can always loop back & re-mark this
+particular test as leak-free at some future date.
 
-I wasn't seriously "proposing" an alternative.  It was just that it
-looked wasteful to go to a separate format (i.e. bundle) when packfiles
-should suffice, as you would be adding extra information that is not
-in bundles via the table-of-contents anyway, and what is given by a
-bundle that is missing in a packfile is only the refs information,
-which should be trivial to add to the table-of-contents.
+> Another way out might be to add these two tests in a
+> new script, which is not marked as not-leaking.  After all, what the
+> new topic adds is not about exit status but how that exit status
+> comes about, so it might not be a bad idea even without the CI leak
+> stuff anyway.
 
+Yeah, that sounds especially good in this case, as if we can't run httpd
+we'll print a meaningful "skip" message in that case. See 0a2bfccb9c8
+(t0051: use "skip_all" under !MINGW in single-test file, 2022-02-04)
+
+> =C3=86var, does the internal state used for revision walking count as
+> leaking when it is still held by the time we hit die() in
+> bad_object(), or anything on stack when we die() are still reachable
+> and won't be reported as a failure?
+
+No, but in this case the variable containing the leaked data isn't in
+scope by the time we exit, i.e. it was used by fetch_one() which had it
+malloc'd, but the struct it lived in went away, and now we're exiting
+from cmd_fetch() etc.
