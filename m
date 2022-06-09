@@ -2,109 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 757DDC43334
-	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 13:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D38CC43334
+	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 13:55:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243004AbiFINyl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 09:54:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41550 "EHLO
+        id S243892AbiFINzg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 09:55:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243365AbiFINyk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 09:54:40 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE97AEE36
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 06:54:38 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id b8so14632231edj.11
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 06:54:38 -0700 (PDT)
+        with ESMTP id S239703AbiFINzc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 09:55:32 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 879BF3CFF2
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 06:55:23 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id h5so32576602wrb.0
+        for <git@vger.kernel.org>; Thu, 09 Jun 2022 06:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=lpznvjO3Gh0NfXnhV0uYs6y8Fyfm5SZgR9U07//WGaM=;
-        b=bCWkIJN0SREoWaYFaPnkC8aY7MYqAksRLLu3st8ibbDbmweygQZ4tb6h/BJ9y8EtSf
-         CfBM1ZSW2pfyrX4GGdqPaGhGA3Tdd0HCXKaIuU5uQ4psNIY59MfRRx3KYBHafpWjMyAN
-         rErZQ8qdyzLT4RITgT53lEyCPXZe34um7/u+F8IvldoN9HY29DxNKyFsGpbxHxfWOmy6
-         FvClhwwRffB6OVwy0jdAedTTtIwHVgHesMRoTH5O3xdRU1PBiXVCbK0xOrBezSJLaxUa
-         lphZFzQ5C43jWYpqNrgLjctUhcNPsWS5r1oaab5uNPprKa8YDNy7Vc3W3MC8WJB7A8yc
-         LbCw==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=d2MflH0gzDhYeX1eKlzyV0/v0Il9kPbI4BbOxmALWVk=;
+        b=Ctv3WYghpSPERjKcRCpH6UW9k6bRlqSJYuiBavMe1/uw/Exj88Xc2OsfIIHWcJwsJT
+         sGEGTT2G8t32gXmvpd9N8JSwJlXekK1nVLAvr++6cnx1pldx/q73r43GEnKIRcxQ5Iog
+         ZHlhyfqnIeghH9vwdE0NTB3gDtt188YDxzAbH9/7S4+v1cOG0/pATxzP2ZZawTtuGM6F
+         51w21e2iu1Mq6Z3xFSL/9ozxT4ka2tE25Cs0HRQxpjZz0ZWpjihXWuht1KgOmaB0SAS4
+         0RxzuE55M5sA/DpXZzT2Lb+cBBLL9p7uyzA/wzEiMAs5GkcaUS82/EiDLZtdfGRDSGSN
+         6gEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=lpznvjO3Gh0NfXnhV0uYs6y8Fyfm5SZgR9U07//WGaM=;
-        b=2SL/t3SaYmsoMnEEh9rIFudqR9cYVAIRCAs5RkBjcFIg0VwAqFzabWtV89+gxN729R
-         OR1p7nXW866yBmto5sgS/OxguqF17KR60F0jO4SpDXwZIjvya0x6jWOJkmqAInkh/8QN
-         zWMwuiVG7NAQMwWN1ev1KFn5W2OX4wR31bva7yQXX7mJWd0LBBbbz14ybZIvsyvpts2X
-         k4GtZ4upJS9EXOAPqaCloVd+16/YAalbVycBPjH4kn3AULtFXr8q6ODrVAXjzZO/taUf
-         8n8EcJ5lstHsQwNZu9/6aWzLmr4dcbN8QaNotMurEv/lpZAQl704+o7pErxxdptjC0Iq
-         M9bw==
-X-Gm-Message-State: AOAM530VT9QRbboKuie6llm1i6IrJu68ISLvtejobKnSG4RReNBNq/AD
-        glDppIc8YWyObXTQFtU+5lWIHvkUn/c=
-X-Google-Smtp-Source: ABdhPJz8wlz4utzb6lVYamxojJDL3+r+LG8GEHZyltevqXNQ1kU24PiWIPkf55ikuU1dvH/dF3ZogA==
-X-Received: by 2002:a05:6402:4252:b0:42e:13d4:4f4c with SMTP id g18-20020a056402425200b0042e13d44f4cmr42997412edb.92.1654782876730;
-        Thu, 09 Jun 2022 06:54:36 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id v3-20020a056402348300b0042dccb44e88sm3638598edc.23.2022.06.09.06.54.36
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=d2MflH0gzDhYeX1eKlzyV0/v0Il9kPbI4BbOxmALWVk=;
+        b=YFT/MtWonjveMKz291IeAwGkEGqC4VVhzz3qTmmc/sooEDhdT7ZOr7eQMvCW9FMiaY
+         hLhn7CgGL4MLwO73CuT6Ng46W1hjy+siJFKE1H6MtzKR9Xn1JDdTWLnsERerCRN7/mTh
+         ZIJJzup150SmUoNnhE3hzKq3DUh4+Q0D9jBlFq4KKUJhki7DvSobKvOp0i+S6XvYuIi1
+         YdlmVGUB6Wbi7yoqsWu4wKSiRaSvhQl0xXQt5G1yPebahv+HTLeDC3tDOKZI6S+NVyiK
+         FfnTKFCzJSkFanXjYrcricJUfaETyB6KO9QfMdfwisHqIDl+/90x4ZGBpFdZjzGI3Fap
+         TBpQ==
+X-Gm-Message-State: AOAM530dHTsm6TWoJyNBNUJPpTgorY3YF0OpiYh7npOv/QNpDQxwcSk9
+        ApzSLCv6Nzrd/Do/U6aX9QoMfczRc1STdnZs
+X-Google-Smtp-Source: ABdhPJxYYRK6/txT9+GPMyH24zv6Y32ceulLFK8kKK6HQlhp4YUe2U+mUmW3+MAHyNe1oVlz51O6CQ==
+X-Received: by 2002:a5d:5956:0:b0:217:77da:c27a with SMTP id e22-20020a5d5956000000b0021777dac27amr25183404wri.230.1654782921654;
+        Thu, 09 Jun 2022 06:55:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k3-20020a05600c1c8300b0039c5fb1f592sm7749257wms.14.2022.06.09.06.55.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 06:54:36 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nzIcN-002uwh-Pf;
-        Thu, 09 Jun 2022 15:54:35 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] ci(github): also mark up compile errors
-Date:   Thu, 09 Jun 2022 15:47:35 +0200
-References: <pull.1253.git.1654774347.gitgitgadget@gmail.com>
- <19d6e34f038121b927cdfacc3c4ae5abd1791415.1654774347.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <19d6e34f038121b927cdfacc3c4ae5abd1791415.1654774347.git.gitgitgadget@gmail.com>
-Message-ID: <220609.864k0ut010.gmgdl@evledraar.gmail.com>
+        Thu, 09 Jun 2022 06:55:21 -0700 (PDT)
+Message-Id: <pull.1255.git.1654782920256.gitgitgadget@gmail.com>
+From:   "Cleber Rosa via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 09 Jun 2022 13:55:20 +0000
+Subject: [PATCH] setup: fix function name
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Cleber Rosa <crosa@redhat.com>, Cleber Rosa <crosa@redhat.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Cleber Rosa <crosa@redhat.com>
 
-On Thu, Jun 09 2022, Johannes Schindelin via GitGitGadget wrote:
+The reference given to users when the result of
+setup_git_directory_gently_1() is unexpected is incorrect.
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> When GCC produces those helpful errors, we will want to present them in
-> the GitHub workflow runs in the most helpful manner. To that end, we
-> want to use workflow commands to render errors and warnings:
-> https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+This fixes the name of the function when presenting the BUG message.
 
-The docs you're linking to state:
+Signed-off-by: Cleber Rosa <crosa@redhat.com>
+---
+    setup: fix function name
 
-	::warning file={name},line={line},endLine={endLine},title={title}::{message}
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1255%2Fclebergnu%2Ffix_function_name-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1255/clebergnu/fix_function_name-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1255
 
-But here...
+ setup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +		sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 file=\2 line=\3::\1/'
+diff --git a/setup.c b/setup.c
+index faf5095e44d..b5a537258d2 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1402,7 +1402,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		 * find a repository.
+ 		 */
+ 	default:
+-		BUG("unhandled setup_git_directory_1() result");
++		BUG("unhandled setup_git_directory_gently_1() result");
+ 	}
+ 
+ 	/*
 
-You seem to omit the comma, and the CI output itself seems to note the
-filename as "compat/win32/syslog.c line=53#L1".
-
-I haven't tested, but is this the issue you noted in the CL as "the only
-downside"? I.e. the link to the source code is nonsensical in that CI
-output, it links to the diff of the PR itself.
-
-But the GH docs say "associate the message with a particular file in
-your repository.", so it would seem that there should be a way to link
-to the file at that revision, not only if it was altered in the given
-commit.
-
-On the "sed" one-liner, at least GCC supports emitting JSON error
-output:
-https://stackoverflow.com/questions/36657869/how-do-i-dump-gcc-warnings-into-a-structured-format
-
-You don't fill in "column" now, but if you used that presumably that
-would be easy, and more useful.
-
-It seems clang also supports it, but not any easily machine-readable
-format:
-https://clang.llvm.org/docs/UsersManual.html#cmdoption-fdiagnostics-format
+base-commit: 9c897eef06347cc5a3eb07c3ae409970ab1052c8
+-- 
+gitgitgadget
