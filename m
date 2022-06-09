@@ -2,180 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ABA8C43334
-	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 20:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 166C1C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 20:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240428AbiFIUCa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 16:02:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54618 "EHLO
+        id S234783AbiFIUGy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 16:06:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231539AbiFIUC2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 16:02:28 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 703D3DA0
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 13:02:26 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id fd25so32628890edb.3
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 13:02:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=CZymDlpRavnIXlHwOnAsMeCtwmN+xOViUUN0mhBbaFA=;
-        b=AEn370zoy16g4ro6AQMWZk5/bQYePXM9vAtu4DehpNIhV2bQPpu01ood4MteYMAC1v
-         1IviGcRXlklZFtlN7vARRDHq9dc+g7zAB6NHn7ajsWmQ5e75SfdsrQfPKOjnyDY78FS/
-         vQP6fKRn+8nlcX1vy6CIqJlE08eQGVYf+qZy0TGjCbWm59cdjwBc8jzFvpHktX0mI98t
-         R/xscm0Kme8d7reo5xc7Y36YBX2p1sRfXJR2Tu5M4l1moLXUE0hq4dO0LY4K8n+x/DiA
-         Zin2pj8g7Vud7095ZVajU6KDBPvq9iAkWRTiKIJUB0pG6i90liWijUXBOGyRG6fzlG4B
-         UKUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=CZymDlpRavnIXlHwOnAsMeCtwmN+xOViUUN0mhBbaFA=;
-        b=KcAZmzirhtLQ3jPTNcTkG78RfXQnYQzmSyPUnEnqNiM/ygWlj7xR0y3jVjhnVzlNpi
-         hBQrB53bQnuWpuBHjs1o71LfcssUmx8oRostvSXhLd+sYRTC4ZfOoIcijDvcIcIqWLag
-         M65PZx5D2uJsit3kn3Zx6KsdEWLCY0RHU+egPCEZQaYs1fQdoa+Ukw8U6mRyxnE6dLWQ
-         k2IDEEORxmbIgyouIe49U9ym0s+6MHg7p79iTZjVTxQnsothO7p5RvzYgA12vlJvYvPc
-         M3aZT4RSYIcTDBeEa+nXjlj0+QcPs+AwgxbtpluIFwGHEzqdn+rOoXXkPO06Ss15U2In
-         qOrQ==
-X-Gm-Message-State: AOAM533klETHsgUTgnWe8ET/qTN+wLraPNQkSEQ9wfVs2faicJKxvfHw
-        I8xYr2FB3mL9WoWbm2afuQU=
-X-Google-Smtp-Source: ABdhPJwBMqklfO5BWoMf5XBHHyXhTWysH76DLKrrkEaQ0HqjMVIfDZIrbR9y2bR9cpU1H9zf930fug==
-X-Received: by 2002:a05:6402:50f:b0:433:48e6:ef78 with SMTP id m15-20020a056402050f00b0043348e6ef78mr2764442edv.217.1654804944668;
-        Thu, 09 Jun 2022 13:02:24 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id i7-20020a17090685c700b007104b37aab7sm8240364ejy.106.2022.06.09.13.02.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 13:02:24 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nzOMJ-0034uY-8w;
-        Thu, 09 Jun 2022 22:02:23 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Josh Steadmon <steadmon@google.com>, congdanhqx@gmail.com,
-        dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: js/ci-github-workflow-markup output regression
-Date:   Thu, 09 Jun 2022 21:43:45 +0200
-References: <xmqqee28spni.fsf@gitster.g>
-        <patch-1.1-0fdfec624eb-20220531T171908Z-avarab@gmail.com>
-        <nycvar.QRO.7.76.6.2206021703110.349@tvgsbejvaqbjf.bet>
-        <220603.86fskmxd43.gmgdl@evledraar.gmail.com>
-        <xmqqpmjpeedq.fsf@gitster.g>
-        <220604.86y1ydwcq1.gmgdl@evledraar.gmail.com>
-        <xmqqo7z4wcsw.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2206080922470.349@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <nycvar.QRO.7.76.6.2206080922470.349@tvgsbejvaqbjf.bet>
-Message-ID: <220609.86r13xsj00.gmgdl@evledraar.gmail.com>
+        with ESMTP id S232983AbiFIUGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 16:06:53 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0C5E96CF
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 13:06:51 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A792147849;
+        Thu,  9 Jun 2022 16:06:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=F9UKU9u1uHPjeLOJCRjTRTPF/V9hzsfj6lLAay
+        juLME=; b=Fq3zf97rvav7DuaVyO5IO9wWLz+cLCEQ+d79ATEnLUU2zktrPGJj4Y
+        XfoK5/Y6eNGtKaY8uYIDjW6+QuPXGSs3+uGN6X3LQMHyubRsHdRC7snvSkPLLOG6
+        y/ZXN9uDZcgZxjqpKtUUmlS+AU3wM05z4fXrf7+BIfVPI5vxJxzns=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 91AF9147848;
+        Thu,  9 Jun 2022 16:06:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0030C147847;
+        Thu,  9 Jun 2022 16:06:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Kyle Meyer <kyle@kyleam.com>, Tassilo Horn <tsdh@gnu.org>,
+        Tao Klerks <tao@klerks.biz>, git@vger.kernel.org
+Subject: Re: [BUG?] Major performance issue with some commands on our repo's
+ master branch
+References: <87h750q1b9.fsf@gnu.org>
+        <CAPMMpohzqKo-+q-tOcXymmzGxuOY-mf2NPRviHURm8-+3MPjZg@mail.gmail.com>
+        <87y1yb2xc8.fsf@gnu.org> <YqEyh5opAaJxph2+@coredump.intra.peff.net>
+        <87sfoe7hio.fsf@kyleam.com> <YqILyX97zKg5ViUS@coredump.intra.peff.net>
+        <xmqqedzxlmpt.fsf@gitster.g>
+        <YqI/TcZyXomxtXtN@coredump.intra.peff.net>
+Date:   Thu, 09 Jun 2022 13:06:48 -0700
+In-Reply-To: <YqI/TcZyXomxtXtN@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 9 Jun 2022 14:43:25 -0400")
+Message-ID: <xmqqtu8tiotj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B2A9B42A-E82F-11EC-BBE7-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-On Wed, Jun 08 2022, Johannes Schindelin wrote:
+> But what I wondered is whether "show" in particular, because it would
+> never want to skip showing a commit, could get away with avoiding the
+> diff automatically.
 
-> Hi Junio,
+Ahh, that is a clever thought.  At least unless we automatically
+turn ourselves into "git log" by giving an range, we are naming
+individual object we want to see, so why not show them?
+
+But I wonder if "git show A -- P" should or should not show the
+commit if A does not touch the path P.  Right now we apply the same
+history simplification so "git show master -- t/" gives nothing to
+me, which is probably one sensible thing to do.  It is debatable why
+somebody who wants to see 'master' wants to hide it when it does not
+touch the paths that match the pathspec given, but it can also be
+debated why somebody would give a pathspec if commits are to be
+hidden when they do not touch paths that match it, so...
+
+> I.e., currently "git show -Sfoo HEAD" will always
+> show HEAD, even if "-S" does not match anything. So if we are not
+> showing any diff output, there is no need to compute the diff in that
+> case. That is unlike "git log", which would omit commits that didn't
+> match.
+
+OK, you came up with an example that behaves differently.
+
+> And really it is not "git show" that is special there, but the
+> always_show_header flag it sets. So something like this might work:
+
+A tempting thought, indeed.
+
+> diff --git a/log-tree.c b/log-tree.c
+> index d0ac0a6327..ed57386938 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -1024,6 +1024,10 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+>  	if (!all_need_diff && !opt->merges_need_diff)
+>  		return 0;
+>  
+> +	if (opt->diffopt.output_format == DIFF_FORMAT_NO_OUTPUT &&
+> +	    opt->always_show_header)
+> +		return 0;
+> +
+>  	parse_commit_or_die(commit);
+>  	oid = get_commit_tree_oid(commit);
+>  
 >
-> On Tue, 7 Jun 2022, Junio C Hamano wrote:
+> It produces the same output in the cases I tried. And running with
+> GIT_TRACE2_PERF shows that it doesn't diff and rename code.
 >
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->> > On Fri, Jun 03 2022, Junio C Hamano wrote:
->> >
->> >> Indeed it makes it impossible to figure it out things like this case.
->> >> But ...
->> >>
->> >>> But this does look easy to "solve" with a quicker fix, just bringing
->> >>> back the "ci/print-test-failures.sh" step so you can at least expand
->> >>> it, and not have to go to the "summary" and download the *.zip of
->> >>> the log itself.
+> I'm not overly confident that it isn't violating some other subtle
+> assumption / corner case that I haven't thought of, though. :)
 >
-> I agree that re-adding the `ci/print-test-failures.sh` step makes sense,
-> given the recent experience.
->
->> >>> As that shows we still have the raw log there, it just didn't make
->> >>> it to the new GitHub Markdown formatting mechanism.
->> >>
->> >> ... it seems a solution is possible?  Care to send in a patch (or
->> >> perhaps Dscho already has a counter-proposal)?
->
-> I will work on this.
->
->> > The only thing I have at the moment is:
->> >
->> >     1. git revert -m 1 bd37e9e41f5
->> >     2. merge: https://lore.kernel.org/git/cover-v6-00.29-00000000000-2=
-0220525T094123Z-avarab@gmail.com/
->> >     3. merge: https://lore.kernel.org/git/cover-v6-00.14-00000000000-2=
-0220525T100743Z-avarab@gmail.com/
->> >
->> > I.e. to pick this in the sequence I'd proposed doing & have tested
->> > thoroughly.
->>
->> I know you two have difference in opinions, but throwing away everything
->> the other party did and forcing your stuff in is not a very effective
->> way to work together.
->
-> I had already pointed out a rather terrible issue in that 29-strong patch
-> series: Dropping Azure Pipelines support makes it unnecessarily harder to
-> work on Git security issues. And it's not like we have an armada of people
-> working on those. I, for one, am pretty worn out from the recent work.
->
-> It might not be the intention of that patch series to make my life harder,
-> but it sure would be its impact. And intent does not excuse impact.
->
-> I therefore had to conclude that the patch series in this form cannot be
-> merged.
-
-You raised the same concern in February, and I made some practical
-suggestions for how to proceed with that in:
-
-    https://lore.kernel.org/git/220222.86y2236ndp.gmgdl@evledraar.gmail.com/
-
-You didn't reply, and here was a reminder in late March:
-
-    https://lore.kernel.org/git/cover-v2-00.25-00000000000-20220325T182534Z=
--avarab@gmail.com/
-
-You then had a similar concern, and I replied again in early April
-saying I'd be happy to acomodate you, if you could reply to that
-original E-Mail and clarify what you'd like exactly:
-
-    https://lore.kernel.org/git/220406.86bkxeecoi.gmgdl@evledraar.gmail.com/
-
-And here's a mention of it again in late April:
-
-    https://lore.kernel.org/git/220421.86fsm66zmz.gmgdl@evledraar.gmail.com/
-
-Then a few weeks ago you brought up the same point, and I replied again
-you to please reply to that E-mail from back in February:
-
-    https://lore.kernel.org/git/220524.86y1yrwaw0.gmgdl@evledraar.gmail.com/
-
-So really Johannes, I'm completely fine with accommodating you.
-
-But when you suggest that some ad-hoc combination of out-of-tree code
-and not-used-in-tree code you have must not be touched *and* you're
-seemingly unwilling to figure out some way forward you're not being very
-helpful.
-
-Instead you just keep repeating that something must not be changed, and
-when it's pointed out to you that that would block someone else's
-patches, but would you be OK with X, Y or Z you seemingly just blackhole
-the replies you get.
-
-So can you reply to that this time? Thanks.
-
-> I recall that other reviews reached the same consensus, that this
-> 29-strong patch series is too unfocused on any particular goal. So maybe
-> calling this "my opinion" is not exactly fair.
-
-Yes, that's something others brought up, but it's unrelated to the Azure
-issue you're raising here. That change was contained within the first 6
-or so patches of that series.
+> -Peff
