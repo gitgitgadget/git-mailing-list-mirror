@@ -2,95 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95387C43334
-	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 18:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E778CC43334
+	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 18:32:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345429AbiFIS3b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 14:29:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57418 "EHLO
+        id S1344553AbiFIScC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 14:32:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345420AbiFIS3a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 14:29:30 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1C1C22B12
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 11:29:28 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 90156146F32;
-        Thu,  9 Jun 2022 14:29:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=2tFVFxqoQc49
-        Zq0PXny314SmhiEZtZl07jQTRdIpfhk=; b=Mlvl/sn4exM1pkmNi2mLXAYKywC5
-        ohxeT1ZQNx1CwwtMz2Jc6HXc34J7zQ8RdCcPMMm0wcKIf6WHBdaiffbtvLpWnCGJ
-        wWVArkQY6RA5KIxZGINgOTwOoK9ly15PcLv02fMzrA8yOfR3brqqXTX9hNEUj8Il
-        9ypE/FBmari+6VQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 886C4146F31;
-        Thu,  9 Jun 2022 14:29:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F0570146F30;
-        Thu,  9 Jun 2022 14:29:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Joakim Petersen <joak-pet@online.no>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Justin Donnelly <justinrdonnelly@gmail.com>
-Subject: Re: [PATCH v7] git-prompt: make colourization consistent
-References: <20220606175022.8410-1-joak-pet@online.no>
-        <20220607115024.64724-1-joak-pet@online.no>
-        <20220609090302.GA1738@szeder.dev>
-        <736a5f12-2ab3-977c-8cba-45529e9ebee0@online.no>
-Date:   Thu, 09 Jun 2022 11:29:25 -0700
-In-Reply-To: <736a5f12-2ab3-977c-8cba-45529e9ebee0@online.no> (Joakim
-        Petersen's message of "Thu, 9 Jun 2022 13:13:34 +0200")
-Message-ID: <xmqq5yl9lmgq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232018AbiFIScB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 14:32:01 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC42BC14
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 11:31:58 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id s12so41948506ejx.3
+        for <git@vger.kernel.org>; Thu, 09 Jun 2022 11:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=HdgYh7H6djiSkWdskIqW1HYZC75prn7mcolys9sjAas=;
+        b=d+zU60w0gN85I1vhWOd+yPsNiB96tcUicmJtU3Ms9smN/4DLNQJdXGVi1f2RiisIPM
+         zrrrFoedS9s5fTJRKJmdaZn4Dsq7SNY+bm4UQD9+gdtTHq8Uo2G8+WHFQX8hS/xGZppp
+         buAiFmNDL88fHmmBo8nHS3dO04CER7vyXS/VzIO+qQssRadE+ZIprbPN8avKuOqI7qwb
+         +K5cALVmUL8kWr3o0YVZ6bFmaIzyC9LROmKUSn2LmAyfOjRDiRXVuolfYubRhutDK+Wp
+         7QO4qmobLtMui8eDTfOzwIp81Mr4lsdalRqf4KIc9veJZELM8PoUwtLtxSjrJYfLC8CE
+         zHdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=HdgYh7H6djiSkWdskIqW1HYZC75prn7mcolys9sjAas=;
+        b=xTyzAq+o1WP6X1pbjmX0tJW21A0xeiCVEEYr0RzqiR8Ac1J8kf2XwuYw3jiZD4jKO+
+         BNup2M0NyiV55LQ4zt/5C85qn9FJ78u9z0mlFvBF5Ri20B9GGS5irrv3V+d6eyZ0Fzzq
+         Iui3y0viAtO6DREw0c02CXzbDeTIas00nmsNjUGiUa8n8GSd6nbC5Bf9l3d3oEhGp7Wp
+         A0bG8bjHiU6Vryb+tWgNs7GesSBQ95TJJ5j7zzHu5NkCCdTkDBru87x3OdNBRAF1Z3sw
+         vHG/QHYsm/hUfI/fR6ZWpFRnL2FQrTC77vI/YgJEFje0SZWKaTpMoTCnUAKcfqfUnYbv
+         6MYQ==
+X-Gm-Message-State: AOAM530QQZxvQ7lKIDo4168jKCaUXxLWmGssMc8ENe1pMKg8IospXiXM
+        2/K/pMNQ3xSOi1Rper6Vtu0=
+X-Google-Smtp-Source: ABdhPJwnWkY7w/0Nt7EAPXzJ2qxyTNpKJpDTjp+2hR/go29ibieorFkh1qRJT00RPJ5bM7qRwIH/gA==
+X-Received: by 2002:a17:907:7fa9:b0:711:d214:36cd with SMTP id qk41-20020a1709077fa900b00711d21436cdmr18620268ejc.600.1654799517413;
+        Thu, 09 Jun 2022 11:31:57 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id x11-20020a056402414b00b0043158c608e4sm8051877eda.27.2022.06.09.11.31.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jun 2022 11:31:56 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nzMwm-0032R6-Bq;
+        Thu, 09 Jun 2022 20:31:56 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        dyroneteng@gmail.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH 1/6] docs: document bundle URI standard
+Date:   Thu, 09 Jun 2022 20:27:47 +0200
+References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
+ <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
+ <xmqqtu8x1fd4.fsf@gitster.g>
+ <48e722dc-f860-f7a6-36d0-b0106087aef4@github.com>
+ <xmqq5ylarhsg.fsf@gitster.g>
+ <3d67b69b-fac8-3171-92dc-303ea672efbf@github.com>
+ <xmqqk09plnze.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqk09plnze.fsf@gitster.g>
+Message-ID: <220609.86v8t9sn6r.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 17F44286-E822-11EC-BE37-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Joakim Petersen <joak-pet@online.no> writes:
 
-> On 09/06/2022 11:03, SZEDER G=C3=A1bor wrote:
->> This patch seems to break colorization when __git_ps1() is invoked
->> from $PROMPT_COMMAND:
->>    ~/src/git (master)$ echo $PROMPT_COMMAND
->> __git_ps1 "\[\e]0;\w - Terminal\a\e[01;32m\]\h\[\e[01;34m\] \w" "\[\e[=
-01;34m\]\$\[\e[00m\] " " \[\e[01;34m\](%s\[\e[01;34m\])"
->>    ~/src/git (master)$ git checkout 9470605a1b
->>    HEAD is now at 9470605a1b git-prompt: make colourization consistent
->>    ~/src/git ((9470605a1b...))$ source contrib/completion/git-prompt.s=
-h
->>    ~/src/git (\[\e[31m\](9470605a1b...)\[\e[0m\])$ # uh-oh
->>    ~/src/git (\[\e[31m\](9470605a1b...)\[\e[0m\])$ git checkout 947060=
-5a1b^
->>    Previous HEAD position was 9470605a1b git-prompt: make colourizatio=
-n consistent
->>    HEAD is now at 2668e3608e Sixth batch
->>    ~/src/git (\[\e[31m\](2668e3608e...)\[\e[0m\])$ source contrib/comp=
-letion/git-prompt.sh
->>    ~/src/git ((2668e3608e...))$ # Looks good.
->>=20
+On Thu, Jun 09 2022, Junio C Hamano wrote:
+
+> Derrick Stolee <derrickstolee@github.com> writes:
+> [...]
+>> I hope I am going in the right direction here, but I likely
+>> misunderstood some of your proposed alternatives.
 >
-> While I did test this on my own prompt for v6 (which is identical to v7
-> in terms of code) and not see any breakage, I have the same issue with
-> v7. Maybe I forgot to re-source the changed git-prompt.sh. Either way,
-> The issue stems from $b being wrapped in $__git_ps1_branch_name and the=
-n
-> back into itself after colouring. Moving this wrapping to before colour
-> is applied fixes this. I will submit a v8 shortly.
+> I wasn't seriously "proposing" an alternative.  It was just that it
+> looked wasteful to go to a separate format (i.e. bundle) when packfiles
+> should suffice, as you would be adding extra information that is not
+> in bundles via the table-of-contents anyway, and what is given by a
+> bundle that is missing in a packfile is only the refs information,
+> which should be trivial to add to the table-of-contents.
 
-As the topic is already in 'next' (and presumably that is how SZEDER
-noticed the breakage), please make it an incremental fix-up.
+One thing that got pointed out to me by someone interested in this
+feature is that they'd be interested in serving up historical git
+repositories with a repo.bundle file.
 
-Thanks.
+We're much better off with a format that includes refs for those use
+cases, even though no version of the patches that have been kicked
+around support this particular use-case yet (but it would be relatively
+easy as a follow-up).
+
+I also daresay that bundles will tend to integrate better into existing
+infrastructure, since if you're doing incremental backups with them it's
+a natural extension to throw those same incremental updates at a CDN and
+serve them up with bundle-uri.
+
+I also think we can come up with much better tooling for collections of
+bundles than random packfiles, since they declare what "tip" they want,
+and we're able to add arbitrary key-values to the header format in the
+future (and Stolee already added one such key-value).
