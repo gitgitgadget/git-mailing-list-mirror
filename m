@@ -2,115 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 968C8C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 01:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA70C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 03:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231315AbiFIB1w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jun 2022 21:27:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48758 "EHLO
+        id S237399AbiFIDFl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jun 2022 23:05:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbiFIB1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jun 2022 21:27:50 -0400
-Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B623A2BC2
-        for <git@vger.kernel.org>; Wed,  8 Jun 2022 18:27:48 -0700 (PDT)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
-        t=1654738066;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=pYdfU5cTAFjyymBZ07OlZ5G1GjTS2+Cg7jaG4Bikhi8=;
-        b=ZYastEm2C8IyRu7hAl6kRSlb/yJsUdHIWI0MCB26AP6yQ/+O5W/58inHJFduV0iWbhgESo
-        ETbdJ/zBBXMWNPTpU2cMz9tGN1078EBNr+v5Y/yvWM3oisg3QpgyccEH4/uw/dLSD2wpGL
-        /2fPB60yWfXoRCeWhLgRKdGecEN/Xqz7X4orqJzG7pCsEygMG2JIJAS49Do+pmCekrL2zv
-        KrA2oefjVBeJDho7yJg7gcPIgiEszxGJE4JPDQuqbDV4+gmifNpbqiZ0Wwb1rBrBLKh8vS
-        gUwK/6STvbQ1mKZfs9Nk2w0vgmEEgCeXrY0QyT1vqw5E8LannVZGgF6F77kzbA==
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Tassilo Horn <tsdh@gnu.org>, Tao Klerks <tao@klerks.biz>,
-        git@vger.kernel.org
-Subject: Re: [BUG?] Major performance issue with some commands on our repo's
- master branch
-In-Reply-To: <YqEyh5opAaJxph2+@coredump.intra.peff.net>
-References: <87h750q1b9.fsf@gnu.org>
- <CAPMMpohzqKo-+q-tOcXymmzGxuOY-mf2NPRviHURm8-+3MPjZg@mail.gmail.com>
- <87y1yb2xc8.fsf@gnu.org> <YqEyh5opAaJxph2+@coredump.intra.peff.net>
-Date:   Wed, 08 Jun 2022 21:27:43 -0400
-Message-ID: <87sfoe7hio.fsf@kyleam.com>
+        with ESMTP id S232220AbiFIDFk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jun 2022 23:05:40 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7BC457171
+        for <git@vger.kernel.org>; Wed,  8 Jun 2022 20:05:39 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id h192so13860367pgc.4
+        for <git@vger.kernel.org>; Wed, 08 Jun 2022 20:05:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=5ekL+ncX1UaD0tkZw+Bg9LRh3b1zcXLcMVmx6rIHKEY=;
+        b=AdZxcTAKp2DS2YQsqVe4gPpCBTTrk5boWbZVKAt7DOtt6HBim3sGfeO8G7cqSf3tRQ
+         7x0rG51ds603ImV+ftxY9Uc/d6iwVqgvQt/3YAMI2s2uxO2v3I+/3CCXnbACaIWKnspF
+         3r+XaCxyp8cW3FtCJ/CmTaL4Ardmqg7GWnOh/K+uAP4FGMvjJJv7cdz9M41r9li7CKFQ
+         YpXQ0HbL4AhyGvL9WP+HEasQcYHc3GuEQJm5nLRWdTAAvD9/GT+lNeTfdiJZaUZkJV2p
+         CUvVlpQ+nHRgr0DGqsAQMLU5pNZ9E/O59FcBQ7qr7HFrtSvRwc5//GWr4NHl5nhV1FCe
+         RCrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=5ekL+ncX1UaD0tkZw+Bg9LRh3b1zcXLcMVmx6rIHKEY=;
+        b=Rv3XZ2jYO5CUpbOVh1agw+/e69gXUE1vyGt6yJHXdEz0JmOyfMtp/QPF0DnBhEKfxS
+         tr0rE3RRQ3yiVkPGN8/rk9vS5HIohat7bp9wpITNKvIF0KNvzc3D2c+ZfIDVtkxTjDxQ
+         GLKSZf8q+92rDTT0eV1+SPErnx3aFRKHy292RxTzcy7TzAmiL67RhxJUuBTKzYVU/+yX
+         7/TwB5khBdhJwYHJOxh6DGkYAmS1ggXdXW1EEutuC2dBe1d0/hUFJno6N5+61fuEsryp
+         NH/uQmcgWmhDshBbUDXjC7NOBocQEXgO/gqCaIo8Yzaela3ZWC9HLjCuInHrJ8zOu+Jh
+         lqhw==
+X-Gm-Message-State: AOAM530NfXec+M3FPGCzpyQhmxju8OFPwMqI5Rix7ay2ttPvY16XdxK+
+        OGBuU+HGAj8Ck+Y+6xsr+4Q=
+X-Google-Smtp-Source: ABdhPJzeIL2KzFliPj5q1+G65Ix60owMTea3vwdPu/Ohl/J2kEU7PjU52831wPnfXEs4fQb2r7QZRQ==
+X-Received: by 2002:a62:820a:0:b0:51b:d1f9:b45f with SMTP id w10-20020a62820a000000b0051bd1f9b45fmr33928754pfd.63.1654743939090;
+        Wed, 08 Jun 2022 20:05:39 -0700 (PDT)
+Received: from JMHNXMC7VH.bytedance.net ([139.177.225.227])
+        by smtp.gmail.com with ESMTPSA id j10-20020a17090ae60a00b001e29ddf9f4fsm14719368pjy.3.2022.06.08.20.05.34
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 08 Jun 2022 20:05:38 -0700 (PDT)
+From:   Han Xin <chiyutianyi@gmail.com>
+To:     nksingh85@gmail.com
+Cc:     Han Xin <chiyutianyi@gmail.com>, avarab@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
+        neerajsi@microsoft.com, newren@gmail.com, philipoakley@iee.email,
+        stolee@gmail.com, worldhello.net@gmail.com,
+        zhiyou.jx@alibaba-inc.com
+Subject: [RFC PATCH] object-file.c: batched disk flushes for stream_loose_object()
+Date:   Thu,  9 Jun 2022 11:05:30 +0800
+Message-Id: <20220609030530.51746-1-chiyutianyi@gmail.com>
+X-Mailer: git-send-email 2.36.1
+In-Reply-To: <7ba4858a-d1cc-a4eb-b6d6-4c04a5dd6ce7@gmail.com>
+References: <7ba4858a-d1cc-a4eb-b6d6-4c04a5dd6ce7@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: kyleam.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King writes:
+Neeraj Singh[1] pointed out that if batch fsync is enabled, we should still
+call prepare_loose_object_bulk_checkin() to potentially create the bulk checkin
+objdir.
 
-> I suspect the issue may be quite subtle. Even you asked for
-> "--no-patch", the underlying diff may still be used for other things.
-> For example, simplifying away TREESAME commits. I.e., ones which did not
-> change anything from their parents after applying path restrictions,
-> diff-filters, etc. There may be other cases, too (e.g., --follow).
->
-> I think the code could be written to realize that none of those features
-> are in use, and disable the diff entirely in favor of checking whether
-> the two trees has the same object id. That would yield _mostly_ the same
-> behavior, though there are probably corner cases (e.g., a tree with an
-> odd mode entry, say, may get parsed so as to produce an empty diff, even
-> though it's not byte for byte identical). That may be an acceptable
-> tradeoff. But I think the code would be a bit brittle (it needs to know
-> about all the cases where a diff might matter, and we may add more
-> later).
+1. https://lore.kernel.org/git/7ba4858a-d1cc-a4eb-b6d6-4c04a5dd6ce7@gmail.com/
 
-Do you think it'd be safe to make --no-patch imply --diff-merges=3Doff, as
-Tao suggested elsewhere in this thread?
+Signed-off-by: Han Xin <chiyutianyi@gmail.com>
+---
+ object-file.c                   |  3 +++
+ t/t5351-unpack-large-objects.sh | 15 ++++++++++++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-  https://lore.kernel.org/git/CAPMMpog-7eDOrgSU9GjV4G9rk5RkL-PJhaUAO3_0p2Yx=
-fRf=3DLA@mail.gmail.com
+diff --git a/object-file.c b/object-file.c
+index 2dd828b45b..3a1be74775 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2131,6 +2131,9 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 	char hdr[MAX_HEADER_LEN];
+ 	int hdrlen;
+ 
++	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
++		prepare_loose_object_bulk_checkin();
++
+ 	/* Since oid is not determined, save tmp file to odb path. */
+ 	strbuf_addf(&filename, "%s/", get_object_directory());
+ 	hdrlen = format_object_header(hdr, sizeof(hdr), OBJ_BLOB, len);
+diff --git a/t/t5351-unpack-large-objects.sh b/t/t5351-unpack-large-objects.sh
+index 461ca060b2..a66a51f7df 100755
+--- a/t/t5351-unpack-large-objects.sh
++++ b/t/t5351-unpack-large-objects.sh
+@@ -18,7 +18,10 @@ test_expect_success "create large objects (1.5 MB) and PACK" '
+ 	test_commit --append foo big-blob &&
+ 	test-tool genrandom bar 1500000 >big-blob &&
+ 	test_commit --append bar big-blob &&
+-	PACK=$(echo HEAD | git pack-objects --revs pack)
++	PACK=$(echo HEAD | git pack-objects --revs pack) &&
++	git verify-pack -v pack-$PACK.pack |
++	    grep -E "commit|tree|blob" |
++		sed -n -e "s/^\([0-9a-f]*\).*/\1/p" >obj-list
+ '
+ 
+ test_expect_success 'set memory limitation to 1MB' '
+@@ -45,6 +48,16 @@ test_expect_success 'unpack big object in stream' '
+ 	test_dir_is_empty dest.git/objects/pack
+ '
+ 
++BATCH_CONFIGURATION='-c core.fsync=loose-object -c core.fsyncmethod=batch'
++
++test_expect_success 'unpack big object in stream (core.fsyncmethod=batch)' '
++	prepare_dest 1m &&
++	git $BATCH_CONFIGURATION -C dest.git unpack-objects <pack-$PACK.pack &&
++	test_dir_is_empty dest.git/objects/pack &&
++	git -C dest.git cat-file --batch-check="%(objectname)" <obj-list >current &&
++	cmp obj-list current
++'
++
+ test_expect_success 'do not unpack existing large objects' '
+ 	prepare_dest 1m &&
+ 	git -C dest.git index-pack --stdin <pack-$PACK.pack &&
+-- 
+2.36.1
 
-If so, it seems like that'd be a good way to get speedups for some merge
-commits.  For example, here are hyperfine timings for the current tip of
-git.git's master branch:
-
-  Benchmark #1: git show --no-patch --format=3D%h 1e59178e3f
-    Time (mean =C2=B1 =CF=83):      47.8 ms =C2=B1   1.5 ms    [User: 43.2 =
-ms, System: 4.6 ms]
-    Range (min =E2=80=A6 max):    46.8 ms =E2=80=A6  54.4 ms    59 runs
-=20=20=20
-    Warning: Statistical outliers were detected. Consider re-running
-    this benchmark on a quiet PC without any interferences from other
-    programs. It might help to use the '--warmup' or '--prepare'
-    options.
-=20=20=20
-  Benchmark #2: git show --no-patch --diff-merges=3Doff --format=3D%h 1e591=
-78e3f
-    Time (mean =C2=B1 =CF=83):       3.2 ms =C2=B1   0.2 ms    [User: 2.5 m=
-s, System: 0.8 ms]
-    Range (min =E2=80=A6 max):     2.9 ms =E2=80=A6   6.8 ms    688 runs
-=20=20=20
-    Warning: Command took less than 5 ms to complete. Results might be
-    inaccurate.
-=20=20=20=20
-    Warning: Statistical outliers were detected. Consider [...]
-    options.
-=20=20=20
-  Benchmark #3: git log --no-walk --format=3D%h 1e59178e3f
-    Time (mean =C2=B1 =CF=83):       3.2 ms =C2=B1   0.1 ms    [User: 2.4 m=
-s, System: 0.8 ms]
-    Range (min =E2=80=A6 max):     2.9 ms =E2=80=A6   4.2 ms    697 runs
-=20=20=20
-    Warning: Command took less than 5 ms to complete. Results might [...]
-=20=20=20=20
-    Warning: Statistical outliers were detected. Consider [...]
-=20=20=20=20
-=20=20=20
-  Summary
-    'git log --no-walk --format=3D%h 1e59178e3f' ran
-      1.01 =C2=B1 0.08 times faster than 'git show --no-patch --diff-merges=
-=3Doff --format=3D%h 1e59178e3f'
-     14.98 =C2=B1 0.79 times faster than 'git show --no-patch --format=3D%h=
- 1e59178e3f'
