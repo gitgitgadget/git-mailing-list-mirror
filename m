@@ -2,97 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D38CC43334
-	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 13:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95E51C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 14:46:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243892AbiFINzg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 09:55:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45894 "EHLO
+        id S240883AbiFIOqS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 10:46:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239703AbiFINzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 09:55:32 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 879BF3CFF2
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 06:55:23 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id h5so32576602wrb.0
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 06:55:23 -0700 (PDT)
+        with ESMTP id S230018AbiFIOqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 10:46:17 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91535102C
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 07:46:16 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id hv24-20020a17090ae41800b001e33eebdb5dso1765600pjb.0
+        for <git@vger.kernel.org>; Thu, 09 Jun 2022 07:46:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=d2MflH0gzDhYeX1eKlzyV0/v0Il9kPbI4BbOxmALWVk=;
-        b=Ctv3WYghpSPERjKcRCpH6UW9k6bRlqSJYuiBavMe1/uw/Exj88Xc2OsfIIHWcJwsJT
-         sGEGTT2G8t32gXmvpd9N8JSwJlXekK1nVLAvr++6cnx1pldx/q73r43GEnKIRcxQ5Iog
-         ZHlhyfqnIeghH9vwdE0NTB3gDtt188YDxzAbH9/7S4+v1cOG0/pATxzP2ZZawTtuGM6F
-         51w21e2iu1Mq6Z3xFSL/9ozxT4ka2tE25Cs0HRQxpjZz0ZWpjihXWuht1KgOmaB0SAS4
-         0RxzuE55M5sA/DpXZzT2Lb+cBBLL9p7uyzA/wzEiMAs5GkcaUS82/EiDLZtdfGRDSGSN
-         6gEg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CG2Zdp/u7sLqSQc7G03dmQeab9Sh+15GSKkg2O2rkC0=;
+        b=lTzXQNCGRLWRq3BHSlvPGdzO1pfvvr1kdH1voYSfo+iJwKG8umwr999Cr1pxgzoPKC
+         YMPmA4GYf4veZFkacoJLC50xfyK7js/UK5g4Gw8qV/P3uxQjC4Wbk0B2765bzdvYSdXM
+         zm4+azxHY/zfofAgeiph5s50lchJ/M1h8C2McnwIrRyFgr9KpxvSyknjtVaprD6LuBPr
+         PAAJsLOpmv77P+8xZ371GiouvIwge5ABQ6M7d50LQYRjyuztw+297azFdJ/F8q7OnzHM
+         KWiaCpNDBZsN69fYCTGfiGtwHWhBFL1RkqNMubEtIpqzRqsROhtvzVQUSYZkqXZ+2snX
+         vDNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=d2MflH0gzDhYeX1eKlzyV0/v0Il9kPbI4BbOxmALWVk=;
-        b=YFT/MtWonjveMKz291IeAwGkEGqC4VVhzz3qTmmc/sooEDhdT7ZOr7eQMvCW9FMiaY
-         hLhn7CgGL4MLwO73CuT6Ng46W1hjy+siJFKE1H6MtzKR9Xn1JDdTWLnsERerCRN7/mTh
-         ZIJJzup150SmUoNnhE3hzKq3DUh4+Q0D9jBlFq4KKUJhki7DvSobKvOp0i+S6XvYuIi1
-         YdlmVGUB6Wbi7yoqsWu4wKSiRaSvhQl0xXQt5G1yPebahv+HTLeDC3tDOKZI6S+NVyiK
-         FfnTKFCzJSkFanXjYrcricJUfaETyB6KO9QfMdfwisHqIDl+/90x4ZGBpFdZjzGI3Fap
-         TBpQ==
-X-Gm-Message-State: AOAM530dHTsm6TWoJyNBNUJPpTgorY3YF0OpiYh7npOv/QNpDQxwcSk9
-        ApzSLCv6Nzrd/Do/U6aX9QoMfczRc1STdnZs
-X-Google-Smtp-Source: ABdhPJxYYRK6/txT9+GPMyH24zv6Y32ceulLFK8kKK6HQlhp4YUe2U+mUmW3+MAHyNe1oVlz51O6CQ==
-X-Received: by 2002:a5d:5956:0:b0:217:77da:c27a with SMTP id e22-20020a5d5956000000b0021777dac27amr25183404wri.230.1654782921654;
-        Thu, 09 Jun 2022 06:55:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k3-20020a05600c1c8300b0039c5fb1f592sm7749257wms.14.2022.06.09.06.55.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 06:55:21 -0700 (PDT)
-Message-Id: <pull.1255.git.1654782920256.gitgitgadget@gmail.com>
-From:   "Cleber Rosa via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 09 Jun 2022 13:55:20 +0000
-Subject: [PATCH] setup: fix function name
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CG2Zdp/u7sLqSQc7G03dmQeab9Sh+15GSKkg2O2rkC0=;
+        b=rAvao9BkWsHQBhamIbSOn/Z/qk9//hm85PoD7CVbo5BS64DJJDl6SE7r2aDppatWR+
+         3Y9Jjgb9QTdbfYW4aoCfdiZmpC5bL3EPODuKuGEo+OSfsjY3zAmStdchQb32ONTlTy4z
+         m9Tn1YwNLfT5T0r5blOzwjbXGXW9u9gseqK8HHQUtyKsdDvbO3Iwnb/iE224Ipuh16v8
+         q69Ax2OMvsVmj4+/5MFDbMSr67Ff1xFSMWlnYiSry0OlG3biUMKPFPJ+iz90OmD5J1+Y
+         BS8By1YX5L0LvKUY5dbXlvUDLCt1BOw/sV78fCTHSQJreqY5bg48LmaUG8WbuZ8YSnDr
+         lCdw==
+X-Gm-Message-State: AOAM533I0BLr60xBN7fEV9vd7fJ/WvpjPXSyMPWtIrJFDwMO0IPOIOZ9
+        icBst6MQD1y7UsLnnVv9GWwm+/FX6IeOcVPEwFDEPgaDe/k=
+X-Google-Smtp-Source: ABdhPJwv2Y0AjwK0sghAmhDNZ4SFyaoY8yMNQQZSTg0zfI8J+co8JVxONvtKt6PfNv+n7TIC7D4nBC/3uLl/HWkIrxY=
+X-Received: by 2002:a17:902:e806:b0:164:164c:5a63 with SMTP id
+ u6-20020a170902e80600b00164164c5a63mr39659085plg.102.1654785976039; Thu, 09
+ Jun 2022 07:46:16 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Cleber Rosa <crosa@redhat.com>, Cleber Rosa <crosa@redhat.com>
+References: <CANWRddN4R6AceeaOyZm1vs8AXBNv3J+cE5MOyrhKVhcqddjUOA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2206091000590.349@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2206091000590.349@tvgsbejvaqbjf.bet>
+From:   Rodrigo Silva Mendoza <rodrigosilvamendoza3@gmail.com>
+Date:   Thu, 9 Jun 2022 07:46:04 -0700
+Message-ID: <CANWRddNa1nB9shoppfXuA2yqmd2353HVBopoufkh0SevnVrngA@mail.gmail.com>
+Subject: Re: Best way to update `HEAD` in mirrored repos
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Cleber Rosa <crosa@redhat.com>
+Hi Johannes,
 
-The reference given to users when the result of
-setup_git_directory_gently_1() is unexpected is incorrect.
+On Thu, Jun 9, 2022 at 1:02 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+>
+> The reason is that `set-head` expects options to come before arguments,
+> like so:
+>
+>         git remote set-head -a origin
+>
+> Ciao,
+> Johannes
 
-This fixes the name of the function when presenting the BUG message.
 
-Signed-off-by: Cleber Rosa <crosa@redhat.com>
----
-    setup: fix function name
+Hmm, that doesn't seem to work for me either - I get the same type of
+error as before.
+Here's a minimal repro:
+    $ git clone git@github.com:git/gitscm-old.git --mirror
+    $ cd gitscm-old.git
+    $ git remote set-head -a origin
+      error: Not a valid ref: refs/remotes/origin/master
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1255%2Fclebergnu%2Ffix_function_name-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1255/clebergnu/fix_function_name-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1255
+Git version: git version 2.32.1 (Apple Git-133)
 
- setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Let me know if I'm missing anything.
 
-diff --git a/setup.c b/setup.c
-index faf5095e44d..b5a537258d2 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1402,7 +1402,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		 * find a repository.
- 		 */
- 	default:
--		BUG("unhandled setup_git_directory_1() result");
-+		BUG("unhandled setup_git_directory_gently_1() result");
- 	}
- 
- 	/*
-
-base-commit: 9c897eef06347cc5a3eb07c3ae409970ab1052c8
--- 
-gitgitgadget
+Cheers,
+Rodrigo
