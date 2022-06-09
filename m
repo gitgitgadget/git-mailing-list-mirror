@@ -2,142 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69DE6C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 19:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB3C8C43334
+	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 19:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235197AbiFITjn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 15:39:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39250 "EHLO
+        id S239985AbiFITvD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 15:51:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234079AbiFITjl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 15:39:41 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F29E26C
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 12:39:40 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id n11so3328883iod.4
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 12:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=0SZDhGqCZe8GLd3HJN9lpqeFznBa7BPUf7KPi1/s9JQ=;
-        b=XuJjqsDLtzNTEWDq+fgv4IDG9KjQx+rDNwacZZyS6Xy53niT5gPjMEvvmG7ZEroBiW
-         LMgSYu8bGIGPXj1fn1dOlznbmi3LQAAUX4tonjUmfyPUKRaGra8v0Dy3J9q2YzPdV2Kk
-         P9Zew1qaPboS2D7P/ViAFVVWr6KpuoReFmLMIuINfX8oTkgJ4DcbY7OG/G95AYWn4xIT
-         XutgwllY3/8XRcCqrXprh1HFi3/l6C8OSsqhN7p2IAj15DdxckePPAZc7KgwN9FTQZfR
-         p78ewXJtrhBANt8EdA/0Fs9lFIDNXdZWnA/XbmPmElKa9cl/znS7yzCZ3CsBQbWfyO1d
-         0ZgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=0SZDhGqCZe8GLd3HJN9lpqeFznBa7BPUf7KPi1/s9JQ=;
-        b=EjL6j/Z6ibFQqWuV8rdt0tpE+AnttNi2fKxPPIrFNj6wYKNV1kK2Xnot/YwJiKTC8C
-         ZUcOB33QKPTSrnIWC8o0WnBjbTnBFI7xivOtKj6kDJevnou19ZuFr8iB+eUHvqc7tfe0
-         OxoYwOWH/KgMC/vyXB3ocQcKtaMELzed64Dz75fftPKCRWXRp/tJxI6WZEVUOj0SoHqp
-         iv21HvridhL/AZKqlVbUm9Ec93BXsKTpaSh/iqpkXVzyIm+gU2vymoGGTj3Q4i9EsYHC
-         qVFcoCm/jnqTnmWty52suo4cx8p8FS+UGpaq4TaHMxIewatabH2TL3/h5lqLzMD/qpp7
-         dUnw==
-X-Gm-Message-State: AOAM533JoAraZTcHzqDng1ALVWI/tBb1FwVaKvqtf7L8kSeUJxOQnOdw
-        lcxSwN2RshSgkr89LuRCLG1g
-X-Google-Smtp-Source: ABdhPJzcO6kod54Am3Ze6ZXaS2BHeAsDGI0+qbjasaPwfV+qx6fCzx+O+a5mUBSaKSKwv1n5fceRYQ==
-X-Received: by 2002:a05:6602:48a:b0:65b:413f:a66c with SMTP id y10-20020a056602048a00b0065b413fa66cmr19810352iov.137.1654803579702;
-        Thu, 09 Jun 2022 12:39:39 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:495e:d490:1505:7440? ([2600:1700:e72:80a0:495e:d490:1505:7440])
-        by smtp.gmail.com with ESMTPSA id k10-20020a92b70a000000b002d1eb84e4fasm10692818ili.83.2022.06.09.12.39.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jun 2022 12:39:39 -0700 (PDT)
-Message-ID: <1ad2435b-f6a5-dc17-1ee1-ffa8c127f04a@github.com>
-Date:   Thu, 9 Jun 2022 15:39:38 -0400
+        with ESMTP id S235606AbiFITvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 15:51:00 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 509AB3A8FB4
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 12:50:59 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B3718199B8E;
+        Thu,  9 Jun 2022 15:50:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3g6JFHbkFoheZY9zQzfFp1gN0Snn/wR1lAbLrc
+        QbaYI=; b=Z1YEfZJCLLPVDuuzKRKPn9H3bu8NrhThv4pmQVeYb9ZIQDvRDLliPv
+        JIDlRUlCFTJzZXDQ41DefcLfBYIM+OXP9hrU/+CDRrJ2oCcuCf4WucghpQY787JX
+        hWKzcFvvSLvwKQFlp+1Wq4tcmDUwpFMXKdsXrfZcHPiIr0oKdv1A4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AC227199B8D;
+        Thu,  9 Jun 2022 15:50:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2F02A199B8C;
+        Thu,  9 Jun 2022 15:50:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v2] ls-files.c: add --object-only option
+References: <pull.1250.git.1654509678718.gitgitgadget@gmail.com>
+        <pull.1250.v2.git.1654778272871.gitgitgadget@gmail.com>
+Date:   Thu, 09 Jun 2022 12:50:53 -0700
+In-Reply-To: <pull.1250.v2.git.1654778272871.gitgitgadget@gmail.com> (ZheNing
+        Hu via GitGitGadget's message of "Thu, 09 Jun 2022 12:37:52 +0000")
+Message-ID: <xmqq35gdk44i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 1/6] docs: document bundle URI standard
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de
-References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
- <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
- <xmqqtu8x1fd4.fsf@gitster.g>
- <48e722dc-f860-f7a6-36d0-b0106087aef4@github.com>
- <xmqq5ylarhsg.fsf@gitster.g>
- <3d67b69b-fac8-3171-92dc-303ea672efbf@github.com>
- <xmqqk09plnze.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqk09plnze.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 798C22A6-E82D-11EC-AB1B-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/9/2022 1:56 PM, Junio C Hamano wrote:
-> Derrick Stolee <derrickstolee@github.com> writes:
-> 
->> Ævar's observation that bundles also add ref tips to the packfile is
->> the key to breaking down this concern: these ref tips give us a way
->> to negotiate the difference between what the client already has
->> (including the bundles downloaded from a bundle provider) and what it
->> wants from the origin Git server. This all happens without any change
->> necessary to the origin Git server.
->>
->> And thus, this bundle URI design came about. It takes all of the best
->> things about the GVFS Cache Server but then layers refs on top of the
->> time-based prefetch packfiles so a normal Git client can do that
->> "catch-up fetch" afterwards.
-> 
-> Yup.  My observation was that (1) you would need ref tips in some
-> way, (2) you are conveying not just "here are the set of bundle
-> files", but "this bundle file has these associated attributes" (like
-> .timestamp, and .uri to fetch it from), in the table-of-contents the
-> clients are expected to obtain anyway, hence (3) you could, but you
-> do not need to, use bundle as a way to convey "packfile contents
-> plus refs" to the clients (iow, instead you can use packfile and
-> then report these refs information in the table-of-contents as more
-> "associated attributes" to the items listed in the table-of-contents).
-...
-> Starting from "bundle URI standard" document at the beginning of the
-> thread, if we replace all the mentions of "bundle file" with
-> "packfile" in it, and then add .positiveRefs and .negativeRefs to
-> each "packfile" (renamed from "bundle file") as additional
-> "packfile.<id>.*" (renamed from "bundle.<id>.*") attributes, without
-> changing anything else, the result would be feature equivalent to
-> the original "bundle URI standard", I would think, but without
-> having to wrap a packfile in a bundle file?
-> 
->> I hope I am going in the right direction here, but I likely
->> misunderstood some of your proposed alternatives.
-> 
-> I wasn't seriously "proposing" an alternative.  It was just that it
-> looked wasteful to go to a separate format (i.e. bundle) when packfiles
-> should suffice, as you would be adding extra information that is not
-> in bundles via the table-of-contents anyway, and what is given by a
-> bundle that is missing in a packfile is only the refs information,
-> which should be trivial to add to the table-of-contents.
- 
-Ok, I've trimmed your latest reply to focus on the main point:
-"Why bundles?"
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-You are right that we could use a table of contents to list the
-metadata that we need (that is currently stored in the bundle
-header) except for one case: the single bundle. If the provider
-wants to skip the table of contents/bundle list and only provide
-one file that bootstraps clones, then we need something more than
-just a packfile.
+> From: ZheNing Hu <adlternative@gmail.com>
+>
+> `git ls-files --stage` default output format is:
+>
+> [<tag> ]<mode> <object> <stage> <file>
+>
+> sometime we want to find a path's corresponding objectname,
 
-This could be remedied by _requiring_ the table of contents with
-the ref list, but it does lead to separation of the packfile from
-the important ref information.
+"sometime" -> "When", perhaps.  If you really want to say that,
+"Sometimes, " is also good, though.
 
-Further, the provider might want to cover a large number of refs,
-not just the default ref. That would increase the size of the
-table of contents more than necessary.
+By the way, I do not think you are "want to find a path's
+corresponding objectname" at all with this feature.  The output from
+"ls-files -s" will have many object names, one per each path if the
+index is merged, and if you discard the path, you no longer can tell
+which object name corresponds to which path.
 
-With these things in mind, I do still think bundles are a good
-way to store and share this data.
+> we will parse the output and extract objectname from it
+> again and again.
 
-Thanks,
--Stolee
+Why is that a problem?  "again and again" is over-exaggerating;
+you'd munge each line just once.
+
+It would help readers if you say WHY you want to find object names.
+Perhaps you want to find the set of objects that are registered in
+the index, regardless of their paths?
+
+In any case, the paragraph needs a rewrite.
+
+> So introduce a new option `--object-only` which can only
+> output objectname when giving `--stage` or `--resolve-undo`.
+
+"which can only" makes it sound like you are complaining about its
+limitation.
+
+I read these two lines to mean "git ls-files -s --object-only" does
+not even give me the stage information, but that would make the
+command completely useless, so I am assuming that is not what you
+meant to say.  The same comment applies for resolve-undo, which is
+merely "what 'ls-files -s' may have given before you resolved".
+
+If you borrowed a feature from another existing command, say that
+explicitly, which will allow your commit to gain confidence by
+reviewers and future readers by showing that you care about overall
+consistency in the system.
+
+	Add a new option `--object-only` that omits the mode and
+	filename from the output, taking inspiration from the option
+	with the same name in the `git ls-tree` command.
+
+or something like that, perhaps.
+
+How does/should this interact with the `--deduplicate` option?
+
+If we are not giving stages and truly giving only object names
+(which I doubt is what we want, by the way), then we can and should
+deduplicate the output when the option is given.  If we have two
+identical blobs at different paths, or two identical blobs at the
+same path but at different stages, shouldn't we get only a single
+copy of output for that blob, as we are not showing paths nor
+stages, right?
+
+How does/should this behave when --stage is not given?
+
+I have a suspicion that this whole thing is misdesigned.  Instead of
+making it piggy back on --stage, don't you want to make it an
+independent option?  I.e.
+
+	git ls-files --object-only
+
+with no other option would behave like
+
+	git ls-files -s | sed -e 's/^[0-6]* \([0-9a-f]*\) .*/\1/'
+
+and it is an error to combine it with -s or --deduplicate.  If the
+purpose is to learn the set of objects registered in the index, then
+it might even make sense to make it an equivalent to
+
+	git ls-files -s |
+	sed -e 's/^[0-6]* \([0-9a-f]*\) .*/\1/' |
+	sort -u
+
+as duplicates or order of the entries is no use for such a use
+case.  
+
+It entirely depends on WHY you want to find object names, and that
+is why I asked it much earlier in this message.
+
+And I do not think it makes any sense to give resolve-undo
+information without paths nor stages at all.  Please do not tie this
+with that mode.
+
+In short
+
+ - this probably is better done as a separate independent mode
+   "--object-only", rather than a piggy-back feature on top of
+    existing other features like "-s" and "--resolve-undo".
+
+ - the new mode should be made mutually incompatible with "-s" and
+   "--resolve-undo".  There may be other options that this should be
+   incompatible, like "--tag" and "--full-name".
+
+Thanks.
