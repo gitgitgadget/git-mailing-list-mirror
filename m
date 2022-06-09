@@ -2,313 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 990FFC433EF
-	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 09:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 373A2C43334
+	for <git@archiver.kernel.org>; Thu,  9 Jun 2022 09:31:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233658AbiFIJDK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 05:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37116 "EHLO
+        id S242411AbiFIJbW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 05:31:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233594AbiFIJDI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 05:03:08 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2081422BAE6
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 02:03:06 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id y19so46150152ejq.6
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 02:03:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kYobcZbvHvXHoF+eZkVhTIJt/oK9IHpo4DR3YNIbPq0=;
-        b=Z/D1kpxEupv29zOUUAtGRc3oZ+EfhKZfs8jLVNPuCmm+Xo4Wy9NVgMOY+WmZKFvrPq
-         S0f1314naAgCoGfqDnpE3sJcWEgTmwJ4rWSgJHkafq04JLfqdI/7BDgWQoCj9aksQrnK
-         ABFGPr4gyTiDU0xsfImisHsHdyNlEANQUngTTFniUgJpmf26NjgPyTaQBaazPPsMP1eu
-         T1NBigOZ1bJPlWlsKTLgc+cv7utfgPtelS0rRPCzvAuJWXJUyPwJhefC+zncFGMkjT/L
-         RZHCM0WGn4vzSGJzRv8j9176seH2/WZkdY/AaQVh1gxksI9vmGGjtEyG0Gw+xRgAaZ7A
-         lg5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kYobcZbvHvXHoF+eZkVhTIJt/oK9IHpo4DR3YNIbPq0=;
-        b=Xn0XgtehhUlqGLnVh6/hoA/M2Pvwc1iDOIMt3rnAJ2ZIcHLfm/LV904xCVXD/3P5oU
-         dc+I581bQZuCnFBmzIPIFTWXZflXYp43aj6DHU6YtK+dTVTS+/E/PlvRJ48U7/N0XxXy
-         kwMaFKtLzak9fmwD1sPt4pI2/i4VuXDc04AKpRZykMhpMn4wIUIR3n5R3E8phFbTfRNJ
-         xnQnxaz209E0h1Z7CMwQJzLHjRYoIMgYrKsChxZZip9wXdPpBduNSLI9WlV7FurM6h04
-         Gk5R4patixp7Z9xp9AXqkNhWxB5ArGRAr+vtxgvQWcsrFkX1ti+m4woPjLyyUTN8atyK
-         xenA==
-X-Gm-Message-State: AOAM533KZXSLiLNgnKoiMEmrtF2qxIYsiyujrmi5n6SRtyDSqqlkah5N
-        4vpGYchyWcbLdv1l+Sd/sf0YrGDYtLs=
-X-Google-Smtp-Source: ABdhPJyKej2ScojuTGrmL4dhAPL6ce3nEYwb0OaD0HDrfw6QAf0JPnBvvzl7DAq2jDxVcTk61VeCkA==
-X-Received: by 2002:a17:907:2cc3:b0:6fa:55f:8805 with SMTP id hg3-20020a1709072cc300b006fa055f8805mr34920249ejc.46.1654765384531;
-        Thu, 09 Jun 2022 02:03:04 -0700 (PDT)
-Received: from localhost (78-131-17-130.pool.digikabel.hu. [78.131.17.130])
-        by smtp.gmail.com with ESMTPSA id be5-20020a0564021a2500b0042e09f44f81sm12753851edb.38.2022.06.09.02.03.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 02:03:03 -0700 (PDT)
-Date:   Thu, 9 Jun 2022 11:03:02 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Joakim Petersen <joak-pet@online.no>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Justin Donnelly <justinrdonnelly@gmail.com>
-Subject: Re: [PATCH v7] git-prompt: make colourization consistent
-Message-ID: <20220609090302.GA1738@szeder.dev>
-References: <20220606175022.8410-1-joak-pet@online.no>
- <20220607115024.64724-1-joak-pet@online.no>
+        with ESMTP id S242744AbiFIJbJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 05:31:09 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 771452B344F
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 02:30:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1654767007;
+        bh=eGMgIxLI8hdyhjFUF21ORmKXoUzIwp5d8JTHAOoiiFs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FAnKVhE2sm2bIS1CzCd/L9hSgk4zgutxONz9IdKaDJbNy2Y3bja7xVk6Jogc+LlUH
+         Q7aaLfK5xK7UtQtezc4GZH9kiBaGH7cEVkg4j26uyQWWp2MT8sRE6w/ap6NWDvPUZt
+         THtoVo6ViOMelh8LhOyKvQl+mnIjta4nS55xXhcI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.206.165] ([213.196.213.247]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N63VY-1nfIxj1UQy-016Qks; Thu, 09
+ Jun 2022 11:30:07 +0200
+Date:   Thu, 9 Jun 2022 11:30:00 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Han Xin <chiyutianyi@gmail.com>
+cc:     nksingh85@gmail.com, avarab@gmail.com, git@vger.kernel.org,
+        gitster@pobox.com, l.s.r@web.de, neerajsi@microsoft.com,
+        newren@gmail.com, philipoakley@iee.email, stolee@gmail.com,
+        worldhello.net@gmail.com, zhiyou.jx@alibaba-inc.com
+Subject: Re: [RFC PATCH] object-file.c: batched disk flushes for
+ stream_loose_object()
+In-Reply-To: <20220609030530.51746-1-chiyutianyi@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2206091114070.349@tvgsbejvaqbjf.bet>
+References: <7ba4858a-d1cc-a4eb-b6d6-4c04a5dd6ce7@gmail.com> <20220609030530.51746-1-chiyutianyi@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220607115024.64724-1-joak-pet@online.no>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:YuJhpzLvnwjmh8bm1nkBFsThQFHsBIftJrKzsWj7Ko33CugCjR0
+ 0welKRmWARST9tnitCkrULsoKNj7Fb2hA/2l6HmuOYPcA/LPPnqh4WDEUBjlHGyRrWhF1by
+ IX9gwPcnE7/VpR5ZCp6qh8M3wZSz7KZs/258pJZqK/LIAwGO6JqJ1EWQdytn/mQEari1sda
+ xBtDcF5uzDi2y4+1V0XuQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Nv+XjeJ0dsM=:+WBUixUdIcdLa2uUSBSE7C
+ dWTglLjZ0awNB4mPrE/RKeJxazUYCwYOqKSbqGphVLdzyHcCZZlONUjHms/pFyd+0osuFEo4V
+ JUT5N60eKLvZKEhYEa3pcUA7mAoM5fhqWu1XDTNqf12eBKUbgGEQ+YVn07ajfZgMFdzHQSrRg
+ sXe94tuPAatUd1R9HKO+skoxiJe1BDLEj5A+h1cwEQFiw0kPObpmoJ+it6R8hqJewmm6BgVER
+ hszayCcmEfAX4RJrzWRg+89KHPoqMRI2FOQC1s3jSc5GM2/eXtE4QT/W6096aJwbE0Jx6pFLT
+ a7HZgM617B7tbrFGLIf8S9ozLGXadEk/ByqpyNoPb53KTfuB9VP9/5Ews+u7lm7dgscQFDBmN
+ yBo50lQoSvfoqUA5ATx2IpaleYO3XlwheBQh/tw+BwqCY782FweWP4M8IMFKtmsfHHk4rnTYh
+ yezVya2LsZUl4wkE7NTX0zoI9XTtj/eEsiLLQ4/gaq16vb6vH7AyFi5ua0ilR8NGpdgKAsNmF
+ sOxvLCyBLSNPHHhRTvS9F6FXfMymzhWLFxmHfIEcRJ7GDbxFdAn0J/DNJw5sisMYu06l6b8QQ
+ ipDV0UxsK5F5cVNOfm4N1OM6jbTzLoJ+b4NiGP2ufK5pgXQQ1hddrStucm9903fnLcBQ1kr+j
+ otVSgA7NAJmRnLvWgNjLQ3/QOy0mmwpOBX7eFDX/FHnpVB/syCG+SAx7nTwzSZPvYigg/4cBI
+ Jl33UDyDXQIJfl472TDHQzfDrJnakdW5dzEBkx7zkPifDWl5QjWA0dZ+OE1ZkcZmVXv2ciOac
+ LLkFxkc59/fxlwQVs8J666U2/uOwTPe2OW8a9ST0Eb9i5FG/UaBFuBf0kA/E3lSTNPvjaeWLV
+ bmjTJ6DLvu7P02cEzz1/u2ghQSKgGr3xwplh7J4IIz82PSQkLWw4Tl5SFZEK//OdcN0p1sXzU
+ ypIUHz3LWBEBvTVruNEl/GLrgWmlzTrS3eoJOU+duckvzVIlswIUAyZQ3xV/eos9F3c/lJrc9
+ 2FYxHcR3CrByylpz8dyNtfaq3kDAZzvqQk19MwDEkRK9UqklWCPD7r+gacSj5QtWRg8mJzL4m
+ X5YyRgtX0iZGvmilPsWHdZ+A3Vag4DdK0KK5nk8uljowjqirIArb4MffH3HcqmWrvJoEGwaDy
+ 2iAIw=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 07, 2022 at 01:50:24PM +0200, Joakim Petersen wrote:
-> The short upstream state indicator inherits the colour of the last short
-> state indicator before it (if there is one), and the sparsity state
-> indicator inherits this colour as well. This behaviour was introduced by
-> 0ec7c23cdc6 (git-prompt: make upstream state indicator location
-> consistent, 2022-02-27), while before this change the aforementioned
-> indicators were white/the default text colour. Some examples to
-> illustrate this behaviour (assuming all indicators are enabled and
-> colourization is on):
->  * If there is something in the stash, both the '$' and the short
->    upstream state indicator following it will be blue.
->  * If the local tree has new, untracked files and there is nothing in
->    the stash, both the '%' and the short upstream state indicator
->    will be red.
->  * If all local changes are added to the index and the stash is empty,
->    both the '+' and the short upstream state indicator following it will
->    be green.
->  * If the local tree is clean and there is nothing in the stash, the
->    short upstream state indicator will be white/${default text colour}.
-> 
-> This appears to be an unintended side-effect of the change, and makes
-> little sense semantically (e.g. why is it bad to be in sync with
-> upstream when you have uncommitted local changes?). The cause of the
-> change in colourization is that previously, the short upstream state
-> indicator appeared immediately after the rebase/revert/bisect/merge
-> state indicator (note the position of $p in $gitstring):
-> 
-> 	local f="$h$w$i$s$u"
-> 	local gitstring="$c$b${f:+$z$f}${sparse}$r$p"
-> 	
-> Said indicator is prepended with the clear colour code, and the short
-> upstream state indicator is thus also uncoloured. Now, the short
-> upstream state indicator follows the sequence of colourized indicators,
-> without any clearing of colour (again note the position of $p, now in
-> $f):
-> 
-> 	local f="$h$w$i$s$u$p"
-> 	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}"
-> 
-> If the user is in a sparse checkout, the sparsity state indicator
-> follows a similar pattern to the short upstream state indicator.
-> However, clearing colour of the colourized indicators changes how the
-> sparsity state indicator is colourized, as it currently inherits (and
-> before the change referenced also inherited) the colour of the last
-> short state indicator before it. Reading the commit message of the
-> change that introduced the sparsity state indicator, afda36dbf3b
-> (git-prompt: include sparsity state as well, 2020-06-21), it appears
-> this colourization also was unintended, so clearing the colour for said
-> indicator further increases consistency.
-> 
-> Make the colourization of these state indicators consistent by making
-> all colourized indicators clear their own colour. Make colouring of $c
-> dependent on it not being empty, as it is no longer being used to colour
-> the branch name. Move clearing of $b's prefix to before colourization so
-> it gets cleared properly when colour codes are inserted into it. These
-> changes make changing the layout of the prompt less prone to unintended
-> colour changes in the future.
-> 
-> Change coloured Bash prompt tests to reflect the colourization changes:
->  * Move the colour codes to wrap the expected content of the expanded
->    $__git_ps1_branch_name in all tests.
->  * Insert a clear-colour code after the symbol for the first indicator
->    in "prompt - bash color pc mode - dirty status indicator - dirty
->    index and worktree", to reflect that all indicators should clear
->    their own colour.
+Hi,
 
-This patch seems to break colorization when __git_ps1() is invoked
-from $PROMPT_COMMAND:
+On Thu, 9 Jun 2022, Han Xin wrote:
 
-  ~/src/git (master)$ echo $PROMPT_COMMAND 
-__git_ps1 "\[\e]0;\w - Terminal\a\e[01;32m\]\h\[\e[01;34m\] \w" "\[\e[01;34m\]\$\[\e[00m\] " " \[\e[01;34m\](%s\[\e[01;34m\])"
-  ~/src/git (master)$ git checkout 9470605a1b
-  HEAD is now at 9470605a1b git-prompt: make colourization consistent
-  ~/src/git ((9470605a1b...))$ source contrib/completion/git-prompt.sh 
-  ~/src/git (\[\e[31m\](9470605a1b...)\[\e[0m\])$ # uh-oh
-  ~/src/git (\[\e[31m\](9470605a1b...)\[\e[0m\])$ git checkout 9470605a1b^
-  Previous HEAD position was 9470605a1b git-prompt: make colourization consistent
-  HEAD is now at 2668e3608e Sixth batch
-  ~/src/git (\[\e[31m\](2668e3608e...)\[\e[0m\])$ source contrib/completion/git-prompt.sh 
-  ~/src/git ((2668e3608e...))$ # Looks good.
+> Neeraj Singh[1] pointed out that if batch fsync is enabled, we should st=
+ill
+> call prepare_loose_object_bulk_checkin() to potentially create the bulk =
+checkin
+> objdir.
+>
+> 1. https://lore.kernel.org/git/7ba4858a-d1cc-a4eb-b6d6-4c04a5dd6ce7@gmai=
+l.com/
+>
+> Signed-off-by: Han Xin <chiyutianyi@gmail.com>
 
+I like a good commit message that is concise and yet has all the necessary
+information. Well done!
 
-> Signed-off-by: Joakim Petersen <joak-pet@online.no>
 > ---
-> Changes since v6:
->  * Remove repeated statements and move all explanation of what the patch
->    does to the latter part of the message.
->  * Add a short statement about other benefits of the behavioural change.
-> 
-> Range-diff against v6:
-> 1:  50765eeb95 = 1:  e25738c667 git-prompt: make colourization consistent
-> 
->  contrib/completion/git-prompt.sh | 22 ++++++++++++----------
->  t/t9903-bash-prompt.sh           | 18 +++++++++---------
->  2 files changed, 21 insertions(+), 19 deletions(-)
-> 
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 87b2b916c0..cb01c2fd5d 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -245,7 +245,8 @@ __git_ps1_show_upstream ()
->  
->  # Helper function that is meant to be called from __git_ps1.  It
->  # injects color codes into the appropriate gitstring variables used
-> -# to build a gitstring.
-> +# to build a gitstring. Colored variables are responsible for clearing
-> +# their own color.
->  __git_ps1_colorize_gitstring ()
->  {
->  	if [[ -n ${ZSH_VERSION-} ]]; then
-> @@ -271,22 +272,23 @@ __git_ps1_colorize_gitstring ()
->  	else
->  		branch_color="$bad_color"
->  	fi
-> -	c="$branch_color$c"
-> +	if [ -n "$c" ]; then
-> +		c="$branch_color$c$c_clear"
-> +	fi
-> +	b="$branch_color$b$c_clear"
->  
-> -	z="$c_clear$z"
-> -	if [ "$w" = "*" ]; then
-> -		w="$bad_color$w"
-> +	if [ -n "$w" ]; then
-> +		w="$bad_color$w$c_clear"
->  	fi
->  	if [ -n "$i" ]; then
-> -		i="$ok_color$i"
-> +		i="$ok_color$i$c_clear"
->  	fi
->  	if [ -n "$s" ]; then
-> -		s="$flags_color$s"
-> +		s="$flags_color$s$c_clear"
->  	fi
->  	if [ -n "$u" ]; then
-> -		u="$bad_color$u"
-> +		u="$bad_color$u$c_clear"
->  	fi
-> -	r="$c_clear$r"
->  }
->  
->  # Helper function to read the first line of a file into a variable.
-> @@ -554,6 +556,7 @@ __git_ps1 ()
->  		fi
->  	fi
->  
-> +	b=${b##refs/heads/}
->  	local z="${GIT_PS1_STATESEPARATOR-" "}"
->  
->  	# NO color option unless in PROMPT_COMMAND mode or it's Zsh
-> @@ -563,7 +566,6 @@ __git_ps1 ()
->  		fi
->  	fi
->  
-> -	b=${b##refs/heads/}
->  	if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
->  		__git_ps1_branch_name=$b
->  		b="\${__git_ps1_branch_name}"
-> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-> index bbd513bab0..abd82eec35 100755
-> --- a/t/t9903-bash-prompt.sh
-> +++ b/t/t9903-bash-prompt.sh
-> @@ -541,7 +541,7 @@ test_expect_success 'prompt - pc mode' '
+>  object-file.c                   |  3 +++
+>  t/t5351-unpack-large-objects.sh | 15 ++++++++++++++-
+>  2 files changed, 17 insertions(+), 1 deletion(-)
+>
+> diff --git a/object-file.c b/object-file.c
+> index 2dd828b45b..3a1be74775 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -2131,6 +2131,9 @@ int stream_loose_object(struct input_stream *in_st=
+ream, size_t len,
+>  	char hdr[MAX_HEADER_LEN];
+>  	int hdrlen;
+>
+> +	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
+> +		prepare_loose_object_bulk_checkin();
+> +
+
+Makes sense.
+
+>  	/* Since oid is not determined, save tmp file to odb path. */
+>  	strbuf_addf(&filename, "%s/", get_object_directory());
+>  	hdrlen =3D format_object_header(hdr, sizeof(hdr), OBJ_BLOB, len);
+> diff --git a/t/t5351-unpack-large-objects.sh b/t/t5351-unpack-large-obje=
+cts.sh
+> index 461ca060b2..a66a51f7df 100755
+> --- a/t/t5351-unpack-large-objects.sh
+> +++ b/t/t5351-unpack-large-objects.sh
+> @@ -18,7 +18,10 @@ test_expect_success "create large objects (1.5 MB) an=
+d PACK" '
+>  	test_commit --append foo big-blob &&
+>  	test-tool genrandom bar 1500000 >big-blob &&
+>  	test_commit --append bar big-blob &&
+> -	PACK=3D$(echo HEAD | git pack-objects --revs pack)
+> +	PACK=3D$(echo HEAD | git pack-objects --revs pack) &&
+> +	git verify-pack -v pack-$PACK.pack |
+> +	    grep -E "commit|tree|blob" |
+> +		sed -n -e "s/^\([0-9a-f]*\).*/\1/p" >obj-list
+
+Here, I would recommend avoiding the pipe, to ensure that we would catch
+problems in the `verify-pack` invocation, and I think we can avoid the
+`grep` altogether:
+
+	git verify-pack -v pack-$PACK.pack >out &&
+	sed -n 's/^\([0-9a-f][0-9a-f]*\).*\(commit\|tree\|blob\)/\1/p' \
+		<out >obj-list
+
 >  '
->  
->  test_expect_success 'prompt - bash color pc mode - branch name' '
-> -	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmain" >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_green}main${c_clear}" >expected &&
->  	(
->  		GIT_PS1_SHOWCOLORHINTS=y &&
->  		__git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
-> @@ -551,7 +551,7 @@ test_expect_success 'prompt - bash color pc mode - branch name' '
+>
+>  test_expect_success 'set memory limitation to 1MB' '
+> @@ -45,6 +48,16 @@ test_expect_success 'unpack big object in stream' '
+>  	test_dir_is_empty dest.git/objects/pack
 >  '
->  
->  test_expect_success 'prompt - bash color pc mode - detached head' '
-> -	printf "BEFORE: (${c_red}\${__git_ps1_branch_name}${c_clear}):AFTER\\n(%s...)" $(git log -1 --format="%h" b1^) >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_red}(%s...)"${c_clear} $(git log -1 --format="%h" b1^) >expected &&
->  	git checkout b1^ &&
->  	test_when_finished "git checkout main" &&
->  	(
-> @@ -563,7 +563,7 @@ test_expect_success 'prompt - bash color pc mode - detached head' '
->  '
->  
->  test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty worktree' '
-> -	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmain" >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}*${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
->  	echo "dirty" >file &&
->  	test_when_finished "git reset --hard" &&
->  	(
-> @@ -576,7 +576,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
->  '
->  
->  test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index' '
-> -	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmain" >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name} ${c_green}+${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
->  	echo "dirty" >file &&
->  	test_when_finished "git reset --hard" &&
->  	git add -u &&
-> @@ -590,7 +590,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
->  '
->  
->  test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index and worktree' '
-> -	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmain" >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}*${c_clear}${c_green}+${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
->  	echo "dirty index" >file &&
->  	test_when_finished "git reset --hard" &&
->  	git add -u &&
-> @@ -605,7 +605,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
->  '
->  
->  test_expect_success 'prompt - bash color pc mode - dirty status indicator - before root commit' '
-> -	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmain" >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name} ${c_green}#${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
->  	(
->  		GIT_PS1_SHOWDIRTYSTATE=y &&
->  		GIT_PS1_SHOWCOLORHINTS=y &&
-> @@ -617,7 +617,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - befo
->  '
->  
->  test_expect_success 'prompt - bash color pc mode - inside .git directory' '
-> -	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nGIT_DIR!" >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\n${c_green}GIT_DIR!${c_clear}" >expected &&
->  	echo "dirty" >file &&
->  	test_when_finished "git reset --hard" &&
->  	(
-> @@ -631,7 +631,7 @@ test_expect_success 'prompt - bash color pc mode - inside .git directory' '
->  '
->  
->  test_expect_success 'prompt - bash color pc mode - stash status indicator' '
-> -	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmain" >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name} ${c_lblue}\$${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
->  	echo 2 >file &&
->  	git stash &&
->  	test_when_finished "git stash drop" &&
-> @@ -645,7 +645,7 @@ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
->  '
->  
->  test_expect_success 'prompt - bash color pc mode - untracked files status indicator' '
-> -	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmain" >expected &&
-> +	printf "BEFORE: (\${__git_ps1_branch_name} ${c_red}%%${c_clear}):AFTER\\n${c_green}main${c_clear}" >expected &&
->  	(
->  		GIT_PS1_SHOWUNTRACKEDFILES=y &&
->  		GIT_PS1_SHOWCOLORHINTS=y &&
-> -- 
+>
+> +BATCH_CONFIGURATION=3D'-c core.fsync=3Dloose-object -c core.fsyncmethod=
+=3Dbatch'
+> +
+> +test_expect_success 'unpack big object in stream (core.fsyncmethod=3Dba=
+tch)' '
+> +	prepare_dest 1m &&
+> +	git $BATCH_CONFIGURATION -C dest.git unpack-objects <pack-$PACK.pack &=
+&
+
+I think the canonical way would be to use `test_config core.fsync ...`,
+but the presented way works, too.
+
+> +	test_dir_is_empty dest.git/objects/pack &&
+> +	git -C dest.git cat-file --batch-check=3D"%(objectname)" <obj-list >cu=
+rrent &&
+
+Good. The `--batch-check=3D"%(objectname)"` part forces `cat-file` to read
+the actual object.
+
+> +	cmp obj-list current
+> +'
+
+My main question about this test case is whether it _actually_ verifies
+that the batch-mode `fsync()`ing took place.
+
+I kind of had expected to see Trace2 enabled and a `grep` for
+`fsync/hardware-flush`. Do you think that would still make sense to add?
+
+Thank you for working on the `fsync()` aspects of Git!
+Dscho
+
+> +
+>  test_expect_success 'do not unpack existing large objects' '
+>  	prepare_dest 1m &&
+>  	git -C dest.git index-pack --stdin <pack-$PACK.pack &&
+> --
 > 2.36.1
-> 
+>
+>
