@@ -2,122 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8801FC43334
-	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 00:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB89C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 00:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345750AbiFJA0s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 20:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57844 "EHLO
+        id S242517AbiFJAeF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 20:34:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345500AbiFJA0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 20:26:34 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF7D53C75
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 17:26:32 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id o8so6625289wro.3
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 17:26:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=r/HX17gRh89EuEt+H3U9vsOlmQzLzCLDGUX84w3u5jU=;
-        b=FKNsqy8CHIbx5qqIApIdLWMz6TEMRw+lM8u8Rw57pzowMSbTyvLAFJRJcSxBA1QLKQ
-         pDqSRxhQx/s3To9C5MgbyRZy0xF71unGWcAXuulVOHAakxsva27VyG9ZvFVX1cJLR8H6
-         BitNfjU8Hoqpw+uyyYar+2FA/D6FRxFEP39WOrXbQUFEXccW8eYVHq9QqU1J43j/jbVn
-         hKHtecmucZlyUOXoaAPCoqpAxYO1vC+pXuuoen0wpjMR7VdUgBjc5RCqM1/zRoAQxYCH
-         V045G9qSAv1ABLF3jcLMtiwcBPIl/ffBZSULPkpM3GrJtlU1ZrnoYj9KzFJvjjEWaalD
-         ierA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=r/HX17gRh89EuEt+H3U9vsOlmQzLzCLDGUX84w3u5jU=;
-        b=RY7y1qIetHtA5bc5X6G45GdioWZQ50AKHvzZtCcgG66TnuyxImlaEgNra8Wgbj8rp1
-         RZjp5dlb47bM7BiLiiRdjsce26qyiYfq71zp/kucv59iQY9g2Ca/oh+ap/4PANDyzXkM
-         FZf6sw6w8/7nMCY27xHfhFndMoj0oFG7h3+fGBSViafIPqj8kdYhDI9nGSfmnoRSWj2o
-         jPz/ii1V6lkifmlxiB7vwwjteJDlgae2plJXesLq5c/sZ6T5/BsG4jFVPvaxiOx/qwMO
-         NTd1FcnwEj1KHHHWy1pgJZrg5vPRpLQjP5nIGyhlD4BgXi6p9Lc86D1dFLKxJu5hTVqT
-         ViKA==
-X-Gm-Message-State: AOAM530eSwsJHJbuZ7wdvl7Os3KwToWVS6eFOSqE/LKURIfcu8nKCXVL
-        BIgUthkUYIziibF40Tm5mVu3OlLg3Zmf8pG3
-X-Google-Smtp-Source: ABdhPJxYzoXDDVBYROsNtQSDa/xMMpRFkvXn594+gjz9NZNnYyMgQ1OQbKzigZOhyn3WDUBzqrFSQQ==
-X-Received: by 2002:adf:fb03:0:b0:20a:e253:b8c7 with SMTP id c3-20020adffb03000000b0020ae253b8c7mr39841238wrr.119.1654820790884;
-        Thu, 09 Jun 2022 17:26:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l21-20020a1ced15000000b003942a244ed1sm841394wmh.22.2022.06.09.17.26.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 17:26:30 -0700 (PDT)
-Message-Id: <fbdfab55f563c2a6dff8485d6870baf472b2e12f.1654820781.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1275.git.git.1654820781.gitgitgadget@gmail.com>
-References: <pull.1275.git.git.1654820781.gitgitgadget@gmail.com>
-From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Jun 2022 00:26:19 +0000
-Subject: [PATCH 6/8] submodule update: remove -v, pass --quiet
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S239769AbiFJAeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 20:34:04 -0400
+Received: from nmsh5.e.nsc.no (nmsh5.e.nsc.no [148.123.160.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F4D65DE4D
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 17:34:00 -0700 (PDT)
+Received: from [192.168.1.110] (unknown [194.19.73.58])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: joak-pet)
+        by nmsh5.e.nsc.no (smtp.online.no) with ESMTPSA id 6A0255208A;
+        Fri, 10 Jun 2022 02:33:57 +0200 (CEST)
+Message-ID: <8bfdf2eb-70f8-ad28-5dac-5ee598cd487a@online.no>
+Date:   Fri, 10 Jun 2022 02:33:53 +0200
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Atharva Raykar <raykar.ath@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Glen Choo <chooglen@google.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH] git-prompt: fix expansion of branch colour codes
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Justin Donnelly <justinrdonnelly@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+References: <20220607115024.64724-1-joak-pet@online.no>
+ <20220609204447.32841-1-joak-pet@online.no> <xmqq4k0tgz6s.fsf@gitster.g>
+From:   Joakim Petersen <joak-pet@online.no>
+In-Reply-To: <xmqq4k0tgz6s.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Source-IP: 194.19.73.58
+X-Scanned-By: MIMEDefang 2.84 on 10.123.160.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Glen Choo <chooglen@google.com>
+On 10/06/2022 02:05, Junio C Hamano wrote:
+> t9903 seems to fail with this, though...?
+> 
 
-In cmd_update(), "-v" unsets GIT_QUIET, but this does nothing because
-GIT_QUIET is only set when "-q|--quiet" is passed.
-
-Remove "-v", and since "git submodule--helper update" already
-understands 'quiet' options, append them to `opts`. This makes GIT_QUIET
-obsolete, so remove it.
-
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- git-submodule.sh            | 6 +-----
- t/t7406-submodule-update.sh | 2 +-
- 2 files changed, 2 insertions(+), 6 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index d93b6dfbbd7..6b3f161dc53 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -242,10 +242,7 @@ cmd_update()
- 	do
- 		case "$1" in
- 		-q|--quiet)
--			GIT_QUIET=1
--			;;
--		-v)
--			unset GIT_QUIET
-+			opts="$opts $1"
- 			;;
- 		--progress)
- 			opts="$opts $1"
-@@ -339,7 +336,6 @@ cmd_update()
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update \
--		${GIT_QUIET:+--quiet} \
- 		${wt_prefix:+--prefix "$wt_prefix"} \
- 		${prefix:+--recursive-prefix "$prefix"} \
- 		$opts \
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 43f779d751c..06d804e2131 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1074,7 +1074,7 @@ test_expect_success 'submodule update --quiet passes quietness to merge/rebase'
- 	 git submodule update --rebase --quiet >out 2>err &&
- 	 test_must_be_empty out &&
- 	 test_must_be_empty err &&
--	 git submodule update --rebase -v >out 2>err &&
-+	 git submodule update --rebase >out 2>err &&
- 	 test_file_not_empty out &&
- 	 test_must_be_empty err
- 	)
--- 
-gitgitgadget
-
+Ah yes, sorry about that, I seem to have gotten a bit ahead of myself.
+Since the wrapping of $b was entirely moved to before colouring happens,
+the tests need to be reverted back to their state from before the
+previous commit, with the exception of the extra $c_clear in the test
+with two active indicators. I'll submit a v2 with this change shortly.
