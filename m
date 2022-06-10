@@ -2,72 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29D14C43334
-	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BFADC433EF
+	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:52:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237302AbiFJCim (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 22:38:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38360 "EHLO
+        id S241846AbiFJCwz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 22:52:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230371AbiFJCil (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 22:38:41 -0400
-Received: from out28-197.mail.aliyun.com (out28-197.mail.aliyun.com [115.124.28.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95ABF117B
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 19:38:39 -0700 (PDT)
-X-Alimail-AntiSpam: AC=CONTINUE;BC=0.08711676|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0340052-0.0304909-0.935504;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047207;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=3;RT=3;SR=0;TI=SMTPD_---.O1KgynQ_1654828715;
-Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.O1KgynQ_1654828715)
-          by smtp.aliyun-inc.com;
-          Fri, 10 Jun 2022 10:38:37 +0800
-Date:   Fri, 10 Jun 2022 10:38:38 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Re: [PATCH] remote-curl: send Accept-Language header to server
-References: <pull.1251.git.1654678407365.gitgitgadget@gmail.com>, 
-        <220609.86leu6thon.gmgdl@evledraar.gmail.com>
-X-Priority: 3
-X-GUID: 3730B9E8-BACF-431E-AD2D-C416AD5D624C
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-Message-ID: <2022061010332322021051@oschina.cn>
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S238394AbiFJCwy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 22:52:54 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7025725EB1
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 19:52:53 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id k11so34078687oia.12
+        for <git@vger.kernel.org>; Thu, 09 Jun 2022 19:52:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=g42SYdREDID3NePxsyq+4ieEH6wxBXtOo6LpmI4EQVo=;
+        b=R3rHp7rgrWOgIi/PUrKa6GDYp3lJZ5VximykLbA5TSs/9pcSKe2S6syTqGDCXwLvBh
+         acq3wQjS+Sc+UW+IJBmw+HqNmGAb3HkB2BXmh/uFm9k1KR9zGldSarLhe5Fhk/UP82Ap
+         C6p5JD+1mC3dJK8b5Lj1wZYKlUJFDjzG4A8MTE1pdpWHkWbHBREoaMWSVuSex2vPdCS7
+         dNqLRQj1TH3CsNIfhcJbx0Tp3llNSSQvmq0ILcQk8AnOkIyxxkrBrqQDyCNwJPryG9wO
+         b9NOKBEOM3oe2PfjKPl3mDxNDZOm9TFaqLHcctCVI5AzdcrTqkqi2jr5M3zWQOsPRUbQ
+         JHbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=g42SYdREDID3NePxsyq+4ieEH6wxBXtOo6LpmI4EQVo=;
+        b=aDETisTVx6lJcLIEVYykDvMfSVo1DutZY3O2zr65N9hjrB3TbccC4ClrSKlkEaPqb5
+         hq8pNAgTURGb22CAg8VIsYEPS/KXUa5hipV/Xl5MkmkRtBdi+2OigQn1owNfsjFm4cQz
+         44+4N2Fxob57ew/qNoIGw0849dUkDO9O97SzAEDtN1aINVnVs4LiPRaz3lJpJ9kar8S4
+         xvYmpOb5TBsjylXmEHO4A5WugDIBMmgfFX811kY8VdjQyA774+ZuGox2draEOwM8UQof
+         TdAYUZroR+p9Mjz/Rq6BwGYn+V6ba+DysGVsE3/RjKenqg1mOKTO+p2B79wNcJyy6FlN
+         +A0A==
+X-Gm-Message-State: AOAM533ioKqlaqhcHL7POlrHZto0r8U3Z3O1k58bnb+h7nL/dCqfhlzf
+        OMxBi8w0qUfBFlXbp8wTB8oxpOMJn4dnBSu+OEe4giacB/tVyg==
+X-Google-Smtp-Source: ABdhPJxRzF/ECuxNirAt3gKfFxI+QmpUx+Ds+p0P1bQlAppo+9CHESjwwTNSvG+s36vFyamudqLOZ9ypZVJKd8N4Qnw=
+X-Received: by 2002:aca:b354:0:b0:32e:fc24:bea6 with SMTP id
+ c81-20020acab354000000b0032efc24bea6mr1181568oif.295.1654829572638; Thu, 09
+ Jun 2022 19:52:52 -0700 (PDT)
+MIME-Version: 1.0
+From:   Piyush Gaikwad <piyushgaikwad321@gmail.com>
+Date:   Thu, 9 Jun 2022 19:52:41 -0700
+Message-ID: <CABsvAmr0-1eLQeCR-hhz_CObOS2bgjRf7v+YG5BOY8h5nn+2kQ@mail.gmail.com>
+Subject: behaviour of untracked files cache in git stable 2.36.1 verison on mac
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-U29ycnksIEkgbWlzdGFrZW5seSBzZW50IHRoZSByZXBseSBlbWFpbCB0byB5b3UgeWVzdGVyZGF5
-LCBJIHNob3VsZCBjbGljayAiUmVwbHkgYWxsIiBidXR0b24gOigKCj4KPk9uIFdlZCwgSnVuIDA4
-IDIwMjIsIExpIExpbmNoYW8gdmlhIEdpdEdpdEdhZGdldCB3cm90ZToKPgo+PiBGcm9tOiBDYWN0
-dXNpbmhhbmQgPGxpbGluY2hhb0Bvc2NoaW5hLmNuPgo+Pgo+PiBHaXQgc2VydmVyIGVuZCdzIGFi
-aWxpdHkgdG8gYWNjZXB0IEFjY2VwdC1MYW5ndWFnZSBoZWFkZXIgd2FzIGludHJvZHVjZWQKPj4g
-aW4gZjE4NjA0YmJmMihodHRwOiBhZGQgQWNjZXB0LUxhbmd1YWdlIGhlYWRlciBpZiBwb3NzaWJs
-ZSksIGJ1dCB0aGlzIGlzCj4+IG9ubHkgdXNlZCBieSB2ZXJ5IGVhcmx5IHBoYXNlIG9mIHRoZSB0
-cmFuc2ZlciwgdGhhdCdzIEhUVFAgR0VUIHJlcXVlc3QgdG8KPj4gZGlzY292ZXIgcmVmZXJlbmNl
-cy4gRm9yIG90aGVyIHBoYXNlcywgbGlrZSBQT1NUIHJlcXVlc3QgaW4gdGhlIHNtYXJ0IEhUVFAK
-Pj4gdGhlIHNlcnZlciBzaWRlIGRvbid0IGtub3cgd2hhdCBsYW5ndWFnZSBjbGllbnQgc3BlYWsu
-Cj4+Cj4+IFRoaXMgcGF0Y2ggdGVhY2hlcyBnaXQgY2xpZW50IHRvIGxlYXJuIGVuZC11c2VyJ3Mg
-cHJlZmVycmVkIGxhbmd1YWdlIGFuZAo+PiB0aHJvdyBhY2NlcHQtbGFuZ3VhZ2UgaGVhZGVyIHRv
-IHNlcnZlciBzaWRlLiBPbmNlIHNlcnZlciBnZXQgdGhpcyBoZWFkZXIKPj4gaXQgaGF2ZSBhYmls
-aXR5IHRvIHRhbGsgdG8gZW5kLXVzZXIgd2l0aCBsYW5ndWFnZSB0aGV5IHVuZGVyc3RhbmQsIHRo
-aXMKPj4gd291bGQgYmUgdmVyeSBoZWxwZnVsIGZvciBtYW55IG5vbi1FbmdsaXNoIHNwZWFrZXJz
-Lgo+Cj5JIG1heSBiZSBtaXNzaW5nIHNvbWV0aGluZywgYnV0IHRoaXMgaXMganVzdCB0aGUgIkFj
-Y2VwdC1MYW5ndWFnZSIgcGFydAo+b2YgdGhpcyBjaGFuZ2UsIGkuZS4gdGhlcmUgaXMgbm8gInJv
-dW5kLXRyaXBwaW5nIiBoZXJlIG9mIGFjdHVhbGx5IGRvaW5nCj50aGUgd29yayBvbiB0aGUgc2Vy
-dmVyIG9mIGRvaW5nIHNldGxvY2FsZSgpLCBubz8KWWVzLCDCoGhlcmUgR2l0IGp1c3QgaG9sZHMg
-dGhpcyBoZWFkZXIgbWVzc2FnZSwgYW5kIHRoZSBhY3R1YWwgd29yayBkZXBlbmRzCm9uIHRoZSBn
-aXQgc2VydmljZSBwcm92aWRlcnMsIGxpa2UgR2l0aHViLCBHaXRsYWIsIG9yIEdpdGVlLsKgCj4K
-PkkgdGhpbmsgdGhlIGVuZC1nb2FsIG9mIGhhdmluZyB0aGUgInJlbW90ZTogIiBtZXNzYWdlcyB0
-cmFuc2xhdGVkLCBpZgo+cG9zc2libGUsIGlzIHZlcnkgd29ydGh3aGlsZSwgYnV0IEknZCBhbHdh
-eXMgaW1hZ2luZWQgd2UnZCBkbyB0aGF0IHdpdGgKPmEgcHJvdG9jb2wgZXh0ZW5zaW9uLCBiZWNh
-dXNlIGV2ZW4gaWYgd2UgZG8gdGhpcyB3aXRoIEhUVFAgaGVhZGVycyB3ZQo+d29uJ3QgZ2V0IHRo
-ZSBzYW1lIG92ZXIgc3NoL2dpdCB0cmFuc3BvcnRzLgpBcyBmb3Igc3NoIHRyYW5zcG9ydCwgY2Fu
-IHdlIHVzZSBzc2ggZW52aXJvbm1lbnQgdG8gcmVhY2ggb3VyIGdvYWw/Cj4KPkJ1dCB0aGVuIGFn
-YWluIHdlIGRvbid0IGhhdmUgcHJvdG9jb2wgdjIgcHVzaCB5ZXQgOigKPgo+U28gcGVyZmVjdCBj
-ZXJ0YWlubHkgc2hvdWxkbid0IGJlIHRoZSBlbmVteSBvZiB0aGUgZ29vZCBoZXJlLCBJIGp1c3QK
-PndvbmRlciB3aGF0IHRoZSBlbmQtZ29hbCBpcyBhbmQgaWYgdGhlcmUncyBhIHBsYW4gdG8gZ2V0
-IHRoZXJlLgoKVGhhbmtzLg==
+Hello all,
 
+I am currently on Mac.
+In Git 2.35.1, when I cloned my repository, it took 7 seconds to
+enumerate the untracked files and when I did time git status, it took
+approximately 2 seconds. And, when I checkout to another branch it
+took approximately 15 seconds and when I checkout back to my main repo
+git status took 15 seconds (which should not take this much time).
+Work-around for this in (2.35.1) was: I set core.untrackedcache=true
+and GIT_FORCE_UNTRACKEDCACHE=1 which helped to update the
+untrackedcache and improve the performance of git status of
+(approximately 4 seconds).
+
+But now in Git 2.36.1, this work-around doesn't seem to work. It takes
+approximately 20 seconds on all branches.
+
+Possible changes in the code:
+In Git 2.35.1, code in dir.c: GIT_FORCE_UNTRACKED_CACHE,0
+and the same in Git 2.36.1, code in dir.c:GIT_FORCE_UNTRACKED_CACHE, -1
+
+Is this code change which made the git config variables unfit for the
+current stable version or is it something else?
+How can I solve this untracked files cache performance issue; is there
+any workaround?
