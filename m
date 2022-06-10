@@ -2,101 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62CEBC43334
-	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 10:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2CC5C43334
+	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 12:04:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349344AbiFJK5f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jun 2022 06:57:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
+        id S1348239AbiFJMEu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jun 2022 08:04:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349139AbiFJK5M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jun 2022 06:57:12 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04BD52ADF59
-        for <git@vger.kernel.org>; Fri, 10 Jun 2022 03:54:49 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id x17so36002550wrg.6
-        for <git@vger.kernel.org>; Fri, 10 Jun 2022 03:54:48 -0700 (PDT)
+        with ESMTP id S245262AbiFJMEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jun 2022 08:04:48 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B1983EB97
+        for <git@vger.kernel.org>; Fri, 10 Jun 2022 05:04:47 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id a15so42479290lfb.9
+        for <git@vger.kernel.org>; Fri, 10 Jun 2022 05:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6NpiRs80V4EyAWLcIpjoCUBwX8WrfETnmq1wjdFiWl4=;
-        b=SBR0Haaz5Bgse9QZBmYpCnJ5zUhUWhFvmGaIgHL3wA5HDBkTYlmR/st7uk/sRU8Prv
-         gYqKNE5EIW8bDatA2WpwxL6gUMrH0dCxPGT7efY+kZLAbvL3SgBmS5k7akz8Q4aKbrpp
-         UJqUrGrvaI8qPpoTccLTLKEt8XzAD6eqeN0boKGMtaj4sNwUPI+Bbe17lzPO2/TmcBVo
-         BZW4AzrpFVJV1zOs+Wm6HEiZXqg8Mw0QkBtBskF8cKz2RFFpTJO1f6wYShW2354EkDXh
-         uyvZoA2HVhDpNNQFnhyoICwk09qb0wg/uvms5dubpvL9CMMZ/RMefli+E5i3InufjaEl
-         QHpw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=XxmX1FePU3ZiFFa/Ihg4WFJb2v5t3DuqooFfD5eE2+U=;
+        b=g8hVRsrLngT+9SGB+rUytgB4eObVkM8+p5EQJ5A4Z2x/3CX2blz+UK6QKRfe2LE+hM
+         NHaY8bhTXFJnyAe80C4u4VQSp6QJ2iyat81Hh4BZpnfIO/Zy60ikirYDZpnjtIqXL2uP
+         jvhV3eHYZTfNbryBGzGUGWxnhoMspUenXN0o2kFjf3Zdoj6hPWAFQk+kDrBK9lVDXIAE
+         0zgMdCnR+goDpSrqx1n7QCx7DpQ1RfZ/rPhHhoftm4sSzLAZ2KuiGI8T9WCTcGBXCu3Z
+         3PtBDrqGfIBQ+oBSx55v/H//v2G4KO7Bt5up/WKBtUnqAW05Slu2enafi270nH5FK97Z
+         UF+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6NpiRs80V4EyAWLcIpjoCUBwX8WrfETnmq1wjdFiWl4=;
-        b=m0VCJfHO7bMW+UE6s+Dq6TpDFsSV8NJwkDpGtCkH1Cik9ZoO5UlCaM0g6H5vtRK02G
-         Nwzd/61gCHFmvdX/Nyp7RyMzDNsDBYIZlGNaUTLqxI+IAyLvqc/PhIUn0QKdQoy4BX8r
-         dQCpuicKYqZREDfKAbdTyQCpdUwT9dWzJso2SbICwpX9JR5/SZzRWqVTrJ+Su7r9xR61
-         sRgSvoWCv/+klKmrWvNoH1siielJejYOFugMH52dEAkL9vsNVjgXtWMctlHmA9nxw/I5
-         iSspLykclszguBtbtNja6g81zArw5qpiQXyYPjV1I4sC5nNUK6+N7x0TahvXdKrtMVuE
-         ouNA==
-X-Gm-Message-State: AOAM5324QrQ0whkvjUH4IEy+y4Gr163ICPfmY5Rl51K6kwMdUqVmirzl
-        r4TV+eza1aQUoTuCRIF9bYoIk7QF8fivhw==
-X-Google-Smtp-Source: ABdhPJyfdiZ1uerh7yHPdOr1VA3pO+WCjZZ4ilNm/fY4ISKnWOqcEnbizzyYJxLdsVakB6kW9qt9FQ==
-X-Received: by 2002:a5d:6487:0:b0:218:35ed:d4ea with SMTP id o7-20020a5d6487000000b0021835edd4eamr28938373wri.344.1654858487127;
-        Fri, 10 Jun 2022 03:54:47 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h12-20020a05600c2cac00b003942a244f40sm2717851wmc.25.2022.06.10.03.54.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jun 2022 03:54:46 -0700 (PDT)
-Message-Id: <b971558e1cba0a40b5adf20f53dfd3822dc7a42c.1654858481.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1246.v3.git.1654858481.gitgitgadget@gmail.com>
-References: <pull.1246.v2.git.1654623814.gitgitgadget@gmail.com>
-        <pull.1246.v3.git.1654858481.gitgitgadget@gmail.com>
-From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Jun 2022 10:54:41 +0000
-Subject: [PATCH v3 3/3] bitmap-format.txt: add information for trailing
- checksum
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=XxmX1FePU3ZiFFa/Ihg4WFJb2v5t3DuqooFfD5eE2+U=;
+        b=CAIwHxeC5E4u8sWst/yUw0kH40k9rBJkbseC9zclNUypWZzZUQacyksVYA94IiwgM+
+         0Zma1D0qnPxOl6Ok5K5qUh8NdnFxnQAeirrapIRw08TcjyJ99mL2X69SoeVW5uYakWXw
+         WzPmcXk9h9ZQMwGv7rjUnGgt9x9J72uzntMMVEZinhulSP+Tl4JjY5ypHPcX4UdajIBP
+         uxhxpzDGMkhjQNvqZd9CqrDJq7hTIaDm64ctQA7yxEjiIacdl6AkygXfWyKUSZ2WVgRE
+         uYG0NzaYA89wvtOOTrJ6AmWaa/Mk0HqnqZK5tvcFeuk4he07DncctPanyyLd1oE+vmQ6
+         22Ww==
+X-Gm-Message-State: AOAM533qngNDqSpc+40WIvv/yCkB0EtapBQp0kevraCIIGfYA2M1bXN9
+        jPj+ygtavxtZ1OAe2vl5TMBFKF78d+goKinTOmc=
+X-Google-Smtp-Source: ABdhPJwX/sL7bUilqrFMItaIysuKuQQKLlX4s7ScNu9j8d/oipj72GEw30r4KHnkCapKsUzk6omhbgM3aPhU8SDTO+k=
+X-Received: by 2002:a05:6512:2a9b:b0:479:1737:a5ec with SMTP id
+ dt27-20020a0565122a9b00b004791737a5ecmr24622713lfb.481.1654862685556; Fri, 10
+ Jun 2022 05:04:45 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+References: <cover-v12-0.8-00000000000-20220329T135446Z-avarab@gmail.com>
+ <cover-v13-0.7-00000000000-20220604T095113Z-avarab@gmail.com>
+ <patch-v13-1.7-12873fc9915-20220604T095113Z-avarab@gmail.com>
+ <xmqqpmjl7i7y.fsf@gitster.g> <CAO0brD2s-i2Bp7r2n+TRLs2LckzM-i1-293rr=sgmC2TbLozow@mail.gmail.com>
+ <xmqqa6allmjl.fsf@gitster.g> <CAO0brD3tU+v_5dS9En_fTpEyYVmgEMVb7iVGsPk6iuYNGdpYBg@mail.gmail.com>
+ <220610.86mtels249.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220610.86mtels249.gmgdl@evledraar.gmail.com>
+From:   Han Xin <chiyutianyi@gmail.com>
+Date:   Fri, 10 Jun 2022 20:04:34 +0800
+Message-ID: <CAO0brD0_CidpW8vKD2xbW=tXmZS-1Nup57Daz6DhcSN=WwPdEg@mail.gmail.com>
+Subject: Re: [PATCH v13 1/7] unpack-objects: low memory footprint for
+ get_data() in dry_run mode
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Neeraj Singh <neerajsi@microsoft.com>,
+        Elijah Newren <newren@gmail.com>,
+        Han Xin <hanxin.hx@alibaba-inc.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+On Fri, Jun 10, 2022 at 10:07 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Fri, Jun 10 2022, Han Xin wrote:
+>
+> > On Fri, Jun 10, 2022 at 2:27 AM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> >>
+> >> Han Xin <chiyutianyi@gmail.com> writes:
+> >>
+> >> >> I am not sure if this is not loosening the error checking in the
+> >> >> dry-run case, though.  In the original code, we set the avail_out
+> >> >> to the total expected size so
+> >> >>
+> >> >>  (1) if the caller gives too small a size, git_inflate() would stop
+> >> >>      at stream.total_out with ret that is not STREAM_END nor OK,
+> >> >>      bypassing the "break", and we catch the error.
+> >> >>
+> >> >>  (2) if the caller gives too large a size, git_inflate() would stop
+> >> >>      at the true size of inflated zstream, with STREAM_END and woul=
+d
+> >> >>      not hit this "break", and we catch the error.
+> >> >>
+> >> >> With the new code, since we keep refreshing avail_out (see below),
+> >> >> git_inflate() does not even learn how many bytes we are _expecting_
+> >> >> to see.  Is the error checking in the loop, with the updated code,
+> >> >> catch the mismatch between expected and actual size (plausibly
+> >> >> caused by a corrupted zstream) the same way as we do in the
+> >> >> non dry-run code path?
+> >> >>
+> >> >
+> >> > Unlike the original implementation, if we get a corrupted zstream, w=
+e
+> >> > won't break at Z_BUFFER_ERROR, maybe until we've read all the
+> >> > input. I think it can still catch the mismatch between expected and
+> >> > actual size when "fill(1)" gets an EOF, if it's not too late.
+> >>
+> >> That is only one half of the two possible failure cases, i.e. input
+> >> is shorter than the expected size.  If the caller specified size is
+> >> smaller than what the stream inflates to, I do not see the new code
+> >> to be limiting the .avail_out near the end of the iteration, which
+> >> would be necessary to catch such an error, even if we are not
+> >> interested in using the inflated contents, no?
+> >>
+> >
+> > Yes, you are right.
+> >
+> > Instead of always using a fixed "bufsize" even if there is not enough
+> > expected output remaining, we can get a more accurate one by comparing
+> > "total_out" to "size", so we can catch problems early by getting
+> > Z_BUFFER_ERROR.
+> >
+> > diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+> > index 64abba8dba..5d59144883 100644
+> > --- a/builtin/unpack-objects.c
+> > +++ b/builtin/unpack-objects.c
+> > @@ -139,7 +139,8 @@ static void *get_data(unsigned long size)
+> >                 if (dry_run) {
+> >                         /* reuse the buffer in dry_run mode */
+> >                         stream.next_out =3D buf;
+> > -                       stream.avail_out =3D bufsize;
+> > +                       stream.avail_out =3D bufsize > size - stream.to=
+tal_out ?
+> > +                               size - stream.total_out : bufsize;
+> >                 }
+> >         }
+> >         git_inflate_end(&stream);
+> >
+> > Thanks
+> > -Han Xin
+>
+> Han, do you want to pick this up again for a v14? It looks like you're
+> very on top of it already, and I re-sent your patches because I saw that
+> your
+> https://lore.kernel.org/git/cover.1653015534.git.chiyutianyi@gmail.com/
+> wasn't picked up in the interim & you hadn't been active on-list
+> otherwise.
+>
+> But it looks like there's some interest now, and that you have more time
+> to test & follow-up on this topic than I do at the moment, so if you
+> wanted to do the work of properly rebasing ot in tho recent fsync
+> changes that would be great. Thanks.
 
-Bitmap file has a trailing checksum at the end of the file. However
-there is no information in the bitmap-format documentation about it.
+OK, I am glad to do that.
 
-Add a trailer section to include the trailing checksum info in the
-`Documentation/technical/bitmap-format.txt` file.
+Thank you very much.
 
-Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
----
- Documentation/technical/bitmap-format.txt | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
-index cd621379f42..3f8cdd0ed91 100644
---- a/Documentation/technical/bitmap-format.txt
-+++ b/Documentation/technical/bitmap-format.txt
-@@ -138,6 +138,10 @@ in the index.
- 
- 		** The compressed bitmap itself, see Appendix A.
- 
-+	* {empty}
-+	TRAILER: ::
-+		Trailing checksum of the preceding contents.
-+
- == Appendix A: Serialization format for an EWAH bitmap
- 
- Ewah bitmaps are serialized in the same protocol as the JAVAEWAH
--- 
-gitgitgadget
+-Han Xin
