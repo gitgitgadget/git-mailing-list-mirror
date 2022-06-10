@@ -2,78 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BFADC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E5F4C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 03:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241846AbiFJCwz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 22:52:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40294 "EHLO
+        id S239219AbiFJDtu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 23:49:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238394AbiFJCwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 22:52:54 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7025725EB1
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 19:52:53 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id k11so34078687oia.12
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 19:52:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=g42SYdREDID3NePxsyq+4ieEH6wxBXtOo6LpmI4EQVo=;
-        b=R3rHp7rgrWOgIi/PUrKa6GDYp3lJZ5VximykLbA5TSs/9pcSKe2S6syTqGDCXwLvBh
-         acq3wQjS+Sc+UW+IJBmw+HqNmGAb3HkB2BXmh/uFm9k1KR9zGldSarLhe5Fhk/UP82Ap
-         C6p5JD+1mC3dJK8b5Lj1wZYKlUJFDjzG4A8MTE1pdpWHkWbHBREoaMWSVuSex2vPdCS7
-         dNqLRQj1TH3CsNIfhcJbx0Tp3llNSSQvmq0ILcQk8AnOkIyxxkrBrqQDyCNwJPryG9wO
-         b9NOKBEOM3oe2PfjKPl3mDxNDZOm9TFaqLHcctCVI5AzdcrTqkqi2jr5M3zWQOsPRUbQ
-         JHbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=g42SYdREDID3NePxsyq+4ieEH6wxBXtOo6LpmI4EQVo=;
-        b=aDETisTVx6lJcLIEVYykDvMfSVo1DutZY3O2zr65N9hjrB3TbccC4ClrSKlkEaPqb5
-         hq8pNAgTURGb22CAg8VIsYEPS/KXUa5hipV/Xl5MkmkRtBdi+2OigQn1owNfsjFm4cQz
-         44+4N2Fxob57ew/qNoIGw0849dUkDO9O97SzAEDtN1aINVnVs4LiPRaz3lJpJ9kar8S4
-         xvYmpOb5TBsjylXmEHO4A5WugDIBMmgfFX811kY8VdjQyA774+ZuGox2draEOwM8UQof
-         TdAYUZroR+p9Mjz/Rq6BwGYn+V6ba+DysGVsE3/RjKenqg1mOKTO+p2B79wNcJyy6FlN
-         +A0A==
-X-Gm-Message-State: AOAM533ioKqlaqhcHL7POlrHZto0r8U3Z3O1k58bnb+h7nL/dCqfhlzf
-        OMxBi8w0qUfBFlXbp8wTB8oxpOMJn4dnBSu+OEe4giacB/tVyg==
-X-Google-Smtp-Source: ABdhPJxRzF/ECuxNirAt3gKfFxI+QmpUx+Ds+p0P1bQlAppo+9CHESjwwTNSvG+s36vFyamudqLOZ9ypZVJKd8N4Qnw=
-X-Received: by 2002:aca:b354:0:b0:32e:fc24:bea6 with SMTP id
- c81-20020acab354000000b0032efc24bea6mr1181568oif.295.1654829572638; Thu, 09
- Jun 2022 19:52:52 -0700 (PDT)
-MIME-Version: 1.0
-From:   Piyush Gaikwad <piyushgaikwad321@gmail.com>
-Date:   Thu, 9 Jun 2022 19:52:41 -0700
-Message-ID: <CABsvAmr0-1eLQeCR-hhz_CObOS2bgjRf7v+YG5BOY8h5nn+2kQ@mail.gmail.com>
-Subject: behaviour of untracked files cache in git stable 2.36.1 verison on mac
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S234635AbiFJDtt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 23:49:49 -0400
+Received: from out28-172.mail.aliyun.com (out28-172.mail.aliyun.com [115.124.28.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41E85387E3B
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 20:49:46 -0700 (PDT)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07263833|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0322387-0.0101906-0.957571;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047199;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=5;RT=5;SR=0;TI=SMTPD_---.O1PjMku_1654832981;
+Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.O1PjMku_1654832981)
+          by smtp.aliyun-inc.com;
+          Fri, 10 Jun 2022 11:49:43 +0800
+Date:   Fri, 10 Jun 2022 11:49:44 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        "Jonathan Tan" <jonathantanmy@google.com>,
+        dscho <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: [PATCH v2] remote-curl: send Accept-Language header to server
+References: <pull.1251.git.1654678407365.gitgitgadget@gmail.com>, 
+        <pull.1251.v2.git.1654756523475.gitgitgadget@gmail.com>, 
+        <xmqqilp9gznd.fsf@gitster.g>
+X-Priority: 3
+X-GUID: 01518A0D-D466-4143-84C9-8B13AB65762E
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+Message-ID: <2022061011484327929877@oschina.cn>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+PiJMaSBMaW5jaGFvIHZpYSBHaXRHaXRHYWRnZXQiIDxnaXRnaXRnYWRnZXRAZ21haWwuY29tPiB3
+cml0ZXM6Cj4KPj4gRnJvbTogTGkgTGluY2hhbyA8bGlsaW5jaGFvQG9zY2hpbmEuY24+Cj4+Cj4+
+IEdpdCBzZXJ2ZXIgZW5kJ3MgYWJpbGl0eSB0byBhY2NlcHQgQWNjZXB0LUxhbmd1YWdlIGhlYWRl
+ciB3YXMgaW50cm9kdWNlZAo+PiBpbiBmMTg2MDRiYmYyKGh0dHA6IGFkZCBBY2NlcHQtTGFuZ3Vh
+Z2UgaGVhZGVyIGlmIHBvc3NpYmxlKSwgYnV0IHRoaXMgaXMKPgo+UGxlYWVzIHJlZmVyIHRvIHRo
+ZSBjb21taXQgbGlrZSBzbzoKPgo+wqDCoMKgIGYxODYwNGJiIChodHRwOiBhZGQgQWNjZXB0LUxh
+bmd1YWdlIGhlYWRlciBpZiBwb3NzaWJsZSwgMjAxNS0wMS0yOCkKPgo+KGNmLiBEb2N1bWVudGF0
+aW9uL1N1Ym1pdHRpbmdQYXRjaGVzOjpjb21taXQtcmVmZXJlbmNlKQo+Cj4iZ2l0IHNob3cgLXMg
+LS1wcmV0dHk9cmVmZXJlbmNlIGYxODYwNGJiIiBpcyBvbmUgd2F5IHRvIGZvcm1hdCBhCj5jb21t
+aXQgbmFtZSBpbiB0aGF0IGZvcm1hdC4KPiAKT0ssIHRoYW5rcyBmb3IgcmVtaW5kaW5nLgo+PiBv
+bmx5IHVzZWQgYnkgdmVyeSBlYXJseSBwaGFzZSBvZiB0aGUgdHJhbnNmZXIsIHRoYXQncyBIVFRQ
+IEdFVCByZXF1ZXN0IHRvCj4KPiJ0aGF0J3MiIC0+ICJ3aGljaCBpcyIsIHByb2JhYmx5LiAKT0su
+Cj4KPj4gZGlzY292ZXIgcmVmZXJlbmNlcy4gRm9yIG90aGVyIHBoYXNlcywgbGlrZSBQT1NUIHJl
+cXVlc3QgaW4gdGhlIHNtYXJ0IEhUVFAKPj4gdGhlIHNlcnZlciBzaWRlIGRvbid0IGtub3cgd2hh
+dCBsYW5ndWFnZSB0aGUgY2xpZW50IHNwZWFrcy4KPgo+IkhUVFAgdGhlIHNlcnZlciBzaWRlIGRv
+bid0IiAtPiAiSFRUUCwgdGhlIHNlcnZlciBkb2VzIG5vdCIKPgo+PsKgIGh0dHAuY8KgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgNCArKy0tCj4+wqAgaHR0cC5o
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAzICsrKwo+PsKg
+IHJlbW90ZS1jdXJsLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMTYgKysrKysrKysr
+KysrKysrKwo+PsKgIHQvdDU1NDEtaHR0cC1wdXNoLXNtYXJ0LnNowqAgfCAxOSArKysrKysrKysr
+KysrKysrKysrCj4+wqAgdC90NTU1MC1odHRwLWZldGNoLWR1bWIuc2jCoCB8IDEwICsrKysrLS0t
+LS0KPj7CoCB0L3Q1NTUxLWh0dHAtZmV0Y2gtc21hcnQuc2ggfCAxMCArKysrKysrKy0tCj4+wqAg
+NiBmaWxlcyBjaGFuZ2VkLCA1MyBpbnNlcnRpb25zKCspLCA5IGRlbGV0aW9ucygtKQo+Cj5XaGF0
+IGlzIGN1cmlvdXMgaXMgdGhhdCB3aXRob3V0IGFueSBvZiBjaGFuZ2VzIHRvIHRoZSAqLltjaF0g
+ZmlsZXMsCj51cGRhdGVkIHRlc3QgNTU1MCBhbmQgNTU1MSBwYXNzIGFscmVhZHkuCj4KPkluIG90
+aGVyIHdvcmRzLCB0aGVzZSB1cGRhdGVkIHRlc3RzIGluIDU1NTAgYW5kIDU1NTEgcHJvYmFibHkg
+YXJlCj5ub3QgdGVzdGluZyB0aGUgYmVoYXZpb3VyIHRoZSB1cGRhdGVkIGNvZGUgaW50ZW5kcyB0
+byBzaG93LsKgIE9mCj5jb3Vyc2UsIGlmIHdlIHJldmVydCB0aGUgY29kZSB0aGF0IHRhdWdodCB0
+aGUgQWNjZXB0LUxhbmd1YWdlIHRvIHRoZQo+R0VUIHJlcXVlc3RzIGluIGYxODYwNGJiLCB0aGVz
+ZSB0ZXN0cyB3aWxsIGZhaWwuwqAgVGhlcmUgaXMgbm8gcmVhc29uCj50byB0b3VjaCB0aGVzZSB0
+d28gdGVzdHMgdG8gInByb3ZlIiB0aGF0IHRoZSBjb2RlIGNoYW5nZSBpbiB0aGlzCj5wYXRjaCBk
+b2VzIG5vdCBicmVhayBleGlzdGluZyBzdXBwb3J0LCBlaXRoZXIuIApNeSBiYWQsIHRoZSB1cGRh
+dGVkIHRlc3QgaW4gdDU1NTAgY2FuIG5vdCB0ZXN0IHRoZSB1cGRhdGVkIGNvZGUsIGJ1dCB0ZXN0
+IAp0aGUgb3JpZ2luYWzCoGNvZGUgaW7CoGYxODYwNGJiLgo+Cj4+IGRpZmYgLS1naXQgYS9odHRw
+LmggYi9odHRwLmgKPj4gaW5kZXggYmEzMDNjZmIzNzIuLjNjOTRjNDc5MTAwIDEwMDY0NAo+PiAt
+LS0gYS9odHRwLmgKPj4gKysrIGIvaHR0cC5oCj4+IEBAIC0xNzgsNiArMTc4LDkgQEAgaW50IGh0
+dHBfZmV0Y2hfcmVmKGNvbnN0IGNoYXIgKmJhc2UsIHN0cnVjdCByZWYgKnJlZik7Cj4+wqAgaW50
+IGh0dHBfZ2V0X2luZm9fcGFja3MoY29uc3QgY2hhciAqYmFzZV91cmwsCj4+wqAgc3RydWN0IHBh
+Y2tlZF9naXQgKipwYWNrc19oZWFkKTsKPj7CoAo+PiArLyogSGVscGVyIGZvciBnZXR0aW5nIEFj
+Y2VwdC1MYW5ndWFnZSBoZWFkZXIgKi8KPj4gK2NvbnN0IGNoYXIgKmh0dHBfZ2V0X2FjY2VwdF9s
+YW5ndWFnZV9oZWFkZXIodm9pZCk7Cj4KPk9LLgo+Cj4+IEBAIC05MzIsNiArOTMzLDEwIEBAIHN0
+YXRpYyBpbnQgcG9zdF9ycGMoc3RydWN0IHJwY19zdGF0ZSAqcnBjLCBpbnQgc3RhdGVsZXNzX2Nv
+bm5lY3QsIGludCBmbHVzaF9yZWNlCj4+wqAgaGVhZGVycyA9IGN1cmxfc2xpc3RfYXBwZW5kKGhl
+YWRlcnMsIG5lZWRzXzEwMF9jb250aW51ZSA/Cj4+wqAgIkV4cGVjdDogMTAwLWNvbnRpbnVlIiA6
+ICJFeHBlY3Q6Iik7Cj4+wqAKPj4gKwkvKiBBZGQgQWNjZXB0LUxhbmd1YWdlIGhlYWRlciAqLwo+
+PiArCWlmIChycGMtPmhkcl9hY2NlcHRfbGFuZ3VhZ2UpCj4+ICsJaGVhZGVycyA9IGN1cmxfc2xp
+c3RfYXBwZW5kKGhlYWRlcnMsIHJwYy0+aGRyX2FjY2VwdF9sYW5ndWFnZSk7Cj4KPmN1cmxfc2xp
+c3RfYXBwZW5kKCkgbWFrZXMgYSBjb3B5IG9mIC5oZHJfYWNjZXB0X2xhbmd1YWdlLCBzbyBycGMK
+PnN0cnVjdCBpcyBzdGlsbCByZXNwb25zaWJsZSB0byByZWxlYXNlIHRoZSByZXNvdXJjZSB1c2Vk
+IGZvciB0aGUKPm1lbWJlciB3aGVuIGl0IGdvZXMgb3V0IG9mIHNjb3BlLgo+Cj4+ICsJYWNjZXB0
+X2xhbmd1YWdlID0gaHR0cF9nZXRfYWNjZXB0X2xhbmd1YWdlX2hlYWRlcigpOwo+PiArCWlmIChh
+Y2NlcHRfbGFuZ3VhZ2UpIHsKPj4gKwlzdHJidWZfYWRkc3RyKCZidWYsIGFjY2VwdF9sYW5ndWFn
+ZSk7Cj4+ICsJcnBjLT5oZHJfYWNjZXB0X2xhbmd1YWdlID0gc3RyYnVmX2RldGFjaCgmYnVmLCBO
+VUxMKTsKPgo+VGhhdCBsb29rcyBsaWtlIGEgcm91bmRhYm91dCB3YXkgdG8gc2F5IHhzdHJkdXAo
+KS7CoCBUaGUgd2hvbGUgdGhpbmcKPmNhbiBiZSBkb25lIGxpa2Ugc286Cj4KPglycGMtPmhkcl9h
+Y2NlcHRfbGFuZ3VhZ2UgPSB4c3RyZHVwX29yX251bGwoaHR0cF9nZXRfYWNjZXB0X2xhbmd1YWdl
+X2hlYWRlcigpKTsKPgo+QW5kIGJ5IGRvaW5nIHNvIHdlIGtpbGwgYW5vdGhlciBidWcuwqAgInN0
+cnVjdCBycGMiIGlzIGFsbG9jYXRlZCBvbgo+dGhlIHN0YWNrIHdpdGhvdXQgYW55IGluaXRpYWxp
+emF0aW9uLCBzbyB0aGUgbmV3IGNvZGUgbGVhdmVzIHRoZQo+aGRyX2FjY2VwdF9sYW5ndWFnZSBt
+ZW1iZXIgdW5pbml0aWFsaXplZC7CoCBSYXRoZXIsIHdlIHdhbnQgdG8KPmV4cGxpY2l0bHkgc2V0
+IE5VTEwgdG8gdGhlIG1lbWJlciB3aGVuIHRoZSBuZXcgaGVhZGVyIGlzIG5vdCBpbiB1c2UuCj4K
+Pj4gKwl9Cj4+ICsKPgo+VGhlIG1lbW9yeSBvd25lcnNoaXAgbW9kZWwgZm9yIHRoaXMgbmV3IC5o
+ZHJfYWNjZXB0X2xhbmd1YWdlIG1lbWJlcgo+aW4gdGhlIFJQQyBzdHJ1Y3Qgc2VlbXMgdG8gYmUg
+dGhhdCB0aGUgc3RydWN0IG93bnMgdGhlIHJlc291cmNlIG9mCj50aGUgbWVtYmVyLgo+Cj4+wqAg
+c3RyYnVmX2FkZGYoJmJ1ZiwgIkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24veC0lcy1yZXF1ZXN0
+Iiwgc3ZjKTsKPj7CoCBycGMtPmhkcl9jb250ZW50X3R5cGUgPSBzdHJidWZfZGV0YWNoKCZidWYs
+IE5VTEwpOwo+PsKgCj4+IEBAIC0xNDAwLDYgKzE0MTIsNyBAQCBzdGF0aWMgaW50IHN0YXRlbGVz
+c19jb25uZWN0KGNvbnN0IGNoYXIgKnNlcnZpY2VfbmFtZSkKPj7CoCBzdHJ1Y3QgZGlzY292ZXJ5
+ICpkaXNjb3ZlcjsKPj7CoCBzdHJ1Y3QgcnBjX3N0YXRlIHJwYzsKPj7CoCBzdHJ1Y3Qgc3RyYnVm
+IGJ1ZiA9IFNUUkJVRl9JTklUOwo+PiArCWNvbnN0IGNoYXIgKmFjY2VwdF9sYW5ndWFnZTsKPj7C
+oAo+PsKgIC8qCj4+wqAgKiBSdW4gdGhlIGluZm8vcmVmcyByZXF1ZXN0IGFuZCBzZWUgaWYgdGhl
+IHNlcnZlciBzdXBwb3J0cyBwcm90b2NvbAo+PiBAQCAtMTQxOCw2ICsxNDMxLDkgQEAgc3RhdGlj
+IGludCBzdGF0ZWxlc3NfY29ubmVjdChjb25zdCBjaGFyICpzZXJ2aWNlX25hbWUpCj4+wqAgcHJp
+bnRmKCJcbiIpOwo+PsKgIGZmbHVzaChzdGRvdXQpOwo+PsKgIH0KPj4gKwlhY2NlcHRfbGFuZ3Vh
+Z2UgPSBodHRwX2dldF9hY2NlcHRfbGFuZ3VhZ2VfaGVhZGVyKCk7Cj4+ICsJaWYgKGFjY2VwdF9s
+YW5ndWFnZSkKPj4gKwlycGMuaGRyX2FjY2VwdF9sYW5ndWFnZSA9IHhzdHJmbXQoIiVzIiwgYWNj
+ZXB0X2xhbmd1YWdlKTsKPgo+QW5kIHRoaXMgaXMgaW4gbGluZSB3aXRoIHRoYXQgbWVtb3J5IG93
+bmVyc2hpcCBtb2RlbC4KPgo+PsKgIHJwYy5zZXJ2aWNlX25hbWUgPSBzZXJ2aWNlX25hbWU7Cj4+
+wqAgcnBjLnNlcnZpY2VfdXJsID0geHN0cmZtdCgiJXMlcyIsIHVybC5idWYsIHJwYy5zZXJ2aWNl
+X25hbWUpOwo+Cj5JIGhvd2V2ZXIgZG8gbm90IHNlZSBhbnlib2R5IHRoYXQgYWN0dWFsbHkgZnJl
+ZWluZyB3aGVuIHJwYyBpcwo+ZG9uZS4KPgo+QXJlIHdlIGFkZGluZyBhIG5ldyBtZW1vcnkgbGVh
+az/CoCBTaG91bGRuJ3Qgd2UgYmUgcmVsZWFzaW5nIHRoZQo+cmVzb3VyY2VzIGhlbGQgaW4gcnBj
+Lmhkcl9hY2NlcHRfbGFuZ3VhZ2Ugd2hlbiBycGMgZ29lcyBvdXQgb2YKPnNjb3BlPyAKUmlnaHQu
+IHdlIHNob3VsZCBmcmVlIGl0IGluIHRoZSBlbmQgb2YgdGhlIG1ldGhvZCwgbGlrZSBzbzoKwqAg
+wqAgwqAgwqAgZnJlZShycGMuc2VydmljZV91cmwpOwrCoCDCoCDCoCDCoCBmcmVlKHJwYy5oZHJf
+Y29udGVudF90eXBlKTsKwqAgwqAgwqAgwqAgZnJlZShycGMuaGRyX2FjY2VwdCk7CisgwqAgwqAg
+wqBmcmVlKHJwYy5oZHJfYWNjZXB0X2xhbmd1YWdlKTsKwqAgwqAgwqAgwqAgZnJlZShycGMucHJv
+dG9jb2xfaGVhZGVyKTsKwqAgwqAgwqAgwqAgZnJlZShycGMuYnVmKTsKwqAgwqAgwqAgwqAgc3Ry
+YnVmX3JlbGVhc2UoJmJ1Zik7Cgo+Cj4+IGRpZmYgLS1naXQgYS90L3Q1NTQxLWh0dHAtcHVzaC1z
+bWFydC5zaCBiL3QvdDU1NDEtaHR0cC1wdXNoLXNtYXJ0LnNoCj4+IGluZGV4IDJmMDlmZjRmYWM2
+Li40Mjg4YTI3OWU5ZSAxMDA3NTUKPj4gLS0tIGEvdC90NTU0MS1odHRwLXB1c2gtc21hcnQuc2gK
+Pj4gKysrIGIvdC90NTU0MS1odHRwLXB1c2gtc21hcnQuc2gKPj4gQEAgLTgwLDYgKzgwLDI1IEBA
+IHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3B1c2ggdG8gcmVtb3RlIHJlcG9zaXRvcnkgKHN0YW5kYXJk
+KScgJwo+PsKgIHRlc3QgJEhFQUQgPSAkKGdpdCByZXYtcGFyc2UgLS12ZXJpZnkgSEVBRCkpCj4+
+wqAgJwo+PsKgCj4+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdwdXNoIHRvIHJlbW90ZSByZXBvc2l0
+b3J5IChzdGFuZGFyZCkgd2l0aCBzZW5kaW5nIEFjY2VwdC1MYW5ndWFnZScgJwo+PiArCWNhdCA+
+ZXhwIDw8LVxFT0YgJiYKPj4gKwk9PiBTZW5kIGhlYWRlcjogQWNjZXB0LUxhbmd1YWdlOiB6aC1D
+TiwgZW47cT0wLjksICo7cT0wLjgKPj4gKwk9PiBTZW5kIGhlYWRlcjogQWNjZXB0LUxhbmd1YWdl
+OiB6aC1DTiwgZW47cT0wLjksICo7cT0wLjgKPj4gKwlFT0YKPgo+QXMgSSBhbHJlYWR5IGFza2Vk
+LCBkbyB3ZSBuZWVkIHRvIHVzZSBhIGxhbmd1YWdlIGNvZGUgdGhhdCBoYXMgbmV2ZXIKPmJlZW4g
+dXNlZCBpbiBvdXIgZXhpc3RpbmcgdGVzdCB0byB0ZXN0IHRoaXMgbmV3IGNvZGVwYXRoLCBvciBp
+cyBpdAo+c3VmZmljaWVudCB0byByZXVzZSB3aGF0IHdlIGFscmVhZHkga25vdyB0aGF0IHdpbGwg
+bm90IGNhdXNlIHByb2JsZW1zCj5pbiBkZXZlbG9wZXJzJyB0ZXN0aW5nIGVudmlyb25tZW50LCBs
+aWtlIHRob3NlIHVzZWQgaW4gb3RoZXIKPmV4aXN0aW5nIHRlc3RzLCBsaWtlIGtvX0tSLCBlbl9V
+UywgZXRjLsKgIElmIHRoZSBsYXR0ZXIsIEkgc3Ryb25nbHkKPmRvIG5vdCB3YW50IHRvIHNlZSBh
+IG5ldyBsYW5ndWFnZSBhZGRlZCB0byB0aGUgdGVzdC7CoCBXZSBhcmUgKm5vdCoKPmluIHRoZSBi
+dXNpbmVzcyBvZiB0ZXN0aW5nIHRoZSBzeXN0ZW0gbG9jYWxlIHN1cHBvcnQgb24gdGhlIHVzZXIn
+cwo+cGxhdGZvcm0uIApPSy7CoAo+Cj4+ICsJY2QgIiRST09UX1BBVEgiL3Rlc3RfcmVwb19jbG9u
+ZSAmJgo+PiArCTogPnBhdGhfbGFuZyAmJgo+PiArCWdpdCBhZGQgcGF0aF9sYW5nICYmCj4+ICsJ
+dGVzdF90aWNrICYmCj4+ICsJZ2l0IGNvbW1pdCAtbSBwYXRoX2xhbmcgJiYKPj4gKwlIRUFEPSQo
+Z2l0IHJldi1wYXJzZSAtLXZlcmlmeSBIRUFEKSAmJgo+PiArCUdJVF9UUkFDRV9DVVJMPXRydWUg
+TEFOR1VBR0U9InpoX0NOOmVuIiBnaXQgcHVzaCAtdiAtdiAyPmVyciAmJgo+Cj5JZiB0aGlzIHRl
+c3QsIG9yIGV4aXN0aW5nIHRlc3RzIGluIG90aGVyIHNjcmlwdHMsIGRvIG5vdCBhY3R1YWxseQo+
+cmVxdWlyZSB0aGUgTEFOR1VBR0Ugc3BlY2lmaWVkIGluIHRoZSBlbnZpcm9ubWVudCB2YXJpYWJs
+ZSB0byBiZQo+Imluc3RhbGxlZCIgb24gdGhlIHVzZXIncyBwbGF0Zm9ybSwgdGhlbiBpdCBtaWdo
+dCBiZSBhbiBhY2NlcHRhYmxlCj5hbHRlcm5hdGl2ZSB0byB1c2UgYSBsb2NhbGUgKGxpa2UgInRs
+aF9BUSIpIHRoYXQgaXMgaW1wbGF1c2libGUgdG8KPmV4aXN0IG9uIHRoZSB1c2VyJ3Mgc3lzdGVt
+LCBidXQgdXNpbmcgd2hhdCB3ZSBhbHJlYWR5IHVzZSBpbiBvdGhlcgo+dGVzdHMgd291bGQgYmUg
+dGhlIHNhZmVzdCB0aGluZyB0byBkby4KPgo+VXNlIGtvX0tSLlVURjggKGFuZCBub3RoaW5nIGVs
+c2UpIGxpa2UgNTU1MCBkb2VzIHdpdGggaXRzIGZpcnN0IHVzZQo+b2YgY2hlY2tfbGFuZ3VhZ2Ug
+aGVscGVyLsKgIE9yIHVzaW5nIGVuX1VTIGlzIGFsc28gZmluZSwgYXMgdGhhdCBpcwo+YWxzbyB1
+c2VkIG92ZXIgdGhlcmUuIApPSy4KPgo+PiArCSEgZ3JlcCAiRXhwZWN0OiAxMDAtY29udGludWUi
+IGVyciAmJgo+PiArCj4+ICsJZ3JlcCAiPT4gU2VuZCBoZWFkZXI6IEFjY2VwdC1MYW5ndWFnZToi
+IGVyciA+ZXJyLmxhbmd1YWdlICYmCj4+ICsJdGVzdF9jbXAgZXhwIGVyci5sYW5ndWFnZQo+PiAr
+Jwo+PiArCj4+wqAgdGVzdF9leHBlY3Rfc3VjY2VzcyAncHVzaCBhbHJlYWR5IHVwLXRvLWRhdGUn
+ICcKPj7CoCBnaXQgcHVzaAo+PsKgICcKPgo+QXMgSSBhbHJlYWR5IHNhaWQsIEkgZG8gbm90IHRo
+aW5rIGNoYW5nZXMgdG8gdGhlIGZvbGxvd2luZyB0d28gdGVzdHMKPmFyZSB3YXJyYW50ZWQuCj4K
+Pj4gZGlmZiAtLWdpdCBhL3QvdDU1NTAtaHR0cC1mZXRjaC1kdW1iLnNoIGIvdC90NTU1MC1odHRw
+LWZldGNoLWR1bWIuc2gKPj4gZGlmZiAtLWdpdCBhL3QvdDU1NTEtaHR0cC1mZXRjaC1zbWFydC5z
+aCBiL3QvdDU1NTEtaHR0cC1mZXRjaC1zbWFydC5zaCAKV2VsbCwgYWZ0ZXIgSSBtYWRlIHNvbWUg
+dGVzdHMsIHRoZSByZWFzb24gdDU1NTEgZmFpbCB0byB0ZXN0IHdoYXQgd2Ugd2FudCBpcwoiaWYg
+dGVzdCAiJEdJVF9URVNUX1BST1RPQ09MX1ZFUlNJT04iID0gMiIgdGhpcyBzdGF0ZW1lbnQgYmxv
+Y2sgdGhlIHJlYWwKdGVzdC4KPgo+Cj5UaGFua3Mu
 
-I am currently on Mac.
-In Git 2.35.1, when I cloned my repository, it took 7 seconds to
-enumerate the untracked files and when I did time git status, it took
-approximately 2 seconds. And, when I checkout to another branch it
-took approximately 15 seconds and when I checkout back to my main repo
-git status took 15 seconds (which should not take this much time).
-Work-around for this in (2.35.1) was: I set core.untrackedcache=true
-and GIT_FORCE_UNTRACKEDCACHE=1 which helped to update the
-untrackedcache and improve the performance of git status of
-(approximately 4 seconds).
-
-But now in Git 2.36.1, this work-around doesn't seem to work. It takes
-approximately 20 seconds on all branches.
-
-Possible changes in the code:
-In Git 2.35.1, code in dir.c: GIT_FORCE_UNTRACKED_CACHE,0
-and the same in Git 2.36.1, code in dir.c:GIT_FORCE_UNTRACKED_CACHE, -1
-
-Is this code change which made the git config variables unfit for the
-current stable version or is it something else?
-How can I solve this untracked files cache performance issue; is there
-any workaround?
