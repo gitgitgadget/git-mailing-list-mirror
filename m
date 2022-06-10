@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2946C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67F25C43334
+	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346052AbiFJCDD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 22:03:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45842 "EHLO
+        id S1346058AbiFJCDF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 22:03:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345991AbiFJCCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 22:02:31 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F017CE5CE
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 19:02:10 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id q15so26596898wrc.11
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 19:02:10 -0700 (PDT)
+        with ESMTP id S1345887AbiFJCCS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 22:02:18 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F879BCE88
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 19:02:03 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id a10so10689315wmj.5
+        for <git@vger.kernel.org>; Thu, 09 Jun 2022 19:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=efHOzyjZ950i3UiKV6jUtbv/GdRv7QNPcTNCpJRrfmU=;
-        b=kaDy9a+7gBQJ4ktO6oM/tEE820GHiog2/g7uHdk6pjo7LfAraIVbdQKU05dzD3syTy
-         WG/Nt+KopkdSw4UZKENss3HyDxllL6jG+s0GbQhi/kaE1HoE3b2wwONFfDVkKQFbq7t0
-         9BUf1Hw9kciKCIEVFBZsV88jRr8AnaAJuPkzXTfH/5DkSD657M2gp4R2d1wXOSR5Jtd2
-         FcYxpFr7yGzWfFk7uazvri6qsdtLkQt7OKwpIGPkEvUlLewdirSIGH/969MRYAnE+4gv
-         CTswtL+ymNZ3zN+kpAlI2dCOcG4Tej/mezcYcIVTPXNPUYUmfttFnBd4DdvTehFhvrrj
-         BR0A==
+        bh=i5yWOgGV6nkLRgqYQPcJed9enMkjAOg/wHLTF2newGs=;
+        b=Sbr9R7ck9Pbkhp+1s+9+GU4awgiYUYy41LwSrH7Y4h6NxAjc0RD7zbiQsFGSbkxC/N
+         aGky75KADwfgBA20tJfLp3/kfil6mMVxN/S4mS+/fwWxes6ec5JnMrib4f6LdJar1pFo
+         s9isldZo+QqjSsCIbEmJYZkW4GiOPQ5q9dtBRFkmHBndLTygUIxsTiA24IkxU3aTHCHa
+         lCcTvDn4dTGqv9cHdWCEOGWuf8o3C0wAqD5oq51p7GzubipE7kP9KDYEml1rkkjvIRG0
+         hcU/1CkYHfRB1KggelcrQtqczjpd4/SRWftSGX8c9sdr3lj10XkIa3yCGROj45KL8DYl
+         yS9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=efHOzyjZ950i3UiKV6jUtbv/GdRv7QNPcTNCpJRrfmU=;
-        b=5tBhZ96KB6T7tlFgvoHOkwKyOgvkfqGFa80NvWr9h2XrLQrZA9EvHx40f/5+CWAkte
-         E9D2iyP2dLahaqVeV1lmvr2tPHelHN8HQCiga/yvnBJpSQJAne0dfCpeB+zRvk+qmsPN
-         63wdXH58J2p+sH0J3527fCDtLKSNSm1JrvNL66WI4JlBm29TOFns2kbJHpaX5ET1s1hF
-         GqmzWuKnvDsFvr+fLnaC5kbLIOqsO4bOF7nyshSnzPTeylSCihEVSnO4ilX/aKrdAOxV
-         yoiDvi3giIKQcaPEzjMgdMd8qCLJzYv07xOmwpMu3M09lxI/uy0/haVvVbSTvlc2EWWM
-         kpVA==
-X-Gm-Message-State: AOAM533HVcajnDHHd/WSlhwfuALTdzb5BsZLSlSF6slacz2D5c5xC11/
-        v36SoJgLSnWiFTUZUOYsMT5n7ZCfa2CPpw==
-X-Google-Smtp-Source: ABdhPJz2sDRorYXZeCrNo3Jsag2EBzQl1H9lRXHHBcL8CW0JGnw/EynZpZF8ZNYLQn+z+gHyeW7KEQ==
-X-Received: by 2002:a5d:47a1:0:b0:218:423c:8448 with SMTP id 1-20020a5d47a1000000b00218423c8448mr23327480wrb.199.1654826518804;
-        Thu, 09 Jun 2022 19:01:58 -0700 (PDT)
+        bh=i5yWOgGV6nkLRgqYQPcJed9enMkjAOg/wHLTF2newGs=;
+        b=yrrs3qRKFFxgHr3sxMZ6izmSYaGakbFcyDhkEzLdHFi8H3C158SrSHEu8vRh6I/YBG
+         r6ZTx26BF6+BBqxSO0rYTcVyWCwSqE1Jajmm5T7WMuqt0rseMiun2IWuCNfOkpvRV50l
+         gM9c0jMnqCRFclkpNrDZYbU6AL+I9VztBucCK7Twu2wREaL34m3m3+3wWaSfibw0epDP
+         QULG4Y8xWWgcRGwK4u7JTeymwdpJ4K83SOo9BnumTRrf6t9ilexZxPyBWlR7hLmYOr94
+         l8VoxWh7SB50ef9qrsI9KBnacene8I7jLffijlUl1lTQeLC8PYN/+IO6W5iHnlC32WZY
+         oYsg==
+X-Gm-Message-State: AOAM532UY55Wq8Y1wKh8uylJf4H0PHHZ635cJ6MZzSPfPgX8NnBq+b8I
+        LqsEEmk/u2i5qkAjxy4q/gdQvUZry448hw==
+X-Google-Smtp-Source: ABdhPJzfqXE62PZSBF0MYlfHsiMulH9BFcZWnjs6Iqem66S/k8AMsQOdWQYIbYtChfxrRTB9Im1v7Q==
+X-Received: by 2002:a05:600c:19cb:b0:397:51db:446f with SMTP id u11-20020a05600c19cb00b0039751db446fmr6098221wmq.182.1654826521630;
+        Thu, 09 Jun 2022 19:02:01 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m5-20020adffe45000000b00219e8d28fb1sm122547wrs.57.2022.06.09.19.01.58
+        by smtp.gmail.com with ESMTPSA id m5-20020adffe45000000b00219e8d28fb1sm122547wrs.57.2022.06.09.19.02.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 19:01:58 -0700 (PDT)
+        Thu, 09 Jun 2022 19:02:00 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH 13/20] submodule--helper: understand --checkout, --merge and --rebase synonyms
-Date:   Fri, 10 Jun 2022 04:01:25 +0200
-Message-Id: <RFC-patch-13.20-20db979a094-20220610T011725Z-avarab@gmail.com>
+Subject: [RFC PATCH 16/20] git-submodule.sh: dispatch "update" to helper
+Date:   Fri, 10 Jun 2022 04:01:28 +0200
+Message-Id: <RFC-patch-16.20-08abadda7c3-20220610T011725Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1178.gb5b1747c546
 In-Reply-To: <RFC-cover-00.20-00000000000-20220610T011725Z-avarab@gmail.com>
 References: <pull.1275.git.git.1654820781.gitgitgadget@gmail.com> <RFC-cover-00.20-00000000000-20220610T011725Z-avarab@gmail.com>
@@ -68,115 +68,231 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Understand --checkout, --merge and --rebase synonyms for
---update={checkout,merge,rebase}, as well as the short options that
-'git submodule' itself understands.
+Dispatch the "update" command directly to "git submodule--helper
+update", rather than doing our own argument parsing in
+git-submodule.sh. As this is the last cmd_*() function to be removed
+from git-submodule.sh we can do some larger cleanup of that file as a
+result.
 
-This removes a difference between the CLI API of "git submodule" and
-"git submodule--helper", making it easier to make the latter an alias
-for the former. See 48308681b07 (git submodule update: have a
-dedicated helper for cloning, 2016-02-29) for the initial addition of
---update.
+As noted in a preceding commit the only behavior change here should be
+the desirable change of better "-h" output, and that this
+implementation understands the "--verbose" synonym for "-v". Let's
+update the documentation to reflect the new "--verbose" synonym.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 17 +++++++++++++++++
- git-submodule.sh            | 14 +++++++++-----
- 2 files changed, 26 insertions(+), 5 deletions(-)
+ Documentation/git-submodule.txt |   5 +-
+ git-submodule.sh                | 159 +-------------------------------
+ 2 files changed, 5 insertions(+), 159 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f1f5c6b84c6..64d7c5d7ba4 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2583,6 +2583,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 	struct update_data opt = UPDATE_DATA_INIT;
- 	struct list_objects_filter_options filter_options;
- 	int ret;
-+	enum submodule_update_type update_type = SM_UPDATE_UNSPECIFIED;
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 5f1c552110e..95685ac4f1c 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] deinit [-f|--force] (--all|[--] <path>...)
+-'git submodule' [--quiet] update [-v] [<options>] [--] [<path>...]
++'git submodule' [--quiet] update [-v | --verbose] [<options>] [--] [<path>...]
+ 'git submodule' [--quiet] set-branch [<options>] [--] <path>
+ 'git submodule' [--quiet] set-url [--] <path> <newurl>
+ 'git submodule' [--quiet] summary [<options>] [--] [<path>...]
+@@ -133,7 +133,7 @@ If you really want to remove a submodule from the repository and commit
+ that use linkgit:git-rm[1] instead. See linkgit:gitsubmodules[7] for removal
+ options.
  
- 	struct option module_update_options[] = {
- 		OPT__FORCE(&opt.force, N_("force checkout updates"), 0),
-@@ -2604,6 +2605,15 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "update", &opt.update_default,
- 			   N_("string"),
- 			   N_("rebase, merge, checkout or none")),
-+		OPT_SET_INT(0, "checkout", &update_type,
-+			N_("use the 'checkout' update strategy (default)"),
-+			SM_UPDATE_CHECKOUT),
-+		OPT_SET_INT('m', "merge", &update_type,
-+			N_("use the 'merge' update strategy"),
-+			SM_UPDATE_MERGE),
-+		OPT_SET_INT('r', "rebase", &update_type,
-+			N_("use the 'rebase' update strategy"),
-+			SM_UPDATE_MERGE),
- 		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
- 			   N_("reference repository")),
- 		OPT_BOOL(0, "dissociate", &opt.dissociate,
-@@ -2653,6 +2663,13 @@ static int module_update(int argc, const char **argv, const char *prefix)
+-update [-v] [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter <filter spec>] [--] [<path>...]::
++update [-v | --verbose] [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter <filter spec>] [--] [<path>...]::
+ +
+ --
+ Update the registered submodules to match what the superproject
+@@ -271,6 +271,7 @@ OPTIONS
+ 	Only print error messages.
  
- 	opt.filter_options = &filter_options;
+ -v::
++--verbose::
+ 	Don't be quiet. This option is only valid for the update command.
  
-+	if (update_type == SM_UPDATE_CHECKOUT)
-+		opt.update_default = "checkout";
-+	else if (update_type == SM_UPDATE_MERGE)
-+		opt.update_default = "merge";
-+	else if (update_type == SM_UPDATE_REBASE)
-+		opt.update_default = "rebase";
-+
- 	if (opt.update_default)
- 		if (parse_submodule_update_strategy(opt.update_default,
- 						    &opt.update_strategy) < 0)
+ --progress::
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 43fe3bcb00b..d8abdd8e8ad 100755
+index 1929c34ae8b..e245b7fbaca 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -38,7 +38,9 @@ init=
- require_init=
- remote=
- nofetch=
--update=
-+rebase=
-+merge=
-+checkout=
- depth=
- progress=
- dissociate=
-@@ -83,7 +85,7 @@ cmd_update()
- 			force=$1
- 			;;
- 		-r|--rebase)
--			update="rebase"
-+			rebase=1
- 			;;
- 		--reference)
- 			case "$2" in '') usage ;; esac
-@@ -97,13 +99,13 @@ cmd_update()
- 			dissociate=1
- 			;;
- 		-m|--merge)
--			update="merge"
-+			merge=1
- 			;;
- 		--recursive)
- 			recursive=1
- 			;;
- 		--checkout)
--			update="checkout"
-+			checkout=1
- 			;;
- 		--recommend-shallow)
- 			recommend_shallow="--recommend-shallow"
-@@ -164,7 +166,9 @@ cmd_update()
- 		${init:+--init} \
- 		${nofetch:+--no-fetch} \
- 		${wt_prefix:+--prefix "$wt_prefix"} \
--		${update:+--update "$update"} \
-+		${rebase:+--rebase} \
-+		${merge:+--merge} \
-+		${checkout:+--checkout} \
- 		${reference:+"$reference"} \
- 		${dissociate:+"--dissociate"} \
- 		${depth:+"$depth"} \
+@@ -30,163 +30,7 @@ GIT_PROTOCOL_FROM_USER=0
+ export GIT_PROTOCOL_FROM_USER
+ 
+ command=
+-force=
+-reference=
+ cached=
+-recursive=
+-init=
+-require_init=
+-remote=
+-nofetch=
+-rebase=
+-merge=
+-checkout=
+-depth=
+-progress=
+-dissociate=
+-single_branch=
+-jobs=
+-recommend_shallow=
+-filter=
+-
+-#
+-# Update each submodule path to correct revision, using clone and checkout as needed
+-#
+-# $@ = requested paths (default to all)
+-#
+-cmd_update()
+-{
+-	# parse $args after "submodule ... update".
+-	while test $# -ne 0
+-	do
+-		case "$1" in
+-		-q|--quiet)
+-			GIT_QUIET=1
+-			;;
+-		-v)
+-			unset GIT_QUIET
+-			;;
+-		--progress)
+-			progress=1
+-			;;
+-		-i|--init)
+-			init=1
+-			;;
+-		--require-init)
+-			require_init=1
+-			;;
+-		--remote)
+-			remote=1
+-			;;
+-		-N|--no-fetch)
+-			nofetch=1
+-			;;
+-		-f|--force)
+-			force=$1
+-			;;
+-		-r|--rebase)
+-			rebase=1
+-			;;
+-		--reference)
+-			case "$2" in '') usage ;; esac
+-			reference="--reference=$2"
+-			shift
+-			;;
+-		--reference=*)
+-			reference="$1"
+-			;;
+-		--dissociate)
+-			dissociate=1
+-			;;
+-		-m|--merge)
+-			merge=1
+-			;;
+-		--recursive)
+-			recursive=1
+-			;;
+-		--checkout)
+-			checkout=1
+-			;;
+-		--recommend-shallow)
+-			recommend_shallow="--recommend-shallow"
+-			;;
+-		--no-recommend-shallow)
+-			recommend_shallow="--no-recommend-shallow"
+-			;;
+-		--depth)
+-			case "$2" in '') usage ;; esac
+-			depth="--depth=$2"
+-			shift
+-			;;
+-		--depth=*)
+-			depth=$1
+-			;;
+-		-j|--jobs)
+-			case "$2" in '') usage ;; esac
+-			jobs="--jobs=$2"
+-			shift
+-			;;
+-		--jobs=*)
+-			jobs=$1
+-			;;
+-		--single-branch)
+-			single_branch="--single-branch"
+-			;;
+-		--no-single-branch)
+-			single_branch="--no-single-branch"
+-			;;
+-		--filter)
+-			case "$2" in '') usage ;; esac
+-			filter="--filter=$2"
+-			shift
+-			;;
+-		--filter=*)
+-			filter="$1"
+-			;;
+-		--)
+-			shift
+-			break
+-			;;
+-		-*)
+-			usage
+-			;;
+-		*)
+-			break
+-			;;
+-		esac
+-		shift
+-	done
+-
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update \
+-		${GIT_QUIET:+--quiet} \
+-		${force:+--force} \
+-		${progress:+"--progress"} \
+-		${remote:+--remote} \
+-		${recursive:+--recursive} \
+-		${init:+--init} \
+-		${nofetch:+--no-fetch} \
+-		${wt_prefix:+--prefix "$wt_prefix"} \
+-		${rebase:+--rebase} \
+-		${merge:+--merge} \
+-		${checkout:+--checkout} \
+-		${reference:+"$reference"} \
+-		${dissociate:+"--dissociate"} \
+-		${depth:+"$depth"} \
+-		${require_init:+--require-init} \
+-		${dissociate:+"--dissociate"} \
+-		$single_branch \
+-		$recommend_shallow \
+-		$jobs \
+-		$filter \
+-		-- \
+-		"$@"
+-}
+-
+-# This loop parses the command line arguments to find the
+-# subcommand name to dispatch.  Parsing of the subcommand specific
+-# options are primarily done by the subcommand implementations.
+-# Subcommand specific options such as --branch and --cached are
+-# parsed here as well, for backward compatibility.
+ 
+ while test $# != 0 && test -z "$command"
+ do
+@@ -235,7 +79,8 @@ absorbgitdirs)
+ 	git submodule--helper "$command" --prefix "$wt_prefix" "$@"
+ 	;;
+ update)
+-	cmd_update "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper "$command" \
++		${GIT_QUIET:+--quiet} ${wt_prefix:+--prefix "$wt_prefix"} "$@"
+ 	;;
+ add | foreach | init | deinit | set-branch | set-url | status | summary | sync)
+ 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper "$command" \
 -- 
 2.36.1.1178.gb5b1747c546
 
