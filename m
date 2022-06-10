@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68EF5C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9D38C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346014AbiFJCCk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 22:02:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45936 "EHLO
+        id S1345998AbiFJCC5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 22:02:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345944AbiFJCCR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 22:02:17 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB2F8BDA1C
+        with ESMTP id S1345960AbiFJCCS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 22:02:18 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB457BDA3A
         for <git@vger.kernel.org>; Thu,  9 Jun 2022 19:02:06 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id k16so34649771wrg.7
+Received: by mail-wr1-x42f.google.com with SMTP id p10so34633101wrg.12
         for <git@vger.kernel.org>; Thu, 09 Jun 2022 19:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NCR02URZY64Y9Y3s8i3sU/yXPz1Mnc40xeeiSkiJHKw=;
-        b=Z+TyVpxgYBocPn3XEo7i6j5r65clDO3hWkVoIdbXwOkbGaaPNayYNmWWFnbIBoKe4x
-         Ep0MLGUrjEvOvoc/yiZrcysc2o2rKrqd+LXo7ol43J+oQ/W0W5+iiinuiNJ4v72z9Pfk
-         CDUg39He1+ugijqJ86bvgfESZk4CxMZP9ij/1tZh4jsg1d1FAB26oc+yf2U3XTyAH04s
-         gCNyFugnUFwvnpPpiZQ9gjWvszPzQDi8ixLJAAiGvxIbtE595ZJLdGNbVVNx5TTxaeHT
-         xz6mXpmD1ozmZe4TXU3DIMjDyQwBm4NzDNi4TnEmTKEQncbEZAL70zCze+/vYUKQ/Cp+
-         Rjlw==
+        bh=2bJNiKchi+yd4bLr8Hs8/H73KcvPvRXcjPn6HIppkwg=;
+        b=I0p6/ZzN+7eRVtOSi/Cqk/pEaT7tOcSFMlQ3EGUGCdXTR639CTy0FZdU2Xwjt28X+k
+         3x2iTNVfGlwwtv4bFF1qKbz9yLL5re2BMAUwhK7Q//qUxnGbHj8FmxZDh63e3cMmWTVz
+         6LYsHgSxIOIX9pgPkbYfbMgnPxCi6QM3xNG9tH6JEHIl2KB+O/xU34gn+LmifEgNPt9+
+         6nc7O0Jw6SpujH0x7xw0UxaTMqF1M+T0X/dWrasDh11+2i+pY/IEgOpnwAfUwBmvC6Wi
+         iwJd3h4kplqZ7uHZQ4FauCj/avSW0MNmG61BqtapF2A+YN6bIH5OXYx1ufKTOTig6A6s
+         Rn2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NCR02URZY64Y9Y3s8i3sU/yXPz1Mnc40xeeiSkiJHKw=;
-        b=h+RwcSDZmYLMo7vq8WoQ96EQw06nzY9IMbmg8iVyoJga0qewB0ILXA9uUe877oRsK/
-         iHud/pD4m8Y2YW8PhyXAf+cRkATrYOLYfqPVKtgmG5Jor+4eGNHUOnlH0Z12Of3G2QCP
-         BYcB6EwC23vSlr5ik/1sTJitIDcaNM6YKulggXXxtQWJa5D2PEHtjvNUuZ61HPSR6jtu
-         zA7d86Z21KQ8lElHjXr8xc4zhxOmisqcV2t1zKHBn5DfKXpb6VzXnDxUduGEvO74vvCB
-         hdgniTlHDh9wa/zEQz7+PrEegbsAGvUBvCefJQ0UDEkMPT2qgSpU3axS0OBZ2J8wIOGg
-         gQ3A==
-X-Gm-Message-State: AOAM530vv4A1gyFnf5BqJilAqOZeK3ShsNdlvYjJjlNdkPtNeiygA0QS
-        5sdjC2RQzH8+1NopRgqtZEbNBxfThI65+Q==
-X-Google-Smtp-Source: ABdhPJzMyFiBSyYPLE3uqsuEUeJu327G2aSHWYjZ2z5rLy4VWpK6NmmrHHumTl7RrW1pT0so9iQuFQ==
-X-Received: by 2002:adf:e54e:0:b0:218:3fee:b8eb with SMTP id z14-20020adfe54e000000b002183feeb8ebmr23182365wrm.253.1654826525700;
-        Thu, 09 Jun 2022 19:02:05 -0700 (PDT)
+        bh=2bJNiKchi+yd4bLr8Hs8/H73KcvPvRXcjPn6HIppkwg=;
+        b=x8/GEALh/YiRFA9cK6izHodwvB+GkGc2k7QhAdjMW2X4DWNhFQx8FAY7BDvQ5jb9gf
+         DFUhUb1pw9OqBRRZg7hIAwe0N9y2XLJ0QXGo5DGknrk0Bg2eThLrrXRQSMEpAFkmvK8E
+         Bmg/rovCCIqgWU5QZoUuXpvxTkGr6bNm+TcZOajVqxnfRb48P2nayt/7IVG4tJNvfvAX
+         2Lj9BYMnR9wn4r5AXPPWpTh4yMYAA3oU9Ip7RkBepfzXFiGqnlt4qzi9QaR3YSReoMeL
+         Ky1g+kY/BR1G+lK0SKCU4soYjE8NGJncMfr3AouAvTJa1QkGt64zTpukfAm5OWBg+tD2
+         IjRQ==
+X-Gm-Message-State: AOAM533akJ1iLpS9YrXV5SxmlMI1pp1aOD1jdczOqN9rGgjOmHBMmL0U
+        Qbq/de/geE53ipnN96sBdqhp30wNPzkRZw==
+X-Google-Smtp-Source: ABdhPJzaCBwCzJYqEpAWqt6I/sKJTDZwWeUN/moO+bdSQUErzMzgj7CzLPG0M7xNZFQdLW85/OyzjA==
+X-Received: by 2002:adf:f3ce:0:b0:211:55a:a604 with SMTP id g14-20020adff3ce000000b00211055aa604mr40986065wrp.213.1654826524634;
+        Thu, 09 Jun 2022 19:02:04 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m5-20020adffe45000000b00219e8d28fb1sm122547wrs.57.2022.06.09.19.02.04
+        by smtp.gmail.com with ESMTPSA id m5-20020adffe45000000b00219e8d28fb1sm122547wrs.57.2022.06.09.19.02.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 09 Jun 2022 19:02:04 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH 20/20] submodule: add a subprocess-less submodule.useBuiltin setting
-Date:   Fri, 10 Jun 2022 04:01:32 +0200
-Message-Id: <RFC-patch-20.20-b2aaad5c008-20220610T011725Z-avarab@gmail.com>
+Subject: [RFC PATCH 19/20] submodule: make it a built-in, remove git-submodule.sh
+Date:   Fri, 10 Jun 2022 04:01:31 +0200
+Message-Id: <RFC-patch-19.20-1423950de08-20220610T011725Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1178.gb5b1747c546
 In-Reply-To: <RFC-cover-00.20-00000000000-20220610T011725Z-avarab@gmail.com>
 References: <pull.1275.git.git.1654820781.gitgitgadget@gmail.com> <RFC-cover-00.20-00000000000-20220610T011725Z-avarab@gmail.com>
@@ -68,137 +68,313 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an experimental setting to avoid the subprocess invocation of "git
-submodule--helper", instead we'll call cmd_submodule__helper()
-directly.
+Replace the now-trivial git-submodule.sh script with a built-in
+builtin/submodule.c. For now this new command is only a dumb
+dispatcher that uses run-command.c to invoke "git submodule--helper",
+just as "git-submodule.sh" used to do.
+
+This is obviously not ideal, and we should follow-up and merge the
+builtin/submodule--helper.c code into builtin/submodule.c, but doing it
+this way makes it easy to review that this new C implementation isn't
+doing anything more clever than the old shellscript implementation.
+
+The "define BUILTIN_" macros will help with that, i.e. the usage
+information we emit can be merged with what
+builtin/submodule--helper.c is now emitting. See
+8757b35d443 (commit-graph: define common usage with a macro,
+2021-08-23) and 1e91d3faf6c (reflog: move "usage" variables and use
+macros, 2022-03-17) for prior art using this pattern.
+
+The "(argc < 2 || !strcmp(argv[1], "-h"))" path at the top of
+cmd_submodule__helper() could now be a "(argc < 2)" if not for
+t0012-help.sh (which invokes all built-ins manually with "-h"). Let's
+leave it for now, eventually we'll consolidate the two.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/submodule.txt |  4 ++++
- builtin/submodule.c                | 35 ++++++++++++++++++++++++++++--
- ci/run-build-and-tests.sh          |  1 +
- t/README                           |  4 ++++
- 4 files changed, 42 insertions(+), 2 deletions(-)
+ Makefile            |   2 +-
+ builtin.h           |   1 +
+ builtin/submodule.c | 138 ++++++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh    |  80 -------------------------
+ git.c               |   1 +
+ 5 files changed, 141 insertions(+), 81 deletions(-)
+ create mode 100644 builtin/submodule.c
+ delete mode 100755 git-submodule.sh
 
-diff --git a/Documentation/config/submodule.txt b/Documentation/config/submodule.txt
-index 6490527b45b..aa761f331c9 100644
---- a/Documentation/config/submodule.txt
-+++ b/Documentation/config/submodule.txt
-@@ -79,6 +79,10 @@ setting.
- * `branch` is supported only if `submodule.propagateBranches` is
- enabled
+diff --git a/Makefile b/Makefile
+index 790382bd1e3..635ab791a8a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -622,7 +622,6 @@ SCRIPT_SH += git-merge-resolve.sh
+ SCRIPT_SH += git-mergetool.sh
+ SCRIPT_SH += git-quiltimport.sh
+ SCRIPT_SH += git-request-pull.sh
+-SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-web--browse.sh
  
-+submodule.useBuiltin::
-+	Set to `true` to use a faster but possibly less stable subprocess-less
-+	implementation of linkgit:git-submodule[1]. Is `false` by default.
-+
- submodule.propagateBranches::
- 	[EXPERIMENTAL] A boolean that enables branching support when
- 	using `--recurse-submodules` or `submodule.recurse=true`.
+ SCRIPT_LIB += git-mergetool--lib
+@@ -1213,6 +1212,7 @@ BUILTIN_OBJS += builtin/show-ref.o
+ BUILTIN_OBJS += builtin/sparse-checkout.o
+ BUILTIN_OBJS += builtin/stash.o
+ BUILTIN_OBJS += builtin/stripspace.o
++BUILTIN_OBJS += builtin/submodule.o
+ BUILTIN_OBJS += builtin/submodule--helper.o
+ BUILTIN_OBJS += builtin/symbolic-ref.o
+ BUILTIN_OBJS += builtin/tag.o
+diff --git a/builtin.h b/builtin.h
+index 40e9ecc8485..c8cf4a2ae3b 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -223,6 +223,7 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix);
+ int cmd_status(int argc, const char **argv, const char *prefix);
+ int cmd_stash(int argc, const char **argv, const char *prefix);
+ int cmd_stripspace(int argc, const char **argv, const char *prefix);
++int cmd_submodule(int argc, const char **argv, const char *prefix);
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix);
+ int cmd_switch(int argc, const char **argv, const char *prefix);
+ int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/submodule.c b/builtin/submodule.c
-index b777787169e..9bb731ce87a 100644
---- a/builtin/submodule.c
+new file mode 100644
+index 00000000000..b777787169e
+--- /dev/null
 +++ b/builtin/submodule.c
-@@ -6,6 +6,7 @@
- #include "parse-options.h"
- #include "run-command.h"
- #include "strvec.h"
-+#include "config.h"
- 
- #define BUILTIN_SUBMODULE_USAGE \
- 	"git submodule [--quiet] [--cached]"
-@@ -105,17 +106,33 @@ static void setup_helper_args(int argc, const char **argv, const char *prefix,
- 	strvec_pushv(args, argv);
- }
- 
-+static int get_use_builtin(void)
+@@ -0,0 +1,138 @@
++/*
++ * Copyright (c) 2007-2022 Lars Hjemli & others
++ * Copyright(c) 2022 Ævar Arnfjörð Bjarmason
++ */
++#include "builtin.h"
++#include "parse-options.h"
++#include "run-command.h"
++#include "strvec.h"
++
++#define BUILTIN_SUBMODULE_USAGE \
++	"git submodule [--quiet] [--cached]"
++
++#define BUILTIN_SUBMODULE_ADD_USAGE \
++	N_("git submodule [--quiet] add [-b <branch>] [-f | --force] [--name <name>]\n" \
++	   "              [--reference <repository>] [--] <repository> [<path>]")
++
++#define BUILTIN_SUBMODULE_STATUS_USAGE \
++	N_("git submodule [--quiet] status [--cached] [--recursive] [--] [<path>...]")
++
++#define BUILTIN_SUBMODULE_INIT_USAGE \
++	N_("git submodule [--quiet] init [--] [<path>...]")
++
++#define BUILTIN_SUBMODULE_DEINIT_USAGE \
++	N_("git submodule [--quiet] deinit [-f | --force] (--all | [--] <path>...)")
++
++#define BUILTIN_SUBMODULE_UPDATE_USAGE \
++	N_("git submodule [--quiet] update [-v] [--init [--filter=<filter-spec>]]\n" \
++	   "              [--remote] [-N | --no-fetch] [-f | --force] [--checkout |--merge | --rebase]\n" \
++	   "              [--[no-]recommend-shallow] [--reference <repository>] [--recursive]\n" \
++	   "              [--[no-]single-branch] [--] [<path>...]")
++
++#define BUILTIN_SUBMODULE_SET_BRANCH_USAGE \
++	N_("git submodule [--quiet] set-branch (--default | --branch <branch>) [--] <path>")
++
++#define BUILTIN_SUBMODULE_SET_URL_USAGE \
++	N_("git submodule [--quiet] set-url [--] <path> <newurl>")
++
++#define BUILTIN_SUBMODULE_SUMMARY_USAGE \
++	N_("git submodule [--quiet] summary [--cached | --files] [--summary-limit <n>]\n"  \
++	   "              [commit] [--] [<path>...]")
++#define BUILTIN_SUBMODULE_FOREACH_USAGE \
++	N_("git submodule [--quiet] foreach [--recursive] <command>")
++
++#define BUILTIN_SUBMODULE_SYNC_USAGE \
++	N_("git submodule [--quiet] sync [--recursive] [--] [<path>...]")
++
++#define BUILTIN_SUBMODULE_ABSORBGITDIRS_USAGE \
++	N_("git submodule [--quiet] absorbgitdirs [--] [<path>...]")
++
++static const char * const git_submodule_usage[] = {
++	BUILTIN_SUBMODULE_USAGE,
++	BUILTIN_SUBMODULE_ADD_USAGE,
++	BUILTIN_SUBMODULE_STATUS_USAGE,
++	BUILTIN_SUBMODULE_INIT_USAGE,
++	BUILTIN_SUBMODULE_DEINIT_USAGE,
++	BUILTIN_SUBMODULE_UPDATE_USAGE,
++	BUILTIN_SUBMODULE_SET_BRANCH_USAGE,
++	BUILTIN_SUBMODULE_SET_URL_USAGE,
++	BUILTIN_SUBMODULE_SUMMARY_USAGE,
++	BUILTIN_SUBMODULE_FOREACH_USAGE,
++	BUILTIN_SUBMODULE_SYNC_USAGE,
++	BUILTIN_SUBMODULE_ABSORBGITDIRS_USAGE,
++	NULL,
++};
++
++static void setup_helper_args(int argc, const char **argv, const char *prefix,
++			      int quiet, int cached, struct strvec *args)
 +{
-+	int v;
++	const char *cmd;
++	int do_quiet_cache = 1;
++	int do_prefix = 1;
 +
-+	if (git_env_bool("GIT_TEST_SUBMODULE_USE_BUILTIN", 0))
-+		v = 1;
-+	else if (!git_config_get_bool("submodule.usebuiltin", &v))
++	strvec_push(args, "submodule--helper");
++
++	/* No command word defaults to "status" */
++	if (!argc) {
++		strvec_push(args, "status");
++		return;
++	}
++
++	/* Either a valid command, or submodule--helper will barf! */
++	cmd = argv[0];
++	strvec_push(args, cmd);
++	argv++;
++	argc--;
++
++	/* Options that need to go before user-supplied options */
++	if (!strcmp(cmd, "absorbgitdirs"))
++		do_quiet_cache = 0;
++	else if (!strcmp(cmd, "update"))
 +		;
-+	else if (!git_config_get_bool("feature.experimental", &v))
-+	      ;
++	else
++		do_prefix = 0;
++	if (do_quiet_cache) {
++		if (quiet)
++			strvec_push(args, "--quiet");
++		if (cached)
++			strvec_push(args, "--cached");
 +
-+	return v;
++		if (prefix && do_prefix)
++			strvec_pushl(args, "--prefix", prefix, NULL);
++	}
++
++	/* All commands get argv, including a "--", if any */
++	strvec_pushv(args, argv);
 +}
 +
- int cmd_submodule(int argc, const char **argv, const char *prefix)
- {
- 	int opt_quiet = 0;
- 	int opt_cached = 0;
- 	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strvec args = STRVEC_INIT;
- 	struct option options[] = {
- 		OPT__QUIET(&opt_quiet, N_("be quiet")),
- 		OPT_BOOL(0, "cached", &opt_cached,
- 			 N_("print the OID of submodules")),
- 		OPT_END()
- 	};
-+	const int use_builtin = get_use_builtin();
- 	int ret;
- 
- 	argc = parse_options(argc, argv, prefix, options, git_submodule_usage,
-@@ -125,14 +142,28 @@ int cmd_submodule(int argc, const char **argv, const char *prefix)
- 	 * Tell the rest of git that any URLs we get don't come
- 	 * directly from the user, so it can apply policy as appropriate.
- 	 */
--	strvec_push(&cp.env_array, "GIT_PROTOCOL_FROM_USER=0");
-+	if (use_builtin)
-+		xsetenv("GIT_PROTOCOL_FROM_USER", "0", 1);
-+	else
-+		strvec_push(&cp.env_array, "GIT_PROTOCOL_FROM_USER=0");
++int cmd_submodule(int argc, const char **argv, const char *prefix)
++{
++	int opt_quiet = 0;
++	int opt_cached = 0;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	struct option options[] = {
++		OPT__QUIET(&opt_quiet, N_("be quiet")),
++		OPT_BOOL(0, "cached", &opt_cached,
++			 N_("print the OID of submodules")),
++		OPT_END()
++	};
++	int ret;
 +
- 	setup_helper_args(argc, argv, prefix, opt_quiet, opt_cached,
--			  &cp.args);
-+			  use_builtin ? &args : &cp.args);
++	argc = parse_options(argc, argv, prefix, options, git_submodule_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
 +
-+	if (use_builtin) {
-+		ret = cmd_submodule__helper(args.nr, args.v, prefix);
-+		goto cleanup;
-+	}
- 
- 	cp.git_cmd = 1;
- 	cp.no_stdin = 0; /* for git submodule foreach */
- 	cp.dir = startup_info->original_cwd;
- 	ret = run_command(&cp);
- 
-+cleanup:
-+	if (!use_builtin)
-+		/* TODO: Double free? */
-+		strvec_clear(&args);
++	/*
++	 * Tell the rest of git that any URLs we get don't come
++	 * directly from the user, so it can apply policy as appropriate.
++	 */
++	strvec_push(&cp.env_array, "GIT_PROTOCOL_FROM_USER=0");
++	setup_helper_args(argc, argv, prefix, opt_quiet, opt_cached,
++			  &cp.args);
 +
- 	return ret;
- }
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 8ebff425967..06d40fc94aa 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -27,6 +27,7 @@ linux-TEST-vars)
- 	export GIT_TEST_MULTI_PACK_INDEX=1
- 	export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=1
- 	export GIT_TEST_ADD_I_USE_BUILTIN=0
-+	export GIT_TEST_SUBMODULE_USE_BUILTIN=1
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
- 	export GIT_TEST_WRITE_REV_INDEX=1
- 	export GIT_TEST_CHECKOUT_WORKERS=2
-diff --git a/t/README b/t/README
-index 309a31133c6..20c2e74723d 100644
---- a/t/README
-+++ b/t/README
-@@ -423,6 +423,10 @@ GIT_TEST_ADD_I_USE_BUILTIN=<boolean>, when false, disables the
- built-in version of git add -i. See 'add.interactive.useBuiltin' in
- git-config(1).
- 
-+GIT_TEST_SUBMODULE_USE_BUILTIN=<boolean>, when true, enables the
-+built-in subprocess-less invocation of "git submodule--helper".
-+See 'submodule.useBuiltin' in git-config(1).
++	cp.git_cmd = 1;
++	cp.no_stdin = 0; /* for git submodule foreach */
++	cp.dir = startup_info->original_cwd;
++	ret = run_command(&cp);
 +
- GIT_TEST_INDEX_THREADS=<n> enables exercising the multi-threaded loading
- of the index for the whole test suite by bypassing the default number of
- cache entries and thread minimums. Setting this to 1 will make the
++	return ret;
++}
+diff --git a/git-submodule.sh b/git-submodule.sh
+deleted file mode 100755
+index 0274b253297..00000000000
+--- a/git-submodule.sh
++++ /dev/null
+@@ -1,80 +0,0 @@
+-#!/bin/sh
+-#
+-# git-submodule.sh: add, init, update or list git submodules
+-#
+-# Copyright (c) 2007 Lars Hjemli
+-
+-dashless=$(basename "$0" | sed -e 's/-/ /')
+-USAGE="[--quiet] [--cached]
+-   or: $dashless [--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+-   or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+-   or: $dashless [--quiet] init [--] [<path>...]
+-   or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
+-   or: $dashless [--quiet] update [-v] [--init [--filter=<filter-spec>]] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--[no-]single-branch] [--] [<path>...]
+-   or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
+-   or: $dashless [--quiet] set-url [--] <path> <newurl>
+-   or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+-   or: $dashless [--quiet] foreach [--recursive] <command>
+-   or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
+-   or: $dashless [--quiet] absorbgitdirs [--] [<path>...]"
+-OPTIONS_SPEC=
+-SUBDIRECTORY_OK=Yes
+-. git-sh-setup
+-require_work_tree
+-wt_prefix=$(git rev-parse --show-prefix)
+-cd_to_toplevel
+-
+-# Tell the rest of git that any URLs we get don't come
+-# directly from the user, so it can apply policy as appropriate.
+-GIT_PROTOCOL_FROM_USER=0
+-export GIT_PROTOCOL_FROM_USER
+-
+-quiet=
+-cached=
+-
+-while test $# != 0
+-do
+-	case "$1" in
+-	-q|--quiet)
+-		quiet=1 &&
+-		shift
+-		;;
+-	--cached)
+-		cached=1 &&
+-		shift
+-		;;
+-	*)
+-		break
+-		;;
+-	esac
+-done
+-
+-# No command word defaults to "status"
+-command=
+-if test $# = 0
+-then
+-	command=status
+-else
+-	case "$1" in
+-	add | foreach | init | deinit | update | set-branch | set-url | status | summary | sync | absorbgitdirs)
+-		command=$1 &&
+-		shift
+-		;;
+-	*)
+-		usage
+-	esac
+-fi
+-
+-case "$command" in
+-absorbgitdirs)
+-	git submodule--helper "$command" --prefix "$wt_prefix" "$@"
+-	;;
+-update)
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper "$command" \
+-		${quiet:+--quiet} ${wt_prefix:+--prefix "$wt_prefix"} "$@"
+-	;;
+-*)
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper "$command" \
+-		${quiet:+--quiet} ${cached:+--cached} "$@"
+-	;;
+-esac
+diff --git a/git.c b/git.c
+index 5ff4f3e25b7..047fc262cd2 100644
+--- a/git.c
++++ b/git.c
+@@ -609,6 +609,7 @@ static struct cmd_struct commands[] = {
+ 	{ "stash", cmd_stash, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "stripspace", cmd_stripspace },
++	{ "submodule", cmd_submodule, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX | NO_PARSEOPT },
+ 	{ "switch", cmd_switch, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
 -- 
 2.36.1.1178.gb5b1747c546
 
