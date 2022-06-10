@@ -2,99 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5827FC43334
-	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29D14C43334
+	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 02:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239500AbiFJCLX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 22:11:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56606 "EHLO
+        id S237302AbiFJCim (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 22:38:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229934AbiFJCLV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 22:11:21 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EDF4355008
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 19:11:19 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id z7so33401476edm.13
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 19:11:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=DThuOlBGOJUY+Swq3f5fQDUhp33UUmLlSPlIAjE6I7c=;
-        b=lDw3yUKMkYVGexmvRTuMAK2A5yIYfUYMqRTC3uCfjorH7OMs33ybf7fuW39fBwzcih
-         tj4K8F6rcoDba3BFdGEROv8DTJyddloKBPnvmuqRB4/xlRstwVllFcwQnIS2bs5343NH
-         KDkho/gzAsXddrJAH6wbekXFH8SG9jyoQaOK9VniqO/Z9FrKs5KSUqTYJfwMChnZ7mN5
-         XKT+6Qq6rSFQx3axwxIh9ZWRGpdHmyUE/rGYqVjPp22L6qwldYB1Emxn3BAPeS8l5Juw
-         pzp7JI89oG+GfC3mGBEhwab0zIr4RCRbPvjO2Cgw7RWVFVwbbpoE8m0qRhEqNFbDuUHl
-         sSqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=DThuOlBGOJUY+Swq3f5fQDUhp33UUmLlSPlIAjE6I7c=;
-        b=Ro9GXHUvt1A8PJmP+M8e5F73AL1kPwDAWRb2fZNARaV3g2h70B0qChxCIMqX6pyMu3
-         t53UDXEqQr1YAGP7fNppKAONH4RLhaC7ub6aIyKm0IHNivARi9o+1psb3cCLDkfMbrfo
-         /G2T0cXmFGN/jOKqssLfsvuNwSiNjvq65T0g0wKAUa4c6/K04EQZKipTXqCI5saR4Psj
-         nmSLXLbKAmT7M85+INzc0KfcUyMBeBtl0KhsJo7o4jUzbew+E5fiWekVPtZ5iTC3iveD
-         LqExDToXCHIuF4i/JWXgBuWiyiI2HBecAHD7yC/b7tsqpCXK6lEEDrQTqLf5bCkz1R7j
-         NDKQ==
-X-Gm-Message-State: AOAM53120aCx3JEB+WJSMbeLasHESqbwG4DXOZf0PIDVGHQTrVYVFjqg
-        RI5NWDPAOUz08mEze1REbCGHttdPE2/gLw==
-X-Google-Smtp-Source: ABdhPJxm5eG8KQReRr98WQagNh8V8dE90GG0/L3rVIgyDfCQ7JK1RAXrSgI/P3Yvi1/jshSgK+sVHQ==
-X-Received: by 2002:a05:6402:1f0f:b0:42d:d4a5:a38c with SMTP id b15-20020a0564021f0f00b0042dd4a5a38cmr47382054edb.140.1654827077619;
-        Thu, 09 Jun 2022 19:11:17 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id pk16-20020a170906d7b000b006fee526ed72sm11208254ejb.217.2022.06.09.19.11.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 19:11:16 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nzU7I-00380Q-Gs;
-        Fri, 10 Jun 2022 04:11:16 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v6+ 4/7] scalar: implement `scalar diagnose`
-Date:   Fri, 10 Jun 2022 04:08:34 +0200
-References: <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
- <20220528231118.3504387-1-gitster@pobox.com>
- <20220528231118.3504387-5-gitster@pobox.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220528231118.3504387-5-gitster@pobox.com>
-Message-ID: <220610.86ilp9s1x7.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S230371AbiFJCil (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 22:38:41 -0400
+Received: from out28-197.mail.aliyun.com (out28-197.mail.aliyun.com [115.124.28.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95ABF117B
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 19:38:39 -0700 (PDT)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.08711676|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0340052-0.0304909-0.935504;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047207;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=3;RT=3;SR=0;TI=SMTPD_---.O1KgynQ_1654828715;
+Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.O1KgynQ_1654828715)
+          by smtp.aliyun-inc.com;
+          Fri, 10 Jun 2022 10:38:37 +0800
+Date:   Fri, 10 Jun 2022 10:38:38 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Re: [PATCH] remote-curl: send Accept-Language header to server
+References: <pull.1251.git.1654678407365.gitgitgadget@gmail.com>, 
+        <220609.86leu6thon.gmgdl@evledraar.gmail.com>
+X-Priority: 3
+X-GUID: 3730B9E8-BACF-431E-AD2D-C416AD5D624C
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+Message-ID: <2022061010332322021051@oschina.cn>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+U29ycnksIEkgbWlzdGFrZW5seSBzZW50IHRoZSByZXBseSBlbWFpbCB0byB5b3UgeWVzdGVyZGF5
+LCBJIHNob3VsZCBjbGljayAiUmVwbHkgYWxsIiBidXR0b24gOigKCj4KPk9uIFdlZCwgSnVuIDA4
+IDIwMjIsIExpIExpbmNoYW8gdmlhIEdpdEdpdEdhZGdldCB3cm90ZToKPgo+PiBGcm9tOiBDYWN0
+dXNpbmhhbmQgPGxpbGluY2hhb0Bvc2NoaW5hLmNuPgo+Pgo+PiBHaXQgc2VydmVyIGVuZCdzIGFi
+aWxpdHkgdG8gYWNjZXB0IEFjY2VwdC1MYW5ndWFnZSBoZWFkZXIgd2FzIGludHJvZHVjZWQKPj4g
+aW4gZjE4NjA0YmJmMihodHRwOiBhZGQgQWNjZXB0LUxhbmd1YWdlIGhlYWRlciBpZiBwb3NzaWJs
+ZSksIGJ1dCB0aGlzIGlzCj4+IG9ubHkgdXNlZCBieSB2ZXJ5IGVhcmx5IHBoYXNlIG9mIHRoZSB0
+cmFuc2ZlciwgdGhhdCdzIEhUVFAgR0VUIHJlcXVlc3QgdG8KPj4gZGlzY292ZXIgcmVmZXJlbmNl
+cy4gRm9yIG90aGVyIHBoYXNlcywgbGlrZSBQT1NUIHJlcXVlc3QgaW4gdGhlIHNtYXJ0IEhUVFAK
+Pj4gdGhlIHNlcnZlciBzaWRlIGRvbid0IGtub3cgd2hhdCBsYW5ndWFnZSBjbGllbnQgc3BlYWsu
+Cj4+Cj4+IFRoaXMgcGF0Y2ggdGVhY2hlcyBnaXQgY2xpZW50IHRvIGxlYXJuIGVuZC11c2VyJ3Mg
+cHJlZmVycmVkIGxhbmd1YWdlIGFuZAo+PiB0aHJvdyBhY2NlcHQtbGFuZ3VhZ2UgaGVhZGVyIHRv
+IHNlcnZlciBzaWRlLiBPbmNlIHNlcnZlciBnZXQgdGhpcyBoZWFkZXIKPj4gaXQgaGF2ZSBhYmls
+aXR5IHRvIHRhbGsgdG8gZW5kLXVzZXIgd2l0aCBsYW5ndWFnZSB0aGV5IHVuZGVyc3RhbmQsIHRo
+aXMKPj4gd291bGQgYmUgdmVyeSBoZWxwZnVsIGZvciBtYW55IG5vbi1FbmdsaXNoIHNwZWFrZXJz
+Lgo+Cj5JIG1heSBiZSBtaXNzaW5nIHNvbWV0aGluZywgYnV0IHRoaXMgaXMganVzdCB0aGUgIkFj
+Y2VwdC1MYW5ndWFnZSIgcGFydAo+b2YgdGhpcyBjaGFuZ2UsIGkuZS4gdGhlcmUgaXMgbm8gInJv
+dW5kLXRyaXBwaW5nIiBoZXJlIG9mIGFjdHVhbGx5IGRvaW5nCj50aGUgd29yayBvbiB0aGUgc2Vy
+dmVyIG9mIGRvaW5nIHNldGxvY2FsZSgpLCBubz8KWWVzLCDCoGhlcmUgR2l0IGp1c3QgaG9sZHMg
+dGhpcyBoZWFkZXIgbWVzc2FnZSwgYW5kIHRoZSBhY3R1YWwgd29yayBkZXBlbmRzCm9uIHRoZSBn
+aXQgc2VydmljZSBwcm92aWRlcnMsIGxpa2UgR2l0aHViLCBHaXRsYWIsIG9yIEdpdGVlLsKgCj4K
+PkkgdGhpbmsgdGhlIGVuZC1nb2FsIG9mIGhhdmluZyB0aGUgInJlbW90ZTogIiBtZXNzYWdlcyB0
+cmFuc2xhdGVkLCBpZgo+cG9zc2libGUsIGlzIHZlcnkgd29ydGh3aGlsZSwgYnV0IEknZCBhbHdh
+eXMgaW1hZ2luZWQgd2UnZCBkbyB0aGF0IHdpdGgKPmEgcHJvdG9jb2wgZXh0ZW5zaW9uLCBiZWNh
+dXNlIGV2ZW4gaWYgd2UgZG8gdGhpcyB3aXRoIEhUVFAgaGVhZGVycyB3ZQo+d29uJ3QgZ2V0IHRo
+ZSBzYW1lIG92ZXIgc3NoL2dpdCB0cmFuc3BvcnRzLgpBcyBmb3Igc3NoIHRyYW5zcG9ydCwgY2Fu
+IHdlIHVzZSBzc2ggZW52aXJvbm1lbnQgdG8gcmVhY2ggb3VyIGdvYWw/Cj4KPkJ1dCB0aGVuIGFn
+YWluIHdlIGRvbid0IGhhdmUgcHJvdG9jb2wgdjIgcHVzaCB5ZXQgOigKPgo+U28gcGVyZmVjdCBj
+ZXJ0YWlubHkgc2hvdWxkbid0IGJlIHRoZSBlbmVteSBvZiB0aGUgZ29vZCBoZXJlLCBJIGp1c3QK
+PndvbmRlciB3aGF0IHRoZSBlbmQtZ29hbCBpcyBhbmQgaWYgdGhlcmUncyBhIHBsYW4gdG8gZ2V0
+IHRoZXJlLgoKVGhhbmtzLg==
 
-On Sat, May 28 2022, Junio C Hamano wrote:
-
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> [...]
-> The `diagnose` command is the culmination of this hard-won knowledge: it
-> gathers the installed hooks, the config, a couple statistics describing
-> the data shape, among other pieces of information, and then wraps
-> everything up in a tidy, neat `.zip` archive.
-> [...]
-> +	if ((res = add_directory_to_archiver(&archiver_args, ".git", 0)) ||
-> +	    (res = add_directory_to_archiver(&archiver_args, ".git/hooks", 0)) ||
-> +	    (res = add_directory_to_archiver(&archiver_args, ".git/info", 0)) ||
-> +	    (res = add_directory_to_archiver(&archiver_args, ".git/logs", 1)) ||
-> +	    (res = add_directory_to_archiver(&archiver_args, ".git/objects/info", 0)))
-> +		goto diagnose_cleanup;
-
-Noticed on top of some local changes I have to not add a .git/hooks (the
---no-template topic), but this fails to diagnose any repo that doesn't
-have these paths, which are optional, either because a user could have manually removed them, or used --template=.
-
-although I don't think there's a way to create that sort of repo with
-the scalar tooling, it doesn't seem to forward that option, but I didn't
-look deeply.
-
-So, no big deal, but it would be nice to have that fixed. Is there a
-reason for why this mere addition of various stuff for diagnosis goes
-straight to an opendir() and error on failure, as opposed to doing an
-lstat() etc. first?
