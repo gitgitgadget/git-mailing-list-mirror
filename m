@@ -2,55 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17C19C43334
-	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 00:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 271C0C43334
+	for <git@archiver.kernel.org>; Fri, 10 Jun 2022 00:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344826AbiFJA0a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jun 2022 20:26:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57268 "EHLO
+        id S1345236AbiFJA0c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jun 2022 20:26:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233834AbiFJA02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jun 2022 20:26:28 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA55952B34
-        for <git@vger.kernel.org>; Thu,  9 Jun 2022 17:26:24 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id i64-20020a1c3b43000000b0039c6fd897b4so43866wma.4
-        for <git@vger.kernel.org>; Thu, 09 Jun 2022 17:26:24 -0700 (PDT)
+        with ESMTP id S236283AbiFJA03 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jun 2022 20:26:29 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23E7953729
+        for <git@vger.kernel.org>; Thu,  9 Jun 2022 17:26:27 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id n185so13160686wmn.4
+        for <git@vger.kernel.org>; Thu, 09 Jun 2022 17:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=R9+JUVg51xhNlgrCzvt2l0f6p4VRz4GDXiB9bSmtSAM=;
-        b=WS/t3PbRNcMPc+3kgIetj/A4jr54AmFy89iPfhNc+6CHitRx/4W6KDE/PsQpaK5ajP
-         BVxqtP9X+B0wjFI3pirPCyfbSmCpJ0AWGdHKqhBLrOv3L8H8OZutQSYZ+FM7Hhz8TwW0
-         gMUMOvAyEFR77Ghi13UQ3NBPot5i79oIzZ+nAGdn+0NENjTY3nckEHX63e9x7UF6qKIR
-         uw8EKk7gC59ns3Q16Xlx++h4rWhZYdHtGSUVxCOpKbd8rhOzKIAsooN/tQ9xAOcfKcnD
-         dc91v1YaGars4o4sbcB4tNtJkTBVUdrf2egOBdv1Es7+nBocsjoiHDnhgW3T01mciSps
-         cQbg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=PFQNog4dekWVD0soIGWRjEv+FE5TKkozPtY4iVt7lRw=;
+        b=GcgLVwljhq+EA3u0ccmJvsEXAaVrksuWRoSWmiz605hNPzaZ0WcoCBcf27Y9XfZGXz
+         lsm6CRZXRfpuOG6LfkQPD7KQ3rz8fzUaJGMeeIWbB5PJP/P0lIS3cHdfJzPFdqIoE+ty
+         uoEIwQoNCbv3Xsj413h8U7TF5xUUEliHyypRLL3W+MaS/8MVf99YFOZ7V6IhNyzx/Ku8
+         5bKfoNVUj+tU4UzQYAK0lwD/YR+Pg4Lhgfim4h6Px3YAwTgJF39HsfNv/YR5pkVTExBK
+         Ercsm5zdeOsVPGqjG0rfGjc60Ser2O0f/r0F3x+ADHRW2CZ0XCC9WhF3aXHPQs1RpGBA
+         2/zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=R9+JUVg51xhNlgrCzvt2l0f6p4VRz4GDXiB9bSmtSAM=;
-        b=1rvUWVT1qFJTfDgkLCXHsmg6NMHWTS2pfhLSHh2dmOnPLD7TX5bTKl8eHoA3oS8LWD
-         X/JIGImBc2uhwRGhwC6xrxTnzvgi6Yds34Vzy/OA82b6rkJuRsIFrr57Frt37eVogZWH
-         qGJJ0cu+mOyn3ZARYttN2bXm63ebbfSLTrjsvjKwId5qx+QwNuXe0Zy2ChPcFbQDsu1R
-         A4mFwcMqLsdETkvYdzNS+rj3QZDQn2KK9PIrBvfC9c1FS7p7LfC9EsT5d/rB/0uVLEdl
-         JW5JmpbrMM/+Q49Atyxoc+kpR2xJwUwOzfrIy9jbjEai3PfpuQiUAbW0lnu//hapnCeW
-         RF5A==
-X-Gm-Message-State: AOAM533+Iuz368xEu8VvQNpfT7mXYET7jPr3aI7G+e5dcr2kfopmV8hz
-        qlsW+HHWhHPU3BTKGbjfDjreJ1I1s0/A7xMU
-X-Google-Smtp-Source: ABdhPJyDKw0AzY7mKIi3zS6rVKuhTQ74ayWC3cW4+BNRUc11TU1cD9F/hTw6eLvirT9VvGJetG6eBw==
-X-Received: by 2002:a1c:4c13:0:b0:39c:5a6b:8540 with SMTP id z19-20020a1c4c13000000b0039c5a6b8540mr5731843wmf.106.1654820782655;
-        Thu, 09 Jun 2022 17:26:22 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=PFQNog4dekWVD0soIGWRjEv+FE5TKkozPtY4iVt7lRw=;
+        b=NkKjEChnqivHalij31646QmofNNdVPASSgHtGji4N76XMHcVAoqKKN7Wr8VIlbOh8p
+         66PZPxPArFLlenxPLue0Dmjs66na61HUlJ8/cVLSvjkUssctz+jJ7HJcqlShiNLLoDpJ
+         r6UeNz/lgcmS70syMmNCxjQMeCHjXuHVTzSe8k32s0oJuKCxqILRdzNbjOLo1tTW6n6I
+         TIpu7/gfbnRb4n058L1mQnnGqzuB/5OS0F/1AHhzj/irnJoC1cZNhwyz/WiiS7rC65Wd
+         7mN8tviBXSD8JMv5EGZWT49r7d7NgKsn6GAUvmoogrBclQaAF5myULjIaGWccxnBggmr
+         B/lw==
+X-Gm-Message-State: AOAM531K3Aagvqnm8oJIcWBiCidIgM2yHlgE+IKBqb76gC0oHyLjwy1P
+        /l4DUV2j7u1km4dfu9nja4I/mtaxIe+a0uY6
+X-Google-Smtp-Source: ABdhPJxT8TruzkGfilUvxNUUh9aUUpdwxxnukuAGnr6yKac08F4P8s5rwcaz/S7MFg8QrAVVbRTCLA==
+X-Received: by 2002:a05:600c:2297:b0:39c:511d:4b6 with SMTP id 23-20020a05600c229700b0039c511d04b6mr5870328wmf.188.1654820785253;
+        Thu, 09 Jun 2022 17:26:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k24-20020a05600c1c9800b0039c5645c60fsm5653613wms.3.2022.06.09.17.26.21
+        by smtp.gmail.com with ESMTPSA id u7-20020a05600c19c700b003973b9d0447sm1025508wmq.36.2022.06.09.17.26.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 17:26:21 -0700 (PDT)
-Message-Id: <pull.1275.git.git.1654820781.gitgitgadget@gmail.com>
+        Thu, 09 Jun 2022 17:26:24 -0700 (PDT)
+Message-Id: <058d84864120844e70f3a2dc65432d6327d63bea.1654820781.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1275.git.git.1654820781.gitgitgadget@gmail.com>
+References: <pull.1275.git.git.1654820781.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Jun 2022 00:26:13 +0000
-Subject: [PATCH 0/8] [RFC] submodule update: parse all options in C
+Date:   Fri, 10 Jun 2022 00:26:15 +0000
+Subject: [PATCH 2/8] submodule update: pass options containing "[no-]"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -58,79 +60,66 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Atharva Raykar <raykar.ath@gmail.com>,
+        Glen Choo <chooglen@google.com>,
         Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As a follow up to ar/submodule-update [1] and its successors
-gc/submodule-update-part* [2] [3], this series converts the last remaining
-piece of "git submodule update" into C, namely, the option parsing in
-git-submodule.sh.
+From: Glen Choo <chooglen@google.com>
 
-As a result, git-submodule.sh::cmd_update() is now an (almost) one-liner:
+"git submodule--helper update" understands these options, so append them
+to `opts` and remove their intermediate variables.
 
-cmd_update() { git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update
-${wt_prefix:+--prefix "$wt_prefix"}
-"$@" }
+As a result, we now pass every instance of the option and its "no-"
+variant to "git submodule--helper update" instead of only passing the
+last instance. As we noted in the previous commit, this is good because
+this makes our options parsing consistent.
 
-and best of all, "git submodule update" now shows a usage string for its own
-subcommand instead of a giant usage string for all of "git submodule" :)
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ git-submodule.sh | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-Given how many options "git submodule update" accepts, this series takes a
-gradual approach:
-
- 1. Create a variable opts, which holds the literal options we want to pass
-    to "git submodule--helper update". Then, for each option...
- 2. If "git submodule--helper update" already understands the string option,
-    append it to opts and remove any special handling (1-3/8).
- 3. Otherwise, if the option makes sense, teach "git submodule--helper
-    update" to understand the option. Goto 2. (4-5/8).
- 4. Otherwise, if the option makes no sense, drop it (6/8).
- 5. When we've processed all options, delete all the option parsing code
-    (7/8) and clean up (8/8).
-
-I read over the other "git submodule" subcommands very briefly to see how
-much work this would be if we were to repeat the process for all
-subcommands. It should be relatively simple - most "git submodule--helper"
-commands already understand every CLI option that they need to, so we can
-skip step 3 (i.e. the tedious one).
-
-I'm sending this as an RFC because even though this series is pretty
-low-risk, the previous topics [1] [2] [3] had their fair share of
-regressions (even when the conversions seemed 'obviously correct') and
-showed that the test coverage of "git submodule "update" is quite poor. I'd
-like to get feedback on the general approach before I invest more time into
-improving the test coverage and/or checking the before/after output for
-regressions [4].
-
-[1] https://lore.kernel.org/git/20210907115932.36068-1-raykar.ath@gmail.com/
-[2] Part 1
-https://lore.kernel.org/git/20220305001401.20888-1-chooglen@google.com/ [3]
-Part 2
-https://lore.kernel.org/git/20220315210925.79289-1-chooglen@google.com/ [4]
-Ævar suggested a way to do this using the test suite and "--tee" in
-https://lore.kernel.org/git/220214.86h791xsza.gmgdl@evledraar.gmail.com/
-
-Glen Choo (8):
-  submodule update: remove intermediate parsing
-  submodule update: pass options containing "[no-]"
-  submodule update: pass options with stuck forms
-  submodule update: pass --require-init and --init
-  submodule--helper update: use one param per type
-  submodule update: remove -v, pass --quiet
-  submodule update: stop parsing options in .sh
-  submodule update: remove never-used expansion
-
- builtin/submodule--helper.c |  41 +++++++----
- git-submodule.sh            | 131 ------------------------------------
- t/t7406-submodule-update.sh |   2 +-
- 3 files changed, 29 insertions(+), 145 deletions(-)
-
-
-base-commit: 1e59178e3f65880188caedb965e70db5ceeb2d64
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1275%2Fchooglen%2Fsubmodule%2Fparse-update-opts-in-c-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1275/chooglen/submodule/parse-update-opts-in-c-v1
-Pull-Request: https://github.com/git/git/pull/1275
+diff --git a/git-submodule.sh b/git-submodule.sh
+index f4679e0db80..8c46eac22e8 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -296,10 +296,10 @@ cmd_update()
+ 			update="checkout"
+ 			;;
+ 		--recommend-shallow)
+-			recommend_shallow="--recommend-shallow"
++			opts="$opts $1"
+ 			;;
+ 		--no-recommend-shallow)
+-			recommend_shallow="--no-recommend-shallow"
++			opts="$opts $1"
+ 			;;
+ 		--depth)
+ 			case "$2" in '') usage ;; esac
+@@ -318,10 +318,10 @@ cmd_update()
+ 			jobs=$1
+ 			;;
+ 		--single-branch)
+-			single_branch="--single-branch"
++			opts="$opts $1"
+ 			;;
+ 		--no-single-branch)
+-			single_branch="--no-single-branch"
++			opts="$opts $1"
+ 			;;
+ 		--filter)
+ 			case "$2" in '') usage ;; esac
+@@ -354,8 +354,6 @@ cmd_update()
+ 		${reference:+"$reference"} \
+ 		${depth:+"$depth"} \
+ 		${require_init:+--require-init} \
+-		$single_branch \
+-		$recommend_shallow \
+ 		$jobs \
+ 		$filter \
+ 		$opts \
 -- 
 gitgitgadget
+
