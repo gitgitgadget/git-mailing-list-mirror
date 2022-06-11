@@ -2,117 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A14EC43334
-	for <git@archiver.kernel.org>; Sat, 11 Jun 2022 09:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A7B7C433EF
+	for <git@archiver.kernel.org>; Sat, 11 Jun 2022 14:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231664AbiFKJBn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Jun 2022 05:01:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38992 "EHLO
+        id S233838AbiFKODd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Jun 2022 10:03:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230158AbiFKJBi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Jun 2022 05:01:38 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8290B527C8
-        for <git@vger.kernel.org>; Sat, 11 Jun 2022 02:01:35 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id n10so2148338ejk.5
-        for <git@vger.kernel.org>; Sat, 11 Jun 2022 02:01:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=gV02uQB3JcktgAlyPmzGxwBhVnBGyYPh5gr51e1685U=;
-        b=kuMLkpIZX1DrT39DTJzD/9xDaVCNiDz9OPhg/fyuGpYy80WTafuaptErU2/2xGawKZ
-         3r702x8uXHs8NoEHhlBGeG3u7lz4F/6dSZxTCddU/K4VAKj2Jp6neDck4yMSPdQvf9QI
-         xS5Q+TyvRIT6tJXR5Yn61+rTgtmuqUt9M9bP1kwaNEU+sdyxMQdI7smkJG/vKBaRbaV8
-         e5UdzlJPW5Ru+ZFyf+HtB10SZoqgo9wb1IJurnjZYQm/K8Z8wvHponJpd4ZspYSVsBKU
-         Dcrqqt8Ecy5g7mcwnh5NcG+ycG9LNdGl00dmUQSLXfkHd1RlxmvUv8rPmLZNjjennMtb
-         Fd1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=gV02uQB3JcktgAlyPmzGxwBhVnBGyYPh5gr51e1685U=;
-        b=SCMOANUEEoqVllNzxYK40UmHnWkUnQc7p78bYhQhSpU86bad753sI6vcKNjuMEbACf
-         YMqYk0vmWfmXsX7z/dQ91bcZZpdkbvr05AXbWEkcMV7c7F34xGze9AFqje6Jw14uPE1v
-         15VZvu9PQYe+Lez5b71V6jR2Oecb7lnPQCVZA1TSXB9Y/jZFtPj1gztM6xzZ2bdzDTkA
-         69CYr9bmY6s4NLvAEZreqcSJfi3+RObxRJmqN2niQKXE1oVc7syl5s0qMu85NWISEakQ
-         EvZ/hkc9iFchVu872/v7KTcUtoxOz9v6HcIpR1bU1d73EQJ1yc5qXCUHLSXntQHyP+sx
-         1kOQ==
-X-Gm-Message-State: AOAM53245o02Ky2p3CB7kh2iZz+F2zrPDPO6b71ZCcx/Rzq0pC6U0e+F
-        yuo7/33GlwAM0MnGqvnM5Po=
-X-Google-Smtp-Source: ABdhPJwj2nIlkvrUAbmnjOFpPR1uGKMijLB4Zt5imNO21Kgf+JnXM/GA8XanwM1zWNv31Lk3p4qbHg==
-X-Received: by 2002:a17:906:5e4c:b0:70a:4673:bdcc with SMTP id b12-20020a1709065e4c00b0070a4673bdccmr42707021eju.511.1654938093971;
-        Sat, 11 Jun 2022 02:01:33 -0700 (PDT)
-Received: from localhost (92-249-246-141.pool.digikabel.hu. [92.249.246.141])
-        by smtp.gmail.com with ESMTPSA id bk19-20020a170906b0d300b006feb3d65337sm752760ejb.102.2022.06.11.02.01.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Jun 2022 02:01:33 -0700 (PDT)
-Date:   Sat, 11 Jun 2022 11:01:31 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Joakim Petersen <joak-pet@online.no>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Justin Donnelly <justinrdonnelly@gmail.com>
-Subject: Re: [PATCH v7] git-prompt: make colourization consistent
-Message-ID: <20220611090131.GB1785@szeder.dev>
-References: <20220606175022.8410-1-joak-pet@online.no>
- <20220607115024.64724-1-joak-pet@online.no>
- <20220609090302.GA1738@szeder.dev>
- <736a5f12-2ab3-977c-8cba-45529e9ebee0@online.no>
- <xmqq5yl9lmgq.fsf@gitster.g>
+        with ESMTP id S233831AbiFKODc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Jun 2022 10:03:32 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F6B6443C6
+        for <git@vger.kernel.org>; Sat, 11 Jun 2022 07:03:28 -0700 (PDT)
+Received: from host-78-147-178-211.as13285.net ([78.147.178.211] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1o01i2-0002Ms-BR;
+        Sat, 11 Jun 2022 15:03:26 +0100
+Message-ID: <4cac8a13-a075-544e-8c10-e58bbf0dd73d@iee.email>
+Date:   Sat, 11 Jun 2022 15:03:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v2 3/4] rebase: note `preserve` merges may be a pull
+ config option
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
+ <pull.1242.v2.git.1654341469.gitgitgadget@gmail.com>
+ <fe000f062078e544361c87c319830cd36aabbc91.1654341469.git.gitgitgadget@gmail.com>
+ <xmqq1qw18yk2.fsf@gitster.g>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <xmqq1qw18yk2.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq5yl9lmgq.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 09, 2022 at 11:29:25AM -0700, Junio C Hamano wrote:
-> Joakim Petersen <joak-pet@online.no> writes:
-> 
-> > On 09/06/2022 11:03, SZEDER Gábor wrote:
-> >> This patch seems to break colorization when __git_ps1() is invoked
-> >> from $PROMPT_COMMAND:
-> >>    ~/src/git (master)$ echo $PROMPT_COMMAND
-> >> __git_ps1 "\[\e]0;\w - Terminal\a\e[01;32m\]\h\[\e[01;34m\] \w" "\[\e[01;34m\]\$\[\e[00m\] " " \[\e[01;34m\](%s\[\e[01;34m\])"
-> >>    ~/src/git (master)$ git checkout 9470605a1b
-> >>    HEAD is now at 9470605a1b git-prompt: make colourization consistent
-> >>    ~/src/git ((9470605a1b...))$ source contrib/completion/git-prompt.sh
-> >>    ~/src/git (\[\e[31m\](9470605a1b...)\[\e[0m\])$ # uh-oh
-> >>    ~/src/git (\[\e[31m\](9470605a1b...)\[\e[0m\])$ git checkout 9470605a1b^
-> >>    Previous HEAD position was 9470605a1b git-prompt: make colourization consistent
-> >>    HEAD is now at 2668e3608e Sixth batch
-> >>    ~/src/git (\[\e[31m\](2668e3608e...)\[\e[0m\])$ source contrib/completion/git-prompt.sh
-> >>    ~/src/git ((2668e3608e...))$ # Looks good.
-> >> 
-> >
-> > While I did test this on my own prompt for v6 (which is identical to v7
-> > in terms of code) and not see any breakage, I have the same issue with
-> > v7. Maybe I forgot to re-source the changed git-prompt.sh. Either way,
-> > The issue stems from $b being wrapped in $__git_ps1_branch_name and then
-> > back into itself after colouring. Moving this wrapping to before colour
-> > is applied fixes this. I will submit a v8 shortly.
-> 
-> As the topic is already in 'next' (and presumably that is how SZEDER
-> noticed the breakage),
+Sorry for delay, I had other family priorities to attend to.
 
-Indeed.  I usually use a custom git built from 'next' with a couple of
-my forever-WIP topics merged on top, and I just happened to build and
-deploy a version with this patch already merged the other day, with
-the additional stroke of luck that I opened a new terminal window
-(what I normally rarely do) whose shell sourced the buggy prompt
-script.
+On 06/06/2022 18:57, Junio C Hamano wrote:
+> "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: Philip Oakley <philipoakley@iee.email>
+>>
+>> The `--preserve-merges` option was removed by v2.34.0. However
+>> users may not be aware that it is also a Pull configuration option,
+>> which is still offered by major IDE vendors such as Visual Studio.
+>>
+>> Extend the `--preserve-merges` die message to also direct users to
+>> the possible use of the `preserve` option in the `pull.rebase` config.
+>> This is an additional 'belt and braces' information statement.
+>>
+>> Signed-off-by: Philip Oakley <philipoakley@iee.email>
+>> ---
+>>  builtin/rebase.c | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index 17cc776b4b1..5f8921551e1 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -1205,7 +1205,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>  			     builtin_rebase_usage, 0);
+>>  
+>>  	if (preserve_merges_selected)
+>> -		die(_("--preserve-merges was replaced by --rebase-merges"));
+>> +		die(_("--preserve-merges was replaced by --rebase-merges\n"
+>> +			"Note: Your `pull.rebase` configuration may also be  set to 'preserve',\n"
+>> +			"which is no longer supported; use 'merges' instead"));
+> "be  set" -> "be set".
+Noted. I see that the series is now in `next` [Thank you], so not worth
+the churn of a patch, unless folks start noticing..
 
-I did notice this patch being discussed on the ML, and found the
-amount of changes to the expected output in the tests somewhat
-suspicious, but, alas, haven't managed to take a closer look before
-the patch went into 'next'.  Still hasn't, actually, but FWIW Joakim's
-fix (as 0e5d9ef395 in 'seen') does work for me.
+>
+> I am not sure how this helps anybody, though.  
 
+It's the Catch 22 problem for deleted capabilities, which we rarely see
+because we normally have backward compatibility.
+ 
+>
+> When pull.rebase is parsed, rebase.c::rebase_parse_value() is called
+> from builtin/pull.c::parse_config_rebase() and would trigger an
+> error, whether it comes from the pull.rebase or the branch.*.rebase
+> configuration variable.  An error() message already said that
+> 'preserve' was removed and 'merges' would be a replacement when it
+> happened.
+>
+> If the user has *not* reached this die() due to a configuration
+> variable, then there is not much point giving this new message,
+> either.
 
-Thanks,
-Gábor
+From my perspective, users should then be purging _all_ their `preserve`
+configurations once they hit such errors. As the v2.34.0 change
+propagates through the Git ecosystem, hopefully it'll be a sufficient
+prompt for those who haven't realised that the option can be 'hidden' in
+their configuration options.
 
+Time will tell.
+
+Thanks
+
+Philip
