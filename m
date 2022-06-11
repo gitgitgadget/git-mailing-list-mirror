@@ -2,63 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D45EFC43334
-	for <git@archiver.kernel.org>; Sat, 11 Jun 2022 02:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F6BBC43334
+	for <git@archiver.kernel.org>; Sat, 11 Jun 2022 02:44:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349186AbiFKCoi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jun 2022 22:44:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47964 "EHLO
+        id S238847AbiFKCor (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jun 2022 22:44:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346449AbiFKCoh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jun 2022 22:44:37 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1264E27B9A9
-        for <git@vger.kernel.org>; Fri, 10 Jun 2022 19:44:36 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id e11so996856pfj.5
-        for <git@vger.kernel.org>; Fri, 10 Jun 2022 19:44:36 -0700 (PDT)
+        with ESMTP id S1346449AbiFKCol (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jun 2022 22:44:41 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A13783F4A33
+        for <git@vger.kernel.org>; Fri, 10 Jun 2022 19:44:40 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 184so762231pga.12
+        for <git@vger.kernel.org>; Fri, 10 Jun 2022 19:44:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vLUWLjYkleWN5BEzzxD8ijf+fH0mXjEytjMMPvFM3Ks=;
-        b=fHXFmb4dAOqMyfGSlpY29tUSD7AP9lcoCm3BlIJWxWt4kNdQyT9qohzLNvmTATX8X1
-         0IRK9EkketUvOQ+d+m2FhHQ1efEtrER2yYDz4vZUQIllMn3uzaAjwqRH71cO9SpGpetW
-         PXiW9jZ/JbysKQY37+8qnYzF2//rNsbEt6N/ZXDaclmYlNWM+Zaf9RlfVeAG55a7/tWp
-         WP9hOMgfb2uYwT4a5u8Dw39c9i9WVIj39+194fJ/IlzpDVFagDKeBk/n8dLVjVJC2+vE
-         y0jeAr0Na99gFcLikRH/5TC8wwz3C7xTJdZvkTOogAqSi8IXfSVPH6RTzChIBTIfA/cK
-         zBnw==
+        bh=4utz62g3dKi9uT+B+uL6sJEH6c/3c+FIBPvOJkIxnqI=;
+        b=edcQRZZ/l5Df6tT6SuzvfPQ/Xmy4BBLiuOpjfMHZZM8yLavLRHiVpVNYO7BB+9sjoM
+         xeZJpZ05Ft5kD6ZEYJRyyyzCSn42v8VAqz5s2aydoN0ZKp6UHvUgAMAQztumyKc9m02P
+         w3ZdJI/mCsniTsFo2alL5tKpBkkbsd/ekGFA5Vd062jxPucWE16UMnmbSnVesDgV+zZz
+         xoctvMdsp0P7yPm0n/QiM7GFdHDXm9umy/92vFJKd+0vvuEh9g3llTDB1D2l7BD/ZRIg
+         6SeBS0FmPPqEGZ+6XG/poGDZwVFDh3/hogf5W2cL+rNLWbjGiUKVS9wZbCV/fyORzTf+
+         F47w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vLUWLjYkleWN5BEzzxD8ijf+fH0mXjEytjMMPvFM3Ks=;
-        b=Xi7t4eUhgqZVF+yYoNyQNM4iE41u6+JobL/8iLWTI4JE28RhaOrPoKcVZ/Q2PsfXRJ
-         lE1VfWa2iXfJ5KDEZPMGOkFkOhsq5ssg0uHZcsuJ4nSJNAaAGQ+b2aNUnBBaxoDVtQRw
-         qU+p3LQHGiEqcnapfMqEyGltzhy12YvmJ81wi9EvkS+ac/aun+Wh44ffcFuvbvSSzMOs
-         x1S/44LB5AgDTmYCiHxugNV6qwJeFG5QElK1gqjGJLMIS7vecosTTrfEykFNhvS/9rvL
-         qPmv7GOWu81g8VFvO9kYo3WXW8eR8ARNFiRTljDBo9oigzm8NfBVq2M0ko/nEt1uUJkN
-         AqLw==
-X-Gm-Message-State: AOAM531WlyhdHEKM0JZlFtaE9PPlCMzpSxisZVUgQFyVImOnyDEqbF5r
-        yiHhn6LgZSquMN6iVcRm3z8=
-X-Google-Smtp-Source: ABdhPJw/qkxaNHCqrCJdBphykpP2+ESH3mQPhFf232LExqLyO9fZKZCpIdPdiB7FsNSPJkoPA/iQAg==
-X-Received: by 2002:aa7:8ec6:0:b0:51b:c6ec:5ff5 with SMTP id b6-20020aa78ec6000000b0051bc6ec5ff5mr46752892pfr.5.1654915475421;
-        Fri, 10 Jun 2022 19:44:35 -0700 (PDT)
+        bh=4utz62g3dKi9uT+B+uL6sJEH6c/3c+FIBPvOJkIxnqI=;
+        b=ZEcQImXOpbbR9MjTEoLqIPFeTw+tpWkuL6xMN7C5aDbiAXlFFIoKWP4S0lSB8rwxSu
+         SptH6LxQkKA1Kv4SbpjTkqoDhr0P0HO18O4oW4r+RyOAVkH3x0ebeSF6QK1S/rtW9mHF
+         Qh9Phal5rZm6ZKr4tLh6MXBy4MKQ+z4lIbi0WHL8loCikoGC5Q92KNKSYW29obT4bdx9
+         y58h4l8O2nRoKtf2CTYCYHQy2Qk6A6dBKS6wiON3By3JCUTHZU8nB+kHKfUHrvfrzVaN
+         BArPXOx3b4vsFvHqSH+d/8iq+QTPw8WZbqQGbEgx7ncul5KYRezqu9smSEyuaoPUt9SH
+         8XNg==
+X-Gm-Message-State: AOAM533qtUTXDUcQLZzKnlDP2yMgCqJfHfRhAb25eDbB763trkacVsLv
+        pChAnxLg+BpMCYwt9+cgwXbMhqzHMgtuhiat
+X-Google-Smtp-Source: ABdhPJzwXaWTpnsoXkpT9PXWJKcVGp00GvL8cUrX/w1n1aUxW5bK9Spe+kww1kYB5ab9j02YUepETA==
+X-Received: by 2002:a05:6a00:140b:b0:4e1:2cbd:30ba with SMTP id l11-20020a056a00140b00b004e12cbd30bamr49021722pfu.46.1654915480185;
+        Fri, 10 Jun 2022 19:44:40 -0700 (PDT)
 Received: from localhost.localdomain ([2409:8a28:80c:ca60:6957:cd88:1852:9438])
-        by smtp.gmail.com with ESMTPSA id l13-20020a62be0d000000b0051ba90d55acsm257077pff.207.2022.06.10.19.44.31
+        by smtp.gmail.com with ESMTPSA id l13-20020a62be0d000000b0051ba90d55acsm257077pff.207.2022.06.10.19.44.35
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 10 Jun 2022 19:44:34 -0700 (PDT)
+        Fri, 10 Jun 2022 19:44:39 -0700 (PDT)
 From:   Han Xin <chiyutianyi@gmail.com>
 To:     avarab@gmail.com
-Cc:     Han Xin <chiyutianyi@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, l.s.r@web.de, neerajsi@microsoft.com,
-        newren@gmail.com, philipoakley@iee.email, stolee@gmail.com,
-        worldhello.net@gmail.com, Neeraj Singh <nksingh85@gmail.com>
-Subject: [PATCH v15 0/6] unpack-objects: support streaming blobs to disk
-Date:   Sat, 11 Jun 2022 10:44:15 +0800
-Message-Id: <cover.1654914555.git.chiyutianyi@gmail.com>
+Cc:     Han Xin <hanxin.hx@alibaba-inc.com>, chiyutianyi@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
+        neerajsi@microsoft.com, newren@gmail.com, philipoakley@iee.email,
+        stolee@gmail.com, worldhello.net@gmail.com,
+        Neeraj Singh <nksingh85@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v15 1/6] unpack-objects: low memory footprint for get_data() in dry_run mode
+Date:   Sat, 11 Jun 2022 10:44:16 +0800
+Message-Id: <9a776f717d512dc63888a9334074bbf1728395c5.1654914555.git.chiyutianyi@gmail.com>
 X-Mailer: git-send-email 2.36.1
-In-Reply-To: <cover.1654871915.git.chiyutianyi@gmail.com>
-References: <cover.1654871915.git.chiyutianyi@gmail.com>
+In-Reply-To: <cover.1654914555.git.chiyutianyi@gmail.com>
+References: <cover.1654871915.git.chiyutianyi@gmail.com> <cover.1654914555.git.chiyutianyi@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,131 +68,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series makes "unpack-objects" capable of streaming large objects
-to disk.
+From: Han Xin <hanxin.hx@alibaba-inc.com>
 
-As 6/6 shows streaming e.g. a 100MB blob now uses ~5MB of memory
-instead of ~105MB. This streaming method is slower if you've got
-memory to handle the blobs in-core, but if you don't it allows you to
-unpack objects at all, as you might otherwise OOM.
+As the name implies, "get_data(size)" will allocate and return a given
+amount of memory. Allocating memory for a large blob object may cause the
+system to run out of memory. Before preparing to replace calling of
+"get_data()" to unpack large blob objects in latter commits, refactor
+"get_data()" to reduce memory footprint for dry_run mode.
 
-Changes since v14:
+Because in dry_run mode, "get_data()" is only used to check the
+integrity of data, and the returned buffer is not used at all, we can
+allocate a smaller buffer and use it as zstream output. Make the function
+return NULL in the dry-run mode, as no callers use the returned buffer.
 
-* Remove "object-file.c: do fsync() and close() before post-write die()"
-  as it's not necessary anymore. It was first introduced in v10 and was
-  no longer in the utility function end_loose_object_common() since v12.
-  We can see the discussion[1].
+The "find [...]objects/?? -type f | wc -l" test idiom being used here
+is adapted from the same "find" use added to another test in
+d9545c7f465 (fast-import: implement unpack limit, 2016-04-25).
 
-* Minor grammar/comment etc. fixes throughout.
-
-1. https://lore.kernel.org/git/0b9bc499-18c7-e8ab-5c89-f9e1a98685bc@web.de/
-
-Han Xin (4):
-  unpack-objects: low memory footprint for get_data() in dry_run mode
-  object-file.c: refactor write_loose_object() to several steps
-  object-file.c: add "stream_loose_object()" to handle large object
-  unpack-objects: use stream_loose_object() to unpack large objects
-
-Ævar Arnfjörð Bjarmason (2):
-  object-file.c: factor out deflate part of write_loose_object()
-  core doc: modernize core.bigFileThreshold documentation
-
- Documentation/config/core.txt   |  33 +++--
- builtin/unpack-objects.c        | 106 +++++++++++++--
- object-file.c                   | 233 ++++++++++++++++++++++++++++----
- object-store.h                  |   8 ++
- t/t5351-unpack-large-objects.sh |  76 +++++++++++
- 5 files changed, 405 insertions(+), 51 deletions(-)
+Suggested-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Signed-off-by: Han Xin <chiyutianyi@gmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/unpack-objects.c        | 37 ++++++++++++++++++++---------
+ t/t5351-unpack-large-objects.sh | 41 +++++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+), 11 deletions(-)
  create mode 100755 t/t5351-unpack-large-objects.sh
 
-Range-diff against v14:
-1:  bf600a2fa8 ! 1:  9a776f717d unpack-objects: low memory footprint for get_data() in dry_run mode
-    @@ Commit message
-         d9545c7f465 (fast-import: implement unpack limit, 2016-04-25).
-     
-         Suggested-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-    -    Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-    +    Signed-off-by: Han Xin <chiyutianyi@gmail.com>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## builtin/unpack-objects.c ##
-2:  a327f484f7 < -:  ---------- object-file.c: do fsync() and close() before post-write die()
-3:  9bc8002282 ! 2:  a1e090d338 object-file.c: refactor write_loose_object() to several steps
-    @@ Commit message
-     
-         Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-         Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-    -    Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-    +    Signed-off-by: Han Xin <chiyutianyi@gmail.com>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## object-file.c ##
-    @@ object-file.c: static int write_loose_object(const struct object_id *oid, char *
-     -	ret = git_deflate_end_gently(&stream);
-     +	ret = end_loose_object_common(&c, &stream, &parano_oid);
-      	if (ret != Z_OK)
-    --		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid),
-    --		    ret);
-    + 		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid),
-    + 		    ret);
-     -	the_hash_algo->final_oid_fn(&parano_oid, &c);
-    -+		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid), ret);
-    - 	close_loose_object(fd, tmp_file.buf);
-    - 
-      	if (!oideq(oid, &parano_oid))
-    + 		die(_("confused by unstable object source data for %s"),
-    + 		    oid_to_hex(oid));
-4:  7c73815f18 = 3:  0ddf912d47 object-file.c: factor out deflate part of write_loose_object()
-5:  28a9588f9c ! 4:  f9e51d3c68 object-file.c: add "stream_loose_object()" to handle large object
-    @@ Commit message
-         Helped-by: René Scharfe <l.s.r@web.de>
-         Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-         Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-    -    Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-    +    Signed-off-by: Han Xin <chiyutianyi@gmail.com>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## object-file.c ##
-6:  dea5c4172b ! 5:  61ae1c1632 core doc: modernize core.bigFileThreshold documentation
-    @@ Documentation/config/core.txt: You probably do not need to adjust this value.
-     -Common unit suffixes of 'k', 'm', or 'g' are supported.
-     +* Stored deflated in packfiles, without attempting delta compression.
-     ++
-    -+The default limit is primarily set with this use-case in mind. With it
-    ++The default limit is primarily set with this use-case in mind. With it,
-     +most projects will have their source code and other text files delta
-     +compressed, but not larger binary media files.
-     ++
-     +Storing large files without delta compression avoids excessive memory
-     +usage, at the slight expense of increased disk usage.
-     ++
-    -+* Will be treated as if though they were labeled "binary" (see
-    ++* Will be treated as if they were labeled "binary" (see
-     +  linkgit:gitattributes[5]). e.g. linkgit:git-log[1] and
-    -+  linkgit:git-diff[1] will not diffs for files above this limit.
-    ++  linkgit:git-diff[1] will not compute diffs for files above this limit.
-     ++
-    -+* Will be generally be streamed when written, which avoids excessive
-    ++* Will generally be streamed when written, which avoids excessive
-     +memory usage, at the cost of some fixed overhead. Commands that make
-     +use of this include linkgit:git-archive[1],
-     +linkgit:git-fast-import[1], linkgit:git-index-pack[1] and
-7:  d236230a4c ! 6:  5a4782d746 unpack-objects: use stream_loose_object() to unpack large objects
-    @@ Commit message
-         Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-         Helped-by: Derrick Stolee <stolee@gmail.com>
-         Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-    -    Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-    +    Signed-off-by: Han Xin <chiyutianyi@gmail.com>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Documentation/config/core.txt ##
-     @@ Documentation/config/core.txt: usage, at the slight expense of increased disk usage.
-    - * Will be generally be streamed when written, which avoids excessive
-    + * Will generally be streamed when written, which avoids excessive
-      memory usage, at the cost of some fixed overhead. Commands that make
-      use of this include linkgit:git-archive[1],
-     -linkgit:git-fast-import[1], linkgit:git-index-pack[1] and
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 56d05e2725..32e8b47059 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -97,15 +97,27 @@ static void use(int bytes)
+ 	display_throughput(progress, consumed_bytes);
+ }
+ 
++/*
++ * Decompress zstream from the standard input into a newly
++ * allocated buffer of specified size and return the buffer.
++ * The caller is responsible to free the returned buffer.
++ *
++ * But for dry_run mode, "get_data()" is only used to check the
++ * integrity of data, and the returned buffer is not used at all.
++ * Therefore, in dry_run mode, "get_data()" will release the small
++ * allocated buffer which is reused to hold temporary zstream output
++ * and return NULL instead of returning garbage data.
++ */
+ static void *get_data(unsigned long size)
+ {
+ 	git_zstream stream;
+-	void *buf = xmallocz(size);
++	unsigned long bufsize = dry_run && size > 8192 ? 8192 : size;
++	void *buf = xmallocz(bufsize);
+ 
+ 	memset(&stream, 0, sizeof(stream));
+ 
+ 	stream.next_out = buf;
+-	stream.avail_out = size;
++	stream.avail_out = bufsize;
+ 	stream.next_in = fill(1);
+ 	stream.avail_in = len;
+ 	git_inflate_init(&stream);
+@@ -125,8 +137,17 @@ static void *get_data(unsigned long size)
+ 		}
+ 		stream.next_in = fill(1);
+ 		stream.avail_in = len;
++		if (dry_run) {
++			/* reuse the buffer in dry_run mode */
++			stream.next_out = buf;
++			stream.avail_out = bufsize > size - stream.total_out ?
++						   size - stream.total_out :
++						   bufsize;
++		}
+ 	}
+ 	git_inflate_end(&stream);
++	if (dry_run)
++		FREE_AND_NULL(buf);
+ 	return buf;
+ }
+ 
+@@ -326,10 +347,8 @@ static void unpack_non_delta_entry(enum object_type type, unsigned long size,
+ {
+ 	void *buf = get_data(size);
+ 
+-	if (!dry_run && buf)
++	if (buf)
+ 		write_object(nr, type, buf, size);
+-	else
+-		free(buf);
+ }
+ 
+ static int resolve_against_held(unsigned nr, const struct object_id *base,
+@@ -359,10 +378,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 		oidread(&base_oid, fill(the_hash_algo->rawsz));
+ 		use(the_hash_algo->rawsz);
+ 		delta_data = get_data(delta_size);
+-		if (dry_run || !delta_data) {
+-			free(delta_data);
++		if (!delta_data)
+ 			return;
+-		}
+ 		if (has_object_file(&base_oid))
+ 			; /* Ok we have this one */
+ 		else if (resolve_against_held(nr, &base_oid,
+@@ -398,10 +415,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 			die("offset value out of bound for delta base object");
+ 
+ 		delta_data = get_data(delta_size);
+-		if (dry_run || !delta_data) {
+-			free(delta_data);
++		if (!delta_data)
+ 			return;
+-		}
+ 		lo = 0;
+ 		hi = nr;
+ 		while (lo < hi) {
+diff --git a/t/t5351-unpack-large-objects.sh b/t/t5351-unpack-large-objects.sh
+new file mode 100755
+index 0000000000..8d84313221
+--- /dev/null
++++ b/t/t5351-unpack-large-objects.sh
+@@ -0,0 +1,41 @@
++#!/bin/sh
++#
++# Copyright (c) 2022 Han Xin
++#
++
++test_description='git unpack-objects with large objects'
++
++. ./test-lib.sh
++
++prepare_dest () {
++	test_when_finished "rm -rf dest.git" &&
++	git init --bare dest.git
++}
++
++test_expect_success "create large objects (1.5 MB) and PACK" '
++	test-tool genrandom foo 1500000 >big-blob &&
++	test_commit --append foo big-blob &&
++	test-tool genrandom bar 1500000 >big-blob &&
++	test_commit --append bar big-blob &&
++	PACK=$(echo HEAD | git pack-objects --revs pack)
++'
++
++test_expect_success 'set memory limitation to 1MB' '
++	GIT_ALLOC_LIMIT=1m &&
++	export GIT_ALLOC_LIMIT
++'
++
++test_expect_success 'unpack-objects failed under memory limitation' '
++	prepare_dest &&
++	test_must_fail git -C dest.git unpack-objects <pack-$PACK.pack 2>err &&
++	grep "fatal: attempting to allocate" err
++'
++
++test_expect_success 'unpack-objects works with memory limitation in dry-run mode' '
++	prepare_dest &&
++	git -C dest.git unpack-objects -n <pack-$PACK.pack &&
++	test_stdout_line_count = 0 find dest.git/objects -type f &&
++	test_dir_is_empty dest.git/objects/pack
++'
++
++test_done
 -- 
 2.36.1
 
