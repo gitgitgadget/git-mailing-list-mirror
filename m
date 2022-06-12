@@ -2,100 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1603FC433EF
-	for <git@archiver.kernel.org>; Sat, 11 Jun 2022 19:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F237AC43334
+	for <git@archiver.kernel.org>; Sun, 12 Jun 2022 06:01:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230467AbiFKTWm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Jun 2022 15:22:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37236 "EHLO
+        id S234451AbiFLGB1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jun 2022 02:01:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiFKTWl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Jun 2022 15:22:41 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28307369FD
-        for <git@vger.kernel.org>; Sat, 11 Jun 2022 12:22:40 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E4658124346;
-        Sat, 11 Jun 2022 15:22:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=6gskgh8AjiFX
-        wM+aDurArUBMJ1pfKAcG9Ok6+ezVyFo=; b=Ousf5ylKCJnpYZXFCZeC0EiJzxom
-        +dlLec3adlP5pelXkiqdTrs1BT2L5fL4KMYsoCI6XDT//qUZDk0w9I2EJwHGrwji
-        Qh/vo1k5VKPuLoKcg81e7jJhBnjwDRaAk8+qFiGaZJ50qgT085wGf0nueSUq6Wq2
-        4bvjWy3Kbkkfyds=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB584124344;
-        Sat, 11 Jun 2022 15:22:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4D24A124343;
-        Sat, 11 Jun 2022 15:22:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2 3/4] rebase: note `preserve` merges may be a pull
- config option
-References: <pull.1242.git.1653556865.gitgitgadget@gmail.com>
-        <pull.1242.v2.git.1654341469.gitgitgadget@gmail.com>
-        <fe000f062078e544361c87c319830cd36aabbc91.1654341469.git.gitgitgadget@gmail.com>
-        <xmqq1qw18yk2.fsf@gitster.g>
-        <4cac8a13-a075-544e-8c10-e58bbf0dd73d@iee.email>
-        <3800fa9c-50b4-2967-2f00-036c1edf5e52@iee.email>
-Date:   Sat, 11 Jun 2022 12:22:37 -0700
-In-Reply-To: <3800fa9c-50b4-2967-2f00-036c1edf5e52@iee.email> (Philip Oakley's
-        message of "Sat, 11 Jun 2022 16:38:20 +0100")
-Message-ID: <xmqqh74rattu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230001AbiFLGBX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jun 2022 02:01:23 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D8B269487
+        for <git@vger.kernel.org>; Sat, 11 Jun 2022 23:01:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1655013640;
+        bh=DjIUeAyeqCO7Q7yWsrllZTNNbMZJkJ+kUOtBbIHhepA=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=gFQZQzussR+6PrR313uXDOvQ2jgyO1AJwlcrgGMzYCVJKghHvlavY4cxZi3g0qvVt
+         QHvOaXnKgqJ7SfXs0s71hRDOr/X6Axt6FUUflU7/hcUaLpy8tvOpJHjkkS4qNNJUcU
+         3rpUwkg/wZdxHHypFo+bEGK1iKcXUyS45bX1N3gg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MdwJO-1nQOCc0Gso-00az4o; Sun, 12
+ Jun 2022 08:00:40 +0200
+Message-ID: <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
+Date:   Sun, 12 Jun 2022 08:00:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: DAF679B2-E9BB-11EC-B670-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Subject: [PATCH v3 0/5] Avoid spawning gzip in git archive
+Content-Language: en-US
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <pull.145.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <pull.145.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ykfVihD/wXOxOn++Ff/oV2xCtNf+RtNTYHb4B6mCOknBR6sCY1m
+ VcnVWlgbnHUKUuZ4WIYUAoY9NLevcpA7d78wjzWkekMwJ5MowjU9Od40BtjnNku1ua6GRN1
+ 65WAAx/aSZxUFy6/fI0RMruhKvsx4ZZUBfCRSSUKlkQDoaRnYGc2R3UFasxiU9uzwAIyvTJ
+ vDFM0IRBalXKrvE5huMlQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gnjRZ+QVT6I=:djs3DaKzONUpBNywaHKwjT
+ EulytHqdX87T7mE0MGS+mmemRyhHvqPbMk1Lwvc5udPbx8ETZ99mAVEc8pc/QWp1TbKzVbiek
+ w1gC/RekD2HJ2lYG80YviPBg3PSWE3s2gNIyqttsEOA/rnVyrWMIgRVWYyeCqBR8wdutLrp/n
+ wbSLzFYjJHqVWkxsU13PNfGTI9lHHvlrMPRYn3JUmLPbBWWijmJd8qj9J6kNmg8Qnc7aBt3cp
+ MBNaeEnEH9OEweU35AxM8ih8eghSFkG6fkU6fe9Rg4Bl5eymiGOIiHc8SVbbqrxXAINWOimpX
+ uv8fHun9+kQebqukIo/JuDet1RnP9vfUnccMZzf4DF1eJJ7/ARGVQ3AXVNv6d+X4P3NY3hN3O
+ mxM6HRI4dDmOH9HdYJMS16Q7OdkLCSvI2w56HKNezlWyW/by9ZsfGhnDdoRDn/RldQ7vikiv8
+ BzPghiNpZg7R6ER0Wha5Ymo9pSEnyAk55GR49Wv54x0QlU0zCiDvTG23jNZYK61X3ZPal4twB
+ deXzoA5eX1BG9jKYVSqi7m0MqksaRwFXBYGBnOwDcW4HBdjIlVfR7oG6NhvYqOaBR4mZrVpoJ
+ 5XXh1seiq2JWWPohPQnA2nYv1MPhLZ0Pu11ITeBdMEnLzZ/8qIqFrdCW2jzcFYdQSpkMY9bFG
+ N1TQavTW2mm/0lVrqShSfuKANoshXBT6W304yz6lI0dJqjrMf3kTyfIBI9axG3+BfahEDDaAJ
+ wwmfiSZJXaw5xhiKHi+PJ4/0kBkXpmHH2uPGyW+aTG0E2t59qDLmOgGlH1/R/kueCqJBu0EUw
+ fYyLkoUj85V4b90R4nGl+Pr0WV1T9iuVB7T3+kboT4x2g8km0hL6RJncM7EMncJksuGtMKFoP
+ DEUcjFrsxdQNfpkijYxW4pWC9VBaYYYjdyUHrAQBZ4a6f/MoouV1fa1UDqIeXODDcG/YjoMiM
+ PxLSXmIaq3PhqKimGp/DcWGPH5pkpXGC18NkF5W+uZOwGrHubg+/zssGjBKM7DYnRyxLre0hh
+ NjRyhWdXmBhJMIDFeryWEndLmY0AL+1ZLrAiD65RBTPYPDB9VamAN/jwDc6qZAhBIvwCXKHrx
+ vY/OItcmt9XYg2+2BDdgVtXLUZzRT7zgOj+
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+It's been a while, let's try again.
 
-> small clarification,
->
-> On 11/06/2022 15:03, Philip Oakley wrote:
->>> When pull.rebase is parsed, rebase.c::rebase_parse_value() is called
->>> from builtin/pull.c::parse_config_rebase() and would trigger an
->>> error, whether it comes from the pull.rebase or the branch.*.rebase
->>> configuration variable.  An error() message already said that
->>> 'preserve' was removed and 'merges' would be a replacement when it
->>> happened.
->>>
->>> If the user has *not* reached this die() due to a configuration
->>> variable, then there is not much point giving this new message,
->>> either.
->> From my perspective, users should then
->
-> That is, when users hit any of the `preserve-merges` error message, ...=
-=C2=A0
+Changes:
+- Use our own zlib helpers instead of the gz* functions of zlib,
+- ... which allows us to set the OS_CODE header consistently.
+- Pseudo-command "git archive gzip" to select the internal
+  implementation in config.
+- Use a function pointer to plug in the internal gzip.
+- Tests.
+- Discuss performance in commit message.
 
-Yes, but configuration parsing happens way earlier than the actual
-use of the option (which is decided after configuration and then
-command line is read), so the users would probably have hit the
-error message and corrected their configuration before they can even
-see this error message, no?
+  archive: rename archiver data field to filter_command
+  archive-tar: factor out write_block()
+  archive-tar: add internal gzip implementation
+  archive-tar: use OS_CODE 3 (Unix) for internal gzip
+  archive-tar: use internal gzip by default
 
-I guess I am repeating myself, so there may be some case where a
-stale variable can still be in the user's configuration file and the
-user can hit this error message without seeing the other error
-message about the stale configuration variable that I am not seeing?
+ Documentation/git-archive.txt |  3 +-
+ archive-tar.c                 | 79 ++++++++++++++++++++++++++++++-----
+ archive.h                     |  2 +-
+ t/t5000-tar-tree.sh           | 28 ++++++++++---
+ 4 files changed, 93 insertions(+), 19 deletions(-)
 
->>  be purging _all_ their `preserve`
->> configurations once they hit such errors. As the v2.34.0 change
->> propagates through the Git ecosystem, hopefully it'll be a sufficient
->> prompt for those who haven't realised that the option can be 'hidden' =
-in
->> their configuration options.
+=2D-
+2.36.1
