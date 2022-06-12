@@ -2,35 +2,35 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CD59C43334
-	for <git@archiver.kernel.org>; Sun, 12 Jun 2022 06:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88270C43334
+	for <git@archiver.kernel.org>; Sun, 12 Jun 2022 06:06:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231483AbiFLGEL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jun 2022 02:04:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41240 "EHLO
+        id S234047AbiFLGGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jun 2022 02:06:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230001AbiFLGEL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jun 2022 02:04:11 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4EA112AD6
-        for <git@vger.kernel.org>; Sat, 11 Jun 2022 23:04:09 -0700 (PDT)
+        with ESMTP id S230001AbiFLGGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jun 2022 02:06:04 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB23119C10
+        for <git@vger.kernel.org>; Sat, 11 Jun 2022 23:06:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1655013839;
-        bh=l25bGK4F8qm1yqKuZ/f4WA2c4yj52roMCXYwFXn623Q=;
+        s=dbaedf251592; t=1655013937;
+        bh=qsdawq715O/V/nmmBycYUKaJbChEBTxQP9xdGa7cxHw=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=PkQupart+mL7F+X7pTzJ/jQS0Gry/Tngi16bKyeXonIJZWTs7/IDKkR9ahmw3OlU4
-         3VUnbfIFe6fmGuysrHF0Ej6S7tFlfXu8O1xSX0Hy/UKK8G1aNAqJSd+E7W7tx0eyEX
-         AnPKRjssAmA87zKHvFJmoqooCqLlKYQe06LPXzA8=
+        b=i/FQcIE/UCDioV2c8ecACF3m7Ts1NByGV8Q7pxDjy+jAYJdwfFCqjUAz6cMLW+Ewg
+         NRzvl+MOM8G+eRQVgJWeBTWkX2Qm0edz4BIjchplaaf1K/Y4/Lpr5qMKq84XDNYbxl
+         bZe245xRZq0igjJo1zBGZxVhbyZCIiaeMGlzf1KI=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MCXVX-1nrmOL429D-009cD6; Sun, 12
- Jun 2022 08:03:59 +0200
-Message-ID: <35db4457-1f86-ce05-baeb-51be57393bb4@web.de>
-Date:   Sun, 12 Jun 2022 08:03:58 +0200
+Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N5UgI-1nh0g64842-016l8K; Sun, 12
+ Jun 2022 08:05:37 +0200
+Message-ID: <0c7a4261-47e6-941f-bd0c-4ecc646bb124@web.de>
+Date:   Sun, 12 Jun 2022 08:05:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.10.0
-Subject: [PATCH v3 1/5] archive: rename archiver data field to filter_command
+Subject: [PATCH v3 2/5] archive-tar: factor out write_block()
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     git@vger.kernel.org
@@ -45,93 +45,86 @@ References: <pull.145.git.gitgitgadget@gmail.com>
 In-Reply-To: <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:cbNCXD7s8jsih4SsPQj1mkN8gdecZeKryXYe5JbH+3yGr6LTVqm
- m45RZoHgFBRHNI9OHNxqR0BZelD+GLHSVO3f9a2q0AxU1vjk6dLWQVLCyRnCzWSqpa0Pia7
- C5WBmAPBbrYCd5vJey18ohSdqZbb6v8SYJvDLo3ko6O7irNPFYxWMuxd+sHZdM9ntjSA2h4
- +wqE6Dskmrf1AbHJPd06g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5l/qbfeSPws=:9/SMlwn0mZz8EC5qIl8ZLr
- A38cbh9n53fKui/J9dx0pYRJeipk8KXWBVJk/6Sa3Yvd1/icMr34v638cnlmpZYSCyeDMzuFm
- 4MEv4tn4TrUrFw7+Eg82tK1X9xIv5O3520m/9ByScjnKGMNw5RhBIUmG19e8mMJtEdr2n2MA0
- 66JAIqs4Tcc44oa9GYQmR/SbXYXpJZ1qEmGHwq4cp2BQyYW6bNioZwcJcsnoY93EnPrtoTz85
- 7ddvHcLcG9vkqX97X4lyvxeQbAtdvxx/5JWCgTeOmkSz4SdQk+trsBzjDov9zSqWYUxoPLS4O
- TM1fRPZIgY0yezVbvwAHxdSYC8xjWSKFbiAIWALrvMfhmVQe8aXDxrJ3eyzICVCAcpZfW2aKi
- cv2Z+l67W6kwG3VfhigllRZurmz7AhJwF3NxdRkal+aJ/xsiJhF27RyediWRKaJLnTC/7lTsW
- s/vteHjkuTv4bSLEx8SNh+dtRZvuX0/OfJSDm6UsttDflxup0naru/p6+BDfa6wD5QLsu9DLS
- Vz6szYe25XxSogBj/pU2suBD9yGoHX0PcCtRWwfK6b5OCjtcHu1YUQ83t+w6bG+Odwnpa2frs
- IS/AdlpcBOJjypUJd4B8ZxD4u7Au+Ch1AHMq/sLTkJsRG6cFrwPCWTk/niodU+KhWZk9Vgbhh
- zVq7SCjMPti0Oa4Jmuy2OGrr+cNVUr2pX1+OeRHZ92Z2k8am+7NtSg48O8SRRgbFwz5j9wX/4
- Vlbb+P7YgQmfd7pgzgScnyaJBrjbMMc4xvTPPyPwrtwLuF8tYDpizOtCYLiq1RwKG2uh05JNt
- wotdaEt3Ly4FO0IBGRK4zzES84PNILpTLRiLHhuYtIqZ0pU7fcpuOrPqORNVnwvMWQo7UwAcO
- z/wn3iwqqYDLVqOFO3/ai4L0LjdyNQF0q+sU2EXNsR3VilYYt4xhEx/19RuFtskBfxb+ppw2/
- c0h/WGwS/L3U/PpxYQfctZm8QbaoLLw428C2zrdjBYyimo48rMz3KIkYZrjeYdu8Hjlf+OYbs
- jFSuE/j8ydaX3rIHl+3hvgrfEznyfpNWSAomj4PuMzrocNPTH18xTZsthnzlYnNy7wb6CQkuH
- /N+JlLq9EcdFhSfEwNLMb7by5rKXUHwMdGJ
+X-Provags-ID: V03:K1:HFRQ8GIFNgO/2VjM39nuU+bGm+qBME5kYKjpuvs+XWifhBLfbfP
+ ri6a3NDrCjL8DpHtpNpKaXiioQSY31e91zLSF5CWn9c1qvEXRrPrRV/CqiADqsLpbSIeH6H
+ Xw6mvHid0r355gxwWlGJsJBSnEN2l3VF9yH7i4+kcuTTZH5p73Oj+CMla2jRNuclXI13SN0
+ LswfIOlOJkinDbBOGDbQw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:le9+ddnGe44=:EoUj6Q8g9Wvqf0CXNbDGsT
+ i5Cf4YfRa5OJc00hp9D9fyQzVyxndoF3jYiiWXNkzQ3h839D79oRI/UCpI7GxsZ9yZ6gOkiX7
+ yQ3Un4hP995iDjK2donklpdhuo1z+BSp9N/nL9YFpbKuxnX8CO3/WN5rozQwhipByXnIf1cZP
+ BkkdJNztuzIhA+cdGjul31DkTTQ1FaCmCubJU8whJO7MR7sF8DTNqthHkIUj9BprtwsjT9XCU
+ 3quTISBzCviou0+dImW2sxdVouOIGU9XVHqgBkAk5ogErJrP9oWaSZm0gJNXu9+AuA9KUulPn
+ g7ZqOm2oU36yRmkwh8k3gkiLHfq+/HfOqn2GeklqvnlXW09Ghwg3GLT2M3Usrb5iy5y2RqivE
+ mI0SBlMmpT2hq8yiOlJXBaC1+7JN7ON3gCZJgkADauf0TysWOAJaK/RNpPbxHhvRWbC4AS9+O
+ /P//9mxfIZpejaC0xxvItyPCpnyCPwAncS670YL8EmLMY4apUvYFPbCalLbp4NYpMVS9nwL0M
+ QDjozseeVWWB6aL1OYk93VMCQ5RDbwlLzKYiIkbRaDQ1e9tNQula2TJGGWrkIvaI2aAvLvvMl
+ cEVu7sSYP/ePt9tOzeLsL8GeHYXALbj1OLq9wKWg3E6C/VS0olvukeriurw1OppE5SQy7pVef
+ swom1seuO4Xo7OKp/fb1+LFNN4gFIJ2jJMGQo67fEToPE9VZdaswuQBJ3D+ry1epGNQHwoANb
+ dr+njL2dMpwBL/eGpFOSnnSmeG8UOLWUzztQ0tk6UWcjQaOk/6MBcEJMv1YnIQlVpZitUqoSo
+ /rTwJE1kzZjfQJMWRNtV3PHkP5s0YtEfP5O3zA11SP6Xfm20cHHNoVwhhvDqz1pnohpt/rDjl
+ cmc02ydS32Yss6c0Mt+EI+Lw05u2busV2oC03YU2EqgzxGgicnRR9mD6rNB8EqeJMTphbdLem
+ 2UFlWgzRFAu9Ni2ItkP+ux4AWJ0BZhJO0e8Sh+jq5CGfIkbUoT8YtFfi1pSVbvsE2vt+7QjCV
+ QUW1zZxKD8/A0TymvztgOYbKuUL48IqxXQQLoKlqAiUV5gMKBSX4fqMK3X7eEVviPLeMxx+0T
+ 64bQKbNabCjwAmV6Vw/887o1Yg8aIhBA+nG
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The void pointer "data" in struct archiver is only used to store filter
-commands to pass tar archives to, like gzip.  Rename it accordingly and
-also turn it into a char pointer to document the fact that it's a string
-reference.
+All tar archive writes have the same size and are done to the same file
+descriptor.  Move them to a common function, write_block(), to reduce
+code duplication and make it easy to change the destination.
 
+Original-patch-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- archive-tar.c | 10 +++++-----
- archive.h     |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ archive-tar.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/archive-tar.c b/archive-tar.c
-index 042feb66d2..2717e34a1d 100644
+index 2717e34a1d..4e6a3deb80 100644
 =2D-- a/archive-tar.c
 +++ b/archive-tar.c
-@@ -383,8 +383,8 @@ static int tar_filter_config(const char *var, const ch=
-ar *value, void *data)
- 	if (!strcmp(type, "command")) {
- 		if (!value)
- 			return config_error_nonbool(var);
--		free(ar->data);
--		ar->data =3D xstrdup(value);
-+		free(ar->filter_command);
-+		ar->filter_command =3D xstrdup(value);
- 		return 0;
- 	}
- 	if (!strcmp(type, "remote")) {
-@@ -432,10 +432,10 @@ static int write_tar_filter_archive(const struct arc=
-hiver *ar,
- 	struct child_process filter =3D CHILD_PROCESS_INIT;
- 	int r;
+@@ -38,11 +38,16 @@ static int write_tar_filter_archive(const struct archi=
+ver *ar,
+ #define USTAR_MAX_MTIME 077777777777ULL
+ #endif
 
--	if (!ar->data)
-+	if (!ar->filter_command)
- 		BUG("tar-filter archiver called with no filter defined");
-
--	strbuf_addstr(&cmd, ar->data);
-+	strbuf_addstr(&cmd, ar->filter_command);
- 	if (args->compression_level >=3D 0)
- 		strbuf_addf(&cmd, " -%d", args->compression_level);
-
-@@ -478,7 +478,7 @@ void init_tar_archiver(void)
- 	git_config(git_tar_config, NULL);
- 	for (i =3D 0; i < nr_tar_filters; i++) {
- 		/* omit any filters that never had a command configured */
--		if (tar_filters[i]->data)
-+		if (tar_filters[i]->filter_command)
- 			register_archiver(tar_filters[i]);
++static void write_block(const void *buf)
++{
++	write_or_die(1, buf, BLOCKSIZE);
++}
++
+ /* writes out the whole block, but only if it is full */
+ static void write_if_needed(void)
+ {
+ 	if (offset =3D=3D BLOCKSIZE) {
+-		write_or_die(1, block, BLOCKSIZE);
++		write_block(block);
+ 		offset =3D 0;
  	}
  }
-diff --git a/archive.h b/archive.h
-index 49fab71aaf..08bed3ed3a 100644
-=2D-- a/archive.h
-+++ b/archive.h
-@@ -43,7 +43,7 @@ struct archiver {
- 	const char *name;
- 	int (*write_archive)(const struct archiver *, struct archiver_args *);
- 	unsigned flags;
--	void *data;
-+	char *filter_command;
- };
- void register_archiver(struct archiver *);
+@@ -66,7 +71,7 @@ static void do_write_blocked(const void *data, unsigned =
+long size)
+ 		write_if_needed();
+ 	}
+ 	while (size >=3D BLOCKSIZE) {
+-		write_or_die(1, buf, BLOCKSIZE);
++		write_block(buf);
+ 		size -=3D BLOCKSIZE;
+ 		buf +=3D BLOCKSIZE;
+ 	}
+@@ -101,10 +106,10 @@ static void write_trailer(void)
+ {
+ 	int tail =3D BLOCKSIZE - offset;
+ 	memset(block + offset, 0, tail);
+-	write_or_die(1, block, BLOCKSIZE);
++	write_block(block);
+ 	if (tail < 2 * RECORDSIZE) {
+ 		memset(block, 0, offset);
+-		write_or_die(1, block, BLOCKSIZE);
++		write_block(block);
+ 	}
+ }
 
 =2D-
 2.36.1
