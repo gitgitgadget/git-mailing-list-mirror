@@ -2,35 +2,35 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBEF7C433EF
-	for <git@archiver.kernel.org>; Sun, 12 Jun 2022 06:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A625DC43334
+	for <git@archiver.kernel.org>; Sun, 12 Jun 2022 06:19:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234511AbiFLGSs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jun 2022 02:18:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48820 "EHLO
+        id S234523AbiFLGTY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jun 2022 02:19:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbiFLGSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jun 2022 02:18:46 -0400
+        with ESMTP id S229664AbiFLGTY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jun 2022 02:19:24 -0400
 Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D3F539BA6
-        for <git@vger.kernel.org>; Sat, 11 Jun 2022 23:18:44 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0334239BA8
+        for <git@vger.kernel.org>; Sat, 11 Jun 2022 23:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1655014701;
-        bh=1UVCC78FdXD4x06vNF2gJTXUHfIxiKSYmgoRCp6h724=;
+        s=dbaedf251592; t=1655014745;
+        bh=VKU4TSmiHTGdb75DWjKGpgdbGJuoyYmFY+hvStDAVao=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=Cwz+OT5js8HpT/YkR5JHgbnKQDzAg+nHc8RbDEp43HVIGzCMpbJcGqyhjlHtCwqsP
-         oZrmSvBILy/yzpdambaA18SPdJr3x1YnTvBZkKkUbMNUKd6AcsQlSxJSdj2KY5jKnI
-         WoY5g0hnqWwh0ozWaajfEowH+mRyCwQDOInv/0cA=
+        b=npnlhlWTkyX7/xfiBB8QEH8QvhrORkz/gOwvYGdHzeBTwu7HvAxb/SE0PevgtO06N
+         zGVpV2kECuZ6Stgd3WWrgsGtHqgjZ+LiklvyJTbx49QDhD/NJfonjZyYSS+6G+nvzO
+         la0iWRbwGgRr+2PnpoNQALYE0R48kAMVqvzTVL/Y=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M9ZZo-1o3aJc3Ra8-005kiY; Sun, 12
- Jun 2022 08:18:20 +0200
-Message-ID: <0a6877c3-07f2-b0e2-f23c-9ea4c588e8a5@web.de>
-Date:   Sun, 12 Jun 2022 08:18:20 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MnX5F-1nGnBU2e8b-00jSa7; Sun, 12
+ Jun 2022 08:19:05 +0200
+Message-ID: <d9e75b24-c351-e226-011d-5a5cc2e1c858@web.de>
+Date:   Sun, 12 Jun 2022 08:19:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.10.0
-Subject: [PATCH v3 4/5] archive-tar: use OS_CODE 3 (Unix) for internal gzip
+Subject: [PATCH v3 5/5] archive-tar: use internal gzip by default
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     git@vger.kernel.org
@@ -45,132 +45,147 @@ References: <pull.145.git.gitgitgadget@gmail.com>
 In-Reply-To: <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ZMD5m2x3NvG36FYnYGrEoWqUFYtakQdpuu8kP51VxxIHzxam956
- DQwisIObJyQcUjeC+VFWN1fwqObuUqCyu5TvdAKjq3LZNaqGMHXL9izBu+OdoAJaz3i2ZBB
- 8CaOizSt1JwkhglnCWdMeG1zJF5llSoSOETk2UnqpYN/n5Nb+Qf4rUlsnt8ph/72//PKl4E
- gOctF/R7mkTC4euKm34Wg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gF9pEg64btI=:sCd1qBLCt/X/oKw05HKrpW
- Knt4kxmgGT+KalDljIbobWNDfh+bXqF+lnhe5WozmLVaV18FMwQ36Ab2P3AK+IMsmrMG2Le03
- FoGr1MbnIrKSL95n9EVv2PxxIaLEm0UIeqstH2TImCFJBOdi78HQio8+UJIYjLD0r/WV/CGOu
- bZell81ypIH+GEBnGFYfdSgu1LSN6wfl+ANaHj/7SiEYHJ/duB/xkxn/WT453UgJaBjAB3yVp
- 61xWKcQ9GbyUbhlcT6yJRmIZqxYYKc4VRZ3/PX69SaCgHfFXirNAbTkyjpMDoWsbeDwRKggrs
- l24/D2nx+xvlyonPEFpTLxzTALVszPUe8NWPk/NPqaG9hLckvu7ebBMQrDdoPjh6pdeBzOgej
- BqCLdUtXwVKWU82xmlihn0lsimpvjiuyLj0eE9j9LFfjKOfTy6q/4V6GgyjapMXvH/FEMKCpz
- ZXChuuIntirgkOCieNSa4xduBtq9f7TRrzjxWsBWjJJPJsegWlaObgRuVx7PYd0QOf1QCkmSW
- 3KJuxvqN/qWdEJsqN4k+8IaFTP9MuiOPVHGiV113UkQwaj9wAmMA1ji1PzZhna9gVfmrk6jbk
- b1P8fvPVnf+MPb2qQTYrKEJhhFB1DwhKQJsiDKFwjQHFOsO9EKBdcyhRZ5VbgEi5UsxN+MS0Q
- H/Iu9WOM0k9pdZYG8iuIig7Pn/tgiJA/VQjjOUtaCqSxpf1k2Rv3hVZFw88UU0BH2IHVVM+cI
- B06/DFjzyy3ZRSuAhVm66lLnLVkP0YkyfKMYjaXeKd6I93xt22qKa0M/pthgnZHEZtozuHO/L
- TPkO5B++Z34YLsDxcqThiopNJ7O4mvcJTaXcZod6yiXBVcTCeeGL2O1d2Z5E2IP+IZ8enyzNx
- pLnPTaZqzT1z6bYC89Z7xb/S3gWaZvBAsJJ5IyV/Te5gBVqzm3lk3HXJa1YE6C1MuVBIpYixo
- XviY/6nQuWIj0lXuT8YCU0K3yJs5KscXA0PG9UUy9i5tppBAmvpMsr6YU4VndtYnLCpZw7Uea
- gF6GS9x3rg1/RYhlfqUemeBycOc1jKBkJPr2wLb5R4pdtgs8Xir/PbLcy1lBOhSRT8njASVY1
- WNUF4va6zWpsm2RB0owIDf6TiI698dxnjrA
+X-Provags-ID: V03:K1:t/cny2zg2ihPzkPprkLWHcT1FM2KE89qX52UUgd5411Kyjj4bzZ
+ MRNNPCfrC+GKTjn6ZClypEb+gYtsRndOVjZQ9vjzgMWJ+T81AM5cTrqsAdo7rTNjN2prwt7
+ 345fxkV5lSWcMpEWL8T2tR/KraOOoeOWliSL4CD1CQeapXo0Rt6FwKGkWefa1hzntGRJ2Og
+ UuXkdAkmT/Hyj/6xE8D5g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bZFEO5ja+rY=:A1RPxVq02/fNvoKsN5b436
+ d1rRu4a0XYnuaSTz1c15z4amyiAh7Mv7D5e/Yj23v13ivSc7VZBl5mpoWpkS4E9BeJ+QZ+SY0
+ M7/eFGfHYYNhmD0s2aotfeWhnJssbzXh55WxjQ9jq1VTsb8ZO0A6podsQ88DaSRSTQC/MdS9P
+ v2ecayfGNgqZcNZhANNarbO6yPtHCP/YcsAvLK5vXVD/RXplH8akFpUeAF+mNhs2bJXlIFcyr
+ ApSZ7zO+Wtnzwx8ZAR6SXZFrHfu4l9QAmCBUGrQQCIJ9F4e4IJXkrPrvdivIlb/xTOpEa7efz
+ gn9E7C3xfuJTTm3n1L42mSr8ZHJuRsNYWzQQwBmG9FYf28a0kUcWaAe3FZY0Q4uQ2OJqHMTwK
+ GpZFylaVTZjFadcqWcnx+6M1lvJltZ6erpQdH/iq/+w1OTA2k4lMIyvclFYbSstR/485SLr6e
+ slDDYeqINJf3n316my8SUNhETLmR92Am8d9L4vh4vSrHyanNi/U1z+MbZSGc/+Ses6SbHgKxk
+ rXPy0D8PvMW4tRAXVz3UDKtt/mx9RxNr/cvJjkYQi+Z5S9vEiiugVoSdYVJn/7zDg1j8Vdfed
+ us+Xmj/7EIYObeTldwhPtNhL5Rh7RM4JJeFSgBicBIHC5DuDXzuwK0DZ4bMTAiaGqOxxK8Rrh
+ tAs+dkRRAxrbC/rtmJzuLObpRwCtFcSTnPrfTQr1vDPnRV6Xa2OlpQD5YOuQkQBXKZG6alpXM
+ mrKsK838JJMEoBYxvwGGtiaNNw6PovlRYPofdPsZNcIwup3q8R87b7sjthrumGFpbll/k6evi
+ qR5it9l51/sCS/8FpS18BJ8b/7Gv0sbmdSBURLJqigdWym353UsJ8pxfBBc4slqC1yLlxHVw6
+ I2TxkoAR8vnaxavJk+m+cYdps+iU1G+SjxpEW09GTRnTXoQVknAgf7tCnOII1FStqvBL3yWNA
+ y1rNSN+mKAUPsilhEpndiOYBNfVrAOlDaRv0wzG1iArbYuxYEOIdZMoQzvYN/DCPxR+SAo9zO
+ oABZTOxe6UNWdHRz79C7QTGvx3rajVTxStDLet/40R/shi4ICrd5lcRfjJGU27wjHKED3xJof
+ liiHl+yQynnR6z7PqJxdK+mh1ajfBpnzmIE
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gzip(1) encodes the OS it runs on in the 10th byte of its output. It
-uses the following OS_CODE values according to its tailor.h [1]:
-
-        0 - MS-DOS
-        3 - UNIX
-        5 - Atari ST
-        6 - OS/2
-       10 - TOPS-20
-       11 - Windows NT
-
-The gzip.exe that comes with Git for Windows uses OS_CODE 3 for some
-reason, so this value is used on practically all supported platforms
-when generating tgz archives using gzip(1).
-
-Zlib uses a bigger set of values according to its zutil.h [2], aligned
-with section 4.4.2 of the ZIP specification, APPNOTE.txt [3]:
-
-         0 - MS-DOS
-         1 - Amiga
-         3 - UNIX
-         4 - VM/CMS
-         5 - Atari ST
-         6 - OS/2
-         7 - Macintosh
-         8 - Z-System
-        10 - Windows NT
-        11 - MVS (OS/390 - Z/OS)
-        13 - Acorn Risc
-        16 - BeOS
-        18 - OS/400
-        19 - OS X (Darwin)
-
-Thus the internal gzip implementation in archive-tar.c sets different
-OS_CODE header values on major platforms Windows and macOS.  Git for
-Windows uses its own zlib-based variant since v2.20.1 by default and
-thus embeds OS_CODE 10 in tgz archives.
-
-The tar archive for a commit is generated consistently on all systems
-(by the same Git version).  The OS_CODE in the gzip header does not
-influence extraction.  Avoid leaking OS information and make tgz
-archives constistent and reproducable (with the same Git and libz
-versions) by using OS_CODE 3 everywhere.
-
-NB: The function deflateSetHeader() was introduced by zlib 1.2.2.1,
-released 2004-10-31.
-
-At least on macOS 12.4 this produces the same output as gzip(1) for the
-examples I tried:
-
-   # before
-   $ git -c tar.tgz.command=3D'git archive gzip' archive --format=3Dtgz v2=
-.36.0 | shasum
-   3abbffb40b7c63cf9b7d91afc682f11682f80759  -
-
-   # with this patch
-   $ git -c tar.tgz.command=3D'git archive gzip' archive --format=3Dtgz v2=
-.36.0 | shasum
-   dc6dc6ba9636d522799085d0d77ab6a110bcc141  -
-
-   $ git archive --format=3Dtar v2.36.0 | gzip -cn | shasum
-   dc6dc6ba9636d522799085d0d77ab6a110bcc141  -
-
-[1] https://git.savannah.gnu.org/cgit/gzip.git/tree/tailor.h
-[2] https://github.com/madler/zlib/blob/master/zutil.h
-[3] https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
+Drop the dependency on gzip(1) and use our internal implementation to
+create tar.gz and tgz files.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
-Perhaps makes sense for remote-curl as well (out of scope of this
-series)?
+ Documentation/git-archive.txt |  4 ++--
+ archive-tar.c                 |  4 ++--
+ t/t5000-tar-tree.sh           | 32 ++++++++++++++++----------------
+ 3 files changed, 20 insertions(+), 20 deletions(-)
 
- archive-tar.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 5b017c2bdc..9de12896fc 100644
+=2D-- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -148,8 +148,8 @@ tar.<format>.command::
+ 	format is given.
+ +
+ The "tar.gz" and "tgz" formats are defined automatically and default to
+-`gzip -cn`. You may override them with custom commands. An internal gzip
+-implementation can be used by specifying the value `git archive gzip`.
++the magic value `git archive gzip`, which invokes an internal
++implementation of gzip. You may override them with custom commands.
 
+ tar.<format>.remote::
+ 	If true, enable `<format>` for use by remote clients via
 diff --git a/archive-tar.c b/archive-tar.c
-index 53d0ef685c..bf7e321e0e 100644
+index bf7e321e0e..60669eb7b9 100644
 =2D-- a/archive-tar.c
 +++ b/archive-tar.c
-@@ -460,6 +460,14 @@ static void tgz_write_block(const void *data)
+@@ -528,9 +528,9 @@ void init_tar_archiver(void)
+ 	int i;
+ 	register_archiver(&tar_archiver);
 
- static const char internal_gzip_command[] =3D "git archive gzip";
+-	tar_filter_config("tar.tgz.command", "gzip -cn", NULL);
++	tar_filter_config("tar.tgz.command", internal_gzip_command, NULL);
+ 	tar_filter_config("tar.tgz.remote", "true", NULL);
+-	tar_filter_config("tar.tar.gz.command", "gzip -cn", NULL);
++	tar_filter_config("tar.tar.gz.command", internal_gzip_command, NULL);
+ 	tar_filter_config("tar.tar.gz.remote", "true", NULL);
+ 	git_config(git_tar_config, NULL);
+ 	for (i =3D 0; i < nr_tar_filters; i++) {
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 9ac0ec67fe..1a68e89a55 100755
+=2D-- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -339,21 +339,21 @@ test_expect_success 'only enabled filters are availa=
+ble remotely' '
+ 	test_cmp_bin remote.bar config.bar
+ '
 
-+static void tgz_set_os(git_zstream *strm, int os)
-+{
-+#if ZLIB_VERNUM >=3D 0x1221
-+	struct gz_header_s gzhead =3D { .os =3D os };
-+	deflateSetHeader(&strm->z, &gzhead);
-+#endif
-+}
-+
- static int write_tar_filter_archive(const struct archiver *ar,
- 				    struct archiver_args *args)
- {
-@@ -473,6 +481,7 @@ static int write_tar_filter_archive(const struct archi=
-ver *ar,
- 	if (!strcmp(ar->filter_command, internal_gzip_command)) {
- 		write_block =3D tgz_write_block;
- 		git_deflate_init_gzip(&gzstream, args->compression_level);
-+		tgz_set_os(&gzstream, 3); /* Unix, for reproducibility */
- 		gzstream.next_out =3D outbuf;
- 		gzstream.avail_out =3D sizeof(outbuf);
+-test_expect_success GZIP 'git archive --format=3Dtgz' '
++test_expect_success 'git archive --format=3Dtgz' '
+ 	git archive --format=3Dtgz HEAD >j.tgz
+ '
 
+-test_expect_success GZIP 'git archive --format=3Dtar.gz' '
++test_expect_success 'git archive --format=3Dtar.gz' '
+ 	git archive --format=3Dtar.gz HEAD >j1.tar.gz &&
+ 	test_cmp_bin j.tgz j1.tar.gz
+ '
+
+-test_expect_success GZIP 'infer tgz from .tgz filename' '
++test_expect_success 'infer tgz from .tgz filename' '
+ 	git archive --output=3Dj2.tgz HEAD &&
+ 	test_cmp_bin j.tgz j2.tgz
+ '
+
+-test_expect_success GZIP 'infer tgz from .tar.gz filename' '
++test_expect_success 'infer tgz from .tar.gz filename' '
+ 	git archive --output=3Dj3.tar.gz HEAD &&
+ 	test_cmp_bin j.tgz j3.tar.gz
+ '
+@@ -363,31 +363,31 @@ test_expect_success GZIP 'extract tgz file' '
+ 	test_cmp_bin b.tar j.tar
+ '
+
+-test_expect_success GZIP 'remote tar.gz is allowed by default' '
++test_expect_success 'remote tar.gz is allowed by default' '
+ 	git archive --remote=3D. --format=3Dtar.gz HEAD >remote.tar.gz &&
+ 	test_cmp_bin j.tgz remote.tar.gz
+ '
+
+-test_expect_success GZIP 'remote tar.gz can be disabled' '
++test_expect_success 'remote tar.gz can be disabled' '
+ 	git config tar.tar.gz.remote false &&
+ 	test_must_fail git archive --remote=3D. --format=3Dtar.gz HEAD \
+ 		>remote.tar.gz
+ '
+
+-test_expect_success 'git archive --format=3Dtgz (internal gzip)' '
+-	test_config tar.tgz.command "git archive gzip" &&
+-	git archive --format=3Dtgz HEAD >internal_gzip.tgz
++test_expect_success GZIP 'git archive --format=3Dtgz (external gzip)' '
++	test_config tar.tgz.command "gzip -cn" &&
++	git archive --format=3Dtgz HEAD >external_gzip.tgz
+ '
+
+-test_expect_success 'git archive --format=3Dtar.gz (internal gzip)' '
+-	test_config tar.tar.gz.command "git archive gzip" &&
+-	git archive --format=3Dtar.gz HEAD >internal_gzip.tar.gz &&
+-	test_cmp_bin internal_gzip.tgz internal_gzip.tar.gz
++test_expect_success GZIP 'git archive --format=3Dtar.gz (external gzip)' =
+'
++	test_config tar.tar.gz.command "gzip -cn" &&
++	git archive --format=3Dtar.gz HEAD >external_gzip.tar.gz &&
++	test_cmp_bin external_gzip.tgz external_gzip.tar.gz
+ '
+
+-test_expect_success GZIP 'extract tgz file (internal gzip)' '
+-	gzip -d -c <internal_gzip.tgz >internal_gzip.tar &&
+-	test_cmp_bin b.tar internal_gzip.tar
++test_expect_success GZIP 'extract tgz file (external gzip)' '
++	gzip -d -c <external_gzip.tgz >external_gzip.tar &&
++	test_cmp_bin b.tar external_gzip.tar
+ '
+
+ test_expect_success 'archive and :(glob)' '
 =2D-
 2.36.1
