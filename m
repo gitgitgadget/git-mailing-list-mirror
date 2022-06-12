@@ -2,70 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D831C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A59F7CCA473
 	for <git@archiver.kernel.org>; Sun, 12 Jun 2022 07:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234710AbiFLHoi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jun 2022 03:44:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234694AbiFLHof (ORCPT <rfc822;git@vger.kernel.org>);
+        id S234689AbiFLHof (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 12 Jun 2022 03:44:35 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF265250B
-        for <git@vger.kernel.org>; Sun, 12 Jun 2022 00:44:31 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id cx11so3027022pjb.1
-        for <git@vger.kernel.org>; Sun, 12 Jun 2022 00:44:31 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60352 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230273AbiFLHoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jun 2022 03:44:32 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03CEA52507
+        for <git@vger.kernel.org>; Sun, 12 Jun 2022 00:44:28 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id e9so3006062pju.5
+        for <git@vger.kernel.org>; Sun, 12 Jun 2022 00:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZsldcDAeLHhX4uyIb+uqN4Rn37IVrbNy62COeT6ogkU=;
-        b=IU4iplb5eYTqWjDFlTzNlWv6zG7jsfIQSIGy5BO0U0j5/Pv1RI8nbB6ttKIZigU/Sw
-         9aXIGO6cjWZ9mZVBUyzF8Lh6B1uUPDTM84RKsTcfaPf3NE9oJ8FhSTUMLcDgZO2Ma1YC
-         xJ6Pzlk/qaTKyZT5I9D9KhqLKNa/LvQqgTLqnCjfObhuobuh21RmdtGVu2ZzSNTFHk3v
-         1qM/hKkkiL8SZuob8ppkv3XVw8Ld2f5XxyQpsSVvFBBN93XG3lGT4ygYwNGv4eGO4EqY
-         hLMD/DDe5yj1lrFlKjdgxW955t5SsRoyun4yjsfUKhcti+QmjR1c9M2hoQwFpVUaGZJ2
-         2FHw==
+        bh=UBYYshF/ZvKQ1eu5V1s72WIIn17RpfYKNvnPDhewTLU=;
+        b=Ec/BIHNaHikl/GlKrLPaxn1tfyK4mGIpZNl+EV3ubvw7v/587Y4EhYu4yyTMKOtiXF
+         YOX/WuzgtJ0yEBgRufwxqfhBHoVD1C5E6n73uK5OusRrg01xkND8Sd9nOcUXOe0YTaYi
+         maRxOi0zg52/hr3NOe6t4WhaEa6Ya7QoZdgLnrZ5GRy196xYrFp28V+UbKwrrrRRR5I0
+         CJ9s4yTDaavzHT/vap94vEJHw+fpNjK29SQGBD1JP+v2nrzWcs0D/Y29OEYA7pLqvn51
+         z29mEDLxHwexMM8svPRLW4C/3DYL8SnvvXOls7kChfKuNpVpQhLRe9JxAmbX8zwfhnfH
+         HXZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZsldcDAeLHhX4uyIb+uqN4Rn37IVrbNy62COeT6ogkU=;
-        b=BHVYe2hk+8OwcUpQnhKFL2Bsa2BvxIHhm9EpW2yjx/c14GT4i5/6s3W2g755mHmBhM
-         zgXQWJOIFg1q25C+WdIyWWX+t1/hEj9j6dCkPGbeDfQCzIEnl73OLY+R3AavVbHvdEE3
-         mJdzvOTlMTzEjS0yS0S/9vlY2mU0L/B9mjK548dlal4qnfqZY2ld03tUc39c4Qm6T4q3
-         XNkiv5F8PV5f7CbbvgJxFQVNONpN49hP6MjRpyqXmx86M27pU14d2PADYBzIooBKANNW
-         Bvi0sM1U6Y8bVlLCJu5zXxk6dPRAdMFIxPsXtSRoUmq39R9EBGfyIqiU5ACjDbh2CKsQ
-         VNCg==
-X-Gm-Message-State: AOAM5327q4eZHatijgoHdUwhx4namD7SNL4p941V/CmnMUtxvr1d3LU+
-        ypSjIHLZbRQi/g22J2MsL4U=
-X-Google-Smtp-Source: ABdhPJzjaLVcnxCF5X3QELaPFcaDtkXJ0YH9a7sq0CeUIicy9I8JVq+BagnUoZ/XuhKmN3mlOdEi/w==
-X-Received: by 2002:a17:90b:170b:b0:1e8:6d34:eba6 with SMTP id ko11-20020a17090b170b00b001e86d34eba6mr9018533pjb.105.1655019870549;
-        Sun, 12 Jun 2022 00:44:30 -0700 (PDT)
+        bh=UBYYshF/ZvKQ1eu5V1s72WIIn17RpfYKNvnPDhewTLU=;
+        b=tYov3VerzbP861feIK602Nb7cU0PuIhgTqwlO0Ts/qd8ZNgta4f7NLeQiaiQHOZNGo
+         B/cQpidcCvE/OV83Ue4JnvPHagTxoJXcLCT79pJVRUuyIdd5e3qa0UhTV+sybebl1lLU
+         gyp7FhotjRaQrH3G8LMCYiV+Flj6r+49118wdFFlmhv9x1cR/5NAgs7mqLNwcN+hHBBe
+         fHYRVhq0uLEno3q2W9fY75yda5DvYP8DoF33tPuVEno5MSHKDh5ObvRjg4Z8sbQntdRT
+         /+kQK9V37Gu/IW8RtZThYUvIlwSfdM38DkMazapadrwXJe+HqIHSGINVpo6pD3cmGhh2
+         XBXA==
+X-Gm-Message-State: AOAM530kp/56sx3e0WqbExT1l1QYfmi4z0CdF9WrR/ODL4p3uRRR7A+3
+        smgIt+IYjdLaXF3khhkuhhU=
+X-Google-Smtp-Source: ABdhPJxv9llBAuvUuE/M7UbgX4Ip8V437XV+ZouktefYY6pL2ADXn2exYk6Il1FpfinL7QMXNgQ+kw==
+X-Received: by 2002:a17:902:f60c:b0:156:82c9:e44b with SMTP id n12-20020a170902f60c00b0015682c9e44bmr53137230plg.106.1655019868167;
+        Sun, 12 Jun 2022 00:44:28 -0700 (PDT)
 Received: from code-infra-dev-cbj.ea134 ([140.205.70.44])
-        by smtp.gmail.com with ESMTPSA id w14-20020a1709029a8e00b001676f87473fsm2559707plp.302.2022.06.12.00.44.28
+        by smtp.gmail.com with ESMTPSA id w14-20020a1709029a8e00b001676f87473fsm2559707plp.302.2022.06.12.00.44.25
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Jun 2022 00:44:30 -0700 (PDT)
+        Sun, 12 Jun 2022 00:44:27 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
         gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v3 0/5] trace2 output for bitmap decision path
-Date:   Sun, 12 Jun 2022 15:44:15 +0800
-Message-Id: <cover.1655018322.git.dyroneteng@gmail.com>
+Subject: [PATCH v3 0/5] 
+Date:   Sun, 12 Jun 2022 15:44:14 +0800
+Message-ID: <cover.1655018322.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.35.1.582.g320e881567
-In-Reply-To: <cover.1655018322.git.dyroneteng@gmail.com>
+In-Reply-To: <cover.1650547400.git.dyroneteng@gmail.com>
 References: <cover.1650547400.git.dyroneteng@gmail.com>
- <cover.1655018322.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Message-ID: <20220612074414.rQxjU5OOCOLHnVIW_RzZmx8Yhomnk5vXdZSk6J-71kg@z>
 
-*** BLURB HERE ***
+Sorry for the late reply (in emergency project).
+
+I reread the replies in patch v2 and fixed/optimized
+in patch v3 in respective, I hope I haven't missed
+anything.
+
+Thanks.
 
 Teng Long (5):
   pack-bitmap.c: continue looping when first MIDX bitmap is found
@@ -102,8 +108,7 @@ Range-diff against v2:
     @@ Commit message
      
          There may bring some confusion in this "idx_name" naming, which
-         might lead us to think of ".idx "or" multi-pack-index" files,
-    -    although bitmap is essentially can be understood as a kind of index
+         might lead us to think of ".idx "or" multi-pack-index" files,    -    although bitmap is essentially can be understood as a kind of index
     -    , let's define this name a little more accurate here.
     +    although bitmap is essentially can be understood as a kind of index,
     +    let's define this name a little more accurate here.
