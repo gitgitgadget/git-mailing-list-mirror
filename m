@@ -2,172 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78614C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 22:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D371C43334
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 23:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241765AbiFMWkO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 18:40:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41894 "EHLO
+        id S232211AbiFMXB3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 19:01:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244974AbiFMWkI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 18:40:08 -0400
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01olkn2099.outbound.protection.outlook.com [40.92.52.99])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09FC22DD58
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:40:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=flyDsg+kvGhsLmQIvH8hGIv3naKl1kKS7R6nDpw9At8HirX6fTIOozc65r95sqcaORcoBbDWB8UGLpzrLNBGF5zNXCf4SUCQffJdcwsKn1QmRyz/aMNavslFwZhCVQPyAYKoIdFoIcL683HHykYDI2rtq3SAeH3tuWVQVydxB0n1kIYrWycw+aBRW6VSsQoAniZycx2nXrGa1tYfJy2tkYoE9RE6CzSdArudbMbsmu7Y/He6EMPnm6WY2A25B4jxSqf9z5dVA9E0pXz7An5bukdewy7X6JpvJB7c1GHc72eTQNvbtVJ4rP94VWw9LZJCCjKj/hW+JXsyrR4W4voosA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fCt6BOFNH4TbsSpnSJ349LZeE4UJYCwovVRheQghYec=;
- b=akood6L7i98mAxcX8o/z9Mc9eb+dugFNRYA9sA8Bavv9y4rvPCN2C96M01mHJzTjl9f9j+hKxRxvMUrYZ1m5Qsbyboj4ENkDzX2CvoIKUMbtySFFXrTVZ+0KQlQkHj1H6PZ2GG6ctX7kO/X6yWJkEiGy5iJZ/Fp63eWPuo3X08nQro2FOazmezjIuerk25tIkihHFAdBYVneez/hPeGq4+Uuc6khvnxn8GrJmE7rXXtkV/ckA/E4j7dFylUZoebK/RkJM+F7Ogc4HixtwEhX/mzEsMPpCWx05yxjX7qoerW7eFmJW5pmAreEGCFbEe1miqcXMOoSwmmKIJ5CQLvxHA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fCt6BOFNH4TbsSpnSJ349LZeE4UJYCwovVRheQghYec=;
- b=t7fOHW9nzOJj/LqjlsFynI7aPo9cTPb1Cu70E9R/DzSzIMwklgY5JrFDW4vSvCBbBFWWIhjBTyiiPmKoGHUr27nbdBfIILGA+wTRhgKbmaXR81JJByGgrmPQ233FHVTwYKYn0+ULrBjxRO/6mcVO/MaZ+44p0dRJlzyr2zFO+JHZEKWLLZa9Z1uutJPWKl1Y11vXADYuNGtadRBeEZxuC5Y/skABvuZsMyWWuEnqMHwAFfcU/Sgk9kDl45/j3cdEtWYJqHWPt9LKWlyUYXe9i68cgnNm2cYwUq2RdgcgdL7jAGwbCjN4xtopyeSVcjaeC17RKPhPbJmNyBMsYVw+gQ==
-Received: from TY0PR04MB5604.apcprd04.prod.outlook.com (2603:1096:400:14d::9)
- by SG2PR04MB2924.apcprd04.prod.outlook.com (2603:1096:4:22::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5332.13; Mon, 13 Jun
- 2022 22:40:02 +0000
-Received: from TY0PR04MB5604.apcprd04.prod.outlook.com
- ([fe80::427:299b:b31c:c09e]) by TY0PR04MB5604.apcprd04.prod.outlook.com
- ([fe80::427:299b:b31c:c09e%9]) with mapi id 15.20.5332.021; Mon, 13 Jun 2022
- 22:40:02 +0000
-From:   =?utf-8?B?4Lio4Lij4Lix4LiT4Lii4LmMIOC4quC4uOC4meC4l+C4o+C4m+C4oOC4sg==?=
-         =?utf-8?B?4Lij4Lix4LiB4Lip4LmM?= <sarun515m@outlook.com>
-To:     =?utf-8?B?ZGV2cHJvZ3JhbXNAYXBwbGUuY29tICjguKjguKPguLHguJPguKLguYwg4Liq?=
-         =?utf-8?B?4Li44LiZ4LiX4Lij4Lib4Lig4Liy4Lij4Lix4LiB4Lip4LmMICYgQk0pIElD?=
-         =?utf-8?Q?loud?= <mail-noreply@google.com>,
-        GitHub <support@githubsupport.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Sarun515m@outlook.com
-Thread-Topic: Sarun515m@outlook.com
-Thread-Index: AQHYf3aExfNH3/4NHkmnNJoOU873ug==
-Date:   Mon, 13 Jun 2022 22:40:01 +0000
-Message-ID: <TY0PR04MB5604E52DCC1BD9EDE31988E3FBAB9@TY0PR04MB5604.apcprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-tmn:  [HdFU1INZZkcFDjCeudBXDthhW0zINQxTHhPHOxhPqRM=]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 752daeb5-46a9-4a09-3536-08da4d8da769
-x-ms-traffictypediagnostic: SG2PR04MB2924:EE_
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: IeonfgNGybqPceU00+th6voJNCAr9+u7OFEHye3/BHJekf0vD4UcnaERHaXTPqAOIGl6vQEgrh9H6OGadZC7Zi3vH2vu1AUZCEhjuoh/3ah5QU1w14jm+85uB1nbJecoLSAgUDyUqeTQ2mfoOznh01qQ/+CPfs/hmau6D31KUyTW8bRhwLRRaOrm8JZHMyShNq5xKJKLqvwUIv3quPUsaE/i4jtqkZZ146bAmfSv6j1E7KffgPu2wLixB8E/I31VbkkYAwh2iICT1VdBHtY4YBufbPCfIdVZF1/XV4jPd/COtbCzifEw1wxKO4TISGMlOpnmLXjC8yTitXHfTwaf/V6F8FCQUudfKSSRl8it9/1hmNR8fhSFGSggmIiHItuv2lDyg1crpvmxj06siLzrJj45taxCv2BDFo3OgV1XM0DfhM9lq9TEIhpbxo8bLTPd4jhUT9K//PIJbPt5mtHE3AH1zLdd46HWCAY+degS6TXZJe+UZr7Z6gNwCo024FSxHQH+e7i7uV7f22erHc4YHgMqOv9brpmtCN43GSbZINlpYH7SgezdiKrEA749VQ7fZkph1OjREFlsZ40ViaUe+g==
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?czY5NGoxekdXUWNKeWZZd3hHa0tkaCtVZHJjc08yMGNpdkFRSHZnVjVFcFB5?=
- =?utf-8?B?eHVPSUZ1VFR5dUlyT0JBWnFZRXh1bFVRbFhqaGRvUWs3aTg1aEFYT1RDV1d3?=
- =?utf-8?B?REwxb0lqdWdTbVZJNlJkQlhCQU1USERJRFdTNFEwOHBsbUI0ZkNSMHA0TitP?=
- =?utf-8?B?ZjZhT1hQOGcreFdLdXVqVzJyWGNpSENyZnNjMS9zY0plU2VSS2JwOUJZb0lU?=
- =?utf-8?B?d3BZckhxd1JCSTlJT1oxSDQ4TnNJNjJUbUZvYTE0N0JROC9LK2ZGNHhPUUZ3?=
- =?utf-8?B?emUyTllmVGx0UmdBVkhPVkZnTGk0em9JbVJiY0FqeHh4R051ZFE0WExNeFFr?=
- =?utf-8?B?dWk0Z0JPSER2RnhubFR1dHkwTHhDOHNLTVFTRTJwWHVRcS9JbTB5UyszdVJB?=
- =?utf-8?B?SlFMQjhaaU0wSHA0d2NSWjNCZXJOT21VRE1ERzQzTlNWblNaWFgvY1lUcjlw?=
- =?utf-8?B?bzRJNGh4V09qOWZMVjlha1owK3lES3JHcHRLaDVweDhrWW1oS3kvR0l6MTl0?=
- =?utf-8?B?Ym5MOEtCanJuemJBUUQzMFJpQ1pma2ZqNEYrRC80aWdTNVpRclBUUm9jWnNW?=
- =?utf-8?B?KzJNdDUveTF3S3dHQ05JNnNnZW1QWjNOdFl5RDd0WkpVQmNTNEpiZlRWc3VS?=
- =?utf-8?B?TFo0NDdvbEl1S2pMcDhsVTZGbGNQZjlhc2RUdVB3dlZocjdVZWRydE83TUoy?=
- =?utf-8?B?Z0grR0RvSmg2dEMreHZDNnZ4cC9OcTVQbEhlQjJkTnVvTHVFZVRzb0IxNC95?=
- =?utf-8?B?c1JTYldma0tyT1NUUGFsN2FnU0ViNGFTUGhtMm5HMnFaWjJjdCttSGVBaCtG?=
- =?utf-8?B?dUpVRVdmREp1elBGUmdOOVZTbnl0L3Ywb2V0QTZoUm1sdlJXbmNhUkVVcEw3?=
- =?utf-8?B?c1lHWkZjbXpaMkJmbnltaVpMWDVVbE1UZ014dEx5Wm5XNmJwM0FGVEJxeGdW?=
- =?utf-8?B?TzRUS20vMXJJcmczb2V5eWE4citMS0lXUzBVc1dsaTlTVEtLTXIvK3VSZFdz?=
- =?utf-8?B?OTlaRkhQMGNNM3k4SUcveVNaKzZGNmEyL29sM0MvYzd5RVpOa3JGdithN2s4?=
- =?utf-8?B?d05YTGZzY1hqUVAxU0FzZ0hGWk5XcVByVFd2bUlmeVF2OWZERTl2UmRHaWtS?=
- =?utf-8?B?bDFCcDFETmMvVzFhaFJWVXlHd0NLQTBLSUdmbTVTTmVmbE52akhnVDJFQW5w?=
- =?utf-8?B?c3k5WGVsZ1VSbXZqY2VUSG9YMHJQNUlmdUswTlBNZTYxWFBjWFcwcjlnRW4r?=
- =?utf-8?B?RjQwSmNtcXN3Q2JkNE1NajgrTSs3K2FEZFBUa0gxcWhmWHFmOStsYU9FWUo3?=
- =?utf-8?B?UnVqUG9hZ2R6NnBkS2hwcFQ1c09Rb1NrcEFkN1BFdm4rSVMxcFBLeEk1TmVP?=
- =?utf-8?B?aDAvUjByUXRsOW1vMHhqNDRxd3JwK0pmQ0pwalRsL2lYRURxUGcrc0RuZWt1?=
- =?utf-8?B?ZnFORG5yUHltVUR0bDdEaWdPd24xS1JqRnZpUVdzV3B1bGEwQmR1OWtQZ1dk?=
- =?utf-8?B?aEovcUZNNWluRUdhYVRUTmJVOGMxZUI5ZUxDT0dMYmNjQkdqYkFHVmpYY1lq?=
- =?utf-8?B?Q296WDQ4SU9rSHpMMkNrRG5wZ1hYbGhBd2ltUkpVTVNSQkdhTHNjK1J1aEta?=
- =?utf-8?B?MFI1V2dPb0ZJaTBaYVRSZHZnazczM3NKYkZEb24yamwzbjVZMEdVMm5kUDlR?=
- =?utf-8?B?M0JXOE5wQzBFQk8yMDZSVUZmcmxqVGxOY1JrYU1MVVZLU0ZOWHErRm9lWDFF?=
- =?utf-8?B?dUZIbnk1dUh3T1p6cGxpNXhrVUFZdEZLOVBKd054RVEvTDd6RmlKdnVhTnpq?=
- =?utf-8?B?bFZrazF3UDJzd3QzUHhpcnZlV3k4ajBqTS92SUJiaEFoY1BVVU93d0U0Nm1K?=
- =?utf-8?B?QnJhZnY3RHArd1p1cTAyU3ZWSEROSHVyMnA1MEJESjNkL2dxMjh4WVA3R2Ex?=
- =?utf-8?Q?oRwofWShR+k=3D?=
-Content-Type: multipart/alternative;
-        boundary="_002_TY0PR04MB5604E52DCC1BD9EDE31988E3FBAB9TY0PR04MB5604apcp_"
+        with ESMTP id S1348817AbiFMW66 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 18:58:58 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A2D717E29
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:58:57 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id b8so9173486edj.11
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:58:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=7hkiw6xYi+WACz5jiKli4ahmU1ga+284ebQEyO9QfpI=;
+        b=IoQj/0bRokr6kmz4/AUcA3h3i9VqRmjrgFVtFQX74D+e5UYIzA/gLPQ6AL+nBA15sU
+         VNqg/yWJYsYd99lUX4Grc/bpwjUmQHJ0UkC5+tfU54b8+9Cu8SKEotopK5fTsYpWW+vK
+         qqh7mT2dnhiWQrhTq/CUFeeohE5qh3EFa/rNJ7/KbPFgWw8spgvbtvfi7FwFeHAXpC1g
+         ZRuODywRkSGpoGzdtoQCmVsvoPcUoEY+86delo6/5JLrXOYSYEMk4ckYadDoFqZiZAxI
+         M3JNaZNOKv+vcPSWJUHpkT2E+0G/59cQczvOM9Ig1WUnlr5YAJAcBpGLpjtBgz2qgIDY
+         wCIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=7hkiw6xYi+WACz5jiKli4ahmU1ga+284ebQEyO9QfpI=;
+        b=D66WxHTPGCSaijw/Fa/cIBWqEsguACOJae3XlDMZfhNB8N0iyBVr3eAZ6SNNpgAZ7/
+         GEoeJtRIDvQToHndhNSTAlqvodM++4zB0bwBqfexrFXc/gQuWIqwqhRhCHOnxqrpBlTD
+         b9Bne2u/7aG/je0YNxCbmzormtgGBOjRsTeZfIfxNjkTjf5EWecnmRpyBLIT90Va7xtC
+         vzCxc3imeslhjOVztmO1MN8UFx7EC6+e8QOhzHSyrT4mswnBBUxbSIu8Gzz7vwQhH0aE
+         EWyoAHCt6blLhk+AImUGJ9kEqtOI3rcqfSFOV1kzI6eW9me0i1Xh5R/Fa+KQoDdaFUwa
+         /mSA==
+X-Gm-Message-State: AOAM533xzyHSfddnyb6gURizqdaVEMGMw+80g/9n5pqn5+MYH/0X+Bvj
+        zUoovk4MCHCZHDDEq89SsFVRTR96xoj2NQ==
+X-Google-Smtp-Source: ABdhPJy3aJaIs0O5fwm1PKRWVl9Ax8k7ETWrS4NocUOW3mKU5tp8+DXSN1dmbUHigKbHC3MEzmY1CQ==
+X-Received: by 2002:a05:6402:2892:b0:42d:c871:78f4 with SMTP id eg18-20020a056402289200b0042dc87178f4mr2416222edb.192.1655161135657;
+        Mon, 13 Jun 2022 15:58:55 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id p3-20020a50c943000000b0042bcf1e0060sm5723719edh.65.2022.06.13.15.58.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jun 2022 15:58:55 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o0t1K-000G7f-Hn;
+        Tue, 14 Jun 2022 00:58:54 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] ci(GitHub): mark up compile errors, too
+Date:   Tue, 14 Jun 2022 00:41:28 +0200
+References: <pull.1253.git.1654774347.gitgitgadget@gmail.com>
+ <pull.1253.v2.git.1655125988.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <pull.1253.v2.git.1655125988.gitgitgadget@gmail.com>
+Message-ID: <220614.86tu8oyxu9.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY0PR04MB5604.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 752daeb5-46a9-4a09-3536-08da4d8da769
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jun 2022 22:40:02.0139
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB2924
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---_002_TY0PR04MB5604E52DCC1BD9EDE31988E3FBAB9TY0PR04MB5604apcp_
-Content-Type: text/plain; charset="utf-8"
-Content-ID:
- <DB243AFF0D00014A843CA6547CFB2BFA@sct-15-20-4755-11-msonline-outlook-6ea25.templateTenant>
-Content-Transfer-Encoding: base64
 
-4LmA4Lih4Li34LmI4LitOiDigIsxNCDguKHguLQu4LiiLiAyMDIyICjigIvguJfguLHguYnguIfi
-gIvguKvguKHguJQsIOKAi+C5gOC4geC4tOC4lOKAi+C4i+C5ieC4sykK4Liq4LiW4Liy4LiZ4oCL
-4LiX4Li14LmIOiDigIs0MzAg4LiWLiDguK3guYjguK3guJnguJnguLjguIog4LmB4LiC4Lin4LiH
-IOC4quC4p+C4meC4q+C4peC4p+C4hyDguYHguILguKfguIfguKrguKfguJnguKvguKXguKfguIcg
-4LiB4Lij4Li44LiH4LmA4LiX4Lie4Lih4Lir4Liy4LiZ4LiE4LijIDEwMjUwIOC4m+C4o+C4sOC5
-gOC4l+C4qOC5hOC4l+C4ogotLQpMaW5nIE1haWw=
+On Mon, Jun 13 2022, Johannes Schindelin via GitGitGadget wrote:
 
---_002_TY0PR04MB5604E52DCC1BD9EDE31988E3FBAB9TY0PR04MB5604apcp_
-BEGIN: VCALENDAR
-METHOD: REQUEST
-PRODID: AndroidEmail
-VERSION: 2.0
-BEGIN: VTIMEZONE
-TZID: Asia/Bangkok
-X-LIC-LOCATION: เวลาอินโดจีน
-BEGIN: STANDARD
-TZOFFSETFROM: +0700
-TZOFFSETTO: +0700
-DTSTART: 19700101T000000Z
-END: STANDARD
-END: VTIMEZONE
-BEGIN: VEVENT
-UID: 3fb72000-b0b7-4d6a-8aab-c470f8d4491f
-DTSTAMP: 20220613T223947Z
-DTSTART: 20220614T000000
-DTEND: 20221215T000000
-LOCATION: 430 ถ. อ่อนนุช แขวง สวนหลวง
-	 แขวงสวนหลวง กรุงเทพมหานค
-	ร 10250 ประเทศไทย
-SUMMARY: Sarun515m@outlook.com
-DESCRIPTION: เมื่อ: ​14 มิ.ย. 2022 (​ทั้ง​ห
-	มด\, ​เกิด​ซ้ำ)\nสถาน​ที่: ​430
-	 ถ. อ่อนนุช แขวง สวนหลวง แขว
-	งสวนหลวง กรุงเทพมหานคร 10250 
-	ประเทศไทย\n--\nLing Mail
-X-MICROSOFT-CDO-ALLDAYEVENT: TRUE
-RRULE: FREQ=WEEKLY;WKST=MO
-STATUS: TENTATIVE
-STATUS: TENTATIVE
-STATUS: TENTATIVE
-CLASS: PUBLIC
-ORGANIZER;CN="": MAILTO:sarun515m@outlook.com
-TRANSP: OPAQUE
-X-MICROSOFT-CDO-BUSYSTATUS: BUSY
-PRIORITY: 5
-SEQUENCE: 0
-BEGIN: VALARM
-ACTION: DISPLAY
-DESCRIPTION: REMINDER
-TRIGGER: -PT900M
-END: VALARM
-END: VEVENT
-END: VCALENDAR
+> Just like we mark up test failures, it makes sense to mark up compile
+> errors, too.
+>
+> In a sense, it makes even more sense with compile errors than with test
+> failures because we can link directly to the corresponding source code in
+> the former case (if said code has been touched by the Pull Request, that
+> is). The only downside is that this link currently is kind of misleading =
+if
+> the Pull Request did not even touch the offending source code (such as was
+> the case when a GCC upgrade in Git for Windows' SDK all of a sudden point=
+ed
+> out problems in the source code that had existed for a long time already).
+> We will see how the GitHub Actions engineers will develop this feature
+> further.
+>
+> This patch series is based on js/ci-github-workflow-markup. Which also
+> serves as an example how this looks like if the offending source code was
+> not touched by the Pull Request:
+> https://github.com/dscho/git/actions/runs/2477526645 because it still
+> triggers the above-referenced GCC build failure.
+>
+> Changes since v1:
+>
+>  * Using a comma in the workflow command now, as described in the official
+>    documentation ;-) (Thank you, =C3=86var)
 
+You're welcome!
 
---_002_TY0PR04MB5604E52DCC1BD9EDE31988E3FBAB9TY0PR04MB5604apcp_--
+>  * The curly bracket construct was replaced by a proper subshell, to avoid
+>    jumbled output and a race where the exit.status file could be read bef=
+ore
+>    it was written.
+>
+> Johannes Schindelin (2):
+>   ci(github): use grouping also in the `win-build` job
+>   ci(github): also mark up compile errors
+
+It's still genuinely unclear to me what exactly the expected
+before/after result is, and I wish the 2/2 commit would discuss it.
+
+So, in v1 we had this: https://github.com/gitgitgadget/git/actions/runs/246=
+1737185
+
+Where the *summary* for the CI said e.g. "syslog.c line=3D53#L1", so that
+was the "needs a comma" bug, now it says syslog.c#L53 instead:
+https://github.com/dscho/git/actions/runs/2477526645 (your link
+above). So that's good.
+
+But re my earlier comment where I asked/wondered if fixing that would
+link to the source file at line 53 it still seems to just link to the
+diff.
+
+Is that a bug? The desired result? If the commit was modifying syslog.c
+would the link work?
+
+Clearly an end result where we link to the source file/lines at the rev
+we're testing is much more useful.
+
+I found this discussion:
+https://github.community/t/are-github-actions-notice-warning-error-annotati=
+ons-broken/225674
+
+Which has a link to an example run at:
+https://github.com/IronTooch-ColdStorage/Github-AnnotationTest/actions/runs=
+/1782265048
+
+So isn't this for creating "annotations" for just the regions that would
+be involved in your diff? I.e. it shows a notice for the line(s)
+involved in the diff itself, but presumably nothing else?
+
+If that's the case I think it would be much more useful to just
+e.g. wrap $(CC) in some "tee"-like command to spew its output somewhere,
+and then have a "step" where we extract the warnings/errors emitted, and
+emit URLs you could click on, unless there's some way to make the GitHub
+UX emit the same information.
+
+I.e. it'll be quite hit & miss whether the annotation will show up in
+the diff, the compiler will often warn about a line some distance away
+from the change made, e.g. if a variable is made unused.
+
+Unless the intent is only to aggregate them on the summary page, but
+then why do we need to link to the "line" at all, which will at best
+work unreliably, and at worst be actively misleading.
+
+In any case, needing to do less reading of the tea leaves would be nice,
+i.e. if the commit message explain what the desired change is exactly,
+and how it should be handling these cases.
+
+Thanks.
