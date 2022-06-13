@@ -2,110 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C15D5C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 21:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8CA0C43334
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 21:36:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352378AbiFMVdT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 17:33:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33052 "EHLO
+        id S1347266AbiFMVgs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 17:36:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352446AbiFMVdB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 17:33:01 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69DEBE0C
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 14:32:28 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E5AB6198D2E;
-        Mon, 13 Jun 2022 17:32:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=o2jUdzMc+d/yZrMaWlgDLAAvaiPd4co9jO8Vjp
-        33PzQ=; b=yPmD1hzFG7p5+eBjEQIHKwu1lGGZUGowU7aJNXwW1EZoReeO+uNjUj
-        KBLZkKSneV59Jt18164EnbBkIPeNtK+y+ivtrIe3zE5uR46IjktAa8HcJb+PkZqX
-        q8llPTmfoWR94I7UyE+YUzon4Kn7chcFN3Wy4KRTHRChGxDam31Ik=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DD715198D2C;
-        Mon, 13 Jun 2022 17:32:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 82E41198D2B;
-        Mon, 13 Jun 2022 17:32:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-        <avarab@gmail.com>, Li Linchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH v3] remote-curl: send Accept-Language header to server
-References: <pull.1251.v2.git.1654756523475.gitgitgadget@gmail.com>
-        <pull.1251.v3.git.1655054421697.gitgitgadget@gmail.com>
-Date:   Mon, 13 Jun 2022 14:32:23 -0700
-In-Reply-To: <pull.1251.v3.git.1655054421697.gitgitgadget@gmail.com> (Li
-        Linchao via GitGitGadget's message of "Sun, 12 Jun 2022 17:20:21
-        +0000")
-Message-ID: <xmqq1qvs5jx4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1347095AbiFMVgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 17:36:46 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F878194
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 14:36:45 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id l3so3532044qtp.1
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 14:36:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gMgLd0WD3scKj9WAwzOml44jtbimMum0ZTVvfEE3x9U=;
+        b=Awrq4IkaojqehRSn+SysjMJHSjyDOban7eS5IS9eEun+lQ3DT5IUE9/GNwO5NFHGfv
+         h8WqJKPkPxeiDvkaALdTVZUq2SYJsR4cItZgSl9fmcprlXEWg/T6tFTBgYByImm2kQ4A
+         9u6svYPTbyAVPJFzYFT4PvPX4niRdVx/zlZAgydCX53Te0/PbGNbICHvq27v0PRm8A5W
+         fRUIqMc8Gh3N/RJTYQmcoA0cgn0RZmJeDVJC6CQjEHFP7ciJDfWTC+MJOujRkTIv4GoU
+         OJftJAM4fvjRrV0ME4w6KXanxter2cGy8T6ep1Bf/iwnQCojHWAcibuAGJiv0wXKUE07
+         Qpmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gMgLd0WD3scKj9WAwzOml44jtbimMum0ZTVvfEE3x9U=;
+        b=A87ty50qjD5uBbLoEWmOz8ysSfz0KTqkXBz9iG06T43Owdo3y+vXGPdT5bVDwQeoeF
+         iqRCNEYVE9qK9Qzq+Yt9vYF95B5sdxCFtKzmsoWSkE1w6VV4QuwBkYQG7DvjQuukP56+
+         muQPwY/5MM9Z2apfcRfeHbwj287a+Xjw7ux85bcL4xfGb/9jYj4AnPs6FvwWkXlZtLP9
+         Ic7TYdQKwrIjfaWI+7MlqBxt6Get3l484hWFyYn3dUZj2YQbl+VpnjzL7YtvPk4Pe3s1
+         XoNdzp0E7ZKZ4NtkZoOd3EvZNPg/CwjA+QskDwF0XGpfNVCt+hoBJgalraGiDSSqJtyp
+         kZ8g==
+X-Gm-Message-State: AOAM532Gc+vLlxJPK1Y+LBxW6cfDLrEO3ZqA0+wsh9gHUQuxpMWtPyOU
+        RfKr9Xfzwp8hu5olIN0bu2uEtxjxCOQwI8my
+X-Google-Smtp-Source: ABdhPJwP0miYgMvEbk5HYj9dE1b/C+0N8i7Ya9I+TLGIpE5AhfV4bWZG41+/yKLTe1IImfjwhyZOEQ==
+X-Received: by 2002:a05:622a:100a:b0:304:eb7b:5e1b with SMTP id d10-20020a05622a100a00b00304eb7b5e1bmr1679386qte.393.1655156204754;
+        Mon, 13 Jun 2022 14:36:44 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 14-20020a37030e000000b006a6b498e23esm8067693qkd.81.2022.06.13.14.36.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jun 2022 14:36:44 -0700 (PDT)
+Date:   Mon, 13 Jun 2022 17:36:43 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Repository corruption if objects pushed in the middle of repack
+Message-ID: <Yqet68Sll1cz+ySY@nand.local>
+References: <20220613203145.wbpi2m3ys3hchw6c@meerkat.local>
+ <YqepoUMb3rkKgWqB@nand.local>
+ <YqerC883GiwHiiZU@nand.local>
+ <20220613213221.iekmfjihho5ujfq2@meerkat.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 50BC1648-EB60-11EC-9A0D-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220613213221.iekmfjihho5ujfq2@meerkat.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Li Linchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Jun 13, 2022 at 05:32:21PM -0400, Konstantin Ryabitsev wrote:
+> On Mon, Jun 13, 2022 at 05:24:27PM -0400, Taylor Blau wrote:
+> > A much more likely explanation for what is going on has to do with the
+> > `--unpack-unreachable` option you're using.
+> >
+> > In your example, any unreachable object written within the last day is
+> > written loose, and anything else older than that is simply discarded. If
+> > the following happens, in order:
+> >
+> >   - an unreachable object is detected, and marked for deletion
+> >   - that object then becomes reachable via some ref-update
+> >   - then the object becomes an ancestor of some push which depends on it
+> >   - _then_ the object is deleted by repack
+> >
+> > ...then the repository will be missing some objects which are in its
+> > reachable set, and thus corrupt. IOW, the `--unpack-unreachable` option
+> > (and its successor, cruft packs) are both racy with respect to
+> > ref-updates.
+> >
+> > Are you able to find evidence of that race in your logging? I would bet
+> > that is likely what is going on here.
+>
+> I'm not sure that's the case, because the object that is missing is the one
+> that didn't exist before the repack started. In the scenario you describe, the
+> pre-existing unreachable ancestor of it would be missing, not the newly
+> incoming object. Right?
 
-> @@ -932,6 +933,10 @@ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_rece
->  	headers = curl_slist_append(headers, needs_100_continue ?
->  		"Expect: 100-continue" : "Expect:");
->  
-> +	/* Add Accept-Language header */
-> +	if (rpc->hdr_accept_language)
-> +		headers = curl_slist_append(headers, rpc->hdr_accept_language);
-> +
->  	/* Add the extra Git-Protocol header */
->  	if (rpc->protocol_header)
->  		headers = curl_slist_append(headers, rpc->protocol_header);
-> @@ -1080,6 +1085,8 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
->  	strbuf_addf(&buf, "%s%s", url.buf, svc);
->  	rpc->service_url = strbuf_detach(&buf, NULL);
->  
-> +	rpc->hdr_accept_language = xstrdup_or_null(http_get_accept_language_header());
-> +
->  	strbuf_addf(&buf, "Content-Type: application/x-%s-request", svc);
->  	rpc->hdr_content_type = strbuf_detach(&buf, NULL);
->  
-> @@ -1118,6 +1125,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
->  	free(rpc->service_url);
->  	free(rpc->hdr_content_type);
->  	free(rpc->hdr_accept);
-> +	free(rpc->hdr_accept_language);
->  	free(rpc->protocol_header);
->  	free(rpc->buf);
->  	strbuf_release(&buf);
-> @@ -1400,6 +1408,7 @@ static int stateless_connect(const char *service_name)
->  	struct discovery *discover;
->  	struct rpc_state rpc;
->  	struct strbuf buf = STRBUF_INIT;
-> +	const char *accept_language;
->  
->  	/*
->  	 * Run the info/refs request and see if the server supports protocol
-> @@ -1418,6 +1427,9 @@ static int stateless_connect(const char *service_name)
->  		printf("\n");
->  		fflush(stdout);
->  	}
-> +	accept_language = http_get_accept_language_header();
-> +	if (accept_language)
-> +		rpc.hdr_accept_language = xstrfmt("%s", accept_language);
+Aren't we reporting that the newly pushed tree was broken _because_ it
+had some links to sub-trees that no longer existed?
 
-Isn't rpc.hdr_accept_language left uninitialized garbage if
-accept_language is NULL?  It is the same bug I pointed out earlier,
-whose fix may have to be different.
-
-Has this been tested?  I got immediate segfault with this patch in
-'seen'.
-
+Thanks,
+Taylor
