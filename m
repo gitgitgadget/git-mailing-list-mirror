@@ -2,78 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3723C43334
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 22:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C95DC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 22:39:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239284AbiFMW1O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 18:27:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35028 "EHLO
+        id S240328AbiFMWjL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 18:39:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234454AbiFMW1N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 18:27:13 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9836C30F53
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:27:12 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id v25so9128404eda.6
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:27:12 -0700 (PDT)
+        with ESMTP id S230240AbiFMWjK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 18:39:10 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8E562C9
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:39:09 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id w17so1332573wrg.7
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Qau9m1CGoyaxh/bv+vp32842sGFFWl5wJcxWkLKpdkM=;
-        b=UidvetC66EdbD0Q1lMyEAFC371ueaBwSMnHZ7xE2djyUYem2+v3eqsFHOP1euM3LLq
-         ZIQiq5AnMSqnuBVhUPU2un0wcxzxDSXUEf7AfhscY5M50sM89H0OUJAHMJnSR4Yg1wVR
-         BJy6xNqPNg8j+AwTDI0xhsDiQBms1brmL+KqGQ0tDPRjZKolMOQ99mndI5g9xgC+TLLU
-         NgEAonHoR6RQvAX+zuV00gDOZfhjCTCpOZ6hSaQM8yyGTOjwM3XfRxRn4omXqP9JCl6P
-         GoucR07zJCS7dLlZFVAi0J1WrNrqHYkqDGg+8CkusFlDgQt/BTL+S/x/6NGcV29WcxzW
-         fk7w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SZz5/KAUtwJd75mvLxj4GUa9sffsa7d36rY3weXr0so=;
+        b=kdD1/des6P/52824jThcRzovsfKYq/WLF9ecI2CJ+Zh+Bw2HnW8aZ0UK78MWXX6Lgi
+         aYYA3HTEKm9QtzCZtrx6uzT48xK0o35WfxG6+13Ep2IMS3/hgZOWiwNQKYN5LHFj9kjm
+         Xg10hfbNlte8McyYUg1CLRVQTsstdSH1lLLUcubzcbw5lNa3efrillm2i39oprJY7qCT
+         eZEmnE9TZGX1OVh2r2OFmSsU1B7qJj8TBoRU/msy0r8euwpFkdnppgNFUS/e6WQF8i7D
+         gY7LWxqh0Dj9PHi1ATwHgl07TGOtjIwduV+LgiBht1DF5VTronxMpUvCnr/KYbKlW5o/
+         iZTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Qau9m1CGoyaxh/bv+vp32842sGFFWl5wJcxWkLKpdkM=;
-        b=UXze59ntkZBTQKuHrzsL+F9nBMTFBubqLTj3JEGiVPD2BA/WH/jJSxtdimU55kuOCb
-         IbfCsf/Aj2UdpwsZB/zYWeTiVXHMKU2d60lfou0NbkiAo4G7DqabztpEAO3z0aRX5Rbi
-         4a5RjwQ29tV+YU+2QVFj8LgkXSwEZK2B4Z49wannB5D5lUQLoOHZ/7Fa870xxcEg44NW
-         Yrez+XDewQTtKRj/RdBOLvKoog+jWFB+Gv0nBULF8F0EH4WlHU70wc8AXfSAuSwQeKLY
-         OX9KWJw0rzHsUTjq1h0rJAME4Y/vPmxz9E2E9sdxAbpIvhQe5eVw7l+HPJFEVOGaRFNq
-         f5aQ==
-X-Gm-Message-State: AJIora9Fe0mjauN+tFBhguH1jBdBL/4k1B40czxjdOdBZo7FzYRDMate
-        VOwQEPlsuoeHR05wfxoLJCasyZQgb/8P2u3WQh1L+lit
-X-Google-Smtp-Source: AGRyM1urIhLFH++rmlUz21xv+XHB3DAPLL/GGks6VFVNCt/bYQvuilgLSfFW6tVc3KIS8SUf6c4Mkibw5W0LfDQol3w=
-X-Received: by 2002:aa7:d441:0:b0:431:486b:2573 with SMTP id
- q1-20020aa7d441000000b00431486b2573mr2325538edr.60.1655159231137; Mon, 13 Jun
- 2022 15:27:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SZz5/KAUtwJd75mvLxj4GUa9sffsa7d36rY3weXr0so=;
+        b=tptJqaTdAgQlDOa556nyxc+YMwAzZZ33asLN/KVpDcuYg3XwqRcnZabJL6L1wXpcYN
+         84y/VddJ5qG7XFl2JOKrfylpXGpRRcWRez8SKI6mbgKFN1/mJtGLWYoLSLVGHnbti6ul
+         JJOnRxI2udCSDQytlCCEDioS9dOoDeFeJh0hG8xcKHmhuu+CWzyI04A7ARzmsvrTdZ8j
+         ntaaA/TGRd1AnsGSN8viPsTaHCK+yvGJ/NxqNRrcXr7l4s2OvSsEH9V5cSLD08U/BeXP
+         hf6bueYRDj2eLtUkYu7h5Yi9coFsSuU4Xlg+doR2lxJqMOiw07iK0PF+bOYTfMVVqBdT
+         OEcw==
+X-Gm-Message-State: AJIora/4/9SPufM8GbWTPnsVFzA0G/mQEGighkPUI4mZFxRTVP9IfeRJ
+        PzPYCPlYQT/1Q0u98W9W8T6K6f/9povRqw==
+X-Google-Smtp-Source: AGRyM1snTuBavJwo8S2eeVm3bh6ikcWTZAwrjIvJ9yqy1kLmMcSCYe9IIxaoZcIn4ry452irQv4gwA==
+X-Received: by 2002:a5d:4389:0:b0:213:1d58:1666 with SMTP id i9-20020a5d4389000000b002131d581666mr1785653wrq.294.1655159947818;
+        Mon, 13 Jun 2022 15:39:07 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id y3-20020adfd083000000b002103cfd2fbasm9670303wrh.65.2022.06.13.15.39.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jun 2022 15:39:07 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 01/12] git-submodule.sh: remove unused sanitize_submodule_env()
+Date:   Tue, 14 Jun 2022 00:38:52 +0200
+Message-Id: <patch-v2-01.12-c5afc72e075-20220613T220150Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
+In-Reply-To: <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com>
+References: <kl6lzgig5qmc.fsf@chooglen-macbookpro.roam.corp.google.com> <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20220613203145.wbpi2m3ys3hchw6c@meerkat.local>
- <YqepoUMb3rkKgWqB@nand.local> <YqerC883GiwHiiZU@nand.local>
- <20220613213221.iekmfjihho5ujfq2@meerkat.local> <Yqet68Sll1cz+ySY@nand.local> <20220613214514.udtn35w7j6q2lrbh@meerkat.local>
-In-Reply-To: <20220613214514.udtn35w7j6q2lrbh@meerkat.local>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Mon, 13 Jun 2022 15:26:59 -0700
-Message-ID: <CAPx1GveKAaO1NMRZvcoj5nGm4Cd=A5CLkq7u-eOYtRvU2YVaGw@mail.gmail.com>
-Subject: Re: Repository corruption if objects pushed in the middle of repack
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 13, 2022 at 3:07 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
-> It's just strange that we've been doing something similar like this to tens of
-> thousands of repositories (e.g. those on codeaurora.org), and it's the first
-> time that I see such consistent corruption manifest itself. If I were to go
-> with my gut instinct, I would blame the shallow checkout on the client, but I
-> don't have any good way of explaining why that would be the culprit either.
+The sanitize_submodule_env() function was last used before
+b3c5f5cb048 (submodule: move core cmd_update() logic to C,
+2022-03-15), let's remove it.
 
-One thing that *is* different with a shallow clone followed by push, is
-that the `git push` pushes a lot of objects unnecessarily because the
-client doesn't have the commits to prove that they're unnecessary. So
-the delivered pack file has a *lot* of redundant objects.
+This also allows us to remove clear_local_git_env() from
+git-sh-setup.sh. That function hasn't been documented in
+Documentation/git-sh-setup.sh, and since 14111fc4927 (git: submodule
+honor -c credential.* from command line, 2016-02-29) it had only been
+used in the sanitize_submodule_env() function being removed here.
 
-(A `--depth 2` clone usually omits most redundant objects, which is a
-reason to use `--depth 2` instead of `--depth 1`.)
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ git-sh-setup.sh  |  7 -------
+ git-submodule.sh | 11 -----------
+ 2 files changed, 18 deletions(-)
 
-Chris
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index d92df37e992..ecb60d9e3cb 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -285,13 +285,6 @@ get_author_ident_from_commit () {
+ 	parse_ident_from_commit author AUTHOR
+ }
+ 
+-# Clear repo-local GIT_* environment variables. Useful when switching to
+-# another repository (e.g. when entering a submodule). See also the env
+-# list in git_connect()
+-clear_local_git_env() {
+-	unset $(git rev-parse --local-env-vars)
+-}
+-
+ # Generate a virtual base file for a two-file merge. Uses git apply to
+ # remove lines from $1 that are not in $2, leaving only common lines.
+ create_virtual_base() {
+diff --git a/git-submodule.sh b/git-submodule.sh
+index fd0b4a2c947..bc436c4ca47 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -56,17 +56,6 @@ isnumber()
+ 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
+ }
+ 
+-# Sanitize the local git environment for use within a submodule. We
+-# can't simply use clear_local_git_env since we want to preserve some
+-# of the settings from GIT_CONFIG_PARAMETERS.
+-sanitize_submodule_env()
+-{
+-	save_config=$GIT_CONFIG_PARAMETERS
+-	clear_local_git_env
+-	GIT_CONFIG_PARAMETERS=$save_config
+-	export GIT_CONFIG_PARAMETERS
+-}
+-
+ #
+ # Add a new submodule to the working tree, .gitmodules and the index
+ #
+-- 
+2.36.1.1239.gfba91521d90
+
