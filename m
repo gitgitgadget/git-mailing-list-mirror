@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60E59C43334
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 15:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F176EC43334
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 15:39:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236370AbiFMPjW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 11:39:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54424 "EHLO
+        id S243054AbiFMPjj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 11:39:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350736AbiFMPi4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 11:38:56 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC1C3157EB9
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 06:13:20 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id k19so7080829wrd.8
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 06:13:20 -0700 (PDT)
+        with ESMTP id S1349078AbiFMPiw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 11:38:52 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E164674C7
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 06:13:13 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id c130-20020a1c3588000000b0039c6fd897b4so1513222wma.4
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 06:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2StqKQ6yDZeblOPKDMXNkYKypA2ex0BiUGVOjqSB0tI=;
-        b=eqJ2H1hfWkrZ7Byatq46jKf3VmlDidewRXtFRD5YPye6npzutQRwC5Cu2AEYkz6xlm
-         mDN9tyRucSaPA/moLBkUUVgouevQn02xnVWIM3upJwSnNZ9ecNYKqLdovmDEPIHDYkCF
-         s92J6Bl0CFYUbbPfA6sNNCI9AlneHg6wjBDZWnxlXjU62jyIIgKlZZGXggPNNFB2qRvZ
-         h4Dg/Xd8lE7NhhERFWdK8+GN/Bv/wD2NnnZyLiCAPv8KbhyX/tXMTU4fLo1bqPwBuWI1
-         qDeCLAm5/O2hskxQjKxs9Mg07WZCvAKS1+p1MOnPLQkcUeHHgjCTV2bK4iN640qq6cCn
-         w7qg==
+        bh=uKDA6wya3ia5Po17rW30aZgU49Lt1E0VSzRb5f8FthA=;
+        b=lpBTqMAoE8u5Y8MANBTlXoVP40UmwI4NjgKBIlWo2zIePsOKhsefyuT/GCZ5LqYakk
+         4l1xxuAWoPTXVEmPkaTJK2mXHqeUmul16OLFMP7S+ZcfbpfV7k2tqaWvKOMOsNvnJbrV
+         WA4zIEvfU7jzz0AMVqZPQYVqths79ihOaVGGBJEQnin81s6LpYoVxXemGeGV0bUuBUo4
+         NbVEobfbD+LZSHYuUb4p5NSROG4G/iZa+FHDjjFy2A7seqdvOCOcOT9Kl6mzEvXPVLWt
+         37hsZqNfNKVu4oAbcefHGET8tEtZLRlr+ElAr3t64T0Wa5aavX4d021qX5f//ttmt4XI
+         Vjow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2StqKQ6yDZeblOPKDMXNkYKypA2ex0BiUGVOjqSB0tI=;
-        b=FBb7uzYcpU/KO4IKU5njGCPb5686iHn0kIaI2RbIZ2EcXEne6C1S/y2MD2tt+TWJxU
-         C6xBlL5+vPu9PMzJeKLos1+S2MQ9Ua8ek/0DDq5XFI3yHGhcNftoajoIS7xXtazlJPNR
-         OdBlGiahGOlOcgsgFy/2bcyWenV5ruci7TSEetgoBmnw6QGf0Jx5rlQc1yooBk38ifSN
-         am02x8yTo+E9gVOolK3UqRdIYyFXK8uE+AIEoEcR6dEvX6ZV/4bFmUEqsZwYfZWjArPq
-         akUCgcZdlpwk+JHl5orI+PEqQzQlxMVkP6dzfx3/61qW/9g2FSJjt75VrySui/a/+SHL
-         QY8g==
-X-Gm-Message-State: AOAM533pqd9+4PxIgtVYbvXy2u2R/d5LLxKksvoP9TYCTZAdPW2z6idR
-        CdpnAmRkJJskI8vGGtgYeKle6KUdZwXlFw==
-X-Google-Smtp-Source: ABdhPJx4I40q7+FOQXAE8VI3jiTD4UGdW9Pz0sKpLWV8dreh2EcORdZGNoODslfApKkHhy6AyZFvvQ==
-X-Received: by 2002:a5d:498f:0:b0:215:4d13:477e with SMTP id r15-20020a5d498f000000b002154d13477emr48698528wrq.155.1655125992841;
-        Mon, 13 Jun 2022 06:13:12 -0700 (PDT)
+        bh=uKDA6wya3ia5Po17rW30aZgU49Lt1E0VSzRb5f8FthA=;
+        b=gYeE0mLDr3zN01rN7iTdjHvuvRnjxcswr/BU5ASefdldjEX2wHpkULspcwD9LVJCEP
+         KnO9RP8ikHV6htEaJS2r/ibEVQ6+W1x5gW7sgvhPukvpyBQcXanqkQ96YNcwYj9DqEeD
+         H/CkX0LOza548HYe+lqnbOI21Din7eWPKYz/+3Sn0uZDxkWMOKH3KFMrNAb9TEnqnOzh
+         2zmgyFa+aRYOoDclY3kdZPk+hh8RV+a1U3EfctghxmxJI/mvCr0vLEinIiRaqtxkKxnV
+         grJ8Iv9rB0emwahaQ7nPJE6wPrP5TWwEw0K75+6CbXehbxJ3HMQbKOFMX2A8Py5tYZg3
+         ePWA==
+X-Gm-Message-State: AOAM532kOULir4JumZthpMAi2QMkjhb3sLfwSj+a0Zog3/APiMWV544n
+        7W3BBWia291WTzCcTDi/F8CbyyH3FoTKXQ==
+X-Google-Smtp-Source: ABdhPJwlI1hpCjOc+RRmz6VbmCO7C1hmWjm7uiMdlqIFv8u7x/2Ecs7h2a2ynbCVMUgLqDO9KRd3lA==
+X-Received: by 2002:a7b:c758:0:b0:39c:44ce:f00f with SMTP id w24-20020a7bc758000000b0039c44cef00fmr14841334wmk.167.1655125989842;
+        Mon, 13 Jun 2022 06:13:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q14-20020adfea0e000000b00213ba4b5d94sm10246228wrm.27.2022.06.13.06.13.11
+        by smtp.gmail.com with ESMTPSA id d14-20020a05600c34ce00b003975c7058bfsm9304713wmq.12.2022.06.13.06.13.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 06:13:11 -0700 (PDT)
-Message-Id: <34daf06bb710434a2392b3cb91d35047565d5602.1655125988.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1253.v2.git.1655125988.gitgitgadget@gmail.com>
+        Mon, 13 Jun 2022 06:13:09 -0700 (PDT)
+Message-Id: <pull.1253.v2.git.1655125988.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1253.git.1654774347.gitgitgadget@gmail.com>
 References: <pull.1253.git.1654774347.gitgitgadget@gmail.com>
-        <pull.1253.v2.git.1655125988.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Jun 2022 13:13:08 +0000
-Subject: [PATCH v2 2/2] ci(github): also mark up compile errors
+Date:   Mon, 13 Jun 2022 13:13:06 +0000
+Subject: [PATCH v2 0/2] ci(GitHub): mark up compile errors, too
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,52 +60,71 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Just like we mark up test failures, it makes sense to mark up compile
+errors, too.
 
-When GCC produces those helpful errors, we will want to present them in
-the GitHub workflow runs in the most helpful manner. To that end, we
-want to use workflow commands to render errors and warnings:
-https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+In a sense, it makes even more sense with compile errors than with test
+failures because we can link directly to the corresponding source code in
+the former case (if said code has been touched by the Pull Request, that
+is). The only downside is that this link currently is kind of misleading if
+the Pull Request did not even touch the offending source code (such as was
+the case when a GCC upgrade in Git for Windows' SDK all of a sudden pointed
+out problems in the source code that had existed for a long time already).
+We will see how the GitHub Actions engineers will develop this feature
+further.
 
-In the previous commit, we ensured that grouping is used for the build
-in all jobs, and this allows us to piggy-back onto the `group` function
-to transmogrify the output.
+This patch series is based on js/ci-github-workflow-markup. Which also
+serves as an example how this looks like if the offending source code was
+not touched by the Pull Request:
+https://github.com/dscho/git/actions/runs/2477526645 because it still
+triggers the above-referenced GCC build failure.
 
-Note: If `set -o pipefail` was available, we could do this in a little
-more elegant way. But since some of the steps are run using `dash`, we
-have to do a little `{ ...; echo $? >exit.status; } | ...` dance.
+Changes since v1:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- ci/lib.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ * Using a comma in the workflow command now, as described in the official
+   documentation ;-) (Thank you, Ævar)
+ * The curly bracket construct was replaced by a proper subshell, to avoid
+   jumbled output and a race where the exit.status file could be read before
+   it was written.
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 2f6d9d26e40..aa7e979a0bf 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -29,8 +29,14 @@ else
- 		set +x
- 		begin_group "$1"
- 		shift
--		"$@"
--		res=$?
-+		# work around `dash` not supporting `set -o pipefail`
-+		(
-+			"$@" 2>&1
-+			echo $? >exit.status
-+		) |
-+		sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 file=\2,line=\3::\1/'
-+		res=$(cat exit.status)
-+		rm exit.status
- 		end_group
- 		return $res
- 	}
+Johannes Schindelin (2):
+  ci(github): use grouping also in the `win-build` job
+  ci(github): also mark up compile errors
+
+ ci/lib.sh                 | 10 ++++++++--
+ ci/make-test-artifacts.sh |  2 +-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+
+
+base-commit: 3069f2a6f4c38e7e599067d2e4a8e31b4f53e2d3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1253%2Fdscho%2Fci-mark-up-compile-failures-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1253/dscho/ci-mark-up-compile-failures-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1253
+
+Range-diff vs v1:
+
+ 1:  5212c5ec474 = 1:  5212c5ec474 ci(github): use grouping also in the `win-build` job
+ 2:  19d6e34f038 ! 2:  34daf06bb71 ci(github): also mark up compile errors
+     @@ ci/lib.sh: else
+      -		"$@"
+      -		res=$?
+      +		# work around `dash` not supporting `set -o pipefail`
+     -+		{
+     ++		(
+      +			"$@" 2>&1
+      +			echo $? >exit.status
+     -+		} |
+     -+		sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 file=\2 line=\3::\1/'
+     ++		) |
+     ++		sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 file=\2,line=\3::\1/'
+      +		res=$(cat exit.status)
+      +		rm exit.status
+       		end_group
+
 -- 
 gitgitgadget
