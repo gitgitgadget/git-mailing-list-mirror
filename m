@@ -2,112 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA93CCCA47B
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 17:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DC1FC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 18:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239560AbiFMRTD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 13:19:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32780 "EHLO
+        id S1343611AbiFMSkS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 14:40:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241747AbiFMRSg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 13:18:36 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7F610ED
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 05:29:49 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id x17so6937734wrg.6
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 05:29:49 -0700 (PDT)
+        with ESMTP id S1343595AbiFMSjz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 14:39:55 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1250B4EF78
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 08:00:00 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id fu17so4061769qtb.2
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 08:00:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=IiRZec0PjHc39lMAlne3dFiB2/W53beW8du8uoopyiE=;
-        b=jOOFl3BPSCFusp7DfBfHAioGy+a7EQD5/VkUzOn1mEK5642d91kRoeWv82b5gbiqUd
-         /j/DybTY20tew9MwYUPNrj6MmFsYJJ7Gsc5AdMXqk8ExNge0dLjBs0Qax5I1B3IwZeyh
-         M55nazlHBAq44t/FnRQtNkpPBZe5TkM1FWyc56B2g5qGcv1myDVukqeXxq50jetLRjf0
-         2bVvOsP1yQRyywX+0+OrzGGtGHArU3rikmKFWPocEjG/H+ru5GqsAPb+g0t01fjVkEui
-         BDtMQNTAYKPr1z/KFVewB6XidBp9C98a3tetOks6Qsj7xSX3N4PX2C5IZEw+2f4mZjEd
-         MMig==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=KrMpKvDQtuaeEWDoBtYEom4UAj5jNioDlT49pbVzUFI=;
+        b=fvJrwU4fOh20SwZBt277/ZQlglYQkfaCwFI6tFCBIxq2iW0LVGXMnXvY9H96bC6Fj6
+         TctW6c92UaFTJ/BriUFx+0S3mBJJGMPv0OdZcSt3PgiXThzgvLjnmTDRd3D1SvPTL/cx
+         x8XztrYwZ1X4ZXVumm1qvx4FlsxWO69yZ7V7/pD3ypeZaNysXBJr92sIHCGz7jXL66Tt
+         0+okCPPJk4AUhDn2Lz6lb1ab+J+2pH6zZj55tezK3w39+lR8rWfC7aXhXBqqCqal3SU1
+         0vCeeeWVWZI7tisDSHZ290A0dpfUBu81w/x+JXWnAILhCPtHUiUJPYVKkcrVZQusTvow
+         t3Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IiRZec0PjHc39lMAlne3dFiB2/W53beW8du8uoopyiE=;
-        b=NZkbME9xmHi+4iaJZLZGGVSc4z5gfZu7y2Pmdykc8emoWqmcYy3kORqdUy2aM9VSPv
-         fTax1WNnFw5rO4+ZYtWh9oG4VmK5mLjhSUJ1HkER+ymV5R6Qe6c5J/WvM0+kNPg1iGNF
-         BIVxCW+JnkecK4G2tSnrPJdqf2jfphujCk451kr6qL+1Zg6tWjKDGwnqHc7fae18urds
-         XRhnmbcnc3fLGmSfdqRNq5ZTfY3Sv1/WDv7+lfAt7Yzp6VH3E+wkfkbR1Nfiw+OwCoSF
-         J1rXcCIIuvlOTTbbFLa5F4nMvGpxMCnUgME0+teg6jviH18bh3ibhGamksmRZX95vMXO
-         kLqg==
-X-Gm-Message-State: AOAM532F1Rokzz3JgwxecpW+KQc+41JgH4RItYAGXVAxEd7gLwe6/7vQ
-        fa3IuhAZFKlt7OcCIgBz7M25jcUopUu3EQ==
-X-Google-Smtp-Source: ABdhPJyYKsz4t9YtuXCwMkgYxXPGSoWUUIYHssLvMMkhfZIpv8DgQzR2ENYomgoKVfsz+/J40O2bog==
-X-Received: by 2002:a05:6000:18a8:b0:212:ae71:a3f6 with SMTP id b8-20020a05600018a800b00212ae71a3f6mr55431715wri.635.1655123388022;
-        Mon, 13 Jun 2022 05:29:48 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b14-20020a05600c4e0e00b0039747cf8354sm9239432wmq.39.2022.06.13.05.29.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 05:29:47 -0700 (PDT)
-Message-Id: <af67c33916f5ff29f158f400d6365e6c09e80eea.1655123383.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1259.git.1655123383.gitgitgadget@gmail.com>
-References: <pull.1259.git.1655123383.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Jun 2022 12:29:43 +0000
-Subject: [PATCH 3/3] diff-index.txt: update raw output format in examples
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=KrMpKvDQtuaeEWDoBtYEom4UAj5jNioDlT49pbVzUFI=;
+        b=U9d/4V+lMWwy0G0ByKrqCl2vWqadkJQWB3RC9JTPr+gidpmdYixmsB8IjXt8/qztjs
+         jYx6/cYzmfPOVfpYqVAhyBVbe0XY3ff6CpmZXUsR4oK3Qo81Tmxil66xqK92OKOwdHyb
+         z1/krrjeBE3lWzBJa6MEUtNcWK9C/i09p8RFolzvvdf4isWQ8TfXu6Uw7Pr1CQsVJQL6
+         XF/0dF2rD/KZwShmfM5+/SleEnCcZ53aWSVZJUQiGwevERVY6YRbjNSRc7++UkTKUOCn
+         RUZt1Kjg2DAEKyHvV+BuTPY0Oj9/psAwwdLb5LROUxgW/2DwbNcc+saOGrD8xiriZc61
+         YBBA==
+X-Gm-Message-State: AOAM533f0r3TWK3kj9X5dsSb5bnPJSGGbXR/lTgzRokwORlhTEKikdxd
+        IIYnVATDDSerLbL2/l7eX9ot
+X-Google-Smtp-Source: ABdhPJyLtZk/twNdUaxrZRJFomMTBxgiIh4U/Nexo8Ht4UW1dDPHbkm9lmIMZGh1scWdDF0I2k6nYg==
+X-Received: by 2002:a05:622a:1794:b0:304:cb20:5195 with SMTP id s20-20020a05622a179400b00304cb205195mr97753qtk.266.1655132399169;
+        Mon, 13 Jun 2022 07:59:59 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:170:45d1:1083:f688? ([2600:1700:e72:80a0:170:45d1:1083:f688])
+        by smtp.gmail.com with ESMTPSA id y18-20020ac85f52000000b003050bd1f7c9sm5272754qta.76.2022.06.13.07.59.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jun 2022 07:59:58 -0700 (PDT)
+Message-ID: <6cd7db33-6ab5-9843-4483-4cce9835b177@github.com>
+Date:   Mon, 13 Jun 2022 10:59:58 -0400
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: [PATCH 5/5] branch: fix branch_checked_out() leaks
+Content-Language: en-US
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On 6/8/2022 4:08 PM, Derrick Stolee via GitGitGadget wrote:
+> This is a replacement for some patches from v2 of my 'git rebase
+> --update-refs' topic [1]. After some feedback from Philip, I've decided to
+> pull that topic while I rework how I track the refs to rewrite [2]. This
+> series moves forward with the branch_checked_out() helper that was a bit
+> more complicated than expected at first glance. This series is a culmination
+> of the discussion started by Junio at [3].
+> 
 
-The two examples in the doc for 'git diff-index' were not updated when
-the raw output format was changed in 81e50eabf0 ([PATCH] The diff-raw
-format updates., 2005-05-21) (first example) and in b6d8f309d9 ([PATCH]
-diff-raw format update take #2., 2005-05-23) and 7cb6ac1e4b (diff:
-diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value,
-2017-12-03) (second example).
+Junio pointed out that patch 1 introduced a memory leak when a ref
+is checked out in multiple places. Here is a patch to fix that
+scenario. It applies cleanly on top of patch 4, so I include it as
+a new "patch 5". I will include it in any v2 of the full series, if
+needed.
 
-Update the output, inventing some characters to complete the source
-hash in the second example. Also correct the destination mode in the
-second example, which was wrongly '100664' since the addition of the
-example in c64b9b8860 (Reference documentation for the core git
-commands., 2005-05-05).
+Thanks,
+-Stolee
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---- >8 ----
+
+From c3842b36ebb4053ac49b0306154b840431f9bf6f Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <derrickstolee@github.com>
+Date: Mon, 13 Jun 2022 10:33:20 -0400
+Subject: [PATCH 5/5] branch: fix branch_checked_out() leaks
+
+The branch_checked_out() method populates a strmap linking a refname to
+a worktree that has that branch checked out. While unlikely, it is
+possible that a bug or filesystem manipulation could create a scenario
+where the same ref is checked out in multiple places. Further, there are
+some states in an interactive rebase where HEAD and REBASE_HEAD point to
+the same ref, leading to multiple insertions into the strmap. In either
+case, the strmap_put() method returns the old value which is leaked.
+
+Update branch_checked_out() to consume that pointer and free it.
+
+Add a test in t2407 that checks this erroneous case. The test "checks
+itself" by first confirming that the filesystem manipulations it makes
+trigger the branch_checked_out() logic, and then sets up similar
+manipulations to make it look like there are multiple worktrees pointing
+to the same ref.
+
+While TEST_PASSES_SANITIZE_LEAK would be helpful to demonstrate the
+leakage and prevent it in the future, t2407 uses helpers such as 'git
+clone' that cause the test to fail under that mode.
+
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-diff-index.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ branch.c                  | 25 +++++++++++++++----------
+ t/t2407-worktree-heads.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
-index 679cae27d9b..c30d8f0da8a 100644
---- a/Documentation/git-diff-index.txt
-+++ b/Documentation/git-diff-index.txt
-@@ -69,8 +69,8 @@ done an `update-index` to make that effective in the index file.
- matches my working directory. But doing a 'git diff-index' does:
+diff --git a/branch.c b/branch.c
+index c0fe6ea0b65..390c092a18f 100644
+--- a/branch.c
++++ b/branch.c
+@@ -385,25 +385,29 @@ static void prepare_checked_out_branches(void)
+ 	worktrees = get_worktrees();
  
-   torvalds@ppc970:~/git> git diff-index --cached HEAD
--  -100644 blob    4161aecc6700a2eb579e842af0b7f22b98443f74        commit.c
--  +100644 blob    4161aecc6700a2eb579e842af0b7f22b98443f74        git-commit.c
-+  :100644 000000 4161aecc6700a2eb579e842af0b7f22b98443f74 0000000000000000000000000000000000000000 D	commit.c
-+  :000000 100644 0000000000000000000000000000000000000000 4161aecc6700a2eb579e842af0b7f22b98443f74 A	git-commit.c
+ 	while (worktrees[i]) {
++		char *old;
+ 		struct wt_status_state state = { 0 };
+ 		struct worktree *wt = worktrees[i++];
  
- You can see easily that the above is a rename.
+ 		if (wt->is_bare)
+ 			continue;
  
-@@ -103,7 +103,7 @@ have not actually done a 'git update-index' on it yet - there is no
- "object" associated with the new state, and you get:
+-		if (wt->head_ref)
+-			strmap_put(&current_checked_out_branches,
+-				   wt->head_ref,
+-				   xstrdup(wt->path));
++		if (wt->head_ref) {
++			old = strmap_put(&current_checked_out_branches,
++					 wt->head_ref,
++					 xstrdup(wt->path));
++			free(old);
++		}
  
-   torvalds@ppc970:~/v2.6/linux> git diff-index --abbrev HEAD
--  :100644 100664 7476bb... 000000...      kernel/sched.c
-+  :100644 100644 7476bb5ba 000000000 M	kernel/sched.c
+ 		if (wt_status_check_rebase(wt, &state) &&
+ 		    (state.rebase_in_progress || state.rebase_interactive_in_progress) &&
+ 		    state.branch) {
+ 			struct strbuf ref = STRBUF_INIT;
+ 			strbuf_addf(&ref, "refs/heads/%s", state.branch);
+-			strmap_put(&current_checked_out_branches,
+-				   ref.buf,
+-				   xstrdup(wt->path));
++			old = strmap_put(&current_checked_out_branches,
++					 ref.buf,
++					 xstrdup(wt->path));
++			free(old);
+ 			strbuf_release(&ref);
+ 		}
+ 		wt_status_state_free_buffers(&state);
+@@ -412,9 +416,10 @@ static void prepare_checked_out_branches(void)
+ 		    state.branch) {
+ 			struct strbuf ref = STRBUF_INIT;
+ 			strbuf_addf(&ref, "refs/heads/%s", state.branch);
+-			strmap_put(&current_checked_out_branches,
+-				   ref.buf,
+-				   xstrdup(wt->path));
++			old = strmap_put(&current_checked_out_branches,
++					 ref.buf,
++					 xstrdup(wt->path));
++			free(old);
+ 			strbuf_release(&ref);
+ 		}
+ 		wt_status_state_free_buffers(&state);
+diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
+index 6dcc0d39a2d..0760595337b 100755
+--- a/t/t2407-worktree-heads.sh
++++ b/t/t2407-worktree-heads.sh
+@@ -78,4 +78,43 @@ test_expect_success 'refuse to overwrite: worktree in rebase' '
+ 	grep "refusing to fetch into branch '\''refs/heads/wt-4'\''" err
+ '
  
- i.e., it shows that the tree has changed, and that `kernel/sched.c` is
- not up to date and may contain new stuff. The all-zero sha1 means that to
++test_expect_success 'refuse to overwrite when in error states' '
++	test_when_finished rm -rf .git/worktrees/wt-*/rebase-merge &&
++	test_when_finished rm -rf .git/worktrees/wt-*/BISECT_* &&
++
++	git branch -f fake1 &&
++	mkdir -p .git/worktrees/wt-3/rebase-merge &&
++	touch .git/worktrees/wt-3/rebase-merge/interactive &&
++	echo refs/heads/fake1 >.git/worktrees/wt-3/rebase-merge/head-name &&
++	echo refs/heads/fake2 >.git/worktrees/wt-3/rebase-merge/onto &&
++
++	git branch -f fake2 &&
++	touch .git/worktrees/wt-4/BISECT_LOG &&
++	echo refs/heads/fake2 >.git/worktrees/wt-4/BISECT_START &&
++
++	# First, ensure we prevent writing when only one reason to fail.
++	for i in 1 2
++	do
++		test_must_fail git branch -f fake$i HEAD 2>err &&
++		grep "cannot force update the branch '\''fake$i'\'' checked out at" err ||
++			return 1
++	done &&
++
++	# Second, set up duplicate values.
++	mkdir -p .git/worktrees/wt-4/rebase-merge &&
++	touch .git/worktrees/wt-4/rebase-merge/interactive &&
++	echo refs/heads/fake2 >.git/worktrees/wt-4/rebase-merge/head-name &&
++	echo refs/heads/fake1 >.git/worktrees/wt-4/rebase-merge/onto &&
++
++	touch .git/worktrees/wt-1/BISECT_LOG &&
++	echo refs/heads/fake1 >.git/worktrees/wt-1/BISECT_START &&
++
++	for i in 1 2
++	do
++		test_must_fail git branch -f fake$i HEAD 2>err &&
++		grep "cannot force update the branch '\''fake$i'\'' checked out at" err ||
++			return 1
++	done
++'
++
+ test_done
 -- 
-gitgitgadget
+2.36.1.220.g1fae7daf425
+
+
