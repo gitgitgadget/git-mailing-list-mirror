@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9786CCA47B
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 22:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 963E6C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 22:39:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242362AbiFMWjj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 18:39:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41850 "EHLO
+        id S245179AbiFMWjy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 18:39:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232360AbiFMWjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 18:39:31 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36F2BFD26
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:39:17 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id o37-20020a05600c512500b0039c4ba4c64dso5305650wms.2
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:39:17 -0700 (PDT)
+        with ESMTP id S241622AbiFMWjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 18:39:35 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C6CC1BE9A
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:39:19 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id c21so8857423wrb.1
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 15:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=llp78DBjDQiK10l3Zdlt/SAMPxlgp87p1ulStNFV0jU=;
-        b=WoUVre9iBe5gYQrLNyScYUC0rN5MeXX1QZOCbq59MlbQOo12g7avBOdOuJZQaGV1Md
-         0Cm4elJst0V6lS05zSyWKq7VPocVPP8//7VDtdP/VAjX0B8i0pExtSai/0rYu7xHCNTv
-         o8Hun1AfwLeYamskW7DKhGvLl7TmPHpPGoZHP9s/08Nx4K8h4LU9uvzIufL/LxYL65i3
-         94/hRwLsAW0JeozvCF9KZgs6B5hZsPaWjQ5VprWJPBR6VH9kBvxkH8jGf3d/W1CV4ax2
-         pazimD7V9sIkqPYZ9WEZU9veKXHF2viYXfTrPJlAmlASkayTTvHfvFTywIzF/YVEbCUE
-         1SKA==
+        bh=ToooNOTgavex5x2MG3PNLcEHtMzKdYQZwy6Pk5Zu00M=;
+        b=eWlvMibYPzIWSF6MQWO6902/qNoPsNJpXuzZLZgGqWu/pjeV10OKw9biEJBlh18KUc
+         s3ke8vVzBAAU5b2GnPCCEidK5m6Vdyxa9AA+7dvcfxE5Vb8DtwiKEcg8s0m7Pu4G54+b
+         D92WNVFTwSaz04FnmYLLyKo4xcwEStMp9tjyZbHvWYBav6egVFOsPMYUaU+cPaNb5mwp
+         3JdrUthhat9XhgMRWWUjQOlULFzrh+FHBBHiL0wdjBoeKce0j0SOS+y72sI+8/p/KL8L
+         ZkVo9k7TpGONTmooEqi3O7AynjiOPZobyKUMRGfUZcBpcbYDSvZSkNGJeqWH/ey0loup
+         DHIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=llp78DBjDQiK10l3Zdlt/SAMPxlgp87p1ulStNFV0jU=;
-        b=7fThEDByVWGsUkpPLS0qp1LZ8j5A+J/K51pnbeW9hDt8MKs++Z5vm/BewK/0xDf3DC
-         5y1y20eq5TK2E93DsgafVtN9WXfUK8hSQT5kXlP/rs/CHjU6SiNtCrrVeg6XhwqGilhh
-         cYaRu6Qbb4CnKwPDcHhrVQ4KF+yXkALuTYYabw2UoB1UKTtiEgkQrFc2pU3waZl58ZSg
-         SB82/pnfW5w1xlXbCFCpQdSrm0aYX3cHABoqi4UGcRPNvLrP1VLSedkNKxSIm0DX8vpR
-         pdWITNvtTSLBc7FLbkQuMl0pbPoIIvP10kpula4qzka6334BV0DkRT82XmMWNiWu7Ztr
-         2LkA==
-X-Gm-Message-State: AOAM532qKeKEtEv3xJa/U9tSNtXkGmGmspaD8kcS1TWZ3tk4qGIhVGPR
-        pI/AjmgSr/OlmSjVznEUrmFcmiItKBzueQ==
-X-Google-Smtp-Source: ABdhPJy2dueEIZAx2UB0zVDvJEOKLnlNqp0QMzJxqJmms35BJJqHNvVB6wJvoLh++zuJD5Kd9oV4Ew==
-X-Received: by 2002:a05:600c:22d9:b0:39c:4b1b:5f99 with SMTP id 25-20020a05600c22d900b0039c4b1b5f99mr891663wmg.151.1655159955494;
-        Mon, 13 Jun 2022 15:39:15 -0700 (PDT)
+        bh=ToooNOTgavex5x2MG3PNLcEHtMzKdYQZwy6Pk5Zu00M=;
+        b=1O2q1kDz41Xux9M05ckowwu369gZQ+LpZG0cYLLiHgAvmmDEzrHpy5sQssTxMRspgJ
+         h/mJkIv+9XugfFRpYtCF8DpFkx4M96iWAQVulrQhp1GT1nrBNLwhPaOxRquZseqA1X2p
+         yq9dbXfPRKuckJP6ALrN3JzGhFXQViawAIeaC+uwYCT26/imXh3YUw/WFxqeh/cKWt+0
+         jk1KuexdRUsoYDwrlXuvMZn6FFsJlufohLTfizuWTABmubEmdzqsrsCFO7bSfyQbp3Nk
+         ogmrdkRwas50y63cmL+gDFyWHeLUy9noLEZF+79RgO2NVZpihi2Mfru5MyrflbSZy+0P
+         P2gw==
+X-Gm-Message-State: AJIora/yHVkKHaSMkEsU4UkdB3f5NCrL1zFtJ4IxcrOoUnBlapfRFtWs
+        9qDHWIGhHl7d3A7ucO1/e7WSatyIldjjSA==
+X-Google-Smtp-Source: AGRyM1t6K4LuF50XgK6EhKr8/VAr+6Q3x+5z5FnxRuTez4QwimHE+IW/dHsT0LaSA3Daym+4YwG9uw==
+X-Received: by 2002:adf:eac4:0:b0:217:737b:e77a with SMTP id o4-20020adfeac4000000b00217737be77amr1751124wrn.121.1655159958447;
+        Mon, 13 Jun 2022 15:39:18 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y3-20020adfd083000000b002103cfd2fbasm9670303wrh.65.2022.06.13.15.39.14
+        by smtp.gmail.com with ESMTPSA id y3-20020adfd083000000b002103cfd2fbasm9670303wrh.65.2022.06.13.15.39.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 15:39:14 -0700 (PDT)
+        Mon, 13 Jun 2022 15:39:17 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 08/12] submodule--helper: report "submodule" as our name in "-h" output
-Date:   Tue, 14 Jun 2022 00:38:59 +0200
-Message-Id: <patch-v2-08.12-99ac52d810f-20220613T220150Z-avarab@gmail.com>
+Subject: [PATCH v2 11/12] git-submodule.sh: use "$quiet", not "$GIT_QUIET"
+Date:   Tue, 14 Jun 2022 00:39:02 +0200
+Message-Id: <patch-v2-11.12-875acae8550-20220613T220150Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
 In-Reply-To: <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com>
 References: <kl6lzgig5qmc.fsf@chooglen-macbookpro.roam.corp.google.com> <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com>
@@ -68,166 +68,196 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the rest of the usage output for "git submodule--helper" so
-that it will pretend to be named "git submodule", which it already did
-e.g. in the case of "status", "deinit" and "update".
+Remove the use of the "$GIT_QUIET" variable in favor of our own
+"$quiet", ever since b3c5f5cb048 (submodule: move core cmd_update()
+logic to C, 2022-03-15) we have not used the "say" function in
+git-sh-setup.sh, which is the only thing that's affected by using
+"GIT_QUIET".
 
-This will allow us to eventually dispatch further into "git
-submodule--helper" from git-submodule.sh, while emitting the correct
-usage output.
-
-This does make the usage output of "git submodule--helper" itself
-"incorrect", but since nothing user-facing invokes it directly it
-makes sense to continue to elide that difference entirely. A user
-isn't served by us exposing this internal implementation detail.
-
-This fixes a bug that's been there ever since "git submodule
-absorbgitdirs" was added in f6f85861400 (submodule: add absorb-git-dir
-function, 2016-12-12). Before this we'd emit e.g. this on invalid
-usage:
-
-	$ git submodule absorbgitdirs --blah
-	error: unknown option `blah'
-	usage: git submodule--helper absorbgitdirs [<options>] [<path>...]
-
-Now we'll emit the same, except that the usage line is now referring
-to the correct command run by the user:
-
-	usage: git submodule absorbgitdirs [<options>] [<path>...]
-	[.. same usage output ...]
+We still want to support --quiet for our own use though, but let's use
+our own variable for that, but now it's obvious that we only care
+about passing "--quiet" to "git submodule--helper", and not to change
+the output of any "say" invocation.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ git-submodule.sh | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 574d6e0a79b..c2f55779cb1 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -286,7 +286,7 @@ static int module_list(int argc, const char **argv, const char *prefix)
- 	};
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 7fc7119fb21..5e5d21c010f 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -30,6 +30,7 @@ GIT_PROTOCOL_FROM_USER=0
+ export GIT_PROTOCOL_FROM_USER
  
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper list [--prefix=<path>] [<path>...]"),
-+		N_("git submodule list [--prefix=<path>] [<path>...]"),
- 		NULL
- 	};
+ command=
++quiet=
+ branch=
+ force=
+ reference=
+@@ -80,7 +81,7 @@ cmd_add()
+ 			force=$1
+ 			;;
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--progress)
+ 			progress=1
+@@ -128,7 +129,7 @@ cmd_add()
+ 		usage
+ 	fi
  
-@@ -444,7 +444,7 @@ static int module_foreach(int argc, const char **argv, const char *prefix)
- 	};
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${GIT_QUIET:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${quiet:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
+ }
  
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper foreach [--quiet] [--recursive] [--] <command>"),
-+		N_("git submodule foreach [--quiet] [--recursive] [--] <command>"),
- 		NULL
- 	};
+ #
+@@ -144,7 +145,7 @@ cmd_foreach()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--recursive)
+ 			recursive=1
+@@ -159,7 +160,7 @@ cmd_foreach()
+ 		shift
+ 	done
  
-@@ -582,7 +582,7 @@ static int module_init(int argc, const char **argv, const char *prefix)
- 	};
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
+ }
  
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper init [<options>] [<path>]"),
-+		N_("git submodule init [<options>] [<path>]"),
- 		NULL
- 	};
+ #
+@@ -174,7 +175,7 @@ cmd_init()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--)
+ 			shift
+@@ -190,7 +191,7 @@ cmd_init()
+ 		shift
+ 	done
  
-@@ -786,7 +786,7 @@ static int module_name(int argc, const char **argv, const char *prefix)
- 	const struct submodule *sub;
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${GIT_QUIET:+--quiet} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${quiet:+--quiet} -- "$@"
+ }
  
- 	if (argc != 2)
--		usage(_("git submodule--helper name <path>"));
-+		usage(_("git submodule name <path>"));
+ #
+@@ -207,7 +208,7 @@ cmd_deinit()
+ 			force=$1
+ 			;;
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--all)
+ 			deinit_all=t
+@@ -226,7 +227,7 @@ cmd_deinit()
+ 		shift
+ 	done
  
- 	sub = submodule_from_path(the_repository, null_oid(), argv[1]);
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${GIT_QUIET:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${quiet:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
+ }
  
-@@ -1185,7 +1185,7 @@ static int module_summary(int argc, const char **argv, const char *prefix)
- 	};
+ #
+@@ -241,7 +242,7 @@ cmd_update()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--progress)
+ 			progress=1
+@@ -335,7 +336,7 @@ cmd_update()
+ 	done
  
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper summary [<options>] [<commit>] [--] [<path>]"),
-+		N_("git submodule summary [<options>] [<commit>] [--] [<path>]"),
- 		NULL
- 	};
+ 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update \
+-		${GIT_QUIET:+--quiet} \
++		${quiet:+--quiet} \
+ 		${force:+--force} \
+ 		${progress:+"--progress"} \
+ 		${remote:+--remote} \
+@@ -396,7 +397,7 @@ cmd_set_branch() {
+ 		shift
+ 	done
  
-@@ -1349,7 +1349,7 @@ static int module_sync(int argc, const char **argv, const char *prefix)
- 	};
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${quiet:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
+ }
  
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper sync [--quiet] [--recursive] [<path>]"),
-+		N_("git submodule sync [--quiet] [--recursive] [<path>]"),
- 		NULL
- 	};
+ #
+@@ -409,7 +410,7 @@ cmd_set_url() {
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--)
+ 			shift
+@@ -425,7 +426,7 @@ cmd_set_url() {
+ 		shift
+ 	done
  
-@@ -1789,7 +1789,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	};
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${GIT_QUIET:+--quiet} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${quiet:+--quiet} -- "$@"
+ }
  
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
-+		N_("git submodule clone [--prefix=<path>] [--quiet] "
- 		   "[--reference <repository>] [--name <name>] [--depth <depth>] "
- 		   "[--single-branch] [--filter <filter-spec>] "
- 		   "--url <url> --path <path>"),
-@@ -2787,7 +2787,7 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- 	};
+ #
+@@ -496,7 +497,7 @@ cmd_status()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--cached)
+ 			cached=1
+@@ -518,7 +519,7 @@ cmd_status()
+ 		shift
+ 	done
  
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper absorbgitdirs [<options>] [<path>...]"),
-+		N_("git submodule absorbgitdirs [<options>] [<path>...]"),
- 		NULL
- 	};
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${quiet:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
+ }
+ #
+ # Sync remote urls for submodules
+@@ -531,7 +532,7 @@ cmd_sync()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			shift
+ 			;;
+ 		--recursive)
+@@ -551,7 +552,7 @@ cmd_sync()
+ 		esac
+ 	done
  
-@@ -2851,9 +2851,9 @@ static int module_config(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper config <name> [<value>]"),
--		N_("git submodule--helper config --unset <name>"),
--		"git submodule--helper config --check-writeable",
-+		N_("git submodule config <name> [<value>]"),
-+		N_("git submodule config --unset <name>"),
-+		"git submodule config --check-writeable",
- 		NULL
- 	};
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
+ }
  
-@@ -2892,7 +2892,7 @@ static int module_set_url(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 	const char *const usage[] = {
--		N_("git submodule--helper set-url [--quiet] <path> <newurl>"),
-+		N_("git submodule set-url [--quiet] <path> <newurl>"),
- 		NULL
- 	};
- 
-@@ -2931,8 +2931,8 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 	const char *const usage[] = {
--		N_("git submodule--helper set-branch [-q|--quiet] (-d|--default) <path>"),
--		N_("git submodule--helper set-branch [-q|--quiet] (-b|--branch) <branch> <path>"),
-+		N_("git submodule set-branch [-q|--quiet] (-d|--default) <path>"),
-+		N_("git submodule set-branch [-q|--quiet] (-b|--branch) <branch> <path>"),
- 		NULL
- 	};
- 
-@@ -2973,7 +2973,7 @@ static int module_create_branch(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 	const char *const usage[] = {
--		N_("git submodule--helper create-branch [-f|--force] [--create-reflog] [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start-oid> <start-name>"),
-+		N_("git submodule create-branch [-f|--force] [--create-reflog] [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start-oid> <start-name>"),
- 		NULL
- 	};
- 
-@@ -3276,7 +3276,7 @@ static int module_add(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	const char *const usage[] = {
--		N_("git submodule--helper add [<options>] [--] <repository> [<path>]"),
-+		N_("git submodule add [<options>] [--] <repository> [<path>]"),
- 		NULL
- 	};
- 
+ cmd_absorbgitdirs()
+@@ -572,7 +573,7 @@ do
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+-		GIT_QUIET=1
++		quiet=1
+ 		;;
+ 	--cached)
+ 		cached=1
 -- 
 2.36.1.1239.gfba91521d90
 
