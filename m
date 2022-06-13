@@ -2,89 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A80EFC43334
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 21:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EB9BC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 21:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239450AbiFMVpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 17:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51544 "EHLO
+        id S235421AbiFMVzn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 17:55:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234131AbiFMVpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 17:45:17 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AC96438
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 14:45:17 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id x18so4877039qtj.3
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 14:45:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VZXpEgEVptwZ9a3tfwIhcxuPdxRvjaf9eNTryOHVABE=;
-        b=SXZrH6J5aQu+snkdaT58W3wh+7lf4ukKQu5aQI5DhCtv8sZvS0uwOCr6MBv6wxd39X
-         AgE3FtcNXPR2gBBWLwHwTge+ydvpN2QAkEz455kg+uaGl4HHpk/kSTHi280xWLDx+d21
-         j2V9226HZMgiTxD8Uwbbydodmy6onMQ447+RA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VZXpEgEVptwZ9a3tfwIhcxuPdxRvjaf9eNTryOHVABE=;
-        b=DVFl9lpL3czltF8ebcaNKlzV2PBUUul/+uUYRcnpmfWEPe9IhHC6ZnNdRioHUrstlP
-         48rhqVVo5C9OXNklQVPHA/Ep1ZTrDZLMlqNrUqddxWn+xJlfaeoRZmqLatJpADOA/rTY
-         7PbPMpN7S4PUlVdzFtGPRUeOeTw2kmHZTHQYE4UuC7ty2AbdMzJ4fOnOcmp8r3E2OrmZ
-         B9DAKJMT7UpKTlDuTNrr43Rh7Dg3BzFaCGJfaMKU4/oh/ZGhqy5yJ1DY71V2dXo/GPIZ
-         5MlzudaVCqW6rrMdRZfK+s595IGUnx/Hd1cUnjxGI6tqTw8KwtO0MYK2tNcDe6N0zgN7
-         TCWQ==
-X-Gm-Message-State: AOAM53145npN7KhBD3GvGxBMjCiXwqqZfXH3rcuyDNZJ9eCTQfk/vm9D
-        Jin5QsIAbltyCZDteEYCoEvex6aYOBOQWQ==
-X-Google-Smtp-Source: ABdhPJzqZHjKTxmGpco9b8K3SFgNI1ePyteYMyMy1qjQE+LmmkL8d87k7JTqWCkINqxZ2wKrWu8+Vg==
-X-Received: by 2002:a05:622a:4f:b0:305:2678:714b with SMTP id y15-20020a05622a004f00b003052678714bmr1642953qtw.143.1655156716101;
-        Mon, 13 Jun 2022 14:45:16 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id h5-20020a05620a400500b006a6d4261f40sm5182170qko.111.2022.06.13.14.45.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 14:45:15 -0700 (PDT)
-Date:   Mon, 13 Jun 2022 17:45:14 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Repository corruption if objects pushed in the middle of repack
-Message-ID: <20220613214514.udtn35w7j6q2lrbh@meerkat.local>
-References: <20220613203145.wbpi2m3ys3hchw6c@meerkat.local>
- <YqepoUMb3rkKgWqB@nand.local>
- <YqerC883GiwHiiZU@nand.local>
- <20220613213221.iekmfjihho5ujfq2@meerkat.local>
- <Yqet68Sll1cz+ySY@nand.local>
+        with ESMTP id S230254AbiFMVzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 17:55:41 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74A6D205EE
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 14:55:40 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DDD6134DFA;
+        Mon, 13 Jun 2022 17:55:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=g1wEO08UxVuZ
+        gZgwQxkgVHaB/FO9GK5BY7tOnbjAwSk=; b=j26HKxJr8b37jsJEcoTN3jBdqamq
+        wD5fpVvosCa/96OwTj3Jy2ViS4ZPnrRQIaaWluF2pqZZPy6LuXeaUM/1Xz6LYkgH
+        K4L/yVGbIjDxzq7IAKE9R7vExeb6LgtvJNAvfeK7QrzBbns3nrgLpMGVM9tBoBzT
+        e/Wjei0zkx1nnUo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1564A134DF9;
+        Mon, 13 Jun 2022 17:55:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6B473134DF8;
+        Mon, 13 Jun 2022 17:55:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 5/5] archive-tar: use internal gzip by default
+References: <pull.145.git.gitgitgadget@gmail.com>
+        <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
+        <d9e75b24-c351-e226-011d-5a5cc2e1c858@web.de>
+Date:   Mon, 13 Jun 2022 14:55:37 -0700
+In-Reply-To: <d9e75b24-c351-e226-011d-5a5cc2e1c858@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 12 Jun 2022 08:19:05 +0200")
+Message-ID: <xmqqk09k449y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Yqet68Sll1cz+ySY@nand.local>
+X-Pobox-Relay-ID: 8F91903E-EB63-11EC-942D-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 13, 2022 at 05:36:43PM -0400, Taylor Blau wrote:
-> > I'm not sure that's the case, because the object that is missing is the one
-> > that didn't exist before the repack started. In the scenario you describe, the
-> > pre-existing unreachable ancestor of it would be missing, not the newly
-> > incoming object. Right?
-> 
-> Aren't we reporting that the newly pushed tree was broken _because_ it
-> had some links to sub-trees that no longer existed?
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-Hmm... now I'm not sure, and I don't have the broken repo in front of me any
-more. :(
+> -test_expect_success GZIP 'git archive --format=3Dtar.gz' '
+> +test_expect_success 'git archive --format=3Dtar.gz' '
+>  	git archive --format=3Dtar.gz HEAD >j1.tar.gz &&
+>  	test_cmp_bin j.tgz j1.tar.gz
+>  '
 
-Well, the upside of this happening on a routine basis is that I can make
-a copy of it next time so I can be more helpful in troubleshooting this
-situation. Let me sit on this and make some copies next time this happens
-(even if it's super annoying that it happens to such a large repo), and then
-perhaps I can give you a better answer.
+Curiously, this breaks for me.  It is understandable if we are not
+producing byte-for-byte identical output with internal gzip.
 
-It's just strange that we've been doing something similar like this to tens of
-thousands of repositories (e.g. those on codeaurora.org), and it's the first
-time that I see such consistent corruption manifest itself. If I were to go
-with my gut instinct, I would blame the shallow checkout on the client, but I
-don't have any good way of explaining why that would be the culprit either.
+With the following hack I can force the step pass, so it seems that
+the two invocations of internal gzip are not emitting identical
+result for the tar stream taken out of HEAD^{tree} object?
 
--K
+diff --git c/t/t5000-tar-tree.sh w/t/t5000-tar-tree.sh
+index 1a68e89a55..c0a2cb92d4 100755
+--- c/t/t5000-tar-tree.sh
++++ w/t/t5000-tar-tree.sh
+@@ -340,14 +340,16 @@ test_expect_success 'only enabled filters are avail=
+able remotely' '
+ '
+=20
+ test_expect_success 'git archive --format=3Dtgz' '
+-	git archive --format=3Dtgz HEAD >j.tgz
++	git -c tar.tgz.command=3D"gzip -cn" archive --format=3Dtgz HEAD >j.tgz
+ '
+=20
+ test_expect_success 'git archive --format=3Dtar.gz' '
+-	git archive --format=3Dtar.gz HEAD >j1.tar.gz &&
++	git -c tar.tar.gz.command=3D"gzip -cn" archive --format=3Dtar.gz HEAD >=
+j1.tar.gz &&
+ 	test_cmp_bin j.tgz j1.tar.gz
+ '
+=20
++exit
++
+ test_expect_success 'infer tgz from .tgz filename' '
+ 	git archive --output=3Dj2.tgz HEAD &&
+ 	test_cmp_bin j.tgz j2.tgz
+
