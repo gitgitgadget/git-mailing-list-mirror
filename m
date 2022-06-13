@@ -2,83 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9853EC43334
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 21:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58DB7C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 21:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351551AbiFMVRQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 17:17:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42006 "EHLO
+        id S1351884AbiFMVU4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 17:20:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352251AbiFMVQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 17:16:58 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E5F01277C
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 13:59:11 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6E0931A7C9F;
-        Mon, 13 Jun 2022 16:59:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4mG/8EVSuZ/NsV/2YD+ikwFyjZ9ECqc7Sj/QAR
-        05HkI=; b=NCZFl7EuYjMcqZb0HSBKJQO0GNZMjGj41gROB0fPoONPs+jLTwOC/e
-        RMjDQzG0pNBf8OIzSscQ0xSoCRKXRG+zTgqw81XX7+4fVFRC+Vm46VtsdUKSH6wm
-        wT+lIdZh+ksruxmYsMJ5YEgLlmIh9vxw6Y6EHhywZYfA7JNb6N9UQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 660391A7C9E;
-        Mon, 13 Jun 2022 16:59:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0D9A11A7C99;
-        Mon, 13 Jun 2022 16:59:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v3 5/5] bitmap: add trace2 outputs during open "bitmap"
- file
-References: <cover.1655018322.git.dyroneteng@gmail.com>
-        <e118758d1dada378d65d58579cc1372fa547d720.1655018322.git.dyroneteng@gmail.com>
-Date:   Mon, 13 Jun 2022 13:59:05 -0700
-In-Reply-To: <e118758d1dada378d65d58579cc1372fa547d720.1655018322.git.dyroneteng@gmail.com>
-        (Teng Long's message of "Sun, 12 Jun 2022 15:44:20 +0800")
-Message-ID: <xmqq5yl45lgm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1351757AbiFMVUh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 17:20:37 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86190496A5
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 14:03:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1655154205;
+        bh=EDIHD5c+ZoKBEeZuSENmiXrekkwAsRbVHoL8IHyx/n8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=I6AEzyePuMzT8pasWxEpKehpbc+PJRqOULhObnnBQ6otg+HT8IHui+QTFcIwQ26Kk
+         l7itke4cEr2gjBXsaHC4OqxEfqjOP49CPmCbKeSG+J8iYM1D/we/fw17/B98EYYiVM
+         fwW1+c3BrJoq1ThC6gmQNzfHng1xmL6KbVYDheyo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.123.239] ([89.1.215.185]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MA7Ka-1ntgDn0mcs-00Bg2a; Mon, 13
+ Jun 2022 23:03:25 +0200
+Date:   Mon, 13 Jun 2022 23:03:23 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH 0/2] Integrate Scalar into the CI builds
+In-Reply-To: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2206132246010.353@tvgsbejvaqbjf.bet>
+References: <pull.1129.git.1654160735.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AA24ABD2-EB5B-11EC-A1F0-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zLAwxZ9gGxEfJ+xvGDLR1ZXKm4ZvhhcIgpxFwj0emp9SVWqJFiD
+ ZdMchlNJxT5hDvfU0VEGTCcUtZ9KVQpZkfTBJaNtsbn3nNaMhkmboPbRVPolGvu9oU7IrT3
+ +ExvRk9OSQ0cHscavQ4dZy7353bUHdvB/EG3kIyGnQnbl7OZQk+oapKM0t70DnbYjDbnMq+
+ l28nuCE2BuviycF3vg5Fw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jFrfq4SsC9s=:hjrAowinK0U3EWEYjmr4Us
+ Fm+WswbHFk43QCmamf/bvg3SM5kcztK14K61B87kwJDhjaceopq1c3aCHfHv+l8U2N9O8o6rb
+ pk5k44opQDRrELij0gtNBJb+n7eA7U+0KwZqdk23rbR44LLy6FFQHuVo4Tdy1lPHcQOsZ0dbK
+ plquQdBin7rhcnuaWyaICDU/fkUGJ747Rokuy9tvxm0y4GQuNlp7yNCTuX+/E/rAlWGkMbeyG
+ /eT5X6N6HnIVjZiu/5cQmFV5NsMFZb/ADVQDZvcDK4wn9teIs9+FFx4v0MbW4vKyGAYhViNbc
+ dHHi0F5L9Dh2odKMBgSvRAQrq4+yskAXlHcJkeS27t6sN6+ZY/gzt3B/mJ477jMQEH/8X2iGs
+ 1Oogxu8gwhrbtXNwiY8o+Sdm5B4UMp2HHPkOeCDrXmamHyx53V0Sqc5+lbfUQOaeY50Z3jFfV
+ tJPCEyn9AzDyHEYbZ5XRTyeF9RI8ho7M5jl2Z6C9ieIHipx6FEHqdKgofnAoiFD3KUJgDeQr2
+ zFqlFqrdrKqT/Yugl0Uqx5tNtoaQu0MdmOpKr20NAzwm34Ewd5CD2eX3bMUs2PcDk97tHdCEz
+ uEFF1fIxyRc3aFoEEqcZxRT3Te1U/3Tx0Losf1uTvIjymaF8aV5i0XgPIuFjHsnhfR0VmpJpq
+ kTRUyRnwju81gvVAUuFUVMLA9w5XyhUIJ+CNiKhxQxYe8ZiohedPZGhdjE2/UDMbTiP1xwE42
+ 9CCK4EEhaRo4flBz30TO2dHfxsbUh0zFEwi7YAzZ68TiGFBYxmhR5P8ap4AFvQC1O2yMuKZEL
+ DnLlGBYABthP4g911Rg0gC6CUWWwAUK7nA1VyAiJTZEAAFhlMqHlqp8Jpn/qRLf52CkrjG6WT
+ tscJ53F0rKmWoXXtF5CKyRP4xFairv4DtP+UXYZtFWoJwmPWRgivJWsQMO4guKNm6B3JgDGAj
+ RhWm0xYZ1YXgyF0tg+8E4kni5/GeioGZpFDGfi73y1O76m/NZxiPWElx37MLof3uHDiEDyT2f
+ k2Lxks+3H0+k0EbO10Gs7KJlWmInEAT2piTW79MVmZE7Lw+EpxA0WLjE1AQQxsu05S5eQlBrd
+ g0p/8cE4cAK+69UAvjRliPCVJV+pvLmoDM2L3Gn9yH5ntT/q9ui19wXrg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Hi,
 
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 5654eb7b8d..ced5993560 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -312,9 +312,11 @@ char *pack_bitmap_filename(struct packed_git *p)
->  static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
->  			      struct multi_pack_index *midx)
->  {
-> +	int fd;
->  	struct stat st;
->  	char *bitmap_name = midx_bitmap_filename(midx);
-> -	int fd = git_open(bitmap_name);
-> +	trace2_data_string("midx", the_repository, "path", bitmap_name);
-> +	fd = git_open(bitmap_name);
->  
->  	free(bitmap_name);
+On Thu, 2 Jun 2022, Johannes Schindelin via GitGitGadget wrote:
 
-The patch adds new statements at a wrong place.  The block of
-declarations and the first statement in the block were separated by
-a blank line, but they no longer are.
+> During the review of the initial Scalar patch series, it was suggested t=
+o
+> include Scalar in Git's CI builds. Due to some conflicts, this was postp=
+oned
+> to a later patch series: This patch series.
+>
+> Note that the changes to the GitHub workflow are somewhat transient in
+> nature: Based on the feedback I received on the Git mailing list, I see =
+some
+> appetite for turning Scalar into a full-fledged top-level command in Git=
+,
+> similar to gitk. Therefore my current plan is to do exactly that in the =
+end
+> (and I already have patches lined up to that end). This will essentially
+> revert the ci/run-build-and-tests.sh change in this patch series.
+>
+> This patch series is based on js/scalar-diagnose.
+>
+> Johannes Schindelin (2):
+>   cmake: optionally build `scalar`, too
+>   ci: also run the `scalar` tests
 
-These things tend to show up in merges quite clearly.  They do not
-cause more unnecessary conflicts but can make resolution more error
-prone.
+Upon further reflection, I would like to retract these patches for now.
+They do seem a poor fit within the Scalar story arc: in the end, they
+won't be needed anyway (after moving Scalar out of `contrib/`).
 
-Thanks.
+I talked to Victoria and she kindly agreed to drive the Scalar upstreaming
+from here (after v2.37.0, I imagine).
+
+Thanks,
+Dscho
