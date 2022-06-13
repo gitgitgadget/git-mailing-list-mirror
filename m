@@ -2,120 +2,230 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA3AC43334
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 23:20:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83489C43334
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 23:57:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236368AbiFMXUp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 19:20:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51872 "EHLO
+        id S238974AbiFMX51 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 19:57:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237654AbiFMXUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 19:20:42 -0400
-Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C10992A42D
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 16:20:38 -0700 (PDT)
-Received: by mail-vs1-xe34.google.com with SMTP id d39so7369879vsv.7
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 16:20:38 -0700 (PDT)
+        with ESMTP id S239465AbiFMX50 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 19:57:26 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81AE32BD
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 16:57:24 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id gl15so14044525ejb.4
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 16:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ka7TacrnRLqEDE20NsVT6pM1pPa++41nXPPA34CBKh0=;
-        b=M+Y0p/ryM0zfG5IPlOH67wC3kjv4Ucld2VSUHOIydFLGJHvjEnoNF03tQhEFqaTj0w
-         jvlGqE6zln8yUO84eryySdPaatGcLSqzSv0Cn6xvZL6Ar6wEv83cGzgh5vr+5pKbTzJf
-         NZtaouYMBgdVBGIWn5NOs1p15xAacHpM2gpRbZCaAiQkCIpbdotkljKuPOypT57t1/Ti
-         U37wB1pkNrsYCO8EW5tRX47CfTaALJVotaJDGeRcVxNOqLGEGDBUiVoQbk6XbtWl9gEe
-         7YRIOnphk2egbqnpJ8zKgSIqSxxv1Dz2deVZkvgmtu1/piY7tc3f6K6eAWUvRucbnNtq
-         8Buw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=TQQwsxBkj/FzmLFgZb6MzquG88GG8VAwVomcjZ2Vo3c=;
+        b=jxodyp0u6+lrTf9tQUIthl4a2RXxGQfnqG6n9R2yjJftRLkLS8meouva3mXVXUhEbH
+         IeHMpcH5LVHZPM9PyUmHm6tIOudRygnkkd54HpBzXGdFmIsP29ppkCOSEkjuoVXPwXta
+         td0WXIHWAKj5h9yYM3UoeFz1U4kYL3lYu340XR49dd0iFz9iHQ4ui5b5KUGPRX3mz8p6
+         t1HVuoPoxFk84Xrrhykq7Gw/nUKsMSBxDJQpOqQNEbJtv+gyovGhARRYtHBaJS49iSkC
+         bPdk/9nl+lACVdNyYDp1Hkjwm49gyNd+15LqM4d8W2Zlk6yMsPz1vXUVpyrAf3rRWwB6
+         oY8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ka7TacrnRLqEDE20NsVT6pM1pPa++41nXPPA34CBKh0=;
-        b=QE8V16hbClTbxgCV++t3AopWPTj36TA8uvxoMubyLHrGUnLaPViCtIX3HzWPGhP9FV
-         oxstBWga23uIALP2ASxKfEeqTNjQCnO4BvNOm9Hixsvf3zziM8cMlUDLu6TA8EqC7B+Q
-         ggaa9O01eqnlDyuy3Szp5b01nQY3LMvoLmpPT9qqOalq0jcWmp6TVvueDD9aT9B0XbAO
-         S4oCNKeLGbX24WzCidZuIoF/fDZ8aWCAgHraE1M73Yt+U4WumYelb6K38Bh1qJSOyDRX
-         gadg0C7+wZnWkKuUeRC9oIV3gJFB+YfHzJ7pRjozhcAYNH4EExhL2iODibBExAlaNjQ+
-         7fnQ==
-X-Gm-Message-State: AJIora+OiMU/+QQ7OTGJizri9aovvJAXFm9naW+CpGiZWn6KEfXGdmiA
-        aCGUgLBgC2E1RdLH6WccjL24qzcSSYeJuhQBriL6Dd3s
-X-Google-Smtp-Source: AGRyM1u0IVoLkjGgUQjO5F/Tu01GTOBOklujRTcYBJ3fnjYMpkWeQBhtOnkHbDBiYT5v+GtPs+2Y50uaKPToD5pTgyo=
-X-Received: by 2002:a67:ea85:0:b0:34b:912f:2c66 with SMTP id
- f5-20020a67ea85000000b0034b912f2c66mr975741vso.42.1655162437697; Mon, 13 Jun
- 2022 16:20:37 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=TQQwsxBkj/FzmLFgZb6MzquG88GG8VAwVomcjZ2Vo3c=;
+        b=L7qasGuWdQp+aiu5RLDsqAPRWUb8O9dB2YGMIOb6/6kkGpkRoNA+/G28SbesCbLiGE
+         SaQyKrl+KZO8V8GVpWTl0IqqYwANquZuPbnNasXBo7Z5OgyW8sG0srEQitnOCuhvNnPg
+         yA/HrUKAx6J/uCSbfEuYQAVBFpRoZ1CbHq5OW76D+yHT1I6bkfn3/n9R06IeCukktaSn
+         geQllNjb0wFnbTO+JKtsrss/n7gQm2Vk6LGKpaZb2OyHG1rk7ECfyjWbefQ1mrcfTKty
+         1+FAQcS97VS13RuvWQoJCUCN3LgrlYV83M5u5EyKQfMnR596TpNyqzuNGSbbixOWxLlp
+         uOog==
+X-Gm-Message-State: AOAM532OPg3FyGj3bi1yK2TV24Lr+RJeE1K1NZnnwfYNMlvaohWTzsts
+        0x4nSQZZG0ZpbTJ90HRK9GnyMLpYgGB4Dg==
+X-Google-Smtp-Source: ABdhPJwUGN/pCrRB3HAXZsXsoE8qCeACdPJIzfBFk5wSj7snUcIxouCNUEwJFaKByaPKqkzWMBBjsQ==
+X-Received: by 2002:a17:907:7d8e:b0:711:cf4b:9c5 with SMTP id oz14-20020a1709077d8e00b00711cf4b09c5mr1907441ejc.637.1655164642894;
+        Mon, 13 Jun 2022 16:57:22 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id f18-20020a056402355200b004318ba244dcsm5917094edd.10.2022.06.13.16.57.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jun 2022 16:57:22 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o0tvt-000Htz-Mf;
+        Tue, 14 Jun 2022 01:57:21 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>
+Subject: Re: [PATCH v2 00/12] submodule: make "git submodule--helper" behave
+ like "git submodule"
+Date:   Tue, 14 Jun 2022 01:31:10 +0200
+References: <kl6lzgig5qmc.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com>
+        <kl6lwndk5ffc.fsf@chooglen-macbookpro.roam.corp.google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <kl6lwndk5ffc.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220614.86pmjcyv4u.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAChcVumTgNqRTt=EtThXiw9ga=W9WC-uS0XOkz7T+TbtGKeU+w@mail.gmail.com>
- <xmqq1qvwfntm.fsf@gitster.g>
-In-Reply-To: <xmqq1qvwfntm.fsf@gitster.g>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 13 Jun 2022 16:20:28 -0700
-Message-ID: <CA+P7+xrfkApv_r_YQqOt-LiaC=Ctb2px0UuaSwqU_ua_qmH4OA@mail.gmail.com>
-Subject: Re: Should `git remote show` display excluded branches as to-be-fetched?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Pavel Rappo <pavel.rappo@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 10, 2022 at 10:08 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Pavel Rappo <pavel.rappo@gmail.com> writes:
->
-> > Here's a console session:
-> >
-> >   % git config --get-all remote.jdk19.fetch
-> >   +refs/heads/*:refs/remotes/jdk19/*
-> >   ^refs/heads/pr/*
->
-> Thanks
->
-> "Negative refspecs" is relatively new feature introduced in c0192df6
-> (refspec: add support for negative refspecs, 2020-09-30), so it
-> would not be so surprising if it still had some surprising behaviour
-> ;-)
->
-> Jacob, care to take a look?
->
 
-Ok, so this looks like its caused by the fact that get_fetch_map in
-builtin/remote.c ignores all negative refspecs. I think what we really
-want to do is check if a given ref matches any negative ref and then
-maybe move it from the new listing into a separate skipped listing.
+On Mon, Jun 13 2022, Glen Choo wrote:
 
-Figuring out the best way to do this is a little bit of a challenge.
-It looks like maybe we need to use one of the functions in remote.c
-just after the get_fetch_map call in get_ref_states. But exactly what
-has so far eluded me after a bit of digging.
+> Thanks! I'm happy to see this happen regardless of whose patches we use
+> :)
 
-I'm still looking at this, but help would be appreciated if anyone
-else has a suggestion.
+I didn't set out to keep "my side", but just to see if we could come up
+with something non-RFC that could be queued/integrated sooner than
+later, and removing dead code & the smallish changes to unify the
+interfaces for a subsequent conversion seemed like it would be more
+palatable.
 
-Thanks,
-Jake
+Thus dropping 1-3/8 of yours, it's the "real" migration (or steps
+towards it). Then your 4/8 was tangled up in that migration so I took my
+smaller 12/20 over it.
 
-> >   % git remote show jdk19
-> >
-> >   * remote jdk19
-> >     Fetch URL: git@github.com:openjdk/jdk19.git
-> >     Push  URL: git@github.com:openjdk/jdk19.git
-> >     HEAD branch: master
-> >     Remote branches:
-> >       master tracked
-> >       pr/1   new (next fetch will store in remotes/jdk19)
-> >       pr/2   new (next fetch will store in remotes/jdk19)
-> >       pr/3   new (next fetch will store in remotes/jdk19)
-> >     Local ref configured for 'git push':
-> >       master pushes to master (fast-forwardable)
-> >
-> > I would naively expect the pr/1, pr/2, and pr/3 branches to be either:
-> >
-> > - not displayed, or better
-> > - displayed with a hint that they won't be fetched (since they match a
-> > _negative_ refspec, which is the second line in the `git config`
-> > output above)
-> >
-> > Thanks,
-> > -Pavel
+I then took your 5/8, but combined with my 13/20 as discussed in the
+CL. I.e. splitting up the external from internal interface change, which
+we can do in two steps.
+
+Your 6/8 is then taken over my 14-15/20, 7/8 is another thing I dropped
+as the "real" migration to leave for later, and as discussed (see below)
+your 8/8 is much smaller than the dead code removal we can do here in
+2/12, i.e. we can drop --super-prefix, and a lot of yarn falls out once
+we pull on that thread...
+
+Most of the patches I dropped were my own :) I.e. the "actual
+conversion" bits, and then I picked up e.g. the
+s/absorb-git-dirs/absorbgitdirs/g etc., and other patches in my series
+that unified the interfaces.
+
+> Reading the cover letter, I think it probably makes sense for this to
+> supersede gc/submodule-update. I haven't really looked at the changes
+> yet though, but I will soon.
+
+I hadn't noticed that Junio had picked your RFC patches up (I didn't
+check, figuring since it was RFC they wouldn't be...).
+
+Anyway, I'm fine with whatever gets us to the end goal most efficiently.
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>>> Here's a way of breaking apart the work that makes sense to me:
+>>>
+>>> - Reuse the patches that prepare git-submodule.sh for the conversion,
+>>>   particularly 1-7/20 (create a "case" dispatch statement and its
+>>>   preceding patches).
+>>> - Keep my series that prepares "update", since that's the most tedious
+>>>   one to convert. If I don't dispatch to the "case" statement, I don't
+>>>   think it will even conflict with the preparatory series.
+>>>
+>>>   Some of your patches make more sense than mine, and I'll incorporate
+>>>   them as necessary :)
+>>> - Dispatch subcommands using the "case" dispatch, including "update". We
+>>>   might have to do this slowly if we want things to be easy to eyeball.
+>>> - "git rm git-submodule.sh"!
+>>
+>> Hopefully there's no stepping on toes here, but I thought I'd send
+>> this out now (I went back to the laptop) to avoid the duplicate work,
+>> since I'd already attempted combining the two, and this is the result.
+>
+> Fortunately I hadn't resumed work on this yet, so it works out :)
+
+Hope it helped :)
+
+>> [...]
+>> This is still in this series as 02/12. I think you've misunderstood
+>> that code, it *is* invoking "git submodule--helper" with
+>> "--super-prefix", but the option is passed as:
+>>
+>>     git --super-prefix <path> submodule--helper
+>>
+>> And not as:
+>>
+>>     git submodule--helper --super-prefix <path>
+>>
+>> This is thus handled by other code before builtin/submodule--helper.c,
+>> and it doesn't need to handle it.
+>>
+>> But anyway, this is confusing, so I updated the commit message (seen
+>> in the range-diff below)>
+>
+> Ah that's right, I forgot that we have to pass it to "git" directly.
+> Thanks.
+>
+> I wonder why we ever needed this. 89c8626557 (submodule helper: support
+> super prefix, 2016-12-08) doesn't really explain it, so it looks like
+> I'll have to dig around the ML.
+
+It was needed, but not after b3c5f5cb048 (submodule: move core
+cmd_update() logic to C, 2022-03-15) as my 02/12 discusses.
+
+As a quick test try to check out b3c5f5cb048 and apply this change:
+
+    -#define SUPPORT_SUPER_PREFIX (1<<0)
+    +#define SUPPORT_SUPER_PREFIX 0
+
+You'll find that t7406-submodule-update.sh passes, but check out its
+parent (which is a commit of yours) and it'll fail, as we'll then emit
+output like:
+
+    -Submodule path '../super': checked out 'e1c658656b91df52a4634fbffeaa73=
+9807ce3521'
+    +Submodule path 'super': checked out 'e1c658656b91df52a4634fbffeaa73980=
+7ce3521'
+
+So this is just one of the things that were overly complex in
+git-submodule--helper because parts of it had to bridge the gap between
+*.sh and *.c land, but once we moved more parts to C we ended up getting
+that for free.
+
+>>>>   submodule--helper: have --require-init imply --init
+>>>>   submodule--helper: understand --checkout, --merge and --rebase
+>>>>     synonyms
+>>>>   git-submodule doc: document the -v" option to "update"
+>>>>   submodule--helper: understand -v option for "update"
+>>>>
+>>>> not-so-easy prep for "cmd_update()"
+>>>>
+>>>>   git-submodule.sh: dispatch "update" to helper
+>>>>
+>>>> Full cmd_update() migration in one go.
+>>>
+>>> Yeah, and since it's not-so-easy, it probably makes sense to continue to
+>>> keep my series around. I'll borrow some of these patches if that's ok :)
+>>
+>> The proposal in *this series* is to leave this aside for now, but
+>> generally I wonder what part of it you find not-so-easy.
+>>
+>> Personally I find it much harder to carefully review the way you
+>> proposed to do it, i.e. to "buffer up" options that we "don't handle",
+>> but actually need to sort-of handle, as we'd still like to die if we
+>> have unknown options.
+>>
+>> Particularly since shellscript quoting etc. is a pain with that sort
+>> of thing, as it doesn't have any real list or key-value
+>> datastructures.
+>>
+>> Whereas getting it to the point where we're clearly just passing
+>> options as-is through beforehand, and then simply dropping the wrapper
+>> is, I think, much easier to review. You only need to trust or check
+>> that e.g. "git submodule--helper update" also supports a "--progress"
+>> option or whatever, and/or that we've got coverage for it.
+>
+> Makes sense. I suppose we don't have to overthink the conversion because
+> we will have to make the leap of faith to C at some point.
+
+Anyway, that's something we can leave aside for now. I.e. maybe your way
+of doing it is better, maybe mine is. That's for later.
+
+For now what do you think about focusing on initial smaller changes to
+get the two command-line interfaces as close to 1=3D1 as possible, and to
+remove dead code etc.
+
+I.e. to aim for small changes now to make reviewing the eventual *.sh
+v.s. *.c code as easy as possible, as the CLI for "submodule" and
+"submodule--helper" will behave the same at that point, there won't be
+any dead code etc.
