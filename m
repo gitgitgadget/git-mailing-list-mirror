@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDACDC43334
-	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 17:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA93CCCA47B
+	for <git@archiver.kernel.org>; Mon, 13 Jun 2022 17:19:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236328AbiFMRTB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 13:19:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33210 "EHLO
+        id S239560AbiFMRTD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 13:19:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241724AbiFMRSg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241747AbiFMRSg (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 13 Jun 2022 13:18:36 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF16F1A
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 05:29:48 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id p6-20020a05600c1d8600b0039c630b8d96so3854249wms.1
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 05:29:48 -0700 (PDT)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7F610ED
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 05:29:49 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id x17so6937734wrg.6
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 05:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZZQE3QYA2JbqOmSptV2LuRxedy/zEXuFwSgp77oCjng=;
-        b=F4cLpLPsT6Mh4jxaS15xpR0aHM17k76GOjESgonXS6eo9wIhPsnfH1mXDrGWVOhaut
-         dSOZ1V/Q2HxK5acQYDySkYIcaEnoE2lICG3H0GB7xARP50GtbckCgbv0t0vypZavN8IU
-         m/KLRfFgzsO7dzwioQrWVyyWgMSiQ4xQboC7PWJla4Ye0PqLIfUs13A/d+PFKW/xpX/C
-         ovOqwDDKpGujJpV72Buws7hgUfo5nQqegf0cU7woq1wMtGBlolvFEJDeSnjgB/MSechr
-         VsQA6DRYqCm8hPaem8bMKLQb49Sn7snC4TsxuUZHANjD24uFRIrJDTwGSepEmdanbCJW
-         pZOg==
+        bh=IiRZec0PjHc39lMAlne3dFiB2/W53beW8du8uoopyiE=;
+        b=jOOFl3BPSCFusp7DfBfHAioGy+a7EQD5/VkUzOn1mEK5642d91kRoeWv82b5gbiqUd
+         /j/DybTY20tew9MwYUPNrj6MmFsYJJ7Gsc5AdMXqk8ExNge0dLjBs0Qax5I1B3IwZeyh
+         M55nazlHBAq44t/FnRQtNkpPBZe5TkM1FWyc56B2g5qGcv1myDVukqeXxq50jetLRjf0
+         2bVvOsP1yQRyywX+0+OrzGGtGHArU3rikmKFWPocEjG/H+ru5GqsAPb+g0t01fjVkEui
+         BDtMQNTAYKPr1z/KFVewB6XidBp9C98a3tetOks6Qsj7xSX3N4PX2C5IZEw+2f4mZjEd
+         MMig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZZQE3QYA2JbqOmSptV2LuRxedy/zEXuFwSgp77oCjng=;
-        b=N9Zbk0yY3uIFpimVTlx7j0uJJ/tD7u+Ia7yoDC+TjsYG62rlrMhs5WND5tgkyiWwJ+
-         2MUbi5TYu9eCmY6hMYCh9nmTCLnKg5beGdobyou42IPiufWc8ticLiNAvjubz3zBdQoF
-         VOWOA0p9VTqrkVm9x9b2nOpYAg0fZxNrSxq94nYqNG+Vj3hPgMSP+qQJctiHU2nAzgRD
-         yGPjT+Ut/ahy5rDXX7AsyMrR7Fcc52APOqNZtnivacQva155gSRh0KPXM1kQQrA5GAOi
-         uPrgcGzNZc9B46q6olbla7xzFXcrlnPYx3WbtWbiTwBrdp0YemSdlDkhxpHOYAMPPzjX
-         cltQ==
-X-Gm-Message-State: AOAM533NlJYpFhA3yFYnq4TLkrjXe0lYxpItAmk+YF9Rn0J4LkuzfrOc
-        N/npzwd4E+0AcZH5YO1/x5WQsF//INuPRA==
-X-Google-Smtp-Source: ABdhPJwymYnHH6lNAk1RrBF6JjNYP13E/i29MHcyY+c02oozj3Q42YUSJ20V/PHI5k4KnWxiSqTK9A==
-X-Received: by 2002:a05:600c:3788:b0:39c:3a20:a50e with SMTP id o8-20020a05600c378800b0039c3a20a50emr15283495wmr.196.1655123386758;
-        Mon, 13 Jun 2022 05:29:46 -0700 (PDT)
+        bh=IiRZec0PjHc39lMAlne3dFiB2/W53beW8du8uoopyiE=;
+        b=NZkbME9xmHi+4iaJZLZGGVSc4z5gfZu7y2Pmdykc8emoWqmcYy3kORqdUy2aM9VSPv
+         fTax1WNnFw5rO4+ZYtWh9oG4VmK5mLjhSUJ1HkER+ymV5R6Qe6c5J/WvM0+kNPg1iGNF
+         BIVxCW+JnkecK4G2tSnrPJdqf2jfphujCk451kr6qL+1Zg6tWjKDGwnqHc7fae18urds
+         XRhnmbcnc3fLGmSfdqRNq5ZTfY3Sv1/WDv7+lfAt7Yzp6VH3E+wkfkbR1Nfiw+OwCoSF
+         J1rXcCIIuvlOTTbbFLa5F4nMvGpxMCnUgME0+teg6jviH18bh3ibhGamksmRZX95vMXO
+         kLqg==
+X-Gm-Message-State: AOAM532F1Rokzz3JgwxecpW+KQc+41JgH4RItYAGXVAxEd7gLwe6/7vQ
+        fa3IuhAZFKlt7OcCIgBz7M25jcUopUu3EQ==
+X-Google-Smtp-Source: ABdhPJyYKsz4t9YtuXCwMkgYxXPGSoWUUIYHssLvMMkhfZIpv8DgQzR2ENYomgoKVfsz+/J40O2bog==
+X-Received: by 2002:a05:6000:18a8:b0:212:ae71:a3f6 with SMTP id b8-20020a05600018a800b00212ae71a3f6mr55431715wri.635.1655123388022;
+        Mon, 13 Jun 2022 05:29:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n4-20020a05600c3b8400b0039c5224bfcbsm13425171wms.46.2022.06.13.05.29.45
+        by smtp.gmail.com with ESMTPSA id b14-20020a05600c4e0e00b0039747cf8354sm9239432wmq.39.2022.06.13.05.29.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 05:29:46 -0700 (PDT)
-Message-Id: <5ff3a52556716e92f7207c75660cec2eb3da2587.1655123383.git.gitgitgadget@gmail.com>
+        Mon, 13 Jun 2022 05:29:47 -0700 (PDT)
+Message-Id: <af67c33916f5ff29f158f400d6365e6c09e80eea.1655123383.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1259.git.1655123383.gitgitgadget@gmail.com>
 References: <pull.1259.git.1655123383.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Jun 2022 12:29:42 +0000
-Subject: [PATCH 2/3] diff-format.txt: correct misleading wording
+Date:   Mon, 13 Jun 2022 12:29:43 +0000
+Subject: [PATCH 3/3] diff-index.txt: update raw output format in examples
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,75 +67,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Near the end of the "Raw output format" section, an example shows the
-output of 'git diff-files' for a tracked file modified on disk but not
-yet added to the index. However the wording is:
+The two examples in the doc for 'git diff-index' were not updated when
+the raw output format was changed in 81e50eabf0 ([PATCH] The diff-raw
+format updates., 2005-05-21) (first example) and in b6d8f309d9 ([PATCH]
+diff-raw format update take #2., 2005-05-23) and 7cb6ac1e4b (diff:
+diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value,
+2017-12-03) (second example).
 
-    <sha1> is shown as all 0's if a file is new on the filesystem
-    and it is out of sync with the index.
-
-which is confusing since it can be understood to mean that 'file' is a
-new, yet untracked file, in which case 'git diff-files' does not care
-about it at all.
-
-When this example was introduced all the way back in c64b9b8860
-(Reference documentation for the core git commands., 2005-05-05), 'old'
-and 'new' referred to the two entities being compared, depending on the
-command being used (diff-index, diff-tree or diff-files - which at the
-time were diff-cache, diff-tree and show-diff). The wording used at the
-time was:
-
-    <new-sha1> is shown as all 0's if new is a file on the
-    filesystem and it is out of sync with the cache.
-
-This section was reworked in 81e50eabf0 ([PATCH] The diff-raw
-format updates., 2005-05-21) and the mention of the meaning of 'new' and
-'old' was removed. Then in f73ae1fc5d (Some typos and light editing of
-various manpages, 2005-10-05), the wording was changed to what it is
-now.
-
-In addition, in b6d8f309d9 ([PATCH] diff-raw format update take #2.,
-2005-05-23), the section was further reworked and did not use '<sha1>'
-anymore, making the example the sole user of this token.
-
-Rework the introductory sentence of the example to instead refer to
-'sha1 for "dst"', which is what the text description above it uses, and
-fix the wording so that we do not mention a "new file".
-
-While at it, also tweak the wording used in the description of the raw
-format to explicitely state that all 0's are used for the destination
-hash if the working tree is out of sync with the index, instead of the
-more vague "look at worktree".
+Update the output, inventing some characters to complete the source
+hash in the second example. Also correct the destination mode in the
+second example, which was wrongly '100664' since the addition of the
+example in c64b9b8860 (Reference documentation for the core git
+commands., 2005-05-05).
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/diff-format.txt | 6 +++---
+ Documentation/git-diff-index.txt | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
-index b8319eeb41d..a3ae8747a22 100644
---- a/Documentation/diff-format.txt
-+++ b/Documentation/diff-format.txt
-@@ -43,7 +43,7 @@ That is, from the left to the right:
- . a space.
- . sha1 for "src"; 0\{40\} if creation or unmerged.
- . a space.
--. sha1 for "dst"; 0\{40\} if deletion, unmerged or "look at work tree".
-+. sha1 for "dst"; 0\{40\} if deletion, unmerged or "work tree out of sync with the index".
- . a space.
- . status, followed by optional "score" number.
- . a tab or a NUL when `-z` option is used.
-@@ -69,8 +69,8 @@ percentage of similarity between the source and target of the move or
- copy).  Status letter M may be followed by a score (denoting the
- percentage of dissimilarity) for file rewrites.
+diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
+index 679cae27d9b..c30d8f0da8a 100644
+--- a/Documentation/git-diff-index.txt
++++ b/Documentation/git-diff-index.txt
+@@ -69,8 +69,8 @@ done an `update-index` to make that effective in the index file.
+ matches my working directory. But doing a 'git diff-index' does:
  
--<sha1> is shown as all 0's if a file is new on the filesystem
--and it is out of sync with the index.
-+The sha1 for "dst" is shown as all 0's if a file on the filesystem
-+is out of sync with the index.
+   torvalds@ppc970:~/git> git diff-index --cached HEAD
+-  -100644 blob    4161aecc6700a2eb579e842af0b7f22b98443f74        commit.c
+-  +100644 blob    4161aecc6700a2eb579e842af0b7f22b98443f74        git-commit.c
++  :100644 000000 4161aecc6700a2eb579e842af0b7f22b98443f74 0000000000000000000000000000000000000000 D	commit.c
++  :000000 100644 0000000000000000000000000000000000000000 4161aecc6700a2eb579e842af0b7f22b98443f74 A	git-commit.c
  
- Example:
+ You can see easily that the above is a rename.
  
+@@ -103,7 +103,7 @@ have not actually done a 'git update-index' on it yet - there is no
+ "object" associated with the new state, and you get:
+ 
+   torvalds@ppc970:~/v2.6/linux> git diff-index --abbrev HEAD
+-  :100644 100664 7476bb... 000000...      kernel/sched.c
++  :100644 100644 7476bb5ba 000000000 M	kernel/sched.c
+ 
+ i.e., it shows that the tree has changed, and that `kernel/sched.c` is
+ not up to date and may contain new stuff. The all-zero sha1 means that to
 -- 
 gitgitgadget
-
