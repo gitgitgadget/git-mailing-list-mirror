@@ -2,193 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78C61C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 19:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 345B7C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 20:05:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239258AbiFNT2B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 15:28:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39182 "EHLO
+        id S239685AbiFNUFe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 16:05:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231730AbiFNT1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 15:27:44 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 517C313EBA
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 12:27:43 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id n185so5189226wmn.4
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 12:27:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xivVobC5MZizYnrUWGjHH9ct5f/yTO+O0jOCbEvOrPM=;
-        b=IF7pjFBdTqGZX22tjUK5UMU6pA01xMxAztnG9k7QN0yOYE3IIvVpcUlHsDfO5UOnRA
-         J75A+szXwOyTBDLOqkFBo+AH6cFnDgHTX63yiVAlXdIt3CebYX4RO3SqAeOsRcf6X5n1
-         WJ4IKl7vZ4NqqlyvltJtMS2Rik9Lo7KzVoEmOpxPT4YfhciqzTC4yDRT0+V35uvRLC8P
-         pYlTY5b2j1w2sezvpvHH+vJZeYUS3y5n64HZio7KwhZ7P2GjxKQTWp6tAwHCj8ZcOXqu
-         9wJ57Ntz5/7WyuIjhPMGmE0bbgv6vah70JPRPYk8U3RdU8Cmp0m85xjpQxfj0NpxZEQD
-         46yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xivVobC5MZizYnrUWGjHH9ct5f/yTO+O0jOCbEvOrPM=;
-        b=ann2zBgrrZV9DQMVRkx2NfuJzOHy0750lk354WZAg6FGaPcljJK3zSsoeVS2s7aAqd
-         03y3Ctut8UxNoGYo8RifMMjc/mF5zYEM+2rthYNEAR3hpiCNkITr+p3MKGA1kK/iSnd0
-         xDWjmi9hE2BupJEoooTQ546BK85Zge35k7U+P7MhmwJIH0vKvwTroRcwhJGpBD0/8PDr
-         WLJGfuUaqZPJ3Lni5QkVzFu2xYswdaTfjHJOqqgsh/MPh/wO80mzeawHECSjNMUuh5tS
-         GNmtgFBLmx6zmXeJ0+5OJwcvxIl7xobajTcZSv85WYdvsVof3Vn+vE+nIxUkYllgXspZ
-         JnRA==
-X-Gm-Message-State: AOAM532w3wm3fMOzBr3W8qS0jRv0pO1U7TazGhvPubyUFQcVmx/pIHRH
-        S1d7H/Nx1+g0BFFRejHk36Attz6TIvW3ZA==
-X-Google-Smtp-Source: ABdhPJz17mHLtBK3Z6Mlhz62ZaXgaTDje7dhNWQkKohQqGjZ7njSLXZbden343UjUChxh29tqmCRzg==
-X-Received: by 2002:a1c:7703:0:b0:39c:521d:e9af with SMTP id t3-20020a1c7703000000b0039c521de9afmr5596024wmi.170.1655234861291;
-        Tue, 14 Jun 2022 12:27:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c7-20020a05600c0ac700b0039c4b518df4sm16772144wmr.5.2022.06.14.12.27.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 12:27:40 -0700 (PDT)
-Message-Id: <0aa9478bc3815726a47ea99cac0fd333e95c1584.1655234853.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1254.v2.git.1655234853.gitgitgadget@gmail.com>
-References: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
-        <pull.1254.v2.git.1655234853.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Jun 2022 19:27:33 +0000
-Subject: [PATCH v2 5/5] branch: fix branch_checked_out() leaks
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S231928AbiFNUFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 16:05:32 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 562FC4C7B2
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 13:05:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1655237102;
+        bh=4rN4s+M/0DeY4Wwzg+q6111s+8pjMh2/twqHoIko1xY=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=Jz6fD6JGET5c7RVQ2S3paxgvJFsCTc9p/qZn/1PEsfN+hIvs1RaNFFWRZQTFgpo4K
+         AmtLWQBms0HOI5G0SWrqBNUqCAEGOi5aBAb9EGmFj4ICzBcFRQ0irY2vgf9/FM+ESB
+         sRmeZTnonabUAfeFdmvoFszBvb4lba4NuQ+/+IBs=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MnpGi-1nLnPw3JdK-00pWTU; Tue, 14
+ Jun 2022 22:05:02 +0200
+Message-ID: <4b4da5b3-7898-e97b-af74-a6874c8cb7e2@web.de>
+Date:   Tue, 14 Jun 2022 22:04:59 +0200
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Subject: Re: [PATCH v3 5/5] archive-tar: use internal gzip by default
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <pull.145.git.gitgitgadget@gmail.com>
+ <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
+ <d9e75b24-c351-e226-011d-5a5cc2e1c858@web.de> <xmqqk09k449y.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2206141109270.353@tvgsbejvaqbjf.bet>
+ <28f6ec2a-1d94-b29a-4bfd-6a9e74c8edbf@web.de>
+ <nycvar.QRO.7.76.6.2206141802310.353@tvgsbejvaqbjf.bet>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <nycvar.QRO.7.76.6.2206141802310.353@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:mIXi7YRWE5IeiZs6y3UsI8zNbgV4pAJIgE7CZaP74BJIE73udAx
+ 4N6yawfDCnF6ZCsLutog1rK1I3jzICpwThrzy4pP3O9t7FY1OeymczXS4sGpjWRzb5Xt9vn
+ 9PBw8FYmywYVCibOu8YbZsM7yE0BcZEvFwbgClH/7PPuhZPfggKWXkmd0EBWkLnswOoN41H
+ y+kpemyMEPDToK7/e7Hbw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qdqfawVobLY=:TwdqCbggOULK88GJ6CxvDL
+ B/bedGaIlUm3XfSrwUYonmOIScreMB4W2vcPBVuna2A9vUJHZZZuQhR63OykHlzKqHPba3kZ3
+ GcpsED/wHRgqWQSXzBSBqf3TAnuj2BXdT7lStJmCL6B5P8Ikmcc0iPU03OGBSD2cQJlCQvA6i
+ 8EKKnGm/SStncby1OaNEcGAEAP0dyOJABj8Ulj7XZ+jRnaBga7vbAz1RW+K5Zs5PznoBaq7Ib
+ kEc8sOpqpRiMeUAcMrZm07X+qKoZ19c9+T4l7HaLjiF5jzdK4r3QpHkPRsixZrFVaZ9tAkRuB
+ TL961lu+iLjIKrkkkbpJ+j1SjXVW4VJd0hKb70kTZBjNikU7SKbptpY9378M1MDjHAyrJhbh9
+ yir+YIlzrkEF2H08s1IYtSuS98VVjoYBpAdlhsOOjUP+XcYs6x4yDdNZ/hifNCmSHIycM8az3
+ xaviZD3AtLu9qNIFbEhu65f3+9yFMvsyeYXfo+eNrJEindePO3i8WcS+ExHFR3WT1xTyM6mfv
+ yUMEqSPwfatQPkPYpbmeREjB+j2GXRLJ7uzGRTCfFjHc+ZOql4R5l5Iby+1U+kFkRNI5V5Kmh
+ ZFr+09s2jRlLPEhWLGtdmBw9Mmj1xfkMggle6oRu9v1TVZcbTgDjxDdTRtIRL4Va+vHCoMSli
+ CJsqZBLZGR3fHvcrTqwCLlfzVHBK5sRlOYxL+DtdvOSZ2KxlacqJEb5Tzf36vSXefC294PJl0
+ JkEiZb291B1NEpyBSe4RfAC86w8ohV74KxJu8JPe7r1vLNUOJOewK6SfRpvBFN1kIFUbMy1J5
+ lYFSr46Nh0pc2pSSD4Q0DA05980CPXUg/589UFNpYOCHGtwLPdtjg9/N+VIhFOTJAKqaG5K40
+ 0EkPPHy6pHIJPFFCT3h+ZjOzbPY64yCorroH5zpB0ViML03YTvY/+cH0pxEf67Auv/TxMV9Ia
+ 690IQwRkMiEaj3rREwPmiJ1GXYGpeX9P4lDFWfrtyB7MoDMQc6/hsJ7lUQNLXIn/EkkXt9VL6
+ ckbieJYUngw2HLR6N7Z6H7da+7VAM0+1uBGHA9IMoiqDUu4d/VcleppxeMF5TdMrxF5wEQzpM
+ aLCxNDXlSJ8kLGy6Cfrb+uMh1jYsbVTkoT5
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Am 14.06.22 um 18:29 schrieb Johannes Schindelin:
+> Hi Ren=C3=A9,
+>
+> On Tue, 14 Jun 2022, Ren=C3=A9 Scharfe wrote:
+>
+>> Am 14.06.22 um 13:27 schrieb Johannes Schindelin:
+>>
+>>> The solution is to move the heap variable back into a scope that match=
+es
+>>> the lifetime of the compression:
+>>>
+>>> -- snip --
+>>> diff --git a/archive-tar.c b/archive-tar.c
+>>> index 60669eb7b9c..3d77e0f7509 100644
+>>> --- a/archive-tar.c
+>>> +++ b/archive-tar.c
+>>> @@ -460,17 +460,12 @@ static void tgz_write_block(const void *data)
+>>>
+>>>  static const char internal_gzip_command[] =3D "git archive gzip";
+>>>
+>>> -static void tgz_set_os(git_zstream *strm, int os)
+>>> -{
+>>> -#if ZLIB_VERNUM >=3D 0x1221
+>>> -	struct gz_header_s gzhead =3D { .os =3D os };
+>>> -	deflateSetHeader(&strm->z, &gzhead);
+>>> -#endif
+>>> -}
+>>> -
+>>>  static int write_tar_filter_archive(const struct archiver *ar,
+>>>  				    struct archiver_args *args)
+>>>  {
+>>> +#if ZLIB_VERNUM >=3D 0x1221
+>>> +	struct gz_header_s gzhead =3D { .os =3D 3 }; /* Unix, for reproducib=
+ility */
+>>> +#endif
+>>>  	struct strbuf cmd =3D STRBUF_INIT;
+>>>  	struct child_process filter =3D CHILD_PROCESS_INIT;
+>>>  	int r;
+>>> @@ -481,7 +476,10 @@ static int write_tar_filter_archive(const struct =
+archiver *ar,
+>>>  	if (!strcmp(ar->filter_command, internal_gzip_command)) {
+>>>  		write_block =3D tgz_write_block;
+>>>  		git_deflate_init_gzip(&gzstream, args->compression_level);
+>>> -		tgz_set_os(&gzstream, 3); /* Unix, for reproducibility */
+>>> +#if ZLIB_VERNUM >=3D 0x1221
+>>> +		if (deflateSetHeader(&gzstream.z, &gzhead) !=3D Z_OK)
+>>> +			BUG("deflateSetHeader() called too late");
+>>> +#endif
+>>>  		gzstream.next_out =3D outbuf;
+>>>  		gzstream.avail_out =3D sizeof(outbuf);
+>>>
+>>> -- snap --
+>>
+>> Good find, thank you!  A shorter solution would be to make gzhead stati=
+c.
+>
+> I should have said that I had considered this, but decided against it
+> because it would introduce yet another issue: it would render the code
+> needlessly un-multi-threadable. And that can be avoided _really_ easily.
 
-The branch_checked_out() method populates a strmap linking a refname to
-a worktree that has that branch checked out. While unlikely, it is
-possible that a bug or filesystem manipulation could create a scenario
-where the same ref is checked out in multiple places. Further, there are
-some states in an interactive rebase where HEAD and REBASE_HEAD point to
-the same ref, leading to multiple insertions into the strmap. In either
-case, the strmap_put() method returns the old value which is leaked.
+archive-tar.c (and archive-zip.c) use other static variables, so a
+static gzhead won't break or block anything in this regard.  There was
+no interest in running it in parallel threads so far AFAIK, and it's
+hard for me to imagine the usefulness of creating multiple .tgz files at
+the same time.
 
-Update branch_checked_out() to consume that pointer and free it.
+The doubled ZLIB_VERNUM is unsightly and I'm not sure the BUG check is
+useful -- I omitted error checking because there is no recurse for us if
+deflateSetHeader() doesn't work, and on ancient zlib versions we
+silently continue anyway.
 
-Add a test in t2407 that checks this erroneous case. The test "checks
-itself" by first confirming that the filesystem manipulations it makes
-trigger the branch_checked_out() logic, and then sets up similar
-manipulations to make it look like there are multiple worktrees pointing
-to the same ref.
+But that's all just minor quibbling -- I'll include your changes in the
+next version, they look fine overall.
 
-While TEST_PASSES_SANITIZE_LEAK would be helpful to demonstrate the
-leakage and prevent it in the future, t2407 uses helpers such as 'git
-clone' that cause the test to fail under that mode.
-
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- branch.c                  | 25 +++++++++++++++----------
- t/t2407-worktree-heads.sh | 28 ++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 10 deletions(-)
-
-diff --git a/branch.c b/branch.c
-index d4ddec6f4e5..6007ee7baeb 100644
---- a/branch.c
-+++ b/branch.c
-@@ -385,25 +385,29 @@ static void prepare_checked_out_branches(void)
- 	worktrees = get_worktrees();
- 
- 	while (worktrees[i]) {
-+		char *old;
- 		struct wt_status_state state = { 0 };
- 		struct worktree *wt = worktrees[i++];
- 
- 		if (wt->is_bare)
- 			continue;
- 
--		if (wt->head_ref)
--			strmap_put(&current_checked_out_branches,
--				   wt->head_ref,
--				   xstrdup(wt->path));
-+		if (wt->head_ref) {
-+			old = strmap_put(&current_checked_out_branches,
-+					 wt->head_ref,
-+					 xstrdup(wt->path));
-+			free(old);
-+		}
- 
- 		if (wt_status_check_rebase(wt, &state) &&
- 		    (state.rebase_in_progress || state.rebase_interactive_in_progress) &&
- 		    state.branch) {
- 			struct strbuf ref = STRBUF_INIT;
- 			strbuf_addf(&ref, "refs/heads/%s", state.branch);
--			strmap_put(&current_checked_out_branches,
--				   ref.buf,
--				   xstrdup(wt->path));
-+			old = strmap_put(&current_checked_out_branches,
-+					 ref.buf,
-+					 xstrdup(wt->path));
-+			free(old);
- 			strbuf_release(&ref);
- 		}
- 		wt_status_state_free_buffers(&state);
-@@ -412,9 +416,10 @@ static void prepare_checked_out_branches(void)
- 		    state.branch) {
- 			struct strbuf ref = STRBUF_INIT;
- 			strbuf_addf(&ref, "refs/heads/%s", state.branch);
--			strmap_put(&current_checked_out_branches,
--				   ref.buf,
--				   xstrdup(wt->path));
-+			old = strmap_put(&current_checked_out_branches,
-+					 ref.buf,
-+					 xstrdup(wt->path));
-+			free(old);
- 			strbuf_release(&ref);
- 		}
- 		wt_status_state_free_buffers(&state);
-diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
-index a5aec1486c5..b6be42f74a2 100755
---- a/t/t2407-worktree-heads.sh
-+++ b/t/t2407-worktree-heads.sh
-@@ -98,4 +98,32 @@ test_expect_success !SANITIZE_LEAK 'refuse to fetch over ref: worktree in rebase
- 	grep "refusing to fetch into branch" err
- '
- 
-+test_expect_success 'refuse to overwrite when in error states' '
-+	test_when_finished rm -rf .git/worktrees/wt-*/rebase-merge &&
-+	test_when_finished rm -rf .git/worktrees/wt-*/BISECT_* &&
-+
-+	# Both branches are currently under rebase.
-+	mkdir -p .git/worktrees/wt-3/rebase-merge &&
-+	touch .git/worktrees/wt-3/rebase-merge/interactive &&
-+	echo refs/heads/fake-1 >.git/worktrees/wt-3/rebase-merge/head-name &&
-+	echo refs/heads/fake-2 >.git/worktrees/wt-3/rebase-merge/onto &&
-+	mkdir -p .git/worktrees/wt-4/rebase-merge &&
-+	touch .git/worktrees/wt-4/rebase-merge/interactive &&
-+	echo refs/heads/fake-2 >.git/worktrees/wt-4/rebase-merge/head-name &&
-+	echo refs/heads/fake-1 >.git/worktrees/wt-4/rebase-merge/onto &&
-+
-+	# Both branches are currently under bisect.
-+	touch .git/worktrees/wt-4/BISECT_LOG &&
-+	echo refs/heads/fake-2 >.git/worktrees/wt-4/BISECT_START &&
-+	touch .git/worktrees/wt-1/BISECT_LOG &&
-+	echo refs/heads/fake-1 >.git/worktrees/wt-1/BISECT_START &&
-+
-+	for i in 1 2
-+	do
-+		test_must_fail git branch -f fake-$i HEAD 2>err &&
-+		grep "cannot force update the branch '\''fake-$i'\'' checked out at" err ||
-+			return 1
-+	done
-+'
-+
- test_done
--- 
-gitgitgadget
+Ren=C3=A9
