@@ -2,128 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87B33C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 14:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 095AFC43334
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 14:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243075AbiFNOWQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 10:22:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38796 "EHLO
+        id S245182AbiFNOfO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 10:35:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236158AbiFNOWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 10:22:14 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FE7F5F53
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 07:22:13 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id z11so6667513ilq.6
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 07:22:13 -0700 (PDT)
+        with ESMTP id S231738AbiFNOfN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 10:35:13 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04DDB36E14
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 07:35:13 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id p69so9617790iod.0
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 07:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=j0lkwtKGZHBqmr0lfU3SNzYfgN1ht+svZvtpBFlkK6w=;
-        b=CjJJTykHd3UxfcnK9alybj4DjKn5y5zjXYt+vU03XT7GLHGffzFXjz4JuBkICBM7Lx
-         fGtF6lyrdx/smBUYy21fSd4d4vZy6LLIOMUpTF5sX/7AJm91Ivq8NrV66cSyUhT0lSTo
-         rhzo/4lNqjqnfyZbQNWBCnCTIsAE3WnBFlHtdylIsFV86wTTXLdigbeHelCw2NSoNqT2
-         ejjbPiSfQuC2UUkHT7cLvEK3bHmfWdo8/gk04nhkuYf0VsyCwwdD1SDKQvenZV+5IAci
-         iOzIleEEdnxRTktdtbRkL/ddhCx1uj21AWdtONjbHBlO2dGX9JTPyKfwjs4BsF+bpwZg
-         SSig==
+        bh=BzXbzYopGct1c3tfXpXkHPMnW3GfxOYUNO/wpDkGbao=;
+        b=fQxD0XtjEhKW3dFQ/bjsQpHtw8KZjhS0Or+prmR3xqiny8h0l6hTdnyckUDzaDNJHn
+         CF3062/PJIUxcaZfANNVNFw+o79852lGXf/tovY3mysD3/Vxr/2yJr31EK72ktr4WdHu
+         XzUu3jc0Otxkp/0hyMvIEJcMHLxfIRBkHJGPTTX9pRdKD4V4mKU68AOeQwQnWqOdyHlW
+         mkhfmjnnOptKpyfrpPh2pMkKTXUsGQoJnuYEci1UI2Qeu2h4CzuLbFfo2k+sW3RsBiyH
+         h07Nlz5OHctnVI8SsdhEJ54qgpRA05/POlMPhZmC5T/yWfLHN0bIVZZumfg1zfZ2wwOI
+         Xp7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=j0lkwtKGZHBqmr0lfU3SNzYfgN1ht+svZvtpBFlkK6w=;
-        b=bRMztwubxK0jFMVdhnnkG9VhWQcWvtY4C/Yqyz8i/vfOa8+EOZgtxiewf1zSQxRHis
-         n0Hd8bbc7QpZzIDaSwQqU7pshq5Ve020HgzLrDIdyAKVDxagqc5vr0QejRabkyGxre1S
-         ERNaqZBklLJ0CDEIaoXU8Jsq65QjDFhR87f97lWmxZk3IHV+Rx1eHL2rLu12IsZDA9c4
-         A9UfHae7JDrItCimKUdn8YoDEVtI3RzejPPDCcAxMjLSTph341quZ7WT7M6XEyvyX6m2
-         l4jMknOhxZItKVBS6nRAt1Bjq4UbbOWZuPjpWUSrifnNv93ryVcJjQtRFiLqbuXmRz07
-         ktJA==
-X-Gm-Message-State: AJIora+dCoX9xWRbp9WHRmAADPrjgCzm8xV8tjdj8OEJZv5u2qdQlsFD
-        oLYmTl88XflCXR9ox2ooLCHA6fv64Ofu
-X-Google-Smtp-Source: AGRyM1vxc0R+gGNbFUgRY8SS3e6Ij+5h20wKw4bp9KhiBTFS2wgoZOWIE6ar9NHJWb2IMfc9IhrXqA==
-X-Received: by 2002:a92:c24c:0:b0:2d1:cdd0:1959 with SMTP id k12-20020a92c24c000000b002d1cdd01959mr3061507ilo.39.1655216533039;
-        Tue, 14 Jun 2022 07:22:13 -0700 (PDT)
+        bh=BzXbzYopGct1c3tfXpXkHPMnW3GfxOYUNO/wpDkGbao=;
+        b=Wnc/hzDp1yV+KJ/Shiv7oTTN3uhwwqWjchA0FV9w8TOEN6VtGUJMX8/FIHWFjsUxwV
+         PeaWClKONfoIDHab1s7Ok0JVBwYJDDE6HeH1jD2L3xDJejvMKCKGFnn+05TRcNnuX54A
+         9lcJs7i9NKx5l79Sy8CEP9HmrnqXq+E7R/9hO77cbBm2ZcxYyl5DusKQ4rx/XzBTX+H+
+         SRZ+oCxnq3PqicHEKJm3npKHpJbLPr8fNU9AymVtU45AycjiDGJ34UJOZEuQJh31X8zP
+         qcZ0P/eukvXcs0dgHdRd9/bPnOj95b1aYypplvwvJOsB5kkAlKRlU0nlQbID/FGvuiVi
+         b6XA==
+X-Gm-Message-State: AOAM533UcW+C+Fs/hagRxpz2kX9RmfMavXbA4Ol7NF6PIcrvzsvUPskg
+        1UvY6KsKcpdB1VgUqbvDbLEoSTkrVPJm
+X-Google-Smtp-Source: ABdhPJzQHY+AyBVx7IBsjrB8VKltVxe0jkPU4CaXSUYF7g4ha60SC9C9K8UFGvmY/nLebJc2fEAmnw==
+X-Received: by 2002:a02:ceba:0:b0:331:bd1c:a97f with SMTP id z26-20020a02ceba000000b00331bd1ca97fmr3001291jaq.216.1655217312263;
+        Tue, 14 Jun 2022 07:35:12 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:508:3b97:7c0b:efc0? ([2600:1700:e72:80a0:508:3b97:7c0b:efc0])
-        by smtp.gmail.com with ESMTPSA id r8-20020a02b108000000b0032b3a7817e9sm4891885jah.173.2022.06.14.07.22.12
+        by smtp.gmail.com with ESMTPSA id b14-20020a92c84e000000b002d1df239846sm5462930ilq.79.2022.06.14.07.35.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jun 2022 07:22:12 -0700 (PDT)
-Message-ID: <78ce313d-a93c-ca2a-12f9-a6afbd6f15a2@github.com>
-Date:   Tue, 14 Jun 2022 10:22:12 -0400
+        Tue, 14 Jun 2022 07:35:11 -0700 (PDT)
+Message-ID: <31f406b1-b4e8-5da2-40af-5747938de634@github.com>
+Date:   Tue, 14 Jun 2022 10:35:10 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [Internet]Re: reachability-bitmap makes push performance worse ?
+Subject: Re: [PATCH] revision: mark blobs needed for resolve-undo as reachable
 Content-Language: en-US
-To:     =?UTF-8?B?a3lsZXpoYW8o6LW15p+v5a6HKQ==?= <kylezhao@tencent.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <b940e705fbe9454685757f2e3055e2ce@tencent.com>
- <220614.864k0nzkgp.gmgdl@evledraar.gmail.com>
- <d92e5a26e7664d7ab8ab1215ecaea6bf@tencent.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqfskdieqz.fsf@gitster.g>
+ <7cd41846-e6ef-7a24-0426-6031a529360f@github.com>
+ <220614.86czfcytlz.gmgdl@evledraar.gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <d92e5a26e7664d7ab8ab1215ecaea6bf@tencent.com>
+In-Reply-To: <220614.86czfcytlz.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/14/2022 7:00 AM, kylezhao(赵柯宇) wrote:
->> This is a known issue, I think you've found the same problem discussed in these past threads:
+On 6/13/2022 8:24 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Jun 13 2022, Derrick Stolee wrote:
+> 
+>> On 6/9/2022 7:44 PM, Junio C Hamano wrote:
 >>
->> https://lore.kernel.org/git/38b99459158a45b1bea09037f3dd092d@exmbdft7.ad.twosigma.com/
->> https://lore.kernel.org/git/87zhoz8b9o.fsf@evledraar.gmail.com/
-> 
-> Thanks.
-> 
->> The latter one in particular has a lot of extra details. The former also
->> has the suggestion of a per-push bitmap configuration as a workaround.
+>>> +	struct string_list *resolve_undo = istate->resolve_undo;
+>>> +
+>>> +	if (!resolve_undo)
+>>> +		return 0;
+>>> +
+>>> +	for_each_string_list_item(item, resolve_undo) {
 >>
->> As your numbers show it's still an issue today, but those threads should
->> help you if you're looking to dig further into the root cause.
->>
->> Aside from the underlying root causes it would be very nice to fix the
->> progress code in that area, i.e. we "stall" on "Enumerating objects",
->> which is just a matter of us not having a separate progress bar for the
->> very expensive bitmap work we're doing.
+>> I see this is necessary since for_each_string_list_item() does
+>> not handle NULL lists. After attempting to allow it to handle
+>> NULL lists, I see that the compiler complains about the cases
+>> where it would _never_ be NULL, so that change appears to be
+>> impossible.
+>>  
+>> The patch looks good. I liked the comments for the three phases
+>> of the test.
 > 
-> It looks like optimizing the bitmap to solve the problem will be a long
-> process. This requires developers to have a deep understanding of the
-> algorithm.
-> 
-> A per-push bitmap configuration as a workaround can't completely solve the
-> problem, but it works for me. After all, bitmap was not designed to optimize
-> git push. Most of time, git push is not been called as frequently as git fetch.
+> I think it's probably good to keep for_each_string_list_item()
+> implemented the way it is, given that all existing callers of it feed
+> non-NULL lists to it.
 
-I think the issue is that bitmaps are designed to support servers, which don't
-exactly use "git push" but instead use "git upload-pack" with a very different
-type of data (a lot of branches simultaneously from a large variety of bases).
+We are talking right now about an example where it would be cleaner to
+allow a NULL value.
 
-In general, clients that use "git push" don't generally have bitmaps, so this
-has not been a priority. For clients, it is faster to do a more focused object
-walk. See these commits and blog post for more details:
+This guarded example also exists in http.c (we would still need to guard
+on NULL options):
 
-* d5d2e93577 (revision: implement sparse algorithm, 2019-01-16)
-* 3d036eb0d2 (pack-objects: create pack.useSparse setting, 2019-01-16)
-* https://devblogs.microsoft.com/devops/exploring-new-frontiers-for-git-push-performance/
+	/* Add additional headers here */
+	if (options && options->extra_headers) {
+		const struct string_list_item *item;
+		for_each_string_list_item(item, options->extra_headers) {
+			headers = curl_slist_append(headers, item->string);
+		}
+	}
 
-Hopefully that gives enough context as to why one would want to disable bitmaps
-for most "git push" operations.
+These guarded examples in ref_filter_match() would be greatly simplified:
 
-> The problem has been around for 3 years, has the community considered providing
-> a config like "push.useBitmap" to prevent git push using bitmap? It would be
-> appreciated if there is such a config, which can quickly solve my problem and
-> doesn't seem like a lot of work.
+	if (exclude_patterns && exclude_patterns->nr) {
+		for_each_string_list_item(item, exclude_patterns) {
+			if (match_ref_pattern(refname, item))
+				return 0;
+		}
+	}
 
-I think this config would be a good idea, and I would even argue that we might
-want to set it to "false" by default.
+	if (include_patterns && include_patterns->nr) {
+		for_each_string_list_item(item, include_patterns) {
+			if (match_ref_pattern(refname, item))
+				return 1;
+		}
+		return 0;
+	}
 
-> If no one is interested in it, I can also try to submit a patch (although it
-> may be a bit slow since all I am new to the git community).
+	if (exclude_patterns_config && exclude_patterns_config->nr) {
+		for_each_string_list_item(item, exclude_patterns_config) {
+			if (match_ref_pattern(refname, item))
+				return 0;
+		}
+	}
 
-We would welcome the contribution! I look forward to seeing it when you're
-ready.
+(The include_patterns check would still be needed for that extra
+return 0; in the middle.)
+
+There are more examples, but I'll stop listing them here.
+
+> But why is it impossible to make it handle NULL lists? This works for
+> me, and passes the tests:
+
+> 	 /** Iterate over each item, as a macro. */
+> 	 #define for_each_string_list_item(item,list)            \
+> 	-	for (item = (list)->items;                      \
+> 	+	for (item = (((list) && (list)->items) ? ((list)->items) : NULL); \
+
+I thinks I had something like
+
+	for ((list) && item = (list)->items; (list) && item && ...
+
+but even with your suggestion, I get this compiler error:
+
+In file included from convert.h:8,
+                 from cache.h:10,
+                 from apply.c:10:
+apply.c: In function ‘write_out_results’:
+string-list.h:146:22: error: the address of ‘cpath’ will always evaluate as ‘true’ [-Werror=address]
+  146 |         for (item = ((list) && (list)->items) ? (list)->items : NULL;     \
+      |                      ^
+apply.c:4652:25: note: in expansion of macro ‘for_each_string_list_item’
+ 4652 |                         for_each_string_list_item(item, &cpath)
+      |   
+
+(along with many other examples).
+
+Junio is right that we would need to convert this into a method with a
+function pointer instead of a for_each_* macro. That's quite a big lift
+for some small convenience for the callers.
 
 Thanks,
 -Stolee
