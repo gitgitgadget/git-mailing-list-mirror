@@ -2,235 +2,598 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCCA2C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 01:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7092C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 01:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348593AbiFNBkP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 21:40:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49562 "EHLO
+        id S237950AbiFNBqa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 21:46:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbiFNBkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 21:40:14 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04245192B5
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 18:40:13 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id q104so5542838qvq.8
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 18:40:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QGcwZ0v7qf8uO3yYvmLtIwX3H/f5eVSsAU608gYN120=;
-        b=3JjYXWr+TaD70rMSOuO01whuO+zRtIE7n7Vhe5hvJm1boKH1Ylo7lJ9SuEm23lBFP1
-         vV7RmBGiTJk3qjfY8S7PfEEvl+q0Vpo+tjQSaMLVBoD3nBcK5qIy3cMtCS6uqpqgqiwp
-         Pg7cwGEvz/HxrzD6/Hyz5UhYeGfwB1uqqjDSv/CgmgJ2AvUSYqvNSUqd/JCWpgBibb0H
-         HnJLdJQy571GjdlLiSObZqTCt6ibTqFAh1IQmpqNr0oEo/o4AZBfns4jT1pg3Iqcd9jn
-         HtbBxWvUbEpHRhw2SaXZGR9jIoE3sZokl0VO2ferX3Ht/jBqxlY1QSN+9QvXtfS0tGSw
-         bUng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QGcwZ0v7qf8uO3yYvmLtIwX3H/f5eVSsAU608gYN120=;
-        b=Nq6mxfsH5qEyInDrV/1Ayw/cBgCNJYaHpEDnyCwMHrAHrAA91u4st9S24mP9jCwOpc
-         zJNBnBXq1S8DCiJrhVABZ7uuf2IViqRwzCu43Wqk9nt+YfJHzJQEkAomfg3J6naKBq0D
-         W1j1p+fxTz/88A8N+5Yve0wLZ90OURUceiMYSMRXBeLn6XAM5mqjjus2HFjjbQyJSaTG
-         QS5WDW85HJnFWWPMUGNfXJXgJUf15kh+u7jORZTs9m3QQ32KGEFKzBfuXfPoWbfpdikc
-         THjFgY8AuCAN+owP94VTMxlQQVZCSvaxvux5vdbfeCduKs41WanW0C5T663u+bkSd9cG
-         q0hg==
-X-Gm-Message-State: AJIora9LOs4ZEQxGZ4l5hOTzpSNAAfIQxWne62nVw6TKlpim23eO7ykU
-        is5rehPQwxVzx3caVP21A8K3iw==
-X-Google-Smtp-Source: AGRyM1uLP1i4J87XQkWvfbFb3QVzzts1U32JiEsw4iKVS/vFNeCRk9hrt+9WjQ0dMXcRijq1kn/NGA==
-X-Received: by 2002:a05:6214:242e:b0:467:d5e7:aa79 with SMTP id gy14-20020a056214242e00b00467d5e7aa79mr1889166qvb.131.1655170812033;
-        Mon, 13 Jun 2022 18:40:12 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w13-20020a05620a444d00b006a6cadd89efsm8840459qkp.82.2022.06.13.18.40.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 18:40:11 -0700 (PDT)
-Date:   Mon, 13 Jun 2022 21:40:10 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        gitster@pobox.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v3 5/5] bitmap: add trace2 outputs during open "bitmap"
- file
-Message-ID: <Yqfm+rsP5DWyj95L@nand.local>
-References: <cover.1655018322.git.dyroneteng@gmail.com>
- <e118758d1dada378d65d58579cc1372fa547d720.1655018322.git.dyroneteng@gmail.com>
+        with ESMTP id S236353AbiFNBq2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 21:46:28 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321382A954
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 18:46:26 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4EB1113656E;
+        Mon, 13 Jun 2022 21:46:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=b
+        4F5Vipo9dss1ZbOSUAS89Xay1Aplplwx+fY0Zuk+FE=; b=iJY0e8UiSIhP8nT2a
+        jiTX4vqhj4iIM4/BEJpP6gvnw6KLF+0PFJ7/VQv59AdACeRtGhtBXNcC3D4RNtCF
+        Ta6wUUjumTsAZj1EdA48V0g90mYOU1OgsxC5biNKI0tYERo7AOad76/81No9iOWe
+        /KAyk3uxdSAjCo1Zi71100I6po=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 44C0F13656B;
+        Mon, 13 Jun 2022 21:46:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AD0F7136569;
+        Mon, 13 Jun 2022 21:46:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: What's cooking in git.git (Jun 2022, #04; Mon, 13)
+X-master-at: 8168d5e9c23ed44ae3d604f392320d66556453c9
+X-next-at: 0611611a94d360ce329fe0f1863f779d7fab5cab
+Date:   Mon, 13 Jun 2022 18:46:21 -0700
+Message-ID: <xmqq35g82f0y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e118758d1dada378d65d58579cc1372fa547d720.1655018322.git.dyroneteng@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: CB645CD4-EB83-11EC-9086-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 12, 2022 at 03:44:20PM +0800, Teng Long wrote:
-> It's supported for a repo to use bitmap in both "NORMAL" bitmap way
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen',
+and aren't considered "accepted" at all.
 
-I'm nitpicking, but I usually say "single-pack bitmap" or "multi-pack
-(MIDX) bitmap" when distinguishing between the two.
+I just tagged Git 2.37-rc0, after merging some topics to the
+'master' branch.  For some topics, it is a day early (I usually try
+to have topics cook at least 7 calendar days in 'next'), but since
+tomorrow is my "offline every other Tuesday" day, I am merging them
+early, among them is a fix for another (and hopefully the last
+known) 2.36 regression.  I plan to tag -rc1 around the end of the
+week, at which time we will stop merging any new topic from the
+'next' branch down to 'master' until the final release that will
+happen around the end of the month (https://tinyurl.com/gitCal).
 
-> or a MIDX (multi-pack-index) bitmap. Either of two bitmap kinds can
-> exist in the repository, or both can be stored but let the config
-> controls which kind of bitmap is used (like "core.multipackIndex",
-> etc.). Because of this, sometimes the bitmap debug path is not
-> obvious enough, for example, when executing:
->
->  $git rev-list  --test-bitmap  HEAD
->  fatal: failed to load bitmap indexes
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-Odd spacing, and there should be a single space character separating "$"
-from "git" (like "$ git").
+With maint, master, next, seen, todo:
 
-While I'm thinking about it: is the error message here up-to-date with
-the changes made by the previous patch?
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
 
-> If we see the output like this, It's not sure for us to know
-> what's happened concretely, because the cause should be :
->
->   1. Neither normal nor MIDX bitmap exists.
->   2. Only MIDX bitmap exists but core.multipackIndex="false".
->   3. Config core.multipackIndex set to "true" but MIDX  bitmap is
->      corrupted.
->   4. Config core.multipackIndex set to "true" and no MIDX bitmap
->      exists but normal bitmap file is corrupted.
->   ....
->
-> These are some of the scenarios I briefly tested, but maybe there are
-> others (some scenarios is produced manually like "corrupted bitmap file",
-> but it's not represent it's an existed bug.).
+With all the integration branches and topics broken out:
 
-This could probably be trimmed down for brevity, but I don't feel
-strongly about it. If you wanted to make your commit message a tad
-shorter, perhaps something like:
+	https://github.com/gitster/git/
 
-  When a user sees output like this, it's unclear which kind(s) of
-  .bitmap exist, and which were read. For example, it's possible a MIDX
-  bitmap exists, but was not read (e.g., because
-  core.multiPackIndex=false), among many other scenarios.
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-would suffice.
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-> Therefore, we added some TRACE2 code so that when we read the bitmap
+Release tarballs are available at:
 
-s/TRACE2/trace2
+	https://www.kernel.org/pub/software/scm/git/
 
-> we can be more clear about the decision path, such as whether it is
-> working on MIDX or NORMAL bitmap at present, or the related config is
+--------------------------------------------------
+[Graduated to 'master']
 
-s/NORMAL/pack
+* ab/hooks-regression-fix (2022-06-07) 2 commits
+  (merged to 'next' on 2022-06-08 at c1109feb67)
+ + hook API: fix v2.36.0 regression: hooks should be connected to a TTY
+ + run-command: add an "ungroup" option to run_process_parallel()
 
-> enabled or not. This may help with logging, user troubleshooting, and
-> development debugging.
->
-> Here are some brief output examples on different scenarios when
-> executing:
->
->   $GIT_TRACE2_PERF=1 git rev-list --test-bitmap HEAD
+ In Git 2.36 we revamped the way how hooks are invoked.  One change
+ that is end-user visible is that the output of a hook is no longer
+ directly connected to the standard output of "git" that spawns the
+ hook, which was noticed post release.  This is getting corrected.
+ source: <cover-v6-0.2-00000000000-20220606T170356Z-avarab@gmail.com>
 
-s/$GIT/$ GIT
 
-> Scenario 1: core.multipackIndex [false], midx bitmap exists [Y],
-> normal bitmap exists [N]
+* ab/remote-free-fix (2022-06-07) 2 commits
+  (merged to 'next' on 2022-06-08 at 03c3aeaeee)
+ + remote.c: don't dereference NULL in freeing loop
+ + remote.c: remove braces from one-statement "for"-loops
 
-The output here is quite wide, and I wonder if this whole section could
-be shortened. For example, scenario 2 is arguably more interesting than
-scenario 1 (I think readers would reasonably infer what happens in
-scenario 1 by reading what happens in scenario 2).
+ Use-after-free (with another forget-to-free) fix.
+ source: <cover-0.3-00000000000-20220607T154520Z-avarab@gmail.com>
 
->        19:21:56.580349 repo-settings.c:11           | d0 | main                     | data         | r1  |  0.000827 |  0.000827 | config       | core.multipackindex:false
->        19:21:56.580356 repo-settings.c:11           | d0 | main                     | data         | r1  |  0.000834 |  0.000834 | config       | index.sparse:false
->        19:21:56.580706 pack-bitmap.c:525            | d0 | main                     | region_enter | r1  |  0.001183 |           | pack-bitmap  | label:open_bitmap
->        19:21:56.580719 pack-bitmap.c:386            | d0 | main                     | data         | r1  |  0.001196 |  0.000013 | bitmap       | ..path:.git/objects/pack/pack-e9eb18e6a423057f4424a762069e13804a75d01e.bitmap
->        19:21:56.580729 pack-bitmap.c:530            | d0 | main                     | region_leave | r1  |  0.001207 |  0.000024 | pack-bitmap  | label:open_bitmap
->        19:21:56.580737 usage.c:60                   | d0 | main                     | error        |     |           |           |              | failed to load bitmap indexes
->        fatal: failed to load bitmap indexes
->        19:21:56.580746 usage.c:74                   | d0 | main                     | exit         |     |  0.001224 |           |              | code:128
->        19:21:56.580754 trace2/tr2_tgt_perf.c:215    | d0 | main                     | atexit       |     |  0.001232 |           |              | code:128
->
-> Scenario 2: core.multipackIndex [false], midx bitmap exists [Y],
-> normal bitmap exists [Y]
->
-> 	19:23:44.692384 repo-settings.c:11           | d0 | main                     | data         | r0  |  0.000765 |  0.000765 | config       | core.multipackindex:false
-> 	19:23:44.692755 pack-bitmap.c:525            | d0 | main                     | region_enter | r0  |  0.001135 |           | pack-bitmap  | label:open_bitmap
-> 	19:23:44.692768 pack-bitmap.c:386            | d0 | main                     | data         | r0  |  0.001149 |  0.000014 | bitmap       | ..path:/home/tenglong.tl/test/dyrone_bitmap/.git/objects/pack/pack-e9eb18e6a423057f4424a762069e13804a75d01e.bitmap
-> 	19:23:44.692790 pack-bitmap.c:530            | d0 | main                     | region_leave | r0  |  0.001171 |  0.000036 | pack-bitmap  | label:open_bitmap
-> 	Bitmap v1 test (1 entries loaded)
-> 	Found bitmap for d864fefa87415d6cd289c72aa9ffd45b4a8ffd84. 64 bits / 11030517 checksum
-> 	19:23:44.693119 progress.c:268               | d0 | main                     | region_enter | r0  |  0.001500 |           | progress     | label:Verifying bitmap entries
-> 	Verifying bitmap entries: 100% (3/3), done.
-> 	19:23:44.693208 progress.c:339               | d0 | main                     | data         | r0  |  0.001589 |  0.000089 | progress     | ..total_objects:3
-> 	19:23:44.693216 progress.c:346               | d0 | main                     | region_leave | r0  |  0.001597 |  0.000097 | progress     | label:Verifying bitmap entries
-> 	OK!
-> 	19:23:44.693234 git.c:718                    | d0 | main                     | exit         |     |  0.001615 |           |              | code:0
-> 	19:23:44.693244 trace2/tr2_tgt_perf.c:215    | d0 | main                     | atexit       |     |  0.001625 |           |              | code:0
 
-And scenario 2 could be cleaned up by just showing a few of the columns
-from the trace2 output. Perhaps along the lines of:
+* ds/credentials-in-url (2022-06-06) 1 commit
+  (merged to 'next' on 2022-06-08 at 3db83a2012)
+ + remote: create fetch.credentialsInUrl config
 
-> 	| data         | r0  |  0.000765 |  0.000765 | config       | core.multipackindex:false
-> 	| region_enter | r0  |  0.001135 |           | pack-bitmap  | label:open_bitmap
-> 	| data         | r0  |  0.001149 |  0.000014 | bitmap       | ..path:.git/objects/pack/pack-e9eb18e6a423057f4424a762069e13804a75d01e.bitmap
-> 	| region_leave | r0  |  0.001171 |  0.000036 | pack-bitmap  | label:open_bitmap
-> 	| region_enter | r0  |  0.001500 |           | progress     | label:Verifying bitmap entries
+ The "fetch.credentialsInUrl" configuration variable controls what
+ happens when a URL with embedded login credential is used.
+ source: <pull.1237.v5.git.1654526176695.gitgitgadget@gmail.com>
 
-Reading the below scenarios, I think just showing this example is more
-than sufficient for illustrating your point.
 
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> ---
->  pack-bitmap.c   | 27 +++++++++++++++++++++------
->  repo-settings.c |  1 +
->  2 files changed, 22 insertions(+), 6 deletions(-)
->
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 5654eb7b8d..ced5993560 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -312,9 +312,11 @@ char *pack_bitmap_filename(struct packed_git *p)
->  static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
->  			      struct multi_pack_index *midx)
->  {
-> +	int fd;
->  	struct stat st;
->  	char *bitmap_name = midx_bitmap_filename(midx);
-> -	int fd = git_open(bitmap_name);
-> +	trace2_data_string("midx", the_repository, "path", bitmap_name);
-> +	fd = git_open(bitmap_name);
->
->  	free(bitmap_name);
->
-> @@ -343,12 +345,19 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
->  				MAP_PRIVATE, fd, 0);
->  	close(fd);
->
-> -	if (load_bitmap_header(bitmap_git) < 0)
-> +	if (load_bitmap_header(bitmap_git) < 0) {
-> +		trace2_data_string("midx", the_repository, "load bitmap header",
-> +				   "failed");
+* gc/document-config-worktree-scope (2022-06-07) 1 commit
+  (merged to 'next' on 2022-06-08 at 85f62a864a)
+ + config: document and test the 'worktree' scope
 
-I wonder, why don't we show these errors to the user? Should we
-introduce a "ret" variable and set it to (for e.g.)
+ Doc update.
+ source: <pull.1274.git.git.1654637044966.gitgitgadget@gmail.com>
 
-    ret = error(_("failed to load bitmap header"));
 
-or something?
+* js/wait-or-whine-can-fail (2022-06-07) 1 commit
+  (merged to 'next' on 2022-06-08 at 54fe70c95d)
+ + run-command: don't spam trace2_child_exit()
 
->  struct bitmap_index *prepare_bitmap_git(struct repository *r)
-> diff --git a/repo-settings.c b/repo-settings.c
-> index b4fbd16cdc..5bc7a97a6d 100644
-> --- a/repo-settings.c
-> +++ b/repo-settings.c
-> @@ -8,6 +8,7 @@ static void repo_cfg_bool(struct repository *r, const char *key, int *dest,
->  {
->  	if (repo_config_get_bool(r, key, dest))
->  		*dest = def;
-> +	trace2_data_string("config", r, key, *dest ? "true" : "false");
+ We used to log an error return from wait_or_whine() as process
+ termination of the waited child, which was incorrect.
+ source: <50d872a057a558fa5519856b95abd048ddb514dc.1654625626.git.steadmon@google.com>
 
-I'm not sure we want to dump the whole repository configuration into
-trace2 output. Is there a more convenient place to log any important
-value(s) _after_ they have been read?
 
-Thanks,
-Taylor
+* jt/unparse-commit-upon-graft-change (2022-06-06) 1 commit
+  (merged to 'next' on 2022-06-08 at 3d8de84325)
+ + commit,shallow: unparse commits if grafts changed
+
+ Updating the graft information invalidates the list of parents of
+ in-core commit objects that used to be in the graft file.
+ source: <20220606175437.1740447-1-jonathantanmy@google.com>
+
+
+* pb/range-diff-with-submodule (2022-06-06) 1 commit
+  (merged to 'next' on 2022-06-07 at e5e31590c4)
+ + range-diff: show submodule changes irrespective of diff.submodule
+
+ "git -c diff.submodule=log range-diff" did not show anything for
+ submodules that changed in the ranges being compared, and
+ "git -c diff.submodule=diff range-diff" did not work correctly.
+ Fix this by including the "--submodule=short" output
+ unconditionally to be compared.
+ source: <pull.1244.v2.git.1654549153769.gitgitgadget@gmail.com>
+
+
+* sn/fsmonitor-missing-clock (2022-06-07) 1 commit
+  (merged to 'next' on 2022-06-08 at 812b99338c)
+ + fsmonitor: query watchman with right valid json
+
+ Sample watchman interface hook sometimes failed to produce
+ correctly formatted JSON message, which has been corrected.
+ source: <20220607111419.15753-1-sluongng@gmail.com>
+
+
+* tb/show-ref-optim (2022-06-06) 1 commit
+  (merged to 'next' on 2022-06-08 at 683a3cc261)
+ + builtin/show-ref.c: avoid over-iterating with --heads, --tags
+
+ "git show-ref --heads" (and "--tags") still iterated over all the
+ refs only to discard refs outside the specified area, which has
+ been corrected.
+ source: <3fa6932641f18d78156bbf60b1571383f2cb5046.1654293264.git.me@ttaylorr.com>
+
+
+* tl/ls-tree-oid-only (2022-06-03) 1 commit
+  (merged to 'next' on 2022-06-07 at e1c1e0b25a)
+ + ls-tree: test for the regression in 9c4d58ff2c3
+
+ Add tests for a regression fixed earlier.
+ source: <patch-v2-1.1-f2beb02dd29-20220603T102148Z-avarab@gmail.com>
+
+
+* zh/read-cache-copy-name-entry-fix (2022-06-06) 1 commit
+  (merged to 'next' on 2022-06-08 at 760f43dd19)
+ + read-cache.c: reduce unnecessary cache entry name copying
+
+ Remove redundant copying (with index v3 and older) or possible
+ over-reading beyond end of mmapped memory (with index v4) has been
+ corrected.
+ source: <pull.1249.git.1654436248249.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[New Topics]
+
+* jc/apply-icase-tests (2022-06-13) 1 commit
+ - t4141: test "git apply" with core.ignorecase
+
+ source: <xmqqo7yw77qo.fsf@gitster.g>
+
+
+* ll/curl-accept-language (2022-06-13) 2 commits
+ - PREP??? give initializer to rpc_state
+ - remote-curl: send Accept-Language header to server
+
+ source: <pull.1251.v3.git.1655054421697.gitgitgadget@gmail.com>
+
+
+* pb/diff-doc-raw-format (2022-06-13) 3 commits
+ - diff-index.txt: update raw output format in examples
+ - diff-format.txt: correct misleading wording
+ - diff-format.txt: dst can be 0* SHA-1 when path is deleted, too
+
+ source: <pull.1259.git.1655123383.gitgitgadget@gmail.com>
+
+
+* rs/archive-with-internal-gzip (2022-06-13) 5 commits
+ - archive-tar: use internal gzip by default
+ - archive-tar: use OS_CODE 3 (Unix) for internal gzip
+ - archive-tar: add internal gzip implementation
+ - archive-tar: factor out write_block()
+ - archive: rename archiver data field to filter_command
+
+ source: <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
+
+
+* tl/pack-bitmap-trace (2022-06-13) 5 commits
+ - bitmap: add trace2 outputs during open "bitmap" file
+ - pack-bitmap.c: using error() instead of silently returning -1
+ - pack-bitmap.c: make warnings support i18N when opening bitmap
+ - pack-bitmap.c: rename "idx_name" to "bitmap_name"
+ - pack-bitmap.c: continue looping when first MIDX bitmap is found
+
+ source: <cover.1655018322.git.dyroneteng@gmail.com>
+
+--------------------------------------------------
+[Stalled]
+
+* en/merge-tree (2022-02-23) 13 commits
+ - git-merge-tree.txt: add a section on potentional usage mistakes
+ - merge-tree: add a --allow-unrelated-histories flag
+ - merge-tree: allow `ls-files -u` style info to be NUL terminated
+ - merge-tree: provide easy access to `ls-files -u` style info
+ - merge-tree: provide a list of which files have conflicts
+ - merge-ort: provide a merge_get_conflicted_files() helper function
+ - merge-tree: support including merge messages in output
+ - merge-ort: split out a separate display_update_messages() function
+ - merge-tree: implement real merges
+ - merge-tree: add option parsing and initial shell for real merge function
+ - merge-tree: move logic for existing merge into new function
+ - merge-tree: rename merge_trees() to trivial_merge_trees()
+ - Merge branch 'en/remerge-diff' into en/merge-trees
+
+ A new command is introduced that takes two commits and computes a
+ tree that would be contained in the resulting merge commit, if the
+ histories leading to these two commits were to be merged, and is
+ added as a new mode of "git merge-tree" subcommand.
+
+ On hold.
+ cf. <CABPp-BGZ7OAYRR5YKRsxJSo-C=ho+qcNAkqwkim8CkhCfCeHsA@mail.gmail.com>
+ source: <pull.1122.v6.git.1645602413.gitgitgadget@gmail.com>
+
+
+* bc/stash-export (2022-04-08) 4 commits
+ - builtin/stash: provide a way to import stashes from a ref
+ - builtin/stash: provide a way to export stashes to a ref
+ - builtin/stash: factor out revision parsing into a function
+ - object-name: make get_oid quietly return an error
+
+ A mechanism to export and import stash entries to and from a normal
+ commit to transfer it across repositories has been introduced.
+
+ Expecting a reroll.
+ cf. <YnL2d4Vr9Vr7W4Hj@camp.crustytoothpaste.net>
+ source: <20220407215352.3491567-1-sandals@crustytoothpaste.net>
+
+
+* cw/remote-object-info (2022-05-06) 11 commits
+ - SQUASH??? coccicheck
+ - SQUASH??? ensure that coccicheck is happy
+ - SQUASH??? compilation fix
+ - cat-file: add --batch-command remote-object-info command
+ - cat-file: move parse_cmd and DEFAULT_FORMAT up
+ - transport: add object-info fallback to fetch
+ - transport: add client side capability to request object-info
+ - object-info: send attribute packet regardless of object ids
+ - object-store: add function to free object_info contents
+ - fetch-pack: move fetch default settings
+ - fetch-pack: refactor packet writing
+
+ A client component to talk with the object-info endpoint.
+
+ Expecting a reroll.
+ source: <20220502170904.2770649-1-calvinwan@google.com>
+
+--------------------------------------------------
+[Cooking]
+
+* ds/branch-checked-out (2022-06-13) 5 commits
+ - branch: fix branch_checked_out() leaks
+ - branch: use branch_checked_out() when deleting refs
+ - fetch: use new branch_checked_out() and add tests
+ - branch: check for bisects and rebases
+ - branch: add branch_checked_out() helper
+
+ Introduce a helper to see if a branch is already being worked on
+ (hence should not be newly checked out in a working tree), which
+ performs much better than the existing find_shared_symref() to
+ replace many uses of the latter.
+
+ Will merge to 'next'?
+ source: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
+
+
+* fs/ssh-default-key-command-doc (2022-06-08) 1 commit
+  (merged to 'next' on 2022-06-10 at b5cc5b6619)
+ + gpg docs: explain better use of ssh.defaultKeyCommand
+
+ Doc update.
+
+ Will merge to 'master'.
+ source: <20220608152437.126276-1-fs@gigacodes.de>
+
+
+* js/ci-github-workflow-markup (2022-06-13) 3 commits
+ - ci(github): also mark up compile errors
+ - ci(github): use grouping also in the `win-build` job
+ - ci(github): bring back the 'print test failures' step
+
+ Recent CI update hides certain failures in test jobs, which has
+ been corrected.
+
+ Will merge to 'next'.
+ source: <pull.1253.v2.git.1655125988.gitgitgadget@gmail.com>
+
+
+* jt/connected-show-missing-from-which-side (2022-06-10) 1 commit
+ - fetch,fetch-pack: clarify connectivity check error
+
+ We may find an object missing after a "git fetch" stores the
+ objects it obtained from the other side, but it is not necessarily
+ because the remote failed to send necessary objects.  Reword the
+ messages in an attempt to help users explore other possibilities
+ when they hit this error.
+
+ Expecting a reroll.
+ source: <20220610195247.1177549-1-jonathantanmy@google.com>
+
+
+* gc/submodule-update (2022-06-10) 8 commits
+ - submodule update: remove never-used expansion
+ - submodule update: stop parsing options in .sh
+ - submodule update: remove -v, pass --quiet
+ - submodule--helper update: use one param per type
+ - submodule update: pass --require-init and --init
+ - submodule update: pass options with stuck forms
+ - submodule update: pass options containing "[no-]"
+ - submodule update: remove intermediate parsing
+
+ More work on "git submodule update".
+
+ Needs review.
+ source: <pull.1275.git.git.1654820781.gitgitgadget@gmail.com>
+
+
+* jc/resolve-undo (2022-06-09) 1 commit
+ - revision: mark blobs needed for resolve-undo as reachable
+
+ The resolve-undo information in the index was not protected against
+ GC, which has been corrected.
+
+ Will merge to 'next'?
+ source: <xmqqfskdieqz.fsf@gitster.g>
+
+
+* jp/prompt-clear-before-upstream-mark (2022-06-10) 2 commits
+ - git-prompt: fix expansion of branch colour codes
+  (merged to 'next' on 2022-06-08 at 201a84ad63)
+ + git-prompt: make colourization consistent
+
+ Bash command line prompt (in contrib/) update.
+
+ Will merge to 'next'.
+ source: <20220609204447.32841-1-joak-pet@online.no>
+ source: <20220606175022.8410-1-joak-pet@online.no>
+
+
+* ab/build-gitweb (2022-06-02) 7 commits
+ - Makefile: build 'gitweb' in the default target
+ - gitweb/Makefile: include in top-level Makefile
+ - gitweb: remove "test" and "test-installed" targets
+ - gitweb/Makefile: prepare to merge into top-level Makefile
+ - gitweb/Makefile: clear up and de-duplicate the gitweb.{css,js} vars
+ - gitweb/Makefile: add a $(GITWEB_ALL) variable
+ - gitweb/Makefile: define all .PHONY prerequisites inline
+
+ Teach "make all" to build gitweb as well.
+
+ Needs review.
+ source: <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
+
+
+* ab/test-without-templates (2022-06-06) 7 commits
+ - tests: don't assume a .git/info for .git/info/sparse-checkout
+ - tests: don't assume a .git/info for .git/info/exclude
+ - tests: don't assume a .git/info for .git/info/refs
+ - tests: don't assume a .git/info for .git/info/attributes
+ - tests: don't assume a .git/info for .git/info/grafts
+ - tests: don't depend on template-created .git/branches
+ - t0008: don't rely on default ".git/info/exclude"
+
+ Tweak tests so that they still work when the "git init" template
+ did not create .git/info directory.
+
+ Will merge to 'next'?
+ source: <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
+
+
+* ac/bitmap-format-doc (2022-06-10) 3 commits
+ - bitmap-format.txt: add information for trailing checksum
+ - bitmap-format.txt: fix some formatting issues
+ - bitmap-format.txt: feed the file to asciidoc to generate html
+
+ Adjust technical/bitmap-format to be formatted by AsciiDoc, and
+ add some missing information to the documentation.
+
+ Will merge to 'next'?
+ source: <pull.1246.v3.git.1654858481.gitgitgadget@gmail.com>
+
+
+* hx/unpack-streaming (2022-06-13) 6 commits
+ - unpack-objects: use stream_loose_object() to unpack large objects
+ - core doc: modernize core.bigFileThreshold documentation
+ - object-file.c: add "stream_loose_object()" to handle large object
+ - object-file.c: factor out deflate part of write_loose_object()
+ - object-file.c: refactor write_loose_object() to several steps
+ - unpack-objects: low memory footprint for get_data() in dry_run mode
+
+ Allow large objects read from a packstream to be streamed into a
+ loose object file straight, without having to keep it in-core as a
+ whole.
+
+ Will merge to 'next'?
+ source: <cover.1654914555.git.chiyutianyi@gmail.com>
+
+
+* po/rebase-preserve-merges (2022-06-06) 4 commits
+  (merged to 'next' on 2022-06-10 at 471f67aebc)
+ + rebase: translate a die(preserve-merges) message
+ + rebase: note `preserve` merges may be a pull config option
+ + rebase: help users when dying with `preserve-merges`
+ + rebase.c: state preserve-merges has been removed
+
+ Various error messages that talk about the removal of
+ "--preserve-merges" in "rebase" have been strengthened, and "rebase
+ --abort" learned to get out of a state that was left by an earlier
+ use of the option.
+
+ Will merge to 'master'.
+ source: <pull.1242.v2.git.1654341469.gitgitgadget@gmail.com>
+
+
+* tb/show-ref-count (2022-06-06) 2 commits
+ - builtin/show-ref.c: limit output with `--count`
+ - builtin/show-ref.c: rename `found_match` to `matches_nr`
+
+ "git show-ref" learned to stop after emitting N refs with the new
+ "--count=N" option.
+
+ Expecting a reroll.
+ cf. <xmqqczfl4ce1.fsf@gitster.g>
+ source: <cover.1654552560.git.me@ttaylorr.com>
+
+
+* jc/cocci-cleanup (2022-06-07) 1 commit
+ - cocci: retire is_null_sha1() rule
+
+ Remove a coccinelle rule that is no longer relevant.
+
+ Will merge to 'next'.
+ source: <xmqq7d5suoqt.fsf@gitster.g>
+
+
+* ds/bundle-uri-more (2022-06-06) 6 commits
+ - fetch: add 'refs/bundle/' to log.excludeDecoration
+ - bundle-uri: add support for http(s):// and file://
+ - fetch: add --bundle-uri option
+ - bundle-uri: create basic file-copy logic
+ - remote-curl: add 'get' capability
+ - docs: document bundle URI standard
+
+ The "bundle URI" topic.
+
+ Needs review.
+ source: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
+
+
+* jc/revert-show-parent-info (2022-05-31) 2 commits
+  (merged to 'next' on 2022-06-07 at e405211ff4)
+ + revert: --reference should apply only to 'revert', not 'cherry-pick'
+  (merged to 'next' on 2022-05-30 at b5da52dc14)
+ + revert: optionally refer to commit in the "reference" format
+
+ "git revert" learns "--reference" option to use more human-readable
+ reference to the commit it reverts in the message template it
+ prepares for the user.
+
+ Will merge to 'master'.
+ source: <xmqq8rqn7buk.fsf_-_@gitster.g>
+
+
+* js/bisect-in-c (2022-05-21) 15 commits
+ - bisect: no longer try to clean up left-over `.git/head-name` files
+ - bisect: remove Cogito-related code
+ - Turn `git bisect` into a full built-in
+ - bisect: teach the `bisect--helper` command to show the correct usage strings
+ - bisect: move even the command-line parsing to `bisect--helper`
+ - bisect--helper: return only correct exit codes in `cmd_*()`
+ - bisect--helper: move the `BISECT_STATE` case to the end
+ - bisect--helper: make `--bisect-state` optional
+ - bisect--helper: align the sub-command order with git-bisect.sh
+ - bisect--helper: using `--bisect-state` without an argument is a bug
+ - bisect--helper: really retire `--bisect-autostart`
+ - bisect--helper: really retire --bisect-next-check
+ - bisect--helper: retire the --no-log option
+ - bisect: avoid double-quoting when printing the failed command
+ - bisect run: fix the error message
+
+ Final bits of "git bisect.sh" have been rewritten in C.
+
+ The command line parsing is reported to be still broken.
+ cf. <220521.86zgjazuy4.gmgdl@evledraar.gmail.com>
+ source: <pull.1132.v3.git.1653144546.gitgitgadget@gmail.com>
+
+
+* cb/path-owner-check-with-sudo-plus (2022-05-12) 1 commit
+ - git-compat-util: allow root to access both SUDO_UID and root owned
+
+ "sudo git foo" used to consider a repository owned by the original
+ user a safe one to access; it now also considers a repository owned
+ by root a safe one, too (after all, if an attacker can craft a
+ malicious repository owned by root, the box is 0wned already).
+
+ Will merge to 'next'?
+ cf. <20220519152344.ktrifm3pc42bjruh@Carlos-MacBook-Pro-2.local>
+ source: <20220513010020.55361-5-carenas@gmail.com>
+
+
+* gc/bare-repo-discovery (2022-06-07) 5 commits
+ - setup.c: create `discovery.bare`
+ - safe.directory: use git_protected_config()
+ - config: read protected config with `git_protected_config()`
+ - Documentation: define protected configuration
+ - Documentation/git-config.txt: add SCOPES section
+
+ Introduce a discovery.barerepository configuration variable that
+ allows users to forbid discovery of bare repositories.
+
+ Expecting a reroll.
+ source: <29053d029f8ec61095a2ad557be38b1d485a158f.1654635432.git.gitgitgadget@gmail.com>
+
+
+* gg/worktree-from-the-above (2022-05-20) 3 commits
+ - dir: minor refactoring / clean-up
+ - dir: cache git_dir's realpath
+ - dir: traverse into repository
+
+ With a non-bare repository, with core.worktree pointing at a
+ directory that has the repository as its subdirectory, regressed in
+ Git 2.27 days.
+
+ Needs review.
+ source: <20220520192840.8942-1-ggossdev@gmail.com>
+
+
+* ar/send-email-confirm-by-default (2022-04-22) 1 commit
+ - send-email: always confirm by default
+
+ "git send-email" is changed so that by default it asks for
+ confirmation before sending each message out.
+
+ Will discard.
+
+ I wanted to like this, and had it in the version of Git I use
+ myself for daily work, but the prompting turned out to be somewhat
+ distracting.
+
+ Thoughts?
+ source: <20220422083629.1404989-1-hi@alyssa.is>
