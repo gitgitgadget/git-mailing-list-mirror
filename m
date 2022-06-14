@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCB06CCA47B
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 21:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A33C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 21:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357026AbiFNV2K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 17:28:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53914 "EHLO
+        id S1357271AbiFNV2M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 17:28:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344467AbiFNV15 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 17:27:57 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A096A27CF7
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 14:27:56 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id a15so12888473wrh.2
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 14:27:56 -0700 (PDT)
+        with ESMTP id S1345162AbiFNV17 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 17:27:59 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE617289AA
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 14:27:57 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id n185so5327921wmn.4
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 14:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=h+9+nitqEtTXKr9Ey6ONDalegAbsuEUZYi3BRfqGkdE=;
-        b=HklN4pZkjVA7ODuctJ3QLTD4AQ6Kng5zA7wJDeMB/n0N6c6RsdQWmYm4mochjpR7hO
-         SHWMdUiDoWKTukr+PaCdu3KEADc6qU2lfRsAbzOG2j2YaM4Ge8eutUZrb4DzFRaOlvpY
-         Vtbaddmmx2hYMdfI9cI/Indi/W1SxQY2yMrdvH7IgoUNFIBOoxJpz5MmBh/TVdPrbDiC
-         Nv6kiSfcY2Y20V5mF50mjdTXhMYFops/6dx3AAKOWw+iwXmv91F+dxOw3tMJr4WNQhEA
-         bvEvvMrcYG4d4yqEnu2+XS3uYF3njjn78Gh2XNzpV8mfXIV4x33EMCkc4s7SJ9/L76II
-         BElg==
+        bh=ZPl6Zq2JI8wNCS5ZExHetDtnJijrCm3i3KuNoQFRYMM=;
+        b=CPKXMFsAtuK42HHT+rli2k5B4AzCqcEtX9DRhfizATWnH0pCOB0ZJ0kHDvlbywswYr
+         ZS58hcaUWG4kiZgAe1ILVbe4IoFQdSxu27R0wyXj53MCcxGwr6eP2cuAAk5PoBUg+y+y
+         IffEiA5K6FbsVgFYWs9QiMwPmK7jdhJiyNNcnQH+oPz3Qllx3NcN3NCbPxQ20TFEpZ79
+         Xd0c0YfxsoihDyfOkEqPvMrZ3Fmsw208B7EbnxdlqGc+DdVqsNf1gv15OgyvpDharkRW
+         5UKNKOm61MdZ25enUmK3DJv7/SNCvC2JQ2FJprxA0dlZHPwGqIza4cb4X0/YLbGcjud/
+         jgTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=h+9+nitqEtTXKr9Ey6ONDalegAbsuEUZYi3BRfqGkdE=;
-        b=DB/yR2HSMmR+nYmMZO3w/Q/ZwlHPruv47UnQGTXOHW2AahJ1o5WIcbmXiOJuIC3ZHx
-         NHfz4O6A0+0U1d9SEjGCJIYE2JEoVq5wGDEbz6kQYsFAHls8k+PwoIVmRhYdTUdlKXxr
-         7cO6BjHaQfScolXkJox4PFA1qtV/gU+wc97IT1VEUBJOnRpJAOou7XI6G6sBRcobubKE
-         FkVyklHOgRJyxXtfAL0QPAPciOGXSo9yXRwJk7JdoWtaO8GCYdaYun9I8ZB/g4ZDmUx8
-         vTqJLYezCjBavIhi4Bj+f/6jqSdxwlHhTVfWq/QLqaWjAT9jTdTDsarXdawUvT+wnTgn
-         WeMA==
-X-Gm-Message-State: AJIora+A0lEUIh6uaLYIcpbeoIgVhCKi+LryKawmMLPm2lDedGT2PfSO
-        OqBlgD4WQPkVK3luO8lVwC8/BOEKy+KP9w==
-X-Google-Smtp-Source: AGRyM1vPbLDDTnVewKeFoeMPteB4MMcubQe51CxaDja0plOUuVPeV454i1Xqbxd+aFw0jIo5EeuyRA==
-X-Received: by 2002:a05:6000:12d0:b0:210:2ba3:e67 with SMTP id l16-20020a05600012d000b002102ba30e67mr6841845wrx.382.1655242074707;
-        Tue, 14 Jun 2022 14:27:54 -0700 (PDT)
+        bh=ZPl6Zq2JI8wNCS5ZExHetDtnJijrCm3i3KuNoQFRYMM=;
+        b=m4zym0VFEdNWv3bBO52tDHwxLXlnNeaP+DLd8bIn9YUjS95ZiAJ6tieDXGOWxk6VQY
+         9ryDPLq7n37pthb3hu1uVBCcI2WshQtCcXKwFptBmWJJOv3au9Y5loaABw9FY+cJfQdm
+         VIDIA0POOMc41RtG29GVpiVGDcSn1JD6o4xkZNMek6Tcm6uwkuEFOP6n2v+CFLfApVhO
+         XbT2DJToBMXYwyQo/smZSXCjHvdYPxrzgKGZMnIqvhnYtzTzpOJ6N4LcjFlSYzHg8L33
+         edHu9ugolfZ2N0EWlznu1vWcYVuxQxAIwAWwW8RUktkwt9SmJ2HAypSmA7p/LtZFg2s0
+         TBEA==
+X-Gm-Message-State: AOAM531I6jgBbaxFz0YHFbOAqdQOY4CgWA98XExRpgBVjrc4WdNZ2WUL
+        ExwVXyNCCeK6akHftWjwMWYodDYGJSjs/A==
+X-Google-Smtp-Source: ABdhPJy8fdxwLHb5NSgE7acciL7EqMNyoYMC7vybRA8VsfIxhJ5RL3TjQO/HS0GY0ykNCbQCpcVNOQ==
+X-Received: by 2002:a05:600c:414e:b0:397:55aa:ccc0 with SMTP id h14-20020a05600c414e00b0039755aaccc0mr6438545wmm.51.1655242075952;
+        Tue, 14 Jun 2022 14:27:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c15-20020adfed8f000000b0020c5253d926sm12800326wro.114.2022.06.14.14.27.53
+        by smtp.gmail.com with ESMTPSA id c5-20020a05600c0a4500b0039c4ba160absm6413310wmq.2.2022.06.14.14.27.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 14:27:54 -0700 (PDT)
-Message-Id: <f59a0c326a01ab5f4e415a7ed03ff046b84b337b.1655242070.git.gitgitgadget@gmail.com>
+        Tue, 14 Jun 2022 14:27:55 -0700 (PDT)
+Message-Id: <b67e110bf60e820874de94c64ee8c32d69413877.1655242070.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
 References: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Jun 2022 21:27:48 +0000
-Subject: [PATCH 2/4] t5329: test 'git gc --cruft' without '--prune=now'
+Date:   Tue, 14 Jun 2022 21:27:49 +0000
+Subject: [PATCH 3/4] pack-write: drop always-NULL parameter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,34 +67,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Replace a 'git repack --cruft -d' with the wrapper 'git gc --cruft' to
-exercise some logic in builtin/gc.c that adds the '--cruft' option to
-the underlying 'git repack' command.
+write_mtimes_file() takes an mtimes parameter as its first option, but
+the only caller passes a NULL constant. Drop this parameter to simplify
+logic. This can be reverted if that parameter is needed in the future.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t5329-pack-objects-cruft.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ pack-write.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index b481224b93d..55bb9c0e7b5 100755
---- a/t/t5329-pack-objects-cruft.sh
-+++ b/t/t5329-pack-objects-cruft.sh
-@@ -451,11 +451,13 @@ test_expect_success 'expiring cruft objects with git gc' '
- 		sort <reachable.raw >reachable &&
- 		comm -13 reachable objects >unreachable &&
+diff --git a/pack-write.c b/pack-write.c
+index 23c0342018f..00787e306db 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -310,26 +310,21 @@ static void write_mtimes_trailer(struct hashfile *f, const unsigned char *hash)
+ 	hashwrite(f, hash, the_hash_algo->rawsz);
+ }
  
--		git repack --cruft -d &&
-+		# Write a cruft pack instead of deleting files.
-+		git gc --cruft &&
+-static const char *write_mtimes_file(const char *mtimes_name,
+-				     struct packing_data *to_pack,
++static const char *write_mtimes_file(struct packing_data *to_pack,
+ 				     struct pack_idx_entry **objects,
+ 				     uint32_t nr_objects,
+ 				     const unsigned char *hash)
+ {
++	struct strbuf tmp_file = STRBUF_INIT;
++	const char *mtimes_name;
+ 	struct hashfile *f;
+ 	int fd;
  
- 		mtimes=$(ls .git/objects/pack/pack-*.mtimes) &&
- 		test_path_is_file $mtimes &&
+ 	if (!to_pack)
+ 		BUG("cannot call write_mtimes_file with NULL packing_data");
  
-+		# Ignore the cruft pack and delete every unreachable object.
- 		git gc --cruft --prune=now &&
+-	if (!mtimes_name) {
+-		struct strbuf tmp_file = STRBUF_INIT;
+-		fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
+-		mtimes_name = strbuf_detach(&tmp_file, NULL);
+-	} else {
+-		unlink(mtimes_name);
+-		fd = xopen(mtimes_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+-	}
++	fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
++	mtimes_name = strbuf_detach(&tmp_file, NULL);
+ 	f = hashfd(fd, mtimes_name);
  
- 		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
+ 	write_mtimes_header(f);
+@@ -561,7 +556,7 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 				      pack_idx_opts->flags);
+ 
+ 	if (pack_idx_opts->flags & WRITE_MTIMES) {
+-		mtimes_tmp_name = write_mtimes_file(NULL, to_pack, written_list,
++		mtimes_tmp_name = write_mtimes_file(to_pack, written_list,
+ 						    nr_written,
+ 						    hash);
+ 	}
 -- 
 gitgitgadget
 
