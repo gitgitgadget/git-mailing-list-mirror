@@ -2,171 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 095AFC43334
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 14:35:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1586BC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 15:00:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245182AbiFNOfO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 10:35:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56220 "EHLO
+        id S1354232AbiFNPAg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 11:00:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231738AbiFNOfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 10:35:13 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04DDB36E14
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 07:35:13 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id p69so9617790iod.0
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 07:35:12 -0700 (PDT)
+        with ESMTP id S1344219AbiFNPAe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 11:00:34 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B25832EE4
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:00:33 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id l14so2782060ilq.1
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=BzXbzYopGct1c3tfXpXkHPMnW3GfxOYUNO/wpDkGbao=;
-        b=fQxD0XtjEhKW3dFQ/bjsQpHtw8KZjhS0Or+prmR3xqiny8h0l6hTdnyckUDzaDNJHn
-         CF3062/PJIUxcaZfANNVNFw+o79852lGXf/tovY3mysD3/Vxr/2yJr31EK72ktr4WdHu
-         XzUu3jc0Otxkp/0hyMvIEJcMHLxfIRBkHJGPTTX9pRdKD4V4mKU68AOeQwQnWqOdyHlW
-         mkhfmjnnOptKpyfrpPh2pMkKTXUsGQoJnuYEci1UI2Qeu2h4CzuLbFfo2k+sW3RsBiyH
-         h07Nlz5OHctnVI8SsdhEJ54qgpRA05/POlMPhZmC5T/yWfLHN0bIVZZumfg1zfZ2wwOI
-         Xp7g==
+        bh=qGP7ajTpnhkauDrL+6S3/n2N1Tg3NAf3YtdHY51yFLM=;
+        b=Fx5o0MKIElVPr9oL/pWoVN6TpI0vQU1+NFEEd9Z+K424xezs3WwjLA2e8M4UbOh0d+
+         C5I2nE2nHZ2J+NLgKS8fYo5lWrGeSQu5AbucMzSIgR7lCs1Jjq0E4L41IXfLJOc/sR8l
+         TXjCG/zgE0NP25kRBeHxrXid1lCMTHPV6rb7S2yaFXPfWJrqoNT1zFEPYrniN2i73fNl
+         WXdJM+YlP05o77ATE7XbW/+6xUbup7P+EHG+8WPbKa1JvH3W98iJWgZLAyqXQhJ0UFS4
+         tYBJXoAIxCkHePx0RAcbwg4V/B1NPK/DkNPxSl6ifXWUkANq/MUetVDNR/ygljHtGvKw
+         ttmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=BzXbzYopGct1c3tfXpXkHPMnW3GfxOYUNO/wpDkGbao=;
-        b=Wnc/hzDp1yV+KJ/Shiv7oTTN3uhwwqWjchA0FV9w8TOEN6VtGUJMX8/FIHWFjsUxwV
-         PeaWClKONfoIDHab1s7Ok0JVBwYJDDE6HeH1jD2L3xDJejvMKCKGFnn+05TRcNnuX54A
-         9lcJs7i9NKx5l79Sy8CEP9HmrnqXq+E7R/9hO77cbBm2ZcxYyl5DusKQ4rx/XzBTX+H+
-         SRZ+oCxnq3PqicHEKJm3npKHpJbLPr8fNU9AymVtU45AycjiDGJ34UJOZEuQJh31X8zP
-         qcZ0P/eukvXcs0dgHdRd9/bPnOj95b1aYypplvwvJOsB5kkAlKRlU0nlQbID/FGvuiVi
-         b6XA==
-X-Gm-Message-State: AOAM533UcW+C+Fs/hagRxpz2kX9RmfMavXbA4Ol7NF6PIcrvzsvUPskg
-        1UvY6KsKcpdB1VgUqbvDbLEoSTkrVPJm
-X-Google-Smtp-Source: ABdhPJzQHY+AyBVx7IBsjrB8VKltVxe0jkPU4CaXSUYF7g4ha60SC9C9K8UFGvmY/nLebJc2fEAmnw==
-X-Received: by 2002:a02:ceba:0:b0:331:bd1c:a97f with SMTP id z26-20020a02ceba000000b00331bd1ca97fmr3001291jaq.216.1655217312263;
-        Tue, 14 Jun 2022 07:35:12 -0700 (PDT)
+        bh=qGP7ajTpnhkauDrL+6S3/n2N1Tg3NAf3YtdHY51yFLM=;
+        b=I6yLymvHj43hDRhVbKVexyfrhwoBbM+IocXAl7Wog5JK+lN4tiHD74gs6hxzD8k5H+
+         DilGRG34g1100Ogza9CEW7XtcfdUhP3R3RwywqBUL2Kxi6YRdpK6atuB1hKWberYHWCj
+         pDTTnVxq5xBUWly/75uvB5NxevPqZVtc58WhZWwsCq8CBPw73adH5LRTvI+EvVot+6x2
+         bvXcpq+V7fHCPiFVPsufs/iE97CGgLqsss3qGx/Ec09sCeptSxQA/PDBMzCj2TmdjyAC
+         be+izEXE7M+2NBZqNJ19Aha5U/SurTUJNXat+KZTyof2wnyC6B7nvnDMuLj6yi9T20zZ
+         ioug==
+X-Gm-Message-State: AJIora+08ZVgm7U/NX36Fu7Gxy8NWTOm04kIjReq8MqxqeL7gvxblF2q
+        qQdN8rGSegi/ZEq1U5HX2ywXAyffA1kR
+X-Google-Smtp-Source: AGRyM1u2ATgkITkwEyBQJX/mPAX8yQ4y7C1CcYujMV8nifo3HHSBdrsT95NgTUE6mLGFns0CJfJYHA==
+X-Received: by 2002:a05:6e02:1485:b0:2d1:c323:18fe with SMTP id n5-20020a056e02148500b002d1c32318femr3228783ilk.228.1655218832760;
+        Tue, 14 Jun 2022 08:00:32 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:508:3b97:7c0b:efc0? ([2600:1700:e72:80a0:508:3b97:7c0b:efc0])
-        by smtp.gmail.com with ESMTPSA id b14-20020a92c84e000000b002d1df239846sm5462930ilq.79.2022.06.14.07.35.11
+        by smtp.gmail.com with ESMTPSA id s4-20020a056e02020400b002d3da8e4af5sm5682310ilr.23.2022.06.14.08.00.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jun 2022 07:35:11 -0700 (PDT)
-Message-ID: <31f406b1-b4e8-5da2-40af-5747938de634@github.com>
-Date:   Tue, 14 Jun 2022 10:35:10 -0400
+        Tue, 14 Jun 2022 08:00:32 -0700 (PDT)
+Message-ID: <20999998-e369-8623-579c-a71527f9184e@github.com>
+Date:   Tue, 14 Jun 2022 11:00:31 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH] revision: mark blobs needed for resolve-undo as reachable
+Subject: Re: [ANNOUNCE] Git v2.37.0-rc0
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqfskdieqz.fsf@gitster.g>
- <7cd41846-e6ef-7a24-0426-6031a529360f@github.com>
- <220614.86czfcytlz.gmgdl@evledraar.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Jeff Hostetler <git@jeffhostetler.com>
+References: <xmqqwndk10gg.fsf@gitster.g>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220614.86czfcytlz.gmgdl@evledraar.gmail.com>
+In-Reply-To: <xmqqwndk10gg.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/13/2022 8:24 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Jun 13 2022, Derrick Stolee wrote:
-> 
->> On 6/9/2022 7:44 PM, Junio C Hamano wrote:
->>
->>> +	struct string_list *resolve_undo = istate->resolve_undo;
->>> +
->>> +	if (!resolve_undo)
->>> +		return 0;
->>> +
->>> +	for_each_string_list_item(item, resolve_undo) {
->>
->> I see this is necessary since for_each_string_list_item() does
->> not handle NULL lists. After attempting to allow it to handle
->> NULL lists, I see that the compiler complains about the cases
->> where it would _never_ be NULL, so that change appears to be
->> impossible.
->>  
->> The patch looks good. I liked the comments for the three phases
->> of the test.
-> 
-> I think it's probably good to keep for_each_string_list_item()
-> implemented the way it is, given that all existing callers of it feed
-> non-NULL lists to it.
+On 6/13/2022 9:46 PM, Junio C Hamano wrote:
 
-We are talking right now about an example where it would be cleaner to
-allow a NULL value.
+>  * A workflow change for translators are being proposed.  git.pot is
+>    no longer version controlled and it is local responsibility of
+>    translaters to generate it.
 
-This guarded example also exists in http.c (we would still need to guard
-on NULL options):
+s/translaters/translators/
 
-	/* Add additional headers here */
-	if (options && options->extra_headers) {
-		const struct string_list_item *item;
-		for_each_string_list_item(item, options->extra_headers) {
-			headers = curl_slist_append(headers, item->string);
-		}
-	}
+>  * More fsmonitor--daemon.
 
-These guarded examples in ref_filter_match() would be greatly simplified:
+Would you like to expand more here? Perhaps...
 
-	if (exclude_patterns && exclude_patterns->nr) {
-		for_each_string_list_item(item, exclude_patterns) {
-			if (match_ref_pattern(refname, item))
-				return 0;
-		}
-	}
+  * The fsmonitor--daemon handles even more corner cases when
+    watching filesystem events.
 
-	if (include_patterns && include_patterns->nr) {
-		for_each_string_list_item(item, include_patterns) {
-			if (match_ref_pattern(refname, item))
-				return 1;
-		}
-		return 0;
-	}
+CC'ing Jeff to see if he has thoughts.
 
-	if (exclude_patterns_config && exclude_patterns_config->nr) {
-		for_each_string_list_item(item, exclude_patterns_config) {
-			if (match_ref_pattern(refname, item))
-				return 0;
-		}
-	}
+>  * The path taken by "git multi-pack-index" command from the end user
+>    was compared with path internally prepared by the tool withut first
+>    normalizing, which lead to duplicated paths not being noticed,
+>    which has been corrected.
 
-(The include_patterns check would still be needed for that extra
-return 0; in the middle.)
+s/withut/without/
 
-There are more examples, but I'll stop listing them here.
+>  * Update a few end-user facing messages around eol conversion.
+>    (merge c970d30c2c ah/convert-warning-message later to maint).
 
-> But why is it impossible to make it handle NULL lists? This works for
-> me, and passes the tests:
+optional: s/eol/EOL/
 
-> 	 /** Iterate over each item, as a macro. */
-> 	 #define for_each_string_list_item(item,list)            \
-> 	-	for (item = (list)->items;                      \
-> 	+	for (item = (((list) && (list)->items) ? ((list)->items) : NULL); \
+>  * With a more targetted workaround in http.c in another topic, we may
+>    be able to lift this blanket "GCC12 dangling-pointer warning is
+>    broken and unsalvageable" workaround.
 
-I thinks I had something like
+s/targetted/targeted/
 
-	for ((list) && item = (list)->items; (list) && item && ...
+Thanks for all your work to create this release!
 
-but even with your suggestion, I get this compiler error:
-
-In file included from convert.h:8,
-                 from cache.h:10,
-                 from apply.c:10:
-apply.c: In function ‘write_out_results’:
-string-list.h:146:22: error: the address of ‘cpath’ will always evaluate as ‘true’ [-Werror=address]
-  146 |         for (item = ((list) && (list)->items) ? (list)->items : NULL;     \
-      |                      ^
-apply.c:4652:25: note: in expansion of macro ‘for_each_string_list_item’
- 4652 |                         for_each_string_list_item(item, &cpath)
-      |   
-
-(along with many other examples).
-
-Junio is right that we would need to convert this into a method with a
-function pointer instead of a for_each_* macro. That's quite a big lift
-for some small convenience for the callers.
-
-Thanks,
 -Stolee
