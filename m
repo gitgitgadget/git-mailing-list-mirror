@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6DA1C43334
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 10:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0008FC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 10:11:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241060AbiFNKJf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 06:09:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54538 "EHLO
+        id S240603AbiFNKLE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 06:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240680AbiFNKJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 06:09:20 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 016D230573
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 03:09:18 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id k19so10543229wrd.8
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 03:09:18 -0700 (PDT)
+        with ESMTP id S231955AbiFNKLD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 06:11:03 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC5EE3F324
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 03:11:01 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id x17so10567734wrg.6
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 03:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=DZL87WmC1orsNXxGQoblbbDnqbll/a5VycUR4h3uZAY=;
-        b=aEOW05zKMfEbSY7GSt6aXGvPdY7kAHVg4zARBhrznN46qhO7SijHA4RopQa4v10yvF
-         w71otEH5GPQgOpxzRaKSDYCoPxcaNDNihKQmHW9erLeCKlb1Rb6L+DZDMnxkOCoJ8W7c
-         s8ddu/15v/mGv++E6PSYMRtHIGqeniRuH/9rIKX9CtNDojpsv2TfopGSRNQg8gCMy5yO
-         epstogA1/Kb4FWxup0A+OzckuVQvIJNO6roma27pCYKVbSewFxMXzk/jiXO0iRLxX3ET
-         VOSu7gdC+dMizL2RRjrxovyg/HjB1mZ9PqRmghh1FF49EXTwEVXgfDfkxk4LVZGKhkSm
-         wuRw==
+        bh=eUWuKVVrAGTuDKefCAabry8YF8+P5/Ld1uod3qoUTP0=;
+        b=pmJFDcShXWRthtkETzUwNJvpKyzt7Ztqw7vFBt79ejJK3PQHhdembrE2351mzKyPwI
+         SppsLKtvEKIKHVtM2GwwUoMFcpS9EJJnMBstsUj90gZMhNMTRd7H8DUZCgAOyLynl4uV
+         3UYsaS9U5vB6e21532v4MyHf3OvJ37ZIjPOeyf3JUVbfGiG7MUViqmoonZah/jIf4UN3
+         2Gd5nukEM/tNxouG1t4J8B23G3Bxc+KjJ2kgM/eqYjA7WD8IcQbll0JHfhqq48127dP5
+         slJS2yu1YQW2kA50hjmdK1OBNfkrmtv82yYjabXL1DlrJcjCeIcCgGuOE1av2C5WpjER
+         d7aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=DZL87WmC1orsNXxGQoblbbDnqbll/a5VycUR4h3uZAY=;
-        b=myfzYlmYsfmLNEiu/CeZhe9Na3v0HaoHopet5wxA22EQO1OdkyU+LM5K/xqKFXnR5W
-         or026DUS4VkqnsedlOFwH70KimmkoZS/pp1rfkvEJwS1sOt+a3IzHk4FKMd3FoA7Jx2Z
-         Su7jEOWDBC56KCCZ8M/3o86EsJH+z4mW3wcoi0maFWI1dY1TBLSw3eUVsVcng3FRYtnJ
-         xZWhPinXkLWJJBwg3liVDUWFhX1V2qAMx+9YDOiZEA7KbgfzEjBNbduOwrx1TC/q78aO
-         VQy88Qv+cq3cv1ISSo9GpXfMnoOeNn4S0I0Txb83hBrlsVjBlrigVfVqajevQN0Brmf/
-         iVwQ==
-X-Gm-Message-State: AJIora+BwnRrqjlrDUI1nw3eH20+zmf6TRWYo4puwJldGdsgXhsLFK/V
-        CwAdK4oOpp0h4Uei9PdwP50=
-X-Google-Smtp-Source: AGRyM1sZ/AZj3JCyiZ9cewO8bHxowXKyjWTRoeUwDy+bH3XM3RSLdyP29Oimz57sOZWL14n1cEWN8A==
-X-Received: by 2002:adf:e902:0:b0:213:a337:92ae with SMTP id f2-20020adfe902000000b00213a33792aemr4142723wrm.84.1655201357443;
-        Tue, 14 Jun 2022 03:09:17 -0700 (PDT)
+        bh=eUWuKVVrAGTuDKefCAabry8YF8+P5/Ld1uod3qoUTP0=;
+        b=zJ3FyOii/QuPgycc3YvzNXChaD6XVE7Hol0OnPo485U7PX5aF7BxIhfaglM7dlnXHY
+         D/+UmC52eX2jXtLbWTxnaFgbdTA4HTeg0M6ZpBdDlcYCxCpDFkMEsUVbK8Ia4zzUTovU
+         SvS7unchTfMH9WOr7MHrNLdxO0L75Xb3hCVGf3RnJUqu2sWBjLMsF334dOCaLvlBWHSq
+         3qjI22QK+fuD2XU34zwoAoJcvMg5M3MOL/zLPRYdnk6I9N99Mb89clnsCiFlIzrCyNG5
+         wIgE/2UZP5F1HZdHJ2jPZfxXgBiNaOGqPxjHwoaYtmp1CXM6z2slTFYVcshR8L5sSabL
+         Li4A==
+X-Gm-Message-State: AJIora/mT9tebsYYaeuih/3XTQGJ25to7RbbaTD8kQfkxUA6ryC30SuI
+        SidgrHP/eOGN6udlr2KEckw=
+X-Google-Smtp-Source: AGRyM1t1lI22WKvrzADuYnl8NL4jZAFVE9jLYiOqaRWqDCB4uewtZRSM1xmMXVJWd9BILsAdvGBnlA==
+X-Received: by 2002:a5d:4646:0:b0:210:3e3c:86dc with SMTP id j6-20020a5d4646000000b002103e3c86dcmr4154536wrs.277.1655201460348;
+        Tue, 14 Jun 2022 03:11:00 -0700 (PDT)
 Received: from [192.168.1.201] ([31.185.185.192])
-        by smtp.googlemail.com with ESMTPSA id w5-20020a5d6805000000b002119c1a03e4sm11216132wru.31.2022.06.14.03.09.16
+        by smtp.googlemail.com with ESMTPSA id z10-20020a05600c0a0a00b003974b95d897sm19639873wmp.37.2022.06.14.03.10.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jun 2022 03:09:16 -0700 (PDT)
-Message-ID: <42ada1a3-adc2-2c43-9aa1-7854858865ae@gmail.com>
-Date:   Tue, 14 Jun 2022 11:09:15 +0100
+        Tue, 14 Jun 2022 03:10:59 -0700 (PDT)
+Message-ID: <5137243d-ff20-e184-493b-29af64c408d9@gmail.com>
+Date:   Tue, 14 Jun 2022 11:10:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/4] branch: add branch_checked_out() helper
+Subject: Re: [PATCH 3/4] fetch: use new branch_checked_out() and add tests
 Content-Language: en-US
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -65,188 +65,156 @@ Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
         Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 References: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
- <dbb7eae390c90d4b710f48d8875bd7db0409aea3.1654718942.git.gitgitgadget@gmail.com>
+ <4540dbeed385341f8c5b45134e1a65dc48c75b0c.1654718942.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <dbb7eae390c90d4b710f48d8875bd7db0409aea3.1654718942.git.gitgitgadget@gmail.com>
+In-Reply-To: <4540dbeed385341f8c5b45134e1a65dc48c75b0c.1654718942.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Hi Stolee
 
-On 08/06/2022 21:08, Derrick Stolee via GitGitGadget wrote:
+On 08/06/2022 21:09, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <derrickstolee@github.com>
-> 
-> The validate_new_branchname() method contains a check to see if a branch
-> is checked out in any non-bare worktree. This is intended to prevent a
-> force push that will mess up an existing checkout. This helper is not
-> suitable to performing just that check, because the method will die()
-> when the branch is checked out instead of returning an error code.
-> 
-> Create a new branch_checked_out() helper that performs the most basic
-> form of this check. To ensure we can call branch_checked_out() in a loop
-> with good performance, do a single preparation step that iterates over
-> all worktrees and stores their current HEAD branches in a strmap. The
-> branch_checked_out() helper can then discover these branches using a
-> hash lookup.
-> 
-> This helper is currently missing some key functionality. Namely: it
-> doesn't look for active rebases or bisects which mean that the branch is
-> "checked out" even though HEAD doesn't point to that ref. This
-> functionality will be added in a coming change.
-> 
-> We could use branch_checked_out() in validate_new_branchname(), but this
-> missing functionality would be a regression. However, we have no tests
-> that cover this case!
-> 
-> Add a new test script that will be expanded with these cross-worktree
-> ref updates. The current tests would still pass if we refactored
-> validate_new_branchname() to use this version of branch_checked_out().
-> The next change will fix that functionality and add the proper test
-> coverage.
-> 
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->   branch.c                  | 42 +++++++++++++++++++++++++++++++++++++++
->   branch.h                  |  8 ++++++++
->   t/t2407-worktree-heads.sh | 24 ++++++++++++++++++++++
->   3 files changed, 74 insertions(+)
->   create mode 100755 t/t2407-worktree-heads.sh
-> 
-> diff --git a/branch.c b/branch.c
-> index 2d6569b0c62..061a11f3415 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -10,6 +10,7 @@
->   #include "worktree.h"
->   #include "submodule-config.h"
->   #include "run-command.h"
-> +#include "strmap.h"
+> [...]
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index ac29c2b1ae3..1ba56240312 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -885,7 +885,7 @@ static int update_local_ref(struct ref *ref,
+>   			    struct worktree **worktrees)
+>   {
+>   	struct commit *current = NULL, *updated;
+> -	const struct worktree *wt;
+> +	char *path = NULL;
+>   	const char *pretty_ref = prettify_refname(ref->name);
+>   	int fast_forward = 0;
 >   
->   struct tracking {
->   	struct refspec_item spec;
-> @@ -369,6 +370,47 @@ int validate_branchname(const char *name, struct strbuf *ref)
->   	return ref_exists(ref->buf);
->   }
+> @@ -900,17 +900,17 @@ static int update_local_ref(struct ref *ref,
+>   	}
 >   
-> +static int initialized_checked_out_branches;
-> +static struct strmap current_checked_out_branches = STRMAP_INIT;
+>   	if (!update_head_ok &&
+> -	    (wt = find_shared_symref(worktrees, "HEAD", ref->name)) &&
+> -	    !wt->is_bare && !is_null_oid(&ref->old_oid)) {
+> +	    !is_null_oid(&ref->old_oid) &&
+> +	    branch_checked_out(ref->name, &path)) {
+>   		/*
+>   		 * If this is the head, and it's not okay to update
+>   		 * the head, and the old value of the head isn't empty...
+>   		 */
+>   		format_display(display, '!', _("[rejected]"),
+> -			       wt->is_current ?
+> -				       _("can't fetch in current branch") :
+> -				       _("checked out in another worktree"),
+> +			       path ? _("can't fetch in current branch") :
+> +				      _("checked out in another worktree"),
 
-I looks like this map is never freed which I think makes sense but makes 
-me wonder about the relevance of patch 5. I think it would probably be 
-worth marking the map with UNLEAK() in prepare_checked_out_branches().
-
-> +static void prepare_checked_out_branches(void)
-> +{
-> +	int i = 0;
-> +	struct worktree **worktrees;
-> +
-> +	if (initialized_checked_out_branches)
-> +		return;
-> +	initialized_checked_out_branches = 1;
-> +
-> +	worktrees = get_worktrees();
-> +
-> +	while (worktrees[i]) {
-> +		struct worktree *wt = worktrees[i++];
-> +
-> +		if (wt->is_bare)
-> +			continue;
-> +
-> +		if (wt->head_ref)
-> +			strmap_put(&current_checked_out_branches,
-> +				   wt->head_ref,
-> +				   xstrdup(wt->path));
-
-STRMAP_INIT sets .strdup_strings = 1, so the xstrdup() is unnecessary.
-
-> +	}
-> +
-> +	free_worktrees(worktrees);
-> +}
-> +
-> +int branch_checked_out(const char *refname, char **path)
-> +{
-> +	const char *path_in_set;
-> +	prepare_checked_out_branches();
-> +
-> +	path_in_set = strmap_get(&current_checked_out_branches, refname);
-> +	if (path_in_set && path)
-> +		*path = xstrdup(path_in_set);
-> +
-> +	return !!path_in_set;
-> +}
-
-I like the idea of having a specific function to see if a branch is 
-checkout out rather than Ævar's suggestion of forcing all callers to do
-     strmap_get(get_worktree_refs_strmap(), ref)
-which will quickly get tiresome. I do wonder though if we'd be better 
-off with a thin wrapper around strmap_get() such as
-
-const char* branch_checked_out(const char *refname)
-{
-	prepare_checked_out_branches();
-	return strmap_get(&current_checked_out_branches, refname);
-}
-
-so that the user can choose whether to copy the path or not.
+I'm confused by this, isn't path always non-null?
 
 Best Wishes
 
 Phillip
 
->   /*
->    * Check if a branch 'name' can be created as a new branch; die otherwise.
->    * 'force' can be used when it is OK for the named branch already exists.
-> diff --git a/branch.h b/branch.h
-> index 560b6b96a8f..5ea93d217b1 100644
-> --- a/branch.h
-> +++ b/branch.h
-> @@ -101,6 +101,14 @@ void create_branches_recursively(struct repository *r, const char *name,
->   				 const char *tracking_name, int force,
->   				 int reflog, int quiet, enum branch_track track,
->   				 int dry_run);
-> +
-> +/*
-> + * Returns true if the branch at 'refname' is checked out at any
-> + * non-bare worktree. The path of the worktree is stored in the
-> + * given 'path', if provided.
-> + */
-> +int branch_checked_out(const char *refname, char **path);
-> +
->   /*
->    * Check if 'name' can be a valid name for a branch; die otherwise.
->    * Return 1 if the named branch already exists; return 0 otherwise.
+>   			       remote, pretty_ref, summary_width);
+> +		free(path);
+>   		return 1;
+>   	}
+>   
+> @@ -1434,19 +1434,16 @@ cleanup:
+>   	return result;
+>   }
+>   
+> -static void check_not_current_branch(struct ref *ref_map,
+> -				     struct worktree **worktrees)
+> +static void check_not_current_branch(struct ref *ref_map)
+>   {
+> -	const struct worktree *wt;
+> +	char *path;
+>   	for (; ref_map; ref_map = ref_map->next)
+>   		if (ref_map->peer_ref &&
+>   		    starts_with(ref_map->peer_ref->name, "refs/heads/") &&
+> -		    (wt = find_shared_symref(worktrees, "HEAD",
+> -					     ref_map->peer_ref->name)) &&
+> -		    !wt->is_bare)
+> +		    branch_checked_out(ref_map->peer_ref->name, &path))
+>   			die(_("refusing to fetch into branch '%s' "
+>   			      "checked out at '%s'"),
+> -			    ref_map->peer_ref->name, wt->path);
+> +			    ref_map->peer_ref->name, path);
+>   }
+>   
+>   static int truncate_fetch_head(void)
+> @@ -1650,7 +1647,7 @@ static int do_fetch(struct transport *transport,
+>   	ref_map = get_ref_map(transport->remote, remote_refs, rs,
+>   			      tags, &autotags);
+>   	if (!update_head_ok)
+> -		check_not_current_branch(ref_map, worktrees);
+> +		check_not_current_branch(ref_map);
+>   
+>   	retcode = open_fetch_head(&fetch_head);
+>   	if (retcode)
 > diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
-> new file mode 100755
-> index 00000000000..dd905dc1a5c
-> --- /dev/null
+> index 12faca7f655..f3f8b0b2b79 100755
+> --- a/t/t2407-worktree-heads.sh
 > +++ b/t/t2407-worktree-heads.sh
-> @@ -0,0 +1,24 @@
-> +#!/bin/sh
+> @@ -10,6 +10,15 @@ test_expect_success 'setup' '
+>   		test_commit $i &&
+>   		git branch wt-$i &&
+>   		git worktree add wt-$i wt-$i || return 1
+> +	done &&
 > +
-> +test_description='test operations trying to overwrite refs at worktree HEAD'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup' '
+> +	# Create a server that updates each branch by one commit
+> +	git clone . server &&
+> +	git remote add server ./server &&
 > +	for i in 1 2 3 4
 > +	do
-> +		test_commit $i &&
-> +		git branch wt-$i &&
-> +		git worktree add wt-$i wt-$i || return 1
-> +	done
+> +		git -C server checkout wt-$i &&
+> +		test_commit -C server A-$i || return 1
+>   	done
+>   '
+>   
+> @@ -21,6 +30,16 @@ test_expect_success 'refuse to overwrite: checked out in worktree' '
+>   	done
+>   '
+>   
+> +test_expect_success 'refuse to overwrite during fetch' '
+> +	test_must_fail git fetch server +refs/heads/wt-3:refs/heads/wt-3 2>err &&
+> +	grep "refusing to fetch into branch '\''refs/heads/wt-3'\''" err &&
+> +
+> +	# General fetch into refs/heads/ will fail on first ref,
+> +	# so use a generic error message check.
+> +	test_must_fail git fetch server +refs/heads/*:refs/heads/* 2>err &&
+> +	grep "refusing to fetch into branch" err
 > +'
 > +
-> +test_expect_success 'refuse to overwrite: checked out in worktree' '
-> +	for i in 1 2 3 4
-> +	do
-> +		test_must_fail git branch -f wt-$i HEAD 2>err
-> +		grep "cannot force update the branch" err || return 1
-> +	done
-> +'
+>   test_expect_success 'refuse to overwrite: worktree in bisect' '
+>   	test_when_finished test_might_fail git -C wt-4 bisect reset &&
+>   
+> @@ -31,7 +50,10 @@ test_expect_success 'refuse to overwrite: worktree in bisect' '
+>   	) &&
+>   
+>   	test_must_fail git branch -f wt-4 HEAD 2>err &&
+> -	grep "cannot force update the branch '\''wt-4'\'' checked out at" err
+> +	grep "cannot force update the branch '\''wt-4'\'' checked out at" err &&
 > +
-> +test_done
+> +	test_must_fail git fetch server +refs/heads/wt-4:refs/heads/wt-4 2>err &&
+> +	grep "refusing to fetch into branch '\''refs/heads/wt-4'\''" err
+>   '
+>   
+>   . "$TEST_DIRECTORY"/lib-rebase.sh
+> @@ -47,7 +69,10 @@ test_expect_success 'refuse to overwrite: worktree in rebase' '
+>   	) &&
+>   
+>   	test_must_fail git branch -f wt-4 HEAD 2>err &&
+> -	grep "cannot force update the branch '\''wt-4'\'' checked out at" err
+> +	grep "cannot force update the branch '\''wt-4'\'' checked out at" err &&
+> +
+> +	test_must_fail git fetch server +refs/heads/wt-4:refs/heads/wt-4 2>err &&
+> +	grep "refusing to fetch into branch '\''refs/heads/wt-4'\''" err
+>   '
+>   
+>   test_done
 
