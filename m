@@ -2,140 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45CF0C43334
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 02:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A96F4C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 05:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242908AbiFNC6O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 22:58:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52126 "EHLO
+        id S237038AbiFNFNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 01:13:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351913AbiFNC51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 22:57:27 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A0823FDB8
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 19:49:31 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id hh4so5237622qtb.10
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 19:49:31 -0700 (PDT)
+        with ESMTP id S230137AbiFNFNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 01:13:44 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DB8617E24
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 22:13:43 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id u12so14903976eja.8
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 22:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G42E29AzWMBK/XfRYLg6N5nTByVnE6sFrExTHGHwfZ0=;
-        b=TvWbDZslwsK7Kib3tu7m8oamLjoqnwKD8xVjXizQGBglbAwZYoDc8CSjA0CHyOQ8G4
-         uPDbJ68VNVZUHaC/gVMNr/tPmxc+GUj+vipNnx9CAO2Zweih9SuEtpHTFD6VqdImT+1R
-         +EyeUe+0Jv93WRya7tldeCVI3jl1stad9/xCwF+gEDa89oTjuWaNESkcC5Vf7EyjcWdw
-         j9rcPAV3phaBUMldP09XPDbSX6N7D9v1ziXNtKSJyPhLe7Gs5D0Am4MrP36ObGF1OCjE
-         KSLK0+H4aznmH37TnJ0G75UQ1pYrbm3vCdltEepSyG5DpMgphGZrMZ2aEETpgPdquOor
-         +hdw==
+        d=klerks.biz; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=UmmbKPuDDlecYObsowBs8U5R5SbqgbB10OMeZtjZcMc=;
+        b=WVpAuL5cL9sYRgrKh8NykUeZU8FBU9pYgdkmqOG5SF8AI07dAPmMZ8FtJ5ukVqCxqQ
+         UUx5JCVPT8n/lnvhJn7X6xXDq4/Ljj3SQR6BYTPGswlRQDEv+adGaLKT1zBgAVHtSIEv
+         OXMFV1ZE+Qi1B1JGc3N5U3Y8xa/MQM9dFPpCs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G42E29AzWMBK/XfRYLg6N5nTByVnE6sFrExTHGHwfZ0=;
-        b=EppKuPQOv33Vye1uFQ/ZpBRMzy1H6tQxddy3vUX6Vfew0Rwgwqfhdwk7CacKbNh0gb
-         sImyO3CoCEPpkSjY3aw71Gxms2DyeLYnQUEIukTwTQ1JiGdZuWrrFfS87cWiy48YoEtp
-         pnYJdaaXwzOPxjpla03butAyEEFpEATSwJZ1UDyzREjHnmxKVbKb1HW8GQlof9pchIuq
-         Cl6QgPQfX5bU4MBb1DDg75I31UWCGeckJTbaJJBKhxMN1IANEN/lAP5nxUVln42SZC9R
-         IT367PUAMhhAFqtQr2/AWQF/KaSTWWP9M+B7C8+Cx9jKlljLJuT5ByeNtnBLSUgsYxk7
-         4BKQ==
-X-Gm-Message-State: AOAM533yTx+w9+gi2pdjeYcZic7aXg2w/ZTH7rt9fxRISEyVy5nPidb4
-        V1/WPH1QyIfHiHEGPuIpVkxRstEaDyOZPIMd
-X-Google-Smtp-Source: ABdhPJx7Sh3ad+/zPoGg35WlAvKlRTrYWMJ0EoohAUrHi96x1rbtLfE79rfmQrVSH3Eu1xhUIuQ4VQ==
-X-Received: by 2002:ac8:7d16:0:b0:305:1e80:b44d with SMTP id g22-20020ac87d16000000b003051e80b44dmr2492603qtb.231.1655174970659;
-        Mon, 13 Jun 2022 19:49:30 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j14-20020ac806ce000000b003050af740e6sm6281536qth.22.2022.06.13.19.49.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 19:49:30 -0700 (PDT)
-Date:   Mon, 13 Jun 2022 22:49:29 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] revision: mark blobs needed for resolve-undo as reachable
-Message-ID: <Yqf3OT9vSvWETVCJ@nand.local>
-References: <xmqqfskdieqz.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UmmbKPuDDlecYObsowBs8U5R5SbqgbB10OMeZtjZcMc=;
+        b=m/rR0giAOXyJ0qwOV0U1PyWUspTaws2qaeH93OTWLAhItD+9AuBoPaqxGj3Wr/cUlH
+         XirHTgPQ72Av/k+7drukYYEer61JYMvGrQvBMm/ut31Ftyy2FFvnPn84/jtveLMGCtVi
+         Sh45cjXklP+O9EvocHAOVdBQVm/XnTH7uDvUuL80aemo1Ena7g9ljSpLjdN1pioDNt0l
+         Tmr3MtJ5sJyA9kVHDy+DS+wrldi++5NayarwHGpeuFtoNa03hycqtyeYTQ+GSF5XmCZ+
+         0Me3RIiXWMMODR0OOjRoL2/1wV6aCiHW8UuagX47bZIa6CrV/k1c9H+TN5TdL6a+emJU
+         yStA==
+X-Gm-Message-State: AJIora+oT8OT4kVtzcXWrNDFcIBpSoOWKkUZZO7xq2vmUtcJ63/Blttx
+        YZzDr3xeaW2UG1nugBZb4p7ZdxZVpkuB04cHgCPSikIzDlmwe4Ie
+X-Google-Smtp-Source: ABdhPJx85eIZ4pgEvaVh8sqKn5t2af0XyEvF2O93FW9nqHpnti9ytYRFM5Mko1BOW0vTLTB2VXTtd7Q8IPrqBG5mhQc=
+X-Received: by 2002:a17:906:2b5a:b0:707:ce7b:94eb with SMTP id
+ b26-20020a1709062b5a00b00707ce7b94ebmr2558783ejg.335.1655183621959; Mon, 13
+ Jun 2022 22:13:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfskdieqz.fsf@gitster.g>
+References: <pull.1257.git.1654967038802.gitgitgadget@gmail.com> <xmqqleu3au2n.fsf@gitster.g>
+In-Reply-To: <xmqqleu3au2n.fsf@gitster.g>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 14 Jun 2022 07:13:31 +0200
+Message-ID: <CAPMMpojdnAMnczJAevqL8GSOb8gvddcSiYfbz0c51oPpn4U0wA@mail.gmail.com>
+Subject: Re: [PATCH] apply: support case-only renames in case-insensitive filesystems
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 09, 2022 at 04:44:20PM -0700, Junio C Hamano wrote:
-> The resolve-undo extension was added to the index in cfc5789a
-> (resolve-undo: record resolved conflicts in a new index extension
-> section, 2009-12-25).  This extension records the blob object names
-> and their modes of conflicted paths when the path gets resolved
-> (e.g. with "git add"), to allow "undoing" the resolution with
-> "checkout -m path".  These blob objects should be guarded from
-> garbage-collection while we have the resolve-undo information in the
-> index (otherwise unresolve operation may try to use a blob object
-> that has already been pruned away).
+On Sat, Jun 11, 2022 at 9:17 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> But the code called from mark_reachable_objects() for the index
-> forgets to do so.  Teach add_index_objects_to_pending() helper to
-> also add objects referred to by the resolve-undo extension.
+> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Tao Klerks <tao@klerks.biz>
+> >
+> > "git apply" checks, when validating a patch, to ensure that any files
+> > being added aren't already in the worktree.
+> >
+> > When this check runs on a case-only rename, in a case-insensitive
+> > filesystem, this leads to a false positive - the command fails with an
+> > error like:
+> > error: File1: already exists in working directory
+> >
+> > Fix this existence check to allow the file to exist, for a case-only
+> > rename when config core.ignorecase is set.
+>
+> Hmph, close, but the patch as-posted may be fatally buggy, I think.
+>
 
-Nice find!
+Yes indeed, very much so.
 
-> Also make matching changes to "fsck", which has code that is fairly
-> similar to the reachability stuff, but have parallel implementations
-> for all these stuff, which may (or may not) someday want to be unified.
+> At the beginning of the function there is this block:
+>
+>         const char *old_name =3D patch->old_name;
+>         const char *new_name =3D patch->new_name;
+>         const char *name =3D old_name ? old_name : new_name;
+>
+> which makes us realize that old_name CAN legitimately be NULL.  That
+> is true for a creation patch.  new_name can also be NULL for a
+> deletion patch.
+>
 
-I wasn't sure what the change in fsck was when skimming the diffstat
-before reading your patch message, but makes sense. I'm glad that you
-included this, too.
+Yep, I was aware of the nulls, but I was unaware that passing nulls
+into "strcasecmp()" was a bad thing to do. I just assumed a non-zero
+comparison result would ensue.
 
-> +static void add_resolve_undo_to_pending(struct index_state *istate, struct rev_info *revs)
-> +{
-> +	struct string_list_item *item;
-> +	struct string_list *resolve_undo = istate->resolve_undo;
-> +
-> +	if (!resolve_undo)
-> +		return;
-> +
-> +	for_each_string_list_item(item, resolve_undo) {
-> +		const char *path = item->string;
-> +		struct resolve_undo_info *ru = item->util;
-> +		int i;
-> +
-> +		if (!ru)
-> +			continue;
-> +		for (i = 0; i < 3; i++) {
-> +			struct blob *blob;
-> +
-> +			if (!ru->mode[i] || !S_ISREG(ru->mode[i]))
-> +				continue;
-> +
-> +			blob = lookup_blob(revs->repo, &ru->oid[i]);
-> +			if (!blob) {
-> +				warning(_("resolve-undo records `%s` which is missing"),
-> +					oid_to_hex(&ru->oid[i]));
-> +				continue;
-> +			}
-> +			add_pending_object_with_path(revs, &blob->object, "",
-> +						     ru->mode[i], path);
-> +		}
-> +	}
-> +}
+> >       if ((tpatch =3D in_fn_table(state, new_name)) &&
+> >           (was_deleted(tpatch) || to_be_deleted(tpatch)))
+> >               ok_if_exists =3D 1;
+> > +     else if (ignore_case && !strcasecmp(old_name, new_name))
+> > +             ok_if_exists =3D 1;
+>
+> You'd get a segfault when the patch is creating a file at new_name,
+> or deleting a file at old_name, wouldn't you?
+>
 
-This implementation looks good to my eyes.
+Indeed you do (when ignorecase is true of course).
 
-> @@ -1718,6 +1752,8 @@ static void do_add_index_objects_to_pending(struct rev_info *revs,
->  		add_cache_tree(istate->cache_tree, revs, &path, flags);
->  		strbuf_release(&path);
->  	}
-> +
-> +	add_resolve_undo_to_pending(istate, revs);
->  }
+> We need a new test or two to see if a straight creation or deletion
+> patch does work correctly with icase set, before we even dream of
+> handling rename patches.  Not having tests for such basic cases is
+> quite surprising, but apparently the above line passed the CI.
+>
 
-Great; this fixes the bug for cruft packs, too, whose reachable pack is
-generated with `--indexed-objects`, so the cruft pack will no longer
-contain the resolve-undo objects.
+This is where I made some very bad assumptions: I only manually ran
+the new "t4141-apply-case-insensitive-rename.sh" test, and assumed
+that the test suite ran against linux, windows, and OSX, with the
+latter two running on case-insensitive filesystems. I assumed that
+both case-sensitive and case-insensitive code paths would be tested by
+the complete CI suite.
 
-> +test_expect_success 'resolve-undo keeps blobs from gc' '
+The OSX tests were not running for me at all in GitGitGadget (seems to
+be an ongoing struggle), but I assumed that everything was still
+tested in case-insensitive mode because of the windows suite. It looks
+like that was wrong, although I still don=C2=B4t know how/why.
 
-Very thorough. Thanks!
+Had I run "t4114-apply-typechange.sh" (or probably some others in the
+41XX range) on the OSX environment where I happen to have developed
+this weekend, I would have seen the failures immediately.
 
-Taylor
+> >       else
+> >               ok_if_exists =3D 0;
+>
+> Having said that, I wonder what the existing check before the new
+> condition is doing?  Especially, what is in_fn_table() for and how
+> does it try to do its work?
+>
+> Reading the big comment before it, it seems that it tries to deal
+> with tricky delete/create case already.  With a typechange patch
+> that first removes a regular file "hello.txt" and then creates a
+> symbolic link "hello.txt" is exempted from the "what you are
+> creating should not exist already" rule by using in_fn_table()
+> check.  If it tries to create a symlink "Hello.txt" instead,
+> shouldn't we allow it the same way on case-insensitive systems?  I
+> do not think in_fn_table() pays attention to "ignore_case" option,
+> so there may be an existing bug there already, regardless of the
+> problem you are trying to address with your patch.
+>
+> And I wonder if doing case-insensitive match in in_fn_table() lets
+> us cover this new case as well as "fixing" the existing issue.
+>
+
+Yep, I confirmed that as you expect, it does fix the issue I set out
+to fix, and as you noted also fixes other (slightly more obscure?)
+existing issues with "git apply" on case-insensitive filesystems.
+
+This time I tested all of t41XX on a case-insensitive system, and the
+CI process ran in GitLab, presumably on case-sensitive filesystems
+only.
+
+I'm not sure what more to look out for, and will note as much in the
+patch v2 comments.
+
+> In any case, here are such two tests to make sure creation and
+> deletion patches on icase systems are not broken by careless
+> mistakes like the one in this patch.
+
+I have a question related to this:
+
+*Do* we expect to run the full test suite on case-insensitive systems
+in gitlab, or do we expect to need to add explicit "-C
+core.ignorecase" tests as you have done here? The latter seems risky
+both because the behavior is not representatively tested (because it's
+still actually running in a case-sensitive filesystem), and because
+it's hard to predict all the things that should be explicitly retested
+in this way.
+
+I don't think these specific tests were necessary, and I guess they
+are replaced by later ones in this thread, so I will ignore this bit
+specifically.
+
+Thanks for the careful review, my apologies for the careless patch.
