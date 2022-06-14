@@ -2,123 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A89DBC43334
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 06:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3265EC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 06:17:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245730AbiFNGJP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 02:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43022 "EHLO
+        id S237926AbiFNGQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 02:16:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230137AbiFNGJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 02:09:14 -0400
-Received: from mail-vk1-xa2c.google.com (mail-vk1-xa2c.google.com [IPv6:2607:f8b0:4864:20::a2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931BF11158
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 23:09:13 -0700 (PDT)
-Received: by mail-vk1-xa2c.google.com with SMTP id n203so3580410vke.7
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 23:09:13 -0700 (PDT)
+        with ESMTP id S229937AbiFNGQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 02:16:58 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E663377E8
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 23:16:57 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id s12so15160797ejx.3
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 23:16:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=klerks.biz; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Uuxi1JHGqAFvbmp+tPsxz1IDWB5ifMT99rajL0xdXMo=;
-        b=HPAAasC3Vfpta4vWIc4Ng3m2mDJSIkU6dBI6m1lZnzpnDCQYNC8meHer58F4dQt/fz
-         c2+q3Fu5ZlWmdRc2t9qjQCrbOXoV4IGIngIaNTrY7Lu+qAk2gs9XXOkQDfJSyCJR8X9b
-         7gTF2yo1LVmI33WaZsqXKf6tfFwtcOMY8Bh8bKCkVzItGBcOFvwE+yqi1jRzR11s0Rhe
-         +cCnPEQ2ubKRe2KQQWIQupRw306WJm2kPWJTBQLFffHdHKPBktUlfDo1LHmzV799LzfJ
-         4/6E8d5Rtjbbt348HTJNNhWY8o7VIWlqLBMD/dO/IbL5Q26XbamIUYS0/wqPNvkxqT7R
-         teLw==
+        bh=meSllCvayloV4olif8FN/nL+6NOnx5QGYHCJevuLOxo=;
+        b=W/ezLS72LhZ/5lM9EOAo9s1x6iDtQ2KhOgKmawk/UYYEf0PTFfuX5tychKGTXmlo6v
+         +7gFkykm/0Bg29i0PQ/l6cwlDFugJ8zU7KhrhfZY1XW3e4pfJgw3SZplp3Tc4EX2c9lp
+         UMOBD1Jy/qGEfKrg6I3WoBJCDAvHGdGCjZL9k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Uuxi1JHGqAFvbmp+tPsxz1IDWB5ifMT99rajL0xdXMo=;
-        b=LzujLFj0RdMrkIsSu+Z/WsgaKVnWUCRCr0el8oqyAcdy6MNA3O7FHipvuGODV/1t/N
-         HecM9aoNB+76QwioynyCNnV9V1yNgewWph7lOD34zT+dN7XfkOHkkoy5VUYriuOu/qtN
-         0s/6POzQrEsGPG26sLymeGHBsaj8WUCFgjF6tdz2QBCVGIi0aFb2yHv3g2fzV//IWorx
-         sRB52t2fvXk/Dx05a3ITlqyrg+mGTSqCApWCIwy96mycQkf7i0yQShVrrx85bljVqnt6
-         OjcHfV8X3h5LjqeO/4amrZiyOZHKYmsFmnsEs6+w9jsOC4Ff9sM4su4xZJEBEULrVHII
-         gCfg==
-X-Gm-Message-State: AJIora9OveRFMqapuwmWWbwOu0MQ7V0wq9w4MbgxwpIsszheM/Mxn777
-        BV2YYkjf5u1IwJD0GHpB6Ep7BTNpK8ZmGoS3XdIDw+t9
-X-Google-Smtp-Source: AGRyM1sOhqdOzu5Dl0/FJIuGCVN3+J7uE+CNt1/RtLXVxKY+J4Tlq1YeX3VtH9VXUHs2N2jkeHukp54ZtP6FT4nOQFY=
-X-Received: by 2002:a1f:ae8b:0:b0:35e:12bf:1ae with SMTP id
- x133-20020a1fae8b000000b0035e12bf01aemr1241154vke.18.1655186952622; Mon, 13
- Jun 2022 23:09:12 -0700 (PDT)
+        bh=meSllCvayloV4olif8FN/nL+6NOnx5QGYHCJevuLOxo=;
+        b=F85tiugMevJX3TN+0DhFP4Ynv1xHZ1pFu5W9lt0oeBVSSXoIk2YxJd9Sj7FmEi5hnf
+         Cky1yECHKczrFelaNQD6yoGds4k/T9bRk3deMvmRMPkEblostVA/88/IgH8ClJNu5Nhg
+         48luIQ836VGCfdi9Hd6EKzqrqF2up9yz6KjEmttIuzKooSGRgbmAzf+JW3Tmks60PUMq
+         +o8KTg8WyR25b+5t2AIqOfsizUxrLdNsoh3M0/hRJTtpterAKjXn/Q5Z0iC44jn/PonP
+         f1DH/jTj9LMIMkz0K0caFjgXUt+YqxyL4PkzBj6rbEtRktPZ9y3mBLHoKcViF6kCYvm+
+         8biA==
+X-Gm-Message-State: AOAM532W791DJZWl8nLdoYIxftIxv6RBt1Q+XxRIgesrmiISADcowK3z
+        auiRHmu1xPYyJobIVP3H+yuDlIGS/98kEYsMyQFuuSyDDfmvEq7ytKM=
+X-Google-Smtp-Source: ABdhPJwRdv4qLO2EiHMJw/mDXR/khs33NJDMv0gO0qIRgZs9M0vMLN46/9ncp+Qpv00yZWzLqkLWJx8+QgtfYeTiPmg=
+X-Received: by 2002:a17:907:7256:b0:711:dd35:61eb with SMTP id
+ ds22-20020a170907725600b00711dd3561ebmr2751055ejc.445.1655187416035; Mon, 13
+ Jun 2022 23:16:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220614003251.16765-1-jacob.e.keller@intel.com> <Yqfec9yvT3LKomNK@nand.local>
-In-Reply-To: <Yqfec9yvT3LKomNK@nand.local>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 13 Jun 2022 23:09:02 -0700
-Message-ID: <CA+P7+xos3vpPjb3m_BkR4Qp3OPf+R+-A1B=jTD3-Q6FeO4RpMg@mail.gmail.com>
-Subject: Re: [PATCH] remote: handle negative refspecs in git remote show
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Pavel Rappo <pavel.rappo@gmail.com>
+References: <pull.1257.git.1654967038802.gitgitgadget@gmail.com> <xmqqr13t8np7.fsf@gitster.g>
+In-Reply-To: <xmqqr13t8np7.fsf@gitster.g>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 14 Jun 2022 08:16:44 +0200
+Message-ID: <CAPMMpogTcKqw6SHon9soj_CqPf-E8SmHpJ1FRRBKaCcOVnyHRg@mail.gmail.com>
+Subject: Re: [PATCH] apply: support case-only renames in case-insensitive filesystems
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 13, 2022 at 6:03 PM Taylor Blau <me@ttaylorr.com> wrote:
+On Mon, Jun 13, 2022 at 1:30 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Mon, Jun 13, 2022 at 05:32:51PM -0700, Jacob Keller wrote:
-> > Fix this by checking negative refspecs inside of get_ref_states. For
-> > each ref which matches a negative refspec, copy it into a "skipped" list
-> > and remove it from the fetch map. This allows us to show the following
-> > output instead:
+> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Seems sensible.
+> > +if ! test_have_prereq CASE_INSENSITIVE_FS
+> > +then
+> > +     test_set_prereq CASE_SENSITIVE_FS
+> > +     echo nuts
+> > +fi
 >
-> > +     /* handle negative refspecs first */
-> > +     for (tail = &fetch_map; *tail; ) {
-> > +             ref = *tail;
+> You can easily say !CASE_INSENSITIVE_FS as the prerequiste, so I do
+> not see the point of this.  I do not see the point of "nuts", either.
+
+I was not aware of negated prerequisite support (I did not see it in
+the README nor in any examples I scanned), but I agree this is much
+cleaner of course!
+
+"nuts" was a debugging leak, my apologies.
+
+>
+> But it probably is a moot point as I do not think you should do the
+> prerequisite at all.
+>
+> Instead, you can explicitly set the core.ignorecase configuration,
+> i.e. "git -c core.ignorecase=yes/no", and possibly "apply --cached"
+> so that you do not have to worry about the case sensitivity of the
+> filesystem at all.
+
+Sure, I can see how we can test most of the case-sensitive logic, even
+on a case-insensitive filesystem, with "--cached" and "-c
+core.ignorecase=no". I'm not sure whether there's a need to test the
+same things against the actual file system or not (certainly in the
+case-insensitive path there is, as this is where the errors/conflicts
+actually occur).
+
+>
+> > +test_expect_success setup '
+> > +     echo "This is some content in the file." > file1 &&
+>
+> Style.  Redirection operator ">" sticks to its operand, i.e.
+>
+>         echo "This is some content in the file." >file1 &&
+>
+
+Thx.
+
+> > +     echo "A completely different file." > file2 &&
+> > +     git update-index --add file1 &&
+> > +     git update-index --add file2 &&
+> > +     cat >case_only_rename_patch <<-\EOF
+> > +     diff --git a/file1 b/File1
+> > +     similarity index 100%
+> > +     rename from file1
+> > +     rename to File1
+> > +     EOF
+>
+> You are better off not writing the diff output manually.  Instead,
+> you can let the test write it for you, e.g.
+>
+>         echo "This is some content in the file." >file1 &&
+>         git update-index --add file1 &&
+>         file1blob=$(git rev-parse :file1) &&
+>         git commit -m "Initial - file1" &&
+>         git update-index --add --cacheinfo 100644,$file1blob,File1 &&
+>         git rm --cached file1 &&
+>         git diff --cached -M HEAD >case-only-rename-patch
+>
+
+Makes sense, thx.
+
+> If you want to be extra careful not to rely on your filesystem
+> corrupting the pathnames you feed (e.g. the redireciton to "file1"
+> might create file FILE1 on MS-DOS ;-), you could even do:
+>
+>         file1blob=$(echo "This is some content in the file." |
+>                     git hash-object -w --stdin) &&
+>         file2blob=$(echo "A completeloy different contents." |
+>                     git hash-object -w --stdin) &&
+>         git update-index --add --cacheinfo 100644,$file1blob,file1 &&
+>
+>         git commit -m "Initial - file1" &&
+>         git update-index --add --cacheinfo 100644,$file1blob,File1 &&
+>         git rm --cached file1 &&
+>         git diff --cached -M HEAD >rename-file1-to-File2 &&
+>
+>         git reset --hard HEAD &&
+>         git update-index --add --cacheinfo 100644,$file1blob,file2 &&
+>         git rm --cached file1 &&
+>         git diff --cached -M HEAD >rename-file1-to-file2 &&
+>
+>         # from here on, HEAD has file1 and file2
+>         git reset --hard HEAD &&
+>         git update-index --add --cacheinfo 100644,$file2blob,file2 &&
+>         git commit -m 'file1 and file2'
+>
+
+Cool, but probably excessive? (do we support MS-DOS??)
+
+> > +'
 > > +
-> > +             if (omit_name_by_refspec(ref->name, &states->remote->fetch)) {
-> > +                     string_list_append(&states->skipped, abbrev_branch(ref->name));
+> > +test_expect_success 'refuse to apply rename patch with conflict' '
+> > +     cat >conflict_patch <<-\EOF &&
+> > +     diff --git a/file1 b/file2
+> > +     similarity index 100%
+> > +     rename from file1
+> > +     rename to file2
+> > +     EOF
+> > +     test_must_fail git apply --index conflict_patch
+>
+> And then, you could use --cached (not --index) to bypass the working
+> tree altogether, which is a good way to test the feature without
+> getting affected by the underlying filesystem.  Check both case
+> sensitive and case insensitive cases:
+>
+>         # Start from a known state
+>         git reset --hard HEAD &&
+>         test_must_fail git -c core.ignorecase=no apply --cached rename-file1-to-file2 &&
+>
+>         # Start from a known state
+>         git reset --hard HEAD &&
+>         test_must_fail git -c core.ignorecase=yes apply --cached rename-file1-to-file2 &&
+>
+
+Makes sense, understanding that this tests "happy paths" - it doesn't
+fail even if talking to the (case-insensitive) filesystem actually
+would (which here it wouldn't of course).
+
+> > +'
 > > +
-> > +                     /* Matched a negative refspec, so remove this ref from
-> > +                      * consideration for being a new or tracked ref.
-> > +                      */
-> > +                     *tail = ref->next;
-> > +                     free(ref->peer_ref);
-> > +                     free(ref);
-> > +             } else {
-> > +                     tail = &ref->next;
-> > +             }
-> > +     }
+> > +test_expect_success CASE_SENSITIVE_FS 'refuse to apply case-only rename patch with conflict, in case-sensitive FS' '
+>
+> Lose the prerequisite, replace --index with --cached, and force core.ignorecase
+> to both case insensitive and sensitive to check the behaviour.
+>
+
+Sure, makes sense - you can test case-sensitive behaviors in git
+without needing a case-sensitive FS.
+
+> > +     test_when_finished "git mv File1 file2" &&
+> > +     git mv file2 File1 &&
+> > +     test_must_fail git apply --index case_only_rename_patch
+> > +'
 > > +
+> > +test_expect_success 'apply case-only rename patch without conflict' '
 >
-> Not being overly familiar with the "git remote show" code, this
-> implementation looks very reasonable to me. If we see a negative
-> refspec, we remove it from the fetch_map list and append it to the
-> skipped list. Otherwise, we increment our pointer, and continue along
-> until we reach the end of the list.
+> Likewise, try both sensitive and insensitive one.
 >
 
-The specific way the loop works is similar to other ref looping code
-but it feels a little odd to me. Still, it seems to be the right
-approach overall.
+This one will fail on a case-insensitive filesystem if you disable
+core.ignorecase, so explicitly trying with both settings in a single
+test, without prerequisites, presumably isn't the right thing. I
+assume the right thing is to have 2 versions of the same test, one
+which expects success in all cases on a case-sensitive filesystem, and
+one which expects failure when case-insensitivity is disabled on a
+case-insensitive filesystem?
 
-> > +test_expect_success 'show with negative refspecs' '
-> > +     test_when_finished "git -C test config --fixed-value --unset remote.origin.fetch ^refs/heads/main" &&
-> > +     (
-> > +             cd test &&
-> > +             git config --add remote.origin.fetch ^refs/heads/main &&
+> > +     git apply --index case_only_rename_patch
+> > +'
+> > +
+> > +test_done
+> >
+> > base-commit: 1e59178e3f65880188caedb965e70db5ceeb2d64
 >
-> Doing "git config --unset" outside of the subshell could be avoided by
-> ditching the subshell altogether, perhaps with something like:
->
->     test_config -C test remote.origin.fetch ^refs/heads/main &&
->     git -C test remote show origin >actual &&
->     test_cmp test/expect actual
+> Thanks.
 >
 
-I still think that removing the subshell is a good idea here. I'll
-investigate this.
-
-I also wonder if it would be difficult to enable "--add" semantics for
-test_config.
-
-> Thanks,
-> Taylor
+Thank you!
