@@ -2,136 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EED39C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 15:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 993B3CCA47A
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 15:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236776AbiFNPhc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 11:37:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45180 "EHLO
+        id S235828AbiFNPk7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 11:40:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236865AbiFNPhb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 11:37:31 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF81C60C9
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:37:29 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id d123so9753757iof.10
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:37:29 -0700 (PDT)
+        with ESMTP id S235793AbiFNPk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 11:40:58 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A72735DFA
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:40:57 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id w17so4320347wrg.7
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:40:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=rp3Zdes41npNr8QJGomMDAIIssmWOrfisS6VSMQs+rY=;
-        b=TVCFD1tvqUTGUTpC/i9e6mPbtXZUiVb3AKJOMwo8pPrl09TqlAhJXCgurmScmLBJ8w
-         xEDJ/7wEfaTv3dRH4tDyrNhrBv9S1cf2m5+ppCruwGZGPzMWLZJmJQPj1jhGgZp0dtZx
-         4BTXNoidtYXLrtzCvlP0GYlyIf9yxw8L+w0mXVGuyF9OtFN1r6pbh7He9CBP3fot21Ab
-         NTYgOWhT4RqaM3mNqLlTD5EBeAtjyuL7dSqrT91aHFvDwXWWagpHIEOVdDXqrRwnyidp
-         UOfmvBQQXzQJAPl9hNVQJax63KADj8yT1i7x4ZBtLtQ04zgb63s220Qufv0Q48RT5jjI
-         7ctw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=iB0ff0vblDWWD+ozfdYai6PjSH3WFtBH4eR+pvvpHcQ=;
+        b=Ca/7P0zGxgkZ3sfVgO6inWVSslXm5DAE5BQf9MIkXfeBMxy4NFlzUfS7ToyO041Xaq
+         gF3zjTc0DZ7QBoILdZG6UABaovJSfJjdokssfiLW0zyyXdFCjqUBoZSGaaUAvLPLoE0V
+         /+MHbCpyzeGFqxyArATFt5LNc9QyZFURm4vEs58srhroczt+TTNEiGDSKHO8dnYq229J
+         3iweYS/AuwO97AvkFXNKH1FWzcSQ7VLaskDbkkV6A6RwvxitR3CjtcaUe9lDCYmsSYD1
+         Ex7h7cO1HSwBQCAm6ao6h7Q3eBSJS0kGyyxBNgcV/K4yVMkmERZNTMBRGq0JOwM5m+eB
+         Vqgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=rp3Zdes41npNr8QJGomMDAIIssmWOrfisS6VSMQs+rY=;
-        b=ROKeY7mY/2DpFBhJcHfgRPpopcTNjcuG5X7wrij4CmWPl3fu6kyJU7V4gJZ2myJHKG
-         OtWTNv6Rn/SNOsmtse0EGrr60dajFLoR2l3Wm9cBv7vsBaiXD/NOfvNKS9Q3/wfXL87e
-         ycVs7Tvop8cfJG//Uot8NIzI041DQ5M3bSkx1R2CPC+DvJJ6vgEuCa+nBy8CypPLE2Qs
-         PAYDh0ySfN3nWqTFLfONWX5+L/IZO4NQ4JfHb0lr5AU2APfgSl4ntSKd1jKBoblb1ius
-         nQXZi1K7xuNdO3o/kxFMAEyA6iyeMFYKMsf4X/Cu/KNBWiSGx3jOsY5fopkgbaxHwwEV
-         G4Og==
-X-Gm-Message-State: AOAM533iZv6UEEVBYeC8GWte2Slyft0IC12rG2SHlYXoaiKa4nROQ4oj
-        lsTk62dSYMZX38HI+RLJnzFt
-X-Google-Smtp-Source: ABdhPJz8Nho+rZmUHDvkk5YWSv69KIM3lCm6yXbGD0/aj3nDUFEKG4TYN+qyj+PIaIc6zLTEVpuQ8Q==
-X-Received: by 2002:a05:6638:3787:b0:331:aaf5:950c with SMTP id w7-20020a056638378700b00331aaf5950cmr3325692jal.118.1655221049208;
-        Tue, 14 Jun 2022 08:37:29 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:508:3b97:7c0b:efc0? ([2600:1700:e72:80a0:508:3b97:7c0b:efc0])
-        by smtp.gmail.com with ESMTPSA id b80-20020a6bb253000000b0066958ec56d9sm5581996iof.40.2022.06.14.08.37.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jun 2022 08:37:28 -0700 (PDT)
-Message-ID: <0d00d910-a7aa-dfd8-a24c-51968800c2a8@github.com>
-Date:   Tue, 14 Jun 2022 11:37:27 -0400
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=iB0ff0vblDWWD+ozfdYai6PjSH3WFtBH4eR+pvvpHcQ=;
+        b=dFSesWkCHCoRny4jrTHt7cXyJyL28zjFkk24FZCxF5jhQlSvIs3VrDpo7qagIqQHXp
+         q4zO9WuuVsCt+Sg+zpcRThHE8uHz6jHECXG5Hp2dOCCHFN1xAE/SvKLS87cElj++a41X
+         jB8NixzIXx4BDpplPRJnF2B38Y8XG9CACNSUY32R3aIhixHlF4CG7avVQWDvLvgKznFk
+         X9RBw1PATSYjnjvrov+/u1UuHsQXjIPirinnCPfyJk+TmD5JenV9Y+G3XYz8nlpwUzNl
+         7rGCbUQaMjXuquQGTtaxgWm3X06ogO63NXQmaDkD9qRfztAGZoGz55+HVvfJrl+HeFrs
+         c5vQ==
+X-Gm-Message-State: AJIora/tHUQT9hg96Z4AVCXsnX7ky+XGzbexEFMn00a1b2RJXvsSLO1T
+        54SNIsF8SWdEonG7InAQU3HT4Tz5YrBNMQ==
+X-Google-Smtp-Source: AGRyM1vIJkwfaJR/qANVUtFLHb6BXTzYeeujcP26lm5si4Lc+13NbCBbA5b+KBh4rAyEUtL/e8e5ww==
+X-Received: by 2002:a05:6000:1a41:b0:20e:687f:1c3 with SMTP id t1-20020a0560001a4100b0020e687f01c3mr5475387wry.415.1655221255688;
+        Tue, 14 Jun 2022 08:40:55 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l188-20020a1c25c5000000b0039c6390730bsm17833569wml.29.2022.06.14.08.40.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jun 2022 08:40:55 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael J Gruber <git@grubix.eu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] add -i tests: mark "TODO" depending on GIT_TEST_ADD_I_USE_BUILTIN
+Date:   Tue, 14 Jun 2022 17:40:07 +0200
+Message-Id: <patch-v2-1.1-13c26e546f6-20220614T153746Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
+In-Reply-To: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu>
+References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 5/5] branch: fix branch_checked_out() leaks
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-        me@ttaylorr.com, Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1254.git.1654718942.gitgitgadget@gmail.com>
- <6cd7db33-6ab5-9843-4483-4cce9835b177@github.com>
- <220614.868rq0ytaa.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220614.868rq0ytaa.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/13/2022 8:33 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Jun 13 2022, Derrick Stolee wrote:
-> 
->> On 6/8/2022 4:08 PM, Derrick Stolee via GitGitGadget wrote:
+Fix an issue that existed before 0527ccb1b55 (add -i: default to the
+built-in implementation, 2021-11-30), but which became the default
+with that change, we should not be marking tests that are known to
+pass as "TODO" tests.
 
->> While TEST_PASSES_SANITIZE_LEAK would be helpful to demonstrate the
->> leakage and prevent it in the future, t2407 uses helpers such as 'git
->> clone' that cause the test to fail under that mode.
-> 
-> If you apply this:
-> 	
-> 	diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
-> 	index 0760595337b..d41171acb83 100755
-> 	--- a/t/t2407-worktree-heads.sh
-> 	+++ b/t/t2407-worktree-heads.sh
-> 	@@ -10,16 +10,8 @@ test_expect_success 'setup' '
-> 	 		test_commit $i &&
-> 	 		git branch wt-$i &&
-> 	 		git worktree add wt-$i wt-$i || return 1
-> 	-	done &&
-> 	-
-> 	-	# Create a server that updates each branch by one commit
-> 	-	git clone . server &&
-> 	-	git remote add server ./server &&
-> 	-	for i in 1 2 3 4
-> 	-	do
-> 	-		git -C server checkout wt-$i &&
-> 	-		test_commit -C server A-$i || return 1
-> 	 	done
-> 	+
-> 	 '
-> 	 
-> 	 test_expect_success 'refuse to overwrite: checked out in worktree' '
-> 
-> And compile with SANITIZE=leak then this will pass as:
-> 
-> 	./t2407-worktree-heads.sh  --run=1,6
+When GIT_TEST_ADD_I_USE_BUILTIN=1 was made the default we started
+passing the tests added in 0f0fba2cc87 (t3701: add a test for advanced
+split-hunk editing, 2019-12-06) and 1bf01040f0c (add -p: demonstrate
+failure when running 'edit' after a split, 2015-04-16).
 
-Of course this works for the tests that don't need the 'server' repo,
-but it fails in the tests that _do_ need it.
+Thus we've been emitting this sort of output:
 
-I'm able to make this work by creating the 'server' with init and
-creating the wt-$i branches from scratch (they don't need to be
-fast-forward updates).
+	$ prove ./t3701-add-interactive.sh
+	./t3701-add-interactive.sh .. ok
+	All tests successful.
 
-The linux-leaks tests still fail due to 'git fetch' and 'git bisect'
-calls, but these can be avoided by carefully splitting the tests and
-using the !SANITIZE_LEAK prereq.
+	Test Summary Report
+	-------------------
+	./t3701-add-interactive.sh (Wstat: 0 Tests: 70 Failed: 0)
+	  TODO passed:   45, 47
+	Files=1, Tests=70,  2 wallclock secs ( 0.03 usr  0.00 sys +  0.86 cusr  0.33 csys =  1.22 CPU)
+	Result: PASS
 
-> Normally I'd just say "let's leave it for later", but in this case the
-> entire point of the commit and the relatively lengthy test is to deal
-> with a memory leak, so just copy/pasting the few lines of setup you
-> actually need to a new test & testing with SANITIZE=leak seems worth the
-> effort in this case.
+Which isn't just cosmetic, but due to issues with
+test_expect_failure (see [1]) we could e.g. be hiding something as bad
+as a segfault in the new implementation. It makes sense catch that,
+especially before we put out a release with the built-in "add -i", so
+let's generalize the check we were already doing in 0527ccb1b55 with a
+new "ADD_I_USE_BUILTIN" prerequisite.
 
-Well, the point isn't to use automation to check for leaks, but instead
-to fix leaks and add tests for the case where we previously had leaks.
-The tests demonstrate that we aren't accidentally introducing a use-after-
-free or double-free.
+1. https://lore.kernel.org/git/patch-1.7-4624abc2591-20220318T002951Z-avarab@gmail.com/
 
-Thanks,
--Stolee
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+On Tue, Jun 14 2022, Michael J Gruber wrote:
+
+> 0527ccb1b5 ("add -i: default to the built-in implementation", 2021-11-30)
+> switched to the implementation which fixed to subtest. Mark them as
+> expect_success now.
+>
+> Signed-off-by: Michael J Gruber <git@grubix.eu>
+> ---
+> I did check the ML but may have missed a series which contains this. (I
+> only found one which tries to make the test output clearer in CI.)
+
+I was looking at the same earlier and came up with this (before seeing
+your patch here), so a proposed v2 I suppose.
+
+Just converting it to "test_expect_success" will break CI and other
+setups that are testing with GIT_TEST_ADD_I_USE_BUILTIN=false.
+
+The below fixes it, however.
+
+ t/t2016-checkout-patch.sh  |  2 +-
+ t/t3701-add-interactive.sh | 12 ++++++++++--
+ t/test-lib.sh              |  4 ++++
+ 3 files changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
+index bc3f69b4b1d..a5822e41af2 100755
+--- a/t/t2016-checkout-patch.sh
++++ b/t/t2016-checkout-patch.sh
+@@ -4,7 +4,7 @@ test_description='git checkout --patch'
+ 
+ . ./lib-patch-mode.sh
+ 
+-if ! test_bool_env GIT_TEST_ADD_I_USE_BUILTIN true && ! test_have_prereq PERL
++if ! test_have_prereq ADD_I_USE_BUILTIN && ! test_have_prereq PERL
+ then
+ 	skip_all='skipping interactive add tests, PERL not set'
+ 	test_done
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 94537a6b40a..fc26cb8bae8 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -538,7 +538,15 @@ test_expect_success 'split hunk "add -p (edit)"' '
+ 	! grep "^+15" actual
+ '
+ 
+-test_expect_failure 'split hunk "add -p (no, yes, edit)"' '
++test_expect_success 'setup ADD_I_USE_BUILTIN check' '
++	result=success &&
++	if ! test_have_prereq ADD_I_USE_BUILTIN
++	then
++		result=failure
++	fi
++'
++
++test_expect_$result 'split hunk "add -p (no, yes, edit)"' '
+ 	test_write_lines 5 10 20 21 30 31 40 50 60 >test &&
+ 	git reset &&
+ 	# test sequence is s(plit), n(o), y(es), e(dit)
+@@ -562,7 +570,7 @@ test_expect_success 'split hunk with incomplete line at end' '
+ 	test_must_fail git grep --cached before
+ '
+ 
+-test_expect_failure 'edit, adding lines to the first hunk' '
++test_expect_$result 'edit, adding lines to the first hunk' '
+ 	test_write_lines 10 11 20 30 40 50 51 60 >test &&
+ 	git reset &&
+ 	tr _ " " >patch <<-EOF &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 736c6447ecf..f5291ef56ef 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1759,6 +1759,10 @@ test_lazy_prereq SHA1 '
+ 	esac
+ '
+ 
++test_lazy_prereq ADD_I_USE_BUILTIN '
++	test_bool_env GIT_TEST_ADD_I_USE_BUILTIN true
++'
++
+ # Ensure that no test accidentally triggers a Git command
+ # that runs the actual maintenance scheduler, affecting a user's
+ # system permanently.
+-- 
+2.36.1.1239.gfba91521d90
+
