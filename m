@@ -2,137 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD9A0C43334
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 01:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD7ECC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 01:16:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243854AbiFNBDx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jun 2022 21:03:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44760 "EHLO
+        id S231726AbiFNBP7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jun 2022 21:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238764AbiFNBDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jun 2022 21:03:51 -0400
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B31615A39
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 18:03:50 -0700 (PDT)
-Received: by mail-qv1-xf32.google.com with SMTP id 43so5528319qvb.3
-        for <git@vger.kernel.org>; Mon, 13 Jun 2022 18:03:50 -0700 (PDT)
+        with ESMTP id S229853AbiFNBPy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jun 2022 21:15:54 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 873F21900F
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 18:15:53 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id l3so3824136qtp.1
+        for <git@vger.kernel.org>; Mon, 13 Jun 2022 18:15:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zE2z9ZmoSow3TeMIqIBigCU2Me0fYD6QSgdCFPJ3aJ8=;
-        b=iLaMwyfanbbPZ26KN6VQbjqYVG775ATMIerossIZysnS0LHspB0lnfGIXGfRcbJ+pE
-         wU8GZaQe4rPlSkW77wLh96Z7dLRrwwHVPCUniz2mULvjy6gJQGU+QLTirb0sQlS+Mukz
-         d3PT52liy2DZn2pZ2Wclxck9ANhkNSWvkKrHmRDU/Hh8NjST9EhPn/Pa9cfT3p1v4/Fc
-         F3/bNYdGae64af0CgpAzgRWXJIkdFk3/2a+3q3smYUGIi2EVOZ0lmlne8NIHjFegHrpr
-         /7KjuclHUJ6dCqDcKRG6HhZNSTFmzd/exXPEQqcBwNBn83/9T6TmpkvvDl/rz4Iaa47t
-         FFXg==
+        bh=LCLk7mBK3ImKXxaSGE9EVtiOdQU1fdF4ZBCau0tiUm0=;
+        b=6FfbFjz/5Y+jEPZl/ZslDC6Yi06ng7HEL2t3CEou3BiSdSQEdnmqOHHLVwoycXh/d5
+         5J2Y362H+Z/31ORDEUE8KU7471BtKsyPTzrOs7DPxB7aOk+3qSbmkaSmGnzdRtx5fDBZ
+         lAEFJkHzTA0cyBY0MX2XMgAAT6vM0v0MSMypkPBYqon1EmrcvAuueWW0U97EhB9nxLvx
+         Lodno0Q13kKYjc4nXhdHgK2mMWjYCQOFfUB86scy8esEdF/m/4cwKvVDbgtZrKvmuMo/
+         bPnajGaeRv8DBgSt/N+PqKCntEvTd2dYIp25pGBjelbvPBp2pidteYPwGzIkTcDXDgmx
+         Eydg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zE2z9ZmoSow3TeMIqIBigCU2Me0fYD6QSgdCFPJ3aJ8=;
-        b=PP0VMTIfBhLUKpaRG0rhrjYIoJNhau/FL84ammtbsxJQD3myoIFgSTDXfA/Z8HkLNk
-         Kzjgn3IUcahP/ZYCo35/cqh78UpMzwFWVoaOtODMf12l3Ot88gajxj/eza3MM+5OKnYF
-         +nQxQVATBIgm4wuefU355tlFD1RdlF9kIiCLIPsAJQq+8FtRlrC9n6PuSQulJzyW1oUx
-         yLDryAUahigHgxWXA6aVunhQ4RI1X4Mu+0eoOvQiR+rA+1uGkGdze6VzyHKfPk8oxgrt
-         4ev7myBeX8VCPUJgLpFXp+CBS+h78Tp5Ue2nGUVlzKdl9IrBIWJsyMQQzck/qFam+DIQ
-         A0OA==
-X-Gm-Message-State: AJIora/+X9NHCykX+jlgpMHYWiveAmblsrUyQnFqMzt+lWANVJbKBsyl
-        KQRn/mQRiNRcrPmPUY2zwyk61w==
-X-Google-Smtp-Source: AGRyM1sxYCJ0OpJM+rYctfIjl5IVWDpUV0f1KzgaqznNwWgblc+rG/t8GuV8sEnybowbkCRRufivqQ==
-X-Received: by 2002:a05:6214:f62:b0:46a:471a:dc8c with SMTP id iy2-20020a0562140f6200b0046a471adc8cmr1479665qvb.124.1655168629734;
-        Mon, 13 Jun 2022 18:03:49 -0700 (PDT)
+        bh=LCLk7mBK3ImKXxaSGE9EVtiOdQU1fdF4ZBCau0tiUm0=;
+        b=yEjLS663YmUs0wfxOPOc7CJsJ8JG/JskKVvuiuXrThWohUSYXDVbE7jhuPfGGiABpl
+         y3uwoeA6KFJbVHn88DFhMa6i1TOJnZJQ8DC35oeqfefkoJIzc2gwmC3g9oYRGrzI+S0M
+         jN6Y/Nb5EawU5SSSuHByYwlRh5BxDoP8z/x9d+FISp66Sh0+7h9mx94BThv8AUw46+0P
+         hzWG/FJ15NUSYUJYCmt/ucP9cg0BYNAPRDnMQ0okU792Szky8sJJvXD52Ii5rLtuK5Sq
+         wjVNbdmshbSijP6KDdJndg4igWWsaUAG+jFGkb86OkE7F8oM6CG7SFtyRRDJX6tMBIFn
+         pv3Q==
+X-Gm-Message-State: AOAM530oGzfLa5z/bWIbpSWlQmr93nfGNDBYq+4tw9KSjBZapv0uWZLY
+        6FDbuOgAyBiLEmOGpbv9kTwyHg==
+X-Google-Smtp-Source: ABdhPJyKS2VRb+FELgPV4ErsqivfbKEMTsNyExAwMQ5GAiTrvKq2nl69j7dyb4DqCRskN0hb6KpnGQ==
+X-Received: by 2002:a05:622a:64a:b0:305:205c:18ed with SMTP id a10-20020a05622a064a00b00305205c18edmr2273525qtb.380.1655169352627;
+        Mon, 13 Jun 2022 18:15:52 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t67-20020a379146000000b006a71c420460sm7541965qkd.22.2022.06.13.18.03.48
+        by smtp.gmail.com with ESMTPSA id t5-20020a05622a148500b00304e90f66f7sm6082433qtx.70.2022.06.13.18.15.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 18:03:49 -0700 (PDT)
-Date:   Mon, 13 Jun 2022 21:03:47 -0400
+        Mon, 13 Jun 2022 18:15:52 -0700 (PDT)
+Date:   Mon, 13 Jun 2022 21:15:51 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.e.keller@intel.com>,
-        Pavel Rappo <pavel.rappo@gmail.com>
-Subject: Re: [PATCH] remote: handle negative refspecs in git remote show
-Message-ID: <Yqfec9yvT3LKomNK@nand.local>
-References: <20220614003251.16765-1-jacob.e.keller@intel.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
+        gitster@pobox.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v3 4/5] pack-bitmap.c: using error() instead of silently
+ returning -1
+Message-ID: <YqfhR/PV6HhGyhT5@nand.local>
+References: <cover.1655018322.git.dyroneteng@gmail.com>
+ <72da3b584490467c2492578a8125cbcfe05aad9a.1655018322.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220614003251.16765-1-jacob.e.keller@intel.com>
+In-Reply-To: <72da3b584490467c2492578a8125cbcfe05aad9a.1655018322.git.dyroneteng@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 13, 2022 at 05:32:51PM -0700, Jacob Keller wrote:
-> Fix this by checking negative refspecs inside of get_ref_states. For
-> each ref which matches a negative refspec, copy it into a "skipped" list
-> and remove it from the fetch map. This allows us to show the following
-> output instead:
-
-Seems sensible.
-
-> +	/* handle negative refspecs first */
-> +	for (tail = &fetch_map; *tail; ) {
-> +		ref = *tail;
-> +
-> +		if (omit_name_by_refspec(ref->name, &states->remote->fetch)) {
-> +			string_list_append(&states->skipped, abbrev_branch(ref->name));
-> +
-> +			/* Matched a negative refspec, so remove this ref from
-> +			 * consideration for being a new or tracked ref.
-> +			 */
-> +			*tail = ref->next;
-> +			free(ref->peer_ref);
-> +			free(ref);
-> +		} else {
-> +			tail = &ref->next;
-> +		}
-> +	}
-> +
-
-Not being overly familiar with the "git remote show" code, this
-implementation looks very reasonable to me. If we see a negative
-refspec, we remove it from the fetch_map list and append it to the
-skipped list. Otherwise, we increment our pointer, and continue along
-until we reach the end of the list.
-
-> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-> index fff14e13ed43..e19b8d666c73 100755
-> --- a/t/t5505-remote.sh
-> +++ b/t/t5505-remote.sh
-> @@ -302,6 +302,33 @@ test_expect_success 'show' '
->  	)
->  '
+On Sun, Jun 12, 2022 at 03:44:19PM +0800, Teng Long wrote:
+> @@ -323,7 +323,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
 >
-> +cat >test/expect <<EOF
-> +* remote origin
-> +  Fetch URL: $(pwd)/one
-> +  Push  URL: $(pwd)/one
-> +  HEAD branch: main
-> +  Remote branches:
-> +    main     skipped
-> +    side     tracked
-> +    upstream stale (use 'git remote prune' to remove)
-> +  Local branches configured for 'git pull':
-> +    ahead merges with remote main
-> +    main  merges with remote main
-> +  Local refs configured for 'git push':
-> +    main pushes to main     (local out of date)
-> +    main pushes to upstream (create)
-> +EOF
-> +
-> +test_expect_success 'show with negative refspecs' '
-> +	test_when_finished "git -C test config --fixed-value --unset remote.origin.fetch ^refs/heads/main" &&
-> +	(
-> +		cd test &&
-> +		git config --add remote.origin.fetch ^refs/heads/main &&
+>  	if (fstat(fd, &st)) {
+>  		close(fd);
+> -		return -1;
+> +		return error(_("cannot stat bitmap file"));
 
-Doing "git config --unset" outside of the subshell could be avoided by
-ditching the subshell altogether, perhaps with something like:
+Since we are handling an error from fstat here, the errno variable
+contains useful information that we should include in the error via
+error_errno().
 
-    test_config -C test remote.origin.fetch ^refs/heads/main &&
-    git -C test remote show origin >actual &&
-    test_cmp test/expect actual
+> @@ -361,7 +361,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+>  	bitmap_git->map_pos = 0;
+>  	bitmap_git->map = NULL;
+>  	bitmap_git->midx = NULL;
+> -	return -1;
+> +	return error("cannot open midx bitmap file");
+
+The other error strings are marked for translation, but this one is not.
+Was that intentional, or just a typo / oversight?
+
+>  static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git *packfile)
+> @@ -382,7 +382,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+>
+>  	if (fstat(fd, &st)) {
+>  		close(fd);
+> -		return -1;
+> +		return error(_("cannot stat bitmap file"));
+
+Same note here about using error_errno() instead of just error().
 
 Thanks,
 Taylor
