@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51B5AC433EF
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 21:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCB06CCA47B
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 21:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344911AbiFNV2A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 17:28:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53870 "EHLO
+        id S1357026AbiFNV2K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 17:28:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236212AbiFNV14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 17:27:56 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75EBD289AA
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 14:27:55 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id l2-20020a05600c4f0200b0039c55c50482so118691wmq.0
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 14:27:55 -0700 (PDT)
+        with ESMTP id S1344467AbiFNV15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 17:27:57 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A096A27CF7
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 14:27:56 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id a15so12888473wrh.2
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 14:27:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+NgjN9UmnSwRfn2y5XHvzFtH+tF1VxB6YhLftcKV2bQ=;
-        b=muwW3hU/Z/t595DYtrH0OHPYtdTc6BNjjlo1c5sPI5feX7eBLGjcDH17kF50LXO8x8
-         jFZekYTKsj5ls0dlOvWQXLXAI7/sbVvJUMRsF3EiKFo4KdzF9i8XfFm1AXQ/qneLfrc4
-         1rjpq9EqoAM6ayUg4KgnjHdJKG/Weh6jljmZQxiqnaO5yUseuor6DEumH/4q4W56kSLn
-         I3EGZjtTmdWaVo3UzKJZfAjvufhQ+FX1jz8UMrYrrWo733EV/ZHqz+oXC0Xlsl/ug0j8
-         B+PKGWJ4/H8KqF+0vsNBj631LkUL7Pa7hVlKTAqEEh+3jt1gJfTrjhvlOROGQ4VnEVPB
-         2N7g==
+        bh=h+9+nitqEtTXKr9Ey6ONDalegAbsuEUZYi3BRfqGkdE=;
+        b=HklN4pZkjVA7ODuctJ3QLTD4AQ6Kng5zA7wJDeMB/n0N6c6RsdQWmYm4mochjpR7hO
+         SHWMdUiDoWKTukr+PaCdu3KEADc6qU2lfRsAbzOG2j2YaM4Ge8eutUZrb4DzFRaOlvpY
+         Vtbaddmmx2hYMdfI9cI/Indi/W1SxQY2yMrdvH7IgoUNFIBOoxJpz5MmBh/TVdPrbDiC
+         Nv6kiSfcY2Y20V5mF50mjdTXhMYFops/6dx3AAKOWw+iwXmv91F+dxOw3tMJr4WNQhEA
+         bvEvvMrcYG4d4yqEnu2+XS3uYF3njjn78Gh2XNzpV8mfXIV4x33EMCkc4s7SJ9/L76II
+         BElg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+NgjN9UmnSwRfn2y5XHvzFtH+tF1VxB6YhLftcKV2bQ=;
-        b=a2CIRvanMP4gX8Et3WIIzZMDGLiO3pFdYAwNPwYQs+ylTQCz+lwvcsCIkGqZwSZKlP
-         wvCgfI7zzG+P83qpEDTwwnOg0f0TudWxTtY94v2GJcpGFGxA0xFMM6z64UZTvSm8HHsR
-         G/5pWyi7+qiPPBxxX6LiLrR8fxva82JVFNWk9C/ZHRFp/lF0yy0hAQVR1vf/XJfLCrMC
-         /WnS1oNSB8u4TimaN0nUI61ZUXxB0yigDHQoxKo+JFS773hIYifDs0093PrLcLbQr6JY
-         cuFpay2j8779DV7PNHfUMWwkPbtOKj/qw5ZYNmJq0eloP7+mfa+OKD9gREu91PoxThjz
-         i88w==
-X-Gm-Message-State: AOAM531UhsK12v5OEA33n8THpoSYG3maCqR9m6ogvrfY1Z9JS83yobs9
-        48RmhWPORh7f+aKEqk0zTO+Du+VScUjKNw==
-X-Google-Smtp-Source: ABdhPJzzuszhJpMhtZpVtRUzh5+uGe5F0ADsY+zNjTqNPU3lZ729x9CmOMFfwPOKzLumUub9lW7QZw==
-X-Received: by 2002:a7b:c413:0:b0:39c:37cc:b0fe with SMTP id k19-20020a7bc413000000b0039c37ccb0femr6054386wmi.11.1655242073564;
-        Tue, 14 Jun 2022 14:27:53 -0700 (PDT)
+        bh=h+9+nitqEtTXKr9Ey6ONDalegAbsuEUZYi3BRfqGkdE=;
+        b=DB/yR2HSMmR+nYmMZO3w/Q/ZwlHPruv47UnQGTXOHW2AahJ1o5WIcbmXiOJuIC3ZHx
+         NHfz4O6A0+0U1d9SEjGCJIYE2JEoVq5wGDEbz6kQYsFAHls8k+PwoIVmRhYdTUdlKXxr
+         7cO6BjHaQfScolXkJox4PFA1qtV/gU+wc97IT1VEUBJOnRpJAOou7XI6G6sBRcobubKE
+         FkVyklHOgRJyxXtfAL0QPAPciOGXSo9yXRwJk7JdoWtaO8GCYdaYun9I8ZB/g4ZDmUx8
+         vTqJLYezCjBavIhi4Bj+f/6jqSdxwlHhTVfWq/QLqaWjAT9jTdTDsarXdawUvT+wnTgn
+         WeMA==
+X-Gm-Message-State: AJIora+A0lEUIh6uaLYIcpbeoIgVhCKi+LryKawmMLPm2lDedGT2PfSO
+        OqBlgD4WQPkVK3luO8lVwC8/BOEKy+KP9w==
+X-Google-Smtp-Source: AGRyM1vPbLDDTnVewKeFoeMPteB4MMcubQe51CxaDja0plOUuVPeV454i1Xqbxd+aFw0jIo5EeuyRA==
+X-Received: by 2002:a05:6000:12d0:b0:210:2ba3:e67 with SMTP id l16-20020a05600012d000b002102ba30e67mr6841845wrx.382.1655242074707;
+        Tue, 14 Jun 2022 14:27:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o20-20020a5d58d4000000b0021a05379fd3sm8460298wrf.30.2022.06.14.14.27.52
+        by smtp.gmail.com with ESMTPSA id c15-20020adfed8f000000b0020c5253d926sm12800326wro.114.2022.06.14.14.27.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 14:27:52 -0700 (PDT)
-Message-Id: <c6803df1b6afead99a0a6a383ab9aa563920f464.1655242070.git.gitgitgadget@gmail.com>
+        Tue, 14 Jun 2022 14:27:54 -0700 (PDT)
+Message-Id: <f59a0c326a01ab5f4e415a7ed03ff046b84b337b.1655242070.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
 References: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Jun 2022 21:27:47 +0000
-Subject: [PATCH 1/4] t2107: test 'git update-index --verbose'
+Date:   Tue, 14 Jun 2022 21:27:48 +0000
+Subject: [PATCH 2/4] t5329: test 'git gc --cruft' without '--prune=now'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,94 +67,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The '--verbose' option reports what is being added and removed from the
-index, but has not been tested up to this point. Augment the tests in
-t2107 to check the '--verbose' option in some scenarios.
+Replace a 'git repack --cruft -d' with the wrapper 'git gc --cruft' to
+exercise some logic in builtin/gc.c that adds the '--cruft' option to
+the underlying 'git repack' command.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t2106-update-index-assume-unchanged.sh |  2 +-
- t/t2107-update-index-basic.sh            | 31 +++++++++++++++++++-----
- 2 files changed, 26 insertions(+), 7 deletions(-)
+ t/t5329-pack-objects-cruft.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/t/t2106-update-index-assume-unchanged.sh b/t/t2106-update-index-assume-unchanged.sh
-index d943ddf47e0..ad2692a2979 100755
---- a/t/t2106-update-index-assume-unchanged.sh
-+++ b/t/t2106-update-index-assume-unchanged.sh
-@@ -20,7 +20,7 @@ test_expect_success 'do not switch branches with dirty file' '
- 	git reset --hard &&
- 	git checkout other &&
- 	echo dirt >file &&
--	git update-index --assume-unchanged file &&
-+	git update-index --verbose --assume-unchanged file &&
- 	test_must_fail git checkout - 2>err &&
- 	test_i18ngrep overwritten err
- '
-diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
-index a30b7ca6bc9..07e6de84e6d 100755
---- a/t/t2107-update-index-basic.sh
-+++ b/t/t2107-update-index-basic.sh
-@@ -36,9 +36,14 @@ test_expect_success '--cacheinfo does not accept blob null sha1' '
- 	echo content >file &&
- 	git add file &&
- 	git rev-parse :file >expect &&
--	test_must_fail git update-index --cacheinfo 100644 $ZERO_OID file &&
-+	test_must_fail git update-index --verbose --cacheinfo 100644 $ZERO_OID file >out &&
- 	git rev-parse :file >actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+
-+	cat >expect <<-\EOF &&
-+	add '\''file'\''
-+	EOF
-+	test_cmp expect out
- '
+diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
+index b481224b93d..55bb9c0e7b5 100755
+--- a/t/t5329-pack-objects-cruft.sh
++++ b/t/t5329-pack-objects-cruft.sh
+@@ -451,11 +451,13 @@ test_expect_success 'expiring cruft objects with git gc' '
+ 		sort <reachable.raw >reachable &&
+ 		comm -13 reachable objects >unreachable &&
  
- test_expect_success '--cacheinfo does not accept gitlink null sha1' '
-@@ -59,9 +64,14 @@ test_expect_success '--cacheinfo mode,sha1,path (new syntax)' '
- 	git rev-parse :file >actual &&
- 	test_cmp expect actual &&
+-		git repack --cruft -d &&
++		# Write a cruft pack instead of deleting files.
++		git gc --cruft &&
  
--	git update-index --add --cacheinfo "100644,$(cat expect),elif" &&
-+	git update-index --add --verbose --cacheinfo "100644,$(cat expect),elif" >out &&
- 	git rev-parse :elif >actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+
-+	cat >expect <<-\EOF &&
-+	add '\''elif'\''
-+	EOF
-+	test_cmp expect out
- '
+ 		mtimes=$(ls .git/objects/pack/pack-*.mtimes) &&
+ 		test_path_is_file $mtimes &&
  
- test_expect_success '.lock files cleaned up' '
-@@ -74,7 +84,8 @@ test_expect_success '.lock files cleaned up' '
- 	git config core.worktree ../../worktree &&
- 	# --refresh triggers late setup_work_tree,
- 	# active_cache_changed is zero, rollback_lock_file fails
--	git update-index --refresh &&
-+	git update-index --refresh --verbose >out &&
-+	test_must_be_empty out &&
- 	! test -f .git/index.lock
- 	)
- '
-@@ -83,7 +94,15 @@ test_expect_success '--chmod=+x and chmod=-x in the same argument list' '
- 	>A &&
- 	>B &&
- 	git add A B &&
--	git update-index --chmod=+x A --chmod=-x B &&
-+	git update-index --verbose --chmod=+x A --chmod=-x B >out &&
-+	cat >expect <<-\EOF &&
-+	add '\''A'\''
-+	chmod +x '\''A'\''
-+	add '\''B'\''
-+	chmod -x '\''B'\''
-+	EOF
-+	test_cmp expect out &&
-+
- 	cat >expect <<-EOF &&
- 	100755 $EMPTY_BLOB 0	A
- 	100644 $EMPTY_BLOB 0	B
++		# Ignore the cruft pack and delete every unreachable object.
+ 		git gc --cruft --prune=now &&
+ 
+ 		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
 -- 
 gitgitgadget
 
