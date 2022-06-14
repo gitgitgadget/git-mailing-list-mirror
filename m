@@ -2,195 +2,296 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B087C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 08:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A013CCA47C
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 09:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352517AbiFNIGQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 04:06:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56490 "EHLO
+        id S242685AbiFNJCr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 05:02:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231437AbiFNIGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 04:06:15 -0400
-X-Greylist: delayed 379 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 14 Jun 2022 01:06:02 PDT
-Received: from mail11.tencent.com (mail11.tencent.com [14.18.178.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95C1436337
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 01:06:02 -0700 (PDT)
-Received: from EX-SZ023.tencent.com (unknown [10.28.6.89])
-        by mail11.tencent.com (Postfix) with ESMTP id BFCC766421
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 15:59:41 +0800 (CST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
-        s=s202002; t=1655193581;
-        bh=pHmmozP2fxKL9nkw0R/Umwz0GwSoohQA5oKWpQXKZkg=;
-        h=From:To:Subject:Date;
-        b=iSkPf/3l4hFlPr90M/WIbvSVCSkUqeozuyPg1q70m+B998EoZshIjz3g9ra+iVjf8
-         Cdj4WUtsYkZI8jGsRXVTtHpaX7v6Yo7qrP6OggZEpleGkMWMgJzcJsy3rg74z5HBTn
-         ZnnJfAwz7PwYZBmDJjeRQ2Mjv0NvASS+vjMRpT5Q=
-Received: from EX-SZ065.tencent.com (10.28.6.17) by EX-SZ023.tencent.com
- (10.28.6.89) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 14 Jun
- 2022 15:59:41 +0800
-Received: from EX-SZ066.tencent.com (10.28.6.18) by EX-SZ065.tencent.com
- (10.28.6.17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 14 Jun
- 2022 15:59:41 +0800
-Received: from EX-SZ066.tencent.com ([fe80::2186:e8b5:166c:c4ab]) by
- EX-SZ066.tencent.com ([fe80::2186:e8b5:166c:c4ab%6]) with mapi id
- 15.01.2242.008; Tue, 14 Jun 2022 15:59:41 +0800
-From:   =?utf-8?B?a3lsZXpoYW8o6LW15p+v5a6HKQ==?= <kylezhao@tencent.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: reachability-bitmap makes push performance worse ?
-Thread-Topic: reachability-bitmap makes push performance worse ?
-Thread-Index: AQHYf8Otm1Avh11Jf0usOdlwvHvEJQ==
-Date:   Tue, 14 Jun 2022 07:59:41 +0000
-Message-ID: <b940e705fbe9454685757f2e3055e2ce@tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.99.3.239]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S242713AbiFNJCk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 05:02:40 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E0125E82
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 02:02:34 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id g25so15840599ejh.9
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 02:02:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=vH2zUU/52PrFdU07mVlkSqiHs553zowsebMUKA5PENU=;
+        b=M8Rg5uUnhLAzdGrw4JT8SvwWHvB53QbHoUSBs2Me5NFEvvHnYFT7NUP8U+7YIJjDua
+         ZwICpXHMCUD6PxFeTkCIfIUQdJgUYv5iKljjQCnJbz7QEFTuciYDsZbg7w83lqTwbCSf
+         8afl9kMIOlPNYC8VXh7v9o3oftb84guV37BvsxZchKDfGZq+vEAaDSSUPG6ZMrZ4tO1D
+         EW5qHcmjy5zb/CrkqGkDeJ3P9kl4rFnGm9sM6KzBTOrja0F6YAWQYd5wKLSYBtsMXlW1
+         rheC2g1zcJKHHkY1VofzcsoqrtfIsbv96oS/8sUq26VdYBrckpqW4HtgXqKK+47drNGb
+         z3qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=vH2zUU/52PrFdU07mVlkSqiHs553zowsebMUKA5PENU=;
+        b=5H/e9WvD0nJ7v7LwPSyu33L6r1j+Y//GiLzxwKl/klTEXQg6kQBbNoCcEMjmyfInkM
+         4muQbsW8nNKZczp5Ik52jQI6c4Ox27+k7BxrI82HCqUCNm9uo2rn9kT8Ku89RjhCBifl
+         SpnGPcDKcH3WyTiLzi/X+fIbLToSHgsKxkDgrcm7A0KnmWTQDDEwf0i5nUt9MEoHfA/C
+         2WrG3N2yRQZ1zggW+cVUT9mpOpPgjO3LJJCxmkaB5JCKQPe8pt1vZoBOWR3qUL8GHPZr
+         dvt3ye7dV8A+D8rdDZ45nOKW6I9xveIfNrtCma8H0JysDHfnlAnUOvbmYUnMgfI4v1t0
+         sOiQ==
+X-Gm-Message-State: AJIora+Bt1hARFg/xx1O1w7Dhf60ZE1XWlQe52D+OGWf6c0EJm1KwmpP
+        CCT5sm0JirTI8IOEANo2PVgg0SY+UmCPIA==
+X-Google-Smtp-Source: ABdhPJwUEc4TjpfXn+PKkMxJFQSQDuo+nh+uWlJQRB0lEu1bsGPL1wb/M603oij2iInCOqDuYUvN0g==
+X-Received: by 2002:a17:907:6ea4:b0:711:d106:b93a with SMTP id sh36-20020a1709076ea400b00711d106b93amr3373301ejc.189.1655197353099;
+        Tue, 14 Jun 2022 02:02:33 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id hh14-20020a170906a94e00b00703e09dd2easm4886141ejb.147.2022.06.14.02.02.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jun 2022 02:02:32 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o12RT-000KkG-0P;
+        Tue, 14 Jun 2022 11:02:31 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?a3lsZXpoYW8o6LW15p+v5a6HKQ==?= <kylezhao@tencent.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: reachability-bitmap makes push performance worse ?
+Date:   Tue, 14 Jun 2022 10:55:54 +0200
+References: <b940e705fbe9454685757f2e3055e2ce@tencent.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <b940e705fbe9454685757f2e3055e2ce@tencent.com>
+Message-ID: <220614.864k0nzkgp.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQpIaSBBbGwsIA0KwqANCnRoYW5rIHlvdSBmb3IgcmVhZGluZyBteSByZXBvcnQuDQrCoA0KwqAN
-CkhvdyBkaWQgd2UgZmluZCBvdXQ/DQrCoA0KVGhlIHByb2JsZW0gZGVzY3JpYmVkIGluIHRoZSB0
-aXRsZSBvY2N1cnMgb24gb3VyIGdpdCBzZXJ2ZXIuDQpFYWNoIGdpdCByZXBvc2l0b3JpZXMgaGF2
-ZSBtdWx0aXBsZSByZXBsaWNhcyBvbiBvdXIgc2VydmVycyB0byBpbmNyZWFzZSBnaXQgcmVhZCBw
-ZXJmb3JtYW5jZSwgYW5kIHRoZSBkYXRhIHN5bmNocm9uaXphdGlvbiBtZXRob2QgYmV0d2VlbiB0
-aGVzZSByZXBsaWNhcyBpcyBnaXQgcHVzaC4NCk9uZSBkYXkgd2UgZm91bmQgdGhhdCB0aGUgZ2l0
-IHB1c2ggb2YgYSByZXBvc2l0b3J5IHdhcyBzaWduaWZpY2FudGx5IHNsb3csIGFuZCBpdCB0b29r
-IG1vcmUgdGhhbiB0ZW4gc2Vjb25kcyB0byBqdXN0IGNyZWF0ZSBhIG5ldyBicmFuY2ggZnJvbSBh
-biBleGlzdGluZyBjb21taXQuDQrCoA0KSG93IHRvIHJlcHJvZHVjZSB0aGUgcHJvYmxlbSA/DQrC
-oA0KZ2l0IHZlcnNpb246IDIuMzYuMQ0KwqANCiMgL2RhdGEvdGVzdC9yZXBvIGlzIGEgYmFyZSBn
-aXQgcmVwb3NpdG9yeSB3aGljaCBjYW4gcmVwcm9kdWNlIHRoZSBwcm9ibGVtDQokIGNkIC9kYXRh
-L3Rlc3QvcmVwbw0KwqANCiMgbnVtYmVyIG9mIHJlZnMNCiQgZ2l0IHNob3ctcmVmIHwgd2MgLWwN
-CjIxMTM0DQojIHBhY2sgaW5mb3JtYXRpb24NCiQgbHMgb2JqZWN0cy9wYWNrLyAtaGwNCnRvdGFs
-IDE0Rw0KLXItLXItLXItLSAxIHJvb3Qgcm9vdMKgIDQzTSBKdW4gMTQgMDQ6MTYgcGFjay05YTdm
-YzAyNDY1MjY0NWE2MzJmYjgyYTRmZjI2YzNkZGY0ODgzZWVkLmJpdG1hcA0KLXItLXItLXItLSAx
-IHJvb3Qgcm9vdCAxNjlNIEp1biAxNCAwNDoxNSBwYWNrLTlhN2ZjMDI0NjUyNjQ1YTYzMmZiODJh
-NGZmMjZjM2RkZjQ4ODNlZWQuaWR4DQotci0tci0tci0tIDEgcm9vdCByb290wqAgMTRHIEp1biAx
-NCAwNDoxNCBwYWNrLTlhN2ZjMDI0NjUyNjQ1YTYzMmZiODJhNGZmMjZjM2RkZjQ4ODNlZWQucGFj
-aw0KwqANCiMgb2JqZWN0cyBpbmZvcm1hdGlvbg0KJCBnaXQgY291bnQtb2JqZWN0cyAtdg0KY291
-bnQ6IDANCnNpemU6IDANCmluLXBhY2s6IDUxODUxNDENCnBhY2tzOiAxDQpzaXplLXBhY2s6IDEz
-OTM4NzA0DQpwcnVuZS1wYWNrYWJsZTogMA0KZ2FyYmFnZTogMA0Kc2l6ZS1nYXJiYWdlOiAwDQrC
-oA0KIyBudW1iZXIgb2YgY29tbWl0cw0KJCBnaXQgcmV2LWxpc3QgLS1hbGwgfCAgd2MgLWwNCjk1
-NTI2Mg0KwqANCiQgY3AgLXIgL2RhdGEvdGVzdC9yZXBvIC9kYXRhL3Rlc3QvcmVwbGljYS0xDQok
-IGNwIC1yIC9kYXRhL3Rlc3QvcmVwbyAvZGF0YS90ZXN0L3JlcGxpY2EtMg0KJCBjZCAvZGF0YS90
-ZXN0L3JlcGxpY2EtMQ0KwqANCiMgY3JlYXRlIGEgYnJhbmNoIGZyb20gYW4gZXhpc3RpbmcgY29t
-bWl0DQokIGdpdCB1cGRhdGUtcmVmIHJlZnMvaGVhZHMvYl8xIDQzZmE0NzIxYzYxMTA2NTgzY2Q1
-NTJkYTg1ZGEzYmQ4NGYwZjk5MjkNCiQgZ2l0IHNob3ctcmVmIHwgZ3JlcCA0M2ZhNDcyMWM2MTEw
-NjU4M2NkNTUyZGE4NWRhM2JkODRmMGY5OTI5DQo0M2ZhNDcyMWM2MTEwNjU4M2NkNTUyZGE4NWRh
-M2JkODRmMGY5OTI5IHJlZnMvaGVhZHMvYl8xDQrCoA0KIyBudW1iZXIgb2YgY29tbWl0cyBvZiB0
-aGUgcmVmDQokIGdpdCByZXYtbGlzdCByZWZzL2hlYWRzL2JfMSB8ICB3YyAtbA0KMTE3ODM2DQrC
-oA0KIyBnaXQgcHVzaCB3aXRoIGJpdG1hcA0KJCBHSVRfVFJBQ0U9MSBnaXQgcHVzaCBmaWxlOi8v
-L2RhdGEvdGVzdC9yZXBsaWNhLTIgcmVmcy9oZWFkcy9iXzENCjA0OjE5OjA3LjY1NDEwMyBnaXQu
-Yzo0NTnCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHRyYWNlOiBidWlsdC1pbjogZ2l0IHB1
-c2ggZmlsZTovLy9kYXRhL3Rlc3QvcmVwbGljYS0yIHJlZnMvaGVhZHMvYl8xDQowNDoxOTowNy42
-OTAwMDYgcnVuLWNvbW1hbmQuYzo2NTTCoMKgwqDCoMKgwqAgdHJhY2U6IHJ1bl9jb21tYW5kOiB1
-bnNldCBHSVRfRElSIEdJVF9JTVBMSUNJVF9XT1JLX1RSRUUgR0lUX1BSRUZJWDsgJ2dpdC1yZWNl
-aXZlLXBhY2sgJ1wnJy9kYXRhL3Rlc3QvcmVwbGljYS0yJ1wnJycNCjA0OjE5OjA3LjY5NDMzOSBn
-aXQuYzo0NTnCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHRyYWNlOiBidWlsdC1pbjogZ2l0
-IHJlY2VpdmUtcGFjayAvZGF0YS90ZXN0L3JlcGxpY2EtMg0KMDQ6MTk6MDcuNzUxODE0IHJ1bi1j
-b21tYW5kLmM6NjU0wqDCoMKgwqDCoMKgIHRyYWNlOiBydW5fY29tbWFuZDogZ2l0IHBhY2stb2Jq
-ZWN0cyAtLWFsbC1wcm9ncmVzcy1pbXBsaWVkIC0tcmV2cyAtLXN0ZG91dCAtLXRoaW4gLS1kZWx0
-YS1iYXNlLW9mZnNldCAtLXByb2dyZXNzDQowNDoxOTowNy43NTQwMTEgZ2l0LmM6NDU5wqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCBwYWNrLW9iamVjdHMg
-LS1hbGwtcHJvZ3Jlc3MtaW1wbGllZCAtLXJldnMgLS1zdGRvdXQgLS10aGluIC0tZGVsdGEtYmFz
-ZS1vZmZzZXQgLS1wcm9ncmVzcw0KVG90YWwgMCAoZGVsdGEgMCksIHJldXNlZCAwIChkZWx0YSAw
-KSwgcGFjay1yZXVzZWQgMA0KMDQ6MTk6MjAuMzA0ODY4IHJ1bi1jb21tYW5kLmM6NjU0wqDCoMKg
-wqDCoMKgIHRyYWNlOiBydW5fY29tbWFuZDogR0lUX0FMVEVSTkFURV9PQkpFQ1RfRElSRUNUT1JJ
-RVM9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzIEdJVF9PQkpFQ1RfRElSRUNUT1JZPS9k
-YXRhL3Rlc3QvcmVwbGljYS0yLy4vb2JqZWN0cy90bXBfb2JqZGlyLWluY29taW5nLUNhQ1RIbSBH
-SVRfUVVBUkFOVElORV9QQVRIDQo9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzL3RtcF9v
-YmpkaXItaW5jb21pbmctQ2FDVEhtIGdpdCB1bnBhY2stb2JqZWN0cyAtLXBhY2tfaGVhZGVyPTIs
-MA0KcmVtb3RlOiAwNDoxOToyMC4zMDY1NTAgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCB1bnBhY2stb2JqZWN0cyAtLXBhY2tfaGVhZGVy
-PTIsMA0KMDQ6MTk6MjAuMzA2OTAzIHJ1bi1jb21tYW5kLmM6NjU0wqDCoMKgwqDCoMKgIHRyYWNl
-OiBydW5fY29tbWFuZDogR0lUX0FMVEVSTkFURV9PQkpFQ1RfRElSRUNUT1JJRVM9L2RhdGEvdGVz
-dC9yZXBsaWNhLTIvLi9vYmplY3RzIEdJVF9PQkpFQ1RfRElSRUNUT1JZPS9kYXRhL3Rlc3QvcmVw
-bGljYS0yLy4vb2JqZWN0cy90bXBfb2JqZGlyLWluY29taW5nLUNhQ1RIbSBHSVRfUVVBUkFOVElO
-RV9QQVRIDQo9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzL3RtcF9vYmpkaXItaW5jb21p
-bmctQ2FDVEhtIGdpdCByZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRpbiAtLW5vdCAtLWFsbCAtLXF1
-aWV0IC0tYWx0ZXJuYXRlLXJlZnMgJy0tcHJvZ3Jlc3M9Q2hlY2tpbmcgY29ubmVjdGl2aXR5Jw0K
-cmVtb3RlOiAwNDoxOToyMC4zMDgzMzIgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCByZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRpbiAtLW5v
-dCAtLWFsbCAtLXF1aWV0IC0tYWx0ZXJuYXRlLXJlZnMgJy0tcHJvZ3Jlc3M9Q2hlY2tpbmcgY29u
-bmVjdGl2aXR5Jw0KcmVtb3RlOiAwNDoxOToyMC4zNDQwMzEgcnVuLWNvbW1hbmQuYzo2NTTCoMKg
-wqDCoMKgwqAgdHJhY2U6IHJ1bl9jb21tYW5kOiB1bnNldCBHSVRfQUxURVJOQVRFX09CSkVDVF9E
-SVJFQ1RPUklFUyBHSVRfRElSIEdJVF9PQkpFQ1RfRElSRUNUT1JZIEdJVF9QUkVGSVg7IGdpdCAt
-LWdpdC1kaXI9L2RhdGEvdGVzdC9yZXBsaWNhLTIgZm9yLWVhY2gtcmVmICctLWZvcm1hdD0lKG9i
-amVjdG5hbWUpJw0KcmVtb3RlOiAwNDoxOToyMC4zNDYzNTkgZ2l0LmM6NDU5wqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCBmb3ItZWFjaC1yZWYgJy0tZm9y
-bWF0PSUob2JqZWN0bmFtZSknDQowNDoxOToyMC4zOTU1MTEgcnVuLWNvbW1hbmQuYzo2NTTCoMKg
-wqDCoMKgwqAgdHJhY2U6IHJ1bl9jb21tYW5kOiBnaXQgZ2MgLS1hdXRvIC0tcXVpZXQNCnJlbW90
-ZTogMDQ6MTk6MjAuMzk3OTQ5IGdpdC5jOjQ1OcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-dHJhY2U6IGJ1aWx0LWluOiBnaXQgZ2MgLS1hdXRvIC0tcXVpZXQNClRvIGZpbGU6Ly8vZGF0YS90
-ZXN0L3JlcGxpY2EtMg0KKiBbbmV3IGJyYW5jaF3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgYl8xIC0+IGJfMQ0KwqANCiMgcmVzZXQgcmVwbGljYS0yIGFuZCByZW1vdmUgYml0bWFwDQok
-IHJtIC1yZiAvZGF0YS90ZXN0L3JlcGxpY2EtMg0KJCBjcCAtciAvZGF0YS90ZXN0L3JlcG8gL2Rh
-dGEvdGVzdC9yZXBsaWNhLTINCiQgcm0gb2JqZWN0cy9wYWNrL3BhY2stOWE3ZmMwMjQ2NTI2NDVh
-NjMyZmI4MmE0ZmYyNmMzZGRmNDg4M2VlZC5iaXRtYXANCsKgDQrCoA0KIyBnaXQgcHVzaCB3aXRo
-b3V0IGJpdG1hcA0KJCBHSVRfVFJBQ0U9MSBnaXQgcHVzaCBmaWxlOi8vL2RhdGEvdGVzdC9yZXBs
-aWNhLTIgcmVmcy9oZWFkcy9iXzENCjA0OjIwOjQ0LjYzMzU5MCBnaXQuYzo0NTnCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIHRyYWNlOiBidWlsdC1pbjogZ2l0IHB1c2ggZmlsZTovLy9kYXRh
-L3Rlc3QvcmVwbGljYS0yIHJlZnMvaGVhZHMvYl8xDQowNDoyMDo0NC42Njg5MDggcnVuLWNvbW1h
-bmQuYzo2NTTCoMKgwqDCoMKgwqAgdHJhY2U6IHJ1bl9jb21tYW5kOiB1bnNldCBHSVRfRElSIEdJ
-VF9JTVBMSUNJVF9XT1JLX1RSRUUgR0lUX1BSRUZJWDsgJ2dpdC1yZWNlaXZlLXBhY2sgJ1wnJy9k
-YXRhL3Rlc3QvcmVwbGljYS0yJ1wnJycNCjA0OjIwOjQ0LjY3MzIzNCBnaXQuYzo0NTnCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHRyYWNlOiBidWlsdC1pbjogZ2l0IHJlY2VpdmUtcGFjayAv
-ZGF0YS90ZXN0L3JlcGxpY2EtMg0KMDQ6MjA6NDQuNzIwODUyIHJ1bi1jb21tYW5kLmM6NjU0wqDC
-oMKgwqDCoMKgIHRyYWNlOiBydW5fY29tbWFuZDogZ2l0IHBhY2stb2JqZWN0cyAtLWFsbC1wcm9n
-cmVzcy1pbXBsaWVkIC0tcmV2cyAtLXN0ZG91dCAtLXRoaW4gLS1kZWx0YS1iYXNlLW9mZnNldCAt
-LXByb2dyZXNzDQowNDoyMDo0NC43MjMxMDAgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCBwYWNrLW9iamVjdHMgLS1hbGwtcHJvZ3Jlc3Mt
-aW1wbGllZCAtLXJldnMgLS1zdGRvdXQgLS10aGluIC0tZGVsdGEtYmFzZS1vZmZzZXQgLS1wcm9n
-cmVzcw0KVG90YWwgMCAoZGVsdGEgMCksIHJldXNlZCAwIChkZWx0YSAwKSwgcGFjay1yZXVzZWQg
-MA0KMDQ6MjA6NDQuODAwMjk4IHJ1bi1jb21tYW5kLmM6NjU0wqDCoMKgwqDCoMKgIHRyYWNlOiBy
-dW5fY29tbWFuZDogR0lUX0FMVEVSTkFURV9PQkpFQ1RfRElSRUNUT1JJRVM9L2RhdGEvdGVzdC9y
-ZXBsaWNhLTIvLi9vYmplY3RzIEdJVF9PQkpFQ1RfRElSRUNUT1JZPS9kYXRhL3Rlc3QvcmVwbGlj
-YS0yLy4vb2JqZWN0cy90bXBfb2JqZGlyLWluY29taW5nLVVPV1kxRSBHSVRfUVVBUkFOVElORV9Q
-QVRIDQo9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzL3RtcF9vYmpkaXItaW5jb21pbmct
-VU9XWTFFIGdpdCB1bnBhY2stb2JqZWN0cyAtLXBhY2tfaGVhZGVyPTIsMA0KcmVtb3RlOiAwNDoy
-MDo0NC44MDIwNTYgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB0cmFjZTog
-YnVpbHQtaW46IGdpdCB1bnBhY2stb2JqZWN0cyAtLXBhY2tfaGVhZGVyPTIsMA0KMDQ6MjA6NDQu
-ODAyNDc0IHJ1bi1jb21tYW5kLmM6NjU0wqDCoMKgwqDCoMKgIHRyYWNlOiBydW5fY29tbWFuZDog
-R0lUX0FMVEVSTkFURV9PQkpFQ1RfRElSRUNUT1JJRVM9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9v
-YmplY3RzIEdJVF9PQkpFQ1RfRElSRUNUT1JZPS9kYXRhL3Rlc3QvcmVwbGljYS0yLy4vb2JqZWN0
-cy90bXBfb2JqZGlyLWluY29taW5nLVVPV1kxRSBHSVRfUVVBUkFOVElORV9QQVRIDQo9L2RhdGEv
-dGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzL3RtcF9vYmpkaXItaW5jb21pbmctVU9XWTFFIGdpdCBy
-ZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRpbiAtLW5vdCAtLWFsbCAtLXF1aWV0IC0tYWx0ZXJuYXRl
-LXJlZnMgJy0tcHJvZ3Jlc3M9Q2hlY2tpbmcgY29ubmVjdGl2aXR5Jw0KcmVtb3RlOiAwNDoyMDo0
-NC44MDM5MzAgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB0cmFjZTogYnVp
-bHQtaW46IGdpdCByZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRpbiAtLW5vdCAtLWFsbCAtLXF1aWV0
-IC0tYWx0ZXJuYXRlLXJlZnMgJy0tcHJvZ3Jlc3M9Q2hlY2tpbmcgY29ubmVjdGl2aXR5Jw0KcmVt
-b3RlOiAwNDoyMDo0NC44MzQzODggcnVuLWNvbW1hbmQuYzo2NTTCoMKgwqDCoMKgwqAgdHJhY2U6
-IHJ1bl9jb21tYW5kOiB1bnNldCBHSVRfQUxURVJOQVRFX09CSkVDVF9ESVJFQ1RPUklFUyBHSVRf
-RElSIEdJVF9PQkpFQ1RfRElSRUNUT1JZIEdJVF9QUkVGSVg7IGdpdCAtLWdpdC1kaXI9L2RhdGEv
-dGVzdC9yZXBsaWNhLTIgZm9yLWVhY2gtcmVmICctLWZvcm1hdD0lKG9iamVjdG5hbWUpJw0KcmVt
-b3RlOiAwNDoyMDo0NC44MzYyMjAgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCB0cmFjZTogYnVpbHQtaW46IGdpdCBmb3ItZWFjaC1yZWYgJy0tZm9ybWF0PSUob2JqZWN0bmFt
-ZSknDQowNDoyMDo0NC44ODQxNjUgcnVuLWNvbW1hbmQuYzo2NTTCoMKgwqDCoMKgwqAgdHJhY2U6
-IHJ1bl9jb21tYW5kOiBnaXQgZ2MgLS1hdXRvIC0tcXVpZXQNCnJlbW90ZTogMDQ6MjA6NDQuODg2
-MTA4IGdpdC5jOjQ1OcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdHJhY2U6IGJ1aWx0LWlu
-OiBnaXQgZ2MgLS1hdXRvIC0tcXVpZXQNClRvIGZpbGU6Ly8vZGF0YS90ZXN0L3JlcGxpY2EtMg0K
-KiBbbmV3IGJyYW5jaF3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYl8xIC0+IGJfMQ0K
-wqANCsKgDQpJdCBjYW4gYmUgc2VlbiBmcm9tIHRoZSBhYm92ZSBvcGVyYXRpb25zIHRoYXQgZ2l0
-IHB1c2ggaXMgc3R1Y2sgaW4gdGhlIGdpdCBwYWNrLW9iamVjdHMgcHJvY2VzcyBmb3IgYWJvdXQg
-MTNzIGZvciBhIGxvbmcgdGltZS4NCkFmdGVyIEkgZGVsZXRlZCB0aGUgYml0bWFwLCB0aGUgd2hv
-bGUgZ2l0IHB1c2ggY29tcGxldGVkIGluIGxlc3MgdGhhbiAxcy4NCsKgDQpEdXJpbmcgdGVzdGlu
-Zywgd2UgZm91bmQgdGhhdCBub3QgZXZlcnkgZ2l0IHJlcG9zaXRvcnkgd2FzIHNpZ25pZmljYW50
-bHkgYWZmZWN0ZWQgYnkgYml0bWFwLiANClRoaXMgbWF5IGJlIHJlbGF0ZWQgdG8gdGhlIG51bWJl
-ciBvZiBvYmplY3RzIGluIHRoZSBnaXQgcmVwb3NpdG9yeSBpdHNlbGYsIHRoZSBudW1iZXIgb2Yg
-cmVmcywgYW5kIHRoZSBzaGExIHBvaW50ZWQgdG8gYnkgdGhlIHB1c2hlZCBicmFuY2guDQrCoA0K
-V2UgYmVuZWZpdCBmcm9tIGJpdG1hcCBwZXJmb3JtYW5jZSBvcHRpbWl6YXRpb25zIGZvciBnaXQg
-ZmV0Y2ggYW5kIGNsb25lLCBidXQgaXQgc2VlbXMgdGhhdCBpdCBhZmZlY3RzIHRoZSBwZXJmb3Jt
-YW5jZSBvZiBnaXQgcHVzaC4NCsKgDQpNYXliZSB3ZSBjYW4gZGlzYWJsZSBiaXRtYXAgdW5kZXIg
-dGhlIHByb2Nlc3Mgb2YgZ2l0IHB1c2g/DQpBcyBmYXIgYXMgSSBrbm93LCB0aGUgbnVtYmVyIG9m
-ICJjb3VudGluZyBvYmplY3RzIiByZXByZXNlbnRlZCBkdXJpbmcgYSBnaXQgcHVzaCBpcyB1c3Vh
-bGx5IHNtYWxsIHJlbGF0aXZlIHRvIHRoZSBlbnRpcmUgcmVwb3NpdG9yeS4NCkNvdW50aW5nIG9i
-amVjdHMgYnkgYnVpbGRpbmcgYml0bWFwcyBpbiBtZW1vcnkgbWF5IHRha2UgbW9yZSB0aW1lIHRo
-YW4gYmVmb3JlLg0KwqANCk9mIGNvdXJzZSwgaXQgd291bGQgYmUgYmV0dGVyIGlmIGFueW9uZSBo
-YXMgYSBiZXR0ZXIgc29sdXRpb24uDQrCoA0KUmVnYXJkcywNCkt5bGUNCiAgICA=
+
+On Tue, Jun 14 2022, kylezhao(=E8=B5=B5=E6=9F=AF=E5=AE=87) wrote:
+
+> Hi All,=20
+> =C2=A0
+> thank you for reading my report.
+> =C2=A0
+> =C2=A0
+> How did we find out?
+> =C2=A0
+> The problem described in the title occurs on our git server.
+> Each git repositories have multiple replicas on our servers to increase g=
+it read performance, and the data synchronization method between these repl=
+icas is git push.
+> One day we found that the git push of a repository was significantly slow=
+, and it took more than ten seconds to just create a new branch from an exi=
+sting commit.
+> =C2=A0
+> How to reproduce the problem ?
+> =C2=A0
+> git version: 2.36.1
+> =C2=A0
+> # /data/test/repo is a bare git repository which can reproduce the problem
+> $ cd /data/test/repo
+> =C2=A0
+> # number of refs
+> $ git show-ref | wc -l
+> 21134
+> # pack information
+> $ ls objects/pack/ -hl
+> total 14G
+> -r--r--r-- 1 root root=C2=A0 43M Jun 14 04:16 pack-9a7fc024652645a632fb82=
+a4ff26c3ddf4883eed.bitmap
+> -r--r--r-- 1 root root 169M Jun 14 04:15 pack-9a7fc024652645a632fb82a4ff2=
+6c3ddf4883eed.idx
+> -r--r--r-- 1 root root=C2=A0 14G Jun 14 04:14 pack-9a7fc024652645a632fb82=
+a4ff26c3ddf4883eed.pack
+> =C2=A0
+> # objects information
+> $ git count-objects -v
+> count: 0
+> size: 0
+> in-pack: 5185141
+> packs: 1
+> size-pack: 13938704
+> prune-packable: 0
+> garbage: 0
+> size-garbage: 0
+> =C2=A0
+> # number of commits
+> $ git rev-list --all |  wc -l
+> 955262
+> =C2=A0
+> $ cp -r /data/test/repo /data/test/replica-1
+> $ cp -r /data/test/repo /data/test/replica-2
+> $ cd /data/test/replica-1
+> =C2=A0
+> # create a branch from an existing commit
+> $ git update-ref refs/heads/b_1 43fa4721c61106583cd552da85da3bd84f0f9929
+> $ git show-ref | grep 43fa4721c61106583cd552da85da3bd84f0f9929
+> 43fa4721c61106583cd552da85da3bd84f0f9929 refs/heads/b_1
+> =C2=A0
+> # number of commits of the ref
+> $ git rev-list refs/heads/b_1 |  wc -l
+> 117836
+> =C2=A0
+> # git push with bitmap
+> $ GIT_TRACE=3D1 git push file:///data/test/replica-2 refs/heads/b_1
+> 04:19:07.654103 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git push file:///data=
+/test/replica-2 refs/heads/b_1
+> 04:19:07.690006 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command: unset GIT_DIR GIT_IMPLICIT_WORK_TREE GIT_PREFIX; 'git-rece=
+ive-pack '\''/data/test/replica-2'\'''
+> 04:19:07.694339 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git receive-pack /dat=
+a/test/replica-2
+> 04:19:07.751814 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command: git pack-objects --all-progress-implied --revs --stdout --=
+thin --delta-base-offset --progress
+> 04:19:07.754011 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git pack-objects --al=
+l-progress-implied --revs --stdout --thin --delta-base-offset --progress
+> Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+> 04:19:20.304868 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command:
+> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D/data/test/replica-2/./objects
+> GIT_OBJECT_DIRECTORY=3D/data/test/replica-2/./objects/tmp_objdir-incoming=
+-CaCTHm
+> GIT_QUARANTINE_PATH
+> =3D/data/test/replica-2/./objects/tmp_objdir-incoming-CaCTHm git unpack-o=
+bjects --pack_header=3D2,0
+> remote: 04:19:20.306550 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git unpack-o=
+bjects --pack_header=3D2,0
+> 04:19:20.306903 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command:
+> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D/data/test/replica-2/./objects
+> GIT_OBJECT_DIRECTORY=3D/data/test/replica-2/./objects/tmp_objdir-incoming=
+-CaCTHm
+> GIT_QUARANTINE_PATH
+> =3D/data/test/replica-2/./objects/tmp_objdir-incoming-CaCTHm git rev-list=
+ --objects --stdin --not --all --quiet --alternate-refs '--progress=3DCheck=
+ing connectivity'
+> remote: 04:19:20.308332 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git rev-list=
+ --objects --stdin --not --all --quiet --alternate-refs '--progress=3DCheck=
+ing connectivity'
+> remote: 04:19:20.344031 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 trace: run_command:
+> unset GIT_ALTERNATE_OBJECT_DIRECTORIES GIT_DIR GIT_OBJECT_DIRECTORY
+> GIT_PREFIX; git --git-dir=3D/data/test/replica-2 for-each-ref
+> '--format=3D%(objectname)'
+> remote: 04:19:20.346359 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git for-each=
+-ref '--format=3D%(objectname)'
+> 04:19:20.395511 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command: git gc --auto --quiet
+> remote: 04:19:20.397949 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git gc --aut=
+o --quiet
+> To file:///data/test/replica-2
+> * [new branch]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b_1 -> b_1
+> =C2=A0
+> # reset replica-2 and remove bitmap
+> $ rm -rf /data/test/replica-2
+> $ cp -r /data/test/repo /data/test/replica-2
+> $ rm objects/pack/pack-9a7fc024652645a632fb82a4ff26c3ddf4883eed.bitmap
+> =C2=A0
+> =C2=A0
+> # git push without bitmap
+> $ GIT_TRACE=3D1 git push file:///data/test/replica-2 refs/heads/b_1
+> 04:20:44.633590 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git push file:///data=
+/test/replica-2 refs/heads/b_1
+> 04:20:44.668908 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command: unset GIT_DIR GIT_IMPLICIT_WORK_TREE GIT_PREFIX; 'git-rece=
+ive-pack '\''/data/test/replica-2'\'''
+> 04:20:44.673234 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git receive-pack /dat=
+a/test/replica-2
+> 04:20:44.720852 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command: git pack-objects --all-progress-implied --revs --stdout --=
+thin --delta-base-offset --progress
+> 04:20:44.723100 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git pack-objects --al=
+l-progress-implied --revs --stdout --thin --delta-base-offset --progress
+> Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+> 04:20:44.800298 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command:
+> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D/data/test/replica-2/./objects
+> GIT_OBJECT_DIRECTORY=3D/data/test/replica-2/./objects/tmp_objdir-incoming=
+-UOWY1E
+> GIT_QUARANTINE_PATH
+> =3D/data/test/replica-2/./objects/tmp_objdir-incoming-UOWY1E git unpack-o=
+bjects --pack_header=3D2,0
+> remote: 04:20:44.802056 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git unpack-o=
+bjects --pack_header=3D2,0
+> 04:20:44.802474 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command:
+> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D/data/test/replica-2/./objects
+> GIT_OBJECT_DIRECTORY=3D/data/test/replica-2/./objects/tmp_objdir-incoming=
+-UOWY1E
+> GIT_QUARANTINE_PATH
+> =3D/data/test/replica-2/./objects/tmp_objdir-incoming-UOWY1E git rev-list=
+ --objects --stdin --not --all --quiet --alternate-refs '--progress=3DCheck=
+ing connectivity'
+> remote: 04:20:44.803930 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git rev-list=
+ --objects --stdin --not --all --quiet --alternate-refs '--progress=3DCheck=
+ing connectivity'
+> remote: 04:20:44.834388 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 trace: run_command:
+> unset GIT_ALTERNATE_OBJECT_DIRECTORIES GIT_DIR GIT_OBJECT_DIRECTORY
+> GIT_PREFIX; git --git-dir=3D/data/test/replica-2 for-each-ref
+> '--format=3D%(objectname)'
+> remote: 04:20:44.836220 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git for-each=
+-ref '--format=3D%(objectname)'
+> 04:20:44.884165 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
+ce: run_command: git gc --auto --quiet
+> remote: 04:20:44.886108 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git gc --aut=
+o --quiet
+> To file:///data/test/replica-2
+> * [new branch]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b_1 -> b_1
+> =C2=A0
+> =C2=A0
+> It can be seen from the above operations that git push is stuck in the gi=
+t pack-objects process for about 13s for a long time.
+> After I deleted the bitmap, the whole git push completed in less than 1s.
+> =C2=A0
+> During testing, we found that not every git repository was significantly =
+affected by bitmap.=20
+> This may be related to the number of objects in the git repository itself=
+, the number of refs, and the sha1 pointed to by the pushed branch.
+> =C2=A0
+> We benefit from bitmap performance optimizations for git fetch and clone,=
+ but it seems that it affects the performance of git push.
+> =C2=A0
+> Maybe we can disable bitmap under the process of git push?
+> As far as I know, the number of "counting objects" represented during a g=
+it push is usually small relative to the entire repository.
+> Counting objects by building bitmaps in memory may take more time than be=
+fore.
+> =C2=A0
+> Of course, it would be better if anyone has a better solution.
+
+This is a known issue, I think you've found the same problem discussed
+in these past threads:
+
+https://lore.kernel.org/git/38b99459158a45b1bea09037f3dd092d@exmbdft7.ad.tw=
+osigma.com/
+https://lore.kernel.org/git/87zhoz8b9o.fsf@evledraar.gmail.com/
+
+The latter one in particular has a lot of extra details. The former also
+has the suggestion of a per-push bitmap configuration as a workaround.
+
+As your numbers show it's still an issue today, but those threads should
+help you if you're looking to dig further into the root cause.
+
+Aside from the underlying root causes it would be very nice to fix the
+progress code in that area, i.e. we "stall" on "Enumerating objects",
+which is just a matter of us not having a separate progress bar for the
+very expensive bitmap work we're doing.
