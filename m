@@ -2,89 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAE5AC43334
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 15:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E029C43334
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 15:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244892AbiFNPsv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 11:48:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58460 "EHLO
+        id S1347101AbiFNP4h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 11:56:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244359AbiFNPsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 11:48:50 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BA35111B
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:48:48 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id p1so6845432ilj.9
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:48:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hBO8aQ2fdaMSoet5aAHvyip+F94uTLRruUERuTUvg24=;
-        b=WXfTZ1gdlobYn0l4bPjinMimuY0+vWst/y1BPfRqy5zCDckaV13kaSFacz4uF3hMAT
-         LVmUS3awYVzU6bZtprW1NdogKVJTjWf1oap6vC6Dw/hBglrwbbExViZknSERwvoLd3P2
-         MvnPdhoIr+CggUiC78x8OrHDJjXcWGYhVNpkis+JrCWtUviLbG7twQ6CKVtIdvENbtjm
-         EJxlDjeq5RY0IxQ2wcWxpGO/RgREqW62iw52fyqdIk1yQAYlHZQ+vf2Rouz+O1nrkM/X
-         HMcLxipP3nUVYAYkkHLM7LFjAuNl26kH1yXRtzLchskLwuQ96hj7158noCPzCaMRG8c5
-         cfCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=hBO8aQ2fdaMSoet5aAHvyip+F94uTLRruUERuTUvg24=;
-        b=o9Lf1zxfmx1Cop/dBxcRPfYTRZrIz25FjLorcuDWHVXlFifnUsyUYR4mTSV11QkwRy
-         ofd3RAscPL0qbB4zwzpnMyrupccmEztklMR5fCWAF3CNYwPiJ7cIUcopMVBNkf1n2Nm/
-         9+pkqCRFzZIyNxE/TYRBrMT3pXH6F7L1aIH8NSNAmDocOeyXoLwuIETbO/eCqkxj3qJI
-         eYRnOKfT5R6XWot2XlrUOvruRxjT3f86kZYc3Y96/evkQH0Xo56Q8I4EVoz5HSkKolHf
-         a+CFVyKQrhhylf0YPwo3DLf3eYLjQh8C90vlzZKznXmBsbfUKWwd7B2E1DJzQiLlLL6a
-         wv9Q==
-X-Gm-Message-State: AJIora+b7fIIm3fcy2NiopcrhPwFImo1aEemIhrdXUv/YhsSH4aBWcvZ
-        9tAJh7+4AWP3RiSq/ttmiWFO
-X-Google-Smtp-Source: AGRyM1tINrBobpDoVZdWEWOlCS83l5hE3fXdKk3fY7TMsQH+SIoX6jXm9S0ZXllkKaEF88eisj1thw==
-X-Received: by 2002:a05:6e02:188f:b0:2d3:c38f:7e9b with SMTP id o15-20020a056e02188f00b002d3c38f7e9bmr3399488ilu.151.1655221727725;
-        Tue, 14 Jun 2022 08:48:47 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:508:3b97:7c0b:efc0? ([2600:1700:e72:80a0:508:3b97:7c0b:efc0])
-        by smtp.gmail.com with ESMTPSA id w20-20020a029694000000b00331d98c9a7fsm4985894jai.40.2022.06.14.08.48.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jun 2022 08:48:47 -0700 (PDT)
-Message-ID: <b7d4dc9f-613c-17b6-f3e7-83cbd88a24db@github.com>
-Date:   Tue, 14 Jun 2022 11:48:46 -0400
+        with ESMTP id S1350585AbiFNP4f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 11:56:35 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB3382CC98
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 08:56:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1655222173;
+        bh=FIcg4s36+KfMMEq4nFRzg4mp1mZA67mUBo8TWVki570=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=A00Zs3BnKFILcTmElwvauJwwb3UtVQakYgtDkZBpuaMaadBEQCa423G/BrG4Neya2
+         H454SytOTmRNCkPdh76DUsIST2qrAe9KuC0Sqie387Vf5VPVbtiW7HCcHLSk288M8k
+         ZP3M85LWv8vLkdlXLUOWX99r+og34Z/5US9hD290=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MRW2R-1oOb3w2K4T-00NTGx; Tue, 14
+ Jun 2022 17:56:13 +0200
+Message-ID: <c67bd455-c643-43e4-3770-7dd891e57b4e@web.de>
+Date:   Tue, 14 Jun 2022 17:56:10 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] t3701: two subtests are fixed
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Subject: Re: [PATCH v3 5/5] archive-tar: use internal gzip by default
 Content-Language: en-US
-To:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <pull.145.git.gitgitgadget@gmail.com>
+ <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
+ <d9e75b24-c351-e226-011d-5a5cc2e1c858@web.de> <xmqqk09k449y.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2206141109270.353@tvgsbejvaqbjf.bet>
+ <28f6ec2a-1d94-b29a-4bfd-6a9e74c8edbf@web.de>
+In-Reply-To: <28f6ec2a-1d94-b29a-4bfd-6a9e74c8edbf@web.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:mpgqzKuP6zDTa8DMWsWlbPzezs0aOBlbPB9ME5bScEW7oxi1yww
+ ndcvHhj3VCH6lT+PhdQFJknit8BKTbWjcmufwPNOrGKgoffuFUBDU5/GhtynVFMsdJcSHJG
+ 2pfVJ6uyaPSStIEIAsH+kO28HLdqYMJJKFplHhWOqRkfRNIgSWPq8t3SDjfdBKrItOQkNR4
+ 8IyXcr1Yo93Yd8m05Y7bg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EuIGzGNpbpk=:JZ3VsqQ1VizqtpSxKCgSOW
+ 1mAeB3YEwdktOyg/xjw1Kc/xDEpaKwejVinY0LnAUxb+wIcvxXLMgN0H5jR+x9CxDpVT4bXlI
+ aL6V8aiW0/mbnkGtBEH+pa6Ig7r5JElDrVBGSJ3xt9aQjV8ySQCWZBnchYgGloWfjnLkj3kHO
+ HKOePwxt27zkcJw2tyf88Q23gwBNxBBpN4Yl2tU/Qus98ZSMpjpkgyDeMmW8zZikraDGksczo
+ 0e7UAq3rsD6vJUXogrMMdM4p+53r0GMCplqo9S9Z6xf/zZo1G5cggZkK44xZStktXovGocYfQ
+ o79L3+QOoxH8bnwS/VpioR3BBU1ZUveKO40qjLonDVj1i+hSt1f4Kv47XPcpaf9kyj8aNhCuF
+ iOHJTtsPtc+35qwztwCC68WT5B3TwjCM5oRt1pJoIeWnq30IGrcj9VKqn67c/2QszCknsryQe
+ FOD0mXM9GsQV0TH9LskBs32Vavfok68BDhTdSlWldNGWjTjB75uFFUdCi4DZZzarPbX+HWfyQ
+ Q+S/vFrUhy/xXP7LokFRtbz0RDhs77Jh719mFvDoydhBejbGHJ68NhHC94BPdj8CsVbZnS0+k
+ jBa/QyMalC5RPHSlwViMS2QPJXuZPsIm/NVOaJ9bR0QmS6SRV5w4UzO4GFGgJmTG/XBCKOMKG
+ IElEmnfJKC5cmOBYrtJ1kKzSSEPLesx3qehr+Ujtrml06SKC5OhGhW460cSns0x+46L5Kswk1
+ mctcUo3m8LmlLbT5UJSUYlgoZZMflyjPingyQyy6E7DRQfUWwvXz3ARjHXSSq/TiZWd9qznex
+ aLpL1BuqeIH1w+YtKJJnQPJxyAMJcNFpnVhjJodN6FWIwo9Tb6M/OJF0Pm+pFwfi6hAsjdI7s
+ d4e+CFF3xIT/IrUFivS9TxPhI5U08O3dVG7G6CRQU6+saWOeitpr0U0yMi/xlgVVjutffPRLF
+ /uybwMbdR6AeCPY69lYrDe68wbfjLNAsOHiQ/Sn5TpLB77hnkMipKiXlpzPVse0y7CxxaseMd
+ FDDNyrMwcUjADsLWLSnm4D1utWVXprGQwUsKeg43iKptYYPmijiW7TMtyaVXYnrMqZjdC84Oi
+ olcLRj1EqpCEv2AopAVuwoYs5EVAJtL8foH
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/14/2022 11:26 AM, Michael J Gruber wrote:
-> 0527ccb1b5 ("add -i: default to the built-in implementation", 2021-11-30)
-> switched to the implementation which fixed to subtest. Mark them as
-> expect_success now.
+Am 14.06.22 um 17:47 schrieb Ren=C3=A9 Scharfe:
+> Am 14.06.22 um 13:27 schrieb Johannes Schindelin:
+>> Hi Junio,
+>>
+>> On Mon, 13 Jun 2022, Junio C Hamano wrote:
+>>
+>>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>>
+>>>> -test_expect_success GZIP 'git archive --format=3Dtar.gz' '
+>>>> +test_expect_success 'git archive --format=3Dtar.gz' '
+>>>>  	git archive --format=3Dtar.gz HEAD >j1.tar.gz &&
+>>>>  	test_cmp_bin j.tgz j1.tar.gz
+>>>>  '
+>>>
+>>> Curiously, this breaks for me.  It is understandable if we are not
+>>> producing byte-for-byte identical output with internal gzip.
+>
+> Makes sense in retrospect, there's no reason the output of gzip(1) and
+> zlib would have to be the same exactly.  It just happened to be so on my
+> platform, so the tests deceptively passed for me.  I think we simply
+> have to drop those that try to compare compressed files made by
+> different tools -- we can still check if their content can be extracted
+> and matches.
 
-s/to subtest/two subtests/
+I have to take that back, I was confused -- the tests are fine.  There are=
+ no
+comparisons between gzip-generated and zlib-generated files.  There's just
+the gzhead use-after-return error that Dscho discovered.
 
-> 
-> Signed-off-by: Michael J Gruber <git@grubix.eu>
-> ---
-> I did check the ML but may have missed a series which contains this. (I
-> only found one which tries to make the test output clearer in CI.)
-
-The breakage vanished as of 1fc1879839 (Merge branch 'js/use-builtin-add-i',
-2022-05-30). The direct change is likely 0527ccb1b5 (add -i: default to the
-built-in implementation, 2021-11-30), but that commit actually fails the
-tests, it seems. Something about a parallel topic must have made it work at
-the merge point.
-
-Patch looks good. Thanks!
-
--Stolee
+Ren=C3=A9
