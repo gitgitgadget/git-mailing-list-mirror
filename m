@@ -2,155 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A039EC43334
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 07:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B087C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 08:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354313AbiFNHZa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 03:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41292 "EHLO
+        id S1352517AbiFNIGQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 04:06:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351788AbiFNHZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 03:25:27 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 585CD3DA5B
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 00:25:26 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id n10so15418740ejk.5
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 00:25:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=qQ6kQ9LI+JVsODUR/EFKkGJezBzEQeE3ml0H7ik+wdU=;
-        b=NSWt8Lzp6b+SPueI9j23y3MpC8dP+dfPo6VW1+xSyq8fP2/0ZRzMYBSLQ7oO9P1Izn
-         GB97qvtwn61hxyOo271VpibnQreUksuoQKS0FRgSDePVqRnyvw+29sUZ5py4Y6bQpATd
-         ta6fpcsEVCjGHZmSn/ETivtTsq8I8ORTLAgVpgOBMrCfPCcPuo1EuFFlJyiMyrSnW+Pf
-         xwDrRnWy/ZOcbJv2jAqIFMmXilOKebiQms1/XexhycAXL7gmBKJtREmcOPqVbef/cF1s
-         9DVjfzX0LNIRir5O85szyx2VI4uGHuXTHHUdEWRbphF0P2e6WF8xgNn8/Iz/WLfIMOVx
-         wGHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=qQ6kQ9LI+JVsODUR/EFKkGJezBzEQeE3ml0H7ik+wdU=;
-        b=bE550hOiJm8a01wDRoGSzMkW6ugcJsdJVt+Pp9lx/4gbDoC+Ya1cjHvz7xzH3A5fRg
-         APmuf+yLa/+Xh5Vnivx0C7ONIv7EDDqJCu/K03VDlMktJvLCZ7uxW3nrXKvjbvZZawA/
-         JpGhHUCIOw4ecBOpsqtz5/bVBOob0W7reH4JxmBMZIN9TlHPo4lSH36NaWgU0g9De7/0
-         blb6YyFMGD6+Kl1J2jowAKBfQcDhGLttKp+bywHigvDW9t9OcplhSJj99l7/a8pMUdy1
-         r7NONBbIFHaa26CBY5NBScy3PeijBEq4zFuFL7XIXXjwnChRP2MuZPRNmSzUGdJ//RX0
-         H0TQ==
-X-Gm-Message-State: AJIora9Koe0V2RGhNdGHVE3td/cQ26p9jdgwN6Y2CRQ6ArDLLsaM4eL8
-        V1E8rr1z3Dw+L/jIKxn2K1RgGVtlWwNApxd7Aoy+KmR1aJoYYdJPu2Qfvg==
-X-Google-Smtp-Source: ABdhPJz1Z+ED66SIqKyj9GrO4Azl2MVcCJ/DUgyvS15LhH4jex3a4q+dPE2CmOi/Z7pSUE8lmXdQjPmYUFRTL+gtD2Q=
-X-Received: by 2002:a17:906:c155:b0:708:21b1:dcf6 with SMTP id
- dp21-20020a170906c15500b0070821b1dcf6mr3030824ejc.661.1655191524570; Tue, 14
- Jun 2022 00:25:24 -0700 (PDT)
+        with ESMTP id S231437AbiFNIGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 04:06:15 -0400
+X-Greylist: delayed 379 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 14 Jun 2022 01:06:02 PDT
+Received: from mail11.tencent.com (mail11.tencent.com [14.18.178.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95C1436337
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 01:06:02 -0700 (PDT)
+Received: from EX-SZ023.tencent.com (unknown [10.28.6.89])
+        by mail11.tencent.com (Postfix) with ESMTP id BFCC766421
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 15:59:41 +0800 (CST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
+        s=s202002; t=1655193581;
+        bh=pHmmozP2fxKL9nkw0R/Umwz0GwSoohQA5oKWpQXKZkg=;
+        h=From:To:Subject:Date;
+        b=iSkPf/3l4hFlPr90M/WIbvSVCSkUqeozuyPg1q70m+B998EoZshIjz3g9ra+iVjf8
+         Cdj4WUtsYkZI8jGsRXVTtHpaX7v6Yo7qrP6OggZEpleGkMWMgJzcJsy3rg74z5HBTn
+         ZnnJfAwz7PwYZBmDJjeRQ2Mjv0NvASS+vjMRpT5Q=
+Received: from EX-SZ065.tencent.com (10.28.6.17) by EX-SZ023.tencent.com
+ (10.28.6.89) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 14 Jun
+ 2022 15:59:41 +0800
+Received: from EX-SZ066.tencent.com (10.28.6.18) by EX-SZ065.tencent.com
+ (10.28.6.17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 14 Jun
+ 2022 15:59:41 +0800
+Received: from EX-SZ066.tencent.com ([fe80::2186:e8b5:166c:c4ab]) by
+ EX-SZ066.tencent.com ([fe80::2186:e8b5:166c:c4ab%6]) with mapi id
+ 15.01.2242.008; Tue, 14 Jun 2022 15:59:41 +0800
+From:   =?utf-8?B?a3lsZXpoYW8o6LW15p+v5a6HKQ==?= <kylezhao@tencent.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: reachability-bitmap makes push performance worse ?
+Thread-Topic: reachability-bitmap makes push performance worse ?
+Thread-Index: AQHYf8Otm1Avh11Jf0usOdlwvHvEJQ==
+Date:   Tue, 14 Jun 2022 07:59:41 +0000
+Message-ID: <b940e705fbe9454685757f2e3055e2ce@tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.99.3.239]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-From:   Haiyng Tan <haiyangtand@gmail.com>
-Date:   Tue, 14 Jun 2022 15:25:13 +0800
-Message-ID: <CANe9W27GVn-w1WSZNTxh5SKEMzHGEZQCF48vmbvMi4AUEg12yQ@mail.gmail.com>
-Subject: Re: An endless loop fetching issue with partial clone, alternates and
- commit graph
-To:     git@vger.kernel.org, chiyutianyi@gmail.com
-Cc:     ps@pks.im, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 13 Jun 2022 00:17:07 +0800, Han Xin wrote:
-> We found an issue that could create an endless loop where alternates
-> objects are used improperly.
->
-> While do fetching in a partial cloned repository with a commit graph,
-> deref_without_lazy_fetch_extended() will call lookup_commit_in_graph()
-> to find the commit object. We can found the code in commit-graph.c:
->
->      struct commit *lookup_commit_in_graph(struct repository *repo, const=
- struct object_id *id)
->      {
->           =E2=80=A6
->           if (!search_commit_pos_in_graph(id, repo->objects->commit_graph=
-, &pos))
->                return NULL;
->           if (!repo_has_object_file(repo, id))
->                return NULL;
-
-> If we found the object in the commit graph, but missing it in the reposit=
-ory,
-> we will go into an endless loop:
->      git fetch -> deref_without_lazy_fetch_extended() ->
->           lookup_commit_in_graph() -> repo_has_object_file() ->
->                promisor_remote_get_direct() -> fetch_objects() ->
->                     git fetch
->
-> I know that the reason for this issue is due to improper use of
-> alternates, we can ensure that objects will not be lost by maintaining
-> all the references. But shouldn't we do something about this unusual
-> usage, it will cause a fetch bombardment of the remote git service.
->
-> We can reproduce this issue with the following test case, it will
-> generate a lot of git processes, please be careful to stop it.
-> =E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
-=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
-=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
-=94=E2=80=94=E2=80=94
-> #!/bin/sh
->
-> test_description=3D'test for an endless loop fetching=E2=80=99
->
-> GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-> export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
-> . ./test-lib.sh
->
-> test_expect_success 'setup=E2=80=99 =E2=80=98
->     git init --bare dest.git &&
->     test_commit one &&
->    git checkout -b testbranch &&
->    test_commit two &&
->    git push dest.git --all
-> '
->
-> test_expect_success 'prepare a alternates repository without testbranch' =
-'
->    git clone -b $GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME dest.git alternates=
- &&
->    oid=3D$(git -C alternates rev-parse refs/remotes/origin/testbranch) &&
->    git -C alternates update-ref -d refs/remotes/origin/testbranch &&
->    git -C alternates gc --prune=3Dnow
-> '
->
-> test_expect_success 'prepare a repository with commit-graph' '
->    git init source &&
->    echo "$(pwd)/dest.git/objects" >source/.git/objects/info/alternates &&
->    git -C source remote add origin "$(pwd)/dest.git" &&
->    git -C source config remote.origin.promisor true &&
->    git -C source config remote.origin.partialclonefilter blob:none &&
->    git -C source fetch origin &&
->    (
->        cd source &&
->        test_commit three &&
->        git -c gc.writeCommitGraph=3Dtrue gc
->    )
-> '
->
-> test_expect_success 'change alternates' '
->    echo "$(pwd)/alternates/.git/objects" >source/.git/objects/info/altern=
-ates &&
->    # this will bring an endless loop fetching
->    git -C source fetch origin $oid
-> '
->
-> test_done
->
-> ------------------------------------------------------
->
-> Thanks
-> -Han Xin
-
-I think it's caused by using lazy-fetch in deref_without_lazy_fetch_extende=
-d().
-In lookup_commit_in_graph(), lazy-fetch is initiated by
-repo_has_object_file() used.
-has_object() should be used, it's no-lazy-fetch.
+DQpIaSBBbGwsIA0KwqANCnRoYW5rIHlvdSBmb3IgcmVhZGluZyBteSByZXBvcnQuDQrCoA0KwqAN
+CkhvdyBkaWQgd2UgZmluZCBvdXQ/DQrCoA0KVGhlIHByb2JsZW0gZGVzY3JpYmVkIGluIHRoZSB0
+aXRsZSBvY2N1cnMgb24gb3VyIGdpdCBzZXJ2ZXIuDQpFYWNoIGdpdCByZXBvc2l0b3JpZXMgaGF2
+ZSBtdWx0aXBsZSByZXBsaWNhcyBvbiBvdXIgc2VydmVycyB0byBpbmNyZWFzZSBnaXQgcmVhZCBw
+ZXJmb3JtYW5jZSwgYW5kIHRoZSBkYXRhIHN5bmNocm9uaXphdGlvbiBtZXRob2QgYmV0d2VlbiB0
+aGVzZSByZXBsaWNhcyBpcyBnaXQgcHVzaC4NCk9uZSBkYXkgd2UgZm91bmQgdGhhdCB0aGUgZ2l0
+IHB1c2ggb2YgYSByZXBvc2l0b3J5IHdhcyBzaWduaWZpY2FudGx5IHNsb3csIGFuZCBpdCB0b29r
+IG1vcmUgdGhhbiB0ZW4gc2Vjb25kcyB0byBqdXN0IGNyZWF0ZSBhIG5ldyBicmFuY2ggZnJvbSBh
+biBleGlzdGluZyBjb21taXQuDQrCoA0KSG93IHRvIHJlcHJvZHVjZSB0aGUgcHJvYmxlbSA/DQrC
+oA0KZ2l0IHZlcnNpb246IDIuMzYuMQ0KwqANCiMgL2RhdGEvdGVzdC9yZXBvIGlzIGEgYmFyZSBn
+aXQgcmVwb3NpdG9yeSB3aGljaCBjYW4gcmVwcm9kdWNlIHRoZSBwcm9ibGVtDQokIGNkIC9kYXRh
+L3Rlc3QvcmVwbw0KwqANCiMgbnVtYmVyIG9mIHJlZnMNCiQgZ2l0IHNob3ctcmVmIHwgd2MgLWwN
+CjIxMTM0DQojIHBhY2sgaW5mb3JtYXRpb24NCiQgbHMgb2JqZWN0cy9wYWNrLyAtaGwNCnRvdGFs
+IDE0Rw0KLXItLXItLXItLSAxIHJvb3Qgcm9vdMKgIDQzTSBKdW4gMTQgMDQ6MTYgcGFjay05YTdm
+YzAyNDY1MjY0NWE2MzJmYjgyYTRmZjI2YzNkZGY0ODgzZWVkLmJpdG1hcA0KLXItLXItLXItLSAx
+IHJvb3Qgcm9vdCAxNjlNIEp1biAxNCAwNDoxNSBwYWNrLTlhN2ZjMDI0NjUyNjQ1YTYzMmZiODJh
+NGZmMjZjM2RkZjQ4ODNlZWQuaWR4DQotci0tci0tci0tIDEgcm9vdCByb290wqAgMTRHIEp1biAx
+NCAwNDoxNCBwYWNrLTlhN2ZjMDI0NjUyNjQ1YTYzMmZiODJhNGZmMjZjM2RkZjQ4ODNlZWQucGFj
+aw0KwqANCiMgb2JqZWN0cyBpbmZvcm1hdGlvbg0KJCBnaXQgY291bnQtb2JqZWN0cyAtdg0KY291
+bnQ6IDANCnNpemU6IDANCmluLXBhY2s6IDUxODUxNDENCnBhY2tzOiAxDQpzaXplLXBhY2s6IDEz
+OTM4NzA0DQpwcnVuZS1wYWNrYWJsZTogMA0KZ2FyYmFnZTogMA0Kc2l6ZS1nYXJiYWdlOiAwDQrC
+oA0KIyBudW1iZXIgb2YgY29tbWl0cw0KJCBnaXQgcmV2LWxpc3QgLS1hbGwgfCAgd2MgLWwNCjk1
+NTI2Mg0KwqANCiQgY3AgLXIgL2RhdGEvdGVzdC9yZXBvIC9kYXRhL3Rlc3QvcmVwbGljYS0xDQok
+IGNwIC1yIC9kYXRhL3Rlc3QvcmVwbyAvZGF0YS90ZXN0L3JlcGxpY2EtMg0KJCBjZCAvZGF0YS90
+ZXN0L3JlcGxpY2EtMQ0KwqANCiMgY3JlYXRlIGEgYnJhbmNoIGZyb20gYW4gZXhpc3RpbmcgY29t
+bWl0DQokIGdpdCB1cGRhdGUtcmVmIHJlZnMvaGVhZHMvYl8xIDQzZmE0NzIxYzYxMTA2NTgzY2Q1
+NTJkYTg1ZGEzYmQ4NGYwZjk5MjkNCiQgZ2l0IHNob3ctcmVmIHwgZ3JlcCA0M2ZhNDcyMWM2MTEw
+NjU4M2NkNTUyZGE4NWRhM2JkODRmMGY5OTI5DQo0M2ZhNDcyMWM2MTEwNjU4M2NkNTUyZGE4NWRh
+M2JkODRmMGY5OTI5IHJlZnMvaGVhZHMvYl8xDQrCoA0KIyBudW1iZXIgb2YgY29tbWl0cyBvZiB0
+aGUgcmVmDQokIGdpdCByZXYtbGlzdCByZWZzL2hlYWRzL2JfMSB8ICB3YyAtbA0KMTE3ODM2DQrC
+oA0KIyBnaXQgcHVzaCB3aXRoIGJpdG1hcA0KJCBHSVRfVFJBQ0U9MSBnaXQgcHVzaCBmaWxlOi8v
+L2RhdGEvdGVzdC9yZXBsaWNhLTIgcmVmcy9oZWFkcy9iXzENCjA0OjE5OjA3LjY1NDEwMyBnaXQu
+Yzo0NTnCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHRyYWNlOiBidWlsdC1pbjogZ2l0IHB1
+c2ggZmlsZTovLy9kYXRhL3Rlc3QvcmVwbGljYS0yIHJlZnMvaGVhZHMvYl8xDQowNDoxOTowNy42
+OTAwMDYgcnVuLWNvbW1hbmQuYzo2NTTCoMKgwqDCoMKgwqAgdHJhY2U6IHJ1bl9jb21tYW5kOiB1
+bnNldCBHSVRfRElSIEdJVF9JTVBMSUNJVF9XT1JLX1RSRUUgR0lUX1BSRUZJWDsgJ2dpdC1yZWNl
+aXZlLXBhY2sgJ1wnJy9kYXRhL3Rlc3QvcmVwbGljYS0yJ1wnJycNCjA0OjE5OjA3LjY5NDMzOSBn
+aXQuYzo0NTnCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHRyYWNlOiBidWlsdC1pbjogZ2l0
+IHJlY2VpdmUtcGFjayAvZGF0YS90ZXN0L3JlcGxpY2EtMg0KMDQ6MTk6MDcuNzUxODE0IHJ1bi1j
+b21tYW5kLmM6NjU0wqDCoMKgwqDCoMKgIHRyYWNlOiBydW5fY29tbWFuZDogZ2l0IHBhY2stb2Jq
+ZWN0cyAtLWFsbC1wcm9ncmVzcy1pbXBsaWVkIC0tcmV2cyAtLXN0ZG91dCAtLXRoaW4gLS1kZWx0
+YS1iYXNlLW9mZnNldCAtLXByb2dyZXNzDQowNDoxOTowNy43NTQwMTEgZ2l0LmM6NDU5wqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCBwYWNrLW9iamVjdHMg
+LS1hbGwtcHJvZ3Jlc3MtaW1wbGllZCAtLXJldnMgLS1zdGRvdXQgLS10aGluIC0tZGVsdGEtYmFz
+ZS1vZmZzZXQgLS1wcm9ncmVzcw0KVG90YWwgMCAoZGVsdGEgMCksIHJldXNlZCAwIChkZWx0YSAw
+KSwgcGFjay1yZXVzZWQgMA0KMDQ6MTk6MjAuMzA0ODY4IHJ1bi1jb21tYW5kLmM6NjU0wqDCoMKg
+wqDCoMKgIHRyYWNlOiBydW5fY29tbWFuZDogR0lUX0FMVEVSTkFURV9PQkpFQ1RfRElSRUNUT1JJ
+RVM9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzIEdJVF9PQkpFQ1RfRElSRUNUT1JZPS9k
+YXRhL3Rlc3QvcmVwbGljYS0yLy4vb2JqZWN0cy90bXBfb2JqZGlyLWluY29taW5nLUNhQ1RIbSBH
+SVRfUVVBUkFOVElORV9QQVRIDQo9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzL3RtcF9v
+YmpkaXItaW5jb21pbmctQ2FDVEhtIGdpdCB1bnBhY2stb2JqZWN0cyAtLXBhY2tfaGVhZGVyPTIs
+MA0KcmVtb3RlOiAwNDoxOToyMC4zMDY1NTAgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCB1bnBhY2stb2JqZWN0cyAtLXBhY2tfaGVhZGVy
+PTIsMA0KMDQ6MTk6MjAuMzA2OTAzIHJ1bi1jb21tYW5kLmM6NjU0wqDCoMKgwqDCoMKgIHRyYWNl
+OiBydW5fY29tbWFuZDogR0lUX0FMVEVSTkFURV9PQkpFQ1RfRElSRUNUT1JJRVM9L2RhdGEvdGVz
+dC9yZXBsaWNhLTIvLi9vYmplY3RzIEdJVF9PQkpFQ1RfRElSRUNUT1JZPS9kYXRhL3Rlc3QvcmVw
+bGljYS0yLy4vb2JqZWN0cy90bXBfb2JqZGlyLWluY29taW5nLUNhQ1RIbSBHSVRfUVVBUkFOVElO
+RV9QQVRIDQo9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzL3RtcF9vYmpkaXItaW5jb21p
+bmctQ2FDVEhtIGdpdCByZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRpbiAtLW5vdCAtLWFsbCAtLXF1
+aWV0IC0tYWx0ZXJuYXRlLXJlZnMgJy0tcHJvZ3Jlc3M9Q2hlY2tpbmcgY29ubmVjdGl2aXR5Jw0K
+cmVtb3RlOiAwNDoxOToyMC4zMDgzMzIgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCByZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRpbiAtLW5v
+dCAtLWFsbCAtLXF1aWV0IC0tYWx0ZXJuYXRlLXJlZnMgJy0tcHJvZ3Jlc3M9Q2hlY2tpbmcgY29u
+bmVjdGl2aXR5Jw0KcmVtb3RlOiAwNDoxOToyMC4zNDQwMzEgcnVuLWNvbW1hbmQuYzo2NTTCoMKg
+wqDCoMKgwqAgdHJhY2U6IHJ1bl9jb21tYW5kOiB1bnNldCBHSVRfQUxURVJOQVRFX09CSkVDVF9E
+SVJFQ1RPUklFUyBHSVRfRElSIEdJVF9PQkpFQ1RfRElSRUNUT1JZIEdJVF9QUkVGSVg7IGdpdCAt
+LWdpdC1kaXI9L2RhdGEvdGVzdC9yZXBsaWNhLTIgZm9yLWVhY2gtcmVmICctLWZvcm1hdD0lKG9i
+amVjdG5hbWUpJw0KcmVtb3RlOiAwNDoxOToyMC4zNDYzNTkgZ2l0LmM6NDU5wqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCBmb3ItZWFjaC1yZWYgJy0tZm9y
+bWF0PSUob2JqZWN0bmFtZSknDQowNDoxOToyMC4zOTU1MTEgcnVuLWNvbW1hbmQuYzo2NTTCoMKg
+wqDCoMKgwqAgdHJhY2U6IHJ1bl9jb21tYW5kOiBnaXQgZ2MgLS1hdXRvIC0tcXVpZXQNCnJlbW90
+ZTogMDQ6MTk6MjAuMzk3OTQ5IGdpdC5jOjQ1OcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+dHJhY2U6IGJ1aWx0LWluOiBnaXQgZ2MgLS1hdXRvIC0tcXVpZXQNClRvIGZpbGU6Ly8vZGF0YS90
+ZXN0L3JlcGxpY2EtMg0KKiBbbmV3IGJyYW5jaF3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgYl8xIC0+IGJfMQ0KwqANCiMgcmVzZXQgcmVwbGljYS0yIGFuZCByZW1vdmUgYml0bWFwDQok
+IHJtIC1yZiAvZGF0YS90ZXN0L3JlcGxpY2EtMg0KJCBjcCAtciAvZGF0YS90ZXN0L3JlcG8gL2Rh
+dGEvdGVzdC9yZXBsaWNhLTINCiQgcm0gb2JqZWN0cy9wYWNrL3BhY2stOWE3ZmMwMjQ2NTI2NDVh
+NjMyZmI4MmE0ZmYyNmMzZGRmNDg4M2VlZC5iaXRtYXANCsKgDQrCoA0KIyBnaXQgcHVzaCB3aXRo
+b3V0IGJpdG1hcA0KJCBHSVRfVFJBQ0U9MSBnaXQgcHVzaCBmaWxlOi8vL2RhdGEvdGVzdC9yZXBs
+aWNhLTIgcmVmcy9oZWFkcy9iXzENCjA0OjIwOjQ0LjYzMzU5MCBnaXQuYzo0NTnCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIHRyYWNlOiBidWlsdC1pbjogZ2l0IHB1c2ggZmlsZTovLy9kYXRh
+L3Rlc3QvcmVwbGljYS0yIHJlZnMvaGVhZHMvYl8xDQowNDoyMDo0NC42Njg5MDggcnVuLWNvbW1h
+bmQuYzo2NTTCoMKgwqDCoMKgwqAgdHJhY2U6IHJ1bl9jb21tYW5kOiB1bnNldCBHSVRfRElSIEdJ
+VF9JTVBMSUNJVF9XT1JLX1RSRUUgR0lUX1BSRUZJWDsgJ2dpdC1yZWNlaXZlLXBhY2sgJ1wnJy9k
+YXRhL3Rlc3QvcmVwbGljYS0yJ1wnJycNCjA0OjIwOjQ0LjY3MzIzNCBnaXQuYzo0NTnCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHRyYWNlOiBidWlsdC1pbjogZ2l0IHJlY2VpdmUtcGFjayAv
+ZGF0YS90ZXN0L3JlcGxpY2EtMg0KMDQ6MjA6NDQuNzIwODUyIHJ1bi1jb21tYW5kLmM6NjU0wqDC
+oMKgwqDCoMKgIHRyYWNlOiBydW5fY29tbWFuZDogZ2l0IHBhY2stb2JqZWN0cyAtLWFsbC1wcm9n
+cmVzcy1pbXBsaWVkIC0tcmV2cyAtLXN0ZG91dCAtLXRoaW4gLS1kZWx0YS1iYXNlLW9mZnNldCAt
+LXByb2dyZXNzDQowNDoyMDo0NC43MjMxMDAgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCB0cmFjZTogYnVpbHQtaW46IGdpdCBwYWNrLW9iamVjdHMgLS1hbGwtcHJvZ3Jlc3Mt
+aW1wbGllZCAtLXJldnMgLS1zdGRvdXQgLS10aGluIC0tZGVsdGEtYmFzZS1vZmZzZXQgLS1wcm9n
+cmVzcw0KVG90YWwgMCAoZGVsdGEgMCksIHJldXNlZCAwIChkZWx0YSAwKSwgcGFjay1yZXVzZWQg
+MA0KMDQ6MjA6NDQuODAwMjk4IHJ1bi1jb21tYW5kLmM6NjU0wqDCoMKgwqDCoMKgIHRyYWNlOiBy
+dW5fY29tbWFuZDogR0lUX0FMVEVSTkFURV9PQkpFQ1RfRElSRUNUT1JJRVM9L2RhdGEvdGVzdC9y
+ZXBsaWNhLTIvLi9vYmplY3RzIEdJVF9PQkpFQ1RfRElSRUNUT1JZPS9kYXRhL3Rlc3QvcmVwbGlj
+YS0yLy4vb2JqZWN0cy90bXBfb2JqZGlyLWluY29taW5nLVVPV1kxRSBHSVRfUVVBUkFOVElORV9Q
+QVRIDQo9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzL3RtcF9vYmpkaXItaW5jb21pbmct
+VU9XWTFFIGdpdCB1bnBhY2stb2JqZWN0cyAtLXBhY2tfaGVhZGVyPTIsMA0KcmVtb3RlOiAwNDoy
+MDo0NC44MDIwNTYgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB0cmFjZTog
+YnVpbHQtaW46IGdpdCB1bnBhY2stb2JqZWN0cyAtLXBhY2tfaGVhZGVyPTIsMA0KMDQ6MjA6NDQu
+ODAyNDc0IHJ1bi1jb21tYW5kLmM6NjU0wqDCoMKgwqDCoMKgIHRyYWNlOiBydW5fY29tbWFuZDog
+R0lUX0FMVEVSTkFURV9PQkpFQ1RfRElSRUNUT1JJRVM9L2RhdGEvdGVzdC9yZXBsaWNhLTIvLi9v
+YmplY3RzIEdJVF9PQkpFQ1RfRElSRUNUT1JZPS9kYXRhL3Rlc3QvcmVwbGljYS0yLy4vb2JqZWN0
+cy90bXBfb2JqZGlyLWluY29taW5nLVVPV1kxRSBHSVRfUVVBUkFOVElORV9QQVRIDQo9L2RhdGEv
+dGVzdC9yZXBsaWNhLTIvLi9vYmplY3RzL3RtcF9vYmpkaXItaW5jb21pbmctVU9XWTFFIGdpdCBy
+ZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRpbiAtLW5vdCAtLWFsbCAtLXF1aWV0IC0tYWx0ZXJuYXRl
+LXJlZnMgJy0tcHJvZ3Jlc3M9Q2hlY2tpbmcgY29ubmVjdGl2aXR5Jw0KcmVtb3RlOiAwNDoyMDo0
+NC44MDM5MzAgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB0cmFjZTogYnVp
+bHQtaW46IGdpdCByZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRpbiAtLW5vdCAtLWFsbCAtLXF1aWV0
+IC0tYWx0ZXJuYXRlLXJlZnMgJy0tcHJvZ3Jlc3M9Q2hlY2tpbmcgY29ubmVjdGl2aXR5Jw0KcmVt
+b3RlOiAwNDoyMDo0NC44MzQzODggcnVuLWNvbW1hbmQuYzo2NTTCoMKgwqDCoMKgwqAgdHJhY2U6
+IHJ1bl9jb21tYW5kOiB1bnNldCBHSVRfQUxURVJOQVRFX09CSkVDVF9ESVJFQ1RPUklFUyBHSVRf
+RElSIEdJVF9PQkpFQ1RfRElSRUNUT1JZIEdJVF9QUkVGSVg7IGdpdCAtLWdpdC1kaXI9L2RhdGEv
+dGVzdC9yZXBsaWNhLTIgZm9yLWVhY2gtcmVmICctLWZvcm1hdD0lKG9iamVjdG5hbWUpJw0KcmVt
+b3RlOiAwNDoyMDo0NC44MzYyMjAgZ2l0LmM6NDU5wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCB0cmFjZTogYnVpbHQtaW46IGdpdCBmb3ItZWFjaC1yZWYgJy0tZm9ybWF0PSUob2JqZWN0bmFt
+ZSknDQowNDoyMDo0NC44ODQxNjUgcnVuLWNvbW1hbmQuYzo2NTTCoMKgwqDCoMKgwqAgdHJhY2U6
+IHJ1bl9jb21tYW5kOiBnaXQgZ2MgLS1hdXRvIC0tcXVpZXQNCnJlbW90ZTogMDQ6MjA6NDQuODg2
+MTA4IGdpdC5jOjQ1OcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdHJhY2U6IGJ1aWx0LWlu
+OiBnaXQgZ2MgLS1hdXRvIC0tcXVpZXQNClRvIGZpbGU6Ly8vZGF0YS90ZXN0L3JlcGxpY2EtMg0K
+KiBbbmV3IGJyYW5jaF3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYl8xIC0+IGJfMQ0K
+wqANCsKgDQpJdCBjYW4gYmUgc2VlbiBmcm9tIHRoZSBhYm92ZSBvcGVyYXRpb25zIHRoYXQgZ2l0
+IHB1c2ggaXMgc3R1Y2sgaW4gdGhlIGdpdCBwYWNrLW9iamVjdHMgcHJvY2VzcyBmb3IgYWJvdXQg
+MTNzIGZvciBhIGxvbmcgdGltZS4NCkFmdGVyIEkgZGVsZXRlZCB0aGUgYml0bWFwLCB0aGUgd2hv
+bGUgZ2l0IHB1c2ggY29tcGxldGVkIGluIGxlc3MgdGhhbiAxcy4NCsKgDQpEdXJpbmcgdGVzdGlu
+Zywgd2UgZm91bmQgdGhhdCBub3QgZXZlcnkgZ2l0IHJlcG9zaXRvcnkgd2FzIHNpZ25pZmljYW50
+bHkgYWZmZWN0ZWQgYnkgYml0bWFwLiANClRoaXMgbWF5IGJlIHJlbGF0ZWQgdG8gdGhlIG51bWJl
+ciBvZiBvYmplY3RzIGluIHRoZSBnaXQgcmVwb3NpdG9yeSBpdHNlbGYsIHRoZSBudW1iZXIgb2Yg
+cmVmcywgYW5kIHRoZSBzaGExIHBvaW50ZWQgdG8gYnkgdGhlIHB1c2hlZCBicmFuY2guDQrCoA0K
+V2UgYmVuZWZpdCBmcm9tIGJpdG1hcCBwZXJmb3JtYW5jZSBvcHRpbWl6YXRpb25zIGZvciBnaXQg
+ZmV0Y2ggYW5kIGNsb25lLCBidXQgaXQgc2VlbXMgdGhhdCBpdCBhZmZlY3RzIHRoZSBwZXJmb3Jt
+YW5jZSBvZiBnaXQgcHVzaC4NCsKgDQpNYXliZSB3ZSBjYW4gZGlzYWJsZSBiaXRtYXAgdW5kZXIg
+dGhlIHByb2Nlc3Mgb2YgZ2l0IHB1c2g/DQpBcyBmYXIgYXMgSSBrbm93LCB0aGUgbnVtYmVyIG9m
+ICJjb3VudGluZyBvYmplY3RzIiByZXByZXNlbnRlZCBkdXJpbmcgYSBnaXQgcHVzaCBpcyB1c3Vh
+bGx5IHNtYWxsIHJlbGF0aXZlIHRvIHRoZSBlbnRpcmUgcmVwb3NpdG9yeS4NCkNvdW50aW5nIG9i
+amVjdHMgYnkgYnVpbGRpbmcgYml0bWFwcyBpbiBtZW1vcnkgbWF5IHRha2UgbW9yZSB0aW1lIHRo
+YW4gYmVmb3JlLg0KwqANCk9mIGNvdXJzZSwgaXQgd291bGQgYmUgYmV0dGVyIGlmIGFueW9uZSBo
+YXMgYSBiZXR0ZXIgc29sdXRpb24uDQrCoA0KUmVnYXJkcywNCkt5bGUNCiAgICA=
