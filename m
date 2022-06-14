@@ -2,166 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45347C43334
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 11:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D2E6C43334
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 12:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240950AbiFNL3I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 07:29:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50392 "EHLO
+        id S230009AbiFNMVD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 08:21:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240679AbiFNL3F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 07:29:05 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560563EBA9
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 04:29:03 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id g16-20020a17090a7d1000b001ea9f820449so6838679pjl.5
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 04:29:03 -0700 (PDT)
+        with ESMTP id S229472AbiFNMVC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 08:21:02 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E03442EE2
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 05:21:01 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id a184so6192576qkg.5
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 05:21:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dL0Lvv9k4w0KanLzmawwZldT1dXyzaf+YotmmC+dd0s=;
-        b=lk8bdIiv6In3+PY6wT85psnllUVn9gM994GfSmWqYcOw50x4dcQi1JPwOAXFoNBo/6
-         lcSwsrNp01dmnU8QTXO+bgMCt5/6fMsQ5gTGaBXrKpqhsDWlRLT73dTeccfOcg8u2/fy
-         yTJzqLpDd2Fv7MWlAK9BHmdb7tCcaHjM+HyfNj2l7jW+elITc0Yc7eJc0nqm9F2yf2FC
-         fVsiD0XIsm3Zp3Uc5BFDj5cjhL/gllIv1L1/aVIl67rbcY5jo5Ds2pLFpGfQSkDeP46j
-         gpKRaAsSpbGKHgYyagl0YDC5Kh6POFkHGRmTPlOCfZr5VTeZVkEyi6ZkUdPzeMfxHYSp
-         kM6A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=L6oO1tcmM/JTmVLsvT0TX7Qn+VNhWM0QIu2VYGEMs74=;
+        b=jPW76MfCGOl59t5IU73I6MSF48PV7YYGc4aye3bw6aQFVKonqs17eeBI82MZbuHMa2
+         Wi74VVQ06dQOorhR0HsrTTDwByxekjBCJvMvlC+l2N15GovBScFizS9LMjSPjoKVJVe3
+         NBeufgbmc6sLwpIgQCRNHhEkCtyRjXI4faa1Prsksys5ggtuyyE8eYylV9EZaLjd6Vff
+         0dM4TEBya5lMjvBeFyQS0mwbL3XSHTbAlaAbLECof89I0cHyZjp9XXbIBaNl4SiWYnZ8
+         RYRhOlQN//7eaXLORJU8zspB/jmApDMgZwuTm+OW4DBbYkyi4qJM0/kEknYU8/Fo3DbI
+         9s9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=dL0Lvv9k4w0KanLzmawwZldT1dXyzaf+YotmmC+dd0s=;
-        b=AjY9ZyfXzwCSpLLOGHJh5VW3UyYMX2HpTOURu416XQcDmhNV9yL7nThgc9H6qb8d4X
-         Dgrd/SATzIM8TtAnXT9zF4/IOFHnb3KemQH+pna3rDcuaECgLPd2wPHqB/Bm4wFy8ybC
-         JGM85e2rQKHjvLyMBnypRuyuHzR9BUYUhMeims3GzKqNzzGu5N6iNq+DbzVi6dQK/fCN
-         RRBXxQVOGgxkng5Y4IfQ/PofeRZBngRdIritKw6cMhde5+1+OBpuM50KJSl5KqvE9wzM
-         sakzx7EzK2ic+jE1jvFZ/TiT/PG9XmA6inGkFiBb74enKuaTyrLhNY3EGu7tkB15DANu
-         rH/Q==
-X-Gm-Message-State: AOAM530T8ITMvYvvrJP/V+71BdMyyoj5D0cf3daGgDIb2bdanPs4vFU3
-        wcwL3K9sJsSMhgcjUmrntRc=
-X-Google-Smtp-Source: AGRyM1v8BUYRliYPY744J0iSS2KctFWcvgjgy7UTTwteCeacE/meGK0Lrp+2p4tRmzyi09vg0QUEnA==
-X-Received: by 2002:a17:902:aa8f:b0:168:b18c:5e16 with SMTP id d15-20020a170902aa8f00b00168b18c5e16mr3899297plr.64.1655206142733;
-        Tue, 14 Jun 2022 04:29:02 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id a27-20020a637f1b000000b0040898e7e30csm2900211pgd.94.2022.06.14.04.29.01
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Jun 2022 04:29:02 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git l10n discussion group <git-l10n@googlegroups.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: [L10N] Kickoff for Git 2.37.0 round #1
-Date:   Tue, 14 Jun 2022 19:28:58 +0800
-Message-Id: <20220614112858.16576-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+        bh=L6oO1tcmM/JTmVLsvT0TX7Qn+VNhWM0QIu2VYGEMs74=;
+        b=TdQsoUlSVbP7aJ1Od1GAg9Nt2WR/sFgZgl6l5Dyrt7Yi3RZv4j1bD8TXPEC53U/KNK
+         +jzUz3pYIVH5YgXpf7WZcQy5xVf8E413r9IfRN7MEKJyOjrHLsfkTr5LgipghbudrlFh
+         5vBvBs4uEkr9mqpI9Y/KWxoUWXCx3jdd4aSCyGx8M454bVpExyDHo7frmgt/0udiD/dZ
+         IsK9+ln01STFwg602bUqPIWmO5X4QrYTEjigN3+v5cok7G+/1x5RlP98vuvNOCTWDyVh
+         /KZrNu0Ixdn+ReBN6d4vi2LKI+5Df0+TAUy2enMxhBN6JIwGCnbpfbh6HM/PJXJQx5xU
+         okiw==
+X-Gm-Message-State: AOAM530cM59CJsMqvt+6zlFS1SA7F9f4ILkNoRdAUc9WfqL4uHaI+98B
+        vV834khz0U3HHlaghiaQ2vTMHDQXPhw=
+X-Google-Smtp-Source: ABdhPJwncOtFjtENL4Rcsfyq8LQEkW8SW2o/jtR0NAFfBHFfDsORCRQjxofYhugmcphy9YelcldqvQ==
+X-Received: by 2002:a05:620a:294f:b0:6a7:4413:9416 with SMTP id n15-20020a05620a294f00b006a744139416mr3429675qkp.181.1655209260197;
+        Tue, 14 Jun 2022 05:21:00 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id p6-20020a05622a048600b00304de7561a8sm7602237qtx.27.2022.06.14.05.20.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jun 2022 05:20:59 -0700 (PDT)
+Subject: Re: [PATCH 1/3] diff-format.txt: fix ancient copy-paste error
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1259.git.1655123383.gitgitgadget@gmail.com>
+ <6eaf9b3829fa8f7300bc0123c916d5ffa7c7d80b.1655123383.git.gitgitgadget@gmail.com>
+ <xmqq35g8772x.fsf@gitster.g>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <f6e86c07-0c70-3837-abb2-874d599359b8@gmail.com>
+Date:   Tue, 14 Jun 2022 08:20:57 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <xmqq35g8772x.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-Git v2.37.0-rc0 has been released, and it's time to start new round of
-git l10n.  This time there are 92 updated messages need to be translated
-since last release. Please send your pull request to the l10n coordinator's
-repository below before this update window closes on Sun, June 26, 2022. 
+Le 2022-06-13 à 14:26, Junio C Hamano a écrit :
+> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>>
+>> Fix what is probably a copy-paste error dating back all the way to
+>> b6d8f309d9 ([PATCH] diff-raw format update take #2., 2005-05-23).
+> 
+> I'll retitle and rewrite the message like so:
+> 
+>     diff-format.txt: dst can be 0* SHA-1 when path is deleted, too
+>     
+>     "dst" can legitimately be "0\{40\}" for a creation patch, e.g. when
+>     the stat information is stale, but it falls into "look at work tree"
+>     case.  The original description in b6d8f309 ([PATCH] diff-raw format
+>     update take #2., 2005-05-23) forgot that deletion also makes the
+>     "dst" 0* SHA-1.
+>     
+>     Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> 
+> Thanks.
+> 
 
-    https://github.com/git-l10n/git-po/
+OK, that makes sense. I hadn't thought of the case you are mentioning here
+(new file added to the index and then modified).
 
-As of git 2.37, we (git l10n contributors) have a new l10n workflow. The
-following description of the new l10n workflow is from the "po/README.md"
-file.
+Thanks,
 
-
-## The "po/git.pot" file is a generated file, no longer in the repository
-
-The l10n coordinator does not need to generate the "po/git.pot" file every
-time to start a new l10n workflow, and there is no "po/git.pot" file at all.
-
-Everyone can generate the "po/git.pot" file with the command below:
-
-    make po/git.pot
-
-But we can also forget about it. By updating our corresponding "po/XX.po"
-file, the "po/git.pot" file is automatically generated.
-
-
-## Update the "po/XX.po" file, and start to translate
-
-Before updating the "po/XX.po" file, l10n contributors should pull the latest
-commits from the master branch of "git.git". E.g.:
-
-    git pull --rebase git@github.com:git/git.git master
-
-Then update the cooresponding "po/XX.po" file using the following command:
-
-    make po-update PO_FILE=po/XX.po
-
-Translate the uptodate "po/XX.po" file, and create a new commit.
-
-
-## Refine your commits, send pull requests
-
-In the "po/XX.po" file, there are location lines in comments like below:
-
-    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
-    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
-    #: builtin/rebase.c:1671
-
-These comments with file locations are useful for l10n contributors to locate
-the context easily during translation. But these file locations introduce a
-lot of noise and will consume a lot of repository storage. Therefore, we
-should remove these file locations from the "po/XX.po" file.
-
-To remove file locations in the "po/XX.po" file, you can use one of the
-following two ways, but don't switch back and forth.
-
- * Keep the filenames, only remove locations (need gettext 0.19 and above):
-
-        msgcat --add-location=file po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
- * Remove both filenames and locations:
-
-        msgcat --no-location po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
-After squashing trivial commits and removing file locations in the "po/XX.po"
-file, send pull request to the l10n coordinator's repository below:
-
-    https://github.com/git-l10n/git-po/
-
-
-## Resolve errors found by the l10n CI pipeline for the pull request
-
-A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
-help git l10n coordinator and git l10n contributors to check the conventions
-of git l10n contributions, and it is also used in GitHub actions as l10n CI
-pipeline to validate each pull request in the "git-l10n/git-po" repository.
-Please fix the issues found by the helper program.
-
-
-** Please note: The update window will close on Sun, June 26, 2022. **
-
-
---
-Jiang Xin
+Philippe.
