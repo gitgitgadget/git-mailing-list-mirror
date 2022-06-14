@@ -2,296 +2,353 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A013CCA47C
-	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 09:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81345C43334
+	for <git@archiver.kernel.org>; Tue, 14 Jun 2022 09:09:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242685AbiFNJCr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 05:02:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41762 "EHLO
+        id S239654AbiFNJJR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 05:09:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242713AbiFNJCk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 05:02:40 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E0125E82
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 02:02:34 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id g25so15840599ejh.9
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 02:02:34 -0700 (PDT)
+        with ESMTP id S233174AbiFNJJQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 05:09:16 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A2583FBE5
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 02:09:15 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id m39-20020a05600c3b2700b0039c511ebbacso5850413wms.3
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 02:09:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=vH2zUU/52PrFdU07mVlkSqiHs553zowsebMUKA5PENU=;
-        b=M8Rg5uUnhLAzdGrw4JT8SvwWHvB53QbHoUSBs2Me5NFEvvHnYFT7NUP8U+7YIJjDua
-         ZwICpXHMCUD6PxFeTkCIfIUQdJgUYv5iKljjQCnJbz7QEFTuciYDsZbg7w83lqTwbCSf
-         8afl9kMIOlPNYC8VXh7v9o3oftb84guV37BvsxZchKDfGZq+vEAaDSSUPG6ZMrZ4tO1D
-         EW5qHcmjy5zb/CrkqGkDeJ3P9kl4rFnGm9sM6KzBTOrja0F6YAWQYd5wKLSYBtsMXlW1
-         rheC2g1zcJKHHkY1VofzcsoqrtfIsbv96oS/8sUq26VdYBrckpqW4HtgXqKK+47drNGb
-         z3qg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=N5EEshzyHNwusRFuCOt0szQsnkyTgNGdQE2tyPquGoU=;
+        b=MNXNqxtT+/5NPGjv3zybOcLQR2pX4wsXE00UIrxDKRfpBYknx+JWSQY1cli0AOOXH6
+         Ksq22cl2ELEgdqBXCQEDI0omn8zDUemiDcX1jQpzJW8y9ILRKvlMnQizANjO4s2fOBD5
+         UjWj0yI/nhCoylezUyG6l0KyH2uvWMpTHmH0olSdWd4HU/IYMtsH2Y8xWgnz2qxS8EeX
+         qTubK/xV7p6DYxIQOOjd0CaSfVXeyduVdIwy5QYNer9Ur/3AUGRJSpVaaiIYiuuQhPt5
+         Q/+EvQsVUKJvJAkmWw59DzavOx+I3AwgDhy1yUZCUqSzztSk7eNPGGsoBHUUZ3lUGUkS
+         rRXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=vH2zUU/52PrFdU07mVlkSqiHs553zowsebMUKA5PENU=;
-        b=5H/e9WvD0nJ7v7LwPSyu33L6r1j+Y//GiLzxwKl/klTEXQg6kQBbNoCcEMjmyfInkM
-         4muQbsW8nNKZczp5Ik52jQI6c4Ox27+k7BxrI82HCqUCNm9uo2rn9kT8Ku89RjhCBifl
-         SpnGPcDKcH3WyTiLzi/X+fIbLToSHgsKxkDgrcm7A0KnmWTQDDEwf0i5nUt9MEoHfA/C
-         2WrG3N2yRQZ1zggW+cVUT9mpOpPgjO3LJJCxmkaB5JCKQPe8pt1vZoBOWR3qUL8GHPZr
-         dvt3ye7dV8A+D8rdDZ45nOKW6I9xveIfNrtCma8H0JysDHfnlAnUOvbmYUnMgfI4v1t0
-         sOiQ==
-X-Gm-Message-State: AJIora+Bt1hARFg/xx1O1w7Dhf60ZE1XWlQe52D+OGWf6c0EJm1KwmpP
-        CCT5sm0JirTI8IOEANo2PVgg0SY+UmCPIA==
-X-Google-Smtp-Source: ABdhPJwUEc4TjpfXn+PKkMxJFQSQDuo+nh+uWlJQRB0lEu1bsGPL1wb/M603oij2iInCOqDuYUvN0g==
-X-Received: by 2002:a17:907:6ea4:b0:711:d106:b93a with SMTP id sh36-20020a1709076ea400b00711d106b93amr3373301ejc.189.1655197353099;
-        Tue, 14 Jun 2022 02:02:33 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id hh14-20020a170906a94e00b00703e09dd2easm4886141ejb.147.2022.06.14.02.02.32
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=N5EEshzyHNwusRFuCOt0szQsnkyTgNGdQE2tyPquGoU=;
+        b=Y/5ErRGZoJ+vYuT/w3w+HZ1G1FMCdP5R9XQdk6zyLtUP/A5KvxzhsC37gOOfuh4H4u
+         83Izqiq9SuPT2E/lX4qkiSWfRvnpc3Tpk48Le4EgCCgxeUP2FA3kVkKPKt5q7LthpN9c
+         EgsmvdO7CzbLzoImOsNu+UHkmwjKqKBfCy0XUwVkN1iqXu4JpWr69TyndMTkW3OLmEVn
+         /H02CT0UjEyN7NMKSX/4UWs8So9sU2jr/TQhbLZtMUNXcaKIqUGJPTE0uaP7TySTWG8s
+         Waw1U0qdwiM9CnssZSJP2Tbhq2ksxsQWDZE8dggnTS1fPinSC97zgm7jFDEGaEDIycoi
+         0rDw==
+X-Gm-Message-State: AOAM532lgQi17Pt+f6BAhkEIdmRZGx2z7wvBWsvgpoMSiTDrRKmLeK4p
+        YORfTYku0GwDkAmUFpGpR0uVh2j9/CxP6Q==
+X-Google-Smtp-Source: ABdhPJyCk7PmW/kau7wrfLn7/h8GooW8S0lfGQlNro4L3Jf9qsrEuEeNGQkXyrzJqjU1RUb/N7ZBaw==
+X-Received: by 2002:a05:600c:3b8c:b0:39c:60e3:36db with SMTP id n12-20020a05600c3b8c00b0039c60e336dbmr3025391wms.77.1655197753044;
+        Tue, 14 Jun 2022 02:09:13 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bi21-20020a05600c3d9500b0039c948dbb61sm5835711wmb.26.2022.06.14.02.09.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 02:02:32 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o12RT-000KkG-0P;
-        Tue, 14 Jun 2022 11:02:31 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?a3lsZXpoYW8o6LW15p+v5a6HKQ==?= <kylezhao@tencent.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: reachability-bitmap makes push performance worse ?
-Date:   Tue, 14 Jun 2022 10:55:54 +0200
-References: <b940e705fbe9454685757f2e3055e2ce@tencent.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <b940e705fbe9454685757f2e3055e2ce@tencent.com>
-Message-ID: <220614.864k0nzkgp.gmgdl@evledraar.gmail.com>
+        Tue, 14 Jun 2022 02:09:12 -0700 (PDT)
+Message-Id: <pull.1260.git.1655197751403.gitgitgadget@gmail.com>
+From:   "Brad Forschinger via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 14 Jun 2022 09:09:11 +0000
+Subject: [PATCH] git-prompt: use builtin test
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Brad Forschinger <bnjf@bnjf.id.au>,
+        Brad Forschinger <bnjf@bnjf.id.au>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Brad Forschinger <bnjf@bnjf.id.au>
 
-On Tue, Jun 14 2022, kylezhao(=E8=B5=B5=E6=9F=AF=E5=AE=87) wrote:
+The test and [ commands are used throughout the prompt generation.  They
+also happen to be valid function names that can be defined, leading to
+unintentional results.  Prevent the somewhat unusual case of this
+happening by simply using [[, which is reserved.
 
-> Hi All,=20
-> =C2=A0
-> thank you for reading my report.
-> =C2=A0
-> =C2=A0
-> How did we find out?
-> =C2=A0
-> The problem described in the title occurs on our git server.
-> Each git repositories have multiple replicas on our servers to increase g=
-it read performance, and the data synchronization method between these repl=
-icas is git push.
-> One day we found that the git push of a repository was significantly slow=
-, and it took more than ten seconds to just create a new branch from an exi=
-sting commit.
-> =C2=A0
-> How to reproduce the problem ?
-> =C2=A0
-> git version: 2.36.1
-> =C2=A0
-> # /data/test/repo is a bare git repository which can reproduce the problem
-> $ cd /data/test/repo
-> =C2=A0
-> # number of refs
-> $ git show-ref | wc -l
-> 21134
-> # pack information
-> $ ls objects/pack/ -hl
-> total 14G
-> -r--r--r-- 1 root root=C2=A0 43M Jun 14 04:16 pack-9a7fc024652645a632fb82=
-a4ff26c3ddf4883eed.bitmap
-> -r--r--r-- 1 root root 169M Jun 14 04:15 pack-9a7fc024652645a632fb82a4ff2=
-6c3ddf4883eed.idx
-> -r--r--r-- 1 root root=C2=A0 14G Jun 14 04:14 pack-9a7fc024652645a632fb82=
-a4ff26c3ddf4883eed.pack
-> =C2=A0
-> # objects information
-> $ git count-objects -v
-> count: 0
-> size: 0
-> in-pack: 5185141
-> packs: 1
-> size-pack: 13938704
-> prune-packable: 0
-> garbage: 0
-> size-garbage: 0
-> =C2=A0
-> # number of commits
-> $ git rev-list --all |  wc -l
-> 955262
-> =C2=A0
-> $ cp -r /data/test/repo /data/test/replica-1
-> $ cp -r /data/test/repo /data/test/replica-2
-> $ cd /data/test/replica-1
-> =C2=A0
-> # create a branch from an existing commit
-> $ git update-ref refs/heads/b_1 43fa4721c61106583cd552da85da3bd84f0f9929
-> $ git show-ref | grep 43fa4721c61106583cd552da85da3bd84f0f9929
-> 43fa4721c61106583cd552da85da3bd84f0f9929 refs/heads/b_1
-> =C2=A0
-> # number of commits of the ref
-> $ git rev-list refs/heads/b_1 |  wc -l
-> 117836
-> =C2=A0
-> # git push with bitmap
-> $ GIT_TRACE=3D1 git push file:///data/test/replica-2 refs/heads/b_1
-> 04:19:07.654103 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git push file:///data=
-/test/replica-2 refs/heads/b_1
-> 04:19:07.690006 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command: unset GIT_DIR GIT_IMPLICIT_WORK_TREE GIT_PREFIX; 'git-rece=
-ive-pack '\''/data/test/replica-2'\'''
-> 04:19:07.694339 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git receive-pack /dat=
-a/test/replica-2
-> 04:19:07.751814 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command: git pack-objects --all-progress-implied --revs --stdout --=
-thin --delta-base-offset --progress
-> 04:19:07.754011 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git pack-objects --al=
-l-progress-implied --revs --stdout --thin --delta-base-offset --progress
-> Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
-> 04:19:20.304868 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command:
-> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D/data/test/replica-2/./objects
-> GIT_OBJECT_DIRECTORY=3D/data/test/replica-2/./objects/tmp_objdir-incoming=
--CaCTHm
-> GIT_QUARANTINE_PATH
-> =3D/data/test/replica-2/./objects/tmp_objdir-incoming-CaCTHm git unpack-o=
-bjects --pack_header=3D2,0
-> remote: 04:19:20.306550 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git unpack-o=
-bjects --pack_header=3D2,0
-> 04:19:20.306903 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command:
-> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D/data/test/replica-2/./objects
-> GIT_OBJECT_DIRECTORY=3D/data/test/replica-2/./objects/tmp_objdir-incoming=
--CaCTHm
-> GIT_QUARANTINE_PATH
-> =3D/data/test/replica-2/./objects/tmp_objdir-incoming-CaCTHm git rev-list=
- --objects --stdin --not --all --quiet --alternate-refs '--progress=3DCheck=
-ing connectivity'
-> remote: 04:19:20.308332 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git rev-list=
- --objects --stdin --not --all --quiet --alternate-refs '--progress=3DCheck=
-ing connectivity'
-> remote: 04:19:20.344031 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 trace: run_command:
-> unset GIT_ALTERNATE_OBJECT_DIRECTORIES GIT_DIR GIT_OBJECT_DIRECTORY
-> GIT_PREFIX; git --git-dir=3D/data/test/replica-2 for-each-ref
-> '--format=3D%(objectname)'
-> remote: 04:19:20.346359 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git for-each=
--ref '--format=3D%(objectname)'
-> 04:19:20.395511 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command: git gc --auto --quiet
-> remote: 04:19:20.397949 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git gc --aut=
-o --quiet
-> To file:///data/test/replica-2
-> * [new branch]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b_1 -> b_1
-> =C2=A0
-> # reset replica-2 and remove bitmap
-> $ rm -rf /data/test/replica-2
-> $ cp -r /data/test/repo /data/test/replica-2
-> $ rm objects/pack/pack-9a7fc024652645a632fb82a4ff26c3ddf4883eed.bitmap
-> =C2=A0
-> =C2=A0
-> # git push without bitmap
-> $ GIT_TRACE=3D1 git push file:///data/test/replica-2 refs/heads/b_1
-> 04:20:44.633590 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git push file:///data=
-/test/replica-2 refs/heads/b_1
-> 04:20:44.668908 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command: unset GIT_DIR GIT_IMPLICIT_WORK_TREE GIT_PREFIX; 'git-rece=
-ive-pack '\''/data/test/replica-2'\'''
-> 04:20:44.673234 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git receive-pack /dat=
-a/test/replica-2
-> 04:20:44.720852 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command: git pack-objects --all-progress-implied --revs --stdout --=
-thin --delta-base-offset --progress
-> 04:20:44.723100 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git pack-objects --al=
-l-progress-implied --revs --stdout --thin --delta-base-offset --progress
-> Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
-> 04:20:44.800298 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command:
-> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D/data/test/replica-2/./objects
-> GIT_OBJECT_DIRECTORY=3D/data/test/replica-2/./objects/tmp_objdir-incoming=
--UOWY1E
-> GIT_QUARANTINE_PATH
-> =3D/data/test/replica-2/./objects/tmp_objdir-incoming-UOWY1E git unpack-o=
-bjects --pack_header=3D2,0
-> remote: 04:20:44.802056 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git unpack-o=
-bjects --pack_header=3D2,0
-> 04:20:44.802474 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command:
-> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D/data/test/replica-2/./objects
-> GIT_OBJECT_DIRECTORY=3D/data/test/replica-2/./objects/tmp_objdir-incoming=
--UOWY1E
-> GIT_QUARANTINE_PATH
-> =3D/data/test/replica-2/./objects/tmp_objdir-incoming-UOWY1E git rev-list=
- --objects --stdin --not --all --quiet --alternate-refs '--progress=3DCheck=
-ing connectivity'
-> remote: 04:20:44.803930 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git rev-list=
- --objects --stdin --not --all --quiet --alternate-refs '--progress=3DCheck=
-ing connectivity'
-> remote: 04:20:44.834388 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 trace: run_command:
-> unset GIT_ALTERNATE_OBJECT_DIRECTORIES GIT_DIR GIT_OBJECT_DIRECTORY
-> GIT_PREFIX; git --git-dir=3D/data/test/replica-2 for-each-ref
-> '--format=3D%(objectname)'
-> remote: 04:20:44.836220 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git for-each=
--ref '--format=3D%(objectname)'
-> 04:20:44.884165 run-command.c:654=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tra=
-ce: run_command: git gc --auto --quiet
-> remote: 04:20:44.886108 git.c:459=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trace: built-in: git gc --aut=
-o --quiet
-> To file:///data/test/replica-2
-> * [new branch]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b_1 -> b_1
-> =C2=A0
-> =C2=A0
-> It can be seen from the above operations that git push is stuck in the gi=
-t pack-objects process for about 13s for a long time.
-> After I deleted the bitmap, the whole git push completed in less than 1s.
-> =C2=A0
-> During testing, we found that not every git repository was significantly =
-affected by bitmap.=20
-> This may be related to the number of objects in the git repository itself=
-, the number of refs, and the sha1 pointed to by the pushed branch.
-> =C2=A0
-> We benefit from bitmap performance optimizations for git fetch and clone,=
- but it seems that it affects the performance of git push.
-> =C2=A0
-> Maybe we can disable bitmap under the process of git push?
-> As far as I know, the number of "counting objects" represented during a g=
-it push is usually small relative to the entire repository.
-> Counting objects by building bitmaps in memory may take more time than be=
-fore.
-> =C2=A0
-> Of course, it would be better if anyone has a better solution.
+Signed-off-by: Brad Forschinger <bnjf@bnjf.id.au>
+---
+    git-prompt: use builtin test
+    
+    The test and [ commands are used throughout the prompt generation. They
+    also happen to be valid function names that can be defined, leading to
+    unintentional results. Prevent the somewhat unusual case of this
+    happening by simply using [[, which is reserved.
+    
+    Signed-off-by: Brad Forschinger bnjf@bnjf.id.au
 
-This is a known issue, I think you've found the same problem discussed
-in these past threads:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1260%2Fbnjf%2Fprompt-use-builtins-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1260/bnjf/prompt-use-builtins-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1260
 
-https://lore.kernel.org/git/38b99459158a45b1bea09037f3dd092d@exmbdft7.ad.tw=
-osigma.com/
-https://lore.kernel.org/git/87zhoz8b9o.fsf@evledraar.gmail.com/
+ contrib/completion/git-prompt.sh | 92 ++++++++++++++++----------------
+ 1 file changed, 46 insertions(+), 46 deletions(-)
 
-The latter one in particular has a lot of extra details. The former also
-has the suggestion of a per-push bitmap configuration as a workaround.
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 87b2b916c03..e5a887a7c21 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -230,7 +230,7 @@ __git_ps1_show_upstream ()
+ 		if [[ -n "$count" && -n "$name" ]]; then
+ 			__git_ps1_upstream_name=$(git rev-parse \
+ 				--abbrev-ref "$upstream_type" 2>/dev/null)
+-			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
++			if [[ $pcmode = yes ]] && [[ $ps1_expanded = yes ]]; then
+ 				upstream="$upstream \${__git_ps1_upstream_name}"
+ 			else
+ 				upstream="$upstream ${__git_ps1_upstream_name}"
+@@ -266,7 +266,7 @@ __git_ps1_colorize_gitstring ()
+ 	local flags_color="$c_lblue"
+ 
+ 	local branch_color=""
+-	if [ $detached = no ]; then
++	if [[ $detached = no ]]; then
+ 		branch_color="$ok_color"
+ 	else
+ 		branch_color="$bad_color"
+@@ -274,16 +274,16 @@ __git_ps1_colorize_gitstring ()
+ 	c="$branch_color$c"
+ 
+ 	z="$c_clear$z"
+-	if [ "$w" = "*" ]; then
++	if [[ "$w" = "*" ]]; then
+ 		w="$bad_color$w"
+ 	fi
+-	if [ -n "$i" ]; then
++	if [[ -n "$i" ]]; then
+ 		i="$ok_color$i"
+ 	fi
+-	if [ -n "$s" ]; then
++	if [[ -n "$s" ]]; then
+ 		s="$flags_color$s"
+ 	fi
+-	if [ -n "$u" ]; then
++	if [[ -n "$u" ]]; then
+ 		u="$bad_color$u"
+ 	fi
+ 	r="$c_clear$r"
+@@ -294,7 +294,7 @@ __git_ps1_colorize_gitstring ()
+ # variable, in that order.
+ __git_eread ()
+ {
+-	test -r "$1" && IFS=$'\r\n' read "$2" <"$1"
++	[[ -r "$1" ]] && IFS=$'\r\n' read "$2" <"$1"
+ }
+ 
+ # see if a cherry-pick or revert is in progress, if the user has committed a
+@@ -304,11 +304,11 @@ __git_eread ()
+ __git_sequencer_status ()
+ {
+ 	local todo
+-	if test -f "$g/CHERRY_PICK_HEAD"
++	if [[ -f "$g/CHERRY_PICK_HEAD" ]]
+ 	then
+ 		r="|CHERRY-PICKING"
+ 		return 0;
+-	elif test -f "$g/REVERT_HEAD"
++	elif [[ -f "$g/REVERT_HEAD" ]]
+ 	then
+ 		r="|REVERTING"
+ 		return 0;
+@@ -399,8 +399,8 @@ __git_ps1 ()
+ 	# incorrect.)
+ 	#
+ 	local ps1_expanded=yes
+-	[ -z "${ZSH_VERSION-}" ] || [[ -o PROMPT_SUBST ]] || ps1_expanded=no
+-	[ -z "${BASH_VERSION-}" ] || shopt -q promptvars || ps1_expanded=no
++	[[ -z "${ZSH_VERSION-}" ]] || [[ -o PROMPT_SUBST ]] || ps1_expanded=no
++	[[ -z "${BASH_VERSION-}" ]] || shopt -q promptvars || ps1_expanded=no
+ 
+ 	local repo_info rev_parse_exit_code
+ 	repo_info="$(git rev-parse --git-dir --is-inside-git-dir \
+@@ -408,12 +408,12 @@ __git_ps1 ()
+ 		--short HEAD 2>/dev/null)"
+ 	rev_parse_exit_code="$?"
+ 
+-	if [ -z "$repo_info" ]; then
++	if [[ -z "$repo_info" ]]; then
+ 		return $exit
+ 	fi
+ 
+ 	local short_sha=""
+-	if [ "$rev_parse_exit_code" = "0" ]; then
++	if [[ "$rev_parse_exit_code" = "0" ]]; then
+ 		short_sha="${repo_info##*$'\n'}"
+ 		repo_info="${repo_info%$'\n'*}"
+ 	fi
+@@ -424,18 +424,18 @@ __git_ps1 ()
+ 	local inside_gitdir="${repo_info##*$'\n'}"
+ 	local g="${repo_info%$'\n'*}"
+ 
+-	if [ "true" = "$inside_worktree" ] &&
+-	   [ -n "${GIT_PS1_HIDE_IF_PWD_IGNORED-}" ] &&
+-	   [ "$(git config --bool bash.hideIfPwdIgnored)" != "false" ] &&
++	if [[ "true" = "$inside_worktree" ]] &&
++	   [[ -n "${GIT_PS1_HIDE_IF_PWD_IGNORED-}" ]] &&
++	   [[ "$(git config --bool bash.hideIfPwdIgnored)" != "false" ]] &&
+ 	   git check-ignore -q .
+ 	then
+ 		return $exit
+ 	fi
+ 
+ 	local sparse=""
+-	if [ -z "${GIT_PS1_COMPRESSSPARSESTATE-}" ] &&
+-	   [ -z "${GIT_PS1_OMITSPARSESTATE-}" ] &&
+-	   [ "$(git config --bool core.sparseCheckout)" = "true" ]; then
++	if [[ -z "${GIT_PS1_COMPRESSSPARSESTATE-}" ]] &&
++	   [[ -z "${GIT_PS1_OMITSPARSESTATE-}" ]] &&
++	   [[ "$(git config --bool core.sparseCheckout)" = "true" ]]; then
+ 		sparse="|SPARSE"
+ 	fi
+ 
+@@ -443,34 +443,34 @@ __git_ps1 ()
+ 	local b=""
+ 	local step=""
+ 	local total=""
+-	if [ -d "$g/rebase-merge" ]; then
++	if [[ -d "$g/rebase-merge" ]]; then
+ 		__git_eread "$g/rebase-merge/head-name" b
+ 		__git_eread "$g/rebase-merge/msgnum" step
+ 		__git_eread "$g/rebase-merge/end" total
+ 		r="|REBASE"
+ 	else
+-		if [ -d "$g/rebase-apply" ]; then
++		if [[ -d "$g/rebase-apply" ]]; then
+ 			__git_eread "$g/rebase-apply/next" step
+ 			__git_eread "$g/rebase-apply/last" total
+-			if [ -f "$g/rebase-apply/rebasing" ]; then
++			if [[ -f "$g/rebase-apply/rebasing" ]]; then
+ 				__git_eread "$g/rebase-apply/head-name" b
+ 				r="|REBASE"
+-			elif [ -f "$g/rebase-apply/applying" ]; then
++			elif [[ -f "$g/rebase-apply/applying" ]]; then
+ 				r="|AM"
+ 			else
+ 				r="|AM/REBASE"
+ 			fi
+-		elif [ -f "$g/MERGE_HEAD" ]; then
++		elif [[ -f "$g/MERGE_HEAD" ]]; then
+ 			r="|MERGING"
+ 		elif __git_sequencer_status; then
+ 			:
+-		elif [ -f "$g/BISECT_LOG" ]; then
++		elif [[ -f "$g/BISECT_LOG" ]]; then
+ 			r="|BISECTING"
+ 		fi
+ 
+-		if [ -n "$b" ]; then
++		if [[ -n "$b" ]]; then
+ 			:
+-		elif [ -h "$g/HEAD" ]; then
++		elif [[ -h "$g/HEAD" ]]; then
+ 			# symlink symbolic ref
+ 			b="$(git symbolic-ref HEAD 2>/dev/null)"
+ 		else
+@@ -480,7 +480,7 @@ __git_ps1 ()
+ 			fi
+ 			# is it a symbolic ref?
+ 			b="${head#ref: }"
+-			if [ "$head" = "$b" ]; then
++			if [[ "$head" = "$b" ]]; then
+ 				detached=yes
+ 				b="$(
+ 				case "${GIT_PS1_DESCRIBE_STYLE-}" in
+@@ -502,7 +502,7 @@ __git_ps1 ()
+ 		fi
+ 	fi
+ 
+-	if [ -n "$step" ] && [ -n "$total" ]; then
++	if [[ -n "$step" ]] && [[ -n "$total" ]]; then
+ 		r="$r $step/$total"
+ 	fi
+ 
+@@ -515,41 +515,41 @@ __git_ps1 ()
+ 	local p="" # short version of upstream state indicator
+ 	local upstream="" # verbose version of upstream state indicator
+ 
+-	if [ "true" = "$inside_gitdir" ]; then
+-		if [ "true" = "$bare_repo" ]; then
++	if [[ "true" = "$inside_gitdir" ]]; then
++		if [[ "true" = "$bare_repo" ]]; then
+ 			c="BARE:"
+ 		else
+ 			b="GIT_DIR!"
+ 		fi
+-	elif [ "true" = "$inside_worktree" ]; then
+-		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
+-		   [ "$(git config --bool bash.showDirtyState)" != "false" ]
++	elif [[ "true" = "$inside_worktree" ]]; then
++		if [[ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]] &&
++		   [[ "$(git config --bool bash.showDirtyState)" != "false" ]]
+ 		then
+ 			git diff --no-ext-diff --quiet || w="*"
+ 			git diff --no-ext-diff --cached --quiet || i="+"
+-			if [ -z "$short_sha" ] && [ -z "$i" ]; then
++			if [[ -z "$short_sha" ]] && [[ -z "$i" ]]; then
+ 				i="#"
+ 			fi
+ 		fi
+-		if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ] &&
++		if [[ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]] &&
+ 		   git rev-parse --verify --quiet refs/stash >/dev/null
+ 		then
+ 			s="$"
+ 		fi
+ 
+-		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
+-		   [ "$(git config --bool bash.showUntrackedFiles)" != "false" ] &&
++		if [[ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]] &&
++		   [[ "$(git config --bool bash.showUntrackedFiles)" != "false" ]] &&
+ 		   git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+ 		then
+ 			u="%${ZSH_VERSION+%}"
+ 		fi
+ 
+-		if [ -n "${GIT_PS1_COMPRESSSPARSESTATE-}" ] &&
+-		   [ "$(git config --bool core.sparseCheckout)" = "true" ]; then
++		if [[ -n "${GIT_PS1_COMPRESSSPARSESTATE-}" ]] &&
++		   [[ "$(git config --bool core.sparseCheckout)" = "true" ]]; then
+ 			h="?"
+ 		fi
+ 
+-		if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
++		if [[ -n "${GIT_PS1_SHOWUPSTREAM-}" ]]; then
+ 			__git_ps1_show_upstream
+ 		fi
+ 	fi
+@@ -557,14 +557,14 @@ __git_ps1 ()
+ 	local z="${GIT_PS1_STATESEPARATOR-" "}"
+ 
+ 	# NO color option unless in PROMPT_COMMAND mode or it's Zsh
+-	if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
+-		if [ $pcmode = yes ] || [ -n "${ZSH_VERSION-}" ]; then
++	if [[ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]]; then
++		if [[ $pcmode = yes ]] || [[ -n "${ZSH_VERSION-}" ]]; then
+ 			__git_ps1_colorize_gitstring
+ 		fi
+ 	fi
+ 
+ 	b=${b##refs/heads/}
+-	if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
++	if [[ $pcmode = yes ]] && [[ $ps1_expanded = yes ]]; then
+ 		__git_ps1_branch_name=$b
+ 		b="\${__git_ps1_branch_name}"
+ 	fi
+@@ -572,8 +572,8 @@ __git_ps1 ()
+ 	local f="$h$w$i$s$u$p"
+ 	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}"
+ 
+-	if [ $pcmode = yes ]; then
+-		if [ "${__git_printf_supports_v-}" != yes ]; then
++	if [[ $pcmode = yes ]]; then
++		if [[ "${__git_printf_supports_v-}" != yes ]]; then
+ 			gitstring=$(printf -- "$printf_format" "$gitstring")
+ 		else
+ 			printf -v gitstring -- "$printf_format" "$gitstring"
 
-As your numbers show it's still an issue today, but those threads should
-help you if you're looking to dig further into the root cause.
-
-Aside from the underlying root causes it would be very nice to fix the
-progress code in that area, i.e. we "stall" on "Enumerating objects",
-which is just a matter of us not having a separate progress bar for the
-very expensive bitmap work we're doing.
+base-commit: 5699ec1b0aec51b9e9ba5a2785f65970c5a95d84
+-- 
+gitgitgadget
