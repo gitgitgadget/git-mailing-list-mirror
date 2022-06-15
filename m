@@ -2,80 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C65D3C43334
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 02:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46016C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 02:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237391AbiFOCS6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 22:18:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46042 "EHLO
+        id S244510AbiFOC1i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 22:27:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229924AbiFOCS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 22:18:57 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16063240BC
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 19:18:55 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id hf10so7448028qtb.7
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 19:18:55 -0700 (PDT)
+        with ESMTP id S231969AbiFOC1h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 22:27:37 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD29C24953
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 19:27:35 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id g15so6416791qke.4
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 19:27:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=FtFxZnRbaNYXW50jwsgH4LQhUcT01FYp6++Ct0SPPvM=;
-        b=OgD5Mrdi5ytw3wzKZLvY39aHbPDC7cE9g6uGv2MZUe0EUaclLJAmsnEw0BWfhkCw05
-         V9sb0yK4pR5ssX5dMtoj8/a7h6Cgi1m0dAO5zr6tqRTvX5U4NOviK+nCw0Mqt8rh07e5
-         qnSxG/Y8WWk2m8E/GyBmxkKjlPotuvGhpulL4m2KB9dPIyjE+mpqW9Sg8OGkXfKCQPbD
-         OE+wkRsjVyv0S3VwUg6+2spQlx4C0Cksr4yietxFql2Nu6xfm5CUVJfuPEHZmRuqW0qF
-         tTWn6ghrYCHzBb+VWV+wGHh1YJwG2euHQU9sTsMoqkFuY7xYL7VmRJKYZkgSaizPkVE2
-         4ocw==
+        bh=bQHXAZyOoHz7exsBKFymUpc59Y4dXNFhuA4tv/pYRuM=;
+        b=y2VhiyJYmvBll7nHVk9E0sFo+Jqc9I9UsdYmJkD8+BeHAnIPEjLqtxSNbVv116jooj
+         HxwIgIPkVlbE6YNa7UkJE0Pngv7SYlkMWxR9xFBBdJY5WDqH1Fg2TUh2R0YwkHu1YJ0b
+         XYzqVMIdvwM6wWgX8t6BLLlJtVG/qY7ZqYHm3m+riP2Fb0sQTgZHcav8ugd9wKQ9F7G1
+         I8zRRG1uTuNZgOpTYhQpuNuVTqQpaJiprqTSioPNAMZErTIm4VpHhwImyPjgS9fmAUAJ
+         oUq1zFfz+gbaUilIGCBtUjWPDdfH3s2vVJ7ZfZymv7no7cSg7xjMMkdOfk/SCSW4jlWI
+         M1PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=FtFxZnRbaNYXW50jwsgH4LQhUcT01FYp6++Ct0SPPvM=;
-        b=IrvafwNhkqGuapfa40zpu9tWTx3BuEMrnc/ioxz51Ikk5DZXpNuX5L4wDeysID0Ia+
-         yorrWiTtqfLFfuAJgDqyc6c2DtDZcMJLQ3ruxCnIxfFFKMIqJ/rGSoTtCKwtj+0VsGRU
-         WMELzIgDo2caTsZRUn9eAQKp+SO1n6neP6obTK3tYU6DK914v4WunRcSOciWdQHya0fn
-         s11g8j9X6gj6rdojuHzoLWNYryVSZPAzLuCe0Of6h2a7i9ZItmANlIUbuK/POB/Hns7n
-         OL4yceNFBrFXQF30wOJi7UQUJd6LTyLUXGKNYMw8fzqLsj9MYvkMjX7gkidT1Mqj12rx
-         r3cg==
-X-Gm-Message-State: AOAM531kaLRnkHFm8BYEpTogt1UGTWXGPaAnxMUr2XMYuR9gbxlX/LNS
-        Irtqg8QyydPRYqX4COOvViw2Kg==
-X-Google-Smtp-Source: ABdhPJzUAm0Vtdb3l7f97QE9PuuMizynR4VRdCTqPjfDj9Qqyb3BQwmsjA/6MJyYlgzQCTuQjeoq5Q==
-X-Received: by 2002:ac8:7d49:0:b0:304:e4ce:3345 with SMTP id h9-20020ac87d49000000b00304e4ce3345mr7164713qtb.508.1655259534193;
-        Tue, 14 Jun 2022 19:18:54 -0700 (PDT)
+        bh=bQHXAZyOoHz7exsBKFymUpc59Y4dXNFhuA4tv/pYRuM=;
+        b=KnWtduDGXXqzT2kvJOfAr97OPIgWpl03Vnxg662IkzixJHud0oNAhb+bYk0CM6+Jtw
+         RYWXqUcFwxXbGtKw/n8tKuDYe090r0nlWhgMZTPiv7igg/POHhHZbZUzDt1GVro85UPw
+         vqtpkVmIjleSe4iwdDfqMhkhIucs4m+sqlj4/fAkp9O2tMAi+/4g4iiEU8uwcERz59ZV
+         jfMQHbuhIhJwQVFkF3rRHEgzVtPN2n2c1PKu1pjw3HOSe4F/5uPXxUdBgKVntFe0WGC7
+         2icSiZt3mgdXDw5wUy+Nfy0D3PkrLQh7Alv6sOBq+H/ACRC+ZB8wWiQ7SjEzvcDh9Yet
+         uAzQ==
+X-Gm-Message-State: AOAM533rK9a6BqIpNWIeb4djq3GaTkmETndOgH8K+IXlm4vqG/ag8b0e
+        KxJoU++tiMuCnae9LRtBDsA4IA==
+X-Google-Smtp-Source: ABdhPJxqoE5C4VY+PWsn3eZdZH7YKEs2ahVIZTES4dnF2LDExfiycrhQbqbV1zeFw3DHG7Mkq++hAQ==
+X-Received: by 2002:a37:98b:0:b0:6a6:b2ca:194c with SMTP id 133-20020a37098b000000b006a6b2ca194cmr6684943qkj.470.1655260054959;
+        Tue, 14 Jun 2022 19:27:34 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w2-20020a05622a134200b003051ba1f8bcsm8354884qtk.15.2022.06.14.19.18.53
+        by smtp.gmail.com with ESMTPSA id p6-20020a05622a048600b00304de7561a8sm9354464qtx.27.2022.06.14.19.27.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 19:18:53 -0700 (PDT)
-Date:   Tue, 14 Jun 2022 22:18:52 -0400
+        Tue, 14 Jun 2022 19:27:34 -0700 (PDT)
+Date:   Tue, 14 Jun 2022 22:27:33 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Haiyng Tan <haiyangtand@gmail.com>
-Cc:     git@vger.kernel.org, chiyutianyi@gmail.com, ps@pks.im,
-        jonathantanmy@google.com, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: An endless loop fetching issue with partial clone, alternates
- and commit graph
-Message-ID: <YqlBjET0tf7V9/sg@nand.local>
-References: <CANe9W27GVn-w1WSZNTxh5SKEMzHGEZQCF48vmbvMi4AUEg12yQ@mail.gmail.com>
+To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH v3 2/3] bitmap-format.txt: fix some formatting issues
+Message-ID: <YqlDlYHR1HBJRiDZ@nand.local>
+References: <pull.1246.v2.git.1654623814.gitgitgadget@gmail.com>
+ <pull.1246.v3.git.1654858481.gitgitgadget@gmail.com>
+ <c74b9a52c2a7b5f3ebbfaca08c8de42aac7f7eac.1654858481.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CANe9W27GVn-w1WSZNTxh5SKEMzHGEZQCF48vmbvMi4AUEg12yQ@mail.gmail.com>
+In-Reply-To: <c74b9a52c2a7b5f3ebbfaca08c8de42aac7f7eac.1654858481.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[+cc Stolee]
+Hi Abhradeep,
 
-On Tue, Jun 14, 2022 at 03:25:13PM +0800, Haiyng Tan wrote:
-> I think it's caused by using lazy-fetch in
-> deref_without_lazy_fetch_extended().  In lookup_commit_in_graph(),
-> lazy-fetch is initiated by repo_has_object_file() used.  has_object()
-> should be used, it's no-lazy-fetch.
+On Fri, Jun 10, 2022 at 10:54:40AM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
+> ++
+> +In each bitmap, the `n`th bit is set to true if the `n`th object
+> +in the packfile or multi-pack index is of that type.
+> +
+> +    The obvious consequence is that the OR of all 4 bitmaps will result
+> +    in a full set (all bits set), and the AND of all 4 bitmaps will
+> +    result in an empty bitmap (no bits set).
+> +
+> +	* N entries with compressed bitmaps, one for each indexed commit
+> ++
+> +Where `N` is the total amount of entries in this bitmap index.
+> +Each entry contains the following:
 
-Hmm. Are there cases where lookup_commit_in_graph() is expected to
-lazily fetch missing objects from promisor remotes? If so, then this
-wouldn't quite work. If not, then this seems like an appropriate fix to
-me.
+The new formatting looks terrific; it's much easier to read this in my
+browser after generating the HTML version of these docs. Two questions:
+
+- Are the hard-tabs added in this file required for ASCIIDoc to treat it
+  correctly? They are a slight impediment to reading the source in my
+  editor, but it's not a huge deal. It would just be nice if we could
+  replace "\t" characters with two or four spaces or something.
+
+- The above hunk is the only one which rendered slightly oddly to me; it
+  looks like the paragraph beginning with "The obvious consequence ..."
+  is surrounded by a <pre> element, when it should be a continuation of
+  the above paragraph ("In each bitmap ...").
+
+Otherwise, this series is looking great. Let me know what you think!
 
 Thanks,
 Taylor
