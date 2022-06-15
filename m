@@ -2,212 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3AE7C43334
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 16:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AC5EC43334
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 16:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244933AbiFOQwN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 12:52:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54738 "EHLO
+        id S1345812AbiFOQyZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 12:54:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243443AbiFOQwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 12:52:11 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C658848E5D
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 09:52:10 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id q12-20020a056a0002ac00b0051bb2e66c91so5428600pfs.4
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 09:52:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=4GodK1loLWTy5ktJpNCVYVAbu/SbbZMzk5GAlfXnGRg=;
-        b=VO5Ol3zXvNV6PZvFdDrFLWvC+8vvfytl8o6h7eCgh2PY+tjDoKR68BV3Ns18REJv5g
-         ukDMcenlX3GV2HA+lqv2XUTgx7+9eKRBo27de5T0UkNN/HQVv+GvK9UzxeF+HVlk0l6C
-         wrftlg0b3aUoYFxAl3uxD2R8RK8suBHd5FGaK5yuisO5KbALMt+OIwW6UUa0okk3RJ0j
-         xAj4Qd2TgB2hQf8ANx2h/gaDgm1Sk/CfrS2Ua3+l+lG9eUAyHVmG0enNSceOpNoWYAnC
-         cKt0C53/fiCj4FKOryEn7bZHmyo+pZkL4lTu1XvYUhWfw9ezI6YpRcDWgXRQogGHng3p
-         xuEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=4GodK1loLWTy5ktJpNCVYVAbu/SbbZMzk5GAlfXnGRg=;
-        b=JxFGeA6ApWbDN8MmHCDyDfUXmeJGguI7MIrYYITRURVzBtOJ+gPtHDm5LXwuhXnT69
-         GRttcfcvFIxUu+fUCU3iEZao9eVubcI3mtA07kQc0xNlbXrfUGLwj+kbj9f/DHRnBLpF
-         O7DOz7GzimsQCT0n2rue8ebiYnhTSDaqsFD6eDChxW1vATfAntDacc2IpH1LR4Qk+LRd
-         Yc1507q/T+juxZlDReJvauKsfwVASGwUMjVOxqQb+p48pZnzInX+Ivga9LHO2ZW1cEO9
-         i/7xbqQJ9qNMNc0WncEJ4r5d0Z3GS5LlQEGKK0TRJZHdCCCh6EuRfnPtp47gMypUMtlM
-         1Bfw==
-X-Gm-Message-State: AJIora9t3+kIBvdwzMw3m6r5UuWthN7e8u32hAJRgmoyOXUs461tLN4/
-        I6de7kSuyKSWUfAEs7Jwi+DWYGBmIr2kwA==
-X-Google-Smtp-Source: AGRyM1uVR/Wcwgce42HS3pHdOtOUvKihS9H8cUr/Z0jQfQ/GQZUJj70DWmC0J8e0uA5AyQ+GplvYG/juZ99sqA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:1c02:b0:1e0:df7:31f2 with SMTP id
- s2-20020a17090a1c0200b001e00df731f2mr11492228pjs.222.1655311930232; Wed, 15
- Jun 2022 09:52:10 -0700 (PDT)
-Date:   Wed, 15 Jun 2022 09:52:01 -0700
-In-Reply-To: <patch-v2-10.12-ac00a9599de-20220613T220150Z-avarab@gmail.com>
-Message-Id: <kl6l8rpx6f9q.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <kl6lzgig5qmc.fsf@chooglen-macbookpro.roam.corp.google.com>
- <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com> <patch-v2-10.12-ac00a9599de-20220613T220150Z-avarab@gmail.com>
-Subject: Re: [PATCH v2 10/12] submodule--helper: eliminate internal "--update" option
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
+        with ESMTP id S235833AbiFOQyW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 12:54:22 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8798745511
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 09:54:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1655312015;
+        bh=xAUU/rDgyFwlo8dmJ7cizp7H9FCs6kn2rA/i/2ydCtM=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=LYBFU8OXKVmUFycb/E3/pY+iDGWWp4GoiM+GVuD7E68q7R5x8Lyw7aATG3xzpx/+5
+         aCDC5HNtVf4HGAVY38q8Ep6W3ustZKRkz/hFEgvm1qleQvMzfFReS9t+cB5uAaNAQK
+         a2ufg2/Gy5kKJEjsuO9FleqVx4zrYnGu4EyELsr0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MQPdl-1oNseE32MD-00MS7c; Wed, 15
+ Jun 2022 18:53:35 +0200
+Message-ID: <9df761c3-355a-ede9-7971-b32687fe9abb@web.de>
+Date:   Wed, 15 Jun 2022 18:53:32 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Subject: [PATCH v4 0/6] Avoid spawning gzip in git archive
+Content-Language: en-US
+To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <pull.145.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <pull.145.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:wFw7Yi6J/zWX1jEgnDAzyqKOc7yW585/iVR6dQwW3qi6UwLfL+c
+ MnD6C/SixYcSGS882wx2QNNGAU9rqFGT2+cL9M1qrZ1Kq62t6NRIUVbs3TjmYWBbip+2iQM
+ XTDPcDegAdYgLV01BCFrfXWSCggsCQ2b85pzyhWeQORAO7K1KyGc8YNBIPD9CpQvfu1k8QT
+ RkgXI7zzqJr3cQgUagKlw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:25gnwSuYjVg=:FtE3WSU3cEB5OFc6IoBLLZ
+ mNiHMapsWdOOKDksPUF1V0AoQ9UWqgb4gcAEeab4ocf4F0Xw/xlBMk4X2haJOk+cH3nFMv/DQ
+ 3MmSePqaAg42RM4Qudfj6s5vscu2C5u1HcS34Vz/z4M3Nn/Z1cejSh0QS0EcDuDfRQ5+bzODA
+ pERsz4LYn5OxUfN+3XWgqQf6gkClgr3Db+Vq2VImSRxuNy7EJK6C8YgMLlaQpWfSe9TyqwUW6
+ g2ABjuQ64ndNmCWDz7Dddc8hUJZuTnwU01l7yG/LZKLy5rY6qGr7ci8n7PwuojI5rKpa8P3Of
+ WgrYwGy1YNu2X3uVCoGH7OJUikXmzPvQtVDW2qBQmSR1kfcc8/7RydXsLJ+gElkyIQ5g1XQgB
+ 8q7/hhmGSFl//zV5rO7PaBvRBRm7cJyVM005dsTQJ48ABbYsXAGpikPq/hEGd5E/s/hID21q/
+ 8koozmLHTg62/M6KMZmoPL+nk0tmJiYNfaEuHkBKfRoJlspEK1GdBY/jwjoRpiNBLyM0ufNIE
+ pPu5ls17YxKcrSzY0PqJip2hDsJVtqSzzfx5psKWvYX04VpUlcLDDNxuxaCC0rkFJiSbVfFwA
+ Jv5dlUxsfNoJyV1Rr6ulro9o7rKknAYwI8TAhpyIu+892oEyzN2SX0dfY6LsWjVvv1pvCPsio
+ WqWss9ORoWjhuUfPxNIyixIKcRJnMoef1lxb0UrrGKP4ovCYZsG7OgjbIukjPy0bPn+3gjKLs
+ TZbRuwSLR/A8T2MqTdoi5ixbWVIngrpvMWWpiLl8x5lRKCVx3dMR8TjJyw8rC+mhrHtLNpyBT
+ dbL11E3zDGneHGLnJSWA54Bwv6inmFZy8n+p4XiVD+6UesH3sYbbtdv84nueLLDKgg92sEVNI
+ 8cs7FanDUnPjqcqoEqLKZOZYbc1phclgEBGH/UBU9QmfbnS9ujgsmamDdiY4TMFGqmLGO6KSc
+ DIJOUAR6CCottbJbeMkloOzP4TFqnI/H7juwsUdVSpXUhbsA2PpWl30mK9kl7ZFSe01QjefBW
+ yI5pm8EfXnMwiZag4dH7qDAt8SVsqvkO1YT4EehL3GG0Idr7Ucc77E1Q0ihv8Ca41KpuhTsnA
+ vitfBMWtXvNkCStA+m/+3LFgZrZX4uhA9aN
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Changes since v3:
+- Use deflateSetHeader() correctly, thanks to Dscho.
+- New patch to update the format-related documentation.
 
-> From: Glen Choo <chooglen@google.com>
->
-> Follow-up on the preceding commit which taught "git submodule--helper
-> update" to understand "--merge", "--checkout" and "--rebase" and use
-> those options instead of "--update=3D(rebase|merge|checkout|none)" when
-> the command invokes itself.
->
-> Unlike the preceding change this isn't strictly necessary to
-> eventually change "git-submodule.sh" so that it invokes "git
-> submodule--helper update" directly, but let's remove this
-> inconsistency in the command-line interface. We shouldn't need to
-> carry special synonyms for existing options in "git submodule--helper"
-> when that command can use the primary documented names instead.
->
-> But, as seen in the post-image this makes the control flow within
-> "builtin/submodule--helper.c" simpler, we can now write directly to
-> the "update_default" member of "struct update_data" when parsing the
-> options in "module_update()".
->
-> Signed-off-by: Glen Choo <chooglen@google.com>
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  builtin/submodule--helper.c | 42 ++++++++++++++++---------------------
->  1 file changed, 18 insertions(+), 24 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 57f0237af23..65cf4b915df 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1818,7 +1818,7 @@ static int module_clone(int argc, const char **argv=
-, const char *prefix)
->  static void determine_submodule_update_strategy(struct repository *r,
->  						int just_cloned,
->  						const char *path,
-> -						const char *update,
-> +						enum submodule_update_type update,
->  						struct submodule_update_strategy *out)
->  {
->  	const struct submodule *sub =3D submodule_from_path(r, null_oid(), path=
-);
-> @@ -1828,9 +1828,7 @@ static void determine_submodule_update_strategy(str=
-uct repository *r,
->  	key =3D xstrfmt("submodule.%s.update", sub->name);
-> =20
->  	if (update) {
-> -		if (parse_submodule_update_strategy(update, out) < 0)
-> -			die(_("Invalid update mode '%s' for submodule path '%s'"),
-> -				update, path);
-> +		out->type =3D update;
->  	} else if (!repo_config_get_string_tmp(r, key, &val)) {
->  		if (parse_submodule_update_strategy(val, out) < 0)
->  			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
-> @@ -1882,7 +1880,7 @@ struct update_data {
->  	const char *prefix;
->  	const char *recursive_prefix;
->  	const char *displaypath;
-> -	const char *update_default;
-> +	enum submodule_update_type update_default;
->  	struct object_id suboid;
->  	struct string_list references;
->  	struct submodule_update_strategy update_strategy;
-> @@ -2406,6 +2404,8 @@ static void ensure_core_worktree(const char *path)
-> =20
->  static void update_data_to_args(struct update_data *update_data, struct =
-strvec *args)
->  {
-> +	enum submodule_update_type ud =3D update_data->update_default;
-> +
->  	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
->  	strvec_pushf(args, "--jobs=3D%d", update_data->max_jobs);
->  	if (update_data->recursive_prefix)
-> @@ -2429,8 +2429,15 @@ static void update_data_to_args(struct update_data=
- *update_data, struct strvec *
->  		strvec_push(args, "--require-init");
->  	if (update_data->depth)
->  		strvec_pushf(args, "--depth=3D%d", update_data->depth);
-> -	if (update_data->update_default)
-> -		strvec_pushl(args, "--update", update_data->update_default, NULL);
-> +	if (ud =3D=3D SM_UPDATE_MERGE)
-> +		strvec_push(args, "--merge");
-> +	else if (ud =3D=3D SM_UPDATE_CHECKOUT)
-> +		strvec_push(args, "--checkout");
-> +	else if (ud =3D=3D SM_UPDATE_REBASE)
-> +		strvec_push(args, "--rebase");
-> +	else if (ud !=3D SM_UPDATE_UNSPECIFIED)
-> +		BUG("cannot convert update_default=3D%d to args", ud);
-> +
->  	if (update_data->references.nr) {
->  		struct string_list_item *item;
->  		for_each_string_list_item(item, &update_data->references)
+  archive: update format documentation
+  archive: rename archiver data field to filter_command
+  archive-tar: factor out write_block()
+  archive-tar: add internal gzip implementation
+  archive-tar: use OS_CODE 3 (Unix) for internal gzip
+  archive-tar: use internal gzip by default
 
-Everything up to here looks familiar ;)
+ Documentation/git-archive.txt | 21 +++++-----
+ archive-tar.c                 | 77 ++++++++++++++++++++++++++++++-----
+ archive.h                     |  2 +-
+ t/t5000-tar-tree.sh           | 28 ++++++++++---
+ 4 files changed, 100 insertions(+), 28 deletions(-)
 
-> @@ -2582,7 +2589,6 @@ static int module_update(int argc, const char **arg=
-v, const char *prefix)
->  	struct update_data opt =3D UPDATE_DATA_INIT;
->  	struct list_objects_filter_options filter_options;
->  	int ret;
-> -	enum submodule_update_type update_type =3D SM_UPDATE_UNSPECIFIED;
-> =20
->  	struct option module_update_options[] =3D {
->  		OPT__FORCE(&opt.force, N_("force checkout updates"), 0),
-> @@ -2601,16 +2607,13 @@ static int module_update(int argc, const char **a=
-rgv, const char *prefix)
->  			   N_("path"),
->  			   N_("path into the working tree, across nested "
->  			      "submodule boundaries")),
-> -		OPT_STRING(0, "update", &opt.update_default,
-> -			   N_("string"),
-> -			   N_("rebase, merge, checkout or none")),
-> -		OPT_SET_INT(0, "checkout", &update_type,
-> +		OPT_SET_INT(0, "checkout", &opt.update_default,
->  			N_("use the 'checkout' update strategy (default)"),
->  			SM_UPDATE_CHECKOUT),
-> -		OPT_SET_INT('m', "merge", &update_type,
-> +		OPT_SET_INT('m', "merge", &opt.update_default,
->  			N_("use the 'merge' update strategy"),
->  			SM_UPDATE_MERGE),
-> -		OPT_SET_INT('r', "rebase", &update_type,
-> +		OPT_SET_INT('r', "rebase", &opt.update_default,
->  			N_("use the 'rebase' update strategy"),
->  			SM_UPDATE_REBASE),
->  		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
-> @@ -2662,17 +2665,8 @@ static int module_update(int argc, const char **ar=
-gv, const char *prefix)
-> =20
->  	opt.filter_options =3D &filter_options;
-> =20
-> -	if (update_type =3D=3D SM_UPDATE_CHECKOUT)
-> -		opt.update_default =3D "checkout";
-> -	else if (update_type =3D=3D SM_UPDATE_MERGE)
-> -		opt.update_default =3D "merge";
-> -	else if (update_type =3D=3D SM_UPDATE_REBASE)
-> -		opt.update_default =3D "rebase";
-> -
->  	if (opt.update_default)
-> -		if (parse_submodule_update_strategy(opt.update_default,
-> -						    &opt.update_strategy) < 0)
-> -			die(_("bad value for update parameter"));
-> +		opt.update_strategy.type =3D opt.update_default;
+Range-Diff vs. v3:
+-:  ---------- > 1:  67369ed452 archive: update format documentation
+1:  73ccd190bd =3D 2:  6a7cce50ef archive: rename archiver data field to f=
+ilter_command
+2:  352cff7163 =3D 3:  c86e82bee8 archive-tar: factor out write_block()
+3:  4e7cf97631 ! 4:  6196b0e39d archive-tar: add internal gzip implementat=
+ion
+    @@ Commit message
 
-Here we're undoing the changes in the previous patch. I guess there's a
-readability benefit to having them separate, but I think both patches
-are simple enough that we can combine into one (with you as the author
-:).)
+      ## Documentation/git-archive.txt ##
+     @@ Documentation/git-archive.txt: tar.<format>.command::
+    - 	format is given.
+    + 	to the command (e.g., `-9`).
+      +
+    - The "tar.gz" and "tgz" formats are defined automatically and default=
+ to
+    --`gzip -cn`. You may override them with custom commands.
+    -+`gzip -cn`. You may override them with custom commands. An internal =
+gzip
+    -+implementation can be used by specifying the value `git archive gzip=
+`.
+    + The `tar.gz` and `tgz` formats are defined automatically and use the
+    +-command `gzip -cn` by default.
+    ++command `gzip -cn` by default. An internal gzip implementation can b=
+e
+    ++used by specifying the value `git archive gzip`.
+
+      tar.<format>.remote::
+    - 	If true, enable `<format>` for use by remote clients via
+    + 	If true, enable the format for use by remote clients via
+
+      ## archive-tar.c ##
+     @@ archive-tar.c: static int write_tar_filter_archive(const struct ar=
+chiver *ar,
+4:  cb2bbe9f6d < -:  ---------- archive-tar: use OS_CODE 3 (Unix) for inte=
+rnal gzip
+-:  ---------- > 5:  19d286af6a archive-tar: use OS_CODE 3 (Unix) for inte=
+rnal gzip
+5:  5dd968ced1 ! 6:  74683137af archive-tar: use internal gzip by default
+    @@ Commit message
+
+      ## Documentation/git-archive.txt ##
+     @@ Documentation/git-archive.txt: tar.<format>.command::
+    - 	format is given.
+    + 	to the command (e.g., `-9`).
+      +
+    - The "tar.gz" and "tgz" formats are defined automatically and default=
+ to
+    --`gzip -cn`. You may override them with custom commands. An internal =
+gzip
+    --implementation can be used by specifying the value `git archive gzip=
+`.
+    -+the magic value `git archive gzip`, which invokes an internal
+    -+implementation of gzip. You may override them with custom commands.
+    + The `tar.gz` and `tgz` formats are defined automatically and use the
+    +-command `gzip -cn` by default. An internal gzip implementation can b=
+e
+    +-used by specifying the value `git archive gzip`.
+    ++magic command `git archive gzip` by default, which invokes an intern=
+al
+    ++implementation of gzip.
+
+      tar.<format>.remote::
+    - 	If true, enable `<format>` for use by remote clients via
+    + 	If true, enable the format for use by remote clients via
+
+      ## archive-tar.c ##
+     @@ archive-tar.c: void init_tar_archiver(void)
+=2D-
+2.36.1
