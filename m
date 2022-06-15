@@ -2,166 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69BEBC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 20:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDB05C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 20:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347441AbiFOUpb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 16:45:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39468 "EHLO
+        id S236902AbiFOUrc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 16:47:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238164AbiFOUpY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 16:45:24 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 640AC2FFE0
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 13:45:23 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id fu3so25501592ejc.7
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 13:45:23 -0700 (PDT)
+        with ESMTP id S231149AbiFOUr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 16:47:29 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 819983A1
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 13:47:28 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id d128so9661972qkg.8
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 13:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=+KCXRxs8nvbu1Wf6vlhmHNFQa0A3sQcY0hBgZNkg/Ik=;
-        b=MmKAKp4Ntykxz31u3ObAIZvgzhvPA++0Jq0JzDK3ngVd/MZm36Mgj9K6eYAqZecCGf
-         GLK2n/kbWiFdzKtSEWWGvB0WdcjZk2byitgTK41a3h+hv7wDTAJ/R9ECfPqEMH4gJM+Z
-         YCD//PXL3oWCJxmN0S8hgRmk5azyFwwngvzMtBmRkCUVjw5Pz+QQCZ0cTRxCJiBpmTnd
-         wJ4WFPORiumRzpD63K8X8ND5kWE7+0TUAF+exbg1/Ch0H6JxdLEHom3ueA4e2xbsXd7u
-         Hi5N9QAouMQ63ejFlsLnbpT8OprMgUcfOmIiCCFgmK8jzKq3ErUBlR2ay4rGoyr0Jyyz
-         4cgA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Y4+7xy2h4p7c3Nc0V6LmXM/uXsG/dY5OLXy6jN5qxeo=;
+        b=f0Xgj/7EulYWbUPOkHsGkrkFZJeTK3OgGmm3GzhcAmhWzCTcWS8noNycdIqC+q3WCq
+         +OKOgtoos2MEFgsIV2mFJU2sx4kMWN9nf9yWhQBjjYozV/VGVCasbc6mKy3ny5I0K2rM
+         fJFx40Ibtjt/XPFulcgj9m1Hv4t+hbScVl7YJWCMh5sPqD07aXm+8ChYxh9d4rgZT0jw
+         JiMvply2mHhDmwQt3Sxnvt49WnYqzxgfJHM0FdZchQxRHDf9UEI7gP5L92X1klU7R3tn
+         PfgffbF12GFjlop08RnuI8ayWOH/3q6JQ8Kfyb4S9U7M5U35NKjX7c4NZro6K5geFCy9
+         Qydg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=+KCXRxs8nvbu1Wf6vlhmHNFQa0A3sQcY0hBgZNkg/Ik=;
-        b=Xhzhenu82WZKU5nqGTpSFcEWIB3XbhnNXjz3aW72Lj/EkR4iNr0zy+3mG1PhB4uokd
-         fMEZgi1Hbopzod9XqJMdCS7iLc9eIADmDzqc6SlWBkHYsSFpeev9a0nvLFVa3Ic0G3XS
-         YVW8E22CAWl7CiDRuNIn9nWo04uLEw2u0aSU57kYUc2ZVPTzC2JcmarH8kmskxzJmUuv
-         Wj2DPtmdTwsfO3/DEGokd0KYw/vKm4p344SteLcizFkplntoJquUVDPhY+jSbunkgLrQ
-         pH1TWqOP6Dh28zf3thiO6J42vfat7o5hKW9r/H09D3p9yACIcDQXE1rrePPKSIupcltL
-         6moQ==
-X-Gm-Message-State: AJIora9NplXpMtM/z6JVBC536C5pAOtmFpjiZE/uKC15eQuiS5l3h6+5
-        XwWERTAg1U3qMUFfRahjIS8=
-X-Google-Smtp-Source: AGRyM1uP/aSp+xsmWVts8NKCXZcMcYLFTKeSxWS+HIF5iGi1tKvu5C0QwyUzg4caBgc/kPPeGdUh2Q==
-X-Received: by 2002:a17:906:5352:b0:712:3916:e92 with SMTP id j18-20020a170906535200b0071239160e92mr1484920ejo.756.1655325922863;
-        Wed, 15 Jun 2022 13:45:22 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id b16-20020a056402351000b0042de8155fa1sm210435edd.0.2022.06.15.13.45.22
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Y4+7xy2h4p7c3Nc0V6LmXM/uXsG/dY5OLXy6jN5qxeo=;
+        b=4g6FaPbN99FxiCvpLWKhmhBRWqxgS0xMz9uWD3UPC9Q887qEUKXovP3IAI8HaoJQHF
+         qze7IHN0AE2lXxypK3fr+AaWTISkPgYecMpXmu58iHCT58aWg7oKH7knkEw790j7srZd
+         FHiCCsxcqVnjiq03ChmyQJ+bmZ9Xut7nnc88pSFuGbmyc10ytsDDW+ehwrPOm2ktbP/V
+         WeSLe11ge2gW5+BHfP8KwD4JE73Dmoa4LGLrJlf5Hs71aQlBrG2i3H3/hOfFK/iq/38A
+         Zowkd4XKeUpDXozhM9GfdHjNqxrPDuO6u89HKviZsSNgPtid2+oIFlq7TBe29n2R3xdd
+         6/Kg==
+X-Gm-Message-State: AJIora/BdWNqdyc2C0sGsQuNhj7t9EnEqFcXIieGCr3dss0GsGHcgcdU
+        QFyWuOLL+NwK2rszqXZaQFLnrg==
+X-Google-Smtp-Source: AGRyM1scD0ARcF5hGbrrbsG4J9NeHXhbeMaWwphe6uS/P08UqoI6Af8ffuh2PzuvhCBwIoY3KJbwKQ==
+X-Received: by 2002:a05:620a:44c6:b0:6a6:d033:7804 with SMTP id y6-20020a05620a44c600b006a6d0337804mr1246375qkp.153.1655326047634;
+        Wed, 15 Jun 2022 13:47:27 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id h8-20020ac87148000000b003050af740e6sm154031qtp.22.2022.06.15.13.47.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 13:45:22 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o1ZtB-000u54-KT;
-        Wed, 15 Jun 2022 22:45:21 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 4/6] archive-tar: add internal gzip implementation
-Date:   Wed, 15 Jun 2022 22:32:04 +0200
-References: <pull.145.git.gitgitgadget@gmail.com>
- <9df761c3-355a-ede9-7971-b32687fe9abb@web.de>
- <1328fe72-1a27-b214-c226-d239099be673@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <1328fe72-1a27-b214-c226-d239099be673@web.de>
-Message-ID: <220615.86wndhwt9a.gmgdl@evledraar.gmail.com>
+        Wed, 15 Jun 2022 13:47:27 -0700 (PDT)
+Date:   Wed, 15 Jun 2022 16:47:26 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] revision: mark blobs needed for resolve-undo as reachable
+Message-ID: <YqpFXoKPu2E1j+mr@nand.local>
+References: <xmqqfskdieqz.fsf@gitster.g>
+ <7cd41846-e6ef-7a24-0426-6031a529360f@github.com>
+ <220614.86czfcytlz.gmgdl@evledraar.gmail.com>
+ <31f406b1-b4e8-5da2-40af-5747938de634@github.com>
+ <Yqk9uMS5kxHD6o7l@nand.local>
+ <YqlWhKDFX3KESY0h@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YqlWhKDFX3KESY0h@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Jun 15 2022, Ren=C3=A9 Scharfe wrote:
-
-> Git uses zlib for its own object store, but calls gzip when creating tgz
-> archives.  Add an option to perform the gzip compression for the latter
-> using zlib, without depending on the external gzip binary.
+On Tue, Jun 14, 2022 at 11:48:20PM -0400, Jeff King wrote:
+> On Tue, Jun 14, 2022 at 10:02:32PM -0400, Taylor Blau wrote:
 >
-> Plug it in by making write_block a function pointer and switching to a
-> compressing variant if the filter command has the magic value "git
-> archive gzip".  Does that indirection slow down tar creation?  Not
-> really, at least not in this test:
+> > --- >8 ---
+> >
+> > diff --git a/string-list.h b/string-list.h
+> > index d5a744e143..425abc55f4 100644
+> > --- a/string-list.h
+> > +++ b/string-list.h
+> > @@ -143,7 +143,7 @@ int for_each_string_list(struct string_list *list,
+> >
+> >  /** Iterate over each item, as a macro. */
+> >  #define for_each_string_list_item(item,list)            \
+> > -	for (item = (list)->items;                      \
+> > +	for (item = (list) ? (list)->items : NULL;      \
+> >  	     item && item < (list)->items + (list)->nr; \
+> >  	     ++item)
+> >
+> > --- 8< ---
+> >
+> > > but even with your suggestion, I get this compiler error:
+> >
+> > ...so did I. Though I'm not sure I understand the compiler's warning
+> > here. Surely the thing being passed as list in the macro expansion
+> > _won't_ always evaluate to non-NULL, will it?
 >
-> $ hyperfine -w3 -L rev HEAD,origin/main -p 'git checkout {rev} && make' \
-> './git -C ../linux archive --format=3Dtar HEAD # {rev}'
+> In the general case, no, but in this specific expansion of the macro, it
+> is passing the address of a local variable (&cpath), which will never be
+> NULL. The compiler is overeager here; the check is indeed pointless in
+> this expansion, but warning on useless macro-expanded code isn't
+> helpful, since other macro users need it.
 
-Shameless plug: https://lore.kernel.org/git/211201.86r1aw9gbd.gmgdl@evledra=
-ar.gmail.com/
+Ah, that makes sense. The compiler is warning us that the macro-expanded
+version of for_each_string_list_item() has a ternary expression that
+will never evaluate its right-hand side in cases where it can prove the
+second argument to the macro is non-NULL.
 
-I.e. a "hyperfine" wrapper I wrote to make exactly this sort of thing
-easier.
-
-You'll find that you need less or no --warmup with it, since the
-checkout flip-flopping and re-making (and resulting FS and other cache
-eviction) will go away, as we'll use different "git worktree"'s for the
-two "rev".
-
-(Also, putting those on a ramdisk really helps)
-
-> Benchmark #1: ./git -C ../linux archive --format=3Dtar HEAD # HEAD
->   Time (mean =C2=B1 =CF=83):      4.044 s =C2=B1  0.007 s    [User: 3.901=
- s, System: 0.137 s]
->   Range (min =E2=80=A6 max):    4.038 s =E2=80=A6  4.059 s    10 runs
+> Hiding it in a function seems to work, even with -O2 inlining, like:
 >
-> Benchmark #2: ./git -C ../linux archive --format=3Dtar HEAD # origin/main
->   Time (mean =C2=B1 =CF=83):      4.047 s =C2=B1  0.009 s    [User: 3.903=
- s, System: 0.138 s]
->   Range (min =E2=80=A6 max):    4.038 s =E2=80=A6  4.066 s    10 runs
+> diff --git a/string-list.h b/string-list.h
+> index d5a744e143..b28b135e11 100644
+> --- a/string-list.h
+> +++ b/string-list.h
+> @@ -141,9 +141,14 @@ void string_list_clear_func(struct string_list *list, string_list_clear_func_t c
+>  int for_each_string_list(struct string_list *list,
+>  			 string_list_each_func_t func, void *cb_data);
 >
-> How does tgz creation perform?
->
-> $ hyperfine -w3 -L command 'gzip -cn','git archive gzip' \
-> './git -c tar.tgz.command=3D"{command}" -C ../linux archive --format=3Dtg=
-z HEAD'
-> Benchmark #1: ./git -c tar.tgz.command=3D"gzip -cn" -C ../linux archive -=
--format=3Dtgz HEAD
->   Time (mean =C2=B1 =CF=83):     20.404 s =C2=B1  0.006 s    [User: 23.94=
-3 s, System: 0.401 s]
->   Range (min =E2=80=A6 max):   20.395 s =E2=80=A6 20.414 s    10 runs
->
-> Benchmark #2: ./git -c tar.tgz.command=3D"git archive gzip" -C ../linux a=
-rchive --format=3Dtgz HEAD
->   Time (mean =C2=B1 =CF=83):     23.807 s =C2=B1  0.023 s    [User: 23.65=
-5 s, System: 0.145 s]
->   Range (min =E2=80=A6 max):   23.782 s =E2=80=A6 23.857 s    10 runs
->
-> Summary
->   './git -c tar.tgz.command=3D"gzip -cn" -C ../linux archive --format=3Dt=
-gz HEAD' ran
->     1.17 =C2=B1 0.00 times faster than './git -c tar.tgz.command=3D"git a=
-rchive gzip" -C ../linux archive --format=3Dtgz HEAD'
->
-> So the internal implementation takes 17% longer on the Linux repo, but
-> uses 2% less CPU time.  That's because the external gzip can run in
-> parallel on its own processor, while the internal one works sequentially
-> and avoids the inter-process communication overhead.
->
-> What are the benefits?  Only an internal sequential implementation can
-> offer this eco mode, and it allows avoiding the gzip(1) requirement.
+> +static inline struct string_list_item *string_list_first_item(const struct string_list *list)
+> +{
+> +	return list ? list->items : NULL;
+> +}
+> +
+>  /** Iterate over each item, as a macro. */
+>  #define for_each_string_list_item(item,list)            \
+> -	for (item = (list)->items;                      \
+> +	for (item = string_list_first_item(list);       \
+>  	     item && item < (list)->items + (list)->nr; \
+>  	     ++item)
 
-I had been keeping one eye on this series, but didn't look at it in any
-detail.
+That works, nice. I don't really want to mess up the tree too much this
+close to a release, but this sort of clean-up seems good to do. I know
+Stolee identified a handful of spots that would benefit from it. Some
+good #leftoverbits, I guess :-).
 
-I found this after reading 6/6, which I think in any case could really
-use some "why" summary, which seems to mostly be covered here.
-
-I.e. it's unclear if the "drop the dependency on gzip(1)" in 6/6 is a
-reference to the GZIP test dependency, or that our users are unlikely to
-have "gzip(1)" on their systems.
-
-If it's the latter I'd much rather (as a user) take a 17% wallclock
-improvement over a 2% cost of CPU. I mostly care about my own time, not
-that of the CPU.
-
-Can't we have our 6/6 cake much easier and eat it too by learning a
-"fallback" mode, i.e. we try to invoke gzip, and if that doesn't work
-use the "internal" one?
-
-Re the "eco mode": I also wonder how much of the overhead you're seeing
-for both that 17% and 2% would go away if you pin both processes to the
-same CPU, I can't recall the command offhand, but IIRC taskset or
-numactl can do that. I.e. is this really measuring IPC overhead, or
-I-CPU overhead on your system?
+Thanks,
+Taylor
