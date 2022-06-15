@@ -2,72 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5651C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 07:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4404C43334
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 08:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346760AbiFOHjn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 03:39:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47364 "EHLO
+        id S240019AbiFOIFs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 04:05:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346638AbiFOHjj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 03:39:39 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF0A393DD
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 00:39:37 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id a10so10497411pju.3
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 00:39:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=NF2ZCMf5p/TQgAeeWJO7oxRCoViOwgfCl5RRknbNHUs=;
-        b=eGjGiAsrmArQriQNnxkKCNiPZ4uY3fSuJ4RGNb2BPRawUbZpLfzll1xHCMSpUuAPFT
-         CUuaf9Up3ZkseMd4mlMeWKtXDNd5iK+qP0We86cM2qb9OYfQOv2xEWmSRYzv24BhZvnq
-         w0BC7EMXZqFK5N5yERW+eHIs1JrYQCHMsTY7o1VXGDztDMF22+AJlizzr7IS73To8A9m
-         +J4wNU6hEo1PHj+FwA7sT8CB1iXHp2/LWKsaU55wk2gi+Rw+c4NyIgaIqL+vpNPUco0l
-         6QGgJM6dI5iH63IVXVifAyrhFC9MkraD5EZHZGpXob0nTqLiFrZhRm2ir/l4r4krP6Wk
-         T86Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=NF2ZCMf5p/TQgAeeWJO7oxRCoViOwgfCl5RRknbNHUs=;
-        b=ZPaGJR6D9BwWP8e/wuJu6VRNcoyZebqC9U91KwdBXOMjSJaJ8+JTp3fY9mmulVOj6B
-         lAl8LbuggkpwmvrMwiSRIdlHMLvWR/A/7XqJ1DBwObWUURL/7jpZTVqqIDiX/pFXB6Mn
-         dsd8k8w9PXZtgvt5/oK+9wHQJqqxBVpETyq8sHfO6HMWYuVo3A/rOO92ronppLssWt8t
-         8vXtDUiqjmEzWKQHuXDLMF1ey3ORPK94/RWoQ8UPH4Ytov7dmF0znILrVH/+CSo99kOX
-         GsTbuCF0spOfn0N3K2CPACytEMtgdNvxBgEgaAdfNQYWTuYxIOwxoojEZaulmHQ/qiIE
-         n8uQ==
-X-Gm-Message-State: AJIora/EausDNAfvDIGt1pGu4xBQEG7fwYbSHf4bF+Pt+mUa4bZZ4Q8V
-        eGk/L77Zv14PPGfD0HnxLlMVDYGvqQu4goSziksvHWmVdkI=
-X-Google-Smtp-Source: AGRyM1uWyp5PiXu3V+YSyBtkf3paaiH+mqi/Yk9+Mbv08Vj3qyfSt0N1yHxE78cr2W5zr9AO7IlIZn6eLmca7f4TY18=
-X-Received: by 2002:a17:902:8345:b0:167:879c:abe8 with SMTP id
- z5-20020a170902834500b00167879cabe8mr7940951pln.7.1655278776635; Wed, 15 Jun
- 2022 00:39:36 -0700 (PDT)
-MIME-Version: 1.0
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Wed, 15 Jun 2022 15:39:25 +0800
-Message-ID: <CAJyCBOSrhxbCcDX5oWBuNEWOxQu2Rmk+T+paORLzoLF=iaBH1Q@mail.gmail.com>
-Subject: [GSoC] Status update
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S237955AbiFOIFr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 04:05:47 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 15 Jun 2022 01:05:46 PDT
+Received: from st43p00im-zteg10062001.me.com (st43p00im-zteg10062001.me.com [17.58.63.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B088C4705C
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 01:05:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1655279924;
+        bh=Iw2Sz+7ab4j8EfQ2HRy5Y/deHoPXqRtYIYWvoxj1bAI=;
+        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+        b=dqeZ2A1hWPgc+67XaozW0Cm7F6iSIhgbPPkjR6sgG8DmL+O90gaq+C1LGLiugYc5+
+         yyVh2CzZdMJ8emHKXetQmodeMbIZh+LV3y6nSHNU7g6geraD6EVDWQmMMj5/V1+/Ya
+         B4WzWq/KoddKb9EaBP01+IUp36jykYqNqrdD/eg2WvHnbm8rtO7ZtBoOMlhmzIYn8Y
+         dRdH8vnnqfoXVvuONpLHjFWtMl2O+cc2UZPF28F20yZWypQsd6WX2llMmX/DrRyDPH
+         v4TxxN7zowPuCc+Sj2mSS9fSlrhkiwG70MkkIGwFIfbs/riwy6UTdYllTMAgpqHCMj
+         QZGfjl5oTi4fQ==
+Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+        by st43p00im-zteg10062001.me.com (Postfix) with ESMTPSA id 8F129800641;
+        Wed, 15 Jun 2022 07:58:43 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+From:   Ali Almrhbi <alialmrhbi0@icloud.com>
+Mime-Version: 1.0 (1.0)
+Date:   Wed, 15 Jun 2022 10:58:37 +0300
+Subject: Re: [PATCH] git-diff: Introduce --index and deprecate --cached.
+Message-Id: <96A237BC-9E68-4DD1-A015-988944ACE1F8@icloud.com>
+Cc:     ae@op5.se, git@vger.kernel.org, jakesteward0916@gmail.com,
+        junkio@cox.net
+To:     nnn2271989@icloud.com
+X-Mailer: iPhone Mail (19D52)
+X-Proofpoint-GUID: srD1zyHP4kDGgiKpr_XIziIUFxZ_wAEr
+X-Proofpoint-ORIG-GUID: srD1zyHP4kDGgiKpr_XIziIUFxZ_wAEr
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 clxscore=1011 mlxlogscore=531 phishscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2202240000 definitions=main-2206150029
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git community,
-
-Here is Shaoxuan Yuan. I'm this year's GSoC student for the project
-"More Sparse Index Integration". My mentors Derrick and Victoria and I
-are already in touch for a while on the Slack channel, and I'm writing
-to let the community know that things are going well.
-
-For the progress report, I'm going to do a weekly blog here [1].
-
-As for now, I'm still working with my mentors to refactor mv.c for
-sparse-checkout and sparse-index integration. This series is WIP here
-[2].
-
-[1]: https://ffyuanda.github.io
-[2]: https://lore.kernel.org/git/20220331091755.385961-1-shaoxuan.yuan02@gmail.com/
--- 
-Thanks & Regards,
-Shaoxuan
+DQoNCuKAq9ij2Y/Ysdiz2YTYqiDZhdmGINin2YTZgCBpUGhvbmXigKw=
