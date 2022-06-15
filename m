@@ -2,83 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A734C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 13:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 350F9C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 13:46:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243950AbiFONa4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 09:30:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38158 "EHLO
+        id S240502AbiFONqC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 09:46:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232167AbiFONaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 09:30:55 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F0F32EC6
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 06:30:54 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id x18so8139952qtj.3
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 06:30:54 -0700 (PDT)
+        with ESMTP id S230055AbiFONp7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 09:45:59 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 598432CCB4
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 06:45:56 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id x6-20020a1c7c06000000b003972dfca96cso1151634wmc.4
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 06:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=oVT1OwQnaQ20+uJu2Gu3g5KbhetNQyKNFnvdINfUszs=;
-        b=O0Zal4nKSXbQecFpgt/P97cVHlA1/UsWTomefj7bA5zzitBMPLN1dAb/GLFQbLgcpw
-         KNBAxgxMh4SNJ4sGh5dPgOsTFItn6/ZSZMaCaRjCg30RV8dbn7zbcH7REGKa8C9ZfGft
-         FVKJoyn3QcsQeqCVmK8GNYqW+QphVaK0bnNq+ZNLqKJlL4qaK60Qy0Sj8VH6nVjad2J8
-         oeUDshrNoJsw/hZyI9z1MehY8jY2KKL4NfWXDLm4TwvhoH3FW8qv6Yg7WGK1qHKbU3dF
-         Na9VuED0BLPveRc3nhw6IRZi79VrEWwctwJxI2MNO09eeiZzqRk6E+P1krelDVD2G4J3
-         cy2w==
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=HsY3yAAERQuCvptjjA5gQczyiFdpYxYU05D0DcWdDCA=;
+        b=LsHkvEaBTA2xoj5cafRHgQ0lumJGb6akAUEo7BVpcdsPua9ZWcYxQ/DlJe8v2iN+Gp
+         6PKt02QmqXfBqV4GipGeunDZb0urpeXhAgbacvvCs0QUAGMF2IWOyRylzJkaEzqRPLIJ
+         CmHYA+sWHpqMzDaX0WHKcroEWG3gq6C7HZpKH0ldx1Eo/yJFmV7UIMTbmabl/72PNDbc
+         2Bm5TEJFswVUQa9PbJsebw5tH1HCcyUCaeNkt2cCQq7a9q362AvOywMUiVtOikXZ7Rqc
+         qM3/31JkCqrsXPbjsF7/qswOTChKYc+XiKhTTEjmqhxHK818uw3JibjuZ3pLEXVXv3Mw
+         45mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=oVT1OwQnaQ20+uJu2Gu3g5KbhetNQyKNFnvdINfUszs=;
-        b=bT720pMRXjwPdSkcXMW6+54OXjEqVvNkxS0En7z4MhERgF7xph706JBvlJexsrQwBr
-         V9Lqi923TEfAc8WATfghHjXzVh+6e/lwUpCBWpSWpwC34yUSjrBVrQhHyFIJYZ0+2b+P
-         WbsjGA83nKS20ii9jhzdakXKdCnz4g7mHUJ9ejBpe/yUfhGryM08xpWyQtyToitF6mr1
-         kfSmLRzJKNPO+vwsoEX0oJomUNM33jFnI65EDjtVZieRgN37gj/oIwHElFLI9FOYMQwh
-         cb7Vkx/tUVq2czVN85VI0UikwCTvOPt45aZO9/2EEzPi3rHgJGrQHYSJ7j0Aw3UPZ+d4
-         NLhA==
-X-Gm-Message-State: AOAM530txj4CKL0mRIsndu67Y2W6Gwb5Aoc5dwhPXtVWjmpi/UF0K4uQ
-        EQNo7O9MI0BrG1J73u1sPkEAGTNUfIYT
-X-Google-Smtp-Source: ABdhPJx09dmPSnFXoMkmizJiJZRSIq5L+BsLM4u8n9wF/wG2mJrCo3LBhebYODUy7ezDBYy3+BezIA==
-X-Received: by 2002:a05:622a:305:b0:305:f25:9350 with SMTP id q5-20020a05622a030500b003050f259350mr8747916qtw.507.1655299853897;
-        Wed, 15 Jun 2022 06:30:53 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:900f:fa9e:132:1bde? ([2600:1700:e72:80a0:900f:fa9e:132:1bde])
-        by smtp.gmail.com with ESMTPSA id l188-20020a37bbc5000000b006a6bbc2725esm11404352qkf.118.2022.06.15.06.30.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jun 2022 06:30:53 -0700 (PDT)
-Message-ID: <a7c81b77-651d-3374-6db8-f46ad01a8319@github.com>
-Date:   Wed, 15 Jun 2022 09:30:52 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH] pack-write.c: remove unused `mtimes_name` parameter
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com
-References: <f5bf68702d55b601ebd13bc4a6f1a34dc35abae5.1655253465.git.me@ttaylorr.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <f5bf68702d55b601ebd13bc4a6f1a34dc35abae5.1655253465.git.me@ttaylorr.com>
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=HsY3yAAERQuCvptjjA5gQczyiFdpYxYU05D0DcWdDCA=;
+        b=yYGfjCahV2cKuzHjGQ0Ig3eiZpcAvQN5QTM7O0GkTcVb6wOetdGh+W44t7hu40bxhG
+         1ZWXm84w8vBJvKEYeUiPvza0xC3XVhX3HV6vCVBEk39i/T2by6yOK5NJ3iAsbvZZRtzA
+         ibElM4HjEp+JVPnKNmo7zEFB2g3HTf7B1wbWhPCBNwNVXsUMQDQRpqaEwmAn4hJId29l
+         FoS33qGl3tsCiQxRD2Rmv3aYDr+8nT6K0dlU1/EUm0C0olar+l03Y/tLcw4AcNTNWBuk
+         Z3NaEyBafOneBOqvtX3GKLgNbNgTijYvo7eai61Y46bEnp7TKCUE+3QHVuJEU1H6h9j8
+         AKQA==
+X-Gm-Message-State: AOAM530rht02uIGEVOLO9OL/X99MxYWmFGFk9NHVTmImZp1ybqfusYEB
+        uciZWzI1TTD6UY34uriIcl2+zddsI1N0Tg==
+X-Google-Smtp-Source: ABdhPJx18ZS8etDG1JmcT/4akFwvkl9hBA9QQ71FUjB/wEha5eLoVw/4Zu00r7McTUDA5a45Otn/zg==
+X-Received: by 2002:a7b:c389:0:b0:39c:49fe:25d3 with SMTP id s9-20020a7bc389000000b0039c49fe25d3mr10219316wmj.83.1655300754547;
+        Wed, 15 Jun 2022 06:45:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e15-20020adfe38f000000b0020fd392df33sm14576746wrm.29.2022.06.15.06.45.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jun 2022 06:45:53 -0700 (PDT)
+Message-Id: <pull.1262.git.1655300752.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 15 Jun 2022 13:45:50 +0000
+Subject: [PATCH 0/2] ls-files: introduce "--format" and "--object-only" options
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/14/22 8:37 PM, Taylor Blau wrote:
-> `write_mtimes_file()` takes an optional parameter `mtimes_name`, which
-> specifies where to write the mtimes file. If it is NULL, a location is
-> generated with `odb_mkstemp()`.
-> 
-> This imitates the pattern in `write_idx_file()`, and `write_rev_file()`,
-> both of which have callers from the `index-pack` builtin which specify
-> an exact location instead of generating one.
+Sometime we may need to extract some custom informations from git index
+entries. Add a new option "--format" to "git ls-files" which can do such
+thing, and add a new option "--object-only" which alias to
+"--format=%(objectname)".
 
-I have a nearly-identical patch [1], but I'm happy to take Taylor's
-instead. I'll plan on dropping that patch from my v2.
+The origin discussion is here:
+https://lore.kernel.org/git/pull.1250.v2.git.1654778272871.gitgitgadget@gmail.com/
 
-[1] https://lore.kernel.org/git/b67e110bf60e820874de94c64ee8c32d69413877.1655242070.git.gitgitgadget@gmail.com/
+ZheNing Hu (2):
+  ls-files: introduce "--format" option
+  ls-files: introduce "--object-only" option
 
-Thanks,
--Stolee
+ Documentation/git-ls-files.txt |  59 ++++++++++-
+ builtin/ls-files.c             | 160 +++++++++++++++++++++++++++++-
+ t/t3013-ls-files-format.sh     | 176 +++++++++++++++++++++++++++++++++
+ 3 files changed, 390 insertions(+), 5 deletions(-)
+ create mode 100755 t/t3013-ls-files-format.sh
+
+
+base-commit: ab336e8f1c8009c8b1aab8deb592148e69217085
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1262%2Fadlternative%2Fzh%2Fls-file-format-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1262/adlternative/zh/ls-file-format-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1262
+-- 
+gitgitgadget
