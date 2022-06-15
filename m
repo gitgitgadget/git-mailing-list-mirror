@@ -2,98 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8D1CC43334
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 01:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56606C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 01:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242412AbiFOBZz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jun 2022 21:25:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
+        id S1344884AbiFOBuk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jun 2022 21:50:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233337AbiFOBZy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jun 2022 21:25:54 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF915183B5
-        for <git@vger.kernel.org>; Tue, 14 Jun 2022 18:25:53 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CA6541A19D5;
-        Tue, 14 Jun 2022 21:25:52 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-        :to:cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=+lLbRaW+++ahW60ZP244EB3v3cN6PlKqw25fhtQ
-        F4XU=; b=r79yAzMseotnQ48lRpPVb0GlKoOWFX5cAjP7K9OjEUP7E6rUa4KOYdn
-        Xfo8WIPhmbgaD/8uZPSXy0KHncYtdwQ5/LIVDUUFypaC1xG0zapEu5oHgxlsarNm
-        nMzEBldlm2gls+3jgRZg80QdT7kB3QwLoiw31IiKzQ6vuzziZal8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C1B0C1A19D4;
-        Tue, 14 Jun 2022 21:25:52 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [71.254.192.78])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 31ABE1A19D1;
-        Tue, 14 Jun 2022 21:25:48 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Date:   Tue, 14 Jun 2022 21:25:44 -0400
-From:   Todd Zullinger <tmz@pobox.com>
+        with ESMTP id S232340AbiFOBui (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jun 2022 21:50:38 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2094949276
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 18:50:35 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id b142so7779562qkg.2
+        for <git@vger.kernel.org>; Tue, 14 Jun 2022 18:50:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6dOoK6RLziYH7IdKGTwuzxm0XsTgXQTt7aqGjN7rgXU=;
+        b=k4S3E1LdoOQCYjrsk5A1/wfaL88kvzPoL4vjDnvaHW78q3KUi2x2ENabXCzzzKTdHe
+         X+/4llKngnkIbk5Ed5BLKqLEDR0sfMn8PAh8IbpW9iO+O6SkhgxUiYjXdbl/dq71lFDF
+         YJvtZs43KF6szDtaU73Dw+zogzbCmTl6PTNTcs1gtM0oYvtIgTdhRBl9pSlIngPIbQ3p
+         jnHOHtbHCmG2k7/9a+zftRypmyjQscoVB0g9KTYOLY+4bwHZHr9bKddA/cZ63ICeh0wN
+         QIgIxBfyNeb29CRLA1bn19BJAYyhI5Hzl9bJb2zdBg1JbpvkaZBG/qNt3KQIkYiBEDbl
+         KofQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6dOoK6RLziYH7IdKGTwuzxm0XsTgXQTt7aqGjN7rgXU=;
+        b=ywEJg01h9hjIGHgLZP0TkmhpAojCpqF/EkhSh/H2rfVmCAAEt3kOIrN1btyzXR8Odk
+         JCp7Cn11X7wYiX2sanHNbvjDrwr4QLnj1JTtAw7C58prEIOXEssIz5imZG5Ew69B+r/g
+         J5oxAWZqtSjdBhQW8GrcU+xIVNEm806IgjjDxAi3ZCi8xWgbaf5rh7V6Aemm59ZfErzB
+         gw2BoSDNLQ01wENw3c1DihRQa5oOr69+YV6O3rZSkdFrjavGT06gaHW/PWoGtNQc2UNr
+         qu5ruvt7nJmA4mLa9UAD+7J4bfALYvS+O3ckY+WJ+ob7/O3VMetsSw9Im9CZa9l6cXiS
+         vOrA==
+X-Gm-Message-State: AOAM533bLm0jXA3TzaOB6YoAqZtkuHyJClU+SOuW+I7AIxmK5/8msqgm
+        8rV22+SlI4xHGqgFal3xfH9w7nayv29PPOJs
+X-Google-Smtp-Source: ABdhPJyWVKXFNnvOuxO3792c/1dP3S9SzHLjQAVhFCIMGs37Re7gbJNKJO7HH/JqCsCVHzEyWsFWkw==
+X-Received: by 2002:a05:620a:4505:b0:6a6:f875:a609 with SMTP id t5-20020a05620a450500b006a6f875a609mr6321327qkp.710.1655257833998;
+        Tue, 14 Jun 2022 18:50:33 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d1-20020a05620a240100b0069c72b41b59sm11486542qkn.2.2022.06.14.18.50.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jun 2022 18:50:33 -0700 (PDT)
+Date:   Tue, 14 Jun 2022 21:50:32 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t3701: two subtests are fixed
-Message-ID: <Yqk1GCPkfauGHQQB@pobox.com>
-References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] config: correct log.showRoot description
+Message-ID: <Yqk66CTVbX22Xi+e@nand.local>
+References: <b7aa801c3995fffdce37d90adba9253485b616e3.1655223201.git.git@grubix.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu>
-X-Pobox-Relay-ID: 161EE1C4-EC4A-11EC-864E-C85A9F429DF0-09356542!pb-smtp20.pobox.com
+In-Reply-To: <b7aa801c3995fffdce37d90adba9253485b616e3.1655223201.git.git@grubix.eu>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber wrote:
-> 0527ccb1b5 ("add -i: default to the built-in implementation", 2021-11-30)
-> switched to the implementation which fixed to subtest. Mark them as
-> expect_success now.
-> 
-> Signed-off-by: Michael J Gruber <git@grubix.eu>
-> ---
-> I did check the ML but may have missed a series which contains this. (I
-> only found one which tries to make the test output clearer in CI.)
+On Tue, Jun 14, 2022 at 06:14:22PM +0200, Michael J Gruber wrote:
+> diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
+> index 456eb07800..b210f24cca 100644
+> --- a/Documentation/config/log.txt
+> +++ b/Documentation/config/log.txt
+> @@ -40,10 +40,10 @@ log.graphColors::
+>  	history lines in `git log --graph`.
+>
+>  log.showRoot::
+> -	If true, the initial commit will be shown as a big creation event.
+> -	This is equivalent to a diff against an empty tree.
+> -	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
+> -	normally hide the root commit will now show it. True by default.
+> +	If `false`, tools like linkgit:git-log[1] or linkgit:git-whatchanged[1]
+> +	will not treat the initial commit as a big creation event.  Any root
+> +	commits in `git log -p` output would be shown without a diff attached.
+> +	The default is `true`.
 
-I sent a patch (<20220614185218.1091413-1-tmz@pobox.com>) as
-well.  I mentioned the commits which added these tests, but
-didn't call out 0527ccb1b5 (add -i: default to the built-in
-implementation, 2021-11-30) explicitly, which is a good
-addition.
+This looks good to me. An alternative approach which would work to would
+be to replace "If `true`" with "When `true`". I have a vague preference
+towards the latter, since it explains what log.showRoot does, rather
+than what it does not do.
 
-I'm just happy to see the builtin `add -i` as the default.
+But this works just as well, and I think that I'm splitting hairs
+anyways ;).
 
->  t/t3701-add-interactive.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 94537a6b40..9a06638704 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -538,7 +538,7 @@ test_expect_success 'split hunk "add -p (edit)"' '
->  	! grep "^+15" actual
->  '
->  
-> -test_expect_failure 'split hunk "add -p (no, yes, edit)"' '
-> +test_expect_success 'split hunk "add -p (no, yes, edit)"' '
->  	test_write_lines 5 10 20 21 30 31 40 50 60 >test &&
->  	git reset &&
->  	# test sequence is s(plit), n(o), y(es), e(dit)
-> @@ -562,7 +562,7 @@ test_expect_success 'split hunk with incomplete line at end' '
->  	test_must_fail git grep --cached before
->  '
->  
-> -test_expect_failure 'edit, adding lines to the first hunk' '
-> +test_expect_success 'edit, adding lines to the first hunk' '
->  	test_write_lines 10 11 20 30 40 50 51 60 >test &&
->  	git reset &&
->  	tr _ " " >patch <<-EOF &&
-
--- 
-Todd
+Thanks,
+Taylor
