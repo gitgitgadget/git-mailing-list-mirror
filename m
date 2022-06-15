@@ -2,109 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB9A0C43334
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 21:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2D2DC43334
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 21:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244325AbiFOVhE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 17:37:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58896 "EHLO
+        id S1347701AbiFOVpG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 17:45:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239710AbiFOVhB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 17:37:01 -0400
-Received: from dalaran.tastycake.net (dalaran.tastycake.net [IPv6:2001:ba8:0:1c0::1:1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE6CF562D0
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 14:36:59 -0700 (PDT)
-Received: from 77.116.2.81.in-addr.arpa ([81.2.116.77] helo=lucy.dinwoodie.org)
-        by dalaran.tastycake.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        (envelope-from <adam@dinwoodie.org>)
-        id 1o1ah7-0000LS-K2; Wed, 15 Jun 2022 22:36:57 +0100
-Received: from adam by lucy.dinwoodie.org with local (Exim 4.94.2)
-        (envelope-from <adam@dinwoodie.org>)
-        id 1o1ah6-001Hsm-Tc; Wed, 15 Jun 2022 22:36:56 +0100
-Date:   Wed, 15 Jun 2022 22:36:56 +0100
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v6+ 2/7] archive --add-virtual-file: allow paths
- containing colons
-Message-ID: <20220615213656.zp36wdwbcz7yevac@lucy.dinwoodie.org>
-References: <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
- <20220528231118.3504387-1-gitster@pobox.com>
- <20220528231118.3504387-3-gitster@pobox.com>
- <20220615181641.vltm3qtbsckp5s56@lucy.dinwoodie.org>
- <xmqqpmj9zohk.fsf@gitster.g>
+        with ESMTP id S241445AbiFOVpE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 17:45:04 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20FFB33883
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 14:45:02 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7400E12607C;
+        Wed, 15 Jun 2022 17:45:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9KJDyWKXp0nq81wIJA79ZaCFcktcNoFSAZ9wC8
+        0X/fI=; b=EtL3a1ufXVjTSsK2DOTX5F2LM9hG3qp7/IkW1x/6C6KKIZ/kH9jJ/E
+        iehgBaSSRYVOOsXeXPP6ATaCPmjjVn2rrrWTkIPZBZYLV7OwOCWkCf/YicB1h4dQ
+        cZs4d41dHkhc6Itba493WBYJfxxaMZUk0GGEP1dWOFCijn2Ws7dqc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E99512607A;
+        Wed, 15 Jun 2022 17:45:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 15EC0126079;
+        Wed, 15 Jun 2022 17:45:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.e.keller@intel.com>,
+        Pavel Rappo <pavel.rappo@gmail.com>
+Subject: Re: [PATCH] remote: handle negative refspecs in git remote show
+References: <20220614003251.16765-1-jacob.e.keller@intel.com>
+Date:   Wed, 15 Jun 2022 14:44:59 -0700
+In-Reply-To: <20220614003251.16765-1-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Mon, 13 Jun 2022 17:32:51 -0700")
+Message-ID: <xmqqzgidy52c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqpmj9zohk.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 67E84D10-ECF4-11EC-9626-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 15, 2022 at 01:00:07PM -0700, Junio C Hamano wrote:
-> Adam Dinwoodie <adam@dinwoodie.org> writes:
-> 
-> >> diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-> >> index d6027189e2..3992d08158 100755
-> >> --- a/t/t5003-archive-zip.sh
-> >> +++ b/t/t5003-archive-zip.sh
-> >> @@ -207,13 +207,21 @@ check_zip with_untracked
-> >>  check_added with_untracked untracked untracked
-> >>  
-> >>  test_expect_success UNZIP 'git archive --format=zip --add-virtual-file' '
-> >> +	if test_have_prereq FUNNYNAMES
-> >> +	then
-> >> +		PATHNAME="pathname with : colon"
-> >> +	else
-> >> +		PATHNAME="pathname without colon"
-> >> +	fi &&
-> >>  	git archive --format=zip >with_file_with_content.zip \
-> >> +		--add-virtual-file=\""$PATHNAME"\": \
-> >>  		--add-virtual-file=hello:world $EMPTY_TREE &&
-> >>  	test_when_finished "rm -rf tmp-unpack" &&
-> >>  	mkdir tmp-unpack && (
-> >>  		cd tmp-unpack &&
-> >>  		"$GIT_UNZIP" ../with_file_with_content.zip &&
-> >>  		test_path_is_file hello &&
-> >> +		test_path_is_file "$PATHNAME" &&
-> >>  		test world = $(cat hello)
-> >>  	)
-> >>  '
-> >
-> > This test is currently failing on Cygwin: it looks like it's exposing a
-> > bug in Cygwin that means files with colons in their name aren't
-> > correctly extracted from zip archives.  I'm going to report that to the
-> > Cygwin mailing list, but I wanted to note it for the record here, too.
-> 
-> Does this mean that our code to set FUNNYNAMES prerequiste is
-> slightly broken?  IOW, should we check with a path with a colon in
-> it, as well as whatever we use currently for FUNNYNAMES?
-> 
-> Something like the attached patch?  
-> 
-> Or does Cygwin otherwise work perfectly well with a path with a
-> colon in it, but only $GIT_UNZIP command has problem with it?  If
-> that is the case, then please disregard the attached.
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-The latter: Cygwin works perfectly with paths containing colons, except
-that Cygwin's `unzip` is seemingly buggy and doesn't work.  The file
-systems Cygwin runs on don't support colons in paths, but Cygwin hides
-that problem by rewriting ASCII colons to some high Unicode code point
-on the filesystem, meaning Cygwin-native applications see a regular
-colon, while Windows-native applications see an unusual but perfectly
-valid Unicode character.
+> Fix this by checking negative refspecs inside of get_ref_states. For
+> each ref which matches a negative refspec, copy it into a "skipped" list
+> and remove it from the fetch map. This allows us to show the following
+> output instead:
+>
+>   * remote jdk19
+>     Fetch URL: git@github.com:openjdk/jdk19.git
+>     Push  URL: git@github.com:openjdk/jdk19.git
+>     HEAD branch: master
+>     Remote branches:
+>       master tracked
+>       pr/1   skipped
+>       pr/2   skipped
+>       pr/3   skipped
+>     Local ref configured for 'git push':
+>       master pushes to master (fast-forwardable)
+>
+> By showing the refs as skipped, it helps clarify that these references
+> won't actually be fetched. Alternatively, we could simply remove them
+> entirely.
 
-I tested the same patch to FUNNYNAMES myself before reporting, and the
-test fails exactly the same way.  If we wanted to catch this, I think
-we'd need a test that explicitly attempted to unzip an archive
-containing a path with a colon.
+Very sensible.
 
-(The code to set FUNNYNAMES *is* slightly broken, per the discussions
-around 6d340dfaef ("t9902: split test to run on appropriate systems",
-2022-04-08), and my to-do list still features tidying up and
-resubmitting the patch Ævar wrote in that discussion thread.  But it
-wouldn't help here because this issue is specific to Cygwin's `unzip`,
-rather than a general limitation of running on Cygwin.)
+> @@ -367,6 +368,24 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
+>  			die(_("Could not get fetch map for refspec %s"),
+>  				states->remote->fetch.raw[i]);
+>  
+> +	/* handle negative refspecs first */
+> +	for (tail = &fetch_map; *tail; ) {
+> +		ref = *tail;
+> +
+> +		if (omit_name_by_refspec(ref->name, &states->remote->fetch)) {
+> +			string_list_append(&states->skipped, abbrev_branch(ref->name));
+> +
+> +			/* Matched a negative refspec, so remove this ref from
+> +			 * consideration for being a new or tracked ref.
+> +			 */
+> +			*tail = ref->next;
+> +			free(ref->peer_ref);
+> +			free(ref);
+> +		} else {
+> +			tail = &ref->next;
+> +		}
+> +	}
+
+
+This is somewhat curious.  Do we really need to destroy the
+fetch_map like the above?  I know by removing skipped items from the
+list, the existing loop (below) can stop having to worry about them,
+but the caller of get_ref_states() may later want to iterate over
+the full fetch_map for other reasons (even if the current one does
+not, a future version of the caller may have a reason to do so that
+we do not know right now yet).
+
+> +
+>  	for (ref = fetch_map; ref; ref = ref->next) {
+>  		if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
+>  			string_list_append(&states->new_refs, abbrev_branch(ref->name));
+
+IOW, is adding a new condition to this existing loop insufficient?
+
+	for (ref = fetch_map; ref; ref = ref->next) {
+-		if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
++		if (omit_name_by_refspec(ref->name, &states->remote->fetch))
++			string_list_append(&states->skipped, abbrev_branch(ref->name));
++		else if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
+			string_list_append(&states->new_refs, abbrev_branch(ref->name));
+		else
+			string_list_append(&states->tracked, abbrev_branch(ref->name));
+	}
+
+
+Thanks.
