@@ -2,145 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B591C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 14:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A0DDC43334
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 14:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352263AbiFOOFU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 10:05:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47358 "EHLO
+        id S1344471AbiFOO24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 10:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356622AbiFOODZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 10:03:25 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10F4414D05
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 07:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1655301774;
-        bh=RktB7X1+scvX7NtB9BHBgW1P+Ti2CODOKMsKYIYlyIg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=T16xmyaJC+oEUU7+9kf7uGUxd2nuMwfvFsNu798kkUITbAIHgipborkcZAHC6qsg8
-         NTrqeTZ1qcOdoOq72DPBpo2Xy7HtN/0MI741JsaejMwai2ZM/8oVNfg5DCbfEmqPVY
-         RUJrPm25TjzKrt4ZcB6Hu1TaL6nvN0X6QfMIlqyw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.60.234] ([89.1.215.185]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgNcz-1nVjgv1kSd-00hvkK; Wed, 15
- Jun 2022 16:02:54 +0200
-Date:   Wed, 15 Jun 2022 16:02:51 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, bagasdotme@gmail.com
-Subject: Re: [PATCH v5 4/4] git-compat-util: allow root to access both SUDO_UID
- and root owned
-In-Reply-To: <20220513010020.55361-5-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2206151557510.349@tvgsbejvaqbjf.bet>
-References: <20220510174616.18629-1-carenas@gmail.com> <20220513010020.55361-1-carenas@gmail.com> <20220513010020.55361-5-carenas@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S242339AbiFOO23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 10:28:29 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB291EC74
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 07:28:29 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id v11-20020a17090a4ecb00b001e2c5b837ccso2280588pjl.3
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 07:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=doicqxWT7t4+ZQ2Fo9SiO5zmrlnAK4h4Wq3mBe4jgbQ=;
+        b=hid5zQopzQclyf9ziETTaEFMYoF7mf0MAgNAoIJQF+EHWh26HAEl5Oo9S9Y3OJn9cU
+         MW3WJGpaJSJEdUwBNZT8cmwY9WCTJyFopaKsfjA8E/GWU9sP1E4h8ikS1jDqOK3vl1ie
+         SJLLF6woypwx1EY0E/iWVXoQ0yxf9x4J1dXSP0hKgu7aRNwAAn+hflKO8KmMcuqJKqCC
+         z8ow2du0emxaQyxyerI4KIm/uIcsVPf2HGAuOdLVq7/NwPZF5ErkAJYu0P1rrWzJfSgW
+         bEI6AFRXlEL5Q0ITHQojNh3BX7m2wTKt0VN11ju1hJWhyfdK/5UbOvs5sJLpYigP8dcz
+         DGbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=doicqxWT7t4+ZQ2Fo9SiO5zmrlnAK4h4Wq3mBe4jgbQ=;
+        b=40QP3e+3E4c+MLBjD3cXtNrPPVJFrehW2aLBo6ClaYGoaVvOKFip+cBwrLyQIJssi3
+         Kt+0tAKtqNThowHLvTaAGlGdr8dM2lYXdJ8vifv0oMFRPe/QdVdxip/5IMesTPvAwKbZ
+         s6h4uqD3dc+AzFmsC4Lgj3WZUtlLAz8lt7NkFlPHXqiZVjbJ2SFLMNRyD5pcaUb+pNym
+         nnGUL5O+OrSnOZL7VrSazuLp+xgJFOAt0t6rJxTbQZcQoS/jP026yhVmm/8lVZXDTGKE
+         yUFkpAYr4F9nqKWX2ZHDW/zxwSGSBDpNDGSzefOq6FP+uTgz9Ejt788quha0F87hf9P9
+         JfSA==
+X-Gm-Message-State: AJIora8WaUVBO3LtxAfH39p7NWRUW6zDOiLmSlz32DI8MMd8/XihiGxE
+        Tj5LZO1xqrBxTzTuML03qk4=
+X-Google-Smtp-Source: AGRyM1s+qS0ejN5AZbT87BvYZVFg6XAs39n04epWKEhfB3G2jwprpNLe6UQcWzcYRdF8AGOZjvcuVg==
+X-Received: by 2002:a17:902:bc85:b0:168:dadd:f86 with SMTP id bb5-20020a170902bc8500b00168dadd0f86mr9539370plb.93.1655303308718;
+        Wed, 15 Jun 2022 07:28:28 -0700 (PDT)
+Received: from localhost.localdomain ([202.142.80.224])
+        by smtp.gmail.com with ESMTPSA id f2-20020a170902ab8200b001616b71e5e3sm9343772plr.171.2022.06.15.07.28.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 15 Jun 2022 07:28:27 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 2/3] bitmap-format.txt: fix some formatting issues
+Date:   Wed, 15 Jun 2022 19:58:04 +0530
+Message-Id: <20220615142804.69543-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <YqlDlYHR1HBJRiDZ@nand.local>
+References: <YqlDlYHR1HBJRiDZ@nand.local>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-14294196-1655301774=:349"
-X-Provags-ID: V03:K1:ZPSWtGlWRH9HekL4VNXDxVYtHoelkwTR/xsSk7TThbWWdBeZbcf
- cAPhBXPpIzTPo/jyRAvwBMRrIjfODd2+aOgtrnzQoQoSzTKWt4Gve2zitPKEHWC/DKF95vA
- z0FdtqjoAyw9CwhyXd6XsN5XOkfQ7ERYo3RsVi6ecvwifKeBuSQIrH2xLwCFimsS7iWRPqB
- nwSYyy2t+3pDY4ws4G7xQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Bd1eHUarpQ0=:LXK2W8aYiU26sqm7sEM2eG
- 44Ji3nwxgQhIdnbPE+1nqhrxdBh2aHF4x92arbF2vFHteuXTW1jk9uc2Qs70LdOT9YN+GgkZQ
- AYK9GiDvW3rBkBZihwR75pskcpIFMFM7Uv0S3g/jqfOEouOKynRkfDmiCp45dHYl5MvG35LQm
- 1VaRQRXXVsL8oa5BcYRPnkEdWZ8auajXjNO0/lLMI+ws0uohbrNxDrfrMQ/ZdNn9ENMGA2i0h
- Wbn7yL8pIFxL+7Sfrj0DxlzRjfCoAT7KaHuh3qHO9Tlzx1QQrvUp7cTAN47c9NcXv9gxriYH9
- rZMlYPbtd3ABHfeyzTgHyAX1sRKsnuRGZyRuhXbfFlBRisbKEaBvmFXkzBauH4DTdlwhSHqK0
- xmr9qP5nFUUrvYn8/7w17697xobEqOThtr0hDTIG3IzWeGMp1RGwpod5GpX+384rQ1WXm6R4V
- owIIkTzhvix93J9dGQmX7TfdRaxnHBWXJI6wVX7wluWIwOOcPZJgTitBioMH4nl9oHdIy2fuF
- nkL5yGGvNtOGuK0dBKA4I/L8UP/orst1GHa+4nYRw57lP0wGbTfOdGqbnc4LoxcPWLvoZ1UGV
- OHsFqE5PZwR2Pp05hcP4ArPQsX+x4hCmbqqq3AyX9XzuCaTpwiMqmBwcofTlw50QBg2ytmlfu
- mdVaNwotBQuchLeqHlz1tncGu7o+kUJaDb9lLsoEGoGnXmYIR8mg9RvplVznCp53H2BMhxUS4
- wvl2zPiMJfUOag6VibK7s/oLm90zeI6+cpsIKFCUKYechTrsbo8Xw+mKhNUW/jCrQ5qtLQzc7
- cegYKm2vrpVcFSyZDM12faOwb+3bTiR1+tjVdiDtSBLGE7dv03qNrb6GcaqTJDaqKPilBpC9I
- MV1AlZXRwPeOsQlSzikV7M14naFABu2q0h+71cNxRicvdDbn0gnyCTda/ImwRyPO1vI47ORze
- fJXBQksPMLwN2PKCvTjhfjj7tZIkEIMrUghIu0ylUiM5PpOqBlSyri7NknBV7BmK6spa5rFSg
- foRuR1KtIV/EYng26sQDCEEgBhwfOW2g1Gm5/Ga+o/uTc7yc3L/kp0V+azsEHJRHV6UufWdrW
- dMu7EeDYkQ59Kr69CKvsSl71VnRdLjshf9rMFjxqsa4u9h0tDL0H0cT0w==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Taylor Blau <me@ttaylorr.com> wrote:
 
---8323328-14294196-1655301774=:349
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> - Are the hard-tabs added in this file required for ASCIIDoc to treat it
+>   correctly? They are a slight impediment to reading the source in my
+>   editor, but it's not a huge deal. It would just be nice if we could
+>   replace "\t" characters with two or four spaces or something.
 
-Hi Carlo,
 
-On Thu, 12 May 2022, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+No, it is not required for Asciidoc. But `git diff --check` was complaining
+against it. Don't know if that is related to my git configuration settings.
+Moreover other parts of the file didn't seem to use spaces. For these reasons,
+I used tabs. But can remove it if you say.
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index e7cbfa65c9a..0a5a4ee7a9a 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -420,9 +420,10 @@ static inline int git_offset_1st_component(const ch=
-ar *path)
->   * maybe provide you with a patch that would prevent this issue again
->   * in the future.
->   */
-> -static inline void extract_id_from_env(const char *env, uid_t *id)
-> +static inline int id_from_env_matches(const char *env, uid_t id)
+> - The above hunk is the only one which rendered slightly oddly to me; it
+>   looks like the paragraph beginning with "The obvious consequence ..."
+>   is surrounded by a <pre> element, when it should be a continuation of
+>   the above paragraph ("In each bitmap ...").
 
-I agree somewhat with Gab=C3=B3r's concern that this patch tries to do too=
- many
-things at once, including this rename.
+Thanks for pointing out. Don't know how it was missed. Correcting it.
 
-We have a recent history of introducing so many regressions that `.1`
-releases have become the norm rather than the exception, and from where I
-sit, the reason is squarely with the uptick in refactoring (including
-renames like this one).
-
-So unless the refactoring is done to any other end than for refactoring's
-own sake (which is really not a good reason), I see it as problematic.
-
->  {
->  	const char *real_uid =3D getenv(env);
-> +	int matches =3D 0;
->
->  	/* discard anything empty to avoid a more complex check below */
->  	if (real_uid && *real_uid) {
-> @@ -432,9 +433,10 @@ static inline void extract_id_from_env(const char *=
-env, uid_t *id)
->  		errno =3D 0;
->  		/* silent overflow errors could trigger a bug here */
->  		env_id =3D strtoul(real_uid, &endptr, 10);
-> -		if (!*endptr && !errno)
-> -			*id =3D env_id;
-> +		if (!*endptr && !errno && (uid_t)env_id =3D=3D id)
-> +			matches =3D 1;
->  	}
-> +	return matches;
->  }
->
->  static inline int is_path_owned_by_current_uid(const char *path)
-> @@ -446,10 +448,13 @@ static inline int is_path_owned_by_current_uid(con=
-st char *path)
->  		return 0;
->
->  	euid =3D geteuid();
-> +	if (st.st_uid =3D=3D euid)
-> +		return 1;
-> +
->  	if (euid =3D=3D ROOT_UID)
-> -		extract_id_from_env("SUDO_UID", &euid);
-> +		return id_from_env_matches("SUDO_UID", st.st_uid);
-
-A much shorter, much more obvious patch would look like this:
-
--	if (euid =3D=3D ROOT_UID)
-+	if (st.st_uid !=3D euid && euid =3D=3D ROOT_UID && )
- 		extract_id_from_env("SUDO_UID", &euid);
-
-It accomplishes the same goal, but is eminently easier to review. For
-regression fixes, I much prefer the safety and confidence that comes with
-that.
-
-Ciao,
-Dscho
-
---8323328-14294196-1655301774=:349--
+Thanks :)
