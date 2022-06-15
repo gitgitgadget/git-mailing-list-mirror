@@ -2,219 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFAC6C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 13:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B591C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 14:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349010AbiFONqH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 09:46:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54694 "EHLO
+        id S1352263AbiFOOFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 10:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345980AbiFONqA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 09:46:00 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 700CE3631D
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 06:45:59 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id x6-20020a1c7c06000000b003972dfca96cso1151736wmc.4
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 06:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=7/vAO19gmzQ/Zx+pfQQA3q44oXbvUGM07P1kiyB7n6s=;
-        b=cT0utbXuems+f2UQfisB2GXDBKDTZzmBqc/5VEOLcWf6MymMyzEN16qVOKTy0b9JrN
-         JIunuFN+uAL0bFoDCwfHMdhQ5c7btrM11c5qyUWLxxI/tVYk1KNoCW75zPQyOukXZGVN
-         wbK5j2bL68B6EnYoBkBA0y2QnNa535l7/H/yKhWY7X+GO2Xl8Sb19ACJLKA/ZGrM/LES
-         aT0G05Se31QwvTOXx/E/KNeX3HLWgB7TFELmuF80lTQLn1pqCuPspWN4y0T3fu4LurSL
-         c3JtlHysSPWj3EHja4ECNMxbvVlTRT0oreUwl4pH/NumPP7QlzwVKEC7SP8ZeMumTxKO
-         jIag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7/vAO19gmzQ/Zx+pfQQA3q44oXbvUGM07P1kiyB7n6s=;
-        b=kTWPX6eD+PkT+uIfcEdOn7hst3LdWQtxRS+0JvKosreTO6fvLMvb3hO6YFVSF3+1Bs
-         XnRQjDu5vOse0+scf7xBCKRmwAcME1nRTAkrgJeXCRuFeAIB1f/tg2WaEgQ45MCvBVjD
-         mHoJaMGmWqH4oSlcJSMxG+kxLnbCQ3b/AafmWfna2g7aNLVKyt7uC/Ri7NbtlhBj426X
-         MfoQytDxDfqCZ+MmUmA0TFez8bYQoWJNsRAeSP9fLbcyGGGHA2OQ1t3oo2+jHE89voWl
-         kAXanSVa9iTrPsE+57I8BX7Pd7+951aPiLlDyJ5KbWD+MNJN0tbxI9XcwaGJJLJiKON4
-         hLXw==
-X-Gm-Message-State: AOAM531pZJMZjd0zrECigovMmN8bd4EKPbr/XFl0MIUjmmsnELJdU+zB
-        2qibxMQAeV1Lo6BWVHB3KxPorlCVlKdKaw==
-X-Google-Smtp-Source: ABdhPJx6tMCAO3z982AeZUQpPXt7N1ew7RCqi2DgtMcFdzsv/CLJ6SYeHNn+wqW+mOLT5iXyXxnuug==
-X-Received: by 2002:a1c:ed08:0:b0:39c:80b1:b0b3 with SMTP id l8-20020a1ced08000000b0039c80b1b0b3mr10074279wmh.134.1655300757545;
-        Wed, 15 Jun 2022 06:45:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d9-20020adffd89000000b002102d4ed579sm14401866wrr.39.2022.06.15.06.45.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 06:45:56 -0700 (PDT)
-Message-Id: <81ae1280e8eb471c7a11dceb0aa7a8915948b2ce.1655300752.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1262.git.1655300752.gitgitgadget@gmail.com>
-References: <pull.1262.git.1655300752.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 15 Jun 2022 13:45:52 +0000
-Subject: [PATCH 2/2] ls-files: introduce "--object-only" option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1356622AbiFOODZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 10:03:25 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10F4414D05
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 07:03:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1655301774;
+        bh=RktB7X1+scvX7NtB9BHBgW1P+Ti2CODOKMsKYIYlyIg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=T16xmyaJC+oEUU7+9kf7uGUxd2nuMwfvFsNu798kkUITbAIHgipborkcZAHC6qsg8
+         NTrqeTZ1qcOdoOq72DPBpo2Xy7HtN/0MI741JsaejMwai2ZM/8oVNfg5DCbfEmqPVY
+         RUJrPm25TjzKrt4ZcB6Hu1TaL6nvN0X6QfMIlqyw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.60.234] ([89.1.215.185]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgNcz-1nVjgv1kSd-00hvkK; Wed, 15
+ Jun 2022 16:02:54 +0200
+Date:   Wed, 15 Jun 2022 16:02:51 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, bagasdotme@gmail.com
+Subject: Re: [PATCH v5 4/4] git-compat-util: allow root to access both SUDO_UID
+ and root owned
+In-Reply-To: <20220513010020.55361-5-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2206151557510.349@tvgsbejvaqbjf.bet>
+References: <20220510174616.18629-1-carenas@gmail.com> <20220513010020.55361-1-carenas@gmail.com> <20220513010020.55361-5-carenas@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-14294196-1655301774=:349"
+X-Provags-ID: V03:K1:ZPSWtGlWRH9HekL4VNXDxVYtHoelkwTR/xsSk7TThbWWdBeZbcf
+ cAPhBXPpIzTPo/jyRAvwBMRrIjfODd2+aOgtrnzQoQoSzTKWt4Gve2zitPKEHWC/DKF95vA
+ z0FdtqjoAyw9CwhyXd6XsN5XOkfQ7ERYo3RsVi6ecvwifKeBuSQIrH2xLwCFimsS7iWRPqB
+ nwSYyy2t+3pDY4ws4G7xQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Bd1eHUarpQ0=:LXK2W8aYiU26sqm7sEM2eG
+ 44Ji3nwxgQhIdnbPE+1nqhrxdBh2aHF4x92arbF2vFHteuXTW1jk9uc2Qs70LdOT9YN+GgkZQ
+ AYK9GiDvW3rBkBZihwR75pskcpIFMFM7Uv0S3g/jqfOEouOKynRkfDmiCp45dHYl5MvG35LQm
+ 1VaRQRXXVsL8oa5BcYRPnkEdWZ8auajXjNO0/lLMI+ws0uohbrNxDrfrMQ/ZdNn9ENMGA2i0h
+ Wbn7yL8pIFxL+7Sfrj0DxlzRjfCoAT7KaHuh3qHO9Tlzx1QQrvUp7cTAN47c9NcXv9gxriYH9
+ rZMlYPbtd3ABHfeyzTgHyAX1sRKsnuRGZyRuhXbfFlBRisbKEaBvmFXkzBauH4DTdlwhSHqK0
+ xmr9qP5nFUUrvYn8/7w17697xobEqOThtr0hDTIG3IzWeGMp1RGwpod5GpX+384rQ1WXm6R4V
+ owIIkTzhvix93J9dGQmX7TfdRaxnHBWXJI6wVX7wluWIwOOcPZJgTitBioMH4nl9oHdIy2fuF
+ nkL5yGGvNtOGuK0dBKA4I/L8UP/orst1GHa+4nYRw57lP0wGbTfOdGqbnc4LoxcPWLvoZ1UGV
+ OHsFqE5PZwR2Pp05hcP4ArPQsX+x4hCmbqqq3AyX9XzuCaTpwiMqmBwcofTlw50QBg2ytmlfu
+ mdVaNwotBQuchLeqHlz1tncGu7o+kUJaDb9lLsoEGoGnXmYIR8mg9RvplVznCp53H2BMhxUS4
+ wvl2zPiMJfUOag6VibK7s/oLm90zeI6+cpsIKFCUKYechTrsbo8Xw+mKhNUW/jCrQ5qtLQzc7
+ cegYKm2vrpVcFSyZDM12faOwb+3bTiR1+tjVdiDtSBLGE7dv03qNrb6GcaqTJDaqKPilBpC9I
+ MV1AlZXRwPeOsQlSzikV7M14naFABu2q0h+71cNxRicvdDbn0gnyCTda/ImwRyPO1vI47ORze
+ fJXBQksPMLwN2PKCvTjhfjj7tZIkEIMrUghIu0ylUiM5PpOqBlSyri7NknBV7BmK6spa5rFSg
+ foRuR1KtIV/EYng26sQDCEEgBhwfOW2g1Gm5/Ga+o/uTc7yc3L/kp0V+azsEHJRHV6UufWdrW
+ dMu7EeDYkQ59Kr69CKvsSl71VnRdLjshf9rMFjxqsa4u9h0tDL0H0cT0w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---object-only is an alias for --format=%(objectname),
-which output objectname of index entries, taking
-inspiration from the option with the same name in
-the `git ls-tree` command.
+--8323328-14294196-1655301774=:349
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
---object-only cannot be used with --format, and -s, -o,
--k, --resolve-undo, --deduplicate, --debug.
+Hi Carlo,
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
- Documentation/git-ls-files.txt |  8 +++++++-
- builtin/ls-files.c             | 36 +++++++++++++++++++++++++++++++++-
- t/t3013-ls-files-format.sh     | 34 ++++++++++++++++++++++++++++++++
- 3 files changed, 76 insertions(+), 2 deletions(-)
+On Thu, 12 May 2022, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index b22860ec8c0..c3f46bb821b 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 		[-c|--cached] [-d|--deleted] [-o|--others] [-i|--|ignored]
- 		[-s|--stage] [-u|--unmerged] [-k|--|killed] [-m|--modified]
- 		[--directory [--no-empty-directory]] [--eol]
--		[--deduplicate]
-+		[--deduplicate] [--object-only]
- 		[-x <pattern>|--exclude=<pattern>]
- 		[-X <file>|--exclude-from=<file>]
- 		[--exclude-per-directory=<file>]
-@@ -199,6 +199,12 @@ followed by the  ("attr/<eolattr>").
- 	interpolates to `\0` (NUL), `%09` to `\t` (TAB) and %0a to `\n` (LF).
- 	--format cannot be combined with `-s`, `-o`, `-k`, `--resolve-undo`,
- 	`--debug`.
-+
-+--object-only::
-+	List only names of the objects, one per line. This is equivalent
-+	to specifying `--format='%(objectname)'`. Cannot be combined with
-+	`--format=<format>`.
-+
- \--::
- 	Do not interpret any more arguments as options.
- 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 9dd6c55eeb9..4ac8f34baac 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -60,6 +60,27 @@ static const char *tag_modified = "";
- static const char *tag_skip_worktree = "";
- static const char *tag_resolve_undo = "";
- 
-+static enum ls_files_cmdmode {
-+	MODE_DEFAULT = 0,
-+	MODE_OBJECT_ONLY,
-+} ls_files_cmdmode;
-+
-+struct ls_files_cmdmodee_to_fmt {
-+	enum ls_files_cmdmode mode;
-+	const char *const fmt;
-+};
-+
-+static struct ls_files_cmdmodee_to_fmt ls_files_cmdmode_format[] = {
-+	{
-+		.mode = MODE_DEFAULT,
-+		.fmt = NULL,
-+	},
-+	{
-+		.mode = MODE_OBJECT_ONLY,
-+		.fmt = "%(objectname)",
-+	},
-+};
-+
- static void write_eolinfo_internal(struct strbuf *sb, struct index_state *istate,
- 				   const struct cache_entry *ce, const char *path)
- {
-@@ -747,6 +768,8 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 			DIR_SHOW_IGNORED),
- 		OPT_BOOL('s', "stage", &show_stage,
- 			N_("show staged contents' object name in the output")),
-+		OPT_CMDMODE(0, "object-only", &ls_files_cmdmode, N_("list only objects"),
-+			    MODE_OBJECT_ONLY),
- 		OPT_BOOL('k', "killed", &show_killed,
- 			N_("show files on the filesystem that need to be removed")),
- 		OPT_BIT(0, "directory", &dir.flags,
-@@ -815,9 +838,20 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		add_pattern(exclude_list.items[i].string, "", 0, pl, --exclude_args);
- 	}
- 
-+	if (format && ls_files_cmdmode)
-+		die(_("--format can't be combined with other format-altering options"));
-+
-+	for (i = 0; !format && i < ARRAY_SIZE(ls_files_cmdmode_format); i++) {
-+		if (ls_files_cmdmode == ls_files_cmdmode_format[i].mode) {
-+			format = ls_files_cmdmode_format[i].fmt;
-+			break;
-+		}
-+	}
-+
- 	if (format && (show_stage || show_others || show_killed ||
- 		show_resolve_undo || skipping_duplicates || debug_mode))
--			die(_("ls-files --format cannot used with -s, -o, -k, --resolve-undo, --deduplicate, --debug"));
-+		die(_("ls-files --format or other format-altering options "
-+		      "cannot used with -s, -o, -k, --resolve-undo, --deduplicate, --debug"));
- 
- 	if (show_tag || show_valid_bit || show_fsmonitor_bit) {
- 		tag_cached = "H ";
-diff --git a/t/t3013-ls-files-format.sh b/t/t3013-ls-files-format.sh
-index 61a2e68713a..1c982ea13e0 100755
---- a/t/t3013-ls-files-format.sh
-+++ b/t/t3013-ls-files-format.sh
-@@ -139,4 +139,38 @@ test_expect_success 'git ls-files --format with --debug must fail' '
- 	test_must_fail git ls-files --format="%(objectname)" --debug
- '
- 
-+test_expect_success 'git ls-files --object-only equal to --format=%(objectname)' '
-+	git ls-files --format="%(objectname)" >expect &&
-+	git ls-files --object-only >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git ls-files --object-only with --format must fail' '
-+	test_must_fail git ls-files --format="%(path)" --object-only
-+'
-+
-+test_expect_success 'git ls-files --object-only with -s must fail' '
-+	test_must_fail git ls-files --object-only -s
-+'
-+
-+test_expect_success 'git ls-files --object-only with -o must fail' '
-+	test_must_fail git ls-files --object-only -o
-+'
-+
-+test_expect_success 'git ls-files --object-only with -k must fail' '
-+	test_must_fail git ls-files --object-only -k
-+'
-+
-+test_expect_success 'git ls-files --object-only with --resolve-undo must fail' '
-+	test_must_fail git ls-files --object-only --resolve-undo
-+'
-+
-+test_expect_success 'git ls-files --object-only with --deduplicate must fail' '
-+	test_must_fail git ls-files --object-only --deduplicate
-+'
-+
-+test_expect_success 'git ls-files --object-only with --debug must fail' '
-+	test_must_fail git ls-files --object-only --debug
-+'
-+
- test_done
--- 
-gitgitgadget
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index e7cbfa65c9a..0a5a4ee7a9a 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -420,9 +420,10 @@ static inline int git_offset_1st_component(const ch=
+ar *path)
+>   * maybe provide you with a patch that would prevent this issue again
+>   * in the future.
+>   */
+> -static inline void extract_id_from_env(const char *env, uid_t *id)
+> +static inline int id_from_env_matches(const char *env, uid_t id)
+
+I agree somewhat with Gab=C3=B3r's concern that this patch tries to do too=
+ many
+things at once, including this rename.
+
+We have a recent history of introducing so many regressions that `.1`
+releases have become the norm rather than the exception, and from where I
+sit, the reason is squarely with the uptick in refactoring (including
+renames like this one).
+
+So unless the refactoring is done to any other end than for refactoring's
+own sake (which is really not a good reason), I see it as problematic.
+
+>  {
+>  	const char *real_uid =3D getenv(env);
+> +	int matches =3D 0;
+>
+>  	/* discard anything empty to avoid a more complex check below */
+>  	if (real_uid && *real_uid) {
+> @@ -432,9 +433,10 @@ static inline void extract_id_from_env(const char *=
+env, uid_t *id)
+>  		errno =3D 0;
+>  		/* silent overflow errors could trigger a bug here */
+>  		env_id =3D strtoul(real_uid, &endptr, 10);
+> -		if (!*endptr && !errno)
+> -			*id =3D env_id;
+> +		if (!*endptr && !errno && (uid_t)env_id =3D=3D id)
+> +			matches =3D 1;
+>  	}
+> +	return matches;
+>  }
+>
+>  static inline int is_path_owned_by_current_uid(const char *path)
+> @@ -446,10 +448,13 @@ static inline int is_path_owned_by_current_uid(con=
+st char *path)
+>  		return 0;
+>
+>  	euid =3D geteuid();
+> +	if (st.st_uid =3D=3D euid)
+> +		return 1;
+> +
+>  	if (euid =3D=3D ROOT_UID)
+> -		extract_id_from_env("SUDO_UID", &euid);
+> +		return id_from_env_matches("SUDO_UID", st.st_uid);
+
+A much shorter, much more obvious patch would look like this:
+
+-	if (euid =3D=3D ROOT_UID)
++	if (st.st_uid !=3D euid && euid =3D=3D ROOT_UID && )
+ 		extract_id_from_env("SUDO_UID", &euid);
+
+It accomplishes the same goal, but is eminently easier to review. For
+regression fixes, I much prefer the safety and confidence that comes with
+that.
+
+Ciao,
+Dscho
+
+--8323328-14294196-1655301774=:349--
