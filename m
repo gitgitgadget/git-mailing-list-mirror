@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04FE6C43334
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 23:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F6E1C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 23:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355614AbiFOXgL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 19:36:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50576 "EHLO
+        id S1355709AbiFOXgN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 19:36:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353164AbiFOXgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 19:36:04 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E6B81F2F1
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:36:02 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id g4so664112wrh.11
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:36:02 -0700 (PDT)
+        with ESMTP id S1354405AbiFOXgF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 19:36:05 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F9F91FA70
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:36:04 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id c130-20020a1c3588000000b0039c6fd897b4so1946764wma.4
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=z8+UMTp30b1F78jgENYieuMCerJSCWnKSUPMDjMHk04=;
-        b=Ivy7WaHPqjGX6KDO4S2I8rVQj41lhgo9ekrlWaIrfrFyBFtYS2JzQlqyHVk1eud52S
-         MS/mK8n2wQ8gM0EaDwJDKSG5u5atJwhL5FF6qyiaflCbeGvgioRQDdfFT6jlyiqSs4O/
-         A/s7rl/OZAJqg2iAG3Wrkp2SCmtqnOlu2/61gXUg9FiOxY9y3rheK5/rUvYFgB0z5PoE
-         I660M/rZOiVV9IJujKKHw18uQ5QN4tudXX165wapVC4SLtCAVoLqfhjgVkanzrmlRtcM
-         TVAVbbf86JNLzUtJouV8rwGLugeTWMH7Ol8xn814zQc/q5hLYtoJRo92m10OzULIt7Kh
-         28eQ==
+        bh=Rz4Spf9wJ4JUzJ6rRlAuh8KL9eEdhg8OuaHDT2kKLkE=;
+        b=erDyRc619uxEPNLB1Q/eN+3sYi6HNuibA7yUbPDkBhiyKsXzalA2h/XldpiKahhnpF
+         zKjGVNChR5NJZRsKb6CmQuOOYWQFHCY0Ddc1g6gxRmfMfdNq2lcu7sTFpY+mtPmWl+4c
+         xT/4McwmGkLDzFGKyl6IK9aV1y9JiFNNuRT3mPzEf6OGoVcGQyiKBiXBx8YbgVgrKvOG
+         9ueY/W8JAZlJEwCUd+nlT0vfZk/BhY7LSOYRYQsOnqu/Yho9Gb2LEQNPO/PrQYotITV8
+         VatmctypKYqdDcQmALwbFME1hpy5Cn9GnBa4bjLcy+4YInYFS/3VvaO9wfxlMdCWF0Ra
+         Xobw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=z8+UMTp30b1F78jgENYieuMCerJSCWnKSUPMDjMHk04=;
-        b=Og7O+BhNlI1a07OJ1MA8O3Q9QMknJ/vAZAb8qAIoOge3DeSs1hyZjApXaMMCCoDf9H
-         /vld+4XD0zIEbpltPVciOMknM3AQQmRsrn7DE6LxCYQ8oZN706LaKlY0oE7WsDlw1M1G
-         wXgHDVSwGbgxUGLxOb5+bHIbO5uV74J2MPWCHBjPt19sMa1++VYgXYsY7ZVa0gzsiSaK
-         XS3cBDEYWLCrGDrogJ3rKcLA6Fn4XAbmimcIjj+jOuyIvZlT0fWxnBRlls1giaKFwVdw
-         cwUEvjrTC7xyHuXR/gk2dDMA+oehM5xaAdDAw8RHhCA6O3ffJpCvsw+fca91JBQWgk3U
-         lCmg==
-X-Gm-Message-State: AJIora/IRniMcTNDReAHxrooDZbqxIyJ843O2rr2GRwuFc/8dZfhTihX
-        Tc+QSlkVf2vrMcUgDGB1FXwKZhqXMw6Rbg==
-X-Google-Smtp-Source: AGRyM1vUPb0ZIGGxeRsxREdHl5WNqV5CFStRkFrpjffwwiLASiNVz/UMcSP82r3On+qv0ZXg5Nkh7g==
-X-Received: by 2002:adf:cc92:0:b0:21a:356e:bda9 with SMTP id p18-20020adfcc92000000b0021a356ebda9mr124570wrj.509.1655336161182;
-        Wed, 15 Jun 2022 16:36:01 -0700 (PDT)
+        bh=Rz4Spf9wJ4JUzJ6rRlAuh8KL9eEdhg8OuaHDT2kKLkE=;
+        b=y0h8F9ppRfXQhHfv/iF6ehwxY0gt8oYMR0/j22xhbEhjLJLwAD6QqPw0sMjrLfzIac
+         3rCjMkWfKLXhNC+XOLSxkWb28BxyLnu9X0qSbHlFEnWc8T+07xwQTgRO6H31HHPvls1u
+         A6AWSox7ExdkopcoR6ecmKETnrt5th0T+RQ4s8Wiq9/Lx+fPOgtXGaMWsVlTnvPPXTZ9
+         6wA2iXAPCodUMm5GSb1JUKivzes9dYVQjyxJoU+e8CQLvcO85mh886fIIXbVDlIA3qRO
+         bg56kDzA/bh0iFZRpnM0vUe4CMEuFQCQxIc2aENEpPswH55Htt2kmA+zp0b8dmsBxxmU
+         Fz8Q==
+X-Gm-Message-State: AOAM531NMGYHvBZJLV+N4+h64fmUAmJeN97hUVEGf3E7MnyUFPratUY7
+        bpHpbyHIMaATN/dOGbNXLmTvwQXHmpTeRQ==
+X-Google-Smtp-Source: ABdhPJzAYZ/OLJVofTMJZpMjsc5HV23Y+3hlmfD4GGIvklzguH+bda+nTzcIlkIJbpg6zmg/MFkAbw==
+X-Received: by 2002:a05:600c:3ba7:b0:39c:5b80:3b76 with SMTP id n39-20020a05600c3ba700b0039c5b803b76mr12572880wms.35.1655336162745;
+        Wed, 15 Jun 2022 16:36:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id be8-20020a05600c1e8800b0039c235fb6a5sm376771wmb.8.2022.06.15.16.35.59
+        by smtp.gmail.com with ESMTPSA id e3-20020a5d5943000000b002103136623esm229630wri.85.2022.06.15.16.36.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 16:36:00 -0700 (PDT)
-Message-Id: <a3f79b3e034a3a982b3be7835062493bfdf29ee5.1655336146.git.gitgitgadget@gmail.com>
+        Wed, 15 Jun 2022 16:36:01 -0700 (PDT)
+Message-Id: <b176e5764f990fbf8c132ae1563027531bd8cc9f.1655336146.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1264.git.1655336146.gitgitgadget@gmail.com>
 References: <pull.1264.git.1655336146.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 15 Jun 2022 23:35:42 +0000
-Subject: [PATCH 08/11] read_index_from(): avoid memory leak
+Date:   Wed, 15 Jun 2022 23:35:43 +0000
+Subject: [PATCH 09/11] pack-mtimes: avoid closing a bogus file descriptor
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,40 +66,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In 998330ac2e7c (read-cache: look for shared index files next to the
-index, too, 2021-08-26), we added code that allocates memory to store
-the base path of a shared index, but we never released that memory.
+In 94cd775a6c52 (pack-mtimes: support reading .mtimes files,
+2022-05-20), code was added to close the file descriptor corresponding
+to the mtimes file.
+
+However, it is possible that opening that file failed, in which case we
+are closing a file descriptor with the value `-1`. Let's guard that
+`close()` call.
 
 Reported by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- read-cache.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ pack-mtimes.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index e61af3a3d4d..76f372ff917 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2473,15 +2473,15 @@ int read_index_from(struct index_state *istate, const char *path,
- 				   the_repository, "%s", base_path);
- 	if (!ret) {
- 		char *path_copy = xstrdup(path);
--		const char *base_path2 = xstrfmt("%s/sharedindex.%s",
--						 dirname(path_copy),
--						 base_oid_hex);
-+		char *base_path2 = xstrfmt("%s/sharedindex.%s",
-+					   dirname(path_copy), base_oid_hex);
- 		free(path_copy);
- 		trace2_region_enter_printf("index", "shared/do_read_index",
- 					   the_repository, "%s", base_path2);
- 		ret = do_read_index(split_index->base, base_path2, 1);
- 		trace2_region_leave_printf("index", "shared/do_read_index",
- 					   the_repository, "%s", base_path2);
-+		free(base_path2);
+diff --git a/pack-mtimes.c b/pack-mtimes.c
+index 0e0aafdcb06..0f9785fc5e4 100644
+--- a/pack-mtimes.c
++++ b/pack-mtimes.c
+@@ -89,7 +89,8 @@ cleanup:
+ 		*data_p = data;
  	}
- 	if (!oideq(&split_index->base_oid, &split_index->base->oid))
- 		die(_("broken index, expect %s in %s, got %s"),
+ 
+-	close(fd);
++	if (fd >= 0)
++		close(fd);
+ 	return ret;
+ }
+ 
 -- 
 gitgitgadget
 
