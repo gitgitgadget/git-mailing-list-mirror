@@ -2,121 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09C35C43334
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 18:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6995C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 18:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356371AbiFOSSF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 14:18:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58970 "EHLO
+        id S245372AbiFOS3Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 14:29:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357105AbiFOSSE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 14:18:04 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3458F2AE16
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 11:18:00 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id c83so9373986qke.3
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 11:18:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Xgxy69vQau34/fC3tg8ZGhXvu1epBsQOtUYst1QimxQ=;
-        b=OtmlNf1NzuLK4HBl3PSuHXMWW0Du9LBDN9GGhEJi68NleBc51H2tytA5fmT1CC0C1s
-         rfWT2m4VPXkNXStikhmE/JXD+DQluboBe9o8jhlSG/fInU5CJdXu2Bo9ZCqJhq0rdEj9
-         r41vCkE3ptJPkmlhef7rkrbYAcrtUdOhtzLE5GTnTp6iPJBUW7Ivv5H6FceOU3J3bwJT
-         cZIe4KVhfNq6pJ/FGfe0qPGb6Ixf5+2BCQcjAigwxcSBeuTZJEzyfO86KiUHqGOK01vW
-         KG0OQJ6nfqpbrIFBZzFAxDrrSNYjhOvg08nBs5PJPOaB1xcnuuJgqypKe1jagI8klP9g
-         Nd9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Xgxy69vQau34/fC3tg8ZGhXvu1epBsQOtUYst1QimxQ=;
-        b=uyGjjkx6hiaeJ4+HKpTFJemus5HNKp36RDV66izTXEpEIDQ2sFIWTojnEAB7SZzIqW
-         kMLrCOA5GFlW0BpyfIU0pz3bYQWT1Qs19phFb0OVssaD2NL/1xSywbfPEx+MJsqcFjl1
-         abmJIuVJzbVJhwpRvVz8dCk0MfIDgDtKcIdHz/uamG+73Ubqa1ULuH7BW2dX0Ah6XD41
-         mWO6GR8hbt1GsDLWVPylieAXlv6ueAY8YuieoQLZuHLArnNadgLU1THt2fdq5RqvurYl
-         jd0zW271lVFaremfHKwFQkDuYwa+clY0OiBwCxAOpez+nIAkvSLn9rFylOfo+krFZMz/
-         R+/A==
-X-Gm-Message-State: AJIora/KAt0CmDOR0IkdT/p8US91A6sE4o7h/jqNWyyMLFn+6BvZXRlf
-        VrCNkIUBDwIjGDrCFTL2JzJD7nRgWM8t
-X-Google-Smtp-Source: AGRyM1tPNUh18g+41Xp+jr26K9setIMqXUGdfLPbn0XhYjPoqLFIV8gvbr7iKsv8VegYm4FOajS4NA==
-X-Received: by 2002:a05:620a:1264:b0:6a6:e38c:3213 with SMTP id b4-20020a05620a126400b006a6e38c3213mr782667qkl.315.1655317079200;
-        Wed, 15 Jun 2022 11:17:59 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:39b0:f38b:602a:a5c2? ([2600:1700:e72:80a0:39b0:f38b:602a:a5c2])
-        by smtp.gmail.com with ESMTPSA id h8-20020ac87148000000b0030501abadabsm9721432qtp.19.2022.06.15.11.17.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jun 2022 11:17:58 -0700 (PDT)
-Message-ID: <1fe6c00a-806c-89de-cb67-d063dc4a5279@github.com>
-Date:   Wed, 15 Jun 2022 14:17:58 -0400
+        with ESMTP id S1358479AbiFOS3W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 14:29:22 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB9F40E41
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 11:29:20 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 40C0912493B;
+        Wed, 15 Jun 2022 14:29:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Hukm/MHfhFnV
+        /c7mBc3KnFti1nG36v3mahKA35Rcda8=; b=rJRoN3w9HZd+tnqwrZgoNtDWkhPg
+        o21JXjZLzxxBDSPtVz089Fqx7y/uouI+7V1FYEXb1tnnru/HO5kgiMYmjR3ViKod
+        gKcpU/hSmuEhIKWYeIM9CLwJo+wLaUlgB9RWQvuDuxezpLUpil+vb09RgMqmYIzL
+        +17etoDzHo8QbAo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 37FA812493A;
+        Wed, 15 Jun 2022 14:29:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 83C41124939;
+        Wed, 15 Jun 2022 14:29:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/1] tests: add LIBCURL prerequisite to tests needing
+ libcurl
+References: <cover-0.1-00000000000-20220615T103609Z-avarab@gmail.com>
+        <patch-1.1-353c384d2b1-20220615T103609Z-avarab@gmail.com>
+Date:   Wed, 15 Jun 2022 11:29:16 -0700
+In-Reply-To: <patch-1.1-353c384d2b1-20220615T103609Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 15 Jun
+ 2022 12:36:32 +0200")
+Message-ID: <xmqq35g5232b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] mktree: learn about promised objects
-Content-Language: en-US
-To:     Richard Oliver <roliver@roku.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com
-References: <77035a0f-c42e-5cb3-f422-03fe81093adb@roku.com>
- <0067c46a-7bfd-db9c-5156-16f032814464@github.com>
- <797af8c8-229f-538b-d122-8ea48067cc19@roku.com>
- <574dc4a9-b3c7-1fd3-8c0e-39071117c7f0@github.com>
- <YqkpRE8nykqVv8cn@nand.local> <YqlZb3Ycc71+dPu4@coredump.intra.peff.net>
- <ad9b5ec9-14fd-cd66-be87-2fe1eb24296a@roku.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ad9b5ec9-14fd-cd66-be87-2fe1eb24296a@roku.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1165F750-ECD9-11EC-A598-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/15/2022 1:40 PM, Richard Oliver wrote:
-> On 15/06/2022 05:00, Jeff King wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
->> So it is not just lookup, but actual tree walking that is expensive. The
->> flip side is that you don't have to store a complete separate list of
->> the promised objects. Whether that's a win depends on how many local
->> objects you have, versus how many are promised.
+> The existing "CURL" prerequisite is only used in one place, and we
+> should probably name it "CURL_PROGRAM",
 
-This is also why blobless (or blob-size filters) are the recommended way
-to use partial clone. It's just too expensive to have tree misses.
+True.  It probably wants to become a lazy prerequisite defined only
+in that program.
 
->> But it would be possible to cache the promisor list to make the tradeoff
->> separately. E.g., do the walk over the promisor trees once (perhaps at
->> pack creation time), and store a sorted list of fixed-length (oid, type)
->> records that could be binary searched. You could even put it in the
->> .promisor file. :)
->>
->> -Peff
-> 
-> I like the idea of caching the promisor list at pack creation time;
-> I'll start work on a patch set that implements this.
-> 
-> Meanwhile, is it worth considering a '--promised-as-missing' option
-> (or a config option) for invocations such as 'mktree --missing' that
-> prevents promised objects being faulted-in? Currently, the only
-> reliable way that I've found to prevent 'mktree --missing' faulting-in
-> promised objects is to remove the remote. Such an option could either
-> set the global variable 'fetch_if_missing' to '0' or could ensure
-> 'OBJECT_INFO_SKIP_FETCH_OBJECT' is passed appropriately.
+> then rename "LIBCURL" to
+> "CURL" as a follow-up, but for now (pre-v2.37.0) let's aim for the
+> most minimal fix possible.
 
-One issue I've had with the current design of partial clone is that we
-put all of the filter logic into the remotes, not the repository itself.
-This means that if I use "git remote add" to add a new remote, then that
-remote does not inherit the filter (and hence fetches can be too large
-or even fail because we are "missing" an object pointed to by the
-resulting pack).
+OK.
 
-If we had a repository-scoped notion of the filter, then we could
-special-case this mktree logic to assume a blob if the filter only
-excludes blobs. That would be even faster than looking up the type
-from a "promised objects" file.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  t/lib-httpd.sh        | 2 +-
+>  t/t5516-fetch-push.sh | 4 ++--
+>  t/t5601-clone.sh      | 4 ++--
+>  t/test-lib.sh         | 1 +
+>  4 files changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+> index 782891908d7..1f6b9b08d1d 100644
+> --- a/t/lib-httpd.sh
+> +++ b/t/lib-httpd.sh
+> @@ -29,7 +29,7 @@
+>  # Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
+>  #
+> =20
+> -if test -n "$NO_CURL"
+> +if ! test_have_prereq LIBCURL
+>  then
+>  	skip_all=3D'skipping test, git built without http support'
+>  	test_done
 
-Just thinking about smaller steps that could simplify things before
-adding a new data format. Feel free to continue pursuing that lookup
-file if that's what you think will work best.
+This is not strictly needed in "the most minimal fix possible", is
+it?  Just checking.
 
-Thanks,
--Stolee
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index dedca106a7a..c1220b2ed35 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -1834,7 +1834,7 @@ test_expect_success 'refuse to push a hidden ref,=
+ and make sure do not pollute t
+>  	test_dir_is_empty testrepo/.git/objects/pack
+>  '
+> =20
+> -test_expect_success 'fetch warns or fails when using username:password=
+' '
+> +test_expect_success LIBCURL 'fetch warns or fails when using username:=
+password' '
+
+This _is_ needed.
+
+> -test_expect_success 'push warns or fails when using username:password'=
+ '
+> +test_expect_success LIBCURL 'push warns or fails when using username:p=
+assword' '
+
+So is this.
+
+> -test_expect_success 'clone warns or fails when using username:password=
+' '
+> +test_expect_success LIBCURL 'clone warns or fails when using username:=
+password' '
+
+And this too.
+
+> -test_expect_success 'clone does not detect username:password when it i=
+s https://username@domain:port/' '
+> +test_expect_success LIBCURL 'clone does not detect username:password w=
+hen it is https://username@domain:port/' '
+
+And this too.
+
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 736c6447ecf..02bc88c72b4 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1572,6 +1572,7 @@ esac
+>  test_set_prereq REFFILES
+> =20
+>  ( COLUMNS=3D1 && test $COLUMNS =3D 1 ) && test_set_prereq COLUMNS_CAN_=
+BE_1
+> +test -z "$NO_CURL" && test_set_prereq LIBCURL
+
+And this, of course.
+
+>  test -z "$NO_PERL" && test_set_prereq PERL
+>  test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
+>  test -z "$NO_PYTHON" && test_set_prereq PYTHON
