@@ -2,179 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D3F2C43334
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 11:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94F94C43334
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 11:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347003AbiFOLI7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 07:08:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34890 "EHLO
+        id S234428AbiFOLYa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 07:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348846AbiFOLIp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 07:08:45 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A0B33E07
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 04:08:43 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id m16-20020a7bca50000000b0039c8a224c95so922846wml.2
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 04:08:43 -0700 (PDT)
+        with ESMTP id S1344205AbiFOLYT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 07:24:19 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA33135A8A
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 04:24:17 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id y19so22569080ejq.6
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 04:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=BUw9zng33tadGMvizJ2+n1aX10qoZ5+fjvOTadfxUu4=;
-        b=nSjTdDj3DmV+q2SJe/mhsCG30EOTwbr1zf1bMUbaB07MXnqr2qlmVInjyFcGT6uso9
-         tyOuzQDZYGpu6x4q1V2LG3ojqJ8StqQk6beox7s9p+WzMFNXrOdOph72Hx3prwNKQt3q
-         3tXME7HmGvGOVd8P7wncnDXwQuAfOKzNKqs4rRbEnTHTuOfqDlsEXc1btC2SgD5Hg0ub
-         25msLy14UFm01BAZAeOL8ysydCpH6ck96bC9WMMX0sci32DQbo5vJ9qzP0swTwI8bkZ1
-         1r78udSNQ5EJ5nPnDk/WdYNWjd27YC41vygTelRliLXw3X5zZZSA3cR/sj6pqCgw9qd+
-         TMbA==
+        d=klerks.biz; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=F4UrA/9bkYMBqPebWF1tF6gPEQitL3B209MC9lUQ3i0=;
+        b=gaRcnMuJcvX/KUQeQSUl5dd8GTNE2QCemZ0Pc3vReGp5Q91N8Ib0UNMxeTvkfxPJkJ
+         QenCmqJedkCn91EYKBrG7NBMCb+xrMdfPbE8NKkb+HuMkW1Qis5jW/AgdqJaTV662t5c
+         kbAaTYmN9coxj6Yi01oLNmpvIzFh4ESWWhVZk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BUw9zng33tadGMvizJ2+n1aX10qoZ5+fjvOTadfxUu4=;
-        b=BYUyUadMRAMos4IEtCwsUZfGm7eQbALJcgBHaNXLZBPBx5a/udhINlR2wpwkmJbrx2
-         lXrEEfVWDVoKY7fHfTb0zmFVrEf7Jdmk1tYkrtYbJ9UZgCehz5M/m669AqTEeyN21Tw/
-         43BlABchsnpbl6l+H3g3Tg3P1Ne8zGO75GPCSsdNEv5VADPsIyWviC4NhsaWKHVHxyFX
-         Checlm7rxqjZC5w1cMgqrG3z3CeLVf2Pmv/3JRul8QPyBJmb0jmJ44xjrkMM8NwvTgOH
-         +qzqJaEKuxGAf10uJw/dFi91GKufXTYBZuRAabOuK1KclHshYcTxawdG3snHDvTxg/71
-         T5qw==
-X-Gm-Message-State: AOAM530qLUA4NU0Uzkb27ygkIAk1u3H8eS0vaBQopbHgBa7kyuGZkcmv
-        /zSIxvtyDQiNr9pfrJjdv17tcGjK5Aqqvg==
-X-Google-Smtp-Source: ABdhPJzZ0VUexiTU6VwZYgL5uKUd7UJoNnPr/eqITKVCBuf1JyB3ownIOyqo1IjplnnOE9LbmmUbcw==
-X-Received: by 2002:a1c:6a16:0:b0:39c:655a:ac2c with SMTP id f22-20020a1c6a16000000b0039c655aac2cmr9458903wmc.66.1655291322061;
-        Wed, 15 Jun 2022 04:08:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k11-20020a056000004b00b0020d02262664sm14465799wrx.25.2022.06.15.04.08.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 04:08:41 -0700 (PDT)
-Message-Id: <pull.1263.git.1655291320433.gitgitgadget@gmail.com>
-From:   "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 15 Jun 2022 11:08:40 +0000
-Subject: [PATCH] send-pack.c: add config push.useBitmaps
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=F4UrA/9bkYMBqPebWF1tF6gPEQitL3B209MC9lUQ3i0=;
+        b=x+xxMzeuacxbxxMF/cJI41is2F7FXA7vYSL2urFqQJU7eeNUJh5YZdm6zbK5Wzuzwy
+         wUAQT+d2xhTyJs1wAm1BNAonFMU9a/SBFY5hFB0yjIt1ociDy6X8WeGPQBWuRiPUuWnc
+         3D++U6YByoCxRu7MzntXEMtILJyr4nxYVIxhJT6VfPzrv/QiwZOetyZEAhAw3ZIFQHdB
+         HrnB6Pk0jwC3VSZh2AYLkmTa4Gj9pJfb9CX+LKpu65QZUTIugRtRv/DDBCd9uFiZvSqs
+         q9Dsc2ryiPWK6zBj36HX3esbVhGZm80/Fyx8ksFvyKnFvAHXN3pVw8U7fiLvsceOFXTB
+         RunA==
+X-Gm-Message-State: AJIora9GN62wGw6Vz+hAJdelQPdzTAEmss8lSquwIYsJ5Ch3VSvlU8bw
+        C8nOs9uIfsSQOVBWIs4VtJy1wBgrAK8YKoY7iuRaIXgl3OxFlK/W4xY=
+X-Google-Smtp-Source: ABdhPJyvd1fBj5yILgGI3muNDyQd68x0938DW70ufnUorA83qHeQu8aZhGMVYlLe8qzRZr6Eem8a0roy1suwfX83Qc0=
+X-Received: by 2002:a17:906:2b5a:b0:707:ce7b:94eb with SMTP id
+ b26-20020a1709062b5a00b00707ce7b94ebmr8228411ejg.335.1655292256369; Wed, 15
+ Jun 2022 04:24:16 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Kyle Zhao <kylezhao@tencent.com>,
-        Kyle Zhao <kylezhao@tencent.com>
+References: <pull.1257.git.1654967038802.gitgitgadget@gmail.com>
+ <xmqqleu3au2n.fsf@gitster.g> <xmqqedzt8nfq.fsf@gitster.g> <CAPMMpogcm36pd7fjvG64G7Vg29arukF-wzOKYbNYG9NOpVCXvQ@mail.gmail.com>
+In-Reply-To: <CAPMMpogcm36pd7fjvG64G7Vg29arukF-wzOKYbNYG9NOpVCXvQ@mail.gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Wed, 15 Jun 2022 13:24:05 +0200
+Message-ID: <CAPMMpohZbcK1a8T+eoTdG2wjaOvLun1E0QZEEVv6QTxhHb8r5w@mail.gmail.com>
+Subject: Re: [PATCH] apply: support case-only renames in case-insensitive filesystems
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kyle Zhao <kylezhao@tencent.com>
+On Tue, Jun 14, 2022 at 8:22 AM Tao Klerks <tao@klerks.biz> wrote:
+>
+>
+> New patch coming.
+>
 
-This allows you to disabled bitmaps for "git push". Default is false.
+Quick update on this - while exploring test scenarios I found an
+edge-case where these changes *seem* to introduce a regression. The
+probably-problematic behavior is that if there is a
+differing-in-case-only (case-insensitive duplicate) file (with
+different content) in the index, but obviously not on the filesystem
+as the case-insensitive filesystem can't allow both files to exist,
+the "git apply --index" of a case-only rename from the original
+filename to the "duplicate" filename will replace that duplicate file
+in the index, replacing its original content. With these changes, the
+rename of a file can, under very specific circumstances, cause a
+"rename" patch to replace/delete unrelated data in a staged-only (and
+maybe also committed) file.
 
-Bitmaps are designed to speed up the "counting objects" phase of
-subsequent packs created for clones and fetches.
-But in some cases, turning bitmaps on does horrible things for "push"
-performance[1].
+I need to do more testing to understand the relationship between this
+behavior and similar scenarios in, for example, git checkout.
 
-[1]: https://lore.kernel.org/git/87zhoz8b9o.fsf@evledraar.gmail.com/
-
-Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
----
-    send-pack.c: add config push.useBitmaps
-    
-    This patch add config push.useBitmaps to prevent git push using bitmap.
-    
-    The origin discussion is here:
-    https://lore.kernel.org/git/b940e705fbe9454685757f2e3055e2ce@tencent.com/
-    
-    Thanks, Kyle
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1263%2Fkeyu98%2Fkz%2Fpush-usebitmps-config-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1263/keyu98/kz/push-usebitmps-config-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1263
-
- Documentation/config/push.txt |  4 ++++
- send-pack.c                   |  6 ++++++
- send-pack.h                   |  3 ++-
- t/t5516-fetch-push.sh         | 11 +++++++++++
- 4 files changed, 23 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-index e32801e6c91..d8fb0bd1414 100644
---- a/Documentation/config/push.txt
-+++ b/Documentation/config/push.txt
-@@ -137,3 +137,7 @@ push.negotiate::
- 	server attempt to find commits in common. If "false", Git will
- 	rely solely on the server's ref advertisement to find commits
- 	in common.
-+
-+push.useBitmaps::
-+	If this config and `pack.useBitmaps` are both "true", git will
-+	use pack bitmaps (if available) when git push. Default is false.
-\ No newline at end of file
-diff --git a/send-pack.c b/send-pack.c
-index bc0fcdbb000..d6091571caa 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -84,6 +84,8 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
- 		strvec_push(&po.args, "--progress");
- 	if (is_repository_shallow(the_repository))
- 		strvec_push(&po.args, "--shallow");
-+	if (!args->use_bitmaps)
-+		strvec_push(&po.args, "--no-use-bitmap-index");
- 	po.in = -1;
- 	po.out = args->stateless_rpc ? -1 : fd;
- 	po.git_cmd = 1;
-@@ -482,6 +484,7 @@ int send_pack(struct send_pack_args *args,
- 	int use_push_options = 0;
- 	int push_options_supported = 0;
- 	int object_format_supported = 0;
-+	int use_bitmaps = 0;
- 	unsigned cmds_sent = 0;
- 	int ret;
- 	struct async demux;
-@@ -497,6 +500,9 @@ int send_pack(struct send_pack_args *args,
- 	git_config_get_bool("push.negotiate", &push_negotiate);
- 	if (push_negotiate)
- 		get_commons_through_negotiation(args->url, remote_refs, &commons);
-+	git_config_get_bool("push.usebitmaps", &use_bitmaps);
-+	if (use_bitmaps)
-+		args->use_bitmaps = 1;
- 
- 	git_config_get_bool("transfer.advertisesid", &advertise_sid);
- 
-diff --git a/send-pack.h b/send-pack.h
-index e148fcd9609..f7af1b0353e 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -26,7 +26,8 @@ struct send_pack_args {
- 		/* One of the SEND_PACK_PUSH_CERT_* constants. */
- 		push_cert:2,
- 		stateless_rpc:1,
--		atomic:1;
-+		atomic:1,
-+		use_bitmaps:1;
- 	const struct string_list *push_options;
- };
- 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index dedca106a7a..ee0b912a5e8 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1865,4 +1865,15 @@ test_expect_success 'push warns or fails when using username:password' '
- 	test_line_count = 1 warnings
- '
- 
-+test_expect_success 'push with config push.useBitmaps' '
-+	mk_test testrepo heads/main &&
-+	git checkout main &&
-+	GIT_TRACE=1 git push testrepo main:test >/dev/null 2>stderr &&
-+	grep "no-use-bitmap-index" stderr &&
-+
-+	git config push.useBitmaps true &&
-+	GIT_TRACE=1 git push testrepo main:test2 >/dev/null 2>stderr &&
-+	! grep "no-use-bitmap-index" stderr
-+'
-+
- test_done
-
-base-commit: 8168d5e9c23ed44ae3d604f392320d66556453c9
--- 
-gitgitgadget
+The current patch can be found at
+https://github.com/gitgitgadget/git/pull/1257, but I'm not sure when
+I'll have time to investigate further, settle whether this is a
+(meaningful) regression or not, think about how to address it if so,
+and submit a v2 :(
