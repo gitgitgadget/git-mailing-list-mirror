@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1C0DC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 10:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 585A1C43334
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 10:53:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347361AbiFOKxo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 06:53:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46990 "EHLO
+        id S1345296AbiFOKxr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 06:53:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346496AbiFOKxl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 06:53:41 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5FC50B24
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 03:53:39 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id i81-20020a1c3b54000000b0039c76434147so914495wma.1
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 03:53:39 -0700 (PDT)
+        with ESMTP id S1347357AbiFOKxm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 06:53:42 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EE0C51E6D
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 03:53:40 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id v14so14832137wra.5
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 03:53:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=emBhEpvWlEQsOUu/N8nLaPfEIXOnRdqe/CuuQ5lT1Us=;
-        b=dWLiOHAG3S1Q8JLSgvQ+GcgSuvVXzia8r8JTdhRPA0xTmjrgkUOtlRrNMl3JQ+bs7k
-         NgK2AEnomXRg/hEzkSqrPIlCaHHk0Fu1DIqPh80j2Ee0uiu8X1kShhuQbMBrVRFmLVoY
-         E58Xkk5hbEE4LTt1gpAldY0ynD+NVXRAOP4jUffDDlry6+XJJVwO9ATNCXcIRLoGkpXk
-         nDkqlEL/GXE7yHSID8tKjIFrNPDdNtQ4hZ2+gyxvXL7Pg52VPriC/zEWINF7M1b0Vtdt
-         hs0U0q/FpEd7HdPNxQvLAyHcGz8u11cdCYs95t+URMm9XdqHMRS0LtBQlk26KivaRLeH
-         X7+Q==
+        bh=F6c0OWQMiNBPiEJn6VF6ub43lsgxXQeqJh7hOpRyNTc=;
+        b=h6JEs8YV4lmioHNL2PABNAwB4OXiHDugN1AeJzCpNjgm+hXQuQfUdrhgvim8iAWpls
+         a1uEPJNoCVs8Y2J+k8vwhcKtrd9EW4/N5CTZ/CUanHV/lH6U8Kgt5/D41BpVQRin7NLm
+         8try1SOhbqnbUkLp+w0app/u3oxjmFD4oGUQRnDE0imsqNcluUEEwzqqhDhox9n2yySl
+         hPX2H++dqXZAaTdogI/BRLJR5Ubm1aI19GRwfPgNs8Vw4Q2p5kkOtUEegoo546Qk/FVs
+         +kxdR8LfjosFApMhXqJ2LrRPr5eKF0Jhd4FYIH06128nu91KU+oA8yD6Cl9nsskXCQ/Z
+         b4JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=emBhEpvWlEQsOUu/N8nLaPfEIXOnRdqe/CuuQ5lT1Us=;
-        b=k5dwrpZ55OYDQFoffK5hXHAzMphbmnPJ9+udtp8CV4ktrvN5xhhsL0FkPC+UhPIjOh
-         iLfeJdEYuvFTdfrWhXtEMJBEGqhHDaMHN4MO2o9fRB5AFlHRycTvEI5/k00lz+KkgZlP
-         tZCvz8MGhEYQDGb2Q2yZIzddSiXRo/JP4iZA5kcomAr5eVbd9v9IY4H1qMtMOMiDa64b
-         5sBjtsEgd2FjBeRTNNHgPhmlLegwg5qmVOSyucWoajRzKrOmwwtIMaqQKKNAXRUohS/V
-         RuFWKpqoVqZ96RnJSSDdb/tgs6kPeUnFyMO33vNMCEML/AmxhOi6wI3YGWyW/qDxatiS
-         xaXw==
-X-Gm-Message-State: AOAM533fUyTrqRBTfFwb0Tu5Xm6dyom8My/P9czmVcpBwRn6Gkpx5y0x
-        A9one6SivY2Q87DeLfaDpm+14ZdIL+TRlQ==
-X-Google-Smtp-Source: ABdhPJwGeSgJ4ozzlL1Fg3xjrt23mTIpw3FU/gnlEEaKH8dqnO3zotiA/ZTh0YEKs4WF6CjFPASwHA==
-X-Received: by 2002:a05:600c:4f96:b0:39c:7bd0:d4c8 with SMTP id n22-20020a05600c4f9600b0039c7bd0d4c8mr9115455wmq.16.1655290417492;
-        Wed, 15 Jun 2022 03:53:37 -0700 (PDT)
+        bh=F6c0OWQMiNBPiEJn6VF6ub43lsgxXQeqJh7hOpRyNTc=;
+        b=GzviODtnJ3bRhp84ohPeNByjwADf8nVXzhABzTwykQU9YfxQlG0We79eF8hlOCjZ8G
+         FRmkBwy5dSA+LbRuXiV4KT/NSYk5UlNOyz6/friLSz3U3IfZoIi3Y881kAf1h0yccIFQ
+         5udqLRnL2f53oLPyHnl2C7WTiBCaib/1+fj/QVJ8zcoTer6g3qRlErbpf895FrhRilvn
+         JbtpwMvZYgkQFRXfP71AU0JwTvIKomby4W3+h9vqo8+ANLvPB457adgQp2wofP0k1cHI
+         ZQh5AU8y8G8pkU0lnQylwQAduPRtJvohnGB9q+8vgUunlgTHD3dC8rQ8Rny/VkTkikSh
+         t4vw==
+X-Gm-Message-State: AJIora8rW4ssjjkwMMxEo/qWIRWbTm0u6Md1CnAWqd1x/9jqIAXNWjtj
+        CPQYJyBC2Yi4NqTlJjlOOLR8mXHP0I3sNA==
+X-Google-Smtp-Source: AGRyM1uqtRcriu/0kO0eI0LWkan6reVB6zP4TY7Ho1kI6e450DgkVHek8v0ca/XAutsiQ1ipaQE0Nw==
+X-Received: by 2002:a5d:64a3:0:b0:218:4a35:dd89 with SMTP id m3-20020a5d64a3000000b002184a35dd89mr9466247wrp.209.1655290418786;
+        Wed, 15 Jun 2022 03:53:38 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g12-20020a7bc4cc000000b0039bc95cf4b2sm1786747wmk.11.2022.06.15.03.53.36
+        by smtp.gmail.com with ESMTPSA id g12-20020a7bc4cc000000b0039bc95cf4b2sm1786747wmk.11.2022.06.15.03.53.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 03:53:36 -0700 (PDT)
+        Wed, 15 Jun 2022 03:53:37 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH 1/5] push tests: add a missing "test_line_count"
-Date:   Wed, 15 Jun 2022 12:53:28 +0200
-Message-Id: <RFC-patch-1.5-a1245bd3139-20220615T104503Z-avarab@gmail.com>
+Subject: [RFC PATCH 2/5] fetch+push tests: add missing coverage for 6dcbdc0d661
+Date:   Wed, 15 Jun 2022 12:53:29 +0200
+Message-Id: <RFC-patch-2.5-38af32c5b96-20220615T104503Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
 In-Reply-To: <RFC-cover-0.5-00000000000-20220615T104503Z-avarab@gmail.com>
 References: <RFC-cover-0.5-00000000000-20220615T104503Z-avarab@gmail.com>
@@ -66,27 +66,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a "test_line_count" missing from 6dcbdc0d661, we'd clobber
-"warnings" here, but never test its contents.
+Add tests that were missing from 6dcbdc0d661 (remote: create
+fetch.credentialsInUrl config, 2022-06-06), we want to test how we
+handle cases where the config comes from a file, and that we handle
+"pushURL" correctly.
+
+Currently the "pushURL" case isn't handled at all, i.e. URLs aren't
+warned about in "remote.*pushurl" , only for "remote.*.url".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5516-fetch-push.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ t/t5516-fetch-push.sh | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
 diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 79d8a7b3675..4b32ae39a39 100755
+index 4b32ae39a39..51d695e475a 100755
 --- a/t/t5516-fetch-push.sh
 +++ b/t/t5516-fetch-push.sh
-@@ -1860,6 +1860,8 @@ test_expect_success 'push warns or fails when using username:password' '
- 
- 	test_must_fail git -c transfer.credentialsInUrl=warn push https://username:password@localhost 2>err &&
- 	grep "warning: $message" err >warnings &&
-+	test_line_count = 1 warnings &&
-+
- 	test_must_fail git -c transfer.credentialsInUrl=die push https://username:password@localhost 2>err &&
- 	grep "fatal: $message" err >warnings &&
+@@ -1852,6 +1852,26 @@ test_expect_success 'fetch warns or fails when using username:password' '
  	test_line_count = 1 warnings
+ '
+ 
++test_expect_success CURL 'fetch warns or fails when using username:password in config' '
++	message="URL '\''https://username:<redacted>@localhost/'\'' uses plaintext credentials" &&
++
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	test_commit -C repo A &&
++	git -C repo remote add pwd-url https://username:password@localhost &&
++	test_must_fail git -C repo -c transfer.credentialsInUrl=allow fetch pwd-url 2>err &&
++	! grep "$message" err &&
++
++	test_must_fail git -C repo -c transfer.credentialsInUrl=warn fetch pwd-url 2>err &&
++	grep "warning: $message" err >warnings &&
++	test_line_count = 3 warnings &&
++
++	git -C repo remote set-url --push pwd-url https://username:password@localhost &&
++	git -C repo remote set-url pwd-url https://localhost &&
++
++	test_must_fail git -C repo -c transfer.credentialsInUrl=warn fetch pwd-url 2>err &&
++	! grep "fatal: $message" err
++'
+ 
+ test_expect_success 'push warns or fails when using username:password' '
+ 	message="URL '\''https://username:<redacted>@localhost/'\'' uses plaintext credentials" &&
+@@ -1867,4 +1887,25 @@ test_expect_success 'push warns or fails when using username:password' '
+ 	test_line_count = 1 warnings
+ '
+ 
++test_expect_success CURL 'push warns or fails when using username:password in config' '
++	message="URL '\''https://username:<redacted>@localhost/'\'' uses plaintext credentials" &&
++
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	test_commit -C repo A &&
++	git -C repo remote add pwd-url https://username:password@localhost &&
++	test_must_fail git -C repo -c transfer.credentialsInUrl=allow push pwd-url HEAD:refs/heads/branch 2>err &&
++	! grep "$message" err &&
++
++	test_must_fail git -C repo -c transfer.credentialsInUrl=warn push pwd-url HEAD:refs/heads/branch 2>err &&
++	grep "warning: $message" err >warnings &&
++	test_line_count = 2 warnings &&
++
++	git -C repo remote set-url --push pwd-url https://username:password@localhost &&
++	git -C repo remote set-url pwd-url https://localhost &&
++
++	test_must_fail git -C repo -c transfer.credentialsInUrl=warn push pwd-url HEAD:refs/heads/branch 2>err &&
++	! grep "warning: $message" err
++'
++
+ test_done
 -- 
 2.36.1.1239.gfba91521d90
 
