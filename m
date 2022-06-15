@@ -2,72 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC0FBC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 22:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6E7AC433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 22:55:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346644AbiFOWl7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 18:41:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57012 "EHLO
+        id S1347137AbiFOWzT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 18:55:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237675AbiFOWl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 18:41:57 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343C55622F
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 15:41:57 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 71C9B1B7C0A;
-        Wed, 15 Jun 2022 18:41:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=89CpZxy7NYnPPIxxJfNrHIuUhN1w+aUJ41eGvN
-        UUoqE=; b=IRuc12QDV39mvOJMNMBSnn+hr4lySmXMazdEcYxX0SOw+KpWcMCudR
-        62UpJjZpvgAFZFNT3HVh5UtRSoixFThDc0hq2WiZFyRK98G9SXZdnwsQudLdIbCx
-        4Ac2bv2RkycG1c0Jn+DK/s3N0/+4bEuJTFOdfoVFAgow/eCq67mhY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 69B2D1B7C09;
-        Wed, 15 Jun 2022 18:41:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 174DF1B7C03;
-        Wed, 15 Jun 2022 18:41:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH v3 0/3] bitmap-format.txt: fix some formatting issues
- and include checksum info
-References: <pull.1246.v2.git.1654623814.gitgitgadget@gmail.com>
-        <pull.1246.v3.git.1654858481.gitgitgadget@gmail.com>
-        <xmqq8rq4fo6p.fsf@gitster.g> <YqlD2qtwqmIKG9lo@nand.local>
-Date:   Wed, 15 Jun 2022 15:41:51 -0700
-In-Reply-To: <YqlD2qtwqmIKG9lo@nand.local> (Taylor Blau's message of "Tue, 14
-        Jun 2022 22:28:42 -0400")
-Message-ID: <xmqqtu8ly2fk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1347441AbiFOWzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 18:55:18 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0BB7295
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 15:55:16 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id 43so10478347qvb.3
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 15:55:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BEEyaMzxGVUVjkYM+z/Q1CpUcBmLusl/TZkgJm+jBmg=;
+        b=MoNvdmpKSpOgS51DCWk3HIe0NOxbw3XYX4hXtUt+J3WjRy7jf1Mw4cuc/QA9rXDpk1
+         QCt2gjtGQpuxPeRPgrhOJf4x6P5y7Z0gAr70NaG+bOwggjUSSbR7/Yx52qbs+5u1FTX6
+         e+rGB75J6Hdts7jILA6zbCckBAvhAxokGdlrO4lIiVSTp4kC6aomB1f+8DHBz+9KSHnd
+         gBck4YcrUjKcx7Ap2/RcvbsDgWYARw6wk9/J4+/7Jn5yb+f7kgOoLI5YDuV25GXZIcF/
+         Spbz5Snc645BwCEvCJBKIIN+7ri/A7lUCDD6fJ8RJt4D4qhb5pKM3YKhMUUYqcPQC9+j
+         kIWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BEEyaMzxGVUVjkYM+z/Q1CpUcBmLusl/TZkgJm+jBmg=;
+        b=5J+fpGJzGQfuD7L1kFACSIlQ6tFTeAKN6bvsvRhQtZAZVF8+Nb71fR0YVkJ1wzkko+
+         UTyPmE8O8nEOZz4t/j45FU1m1uLLyzscoTMNkq06qrEKqGqSCagakHV5ONi0Zhw5bmQ+
+         SSatDpcxxRY/4Dk+uMREhQOCD0k9cNSysBbYdF8eGxC+UO8lXbG6hqzQg/9UlmLgWi2P
+         obJ6coGcHawz5WJ7ozYZdCQ1n/pdKkkwVXksovyKdfLZXCzmTdMO+RBK6qKPwPm1VD19
+         0vbZZvlnjtZfKXe1BuJeswJFp9grXDNo+wUf9nSIv6FUP6YouZAEqLad6w0i9RLmqnIQ
+         ZDPA==
+X-Gm-Message-State: AJIora9Kes9/Eo/ij93/e0EDpdh20IeaJcSKT/Fxt1loJW7CN7h92jtp
+        +Ym6uQh0tg/6s2EkUwFoOvZeRA==
+X-Google-Smtp-Source: AGRyM1tQ9UnIYTv+gZbqbyYqKYurs6ssZ/ZPVKogdyk+375WC/I8N575chAiTAa0bjseQNkMpCtHUQ==
+X-Received: by 2002:a05:622a:19a6:b0:304:ec2c:ce2a with SMTP id u38-20020a05622a19a600b00304ec2cce2amr1730206qtc.472.1655333716016;
+        Wed, 15 Jun 2022 15:55:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id s6-20020a05622a018600b002fcb0d95f65sm358780qtw.90.2022.06.15.15.55.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jun 2022 15:55:15 -0700 (PDT)
+Date:   Wed, 15 Jun 2022 18:55:14 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH] pack-write.c: remove unused `mtimes_name` parameter
+Message-ID: <YqpjUiT45Oy8a577@nand.local>
+References: <f5bf68702d55b601ebd13bc4a6f1a34dc35abae5.1655253465.git.me@ttaylorr.com>
+ <a7c81b77-651d-3374-6db8-f46ad01a8319@github.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5A36A10A-ECFC-11EC-A499-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a7c81b77-651d-3374-6db8-f46ad01a8319@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Wed, Jun 15, 2022 at 09:30:52AM -0400, Derrick Stolee wrote:
+> On 6/14/22 8:37 PM, Taylor Blau wrote:
+> > `write_mtimes_file()` takes an optional parameter `mtimes_name`, which
+> > specifies where to write the mtimes file. If it is NULL, a location is
+> > generated with `odb_mkstemp()`.
+> >
+> > This imitates the pattern in `write_idx_file()`, and `write_rev_file()`,
+> > both of which have callers from the `index-pack` builtin which specify
+> > an exact location instead of generating one.
+>
+> I have a nearly-identical patch [1], but I'm happy to take Taylor's
+> instead. I'll plan on dropping that patch from my v2.
 
-> This version of the series significantly improves the readability of the
-> generated HTML, and I only had a minor comment or two.
+;-). Great minds think alike? Either that, or one of us (me) stopped
+reading the rest of this series before sending their patch.
 
-Yeah, I looked at the output and it is improved so much to the point
-that the remaining paragraph or two that are still typeset in the fixed
-font incorrectly start to look even irritating ;-)
+> [1] https://lore.kernel.org/git/b67e110bf60e820874de94c64ee8c32d69413877.1655242070.git.gitgitgadget@gmail.com/
 
-I've tentatively queued it in my tree.  I doubt that the topic is
-ultra-urgent so if the remaining mark-up issues can be fixed before
-the topic hits 'next', that would be great.
+Either version is fine with me. It's probably easier for the maintainer
+to just drop my patch and take this series in one go, so I'd err on the
+side of your version in [1].
 
-Thanks, both.
+Thanks,
+Taylor
