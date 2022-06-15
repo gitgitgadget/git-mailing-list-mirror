@@ -2,108 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97538C43334
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 10:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A45D0C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 10:53:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347221AbiFOKrS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 06:47:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40274 "EHLO
+        id S245648AbiFOKxl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 06:53:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245468AbiFOKrP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 06:47:15 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A75151E56
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 03:47:14 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id eo8so7295104edb.0
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 03:47:14 -0700 (PDT)
+        with ESMTP id S243714AbiFOKxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 06:53:39 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE435130A
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 03:53:38 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id h19so11592675wrc.12
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 03:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=rqLn5pC7YqwLPuVdUKNuj0xuX0LI+wdw6kOwMh1PylA=;
-        b=P+7UuCYbKde/TsCZ1HgrBQeXV2d8ZTtNM3OPA9DoEap5uqDKGDOqM4BUwgufoX2jox
-         nx8l1nshlrfTmOUZGoxrPyFMyRyq0fB89srvJq3Bya5YP5Ix97DfUxQJ8/UF+AQD/klE
-         w1tEh7fdu9u7+vQOW3L8etKzUywiMyUlMawTeZehnmmLVAonkPj/amYPEqubVwm5aWtw
-         lduL0kaPifC8kMJvRJNt6oAmEBgGaP+cvTfM1VtvkRTKrTY6IqcHlUl97mDYweo0rEsl
-         uPrtDosDlhlEX/v9ThyCg4Cvwdjr3dR9JffnLBCmoWY2RaA2+NtT6vbFTMtfUPTMgRry
-         m+wQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xDMjg2UfZCcFgvn1q9idQihNe3JLOJNYz0/KKLpDuG4=;
+        b=g/vT7dhUJe4NwDE44i42WS1BX8TdSBi6a3mzrRuadklW5TvrbvkOPr1fq5w8QXKIC4
+         o+Ql0TpLKwyu/0EcHoaCuydkVwcU632lS/wAaIS+F97K+oU+1syKjec0/hTn50Y5EcVs
+         8vW7KoyezRP1nlgvOaD5xxIGzLsIIhbH1hpU3Tj2E44AdwPoSghqtiWf4aV0WIKQdzQe
+         7mUFxY2rz9c4/IAd63v2EdLOgjRvZUIrTrrVWifcgxEF2tjH6PkJM0SSicR9lOVyKkVc
+         2mqQ3kHKMevjCftbmTnjqkpZA8MmFBSKL9L3vHZklFXv/l31OUElBC3rWzJmRDZ2X7pb
+         3G0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=rqLn5pC7YqwLPuVdUKNuj0xuX0LI+wdw6kOwMh1PylA=;
-        b=umtkV7cbYbvPJgUFo7RmzDBXVxh8nt9zSU4wA5c8lVaX1vk7CRN8c68zctzFc21/ST
-         iz04ELUaWYOqsWxEGtJ2NiRSqFb/NN0SM1it48PW/VOJMEGcgE9V+0oc54OrYqr2xH4C
-         QS9JdXn+fS80k+4PFIDfzkMcMzu4beyeaio8i3MtMK7ep3o/fFK9o4HSklB5GgyAwOqw
-         q/qDBqw+MdllQwDAZIyGe1yEtmZXxoMAuS5nnDQX3FaFmJv5zXJ4rDSH0uZQ4nBhgRS/
-         LVNIxAkkjMP0XodzeA0V34KPhti0zzvAqLUHQyadBHETImOoDSHan7d5xl2cKmIqM9G6
-         Gkag==
-X-Gm-Message-State: AJIora+D93fw80chZgvRgd1tcyZ48zqpric+OaVxJfrMAzs97trx2tPM
-        dlI8R4LViM3vBO9TX9j0bX4=
-X-Google-Smtp-Source: ABdhPJxfx2e8RkvJ0Xa5YE+1Mu2Mjoqr4SS2eskJqD//vDuLG1NoemIqR8UN18Hf95WRzkHdpPkQ3w==
-X-Received: by 2002:a05:6402:190b:b0:431:3231:fce6 with SMTP id e11-20020a056402190b00b004313231fce6mr11829968edz.127.1655290032914;
-        Wed, 15 Jun 2022 03:47:12 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id wi23-20020a170906fd5700b006f3ef214e3bsm6071572ejb.161.2022.06.15.03.47.12
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xDMjg2UfZCcFgvn1q9idQihNe3JLOJNYz0/KKLpDuG4=;
+        b=OtpLoFUkAEWoAtxOKjD3hTn5jOuE1laQrBoeoGLa6hgi1BdYRvkl3P2hx6e/kwRNCO
+         ulbE48EO9fBJ9dm8o2+xEJVUAd56hq6qm9iYMz1KVGgWTL1Q8olNGmaCMU2ieiNpOPFN
+         11n+W+vnABpIpjRvmR2PSFxOoByMzF6WfufN5KPC+4Vkg+nbjgcamM9EsTeD0RnqU0dR
+         cy4xlwJBWi5T6UV6x/5bHw0L2UX96oDs30E5U0h4Ts2rehD2v39L7FXdqO2zo3/iOlPm
+         g4h+inpBK/R/WBhIiul6FXKGHeIw900eXblreNlpWzc541NZpwX2V6TemCCgdAYyqYJC
+         JjRg==
+X-Gm-Message-State: AJIora8PsGAorygWIEd+RHSMbCbRRrCPtguJPCciIKJiK1oHybDik9pY
+        VKJ/PTIbJrfj8wsemuBeElsYKCpDGrk8UQ==
+X-Google-Smtp-Source: AGRyM1s1aMm6WtZHxP/1craoj2sP0VnHdXBXtx7CH8+atYqJv/w1mVBaWDLg0vARfEGqn5nDBxPxDw==
+X-Received: by 2002:a5d:69ca:0:b0:21a:536:61ba with SMTP id s10-20020a5d69ca000000b0021a053661bamr9390751wrw.235.1655290416657;
+        Wed, 15 Jun 2022 03:53:36 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id g12-20020a7bc4cc000000b0039bc95cf4b2sm1786747wmk.11.2022.06.15.03.53.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 03:47:12 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o1QYJ-000o1v-IA;
-        Wed, 15 Jun 2022 12:47:11 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     rsbecker@nexbridge.com
-Cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Test Failure t5516.113 RE: [ANNOUNCE] Git v2.37.0-rc0
-Date:   Wed, 15 Jun 2022 12:46:21 +0200
-References: <01e801d880a0$2c5e4d50$851ae7f0$@nexbridge.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <01e801d880a0$2c5e4d50$851ae7f0$@nexbridge.com>
-Message-ID: <220615.86ilp2xky8.gmgdl@evledraar.gmail.com>
+        Wed, 15 Jun 2022 03:53:36 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH 0/5] fix issues in transfer.credentialsInUrl
+Date:   Wed, 15 Jun 2022 12:53:27 +0200
+Message-Id: <RFC-cover-0.5-00000000000-20220615T104503Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is on top of [1], and given the "rc" phase is an RFC. This:
 
-On Wed, Jun 15 2022, rsbecker@nexbridge.com wrote:
+ * Fixes the issue of the transfer.credentialsInUrl (now renamed) not
+   finding passwords in "pushurl" URLs (in my case, the only place
+   where I'd actually put a password in a URL in a config...)
 
-> On June 13, 2022 9:46 PM, Junio C Hamano wrote:
->>An early preview release Git v2.37.0-rc0 is now available for testing at the usual
->>places.  It is comprised of 339 non-merge commits since v2.36.0, contributed by 59
->>people, 18 of which are new faces [*].  There are a few topics that we may want to
->>merge before the final release, which will be in -rc1 that is planned to be tagged at
->>around the end of the week.
->
-> This one keeps showing up occasionally. I am not sure why, but I am
-> not certain bash likes ! grep. This only happens on our NonStop x86
-> build, which is a more recent platform than the ia64, where the
-> construct succeeds. Have we not moved away from that?
->
-> not ok 113 - fetch warns or fails when using username:password
-> #	
-> #		message="URL 'https://username:<redacted>@localhost/' uses plaintext credentials" &&
-> #		test_must_fail git -c fetch.credentialsInUrl=allow fetch https://username:password@localhost 2>err &&
-> #		! grep "$message" err &&
-> #	
-> #		test_must_fail git -c fetch.credentialsInUrl=warn fetch https://username:password@localhost 2>err &&
-> #		grep "warning: $message" err >warnings &&
-> #		test_line_count = 3 warnings &&
-> #	
-> #		test_must_fail git -c fetch.credentialsInUrl=die fetch https://username:password@localhost 2>err &&
-> #		grep "fatal: $message" err >warnings &&
-> #		test_line_count = 1 warnings &&
-> #	
-> #		test_must_fail git -c fetch.credentialsInUrl=die fetch https://username:@localhost 2>err &&
-> #		grep "fatal: $message" err >warnings &&
-> #		test_line_count = 1 warnings
-> #	
+ * 1/5 fixes a bug in an existing test, but I didn't think it was
+   worth bothering with for 2.37.0.
 
-I've submitted
-https://lore.kernel.org/git/cover-0.1-00000000000-20220615T103609Z-avarab@gmail.com
-to fix this (but spotted this thread just afterwards, I fixed the bug
-yesterday).
+ * Adds missing test coverage for reading the config from a file, not
+   the CLI.
 
-This happens on all platforms, you just happen to have NO_CURL=Y only in
-your nonstop build.
+ * 3/5 is a WIP CI target to spot the type of issue I fixed in [2],
+   it's not the first time where we have a NO_CURL=Y breakage land on
+   master...
+
+ * 4/5 attemps to "really" fix the duplicate warnings we emit, I think
+   the approach there is good, especially the part where we shouldn't
+   emit it twice in-process.
+
+   But this currently misses e.g. "git ls-remote". I wonder if we
+   should just stick that git_config_push_parameter() condition into
+   packet_trace_identity() and call it a day.
+
+ * 5/5 fixes the (major) blind spot of the warning missing "pushurl" config.
+
+I think this is all non-RFC quality, except the "ls-remote" case, and
+us missing tests for that & other transport users that aren't
+clone/fetch/push.
+
+Derrick: Are you interested in picking this up & pursuing it after the
+release, with whatever fix-ups/rewrites etc. that you find
+appropriate?
+
+1. https://lore.kernel.org/git/cover-0.2-00000000000-20220615T103852Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/cover-0.1-00000000000-20220615T103609Z-avarab@gmail.com/
+
+Ævar Arnfjörð Bjarmason (5):
+  push tests: add a missing "test_line_count"
+  fetch+push tests: add missing coverage for 6dcbdc0d661
+  CI: add a linux-BUILD-vars job
+  fetch: stop emitting duplicate transfer.credentialsInUrl=warn warnings
+  transport: check remote.<name>pushurl with transfer.credentialsInUrl
+
+ .github/workflows/main.yml |  3 ++
+ builtin/clone.c            |  5 ++-
+ builtin/fetch.c            |  4 ++
+ builtin/push.c             |  6 ++-
+ ci/run-build-and-tests.sh  | 30 ++++++++++++++
+ remote.c                   | 82 +++++++++++++++++++++++++++-----------
+ remote.h                   | 14 +++++++
+ t/t5516-fetch-push.sh      | 46 ++++++++++++++++++++-
+ t/t5601-clone.sh           |  2 +-
+ 9 files changed, 164 insertions(+), 28 deletions(-)
+
+-- 
+2.36.1.1239.gfba91521d90
+
