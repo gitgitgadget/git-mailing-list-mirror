@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE721C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 23:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 356EAC43334
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 23:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350885AbiFOXf5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 19:35:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50272 "EHLO
+        id S1351538AbiFOXgD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 19:36:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350721AbiFOXfy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 19:35:54 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 154DC1A077
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:35:53 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id i81-20020a1c3b54000000b0039c76434147so1962108wma.1
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:35:53 -0700 (PDT)
+        with ESMTP id S1350852AbiFOXf5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 19:35:57 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 797E51B79C
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:35:55 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id n185so7069607wmn.4
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:35:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zDNeHA/m3I9ZBVTe9fpqf5UB3mPXA5PuTEuAdJuXb3E=;
-        b=l7d66ux8hIf5SeqNMyR6ppv8xvqF5sSrh6FiwRePAY1M2VELNcqNOtkG+bZkgY1w4l
-         VE9MPdW2vlQZ4+0i5jmTUItq9Ew+h+I9HCg4Xqysv79BcVMRXT1ZJmvFO70G+CHjatnh
-         MQ1VlXpnJaP5VaDeoqR48bSYcjB9zQymDAMPe3qqOL3i5zPO5/7p8PNbghmJNrd0clLB
-         5Yo7bqdFSSkq5XXBsNHtWBIg6IZgl9qz9sHXK0E7PLZDAn8D/w/yLS9gd44MvMRF27Rd
-         z7piQsLwud7wgz8W9kKwprUjh6XNui7NZt7Anl/GUKZq1dKu2a0C9L3xwEdC5gjenPtv
-         KAtA==
+        bh=XiVF6nIhCq/TCqZicNwCBbpD/oTYFMdBLjrfs+dbp60=;
+        b=aVCK/yG8xDekyK2fP9/2nlggV4CQ/8DTJjBGKIsBjuXqOUFgSeVFuchWepnknEJbDL
+         2nDmSSs80E0YPLTHIhkECTpSr8WP+5oaC6HEyzk0esx/hGpW+LJJ5e1mhPRASH2rsUZT
+         TEKzQucEM2IA+rVCUN5JLk+TLYQDYhHr9kcsHoPg/ZbLkfHtGZu9FKbPry+ATZeP6Jgi
+         vF0yrKh4FF8yB2K/sQfJmyVrCruARnQZuRpPM6A1+PtKUR6hwXgXN/dxQjlTEJFtsarU
+         vLDMNs5yuGIDrJFEdacGR6o3rr4fw3HFB9Rz0GAUkQoCtkopskw7EFhaO5iZ4LcTMJhf
+         vE7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zDNeHA/m3I9ZBVTe9fpqf5UB3mPXA5PuTEuAdJuXb3E=;
-        b=1Op1ex01u/3DJDChQIdGOrG65wzQs9Fc4Nq4p39q5Dx+8+j0Cj0A8Uxr6D2M4weAin
-         s20LRfU4GcE0Kclg/08dr4ajQymWzJ79wqC//i+01aznlsGWKvShUxJWdhE0WRM0MRKV
-         9Teu+bnw8yI96ufwHjm5+SKRrX4UYrW88c8u+CDzK0lG0Cezi8QXznq+hWwwFQLLRe9L
-         JiFA5V6FGrUBR5MbmFsQK9+VKEC9TY6CZPFD6aqNJofteZdG5wc/JkgoUb9/7XXh9ioR
-         AfpNFZNMA8kE4b9gIwvBtDWJambO2r1uO6XgvDJqlneaq7utJvfL3BX94NfSjlDMFoo1
-         KB7w==
-X-Gm-Message-State: AJIora8v74DOD2RfaKhqLo9wfWulUWZZhNMqN+792wsf4RrLkBZi8Dly
-        tKc08Awdjme/JgtGsLazgwfbeIedJQVJxA==
-X-Google-Smtp-Source: AGRyM1sd3F6BtG7EeV/TCcHZ0tX40K74tfVcePi/cuG89qwfjxZ1nTIM2U/oy4ANKoSXiNkw//6FDQ==
-X-Received: by 2002:a05:600c:4f95:b0:39c:7bd0:d47d with SMTP id n21-20020a05600c4f9500b0039c7bd0d47dmr1890573wmq.17.1655336152370;
-        Wed, 15 Jun 2022 16:35:52 -0700 (PDT)
+        bh=XiVF6nIhCq/TCqZicNwCBbpD/oTYFMdBLjrfs+dbp60=;
+        b=Kkzw0UTbeUJJZaxdDGLjJuVtVNnJ8YONbgiHdwV+l0nZdqHt/y3/yLLc2HHIU8QBGc
+         XxBiFaDKsB2FXC7oJ2aqc5Mxn6yVmtiJRS61lZe90p7h0h4CQPxsI5lFnFi+ldYUNFcR
+         p9qTKs06CNPEOM0jQV97ooheSJqwCOfAPqTolSS+p/tQ4nw2k4uixVRoVTjH8R5Bhr9S
+         sT8rjHvCxAGQWUg49Nkt0u6szSUu1P71EoHydC2mTiXqik4sQbjZXkOcJ74lC5nY7JaZ
+         yb7UB64DwGzQPNDRO6QhrDahmDbSfm6N4dDvdTV6nOrAtGJ3DJ9YgImiuid4vGqLE+l5
+         9xuQ==
+X-Gm-Message-State: AOAM5322cAQvcZc2MxJYt3EUebC7STMEczwxNpCWnviiACxeW9V7pSTT
+        loRVBZhfi/rAKQWCmCwBkK67uHOZfXTrHA==
+X-Google-Smtp-Source: ABdhPJwyCPRNZZfa8Hq489t4MGMF+ZP4ZYNm8Bg7JYs1tx+MXHlnJhQP/spNNdW0xBqWl3UoyZI3PA==
+X-Received: by 2002:a7b:c777:0:b0:39c:4e1d:fd27 with SMTP id x23-20020a7bc777000000b0039c4e1dfd27mr12307993wmk.1.1655336153768;
+        Wed, 15 Jun 2022 16:35:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l1-20020a1c2501000000b0039747cf8354sm294717wml.39.2022.06.15.16.35.51
+        by smtp.gmail.com with ESMTPSA id n4-20020a05600c4f8400b003971fc23185sm4386235wmq.20.2022.06.15.16.35.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 16:35:51 -0700 (PDT)
-Message-Id: <6d409ad45867aa5193c15828614e865e53ac0c57.1655336146.git.gitgitgadget@gmail.com>
+        Wed, 15 Jun 2022 16:35:53 -0700 (PDT)
+Message-Id: <877a45867ae368bf9e053caedcb6cf421e02344d.1655336146.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1264.git.1655336146.gitgitgadget@gmail.com>
 References: <pull.1264.git.1655336146.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 15 Jun 2022 23:35:36 +0000
-Subject: [PATCH 02/11] fsmonitor: avoid memory leak in
- `fsm_settings__get_incompatible_msg()`
+Date:   Wed, 15 Jun 2022 23:35:37 +0000
+Subject: [PATCH 03/11] submodule--helper: avoid memory leak in
+ `update_submodule()`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,31 +71,22 @@ Reported by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsmonitor-settings.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ builtin/submodule--helper.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index 658cb79da01..464424a1e92 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -202,11 +202,15 @@ char *fsm_settings__get_incompatible_msg(const struct repository *r,
- 	case FSMONITOR_REASON_OK:
- 		goto done;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 5c77dfcffee..d7b8004b933 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2512,6 +2512,8 @@ static int update_submodule(struct update_data *update_data)
  
--	case FSMONITOR_REASON_BARE:
-+	case FSMONITOR_REASON_BARE: {
-+		char *cwd = xgetcwd();
+ 		next.recursive_prefix = get_submodule_displaypath(prefixed_path,
+ 								  update_data->prefix);
++		free(prefixed_path);
 +
- 		strbuf_addf(&msg,
- 			    _("bare repository '%s' is incompatible with fsmonitor"),
--			    xgetcwd());
-+			    cwd);
-+		free(cwd);
- 		goto done;
-+	}
- 
- 	case FSMONITOR_REASON_ERROR:
- 		strbuf_addf(&msg,
+ 		next.prefix = NULL;
+ 		oidcpy(&next.oid, null_oid());
+ 		oidcpy(&next.suboid, null_oid());
 -- 
 gitgitgadget
 
