@@ -2,89 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6E7AC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 22:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98485C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Jun 2022 23:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347137AbiFOWzT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 18:55:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41390 "EHLO
+        id S244334AbiFOXTO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 19:19:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347441AbiFOWzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 18:55:18 -0400
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0BB7295
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 15:55:16 -0700 (PDT)
-Received: by mail-qv1-xf30.google.com with SMTP id 43so10478347qvb.3
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 15:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=BEEyaMzxGVUVjkYM+z/Q1CpUcBmLusl/TZkgJm+jBmg=;
-        b=MoNvdmpKSpOgS51DCWk3HIe0NOxbw3XYX4hXtUt+J3WjRy7jf1Mw4cuc/QA9rXDpk1
-         QCt2gjtGQpuxPeRPgrhOJf4x6P5y7Z0gAr70NaG+bOwggjUSSbR7/Yx52qbs+5u1FTX6
-         e+rGB75J6Hdts7jILA6zbCckBAvhAxokGdlrO4lIiVSTp4kC6aomB1f+8DHBz+9KSHnd
-         gBck4YcrUjKcx7Ap2/RcvbsDgWYARw6wk9/J4+/7Jn5yb+f7kgOoLI5YDuV25GXZIcF/
-         Spbz5Snc645BwCEvCJBKIIN+7ri/A7lUCDD6fJ8RJt4D4qhb5pKM3YKhMUUYqcPQC9+j
-         kIWg==
+        with ESMTP id S1355329AbiFOXTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 19:19:06 -0400
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0FCE3BA
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:19:02 -0700 (PDT)
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-30fdbe7467cso76453857b3.1
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 16:19:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BEEyaMzxGVUVjkYM+z/Q1CpUcBmLusl/TZkgJm+jBmg=;
-        b=5J+fpGJzGQfuD7L1kFACSIlQ6tFTeAKN6bvsvRhQtZAZVF8+Nb71fR0YVkJ1wzkko+
-         UTyPmE8O8nEOZz4t/j45FU1m1uLLyzscoTMNkq06qrEKqGqSCagakHV5ONi0Zhw5bmQ+
-         SSatDpcxxRY/4Dk+uMREhQOCD0k9cNSysBbYdF8eGxC+UO8lXbG6hqzQg/9UlmLgWi2P
-         obJ6coGcHawz5WJ7ozYZdCQ1n/pdKkkwVXksovyKdfLZXCzmTdMO+RBK6qKPwPm1VD19
-         0vbZZvlnjtZfKXe1BuJeswJFp9grXDNo+wUf9nSIv6FUP6YouZAEqLad6w0i9RLmqnIQ
-         ZDPA==
-X-Gm-Message-State: AJIora9Kes9/Eo/ij93/e0EDpdh20IeaJcSKT/Fxt1loJW7CN7h92jtp
-        +Ym6uQh0tg/6s2EkUwFoOvZeRA==
-X-Google-Smtp-Source: AGRyM1tQ9UnIYTv+gZbqbyYqKYurs6ssZ/ZPVKogdyk+375WC/I8N575chAiTAa0bjseQNkMpCtHUQ==
-X-Received: by 2002:a05:622a:19a6:b0:304:ec2c:ce2a with SMTP id u38-20020a05622a19a600b00304ec2cce2amr1730206qtc.472.1655333716016;
-        Wed, 15 Jun 2022 15:55:16 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s6-20020a05622a018600b002fcb0d95f65sm358780qtw.90.2022.06.15.15.55.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 15:55:15 -0700 (PDT)
-Date:   Wed, 15 Jun 2022 18:55:14 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH] pack-write.c: remove unused `mtimes_name` parameter
-Message-ID: <YqpjUiT45Oy8a577@nand.local>
-References: <f5bf68702d55b601ebd13bc4a6f1a34dc35abae5.1655253465.git.me@ttaylorr.com>
- <a7c81b77-651d-3374-6db8-f46ad01a8319@github.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YGQv8tmj9P2XfZLwXX+BDEtSAm1A05vOzFcuwco1fN4=;
+        b=6CRBhhrv0a/wymeL2X9zULu/ah+Oa7V4pO/elB3DnErbbrURnN3cVBzqa3JEQtElTx
+         rtVbcNk3cGjXo7KyCYMiRZkEAuNSAIh1LfXx84Ybju45+VSPfIXM7+WNtP6ujDrX4KDM
+         98lnzJs6BBPPfRNuY2gUCMZPwYRnIYwp9x8QOkgMlyvIqCDIwrfcCSdwvGaYi1zIldAa
+         UWFZKWLflyoifEm2KJc1nkocMM7mFNE+3iG4zWVLxn/9C6+FcSHZ6X2VDsc2OVjzrukj
+         +1v7XjZwPCi8qvW1rCAU7CMMFVe2qEaKwBWlKY8w5F+Ax2C5qUtQSfhiYa/ua+mTZe1S
+         wjcw==
+X-Gm-Message-State: AJIora9WZvF0JU1+3w9IPx/72iGZbDJnviyUPTZYw2JjOgQcquXEPTQk
+        B9/octsKgRci25oeM2AHbmVGHJ5xuvDd4Zpk100=
+X-Google-Smtp-Source: AGRyM1sI9FXPS7PJlxz90qw+sGfbFx4Cdo0s3lEm6PdZOO8fU6K4td9maY6rtfSncWiGIPUTVXWout6weRwf51bAQl4=
+X-Received: by 2002:a81:9256:0:b0:30c:7143:f218 with SMTP id
+ j83-20020a819256000000b0030c7143f218mr2366146ywg.493.1655335142053; Wed, 15
+ Jun 2022 16:19:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a7c81b77-651d-3374-6db8-f46ad01a8319@github.com>
+References: <pull.1261.git.1655242070.gitgitgadget@gmail.com> <c6803df1b6afead99a0a6a383ab9aa563920f464.1655242070.git.gitgitgadget@gmail.com>
+In-Reply-To: <c6803df1b6afead99a0a6a383ab9aa563920f464.1655242070.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 15 Jun 2022 19:18:49 -0400
+Message-ID: <CAPig+cTtZ3=r62XDTE4gpy0Fk_gkzOROm34gW6gkuGRjdQRBTA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] t2107: test 'git update-index --verbose'
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 15, 2022 at 09:30:52AM -0400, Derrick Stolee wrote:
-> On 6/14/22 8:37 PM, Taylor Blau wrote:
-> > `write_mtimes_file()` takes an optional parameter `mtimes_name`, which
-> > specifies where to write the mtimes file. If it is NULL, a location is
-> > generated with `odb_mkstemp()`.
-> >
-> > This imitates the pattern in `write_idx_file()`, and `write_rev_file()`,
-> > both of which have callers from the `index-pack` builtin which specify
-> > an exact location instead of generating one.
+On Tue, Jun 14, 2022 at 5:36 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> The '--verbose' option reports what is being added and removed from the
+> index, but has not been tested up to this point. Augment the tests in
+> t2107 to check the '--verbose' option in some scenarios.
 >
-> I have a nearly-identical patch [1], but I'm happy to take Taylor's
-> instead. I'll plan on dropping that patch from my v2.
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+> diff --git a/t/t2106-update-index-assume-unchanged.sh b/t/t2106-update-index-assume-unchanged.sh
+> @@ -20,7 +20,7 @@ test_expect_success 'do not switch branches with dirty file' '
+>         echo dirt >file &&
+> -       git update-index --assume-unchanged file &&
+> +       git update-index --verbose --assume-unchanged file &&
+>         test_must_fail git checkout - 2>err &&
+>         test_i18ngrep overwritten err
+>  '
 
-;-). Great minds think alike? Either that, or one of us (me) stopped
-reading the rest of this series before sending their patch.
+If this test passes with or without the addition of `--verbose`, then
+adding `--verbose` unnecessarily only pollutes what is (presumably)
+the minimum code necessary to implement what the test is checking, and
+may confuse future readers into thinking that something subtle is
+going on.
 
-> [1] https://lore.kernel.org/git/b67e110bf60e820874de94c64ee8c32d69413877.1655242070.git.gitgitgadget@gmail.com/
+> diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+> @@ -36,9 +36,14 @@ test_expect_success '--cacheinfo does not accept blob null sha1' '
+>         echo content >file &&
+>         git add file &&
+>         git rev-parse :file >expect &&
+> -       test_must_fail git update-index --cacheinfo 100644 $ZERO_OID file &&
+> +       test_must_fail git update-index --verbose --cacheinfo 100644 $ZERO_OID file >out &&
+>         git rev-parse :file >actual &&
+> -       test_cmp expect actual
+> +       test_cmp expect actual &&
+> +
+> +       cat >expect <<-\EOF &&
+> +       add '\''file'\''
+> +       EOF
+> +       test_cmp expect out
+>  '
 
-Either version is fine with me. It's probably easier for the maintainer
-to just drop my patch and take this series in one go, so I'd err on the
-side of your version in [1].
-
-Thanks,
-Taylor
+While I understand your desire to address a gap in the test coverage,
+I worry that this sort of change, which is orthogonal to the test's
+stated purpose, has the same downsides as mentioned above (i.e.
+polluting the minimum necessary code, and potentially confusing
+readers). Rather than piggybacking on existing tests, adding one or
+two new standalone tests dedicated to checking `--verbose` would be
+more palatable, more understandable, and be less likely to confuse
+future readers. The same comment applies to the remaining changes in
+this patch.
