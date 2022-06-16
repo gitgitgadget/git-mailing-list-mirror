@@ -2,306 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26187C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 03:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92223C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 03:39:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357782AbiFPDhE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 23:37:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55864 "EHLO
+        id S1358087AbiFPDjU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 23:39:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238953AbiFPDhC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 23:37:02 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14AE742A2C
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 20:37:01 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id o16so146934wra.4
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 20:37:01 -0700 (PDT)
+        with ESMTP id S1349153AbiFPDjS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 23:39:18 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B75AF1EEEB
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 20:39:16 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id z14so347822pjb.4
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 20:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=OrbgePDG6vY9IhVtUHHXDaTPPsh2WIOXl+alKcTwFY4=;
-        b=hz6Gr/8V+hPWOgAKFOKD2WIOL/USrpiIjWr76chNnWvadoHQCixhbouYXq0m87Fmjh
-         U9XyhS14YqCfAcboBLn56Z+wQ78GlZ2UhJwerLOdsYyutLw+/MAGUTaxWebjlfGX0+wT
-         o/4XXhaCbtRmikllAq1c4rQpyFB7Mwo957/C3T5FD/ADgwdGgrtLDbcjUGQ10fgsuG6J
-         tdEo4ZoNHmLup3J6cqJerGjZLe85lvQEWWCGHl6Cmd5JgK38w5M7nnX7KaTDnpA16zaD
-         2Tqs6EYm4Jt7mehLo+OKFIOsiypcdzwObu3Cna2/M+1Gg5M6og9wYu8UUjlfsMevKQeR
-         CDOw==
+        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=50eAq0hn8mRSwmR8ttAheEO3T5nEsNAHlXw1JN3+TUU=;
+        b=doLfORCdkzsoudR0nyn848cbS5UCZD3Wwi5HRdVjrbyiMzGRwENpthGv+00pGfRfiN
+         iFsBNOZmH9uGH17Ud8pyQ7a+jDcsQgaTD9zeNkLc+0gM/f8NBvqwJ6lxK8h3OdLAmAwr
+         /VpopquVoEA583z9jsARmdg5Si7HdrjOKLC5iL0rJtB2/fVoDbIt7WVickNuPrtr/zsc
+         dvbyole6b4HRqMRnvtwdjtX0zFxK1qW8Be2MNS4FMq28iuEdnNyV+fS5HjtLlvDEL/js
+         R4tntS3P0AVR7ooKJXK5I3dfYpBL1PE8C68uZYvhon5aC6Fac3lieJDsNm6ZJfFJ0Vkx
+         aOVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OrbgePDG6vY9IhVtUHHXDaTPPsh2WIOXl+alKcTwFY4=;
-        b=CacTsCBScLP3OLa9RpYJON5tFP2JWBvFOpr/F4xA/2FpsK3uxuzSnoMwtSUa0jpXO/
-         r9zkBtAnlJEpzTf+bwVBfK5AnHu1nRITOXJOWsbtm6RIRGRGJmCGTI9R0SUiuI2lq1Qb
-         ZdWe8RPMRyMv8rJtnr8QUBXx+kiMNiUpFopCTykFAaLXR2W+Z4K85FRQTPgVhnnVmGHc
-         joLJIUM/dapCb/0a3n7EbXMZjOKdjDtLojEGY5Q4+YFuk8gFGoVwbU4NqMp2xTDcVyTU
-         N9yHDUnxjWgKaB2OZdwD8hSUDwVf3KGV7NLcF4A5pkkMRmjkdJU7kQZ6rQufkyd1g9pR
-         XWMg==
-X-Gm-Message-State: AJIora+A32peDaozvlbnacaOu6cyaQIXsKBgcgoJRx3qCiNe8/zl/H6T
-        LZ2FhQ+DDmCvLw6muMYO9DQrWvYzMCICnw==
-X-Google-Smtp-Source: AGRyM1vxZ0841XxWaJKRa5R5A1YHPtN6Ons9BuIBifwUAV4vIOHS8RAt919srWWMeFHepZC+4FbVyg==
-X-Received: by 2002:adf:e2cb:0:b0:20c:c1bb:9fcb with SMTP id d11-20020adfe2cb000000b0020cc1bb9fcbmr2605182wrj.35.1655350619151;
-        Wed, 15 Jun 2022 20:36:59 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i2-20020adffdc2000000b00213ba4b5d94sm695541wrs.27.2022.06.15.20.36.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 20:36:58 -0700 (PDT)
-Message-Id: <pull.1263.v2.git.1655350617442.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1263.git.1655291320433.gitgitgadget@gmail.com>
-References: <pull.1263.git.1655291320433.gitgitgadget@gmail.com>
-From:   "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jun 2022 03:36:57 +0000
-Subject: [PATCH v2] send-pack.c: add config push.useBitmaps
-Fcc:    Sent
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=50eAq0hn8mRSwmR8ttAheEO3T5nEsNAHlXw1JN3+TUU=;
+        b=pt4o8SCCEjfSvCx2GKI/Qe/aEba3LLaL7yp57A3mB/dNB5F6FtJz8lpSJz9jIU4OxV
+         K0EJnbXiVO4/cZT24Gs4jrqELdQA3ZJa4S1pYHt0J8E3seQ5G7el9I8kkxL/kSaPnLHM
+         6+jyHw7wnBOMy0WCow1d5Bdv3DHDx+PLmOpC/Zv4i//h4tMuZwLmFCFGymf2QdWAC7T5
+         n/CKWs62KzZmheYIEg+lVaEs6Q1vxHRK9WzJli1mQ6maku4+4Fqe2dT43oOOxdXhV5Iz
+         I50ixV3uLnpRitJQr5phc4HhyHMmM8dTshtkbYJvufJDbnb099EY0zuCw/JOhUZoQ3Rs
+         qaCQ==
+X-Gm-Message-State: AJIora8tIjPQLo9+XqNw8hmFq/V/Z1qdx5MIgvXU9BOFaz0TezuiB+k6
+        L1+JnwP83IVULGFZ/IK14WLLYSxSJovquQ==
+X-Google-Smtp-Source: AGRyM1tfdbJNIAEVPQFjp4gmyGw0+PgI/eAUkt88IuZf0svtqp60Fe9sx0795fLkllbAU+jUYAB6tQ==
+X-Received: by 2002:a17:90a:b797:b0:1ea:c49d:1070 with SMTP id m23-20020a17090ab79700b001eac49d1070mr2848293pjr.175.1655350755714;
+        Wed, 15 Jun 2022 20:39:15 -0700 (PDT)
+Received: from JMHNXMC7VH.bytedance.net ([139.177.225.227])
+        by smtp.gmail.com with ESMTPSA id p4-20020a170902780400b0016760c06b76sm393163pll.194.2022.06.15.20.39.11
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 15 Jun 2022 20:39:15 -0700 (PDT)
+From:   Han Xin <hanxin.hx@bytedance.com>
+To:     me@ttaylorr.com
+Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
+        git@vger.kernel.org, haiyangtand@gmail.com,
+        jonathantanmy@google.com, ps@pks.im,
+        Han Xin <hanxin.hx@bytedance.com>
+Subject: [RFC PATCH 0/2] Re: An endless loop fetching issue with partial clone, alternates and commit graph
+Date:   Thu, 16 Jun 2022 11:38:31 +0800
+Message-Id: <cover.1655350442.git.hanxin.hx@bytedance.com>
+X-Mailer: git-send-email 2.36.1
+In-Reply-To: <YqlBjET0tf7V9/sg@nand.local>
+References: <YqlBjET0tf7V9/sg@nand.local>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>, kylezhao <kylezhao@tencent.com>,
-        Kyle Zhao <kylezhao@tencent.com>,
-        Kyle Zhao <kylezhao@tencent.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kyle Zhao <kylezhao@tencent.com>
+On Wed, Jun 15, 2022 at 10:18 AM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> [+cc Stolee]
+>
+> On Tue, Jun 14, 2022 at 03:25:13PM +0800, Haiyng Tan wrote:
+> > I think it's caused by using lazy-fetch in
+> > deref_without_lazy_fetch_extended().  In lookup_commit_in_graph(),
+> > lazy-fetch is initiated by repo_has_object_file() used.  has_object()
+> > should be used, it's no-lazy-fetch.
+>
+> Hmm. Are there cases where lookup_commit_in_graph() is expected to
+> lazily fetch missing objects from promisor remotes? If so, then this
+> wouldn't quite work. If not, then this seems like an appropriate fix to
+> me.
+>
+> Thanks,
+> Taylor
 
-This allows you to disable bitmaps for "git push". Default is false.
+We can see the use of has_object() in RelNotes/2.29.0.txt[1]：
+   * A new helper function has_object() has been introduced to make it
+     easier to mark object existence checks that do and don't want to
+     trigger lazy fetches, and a few such checks are converted using it.
 
-Reachability bitmaps are designed to speed up the "counting objects"
-phase of generating a pack during a clone or fetch. They are not
-optimized for Git clients sending a small topic branch via "git push".
-In some cases (see [1]), using reachability bitmaps during "git push"
-can cause significant performance regressions.
+Let's see the difference between has_object() and repo_has_object_file():
+    int has_object(struct repository *r, const struct object_id *oid,
+            unsigned flags)
+    {
+        int quick = !(flags & HAS_OBJECT_RECHECK_PACKED);
+        unsigned object_info_flags = OBJECT_INFO_SKIP_FETCH_OBJECT |
+            (quick ? OBJECT_INFO_QUICK : 0);
 
-Add a new "push.useBitmaps" config option to disable reachability
-bitmaps during "git push". This allows reachability bitmaps to still
-be used in other areas, such as "git rev-list --use-bitmap-index".
+        if (!startup_info->have_repository)
+            return 0;
+        return oid_object_info_extended(r, oid, NULL, object_info_flags) >= 0;
+    }
 
-[1]: https://lore.kernel.org/git/87zhoz8b9o.fsf@evledraar.gmail.com/
+    int repo_has_object_file_with_flags(struct repository *r,
+                        const struct object_id *oid, int flags)
+    {
+        if (!startup_info->have_repository)
+            return 0;
+        return oid_object_info_extended(r, oid, NULL, flags) >= 0;
+    }
 
-Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
----
-    send-pack.c: add config push.useBitmaps
-    
-    This patch add config push.useBitmaps to prevent git push using bitmap.
-    
-    The origin discussion is here:
-    https://lore.kernel.org/git/b940e705fbe9454685757f2e3055e2ce@tencent.com/
-    
-    Thanks, -Kyle
-    
-    Changes since v1:
-    
-     * changed the commit message
-     * modified and added missing \n to push.txt
-     * used test_subcommand for test
-     * modified "if" statement for "git_config_get_bool()" in send-pack.c
+    int repo_has_object_file(struct repository *r,
+                const struct object_id *oid)
+    {
+        return repo_has_object_file_with_flags(r, oid, 0);
+    }
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1263%2Fkeyu98%2Fkz%2Fpush-usebitmps-config-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1263/keyu98/kz/push-usebitmps-config-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1263
+Now we kown that has_object() add OBJECT_INFO_SKIP_FETCH_OBJECT to skip
+fetch object.
 
-Range-diff vs v1:
+I found that Ævar Arnfjörð Bjarmason added deref_without_lazy_fetch()
+4 weeks ago[2]:
+    static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
+                            int mark_tags_complete)
+    {
+        enum object_type type;
+        unsigned flags = OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK;
+        return deref_without_lazy_fetch_extended(oid, mark_tags_complete,
+                            &type, flags);
+    }
 
- 1:  000d033584b ! 1:  42e0b4845b2 send-pack.c: add config push.useBitmaps
-     @@ Metadata
-       ## Commit message ##
-          send-pack.c: add config push.useBitmaps
-      
-     -    This allows you to disabled bitmaps for "git push". Default is false.
-     +    This allows you to disable bitmaps for "git push". Default is false.
-      
-     -    Bitmaps are designed to speed up the "counting objects" phase of
-     -    subsequent packs created for clones and fetches.
-     -    But in some cases, turning bitmaps on does horrible things for "push"
-     -    performance[1].
-     +    Reachability bitmaps are designed to speed up the "counting objects"
-     +    phase of generating a pack during a clone or fetch. They are not
-     +    optimized for Git clients sending a small topic branch via "git push".
-     +    In some cases (see [1]), using reachability bitmaps during "git push"
-     +    can cause significant performance regressions.
-     +
-     +    Add a new "push.useBitmaps" config option to disable reachability
-     +    bitmaps during "git push". This allows reachability bitmaps to still
-     +    be used in other areas, such as "git rev-list --use-bitmap-index".
-      
-          [1]: https://lore.kernel.org/git/87zhoz8b9o.fsf@evledraar.gmail.com/
-      
-     @@ Documentation/config/push.txt: push.negotiate::
-       	in common.
-      +
-      +push.useBitmaps::
-     -+	If this config and `pack.useBitmaps` are both "true", git will
-     -+	use pack bitmaps (if available) when git push. Default is false.
-     - \ No newline at end of file
-     ++    If this config and `pack.useBitmaps` are both `true`, then Git will
-     ++    use reachability bitmaps during `git push`, if available (disabled
-     ++    by default).
-      
-       ## send-pack.c ##
-      @@ send-pack.c: static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
-     @@ send-pack.c: static int pack_objects(int fd, struct ref *refs, struct oid_array
-       	po.out = args->stateless_rpc ? -1 : fd;
-       	po.git_cmd = 1;
-      @@ send-pack.c: int send_pack(struct send_pack_args *args,
-     - 	int use_push_options = 0;
-     - 	int push_options_supported = 0;
-     - 	int object_format_supported = 0;
-     -+	int use_bitmaps = 0;
-     - 	unsigned cmds_sent = 0;
-     - 	int ret;
-       	struct async demux;
-     + 	const char *push_cert_nonce = NULL;
-     + 	struct packet_reader reader;
-     ++	int use_bitmaps;
-     + 
-     + 	if (!remote_refs) {
-     + 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
-      @@ send-pack.c: int send_pack(struct send_pack_args *args,
-     - 	git_config_get_bool("push.negotiate", &push_negotiate);
-       	if (push_negotiate)
-       		get_commons_through_negotiation(args->url, remote_refs, &commons);
-     -+	git_config_get_bool("push.usebitmaps", &use_bitmaps);
-     -+	if (use_bitmaps)
-     -+		args->use_bitmaps = 1;
-       
-     ++	if (!git_config_get_bool("push.usebitmaps", &use_bitmaps))
-     ++		args->use_bitmaps = use_bitmaps;
-     ++
-       	git_config_get_bool("transfer.advertisesid", &advertise_sid);
-       
-     + 	/* Does the other end support the reporting? */
-      
-       ## send-pack.h ##
-      @@ send-pack.h: struct send_pack_args {
-     @@ t/t5516-fetch-push.sh: test_expect_success 'push warns or fails when using usern
-      +test_expect_success 'push with config push.useBitmaps' '
-      +	mk_test testrepo heads/main &&
-      +	git checkout main &&
-     -+	GIT_TRACE=1 git push testrepo main:test >/dev/null 2>stderr &&
-     -+	grep "no-use-bitmap-index" stderr &&
-     ++	GIT_TRACE2_EVENT="$PWD/default" \
-     ++	git push testrepo main:test &&
-     ++	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-     ++	--thin --delta-base-offset -q --no-use-bitmap-index <default &&
-      +
-      +	git config push.useBitmaps true &&
-     -+	GIT_TRACE=1 git push testrepo main:test2 >/dev/null 2>stderr &&
-     -+	! grep "no-use-bitmap-index" stderr
-     ++	GIT_TRACE2_EVENT="$PWD/true" \
-     ++	git push testrepo main:test2 &&
-     ++	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-     ++	--thin --delta-base-offset -q <true &&
-     ++
-     ++	git config push.useBitmaps false &&
-     ++	GIT_TRACE2_EVENT="$PWD/false" \
-     ++	git push testrepo main:test3 &&
-     ++	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-     ++	--thin --delta-base-offset -q --no-use-bitmap-index <false
-      +'
-      +
-       test_done
+But oi_flags is only used by oid_object_info_extended() and is missed by
+lookup_commit_in_graph():
+    static struct commit *deref_without_lazy_fetch_extended(const struct object_id *oid,
+                                int mark_tags_complete,
+                                enum object_type *type,
+                                unsigned int oi_flags)
+    {
+        struct object_info info = { .typep = type };
+        struct commit *commit;
 
+        commit = lookup_commit_in_graph(the_repository, oid);
+        if (commit)
+            return commit;
 
- Documentation/config/push.txt |  5 +++++
- send-pack.c                   |  6 ++++++
- send-pack.h                   |  3 ++-
- t/t5516-fetch-push.sh         | 21 +++++++++++++++++++++
- 4 files changed, 34 insertions(+), 1 deletion(-)
+        while (1) {
+            if (oid_object_info_extended(the_repository, oid, &info,
+                            oi_flags))
 
-diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-index e32801e6c91..3f3ff66fe7c 100644
---- a/Documentation/config/push.txt
-+++ b/Documentation/config/push.txt
-@@ -137,3 +137,8 @@ push.negotiate::
- 	server attempt to find commits in common. If "false", Git will
- 	rely solely on the server's ref advertisement to find commits
- 	in common.
-+
-+push.useBitmaps::
-+    If this config and `pack.useBitmaps` are both `true`, then Git will
-+    use reachability bitmaps during `git push`, if available (disabled
-+    by default).
-diff --git a/send-pack.c b/send-pack.c
-index bc0fcdbb000..627e79d7623 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -84,6 +84,8 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
- 		strvec_push(&po.args, "--progress");
- 	if (is_repository_shallow(the_repository))
- 		strvec_push(&po.args, "--shallow");
-+	if (!args->use_bitmaps)
-+		strvec_push(&po.args, "--no-use-bitmap-index");
- 	po.in = -1;
- 	po.out = args->stateless_rpc ? -1 : fd;
- 	po.git_cmd = 1;
-@@ -487,6 +489,7 @@ int send_pack(struct send_pack_args *args,
- 	struct async demux;
- 	const char *push_cert_nonce = NULL;
- 	struct packet_reader reader;
-+	int use_bitmaps;
- 
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
-@@ -498,6 +501,9 @@ int send_pack(struct send_pack_args *args,
- 	if (push_negotiate)
- 		get_commons_through_negotiation(args->url, remote_refs, &commons);
- 
-+	if (!git_config_get_bool("push.usebitmaps", &use_bitmaps))
-+		args->use_bitmaps = use_bitmaps;
-+
- 	git_config_get_bool("transfer.advertisesid", &advertise_sid);
- 
- 	/* Does the other end support the reporting? */
-diff --git a/send-pack.h b/send-pack.h
-index e148fcd9609..f7af1b0353e 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -26,7 +26,8 @@ struct send_pack_args {
- 		/* One of the SEND_PACK_PUSH_CERT_* constants. */
- 		push_cert:2,
- 		stateless_rpc:1,
--		atomic:1;
-+		atomic:1,
-+		use_bitmaps:1;
- 	const struct string_list *push_options;
- };
- 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index dedca106a7a..0d416d1474f 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1865,4 +1865,25 @@ test_expect_success 'push warns or fails when using username:password' '
- 	test_line_count = 1 warnings
- '
- 
-+test_expect_success 'push with config push.useBitmaps' '
-+	mk_test testrepo heads/main &&
-+	git checkout main &&
-+	GIT_TRACE2_EVENT="$PWD/default" \
-+	git push testrepo main:test &&
-+	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-+	--thin --delta-base-offset -q --no-use-bitmap-index <default &&
-+
-+	git config push.useBitmaps true &&
-+	GIT_TRACE2_EVENT="$PWD/true" \
-+	git push testrepo main:test2 &&
-+	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-+	--thin --delta-base-offset -q <true &&
-+
-+	git config push.useBitmaps false &&
-+	GIT_TRACE2_EVENT="$PWD/false" \
-+	git push testrepo main:test3 &&
-+	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-+	--thin --delta-base-offset -q --no-use-bitmap-index <false
-+'
-+
- test_done
+So, an appropriate fix can be that let lookup_commit_in_graph() pickup
+oi_flags and pass it to oid_object_info_extended(), then the fetching
+loop will be prevent by the given flag OBJECT_INFO_SKIP_FETCH_OBJECT.
 
-base-commit: 8168d5e9c23ed44ae3d604f392320d66556453c9
+1. https://github.com/git/git/blob/master/Documentation/RelNotes/2.29.0.txt
+2. https://lore.kernel.org/git/2a563b5f18cc9c42cb71a9547344a5435f6bc058.1652731865.git.gitgitgadget@gmail.com/
+
+Thanks
+-Han Xin
+
+Han Xin (2):
+  commit-graph.c: add "flags" to lookup_commit_in_graph()
+  fetch-pack.c: pass "oi_flags" to lookup_commit_in_graph()
+
+ builtin/fetch.c                    |  4 ++-
+ commit-graph.c                     |  5 ++--
+ commit-graph.h                     |  3 +-
+ fetch-pack.c                       | 10 +++----
+ revision.c                         |  2 +-
+ t/t5583-fetch-with-commit-graph.sh | 47 ++++++++++++++++++++++++++++++
+ upload-pack.c                      |  5 ++--
+ 7 files changed, 64 insertions(+), 12 deletions(-)
+ create mode 100644 t/t5583-fetch-with-commit-graph.sh
+
 -- 
-gitgitgadget
+2.36.1
+
