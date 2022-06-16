@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C90FC43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 03:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C152EC43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 03:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358169AbiFPDjX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jun 2022 23:39:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59278 "EHLO
+        id S1358467AbiFPDjd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jun 2022 23:39:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356282AbiFPDjV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jun 2022 23:39:21 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 338891CFED
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 20:39:20 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id v17-20020a17090a899100b001ead067eaf9so668025pjn.0
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 20:39:20 -0700 (PDT)
+        with ESMTP id S1350569AbiFPDjY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jun 2022 23:39:24 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20B3A1CFDF
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 20:39:24 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id 187so357368pfu.9
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 20:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bytedance-com.20210112.gappssmtp.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mNOTUFfdKMNYspcLCed+ztcc3HTgXEP/TnpY9Z64ruc=;
-        b=PRaTV8n3NPNogjzGogyirgDV5qe1+VvurCW49ZlcR9FEyPwhfGZJ9aomTkYwWO6Tm2
-         yVf8er7SFXYcEWi6yJpcHMM80FbBxPckCiT10Knk57FWjtSFD4fmHSSb/vMakd87572N
-         +XZzdNpBTUkhtaQrI++gg4KbhleyZ5TcOp/X8kwEpvMgEb+fSYexms/JAOPv7dvpjqfn
-         Z1ASgOKXMW20LwHcLj0BDf4DKxbPNUE8Nk58W391jg8voo+bZCICEQZvPENp6u/eMZPi
-         LXii5xldsVg+91fi4SpCFC5o+oJ3YErW6+22JwzihYRLu7jNswSbQ3UM1j+nHRqL8Dwk
-         ji2A==
+        bh=Yb1EbTs3FbmhWARjFziHnHYJ4IETCtm0biCtbmvFWy4=;
+        b=ZA3gT0KRcsqrWitTY9uzBDX4B7EcWN7YVOB4Qfj1CJYzOb4V6nm9Dx7etmYLV+s8Cg
+         KQwvGWfYzLxkpneN331muPG3xklOdSupRr5nNJieDQwF1Biunl6EMdR0ElFr4LdktQRb
+         GVu37uvN9HdPRwy9qRxtkHQNHZSI6UF2zQ1D/kMGfJ4+0vizysfp8lGv8Mb5oADx269O
+         WfTU5efF6a28UrHgOnUm1OBDcB6YrlgKUPkZkU9xSXoXWHpWyaqij5MWXo3YYBjzI0fa
+         H/LweXHofWZSfNu/2rHIi4mFCWEfeaehou5Fx4uO5jy7mwdoXAsORkK2pLUhGjyPyJ8V
+         5iEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mNOTUFfdKMNYspcLCed+ztcc3HTgXEP/TnpY9Z64ruc=;
-        b=Q1Wf0BEAFeJvpVJ/tLWUXocwAqqrIPUbk11T2sxTVpxARWMDkVaz9wCR+9PmxVWmkG
-         Q1t36ljf2bXiwTVdP7PrlObcIUO28LaB3siiaZx17n60GRYvtvuLRnfEGPcrp0CYsTxL
-         cbmGBjvLo7d6RORN+N92RxJM6SGI1Lne+PXTxZjMoiuDFl0bM+0b0RQ7EtyKq7xsU7lt
-         vgatbG7XS9uVcvvO0C7u8k/0KRDRz0VxXNb0dFMMtsWdh0MchcacEpUy6uDwHBQuALH8
-         DnZPn7w4UhefI7+wOGEEtwlRhgnLDkfIQM+1/6mnDY5yqm+RU4y8sn4w+Rzf3L6c/SwL
-         86MA==
-X-Gm-Message-State: AJIora9ZCRfLrvpiIFAS24Liui/V04wnNPx5/ersA8X5n0uUa4lw5Mvv
-        KbcN+EtVIuVN9BhdN0MR3jHbBQ==
-X-Google-Smtp-Source: AGRyM1sdAqDJmv2YDDbsg0+XboK78Hi0X9moF5VteM0O4iUipDNzRZ1T0DyOIukeZRJJRgtwMHI13Q==
-X-Received: by 2002:a17:90b:4b8d:b0:1e3:5147:6e63 with SMTP id lr13-20020a17090b4b8d00b001e351476e63mr2909974pjb.162.1655350759653;
-        Wed, 15 Jun 2022 20:39:19 -0700 (PDT)
+        bh=Yb1EbTs3FbmhWARjFziHnHYJ4IETCtm0biCtbmvFWy4=;
+        b=MUw5uwxPXp7mdai/7Z90vXwwSQ5LgInFAkRFj5KG7eWwJf/NgcTs/2+PsNabMbmy1D
+         BP772KzAbhYdCoEo5PK65xdfniStBdy8nvzLiB7irrX/ScIJtv07F1xDNXzrM8SVJfnM
+         4Ukzr8tPZJ/H+SLVqms306RAToWqZl5yuW+5avvifprEgYdSXW3VZkdx6GnCWJuKikSa
+         6aIHFJtXXKLF/NWNW96gJgeDpB9OTb8k/P1BULr7WJJD2dE1aaQ/CNnypxBhg1gGNrZq
+         bZESEGGqrQ0Z6HiBbnFZMnv8gxaAig+Nm+5YTaBzZEn4+PDUtvbZ0pwL108QpQgAIshi
+         ICBQ==
+X-Gm-Message-State: AJIora8H+FdmkDJ6fCaIh+4VBqfJf++fOFeZsQauYnX9q4IgxsdroDB6
+        15eXucXWHOi+SS7d0Ig/siYBPA==
+X-Google-Smtp-Source: AGRyM1uupYLMyHq17Hh9dRpJXKTUHgMdn4U/Acaq/38Mm7Id0YU8euTiEFi4pRFuIm9bVMuVU8Yd/w==
+X-Received: by 2002:a05:6a00:4406:b0:51c:244f:85d8 with SMTP id br6-20020a056a00440600b0051c244f85d8mr2838643pfb.36.1655350763601;
+        Wed, 15 Jun 2022 20:39:23 -0700 (PDT)
 Received: from JMHNXMC7VH.bytedance.net ([139.177.225.227])
-        by smtp.gmail.com with ESMTPSA id p4-20020a170902780400b0016760c06b76sm393163pll.194.2022.06.15.20.39.16
+        by smtp.gmail.com with ESMTPSA id p4-20020a170902780400b0016760c06b76sm393163pll.194.2022.06.15.20.39.20
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 15 Jun 2022 20:39:19 -0700 (PDT)
+        Wed, 15 Jun 2022 20:39:23 -0700 (PDT)
 From:   Han Xin <hanxin.hx@bytedance.com>
 To:     me@ttaylorr.com
 Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
         git@vger.kernel.org, haiyangtand@gmail.com,
         jonathantanmy@google.com, ps@pks.im,
         Han Xin <hanxin.hx@bytedance.com>
-Subject: [RFC PATCH 1/2] commit-graph.c: add "flags" to lookup_commit_in_graph()
-Date:   Thu, 16 Jun 2022 11:38:32 +0800
-Message-Id: <9aa52b29862d9a6432d0752eae12365f43ba52c0.1655350442.git.hanxin.hx@bytedance.com>
+Subject: [RFC PATCH 2/2] fetch-pack.c: pass "oi_flags" to lookup_commit_in_graph()
+Date:   Thu, 16 Jun 2022 11:38:33 +0800
+Message-Id: <03ec01ab398bc4967f7ac8ccab510cac2d6785be.1655350442.git.hanxin.hx@bytedance.com>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <cover.1655350442.git.hanxin.hx@bytedance.com>
 References: <cover.1655350442.git.hanxin.hx@bytedance.com>
@@ -65,132 +65,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When try to do deref_without_lazy_fetch_extended(), "oi_flags" will
-be missed by lookup_commit_in_graph(), then repo_has_object_file()
-may start a new round objects fetching.
-So let's add "flags" to lookup_commit_in_graph() and use
-repo_has_object_file_with_flags() to pass the flags.
+As the custom "oi_flags" is missed by lookup_commit_in_graph(), we will
+get another lazy fetch round if we found the commit in commit graph but
+miss it in the local object repository.
+
+We can see the issue via[1].
+
+1. https://lore.kernel.org/git/20220612161707.21807-1-chiyutianyi@gmail.com/
 
 Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
 ---
- builtin/fetch.c | 4 +++-
- commit-graph.c  | 5 +++--
- commit-graph.h  | 3 ++-
- fetch-pack.c    | 4 ++--
- revision.c      | 2 +-
- upload-pack.c   | 5 +++--
- 6 files changed, 14 insertions(+), 9 deletions(-)
+ fetch-pack.c                       | 10 +++----
+ t/t5583-fetch-with-commit-graph.sh | 47 ++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 5 deletions(-)
+ create mode 100644 t/t5583-fetch-with-commit-graph.sh
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ac29c2b1ae..44285d5318 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1179,7 +1179,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				 * annotated tags.
- 				 */
- 				if (!starts_with(rm->name, "refs/tags/"))
--					commit = lookup_commit_in_graph(the_repository, &rm->old_oid);
-+					commit = lookup_commit_in_graph(
-+						the_repository, &rm->old_oid,
-+						0);
- 				if (!commit) {
- 					commit = lookup_commit_reference_gently(the_repository,
- 										&rm->old_oid,
-diff --git a/commit-graph.c b/commit-graph.c
-index 92d4503336..b09f454bb5 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -889,7 +889,8 @@ static int find_commit_pos_in_graph(struct commit *item, struct commit_graph *g,
- 	}
- }
- 
--struct commit *lookup_commit_in_graph(struct repository *repo, const struct object_id *id)
-+struct commit *lookup_commit_in_graph(struct repository *repo,
-+				      const struct object_id *id, int flags)
- {
- 	struct commit *commit;
- 	uint32_t pos;
-@@ -898,7 +899,7 @@ struct commit *lookup_commit_in_graph(struct repository *repo, const struct obje
- 		return NULL;
- 	if (!search_commit_pos_in_graph(id, repo->objects->commit_graph, &pos))
- 		return NULL;
--	if (!repo_has_object_file(repo, id))
-+	if (!repo_has_object_file_with_flags(repo, id, flags))
- 		return NULL;
- 
- 	commit = lookup_commit(repo, id);
-diff --git a/commit-graph.h b/commit-graph.h
-index 2e3ac35237..747a67c0ee 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -46,7 +46,8 @@ int parse_commit_in_graph(struct repository *r, struct commit *item);
-  * that we don't return commits whose object has been pruned. Otherwise, this
-  * function returns `NULL`.
-  */
--struct commit *lookup_commit_in_graph(struct repository *repo, const struct object_id *id);
-+struct commit *lookup_commit_in_graph(struct repository *repo,
-+				      const struct object_id *id, int flags);
- 
- /*
-  * It is possible that we loaded commit contents from the commit buffer,
 diff --git a/fetch-pack.c b/fetch-pack.c
-index cb6647d657..4a62fb182e 100644
+index 4a62fb182e..ca1234e456 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
 @@ -123,7 +123,7 @@ static struct commit *deref_without_lazy_fetch_extended(const struct object_id *
  	struct object_info info = { .typep = type };
  	struct commit *commit;
  
--	commit = lookup_commit_in_graph(the_repository, oid);
-+	commit = lookup_commit_in_graph(the_repository, oid, 0);
+-	commit = lookup_commit_in_graph(the_repository, oid, 0);
++	commit = lookup_commit_in_graph(the_repository, oid, oi_flags);
  	if (commit)
  		return commit;
  
-@@ -714,7 +714,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+@@ -704,6 +704,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+ 	struct ref *ref;
+ 	int old_save_commit_buffer = save_commit_buffer;
+ 	timestamp_t cutoff = 0;
++	int oi_flags = OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK;
+ 
+ 	if (args->refetch)
+ 		return;
+@@ -714,13 +715,12 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
  	for (ref = *refs; ref; ref = ref->next) {
  		struct commit *commit;
  
--		commit = lookup_commit_in_graph(the_repository, &ref->old_oid);
-+		commit = lookup_commit_in_graph(the_repository, &ref->old_oid, 0);
+-		commit = lookup_commit_in_graph(the_repository, &ref->old_oid, 0);
++		commit = lookup_commit_in_graph(the_repository, &ref->old_oid,
++						oi_flags);
  		if (!commit) {
  			struct object *o;
  
-diff --git a/revision.c b/revision.c
-index 211352795c..df5db51f98 100644
---- a/revision.c
-+++ b/revision.c
-@@ -379,7 +379,7 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
- 	 * look up the object ID in those graphs. Like this, we can avoid
- 	 * parsing commit data from disk.
- 	 */
--	commit = lookup_commit_in_graph(revs->repo, oid);
-+	commit = lookup_commit_in_graph(revs->repo, oid, 0);
- 	if (commit)
- 		object = &commit->object;
- 	else
-diff --git a/upload-pack.c b/upload-pack.c
-index 3a851b3606..0fa9c3cf3f 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1407,7 +1407,7 @@ static int parse_want(struct packet_writer *writer, const char *line,
- 			die("git upload-pack: protocol error, "
- 			    "expected to get oid, not '%s'", line);
- 
--		commit = lookup_commit_in_graph(the_repository, &oid);
-+		commit = lookup_commit_in_graph(the_repository, &oid, 0);
- 		if (commit)
- 			o = &commit->object;
- 		else
-@@ -1455,7 +1455,8 @@ static int parse_want_ref(struct packet_writer *writer, const char *line,
- 		item->util = oiddup(&oid);
- 
- 		if (!starts_with(refname_nons, "refs/tags/")) {
--			struct commit *commit = lookup_commit_in_graph(the_repository, &oid);
-+			struct commit *commit =
-+				lookup_commit_in_graph(the_repository, &oid, 0);
- 			if (commit)
- 				o = &commit->object;
- 		}
+-			if (!has_object_file_with_flags(&ref->old_oid,
+-						OBJECT_INFO_QUICK |
+-						OBJECT_INFO_SKIP_FETCH_OBJECT))
++			if (!has_object_file_with_flags(&ref->old_oid, oi_flags))
+ 				continue;
+ 			o = parse_object(the_repository, &ref->old_oid);
+ 			if (!o || o->type != OBJ_COMMIT)
+diff --git a/t/t5583-fetch-with-commit-graph.sh b/t/t5583-fetch-with-commit-graph.sh
+new file mode 100644
+index 0000000000..cb2beafa8d
+--- /dev/null
++++ b/t/t5583-fetch-with-commit-graph.sh
+@@ -0,0 +1,47 @@
++#!/bin/sh
++
++test_description='test for fetching missing object with a full commit-graph'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	git init --bare dest.git &&
++	test_commit one &&
++	git checkout -b testbranch &&
++	test_commit two &&
++	git push dest.git --all
++'
++
++test_expect_success 'prepare a alternates repository without testbranch' '
++	git clone -b $GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME dest.git alternates &&
++	oid=$(git -C alternates rev-parse refs/remotes/origin/testbranch) &&
++	git -C alternates update-ref -d refs/remotes/origin/testbranch &&
++	git -C alternates gc --prune=now
++'
++
++test_expect_success 'prepare a repository with a full commit-graph' '
++	git init source &&
++	echo "$(pwd)/dest.git/objects" >source/.git/objects/info/alternates &&
++	git -C source remote add origin "$(pwd)/dest.git" &&
++	git -C source config remote.origin.promisor true &&
++	git -C source config remote.origin.partialclonefilter blob:none &&
++	git -C source fetch origin &&
++	(
++		cd source &&
++		test_commit three &&
++		git -c gc.writeCommitGraph=true gc
++	)
++'
++
++test_expect_success 'change the alternates to that without commit two' '
++	echo "$(pwd)/alternates/.git/objects" >source/.git/objects/info/alternates
++'
++
++test_expect_success 'fetch the missing object' '
++	git -C source fetch origin $oid
++'
++
++test_done
 -- 
 2.36.1
 
