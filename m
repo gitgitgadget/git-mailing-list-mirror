@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CCFCC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AFA1C43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:14:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376953AbiFPNN7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 09:13:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47952 "EHLO
+        id S1376960AbiFPNOB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 09:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376947AbiFPNN4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 09:13:56 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82EB73917A
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:53 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id c21so1853210wrb.1
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:53 -0700 (PDT)
+        with ESMTP id S1376906AbiFPNN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 09:13:58 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CDC33584D
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:55 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id o8so1849999wro.3
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WJk6WpJm9twMGGM9yT6vKEqpb2pBiIBJq9nE/+PKYLc=;
-        b=oa4RgMRXpONHEqZTtATfIBLXJP6kEfTe1lhyNyhuQDeTz8njtdjD/GgwniWeqKav2f
-         0iFD4X3OS54ekXtuRJNixVBP/F0O9MUlASkn7eW4E0edAwh1eUk/pwk8vhkbPzD+GKCo
-         CK/zFmPfQ+up1gKIbNlHs6SRFEM1G3AHikbR4amPg0QD4KT9ugHDsu+lpb6JmRv1roiD
-         JpGsCxAvYQ0Ij4AIlAXhPno5Pd/oQ4HnMPiONZoneUUCEHyGSQWba89vn86uBKrb9IE2
-         I/GwLEGl8AAO76fo1KEYoZN2mNDRlPI3xPxkCWumeJagg6yroUCYIjFNBIrUh7iopNRE
-         BhDQ==
+        bh=CroZ7wVEHD5BnTdKaPi1CT8nA1TvimJ9eubRklrt+3Y=;
+        b=OAcRHrzGk0DJZryYw6PCpzNqq9YmdF1YgHU/Fd7X2foVtNcrPiuWAyd7oAMEgPU/Im
+         D+kwLBlesMOJSlb6Ck40fhW1QLTzAmwVUdMfD3RYJymenrBDc0Y9+iYVKtguR7Q82ZFc
+         Q536WLlgfVYWXsH/7heEMG3Ag8uoyuvry9TMQhMTFwvM0usTq52BVAgb5usIYOPz+HNV
+         DQC3kFBz0MRK4+8yTTVSwN7Dkvc6XN95ahrtkZLCNkuHxMtlyq8acbcaXIUb7Ff13jNp
+         JTwF94vbsw4OR5z5s4RjYEQrdx4JM/6vO9v2FtTOwOtRcpeT3PAwqFqFzPs3q16NT236
+         v1Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WJk6WpJm9twMGGM9yT6vKEqpb2pBiIBJq9nE/+PKYLc=;
-        b=Ce29dGWFopuUeOnJ+pzmMdH+1rWFz2KBUaRXxk2/MkVoQS3eM3xE9xub7juLrfN+FT
-         RsQ1QKtWMl1/+kUd2hAW85L3F4qeWceuEIvNUaGSecX1G6E1/A8D32WD57x6q83eWr9Y
-         2Hwj/KX1jKDWleK4TCi3qmnbBv9a5TioqY4kYMnwaunBGUUhmEZ5fDC9zZTqawH6JcdO
-         JkKSdQFgV8YdcCAj/v42PzUVdUXQfCLek394AF5Ud8CWCWwF+IiWoOXGtYMDZppOAOBm
-         jwwE3EQ6AVdC65U8KbMQT2WmdDRWKK1S0FtlVvMJT9n/ZSGLwn9ElzoZTCy1Ulv2uqXi
-         xN/w==
-X-Gm-Message-State: AJIora+S+QTBpR51qNtS8jeIsPsBlVzSgb8H/eZol5Ckjs3NJaQTAEBh
-        +QiwRcr4/axHv3QsfYg72LMQdwkDgC0BPw==
-X-Google-Smtp-Source: AGRyM1tc/ZGat1ZB2dd7yBTpGR8KlVKX8fcpZuAjs0ZW0ZJRUdZPxsrT71hgdMt4ovtWInYMjFp4Pg==
-X-Received: by 2002:a05:6000:18a8:b0:212:ae71:a3f6 with SMTP id b8-20020a05600018a800b00212ae71a3f6mr4528232wri.635.1655385231516;
-        Thu, 16 Jun 2022 06:13:51 -0700 (PDT)
+        bh=CroZ7wVEHD5BnTdKaPi1CT8nA1TvimJ9eubRklrt+3Y=;
+        b=XT6KBLfDWvdTvxC3o0uu9DW9OIe4z3dutC39KfWqeXse8UEvUpE1lVu0/4qRAAmYFI
+         l4JQDYaacA2/56NibUiI2OpFTYrs5swsnd+Bz93GQJGAD4PrloamDYrZ/7I8qn7pJZOX
+         ndaq7xcKh1zPUyAC/yfIuBnDFkSZA9K+0OUCaZ87b3P+pTMfPFDIi0wLTuEm9lCMqNaA
+         v3/9YPtOl+UoYo6UclYjWsfoYUuO+e1RefXcEjCcMLW19sZgrWPDTkB0qVlF7Hi83dgN
+         NNSzNJmApn3j0Bn5DtgAs7hg7lpLLOoIeLK+vqwuTLIPzE5jLfTFuTarZQjSJ0/Zb/+u
+         LIpA==
+X-Gm-Message-State: AJIora89Td4wpKcUHc8GZsc6kHIKPxFG0aDAok53xLzcEqphv/NMAsJO
+        6pVuB89Sb++3lVrZjwPhww4gTG9PfzLj9w==
+X-Google-Smtp-Source: AGRyM1vFWS18gJd73WOk9yW1Y0OANlE5NpWsoq+RgE8A4d6BMUKHv79Yzpy0zNx1cZ7cG57REi8ueg==
+X-Received: by 2002:a05:6000:230:b0:210:31ca:28b8 with SMTP id l16-20020a056000023000b0021031ca28b8mr4682436wrz.538.1655385234008;
+        Thu, 16 Jun 2022 06:13:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r17-20020a05600c35d100b0039c8d181ac6sm6542254wmq.26.2022.06.16.06.13.50
+        by smtp.gmail.com with ESMTPSA id j7-20020adfea47000000b0021863a560f6sm1854555wrn.3.2022.06.16.06.13.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 06:13:50 -0700 (PDT)
-Message-Id: <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
+        Thu, 16 Jun 2022 06:13:53 -0700 (PDT)
+Message-Id: <ca5dbc29e40e62f03cd0676996e16e5cdd6bedbd.1655385230.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
 References: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
+        <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jun 2022 13:13:46 +0000
-Subject: [PATCH v2 0/4] Reactions to v2.37.0-rc0 test coverage report
+Date:   Thu, 16 Jun 2022 13:13:48 +0000
+Subject: [PATCH v2 2/4] t5329: test 'git gc --cruft' without '--prune=now'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -60,97 +61,42 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com,
         Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These patches add test coverage or simplify code based on discoveries in the
-test coverage report (specifically, some that I highlighted at [1]).
+From: Derrick Stolee <derrickstolee@github.com>
 
-[1]
-https://lore.kernel.org/git/3d1c6dfd-1df6-3393-df5e-692719375772@github.com/
+Replace a 'git repack --cruft -d' with the wrapper 'git gc --cruft' to
+exercise some logic in builtin/gc.c that adds the '--cruft' option to
+the underlying 'git repack' command.
 
- 1. Add tests for 'git update-index --verbose'.
- 2. Add 'git gc --cruft' without '--prune=now' to test.
- 3. Drop an always-NULL parameter from an internal method.
- 4. Revert 080ab56a4 (cache-tree: implement cache_tree_find_path(),
-    2022-05-23).
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ t/t5329-pack-objects-cruft.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Any subset of these could be taken (or dropped), but I thought they would be
-worth considering.
-
-
-Updates in v2
-=============
-
- * A useless addition of --verbose was removed from a test in patch 1.
- * Comments are updated in patch 2 based on Taylor's recommendations.
- * Added --prune="01-01-1980" to exercise the --cruft-expiration logic
-   underneath 'git gc --cruft'.
-
-Thanks, -Stolee
-
-Derrick Stolee (4):
-  t2107: test 'git update-index --verbose'
-  t5329: test 'git gc --cruft' without '--prune=now'
-  pack-write: drop always-NULL parameter
-  cache-tree: remove cache_tree_find_path()
-
- cache-tree.c                  | 27 ---------------------------
- cache-tree.h                  |  2 --
- pack-write.c                  | 17 ++++++-----------
- t/t2107-update-index-basic.sh | 31 +++++++++++++++++++++++++------
- t/t5329-pack-objects-cruft.sh |  4 +++-
- 5 files changed, 34 insertions(+), 47 deletions(-)
-
-
-base-commit: 8168d5e9c23ed44ae3d604f392320d66556453c9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1261%2Fderrickstolee%2Ftest-coverage-response-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1261/derrickstolee/test-coverage-response-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1261
-
-Range-diff vs v1:
-
- 1:  c6803df1b6a ! 1:  c22963b49e6 t2107: test 'git update-index --verbose'
-     @@ Commit message
-      
-          Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-      
-     - ## t/t2106-update-index-assume-unchanged.sh ##
-     -@@ t/t2106-update-index-assume-unchanged.sh: test_expect_success 'do not switch branches with dirty file' '
-     - 	git reset --hard &&
-     - 	git checkout other &&
-     - 	echo dirt >file &&
-     --	git update-index --assume-unchanged file &&
-     -+	git update-index --verbose --assume-unchanged file &&
-     - 	test_must_fail git checkout - 2>err &&
-     - 	test_i18ngrep overwritten err
-     - '
-     -
-       ## t/t2107-update-index-basic.sh ##
-      @@ t/t2107-update-index-basic.sh: test_expect_success '--cacheinfo does not accept blob null sha1' '
-       	echo content >file &&
- 2:  f59a0c326a0 ! 2:  ca5dbc29e40 t5329: test 'git gc --cruft' without '--prune=now'
-     @@ t/t5329-pack-objects-cruft.sh: test_expect_success 'expiring cruft objects with
-       		comm -13 reachable objects >unreachable &&
-       
-      -		git repack --cruft -d &&
-     -+		# Write a cruft pack instead of deleting files.
-     -+		git gc --cruft &&
-     ++		# Write a cruft pack containing all unreachable objects.
-     ++		git gc --cruft --prune="01-01-1980" &&
-       
-       		mtimes=$(ls .git/objects/pack/pack-*.mtimes) &&
-       		test_path_is_file $mtimes &&
-       
-     -+		# Ignore the cruft pack and delete every unreachable object.
-     ++		# Prune all unreachable objects from the cruft pack.
-       		git gc --cruft --prune=now &&
-       
-       		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
- 3:  b67e110bf60 = 3:  b956a371c70 pack-write: drop always-NULL parameter
- 4:  81d8e2b5fdd = 4:  8486a1d6eca cache-tree: remove cache_tree_find_path()
-
+diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
+index b481224b93d..8968f7a08d8 100755
+--- a/t/t5329-pack-objects-cruft.sh
++++ b/t/t5329-pack-objects-cruft.sh
+@@ -451,11 +451,13 @@ test_expect_success 'expiring cruft objects with git gc' '
+ 		sort <reachable.raw >reachable &&
+ 		comm -13 reachable objects >unreachable &&
+ 
+-		git repack --cruft -d &&
++		# Write a cruft pack containing all unreachable objects.
++		git gc --cruft --prune="01-01-1980" &&
+ 
+ 		mtimes=$(ls .git/objects/pack/pack-*.mtimes) &&
+ 		test_path_is_file $mtimes &&
+ 
++		# Prune all unreachable objects from the cruft pack.
+ 		git gc --cruft --prune=now &&
+ 
+ 		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
 -- 
 gitgitgadget
+
