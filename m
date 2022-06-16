@@ -2,101 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D533CC43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 05:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3A10C43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 06:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350811AbiFPFEM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 01:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33922 "EHLO
+        id S1358961AbiFPGID (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 02:08:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349153AbiFPFEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 01:04:04 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63966544EF
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 22:04:02 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id h5so344794wrb.0
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 22:04:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tXMPoiGM3eUmc86fZkpV5Y8BDy83416sQIkbyZgSgM0=;
-        b=PRguAry5o8dwlxMxMb2LE7fxtEeTm9WpmJM/SfUrcP85thszjnswrMbtwUaK46H8+8
-         AGhsa6UYX41KgyGesyUBLWyhM8RIRPhYp463Kzd2JwNcOUN3YPwabTmiaXfs75yg37m+
-         F73Q1sYeZU+UGOLatnHRMQ6NyhDNk8aV/BJCUarqjkcW4ACHTHTfWTyj1hS4BAzoDDyp
-         12+pmNr3HWF/JoD5PNFY6i8czmZmEI2DV0u78xUKlJPIfVgZleAG2CKifAQ0CDiLCJVl
-         3yR+ihtfTTGrUG6WWxYLpR+RkW+enNs8I5+6SojvHy2iY+Qs5d8uAmU52zqgKNaiOQos
-         S40Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tXMPoiGM3eUmc86fZkpV5Y8BDy83416sQIkbyZgSgM0=;
-        b=UtdkMDofybrVLEmaGFb/U7wj2x+qpUZnbRbO1WE9NIiG+1X/5LHh0T0zMJEV2cLw88
-         6xLi6wXjDc3utSUx/8qjblzebGRXvn/x5w6f7EpXSrSmfiymngG84n4GpTz8tNGY12Zy
-         2b8r3Nvg8FgolLqOoMlStp/II4whwtBMDY4yPzRF+CbfFXrwlx+1nG7UNklQnRCpNxQw
-         8dlYsagpUP2LCfuAI9FZ7wNC7kI/xM3pwSS4lrj/rE1163hNNhatkWBhqlrJcJ7RAjYp
-         zbJa4K1/rpGuLjnLHkHTvOPOW048FL7LICHJ0uRjIqGZRnTQoqOhiFlypOAOKstRKuER
-         gtFQ==
-X-Gm-Message-State: AJIora9gQYlBTHCoVBVv7fbYQGmWaiD35PUx46xKP6/6YX8FjBBI3y7L
-        yaBflXgcTCP73M9rR0950uituGRBGgaviQ==
-X-Google-Smtp-Source: AGRyM1uxe1gCzUPV99BC5W0fYi+EtVyf3vosH82pL1ooSVmYUUJxL9lpJHtOG8wJRzsvR6R+k83kgQ==
-X-Received: by 2002:a05:6000:11:b0:210:302d:e787 with SMTP id h17-20020a056000001100b00210302de787mr2788209wrx.535.1655355840544;
-        Wed, 15 Jun 2022 22:04:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h28-20020adfa4dc000000b0020fff0ea0a3sm662341wrb.116.2022.06.15.22.03.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 22:03:59 -0700 (PDT)
-Message-Id: <dbb86dca20574eef0cb783be597dbe05677f1efb.1655355834.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1246.v4.git.1655355834.gitgitgadget@gmail.com>
-References: <pull.1246.v3.git.1654858481.gitgitgadget@gmail.com>
-        <pull.1246.v4.git.1655355834.gitgitgadget@gmail.com>
-From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jun 2022 05:03:54 +0000
-Subject: [PATCH v4 3/3] bitmap-format.txt: add information for trailing
- checksum
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1358654AbiFPGH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 02:07:56 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E2B724BF5
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 23:07:42 -0700 (PDT)
+Received: (qmail 12593 invoked by uid 109); 16 Jun 2022 06:07:42 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jun 2022 06:07:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Date:   Thu, 16 Jun 2022 02:07:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Richard Oliver <roliver@roku.com>, Taylor Blau <me@ttaylorr.com>,
+        git@vger.kernel.org, jonathantanmy@google.com
+Subject: Re: [PATCH] mktree: learn about promised objects
+Message-ID: <YqrIrYHKUP6b/EtN@coredump.intra.peff.net>
+References: <77035a0f-c42e-5cb3-f422-03fe81093adb@roku.com>
+ <0067c46a-7bfd-db9c-5156-16f032814464@github.com>
+ <797af8c8-229f-538b-d122-8ea48067cc19@roku.com>
+ <574dc4a9-b3c7-1fd3-8c0e-39071117c7f0@github.com>
+ <YqkpRE8nykqVv8cn@nand.local>
+ <YqlZb3Ycc71+dPu4@coredump.intra.peff.net>
+ <ad9b5ec9-14fd-cd66-be87-2fe1eb24296a@roku.com>
+ <1fe6c00a-806c-89de-cb67-d063dc4a5279@github.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1fe6c00a-806c-89de-cb67-d063dc4a5279@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+On Wed, Jun 15, 2022 at 02:17:58PM -0400, Derrick Stolee wrote:
 
-Bitmap file has a trailing checksum at the end of the file. However
-there is no information in the bitmap-format documentation about it.
+> On 6/15/2022 1:40 PM, Richard Oliver wrote:
+> > On 15/06/2022 05:00, Jeff King wrote:
+> 
+> >> So it is not just lookup, but actual tree walking that is expensive. The
+> >> flip side is that you don't have to store a complete separate list of
+> >> the promised objects. Whether that's a win depends on how many local
+> >> objects you have, versus how many are promised.
+> 
+> This is also why blobless (or blob-size filters) are the recommended way
+> to use partial clone. It's just too expensive to have tree misses.
 
-Add a trailer section to include the trailing checksum info in the
-`Documentation/technical/bitmap-format.txt` file.
+I agree that tree misses are awful, but I'm actually talking about
+something different: traversing the local trees we _do_ have in order to
+find the set of promised objects. Which is worse for blob:none, because
+it means you have more trees locally. :)
 
-Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
----
- Documentation/technical/bitmap-format.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+Try this with a big repo like linux.git:
 
-diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
-index 49c8e819804..7be5f2318ba 100644
---- a/Documentation/technical/bitmap-format.txt
-+++ b/Documentation/technical/bitmap-format.txt
-@@ -138,6 +138,10 @@ in the index.
+  git clone --no-local --filter=blob:none linux.git repo
+  cd repo
+
+  # this is fast; we mark the promisor trees as UNINTERESTING, so we do
+  # not look at them as part of the traversal, and never call
+  # is_promisor_object().
+  time git rev-list --count --objects --all --exclude-promisor-objects
+
+  # but imagine we had a fixed mktree[1] that did not fault in the blobs
+  # unnecessarily, and we made a new tree that references a promised
+  # blob.
+  tree=$(git ls-tree HEAD~1000 | grep Makefile | git mktree --missing)
+  commit=$(echo foo | git commit-tree -p HEAD $tree)
+  git update-ref refs/heads/foo $commit
+
+  # this is now slow; even though we only call is_promisor_object()
+  # once, we have to open every single tree in the pack to find it!
+  time git rev-list --count --objects --all --exclude-promisor-objects
+
+Those rev-lists run in 1.7s and 224s respectively. Ouch!
+
+Now the setup there is kind of contrived, and it's actually not trivial
+to convince rev-list to actually call is_promisor_object() these days.
+That's because promisor-ness (promisosity?) tends to be one-way
+transitive. A promised blob is usually either only referenced by
+promised trees (which we have in this case), or is faulted in as part of
+making a new tree.
+
+But it's not guaranteed, and certainly a faulted-in object could later
+be deleted from the local repo, since it's promised. I suspect there are
+less convoluted workflows to get to a similar state, but I don't know
+them offhand. There's more discussion of this issue in this thread from
+last summer:
+
+  https://lore.kernel.org/git/20210403090412.GH2271@szeder.dev/
+
+-Peff
+
+[1] The mktree I used was the fix discussed elsewhere in the thread:
+
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 902edba6d2..42ae82230c 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -117,15 +117,11 @@ static void mktree_line(char *buf, int nul_term_line, int allow_missing)
+ 	}
  
-         ** The compressed bitmap itself, see Appendix A.
- 
-+	* {empty}
-+	TRAILER: ::
-+		Trailing checksum of the preceding contents.
-+
- == Appendix A: Serialization format for an EWAH bitmap
- 
- Ewah bitmaps are serialized in the same protocol as the JAVAEWAH
--- 
-gitgitgadget
+ 	/* Check the type of object identified by sha1 */
+-	obj_type = oid_object_info(the_repository, &oid, NULL);
+-	if (obj_type < 0) {
+-		if (allow_missing) {
+-			; /* no problem - missing objects are presumed to be of the right type */
+-		} else {
++	if (!allow_missing) {
++		obj_type = oid_object_info(the_repository, &oid, NULL);
++		if (obj_type < 0)
+ 			die("entry '%s' object %s is unavailable", path, oid_to_hex(&oid));
+-		}
+-	} else {
+-		if (obj_type != mode_type) {
++		else if (obj_type != mode_type) {
+ 			/*
+ 			 * The object exists but is of the wrong type.
+ 			 * This is a problem regardless of allow_missing
