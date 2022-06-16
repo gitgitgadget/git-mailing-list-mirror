@@ -2,149 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06C80CCA47A
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 10:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F71EC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 12:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230004AbiFPKWk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 06:22:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39308 "EHLO
+        id S232829AbiFPMyP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 08:54:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230020AbiFPKWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 06:22:39 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 981506402
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 03:22:32 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 25so1520959edw.8
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 03:22:32 -0700 (PDT)
+        with ESMTP id S231831AbiFPMyN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 08:54:13 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E486C38DB4
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 05:54:12 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id 19so1347017iou.12
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 05:54:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=VW7EAs5L/4edtUlWNYn7285ZAMNciwVwp/lMlNAQ3ag=;
-        b=nFdlj2ubrlLmS1i/FnlRdVUbqJDYqTmWgCTVIwJofniBYjHvlTlYeezPz2sR/X/X55
-         XNbFokcxTehYXDE5QCUtjOJLajX4JFjKgHn6uTI3SfljSCEVkt2MEtOhfN9de3EwswWC
-         mpV/6c6vOXLzOK3uiIBPadYmiwFS8XsHNmjBNF9nswrprTvAlh7VzVrRmxZjcgd5jTez
-         8xOLT58a7LGbFgymBpuS/+xhKbQGke73DsVdgop9vX1+BT/X+DPKxZOJKsvp6du6W8JB
-         m1UVwJiA2H1EG/CAc5ma072MfPclg6fL4JPeHa0Wmc32FQhgwpoWk5MdJFU8jE1LFpOi
-         l/wQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ngs0kjn++/mdTrTd4FMohxU++508EiQwBiYhIN7gNes=;
+        b=ddVYt1uYgADlIKz5isDCv1kEQkeE1Hm4dGNaYgVaXG6XMHZGnQ2+wbafPPHfYv9OMd
+         wywsB1SHe9o9MFo23QS4r9WvGT/nRuvCGmlUmzJFS5FLT+VSVdkgCBmdQ9yT9pbu0Urj
+         YOm5YPR2gi7RBxHnu5Hd5YLtpV7afdJiIiqL83av6kVw2gXL4lApMKwpzhzAHxLsiXzZ
+         gmdEnMJsZOFKnRE0m4xG3nyuUQKV5wCDZtGuklgRoFh8OvGfpOFVjcFZ0PhPkRhJ0ZVs
+         Al3/E8ELfwmhdpi+hhX6UlMX+2eIDxfX5Seww2VxfAJ+/rUTS1VULWmqAs3rdzpcQTKM
+         D+Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=VW7EAs5L/4edtUlWNYn7285ZAMNciwVwp/lMlNAQ3ag=;
-        b=bGO1t4cFQFaBiap9nwjUx/vOzjhwGPO/Z6ruvpF48StBU1S7mo5wJX0FHwQKN2Xq05
-         eCc85tGlMUFXdFSSyN2UwzRisHjHw3A4duVjZV+MLbt1ma4C9qrcAXOA4Fw8W5WGIEEQ
-         Dz180CvtZuuSnC9kBNj702UufCM9QzS82z8PayaKUKwwTut/4rgdNmbOdvv0BA57TYqr
-         jn1HUFNUlD0Z22uqhfhhg4FRc/zPJD0C+nvXIEeW9/2wGCs6/t8sVdg6Q0A0NjYVFW3J
-         e8GXl/ft2k7E+BdS/2zNx+j1XxhrgVtoB+64tC0vk4Me1DeWLuEvpOSRRiNADluUQLxR
-         /FFw==
-X-Gm-Message-State: AJIora8Kfr2aoWB4LPAidDImddZRcLqZiwe3X6hmPCHxtZoPuLJfMzIg
-        eKpIDNrf22QJSIQNVw1SG25AFFcP6MvnkA==
-X-Google-Smtp-Source: AGRyM1vqa/fxDPUy6eTNWZYFzhMfb34WvS6eyWgrf6v/HPwRa6sy8Wh2MxmPDzbLanQLBZIemeEBng==
-X-Received: by 2002:a05:6402:11c7:b0:42e:c47a:ffdf with SMTP id j7-20020a05640211c700b0042ec47affdfmr5457789edw.113.1655374950481;
-        Thu, 16 Jun 2022 03:22:30 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id i25-20020a50fc19000000b0042bc54296a1sm1423360edr.91.2022.06.16.03.22.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 03:22:28 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o1mdv-000ydp-PN;
-        Thu, 16 Jun 2022 12:22:27 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Michael J Gruber <git@grubix.eu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] add -i tests: mark "TODO" depending on
- GIT_TEST_ADD_I_USE_BUILTIN
-Date:   Thu, 16 Jun 2022 12:16:46 +0200
-References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu>
- <patch-v2-1.1-13c26e546f6-20220614T153746Z-avarab@gmail.com>
- <YqlIRveupj6tOO4P@pobox.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YqlIRveupj6tOO4P@pobox.com>
-Message-ID: <220616.86sfo4x5zw.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ngs0kjn++/mdTrTd4FMohxU++508EiQwBiYhIN7gNes=;
+        b=Hgi7lhSTjA3i+Gjh0zb91qqbEj4yMepO2m7WwlMKY/7+AaNGVs3u4tdKsZy0ZpAoqT
+         lhfL1fc/BJD9mODUg10wCcAEEcOa04TCUaDv1rlNM12C8CQ3a9FjsDx8RSy50RJP3PQU
+         /TUWFm17XOs4SwSNS0Ag/po15FRjhA71f7pn16OwWeye97fTtbmeBddUychQ2QjJyaKJ
+         1fa8xjeUF3fmuaeRKzA/aTJ7rTkR1oRLxfFN3SL2r9qIHCWHXuhtIHMNh3TWwXlWH6Kb
+         EJllyp4ikZkRW/tW7aVaU6keCzdx6MVSW5hhdC8kU2wytmY73skfC7Sb2q8GLhSbSS6h
+         9jYA==
+X-Gm-Message-State: AJIora+UFahe0J2Sfu75K+qRxE7+YQbNmRvy6yrRmaHViz02NjWxvWeG
+        e/+9YhcsaHDgbAN/74r5eVil
+X-Google-Smtp-Source: AGRyM1uKKdwKXDxtdyTY2KQQd3vNapaOY00VAgxMbVYVvTHGV4HIeaVUQWPJ6lHr2nNi7flQPoqXTA==
+X-Received: by 2002:a5e:c90d:0:b0:669:daa8:f59e with SMTP id z13-20020a5ec90d000000b00669daa8f59emr2456404iol.1.1655384052257;
+        Thu, 16 Jun 2022 05:54:12 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:cfb:ad5:8ed2:9eba? ([2600:1700:e72:80a0:cfb:ad5:8ed2:9eba])
+        by smtp.gmail.com with ESMTPSA id p20-20020a927414000000b002d1d8de99e7sm966885ilc.40.2022.06.16.05.54.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Jun 2022 05:54:11 -0700 (PDT)
+Message-ID: <a5c4ca33-abf5-7adf-2a91-2dadf7a98d9b@github.com>
+Date:   Thu, 16 Jun 2022 08:54:09 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/4] t2107: test 'git update-index --verbose'
+Content-Language: en-US
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
+ <c6803df1b6afead99a0a6a383ab9aa563920f464.1655242070.git.gitgitgadget@gmail.com>
+ <CAPig+cTtZ3=r62XDTE4gpy0Fk_gkzOROm34gW6gkuGRjdQRBTA@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CAPig+cTtZ3=r62XDTE4gpy0Fk_gkzOROm34gW6gkuGRjdQRBTA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Jun 14 2022, Todd Zullinger wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Fix an issue that existed before 0527ccb1b55 (add -i: default to the
->> built-in implementation, 2021-11-30), but which became the default
->> with that change, we should not be marking tests that are known to
->> pass as "TODO" tests.
-> [...]
+On 6/15/2022 7:18 PM, Eric Sunshine wrote:
+> On Tue, Jun 14, 2022 at 5:36 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> The '--verbose' option reports what is being added and removed from the
+>> index, but has not been tested up to this point. Augment the tests in
+>> t2107 to check the '--verbose' option in some scenarios.
+>>
+>> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 >> ---
->> Just converting it to "test_expect_success" will break CI and other
->> setups that are testing with GIT_TEST_ADD_I_USE_BUILTIN=3Dfalse.
->>=20
->> The below fixes it, however.
->
-> Nice catch.  FWIW, I tested w/GIT_TEST_ADD_I_USE_BUILTIN=3D0
-> and without.
+>> diff --git a/t/t2106-update-index-assume-unchanged.sh b/t/t2106-update-index-assume-unchanged.sh
+>> @@ -20,7 +20,7 @@ test_expect_success 'do not switch branches with dirty file' '
+>>         echo dirt >file &&
+>> -       git update-index --assume-unchanged file &&
+>> +       git update-index --verbose --assume-unchanged file &&
+>>         test_must_fail git checkout - 2>err &&
+>>         test_i18ngrep overwritten err
+>>  '
+> 
+> If this test passes with or without the addition of `--verbose`, then
+> adding `--verbose` unnecessarily only pollutes what is (presumably)
+> the minimum code necessary to implement what the test is checking, and
+> may confuse future readers into thinking that something subtle is
+> going on.
 
-My patch landed on "master" as 7ccbea564e8 (add -i tests: mark "TODO"
-depending on GIT_TEST_ADD_I_USE_BUILTIN, 2022-06-14) so this is water
-under the bridge.
+Thanks for pointing this out. I shouldn't have left this change in.
+ 
+>> diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+>> @@ -36,9 +36,14 @@ test_expect_success '--cacheinfo does not accept blob null sha1' '
+>>         echo content >file &&
+>>         git add file &&
+>>         git rev-parse :file >expect &&
+>> -       test_must_fail git update-index --cacheinfo 100644 $ZERO_OID file &&
+>> +       test_must_fail git update-index --verbose --cacheinfo 100644 $ZERO_OID file >out &&
+>>         git rev-parse :file >actual &&
+>> -       test_cmp expect actual
+>> +       test_cmp expect actual &&
+>> +
+>> +       cat >expect <<-\EOF &&
+>> +       add '\''file'\''
+>> +       EOF
+>> +       test_cmp expect out
+>>  '
+> 
+> While I understand your desire to address a gap in the test coverage,
+> I worry that this sort of change, which is orthogonal to the test's
+> stated purpose, has the same downsides as mentioned above (i.e.
+> polluting the minimum necessary code, and potentially confusing
+> readers). Rather than piggybacking on existing tests, adding one or
+> two new standalone tests dedicated to checking `--verbose` would be
+> more palatable, more understandable, and be less likely to confuse
+> future readers. The same comment applies to the remaining changes in
+> this patch.
 
-But just to tie this loose knot I think something went wrong in your
-testing.
+I understand that the test wants to test specific behavior, and that
+behavior is focused on certain inputs to 'git update-index', but I
+also think that the --verbose option presents _additional information_
+about what is expected from these behaviors. It doesn't change the
+already-tested behavior, only enhances it.
 
-If I:
+If I separate things out and only had test for --verbose, I would need
+to replicate many of these behaviors just for that option, which would
+be wasteful.
 
-    git checkout v2.37.0-rc0
-    # Apply your patch from <20220614185218.1091413-1-tmz@pobox.com>
+In this particular case, I'm demonstrating that the --verbose mode
+still reports the file as added (because of the earlier 'git add file')
+even though the command as a whole failed due to an invalid OID.
 
-I'll consistently get a failure from:
-
-    GIT_TEST_ADD_I_USE_BUILTIN=3Dfalse ./t3701-add-interactive.sh
-
-Since we do fail that test with the Perl implementation, and now it's no
-longer a TODO test.
-
-Perhaps you used it as a parameter to "make"? I.e.:
-
-    make GIT_TEST_ADD_I_USE_BUILTIN=3Dfalse
-    make test
-
-Which isn't how it works, just speculating...
-=20
->> diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
->> index bc3f69b4b1d..a5822e41af2 100755
->> --- a/t/t2016-checkout-patch.sh
->> +++ b/t/t2016-checkout-patch.sh
->> @@ -4,7 +4,7 @@ test_description=3D'git checkout --patch'
->>=20=20
->>  . ./lib-patch-mode.sh
->>=20=20
->> -if ! test_bool_env GIT_TEST_ADD_I_USE_BUILTIN true && ! test_have_prere=
-q PERL
->> +if ! test_have_prereq ADD_I_USE_BUILTIN && ! test_have_prereq PERL
->>  then
->>  	skip_all=3D'skipping interactive add tests, PERL not set'
->
-> It's not the fault of this patch, but it makes it obvious
-> that the `skip_all` message is no longer accurate.  Perhaps
-> somethine like this?
->
->     skip_all=3D'skipping interactive add tests, missing ADD_I_USE_BUILTIN=
- or PERL'
->
-> Maybe a separate `ADD_I` prereq would be better?  Though
-> without looking closer, I don't know if that would end up
-> being clearer to anyone running the tests without either
-> PERL or the add -i builtin enabled.
-
-Yeah seems like a good idea for a follow-up, but since it's landed I'll
-probably forget :)
-
-> Thanks for the keen eye and attention to detail, =C3=86var,
-
-Happy to have it fixed!
+Thanks,
+-Stolee
