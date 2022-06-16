@@ -2,110 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55A75C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 04:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52F5FC43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 04:53:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242923AbiFPExI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 00:53:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54000 "EHLO
+        id S1349153AbiFPExU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 00:53:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbiFPExH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 00:53:07 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B476422283
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 21:53:06 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5332C18A64E;
-        Thu, 16 Jun 2022 00:53:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nHx6IK8ZAjd+a0iXRF8KUwp3+uRbPB4PuxJxLD
-        UuJwY=; b=W+cyIv48qpMOz7tB0WrwKBn4TOMUWeIbrKf+dyvQemXDDCzEynk79r
-        GxQxMnVkc2dnXraGxgph2YuEFdTwvmCdZ/pguhR+aHcWZqdmyWL4w9h/5D6+N+w8
-        rChtrwTHKiaOfSUeFnHyMIoy0vGqxr15STMhfgUQ2CcvjIqIiaTrg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C2EB18A64C;
-        Thu, 16 Jun 2022 00:53:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E88FC18A64B;
-        Thu, 16 Jun 2022 00:53:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+        with ESMTP id S229681AbiFPExS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 00:53:18 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C004A237D6
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 21:53:16 -0700 (PDT)
+Received: (qmail 12405 invoked by uid 109); 16 Jun 2022 04:53:16 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jun 2022 04:53:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Date:   Thu, 16 Jun 2022 00:53:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 06/11] pack-redundant: avoid using uninitialized memory
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 11/11] bug_fl(): add missing `va_end()` call
+Message-ID: <Yqq3O5hykBecoVKQ@coredump.intra.peff.net>
 References: <pull.1264.git.1655336146.gitgitgadget@gmail.com>
-        <bc29a9710e3a22e6d660098c4f201f3bfecc54ea.1655336146.git.gitgitgadget@gmail.com>
-Date:   Wed, 15 Jun 2022 21:53:01 -0700
-In-Reply-To: <bc29a9710e3a22e6d660098c4f201f3bfecc54ea.1655336146.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 15 Jun 2022
-        23:35:40 +0000")
-Message-ID: <xmqqilp1w6oi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <d674aefa78bdb6d255e40af2f308abf8a87a593a.1655336146.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 341517F2-ED30-11EC-8FF7-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d674aefa78bdb6d255e40af2f308abf8a87a593a.1655336146.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Jun 15, 2022 at 11:35:45PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In the `add_pack()` function, we forgot to initialize the field `next`,
-> which could potentially lead to readin uninitialized memory later.
->
+> 
+> According to the manual:
+> 
+> 	Each invocation of va_copy() must be matched by a corresponding
+> 	invocation of va_end() in the  same function.
+> 
+> Note: There is another instance of `va_copy()` in `usage.c` that is
+> missing a `va_end()` call, in `BUG_vfl()`. It does not matter there,
+> though, because that function either `exit()`s or `abort()`s, anyway.
+> 
 > Reported by Coverity.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/pack-redundant.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-> index ed9b9013a5f..1f7da1f68b6 100644
-> --- a/builtin/pack-redundant.c
-> +++ b/builtin/pack-redundant.c
-> @@ -526,6 +526,7 @@ static struct pack_list * add_pack(struct packed_git *p)
->  	}
->  	l.all_objects_size = l.remaining_objects->size;
->  	l.unique_objects = NULL;
-> +	l.next = NULL;
->  	if (p->pack_local)
->  		return pack_list_insert(&local_packs, &l);
->  	else
-		return pack_list_insert(&altodb_packs, &l);
 
+This was introduced by the recent 0cc05b044f (usage.c: add a non-fatal
+bug() function to go with BUG(), 2022-06-02). But there's a much worse
+bug in the same function. The code introduced by that patch does:
 
-The pack_list_insert reads like so:
+  va_list ap, cp;
+  [...]
+  va_copy(cp, ap);
+  va_start(ap, fmt);
 
-static inline struct pack_list * pack_list_insert(struct pack_list **pl,
-					   struct pack_list *entry)
-{
-	struct pack_list *p = xmalloc(sizeof(struct pack_list));
-	memcpy(p, entry, sizeof(struct pack_list));
-	p->next = *pl;
-	*pl = p;
-	return p;
-}
+So "cp" is copied from "ap" before we have actually initialized "ap".
+It's surprising that this works at all. The two lines should be flipped.
 
+IMHO, since we're in the actual varargs function itself, it would be
+simpler to just bracket each use with start/end, rather than copying,
+like:
 
-IOW, we prepare members of "l", pass it as "entry" to pack_list_insert(),
-but the helper function allocates a new piece of memory, copies "l"
-to it, and then sets the .next member of it to a reasonable value.
+diff --git a/usage.c b/usage.c
+index 79900d0287..56e29d6cd6 100644
+--- a/usage.c
++++ b/usage.c
+@@ -334,15 +334,17 @@ NORETURN void BUG_fl(const char *file, int line, const char *fmt, ...)
+ int bug_called_must_BUG;
+ void bug_fl(const char *file, int line, const char *fmt, ...)
+ {
+-	va_list ap, cp;
++	va_list ap;
+ 
+ 	bug_called_must_BUG = 1;
+ 
+-	va_copy(cp, ap);
+ 	va_start(ap, fmt);
+ 	BUG_vfl_common(file, line, fmt, ap);
+ 	va_end(ap);
+-	trace2_cmd_error_va(fmt, cp);
++
++	va_start(ap, fmt);
++	trace2_cmd_error_va(fmt, ap);
++	va_end(ap);
+ }
+ 
+ #ifdef SUPPRESS_ANNOTATED_LEAKS
 
-And after that, the "l" that was merely used as a template goes out
-of scope.
+but I am happy with any solution that is correct. :)
 
-So I think this is a false positive.  memcpy(p) does copy the
-uninitialized garbage that is held in entry->next to p->next, but it
-is overwritten with a reasonable address immediately after that.
-
-
+-Peff
