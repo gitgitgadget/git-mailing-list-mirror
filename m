@@ -2,29 +2,29 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3A10C43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 06:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DBE5C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 06:55:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358961AbiFPGID (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 02:08:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55322 "EHLO
+        id S1359420AbiFPGze (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 02:55:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358654AbiFPGH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 02:07:56 -0400
+        with ESMTP id S1359169AbiFPGzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 02:55:10 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E2B724BF5
-        for <git@vger.kernel.org>; Wed, 15 Jun 2022 23:07:42 -0700 (PDT)
-Received: (qmail 12593 invoked by uid 109); 16 Jun 2022 06:07:42 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680685D5CC
+        for <git@vger.kernel.org>; Wed, 15 Jun 2022 23:54:42 -0700 (PDT)
+Received: (qmail 12769 invoked by uid 109); 16 Jun 2022 06:54:41 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jun 2022 06:07:42 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jun 2022 06:54:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Date:   Thu, 16 Jun 2022 02:07:41 -0400
+Date:   Thu, 16 Jun 2022 02:54:41 -0400
 From:   Jeff King <peff@peff.net>
 To:     Derrick Stolee <derrickstolee@github.com>
 Cc:     Richard Oliver <roliver@roku.com>, Taylor Blau <me@ttaylorr.com>,
         git@vger.kernel.org, jonathantanmy@google.com
-Subject: Re: [PATCH] mktree: learn about promised objects
-Message-ID: <YqrIrYHKUP6b/EtN@coredump.intra.peff.net>
+Subject: [PATCH] is_promisor_object(): walk promisor packs in pack-order
+Message-ID: <YqrTsbXbEjx0Pabn@coredump.intra.peff.net>
 References: <77035a0f-c42e-5cb3-f422-03fe81093adb@roku.com>
  <0067c46a-7bfd-db9c-5156-16f032814464@github.com>
  <797af8c8-229f-538b-d122-8ea48067cc19@roku.com>
@@ -33,95 +33,87 @@ References: <77035a0f-c42e-5cb3-f422-03fe81093adb@roku.com>
  <YqlZb3Ycc71+dPu4@coredump.intra.peff.net>
  <ad9b5ec9-14fd-cd66-be87-2fe1eb24296a@roku.com>
  <1fe6c00a-806c-89de-cb67-d063dc4a5279@github.com>
+ <YqrIrYHKUP6b/EtN@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1fe6c00a-806c-89de-cb67-d063dc4a5279@github.com>
+In-Reply-To: <YqrIrYHKUP6b/EtN@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 15, 2022 at 02:17:58PM -0400, Derrick Stolee wrote:
+On Thu, Jun 16, 2022 at 02:07:41AM -0400, Jeff King wrote:
 
-> On 6/15/2022 1:40 PM, Richard Oliver wrote:
-> > On 15/06/2022 05:00, Jeff King wrote:
-> 
-> >> So it is not just lookup, but actual tree walking that is expensive. The
-> >> flip side is that you don't have to store a complete separate list of
-> >> the promised objects. Whether that's a win depends on how many local
-> >> objects you have, versus how many are promised.
-> 
-> This is also why blobless (or blob-size filters) are the recommended way
-> to use partial clone. It's just too expensive to have tree misses.
+> Those rev-lists run in 1.7s and 224s respectively. Ouch!
 
-I agree that tree misses are awful, but I'm actually talking about
-something different: traversing the local trees we _do_ have in order to
-find the set of promised objects. Which is worse for blob:none, because
-it means you have more trees locally. :)
+Even though I expected the second one to be slow, I was shocked at just
+how slow it was. The patch below speeds it up by a factor of 2, and I
+think is worth applying separately, regardless of anything else being
+discussed in this thread.
 
-Try this with a big repo like linux.git:
+-- >8 --
+Subject: is_promisor_object(): walk promisor packs in pack-order
 
-  git clone --no-local --filter=blob:none linux.git repo
-  cd repo
+When we generate the list of promisor objects, we walk every pack with a
+.promisor file and examine its objects for any links to other objects.
+By default, for_each_packed_object() will go in pack .idx order.
 
-  # this is fast; we mark the promisor trees as UNINTERESTING, so we do
-  # not look at them as part of the traversal, and never call
-  # is_promisor_object().
-  time git rev-list --count --objects --all --exclude-promisor-objects
+This is the worst case with respect to our delta base cache. If we have
+a delta chain of A->B->C->D, then visiting A may require reconstructing
+both B and C, unless we also visited B recently, in which case we may
+have cached its value. Because .idx order is based on sha1, it's random
+with respect to the actual object contents and deltas, and thus we're
+unlikely to get many cache hits.
 
-  # but imagine we had a fixed mktree[1] that did not fault in the blobs
-  # unnecessarily, and we made a new tree that references a promised
-  # blob.
-  tree=$(git ls-tree HEAD~1000 | grep Makefile | git mktree --missing)
-  commit=$(echo foo | git commit-tree -p HEAD $tree)
-  git update-ref refs/heads/foo $commit
+If we instead traverse in pack order, then we get the optimal case:
+packs are written to keep delta families together, and to place bases
+before their children.
 
-  # this is now slow; even though we only call is_promisor_object()
-  # once, we have to open every single tree in the pack to find it!
-  time git rev-list --count --objects --all --exclude-promisor-objects
+Even on a modest repository like git.git, this has a noticeable speedup
+on p5600.4, which runs "fsck" on a partial clone with blob:none (so lots
+of trees which need to be walked, and which delta well):
 
-Those rev-lists run in 1.7s and 224s respectively. Ouch!
+Test       HEAD^               HEAD
+-------------------------------------------------------
+5600.4:    17.87(17.83+0.04)   15.42(15.35+0.06) -13.7%
 
-Now the setup there is kind of contrived, and it's actually not trivial
-to convince rev-list to actually call is_promisor_object() these days.
-That's because promisor-ness (promisosity?) tends to be one-way
-transitive. A promised blob is usually either only referenced by
-promised trees (which we have in this case), or is faulted in as part of
-making a new tree.
+On a larger repository like linux.git, the speedup is even more
+pronounced:
 
-But it's not guaranteed, and certainly a faulted-in object could later
-be deleted from the local repo, since it's promised. I suspect there are
-less convoluted workflows to get to a similar state, but I don't know
-them offhand. There's more discussion of this issue in this thread from
-last summer:
+Test       HEAD^                 HEAD
+-----------------------------------------------------------
+5600.4:    322.47(322.01+0.42)   186.41(185.76+0.63) -42.2%
 
-  https://lore.kernel.org/git/20210403090412.GH2271@szeder.dev/
+Any other operations that call is_promisor_object(), like "rev-list
+--exclude-promisor-objects", would similarly benefit, but the
+invocations in p5600 don't actually trigger any such cases.
 
--Peff
+Note that we may pay a small price to build a rev-index in-memory to do
+the pack-order traversal. But it's still a big net win, and even that
+small cost goes away if you are using pack.writeReverseIndex.
 
-[1] The mktree I used was the fix discussed elsewhere in the thread:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+As an aside, feels like pack.writeReverseIndex ought to become the
+default (which AFAIK hasn't happened yet).
 
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 902edba6d2..42ae82230c 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -117,15 +117,11 @@ static void mktree_line(char *buf, int nul_term_line, int allow_missing)
+ packfile.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/packfile.c b/packfile.c
+index 8e812a84a3..ed69fe457b 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2275,7 +2275,8 @@ int is_promisor_object(const struct object_id *oid)
+ 		if (has_promisor_remote()) {
+ 			for_each_packed_object(add_promisor_object,
+ 					       &promisor_objects,
+-					       FOR_EACH_OBJECT_PROMISOR_ONLY);
++					       FOR_EACH_OBJECT_PROMISOR_ONLY |
++					       FOR_EACH_OBJECT_PACK_ORDER);
+ 		}
+ 		promisor_objects_prepared = 1;
  	}
- 
- 	/* Check the type of object identified by sha1 */
--	obj_type = oid_object_info(the_repository, &oid, NULL);
--	if (obj_type < 0) {
--		if (allow_missing) {
--			; /* no problem - missing objects are presumed to be of the right type */
--		} else {
-+	if (!allow_missing) {
-+		obj_type = oid_object_info(the_repository, &oid, NULL);
-+		if (obj_type < 0)
- 			die("entry '%s' object %s is unavailable", path, oid_to_hex(&oid));
--		}
--	} else {
--		if (obj_type != mode_type) {
-+		else if (obj_type != mode_type) {
- 			/*
- 			 * The object exists but is of the wrong type.
- 			 * This is a problem regardless of allow_missing
+-- 
+2.37.0.rc0.352.g10876ef154
+
