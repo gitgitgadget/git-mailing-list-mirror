@@ -2,90 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B6E2C43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 21:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E07E5C43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 21:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379035AbiFPVSh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 17:18:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39984 "EHLO
+        id S1379136AbiFPVTA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 17:19:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378629AbiFPVSX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 17:18:23 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0CD62ED64
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:18:19 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 334A5190F78;
-        Thu, 16 Jun 2022 17:18:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FDYWZkxt6r2gnmeGgTcnUjaxVd2lpF598ph2bv
-        j7+f4=; b=otMZ/CzCmv/j42AE3z6MYnutjvQb0idAvX38Qv4Y/q2Bbyhau2XgNL
-        1AfZwZcHtGmbPneUG++rFFFl0b/uMLt6F9FV+GEgaAWOUcc2WU8BJtelVYfbKcmX
-        8bxpYvNxpAAzjE+OQUQlbVVYRUYvAn1H6GJBPlUH/juxNuxltBLzA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C05C190F77;
-        Thu, 16 Jun 2022 17:18:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E0EF1190F70;
-        Thu, 16 Jun 2022 17:18:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Jacob Keller <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v2 3/5] tests: only automatically unset matching values
- from test_config
-References: <20220616205456.19081-1-jacob.e.keller@intel.com>
-        <20220616205456.19081-4-jacob.e.keller@intel.com>
-Date:   Thu, 16 Jun 2022 14:18:14 -0700
-In-Reply-To: <20220616205456.19081-4-jacob.e.keller@intel.com> (Jacob Keller's
-        message of "Thu, 16 Jun 2022 13:54:54 -0700")
-Message-ID: <xmqq35g4s3xl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1379129AbiFPVSx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 17:18:53 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07F0B60DAA
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:18:52 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id q104so3919610qvq.8
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:18:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sf9bz3x8XimyBmzA0TDcEm9yxHK2VBXgEE0ROQlEQWQ=;
+        b=z8yuSF/Cq7yvoa3O/GyvyGBBdNpzOZMvB2VLPsx8KunXtcR2sSIya/XS36Q56nhPYv
+         jwTifLQzcmi7TKwU+oyCxSPTn0Aa29vUla6XKPT5luvbH/d8Ogox6kzA0LUvOO1m5JQo
+         01Grtny+iQzM6MqBcwOeNlwtDqDrLSA48uhprxVZ5AzMERrVYpvKIhJqBU9mcrzEyC/j
+         PARk8go7QpBTdBmYBo97y3rWQlY/FOsoeDfvbAv01Lilfns0oMwtYirSq4TEvzajozuL
+         V9JwDwhIk25ScWZ1I5DUbub02itd6zq9uctcBwzeOv4jCBdstuNvZNOh9nB/HA2KNa4N
+         056w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sf9bz3x8XimyBmzA0TDcEm9yxHK2VBXgEE0ROQlEQWQ=;
+        b=ZxfxnHRGFlMkC6ERj+9O87EAmk9k5cyPMlWHXOhhgiAnMk+dI4HUS06cpNEnikDSTy
+         GcXMovRWK2GIS8NOXp/WQv7dRFlUffwPgOcRORnpGMFYVj++F5As9qs0YrorlcXV+BXl
+         rSm9tUfvn7T9OaoeieAiwtI/GqScHzj4o1ilD71lNqRkGofKfB6dx+LplcctlaAqCEGm
+         12AJheb16iIoXdpGuf+4t0OVdRE1zfSPoKYwGay9sbxmxhJ2CCCcmo3IQogtYfVI7ifv
+         AhBP+xoSWKBJgGvhXKEYeqqGNQ0pLs9JmWvUFCea0Cq+eu/3TqlWtLGg96cPo8Rv47hm
+         7rsQ==
+X-Gm-Message-State: AJIora9D94/VwFj8SlH/M6Jo6paEM/9NCv3NV7gd+B6ZckjCkQ6Tifon
+        1AbWx+yZ+r5UQQokRhKKc/PLSfax3BPlUPf7
+X-Google-Smtp-Source: AGRyM1sS6+o6jiXHrJBfi8lz13l2zbd60hTslABrVlAYvEjEhM9PmjxeFK2hHebsfK1mAKGB9RV+CA==
+X-Received: by 2002:ac8:59c6:0:b0:305:2f9c:a53e with SMTP id f6-20020ac859c6000000b003052f9ca53emr5786003qtf.59.1655414331198;
+        Thu, 16 Jun 2022 14:18:51 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id w13-20020a05620a444d00b006a9901130b2sm3113971qkp.86.2022.06.16.14.18.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jun 2022 14:18:50 -0700 (PDT)
+Date:   Thu, 16 Jun 2022 17:18:49 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH v4 0/3] bitmap-format.txt: fix some formatting issues and
+ include checksum info
+Message-ID: <YqueOVZcv8/zYWUF@nand.local>
+References: <pull.1246.v3.git.1654858481.gitgitgadget@gmail.com>
+ <pull.1246.v4.git.1655355834.gitgitgadget@gmail.com>
+ <xmqq35g4tp7c.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D628F19C-EDB9-11EC-AA11-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq35g4tp7c.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On Thu, Jun 16, 2022 at 11:53:27AM -0700, Junio C Hamano wrote:
+> This version looks good and seems to format well.  Well done.
 
-> +	# Only enable --fixed-value if we have two parameters
-> +	if test $# < 2
-> +	then
-> +		fixedvalue=
-> +	fi
+Agreed. Nice work, Abhradeep!
 
-Two comments:
-
- * Does "<" do what you expect to do?  Did you mean "-lt"?
-
- * Using "bug in the test script: $*" and diagnosing missing
-   parameters, instead of silently ignoring the option the developer
-   wrote, would be more preferrable.
-
-> +	git ${config_dir:+-C "$config_dir"} config ${global:+--global} ${fixedvalue:+--fixed-value} --unset-all "$1" "$2"
->  	config_status=$?
->  	case "$config_status" in
->  	5) # ok, nothing to unset
-> @@ -575,7 +586,7 @@ test_config () {
->  		esac
->  		shift
->  	done
-> -	test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} ${global:+--global} '$1'" &&
-> +	test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} --fixed-value ${global:+--global} '$1' '$2'" &&
-
-Why are $1 and $2 enclosed in a pair of single quotes?  Is the
-assumption that they do not contain a single quote themselves?
-
-I guess that is true also for config_dir and shares the same
-problem, so you are not introducing a new problem.
-
->  	git ${config_dir:+-C "$config_dir"} config ${global:+--global} "$1" "$2"
->  }
+Thanks,
+Taylor
