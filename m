@@ -2,99 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C3E2C43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 21:17:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B6E2C43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 21:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378985AbiFPVRt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 17:17:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39170 "EHLO
+        id S1379035AbiFPVSh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 17:18:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378629AbiFPVRs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 17:17:48 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BAB5120A9
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:17:47 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id 89so3985777qvc.0
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:17:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=wcvaqJewYI+3/PEO8GSg/J1u9prGq4HCKGIRQedMVSY=;
-        b=qI5hZ10gA6g8Eg55CtQ9tNf1PCgj1ci8wouMr5lqWetyCF5piHTwVri1O1fDctHFRu
-         J971UDphvVRs6Y8/VAcl/+gNY5B5TakAvyzPHYwG8RZqHKAbb38qA0rqxhdcimLiIhCZ
-         yknjor7EW2ygB+RbSppz2uZCh/MholQnynxHNh2ZdMGEoJ7hJBkbV+6qHuRRsiB4FCuK
-         0gIxJBqooopSrUnEvq2oM6iZwE5N55vWicuVB6lHi7d19WvMCZhmtuvqhaicxDad0nfi
-         n5OBty2IL41Yv0Rupk+0Zpl6eov+E1vy8YENiLg5xVof7vbBEqjOc0m6Sbtd0gY7gZQd
-         WLQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=wcvaqJewYI+3/PEO8GSg/J1u9prGq4HCKGIRQedMVSY=;
-        b=DvqlUUM5AaA9fs0ChMqwObzEd8TYdruwlqqPMZu3vkcweOy7dh7ZtG7NFGdmNJvspD
-         Upvv1sTvDUmcG9iAhJshRYIyZ7C/3SSinCD6qs81WB5sc68uCdHxMn0smNRa2DFzQBuk
-         3J710O0BxOaCTeS2bRQIS7Pk8aqIXBotqLCuVDEmM8Rm6ez70nwiB1moFPEYf9V5XwZ0
-         DlEhNOt/DdXZi9A7bht0QU1kmtBawCOQJKDVC9qDidLXeEgA4I+h4m9vJSg8NJlkp7uK
-         sPBoOhwuyJF0P4DLuPvGZbV1p+sXsvjQ3iNpluVMZuFyrg0y8RQBUfyYrqx491Y8Doce
-         1U4A==
-X-Gm-Message-State: AJIora9fXs6gLfxZSnGtoo/CeeeqypawztW+G1Yfm4Mt3luD8/dGGX/2
-        DiXQGu5VK7p1vCnLy5Tbi2TxQg==
-X-Google-Smtp-Source: AGRyM1trWjQ8zDkW0P0cb5VP/XDEFRrIwbGAEOtZpS3BFMeUEMv1KCOEPABnRth8aUBJX9aMN1DOXg==
-X-Received: by 2002:a05:622a:353:b0:304:fdcd:b9b9 with SMTP id r19-20020a05622a035300b00304fdcdb9b9mr5801424qtw.276.1655414266304;
-        Thu, 16 Jun 2022 14:17:46 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id e15-20020ac85dcf000000b00304ec60f711sm2879670qtx.39.2022.06.16.14.17.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 14:17:45 -0700 (PDT)
-Date:   Thu, 16 Jun 2022 17:17:45 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?a3lsZXpoYW8o6LW15p+v5a6HKQ==?= <kylezhao@tencent.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Kyle Zhao via GitGitGadget <gitgitgadget@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [Internet]Re: [PATCH v2] send-pack.c: add config push.useBitmaps
-Message-ID: <Yqud+Y6LgkbmBOBj@nand.local>
-References: <pull.1263.git.1655291320433.gitgitgadget@gmail.com>
- <pull.1263.v2.git.1655350617442.gitgitgadget@gmail.com>
- <220616.86fsk4ww69.gmgdl@evledraar.gmail.com>
- <be5afab25a5b44b3af797c0c8b75f5e6@tencent.com>
+        with ESMTP id S1378629AbiFPVSX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 17:18:23 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0CD62ED64
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:18:19 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 334A5190F78;
+        Thu, 16 Jun 2022 17:18:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FDYWZkxt6r2gnmeGgTcnUjaxVd2lpF598ph2bv
+        j7+f4=; b=otMZ/CzCmv/j42AE3z6MYnutjvQb0idAvX38Qv4Y/q2Bbyhau2XgNL
+        1AfZwZcHtGmbPneUG++rFFFl0b/uMLt6F9FV+GEgaAWOUcc2WU8BJtelVYfbKcmX
+        8bxpYvNxpAAzjE+OQUQlbVVYRUYvAn1H6GJBPlUH/juxNuxltBLzA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C05C190F77;
+        Thu, 16 Jun 2022 17:18:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E0EF1190F70;
+        Thu, 16 Jun 2022 17:18:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v2 3/5] tests: only automatically unset matching values
+ from test_config
+References: <20220616205456.19081-1-jacob.e.keller@intel.com>
+        <20220616205456.19081-4-jacob.e.keller@intel.com>
+Date:   Thu, 16 Jun 2022 14:18:14 -0700
+In-Reply-To: <20220616205456.19081-4-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Thu, 16 Jun 2022 13:54:54 -0700")
+Message-ID: <xmqq35g4s3xl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <be5afab25a5b44b3af797c0c8b75f5e6@tencent.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D628F19C-EDB9-11EC-AA11-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 16, 2022 at 03:11:09PM +0000, kylezhao(赵柯宇) wrote:
-> > At the time I didn't, because as noted in a follow-up I'd lost my test
-> > case by the time I read that, but it seems you haven't, and have a
-> > current test case.
->
-> I tried to find a test case in open-source projects, and finally found one.
-> $ git clone https://github.com/JetBrains/intellij-community.git --bare
-> $ cd intellij-community.git
-> $ git repack -adb
-> $ GIT_TRACE=1 git push . master:test1
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-I wouldn't expect this to push any objects at all, since you're pushing
-to a repository that already has all of the objects contained in
-`master`.
+> +	# Only enable --fixed-value if we have two parameters
+> +	if test $# < 2
+> +	then
+> +		fixedvalue=
+> +	fi
 
-A more representative test might be something like:
+Two comments:
 
-    $ git clone https://github.com/JetBrains/intellij-community.git --bare
-    $ cd intellij-community.git
-    $ git repack -adb
-    $ git rev-parse HEAD >in
-    $ time git pack-objects --revs --stdout <in >/dev/null
-    # move the bitmap away so we don't use it
-    $ mv objects/pack/pack-*.bitmap{,.bak}
-    $ time git pack-objects --revs --stdout <in >/dev/null
+ * Does "<" do what you expect to do?  Did you mean "-lt"?
 
-Thanks,
-Taylor
+ * Using "bug in the test script: $*" and diagnosing missing
+   parameters, instead of silently ignoring the option the developer
+   wrote, would be more preferrable.
+
+> +	git ${config_dir:+-C "$config_dir"} config ${global:+--global} ${fixedvalue:+--fixed-value} --unset-all "$1" "$2"
+>  	config_status=$?
+>  	case "$config_status" in
+>  	5) # ok, nothing to unset
+> @@ -575,7 +586,7 @@ test_config () {
+>  		esac
+>  		shift
+>  	done
+> -	test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} ${global:+--global} '$1'" &&
+> +	test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} --fixed-value ${global:+--global} '$1' '$2'" &&
+
+Why are $1 and $2 enclosed in a pair of single quotes?  Is the
+assumption that they do not contain a single quote themselves?
+
+I guess that is true also for config_dir and shares the same
+problem, so you are not introducing a new problem.
+
+>  	git ${config_dir:+-C "$config_dir"} config ${global:+--global} "$1" "$2"
+>  }
