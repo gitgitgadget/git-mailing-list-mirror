@@ -2,85 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBBFBC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 07:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71F51C43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 09:23:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358639AbiFPHJh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 03:09:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56328 "EHLO
+        id S1359684AbiFPJXv convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 16 Jun 2022 05:23:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230043AbiFPHJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 03:09:35 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD16619C14
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 00:09:33 -0700 (PDT)
-Received: (qmail 12816 invoked by uid 109); 16 Jun 2022 07:09:33 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jun 2022 07:09:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Date:   Thu, 16 Jun 2022 03:09:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Neeraj Singh <neerajsi@microsoft.com>
-Subject: [PATCH] perf-lib: fix missing test titles in output
-Message-ID: <YqrXLO5oMYeOr2PB@coredump.intra.peff.net>
+        with ESMTP id S231689AbiFPJXt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 05:23:49 -0400
+X-Greylist: delayed 549 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 16 Jun 2022 02:23:47 PDT
+Received: from mailproxy01.manitu.net (mailproxy01.manitu.net [217.11.48.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B884611822
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 02:23:47 -0700 (PDT)
+Received: from localhost (nb-ana002.math.uni-hannover.de [130.75.46.4])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: michael@grubix.eu)
+        by mailproxy01.manitu.net (Postfix) with ESMTPSA id A776E1260246;
+        Thu, 16 Jun 2022 11:14:36 +0200 (CEST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <nycvar.QRO.7.76.6.2206151649030.349@tvgsbejvaqbjf.bet>
+References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu> <nycvar.QRO.7.76.6.2206151649030.349@tvgsbejvaqbjf.bet>
+Subject: Re: [PATCH] t3701: two subtests are fixed
+From:   Michael J Gruber <git@grubix.eu>
+Cc:     git@vger.kernel.org,
+        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Message-ID: <165537087609.19905.821171947957640468.git@grubix.eu>
+Date:   Thu, 16 Jun 2022 11:14:36 +0200
+User-Agent: alot/0.10
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 5dccd9155f (t/perf: add iteration setup mechanism to perf-lib,
-2022-04-04) modified the parameter parsing of test_wrapper() such that
-the test title was no longer in $1, and is instead in $test_title_.
+Johannes Schindelin venit, vidit, dixit 2022-06-15 16:50:40:
+> Hi Michael,
 
-We correctly pass the new variable to the code which outputs the title
-to the log, but missed the spot in test_wrapper() where the title is
-written to the ".descr" file which is used to produce the final output
-table. As a result, all of the titles are missing from that table (or
-worse, using whatever was left in $1):
+Hallo Dscho!
 
-  $ ./p0000-perf-lib-sanity.sh
-  [...]
-  Test           this tree
-  ------------------------------
-  0000.1:        0.01(0.01+0.00)
-  0000.2:        0.01(0.00+0.01)
-  0000.4:        0.00(0.00+0.00)
-  0000.5: true   0.00(0.00+0.00)
-  0000.7:        0.00(0.00+0.00)
-  0000.8:        0.00(0.00+0.00)
+> On Tue, 14 Jun 2022, Michael J Gruber wrote:
+> 
+> > 0527ccb1b5 ("add -i: default to the built-in implementation", 2021-11-30)
+> > switched to the implementation which fixed to subtest. Mark them as
+> > expect_success now.
+> 
+> Good catch!
+ 
+I'm no list regular anymore, but still a "next+ regular". While
+experimenting with my own patch I noticed something got fixed
+unexpectedly. That goes to show that these unexpected successes
+(from expect_failure) go unnoticed too easily. I had missed this on my
+regular rebuilds.
 
-After this patch, we get the pre-5dccd9155f output:
+> However... that commit specifically contains this change:
+> 
+>         diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+>         index cc62616d806..660ebe8d108 100755
+>         --- a/ci/run-build-and-tests.sh
+>         +++ b/ci/run-build-and-tests.sh
+>         @@ -29,7 +29,7 @@ linux-gcc)
+>                 export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
+>                 export GIT_TEST_MULTI_PACK_INDEX=1
+>                 export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=1
+>         -       export GIT_TEST_ADD_I_USE_BUILTIN=1
+>         +       export GIT_TEST_ADD_I_USE_BUILTIN=0
+>                 export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+>                 export GIT_TEST_WRITE_REV_INDEX=1
+>                 export GIT_TEST_CHECKOUT_WORKERS=2
+> 
+> The intention is to have t3701 be run with the non-built-in version of
+> `git add -i` in the `linux-gcc` job, and I am surprised that those two
+> tests do not fail for you in that case.
+> 
+> Did you run this through the CI builds?
 
-  Test                                                       this tree
-  --------------------------------------------------------------------------
-  0000.1: test_perf_default_repo works                       0.00(0.00+0.00)
-  0000.2: test_checkout_worktree works                       0.01(0.00+0.01)
-  0000.4: export a weird var                                 0.00(0.00+0.00)
-  0000.5: éḿíẗ ńöń-ÁŚĆÍÍ ćḧáŕáćẗéŕś                          0.00(0.00+0.00)
-  0000.7: important variables available in subshells         0.00(0.00+0.00)
-  0000.8: test-lib-functions correctly loaded in subshells   0.00(0.00+0.00)
+That's why I mentioned "no list regular" - I didn't know about that knob
+nor the intention to have the test suite run with either implementation
+(rather than switching to the new one for good).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/perf/perf-lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I do local builds, usually with
 
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index ab3687c28d..27c2801792 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -219,7 +219,7 @@ test_wrapper_ () {
- 	then
- 		base=$(basename "$0" .sh)
- 		echo "$test_count" >>"$perf_results_dir"/$base.subtests
--		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
-+		echo "$test_title_" >"$perf_results_dir"/$base.$test_count.descr
- 		base="$perf_results_dir"/"$PERF_RESULTS_PREFIX$(basename "$0" .sh)"."$test_count"
- 		"$test_wrapper_func_" "$test_title_" "$@"
- 	fi
--- 
-2.37.0.rc0.352.g10876ef154
+```
+DEVELOPER=1 (which I had to disable during the bisect run; gcc12...)
+DEFAULT_TEST_TARGET=prove
+GIT_PROVE_OPTS=--jobs 4
+GIT_TEST_OPTS=--root=/dev/shm/t --chain-lint
+SHELL_PATH=/bin/dash
+SKIP_DASHED_BUILT_INS=y
+```
+
+in config.mak. Nothing else strikes me as potentially relevant.
+
+Ævar noticed this and has a better version of my patch, I think.
+
+Michael
