@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2EBBC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8917EC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:14:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376971AbiFPNOE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 09:14:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48116 "EHLO
+        id S1376997AbiFPNOJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 09:14:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376938AbiFPNN7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1376926AbiFPNN7 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 16 Jun 2022 09:13:59 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66FD9369EE
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:57 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id m39-20020a05600c3b2700b0039c511ebbacso2807677wms.3
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:57 -0700 (PDT)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DEB33A0F
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:58 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id n185so750295wmn.4
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZPl6Zq2JI8wNCS5ZExHetDtnJijrCm3i3KuNoQFRYMM=;
-        b=UJE/+dSx6veaIQoOpSA5Oq0m002Kav7oujFMJVZwu5Kq17qIjE0RgKl5xpMl7sZ1l0
-         geWorQn6Azp1cTe5m2O700P66CRGuuK+L29bkkceag0yvl4o26vCRc9ujlSjPxrPn9Xw
-         oCkKmmGIu1rkPtq+zj9avw234qDINUUVsB5uVdvhrPuRrZvm1cKgIb3Fi6Rq127AfYLd
-         PE5wYRHLImZem0HLRoQs8MxwCg0alagyJJKwbnVmYoysgpnVa07O850rSsQRVti8OtjF
-         IuaQ5JkHTYf3IegF5/TKUCNnzOcg8Gftulz4TTkV6rXH1GsYZrXqIezeAJHVpMkB3lWT
-         Gkfg==
+        bh=alRx2CpD6UCtMqSiYdRE3shPSPHBMdmw/AvBwMyz424=;
+        b=J8sKlu2CyzqrE/Ntc37kw9ADw95RxfLhokM2jZ0V50T/YiBGhJ2l9jsnDtJlbwSM6A
+         rl5Z+83ng4I73dnRaLezXs+qhukj9GWIQUIKxGVAVyxzjzlGsKH9j/sTzDIwwM4QIntK
+         v+GDLyshzmUMzbF2nPKOKuwwvAntc1RpwPTGrL7S4Uaik7WAUh9+Ihour0yxaN3T6Vu3
+         6Ku3hUmeqVazup2OT98S600nmI4F+QbouLEoV81ZBora0vJN+JN0qaJ7elY1zAlqPcWF
+         Fbtly+KP0gavmD1FBlLaOiQhGrjLuuIi4rAGRyBSIoRFPQcRagHEzpN7dRwCE/YhC+ve
+         fnig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZPl6Zq2JI8wNCS5ZExHetDtnJijrCm3i3KuNoQFRYMM=;
-        b=Wc3MivBJkoK9mUPYOY6KU/uxRP4zM+Z4j/JLSXN6804ApB+zhN9YTSwB5ML8u8m47b
-         Z8vgYbwxyNzyuKoGl+LSIl/yxtHkxUOU7yS1pb72r8zb3RK3eUYZFS/pOh81zWCm/Nat
-         FnG10qRvhJGNoopw2EH1opbdnlqYWfLG5L0tolzes4Q2rCds99ZMy6Lwz5KR7x2lZuDa
-         fDYH/bmyQzgKgM3n0xIQDkcyNi+7pUat3ays2jN0T9iukhtDPIQ43Xj1KxuT4kuIUl4o
-         cr40PRjnsAlz6NA5uU9FbXilDhs+ci+WLpE8xBmW6balpfncHw2SwO2qwnyO8I3Ws3v9
-         zVXQ==
-X-Gm-Message-State: AOAM530gxbpnSOBT5+SR1BkYDrY7iLPWHmgLPbIplh8cG76M+B2laiJ7
-        AxlSk7eZrl8fyEf6uSkw7oBeVXIvUBHqOA==
-X-Google-Smtp-Source: ABdhPJx/e/xVLDF5wv/LeJ9tlGumVW8yVQCNoHkKCdb25kTEpbkQVDDj3+cZcesIbzhyD7kNjD+Gjw==
-X-Received: by 2002:a05:600c:1e1c:b0:39c:65a1:7c3a with SMTP id ay28-20020a05600c1e1c00b0039c65a17c3amr15762921wmb.6.1655385235120;
-        Thu, 16 Jun 2022 06:13:55 -0700 (PDT)
+        bh=alRx2CpD6UCtMqSiYdRE3shPSPHBMdmw/AvBwMyz424=;
+        b=tSQX+wDioXIt7vS9zX0YDhjWeKBnhwQ6M8CAREVufSepMw4bIeVMr7I4hYNev81e/e
+         qGBXUOjvN0HWsaB2b5A/xMhWFtf4gjgfZ1rVq45bCqLUn1+CDIESgAtGyCsKq+OqHqU4
+         KfB9Jap+uLlSGxvtnabXCnU60T/Orvn24jLDigKZxSD4arjG8YlYWpHPw5Hbu+ggvlTK
+         Myb47+hZJYpJ54SWr6P3As13g6vz0IXusBKpP7KVsZfxSE8DaNdGvJkk98rhx44Fc82J
+         2kyxTAvkU1OdO1UZLiq8abRSbx/JN5MNkOjNSqNB1pHhwBZb4ECtjGZpE6+U+gBUgBB/
+         Pcrw==
+X-Gm-Message-State: AJIora8m1cNGZHZbgutlfWa0fPmKCZDVLIeULzKqrbLkowRmPtfRAbZM
+        WxFJYE5VCuiNWF6h3EYPJRM5dzo1YkKPag==
+X-Google-Smtp-Source: AGRyM1v/ia8KVhCYh1k0r2nYLDwuEO4oFyD75F7Ilz363WDBsF1Lz4YHmgJxGtQ2GYVPH0qCnu8YZw==
+X-Received: by 2002:a05:600c:4e0e:b0:39c:8d11:58eb with SMTP id b14-20020a05600c4e0e00b0039c8d1158ebmr5056834wmq.190.1655385236908;
+        Thu, 16 Jun 2022 06:13:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r66-20020a1c2b45000000b0039c97cc82fbsm5912829wmr.15.2022.06.16.06.13.54
+        by smtp.gmail.com with ESMTPSA id d8-20020adfc088000000b00213ba0cab3asm1903143wrf.44.2022.06.16.06.13.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 06:13:54 -0700 (PDT)
-Message-Id: <b956a371c7083985eb7ceedc2b9c8fc65a0d43dc.1655385230.git.gitgitgadget@gmail.com>
+        Thu, 16 Jun 2022 06:13:56 -0700 (PDT)
+Message-Id: <8486a1d6eca66e2d71b4317ce03318aed6346bc0.1655385230.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
 References: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
         <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jun 2022 13:13:49 +0000
-Subject: [PATCH v2 3/4] pack-write: drop always-NULL parameter
+Date:   Thu, 16 Jun 2022 13:13:50 +0000
+Subject: [PATCH v2 4/4] cache-tree: remove cache_tree_find_path()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,60 +69,67 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-write_mtimes_file() takes an mtimes parameter as its first option, but
-the only caller passes a NULL constant. Drop this parameter to simplify
-logic. This can be reverted if that parameter is needed in the future.
+This reverts 080ab56a46 (cache-tree: implement cache_tree_find_path(),
+2022-05-23). The cache_tree_find_path() method was never actually called
+in the topic that added it. I cannot find any reference to it in any of
+my forks, so this appears to not be needed at the moment.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- pack-write.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ cache-tree.c | 27 ---------------------------
+ cache-tree.h |  2 --
+ 2 files changed, 29 deletions(-)
 
-diff --git a/pack-write.c b/pack-write.c
-index 23c0342018f..00787e306db 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -310,26 +310,21 @@ static void write_mtimes_trailer(struct hashfile *f, const unsigned char *hash)
- 	hashwrite(f, hash, the_hash_algo->rawsz);
+diff --git a/cache-tree.c b/cache-tree.c
+index ff794d940fa..56db0b5026b 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -101,33 +101,6 @@ struct cache_tree_sub *cache_tree_sub(struct cache_tree *it, const char *path)
+ 	return find_subtree(it, path, pathlen, 1);
  }
  
--static const char *write_mtimes_file(const char *mtimes_name,
--				     struct packing_data *to_pack,
-+static const char *write_mtimes_file(struct packing_data *to_pack,
- 				     struct pack_idx_entry **objects,
- 				     uint32_t nr_objects,
- 				     const unsigned char *hash)
- {
-+	struct strbuf tmp_file = STRBUF_INIT;
-+	const char *mtimes_name;
- 	struct hashfile *f;
- 	int fd;
- 
- 	if (!to_pack)
- 		BUG("cannot call write_mtimes_file with NULL packing_data");
- 
--	if (!mtimes_name) {
--		struct strbuf tmp_file = STRBUF_INIT;
--		fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
--		mtimes_name = strbuf_detach(&tmp_file, NULL);
--	} else {
--		unlink(mtimes_name);
--		fd = xopen(mtimes_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+-struct cache_tree *cache_tree_find_path(struct cache_tree *it, const char *path)
+-{
+-	const char *slash;
+-	int namelen;
+-	struct cache_tree_sub it_sub = {
+-		.cache_tree = it,
+-	};
+-	struct cache_tree_sub *down = &it_sub;
+-
+-	while (down) {
+-		slash = strchrnul(path, '/');
+-		namelen = slash - path;
+-		down->cache_tree->entry_count = -1;
+-		if (!*slash) {
+-			int pos;
+-			pos = cache_tree_subtree_pos(down->cache_tree, path, namelen);
+-			if (0 <= pos)
+-				return down->cache_tree->down[pos]->cache_tree;
+-			return NULL;
+-		}
+-		down = find_subtree(it, path, namelen, 0);
+-		path = slash + 1;
 -	}
-+	fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
-+	mtimes_name = strbuf_detach(&tmp_file, NULL);
- 	f = hashfd(fd, mtimes_name);
+-
+-	return NULL;
+-}
+-
+ static int do_invalidate_path(struct cache_tree *it, const char *path)
+ {
+ 	/* a/b/c
+diff --git a/cache-tree.h b/cache-tree.h
+index f75f8e74dcd..8efeccebfc9 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -29,8 +29,6 @@ struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
  
- 	write_mtimes_header(f);
-@@ -561,7 +556,7 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
- 				      pack_idx_opts->flags);
+ int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen);
  
- 	if (pack_idx_opts->flags & WRITE_MTIMES) {
--		mtimes_tmp_name = write_mtimes_file(NULL, to_pack, written_list,
-+		mtimes_tmp_name = write_mtimes_file(to_pack, written_list,
- 						    nr_written,
- 						    hash);
- 	}
+-struct cache_tree *cache_tree_find_path(struct cache_tree *it, const char *path);
+-
+ void cache_tree_write(struct strbuf *, struct cache_tree *root);
+ struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
+ 
 -- 
 gitgitgadget
-
