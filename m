@@ -2,90 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D306FC43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 21:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4500FC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 22:07:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378609AbiFPV6O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 17:58:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42084 "EHLO
+        id S1378591AbiFPWHO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 18:07:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230174AbiFPV6N (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 17:58:13 -0400
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D03F933E2D
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:58:12 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id 89so4111621qvc.0
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:58:12 -0700 (PDT)
+        with ESMTP id S231569AbiFPWHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 18:07:13 -0400
+Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com [IPv6:2607:f8b0:4864:20::e31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D086160C
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 15:07:12 -0700 (PDT)
+Received: by mail-vs1-xe31.google.com with SMTP id x9so2445284vsg.13
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 15:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/unJzaFwRfpxxuPiVXnihgljENGy9wUbXfWMyNXmXZE=;
-        b=SW6/yes5R6+8VThgTQkA/LZtrU+woLUqM3Rll2CkotEZR1ojWCtkBrxsf9V0TFRcK5
-         QILOTEy1cqlZYR8qhJEKpcBB1BlnQ575fINgeNe2gw37arxPE+R9X0cwNu5CTGu6iUpZ
-         pXREwu0PCp8i/e3mNe0R64udXDFVAknakMnSFrh9jYEEmFGfWRyhoCmMMAQfJ1LOe4gU
-         PYVRpGpn8Iw1cq9injp8RSyHJ/kn9ZF0Rxtf7S/2uOxQidsmizi6DvEa206F2M5sS7EK
-         JJU0wTY73ANBbNqSHxZDPhUQycNdVi61UF9Z6gP+48SyVzxpitVLBJRBGObP833uVBr1
-         uszA==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4YuYwzneiXSn9/jesY1EYEm7Us8yqmuslpoct0cjf+8=;
+        b=EgqzN2L708UMiHHS9x8+n603raF9DK3i1Tbwn0YaWKuda6trQFrxUoG37wDzic7LMu
+         FjzpR0kRpS+/IYNDAKxlGQpA6gYKckoNHl58kAHnlaeKp8XBLx1yEJeFsiWPx7LBvd7A
+         V1xJHwqAQUMsCLbiWUSwVuPvXvB8mqSd02N7pyYrfEEMtLWW9ZsApOEeZkSn9FAovAZ1
+         /BcGMUFCsx6E/+7qG4o1Fy/447w1TtIPCR8ftqtcLvVs20k3MoyPtZ03j0zJ93R8vju2
+         N74HELOjJTEjNB6Tq20/97zFCyJmdYZFru5G2ylBbFBZAVUOoMD68A/iiuBcjx789r06
+         vCXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/unJzaFwRfpxxuPiVXnihgljENGy9wUbXfWMyNXmXZE=;
-        b=T691TejoUY+pjmwYmOtLGDSwiWJU2KjTlrUvFHHSW6vQIKh+SMbTDCQskfxh1YDEhE
-         ersWFA/OiMRiVKGWEjZ3/pdxfcYPSFCY3ALwyIE1YniL+O7WR9KVDpTV8bvw5+c9HryJ
-         Uz33BDGjx7fUm+syqyk+bjn8bo+xvsq9BfM8Xf/PPAg+Ab6JdFmcEa52p1Dvlf6I43yA
-         jxJR7nuPBk1jJ6QMOgLpic5UIp0hJXzvdrMWS8dYbVvNT0sZknYwwAlxTLcY+WfXHY/I
-         w5MQHrAKWKHLV3eGrrzVmDBr8vxHTVwtmDnXgG2p9bzQ4+7SplIxdHHUTqUDIxoWLCwO
-         IIQQ==
-X-Gm-Message-State: AJIora8ivN/+jiWdEmc4+n9SXhERptaukL3/KahDmI3bj1x6MUMufFXC
-        jhvx0ZMzq+1K5XpyrY6L39iQzRgbtmd347T6
-X-Google-Smtp-Source: AGRyM1v1lBFvXeURVVVQtrKorX9cU1yGvdWS4ZLP9srMelTm8i/EJm2ZwDrj4uerXEKwu1LkRpROSA==
-X-Received: by 2002:a05:622a:4ca:b0:304:f29e:7cc5 with SMTP id q10-20020a05622a04ca00b00304f29e7cc5mr5980165qtx.156.1655416691948;
-        Thu, 16 Jun 2022 14:58:11 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d8-20020ac85d88000000b00304edcfa109sm2898950qtx.33.2022.06.16.14.58.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 14:58:11 -0700 (PDT)
-Date:   Thu, 16 Jun 2022 17:58:10 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: gc/bare-repo-discovery (was Re: What's cooking in git.git (Jun
- 2022, #04; Mon, 13))
-Message-ID: <YquncgVEpWIG7lJ7@nand.local>
-References: <xmqq35g82f0y.fsf@gitster.g>
- <kl6lzgid4u5p.fsf@chooglen-macbookpro.roam.corp.google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4YuYwzneiXSn9/jesY1EYEm7Us8yqmuslpoct0cjf+8=;
+        b=lxJrEQmDAnhYsBqRTSAvBrYaBXv+ZklnQ4SmxZ6q1JlaoBJDV7SwQypItHpv+FC2R9
+         vsYt2c6I1U6x1Ni5z/tuPoYxO8u3szRcGno6qQP6Y+1D8YCEZ5RAFxiEkDBdeH917dii
+         nLjIbPVKBgZjJ9gHjjjM3PJpKVzXPGiBij6cuoap9/tK3j0Zp34p5OcnZktDjpcv0JNV
+         d47E0IaXzL94FARtPDZ9zlLrNDP5guLPkMrLZbMel3IWm6tV1pH39PgqxJ8gVupbxhDj
+         gviv+PsZj0F9pAulv/ayRndhH6L0IbZvgj+UBzNViUwUXxk9jz/SAjnuybAVfWGMIBCb
+         TyTw==
+X-Gm-Message-State: AJIora/auj1z4hBA3C7dLpprnhhlm8emt05cT07f2rtls8G7F6Cn2lSg
+        7fW/Liznb8fxmO6pU+N1rhfVzIkWmS9CNWTIlaw=
+X-Google-Smtp-Source: AGRyM1tyu/rvoePQYjO78abAbntOuTHeIdo5NasrZ7yuTHCUkpVthSRWT5CYFNANjj6dSMoBHXviEtVc7vF0FOXbYMs=
+X-Received: by 2002:a05:6102:215c:b0:34c:1e12:afa with SMTP id
+ h28-20020a056102215c00b0034c1e120afamr3270014vsg.29.1655417231968; Thu, 16
+ Jun 2022 15:07:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <kl6lzgid4u5p.fsf@chooglen-macbookpro.roam.corp.google.com>
+References: <20220616205456.19081-1-jacob.e.keller@intel.com>
+ <20220616205456.19081-4-jacob.e.keller@intel.com> <xmqq35g4s3xl.fsf@gitster.g>
+In-Reply-To: <xmqq35g4s3xl.fsf@gitster.g>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 16 Jun 2022 15:07:02 -0700
+Message-ID: <CA+P7+xomvVK4ZvQfepbVCCgE8uXZvueZQudEa07pvWQYrU=hJQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] tests: only automatically unset matching values
+ from test_config
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 15, 2022 at 12:13:22PM -0700, Glen Choo wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Jun 16, 2022 at 2:18 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> > * gc/bare-repo-discovery (2022-06-07) 5 commits
-> >  - setup.c: create `discovery.bare`
-> >  - safe.directory: use git_protected_config()
-> >  - config: read protected config with `git_protected_config()`
-> >  - Documentation: define protected configuration
-> >  - Documentation/git-config.txt: add SCOPES section
-> >
-> >  Introduce a discovery.barerepository configuration variable that
-> >  allows users to forbid discovery of bare repositories.
-> >
-> >  Expecting a reroll.
-> >  source: <29053d029f8ec61095a2ad557be38b1d485a158f.1654635432.git.gitgitgadget@gmail.com>
+> Jacob Keller <jacob.keller@gmail.com> writes:
 >
-> v4 hasn't been reviewed yet. I think "Needs Review" is more accurate.
+> > +     # Only enable --fixed-value if we have two parameters
+> > +     if test $# < 2
+> > +     then
+> > +             fixedvalue=
+> > +     fi
+>
+> Two comments:
+>
+>  * Does "<" do what you expect to do?  Did you mean "-lt"?
+>
+>  * Using "bug in the test script: $*" and diagnosing missing
+>    parameters, instead of silently ignoring the option the developer
+>    wrote, would be more preferrable.
 
-Yep, I agree that we can move this to "needs review". FWIW, I've been
-meaning to look at the more recent iterations of this series, but
-haven't quite gotten to it yet.
+I guess we should check that it has exactly 1 or 2 arguments, yea.
 
-Thanks,
-Taylor
+>
+> > +     git ${config_dir:+-C "$config_dir"} config ${global:+--global} ${fixedvalue:+--fixed-value} --unset-all "$1" "$2"
+> >       config_status=$?
+> >       case "$config_status" in
+> >       5) # ok, nothing to unset
+> > @@ -575,7 +586,7 @@ test_config () {
+> >               esac
+> >               shift
+> >       done
+> > -     test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} ${global:+--global} '$1'" &&
+> > +     test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} --fixed-value ${global:+--global} '$1' '$2'" &&
+>
+> Why are $1 and $2 enclosed in a pair of single quotes?  Is the
+> assumption that they do not contain a single quote themselves?
+>
+> I guess that is true also for config_dir and shares the same
+> problem, so you are not introducing a new problem.
+>
+
+Yea, I wasn't sure.
+
+> >       git ${config_dir:+-C "$config_dir"} config ${global:+--global} "$1" "$2"
+> >  }
