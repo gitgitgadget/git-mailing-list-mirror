@@ -2,134 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8917EC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F398C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:33:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376997AbiFPNOJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 09:14:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48150 "EHLO
+        id S233016AbiFPNdD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 09:33:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376926AbiFPNN7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 09:13:59 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DEB33A0F
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:58 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id n185so750295wmn.4
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:58 -0700 (PDT)
+        with ESMTP id S229723AbiFPNdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 09:33:01 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF8513F0A
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:32:56 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id o7so2843872eja.1
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=alRx2CpD6UCtMqSiYdRE3shPSPHBMdmw/AvBwMyz424=;
-        b=J8sKlu2CyzqrE/Ntc37kw9ADw95RxfLhokM2jZ0V50T/YiBGhJ2l9jsnDtJlbwSM6A
-         rl5Z+83ng4I73dnRaLezXs+qhukj9GWIQUIKxGVAVyxzjzlGsKH9j/sTzDIwwM4QIntK
-         v+GDLyshzmUMzbF2nPKOKuwwvAntc1RpwPTGrL7S4Uaik7WAUh9+Ihour0yxaN3T6Vu3
-         6Ku3hUmeqVazup2OT98S600nmI4F+QbouLEoV81ZBora0vJN+JN0qaJ7elY1zAlqPcWF
-         Fbtly+KP0gavmD1FBlLaOiQhGrjLuuIi4rAGRyBSIoRFPQcRagHEzpN7dRwCE/YhC+ve
-         fnig==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=480BPN4ELFjCrM/pPcOuieBKWzluu9bNmesnS7EJlIg=;
+        b=iNCChmF+npevItGGnmvjhCKt12tTsbcNprIQrw2u2bW8wgLw0kKX+oMCXThXXOkxle
+         hvssFIcNx/HlU7waE9HngKzhF+xk9EK9W3h/z9Ik2eYgw/eLBpvnpPrGXvjkynR5zA65
+         bW07FV0qITo+thxJ6bhDIav5Z+81zPsuDB3IvT4Py6ZvzA3YPieD8gOz6XWuL5GLpwS3
+         n2Uuuss1BGKVTtTasZl/3P/WGCXVJCVUoY6235uMNKysIKG/eeU0DjaAFFhh7hRshEVD
+         mFdDHHdzmwP4J3PtEpnU4J+6ePDbdP8HzC/W50xIglhdWuQTntiW9j61wBRkpN+GoXTp
+         bC5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=alRx2CpD6UCtMqSiYdRE3shPSPHBMdmw/AvBwMyz424=;
-        b=tSQX+wDioXIt7vS9zX0YDhjWeKBnhwQ6M8CAREVufSepMw4bIeVMr7I4hYNev81e/e
-         qGBXUOjvN0HWsaB2b5A/xMhWFtf4gjgfZ1rVq45bCqLUn1+CDIESgAtGyCsKq+OqHqU4
-         KfB9Jap+uLlSGxvtnabXCnU60T/Orvn24jLDigKZxSD4arjG8YlYWpHPw5Hbu+ggvlTK
-         Myb47+hZJYpJ54SWr6P3As13g6vz0IXusBKpP7KVsZfxSE8DaNdGvJkk98rhx44Fc82J
-         2kyxTAvkU1OdO1UZLiq8abRSbx/JN5MNkOjNSqNB1pHhwBZb4ECtjGZpE6+U+gBUgBB/
-         Pcrw==
-X-Gm-Message-State: AJIora8m1cNGZHZbgutlfWa0fPmKCZDVLIeULzKqrbLkowRmPtfRAbZM
-        WxFJYE5VCuiNWF6h3EYPJRM5dzo1YkKPag==
-X-Google-Smtp-Source: AGRyM1v/ia8KVhCYh1k0r2nYLDwuEO4oFyD75F7Ilz363WDBsF1Lz4YHmgJxGtQ2GYVPH0qCnu8YZw==
-X-Received: by 2002:a05:600c:4e0e:b0:39c:8d11:58eb with SMTP id b14-20020a05600c4e0e00b0039c8d1158ebmr5056834wmq.190.1655385236908;
-        Thu, 16 Jun 2022 06:13:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8-20020adfc088000000b00213ba0cab3asm1903143wrf.44.2022.06.16.06.13.55
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=480BPN4ELFjCrM/pPcOuieBKWzluu9bNmesnS7EJlIg=;
+        b=MXdkwS7zFl89nINIDGQOz+t7kUKv1a0pBDH5GR4s4KQ/d0VOWTjlKtaRAcFoGScRCy
+         VqebRDPETpH1DYcTG3Y7L5A946kuL+MUeqam/5DCd1h8ncwTK/OnWIuDPAzcC/C5flcp
+         wxTQ/KYWnEBEmy9M9p6y2kbPgABiNzJM32mUGTaUD3jMBgJS6Vgj4IB5KxJ97Zch7ja7
+         Jz9nVR7HVJG7P/9D2MCjbtwjjBwU+rjFcsyNqRrb20bumY723cpv/XwKsR8bTBM6D7VH
+         aoB9TAgTLTHN+sntHDgAW7mv5B+SjzjC9ocGScVFQYojgOuk2q8DoBujbcK/3aCzI+bu
+         UuDA==
+X-Gm-Message-State: AJIora+j+iR5GodCjr51Behr5HavTY3UwuiItGDZdafUNvj2X2bBaA4Y
+        9578h4b7KQ3LjPgXWDsBcXo2+HY3P0o=
+X-Google-Smtp-Source: AGRyM1uK+fiwuCYnB00dUrSC//X5f0qvHZmomVoahpnfd6nhemMDJNDXOvrrIKc8brIi1R9CMfcSKg==
+X-Received: by 2002:a17:907:80ca:b0:70f:77fd:cfbd with SMTP id io10-20020a17090780ca00b0070f77fdcfbdmr4481357ejc.82.1655386375062;
+        Thu, 16 Jun 2022 06:32:55 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id e25-20020a056402089900b0042be14040c1sm1844341edy.86.2022.06.16.06.32.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 06:13:56 -0700 (PDT)
-Message-Id: <8486a1d6eca66e2d71b4317ce03318aed6346bc0.1655385230.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
-References: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
-        <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jun 2022 13:13:50 +0000
-Subject: [PATCH v2 4/4] cache-tree: remove cache_tree_find_path()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 16 Jun 2022 06:32:54 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o1pcE-0014cb-1N;
+        Thu, 16 Jun 2022 15:32:54 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 10/11] relative_url(): fix incorrect condition
+Date:   Thu, 16 Jun 2022 15:09:38 +0200
+References: <pull.1264.git.1655336146.gitgitgadget@gmail.com>
+ <0bf70e65d2c9e187203a77088ff0f7d18510caca.1655336146.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <0bf70e65d2c9e187203a77088ff0f7d18510caca.1655336146.git.gitgitgadget@gmail.com>
+Message-ID: <220616.86k09gwx6i.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
 
-This reverts 080ab56a46 (cache-tree: implement cache_tree_find_path(),
-2022-05-23). The cache_tree_find_path() method was never actually called
-in the topic that added it. I cannot find any reference to it in any of
-my forks, so this appears to not be needed at the moment.
+On Wed, Jun 15 2022, Johannes Schindelin via GitGitGadget wrote:
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- cache-tree.c | 27 ---------------------------
- cache-tree.h |  2 --
- 2 files changed, 29 deletions(-)
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> In 63e95beb085c (submodule: port resolve_relative_url from shell to C,
+> 2016-04-15), we added a loop over `url` where we are looking for `../`
+> or `./` components.
+>
+> The loop condition we used is the pointer `url` itself, which is clearly
+> not what we wanted.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index ff794d940fa..56db0b5026b 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -101,33 +101,6 @@ struct cache_tree_sub *cache_tree_sub(struct cache_tree *it, const char *path)
- 	return find_subtree(it, path, pathlen, 1);
- }
- 
--struct cache_tree *cache_tree_find_path(struct cache_tree *it, const char *path)
--{
--	const char *slash;
--	int namelen;
--	struct cache_tree_sub it_sub = {
--		.cache_tree = it,
--	};
--	struct cache_tree_sub *down = &it_sub;
--
--	while (down) {
--		slash = strchrnul(path, '/');
--		namelen = slash - path;
--		down->cache_tree->entry_count = -1;
--		if (!*slash) {
--			int pos;
--			pos = cache_tree_subtree_pos(down->cache_tree, path, namelen);
--			if (0 <= pos)
--				return down->cache_tree->down[pos]->cache_tree;
--			return NULL;
--		}
--		down = find_subtree(it, path, namelen, 0);
--		path = slash + 1;
--	}
--
--	return NULL;
--}
--
- static int do_invalidate_path(struct cache_tree *it, const char *path)
- {
- 	/* a/b/c
-diff --git a/cache-tree.h b/cache-tree.h
-index f75f8e74dcd..8efeccebfc9 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -29,8 +29,6 @@ struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
- 
- int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen);
- 
--struct cache_tree *cache_tree_find_path(struct cache_tree *it, const char *path);
--
- void cache_tree_write(struct strbuf *, struct cache_tree *root);
- struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
- 
--- 
-gitgitgadget
+Clearly, but having looked at this I think it's useful to note that
+coverity must be (I don't know what it actually emitted) be complaining
+about the "url" condition being useless, i.e. it's the same as a "while
+(1)", not that we run off the end of the string.
+
+I.e. due to the way those start_with*() functions work we would abort
+early if we were running off th end of the string.
+
+> Pointed out by Coverity.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  remote.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/remote.c b/remote.c
+> index 9b9bbfe80ec..bded6acbfe8 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2846,7 +2846,7 @@ char *relative_url(const char *remote_url, const char *url,
+>  	 * When the url starts with '../', remove that and the
+>  	 * last directory in remoteurl.
+>  	 */
+> -	while (url) {
+> +	while (*url) {
+>  		if (starts_with_dot_dot_slash_native(url)) {
+>  			url += 3;
+>  			colonsep |= chop_last_dir(&remoteurl, is_relative);
+
+Which I tested with this:
+	
+	diff --git a/remote.c b/remote.c
+	index 9b9bbfe80ec..e049bbb791c 100644
+	--- a/remote.c
+	+++ b/remote.c
+	@@ -2846,14 +2846,17 @@ char *relative_url(const char *remote_url, const char *url,
+	 	 * When the url starts with '../', remove that and the
+	 	 * last directory in remoteurl.
+	 	 */
+	-	while (url) {
+	+	while (1) {
+	 		if (starts_with_dot_dot_slash_native(url)) {
+	 			url += 3;
+	 			colonsep |= chop_last_dir(&remoteurl, is_relative);
+	-		} else if (starts_with_dot_slash_native(url))
+	+		} else if (starts_with_dot_slash_native(url)) {
+	 			url += 2;
+	-		else
+	-			break;
+	+		} else if (!*url) {
+	+			BUG("ran off the end of our url?");
+	+		} else {
+	+			break; 
+	+		}
+	 	}
+	 	strbuf_reset(&sb);
+	 	strbuf_addf(&sb, "%s%s%s", remoteurl, colonsep ? ":" : "/", url);
+	
+Which will fail e.g. on this test in t3420-rebase-autostash.sh:
+
+	+ git submodule add ./ sub
+	BUG: remote.c:2856: ran off the end of our url?
+	Aborted
+
+I worried a bit about this since we released this with v2.9.0, so in all
+this time we haven't been infinitely looping on this case, or at least
+haven't had any reports about that.
+
+So if we hadn't been catching this in starts_with_*() I wouldn't be
+confident that this was the correct fix, yes it's almost certainly not
+what not what was intended, but if we change it to that are we confident
+that the side-effects are going to be what we want?
+
+But in this case I'm pretty sure that the behavior before/after will be
+the same, and that the only change will be to make coverity happier, and
+the code less confusing.
+
