@@ -2,77 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E07E5C43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 21:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 871F2C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 21:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379136AbiFPVTA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 17:19:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40612 "EHLO
+        id S1378627AbiFPVb6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 17:31:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379129AbiFPVSx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 17:18:53 -0400
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07F0B60DAA
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:18:52 -0700 (PDT)
-Received: by mail-qv1-xf36.google.com with SMTP id q104so3919610qvq.8
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:18:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sf9bz3x8XimyBmzA0TDcEm9yxHK2VBXgEE0ROQlEQWQ=;
-        b=z8yuSF/Cq7yvoa3O/GyvyGBBdNpzOZMvB2VLPsx8KunXtcR2sSIya/XS36Q56nhPYv
-         jwTifLQzcmi7TKwU+oyCxSPTn0Aa29vUla6XKPT5luvbH/d8Ogox6kzA0LUvOO1m5JQo
-         01Grtny+iQzM6MqBcwOeNlwtDqDrLSA48uhprxVZ5AzMERrVYpvKIhJqBU9mcrzEyC/j
-         PARk8go7QpBTdBmYBo97y3rWQlY/FOsoeDfvbAv01Lilfns0oMwtYirSq4TEvzajozuL
-         V9JwDwhIk25ScWZ1I5DUbub02itd6zq9uctcBwzeOv4jCBdstuNvZNOh9nB/HA2KNa4N
-         056w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sf9bz3x8XimyBmzA0TDcEm9yxHK2VBXgEE0ROQlEQWQ=;
-        b=ZxfxnHRGFlMkC6ERj+9O87EAmk9k5cyPMlWHXOhhgiAnMk+dI4HUS06cpNEnikDSTy
-         GcXMovRWK2GIS8NOXp/WQv7dRFlUffwPgOcRORnpGMFYVj++F5As9qs0YrorlcXV+BXl
-         rSm9tUfvn7T9OaoeieAiwtI/GqScHzj4o1ilD71lNqRkGofKfB6dx+LplcctlaAqCEGm
-         12AJheb16iIoXdpGuf+4t0OVdRE1zfSPoKYwGay9sbxmxhJ2CCCcmo3IQogtYfVI7ifv
-         AhBP+xoSWKBJgGvhXKEYeqqGNQ0pLs9JmWvUFCea0Cq+eu/3TqlWtLGg96cPo8Rv47hm
-         7rsQ==
-X-Gm-Message-State: AJIora9D94/VwFj8SlH/M6Jo6paEM/9NCv3NV7gd+B6ZckjCkQ6Tifon
-        1AbWx+yZ+r5UQQokRhKKc/PLSfax3BPlUPf7
-X-Google-Smtp-Source: AGRyM1sS6+o6jiXHrJBfi8lz13l2zbd60hTslABrVlAYvEjEhM9PmjxeFK2hHebsfK1mAKGB9RV+CA==
-X-Received: by 2002:ac8:59c6:0:b0:305:2f9c:a53e with SMTP id f6-20020ac859c6000000b003052f9ca53emr5786003qtf.59.1655414331198;
-        Thu, 16 Jun 2022 14:18:51 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w13-20020a05620a444d00b006a9901130b2sm3113971qkp.86.2022.06.16.14.18.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 14:18:50 -0700 (PDT)
-Date:   Thu, 16 Jun 2022 17:18:49 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH v4 0/3] bitmap-format.txt: fix some formatting issues and
- include checksum info
-Message-ID: <YqueOVZcv8/zYWUF@nand.local>
-References: <pull.1246.v3.git.1654858481.gitgitgadget@gmail.com>
- <pull.1246.v4.git.1655355834.gitgitgadget@gmail.com>
- <xmqq35g4tp7c.fsf@gitster.g>
+        with ESMTP id S232047AbiFPVb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 17:31:57 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE58661298
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 14:31:56 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3A4B418863A;
+        Thu, 16 Jun 2022 17:31:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dov0gn15MeqdCm4vHZGPNFVyupz6lpQoYqNy4U
+        0fHFY=; b=naV4dtKyz4xoiuIYWPpohsQln8j0t4rt3JIaug+5q+Y7iXHdNOxGJZ
+        ig3NWLwOzQmBtEnal+6qo1IPqt05aPRb7uX36CwZ+Ysn5GxxsFzTIdc0dMQJ0+Il
+        XjWAdk1Lirf8sygl17N0R0zyxVz+lJJYVCUfBy4M83gOjgR0Go+rU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3196E188639;
+        Thu, 16 Jun 2022 17:31:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B457F188638;
+        Thu, 16 Jun 2022 17:31:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v2 0/5] support negative refspecs in git remote show
+References: <20220616205456.19081-1-jacob.e.keller@intel.com>
+Date:   Thu, 16 Jun 2022 14:31:50 -0700
+In-Reply-To: <20220616205456.19081-1-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Thu, 16 Jun 2022 13:54:51 -0700")
+Message-ID: <xmqqv8t0qoqh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq35g4tp7c.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BC6CDA82-EDBB-11EC-823E-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 16, 2022 at 11:53:27AM -0700, Junio C Hamano wrote:
-> This version looks good and seems to format well.  Well done.
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-Agreed. Nice work, Abhradeep!
+> This series adds support for negative refspecs to git remote show, fixing an
+> issue reported by Pavel Rappo.
+>
+> In addition, it includes some cleanup of the t5505-remote.sh test script,
+> focusing on removing subshells and using test_config more.
+>
+> To support this, test_config and test_unconfig are extended to take and
+> handle more options. The test_config_global is removed in favor of just
+> using test_config --global.
+>
+> In addition, test_config now passes the value and --fixed-value into
+> test_unconfig so that only the specific value is removed (rather than all
+> keys of the name).
+>
+> The original v1 can be found here:
+> https://lore.kernel.org/git/20220614003251.16765-1-jacob.e.keller@intel.com/
+>
+> If the config changes are too controversial, I'm happy to split them out
+> into a separate series for further discussion, or drop them if they aren't
+> desirable.
 
-Thanks,
-Taylor
+I did not see anything in 5/5 that substantially depends on all the
+code churn done in 1/5-4/5.  Am I mistaken?
+
+It would have been much nicer to organize the patch series so that
+the first one is the [v2 5/5].  It may not be able to use the
+improved test_config, but writing test_when_finished instead would
+not be the end of the world.  The three-line test body will still be
+three lines.  Then test_when_finished will have to be updated in
+follow-up patches that corresponds to [v2 1/5]-[v2 4/5], but that is
+the cost of "clean up".  The main "fix" patch shouldn't be the one
+that is paying the price for it.
+
+The clean-up offered by [v2 1/5] is a worthwhile thing to do.  It's
+just that I do not think it is wise to make the fix in [v2 5/5] wait
+for the 1.4k lines patch to be adequately reviewed.
+
+Retiring "test_config_global" in [v2 2/5] is probably a good change,
+especially when we are to add more featurs to test_config.  Again,
+[v2 5/5] shouldn't have to be made waiting on an extra 800-line patch
+to be reviewed.
