@@ -2,98 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36890C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 17:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A494C43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 17:44:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377995AbiFPRTO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 13:19:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60090 "EHLO
+        id S229592AbiFPRov (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 13:44:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378221AbiFPRTD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 13:19:03 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86241483BA
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 10:19:02 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id h5so2758392wrb.0
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 10:19:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=h6dmI96dKgxRKn4/jtUlQaH6ejgykzz6fCzP1o7ka2g=;
-        b=UqACbAq1R8Z+lMQyTU7FaDVnC7Z29e37SRCXjI5ZaRWphwdRkoDpvrOQycRmn8CLdQ
-         j0uTPxnD8N5kMl1LfZGNIs8aZ33QkO1WG0milHltiDh8eTDEh/yK01N8yKLsQ2J9dTgI
-         Cv67Qwai/rFAmIe+eL8n3bJ3LI3fkOs/G7rcREbfZGDFbsZsXuUufJRD8B2RGLReTXYC
-         /CM27Xz/CZhTHWMq3ThXvFU1pNx6rdBzVuiMt5Ul8FE289VIU8sCKMtQbTwFa7pCHzr3
-         TY7L7geAK5PtBMzMJz71jv5Ketz6C37VYuhUZAvRbqdMJJz7iK7H0cw8sr/YiD6mIiwr
-         TipQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=h6dmI96dKgxRKn4/jtUlQaH6ejgykzz6fCzP1o7ka2g=;
-        b=J21WVl9yS9UzeQVYHU0d2Q+2hRPaChZBz94MgyUY3X7Jw9Ah4vnNOQK7lSVwfDT3c7
-         awRF0jDs7sum0DgnXEe7SjoJa5Ar4+jWaATs7iKZRCy7mOcmqzNEvTow4UqwYMjz/8dn
-         J6XWi93n8fy/+GpzsAHDJOUIp+DMloII1Cu7N88GqHg8meWKr1f16MT7AGnga1RyLA1f
-         Y22AmelIwgghLOrUqokYibE8d29XnaS6fschzj4o8EWuEAh2j8l5CXuwMyocYpnFtgIS
-         nNC0fOxOqGpCwC6ow+4LJRnQkF5/r7hL7Pi0RcPiiblpd3jUeFKGtxhQVPhGbPXruzzk
-         NHaQ==
-X-Gm-Message-State: AJIora8GOx7kLcBnBR5JJu8dcpzEpQLKW6KJOH8RVeC7T5CsZwR1RSR8
-        dNsf4r+lxewECWMfh1rjnfnGVN964W2LWQ==
-X-Google-Smtp-Source: AGRyM1vimHnien+3WEJ5A/XU6/1BlqwA1RXlmxKqm2ouGRAd8AtllQkj6sYmdaEs6rjRoOcMgEz8Yg==
-X-Received: by 2002:a5d:59a7:0:b0:218:5584:e3b1 with SMTP id p7-20020a5d59a7000000b002185584e3b1mr5650411wrr.421.1655399940548;
-        Thu, 16 Jun 2022 10:19:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j38-20020a05600c1c2600b0039c7f790f6asm6364182wms.30.2022.06.16.10.18.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 10:18:59 -0700 (PDT)
-Message-Id: <pull.1277.git.git.1655399939066.gitgitgadget@gmail.com>
-From:   "Fangyi Zhou via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jun 2022 17:18:58 +0000
-Subject: [PATCH] builtin/rebase: remove a redundant space in l10n string
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229455AbiFPRou (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 13:44:50 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECC161E3D9
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 10:44:49 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 037C5129746;
+        Thu, 16 Jun 2022 13:44:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bLFpNxMKs1RrRYESvvkGC9N7hQSObeeBjX4yIT
+        2fFLE=; b=ILMOX8hLtUtzqqHZXqevJ9FidZHh63UiWGQOR8a65c3K/ZXEMXRBku
+        aqPH3fhtA/Lx2FVVizyjOPIdMEPpf8dlpF01uthpThhz0t7gD/GtcixQ0PEcyqkc
+        Pha//F976PR+BXChuQ66uMRzSkv49k9ONZjtasTz2UnSj3A56/im0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EEE7A129745;
+        Thu, 16 Jun 2022 13:44:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6367A129744;
+        Thu, 16 Jun 2022 13:44:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Richard Oliver <roliver@roku.com>
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        jonathantanmy@google.com
+Subject: Re: [PATCH] mktree: Make '--missing' behave as documented
+References: <77035a0f-c42e-5cb3-f422-03fe81093adb@roku.com>
+        <0067c46a-7bfd-db9c-5156-16f032814464@github.com>
+        <797af8c8-229f-538b-d122-8ea48067cc19@roku.com>
+        <574dc4a9-b3c7-1fd3-8c0e-39071117c7f0@github.com>
+        <YqkpRE8nykqVv8cn@nand.local>
+        <YqlZb3Ycc71+dPu4@coredump.intra.peff.net>
+        <ad9b5ec9-14fd-cd66-be87-2fe1eb24296a@roku.com>
+        <xmqqa6adzln6.fsf@gitster.g>
+        <1566aed1-a38f-a9ca-241c-21b56d732328@roku.com>
+Date:   Thu, 16 Jun 2022 10:44:47 -0700
+In-Reply-To: <1566aed1-a38f-a9ca-241c-21b56d732328@roku.com> (Richard Oliver's
+        message of "Thu, 16 Jun 2022 16:46:00 +0100")
+Message-ID: <xmqqy1xwtsds.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Fangyi Zhou <me@fangyi.io>, Fangyi Zhou <me@fangyi.io>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 04497790-ED9C-11EC-B49B-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Fangyi Zhou <me@fangyi.io>
+Richard Oliver <roliver@roku.com> writes:
 
-Found in l10n.
+> Subject: [PATCH] mktree: Make '--missing' behave as documented
 
-Signed-off-by: Fangyi Zhou <me@fangyi.io>
----
-    builtin/rebase: remove a redundant space in l10n string
-    
-    Found in l10n.
-    
-    Signed-off-by: Fangyi Zhou me@fangyi.io
+I would intead title the change as
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1277%2Ffangyi-zhou%2Ffix-rebase-extra-space-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1277/fangyi-zhou/fix-rebase-extra-space-v1
-Pull-Request: https://github.com/git/git/pull/1277
+	   mktree: disable object verification under '--missing'
 
- builtin/rebase.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+if I were writing this change.  It is a tad longer, but "as
+documented" is much less informative when this appears in "git
+shortlog --no-merges".
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 640b6046a5a..70aa7c842f3 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1206,7 +1206,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 	if (preserve_merges_selected)
- 		die(_("--preserve-merges was replaced by --rebase-merges\n"
--			"Note: Your `pull.rebase` configuration may also be  set to 'preserve',\n"
-+			"Note: Your `pull.rebase` configuration may also be set to 'preserve',\n"
- 			"which is no longer supported; use 'merges' instead"));
- 
- 	if (action != ACTION_NONE && total_argc != 2) {
+But wait for a bit.  I am not sold on "disable" 100% yet.
 
-base-commit: 4f6db706e6ad145a9bf6b26a1ca0970bed27bb72
--- 
-gitgitgadget
+> Do not make use of the object store to verify object type for
+> 'allow_missing' objects in mktree_line(). GIT-MKTREE(1) documents
+> '--missing' as disabling "verif[ication] that each tree entry's sha1
+> identifies an existing object".
+
+I am on the fence on this.  The current behaviour is not exactly
+forcing verification with "--missing".  Even if oid_object_info(),
+after consulting the promisor remote, says that the object is not
+available, the code does not complain, and in that sense, it is
+working as documented.  It's just that it is doing unnecessary work
+that you know you are not going to use.
+
+> This change retains the check for '<mode>' and '<type>' for
+> 'allow_missing' objects as this check is merely input validation that
+> avoids interrogating the object store.
+>
+> Signed-off-by: Richard Oliver <roliver@roku.com>
+> ---
+>  builtin/mktree.c | 11 ++++-------
+>  1 file changed, 4 insertions(+), 7 deletions(-)
+
+31c8221a (mktree: validate entry type in input, 2009-05-14) was
+overly eager to check with the local object store. They called the
+sha1_object_info() API to obtain the type information, allowed the
+call to silently fail when the object was missing locally, but
+sanity checked the types opportunistically when the object did
+exist.  That implementation is hurting us now, but it is sort of
+excusable because back then there was no lazy/on-demand downloading
+of individual objects that causes a long delay and materializes the
+object, hence defeating the point of using "--missing".
+
+And that is why the code back then was OK but not anymore in today's
+world.  Something like the analysis in the above paragraph should be
+in the commit log message to explain why we are making this change
+today.
+
+This patch would be a good first cut as a starting point, but we
+probably can do better by doing oid_object_info_extended() call with
+OBJECT_INFO_SKIP_FETCH_OBJECT bit (and probably QUICK bit, too) set,
+with the current code structure.
+
+And when we do so, the title would not match the purpose of the
+change.  The verification was disabled with "--missing" all along
+and that is not what we are changing.  What we will be fixing is the
+wasteful implementation.
+
+    mktree: do not check types of remote objects
+
+    With 31c8221a (mktree: validate entry type in input, 2009-05-14), we
+    called the sha1_object_info() API to obtain the type information,
+    but allowed the call to silently fail when the object was missing
+    locally, so that we can sanity-check the types opportunistically
+    when the object did exist.
+
+    The implementation is understandable because back then there was no
+    lazy/on-demand downloading of individual objects from the promisor
+    remotes that causes a long delay and materializes the object, hence
+    defeating the point of using "--missing".  The design is hurting us
+    now.
+
+    We could bypass the opportunistic type/mode consistency check
+    altogether when "--missing" is given, but instead, use the
+    oid_object_info_extended() API and tell it that we are only
+    interested in objects that locally exist and are immediately
+    available by passing OBJECT_INFO_SKIP_FETCH_OBJECT bit to it.  That
+    way, we will still retain the cheap and opportunistic sanity check
+    for local objects.
+
+or something like that, perhaps?
+
+Thanks.
+
+> diff --git a/builtin/mktree.c b/builtin/mktree.c
+> index 902edba6d2..f41fda6e7d 100644
+> --- a/builtin/mktree.c
+> +++ b/builtin/mktree.c
+> @@ -116,15 +116,12 @@ static void mktree_line(char *buf, int nul_term_line, int allow_missing)
+>  			path, ptr, type_name(mode_type));
+>  	}
+>  
+> -	/* Check the type of object identified by sha1 */
+> -	obj_type = oid_object_info(the_repository, &oid, NULL);
+> -	if (obj_type < 0) {
+> -		if (allow_missing) {
+> -			; /* no problem - missing objects are presumed to be of the right type */
+> -		} else {
+> +	if (!allow_missing) {
+> +		/* Check the type of object identified by sha1 */
+> +		obj_type = oid_object_info(the_repository, &oid, NULL);
+> +		if (obj_type < 0) {
+>  			die("entry '%s' object %s is unavailable", path, oid_to_hex(&oid));
+>  		}
+> -	} else {
+>  		if (obj_type != mode_type) {
+>  			/*
+>  			 * The object exists but is of the wrong type.
