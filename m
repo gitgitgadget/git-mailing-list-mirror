@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AFA1C43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2EBBC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:14:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376960AbiFPNOB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 09:14:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47910 "EHLO
+        id S1376971AbiFPNOE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 09:14:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376906AbiFPNN6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 09:13:58 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CDC33584D
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:55 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id o8so1849999wro.3
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:55 -0700 (PDT)
+        with ESMTP id S1376938AbiFPNN7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 09:13:59 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66FD9369EE
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:57 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id m39-20020a05600c3b2700b0039c511ebbacso2807677wms.3
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CroZ7wVEHD5BnTdKaPi1CT8nA1TvimJ9eubRklrt+3Y=;
-        b=OAcRHrzGk0DJZryYw6PCpzNqq9YmdF1YgHU/Fd7X2foVtNcrPiuWAyd7oAMEgPU/Im
-         D+kwLBlesMOJSlb6Ck40fhW1QLTzAmwVUdMfD3RYJymenrBDc0Y9+iYVKtguR7Q82ZFc
-         Q536WLlgfVYWXsH/7heEMG3Ag8uoyuvry9TMQhMTFwvM0usTq52BVAgb5usIYOPz+HNV
-         DQC3kFBz0MRK4+8yTTVSwN7Dkvc6XN95ahrtkZLCNkuHxMtlyq8acbcaXIUb7Ff13jNp
-         JTwF94vbsw4OR5z5s4RjYEQrdx4JM/6vO9v2FtTOwOtRcpeT3PAwqFqFzPs3q16NT236
-         v1Ww==
+        bh=ZPl6Zq2JI8wNCS5ZExHetDtnJijrCm3i3KuNoQFRYMM=;
+        b=UJE/+dSx6veaIQoOpSA5Oq0m002Kav7oujFMJVZwu5Kq17qIjE0RgKl5xpMl7sZ1l0
+         geWorQn6Azp1cTe5m2O700P66CRGuuK+L29bkkceag0yvl4o26vCRc9ujlSjPxrPn9Xw
+         oCkKmmGIu1rkPtq+zj9avw234qDINUUVsB5uVdvhrPuRrZvm1cKgIb3Fi6Rq127AfYLd
+         PE5wYRHLImZem0HLRoQs8MxwCg0alagyJJKwbnVmYoysgpnVa07O850rSsQRVti8OtjF
+         IuaQ5JkHTYf3IegF5/TKUCNnzOcg8Gftulz4TTkV6rXH1GsYZrXqIezeAJHVpMkB3lWT
+         Gkfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CroZ7wVEHD5BnTdKaPi1CT8nA1TvimJ9eubRklrt+3Y=;
-        b=XT6KBLfDWvdTvxC3o0uu9DW9OIe4z3dutC39KfWqeXse8UEvUpE1lVu0/4qRAAmYFI
-         l4JQDYaacA2/56NibUiI2OpFTYrs5swsnd+Bz93GQJGAD4PrloamDYrZ/7I8qn7pJZOX
-         ndaq7xcKh1zPUyAC/yfIuBnDFkSZA9K+0OUCaZ87b3P+pTMfPFDIi0wLTuEm9lCMqNaA
-         v3/9YPtOl+UoYo6UclYjWsfoYUuO+e1RefXcEjCcMLW19sZgrWPDTkB0qVlF7Hi83dgN
-         NNSzNJmApn3j0Bn5DtgAs7hg7lpLLOoIeLK+vqwuTLIPzE5jLfTFuTarZQjSJ0/Zb/+u
-         LIpA==
-X-Gm-Message-State: AJIora89Td4wpKcUHc8GZsc6kHIKPxFG0aDAok53xLzcEqphv/NMAsJO
-        6pVuB89Sb++3lVrZjwPhww4gTG9PfzLj9w==
-X-Google-Smtp-Source: AGRyM1vFWS18gJd73WOk9yW1Y0OANlE5NpWsoq+RgE8A4d6BMUKHv79Yzpy0zNx1cZ7cG57REi8ueg==
-X-Received: by 2002:a05:6000:230:b0:210:31ca:28b8 with SMTP id l16-20020a056000023000b0021031ca28b8mr4682436wrz.538.1655385234008;
-        Thu, 16 Jun 2022 06:13:54 -0700 (PDT)
+        bh=ZPl6Zq2JI8wNCS5ZExHetDtnJijrCm3i3KuNoQFRYMM=;
+        b=Wc3MivBJkoK9mUPYOY6KU/uxRP4zM+Z4j/JLSXN6804ApB+zhN9YTSwB5ML8u8m47b
+         Z8vgYbwxyNzyuKoGl+LSIl/yxtHkxUOU7yS1pb72r8zb3RK3eUYZFS/pOh81zWCm/Nat
+         FnG10qRvhJGNoopw2EH1opbdnlqYWfLG5L0tolzes4Q2rCds99ZMy6Lwz5KR7x2lZuDa
+         fDYH/bmyQzgKgM3n0xIQDkcyNi+7pUat3ays2jN0T9iukhtDPIQ43Xj1KxuT4kuIUl4o
+         cr40PRjnsAlz6NA5uU9FbXilDhs+ci+WLpE8xBmW6balpfncHw2SwO2qwnyO8I3Ws3v9
+         zVXQ==
+X-Gm-Message-State: AOAM530gxbpnSOBT5+SR1BkYDrY7iLPWHmgLPbIplh8cG76M+B2laiJ7
+        AxlSk7eZrl8fyEf6uSkw7oBeVXIvUBHqOA==
+X-Google-Smtp-Source: ABdhPJx/e/xVLDF5wv/LeJ9tlGumVW8yVQCNoHkKCdb25kTEpbkQVDDj3+cZcesIbzhyD7kNjD+Gjw==
+X-Received: by 2002:a05:600c:1e1c:b0:39c:65a1:7c3a with SMTP id ay28-20020a05600c1e1c00b0039c65a17c3amr15762921wmb.6.1655385235120;
+        Thu, 16 Jun 2022 06:13:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j7-20020adfea47000000b0021863a560f6sm1854555wrn.3.2022.06.16.06.13.53
+        by smtp.gmail.com with ESMTPSA id r66-20020a1c2b45000000b0039c97cc82fbsm5912829wmr.15.2022.06.16.06.13.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 06:13:53 -0700 (PDT)
-Message-Id: <ca5dbc29e40e62f03cd0676996e16e5cdd6bedbd.1655385230.git.gitgitgadget@gmail.com>
+        Thu, 16 Jun 2022 06:13:54 -0700 (PDT)
+Message-Id: <b956a371c7083985eb7ceedc2b9c8fc65a0d43dc.1655385230.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
 References: <pull.1261.git.1655242070.gitgitgadget@gmail.com>
         <pull.1261.v2.git.1655385230.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jun 2022 13:13:48 +0000
-Subject: [PATCH v2 2/4] t5329: test 'git gc --cruft' without '--prune=now'
+Date:   Thu, 16 Jun 2022 13:13:49 +0000
+Subject: [PATCH v2 3/4] pack-write: drop always-NULL parameter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,34 +69,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Replace a 'git repack --cruft -d' with the wrapper 'git gc --cruft' to
-exercise some logic in builtin/gc.c that adds the '--cruft' option to
-the underlying 'git repack' command.
+write_mtimes_file() takes an mtimes parameter as its first option, but
+the only caller passes a NULL constant. Drop this parameter to simplify
+logic. This can be reverted if that parameter is needed in the future.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t5329-pack-objects-cruft.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ pack-write.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index b481224b93d..8968f7a08d8 100755
---- a/t/t5329-pack-objects-cruft.sh
-+++ b/t/t5329-pack-objects-cruft.sh
-@@ -451,11 +451,13 @@ test_expect_success 'expiring cruft objects with git gc' '
- 		sort <reachable.raw >reachable &&
- 		comm -13 reachable objects >unreachable &&
+diff --git a/pack-write.c b/pack-write.c
+index 23c0342018f..00787e306db 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -310,26 +310,21 @@ static void write_mtimes_trailer(struct hashfile *f, const unsigned char *hash)
+ 	hashwrite(f, hash, the_hash_algo->rawsz);
+ }
  
--		git repack --cruft -d &&
-+		# Write a cruft pack containing all unreachable objects.
-+		git gc --cruft --prune="01-01-1980" &&
+-static const char *write_mtimes_file(const char *mtimes_name,
+-				     struct packing_data *to_pack,
++static const char *write_mtimes_file(struct packing_data *to_pack,
+ 				     struct pack_idx_entry **objects,
+ 				     uint32_t nr_objects,
+ 				     const unsigned char *hash)
+ {
++	struct strbuf tmp_file = STRBUF_INIT;
++	const char *mtimes_name;
+ 	struct hashfile *f;
+ 	int fd;
  
- 		mtimes=$(ls .git/objects/pack/pack-*.mtimes) &&
- 		test_path_is_file $mtimes &&
+ 	if (!to_pack)
+ 		BUG("cannot call write_mtimes_file with NULL packing_data");
  
-+		# Prune all unreachable objects from the cruft pack.
- 		git gc --cruft --prune=now &&
+-	if (!mtimes_name) {
+-		struct strbuf tmp_file = STRBUF_INIT;
+-		fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
+-		mtimes_name = strbuf_detach(&tmp_file, NULL);
+-	} else {
+-		unlink(mtimes_name);
+-		fd = xopen(mtimes_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+-	}
++	fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
++	mtimes_name = strbuf_detach(&tmp_file, NULL);
+ 	f = hashfd(fd, mtimes_name);
  
- 		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
+ 	write_mtimes_header(f);
+@@ -561,7 +556,7 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 				      pack_idx_opts->flags);
+ 
+ 	if (pack_idx_opts->flags & WRITE_MTIMES) {
+-		mtimes_tmp_name = write_mtimes_file(NULL, to_pack, written_list,
++		mtimes_tmp_name = write_mtimes_file(to_pack, written_list,
+ 						    nr_written,
+ 						    hash);
+ 	}
 -- 
 gitgitgadget
 
