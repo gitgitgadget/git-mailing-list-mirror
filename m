@@ -2,119 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7CC1C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 18:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 648FBC43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 18:12:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376865AbiFPSJL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 14:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45032 "EHLO
+        id S1377330AbiFPSMi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 14:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233838AbiFPSJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 14:09:10 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B278F4CD54
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 11:09:09 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id j4-20020a170902da8400b00168b0b2341dso1211575plx.5
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 11:09:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=iE3iW8GKpe6tdYPk7A26TFYxV4F1eI3ZIaxlXCcgeEg=;
-        b=eONMtPOtxpl8MD4W+EBchwvw+6nOjbzSLIVuc7zS8vLV6D+ZGcOa73vTsQaMbvvuO/
-         AKc5kYkkBtIBc4r/fUhtO/RLdH1nhis586yvsPuWHWwd9L1QMSZ+g4jRTmOcE36rrDNC
-         3uJX6k9wYYzfEZasu56MKL16QjwZal42rMa+LtrBJpTZEbyi4iwd1/cR2i/qwKJQYLR0
-         qUhkZmRj92pwdFaQi/gSUM+Dx0BSNBiuUqyh28Z2SgWxtaFJqQOytumuWsZBtQMN32dN
-         m+JzRPVZq0U7iWiE91IX2YKZPfna2+7n3Y/IMu9N0rQz2DaUT7NBVEPYs07yF6QwdVzE
-         pvfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=iE3iW8GKpe6tdYPk7A26TFYxV4F1eI3ZIaxlXCcgeEg=;
-        b=ceaOjPxAkgxpLEFoaBNz4Qic5kBhnUy6RQJqZ9AuY5XpJmMW3h1fv2M54lrVZwUsuI
-         H6OrDmRoZMlL0WCHH2rgQqlMnX3AUJp3e9Yoh/aWK9AC1lIXPVHsVhN3XUuXuyO/+Aa4
-         22eA/ONBk5zfoEeESc9DBV8MNODf4C5w0qLXXuArhcEr+XmQGSjQ/kfE+kaD0XWfbgLf
-         AOke6+KtKrt3qTzK51Bk4g5BZxEE/51k3O7JuxmWIf46ZxvdQt/0fnyObDSypkojBulb
-         6OR8etGlQ2f0sD5P0ib6vX4bg7uvSffWahJ59m8Vxb2F6RZr93FpyklBYy/IONX3OE0f
-         uIgg==
-X-Gm-Message-State: AJIora93njiyk5kPYoDiDaLu8Z+bXIAVvIbnYjNX4tBF0hU21Hk5TCO3
-        lTtBft0HU9FfcpSmxFM5ikEzl3CaFGWi6g==
-X-Google-Smtp-Source: AGRyM1vSfwdmcWQR1hVDiAr2Gz9OjB/xjQxVm1i2yfImic7qrpDxU4t8JOAnSOAjfc757Ul/uDyrC40W1lFkmQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:2405:b0:520:6b82:646b with SMTP
- id z5-20020a056a00240500b005206b82646bmr5970952pfh.24.1655402949141; Thu, 16
- Jun 2022 11:09:09 -0700 (PDT)
-Date:   Thu, 16 Jun 2022 11:09:07 -0700
-In-Reply-To: <xmqqmtedw7fm.fsf@gitster.g>
-Message-Id: <kl6lpmj84h18.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1264.git.1655336146.gitgitgadget@gmail.com>
- <591166e07d87fdb5efc2769d3e2963e3f0412720.1655336146.git.gitgitgadget@gmail.com>
- <xmqqmtedw7fm.fsf@gitster.g>
-Subject: Re: [PATCH 05/11] submodule-config: avoid memory leak
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S233838AbiFPSMg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 14:12:36 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B54626F6
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 11:12:34 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AEE791AF338;
+        Thu, 16 Jun 2022 14:12:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Qy+IayMP0div
+        LAdq5GhI4RbiO4oJjeRkx7ExKOyp5/I=; b=epxQHC0AwGKO3D94kwC7BBLIZeNm
+        KhlxEbLySjwYN9uQwdFrEsEV54nss+HnG3HHXnXpQzd1R0GGOqzHlIkgalkRzJfN
+        njuPEX08ee5Ak/FMoRJ0ks7Oi92/HrVqdbfHcCWHlruYe5EEIpmd1C3QdZYO3pdW
+        0dd8BntMNk7/pFg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A70741AF337;
+        Thu, 16 Jun 2022 14:12:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3FB5C1AF336;
+        Thu, 16 Jun 2022 14:12:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Kyle Zhao via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>, Kyle Zhao <kylezhao@tencent.com>
+Subject: Re: [PATCH v2] send-pack.c: add config push.useBitmaps
+References: <pull.1263.git.1655291320433.gitgitgadget@gmail.com>
+        <pull.1263.v2.git.1655350617442.gitgitgadget@gmail.com>
+        <220616.86fsk4ww69.gmgdl@evledraar.gmail.com>
+Date:   Thu, 16 Jun 2022 11:12:28 -0700
+In-Reply-To: <220616.86fsk4ww69.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 16 Jun 2022 15:38:36 +0200")
+Message-ID: <xmqqfsk4tr3n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E2D429C6-ED9F-11EC-BEA8-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+>> +	mk_test testrepo heads/main &&
+>> +	git checkout main &&
+>> +	GIT_TRACE2_EVENT=3D"$PWD/default" \
+>> +	git push testrepo main:test &&
+>> +	test_subcommand git pack-objects --all-progress-implied --revs --std=
+out \
+>> +	--thin --delta-base-offset -q --no-use-bitmap-index <default &&
 >
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> In 961b130d20c9 (branch: add --recurse-submodules option for branch
->> creation, 2022-01-28), a funny pattern was introduced where first some
->> struct is `xmalloc()`ed, then we resize an array whose element type is
->> the same struct, and then the first struct's contents are copied into
->> the last element of that array.
+> Nit: We tend to indent these ase we wrap, so e.g.:
 >
-> Sigh.  The original is butt ugly, with this strange pattern and
-> structure assignments etc.  I wonder how something like this slipped
-> through our reviews.
-
-Gah, I have no excuses for bad code I've already written, I can only
-strive to write better code next time.
-
-Thanks Johannes for spotting and fixing this.
-
-> I wonder if it would help for me to stop trusting reviews by less
-> experienced reviewers too much, and instead give sanity checks to
-> more patches myself from now on, but I certainly cannot afford the
-> time and my mental health to do so for all the patches X-<.
-
-I seem to recall that this was reviewed by fairly experienced folks. I'm
-guessing it slipped through due to reviewer fatigue, which might be a
-good argument for adding more tooling to lighten reviewer load/patch up
-the gaps.
-
+> 	test_subcommand git ... \
+> 		--thin --delta [...]
 >
-> Will queue.
+> The rest all looks good as far as the diff goes, if what we want to do
+> is to disable this by default, and this isn't worth a re-roll in itself=
+.
 >
->>  		if (S_ISGITLINK(name_entry->mode) &&
->>  		    is_tree_submodule_active(r, root_tree, tree_path)) {
->> -			st_entry = xmalloc(sizeof(*st_entry));
->> +			ALLOC_GROW(out->entries, out->entry_nr + 1,
->> +				   out->entry_alloc);
->> +			st_entry = &out->entries[out->entry_nr++];
->> +
->>  			st_entry->name_entry = xmalloc(sizeof(*st_entry->name_entry));
->>  			*st_entry->name_entry = *name_entry;
->>  			st_entry->submodule =
->> @@ -766,9 +769,6 @@ static void traverse_tree_submodules(struct repository *r,
->>  						root_tree))
->>  				FREE_AND_NULL(st_entry->repo);
->>  
->> -			ALLOC_GROW(out->entries, out->entry_nr + 1,
->> -				   out->entry_alloc);
->> -			out->entries[out->entry_nr++] = *st_entry;
->>  		} else if (S_ISDIR(name_entry->mode))
->>  			traverse_tree_submodules(r, root_tree, tree_path,
->>  						 &name_entry->oid, out);
+> But I still think that completely disabling bitmaps might be premature
+> here, especially per Taylor's comment on v1 (which I understand to mean
+> that they should help some of the time, even with push).
+
+The usual way to move is to move slowly and carefully.
+
+It may well be the case that disabling bitmaps gives users a better
+default, but that is not even proven and is hard to prove.  How many
+users of Git do we have?  Those silently using it happily will by
+definition complain here or elsewhere, and the complaints "X is slow
+with Y, so Y should be disabled when doing X" we hear tend to be
+louder than "I am happily doing X with Y".
+
+I have different problems with this patch, though.  It can use a bit
+more honesty.  If you introduce a new knob and sell it as a knob
+that allows disabling, be honest and keep its behaviour as
+advertised.
+
+As posted, IIUC, the patch does something quite different.  It
+disables by default, and have a knob to allow it enabled again.
+
+So, perhaps make it default on to keep the historical behaviour, and
+document it as "setting it false may improve push performance without
+affecting use of the reachability bitmaps for other operations.
+Default is true."
+
+Thanks.
