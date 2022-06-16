@@ -2,102 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71F51C43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 09:23:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA057C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 10:20:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359684AbiFPJXv convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 16 Jun 2022 05:23:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49110 "EHLO
+        id S229613AbiFPKUP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 06:20:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231689AbiFPJXt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 05:23:49 -0400
-X-Greylist: delayed 549 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 16 Jun 2022 02:23:47 PDT
-Received: from mailproxy01.manitu.net (mailproxy01.manitu.net [217.11.48.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B884611822
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 02:23:47 -0700 (PDT)
-Received: from localhost (nb-ana002.math.uni-hannover.de [130.75.46.4])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: michael@grubix.eu)
-        by mailproxy01.manitu.net (Postfix) with ESMTPSA id A776E1260246;
-        Thu, 16 Jun 2022 11:14:36 +0200 (CEST)
-Content-Type: text/plain; charset="utf-8"
+        with ESMTP id S229479AbiFPKUO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 06:20:14 -0400
+X-Greylist: delayed 62 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 16 Jun 2022 03:20:12 PDT
+Received: from ewsoutbound.kpnmail.nl (ewsoutbound.kpnmail.nl [195.121.94.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F42453E08
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 03:20:12 -0700 (PDT)
+X-KPN-MessageId: c16c72d4-ed5d-11ec-92d5-005056abbe64
+Received: from smtp.kpnmail.nl (unknown [10.31.155.40])
+        by ewsoutbound.so.kpn.org (Halon) with ESMTPS
+        id c16c72d4-ed5d-11ec-92d5-005056abbe64;
+        Thu, 16 Jun 2022 12:19:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=xs4all.nl; s=xs4all01;
+        h=content-type:subject:from:to:mime-version:date:message-id;
+        bh=eTDWnShJarnPcgrimZKUWy1T+lCoYe4NXA7Rs0IT6Ts=;
+        b=FxzB7Rp83T4JiKB1wAP/40HJFtuY9Btb9SAY01T11aijfYXeGIOpv3ef9mmp9jZfTNHW2s5zBYXtC
+         h4yKs5k7qo6E9CvEwuiQSR5zZMlTpJGlgHlY+gHSQz2tEW8S+IuA5uVNH+C9UXUBbD7xdmpIjes+nr
+         TuNcXLhA6e/cErUTgIxQZUHS1/EpKghZcCodfGIZMaOMUvGxB21UhgJOxNt/GsIVkaXDG8tWdskdad
+         jWpMozmPKSivR2I9wqtj3vno4fv0AwIF7MBJcZ8XHnf7SOLHZ8ij7bdKW9+iGqIrMRfbDwBGIX8iyo
+         pTf5VyQGBfo/0VvUay4fkrRwdO9gnMA==
+X-KPN-MID: 33|1qpYul8kLcQJ8URnPVWRSJueapo+4HVURYDVdQl90Rkpe1jABDpZWXlR6CdaPZc
+ 5saWbWyCzG0z3XOKHXrOuCU19UherNc/4b3vbxF9dBUY=
+X-KPN-VerifiedSender: Yes
+X-CMASSUN: 33|XuJisk4uRdYu9Htp547fmvLXxthDdWM5MIrlEZygH5PxuCgtqMh6NJY3bd1qlX4
+ JApZCTr0nksvACYd/6nizlQ==
+X-Originating-IP: 77.172.39.203
+Received: from [192.168.178.31] (77-172-39-203.fixed.kpn.net [77.172.39.203])
+        by smtp.xs4all.nl (Halon) with ESMTPSA
+        id c1e7f446-ed5d-11ec-9eb8-005056ab7584;
+        Thu, 16 Jun 2022 12:19:08 +0200 (CEST)
+Message-ID: <da79cc66-42a0-2563-d09b-fbc0ad5b28bd@xs4all.nl>
+Date:   Thu, 16 Jun 2022 12:19:08 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-In-Reply-To: <nycvar.QRO.7.76.6.2206151649030.349@tvgsbejvaqbjf.bet>
-References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu> <nycvar.QRO.7.76.6.2206151649030.349@tvgsbejvaqbjf.bet>
-Subject: Re: [PATCH] t3701: two subtests are fixed
-From:   Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org,
-        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Message-ID: <165537087609.19905.821171947957640468.git@grubix.eu>
-Date:   Thu, 16 Jun 2022 11:14:36 +0200
-User-Agent: alot/0.10
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+To:     git@vger.kernel.org
+Content-Language: en-US
+From:   Dennis van Gerwen <dvg@xs4all.nl>
+Subject: Feature Request: Custom split location for `git add --patch`
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin venit, vidit, dixit 2022-06-15 16:50:40:
-> Hi Michael,
+L.S.
 
-Hallo Dscho!
+Please consider this feature request for interactive staging in patch 
+mode, using [`git add --patch`][1].
 
-> On Tue, 14 Jun 2022, Michael J Gruber wrote:
-> 
-> > 0527ccb1b5 ("add -i: default to the built-in implementation", 2021-11-30)
-> > switched to the implementation which fixed to subtest. Mark them as
-> > expect_success now.
-> 
-> Good catch!
- 
-I'm no list regular anymore, but still a "next+ regular". While
-experimenting with my own patch I noticed something got fixed
-unexpectedly. That goes to show that these unexpected successes
-(from expect_failure) go unnoticed too easily. I had missed this on my
-regular rebuilds.
+## Problem
 
-> However... that commit specifically contains this change:
-> 
->         diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
->         index cc62616d806..660ebe8d108 100755
->         --- a/ci/run-build-and-tests.sh
->         +++ b/ci/run-build-and-tests.sh
->         @@ -29,7 +29,7 @@ linux-gcc)
->                 export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
->                 export GIT_TEST_MULTI_PACK_INDEX=1
->                 export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=1
->         -       export GIT_TEST_ADD_I_USE_BUILTIN=1
->         +       export GIT_TEST_ADD_I_USE_BUILTIN=0
->                 export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
->                 export GIT_TEST_WRITE_REV_INDEX=1
->                 export GIT_TEST_CHECKOUT_WORKERS=2
-> 
-> The intention is to have t3701 be run with the non-built-in version of
-> `git add -i` in the `linux-gcc` job, and I am surprised that those two
-> tests do not fail for you in that case.
-> 
-> Did you run this through the CI builds?
+If a hunk cannot be split automatically, the `s` (split) option 
+disappears from the list of options, and we get:
 
-That's why I mentioned "no list regular" - I didn't know about that knob
-nor the intention to have the test suite run with either implementation
-(rather than switching to the new one for good).
+ > (1/6) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? s
+ > Sorry, cannot split this hunk
 
-I do local builds, usually with
 
-```
-DEVELOPER=1 (which I had to disable during the bisect run; gcc12...)
-DEFAULT_TEST_TARGET=prove
-GIT_PROVE_OPTS=--jobs 4
-GIT_TEST_OPTS=--root=/dev/shm/t --chain-lint
-SHELL_PATH=/bin/dash
-SKIP_DASHED_BUILT_INS=y
-```
+See for example these questions on StackOverflow: [2], [3]
 
-in config.mak. Nothing else strikes me as potentially relevant.
+I am aware that this problem can be solved by using the [`--edit` 
+option][4] to edit the hunk, as explained in the docs under [editing 
+patches][5].
 
-Ævar noticed this and has a better version of my patch, I think.
+However, if we have a large contiguous hunk, and we only want to split 
+at one specific location, using `--edit` can be quite cumbersome, 
+because (as far as I know) we need to edit all the lines that we do not 
+want to stage.
 
-Michael
+## Feature request
+
+Would it be possible to add a "custom split location" feature, allowing 
+the user to specify where a contiguous hunk should be split?
+
+Some options:
+
+- Always show the `s` (split hunk) option, and let the user specify a 
+line number if an automatic split cannot be made.
+
+- Add a new [patch option][6], in addition to `s` (split hunk), to split 
+any hunk at a custom location.
+
+- Add a new operation for editing patches, for example "s" (in addition 
+to "+", "-", and " "), indicating where to split (e.g. "split after this 
+line"). This way the user only needs to modify a single line in edit mode.
+
+I'm sure there are a lot of nasty details to consider, but I do think 
+such a feature would be very convenient.
+
+Thanks for your help,
+
+Dennis
+
+[1]: https://git-scm.com/docs/git-add#Documentation/git-add.txt---patch
+[2]: https://stackoverflow.com/q/6276752
+[3]: https://stackoverflow.com/q/56892981
+[4]: https://git-scm.com/docs/git-add#Documentation/git-add.txt---edit
+[5]: https://git-scm.com/docs/git-add#_editing_patches
+[6]: https://git-scm.com/docs/git-add#Documentation/git-add.txt-patch
+
