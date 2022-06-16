@@ -2,82 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8E08C43334
-	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 22:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 052CFC43334
+	for <git@archiver.kernel.org>; Thu, 16 Jun 2022 22:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378589AbiFPWIr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 18:08:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52122 "EHLO
+        id S1378591AbiFPWKH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 18:10:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbiFPWIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 18:08:46 -0400
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCA9D5EDE1
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 15:08:45 -0700 (PDT)
-Received: by mail-vs1-xe2a.google.com with SMTP id x9so2448321vsg.13
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 15:08:45 -0700 (PDT)
+        with ESMTP id S229457AbiFPWKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 18:10:06 -0400
+Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67EC35F8CF
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 15:10:05 -0700 (PDT)
+Received: by mail-vs1-xe2d.google.com with SMTP id x187so2505775vsb.0
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 15:10:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=gChw1KbgNzC5bJE31IVJlwSxSLr2fePwXwu5d/5YgsA=;
-        b=nMm21djOk5CNYAqVGMJnQMnPVNUEr5piHEkkG7+v9k3HdXH2I1pH/uACfTQ3IQL29z
-         ienb99hnS7E/xFOQcKv+ZAPPiE7loO0UqDTRdis3hotSGGdWmr1Iykznrp4SytOYaoQz
-         hf+cw+Dy1sCjNTOyugAttHqI3ppD0uKJrtJx6Fn+mqPfqYNvFIm6mBdjo0+XPeQRrCVn
-         txmEBfgzHJSsyAnmCKjk61d8BhzHiwMtEogEZPJ4/ffLE3TXy/Ymw8QsxdQemRCIuP5g
-         airSgDmxZO1YIDmIxvrb91GXluaVTAHUCIIcaJ1hBywoBQP2m7eyPukA3waMUGoTA9ys
-         Ni0Q==
+        bh=1xXM0kU3pLXF6oQ/J4mwMYQYFAQYBeQeD3CZi6wBrrI=;
+        b=L8OfYs9shNtivJmZrfXjg4f4OgWfgrdMEDKlXFNLKFDrR1i8aR8dnfPVhsDhG01ELm
+         k5VNZcvk28veBnXvept2HgE5fS9FzL8BUxq7TOpzM96jgDzD5NkjyEVVELWlJth8Qi8I
+         E0vT/a+slj0YbwMDzjo5oqjE5F8MnuTQuTwACtoUfqr9SqdymgymzxCt5HMomqoYruNY
+         qFAoTeSBh2ErXWHqLPGByZZbRU6Sg6WZIBKzzgMnNzKXmp8+TRY89df7qMzP4+olma9J
+         v2axEFOQbg3OAkZf1Jl2ooTQlCqtWKxeHflGfwtQwTATkHYonHTIakRYhlHQ6rbAF0Sd
+         KiaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gChw1KbgNzC5bJE31IVJlwSxSLr2fePwXwu5d/5YgsA=;
-        b=TvuUG1z2gf59HKjJXza1GfoGAvLmmBQGEcoZZ5vuOTST+Ou8/3n4rxS+o8Wbiqj+Kp
-         viQDswWcvlJupx6RVTgT/FO37QqfkCLWjzafMWrMjdp5VnvSx2dyxV4G3UYI9YwJwVfM
-         jU1EX1HToSEiknxOo9C+TwzyIqNmqFvcTTyUgKPLxHfnqnC81VoFpnzciGac/yhizkI9
-         uJ+1i7JSIu4loTdyyJqyEkFD8haGl2sDTR9lWd0+XkJxaSjGUIH7ogrQQswYSxlSfDiL
-         tWLJBt3LsuPdZF0D8XfbNhcuT0O4FuAIjoZnYSTn/SKmAyJ7AVcb0KKJhAg2TU8EAnjM
-         EQrw==
-X-Gm-Message-State: AJIora+6cR+Ogrclm2jE8qPwZchagbUZ/zeR7L/jwrgWnkVvmj3irnXn
-        w60ZKgEEqRB2+rvCZRpznYJAIYcIM68R35PWZukwRFzr
-X-Google-Smtp-Source: AGRyM1sHDNigiY9YwEo67gKvEPO5ddhyc9XnP8ihyPyygeHpp59k915KreZLIhV7ARtVivs2vObmswOiANvZa8s/VMA=
-X-Received: by 2002:a67:3c1:0:b0:34c:62e3:e5b1 with SMTP id
- 184-20020a6703c1000000b0034c62e3e5b1mr3512078vsd.8.1655417324919; Thu, 16 Jun
- 2022 15:08:44 -0700 (PDT)
+        bh=1xXM0kU3pLXF6oQ/J4mwMYQYFAQYBeQeD3CZi6wBrrI=;
+        b=L3QYXVy+6d5SuwyPQ4jWt9oL/EVXJqHOW6EW4NmJ72kPshMCe2l8PrVRmQVIC6NmcK
+         5eHSKjbRON481861k9W9fN20W0fgFDhnVOTwG+QTKKbMUlfeMa+o62va5tO73jFvlH5L
+         ufPn8wM4Bz3w5xkHekNhy3g9IDmK5Cxt1MHqMGOlWLpxUBtwdRCDmi1lmMrFva7F9J2k
+         mORv0q50mrxn4Q0WphN/IU6woIPDwl/hkXhHVAuYGkpyVV9G3c4P3m+DdUnJNusnNbcw
+         LJM3KX+v2CpiNLaAeZfbcTZmWnhqfn+NNSHznpTAQZGKEVAy5EASiY4nLEoYO936F+3H
+         wiRA==
+X-Gm-Message-State: AJIora8xyApHjn12SvplzKLK8YB8J2EcrQ1Ll+GjWEtNzgyI9LucXf+Y
+        ZFPWfabTYKm1A78NFqMIVBbQq1mbjizuJyKXSGc=
+X-Google-Smtp-Source: AGRyM1uKovg63DCfhUKRtoZLLtNdKLuYtn5SaAFCOPANAJcSehQFykLHx9F6dMT7kaaYGuEpFS/ouAJouc6WMryFTT0=
+X-Received: by 2002:a05:6102:215c:b0:34c:1e12:afa with SMTP id
+ h28-20020a056102215c00b0034c1e120afamr3273003vsg.29.1655417404480; Thu, 16
+ Jun 2022 15:10:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220616205456.19081-1-jacob.e.keller@intel.com>
- <20220616205456.19081-3-jacob.e.keller@intel.com> <xmqqpmj8qomp.fsf@gitster.g>
-In-Reply-To: <xmqqpmj8qomp.fsf@gitster.g>
+References: <20220614003251.16765-1-jacob.e.keller@intel.com>
+ <xmqqzgidy52c.fsf@gitster.g> <CA+P7+xpS0v9Oi3t4S76AcNRazdzJEEj6HxzO+z+dAFDPJ=yHJA@mail.gmail.com>
+ <xmqqletwqnse.fsf@gitster.g>
+In-Reply-To: <xmqqletwqnse.fsf@gitster.g>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 16 Jun 2022 15:08:35 -0700
-Message-ID: <CA+P7+xp3FRya7HMR4DVwOQ_WSsFoKbv3z=++YOP0M0hV4Cnwmw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] tests: handle --global directly in test_config/test_unconfig
+Date:   Thu, 16 Jun 2022 15:09:54 -0700
+Message-ID: <CA+P7+xrx-Cec0mUJvDtWn0Fxu5vLdVkTbteWKiZyouH=64pWvA@mail.gmail.com>
+Subject: Re: [PATCH] remote: handle negative refspecs in git remote show
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git mailing list <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Jacob Keller <jacob.e.keller@intel.com>
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Pavel Rappo <pavel.rappo@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 16, 2022 at 2:34 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Jun 16, 2022 at 2:52 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Jacob Keller <jacob.keller@gmail.com> writes:
 >
-> > +             --global)
-> > +                     global=yes
+> >> This is somewhat curious.  Do we really need to destroy the
+> >> fetch_map like the above?  I know by removing skipped items from the
+> >> list, the existing loop (below) can stop having to worry about them,
+> >> but the caller of get_ref_states() may later want to iterate over
+> >> the full fetch_map for other reasons (even if the current one does
+> >> not, a future version of the caller may have a reason to do so that
+> >> we do not know right now yet).
+> >>
+> >
+> > Good point. I'll fix this. I think we can just move the
+> > omit_name_by_refspec into the other loop.
+> >
+> >> > +
+> >> >       for (ref = fetch_map; ref; ref = ref->next) {
+> >> >               if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
+> >> >                       string_list_append(&states->new_refs, abbrev_branch(ref->name));
+> >>
+> >> IOW, is adding a new condition to this existing loop insufficient?
+> >>
+> >
+> > The tricky part here is that we don't have a simple check, and we're
+> > currently iterating over all of the refspecs each time. But we have to
+> > do that regardless so I think this makes sense. Will fix.
 >
->                         global=--global
->
-> > ...
-> > +     git ${config_dir:+-C "$config_dir"} config ${global:+--global} --unset-all "$1"
->
->         git ${config_dir:+-C "$config_dir"} config $global --unset-all "$1"
->
-> The other one can use the same trick to make it more concise.
+> Another thing that worries me is that get_stale_heads() will not see
+> the filtered refs with your original implementation, because you cull
+> them from the fetch_map in the extra loop upfront.
 >
 
-Ah, yep, makes sense!
+I think the new implementation fixed this, but I'll see about adding a test!
 
-> Thanks.
+> I do not know offhand what its effect would be, but it probably is
+> worth testing.  In your original scenario, if we locally have
+> refs/remotes/jdk19/old and refs/remotes/jdk19/pr/1 (perhaps obtained
+> before we configured ^refs/pr/* negative refspec), we'd want to see
+> that pr/1 exists here but will not be updated.
+>
+
+Yea, I will see if I can check that.
+
+>   * remote jdk19
+>     Fetch URL: git@github.com:openjdk/jdk19.git
+>     Push  URL: git@github.com:openjdk/jdk19.git
+>     HEAD branch: master
+>     Remote branches:
+>       master tracked
+>       old    stale
+>       pr/1   stale
+>       pr/2   skipped
+>       pr/3   skipped
+>     Local ref configured for 'git push':
+>       master pushes to master (fast-forwardable)
