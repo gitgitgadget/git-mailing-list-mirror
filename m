@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39AB7C433EF
-	for <git@archiver.kernel.org>; Fri, 17 Jun 2022 00:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F3B5C43334
+	for <git@archiver.kernel.org>; Fri, 17 Jun 2022 00:20:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379255AbiFQAUn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 20:20:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38770 "EHLO
+        id S1379307AbiFQAUs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 20:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229832AbiFQAUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 20:20:41 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2CB263387
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 17:20:40 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id x138so2807477pfc.12
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 17:20:40 -0700 (PDT)
+        with ESMTP id S229832AbiFQAUp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 20:20:45 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C7656338A
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 17:20:43 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id c196so2841629pfb.1
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 17:20:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=He6Owz/zzm4EEe8hJE9G9YQuqvQ/4n8XzVDkspBeYWE=;
-        b=JpEMlBOXwYxB+6Xm+OyTS1GTeKOisQb4Qu4Z/2zDSqBOLwtHrUFO/fu9EQuXZgK1aD
-         DeNoDneSdYPEE0ZkHr59eGt4MOfuK3Nrx+vRtCjte8H0asG6YVJ6A0C5PsJG9iBR6gmB
-         bXxDi2rjjEklYiy/rjrGjH4kgYzvIMmr5jXxktT1iT9TpO5NmRVw5dT6TcZo08PJqKsb
-         B/0DU5/b7euGz+nyhGSf3aduWmIkWKO45uWoTOZpDKJZn1T/eGmScVKuvnWHwXuGKtRe
-         9H9kw7nORM0M6VaVlNFxPsuZHajaPSPWcV7pirVXKmpIeVf1CsFxET4Dvwbvz6lr4dd9
-         TdnA==
+        bh=AmQrtbs9hXaXgJd5WXGS8wX20O5jCMFDm3IhfhxfQzE=;
+        b=iy885EQ0D1Oe22/uyQbuoqz9AyE35NUoIWaN6Y5jXAk/nEuhaWn/8dlqGw1aWKkqDW
+         qrrsSJcLpl4Z7I8M7AJa/dJhqt808qRCal3yNgTAbYiOjdBVYBA1nqNjUGnUeyMgE130
+         Mzjy216p+pGiYRjqDwy9tqsYIhm8+eA2xOLkqTtmJDryQI0GhbtIIZsBkffvXAEzSbp+
+         PdS66BKyQ906rj9klLs/nxmbwJaEA5nDrG7M0PNNfTXSzWAWX69O0eZtiMV7u9NkD5qo
+         ISuagMEKaGMhXuddrdhUtJD2D4KxdWD1UoGZV6eARamWwWVfEttd+p9PJtcMYqMMIsOa
+         ABuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=He6Owz/zzm4EEe8hJE9G9YQuqvQ/4n8XzVDkspBeYWE=;
-        b=h+WUWWuMU92HejECdl9Pt3CLHRSxLqZON/KyhDnmTAdWSazz84w3X6APQ+e7CqJBPp
-         SwdlsH6cntiQE6Z9loL8S2hST5Tmvrtexcy7lcMW83liag4KS+4OU/o7z69zM9Y9o94Q
-         XH+vpZA1SpZYEQC+KM+JUCUxOXUiph2Tr3+Vy60wFuV7pMrz54+0m/kRH5qPHbo8J153
-         lBvKZj/hVMGqYgm1cS1DXwYdElL0CkNqg+OElTH0Eiyg+uC6CAx9pRea6Y9/bZzPOOzj
-         i5aFTP5bkTF1XaRAHQgOVrggUkbanEEqn58iOF8f6UGBXZQFA/31o24lnx3BTmKaNZMX
-         dU6w==
-X-Gm-Message-State: AJIora9tVPuTcEeLdBJq/HdqtZ0I/ZrxUHXYgrTGlc9jK9saHwDHoJul
-        jxGYWUNU25qQrkNkkZMV1ua1BZSyxuA=
-X-Google-Smtp-Source: AGRyM1ujyGVaA1kukN5nEHOzvHG5bk0IroNMKoBto/iLaChTWTqRoK89QnHWT9A4GNXXmGgN2m67lw==
-X-Received: by 2002:a05:6a00:2286:b0:51c:48b7:a445 with SMTP id f6-20020a056a00228600b0051c48b7a445mr7273865pfe.62.1655425240158;
-        Thu, 16 Jun 2022 17:20:40 -0700 (PDT)
+        bh=AmQrtbs9hXaXgJd5WXGS8wX20O5jCMFDm3IhfhxfQzE=;
+        b=VE5D9SzsrXe/rAZnH9cqpKkK3HCMvwg/6Zh8asRnZV2DOK4em/YBuDniTWCJYKRXHP
+         0nx008kwzSCxwYeZCNsegaLkbFOgr61Yrzvoj/ojbE1GOB2KznmhYprncwm8PdtOkmYc
+         XqjIgWJtxQZQ92onUWSzUNmddlGTYxqIQ0TY66BLljsnD59x/d6kcY6PR+KMyeXShiBv
+         bVfam+bDs7Su9dF0/jRF7l8wCx32awt/eg+wH7yxSRFQ11Ne4kp5ICxllyZpKxSUaIbs
+         yRF9bwKXoQRy4rrPM46OHOLPgGIQowJZbq/KB40baxRbsC2MPpD9Xib86HlQPM5sMsOU
+         SyRA==
+X-Gm-Message-State: AJIora9zbnEbtkCa9HAmB52F5dyK6urten0z10OtlflKfd3hD7nvX56y
+        rhY6MpvzIOudjtdnA5z1KwnQ8kFDLg8=
+X-Google-Smtp-Source: AGRyM1tXx76SNVZwTe6kZPbVFmxZwSXoGhjNdIv0pSGTdqKfd5rZg1fsicyWjRRk3MSv19BVC5TF7A==
+X-Received: by 2002:a05:6a00:a15:b0:51c:6807:779f with SMTP id p21-20020a056a000a1500b0051c6807779fmr7237925pfh.78.1655425242128;
+        Thu, 16 Jun 2022 17:20:42 -0700 (PDT)
 Received: from JEKELLER-HOME.localdomain ([50.39.231.65])
-        by smtp.gmail.com with ESMTPSA id e1-20020a17090301c100b001663165eb16sm2260623plh.7.2022.06.16.17.20.39
+        by smtp.gmail.com with ESMTPSA id e1-20020a17090301c100b001663165eb16sm2260623plh.7.2022.06.16.17.20.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 17:20:39 -0700 (PDT)
+        Thu, 16 Jun 2022 17:20:41 -0700 (PDT)
 From:   Jacob Keller <jacob.keller@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Pavel Rappo <pavel.rappo@gmail.com>
-Subject: [PATCH v3 1/6] remote: handle negative refspecs in git remote show
-Date:   Thu, 16 Jun 2022 17:20:31 -0700
-Message-Id: <20220617002036.1577-2-jacob.keller@gmail.com>
+        Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v3 3/6] tests: handle --global directly in test_config/test_unconfig
+Date:   Thu, 16 Jun 2022 17:20:33 -0700
+Message-Id: <20220617002036.1577-4-jacob.keller@gmail.com>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20220617002036.1577-1-jacob.keller@gmail.com>
 References: <20220617002036.1577-1-jacob.keller@gmail.com>
@@ -66,215 +65,850 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.e.keller@intel.com>
 
-By default, the git remote show command will query data from remotes to
-show data about what might be done on a future git fetch. This process
-currently does not handle negative refspecs. This can be confusing,
-because the show command will list refs as if they would be fetched. For
-example if the fetch refspec "^refs/heads/pr/*", it still displays the
-following:
+The test_config function is used to set a configuration value and then
+ensure its unset at the end of the test. The test_config_global function
+does the same, but for global values.
 
-  * remote jdk19
-    Fetch URL: git@github.com:openjdk/jdk19.git
-    Push  URL: git@github.com:openjdk/jdk19.git
-    HEAD branch: master
-    Remote branches:
-      master tracked
-      pr/1   new (next fetch will store in remotes/jdk19)
-      pr/2   new (next fetch will store in remotes/jdk19)
-      pr/3   new (next fetch will store in remotes/jdk19)
-    Local ref configured for 'git push':
-      master pushes to master (fast-forwardable)
+Instead of having two separate functions, handle the '--global' option
+in test_config and test_unconfig. This matches more closely with "git
+config" syntax and paves the way for additional optional argument
+handling.
 
-Fix this by adding an additional check inside of get_ref_states. If a
-ref matches one of the negative refspecs, mark it as skipped instead of
-marking it as new or tracked.
-
-With this change, we now report remote branches that are skipped due to
-negative refspecs properly:
-
-  * remote jdk19
-    Fetch URL: git@github.com:openjdk/jdk19.git
-    Push  URL: git@github.com:openjdk/jdk19.git
-    HEAD branch: master
-    Remote branches:
-      master tracked
-      pr/1   skipped
-      pr/2   skipped
-      pr/3   skipped
-    Local ref configured for 'git push':
-      master pushes to master (fast-forwardable)
-
-By showing the refs as skipped, it helps clarify that these references
-won't actually be fetched.
-
-This does not properly handle refs going stale due to a newly added
-negative refspec. In addition, git remote prune doesn't handle that
-negative refspec case either. Fixing that requires digging into
-get_stale_heads and handling the case of a ref which exists on the
-remote but is omitted due to a negative refspec locally.
-
-Add a new test case which covers the functionality above, as well as a
-new expected failure indicating the poor overlap with stale refs.
-
-Reported-by: Pavel Rappo <pavel.rappo@gmail.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
 ---
- builtin/remote.c  | 12 ++++++++++--
- remote.c          |  2 +-
- remote.h          |  6 ++++++
- t/t5505-remote.sh | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 63 insertions(+), 3 deletions(-)
+ t/lib-parallel-checkout.sh              |  4 +-
+ t/lib-proto-disable.sh                  | 12 ++---
+ t/lib-submodule-update.sh               |  2 +-
+ t/t0001-init.sh                         | 14 ++---
+ t/t0021-conversion.sh                   | 58 ++++++++++----------
+ t/t0210-trace2-normal.sh                | 10 ++--
+ t/t0211-trace2-perf.sh                  |  4 +-
+ t/t0212-trace2-event.sh                 |  2 +-
+ t/t1309-early-config.sh                 |  2 +-
+ t/t2081-parallel-checkout-collisions.sh |  2 +-
+ t/t2082-parallel-checkout-attributes.sh |  4 +-
+ t/t3431-rebase-fork-point.sh            |  2 +-
+ t/t5505-remote.sh                       | 12 ++---
+ t/t5544-pack-objects-hook.sh            |  6 +--
+ t/t5550-http-fetch-dumb.sh              |  8 +--
+ t/t5573-pull-verify-signatures.sh       |  6 +--
+ t/t5606-clone-options.sh                | 10 ++--
+ t/t5617-clone-submodules-remote.sh      |  4 +-
+ t/t5702-protocol-v2.sh                  |  2 +-
+ t/t7814-grep-recurse-submodules.sh      | 16 +++---
+ t/test-lib-functions.sh                 | 72 ++++++++++++++++++-------
+ 21 files changed, 144 insertions(+), 108 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d4b69fe77898..d9b8746cb3cb 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -344,12 +344,13 @@ static void read_branches(void)
+diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
+index 83b279a846c6..7a1a1f2b75b9 100644
+--- a/t/lib-parallel-checkout.sh
++++ b/t/lib-parallel-checkout.sh
+@@ -9,8 +9,8 @@ set_checkout_config () {
+ 		BUG "usage: set_checkout_config <workers> <threshold>"
+ 	fi &&
  
- struct ref_states {
- 	struct remote *remote;
--	struct string_list new_refs, stale, tracked, heads, push;
-+	struct string_list new_refs, skipped, stale, tracked, heads, push;
- 	int queried;
- };
- 
- #define REF_STATES_INIT { \
- 	.new_refs = STRING_LIST_INIT_DUP, \
-+	.skipped = STRING_LIST_INIT_DUP, \
- 	.stale = STRING_LIST_INIT_DUP, \
- 	.tracked = STRING_LIST_INIT_DUP, \
- 	.heads = STRING_LIST_INIT_DUP, \
-@@ -368,7 +369,9 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 				states->remote->fetch.raw[i]);
- 
- 	for (ref = fetch_map; ref; ref = ref->next) {
--		if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
-+		if (omit_name_by_refspec(ref->name, &states->remote->fetch))
-+			string_list_append(&states->skipped, abbrev_branch(ref->name));
-+		else if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
- 			string_list_append(&states->new_refs, abbrev_branch(ref->name));
- 		else
- 			string_list_append(&states->tracked, abbrev_branch(ref->name));
-@@ -383,6 +386,7 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 	free_refs(fetch_map);
- 
- 	string_list_sort(&states->new_refs);
-+	string_list_sort(&states->skipped);
- 	string_list_sort(&states->tracked);
- 	string_list_sort(&states->stale);
- 
-@@ -941,6 +945,7 @@ static void clear_push_info(void *util, const char *string)
- static void free_remote_ref_states(struct ref_states *states)
- {
- 	string_list_clear(&states->new_refs, 0);
-+	string_list_clear(&states->skipped, 0);
- 	string_list_clear(&states->stale, 1);
- 	string_list_clear(&states->tracked, 0);
- 	string_list_clear(&states->heads, 0);
-@@ -1035,6 +1040,8 @@ static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- 			arg = states->remote->name;
- 		} else if (string_list_has_string(&states->tracked, name))
- 			arg = _(" tracked");
-+		else if (string_list_has_string(&states->skipped, name))
-+			arg = _(" skipped");
- 		else if (string_list_has_string(&states->stale, name))
- 			arg = _(" stale (use 'git remote prune' to remove)");
- 		else
-@@ -1308,6 +1315,7 @@ static int show(int argc, const char **argv)
- 		/* remote branch info */
- 		info.width = 0;
- 		for_each_string_list(&info.states.new_refs, add_remote_to_show_info, &info);
-+		for_each_string_list(&info.states.skipped, add_remote_to_show_info, &info);
- 		for_each_string_list(&info.states.tracked, add_remote_to_show_info, &info);
- 		for_each_string_list(&info.states.stale, add_remote_to_show_info, &info);
- 		if (info.list.nr)
-diff --git a/remote.c b/remote.c
-index 404e1e0a0ddb..7d68b5632bb5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -804,7 +804,7 @@ static int refspec_match(const struct refspec_item *refspec,
- 	return !strcmp(refspec->src, name);
+-	test_config_global checkout.workers $1 &&
+-	test_config_global checkout.thresholdForParallelism $2
++	test_config --global checkout.workers $1 &&
++	test_config --global checkout.thresholdForParallelism $2
  }
  
--static int omit_name_by_refspec(const char *name, struct refspec *rs)
-+int omit_name_by_refspec(const char *name, struct refspec *rs)
- {
- 	int i;
+ # Run "${@:2}" and check that $1 checkout workers were used
+diff --git a/t/lib-proto-disable.sh b/t/lib-proto-disable.sh
+index 83babe57d959..f3cb43ae1aab 100644
+--- a/t/lib-proto-disable.sh
++++ b/t/lib-proto-disable.sh
+@@ -147,33 +147,33 @@ test_config () {
+ 	# Test clone/fetch/push with protocol.allow user defined default
+ 	test_expect_success "clone $desc (enabled)" '
+ 		rm -rf tmp.git &&
+-		test_config_global protocol.allow always &&
++		test_config --global protocol.allow always &&
+ 		git clone --bare "$url" tmp.git
+ 	'
  
-diff --git a/remote.h b/remote.h
-index dd4402436f1f..448675e11259 100644
---- a/remote.h
-+++ b/remote.h
-@@ -247,6 +247,12 @@ int resolve_remote_symref(struct ref *ref, struct ref *list);
-  */
- struct ref *ref_remove_duplicates(struct ref *ref_map);
+ 	test_expect_success "fetch $desc (enabled)" '
+-		test_config_global protocol.allow always &&
++		test_config --global protocol.allow always &&
+ 		git -C tmp.git fetch
+ 	'
  
-+/*
-+ * Check whether a name matches any negative refspec in rs. Returns 1 if the
-+ * name matches at least one negative refspec, and 0 otherwise.
-+ */
-+int omit_name_by_refspec(const char *name, struct refspec *rs);
-+
- /*
-  * Remove all entries in the input list which match any negative refspec in
-  * the refspec list.
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index fff14e13ed43..0aad0eb4d26c 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -302,6 +302,52 @@ test_expect_success 'show' '
- 	)
+ 	test_expect_success "push $desc (enabled)" '
+-		test_config_global protocol.allow always &&
++		test_config --global protocol.allow always &&
+ 		git -C tmp.git push origin HEAD:pushed
+ 	'
+ 
+ 	test_expect_success "push $desc (disabled)" '
+-		test_config_global protocol.allow never &&
++		test_config --global protocol.allow never &&
+ 		test_must_fail git -C tmp.git push origin HEAD:pushed
+ 	'
+ 
+ 	test_expect_success "fetch $desc (disabled)" '
+-		test_config_global protocol.allow never &&
++		test_config --global protocol.allow never &&
+ 		test_must_fail git -C tmp.git fetch
+ 	'
+ 
+ 	test_expect_success "clone $desc (disabled)" '
+ 		rm -rf tmp.git &&
+-		test_config_global protocol.allow never &&
++		test_config --global protocol.allow never &&
+ 		test_must_fail git clone --bare "$url" tmp.git
+ 	'
+ }
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index f7c7df0ca427..17d95b8193a9 100644
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -198,7 +198,7 @@ test_git_directory_exists () {
+ # settings for diff.ignoreSubmodules.
+ prolog () {
+ 	(test -d submodule_update_repo || create_lib_submodule_repo) &&
+-	test_config_global diff.ignoreSubmodules all &&
++	test_config --global diff.ignoreSubmodules all &&
+ 	test_config diff.ignoreSubmodules all
+ }
+ 
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index d479303efa03..42242ca5ee0a 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -200,7 +200,7 @@ init_no_templatedir_env () {
+ test_expect_success 'init with init.templatedir set' '
+ 	mkdir templatedir-source &&
+ 	echo Content >templatedir-source/file &&
+-	test_config_global init.templatedir "${HOME}/templatedir-source" &&
++	test_config --global init.templatedir "${HOME}/templatedir-source" &&
+ 
+ 	init_no_templatedir_env templatedir-set &&
+ 	test_cmp templatedir-source/file templatedir-set/.git/file
+@@ -209,15 +209,15 @@ test_expect_success 'init with init.templatedir set' '
+ test_expect_success 'init with init.templatedir using ~ expansion' '
+ 	mkdir -p templatedir-source &&
+ 	echo Content >templatedir-source/file &&
+-	test_config_global init.templatedir "~/templatedir-source" &&
++	test_config --global init.templatedir "~/templatedir-source" &&
+ 
+ 	init_no_templatedir_env templatedir-expansion &&
+ 	test_cmp templatedir-source/file templatedir-expansion/.git/file
  '
  
-+cat >expect <<EOF
-+* remote origin
-+  Fetch URL: $(pwd)/one
-+  Push  URL: $(pwd)/one
-+  HEAD branch: main
-+  Remote branches:
-+    main skipped
-+    side tracked
-+  Local branches configured for 'git pull':
-+    ahead merges with remote main
-+    main  merges with remote main
-+  Local refs configured for 'git push':
-+    main pushes to main     (local out of date)
-+    main pushes to upstream (create)
-+EOF
-+
-+test_expect_success 'show with negative refspecs' '
-+	test_when_finished "git -C test config --unset-all --fixed-value remote.origin.fetch ^refs/heads/main" &&
-+	git -C test config --add remote.origin.fetch ^refs/heads/main &&
-+	git -C test remote show origin >output &&
-+	test_cmp expect output
-+'
-+
-+cat >expect <<EOF
-+* remote origin
-+  Fetch URL: $(pwd)/one
-+  Push  URL: $(pwd)/one
-+  HEAD branch: main
-+  Remote branches:
-+    main new (next fetch will store in remotes/origin)
-+    side stale (use 'git remote prune' to remove)
-+  Local branches configured for 'git pull':
-+    ahead merges with remote main
-+    main  merges with remote main
-+  Local refs configured for 'git push':
-+    main pushes to main     (local out of date)
-+    main pushes to upstream (create)
-+EOF
-+
-+test_expect_failure 'show stale with negative refspecs' '
-+	test_when_finished "git -C test config --unset-all --fixed-value remote.origin.fetch ^refs/heads/side" &&
-+	git -C test config --add remote.origin.fetch ^refs/heads/side &&
-+	git -C test remote show origin >output &&
-+	test_cmp expect output
-+'
-+
- cat >test/expect <<EOF
- * remote origin
-   Fetch URL: $(pwd)/one
+ test_expect_success 'init --bare/--shared overrides system/global config' '
+-	test_config_global core.bare false &&
+-	test_config_global core.sharedRepository 0640 &&
++	test_config --global core.bare false &&
++	test_config --global core.sharedRepository 0640 &&
+ 	git init --bare --shared=0666 init-bare-shared-override &&
+ 	check_config init-bare-shared-override true unset &&
+ 	test x0666 = \
+@@ -225,7 +225,7 @@ test_expect_success 'init --bare/--shared overrides system/global config' '
+ '
+ 
+ test_expect_success 'init honors global core.sharedRepository' '
+-	test_config_global core.sharedRepository 0666 &&
++	test_config --global core.sharedRepository 0666 &&
+ 	git init shared-honor-global &&
+ 	test x0666 = \
+ 	x$(git config -f shared-honor-global/.git/config core.sharedRepository)
+@@ -569,7 +569,7 @@ test_expect_success '--initial-branch' '
+ '
+ 
+ test_expect_success 'overridden default initial branch name (config)' '
+-	test_config_global init.defaultBranch nmb &&
++	test_config --global init.defaultBranch nmb &&
+ 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= git init initial-branch-config &&
+ 	git -C initial-branch-config symbolic-ref HEAD >actual &&
+ 	grep nmb actual
+@@ -583,7 +583,7 @@ test_expect_success 'advice on unconfigured init.defaultBranch' '
+ '
+ 
+ test_expect_success 'overridden default main branch name (env)' '
+-	test_config_global init.defaultBranch nmb &&
++	test_config --global init.defaultBranch nmb &&
+ 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=env git init main-branch-env &&
+ 	git -C main-branch-env symbolic-ref HEAD >actual &&
+ 	grep env actual
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index bad37abad2c3..119004ed9c58 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -339,8 +339,8 @@ test_expect_success "filter: smudge empty file" '
+ '
+ 
+ test_expect_success 'disable filter with empty override' '
+-	test_config_global filter.disable.smudge false &&
+-	test_config_global filter.disable.clean false &&
++	test_config --global filter.disable.smudge false &&
++	test_config --global filter.disable.clean false &&
+ 	test_config filter.disable.smudge false &&
+ 	test_config filter.disable.clean false &&
+ 
+@@ -366,8 +366,8 @@ test_expect_success 'diff does not reuse worktree files that need cleaning' '
+ '
+ 
+ test_expect_success PERL 'required process filter should filter data' '
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
+-	test_config_global filter.protocol.required true &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
++	test_config --global filter.protocol.required true &&
+ 	rm -rf repo &&
+ 	mkdir repo &&
+ 	(
+@@ -451,8 +451,8 @@ test_expect_success PERL 'required process filter should filter data' '
+ '
+ 
+ test_expect_success PERL 'required process filter should filter data for various subcommands' '
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
+-	test_config_global filter.protocol.required true &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
++	test_config --global filter.protocol.required true &&
+ 	(
+ 		cd repo &&
+ 
+@@ -562,9 +562,9 @@ test_expect_success PERL 'required process filter should filter data for various
+ '
+ 
+ test_expect_success PERL 'required process filter takes precedence' '
+-	test_config_global filter.protocol.clean false &&
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean" &&
+-	test_config_global filter.protocol.required true &&
++	test_config --global filter.protocol.clean false &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean" &&
++	test_config --global filter.protocol.required true &&
+ 	rm -rf repo &&
+ 	mkdir repo &&
+ 	(
+@@ -588,7 +588,7 @@ test_expect_success PERL 'required process filter takes precedence' '
+ '
+ 
+ test_expect_success PERL 'required process filter should be used only for "clean" operation only' '
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean" &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean" &&
+ 	rm -rf repo &&
+ 	mkdir repo &&
+ 	(
+@@ -623,8 +623,8 @@ test_expect_success PERL 'required process filter should be used only for "clean
+ '
+ 
+ test_expect_success PERL 'required process filter should process multiple packets' '
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
+-	test_config_global filter.protocol.required true &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
++	test_config --global filter.protocol.required true &&
+ 
+ 	rm -rf repo &&
+ 	mkdir repo &&
+@@ -688,8 +688,8 @@ test_expect_success PERL 'required process filter should process multiple packet
+ '
+ 
+ test_expect_success PERL 'required process filter with clean error should fail' '
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
+-	test_config_global filter.protocol.required true &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
++	test_config --global filter.protocol.required true &&
+ 	rm -rf repo &&
+ 	mkdir repo &&
+ 	(
+@@ -707,7 +707,7 @@ test_expect_success PERL 'required process filter with clean error should fail'
+ '
+ 
+ test_expect_success PERL 'process filter should restart after unexpected write failure' '
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
+ 	rm -rf repo &&
+ 	mkdir repo &&
+ 	(
+@@ -762,7 +762,7 @@ test_expect_success PERL 'process filter should restart after unexpected write f
+ '
+ 
+ test_expect_success PERL 'process filter should not be restarted if it signals an error' '
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
+ 	rm -rf repo &&
+ 	mkdir repo &&
+ 	(
+@@ -805,7 +805,7 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
+ '
+ 
+ test_expect_success PERL 'process filter abort stops processing of all further files' '
+-	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
++	test_config --global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
+ 	rm -rf repo &&
+ 	mkdir repo &&
+ 	(
+@@ -845,8 +845,8 @@ test_expect_success PERL 'process filter abort stops processing of all further f
+ '
+ 
+ test_expect_success PERL 'invalid process filter must fail (and not hang!)' '
+-	test_config_global filter.protocol.process cat &&
+-	test_config_global filter.protocol.required true &&
++	test_config --global filter.protocol.process cat &&
++	test_config --global filter.protocol.required true &&
+ 	rm -rf repo &&
+ 	mkdir repo &&
+ 	(
+@@ -862,10 +862,10 @@ test_expect_success PERL 'invalid process filter must fail (and not hang!)' '
+ '
+ 
+ test_expect_success PERL 'delayed checkout in process filter' '
+-	test_config_global filter.a.process "rot13-filter.pl a.log clean smudge delay" &&
+-	test_config_global filter.a.required true &&
+-	test_config_global filter.b.process "rot13-filter.pl b.log clean smudge delay" &&
+-	test_config_global filter.b.required true &&
++	test_config --global filter.a.process "rot13-filter.pl a.log clean smudge delay" &&
++	test_config --global filter.a.required true &&
++	test_config --global filter.b.process "rot13-filter.pl b.log clean smudge delay" &&
++	test_config --global filter.b.required true &&
+ 
+ 	rm -rf repo &&
+ 	mkdir repo &&
+@@ -941,8 +941,8 @@ test_expect_success PERL 'delayed checkout in process filter' '
+ '
+ 
+ test_expect_success PERL 'missing file in delayed checkout' '
+-	test_config_global filter.bug.process "rot13-filter.pl bug.log clean smudge delay" &&
+-	test_config_global filter.bug.required true &&
++	test_config --global filter.bug.process "rot13-filter.pl bug.log clean smudge delay" &&
++	test_config --global filter.bug.required true &&
+ 
+ 	rm -rf repo &&
+ 	mkdir repo &&
+@@ -961,8 +961,8 @@ test_expect_success PERL 'missing file in delayed checkout' '
+ '
+ 
+ test_expect_success PERL 'invalid file in delayed checkout' '
+-	test_config_global filter.bug.process "rot13-filter.pl bug.log clean smudge delay" &&
+-	test_config_global filter.bug.required true &&
++	test_config --global filter.bug.process "rot13-filter.pl bug.log clean smudge delay" &&
++	test_config --global filter.bug.required true &&
+ 
+ 	rm -rf repo &&
+ 	mkdir repo &&
+@@ -992,9 +992,9 @@ do
+ 
+ 	test_expect_success PERL,SYMLINKS,$mode_prereq \
+ 	"delayed checkout with $mode-collision don't write to the wrong place" '
+-		test_config_global filter.delay.process \
++		test_config --global filter.delay.process \
+ 			"\"$TEST_ROOT/rot13-filter.pl\" --always-delay delayed.log clean smudge delay" &&
+-		test_config_global filter.delay.required true &&
++		test_config --global filter.delay.required true &&
+ 
+ 		git init $mode-collision &&
+ 		(
+diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
+index 80e76a4695ed..210b99ec9c1b 100755
+--- a/t/t0210-trace2-normal.sh
++++ b/t/t0210-trace2-normal.sh
+@@ -251,8 +251,8 @@ sane_unset GIT_TRACE2_BRIEF
+ 
+ test_expect_success 'using global config, normal stream, return code 0' '
+ 	test_when_finished "rm trace.normal actual expect" &&
+-	test_config_global trace2.normalBrief 1 &&
+-	test_config_global trace2.normalTarget "$(pwd)/trace.normal" &&
++	test_config --global trace2.normalBrief 1 &&
++	test_config --global trace2.normalTarget "$(pwd)/trace.normal" &&
+ 	test-tool trace2 001return 0 &&
+ 	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+@@ -267,10 +267,10 @@ test_expect_success 'using global config, normal stream, return code 0' '
+ 
+ test_expect_success 'using global config with include' '
+ 	test_when_finished "rm trace.normal actual expect real.gitconfig" &&
+-	test_config_global trace2.normalBrief 1 &&
+-	test_config_global trace2.normalTarget "$(pwd)/trace.normal" &&
++	test_config --global trace2.normalBrief 1 &&
++	test_config --global trace2.normalTarget "$(pwd)/trace.normal" &&
+ 	mv "$(pwd)/.gitconfig" "$(pwd)/real.gitconfig" &&
+-	test_config_global include.path "$(pwd)/real.gitconfig" &&
++	test_config --global include.path "$(pwd)/real.gitconfig" &&
+ 	test-tool trace2 001return 0 &&
+ 	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
+index 22d0845544e9..1196fe9c1131 100755
+--- a/t/t0211-trace2-perf.sh
++++ b/t/t0211-trace2-perf.sh
+@@ -159,8 +159,8 @@ sane_unset GIT_TRACE2_PERF_BRIEF
+ 
+ test_expect_success 'using global config, perf stream, return code 0' '
+ 	test_when_finished "rm trace.perf actual expect" &&
+-	test_config_global trace2.perfBrief 1 &&
+-	test_config_global trace2.perfTarget "$(pwd)/trace.perf" &&
++	test_config --global trace2.perfBrief 1 &&
++	test_config --global trace2.perfTarget "$(pwd)/trace.perf" &&
+ 	test-tool trace2 001return 0 &&
+ 	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
+ 	cat >expect <<-EOF &&
+diff --git a/t/t0212-trace2-event.sh b/t/t0212-trace2-event.sh
+index 6d3374ff773c..39828f3345ef 100755
+--- a/t/t0212-trace2-event.sh
++++ b/t/t0212-trace2-event.sh
+@@ -277,7 +277,7 @@ test_expect_success JSON_PP 'basic trace2_data' '
+ 
+ test_expect_success JSON_PP 'using global config, event stream, error event' '
+ 	test_when_finished "rm trace.event actual expect" &&
+-	test_config_global trace2.eventTarget "$(pwd)/trace.event" &&
++	test_config --global trace2.eventTarget "$(pwd)/trace.event" &&
+ 	test-tool trace2 003error "hello world" "this is a test" &&
+ 	perl "$TEST_DIRECTORY/t0212/parse_events.perl" <trace.event >actual &&
+ 	sed -e "s/^|//" >expect <<-EOF &&
+diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
+index 537435b90ae9..db30478260b3 100755
+--- a/t/t1309-early-config.sh
++++ b/t/t1309-early-config.sh
+@@ -96,7 +96,7 @@ test_expect_success 'early config and onbranch' '
+ '
+ 
+ test_expect_success 'onbranch config outside of git repo' '
+-	test_config_global includeIf.onbranch:topic.path non-existent &&
++	test_config --global includeIf.onbranch:topic.path non-existent &&
+ 	nongit git help
+ '
+ 
+diff --git a/t/t2081-parallel-checkout-collisions.sh b/t/t2081-parallel-checkout-collisions.sh
+index 6acdb89d12bd..76638658265b 100755
+--- a/t/t2081-parallel-checkout-collisions.sh
++++ b/t/t2081-parallel-checkout-collisions.sh
+@@ -138,7 +138,7 @@ test_expect_success CASE_INSENSITIVE_FS 'collision report on clone (w/ racy file
+ test_expect_success CASE_INSENSITIVE_FS,!MINGW,!CYGWIN \
+ 	'collision report on clone (w/ colliding peer after the detected entry)' '
+ 
+-	test_config_global filter.logger.smudge "\"$TEST_ROOT/logger_script\" %f" &&
++	test_config --global filter.logger.smudge "\"$TEST_ROOT/logger_script\" %f" &&
+ 	git reset --hard basename_collision &&
+ 	echo "file_x filter=logger" >.gitattributes &&
+ 	git add .gitattributes &&
+diff --git a/t/t2082-parallel-checkout-attributes.sh b/t/t2082-parallel-checkout-attributes.sh
+index 252545796182..f90dd7f156d4 100755
+--- a/t/t2082-parallel-checkout-attributes.sh
++++ b/t/t2082-parallel-checkout-attributes.sh
+@@ -142,9 +142,9 @@ test_expect_success PERL 'parallel-checkout and delayed checkout' '
+ 	write_script rot13-filter.pl "$PERL_PATH" \
+ 		<"$TEST_DIRECTORY"/t0021/rot13-filter.pl &&
+ 
+-	test_config_global filter.delay.process \
++	test_config --global filter.delay.process \
+ 		"\"$(pwd)/rot13-filter.pl\" --always-delay \"$(pwd)/delayed.log\" clean smudge delay" &&
+-	test_config_global filter.delay.required true &&
++	test_config --global filter.delay.required true &&
+ 
+ 	echo "abcd" >original &&
+ 	echo "nopq" >rot13 &&
+diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
+index 1d0b15380edf..97aa15b673fa 100755
+--- a/t/t3431-rebase-fork-point.sh
++++ b/t/t3431-rebase-fork-point.sh
+@@ -92,7 +92,7 @@ test_expect_success 'rebase.forkPoint set to false' '
+ '
+ 
+ test_expect_success 'rebase.forkPoint set to false and then to true' '
+-	test_config_global rebase.forkPoint false &&
++	test_config --global rebase.forkPoint false &&
+ 	test_config rebase.forkPoint true &&
+ 	do_test_rebase "G F E D B A"
+ '
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index c4228a27a71f..7914379ed253 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -668,7 +668,7 @@ test_expect_success 'reject adding remote with an invalid name' '
+ # the last two ones check if the config is updated.
+ 
+ test_expect_success 'rename a remote' '
+-	test_config_global remote.pushDefault origin &&
++	test_config --global remote.pushDefault origin &&
+ 	git clone one four &&
+ 	git -C four config branch.main.pushRemote origin &&
+ 	GIT_TRACE2_EVENT=$(pwd)/trace \
+@@ -693,7 +693,7 @@ test_expect_success 'rename a remote renames repo remote.pushDefault' '
+ '
+ 
+ test_expect_success 'rename a remote renames repo remote.pushDefault but ignores global' '
+-	test_config_global remote.pushDefault other &&
++	test_config --global remote.pushDefault other &&
+ 	git clone one four.2 &&
+ 	git -C four.2 config remote.pushDefault origin &&
+ 	git -C four.2 remote rename origin upstream &&
+@@ -702,7 +702,7 @@ test_expect_success 'rename a remote renames repo remote.pushDefault but ignores
+ '
+ 
+ test_expect_success 'rename a remote renames repo remote.pushDefault but keeps global' '
+-	test_config_global remote.pushDefault origin &&
++	test_config --global remote.pushDefault origin &&
+ 	git clone one four.3 &&
+ 	git -C four.3 config remote.pushDefault origin &&
+ 	git -C four.3 remote rename origin upstream &&
+@@ -740,7 +740,7 @@ test_expect_success 'rename succeeds with existing remote.<target>.prune' '
+ '
+ 
+ test_expect_success 'remove a remote' '
+-	test_config_global remote.pushDefault origin &&
++	test_config --global remote.pushDefault origin &&
+ 	git clone one four.five &&
+ 	git -C four.five config branch.main.pushRemote origin &&
+ 	git -C four.five remote remove origin &&
+@@ -758,7 +758,7 @@ test_expect_success 'remove a remote removes repo remote.pushDefault' '
+ '
+ 
+ test_expect_success 'remove a remote removes repo remote.pushDefault but ignores global' '
+-	test_config_global remote.pushDefault other &&
++	test_config --global remote.pushDefault other &&
+ 	git clone one four.five.2 &&
+ 	git -C four.five.2 config remote.pushDefault origin &&
+ 	git -C four.five.2 remote remove origin &&
+@@ -767,7 +767,7 @@ test_expect_success 'remove a remote removes repo remote.pushDefault but ignores
+ '
+ 
+ test_expect_success 'remove a remote removes repo remote.pushDefault but keeps global' '
+-	test_config_global remote.pushDefault origin &&
++	test_config --global remote.pushDefault origin &&
+ 	git clone one four.five.3 &&
+ 	git -C four.five.3 config remote.pushDefault origin &&
+ 	git -C four.five.3 remote remove origin &&
+diff --git a/t/t5544-pack-objects-hook.sh b/t/t5544-pack-objects-hook.sh
+index dd5f44d986f2..7acea482224a 100755
+--- a/t/t5544-pack-objects-hook.sh
++++ b/t/t5544-pack-objects-hook.sh
+@@ -24,7 +24,7 @@ clear_hook_results () {
+ 
+ test_expect_success 'hook runs via global config' '
+ 	clear_hook_results &&
+-	test_config_global uploadpack.packObjectsHook ./hook &&
++	test_config --global uploadpack.packObjectsHook ./hook &&
+ 	git clone --no-local . dst.git 2>stderr &&
+ 	grep "hook running" stderr
+ '
+@@ -61,8 +61,8 @@ test_expect_success 'hook does not run from repo config' '
+ 
+ test_expect_success 'hook works with partial clone' '
+ 	clear_hook_results &&
+-	test_config_global uploadpack.packObjectsHook ./hook &&
+-	test_config_global uploadpack.allowFilter true &&
++	test_config --global uploadpack.packObjectsHook ./hook &&
++	test_config --global uploadpack.allowFilter true &&
+ 	git clone --bare --no-local --filter=blob:none . dst.git &&
+ 	git -C dst.git rev-list --objects --missing=allow-any --no-object-names --all >objects &&
+ 	git -C dst.git cat-file --batch-check="%(objecttype)" <objects >types &&
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index f0d9cd584d3b..e97f94f1db68 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -100,7 +100,7 @@ test_expect_success 'http auth can request both user and pass' '
+ '
+ 
+ test_expect_success 'http auth respects credential helper config' '
+-	test_config_global credential.helper "!f() {
++	test_config --global credential.helper "!f() {
+ 		cat >/dev/null
+ 		echo username=user@host
+ 		echo password=pass@host
+@@ -111,14 +111,14 @@ test_expect_success 'http auth respects credential helper config' '
+ '
+ 
+ test_expect_success 'http auth can get username from config' '
+-	test_config_global "credential.$HTTPD_URL.username" user@host &&
++	test_config --global "credential.$HTTPD_URL.username" user@host &&
+ 	set_askpass wrong pass@host &&
+ 	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-user &&
+ 	expect_askpass pass user@host
+ '
+ 
+ test_expect_success 'configured username does not override URL' '
+-	test_config_global "credential.$HTTPD_URL.username" wrong &&
++	test_config --global "credential.$HTTPD_URL.username" wrong &&
+ 	set_askpass wrong pass@host &&
+ 	git clone "$HTTPD_URL_USER/auth/dumb/repo.git" clone-auth-user2 &&
+ 	expect_askpass pass user@host
+@@ -452,7 +452,7 @@ test_expect_success 'http-alternates cannot point at funny protocols' '
+ test_expect_success 'http-alternates triggers not-from-user protocol check' '
+ 	echo "$HTTPD_URL/dumb/victim.git/objects" \
+ 		>"$evil/objects/info/http-alternates" &&
+-	test_config_global http.followRedirects true &&
++	test_config --global http.followRedirects true &&
+ 	test_must_fail git -c protocol.http.allow=user \
+ 		clone $HTTPD_URL/dumb/evil.git evil-user &&
+ 	git -c protocol.http.allow=always \
+diff --git a/t/t5573-pull-verify-signatures.sh b/t/t5573-pull-verify-signatures.sh
+index a53dd8550d0b..bc61ee3ef56f 100755
+--- a/t/t5573-pull-verify-signatures.sh
++++ b/t/t5573-pull-verify-signatures.sh
+@@ -126,7 +126,7 @@ test_expect_success GPG 'pull commit into unborn branch with untrusted signature
+ test_expect_success GPG 'pull commit into unborn branch with untrusted signature and --verify-signatures and minTrustLevel=ultimate' '
+ 	test_when_finished "rm -rf empty-repo" &&
+ 	git init empty-repo &&
+-	test_config_global gpg.minTrustLevel ultimate &&
++	test_config --global gpg.minTrustLevel ultimate &&
+ 	test_must_fail \
+ 		git -C empty-repo pull --ff-only --verify-signatures ../untrusted 2>pullerror &&
+ 	test_i18ngrep "has an untrusted GPG signature" pullerror
+@@ -135,7 +135,7 @@ test_expect_success GPG 'pull commit into unborn branch with untrusted signature
+ test_expect_success GPG 'pull commit into unborn branch with untrusted signature and --verify-signatures and minTrustLevel=marginal' '
+ 	test_when_finished "rm -rf empty-repo" &&
+ 	git init empty-repo &&
+-	test_config_global gpg.minTrustLevel marginal &&
++	test_config --global gpg.minTrustLevel marginal &&
+ 	test_must_fail \
+ 		git -C empty-repo pull --ff-only --verify-signatures ../untrusted 2>pullerror &&
+ 	test_i18ngrep "has an untrusted GPG signature" pullerror
+@@ -144,7 +144,7 @@ test_expect_success GPG 'pull commit into unborn branch with untrusted signature
+ test_expect_success GPG 'pull commit into unborn branch with untrusted signature and --verify-signatures and minTrustLevel=undefined' '
+ 	test_when_finished "rm -rf empty-repo" &&
+ 	git init empty-repo &&
+-	test_config_global gpg.minTrustLevel undefined &&
++	test_config --global gpg.minTrustLevel undefined &&
+ 	git -C empty-repo pull --ff-only --verify-signatures ../untrusted >pulloutput &&
+ 	test_i18ngrep "has a good GPG signature" pulloutput
+ '
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index 8f676d6b0c0e..a7efedfb79a5 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -18,11 +18,11 @@ test_expect_success 'setup' '
+ 
+ test_expect_success 'submodule.stickyRecursiveClone flag manipulates submodule.recurse value' '
+ 
+-	test_config_global submodule.stickyRecursiveClone true &&
++	test_config --global submodule.stickyRecursiveClone true &&
+ 	git clone --recurse-submodules parent clone_recurse_true &&
+ 	test_cmp_config -C clone_recurse_true true submodule.recurse &&
+ 
+-	test_config_global submodule.stickyRecursiveClone false &&
++	test_config --global submodule.stickyRecursiveClone false &&
+ 	git clone --recurse-submodules parent clone_recurse_false &&
+ 	test_expect_code 1 git -C clone_recurse_false config --get submodule.recurse
+ 
+@@ -94,7 +94,7 @@ test_expect_success 'prefers --template config over normal config' '
+ 	template="$TRASH_DIRECTORY/template-with-config" &&
+ 	mkdir "$template" &&
+ 	git config --file "$template/config" foo.bar from_template &&
+-	test_config_global foo.bar from_global &&
++	test_config --global foo.bar from_global &&
+ 	git clone "--template=$template" parent clone-template-config &&
+ 	test "$(git -C clone-template-config config --local foo.bar)" = "from_template"
+ 
+@@ -112,7 +112,7 @@ test_expect_success 'prefers -c config over --template config' '
+ 
+ test_expect_success 'prefers config "clone.defaultRemoteName" over default' '
+ 
+-	test_config_global clone.defaultRemoteName from_config &&
++	test_config --global clone.defaultRemoteName from_config &&
+ 	git clone parent clone-config-origin &&
+ 	git -C clone-config-origin rev-parse --verify refs/remotes/from_config/main
+ 
+@@ -142,7 +142,7 @@ test_expect_success 'redirected clone -v does show progress' '
+ '
+ 
+ test_expect_success 'clone does not segfault with --bare and core.bare=false' '
+-	test_config_global core.bare false &&
++	test_config --global core.bare false &&
+ 	git clone --bare parent clone-bare &&
+ 	echo true >expect &&
+ 	git -C clone-bare rev-parse --is-bare-repository >actual &&
+diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules-remote.sh
+index ca8f80083a2f..b92f2e5ca470 100755
+--- a/t/t5617-clone-submodules-remote.sh
++++ b/t/t5617-clone-submodules-remote.sh
+@@ -87,7 +87,7 @@ test_expect_success 'clone with --filter' '
+ # check that clone.filterSubmodules works (--also-filter-submodules can be
+ # omitted)
+ test_expect_success 'filters applied with clone.filterSubmodules' '
+-	test_config_global clone.filterSubmodules true &&
++	test_config --global clone.filterSubmodules true &&
+ 	git clone --recurse-submodules --filter blob:none \
+ 		"file://$pwd/srv.bare" super_clone2 &&
+ 	test_cmp_config -C super_clone2 true remote.origin.promisor &&
+@@ -97,7 +97,7 @@ test_expect_success 'filters applied with clone.filterSubmodules' '
+ '
+ 
+ test_expect_success '--no-also-filter-submodules overrides clone.filterSubmodules=true' '
+-	test_config_global clone.filterSubmodules true &&
++	test_config --global clone.filterSubmodules true &&
+ 	git clone --recurse-submodules --filter blob:none \
+ 		--no-also-filter-submodules \
+ 		"file://$pwd/srv.bare" super_clone3 &&
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 00ce9aec2346..d7ac417bacb6 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -341,7 +341,7 @@ test_expect_success 'upload-pack respects config using protocol v2' '
+ 	EOF
+ 	test_commit -C server one &&
+ 
+-	test_config_global uploadpack.packobjectshook ./hook &&
++	test_config --global uploadpack.packobjectshook ./hook &&
+ 	test_path_is_missing server/.git/hookout &&
+ 	git -c protocol.version=2 clone "file://$(pwd)/server" client &&
+ 	test_path_is_file server/.git/hookout
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index a4476dc49220..36aa1f8a2afb 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -444,7 +444,7 @@ test_expect_success 'grep --recurse-submodules with --cached ignores worktree mo
+ 
+ test_expect_failure 'grep --textconv: superproject .gitattributes does not affect submodules' '
+ 	reset_and_clean &&
+-	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	test_config --global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
+ 	echo "a diff=d2x" >.gitattributes &&
+ 
+ 	cat >expect <<-\EOF &&
+@@ -456,7 +456,7 @@ test_expect_failure 'grep --textconv: superproject .gitattributes does not affec
+ 
+ test_expect_failure 'grep --textconv: superproject .gitattributes (from index) does not affect submodules' '
+ 	reset_and_clean &&
+-	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	test_config --global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
+ 	echo "a diff=d2x" >.gitattributes &&
+ 	git add .gitattributes &&
+ 	rm .gitattributes &&
+@@ -470,7 +470,7 @@ test_expect_failure 'grep --textconv: superproject .gitattributes (from index) d
+ 
+ test_expect_failure 'grep --textconv: superproject .git/info/attributes does not affect submodules' '
+ 	reset_and_clean &&
+-	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	test_config --global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
+ 	super_attr="$(git rev-parse --git-path info/attributes)" &&
+ 	test_when_finished "rm -f \"$super_attr\"" &&
+ 	echo "a diff=d2x" >"$super_attr" &&
+@@ -488,7 +488,7 @@ test_expect_failure 'grep --textconv: superproject .git/info/attributes does not
+ #
+ test_expect_failure 'grep --textconv correctly reads submodule .gitattributes' '
+ 	reset_and_clean &&
+-	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	test_config --global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
+ 	echo "a diff=d2x" >submodule/.gitattributes &&
+ 
+ 	cat >expect <<-\EOF &&
+@@ -500,7 +500,7 @@ test_expect_failure 'grep --textconv correctly reads submodule .gitattributes' '
+ 
+ test_expect_failure 'grep --textconv correctly reads submodule .gitattributes (from index)' '
+ 	reset_and_clean &&
+-	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	test_config --global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
+ 	echo "a diff=d2x" >submodule/.gitattributes &&
+ 	git -C submodule add .gitattributes &&
+ 	rm submodule/.gitattributes &&
+@@ -514,7 +514,7 @@ test_expect_failure 'grep --textconv correctly reads submodule .gitattributes (f
+ 
+ test_expect_failure 'grep --textconv correctly reads submodule .git/info/attributes' '
+ 	reset_and_clean &&
+-	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	test_config --global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
+ 
+ 	submodule_attr="$(git -C submodule rev-parse --path-format=absolute --git-path info/attributes)" &&
+ 	test_when_finished "rm -f \"$submodule_attr\"" &&
+@@ -529,8 +529,8 @@ test_expect_failure 'grep --textconv correctly reads submodule .git/info/attribu
+ 
+ test_expect_failure 'grep saves textconv cache in the appropriate repository' '
+ 	reset_and_clean &&
+-	test_config_global diff.d2x_cached.textconv "sed -e \"s/d/x/\"" &&
+-	test_config_global diff.d2x_cached.cachetextconv true &&
++	test_config --global diff.d2x_cached.textconv "sed -e \"s/d/x/\"" &&
++	test_config --global diff.d2x_cached.cachetextconv true &&
+ 	echo "a diff=d2x_cached" >submodule/.gitattributes &&
+ 
+ 	# We only read/write to the textconv cache when grepping from an OID,
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 6da7273f1d5f..e518b89bf128 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -506,16 +506,36 @@ test_modebits () {
+ 			  -e 's|^\(......\)S|\1-|' -e 's|^\(......\)s|\1x|'
+ }
+ 
++# Usage: test_unconfig [options] <name>
++#   -C <dir>:
++#	Run all git commits in directory <dir>
++#   --global:
++#	Modify the global configuration instead of repository.
++#
+ # Unset a configuration variable, but don't fail if it doesn't exist.
+ test_unconfig () {
++	global=
+ 	config_dir=
+-	if test "$1" = -C
+-	then
++	while test $# != 0
++	do
++		case "$1" in
++		-C)
++			config_dir="$2"
++			shift
++			;;
++		--global)
++			global=--global
++			;;
++		-*)
++			BUG "invalid test_unconfig option: $1"
++			;;
++		*)
++			break
++			;;
++		esac
+ 		shift
+-		config_dir=$1
+-		shift
+-	fi
+-	git ${config_dir:+-C "$config_dir"} config --unset-all "$@"
++	done
++	git ${config_dir:+-C "$config_dir"} config $global --unset-all "$1"
+ 	config_status=$?
+ 	case "$config_status" in
+ 	5) # ok, nothing to unset
+@@ -525,22 +545,38 @@ test_unconfig () {
+ 	return $config_status
+ }
+ 
++# Usage: test_config [options] <name> <value>
++#   -C <dir>:
++#	Run all git commits in directory <dir>
++#   --global:
++#	Modify the global configuration instead of the repository
++#	configuration.
++#
+ # Set git config, automatically unsetting it after the test is over.
+ test_config () {
++	global=
+ 	config_dir=
+-	if test "$1" = -C
+-	then
++	while test $# != 0
++	do
++		case "$1" in
++		-C)
++			config_dir="$2"
++			shift
++			;;
++		--global)
++			global=--global
++			;;
++		-*)
++			BUG "invalid test_config option: $1"
++			;;
++		*)
++			break
++			;;
++		esac
+ 		shift
+-		config_dir=$1
+-		shift
+-	fi
+-	test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} '$1'" &&
+-	git ${config_dir:+-C "$config_dir"} config "$@"
+-}
+-
+-test_config_global () {
+-	test_when_finished "test_unconfig --global '$1'" &&
+-	git config --global "$@"
++	done
++	test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} $global '$1'" &&
++	git ${config_dir:+-C "$config_dir"} config $global "$1" "$2"
+ }
+ 
+ write_script () {
 -- 
 2.36.1
 
