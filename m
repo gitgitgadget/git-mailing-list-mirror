@@ -2,152 +2,287 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06188C43334
-	for <git@archiver.kernel.org>; Fri, 17 Jun 2022 02:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DF56C43334
+	for <git@archiver.kernel.org>; Fri, 17 Jun 2022 03:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233338AbiFQCPf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jun 2022 22:15:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34470 "EHLO
+        id S1379834AbiFQD73 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jun 2022 23:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232651AbiFQCPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jun 2022 22:15:34 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C7A64BFA
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 19:15:33 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id bo5so3001065pfb.4
-        for <git@vger.kernel.org>; Thu, 16 Jun 2022 19:15:33 -0700 (PDT)
+        with ESMTP id S234061AbiFQD70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jun 2022 23:59:26 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF3E866689
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 20:59:24 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id m125-20020a1ca383000000b0039c63fe5f64so1784523wme.0
+        for <git@vger.kernel.org>; Thu, 16 Jun 2022 20:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Li0nnFoHCPYJmDvL4gZ/jHLis9QPFhhvz/R7zmPX7lA=;
-        b=X5ZIWzxgNceyNGloPP8oDYkQCAaYKkYFR+nIt6C8I7Onf9+qW+6YpNa6zTuxZ+fF3x
-         szbE1OPot1EgGIKCQLyw5Kcb7PBMDrMzj5fgKC/473i7Dxyo6dpzNL7pEGW1AtZP90ej
-         qZvMSjBL+8ZpP9qUm8YOCfMHagt9YUBlXPhGzDY5ZOjDVguk//NekdIztQQHaP+I35m/
-         8Ih1EkqVbGV72OOrTtg7Fr5yXhfA/z7LdGRfjFj0ztHdj785gsHDXnOLwuGpLP75vYQH
-         SbWLEtjFV9l+BhumC4qj9iCFu4LZ4uYYYudfEKmlwPLAijJ5m+20EG7T91hQUjuFiogD
-         LSFg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ZzBi/VReOsqhwitGsPVxfHklJyX/xYwIWl1oCmCTrHQ=;
+        b=RoEhT1YBT/RvlUXFbHZN8ucYoKGgIqdC8TxXKmcv0f6POgZRHrDrPG0+a2karPI4vo
+         3nFBUbyJU+IiJHx8jWaSVccmpgvRvMTfQI1zjnXl7Vs4zkfACeifj/r7ihhPJX5XRqNR
+         k2pRQanUV3V27IryHBCyMAnOW7AfkoURwmxkxbFkTLdtGGtDhLXcqIRd5dMCsGg5o+Ud
+         DGmZkiGaaAtX3tPLrCobMZQm/0GOlhKNNYs2+wlsKkPKMhlPJmPIqCXmfp15lMe/MoOU
+         zVmeJxsTzSIDxW54EZ1vXYfpTMvz383h9hZGufYI4/W7smLjLfc0W8sdhjXe5Bid3v7m
+         dogg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Li0nnFoHCPYJmDvL4gZ/jHLis9QPFhhvz/R7zmPX7lA=;
-        b=1CDVUdw9ekQ3jJ5/SyY/V4QUEY+LzYfH0tC6BULyiLNVsIAdyXGBZIQD8kOYioDrdW
-         vf97ZMR4Z9rcyasKwHyMQLiYOjfj3JOSpyOqXIsLYemva2c7JR1eHt46QnCZV7FRT2Mh
-         eUX3y2HzFFmvFfXfB+hfSK8S8q386yLA5JCh+LJ0Vg0NASg4e+pFlqruUVan5mk1pxtM
-         X9WEfbMu3HJTP8ljDUTNRoYonKwDB8n2Z+vQ6EYloGFUZRuuqQx+AIKtLOulYG4Dzy/Y
-         kYe8wqXqIavTRRSM3Y6kfk1M+pJ87fAN38uHmMENbeOkbadIbLwM8yhKCM4JXCNARvJr
-         tlEQ==
-X-Gm-Message-State: AJIora+zwPAWzFtFbpTKnuCfxvp7Ul2pVl3cDSwnzuxhah+HQCHR9DLc
-        RpLPDn4BTkUnvvts3APG8XpkcqVkZeAi3mUoPH4=
-X-Google-Smtp-Source: AGRyM1vnPvM02iMAzduIHegr8zb5bk6ZtUBOOMO/P5CcTIk2oGGVV/7PXo8fRjxSIW8p0pmBf68p7qkmvG0nvByXyFI=
-X-Received: by 2002:a05:6a00:b42:b0:51c:79bd:4226 with SMTP id
- p2-20020a056a000b4200b0051c79bd4226mr7878007pfo.70.1655432132778; Thu, 16 Jun
- 2022 19:15:32 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=ZzBi/VReOsqhwitGsPVxfHklJyX/xYwIWl1oCmCTrHQ=;
+        b=E1PcNiD/pOUytrY4NcafSxI4uHa1ic+HcRIZCc8d8GJcJG5U1hhElx6D0cgsoZZL1H
+         zN8lXYBZOel8gFLMdWKkxeOicMtb4iXAQLhIJzb3fbbS+dNBsB3yz3GnenI3zb9Ajerr
+         7G0E1Rgtv/7q7YA+GWYOSMfpMP8GjUVTcC0klNtR0wkzW8fwkLGjQJk7yuJC+V6Y5uwq
+         LOR1Ijc1KCfcAfLTDoFyqej+eys3z2o2CKSdcyV6mlpCJu+5d91FXn7Z1WLNvl5Hs+Cd
+         ymeMGZMN7qp003NqehY+SSP5WBM2TQlDsZbCOQCdbAuv+mLK2M2slMPN192hI0f2ZapG
+         tKbA==
+X-Gm-Message-State: AJIora/+xXIW/ZOHFXIX0EGaFN6nJdEv4oHdLovc8/oFl+Fm9Eo5dev8
+        p2Fq1NgjJDF4ne7eRNsD1wQ+WRzCadIOsA==
+X-Google-Smtp-Source: AGRyM1s2t4LtnL6dhgu92xELfEVAQzxb5T/+JAAWiIMZRs0Erpmpm9v9e7Dx6NPZvAcm+JsQg+u0Zw==
+X-Received: by 2002:a05:600c:5112:b0:397:53f5:e15b with SMTP id o18-20020a05600c511200b0039753f5e15bmr8193882wms.93.1655438362982;
+        Thu, 16 Jun 2022 20:59:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t22-20020a05600c41d600b0039db7f1a3f5sm3962790wmh.45.2022.06.16.20.59.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jun 2022 20:59:22 -0700 (PDT)
+Message-Id: <pull.1263.v3.git.1655438361228.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1263.v2.git.1655350617442.gitgitgadget@gmail.com>
+References: <pull.1263.v2.git.1655350617442.gitgitgadget@gmail.com>
+From:   "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 17 Jun 2022 03:59:20 +0000
+Subject: [PATCH v3] send-pack.c: add config push.useBitmaps
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
- <20220527100804.209890-1-shaoxuan.yuan02@gmail.com> <20220527100804.209890-6-shaoxuan.yuan02@gmail.com>
- <077a0579-903e-32ad-029c-48572d471c84@github.com> <xmqq8rqm3fxa.fsf@gitster.g>
- <d0ac1bea-6d98-140c-0e46-d7569e80b29d@github.com> <CAJyCBOQGAL9aGW+Gxv8sZH9T_tB6_pdeLNwmNgqPhz7cMdZrbA@mail.gmail.com>
- <6375c172-82cb-dffc-875f-e5e742d5e49e@github.com>
-In-Reply-To: <6375c172-82cb-dffc-875f-e5e742d5e49e@github.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Fri, 17 Jun 2022 10:15:20 +0800
-Message-ID: <CAJyCBOS3AKPT43ERsfLetSHRP_tciNvok-MSg5d=buStKPMxYA@mail.gmail.com>
-Subject: Re: [WIP v2 5/5] mv: use update_sparsity() after touching sparse contents
-To:     Victoria Dye <vdye@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        derrickstolee@github.com, newren@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>, kylezhao <kylezhao@tencent.com>,
+        Jeff King <peff@peff.net>, Kyle Zhao <kylezhao@tencent.com>,
+        Kyle Zhao <kylezhao@tencent.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 17, 2022 at 12:42 AM Victoria Dye <vdye@github.com> wrote:
-*Truncated messages*
-> > For me, the alternative provides a less frustrating experience.
-> >
-> > Since it is more explicit (giving a message and directly saying NO).
-> >> Also, the `sparse-checkout` users should expect the moved file to be
-> > missing in the working tree, as opposed to being present.
-> >
->
-> Good point, since the sparseness of the destination file would be different
-> depending on whether it had local modifications or not (with no indication
-> from 'mv' of the different treatment).
->
-> If you're interested, maybe there's a middle-ground option? Suppose you want
-> to move a file 'file1' to an out-of-cone location:
->
-> 1. If 'file1' is clean, regardless of use of '--force', move the file & make
->    it sparse.
-> 2. If 'file1' is *not* clean and '--force' is *not* used, refuse to move the
->    file (with a "Path 'file1' not uptodate; will not move. Use '--force' to
->    override." type of error).
-> 3. If 'file1' is *not* clean and '--force' is used, move the file but do not
->    make it sparse.
->
-> That way, '--force' really does force the move to happen, but users are
-> generally warned against it. I'm still not sure what the "right" approach
-> is, but to your point I think it should err on the side of not surprising
-> the user.
+From: Kyle Zhao <kylezhao@tencent.com>
 
-I generally think this middle-ground option is good. Though I think the sort
-of options that "messing with sparse contents" should be handled by
-'--sparse', instead
-of '--force', since the latter is used to "force move/rename even if
-target exists".
-Mixing the usage may cause syntax confusion?
+This allows you to disable bitmaps for "git push". Default is true.
 
-> > And the tweaked rule suggested by Junio [1] might need an extra
-> >  `git sparse-checkout reapply` to re-sparsify the file that moved out-of-cone
-> > after staging its change?
-> >
->
-> Just so I understand correctly, do you mean 'git sparse-checkout reapply'
-> *as part of* the 'mv' operation? Or are you thinking that a user might want
-> to manually run 'git sparse-checkout reapply' after running 'mv'?
->
-> If it's the former (internally calling 'git sparse-checkout reapply' in
-> 'mv'), then no, you wouldn't want to do that. In Junio's suggestion, he said
-> (emphasis mine):
->
-> > When a dirty path is moved out of cone, we would trigger the
-> > "SKIP_WORKTREE automatically disabled" behaviour" *and that would be a
-> > good thing, I imagine?*
->
-> We don't want the file moved out-of-cone to be sparse again because it has
-> local (on-disk) modifications that would disappear (since a file needs to be
-> removed from disk to be "sparse" in the eyes of 'sparse-checkout'). It's
-> *completely valid* behavior to have an out-of-cone file become non-sparse if
-> a user does something to cause that; it doesn't cause any bugs/corruption
-> with the repo. And, even if you did want to make the file sparse, it should
-> be done by manually setting 'SKIP_WORKTREE' and individually removing the
-> file from disk (for all the reasons I mentioned in my upthread comment [1]).
->
-> On the other hand, if you're talking about a user manually running 'git
-> sparse-checkout reapply' after the fact, that wouldn't work either - they'd
-> get an error:
-> warning: The following paths are not up to date and were left despite sparse patterns:
->         <out-of-cone modified file>
+Reachability bitmaps are designed to speed up the "counting objects"
+phase of generating a pack during a clone or fetch. They are not
+optimized for Git clients sending a small topic branch via "git push".
+In some cases (see [1]), using reachability bitmaps during "git push"
+can cause significant performance regressions.
 
-This is what I meant, a user manually running `git sparse-checkout reapply`.
-Though I did say users should only do this "after staging its change".
+Add a new "push.useBitmaps" config option to disable reachability
+bitmaps during "git push". This allows reachability bitmaps to still
+be used in other areas, such as "git rev-list --use-bitmap-index".
 
-I propose this solution which sounds good to me:
+[1]: https://lore.kernel.org/git/87zhoz8b9o.fsf@evledraar.gmail.com/
 
-1. If 'file1' is clean, iff with the use of '--sparse', move the file & make
-    it sparse.
-2. If 'file1' is dirty, iff with the use of '--sparse', move the file
-& *do not* make
-    it sparse, instead advise something like
-    "file1 is not up to date, keep it non-sparse.
-    Stage file1 then run `git sparse-checkout reapply` to re-sparsify it."
+Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
+---
+    send-pack.c: add config push.useBitmaps
+    
+    This patch add config push.useBitmaps to prevent git push using bitmap.
+    
+    The origin discussion is here:
+    https://lore.kernel.org/git/b940e705fbe9454685757f2e3055e2ce@tencent.com/
+    
+    Thanks, -Kyle
+    
+    Changes since v1:
+    
+     * changed the commit message
+     * modified and added missing \n to push.txt
+     * used test_subcommand for test
+     * modified "if" statement for "git_config_get_bool()" in send-pack.c
+    
+    Changes since v2:
+    
+     * enable 'push.useBitmaps" by default
+     * fix nit in t/t5516-fetch-push.sh
 
-> [1] https://lore.kernel.org/git/077a0579-903e-32ad-029c-48572d471c84@github.com/
->
-> > [1] https://lore.kernel.org/git/xmqq8rqm3fxa.fsf@gitster.g/
-> >
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1263%2Fkeyu98%2Fkz%2Fpush-usebitmps-config-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1263/keyu98/kz/push-usebitmps-config-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1263
+
+Range-diff vs v2:
+
+ 1:  42e0b4845b2 ! 1:  a523cb52542 send-pack.c: add config push.useBitmaps
+     @@ Metadata
+       ## Commit message ##
+          send-pack.c: add config push.useBitmaps
+      
+     -    This allows you to disable bitmaps for "git push". Default is false.
+     +    This allows you to disable bitmaps for "git push". Default is true.
+      
+          Reachability bitmaps are designed to speed up the "counting objects"
+          phase of generating a pack during a clone or fetch. They are not
+     @@ Documentation/config/push.txt: push.negotiate::
+       	in common.
+      +
+      +push.useBitmaps::
+     -+    If this config and `pack.useBitmaps` are both `true`, then Git will
+     -+    use reachability bitmaps during `git push`, if available (disabled
+     -+    by default).
+     ++	If this config and `pack.useBitmaps` are both `true`, then Git will
+     ++	use reachability bitmaps during `git push`, if available. If set to
+     ++	`false`, may improve push performance without affecting use of the
+     ++	reachability bitmaps for other operations. Default is true.
+      
+       ## send-pack.c ##
+      @@ send-pack.c: static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
+       		strvec_push(&po.args, "--progress");
+       	if (is_repository_shallow(the_repository))
+       		strvec_push(&po.args, "--shallow");
+     -+	if (!args->use_bitmaps)
+     ++	if (args->no_use_bitmaps)
+      +		strvec_push(&po.args, "--no-use-bitmap-index");
+       	po.in = -1;
+       	po.out = args->stateless_rpc ? -1 : fd;
+     @@ send-pack.c: int send_pack(struct send_pack_args *args,
+       		get_commons_through_negotiation(args->url, remote_refs, &commons);
+       
+      +	if (!git_config_get_bool("push.usebitmaps", &use_bitmaps))
+     -+		args->use_bitmaps = use_bitmaps;
+     ++		args->no_use_bitmaps = !use_bitmaps;
+      +
+       	git_config_get_bool("transfer.advertisesid", &advertise_sid);
+       
+     @@ send-pack.h: struct send_pack_args {
+       		stateless_rpc:1,
+      -		atomic:1;
+      +		atomic:1,
+     -+		use_bitmaps:1;
+     ++		no_use_bitmaps:1;
+       	const struct string_list *push_options;
+       };
+       
+     @@ t/t5516-fetch-push.sh: test_expect_success 'push warns or fails when using usern
+      +	GIT_TRACE2_EVENT="$PWD/default" \
+      +	git push testrepo main:test &&
+      +	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
+     -+	--thin --delta-base-offset -q --no-use-bitmap-index <default &&
+     ++		--thin --delta-base-offset -q <default &&
+      +
+      +	git config push.useBitmaps true &&
+      +	GIT_TRACE2_EVENT="$PWD/true" \
+      +	git push testrepo main:test2 &&
+      +	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
+     -+	--thin --delta-base-offset -q <true &&
+     ++		--thin --delta-base-offset -q <true &&
+      +
+      +	git config push.useBitmaps false &&
+      +	GIT_TRACE2_EVENT="$PWD/false" \
+      +	git push testrepo main:test3 &&
+      +	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
+     -+	--thin --delta-base-offset -q --no-use-bitmap-index <false
+     ++		--thin --delta-base-offset -q --no-use-bitmap-index <false
+      +'
+      +
+       test_done
+
+
+ Documentation/config/push.txt |  6 ++++++
+ send-pack.c                   |  6 ++++++
+ send-pack.h                   |  3 ++-
+ t/t5516-fetch-push.sh         | 21 +++++++++++++++++++++
+ 4 files changed, 35 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
+index e32801e6c91..f16ac9311db 100644
+--- a/Documentation/config/push.txt
++++ b/Documentation/config/push.txt
+@@ -137,3 +137,9 @@ push.negotiate::
+ 	server attempt to find commits in common. If "false", Git will
+ 	rely solely on the server's ref advertisement to find commits
+ 	in common.
++
++push.useBitmaps::
++	If this config and `pack.useBitmaps` are both `true`, then Git will
++	use reachability bitmaps during `git push`, if available. If set to
++	`false`, may improve push performance without affecting use of the
++	reachability bitmaps for other operations. Default is true.
+diff --git a/send-pack.c b/send-pack.c
+index bc0fcdbb000..d18cde850ef 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -84,6 +84,8 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
+ 		strvec_push(&po.args, "--progress");
+ 	if (is_repository_shallow(the_repository))
+ 		strvec_push(&po.args, "--shallow");
++	if (args->no_use_bitmaps)
++		strvec_push(&po.args, "--no-use-bitmap-index");
+ 	po.in = -1;
+ 	po.out = args->stateless_rpc ? -1 : fd;
+ 	po.git_cmd = 1;
+@@ -487,6 +489,7 @@ int send_pack(struct send_pack_args *args,
+ 	struct async demux;
+ 	const char *push_cert_nonce = NULL;
+ 	struct packet_reader reader;
++	int use_bitmaps;
+ 
+ 	if (!remote_refs) {
+ 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
+@@ -498,6 +501,9 @@ int send_pack(struct send_pack_args *args,
+ 	if (push_negotiate)
+ 		get_commons_through_negotiation(args->url, remote_refs, &commons);
+ 
++	if (!git_config_get_bool("push.usebitmaps", &use_bitmaps))
++		args->no_use_bitmaps = !use_bitmaps;
++
+ 	git_config_get_bool("transfer.advertisesid", &advertise_sid);
+ 
+ 	/* Does the other end support the reporting? */
+diff --git a/send-pack.h b/send-pack.h
+index e148fcd9609..d5d6ff589d9 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -26,7 +26,8 @@ struct send_pack_args {
+ 		/* One of the SEND_PACK_PUSH_CERT_* constants. */
+ 		push_cert:2,
+ 		stateless_rpc:1,
+-		atomic:1;
++		atomic:1,
++		no_use_bitmaps:1;
+ 	const struct string_list *push_options;
+ };
+ 
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index dedca106a7a..ffda830ba22 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1865,4 +1865,25 @@ test_expect_success 'push warns or fails when using username:password' '
+ 	test_line_count = 1 warnings
+ '
+ 
++test_expect_success 'push with config push.useBitmaps' '
++	mk_test testrepo heads/main &&
++	git checkout main &&
++	GIT_TRACE2_EVENT="$PWD/default" \
++	git push testrepo main:test &&
++	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
++		--thin --delta-base-offset -q <default &&
++
++	git config push.useBitmaps true &&
++	GIT_TRACE2_EVENT="$PWD/true" \
++	git push testrepo main:test2 &&
++	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
++		--thin --delta-base-offset -q <true &&
++
++	git config push.useBitmaps false &&
++	GIT_TRACE2_EVENT="$PWD/false" \
++	git push testrepo main:test3 &&
++	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
++		--thin --delta-base-offset -q --no-use-bitmap-index <false
++'
++
+ test_done
+
+base-commit: 8168d5e9c23ed44ae3d604f392320d66556453c9
 -- 
-Thanks & Regards,
-Shaoxuan
+gitgitgadget
