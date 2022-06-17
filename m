@@ -2,225 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C17D8C43334
-	for <git@archiver.kernel.org>; Fri, 17 Jun 2022 17:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD0A8C43334
+	for <git@archiver.kernel.org>; Fri, 17 Jun 2022 17:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382500AbiFQRBv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jun 2022 13:01:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43034 "EHLO
+        id S1382992AbiFQRmM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jun 2022 13:42:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231786AbiFQRBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jun 2022 13:01:50 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F6503054F
-        for <git@vger.kernel.org>; Fri, 17 Jun 2022 10:01:49 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 085CD18F900;
-        Fri, 17 Jun 2022 13:01:48 -0400 (EDT)
+        with ESMTP id S234564AbiFQRmJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jun 2022 13:42:09 -0400
+Received: from pb-sasl-trial21.pobox.com (pb-sasl-trial21.pobox.com [173.228.157.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E55CE3F30C
+        for <git@vger.kernel.org>; Fri, 17 Jun 2022 10:42:06 -0700 (PDT)
+Received: from pb-sasl-trial21.pobox.com (localhost.local [127.0.0.1])
+        by pb-sasl-trial21.pobox.com (Postfix) with ESMTP id 27C9A19FBC;
+        Fri, 17 Jun 2022 13:42:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wTosYLOMXZK2HKiX9yBnMTVJZ3O3EBtspu6cLc
-        s34YQ=; b=nY9nEOq9YFVe81wcfilGGGN3ez64hN17j/Hf9IpMrurqd4lYRsRBLv
-        AgHI9L+Qzxac3fjlEDyrJRbNGLVqFXbNL+q1vbUHmYgNcukzN9gJUdH7J3x/72oY
-        HbBwXxF+K7/vVN3/oWqTy8uEI8uLcgNIBuxNFLUc88/A/QUa1+fhw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F3C0518F8FE;
-        Fri, 17 Jun 2022 13:01:47 -0400 (EDT)
+        :content-type; s=sasl; bh=GQjaSnGniKQhglOfEjvXZbinvG8=; b=rtGUpD
+        HE2mTgCBNU60RSImspolS81SyXofuN0z8r3tShzAj5Z+JbmSjFYPm6oOf9pe9WMH
+        +sny/Gwu7Bqs8wjt9JIZ/USuZsUZqEVF3S2IXADXvjBd4PVyNMdebqSah1s9ThE5
+        6xRoJ3u7W70w/GvT9qGoTuNiqCbs6Qc2qGIo8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hVSq33zbIJuwQpwRs5i0Ro/HEbfEgNIz
+        +f20Z4EDA+7lwMaMOe0oQiwl/6AURL2uTcmUZL4j43MfBSVuVuj2M0Ivgyxlf8Pz
+        JzxsVO5uoBrSFoDfWIxlDO2b4RUB0F9Y3p6q6TZSkzO+g2LCGHVQzejj+EEr7Iro
+        QxToMzbQ2k8=
+Received: from pb-smtp21.sea.icgroup.com (pb-smtp21.pobox.com [10.110.30.21])
+        by pb-sasl-trial21.pobox.com (Postfix) with ESMTP id 1662519FBB;
+        Fri, 17 Jun 2022 13:42:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 95BA418F8FD;
-        Fri, 17 Jun 2022 13:01:44 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9B02019856B;
+        Fri, 17 Jun 2022 13:41:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>, kylezhao <kylezhao@tencent.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] send-pack.c: add config push.useBitmaps
-References: <pull.1263.v2.git.1655350617442.gitgitgadget@gmail.com>
-        <pull.1263.v3.git.1655438361228.gitgitgadget@gmail.com>
-Date:   Fri, 17 Jun 2022 10:01:43 -0700
-In-Reply-To: <pull.1263.v3.git.1655438361228.gitgitgadget@gmail.com> (Kyle
-        Zhao via GitGitGadget's message of "Fri, 17 Jun 2022 03:59:20 +0000")
-Message-ID: <xmqqtu8jns08.fsf@gitster.g>
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Phillip Szelat <phillip.szelat@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        =?utf-8?Q?S=C3=A9bastien?= Helleu <flashcode@flashtux.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Sihyeon Jang <uneedsihyeon@gmail.com>,
+        Arusekk <arek_koz@o2.pl>, Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        insolor <insolor@gmail.com>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Ray Chen <oldsharp@gmail.com>,
+        =?utf-8?B?5L6d5LqR?= <lilydjwg@gmail.com>,
+        Yi-Jyun Pan <pan93412@gmail.com>,
+        Franklin Weng <franklin@goodhorse.idv.tw>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] i18n: fix mismatched camelCase config variables
+References: <20220617100309.3224-1-worldhello.net@gmail.com>
+        <xmqqtu8jpa7p.fsf@gitster.g>
+Date:   Fri, 17 Jun 2022 10:41:58 -0700
+In-Reply-To: <xmqqtu8jpa7p.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        17 Jun 2022 08:43:06 -0700")
+Message-ID: <xmqqpmj7nq55.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2AA328D2-EE5F-11EC-8B55-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: CA1BF308-EE64-11EC-92F2-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->  Documentation/config/push.txt |  6 ++++++
->  send-pack.c                   |  6 ++++++
->  send-pack.h                   |  3 ++-
->  t/t5516-fetch-push.sh         | 21 +++++++++++++++++++++
->  4 files changed, 35 insertions(+), 1 deletion(-)
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+>> Mismatched camelCases, choose the former:
+>>
+>>  * Documentation/config/fetch.txt: fetch.credentialsInUrl
+>>    remote.c:                       fetch.credentialsInURL
+>
+> We renamed this with "fetch" -> "transfer", didn't we?
+>
+> Everything else looks good, though.
 
-Thanks.  This round looks more or less OK.
+I've applied after tweaking it a bit.
 
-> diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-> index e32801e6c91..f16ac9311db 100644
-> --- a/Documentation/config/push.txt
-> +++ b/Documentation/config/push.txt
-> @@ -137,3 +137,9 @@ push.negotiate::
->  	server attempt to find commits in common. If "false", Git will
->  	rely solely on the server's ref advertisement to find commits
->  	in common.
-> +
-> +push.useBitmaps::
-> +	If this config and `pack.useBitmaps` are both `true`, then Git will
-> +	use reachability bitmaps during `git push`, if available. If set to
-> +	`false`, may improve push performance without affecting use of the
-> +	reachability bitmaps for other operations. Default is true.
-
-While nothing in the description is incorrect per-se, I somehow find
-it hard to follow.  "git push" uses reachability bitmaps when three
-conditions hold true at the same time (pack.useBitmaps that is by
-default true, push.useBitmaps that is by default true, and there
-exist reachability bitmaps to be used).  It is left unsaid why the
-user needs to know about this configuration variable in order to
-tweak "without affecting other operations".
-
-I tried to come up with a version that I find easier to read (at
-least to me).  I am not sure how successfull I was.
-
-    While git can be told to use reachability bitmaps in general
-    with "pack.useBitmaps" configuration, this variable can be used
-    to disable use of bitmaps only for "git push" by setting it to
-    false, without preventing other git operations from using
-    bitmaps.
-
-> diff --git a/send-pack.c b/send-pack.c
-> index bc0fcdbb000..d18cde850ef 100644
-> --- a/send-pack.c
-> +++ b/send-pack.c
-> @@ -84,6 +84,8 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
->  		strvec_push(&po.args, "--progress");
->  	if (is_repository_shallow(the_repository))
->  		strvec_push(&po.args, "--shallow");
-> +	if (args->no_use_bitmaps)
-> +		strvec_push(&po.args, "--no-use-bitmap-index");
-
-"disable_bitmaps" might be a better name for the struct member, but OK.
-
-> @@ -498,6 +501,9 @@ int send_pack(struct send_pack_args *args,
->  	if (push_negotiate)
->  		get_commons_through_negotiation(args->url, remote_refs, &commons);
->  
-> +	if (!git_config_get_bool("push.usebitmaps", &use_bitmaps))
-> +		args->no_use_bitmaps = !use_bitmaps;
-
-Because the "--no-use-bitmap-index" is explicitly given only when
-the ".no_use_bitmaps" member is true and we do not pass
-"--use-bitmap-index" merely because the member is false, the
-configuration can only disable, which matches the documented
-design.  Good.
-
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index dedca106a7a..ffda830ba22 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -1865,4 +1865,25 @@ test_expect_success 'push warns or fails when using username:password' '
->  	test_line_count = 1 warnings
->  '
->  
-> +test_expect_success 'push with config push.useBitmaps' '
-> +	mk_test testrepo heads/main &&
-> +	git checkout main &&
-> +	GIT_TRACE2_EVENT="$PWD/default" \
-> +	git push testrepo main:test &&
-> +	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-> +		--thin --delta-base-offset -q <default &&
-
-We do not pass "--no-use-bitmap-index" without configuration.
-Good. 
-
-How do we know this is the "default" state, by the way?  Because we
-read the tests before this, all 1860 lines?
-
-Perhaps
-
-	test_unconfig push.useBitmaps &&
-
-at the very beginning of the test would help future readers.  That
-way, they can immediately tell that the first test piece is without
-the variable.
-
-> +	git config push.useBitmaps true &&
-> +	GIT_TRACE2_EVENT="$PWD/true" \
-> +	git push testrepo main:test2 &&
-
-Perhaps use
-
-	test_config push.useBitmaps true
-
-instead?  That way, after this test-expect-success finishes,
-push.useBitmaps variable will be wiped from the configuration
-variable.  That is a good hygiene to follow to help future
-developers who may need to add more tests after this one.
-
-> +	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-> +		--thin --delta-base-offset -q <true &&
-> +
-> +	git config push.useBitmaps false &&
-
-Likewise.
-
-> +	GIT_TRACE2_EVENT="$PWD/false" \
-> +	git push testrepo main:test3 &&
-> +	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
-> +		--thin --delta-base-offset -q --no-use-bitmap-index <false
-> +'
-> +
->  test_done
-
-
-Lastly, some critique on the proposed log message.
-
-> This allows you to disable bitmaps for "git push". Default is true.
-
-I find it more confusing to have this line at the beginning than
-without.  What the configuration variable does is explained later
-anyway, and our convention is not to start from such a "conclusion"
-but ease the readers into the reasoning by starting with the
-explanation of the status quo, which leads readers to realize why
-the current system is lacking.
-
-> Reachability bitmaps are designed to speed up the "counting objects"
-> phase of generating a pack during a clone or fetch. They are not
-> optimized for Git clients sending a small topic branch via "git push".
-> In some cases (see [1]), using reachability bitmaps during "git push"
-> can cause significant performance regressions.
-
-And this paragraph brilliantly does its job.  A reader who did not
-even know what the reachability bitmaps are for is now prepared to
-follow your logic why it is a good idea to special case "git push"
-because you explain that it is good for some things and not
-necessarily good for others like "git push".
-
-> Add a new "push.useBitmaps" config option to disable reachability
-> bitmaps during "git push". This allows reachability bitmaps to still
-> be used in other areas, such as "git rev-list --use-bitmap-index".
-
-I had the same problem with this paragraph as the one in the
-documentation part of the patch.  Nothing in it is incorrect per-se,
-but is roundabout way of saying what it wants to say.
-
-Here is my attempted rewrite.
-
-    Add a new "push.useBitmaps" configuration variable to allow users to
-    tell "git push" not to use bitmaps.  We already have "pack.bitmaps"
-    that controls the use of bitmaps, but a separate configuration
-    variable allows the reachability bitmaps to still be used in other
-    areas, such as "git rev-list --use-bitmap-index", while disabling it
-    only for "git push".
-
-Thanks.
+Will be pushing the result out shortly.
