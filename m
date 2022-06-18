@@ -2,185 +2,273 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39940C43334
-	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 11:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 242A3C43334
+	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 13:01:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233050AbiFRLzd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jun 2022 07:55:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
+        id S234359AbiFRNBM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jun 2022 09:01:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230213AbiFRLzb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jun 2022 07:55:31 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0751DDFEB
-        for <git@vger.kernel.org>; Sat, 18 Jun 2022 04:55:29 -0700 (PDT)
+        with ESMTP id S234351AbiFRNBL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jun 2022 09:01:11 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB00219FBE
+        for <git@vger.kernel.org>; Sat, 18 Jun 2022 06:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1655553327;
-        bh=5N5a1LZdaJ6n3K6Vz+ISciyO5zevF0Ge/v9almNaBWo=;
+        s=badeba3b8450; t=1655557268;
+        bh=NLpAEW8ZLV7wRx6ct7+hl0uC+K6cSkb8thBg0ebb+vI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GLMaaL5UiqC0AX3lssiebtAlEJWJXHPsgW4Qs7cqszRdCvYTdlYmdXKwyKlpSz6IA
-         cuM7CfFFVH84fXSXxQojQzwfzYiwASJf7Y2J6x5JVA9LBf69rGudzC+dZHe6NbWvFL
-         hnWVBIt9Qd3ox5LrHBjWQbgHlmGoPaYbcl+bMaF0=
+        b=Co3kga/1YeuV6Da3diqiQoV+irjovc4UuM65sZZ7UkDj5uT4BXHTUVA4pL4oxe2oU
+         sIqC02RPOdP09YJ2HiC4n1FdICHteoSrB3y9/iaEaaW8GLtjnYa0fWjykMkSLCofw4
+         XXsaARLJx3wd7QMJDKzYZQHXPiRk9egEhxwzhRrU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.60.234] ([89.1.215.185]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrhQC-1nNdqk3lTA-00nh62; Sat, 18
- Jun 2022 13:55:27 +0200
-Date:   Sat, 18 Jun 2022 13:55:24 +0200 (CEST)
+Received: from [172.23.60.234] ([89.1.215.185]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZkpb-1oEuA838QZ-00WoFB; Sat, 18
+ Jun 2022 15:01:07 +0200
+Date:   Sat, 18 Jun 2022 15:01:06 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Michael J Gruber <git@grubix.eu>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH] t3701: two subtests are fixed
-In-Reply-To: <165537087609.19905.821171947957640468.git@grubix.eu>
-Message-ID: <nycvar.QRO.7.76.6.2206181342200.349@tvgsbejvaqbjf.bet>
-References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu> <nycvar.QRO.7.76.6.2206151649030.349@tvgsbejvaqbjf.bet> <165537087609.19905.821171947957640468.git@grubix.eu>
+To:     Dennis van Gerwen <dvg@xs4all.nl>
+cc:     git@vger.kernel.org
+Subject: Re: Feature Request: Custom split location for `git add --patch`
+In-Reply-To: <da79cc66-42a0-2563-d09b-fbc0ad5b28bd@xs4all.nl>
+Message-ID: <nycvar.QRO.7.76.6.2206181359400.349@tvgsbejvaqbjf.bet>
+References: <da79cc66-42a0-2563-d09b-fbc0ad5b28bd@xs4all.nl>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1688576404-1655553327=:349"
-X-Provags-ID: V03:K1:6XrsiRzFd8/JhRfvLV+6I0LgxNVMH/GX4jXwnqXqgKl3bWrZX9/
- 9TzZQOnCcwE1ls85i2ZK41T77gtLKnYUK95QFOygSshjV+zzfHXf2DkTZgc9GwHPrkIi3DS
- gdW6uZCqDTv8Bv7+6+Q0OQgzDb9BL1PQdWZJX3kkQp0Kvt8UXfXvXRfrR+4+lDkRXHimNoG
- PRydxpe9NQhuHJTB0bqjQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:j0ZLKCvc/VY=:hmZErOwfW9i/RAsy1+ytv8
- D05LEpya8O0FGFghfdc/iA39KcjVVO/ouYUz7TlRk/Iq12v6B3mgHdKT8BKc5gI4Co53yqJkl
- pwf1QSZ3PwJPG9PhDbekSDfn2YXG0MU+ndHA4dK/9GN5EWt+tWYLmDHsJYh3RkWyrE45KxfOu
- 1Zxh7AZeHqUZFlLklhMzpmpUKHCTYYjOyF3+EUfmFpkB+A+97tH/KkVgVc4df27wyR7AKaQNn
- 3eTEWJ5xhlw/HR41brZ2nJ5CZ1zP0hjUXZ/lytNKJh2Gi+InxR1v//bAbkO82FPz39+9IJRXE
- EPlQr7qC0zDtLtPBQ6z2pMNJ3DdqbnSH8b/QDFdZsjuExifmpzvAn1BefwmaPt1xgwcBmqjx6
- YA6VT0owQymNGA3HeUniaFrI58YZx9BexN1RmgV1ZHMCvXPtbfjFV/cfvS/EU+YH/xnXfPVF2
- kXCG0qkXkH3mx5fK2WDNHJxYs5fqBe3K4sFT00snVfmUn40y3x/1nIdM9TUNPKvsrmYEQI9xS
- fgNp//jRicFPS+Kobo+cBeVWKfiUbkd0hFDa6NqOjjIm4LQz+YKpldEpwMHA5HPW/CyyLn2do
- UxvDSNYLxX/tIgEWabNf4c46VKIX/gyb6fwkSsXNU+rYXoVNukzX4zdr2bL+fhn0PiAVJqCuO
- FcnW+zWizEKE+Tb/e+bmGY9nb9Vl/Pl91A6SxgrLOOqXf/q9cZmdhr0lZSKFcXhT1m0/3jx7O
- TQtZVpkHgkQf3q00nnGxaYokCPU2bLpEZHK8il4hA1LJsSqvKGaRBvaYwQzLMsjpx8l+DfEkN
- +E3yYfQnpL5sZPaDzB4cpUdXnnjSLXjci+lonPF3GGUsoRNgqDCO8Pdn7pqsOQhPjUmqgUXm/
- ZT97cnJ4DpunJZxyjLXAK09qDF7vmtUTekQReYcxevW8F3Ug4V62G/HXzuodFkq7GwjcRI+Cm
- beebBru3jT7lKomo0nns/qgEL/J7dL0sv7IDQWykzeOLiVq+gZq+DNiI7aU4HXEWuU2mGXcVK
- Ck3KBT0L94E3KTYTquBla/EpHPiYgelDOK1bP6ciyfTWrY8AM+BNM2rpuBsqzqxIc2Wh+zrVm
- 6hHvTgRxnzaKW6F+9JII4UhmVc75j3oHeg2DoM8dy/Kh8Otye4SsuztYw==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HkpeUw46ybRF/dG81xAG2Tzl1yDcKWlhwDIq7FoQ3GJ6saY+ZSz
+ Fgtua8u78xyGJ12ZGtH44ayG7C66vvNbSfb9m1NnXzfSRl0CwdRcqHjp0QUatWoj0OLfcZj
+ VVhSH2VjiBif2+UhsYeBObDx5iSWLy2TRZ3XXNCDIoIteeNX41UtRnNn2y3crC7reiMj9RE
+ 3TbopRR+OGLHROVk6coHQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:U1cZ031xus4=:N1pOgYtrzY1MpgPADCAVPW
+ U8hveaGUMkQ38fhdE2lGk+pmWTserk826vS1EC9dYIHxgbnz7Px4jKhqwV2nF7lwMxx4/Z+kv
+ 61HAVSexn5xdQ3T5q0XqlKB6+AJlbyXziazWGXjIOY7lD+iYCKpQ5ZN43NEeUtuvc2NCeKwbt
+ NvzAY3cA+Xq0qL9tbe7Lx/5yBRP2QB6o4qOtLimZ672pCPJJtqj4ov9AVyHdyHw7EXZZ917Tw
+ 22j8qVXf1sdnQaYHMLQ8EYO+Vr4oHZ8JI+ONRbCANyUaKcfsgcbx8N5F6Sb5SEuc3zO6ly/Dr
+ onRl8dMJ/si47yX0mu1ILlAp5AP50x9NmjueFLclGX/3VWTWROJpIEXzK5offZcEqO+ePaL3Z
+ ibzyF431MW30LYuPbJugVxwSgEzxJ6/RX21E9KjQ4ANzCLN2dkKR3KMICJ7YqapmXvopK6n1V
+ ReThaT4zZxhdL8XYcHOvJTpqovSlDg3iWlyqklo+8YONg6ONFHWMTkBn+vVqYseCFUIHkWE7c
+ r9Fm3Z4J1NbeMUzeGnaStiYFsc8KMQEDqtglUYnFJaWQzlEfbF3DXQe50nM0RsfmEPRsjW/u6
+ GbOYFqmUhay73xtAt4q1InU3g+Wvivl0j55FESPHamPay/v7a1COzhsv/KJeMy5/JkOPLbspJ
+ B+zZdQYbL6TRbbqfbjadXssUaZ9w2enC1rGeiX3HKyK2gsFZqE3RoHKvssefgzJHQ5auab52c
+ wTBVgDGwFJevRRS8wMQvLG5/OhdZRGhFx22l7O4tb6Jc6Qf1Rpk5cbe2Fg9EXTJ9i/7IQGxgX
+ fZ4/4FxtLVnkn7jbniFdeCfJ28JRLyyK6yi9nUXJVp8objvZNU7Q5y4gmIVwNa8fSNqJJ1kex
+ 3MH0UQwvt9StUsM8bgtxQHJ8zpnr6Gy1Lv6N4rdxgEosDdIlUxvnAbbZNXdM/PqdbS5mfeuDx
+ jdxk5EHINBxN2hZuc45TMQXmYzbVQtz4X1goSZYSoLGMgIYT6dDOTcCr+pqWP4lvgIsfKwS+a
+ 47SJ08I8Z0RtiC6C91f9QQik3DwSmXBtJi+4WDA9/qzVnNUI+nWrgNhofzkocmFqapjTZE88A
+ NaLMdhDQbeApFUVr9wKR4tAjgtLWlTHq283h4eADVXRIoSSeSzEXH08ZA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Dennis,
 
---8323328-1688576404-1655553327=:349
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 16 Jun 2022, Dennis van Gerwen wrote:
 
-Hi Michael,
-
-On Thu, 16 Jun 2022, Michael J Gruber wrote:
-
-> Johannes Schindelin venit, vidit, dixit 2022-06-15 16:50:40:
+> ## Problem
 >
-> > On Tue, 14 Jun 2022, Michael J Gruber wrote:
-> >
-> > > 0527ccb1b5 ("add -i: default to the built-in implementation", 2021-1=
-1-30)
-> > > switched to the implementation which fixed to subtest. Mark them as
-> > > expect_success now.
-> >
-> > Good catch!
+> If a hunk cannot be split automatically, the `s` (split) option disappea=
+rs
+> from the list of options, and we get:
 >
-> I'm no list regular anymore, but still a "next+ regular". While
-> experimenting with my own patch I noticed something got fixed
-> unexpectedly. That goes to show that these unexpected successes
-> (from expect_failure) go unnoticed too easily. I had missed this on my
-> regular rebuilds.
-
-Makes sense.
-
-> > However... that commit specifically contains this change:
-> >
-> >         diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-test=
-s.sh
-> >         index cc62616d806..660ebe8d108 100755
-> >         --- a/ci/run-build-and-tests.sh
-> >         +++ b/ci/run-build-and-tests.sh
-> >         @@ -29,7 +29,7 @@ linux-gcc)
-> >                 export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=3D1
-> >                 export GIT_TEST_MULTI_PACK_INDEX=3D1
-> >                 export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=3D1
-> >         -       export GIT_TEST_ADD_I_USE_BUILTIN=3D1
-> >         +       export GIT_TEST_ADD_I_USE_BUILTIN=3D0
-> >                 export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmaster
-> >                 export GIT_TEST_WRITE_REV_INDEX=3D1
-> >                 export GIT_TEST_CHECKOUT_WORKERS=3D2
-> >
-> > The intention is to have t3701 be run with the non-built-in version of
-> > `git add -i` in the `linux-gcc` job, and I am surprised that those two
-> > tests do not fail for you in that case.
-> >
-> > Did you run this through the CI builds?
+> > (1/6) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? s
+> > Sorry, cannot split this hunk
 >
-> That's why I mentioned "no list regular" - I didn't know about that knob
-> nor the intention to have the test suite run with either implementation
-> (rather than switching to the new one for good).
 >
-> I do local builds, usually with
+> See for example these questions on StackOverflow: [2], [3]
 >
-> ```
-> DEVELOPER=3D1 (which I had to disable during the bisect run; gcc12...)
-> DEFAULT_TEST_TARGET=3Dprove
-> GIT_PROVE_OPTS=3D--jobs 4
-> GIT_TEST_OPTS=3D--root=3D/dev/shm/t --chain-lint
-> SHELL_PATH=3D/bin/dash
-> SKIP_DASHED_BUILT_INS=3Dy
-> ```
+> I am aware that this problem can be solved by using the [`--edit` option=
+][4]
+> to edit the hunk, as explained in the docs under [editing patches][5].
 >
-> in config.mak. Nothing else strikes me as potentially relevant.
+> However, if we have a large contiguous hunk, and we only want to split a=
+t one
+> specific location, using `--edit` can be quite cumbersome, because (as f=
+ar as
+> I know) we need to edit all the lines that we do not want to stage.
 >
-> =C3=86var noticed this and has a better version of my patch, I think.
+> ## Feature request
+>
+> Would it be possible to add a "custom split location" feature, allowing =
+the
+> user to specify where a contiguous hunk should be split?
+>
+> Some options:
+>
+> - Always show the `s` (split hunk) option, and let the user specify a li=
+ne
+> number if an automatic split cannot be made.
+>
+> - Add a new [patch option][6], in addition to `s` (split hunk), to split=
+ any
+> hunk at a custom location.
+>
+> - Add a new operation for editing patches, for example "s" (in addition =
+to
+> "+", "-", and " "), indicating where to split (e.g. "split after this li=
+ne").
+> This way the user only needs to modify a single line in edit mode.
+>
+> I'm sure there are a lot of nasty details to consider, but I do think su=
+ch a
+> feature would be very convenient.
 
-So you did not find it utterly rude and presumptuous that somebody sent a
-new iteration of your patch without even so much as consulting with you
-whether you're okay with this? I salute your forbearance, then.
+While I am personally not interested in having this option (I find that I
+always have to edit other aspects when splitting at non-context lines,
+anyway, so I _have_ to use `e`), if you are interested in giving this a
+go, I will be more than happy to help.
 
-Besides, it is not really a better version of your patch. That would have
-been:
+The most important thing to note is that there are currently _two_
+implementations of the `git add -p` command, one in Perl and one in C. The
+former one is slated to be dropped in favor of the latter, so I will
+concentrate on the implementation in C.
 
-=2D- snip --
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 94537a6b40a..6d1032fe8ae 100755
-=2D-- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -538,7 +538,9 @@ test_expect_success 'split hunk "add -p (edit)"' '
- 	! grep "^+15" actual
- '
+The function implementing the current split logic is not exactly for the
+faint of heart, ~150 lines of almost undocumented code:
+https://github.com/git/git/blob/v2.37.0-rc0/add-patch.c#L892-L1049
 
--test_expect_failure 'split hunk "add -p (no, yes, edit)"' '
-+test_lazy_prereq BUILTIN_ADD_I 'test_bool_env GIT_TEST_ADD_I_USE_BUILTIN =
-true'
-+
-+test_expect_success BUILTIN_ADD_I 'split hunk "add -p (no, yes, edit)"' '
- 	test_write_lines 5 10 20 21 30 31 40 50 60 >test &&
- 	git reset &&
- 	# test sequence is s(plit), n(o), y(es), e(dit)
-@@ -562,7 +564,7 @@ test_expect_success 'split hunk with incomplete line a=
-t end' '
- 	test_must_fail git grep --cached before
- '
+But then, it does both a lot more _and_ a lot less of what you want: It
+automatically finds all stretches of context lines and then expands the
+indicated single hunk into as many hunks as it can split it into, sharing
+the stretches of context lines between adjacent hunks.
 
--test_expect_failure 'edit, adding lines to the first hunk' '
-+test_expect_failure BUILTIN_ADD_I 'edit, adding lines to the first hunk' =
-'
- 	test_write_lines 10 11 20 30 40 50 51 60 >test &&
- 	git reset &&
- 	tr _ " " >patch <<-EOF &&
-=2D- snap --
+Obviously, you would need to add a new function that is inspired by this
+function, but differs in the following aspects:
 
-As you can see, this is _actually_ building on your work rather than
-replacing it.
+- It requires an additional parameter, the line offset at which to split
+  the hunk.
 
-But since that replacement made it into -rc1, I will stop spending brain
-cycles on it.
+- It always splits the hunk into two hunks, no more, no less.
 
-Thank you for your contribution, I am glad that you keep sending patches
-to the Git mailing list!
+However, from my experience with the Git GUI code implementing line
+staging, the biggest challenge will be that one of the assumptions of the
+current hunk splitting design will be broken by your feature: so far,
+when applying a hunk, no other hunks need to be touched: they remain
+unchanged.
+
+When splitting a hunk by context lines, the new hunks will share
+overlapping context lines, but those remain invariant whether hunks are
+applied or not.
+
+With your desired feature, this would change. Take this hunk, for example:
+
+	-- snip --
+	@@
+	 All journeys start with a first step.
+
+	-[tbd]
+	+Actually, some journeys, some interesting ones, end in a disaster
+	+right at the start, because the first step was skipped.
+
+	 And this concludes the chapter. Good night.
+	-- snap --
+
+Let's just split this for simplicity's sake between the `-` and the `+`
+lines. So the first hunk would become:
+
+	-- snip --
+	@@
+	 All journeys start with a first step.
+
+	-[tbd]
+
+	 And this concludes the chapter. Good night.
+	-- snap --
+
+and the second:
+
+	-- snip --
+	@@
+	 All journeys start with a first step.
+
+	 [tbd]
+	+Actually, some journeys, some interesting ones, end in a disaster
+	+right at the start, because the first step was skipped.
+
+	 And this concludes the chapter. Good night.
+	-- snap --
+
+Note how the `-` line became a context line? It _has_ to be, otherwise the
+second hunk could not be applied as-is. That is, until the first hunk has
+been applied. In which case the second hunk needs to be modified:
+
+	-- snip --
+	@@
+	 All journeys start with a first step.
+
+	+Actually, some journeys, some interesting ones, end in a disaster
+	+right at the start, because the first step was skipped.
+
+	 And this concludes the chapter. Good night.
+	-- snap --
+
+Now the `[tbd]` line in the context has vanished.
+
+This is really an important concept to keep in mind: if you split at
+context lines, your hunks can remain immutable. If you want to split
+elsewhere, after one of the hunks resulting from said split is a applied,
+you have to recompute the other hunk.
+
+In Git GUI, that's easy: it always presents the entire diff, and when
+something gets (un-)staged, the entire diff is recomputed.
+
+In `add -p`, we try very hard _not_ to stage anything until the user is
+done deciding what to stage and what to skip. It then applies the entire
+file diff in one fell swoop.
+
+So why does it work with `edit`, then? You can edit a hunk and stage it,
+right? That's because it is still a single hunk. It does not modify any
+line that might be the context line of a different hunk.
+
+With this in mind, if you are still interested to tackle this feature,
+here are a couple of notes that should get you started:
+
+- The hunks are recorded as an array of element type `struct hunk`
+  (https://github.com/git/git/blob/v2.37.0-rc0/add-patch.c#L243-L248) in
+  the `struct file_diff`
+  (https://github.com/git/git/blob/v2.37.0-rc0/add-patch.c#L256-L261).
+
+- Each hunk has a `start` and `end` offset. This is the offset into the
+  diff that is stored in plain text in the `plain` strbuf in `struct
+  add_p_state`.
+
+  They have to be offsets instead of pointers because that strbuf can be
+  modified, i.e. it might need to grow so much that its needs to move to a
+  new memory location (which would invalidate all existing pointers).
+
+- Likewise, there are `colored_start` and `colored_end` (byte) offsets
+  that point into the `colored` strbuf of the `struct file_diff`. This is
+  because the colored version of the diff may optionally be generated by
+  another tool than Git itself, and the only requirement is that it
+  generates the same amount of lines and Git assumes a 1:1 correlation
+  between the lines.
+
+- Each hunk also has a hunk header. The `old_offset`, `old_count`,
+  `new_offset` and `new_count` attributes correspond to the diff hunk
+  header, i.e. they refer to line numbers/counts in the pre/post image.
+
+- When splitting a hunk, a new element has to be inserted into the `hunk`
+  array of the `struct file_diff`, and the new hunk's numbers have to be
+  adjusted carefully, as well as the hunk from which the new hunk was
+  split out.
+
+- Since the split hunks require context lines that the corresponding lines
+  did not have in the original diff, you cannot simply adjust the `start`
+  and `end` offsets to point into the existing diff.
+
+  You have to use the same trick as the `edit` feature: append the new
+  hunk with its context lines to `plain` (and to `colored`, unless that's
+  empty), and then point to those offsets.
+
+- You need to take care to record relationships between hunks so that one
+  hunk's content can be adjusted accordingly if another hunk is staged to
+  be applied and therefore changes the former hunk's context lines.
+
+  This is similar to the role of the `delta` field that keeps track how
+  the post image line number in the hunk header needs to be adjusted
+  depending how previous hunks have been edited.
+
+Ciao,
 Dscho
-
---8323328-1688576404-1655553327=:349--
