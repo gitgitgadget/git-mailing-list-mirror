@@ -2,96 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E9FC43334
-	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 11:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AAAAC43334
+	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 11:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbiFRLMx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jun 2022 07:12:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38114 "EHLO
+        id S232102AbiFRLPQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jun 2022 07:15:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232747AbiFRLMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jun 2022 07:12:50 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C32DFDB
-        for <git@vger.kernel.org>; Sat, 18 Jun 2022 04:12:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1655550757;
-        bh=nZGGRk6zjEkigEmdYUZeasVVXIrhR5OgqfeBdUqnXGI=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=aTcx7edDAU8UDPVPLR8Y2FoSsQouooq1ZF1Qe57DI/Wf2XY0Q1AKwCaGF7hzB5RbA
-         fYedXKQEFZckJ11Qv1aFpMGo52Fdm9fbnZYdRagdbu5FRe51Iv2CNvQNVlVaEffoDD
-         Qn+3N4TI96jV5j0XBky+e3lD0HBTAmICvq9hwrSk=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MXXN7-1oCirq2nWB-00Z2q8; Sat, 18
- Jun 2022 13:12:37 +0200
-Message-ID: <493bbdb3-be73-9aa2-e3f6-82508d15ef88@web.de>
-Date:   Sat, 18 Jun 2022 13:12:34 +0200
+        with ESMTP id S234715AbiFRLPP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jun 2022 07:15:15 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 633C82253E
+        for <git@vger.kernel.org>; Sat, 18 Jun 2022 04:15:14 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id u18so5869099plb.3
+        for <git@vger.kernel.org>; Sat, 18 Jun 2022 04:15:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b4gq3NRnnlpkgMdSGQ7wli/06rWc6YCbk4xnPCJdhWM=;
+        b=jx6qUjrlipdftMfFeuL12qbdoXpQJndM0ewwFCrlkX2lnNyGbJ51DSliIzRc2y9CAC
+         4qGeX7G3Qq7XGtlbGmFWZykMtfXcuZq6N3St7PDeCz7J/5uvTQRlzuliT4/LoJ78mESt
+         FlV5bKsf4iaMBiHHeYZaPxuc5BQ9Hx6WTPV55k3lmtbejfLtVW8Bye3TjKYNDOKIdk31
+         Lrk9KFUkQ7r/0p+C+ZhMYZ5fttpVkw/sTZATmarR0/uiosJtCUavHPw5zq+H9uqiZOyA
+         QLrdGUpQcDjnh93uJ/s7dXuPOyQIC2J+jj4muuJ6IYwb3UhKC3It5m5TJvS1/z4dzhPk
+         gU7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b4gq3NRnnlpkgMdSGQ7wli/06rWc6YCbk4xnPCJdhWM=;
+        b=cuw4jLfe9WW58js616ov0JEXuL9Z5k7ddDBsYOtFZnjl/HRxGeaegYN363tx+W4XQM
+         8JOPyZFoj/ST/WOXJAlbdqe1lXyPF8ob/oOdJWMvyDCaSFBnnifRvS3ltRLl8ZT2q2DQ
+         pHphnwaZ3rtFT+nfFd11a3RgjxsAa7A4qqRqOQfXcKgdVMZGm222RryOhDj44IaW7D+T
+         KsRe+xe2eKUoRCu5KrNlIGnu/p/LigTnqsNXgGK0tqXeYnZ+OWyOGYwXUnyO5I4hzk/Z
+         n6QIqWqRBjDI8egajG871q98idLpXRV3XhueHfI3y0QZieGYwIFVzTbxyfwPn0ATTn7r
+         RlLg==
+X-Gm-Message-State: AJIora/uwTYQcgfJAwnGM0nfugqSuuHQIK1hAkFRVzzjGfu1M79+FSNn
+        OmQ8sr5bG0rBtEeM9rpDme5d3HgG8tpsHTWAgsJSWAiG65Y=
+X-Google-Smtp-Source: AGRyM1s1uKflLq6Lsb2WQ8lvnc3J8kRtjuT80QzActtL2RG2jsDmjj+3q7+DxKXxCmjPhX5rLnt+83BnSdmc6BmxDOw=
+X-Received: by 2002:a17:902:d5ce:b0:167:6c02:754c with SMTP id
+ g14-20020a170902d5ce00b001676c02754cmr13964686plh.135.1655550913817; Sat, 18
+ Jun 2022 04:15:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.10.0
-Subject: [PATCH 2/2] combine-diff: abort if --output is given
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-References: <a6a14213-bc82-d6fb-43dd-5a423c40a4f8@web.de>
- <patch-1.1-f7fd645468c-20220523T182954Z-avarab@gmail.com>
- <xmqqleusqaff.fsf@gitster.g> <220524.86leurw3my.gmgdl@evledraar.gmail.com>
- <xmqqmtf6hgae.fsf@gitster.g> <220524.86v8tuvfl1.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <220524.86v8tuvfl1.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:596uU2OI9pnARMnyOSWR5ieEtmriIl+POGzxBStzSwTK2SHd6B0
- FBGS9I3yP7+ReogK4KghtxKvD9vMemsKW35I3NQErHmk1Wplm5cpJHguNIzVuozknMsZ0G3
- fJkCelyhFdeSgpJM0sqkLh4rZZ/uQ/8MGI52j6hoLOscl69JvCI/WmrCI0RU7tzbJ6kQSfz
- p8b8zMbeORrQmS3q6RaHA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PvjwTIIISL0=:/i4DKoI6mnKkQDXmlStoZn
- fHSlVZLCNZoUFrPGaNR7AsCdHQeSiyHQbYs6MYTjeRFLgFcYvmZMuJfVxfbLjvzXNkY3V4H2H
- QIof8lkdE7fSkzPldVbfhFDjVoDtDiEPCY43hYZhtIV7nN2GGcEO6OTVeqD+9Gplcqe/w6/XT
- cvRfBnmuitz91rsuAk9KP/hknEdvhfnskPCsKg8p6/fWWxXRsYI667yAPr6xiAV9/Kx9x9NHe
- uRJQiNiR1JWtO5WL9zsDdG6XBlSjbUjbcCEVdtT0PEPxHqpqg3o0bJwhbyjjjOM40e0LxNkkz
- NME2UFvANx0T1ctqJsx3cTPKD5gIS/gUarhZSsZZk8RdUkQcU4KqV5YwLA0BhrkltxnSqYITz
- PYMY/hB8Ap0cLDtdf19PseS6HqkVyf3lV2TyHSfH0M4ZB4MZ7tERH7V/TZTDp+jjaK8fF+yXl
- BDZA/iFOMoguaudCibY9uI/VhzES01905lQ2NEr5aJkpkMqxSXCCPL5q++ZpFD/9rPuMnCTn4
- ocAQS90Eq+R/0QYCe5N6J1Rg2upebCuU5hCSf/o1Zx5AQqUeSxp+gQ/88GJZ1WnyAADTdZ6u8
- AjBXUaJF69M4fMP8okOOVRUHX8Uixln0wZMdF9TvBKdgOeGCvXG9msPBR3IZl0YaB4Bi01SNO
- y5w2mVXBMXfKJtlsgZaORPT2KJfXq1g7uhT5rUa1AHOW0PMe2F+AFzC+Nsi/SQeCMpiNWh7J0
- BuRSJ4wMbhVYMys7ZXiJxK8pCuB9z3IPwBdMpuO1mxL/VqcuwI8h6iQz3NGFUB8txCNWKtzd6
- FnbwG5GNMZjUrfLFahELB0AvO3QdrCz2uyl7NIRXJmcTlhZA44KsHCJr27XF0ButpMAYNAx6p
- nEXbnBtQfzDhjR4E+cvN+hwut8sui8xI3FRc/2aA9Sw0dsIQ/G00Z6xjhflbvO+hmu8qlYIGw
- 1yRXYDHjGixk03kIOn+gnDcDnY7/zDXhHmMKo7kvoVgthgXK97r06NQ4mrhIuIUDHKfcnhUsA
- g543efhBX87Jg6cA04bVJtqDV2I+g/CiMe6SEkTUdr6VJKmZFRHA7i/+ykPM58RhqZo1VfyKH
- PNgRDCNxz/q1Fh+2jvosXScqDWx7AVSsx2A
+References: <b4f40821-8592-1a35-8b60-219fd7e29e9f@luigifab.fr> <CAJyCBORdr3kaBbBmec5T5JAjcUpq6mSKQC=8_poLaZzSpkMJLA@mail.gmail.com>
+In-Reply-To: <CAJyCBORdr3kaBbBmec5T5JAjcUpq6mSKQC=8_poLaZzSpkMJLA@mail.gmail.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Date:   Sat, 18 Jun 2022 19:15:01 +0800
+Message-ID: <CAJyCBOSc_n0is=77Ua_VZbce81qA0yKbUm6Dp2TxxpFAgVQ1OA@mail.gmail.com>
+Subject: Re: git a/xyz or b/xyz
+To:     Fabrice Creuzot <code@luigifab.fr>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code for combined diffs currently only writes to stdout.  Abort and
-report that fact instead of silently ignoring the --output option.  The
-(empty) output file has already been created at that point, though.
+On Sat, Jun 18, 2022 at 7:09 PM Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> wrote:
+>
+> On Sat, Jun 18, 2022 at 6:50 PM Fabrice Creuzot <code@luigifab.fr> wrote:
+> >
+> > Hello
+> >
+> > When we are reading a "git diff", all paths are prefixed with "a/" and
+> > "b/". Example:
+> > diff --git a/xyz
+> > index 4aa4b5230..1c2b8b69e 100644
+> > --- a/xyz
+> > +++ b/xyz
+> > @@ -1,7 +1,7 @@
+> >
+> >
+> > With my terminal, I double click on the path to select the full path for
+> > copy.
+> >
+> > Then, when I paste: "git log a/xyz",
+> >   git says: unknown revision or path not in the working tree
+> >
+> > Ok, I need to remove the "a/" or "b/".
+> > But, is git can understand that "a/xyz" is "xyz" because "a/xyz" does
+> > not exist?
+> >
+> > Thanks
+>
+> Hi Fabrice,
+>
+> You can think that "a/" stands for "before" or "old content", whereas
+>  "b/" stands for "after" or "new content". Paths are prefixed with these
+> to indicate which is before and which is after.
+>
+> For example, when you call "git diff", it is to "view the changes you made
+> relative to the index (staging area for the next commit)".
+> In this case, "before" is the index, namely "a/", whereas "after"
+> is your current working tree, namely "b/".
 
-Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- combine-diff.c | 3 +++
- 1 file changed, 3 insertions(+)
+A more precise way of saying is "a/" stands for source, whereas "b/"
+stands for destination.
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 11df1d7f39..b0ece95480 100644
-=2D-- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1501,6 +1501,9 @@ void diff_tree_combined(const struct object_id *oid,
- 	if (opt->ignore_regex_nr)
- 		die("combined diff and '%s' cannot be used together",
- 		    "--ignore-matching-lines");
-+	if (opt->close_file)
-+		die("combined diff and '%s' cannot be used together",
-+		    "--output");
-
- 	/* nothing to do, if no parents */
- 	if (!num_parent)
-=2D-
-2.36.1
+-- 
+Thanks & Regards,
+Shaoxuan
