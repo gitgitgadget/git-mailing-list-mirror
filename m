@@ -2,134 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70C65C43334
-	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 22:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0F7BC43334
+	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 22:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbiFRWEe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jun 2022 18:04:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59252 "EHLO
+        id S233089AbiFRWFW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jun 2022 18:05:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229715AbiFRWEc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jun 2022 18:04:32 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60093D91
-        for <git@vger.kernel.org>; Sat, 18 Jun 2022 15:04:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1655589854;
-        bh=ag3Bi0hR0ZjrCAZwIaWJTC/UERXadPME2ObjYYR9sfE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=W/0ONqBKtZjIqqOUKY3RaMiT0Mfe0RX0sd/APUf16xpPZkmTsbNcTa6XdxAPOH4/n
-         jl1VJ9jwwk4DuEPbdQbbN7yi6y8bw64hrtF3uTkAZ0dQ5XBhv/wPvbgVq9Ysuj6Cpx
-         S88DooRVV077LGMNoOgybOuPHor4iI4fewenCoVg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.60.234] ([89.1.215.185]) by mail.gmx.net (mrgmx104
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Msq24-1niwhp40OO-00tCs5; Sun, 19
- Jun 2022 00:04:14 +0200
-Date:   Sun, 19 Jun 2022 00:04:08 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
-Subject: Re: Plumbing for mapping from a remote tracking ref to the remote
- ref?
-In-Reply-To: <xmqqilp1znn1.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2206182358350.349@tvgsbejvaqbjf.bet>
-References: <CAPMMpogUxq59zj+=7UDiURYbydAwvymOqhEWaheT9fkU8HaP4Q@mail.gmail.com> <xmqqilp1znn1.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S229715AbiFRWFU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jun 2022 18:05:20 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A5212081
+        for <git@vger.kernel.org>; Sat, 18 Jun 2022 15:05:19 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2CAA1199884;
+        Sat, 18 Jun 2022 18:05:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z2QANN+au5M4CsVp7WJhK8wtIb1Z+78x3R61zF
+        CHlEA=; b=yZLHPoxVOGrxYVAFM1Ho3mYpiJx4HsktGEpZjxuoZkK6XYh9p9RF7P
+        bMJnBIR7QNaQF0fc3TrGmUTqKxRmMvpTvy4kBQyOgYv1yJXsx4UCSMBwX2bYdTq/
+        FlwQoxIuNN8w/D+EOBPFZDw1LOXFdpUFxYNVrtuMQq4VhHtti2Irw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 24A39199883;
+        Sat, 18 Jun 2022 18:05:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C0932199880;
+        Sat, 18 Jun 2022 18:05:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
+Subject: Re: [PATCH v6+ 2/7] archive --add-virtual-file: allow paths
+ containing colons
+References: <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
+        <20220528231118.3504387-1-gitster@pobox.com>
+        <20220528231118.3504387-3-gitster@pobox.com>
+        <20220615181641.vltm3qtbsckp5s56@lucy.dinwoodie.org>
+        <xmqqpmj9zohk.fsf@gitster.g>
+        <20220615213656.zp36wdwbcz7yevac@lucy.dinwoodie.org>
+        <nycvar.QRO.7.76.6.2206182213290.349@tvgsbejvaqbjf.bet>
+Date:   Sat, 18 Jun 2022 15:05:14 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2206182213290.349@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Sat, 18 Jun 2022 22:19:28 +0200 (CEST)")
+Message-ID: <xmqqlettljad.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+pT8DYS6mckN9vqbO3p26emXt6PR+HI76AVMaqSKLNKQDFWO7JD
- xYRyJnHVmiXFE8KVEKfgEN8VGVnYg5IZa/nRwcJXcSKF4PTgsEShoREkg/GXkgic2S/7QBw
- x7BWeifKKnSBAjnBpc09WrvbSOk0vYwm6Yf1RhNtMdR4Nom+DW1dDfMdy1zt3GunYF+4IZC
- lHaM7gxeazo109wHp5tkQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ADzL8SQqJ5c=:Vc8z9f7H6I1WTlHyctgI30
- 96cvzJ9/DZftkjXA7GImi6/j/xuM3bUomOcov+/3itm5PmTHaGdEFkgK0e5ZEIZ/IBvw54RO+
- OwtfWOvROo5XtO0IP4yYjxN0i2n58JpCpp7a/9PD9Hlf3oIYpC2Ptsf8lce5pBvIHNTn3G6X7
- lpzYRkYYQc37B5bOjLCA3r5o2I3tC6Dw+eczdudvKoFRPRYX6CWQb2u5w9pXWHwSlPnpNeUK0
- 4jpiV0md8tzxnHQAVqCiD8y2j1uNyMrb4641miOt/FzKuELg69oOc3HjsVIgWMqM8BP+UDwKB
- 1Ygun+wYClTiTlCRn0unWbGGFzAUqGguH5eyPjCHqtC5uZlaf98eJSpAmUv5TnWuM3mTVCF5b
- fLRV7ShZ3suclT3BjLSOILU1dyQcqZbf9VfzY0w615WdZQIXpA9wphXDMEYKm5tLXOsTL9nhV
- iik55+Vcwx0P5zFV3tF7QuULsMQUyHxUTWU3urI/SZ4TITiSvtcqN+Vfa0paRpkXdna8mU434
- xjwCVdEo7n/8Pkikt69/+H/et/7tA3AieC07wWsWdYiLsu638Tq8WxhmtbPy66cjh1DdbDUxV
- Xyd07C04ZmKlyPxU81Dkiit9gE9ecN8Lt7NAvo/CwmczmGJGO9FUMOiaqKP1Nm8NMF6tsac0u
- caq308Ubx+v2H+pAn2gV+ZcLXJYh5BYO4/6JXgOo0fo/clbhmKoWuFSmRT1HxF6rqKjfO4uFx
- momznaaRpXfuRWbY4lLemJ9TkV8bKszXtImAo+6AUuuteNoMsAUWb7CZrmL5QmZb5yM2maxtM
- jnzUkiWlG4wVLAY1H9YPEi6nuJUxgOUOT0KHhcQgrKtqvfCCTUEjdWgP4MauxdPfjOG9C6FM+
- GlMvXoJs53XrghJa9bee2aQH/NIXwpBZfVuZkjM0cmvLCNAIMoydSlfWAU+ac4mM7AnLYniY7
- 1jAFK+MPhRjU0zCd/AOciIOihW8TM3/RLKd91wPZfRCM/MYmEbtDf878s5TrHW+920JamO/O/
- Xt0FyGL5SMvdBNR+hN4zJb83QtHOhjGuhSY8pLIH7D+sni9RxXgfkOmwPiL4khk5reB6I2zSR
- xpE8BRWhHweT7sp3ggkew/phrM3sUx/m9VlFABB8++C7bVLO3U3VbD/jQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: BBC19DDC-EF52-11EC-A1EF-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 15 Jun 2022, Junio C Hamano wrote:
+> I'd rather avoid changing FUNNYNAMES at this stage, if we can help it.
 
-> Tao Klerks <tao@klerks.biz> writes:
->
-> > Given the following configured fetch refspec for a remote:
-> >
-> > [remote "origin"]
-> >         url =3D git@someserver:somerepo.git
-> >         fetch =3D +refs/heads/*:refs/remotes/somepath/*
-> >
-> > And given a ref of the form "refs/remotes/somepath/branch_A",
-> >
-> > I'm wondering whether there is any plumbing that would be able to tell
-> > me what to put in a "fetch" command, to get
-> > "refs/remotes/somepath/branch_A" fetched - in other words, is there
-> > any plumbing that can use the configured fetch refspecs to map
-> > "refs/remotes/somepath/branch_A" to "refs/heads/branch_A" for me, so
-> > that I can then do "git fetch origin refs/heads/branch_A".
->
-> I am fairly certain that I never have written one myself ;-)
+I wonder if it is sufficient to ask "unzip -l" the names of the
+files in the archive, without having to materialize these files on
+the filesystem.  Would that bypass the whole FUNNYNAMES business, or
+is "unzip" paranoid enough to reject an archive, even when it is not
+extracting into the local filesystem, with a path that it would not
+be able to extract if it were asked to?
 
-I looked for something like that, but did not find it. We seem to have the
-functions `apply_refspecs()`, `query_refspecs()` and
-`remote_find_tracking()` that could be used to that end, but I do not see
-any of them being used in plumbing that would expose the ref mapping in
-the desired way.
+I do not know how standardized different implementations of "unzip"
+is, and how similar output "unzip -l" implementations produce are,
+but the following seems to pass for me locally.
 
-> I wonder how the end-user experience should look like.
->
-> 	$ git refmap refs/remotes/somepath/branch-A
-> 	origin refs/heads/branch-A
->
-> 	$ git refmap refs/remotes/somepath/{branch-A,branch-B}
-> 	origin refs/heads/branch-A
-> 	origin refs/heads/branch-B
->
-> IOW, you give name(s) of remote-tracking branches and then you get
-> the remote and their ref for these?
+ t/t5003-archive-zip.sh | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-Modulo introducing a new top-level command (a subcommand of `git remote`
-would make much more sense and make the feature eminently more
-discoverable), and modulo allowing patterns in the ref to match, I agree.
-
-> I do not oppose to such a command existing, but I do not know what
-> the right answer should be for a case like this:
->
-> 	[remote "origin"]
-> 		url =3D ... the official project repository ...
-> 		fetch =3D +refs/heads/*:refs/remotes/upstream/*
->
-> 	[remote "mirror"]
-> 		url =3D ... a local mirror you'd use regularly ...
-> 		fetch =3D +refs/heads/*:refs/remotes/upstream/*
->
-> In order to support such a "more than one can update the same" case
-> sensibly, the output may have to repeat the input, e.g.
->
-> 	$ git refmap refs/remotes/upstream/main
-> 	refs/remotes/upstream/main	origin refs/heads/main
-> 	refs/remotes/upstream/main	mirror refs/heads/main
->
-> perhaps?
-
-Sounds like a good plan to me.
-
-Ciao,
-Dscho
+diff --git c/t/t5003-archive-zip.sh w/t/t5003-archive-zip.sh
+index 3992d08158..f2fdf2c235 100755
+--- c/t/t5003-archive-zip.sh
++++ w/t/t5003-archive-zip.sh
+@@ -207,23 +207,13 @@ check_zip with_untracked
+ check_added with_untracked untracked untracked
+ 
+ test_expect_success UNZIP 'git archive --format=zip --add-virtual-file' '
+-	if test_have_prereq FUNNYNAMES
+-	then
+-		PATHNAME="pathname with : colon"
+-	else
+-		PATHNAME="pathname without colon"
+-	fi &&
++	PATHNAME="pathname with : colon" &&
+ 	git archive --format=zip >with_file_with_content.zip \
+ 		--add-virtual-file=\""$PATHNAME"\": \
+ 		--add-virtual-file=hello:world $EMPTY_TREE &&
+-	test_when_finished "rm -rf tmp-unpack" &&
+-	mkdir tmp-unpack && (
+-		cd tmp-unpack &&
+-		"$GIT_UNZIP" ../with_file_with_content.zip &&
+-		test_path_is_file hello &&
+-		test_path_is_file "$PATHNAME" &&
+-		test world = $(cat hello)
+-	)
++	"$GIT_UNZIP" -l with_file_with_content.zip >toc &&
++	grep -e " $PATHNAME\$" toc &&
++	grep -e " hello\$" toc
+ '
+ 
+ test_expect_success 'git archive --format=zip --add-file twice' '
