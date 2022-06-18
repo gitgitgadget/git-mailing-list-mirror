@@ -2,35 +2,35 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62CB3C43334
-	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 11:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E9FC43334
+	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 11:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232741AbiFRLMr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jun 2022 07:12:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38002 "EHLO
+        id S232855AbiFRLMx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jun 2022 07:12:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232239AbiFRLMq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jun 2022 07:12:46 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D2186555
-        for <git@vger.kernel.org>; Sat, 18 Jun 2022 04:12:45 -0700 (PDT)
+        with ESMTP id S232747AbiFRLMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jun 2022 07:12:50 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C32DFDB
+        for <git@vger.kernel.org>; Sat, 18 Jun 2022 04:12:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1655550750;
-        bh=tffI9pSqKs2ilD+6vAePXDm4HNoKGfiogMZS0KFmjoE=;
+        s=dbaedf251592; t=1655550757;
+        bh=nZGGRk6zjEkigEmdYUZeasVVXIrhR5OgqfeBdUqnXGI=;
         h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=FRGMYD7wPTt4lEQjYPDi6m4pR1E7lB6fqLKpydoXTavzBTf8BMYCTTbC6pATsun8j
-         VBUsto3twVf/tXjbQSBFcPpUTMoLXYJEwGsLncQ8kYxGR4bK6+r3i/XlD8z/Gl2YYe
-         kCANYHfHVk3XTBqX3+m2YihSu3F/OdFV8l7hsqq4=
+        b=aTcx7edDAU8UDPVPLR8Y2FoSsQouooq1ZF1Qe57DI/Wf2XY0Q1AKwCaGF7hzB5RbA
+         fYedXKQEFZckJ11Qv1aFpMGo52Fdm9fbnZYdRagdbu5FRe51Iv2CNvQNVlVaEffoDD
+         Qn+3N4TI96jV5j0XBky+e3lD0HBTAmICvq9hwrSk=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MEUS0-1nwQVQ0VJa-00GSlC; Sat, 18
- Jun 2022 13:12:30 +0200
-Message-ID: <49bcadd1-7dc2-d5ee-36a5-59456450aeca@web.de>
-Date:   Sat, 18 Jun 2022 13:12:28 +0200
+Received: from [192.168.178.29] ([79.203.31.99]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MXXN7-1oCirq2nWB-00Z2q8; Sat, 18
+ Jun 2022 13:12:37 +0200
+Message-ID: <493bbdb3-be73-9aa2-e3f6-82508d15ef88@web.de>
+Date:   Sat, 18 Jun 2022 13:12:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.10.0
-Subject: [PATCH 1/2] combine-diff: abort if --ignore-matching-lines is given
+Subject: [PATCH 2/2] combine-diff: abort if --output is given
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
@@ -44,55 +44,54 @@ From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 In-Reply-To: <220524.86v8tuvfl1.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:2aiBWTpeTtRM9Yygdey6+IgDxfKo2BdzPAYlAFRXAyCDjPwFm4S
- YnovPzoY3Vkkf5hzpSvfkbBVhcO1Q1OtXQIh4SHQK4o/ny90R1sXb14lHI4tlvRFouCp5SZ
- JCfPUmP4SDm4F13OBb6MQpezVLwBEt73+YqXqYpfw0dCkWCxUdeOaGNw+5Zp5Vh2MGVeGvH
- ww+CcdZSR1F5Kd9xM613Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3GKZZiZGnI0=:xA0IM2Bsfo35V4mDjiOAx7
- a22mBv8B/JuC9T349/treJCeg7NaoyfbvPaNBOYQnC1ulMgOAM99p68xSnr50op2BKHknM1F5
- +BJaz5U2ZpGYQr+ByUXknzKUiOM2Cz6W791zQ4S0N/pX9KAzBbcTcQwNynzemm+rJAqbEDLzT
- merQcZ/npsD2lAAe6y+bZ60Lf4qeVlVzQpGSsxubZ8nDNF4JUrlwRLI4pQ0fr/xqYx67+bLtO
- mkQQzkPvJJibi5FtPB/oUq4pZbAf6NeCzA9PNDlntdq7V36D7iBz0e6pKJWg97vYIHoUJqEsT
- g1Qv2HxF4qG5xbEcTKKdasNokjRCmPUtPa2foHEADoA5WzV+TNCnaoZmnJErOsqquQPwfimRN
- IOFBMNKntdT7EVMHXPZFNxZPtUJlSweAOtUD4GNAzG3ZevcTosM7WJnnE93oIY8XJAmDMuR3A
- 4MXuPUhGhaykDI4B8qQHPvLkV91lkgJ1l1QaUm9Ab6J6BD4Yq4zClFeBtCsF7erKVl59RZY/g
- YhWPS5nfN5xLkiKYZ7JyS6b6x+gEDKFIkFlkyGlslLEFdldMvsnMllDKxD9SDCrmHFwFa6X2+
- S7WHylMpZtCRxZyTYmso5+0Vqe5TmmjkAkQIYuRcWYEeMc6dzyMgvh5KDI0fzFivKP9IdxbG/
- EUl5ZAmynip2LGVw04haRWynCB5WdIIfNtTTYpP9x4+abw3pwJ4euYELoO8x+fMksJUZ5CaJS
- DuS4XTHpo8Xi0UU/w5q2U0lib3b0+S3g2Q70rownnlasQOua1ztso515chRNz4whdOnLXLRF7
- ENXGU1J9Ci8ahbn4YhXVBHek5HW6rxUxBeM9kPEbmknH2ivDpo7Oi2OV4wKNj89KPtoIfeSRr
- uH6hNKAH8W6+cK6M/GwSGrhhu5nCZoil4gXLGlL99NhyM9FN7x7+bxzofdGQfmhn0eXcZgVhB
- 6dou8wFx0JR0xKwozhKhKwOWa2Yus1LgBidTPBaN1fE771/7F1P9XwkvQiwXZH8qkpUm6mS8j
- FrlmRcaB9dh6hZMRqevBLqkfzXCoNkk9yrQG/jTvc4+YQnc0o2HvtNcTjioOnX6qrU6IYNJWe
- 1pcopavNMf5K7SlQW5oWm8TZ53mzkpiHX9O
+X-Provags-ID: V03:K1:596uU2OI9pnARMnyOSWR5ieEtmriIl+POGzxBStzSwTK2SHd6B0
+ FBGS9I3yP7+ReogK4KghtxKvD9vMemsKW35I3NQErHmk1Wplm5cpJHguNIzVuozknMsZ0G3
+ fJkCelyhFdeSgpJM0sqkLh4rZZ/uQ/8MGI52j6hoLOscl69JvCI/WmrCI0RU7tzbJ6kQSfz
+ p8b8zMbeORrQmS3q6RaHA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PvjwTIIISL0=:/i4DKoI6mnKkQDXmlStoZn
+ fHSlVZLCNZoUFrPGaNR7AsCdHQeSiyHQbYs6MYTjeRFLgFcYvmZMuJfVxfbLjvzXNkY3V4H2H
+ QIof8lkdE7fSkzPldVbfhFDjVoDtDiEPCY43hYZhtIV7nN2GGcEO6OTVeqD+9Gplcqe/w6/XT
+ cvRfBnmuitz91rsuAk9KP/hknEdvhfnskPCsKg8p6/fWWxXRsYI667yAPr6xiAV9/Kx9x9NHe
+ uRJQiNiR1JWtO5WL9zsDdG6XBlSjbUjbcCEVdtT0PEPxHqpqg3o0bJwhbyjjjOM40e0LxNkkz
+ NME2UFvANx0T1ctqJsx3cTPKD5gIS/gUarhZSsZZk8RdUkQcU4KqV5YwLA0BhrkltxnSqYITz
+ PYMY/hB8Ap0cLDtdf19PseS6HqkVyf3lV2TyHSfH0M4ZB4MZ7tERH7V/TZTDp+jjaK8fF+yXl
+ BDZA/iFOMoguaudCibY9uI/VhzES01905lQ2NEr5aJkpkMqxSXCCPL5q++ZpFD/9rPuMnCTn4
+ ocAQS90Eq+R/0QYCe5N6J1Rg2upebCuU5hCSf/o1Zx5AQqUeSxp+gQ/88GJZ1WnyAADTdZ6u8
+ AjBXUaJF69M4fMP8okOOVRUHX8Uixln0wZMdF9TvBKdgOeGCvXG9msPBR3IZl0YaB4Bi01SNO
+ y5w2mVXBMXfKJtlsgZaORPT2KJfXq1g7uhT5rUa1AHOW0PMe2F+AFzC+Nsi/SQeCMpiNWh7J0
+ BuRSJ4wMbhVYMys7ZXiJxK8pCuB9z3IPwBdMpuO1mxL/VqcuwI8h6iQz3NGFUB8txCNWKtzd6
+ FnbwG5GNMZjUrfLFahELB0AvO3QdrCz2uyl7NIRXJmcTlhZA44KsHCJr27XF0ButpMAYNAx6p
+ nEXbnBtQfzDhjR4E+cvN+hwut8sui8xI3FRc/2aA9Sw0dsIQ/G00Z6xjhflbvO+hmu8qlYIGw
+ 1yRXYDHjGixk03kIOn+gnDcDnY7/zDXhHmMKo7kvoVgthgXK97r06NQ4mrhIuIUDHKfcnhUsA
+ g543efhBX87Jg6cA04bVJtqDV2I+g/CiMe6SEkTUdr6VJKmZFRHA7i/+ykPM58RhqZo1VfyKH
+ PNgRDCNxz/q1Fh+2jvosXScqDWx7AVSsx2A
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code for combined diffs doesn't currently support ignoring changes
-that match a regex.  Abort and report that fact instead of running into
-a segfault.
+The code for combined diffs currently only writes to stdout.  Abort and
+report that fact instead of silently ignoring the --output option.  The
+(empty) output file has already been created at that point, though.
 
+Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- combine-diff.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ combine-diff.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/combine-diff.c b/combine-diff.c
-index b724f02123..11df1d7f39 100644
+index 11df1d7f39..b0ece95480 100644
 =2D-- a/combine-diff.c
 +++ b/combine-diff.c
-@@ -1498,6 +1498,10 @@ void diff_tree_combined(const struct object_id *oid=
-,
- 	int i, num_paths, needsep, show_log_first, num_parent =3D parents->nr;
- 	int need_generic_pathscan;
-
-+	if (opt->ignore_regex_nr)
+@@ -1501,6 +1501,9 @@ void diff_tree_combined(const struct object_id *oid,
+ 	if (opt->ignore_regex_nr)
+ 		die("combined diff and '%s' cannot be used together",
+ 		    "--ignore-matching-lines");
++	if (opt->close_file)
 +		die("combined diff and '%s' cannot be used together",
-+		    "--ignore-matching-lines");
-+
++		    "--output");
+
  	/* nothing to do, if no parents */
  	if (!num_parent)
- 		return;
 =2D-
 2.36.1
