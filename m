@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93D5CC43334
-	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 00:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A22E8C433EF
+	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 00:21:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383737AbiFRAVi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jun 2022 20:21:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43632 "EHLO
+        id S1383765AbiFRAVm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jun 2022 20:21:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383705AbiFRAVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jun 2022 20:21:18 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520E75A2C2
-        for <git@vger.kernel.org>; Fri, 17 Jun 2022 17:21:14 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id q15so3001392wmj.2
-        for <git@vger.kernel.org>; Fri, 17 Jun 2022 17:21:14 -0700 (PDT)
+        with ESMTP id S1383739AbiFRAV3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jun 2022 20:21:29 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7356E663C9
+        for <git@vger.kernel.org>; Fri, 17 Jun 2022 17:21:19 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id q9so7510433wrd.8
+        for <git@vger.kernel.org>; Fri, 17 Jun 2022 17:21:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hiORs4e9DkzNUZHgsiWSwsPhsPUCvMsvR9nowMjv0Z8=;
-        b=R28rqkEwDTi5dJTfN9CozNA25LVl7R0XzbWjNEKkrbLMbNol6IPrUv9xFcbThapdqV
-         5WbkHQ35XfXynxV1zrT1AclKY2gFbV/Upg9vF6lV0jNlguUFgCm7ie1Wu4368t7cDE8s
-         Oo8Nn0gBISAVIgXdYW9ylYlYL3U3UHYKlfcSz9tOivV2ZRGU5gHljAjDpTYigDLuBDXp
-         d0ssTZ2VAq3h2zX58Nx4fDTsl1piDwGGqB+yBmrJeCf/TtdSqjArnP6ckW2uCoC6DLt+
-         j6VD9kdd7RppWmyHJB79vxv+LVEpXddePACzlC4TW9ux1Q4ijeEtw4qHX4bCvPLoK85N
-         1tSg==
+        bh=x8732zrRviVYi7oflkB1AFK8oc6/ARNmZOK3eguro0U=;
+        b=I6V/kQ+ehLP8ozpkftZIyBRmiHgkY6c9IkOHvxlFcc+cOgSy0XIMBye67ltoXex/+H
+         tuKV0XU9efmZB0t1NXd9XhfkytJ41ytaUJvWaXzZjbqPuNmER9FhnqrZjIdhzDOyQbcb
+         9NGZGioF+JXLtHcmWJRkyc2QsfHX0RtQriAMzgyCZ6vtF+WGhjgDgPwx5deyeOVo8NsD
+         +mANNQV1UvbiZiV1CZSuvgwwWHoiKdX/YE3FYQEClRbeZ464tKaIf7HMu379PDdovkkt
+         +sBZ8Gb6LPwEYybFhNG970sJAHCRrHtZ+14D+67dDIep3g43SJE4Iret8wYg1O87b2uf
+         d7pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hiORs4e9DkzNUZHgsiWSwsPhsPUCvMsvR9nowMjv0Z8=;
-        b=GQF88RwUdcc7PobK3ajf0kjIbD6enIeyTDXUvaIkCJHdXj9xHbZMvBxghyfKOayvrG
-         iMVvneC/4Us2eCBFaJEFI70WKn8l2SiHj79sW0eNbbVfSezTvNxAgZzG5ZEzqqrwSu+m
-         rGE64JPTRfZLAvy/lRlFuEJy7fbJ05UukGWqVitgrTS96BIGtzHT9bpYHN8O3HDaEtiX
-         BBnfFSlfu51CnnDZxnF4zo9M6A+vhSOKez9H0YO3YSjFsIRoxdZrPOmPWjH6XfpG7OR9
-         1AMutQ1EI6UPfBsY3F02yoKY9Y7J5VCU7/Ceh0PQSdGaxCFSYUMKb86Awwua0UabcjkW
-         rSZw==
-X-Gm-Message-State: AOAM530z8BWedxsPHWPoP1tr2TXmn0GycNr9WZ3X/BwqXjKjRGe65lz9
-        UaR+35fC7lqA031MyE744Rkj7C1xkS4dFA==
-X-Google-Smtp-Source: ABdhPJzncmqMLQ5bIXbUR1n0YUdAFOj1AP4OIy8M17kQSDc4nBwKtyBHvsOoYUIQj+Hz4zPRwhIHPA==
-X-Received: by 2002:a05:600c:1547:b0:39c:7fc6:3082 with SMTP id f7-20020a05600c154700b0039c7fc63082mr23253466wmg.189.1655511672319;
-        Fri, 17 Jun 2022 17:21:12 -0700 (PDT)
+        bh=x8732zrRviVYi7oflkB1AFK8oc6/ARNmZOK3eguro0U=;
+        b=GHwCXB3d05j9cj1B7TXtkn5ZLP3GQrnITn2UANPcARa96Puipm9LagysFgG9hdZwm8
+         yEFV0Prkq+Mf7wDNEoZ6tYZnkZ3jtu23B2UsSqoHOX8aHItORzmvZhVZF5K2V3DkRY60
+         QE3u2weHaF4q6wW9lPo3zz34UgFg0KiW7+Jiz5jYGh9Hn+M0iBaj/fNcxeHvNMcV11wN
+         FTxiYsnVYtzJk4bxVTOwZSpQHOhKC6N4GEqnEaA44al1j6Yu6a7v5jR0KoM54EzUIVIc
+         BMpdfr3I1iL8dJOeTUuvO8Me13wZBqgQdmnhePJ1IKbLUKnpZUpiJRDHaKyoSn9tWWeP
+         yMdA==
+X-Gm-Message-State: AJIora+2L2whViaJWwkppCcynPyCJlTrYvBkl0UikZmjGPkeFTNfHTI/
+        Xz01OONJXUhobB9mA0OaHfc7nS0GDWWdYA==
+X-Google-Smtp-Source: AGRyM1vo+rEdwq0BfV1FV5ifpMwUtJ0lxXucYpbgqxsCQUGzSxiisTj94h1iuIDujtYB9jCDwYTm0A==
+X-Received: by 2002:adf:db91:0:b0:21a:2731:fca8 with SMTP id u17-20020adfdb91000000b0021a2731fca8mr11291640wri.520.1655511677524;
+        Fri, 17 Jun 2022 17:21:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j13-20020a5d452d000000b0021a3d94c7bdsm3837374wra.28.2022.06.17.17.21.11
+        by smtp.gmail.com with ESMTPSA id c5-20020a05600c0a4500b0039c4ba160absm20391697wmq.2.2022.06.17.17.21.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jun 2022 17:21:11 -0700 (PDT)
-Message-Id: <6419487e26bdaa3fdad357c993f5dd25efe1c70b.1655511660.git.gitgitgadget@gmail.com>
+        Fri, 17 Jun 2022 17:21:16 -0700 (PDT)
+Message-Id: <6b47c0fdbd7764275325ae75d534c506da4fe4d5.1655511660.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1122.v7.git.1655511660.gitgitgadget@gmail.com>
 References: <pull.1122.v6.git.1645602413.gitgitgadget@gmail.com>
         <pull.1122.v7.git.1655511660.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 18 Jun 2022 00:20:51 +0000
-Subject: [PATCH v7 08/17] merge-ort: remove command-line-centric submodule
- message from merge-ort
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 18 Jun 2022 00:20:55 +0000
+Subject: [PATCH v7 12/17] merge-ort: make `path_messages` a strmap to a
+ string_list
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,62 +73,165 @@ Cc:     Christian Couder <chriscool@tuxfamily.org>,
         Josh Steadmon <steadmon@google.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-There was one case in merge-ort that would call path_msg() multiple
-times for the same logical conflict, and it was in order to give advice
-about how to resolve a conflict.  This advice does not make as much
-sense with remerge-diff, or with merge-tree being invoked by a GitHub
-GUI for resolution of messages, and is making it hard to provide
-which-logical-conflict-affects-which-paths information in a machine
-parseable way to a higher level caller of merge-tree.  Let's simply
-remove this informational message.
+This allows us once again to get away with less data copying.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c                | 9 +--------
- t/t6437-submodule-merge.sh | 2 +-
- 2 files changed, 2 insertions(+), 9 deletions(-)
+ diff.c      | 27 ++++++++++++++++++++-------
+ merge-ort.c | 34 +---------------------------------
+ merge-ort.h |  2 +-
+ 3 files changed, 22 insertions(+), 41 deletions(-)
 
+diff --git a/diff.c b/diff.c
+index e71cf758861..2214ae49e4b 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3362,23 +3362,23 @@ struct userdiff_driver *get_textconv(struct repository *r,
+ 	return userdiff_get_textconv(r, one->driver);
+ }
+ 
+-static struct strbuf *additional_headers(struct diff_options *o,
+-					 const char *path)
++static struct string_list *additional_headers(struct diff_options *o,
++					      const char *path)
+ {
+ 	if (!o->additional_path_headers)
+ 		return NULL;
+ 	return strmap_get(o->additional_path_headers, path);
+ }
+ 
+-static void add_formatted_headers(struct strbuf *msg,
+-				  struct strbuf *more_headers,
++static void add_formatted_header(struct strbuf *msg,
++				  const char *header,
+ 				  const char *line_prefix,
+ 				  const char *meta,
+ 				  const char *reset)
+ {
+-	char *next, *newline;
++	const char *next, *newline;
+ 
+-	for (next = more_headers->buf; *next; next = newline) {
++	for (next = header; *next; next = newline) {
+ 		newline = strchrnul(next, '\n');
+ 		strbuf_addf(msg, "%s%s%.*s%s\n", line_prefix, meta,
+ 			    (int)(newline - next), next, reset);
+@@ -3387,6 +3387,19 @@ static void add_formatted_headers(struct strbuf *msg,
+ 	}
+ }
+ 
++static void add_formatted_headers(struct strbuf *msg,
++				  struct string_list *more_headers,
++				  const char *line_prefix,
++				  const char *meta,
++				  const char *reset)
++{
++	int i;
++
++	for (i = 0; i < more_headers->nr; i++)
++		add_formatted_header(msg, more_headers->items[i].string,
++				     line_prefix, meta, reset);
++}
++
+ static void builtin_diff(const char *name_a,
+ 			 const char *name_b,
+ 			 struct diff_filespec *one,
+@@ -4314,7 +4327,7 @@ static void fill_metainfo(struct strbuf *msg,
+ 	const char *set = diff_get_color(use_color, DIFF_METAINFO);
+ 	const char *reset = diff_get_color(use_color, DIFF_RESET);
+ 	const char *line_prefix = diff_line_prefix(o);
+-	struct strbuf *more_headers = NULL;
++	struct string_list *more_headers = NULL;
+ 
+ 	*must_show_header = 1;
+ 	strbuf_init(msg, PATH_MAX * 2 + 300);
 diff --git a/merge-ort.c b/merge-ort.c
-index 1635d215c0b..7e8b9cd6ea7 100644
+index 668aec64f13..dfec08c88be 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1693,15 +1693,8 @@ static int merge_submodule(struct merge_options *opt,
- 			      (struct commit *)merges.objects[0].item);
- 		path_msg(opt, path, 0,
- 			 _("Failed to merge submodule %s, but a possible merge "
--			   "resolution exists:\n%s\n"),
-+			   "resolution exists: %s"),
- 			 path, sb.buf);
--		path_msg(opt, path, 1,
--			 _("If this is correct simply add it to the index "
--			   "for example\n"
--			   "by using:\n\n"
--			   "  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
--			   "which will accept this suggestion.\n"),
--			 oid_to_hex(&merges.objects[0].item->oid), path);
- 		strbuf_release(&sb);
- 		break;
- 	default:
-diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
-index 178413c22f0..c253bf759ab 100755
---- a/t/t6437-submodule-merge.sh
-+++ b/t/t6437-submodule-merge.sh
-@@ -133,7 +133,7 @@ test_expect_success 'merging should conflict for non fast-forward' '
- 	(cd merge-search &&
- 	 git checkout -b test-nonforward b &&
- 	 (cd sub &&
--	  git rev-parse sub-d > ../expect) &&
-+	  git rev-parse --short sub-d > ../expect) &&
- 	  if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	  then
- 		test_must_fail git merge c >actual
+@@ -4370,8 +4370,6 @@ void merge_finalize(struct merge_options *opt,
+ 		    struct merge_result *result)
+ {
+ 	struct merge_options_internal *opti = result->priv;
+-	struct hashmap_iter iter;
+-	struct strmap_entry *e;
+ 
+ 	if (opt->renormalize)
+ 		git_attr_set_direction(GIT_ATTR_CHECKIN);
+@@ -4379,15 +4377,6 @@ void merge_finalize(struct merge_options *opt,
+ 
+ 	clear_or_reinit_internal_opts(opti, 0);
+ 	FREE_AND_NULL(opti);
+-
+-	/* Release and free each strbuf found in path_messages */
+-	strmap_for_each_entry(result->path_messages, &iter, e) {
+-		struct strbuf *buf = e->value;
+-
+-		strbuf_release(buf);
+-	}
+-	strmap_clear(result->path_messages, 1);
+-	FREE_AND_NULL(result->path_messages);
+ }
+ 
+ /*** Function Grouping: helper functions for merge_incore_*() ***/
+@@ -4611,8 +4600,6 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
+ 					    struct merge_result *result)
+ {
+ 	struct object_id working_tree_oid;
+-	struct hashmap_iter iter;
+-	struct strmap_entry *e;
+ 
+ 	if (opt->subtree_shift) {
+ 		side2 = shift_tree_object(opt->repo, side1, side2,
+@@ -4653,26 +4640,7 @@ redo:
+ 	trace2_region_leave("merge", "process_entries", opt->repo);
+ 
+ 	/* Set return values */
+-	result->path_messages = xcalloc(1, sizeof(*result->path_messages));
+-	strmap_init_with_options(result->path_messages, NULL, 0);
+-	strmap_for_each_entry(&opt->priv->conflicts, &iter, e) {
+-		const char *path = e->key;
+-		struct strbuf *buf = strmap_get(result->path_messages, path);
+-		struct string_list *conflicts = e->value;
+-
+-		if (!buf) {
+-			buf = xcalloc(1, sizeof(*buf));
+-			strbuf_init(buf, 0);
+-			strmap_put(result->path_messages, path, buf);
+-		}
+-
+-		for (int i = 0; i < conflicts->nr; i++) {
+-			if (buf->len)
+-				strbuf_addch(buf, '\n');
+-			strbuf_addstr(buf, conflicts->items[i].string);
+-			strbuf_trim_trailing_newline(buf);
+-		}
+-	}
++	result->path_messages = &opt->priv->conflicts;
+ 
+ 	result->tree = parse_tree_indirect(&working_tree_oid);
+ 	/* existence of conflicted entries implies unclean */
+diff --git a/merge-ort.h b/merge-ort.h
+index f9c536ed8c4..c4909bcbf96 100644
+--- a/merge-ort.h
++++ b/merge-ort.h
+@@ -28,7 +28,7 @@ struct merge_result {
+ 	/*
+ 	 * Special messages and conflict notices for various paths
+ 	 *
+-	 * This is a map of pathnames to strbufs. It contains various
++	 * This is a map of pathnames to a string_list. It contains various
+ 	 * warning/conflict/notice messages (possibly multiple per path)
+ 	 * that callers may want to use.
+ 	 */
 -- 
 gitgitgadget
 
