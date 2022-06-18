@@ -2,168 +2,255 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEE40C43334
-	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 20:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5253DC43334
+	for <git@archiver.kernel.org>; Sat, 18 Jun 2022 21:57:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230525AbiFRUTo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jun 2022 16:19:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38672 "EHLO
+        id S230042AbiFRV5S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jun 2022 17:57:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiFRUTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jun 2022 16:19:44 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62137BE0C
-        for <git@vger.kernel.org>; Sat, 18 Jun 2022 13:19:42 -0700 (PDT)
+        with ESMTP id S229476AbiFRV5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jun 2022 17:57:17 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F70412AA8
+        for <git@vger.kernel.org>; Sat, 18 Jun 2022 14:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1655583573;
-        bh=KJQnAOBJ5aKGMdc7Gb2UYiuA16TNjIOjf9S+8pj1Msw=;
+        s=badeba3b8450; t=1655589430;
+        bh=egpvepW1UJCcxKaSYHIllJarN9rzkMTPu2GrCt8kmwk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=MaFbxc5jQLey9jsEX8M8DHZPMRrNw3Mg3FuwnhThZdS4a8Ls/wZuR+UC5qc0HVx3P
-         6o6WTSHYgEU/n2OcJy+OPvQX1AEPtNTCI+Dm11WaGERKEr05B48DyJ4KMq89wztHVO
-         vmmBnhj2oWY8IfGSvnzk6ZrPWZnRrYqc/PwXMhEU=
+        b=U7YLlqLaIVUukPkx9ojkD/JfIlSmb+rjqNyctEttDYiQHFFR0RyY6BHwBvrbGLqZL
+         nKvS+qwAP5PQQ9JFWnXdHNjdVff7uAjZHpJPJY6foulbvpje74eZ2VaBlh33x82cgV
+         wFuI4jsUfkyrl8ywhEQxD2stU1NyAUBqenWiSN1Q=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.60.234] ([89.1.215.185]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mlw7f-1nKUHH3Op1-00j0X5; Sat, 18
- Jun 2022 22:19:32 +0200
-Date:   Sat, 18 Jun 2022 22:19:28 +0200 (CEST)
+Received: from [172.23.60.234] ([89.1.215.185]) by mail.gmx.net (mrgmx105
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhU5b-1nXlSw40iB-00ecJu; Sat, 18
+ Jun 2022 23:57:10 +0200
+Date:   Sat, 18 Jun 2022 23:57:07 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v6+ 2/7] archive --add-virtual-file: allow paths containing
- colons
-In-Reply-To: <20220615213656.zp36wdwbcz7yevac@lucy.dinwoodie.org>
-Message-ID: <nycvar.QRO.7.76.6.2206182213290.349@tvgsbejvaqbjf.bet>
-References: <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com> <20220528231118.3504387-1-gitster@pobox.com> <20220528231118.3504387-3-gitster@pobox.com> <20220615181641.vltm3qtbsckp5s56@lucy.dinwoodie.org> <xmqqpmj9zohk.fsf@gitster.g>
- <20220615213656.zp36wdwbcz7yevac@lucy.dinwoodie.org>
+To:     Lukas Buricin <lukas.buricin@cubicmotion.com>
+cc:     git@vger.kernel.org
+Subject: Re: Windows long file paths bug(s) with "-c core.longpaths=true"
+ whilst cloning
+In-Reply-To: <CA+c+RB=ud_==QYJMgcwQ=X4imQhxsFvMuKp_bP0H_MBY1BbUgQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2206182308590.349@tvgsbejvaqbjf.bet>
+References: <CA+c+RB=ud_==QYJMgcwQ=X4imQhxsFvMuKp_bP0H_MBY1BbUgQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-27214116-1655583572=:349"
-X-Provags-ID: V03:K1:ciW30uc6a5mT02RS8mN1vVWpbuwqZZo7VwJQzaxMA7uCnUiyV8i
- M89eN5ph0x0P8iNJE/UsMjBmGkqnceeyUQVhaNesN/QaxW6V7z0aZl4mCBooP5TTwf5+QCb
- dF/3sb/XxLEVSuXDJiRX38i5jbjjBsbHyY/SfZ5uHVWqW3IDBoiNmAaLzCY0gER02yI+hbO
- IHR5OwgvPubuqpskrilhA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zuOUi623bwM=:tBTDmSl1ZWOVbE385UGPmX
- IZrIjTSrOtk/l94hxtrrr0LElWoPG50p9wX9tKTamXJi1lfv7esLU+NXiGkMrTSPHif8A367c
- SulzMAoCTQhfl3aGirWme2DKmE7PJ2918R+3Y/BbGtv2JuMGT3axV3jy6uu+PVuUq7wcjdfky
- E1Nr9j/f0nbr6kkjtwBJpEEXoFCEpIfJG9TL6WtkYG3OePW3nEpkMcNx5mVl/3okfkB+qbBdT
- Y9ZlzwyHOkmwmJ3HIJlb9NzJAdK2Vdnc+R5A7cCmLceUGcFlKAOjozCoz7MMJTZNaL+i4qfWP
- yWF+U5rBq0leWzis35rjWgABKPeQN8+xWmLUfLHBi1cRxcN3MB6M7tEapy5kHA1nklHdVDGe3
- 54XRF6+DyM9k1yk2NtcS0JfyBmJjKP1xUJfYO+FRvQK0qiFwpCKm7gJwCIqfg8faGYd0foCaP
- MYN+mOR8BOQWANtwLtzODE0fwmjRHVHJY31mclP58d26nQalqHets3I6va0HZrTJ5z5vKJK9d
- QMN6vBDKe2S/ZROBxj0i+gEdUUQbdh70z1TXCTtoCKSAZDKfWwXsgKnWa4xjMcEOSBco/gHAa
- BrUQwCe0teLOLblytR/noCGVKfZbGFD15GNLrfskE1hTOFCTnBK7VgQinpnj4VoRRHGSI2upz
- 23sPAPX4jrrWr7HT/ntBhQ0dqf7SafhT54V0kClra2CBTvpGv6iA91k1vryaQy0pT7tT+IyiS
- 1wHVZClvlPRSd8msVE9DQJ8FSMQS3skVv7EouuWfeEke5y/Gq4oFyAutr62iOCmLGFCdH4RHf
- KOfTmAqtGjAwXSOXW75qrhoXA6chA4XtNPqGmq7/15ZrftVdV8ztA8aeZTuNVSvtYSWl1x1yj
- eIMLzJPKSbUoUQZ3CrnNad2bEt8YBrMxfaCdkkF1hTRIxp495g6sxm3O/AQINVH+iS1HlqM4L
- 65EZ1FWYvzcrZVydYJ3oG6hZZDUpNqumBnqoae3XzwempKrLqvpa0pZ2COGriAbDrW76WyJCr
- e/+0XLDxAJFEx89ZNbwUhaPt+hhO86+rBLrJ9imtEe90iFUt1V1scrs4ssCISBfiIOO187fhi
- EPN/hdct2EqPMEfpSTD8sLlVN5PHb3VOgZu+7Xo8svqmXwhnVOpmK//Ug==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Pu+sDZpbb4zBg9EtzpcuBuEqdTufTN1iGB5aIKLz5nr+faLtym1
+ Bi8LyArO8DpCB70nfDD1GxtwYoWxneSQivn0LeKeKb52xhEXsUA9XDJGQfXYGyjdHMxO2sT
+ rZ+VxL1muPc8y5LI4qL1KguimuHwcfTpAbNOFKBJ1sRPw/tNy9tx3Thj0nWQ1tV98rjTea6
+ sSaDbQtaGlDSfZXp2++Tg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UpMNDv/m2gk=:rHnzHc/tRPJuaMrZUji4vM
+ yilDgZp4cNmeZgiFPAgSQJMxQM6mM7gAYyR8QftZI7aDPyW4HHJjPdXnHMRmi38NYuqB3BGcu
+ hBvDinBP8mWQUEh4NoUUw5NQ2WapAVLP9wQPEqarVyi8SHwdvJnHDLMaYpZvy6PH2Z7RAeNQl
+ zE9X51TjD20OYkIaJI0ml0CNmH137MhX2I1hNCxyvasoFlckIau1gmuvZEuAc0Y1mI5CP2+gm
+ Ee0AAZcODOm/ZQML6hEcFbRp+36DijQtHIB59lnNu78EjXF2maCMh6jmfYmRfLBaksSwAl/Vg
+ tIqFxDv4wstPyHzhfeY6YCrAqH6HL0NTXwBSRsewwx8uab7x4vbJv+4r28KUdIIuECLv1nMC5
+ 6xZfkxm9nXGYLzKv5cpxeDl6NLL4mQaCl+rFTspiscSuDG0456IN8Ei/4V9fYixoF/XQqWi6y
+ 9A5ywqD3/ZR6NAX+V0hvXnqf7fd65YQ24ElKlZ/1WV+Gf3PvAERXOMgldEmnNnyQJXM1QOUbN
+ zsXSXmg0U6cXC60WaCkXlGQwKNzmaVNWwLJ4gIa4ryIOHmoZT7NxGRT6rueVkoScm+hnQI8TF
+ plzTqyS7K1n4nYtEY7oxNT0mdgv1Kbhdah6Segat2s6zaFnlTg9Riw2GHv48szg/FoVxRlq7B
+ DqMgo5KkGR3dvd8J9YHwGI+lrgAv+B7OvyqHEoXTi5wpQ5QZ3LDZuPI2B1O1QaXi1Ov4NLlZ/
+ qiIrczVhanScE9uWTUm0kvivRZHplpuSdk0FO9aK7HdHPcAvrXc/HTW8KVTHXAg0vMkIxAPzs
+ Ubd8/XITKlCtNaO2trm9e9gXRgs8sJ8OuGppDtCCRQUfPeTilGSMZjZH1mOy8lzQ6tTMju2MS
+ kFv6NTF3MY32PZF8lkmI5y/ojI8ouFl0uRzXVgdo7ZMLzlAZCmB36FWDPFXNcwlfaBiRVMg1O
+ pgXmgr/W9W5ceLB4mEfJXfXh8toM1u8poPq8PPl3yTIXD7l9DBiZasjn7CGNPbGkRFuMBSuy1
+ tC2KH4ZvfK83Q0dhIGfVsPAa/so1ttLQzIWUEG0C5Uf7fiS14TudH3aOhpR+cuZ07S2k/pvvu
+ 8kk2nxUKcqAF0J+DyhCo35TunSJkMt+rgUlarMMUqFF5x4hBnT8cRltjQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Lukas,
 
---8323328-27214116-1655583572=:349
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, 15 Jun 2022, Lukas Buricin wrote:
 
-Hi Adam,
-
-On Wed, 15 Jun 2022, Adam Dinwoodie wrote:
-
-> On Wed, Jun 15, 2022 at 01:00:07PM -0700, Junio C Hamano wrote:
-> > Adam Dinwoodie <adam@dinwoodie.org> writes:
-> >
-> > >> diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-> > >> index d6027189e2..3992d08158 100755
-> > >> --- a/t/t5003-archive-zip.sh
-> > >> +++ b/t/t5003-archive-zip.sh
-> > >> @@ -207,13 +207,21 @@ check_zip with_untracked
-> > >>  check_added with_untracked untracked untracked
-> > >>
-> > >>  test_expect_success UNZIP 'git archive --format=3Dzip --add-virtua=
-l-file' '
-> > >> +	if test_have_prereq FUNNYNAMES
-> > >> +	then
-> > >> +		PATHNAME=3D"pathname with : colon"
-> > >> +	else
-> > >> +		PATHNAME=3D"pathname without colon"
-> > >> +	fi &&
-> > >>  	git archive --format=3Dzip >with_file_with_content.zip \
-> > >> +		--add-virtual-file=3D\""$PATHNAME"\": \
-> > >>  		--add-virtual-file=3Dhello:world $EMPTY_TREE &&
-> > >>  	test_when_finished "rm -rf tmp-unpack" &&
-> > >>  	mkdir tmp-unpack && (
-> > >>  		cd tmp-unpack &&
-> > >>  		"$GIT_UNZIP" ../with_file_with_content.zip &&
-> > >>  		test_path_is_file hello &&
-> > >> +		test_path_is_file "$PATHNAME" &&
-> > >>  		test world =3D $(cat hello)
-> > >>  	)
-> > >>  '
-> > >
-> > > This test is currently failing on Cygwin: it looks like it's exposin=
-g a
-> > > bug in Cygwin that means files with colons in their name aren't
-> > > correctly extracted from zip archives.  I'm going to report that to =
-the
-> > > Cygwin mailing list, but I wanted to note it for the record here, to=
-o.
-> >
-> > Does this mean that our code to set FUNNYNAMES prerequiste is
-> > slightly broken?  IOW, should we check with a path with a colon in
-> > it, as well as whatever we use currently for FUNNYNAMES?
-> >
-> > Something like the attached patch?
-> >
-> > Or does Cygwin otherwise work perfectly well with a path with a
-> > colon in it, but only $GIT_UNZIP command has problem with it?  If
-> > that is the case, then please disregard the attached.
+> I am seeing multiple problems when cloning. I use "-c
+> core.longpaths=3Dtrue" and I of course have the long paths enabled in
+> Windows.
 >
-> The latter: Cygwin works perfectly with paths containing colons, except
-> that Cygwin's `unzip` is seemingly buggy and doesn't work.  The file
-> systems Cygwin runs on don't support colons in paths, but Cygwin hides
-> that problem by rewriting ASCII colons to some high Unicode code point
-> on the filesystem,
-
-Let me throw in a bit more detail: The forbidden characters are mapped
-into the Unicode page U+f0XX, which is supposed to be used "for private
-purposes". Even more detail can be found here:
-https://github.com/cygwin/cygwin/blob/cygwin-3_3_5-release/winsup/cygwin/s=
-trfuncs.cc#L19-L23
-
-> meaning Cygwin-native applications see a regular colon, while
-> Windows-native applications see an unusual but perfectly valid Unicode
-> character.
-
-Now, I have two questions:
-
-- Why does `unzip` not use Cygwin's regular functions (which should all be
-  aware of that U+f0XX <-> U+00XX mapping)?
-
-- Even more importantly: would the test case pass if we simply used
-  another forbidden character, such as `?` or `*`?
-
-> I tested the same patch to FUNNYNAMES myself before reporting, and the
-> test fails exactly the same way.  If we wanted to catch this, I think
-> we'd need a test that explicitly attempted to unzip an archive
-> containing a path with a colon.
+> Cloning long file names appears to work only when the file names
+> themselves breach the limit MAX_PATH 260 characters, but not in other
+> cases.
 >
-> (The code to set FUNNYNAMES *is* slightly broken, per the discussions
-> around 6d340dfaef ("t9902: split test to run on appropriate systems",
-> 2022-04-08), and my to-do list still features tidying up and
-> resubmitting the patch =C3=86var wrote in that discussion thread.  But i=
-t
-> wouldn't help here because this issue is specific to Cygwin's `unzip`,
-> rather than a general limitation of running on Cygwin.)
+> 1) When cloning in a directory path that is on its own longer than
+> MAX_PATH. For example, when cloning to
+>
+> C:\my_very_long_named_directory_..._reaching_over_MAX_PATH_260_long
+>
+> then the content of '.git' folder in
+>
+> C:\my_very_long_named_directory_..._reaching_over_MAX_PATH_260_long\.git
+>
+> fails to get created. Whilst this may seem like an unlikely scenario
+> for a single repository being in such a long-named directory, it can
+> happen with a more complex hierarchy of submodules, where the problem
+> becomes more obvious ("external" represents directories containing
+> submodules):
+>
+> c:\my_projects\my_project\external\app_components\external\app_api_layer=
+\external\framework\external\video_components\external\core_components\ext=
+ernal\base\external\windows-third-parties\gtest\...
+>
+> The first problem seems to be in compat\mingw.c, inside char
+> *mingw_mktemp(char *template) where we still use wchar_t
+> wtemplate[MAX_PATH];
+>
+> After replacing it with MAX_LONG_PATH the problem moves further to
+> usages of xutftowcs_path() that internally assumes everything to be
+> just MAX_PATH.
 
-I'd rather avoid changing FUNNYNAMES at this stage, if we can help it.
+Indeed. You will see much of the same journey, in the form of testable
+patches, at https://github.com/git-for-windows/git/pull/3877.
 
-Thanks,
+One major problem, of course, is the assumption of `mktemp()` that the
+buffer passed as a parameter has the size `MAX_PATH`. So if we start
+assuming that the size is actually much larger, we risk buffer overruns
+unless we litter Git's code even outside of `compat/mingw.c` with
+`MAX_LONG_PATH` instances, a proposal I have no doubt would be shot down
+immediately on the Git mailing list.
+
+> When replaced all the calls to xutftowcs_path() with
+> xutftowcs_path_ex() providing MAX_LONG_PATH and passing
+> "core_long_paths", the initial parent git process moves on. However
+> ...
+>
+> 2) The git process spawns another child git process, which doesn't
+> reflect the parent core_long_paths (being 1), because in the child
+> process it's 0,
+
+Why would it be 0, though? The `-c core.longPaths=3Dtrue` option is parsed
+into the environment variable `GIT_CONFIG_PARAMETERS`, which is passed
+down to the child process.
+
+> hence all the functions that should be allowed to prepend the paths with
+> \\?\ are told not to extend anything. This obviously leads to more
+> failures.
+>
+> 3) Even when the directory paths and the files do fit in the 260 limit
+> (I have shrunk all the paths by renaming 'external' to 'ext' in order
+> to fit in the MAX_PATH), git falls over in its internal .git folder
+> because it stores some information in significantly longer paths than
+> what is present in the repository itself. Using the example of
+>
+> c:\my_projects\my_project\external\app_components\external\app_api_layer=
+\external\framework\external\video_components\external\core_components\ext=
+ernal\base\external\windows-third-parties\gtest\...
+>
+> there will be folders 'modules' added at each level in the .git
+> internal folder for all submodules, so will end up somewhat like:
+>
+> c:\my_projects\my_project\.git\modules\external\app_components\modules\e=
+xternal\app_api_layer\modules\external\framework\modules\external\video_co=
+mponents\modules\external\core_components\modules\external\base\modules\ex=
+ternal\windows-third-parties\modules\gtest\...
+>
+> So the content in .git is much more likely to breach the MAX_PATH
+> limit than the repository "user" files themselves.
+
+Right, and there is the additional problem that the current working
+directory cannot have more than 260 characters, either, when spawning new
+processes.
+
+And we _also_ have to deal with the reality that by far not all
+executables handle long paths gracefully, even as we teach `git.exe` more
+tricks.
+
+For example, the MSYS2 Bash used by Git for Windows does not handle long
+paths. Which is a problem because we still have some core functionality in
+Git being implemented as Unix shell script: The `submodule`, `bisect`, and
+`mergetool` commands are commonly-used examples.
+
+Now, one approach we discussed over at
+https://github.com/git-for-windows/git/pull/3877 is to configure that
+registry setting that allows longer paths for executables whose manifest
+indicate that they are "long-paths aware". The mechanics of rolling
+something like that out would get tricky, though, as it would mean that
+the MSYS2 runtime would have to be modified, too, and for obvious reasons
+it would then require _all_ of the programs that link to it to be made
+long paths-aware, too, otherwise we would be bogged down in buffer
+overrun-related problems.
+
+> In general, aften seeing the code (admittedly first time ever), I also
+> have a few questions, because I might be missing some context ...
+>
+> 1) Why do we use MAX_PATH for buffers at all?
+
+That is a good question. Historical reasons, I suppose. You mentioned
+`mktemp()` above, which is a fine example how the C library functions were
+originally designed with a hard-coded assumption as to buffers of size
+`MAX_PATH`. On Windows, there is at least `_mktemp_s()`, which takes a
+pointer and a size as parameters, but on Linux/Unix, I am unaware of any
+such function, they all seem to expect buffers of size `MAX_PATH`, which
+essentially limits what Git can use. I guess a MAX_PATH of 1024 "ought to
+be enough for anybody".
+
+> This might be my misunderstanding, but I would have thought that
+> providing long file name support would essentially mean not using that
+> contant other than for determining whether to prepend given wchar_t*
+> output by \\?\ when the input const char* is longer than MAX_PATH,
+> before passing the wchar_t* in Windows API calls? This conversion and
+> eventual prepending could be done in one place and should be no burden
+> for the CPU.
+
+Even functions like `GetFullPathNameW()` require you to provide some
+reasonably-sized buffer as parameter. That's the reson why we still stick
+with MAX_LONG_PATH, which we chose as 4096. Because I (and IIRC Karsten
+Blees) guessed at the time that 4096 out to be enough for anybody.
+
+> 2) Why not having long paths by default? Again, this might be me
+> missing some historical context of regression, but it just seems
+> logical to simply prepend by \\?\ whenever needed rather than fail.
+
+There are a few reasons why they should not be on by default, most
+importantly that many 3rd-party programs cannot handle them. For example,
+for a long time CMD itself could not. And of course the MSYS2 version of
+`rm.exe`, which we tried to use in the test suite, cannot handle them.
+
+Rather than succeeding to clone repositories into long paths by default
+only to let the user run into trouble not only using their favorite tools
+on the checked out files, but then also be unable to `rm -rf` the thing,
+we chose to disable long paths support by default instead.
+
+There are also performance implications. Accessing files via their
+relative paths is much quicker than first constructing that `\\?\` form
+(which must be an absolute path).
+
+> 3) Why to have a "-c core.longpaths=3Dtrue" command line argument at
+> all? Given that we can detect whether the long file names are enabled
+> in the OS, we could easily drop that argument and have the full
+> support for free? (Losing also the problem of passing the flag to
+> child git processes). In fact we might even not need the OS support
+> detection, we may simply rely on the Windows API return values and
+> GetLastError() whilst always proving MAX_LONG_PATH and eventually
+> prepending paths with \\?\.
+
+Even just the `mktemp()` example you found _already_ puts a stick into the
+wheels of your idea.
+
+I also sense that there's confusion between the two forms long paths
+support can take:
+
+- Convert paths that would otherwise be too long to the `\\?\` form and
+  use the `*W()` functions of the Windows API. This is supported by all
+  Windows versions that are supported by Git for Windows.
+
+- Require users to configure a registry setting, use the `*W()` family of
+  Win32 API functions exclusively, add a manifest entry that your
+  executable is long paths-aware, and skip that `\\?\` prefixing. See
+  https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-=
+limitation
+  for more details. This requires Windows 10 Build 1607 or later.
+
+The more elegant solution would be the latter, of course, but its Windows
+10 Build 1607 requirement is incompatible with Git for Windows' promise
+that it still supports Windows versions all the way back to Vista
+(although you can expect Vista support to be dropped after Git for Windows
+v2.37.0 is released, with Windows 7 and Windows 8 support to follow around
+the end of this year).
+
+Ciao,
 Dscho
-
---8323328-27214116-1655583572=:349--
