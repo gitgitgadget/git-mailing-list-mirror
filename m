@@ -2,156 +2,220 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00C8AC43334
-	for <git@archiver.kernel.org>; Sun, 19 Jun 2022 13:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5111FC43334
+	for <git@archiver.kernel.org>; Sun, 19 Jun 2022 13:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230490AbiFSNrs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Jun 2022 09:47:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41522 "EHLO
+        id S231853AbiFSNvA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Jun 2022 09:51:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229933AbiFSNrr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Jun 2022 09:47:47 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E4F96378
-        for <git@vger.kernel.org>; Sun, 19 Jun 2022 06:47:45 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1016409cf0bso11148482fac.12
-        for <git@vger.kernel.org>; Sun, 19 Jun 2022 06:47:45 -0700 (PDT)
+        with ESMTP id S230495AbiFSNu7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Jun 2022 09:50:59 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 011F2655E
+        for <git@vger.kernel.org>; Sun, 19 Jun 2022 06:50:58 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id g4so11322020wrh.11
+        for <git@vger.kernel.org>; Sun, 19 Jun 2022 06:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tRythMsIYUeyoIEKTavtjAQb07i2wzcnWZ/AgnqKMbo=;
-        b=CD6JxPwn3vM4/SWWRBhqKK8HyzYvoriSvlZD6PZOsjA6Fa1ZWiNGiHGGicOec3wo2p
-         0znXFdvnl/k8KOrtGH8MIahO2aI2AXFmcaALOgD4g2aF+KaYCMeJ4WPpTz5vzbXRDjKV
-         4jHtbdn9UxWxVse/ZmEY691GidxU60SeNemGiZHE2bOvflKtYd8uIxqxbUOS6XhfKnft
-         BC1UBFhihaqSDCRNtKO7mmaW3GgxGMd70U119+h+6+gcmx2K3f1aY698J2rfkGASgkn6
-         jJGxMNSUYg80Dg14IfWG32Hk+x+G2xZi/u8sfCBSYyRqlf3H5nq1rgo3+RlFsQzGmaw6
-         oITQ==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=neKG6RCtVZNVNw9mT1WIZvV2GBoWM+xpKd69VRBB56Y=;
+        b=OdBvd3mTmW4EsBOLuVOzZaWOby5ByTJUQqemxnoB8ZTC4nqVwuVEYp5QqYhX3sDWTY
+         3jPX0x4kYCWTOs5R6lZbmSholAzglWYTTeddNBmndnqhU98thk26gEKa1Xah6nyzgPpN
+         yqP64MpDIkiu8rwtrCgywYo2cqxF/V/5rxVDKuSDwzV/9YYRQH2lMcBiPLVelH6kgT4b
+         npYbpKL/inIuZbrj3IAE29Z9pulOEkvNp22jfzY2NWWqBYR5VXVKYnsVuRTCVDJeaJ0H
+         yP8EMxcjM6rMkAHpruh3RJ9LJzIcZ3MNZcKmt7lL5Bz+V545XlD2+/22UP6yypDim+oa
+         sCfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tRythMsIYUeyoIEKTavtjAQb07i2wzcnWZ/AgnqKMbo=;
-        b=zqB43CTWALbPa2W9s1j1+EEPH2n75709UnZ2QxGroqqiADZqQhTNuvvWl2lZ0eSgUK
-         lAGoJBv5PvjqqG+TzzM+pbv8sLMSyPvcK7VyBQOA321gwWPeIw3bF353lb2D99LPYdKe
-         K9VbHpbFRvNNiEQWv61LehyfDF4MyyrqDy8PnQwQZ7xUN27XnddCaE56vFAvLtNqQwI4
-         kcZzAm+FCiVqIddbTA9ldCSDpu75Hcj5kM5kErEO4ug0W1oBsNf0k8rJVOKpTX//fOrx
-         VtzC95pdXpVQFYI9kEP6soGlqBGDDc4KbJxeaz7QnQJHs1D5PsFkDY1rx+95mWyNBCgK
-         6Qrw==
-X-Gm-Message-State: AJIora9LKyYCfBE3dJ9jhzqX6UT6vYC3TxiLzT8NmOp7y4FN2MZ6jlpF
-        I5viRH/gezN10IllkO5CnOh6rVpaXUTdm8vQnKw=
-X-Google-Smtp-Source: AGRyM1sJt6rdij0/yVZomqDbKi+9H4tDwnmi12qe1UglBUQ34q9sG/yOo2/MAKNjlmHlBc9TmIu6ZjJcQc5eesKChFg=
-X-Received: by 2002:a05:6870:3320:b0:fd:a944:1abf with SMTP id
- x32-20020a056870332000b000fda9441abfmr15622283oae.251.1655646463553; Sun, 19
- Jun 2022 06:47:43 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=neKG6RCtVZNVNw9mT1WIZvV2GBoWM+xpKd69VRBB56Y=;
+        b=ETwy/MKVI4DrUB73xrRGq82UTI+XO1tkc/YkR/KJ7Q8k+zypyvZYm9fKB8a+Bn4e9Z
+         2wyoiOpX7N1Wl64gcdm0xtpMqUzTU/pPQYmXCmOWkPaWn5kFOXuqriPG4PQWJK6FxRk9
+         sI6ZjRadbB4m8VoctMt1uYL93ZRDT6kiyhvF0GVFTtpemE+4EdXCnGWlXyRCJTtTneV6
+         d0DahzsiPaLG6mG0vL0jBtKAC2O++1r+c18bspfJbo1E4H4J3lYam8ms4OGFqTiGdYhN
+         WGyocKYIGfhy/vCMhDkUmf0NHrXAYPMJfJAvBV8gpGxb6JC2RX1EbzQBM1uGWHCTkcTj
+         kD6w==
+X-Gm-Message-State: AJIora8pQzY9SAMCoGfVdEJzX/Rjk4gj/NnbEVfEmHWs2B8He+ALTi3U
+        AcA2uBfx4nVd4mTQDm2RjHM=
+X-Google-Smtp-Source: AGRyM1u4fTAzxmtpIaqfQz0q5EzEC7PriDA6mweLAU8Xd2u9yCb/wXJeiIwqkzmgKominHbec/ENXg==
+X-Received: by 2002:adf:f890:0:b0:21b:896a:aae1 with SMTP id u16-20020adff890000000b0021b896aaae1mr4615574wrp.543.1655646656378;
+        Sun, 19 Jun 2022 06:50:56 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id j11-20020a05600c190b00b0039c5328ad92sm17933675wmq.41.2022.06.19.06.50.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 Jun 2022 06:50:56 -0700 (PDT)
+Message-ID: <44f572b8-6cef-fad4-04c0-3cbb79db5bf9@gmail.com>
+Date:   Sun, 19 Jun 2022 14:50:54 +0100
 MIME-Version: 1.0
-References: <20220614112858.16576-1-worldhello.net@gmail.com> <CAPv0VGvKFEbVzZEdn+eb-4Bb9KfQWCa=pM3iC_Dyu-6AKGCcug@mail.gmail.com>
-In-Reply-To: <CAPv0VGvKFEbVzZEdn+eb-4Bb9KfQWCa=pM3iC_Dyu-6AKGCcug@mail.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Sun, 19 Jun 2022 20:13:58 +0800
-Message-ID: <CANYiYbGWoMpCOA43k=5a_kio2thf91BV69nfSySwhHZbbMOSkg@mail.gmail.com>
-Subject: Re: [L10N] Kickoff for Git 2.37.0 round #1
-To:     =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-Cc:     Git l10n discussion group <git-l10n@googlegroups.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] ls-files: introduce "--format" option
+Content-Language: en-GB-large
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <pull.1262.git.1655300752.gitgitgadget@gmail.com>
+ <pull.1262.v2.git.1655629990185.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1262.v2.git.1655629990185.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 19, 2022 at 4:02 PM Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n <vnwild=
-man@gmail.com> wrote:
->
-> On Tue, Jun 14, 2022 at 6:29 PM Jiang Xin <worldhello.net@gmail.com> wrot=
-e:
-> >
-> > Hi,
-> >
-> > Git v2.37.0-rc0 has been released, and it's time to start new round of
-> > git l10n.  This time there are 92 updated messages need to be translate=
-d
-> > since last release. Please send your pull request to the l10n coordinat=
-or's
-> > repository below before this update window closes on Sun, June 26, 2022=
-.
-> >
-> >     https://github.com/git-l10n/git-po/
-> >
-> Done, please pull!
->
-> $ git log -n1 --stat
-> commit 22262d3c1947626e296418ffa3543d3584995653 (HEAD -> master, origin/m=
-aster,
-> origin/HEAD)
-> Author: Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n <vnwildman@gmail.com>
-> Date:   Sun Jun 19 07:48:40 2022 +0700
->
->     l10n: vi(5367t): Updated Vietnamese translation v2.37
->
->     Signed-off-by: Tran Ngoc Quan <vnwildman@gmail.com>
->
->  po/vi.po | 37548 +++++++++++++++++++++++++++++++------------------------=
-------
->  1 file changed, 19003 insertions(+), 18545 deletions(-)
+Hi ZheNing
 
-You forgot to remove file-location comments in "po/vi.po".  If you
-send me pull request on GitHub, a CI workflow will be triggered to
-execute the command below,
+On 19/06/2022 10:13, ZheNing Hu via GitGitGadget wrote:
+> From: ZheNing Hu <adlternative@gmail.com>
+> 
+> Add a new option --format that output index enties
+> informations with custom format, taking inspiration
+> from the option with the same name in the `git ls-tree`
+> command.
+> 
+> --format cannot used with -s, -o, -k, --resolve-undo,
+> --deduplicate and --debug.
 
-    $ git-po-helper check-commits --github-action-event=3Dpush <rev-list-ar=
-gs>
+I think this is an interesting feature that provides functionality that 
+is not available by feeding index entries into cat-file.
 
-and you will receive the following report:
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+>   Documentation/git-ls-files.txt |  51 ++++++++++++-
+>   builtin/ls-files.c             | 130 ++++++++++++++++++++++++++++++++-
+>   t/t3013-ls-files-format.sh     | 130 +++++++++++++++++++++++++++++++++
+>   3 files changed, 307 insertions(+), 4 deletions(-)
+>   create mode 100755 t/t3013-ls-files-format.sh
+> 
+> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+> index 0dabf3f0ddc..9a88c92f1ad 100644
+> --- a/Documentation/git-ls-files.txt
+> +++ b/Documentation/git-ls-files.txt
+> @@ -20,7 +20,7 @@ SYNOPSIS
+>   		[--exclude-standard]
+>   		[--error-unmatch] [--with-tree=<tree-ish>]
+>   		[--full-name] [--recurse-submodules]
+> -		[--abbrev[=<n>]] [--] [<file>...]
+> +		[--abbrev[=<n>]] [--format=<format>] [--] [<file>...]
+>   
+>   DESCRIPTION
+>   -----------
+> @@ -192,6 +192,13 @@ followed by the  ("attr/<eolattr>").
+>   	to the contained files. Sparse directories will be shown with a
+>   	trailing slash, such as "x/" for a sparse directory "x".
+>   
+> +--format=<format>::
+> +	A string that interpolates `%(fieldname)` from the result being shown.
+> +	It also interpolates `%%` to `%`, and `%xx` where `xx` are hex digits
+> +	interpolates to character with hex code `xx`; for example `%00`
+> +	interpolates to `\0` (NUL), `%09` to `\t` (TAB) and %0a to `\n` (LF).
+> +	--format cannot be combined with `-s`, `-o`, `-k`, `--resolve-undo` and
+> +	`--debug`.
+>   \--::
+>   	Do not interpret any more arguments as options.
+>   
+> @@ -223,6 +230,48 @@ quoted as explained for the configuration variable `core.quotePath`
+>   (see linkgit:git-config[1]).  Using `-z` the filename is output
+>   verbatim and the line is terminated by a NUL byte.
+>   
+> +It is possible to print in a custom format by using the `--format`
+> +option, which is able to interpolate different fields using
+> +a `%(fieldname)` notation. For example, if you only care about the
+> +"objectname" and "path" fields, you can execute with a specific
+> +"--format" like
+> +
+> +	git ls-files --format='%(objectname) %(path)'
+> +
+> +FIELD NAMES
+> +-----------
+> +Various values from structured fields can be used to interpolate
+> +into the resulting output. For each outputting line, the following
+> +names can be used:
+> +
+> +tag::
+> +	The tag of file status.
 
----------------------------------------------------------------------------=
----
-INFO [po/vi.po@22262d3] 5367 =E6=9D=A1=E5=B7=B2=E7=BF=BB=E8=AF=91=E6=B6=88=
-=E6=81=AF.
----------------------------------------------------------------------------=
----
-ERROR [po/vi.po@22262d3]        Found file-location comments in po
-file. By submitting a location-less
-ERROR [po/vi.po@22262d3]        "po/XX.po" file, the size of the Git
-repository can be greatly reduced.
-ERROR [po/vi.po@22262d3]        See the discussion below:
-ERROR [po/vi.po@22262d3]
-ERROR [po/vi.po@22262d3]
-https://lore.kernel.org/git/20220504124121.12683-1-worldhello.net@gmail.com=
-/
-ERROR [po/vi.po@22262d3]
-ERROR [po/vi.po@22262d3]        As how to commit a location-less
-"po/XX.po" file, See:
-ERROR [po/vi.po@22262d3]
-ERROR [po/vi.po@22262d3]            the [Updating a "XX.po" file]
-section in "po/README.md"
----------------------------------------------------------------------------=
----
-WARNING commit 22262d3: subject length 53 > 50, about 63% commits have
-a subject less than 50 characters
-INFO checking commits: 0 passed, 1 failed.
----------------------------------------------------------------------------=
----
-INFO update pot file by running: make pot
+The documentation for -t strong discourages its use, so I wonder if we 
+really want to expose it here.
 
-ERROR: fail to execute "git-po-helper check-commits"
+> +objectmode::
+> +	The mode of the object.
+> +objectname::
+> +	The name of the object.
+> +stage::
+> +	The stage of the file.
+> +eol::
+> +	The line endings of files.
 
-Will turn on the switch for file-location checking by default in
-git-po-helper check-po, check-command, etc.
+Every other option refers to either a "file" or "object" but here we 
+have "files". Looking at the implementation below this will print the 
+line ending from both the index and the worktree, it would be useful to 
+clarify that here.
 
---
-Jiang Xin
+> +path::
+> +	The pathname of the object.
+> +ctime::
+> +	The create time of file.
+
+It is not clear from this whether this (and all the file attributes 
+below) are coming from the worktree or the index or both like eol?
+
+> +mtime::
+> +	The modify time of file.
+> +dev::
+> +	The ID of device containing file.
+> +ino::
+> +	The inode number of file.
+> +uid::
+> +	The user id of file owner.
+> +gid::
+> +	The group id of file owner.
+> +size::
+> +	The size of the file.
+> +flags::
+> +	The flags of the file.
+
+What are the flags?
+
+> [...]  
+> +static size_t expand_show_index(struct strbuf *sb, const char *start,
+> +			       void *context)
+> +{
+> +	struct show_index_data *data = context;
+> +	const char *end;
+> +	const char *p;
+> +	unsigned int errlen;
+ > [...]
+> +	else if (skip_prefix(start, "(flags)", &p))
+> +		strbuf_addf(sb, "flags: %x", data->ce->ce_flags);
+> +	else {
+> +		errlen = (unsigned long)len;
+> +		die(_("bad ls-files format: %%%.*s"), errlen, start);
+
+errlen is declared as an unsigned int, but you cast len which is a 
+size_t to unsigned long when assigning to errlen. Then errlen is used 
+where a signed int is required by die. There is also a style violation 
+as if any branch of an if needs braces then they should all be braced. I 
+think that the best solution would be to drop errlen and just write
+
+	else
+		die(_("bad ls-files format: %%%.*s"), (int)len, start);
+
+It would be interesting to check the performance of this implementation 
+on a large repository as it is doing a lot of branching inside a loop. I 
+don't think we should change it unless it turns out to be a problem. 
+Then we could try switching on the first character of the format 
+specifier or some other optimization.
+
+Best Wishes
+
+Phillip
