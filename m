@@ -2,84 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57381C43334
-	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 20:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 238FBC43334
+	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 20:34:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245715AbiFTUVe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jun 2022 16:21:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57328 "EHLO
+        id S242633AbiFTUeN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jun 2022 16:34:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239787AbiFTUVd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jun 2022 16:21:33 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 336F213D66
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 13:21:33 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id y79so12249110iof.2
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 13:21:33 -0700 (PDT)
+        with ESMTP id S235181AbiFTUeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jun 2022 16:34:10 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4AD718E18
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 13:34:08 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id lw20so981169ejb.4
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 13:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=m/X4mdojupGUHGWxv+HfhCKbZ+ZkfCMIoJivb23FX0Y=;
-        b=MRYoSzMc8mv0ZTsQCjhDrayVy9VyP9UBpaqbeYKGJfYl+Z0XGkKXygUsVx5oCUEJOn
-         CF/fWAJ/yPYl7Tl5/Sec4WTbq3Vi39iUlHptwvWaTQtelcrVlBfcavyP8Buk82cXus+G
-         BoKN8DWDqqBMOZmGfrFSjqFFKDpi/2mRJ/nw9pGExKOYZlaXDAH8IWutpwbxdhMnCy8u
-         VZgx6fbhLIm/rPpAzl4YRtikz8jvabgm0VM2dbx4eSKyhTVlGSyjYAnYT3NUcxqbJLgj
-         CxoBDBZ+1DgpmCefYR4naK7AIrBi5wtiYSUYM7nXd1FjfQlPEUmUXik/7Te4LsiVXrlS
-         CqAg==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=w7MOdxWTJvv69s3DEQCJmho6BYsMA4ywAo/a6H+oP2w=;
+        b=RyGXd1tUTyKPleQc07N4TuoGDSlE2CW03hi/Jy3ZtmuR4eNXC/+2mBlRuBTi3sKBoT
+         bA+BexO8zc9SRZQJQANwprHKFBo/BIYS7k8Rovn6xgWldwTrwqvb57I25a7Ze8uIo+pe
+         Rgwucyu3TQ/MFlt571D/nIOyuZzD9Nf7AtkpUMatftSHelotTcsGvpVfwAIEaf+ojmn5
+         V3b/laJdrdM8OhVWKA/0bOwRUTbh8K8di3gbp4iS0cYQNvORLqls2zoh8GQTqsENf6+/
+         OXvE4LAAb81y1/rGMkYRUW/W6SxURTf3z7Imjs/CL08AlQWESfOE+oHcvnZBYcOAbUxm
+         ZUHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=m/X4mdojupGUHGWxv+HfhCKbZ+ZkfCMIoJivb23FX0Y=;
-        b=lV7B0dgHhoARv9l6iSX6fhwKYWvL/zgRAM+bnvsfk99zQsPs1dU+NUNEJ4IdE8hDLD
-         0m4+gU+T3qFiUkf61V5NC75wNQPxNHZdWJkhno7GkiOZdAjLp3x4rbLTMrUfqnl8gD7p
-         CayCqBUEhTSHl/VdiVr+EZkse1gCFHSba29I0vptOB+ztNLDsYZCYmDK2ji77F/pKsPy
-         RotNcGLzz193TKRqyPffeSWAMdHRnwfZUZkRDGPEMIfL6SEqzpSbufiBLyoRgXtfe0un
-         KtAGe0vogrxaCWcWXDSfULQs0pMy2qLGay1TZIVfl46nSrqkVWgvZW8PJIO7u8REPzyi
-         asMQ==
-X-Gm-Message-State: AJIora8HSafLwH7tBe8tywARhuwcaVW4T7vPCJZVj75VMYsOKa1cSruo
-        m3E6W/uDAm2DuOQEgt4Rjc5T
-X-Google-Smtp-Source: AGRyM1tM0gjTn3Lf8fBYIcQY8CRWHcygsHiuUPKA3dQgri+MT8QnaIEgyLSnMAorx9oIWA06SoE3ig==
-X-Received: by 2002:a02:aa92:0:b0:331:c856:fe69 with SMTP id u18-20020a02aa92000000b00331c856fe69mr13388268jai.187.1655756492593;
-        Mon, 20 Jun 2022 13:21:32 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:ed9a:c6cc:7079:2a02? ([2600:1700:e72:80a0:ed9a:c6cc:7079:2a02])
-        by smtp.gmail.com with ESMTPSA id h13-20020a0566380f8d00b00331bd537addsm6393527jal.102.2022.06.20.13.21.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jun 2022 13:21:32 -0700 (PDT)
-Message-ID: <25e03c86-5a47-2100-2da7-a635673a8e38@github.com>
-Date:   Mon, 20 Jun 2022 16:21:30 -0400
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=w7MOdxWTJvv69s3DEQCJmho6BYsMA4ywAo/a6H+oP2w=;
+        b=C9XHfhFsvQNEn2OF72Rnon/5kzZlYxjRd4wFrOzDqbDECy/JUiwSK8kS1JIERKP283
+         MPftcjD5fJRhc/zg6H/AhCRGvZgCcRliALvRm723Ne3u13fkjm1yPFr5Ae70UegI6KkP
+         GXHjxvZaOAEVfviD7MvJUBUmOTsv6ayA+mrU6v1clhlatYrdvSlBh6QKdWnP3GCowuOk
+         xP1zIWAX0t1dy7LNmBAEYXYbgjjcetWbMfJS2tey5Ghl3O1HQH3P4XPHFMa2kHQypSgF
+         GqEXSZvpZbamgFgZWR6xVrFtzsBaoYFlm48OBd9KZJ0WagQdKXrczndLZ+eb8LrAdgy/
+         ptTg==
+X-Gm-Message-State: AJIora/yaX8QHQju3GHG3wm3aHYsHRtyHboYlk4irJRDH6zeKSU9fSE0
+        geP6ais4e7LCm6ktd0ShmeI=
+X-Google-Smtp-Source: AGRyM1thqAeBfcoN4uNpNBbUe6zYsl05lx1ZSIy1TKKnmB20ymORpCiRZaj+yKuKjRSEHphWJ5jfMA==
+X-Received: by 2002:a17:906:9b96:b0:711:d21c:1b0b with SMTP id dd22-20020a1709069b9600b00711d21c1b0bmr22766119ejc.365.1655757246917;
+        Mon, 20 Jun 2022 13:34:06 -0700 (PDT)
+Received: from localhost (78-131-14-143.pool.digikabel.hu. [78.131.14.143])
+        by smtp.gmail.com with ESMTPSA id la5-20020a170907780500b006f3ef214de7sm6563504ejc.77.2022.06.20.13.34.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jun 2022 13:34:06 -0700 (PDT)
+Date:   Mon, 20 Jun 2022 22:34:05 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
+        git@vger.kernel.org, avarab@gmail.com
+Subject: Re: Test Failure t5510,t5562 - was RE: [ANNOUNCE] Git v2.37.0-rc1
+Message-ID: <20220620203405.GC1689@szeder.dev>
+References: <00a401d884d0$32885890$979909b0$@nexbridge.com>
+ <8d2a0a36-1d2f-c723-db1e-8978e5d03d1d@github.com>
+ <00b501d884d7$d8ed1200$8ac73600$@nexbridge.com>
+ <495bd957-43dc-f252-657d-2969bb7ad5f3@github.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 1/6] Documentation/technical: describe bitmap lookup table
- extension
-Content-Language: en-US
-To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-References: <pull.1266.git.1655728395.gitgitgadget@gmail.com>
- <2e22ca5069af617fe23072d78efb08b26d6130be.1655728395.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <2e22ca5069af617fe23072d78efb08b26d6130be.1655728395.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <495bd957-43dc-f252-657d-2969bb7ad5f3@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/20/2022 8:33 AM, Abhradeep Chakraborty via GitGitGadget wrote:
-> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+On Mon, Jun 20, 2022 at 04:00:03PM -0400, Derrick Stolee wrote:
+> On 6/20/22 2:59 PM, rsbecker@nexbridge.com wrote:
+> > On June 20, 2022 2:46 PM, Derrick Stolee wrote:
+> 
+> >> The issue is this line (some tabs removed):
+> >>
+> >>  new_cmdline=$(printf "%s" "$cmdline" | perl -pe
+> >> 's[origin(?!/)]["'"$remote_url"'"]g')
+> >>
+> >> At this point, $remote_url contains the file path including the @ symbol. However,
+> >> this perl invocation is dropping everything starting at the @ to the next slash.
+> >>
+> >> I'm not sure of a better way to accomplish what is trying to be done here (replace
+> >> 'origin' with that specific url) without maybe causing other issues.
+> >>
+> >> This line was introduced by e1790f9245f (fetch tests: fetch <url> <spec> as well as
+> >> fetch [<remote>], 2018-02-09).
+> > 
+> > How about using sed instead of perl for this?
+> 
+> I wasn't sure if using sed would create a different kind of replacement
+> problem, but using single-quotes seems to get around that kind of issue.
 
-> +			** {empty}
-> +			BITMAP_OPT_LOOKUP_TABLE (0xf) : :::
+In a 'sed s/regexp/replacement/' command the replacement part has a
+few characters with special meaning, and if those characters happen to
+appear in the path of the trash directory, then:
 
-I think you mean 0x10 (b_1_0000) instead of 0xf (b_1111).
+  $ ./t5510-fetch.sh --root='/tmp/foo\1/'
+  ok 64 - name prune fetch.prune=unset remote.origin.prune=unset fetch.pruneTags=unset remote.origin.pruneTags=unset --no-prune; branch:kept tag:kept
+  sed: -e expression #1, char 62: invalid reference \1 on `s' command's RHS
+  sed: -e expression #1, char 62: invalid reference \1 on `s' command's RHS
+  ok 65 - link prune fetch.prune=unset remote.origin.prune=unset fetch.pruneTags=unset remote.origin.pruneTags=unset --no-prune; branch:kept tag:kept
+  ok 66 - name prune fetch.prune=unset remote.origin.prune=unset fetch.pruneTags=unset remote.origin.pruneTags=unset --prune; branch:pruned tag:kept
+  sed: -e expression #1, char 62: invalid reference \1 on `s' command's RHS
+  sed: -e expression #1, char 62: invalid reference \1 on `s' command's RHS
+  not ok 67 - link prune fetch.prune=unset remote.origin.prune=unset fetch.pruneTags=unset remote.origin.pruneTags=unset --prune; branch:pruned tag:kept
+  [...]
+  # failed 28 among 183 test(s)
 
-I noticed when looking at the constant in patch 2.
+> Please see the patch below. I'm currently running CI in a GGG PR [1]
+> 
+> [1] https://github.com/gitgitgadget/git/pull/1267
+> 
+> Thanks,
+> -Stolee
+> 
+> 
+> --- >8 ---
+> 
+> >From 1df4fc66d4a62adc7087d7d22c8d78842b4e9b4d Mon Sep 17 00:00:00 2001
+> From: Derrick Stolee <derrickstolee@github.com>
+> Date: Mon, 20 Jun 2022 15:52:09 -0400
+> Subject: [PATCH] t5510: replace 'origin' with URL more carefully
+> 
+> The many test_configured_prune tests in t5510-fetch.sh test many
+> combinations of --prune, --prune-tags, and using 'origin' or an explicit
+> URL. Some machinery was introduced in e1790f9245f (fetch tests: fetch
+> <url> <spec> as well as fetch [<remote>], 2018-02-09) to replace
+> 'origin' with this explicit URL. This URL is a "file:///" URL for the
+> root of the $TRASH_DIRECTORY.
+> 
+> However, if the current build tree has an '@' symbol, the replacement
+> using perl fails. It drops the '@' as well as anything else in that
+> directory name.
+> 
+> You can verify this locally by cloning git.git into a "victim@03"
+> directory and running the test script.
+> 
+> To resolve this issue, replace the perl invocation with two sed
+> commands. These two are used to ensure that we match exactly on the
+> whole word 'origin'. We can guarantee that the word boundaries are
+> spaces in our tests. The reason to use exact words is that sometimes a
+> refspec is supplied, such as "+refs/heads/*:refs/remotes/origin/*" which
+> would cause an incorrect replacement. The two commands are used because
+> there is not a clear POSIX way to match on word boundaries without
+> getting extremely pedantic about what possible characters we could have
+> at the boundaries.
+> 
+> Reported-by: Randall Becker <rsbecker@nexbridge.com>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  t/t5510-fetch.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 4620f0ca7fa..8ca3aa5e931 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -853,7 +853,9 @@ test_configured_prune_type () {
+>  		then
+>  			new_cmdline=$cmdline_setup
+>  		else
+> -			new_cmdline=$(printf "%s" "$cmdline" | perl -pe 's[origin(?!/)]["'"$remote_url"'"]g')
+> +			new_cmdline=$(printf "%s" "$cmdline" | \
+> +					sed "s~origin ~'$remote_url' ~g" | \
+> +					sed "s~ origin~ '$remote_url'~g")
 
-Thanks,
--Stolee
+'sed' can run multiple commands at once, e.g. 'sed -e s/// -e s///'.
+
+>  		fi
+>  
+>  		if test "$fetch_prune_tags" = 'true' ||
+> -- 
+> 2.36.1.vfs.0.0
+> 
+> 
+>  
