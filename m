@@ -2,189 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DCFEC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 17:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FC2AC43334
+	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 17:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238455AbiFTRJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jun 2022 13:09:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44004 "EHLO
+        id S232815AbiFTRV5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jun 2022 13:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235404AbiFTRJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jun 2022 13:09:25 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5E11C91F
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 10:09:21 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id q11so11733294iod.8
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 10:09:21 -0700 (PDT)
+        with ESMTP id S242029AbiFTRVx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jun 2022 13:21:53 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80C241EAE7
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 10:21:52 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id o73so8267864qke.7
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 10:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=nEma2gIopxSm43EalZRpCzzPk0A+jr2NXQuJTL7+epQ=;
-        b=Ay1nLkaCsvFCwGZzVmtNQOn65e5IJmJVwNYvspF0xMJaD8NzIAK1HJzuOSnDlWAFl9
-         y3p0uEoXFmpnHkGaZnsFVrffZV6Fswr17AMmbN1ablrop8FjA8hI6RwZ4a7em84Wc6KK
-         /z423AdsSTps6oaAvL3AC4bf38BffIIKNBjwISE+hB1/DBIG857EI1NPfleupNHhdkiD
-         p5xO8SIs1XMNJcnts0MEJPQCM5Q8r/BGmaVmOmmwxHpH0tMzZ8FI8zWWQSUmQkAe5tvW
-         DpFNHRSI9bxzV52GZMXHEdgcicmTc9jH43q60OHb0ALv1mncJOx34NkLbhAvP9QWd9WD
-         b1ww==
+        bh=yDJNefVvmC1R0GTEMLWrZuKdcyN9WkR+vLaP/qCrTSo=;
+        b=quMQQ3txM+/+/9vdsdgs7Yg0RDmpSseaHHBfKI9bOWCyzIjnOvYI+YytduZah3kYye
+         serwFxt9EllxZ5zhmAakQDOxm7DbDIml77M51mM/H9EWpZdx48mr86NJNcpzpD13BVPM
+         FNfmLAci1O2F+MPWxXwq7mZtTSGvxgkpUoRqj5l9S6qMqsh8I3ilk++4mYHV3yj0ruAm
+         wcOyAt31YAB8huFgEvEqSinssCpM1xfgjP6YI5HxcdqJdnLMbPmhaOCd6BmfLGSkaX8A
+         FbkosAWk/gke/nkA20nyzgK0BqeS4aNi7vHertFRCpIlLWhNewDzroO1VwiMdAhkfmq/
+         0g2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=nEma2gIopxSm43EalZRpCzzPk0A+jr2NXQuJTL7+epQ=;
-        b=5unBbE/c0pV43vTbaBog4NOsInKRU6CqGub9O9IJIY9aktkY8HtAPlW2pTsEbaeCHr
-         dichYJfmDERTtFbLCYXtUikEsU2DqAmxbqodmtx1J+g5hyMf1ooUJO4GTjMEzCxO46J4
-         uqxGwDl8bgXcrH2XjEnlaQ61+0EIeSuKZOL3LHNTPqH3SvKOOj5IHARfQs4xVtDyZ2M0
-         FIJy2HPkjOPKNRrS13nrL7zGOOf2MjDzfPWzZ39qxK0mGfZTQkAAQdQ+MVlshfXVmG2r
-         UtdkGlytLqQ6C/ieAemkavxJkvrkeW6JH3oZ51UaHANMkfQudI1r7+T6XQFnnSQpzkYD
-         audw==
-X-Gm-Message-State: AJIora+ZIriZTLb/c62pBgn4dGxToKt9Pi0Txqi0VAbbF6kzPa6ZTlx2
-        DumComNHRy3TjBR/vwbo6NFEgg==
-X-Google-Smtp-Source: AGRyM1v6hqSBXMxTGF/cXD1gisdPJ1XO+GtGU8Qh49n0B4ODNH++QJpk6Gk40FJm96gHl/zCYEHTAw==
-X-Received: by 2002:a05:6638:2595:b0:335:caf5:41b7 with SMTP id s21-20020a056638259500b00335caf541b7mr14252784jat.191.1655744960861;
-        Mon, 20 Jun 2022 10:09:20 -0700 (PDT)
+        bh=yDJNefVvmC1R0GTEMLWrZuKdcyN9WkR+vLaP/qCrTSo=;
+        b=Z4f47DdGI6Ioseg6b2xP+9YNY4FUPeEYdlHoeLAKfbmYMVMtPsrmeZ+fQegog8Bole
+         LMchjDZKz7g5IsO4HCjZmYa8lZ6Ki3pmVbfHnk7RG/owc6/baq2gqzkgB98bV+gm5Ja8
+         zUW21N2CeXy7gP6NdYGGRFN6q6Ibb2uZKsEcpI3ZSXX1auEkUvJ7VuhjcJcHxyOjUbpn
+         f/GCS/RcANY5RJ8JrXly5q+Oa6+Oma3AHPtyflc0HL+aSUwIhfD49Y1zzpRVl+sYbCCb
+         BepwpxC0FjXIf6vLyJIdyorBJr3W/uBql1DL6KsThHcnRzpP3rC68rD4tDJQurVN/Anz
+         mQoQ==
+X-Gm-Message-State: AJIora/iCs3UDx7tXHB6VYSH3Vd8iTJ4ISFVrtu3d4BahiyexSFQAp9T
+        eKM9RFLgU57n3+l0Yqo7FEOqBg==
+X-Google-Smtp-Source: AGRyM1txXXBXmrj3rVHPPr5+nb+pm39uQ+eXOUce6zUyc3DM9Idm48Of9nzqwWZuADBF/6Lv85QHGw==
+X-Received: by 2002:a05:620a:4e1:b0:6a6:98c8:4f76 with SMTP id b1-20020a05620a04e100b006a698c84f76mr17375272qkh.109.1655745711543;
+        Mon, 20 Jun 2022 10:21:51 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c6-20020a023b06000000b0032e71f31487sm168473jaa.31.2022.06.20.10.09.20
+        by smtp.gmail.com with ESMTPSA id r1-20020a05620a298100b006a6d74f8fc9sm12897342qkp.127.2022.06.20.10.21.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jun 2022 10:09:20 -0700 (PDT)
-Date:   Mon, 20 Jun 2022 13:09:19 -0400
+        Mon, 20 Jun 2022 10:21:51 -0700 (PDT)
+Date:   Mon, 20 Jun 2022 13:21:50 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
         Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 Subject: Re: [PATCH 1/6] Documentation/technical: describe bitmap lookup
  table extension
-Message-ID: <YrCpv3XEoB6lOlY4@nand.local>
+Message-ID: <YrCsricF+2rQXiBk@nand.local>
 References: <pull.1266.git.1655728395.gitgitgadget@gmail.com>
  <2e22ca5069af617fe23072d78efb08b26d6130be.1655728395.git.gitgitgadget@gmail.com>
- <b21af0bc-3234-3aa2-e4a0-82874e9a670e@github.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b21af0bc-3234-3aa2-e4a0-82874e9a670e@github.com>
+In-Reply-To: <2e22ca5069af617fe23072d78efb08b26d6130be.1655728395.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 20, 2022 at 12:56:27PM -0400, Derrick Stolee wrote:
-> On 6/20/2022 8:33 AM, Abhradeep Chakraborty via GitGitGadget wrote:
-> > From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-> >
-> > When reading bitmap file, git loads each and every bitmap one by one
-> > even if all the bitmaps are not required. A "bitmap lookup table"
-> > extension to the bitmap format can reduce the overhead of loading
-> > bitmaps which stores a list of bitmapped commit oids, along with their
-> > offset and xor offset. This way git can load only the neccesary bitmaps
-> > without loading the previous bitmaps.
-> >
-> > Add some information for the new "bitmap lookup table" extension in the
-> > bitmap-format documentation.
+On Mon, Jun 20, 2022 at 12:33:09PM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
+> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 >
+> When reading bitmap file, git loads each and every bitmap one by one
+> even if all the bitmaps are not required. A "bitmap lookup table"
+> extension to the bitmap format can reduce the overhead of loading
+> bitmaps which stores a list of bitmapped commit oids, along with their
+> offset and xor offset. This way git can load only the neccesary bitmaps
+> without loading the previous bitmaps.
+
+Well put. It might help to have a concrete example of where we expect
+this to help and not help. I suspect that some of this will show up in
+your work updating the perf suite to use this new table, but I imagine
+that we'll find something like:
+
+    In cases where the result can be read or computed without
+    significant additional traversal (e.g., all commits of interest
+    already have bitmaps computed), we can save some time loading and
+    parsing a majority of the bitmap file that we will never read.
+
+    But in cases where the bitmaps are out-of-date, or there is
+    significant traversal required to go from the reference tips to
+    what's contained in the .bitmap file, this table provides minimal
+    benefit (or something).
+
+Of course, you should verify that that is actually true before we insert
+it into the commit message as such ;-). But that sort of information may
+help readers understand what the purpose of this change is towards the
+beinning of the series.
+
+> Add some information for the new "bitmap lookup table" extension in the
+> bitmap-format documentation.
 >
-> > @@ -67,6 +67,14 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
-> >  			pack/MIDX. The format and meaning of the name-hash is
-> >  			described below.
-> >
-> > +			** {empty}
-> > +			BITMAP_OPT_LOOKUP_TABLE (0xf) : :::
-> > +			If present, the end of the bitmap file contains a table
-> > +			containing a list of `N` object ids, a list of pairs of
-> > +			offset and xor offset of respective objects, and 4-byte
-> > +			integer denoting the flags (currently none). The format
-> > +			and meaning of the table is described below.
-> > +
+> Co-Authored-by: Taylor Blau <ttaylorr@github.com>
+> Mentored-by: Taylor Blau <ttaylorr@github.com>
+
+Here and elsewhere: I typically use my <me@ttaylorr.com> address when
+contributing to Git. So any trailers that mention my email or commits
+that you send on my behalf should use that address, too.
+
+> Co-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+> ---
+>  Documentation/technical/bitmap-format.txt | 31 +++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
 >
-> Here, you are adding a new flag that indicates that the end of the file
-> contains this extra extension. This works because the size of the
-> extension is predictable. As long as any future extensions are also of
-> a predictable size, then we can continue adding them via flags in this
-> way.
-
-Right; any extensions that are added to the existing .bitmap format must
-have a size that is predictable in order for readers to locate the next
-extension, if any.
-
-> This is better than updating the full file format to do something like
-> like use the chunk format API, especially because this format is shared
-> across other tools (JGit being mentioned frequently).
-
-Agreed. Abhradeep and I discussed whether or not it was worth exploring
-a new .bitmap format, and the consensus we reached was that it may be
-required in the future (if we explored a compression scheme other than
-EWAH or made some other backwards-incompatible change), but as of yet it
-isn't necessary. So we avoided it to eliminate unnecessary churn,
-especially of on-disk formats.
-
-> It might be worth mentioning in your commit message what happens when an
-> older version of Git (or JGit) notices this flag. Does it refuse to
-> operate on the .bitmap file? Does it give a warning or die? It would be
-> nice if this extension could be ignored (it seems like adding the extra
-> data at the end does not stop the bitmap data from being understood).
-
-I agree. The bitmap reader does not warn or die when it sees
-unrecognized extensions, that way new extensions can be added without
-rendering all previously-written bitmaps useless. But in order to
-understand an extension on bit N, the reader must also understand
-extensions N-1, N-2, and so on (in order to locate the end of
-extension N).
-
-> > +	- `nr_entries` pairs of 4-byte integers, each in network order.
-> > +	  The first holds the offset from which that commit's bitmap can
-> > +	  be read. The second number holds the position of the commit
-> > +	  whose bitmap the current bitmap is xor'd with in lexicographic
-> > +	  order, or 0xffffffff if the current commit is not xor'd with
-> > +	  anything.
+> diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
+> index 04b3ec21785..34e98787b78 100644
+> --- a/Documentation/technical/bitmap-format.txt
+> +++ b/Documentation/technical/bitmap-format.txt
+> @@ -67,6 +67,14 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
+>  			pack/MIDX. The format and meaning of the name-hash is
+>  			described below.
 >
-> Interesting to give the xor chains directions here. You say "position"
-> here for the second commit: do you mean within the list of object names
-> as opposed to the offset? That would make the most sense so we can trace
-> the full list of XORs we need to make all at once.
+> +			** {empty}
+> +			BITMAP_OPT_LOOKUP_TABLE (0xf) : :::
+
+It the space between "(0xf)" and the first ":" intentional? Similarly,
+should there be two or three colons at the end (either "::" or ":::")?
+
+> +			If present, the end of the bitmap file contains a table
+> +			containing a list of `N` object ids, a list of pairs of
+> +			offset and xor offset of respective objects, and 4-byte
+> +			integer denoting the flags (currently none). The format
+> +			and meaning of the table is described below.
+> +
+
+I remember we had a brief off-list discussion about whether we should
+store the full object IDs in the offset table, or whether we could store
+their pack- or index-relative ordering. Is there a reason to prefer one
+or the other?
+
+I don't think we need to explain the choice fully in the documentation
+in this patch, but it may be worth thinking about separately
+nonetheless. We can store either order and convert it to an object ID in
+constant time.
+
+To figure out which is best, I would recommend trying a few different
+choices here and seeing how they do or don't impact your performance
+testing.
+
+>  		4-byte entry count (network byte order)
 >
-> Are .bitmap files already constrained to 4GB, so these 32-bit offsets
-> make sense? Using 64-bit offsets would be a small cost here, I think,
-> without needing to do any fancy "overflow" tables that could introduce
-> a variable-length extension.
+>  			The total count of entries (bitmapped commits) in this bitmap index.
+> @@ -205,3 +213,26 @@ Note that this hashing scheme is tied to the BITMAP_OPT_HASH_CACHE flag.
+>  If implementations want to choose a different hashing scheme, they are
+>  free to do so, but MUST allocate a new header flag (because comparing
+>  hashes made under two different schemes would be pointless).
+> +
+> +Commit lookup table
+> +-------------------
+> +
+> +If the BITMAP_OPT_LOOKUP_TABLE flag is set, the end of the `.bitmap`
+> +contains a lookup table specifying the positions of commits which have a
+> +bitmap.
+> +
+> +For a `.bitmap` containing `nr_entries` reachability bitmaps, the format
+> +is as follows:
+> +
+> +	- `nr_entries` object names.
+> +
+> +	- `nr_entries` pairs of 4-byte integers, each in network order.
+> +	  The first holds the offset from which that commit's bitmap can
+> +	  be read. The second number holds the position of the commit
+> +	  whose bitmap the current bitmap is xor'd with in lexicographic
+> +	  order, or 0xffffffff if the current commit is not xor'd with
+> +	  anything.
 
-Yeah, we should support >4GB bitmaps here. An overflow table could work,
-but I agree with Stolee that in practice it won't matter. Most .bitmap
-files that I've looked at in the wild have around ~500 entries at most,
-and are usually small. So the cost of widening this section isn't a big
-deal.
+A couple of small thoughts here. I wonder if we'd get better locality if
+we made each record look something like:
 
-But note that the entry count is only one component of the bitmap size:
-the individual entry lengths obviously matter too. And in repositories
-whose bitmaps exceed 500 entries, the entries themselves are often
-several million bits long (before compression) already. So it is
-certainly possible to exceed 4GB without having an astronomical entry
-count.
+    (object_id, offset, xor_pos)
 
-So doubling the width of this extension might add an extra 250 KiB or
-so, which is negligible.
+Where object_id is either 20- or 4-bytes long (depending if we store the
+full object ID, or some 4-byte identifier that allows us to discover
+it), offset is 8 bytes long, and xor_pos is 4-bytes (since in practice
+we don't support packs or MIDXs which have more than 2^32-1 objects).
 
-I would much rather see us do that in cases where it makes sense (small
-number of entries, minimal cost to wider records, etc.) than adding
-unnecessary complexity via an extra lookup table for >4GB offsets.
+In the event that this table doesn't fit into a single cache line, I
+think we'll get better performance out of reading it by not forcing the
+cache to evict itself whenever we need to refer back to the object_id.
 
-> > +	- One 4-byte network byte order integer specifying
-> > +	  table-specific flags. None exist currently, so this is always
-> > +	  "0".
->
-> I'm guessing this is at the end of the extension because a future flag
-> could modify the length of the extension, so we need the flags to be
-> in a predictable location. Could we make that clear somewhere?
+> +	- One 4-byte network byte order integer specifying
+> +	  table-specific flags. None exist currently, so this is always
+> +	  "0".
 
-I can't remember what I had on my mind when I wrote this ;-).
-
-Abhradeep -- do you have any thoughts about what this might be used for?
-I'll try to remember it myself, but I imagine that we could just as
-easily remove this altogether and avoid the confusion.
-
-> How does Git react to seeing flags here that it does not recognize?
-> It seems that Git should ignore the lookup table but continue using the
-> rest of the .bitmap file as it did before, yes?
-
-(See above).
+I mentioned in my reply to Stolee earlier, but I think that we should
+either (a) try to remember what this is for and document it, or (b)
+remove it.
 
 Thanks,
 Taylor
