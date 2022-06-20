@@ -2,136 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1228C43334
-	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 22:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93F29C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 22:18:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238652AbiFTWRL convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 20 Jun 2022 18:17:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33716 "EHLO
+        id S241907AbiFTWSk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jun 2022 18:18:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230366AbiFTWRK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jun 2022 18:17:10 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED8FD19C3D
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 15:17:09 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 25KMH66d071968
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 20 Jun 2022 18:17:06 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Derrick Stolee'" <derrickstolee@github.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>, <avarab@gmail.com>
-References: <00a401d884d0$32885890$979909b0$@nexbridge.com> <8d2a0a36-1d2f-c723-db1e-8978e5d03d1d@github.com> <00b501d884d7$d8ed1200$8ac73600$@nexbridge.com> <495bd957-43dc-f252-657d-2969bb7ad5f3@github.com>
-In-Reply-To: <495bd957-43dc-f252-657d-2969bb7ad5f3@github.com>
-Subject: RE: Test Failure t5510,t5562 - was RE: [ANNOUNCE] Git v2.37.0-rc1
-Date:   Mon, 20 Jun 2022 18:17:01 -0400
-Organization: Nexbridge Inc.
-Message-ID: <00e001d884f3$79f8d6a0$6dea83e0$@nexbridge.com>
+        with ESMTP id S245562AbiFTWSh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jun 2022 18:18:37 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCAC01B794
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 15:18:36 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id 88so14338866qva.9
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 15:18:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2sB9oID9ufkm6I59O6sF31+HfakJdKm4Etuagl1ckF4=;
+        b=Hfo33A+ZCZ9HR6c+79Cc6v/bujOHv6kb7PGNGI2grmPAHBsmRW2GOudWQgxBzq1mON
+         aPUi+yigfoIVOauSAWEpWCL5Rtuy6NqMh7lvhoIX/58HAgvyiHqPDsBQ4h0CAB/le4RG
+         lB/Ehh8j+DLs2VHhubiUu0IQNME+kaL3ZgpsG9TxDAGepbFuuh1k5DqYtHySQMg5qxx1
+         MmbDrfNWS0cvp87Ur0W+ZBe1ICpIEIWyxqZyjPwk09ai7KjynN5pqRCs5HVUEhKtjmsU
+         60VujFtV6T9h0W/eKB6UGQeCp64iXpGF1fc47pDVLF7mo/l83ZnAssotBSG7k3XDEjoj
+         11bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2sB9oID9ufkm6I59O6sF31+HfakJdKm4Etuagl1ckF4=;
+        b=WR2sbHH/xMryb5ErcfvzYtvY3ENk/0NAZA/qyV1IQ9hxi9chUVaKwWw7DPEkN8wRiH
+         3ouoFd2QetMLYKhKOPCbmP6Z3/ecGVhMY+CpkQ6x1fV7TK+2Ow6hxaHY9KJGiVV6Gpe8
+         I2wHtz6bsrNSVaWLp5sQdUvxMERAVBluNgNGUvUrn3MfFX5o3lU23VjS1gkFnfDUaMuT
+         Rf001Yl6mxjvYK5CA8py3+fu+uXz6TyDTYyw5HsoNAJbFphmwST75ps5iEf07E90HMJe
+         ZKwwIcW1dn7/tUa2qTXGa3nJ/nxRzUUWk3rkHysSezSfc524opkeJXjr4FcvWIGfvXHf
+         +Vqg==
+X-Gm-Message-State: AJIora9CF8f2wq5ebWjCqqtzM4AJjNWsQgxCDwVNP4gJnWAGcjaZ0J4u
+        sMSgtDjIEm0nTYLJmI5O3G3odg==
+X-Google-Smtp-Source: AGRyM1sBjGXWGJ0plXB5tvRPFDQfM8NyHHJtjDkkxdwSAMRh9H8BkFCzDzlTyqkLTuwsApPRIJVCug==
+X-Received: by 2002:ac8:5b0d:0:b0:305:2025:c687 with SMTP id m13-20020ac85b0d000000b003052025c687mr21992426qtw.535.1655763515846;
+        Mon, 20 Jun 2022 15:18:35 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id ay31-20020a05620a179f00b006a7137330e2sm11911677qkb.132.2022.06.20.15.18.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jun 2022 15:18:35 -0700 (PDT)
+Date:   Mon, 20 Jun 2022 18:18:34 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Taylor Blau via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Taylor Blau <ttaylorr@github.com>
+Subject: Re: [PATCH 4/6] builtin/pack-objects.c: learn
+ pack.writeBitmapLookupTable
+Message-ID: <YrDyOivHcnA1qirF@nand.local>
+References: <pull.1266.git.1655728395.gitgitgadget@gmail.com>
+ <661c1137e1c918619f6624d2e331bafd9c3281dc.1655728395.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGbty4YZi8TaCT7HXBORJwwZ7F75wEiX5VOAgU1x3MCW0ymCa2mRxvA
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <661c1137e1c918619f6624d2e331bafd9c3281dc.1655728395.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jun 20, 2022 at 12:33:12PM +0000, Taylor Blau via GitGitGadget wrote:
+> From: Taylor Blau <ttaylorr@github.com>
+>
+> Teach git to provide a way for users to enable/disable bitmap lookup
+> table extension by providing a config option named 'writeBitmapLookupTable'.
+>
+> Signed-off-by: Taylor Blau <ttaylorr@github.com>
+> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+> ---
+>  Documentation/config/pack.txt | 7 +++++++
+>  builtin/pack-objects.c        | 8 ++++++++
+>  2 files changed, 15 insertions(+)
+>
+> diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+> index ad7f73a1ead..e12008d2415 100644
+> --- a/Documentation/config/pack.txt
+> +++ b/Documentation/config/pack.txt
+> @@ -164,6 +164,13 @@ When writing a multi-pack reachability bitmap, no new namehashes are
+>  computed; instead, any namehashes stored in an existing bitmap are
+>  permuted into their appropriate location when writing a new bitmap.
+>
+> +pack.writeBitmapLookupTable::
+> +	When true, git will include a "lookup table" section in the
 
+s/git/Git (I typically use "git" when talking about the command-line
+tool, and Git when talking about the project as a proper noun).
 
->-----Original Message-----
->From: Derrick Stolee <derrickstolee@github.com>
->Sent: June 20, 2022 4:00 PM
->To: rsbecker@nexbridge.com; 'Junio C Hamano' <gitster@pobox.com>
->Cc: git@vger.kernel.org; avarab@gmail.com
->Subject: Re: Test Failure t5510,t5562 - was RE: [ANNOUNCE] Git v2.37.0-rc1
->
->On 6/20/22 2:59 PM, rsbecker@nexbridge.com wrote:
->> On June 20, 2022 2:46 PM, Derrick Stolee wrote:
->
->>> The issue is this line (some tabs removed):
->>>
->>>  new_cmdline=$(printf "%s" "$cmdline" | perl -pe
->>> 's[origin(?!/)]["'"$remote_url"'"]g')
->>>
->>> At this point, $remote_url contains the file path including the @
->>> symbol. However, this perl invocation is dropping everything starting at the @
->to the next slash.
->>>
->>> I'm not sure of a better way to accomplish what is trying to be done
->>> here (replace 'origin' with that specific url) without maybe causing other issues.
->>>
->>> This line was introduced by e1790f9245f (fetch tests: fetch <url>
->>> <spec> as well as fetch [<remote>], 2018-02-09).
->>
->> How about using sed instead of perl for this?
->
->I wasn't sure if using sed would create a different kind of replacement problem,
->but using single-quotes seems to get around that kind of issue.
->
->Please see the patch below. I'm currently running CI in a GGG PR [1]
->
->[1] https://github.com/gitgitgadget/git/pull/1267
->
->Thanks,
->-Stolee
->
->
->--- >8 ---
->
->>From 1df4fc66d4a62adc7087d7d22c8d78842b4e9b4d Mon Sep 17 00:00:00 2001
->From: Derrick Stolee <derrickstolee@github.com>
->Date: Mon, 20 Jun 2022 15:52:09 -0400
->Subject: [PATCH] t5510: replace 'origin' with URL more carefully
->
->The many test_configured_prune tests in t5510-fetch.sh test many combinations
->of --prune, --prune-tags, and using 'origin' or an explicit URL. Some machinery was
->introduced in e1790f9245f (fetch tests: fetch <url> <spec> as well as fetch
->[<remote>], 2018-02-09) to replace 'origin' with this explicit URL. This URL is a
->"file:///" URL for the root of the $TRASH_DIRECTORY.
->
->However, if the current build tree has an '@' symbol, the replacement using perl
->fails. It drops the '@' as well as anything else in that directory name.
->
->You can verify this locally by cloning git.git into a "victim@03"
->directory and running the test script.
->
->To resolve this issue, replace the perl invocation with two sed commands. These
->two are used to ensure that we match exactly on the whole word 'origin'. We can
->guarantee that the word boundaries are spaces in our tests. The reason to use
->exact words is that sometimes a refspec is supplied, such as
->"+refs/heads/*:refs/remotes/origin/*" which would cause an incorrect
->replacement. The two commands are used because there is not a clear POSIX way
->to match on word boundaries without getting extremely pedantic about what
->possible characters we could have at the boundaries.
->
->Reported-by: Randall Becker <rsbecker@nexbridge.com>
->Signed-off-by: Derrick Stolee <derrickstolee@github.com>
->---
-> t/t5510-fetch.sh | 4 +++-
-> 1 file changed, 3 insertions(+), 1 deletion(-)
->
->diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh index 4620f0ca7fa..8ca3aa5e931
->100755
->--- a/t/t5510-fetch.sh
->+++ b/t/t5510-fetch.sh
->@@ -853,7 +853,9 @@ test_configured_prune_type () {
-> 		then
-> 			new_cmdline=$cmdline_setup
-> 		else
->-			new_cmdline=$(printf "%s" "$cmdline" | perl -pe
->'s[origin(?!/)]["'"$remote_url"'"]g')
->+			new_cmdline=$(printf "%s" "$cmdline" | \
->+					sed "s~origin ~'$remote_url' ~g" | \
->+					sed "s~ origin~ '$remote_url'~g")
-> 		fi
->
-> 		if test "$fetch_prune_tags" = 'true' ||
+> +	bitmap index (if one is written). This table is used to defer
+> +	loading individual bitmaps as late as possible. This can be
+> +	beneficial in repositories which have relatively large bitmap
+> +	indexes. Defaults to false.
 
-Ok, this seems to work. I have the test environment set up so can retest other options.
+Is there a reason that we would want to default to "false" here? Perhaps
+in the first version of two we would want this to be an opt-in (since
+there is no publicly documented way to opt-out of reading the extension
+once it is written).
 
+We should make sure to enable this by default at some point in the
+future.
+
+>  pack.writeReverseIndex::
+
+...since it's easy to forget ;-).
+
+Thanks,
+Taylor
