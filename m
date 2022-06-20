@@ -2,69 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B6E2C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 16:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 594D9C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 16:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240353AbiFTQ1Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jun 2022 12:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47566 "EHLO
+        id S240993AbiFTQck (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jun 2022 12:32:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243613AbiFTQZh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jun 2022 12:25:37 -0400
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB53417AAD
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 09:25:36 -0700 (PDT)
-Date:   Mon, 20 Jun 2022 16:25:21 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1655742331; x=1656001531;
-        bh=spYNtqrNnQHSLXJzX3k0vvjQ5Uyp81DMwGLR2c3sazo=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
-         Feedback-ID:Message-ID;
-        b=DBRcYOfy9DbCUYvK0afi3O7kopM0vweb8dw3a/0CTFXPGAt1KP3A8oaaMwHylBggu
-         /i/Wt4aLFJA8NkivGFuxFN4z+hfy2OZozLecTn+zS39HmsvnU6Df4PjDQesG2//UBC
-         lZPuty257n1l5H4HJtvp9NzFOEnpFQ0S+gYPER3Zl8WruQKkSwia8+/D3R1izbX+oH
-         mGg3NVrnGIFntLS+AVvUDfILt4op44SLC4a7dgOg+w70hqluOPtetlqCG5Er1E2uX6
-         EJ1hoSjxXSr8yAbtpHCoNOt95Z5K+WC97Pn+8pU58tNIF+iGdjB8TibVIplz8VTsrQ
-         J6LgSI0sKabbg==
-To:     Paul Eggert <eggert@cs.ucla.edu>
-From:   "Carlos L." <00xc@protonmail.com>
-Cc:     "Carlos L. via GitGitGadget" <gitgitgadget@gmail.com>,
-        =?utf-8?Q?Martin_=C3=85gren_=5B_=5D?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-Reply-To: "Carlos L." <00xc@protonmail.com>
-Subject: Re: [PATCH] grep: add --max-count command line option
-Message-ID: <xy0kCdbtIjKb_GkXpHs7eeE8eWLbbct69_tVczBGS3CMnnnKTlTheaeNlH-RB1mMAfWThSTN6bMThsQ4lLtr0Ji6RwG3Nd52L1muiEqdtCU=@protonmail.com>
-In-Reply-To: <449bede6-82b0-72ef-300d-bc0c49a1858b@cs.ucla.edu>
-References: <pull.1278.git.git.1655740174420.gitgitgadget@gmail.com> <449bede6-82b0-72ef-300d-bc0c49a1858b@cs.ucla.edu>
-Feedback-ID: 24333956:user:proton
+        with ESMTP id S232224AbiFTQch (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jun 2022 12:32:37 -0400
+Received: from zimbra.cs.ucla.edu (zimbra.cs.ucla.edu [131.179.128.68])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCA218E11
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 09:32:36 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by zimbra.cs.ucla.edu (Postfix) with ESMTP id D24671600EF;
+        Mon, 20 Jun 2022 09:32:36 -0700 (PDT)
+Received: from zimbra.cs.ucla.edu ([127.0.0.1])
+        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id TR1DoDcnftzv; Mon, 20 Jun 2022 09:32:36 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 2DFFF160143;
+        Mon, 20 Jun 2022 09:32:36 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at zimbra.cs.ucla.edu
+Received: from zimbra.cs.ucla.edu ([127.0.0.1])
+        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id IYvx9NU3hGp5; Mon, 20 Jun 2022 09:32:36 -0700 (PDT)
+Received: from [192.168.0.205] (ip72-206-2-24.fv.ks.cox.net [72.206.2.24])
+        by zimbra.cs.ucla.edu (Postfix) with ESMTPSA id BB8671600EF;
+        Mon, 20 Jun 2022 09:32:35 -0700 (PDT)
+Message-ID: <7b7a2876-f6fe-1234-813b-71ba94a00422@cs.ucla.edu>
+Date:   Mon, 20 Jun 2022 11:32:35 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH] grep: add --max-count command line option
+Content-Language: en-US
+To:     "Carlos L." <00xc@protonmail.com>
+Cc:     "Carlos L. via GitGitGadget" <gitgitgadget@gmail.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3JlbiBbIF0=?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+References: <pull.1278.git.git.1655740174420.gitgitgadget@gmail.com>
+ <449bede6-82b0-72ef-300d-bc0c49a1858b@cs.ucla.edu>
+ <xy0kCdbtIjKb_GkXpHs7eeE8eWLbbct69_tVczBGS3CMnnnKTlTheaeNlH-RB1mMAfWThSTN6bMThsQ4lLtr0Ji6RwG3Nd52L1muiEqdtCU=@protonmail.com>
+From:   Paul Eggert <eggert@cs.ucla.edu>
+In-Reply-To: <xy0kCdbtIjKb_GkXpHs7eeE8eWLbbct69_tVczBGS3CMnnnKTlTheaeNlH-RB1mMAfWThSTN6bMThsQ4lLtr0Ji6RwG3Nd52L1muiEqdtCU=@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Monday, June 20th, 2022 at 17:57, Paul Eggert <eggert@cs.ucla.edu> wrote=
-:
-
-> On 6/20/22 10:49, Carlos L. via GitGitGadget wrote:
+On 6/20/22 11:25, Carlos L. wrote:
+> This does not work well with OPTION_INTEGER, since it assumes the value to be int-sized:
 >
-> > + unsigned max_count;
->
->
-> Why not make this intmax_t? That way, you don't have to worry about
-> casting -1 to unsigned. Also on typical 64-bit machines you no longer
-> have to worry about mishandling counts greater than 232 (the limit
-> becomes 263 - 1 which is plenty).
+> parse-options.c:
+>   219             *(int *)opt->value = strtol(arg, (char **)&s, 10);
 
-This does not work well with OPTION_INTEGER, since it assumes the value to =
-be int-sized:
+OK, so parse-options messes up if the user specifies a count that does 
+not fit in 'int'? Although that's a separate bug, let's not make things 
+worse here; let's make the new count an 'int'.
 
-parse-options.c:
- 219             *(int *)opt->value =3D strtol(arg, (char **)&s, 10);
+In the long run parse-options should be changed to use strtoimax instead 
+of strtol, and the corresponding integers should be changed to intmax_t, 
+and the proper thing should be done if the string value does not fit 
+into intmax_t. But this longer-run fix affects all integer-valued 
+options, not just this one.
 
-I also wanted to avoid using signed int so both sides of the comparison wit=
-h `count` in grep_source_1() have the same sign.
+
+> I also wanted to avoid using signed int so both sides of the comparison with `count` in grep_source_1() have the same sign.
+
+Such comparisons cannot misfire if both values are nonnegative, and that 
+can easily be arranged here.
+
