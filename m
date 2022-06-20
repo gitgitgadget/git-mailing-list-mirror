@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4D01C43334
-	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 12:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A83BBC433EF
+	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 12:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242669AbiFTMdq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jun 2022 08:33:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48690 "EHLO
+        id S242697AbiFTMdr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jun 2022 08:33:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242726AbiFTMdW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jun 2022 08:33:22 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E2296459
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 05:33:20 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id w17so14457627wrg.7
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 05:33:20 -0700 (PDT)
+        with ESMTP id S242746AbiFTMdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jun 2022 08:33:23 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A6186407
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 05:33:22 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id x6-20020a1c7c06000000b003972dfca96cso5618499wmc.4
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 05:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qB40vecJidre48+Xh+Saa3dq72UdlnOWRldQU5puktU=;
-        b=UEBzeoBx713cRahyiGYaJuTxYno8O7dk/HOAgJ4saG5rkuiV3Cwzy2ix65lx4XKhTi
-         gfJERif4cE/B/i4WqRcKvqxmmYsH21KSgcKuQT14pbo3CMUv+AIGe7INHayZm7P5V56j
-         KD6XsIezvV0wiIbEMSB2+mrgshQwGkkW35qlMYcM78g/0l85Qx15Sm9XX5J/KTNZ4oYS
-         VaoTEt2yH7aaJT4X8ZJCPcg9JQMp0CBGcAtzBJobGcVz3VrzEjYcSNPE0GSZFJK4Whyt
-         6xPGtQIQZZDQfgIf3jKiQE5cP3t+Sg/BGGgcvGmLnLYEbllslsjibbm0xuH3dO/FxBXB
-         wIJw==
+        bh=Aau4V7jULEjonH1fV+eoCMGtH3S5VuUSfqMYvIszRwE=;
+        b=It7hEgypbVTPkbfrssjM3QqBvwb/lgB6kii/HE73Y2UTJuqpQ29SObuznePFi1iCKC
+         ZKMf822aRGegckxhSVqpaJchwZA2VCLQ86EGz5ZFyRqqiU5t2qBxYnKtolYSTVZNwAN+
+         x+HpgEUnkPbdZ4ZszRDpY2ZDn1lbqrbTWIRZ31/W6Eo/Wn0ofB6C68Rq0/lJErCNINnY
+         wULAOef2CmMlUrcvGa9jhiXKLfZ+iTEFi5JmkfoH81xYpPSZGPcQVi6myEoD7qKO6nrL
+         HyDlG70J0BAiaCO6CoDnBNGfglpngBTVinYNXwGQ4kX4W7SPK2VcW5IHYCz35fkqYBu/
+         zxqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qB40vecJidre48+Xh+Saa3dq72UdlnOWRldQU5puktU=;
-        b=LZ0jUdLR+SI02HYpV3ZsnYZqV8MP6BZ7ykEXvoIYL38Y2QUy1rydk+oOnFnpHFTm7B
-         r2E0aiO5gV0dnoOf/FNor7JjHKcpj1Fq0/6kvr8Q+UqDOouYYl/wc1/aLTrQT0z+DIjU
-         VCUveZS2Yv7MJ270N6sEPjhAb20bknlm3PryFTtxT8jRrTieUFDnQt4l6BX7PWplPSzG
-         ptkjwf6ulBK3lNFV+/pwQd5NRv98zx+HPmC1zqDcGn8I/mcboFzS1zSBiIWxLIkHM07h
-         4xWj+lIMBwLQRBqkSOC9c0wzOrbNW/Q/45K+KxfyDB+2jjPCaEJoTCK5lOdkeHOh7iC5
-         u5Pg==
-X-Gm-Message-State: AJIora8iayPTQrR+RoDMIu3A4GJmu4IOze9SCbmRGA06L8HJFv2jFFvJ
-        1sDqpB6Q2yyVlbRczJW35TZ8ygFpGdrjFw==
-X-Google-Smtp-Source: AGRyM1vnX5XVn35qPwFbDGixdR5GLCLR2BSoC/j3FoFUYW6MPLaUUDtdxhmDa9X3FQyihjeav2gksA==
-X-Received: by 2002:adf:e752:0:b0:21b:80ae:9d7a with SMTP id c18-20020adfe752000000b0021b80ae9d7amr16462961wrn.362.1655728398996;
-        Mon, 20 Jun 2022 05:33:18 -0700 (PDT)
+        bh=Aau4V7jULEjonH1fV+eoCMGtH3S5VuUSfqMYvIszRwE=;
+        b=OCFdAbO1b/wNp3xWyCvGuY/wakmANCFuq2gXdarKNkdcHirt3Oa6zXaz3lXbu6m+kI
+         sHAIwSM/VTM9emyXWSOUv6MlvbW/wrVWMBWdjkTGV2KxhigfPbT6PfEWEsT1HZEFF7NK
+         Ln8KtFGCv4gT6MEIizdmQkK6duKMq+4CMlrQWy1RK5mqgXq82a5Ha3azENYEtsdJP4k7
+         CAJ2MWLTCb4XKuWdfb07Ft7ezjJGp6ImrDaQt8lUZerYZjqe+eHViwsf0v2aCZpIowf1
+         ceMHQs2SD7mJ/R7M5xY4gviS1XuQfjoRMdJ9N4RvLhJOcLn+8kJcqbhFKzKfwYMxXMTr
+         OLZA==
+X-Gm-Message-State: AJIora9zylzTQC41MmTJQPrEadYp2EHNgTnYqd29x0fzM78QqosoW0O8
+        3HyMd+xazFrc9Z6C021BrMPeh9WofV2KpQ==
+X-Google-Smtp-Source: AGRyM1sU4lfbccgeVU2e7f/84WBgyLlzkVd3xac+2Qn/hJbNqgX2eJnV62TvDz0n32L5krw5MQEcBA==
+X-Received: by 2002:a05:600c:2189:b0:39c:4bfe:880e with SMTP id e9-20020a05600c218900b0039c4bfe880emr24019079wme.78.1655728400249;
+        Mon, 20 Jun 2022 05:33:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b9-20020adfe309000000b0020d0c9c95d3sm13488197wrj.77.2022.06.20.05.33.18
+        by smtp.gmail.com with ESMTPSA id y6-20020a5d6206000000b0021350f7b22esm14136172wru.109.2022.06.20.05.33.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jun 2022 05:33:18 -0700 (PDT)
-Message-Id: <d139a4c48aa058b142c4860721b10344c5498031.1655728395.git.gitgitgadget@gmail.com>
+        Mon, 20 Jun 2022 05:33:19 -0700 (PDT)
+Message-Id: <ed91ebf69a84405f16a4390e6fd208251b8ec53e.1655728395.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1266.git.1655728395.gitgitgadget@gmail.com>
 References: <pull.1266.git.1655728395.gitgitgadget@gmail.com>
 From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Jun 2022 12:33:10 +0000
-Subject: [PATCH 2/6] pack-bitmap: prepare to read lookup table extension
+Date:   Mon, 20 Jun 2022 12:33:11 +0000
+Subject: [PATCH 3/6] pack-bitmap-write.c: write lookup table extension
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,254 +68,128 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 
-Bitmap lookup table extension can let git to parse only the necessary
-bitmaps without loading the previous bitmaps one by one.
+Teach git to write bitmap lookup table extension. The table has the
+following information:
 
-Teach git to read and use the bitmap lookup table extension.
+    - `N` no of Object ids of each bitmapped commits
 
-Co-Authored-by: Taylor Blau <ttaylorr@github.com>
+    - A list of offset, xor-offset pair; the i'th pair denotes the
+      offsets and xor-offsets of i'th commit in the previous list.
+
+    - 4-byte integer denoting the flags
+
+Co-authored-by: Taylor Blau <ttaylorr@github.com>
 Mentored-by: Taylor Blau <ttaylorr@github.com>
-Co-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Co-mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 ---
- pack-bitmap.c | 172 ++++++++++++++++++++++++++++++++++++++++++++++++--
- pack-bitmap.h |   1 +
- 2 files changed, 166 insertions(+), 7 deletions(-)
+ pack-bitmap-write.c | 59 +++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 57 insertions(+), 2 deletions(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 36134222d7a..d5e5973a79f 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -15,6 +15,7 @@
- #include "list-objects-filter-options.h"
- #include "midx.h"
- #include "config.h"
-+#include "hash-lookup.h"
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index c43375bd344..9e88a64dd65 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -650,7 +650,8 @@ static const struct object_id *oid_access(size_t pos, const void *table)
  
- /*
-  * An entry on the bitmap index, representing the bitmap for a given
-@@ -82,6 +83,13 @@ struct bitmap_index {
- 	/* The checksum of the packfile or MIDX; points into map. */
- 	const unsigned char *checksum;
- 
-+	/*
-+	 * If not NULL, these point into the various commit table sections
-+	 * (within map).
-+	 */
-+	unsigned char *table_lookup;
-+	unsigned char *table_offsets;
-+
- 	/*
- 	 * Extended index.
- 	 *
-@@ -185,6 +193,24 @@ static int load_bitmap_header(struct bitmap_index *index)
- 			index->hashes = (void *)(index_end - cache_size);
- 			index_end -= cache_size;
- 		}
-+
-+		if (flags & BITMAP_OPT_LOOKUP_TABLE &&
-+		    git_env_bool("GIT_READ_COMMIT_TABLE", 1)) {
-+			uint32_t entry_count = ntohl(header->entry_count);
-+			uint32_t table_size =
-+				(entry_count * the_hash_algo->rawsz) /* oids */ +
-+				(entry_count * sizeof(uint32_t)) /* offsets */ +
-+				(entry_count * sizeof(uint32_t)) /* xor offsets */ +
-+				(sizeof(uint32_t)) /* flags */;
-+
-+			if (table_size > index_end - index->map - header_size)
-+				return error("corrupted bitmap index file (too short to fit commit table)");
-+
-+			index->table_lookup = (void *)(index_end - table_size);
-+			index->table_offsets = index->table_lookup + the_hash_algo->rawsz * entry_count;
-+
-+			index_end -= table_size;
-+		}
- 	}
- 
- 	index->entry_count = ntohl(header->entry_count);
-@@ -470,7 +496,7 @@ static int load_bitmap(struct bitmap_index *bitmap_git)
- 		!(bitmap_git->tags = read_bitmap_1(bitmap_git)))
- 		goto failed;
- 
--	if (load_bitmap_entries_v1(bitmap_git) < 0)
-+	if (!bitmap_git->table_lookup && load_bitmap_entries_v1(bitmap_git) < 0)
- 		goto failed;
- 
- 	return 0;
-@@ -557,14 +583,145 @@ struct include_data {
- 	struct bitmap *seen;
- };
- 
--struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
--				      struct commit *commit)
-+static struct stored_bitmap *stored_bitmap_for_commit(struct bitmap_index *bitmap_git,
-+						      struct commit *commit,
-+						      uint32_t *pos_hint);
-+
-+static inline const unsigned char *bitmap_oid_pos(struct bitmap_index *bitmap_git,
-+						  uint32_t pos)
-+{
-+	return bitmap_git->table_lookup + (pos * the_hash_algo->rawsz);
-+}
-+
-+static inline const void *bitmap_offset_pos(struct bitmap_index *bitmap_git,
-+					    uint32_t pos)
-+{
-+	return bitmap_git->table_offsets + (pos * 2 * sizeof(uint32_t));
-+}
-+
-+static inline const void *xor_position_pos(struct bitmap_index *bitmap_git,
-+					   uint32_t pos)
-+{
-+	return (unsigned char*) bitmap_offset_pos(bitmap_git, pos) + sizeof(uint32_t);
-+}
-+
-+static int bitmap_lookup_cmp(const void *_va, const void *_vb)
-+{
-+	return hashcmp(_va, _vb);
-+}
-+
-+static int bitmap_table_lookup(struct bitmap_index *bitmap_git,
-+			       struct object_id *oid,
-+			       uint32_t *commit_pos)
-+{
-+	unsigned char *found = bsearch(oid->hash, bitmap_git->table_lookup,
-+				       bitmap_git->entry_count,
-+				       the_hash_algo->rawsz, bitmap_lookup_cmp);
-+	if (found)
-+		*commit_pos = (found - bitmap_git->table_lookup) / the_hash_algo->rawsz;
-+	return !!found;
-+}
-+
-+static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_git,
-+						    struct object_id *oid,
-+						    uint32_t commit_pos)
-+{
-+	uint32_t xor_pos;
-+	off_t bitmap_ofs;
-+
-+	int flags;
-+	struct ewah_bitmap *bitmap;
-+	struct stored_bitmap *xor_bitmap;
-+
-+	bitmap_ofs = get_be32(bitmap_offset_pos(bitmap_git, commit_pos));
-+	xor_pos = get_be32(xor_position_pos(bitmap_git, commit_pos));
-+
-+	/*
-+	 * Lazily load the xor'd bitmap if required (and we haven't done so
-+	 * already). Make sure to pass the xor'd bitmap's position along as a
-+	 * hint to avoid an unnecessary binary search in
-+	 * stored_bitmap_for_commit().
-+	 */
-+	if (xor_pos == 0xffffffff) {
-+		xor_bitmap = NULL;
-+	} else {
-+		struct commit *xor_commit;
-+		struct object_id xor_oid;
-+
-+		oidread(&xor_oid, bitmap_oid_pos(bitmap_git, xor_pos));
-+
-+		xor_commit = lookup_commit(the_repository, &xor_oid);
-+		if (!xor_commit)
-+			return NULL;
-+
-+		xor_bitmap = stored_bitmap_for_commit(bitmap_git, xor_commit,
-+						      &xor_pos);
-+	}
-+
-+	/*
-+	 * Don't bother reading the commit's index position or its xor
-+	 * offset:
-+	 *
-+	 *   - The commit's index position is irrelevant to us, since
-+	 *     load_bitmap_entries_v1 only uses it to learn the object
-+	 *     id which is used to compute the hashmap's key. We already
-+	 *     have an object id, so no need to look it up again.
-+	 *
-+	 *   - The xor_offset is unusable for us, since it specifies how
-+	 *     many entries previous to ours we should look at. This
-+	 *     makes sense when reading the bitmaps sequentially (as in
-+	 *     load_bitmap_entries_v1()), since we can keep track of
-+	 *     each bitmap as we read them.
-+	 *
-+	 *     But it can't work for us, since the bitmap's don't have a
-+	 *     fixed size. So we learn the position of the xor'd bitmap
-+	 *     from the commit table (and resolve it to a bitmap in the
-+	 *     above if-statement).
-+	 *
-+	 * Instead, we can skip ahead and immediately read the flags and
-+	 * ewah bitmap.
-+	 */
-+	bitmap_git->map_pos = bitmap_ofs + sizeof(uint32_t) + sizeof(uint8_t);
-+	flags = read_u8(bitmap_git->map, &bitmap_git->map_pos);
-+	bitmap = read_bitmap_1(bitmap_git);
-+	if (!bitmap)
-+		return NULL;
-+
-+	return store_bitmap(bitmap_git, bitmap, oid, xor_bitmap, flags);
-+}
-+
-+static struct stored_bitmap *stored_bitmap_for_commit(struct bitmap_index *bitmap_git,
-+						      struct commit *commit,
-+						      uint32_t *pos_hint)
+ static void write_selected_commits_v1(struct hashfile *f,
+ 				      struct pack_idx_entry **index,
+-				      uint32_t index_nr)
++				      uint32_t index_nr,
++				      off_t *offsets)
  {
- 	khiter_t hash_pos = kh_get_oid_map(bitmap_git->bitmaps,
- 					   commit->object.oid);
--	if (hash_pos >= kh_end(bitmap_git->bitmaps))
-+	if (hash_pos >= kh_end(bitmap_git->bitmaps)) {
-+		uint32_t commit_pos;
-+		if (!bitmap_git->table_lookup)
-+			return NULL;
+ 	int i;
+ 
+@@ -663,6 +664,9 @@ static void write_selected_commits_v1(struct hashfile *f,
+ 		if (commit_pos < 0)
+ 			BUG("trying to write commit not in index");
+ 
++		if (offsets)
++			offsets[i] = hashfile_total(f);
 +
-+		/* NEEDSWORK: cache misses aren't recorded. */
-+		if (pos_hint)
-+			commit_pos = *pos_hint;
-+		else if (!bitmap_table_lookup(bitmap_git,
-+					      &commit->object.oid,
-+					      &commit_pos))
-+			return NULL;
-+		return lazy_bitmap_for_commit(bitmap_git, &commit->object.oid,
-+					      commit_pos);
-+	}
-+	return kh_value(bitmap_git->bitmaps, hash_pos);
-+}
-+
-+struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
-+				      struct commit *commit)
-+{
-+	struct stored_bitmap *sb = stored_bitmap_for_commit(bitmap_git, commit,
-+							    NULL);
-+	if (!sb)
- 		return NULL;
--	return lookup_stored_bitmap(kh_value(bitmap_git->bitmaps, hash_pos));
-+	return lookup_stored_bitmap(sb);
+ 		hashwrite_be32(f, commit_pos);
+ 		hashwrite_u8(f, stored->xor_offset);
+ 		hashwrite_u8(f, stored->flags);
+@@ -671,6 +675,49 @@ static void write_selected_commits_v1(struct hashfile *f,
+ 	}
  }
  
- static inline int bitmap_position_extended(struct bitmap_index *bitmap_git,
-@@ -1699,8 +1856,9 @@ void test_bitmap_walk(struct rev_info *revs)
- 	if (revs->pending.nr != 1)
- 		die("you must specify exactly one commit to test");
++static int table_cmp(const void *_va, const void *_vb)
++{
++	return oidcmp(&writer.selected[*(uint32_t*)_va].commit->object.oid,
++		      &writer.selected[*(uint32_t*)_vb].commit->object.oid);
++}
++
++static void write_lookup_table(struct hashfile *f,
++			       off_t *offsets)
++{
++	uint32_t i;
++	uint32_t flags = 0;
++	uint32_t *table, *table_inv;
++
++	ALLOC_ARRAY(table, writer.selected_nr);
++	ALLOC_ARRAY(table_inv, writer.selected_nr);
++
++	for (i = 0; i < writer.selected_nr; i++)
++		table[i] = i;
++	QSORT(table, writer.selected_nr, table_cmp);
++	for (i = 0; i < writer.selected_nr; i++)
++		table_inv[table[i]] = i;
++
++	for (i = 0; i < writer.selected_nr; i++) {
++		struct bitmapped_commit *selected = &writer.selected[table[i]];
++		struct object_id *oid = &selected->commit->object.oid;
++
++		hashwrite(f, oid->hash, the_hash_algo->rawsz);
++	}
++	for (i = 0; i < writer.selected_nr; i++) {
++		struct bitmapped_commit *selected = &writer.selected[table[i]];
++
++		hashwrite_be32(f, offsets[table[i]]);
++		hashwrite_be32(f, selected->xor_offset
++			       ? table_inv[table[i] - selected->xor_offset]
++			       : 0xffffffff);
++	}
++
++	hashwrite_be32(f, flags);
++
++	free(table);
++	free(table_inv);
++}
++
+ static void write_hash_cache(struct hashfile *f,
+ 			     struct pack_idx_entry **index,
+ 			     uint32_t index_nr)
+@@ -695,6 +742,7 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ {
+ 	static uint16_t default_version = 1;
+ 	static uint16_t flags = BITMAP_OPT_FULL_DAG;
++	off_t *offsets = NULL;
+ 	struct strbuf tmp_file = STRBUF_INIT;
+ 	struct hashfile *f;
  
--	fprintf(stderr, "Bitmap v%d test (%d entries loaded)\n",
--		bitmap_git->version, bitmap_git->entry_count);
-+	if (!bitmap_git->table_lookup)
-+		fprintf(stderr, "Bitmap v%d test (%d entries loaded)\n",
-+			bitmap_git->version, bitmap_git->entry_count);
+@@ -715,8 +763,14 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 	dump_bitmap(f, writer.trees);
+ 	dump_bitmap(f, writer.blobs);
+ 	dump_bitmap(f, writer.tags);
+-	write_selected_commits_v1(f, index, index_nr);
  
- 	root = revs->pending.objects[0].item;
- 	bm = bitmap_for_commit(bitmap_git, (struct commit *)root);
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 3d3ddd77345..37f86787a4d 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -26,6 +26,7 @@ struct bitmap_disk_header {
- enum pack_bitmap_opts {
- 	BITMAP_OPT_FULL_DAG = 1,
- 	BITMAP_OPT_HASH_CACHE = 4,
-+	BITMAP_OPT_LOOKUP_TABLE = 16,
- };
++	if (options & BITMAP_OPT_LOOKUP_TABLE)
++		CALLOC_ARRAY(offsets, index_nr);
++
++	write_selected_commits_v1(f, index, index_nr, offsets);
++
++	if (options & BITMAP_OPT_LOOKUP_TABLE)
++		write_lookup_table(f, offsets);
+ 	if (options & BITMAP_OPT_HASH_CACHE)
+ 		write_hash_cache(f, index, index_nr);
  
- enum pack_bitmap_flags {
+@@ -730,4 +784,5 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 		die_errno("unable to rename temporary bitmap file to '%s'", filename);
+ 
+ 	strbuf_release(&tmp_file);
++	free(offsets);
+ }
 -- 
 gitgitgadget
 
