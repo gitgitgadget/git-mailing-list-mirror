@@ -2,172 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E58FFC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 09:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86CD5C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 09:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240490AbiFTJFs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jun 2022 05:05:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47884 "EHLO
+        id S237863AbiFTJm2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jun 2022 05:42:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240579AbiFTJFg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jun 2022 05:05:36 -0400
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19E79DFC
-        for <git@vger.kernel.org>; Mon, 20 Jun 2022 02:05:35 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id A988F5C0174;
-        Mon, 20 Jun 2022 05:05:32 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 20 Jun 2022 05:05:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; t=1655715932; x=1655802332; bh=Jl3z/8ZALC
-        HXFWzO8rGjo2C34GpQNmTJwtXbGD80lwE=; b=e7cHdZ/ztBRWo8KCqT5h7NStrw
-        7xPdhtm56q0sBKwC0VoyZVGpStiwWUP3n04xO2rltQCF0flRJbgJxY6bKx9V5CXk
-        JeCUvfdE8o96+J5yD39tE5Z1N8T3B3tM+FDnS+Ro52GvN3xBHkBDY8KP8B2ihVcR
-        77zjGlMb0Z3Gg8mYQZK3ADTDq7LuQWBhNJvv1s/R/s+I45HzfnvoVdXlMJYhh8aF
-        VdhmqRF1RvFoxa73zeAc4G4s4ejoZaf08BV9YV3xNktExQcyf7AscKRRECAgCHox
-        V8fs+ls+FtF3ChxeDPeGQlzI7IqU0e8JeN6ZynrcH28de5tH5rLeqqZSUKUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; t=1655715932; x=1655802332; bh=Jl3z/8ZALCHXFWzO8rGjo2C34GpQ
-        NmTJwtXbGD80lwE=; b=HeWeLGUb/XkNEJ4zMcQCpUWRy/sPWfMScKx7S4ByE7iY
-        H0jBao5jqovqpE4d800IkhAsfT/Wvvtt1icniXVRon1IUSbwxg/o83sozXfFtACE
-        ZPHX5Uop/uTtf0ovm/8Bbgl6AM5E+GkepY2KZQ9BakOsQ8zmSr9db65ERTjYpBrh
-        9JNZb6g2LRc4IX8DqSjaIDtzgUk+YQbnQ05OR4faooC7NOAqQuXfMujiaUD4OS+R
-        LPu5mGUeH5VSNqdiiaP0YNhxWudH2ar+dI2+bDi17jB76iHgqr/owBtEcVyQjakp
-        7YR/Whwv9nRsAUiUpyZvxW7RYnwN7vIKgyTUbJ4ecw==
-X-ME-Sender: <xms:XDiwYmI550cciuPa-XyBJITdea-bp5HCaG7mIea8wadRi6PAPS5_Bw>
-    <xme:XDiwYuKWT4XzAUXmWrJjtzhd5HN_guFn1SUGOTHsZzZS8lWSJcayASppUNLDnxWN8
-    FWCMSsREauSQBV6zw>
-X-ME-Received: <xmr:XDiwYmuiKlBerL_u4ZU0w3z51EzWODBJNjsb6xB9usdyfRvFkBezblvvKnT7G0p8bBESvbNcH85PRxXm3hS-ALvpv8VHT-nRqLOVN8ES2YTvjXCHk0r9jHuJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudefuddgudduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeetfeetleeiffdvveffgfehhfduleelff
-    eujeevvdehfeffiefhhefhleffieejjeenucffohhmrghinhepghhithhhuhgsrdgtohhm
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:XDiwYra1mjkT2_uHMYMps5VsI5H3mqiRfwtGobqSPIuyE3ajAMN4BA>
-    <xmx:XDiwYtamLBqnBs5IM_Sj-P0BmT3RPrQ_JaDubG425T6bZ3NOOZpIBQ>
-    <xmx:XDiwYnDpFSV2nx8kbp2Y-Qc82Lb97ygbuEQBnXL46D4Va5q7lw1Xdg>
-    <xmx:XDiwYgwZqENMDJPOqFGcluiEn3m3Set7kzNNnHQizqxXQg_60qJ3VA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jun 2022 05:05:31 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a5c73e3e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 20 Jun 2022 09:05:30 +0000 (UTC)
-Date:   Mon, 20 Jun 2022 11:05:29 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     =?utf-8?B?5qyj6Z+p?= <hanxin.hx@bytedance.com>
-Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
-        git@vger.kernel.org, haiyangtand@gmail.com,
-        jonathantanmy@google.com, me@ttaylorr.com
-Subject: Re: [External] Re: [PATCH v1] commit-graph.c: no lazy fetch in
- lookup_commit_in_graph()
-Message-ID: <YrA4WdvmN4jrXe/m@ncase>
-References: <cover.1655350442.git.hanxin.hx@bytedance.com>
- <20220618030130.36419-1-hanxin.hx@bytedance.com>
- <YrAcrNApaZDngLL+@ncase>
- <CAKgqsWVfjOw-b4hbz1WDH5sevUab_bQVLb703apew3fX7B60rQ@mail.gmail.com>
+        with ESMTP id S239503AbiFTJmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jun 2022 05:42:25 -0400
+Received: from dalaran.tastycake.net (dalaran.tastycake.net [IPv6:2001:ba8:0:1c0::1:1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC9513DCD
+        for <git@vger.kernel.org>; Mon, 20 Jun 2022 02:42:23 -0700 (PDT)
+Received: from b.8.0.0.8.9.b.0.2.f.0.9.2.a.d.b.d.a.0.2.5.1.e.d.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:de15:20ad:bda2:90f2:b98:8b] helo=lucy.dinwoodie.org)
+        by dalaran.tastycake.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <adam@dinwoodie.org>)
+        id 1o3DvG-0007K1-OA; Mon, 20 Jun 2022 10:42:18 +0100
+Received: from adam by lucy.dinwoodie.org with local (Exim 4.94.2)
+        (envelope-from <adam@dinwoodie.org>)
+        id 1o3Duf-005S5j-FQ; Mon, 20 Jun 2022 10:41:41 +0100
+Date:   Mon, 20 Jun 2022 10:41:41 +0100
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v6+ 2/7] archive --add-virtual-file: allow paths
+ containing colons
+Message-ID: <20220620094141.uwvofvefoq26xxdu@lucy.dinwoodie.org>
+References: <pull.1128.v6.git.1653145696.gitgitgadget@gmail.com>
+ <20220528231118.3504387-1-gitster@pobox.com>
+ <20220528231118.3504387-3-gitster@pobox.com>
+ <20220615181641.vltm3qtbsckp5s56@lucy.dinwoodie.org>
+ <xmqqpmj9zohk.fsf@gitster.g>
+ <20220615213656.zp36wdwbcz7yevac@lucy.dinwoodie.org>
+ <nycvar.QRO.7.76.6.2206182213290.349@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="KPUuNX6o9V2mnBq4"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAKgqsWVfjOw-b4hbz1WDH5sevUab_bQVLb703apew3fX7B60rQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.2206182213290.349@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---KPUuNX6o9V2mnBq4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jun 20, 2022 at 04:53:47PM +0800, =E6=AC=A3=E9=9F=A9 wrote:
-> On Mon, Jun 20, 2022 at 3:34 PM Patrick Steinhardt <ps@pks.im> wrote:
+On Sat, Jun 18, 2022 at 10:19:28PM +0200, Johannes Schindelin wrote:
+> Hi Adam,
+> 
+> On Wed, 15 Jun 2022, Adam Dinwoodie wrote:
+> 
+> > On Wed, Jun 15, 2022 at 01:00:07PM -0700, Junio C Hamano wrote:
+> > > Adam Dinwoodie <adam@dinwoodie.org> writes:
+> > >
+> > > >> diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+> > > >> index d6027189e2..3992d08158 100755
+> > > >> --- a/t/t5003-archive-zip.sh
+> > > >> +++ b/t/t5003-archive-zip.sh
+> > > >> @@ -207,13 +207,21 @@ check_zip with_untracked
+> > > >>  check_added with_untracked untracked untracked
+> > > >>
+> > > >>  test_expect_success UNZIP 'git archive --format=zip --add-virtual-file' '
+> > > >> +	if test_have_prereq FUNNYNAMES
+> > > >> +	then
+> > > >> +		PATHNAME="pathname with : colon"
+> > > >> +	else
+> > > >> +		PATHNAME="pathname without colon"
+> > > >> +	fi &&
+> > > >>  	git archive --format=zip >with_file_with_content.zip \
+> > > >> +		--add-virtual-file=\""$PATHNAME"\": \
+> > > >>  		--add-virtual-file=hello:world $EMPTY_TREE &&
+> > > >>  	test_when_finished "rm -rf tmp-unpack" &&
+> > > >>  	mkdir tmp-unpack && (
+> > > >>  		cd tmp-unpack &&
+> > > >>  		"$GIT_UNZIP" ../with_file_with_content.zip &&
+> > > >>  		test_path_is_file hello &&
+> > > >> +		test_path_is_file "$PATHNAME" &&
+> > > >>  		test world = $(cat hello)
+> > > >>  	)
+> > > >>  '
+> > > >
+> > > > This test is currently failing on Cygwin: it looks like it's exposing a
+> > > > bug in Cygwin that means files with colons in their name aren't
+> > > > correctly extracted from zip archives.  I'm going to report that to the
+> > > > Cygwin mailing list, but I wanted to note it for the record here, too.
+> > >
+> > > Does this mean that our code to set FUNNYNAMES prerequiste is
+> > > slightly broken?  IOW, should we check with a path with a colon in
+> > > it, as well as whatever we use currently for FUNNYNAMES?
+> > >
+> > > Something like the attached patch?
+> > >
+> > > Or does Cygwin otherwise work perfectly well with a path with a
+> > > colon in it, but only $GIT_UNZIP command has problem with it?  If
+> > > that is the case, then please disregard the attached.
 > >
-> > On Sat, Jun 18, 2022 at 11:01:30AM +0800, Han Xin wrote:
-[snip]
-> > > +test_expect_success 'prepare a repository with a commit-graph contai=
-ns commit two' '
-> > > +     git init source &&
-> > > +     echo "$(pwd)/dest.git/objects" >source/.git/objects/info/altern=
-ates &&
-> > > +     git -C source remote add origin "$(pwd)/dest.git" &&
-> > > +     git -C source config remote.origin.promisor true &&
-> > > +     git -C source config remote.origin.partialclonefilter blob:none=
- &&
-> > > +     # the source repository has the whole refs contains refs/heads/=
-tmp
-> > > +     git -C source fetch origin &&
-> > > +     (
-> > > +             cd source &&
-> > > +             test_commit three &&
-> > > +             git -c gc.writeCommitGraph=3Dtrue gc
-> > > +     )
-> > > +'
-> > > +
-> > > +test_expect_success 'change the alternates of source to that without=
- commit two' '
-> > > +     # now we have a commit-graph in the source repository but witho=
-ut the commit two
-> > > +     echo "$(pwd)/alternates/objects" >source/.git/objects/info/alte=
-rnates
-> > > +'
-> > > +
-> > > +test_expect_success 'fetch the missing commit' '
-> > > +     git -C source fetch origin $oid 2>fetch.out &&
-> > > +     grep "$oid" fetch.out
-> > > +'
+> > The latter: Cygwin works perfectly with paths containing colons, except
+> > that Cygwin's `unzip` is seemingly buggy and doesn't work.  The file
+> > systems Cygwin runs on don't support colons in paths, but Cygwin hides
+> > that problem by rewriting ASCII colons to some high Unicode code point
+> > on the filesystem,
+> 
+> Let me throw in a bit more detail: The forbidden characters are mapped
+> into the Unicode page U+f0XX, which is supposed to be used "for private
+> purposes". Even more detail can be found here:
+> https://github.com/cygwin/cygwin/blob/cygwin-3_3_5-release/winsup/cygwin/strfuncs.cc#L19-L23
+> 
+> > meaning Cygwin-native applications see a regular colon, while
+> > Windows-native applications see an unusual but perfectly valid Unicode
+> > character.
+> 
+> Now, I have two questions:
+> 
+> - Why does `unzip` not use Cygwin's regular functions (which should all be
+>   aware of that U+f0XX <-> U+00XX mapping)?
+
+That is an excellent question!  This behaviour came from an `#ifdef
+__CYGWIN__` in the upstream unzip package; with that #ifdef removed,
+everything works as expected.  The folk on the Cygwin mailing list had
+no idea *why* that #ifdef was there, given it's evidently unnecessary;
+my best guess is that it was added a long time ago before Cygwin could
+handle those characters in the general case.
+
+Since my report, the Cygwin package has picked up a new maintainer who
+has released a version of the unzip package with that #ifdef removed, so
+this test is now passing.
+
+> - Even more importantly: would the test case pass if we simply used
+>   another forbidden character, such as `?` or `*`?
+
+The set of characters that had special handling in unzip was "*:?|<> all
+of which are handled appropriately by Cygwin applications in general,
+and all of which had this unnecessary handling in `unzip`
+
+> > I tested the same patch to FUNNYNAMES myself before reporting, and the
+> > test fails exactly the same way.  If we wanted to catch this, I think
+> > we'd need a test that explicitly attempted to unzip an archive
+> > containing a path with a colon.
 > >
-> > This test passes even without your fix, albeit a lot slower compared
-> > to with it. Can we somehow cause it to fail reliably so that the test
-> > becomes effective in catching a regression here?
-> >
->=20
-> Could you help me find the reason why this testcase passes even
-> without the fix.
->=20
-> From the execution of Github Action, it seems that the problem always exi=
-st=EF=BC=9A
-> https://github.com/chiyutianyi/git/actions/runs/2527421443.
->=20
-> Thanks.
-> -Han Xin
+> > (The code to set FUNNYNAMES *is* slightly broken, per the discussions
+> > around 6d340dfaef ("t9902: split test to run on appropriate systems",
+> > 2022-04-08), and my to-do list still features tidying up and
+> > resubmitting the patch Ævar wrote in that discussion thread.  But it
+> > wouldn't help here because this issue is specific to Cygwin's `unzip`,
+> > rather than a general limitation of running on Cygwin.)
+> 
+> I'd rather avoid changing FUNNYNAMES at this stage, if we can help it.
 
-Hard to say, I'm not sure either. One thing I noticed though is that in
-your CI run there's failure in e.g. linux-gcc, but the test run for
-linux-musl succeeds. Personally I'm using musl libc on my system, as
-well, so maybe it's a discrepancy between musl- and glibc-based systems?
+Oh yes, I definitely wasn't proposing changing things for 2.37.0!  I
+just wanted to acknowledge that there is a known issue here that has
+been discussed on this list previously, that we (I) would hopefully get
+around to fixing at some point.
 
-Patrick
-
---KPUuNX6o9V2mnBq4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmKwOFgACgkQVbJhu7ck
-PpR6Dw/9FijUNL/f2mQ0WCwC+GaGZSrsRJTx8i1Fob5MTpqUP59ekINbMDtY8bMM
-yquIDKEQPk9JuDJoUUiIwLjdiyw0YNbvSl2LiBKDnmSY/vqYB3Vurb7UOZq3Ovay
-QxOqxB3XaJ9kGEGVuTGiIDFqsZDd5IG2/IHmCAzJ/W9Zoy6WmwQK/BScx+DFTJg4
-jCJsOKG2rzskawZSM4lHi/L/eLg6RXZJ5cZl49xAJlUBJwmBDf6A5AnGwXYTZBgw
-wznaSjRwRTi1ARBvtoMupvoQU6kFRAyr8TgTUg3mo3plDIu0GIZZsXYWNQOBtGTa
-WulK6nzQF0I4YVcJ40lnFX+ARyVlrBJ9q+gL/3gCdWJHCTQLBYUMUWpeedAm4rj0
-xBj0gpyMWk7bsFY9B9lXxOcjoiZ5nTLTCjn1ei9q2bOHYjPdl3oT+xwmbqX/5m43
-LtxEMqbcqv2hNBwB67dXrjc4iIjn+KTLO30TcgeVVnpzqh8TMQuZIn91/z53QfIB
-5Evz1uiwi1yLs+9o7R8+g+zZ91EHk3P0x0VxFJLKQt5E1iIOUPO6le2ErjsqoXUt
-IBpIypqMIdDhuDllpaAAMUi5+wN2Asf63Hgp5Fp/Oq97S+TCDpko71VwVtlroNks
-MHzzQ8bTPHQj/+qnygXM3qGnJ7bxoqM3Kdwm2SuMiFYzJXJGCW8=
-=k9c/
------END PGP SIGNATURE-----
-
---KPUuNX6o9V2mnBq4--
+Adam
