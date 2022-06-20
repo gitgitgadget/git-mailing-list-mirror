@@ -2,134 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09DC0C43334
-	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 00:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E88ABC43334
+	for <git@archiver.kernel.org>; Mon, 20 Jun 2022 04:01:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237862AbiFTAqg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Jun 2022 20:46:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44906 "EHLO
+        id S230407AbiFTEBT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jun 2022 00:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237755AbiFTAqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Jun 2022 20:46:17 -0400
-Received: from smtp-fw-6002.amazon.com (smtp-fw-6002.amazon.com [52.95.49.90])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A114CDEDB
-        for <git@vger.kernel.org>; Sun, 19 Jun 2022 17:44:44 -0700 (PDT)
+        with ESMTP id S229526AbiFTEBS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jun 2022 00:01:18 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 916946325
+        for <git@vger.kernel.org>; Sun, 19 Jun 2022 21:01:17 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id q15so5087222wmj.2
+        for <git@vger.kernel.org>; Sun, 19 Jun 2022 21:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1655685884; x=1687221884;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=MzGj9U2UHESWPmtQ5rcEWV51pM4Pnpm/hurNhrjEN9w=;
-  b=nE5c1CFOPKrvQQDbh5FSg0KEj6c5VBSU+7O/hQpJN7C424HDwZ9TvAOg
-   Vxfgb8W6iZ0eHlCdvpPFdH2F7eqU1UFONukxO2tVY7RbfpCpEBpsCeO5c
-   MGfNfeTCVMW/vHyiXtPyx3pU1tLxXK+C/95V0debkXWZcgb2W0gVcNV/c
-   0=;
-X-IronPort-AV: E=Sophos;i="5.92,306,1650931200"; 
-   d="scan'208";a="212629044"
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO email-inbound-relay-pdx-2c-a264e6fe.us-west-2.amazon.com) ([10.43.8.2])
-  by smtp-border-fw-6002.iad6.amazon.com with ESMTP; 20 Jun 2022 00:44:35 +0000
-Received: from EX13MTAUWB001.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan2.pdx.amazon.com [10.236.137.194])
-        by email-inbound-relay-pdx-2c-a264e6fe.us-west-2.amazon.com (Postfix) with ESMTPS id AFB7640B9C;
-        Mon, 20 Jun 2022 00:44:34 +0000 (UTC)
-Received: from EX13D35UWB003.ant.amazon.com (10.43.161.65) by
- EX13MTAUWB001.ant.amazon.com (10.43.161.249) with Microsoft SMTP Server (TLS)
- id 15.0.1497.36; Mon, 20 Jun 2022 00:44:34 +0000
-Received: from localhost (10.43.162.133) by EX13D35UWB003.ant.amazon.com
- (10.43.161.65) with Microsoft SMTP Server (TLS) id 15.0.1497.36; Mon, 20 Jun
- 2022 00:44:34 +0000
-From:   Stewart Smith <trawets@amazon.com>
-To:     <git@vger.kernel.org>
-CC:     Stewart Smith <trawets@amazon.com>, Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH] git-send-email: Add --no-validate-email option
-Date:   Sun, 19 Jun 2022 17:44:27 -0700
-Message-ID: <20220620004427.3586240-1-trawets@amazon.com>
-X-Mailer: git-send-email 2.36.1
-MIME-Version: 1.0
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=ut9jmlHNQR3+pZS0PWJoI073wbhyOQpZ9PK1PKpbaRE=;
+        b=RN2j7W4QfRTYJwI67r/+dbqhJZQhQnW6S0cnwxGyo6J0rhhwMuUarubCenHVZwF6x0
+         OFxKJoakbbH4a/dV/KIVIOYD31VhLWwmh1BeW5Pd4V7nfiqFIqJJJ4hDoXVU4M/cGKLo
+         DW9q+1L/WJck4oq1T8D/MA0nqEt+xlctYBGzMKQ/76Y7I5HQAUJHijp4kY1/3TqYw6lh
+         USPWytJ4uzxAdlYIWcvD5kcq5qy9PMNW6xalzk8nFMGNPbrLck32cU24RvMqQQaL0OYH
+         FBdLAZ7jaBf11wUbGe24zpiXPjAIkQr4F4L64tFvovYpTLXfL+WCkrS3JUQDTJzuiEYd
+         F7sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ut9jmlHNQR3+pZS0PWJoI073wbhyOQpZ9PK1PKpbaRE=;
+        b=kZYY7xfB9e9AK/V4Mx9MRF7crzoF9R55ae564ttdzn2O+U2ck3xvyn+PqopuEtamdD
+         MDffRtDhkm3rgL4jVJz0zZmu1Xg5V2VkR0qATe/sSn4ZXkX5E7JokU+EPANjdPykjbAf
+         EsnldMC1pa81kwVH0jstAyRVM+0HTCVXWODO0Lci40hAGdN9MVViNVFNEs0NX17F7eFT
+         9naaTJ73+pxcl1VVWmBtjMokGf9y2nXnq3x15k7MZyzngijV6YOoRbwQFWzETG763Jr1
+         svG7p6JwYuDtC0EyDo0jMvbEtrLoeyKXHHUnRZiJZhJc5XYO7vQbE3IeUIEYUrFLVbY6
+         t6pw==
+X-Gm-Message-State: AOAM530ooxeyY+d6rV3HgPKSoHda1JTNDDCZXF1oGiSBlklRTZ3DFXZG
+        7N6Y1KnwQOdxy0IG68mgHp2oxq3mL85M9A==
+X-Google-Smtp-Source: ABdhPJx7tOBHsfdHXYoxmkvjiEUEpKtv+of8LTb/ep1hjtFH4irCoeA4ZE6fOqvSGl1Jiau2kQU5OQ==
+X-Received: by 2002:a05:600c:5021:b0:39c:6571:e0b0 with SMTP id n33-20020a05600c502100b0039c6571e0b0mr33597690wmr.177.1655697675407;
+        Sun, 19 Jun 2022 21:01:15 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h204-20020a1c21d5000000b0039c693a54ecsm17104451wmh.23.2022.06.19.21.01.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Jun 2022 21:01:13 -0700 (PDT)
+Message-Id: <pull.1265.git.1655697671724.gitgitgadget@gmail.com>
+From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 20 Jun 2022 04:01:11 +0000
+Subject: [PATCH] rev-parse: documentation adjustment - mention remote tracking
+ with @{u}
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.43.162.133]
-X-ClientProxiedBy: EX13D08UWC004.ant.amazon.com (10.43.162.90) To
- EX13D35UWB003.ant.amazon.com (10.43.161.65)
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The perl Email::Valid module gets things right, but this may not always
-be what you want, as can be seen in
-https://bugzilla.redhat.com/show_bug.cgi?id=2046203
+From: Tao Klerks <tao@klerks.biz>
 
-So, add a --validate-email (default, current behavior) and
-the inverse --no-validate-email option to be able to skip the check
-while still having the Email::Valid perl module installed.
+The documentation explained the conversion from remote branch path to
+local tracking ref path for @{push}, but not for @{upstream}.
 
-Fixes: https://bugzilla.redhat.com/show_bug.cgi?id=2046203
-Suggested-by: Todd Zullinger <tmz@pobox.com>
-Signed-off-by: Stewart Smith <trawets@amazon.com>
+Add the note to @{upstream}, and reference it in @{push} to avoid undue
+repetition.
+
+Signed-off-by: Tao Klerks <tao@klerks.biz>
 ---
- git-send-email.perl   | 9 +++++++++
- t/t9902-completion.sh | 1 +
- 2 files changed, 10 insertions(+)
+    rev-parse: documentation adjustment - mention remote tracking with @{u}
+    
+    Small clarification in the doc for git rev-parse.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5861e99a6e..c75b08f9ce 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -103,6 +103,7 @@ sub usage {
-     --quiet                        * Output one line of info per email.
-     --dry-run                      * Don't actually send the emails.
-     --[no-]validate                * Perform patch sanity checks. Default on.
-+    --[no-]validate-email          * Perform email address sanity checks. Default on.
-     --[no-]format-patch            * understand any non optional arguments as
-                                      `git format-patch` ones.
-     --force                        * Send even if safety checks would prevent it.
-@@ -281,6 +282,7 @@ sub do_edit {
- my $chain_reply_to = 0;
- my $use_xmailer = 1;
- my $validate = 1;
-+my $validate_email = 1;
- my $target_xfer_encoding = 'auto';
- my $forbid_sendmail_variables = 1;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1265%2FTaoK%2Ftao-upstreak-doc-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1265/TaoK/tao-upstreak-doc-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1265
+
+ Documentation/revisions.txt | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index f5f17b65a12..33809036f04 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -97,18 +97,19 @@ some output processing may assume ref names in UTF-8.
  
-@@ -293,6 +295,7 @@ sub do_edit {
-     "tocover" => \$cover_to,
-     "signedoffcc" => \$signed_off_by_cc,
-     "validate" => \$validate,
-+    "validateemail" => \$validate_email,
-     "multiedit" => \$multiedit,
-     "annotate" => \$annotate,
-     "xmailer" => \$use_xmailer,
-@@ -531,6 +534,8 @@ sub config_regexp {
- 		    "no-thread" => sub {$thread = 0},
- 		    "validate!" => \$validate,
- 		    "no-validate" => sub {$validate = 0},
-+		    "validate-email!" => \$validate_email,
-+		    "no-validate-email" => sub {$validate_email = 0},
- 		    "transfer-encoding=s" => \$target_xfer_encoding,
- 		    "format-patch!" => \$format_patch,
- 		    "no-format-patch" => sub {$format_patch = 0},
-@@ -1132,6 +1137,10 @@ sub extract_valid_address {
- 	# check for a local address:
- 	return $address if ($address =~ /^($local_part_regexp)$/);
+ '[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
+   The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
+-  refers to the branch that the branch specified by branchname is set to build on
+-  top of (configured with `branch.<name>.remote` and
+-  `branch.<name>.merge`).  A missing branchname defaults to the
+-  current one. These suffixes are also accepted when spelled in uppercase, and
+-  they mean the same thing no matter the case.
++  refers to the remote branch that the branch specified by branchname
++  is set to build on top of (configured with `branch.<name>.remote` and
++  `branch.<name>.merge`). As `branch.<name>.merge` is the branch path on the
++  remote, it is first converted to a local tracking branch (i.e., something in
++  `refs/remotes/`). A missing branchname defaults to the current one. These
++  suffixes are also accepted when spelled in uppercase, and they mean the same
++  thing no matter the case.
  
-+	# Email::Valid isn't always correct, so support a way to bypass
-+	# See https://bugzilla.redhat.com/show_bug.cgi?id=2046203
-+	return 1 if not $validate_email;
-+
- 	$address =~ s/^\s*<(.*)>\s*$/$1/;
- 	my $have_email_valid = eval { require Email::Valid; 1 };
- 	if ($have_email_valid) {
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 31526e6b64..6e363c46f3 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2302,6 +2302,7 @@ test_expect_success PERL 'send-email' '
- 	EOF
- 	test_completion "git send-email --val" <<-\EOF &&
- 	--validate Z
-+	--validate-email Z
- 	EOF
- 	test_completion "git send-email ma" "main "
- '
+ '[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
+   The suffix '@\{push}' reports the branch "where we would push to" if
+   `git push` were run while `branchname` was checked out (or the current
+-  `HEAD` if no branchname is specified). Since our push destination is
+-  in a remote repository, of course, we report the local tracking branch
+-  that corresponds to that branch (i.e., something in `refs/remotes/`).
++  `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
++  the local tracking branch that corresponds to that remote branch.
+ +
+ Here's an example to make it more clear:
+ +
+
+base-commit: 5b71c59bc3b9365075e2a175aa7b6f2b0c84ce44
 -- 
-2.36.1
-
+gitgitgadget
