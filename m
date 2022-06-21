@@ -2,130 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0817C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 22:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F01FC43334
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 22:44:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354507AbiFUWmR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 18:42:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42176 "EHLO
+        id S1354787AbiFUWoK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 18:44:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232016AbiFUWmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 18:42:16 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 133B9326E5
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:42:15 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7954F197EE6;
-        Tue, 21 Jun 2022 18:42:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=LeUhnpKGLtz/
-        IE7MSBB9U7zMJcbjo6MoDkAGE4RRMKc=; b=tRXgknC/ffOyhaDL+5LzTUAgE/hB
-        2LA6sH2kPc7nZiJAVhwE2zi/NSVPaU62kMoamt2afF94kBaL8rDYnBewF/J61S+T
-        QGnNPxGeH1RTSkao+SelIQZvaK0TjWBB8oOOqt6CdxRdfSBnu+nJMms7Qv1ZwMHg
-        vgyIXE6nz8IoAuU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 71876197EE5;
-        Tue, 21 Jun 2022 18:42:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 046BB197EE3;
-        Tue, 21 Jun 2022 18:42:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        rsbecker@nexbridge.com,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] tests: add missing double quotes to included
- library paths
-References: <cover-0.3-00000000000-20220621T221928Z-avarab@gmail.com>
-        <patch-1.3-05ba5e7f837-20220621T221928Z-avarab@gmail.com>
-Date:   Tue, 21 Jun 2022 15:42:10 -0700
-In-Reply-To: <patch-1.3-05ba5e7f837-20220621T221928Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Jun
- 2022 00:21:38 +0200")
-Message-ID: <xmqqzgi5ej0d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232016AbiFUWoI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 18:44:08 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB7D31DD7
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:44:07 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id s1so20861607wra.9
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:44:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=QaoiW2/puoKZXZuF4QtRQHLxn48F61wHJA2Rxr4TPEQ=;
+        b=UJkX7IfxZiCFjOMrCigK+temhP1sS/OCKk+3o4nImiZbMl60jWFRcXWXlIuKlIJojV
+         Nplllnvchd0RjDVc8P6r05NttZsLOPoDV2mMHU61M6N/UCE7blVsJqFcKlOJ5IblDTiU
+         LqD606M2+y6kkwJOV/xnd1kIwom26D5VtYjvO6gkx1+b+ullcZ+QSrdeGgqCXsbb8vBu
+         nyoNtzZGun5VFS4CRwtah9dNgCyotWz6GWbBal3/u9ztCp4h+3qabxRhV+F/C3Wrzgzs
+         Id1zspsLja4ZD5NsdonbEwxwFHXX6dBaSLSXf11/sL5s9pGC1PuYRvGlqct9nc3bfpEo
+         5+Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=QaoiW2/puoKZXZuF4QtRQHLxn48F61wHJA2Rxr4TPEQ=;
+        b=wgrWvVRG6zcknCjsN0fX74EER0Y9DgwSkTYL3vzWAwyYoZVriXIRukhHZK+CU+UbWe
+         4hmpNUybYxteo7IBBxvH6DSFs3h2ioLZnAWpzWFgmpdq7r2D8Uw/emqDicY5yBcR42Vb
+         yy1FpfHhMDl2eahmKLcM3o8o9ilEzk+44+NzBroWhSnpro75jJW3Wen3bGtbtFpX0y2s
+         FgCkAkXaoBwyyH2zRUi4k6JOlDGI3Ot/8DG7nZZ6aNJAkfmKuEaFURr1HJ4iLuy3qI/E
+         G2o4VDHbIraD0TiNluhgQ0KqnkBqYJ5zr/Tvbd/LtoF0tWLnnCRCVwgyPhx5Psy4qL+V
+         UTvw==
+X-Gm-Message-State: AJIora8LnSmUS78AGuqUoiQ3YzzuWfKVo+tfXutvkklAeUcYvFcvjY5D
+        p7oq9T+D4NqQfpCnKn8PBLU3R/oz99czwg==
+X-Google-Smtp-Source: AGRyM1thl3XcfPVb5mMS/oP3hzX6epTXE0K6R8mog+WZSrI+p4rIVKN1EjLeCfcZEkpfk894TX8c2g==
+X-Received: by 2002:adf:d1ea:0:b0:210:3e22:51b0 with SMTP id g10-20020adfd1ea000000b002103e2251b0mr262789wrd.72.1655851445996;
+        Tue, 21 Jun 2022 15:44:05 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id j12-20020a5d564c000000b0021b9585276dsm4024261wrw.101.2022.06.21.15.44.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 15:44:05 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/2] add and apply a rule to find "unused" init+free
+Date:   Wed, 22 Jun 2022 00:44:01 +0200
+Message-Id: <cover-v2-0.2-00000000000-20220621T223954Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
+In-Reply-To: <patch-1.1-7d90f26b73f-20220520T115426Z-avarab@gmail.com>
+References: <patch-1.1-7d90f26b73f-20220520T115426Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 63F9445C-F1B3-11EC-B026-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+This re-roll of [1] gets to the same end-state as far as the changed C
+code is concerned, but I rewrote the coccinelle rule to be much more
+general, based on the more recent discussion at [2].
 
-> Fix two inclusions added in d42bab442d7 (core.fsyncmethod: tests for
-> batch mode, 2022-04-04) that needed to be quoted, and the same sort of
-> issue in a242c150ebb (vimdiff: integrate layout tests in the unit
-> tests framework ('t' folder), 2022-03-30). Both were first released
-> with v2.37.0-rc0.
+See the "contrib/coccinelle/unused.cocci" part of 1/2 for extensive
+commentary and what the rule does & doesn't spot, which I won't repeat
+here.
 
-Describe what symptom you may see if it is left unfixed.  IOW, if we
-consider that having a whitespace in the path to the build directory
-is just as crazy as having a single-quote, it would make this patch
-unnecessary,  Make it easier for readers to decide, by saying
-something like
+The 2/2 is then split up to show the effect that "when strict" has on
+this.
 
-	As TEST_DIRECTORY is (typically) path to t/ in the extracted
-	source tree, it can have funny characters like $IFS whitespace
-	in it.
+I noted in [2] that I had a WIP rule to to remove that unused
+"get_worktrees()" but couldn't figure out a bug, this coccinelle code
+will properly remove that sort of code, but only if it's actually
+unused.
 
-at least.
+1. https://lore.kernel.org/git/patch-1.1-7d90f26b73f-20220520T115426Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/220620.865ykvw2l4.gmgdl@evledraar.gmail.com/
 
-Thanks.
+Ævar Arnfjörð Bjarmason (2):
+  cocci: add and apply a rule to find "unused" variables
+  cocci: remove "when strict" from unused.cocci
 
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  t/t3700-add.sh            | 2 +-
->  t/t3903-stash.sh          | 2 +-
->  t/t7609-mergetool--lib.sh | 2 +-
->  3 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-> index 8979c8a5f03..8689b48589c 100755
-> --- a/t/t3700-add.sh
-> +++ b/t/t3700-add.sh
-> @@ -8,7 +8,7 @@ test_description=3D'Test of git add, including the -- o=
-ption.'
->  TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
-> =20
-> -. $TEST_DIRECTORY/lib-unique-files.sh
-> +. "$TEST_DIRECTORY"/lib-unique-files.sh
-> =20
->  # Test the file mode "$1" of the file "$2" in the index.
->  test_mode_in_index () {
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 20e94881964..2a4c3fd61c0 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -9,7 +9,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> =20
->  . ./test-lib.sh
-> -. $TEST_DIRECTORY/lib-unique-files.sh
-> +. "$TEST_DIRECTORY"/lib-unique-files.sh
-> =20
->  test_expect_success 'usage on cmd and subcommand invalid option' '
->  	test_expect_code 129 git stash --invalid-option 2>usage &&
-> diff --git a/t/t7609-mergetool--lib.sh b/t/t7609-mergetool--lib.sh
-> index d848fe6442b..330d6d603d7 100755
-> --- a/t/t7609-mergetool--lib.sh
-> +++ b/t/t7609-mergetool--lib.sh
-> @@ -7,7 +7,7 @@ Testing basic merge tools options'
->  . ./test-lib.sh
-> =20
->  test_expect_success 'mergetool --tool=3Dvimdiff creates the expected l=
-ayout' '
-> -	. $GIT_BUILD_DIR/mergetools/vimdiff &&
-> +	. "$GIT_BUILD_DIR"/mergetools/vimdiff &&
->  	run_unit_tests
->  '
+ builtin/fetch.c                 |  3 +-
+ builtin/merge.c                 |  4 ---
+ builtin/repack.c                |  2 --
+ contrib/coccinelle/unused.cocci | 64 +++++++++++++++++++++++++++++++++
+ contrib/scalar/scalar.c         |  3 +-
+ diff.c                          |  2 --
+ 6 files changed, 66 insertions(+), 12 deletions(-)
+ create mode 100644 contrib/coccinelle/unused.cocci
+
+Range-diff against v1:
+1:  7d90f26b73f < -:  ----------- cocci: add and apply a rule to find "unused" variables
+-:  ----------- > 1:  d14036521ab cocci: add and apply a rule to find "unused" variables
+-:  ----------- > 2:  4130dc15287 cocci: remove "when strict" from unused.cocci
+-- 
+2.36.1.1239.gfba91521d90
+
