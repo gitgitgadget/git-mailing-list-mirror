@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B702C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 22:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB40CCA473
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 22:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232103AbiFUWVw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 18:21:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54526 "EHLO
+        id S236854AbiFUWVy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 18:21:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231466AbiFUWVr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 18:21:47 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E6543136D
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:21:46 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id g27so14171751wrb.10
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:21:46 -0700 (PDT)
+        with ESMTP id S231681AbiFUWVs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 18:21:48 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D583135A
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:21:47 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id g27so14171773wrb.10
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:21:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rqNBfvp4my4bCi5uvbYD0WQkZ1JkQlO4DgdcROZUjpg=;
-        b=H3rCI7uSw3esz+je9KGJHNVZKxH/yUE9qHe9JW52f4iyS51u86qEmhmrEyQfYLiB7J
-         ivYAXlbewmWumCSyjvrlLLnkS7f09I5lIr2ZyxzDQF5OEQxIH3n/kkhtAieo7j0aKGcO
-         qDQKlAVFdRp3NLNywC+JRAhLHcyU1TGovssXf9BT29cfn1tzEM4rPl/zJZnEk2LVjmMh
-         sFZFG7bv3QkLIECASfj1uvAhGO5SqGbByn7pCRc0lllKat7jck/CKfDJyBmEyOJVGkIE
-         ftRdtV71/722GS9XBkD5jgaeliJusApUD18sbDYWmATlGmdC7yGsiKoY/xmOvj6wKXUA
-         VKcA==
+        bh=ZWsDK28mCl0sErmJFrqa4bPLeo7EIeG7oSD3TXqnP2k=;
+        b=dxirYjF49EZnDSegjNuR/u1GHHFuRfbvi38f85dfekkIHe+kbcpANODusssaBJoo1g
+         5phNxAwO8vVqB5KAxk1nX9XOARQ7A5T777ETs48We6ZQ2jhnsGCrsLBrlFMfyCfR+OTK
+         yNmmnShpllo0ViPQZHAj9za4FxWMK5SmV8x0ruyhBo7bEjEvuxOCMckqABlSECAz3iIP
+         aXu8YCwEht0jhscsVdYGqeaxsTKrdHzkQe3QY8xPizg6rnFL/LjHsjYAMYq0NLjFjizh
+         kZu+zb8K3c+Y1uCT8DZt5EdHGKLcGtubP3jMfm55Oxvjh/2jElOdzj0BidSdgIxhDESN
+         IgxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rqNBfvp4my4bCi5uvbYD0WQkZ1JkQlO4DgdcROZUjpg=;
-        b=HqtNVEqzUyxmP+jtklCWn/jqgZmAISCmFlTHi47ksHt8hz3qNX9YrB6GxmgK2w/jr8
-         P7PZuHe1x3FpCoPa26YCUZlkNyDCwDyTamhoo4tq8uUwgkKDL9kC/7SoK1mN+gyHAkQa
-         CeSXQ00Il1wUp8Vk+BhVTE1uoJKERJ3w/wXu7VF1KtrEL8rjVJg68/oK6FlVrB575gYV
-         DR3Q9G+mb378gkMvSIZLCysqrxz7pIvE9zX0x0sgThOLInplYtUn42QcdzxDUE9DGHsq
-         xxf2pJRG5MuAgJlPFKLqXqOxcldWdidff6Z2WCH6Q1dIKw1HA2kA2iogqZa0ss0TlXDY
-         8PfA==
-X-Gm-Message-State: AJIora8kVwCi0W7hHevJvWcGfEtrUvjA6Dta3ArHW2XE345z0wGjSnq8
-        h0Q0nrhXRy0zOadSVakPXz3kVP46ByTDkQ==
-X-Google-Smtp-Source: AGRyM1sRT7XJmVXphzZhn7qDNo/rcruCkcy33m2O+Q4sjlUGLZXeU8LWISk94Px7owjK/+Uh7U7VaQ==
-X-Received: by 2002:adf:f411:0:b0:21b:8397:860e with SMTP id g17-20020adff411000000b0021b8397860emr195625wro.50.1655850104606;
-        Tue, 21 Jun 2022 15:21:44 -0700 (PDT)
+        bh=ZWsDK28mCl0sErmJFrqa4bPLeo7EIeG7oSD3TXqnP2k=;
+        b=RkXwbagVzmPQWkhKOkDqQaGehrXkYnMmRO6TSzFecYzcu9MkxxnpGymXLGEVAd7u4m
+         R23i0twW0OG0ZvBA6ODaNn4qKuSL5SyuZ8UvQsN3hYnK+qlep1xAM9Fxc9wbC04IIttW
+         SZFm0IJwGZAXQx4XE07Qc0aHUt7F2IzSETEELC2ZI3437wxUjjwIabiEdMsnfHD2H1wJ
+         opIsdsGvIJ8pWiuFhyjrTTH0vvLbkcSc+bHT2sXhu+X0uUfFfzeVAfeee3zRUgom+5S6
+         EtAguODmfLjP9faw34Uvr0WEB6t7AKKev4TeC5FCu7EqcZqJ8vK8EplhFMyBYMaYjoQM
+         1A1w==
+X-Gm-Message-State: AJIora9gTti9sbVMT3F9csZo68g93o/65X6vqE3lrJ/8DYXhObTI1ZQv
+        OHAKATWizdDQG535FgqrHsvxicRjhHsAAg==
+X-Google-Smtp-Source: AGRyM1tBi0V7TSd0tncMUvpJ4kvKuPTLEY4P1B6yPQasjTfdkiEHFHxIVbd/sDWGluZvxWPwqYzRyA==
+X-Received: by 2002:a5d:4352:0:b0:213:4910:6616 with SMTP id u18-20020a5d4352000000b0021349106616mr196235wrr.226.1655850105506;
+        Tue, 21 Jun 2022 15:21:45 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u2-20020a5d4342000000b0020fe61acd09sm17547431wrr.12.2022.06.21.15.21.43
+        by smtp.gmail.com with ESMTPSA id u2-20020a5d4342000000b0020fe61acd09sm17547431wrr.12.2022.06.21.15.21.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 21 Jun 2022 15:21:44 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/3] test-lib.sh: fix prepend_var() quoting issue
-Date:   Wed, 22 Jun 2022 00:21:39 +0200
-Message-Id: <patch-2.3-e06bf0cdfbe-20220621T221928Z-avarab@gmail.com>
+Subject: [PATCH 3/3] config tests: fix harmless but broken "rm -r" cleanup
+Date:   Wed, 22 Jun 2022 00:21:40 +0200
+Message-Id: <patch-3.3-f787b19f8c2-20220621T221928Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
 In-Reply-To: <cover-0.3-00000000000-20220621T221928Z-avarab@gmail.com>
 References: <cover-0.3-00000000000-20220621T221928Z-avarab@gmail.com>
@@ -70,37 +70,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a quoting issue in the function introduced in
-b9638d7286f (test-lib: make $GIT_BUILD_DIR an absolute path,
-2022-02-27), running the test suite where the git checkout was on a
-path with e.g. a space in it would fail.
+The "test_when_finished" cleanup phase added in 4179b4897f2 (config:
+allow overriding of global and system configuration, 2021-04-19) has
+never worked as intended, firstly the ".config/git" is a directory, so
+we'd need the "-r" flag, but more importantly the $HOME variable
+wasn't properly quoted.
+
+We'd thus end up trying to remove the "trash" part of "trash
+directory", which wouldn't fail with "-f", since "rm -f" won't fail on
+non-existing files.
+
+It's possible that this would have caused an actual failure if someone
+had a $HOME with a space character in it, such that our "rm -f" would
+fail to remove an existing directory, but in practice that probably
+never happened.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/test-lib.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1300-config.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 55857af601b..8cabb4d10f9 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -57,14 +57,14 @@ fi
- #
- #	prepend_var VAR : VALUE
- prepend_var () {
--	eval "$1=$3\${$1:+${3:+$2}\$$1}"
-+	eval "$1=\"$3\${$1:+${3:+$2}\$$1}\""
- }
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index d3d9adbb3db..da4d03813f1 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2083,7 +2083,7 @@ test_expect_success '--show-scope with --show-origin' '
+ '
  
- # If [AL]SAN is in effect we want to abort so that we notice
- # problems. The GIT_SAN_OPTIONS variable can be used to set common
- # defaults shared between [AL]SAN_OPTIONS.
- prepend_var GIT_SAN_OPTIONS : abort_on_error=1
--prepend_var GIT_SAN_OPTIONS : strip_path_prefix=\"$GIT_BUILD_DIR/\"
-+prepend_var GIT_SAN_OPTIONS : strip_path_prefix="$GIT_BUILD_DIR/"
+ test_expect_success 'override global and system config' '
+-	test_when_finished rm -f "$HOME"/.config/git &&
++	test_when_finished "rm -rf \"$HOME\"/.config/git" &&
  
- # If we were built with ASAN, it may complain about leaks
- # of program-lifetime variables. Disable it by default to lower
+ 	cat >"$HOME"/.gitconfig <<-EOF &&
+ 	[home]
 -- 
 2.36.1.1239.gfba91521d90
 
