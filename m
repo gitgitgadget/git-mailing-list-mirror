@@ -2,88 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BFDCC43334
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 16:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5649C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 16:56:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234926AbiFUQvK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 12:51:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33402 "EHLO
+        id S1352240AbiFUQ4B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 12:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230491AbiFUQvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 12:51:06 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A08FE2AE02
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 09:51:03 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 442C9131872;
-        Tue, 21 Jun 2022 12:51:02 -0400 (EDT)
+        with ESMTP id S1352234AbiFUQz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 12:55:58 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DE3C1C92E
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 09:55:57 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E042C199093;
+        Tue, 21 Jun 2022 12:55:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9q5DiA5H6rWwp8WhvICAUNsM6RiwoA8izcW2Zl
-        6VKTw=; b=SB58hqYHUWMtI7jEPvlO5ScrLufDLwr/teowxi1GHGLKSAP4ze9VCx
-        ViMe1m2J+eLf0Bm69IKl+3KFck9qx1TelEpOgEBtD7dDaN/sVf0ksrDX/EEG1zHv
-        krjAz6gWBiSXlNgK9TqX6KNvLmcC8QVfiOgQ013bpoksvemRoNgDc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A8CD131870;
-        Tue, 21 Jun 2022 12:51:02 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=Ph0SA/W/OJqf
+        LBposLB4P2iCkh12lpWaXcZEqKiY8ss=; b=WrqX9Xg7U9C+ydjZ6c1t90EjvXfZ
+        OzSECB2eDotvp38KukMOZW9hr0Kmi1v4Cyn3ieE3EC7JV1r/w3Pjb3GgzHYNVdRx
+        MHMP7cKoDJu3Es9534GmPDPE9iHwpj5p6SQUr1BSnrG1DSW8b6ZQCM8zol/+K8mO
+        bcDhx+7zfWtZAcA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D8DD0199092;
+        Tue, 21 Jun 2022 12:55:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 765A613186F;
-        Tue, 21 Jun 2022 12:51:01 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7E57719908B;
+        Tue, 21 Jun 2022 12:55:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Richard Oliver <roliver@roku.com>
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        jonathantanmy@google.com
-Subject: Re: [PATCH] mktree: do not check type of remote objects
-References: <77035a0f-c42e-5cb3-f422-03fe81093adb@roku.com>
-        <0067c46a-7bfd-db9c-5156-16f032814464@github.com>
-        <797af8c8-229f-538b-d122-8ea48067cc19@roku.com>
-        <574dc4a9-b3c7-1fd3-8c0e-39071117c7f0@github.com>
-        <YqkpRE8nykqVv8cn@nand.local>
-        <YqlZb3Ycc71+dPu4@coredump.intra.peff.net>
-        <ad9b5ec9-14fd-cd66-be87-2fe1eb24296a@roku.com>
-        <xmqqa6adzln6.fsf@gitster.g>
-        <1566aed1-a38f-a9ca-241c-21b56d732328@roku.com>
-        <xmqqy1xwtsds.fsf@gitster.g>
-        <748f39a9-65aa-2110-cf92-7ddf81b5f507@roku.com>
-Date:   Tue, 21 Jun 2022 09:51:00 -0700
-In-Reply-To: <748f39a9-65aa-2110-cf92-7ddf81b5f507@roku.com> (Richard Oliver's
-        message of "Tue, 21 Jun 2022 14:59:39 +0100")
-Message-ID: <xmqqwndagdu3.fsf@gitster.g>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
+Subject: Re: [PATCH 1/2] combine-diff: abort if --ignore-matching-lines is
+ given
+References: <a6a14213-bc82-d6fb-43dd-5a423c40a4f8@web.de>
+        <patch-1.1-f7fd645468c-20220523T182954Z-avarab@gmail.com>
+        <xmqqleusqaff.fsf@gitster.g>
+        <220524.86leurw3my.gmgdl@evledraar.gmail.com>
+        <xmqqmtf6hgae.fsf@gitster.g>
+        <220524.86v8tuvfl1.gmgdl@evledraar.gmail.com>
+        <49bcadd1-7dc2-d5ee-36a5-59456450aeca@web.de>
+        <xmqqedzijago.fsf@gitster.g>
+        <95d7609e-4cb5-c87e-0120-144f1f094241@web.de>
+Date:   Tue, 21 Jun 2022 09:55:52 -0700
+In-Reply-To: <95d7609e-4cb5-c87e-0120-144f1f094241@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Tue, 21 Jun 2022 17:58:50 +0200")
+Message-ID: <xmqqsfnygdlz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 54F5C3F8-F182-11EC-8788-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 03052A42-F183-11EC-9823-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Richard Oliver <roliver@roku.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> As a side note, do you think we need to re-work some uses of the word
-> 'missing' in the documentation? Some uses of the word, such as in
-> mktree, predate the concept of promisor remotes. The partial-clone.txt
-> documentation differentiates between missing "due to a partial clone
-> or fetch" and missing "due to repository corruption".  Would making
-> such a distinction elsewhere be useful?
+>>> +	if (opt->ignore_regex_nr)
+>>> +		die("combined diff and '%s' cannot be used together",
+>>> +		    "--ignore-matching-lines");
+>>
+>> "X cannot be used together _with_ Y" perhaps?
+>
+> Not sure, but that type of message was recently unified (most common
+> case: "options '%s' and '%s' cannot be used together") and "with" is
+> only used in an untranslated BUG:
 
-I do agree with that direction.  Back when the world was simpler,
-there were just "we have the object" and "we ought to have the
-object but we do not see it", the latter of which was a clear
-repository corruption.  There was no third choice.
+Ah, sorry, I completely misread the original as "combined diff
+cannot be used together with ignore-matching-lines".
 
-With the lazy/partial clone stuff, it is not a corrupted repository
-anymore when certain objects that are reachable during traversal is
-missing (this is slightly different from a shallow clone in that a
-shallow history makes the traversal stop early, so at least objects
-in a shallow clone that are reachable during traversal must exist).
-
-So, yes, I think the distinction between "missing but shouldn't be"
-and "missing by design" is a good thing to keep in mind.
-
-Thanks.
+Sorry for the noise.
