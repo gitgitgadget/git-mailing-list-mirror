@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5FC0CCA481
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 13:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BF7ACCA483
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 13:34:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231693AbiFUNeP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 09:34:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55574 "EHLO
+        id S232465AbiFUNeR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 09:34:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351445AbiFUNbB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1351434AbiFUNbB (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Jun 2022 09:31:01 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68C052AC71
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 06:25:27 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id a15so5911954pfv.13
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 06:25:27 -0700 (PDT)
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDA1E2AC6E
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 06:25:24 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id o18so5471570plg.2
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 06:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SwAqmWL3uzzEszhth1nDt8QRizxHE8JmPjl4J8Uz4/Q=;
-        b=UHmuTvz6miUHN1o4CVvweoaGtBDex7JxJehRwMBT4i8yojCNZ4KUjqIlYqaTtN0QPn
-         s+KslNRVxHf3lnOqZKhopGHSO80Ffxn+tcAVOUIhi+LYO08NdsuLYjxmgKLFoX29hM0l
-         AgU864g+PqE4Lnz240DcSRzdtPmBlbFlC+Miwom+ShLZyuK6SPNxb2crRnVKb2fkQnEC
-         3tM7HuOUmaEDPfW3398bk+hGixhRT12bZdtmwBkzCFU5P0At6Cse3l4Fjti25tmLV12G
-         RKRpvE0pEzutfxzgaQPujEhZCdNqElY+w2SxE/FhFCaq/w8M/rQ646wG8OWLB35uwX6U
-         TUyg==
+        bh=k/r8JRLHdYM+5p1XDW85HmYMw7+KNWd0BuBVGeCQ7ck=;
+        b=OoTZUAZdnVAoEPcD4akRi54HTcmRwowzi1JVfSkYVSCcXjSdiUZ3DZTtSPBvOcYlGn
+         gA7PtZpNmlEACIRoZXxVtZ90Vy3K09+V1fDN+Xzp09CiK82zdbGpd/LkkyOWAUGVZNwH
+         9G9Y8PEbP1CgPLS5golqqYbL2fOZjg/uvgMewCTev7af57skO+8UGmUdw5c7+muPWm4O
+         e2I+REf/N14Ca7c0ezeFcSLd/x9Nbad45RQgGId2s9EqtyVjHtNqtSTb9HGi2RTmUlSN
+         eMVHeiqEo7LKZP6fI5je30gvg4+oe4eLR5qIXdkDb9hu+RsMK+u+uEOk8dPpi9kL3kz1
+         tQSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SwAqmWL3uzzEszhth1nDt8QRizxHE8JmPjl4J8Uz4/Q=;
-        b=urPyZDWy4fj91BmMvKBhJ+r9BviQH1GEsh+Wri5dWn+RUUHFXSDySmnNgRSrkbUgGe
-         pQp5qx8NSO7WpThavEZm6P6MnAKuRWckiZzHegqWINC8SrdjPFhecDBrBrbsaCFYs29R
-         S+5Sz72kJ3lLkzgCbOiJrNB6VhI/xtutpF9nrq/9x/SlZkIndSGLVlZi9rj8H+2g6r6C
-         UYLX4ExxlqDHrj233++fjj0BjpExwWqLPG8BiUkvRoMeF/ttmRHAbl30P0EpmUpiU3fz
-         KULV66v4Q6TqOXLr8lGXPPoARuVxp1OUeooK5rXSLh0A1gNDx/BE5oFArTrQp6tJvnKK
-         4wtw==
-X-Gm-Message-State: AJIora9wQp5/BQybdSXpoBcg6vFde5sO+a+aC4x9iqid6/+WPW3fkS5S
-        KTBGIrzYoD54aET4pvs73X31HZdBcwv80upj
-X-Google-Smtp-Source: AGRyM1usRoe1alOz/OqbqYnYiaub6wGyh472ZZdzq1BKh02JoOtv2BLIrGISRwZGiCIoll4fabkpyQ==
-X-Received: by 2002:a63:149:0:b0:40c:f753:2fb0 with SMTP id 70-20020a630149000000b0040cf7532fb0mr3103419pgb.172.1655817926886;
-        Tue, 21 Jun 2022 06:25:26 -0700 (PDT)
+        bh=k/r8JRLHdYM+5p1XDW85HmYMw7+KNWd0BuBVGeCQ7ck=;
+        b=SXt3ZhK2YpeOrABmhejl4A4a+Zn1hqgIPS8pKLK6o0vpXtf9OKZrlx3njLA96Niszb
+         c+/M6aFg5toItVviTrU9KVKTd5jGwKSLfu/clzGkFmXAkwdor6xNEN7Xwpx1G8vvVUQt
+         8Z/RoIlpYCZ0dPgQKY3PZyeHOQASAJM3x9XcR6w5lI9Mtot2NaVl7jChEKZVvklXC/7C
+         QaosnZA8pOH8X1B7mJ5BSUYr2Z7V0PWujvf22IXp5648VB+Bw6hyQ6IbwrOtb6uFRkxY
+         qZqmh8kLDiCXFnyr47JQrZb8S2nydxaNs0FqMIKffssHBeoqOm64xdDQp4+3+yzu3mjB
+         Tm0A==
+X-Gm-Message-State: AJIora8nSb8wrUONxoaveeQJ1pIM3dZm8C8NZxh4EOs0xKVoPQrWCQdM
+        lbFpd5G0Hd9oFcE9rFNeAmc=
+X-Google-Smtp-Source: AGRyM1swyuYj44q5uNnbEBf0SZwgTz6WGZPyceIDhTxfUkQaKdkq+A9xKcT5MwhGToDqrxSGubVRFg==
+X-Received: by 2002:a17:903:240d:b0:169:684c:dad8 with SMTP id e13-20020a170903240d00b00169684cdad8mr24455572plo.173.1655817924235;
+        Tue, 21 Jun 2022 06:25:24 -0700 (PDT)
 Received: from code-infra-dev-cbj.ea134 ([140.205.70.41])
-        by smtp.gmail.com with ESMTPSA id f8-20020a170902684800b0016a058b7547sm8602426pln.294.2022.06.21.06.25.24
+        by smtp.gmail.com with ESMTPSA id f8-20020a170902684800b0016a058b7547sm8602426pln.294.2022.06.21.06.25.21
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Jun 2022 06:25:26 -0700 (PDT)
+        Tue, 21 Jun 2022 06:25:23 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
         gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v3 5/5] bitmap: add trace2 outputs during open "bitmap" file
-Date:   Tue, 21 Jun 2022 21:25:05 +0800
-Message-Id: <8735ae99798a43650acb9a1df7ba2072c7758476.1655817253.git.dyroneteng@gmail.com>
+Subject: [PATCH v3 4/5] pack-bitmap.c: using error() instead of silently returning -1
+Date:   Tue, 21 Jun 2022 21:25:04 +0800
+Message-Id: <917551f2b53196c4754d8881a383e989a02d571e.1655817253.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.35.1.582.g270d558070.dirty
 In-Reply-To: <cover.1655817253.git.dyroneteng@gmail.com>
 References: <cover.1655817253.git.dyroneteng@gmail.com>
@@ -63,176 +63,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's supported for a repo to use bitmap in both single-pack bitmap
-way or a multi-pack(MIDX) bitmap. Either of two bitmap kinds can
-exist in the repository, or both can be stored but let the config
-controls which kind of bitmap is used (like "core.multipackIndex",
-etc.). Because of this, sometimes the bitmap debug path is not
-obvious enough, for example, when executing:
+In "open_pack_bitmap_1()" and "open_midx_bitmap_1()", it's better to
+return error() instead of "-1" when some unexpected error occurs like
+"stat bitmap file failed", "bitmap header is invalid" or "checksum
+mismatch", etc.
 
- $ git rev-list  --test-bitmap  HEAD
- fatal: failed to load bitmap indexes
-
-When the output look like this, it's unclear which kind(s) of
-.bitmap exist, and which were read. For example, it's possible a MIDX
-bitmap exists, but was not read (e.g., because
-core.multiPackIndex=false), among many other scenarios.
-
-Therefore, we added some trace2 code so that when we read the bitmap
-we can be more clear about the decision path, such as whether it is
-working on MIDX or single-pack bitmap at present, or the related config
-is enabled or not. This may help with logging, user troubleshooting, and
-development debugging.
-
-Here are some brief output (omitted some unrelated or repetitive rows
-and columns, using "..." instead of) examples on two scenarios when
-executing:
-
-  $ GIT_TRACE2_PERF=1 git rev-list --test-bitmap HEAD
-
-Scenario 1:
-  core.multipackIndex [false], MIDX bitmap exists [Y], single-pack bitmap exists [N]
-
-  ...
-  ... | main                     | data         | r1  | ... | config       | core.multipackindex:false
-  ... | d0 | main                | region_enter | r1  | ... | pack-bitmap  | label:open_bitmap
-  ... | d0 | main                | data         | r1  | ... | bitmap       | ..path:.git/objects/pack/pack-e9eb18e6a423057f4424a762069e13804a75d01e.bitmap
-  ... | main                     | region_leave | r1  | ... | pack-bitmap  | label:open_bitmap
-  ... | main                     | error        |     | ... |              | failed to load bitmap indexes
-  fatal: failed to load bitmap indexes
-  ... | d0 | main                | exit         |     | ... |              | code:128
-  ...
-
-Scenario 2:
-  core.multipackIndex [false], MIDX bitmap exists [Y], single-pack bitmap exists [Y]
-
-  ... | d0 | main                | region_enter | r0  | ... | pack-bitmap  | label:open_bitmap
-  ... | d0 | main                | data         | r0  | ... | bitmap       | ..path:/home/tenglong.tl/test/dyrone_bitmap/.git/objects/pack/pack-e9eb18e6a423057f4424a762069e13804a75d01e.bitmap
-  ... | main                     | region_leave | r0  | ... | pack-bitmap  | label:open_bitmap
-  Bitmap v1 test (1 entries loaded)
-  Found bitmap for d864fefa87415d6cd289c72aa9ffd45b4a8ffd84. 64 bits / 11030517 checksum
-  ... | main                     | region_enter | r0  | ... | progress     | label:Verifying bitmap entries
-  Verifying bitmap entries: 100% (3/3), done.
-  ... | main                     | data         | r0  | ... | progress     | ..total_objects:3
-  ... | main                     | region_leave | r0  | ... | progress     | label:Verifying bitmap entries
-  OK!
-  ... | d0 | main                | exit         |     | ... |              | code:0
-  ...
+There are places where we do not replace, such as when the bitmap
+does not exist (no bitmap in repository is allowed) or when another
+bitmap has already been opened (in which case it should be a warning
+rather than an error).
 
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- pack-bitmap.c   | 21 ++++++++++++++++-----
- repo-settings.c | 22 ++++++++++++----------
- 2 files changed, 28 insertions(+), 15 deletions(-)
+ pack-bitmap.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index a54d5a0c9f..c39d722592 100644
+index af0f41833e..a54d5a0c9f 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -312,9 +312,12 @@ char *pack_bitmap_filename(struct packed_git *p)
- static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
- 			      struct multi_pack_index *midx)
- {
-+	int fd;
- 	struct stat st;
-+
- 	char *bitmap_name = midx_bitmap_filename(midx);
--	int fd = git_open(bitmap_name);
-+	trace2_data_string("midx", the_repository, "path", bitmap_name);
-+	fd = git_open(bitmap_name);
+@@ -323,7 +323,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
  
- 	free(bitmap_name);
- 
-@@ -346,8 +349,10 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
- 	if (load_bitmap_header(bitmap_git) < 0)
- 		goto cleanup;
- 
--	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum))
-+	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum)) {
-+		error(_("midx and bitmap checksum don't match"));
- 		goto cleanup;
-+	}
- 
- 	if (load_midx_revindex(bitmap_git->midx) < 0) {
- 		warning(_("multi-pack bitmap is missing required reverse index"));
-@@ -374,6 +379,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
- 		return -1;
- 
- 	bitmap_name = pack_bitmap_filename(packfile);
-+	trace2_data_string("bitmap", the_repository, "path", bitmap_name);
- 	fd = git_open(bitmap_name);
- 	free(bitmap_name);
- 
-@@ -509,11 +515,16 @@ static int open_midx_bitmap(struct repository *r,
- static int open_bitmap(struct repository *r,
- 		       struct bitmap_index *bitmap_git)
- {
--	assert(!bitmap_git->map);
-+	int ret = 0;
- 
-+	assert(!bitmap_git->map);
-+	trace2_region_enter("pack-bitmap", "open_bitmap", r);
- 	if (!open_midx_bitmap(r, bitmap_git))
--		return 0;
--	return open_pack_bitmap(r, bitmap_git);
-+		goto done;
-+	ret = open_pack_bitmap(r, bitmap_git);
-+done:
-+	trace2_region_leave("pack-bitmap", "open_bitmap", r);
-+	return ret;
- }
- 
- struct bitmap_index *prepare_bitmap_git(struct repository *r)
-diff --git a/repo-settings.c b/repo-settings.c
-index b4fbd16cdc..115d96ece3 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -4,10 +4,12 @@
- #include "midx.h"
- 
- static void repo_cfg_bool(struct repository *r, const char *key, int *dest,
--			  int def)
-+			  int def, int trace)
- {
- 	if (repo_config_get_bool(r, key, dest))
- 		*dest = def;
-+	if (trace)
-+		trace2_data_string("config", r, key, *dest ? "true" : "false");
- }
- 
- void prepare_repo_settings(struct repository *r)
-@@ -29,8 +31,8 @@ void prepare_repo_settings(struct repository *r)
- 	r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE;
- 
- 	/* Booleans config or default, cascades to other settings */
--	repo_cfg_bool(r, "feature.manyfiles", &manyfiles, 0);
--	repo_cfg_bool(r, "feature.experimental", &experimental, 0);
-+	repo_cfg_bool(r, "feature.manyfiles", &manyfiles, 0, 0);
-+	repo_cfg_bool(r, "feature.experimental", &experimental, 0, 0);
- 
- 	/* Defaults modified by feature.* */
- 	if (experimental) {
-@@ -42,13 +44,13 @@ void prepare_repo_settings(struct repository *r)
+ 	if (fstat(fd, &st)) {
+ 		close(fd);
+-		return -1;
++		return error_errno(_("cannot stat bitmap file"));
  	}
  
- 	/* Boolean config or default, does not cascade (simple)  */
--	repo_cfg_bool(r, "core.commitgraph", &r->settings.core_commit_graph, 1);
--	repo_cfg_bool(r, "commitgraph.readchangedpaths", &r->settings.commit_graph_read_changed_paths, 1);
--	repo_cfg_bool(r, "gc.writecommitgraph", &r->settings.gc_write_commit_graph, 1);
--	repo_cfg_bool(r, "fetch.writecommitgraph", &r->settings.fetch_write_commit_graph, 0);
--	repo_cfg_bool(r, "pack.usesparse", &r->settings.pack_use_sparse, 1);
--	repo_cfg_bool(r, "core.multipackindex", &r->settings.core_multi_pack_index, 1);
--	repo_cfg_bool(r, "index.sparse", &r->settings.sparse_index, 0);
-+	repo_cfg_bool(r, "core.commitgraph", &r->settings.core_commit_graph, 1, 0);
-+	repo_cfg_bool(r, "commitgraph.readchangedpaths", &r->settings.commit_graph_read_changed_paths, 1, 0);
-+	repo_cfg_bool(r, "gc.writecommitgraph", &r->settings.gc_write_commit_graph, 1, 0);
-+	repo_cfg_bool(r, "fetch.writecommitgraph", &r->settings.fetch_write_commit_graph, 0, 0);
-+	repo_cfg_bool(r, "pack.usesparse", &r->settings.pack_use_sparse, 1, 0);
-+	repo_cfg_bool(r, "core.multipackindex", &r->settings.core_multi_pack_index, 1, 1);
-+	repo_cfg_bool(r, "index.sparse", &r->settings.sparse_index, 0, 0);
+ 	if (bitmap_git->pack || bitmap_git->midx) {
+@@ -361,7 +361,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+ 	bitmap_git->map_pos = 0;
+ 	bitmap_git->map = NULL;
+ 	bitmap_git->midx = NULL;
+-	return -1;
++	return error(_("cannot open midx bitmap file"));
+ }
  
- 	/*
- 	 * The GIT_TEST_MULTI_PACK_INDEX variable is special in that
+ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git *packfile)
+@@ -382,7 +382,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 
+ 	if (fstat(fd, &st)) {
+ 		close(fd);
+-		return -1;
++		return error_errno(_("cannot stat bitmap file"));
+ 	}
+ 
+ 	if (bitmap_git->pack || bitmap_git->midx) {
+@@ -394,7 +394,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 
+ 	if (!is_pack_valid(packfile)) {
+ 		close(fd);
+-		return -1;
++		return error(_("packfile is invalid"));
+ 	}
+ 
+ 	bitmap_git->pack = packfile;
+@@ -409,7 +409,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 		bitmap_git->map_size = 0;
+ 		bitmap_git->map_pos = 0;
+ 		bitmap_git->pack = NULL;
+-		return -1;
++		return error(_("bitmap header is invalid"));
+ 	}
+ 
+ 	return 0;
 -- 
 2.35.1.582.g270d558070.dirty
 
