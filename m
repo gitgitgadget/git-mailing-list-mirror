@@ -2,151 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F9D7C43334
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 09:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF481C43334
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 09:29:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347951AbiFUJXO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 05:23:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35530 "EHLO
+        id S1348826AbiFUJ3o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 05:29:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348034AbiFUJXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 05:23:13 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF0012A83
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 02:23:12 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id k7so11995445plg.7
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 02:23:12 -0700 (PDT)
+        with ESMTP id S1349122AbiFUJ3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 05:29:34 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5635427175
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 02:29:31 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id ay16so6809482ejb.6
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 02:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fcnfxK2qg+/jvIzxZ0Rzn04TWWl6YYhz9ZYKtybL/qA=;
-        b=JYX9ExEvDcwoFKFiJnFeT1o1fxayRi1hG0cLm/E1Pj28CJ1YJGF5NxZLRKN+wmpIyl
-         /kVRTRkRtFUcTHImNQQzvmRRzCG0o9L9aBxjKgfNRpTUmV7lDaQooXclDXOPvI1QYVee
-         i/mSJQwq2VZ3Ng1Ye5C8/hzPMVeQZIeBEYbHhG3rP9h/aK3D7DT5T3xgtrwEj73R+XN3
-         QGxBx2V8Tesjz9CLoLUNBtNgXkVCC3k/mrH2OEbHLanypszTpAaHoirt33ve95drWjhL
-         iqjSKQ4P/Iqp/M+2M5V2if9L9m8AiMEondvuFjDWU7pPJyBLfayMaxTCAPEif9EZhA+H
-         IxKg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CisnCxs98QhKWxd3u/HwZN1TqraEm1ndo0KMDLbjDhc=;
+        b=q0XowfWDZwuVgY0A2bUR/kWcO6pkrRuAkJJDW5JBKQ+58mX6lExTsh4xgiUcj5FmZa
+         h6Tcr1rxYD8hIb/9vfOo7lVYYtsATQEs+8mn+qSk1USkapyfBtOAEHcfhDJ4q4cRAZ99
+         rOORa5jm+tF+IyVb6G9YbEotm0sAFyWzJbIMpheY2+glg8auJ0G7YkUtXe+erYpEyI4g
+         Bi0Jx0i2c1kdf0ypu1L64df9AUZ8NIqZz8XRgG7xP1rdBzYwww4wp3JaOKKsfmbW7qiY
+         Nt+TDY4igv6bKq/Q3vmhS1W09xZ3SSuzpHfxHekfUR7jZWcnZClt+hqpeEegLTW1mugF
+         hoTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fcnfxK2qg+/jvIzxZ0Rzn04TWWl6YYhz9ZYKtybL/qA=;
-        b=OXUsWmdx9sSm1kIJ/iSUffWVjL9gDRunZpcD1B4q5xCorrCZHE3C0V38dWIzMs7xjQ
-         vRJTkKHORZbudhIbzU7lDR0hvPzE2lKpf1JSuNw+dz39SLMhid8Ql12IuKmCLbUXBMDN
-         ta62wDOyJx0rLpPNL9fGZGkMX450FxOrBLJ6mbYg7bNSf3Hey0tvikxcd4xGfVHUIiwu
-         PIeBh2HiURPSfwieb2qItO3ayVb9vv7HTdOoNHDAxZyfToDs7q7bIMbKkv7G369uH2fS
-         3p4YfG1dANRK6FagL20KY2SKRF8IcBm/OP0kyRXjCD3GL/M6wJ9xNoDhk/2wVAAnD/Nr
-         HviA==
-X-Gm-Message-State: AJIora+5Nhe3kkGV4quV7xTpcrCnu0A/RYux30iUShaT4JmPm702+/3x
-        bR/bN5ua1nAwm46cDFNAhnk=
-X-Google-Smtp-Source: AGRyM1vY1zyY8Y3iVEu4JJgJpVJ1Vjl9FN25kpRAMfDpTGTILRlIOFjP9nlzrOmsNw26gJZp7kRdVw==
-X-Received: by 2002:a17:90b:4b8c:b0:1ec:c7b8:7cb9 with SMTP id lr12-20020a17090b4b8c00b001ecc7b87cb9mr3151283pjb.86.1655803392060;
-        Tue, 21 Jun 2022 02:23:12 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4060:e8c:d9c4:a028:bb47:21:6f27])
-        by smtp.gmail.com with ESMTPSA id i188-20020a62c1c5000000b005187431876fsm3368591pfg.180.2022.06.21.02.23.08
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 21 Jun 2022 02:23:11 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 1/6] Documentation/technical: describe bitmap lookup table extension
-Date:   Tue, 21 Jun 2022 14:52:53 +0530
-Message-Id: <20220621092253.21667-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <YrCsricF+2rQXiBk@nand.local>
-References: <YrCsricF+2rQXiBk@nand.local>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CisnCxs98QhKWxd3u/HwZN1TqraEm1ndo0KMDLbjDhc=;
+        b=cgoV9odDjnu7VWMmC6RIHGUrMz7uqIFTeb9CR3ufuslfrLjVigJEwUZIHVmi6W9gis
+         n33EIqIW8UvlXixf8rEboU215bi1jp6Vdi64WT8xeHy+1O3xoi0v8cygsaSAOXpUqf3C
+         g2A05GFM5uPu60xpkKvVki1o7rWvz8rWLD/n4CjrGfE5OSH/y6jxZMCDMn+DWOMklSuT
+         qGVy3nE7KPdGpFp6IOXMfMyl31QmJnXVnbRFR35ZnczYLdjWAS+STI2XPmHZLXuPIzz1
+         6RIPQjY9s05sn4/WglEMVwngsecic9+TpRwppfaVJikhqpcx99FNdgvnXStBbC2NgNlo
+         ysbA==
+X-Gm-Message-State: AJIora8eU0p0ep54bIiMUPFYmTKDUowLfzmYw4y+qNk3n2bdmbSmkuV5
+        3Qan9WbrWRa9JpMtJoUBXTo=
+X-Google-Smtp-Source: AGRyM1txIzuGo1BK5L6H0EmeoWhTVcc5xAE2SjOhM3kLuKxtGD+qY33NBhXoI/LkdcSo5OOag3vw2Q==
+X-Received: by 2002:a17:906:2245:b0:715:7c81:e39d with SMTP id 5-20020a170906224500b007157c81e39dmr24118551ejr.262.1655803769794;
+        Tue, 21 Jun 2022 02:29:29 -0700 (PDT)
+Received: from localhost (78-131-14-143.pool.digikabel.hu. [78.131.14.143])
+        by smtp.gmail.com with ESMTPSA id dt8-20020a170906b78800b0070f6855b90bsm7273546ejb.170.2022.06.21.02.29.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 02:29:28 -0700 (PDT)
+Date:   Tue, 21 Jun 2022 11:29:15 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <derrickstolee@github.com>, rsbecker@nexbridge.com,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+        avarab@gmail.com
+Subject: Re: [PATCH v2] t5510: replace 'origin' with URL more carefully (was
+ Re: Test Failure t5510,t5562 - was RE: [ANNOUNCE] Git v2.37.0-rc1)
+Message-ID: <20220621092915.GD1689@szeder.dev>
+References: <00a401d884d0$32885890$979909b0$@nexbridge.com>
+ <8d2a0a36-1d2f-c723-db1e-8978e5d03d1d@github.com>
+ <00b501d884d7$d8ed1200$8ac73600$@nexbridge.com>
+ <495bd957-43dc-f252-657d-2969bb7ad5f3@github.com>
+ <484a330e-0902-6e1b-8189-63c72dcea494@github.com>
+ <YrFwcL2dRS/v7xAw@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YrFwcL2dRS/v7xAw@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> wrote:
+On Tue, Jun 21, 2022 at 03:17:04AM -0400, Jeff King wrote:
+> On Mon, Jun 20, 2022 at 06:20:07PM -0400, Derrick Stolee wrote:
+> 
+> > diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> > index 4620f0ca7fa..c255a77e18a 100755
+> > --- a/t/t5510-fetch.sh
+> > +++ b/t/t5510-fetch.sh
+> > @@ -853,7 +853,9 @@ test_configured_prune_type () {
+> >  		then
+> >  			new_cmdline=$cmdline_setup
+> >  		else
+> > -			new_cmdline=$(printf "%s" "$cmdline" | perl -pe 's[origin(?!/)]["'"$remote_url"'"]g')
+> > +			new_cmdline=$(printf "%s" "$cmdline" |
+> > +					sed -e "s~origin ~'$remote_url' ~g" \
+> > +					    -e "s~ origin~ '$remote_url'~g")
+> >  		fi
+> 
+> Doesn't this introduce a new problem if $remote_url contains a tilde?
+> Unlikely, but I thought the point of the exercise was defending against
+> funny paths.
 
->     In cases where the result can be read or computed without
->     significant additional traversal (e.g., all commits of interest
->     already have bitmaps computed), we can save some time loading and
->     parsing a majority of the bitmap file that we will never read.
->
->     But in cases where the bitmaps are out-of-date, or there is
->     significant traversal required to go from the reference tips to
->     what's contained in the .bitmap file, this table provides minimal
->     benefit (or something).
->
-> Of course, you should verify that that is actually true before we insert
-> it into the commit message as such ;-). But that sort of information may
-> help readers understand what the purpose of this change is towards the
-> beinning of the series.
+And it doesn't replace a standalone "origin" word, either, which does
+occur a few times in the test script.
 
-The performance tests cover tests for command like "git rev-list --count
---objects --all", "simulated clone", "simulated fetch" etc. And I tested
-it with both the Git and Linux. In both cases, the average cost of
-"Without lookup table" is bigger than "with lookup table". The margin of
-difference is bigger for linux. Though, I need to fix the calculation
-of xor-offset (see my reply to derrick), the fix will not affect the
-performance too much. So, what you're saying is true. I think I didn't
-write the bitmap out-of-date test though.
+> So perhaps something like:
+> 
+>   perl -e '
+>     my ($cmdline, $url) = @ARGV;
+>     $cmdline =~ s[origin(?!/)][quotemeta($url)]ge;
 
-> Here and elsewhere: I typically use my <me@ttaylorr.com> address when
-> contributing to Git. So any trailers that mention my email or commits
-> that you send on my behalf should use that address, too.
+I don't like this "(?!/)" magic, because I haven't got the slightest
+idea of what it might do by merely looking at it, and these characters
+are not exactly easy to search for.
 
-Ohh, sorry! Will fix it.
+The good old "add a space prefix and suffix" trick can help to easily
+match the "origin" word even when it stands alone, but, alas, the
+result is still not as simple as I'd like with the \s and the string
+concatenation:
 
-> It the space between "(0xf)" and the first ":" intentional? Similarly,
-> should there be two or three colons at the end (either "::" or ":::")?
+  perl -e '
+    new_cmdline=$(perl -e '
+            my ($cmdline, $url) = @ARGV;
+            $cmdline =~ s[\sorigin\s][" " . quotemeta($url) . " "]ge;
+            print $cmdline;
+    ' -- " $cmdline " "$remote_url")
 
-Yes, it is intentional. My previous patch (formatting the bitmap-format.txt)
-uses nested description lists. ":::" means it is the level 3 description list.
-The space is required else asciidoc will assume that it is level 4 description
-list.
+(The 'sed' variant looks good to me:
 
-> I remember we had a brief off-list discussion about whether we should
-> store the full object IDs in the offset table, or whether we could store
-> their pack- or index-relative ordering. Is there a reason to prefer one
-> or the other?
->
-> I don't think we need to explain the choice fully in the documentation
-> in this patch, but it may be worth thinking about separately
-> nonetheless. We can store either order and convert it to an object ID in
-> constant time.
->
-> To figure out which is best, I would recommend trying a few different
-> choices here and seeing how they do or don't impact your performance
-> testing.
+  printf " %s " "$cmdline" |sed "s~ origin ~ '$remote_url' ~g"
 
-I think at that time I thought it would add extra cost of computing
-the actual commit ids from those index position. So, I didn't go 
-further here.
+but then again it just trades one set of troublesome characters for an
+other.)
 
-I still have a feeling that there is some way to get rid of this
-list of commit ids. But at the same time, I do not want to add
-extra computation to the code.
-
-> A couple of small thoughts here. I wonder if we'd get better locality if
-> we made each record look something like:
->
->     (object_id, offset, xor_pos)
->
-> Where object_id is either 20- or 4-bytes long (depending if we store the
-> full object ID, or some 4-byte identifier that allows us to discover
-> it), offset is 8 bytes long, and xor_pos is 4-bytes (since in practice
-> we don't support packs or MIDXs which have more than 2^32-1 objects).
->
-> In the event that this table doesn't fit into a single cache line, I
-> think we'll get better performance out of reading it by not forcing the
-> cache to evict itself whenever we need to refer back to the object_id.
-
-Ok, will look into it.
-
-> I mentioned in my reply to Stolee earlier, but I think that we should
-> either (a) try to remember what this is for and document it, or (b)
-> remove it.
-
-Let us for now remove it.
-
-Thanks :)
+>     print $cmdline;
+>   ' -- "$cmdline" "$remote_url"
+> 
+> I don't mean to golf on this forever, but I wanted to show something
+> concrete since you said you don't know perl well. I just think moving to
+> sed introduces more opportunities for errors here, not fewer. :)
+> 
+> -Peff
