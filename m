@@ -2,107 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 604ECC433EF
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 12:51:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72A14C43334
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 13:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350904AbiFUMv0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 08:51:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51292 "EHLO
+        id S1351689AbiFUNT6 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 21 Jun 2022 09:19:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351066AbiFUMvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 08:51:12 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374112A736
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 05:51:06 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id a17so10463631pls.6
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 05:51:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6utbCtCxppjxtsf19syO7MniJkVsibYGGYx24PNSy4c=;
-        b=Y+NwmQnVL67o2hSDnSfvaJGt71e13nZ+TN2yNF6DpnK5fasH59hEYswG6+AIFLcthg
-         0VZ0I1Xw446iUXNIX8uexQ9QDYPIOfXBs8kmThhbGZj+gB+DA707+ktclSYkTLOOT08c
-         HvIcOM2tUjQSw+iD1zJi9K6Js+EkWHfcBpthvkA3MY3YVER8k27myJhN0yUM31kKyoTo
-         Dp0yCQXh/CG4epfwYOA0GF1fZ/MKXbqCyTH4WWVdzHTOgJJyR3WrQhxPdetU66xZ549U
-         QjWkWFTbxh+61oMyFjq4USjELZy8vX2RYQHh3y0H5ZfGMwnf9e0RTUCh1joDex2yAUgo
-         ftjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6utbCtCxppjxtsf19syO7MniJkVsibYGGYx24PNSy4c=;
-        b=OBymAyErB71DQj8wpDcqYa7zZM+A5xoM5dmQF623Lhpnn+VVz5d/ZHTJYp3mtG+UUL
-         SxAXbPCgOIVWaCcU9QSqx4DxSDWfsBeekAXngnXvQVRhnnbHPvL4AXs6lbCS8qJur8Zo
-         imDj3bvuGuju6+cl4rdaV8Zru6nfCA061e5r61SfPgoWE2pFdZPJuPb9JuBfMi6YLp+G
-         KtWAn2hQHukSUb4vje9gzHLCB8cbAJ1LqpB3L/T9i6S2UVYl4WNStih2FwqSu0lCIDVS
-         k8R+Pufe11ZBDit5oM5/xzVuETwBdCxlYveRu9/6lgCt7/zOHzIUvN1iz1ibBdGuaPJA
-         BI5Q==
-X-Gm-Message-State: AJIora8NuwDlD9gX0Q2IaOnsuXdeGIqxurfpTLB4Cj164muQQDzfmNqG
-        +8rjiljGgMDgzU63g0fndcY=
-X-Google-Smtp-Source: AGRyM1vkxqemKGjklVE+lihdhkRXViOlMMxmgqDLDfqNSWYLmVm23ztwSOFO/U9yc04wMv42EYLPjw==
-X-Received: by 2002:a17:903:2452:b0:16a:38f9:ade9 with SMTP id l18-20020a170903245200b0016a38f9ade9mr3035057pls.152.1655815865432;
-        Tue, 21 Jun 2022 05:51:05 -0700 (PDT)
-Received: from localhost.localdomain ([202.142.80.189])
-        by smtp.gmail.com with ESMTPSA id ci2-20020a17090afc8200b001eca28b8581sm4216308pjb.7.2022.06.21.05.51.02
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 21 Jun 2022 05:51:04 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 3/6] pack-bitmap-write.c: write lookup table extension
-Date:   Tue, 21 Jun 2022 18:20:54 +0530
-Message-Id: <20220621125054.23035-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <YrDxt1MkQKdNJL1F@nand.local>
-References: <YrDxt1MkQKdNJL1F@nand.local>
+        with ESMTP id S1351572AbiFUNTh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 09:19:37 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA3C28E17
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 06:19:00 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 25LDIsjE024331
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 21 Jun 2022 09:18:55 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, "'Stephen Smith'" <ischis2@cox.net>
+Cc:     "'git'" <git@vger.kernel.org>, "'Jeff King'" <peff@peff.org>
+References: <12011256.O9o76ZdvQC@thunderbird> <220621.86sfnyuvt0.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220621.86sfnyuvt0.gmgdl@evledraar.gmail.com>
+Subject: RE: SHA-256 transition
+Date:   Tue, 21 Jun 2022 09:18:49 -0400
+Organization: Nexbridge Inc.
+Message-ID: <011f01d88571$755df480$6019dd80$@nexbridge.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQKdzPESrq0KdVHDZKCsGYSrLnv73gEu09Ihq8XPkgA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> wrote:
+On June 21, 2022 6:25 AM, Ævar Arnfjörð Bjarmason wrote:
+>On Mon, Jun 20 2022, Stephen Smith wrote:
+>
+>> What is the current status of the SHA-1 to SHA-256 transition?   Is the
+>> transition far enough along that users should start changing over to
+>> the new format?
+>
+>Just my 0.02, not the official project line or anything:
+>
+>I wouldn't recommend that anyone use it for anything serious at the moment, as
+>far as I can tell the only users (if any) are currently
+>(some) people work on git itself.
+>
+>The status of it is, I think it's fair to say, that it /should/ work 100% (or at least
+>99.99%?) as far as git itself is concerned.
+>
+>I.e. you can "init" a SHA-256 repository, all our in-repo tooling etc. will work with it.
+>We run full CI tests with a SHA-256 test suite, and it's passing.
+>
+>But the reason I'd still say "no" on the technical/UX side is:
+>
+> * The inter-op between SHA-256 and SHA-1 repositories is still
+>   nonexistent, except for a one-off import. I.e. we don't have any
+>   graceful way to migrate an existing repository.
+>
+> * For new repositories I think you'll probably want to eventually push
+>   it to one of the online git hosting providers, none of which (as far
+>   as I'm aware) support SHA-256 repos.
+>
+> * Even if not, any local git tooling that's not part of git.git is
+>   likely to break, often for trivial reasons like expecting SHA-1 sized
+>   hashes in the output, but if you start using it for your repositories
+>   and use such tools you're very likely to be the first person to run
+>   into bugs in those areas.
+>
+>But more importantly (and note that these views are definitely *not* shared by
+>some other project members, so take it with a grain of salt):
+>There just isn't any compelling selling point to migrate to SHA-256 in the near or
+>foreseeable future for a given individual user of git.
+>
+>The reason we started the SHA-1 -> $newhash (it wasn't known that it would be
+>SHA-256 at the time) was in response to https://shattered.io; Although it had
+>been discussed before, e.g. the thread starting at [1] in 2012.
+>
+>We've since migrated our default hash function from SHA-1 to SHA-1DC (except
+>on vanilla OSX, see [2]). It's a variant SHA-1 that detects the SHAttered attack
+>implemented by the same researchers. I'm not aware of a current viable SHA-1
+>collision against the variant of SHA-1 that we actually use these days.
+>
+>But even assuming for the sake of argument that we were using a much weaker
+>and easier to break hash (say MD4 or MD5) most users still wouldn't have much or
+>anything to worry about in practice.
+>
+>Discovering a hash collision is only the first step in attacking a Git repository. This
+>aspect has been discussed many times on-list, but e.g. [3] is one such thread.
+>
+>The above is really *not* meant to poo-poo the whole notion of switching to a
+>new hash. We're making good progress on it, although I think the really hard part
+>UX-wise is left (online migration).
+>
+>Likewise I'd be really surprised if given the progress of that work the average Git
+>user isn't going to be using not-SHA-1 with Git in 15-20 years, of it's even still
+>around at that time as a relevant VCS.
+>
+>But should even advanced git users be spending time on migrating their data at
+>this point?
+>
+>No, I don't think so given all of the above, and I really think we should carefully
+>consider all of the trade-offs involved before recommending that the average
+>user of git migrate over.
+>
+>1.
+>https://lore.kernel.org/git/CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47E
+>QDE+DiUQ@mail.gmail.com/
+>2. https://lore.kernel.org/git/cover-0.5-00000000000-20220422T094624Z-
+>avarab@gmail.com/
+>3. https://lore.kernel.org/git/CACBZZX65Kbp8N9X9UtBfJca7U1T0m-
+>VtKZeKM5q9mhyCR7dwGg@mail.gmail.com/
+>
 
-> I'm not sure if I remember why `table[i] - selected->xor_offset` is
-> right and not `i - selected->xor_offset`.
+Adding my own 0.02, what some of us are facing is resistance to adopting git in our or client organizations because of the presence of SHA-1. There are organizations where SHA-1 is blanket banned across the board - regardless of its use. While it is sometimes possible to educate of out the situation, as above, and show that SHA-1 is not really vulnerable except as above, which arguably applies to any hash given enough computing power, and in in-flight communication scenarios and cryptographic use.  Getting around this blanket ban is a serious amount of work and I have very recently seen customers move to older much less functional (or useful) VCS platforms just because of SHA-1.
 
-Even I myself got confused! Before sending the patch to the mailing
-list, I was clear about that. That's why I didn't catch the so called
-mistake I have been notifying till now. Thanks Taylor for asking
-the question!
+I also think the comment about git in 15-20 years is a bit concerning if we are making decisions on that basis. Having written code in the mid 1980s that is still alive and relevant today, once processes are put in place, customers are very reluctant to move. I expect git to continue to be relevant for a long time, particularly if it is actively maintained by a motivated team.
 
-I should add a comment before the line so that people can understand it.
-Let us parse `table_inv[table[i] - selected->xor_offset]` -
+IMO, the SHA-1 to SHA-256 (or other hash) migration should receive more attention, which I am willing to give, but I think it requires a deeper discussion. Arguably, if GitHub were to offer SHA-256 repos, I am 99% certain you will see much wider adoption.
 
-Suppose bitmap entries be like - 
+--Randall
 
-Bitmap 0 (for commit 0)
-Bitmap 1 (for commit 1)
-Bitmap 2 (for commit 2)
-Bitmap 3 (for commit 3)
-.
-.
-.
-Bitmap 20 (for commit 20)
-
-These bitmaps are ordered by the date of their corresponding commit.
-`table` array maps commit's lexicographic order to its bitmap order.
-`table_inv` stores the reverse (i.e. it maps bitmap order to lexicographic
-order). Say for example, if commit 4 is lexicographically first among all the
-Commits then `table[0]` is 4. Similarly `table[1]`=2, table[2]=1 etc.
-`table_inv[4]` is 0, table_inv[2]=1 etc.
-
-Now suppose commit 4's bitmap has xor-relation with commit 2's bitmap.
-So, xor-offset for bitmap 4 is 2. And `table[0] - selected->xor_offset`
-is equal to 4-2 = 2. It is pointing to the commit 2. Now, 2 is in bitmap
-Order. We need to convert it into lexicographic order. So, table_inv[2]
-gives us the lexicographic order position of commit 2 I.e. 1.
-
-Long story short, there is no issue regarding xor_offset. This xor_offset
-is not relative to the current commit. It is absolute.
-
-Sorry for the initial claim :)
