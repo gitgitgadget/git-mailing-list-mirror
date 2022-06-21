@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C544C43334
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 11:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 604ECC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 12:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350111AbiFULwl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 07:52:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34936 "EHLO
+        id S1350904AbiFUMv0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 08:51:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348880AbiFULwk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 07:52:40 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAC3F2AC66
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 04:52:38 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id cv13so10129928pjb.4
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 04:52:38 -0700 (PDT)
+        with ESMTP id S1351066AbiFUMvM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 08:51:12 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374112A736
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 05:51:06 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id a17so10463631pls.6
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 05:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qbIbQRqI54/pO2BEvTvxXVMnnbgpDJZu/+UQphrNEBM=;
-        b=XOowqEi1hF5dVFxKtpw0BJdDW021q3DNPfDqb+XUr6LuAIUSbg9Ga/jXQDlG+S8TTT
-         YG1VDj/KMHjupcSviRTM4M7389hcUTyTF89DX0Hnfc7BR4ZTmPebPIILsITIVshyIqHd
-         Gi3cLdkstIw6TvBJfJ7s6hSXCCzv3Dq3k31XS5wLgzLtW1rglCe0wXlgr8xT+HPMlzKe
-         fJpBzru7A9kJVZrmzwkx/OmWMdlx5/D1GbNaxx7rj2CP3gZCiQXVjm73IHqaUgjReSOm
-         BmHc0nNOVDEM6miqOWe1pzPI+MGrJQpD9LJ0voDK9uk/AXdzuaNyUUyXpmPp5rr1uXDS
-         yY9A==
+        bh=6utbCtCxppjxtsf19syO7MniJkVsibYGGYx24PNSy4c=;
+        b=Y+NwmQnVL67o2hSDnSfvaJGt71e13nZ+TN2yNF6DpnK5fasH59hEYswG6+AIFLcthg
+         0VZ0I1Xw446iUXNIX8uexQ9QDYPIOfXBs8kmThhbGZj+gB+DA707+ktclSYkTLOOT08c
+         HvIcOM2tUjQSw+iD1zJi9K6Js+EkWHfcBpthvkA3MY3YVER8k27myJhN0yUM31kKyoTo
+         Dp0yCQXh/CG4epfwYOA0GF1fZ/MKXbqCyTH4WWVdzHTOgJJyR3WrQhxPdetU66xZ549U
+         QjWkWFTbxh+61oMyFjq4USjELZy8vX2RYQHh3y0H5ZfGMwnf9e0RTUCh1joDex2yAUgo
+         ftjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qbIbQRqI54/pO2BEvTvxXVMnnbgpDJZu/+UQphrNEBM=;
-        b=b2aMG86LTa6SAZ6jY8t1BYBZuSqlmohK3o5whsM1RSGijIa4ARYyf/2udP9JkczbSF
-         YYA7+d3INIW2WbQhacwaV4h4nOjbmN+aFQs+v4mrp2ztstEYmCIUPLlHdjVmBNy4uZNT
-         IxCVZkFCArd2dBjsWh2si+yhhcsb82gfWDsA1xuauaN+oGRQOiOtmLVjydhp/le05Xyp
-         qx2vUpmAiu2GsRx6647nZmobOvA2paeSrS1FdXSiJAW4WGjdt+tL3i7q/3AzrdUJnEtl
-         vbEYFZa+fyRsE3dI4CxWuexJksqvrhew66+2tYmNB7KNXtxpm+RxYk+gh32tKNw/JwOl
-         kH4Q==
-X-Gm-Message-State: AJIora+OzQWlYG0H3yXvfNON5Nynpr4eYF5ZrKqxGNjI2zmZ0Vn5ywUU
-        kQoD0upyr3GpI+WRWTiuUt7IUVbhLrQ=
-X-Google-Smtp-Source: AGRyM1sC1Drwkc1x5kBHzmAM8HbuJ3XgV/ZrTlKDtNVcgsSviyMHYNRSacI14ugE95DtI8GjfX63jQ==
-X-Received: by 2002:a17:90b:4ac1:b0:1e6:7c82:9aee with SMTP id mh1-20020a17090b4ac100b001e67c829aeemr42964006pjb.234.1655812358184;
-        Tue, 21 Jun 2022 04:52:38 -0700 (PDT)
+        bh=6utbCtCxppjxtsf19syO7MniJkVsibYGGYx24PNSy4c=;
+        b=OBymAyErB71DQj8wpDcqYa7zZM+A5xoM5dmQF623Lhpnn+VVz5d/ZHTJYp3mtG+UUL
+         SxAXbPCgOIVWaCcU9QSqx4DxSDWfsBeekAXngnXvQVRhnnbHPvL4AXs6lbCS8qJur8Zo
+         imDj3bvuGuju6+cl4rdaV8Zru6nfCA061e5r61SfPgoWE2pFdZPJuPb9JuBfMi6YLp+G
+         KtWAn2hQHukSUb4vje9gzHLCB8cbAJ1LqpB3L/T9i6S2UVYl4WNStih2FwqSu0lCIDVS
+         k8R+Pufe11ZBDit5oM5/xzVuETwBdCxlYveRu9/6lgCt7/zOHzIUvN1iz1ibBdGuaPJA
+         BI5Q==
+X-Gm-Message-State: AJIora8NuwDlD9gX0Q2IaOnsuXdeGIqxurfpTLB4Cj164muQQDzfmNqG
+        +8rjiljGgMDgzU63g0fndcY=
+X-Google-Smtp-Source: AGRyM1vkxqemKGjklVE+lihdhkRXViOlMMxmgqDLDfqNSWYLmVm23ztwSOFO/U9yc04wMv42EYLPjw==
+X-Received: by 2002:a17:903:2452:b0:16a:38f9:ade9 with SMTP id l18-20020a170903245200b0016a38f9ade9mr3035057pls.152.1655815865432;
+        Tue, 21 Jun 2022 05:51:05 -0700 (PDT)
 Received: from localhost.localdomain ([202.142.80.189])
-        by smtp.gmail.com with ESMTPSA id bo9-20020a056a000e8900b0051bbe085f16sm10785240pfb.104.2022.06.21.04.52.34
+        by smtp.gmail.com with ESMTPSA id ci2-20020a17090afc8200b001eca28b8581sm4216308pjb.7.2022.06.21.05.51.02
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 21 Jun 2022 04:52:37 -0700 (PDT)
+        Tue, 21 Jun 2022 05:51:04 -0700 (PDT)
 From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
         Git <git@vger.kernel.org>,
         Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 2/6] pack-bitmap: prepare to read lookup table extension
-Date:   Tue, 21 Jun 2022 17:22:12 +0530
-Message-Id: <20220621115212.22383-1-chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH 3/6] pack-bitmap-write.c: write lookup table extension
+Date:   Tue, 21 Jun 2022 18:20:54 +0530
+Message-Id: <20220621125054.23035-1-chakrabortyabhradeep79@gmail.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <YrDvaMHz9DnjBqLs@nand.local>
-References: <YrDvaMHz9DnjBqLs@nand.local>
+In-Reply-To: <YrDxt1MkQKdNJL1F@nand.local>
+References: <YrDxt1MkQKdNJL1F@nand.local>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -67,78 +67,42 @@ X-Mailing-List: git@vger.kernel.org
 
 Taylor Blau <me@ttaylorr.com> wrote:
 
-> What is the purpose of the GIT_READ_COMMIT_TABLE environment variable? I
-> assume that it's to make it easier to run tests (especially performance
-> ones) with and without access to the lookup table. If so, we should
-> document that (lightly) in the commit message, and rename this to be
-> GIT_TEST_READ_COMMIT_TABLE to indicate that it shouldn't be used outside
-> of tests.
+> I'm not sure if I remember why `table[i] - selected->xor_offset` is
+> right and not `i - selected->xor_offset`.
 
-This is mainly for testing, GIT_TEST_READ_COMMIT_TABLE is perfect.
+Even I myself got confused! Before sending the patch to the mailing
+list, I was clear about that. That's why I didn't catch the so called
+mistake I have been notifying till now. Thanks Taylor for asking
+the question!
 
+I should add a comment before the line so that people can understand it.
+Let us parse `table_inv[table[i] - selected->xor_offset]` -
 
-> All makes sense. Some light documentation might help explain what this
-> comparator function is used for (the bsearch() call below in
-> bitmap_table_lookup()), although I suspect that this function will get
-> slightly more complicated if you pack the table contents as I suggest,
-> in which case more documentation will definitely help.
+Suppose bitmap entries be like - 
 
-Ok.
+Bitmap 0 (for commit 0)
+Bitmap 1 (for commit 1)
+Bitmap 2 (for commit 2)
+Bitmap 3 (for commit 3)
+.
+.
+.
+Bitmap 20 (for commit 20)
 
-> Interesting; this is a point that I forgot about from the original
-> patch. xor_pos is an index (not an offset) into the list of commits in
-> the table of contents in the order appear in that table. We should be
-> clear about (a) what that order is, and (b) that xor_pos is an index
-> into that order.
+These bitmaps are ordered by the date of their corresponding commit.
+`table` array maps commit's lexicographic order to its bitmap order.
+`table_inv` stores the reverse (i.e. it maps bitmap order to lexicographic
+order). Say for example, if commit 4 is lexicographically first among all the
+Commits then `table[0]` is 4. Similarly `table[1]`=2, table[2]=1 etc.
+`table_inv[4]` is 0, table_inv[2]=1 etc.
 
-This is exactly what I said in my first reply. I made a mistake here.
-(1) As xor_pos is relative to the current bitmap, it depends on the bitmap
-entry order. These two order are not same. One is ordered by date, another
-is lexicographically ordered. I will fix it.
+Now suppose commit 4's bitmap has xor-relation with commit 2's bitmap.
+So, xor-offset for bitmap 4 is 2. And `table[0] - selected->xor_offset`
+is equal to 4-2 = 2. It is pointing to the commit 2. Now, 2 is in bitmap
+Order. We need to convert it into lexicographic order. So, table_inv[2]
+gives us the lexicographic order position of commit 2 I.e. 1.
 
-> Yeah. The problem here is that we can't record every commit that
-> _doesn't_ have a bitmap every time we return NULL from one of these
-> queries, since there are arbitrarily many such commits that don't have
-> bitmaps.
->
-> We could approximate it using a Bloom filter or something, and much of
-> that code is already written and could be interesting to try and reuse.
-> But I wonder if we could get by with something simpler, though, which
-> would cause us to load all bitmaps from the lookup table after a fixed
-> number of cache misses (at which point we should force ourselves to load
-> everything and just read everything out of a single O(1) lookup in the
-> stored bitmap table).
->
-> That may or may not be a good idea, and the threshold will probably be
-> highly dependent on the system. So it may not even be worth it, but I
-> think it's an interesting area to experiemnt in and think a little more
-> about.
+Long story short, there is no issue regarding xor_offset. This xor_offset
+is not relative to the current commit. It is absolute.
 
-Now I got the point. I wonder what if we leave it as it is. How much will
-it affect the code?
-
-> How does this commit_pos work again? I confess I have forgetten since I
-> wrote some of this code a while ago... :-).
-
-It is using recursive strategy. The first call to `stored_bitmap_for_commit`
-function do not have `pos_hint`. So, it uses `bitmap_table_lookup` to find
-the commit position in the list and makes a call to `lazy_bitmap_for_commit`
-function. This function gets the offset and xor-offset using the commit id's
-position in the list. If xor-offset exists, it is using this xor-offset to
-get the xor-bitmap by calling `stored_bitmap_for_commit` again. But this time
-`pos_hint` is xor-offset. This goes on till the last non-xor bitmap has found.
-
-As I said before, xor-offset should be an absolute value to make it work
-correctly.
-
-> Should we print this regardless of whether or not there is a lookup
-> table? We should be able to learn the entry count either way.
-
-No, this is necessary. "Bitmap v1 test (%d entries loaded)" means
-all the bitmap entries has been loaded. It is basically for 
-`load_bitmap_entries_bitmap_v1` function which loads all the bitmaps
-One by one. But if there is a lookup table, `prepare_bitmap_git`
-function will not load every entries and thus printing the above
-line is wrong.
-
-Thanks :)
+Sorry for the initial claim :)
