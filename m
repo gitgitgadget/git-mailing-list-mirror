@@ -2,100 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91BFCC43334
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 19:46:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D62E9C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 20:16:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354094AbiFUTqy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 15:46:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32870 "EHLO
+        id S1353056AbiFUUQR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 16:16:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353438AbiFUTqw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 15:46:52 -0400
-X-Greylist: delayed 1225 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 21 Jun 2022 12:46:46 PDT
-Received: from gateway10.unifiedlayer.com (gateway10.unifiedlayer.com [74.220.194.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11407275F6
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 12:46:45 -0700 (PDT)
-Received: from cm6.websitewelcome.com (unknown [108.167.139.19])
-        by gateway10.unifiedlayer.com (Postfix) with ESMTP id D59D920070F5A
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 14:26:19 -0500 (CDT)
-Received: from uscentral455.accountservergroup.com ([174.136.13.174])
-        by cmsmtp with ESMTP
-        id 3jVzoaPIK8f6z3jVzoM7x6; Tue, 21 Jun 2022 14:26:19 -0500
-X-Authority-Reason: nr=8
-Received: from 76-222-220-222.lightspeed.rcsntx.sbcglobal.net ([76.222.220.222]:59808 helo=bigbox.attlocal.net)
-        by uscentral455.accountservergroup.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <git@tim.thechases.com>)
-        id 1o3jVz-001vmi-J9
-        for git@vger.kernel.org; Tue, 21 Jun 2022 14:26:19 -0500
-Date:   Tue, 21 Jun 2022 14:26:18 -0500
-From:   Tim Chase <git@tim.thechases.com>
-To:     git@vger.kernel.org
-Subject: stashing only unstaged changes?
-Message-ID: <20220621142618.239b02cd@bigbox.attlocal.net>
-X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.33; amd64-portbld-freebsd13.0)
+        with ESMTP id S233414AbiFUUQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 16:16:15 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2444A1E3FC
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 13:16:13 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0C3A219541F;
+        Tue, 21 Jun 2022 16:16:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ODbu4HSI/E0ZnxKDail/H79jSpSLaWH5U3zV5D
+        weL9w=; b=DLLAQEkOvYPLgtaKGk/prjI0eKfl3XWDwPTIl/untGsmO//4/U7OqI
+        OtmFv6NLyXjpqsC8c1uI7ucgtx0QgZrHjtiCLw26Nl3d7CTJI5I4KRNzAmoRxiJh
+        gQ4ptWxfMj3Kh0X0534VEC6O6D+WFp/ilIRSUTkX1ZWCL4mmIihUE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 01E8E19541E;
+        Tue, 21 Jun 2022 16:16:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5A5819541D;
+        Tue, 21 Jun 2022 16:16:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH 1/6] docs: document bundle URI standard
+References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
+        <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
+        <xmqqtu8x1fd4.fsf@gitster.g>
+        <48e722dc-f860-f7a6-36d0-b0106087aef4@github.com>
+        <d4427adf-e3ef-a5cd-3016-687004dc5ae3@github.com>
+Date:   Tue, 21 Jun 2022 13:16:08 -0700
+In-Reply-To: <d4427adf-e3ef-a5cd-3016-687004dc5ae3@github.com> (Derrick
+        Stolee's message of "Tue, 21 Jun 2022 15:34:14 -0400")
+Message-ID: <xmqq8rpphiwn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - uscentral455.accountservergroup.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tim.thechases.com
-X-BWhitelist: no
-X-Source-IP: 76.222.220.222
-X-Source-L: No
-X-Exim-ID: 1o3jVz-001vmi-J9
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 76-222-220-222.lightspeed.rcsntx.sbcglobal.net (bigbox.attlocal.net) [76.222.220.222]:59808
-X-Source-Auth: tim@thechases.com
-X-Email-Count: 1
-X-Source-Cap: dGhlY2hhc2U7dGhlY2hhc2U7dXNjZW50cmFsNDU1LmFjY291bnRzZXJ2ZXJncm91cC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain
+X-Pobox-Relay-ID: FD3605C0-F19E-11EC-8246-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I recently had composed a commit with some `git add -p` leaving some
-portions unstaged. I wanted to stash the unstaged changes to make
-sure that the staged code ran as expected, so I did  a `git stash`
-only to find that it unstaged my staged changes and stashed
-*everything*.
+Derrick Stolee <derrickstolee@github.com> writes:
 
-Using `git stash --saved` does the opposite of what I want (stashing
-the index, not the difference between the index and the working-copy)
+>>> The refs/bundles/ appear in the document only here, and it is
+>>> unclear why we even want it (I am assuming this is against gc while
+>>> "git clone" is still running) or how we are going to retire it, if
+>>> ever.  If there are multiple bundle files involved in this "git clone",
+>>> to anchor objects that are necessary against "gc", don't we need to use
+>>> refs/bundles/<i>/* or something like that, where <i> is uniquely assigned
+>>> number locally?
+>> 
+>> The real reason to keep them in refs/bundles/ is because then those
+>> refs can be used in the incremental 'git fetch' after downloading the
+>> bundles (in perpetuity) while not stomping refs/heads or refs/remotes/
+>
+> ...I completely ignored your "refs/bundles/<i>/*" suggestion, which is
+> an interesting way to allow dropping refs from this space, allowing GC
+> to clear up space over time.
 
-So I carefully re-`git add -p`'ed everything and tried `git stash
---keep-index` which sounded promising (my index remained the same),
-but popping my stash ended up causing conflicts because it had
-stashed the diff of HEAD..working-copy, not INDEX..working-copy.  A
-`git stash show -p` confirmed that the stash included things that I
-had already staged.
+FWIW, I wasn't thinking about GC and expiration.  If bundle URI
+thing can say "you need this, that and that other bundle" and cause
+you to fetch three bundles, I thought that there needs a way for you
+to record the tips of these three bundles---these three bundles
+should not have to compete for refs/bundles/master, for example.
 
-So I carefully re-`git add -p`ed everything yet again, but then got
-stuck trying to convince `stash` to save a snapshot of only the diff
-in my working directory. To work around it, I did a `git diff >
-temp.patch` to obtain the stuff I'd wanted to stash, a `git reset
---staged` to clear out those changes, ran my code to verify
-(eventually committing it), and then applied the `temp.patch` back on
-top of my changes.  It worked, but felt convoluted.
-
-I did see the `git stash -p` option, to manually choose the inverse
-bits, but for what I was doing, it was more sensible to `git add -p`
-and try to stash the rest.
-
-So is there some option I've missed to tell `git stash` to stash only
-the delta between the uncommitted-index and the working-copy?
-
-Thanks,
-
--Tim
-
-
-(I'd posted this on /r/git
-
-https://www.reddit.com/r/git/comments/vchu83/stashing_only_unstaged_changes/
-
-but figured I'd try my hand here in the hope of more answers)
