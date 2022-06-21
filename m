@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F62BC433EF
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 22:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C336C43334
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 22:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354507AbiFUWeg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 18:34:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36582 "EHLO
+        id S1354509AbiFUWeh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 18:34:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354481AbiFUWeb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 18:34:31 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 058DC264E
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:34:31 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id i10so17092238wrc.0
+        with ESMTP id S1354478AbiFUWea (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 18:34:30 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02AC3D133
         for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:34:30 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id o16so20853902wra.4
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 15:34:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WFUMVQSQKlu7nIYrPu5XWfVVrVG2zFi4qm1voYVbvHM=;
-        b=UFW0suzc+AozRpw8P2jFM2uZ6xh3urCgbFu2vqZWyX+j8Dy4s6vKruyYKMhAuR+AKU
-         ngOL5ckdHeMBnCF1gBlb+CG37juafLct0olHL5VlgoGhw8LMs3jZlHKz+2exFugqsp3O
-         AYHHpBQ7HXm2FfZtFAIQTFeNsFXeOASbsDom0w9hLizVLLf+9ccx3XrXTB+gKvW1jyuD
-         9O7yPZePcqprPb7cIa67RTp86uz9K/d880jB5xdpg/5u/+u5LrKK1I40Jg2hoRd2Wjlg
-         FWjqHl1Ra8GHkogrW0782FUvjFvhkrbRTLxTWLlMnh2iFVz9EgUR+UMT109Nnkt1fmsI
-         Avpg==
+        bh=9SKREIOOggaRjJlBPAwycKlciSlmhOQX6RJERnKt+JY=;
+        b=bXcqo3wW8FO7zpYJpCaZu1h8AcK8iMtkY81foz67Bf0K4CwKKVXz2/05kiGs4ggxtf
+         mAGweLyazzjb1OGxnos2qts71oViGTsaUPgZRSKw98x8wpbZIPrrmgX5/+LV6dgfr6Lv
+         ekc6Z01hlQdtcbQBFCBNCFpQeXsBjslDrQYvHjXs96AvRK4GyM3kt3uLZ2KxPpVle5A1
+         HbF00m84ynb0UCz7OIPZ7PaIAoc3vpYHyZJQTw2OIWmzaP3w+mn7mcNaifRVV10wDwmg
+         oKtTB9pzcef5L8J7KZNYISJyswHn5u+2M4PwKJ91SQchFa6oj5NzNTqB0h4GUU/haXYf
+         G6Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WFUMVQSQKlu7nIYrPu5XWfVVrVG2zFi4qm1voYVbvHM=;
-        b=sMzHUNlVpaTw7Aa0xwyy66PRXA8dStyrxWcbJfc83u5IRmD9Ce88gxacCuvcGwWXqN
-         S6OA+Y8rGwSn3wwZ6q8echV/3L4A/fF6c+xCs4h+a253/JMxFsxfQxH3AAd3paDJNEO1
-         HiOD61VAMqirqO8EwUdub8+pzBiuS5SV4/F0yz++SfFzHhzaO/ofhdBfl9EgEk4ntfg9
-         LTYLCYS9c83bDLdRtcu2wgPp6+f1YB0onBzpK2bi36YxbdEoR3tx6wuV3HICfgfiNG+8
-         0/IhBJCk45ty49vxiQqdhdZscy8KA7Y4xNfM4Nvo2vYU6mErlWz+KW3TYIO8HhXkuvWV
-         kriw==
-X-Gm-Message-State: AJIora95hES6XXdOXy/7CTmZ9O/jl7e29KgXlyd5gEgvLTRia7hDX+y+
-        WAbE9iDk8OaXuUrEid9+FPIFtQtOypBvqA==
-X-Google-Smtp-Source: AGRyM1vWM3FN9Y3y8BRDAAp4MSv17g9W9WzjrDPulSuWnRNXuLj5okOLiOGu5mIKdC6I3oLB3hOVsA==
-X-Received: by 2002:a5d:4205:0:b0:21b:89ea:b5e3 with SMTP id n5-20020a5d4205000000b0021b89eab5e3mr204232wrq.103.1655850869231;
-        Tue, 21 Jun 2022 15:34:29 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y5-20020a7bcd85000000b0039c7c4a542csm19000299wmj.47.2022.06.21.15.34.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=9SKREIOOggaRjJlBPAwycKlciSlmhOQX6RJERnKt+JY=;
+        b=sRAGfcCOY7ZJUWgKNEphC7tfkaKiivEO3pLPAZJvqu9yBi1SDkG0YmlrOQWt06Dgce
+         rQBnGBwdeN7SQYjc5GwENT+S8QZF4vD07NB05uJrwhJQNTjjadw+2pT8dpCckqKJL3RH
+         KzcT1ct2BAxurLzK5Cchg7ArHDOeIXdGyUDPsv0V6wns3iW/3exJV51UGd1P7d26s9k2
+         9AZvJPbgYBMewUs6HQuefp6w4+NKUJlK8P5K7qLwdreHR/HeSjdjKJiobuHFSKSDQzTA
+         SP6sn04YWCB7sUxS3vozA4cGxcQZfzPbYR+ScVXPHvFfSkgcs2mX1lufcSq2pLigyfCS
+         WdUA==
+X-Gm-Message-State: AJIora/f87yfNLOIx7a3JLJrly+svSg2KRdBpvO0/PZ05FyesubvRWwS
+        XExBex5VwnIHSB63I2z2w0dmO3f0hil5Uw==
+X-Google-Smtp-Source: AGRyM1tni6RKwpv27V08Ckim5ZbImh9ctwLvAnlXqApBf6yEYVWyY5GGpxhYfGhjWc1GbdqQh8g5aA==
+X-Received: by 2002:a5d:570e:0:b0:21b:8aec:3e69 with SMTP id a14-20020a5d570e000000b0021b8aec3e69mr205154wrv.177.1655850868233;
         Tue, 21 Jun 2022 15:34:28 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id y5-20020a7bcd85000000b0039c7c4a542csm19000299wmj.47.2022.06.21.15.34.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 15:34:27 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/10] fetch tests: add a helper to avoid boilerplate
-Date:   Wed, 22 Jun 2022 00:34:16 +0200
-Message-Id: <patch-04.10-398818a5acb-20220621T222854Z-avarab@gmail.com>
+Subject: [PATCH 03/10] fetch tests: use "local", &&-chaining, style etc.
+Date:   Wed, 22 Jun 2022 00:34:15 +0200
+Message-Id: <patch-03.10-02aad13748e-20220621T222854Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
 In-Reply-To: <cover-00.10-00000000000-20220621T222854Z-avarab@gmail.com>
 References: <xmqqa6a5g0m3.fsf@gitster.g> <cover-00.10-00000000000-20220621T222854Z-avarab@gmail.com>
@@ -70,58 +70,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new test_configured_prune_type_branch() helper to avoid the
-boilerplate introduced in 97716d217c1 (fetch: add a --prune-tags
-option and fetch.pruneTags config, 2018-02-09).
+Make use of &&-chaining, the "local" keyword, the more idiomatic "test
+-z" over comparison against "" etc. in the
+"test_configured_prune_type()" function.
 
-Back then it was somewhat necessary, but since 6317972cff9 (fetch:
-make the --prune-tags work with <url>, 2018-02-09) these tests have
-been regular enough that we can always pass the "kept" argument for
-"link", and "pruned" for "name".
+Let's also move the wrapper function to below the function itself. In
+e1790f9245f (fetch tests: fetch <url> <spec> as well as fetch
+[<remote>], 2018-02-09) placed in there to minimize the diff
+size. While it's not incorrect to define these in this order (this
+isn't C), it's less confusing this way.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5510-fetch.sh | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ t/t5510-fetch.sh | 40 +++++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
 diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 799e69dc1b1..5d118a6a806 100755
+index 37e12de2475..799e69dc1b1 100755
 --- a/t/t5510-fetch.sh
 +++ b/t/t5510-fetch.sh
-@@ -1006,22 +1006,19 @@ test_configured_prune unset unset unset true pruned  kept \
- # remote. However, because there's no implicit
- # +refs/heads/*:refs/remotes/origin/* refspec and supplying it on the
- # command-line negates --prune-tags, the branches will not be pruned.
-+test_configured_prune_type_branch () {
-+	test_configured_prune_type "$1" "$2" "$3" "$4" pruned "$6" "$7" "name"
-+	test_configured_prune_type "$1" "$2" "$3" "$4" kept   "$6" "$7" "link"
-+}
- test_configured_prune_type unset unset unset unset kept   kept   "origin --prune-tags" "name"
- test_configured_prune_type unset unset unset unset kept   kept   "origin --prune-tags" "link"
--test_configured_prune_type unset unset unset unset pruned pruned "origin --prune --prune-tags" "name"
--test_configured_prune_type unset unset unset unset kept   pruned "origin --prune --prune-tags" "link"
--test_configured_prune_type unset unset unset unset pruned pruned "--prune --prune-tags origin" "name"
--test_configured_prune_type unset unset unset unset kept   pruned "--prune --prune-tags origin" "link"
--test_configured_prune_type unset unset true  unset pruned pruned "--prune origin" "name"
--test_configured_prune_type unset unset true  unset kept   pruned "--prune origin" "link"
--test_configured_prune_type unset unset unset true  pruned pruned "--prune origin" "name"
--test_configured_prune_type unset unset unset true  kept   pruned "--prune origin" "link"
--test_configured_prune_type true  unset true  unset pruned pruned "origin" "name"
--test_configured_prune_type true  unset true  unset kept   pruned "origin" "link"
--test_configured_prune_type unset  true true  unset pruned pruned "origin" "name"
--test_configured_prune_type unset  true true  unset kept   pruned "origin" "link"
--test_configured_prune_type unset  true unset true  pruned pruned "origin" "name"
--test_configured_prune_type unset  true unset true  kept   pruned "origin" "link"
-+test_configured_prune_type_branch unset unset unset unset - pruned "origin --prune --prune-tags"
-+test_configured_prune_type_branch unset unset unset unset - pruned "--prune --prune-tags origin"
-+test_configured_prune_type_branch unset unset true  unset - pruned "--prune origin"
-+test_configured_prune_type_branch unset unset unset true  - pruned "--prune origin"
-+test_configured_prune_type_branch true  unset true  unset - pruned "origin"
-+test_configured_prune_type_branch unset  true true  unset - pruned "origin"
-+test_configured_prune_type_branch unset  true unset true  - pruned "origin"
+@@ -821,20 +821,15 @@ set_config_tristate () {
+ 	esac
+ }
  
- # When all remote.origin.fetch settings are deleted a --prune
- # --prune-tags still implicitly supplies refs/tags/*:refs/tags/* so
+-test_configured_prune () {
+-	test_configured_prune_type "$@" "name"
+-	test_configured_prune_type "$@" "link"
+-}
+-
+ test_configured_prune_type () {
+-	fetch_prune=$1
+-	remote_origin_prune=$2
+-	fetch_prune_tags=$3
+-	remote_origin_prune_tags=$4
+-	expected_branch=$5
+-	expected_tag=$6
+-	cmdline=$7
+-	mode=$8
++	local fetch_prune="$1" &&
++	local remote_origin_prune="$2" &&
++	local fetch_prune_tags="$3" &&
++	local remote_origin_prune_tags="$4" &&
++	local expected_branch="$5" &&
++	local expected_tag="$6" &&
++	local cmdline="$7" &&
++	local mode="$8" &&
+ 
+ 	if test -z "$cmdline_setup"
+ 	then
+@@ -843,18 +838,18 @@ test_configured_prune_type () {
+ 			remote_fetch="$(git -C one config remote.origin.fetch)" &&
+ 			cmdline_setup="\"$remote_url\" \"$remote_fetch\""
+ 		'
+-	fi
++	fi &&
+ 
+ 	if test "$mode" = 'link'
+ 	then
+-		new_cmdline=""
++		new_cmdline="" &&
+ 
+-		if test "$cmdline" = ""
++		if test -z "$cmdline"
+ 		then
+ 			new_cmdline=$cmdline_setup
+ 		else
+ 			new_cmdline=$(printf "%s" "$cmdline" | perl -pe 's[origin(?!/)]["'"$remote_url"'"]g')
+-		fi
++		fi &&
+ 
+ 		if test "$fetch_prune_tags" = 'true' ||
+ 		   test "$remote_origin_prune_tags" = 'true'
+@@ -863,10 +858,10 @@ test_configured_prune_type () {
+ 			then
+ 				new_cmdline="$new_cmdline refs/tags/*:refs/tags/*"
+ 			fi
+-		fi
++		fi &&
+ 
+ 		cmdline="$new_cmdline"
+-	fi
++	fi &&
+ 
+ 	test_expect_success "$mode prune fetch.prune=$fetch_prune remote.origin.prune=$remote_origin_prune fetch.pruneTags=$fetch_prune_tags remote.origin.pruneTags=$remote_origin_prune_tags${cmdline:+ $cmdline}; branch:$expected_branch tag:$expected_tag" '
+ 		# make sure a newbranch is there in . and also in one
+@@ -915,6 +910,13 @@ test_configured_prune_type () {
+ 			esac
+ 		)
+ 	'
++
++	return 0
++}
++
++test_configured_prune () {
++	test_configured_prune_type "$@" "name" &&
++	test_configured_prune_type "$@" "link"
+ }
+ 
+ # $1 config: fetch.prune
 -- 
 2.36.1.1239.gfba91521d90
 
