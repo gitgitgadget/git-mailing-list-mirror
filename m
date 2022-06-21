@@ -2,110 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 215F0C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 16:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DC86C43334
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 16:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353583AbiFUQCL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 12:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44948 "EHLO
+        id S1353832AbiFUQTq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 12:19:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353586AbiFUQBs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 12:01:48 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E5442E688
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 09:00:55 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 34EB61983F0;
-        Tue, 21 Jun 2022 12:00:54 -0400 (EDT)
+        with ESMTP id S1351025AbiFUQTo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 12:19:44 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3592899D
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 09:19:43 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 608A213371C;
+        Tue, 21 Jun 2022 12:19:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=VKhNBOCKffSs
-        RjHZpdz/215BhCWNX9kDegYmaFV9P9w=; b=mevz148gnjOAZwFBKUdajUloJYI+
-        XJg8LU700S/GK8fh4cYPxKqW4JMtFDIzIjCB61NvbrTGKASWZrzmgTGTUvNijs9M
-        6Ant5OEBYHZD4F5WTX/m+MrsfnO/yM2ZGcYm8ynixKo1cVdPNDCayupn/NUhgRuB
-        Y1bGLb9Z+u6NBjg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D6161983EF;
-        Tue, 21 Jun 2022 12:00:54 -0400 (EDT)
+        :content-type; s=sasl; bh=cTmvY59y9628yrdXWQ+Zw84We+W28/2SOMisIH
+        VQa6Q=; b=KaBv1GOQiJVdMKo/CyvqQbOzR6aZzEfPbSP/zqkhcie0K2mYgSInRy
+        75z7qvXfdQJSwqtpdocf8xQExVTxDU7ctRdkP07gkuZZJMHCy21XO/JwvnJIEAyK
+        u1iKS/HXrfcN2CcLlKxXvEbFcENHO0wWLe8AbVqyenjlk5fHHXhPI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57A5A13371B;
+        Tue, 21 Jun 2022 12:19:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BFE021983ED;
-        Tue, 21 Jun 2022 12:00:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BAD1413371A;
+        Tue, 21 Jun 2022 12:19:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Stewart Smith <trawets@amazon.com>, git@vger.kernel.org,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH] git-send-email: Add --no-validate-email option
-References: <20220620004427.3586240-1-trawets@amazon.com>
-        <YrEMq+slLOHqw/hz@camp.crustytoothpaste.net>
-Date:   Tue, 21 Jun 2022 09:00:49 -0700
-In-Reply-To: <YrEMq+slLOHqw/hz@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Tue, 21 Jun 2022 00:11:23 +0000")
-Message-ID: <xmqqr13ihuq6.fsf@gitster.g>
+To:     "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>
+Subject: Re: [PATCH] rev-parse: documentation adjustment - mention remote
+ tracking with @{u}
+References: <pull.1265.git.1655697671724.gitgitgadget@gmail.com>
+Date:   Tue, 21 Jun 2022 09:19:40 -0700
+In-Reply-To: <pull.1265.git.1655697671724.gitgitgadget@gmail.com> (Tao Klerks
+        via GitGitGadget's message of "Mon, 20 Jun 2022 04:01:11 +0000")
+Message-ID: <xmqqbkumhtur.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 52706586-F17B-11EC-AAB1-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F48F02BC-F17D-11EC-A863-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+"Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 2022-06-20 at 00:44:27, Stewart Smith wrote:
->> The perl Email::Valid module gets things right, but this may not alway=
-s
->> be what you want, as can be seen in
->> https://bugzilla.redhat.com/show_bug.cgi?id=3D2046203
->
-> You should explain this in the body of the message, since we generally
-> want to know the rationale behind the change even if RedHat moves away
-> from Bugzilla in the future.
->
-> You could say something like this:
->
->   The Perl Email::Valid module correctly checks whether an email addres=
-s
->   is syntactically valid.  However, in some cases, people have email
->   addresses which are not syntactically valid, such as those where the
->   local-part is more than 64 octets, and would like to use those
->   addresses despite that fact.
->
->> So, add a --validate-email (default, current behavior) and
->> the inverse --no-validate-email option to be able to skip the check
->> while still having the Email::Valid perl module installed.
->>=20
->> Fixes: https://bugzilla.redhat.com/show_bug.cgi?id=3D2046203
->
-> I don't believe we generally include Fixes headers for external bugs.
+>  '[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
+>    The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
+> -  refers to the branch that the branch specified by branchname is set to build on
+> -  top of (configured with `branch.<name>.remote` and
+> -  `branch.<name>.merge`).  A missing branchname defaults to the
+> -  current one. These suffixes are also accepted when spelled in uppercase, and
+> -  they mean the same thing no matter the case.
+> +  refers to the remote branch that the branch specified by branchname
+> +  is set to build on top of (configured with `branch.<name>.remote` and
+> +  `branch.<name>.merge`).
 
-All good comments; I have nothing to add here.
+Let's refrain from inventing confusing new phrases that are not
+defined in "git help glossary".
 
->> +	# Email::Valid isn't always correct, so support a way to bypass
->> +	# See https://bugzilla.redhat.com/show_bug.cgi?id=3D2046203
+What is a "remote branch"?  I think this is better left as "the
+branch", to avoid confusion with remote-tracking branch we keep
+locally.  I think a version with a slight tweak, e.g.
+
+        ... refers to the name of the branch (configured with
+        `branch.<name>.merge`) at the remote (configured with
+        `branch.<name>.remote`) that the branch is set to build on
+        top of.
+
+would be OK, though.
+
+> ... As `branch.<name>.merge` is the branch path on the
+> +  remote, it is first converted to a local tracking branch (i.e., something in
+> +  `refs/remotes/`).
+
+Let's correct it to "remote-tracking branch".
+
+But more importantly, the order of explanation feels a bit
+backwards. Something like...
+
+    A branch B may be set up to build on top of a branch X
+    (configured with `branch.<name>.merge`) at a remote R
+    (configured with `branch.<name>.remote`).  B@{u} refers to the
+    remote-tracking branch for the branch X taken from remote R,
+    typically found at `refs/remotes/R/X`.
+
+... to cover both of the above, perhaps, may flow more naturally?
+
+> ... A missing branchname defaults to the current one. These
+> +  suffixes are also accepted when spelled in uppercase, and they mean the same
+> +  thing no matter the case.
+
+>  '[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
+>    The suffix '@\{push}' reports the branch "where we would push to" if
+>    `git push` were run while `branchname` was checked out (or the current
+> -  `HEAD` if no branchname is specified). Since our push destination is
+> -  in a remote repository, of course, we report the local tracking branch
+> -  that corresponds to that branch (i.e., something in `refs/remotes/`).
+> +  `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
+> +  the local tracking branch that corresponds to that remote branch.
+>  +
+>  Here's an example to make it more clear:
+>  +
 >
-> Email::Valid is in fact correct.  However, the email which you want to
-> use doesn't conform to the RFC and isn't valid.  So this should probabl=
-y
-> say something like, "Allow people to use an email address which is not
-> valid according to the RFCs if the server accepts it."
-
-I had exactly the same reaction.  Again, I have nothing to add here.
-
-Thanks.
-
->
-> I think this patch would be fine as it stands with those changes. Unlik=
-e
-> =C3=86var, I don't think we should get rid of Email::Valid, just like I=
- don't
-> think we should get rid of the transfer encoding checks.  I support
-> warning people before sending invalid emails, especially since I believ=
-e
-> the address in question would not be deliverable through some mail
-> servers (such as mine).
+> base-commit: 5b71c59bc3b9365075e2a175aa7b6f2b0c84ce44
