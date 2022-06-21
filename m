@@ -2,114 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DC86C43334
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 16:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8993BC43334
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 16:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353832AbiFUQTq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 12:19:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39844 "EHLO
+        id S1351711AbiFUQ1j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 12:27:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351025AbiFUQTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 12:19:44 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3592899D
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 09:19:43 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 608A213371C;
-        Tue, 21 Jun 2022 12:19:42 -0400 (EDT)
+        with ESMTP id S231365AbiFUQ1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 12:27:38 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4022E2D1EE
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 09:27:37 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0220C1916E9;
+        Tue, 21 Jun 2022 12:27:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cTmvY59y9628yrdXWQ+Zw84We+W28/2SOMisIH
-        VQa6Q=; b=KaBv1GOQiJVdMKo/CyvqQbOzR6aZzEfPbSP/zqkhcie0K2mYgSInRy
-        75z7qvXfdQJSwqtpdocf8xQExVTxDU7ctRdkP07gkuZZJMHCy21XO/JwvnJIEAyK
-        u1iKS/HXrfcN2CcLlKxXvEbFcENHO0wWLe8AbVqyenjlk5fHHXhPI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57A5A13371B;
-        Tue, 21 Jun 2022 12:19:42 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=64CoLcZWFjmb
+        pA2/hHtUCIqTPYBGzG+f7Bu/l1Cxutk=; b=lUp/K0nb5DSIMQYlMoqYrGUORb/L
+        3PCMp+Z2ECu7kkRSpYsMIoPERF1qQtTtWThqW+w1HsauxWIKHEFa4kEye6ROVIhG
+        fhKuneO7jutYviyok6zOxdwB1Tzm/MRQikLtFZ1L0z7QnRgILWpL8ck8Y43VyKxx
+        iEsXO2sUtQ8gqag=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D9D6F1916E8;
+        Tue, 21 Jun 2022 12:27:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BAD1413371A;
-        Tue, 21 Jun 2022 12:19:41 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6FA801916E7;
+        Tue, 21 Jun 2022 12:27:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>
-Subject: Re: [PATCH] rev-parse: documentation adjustment - mention remote
- tracking with @{u}
-References: <pull.1265.git.1655697671724.gitgitgadget@gmail.com>
-Date:   Tue, 21 Jun 2022 09:19:40 -0700
-In-Reply-To: <pull.1265.git.1655697671724.gitgitgadget@gmail.com> (Tao Klerks
-        via GitGitGadget's message of "Mon, 20 Jun 2022 04:01:11 +0000")
-Message-ID: <xmqqbkumhtur.fsf@gitster.g>
+To:     "Carlos L. via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?Martin_=C3=85gren_=5B_=5D?= <martin.agren@gmail.com>,
+        "Paul Eggert [ ]" <eggert@cs.ucla.edu>,
+        "Carlos L." <00xc@protonmail.com>
+Subject: Re: [PATCH v2] grep: add --max-count command line option
+References: <pull.1278.git.git.1655740174420.gitgitgadget@gmail.com>
+        <pull.1278.v2.git.git.1655789777023.gitgitgadget@gmail.com>
+Date:   Tue, 21 Jun 2022 09:27:30 -0700
+In-Reply-To: <pull.1278.v2.git.git.1655789777023.gitgitgadget@gmail.com>
+        (Carlos L. via GitGitGadget's message of "Tue, 21 Jun 2022 05:36:16
+        +0000")
+Message-ID: <xmqq5ykuhthp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F48F02BC-F17D-11EC-A863-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0C83AD54-F17F-11EC-AB73-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Carlos L. via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->  '[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
->    The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
-> -  refers to the branch that the branch specified by branchname is set to build on
-> -  top of (configured with `branch.<name>.remote` and
-> -  `branch.<name>.merge`).  A missing branchname defaults to the
-> -  current one. These suffixes are also accepted when spelled in uppercase, and
-> -  they mean the same thing no matter the case.
-> +  refers to the remote branch that the branch specified by branchname
-> +  is set to build on top of (configured with `branch.<name>.remote` and
-> +  `branch.<name>.merge`).
+> From: =3D?UTF-8?q?Carlos=3D20L=3DC3=3DB3pez?=3D <00xc@protonmail.com>
+>
+> This patch adds a command line option analogous to that of GNU
+> grep(1)'s -m / --max-count, which users might already be used to.
+> This makes it possible to limit the amount of matches shown in the
+> output while keeping the functionality of other options such as -C
+> (show code context) or -p (show containing function), which would be
+> difficult to do with a shell pipeline (e.g. head(1)).
+>
+> Signed-off-by: Carlos L=C3=B3pez 00xc@protonmail.com
+> ---
+> ...
+>  Documentation/git-grep.txt | 8 ++++++++
+>  builtin/grep.c             | 9 +++++++++
+>  grep.c                     | 2 ++
+>  grep.h                     | 2 ++
+>  4 files changed, 21 insertions(+)
 
-Let's refrain from inventing confusing new phrases that are not
-defined in "git help glossary".
+Tests?
 
-What is a "remote branch"?  I think this is better left as "the
-branch", to avoid confusion with remote-tracking branch we keep
-locally.  I think a version with a slight tweak, e.g.
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index 3d393fbac1b..19b817d5e58 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -23,6 +23,7 @@ SYNOPSIS
+>  	   [--break] [--heading] [-p | --show-function]
+>  	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+>  	   [-W | --function-context]
+> +	   [(-m | --max-count) <num>]
+>  	   [--threads <num>]
+>  	   [-f <file>] [-e] <pattern>
+>  	   [--and|--or|--not|(|)|-e <pattern>...]
+> @@ -238,6 +239,13 @@ providing this option will cause it to die.
+>  	`git diff` works out patch hunk headers (see 'Defining a
+>  	custom hunk-header' in linkgit:gitattributes[5]).
+> =20
+> +-m <num>::
+> +--max-count <num>::
+> +	Limit the amount of matches per file. When using the `-v` or
+> +	`--invert-match` option, the search stops after the specified
+> +	number of non-matches. A value of -1 will return unlimited
+> +	results (the default).
 
-        ... refers to the name of the branch (configured with
-        `branch.<name>.merge`) at the remote (configured with
-        `branch.<name>.remote`) that the branch is set to build on
-        top of.
+Hmph ...
 
-would be OK, though.
+> +	/*
+> +	 * Optimize out the case where the amount of matches is limited to ze=
+ro.
+> +	 * We do this to keep results consistent with GNU grep(1).
+> +	 */
+> +	if (opt.max_count =3D=3D 0)
+> +		exit(EXIT_FAILURE);
+> +
 
-> ... As `branch.<name>.merge` is the branch path on the
-> +  remote, it is first converted to a local tracking branch (i.e., something in
-> +  `refs/remotes/`).
+OK, so "stop before seeing any match" logically leads to "we found
+nothing, so exit with non-zero".
 
-Let's correct it to "remote-tracking branch".
+> diff --git a/grep.c b/grep.c
+> index 82eb7da1022..b32ab75cb6b 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -1686,6 +1686,8 @@ static int grep_source_1(struct grep_opt *opt, st=
+ruct grep_source *gs, int colle
+>  		bol =3D eol + 1;
+>  		if (!left)
+>  			break;
+> +		if (opt->max_count !=3D -1 && count =3D=3D opt->max_count)
+> +			break;
 
-But more importantly, the order of explanation feels a bit
-backwards. Something like...
+I would have written it "if (0 <=3D opt->max_count && ...)".  What
+happens when a trickster asks you to do "git grep -m -2"?
 
-    A branch B may be set up to build on top of a branch X
-    (configured with `branch.<name>.merge`) at a remote R
-    (configured with `branch.<name>.remote`).  B@{u} refers to the
-    remote-tracking branch for the branch X taken from remote R,
-    typically found at `refs/remotes/R/X`.
+I guess what I am getting at is if we are better off saying that
+negative means unlimited, instead of special casing -1 like this.  I
+didn't think it through so it may be perfectly possible that what
+you wrote makes more sense than "anything negative is unlimited".
 
-... to cover both of the above, perhaps, may flow more naturally?
+I dunno.
 
-> ... A missing branchname defaults to the current one. These
-> +  suffixes are also accepted when spelled in uppercase, and they mean the same
-> +  thing no matter the case.
+>  		left--;
+>  		lno++;
+>  	}
 
->  '[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
->    The suffix '@\{push}' reports the branch "where we would push to" if
->    `git push` were run while `branchname` was checked out (or the current
-> -  `HEAD` if no branchname is specified). Since our push destination is
-> -  in a remote repository, of course, we report the local tracking branch
-> -  that corresponds to that branch (i.e., something in `refs/remotes/`).
-> +  `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
-> +  the local tracking branch that corresponds to that remote branch.
->  +
->  Here's an example to make it more clear:
->  +
+Thanks.
+
+> diff --git a/grep.h b/grep.h
+> index c722d25ed9d..bdcadce61b8 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -171,6 +171,7 @@ struct grep_opt {
+>  	int show_hunk_mark;
+>  	int file_break;
+>  	int heading;
+> +	int max_count;
+>  	void *priv;
+> =20
+>  	void (*output)(struct grep_opt *opt, const void *data, size_t size);
+> @@ -181,6 +182,7 @@ struct grep_opt {
+>  	.relative =3D 1, \
+>  	.pathname =3D 1, \
+>  	.max_depth =3D -1, \
+> +	.max_count =3D -1, \
+>  	.pattern_type_option =3D GREP_PATTERN_TYPE_UNSPECIFIED, \
+>  	.colors =3D { \
+>  		[GREP_COLOR_CONTEXT] =3D "", \
 >
 > base-commit: 5b71c59bc3b9365075e2a175aa7b6f2b0c84ce44
