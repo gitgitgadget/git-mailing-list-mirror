@@ -2,121 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80E65C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 20:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9667C43334
+	for <git@archiver.kernel.org>; Tue, 21 Jun 2022 21:22:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353377AbiFUU12 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 16:27:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33346 "EHLO
+        id S1355898AbiFUVW3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 17:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352338AbiFUU10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 16:27:26 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218D92E9EB
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 13:27:25 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 60FA5137243;
-        Tue, 21 Jun 2022 16:27:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k88wfT+upOaERvXXFubv5Zo3KTEzLE5ysdNhxV
-        MGdYc=; b=ShgPWj2tuXL2I0fS4qdV3XPna0YBW6AzkwKI6pNR2eHzt3FHO8/7lJ
-        VWoS/WpqAVyW9sm84zoHvO9+lshNwavRzch8PnCAY1VfcZUPdN2KQx+fUJpWxRGA
-        alOY1bWvOdr0c0ghPy8hkhbvz0DS12lP4OvaGR1SPk2NdwXXgm/rg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 55338137242;
-        Tue, 21 Jun 2022 16:27:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AE4C413723F;
-        Tue, 21 Jun 2022 16:27:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>, rsbecker@nexbridge.com,
-        Jeff King <peff@peff.net>, avarab@gmail.com
-Subject: Re: [PATCH v2] t5510: replace 'origin' with URL more carefully (was
- Re: Test Failure t5510,t5562 - was RE: [ANNOUNCE] Git v2.37.0-rc1)
-References: <00a401d884d0$32885890$979909b0$@nexbridge.com>
-        <8d2a0a36-1d2f-c723-db1e-8978e5d03d1d@github.com>
-        <00b501d884d7$d8ed1200$8ac73600$@nexbridge.com>
-        <495bd957-43dc-f252-657d-2969bb7ad5f3@github.com>
-        <484a330e-0902-6e1b-8189-63c72dcea494@github.com>
-        <YrFwcL2dRS/v7xAw@coredump.intra.peff.net>
-        <xmqq1qviht4h.fsf@gitster.g>
-Date:   Tue, 21 Jun 2022 13:27:22 -0700
-In-Reply-To: <xmqq1qviht4h.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        21 Jun 2022 09:35:26 -0700")
-Message-ID: <xmqqy1xpg3th.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1356034AbiFUVWG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 17:22:06 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F17831505
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 14:10:07 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id y14so17015894qvs.10
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 14:10:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=GGfnv5PHEjAcI6+CWCKxqrfkI4IVVabH8gxrnoMdLt4=;
+        b=HQ1PLoffhE1b0axGWvlNgLZLtM/7W4n3QQkBaOfIeD5RhyZw8qAdEw1gbJ76c844Ec
+         tW9CXim96pKHOWJV+qJmMir6nAzQKfis8ZFWzc4vOVaaaMMusWf22waT4OITXbjEWVJC
+         pnugfRktj0Kd0WOWGoWl9m9sZnzB3JB+uVVytlsGFPv/tP13BJOj2/KI6b7bQ0wy0zt1
+         RU+6/kFBY+u8no+kyjnSFcWembZG1Kmjeg1XkfjtwCfNI/Mj/cfZYrZNKjkMCyOGnPSN
+         9f1lZt8hcvsjtO9R6+AjZyuHOT6EObVaFF3lMsXkBR7icSZpqvbyDKKgexZjUao+hxKo
+         LENA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=GGfnv5PHEjAcI6+CWCKxqrfkI4IVVabH8gxrnoMdLt4=;
+        b=bfoC12UYo6aA5t3mE1VF0aVwIlxxZHogAA7VGkwWiLz59B2DFZMohrbOuKUJt0a9gE
+         tQWeuI0FAAn/yKuou2dGEvNASFIFguSdveAE4vUoyKW8Xi0DuIxEV9r14EKSUsqRwzjA
+         Q2jk30gx3tmE/XCKhy52s1vkIz8yR2UbJRYGArA4VJI5TvBIhTDmeh6QHETHMI4L4xb7
+         Q6WWNiVIuU+1lsPhhKA+ffg2e7+WVA9puTVmBKFw62vbYiavo2Xt4K0BQB59OALIIe8d
+         A2U3ScTsYb98TCHh5MCcWfkNa+WMl+5kwBx0kvwsD8u/s11vOW+R3CCEJm5B9JUY3caJ
+         TsMA==
+X-Gm-Message-State: AJIora+Pah2xXWam0gN7rKPiskR9C72qU1hXEOqyND22iaHKJcKWtfXQ
+        mNaxfJfthyE1bR5XI3bxPtMi
+X-Google-Smtp-Source: AGRyM1vFNSwJguG7cs+1Zk0RwCfdYKS6okcrqJV4t8klRzuPla2B0px6YEqwWPMHMv8HePVR74iQGw==
+X-Received: by 2002:a05:622a:14d0:b0:307:9a54:b0bf with SMTP id u16-20020a05622a14d000b003079a54b0bfmr169982qtx.495.1655845806287;
+        Tue, 21 Jun 2022 14:10:06 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:44d7:1b01:4339:1df9? ([2600:1700:e72:80a0:44d7:1b01:4339:1df9])
+        by smtp.gmail.com with ESMTPSA id x12-20020ac87a8c000000b00304fce6a137sm12852724qtr.66.2022.06.21.14.10.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jun 2022 14:10:05 -0700 (PDT)
+Message-ID: <17349136-2d99-92fc-a73a-507684f32baa@github.com>
+Date:   Tue, 21 Jun 2022 17:10:04 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8EF7C51A-F1A0-11EC-8D5C-CB998F0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/6] docs: document bundle URI standard
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de
+References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
+ <e771b2971d092af5ea8a47eb708d03e34b284a0f.1654545325.git.gitgitgadget@gmail.com>
+ <xmqqtu8x1fd4.fsf@gitster.g>
+ <48e722dc-f860-f7a6-36d0-b0106087aef4@github.com>
+ <d4427adf-e3ef-a5cd-3016-687004dc5ae3@github.com>
+ <xmqq8rpphiwn.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq8rpphiwn.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Yup, a solution along that line was what I expected to see from
-> those who write Perl when I saw the discussion yesterday.
-
-Here is what I queued tentatively.  This is not exactly new;
-e1790f92 (fetch tests: fetch <url> <spec> as well as fetch
-[<remote>], 2018-02-09) first appeared in v2.17.0 and we can
-live with the same glitch for few more weeks ;-)
-
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
-From: Derrick Stolee <derrickstolee@github.com>
-Date: Mon, 20 Jun 2022 15:52:09 -0400
-Subject: [PATCH] t5510: replace 'origin' with URL more carefully
-
-The many test_configured_prune tests in t5510-fetch.sh test many
-combinations of --prune, --prune-tags, and using 'origin' or an explicit
-URL. Some machinery was introduced in e1790f9245f (fetch tests: fetch
-<url> <spec> as well as fetch [<remote>], 2018-02-09) to replace
-'origin' with this explicit URL. This URL is a "file:///" URL for the
-root of the $TRASH_DIRECTORY.
-
-However, if the current build tree has an '@' symbol, the
-replacement using perl fails. It drops the '@' as well as anything
-else in that directory name.  You can observe this locally by
-cloning git.git into a "victim@03" directory and running the test
-script.
-
-As we are writing in Perl anyway, pass in the shell variables involved
-to the script as arguments and perform necessary string transformations
-inside it, instead of assuming that it is sufficient to enclose the
-$remote_url variable inside a pair of single quotes.
-
-Reported-by: Randall Becker <rsbecker@nexbridge.com>
-Original-patch-by: Derrick Stolee <derrickstolee@github.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t5510-fetch.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 4620f0ca7f..b45879a760 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -853,7 +853,11 @@ test_configured_prune_type () {
- 		then
- 			new_cmdline=$cmdline_setup
- 		else
--			new_cmdline=$(printf "%s" "$cmdline" | perl -pe 's[origin(?!/)]["'"$remote_url"'"]g')
-+			new_cmdline=$(perl -e '
-+				my ($cmdline, $url) = @ARGV;
-+				$cmdline =~ s[origin(?!/)][quotemeta($url)]ge;
-+				print $cmdline;
-+			' -- "$cmdline" "$remote_url")
- 		fi
+On 6/21/2022 4:16 PM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
+> 
+>>>> The refs/bundles/ appear in the document only here, and it is
+>>>> unclear why we even want it (I am assuming this is against gc while
+>>>> "git clone" is still running) or how we are going to retire it, if
+>>>> ever.  If there are multiple bundle files involved in this "git clone",
+>>>> to anchor objects that are necessary against "gc", don't we need to use
+>>>> refs/bundles/<i>/* or something like that, where <i> is uniquely assigned
+>>>> number locally?
+>>>
+>>> The real reason to keep them in refs/bundles/ is because then those
+>>> refs can be used in the incremental 'git fetch' after downloading the
+>>> bundles (in perpetuity) while not stomping refs/heads or refs/remotes/
+>>
+>> ...I completely ignored your "refs/bundles/<i>/*" suggestion, which is
+>> an interesting way to allow dropping refs from this space, allowing GC
+>> to clear up space over time.
+> 
+> FWIW, I wasn't thinking about GC and expiration.  If bundle URI
+> thing can say "you need this, that and that other bundle" and cause
+> you to fetch three bundles, I thought that there needs a way for you
+> to record the tips of these three bundles---these three bundles
+> should not have to compete for refs/bundles/master, for example.
  
- 		if test "$fetch_prune_tags" = 'true' ||
--- 
-2.37.0-rc1-99-g4626346e14
+Not wanting to compete makes sense, but also we should usually
+expect the "most recent" bundle to be the most recent version of the
+branch. However, that ordering only makes sense when we have the
+creationToken (nee timestamp) heuristic, so having distinct ref
+spaces makes sense to avoid collisions.
 
+Thanks,
+-Stolee
