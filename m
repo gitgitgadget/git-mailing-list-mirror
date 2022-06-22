@@ -2,110 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB22EC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 16:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C8B4C43334
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 16:26:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359864AbiFVQC6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 12:02:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37328 "EHLO
+        id S237166AbiFVQ0s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 12:26:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359269AbiFVQCx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 12:02:53 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9848C6
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 09:02:50 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 24A951AA47C;
-        Wed, 22 Jun 2022 12:02:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Mwwg3ewUS0rL
-        ryE/w1K+LPNZzo76ZnHt5zOiKlj7Dbc=; b=tJhEDBuxtvvbrk4zTlEUDshgrEKN
-        wuZCDQGBlT0mkeO4DFen0J/x/7Kt6OeG6ZWZzcBy8IV0UWIZEydRSEzbQFQm+/2P
-        CfK2tc1xmCqPA5WAJPCtvX2AnXn0442JLeHj2rjXI8+mYenlMr/mK3TwlNOs9UIr
-        rstaxX1IKIBjjyg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1C41E1AA47B;
-        Wed, 22 Jun 2022 12:02:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AC4D91AA479;
-        Wed, 22 Jun 2022 12:02:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/2] cocci: add and apply a rule to find "unused"
- variables
-References: <patch-1.1-7d90f26b73f-20220520T115426Z-avarab@gmail.com>
-        <cover-v2-0.2-00000000000-20220621T223954Z-avarab@gmail.com>
-        <patch-v2-1.2-d14036521ab-20220621T223954Z-avarab@gmail.com>
-Date:   Wed, 22 Jun 2022 09:02:45 -0700
-In-Reply-To: <patch-v2-1.2-d14036521ab-20220621T223954Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Jun
- 2022 00:44:02
-        +0200")
-Message-ID: <xmqqsfnw65zu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1358840AbiFVQ0h (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 12:26:37 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32DB73FD80
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 09:26:20 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id 89so25925904qvc.0
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 09:26:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tdHyp/cmKwA+7A6dHCBPDTihW0CsYcWSzNiWB7JOOfc=;
+        b=GY5+1bQXCNnt3VrrQVFnZwzNlgJVA7E8WNV3u02fMtZz5XHqle3ZWHjfoMcIfLOhe6
+         zynIhPIQAr2irMAq6xucNR+89B/tSWS9YtsLlm6fN4le25emnNenH/r+Xrh8JQilk1eA
+         W+xzqThFj6IG4TZ8cFWQfCbXqWDXZBfwPMxN0ZCir6UalA+28KGOoWRffnvKKNycLfmB
+         FPacb1Xs+8PYgyYpPUxM+1AzQAM2CzXLhTftL7/Z+BN8u80DVCzsOjwqvogJLqyM2msD
+         usuwZ/VYYgmxk33cZRlSjLGJ72zcqr0RsfXfxM94r00tYZU70AExvdNzq69ukCkwlMLi
+         vtAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tdHyp/cmKwA+7A6dHCBPDTihW0CsYcWSzNiWB7JOOfc=;
+        b=XoxSk/KckLZOoyIE+yBrTrsfeEaR5hFsZROgALe57d3jpQrB0Zfn/fXKsM/LKqPYV5
+         Rqdzd0S7NDH1Q0ZIZ6oRTePkeL9eV0TtdCS1AM6Dzls9iwy+Z7OYox1YVSEQ7wrMQHza
+         TmpQE9HpC1qeIsc0u6msWAe0wIRnhMC7lBOefyKyAZvwJN95mOMP5+en4HPv9ig1SE0U
+         oVXcDUou/5Ik7chCUQbYbVNDLEIBw0Uq1tak51Kzex9uiR5LhSjVcgvs3Yube7IrUAoU
+         zbc9QPSZCyiCHqy/k4W9gygoNO2jd9BGPWhNd7ykkpIIbCgkoPajdxsoIm7Bhr3F13KS
+         25BQ==
+X-Gm-Message-State: AJIora/1CbCB2jwglU7F46wOdSWJJ4z5lmRL5AMBACkjgrPumSC860I4
+        py52k2N8alR/4Yw1a0MaLw3x6A==
+X-Google-Smtp-Source: AGRyM1viw29UWvcX02U768GR7h5xm6Qw1mI+cfZwLJ79EZ4EcvGE7/d1v55oRcwAwp8qcot9ZR7Psg==
+X-Received: by 2002:ac8:5b50:0:b0:305:320d:c143 with SMTP id n16-20020ac85b50000000b00305320dc143mr3867170qtw.626.1655915179281;
+        Wed, 22 Jun 2022 09:26:19 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y11-20020a05620a44cb00b006a768c699adsm18012469qkp.125.2022.06.22.09.26.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jun 2022 09:26:18 -0700 (PDT)
+Date:   Wed, 22 Jun 2022 12:26:17 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     Git <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/6] Documentation/technical: describe bitmap lookup
+ table extension
+Message-ID: <YrNCqcU4onE43Vl7@nand.local>
+References: <YrCpv3XEoB6lOlY4@nand.local>
+ <20220621083114.21429-1-chakrabortyabhradeep79@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C1F25602-F244-11EC-897E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20220621083114.21429-1-chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Tue, Jun 21, 2022 at 02:01:14PM +0530, Abhradeep Chakraborty wrote:
+> Taylor Blau <me@ttaylorr.com> wrote:
+>
+> > Abhradeep -- do you have any thoughts about what this might be used for?
+> > I'll try to remember it myself, but I imagine that we could just as
+> > easily remove this altogether and avoid the confusion.
+>
+> Honestly, I never understood the logic behind adding this flag option.
+> I thought you have a reason to do that. Even I was thinking of curving
+> it to 1 byte. I will remove it then.
 
-> +identifier INIT_ASSIGN1 =3D~ "^get_worktrees$";
-> +// strbuf_init(&I, ...) etc.
-> +identifier INIT_CALL1 =3D~ "^[a-z_]*_init$";
-> +// stbuf_release(), string_list_clear() etc.
+I think removing it makes more sense. Since many of the other fields are
+4-bytes wide, it's important for alignment purposes that those fields
+have addresses which are a multiple of four (relative to the start of
+the region, hence the 4-byte wide flags field).
 
-strbuf?
+But I'd just as soon get rid of it, so I think that makes sense to me.
 
-> +identifier REL1 =3D~ "^[a-z_]*_(release|clear|free)$";
-> +// release_patch(), clear_pathspec() etc.
-> +identifier REL2 =3D~ "^(release|clear|free)_[a-z_]*$";
-> +@@
-
-I am hesitant to see this broad set of patterns that could match
-init/release functions (and possible false positive matches).
-
-Especially given that it ended up finding only 4 instances, all of
-the same "STRBUF_INIT" followed by "strbuf_release()", which means
-that all other possible matches, when they actually are found, will
-be seen by developers who are not necessarily familiar with these
-rules before they are inspected by those who are for correctness.
-
-It would be nice to have a step that catch only strbuf_init(),
-STRBUF_INIT, strbuf_release(), and nothing else, possibly with
-another step with concrete function names, with other "presumably
-functions whose name match this loose pattern are all release
-functions" patterns in a separate follow-up patch so that the last
-one can easily be reverted.
-
-> +// .. A declaration like "struct strbuf buf;"...
-> +(
-> +- T I;
-> +// ... or "struct STRBUF buf =3D STRBUF_INIT;" ...
-> +|
-> +- T I =3D INIT;
-> +)
-
-Presumably, if either of the above followed by foo_release(I) should
-be caught, then we should catch "T I =3D { 0 };" followed by a release
-as well.  Initialization "T I =3D { 1, };" for a type without _INIT
-macro is also the same story.
-
-Given that, do we even need to limit the forms of declaration?  The
-only thing we care about is that I is new in this scope, and I is
-not used otherwise, in a way other than (1) calling _init() function
-on it, or (2) calling _release() function on it, before leaving the
-scope, right?
-
-Thanks.
+Thanks,
+Taylor
