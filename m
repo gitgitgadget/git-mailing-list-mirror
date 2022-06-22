@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8718CC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 14:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 506C3C43334
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 14:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240412AbiFVO3r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 10:29:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52116 "EHLO
+        id S1357424AbiFVO3s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 10:29:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358319AbiFVO2T (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 10:28:19 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B14A2C73
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 07:28:18 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id r20so3256759wra.1
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 07:28:18 -0700 (PDT)
+        with ESMTP id S1358345AbiFVO20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 10:28:26 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E559F63
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 07:28:24 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id z17so9354339wmi.1
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 07:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yY80mo80QYxEl700sZJC+g5paQKllyzqYNBMmUnyICs=;
-        b=MFuZ8+VDXdmyPSd2VD36EPrkBm8UI9KQUszSZOW1RIdN8I+MFYSmskYJ+R+IuqM1qa
-         EzFIhigflrQ+L5urcZnGmu6LWHt02wYh6PaOe9eTWSGBMuH2nDtQQhD/v9HqC+Ge7lQW
-         s3KHu+IF5rGNQZmAtWOQ6j1KJljcZwMFF6DsVo4ghYR3mX/RJinlGOf8RLpp3+5e4UDH
-         cHuxwSaGVmsRnIS1cLtlcg0CIc8neHo9/ZWKkgSzIrLuRTVjZ+gXaCkOyjLrds6h7tCg
-         6JAPcWAEegS6L2gVXVIBgHAMmCk5tsD6aakOx66M+IG7tfpPL9xpFzPKIL311R2U5SGv
-         lFDA==
+        bh=F8tvUWhT7SDlLvc7lsHTRNuBDDU9s1cEpyjyLgt9lWg=;
+        b=BWrClh2MKBwkvfWIEfpYWYtASufeCDQGiZmailBdwlJhHzyqIfw+Ek8wYv6aJpI2pQ
+         mafoLf9mSNQBc1Sc4CL/c7lSv+hnsKxTXSTlzDDVtiOpffZJzxNnK+4JEyvqiAyLU+uJ
+         sJCAFehQIv0iBswdiDpuaKhqvc3NG29j9pyNxOXX+itMJ+sErCYrliID3bGHTX9xVEzj
+         dBoCILncQN3nJ18S0GmunDqBdu53/BgvNH1UafqE/D5rl5mDWaE+74x/NGkeN848xXzJ
+         QOnaNaeJr8OL5usFRu9nv3d9WEE459y2ypB+QBcESyMVACM2wpML4vjmt/Xc6cKpKrMb
+         RnSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yY80mo80QYxEl700sZJC+g5paQKllyzqYNBMmUnyICs=;
-        b=pB8HediAIIhBrtGuyoyFbSvWfgOU+ypApXWBGO1aPra38pUY2jsQ61ElK6881Mzb7V
-         YKfEWVNAgML3qmdMpnzDEf8/2diXLsfq2u1tiyePHMzooXe+4JHoMLls3BsYeOATbWx3
-         pw5nU5osYaq72gqZgfwJGxQfVzyJ1kJ6pvp0STPlATbuh8jZpSXiNgBB9J/cUsC5ztiV
-         ClHZmSGJt7k8CjC4/ot8CDGeVf09E1TQDGgrrtkIXo/HBbCS5DURyw/c9ZThPsAYj2t2
-         Uz5sGDH3NDH0RJX9Bi6+MdIiYwx0FEXh1QftDXXrFhh6ZmUBrQmKDo3NhfNbdMXNWNkW
-         WbDw==
-X-Gm-Message-State: AJIora/co1pTRUJ4sMvVrc0yq1tqg8iOFXE2ttqQk7hXDIXukn93j4VL
-        uN11wx1YH+/dqnuS8pqX6TAW44sf9TrZMg==
-X-Google-Smtp-Source: AGRyM1uxOihJ4qFq8sbHBFNh6itI6T33Lb5xe7CTYI5vqTYdCLTrASaz+k8yErNlqJvqWgy+o2kOoQ==
-X-Received: by 2002:a5d:4c8a:0:b0:21b:9f3a:c002 with SMTP id z10-20020a5d4c8a000000b0021b9f3ac002mr3696396wrs.182.1655908097917;
-        Wed, 22 Jun 2022 07:28:17 -0700 (PDT)
+        bh=F8tvUWhT7SDlLvc7lsHTRNuBDDU9s1cEpyjyLgt9lWg=;
+        b=ER0r2QKhW/JKArp5N0+uxv8dbDxY6p7iais/OzME7UTofsBv90OFhvypJaXk4QkP8q
+         lHI1ucHq5ehWty1GumIvPZYn9ulk/1ZcxftlG/bgDV00yz3OVfOIcSaSxS6cwrpnfVv0
+         pRvqD0CA8ZJsp+geTkiIDkBvTTlw9XZ2bJ2jW5c40r2k6w5nIwX7rxD3evwRNHq5QUtB
+         AU+TJzPyxkoETz5bStKUAp9Vq25XIHebJ4vJMe9JkoKxQLIIgR5sE5jwdZ35OfixXam+
+         8IQewhaOcCtKRSabJvV/T8HHJR2ha3kmdTi3iJZb4YM91YHjB9nT+/5v2fTgKNXidyUF
+         vpWQ==
+X-Gm-Message-State: AJIora9xSqzsr8c581mBunbDTRjGG9/jZVVwDjIyMwHORK8B8IxdM2VQ
+        167fOaW9WD7LyTI8SaGLJ1aUAa1a2KAKGw==
+X-Google-Smtp-Source: AGRyM1tSY6U2kI13sbu2H9CxLvsWD5KQ4msOSGCqO7kFrVC2BBQja8KHPhkZ2UsXkDRuFPLLLnfuZQ==
+X-Received: by 2002:a05:600c:3b04:b0:39c:951e:6813 with SMTP id m4-20020a05600c3b0400b0039c951e6813mr4202293wms.193.1655908102280;
+        Wed, 22 Jun 2022 07:28:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j11-20020a05600c190b00b0039c5328ad92sm30468304wmq.41.2022.06.22.07.28.16
+        by smtp.gmail.com with ESMTPSA id j11-20020a05600c190b00b0039c5328ad92sm30468304wmq.41.2022.06.22.07.28.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 07:28:16 -0700 (PDT)
+        Wed, 22 Jun 2022 07:28:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 07/12] submodule--helper: rename "absorb-git-dirs" to "absorbgitdirs"
-Date:   Wed, 22 Jun 2022 16:28:02 +0200
-Message-Id: <patch-v3-07.12-ff557f3c81a-20220622T142012Z-avarab@gmail.com>
+Subject: [PATCH v3 11/12] git-submodule.sh: use "$quiet", not "$GIT_QUIET"
+Date:   Wed, 22 Jun 2022 16:28:06 +0200
+Message-Id: <patch-v3-11.12-f8219cd461d-20220622T142012Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
 In-Reply-To: <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com>
 References: <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com> <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com>
@@ -68,71 +68,196 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename the "absorb-git-dirs" subcommand to "absorbgitdirs", which is
-what the "git submodule" command itself has called it since the
-subcommand was implemented in f6f85861400 (submodule: add
-absorb-git-dir function, 2016-12-12).
+Remove the use of the "$GIT_QUIET" variable in favor of our own
+"$quiet", ever since b3c5f5cb048 (submodule: move core cmd_update()
+logic to C, 2022-03-15) we have not used the "say" function in
+git-sh-setup.sh, which is the only thing that's affected by using
+"GIT_QUIET".
 
-Having these two be different will make it more tedious to dispatch to
-eventually dispatch "git submodule--helper" directly, as we'd need to
-retain this name mapping. So let's get rid of this needless
-inconsistency.
+We still want to support --quiet for our own use though, but let's use
+our own variable for that. Now it's obvious that we only care about
+passing "--quiet" to "git submodule--helper", and not to change the
+output of any "say" invocation.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 4 ++--
- git-submodule.sh            | 2 +-
- submodule.c                 | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ git-submodule.sh | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 1876375a4a0..a298d8d0c12 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2788,7 +2788,7 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper absorb-git-dirs [<options>] [<path>...]"),
-+		N_("git submodule--helper absorbgitdirs [<options>] [<path>...]"),
- 		NULL
- 	};
- 
-@@ -3387,7 +3387,7 @@ static struct cmd_struct commands[] = {
- 	{"deinit", module_deinit},
- 	{"summary", module_summary},
- 	{"push-check", push_check},
--	{"absorb-git-dirs", absorb_git_dirs},
-+	{"absorbgitdirs", absorb_git_dirs},
- 	{"is-active", is_active},
- 	{"check-name", check_name},
- 	{"config", module_config},
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 0df6b0fc974..1c1dc320922 100755
+index 7fc7119fb21..5e5d21c010f 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -552,7 +552,7 @@ cmd_sync()
+@@ -30,6 +30,7 @@ GIT_PROTOCOL_FROM_USER=0
+ export GIT_PROTOCOL_FROM_USER
  
- cmd_absorbgitdirs()
- {
--	git submodule--helper absorb-git-dirs --prefix "$wt_prefix" "$@"
-+	git submodule--helper absorbgitdirs --prefix "$wt_prefix" "$@"
+ command=
++quiet=
+ branch=
+ force=
+ reference=
+@@ -80,7 +81,7 @@ cmd_add()
+ 			force=$1
+ 			;;
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--progress)
+ 			progress=1
+@@ -128,7 +129,7 @@ cmd_add()
+ 		usage
+ 	fi
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${GIT_QUIET:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${quiet:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
  }
  
- # This loop parses the command line arguments to find the
-diff --git a/submodule.c b/submodule.c
-index 4e299f578f9..2af16c647d5 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2374,7 +2374,7 @@ void absorb_git_dir_into_superproject(const char *path,
- 		cp.no_stdin = 1;
- 		strvec_pushl(&cp.args, "--super-prefix", sb.buf,
- 			     "submodule--helper",
--			     "absorb-git-dirs", NULL);
-+			     "absorbgitdirs", NULL);
- 		prepare_submodule_repo_env(&cp.env);
- 		if (run_command(&cp))
- 			die(_("could not recurse into submodule '%s'"), path);
+ #
+@@ -144,7 +145,7 @@ cmd_foreach()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--recursive)
+ 			recursive=1
+@@ -159,7 +160,7 @@ cmd_foreach()
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
+ }
+ 
+ #
+@@ -174,7 +175,7 @@ cmd_init()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--)
+ 			shift
+@@ -190,7 +191,7 @@ cmd_init()
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${GIT_QUIET:+--quiet} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${quiet:+--quiet} -- "$@"
+ }
+ 
+ #
+@@ -207,7 +208,7 @@ cmd_deinit()
+ 			force=$1
+ 			;;
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--all)
+ 			deinit_all=t
+@@ -226,7 +227,7 @@ cmd_deinit()
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${GIT_QUIET:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${quiet:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
+ }
+ 
+ #
+@@ -241,7 +242,7 @@ cmd_update()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--progress)
+ 			progress=1
+@@ -335,7 +336,7 @@ cmd_update()
+ 	done
+ 
+ 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update \
+-		${GIT_QUIET:+--quiet} \
++		${quiet:+--quiet} \
+ 		${force:+--force} \
+ 		${progress:+"--progress"} \
+ 		${remote:+--remote} \
+@@ -396,7 +397,7 @@ cmd_set_branch() {
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${quiet:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
+ }
+ 
+ #
+@@ -409,7 +410,7 @@ cmd_set_url() {
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--)
+ 			shift
+@@ -425,7 +426,7 @@ cmd_set_url() {
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${GIT_QUIET:+--quiet} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${quiet:+--quiet} -- "$@"
+ }
+ 
+ #
+@@ -496,7 +497,7 @@ cmd_status()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--cached)
+ 			cached=1
+@@ -518,7 +519,7 @@ cmd_status()
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${quiet:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
+ }
+ #
+ # Sync remote urls for submodules
+@@ -531,7 +532,7 @@ cmd_sync()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			shift
+ 			;;
+ 		--recursive)
+@@ -551,7 +552,7 @@ cmd_sync()
+ 		esac
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
+ }
+ 
+ cmd_absorbgitdirs()
+@@ -572,7 +573,7 @@ do
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+-		GIT_QUIET=1
++		quiet=1
+ 		;;
+ 	--cached)
+ 		cached=1
 -- 
 2.36.1.1239.gfba91521d90
 
