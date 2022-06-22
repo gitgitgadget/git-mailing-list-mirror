@@ -2,135 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC895C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 04:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46894C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 04:30:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356882AbiFVEWI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 00:22:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52334 "EHLO
+        id S1356644AbiFVEaq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 00:30:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356084AbiFVEWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 00:22:07 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9666334BB7
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:22:06 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id m125-20020a1ca383000000b0039c63fe5f64so8264192wme.0
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:22:06 -0700 (PDT)
+        with ESMTP id S1347603AbiFVEap (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 00:30:45 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C61535267
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:30:44 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id cw10so7864734ejb.3
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:30:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WpGUYGiduER+iqJ4m7SM94UODwIKGdJwNycBkkF3qNg=;
-        b=Kxcu1/nmxJSK3K0P/YvwZXX5R2yKPIuwMgsj0+pdN8Dbjd0sQuUEHYZ08dVzbf/twJ
-         93lF/SHwFUeklGyfjZtmGM3d675UuGfN9yAtrwegXFm3HQE6EeTzAjBx+o0P107wrQBI
-         CNtWcAUJZyL71CE9ZFISOhyKOJbHvk+pT4IxotcEGNEFPIQbWT5raSZFGiFdULZhz0Ti
-         9Tj6GPQ+8TQ9bP1z+P/WSD08PiS+d9q0U+4/G1wdBVgYXbDoiI1Mt9nhuh9ZpGR/AjPE
-         gnilcakMcbNWfQmIYaRqnF5ZkCz6dZzFsT+NtNJiHn88ipviS3TyKtEwTBDszEKHe0uM
-         PXdA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JcNCZT3sywWArjXl5q/7fpxdV6KtHWc/EL1DyaGk4mo=;
+        b=dm0VxABlKjH4ixAfYlKRi5/dVlg572vj9841bEnpC0rc0wQwn/PTy0dHMetj8fH9eR
+         aMx3neqTKsuZIU3GLK2NIKMAm2jvVNU4B8lCqPvLDaw/lcz8WhzZYRnUl6OLQq0rXIxT
+         GtufkwvkLFjpbbBGM13UIbpk1el1qUs/nU+6iO1K9mzkJhKYIDko95LR8KvUf/5cgalb
+         O0589jvmcSmkoOka4rl2Oed8u0ypYgdUXgWcTFUmZtKrz425cdn10nncMQZDj6sUMAkL
+         Pp2EwSEv5qTHC+hSRDEsbBs+trrK/i/vModL0SR8b0aDUvcoSMAxYSNSnWosRHkRI+iv
+         M0eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WpGUYGiduER+iqJ4m7SM94UODwIKGdJwNycBkkF3qNg=;
-        b=hmf9dzdLVGbvisomFY8qb7++MlcW+86q5rQiPFzSEvR7JRncoC6gZxWkPAV42K2coj
-         gMCkwQ2GOuIF3nLeOvjuvgnUF5KPOL9BpozEfMJiYD9T6qBpVI4KYprI0RV/OLzA6Zho
-         fwqIhilrLCWjZVoDjqRP1ObUrTFX2V0zMjoDYIAXo0o7ru6aDjVNL3ppz4XxVQ3af2+6
-         H9Ks5rA1zFN0XWnNAi8V6Vv2FEnDAIrzT5JurFpiZafHklzy9C6hdxPWKLXfpvAdu31t
-         cEPBFTxC1eiqv3NKN4lteDnwYCM5ykk2JniJJGV+HC9Ejr9q7GCS+xl7XtrwJWvI98hc
-         fZYg==
-X-Gm-Message-State: AJIora9j3oAITfMjlmTc+hOZjE5ORPTkAghkwtnRaUCRWA/31uB92K5Z
-        BX2dYVdrvPrInekLUapqFp2ff4QSr5+1qA==
-X-Google-Smtp-Source: AGRyM1tvPEFoAebE1+BlsrHqgctQkiuUqBCbURjTZI5nPS5CgqASl9YS6XRawKdCqdOfiAsB+7TplQ==
-X-Received: by 2002:a05:600c:4ed0:b0:39c:4acb:4e04 with SMTP id g16-20020a05600c4ed000b0039c4acb4e04mr1528002wmq.63.1655871724836;
-        Tue, 21 Jun 2022 21:22:04 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x5-20020a5d54c5000000b0021b88ec99cesm10600990wrv.94.2022.06.21.21.21.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 21:21:51 -0700 (PDT)
-Message-Id: <bb2badccb71d76efe0e47431246376b1e7016b05.1655871652.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
-References: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 22 Jun 2022 04:20:51 +0000
-Subject: [PATCH 3/3] merge-ort: fix issue with dual rename and add/add
- conflict
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JcNCZT3sywWArjXl5q/7fpxdV6KtHWc/EL1DyaGk4mo=;
+        b=URQzNBweliwKeqYdD8q4yG8bQ0Bep07lZ9WYLmr92VJ2nojTOoSaLpqGi+SBQbkCYG
+         ohnYwn/maQrmE9TL0JRTJ03R4S+X6E45ssRK1vyCHRvi6tsOsQDWmqlgUo7iZe56WtDQ
+         w9fYFGi/1RAwbIDRQ23dmbIZFLL5dDPbHyahl7ABowXU5y+hUoyZRnruwloq3jGo1y+h
+         EsGbxAd87R2QmSlTsPitz202jwFFABpyFjP1lGMFAB9ey+rV2nhi7TYpMDtBeevzqwwu
+         +kWMcKCR22E5SiWiqiX7QU7nKyZrnOeVSS7sOuv5qAp7w0iXTU8S7q6h8So0q+N49Znw
+         kO1g==
+X-Gm-Message-State: AJIora8KiG31S2x9GG3DC9L5UR59rmQNR+FZ6hWSjmOW7H/aNmm31nYe
+        6MOc7Jx8SPSJeBJpJO4EHHv2lxLFuY4C7I88MHY=
+X-Google-Smtp-Source: AGRyM1u7ECYp6iumj0y9cLubh678EAmea+QQP/kZ2JMqG45uHBPsCcCwyUBVbmfcOPpKmDzTWCBi0ZobVE+6upRQC08=
+X-Received: by 2002:a17:906:99c5:b0:6ff:4c8f:6376 with SMTP id
+ s5-20020a17090699c500b006ff4c8f6376mr1319391ejn.328.1655872242892; Tue, 21
+ Jun 2022 21:30:42 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+References: <kl6lee006mle.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <CABPp-BEW2WF5AJeKqCiL2zhcPwPH-u6p=myoX_GkU6tbV=+TZA@mail.gmail.com>
+ <xmqqczfgfojb.fsf@gitster.g> <CABPp-BEXdfEw5jYn-WM_pyEyS5AHmYEJhVNS8GtHAd2BXCaB_A@mail.gmail.com>
+ <kl6l35g87bga.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6l35g87bga.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 21 Jun 2022 21:30:31 -0700
+Message-ID: <CABPp-BGN0DoSr3bcjTmGZkcoj_dSVzOgFUQ++R=_z8v=nAJsTg@mail.gmail.com>
+Subject: Re: Bug in merge-ort (rename detection can have collisions?)
+To:     Glen Choo <chooglen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Sorry for the long delay.  I haven't gotten much Git time lately...
 
-There is code in both merge-recursive and merge-ort for avoiding doubly
-transitive renames (i.e. one side renames directory A/ -> B/, and the
-other side renames directory B/ -> C/), because this combination would
-otherwise make a mess for new files added to A/ on the first side and
-wondering which directory they end up in -- especially if there were
-even more renames such as the first side renaming C/ -> D/.  In such
-cases, it just turns "off" directory rename detection for the higher
-order transitive cases.
+On Mon, Jun 13, 2022 at 9:52 AM Glen Choo <chooglen@google.com> wrote:
+>
+[...]
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > On Fri, Jun 10, 2022 at 9:53 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> Elijah Newren <newren@gmail.com> writes:
+> >>
+> >> > On Tue, Jun 7, 2022 at 5:11 PM Glen Choo <chooglen@google.com> wrote:
+> >> >>
+> >> >> (I'm not 100% what the bug _is_, only that there is one.)
+> >> >>
+> >> >> = Report
+> >> >>
+> >> >> At $DAYJOB, there was a report that "git merge" was failing on certain
+> >> >> branches. Fortunately, the repo is publicly accessible, so I can share
+> >> >> the full reproduction recipe:
+> >> >> ...
+> >> > Thanks for the detailed report; very cool.  Interestingly, if you
+> >> > reverse the direction of the merge (checkout origin/upstream-master
+> >> > and merge origin/master) then you get a different error:
+> >> > ...
+> >> > Anyway, long story short...I don't have a fix yet, but just thought
+> >> > I'd mention I saw the email and spent some hours digging in.
+> >>
+> >> Thanks for continued support for the ort strategy.  From the very
+> >> beginning, I was hesitant to make our tools try to be too clever
+> >> with excessive heuristics, but at least we are not making a silent
+> >> mismerge in this case, so it is probably OK, especially with "-s
+> >> recursive" still left as an escape hatch.
+> >
+> > In fact, the more general problem area here appears to affect the
+> > recursive strategy as well.  I'm glad the specific testcase reported
+> > works under recursive and gave Glen (or his user) a workaround, but
+> > that feels like luck rather than design because my minimal
+> > reproduction testcase not only triggers the same issue he saw with the
+> > ort strategy, but also triggers a previously unknown fatal bug in the
+> > recursive strategy too.
+>
+> Yeah, hm. I was surprised that we encountered this bug at all, but it's
+> not so surprising after seeing how many edge conditions this bug
+> contains.
 
-The testcases added in t6423 a couple commits ago are slightly different
-but similar in principle.  They involve a similar case of paired
-renaming but instead of A/ -> B/ and B/ -> C/, the second side renames
-a leading directory of B/ to C/.  And both sides add a new file
-somewhere under the directory that the other side will rename.  While
-the new files added start within different directories and thus could
-logically end up within different directories, it is weird for a file
-on one side to end up where the other one started and not move along
-with it.  So, let's just turn off directory rename detection in this
-case as well.
+To be fair, I've dug into cases with more.  :-)
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c                         | 4 ++++
- t/t6423-merge-rename-directories.sh | 4 ++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+> I wonder if there other rename detection bugs lurking beyond the
+> horizon,
 
-diff --git a/merge-ort.c b/merge-ort.c
-index fa6667de18c..5bcb9a4980b 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2292,9 +2292,13 @@ static char *check_for_directory_rename(struct merge_options *opt,
- 	struct strmap_entry *rename_info;
- 	struct strmap_entry *otherinfo = NULL;
- 	const char *new_dir;
-+	int other_side = 3 - side_index;
- 
-+	/* Cases where there is no new path, so we return NULL */
- 	if (strmap_empty(dir_renames))
- 		return new_path;
-+	if (strmap_get(&collisions[other_side], path))
-+		return new_path;
- 	rename_info = check_dir_renamed(path, dir_renames);
- 	if (!rename_info)
- 		return new_path;
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 296c04f8046..4286ae987c4 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -5245,7 +5245,7 @@ test_setup_12l () {
- 	)
- }
- 
--test_expect_merge_algorithm failure failure '12l (B into A): Rename into each other + add/add conflict' '
-+test_expect_merge_algorithm failure success '12l (B into A): Rename into each other + add/add conflict' '
- 	test_setup_12l BintoA &&
- 	(
- 		cd 12l_BintoA &&
-@@ -5273,7 +5273,7 @@ test_expect_merge_algorithm failure failure '12l (B into A): Rename into each ot
- 	)
- '
- 
--test_expect_merge_algorithm failure failure '12l (A into B): Rename into each other + add/add conflict' '
-+test_expect_merge_algorithm failure success '12l (A into B): Rename into each other + add/add conflict' '
- 	test_setup_12l AintoB &&
- 	(
- 		cd 12l_AintoB &&
--- 
-gitgitgadget
+I was trying to dig around for related issues so I can fix the class
+of problems rather than just the instance.  Reversing the direction of
+the merge was just one component of that (and I reported that
+particular tweak since it triggered something a little different).
+
+The original motivation for writing merge-ort was to address bugs I
+couldn't otherwise fix within merge-recursive's implementation.  I've
+put a lot of time into corner cases, many of which (perhaps even the
+majority) were not actually motivated by real-life testcases but me
+just having an obsession with making Git's merge machinery handle
+weird inputs.  Junio even commented on some of my testcases with 'I am
+not sure if there is a single "correct" answer everybody can agree on
+for each of these "insane" cases, though.'.  Now, obviously I can miss
+some inputs, as evidenced by the issue you reported, so there is
+always a chance there are more.  However...
+
+> whether we already assume that these bugs exist, and if so,
+> whether we should officially document "merge without rename detection"
+> as a workaround [1].
+>
+> [1] Assuming that the workaround works of course. I tried to disable
+> rename detection several times, but I couldn't really figure out whether
+> I did it correctly or whether it fixed the bug (which is why I didn't
+> include it in the initial report.)
+
+Turning off renames and relying on users to correct merge issues may
+be reasonable when there are only a few.  When there are more than a
+few, my experience in the past with turning off rename detection (or
+there being too many renames that rename detection turns itself off)
+is that users often:
+
+  * don't match up renamed files and do a three-way merge, but just
+pick one of the two conflicting sides, unknowingly discarding changes
+made on the other side
+  * sometimes notice the files that should have been renames, and
+manually hand apply the subset of changes they remember from one file
+to the other, and unknowingly discarding the remaining subset of
+changes (which were often changes made by people other than the one
+doing the merges).
+
+In the particular repository in question, you've got 600+ renames on
+one side, and 200+ on the other -- including multiple different entire
+directories.  (Also, since lack of rename detection makes renames get
+reported as modify/delete conflicts, and you've got 400+ actual
+modify/delete conflicts on top of all the renames, users would have
+lots of "fun" attempting to sort things all out without tool support.)
+ So, I'm worried the "fallback"/"workaround" is likely to put users in
+a worse situation rather than a better one.
+
+But, even if your goal really is to have a fallback, why not just use
+the `resolve` strategy?  Your testcase doesn't have multiple merge
+bases, and the resolve strategy is roughly the recursive strategy
+minus the renames and the multiple merge base handling.
+
+(Also, I'm not just avoiding work.  I have already written patches to
+turn off rename detection in the ort strategy.  I pointed these out to
+Stolee and Dscho for a special internal usecase of theirs, and at
+least one of those emails cc'ed the mailing list. so you should be
+able to find those patches with a search.  I'm just not convinced of
+the need to merge those patches.)
+
+
+
+Anyway, that all said, I posted a fix for this issue over at
+https://lore.kernel.org/git/pull.1268.git.1655871651.gitgitgadget@gmail.com/.
+With it, I can repeat the tensorflow merge you highlighted, in either
+direction, without issue.
