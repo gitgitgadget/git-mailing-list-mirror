@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88665C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 18:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F4EAC43334
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 18:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233565AbiFVS2N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 14:28:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51350 "EHLO
+        id S1359098AbiFVS5X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 14:57:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236409AbiFVS2G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 14:28:06 -0400
+        with ESMTP id S233854AbiFVS5U (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 14:57:20 -0400
 Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C6A565B3
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 11:28:02 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id h11-20020a17090a130b00b001eca05382e7so92932pja.9
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 11:28:02 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06AC167E9
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 11:57:18 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id q102-20020a17090a17ef00b001ec706653e0so142503pja.0
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 11:57:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=MHjJXZB47jRrw9OXrbnkYVzHV7vKVFJpkssADwKo3ww=;
-        b=Pu/5vz3qL06GnfsTstReetA3SI6GGVqqiWzfEfSG5Tf8n8nub9UMQdQWVEFJg9aPyM
-         PtYGkrjIPyhqUW32tVlTDPTQYJFnmR5rARuYoz/fiAaQf4ODCl35lMd9zrZr71BNQopR
-         PxVVtN91t+kIlzo1A0+jJSNEojzy4ueRkIoW4ioPSJXHqgKBXQECjI09OvVRMxlaiQ4Y
-         hqYF9FEpii2dGk36SIIz7dkTkI/wR9hNTPJiW30TNXEzYE65NNxWsQ95qOrwutgO5czc
-         4hTqB+Uo6rQKi9J2RUo8fsiWcZlUQYHeDE4KA75UhLDn2ov2xoZs12lBNMWyMXwHMJvX
-         zJHw==
+        bh=2yWtCGWw0rr7+HyQ1+A3l53HLSK8k4u8tPLg43JaSx4=;
+        b=kMexWRoGGcMN/e+7l0UMqgzai5uoFbl3Hs63oxBgM/cgqEeAH/lEmwbYc4Vuz5lXOD
+         48WyUszc/S3kVzCxINGor3SiVqSS5KUilllEldsXIOj1EmKa9O52HgJpHSE/x7Fjz5P/
+         VVTwsroFJ9QQ1H6Fta9sGHu+BoJQxER2gB6+tsVz8XiPSlPt/xL3CKOeMmhx/ZVZfsd/
+         Ox8AS/hCx0sSOPJE7K6VF86FyR75sEOfNOH/+Q7mHKuRHsxtAXZQBWHfLzEGOJiCpv1L
+         BftNSes2boapEvpHxrqfiYkN7sel2cCgQDUcd8SRv6pitkwH84lCMZmyv0iHlKVRGuZA
+         i6dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=MHjJXZB47jRrw9OXrbnkYVzHV7vKVFJpkssADwKo3ww=;
-        b=e+ibJ3DlPfoLPw2vffr9egIdkxWy+1q5j1qmEgBebePekYkSUXsNg5PBAIAbjaeBBY
-         xSKee8E3nMB9kkJxqf3OtcnVNzprjRRANWNRU6JERg9y23Hwy7rFItpJSUrTacrgcyJy
-         KvdA64NSqvChurcawUSmGQCuwfpo2JDPQMSMHudGnI+yWB40Qtfxrkxrcf+gTmoOoOf9
-         W+tPEInC94ZGNpsVc6hZO4InZ9LOMFowZKqy1GiaYtD24XkL5dE2wgqQ7fERFtPMo45N
-         ZSwDbFyQGZyWi8hjLhWMSKi//QsJX5t6hfMpcuele67jjnw8WyI1HU7G6+fbrRC/7tY5
-         HeRg==
-X-Gm-Message-State: AJIora+vgbW8aYNMLngFTSMI18EalMEXBSQxzbQSF0YADoyV1JZie6kx
-        kgwjME6Gi0uCzJQkFEvA8Jgxa0Lxx7ImDA==
-X-Google-Smtp-Source: AGRyM1v3iznFR9215sGEGut7MO4N2xFGSt5YDQ+/Wxhcs13xCJc32BOjTpzKZZFJKyqDdb4XBnckuHVAMxYrIA==
+        bh=2yWtCGWw0rr7+HyQ1+A3l53HLSK8k4u8tPLg43JaSx4=;
+        b=wMcaioP0LxB3RbUpuol2kb1yGitKS2hdg/1bwGHB9955vZA81eFwF+GTFKSvwqqWs/
+         zTYvscwwl2pnek9FBJlj/G7M4ilcaaJigAaEYPuL5nVzBIC5CQtd/As8/S/W6v+BsHUs
+         305LgDzY/EWbeozB5TZt0FHnCu0k/TDSC14+sroJuG8ikS5wRP8dhmNMTUYeLerJHjWI
+         R9A0YvC6LfemqKAn6LQcugkxGCLYTQgc+GzGGH62c4hux0cYtSVgRGrpUd3ZU0qQ1tEs
+         JidnFjrSjiobdUXXnuctA4Dzgg0EKau1nOBpsKl+a8mKTDN/MRNQHV3pCdUiEIayiF/j
+         UIBQ==
+X-Gm-Message-State: AJIora+U32dB759SeIu1g98T5r/zOlvp+Xs62ZAX00ofuoCQiE/AcklJ
+        0hAZ51C9C0rIIKz3lAVfyNjMYORtYiFyfQ==
+X-Google-Smtp-Source: AGRyM1uC87aEK2YaPLYwRsLj9X6o6kIjV+gWH933QAlxMxfLYLA4zR8Fgq2wgpIft6DywobRV1OsH3Mnw2uymg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a63:2a8d:0:b0:40c:9b5f:13d3 with SMTP id
- q135-20020a632a8d000000b0040c9b5f13d3mr4003857pgq.465.1655922482026; Wed, 22
- Jun 2022 11:28:02 -0700 (PDT)
-Date:   Wed, 22 Jun 2022 11:28:00 -0700
-In-Reply-To: <patch-v3-08.12-bb1310b9abe-20220622T142012Z-avarab@gmail.com>
-Message-Id: <kl6l4k0ck0y7.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:90a:249:b0:1e0:a8a3:3c6c with SMTP id
+ t9-20020a17090a024900b001e0a8a33c6cmr39609pje.0.1655924238065; Wed, 22 Jun
+ 2022 11:57:18 -0700 (PDT)
+Date:   Wed, 22 Jun 2022 11:57:16 -0700
+In-Reply-To: <patch-v3-09.12-e251fc115e1-20220622T142012Z-avarab@gmail.com>
+Message-Id: <kl6lzgi4il0z.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com>
- <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com> <patch-v3-08.12-bb1310b9abe-20220622T142012Z-avarab@gmail.com>
-Subject: Re: [PATCH v3 08/12] submodule--helper: report "submodule" as our
- name in some "-h" output
+ <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com> <patch-v3-09.12-e251fc115e1-20220622T142012Z-avarab@gmail.com>
+Subject: Re: [PATCH v3 09/12] submodule--helper: understand --checkout,
+ --merge and --rebase synonyms
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
         git@vger.kernel.org
@@ -65,159 +65,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+
+As you noted in your cover letter, this version of 09-10/12 is a lot
+cleaner and more obviously correct.
+
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Change the user-facing "git submodule--helper" commands so that
-> they'll report their name as being "git submodule". To a user these
-> commands are internal implementation details, and it doesn't make
-> sense to emit usage about an internal helper when "git submodule" is
-> invoked with invalid options.
+> Understand --checkout, --merge and --rebase synonyms for
+> --update=3D{checkout,merge,rebase}, as well as the short options that
+> 'git submodule' itself understands.
 >
-> Before this we'd emit e.g.:
->
-> 	$ git submodule absorbgitdirs --blah
-> 	error: unknown option `blah'
-> 	usage: git submodule--helper absorbgitdirs [<options>] [<path>...]
-> 	[...]
-> And:
->
-> 	$ git submodule set-url -- --
-> 	usage: git submodule--helper set-url [--quiet] <path> <newurl>
-> 	[...]
->
-> Now we'll start with "usage: git submodule [...]" in both of those
-> cases. This change does not alter the "list", "name", "clone",
-> "config" and "create-branch" commands, those are internal-only (as an
-> aside; their usage info should probably invoke BUG(...)). This only
-> changes the user-facing commands.
->
-> The "status", "deinit" and "update" commands are not included in this
-> change, because their usage information already used "submodule"
-> rather than "submodule--helper".
-
-I enumerated over all of the commands just to be sure:
-
-- The commands named here and the changed commands cover all of the uses
-  of the usage_*/parse_options API.
-
-- We still mention "submodule--helper" in two internal facing commands
-  ("is-active" and "push-check"), but those call die() (should be BUG()
-  I assume?) instead of usage_*().
-
-- The other two commands ("resolve-relative-url-test" and "check-name")
-  are internal facing commands that never print usage information.
-
-So this covers all of the cases. Great!
-
-> I don't think it's currently possible to emit some of this usage
-> information in practice, as git-submodule.sh will catch unknown
-> options, and e.g. it doesn't seem to be possible to get "add" to emit
-> its usage information from "submodule--helper".
->
-> Though that change may be superfluous now, it's also harmless, and
-> will allow us to eventually dispatch further into "git
-> submodule--helper" from git-submodule.sh, while emitting the correct
-> usage output.
-
-Makes sense.
-
+> This removes a difference between the CLI API of "git submodule" and
+> "git submodule--helper", making it easier to make the latter an alias
+> for the former. See 48308681b07 (git submodule update: have a
+> dedicated helper for cloning, 2016-02-29) for the initial addition of
+> --update.
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  builtin/submodule--helper.c | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
+>  builtin/submodule--helper.c | 30 ++++++++++++++++++++++++++++++
+>  git-submodule.sh            | 14 +++++++++-----
+>  2 files changed, 39 insertions(+), 5 deletions(-)
 >
 > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index a298d8d0c12..6af09d78d4b 100644
+> index 6af09d78d4b..928b7a948b2 100644
 > --- a/builtin/submodule--helper.c
 > +++ b/builtin/submodule--helper.c
-> @@ -444,7 +444,7 @@ static int module_foreach(int argc, const char **argv=
-, const char *prefix)
->  	};
+> @@ -2405,6 +2405,23 @@ static void ensure_core_worktree(const char *path)
+>  	}
+>  }
 > =20
->  	const char *const git_submodule_helper_usage[] =3D {
-> -		N_("git submodule--helper foreach [--quiet] [--recursive] [--] <comman=
-d>"),
-> +		N_("git submodule foreach [--quiet] [--recursive] [--] <command>"),
->  		NULL
->  	};
+> +static const char *submodule_update_type_to_label(enum submodule_update_=
+type type)
+> +{
+> +	switch (type) {
+> +	case SM_UPDATE_CHECKOUT:
+> +		return "checkout";
+> +	case SM_UPDATE_MERGE:
+> +		return "merge";
+> +	case SM_UPDATE_REBASE:
+> +		return "rebase";
+> +	case SM_UPDATE_UNSPECIFIED:
+> +	case SM_UPDATE_NONE:
+> +	case SM_UPDATE_COMMAND:
+> +		break;
+> +	}
+> +	BUG("unreachable with type %d", type);
+> +}
+> +
+>  static void update_data_to_args(struct update_data *update_data, struct =
+strvec *args)
+>  {
+>  	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
+> @@ -2583,6 +2600,7 @@ static int module_update(int argc, const char **arg=
+v, const char *prefix)
+>  	struct update_data opt =3D UPDATE_DATA_INIT;
+>  	struct list_objects_filter_options filter_options;
+>  	int ret;
+> +	enum submodule_update_type update_type =3D SM_UPDATE_UNSPECIFIED;
 > =20
-> @@ -582,7 +582,7 @@ static int module_init(int argc, const char **argv, c=
-onst char *prefix)
->  	};
-> =20
->  	const char *const git_submodule_helper_usage[] =3D {
-> -		N_("git submodule--helper init [<options>] [<path>]"),
-> +		N_("git submodule init [<options>] [<path>]"),
->  		NULL
->  	};
-> =20
-> @@ -1185,7 +1185,7 @@ static int module_summary(int argc, const char **ar=
+>  	struct option module_update_options[] =3D {
+>  		OPT__FORCE(&opt.force, N_("force checkout updates"), 0),
+> @@ -2604,6 +2622,15 @@ static int module_update(int argc, const char **ar=
 gv, const char *prefix)
->  	};
-> =20
->  	const char *const git_submodule_helper_usage[] =3D {
-> -		N_("git submodule--helper summary [<options>] [<commit>] [--] [<path>]=
-"),
-> +		N_("git submodule summary [<options>] [<commit>] [--] [<path>]"),
->  		NULL
->  	};
-> =20
-> @@ -1349,7 +1349,7 @@ static int module_sync(int argc, const char **argv,=
- const char *prefix)
->  	};
-> =20
->  	const char *const git_submodule_helper_usage[] =3D {
-> -		N_("git submodule--helper sync [--quiet] [--recursive] [<path>]"),
-> +		N_("git submodule sync [--quiet] [--recursive] [<path>]"),
->  		NULL
->  	};
-> =20
-> @@ -2788,7 +2788,7 @@ static int absorb_git_dirs(int argc, const char **a=
-rgv, const char *prefix)
->  	};
-> =20
->  	const char *const git_submodule_helper_usage[] =3D {
-> -		N_("git submodule--helper absorbgitdirs [<options>] [<path>...]"),
-> +		N_("git submodule absorbgitdirs [<options>] [<path>...]"),
->  		NULL
->  	};
-> =20
-> @@ -2893,7 +2893,7 @@ static int module_set_url(int argc, const char **ar=
-gv, const char *prefix)
->  		OPT_END()
->  	};
->  	const char *const usage[] =3D {
-> -		N_("git submodule--helper set-url [--quiet] <path> <newurl>"),
-> +		N_("git submodule set-url [--quiet] <path> <newurl>"),
->  		NULL
->  	};
-> =20
-> @@ -2932,8 +2932,8 @@ static int module_set_branch(int argc, const char *=
-*argv, const char *prefix)
->  		OPT_END()
->  	};
->  	const char *const usage[] =3D {
-> -		N_("git submodule--helper set-branch [-q|--quiet] (-d|--default) <path=
->"),
-> -		N_("git submodule--helper set-branch [-q|--quiet] (-b|--branch) <branc=
-h> <path>"),
-> +		N_("git submodule set-branch [-q|--quiet] (-d|--default) <path>"),
-> +		N_("git submodule set-branch [-q|--quiet] (-b|--branch) <branch> <path=
->"),
->  		NULL
->  	};
-> =20
-> @@ -3277,7 +3277,7 @@ static int module_add(int argc, const char **argv, =
-const char *prefix)
->  	};
-> =20
->  	const char *const usage[] =3D {
-> -		N_("git submodule--helper add [<options>] [--] <repository> [<path>]")=
-,
-> +		N_("git submodule add [<options>] [--] <repository> [<path>]"),
->  		NULL
->  	};
-> =20
-> --=20
-> 2.36.1.1239.gfba91521d90
+>  		OPT_STRING(0, "update", &opt.update_default,
+>  			   N_("string"),
+>  			   N_("rebase, merge, checkout or none")),
+> +		OPT_SET_INT(0, "checkout", &update_type,
+> +			N_("use the 'checkout' update strategy (default)"),
+> +			SM_UPDATE_CHECKOUT),
+> +		OPT_SET_INT('m', "merge", &update_type,
+> +			N_("use the 'merge' update strategy"),
+> +			SM_UPDATE_MERGE),
+> +		OPT_SET_INT('r', "rebase", &update_type,
+> +			N_("use the 'rebase' update strategy"),
+> +			SM_UPDATE_REBASE),
+>  		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
+>  			   N_("reference repository")),
+>  		OPT_BOOL(0, "dissociate", &opt.dissociate,
+> @@ -2653,6 +2680,9 @@ static int module_update(int argc, const char **arg=
+v, const char *prefix)
+>=20
+>   opt.filter_options =3D &filter_options;
+>=20
+> +	if (update_type !=3D SM_UPDATE_UNSPECIFIED)
+> +		opt.update_default =3D submodule_update_type_to_label(update_type);
+> +
+>   if (opt.update_default)
+>     if (parse_submodule_update_strategy(opt.update_default,
+>                 &opt.update_strategy) < 0)
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 1c1dc320922..7fc7119fb21 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -40,7 +40,9 @@ require_init=3D
+>  files=3D
+>  remote=3D
+>  nofetch=3D
+> -update=3D
+> +rebase=3D
+> +merge=3D
+> +checkout=3D
+>  custom_name=3D
+>  depth=3D
+>  progress=3D
+> @@ -260,7 +262,7 @@ cmd_update()
+>       force=3D$1
+>       ;;
+>     -r|--rebase)
+> -			update=3D"rebase"
+> +			rebase=3D1
+>       ;;
+>     --reference)
+>       case "$2" in '') usage ;; esac
+> @@ -274,13 +276,13 @@ cmd_update()
+>       dissociate=3D1
+>       ;;
+>     -m|--merge)
+> -			update=3D"merge"
+> +			merge=3D1
+>       ;;
+>     --recursive)
+>       recursive=3D1
+>       ;;
+>     --checkout)
+> -			update=3D"checkout"
+> +			checkout=3D1
+>       ;;
+>     --recommend-shallow)
+>       recommend_shallow=3D"--recommend-shallow"
+> @@ -341,7 +343,9 @@ cmd_update()
+>     ${init:+--init} \
+>     ${nofetch:+--no-fetch} \
+>     ${wt_prefix:+--prefix "$wt_prefix"} \
+> -		${update:+--update "$update"} \
+> +		${rebase:+--rebase} \
+> +		${merge:+--merge} \
+> +		${checkout:+--checkout} \
+>     ${reference:+"$reference"} \
+>     ${dissociate:+"--dissociate"} \
+>     ${depth:+"$depth"} \
+
+A small inelegance is that a user could theoretically pass both
+"--update=3D{checkout,rebase,merge}" and "--{checkout,rebase,merge}",
+where one option ends of clobbering the other (Is it last one wins?).
+
+Ideally we'd check for this kind of invalid usage and die, but maybe
+it's not worth the effort since we fix this in the next patch already?
+
+This wouldn't happen if we squashed 09-10/12 together like I initially
+suggested, but then the patches would no longer be as obviously correct.
+
+Neither seems obviously better than the other, so I'm ok with this
+either way.
