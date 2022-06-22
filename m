@@ -2,73 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF00C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 23:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D595C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 23:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358749AbiFVXNq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 19:13:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32854 "EHLO
+        id S1377289AbiFVXdI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 19:33:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358619AbiFVXNp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 19:13:45 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA1F419B5
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 16:13:43 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A76E11D761;
-        Wed, 22 Jun 2022 19:13:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=Ri9TKPYVmgJ6U9RfWxQQDFaVsbg6y01mn3HX6S
-        8XJHc=; b=rkn4rUvqotpGID3BxGK4UMBGj/Uo0Npy+ie8EQrIQoXA5YvIIdegV3
-        3AX1QoshNO26PxjaUyc7QLnJaU5jUfwd463mwSfK/XctVKAL1IKFKYeymiwgfn4h
-        aWnCWSTYBr+X7pB5SEU4fnp2+myhyZwzaieIVYjX2uBaUDtlJYp/0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 40D2111D760;
-        Wed, 22 Jun 2022 19:13:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 574A911D75D;
-        Wed, 22 Jun 2022 19:13:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: en/merge-tree
-In-Reply-To: <CABPp-BGGDvZ40TY939fFM0xPZuaogPS+ymfEpc+hv-sJnO8Jcg@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 22 Jun 2022 14:16:28 -0700")
-References: <xmqq7d584hqb.fsf@gitster.g>
-        <CABPp-BGGDvZ40TY939fFM0xPZuaogPS+ymfEpc+hv-sJnO8Jcg@mail.gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-Date:   Wed, 22 Jun 2022 16:13:41 -0700
-Message-ID: <xmqqk0982swq.fsf@gitster.g>
+        with ESMTP id S232538AbiFVXdH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 19:33:07 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374B515836
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 16:33:06 -0700 (PDT)
+Received: (qmail 3134 invoked by uid 109); 22 Jun 2022 23:33:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Jun 2022 23:33:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1577 invoked by uid 111); 22 Jun 2022 23:33:04 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Jun 2022 19:33:04 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 22 Jun 2022 19:33:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] revisions.txt: escape "..." to avoid asciidoc horizontal
+ ellipsis
+Message-ID: <YrOmsA04FZae89be@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F51DA4AA-F280-11EC-A132-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+In asciidoc's HTML output of the "gitrevisions" and "git-rev-parse"
+documentation, the header:
 
-> On Wed, Jun 22, 2022 at 12:41 PM Junio C Hamano <gitster@pobox.com> wrote:
->> [Stalled]
->>
->> * en/merge-tree (2022-02-23) 13 commits
->> ...
-> Can you update from "On hold" to "new patchset exists" (new source:
-> <pull.1122.v7.git.1655511660.gitgitgadget@gmail.com>) and move it out
-> from the stalled section?
+  The ... (three-dot) Symmetric Difference Notation
 
-As I diverted my attention to the topic for that anyway, it will not
-stop at "new patchset exists" but actually would have to be replaced
-before getting described in a new issue of the "What's cooking"
-report.  "Will merge to 'next'?" would be the least the topic would
-receive even during the pre-release freeze.
+is rendered using "&8230;", a horizontal ellipsis. This is visually
+ugly, but also hard to search for or cut-and-paste. We really mean three
+ascii dots (0x2e) here, so let's make sure it renders as such.
 
-Thanks.
+The simplest way to do that is just escaping the leading dot, as the
+instances in the rest of the section do. Arguably this should all be
+converted to use backticks, which would let us drop the quoting here and
+elsewhere (e.g., {carat}). But that does change the rendering slightly.
+So let's fix the bug first, and we can decide on migrating the whole
+section separately.
 
+Note that this produces an empty doc-diff of the manpages. Curiously,
+asciidoc produces the same ellipsis entity in the XML file, but docbook
+then converts it back into three literal dots for the roff output! So
+the roff manpages have been correct all along (which may be a reason
+nobody noticed this until now).
 
+Reported-by: Arthur Milchior
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This was originally reported via https://github.com/git/git-scm.com/issues/1700,
+hence no email address for the reporter. I'm not sure if that makes it
+too useless to keep, but I mostly wanted to give credit.
+
+ Documentation/revisions.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index f5f17b65a1..cef8c3c66f 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -283,7 +283,7 @@ The '..' (two-dot) Range Notation::
+  for commits that are reachable from r2 excluding those that are reachable
+  from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
+ 
+-The '...' (three-dot) Symmetric Difference Notation::
++The '\...' (three-dot) Symmetric Difference Notation::
+  A similar notation 'r1\...r2' is called symmetric difference
+  of 'r1' and 'r2' and is defined as
+  'r1 r2 --not $(git merge-base --all r1 r2)'.
+-- 
+2.37.0.rc1.390.g1f5e45eb84
