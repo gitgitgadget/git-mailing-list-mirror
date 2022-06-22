@@ -2,85 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C369C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 04:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8BF2C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 04:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356654AbiFVEVP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 00:21:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51602 "EHLO
+        id S1356703AbiFVEVd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 00:21:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbiFVEVN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 00:21:13 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B2B117A
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:21:11 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id w17so21569380wrg.7
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:21:11 -0700 (PDT)
+        with ESMTP id S1356711AbiFVEVb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 00:21:31 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B16427654
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:21:30 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id j24so881419wrb.11
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=QeJs9HI0zDrU2aqaAUtfKUsamYQ2+rST9RPPMuset3M=;
-        b=NsmaQjj8/w9tCNVpAfahmbsi5XJdvs+pr8u44qQzgY//ei9KvYHfXs+8rXuYPp2wcV
-         m6IT5kBYlwP09kwrBgqNs8M9Lxi+E4b9g6/6bDGTNBL4h4MtSji1TkePzRvVHooxj8Ws
-         2OMjsRpZ44XMEbunheIln46o/14JwMq2Kkm35aEz7NdEhzE6Kf/1WH2fdBF42Fti+ITb
-         txaeVh7WaoLONAaInGiZY8FD3br2PiNu2/CluVgrkn3hvH9lbZqSx+oyyNWqS6MECrKs
-         u2H1LiqaEtD8aD6zIeTRnwCiexRSN8vEqBfI1Un+BS8QtITqRbO/pz5OtDQDQu5MCTlg
-         YJdw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=XitRwais8ji78kTDLUZRsP+0BnKtCqLis4kGkc144SI=;
+        b=LzC1YvuVIXh/dI++pCeYQfqCFSOolbkFSglYlKqC2cwDCTq8oB+HM8Ad4DYEr946GK
+         LQ27Z+BmpOm5d8C60eSROrMO9MbYUNfCmgGHbLWpAMHwF3bkW9ddAcDSBHaQk7HBiSV+
+         jmg27Psev0Igzu1PP090FipdDCGgPHuCDbQtRyReBSkMBdW3ecekywSgKklVvLS/o9iC
+         vwXFqTTdhBCSjCOB2ufSXFRUG2YUxfEZgvwXpwzrfHbryq5S1B3Vput/nAKq3Cxb26hK
+         eovyWjfo6ggGDNAvB6GJ6ubVgS34hLRGobABXto5pEp76mjD6hS03lT7bf0w9aprURpy
+         qnsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=QeJs9HI0zDrU2aqaAUtfKUsamYQ2+rST9RPPMuset3M=;
-        b=rL5HSyzDgr1Axwk8wn05lG0Y+sn9k1kWX/6Pfu+eit0BrxlNBEvAdqLNY+Iclq6xlo
-         0eWgL4RcQ71NLH22qeWK1l9FWyJbqd2U+fRMM4+YSF76h7Dw7VT/QTh5TdTLAz9o4i62
-         drhK4/+f5ZuWBnfZPGx4AvCTXbmDnEqn8o6mjDtCSDB/y/x2i1jPigpJyhjLijadcOwt
-         lzSbd6MJnN74J5ZmQn7CIFpSlDgLsWfK9PVUM7+nPBQYnOez3/IcZ1mHEnVpI2E/Zllq
-         Eyz6xplEuBmRU0cjVxxbL9IIZgK1ZcDc8VkXqydS8Q2C/CQzg1AkLpiQOWWmRWziQM4h
-         cHKQ==
-X-Gm-Message-State: AJIora9dAOWSHTxeWvUKxM0Q09GEc4HehcQK2Dixn8MATt5GFmP7N6Ux
-        MFnkc1JWURF3UuhK+bLEgo71aVgIXRb33Q==
-X-Google-Smtp-Source: AGRyM1ue6kMwisH4sHqR/twiuMF+22GHEF1AXa39aReRLQ6QOT/b/OfX+2qU3E8IOwbz9zsSCYS5Gg==
-X-Received: by 2002:a5d:64ad:0:b0:215:c26f:f53c with SMTP id m13-20020a5d64ad000000b00215c26ff53cmr1153669wrp.22.1655871670059;
-        Tue, 21 Jun 2022 21:21:10 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=XitRwais8ji78kTDLUZRsP+0BnKtCqLis4kGkc144SI=;
+        b=dSUqBSYlVX88qWnRim/k8nGZx1Cz0gvkv5o0wkxmswtyykTg1RCwLDxmXPk8ldFqgD
+         LOaEX42Ac72Po/sZjEgSm/x5raED4S1ucFkPCoHEFJBXVTJihkNCs0zGq4Zhiwzlmnir
+         QhKvAKOXIrGrQ9HKtNdOB8A8AM9Jla6CWM7JpoFt4U2aFIqkqo4ez+8LB5APiS5fsrs6
+         qLzBJdkXfnBWpiP/yz+H0im+7jM/+NSLxJceqXz4y2lEsCK3HTQD457mk5KJLe9WfD0n
+         eStU9VGboDuEfkq3ysx7ukn/L9q8VNHoyJyaP9aL8CToqNMkk0nhgEj7+jep9EXClb4L
+         h5Kw==
+X-Gm-Message-State: AJIora/RwqEqQMm4d2nYmNAswlktoY3YAab7e+evIhyoaXJBUGJs49K+
+        Pci/He4dTQn/zVMemDeYOEmeaTI6Izdkkw==
+X-Google-Smtp-Source: AGRyM1szDWdbsvnJ3f+A3jwgoVrKVOUmG2YsLL2fGiDgTsUNlUjK3QuIbpxy3AgGLUng4Ijw/qwl6g==
+X-Received: by 2002:a5d:5e92:0:b0:21a:278c:b901 with SMTP id ck18-20020a5d5e92000000b0021a278cb901mr1132995wrb.461.1655871688995;
+        Tue, 21 Jun 2022 21:21:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n9-20020a05600c3b8900b0039c5b9e9142sm20638282wms.17.2022.06.21.21.20.54
+        by smtp.gmail.com with ESMTPSA id n37-20020a05600c502500b0039c5cecf206sm21027877wmr.4.2022.06.21.21.21.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 21:20:58 -0700 (PDT)
-Message-Id: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
+        Tue, 21 Jun 2022 21:21:19 -0700 (PDT)
+Message-Id: <69d6204184363e491acb68f744ded0991be63a47.1655871652.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
+References: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 22 Jun 2022 04:20:48 +0000
-Subject: [PATCH 0/3] Fix dual rename into each other plus conflicting adds
+Date:   Wed, 22 Jun 2022 04:20:49 +0000
+Subject: [PATCH 1/3] t6423: add tests of dual directory rename plus add/add
+ conflict
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series adds some testcases based on the tensorflow repository issue
-reported by Glen Choo at [1], demonstrating bugs in both the ort and
-recursive strategies. It also provides a fix for the ort strategy.
+From: Elijah Newren <newren@gmail.com>
 
-[1]
-https://lore.kernel.org/git/kl6lee006mle.fsf@chooglen-macbookpro.roam.corp.google.com/
+This is an attempt at minimalizing a testcase reported by Glen Choo
+with tensorflow where merge-ort would report an assertion failure:
 
-Elijah Newren (3):
-  t6423: add tests of dual directory rename plus add/add conflict
-  merge-ort: shuffle the computation and cleanup of potential collisions
-  merge-ort: fix issue with dual rename and add/add conflict
+    Assertion failed: (ci->filemask == 2 || ci->filemask == 4), function apply_directory_rename_modifications, file merge-ort.c, line 2410
 
- merge-ort.c                         |  60 ++++++++++------
+reversing the direction of the merge provides a different error:
+
+    error: cache entry has null sha1: ...
+    fatal: unable to write .git/index
+
+so we add testcases for both.  With these new testcases, the
+recursive strategy differs in that it returns the latter error for
+both merge directions.
+
+These testcases are somehow a little different than Glen's original
+tensorflow testcase in that these ones trigger a bug with the recursive
+algorithm whereas his testcase didn't.  I figure that means these
+testcases somehow manage to be more comprehensive.
+
+Reported-by: Glen Choo <chooglen@google.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
  t/t6423-merge-rename-directories.sh | 102 ++++++++++++++++++++++++++++
- 2 files changed, 142 insertions(+), 20 deletions(-)
+ 1 file changed, 102 insertions(+)
 
-
-base-commit: e54793a95afeea1e10de1e5ad7eab914e7416250
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1268%2Fnewren%2Ffix-dual-rename-into-each-other-plus-conflicting-adds-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1268/newren/fix-dual-rename-into-each-other-plus-conflicting-adds-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1268
+diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
+index 479db32cd62..296c04f8046 100755
+--- a/t/t6423-merge-rename-directories.sh
++++ b/t/t6423-merge-rename-directories.sh
+@@ -5199,6 +5199,108 @@ test_expect_success '12k: Directory rename with sibling causes rename-to-self' '
+ 	)
+ '
+ 
++# Testcase 12l, Both sides rename a directory into the other side, both add
++#   a file with after directory renames are the same filename
++#   Commit O: sub1/file,                 sub2/other
++#   Commit A: sub3/file,                 sub2/{other, new_add_add_file_1}
++#   Commit B: sub1/{file, newfile}, sub1/sub2/{other, new_add_add_file_2}
++#
++#   In words:
++#     A: sub1/ -> sub3/, add sub2/new_add_add_file_1
++#     B: sub2/ -> sub1/sub2, add sub1/newfile, add sub1/sub2/new_add_add_file_2
++#
++#   Expected: sub3/{file, newfile, sub2/other}
++#             CONFLICT (add/add): sub3/sub2/new_add_add_file
++
++test_setup_12l () {
++	test_create_repo 12l_$1 &&
++	(
++		cd 12l_$1 &&
++
++		mkdir -p sub1 sub2
++		echo file >sub1/file &&
++		echo other >sub2/other &&
++		git add sub1 sub2 &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv sub1 sub3 &&
++		echo conflicting >sub2/new_add_add_file &&
++		git add sub2 &&
++		test_tick &&
++		git add -u &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo dissimilar >sub2/new_add_add_file &&
++		echo brand >sub1/newfile &&
++		git add sub1 sub2 &&
++		git mv sub2 sub1 &&
++		test_tick &&
++		git commit -m "B"
++	)
++}
++
++test_expect_merge_algorithm failure failure '12l (B into A): Rename into each other + add/add conflict' '
++	test_setup_12l BintoA &&
++	(
++		cd 12l_BintoA &&
++
++		git checkout -q A^0 &&
++
++		test_must_fail git -c merge.directoryRenames=true merge -s recursive B^0 &&
++
++		git ls-files -s >out &&
++		test_line_count = 5 out &&
++
++		git rev-parse >actual \
++			:0:sub3/file :0:sub3/newfile :0:sub3/sub2/other \
++			:2:sub1/sub2/new_add_add_file \
++			:3:sub1/sub2/new_add_add_file &&
++		git rev-parse >expect \
++			O:sub1/file  B:sub1/newfile O:sub2/other \
++			A:sub2/new_add_add_file \
++			B:sub1/sub2/new_add_add_file &&
++		test_cmp expect actual &&
++
++		git ls-files -o >actual &&
++		test_write_lines actual expect out >expect &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_merge_algorithm failure failure '12l (A into B): Rename into each other + add/add conflict' '
++	test_setup_12l AintoB &&
++	(
++		cd 12l_AintoB &&
++
++		git checkout -q B^0 &&
++
++		test_must_fail git -c merge.directoryRenames=true merge -s recursive A^0 &&
++
++		git ls-files -s >out &&
++		test_line_count = 5 out &&
++
++		git rev-parse >actual \
++			:0:sub3/file :0:sub3/newfile :0:sub3/sub2/other \
++			:2:sub1/sub2/new_add_add_file \
++			:3:sub1/sub2/new_add_add_file &&
++		git rev-parse >expect \
++			O:sub1/file  B:sub1/newfile O:sub2/other \
++			B:sub1/sub2/new_add_add_file \
++			A:sub2/new_add_add_file &&
++		test_cmp expect actual &&
++
++		git ls-files -o >actual &&
++		test_write_lines actual expect out >expect &&
++		test_cmp expect actual
++	)
++'
++
+ ###########################################################################
+ # SECTION 13: Checking informational and conflict messages
+ #
 -- 
 gitgitgadget
+
