@@ -2,111 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ED2FC43334
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 13:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EC6BC433EF
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 14:28:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357744AbiFVN4N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 09:56:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47358 "EHLO
+        id S1357515AbiFVO2m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 10:28:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357752AbiFVN4M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 09:56:12 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F87134666
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 06:56:08 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id g16-20020a17090a7d1000b001ea9f820449so16784717pjl.5
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 06:56:08 -0700 (PDT)
+        with ESMTP id S1358368AbiFVO22 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 10:28:28 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 166F01BE8C
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 07:28:25 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id j24so2970046wrb.11
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 07:28:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=ycrTXLXKC71RvRcr6YM9y+XFhoyvvXrqSdIjtcWW3Is=;
-        b=qJpB28yP58+G9HNpKaw6aU4+1ZZ2+iGU79DNPetxrFTKdyGJod81/VjSZv6fUIXnfj
-         s728QRvKd5EbJXyjDHjeI2z1ZvKQSFkjhNU5U/ohvJndsPvHvyI+fcKAycSPYojECjBo
-         rkiFHc4GlV3AoDF9l/9FEO1RXwY05sOLtVhmjf0QVGSIu1Um4NIqq8p7AiJu+99eQmTJ
-         amNO9V7cWbq6HhjHx9x4fc7hG4GXz++s2hcVTR8wI9UflDMJwwjbv02AYvWgSE/BX7m+
-         WplucShOOrSdzwUsb58nXh+Cy6uCl2EvNSfqGquGOVqTqVrZJmEgMtIxJYHWlNXMDxu2
-         XioA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=I79DrcLvwdlMAtbLG57y1xHOmg0j3Qt2YUhPNzf3+rY=;
+        b=KLARUimfls+7Tp2fUosv0EIfrMy8VE1nfmCn6dQy9nNVQis7MMDQlcSQNtOBVYOu+M
+         MZDYuNSjoUxmK9YLQK9OLsE+lJ5aaRAMFagtBW8WPVDbYQsVZ0R0hGWs/OZO/J2IuNTy
+         zytB6pfhr367YHLrufP+B8FFtX6Z/Uby3lIXaSoPx/Npf2A4WMrEChUQbjK5SgmeQ9Yq
+         yDRibHToKkk1dVd5AMEfHkFj2aZAu8aXpMSz6OgIzkzoy/Tfjxxa2OrXHN/BhImjYrjX
+         4dUinULpuFdxlfVpGzHNdgnAbObVL4xC3dbtIgd5kl2dL2nmFtfOyMfjyVEg9lnvYtEo
+         aDUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=ycrTXLXKC71RvRcr6YM9y+XFhoyvvXrqSdIjtcWW3Is=;
-        b=OCD8OI2REj1sgvmGyC2u4XJzOaQZENTiM5m+6GBrHOR1fnFItAARCgShlzAWb13YhK
-         21d91/VYkeKUDNcd3XYi34S3+4ZWtMZzuF/2I+MvtANAUEB+QntPHEDFwEVTLCbaCeor
-         IiN3IYlmaG5yHxYzF6TQybrPCXHwBw2WhsypC1EsFJhRXkc49/+oOdk3TYYDcbA7tRG1
-         USAALjWsngPjxd3fyuLX1YEnZWd1fTtv1YZVCpRfwuXEYDv2E3hjl6wLQChxdWNQDNBf
-         L3Qw858ALPUA0ED9rquqSrrcvfkjbwFMYm01ONPUc52LB8hY1M5Ne+qmnkik0WrG4bna
-         alkw==
-X-Gm-Message-State: AJIora+uZretBMS172z/9w4Khv7nffE5nsvSAzg4yE+22JzIaFKfuBYy
-        ZH0RDkVJ2likxtsM1JhRw3miE1Axq5xcHVMRIBrUQjf9qQM=
-X-Google-Smtp-Source: AGRyM1tEq+bFjpVd8MyUDs1nPRCIxKqMgAAf0t+O8OVPlRX4ZOIuIL65u6Nf/e4i7yFOpZziWexm0A3aXNNE0+l9drY=
-X-Received: by 2002:a17:90b:3143:b0:1ec:be03:e0a5 with SMTP id
- ip3-20020a17090b314300b001ecbe03e0a5mr3969362pjb.30.1655906167694; Wed, 22
- Jun 2022 06:56:07 -0700 (PDT)
-MIME-Version: 1.0
-From:   void f <fv729164860@gmail.com>
-Date:   Wed, 22 Jun 2022 21:55:56 +0800
-Message-ID: <CADRR3BHq4ZmjHh9HJfh-nGrKR5X5TUPq3-eyr0Atbz8zM8oOxA@mail.gmail.com>
-Subject: Bug report. Out of memory about git checkout.
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=I79DrcLvwdlMAtbLG57y1xHOmg0j3Qt2YUhPNzf3+rY=;
+        b=FpbX73cfsxauS5eU1x+Vq7B5Y/wkOOSPRbRFDnlh+F8kymToclvb9cIdNz6zyCVRo4
+         JjB77KQSGgxL2+FK/ln3i0sUAK8PPB9Kj+UBDG7JRluzmrvMOXqDbZCuMgwYOHbhtqts
+         fozFpKhlfObEdI3IVyiYlbU0BE97hq507Jzv1sV8BxMCJ8YTMCL+ITrUXm0IqkHj8gGj
+         Fc8kLo8xuv6WzrrA5uUl/vM9n4in0C2wYpLM1VWRSvgwT6k72DT/GNOaLSsTlyoUPfYD
+         /6BdrwaSwAFuStj9GjVDSH9Rtl5Fh9HFoJHIn0eoSj4bco4TGKkSbYkXjha2WNpUyBrI
+         Px9A==
+X-Gm-Message-State: AJIora/TSZLB/OCyErgNkIVNvOwEtocuXg/4CGsM60GnC8frZdwkz7qi
+        zpp4dsE40bn1wFQ6WVk/VEDWaQd7xgMRog==
+X-Google-Smtp-Source: AGRyM1syzNVP0mNzERDD/e/Ox2vt4QOf9lEUELvsUVQxIFHhT2EaL5rrPpLeToLTcdyN7wZKUVTv2A==
+X-Received: by 2002:adf:d1c6:0:b0:218:4fc3:a805 with SMTP id b6-20020adfd1c6000000b002184fc3a805mr3502306wrd.228.1655908103294;
+        Wed, 22 Jun 2022 07:28:23 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id j11-20020a05600c190b00b0039c5328ad92sm30468304wmq.41.2022.06.22.07.28.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jun 2022 07:28:22 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 12/12] git-sh-setup.sh: remove "say" function, change last users
+Date:   Wed, 22 Jun 2022 16:28:07 +0200
+Message-Id: <patch-v3-12.12-ecdd8c6ed28-20220622T142012Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.1239.gfba91521d90
+In-Reply-To: <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com>
+References: <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com> <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=E2=80=94env:
+Remove the "say" function, with various rewrites of the remaining
+git-*.sh code to C and the preceding change to have git-submodule.sh
+stop using the GIT_QUIET variable there were only four uses in
+git-subtree.sh. Let's have it use an "arg_quiet" variable instead, and
+move the "say" function over to it.
 
-git version: 2.19.1
-os : center os
-memory 8G
+The only other use was a trivial message in git-instaweb.sh, since it
+has never supported the --quiet option (or similar) that code added in
+0b624b4ceee (instaweb: restart server if already running, 2009-11-22)
+can simply use "echo" instead.
 
-=E2=80=94 how to repeat this bug:
+The remaining in-tree hits from "say" are all for the sibling function
+defined in t/test-lib.sh. It's safe to remove this function since it
+has never been documented in Documentation/git-sh-setup.txt.
 
-Build a repository with large lfs-file use GIT_LFS_SKIP_SMUDGE like
-this:  (I can't push a 10G lfs-file to github, So I can=E2=80=99t give you =
-an
-example repostiory)
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ contrib/subtree/git-subtree.sh | 15 ++++++++++++---
+ git-instaweb.sh                |  2 +-
+ git-sh-setup.sh                |  9 ---------
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-```
-hecanwei@MacBook-Pro lfs-test % git st
-On branch master
-nothing to commit, working tree clean
-hecanwei@MacBook-Pro lfs-test % echo "$(cat Xcode_13.4.1.xip )"
-version https://git-lfs.github.com/spec/v1
-oid sha256:a1e0dbd6d5a96c4a6d3d63600b58486759aa836c2d9f7e8fa6d7da4c7399638b
-size 10783587696
-```
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 1af1d9653e9..7562a395c24 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -50,6 +50,14 @@ m,message=    use the given message as the commit message for the merge commit
+ 
+ indent=0
+ 
++# Usage: say [MSG...]
++say () {
++	if test -z "$arg_quiet"
++	then
++		printf '%s\n' "$*"
++	fi
++}
++
+ # Usage: debug [MSG...]
+ debug () {
+ 	if test -n "$arg_debug"
+@@ -60,7 +68,7 @@ debug () {
+ 
+ # Usage: progress [MSG...]
+ progress () {
+-	if test -z "$GIT_QUIET"
++	if test -z "$arg_quiet"
+ 	then
+ 		if test -z "$arg_debug"
+ 		then
+@@ -146,6 +154,7 @@ main () {
+ 	eval "$set_args"
+ 
+ 	# Begin "real" flag parsing.
++	arg_quiet=
+ 	arg_debug=
+ 	arg_prefix=
+ 	arg_split_branch=
+@@ -161,7 +170,7 @@ main () {
+ 
+ 		case "$opt" in
+ 		-q)
+-			GIT_QUIET=1
++			arg_quiet=1
+ 			;;
+ 		-d)
+ 			arg_debug=1
+@@ -252,7 +261,7 @@ main () {
+ 	dir="$(dirname "$arg_prefix/.")"
+ 
+ 	debug "command: {$arg_command}"
+-	debug "quiet: {$GIT_QUIET}"
++	debug "quiet: {$arg_quiet}"
+ 	debug "dir: {$dir}"
+ 	debug "opts: {$*}"
+ 	debug
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 4349566c891..c68f49454cd 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -102,7 +102,7 @@ resolve_full_httpd () {
+ 
+ start_httpd () {
+ 	if test -f "$fqgitdir/pid"; then
+-		say "Instance already running. Restarting..."
++		echo "Instance already running. Restarting..."
+ 		stop_httpd
+ 	fi
+ 
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index ecb60d9e3cb..ce273fe0e48 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -57,15 +57,6 @@ die_with_status () {
+ 	exit "$status"
+ }
+ 
+-GIT_QUIET=
+-
+-say () {
+-	if test -z "$GIT_QUIET"
+-	then
+-		printf '%s\n' "$*"
+-	fi
+-}
+-
+ if test -n "$OPTIONS_SPEC"; then
+ 	usage() {
+ 		"$0" -h
+-- 
+2.36.1.1239.gfba91521d90
 
-
-Rm Xcode_13.4.1.xip
-
-Git checkout .
-
-You will see =E2=80=9COut of memory, realloc failed=E2=80=9D
-
-It also use too much memory above version: 2.36.1 macOS
-
-
-=E2=80=94 reason of the bug:
-
-
-When you execute git checkout, Which have to checkout a lfs-file to
-the worktree. Git would execute **convert.c
-apply_multi_file_filter()** to convert lfs pointer from git-object to
-the lfs file. It will execute a subprocess to convert this file. But
-It is strange that git would read all of the file into memory When
-finish the git-lfs subprocess. (The code is about pkt-line.c
-read_packetized_to_strbut()). Lfs usually is a very large file even
-more than the memory. So it would throw out of memory exception.
-
-With this bug, it would have trouble to use sparse-chekout in a
-repository with large lfs-file. Because you must init the repository
-first and set the sparse-chekout config, than use git
-pull/merge/checkout to checkout your subset worktree. It would out of
-memory when you checkout it.
-
-I think git don=E2=80=99t need to read all of the file in memory. It can us=
-e a
-stream to finish the checkout.
