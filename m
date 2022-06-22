@@ -2,176 +2,249 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BA75CCA481
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 17:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D902C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 17:15:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377073AbiFVRIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 13:08:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43348 "EHLO
+        id S1377295AbiFVRPA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 13:15:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377227AbiFVRIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 13:08:18 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6569241F97
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 10:07:16 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id i10so20558144wrc.0
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 10:07:16 -0700 (PDT)
+        with ESMTP id S1376884AbiFVRO7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 13:14:59 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F042D8
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 10:14:58 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id y14so20789891qvs.10
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 10:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=r84uSxyS9NFE40qDPHWXRaofWcK47No3z+vJMkna9PE=;
-        b=CR1XPNudzuHsD8stc478dLq2l8rMMt+kk6pUv+f9rHH9rM+8BPNfiQ6yh9ZSGc2xGH
-         f/l09TC4rZHecqXqRgXxDPUTwHze5wpvJYDfuM0AkTd2TqpKFkcLmPZc55bM1Q5alC4/
-         LAaFwo5nv+Uu4sojxNB0XIxp3C/0uLr4x2eQIKz88MHz/hDZfbzdnc0ujx64iYytqRvm
-         NaJX+/F4DjcJLrmtq6CNe8T+g+4x9ik/6zxNcIF9gxeDhSpRJOCZVrrZd7+z0/KEgZv0
-         VwQ612eePQYCRtZ0EbZtd4VYkWFF1h3ufmDYWy+b21npA1ubCkFef8p6K+uirgd1HsHG
-         bzQw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2QnYJAxJX7kQusqmkdBs6+DDvJ+pcgSqlQgNk3MkdBk=;
+        b=R7ygrV3BujGHNSpWT/fWOxsbKPdCYN+5w66ijpfo3OTFsxGZsApZzR6/qfRbe2nHGG
+         yHlpgCefXz0HjdqSz5XTxDEOEWf/8q9nxlHf6xOSyvhFMPW8hmMMOGTrWPeOebrQrcn7
+         1BA6/s9umtauDSjeeIVqiXzQuDCgdS1cVsUY5Sd67jr0255Zku9CloluhJQQNfxwwXax
+         J4EGUUqLXg551f345kJ0pzC0kWLNjA30s0h9sZkmTFuf5Uu+H/8xYY+lMgFhPJEkuFLX
+         nbaNDL9WPuLnazInDIS9gWC9nuAT2219V0B1HhYZIIIFQBkgOxRPqdzaxnzruIoFvXcV
+         je7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=r84uSxyS9NFE40qDPHWXRaofWcK47No3z+vJMkna9PE=;
-        b=sSP2gkh/ZcrTgUsIRgVqVpVLtANzGHU9PCQUBMsDdWNZ+WuvYWCHmshQ/dZpKb4kCU
-         HdtyW3jOkVwB0v1cMF1pDNdJccOb0yYd7Ae1sihOGbzWNmeHkuUwGKX7aW+ZBw6MO9/9
-         dlQ+Nr/CzuqjXU/9cse3CnZSCiPpa3A8oelGLIIgygHx/gxk+p9uR4DCrT7DP6M8Ta9S
-         cNLRLq8wbNW4JlzcrOP7lUso/EmklXmZnlOxo/2qOFcwJI64Q3h1vRaCF4vFy1EnRKsI
-         CMUA9mhEWZKHB7M8tZuCDNtLGqNRBqlhMlA/bXBvRBDIAR6dNaMJAZZMq+qQ9XqHypCZ
-         3wDg==
-X-Gm-Message-State: AJIora+rcf22i7RFRGJIeUHeD736DrJ1CySw5c59VpbTpjtV1KMzjBBi
-        OOUzJ18EbnG285kA1IhYSMekuQ3XBOjTkg==
-X-Google-Smtp-Source: AGRyM1v2/KuHQNxstyc7O037P4W8NvmMFvKdn7bWxTHUjsRQpUF3cMA29fQgTQAW4+NhtA5pel3VRw==
-X-Received: by 2002:a5d:5888:0:b0:218:733:4cd9 with SMTP id n8-20020a5d5888000000b0021807334cd9mr4589940wrf.619.1655917631159;
-        Wed, 22 Jun 2022 10:07:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d3-20020adffbc3000000b0020e6ce4dabdsm19806494wrs.103.2022.06.22.10.07.10
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2QnYJAxJX7kQusqmkdBs6+DDvJ+pcgSqlQgNk3MkdBk=;
+        b=BPVMVqgxLyiKUsjGwoFBUUXb+9RuzrneQ9x20LMrDRPEj30ePC4tU6a/GwA/y/iU+Z
+         PcxN308ty0EXqQW/a+0bXlDQutouirLtp/TWx6qmCncf2InwxXtnWhDOluu6P9ZbUWEO
+         6v+KGSxJ+2NhT8hquwh3p0F7ll9nEcjG3lR4JSUke1zqeVBwz4RO61UwtdfRhudN4TjF
+         3xmZ3+Ej/P8Nfg6Yg88vBUkpIdNQ0nnC7+7AyM0pnDO1BGAwgM8++OwHfVvCEfjoA/mR
+         jl18kikAptfA1mVK32pi96jMUKJEv0PUVB3ZjLBixxTm7O/cmpcT2Cp1zSQygyFKVU9F
+         5THQ==
+X-Gm-Message-State: AJIora+SfJznp8HIsLctsC2Fzb8yfaKb/78E5Mdrp6KaBqWojd+zGHUH
+        hoHbZJB+8rF9PI2WgZfz4PCi5Q==
+X-Google-Smtp-Source: AGRyM1sr30K/JuCdBjJOzdJwLNvqrbRV5d6sCbl6Sziy7ElP0PxLDvisn0O7FyJI8J4s2Q1Bkd5Zmw==
+X-Received: by 2002:ac8:5ac9:0:b0:306:6da0:5858 with SMTP id d9-20020ac85ac9000000b003066da05858mr4002620qtd.20.1655918096100;
+        Wed, 22 Jun 2022 10:14:56 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id ef8-20020a05620a808800b006a71398f06fsm16632237qkb.32.2022.06.22.10.14.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 10:07:10 -0700 (PDT)
-Message-Id: <5bf7244437e30ae0810e323016de892b82365b12.1655917628.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1278.v3.git.git.1655917628.gitgitgadget@gmail.com>
-References: <pull.1278.v2.git.git.1655789777023.gitgitgadget@gmail.com>
-        <pull.1278.v3.git.git.1655917628.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?Carlos=20L=C3=B3pez?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Wed, 22 Jun 2022 17:07:07 +0000
-Subject: [PATCH v3 1/2] grep: add --max-count command line option
+        Wed, 22 Jun 2022 10:14:55 -0700 (PDT)
+Date:   Wed, 22 Jun 2022 13:14:54 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH 6/6] bitmap-lookup-table: add performance tests
+Message-ID: <YrNODmtvF6/Vlwv2@nand.local>
+References: <pull.1266.git.1655728395.gitgitgadget@gmail.com>
+ <f5f725a3fe2ac0c93088c48ac520303a3df2c83d.1655728395.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     "Martin =?UTF-8?Q?=C3=85gren?= [ ]" <martin.agren@gmail.com>,
-        "Paul Eggert [ ]" <eggert@cs.ucla.edu>,
-        "Carlos L." <00xc@protonmail.com>,
-        =?UTF-8?q?Carlos=20L=C3=B3pez?= <00xc@protonmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f5f725a3fe2ac0c93088c48ac520303a3df2c83d.1655728395.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Carlos=20L=C3=B3pez?= <00xc@protonmail.com>
+On Mon, Jun 20, 2022 at 12:33:14PM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
+> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+>
+> Add performance tests for bitmap lookup table extension.
 
-This patch adds a command line option analogous to that of GNU
-grep(1)'s -m / --max-count, which users might already be used to.
-This makes it possible to limit the amount of matches shown in the
-output while keeping the functionality of other options such as -C
-(show code context) or -p (show containing function), which would be
-difficult to do with a shell pipeline (e.g. head(1)).
+These tests look good, though I left a few notes below which boil down
+to recommending a separate commit to set pack.writeReverseIndex=true,
+and some suggestions for how to clean up the diff in the two performance
+scripts you modified.
 
-Signed-off-by: Carlos López 00xc@protonmail.com
----
- Documentation/git-grep.txt | 9 +++++++++
- builtin/grep.c             | 9 +++++++++
- grep.c                     | 2 +-
- grep.h                     | 2 ++
- 4 files changed, 21 insertions(+), 1 deletion(-)
+I would be interested to see the relevant results from running these
+perf scripts on a reasonably large-sized repository, e.g. the kernel or
+similar.
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 3d393fbac1b..58d944bd578 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -23,6 +23,7 @@ SYNOPSIS
- 	   [--break] [--heading] [-p | --show-function]
- 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
- 	   [-W | --function-context]
-+	   [(-m | --max-count) <num>]
- 	   [--threads <num>]
- 	   [-f <file>] [-e] <pattern>
- 	   [--and|--or|--not|(|)|-e <pattern>...]
-@@ -238,6 +239,14 @@ providing this option will cause it to die.
- 	`git diff` works out patch hunk headers (see 'Defining a
- 	custom hunk-header' in linkgit:gitattributes[5]).
- 
-+-m <num>::
-+--max-count <num>::
-+	Limit the amount of matches per file. When using the `-v` or
-+	`--invert-match` option, the search stops after the specified
-+	number of non-matches. A value of -1 will return unlimited
-+	results (the default). A value of 0 will exit immediately with
-+	a non-zero status.
-+
- --threads <num>::
- 	Number of grep worker threads to use.
- 	See `grep.threads` in 'CONFIGURATION' for more information.
-diff --git a/builtin/grep.c b/builtin/grep.c
-index bcb07ea7f75..e6bcdf860cc 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -961,6 +961,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL_F(0, "ext-grep", &external_grep_allowed__ignored,
- 			   N_("allow calling of grep(1) (ignored by this build)"),
- 			   PARSE_OPT_NOCOMPLETE),
-+		OPT_INTEGER('m', "max-count", &opt.max_count,
-+			N_("maximum number of results per file")),
- 		OPT_END()
- 	};
- 	grep_prefix = prefix;
-@@ -1101,6 +1103,13 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (recurse_submodules && untracked)
- 		die(_("--untracked not supported with --recurse-submodules"));
- 
-+	/*
-+	 * Optimize out the case where the amount of matches is limited to zero.
-+	 * We do this to keep results consistent with GNU grep(1).
-+	 */
-+	if (opt.max_count == 0)
-+		return 1;
-+
- 	if (show_in_pager) {
- 		if (num_threads > 1)
- 			warning(_("invalid option combination, ignoring --threads"));
-diff --git a/grep.c b/grep.c
-index 82eb7da1022..52a894c9890 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1615,7 +1615,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 				return 0;
- 			goto next_line;
- 		}
--		if (hit) {
-+		if (hit && (opt->max_count < 0 || count < opt->max_count)) {
- 			count++;
- 			if (opt->status_only)
- 				return 1;
-diff --git a/grep.h b/grep.h
-index c722d25ed9d..bdcadce61b8 100644
---- a/grep.h
-+++ b/grep.h
-@@ -171,6 +171,7 @@ struct grep_opt {
- 	int show_hunk_mark;
- 	int file_break;
- 	int heading;
-+	int max_count;
- 	void *priv;
- 
- 	void (*output)(struct grep_opt *opt, const void *data, size_t size);
-@@ -181,6 +182,7 @@ struct grep_opt {
- 	.relative = 1, \
- 	.pathname = 1, \
- 	.max_depth = -1, \
-+	.max_count = -1, \
- 	.pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED, \
- 	.colors = { \
- 		[GREP_COLOR_CONTEXT] = "", \
--- 
-gitgitgadget
+For the next version of this series, would you mind running these
+scripts and including the results in this commit message?
 
+> Mentored-by: Taylor Blau <ttaylorr@github.com>
+> Co-mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+> ---
+>  t/perf/p5310-pack-bitmaps.sh       | 60 +++++++++++++++++++-----------
+>  t/perf/p5326-multi-pack-bitmaps.sh | 55 +++++++++++++++++----------
+>  2 files changed, 73 insertions(+), 42 deletions(-)
+>
+> diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
+> index 7ad4f237bc3..a8d9414de92 100755
+> --- a/t/perf/p5310-pack-bitmaps.sh
+> +++ b/t/perf/p5310-pack-bitmaps.sh
+> @@ -10,10 +10,11 @@ test_perf_large_repo
+>  # since we want to be able to compare bitmap-aware
+>  # git versus non-bitmap git
+>  #
+> -# We intentionally use the deprecated pack.writebitmaps
+> +# We intentionally use the deprecated pack.writeBitmaps
+>  # config so that we can test against older versions of git.
+>  test_expect_success 'setup bitmap config' '
+> -	git config pack.writebitmaps true
+> +	git config pack.writeBitmaps true &&
+> +	git config pack.writeReverseIndex true
+
+I suspect that eliminating the overhead of generating the reverse index
+in memory is important to see the effect of this test. We should make
+sure that this is done in a separate step so when we compare two commits
+that both have a reverse index written.
+
+That being said, we should probably make reverse indexes be the default
+anyways, since they help significantly with all kinds of things (really,
+any operation which has to generate a reverse index in memory, like
+preparing a pack to push, the '%(objectsize:disk)' cat-file formatting
+atom, and so on.
+
+So at a minimum I would suggest extracting a separate commit here which
+sets pack.writeReverseIndex to true for this test. That way the commit
+prior to this has reverse indexes written, and comparing "this commit"
+to "the previous one" is isolating the effect of just the lookup table.
+
+But as a useful sideproject, it would be worthwhile to investigate
+setting this to true by default everywhere, perhaps after this series
+has settled a little more (or if you are blocked / want something else
+to do).
+
+>  '
+>
+>  # we need to create the tag up front such that it is covered by the repack and
+> @@ -28,27 +29,42 @@ test_perf 'repack to disk' '
+>
+>  test_full_bitmap
+>
+> -test_expect_success 'create partial bitmap state' '
+> -	# pick a commit to represent the repo tip in the past
+> -	cutoff=$(git rev-list HEAD~100 -1) &&
+> -	orig_tip=$(git rev-parse HEAD) &&
+> -
+> -	# now kill off all of the refs and pretend we had
+> -	# just the one tip
+> -	rm -rf .git/logs .git/refs/* .git/packed-refs &&
+> -	git update-ref HEAD $cutoff &&
+> -
+> -	# and then repack, which will leave us with a nice
+> -	# big bitmap pack of the "old" history, and all of
+> -	# the new history will be loose, as if it had been pushed
+> -	# up incrementally and exploded via unpack-objects
+> -	git repack -Ad &&
+> -
+> -	# and now restore our original tip, as if the pushes
+> -	# had happened
+> -	git update-ref HEAD $orig_tip
+> +test_perf 'use lookup table' '
+> +    git config pack.writeBitmapLookupTable true
+>  '
+
+This part doesn't need to use 'test_perf', since we don't care about the
+performance of running "git config". Instead, using
+`test_expect_success` is more appropriate here.
+
+> -test_partial_bitmap
+> +test_perf 'repack to disk (lookup table)' '
+> +    git repack -adb
+> +'
+> +
+> +test_full_bitmap
+> +
+> +for i in false true
+> +do
+> +	$i && lookup=" (lookup table)"
+> +	test_expect_success "create partial bitmap state$lookup" '
+> +		git config pack.writeBitmapLookupTable '"$i"' &&
+> +		# pick a commit to represent the repo tip in the past
+> +		cutoff=$(git rev-list HEAD~100 -1) &&
+> +		orig_tip=$(git rev-parse HEAD) &&
+> +
+> +		# now kill off all of the refs and pretend we had
+> +		# just the one tip
+> +		rm -rf .git/logs .git/refs/* .git/packed-refs &&
+> +		git update-ref HEAD $cutoff &&
+> +
+> +		# and then repack, which will leave us with a nice
+> +		# big bitmap pack of the "old" history, and all of
+> +		# the new history will be loose, as if it had been pushed
+> +		# up incrementally and exploded via unpack-objects
+> +		git repack -Ad &&
+> +
+> +		# and now restore our original tip, as if the pushes
+> +		# had happened
+> +		git update-ref HEAD $orig_tip
+> +	'
+> +
+> +	test_partial_bitmap
+> +done
+
+Could we extract the body of this loop into a function whose first
+argument is either true/false? I think that would improve readability
+here, and potentially clean up the diff a little bit.
+
+For what it's worth, I don't think we need to do anything fancier for
+the test name other than:
+
+
+    test_partial_bitmap () {
+      local enabled="$1"
+      test_expect_success "create partial bitmap state (lookup=$enabled)" '
+        git config pack.writeBitmapLookupTable "$enabled" &&
+        [...]
+      '
+    }
+
+    test_partial_bitmap false
+    test_partial_bitmap true
+
+or something.
+
+> +for i in false true
+> +do
+> +	$i && lookup=" (lookup table)"
+> +	test_expect_success "create partial bitmap state$lookup" '
+> +		git config pack.writeBitmapLookupTable '"$i"' &&
+> +		# pick a commit to represent the repo tip in the past
+> +		cutoff=$(git rev-list HEAD~100 -1) &&
+> +		orig_tip=$(git rev-parse HEAD) &&
+> +
+> +		# now pretend we have just one tip
+> +		rm -rf .git/logs .git/refs/* .git/packed-refs &&
+> +		git update-ref HEAD $cutoff &&
+> +
+> +		# and then repack, which will leave us with a nice
+> +		# big bitmap pack of the "old" history, and all of
+> +		# the new history will be loose, as if it had been pushed
+> +		# up incrementally and exploded via unpack-objects
+> +		git repack -Ad &&
+> +		git multi-pack-index write --bitmap &&
+> +
+> +		# and now restore our original tip, as if the pushes
+> +		# had happened
+> +		git update-ref HEAD $orig_tip
+> +	'
+> +
+> +	test_partial_bitmap
+> +done
+
+Same note here.
+
+Thanks,
+Taylor
