@@ -2,193 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72CB1C43334
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 03:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C369C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 04:21:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356471AbiFVDRi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 23:17:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42402 "EHLO
+        id S1356654AbiFVEVP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 00:21:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231720AbiFVDRg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 23:17:36 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80A022F009
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 20:17:35 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-2ef5380669cso149974957b3.9
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 20:17:35 -0700 (PDT)
+        with ESMTP id S229644AbiFVEVN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 00:21:13 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B2B117A
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:21:11 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id w17so21569380wrg.7
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 21:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RDvfbGMFq6ZJvAOLLOsu+ZahX20l+WZG2ANrrqq3j3s=;
-        b=BWvbMiIF1JFAmRQ2SDhdR/p5yoek790OeK50ZLgF5OKBncchSF0sxCfuInhf7Q/ypm
-         FToqRz4WELsMPsvsAWC4fz18d2XqreBgcRsvjQSb6caXj8BpHVEohrAXjGYsWuTeqsMw
-         jMYuhbLgCqNgZW5dkOK4uoJujBkFl96m8SE3PxmPN8hD4iBQj8Pq7sIcurCl6V5ca2+m
-         nu7fjCambwCTDfn+WmaObk+THUINga94lYTDsDZeZeLi/VFxWPg6+9ZucutMdyRT83yd
-         7ZuUaeQIwHO0XQPCduwiizvSOzaU+4KB5YDf8Fsb/Sw8gnE4/3YksoaOxRGkEDXRDGmn
-         Es6A==
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=QeJs9HI0zDrU2aqaAUtfKUsamYQ2+rST9RPPMuset3M=;
+        b=NsmaQjj8/w9tCNVpAfahmbsi5XJdvs+pr8u44qQzgY//ei9KvYHfXs+8rXuYPp2wcV
+         m6IT5kBYlwP09kwrBgqNs8M9Lxi+E4b9g6/6bDGTNBL4h4MtSji1TkePzRvVHooxj8Ws
+         2OMjsRpZ44XMEbunheIln46o/14JwMq2Kkm35aEz7NdEhzE6Kf/1WH2fdBF42Fti+ITb
+         txaeVh7WaoLONAaInGiZY8FD3br2PiNu2/CluVgrkn3hvH9lbZqSx+oyyNWqS6MECrKs
+         u2H1LiqaEtD8aD6zIeTRnwCiexRSN8vEqBfI1Un+BS8QtITqRbO/pz5OtDQDQu5MCTlg
+         YJdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RDvfbGMFq6ZJvAOLLOsu+ZahX20l+WZG2ANrrqq3j3s=;
-        b=FsYAWDiTrRMEyfIZ99tvEf0Mb/aKpj0+Oar3aoAZyuByZe4V4+B3wHl+Ygrhc6KUPJ
-         Xt00ycT0jPt0s/C96jGfp8QwHKAk5ghxKvExumBI+SU3eogDzlMaFGaFt+RTdINsXtXf
-         flevOrZuaNO1Akiet19S18jAcBwh8prKcrEB0dLWi8tdzGk1WbNgack8PXRGQmZmZCCl
-         0gdQZv0AwEdRrYkoO/66sQ0qNtXKmuY/KaENWZ6i/XgrxlpJh2xDBkAoFKaGoj7D03ww
-         g6n/SpEer36p0fqkCnE9RbEe1jwITw24O1Q2DcOaADmxjSLd8ZL2/0GZkZp+wSX7Y6nY
-         dfEA==
-X-Gm-Message-State: AJIora82/0dO7TDoJ1a56ZJfdKRNR9Cm0fLFS5KyuMjbV6lF2mzP++m0
-        +wefdqrT1T6+se4JUd6zCjqgcmd0Q0/Kgr4qpHQmOA==
-X-Google-Smtp-Source: AGRyM1utUIhqmwAL58cOlLxoavb3Mz1kiefzplT2ufle4frxgEpHeFZ1oqt5fqKr5+6LeJq7KTRpaYRs/Gl4KujPHSk=
-X-Received: by 2002:a81:238e:0:b0:300:642f:fdb2 with SMTP id
- j136-20020a81238e000000b00300642ffdb2mr1692491ywj.373.1655867854556; Tue, 21
- Jun 2022 20:17:34 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=QeJs9HI0zDrU2aqaAUtfKUsamYQ2+rST9RPPMuset3M=;
+        b=rL5HSyzDgr1Axwk8wn05lG0Y+sn9k1kWX/6Pfu+eit0BrxlNBEvAdqLNY+Iclq6xlo
+         0eWgL4RcQ71NLH22qeWK1l9FWyJbqd2U+fRMM4+YSF76h7Dw7VT/QTh5TdTLAz9o4i62
+         drhK4/+f5ZuWBnfZPGx4AvCTXbmDnEqn8o6mjDtCSDB/y/x2i1jPigpJyhjLijadcOwt
+         lzSbd6MJnN74J5ZmQn7CIFpSlDgLsWfK9PVUM7+nPBQYnOez3/IcZ1mHEnVpI2E/Zllq
+         Eyz6xplEuBmRU0cjVxxbL9IIZgK1ZcDc8VkXqydS8Q2C/CQzg1AkLpiQOWWmRWziQM4h
+         cHKQ==
+X-Gm-Message-State: AJIora9dAOWSHTxeWvUKxM0Q09GEc4HehcQK2Dixn8MATt5GFmP7N6Ux
+        MFnkc1JWURF3UuhK+bLEgo71aVgIXRb33Q==
+X-Google-Smtp-Source: AGRyM1ue6kMwisH4sHqR/twiuMF+22GHEF1AXa39aReRLQ6QOT/b/OfX+2qU3E8IOwbz9zsSCYS5Gg==
+X-Received: by 2002:a5d:64ad:0:b0:215:c26f:f53c with SMTP id m13-20020a5d64ad000000b00215c26ff53cmr1153669wrp.22.1655871670059;
+        Tue, 21 Jun 2022 21:21:10 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n9-20020a05600c3b8900b0039c5b9e9142sm20638282wms.17.2022.06.21.21.20.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 21:20:58 -0700 (PDT)
+Message-Id: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 22 Jun 2022 04:20:48 +0000
+Subject: [PATCH 0/3] Fix dual rename into each other plus conflicting adds
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220618030130.36419-1-hanxin.hx@bytedance.com> <20220621182322.3444926-1-jonathantanmy@google.com>
-In-Reply-To: <20220621182322.3444926-1-jonathantanmy@google.com>
-From:   Han Xin <hanxin.hx@bytedance.com>
-Date:   Wed, 22 Jun 2022 11:17:23 +0800
-Message-ID: <CAKgqsWUdRpm8Aa6+oLqHGGXMzXB76f7mM9vf89mG8XVSsQ-1aw@mail.gmail.com>
-Subject: Re: Re: [PATCH v1] commit-graph.c: no lazy fetch in lookup_commit_in_graph()
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
-        git@vger.kernel.org, haiyangtand@gmail.com,
-        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 22, 2022 at 2:23 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> Han Xin <hanxin.hx@bytedance.com> writes:
-> > If a commit is in the commit graph, we would expect the commit to also
-> > be present. So we should use has_object() instead of
-> > repo_has_object_file(), which will help us avoid getting into an endless
-> > loop of lazy fetch.
-> >
-> > We can see the endless loop issue via this[1].
-> >
-> > 1. https://lore.kernel.org/git/20220612161707.21807-1-chiyutianyi@gmail.com/
->
-> As described in SubmittingPatches:
->
->   Try to make sure your explanation can be understood
->   without external resources. Instead of giving a URL to a mailing list
->   archive, summarize the relevant points of the discussion.
->
+This series adds some testcases based on the tensorflow repository issue
+reported by Glen Choo at [1], demonstrating bugs in both the ort and
+recursive strategies. It also provides a fix for the ort strategy.
 
-Nod.
+[1]
+https://lore.kernel.org/git/kl6lee006mle.fsf@chooglen-macbookpro.roam.corp.google.com/
 
-> > +test_expect_success 'setup' '
-> > +     git init --bare dest.git &&
-> > +     test_commit one &&
-> > +     git checkout -b tmp &&
-> > +     test_commit two &&
-> > +     git push dest.git --all
-> > +'
->
-> You can commit directly to the repo by using "test_commit -C dest.git".
-> Also, can the repositories be better named? I see a "dest.git" (which
-> seems to contain all the objects), "alternates" (which seems to contain
-> everything except refs/heads/tmp), "source" (which only contains the
-> commit graph), and the current directory. It would probably be better to
-> name them e.g. "with-commit", "without-commit", "only-commit-graph", and
-> omit using the current directory altogether.
+Elijah Newren (3):
+  t6423: add tests of dual directory rename plus add/add conflict
+  merge-ort: shuffle the computation and cleanup of potential collisions
+  merge-ort: fix issue with dual rename and add/add conflict
 
-Yes, it makes sense to me.
+ merge-ort.c                         |  60 ++++++++++------
+ t/t6423-merge-rename-directories.sh | 102 ++++++++++++++++++++++++++++
+ 2 files changed, 142 insertions(+), 20 deletions(-)
 
->
-> > +test_expect_success 'prepare a alternates repository without commit two' '
-> > +     git clone --bare dest.git alternates &&
-> > +     oid=$(git -C alternates rev-parse refs/heads/tmp) &&
-> > +     git -C alternates update-ref -d refs/heads/tmp &&
-> > +     git -C alternates gc --prune=now &&
-> > +     pack=$(echo alternates/objects/pack/*.pack) &&
-> > +     git verify-pack -v "$pack" >have &&
-> > +     ! grep "$oid" have
-> > +'
->
-> OK, except refs/heads/tmp could probably have a better name.
 
-I'll rethink the naming here.
-
->
-> > +test_expect_success 'prepare a repository with a commit-graph contains commit two' '
-> > +     git init source &&
-> > +     echo "$(pwd)/dest.git/objects" >source/.git/objects/info/alternates &&
-> > +     git -C source remote add origin "$(pwd)/dest.git" &&
-> > +     git -C source config remote.origin.promisor true &&
-> > +     git -C source config remote.origin.partialclonefilter blob:none &&
-> > +     # the source repository has the whole refs contains refs/heads/tmp
-> > +     git -C source fetch origin &&
-> > +     (
-> > +             cd source &&
-> > +             test_commit three &&
-> > +             git -c gc.writeCommitGraph=true gc
-> > +     )
-> > +'
->
-> Is the purpose of the fetch only to add a ref? If yes, it's clearer just
-> to create that branch instead of fetching.
-
-Nod.
-
->
-> > +test_expect_success 'change the alternates of source to that without commit two' '
-> > +     # now we have a commit-graph in the source repository but without the commit two
-> > +     echo "$(pwd)/alternates/objects" >source/.git/objects/info/alternates
-> > +'
->
-> OK.
->
-> > +test_expect_success 'fetch the missing commit' '
-> > +     git -C source fetch origin $oid 2>fetch.out &&
-> > +     grep "$oid" fetch.out
-> > +'
->
-> Is the bug triggered by fetching the missing commit or by fetching any
-> commit (which triggers the usage of the commit graph)? If any commit,
-> then it's clearer to create an arbitrary commit and then fetch it.
->
-
-Yes, using the missing object in the commit-graph seems to be a little
-misleading.
-
-> Also, I thought that the issue was an infinite loop, and the thing being
-> tested here looks different from that. If you want to ensure that
-> nothing is being fetched, you can use GIT_TRACE="$(pwd)/trace" to
-> observe a fetch-pack command being invoked or
-> GIT_TRACE_PACKET="$(pwd)/trace" to observe the packet being sent. If
-> you're worried about an infinite loop, you can set origin to a directory
-> that does not exist (so that the fetch immediately fails).
-
-Maybe we can use "ulimit" ?
-
-Then the test case can be:
-
-    test_expect_success 'fetch the missing commit once' '
-        ulimit -u 512 &&
-        GIT_TRACE="$(pwd)/trace" git -C source fetch origin $oid 2>err &&
-        ! grep "error: cannot fork" err &&
-        test $(grep "fetch origin" trace | wc -l) -eq 1
-     '
-
-Without this fix, "git fetch" would finally succeed because we didn't
-check the return value of promise_remote_get_direct(). We can find
-the err output like this:
-
-    error: cannot fork() for -c: Resource temporarily unavailable
-    fatal: promisor-remote: unable to fork off fetch subprocess
-
-And we can see a lot of trace logs as follows:
-
-    trace: run_command: git -c fetch.negotiationAlgorithm=noop fetch
-origin --no-tags --no-write-fetch-head --recurse-submodules=no
---filter=blob:none --stdin
-    trace: built-in: git fetch origin --no-tags --no-write-fetch-head
---recurse-submodules=no --filter=blob:none --stdin
-
-Thanks.
--Han Xin
+base-commit: e54793a95afeea1e10de1e5ad7eab914e7416250
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1268%2Fnewren%2Ffix-dual-rename-into-each-other-plus-conflicting-adds-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1268/newren/fix-dual-rename-into-each-other-plus-conflicting-adds-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1268
+-- 
+gitgitgadget
