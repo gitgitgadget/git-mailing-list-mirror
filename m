@@ -2,149 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17C1FC43334
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 09:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80D90C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 11:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238999AbiFVJrN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 05:47:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42362 "EHLO
+        id S1355695AbiFVLZJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 07:25:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232105AbiFVJrL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 05:47:11 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0A2A186C0
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 02:47:10 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id t5so488132eje.1
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 02:47:10 -0700 (PDT)
+        with ESMTP id S235548AbiFVLZI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 07:25:08 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7408B856
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 04:25:07 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id q4so12521834qvq.8
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 04:25:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=bX1X40WNUpWq7J23upRwMNO/TGRNA5dh2gZVbGQWx7c=;
-        b=bTtb6M4cb4YO5fdyC4v8pYl0Qu4cNvwQ1GaG3ju8vT6vi/c0x1/VFPI0oUvfiNDeOP
-         6Si7jkjZU0my5pz+jxem5MF1wKmZhDN1sTK1tTE6PrjAM9LEbFGFIsmcomfgNM3K8gUQ
-         SWolJq5ywvzyehM7kcLXbjBL9tmbV6K2pjQpQ6bQDaWN5HLgg/WQgaQqEUdbVlCZoIqd
-         i9DtDwN1R81RR2VHkTUzKWR0kbQOsdS3m7hYGnHudSgrYo1eOdPCU2OChWabKkpu6GDt
-         RaoYBbIuK5b6Ni8lx8OFofymLbFPzTVTbdJB98IQK7wmOu8JaCcnMDLFL8ATUwOngae4
-         PsaQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=8FaFrnVYdTU4CI2bpUAQ4A8xoCVtCqYnD48Ddt6mXCc=;
+        b=VKh7ZcLpUf8XvnKrCZ4xWQPBD/XjPEtHkjvfFUv1JkqGzsEEJ5qhoGPrannuptTzTv
+         xmk+xGAn/CAyU9B6PL/R4yligOCKg76NwNXSscbvnIGGsJBX5iw6mZjv+lqnwQuFyOeZ
+         vXIi2HibbJtMBYzLLoxke5Iv7XR/j5ZtpcuJiqUFlBJEC0y6gqg7+P8dbPnsdfRYR5fH
+         ot6oJCMqFFubewbhCu80L4ggzb8Y4OeHRuThG9GIjbMVlji9/f6IDh6Eqq4nml1by3Ye
+         e5c5i7v7meoM1t6lvJIqBFLYnIkAEaVIm/zYSZ8p7QwmiI6Fax1Ryr2MFuoOzebU9bIC
+         7R1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=bX1X40WNUpWq7J23upRwMNO/TGRNA5dh2gZVbGQWx7c=;
-        b=DG1nTBzuY8OFxE1gqv1ATAI8WAGk3X7E3lAct3nwvcpkH9kJeWQivV+HzA20Pc3eO0
-         pesvvudEkalcJGjn2ROtkVpCcNixDyEbfxBhDJB04m4YrzXyCGUOgYjU+9v629kUyQyX
-         x8WXCN6PGiJd3RRcR/JuKAhxeYRLUnOkxKxgR7FfypESsLjURJzF7Ncnu8EG8N2MZg/I
-         6KZoIaEtdseYmLA4AXcxIZxykafYkawLYNro/QvM9rN+XGtPTx1TC3tZCkBQ7RO2PsFV
-         tTZ2tH1Fpxgkt2nvTc98Vy5pJWec5/O0Lc19f5R1DTutOaMQAhZcPRuNcZSRVliAiiGB
-         725w==
-X-Gm-Message-State: AJIora/ScE9u0B4Tbm1FjPJaT9bi5i/o0IcnxCWKaNHBQ6oOC5hZ3b0c
-        r3PiIs+Y92NzXh33dJUeQzg=
-X-Google-Smtp-Source: AGRyM1uD1xx2+hO+cnMnjUBeRN7Sya4quMql1CADuWFrsO73ZoSr3YffcPZxLT1ZzMBnRVRahyQOtA==
-X-Received: by 2002:a17:907:161e:b0:722:dcf0:2a0 with SMTP id hb30-20020a170907161e00b00722dcf002a0mr2164424ejc.694.1655891229099;
-        Wed, 22 Jun 2022 02:47:09 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id j17-20020a17090623f100b0070abf371274sm8894370ejg.136.2022.06.22.02.47.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 02:47:08 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o3wx1-000dou-N3;
-        Wed, 22 Jun 2022 11:47:07 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] gitweb: fix "make" not including "gitweb"
- without NOOP run slowdowns
-Date:   Wed, 22 Jun 2022 11:27:54 +0200
-References: <220527.861qwf489s.gmgdl@evledraar.gmail.com>
-        <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
-        <xmqqa6ap8z55.fsf@gitster.g> <20220620083202.GB1689@szeder.dev>
-        <YrFphmtLuHVkI7yr@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YrFphmtLuHVkI7yr@coredump.intra.peff.net>
-Message-ID: <220622.86r13hkp2c.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=8FaFrnVYdTU4CI2bpUAQ4A8xoCVtCqYnD48Ddt6mXCc=;
+        b=6jzZO3bK3QnUIf5AzgCquklYzRkwVKZw7lZELZvLrscTmIy+Jjg7fL7kxn2aWsd2lV
+         +XJWLOaW4jP62MUrUDWLIq64DsKT6RRzFCR2/B3R/x0UlZueAaotR9VWW7pY1bEqfrHN
+         276RIobVmiCSzzfmymDtnmAP3XN1cHaH44Ln0GmHRLYBP4XKF9mIW1QG+FlJBQJ6dF1K
+         6uUDsReJJXcjAYIRHmFcCfyejHpWc9hSzL+EY+A6jGqkupi3CaOGQv0/AhwvvwxmHLFk
+         gCmqUpJZeKWO3UKOnmA5k+4qr1qHNqaGMV8XU1YjcoERglkOvrWZSxHMpSku0yNoc+3u
+         MTiQ==
+X-Gm-Message-State: AJIora8w5eflaWrInQWh8DgSzImDNZCzblY9Sg5RGlGPBNfQO7rVUxH/
+        KB8u2pkFbr8PsXlPgDwdK/8C
+X-Google-Smtp-Source: AGRyM1ub+eZMis9tJXNAPlmBsx9zJY4X7VoeKfXu4yaLhCDIj1DSu3t9O7dAZ45PeSQqHFUxInnbDw==
+X-Received: by 2002:a05:6214:410c:b0:470:46e6:bbbf with SMTP id kc12-20020a056214410c00b0047046e6bbbfmr10135456qvb.42.1655897106897;
+        Wed, 22 Jun 2022 04:25:06 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9029:68d7:275:ef4? ([2600:1700:e72:80a0:9029:68d7:275:ef4])
+        by smtp.gmail.com with ESMTPSA id q13-20020a37f70d000000b006a91da2fc8dsm15728714qkj.0.2022.06.22.04.25.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jun 2022 04:25:06 -0700 (PDT)
+Message-ID: <69256646-13b0-5619-3161-8d8e319fad50@github.com>
+Date:   Wed, 22 Jun 2022 07:25:05 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Subject: Re: [PATCH 10/10] fetch tests: fix needless and buggy re-quoting
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, rsbecker@nexbridge.com,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
+References: <xmqqa6a5g0m3.fsf@gitster.g>
+ <cover-00.10-00000000000-20220621T222854Z-avarab@gmail.com>
+ <patch-10.10-54129b94a77-20220621T222854Z-avarab@gmail.com>
+ <xmqqsfnx6xbh.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqsfnx6xbh.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 6/22/22 2:12 AM, Junio C Hamano wrote:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-On Tue, Jun 21 2022, Jeff King wrote:
+> This makes it a lot clearer, with no perl, no sed, no eval.  It does
+> become louder, but should be easier to follow in general ...
+> 
+>>  test_configured_prune_type --mode link true  unset true  unset pruned pruned \
+>> -	"\"$remote_url\"" \
+>> +	REMOTE_URL \
+>>  	"refs/tags/*:refs/tags/*" "+refs/heads/*:refs/remotes/origin/*"
+> 
+> ... except for a magic like this one.
+> 
+> We may remember the REMOTE_URL -> $remote_url trick used here this
+> week, but I am not sure if we find it sensible in 3 months.
+> 
+> But overall I think this makes it simpler.  I am not 100% sold on
+> the necessity of lengthy earlier steps, though.
 
-> On Mon, Jun 20, 2022 at 10:32:02AM +0200, SZEDER G=C3=A1bor wrote:
->
->> On Mon, Jun 06, 2022 at 10:44:54AM -0700, Junio C Hamano wrote:
->> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->> >=20
->> > > The $subject is a proposed re-roll of SZEDER's
->> > > https://lore.kernel.org/git/20220525205651.825669-1-szeder.dev@gmail=
-.com;
->> > > As noted downthread of that fix having the Makefile invoke "make -C
->> > > gitweb" again would slow us down on NOOP runs by quite a bit.
->> >=20
->> > It would be nice to hear comments SZEDER and others, even if the
->> > comments are clear negative or positive.
->>=20
->> Well, my itch is scratched, so I'm fine with it :)
->>=20
->> I think Peff has a point by questioning whether we should build and
->> install gitweb by default...  I don't have an opinion about that, but
->> if we do want to build it by default, then IMO doing it in the main
->> Makefile is the way to go, so I think in that case this patch series
->> goes in the right direction.
->
-> I hadn't realized the full situation when I was arguing earlier that "we
-> have not been building it for several years". You raised the point that
-> we do auto-build it in "make install", so it would be a change of
-> behavior to stop doing so.
->
-> I still find it hard to care too much about backwards compatibility for
-> building gitweb (or really gitweb at all, for that matter). But my main
-> complaint was foisting another recursive Makefile and its performance
-> and troubles on developers at large, and I think =C3=86var's patches deal
-> with it. So I'm OK with the direction.
->
-> I admit I didn't look _too_ closely at them, but they overall seemed
-> sensible to me. Two things I noted:
->
->   - I wondered if "make NO_PERL=3D1" would complain about "gitweb" being
->     in the default targets. It doesn't, but it does actually build
->     gitweb, which seems a little weird. I don't think we actually rely
->     on perl during the build (e.g., no "perl -c" checks or anything),
->     and the t950x tests seem to respect NO_PERL and avoid running the
->     generated file. So maybe it's OK?
+When I saw that this was a series with 10 patches (without reading
+anything else) I expected that you had created a test-lib.sh helper
+that allowed replacing a word in a string with another string, and
+then the remaining patches were fixing the other tests that have
+similar breaks when using "@" in the path.
 
-I think it's arguably a bug, but as you note we build/test etc. without
-errors, and I think it's restoring the state before e25c7cc146
-(Makefile: drop dependency between git-instaweb and gitweb, 2015-05-29).
+(Heck, I'd even take a "test-tool replace-word <string> <word>
+<replacement>" implementation to avoid all of these issues we have
+due to using scripting languages that rely on special characters
+to define the match and replacement operation.)
 
-Arguably we should replace with a stub script like git-svn et al, and
-arguably we should leave it, as you're more likely to e.g. run gitweb on
-a webserver, so even if you build a "no perl" package, perhaps it's
-convenient to have "gitweb" part of it, and then on that one box that
-runs it you'll install perl...
+It seems like this isn't the last time we are going to have a
+problem with string replacement like this, and having a well-defined
+helper would go far.
 
->   - Speaking of backwards compatibility: after this series, "cd gitweb
->     && make" yields an error. It's got a nice message telling you what
->     to do, but it's likely breaking distro scripts. Again, I'm not sure
->     I care, but if the point of the exercise was to avoid breaking
->     things, well...
+The rest of the changes to the test script seem more complicated
+than necessary for what _should_ be a simple problem.
 
-I think that's OK, having maintained those sorts of build scripts in a
-past life.
-
-I.e. when you upgrade the package it's a minor hassle, and the error
-tells you exactly what to do, and the fix is a 2-3 lines in your recipe
-at most.
-
-I could make gitweb/Makefile "fake it", but as argued in the patches I
-think this trade-off makes more sense. Having it run in some "dual mode"
-would be a maintenance hassle.
-
-Most of the reason for keeping gitweb/Makefile around (as opposed to the
-top-level Makefile absorbing it) was to be able to emit that message to
-be friendly to downstream packagers.
+Thanks,
+-Stolee
