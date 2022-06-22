@@ -2,71 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B8A7C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 14:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00355C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 15:12:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231616AbiFVOct (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 10:32:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58524 "EHLO
+        id S1359306AbiFVPMW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 11:12:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357218AbiFVOcq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 10:32:46 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 22 Jun 2022 07:32:45 PDT
-Received: from hekla.abc.se (hekla.abc.se [158.174.61.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E183B3EF
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 07:32:44 -0700 (PDT)
-Received: from orm.abc.se (orm.abc.se [158.174.61.226])
-        by hekla.abc.se (OpenSMTPD) with ESMTPS id 559495fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 22 Jun 2022 16:26:03 +0200 (CEST)
-Date:   Wed, 22 Jun 2022 15:26:03 +0100 (CET)
-From:   Peter Krefting <peter@softwolves.pp.se>
-To:     Jiang Xin <worldhello.net@gmail.com>
-cc:     =?VISCII?Q?Tr=A5n_Ng=F7c_Qu=E2n?= <vnwildman@gmail.com>,
-        Git l10n discussion group <git-l10n@googlegroups.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?ISO-8859-15?Q?Matthias_R=FCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?ISO-8859-15?Q?Christopher_D=EDaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?ISO-8859-15?Q?Jean-No=EBl_Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Emir SARI <bitigchi@me.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [L10N] Kickoff for Git 2.37.0 round #1
-In-Reply-To: <CANYiYbGWoMpCOA43k=5a_kio2thf91BV69nfSySwhHZbbMOSkg@mail.gmail.com>
-Message-ID: <7df7a2fe-386d-c996-b783-8c95fb78b0ea@softwolves.pp.se>
-References: <20220614112858.16576-1-worldhello.net@gmail.com> <CAPv0VGvKFEbVzZEdn+eb-4Bb9KfQWCa=pM3iC_Dyu-6AKGCcug@mail.gmail.com> <CANYiYbGWoMpCOA43k=5a_kio2thf91BV69nfSySwhHZbbMOSkg@mail.gmail.com>
-User-Agent: Alpine 2.25 (BSO 592 2021-09-18)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+        with ESMTP id S1359301AbiFVPMV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 11:12:21 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76AF83EA99
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 08:12:20 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 85F9812A0D6;
+        Wed, 22 Jun 2022 11:12:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9Rso0DwfR9GvmdQIQCa8gbcgtoO+ODVBPDEcjO
+        +5PTk=; b=kKBb8DcvNMyn78h1FmQraPQonBCUL8SmQODI/45w4NJBbY3vRBXQhE
+        3hZ9dzon/42FOF5baX/3Wf/6+Yha62w35v7dJ0abstLr8mCgzCeTq0Vr/tRKg1pI
+        bQjkhrzcriVDO7yzjZsHh7i+mztZF6BwIAdjFeuo/4FmPYEox5eqo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CF5212A0D5;
+        Wed, 22 Jun 2022 11:12:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DDE1112A0D4;
+        Wed, 22 Jun 2022 11:12:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Teng Long <dyroneteng@gmail.com>, avarab@gmail.com,
+        derrickstolee@github.com, git@vger.kernel.org, me@ttaylorr.com,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v3 5/5] bitmap: add trace2 outputs during open "bitmap"
+ file
+References: <cover.1655817253.git.dyroneteng@gmail.com>
+        <8735ae99798a43650acb9a1df7ba2072c7758476.1655817253.git.dyroneteng@gmail.com>
+        <4176c5af-43fd-b7a1-346c-4d4aa9dbd4ae@jeffhostetler.com>
+Date:   Wed, 22 Jun 2022 08:12:17 -0700
+In-Reply-To: <4176c5af-43fd-b7a1-346c-4d4aa9dbd4ae@jeffhostetler.com> (Jeff
+        Hostetler's message of "Wed, 22 Jun 2022 09:04:32 -0400")
+Message-ID: <xmqqfsjw7mwe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Type: text/plain
+X-Pobox-Relay-ID: B53D53FA-F23D-11EC-89AD-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 19 Jun 2022, Jiang Xin wrote:
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-> You forgot to remove file-location comments in "po/vi.po".  If you
-> send me pull request on GitHub, a CI workflow will be triggered to
-> execute the command below,
+> (I just sent a response to your V2 before I saw your V3, so I'll
+> my response here so that it doesn't get lost.)
+>
+>
+> We should not be doing this.  This would dump every repo-related
+> boolean value on every command.  I see that in V3 that you have
+> a "trace" flag to control this.  But again, this seems wrong here.
 
-Is that why the sv.po pull request is also standing still?
+I noticed that "flag" while merging this with another topic to
+"seen" and found it strange, too.  It "allows" the caller to choose
+which one gets logged per variable, but in a very hard-coded way; we
+probably would have been much better off to have a table of what
+gets logged and have repo_cfg_*() calls consult it.  Even without
+configurability, at least it would move the hard-coded choice of
+what gets logged from code to data.
 
-Running "make po/git.pot" generates the full location lines, so naturally
-the PO file will also include it. If the makefile is fixed to remove them
-they should go away.
+But ...
 
-I modified my update script to run make first, as you removed git.pot from
-the repo, and it generates it there.
+> I already have a GIT_TRACE2_CONFIG_PARAMS and trace2.configparams
+> that will dump "interesting" config values to the trace2 log.
+> Just set one of them to a list of regex's.  Look at the comment above
+> trace2_cmd_list_config() in trace2.h for details.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+... that does sound like the right way to go.
+
+> ...
+> So if I'm reading this right, this will only print the value of
+> "core.multipackindex".
+>
+> You can get this without the changes here using
+>
+> GIT_TRACE2_CONFIG_PARAMS="core.multipackindex,...any_other_values_of_interest..."
+> before running the command (or use the config setting) before running
+> your commandss.
+
+Thanks.
