@@ -2,136 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13C16C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 00:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72CB1C43334
+	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 03:17:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355200AbiFVAso (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jun 2022 20:48:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49314 "EHLO
+        id S1356471AbiFVDRi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jun 2022 23:17:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230028AbiFVAsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jun 2022 20:48:43 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E4EF2F3AC
-        for <git@vger.kernel.org>; Tue, 21 Jun 2022 17:48:42 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:5e4a:89fa:93b9:2058])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6C58B5A47F;
-        Wed, 22 Jun 2022 00:48:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1655858921;
-        bh=BU3TXgEQbUV564FY9Q34PyAQQ9M1YenZoWOCro2n6lk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=OVY+XIv1pVEz8IHlVqe/4twykmQZvhrH4omppbtIc0ijOHChdOXzUtqxjwFeQ5rvK
-         uPqcJzMs+T+cQpgQRNug1zHyK6Wr+zEipvuz9jMsvabhUtz1cEdQBY8zxPngHrYhFU
-         pzVi0KhU6Mpgbapup1M/qzKu3fmGyrwc5FgkYQXqCbizrf9Uvh41SHWRWZYliqGHnG
-         KKcZU9ON6Qho6ZS9QckNBqDOhZtFf7gqqjGEl6G7GunCBVm1Tvodp7bka5+OBiLdu9
-         lXohxEx9WZyD9rqZlEGOFlfwNc55DH4++wEfIQa5Tta98foEl+ALa1A19x8vJCdogY
-         VBuw5FL5PS/HEL+XG9I7+e7226o3y2rwDVknPD4FIL3/YejQT9r2lGmHsc7Jc8OeZw
-         zkSZzcN/zQsuoBeA9bq0/BCg6V4moq+21kK/YTSVzJiix17s4zHlcQSc72H536b1Tx
-         jH1EHBjMe84sgDNmFgvU68F3p+GMhV4MnoiCFwHq0VAX3ihu1+v
-Date:   Wed, 22 Jun 2022 00:48:40 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Stewart Smith <trawets@amazon.com>, git@vger.kernel.org,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH] git-send-email: Add --no-validate-email option
-Message-ID: <YrJm6KactXg4elvD@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stewart Smith <trawets@amazon.com>, git@vger.kernel.org,
-        Todd Zullinger <tmz@pobox.com>
-References: <20220620004427.3586240-1-trawets@amazon.com>
- <YrEMq+slLOHqw/hz@camp.crustytoothpaste.net>
- <220622.864k0dmzl9.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231720AbiFVDRg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jun 2022 23:17:36 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80A022F009
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 20:17:35 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-2ef5380669cso149974957b3.9
+        for <git@vger.kernel.org>; Tue, 21 Jun 2022 20:17:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RDvfbGMFq6ZJvAOLLOsu+ZahX20l+WZG2ANrrqq3j3s=;
+        b=BWvbMiIF1JFAmRQ2SDhdR/p5yoek790OeK50ZLgF5OKBncchSF0sxCfuInhf7Q/ypm
+         FToqRz4WELsMPsvsAWC4fz18d2XqreBgcRsvjQSb6caXj8BpHVEohrAXjGYsWuTeqsMw
+         jMYuhbLgCqNgZW5dkOK4uoJujBkFl96m8SE3PxmPN8hD4iBQj8Pq7sIcurCl6V5ca2+m
+         nu7fjCambwCTDfn+WmaObk+THUINga94lYTDsDZeZeLi/VFxWPg6+9ZucutMdyRT83yd
+         7ZuUaeQIwHO0XQPCduwiizvSOzaU+4KB5YDf8Fsb/Sw8gnE4/3YksoaOxRGkEDXRDGmn
+         Es6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RDvfbGMFq6ZJvAOLLOsu+ZahX20l+WZG2ANrrqq3j3s=;
+        b=FsYAWDiTrRMEyfIZ99tvEf0Mb/aKpj0+Oar3aoAZyuByZe4V4+B3wHl+Ygrhc6KUPJ
+         Xt00ycT0jPt0s/C96jGfp8QwHKAk5ghxKvExumBI+SU3eogDzlMaFGaFt+RTdINsXtXf
+         flevOrZuaNO1Akiet19S18jAcBwh8prKcrEB0dLWi8tdzGk1WbNgack8PXRGQmZmZCCl
+         0gdQZv0AwEdRrYkoO/66sQ0qNtXKmuY/KaENWZ6i/XgrxlpJh2xDBkAoFKaGoj7D03ww
+         g6n/SpEer36p0fqkCnE9RbEe1jwITw24O1Q2DcOaADmxjSLd8ZL2/0GZkZp+wSX7Y6nY
+         dfEA==
+X-Gm-Message-State: AJIora82/0dO7TDoJ1a56ZJfdKRNR9Cm0fLFS5KyuMjbV6lF2mzP++m0
+        +wefdqrT1T6+se4JUd6zCjqgcmd0Q0/Kgr4qpHQmOA==
+X-Google-Smtp-Source: AGRyM1utUIhqmwAL58cOlLxoavb3Mz1kiefzplT2ufle4frxgEpHeFZ1oqt5fqKr5+6LeJq7KTRpaYRs/Gl4KujPHSk=
+X-Received: by 2002:a81:238e:0:b0:300:642f:fdb2 with SMTP id
+ j136-20020a81238e000000b00300642ffdb2mr1692491ywj.373.1655867854556; Tue, 21
+ Jun 2022 20:17:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="tBECWPhGfq0GJZe1"
-Content-Disposition: inline
-In-Reply-To: <220622.864k0dmzl9.gmgdl@evledraar.gmail.com>
-User-Agent: Mutt/2.2.4 (2022-04-30)
+References: <20220618030130.36419-1-hanxin.hx@bytedance.com> <20220621182322.3444926-1-jonathantanmy@google.com>
+In-Reply-To: <20220621182322.3444926-1-jonathantanmy@google.com>
+From:   Han Xin <hanxin.hx@bytedance.com>
+Date:   Wed, 22 Jun 2022 11:17:23 +0800
+Message-ID: <CAKgqsWUdRpm8Aa6+oLqHGGXMzXB76f7mM9vf89mG8XVSsQ-1aw@mail.gmail.com>
+Subject: Re: Re: [PATCH v1] commit-graph.c: no lazy fetch in lookup_commit_in_graph()
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
+        git@vger.kernel.org, haiyangtand@gmail.com,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jun 22, 2022 at 2:23 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> Han Xin <hanxin.hx@bytedance.com> writes:
+> > If a commit is in the commit graph, we would expect the commit to also
+> > be present. So we should use has_object() instead of
+> > repo_has_object_file(), which will help us avoid getting into an endless
+> > loop of lazy fetch.
+> >
+> > We can see the endless loop issue via this[1].
+> >
+> > 1. https://lore.kernel.org/git/20220612161707.21807-1-chiyutianyi@gmail.com/
+>
+> As described in SubmittingPatches:
+>
+>   Try to make sure your explanation can be understood
+>   without external resources. Instead of giving a URL to a mailing list
+>   archive, summarize the relevant points of the discussion.
+>
 
---tBECWPhGfq0GJZe1
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Nod.
 
-On 2022-06-21 at 22:12:24, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->=20
-> On Tue, Jun 21 2022, brian m. carlson wrote:
->=20
-> > Email::Valid is in fact correct.  However, the email which you want to
-> > use doesn't conform to the RFC and isn't valid.  So this should probably
-> > say something like, "Allow people to use an email address which is not
-> > valid according to the RFCs if the server accepts it."
->=20
-> That's fair, but that rationale is quite disconnected from how the code
-> works now. You happen to get that check if you have Email::Valid
-> installed, otherwise not.
->=20
-> So if it's a use-case we care about we should make it a hard dependency.
+> > +test_expect_success 'setup' '
+> > +     git init --bare dest.git &&
+> > +     test_commit one &&
+> > +     git checkout -b tmp &&
+> > +     test_commit two &&
+> > +     git push dest.git --all
+> > +'
+>
+> You can commit directly to the repo by using "test_commit -C dest.git".
+> Also, can the repositories be better named? I see a "dest.git" (which
+> seems to contain all the objects), "alternates" (which seems to contain
+> everything except refs/heads/tmp), "source" (which only contains the
+> commit graph), and the current directory. It would probably be better to
+> name them e.g. "with-commit", "without-commit", "only-commit-graph", and
+> omit using the current directory altogether.
 
-Git has traditionally tried to avoid having lots of hard dependencies on
-Perl modules.  For example, Perl modules are a hassle with Homebrew.
+Yes, it makes sense to me.
 
-Most packagers prefer to enable the full suite of Perl modules, but it
-is a bit nicer to not make it mandatory.  However, if you feel strongly,
-we can change that.
+>
+> > +test_expect_success 'prepare a alternates repository without commit two' '
+> > +     git clone --bare dest.git alternates &&
+> > +     oid=$(git -C alternates rev-parse refs/heads/tmp) &&
+> > +     git -C alternates update-ref -d refs/heads/tmp &&
+> > +     git -C alternates gc --prune=now &&
+> > +     pack=$(echo alternates/objects/pack/*.pack) &&
+> > +     git verify-pack -v "$pack" >have &&
+> > +     ! grep "$oid" have
+> > +'
+>
+> OK, except refs/heads/tmp could probably have a better name.
 
-> > I think this patch would be fine as it stands with those changes. Unlike
-> > =C3=86var, I don't think we should get rid of Email::Valid, just like I=
- don't
-> > think we should get rid of the transfer encoding checks.  I support
-> > warning people before sending invalid emails, especially since I believe
-> > the address in question would not be deliverable through some mail
-> > servers (such as mine).
->=20
-> Would this be addressed by instead opening a connection to the server,
-> and seeing if it is willing to accept these addresess on a "RCPT TO"
-> line?
+I'll rethink the naming here.
 
-No, because that tells you whether your smarthost will accept it.  There
-are often multiple different parties involved in SMTP (including various
-filtering programs, smarthosts, and relays) and all you'll know is
-whether the first one of them accepts it.  I have seen systems where
-there could well be four or five stages of processing an email before
-it even left the host.
+>
+> > +test_expect_success 'prepare a repository with a commit-graph contains commit two' '
+> > +     git init source &&
+> > +     echo "$(pwd)/dest.git/objects" >source/.git/objects/info/alternates &&
+> > +     git -C source remote add origin "$(pwd)/dest.git" &&
+> > +     git -C source config remote.origin.promisor true &&
+> > +     git -C source config remote.origin.partialclonefilter blob:none &&
+> > +     # the source repository has the whole refs contains refs/heads/tmp
+> > +     git -C source fetch origin &&
+> > +     (
+> > +             cd source &&
+> > +             test_commit three &&
+> > +             git -c gc.writeCommitGraph=true gc
+> > +     )
+> > +'
+>
+> Is the purpose of the fetch only to add a ref? If yes, it's clearer just
+> to create that branch instead of fetching.
 
-This is no different than with things like lines longer than 998 octets,
-SMTPUTF8, or various other SMTP protocol issues.  The only surefire way
-to know that your email will be accepted by the remote system is to
-speak the protocol properly.  If people want an option to break the
-protocol, that's fine, but we should try to avoid doing that by default.
+Nod.
 
-The benefit to using Email::Valid in most cases is it prevents lots of
-obvious mistakes, where the email address is clearly syntactically
-invalid and undeliverable, especially due to bad author and committer
-metadata.  The Linux kernel history shows that this is not uncommon and
-it's useful to avoid this problem so you don't have to blow up people's
-inboxes with a v2 right away just because you got an invalid address on
-v1.  (Says the guy who has had to do almost exactly this.)
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+>
+> > +test_expect_success 'change the alternates of source to that without commit two' '
+> > +     # now we have a commit-graph in the source repository but without the commit two
+> > +     echo "$(pwd)/alternates/objects" >source/.git/objects/info/alternates
+> > +'
+>
+> OK.
+>
+> > +test_expect_success 'fetch the missing commit' '
+> > +     git -C source fetch origin $oid 2>fetch.out &&
+> > +     grep "$oid" fetch.out
+> > +'
+>
+> Is the bug triggered by fetching the missing commit or by fetching any
+> commit (which triggers the usage of the commit graph)? If any commit,
+> then it's clearer to create an arbitrary commit and then fetch it.
+>
 
---tBECWPhGfq0GJZe1
-Content-Type: application/pgp-signature; name="signature.asc"
+Yes, using the missing object in the commit-graph seems to be a little
+misleading.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.35 (GNU/Linux)
+> Also, I thought that the issue was an infinite loop, and the thing being
+> tested here looks different from that. If you want to ensure that
+> nothing is being fetched, you can use GIT_TRACE="$(pwd)/trace" to
+> observe a fetch-pack command being invoked or
+> GIT_TRACE_PACKET="$(pwd)/trace" to observe the packet being sent. If
+> you're worried about an infinite loop, you can set origin to a directory
+> that does not exist (so that the fetch immediately fails).
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYrJm6AAKCRB8DEliiIei
-gfhIAP9ouBU+R3GesYTHhWcH9JBJUGEynnNccnI/KalU+6EXWwEA1k+m9J2f4rNe
-jebS56zKR39viq631GPUgP4arTZPPgo=
-=6gUN
------END PGP SIGNATURE-----
+Maybe we can use "ulimit" ?
 
---tBECWPhGfq0GJZe1--
+Then the test case can be:
+
+    test_expect_success 'fetch the missing commit once' '
+        ulimit -u 512 &&
+        GIT_TRACE="$(pwd)/trace" git -C source fetch origin $oid 2>err &&
+        ! grep "error: cannot fork" err &&
+        test $(grep "fetch origin" trace | wc -l) -eq 1
+     '
+
+Without this fix, "git fetch" would finally succeed because we didn't
+check the return value of promise_remote_get_direct(). We can find
+the err output like this:
+
+    error: cannot fork() for -c: Resource temporarily unavailable
+    fatal: promisor-remote: unable to fork off fetch subprocess
+
+And we can see a lot of trace logs as follows:
+
+    trace: run_command: git -c fetch.negotiationAlgorithm=noop fetch
+origin --no-tags --no-write-fetch-head --recurse-submodules=no
+--filter=blob:none --stdin
+    trace: built-in: git fetch origin --no-tags --no-write-fetch-head
+--recurse-submodules=no --filter=blob:none --stdin
+
+Thanks.
+-Han Xin
