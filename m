@@ -2,68 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3AE7C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 16:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2675C43334
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 17:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231942AbiFWQde (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 12:33:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35962 "EHLO
+        id S234645AbiFWRlN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 13:41:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231680AbiFWQdc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 12:33:32 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84D9387A8
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 09:33:30 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BBF34141443;
-        Thu, 23 Jun 2022 12:33:29 -0400 (EDT)
+        with ESMTP id S234421AbiFWRj7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 13:39:59 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F370E973F6
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 10:09:53 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B467C13D27A;
+        Thu, 23 Jun 2022 13:09:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ip9UYoIy+RwGvbb9QUI+fNXob9aOP8oCFp6dXj
-        YYgqA=; b=ixyfmHOmPoTVpW2DB7qs2+3/xr84Kgs2SWXC2BA19ycjDeePv2aPwN
-        MhHmlcnnRAlOahocXnQRUk2tuElTTqfL8H2m8jvC2NwIQvBN9pUx33Fua4kU535m
-        joQ5YQZg0sdqOsMTDDa5Sgy02lqMsUKLHl8x6gTy9Xr5M2DvcpGEs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4922141442;
-        Thu, 23 Jun 2022 12:33:29 -0400 (EDT)
+        :content-type; s=sasl; bh=Z18XC4ZOQYRfxUP7gRPS3hQFGOQFm7XqssnL5R
+        xYLWQ=; b=S40TSl46MtbPZSBM4GfaPPTRfSRkdBXxHuJEQUPxLJysCXjvSyHRfo
+        Py3u5hdX5sN9x+eDmLE0+2GTzthjzDD9xtq21ReD6OVHLlY3k8KlR2LJox8Pflfl
+        yy55/psNBO8R99rtOLtVK2Mdi2cr5Y/0l6g8+HRduMjKOClbspVlQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC47313D279;
+        Thu, 23 Jun 2022 13:09:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 297F3141441;
-        Thu, 23 Jun 2022 12:33:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1511213D278;
+        Thu, 23 Jun 2022 13:09:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] t3701: two subtests are fixed
-References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu>
-        <nycvar.QRO.7.76.6.2206151649030.349@tvgsbejvaqbjf.bet>
-        <165537087609.19905.821171947957640468.git@grubix.eu>
-        <nycvar.QRO.7.76.6.2206181342200.349@tvgsbejvaqbjf.bet>
-        <xmqq8rpqja0v.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2206231747220.349@tvgsbejvaqbjf.bet>
-Date:   Thu, 23 Jun 2022 09:33:27 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2206231747220.349@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 23 Jun 2022 17:55:44 +0200 (CEST)")
-Message-ID: <xmqqilor1grs.fsf@gitster.g>
+To:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Li Linchao <lilinchao@oschina.cn>
+Subject: Re: [PATCH] ls-files: update test style
+References: <pull.1269.git.1655974015414.gitgitgadget@gmail.com>
+Date:   Thu, 23 Jun 2022 10:09:48 -0700
+In-Reply-To: <pull.1269.git.1655974015414.gitgitgadget@gmail.com> (Li Linchao
+        via GitGitGadget's message of "Thu, 23 Jun 2022 08:46:55 +0000")
+Message-ID: <xmqq5ykr1f37.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 368D6F60-F312-11EC-AEFE-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 4A7B1FC2-F317-11EC-8B94-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Li Linchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> But a more complicated solution for the same problem was applied directly
-> to the main branch, so I'd like to shift my attention to problems where my
-> input has a chance of mattering.
+> diff --git a/t/README b/t/README
+> index 309a31133c6..70205fba41b 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -560,6 +560,21 @@ Here are the "do's:"
+>     Even code that isn't a test per se, but merely some setup code
+>     should be inside a test assertion.
+>  
+> + - Keep test title the same line with test helper function itself,
+> +   and end the line with a single quote.
+> +
+> +   Take test_expect_success helper for example, write it like:
+> +
+> +  test_expect_success 'test title to describe this test case' '
+> +  # test body
+> +  '
 
-Any reasonable input makes difference.  You can even improve incrementally
-with follow-up patches.
+If you want to show the pretty layout, then the test body should
+be shown indented, i.e.
 
-Thanks.
+	test_expect_success 'title' '
+		... test body ...
+	'
+
+But I am not sure if this belongs to the existing "Do's and don'ts"
+section, which lists tips that matter for correctness.
+
+This new one certainly encouraged as a more modern style, but is not
+about correctness at all.
+
+A separate "recommended style" section might make sense, but there
+will be a lot more entries, like when to quote and not to quote EOF
+marker for here-document, indenting the body of here-document, etc.
