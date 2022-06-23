@@ -2,223 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24F21C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 11:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C873C43334
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 12:13:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231446AbiFWLmP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 07:42:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57608 "EHLO
+        id S231358AbiFWMNv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 08:13:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231421AbiFWLl7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 07:41:59 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 881094BFE9
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 04:41:57 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id k127so13650945pfd.10
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 04:41:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cGJonfRz8QCsdAKY1pQeQi7v/qw/myKwiE3nlvGM1Fc=;
-        b=IIg5w2eodYyOuRm/WTuJuxj3cFD8TzETXuTBrli/CEn9x73wa1QorHX7rwZsMDoe6/
-         dP+FPN8OuCWhdhsqEnT1YnAAmjONbJnKnfPp5ydwPRRH9OMoue73HPs0zsL9glIzjRn2
-         OgHiUcJw9sxKxVi3bnPiFF6oktSFWgbxhL+oaTJtDuRGShXWC4dUYROT3IkmN7JgkuU3
-         E25MJQuUGq4m8thuAU7AB6a2c3AjVFeJrQ2Q7zCV/oPEzWJa6CUpXe9xSpIMGo1GjPL2
-         +Yq/rWZ4CvOphoS6zpJY3boPDtJUQ5PGpdNH2F8LVOxZPIkHqVpDlrKu3judw40pbQh3
-         8DyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cGJonfRz8QCsdAKY1pQeQi7v/qw/myKwiE3nlvGM1Fc=;
-        b=ylpi+oBuT7gpOvyTaAS7+k7emvfestrwF3recE0lkGCyePBOy7c/CNcp66Dpdiq6Q0
-         /kJv/GfjJsyhNnwpVeB9fsQkD+9t8MEnbiiBpLjlpswCwlSfSax3BWcPphF/ugrL0dZf
-         GQCyLH40ZiHvEuzzxfvfauxt/m7b6V4uqO7DQnC8zwODXkW/w7+L39pO+V1rz3H0nct5
-         zdDLI7bs5rrz+2h5mNLI/lSfHj6o3GfE2wPihrTuqFmpxSus7RGf0YUe+KTw/0xzKxhc
-         MB9RKPeCT8Me8D8xgZkKsWlAhew9A4MJ0ZnPv59dg/IwSKxTq/aUBoYBWjMOUKSTXEFz
-         TN/g==
-X-Gm-Message-State: AJIora+XoJkf9bYSgi/baowjkq5ASobXMxYpg0uxSjchIrp4u77aGOAt
-        yUxwvSRb1g1iTFk+DPI7gpA=
-X-Google-Smtp-Source: AGRyM1vpV/y7G501j/nJ6zdY5F29MU23wUIhTtZRRp4SHX+O7mYctx/kcRFEff3xtV7jRXaHkGXtfg==
-X-Received: by 2002:a63:7a57:0:b0:40c:e242:e947 with SMTP id j23-20020a637a57000000b0040ce242e947mr7281052pgn.511.1655984516992;
-        Thu, 23 Jun 2022 04:41:56 -0700 (PDT)
-Received: from ffyuanda.localdomain ([112.195.146.236])
-        by smtp.gmail.com with ESMTPSA id j7-20020a17090a7e8700b001ec4f258028sm1629299pjl.55.2022.06.23.04.41.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jun 2022 04:41:56 -0700 (PDT)
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-To:     shaoxuan.yuan02@gmail.com
-Cc:     derrickstolee@github.com, git@vger.kernel.org, gitster@pobox.com,
-        vdye@github.com
-Subject: [PATCH v4 7/7] mv: add check_dir_in_index() and solve general dir check issue
-Date:   Thu, 23 Jun 2022 19:41:20 +0800
-Message-Id: <20220623114120.12768-8-shaoxuan.yuan02@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220623114120.12768-1-shaoxuan.yuan02@gmail.com>
-References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
- <20220623114120.12768-1-shaoxuan.yuan02@gmail.com>
+        with ESMTP id S229916AbiFWMNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 08:13:46 -0400
+Received: from mx-out1.deshaw.net (mx-out1.deshaw.net [149.77.95.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10A121A5
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 05:13:43 -0700 (PDT)
+Received: from mx-relay1.deshaw.net (localhost [127.0.0.1])
+        by mx-out1.deshaw.net (Postfix) with ESMTPS id 0108DC1B1AA;
+        Thu, 23 Jun 2022 08:13:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=deshaw.com; s=k001;
+        t=1655986422; bh=BXj4+hg+TkdC0KTh5EeIWXL2450VOHuen+xwLf0gST8=;
+        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+        b=V8XZXSPcu0wcEaZ//9T1SjjRH4geHYRMXmRKt3i5O7Cnmej7nDtuFWdFrV4H0A5Kj
+         0MDD7tax7Wi6WTiusgu9027BM5iCe7eQV3Nau0maDnciSfP10FStCfLsSN6JVWdOIq
+         hubwZOB6HPlbyuaM8YqmCt2vvgXe+07t3I7/GahY=
+Received: from deshaw.com (mail-multi.nyc.deshaw.com [10.219.243.66])
+        by mx-relay1.deshaw.net (Postfix) with ESMTPS id ED33C1207319;
+        Thu, 23 Jun 2022 08:13:41 -0400 (EDT)
+Received: from exchmbxtoa1a.deshaw.com (exchmbxtoa1a.deshaw.com [10.219.74.16])
+        by mail-multi.nyc.deshaw.com (Postfix) with ESMTPS id E8B8A459;
+        Thu, 23 Jun 2022 08:13:41 -0400 (EDT)
+Received: from exchmbxpsc1c.deshaw.com (10.218.74.18) by
+ exchmbxtoa1a.deshaw.com (10.219.74.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.6; Thu, 23 Jun 2022 08:13:41 -0400
+Received: from exchmbxpsc1c.deshaw.com ([fe80::a151:8073:ccf0:c19e]) by
+ exchmbxpsc1c.deshaw.com ([fe80::a151:8073:ccf0:c19e%4]) with mapi id
+ 15.01.2507.006; Thu, 23 Jun 2022 08:13:41 -0400
+From:   "Udoff, Marc" <Marc.Udoff@deshaw.com>
+To:     "Shupak, Vitaly" <Vitaly.Shupak@deshaw.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: git filter bug
+Thread-Topic: git filter bug
+Thread-Index: Adh9GBnXLc9Gl6ZqSU6yhtlNhZ2wRwAcFQIAAJqMoXIAAMa8sAGm3RCQ
+Date:   Thu, 23 Jun 2022 12:13:41 +0000
+Message-ID: <1d01a877d86f4e0583e1bc617349b48a@deshaw.com>
+References: <101027c97a9b40ce97192b1cee203b07@deshaw.com>
+ <442e3166-4f18-3ee0-e3bc-d24687471d5c@kdbg.org> <xmqqsfo879r7.fsf@gitster.g>
+ <c2f49b4f-8588-bae1-97cf-91a36b3f16f9@kdbg.org>
+ <d8ae6210ddf146d7bbd9c78d170fb803@deshaw.com>
+In-Reply-To: <d8ae6210ddf146d7bbd9c78d170fb803@deshaw.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.219.66.97]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Content-Scanned: Fidelis Mail
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Originally, moving a <source> directory which is not on-disk due
-to its existence outside of sparse-checkout cone, "giv mv" command
-errors out with "bad source".
-
-Add a helper check_dir_in_index() function to see if a directory
-name exists in the index. Also add a SKIP_WORKTREE_DIR bit to mark
-such directories.
-
-Change the checking logic, so that such <source> directory makes
-"giv mv" command warns with "advise_on_updating_sparse_paths()"
-instead of "bad source"; also user now can supply a "--sparse" flag so
-this operation can be carried out successfully.
-
-Helped-by: Victoria Dye <vdye@github.com>
-Helped-by: Derrick Stolee <derrickstolee@github.com>
-Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
----
- builtin/mv.c                  | 50 ++++++++++++++++++++++++++++++-----
- t/t7002-mv-sparse-checkout.sh |  4 +--
- 2 files changed, 46 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index aa29da4337..b5d0d8ef4f 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -25,6 +25,7 @@ enum update_mode {
- 	WORKING_DIRECTORY = (1 << 1),
- 	INDEX = (1 << 2),
- 	SPARSE = (1 << 3),
-+	SKIP_WORKTREE_DIR = (1 << 4),
- };
- 
- #define DUP_BASENAME 1
-@@ -123,6 +124,36 @@ static int index_range_of_same_dir(const char *src, int length,
- 	return last - first;
- }
- 
-+/*
-+ * Check if an out-of-cone directory should be in the index. Imagine this case
-+ * that all the files under a directory are marked with 'CE_SKIP_WORKTREE' bit
-+ * and thus the directory is sparsified.
-+ *
-+ * Return 0 if such directory exist (i.e. with any of its contained files not
-+ * marked with CE_SKIP_WORKTREE, the directory would be present in working tree).
-+ * Return 1 otherwise.
-+ */
-+static int check_dir_in_index(const char *name)
-+{
-+	const char *with_slash = add_slash(name);
-+	int length = strlen(with_slash);
-+
-+	int pos = cache_name_pos(with_slash, length);
-+	const struct cache_entry *ce;
-+
-+	if (pos < 0) {
-+		pos = -pos - 1;
-+		if (pos >= the_index.cache_nr)
-+			return 1;
-+		ce = active_cache[pos];
-+		if (strncmp(with_slash, ce->name, length))
-+			return 1;
-+		if (ce_skip_worktree(ce))
-+			return 0;
-+	}
-+	return 1;
-+}
-+
- int cmd_mv(int argc, const char **argv, const char *prefix)
- {
- 	int i, flags, gitmodules_modified = 0;
-@@ -184,7 +215,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	/* Checking */
- 	for (i = 0; i < argc; i++) {
- 		const char *src = source[i], *dst = destination[i];
--		int length, src_is_dir;
-+		int length;
- 		const char *bad = NULL;
- 		int skip_sparse = 0;
- 
-@@ -198,12 +229,17 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 
- 			pos = cache_name_pos(src, length);
- 			if (pos < 0) {
-+				const char *src_w_slash = add_slash(src);
-+				if (!path_in_sparse_checkout(src_w_slash, &the_index) &&
-+				    !check_dir_in_index(src)) {
-+					modes[i] |= SKIP_WORKTREE_DIR;
-+					goto dir_check;
-+				}
- 				/* only error if existence is expected. */
- 				if (!(modes[i] & SPARSE))
- 					bad = _("bad source");
- 				goto act_on_entry;
- 			}
--
- 			ce = active_cache[pos];
- 			if (!ce_skip_worktree(ce)) {
- 				bad = _("bad source");
-@@ -230,12 +266,14 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			bad = _("can not move directory into itself");
- 			goto act_on_entry;
- 		}
--		if ((src_is_dir = S_ISDIR(st.st_mode))
-+		if (S_ISDIR(st.st_mode)
- 		    && lstat(dst, &st) == 0) {
- 			bad = _("cannot move directory over file");
- 			goto act_on_entry;
- 		}
--		if (src_is_dir) {
-+
-+dir_check:
-+		if (S_ISDIR(st.st_mode)) {
- 			int j, dst_len, n;
- 			int first = cache_name_pos(src, length), last;
- 
-@@ -369,7 +407,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			printf(_("Renaming %s to %s\n"), src, dst);
- 		if (show_only)
- 			continue;
--		if (!(mode & (INDEX | SPARSE)) &&
-+		if (!(mode & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
- 		    rename(src, dst) < 0) {
- 			if (ignore_errors)
- 				continue;
-@@ -384,7 +422,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 							      1);
- 		}
- 
--		if (mode & (WORKING_DIRECTORY))
-+		if (mode & (WORKING_DIRECTORY | SKIP_WORKTREE_DIR))
- 			continue;
- 
- 		pos = cache_name_pos(src, strlen(src));
-diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-index 6d2fb4f8d2..71fe29690f 100755
---- a/t/t7002-mv-sparse-checkout.sh
-+++ b/t/t7002-mv-sparse-checkout.sh
-@@ -219,7 +219,7 @@ test_expect_success 'refuse to move file to non-skip-worktree sparse path' '
- 	test_cmp expect stderr
- '
- 
--test_expect_failure 'refuse to move out-of-cone directory without --sparse' '
-+test_expect_success 'refuse to move out-of-cone directory without --sparse' '
- 	test_when_finished "cleanup_sparse_checkout" &&
- 	setup_sparse_checkout &&
- 
-@@ -230,7 +230,7 @@ test_expect_failure 'refuse to move out-of-cone directory without --sparse' '
- 	test_cmp expect stderr
- '
- 
--test_expect_failure 'can move out-of-cone directory with --sparse' '
-+test_expect_success 'can move out-of-cone directory with --sparse' '
- 	test_when_finished "cleanup_sparse_checkout" &&
- 	setup_sparse_checkout &&
- 
--- 
-2.35.1
-
+QmFzZWQgb24gdGhlIGNvbnZlcnNhdGlvbiBiZWxvdywgSSdtIG5vdCBxdWl0ZSBzdXJlIGlmIHRo
+ZXJlIGlzIGNvbnNlbnN1cyB0aGlzIGlzIGEgYnVnIGFuZCBub3QgYSBmZWF0dXJlLiBJZiB0aGlz
+IGlzIGEgYnVnLCB3aGF0IGFyZSB0aGUgbmV4dCBzdGVwcyB0byBnZXR0aW5nIGl0IGZpeGVkPyBJ
+ZiB0aGlzIGlzIHNvbWV0aGluZyB0aGF0IHNvbWVvbmUgd2l0aCBtaW5pbWFsIGNvZGViYXNlIGV4
+cGVyaWVuY2UgY2FuIGZpeCwgd2UnZCBiZSBoYXBweSB0byBzdWJtaXQgYSBQUiBpZiB5b3UgY291
+bGQgZ2l2ZSB1cyBhIGZldyBwb2ludGVycy4NCg0KVGhhbmtzIQ0KDQotLS0tLU9yaWdpbmFsIE1l
+c3NhZ2UtLS0tLQ0KRnJvbTogU2h1cGFrLCBWaXRhbHkgPFZpdGFseS5TaHVwYWtAZGVzaGF3LmNv
+bT4gDQpTZW50OiBUdWVzZGF5LCBKdW5lIDE0LCAyMDIyIDM6MTIgUE0NClRvOiBKb2hhbm5lcyBT
+aXh0IDxqNnRAa2RiZy5vcmc+OyBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+DQpD
+YzogVWRvZmYsIE1hcmMgPE1hcmMuVWRvZmZAZGVzaGF3LmNvbT47IGdpdEB2Z2VyLmtlcm5lbC5v
+cmcNClN1YmplY3Q6IFJFOiBnaXQgZmlsdGVyIGJ1Zw0KDQpIZXJlJ3MgdGhlIGJlaGF2aW9yIHRo
+YXQgSSBvYnNlcnZlOg0KLSBJZiB0aGUgbXRpbWUgb2YgdGhlIG5vcm1hbCBmaWxlIGNoYW5nZXMg
+ZnJvbSB3aGF0J3MgaW4gdGhlIGluZGV4IGJ1dCB0aGUgY29udGVudCBkb2Vzbid0IGNoYW5nZSwg
+ImdpdCBzdGF0dXMiIHVwZGF0ZXMgdGhlIGluZGV4IHdpdGggdGhlIGxhdGVzdCB0aW1lc3RhbXAg
+b2YgdGhlIGZpbGUuDQotIElmIHRoZSBmaWx0ZXJlZCBmaWxlIGNoYW5nZXMsIGJ1dCB0aGUgc2l6
+ZSBzdGF5cyB0aGUgc2FtZSwgZ2l0IHN0YXR1cyBhbHNvIHRyaWdnZXJzIGFuIGluZGV4IHVwZGF0
+ZS4NCi0gQlVUIGlmIHRoZSBzaXplIG9mIHRoZSBmaWx0ZXJlZCBmaWxlIGNoYW5nZXMsIHRoZW4g
+dGhlIGluZGV4IGRvZXMgTk9UIGdldCB1cGRhdGVkIGFuZCB0aGUgZmlsZSBhcHBlYXJzIG1vZGlm
+aWVkIG9uIGV2ZXJ5IGdpdCBzdGF0dXMgcnVuIHVudGlsIHlvdSBleHBsaWNpdGx5IHJ1biAiZ2l0
+IGFkZCA8ZmlsZW5hbWU+IiBhZ2Fpbi4gVGhpcyBpcyB0cnVlIGV2ZW4gaWYgdGhlIHBvc3QtY2xl
+YW4gZmlsdGVyIGNvbnRlbnQgaXMgdGhlIHNhbWUgYXMgd2hhdCdzIGN1cnJlbnRseSBpbiB0aGUg
+aW5kZXguDQotIFRoZSBjbGVhbiBmaWx0ZXIgcnVucyBvbiBldmVyeSAiZ2l0IHN0YXR1cyIgY2Fs
+bCBhbnl3YXksIHNvIHRoaXMgYmVoYXZpb3IgZG9lcyBub3QgYXBwZWFyIHRvIGJlIGFuIG9wdGlt
+aXphdGlvbi4NCg0KU28gaWYgYSBmaWxlIGlzIG1vZGlmaWVkIHN1Y2ggdGhhdCB0aGUgcG9zdC1j
+bGVhbiBmaWx0ZXIgY29udGVudCBpcyB0aGUgc2FtZSBhcyB3aGF0J3MgaW4gdGhlIGluZGV4LCAi
+Z2l0IHN0YXR1cyIgd2lsbCBzaG93IHRoZSBmaWxlIGFzIG1vZGlmaWVkIG9ubHkgaWYgdGhlIGZp
+bGUgc2l6ZSBoYXMgYWxzbyBjaGFuZ2VkLiBJdCBzZWVtcyB0aGF0IHBlcmhhcHMgImdpdCBzdGF0
+dXMiIGlzIGNvbXBhcmluZyBmaWxlIHNpemVzIGJlZm9yZSBhcHBseWluZyB0aGUgY2xlYW4gZmls
+dGVyIHRvIHNlZSBpZiB0aGUgaW5kZXggZW50cnkgbmVlZHMgdG8gYmUgcmVmcmVzaGVkPyANCg0K
+Vml0YWx5DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKb2hhbm5lcyBTaXh0
+IDxqNnRAa2RiZy5vcmc+DQpTZW50OiBNb25kYXksIEp1bmUgMTMsIDIwMjIgNToxNSBQTQ0KVG86
+IEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVyQHBvYm94LmNvbT4NCkNjOiBVZG9mZiwgTWFyYyA8TWFy
+Yy5VZG9mZkBkZXNoYXcuY29tPjsgU2h1cGFrLCBWaXRhbHkgPFZpdGFseS5TaHVwYWtAZGVzaGF3
+LmNvbT47IGdpdEB2Z2VyLmtlcm5lbC5vcmcNClN1YmplY3Q6IFJlOiBnaXQgZmlsdGVyIGJ1Zw0K
+DQpUaGlzIG1lc3NhZ2Ugd2FzIHNlbnQgYnkgYW4gZXh0ZXJuYWwgcGFydHkuDQoNCg0KQW0gMTMu
+MDYuMjIgdW0gMTk6Mjkgc2NocmllYiBKdW5pbyBDIEhhbWFubzoNCj4gSm9oYW5uZXMgU2l4dCA8
+ajZ0QGtkYmcub3JnPiB3cml0ZXM6DQo+DQo+PiBnaXQgc3RhdHVzIGRvZXMgbm90IGNvbXB1dGUg
+ZGlmZmVyZW5jZXM7IGl0IG9ubHkgbG9va3MgYXQgdGhlIHN0YXQgDQo+PiBpbmZvcm1hdGlvbiwg
+YW5kIHRoYXQgaXMgYnkgZGVzaWduIGZvciBwZXJmb3JtYW5jZSByZWFzb25zLiBTbywgSU1PLCAN
+Cj4+IHRoaXMgaXMgd29ya2luZyBhcyBkZXNpZ25lZCBhbmQgbm90IGEgYnVnLg0KPg0KPiBIbXBo
+LCBpcyB0aGF0IHRydWU/ICBJIHRob3VnaHQgImdpdCBzdGF0dXMiIGRpZCBhbiBlcXVpdmFsZW50
+IG9mIA0KPiBkaWZmLmF1dG9SZWZyZXNoSW5kZXgganVzdCBsaWtlIG90aGVyIGNvbW1hbmRzIGxp
+a2UgImdpdCBkaWZmIiBhdCB0aGUgDQo+IFBvcmNlbGFpbiBsZXZlbC4NCg0KSXMgaXQgdHJ1ZT8g
+SSBkb24ndCBrbm93OyB5b3UgdGVsbCBtZSA7KSBnaXQgc3RhdHVzIGNlcnRhaW5seSBkb2VzIGF1
+dG9SZWZyZXNoSW5kZXgsIGJ1dCBpcyB0aGF0IGJhc2VkIG9uIGEgZGlmZiBjb21wdXRhdGlvbj8g
+SSB0aG91Z2h0IGdpdCBzdGF0dXMgbG9va3Mgb25seSBhdCBzdGF0IGluZm9ybWF0aW9uLg0KDQo+
+IElzIHRoaXMgbW9yZSBsaWtlIHRoZSBjb21tb25seSBzZWVuICJhZnRlciB5b3UgZnV0emVkIHRo
+ZSBhdHRyaWJ1dGVzIA0KPiB0byBhZmZlY3Qgbm9ybWFsaXphdGlvbiwgIi0tcmVub3JtYWxpemUi
+IGlzIG5lZWRlZCB0byBmb3JjZSB0aGUgaW5kZXggDQo+IHRvIG1hdGNoIHRoZSBjbGVhbmVkIHZl
+cnNpb24gb2Ygd29ya2luZyB0cmVlIHVuZGVyIHRoZSBuZXcgY2xlYW4gDQo+IGZpbHRlciBydWxl
+cyIsIEkgd29uZGVyPw0KDQpOb3QgaW4gdGhpcyBjYXNlLiBUaGUgbW9kaWZpZWQgZmlsZSB0aGF0
+IGdpdCBzdGF0dXMgcmVwb3J0cyBoYXBwZW5zIGxvbmcgYWZ0ZXIgZ2l0IGNvbW1pdCAtYSBoYXMg
+YWxyZWFkeSBhcHBsaWVkIHRoZSBuZXcgZmlsdGVyLg0KDQotLSBIYW5uZXMNCg==
