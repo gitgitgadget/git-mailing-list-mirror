@@ -2,175 +2,287 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36ADCC43334
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 05:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99689C43334
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 08:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229682AbiFWFMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 01:12:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41952 "EHLO
+        id S230507AbiFWIrE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 04:47:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbiFWFLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 01:11:45 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E0224667D
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 22:01:56 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id g18so404263wrb.10
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 22:01:56 -0700 (PDT)
+        with ESMTP id S230487AbiFWIrC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 04:47:02 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE6749279
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 01:46:58 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id u12-20020a05600c210c00b003a02b16d2b8so1035122wml.2
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 01:46:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=R7Zv1u1c2kSy9zdVSLoZ+YYQfWArNLQhO8tJzSEVAc4=;
-        b=Ck5JSy2EqojvtQ/LXiJfxfRmNqpLQrr7bev8bE1+r7Yo/+pihGJigOCWnD1ZOZ4ON+
-         QgPiJlghUlS+yPqvpxhxkBWKshRsV73g5rkmeaWH+uP195DMj2Xdv7/V0vzoBKFeHD+k
-         2SCx/zC2w84bbBCazRkJH7hhxNF5oWt4383zOEbQYz66vmBnWJ14vfobq04bNMqt8Lzx
-         Uk4EbE7dh88DIfuHL9iuIzo89jWani9kgOl4z6JeSsFy0yGFgZ/DiY08+uh/ZM2uCT7/
-         fvDQnLo5SU/D8JnoFkl1WCyypwMuq+l637GyNGEvrY7TG8uBmWRajEyOqs07B9uum1sH
-         9Vxg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Tzao6zVyxYTp6EhmezmxbqD8zoPrsEbvqsiggYyVouQ=;
+        b=GzMKRJF6THISq7V5ytSgAZ319qZb2EoNZcPqkThYBnNZ1Gw2RupkTOBk22qk6T6SOx
+         xuc1tW4M07KQ6J/UNZJ6bku6lcXRXmhDcqQnXsrdjX05FL9TQOvV97j98UC6Poh+zW2n
+         KqPlp0k7GPhXG9Df7J56LTPUJeF5Q4Fbvz1rKXYpe+NMippuK1GMVnCcrJVB22/s5/l1
+         uhXoG2xMQ3AAd2RV7lTOXuX1zng7784wX0FEKlMDYFZyRv1Z7WOAoh0F0bKlyJ7oskKP
+         H2QJzoF4LdOsEiq+ouaRArPlgi4Ko6wLu9y9JOc8KjEEPFWm1sJ2NEJJkwkn67LCFKvU
+         n8LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=R7Zv1u1c2kSy9zdVSLoZ+YYQfWArNLQhO8tJzSEVAc4=;
-        b=f1yUYK91zYYRlp17xxGXye40bJleV/9W4aOdaV+BLTc9174GsWEuY1qGY4G/r9x1hA
-         AlrxFRClgCJv9QUXDK4z03k51QPWH3vEfJj1xJ2HMNt9tGujfV4y2lAJjfhg6L41188b
-         i7jc2vkUoD7t1wB2aXDgCz98Bw4YAp0QiKfuodAuqokL3/UwhuhPFSvHm53YNC3x0vQu
-         odZ4eNsR62LDM9cjcDwNrivJtAiBKvlRyxTczmQKdDttXtGN71Kdjc1Gd/Be4462lngr
-         WwxgzHmnVFtz0o4e0fGh5crurSJtg5tl/vu/oaR7D9xEDi4WwYHT8twx2OU3id+HPB/2
-         zwoA==
-X-Gm-Message-State: AJIora/OdkYUTNPhGFk0Mrl0qyf+rUP3lgIcE4mnwNCe/Qv0doRLiwwz
-        j1zgijenPvYTdPwecsR4ml5HYGH9y13EYQ==
-X-Google-Smtp-Source: AGRyM1uSPeR0wCXaCVrlQltplX/KQlUyoJcyxFAA1B6IK7fAa9UGbN8CUwKsMt73zsZOJt+Px6+cDA==
-X-Received: by 2002:a05:6000:1d97:b0:210:25d6:e125 with SMTP id bk23-20020a0560001d9700b0021025d6e125mr6196296wrb.464.1655960514448;
-        Wed, 22 Jun 2022 22:01:54 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Tzao6zVyxYTp6EhmezmxbqD8zoPrsEbvqsiggYyVouQ=;
+        b=4SF8LP2USrbzi1TjOINILR2EEsixeUcXeLZ0K1jzjiM4XUop9GGfvXu5xVv63z2A6/
+         Cw+V3I/7/wvi2YRqiQKGK9geo17tWeiNvOj8PXBJnbBknS9X0e4GppALOtZtplroAdkj
+         eaeONy1BSyPJB89iUE5DiUQ1W3ck4EmDqiSwpsNpJXvKLwl50IBou/QwaxdiZX3ujpuP
+         16JNE3Ox3IuKGL+xIwdEfBRm0PDRylEaVXj9FfAgOKOvU16EzG/DesdpI+fkmJaY17uc
+         stzWUNBw4RFFVgid1QiqudSDpBIr/H3DMe/EEyJNspX/nKeIKsOzH652Ncc6rnfHvR+1
+         yG1g==
+X-Gm-Message-State: AJIora/vfKLzI4j768SJOBkOy8PEsD2msg/sOGKU8KT59Fr6AlJJF9PZ
+        2fMiIDXLGNYImHjsBFVBxWGF1x9Yz3iZjA==
+X-Google-Smtp-Source: AGRyM1uC3j1jdJaMIzD56BGC9+QwtSieWQ0ctv2ayUDTyot0HdDQ2v2EezMywHmBm4bdGschmUE8AA==
+X-Received: by 2002:a05:600c:5115:b0:39c:453f:5e06 with SMTP id o21-20020a05600c511500b0039c453f5e06mr2838625wms.123.1655974016853;
+        Thu, 23 Jun 2022 01:46:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r15-20020adff70f000000b002185d79dc7fsm20604799wrp.75.2022.06.22.22.01.53
+        by smtp.gmail.com with ESMTPSA id bg24-20020a05600c3c9800b003974b95d897sm2418539wmb.37.2022.06.23.01.46.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 22:01:53 -0700 (PDT)
-Message-Id: <pull.1265.v2.git.1655960512385.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1265.git.1655697671724.gitgitgadget@gmail.com>
-References: <pull.1265.git.1655697671724.gitgitgadget@gmail.com>
-From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Jun 2022 05:01:52 +0000
-Subject: [PATCH v2] rev-parse: documentation adjustment - mention remote
- tracking with @{u}
+        Thu, 23 Jun 2022 01:46:56 -0700 (PDT)
+Message-Id: <pull.1269.git.1655974015414.gitgitgadget@gmail.com>
+From:   "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 23 Jun 2022 08:46:55 +0000
+Subject: [PATCH] ls-files: update test style
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>,
-        Tao Klerks <tao@klerks.biz>
+Cc:     Li Linchao <lilinchao@oschina.cn>,
+        Li Linchao <lilinchao@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tao Klerks <tao@klerks.biz>
+From: Li Linchao <lilinchao@oschina.cn>
 
-The documentation explained the conversion from remote branch path to
-local tracking ref path for @{push}, but not for @{upstream}.
+Update test style in t/t30[*].sh for uniformity, that's to
+keep test title the same line with helper function itself.
 
-Add the explanation to @{upstream}, and reference it in @{push} to avoid
-undue repetition.
+And update t/README to describe this test style.
 
-Signed-off-by: Tao Klerks <tao@klerks.biz>
+Signed-off-by: Li Linchao <lilinchao@oschina.cn>
 ---
-    rev-parse: documentation adjustment - mention remote tracking with @{u}
+    ls-files: update test style
     
-    Small clarification in the doc for git rev-parse.
+    Update test style in t/t30[*].sh for uniformity, that's to keep test
+    title the same line with helper function itself.
     
-    Changes in V2:
+    And update t/README to describe this test style.
     
-     * Applied Junio's proposed simplification
+    Signed-off-by: Li Linchao lilinchao@oschina.cn
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1265%2FTaoK%2Ftao-upstreak-doc-fix-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1265/TaoK/tao-upstreak-doc-fix-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1265
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1269%2FCactusinhand%2Fllc%2Ffix-test-title-style-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1269/Cactusinhand/llc/fix-test-title-style-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1269
 
-Range-diff vs v1:
+ t/README                           | 15 ++++++++++++++
+ t/t3001-ls-files-others-exclude.sh | 24 +++++++++++-----------
+ t/t3002-ls-files-dashpath.sh       | 33 +++++++++++++-----------------
+ t/t3020-ls-files-error-unmatch.sh  | 12 +++++------
+ t/t3060-ls-files-with-tree.sh      |  6 +++---
+ 5 files changed, 50 insertions(+), 40 deletions(-)
 
- 1:  58d2735d752 ! 1:  9e47e12e9cb rev-parse: documentation adjustment - mention remote tracking with @{u}
-     @@ Commit message
-          The documentation explained the conversion from remote branch path to
-          local tracking ref path for @{push}, but not for @{upstream}.
-      
-     -    Add the note to @{upstream}, and reference it in @{push} to avoid undue
-     -    repetition.
-     +    Add the explanation to @{upstream}, and reference it in @{push} to avoid
-     +    undue repetition.
-      
-          Signed-off-by: Tao Klerks <tao@klerks.biz>
-      
-       ## Documentation/revisions.txt ##
-      @@ Documentation/revisions.txt: some output processing may assume ref names in UTF-8.
-     +   before the current one.
-       
-       '[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
-     -   The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
-     +-  The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
-      -  refers to the branch that the branch specified by branchname is set to build on
-      -  top of (configured with `branch.<name>.remote` and
-      -  `branch.<name>.merge`).  A missing branchname defaults to the
-      -  current one. These suffixes are also accepted when spelled in uppercase, and
-      -  they mean the same thing no matter the case.
-     -+  refers to the remote branch that the branch specified by branchname
-     -+  is set to build on top of (configured with `branch.<name>.remote` and
-     -+  `branch.<name>.merge`). As `branch.<name>.merge` is the branch path on the
-     -+  remote, it is first converted to a local tracking branch (i.e., something in
-     -+  `refs/remotes/`). A missing branchname defaults to the current one. These
-     -+  suffixes are also accepted when spelled in uppercase, and they mean the same
-     -+  thing no matter the case.
-     ++  A branch B may be set up to build on top of a branch X (configured with
-     ++  `branch.<name>.merge`) at a remote R (configured with
-     ++  `branch.<name>.remote`). B@{u} refers to the remote-tracking branch for
-     ++  the branch X taken from remote R, typically found at `refs/remotes/R/X`.
-       
-       '[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
-         The suffix '@\{push}' reports the branch "where we would push to" if
-     @@ Documentation/revisions.txt: some output processing may assume ref names in UTF-
-      -  in a remote repository, of course, we report the local tracking branch
-      -  that corresponds to that branch (i.e., something in `refs/remotes/`).
-      +  `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
-     -+  the local tracking branch that corresponds to that remote branch.
-     ++  the remote-tracking branch that corresponds to that branch at the remote.
-       +
-       Here's an example to make it more clear:
-       +
-
-
- Documentation/revisions.txt | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index f5f17b65a12..7fcfbcbac7e 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -96,19 +96,16 @@ some output processing may assume ref names in UTF-8.
-   before the current one.
+diff --git a/t/README b/t/README
+index 309a31133c6..70205fba41b 100644
+--- a/t/README
++++ b/t/README
+@@ -560,6 +560,21 @@ Here are the "do's:"
+    Even code that isn't a test per se, but merely some setup code
+    should be inside a test assertion.
  
- '[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
--  The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
--  refers to the branch that the branch specified by branchname is set to build on
--  top of (configured with `branch.<name>.remote` and
--  `branch.<name>.merge`).  A missing branchname defaults to the
--  current one. These suffixes are also accepted when spelled in uppercase, and
--  they mean the same thing no matter the case.
-+  A branch B may be set up to build on top of a branch X (configured with
-+  `branch.<name>.merge`) at a remote R (configured with
-+  `branch.<name>.remote`). B@{u} refers to the remote-tracking branch for
-+  the branch X taken from remote R, typically found at `refs/remotes/R/X`.
++ - Keep test title the same line with test helper function itself,
++   and end the line with a single quote.
++
++   Take test_expect_success helper for example, write it like:
++
++  test_expect_success 'test title to describe this test case' '
++  # test body
++  '
++
++   Instead of:
++
++  test_expect_success \
++  'test title to describe this test case' \
++  '# test body'
++
+  - Chain your test assertions
  
- '[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
-   The suffix '@\{push}' reports the branch "where we would push to" if
-   `git push` were run while `branchname` was checked out (or the current
--  `HEAD` if no branchname is specified). Since our push destination is
--  in a remote repository, of course, we report the local tracking branch
--  that corresponds to that branch (i.e., something in `refs/remotes/`).
-+  `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
-+  the remote-tracking branch that corresponds to that branch at the remote.
- +
- Here's an example to make it more clear:
- +
+    Write test code like this:
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index 48cec4e5f88..76361b92336 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -67,26 +67,26 @@ echo '!*.2
+ 
+ allignores='.gitignore one/.gitignore one/two/.gitignore'
+ 
+-test_expect_success \
+-    'git ls-files --others with various exclude options.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with various exclude options.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+        >output &&
+-     test_cmp expect output'
++     test_cmp expect output
++'
+ 
+ # Test \r\n (MSDOS-like systems)
+ printf '*.1\r\n/*.3\r\n!*.6\r\n' >.gitignore
+ 
+-test_expect_success \
+-    'git ls-files --others with \r\n line endings.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with \r\n line endings.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+        >output &&
+-     test_cmp expect output'
++     test_cmp expect output
++'
+ 
+ test_expect_success 'setup skip-worktree gitignore' '
+ 	git add $allignores &&
+@@ -94,14 +94,14 @@ test_expect_success 'setup skip-worktree gitignore' '
+ 	rm $allignores
+ '
+ 
+-test_expect_success \
+-    'git ls-files --others with various exclude options.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with various exclude options.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+        >output &&
+-     test_cmp expect output'
++     test_cmp expect output
++'
+ 
+ test_expect_success !SANITIZE_LEAK 'restore gitignore' '
+ 	git checkout --ignore-skip-worktree-bits $allignores &&
+diff --git a/t/t3002-ls-files-dashpath.sh b/t/t3002-ls-files-dashpath.sh
+index 54d22a45dfb..adbe96fa2df 100755
+--- a/t/t3002-ls-files-dashpath.sh
++++ b/t/t3002-ls-files-dashpath.sh
+@@ -16,15 +16,14 @@ filesystem.
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+-test_expect_success \
+-	setup \
+-	'echo frotz >path0 &&
++test_expect_success 'setup' '
++    echo frotz >path0 &&
+ 	echo frotz >./-foo &&
+-	echo frotz >./--'
++	echo frotz >./--
++'
+ 
+-test_expect_success \
+-    'git ls-files without path restriction.' \
+-    'git ls-files --others >output &&
++test_expect_success 'git ls-files without path restriction.' '
++    git ls-files --others >output &&
+      test_cmp output - <<EOF
+ --
+ -foo
+@@ -33,33 +32,29 @@ path0
+ EOF
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction.' \
+-    'git ls-files --others path0 >output &&
++test_expect_success 'git ls-files with path restriction.' '
++    git ls-files --others path0 >output &&
+ 	test_cmp output - <<EOF
+ path0
+ EOF
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction with --.' \
+-    'git ls-files --others -- path0 >output &&
++test_expect_success 'git ls-files with path restriction with --.' '
++    git ls-files --others -- path0 >output &&
+ 	test_cmp output - <<EOF
+ path0
+ EOF
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction with -- --.' \
+-    'git ls-files --others -- -- >output &&
++test_expect_success 'git ls-files with path restriction with -- --.' '
++    git ls-files --others -- -- >output &&
+ 	test_cmp output - <<EOF
+ --
+ EOF
+ '
+ 
+-test_expect_success \
+-    'git ls-files with no path restriction.' \
+-    'git ls-files --others -- >output &&
++test_expect_success 'git ls-files with no path restriction.' '
++    git ls-files --others -- >output &&
+ 	test_cmp output - <<EOF
+ --
+ -foo
+diff --git a/t/t3020-ls-files-error-unmatch.sh b/t/t3020-ls-files-error-unmatch.sh
+index 2cbcbc0721b..8dd520bb331 100755
+--- a/t/t3020-ls-files-error-unmatch.sh
++++ b/t/t3020-ls-files-error-unmatch.sh
+@@ -19,12 +19,12 @@ test_expect_success 'setup' '
+ 	git commit -m "add foo bar"
+ '
+ 
+-test_expect_success \
+-    'git ls-files --error-unmatch should fail with unmatched path.' \
+-    'test_must_fail git ls-files --error-unmatch foo bar-does-not-match'
++test_expect_success 'git ls-files --error-unmatch should fail with unmatched path.' '
++    test_must_fail git ls-files --error-unmatch foo bar-does-not-match
++'
+ 
+-test_expect_success \
+-    'git ls-files --error-unmatch should succeed with matched paths.' \
+-    'git ls-files --error-unmatch foo bar'
++test_expect_success 'git ls-files --error-unmatch should succeed with matched paths.' '
++    git ls-files --error-unmatch foo bar
++'
+ 
+ test_done
+diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
+index b257c792a46..c350b4641f3 100755
+--- a/t/t3060-ls-files-with-tree.sh
++++ b/t/t3060-ls-files-with-tree.sh
+@@ -62,9 +62,9 @@ test_expect_success 'git ls-files --with-tree should succeed from subdir' '
+ 	)
+ '
+ 
+-test_expect_success \
+-    'git ls-files --with-tree should add entries from named tree.' \
+-    'test_cmp expected output'
++test_expect_success 'git ls-files --with-tree should add entries from named tree.' '
++	test_cmp expected output
++'
+ 
+ test_expect_success 'no duplicates in --with-tree output' '
+ 	git ls-files --with-tree=HEAD >actual &&
 
 base-commit: 5b71c59bc3b9365075e2a175aa7b6f2b0c84ce44
 -- 
