@@ -2,151 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93701C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 15:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9407C43334
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 15:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232091AbiFWP4K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 11:56:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33644 "EHLO
+        id S231869AbiFWP6M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 11:58:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231283AbiFWP4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 11:56:08 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C0E424A5
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:56:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1655999748;
-        bh=4uv2XiZ1Qos6QN0/S1bMjfQIwgePMFYmQi0du3oUf2A=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=At6LwObaJcGqs+R/UEGnfty4+xMkr/kooltZoW26YMQhVkQItrblETgUH6G69c4Y/
-         SMyKtlRn7yw00Kx8SxEgRHwh4JuxrZVXljSAxADSmYMGaZAeNgHDKnGqUFB9jU4rIN
-         oxyfshDO+ZNlJWIaP7Ybs2f2YdP+w+R2eTIDk0+4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.215.93] ([213.196.213.23]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1My32F-1nkGjr1OAR-00zXOM; Thu, 23
- Jun 2022 17:55:48 +0200
-Date:   Thu, 23 Jun 2022 17:55:44 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH] t3701: two subtests are fixed
-In-Reply-To: <xmqq8rpqja0v.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2206231747220.349@tvgsbejvaqbjf.bet>
-References: <cf6aee9acadfb666de6b24b9ed63e1a65bfc009e.1655220242.git.git@grubix.eu> <nycvar.QRO.7.76.6.2206151649030.349@tvgsbejvaqbjf.bet> <165537087609.19905.821171947957640468.git@grubix.eu> <nycvar.QRO.7.76.6.2206181342200.349@tvgsbejvaqbjf.bet>
- <xmqq8rpqja0v.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S230372AbiFWP6L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 11:58:11 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E909FD3
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:58:03 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23A971B6E01;
+        Thu, 23 Jun 2022 11:58:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vDpeRRoSpuI2fxPI4ELFDOQZcRxIc6R8E9W80f
+        4PkFo=; b=Hq2swKUgRigrc8yhBwodNQHOvY70WjVID2mgDm/6DV64zsMHXfESoA
+        eOOTvGFs77vqNFnzZ/yTMgyeSmMwyBxOiYtGg3Bi40yRkIntDp0NUsSL/E8MNIUq
+        2hEgmzwPC2W5lU55mDlUculOPM3jJpEOwgJBBZPZZgJxIZokEo/qs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1BAC11B6E00;
+        Thu, 23 Jun 2022 11:58:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 66E021B6DFC;
+        Thu, 23 Jun 2022 11:57:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v3] ls-files: introduce "--format" option
+References: <pull.1262.v2.git.1655629990185.gitgitgadget@gmail.com>
+        <pull.1262.v3.git.1655777140231.gitgitgadget@gmail.com>
+        <080f65b3-91f5-7b68-4235-4bfb956c8321@gmail.com>
+Date:   Thu, 23 Jun 2022 08:57:58 -0700
+In-Reply-To: <080f65b3-91f5-7b68-4235-4bfb956c8321@gmail.com> (Phillip Wood's
+        message of "Thu, 23 Jun 2022 15:06:33 +0100")
+Message-ID: <xmqqv8sr1iex.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1103821359-1655999748=:349"
-X-Provags-ID: V03:K1:aIcqjWwgGLJE4UW7RLC+tA4vGcU+YFl9zIsfhK0ivURTnM/lsB4
- Bif+6hlvL8n84jeLJNTE6ZGZ6HT+pNZoFtDUPL409e1yHmrSJWmklIHn9nWTHDNiYsqNBzT
- T6+6UxjqdvPLbujk/USsWIN0BLKkJ72S3Szh8HCzm6qt1JmOo8JtH4sjJnQr4pq9bruLqdy
- eBvEfVtRDSe9Li+MIKaEA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xViqrkD06pw=:LhpwCxnZVx6c4ANi07GyNN
- 2J180OYhbjK2GcOYk6mWrWGWdh3qTuUJ1NqcdZtMZGMgJMjFAx9xxdvQ+0XGdNOW5Dv7VmgWF
- Mk+AiDrdwWDj2jp5oIv/xxIA4dEIxaJzhCT2+iX9HL+5oseHp54uXYKGtVOuuEMYl5fnkihl+
- 5ZQASGlJi3BPL0MkOMKAwwZupkkP2Tw8q7BYs1awEsTFDN3clCjPRVwYmQvNttiK0X8QZMZv2
- Dii3wYEwo4cb3jjkvEP7rgmCirjmwUpyjSUSYNVKBUTuwX2c4Yor2mwAXbQ9lJYUnRIIWitvX
- GsJqzsdkUR5cW8NZmlqIiFlEBz2u43yn3BDaJM0AePmXVY9OP7lIR9Okwfl1Qblb1wKJ75Isd
- LFjOmw2I3u326k60wbU83m48j6kxRSbSseKnJXtSOWzpCtuVc2SV4D8IjQogwswy4x326sF8J
- mFG7ju8KtgGgzfIfH+ETw/2kMSetihXZapGzWtjJNCcQemaFWfeplBzPybAMGJjlACiVDkVQw
- TGYiBKe8iGeBhVzUHya3QNv2L+qgTB6UCB0jru3XukjSn43gI7YDTJJHnrqHYxZwca1Vj4UdS
- 53SArgQ3U+YqFHuY9VlpJhEn5I0KCjOsfXVMDTigFIy11D+E/B0H8csMWG8EhPyI8aAPgTWDM
- 5Zl5cI7LnxrkzfQRRwLTTAZqnV4cVmqpM0gLKT9zLbkWstvT8C4POp6oBGw9JWz8jb2NiMuhu
- +YrIEbnPAQ/DxiSWdvXF4IDV3rRYD6V+Kn/OyuhBAGdWgDQ+7pEnjK7vWUuUBQZYM9beMppK2
- 8axX7FBrf8nRg5XgAD2bsG0DAHX96BVjYy+B6jC4CA1U2rm0QJqyCtQxaH2mWjvJhgB86q97t
- +Iadyf7T/51g9jUb9r2Gc7LP3VOujJpn5tRsiw0vVZ5uYZs83VhH/1nePBinClxW0ezv448Ah
- Si/ArJXOLEWcBthQvw0x+gYtQhcqe3pjipySuiHLPUQmHvpQtEg3nBsBoj1CpUzC2gxzLQCiB
- VV+6T3bVbDUh8ZdEvgqG6sH1fHMDPu3X/xewowtlR1q1ac4TDgP7FYjy1erQ6yBeIu7w3JR6Z
- TuVbrKaLFJrKyFgXcx4TgvzB9O66rzg1/xmMhds4cFDzwG9jRnENP2L8A==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 411FC478-F30D-11EC-AF3E-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
---8323328-1103821359-1655999748=:349
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> Thanks for re-rolling, having taken a look a closer look at the tests
+> I'm concerned about the output format for some of the specifiers, see
+> below.
 
-Hi Junio,
+Thanks for raising these issues.  I agree with you on many of them.
+In addition to what you covered ....
 
-I did not want to spend more brain cycles about this, but since you left a
-few questions hanging...
+>> +path::
+>> +	The pathname of the file which is in the index.
+> I think that for all these it might be clearer to say "recorded in the
+> index" rather than "of the file which is in the index"
 
-On Tue, 21 Jun 2022, Junio C Hamano wrote:
+I think we would call this "name".  The name of the existing option
+that controls how they are shown is "--full-name", not "--full-path",
+for example.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> +ctime::
+>> +	The create time of file which is in the index.
 >
-> >> in config.mak. Nothing else strikes me as potentially relevant.
-> >>
-> >> =C3=86var noticed this and has a better version of my patch, I think.
-> >
-> > So you did not find it utterly rude and presumptuous that somebody sen=
-t a
-> > new iteration of your patch without even so much as consulting with yo=
-u
-> > whether you're okay with this? I salute your forbearance, then.
+> This is printed with a prefix 'ctime:' (the same applies to the format
+> specifiers below) I think we should omit that and just print the data
+> so the user can choose the format they want.
 >
-> I had an impression that these (wasn't there another one) were
-> independent discoveries and patching that happened at the same time.
+>> +mtime::
+>> +	The modified time of file which is in the index.
 
-If this was the first time an unsolicited iteration was sent on another
-contributor's behalf, I would be able to give the benefit of the doubt.
-Even if it was the second or third time. It's been many more times,
-though. And it is not leaving the impression of an inviting, welcoming
-culture I would like to see on the Git mailing list. But it's your
-project to lead, not mine, therefore I have no say in this.
+These are only the low-bits of the full timestamp, not ctime/mtime
+themselves.
 
-> > -- snip --
-> > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> > index 94537a6b40a..6d1032fe8ae 100755
-> > --- a/t/t3701-add-interactive.sh
-> > +++ b/t/t3701-add-interactive.sh
-> > @@ -538,7 +538,9 @@ test_expect_success 'split hunk "add -p (edit)"' '
-> >  	! grep "^+15" actual
-> >  '
-> >
-> > -test_expect_failure 'split hunk "add -p (no, yes, edit)"' '
-> > +test_lazy_prereq BUILTIN_ADD_I 'test_bool_env GIT_TEST_ADD_I_USE_BUIL=
-TIN true'
-> > +
-> > +test_expect_success BUILTIN_ADD_I 'split hunk "add -p (no, yes, edit)=
-"' '
-> >  	test_write_lines 5 10 20 21 30 31 40 50 60 >test &&
-> >  	git reset &&
-> >  	# test sequence is s(plit), n(o), y(es), e(dit)
+But stepping back a bit, why do we need to include them in the
+output?  What workflow and use case are we trying to help?  Dump
+output from "stat <path>" equivalent from ls-files and compare with
+"stat ." output to see which ones are stale?  Or is there any value
+to see the value of, say, ctime as an individual data item?
+
+>> +dev::
+>> +	The ID of device containing file which is in the index.
+>> +ino::
+>> +	The inode number of file which is in the index.
+>> +uid::
+>> +	The user id of file owner which is in the index.
+>> +gid::
+>> +	The group id of file owner which is in the index.
+
+Again, why do we need to include these in the output?
+
+Wouldn't it be sufficient, as well as a lot more useful, to show a
+single bit "the cached stat info matches what is in the working tree
+(yes/no)"?
+
+>> +size::
+>> +	The size of the file which is in the index.
+
+This needs to explain what kind of size this is.  Is it the size of
+the blob object?  Is it the size of the file in the working tree
+(i.e. not cleaned)?  Is it _always_ the size, or can it become a
+number that is very different from size in certain circumstances?
+
+IOW, I do not think giving this to unsuspecting users and call it
+"size of the file" hurts them more than it helps them, especially
+because it is not always the size of the file.
+
+I'd suggest getting rid of everything from ctime down to size and if
+we really care about the freshness of the cached stat info, replace
+them with a single bit "up-to-date".
+
+>> +flags::
+>> +	The flags of the file in the index which include
+>> +	in-memory only flags and some extended on-disk flags.
 >
-> Prerequisite lets you skip.
+> If %(flags) is going to be useful then I think we need to think about
+> how they are printed and document that. At the moment they are printed 
+> as a hexadecimal number which is fine for debugging but probably not
+> going to be useful for something like --format. I think printing 
+> documented symbolic names with some kind of separator (a comma maybe)
+> between them is probably more useful
 
-Yes. It lets you skip a test for a known breakage in code we're never
-going to fix because we're going to delete it instead, for example. Saving
-some electricity, too, by avoiding to run said test case.
+I am guessing that most of the above are only useful for curious
+geeks and those who are debugging their new tweak to the code that
+touches the index, i.e. a debugging feature.  But these folks can
+run "git" under a debugger, and they probably have to do so when
+they are seeing an unexpected value in the flags member of a cache
+entry anyway.  So I am not sure whom this field is intended to help.
 
-> > @@ -562,7 +564,7 @@ test_expect_success 'split hunk with incomplete li=
-ne at end' '
-> >  	test_must_fail git grep --cached before
-> >  '
-> >
-> > -test_expect_failure 'edit, adding lines to the first hunk' '
-> > +test_expect_failure BUILTIN_ADD_I 'edit, adding lines to the first hu=
-nk' '
+>> [...]
+>> +test_expect_success 'git ls-files --format eol' '
+>> +	printf "i/lf    w/lf    attr/                 \t\n" >expect &&
+>> +	printf "i/lf    w/lf    attr/                 \t\n" >>expect &&
+>> +	git ls-files --format="%(eol)" --eol >actual &&
 >
-> I am not sure if this is a good change, quite honestly.  With
-> s/failure/success/, perhaps, but not in the posted form.
+> I'm not sure why this is passing --eol as well as --format='%(eol)' -
+> shouldn't that combination of flags be an error?
 
-Indeed, this was an oversight on my part, as you might have guessed from
-the `failure` being replaced with `success` in the previous hunk. I simply
-forgot it here.
+Good eyes.
 
-But a more complicated solution for the same problem was applied directly
-to the main branch, so I'd like to shift my attention to problems where my
-input has a chance of mattering.
-
-Ciao,
-Dscho
-
---8323328-1103821359-1655999748=:349--
+Thanks.
