@@ -2,93 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B1A0C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 02:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F64EC433EF
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 04:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237639AbiFWCOc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 22:14:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57942 "EHLO
+        id S233064AbiFWErr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 00:47:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230296AbiFWCOc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 22:14:32 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D91433894
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 19:14:29 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-fb6b4da1dfso24850774fac.4
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 19:14:29 -0700 (PDT)
+        with ESMTP id S1347523AbiFWEh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 00:37:27 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B182231533
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 21:37:25 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id z7so26739690edm.13
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 21:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=klerks.biz; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=duxudbtsVdS0IXSiEa7ciHxPRHeDKmYrC5xZgr3lp9E=;
-        b=Kl8muXkut5wp/zT0BV5vjZKA8JdLV4n1wT4wFC7MJVrSagKskwHm718EB/13WsNfjk
-         82QymsI5M0tjpfm2jHiu+8mMs5IQUB6PGfXsXx8xStt6Omzi7J4mzn+BhKu5Sly8E4du
-         /8QBUw1Adhsd98KOPzzqM7dnDAZAxm5slilmZW+/XCU8j63tD8axpvnnALThLUFGHJEW
-         pYCZdrz16TMZAKK3KSVUeE19KphIfrIkJgLYRYOE+HG7GHNUNpjlDNS25kWagoqztoil
-         zLoMzH+kJO0Jdf3Y+tudT8lYw9OucwkvUUeOLMgjxOIwrF/b96CW45Sy42FB3Q9OqEH/
-         qUhQ==
+        bh=Oh+mMaNzDwbHu0ZMLgYhDHfoAZGCLF93bJHnTSgaS1E=;
+        b=Pt/dCjW4U/CNNV5g3tpWIj9mvqVhjsfcEbLJNUgZMerf3mHNCxHpb7kRoOKY6bvgxj
+         pAoKLtf5qkR0RJl5QFuZKVi11///raCQu/g4akwE5Rp63TYO7NPjf6Cf2TsIXrOGqZPd
+         zcd5LTFIETqGaseAEofl008nem4iKVruNrGik=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=duxudbtsVdS0IXSiEa7ciHxPRHeDKmYrC5xZgr3lp9E=;
-        b=AbCBz3j6Wrz7cc1PreitcKSjPz5egmkievCneHYd5le6zCTWyiz6gC0AcdIqsFNZMe
-         L7x2jITSHdiQlyeBWy3BPvvu2WobWDt1TLhzfUqG8Qyc90KsjwlXP/DbGenABy18KK1K
-         O+HOO7kzcmJkHsmHDACA4H0ukZ62bRx4w5q4NVTVcPq0HgJsBu5t9xlJweK0npwx7kxf
-         75HPiQ3Y0kuq6KmpRVQqe3f+dEP/JyBZpRJs4Eng01qAltGdZFN/evMXeoi1PCk9m5QE
-         FQb7MzWDjIjRj1ix9yM5mV5hSKsHA8wfvjFl7hhZ99ezb3OsyC01ab9L1kX5PDoIHc/j
-         YF7A==
-X-Gm-Message-State: AJIora+0eHifBqfRErfqHUOapQS691XaqISnL8FOaHGpXFi3ng8OzDF+
-        RndesyE9rMZ6EtjoBV2NBqu1T26deqNoMmw4CqXlPXDgydQ=
-X-Google-Smtp-Source: AGRyM1tjfo1Itz68DC9SXJW4wgnrWSR/R5MmYXoE9yTtfJYBr7JwOMkqwHRH2RVqzJjY77piAALBS4omX2g8nU31HQM=
-X-Received: by 2002:a05:6870:a2d1:b0:101:ce47:e1e6 with SMTP id
- w17-20020a056870a2d100b00101ce47e1e6mr971469oak.80.1655950468428; Wed, 22 Jun
- 2022 19:14:28 -0700 (PDT)
+        bh=Oh+mMaNzDwbHu0ZMLgYhDHfoAZGCLF93bJHnTSgaS1E=;
+        b=Zmw+2oMxu7HuSZgsJq6t1zgfIiirCwqgaNypCpvqUWRGMsi6Extd6eJ5mPs6ksLxAQ
+         gUgiz5W22FOGFKd449CxlFDQJrCPO53hWg703kl+maYn9vSevyEFx+9TB3LLHnwrIBYq
+         ScDPGl34ppWuhJD/iAJvFaF/pMbCT5ptCkEIoJE0HZqPcgpO9QnCI9t9qRPouMmoERip
+         nl0DPDqBEDJXiJ0HOGQ50lH+qmDhAZxeUvswxTU6G/yl09DLz93znBH3aVM+ZtWzdlHZ
+         qFNodYaudfV7YCxX1F7yYE9kIf+XS2cgliUn2FHRIRjVLC2gJAvCBE5cvJX3sQXPD2mm
+         9DDg==
+X-Gm-Message-State: AJIora9yJiuljUWF+hcL7uXHGo4U5X8fN8uP+E2nOmqWIAeNTyTkRTet
+        ZjDOXuqY6ihS/21oYFHxM3QRBbjEVNxDIRZbTQyXxoqdDAeMTTEQpB0=
+X-Google-Smtp-Source: AGRyM1vtIWTZIWEQwNU0UONo+NziIyDhHao4AFQtyqc6WtTdo1hrbULhrGi2rx8ty6nf6nlwfLEot6YoKQTxTFCHXRA=
+X-Received: by 2002:a05:6402:e87:b0:435:5dda:9428 with SMTP id
+ h7-20020a0564020e8700b004355dda9428mr8350455eda.6.1655959044186; Wed, 22 Jun
+ 2022 21:37:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1280.git.git.1655927444821.gitgitgadget@gmail.com>
- <xmqqpmj03183.fsf@gitster.g> <CANYiYbGgS8hYUpAHJBmw0URcwTm+jpXHWK4DA0=jPHYpS53W1A@mail.gmail.com>
-In-Reply-To: <CANYiYbGgS8hYUpAHJBmw0URcwTm+jpXHWK4DA0=jPHYpS53W1A@mail.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Thu, 23 Jun 2022 10:14:16 +0800
-Message-ID: <CANYiYbGCkGoxG9Ly5bEsH14XJMUExtEXArHGLSho8ycXevMs3w@mail.gmail.com>
-Subject: Re: [PATCH] po typo: l10
+References: <pull.1265.git.1655697671724.gitgitgadget@gmail.com> <xmqqbkumhtur.fsf@gitster.g>
+In-Reply-To: <xmqqbkumhtur.fsf@gitster.g>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Thu, 23 Jun 2022 06:37:13 +0200
+Message-ID: <CAPMMpojn3BfwJJ_CqtM=PXaXvErV11ZGcopmGdbiKMDymZ=DVA@mail.gmail.com>
+Subject: Re: [PATCH] rev-parse: documentation adjustment - mention remote
+ tracking with @{u}
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Arthur Milchior via GitGitGadget <gitgitgadget@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Git List <git@vger.kernel.org>,
-        Arthur Milchior <arthur@milchior.fr>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 23, 2022 at 10:01 AM Jiang Xin <worldhello.net@gmail.com> wrote:
+On Tue, Jun 21, 2022 at 6:19 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Thu, Jun 23, 2022 at 4:26 AM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > "Arthur Milchior via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > > From: Arthur Milchior <arthur@milchior.fr>
-> > >
-> > > It should be l10n
-> >
-> > It should be, indeed.
-> >
-> > Thanks for patching a 10-year old bug, introduced at 75b182ae
-> > (Update l10n guide: change the repository URL, etc, 2012-03-02).
-> >
-> > Jiang, I can take it directly to my tree, or I can pull it as part
-> > of the localization update before the release.  Let's make sure we
-> > do not drop it, each expecting that the other party will pick it up
-> > X-<.
+> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> The typo was from my fingers, oops. Thanks Arthur for reporting.
+> > ... As `branch.<name>.merge` is the branch path on the
+> > +  remote, it is first converted to a local tracking branch (i.e., something in
+> > +  `refs/remotes/`).
 >
-> Junio, I will apply this patch to my tree as the l10n update for this
-> release, and will send you a pull request before next Monday.
+> Let's correct it to "remote-tracking branch".
+>
+> But more importantly, the order of explanation feels a bit
+> backwards. Something like...
+>
+>     A branch B may be set up to build on top of a branch X
+>     (configured with `branch.<name>.merge`) at a remote R
+>     (configured with `branch.<name>.remote`).  B@{u} refers to the
+>     remote-tracking branch for the branch X taken from remote R,
+>     typically found at `refs/remotes/R/X`.
+>
+> ... to cover both of the above, perhaps, may flow more naturally?
+>
 
-See this commit: https://github.com/git-l10n/git-po/commit/fb03f55d87
-
->
-> --
-> Jiang Xin
+Looks great, thanks! I feel like a bit of a fraud signing my name to
+it now, but the important thing is that's a much better improvement
+than I proposed. Patch v2 coming.
