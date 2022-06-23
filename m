@@ -2,87 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2675C43334
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 17:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D72D7CCA47C
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 17:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234645AbiFWRlN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 13:41:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42686 "EHLO
+        id S232851AbiFWRx6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 13:53:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234421AbiFWRj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 13:39:59 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F370E973F6
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 10:09:53 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B467C13D27A;
-        Thu, 23 Jun 2022 13:09:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z18XC4ZOQYRfxUP7gRPS3hQFGOQFm7XqssnL5R
-        xYLWQ=; b=S40TSl46MtbPZSBM4GfaPPTRfSRkdBXxHuJEQUPxLJysCXjvSyHRfo
-        Py3u5hdX5sN9x+eDmLE0+2GTzthjzDD9xtq21ReD6OVHLlY3k8KlR2LJox8Pflfl
-        yy55/psNBO8R99rtOLtVK2Mdi2cr5Y/0l6g8+HRduMjKOClbspVlQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC47313D279;
-        Thu, 23 Jun 2022 13:09:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1511213D278;
-        Thu, 23 Jun 2022 13:09:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Li Linchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH] ls-files: update test style
-References: <pull.1269.git.1655974015414.gitgitgadget@gmail.com>
-Date:   Thu, 23 Jun 2022 10:09:48 -0700
-In-Reply-To: <pull.1269.git.1655974015414.gitgitgadget@gmail.com> (Li Linchao
-        via GitGitGadget's message of "Thu, 23 Jun 2022 08:46:55 +0000")
-Message-ID: <xmqq5ykr1f37.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4A7B1FC2-F317-11EC-8B94-CB998F0A682E-77302942!pb-smtp2.pobox.com
+        with ESMTP id S235440AbiFWRwg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 13:52:36 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED13517DC
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 10:13:23 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id f13-20020a170902ce8d00b0016a408cbf3bso3636756plg.7
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 10:13:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=EeFvhCFO+giyylrQ1DFU9CQkVmMtyIPzxoZgdqxrGLs=;
+        b=SvH7+B2f5BdA/Y4noURlBA8mTGVk32pEtRsJysr4K+etHWsk25d9SdNooSdO9T9bKW
+         rttTLHzbQHnCR76umlClX/8DwSmWOFfBY6bzlcK/58d0pcUlsacDvoxSLjjYr375T1xp
+         UiysEh1233T9t4KaDafTN4Mki+kShaqcHj4kmMms03540uAT2oLVQhuYn/hQ4GfiJd+B
+         HrEg17VZe/kb7r/RyvhMXxNSRUuwJ2gIKBxD4A2/JzMoTSd1dJ9Ta+v7wsZzruoWZ8+h
+         x+mKug6oogNzXL4n3VwCrwTwdjK145xgzO40jZm93Cc9xLwn+M3oYvbjDGmkBET7wq5M
+         svIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=EeFvhCFO+giyylrQ1DFU9CQkVmMtyIPzxoZgdqxrGLs=;
+        b=qVzGjT4rqlrv8u7ATBJSD+EVSdd05+raxkHxSAYYPUR68+dbP4zS6yHFpB023T0OCF
+         rixcnxmOMcvb2yWE/fIPox9O6lCxN5fLTovTqYyrabaPrhi+vHNW5DYNvt0gYC7k9m5m
+         /Ol9fxj7C93cNQl0A8ED/Hm/GbzvfqH2BBnTv9a+6MgKYnubMThY41i+MRR3RdTbhNAv
+         AJJ5owAYkN+dJWL4bugAQV0KqXLiEZ17GpabppWlG7jjRmgV4YrApxLrvWQg9swycrgz
+         8Q2sZBgo0CL1/fimrtQjlWqlWhFRsPps68i8Z+gCnMJ49/B2+4aBG9ChVEhi4b69tggf
+         4gnw==
+X-Gm-Message-State: AJIora+laQi6xfpOGqdbZD3Oecw6tEdJOkR18D6YPEn26s/bqjUlXl9O
+        PTbdyyFLV7P2SBVSAHG3tMnwFFpagd2wgQ==
+X-Google-Smtp-Source: AGRyM1voMPeQVzkcr1vyCIwrbxEqraXJyD8X7WlbVECMCXPSua8J74qbaiYQWSOAlyUhdG2+CUP4M5QyaY6Z3A==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:f8d2:b0:1ec:b55b:2fdc with SMTP
+ id l18-20020a17090af8d200b001ecb55b2fdcmr4972656pjd.115.1656004402563; Thu,
+ 23 Jun 2022 10:13:22 -0700 (PDT)
+Date:   Thu, 23 Jun 2022 10:13:20 -0700
+In-Reply-To: <20220622220331.3734584-1-jonathantanmy@google.com>
+Message-Id: <kl6lr13fi9qn.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220622220331.3734584-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v4 0/5] config: introduce discovery.bare and protected config
+From:   Glen Choo <chooglen@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Li Linchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> diff --git a/t/README b/t/README
-> index 309a31133c6..70205fba41b 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -560,6 +560,21 @@ Here are the "do's:"
->     Even code that isn't a test per se, but merely some setup code
->     should be inside a test assertion.
->  
-> + - Keep test title the same line with test helper function itself,
-> +   and end the line with a single quote.
-> +
-> +   Take test_expect_success helper for example, write it like:
-> +
-> +  test_expect_success 'test title to describe this test case' '
-> +  # test body
-> +  '
+> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> Glen Choo (5):
+>>   Documentation/git-config.txt: add SCOPES section
+>>   Documentation: define protected configuration
+>
+> Forgot to mention when I was sending my comments on patch 2: we should
+> standardize on "protected config" and not use "protected configuration"
+> anywhere.
 
-If you want to show the pretty layout, then the test body should
-be shown indented, i.e.
+Makes sense.
 
-	test_expect_success 'title' '
-		... test body ...
-	'
+> One alternative design would have been to have separate configsets for
+> protected config and non-protected config (or even better, separate
+> configsets for trace2 config, protected config minus trace2 config, and
+> non-protected config) but that doesn't have to block the submission of
+> this patch set.
 
-But I am not sure if this belongs to the existing "Do's and don'ts"
-section, which lists tips that matter for correctness.
+I suppose that the idea behind this is that we only parse and store each
+config file exactly once. It's a good goal, but the whole point of the
+configset is that we can query a single struct to figure out the value
+of a config variable. Having multiple configsets starts to shift more of
+the burden to the callers because they now have to query multiple
+configsets to find their desired config value, and we already start to
+see some of this unpleasantness in this series.
 
-This new one certainly encouraged as a more modern style, but is not
-about correctness at all.
+An alternative that I'd been thinking about is to make a few changes to
+the git_config_* + configset API to allow us to use a single configset
+for all of our needs:
 
-A separate "recommended style" section might make sense, but there
-will be a lot more entries, like when to quote and not to quote EOF
-marker for here-document, indenting the body of here-document, etc.
+1. Keep track of what config we've read when reading into
+   the_repository->config, i.e. instead of a boolean "all config has
+   been [un]read", we can express "system and global config has been
+   read, but not local or command config". Then, use this information to
+   load config from sources as they become available. This will allow us
+   to read incomplete config for trace2 and setup.c (discovery.bare and
+   safe.directory), and only read what we need later on.
+
+   This assumes that when Git reads config, that config is always valid
+   later on. So this is broken if, e.g. we read global config file A
+   during setup, but when we discover the repo, we discard A and read
+   global config file B instead. I don't know if we do this or if we are
+   planning to in the future.
+
+2. Add an additional argument that specifies what scopes to respect when
+   reading config (maybe as a set of flags). This gives us extra
+   specificity when using the git_config*() functions, so we could get
+   rid of git_protected_config() like so:
+
+    /* Change enum config_scope into flags first... */
+
+    #define WIP_SCOPES_PROTECTED = CONFIG_SCOPE_SYSTEM & \
+      CONFIG_SCOPE_GLOBAL & CONFIG_SCOPE_COMMAND
+
+    static enum discovery_bare_allowed get_discovery_bare(void)
+    {
+      enum discovery_bare_allowed result = DISCOVERY_BARE_ALWAYS;
+      git_config(discovery_bare_cb, &result, WIP_SCOPES_PROTECTED);
+      return result;
+    }
+
+   And as an added bonus, this gives us an easy way to implement the
+   constant time git_config_*() functions for protected config. We could
+   even do this without doing 1. first. I haven't looked into whether
+   we could turn the enum into flags, but otherwise, I think this is
+   pretty feasible.
