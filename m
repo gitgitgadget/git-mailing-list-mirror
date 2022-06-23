@@ -2,54 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FC04C43334
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 02:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B1A0C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 02:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377342AbiFWCB6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 22:01:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49016 "EHLO
+        id S237639AbiFWCOc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jun 2022 22:14:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233881AbiFWCB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 22:01:57 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41966109C
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 19:01:57 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-101cdfddfacso16670978fac.7
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 19:01:57 -0700 (PDT)
+        with ESMTP id S230296AbiFWCOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 22:14:32 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D91433894
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 19:14:29 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-fb6b4da1dfso24850774fac.4
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 19:14:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=QeR+ehmUcosGVVkDy/1BkXtGouHbhHk5vXlildNzwME=;
-        b=TZ02vOce++g6qayASASQLTrxoZhoFaDB51ci0Vyi0Q94bVcBGPqJw/B7cnG9qypQGA
-         QapNMc0IJYfsOTPm7T9RoKM4NY83+HFyJnFQR+d9BS8CTcn1PZyn+RGXR4h/UgOrlQ76
-         22d948DjMvAr6KPNB256PZc7RC9dJuAMcU6Hiw2eGQbFeqwxHAq2aywoJlOua4KpuBC7
-         FA9lI8xoGL5WBaGWkZUS07m5AfDJjem7eMiDp+PTVpP68KTOk4Bt5LZ5krzAsr4SHKzf
-         yTbKKvSd81/nwv9spT7hyqoWvC62Wn7+LWeVcnT/oS+cKNKBpLTh4b5GgfiuKAiskKkx
-         Gbow==
+        bh=duxudbtsVdS0IXSiEa7ciHxPRHeDKmYrC5xZgr3lp9E=;
+        b=Kl8muXkut5wp/zT0BV5vjZKA8JdLV4n1wT4wFC7MJVrSagKskwHm718EB/13WsNfjk
+         82QymsI5M0tjpfm2jHiu+8mMs5IQUB6PGfXsXx8xStt6Omzi7J4mzn+BhKu5Sly8E4du
+         /8QBUw1Adhsd98KOPzzqM7dnDAZAxm5slilmZW+/XCU8j63tD8axpvnnALThLUFGHJEW
+         pYCZdrz16TMZAKK3KSVUeE19KphIfrIkJgLYRYOE+HG7GHNUNpjlDNS25kWagoqztoil
+         zLoMzH+kJO0Jdf3Y+tudT8lYw9OucwkvUUeOLMgjxOIwrF/b96CW45Sy42FB3Q9OqEH/
+         qUhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=QeR+ehmUcosGVVkDy/1BkXtGouHbhHk5vXlildNzwME=;
-        b=aHvjSkSrTq/ubNiF4G4VKC7ijfm3g7DAReV2R6sUX22FdXyBjN1BuD5XQAeNoZG3Ty
-         0P+loYYBIMHgM/r56nbjBcFWTh2nI2loQAAosn0W6dHF5708drOdQEAPx6pEvOldKl/r
-         TiMWwTHcBvJVJyHO2zRsIIdAKo0w+BlNTQAHq3SeALre8UuDvZB2vY6MNpD4pPnqzzFJ
-         JdTA1ifppH4aUBi7KAZm/zjWkqgwqhhy6Qtk4iCH/5d8QgjdefAPZ6iGJOz6TGYq3cEz
-         9Sdd3NmaHlTVpQYc0crS1wLddghKUs8tC784atRGU5Wc/uObbmIEGQY1lz+S7w8q5Y63
-         b44A==
-X-Gm-Message-State: AJIora/LnGD6hMFbIWpMdJgtd8qFo1kAik3ZNhmg+3VuToB6IbKIEaeV
-        SB2E32FUBNCN7Bhcxl8FVK0AoNb3PSP1z/jh6U0=
-X-Google-Smtp-Source: AGRyM1ufKCR1mn2/7K6CzAEjeyAODUQZk1iP4P+uDf4gGJnmzF2HbAfQAZkXEbVwM05O48LcdHCqp+TDS/n2g5zCLiw=
+        bh=duxudbtsVdS0IXSiEa7ciHxPRHeDKmYrC5xZgr3lp9E=;
+        b=AbCBz3j6Wrz7cc1PreitcKSjPz5egmkievCneHYd5le6zCTWyiz6gC0AcdIqsFNZMe
+         L7x2jITSHdiQlyeBWy3BPvvu2WobWDt1TLhzfUqG8Qyc90KsjwlXP/DbGenABy18KK1K
+         O+HOO7kzcmJkHsmHDACA4H0ukZ62bRx4w5q4NVTVcPq0HgJsBu5t9xlJweK0npwx7kxf
+         75HPiQ3Y0kuq6KmpRVQqe3f+dEP/JyBZpRJs4Eng01qAltGdZFN/evMXeoi1PCk9m5QE
+         FQb7MzWDjIjRj1ix9yM5mV5hSKsHA8wfvjFl7hhZ99ezb3OsyC01ab9L1kX5PDoIHc/j
+         YF7A==
+X-Gm-Message-State: AJIora+0eHifBqfRErfqHUOapQS691XaqISnL8FOaHGpXFi3ng8OzDF+
+        RndesyE9rMZ6EtjoBV2NBqu1T26deqNoMmw4CqXlPXDgydQ=
+X-Google-Smtp-Source: AGRyM1tjfo1Itz68DC9SXJW4wgnrWSR/R5MmYXoE9yTtfJYBr7JwOMkqwHRH2RVqzJjY77piAALBS4omX2g8nU31HQM=
 X-Received: by 2002:a05:6870:a2d1:b0:101:ce47:e1e6 with SMTP id
- w17-20020a056870a2d100b00101ce47e1e6mr941216oak.80.1655949716645; Wed, 22 Jun
- 2022 19:01:56 -0700 (PDT)
+ w17-20020a056870a2d100b00101ce47e1e6mr971469oak.80.1655950468428; Wed, 22 Jun
+ 2022 19:14:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1280.git.git.1655927444821.gitgitgadget@gmail.com> <xmqqpmj03183.fsf@gitster.g>
-In-Reply-To: <xmqqpmj03183.fsf@gitster.g>
+References: <pull.1280.git.git.1655927444821.gitgitgadget@gmail.com>
+ <xmqqpmj03183.fsf@gitster.g> <CANYiYbGgS8hYUpAHJBmw0URcwTm+jpXHWK4DA0=jPHYpS53W1A@mail.gmail.com>
+In-Reply-To: <CANYiYbGgS8hYUpAHJBmw0URcwTm+jpXHWK4DA0=jPHYpS53W1A@mail.gmail.com>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Thu, 23 Jun 2022 10:01:45 +0800
-Message-ID: <CANYiYbGgS8hYUpAHJBmw0URcwTm+jpXHWK4DA0=jPHYpS53W1A@mail.gmail.com>
+Date:   Thu, 23 Jun 2022 10:14:16 +0800
+Message-ID: <CANYiYbGCkGoxG9Ly5bEsH14XJMUExtEXArHGLSho8ycXevMs3w@mail.gmail.com>
 Subject: Re: [PATCH] po typo: l10
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Arthur Milchior via GitGitGadget <gitgitgadget@gmail.com>,
@@ -61,28 +62,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 23, 2022 at 4:26 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Jun 23, 2022 at 10:01 AM Jiang Xin <worldhello.net@gmail.com> wrote:
 >
-> "Arthur Milchior via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Arthur Milchior <arthur@milchior.fr>
+> On Thu, Jun 23, 2022 at 4:26 AM Junio C Hamano <gitster@pobox.com> wrote:
 > >
-> > It should be l10n
+> > "Arthur Milchior via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > > From: Arthur Milchior <arthur@milchior.fr>
+> > >
+> > > It should be l10n
+> >
+> > It should be, indeed.
+> >
+> > Thanks for patching a 10-year old bug, introduced at 75b182ae
+> > (Update l10n guide: change the repository URL, etc, 2012-03-02).
+> >
+> > Jiang, I can take it directly to my tree, or I can pull it as part
+> > of the localization update before the release.  Let's make sure we
+> > do not drop it, each expecting that the other party will pick it up
+> > X-<.
 >
-> It should be, indeed.
+> The typo was from my fingers, oops. Thanks Arthur for reporting.
 >
-> Thanks for patching a 10-year old bug, introduced at 75b182ae
-> (Update l10n guide: change the repository URL, etc, 2012-03-02).
+> Junio, I will apply this patch to my tree as the l10n update for this
+> release, and will send you a pull request before next Monday.
+
+See this commit: https://github.com/git-l10n/git-po/commit/fb03f55d87
+
 >
-> Jiang, I can take it directly to my tree, or I can pull it as part
-> of the localization update before the release.  Let's make sure we
-> do not drop it, each expecting that the other party will pick it up
-> X-<.
-
-The typo was from my fingers, oops. Thanks Arthur for reporting.
-
-Junio, I will apply this patch to my tree as the l10n update for this
-release, and will send you a pull request before next Monday.
-
---
-Jiang Xin
+> --
+> Jiang Xin
