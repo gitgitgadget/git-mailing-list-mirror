@@ -2,88 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E80C43334
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 15:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 646A6C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 15:39:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232041AbiFWPdD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 11:33:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43934 "EHLO
+        id S231686AbiFWPjU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 11:39:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232038AbiFWPdC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 11:33:02 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C6A538A0
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:33:01 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7171C1A55D1;
-        Thu, 23 Jun 2022 11:33:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=cHc32v849jL5
-        Hv+NgvANgTTAup7i4MU+hgWo1uZFq0k=; b=IsPpI6NmpV9xU9uiDqxrkQjK5N9Y
-        5dtolMyzXZxtvk+ka3O8Y7jhw4lSCmt109QIKP7NTJwSmM4jA2oD6uK1q0mkFBBk
-        4NWwhnCArAW9mWZJiEFMbfnOZdgKwJt/j+ltpOIsfMO2xmSYiCbcaqYq3lEpcD3L
-        uu1JvLDBd+9JrM8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 69B9C1A55CF;
-        Thu, 23 Jun 2022 11:33:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DEDBA1A55CE;
-        Thu, 23 Jun 2022 11:32:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Stephen Smith <ischis2@cox.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.org>
-Subject: Re: SHA-256 transition
-References: <12011256.O9o76ZdvQC@thunderbird>
-        <220621.86sfnyuvt0.gmgdl@evledraar.gmail.com>
-        <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
-        <12092182.O9o76ZdvQC@thunderbird>
-        <YrPFfk5eIX55oO8R@tapette.crustytoothpaste.net>
-Date:   Thu, 23 Jun 2022 08:32:55 -0700
-In-Reply-To: <YrPFfk5eIX55oO8R@tapette.crustytoothpaste.net> (brian
-        m. carlson's message of "Thu, 23 Jun 2022 01:44:30 +0000")
-Message-ID: <xmqqbkuj2y54.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229863AbiFWPjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 11:39:19 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15271EE37
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:39:19 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d5so18463403plo.12
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:39:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=danil-cz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ewxGlB+E2ocVl736D7aw473itpsth+LjKZvCCEVBGXU=;
+        b=jlPvZBFJEct27y0se3xW3yWIW6PR2TDeO9HR+pO+AFFO2rbx67vSv1J96mPMKzgTGy
+         2yHO4Azl8YCUqCpFAHxNs0krBn7vEXvEP00QOH/UUZDdpy8+ISUWSqCFj+Iv7pVXmgHd
+         I7EmqeWbM4oeJ+Ju7bYbzKwIETLQoVpXhWOr2cMIMRJx5nyQkot3VB8NO3UQdyF/FuPN
+         aTuYVmZncOAvX603TKLjcc+XRr7GPpJFcsL0x/JPL4epDam1nK3N3ZFFSmwQM8NT7sM6
+         yNpzPm1GHDzlmgXGXSRQod5R6CnmS4iGVSWtLRaLsb0Mup34354i6zB6H49MzYmF+6ho
+         WGug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ewxGlB+E2ocVl736D7aw473itpsth+LjKZvCCEVBGXU=;
+        b=AaZ6eb3Ijm7kh+cR4QiRrQESPMKo1ZdqJ8b7WK0Y3TqE1cYcSb5lhyyIVrG/3RaQ7R
+         Xm9Xz+fSuQA8TUDSrD9Q3JeDAHx36n7cUtlkm3sd8tv9a10KP4qNEPLUqdaP9DafnXss
+         4KSYEBVbjdyMJ5j2o31IDGoLJgpjoyuHUoS/LGxK7GWpZWmxUWxN6LvbBSnTHvTclW+F
+         lhF/teAAI9sN9E/kw55vWwDEv7BB03RNKEIJp/PZsPRg77w4v6q6QLn4cjgoArd1Y9v2
+         Ul4cvHeU8I2sAURCHG3V23xdYVTok2lRztSLscQWcHeyIMTmdoJyUhlZUSm1Z4ACEqX9
+         3JGQ==
+X-Gm-Message-State: AJIora/O6Ju6d9rT5b8KI0QUfoEbJ5IA5+QFlt11QNxt2D74vUT3bwCg
+        CxL+nXDXRMob5H7+16Qd7/Im1xWj1OsWmqO/e0/nqonFhkX9DNx5
+X-Google-Smtp-Source: AGRyM1sCAloYVC0seOT3972UqFh6+aI4/qQ5swZrn7CJBKPTxv4y5xn1xJn+HjbX2kvdrZ6NT2EvQIPXbmTtUTarto8=
+X-Received: by 2002:a17:90b:4f45:b0:1ed:3fe:e54 with SMTP id
+ pj5-20020a17090b4f4500b001ed03fe0e54mr4801513pjb.32.1655998758557; Thu, 23
+ Jun 2022 08:39:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C18F3160-F309-11EC-AAF3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Danil Pristupov <danil@danil.cz>
+Date:   Thu, 23 Jun 2022 17:39:07 +0200
+Message-ID: <CAKdzDnn7KkRpXta1LiHcDPCztPcPRTFv8zTW_v+GpBAuSTW6yg@mail.gmail.com>
+Subject: Diff for unmerged files always misses the `\ No newline at end of
+ file` mark
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Some time ago I reported a bug there, but got no response. I hope it's
+OK if I post it again.
 
-> On 2022-06-23 at 00:45:40, Stephen Smith wrote:
->> On Tuesday, June 21, 2022 5:29:59 PM MST brian m. carlson wrote:
->> > On 2022-06-21 at 10:25:01, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wr=
-ote:
->> > > But the reason I'd still say "no" on the technical/UX side is:
->> > >  * The inter-op between SHA-256 and SHA-1 repositories is still
->> > > =20
->> > >    nonexistent, except for a one-off import. I.e. we don't have an=
-y
->> > >    graceful way to migrate an existing repository.
->> >=20
->> > True, but that doesn't meant that new repositories couldn't use SHA-=
-256.
->>=20
->> So, any idea when a graceful way to migrate a repository might show up=
-?
->
-> I'm hoping that my employer will give me time to work on this in the
-> future.  Perhaps I'll have more to show on this closer to the last
-> quarter of the year.
->
-> At the moment I happen to be very busy in my personal life, so I'm not
-> finding a great deal of time to code much of anything.  But if that
-> changes, I'll try to get back to it.
+Diff for unmerged files always misses the `\ No newline at end of file` mark.
 
-Great ;-).  Thanks.
+I was able to reproduce this with all git versions on all platforms.
+
+Steps to reproduce (macOS, 2.32.0 (Apple Git-132)):
+
+```
+git init
+echo "line1\nline2" > eol.txt
+echo -n "line1\nline2" > noeol.txt
+git add .
+git commit -m "initial"
+git branch br1
+echo "line11\nline2" > eol.txt
+echo -n "line11\nline2" > noeol.txt
+git add .
+git commit -m "line1"
+git checkout br1
+echo "line12\nline2" > eol.txt
+echo -n "line12\nline2" > noeol.txt
+git add .
+git commit -m "line2"
+git merge master
+git diff -- eol.txt > eol.diff
+git diff -- noeol.txt > noeol.diff
+```
+
+Expected behavior: `noeol.diff` must have the `\\ No newline at end of
+file` mark (I guess double slash `\` must be used as a prefix)
+
+```
+$ git diff -- eol.txt
+diff --cc eol.txt
+index 3dc0c7e,5328e33..0000000
+--- a/eol.txt
++++ b/eol.txt
+@@@ -1,2 -1,2 +1,6 @@@
+++<<<<<<< HEAD
+ +line12
+++=======
++ line11
+++>>>>>>> master
+  line2
+\\ No newline at end of file
+```
+
+Actual behavior: `noeol.diff` does NOT have the `\\ No newline at end
+of file` mark
+
+```
+$ git diff -- eol.txt
+diff --cc eol.txt
+index 3dc0c7e,5328e33..0000000
+--- a/eol.txt
++++ b/eol.txt
+@@@ -1,2 -1,2 +1,6 @@@
+++<<<<<<< HEAD
+ +line12
+++=======
++ line11
+++>>>>>>> master
+  line2
+```
