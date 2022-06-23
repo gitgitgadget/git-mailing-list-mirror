@@ -2,155 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9407C43334
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 15:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 851FCC433EF
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 16:12:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231869AbiFWP6M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 11:58:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35238 "EHLO
+        id S231160AbiFWQMn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 12:12:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230372AbiFWP6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 11:58:11 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E909FD3
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:58:03 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23A971B6E01;
-        Thu, 23 Jun 2022 11:58:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vDpeRRoSpuI2fxPI4ELFDOQZcRxIc6R8E9W80f
-        4PkFo=; b=Hq2swKUgRigrc8yhBwodNQHOvY70WjVID2mgDm/6DV64zsMHXfESoA
-        eOOTvGFs77vqNFnzZ/yTMgyeSmMwyBxOiYtGg3Bi40yRkIntDp0NUsSL/E8MNIUq
-        2hEgmzwPC2W5lU55mDlUculOPM3jJpEOwgJBBZPZZgJxIZokEo/qs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1BAC11B6E00;
-        Thu, 23 Jun 2022 11:58:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 66E021B6DFC;
-        Thu, 23 Jun 2022 11:57:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH v3] ls-files: introduce "--format" option
-References: <pull.1262.v2.git.1655629990185.gitgitgadget@gmail.com>
-        <pull.1262.v3.git.1655777140231.gitgitgadget@gmail.com>
-        <080f65b3-91f5-7b68-4235-4bfb956c8321@gmail.com>
-Date:   Thu, 23 Jun 2022 08:57:58 -0700
-In-Reply-To: <080f65b3-91f5-7b68-4235-4bfb956c8321@gmail.com> (Phillip Wood's
-        message of "Thu, 23 Jun 2022 15:06:33 +0100")
-Message-ID: <xmqqv8sr1iex.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231193AbiFWQMm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 12:12:42 -0400
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9459D457AA
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 09:12:41 -0700 (PDT)
+Received: by mail-oo1-xc29.google.com with SMTP id v12-20020a4a314c000000b0041b65c7e100so4100464oog.8
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 09:12:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=SPpGVbHf/cY240jHk7eZMhmfeoqwjQw1EnRyCO/JD2Q=;
+        b=Q71zJACxDNh7qxeK3lNsnDQWtXrF5lEDhtKUAjb95EC/yoC/9BkdFNH2R7hnjXa2g/
+         QuNcvvGeb7L67F0ys8BCqiRy2ynpEuUs9+Nu7PIxvNGbOF7+DkuC7gRb761jHa+oWuCd
+         ddyyGXwYnhbbCvOfotjaC3I/owGvWZ3EIpTDDQVFQV3B5sfIqpwTr9HRWdRNb3Rkt0z6
+         UGKCvpnb15AkzncaR4JBmp/1kxMjTwKpl9wNGLw8aaUlBD0qKmOUSI+nHkwvmFbIi1SG
+         qugJ3FN9uH5wHzYyHbCWy4Y+n4TxUZCO+9qASi9Rj/9/fawala7bcmROE/ACA7j6EFsk
+         g6PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=SPpGVbHf/cY240jHk7eZMhmfeoqwjQw1EnRyCO/JD2Q=;
+        b=FiClUpPldGQhVQChosxzlSpUqGLMro9BiqHD4Ft7ejgoulZuvDQbrnpfLVP58y6HH4
+         V9U3uL7VTuCmvGNhPypcNLHn6dUXxQz6pa48SUP4BikhIyHGyTCP1HrcDi3bTZOVgNhM
+         /RNtDTRJnl8cWgxQohw62VyOrljOFEe/tbyOGfZslM9o1v9Pq9q31Yb4oMWwNcDOl5je
+         ZXg3blYLt1+b/AQb4Zxzoxjj1tJVSr+AxgxDzToLvbZFkk7PlVZf2yeSnGtFC2VbEtZh
+         k3MXJh1H1rrBpBmgKpDMAB3+u+qceDhp4QtQU0QKek29d4i/fvb9hwqCxj+jzefx1dEI
+         oCKw==
+X-Gm-Message-State: AJIora8Z2aBxCZgSbYmQFaW9vj2QAHSyveUG5VA5wYUuhnFbitvpG34M
+        KMAarSbw9ZRf7sPn2QGqI4z7
+X-Google-Smtp-Source: AGRyM1v96H8jZ0oPJ8f14qv20Aj7YQVuvdc/nW5aNSryCSilcUf7h8AH0onXbQ1viQLVN8igjOxXKA==
+X-Received: by 2002:a4a:e5c2:0:b0:421:2d98:955e with SMTP id r2-20020a4ae5c2000000b004212d98955emr4037710oov.38.1656000760801;
+        Thu, 23 Jun 2022 09:12:40 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:7549:2a5a:7ed5:f864? ([2600:1700:e72:80a0:7549:2a5a:7ed5:f864])
+        by smtp.gmail.com with ESMTPSA id v36-20020a056830092400b0060bffcb1ecesm13049598ott.78.2022.06.23.09.12.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jun 2022 09:12:40 -0700 (PDT)
+Message-ID: <c93c8e75-6c88-ac99-d8c3-1e2e7dd06ea3@github.com>
+Date:   Thu, 23 Jun 2022 12:12:39 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 411FC478-F30D-11EC-AF3E-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 0/1] scalar: move to the top-level, test, CI and
+ "install" support
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+References: <patch-1.1-86fb8d56307-20211028T185016Z-avarab@gmail.com>
+ <cover-v2-0.1-00000000000-20220623T100554Z-avarab@gmail.com>
+ <2f3067e1-43fb-26b3-83c4-6ca0722149a0@github.com>
+ <220623.86k097js9k.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220623.86k097js9k.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On 6/23/2022 11:30 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Jun 23 2022, Derrick Stolee wrote:
+> 
+>> On 6/23/2022 6:26 AM, Ævar Arnfjörð Bjarmason wrote:
+>>> This one-patch series integrates the "scalar" command to the
+>>> top-level, meaning we build the "scalar" binary by default, and run
+>>> its tests on "make test" and in CI. We'll also build and test its
+>>> documentation. We now also have "install" support, both for the
+>>> program and its docs, but you'll need to:
+>>>
+>>>     make <install-target> INSTALL_SCALAR=Y
+>>>
+>>> I'm sending this out now to avoid needless duplicate work.
+>>
+>> As mentioned on the list earlier, Victoria is taking over the
+>> remaining work to complete the Scalar project. Nothing has been
+>> sent to the list because we didn't want to cause a distraction
+>> from the release window.
+> 
+> I was on the fence about sending this out, but given that the "CI"
+> thread was going on until the start of that window, and wanting to save
+> her the work of re-discovering the subtle issues with the integration
+> I'd already fixed I thought it was better ot send it out.
 
-> Thanks for re-rolling, having taken a look a closer look at the tests
-> I'm concerned about the output format for some of the specifiers, see
-> below.
+The CI thread was halted not just because of the release window,
+but because of a change in who was doing the work and taking time
+to revisit the plan of record. This was communicated on-list [1].
 
-Thanks for raising these issues.  I agree with you on many of them.
-In addition to what you covered ....
+[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2206132246010.353@tvgsbejvaqbjf.bet/
 
->> +path::
->> +	The pathname of the file which is in the index.
-> I think that for all these it might be clearer to say "recorded in the
-> index" rather than "of the file which is in the index"
+The point is that the end goal is still "Get Scalar out of contrib/"
+but the questions that are still being worked out are things like:
 
-I think we would call this "name".  The name of the existing option
-that controls how they are shown is "--full-name", not "--full-path",
-for example.
+1. _When_ do we integrate Scalar into CI?
+2. _When_ do we move Scalar out of contrib/?
+3. _When_ do we implement the remaining Scalar features?
 
->> +ctime::
->> +	The create time of file which is in the index.
->
-> This is printed with a prefix 'ctime:' (the same applies to the format
-> specifiers below) I think we should omit that and just print the data
-> so the user can choose the format they want.
->
->> +mtime::
->> +	The modified time of file which is in the index.
+All three of these questions depend on what the final result will
+look like, and Victoria is still working on developing her own
+opinion on that before presenting it to the list in a complete
+form.
 
-These are only the low-bits of the full timestamp, not ctime/mtime
-themselves.
+Your patch here is interrupting that process.
 
-But stepping back a bit, why do we need to include them in the
-output?  What workflow and use case are we trying to help?  Dump
-output from "stat <path>" equivalent from ls-files and compare with
-"stat ." output to see which ones are stale?  Or is there any value
-to see the value of, say, ctime as an individual data item?
+>> Victoria is taking time to incorporate your previous thoughts on
+>> how Scalar is built and its location in the codebase and create
+>> a complete narrative of how to get from our current state to that
+>> point.
+> 
+> I wasn't sure she was even aware of it, and given that the WIP patch I
+> saw in my "git fetch" was pretty much a subset of the upthread v1 it
+> seemed that there was needless duplicate work going on.
+> 
+> It seemed clear that that WIP patch was attempting to head in the same
+> direction, but hadn't yet discovered some of the hurdles with
+> e.g. documentation building & installation that I'd fixed
+> already. There's also the CMake integration, which I finished up for
+> this v2.
 
->> +dev::
->> +	The ID of device containing file which is in the index.
->> +ino::
->> +	The inode number of file which is in the index.
->> +uid::
->> +	The user id of file owner which is in the index.
->> +gid::
->> +	The group id of file owner which is in the index.
+Poking around in people's forks to discover what they have as WIP
+is not a good measurement of what work is being done or not. A lot
+of mental energy is being spent in this area.
 
-Again, why do we need to include these in the output?
+Saying "What I see in this person's fork isn't good enough" is not
+a reason to move forward on your own. WIP work is WORK IN PROGRESS
+and is not assumed to be complete or up to expectation for review
+on the list.
 
-Wouldn't it be sufficient, as well as a lot more useful, to show a
-single bit "the cached stat info matches what is in the working tree
-(yes/no)"?
+> FWIW I have this local change queued on top of this v2, it's all
+> cosmetic, but probably a good idea.
 
->> +size::
->> +	The size of the file which is in the index.
+Please stop motivating current patches by work that you have been
+playing with in your local tree. You do this frequently but it is
+not helpful.
+ 
+> The $(SCALAR_SOURCES) bit is something I missed, but which Victoria
+> didn't in her WIP patch (I stole it from there).
 
-This needs to explain what kind of size this is.  Is it the size of
-the blob object?  Is it the size of the file in the working tree
-(i.e. not cleaned)?  Is it _always_ the size, or can it become a
-number that is very different from size in certain circumstances?
+You also mention this in your cover letter (but is notably absent from
+the patch itself).
 
-IOW, I do not think giving this to unsuspecting users and call it
-"size of the file" hurts them more than it helps them, especially
-because it is not always the size of the file.
+I can only attribute your insistence here as a lack of respect for
+your fellow contributors. There is no rush for this to happen immediately,
+so the only reason is that you don't trust that it would be done
+correctly without you submitting the work.
 
-I'd suggest getting rid of everything from ctime down to size and if
-we really care about the freshness of the cached stat info, replace
-them with a single bit "up-to-date".
-
->> +flags::
->> +	The flags of the file in the index which include
->> +	in-memory only flags and some extended on-disk flags.
->
-> If %(flags) is going to be useful then I think we need to think about
-> how they are printed and document that. At the moment they are printed 
-> as a hexadecimal number which is fine for debugging but probably not
-> going to be useful for something like --format. I think printing 
-> documented symbolic names with some kind of separator (a comma maybe)
-> between them is probably more useful
-
-I am guessing that most of the above are only useful for curious
-geeks and those who are debugging their new tweak to the code that
-touches the index, i.e. a debugging feature.  But these folks can
-run "git" under a debugger, and they probably have to do so when
-they are seeing an unexpected value in the flags member of a cache
-entry anyway.  So I am not sure whom this field is intended to help.
-
->> [...]
->> +test_expect_success 'git ls-files --format eol' '
->> +	printf "i/lf    w/lf    attr/                 \t\n" >expect &&
->> +	printf "i/lf    w/lf    attr/                 \t\n" >>expect &&
->> +	git ls-files --format="%(eol)" --eol >actual &&
->
-> I'm not sure why this is passing --eol as well as --format='%(eol)' -
-> shouldn't that combination of flags be an error?
-
-Good eyes.
-
-Thanks.
+Thanks,
+-Stolee
