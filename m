@@ -2,95 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F2DAC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Jun 2022 23:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FAF2C43334
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 00:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234047AbiFVXqg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jun 2022 19:46:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53906 "EHLO
+        id S1376789AbiFWArQ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 22 Jun 2022 20:47:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233155AbiFVXqg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jun 2022 19:46:36 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5208542A3D
-        for <git@vger.kernel.org>; Wed, 22 Jun 2022 16:46:35 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA2FA1AC05D;
-        Wed, 22 Jun 2022 19:46:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Wbjv8pqmmPZxhVZ0GzQ3EGc4e0Uxk0TSZUeDFn
-        Ux2fw=; b=wq6QVEwZ9BsXrUSvcbvT0G6pZy0kY2fN8JeO75VzdKKQHg7VCWyFWn
-        lil2KN1V+1OV/5zYa04Ra5zj2tEtcUifaaLPCS+LxAZqywIj0hw4j8q6JwQ3fPhu
-        1VhfI4HYuhgEk+l3RpxmLRqBRIArOK9rcl97K2jbEuUcOMgISfFJQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B1BE91AC05C;
-        Wed, 22 Jun 2022 19:46:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E98C1AC05A;
-        Wed, 22 Jun 2022 19:46:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] revisions.txt: escape "..." to avoid asciidoc
- horizontal ellipsis
-References: <YrOmsA04FZae89be@coredump.intra.peff.net>
-Date:   Wed, 22 Jun 2022 16:46:30 -0700
-In-Reply-To: <YrOmsA04FZae89be@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 22 Jun 2022 19:33:04 -0400")
-Message-ID: <xmqqfsjw2re1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1359642AbiFWArO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jun 2022 20:47:14 -0400
+X-Greylist: delayed 90 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 22 Jun 2022 17:47:13 PDT
+Received: from omta014.useast.a.cloudfilter.net (omta014.useast.a.cloudfilter.net [34.195.253.205])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6E5E41F82
+        for <git@vger.kernel.org>; Wed, 22 Jun 2022 17:47:13 -0700 (PDT)
+Received: from cxr.smtp.a.cloudfilter.net ([10.0.17.147])
+        by cmsmtp with ESMTP
+        id 417yoG0g0ScQd4AycoPiQV; Thu, 23 Jun 2022 00:45:42 +0000
+Received: from thunderbird.smith.home ([70.176.251.46])
+        by cmsmtp with ESMTPSA
+        id 4AyaoyGbq0VDM4Aybosgpq; Thu, 23 Jun 2022 00:45:42 +0000
+Authentication-Results: cox.net; auth=pass (PLAIN) smtp.auth=ischis2@cox.net
+X-Authority-Analysis: v=2.4 cv=Eenb/dqC c=1 sm=1 tr=0 ts=62b3b7b6
+ a=OCGoW4wscCDr3YEa6K7Wzw==:117 a=OCGoW4wscCDr3YEa6K7Wzw==:17
+ a=8nJEP1OIZ-IA:10 a=JPEYwPQDsx4A:10 a=6XUDo1k8oTiJZPsL8bIA:9 a=wPNLvfGTeEIA:10
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 2E0E81961EA2;
+        Wed, 22 Jun 2022 17:45:40 -0700 (MST)
+From:   Stephen Smith <ischis2@cox.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Stephen Smith <ischis2@cox.net>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.org>
+Subject: Re: SHA-256 transition
+Date:   Wed, 22 Jun 2022 17:45:40 -0700
+Message-ID: <12092182.O9o76ZdvQC@thunderbird>
+In-Reply-To: <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
+References: <12011256.O9o76ZdvQC@thunderbird> <220621.86sfnyuvt0.gmgdl@evledraar.gmail.com> <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8ABFDC0E-F285-11EC-B3EC-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
+X-CMAE-Envelope: MS4xfAGUBxA57x3Xd4EN3QcFXDCD4dpQI8C4DvxRn/UnxDBEiK9JT5AvxTlfWDPpnYtLxBGcV31Y7CTK/EYkpLRH5LOv6giKH6hGQIAI5AMZJq6sZVGj5jeI
+ LjFOIzqmbAY/+soYY+gy9FFPh99r+KItDGP53s6Hb0M6ijjv6vsVMO9Rp30gEIqMdDKCUTbefZ2g4xKkLLEjxZyj/j1ZUYfaqtJ1EuIj7UkBXmsJX5AMvzWU
+ dpWmVS6w6O4ygEwOqeLqQmn6f/KUGyqGsGpIOuUuCYLuWi59pNerteSURO16OyUKFcwisHZh9UEoarVDhu8Jxw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Tuesday, June 21, 2022 5:29:59 PM MST brian m. carlson wrote:
+> On 2022-06-21 at 10:25:01, Ævar Arnfjörð Bjarmason wrote:
+> > But the reason I'd still say "no" on the technical/UX side is:
+> >  * The inter-op between SHA-256 and SHA-1 repositories is still
+> >  
+> >    nonexistent, except for a one-off import. I.e. we don't have any
+> >    graceful way to migrate an existing repository.
+> 
+> True, but that doesn't meant that new repositories couldn't use SHA-256.
 
-> Note that this produces an empty doc-diff of the manpages. Curiously,
-> asciidoc produces the same ellipsis entity in the XML file, but docbook
-> then converts it back into three literal dots for the roff output! So
-> the roff manpages have been correct all along (which may be a reason
-> nobody noticed this until now).
+So, any idea when a graceful way to migrate a repository might show up?
 
-Hilarious.
+> 
+> >  * For new repositories I think you'll probably want to eventually push
+> >  
+> >    it to one of the online git hosting providers, none of which (as far
+> >    as I'm aware) support SHA-256 repos.
+> 
+> This, in my view, is the only compelling reason not to use it for new
+> repositories.
 
-I just checked with "man -l -Tps" and it does seem to throw literal
-three dots in the PostScript.
+Which is a reason to send patches by email. 
 
-> Reported-by: Arthur Milchior
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This was originally reported via https://github.com/git/git-scm.com/issues/1700,
-> hence no email address for the reporter. I'm not sure if that makes it
-> too useless to keep, but I mostly wanted to give credit.
 
-I wonder if it is the same person as
-<pull.1280.git.git.1655927444821.gitgitgadget@gmail.com>
 
-Anyway, thanks, both ;-)
 
->
->  Documentation/revisions.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index f5f17b65a1..cef8c3c66f 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -283,7 +283,7 @@ The '..' (two-dot) Range Notation::
->   for commits that are reachable from r2 excluding those that are reachable
->   from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
->  
-> -The '...' (three-dot) Symmetric Difference Notation::
-> +The '\...' (three-dot) Symmetric Difference Notation::
->   A similar notation 'r1\...r2' is called symmetric difference
->   of 'r1' and 'r2' and is defined as
->   'r1 r2 --not $(git merge-base --all r1 r2)'.
