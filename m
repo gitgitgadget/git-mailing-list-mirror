@@ -2,101 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 116BFC433EF
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 15:14:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24351C43334
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 15:16:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231915AbiFWPOe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 11:14:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33736 "EHLO
+        id S231837AbiFWPQT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 11:16:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231970AbiFWPOb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 11:14:31 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8F333A181
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:14:29 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6D6833F4114;
-        Thu, 23 Jun 2022 11:14:28 -0400 (EDT)
-Received: from jeffhost-mbp.local (unknown [IPv6:2600:1015:b06d:d6ec:b96f:7ca6:e624:cbcd])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 015563F40F3;
-        Thu, 23 Jun 2022 11:14:27 -0400 (EDT)
-Subject: Re: [PATCH v3 5/5] bitmap: add trace2 outputs during open "bitmap"
- file
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-References: <78966fb1-d5be-2fb5-0f68-0fce0b93d249@jeffhostetler.com>
- <20220623093836.113288-1-dyroneteng@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <a4dda985-a319-2c24-2957-5116831142b8@jeffhostetler.com>
-Date:   Thu, 23 Jun 2022 11:14:27 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S231340AbiFWPQS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 11:16:18 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D2A3A5C7
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:16:17 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id q11so25682811oih.10
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 08:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Ev7fkRSNWhOny5i8sV/ULVKWBJwssiMoSfbZHf4Av1I=;
+        b=chS8/fpuuunQuGQ224Y3QbJoRv5NlHE+VsmxsNgFxeu5/aESGnLnpKWYXlWkShow5o
+         qpipmBvGm4GxfSdyZ+RzkhFSI8vJkw4AsZYVPL3Ys8kgXdbXRXJFjsSpMcpDc5dRA1Fs
+         Vaad6SLucctxZ9Sr9/XSiOUeSqn2QDh9pZyIhBRtU3DyRGRjqrLAJhw/7HtO76Z2Subt
+         x3Al0pY8k8wZnq+GmgPbATkvi1pIvnA2Hb1oyi1hOZDl3878crPI00oDq/b8ERD3zUh5
+         /eew1/S4LM/shhcn2jinKpShIeuTnlPf5rPtJJ1GfC+NOq2vL5u1g4Ab0ut1DUqPeagJ
+         0upg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Ev7fkRSNWhOny5i8sV/ULVKWBJwssiMoSfbZHf4Av1I=;
+        b=xFHJx5fEGl4qlCBseQLLvbqu89RIbOZa5oZ2RTsKSKEdZm8m7bxv8ojMPSUCLXDF/W
+         qT5u6EXskdbEM2j3ohN/gaKt29ulgCsYExRxTtPoZ2Cnub6h3rvnSPxw9YOLve5wPBHE
+         dEBzuRfsIh3mxeFtrLoNLipo9rzO6Dm8RZslQWP9pYp3Js8oOSyDCeMAnrOBmVB9eoje
+         uhV4gMuMO+ZblgCnUIypfdu5mT2PE5h78JcsKnKEEjYJVh7Fb85mPq5cCbHpB15O00m6
+         pAczlG1zzM4KcTEMUK7Bgb794XhDe3lYnhzsRf94QbKlUgQehVaUqQURLPPfYmb1UvFI
+         u5dA==
+X-Gm-Message-State: AJIora+DqBAjRN1WdfihvNloshB7hoOopcgAcGSkbragj/QWFNuHpExn
+        IWOlZbXBR2hSBkyyeZdu7vkI
+X-Google-Smtp-Source: AGRyM1vbx/Gg/TIA8wO5lk+J7ygejsFgi/foeLDUHBqCNgltzKIbZBXxGiHVd7vOzzZI9wKCOq482g==
+X-Received: by 2002:a05:6808:10c8:b0:335:35ca:4694 with SMTP id s8-20020a05680810c800b0033535ca4694mr742224ois.245.1655997377269;
+        Thu, 23 Jun 2022 08:16:17 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:7549:2a5a:7ed5:f864? ([2600:1700:e72:80a0:7549:2a5a:7ed5:f864])
+        by smtp.gmail.com with ESMTPSA id m186-20020aca3fc3000000b00328c9e63389sm12868404oia.11.2022.06.23.08.16.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jun 2022 08:16:16 -0700 (PDT)
+Message-ID: <4d181d4f-b86c-42f9-eeca-000ec4a06015@github.com>
+Date:   Thu, 23 Jun 2022 11:16:15 -0400
 MIME-Version: 1.0
-In-Reply-To: <20220623093836.113288-1-dyroneteng@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v4 0/7] mv: fix out-of-cone file/directory move logic
 Content-Language: en-US
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, vdye@github.com
+References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
+ <20220623114120.12768-1-shaoxuan.yuan02@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220623114120.12768-1-shaoxuan.yuan02@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 6/23/2022 7:41 AM, Shaoxuan Yuan wrote:
+> ## Changes since WIP v3 ##
 
-
-On 6/23/22 5:38 AM, Teng Long wrote:
-> On Wed, 22 Jun 2022 08:51:18 -0400, Jeff Hostetler wrote:
-> 
-[...]
-> I remove the changes of "repo_config_bool" from my v4 patch
-> then I try to know about "GIT_TRACE2_CONFIG_PARAMS" and
-> "trace2.configparams". Thereby, when I:
-> 
-> Execute "GIT_TRACE2_PERF=1 GIT_TRACE2_CONFIG_PARAMS=core.multipackIndex git rev-list  --test-bitmap HEAD"
-> 
-> 15:21:38.812782 git.c:461                    | d0 | main                     | def_param    |     |           |           |              | core.multipackindex:false
-> 15:21:38.812797 git.c:461                    | d0 | main                     | def_param    |     |           |           |              | core.multipackindex:false
-> 
-> I checked my configs, I found if there exists multiple level configs.
-> it'll print multiple times. Like If I config all the global, system
-> and local on "core.multipackIndex=false" , the output will be:
-> 
-> 15:41:50.614108 git.c:462                    | d0 | main                     | def_param    |     |           |           |              | core.multipackindex:false
-> 15:41:50.614123 git.c:462                    | d0 | main                     | def_param    |     |           |           |              | core.multipackindex:false
-> 15:41:50.614136 git.c:462                    | d0 | main                     | def_param    |     |           |           |              | core.multipackindex:false
-> 
-> And if I modified the local scope of core.multipackIndex to "true",
-> the output will be:
-> 
-> 15:45:39.200172 git.c:462                    | d0 | main                     | def_param    |     |           |           |              | core.multipackindex:false
-> 15:45:39.200186 git.c:462                    | d0 | main                     | def_param    |     |           |           |              | core.multipackindex:false
-> 15:45:39.200200 git.c:462                    | d0 | main                     | def_param    |     |           |           |              | core.multipackindex:true
-> 
-> I'm not sure it's an intentional design or here should be only
-> print the final value that takes effect or should print all the
-> values if config multiple scopes on the same config.
-> 
-> Hence, I made a temporary patch below to try to add some
-> identifying information to know why we output these lines, like:
-
-I had intended it to only print the final "effective" value
-that the command would actually use.  I don't remember if I
-ever experimented with config values that are set at multiple
-levels, but testing it now shows that you're right it does
-print a "def_param" message for each level.
-
-I would suggest we fix it to only print the final value
-since we really just want to know whether the command will
-or will not use a feature.  The inheritance is somewhat
-irrelevant.
-
-But the change to do that may be quite a mess, so printing
-the scope name as you have here is fine.  And may help with
-support when debugging users having confusing problems, so
-I'm fine with it.
+It's good to keep the main cover letter body around, even as the version
+updates are included. Sometimes reviewers come to a topic late and want
+to see the latest version be completely self-contained.
+ 
+After reading all the patches with fresh eyes, I think the code looks
+very good. I have a nitpick in a commit message and some recommendations
+for additional tests, but otherwise I'm pretty happy with this version.
 
 Thanks,
-Jeff
-
+-Stolee
