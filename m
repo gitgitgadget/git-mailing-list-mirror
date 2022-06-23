@@ -2,151 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FEFCC43334
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 19:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21FF0C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 19:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230297AbiFWTY0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 15:24:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40712 "EHLO
+        id S231294AbiFWTbS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 15:31:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbiFWTYP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 15:24:15 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA953120C
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 11:32:29 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E6245141F26;
-        Thu, 23 Jun 2022 14:32:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PQ5p1iTCUE8c23XJ9facSw+8U/7vVuBKAedunP
-        2bHdQ=; b=Cxpqf7MwaOp6XdH8S62sPXv6qlGIq54tvYF2fx32LbmUw9Hc4sGse2
-        isDtw8nha6IG4UDRzFiCXh7KSngUIItm7kY8Xzo/6fqy0ftgSraEzkcpFbskevFA
-        oXsQPZGCFz0BrdOTvNbWqewtfKWKxz30MbJDtzFp7REpf3rVgKIh4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB354141F25;
-        Thu, 23 Jun 2022 14:32:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 42AF8141F24;
-        Thu, 23 Jun 2022 14:32:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v4 0/5] config: introduce discovery.bare and protected
- config
-References: <20220622220331.3734584-1-jonathantanmy@google.com>
-        <kl6lr13fi9qn.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Thu, 23 Jun 2022 11:32:27 -0700
-In-Reply-To: <kl6lr13fi9qn.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Thu, 23 Jun 2022 10:13:20 -0700")
-Message-ID: <xmqqo7yjz0w4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230247AbiFWTbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 15:31:05 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97E5260F32
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 12:02:04 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id b125so100958qkg.11
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 12:02:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=TRfYRxJGycfLcDEMYak8wpmZ/YgHnMUk9p5RKcAkeSg=;
+        b=r6mONcfJTkQH6+quuNldmXSLqLZVFrY1o2FknBUSAkuQua97p1SGb+keZ0J4/fOZby
+         /k4A4BrIIHqFrWtnAgEtKcJdOjGY6GRdgnuRhF18aEDYtXoeHdm4r8wqjVw6mtAG5ye3
+         q3y3r7qXskappyT8n3XE67XgtxV5tcbMR7x02BV9/pooodt+0oR//+eJNx2MxjL09ZUK
+         MxQDyfRQh6Q5Iowsq9/rv9zYYHpuV89333eBjO7lUz45DFiOH6ed7bMkilt127twngcO
+         4b9sUiCupMSuUF5hnH4mlCFB6oq4mV7+6lvghFtdtqh56R6DBELMhbBFAgkhrbqRSVv9
+         4m6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=TRfYRxJGycfLcDEMYak8wpmZ/YgHnMUk9p5RKcAkeSg=;
+        b=1IGDOOyl85QiOzHYLkp4F2wWhgFM1isb9QwalTE5xQDujV3oglF3ESrIMiQoFyj6MF
+         PMtftTS0ITMmnl0fHWy878u6WEOP6ATogO0D5QrEj6xDxP2GIyIdz/YAEhHrndjr4KlE
+         3YqNM0WQNo3/LpdHTLoadNXR4qGqcbJy8xDTv3l4IXegZJ3+n41RoXqG/P4Y+G1ccqiI
+         iNruiDLhduAMAC06ujwHHEwCkllJEY2oH8pltcZtmIG/SbuJLMAMrzMZAREFh+OelVTb
+         i3e/rjeBXQocLpkGL207QPDq1hAEzd1Skv4MhPZWB78vy2YDd7lNaYsnmQ0UsQNNKnOg
+         v8bQ==
+X-Gm-Message-State: AJIora9VyArKhhCirYnRLLOaZpOIQSV4PL8WWUZpbUBkt7sRvt7L6bYq
+        li/NSeYEKZIueN5TO9btvEeBtMdxymx3Gx5V
+X-Google-Smtp-Source: AGRyM1sf18rxZZsI/RtdkricQT+fO7GHK6xBO5gMwT/GTmomJ5eKMM43VmpOT8Se1GCsC61jsyTiBw==
+X-Received: by 2002:ae9:ea16:0:b0:6ae:eb1f:38ab with SMTP id f22-20020ae9ea16000000b006aeeb1f38abmr4346310qkg.719.1656010923039;
+        Thu, 23 Jun 2022 12:02:03 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id v15-20020a05620a440f00b006a79aa0c8b1sm206445qkp.113.2022.06.23.12.02.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jun 2022 12:02:02 -0700 (PDT)
+Date:   Thu, 23 Jun 2022 15:02:01 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     derrickstolee@github.com, avarab@gmail.com, gitster@pobox.com
+Subject: [PATCH] Documentation/config/transfer.txt: fix typo
+Message-ID: <68c1c3648c51f6298eea4d58286b20e0c770a270.1656010900.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D5CB373C-F322-11EC-BF82-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Commit 7281c196b1 (transfer doc: move fetch.credentialsInUrl to
+"transfer" config namespace, 2022-06-15) propagates a typo from
+6dcbdc0d66 (remote: create fetch.credentialsInUrl config, 2022-06-06),
+where "other" is misspelled as "oher". Fix the typo accordingly.
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
->
->> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>> Glen Choo (5):
->>>   Documentation/git-config.txt: add SCOPES section
->>>   Documentation: define protected configuration
->>
->> Forgot to mention when I was sending my comments on patch 2: we should
->> standardize on "protected config" and not use "protected configuration"
->> anywhere.
->
-> Makes sense.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+Noticed while skimming the new documentation for the upcoming 2.37
+release.
 
-Using a single word consistently does make sense, but why favor a
-non-word over a proper word ;-)?
+ Documentation/config/transfer.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> I suppose that the idea behind this is that we only parse and store each
-> config file exactly once. It's a good goal, but the whole point of the
-> configset is that we can query a single struct to figure out the value
-> of a config variable. Having multiple configsets starts to shift more of
-> the burden to the callers because they now have to query multiple
-> configsets to find their desired config value, and we already start to
-> see some of this unpleasantness in this series.
-
-Yes, I was worried about this, too.  "parse and store exactly once"
-may merely be a performance thing, but it still matters, even though
-it is not worse than making duplicate callbacks to overwrite globals
-that have been already set earlier, which will affect correctness ;-)
-
-> An alternative that I'd been thinking about is to make a few changes to
-> the git_config_* + configset API to allow us to use a single configset
-> for all of our needs:
->
-> 1. Keep track of what config we've read when reading into
->    the_repository->config, i.e. instead of a boolean "all config has
->    been [un]read", we can express "system and global config has been
->    read, but not local or command config". Then, use this information to
->    load config from sources as they become available. This will allow us
->    to read incomplete config for trace2 and setup.c (discovery.bare and
->    safe.directory), and only read what we need later on.
-
-That is not a bad direction to go, but are we sure that we always
-read in the right order (and there is one single right order) and
-stop at the right step?
-
-config.c::do_git_config_sequence() reads the system and then the
-global before the local, the worktree, and the command line.  We
-would allow the values of "protected" configuration variables to be
-inspected by stopping after the first two and inspecting the result
-before the local and the rest overrides them, but will we need
-*only* that kind of partial configuration reading that stops exactly
-there?  Even with the proposed "protected" scheme, I thought we plan
-to honor the command line ones, so we may need to read
-system+global+command without reading anything else to grab the
-values only from the protected sources (ah, I like the application
-of the adjective "protected" to the source, not variables, because
-that is what we are really talking about---alternatively we could
-call it "safe").  But if we later read local and worktree ones
-lazily, unless we _insert_ them before what we read from the command
-line, we'll break the last-one-wins property, so we need to be
-careful.  I guess each configuration value in the configset knows
-where it came from, so it probably is possible to insert the ones
-you read lazily later in the right spot.
-
-> 2. Add an additional argument that specifies what scopes to respect when
->    reading config (maybe as a set of flags). This gives us extra
->    specificity when using the git_config*() functions, so we could get
->    rid of git_protected_config() like so:
->
->     /* Change enum config_scope into flags first... */
->
->     #define WIP_SCOPES_PROTECTED = CONFIG_SCOPE_SYSTEM & \
->       CONFIG_SCOPE_GLOBAL & CONFIG_SCOPE_COMMAND
->
->     static enum discovery_bare_allowed get_discovery_bare(void)
->     {
->       enum discovery_bare_allowed result = DISCOVERY_BARE_ALWAYS;
->       git_config(discovery_bare_cb, &result, WIP_SCOPES_PROTECTED);
->       return result;
->     }
-
-Alternatively, we could make the callback aware of the scope for
-each var-value it is called and have it filter, but that would be a
-bigger surgery.
-
-I think a new iterator git_config_in_scope(), instead of updating
-git_config(), would make sense.  By definition, all existing
-git_config() callers do not need the scope specifiers, and
-"protected" may be the first one but will not be the last one that
-needs to read from particular scopes.
+diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
+index b4475c0690..7ed917f5fc 100644
+--- a/Documentation/config/transfer.txt
++++ b/Documentation/config/transfer.txt
+@@ -20,7 +20,7 @@ exposure, e.g. because:
+   in other ways, e.g. a backup process might copy the data to another
+   system.
+ * The git programs will pass the full URL to one another as arguments
+-  on the command-line, meaning the credentials will be exposed to oher
++  on the command-line, meaning the credentials will be exposed to other
+   users on OS's or systems that allow other users to see the full
+   process list of other users. On linux the "hidepid" setting
+   documented in procfs(5) allows for configuring this behavior.
+--
+2.35.1
