@@ -2,92 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 660E9C43334
-	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 23:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AFA7C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Jun 2022 23:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230358AbiFWXZ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 19:25:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38418 "EHLO
+        id S230424AbiFWXna (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 19:43:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230118AbiFWXZz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 19:25:55 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 619074D9E4
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 16:25:54 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B0041401CE;
-        Thu, 23 Jun 2022 19:25:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=lkktMbGz2WDk
-        mqQPkT2lArJB1ytSj0jVSS/F4LBgIi4=; b=lUqUrY2YIBjbqfPOlgJke4L+2NgM
-        kDmvlwNVrLYXmFQ5kCTVueEBuZD95lDbXGc6133WkzrKZ8ozJx8IAFWCe6PLp/Bz
-        LrznOC+Qcgp6NTPcgyhqQxB5AEDLMOyrQ5On/IF4QO5UN+PYA9AmVwSIPYjA/ev8
-        I0fMHDwV7ukZbSQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E66D1401CC;
-        Thu, 23 Jun 2022 19:25:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E10E81401C9;
-        Thu, 23 Jun 2022 19:25:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] gitweb: fix "make" not including "gitweb"
- without NOOP run slowdowns
-References: <220527.861qwf489s.gmgdl@evledraar.gmail.com>
-        <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
-        <xmqqa6ap8z55.fsf@gitster.g> <20220620083202.GB1689@szeder.dev>
-        <YrFphmtLuHVkI7yr@coredump.intra.peff.net>
-        <220622.86r13hkp2c.gmgdl@evledraar.gmail.com>
-        <xmqq7d587lqx.fsf@gitster.g>
-        <220623.865ykrll0j.gmgdl@evledraar.gmail.com>
-Date:   Thu, 23 Jun 2022 16:25:51 -0700
-In-Reply-To: <220623.865ykrll0j.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 23 Jun 2022 12:29:58 +0200")
-Message-ID: <xmqq7d57x8qo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229454AbiFWXn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 19:43:28 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B184A4D61C
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 16:43:26 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id u15so1293431ejc.10
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 16:43:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=zdS6zYQL8QmmnJ0MNPrukS9oOo1wjna8MTJ/lB693R0=;
+        b=KlzUHJhkRybApYC3+y6FP/Ijz1IPrc7dh9HYwjag8HuKSL9i8KFaxY42GB7USmi38L
+         w1qjhYTd3f5tyHcYTPvAFvl1SFSwl3mye2GCQU0zCoTPNU3Y5LGJwjhlhtKm8rIQaW7R
+         Ccx1N/5lBvuOriA4uXBGi4EPR1U412PPyIpkKz0obr2+12mCmftoCkdZntgGFmvxxTPR
+         clu5K2Tl5nh2pn6AKayvDbQ2CzQHOmGzwZODdkByP+r2eGph8Vsz0Rh8HB6p6DbRvz0f
+         icC6m8ZeqiXojYgpy0doI5lY7AwgcbNfWXDjvfMAf6ka156XmWA5v9+HK2rz8qQRRDnz
+         rShg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=zdS6zYQL8QmmnJ0MNPrukS9oOo1wjna8MTJ/lB693R0=;
+        b=JkRH7zv8eZmZxvbSUgf5Bn0hunijjPlYN95togMAEAyB6QgQpQRtUMMptNhxuFRhBk
+         SDiM5R9ayMpJSVqrUARctxG23LV5jjnY/5/MHoWzIb7Tz/krBhR0S3ldlONZOcDtW8ST
+         kvOC9KEAoOygxunaZiYigS5NgFAXXswAAB6DWT8kw03cBst9KyVSGK87NtIpzObcY7k7
+         6tmUxhR9ha2oZp+SJYn9WxcKj1/t4PB1GYUx1LWLRCmQDQKGM/uSqckQ2DRLAp3afnSu
+         FQ5Xg812G9BBbnBCFPBC7mM72npHk2TEE/2BI+O2TvhbIwMfgh/rzKeWQ8TVLlftUc1b
+         ckjw==
+X-Gm-Message-State: AJIora/xaEBL9ix7vdhqSpaycU/u1/+DO83Q0pWml+b4I7yAPfzQjWbb
+        iqjyU2x5cx+f2SJ5VrJXn+c=
+X-Google-Smtp-Source: AGRyM1slfTxczYylzORCvWnUibggaIcEp6pj2mHFtydkcrweLvQNxwz7w+5SYTsbL0+yKFDmhgOBYg==
+X-Received: by 2002:a17:907:8a20:b0:71e:bc93:4968 with SMTP id sc32-20020a1709078a2000b0071ebc934968mr10162729ejc.573.1656027805085;
+        Thu, 23 Jun 2022 16:43:25 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id p4-20020a056402154400b0042dcac2afc6sm638596edx.72.2022.06.23.16.43.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jun 2022 16:43:24 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o4WTr-0016Cm-Rb;
+        Fri, 24 Jun 2022 01:43:23 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Stephen Smith <ischis2@cox.net>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.org>, Kyle Meyer <kyle@kyleam.com>
+Subject: Re: SHA-256 transition
+Date:   Fri, 24 Jun 2022 00:21:05 +0200
+References: <12011256.O9o76ZdvQC@thunderbird>
+ <220621.86sfnyuvt0.gmgdl@evledraar.gmail.com>
+ <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
+Message-ID: <220624.86fsjvj690.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D2FADA84-F34B-11EC-B924-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->> We could easily add "cd .. && make gitweb" to gitweb/Makefile with
->> the same "minor hassle" but that needs to be done just once, instead
->> of having to be done once per packager, so I am not sure the above
->> argues for a good tradeoff.
+On Wed, Jun 22 2022, brian m. carlson wrote:
+
+> [[PGP Signed Part:Undecided]]
+> On 2022-06-21 at 10:25:01, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> But the reason I'd still say "no" on the technical/UX side is:
+>>=20
+>>  * The inter-op between SHA-256 and SHA-1 repositories is still
+>>    nonexistent, except for a one-off import. I.e. we don't have any
+>>    graceful way to migrate an existing repository.
 >
-> True, but I think critically in this case we've never documented that
-> you should be running gitweb/Makefile directly. I.e. the gitweb/INSTALL
-> has always documented and assumed that you run these from the top-level=
-.
+> True, but that doesn't meant that new repositories couldn't use SHA-256.
 
-Well, I do not think Makefiles document much of their targets in
-general.  If its first/default target has a reasonable name, like
-"all", people expect "cd there && make all" would do the right
-thing.
+Indeed, and people who know enough about its state can (and in some
+cases probably should) use it.
 
-So I do not think "we never documented" is a good excuse.  What the
-current users have been doing and are expecting to keep working is
-what counts.  If they are used to see "cd gitweb && make" working,
-perhaps instead of giving an unfriendly $(error do not run) at the
-beginning of gitweb/Makefile that is designed to trigger only when
-they did that (instead of running 'make gitweb' from the top), it
-would be trivial to have the rule to "cd .. && $(MAKE) gitweb"
-there, no?
+I took the start of the thread to be a question about the state of the
+SHA-1 -> SHA-256 transition, and what we should be generally
+recommending to users at this point.
 
+>>  * For new repositories I think you'll probably want to eventually push
+>>    it to one of the online git hosting providers, none of which (as far
+>>    as I'm aware) support SHA-256 repos.
+>
+> This, in my view, is the only compelling reason not to use it for new
+> repositories.
 
+I think certainly the main one, given most people's workflows around Git
+being heavily forge-based .
 
+>>  * Even if not, any local git tooling that's not part of git.git is
+>>    likely to break, often for trivial reasons like expecting SHA-1 sized
+>>    hashes in the output, but if you start using it for your repositories
+>>    and use such tools you're very likely to be the first person to run
+>>    into bugs in those areas.
+>
+> It's my hope to see libgit2 working on SHA-256 repositories in the
+> relatively near future.
+
+I was referring to the very long tail of tooling here.
+
+E.g. I use magit with Emacs, and last I checked it would puke on
+SHA-256. But checking again it seems someone patched it in January of
+this year to e.g. change "{40}" in regexes to "{40,}", so in theory it
+should work now (but I didn't try actually using it in that mode).
+
+We even still have UI code shipped as part of git.git itself that only
+supports SHA-1, e.g. git-gui's "blame" feature. We were discussing some
+patches for that late last year, but they didn't make it in:
+https://lore.kernel.org/git/20211011121757.627-1-carenas@gmail.com/
+
+Any individual tool like that isn't critical, but I'd think that a large
+long tail of tooling git users are likely to interact with, which for
+the most part isn't ready.
+
+I looked at "tig"'s source now, which I only very occasionally use, and
+it still has SHA-1 sized constants hardcoded etc...
+
+Of course that's a chicken & egg problem, and at some point we'll need
+more brave early adopters. I'm only trying to relay the ground truth of
+what the state is now, for someone who might not be aware of the
+potential trouble they're getting themselves into.
+
+>> But more importantly (and note that these views are definitely *not*
+>> shared by some other project members, so take it with a grain of salt):
+>> There just isn't any compelling selling point to migrate to SHA-256 in
+>> the near or foreseeable future for a given individual user of git.
+>
+> I wholly disagree.  SHA-1 is obsolete, and as soon as hosting providers
+> support SHA-256, all new repositories should be SHA-256.  There is no
+> other defensible reason to continue to use SHA-1 today.
+
+I really don't think we disagree on the need to move away from SHA-1 to
+SHA-256. I'm only attempting to summarize the practical threat, and how
+users might rightly weight that against other concerns.
+
+NIST deprecated SHA-1 in 2011. I think it's safe given Git's growth that
+most people who've used Git started using it after that date, so clearly
+there's a large disconnect between official hash algorithm
+recommendations and how that translates to practical concerns.
+
+>> The reason we started the SHA-1 -> $newhash (it wasn't known that it
+>> would be SHA-256 at the time) was in response to https://shattered.io;
+>> Although it had been discussed before, e.g. the thread starting at [1]
+>> in 2012.
+>>=20
+>> We've since migrated our default hash function from SHA-1 to SHA-1DC
+>> (except on vanilla OSX, see [2]). It's a variant SHA-1 that detects the
+>> SHAttered attack implemented by the same researchers. I'm not aware of a
+>> current viable SHA-1 collision against the variant of SHA-1 that we
+>> actually use these days.
+>
+> That's true, but that still doesn't let you store the data.  There is
+> some data that you can't store in a SHA-1 repository, [...]
+
+I don't think that's come up before, that's correct, but has anyone
+wanted to do that? I.e. people aren't generating these collisions
+accidentally, they're crafted.
+
+If we did want to store those we could change the hardcoded
+-DSHA1DC_INIT_SAFE_HASH_DEFAULT=3D0 to "1", now it's set up to just die if
+it finds a collision, but it could be made to return the "safe hash".
+
+Of course doing so would mean going all-in on SHA1DC, i.e. such a
+repository couldn't interop with our optional OpenSSL and other vanilla
+SHA-1 backends.
+
+> [...]and SHA-1DC is extremely slow.  Using SHA-256 can make things
+> like indexing packs substantially faster.
+
+Yeah, there's a lot of advantages. We could also safely use hardware
+acceleration.
+
+Really, I'm not meaning to poo-poo SHA-256 here, just to provide some
+summary of the current state a user might expect.
+
+I do think even this is mostly a fringe benefit in practice. I feel that
+pain when I e.g. clone chromium.git, but once I pay that one-off cost
+it's mostly not a bottleneck you notice on incremental push/fetch. You
+pay for it on "repack", but that's in the background for most users.
+
+It sure would make hosting providers happy though...
+
+We have discussed having our cake here & eating it too in the
+past. I.e. we could safely use say OpenSSL SHA-1 for "repack" on, as
+long as we kept state and only did so for objects reachable from tips
+that we'd already validated with SHA-1DC.
+
+I think it's a datapoint that even those of us who've noticed the hash
+slowdown have found it painful, but not *that* painful that we've
+invested the effort in even relatively low-hanging-fruit workarounds for
+the problem.
+
+...
+
+Finally, I'd really like to thank you for all your work on SHA-256 so
+far, and really hope that none of what I've said here is discouraging in
+any way. This thread has received some attention outside this ML (on
+LWN), so I wanted to clarify some of the points above. Thanks!
