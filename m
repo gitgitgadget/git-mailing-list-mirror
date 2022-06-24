@@ -2,86 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8A8C43334
-	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 01:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE5EC433EF
+	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 01:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbiFXBOR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 21:14:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58044 "EHLO
+        id S231222AbiFXB13 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 21:27:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbiFXBOQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 21:14:16 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23BAA5675E
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 18:14:15 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26380140BCD;
-        Thu, 23 Jun 2022 21:14:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=68CanB4ssLBV
-        KxrHLtCgwFEDlxzEHA3fuDpOXluUmFk=; b=s5Tzc1f6BC/ikGEX9dZF0K9Nf5ZU
-        gZUfIP+A1R9NIOu4SODYj7xBqTGliBMbNASq9RxOzPh6WviJGe6bfSOfbXiCyX0v
-        vKk1eYm0PjP/JSmTG0msF/rGTDR4RipeSUiSjQYn+m08pXsDh6fJS4jKIMfgPo1p
-        WmIkNFlXi6DvCro=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E06A140BCC;
-        Thu, 23 Jun 2022 21:14:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7E386140BCB;
-        Thu, 23 Jun 2022 21:14:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] gitweb: fix "make" not including "gitweb"
- without NOOP run slowdowns
-References: <220527.861qwf489s.gmgdl@evledraar.gmail.com>
-        <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
-        <xmqqa6ap8z55.fsf@gitster.g> <20220620083202.GB1689@szeder.dev>
-        <YrFphmtLuHVkI7yr@coredump.intra.peff.net>
-        <220622.86r13hkp2c.gmgdl@evledraar.gmail.com>
-        <xmqq7d587lqx.fsf@gitster.g>
-        <220623.865ykrll0j.gmgdl@evledraar.gmail.com>
-        <xmqq7d57x8qo.fsf@gitster.g>
-        <220624.86bkuikidi.gmgdl@evledraar.gmail.com>
-Date:   Thu, 23 Jun 2022 18:14:12 -0700
-In-Reply-To: <220624.86bkuikidi.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 24 Jun 2022 01:45:35 +0200")
-Message-ID: <xmqq35fuyiaj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231208AbiFXB12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 21:27:28 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677F760E01
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 18:27:26 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id u15so1633046ejc.10
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 18:27:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Ztv6SMHfC7QE2VjKbSFahOlC/2T/gxq4PdAqBIUu8PQ=;
+        b=iN7AOCoSIpYLT15eSCbQjGW3+T84a2L2cuQfwwmi1aAXXuZIK5FA+kmv8AJTWtAjKr
+         +lurBOwwaoh439uZ3Z8jEQPDQZ5ZIjnsjhifwftUHq1uCwjpsDLEs1abhldtveLwK21Q
+         CEWww/GzlaWQH1gSmh/VJZYBxefNeolXD9CwUDaSRbLrjpRrrU0+ryxwQ0oUeZLbZ661
+         APnQmmD0tQghQBzF0gLA/Jpflz6zC96eDHi4IIZZ3HCTen8rTjTVGkIvZuh6W6xt/DNj
+         xc2SPxXmamWLzPbgwcl1NOaoQyITc8DojyIGHcJhiE30cvAv1jFfguwmePq49PaWLLAu
+         attA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Ztv6SMHfC7QE2VjKbSFahOlC/2T/gxq4PdAqBIUu8PQ=;
+        b=F986F/a5CNWCl3zUlHDd0jCiRWJFGWf+bVUi0SG3N5o10di+hcnHoo3np5tEvOtgKP
+         OUfiwsoSmY60cLzyZWPEMcPse0k+5SJeGgtgnpkKafhD5KM06BSHQlFlXykse1kM+hDc
+         pIfFmXuHVuQ3eYjDW+Ke+zXygjkup/n6TbqorUYeDiVoghwb/y6PR0JeaXXNVIJ6OGm9
+         wf7ghYgvxUrHbnFNvkfhThLHRe3y+XrPfNMLJRt10mLC/ux83o5U+YdmMgPLBqhdzNVI
+         JNcPR7Aw0MOcARXw2vn5FwVo8r3J/d3YzLPX8/bufTYu30xx67OGvUNksKmAVVjezpqL
+         ABsw==
+X-Gm-Message-State: AJIora+wHo1l3dFGRdz6npSmay9IXZAsqqvzBTrYzaP+x5625d57XysU
+        vT5qfImExj/pw6vVnDKINuA=
+X-Google-Smtp-Source: AGRyM1sRRpsGbj6a9Dq6gvlAqeNd5S+edlJBBXrZCvH5IcAiUZXONkevRDAvivd8HUlWyHx9slemrw==
+X-Received: by 2002:a17:907:96a8:b0:711:56b8:f72b with SMTP id hd40-20020a17090796a800b0071156b8f72bmr11295607ejc.152.1656034044498;
+        Thu, 23 Jun 2022 18:27:24 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id q18-20020a17090609b200b006feaa22e367sm284448eje.165.2022.06.23.18.27.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jun 2022 18:27:23 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o4Y6V-00196l-9b;
+        Fri, 24 Jun 2022 03:27:23 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Stephen Smith <ischis2@cox.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.org>,
+        Kyle Meyer <kyle@kyleam.com>
+Subject: Re: SHA-256 transition
+Date:   Fri, 24 Jun 2022 03:19:46 +0200
+References: <12011256.O9o76ZdvQC@thunderbird>
+ <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
+ <220624.86fsjvj690.gmgdl@evledraar.gmail.com>
+ <12140906.O9o76ZdvQC@thunderbird>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <12140906.O9o76ZdvQC@thunderbird>
+Message-ID: <220624.867d56kg04.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F5A28CDA-F35A-11EC-9675-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> would be in practice, i.e. I download downstream package recipies, whic=
-h
-> are found at (name, relative path & urls). I also manually get the AIX
-> package:
-> ...
-> 	macports-ports  devel/git       https://github.com/macports/macports-p=
-orts.git
+On Thu, Jun 23 2022, Stephen Smith wrote:
+
+> On Thursday, June 23, 2022 3:21:05 PM MST =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> Finally, I'd really like to thank you for all your work on SHA-256 so
+>> far, and really hope that none of what I've said here is discouraging in
+>> any way. This thread has received some attention outside this ML (on
+>> LWN), so I wanted to clarify some of the points above. Thanks!
 >
-> Looking through all of those none of them do anything with
-> gitweb/Makefile. I.e. all "make gitweb" at the top-level, or simply rel=
-y
-> on "make install" to install it.
+> I had looked on LWN before I started the thread to see if anything was be=
+ing=20
+> discussed and it wasn't.
 
-Now we are talking.  Giving that as a datapoint upfront in the
-proposed log message would have saved needless round-trip, I would
-think.
+It wouldn't have helped, as I'm referring to LWN having written an
+article about this thread that you started :)
 
-Thanks.
+It's part of an ongoing series they've had about Git's SHA-256
+transition.
+
+Given how LWN makes money I don't know if it's OK to link to it, but
+it's easy enough to find and/or subscribe to LWN.
+
+> I tend to be an early adopter.   I hadn't seen any new commits in the mai=
+n git=20
+> repository in a while and was beginning to wonder if it had been abandone=
+d.=20=20=20
+> This thread has convinced me that isn't the case, but the main person doi=
+ng=20
+> the developing being busy.
+
+It was a good discussion, and I'm happy you started it.
+
+I think I've mentioned in some past discussions that it would be nice to
+have some "gitsecurity" user-facing documentation, and one thing such a
+thing could include is information that helped users to make an informed
+decision about how much (if at all) they should be worrying about issues
+arising from what hash they're using Git with.
+
+But some documentation on the questions raised here would also be good,
+i.e. "should I use the new hash?", which we could keep somewhat
+up-to-date, and e.g. talk about the approximate state of major
+third-party software, such as the forges.
+
+Currently the closest thing we have to that is the rather sparse and
+scary "THIS OPTION IS EXPERIMENTAL" in git-init(1) when talking about
+--object-format=3Dsha256.
+
+> I too want to say thank you (Brian) for your hard work.=20=20=20
+
+And thank you for using & being interested in git, and contributing to
+the ML!
