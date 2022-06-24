@@ -2,91 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C6A6C43334
-	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 10:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70734C43334
+	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 11:24:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229911AbiFXKwk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jun 2022 06:52:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59418 "EHLO
+        id S231313AbiFXLYW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jun 2022 07:24:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbiFXKwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jun 2022 06:52:39 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE7057C844
-        for <git@vger.kernel.org>; Fri, 24 Jun 2022 03:52:38 -0700 (PDT)
-Received: (qmail 8786 invoked by uid 109); 24 Jun 2022 10:52:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Jun 2022 10:52:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18165 invoked by uid 111); 24 Jun 2022 10:52:37 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Jun 2022 06:52:37 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 24 Jun 2022 06:52:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stephen Smith <ischis2@cox.net>, git <git@vger.kernel.org>
-Subject: Re: SHA-256 transition
-Message-ID: <YrWXdNGZGN7gXL40@coredump.intra.peff.net>
-References: <12011256.O9o76ZdvQC@thunderbird>
- <220621.86sfnyuvt0.gmgdl@evledraar.gmail.com>
- <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
+        with ESMTP id S231349AbiFXLYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jun 2022 07:24:14 -0400
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E126D7A6F3
+        for <git@vger.kernel.org>; Fri, 24 Jun 2022 04:24:12 -0700 (PDT)
+Received: by mail-vk1-f172.google.com with SMTP id b81so1089651vkf.1
+        for <git@vger.kernel.org>; Fri, 24 Jun 2022 04:24:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HoluYYe0lSOfOyy6EeU35wAQ9QIOkySA34x8+7ve/1Y=;
+        b=MLTmogb/gN26NOBc6KYFFEOW34D6TPXHrXci6Y/xrDG1M92dxvbDKOI4MBK8Mgt4AU
+         ntkaT/DZJwcx7wmf20nBtBbzq4tOYC0rCyLiBpAXEaG28z+INXiXTpw5cQmqhnghcC6B
+         b8PzmE3/dCQA5ZPsT3rH280ikuf6fAL7PLNkqxn/soJ7HPnqNu4hcslsZhve0/zGxGCI
+         ND5dei1u436/FE/UHaU4C+ID3yN8Ews0Ckb0WSsIGEzWaafta/DBUR9+0g0FGxo1u43I
+         KP/sRcrDW8B7SR+hWF4ixES7hNTB44ONWAGDgfQwRR/gIKtVsOAjCdcU3zea2OGr3apr
+         xsGQ==
+X-Gm-Message-State: AJIora+6qfC7C6igVN3dkw1Kd9sFFsyw9kCypTC94qy3y7t47RzeaVCB
+        HXbM713Cc73Tv0JgaXwdWW3oHn5T0yb9jx0HFhn7J/Gy
+X-Google-Smtp-Source: AGRyM1uwpD3/E9pB8RIfY2599AcZGUWnivL6JiCt/BXM9SuB50re19uQotFkoYE6MKOp65ShRslecc33ahGW5DTtXrQ=
+X-Received: by 2002:a05:6122:14a6:b0:36c:3462:c77b with SMTP id
+ c6-20020a05612214a600b0036c3462c77bmr12474274vkq.36.1656069851737; Fri, 24
+ Jun 2022 04:24:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
+References: <20220621142618.239b02cd@bigbox.attlocal.net>
+In-Reply-To: <20220621142618.239b02cd@bigbox.attlocal.net>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Fri, 24 Jun 2022 13:23:34 +0200
+Message-ID: <CA+JQ7M9jBSB8tdpz85imER4SF1yhn3jes8ThnzkA_O9+mus1Ng@mail.gmail.com>
+Subject: Re: stashing only unstaged changes?
+To:     Tim Chase <git@tim.thechases.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 22, 2022 at 12:29:59AM +0000, brian m. carlson wrote:
+My $0.02
 
-> > We've since migrated our default hash function from SHA-1 to SHA-1DC
-> > (except on vanilla OSX, see [2]). It's a variant SHA-1 that detects the
-> > SHAttered attack implemented by the same researchers. I'm not aware of a
-> > current viable SHA-1 collision against the variant of SHA-1 that we
-> > actually use these days.
-> 
-> That's true, but that still doesn't let you store the data.  There is
-> some data that you can't store in a SHA-1 repository, and SHA-1DC is
-> extremely slow.  Using SHA-256 can make things like indexing packs
-> substantially faster.
+On Tue, Jun 21, 2022 at 9:57 PM Tim Chase <git@tim.thechases.com> wrote:
+>
+> I recently had composed a commit with some `git add -p` leaving some
+> portions unstaged. I wanted to stash the unstaged changes to make
+> sure that the staged code ran as expected, so I did  a `git stash`
+> only to find that it unstaged my staged changes and stashed
+> *everything*.
 
-I'm curious if you have numbers on this. I naively converted linux.git
-to sha256 by doing "fast-export | fast-import" (the latter in a sha256
-repo, of course, and then both repacked with "-f --window=250" to get
-reasonable apples-to-apples packs).
+What you wanted to do was
+  git stash --keep-index
+which creates a stash with the staged and unstaged changes but leaves
+the staged ones in the working tree.
 
-Running "index-pack --verify" on the result takes about the same time
-(this is on an 8-core system, hence the real/user differences):
+If you forget to do this, what you do is try
+  git stash pop --index
+and then
+  git stash --keep-index
 
-  [sha1dc]
-  real	2m43.754s
-  user	10m52.452s
-  sys	0m36.745s
+> Using `git stash --saved` does the opposite of what I want (stashing
+> the index, not the difference between the index and the working-copy)
 
-  [sha256]
-  real	2m41.884s
-  user	12m23.344s
-  sys	0m35.222s
+I'm unaware of a --saved option
 
-The sha256 repo actually has about 10% fewer objects (I didn't
-investigate, but this is perhaps due to cutting out tags and a few other
-things to convince fast-export to finish running). I'm not sure about
-the extra user time (multicore timings here are funny because of
-frequency scaling, so I think the "real" line is more interesting). So
-sha256 actually comes out a bit worse here. On the other hand, this is
-just using our blk_SHA256 implementation. There may be faster
-alternatives (including ones with hardware support).
+My understanding (which may be incorrect) is that a shash is always of
+the staged/unstaged changes and there's no way to stash only one or
+the other in a single stash operation.
 
-I wouldn't be at all surprised if the difference isn't substantial in
-the long run, though. The repo is on the order of 100GB of object data.
-That's a lot to hash, but it's also just a lot to deal with at all (zlib
-inflating, applying deltas, etc).
+> So I carefully re-`git add -p`'ed everything and tried `git stash
+> --keep-index` which sounded promising (my index remained the same),
+> but popping my stash ended up causing conflicts because it had
+> stashed the diff of HEAD..working-copy, not INDEX..working-copy.  A
+> `git stash show -p` confirmed that the stash included things that I
+> had already staged.
 
-Anyway, this is a pretty rough cut at an experiment. I was mostly
-curious if you had done something more advanced, and/or gotten different
-results.
+Such conflicts are usually trivially be resolved by taking "theirs"
+I have a helper script that does this and it's basically
+  git ls-files --unmerged -z |\
+    xargs -0 sed -i -e '/^<\{7\}/,/^=\{7\}/d' --e '/^>\{7\}/d' &&
+    git ls-files --unmerged -z | xargs -0 git add --
+though, unfortunately, it also stages the content as a part of marking
+resolution.
 
--Peff
+> So I carefully re-`git add -p`ed everything yet again, but then got
+> stuck trying to convince `stash` to save a snapshot of only the diff
+> in my working directory.
+
+A stash is always both staged and unstaged changes of the files.
+
+To stash only staged you may do
+  git stash --keep-index
+  git stash
+The first stash will include staged/unstaged and the second only staged
+
+To create a stash of only unstaged
+  git commit -m tmp # create temporary commit w staged
+  git stash # stash unstaged
+  git reset HEAD~ &&  git stash # stash the previous staged as
+unstaged (optionally git add  in the middle)
+  git stash apply/pop stash@{1} # get the "unstaged" stash
+As you noted such a stash is still based on a tree that may have
+contained staged changes (ORIG_HEAD).
+Ie. if you staged line 1 but not 2-3 the "unstaged" stash will also
+contain line 1
+This is doesn't happen if the staged/unstaged contain different files
+
+> To work around it, I did a `git diff >
+> temp.patch` to obtain the stuff I'd wanted to stash, a `git reset
+> --staged` to clear out those changes, ran my code to verify
+> (eventually committing it), and then applied the `temp.patch` back on
+> top of my changes. It worked, but felt convoluted.
+
+That's basically what you have to do if you only want certain changes.
+(and also what --patch does under the hood)
+
+> I did see the `git stash -p` option, to manually choose the inverse
+> bits, but for what I was doing, it was more sensible to `git add -p`
+> and try to stash the rest.
+
+git stash --patch is MUCH slower than git add -p, so I personally never use it.
+In my workflow I find it better to either
+  git add -p
+and then
+  git stash --keep-index
+or creating regular temporary commits, and fiddling with those,
+perhaps using rebase and friends.
+
+> So is there some option I've missed to tell `git stash` to stash only
+> the delta between the uncommitted-index and the working-copy?
+
+No, there is none.
+
+In my experience, using regular
+add/commit/reset/branch/checkout/rebase is superior to using the stash
+for separating changes into discrete commits.
