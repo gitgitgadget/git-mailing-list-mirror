@@ -2,94 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50A99C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 03:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37AAFC43334
+	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 04:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230370AbiFXDjs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jun 2022 23:39:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53760 "EHLO
+        id S230048AbiFXE6f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jun 2022 00:58:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231419AbiFXDjM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 23:39:12 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0CBE63AA
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 20:39:07 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id f63-20020a623842000000b005252a15e64aso675506pfa.2
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 20:39:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=O5OXF2QKAQLeW5iwxX3X16foXSIk1jDSRHT4Six/1T0=;
-        b=aMfC+PFENuRO6iuNOBhUU8Qupb3r174RDNIhxuhQiBal9VdJXIgy0ogfEHqAjmKgXS
-         RDsWhEiy7TgUUfzO9EJCk4z+pcKXKUJDnLe6vE8wLipF53vCjOGFbUVxyqpQbJtglZgw
-         zsnKBReOFS/6foZUfNDVgih9mMi9BDk3cIyX62U4hGl50CqNDpupwAWRmC1K56vDYOrA
-         Cs5oj5wD/BNgmhdfGNUciWcXm0g7AwJ0WaueMWjTRp3Ca+ZTrEvCd9PofKMVxU9Rq1WN
-         +xeXRDk/HtQ8T+CiudDbLXPb9DDh8ik9IhE3BL5aqAG3ZAlybq5bRCOzWisWUx7mXjkS
-         IbeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=O5OXF2QKAQLeW5iwxX3X16foXSIk1jDSRHT4Six/1T0=;
-        b=5oxs9BdqMhTfgtvbLDnPEgkXhV83IOMEIiV3sl/T52psJrpCE54xYBoSPt2ZED9H8W
-         52Uf4fFUs/ApPYeIC5v7ZVqosdRQy1i+YqoC9JglU9dhT31S/fkSXsR/Kf1WIUPkou1Z
-         6sXcrQQXdW5nQLg9rR4S8L7pLc3EOjWDrQ0NUObc/E8kcGwW9BtSuthUlcolD26jCg3P
-         B7xG5Tqr7xCzAmKrhdpRGEr3DkPSxIWJF7tsKiWJmv2RpztOOFOLEHIFNp/BIjt57T/S
-         Ovq7qYiFRvOlzURAHybBRLQEmyxqJea99AMaFy0gY8p3wAdriXt2p2qOVFyV/YB8Dkqt
-         HgAQ==
-X-Gm-Message-State: AJIora/RaxeKfXWLRPpf2Z2OLJ8WcJHEoP/Uv4MxSBLFHgJozIKOvEvA
-        NClqRejLDL1ctP5pQlRO/Hu6hKdA1SHL1Q==
-X-Google-Smtp-Source: AGRyM1sMjuZ5xNeARre/z4ZBqO8axXwHhMUU91HiuI+UGGvFeG+v6tX6UFo1MW5vthYT9nDBDgWXn37HCe7HcA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:249:b0:1e0:a8a3:3c6c with SMTP id
- t9-20020a17090a024900b001e0a8a33c6cmr130887pje.0.1656041946736; Thu, 23 Jun
- 2022 20:39:06 -0700 (PDT)
-Date:   Thu, 23 Jun 2022 20:39:05 -0700
-In-Reply-To: <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com>
-Message-Id: <kl6lh74aivc6.fsf@chooglen-macbookpro.roam.corp.google.com>
+        with ESMTP id S229537AbiFXE6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jun 2022 00:58:34 -0400
+Received: from out28-169.mail.aliyun.com (out28-169.mail.aliyun.com [115.124.28.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99BFC6D
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 21:58:22 -0700 (PDT)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07266819|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.0778228-0.000760131-0.921417;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047201;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=3;RT=3;SR=0;TI=SMTPD_---.OBk52Qm_1656046679;
+Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.OBk52Qm_1656046679)
+          by smtp.aliyun-inc.com;
+          Fri, 24 Jun 2022 12:58:00 +0800
+Date:   Fri, 24 Jun 2022 12:57:59 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Re: [PATCH] ls-files: update test style
+References: <pull.1269.git.1655974015414.gitgitgadget@gmail.com>, 
+        <220623.86wnd7k5un.gmgdl@evledraar.gmail.com>
+X-Priority: 3
+X-GUID: A32094DF-6D58-4D2F-8032-A199FB0E919F
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
 Mime-Version: 1.0
-References: <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com> <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com>
-Subject: Re: [PATCH v3 00/12] submodule: make "git submodule--helper" behave
- like "git submodule"
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <2022062412565939884621@oschina.cn>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Pgo+T24gVGh1LCBKdW4gMjMgMjAyMiwgTGkgTGluY2hhbyB2aWEgR2l0R2l0R2FkZ2V0IHdyb3Rl
+Ogo+Cj4+IEZyb206IExpIExpbmNoYW8gPGxpbGluY2hhb0Bvc2NoaW5hLmNuPgo+Pgo+PiBVcGRh
+dGUgdGVzdCBzdHlsZSBpbiB0L3QzMFsqXS5zaCBmb3IgdW5pZm9ybWl0eSwgdGhhdCdzIHRvCj4+
+IGtlZXAgdGVzdCB0aXRsZSB0aGUgc2FtZSBsaW5lIHdpdGggaGVscGVyIGZ1bmN0aW9uIGl0c2Vs
+Zi4KPgo+V2UgaGF2ZSBhIGZldyBvZiB0aGVzZSBzb3J0cyBvZiBvbGQgc3R5bGUgdGVzdHMsIGFu
+ZCBpdCdzIGdvb2QgdG8gdXBkYXRlCj50aGVtLiAKWWVzLiBDdXJyZW50bHkgdGhlcmUgYXJlIGF0
+IGxlYXN0IDQwMCsgb2xkIHN0eWxlIHRlc3RzIDopLiBJdCBub3QgZWFzeSBmb3IgbWUKdG8gZml4
+IHRoZW0gYWxsIGF0IG9uY2Ugd2l0aCBzb21lIG1hZ2ljIHJlZ2V4IGV4cHJlc3Npb25zLCBzbyBJ
+J20gbm90IGdvaW5nCnRvIHVwZGF0ZSB0aGVtIGFsbCBpbiBvbmUgcGF0Y2guIEJ1dCBJIHRoaW5r
+LCBmaXJzdCBvZiBhbGwsIHdlIGNhbiBleHBsaWNpdGx5CmRvY3VtZW50wqB3aGljaCB0ZXN0IHN0
+eWxlIHdlIHByZWZlciBmaXJzdC4KPgo+PsKgwqDCoMKgIFdyaXRlIHRlc3QgY29kZSBsaWtlIHRo
+aXM6Cj4+IGRpZmYgLS1naXQgYS90L3QzMDAxLWxzLWZpbGVzLW90aGVycy1leGNsdWRlLnNoIGIv
+dC90MzAwMS1scy1maWxlcy1vdGhlcnMtZXhjbHVkZS5zaAo+PiBpbmRleCA0OGNlYzRlNWY4OC4u
+NzYzNjFiOTIzMzYgMTAwNzU1Cj4+IC0tLSBhL3QvdDMwMDEtbHMtZmlsZXMtb3RoZXJzLWV4Y2x1
+ZGUuc2gKPj4gKysrIGIvdC90MzAwMS1scy1maWxlcy1vdGhlcnMtZXhjbHVkZS5zaAo+PiBAQCAt
+NjcsMjYgKzY3LDI2IEBAIGVjaG8gJyEqLjIKPj7CoAo+PsKgIGFsbGlnbm9yZXM9Jy5naXRpZ25v
+cmUgb25lLy5naXRpZ25vcmUgb25lL3R3by8uZ2l0aWdub3JlJwo+PsKgCj4+IC10ZXN0X2V4cGVj
+dF9zdWNjZXNzIFwKPj4gLcKgwqDCoCAnZ2l0IGxzLWZpbGVzIC0tb3RoZXJzIHdpdGggdmFyaW91
+cyBleGNsdWRlIG9wdGlvbnMuJyBcCj4+IC3CoMKgwqAgJ2dpdCBscy1maWxlcyAtLW90aGVycyBc
+Cj4+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdnaXQgbHMtZmlsZXMgLS1vdGhlcnMgd2l0aCB2YXJp
+b3VzIGV4Y2x1ZGUgb3B0aW9ucy4nICcKPj4gKwlnaXQgbHMtZmlsZXMgLS1vdGhlcnMgXAo+PsKg
+wqDCoMKgwqDCoMKgwqAgLS1leGNsdWRlPVwqLjYgXAo+PsKgwqDCoMKgwqDCoMKgwqAgLS1leGNs
+dWRlLXBlci1kaXJlY3Rvcnk9LmdpdGlnbm9yZSBcCj4+wqDCoMKgwqDCoMKgwqDCoCAtLWV4Y2x1
+ZGUtZnJvbT0uZ2l0L2lnbm9yZSBcCj4+wqDCoMKgwqDCoMKgwqDCoCA+b3V0cHV0ICYmCj4KPlRo
+aXMgdGhvdWdoIHJlYWxseSBzdG9wcyB0b28gc2hvcnQsIGhlcmUgd2UgZW5kIHVwIHdpdGg6Cj4K
+Pgk8VEFCPmdpdC1scy1maWxlcyAtLW90aGVycyBcCj4JPDcgc3BhY2VzPi0tZXhjbHVkZSBbLi4u
+XQo+IApPSy4KPj4gLcKgwqDCoMKgIHRlc3RfY21wIGV4cGVjdCBvdXRwdXQnCj4+ICvCoMKgwqDC
+oCB0ZXN0X2NtcCBleHBlY3Qgb3V0cHV0Cj4KPkFuZCB5b3UndmUgc3BhY2UtaW5kZW50ZWQgdGhp
+cyB0ZXN0X2NtcCwgcHJlc3VtYWJseSB0aGUgYmVsb3cgaGFzIHRoZQo+c2FtZSBpc3N1ZXMgKEkg
+ZGlkbid0IGNoZWNrIGluIGRldGFpbCkgCj4KPkluc3RlYWQgdGhlIGFyZ3VtZW50IGxpc3RzIHNo
+b3VsZCBiZSA8VEFCPjxUQUI+IGluZGVudGVkLCBhbmQgdGhlIHJlc3QKPnNob3VsZCBiZSBUQUIg
+aW5kZW50ZWQuIApPSy4KPgo+PiArJwo+PsKgCj4+wqAgIyBUZXN0IFxyXG4gKE1TRE9TLWxpa2Ug
+c3lzdGVtcykKPj7CoCBwcmludGYgJyouMVxyXG4vKi4zXHJcbiEqLjZcclxuJyA+LmdpdGlnbm9y
+ZQo+PsKgCj4+IC10ZXN0X2V4cGVjdF9zdWNjZXNzIFwKPj4gLcKgwqDCoCAnZ2l0IGxzLWZpbGVz
+IC0tb3RoZXJzIHdpdGggXHJcbiBsaW5lIGVuZGluZ3MuJyBcCj4+IC3CoMKgwqAgJ2dpdCBscy1m
+aWxlcyAtLW90aGVycyBcCj4+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdnaXQgbHMtZmlsZXMgLS1v
+dGhlcnMgd2l0aCBcclxuIGxpbmUgZW5kaW5ncy4nICcKPj4gKwlnaXQgbHMtZmlsZXMgLS1vdGhl
+cnMgXAo+PsKgwqDCoMKgwqDCoMKgwqAgLS1leGNsdWRlPVwqLjYgXAo+PsKgwqDCoMKgwqDCoMKg
+wqAgLS1leGNsdWRlLXBlci1kaXJlY3Rvcnk9LmdpdGlnbm9yZSBcCj4+wqDCoMKgwqDCoMKgwqDC
+oCAtLWV4Y2x1ZGUtZnJvbT0uZ2l0L2lnbm9yZSBcCj4+wqDCoMKgwqDCoMKgwqDCoCA+b3V0cHV0
+ICYmCj4+IC3CoMKgwqDCoCB0ZXN0X2NtcCBleHBlY3Qgb3V0cHV0Jwo+PiArwqDCoMKgwqAgdGVz
+dF9jbXAgZXhwZWN0IG91dHB1dAo+PiArJwo+Cj5Bc2lkZSBmcm9tIHRoZSBhYm92ZSBJIHRoaW5r
+IGl0J3MgYWxzbyB3b3J0aCBpbmNvcnBvcmF0aW5nIGFsbCB0aGUKPiJwcmludGYiLCAiZWNobyIs
+ICJjYXQiIGV0Yy4gdGhhdCB3ZSBkbyBpbnRvIHRoZSAidGVzdF9leHBlY3Rfc3VjY2VzcyIKPnRo
+ZW1zZWx2ZXMsIGFuZCBpZiB0aGV5J3JlIG5lZWRlZCBieSBtb3JlIHRoYW4gb25lIHRlc3QgcGVy
+aGFwcyBtYWtlCj50aGVtIGEgInNldHVwIiBoZWxwZXIgZnVuY3Rpb24gKHdoaWNoIHdvdWxkIHRl
+c3Rfd2hlbl9maW5pc2hlZCAicm0gLWYKPi5naXRpZ25vcmUiIGNsZWFuIHVwIGFmdGVyIGl0c2Vs
+ZikuIApZZXMsIG1ha2Ugc2Vuc2UuCj4KPlRoYXQncyBvYnZpb3VzbHkgYmlnZ2VyIHRoYW4gc29t
+ZSB3aGl0ZXNwYWNlIGNoYW5nZXMsIHNvIHdlIGNvdWxkIHB1bnQKPm9uIGl0IGZvciBub3csIGJ1
+dCBhcyB3ZSdyZSBsb29raW5nIGF0IHRoaXMgYW55d2F5IHdlIGNvdWxkIGNvbnZlcnQKPmZ1bGx5
+IHRvIGEgbW9yZSBtb2Rlcm4gc3R5bGUgaW4gYSBmb2xsb3ctdXAgY29tbWl0Li4uCj4KPj4gLXRl
+c3RfZXhwZWN0X3N1Y2Nlc3MgXAo+PiAtwqDCoMKgICdnaXQgbHMtZmlsZXMgd2l0aCBwYXRoIHJl
+c3RyaWN0aW9uIHdpdGggLS0uJyBcCj4+IC3CoMKgwqAgJ2dpdCBscy1maWxlcyAtLW90aGVycyAt
+LSBwYXRoMCA+b3V0cHV0ICYmCj4+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdnaXQgbHMtZmlsZXMg
+d2l0aCBwYXRoIHJlc3RyaWN0aW9uIHdpdGggLS0uJyAnCj4+ICvCoMKgwqAgZ2l0IGxzLWZpbGVz
+IC0tb3RoZXJzIC0tIHBhdGgwID5vdXRwdXQgJiYKPj7CoCB0ZXN0X2NtcCBvdXRwdXQgLSA8PEVP
+Rgo+PsKgIHBhdGgwCj4+wqAgRU9GCj4+wqAgJwo+Cj5PbiB0aGUgdG9waWMgb2YgbGVhdmluZyB0
+aGluZ3Mgb24gdGhlIHRhYmxlOiBoZXJlIHdlIGNvdWxkIHVzZSAiPDwtRU9GIgo+KG9yIGFjdHVh
+bGx5IGJldHRlciAiPDwtXEVPRiIpIGluc3RlYWQsIGFuZCBpbmRlbnQgdGhlIGhlcmUtZG9jLCBh
+cyB3ZQo+dXN1YWxseSBkby4gCk9LLCB3aWxsIGRvLgo=
 
-> These are preparatory changes to make "git submodule--helper"'s
-> behavior align with that of "git submodule". The next step after this
-> is to get rid of git-submodule.sh entirely, and make "git submodule" a
-> built-in.
->
-> The last two patches here are post-cleanup of related submodule code
-> that isn't strictly necessary, but good to do. Similarly this starts
-> with the removal of some dead code in the area.
->
-> The goal is to make these changes as small as possible, and as
-> obviously correct as possible. This will help to make the meaty
-> changes that follow easier to review.
-
-Thanks for taking this up! I have some lingering confusion over the
-behavior described in 02/12's commit message, but I am quite convinced
-that 02/12 is good - the check that it removes is not needed for
-correctness and it doesn't make much sense as safeguard for developers
-[1].
-
-Nearly everything else is very obviously correct, and I've
-double-checked most of the assertions in the commit messages as well. So
-I'm happy to give this my reviewed-by.
-
-  Reviewed-by: Glen Choo <chooglen@google.com>
-
-[1] https://lore.kernel.org/git/kl6ltu8ci7r5.fsf@chooglen-macbookpro.roam.c=
-orp.google.com
