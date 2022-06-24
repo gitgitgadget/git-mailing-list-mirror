@@ -2,69 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5DFAC433EF
-	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 01:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8A8C43334
+	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 01:14:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbiFXBDF convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 23 Jun 2022 21:03:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50364 "EHLO
+        id S230080AbiFXBOR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jun 2022 21:14:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229808AbiFXBDE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jun 2022 21:03:04 -0400
-Received: from omta015.useast.a.cloudfilter.net (omta015.useast.a.cloudfilter.net [34.195.253.206])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79E39F5B3
-        for <git@vger.kernel.org>; Thu, 23 Jun 2022 18:03:03 -0700 (PDT)
-Received: from cxr.smtp.a.cloudfilter.net ([10.0.17.148])
-        by cmsmtp with ESMTP
-        id 4L61ockThfvVh4Xiwo4jeJ; Fri, 24 Jun 2022 01:03:02 +0000
-Received: from thunderbird.smith.home ([70.176.251.46])
-        by cmsmtp with ESMTPSA
-        id 4XiuotTk7n20P4Xivo9m3Y; Fri, 24 Jun 2022 01:03:02 +0000
-Authentication-Results: cox.net; auth=pass (PLAIN) smtp.auth=ischis2@cox.net
-X-Authority-Analysis: v=2.4 cv=EvTBEAQA c=1 sm=1 tr=0 ts=62b50d46
- a=OCGoW4wscCDr3YEa6K7Wzw==:117 a=OCGoW4wscCDr3YEa6K7Wzw==:17
- a=8nJEP1OIZ-IA:10 a=JPEYwPQDsx4A:10 a=irK6OhU5MZFQRCZIAbcA:9 a=wPNLvfGTeEIA:10
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 8AC06196158E;
-        Thu, 23 Jun 2022 18:03:00 -0700 (MST)
-From:   Stephen Smith <ischis2@cox.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.org>,
-        Kyle Meyer <kyle@kyleam.com>
-Subject: Re: SHA-256 transition
-Date:   Thu, 23 Jun 2022 18:03:00 -0700
-Message-ID: <12140906.O9o76ZdvQC@thunderbird>
-In-Reply-To: <220624.86fsjvj690.gmgdl@evledraar.gmail.com>
-References: <12011256.O9o76ZdvQC@thunderbird> <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net> <220624.86fsjvj690.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229545AbiFXBOQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jun 2022 21:14:16 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23BAA5675E
+        for <git@vger.kernel.org>; Thu, 23 Jun 2022 18:14:15 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26380140BCD;
+        Thu, 23 Jun 2022 21:14:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=68CanB4ssLBV
+        KxrHLtCgwFEDlxzEHA3fuDpOXluUmFk=; b=s5Tzc1f6BC/ikGEX9dZF0K9Nf5ZU
+        gZUfIP+A1R9NIOu4SODYj7xBqTGliBMbNASq9RxOzPh6WviJGe6bfSOfbXiCyX0v
+        vKk1eYm0PjP/JSmTG0msF/rGTDR4RipeSUiSjQYn+m08pXsDh6fJS4jKIMfgPo1p
+        WmIkNFlXi6DvCro=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E06A140BCC;
+        Thu, 23 Jun 2022 21:14:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7E386140BCB;
+        Thu, 23 Jun 2022 21:14:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] gitweb: fix "make" not including "gitweb"
+ without NOOP run slowdowns
+References: <220527.861qwf489s.gmgdl@evledraar.gmail.com>
+        <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com>
+        <xmqqa6ap8z55.fsf@gitster.g> <20220620083202.GB1689@szeder.dev>
+        <YrFphmtLuHVkI7yr@coredump.intra.peff.net>
+        <220622.86r13hkp2c.gmgdl@evledraar.gmail.com>
+        <xmqq7d587lqx.fsf@gitster.g>
+        <220623.865ykrll0j.gmgdl@evledraar.gmail.com>
+        <xmqq7d57x8qo.fsf@gitster.g>
+        <220624.86bkuikidi.gmgdl@evledraar.gmail.com>
+Date:   Thu, 23 Jun 2022 18:14:12 -0700
+In-Reply-To: <220624.86bkuikidi.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 24 Jun 2022 01:45:35 +0200")
+Message-ID: <xmqq35fuyiaj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="iso-8859-1"
-X-CMAE-Envelope: MS4xfH/Jtnfx+2VtT+qlmSSBEezYBsQcAfRF4VSmgqFlU9h9Un+dV32/t/Moh9MlRdkPRHWkPb2nEChjSOuwNgzHFvFJK2hFnfWJsl10h7l5zwxBTaQP+OV0
- d3S2bS5kUa8Rx+t673yxfV+B+1GMuLICxbYhGFv1CLHRpjTcyKuoKxT7vbmRp7jZQc59JNBWQTvcSmag4nxIcrmMo7McxEkYoJC9wwQKnrKav/Rr/X395PTh
- xSfEJtiCHIabvqwUPOy4GdpFH+wS8uXhOeo4QBg+QPIcYBPLpoYgqK0a2d0WmeWdc3jc9fX1ZBoGglANeIywOQ==
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F5A28CDA-F35A-11EC-9675-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday, June 23, 2022 3:21:05 PM MST Ævar Arnfjörð Bjarmason wrote:
-> Finally, I'd really like to thank you for all your work on SHA-256 so
-> far, and really hope that none of what I've said here is discouraging in
-> any way. This thread has received some attention outside this ML (on
-> LWN), so I wanted to clarify some of the points above. Thanks!
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I had looked on LWN before I started the thread to see if anything was being 
-discussed and it wasn't.
+> would be in practice, i.e. I download downstream package recipies, whic=
+h
+> are found at (name, relative path & urls). I also manually get the AIX
+> package:
+> ...
+> 	macports-ports  devel/git       https://github.com/macports/macports-p=
+orts.git
+>
+> Looking through all of those none of them do anything with
+> gitweb/Makefile. I.e. all "make gitweb" at the top-level, or simply rel=
+y
+> on "make install" to install it.
 
-I tend to be an early adopter.   I hadn't seen any new commits in the main git 
-repository in a while and was beginning to wonder if it had been abandoned.   
-This thread has convinced me that isn't the case, but the main person doing 
-the developing being busy.
+Now we are talking.  Giving that as a datapoint upfront in the
+proposed log message would have saved needless round-trip, I would
+think.
 
-I too want to say thank you (Brian) for your hard work.   
-
-
-
-
-
-
+Thanks.
