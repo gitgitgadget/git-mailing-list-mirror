@@ -2,147 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AF2DC43334
-	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 15:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8C81C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 16:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbiFXP7D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jun 2022 11:59:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60696 "EHLO
+        id S230294AbiFXQDi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jun 2022 12:03:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbiFXP7C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jun 2022 11:59:02 -0400
-Received: from relay11.mail.gandi.net (relay11.mail.gandi.net [IPv6:2001:4b98:dc4:8::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA5C52501
-        for <git@vger.kernel.org>; Fri, 24 Jun 2022 08:59:00 -0700 (PDT)
-Received: (Authenticated sender: contact@luigifab.fr)
-        by mail.gandi.net (Postfix) with ESMTPSA id 99F1A100003;
-        Fri, 24 Jun 2022 15:58:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=luigifab.fr; s=gm1;
-        t=1656086339;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=FC0bHD83kRtyBZSWSzS7uRYZf1eEC/FGy8+2xyDIu5o=;
-        b=drTHn1vj3CoE8Y8FqkTqCsinhKai5TMvQtRCu1XGAGwlhQcQ3ovuYi8cnnUUwGAJsZQ/I4
-        ppebJMoK2hVTp91/3goRIoXaaEE07Anci2vKReQmMSAWw48oHj9ycsMlGk1J91OFBN8Ccy
-        rHg2txx9Oocq99VH5Etu0J2/0CNRos6JftJHdDV1CI2sMvtc2g5rk/o9qj6LdmCqyWC9wg
-        BZUYihX3qlAA1y/ENRa2u93/nVUB4P2TLERtmNY/XmHA5yts3FrS95b9y5aKVYIFz8yR8r
-        0Fl2Vq6Ko7mD2QWMlsVWsFF2KBVkxmgQFpYYgOJad/zq3iHh6MF9vXV+ypKQzw==
-Message-ID: <7c490fea-fa8a-0245-5b3f-981b8797a7cd@luigifab.fr>
-Date:   Fri, 24 Jun 2022 17:58:56 +0200
+        with ESMTP id S229731AbiFXQDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jun 2022 12:03:37 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A5653A53
+        for <git@vger.kernel.org>; Fri, 24 Jun 2022 09:03:35 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 920551AFD2F;
+        Fri, 24 Jun 2022 12:03:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cC57z9pe3rhrOmfzYQnCWILjzTFaBGYXVDJDLk
+        OENFc=; b=AanWhIm8/e4Ye8WSxmhAUo1ssJmcRRhRPeeo456C2tbFFPSbLhcQWm
+        rmxpnjNOQ5HbWwt+R9ESC/w86aqbESzsXwuEkedKR/ZMTPI2GjP9WK0ihD9k4XH1
+        p4kq/LkNVzIL5Dillb6eQ5lE+8j9u6k5zGgifmmxq4GKu/ZklOfYM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7603C1AFD2E;
+        Fri, 24 Jun 2022 12:03:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0BE3B1AFD2D;
+        Fri, 24 Jun 2022 12:03:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han Xin <hanxin.hx@bytedance.com>
+Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
+        git@vger.kernel.org, haiyangtand@gmail.com,
+        jonathantanmy@google.com, me@ttaylorr.com, ps@pks.im
+Subject: Re: [PATCH v2 1/2] test-lib.sh: add limited processes to test-lib
+References: <20220618030130.36419-1-hanxin.hx@bytedance.com>
+        <cover.1656044659.git.hanxin.hx@bytedance.com>
+        <442a4c351dea603e226bae89eddc2b3496d93262.1656044659.git.hanxin.hx@bytedance.com>
+Date:   Fri, 24 Jun 2022 09:03:28 -0700
+In-Reply-To: <442a4c351dea603e226bae89eddc2b3496d93262.1656044659.git.hanxin.hx@bytedance.com>
+        (Han Xin's message of "Fri, 24 Jun 2022 13:27:56 +0800")
+Message-ID: <xmqqfsjuvyjz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: git a/xyz or b/xyz
-Content-Language: fr
-To:     Konstantin Khomoutov <kostix@bswap.ru>
-Cc:     git@vger.kernel.org
-References: <b4f40821-8592-1a35-8b60-219fd7e29e9f@luigifab.fr>
- <20220620111230.ck7nkouzkviidtcu@carbon>
-From:   Fabrice Creuzot <code@luigifab.fr>
-In-Reply-To: <20220620111230.ck7nkouzkviidtcu@carbon>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 309B90D0-F3D7-11EC-99AB-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks! --no-prefix do the job.
+Han Xin <hanxin.hx@bytedance.com> writes:
 
-Le 20/06/2022 à 13:12, Konstantin Khomoutov a écrit :
-> On Sat, Jun 18, 2022 at 12:45:30PM +0200, Fabrice Creuzot wrote:
-> 
->> When we are reading a "git diff", all paths are prefixed with "a/" and "b/".
->> Example:
->>
->> diff --git a/xyz
->> index 4aa4b5230..1c2b8b69e 100644
->> --- a/xyz
->> +++ b/xyz
->> @@ -1,7 +1,7 @@
->>
->>
->> With my terminal, I double click on the path to select the full path for
->> copy.
->>
->> Then, when I paste: "git log a/xyz",
->>   git says: unknown revision or path not in the working tree
->>
->> Ok, I need to remove the "a/" or "b/".
->> But, is git can understand that "a/xyz" is "xyz" because "a/xyz" does not
->> exist?
-> 
-> A quick answer: pass `git diff` the "--no-prefix" command-line option to
-> suppress generation of these prefixes.
-> 
-> 
-> A bit of historical context.
-> 
-> Please note that `git diff` - at least by default - generates its output using
-> the format known as "unified diff" which was invented an implemented way
-> before Git was concieved [1]. Quite probably on your system you have access to
-> the two command line tools - `diff` and `patch`, - one of which generates
-> diffs by comparing two files, and another one being able to update a file
-> using a patch information produced by the former.
-> 
-> The diff format records the pathnames of the files compared when the patch
-> data was generated.
-> 
-> Now consider that a patch file can describe changes to apply to any set of
-> files. In order to achieve this, the format has to name the files to be used.
-> 
-> Now consider that the diff format can use used for two conceptually slightly
-> different purposes:
-> 
->   - A patch file in this format can describe a set of "concrete" changes.
-> 
->     Say, you pass a patch file to someone, they just run `patch` on it and
->     that tool patches a set of files no matter where it was run from.
-> 
->   - A patch file in this format can describe a set of changes intended to
->     be applied to a particular state of a file or a set of files, possibly
->     comprising a hierarchy, located anywhere in the target filesystem.
->     
->     A good example is a source tree of a software project: a user can fetch
->     a tarball with a software project and unpack it everywhere they wish.
->     They then should be able to apply a patch file to that unpacked tree.
-> 
-> Note that in the former case the names of the names of the files listed in a
-> patch file may not share even the smallest common prefix while in the second
-> case they will have the same prefix, and the prefix may not even be needed at
-> all.
-> 
-> Historically the patch files to be used in the second case were generated by
-> running a tool like `diff` against the two hierarchies of files: a source,
-> unmodified directory, and the copy of that directly with the necessary
-> modifications. That is, you'd run something like
-> 
->    $ diff -u srcdir modified > changes.patch
-> 
-> and because of that the generated patch file would naturally contain file
-> names starting with "srcdir/" and "modified/" prefixes.
-> 
-> The tool to apply patch files, `patch`, has a command-line option "-p" (for
-> "prefix") which can be used to strip the specified number of prefix
-> directories from the names of the files when applying a patch file. So to
-> apply a patch generated by comparing two directory hierarchy you'd routinely
-> pass "-p1" to that tool, like in
-> 
->    $ cd srcdir
->    $ patch -p1 < changes.patch
-> 
-> 
-> OK, so you can now note that `git diff` is different from the classical patch
-> maniputation tools in that its operation is somewhat virtualized: by default
-> it generates a patch describing the set of differences between the work tree
-> and the index, and can be told to generate a patch between sets of files in
-> named revisions and so on. So there's no two directories physically existing
-> on the file system and so `git diff` generates fake prefixes.
-> 
-> Exactly why it does so by default, I don't know, but I suppose it's just to be
-> in line with the classical use case explained above which was in widespread
-> use before Git even existed.
-> 
-> 1. https://en.wikipedia.org/wiki/Diff#Unified_format
-> 
+> We will use the lazy prerequisite ULIMIT_PROCESSES in a follow-up
+> commit.
+>
+> With run_with_limited_processses() we can limit forking subprocesses and
+> fail reliably in some test cases.
+>
+> Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
+> ---
+>  t/test-lib.sh | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 8ba5ca1534..f920e3b0ae 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1816,6 +1816,15 @@ test_lazy_prereq ULIMIT_FILE_DESCRIPTORS '
+>  	run_with_limited_open_files true
+>  '
+>  
+> +run_with_limited_processses () {
+> +	(ulimit -u 512 && "$@")
+
+The "-u" presumably is a way to say that the current user can have
+only 512 processes at once that is supported by bash and ksh?  dash
+seems to use "-p" for this but "-p" of course means something
+completely different to other shells (and is read-only), which is a
+mess X-<.
+
+I suspect that it is OK to make it practically bash-only, but then ...
+
+> +}
+> +
+> +test_lazy_prereq ULIMIT_PROCESSES '
+> +	test_have_prereq !HPPA,!MINGW,!CYGWIN &&
+> +	run_with_limited_processses true
+
+... as this lazy-prereq makes a trial run that would fail when the
+system does not allow "ulimit -u 512", do we need the platform
+specific prereq check?  I am wondering if the second line alone is
+sufficient.
+
+Also, 512 is not a number I would exactly call "limit forking".
+Does it have to be so high, I wonder.  Of course it cannot be so low
+like 3 or 8 or even 32, as per-user limitation counts your window
+manager and shells running in other windows.
+
+What you ideally want is an option that lets you limit the number of
+processes the shell that issued the ulimit call can spawn
+simultaneously, but I didn't find it in "man bash/dash/ksh".
+
+> +'
+> +
+>  build_option () {
+>  	git version --build-options |
+>  	sed -ne "s/^$1: //p"
