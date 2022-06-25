@@ -2,145 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CFD4C433EF
-	for <git@archiver.kernel.org>; Sat, 25 Jun 2022 08:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B75C8C43334
+	for <git@archiver.kernel.org>; Sat, 25 Jun 2022 09:01:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231761AbiFYIx5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Jun 2022 04:53:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36638 "EHLO
+        id S232276AbiFYJBL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Jun 2022 05:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbiFYIx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Jun 2022 04:53:56 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B67E6393F0
-        for <git@vger.kernel.org>; Sat, 25 Jun 2022 01:53:55 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id E72025A0E9;
-        Sat, 25 Jun 2022 08:53:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1656147234;
-        bh=9J2UbEZSd15Zx0AtvvYaxe8YNGewEFnQvK3QaeOtExU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=y2bSepG12ttvfh4hIee3feBePlcuP8LiU4/6+Ck2Mh6SWEM1O74Qw35xpxSsLY7HD
-         qVave8nbZ9oTSfNCHg5XwGymZKi8BYJPkQ+Z/DyfLcVRHAgN4NxJscj1p+so3k+nLN
-         CMqBdYGvdeQb8J+0fYHYydjmTrBWgwI+WraSLwilqORhoMzvnBMHy0DTxrc8sRHMkd
-         nH23JP1is+3Yl9zopdLCu3otIgwCdM/UGf1eAO9TnG57F+d2JhGiY1SyBAENpIpwlB
-         sE0AIa9P7+lvIaHYCbwFIFnRZ4Eus+0hn5wVnU+q76iKMfWHljJRL3UE36HxIGuV4J
-         qsZbVpaOlkCPzzWaXuO6vVoZRG0bk8hRAFcQWir1KWB+lVkgtxWwenhC22hfayqeDe
-         KLv1WzHO+DNBpAZFQU+O2mli45U6XwREYyxxHEKnmTk2Z5QiSXCPvRe6SYDl7QUjnX
-         PE2LXmfGQWk5pq3IYXFSWfF9b82FWhAwMI4zzWgiOC9eRiFBNMG
-Date:   Sat, 25 Jun 2022 08:53:53 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stephen Smith <ischis2@cox.net>, git <git@vger.kernel.org>
-Subject: Re: SHA-256 transition
-Message-ID: <YrbNIUnftj+Ooumo@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stephen Smith <ischis2@cox.net>, git <git@vger.kernel.org>
-References: <12011256.O9o76ZdvQC@thunderbird>
- <220621.86sfnyuvt0.gmgdl@evledraar.gmail.com>
- <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
- <YrWXdNGZGN7gXL40@coredump.intra.peff.net>
+        with ESMTP id S232026AbiFYJBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Jun 2022 05:01:09 -0400
+X-Greylist: delayed 1935 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 25 Jun 2022 02:01:06 PDT
+Received: from tschil.ethgen.ch (tschil.ethgen.ch [5.9.7.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38422CE1A
+        for <git@vger.kernel.org>; Sat, 25 Jun 2022 02:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ethgen.ch;
+         s=mail; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender:
+        Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=hwqyL4Bpw1CdqjO4EuCgOiC2Yn9vwnp1gnqiD+GGAEg=; b=FJO3/IfD/Ec7I+AVIigxdufYfi
+        Ee7r+pLzNe1ynalU/KPw6qLrPe1dyHUGAjB7UutVuMX77veBzgHhI5NXwbH7rm4+VdgCNRsrqv9r0
+        /J4nJLjNdYjYjpnP1n/DcDFJGjc6/DH67ZJYdsXaCUKV0sjFdRqd6srvJvrMjjcIetUadi0KbIgNC
+        VhWr3thqkEiIQhnfpaZrwjaX/QZVurqsrHF1xrNt1gC3pghiMrdczJpENjO0htr91/k4tlO4l8LNO
+        lMSlf3YZb/1WVcu6KQq+42U4xpS8iCFWK/ieTLXWGyLLz3D9sf+h+dFIWgqCrZ03Ol3aCTeZ/zsUh
+        QKGQzHXwlfSR2DM2G/X2cK5RrOBGSOTB7G4b1el922QBXd/MXmwjoHQRiCN2y/pdgAsb3qnEAjr9z
+        iUmpoo0jdtnEecGCm2XRbIXsI4sWV3733o2Q4l3L/H5HwOv9FmC4ljRMqCsLx4fQQjwFajCeYwAjc
+        3IFShX7JAZoldKoL2jYEM7fZ09yuOPQlYQkSYGzINxLk7GKqtnwf/qImiQXV5++YN8lA0HPLR3Ovq
+        maUyI+AdJkHZ3s1uSA/0xgH2bc5VxxXIDHB+4ZuNWek/HxeYiQs4LWTlFjIu+wVBoPLIDnkhyTn75
+        m8YYp8SB/r9PuAuMr4OQCH3D/fm5BLdtLihQmayPs=;
+Received: from [192.168.17.4] (helo=ikki.ket)
+        by tschil.ethgen.ch with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <Klaus@ethgen.ch>)
+        id 1o519r-00035h-55
+        for git@vger.kernel.org; Sat, 25 Jun 2022 08:28:47 +0000
+Received: from klaus by ikki.ket with local (Exim 4.95)
+        (envelope-from <Klaus@ethgen.ch>)
+        id 1o519q-0004Lf-Rd
+        for git@vger.kernel.org;
+        Sat, 25 Jun 2022 10:28:46 +0200
+Date:   Sat, 25 Jun 2022 09:28:46 +0100
+From:   Klaus Ethgen <Klaus@ethgen.ch>
+To:     git@vger.kernel.org
+Subject: Git-Bug
+Message-ID: <YrbHPlJy/EW/Y+ON@ikki.ethgen.ch>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="KWSAZ3rjVMjn+Luq"
+        protocol="application/pgp-signature"; boundary="P86+cjiTyaSoBWDd"
 Content-Disposition: inline
-In-Reply-To: <YrWXdNGZGN7gXL40@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.4 (2022-04-30)
+OpenPGP: id=79D0B06F4E20AF1C;
+ url=http://www.ethgen.ch/~klaus/79D0B06F4E20AF1C.txt; preference=signencrypt
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---KWSAZ3rjVMjn+Luq
-Content-Type: text/plain; charset=utf-8
+--P86+cjiTyaSoBWDd
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2022-06-24 at 10:52:36, Jeff King wrote:
-> On Wed, Jun 22, 2022 at 12:29:59AM +0000, brian m. carlson wrote:
->=20
-> > > We've since migrated our default hash function from SHA-1 to SHA-1DC
-> > > (except on vanilla OSX, see [2]). It's a variant SHA-1 that detects t=
-he
-> > > SHAttered attack implemented by the same researchers. I'm not aware o=
-f a
-> > > current viable SHA-1 collision against the variant of SHA-1 that we
-> > > actually use these days.
-> >=20
-> > That's true, but that still doesn't let you store the data.  There is
-> > some data that you can't store in a SHA-1 repository, and SHA-1DC is
-> > extremely slow.  Using SHA-256 can make things like indexing packs
-> > substantially faster.
->=20
-> I'm curious if you have numbers on this. I naively converted linux.git
-> to sha256 by doing "fast-export | fast-import" (the latter in a sha256
-> repo, of course, and then both repacked with "-f --window=3D250" to get
-> reasonable apples-to-apples packs).
+Hi,
 
-I did the same thing, except I just did a regular gc and not a custom
-repack, and I created both a SHA-1 and SHA-256 repo from the same
-original.
+since some versions I have the following troubles with git:
 
-> Running "index-pack --verify" on the result takes about the same time
-> (this is on an 8-core system, hence the real/user differences):
->=20
->   [sha1dc]
->   real	2m43.754s
->   user	10m52.452s
->   sys	0m36.745s
->=20
->   [sha256]
->   real	2m41.884s
->   user	12m23.344s
->   sys	0m35.222s
+I use vcsh to manage my vim config files and pull/push them from one
+machine to others. That was working great but now the push refuses to
+work as it state the working tree is unclean even if it is clean:
 
-Here are my results:
+   # on the server:
+   ~> vcsh vim config receive.denyCurrentBranch
+   updateInstead
+   ~> vcsh vim config core.excludesfile
+   .gitignore.d/vim
+   ~> vcsh vim status
+   Auf Branch master
+   Ihr Branch ist auf demselben Stand wie 'origin/master'.
 
-[sha256]
-time ~/checkouts/git/git index-pack --verify .git/objects/pack/pack-*.pack
-~/checkouts/git/git index-pack --verify .git/objects/pack/pack-*.pack  2768=
-=2E42s user 181.00s system 185% cpu 26:31.70 total
+   nichts zu committen, Arbeitsverzeichnis unver=E4ndert
 
-[sha1dc]
-time ~/checkouts/git/git index-pack --verify .git/objects/pack/pack-*.pack
-~/checkouts/git/git index-pack --verify .git/objects/pack/pack-*.pack  3041=
-=2E28s user 184.84s system 199% cpu 26:54.74 total
+   # on the client:
+   ~> vcsh vim status
+   Auf Branch master
+   Ihr Branch ist 3 Commits vor 'xxxx/master'.
+     (benutzen Sie "git push", um lokale Commits zu publizieren)
 
-Note that in my case, I'm using an accelerated hardware-based SHA-256
-implementation (Nettle, which I will send a patch for soon).  This is a
-brand new ThinkPad X1 Carbon Gen 10 with an i7-1280P (with 20 "cores" of
-different sizes).
+   nichts zu committen, Arbeitsverzeichnis unver=E4ndert
+   ~> vcsh vim push
+   Objekte aufz=E4hlen: 10, fertig.
+   Z=E4hle Objekte: 100% (9/9), fertig.
+   Delta-Kompression verwendet bis zu 2 Threads.
+   Komprimiere Objekte: 100% (6/6), fertig.
+   Schreibe Objekte: 100% (6/6), 821 Bytes | 821.00 KiB/s, fertig.
+   Gesamt 6 (Delta 4), Wiederverwendet 0 (Delta 0), Pack wiederverwendet 0
+   To xxxx:.config/vcsh/repo.d/vim.git
+    ! [remote rejected] master -> master (Working directory has unstaged ch=
+anges)
+   error: Fehler beim Versenden einiger Referenzen nach 'xxxx:.config/vcsh/=
+repo.d/vim.git'
 
-So this is about 9% faster in terms of total CPU usage on SHA-256 with
-that implementation.  The wallclock time is less impressive here.
+`vcsh ... command` does the same ad `vcsh ... && git command`... vcsh is
+a simple script that sets GIT_DIR to ~/.config/vcsh/repo.d/....git. vcsh
+is used to manage config files in $HOME but not the full directory. In
+this example, it manages .vimrc, .gvimrc, .vim/ and .exrc.
 
-Of course, it might be slower in software, but considering that AMD has
-had SHA-NI for some time, newer Intel processors have it, and ARM also
-has SHA-2 acceleration instructions, it's likely it will be faster on
-most recent machines assuming it's compiled appropriately.
+As you can see, there is no unstaged changes but git tell me there are.
+
+I tried different things but failed to tell git that everything is clean
+and that there are no unstaged changes.
+
+Other vcsh trees are working well. I see no pattern why this one is not
+working.
+
+Regards
+   Klaus
+
+Ps. Please keep me in Cc as I am not subscribed to this list.
 --=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Klaus Ethgen                                       http://www.ethgen.ch/
+pub  4096R/4E20AF1C 2011-05-16            Klaus Ethgen <Klaus@Ethgen.ch>
+Fingerprint: 85D4 CA42 952C 949B 1753  62B3 79D0 B06F 4E20 AF1C
 
---KWSAZ3rjVMjn+Luq
+--P86+cjiTyaSoBWDd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.35 (GNU/Linux)
+Comment: Charset: ISO-8859-1
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYrbNIQAKCRB8DEliiIei
-gaOeAPwKzCw3dQBMhib/NrvaeAdV04468H+6MKGk3GfwlRChLQD/RqziPX68HnOY
-ZESFBuIKmAyXItySfj/C09FVNaOYtgs=
-=Hsqt
+iQGzBAABCgAdFiEEMWF28vh4/UMJJLQEpnwKsYAZ9qwFAmK2xz4ACgkQpnwKsYAZ
+9qxD5Qv/fAXEBcIxP4AATGMhihe+uK40Nc+Z7ccxvXK2qScg6nUVgnJjt4RZCJh9
+HVFqVlheY3Bt/GZA/FUfHgA+9oDFmCU91j3Qa9BVUE2LgLEQoFrWWcmle+ChIVW7
+TeqwZtRKtGMzcRjbzRO12/Ke5ReiSCsfXOMCx2nH/i24Lc4+Z2Yo5zzKFbL2AJUC
+3Iasxf1AQG5n1fG+/M/Bus3pn6WQpkvyHsaCWB5fsWmOhdDsZzVsY/U7vb5uN2fD
+8MykT3TyN+aDeLHaHdmOClvUgq31HcQtQGvR0eZKRZ51vWF0a0RAzQqighbZ2Q57
+W01AVeRP+I6m6SHND+BvTcifOB3G4SB7pFWkO0/0itA6dMQyc/5wwMPdeZ/D9OeO
+K5lXRzLYIcVswDjqfkgJpjjroysBdWe9phAV9Uh+KLtCExw4zuFkZBRHDAhJ1uI2
+OYJ2Sr5VhR9L8MfuUjCiLp5Kq+GLPg0HYYz7Zy4P8HpeN8zPryO+kb8a1rc5YvPH
+XfbO8w4O
+=/KcU
 -----END PGP SIGNATURE-----
 
---KWSAZ3rjVMjn+Luq--
+--P86+cjiTyaSoBWDd--
