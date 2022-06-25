@@ -2,120 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6ED0C43334
-	for <git@archiver.kernel.org>; Fri, 24 Jun 2022 21:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A66C433EF
+	for <git@archiver.kernel.org>; Sat, 25 Jun 2022 01:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231580AbiFXVxs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jun 2022 17:53:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48198 "EHLO
+        id S231615AbiFYBft (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jun 2022 21:35:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbiFXVxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jun 2022 17:53:47 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A68828B5
-        for <git@vger.kernel.org>; Fri, 24 Jun 2022 14:53:45 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5941414D3F8;
-        Fri, 24 Jun 2022 17:53:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=3c3uRQMO2kKr
-        Zw/AjHM98tsbzqU4D04rATuQmNjiWws=; b=h3xAnoB7T5/hea7xtPdIVMCvscaO
-        5W55R2OU1TH2cHIWWGpylyAnoelts4Drf4VvO76pA1rgeZAPCa3xIRSt6V/0U2vJ
-        mxTpOPF0DCmYoBmuiT2orIrcfVhNqzyOFtyilpKcldKDLoMTyFyg5Ule3au5EDDX
-        eseWhNoggPdBs+I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5199314D3F7;
-        Fri, 24 Jun 2022 17:53:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ABE7114D3F6;
-        Fri, 24 Jun 2022 17:53:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v2 0/1] scalar: move to the top-level, test, CI and
- "install" support
-References: <patch-1.1-86fb8d56307-20211028T185016Z-avarab@gmail.com>
-        <cover-v2-0.1-00000000000-20220623T100554Z-avarab@gmail.com>
-        <2f3067e1-43fb-26b3-83c4-6ca0722149a0@github.com>
-        <220623.86k097js9k.gmgdl@evledraar.gmail.com>
-        <c93c8e75-6c88-ac99-d8c3-1e2e7dd06ea3@github.com>
-        <220624.86y1xmi5wo.gmgdl@evledraar.gmail.com>
-Date:   Fri, 24 Jun 2022 14:53:42 -0700
-In-Reply-To: <220624.86y1xmi5wo.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 24 Jun 2022 13:59:36 +0200")
-Message-ID: <xmqqzgi1u3rt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230417AbiFYBfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jun 2022 21:35:48 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E256748884
+        for <git@vger.kernel.org>; Fri, 24 Jun 2022 18:35:46 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-318889e6a2cso39687627b3.1
+        for <git@vger.kernel.org>; Fri, 24 Jun 2022 18:35:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sSQ+FcQXi42OTdOdZ4qDYtbAgcgHdw018mPl819bJj8=;
+        b=imyQokqb6fOf5GhLhyDQaMeTdYIIJag08ZPhrdW5NPpT5W4TvnpYumMrhsTNROg8N2
+         8czYR8QSA5meIjMABGDb1quHQiyXr+oLiF0wAKYoI4TKKy+MU6yTI5JcR+CfyRddmNAp
+         TVGe1VGlr4ml9jo5hl/2BLEMpB52g8pHB7he6BzdglN1Hm2L5RNh6oJVcIY95Qy3+Rwr
+         7lVB4menk/hT/gCOZXqXqAWwu8PV2CTcDCLNeXQnaMLKfxv5DlaheNwBpSxUzIY52NMk
+         fkx4s6AicNlqB1WJV4yGhPuwA2OTR9A8wzCDe1IKjRsIyi8IB2pHJlENLSQm/7SjKdvl
+         qsIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sSQ+FcQXi42OTdOdZ4qDYtbAgcgHdw018mPl819bJj8=;
+        b=V5bJODRXmh1SL8MnTTWA3ffzsEZfPeTEcACoAGUBo6sJpR4oyd4LJxnZz++V8MM1jU
+         83eVmYj9TBKLio99UviKSD/y4WiM9W8VNDIVB/OU1Y+QTLJ3FG8KIQc+io9aWYXMC+Bm
+         eNwLv7fRzXjlYyKNo8JrAaAkYPWw/0AAmv7K3x0g09kXC11DDNdD0Jd2Zy8cUzbvePTw
+         v0kSEkC+LvrXyiwDr80biGxLLMa0tuIhLKg6h1BMgD7AQ1aGnKq/g4tD8KMSfSNHL1oE
+         VN5Pzvc+tmPrjutvSMQwW3QQmf79/6Tx+cqiATDYWjnb2MR9q7uuYGS/pvLmxJ7LeGfu
+         7IDg==
+X-Gm-Message-State: AJIora8eyTRfS8i5RHRqnuG9geqXCfhswODlK+d1pJ8XIsPthH67ipP+
+        /++ey14q8kO2JTlxCO52je/fidrTqo4RdIc6TteN6w==
+X-Google-Smtp-Source: AGRyM1smMMLKmrnNm7IeZHTHJuy3p8eApB4b3MUnNtJOOjpkNJ5eJDh+8SSKj3t0DtVCK80El6YKcAiBa1q4M8wJCNQ=
+X-Received: by 2002:a81:3a50:0:b0:313:7539:3420 with SMTP id
+ h77-20020a813a50000000b0031375393420mr2035682ywa.366.1656120946157; Fri, 24
+ Jun 2022 18:35:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1DB9AFAC-F408-11EC-9328-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20220618030130.36419-1-hanxin.hx@bytedance.com>
+ <cover.1656044659.git.hanxin.hx@bytedance.com> <442a4c351dea603e226bae89eddc2b3496d93262.1656044659.git.hanxin.hx@bytedance.com>
+ <xmqqfsjuvyjz.fsf@gitster.g>
+In-Reply-To: <xmqqfsjuvyjz.fsf@gitster.g>
+From:   Han Xin <hanxin.hx@bytedance.com>
+Date:   Sat, 25 Jun 2022 09:35:35 +0800
+Message-ID: <CAKgqsWVAy8RTSCwG=LVHPoeF5ECSzeNfK4mPacLo=dTeUkc6SA@mail.gmail.com>
+Subject: Re: Re: [PATCH v2 1/2] test-lib.sh: add limited processes to test-lib
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
+        git@vger.kernel.org, haiyangtand@gmail.com,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> Especially as I'm not insisting that I be the one to drive anything
-> forward on the scalar topic, I think it makes much more sense that it's
-> Victoria.
+On Sat, Jun 25, 2022 at 12:03 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> This patch is just offered as a way to help that effort along. Perhaps
-> she'd ack it as-is, find it useful as it reveals some edge cases she
-> didn't know about, or drop it and go for some other approach. Whatever
-> gets us to the end-goal sooner than later is fine by me.
+> Han Xin <hanxin.hx@bytedance.com> writes:
+>
+> > We will use the lazy prerequisite ULIMIT_PROCESSES in a follow-up
+> > commit.
+> >
+> > With run_with_limited_processses() we can limit forking subprocesses an=
+d
+> > fail reliably in some test cases.
+> >
+> > Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
+> > ---
+> >  t/test-lib.sh | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> >
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 8ba5ca1534..f920e3b0ae 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -1816,6 +1816,15 @@ test_lazy_prereq ULIMIT_FILE_DESCRIPTORS '
+> >       run_with_limited_open_files true
+> >  '
+> >
+> > +run_with_limited_processses () {
+> > +     (ulimit -u 512 && "$@")
+>
+> The "-u" presumably is a way to say that the current user can have
+> only 512 processes at once that is supported by bash and ksh?  dash
+> seems to use "-p" for this but "-p" of course means something
+> completely different to other shells (and is read-only), which is a
+> mess X-<.
+>
+> I suspect that it is OK to make it practically bash-only, but then ...
+>
+> > +}
+> > +
+> > +test_lazy_prereq ULIMIT_PROCESSES '
+> > +     test_have_prereq !HPPA,!MINGW,!CYGWIN &&
+> > +     run_with_limited_processses true
+>
+> ... as this lazy-prereq makes a trial run that would fail when the
+> system does not allow "ulimit -u 512", do we need the platform
+> specific prereq check?  I am wondering if the second line alone is
+> sufficient.
+>
 
-Careful ...
+Yes=EF=BC=8Cthe second line alone is sufficient.
 
-> Once you "git rm" the scalar Makefile there's not really a lot of ways
-> you can go other than something approximating the upthread patch. Given
-> that some of the edge cases are tricky I deemed it worthwhile to share
-> it.
-> ...
-> I'm not saying that, but "you seem to be trying to do X, and may or may
-> not be aware of a past patch that does X, here is is in case it help!.
-> ...
-> Some of the edge cases in the Makefile integration are subtle. I trust
-> that someone looking at it would probably discover those eventually.
+> Also, 512 is not a number I would exactly call "limit forking".
+> Does it have to be so high, I wonder.  Of course it cannot be so low
+> like 3 or 8 or even 32, as per-user limitation counts your window
+> manager and shells running in other windows.
+>
 
-... Even though you ask to assume good intent, an attitude shown by
-repeated "I've done that, I already know *the* solution to the
-problem you are trying to solve, and you can learn from what I did"
-gives recipients quite an impression different from what you intend
-to give.
+It's hard to say.
+I've tried adjusting it to 256, but the test cases in next patch will alway=
+s
+fail with the following "err":
 
-> But if I'd have gotten a patch from my future self with all the learned
-> edge cases beforehand I'd have appreciated, so I figured I'd send it in=
-.
+    ./test-lib.sh: fork: Resource temporarily unavailable
 
-In any case, if you stop sending *replacement* patches in response
-to others' work, that alone will reduce the friction people around
-you are feeling quite a lot.  A replacement patch is a horrible and
-inefficient way to comment on others' work, if your goal is to be
-understood.  The recipient would be forced to read and think like
-you did, making comparison between the two approaches themselves if
-they want to see if it is worth to use the replacement.
+> What you ideally want is an option that lets you limit the number of
+> processes the shell that issued the ulimit call can spawn
+> simultaneously, but I didn't find it in "man bash/dash/ksh".
+>
 
-Making comparison between approaches, arguing for the alternative
-approach to be better, and proposing the alternative to be taken, is
-the responsibility of the party who is suggesting alternative
-approaches, not that of the recipient.
-
-For that reason, if you want to say something to other people's
-work, you are better off doing that either by commenting in-line
-(i.e. annotating their code you want to comment on), or if you
-absolutely need to talk in code, or by giving an incremental update
-once their work solidifies (i.e. pointing out a specific issue in
-the existing code, explaining why it is a problem worth addressing,
-and offering an update---just like when you are fixing a bug).
+Maybe I should use "lib-bash.sh" instead of "test-lib.sh" just like t9902
+and t9903?
+The different meanings of "-p" in bash and dash really make this tricky.
 
 Thanks.
+-Han Xin
+
+> > +'
+> > +
+> >  build_option () {
+> >       git version --build-options |
+> >       sed -ne "s/^$1: //p"
