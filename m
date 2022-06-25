@@ -2,144 +2,210 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A66C433EF
-	for <git@archiver.kernel.org>; Sat, 25 Jun 2022 01:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E46E2C433EF
+	for <git@archiver.kernel.org>; Sat, 25 Jun 2022 02:25:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231615AbiFYBft (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jun 2022 21:35:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52578 "EHLO
+        id S231235AbiFYCZr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jun 2022 22:25:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230417AbiFYBfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jun 2022 21:35:48 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E256748884
-        for <git@vger.kernel.org>; Fri, 24 Jun 2022 18:35:46 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-318889e6a2cso39687627b3.1
-        for <git@vger.kernel.org>; Fri, 24 Jun 2022 18:35:46 -0700 (PDT)
+        with ESMTP id S229912AbiFYCZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jun 2022 22:25:46 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF773B875
+        for <git@vger.kernel.org>; Fri, 24 Jun 2022 19:25:44 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-3177e60d980so40017077b3.12
+        for <git@vger.kernel.org>; Fri, 24 Jun 2022 19:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bytedance-com.20210112.gappssmtp.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=sSQ+FcQXi42OTdOdZ4qDYtbAgcgHdw018mPl819bJj8=;
-        b=imyQokqb6fOf5GhLhyDQaMeTdYIIJag08ZPhrdW5NPpT5W4TvnpYumMrhsTNROg8N2
-         8czYR8QSA5meIjMABGDb1quHQiyXr+oLiF0wAKYoI4TKKy+MU6yTI5JcR+CfyRddmNAp
-         TVGe1VGlr4ml9jo5hl/2BLEMpB52g8pHB7he6BzdglN1Hm2L5RNh6oJVcIY95Qy3+Rwr
-         7lVB4menk/hT/gCOZXqXqAWwu8PV2CTcDCLNeXQnaMLKfxv5DlaheNwBpSxUzIY52NMk
-         fkx4s6AicNlqB1WJV4yGhPuwA2OTR9A8wzCDe1IKjRsIyi8IB2pHJlENLSQm/7SjKdvl
-         qsIg==
+         :cc;
+        bh=4Gml/2GH4DJjzM4dvGvKs/vUf92sEyIUETKVoiN4AGc=;
+        b=aHRgzYSQiNxYjfLn0TzjubB/m1PiNBKXEtg+EZ/PP7VvCmFvHWRH5aaLbNE6k3u9ZB
+         BmGpX3Q3Jp2lT6hBEtsVYUPtn793gR4I8SfuWUu9dFjBka68KVLxr6SofIElN90mRx2k
+         2sKAHDBhkLKqsi5X+3zquK9xC4ZL/JfY+2FukZZt70ar20mKhtZELjyILyXloCgirxUo
+         1J9OR8D9080NjYCDl8DMRNan2ZouJpHOgsSeUgGiSv+3Wm5SCrjecfjwhG07JNiwwu+p
+         fWGb5SfSCQAKvnGX3ClUIOi+SyQNJWI/Vn/XWWPvW82fTT3eTrdhQUjOdB1oQFM0Pblh
+         b7ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=sSQ+FcQXi42OTdOdZ4qDYtbAgcgHdw018mPl819bJj8=;
-        b=V5bJODRXmh1SL8MnTTWA3ffzsEZfPeTEcACoAGUBo6sJpR4oyd4LJxnZz++V8MM1jU
-         83eVmYj9TBKLio99UviKSD/y4WiM9W8VNDIVB/OU1Y+QTLJ3FG8KIQc+io9aWYXMC+Bm
-         eNwLv7fRzXjlYyKNo8JrAaAkYPWw/0AAmv7K3x0g09kXC11DDNdD0Jd2Zy8cUzbvePTw
-         v0kSEkC+LvrXyiwDr80biGxLLMa0tuIhLKg6h1BMgD7AQ1aGnKq/g4tD8KMSfSNHL1oE
-         VN5Pzvc+tmPrjutvSMQwW3QQmf79/6Tx+cqiATDYWjnb2MR9q7uuYGS/pvLmxJ7LeGfu
-         7IDg==
-X-Gm-Message-State: AJIora8eyTRfS8i5RHRqnuG9geqXCfhswODlK+d1pJ8XIsPthH67ipP+
-        /++ey14q8kO2JTlxCO52je/fidrTqo4RdIc6TteN6w==
-X-Google-Smtp-Source: AGRyM1smMMLKmrnNm7IeZHTHJuy3p8eApB4b3MUnNtJOOjpkNJ5eJDh+8SSKj3t0DtVCK80El6YKcAiBa1q4M8wJCNQ=
-X-Received: by 2002:a81:3a50:0:b0:313:7539:3420 with SMTP id
- h77-20020a813a50000000b0031375393420mr2035682ywa.366.1656120946157; Fri, 24
- Jun 2022 18:35:46 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=4Gml/2GH4DJjzM4dvGvKs/vUf92sEyIUETKVoiN4AGc=;
+        b=46FqqCAC827C817Ygvspds09y5d5/TMaKoy1ULdp5Yj7hz6W+2k6kcwSLB9R7MkpAy
+         ihs4+67ETnd4rCp0BbiNXYR0GqMgVCCfwIAAQ5wFgHweJIOlgWf/OR+P7z1jmkFvFjsz
+         1BoNMnL3l1VVa+yd7aFCmBxruU2/1uXxWQcHG8Sti/Ha682IvfoCLjDSuTN0Fcr0y1io
+         m8gaEVgXnXqrTIweRHsh9cbGGpAJnDm87n/rBWuRJptQ+3T86zYaSWbfRvg0TuOKrdpF
+         tyFhTiyuIaoTtjAG2LNWtWhKEkNoo4yIBmNzJeoiLlTAewkJqb0dSQRYdUjN7KBNc0KK
+         +DDA==
+X-Gm-Message-State: AJIora9UMgeU4Kj6di6vua3RN276ejsSWj6OaFNj4LOKkVG8L4fQH5nD
+        c9KXA4ROd3KSL/ByzMRPAoZM8pHmMy7+a9QTnJESdw==
+X-Google-Smtp-Source: AGRyM1vXomWGYDh0vKiSe9yT40A0NhrzkfEOnn3QfvYD9VDHuB8hQ0dGSI0RRUigtl4fxeYYOMShzZXTxCKZ17lBeoI=
+X-Received: by 2002:a81:1cc:0:b0:317:a0fa:7a61 with SMTP id
+ 195-20020a8101cc000000b00317a0fa7a61mr2199354ywb.10.1656123944183; Fri, 24
+ Jun 2022 19:25:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220618030130.36419-1-hanxin.hx@bytedance.com>
- <cover.1656044659.git.hanxin.hx@bytedance.com> <442a4c351dea603e226bae89eddc2b3496d93262.1656044659.git.hanxin.hx@bytedance.com>
- <xmqqfsjuvyjz.fsf@gitster.g>
-In-Reply-To: <xmqqfsjuvyjz.fsf@gitster.g>
+ <cover.1656044659.git.hanxin.hx@bytedance.com> <d3a99a5c5ae538b626e04d7069dd2fc316605dfc.1656044659.git.hanxin.hx@bytedance.com>
+ <xmqqpmiyuhjj.fsf@gitster.g>
+In-Reply-To: <xmqqpmiyuhjj.fsf@gitster.g>
 From:   Han Xin <hanxin.hx@bytedance.com>
-Date:   Sat, 25 Jun 2022 09:35:35 +0800
-Message-ID: <CAKgqsWVAy8RTSCwG=LVHPoeF5ECSzeNfK4mPacLo=dTeUkc6SA@mail.gmail.com>
-Subject: Re: Re: [PATCH v2 1/2] test-lib.sh: add limited processes to test-lib
+Date:   Sat, 25 Jun 2022 10:25:33 +0800
+Message-ID: <CAKgqsWXwf5h7r4fqOnfTbe6vyR25PzQ+hhEddCQV3cMis2ruEg@mail.gmail.com>
+Subject: Re: Re: [PATCH v2 2/2] commit-graph.c: no lazy fetch in lookup_commit_in_graph()
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
         git@vger.kernel.org, haiyangtand@gmail.com,
         Jonathan Tan <jonathantanmy@google.com>,
         Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 25, 2022 at 12:03 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Jun 25, 2022 at 12:56 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Han Xin <hanxin.hx@bytedance.com> writes:
 >
-> > We will use the lazy prerequisite ULIMIT_PROCESSES in a follow-up
-> > commit.
-> >
-> > With run_with_limited_processses() we can limit forking subprocesses an=
-d
-> > fail reliably in some test cases.
+> > If a commit is in the commit graph, we would expect the commit to also
+> > be present.
+>
+> > When we found the commit in the graph in lookup_commit_in_graph(),
+> > but the commit is missing from the repository, we will try
+> > promisor_remote_get_direct() and then enter another loop.  While
+> > sometimes it will finally succeed because it cannot fork
+> > subprocess,
+>
+> Is that a mode of "succeed"-ing?  Or merely a way to exit an endless
+> loop that does not make any progress with a failure?
+
+For the user, "fetch-pack" does succeed, because in
+deref_without_lazy_fetch(), even if lookup_commit_in_graph() fails to
+lazy fetch the lost commit, the following oid_object_info_extended()
+will help us complete the previous work.
+
+In a sense, this infinite loop is based on the fact that infinite processes
+can be created.
+
+However, your attempt to express the reasoning bellow is clearer.
+
+>
+> > it has exhausted the local process resources and can be harmful to the
+> > remote service.
 > >
 > > Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
 > > ---
-> >  t/test-lib.sh | 9 +++++++++
-> >  1 file changed, 9 insertions(+)
-> >
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index 8ba5ca1534..f920e3b0ae 100644
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -1816,6 +1816,15 @@ test_lazy_prereq ULIMIT_FILE_DESCRIPTORS '
-> >       run_with_limited_open_files true
-> >  '
-> >
-> > +run_with_limited_processses () {
-> > +     (ulimit -u 512 && "$@")
 >
-> The "-u" presumably is a way to say that the current user can have
-> only 512 processes at once that is supported by bash and ksh?  dash
-> seems to use "-p" for this but "-p" of course means something
-> completely different to other shells (and is read-only), which is a
-> mess X-<.
+> I think the single-liner change in the patch is a good one, but I am
+> having a hard time to agree with the reasoning above that explains
+> why it is a good change.
 >
-> I suspect that it is OK to make it practically bash-only, but then ...
+> Here is an attempt to express a reasoning I can understand, can
+> agree with, and (I think) better describes why the change is a good
+> one.  Does my understanding of the problem and the solution totally
+> misses the mark?
 >
-> > +}
+>         The commit-graph is used to opportunistically optimize
+>         accesses to certain pieces of information on commit objects,
+>         and lookup_commit_in_graph() tries to say "no" when the
+>         requested commit does not locally exist by returning NULL,
+>         in which case the caller can ask for (which may result in
+>         on-demand fetching from a promisor remote) and parse the
+>         commit object itself.
+>
+>         However, it uses a wrong helper, repo_has_object_file(), to
+>         do so.  This helper not only checks if an object is
+>         immediately available in the local object store, but also
+>         tries to fetch from a promisor remote.  But the fetch
+>         machinery calls lookup_commit_in_graph(), thus causing an
+>         infinite loop.
+>
+>         We should make lookup_commit_in_graph() expect that a commit
+>         given to it can be legitimately missing from the local
+>         object store, by using the has_object_file() helper instead.
+>
+> > diff --git a/t/t5329-no-lazy-fetch-with-commit-graph.sh b/t/t5329-no-lazy-fetch-with-commit-graph.sh
+> > new file mode 100755
+> > index 0000000000..4d25d2c950
+> > --- /dev/null
+> > +++ b/t/t5329-no-lazy-fetch-with-commit-graph.sh
+>
+> Hmph, does this short-test need a completely new file?
+>
+> > @@ -0,0 +1,47 @@
+> > +#!/bin/sh
 > > +
-> > +test_lazy_prereq ULIMIT_PROCESSES '
-> > +     test_have_prereq !HPPA,!MINGW,!CYGWIN &&
-> > +     run_with_limited_processses true
+> > +test_description='test for no lazy fetch with the commit-graph'
+> > +
+> > +. ./test-lib.sh
+> > +
+> > +test_expect_success 'setup: prepare a repository with a commit' '
+> > +     git init with-commit &&
+> > +     test_commit -C with-commit the-commit &&
+> > +     oid=$(git -C with-commit rev-parse HEAD)
+> > +'
+> > +
+> > +test_expect_success 'setup: prepare a repository with commit-graph contains the commit' '
+> > +     git init with-commit-graph &&
+> > +     echo "$(pwd)/with-commit/.git/objects" \
+> > +             >with-commit-graph/.git/objects/info/alternates &&
+> > +     # create a ref that points to the commit in alternates
+> > +     git -C with-commit-graph update-ref refs/ref_to_the_commit "$oid" &&
+> > +     # prepare some other objects to commit-graph
+> > +     test_commit -C with-commit-graph somthing &&
 >
-> ... as this lazy-prereq makes a trial run that would fail when the
-> system does not allow "ulimit -u 512", do we need the platform
-> specific prereq check?  I am wondering if the second line alone is
-> sufficient.
+> somthing? something?
+
+Nod.
+
+>
+> > +     git -c gc.writeCommitGraph=true -C with-commit-graph gc &&
+> > +     test_path_is_file with-commit-graph/.git/objects/info/commit-graph
+> > +'
+> > +
+> > +test_expect_success 'setup: change the alternates to what without the commit' '
+> > +     git init --bare without-commit &&
+> > +     echo "$(pwd)/without-commit/objects" \
+> > +             >with-commit-graph/.git/objects/info/alternates &&
+>
+> Doesn't this deliberately _corrupt_ the with-commit-graph repository
+> that depended on the object whose name is $oid in with-commit
+> repository?  Do we require a corrupt repository to trigger the "bug"?
 >
 
-Yes=EF=BC=8Cthe second line alone is sufficient.
+The "bug" depends on the commit exist in the commit-graph but
+missing in the repository.
 
-> Also, 512 is not a number I would exactly call "limit forking".
-> Does it have to be so high, I wonder.  Of course it cannot be so low
-> like 3 or 8 or even 32, as per-user limitation counts your window
-> manager and shells running in other windows.
+I didn't find a better way to make this kind of scene.
+
+This bug was first found when alternates and commit-graph were
+both used. Since the promise did not maintain all the references,
+I suspect that the "auto gc" during the update process of the promise
+caused the loss of the unreachable commits in the promise.
+
+> > +     test_must_fail git -C with-commit-graph cat-file -e $oid
+> > +'
+> > +
+> > +test_expect_success 'setup: prepare another commit to fetch' '
+> > +     test_commit -C with-commit another-commit &&
+> > +     anycommit=$(git -C with-commit rev-parse HEAD)
+>
+> anycommit?  another_commit?  Be consistent in naming.
 >
 
-It's hard to say.
-I've tried adjusting it to 256, but the test cases in next patch will alway=
-s
-fail with the following "err":
-
-    ./test-lib.sh: fork: Resource temporarily unavailable
-
-> What you ideally want is an option that lets you limit the number of
-> processes the shell that issued the ulimit call can spawn
-> simultaneously, but I didn't find it in "man bash/dash/ksh".
->
-
-Maybe I should use "lib-bash.sh" instead of "test-lib.sh" just like t9902
-and t9903?
-The different meanings of "-p" in bash and dash really make this tricky.
-
-Thanks.
--Han Xin
+Nod.
 
 > > +'
 > > +
-> >  build_option () {
-> >       git version --build-options |
-> >       sed -ne "s/^$1: //p"
+> > +test_expect_success ULIMIT_PROCESSES 'fetch any commit from promisor with the usage of the commit graph' '
+>
+> So we did all of the above set-up sequences only to skip the most
+> interesting test, if we were testing with "dash"?  I suspect that it
+> may be cleaner to put the prerequisite to the whole file with the
+> "early test_done" trick like t0051 and t3008.
+>
+
+It make sense to me.
+
+Thanks.
+-Han Xin
