@@ -2,108 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC832C433EF
-	for <git@archiver.kernel.org>; Sun, 26 Jun 2022 13:36:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06CA6C43334
+	for <git@archiver.kernel.org>; Sun, 26 Jun 2022 15:19:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234598AbiFZNgG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jun 2022 09:36:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60526 "EHLO
+        id S231382AbiFZPTO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jun 2022 11:19:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233597AbiFZNf7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Jun 2022 09:35:59 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD685EE26
-        for <git@vger.kernel.org>; Sun, 26 Jun 2022 06:35:57 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id k6so4428909ilq.2
-        for <git@vger.kernel.org>; Sun, 26 Jun 2022 06:35:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fsjfPLGleI4LWonIDbgPvWcYuv48H5DyXb1fVegiDUc=;
-        b=X6oD5Buh3u+Ot4kVkNfGEqoB7oQZl8k5wdeUKT6owBNTFl3lrQytLYGttuKjV0sq3o
-         j7e0I5PuiVkszQF9vZ7TE1tL01K3McdpKsFn8h37Vr+tQn/FvQpzxStwkWM+IHS5w8Vb
-         EkDcGC1ZDXSD9F7vd0vKJAyIHa+gc9oQj5xSwFpGqdRdmxFZmuXXtIbwCZCt6KrhdnQp
-         fQ5IAVyB9noUGoXVwno0NMOr6zFgEcitlF0gfnfzw0DNyf6PO4lRhtEDdLTDmQiTj3O+
-         6iuKSfblwGDxqlIyna+xDsxwW3dbLTD2ux/f761yaa3OmrSZu78boBN6WOx89Q5I9st+
-         WCiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fsjfPLGleI4LWonIDbgPvWcYuv48H5DyXb1fVegiDUc=;
-        b=5cOhAF5XaAfjzSqA4F8RONF+dx4+0dhOPWhcMOB2lOd+8Iwedp+ofy9n/Irt3bWpzq
-         DLg669E3Y4SxzAV6ufyZV0CcJCXrE4o0SrFbb+MrcDRt3MUFPMCslj8D/KMU7dTalSDk
-         /BPrsq6ZQl6dskCpFcKm3LU/U3JCmDTVunLQbNIF167cnySI/Io6Z2N60YcOZO701VK/
-         frPfoS4FhRdHRE0vCCe1MUGWq++bbhUIjeRhUyjSTvHdmsustVX4Gy8O5h3ToYwrd7e6
-         cdtvt5AOedSfnvzFFSCsiSs8qsmHmN5mpMX2q83OYCsVNpmzRQG5aeDi8KD/EUA9Elso
-         TjJQ==
-X-Gm-Message-State: AJIora/hOhh8QPTz8Q9AkDSS6yHVmn/m6ec6iusnMxXdtevPJoEe7q1x
-        QXIzSaqS/HcOmyCxm2E6pEhkPgk2MnmlH28RCzk=
-X-Google-Smtp-Source: AGRyM1utsdcrjw4wGbFzvGDNIoR/Y9z9tb+2TsW5qLNR5fsr6GJEHyOe9+foDhcYZ52R+MWetI8oseN0mcVVUgcEyPI=
-X-Received: by 2002:a05:6e02:1bc8:b0:2d4:342:9c68 with SMTP id
- x8-20020a056e021bc800b002d403429c68mr4676301ilv.254.1656250557064; Sun, 26
- Jun 2022 06:35:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1262.v2.git.1655629990185.gitgitgadget@gmail.com>
- <pull.1262.v3.git.1655777140231.gitgitgadget@gmail.com> <220624.86letmi383.gmgdl@evledraar.gmail.com>
- <xmqqsfnuvzxc.fsf@gitster.g>
-In-Reply-To: <xmqqsfnuvzxc.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 26 Jun 2022 21:35:46 +0800
-Message-ID: <CAOLTT8Tc95-aUE+uN2d8QjTJpGpGw6cBJfG+bpmyE55OcXTSRA@mail.gmail.com>
-Subject: Re: [PATCH v3] ls-files: introduce "--format" option
+        with ESMTP id S229450AbiFZPTN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jun 2022 11:19:13 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB4A5FD1F
+        for <git@vger.kernel.org>; Sun, 26 Jun 2022 08:19:12 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D952C5A1E3;
+        Sun, 26 Jun 2022 15:19:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1656256751;
+        bh=5yGbbHZJAuebBLe6J8Lgwzz6D+HUCICm6LJJPL0Xapg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=TGreMbaMThlZMj1heOkmAeXpJeySEtHrbUlbBG7teUVECpYvrUmYQ+nu+To37BlJj
+         IFTvPwl2Oinz6um18ypN3PM8h6LOV78eoeYW8DHqs1ef/DdVosDljQthVHf4gQXsDM
+         xqX+t/V4+49wwm7P6TVi8p1Xzh+EWOJ6T2hMziuXfyVRCVawrHJMaE+OFJrBwnRLkf
+         OkWMcQCydqG+VvJmsM4rMPKr1JhoLvkGx2g4tthwyMfDoQp9HtaV0VaaYDZgCpkwo2
+         JgYwGezMHgWQGD1DLzU47PM3h19TqcRWT1epq8O73Qfovmx91cJhPAIwCbfc8Q/u+D
+         GSoj5dvfySqY4BpFVIuMjyPobG22ljJfDngPdcPiZ40ZsPkdh4JDlpfPi9bK0x353F
+         hBjhjw+rQQgBsde+EbH9WbWNamjUzs7MfXDRx7kgu6UdvNRR5FAjU8TYZZgrxUIVZN
+         WktifIRMMi4uqON8zn2O4i5we7CSmLz1BZ5RyklBJbIcHB+oyAo
+Date:   Sun, 26 Jun 2022 15:19:10 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     "Eric W. Biederman" <ebiederm@xmission.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stephen Smith <ischis2@cox.net>, git <git@vger.kernel.org>
+Subject: Re: Plan for SHA-256 repos to support SHA-1?
+Message-ID: <Yrh47mun9U9t0HpO@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Eric W. Biederman" <ebiederm@xmission.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stephen Smith <ischis2@cox.net>, git <git@vger.kernel.org>
+References: <12011256.O9o76ZdvQC@thunderbird>
+ <220621.86sfnyuvt0.gmgdl@evledraar.gmail.com>
+ <YrI9dvfoc5NYgVDq@tapette.crustytoothpaste.net>
+ <YrWXdNGZGN7gXL40@coredump.intra.peff.net>
+ <YrbNIUnftj+Ooumo@tapette.crustytoothpaste.net>
+ <87czewxp2u.fsf_-_@email.froward.int.ebiederm.org>
+ <CAPc5daVtRZ-Str_yCqRXZKT5+KKcXdnptFaer27XneUwj76KjQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Tb7SUudcLaKBnijh"
+Content-Disposition: inline
+In-Reply-To: <CAPc5daVtRZ-Str_yCqRXZKT5+KKcXdnptFaer27XneUwj76KjQ@mail.gmail.com>
+User-Agent: Mutt/2.2.4 (2022-04-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B46=E6=9C=8824=E6=97=
-=A5=E5=91=A8=E4=BA=94 23:33=E5=86=99=E9=81=93=EF=BC=9A
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
-> > On Tue, Jun 21 2022, ZheNing Hu via GitGitGadget wrote:
-> >> +    if (skip_prefix(start, "(objectmode)", &p))
-> >> +            strbuf_addf(sb, "%06o", data->ce->ce_mode);
-> >> +    else if (skip_prefix(start, "(objectname)", &p))
-> >> +            strbuf_add_unique_abbrev(sb, &data->ce->oid, abbrev);
-> >> +    else if (skip_prefix(start, "(stage)", &p))
-> >> +            strbuf_addf(sb, "%d", ce_stage(data->ce));
-> >> +    else if (skip_prefix(start, "(path)", &p))
-> >> +            write_name_to_buf(sb, data->pathname);
->
-> These are just "values".
->
-> >> +    else if (skip_prefix(start, "(ctime)", &p))
-> >> +            strbuf_addf(sb, "ctime: %u:%u",
-> >> +                        sd->sd_ctime.sec, sd->sd_ctime.nsec);
-> >> +    else if (skip_prefix(start, "(mtime)", &p))
-> >> +            strbuf_addf(sb, "mtime: %u:%u",
-> >> +                        sd->sd_mtime.sec, sd->sd_mtime.nsec);
-> >> +    else if (skip_prefix(start, "(dev)", &p))
-> >> +            strbuf_addf(sb, "dev: %u", sd->sd_dev);
-> >> +    else if (skip_prefix(start, "(ino)", &p))
-> >> +            strbuf_addf(sb, "ino: %u", sd->sd_ino);
-> >> +    else if (skip_prefix(start, "(uid)", &p))
-> >> +            strbuf_addf(sb, "uid: %u", sd->sd_uid);
-> >> +    else if (skip_prefix(start, "(gid)", &p))
-> >> +            strbuf_addf(sb, "gid: %u", sd->sd_gid);
-> >> +    else if (skip_prefix(start, "(size)", &p))
-> >> +            strbuf_addf(sb, "size: %u", sd->sd_size);
-> >> +    else if (skip_prefix(start, "(flags)", &p))
-> >> +            strbuf_addf(sb, "flags: %x", data->ce->ce_flags);
->
-> These are not.
->
-Agree. So I just remove them as you see. If someone else
-need them for some reason, we can add them back.
 
-ZheNing Hu
+--Tb7SUudcLaKBnijh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2022-06-26 at 00:27:57, Junio C Hamano wrote:
+> On Sat, Jun 25, 2022 at 5:10 PM Eric W. Biederman <ebiederm@xmission.com>=
+ wrote:
+> > Is there at this point a solid plan for how SHA-256 repos will support
+> > access SHA-1 only clients?
+> >
+> > I remember reading a discussion of having a table somewhere that would
+> > translate SHA-256 to SHA-1 when needed.
+>=20
+> Documentation/technical/hash-function-transition.txt has flushed out
+> the necessary details?
+
+Yup.  The design there sounds very simple and it is, conceptually, but
+practically implementing it is quite complex.
+
+You can pull the in-progress work from transition-interop on my GitHub
+remote to see where some of the complexity lies.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--Tb7SUudcLaKBnijh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.35 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYrh47gAKCRB8DEliiIei
+gX5HAQCEcBQ/ZK5HJhzpLFRgiL58CGmHllSA3LG8ZCW0jUvlCgEAmMD8jyl+5dbA
+Qq1tmrKsLEvfhXKEfXvi7wVZETtIzgc=
+=qQ5o
+-----END PGP SIGNATURE-----
+
+--Tb7SUudcLaKBnijh--
