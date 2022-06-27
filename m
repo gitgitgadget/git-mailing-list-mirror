@@ -2,143 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3871EC43334
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 12:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25127C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 12:45:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236392AbiF0MlL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 08:41:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44024 "EHLO
+        id S235326AbiF0Mpc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 08:45:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236174AbiF0MlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 08:41:09 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F17ACB4BD
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 05:41:08 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id q6so18806536eji.13
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 05:41:08 -0700 (PDT)
+        with ESMTP id S234459AbiF0Mpb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 08:45:31 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021C6EE2C
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 05:45:31 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id q18so8042838pld.13
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 05:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=nkTlnUNoBg15I+zcQPDkOrGgkVyIEJYi61Ge5Vsxdp4=;
-        b=KUfA8u1E16r/sixGV0WuOhfpJD+4XBiRhMmamwfA2SNZs5YmNKCHlyt/qwu4P9ecR8
-         RwBLLM23KCKJ5h0pAWUJzvh9U0o0gHmAsinoOhGKuhROD6DeVLarDbIWkgh7V3LhOEhJ
-         3bsCa3CIdvWjfiGoZTeZdHtK/58xu8D/76nT397QmI/nPfA+A7hwGd8MHOAPdaa4FH0U
-         u7TM4rktcFpkcf51cluk8km6P9xivhFqDtiiU5q5PV8YYA5KFXhOZILQCfqq6F/udFvW
-         T4XHdp7YxIuAvF0WHhA6MMyYI/lgqBNeL5BAf2e1di6TAyLwy9aF5effr4LlkCppuzgy
-         UBuA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vgau/j1ltEkBZOfH1ZyvYg2QfWVXyzI9N5//L18EFAw=;
+        b=ouq042uAxKPrKkRhVFj2Tnhov8++zC+RRQPW4tMEmInOpsupxPpRdWtA1phx+oU4b6
+         sQ0GinPMQbz029lKn/nTaj0rypddeYe7n7zKJ74l2uFPAXc4SHOFqCSfl5VP9swTY/Vd
+         SxtjA7L3E1NSWX7q3/aDSdC5dnYfPk8VWIVhF2ysM3syWFsSJb90WI5j1WHe0TP0oxkK
+         fUnZhfE0WgEC+OWZ+94Jqv8+RZhbZMR860X5bzIXDnNxYrBdtM6fiIHK1yWhwlG69Qio
+         4eG8b253REUIU1pozXP4IjyG7Dftnw/Tf91WhYacMKoPD7WDjCmZvxj56csB0BAe22uV
+         wpQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=nkTlnUNoBg15I+zcQPDkOrGgkVyIEJYi61Ge5Vsxdp4=;
-        b=k2+YavPKEmic6nsjh/x69uVsXDOMm9fN2qYlJg+k9Yu0GWAcmxyrvEhKx4jkprqcVU
-         1hIOEeeePty8JUrkWF8QbEx1bx4yCqgRtFkpT6Wyht2N2acwq6DbBd1DZAH3sRerOh0U
-         zDseYU9VsfinoDQyeeW1u2lRosIR9ncLgyod342IzwIfxfaPNWOoaxN+trToc2/X1e+w
-         huIjkybJg4H+1JB0/MiO0aQQ0XGPuB2cPRpNPRSWA+o8Vo4AARmHtdiluKrAW0dWJC+9
-         XY5qosg/7x4Vv0YWEwNGJyQiNZpTq8lbXHxdbZbKLVO9efTjLEuvFy5Zc4xX4xzBmGRk
-         8Bfw==
-X-Gm-Message-State: AJIora+EDiaK1y7TE1ZEy9IA+lgXI/ClghlPNqnU6LssL8O0+CZ1RaBD
-        /iasdY1fu3Q93IxYYyMmJVdxRyK92Eg=
-X-Google-Smtp-Source: AGRyM1stw8L0JOEcA8/abOZf2HUM+h6sYLSenH9ifRfqAzuR2AjTb4CH0DHW0aqjFis7vpS4gb8udA==
-X-Received: by 2002:a17:907:6294:b0:6e1:ea4:74a3 with SMTP id nd20-20020a170907629400b006e10ea474a3mr12858486ejc.168.1656333667337;
-        Mon, 27 Jun 2022 05:41:07 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id bl24-20020a170906c25800b00704757b1debsm4963785ejb.9.2022.06.27.05.41.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 05:41:06 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o5o38-001VbX-0O;
-        Mon, 27 Jun 2022 14:41:06 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: ab/test-without-templates
-Date:   Mon, 27 Jun 2022 14:29:50 +0200
-References: <xmqq7d584hqb.fsf@gitster.g>
- <220623.86sfnvk5rw.gmgdl@evledraar.gmail.com> <xmqqr13fxc5l.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqr13fxc5l.fsf@gitster.g>
-Message-ID: <220627.864k06i8im.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vgau/j1ltEkBZOfH1ZyvYg2QfWVXyzI9N5//L18EFAw=;
+        b=jyvd1eL6nlWUGExbWJj8jIYLdHb+rgF1Dfv6wSPcdl6vt7O/7qtGYlfoAMYuP2Ei4M
+         dIX4pWGFibJUW34mD001pwsXvfjQbC7L6eclVx+p9eflz01etsUMW1TZVHd7DK6dWdhZ
+         IyoX5QEdGvu8YBEY554QIxJs+RZUc+L0bBnU1qJIB+rUonG8B+j5vEeF70NNSkD52JiI
+         rXTyVPyQN8duA3rsFo0Tvp5ZBlsv9HtdsrnWyyreBIphC9+ECMQR2ZiX+H1+0XOD1F1a
+         pUHcYSimPrE40St41g5Lm/0ZDHzknbTLVzN0M0k9CT93pe8ejvrtPROlrDXwXTAiJMqt
+         88VQ==
+X-Gm-Message-State: AJIora8YolbFLYKoOAr24pr0aNs4WAeykxOzw0e1pMeCR0il80YB0pHE
+        jD/m2WxvV4CxL7el2c468Bwu2I0cIX0=
+X-Google-Smtp-Source: AGRyM1tWdk6HNdO/fbtZclmoSIph/DEGMfNg2L7wyiHcFZcwrL7b08UVpvHZT8J4m6x/+qmu/uQQqw==
+X-Received: by 2002:a17:902:f78b:b0:16a:4ad:f359 with SMTP id q11-20020a170902f78b00b0016a04adf359mr14525968pln.99.1656333929842;
+        Mon, 27 Jun 2022 05:45:29 -0700 (PDT)
+Received: from localhost.localdomain ([202.142.80.81])
+        by smtp.gmail.com with ESMTPSA id q11-20020a17090a2dcb00b001e31fea8c85sm9314822pjm.14.2022.06.27.05.45.26
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 27 Jun 2022 05:45:29 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Git <git@vger.kernel.org>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: [GSoC] Abhradeep's GSoC blogs (27 Jun, 2022 IST)
+Date:   Mon, 27 Jun 2022 18:14:08 +0530
+Message-Id: <20220627124408.15611-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello developers, this is the thread where you can know about
+my weekly GSoC blog links.
 
-On Thu, Jun 23 2022, Junio C Hamano wrote:
+My Project - Reachability bitmap improvements
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Wed, Jun 22 2022, Junio C Hamano wrote:
->>
->>> * ab/test-without-templates (2022-06-06) 7 commits
->>>  - tests: don't assume a .git/info for .git/info/sparse-checkout
->>>  - tests: don't assume a .git/info for .git/info/exclude
->>>  - tests: don't assume a .git/info for .git/info/refs
->>>  - tests: don't assume a .git/info for .git/info/attributes
->>>  - tests: don't assume a .git/info for .git/info/grafts
->>>  - tests: don't depend on template-created .git/branches
->>>  - t0008: don't rely on default ".git/info/exclude"
->>>
->>>  Tweak tests so that they still work when the "git init" template
->>>  did not create .git/info directory.
->>>
->>>  Will merge to 'next'?
->>>  source: <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
->>
->> Presumably the submitters vote doesn't count for much, but FWIW I think
->> it's ready & that there's nothing outstanding left to address.
->
-> I do not think they make any particular test to break, but I do not
-> think it is a good idea overall to give a false impression to the
-> users that it is OK to use incomplete templates that lack things
-> expected by Git in properly initialized repositories.  And these
-> patches definitely take things in that wrong direction.
+Blog update
+------------
 
-In the CL I mentioned some "future goals" goals that you may or may not
-agree with, to elaborate on [1]:
+Title - GSoC Week 2: redesign the table format
+Blog link - https://medium.com/@abhra303/gsoc-week-2-redesign-the-table-format-829dae755a5
 
- - Eventually running the whole test suite without "git init" creating
-   repositories with templates.
+Summary - 
 
- - Running without the bin-wrappers, which as mentions allows us to run
-   faster, and improves our test coverage (it's hard to test some
-   aspects of invoking "git", when really we're invoking a shellscript
-   that invokes git).
+In the last week, I worked on the reviews. Some major requested
+changes are (1) Use commit positions instead of commit oids in
+the table. (2) Use 8 byte offset positions instead of 4 bytes
+(3) use iterative approach for parsing xor bitmaps (4) Use
+`<commit_pos, offset, xor_pos>` triplets.
 
- - Having some config option or other handy way to "git init" without
-   templates (just formalizing the existing "--template=3D" invocation).
+While implementing these changes, I discovered some bugs in the
+previous version. I faced errors during this time. But finally
+managed to fixed those errors. Taylor helped me to get rid of
+some errors.
 
-You may disagree with some or all of those, but this series doesn't try
-to get you to agree with any of them. It's just making our tests more
-sturdy and explicit in their intent by clearly declaring which parts of
-them are relying on our default templates.
+I think that we can optimise the parsing of xor bitmaps further
+by stopping stack filling loop when we get an already parsed
+bitmap since we know that bitmaps having xor relations with it
+has already been stored/parsed.
 
-So it's helping us spot issues like the one fixed in 7f44842ac19
-(sparse-checkout: create leading directory, 2022-01-21) earlier.
 
-I really don't disagree with you per-se about us defining some minimum
-viable template, and declaring that pointing --template=3D* to an empty
-directory is unsupported.
+Previous blogs 
+---------------
 
-But I think it's unarguable that the status quo is leaving our users in
-limbo on that question. Neither git-init(1) nor gitrepository-layout(5)
-etc. cover that question.
+------------------------------------------------------- 
+Title - GSoC Week 1: Let's Get started
+Blog link - https://medium.com/@abhra303/gsoc-week-1-lets-get-started-fad78ec34dcf
 
-Now, I think based on unsubmitted patches I've wrote that just handling
-those cases in code is easier. I.e. it's a small matter of adding a
-"mkdir x/y" before we create "x/y", and almost all of that code is code
-we have already, so we're mostly supporting the "empty dir" template
-model.
+Summary -
 
-But I'm not trying to argue for that here, nor is this series. What this
-series does is make it easier to avoid bugs and unexpected behavior in
-that are, whatever your position on the "minmum viable template"
-question is.
+This is the first blog that I wrote for GSoC. Taylor
+suggested that I should work on "integrating a lookup table
+extension" first as it is smaller compared to other sub-projects.
 
-1. https://lore.kernel.org/git/cover-v2-0.7-00000000000-20220603T110506Z-av=
-arab@gmail.com/
+The idea is to have a table at the end of .bitmap file which
+will contain the offsets (and xor-offsets) of the bitmaps of
+selected commits. Whenever git try to get the bitmap of a
+particular commit, instead of loading each bitmaps one by one,
+git will parse only the desired bitmap by using the offset and
+xor-offset of the table. This will reduce the overhead of
+loading each and every bitmap.
+-------------------------------------------------------
