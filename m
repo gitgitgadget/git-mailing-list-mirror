@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E092C43334
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18E2BC43334
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:38:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240570AbiF0Sia (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 14:38:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35266 "EHLO
+        id S236476AbiF0Sie (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 14:38:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240490AbiF0SiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 14:38:11 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C08CD8
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:39 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id s1so14263622wra.9
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:39 -0700 (PDT)
+        with ESMTP id S240494AbiF0SiM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 14:38:12 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 314F3CDB
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:42 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 189so5500494wmz.2
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gTcS6gAx+mAwu67s0Vsrg+OViPFhCGZSE7su0s70T3I=;
-        b=TI2tEdfvjmjGZgtGnbX7CZ4kgySUmV75akglW05ipTLlBdDjNgiXhegE6jnxUqa9nC
-         jq1faVjB/HYgljSvZKoVJ6QTPwulZM5VLWBEd+Ar69zZ8vaQuEYvH9rOPvAoancJCHTS
-         q/BsIB7M+nvD1aF7v7caDrGftmjtLfRXFllcE1zE7t4jDBr90O5hbFxbCaUpSFYZqBoU
-         qVpZynWzQuUh3w9rqZhYn3oaoh+qDrdo+AmP69IanSdKfLFW/i36nMDqil9AMmV/QllI
-         uyDGyc55EgFLQHwbHEEeB7cTOkejoxDtw7yCdSH4Z+Ugjne7F+J44q2+vSy33RUKg7uu
-         zvlQ==
+        bh=vK/cK2CsYvziF+h6RxKNGee1lI7W8gvh+Wi2KpMeAJo=;
+        b=Xdu+2K5kKEMY7i4P37JjRUNZxMgsuB2GMW8K5nWFcd7xLC1ZZjcE4wyp/GTNfhXGMa
+         aItNr7e0l3kh+V+yDtKG2mhaid1gz+lkeiInV47C9PVDMkHHHOyFcwvKKy6AfC9KsTZL
+         dwLm+UN8jAV6+vngepOyy+8I8TxVGOSzQxfuPquN30d5b52h4NIZpQdLwA/dOMP8LQEQ
+         vhcaJwXgR+Q6BX/8/4jNAnVxNeRXiF7T0Paj8w8DLWKImMvFOhC0d3leJSsNSuq3WS5/
+         mSzrY20dc0NtXqq3yYY5VcfU3bO87VWZPz2XMmiGDjQRC/ZW6geGn6Oq6Zyfs6b3DwnP
+         XuWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gTcS6gAx+mAwu67s0Vsrg+OViPFhCGZSE7su0s70T3I=;
-        b=ImHhPpkYFld/YjROduu+rPB/AP9e3QT8W8eUuz8OIO5Hs5mQty9nCCxsXMb4zt/mGT
-         kqjglmCMDEl667biEmVSAVN6BmP4SHztKF+d9jeB1uIvwyRBBRR/u5Xczhnm0/B77Y34
-         BCzRak0DUXltodifl9P7CnUWtxJA8DOVbZWEqSdipg5iowND2yJYrcoVHVS3mfDNyXdP
-         vOiHszY2o41eBofsHUrSEHS/7KQu3gAL2qzNSPv6ibDJHnpezFTLLNItIvQZgqa/Og/7
-         Qt+LSJ/GfLeK/YQZC/7R7es7tbD/tjTqaJEDCTxMXyLfF7Nv3GFrbFxobEftMa2sm7qW
-         Pf6A==
-X-Gm-Message-State: AJIora9u3YXu9ojc5Yah1sN4WOyXfj5rlFXbycAW8AU6hVmGZ42fcSTv
-        ewuw0yhS4OGsAKlpc04FcY3964QypQZz2g==
-X-Google-Smtp-Source: AGRyM1uYxxwE9kiNVdzuhtntdPJFH8ygPvV5uLiwE3zfogwrAQnfsq9JEuUxoWu4V2GbXeVhAn5aFw==
-X-Received: by 2002:a5d:584e:0:b0:21c:ea0c:3746 with SMTP id i14-20020a5d584e000000b0021cea0c3746mr5474337wrf.199.1656354998016;
-        Mon, 27 Jun 2022 11:36:38 -0700 (PDT)
+        bh=vK/cK2CsYvziF+h6RxKNGee1lI7W8gvh+Wi2KpMeAJo=;
+        b=IogE1F7pZn79tXIDGpIDe+0VgGRWt7JsuQTblGvifb+OsF/0lkCF6UMnCwnh84j3E4
+         IkAbilTKcKzea8B4Wble1Tz3Iz+hPpgzLbkghtGN+u4kC1WwVe5bGHqA9HY1E8WaDiTk
+         P+NQsa1aCaTHkBHutdmnPwhy9lwS8Z/TdIQiXWvCbhTJEhEiMhdfK0UBJvYoLqzKPgi6
+         tyRa3uFVE9NruR6ZBnF7SbgRl37y70i4FeBx6kjf7t3myOgnaY48GgxFeoy6wWnvSb6w
+         n9eItoXX2rBoXnhQLfYCbuuB8ycBJYRDPhHPJ3KXqi1u2WExD4FncLG2JSeSNaGOBOct
+         TZPw==
+X-Gm-Message-State: AJIora9HngC0oNfQHvHQFxGsRdznc6048PJLmlX7/TDf+x+wZqD5y2FS
+        1Fr6IhmzfdJfXH/e4hEj9QDeO2//LzexiQ==
+X-Google-Smtp-Source: AGRyM1tnmaFdQovx2o1qykj+v0b4Vv/pvklzXhjHTA+pdjckXVryIQpdcxusqIEHA6bpfKDIKAaE+A==
+X-Received: by 2002:a1c:19c3:0:b0:39c:6479:3ca with SMTP id 186-20020a1c19c3000000b0039c647903camr21378717wmz.27.1656355000409;
+        Mon, 27 Jun 2022 11:36:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n12-20020a5d6b8c000000b0020c5253d8fcsm13335303wrx.72.2022.06.27.11.36.36
+        by smtp.gmail.com with ESMTPSA id d18-20020adfe852000000b0021ba3d1f2a0sm11064972wrn.48.2022.06.27.11.36.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 11:36:37 -0700 (PDT)
-Message-Id: <43627c05c0b997ea407c865b04994cba630297d6.1656354994.git.gitgitgadget@gmail.com>
+        Mon, 27 Jun 2022 11:36:39 -0700 (PDT)
+Message-Id: <ec9258234142c4d1d164cbf475cb86e7b826bb8f.1656354994.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
 References: <pull.1261.v4.git.git.1654635432.gitgitgadget@gmail.com>
         <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jun 2022 18:36:31 +0000
-Subject: [PATCH v5 2/5] Documentation: define protected configuration
+Date:   Mon, 27 Jun 2022 18:36:33 +0000
+Subject: [PATCH v5 4/5] safe.directory: use git_protected_config()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,113 +73,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-For security reasons, there are config variables that are only trusted
-when they are specified in certain configuration scopes, which are
-sometimes referred to on-list as 'protected configuration' [1]. A future
-commit will introduce another such variable, so let's define our terms
-so that we can have consistent documentation and implementation.
+Use git_protected_config() to read `safe.directory` instead of
+read_very_early_config(), making it 'protected configuration only'.
 
-In our documentation, define 'protected configuration' as the system,
-global and command config scopes. As a shorthand, I will refer to
-variables that are only respected in protected config as 'protected
-configuration only', but this term is not used in the documentation.
+As a result, `safe.directory` now respects "-c", so update the tests and
+docs accordingly. It used to ignore "-c" due to how it was implemented,
+not because of security or correctness concerns [1].
 
-This definition of protected config is based on whether or not Git can
-reasonably protect the user by ignoring the configuration scope:
-
-- System, global and command line config are considered protected
-  because an attacker who has control over any of those can do plenty of
-  harm without Git, so we gain very little by ignoring those scopes.
-- On the other hand, local (and similarly, worktree) config are not
-  considered protected because it is relatively easy for an attacker to
-  control local config, e.g.:
-  - On some shared user environments, a non-admin attacker can create a
-    repository high up the directory hierarchy (e.g. C:\.git on
-    Windows), and a user may accidentally use it when their PS1
-    automatically invokes "git" commands.
-
-    `safe.directory` prevents attacks of this form by making sure that
-    the user intended to use the shared repository. It obviously
-    shouldn't be read from the repository, because that would end up
-    trusting the repository that Git was supposed to reject.
-  - "git upload-pack" is expected to run in repositories that may not be
-    controlled by the user. We cannot ignore all config in that
-    repository (because "git upload-pack" would fail), but we can limit
-    the risks by ignoring `uploadpack.packObjectsHook`.
-
-Only `uploadpack.packObjectsHook` is 'protected configuration only'. The
-following variables are intentionally excluded:
-
-- `safe.directory` should be 'protected configuration only', but it does
-  not technically fit the definition because it is not respected in the
-  "command" scope. A future commit will fix this.
-
-- `trace2.*` happens to read the same scopes as `safe.directory` because
-  they share an implementation. However, this is not for security
-  reasons; it is because we want to start tracing so early that
-  repository-level config and "-c" are not available [2].
-
-  This requirement is unique to `trace2.*`, so it does not makes sense
-  for protected configuration to be subject to the same constraints.
-
-[1] For example,
-https://lore.kernel.org/git/6af83767-576b-75c4-c778-0284344a8fe7@github.com/
-[2] https://lore.kernel.org/git/a0c89d0d-669e-bf56-25d2-cbb09b012e70@jeffhostetler.com/
+[1] https://lore.kernel.org/git/xmqqlevabcsu.fsf@gitster.g/
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- Documentation/config/uploadpack.txt |  6 +++---
- Documentation/git-config.txt        | 13 +++++++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ Documentation/config/safe.txt |  6 +++---
+ setup.c                       |  2 +-
+ t/t0033-safe-directory.sh     | 24 ++++++++++--------------
+ 3 files changed, 14 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/config/uploadpack.txt b/Documentation/config/uploadpack.txt
-index 32fad5bbe81..029abbefdff 100644
---- a/Documentation/config/uploadpack.txt
-+++ b/Documentation/config/uploadpack.txt
-@@ -49,9 +49,9 @@ uploadpack.packObjectsHook::
- 	`pack-objects` to the hook, and expects a completed packfile on
- 	stdout.
+diff --git a/Documentation/config/safe.txt b/Documentation/config/safe.txt
+index fa02f3ccc54..f72b4408798 100644
+--- a/Documentation/config/safe.txt
++++ b/Documentation/config/safe.txt
+@@ -12,9 +12,9 @@ via `git config --add`. To reset the list of safe directories (e.g. to
+ override any such directories specified in the system config), add a
+ `safe.directory` entry with an empty value.
  +
--Note that this configuration variable is ignored if it is seen in the
--repository-level config (this is a safety measure against fetching from
--untrusted repositories).
-+Note that this configuration variable is only respected when it is specified
-+in protected config (see <<SCOPES>>). This is a safety measure against
-+fetching from untrusted repositories.
+-This config setting is only respected when specified in a system or global
+-config, not when it is specified in a repository config, via the command
+-line option `-c safe.directory=<path>`, or in environment variables.
++This config setting is only respected in protected configuration (see
++<<SCOPES>>). This prevents the untrusted repository from tampering with this
++value.
+ +
+ The value of this setting is interpolated, i.e. `~/<path>` expands to a
+ path relative to the home directory and `%(prefix)/<path>` expands to a
+diff --git a/setup.c b/setup.c
+index faf5095e44d..c8e3c32814d 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1137,7 +1137,7 @@ static int ensure_valid_ownership(const char *path)
+ 	    is_path_owned_by_current_user(path))
+ 		return 1;
  
- uploadpack.allowFilter::
- 	If this option is set, `upload-pack` will support partial
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index f93d437b898..f1810952891 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -343,6 +343,7 @@ You can change the way options are read/written by specifying the path to a
- file (`--file`), or by specifying a configuration scope (`--system`,
- `--global`, `--local`, `--worktree`); see <<OPTIONS>> above.
+-	read_very_early_config(safe_directory_cb, &data);
++	git_protected_config(safe_directory_cb, &data);
  
-+[[SCOPES]]
- SCOPES
- ------
+ 	return data.is_safe;
+ }
+diff --git a/t/t0033-safe-directory.sh b/t/t0033-safe-directory.sh
+index 238b25f91a3..5a1cd0d0947 100755
+--- a/t/t0033-safe-directory.sh
++++ b/t/t0033-safe-directory.sh
+@@ -16,24 +16,20 @@ test_expect_success 'safe.directory is not set' '
+ 	expect_rejected_dir
+ '
  
-@@ -380,6 +381,18 @@ Most configuration options are respected regardless of the scope it is
- defined in, but some options are only respected in certain scopes. See the
- option's documentation for the full details.
+-test_expect_success 'ignoring safe.directory on the command line' '
+-	test_must_fail git -c safe.directory="$(pwd)" status 2>err &&
+-	grep "unsafe repository" err
++test_expect_success 'safe.directory on the command line' '
++	git -c safe.directory="$(pwd)" status
+ '
  
-+Protected configuration
-+~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Protected configuration refers to the 'system', 'global', and 'command' scopes.
-+For security reasons, certain options are only respected when they are
-+specified in protected configuration, and ignored otherwise.
-+
-+Git treats these scopes as if they are controlled by the user or a trusted
-+administrator. This is because an attacker who controls these scopes can do
-+substantial harm without using Git, so it is assumed that the user's environment
-+protects these scopes against attackers.
-+
- ENVIRONMENT
- -----------
+-test_expect_success 'ignoring safe.directory in the environment' '
+-	test_must_fail env GIT_CONFIG_COUNT=1 \
+-		GIT_CONFIG_KEY_0="safe.directory" \
+-		GIT_CONFIG_VALUE_0="$(pwd)" \
+-		git status 2>err &&
+-	grep "unsafe repository" err
++test_expect_success 'safe.directory in the environment' '
++	env GIT_CONFIG_COUNT=1 \
++	    GIT_CONFIG_KEY_0="safe.directory" \
++	    GIT_CONFIG_VALUE_0="$(pwd)" \
++	    git status
+ '
  
+-test_expect_success 'ignoring safe.directory in GIT_CONFIG_PARAMETERS' '
+-	test_must_fail env \
+-		GIT_CONFIG_PARAMETERS="${SQ}safe.directory${SQ}=${SQ}$(pwd)${SQ}" \
+-		git status 2>err &&
+-	grep "unsafe repository" err
++test_expect_success 'safe.directory in GIT_CONFIG_PARAMETERS' '
++	env GIT_CONFIG_PARAMETERS="${SQ}safe.directory${SQ}=${SQ}$(pwd)${SQ}" \
++	    git status
+ '
+ 
+ test_expect_success 'ignoring safe.directory in repo config' '
 -- 
 gitgitgadget
 
