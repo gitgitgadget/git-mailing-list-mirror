@@ -2,191 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74991CCA473
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01A7EC43334
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240486AbiF0Sik (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 14:38:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35456 "EHLO
+        id S240215AbiF0Sj5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 14:39:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240485AbiF0SiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 14:38:11 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81F53CD7
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:38 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id e28so9118866wra.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:38 -0700 (PDT)
+        with ESMTP id S239969AbiF0Sjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 14:39:47 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A59C8
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:39:46 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id c6-20020a17090abf0600b001eee794a478so2662135pjs.1
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=eg9oT2ttxFEF1wkAt+PI0iAiQ436tiumYPH3Aazib7E=;
-        b=D4sW+MuYgf8fBMUS2ECsMpV1HGTAYBjilySFW6tWdR4TpNWMwrNCgJ4iuFKtR3L2ph
-         OM+CACYHmQrv7bLk3yLdVGeUbjqMnMWQevjlsIuffszBb+9BMvqE03ZKPIrHci211dmz
-         7mC5QIodWdafs60t9SEcnzHd35D8oSxmVT7p5W+uNAlOg7kzM8CBygxwqWtyrUTVwc68
-         QRVHdh4hJzQnwmGTSBRpVPHICs7U09sxBhMeYwuifghbLl0VNfhI4/I5kzYWCiCtVhNH
-         Tqiwz+3GqzgQJnp2/W8lb3FW7pOgo8Fv0mEq62JUuTeJHeHf+GTbNfiTtqbPQvHNamDP
-         cElw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Bujdv2Bbps6cQCcQQMNaNkHDaBL9Sstt5t0q5JysfdY=;
+        b=QDd/6RVtGkwQ+8twQH73++gBkjaHIImLg0z2Iw/5OffrW3/YnKcHC4aS8kOw4N0I4W
+         ADQWdMF96YQlXtKD1eqsZ224A3Kf4xWoR6ZUqPm90hRzjWgshd9Em94+DBPcelUgFcZE
+         ZnPzxrD48sDrl2rh8po3m6vDKS4vDuiUo7N84tjGNFOKvht7OtsmDXeItuMPSfRjhbcL
+         ADK3x1Mys8RJQdZqSagyCqLMsnwC+VZ948NCESl2LZ+h9/iJuNQIbA/1QS+9BVHAR0qv
+         nP+oyQ+kO+G83ikP/0DNPamxh6xTud71bUTjNyvHog8iMvdwDIxU+yAse61kOeFbqo+V
+         Cxtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eg9oT2ttxFEF1wkAt+PI0iAiQ436tiumYPH3Aazib7E=;
-        b=p1R+b3Z/SYfBWD6aA0mekq+aT33qi8yiKK7OGZ0ndIvacHGoEKl4E0HXVBkDcOaFi2
-         LAno597xCkDc/Trt9f7BX4YxKtapyp1eb0N15OarOLMkiF/LfAYpJMw2JQqSS6YtngZU
-         seZ0Qyk2BpN1GdUdU+wWo+8UgR0EEH4JxDWBA5KfSKsHKfJhE1HL3L8VIQjgd3y5luvl
-         eCj+rbah3R8d/eDjQf5XnRtrNJWqrBOBN0RRhjm1I7OWVi7AynlhI8uKMUMgwpzsk4ZM
-         23T1ASeDPpc5c9jMwd/EEc8Wu+G21fIx7ZsIFA4SqTf4BbZCG69XEDlUVbD8yVrmICNw
-         EiFw==
-X-Gm-Message-State: AJIora/FBH2T6MG8T2irOzXTYcY7qHgXyMrep+36oDklW6FTx7mchmJJ
-        5k6Y2UNCbMwQVHFaVGaQdw4KN017/ubvxg==
-X-Google-Smtp-Source: AGRyM1tH3hbzActPj7H5RH1wOAPQo9HlX5/TOHkvxvumU+jnk3U52QVL0qB3WicOnrcilVS1yUpB7Q==
-X-Received: by 2002:a5d:6d45:0:b0:21a:2f43:cb76 with SMTP id k5-20020a5d6d45000000b0021a2f43cb76mr13842982wri.254.1656354996790;
-        Mon, 27 Jun 2022 11:36:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h4-20020a5d4304000000b0021b829d111csm11530943wrq.112.2022.06.27.11.36.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 11:36:35 -0700 (PDT)
-Message-Id: <ee9619f6ec0608f399fc924cfe9254df5e7bc431.1656354994.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
-References: <pull.1261.v4.git.git.1654635432.gitgitgadget@gmail.com>
-        <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
-From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jun 2022 18:36:30 +0000
-Subject: [PATCH v5 1/5] Documentation/git-config.txt: add SCOPES section
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Bujdv2Bbps6cQCcQQMNaNkHDaBL9Sstt5t0q5JysfdY=;
+        b=s24PtzsPki+m6nNFdpnUpSHryXNXx6RlQ/u8xMPVW8PeD8oOYjV3lh/yclBXE+I2dJ
+         Ws46J86Y0tvpHDc6mD7Db/nd7rlo02VFFDzAEVJ0/BB568JH9UPimBv4e00ld0thuorc
+         9UDzRq8vRWNOto50SB0S3mrrnV0JrmsT4Hd+QpS25jxjrqteUAewCqnZAYbzvlUSMjMB
+         FapnTejSHqYfMRO22jlhqs9j1ioTqYdcCzGF6jEjzd5dzjvjl0olYmgCMUEZHHJ3A3EW
+         wZZt43sd07UApNt79aUPHdsx5gGJpBceovo2LyQfBxRDQARTpA4/RrXR8QbHfcTiL5re
+         dR8Q==
+X-Gm-Message-State: AJIora+Cubtn/4RL7CD0nEYpf9vHSXduezCvceklmtoIxlTFKWavcFk3
+        dOtdPcePSGk3pstJBo5nRCE=
+X-Google-Smtp-Source: AGRyM1tViFbXREHnAuYTG9lkSuMynHr8Y5ua9aj/HnJyexFsxnldoVEZ5dWl8dmpaCDG0mHCWpLq5A==
+X-Received: by 2002:a17:902:ccc4:b0:156:5d37:b42f with SMTP id z4-20020a170902ccc400b001565d37b42fmr15759716ple.157.1656355186112;
+        Mon, 27 Jun 2022 11:39:46 -0700 (PDT)
+Received: from localhost.localdomain ([202.142.80.81])
+        by smtp.gmail.com with ESMTPSA id h27-20020aa79f5b000000b0051c79bd5047sm7704770pfr.139.2022.06.27.11.39.43
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 27 Jun 2022 11:39:45 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 3/6] pack-bitmap-write: learn pack.writeBitmapLookupTable and add tests
+Date:   Tue, 28 Jun 2022 00:09:23 +0530
+Message-Id: <20220627183924.16369-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <YrntSpG5asIPNdZz@nand.local>
+References: <YrntSpG5asIPNdZz@nand.local>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo <chooglen@google.com>,
-        Glen Choo <chooglen@google.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Glen Choo <chooglen@google.com>
+Taylor Blau <me@ttaylorr.com> wrote:
 
-In a subsequent commit, we will introduce "protected configuration",
-which is easiest to describe in terms of configuration scopes (i.e. it's
-the union of the 'system', 'global', and 'command' scopes). This
-description is fine for ML discussions, but it's inadequate for end
-users because we don't provide a good description of "configuration
-scopes" in the public docs.
+> Probably both of them should take into account their separate
+> configuration values, but cleaning up the hashcache one can be done
+> separately outside of this series.
 
-145d59f482 (config: add '--show-scope' to print the scope of a config
-value, 2020-02-10) introduced the word "scope" to our public docs, but
-that only enumerates the scopes and assumes the user can figure out
-those values mean.
+Actually, it does respect the `pack.writebitmaplookuptable` config.
+As pack.writebitmaplookuptable is by default true (for this patch
+Series), this line enables it by default. If `pack.writebitmaplookuptable`
+Set to false, the proposed change in the `git_multi_pack_index_write_config`
+function disables this flag.
 
-Add a SCOPES section to Documentation/git-config.txt that describes the
-configuration scopes, their corresponding CLI options, and mentions that
-some configuration options are only respected in certain scopes. Then,
-use the word "scope" to simplify the FILES section and change some
-confusing wording.
+> This region may make more sense to include in the previous commit,
+> though I don't have a strong feeling about it.
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- Documentation/git-config.txt | 64 ++++++++++++++++++++++++++++--------
- 1 file changed, 50 insertions(+), 14 deletions(-)
+Ok. Will move it to the previous patch.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 9376e39aef2..f93d437b898 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -297,8 +297,8 @@ The default is to use a pager.
- FILES
- -----
- 
--If not set explicitly with `--file`, there are four files where
--'git config' will search for configuration options:
-+By default, 'git config' will read configuration options from multiple
-+files:
- 
- $(prefix)/etc/gitconfig::
- 	System-wide configuration file.
-@@ -322,27 +322,63 @@ $GIT_DIR/config.worktree::
- 	This is optional and is only searched when
- 	`extensions.worktreeConfig` is present in $GIT_DIR/config.
- 
--If no further options are given, all reading options will read all of these
--files that are available. If the global or the system-wide configuration
--file are not available they will be ignored. If the repository configuration
--file is not available or readable, 'git config' will exit with a non-zero
--error code. However, in neither case will an error message be issued.
-+You may also provide additional configuration parameters when running any
-+git command by using the `-c` option. See linkgit:git[1] for details.
-+
-+Options will be read from all of these files that are available. If the
-+global or the system-wide configuration file are not available they will be
-+ignored. If the repository configuration file is not available or readable,
-+'git config' will exit with a non-zero error code. However, in neither case
-+will an error message be issued.
- 
- The files are read in the order given above, with last value found taking
- precedence over values read earlier.  When multiple values are taken then all
- values of a key from all files will be used.
- 
--You may override individual configuration parameters when running any git
--command by using the `-c` option. See linkgit:git[1] for details.
--
--All writing options will per default write to the repository specific
-+By default, options are only written to the repository specific
- configuration file. Note that this also affects options like `--replace-all`
- and `--unset`. *'git config' will only ever change one file at a time*.
- 
--You can override these rules using the `--global`, `--system`,
--`--local`, `--worktree`, and `--file` command-line options; see
--<<OPTIONS>> above.
-+You can change the way options are read/written by specifying the path to a
-+file (`--file`), or by specifying a configuration scope (`--system`,
-+`--global`, `--local`, `--worktree`); see <<OPTIONS>> above.
-+
-+SCOPES
-+------
-+
-+Each configuration source falls within a configuration scope. The scopes
-+are:
-+
-+system::
-+	$(prefix)/etc/gitconfig
-+
-+global::
-+	$XDG_CONFIG_HOME/git/config
-++
-+~/.gitconfig
-+
-+local::
-+	$GIT_DIR/config
-+
-+worktree::
-+	$GIT_DIR/config.worktree
-+
-+command::
-+	environment variables
-++
-+the `-c` option
-+
-+With the exception of 'command', each scope corresponds to a command line
-+option - `--system`, `--global`, `--local`, `--worktree`.
-+
-+When reading options, specifying a scope will only read options from the
-+files within that scope. When writing options, specifying a scope will write
-+to the files within that scope (instead of the repository specific
-+configuration file). See <<OPTIONS>> above for a complete description.
- 
-+Most configuration options are respected regardless of the scope it is
-+defined in, but some options are only respected in certain scopes. See the
-+option's documentation for the full details.
- 
- ENVIRONMENT
- -----------
--- 
-gitgitgadget
-
+Thanks :)
