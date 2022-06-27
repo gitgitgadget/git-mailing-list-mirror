@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67153C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 23:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DA9EC433EF
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 23:20:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241829AbiF0XUX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 19:20:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59010 "EHLO
+        id S241722AbiF0XU2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 19:20:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241117AbiF0XUW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 19:20:22 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72CCF2408F
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 16:20:21 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id o4so11166096wrh.3
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 16:20:21 -0700 (PDT)
+        with ESMTP id S241117AbiF0XUY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 19:20:24 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 401A52408F
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 16:20:23 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id c130-20020a1c3588000000b0039c6fd897b4so8374201wma.4
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 16:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7O0JW1YeyGLYQ/boC6Lsk5ZRa1VVtTah6mpLiweSmBI=;
-        b=mEFgNures3Iei5KKEZPzs2yhQyWensYreoB7bBk75BTC+0+NkdqtF8ajjQ9zcZYVaO
-         3ItwrzwZdxx7bry5MLZuappYlnH7u5pvV3YzqIGIYmE2huSwSHief6TgZQ2jgWqV4Cyl
-         LdJh9FGuu5CN9aRSl5yQa4ILnhn6HYr98deulFj4cZ7GfEbJXu75tDrV1EFtwoonHAD3
-         o/aBvzSeyBEaeBr25TBFDS9zkOiN57HigGMdNUf3BzdB5//bWTjuTZdrovW1p1qwQGaV
-         pmEzJYklwXD8SN8wwvMDIDvofufMiA1zBKgypmIHSvrfwWRQ6g9DVCH1qZSZGokzEVus
-         RrpQ==
+        bh=qBDa1j6tjIudbPwVuTOWST5afbkWAt1ljAD8RMfo12Y=;
+        b=n8p9+ItEQfcIfsXs6sy4cCSpZj9QfRos6/fIrQ6i/jH1LCc2voPcID4+w/BUSVOsEH
+         0vaDlbO8XCTo+R26XR61lTABSN6x9wwTcpO46iSfbh9ADZSmJhHkg5ivIjVdHnVQeM46
+         7FCq4CbVMmBlILEY+g+c162yw0wwKDVzCbJWf4FcCLYwXEJTdVHFTUk+Y1d0UKtjDAj2
+         t7KXngVyOwtaE0KRYyekbQg6uNVNd+xlWnDjm7JkZr/Z1bf9PhjV0Us9jysyu/SFBem4
+         gcQTwdU0H6uOPpTSKeQjYXXJfKiBQWk3DYebyTmHtJFUdUa/vTsI68GjyerA5Lvenbyk
+         89vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7O0JW1YeyGLYQ/boC6Lsk5ZRa1VVtTah6mpLiweSmBI=;
-        b=rx5tbTM9Ta3rj5QbhuN5x84UnHXPr7hnm29Hct4UliAQreq79x4brbY/veF4Xtm/kL
-         gvfjWv8DVM0qdgwcHG2qig/vZJyp60KOSvSBdSn9PClCJSFGD+x5SFYF+C2ffLKsCTF2
-         rmJ1iEEyyUkYCZibCW3fh6MZcSxO2YqCx/o86ofcbTL5FouNZRJYNWW0MrcaCUMNa84g
-         oc20hSxJ4zSRtKKljICVEf478YR3+NitnvIXFE89SoKpD4t7INP7Uv5dMsi4rMTx2Lp6
-         kJzQggAH0GOdqgn6umrwo5bwwy3wXx54XIaCjNLRDQyBZ6nXtaGRyw1dMsdY7LvTU23r
-         +iBQ==
-X-Gm-Message-State: AJIora+YOoZZT3fW2zwYy6cx5HqMxZNPi87BKlleuYh8so5onfb2ay5u
-        ZQiRS49g468TvsQsLK3yBuzyTHWjMa7N/A==
-X-Google-Smtp-Source: AGRyM1t/z7ogHRj0nDSAzFATf1NzGMTa6pfKzSAxqiQxiOiHF6RXJdvTvPj9uZ7regXcbpRwZeXFQw==
-X-Received: by 2002:a5d:6812:0:b0:21b:8a2f:f732 with SMTP id w18-20020a5d6812000000b0021b8a2ff732mr14184659wru.202.1656372019706;
-        Mon, 27 Jun 2022 16:20:19 -0700 (PDT)
+        bh=qBDa1j6tjIudbPwVuTOWST5afbkWAt1ljAD8RMfo12Y=;
+        b=xyjQq3i7eorJpJYst2zB3shO1I+x0lvsM1ZlDejYu3zq/zqdUVRw/ZZtTeA9uq1bJy
+         fzFuVS4um+hJkSAoaWduRXwEs5d9xNvRkIn0ekSjzM9BnQQHDJ5Y1OV7w3dphpD9Bclu
+         xsynBMJxaVn8pm/3rQj8Z/G8B1pKvh3XPAYTeDF5qd9qEi+w4VenvOTATXmN21GM18/0
+         074ABewNTQfdvR8SSaKcSEg+Y13AunWkEZtpQ4ha7YMyQmTaZkxDq65GyXuKCXvnc8cm
+         ZErGb4ha3lBz+p89Tl4jet3VbuINPZOug6X6gHZZWHollJacy+g72zhKH7GnGV5tv27+
+         OgUw==
+X-Gm-Message-State: AJIora/Q6jHfGCktznJCi5nsT9iFFQhHqriKWPI34O03QT2KcekCPd6r
+        0oaaYPf6twZrU5Ixj79A2IEd0Bu7L1f/vg==
+X-Google-Smtp-Source: AGRyM1uerk6POzvchSNIjiX9f8DA43g9X+iipFq9cEWebq5VXbiNnvelHQgagicFFyG6e5f5NqEgGw==
+X-Received: by 2002:a1c:cc1a:0:b0:3a0:39b1:3408 with SMTP id h26-20020a1ccc1a000000b003a039b13408mr17847356wmb.157.1656372021561;
+        Mon, 27 Jun 2022 16:20:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z5-20020adfe545000000b0021b81855c1csm14264937wrm.27.2022.06.27.16.20.18
+        by smtp.gmail.com with ESMTPSA id k31-20020a05600c1c9f00b0039c5642e430sm15327274wms.20.2022.06.27.16.20.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 16:20:19 -0700 (PDT)
-Message-Id: <473548f2fa473b9b94fcc099a81613c622a32022.1656372017.git.gitgitgadget@gmail.com>
+        Mon, 27 Jun 2022 16:20:21 -0700 (PDT)
+Message-Id: <7cd1c46f350bf26216814dcf9dd4b8002a91467a.1656372017.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
 References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jun 2022 23:20:13 +0000
-Subject: [PATCH 1/5] submodule--helper update: use display path helper
+Date:   Mon, 27 Jun 2022 23:20:15 +0000
+Subject: [PATCH 3/5] submodule--helper: use correct display path helper
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,159 +70,67 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-There are two locations in prepare_to_clone_next_submodule() that
-manually calculate the submodule display path, but should just use
-do_get_submodule_displaypath() for consistency.
+Replace a chunk of code in update_submodule() with an equivalent
+do_get_submodule_displaypath() invocation. This is already tested by
+t/t7406-submodule-update.sh:'submodule update --init --recursive from
+subdirectory', so no tests are added.
 
-Do this replacement and reorder the code slightly to avoid computing
-the display path twice.
+The two are equivalent because:
 
-This code was never tested, and adding tests shows that both these sites
-have been computing the display path incorrectly ever since they were
-introduced in 48308681b0 (git submodule update: have a dedicated helper
-for cloning, 2016-02-29) [1]:
+- Exactly one of recursive_prefix|prefix is non-NULL at a time; prefix
+  is set at the superproject level, and recursive_prefix is set when
+  recursing into submodules. There is also a BUG() statement in
+  get_submodule_displaypath() that asserts that both cannot be non-NULL.
 
-- The first hunk puts a "/" between recursive_prefix and ce->name, but
-  recursive_prefix already ends with "/".
-- The second hunk calls relative_path() on recursive_prefix and
-  ce->name, but relative_path() only makes sense when both paths share
-  the same base directory. This is never the case here:
-  - recursive_prefix is the path from the topmost superproject to the
-    current submodule
-  - ce->name is the path from the root of the current submodule to its
-    submodule.
-  so, e.g. recursive_prefix="super" and ce->name="submodule" produces
-  displayname="../super" instead of "super/submodule".
+- In get_submodule_displaypath(), get_super_prefix() always returns NULL
+  because "--super-prefix" is never passed. Thus calling it is
+  equivalent to calling do_get_submodule_displaypath() with super_prefix
+  = NULL.
 
-While we're fixing the display names, also fix inconsistent quoting of
-the submodule name.
+Therefore:
 
-[1] I verified this by applying the tests to 48308681b0.
+- When recursive_prefix is non-NULL, prefix is NULL, and thus
+  get_submodule_displaypath() just returns prefixed_path. This is
+  identical to calling do_get_submodule_displaypath() with super_prefix
+  = recursive_prefix because the return value is still the concatenation
+  of recursive_prefix + update_data->sm_path.
+
+- When prefix is non-NULL, prefixed_path = update_data->sm_path. Thus
+  calling get_submodule_displaypath() with prefixed_path is equivalent
+  to calling do_get_submodule_displaypath() with update_data->sm_path
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 22 +++++---------
- t/t7406-submodule-update.sh | 59 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+), 15 deletions(-)
+ builtin/submodule--helper.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c597df7528e..63c661b26a6 100644
+index 7a963a967b8..fa8256526e9 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1949,30 +1949,22 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	const char *update_string;
- 	enum submodule_update_type update_type;
- 	char *key;
--	struct strbuf displaypath_sb = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
--	const char *displaypath = NULL;
-+	char *displaypath = NULL;
- 	int needs_cloning = 0;
- 	int need_free_url = 0;
+@@ -2445,19 +2445,11 @@ static void update_data_to_args(struct update_data *update_data, struct strvec *
  
-+	displaypath = do_get_submodule_displaypath(ce->name,
-+						   suc->update_data->prefix,
-+						   suc->update_data->recursive_prefix);
-+
- 	if (ce_stage(ce)) {
--		if (suc->update_data->recursive_prefix)
--			strbuf_addf(&sb, "%s/%s", suc->update_data->recursive_prefix, ce->name);
--		else
--			strbuf_addstr(&sb, ce->name);
--		strbuf_addf(out, _("Skipping unmerged submodule %s"), sb.buf);
--		strbuf_addch(out, '\n');
-+		strbuf_addf(out, _("Skipping unmerged submodule '%s'\n"), displaypath);
- 		goto cleanup;
- 	}
- 
- 	sub = submodule_from_path(the_repository, null_oid(), ce->name);
- 
--	if (suc->update_data->recursive_prefix)
--		displaypath = relative_path(suc->update_data->recursive_prefix,
--					    ce->name, &displaypath_sb);
--	else
--		displaypath = ce->name;
+ static int update_submodule(struct update_data *update_data)
+ {
+-	char *prefixed_path;
 -
- 	if (!sub) {
- 		next_submodule_warn_missing(suc, out, displaypath);
- 		goto cleanup;
-@@ -2062,7 +2054,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 					      "--no-single-branch");
+ 	ensure_core_worktree(update_data->sm_path);
  
- cleanup:
--	strbuf_release(&displaypath_sb);
-+	free(displaypath);
- 	strbuf_release(&sb);
- 	if (need_free_url)
- 		free((void*)url);
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 43f779d751c..e1dc3b1041b 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1116,4 +1116,63 @@ test_expect_success 'submodule update --filter sets partial clone settings' '
- 	test_cmp_config -C super-filter/submodule blob:none remote.origin.partialclonefilter
- '
+-	if (update_data->recursive_prefix)
+-		prefixed_path = xstrfmt("%s%s", update_data->recursive_prefix,
+-					update_data->sm_path);
+-	else
+-		prefixed_path = xstrdup(update_data->sm_path);
+-
+-	update_data->displaypath = get_submodule_displaypath(prefixed_path,
+-							     update_data->prefix);
+-	free(prefixed_path);
++	update_data->displaypath = do_get_submodule_displaypath(update_data->sm_path,
++								update_data->prefix,
++								update_data->recursive_prefix);
  
-+# NEEDSWORK: Clean up the tests so that we can reuse the test setup.
-+# Don't reuse the existing repos because the earlier tests have
-+# intentionally disruptive configurations.
-+test_expect_success 'setup clean recursive superproject' '
-+	git init bottom &&
-+	test_commit -C bottom "bottom" &&
-+	git init middle &&
-+	git -C middle submodule add ../bottom bottom &&
-+	git -C middle commit -m "middle" &&
-+	git init top &&
-+	git -C top submodule add ../middle middle &&
-+	git -C top commit -m "top" &&
-+	git clone --recurse-submodules top top-clean
-+'
-+
-+test_expect_success 'submodule update should skip unmerged submodules' '
-+	test_when_finished "rm -fr top-cloned" &&
-+	cp -r top-clean top-cloned &&
-+
-+	# Create an upstream commit in each repo
-+	test_commit -C bottom upstream_commit &&
-+	(cd middle &&
-+	 git -C bottom fetch &&
-+	 git -C bottom checkout -f FETCH_HEAD &&
-+	 git add bottom &&
-+	 git commit -m "upstream_commit"
-+	) &&
-+	(cd top &&
-+	 git -C middle fetch &&
-+	 git -C middle checkout -f FETCH_HEAD &&
-+	 git add middle &&
-+	 git commit -m "upstream_commit"
-+	) &&
-+
-+	# Create a downstream conflict
-+	(cd top-cloned/middle &&
-+	 test_commit -C bottom downstream_commit &&
-+	 git add bottom &&
-+	 git commit -m "downstream_commit" &&
-+	 git fetch --recurse-submodules origin &&
-+	 test_must_fail git merge origin/main
-+	) &&
-+	# Make the update of "middle" a no-op, otherwise we error out
-+	# because of its unmerged state
-+	test_config -C top-cloned submodule.middle.update !true &&
-+	git -C top-cloned submodule update --recursive 2>actual.err &&
-+	grep "Skipping unmerged submodule .middle/bottom." actual.err
-+'
-+
-+test_expect_success 'submodule update --recursive skip submodules with strategy=none' '
-+	test_when_finished "rm -fr top-cloned" &&
-+	cp -r top-clean top-cloned &&
-+
-+	test_commit -C top-cloned/middle/bottom downstream_commit &&
-+	git -C top-cloned/middle config submodule.bottom.update none &&
-+	git -C top-cloned submodule update --recursive 2>actual.err &&
-+	grep "Skipping submodule .middle/bottom." actual.err
-+'
-+
- test_done
+ 	determine_submodule_update_strategy(the_repository, update_data->just_cloned,
+ 					    update_data->sm_path, update_data->update_default,
 -- 
 gitgitgadget
 
