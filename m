@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76EFEC433EF
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBD4CC433EF
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:38:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237017AbiF0Sig (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 14:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37272 "EHLO
+        id S237481AbiF0Sii (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 14:38:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240492AbiF0SiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 14:38:11 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2888CE1
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:40 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id o19-20020a05600c4fd300b003a0489f414cso2630719wmq.4
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:40 -0700 (PDT)
+        with ESMTP id S240496AbiF0SiM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 14:38:12 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96ABCCE2
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:43 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id c130-20020a1c3588000000b0039c6fd897b4so8024747wma.4
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:36:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=BuAOV0ZU7Afp2grKZb5gtV5C/rUTELHJYczDClikMtA=;
-        b=PHzKUav9KVm/INunQ4MHLN1oM1XXAgbqOkD/XDLNIa2O78NDYohPLAu+KemYM9n0f1
-         +QGvhu6Dv0YeMwuYy0TpRNG01e2NX2AdfZZM4btzFlDU1FlVXsz8V7BXmiVKqy+UWP9/
-         WSZEdZ/m7YkTrWBqYCa8SOPjWgiRDGiVJ3ZWjL3GhEAzfnWkPObSX8dtM9htsS1LykXu
-         RZkuFOQ3JjTy6Ei7VgsbBlQ6r19fy9mmUeBgaKHnULwXOLQ2eZ4itUp9cgEIFM+SDqjw
-         RBNphW5ZjWLrbYK4olDsH0i/VS/EeJJ7AT+8WRcW1X8+YI/WQu0pY5jtoU2qkB5o3LHb
-         j9Ng==
+        bh=YqoyexvLeD9VobWvJz7mGg0G5uZtp4Fx9wNnc+nZhXg=;
+        b=FgzdqgcOSh4Lwr7B1tIlF45bUdJ7zRf56DWZU5m6rEQWk0OefOjbB387OaDjglPoux
+         29VZXznGXTb9y7uaEuA6hTbhArwVFpOSc0TsB8+tTmGX0vIFc0RRy1yLGnYFflI6NIEr
+         BTIkpbz/a+Gn5dZ/8cTG1wAHfHdhGgitgZuo4F7NQ/+g+nMNW5vIeEBiyApfxmPszoP/
+         wrCfuyawrcBdzLhO9PYKXRJBlZNi4zoEAQBZ5Cn7x1c2H2r0h3Uf8OGathHpGgw69SUS
+         lIbbaWYpGOwGCjx86sj1YUJEMdNC/R0nqux6TDtXXQex5ao8/ZZUMHoCiJV24sDTVuhr
+         8rYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BuAOV0ZU7Afp2grKZb5gtV5C/rUTELHJYczDClikMtA=;
-        b=NAHbJwN5Ple22IrjQe9knr7NRW//XdGNJeB/vncSNxt/hqsHyB9F4IoYlmU7SS1zLr
-         xgHu3Fn23beGmR1YyFsxgFaFhGY15iVuM5Avm460OjEDMhWfr1XigiSkTSeVohVWus5A
-         UGBxV4DZ2qrY5sB3E2wICxnx/ftnX7iQa3EOoPh6A46bwb0QpdtfwqB+kZykewR19M9g
-         ZxbT9pp1cJ/E+BDzOVUN98wPfqATqEmRb9qFI8AfOkS/VVoDI5PyuDLbyQV2QVyku6q3
-         NqwGBVb6IPE/KUXABsJPpLybRWlzJnpOmBWuAMxspvxAdqngTtVT3EgjXT+RNghNrP/M
-         DSVw==
-X-Gm-Message-State: AJIora/EkQXXi+le7NekcAfST5FawX1MjkOBYJTnMCIZnyIqd2I+qc4/
-        d7l2N8bTGqGZr2EZx9CkW0mch06sV7YIAQ==
-X-Google-Smtp-Source: AGRyM1vpWWLRCuxDEaEjGOz30/K35PFoJyGgvNGM8zFss9Mi1fpXrGCZwiiaObpm6FeucLYztv26pQ==
-X-Received: by 2002:a05:600c:1e14:b0:3a0:2bba:4b2e with SMTP id ay20-20020a05600c1e1400b003a02bba4b2emr17285087wmb.196.1656354999129;
-        Mon, 27 Jun 2022 11:36:39 -0700 (PDT)
+        bh=YqoyexvLeD9VobWvJz7mGg0G5uZtp4Fx9wNnc+nZhXg=;
+        b=DrM+yjUDIroPIPWk/w6PbmOzo2HUTCU9+sF3vUU9/glco4d3YiSncKUnK8B6a7Yjig
+         ltVDGSzjckpGhGmxWiN/vrtPpAXc7XrKC0AYEUaA8j7eBG0Odb6PHOG1sfRhi4bdaVgh
+         PF0Q74BVG8I30Be1l57SCtPV+SRn2i77WNn0u4b4ioEMnij9gAPxYAduN56eU8kzw8vY
+         j9SU082uvaEwKMjq6tW/HGRlFQXtCxtIIHHB/vgz3yWQmboMktLlNw3eKXuMWQYKTuD9
+         JMS+sErNI/9GaYdAV35ucaiB3lWHcwAzPxInEPOaKkRtPXtIW37TbT8Sh2IeponkMZ/P
+         7F4g==
+X-Gm-Message-State: AJIora9nW4xxGzEQu82ZQ6HOXyDR01Vj/24lvGxsCsfaG2071nPQh2i3
+        4sQiOdYZljRe6Y36rM95Gyd8VSVoiZlFew==
+X-Google-Smtp-Source: AGRyM1vW0xTcl9Vtoe87iP/V+UKnmIvGdLLM0LD6c3DfA+ca0YyGSKpIXSJc37KEFJYhWg9+w7+lLg==
+X-Received: by 2002:a7b:c110:0:b0:39c:8270:7b95 with SMTP id w16-20020a7bc110000000b0039c82707b95mr17094546wmi.41.1656355001749;
+        Mon, 27 Jun 2022 11:36:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w13-20020a5d680d000000b0021b93a483dbsm11227084wru.32.2022.06.27.11.36.38
+        by smtp.gmail.com with ESMTPSA id ay4-20020a05600c1e0400b003a047dccfffsm6667120wmb.42.2022.06.27.11.36.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 11:36:38 -0700 (PDT)
-Message-Id: <3efe282e6b94c3daed77590c5f601fad34137c9c.1656354994.git.gitgitgadget@gmail.com>
+        Mon, 27 Jun 2022 11:36:41 -0700 (PDT)
+Message-Id: <14411512783fd4e2cdcc8513690377b29262f6b8.1656354994.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
 References: <pull.1261.v4.git.git.1654635432.gitgitgadget@gmail.com>
         <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jun 2022 18:36:32 +0000
-Subject: [PATCH v5 3/5] config: learn `git_protected_config()`
+Date:   Mon, 27 Jun 2022 18:36:34 +0000
+Subject: [PATCH v5 5/5] setup.c: create `discovery.bare`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,253 +73,261 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-`uploadpack.packObjectsHook` is the only 'protected configuration only'
-variable today, but we've noted that `safe.directory` and the upcoming
-`discovery.bare` should also be 'protected configuration only'. So, for
-consistency, we'd like to have a single implementation for protected
-config.
+There is a known social engineering attack that takes advantage of the
+fact that a working tree can include an entire bare repository,
+including a config file. A user could run a Git command inside the bare
+repository thinking that the config file of the 'outer' repository would
+be used, but in reality, the bare repository's config file (which is
+attacker-controlled) is used, which may result in arbitrary code
+execution. See [1] for a fuller description and deeper discussion.
 
-The primary constraints are:
+A simple mitigation is to forbid bare repositories unless specified via
+`--git-dir` or `GIT_DIR`. In environments that don't use bare
+repositories, this would be minimally disruptive.
 
-1. Reading from protected configuration should be as fast as possible.
-   Nearly all "git" commands inside a bare repository will read both
-   `safe.directory` and `discovery.bare`, so we cannot afford to be
-   slow.
+Create a config variable, `discovery.bare`, that tells Git whether or
+not to die() when it discovers a bare repository. This only affects
+repository discovery, thus it has no effect if discovery was not
+done, e.g. if the user passes `--git-dir=my-dir`, discovery will be
+skipped and my-dir will be used as the repo regardless of the
+`discovery.bare` value.
 
-2. Protected config must be readable when the gitdir is not known.
-   `safe.directory` and `discovery.bare` both affect repository
-   discovery and the gitdir is not known at that point [1].
+This config is an enum of:
 
-The chosen implementation in this commit is to read protected
-configuration and cache the values in a global configset. This is
-similar to the caching behavior we get with the_repository->config.
+- "always": always allow bare repositories (this is the default)
+- "never": never allow bare repositories
 
-Introduce git_protected_config(), which reads protected configuration
-and caches them in the global configset protected_config. Then, refactor
-`uploadpack.packObjectsHook` to use git_protected_config().
+If we want to protect users from such attacks by default, neither value
+will suffice - "always" provides no protection, but "never" is
+impractical for bare repository users. A more usable default would be to
+allow only non-embedded bare repositories ([2] contains one such
+proposal), but detecting if a repository is embedded is potentially
+non-trivial, so this work is not implemented in this series.
 
-The protected configuration functions are named similarly to their
-non-protected counterparts, e.g. git_protected_config_check_init() vs
-git_config_check_init().
-
-In light of constraint 1, this implementation can still be improved
-since git_protected_config() iterates through every variable in
-protected_config, which may still be too expensive. There exist constant
-time lookup functions for non-protected configuration
-(repo_config_get_*()), but for simplicity, this commit does not
-implement similar functions for protected configuration.
-
-An alternative that avoids introducing another configset is to continue
-to read all config using git_config(), but only accept values that have
-the correct config scope [2]. This technically fulfills constraint 2,
-because git_config() simply ignores the local and worktree config when
-the gitdir is not known. However, this would read incomplete config into
-the_repository->config, which would need to be reset when the gitdir is
-known and git_config() needs to read the local and worktree config.
-Resetting the_repository->config might be reasonable while we only have
-these 'protected configuration only' variables, but it's not clear
-whether this extends well to future variables.
-
-[1] In this case, we do have a candidate gitdir though, so with a little
-refactoring, it might be possible to provide a gitdir.
-[2] This is how `uploadpack.packObjectsHook` was implemented prior to
-this commit.
+[1]: https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com
+[2]: https://lore.kernel.org/git/5b969c5e-e802-c447-ad25-6acc0b784582@github.com
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- config.c                     | 51 ++++++++++++++++++++++++++++++++++++
- config.h                     | 17 ++++++++++++
- t/t5544-pack-objects-hook.sh |  7 ++++-
- upload-pack.c                | 27 ++++++++++++-------
- 4 files changed, 91 insertions(+), 11 deletions(-)
+ Documentation/config.txt           |  2 +
+ Documentation/config/discovery.txt | 23 ++++++++++
+ setup.c                            | 57 ++++++++++++++++++++++++-
+ t/t0035-discovery-bare.sh          | 68 ++++++++++++++++++++++++++++++
+ 4 files changed, 149 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/config/discovery.txt
+ create mode 100755 t/t0035-discovery-bare.sh
 
-diff --git a/config.c b/config.c
-index 9b0e9c93285..29e62f5d0ed 100644
---- a/config.c
-+++ b/config.c
-@@ -81,6 +81,18 @@ static enum config_scope current_parsing_scope;
- static int pack_compression_seen;
- static int zlib_compression_seen;
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e284b042f22..9a5e1329772 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -409,6 +409,8 @@ include::config/diff.txt[]
  
-+/*
-+ * Config that comes from trusted sources, namely:
-+ * - system config files (e.g. /etc/gitconfig)
-+ * - global config files (e.g. $HOME/.gitconfig,
-+ *   $XDG_CONFIG_HOME/git)
-+ * - the command line.
-+ *
-+ * This is declared here for code cleanliness, but unlike the other
-+ * static variables, this does not hold config parser state.
-+ */
-+static struct config_set protected_config;
+ include::config/difftool.txt[]
+ 
++include::config/discovery.txt[]
 +
- static int config_file_fgetc(struct config_source *conf)
- {
- 	return getc_unlocked(conf->u.file);
-@@ -2378,6 +2390,11 @@ int git_configset_add_file(struct config_set *cs, const char *filename)
- 	return git_config_from_file(config_set_callback, filename, cs);
+ include::config/extensions.txt[]
+ 
+ include::config/fastimport.txt[]
+diff --git a/Documentation/config/discovery.txt b/Documentation/config/discovery.txt
+new file mode 100644
+index 00000000000..bbcf89bb0b5
+--- /dev/null
++++ b/Documentation/config/discovery.txt
+@@ -0,0 +1,23 @@
++discovery.bare::
++	Specifies whether Git will work with a bare repository that it
++	found during repository discovery. If the repository is
++	specified directly via the --git-dir command-line option or the
++	GIT_DIR environment variable (see linkgit:git[1]), Git will
++	always use the specified repository, regardless of this value.
+++
++This config setting is only respected in protected configuration (see
++<<SCOPES>>). This prevents the untrusted repository from tampering with
++this value.
+++
++The currently supported values are:
+++
++* `always`: Git always works with bare repositories
++* `never`: Git never works with bare repositories
+++
++This defaults to `always`, but this default may change in the future.
+++
++If you do not use bare repositories in your workflow, then it may be
++beneficial to set `discovery.bare` to `never` in your global config.
++This will protect you from attacks that involve cloning a repository
++that contains a bare repository and running a Git command within that
++directory.
+diff --git a/setup.c b/setup.c
+index c8e3c32814d..16938fd5a24 100644
+--- a/setup.c
++++ b/setup.c
+@@ -10,6 +10,10 @@
+ static int inside_git_dir = -1;
+ static int inside_work_tree = -1;
+ static int work_tree_config_is_bogus;
++enum discovery_bare_allowed {
++	DISCOVERY_BARE_NEVER = 0,
++	DISCOVERY_BARE_ALWAYS,
++};
+ 
+ static struct startup_info the_startup_info;
+ struct startup_info *startup_info = &the_startup_info;
+@@ -1142,6 +1146,46 @@ static int ensure_valid_ownership(const char *path)
+ 	return data.is_safe;
  }
  
-+int git_configset_add_parameters(struct config_set *cs)
++static int discovery_bare_cb(const char *key, const char *value, void *d)
 +{
-+	return git_config_from_parameters(config_set_callback, cs);
++	enum discovery_bare_allowed *discovery_bare_allowed = d;
++
++	if (strcmp(key, "discovery.bare"))
++		return 0;
++
++	if (!strcmp(value, "never")) {
++		*discovery_bare_allowed = DISCOVERY_BARE_NEVER;
++		return 0;
++	}
++	if (!strcmp(value, "always")) {
++		*discovery_bare_allowed = DISCOVERY_BARE_ALWAYS;
++		return 0;
++	}
++	return -1;
 +}
 +
- int git_configset_get_value(struct config_set *cs, const char *key, const char **value)
- {
- 	const struct string_list *values = NULL;
-@@ -2619,6 +2636,40 @@ int repo_config_get_pathname(struct repository *repo,
- 	return ret;
- }
- 
-+/* Read values into protected_config. */
-+static void read_protected_config(void)
++static enum discovery_bare_allowed get_discovery_bare(void)
 +{
-+	char *xdg_config = NULL, *user_config = NULL, *system_config = NULL;
-+
-+	git_configset_init(&protected_config);
-+
-+	system_config = git_system_config();
-+	git_global_config(&user_config, &xdg_config);
-+
-+	git_configset_add_file(&protected_config, system_config);
-+	git_configset_add_file(&protected_config, xdg_config);
-+	git_configset_add_file(&protected_config, user_config);
-+	git_configset_add_parameters(&protected_config);
-+
-+	free(system_config);
-+	free(xdg_config);
-+	free(user_config);
++	enum discovery_bare_allowed result = DISCOVERY_BARE_ALWAYS;
++	git_protected_config(discovery_bare_cb, &result);
++	return result;
 +}
 +
-+/* Ensure that protected_config has been initialized. */
-+static void git_protected_config_check_init(void)
++static const char *discovery_bare_allowed_to_string(
++	enum discovery_bare_allowed discovery_bare_allowed)
 +{
-+	if (protected_config.hash_initialized)
-+		return;
-+	read_protected_config();
++	switch (discovery_bare_allowed) {
++	case DISCOVERY_BARE_NEVER:
++		return "never";
++	case DISCOVERY_BARE_ALWAYS:
++		return "always";
++	default:
++		BUG("invalid discovery_bare_allowed %d",
++		    discovery_bare_allowed);
++	}
++	return NULL;
 +}
 +
-+void git_protected_config(config_fn_t fn, void *data)
-+{
-+	git_protected_config_check_init();
-+	configset_iter(&protected_config, fn, data);
+ enum discovery_result {
+ 	GIT_DIR_NONE = 0,
+ 	GIT_DIR_EXPLICIT,
+@@ -1151,7 +1195,8 @@ enum discovery_result {
+ 	GIT_DIR_HIT_CEILING = -1,
+ 	GIT_DIR_HIT_MOUNT_POINT = -2,
+ 	GIT_DIR_INVALID_GITFILE = -3,
+-	GIT_DIR_INVALID_OWNERSHIP = -4
++	GIT_DIR_INVALID_OWNERSHIP = -4,
++	GIT_DIR_DISALLOWED_BARE = -5,
+ };
+ 
+ /*
+@@ -1248,6 +1293,8 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 		}
+ 
+ 		if (is_git_directory(dir->buf)) {
++			if (!get_discovery_bare())
++				return GIT_DIR_DISALLOWED_BARE;
+ 			if (!ensure_valid_ownership(dir->buf))
+ 				return GIT_DIR_INVALID_OWNERSHIP;
+ 			strbuf_addstr(gitdir, ".");
+@@ -1394,6 +1441,14 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		}
+ 		*nongit_ok = 1;
+ 		break;
++	case GIT_DIR_DISALLOWED_BARE:
++		if (!nongit_ok) {
++			die(_("cannot use bare repository '%s' (discovery.bare is '%s')"),
++			    dir.buf,
++			    discovery_bare_allowed_to_string(get_discovery_bare()));
++		}
++		*nongit_ok = 1;
++		break;
+ 	case GIT_DIR_NONE:
+ 		/*
+ 		 * As a safeguard against setup_git_directory_gently_1 returning
+diff --git a/t/t0035-discovery-bare.sh b/t/t0035-discovery-bare.sh
+new file mode 100755
+index 00000000000..0b345d361e6
+--- /dev/null
++++ b/t/t0035-discovery-bare.sh
+@@ -0,0 +1,68 @@
++#!/bin/sh
++
++test_description='verify discovery.bare checks'
++
++. ./test-lib.sh
++
++pwd="$(pwd)"
++
++expect_accepted () {
++	git "$@" rev-parse --git-dir
 +}
 +
- /* Functions used historically to read configuration from 'the_repository' */
- void git_config(config_fn_t fn, void *data)
- {
-diff --git a/config.h b/config.h
-index 7654f61c634..e3ff1fcf683 100644
---- a/config.h
-+++ b/config.h
-@@ -446,6 +446,15 @@ void git_configset_init(struct config_set *cs);
-  */
- int git_configset_add_file(struct config_set *cs, const char *filename);
- 
-+/**
-+ * Parses command line options and environment variables, and adds the
-+ * variable-value pairs to the `config_set`. Returns 0 on success, or -1
-+ * if there is an error in parsing. The caller decides whether to free
-+ * the incomplete configset or continue using it when the function
-+ * returns -1.
-+ */
-+int git_configset_add_parameters(struct config_set *cs);
-+
- /**
-  * Finds and returns the value list, sorted in order of increasing priority
-  * for the configuration variable `key` and config set `cs`. When the
-@@ -505,6 +514,14 @@ int repo_config_get_maybe_bool(struct repository *repo,
- int repo_config_get_pathname(struct repository *repo,
- 			     const char *key, const char **dest);
- 
-+/*
-+ * Functions for reading protected config. By definition, protected
-+ * config ignores repository config, so it is unnecessary to read
-+ * protected config from any `struct repository` other than
-+ * the_repository.
-+ */
-+void git_protected_config(config_fn_t fn, void *data);
-+
- /**
-  * Querying For Specific Variables
-  * -------------------------------
-diff --git a/t/t5544-pack-objects-hook.sh b/t/t5544-pack-objects-hook.sh
-index dd5f44d986f..54f54f8d2eb 100755
---- a/t/t5544-pack-objects-hook.sh
-+++ b/t/t5544-pack-objects-hook.sh
-@@ -56,7 +56,12 @@ test_expect_success 'hook does not run from repo config' '
- 	! grep "hook running" stderr &&
- 	test_path_is_missing .git/hook.args &&
- 	test_path_is_missing .git/hook.stdin &&
--	test_path_is_missing .git/hook.stdout
-+	test_path_is_missing .git/hook.stdout &&
-+
-+	# check that global config is used instead
-+	test_config_global uploadpack.packObjectsHook ./hook &&
-+	git clone --no-local . dst2.git 2>stderr &&
-+	grep "hook running" stderr
- '
- 
- test_expect_success 'hook works with partial clone' '
-diff --git a/upload-pack.c b/upload-pack.c
-index 3a851b36066..09f48317b02 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1321,18 +1321,27 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
- 		data->advertise_sid = git_config_bool(var, value);
- 	}
- 
--	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
--	    current_config_scope() != CONFIG_SCOPE_WORKTREE) {
--		if (!strcmp("uploadpack.packobjectshook", var))
--			return git_config_string(&data->pack_objects_hook, var, value);
--	}
--
- 	if (parse_object_filter_config(var, value, data) < 0)
- 		return -1;
- 
- 	return parse_hide_refs_config(var, value, "uploadpack");
- }
- 
-+static int upload_pack_protected_config(const char *var, const char *value, void *cb_data)
-+{
-+	struct upload_pack_data *data = cb_data;
-+
-+	if (!strcmp("uploadpack.packobjectshook", var))
-+		return git_config_string(&data->pack_objects_hook, var, value);
-+	return 0;
++expect_rejected () {
++	test_must_fail git "$@" rev-parse --git-dir 2>err &&
++	grep "discovery.bare" err
 +}
 +
-+static void get_upload_pack_config(struct upload_pack_data *data)
-+{
-+	git_config(upload_pack_config, data);
-+	git_protected_config(upload_pack_protected_config, data);
-+}
++test_expect_success 'setup bare repo in worktree' '
++	git init outer-repo &&
++	git init --bare outer-repo/bare-repo
++'
 +
- void upload_pack(const int advertise_refs, const int stateless_rpc,
- 		 const int timeout)
- {
-@@ -1340,8 +1349,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
- 	struct upload_pack_data data;
- 
- 	upload_pack_data_init(&data);
--
--	git_config(upload_pack_config, &data);
-+	get_upload_pack_config(&data);
- 
- 	data.stateless_rpc = stateless_rpc;
- 	data.timeout = timeout;
-@@ -1695,8 +1703,7 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
- 
- 	upload_pack_data_init(&data);
- 	data.use_sideband = LARGE_PACKET_MAX;
--
--	git_config(upload_pack_config, &data);
-+	get_upload_pack_config(&data);
- 
- 	while (state != FETCH_DONE) {
- 		switch (state) {
++test_expect_success 'discovery.bare unset' '
++	(
++		cd outer-repo/bare-repo &&
++		expect_accepted
++	)
++'
++
++test_expect_success 'discovery.bare=always' '
++	git config --global discovery.bare always &&
++	(
++		cd outer-repo/bare-repo &&
++		expect_accepted
++	)
++'
++
++test_expect_success 'discovery.bare=never' '
++	git config --global discovery.bare never &&
++	(
++		cd outer-repo/bare-repo &&
++		expect_rejected
++	)
++'
++
++test_expect_success 'discovery.bare in the repository' '
++	(
++		cd outer-repo/bare-repo &&
++		# Temporarily set discovery.bare=always, otherwise git
++		# config fails with "fatal: not in a git directory"
++		# (like safe.directory)
++		git config --global discovery.bare always &&
++		git config discovery.bare always &&
++		git config --global discovery.bare never &&
++		expect_rejected
++	)
++'
++
++test_expect_success 'discovery.bare on the command line' '
++	git config --global discovery.bare never &&
++	(
++		cd outer-repo/bare-repo &&
++		expect_accepted -c discovery.bare=always &&
++		expect_rejected -c discovery.bare=
++	)
++'
++
++test_done
 -- 
 gitgitgadget
-
