@@ -2,135 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D541BC43334
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 539ADC43334
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 19:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237240AbiF0Sxu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 14:53:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45148 "EHLO
+        id S239744AbiF0TWB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 15:22:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230122AbiF0Sxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 14:53:47 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ED031091
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:53:47 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id e2so14399531edv.3
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:53:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=CBHrRbjUZsMBmVeoHA+J20/esBeBJUJiCupSKI10bJs=;
-        b=l4o/aWTsr4fQjzHmqNiHafeJNCZuY5CY3CubFZnxNlNGCO9s0dqGolif7pBUNJBT/n
-         RnIbNLJzUBfrk0WJdNS6Drl5xzDpXlTv0DlKzqUAYH3cuq6m0GmYv7vi2Y80Sb9c6Zia
-         d7LFmIc1QCU2eNFSIqoFI9cpBYzl4uPjZtEi0+zipVaxNsGbW5SYI8+ktvrQfewm3w+a
-         CPj/qhgrSWUMeYtsKCeMZ+Bm1LYKIh6EyVXpjxTYdQiR0dEJm2qIwU6MKBoNrTPJu5am
-         1Y0wEl1IEq5g/2Z5XQ3OlozN+khzus8sLtXRITx7CZTOtEq+Q9wOUjHqSTZlIny6Xfh+
-         7Wxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=CBHrRbjUZsMBmVeoHA+J20/esBeBJUJiCupSKI10bJs=;
-        b=42ujfvEhTOK8DBOCPSjtuxjXjdKLttRPHWfgKftAQIfGOr2v/O4QVKuLakL4U6BvGA
-         AuWhlxH6a9K8hg9rDXmB5ksJVms6sfvvT2aX0pUndpw7zpOt1urgdIMcljw7TY4VrgOe
-         +0eDfqGLnZilZbOokidntR9+m7yAXoRvSAjVdl5+sjaH4jqn9HBc7Tz0urV82Tig7WZF
-         bYiVSDICZ2TtSE7rejFfs1bvBsvI4WxBJ3ch7oglPzab3uk/cSYano0M19bCV2O9OIRw
-         6ORtco3CgJihmBQF66xrDtUAsxAl8NzFFi4vbltZxfT8JrS/nGNTqp5YLNGFy0eUd50o
-         6ceA==
-X-Gm-Message-State: AJIora85y3WvWBZ3lpqLH9MTXypXQLpuUVvrUR3TzLPpvjvaUaTceCBC
-        KLKO+3oTM0lalxL3FIn4So4Wc92avZs=
-X-Google-Smtp-Source: AGRyM1td9npjob4NlTQkTkVxSIkF5Yi5zoD11i5miaU0LruaFmc61L0TeTytWzCWChzxE3hZKo6vvQ==
-X-Received: by 2002:a05:6402:190d:b0:435:9683:bffa with SMTP id e13-20020a056402190d00b004359683bffamr18893719edz.309.1656356025712;
-        Mon, 27 Jun 2022 11:53:45 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id p15-20020a05640243cf00b0042a2d9af0f8sm7858534edc.79.2022.06.27.11.53.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 11:53:45 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o5trk-001ctu-IW;
-        Mon, 27 Jun 2022 20:53:44 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ab/* topics (was: What's cooking in git.git (Jun 2022, #08; Mon, 27))
-Date:   Mon, 27 Jun 2022 20:51:29 +0200
-References: <xmqqsfnqnezx.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqsfnqnezx.fsf@gitster.g>
-Message-ID: <220627.86r13agcp3.gmgdl@evledraar.gmail.com>
+        with ESMTP id S235186AbiF0TWA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 15:22:00 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B26B4A3
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 12:21:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1656357717;
+        bh=5amejZW9s3ktSu3AENDClCsPNhjH2yWzm0Qahqc1Wl0=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=bJywAgOhp1QDVmwcXzzm0THjWXzJ4Slhw6qd1atAe/CHk9mdpHnvXkv9ej0n6VhjW
+         WErzJkriMYtzBzX7GC1tqw5xjXuD1TaUeoSN+KMRYFSsyS2TJPUxLVtHFd9HjV5e4j
+         V8kHKSAcaOgc+dbmXCG34Ght81H2RoEypWPRlmbQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az48-37.y11my21s2nfuzmiq0sccgy5und.cx.internal.cloudapp.net
+ ([20.96.125.252]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MtwYu-1nnQaG3CmK-00uKiv; Mon, 27 Jun 2022 21:21:57 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.37.0
+Date:   Mon, 27 Jun 2022 19:21:54 +0000
+Message-Id: <20220627192154.4051-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.36.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Fcc:    Sent
+X-Provags-ID: V03:K1:6z2i9O2mUqscLt+Bn972pQOFvoRDfraYcZ38by2MXBwyonw1AZo
+ 3zgFAKTrttA32FXYL9cg+/cksoVVP8p4hescGQGvLFtvnhGjXtl4UgR2Qsla1I6pY+zeTGh
+ l0t65r6FlzmjNkLiwNSnnOTrR+alw3+Nb2yEhfSsD96r4EpQIVWq48WJo2CmS5lHyk27ruM
+ lbsadkUk4YsJK0FzmhCDA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Vyb9n5magnw=:KjYMM3S2OQKzC27f8OYtDd
+ 86lKBy3lJ6E596TfPGoXZ1PLB/QhmCpfFpmxmKWXhRhc+ob+OYGU1rdOL7tb+tMa8AWSnky9B
+ 2DEQFwOBbIt4FKkIMrPkseZjMCR0UAI828H8Re2xHVdq5Z9BHjdcYL/QNnZ+0Fab+q9MjJvPI
+ a5DTVGunKqs319YPcRhloZTgVR128HEO9LiMmFMNMydnNNsjXmqjjYcg8Mn/Dm26dM2c6z4RC
+ jfb2jRA0gA4xUyXMZDHL5RXsNs1tJpqxQIMHyi+c5JJjj5q+HLdbvCS9sikx3GtNCbzfkU4OR
+ K3HaQbpIW1qEsoAKC4WsVlhGPlglP1D9/tBf3x6vgm5w3wPCQZOUT5C/5bHGD+Slb24JgZY9p
+ 8Ff/HUw2uZrV6YNw/FtAoZr8OMeV2qgTqyKFDfF8PadFBgnVURYlaYQO/zsp/1tAnPhaRWnPL
+ YDGTly7TxhqqFzoRGuKC7sVBCBg/oIC/RhVvQ542MdKCJJhhhiNjV4o+cr7eHCWN0+/9aHo+4
+ MPMxYaVwyT7LjKPW3RNlwkFNuTzvcEhAeGZMEAc9F4gMJ1hvDn/Vh75w7+/80Yt1wJOIKeHM6
+ DtQ/RdZs8IBIjjmwQ2myeijK7HneLaBMdkSghcI7Pj3riko4bNeLqUw1YD2DDZi37AO+fUwEc
+ e14jqyUoHT23gGPntKpgEWob123SNuxyeQTMZ28hn2owpwqoNzns7XYLfC99vArYOHw8YTJFw
+ jHJAe5Zidu+TrUjoe9QaEXdweh3ry5z4Fviu/yQmGY+3dMgTXxYDCTg+VNRYuZ6uaaAl/cZIX
+ 55q64adnF5Hsq11ai7qsrD/vRdWmbNzzuW772EXgUAuReCFsdKxN7bBmawsyVL7ndYx1zisgg
+ ke9KyWTDAToACHkYg8MP5wKFThiiklQsDkxiNv8kpoEEb+lkcIaiuW3Zc9ojOa9XBzGKDx2yG
+ 01s/TBDg9Ex/MPOk0KFKvp5DxNpLPctjdpLopb9hUCloKk9LxZpH6yZEeGpVUusDVCR8pztsg
+ UrbYKlY8vcHcHKgBd5ahRkQw0tTHny/wXSsh0gRMuAvTiI3Vi8jx+hOugjZSHCd+tqtl7gdDR
+ UqQ4dK/3gRHelSjxYUZRNw9D0ayAcTHSVI8Ki91COivxYp7R0Y0qko5zQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Dear Git users,
 
-On Mon, Jun 27 2022, Junio C Hamano wrote:
+I hereby announce that Git for Windows 2.37.0 is available from:
 
-> * ab/squelch-empty-fsync-traces (2022-06-23) 1 commit
->  - trace2: don't include "fsync" events in all trace2 logs
->
->  Omit fsync-related trace2 entries when their values are all zero.
->
->  Expecting a reroll.
->  cf. <xmqqh74byy19.fsf@gitster.g>
->  source: <patch-1.1-df87e515efd-20220623T154943Z-avarab@gmail.com>
+    https://gitforwindows.org/
 
-Will re-roll.
+Changes since Git for Windows v2.36.1 (May 9th 2022)
 
-> * ab/test-quoting-fix (2022-06-21) 3 commits
->  - config tests: fix harmless but broken "rm -r" cleanup
->  - test-lib.sh: fix prepend_var() quoting issue
->  - tests: add missing double quotes to included library paths
->
->  Fixes for tests when the source directory has unusual characters in
->  its path, e.g. whitespaces, double-quotes, etc.
->
->  Expecting a reroll.
->  source: <cover-0.3-00000000000-20220621T221928Z-avarab@gmail.com>
+New Features
 
-Ditto.
+  * Comes with Git v2.37.0.
+  * Many anti-malware products seem to have problems with our MSYS2
+    runtime, leading to problems running e.g. git subtree. We added a
+    workaround that hopefully helps in most of these scenarios.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.3.5.
+  * Comes with PCRE2 v10.40.
+  * Comes with Git LFS v3.2.0.
+  * Comes with GNU TLS v3.7.6.
+  * SSH's CBC ciphers, which were re-enabled in 2017 to better support
+    Azure Repos have again been disabled by default because Azure Repos
+    does not require them any longer.
+  * Comes with OpenSSL v1.1.1p.
+  * Comes with Git Credential Manager Core v2.0.779.
+  * Comes with cURL v7.84.0.
 
-> * ab/submodule-cleanup (2022-06-15) 12 commits
->  - git-sh-setup.sh: remove "say" function, change last users
->  - git-submodule.sh: use "$quiet", not "$GIT_QUIET"
->  - submodule--helper: eliminate internal "--update" option
->  - submodule--helper: understand --checkout, --merge and --rebase synonyms
->  - submodule--helper: report "submodule" as our name in "-h" output
->  - submodule--helper: rename "absorb-git-dirs" to "absorbgitdirs"
->  - submodule update: remove "-v" option
->  - submodule--helper: have --require-init imply --init
->  - git-submodule.sh: remove unused top-level "--branch" argument
->  - git-submodule.sh: make "$cached" variable a boolean
->  - git-submodule.sh: remove unused $prefix var and --super-prefix
->  - git-submodule.sh: remove unused sanitize_submodule_env()
->
->  Further preparation to turn git-submodule.sh into a builtin.
->
->  Will merge to 'next'?
->  source: <cover-v2-00.12-00000000000-20220613T220150Z-avarab@gmail.com>
+Bug Fixes
 
-I have a locally queued re-roll of this addressing Glen's comments. I
-don't think there's anything broken in this as-is, but hopefully
-clarifying the --super-prefix situation a bit more will help.
+  * The Git for Windows-only --show-ignored-directory option of git
+    status, which was deprecated a long time ago, was finally removed.
+  * A crash when running Git for Windows in Wine was fixed.
+  * A bug in the interaction between FSCache and parallel checkout was
+    fixed.
+  * Cloning to network shares failed on some network file systems,
+    which was fixed.
+  * When Git indicates an unsafe directory due to the file system (e.g.
+    FAT32) being unable to record ownership, Git now gives better hints
+    .
 
-> * ab/test-without-templates (2022-06-06) 7 commits
->  - tests: don't assume a .git/info for .git/info/sparse-checkout
->  - tests: don't assume a .git/info for .git/info/exclude
->  - tests: don't assume a .git/info for .git/info/refs
->  - tests: don't assume a .git/info for .git/info/attributes
->  - tests: don't assume a .git/info for .git/info/grafts
->  - tests: don't depend on template-created .git/branches
->  - t0008: don't rely on default ".git/info/exclude"
->
->  Tweak tests so that they still work when the "git init" template
->  did not create .git/info directory.
->
->  Will merge to 'next'?
->  source: <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
+Git-2.37.0-64-bit.exe | f234cbcb7bc123b8219bc1692b1a44acc0fd805b1c6fccacd1e28d4672499ef8
+Git-2.37.0-32-bit.exe | 558c76cb118b6392f4a48d957e1062031a019fd80788d8db71c5702173a8f2f5
+PortableGit-2.37.0-64-bit.7z.exe | 96808564283669e0129310c14f8ad6ffb55498d3381420bd22200a62585ab2f4
+PortableGit-2.37.0-32-bit.7z.exe | 45efb4a2c9c3fd11ca7580b0d8da469474c2a6ce1c48ff8a7512541923f0cbdb
+MinGit-2.37.0-64-bit.zip | ed3689a5f9b3a6af40e447b30088864209128ddf17a4696be3b90b62e8db73ef
+MinGit-2.37.0-32-bit.zip | d9b3fdef05b06e2ff9e5855df1205f99f3af079175f4b91f6eb46688e10d0b0c
+MinGit-2.37.0-busybox-64-bit.zip | 49639d7272bfe44b779a52629ab5c87923cdad920f8aeaf070b9cb8e177469b5
+MinGit-2.37.0-busybox-32-bit.zip | 83a909d0b5300dbd3cef5615b64517b46dab604fe6153e79e840f7b2d3fe13b4
+Git-2.37.0-64-bit.tar.bz2 | fee7262c91d495cf7a87be1d28d7c37a74dfdd50f526771029911347a2e97e51
+Git-2.37.0-32-bit.tar.bz2 | a955ec2964c028ba70a85a27b7d1468b2bef6154d0fc5d280e26a59fb051dc29
 
-Discussed in
-https://lore.kernel.org/git/220627.86zghygdtd.gmgdl@evledraar.gmail.com/;
-I think it's ready, but you've got some reservations.
+Ciao,
+Johannes
