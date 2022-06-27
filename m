@@ -2,179 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6F84C43334
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 17:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1DAAC43334
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 17:42:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238703AbiF0Rem (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 13:34:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45802 "EHLO
+        id S239410AbiF0Rmq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 13:42:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231809AbiF0Rel (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 13:34:41 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 359DAAE7B
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 10:34:39 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id h11-20020a17090a130b00b001eca05382e7so3872163pja.9
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 10:34:39 -0700 (PDT)
+        with ESMTP id S234914AbiF0Rmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 13:42:45 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC361276C
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 10:42:44 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id k14so8824799plh.4
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 10:42:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=TbK0NTfQyDmpaeRV4rHROLVzfaksnEF9aDtuDOLF/ng=;
-        b=lxOJ3hdwSrXCDIVfyCDZ65VUj4Kxq53BxxwAc2Fr7b3rlz6nRm2e77BBHUbc+FfWqt
-         WXgTqnZ5hZrTc4U8DkXTs9wiRjnnieIEoNDw5n3JTW3Nqggpggu48tiuWFTjk4GNr5Bx
-         ojZ82SdR6POeMmmiw4hcaUmbnl7ts3I2xp7xjgVt0T5z4G2w1Yv+bqIfgD/as+v/eO0y
-         Vy3GpeiGjrE1KMKHC/ff4L3k2XGjVl8/UPK4tpNg98VIzY1WWHPhFT3BX4KrqspYI0fi
-         8HB7Kn8X3O2W7PhKNEXVJ3xs3sTqFG3HXOGTzdxvvhCyyxVF/pb/9ZkTFQdMg1gRAvPS
-         JQJA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qdTB5aYy+h1DmlnTRLIFW5LAK76H6jqG4C8KE992E2Y=;
+        b=Bw4SO+D2dRpVy1ueaYXBRd7cnIKqM5x1TPvIo0hHBY94HVabDAcUxR+WDNiEWYn6Fo
+         jybSro2vyJbGDrKZ1BuDog4VZcfyWAKezueeYSbzbER69YDvEpBNHfut9ByRyKqtSaXw
+         fl0+ygNFHkHskm2/jgb5j9OU1SwIRZRIpLCfcTIFaINeTCaaS9nL0kd7ggMKqEJ4RLXq
+         bR03lFqY6UpNabiJCg0xg3t+D73icqbiAwM5Z8edJM2b/2U6eMTjMmZuLWHhJzH9dkC+
+         4ebGIvRO2jaWFDBAxSAHMcr4/6rdvS5zYiYNncMItW9BCNnui7vsMeGgKWOYli/DoWIE
+         ZviQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=TbK0NTfQyDmpaeRV4rHROLVzfaksnEF9aDtuDOLF/ng=;
-        b=J/Ml6tyyqcOiUe2krz2xZzLNDJui5fPrIL2LaaA+95HCt33ms5OKKXKgeHV8MILu8D
-         9fAOPu+bvi6jvINjJ00nC/Hrzl3qbIrKUbUK53lD3E3d+KJAkox+Gj/U10x8WScLkWd1
-         Xi2q1KJAeKwfpQaG9Zv0V85ER9wvI4dqEBg7tQEnhMl7JoSwyFwHJ7utURB+TzmnX1HK
-         DFZIBenZ3WYfwCPAy+6RyWD8C6iaOiHLmExsIH4VuDRXukz3gaEf9pG7IWqfwPtzchs/
-         PWPKqGVTOc9rqzJ2wm3BQG5OomJhQPmaafBO03j58lD6BOXEkA027B03ewLoqe2HngFt
-         wpNw==
-X-Gm-Message-State: AJIora8kkXxe22zEMwr1lAlqgxXS94WQEcZ1rD1vN7Nsn6WQ2leF6tiT
-        o/DKkczN3TB683G1NKqSvCSs9PdBcx4htw==
-X-Google-Smtp-Source: AGRyM1vBOijv5wy4K4KViLPrXbNpfh2Pvc4gzbYVKA79TMPte9QVYPJtSvsV0o5j8ii8c2WoyxZDUojyfRia/g==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:3147:b0:1ee:d3a3:f24f with SMTP
- id ip7-20020a17090b314700b001eed3a3f24fmr538509pjb.1.1656351278310; Mon, 27
- Jun 2022 10:34:38 -0700 (PDT)
-Date:   Mon, 27 Jun 2022 10:34:36 -0700
-In-Reply-To: <xmqqo7yjz0w4.fsf@gitster.g>
-Message-Id: <kl6lbkuehuxf.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220622220331.3734584-1-jonathantanmy@google.com>
- <kl6lr13fi9qn.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqo7yjz0w4.fsf@gitster.g>
-Subject: Re: [PATCH v4 0/5] config: introduce discovery.bare and protected config
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qdTB5aYy+h1DmlnTRLIFW5LAK76H6jqG4C8KE992E2Y=;
+        b=z6rJWMqJvfeisXV9zMriQAc6axoNSqEiBmc6p9qM33Bk6txzBI1PLl9g65vj3puwPa
+         +MdlnLaY9QMG8HXlW65BHW8osJ6roVZ+GgC5+XtAhf6TXRZsQso/PZ17MMyIDAvS8EA/
+         aY/or+uh3L+8tvfhWMwaTLdWUUdRcuv1YpZkV3kTIgnrfobwgNAc0pDIL2FVYOo3Az6y
+         kTmbi+8uvyj3rs7OTTI7kRsG/XctZLHP83mcAHOisTB/ATBBTED2iy7Mk1nBDdZzKt8B
+         yuhfnKSr2VOX/DtSzieCqnl/vCdYAqT6+d/wjhNvDHT4gRYiIvX7jB7FV9mJ6rUnaaYZ
+         Ilow==
+X-Gm-Message-State: AJIora/E3ZXxmh2RvqtURRNfmbNGO/1dA4M6Nqp7iXe0a5vsTsiwNQ5Q
+        LZ5GciaImf+zYa9A6zVtsGg=
+X-Google-Smtp-Source: AGRyM1u03r7kSeeZl2b4W8s+fAIFaQVIr1AaTCR8wi4qabYJvRWCYrjEHXlRmD7iW+1xCLOcvsQ3Rw==
+X-Received: by 2002:a17:902:bb90:b0:16b:8a74:3aad with SMTP id m16-20020a170902bb9000b0016b8a743aadmr1555492pls.47.1656351763868;
+        Mon, 27 Jun 2022 10:42:43 -0700 (PDT)
+Received: from localhost.localdomain ([202.142.80.81])
+        by smtp.gmail.com with ESMTPSA id be9-20020a056a001f0900b005251fff13dfsm7577785pfb.155.2022.06.27.10.42.40
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 27 Jun 2022 10:42:43 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH v2 3/6] pack-bitmap-write: learn pack.writeBitmapLookupTable and add tests
+Date:   Mon, 27 Jun 2022 23:12:30 +0530
+Message-Id: <20220627174230.16253-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <05edd01a-8b6f-b25d-0cd1-b1a46ca7c219@github.com>
+References: <05edd01a-8b6f-b25d-0cd1-b1a46ca7c219@github.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Derrick Stolee <derrickstolee@github.com> wrote:
 
-> Glen Choo <chooglen@google.com> writes:
+> I wonder if it makes sense to have it default to 'false' for now, but to
+> change that default after the feature has been shipped and running in
+> production for a while.
+
+I do not have any opinion. If most reviewers agree on it, I will surely
+Set it to false.
+
+> I think you should either use "Git" when talking about the software
+> generally, OR use "`git repack --write-bitmap-index` will include..."
+
+Ohh, yeah! Thanks for pointing out.
+
+> s/which/that/
 >
->> Jonathan Tan <jonathantanmy@google.com> writes:
->>
->>> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>> Glen Choo (5):
->>>>   Documentation/git-config.txt: add SCOPES section
->>>>   Documentation: define protected configuration
->>>
->>> Forgot to mention when I was sending my comments on patch 2: we should
->>> standardize on "protected config" and not use "protected configuration"
->>> anywhere.
->>
->> Makes sense.
->
-> Using a single word consistently does make sense, but why favor a
-> non-word over a proper word ;-)?
+> (I'm pretty sure that "that" is better. We're trying to restrict the set
+> of repositories we are talking about, not implying that all repositories
+> have this property.)
 
-Hm, I guess there's an argument that "config" is a term of art that
-specifically refers to things from "git config". From that lens, it's much less
-confusing to see the CONFIGURATION section in
-Documentation/git-config.txt. But the argument is a little flimsy
-because I don't think that's something we've stuck to anywhere.
+Ok.
 
-I'll use "configuration" if it's not too unwieldy.
+> These lines seem misplaced. Maybe they were meant for the previous
+> patch?
 
->> I suppose that the idea behind this is that we only parse and store each
->> config file exactly once. It's a good goal, but the whole point of the
->> configset is that we can query a single struct to figure out the value
->> of a config variable. Having multiple configsets starts to shift more of
->> the burden to the callers because they now have to query multiple
->> configsets to find their desired config value, and we already start to
->> see some of this unpleasantness in this series.
->
-> Yes, I was worried about this, too.  "parse and store exactly once"
-> may merely be a performance thing, but it still matters, even though
-> it is not worse than making duplicate callbacks to overwrite globals
-> that have been already set earlier, which will affect correctness ;-)
+I mainly used it for testing purpose. That's why I included it in
+This patch. But I got your point and will move it to the previous
+patch.
 
-Exactly.
-
->> An alternative that I'd been thinking about is to make a few changes to
->> the git_config_* + configset API to allow us to use a single configset
->> for all of our needs:
->>
->> 1. Keep track of what config we've read when reading into
->>    the_repository->config, i.e. instead of a boolean "all config has
->>    been [un]read", we can express "system and global config has been
->>    read, but not local or command config". Then, use this information to
->>    load config from sources as they become available. This will allow us
->>    to read incomplete config for trace2 and setup.c (discovery.bare and
->>    safe.directory), and only read what we need later on.
->
-> That is not a bad direction to go, but are we sure that we always
-> read in the right order (and there is one single right order) and
-> stop at the right step?
->
-> config.c::do_git_config_sequence() reads the system and then the
-> global before the local, the worktree, and the command line.  We
-> would allow the values of "protected" configuration variables to be
-> inspected by stopping after the first two and inspecting the result
-> before the local and the rest overrides them, but will we need
-> *only* that kind of partial configuration reading that stops exactly
-> there?  Even with the proposed "protected" scheme, I thought we plan
-> to honor the command line ones, so we may need to read
-> system+global+command without reading anything else to grab the
-> values only from the protected sources (ah, I like the application
-> of the adjective "protected" to the source, not variables, because
-> that is what we are really talking about---alternatively we could
-> call it "safe").  But if we later read local and worktree ones
-> lazily, unless we _insert_ them before what we read from the command
-> line, we'll break the last-one-wins property, so we need to be
-> careful.  I guess each configuration value in the configset knows
-> where it came from, so it probably is possible to insert the ones
-> you read lazily later in the right spot.
-
-Yeah, last-one-wins makes this a lot trickier. I thought that it would
-be nice to have insert-with-priority because that also eliminates some
-of the correctness concerns in this series, i.e. that ensures protected
-config has the same priority as regular config, but that's a bigger
-undertaking and I'm not certain about the performance.
-
->> 2. Add an additional argument that specifies what scopes to respect when
->>    reading config (maybe as a set of flags). This gives us extra
->>    specificity when using the git_config*() functions, so we could get
->>    rid of git_protected_config() like so:
->>
->>     /* Change enum config_scope into flags first... */
->>
->>     #define WIP_SCOPES_PROTECTED = CONFIG_SCOPE_SYSTEM & \
->>       CONFIG_SCOPE_GLOBAL & CONFIG_SCOPE_COMMAND
->>
->>     static enum discovery_bare_allowed get_discovery_bare(void)
->>     {
->>       enum discovery_bare_allowed result = DISCOVERY_BARE_ALWAYS;
->>       git_config(discovery_bare_cb, &result, WIP_SCOPES_PROTECTED);
->>       return result;
->>     }
->
-> Alternatively, we could make the callback aware of the scope for
-> each var-value it is called and have it filter, but that would be a
-> bigger surgery.
->
-> I think a new iterator git_config_in_scope(), instead of updating
-> git_config(), would make sense.  By definition, all existing
-> git_config() callers do not need the scope specifiers, and
-> "protected" may be the first one but will not be the last one that
-> needs to read from particular scopes.
-
-Makes sense. The signature of git_config() could stay the same, but we
-could refactor it to use git_config_in_scope().
+Thanks :)
