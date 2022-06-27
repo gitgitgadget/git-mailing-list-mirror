@@ -2,69 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03EF0C43334
-	for <git@archiver.kernel.org>; Sun, 26 Jun 2022 21:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5812AC43334
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 03:53:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230477AbiFZVDV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jun 2022 17:03:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58052 "EHLO
+        id S231753AbiF0Dxb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jun 2022 23:53:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbiFZVDU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Jun 2022 17:03:20 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB86210C0
-        for <git@vger.kernel.org>; Sun, 26 Jun 2022 14:03:16 -0700 (PDT)
-Received: (qmail 19257 invoked by uid 109); 26 Jun 2022 21:03:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 26 Jun 2022 21:03:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10768 invoked by uid 111); 26 Jun 2022 21:03:14 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 26 Jun 2022 17:03:14 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 26 Jun 2022 17:03:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Fernando Ramos <greenfoo@u92.eu>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.37.0-rc2
-Message-ID: <YrjJkuX6diZiF/SM@coredump.intra.peff.net>
-References: <xmqqedzg4hqj.fsf@gitster.g>
- <Yrii4Wj+c0YuQy61@zacax395.localdomain>
+        with ESMTP id S230174AbiF0Dxa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jun 2022 23:53:30 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5164F2ADD
+        for <git@vger.kernel.org>; Sun, 26 Jun 2022 20:53:30 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id i17so5181486ils.12
+        for <git@vger.kernel.org>; Sun, 26 Jun 2022 20:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0F076kjS66jQmT/jdnCM869O44Hd5+YZNKOUf9Kiil4=;
+        b=fMxDGGbortU/of2TjMCK9hstjFLzF60qzcquk9ZNr/q/UJwLiseeymI43YswJ1CBQI
+         IBXkvCWmVYb5pLwHRY/2n7ZzF0g+F3Cz0sdXf7LQ4NRYHikJfX1BXs6qE3/phaXI7Gc9
+         3gT6B9uiijCqUxQ+CYlTku9LApsCJmowu6DKjfuFFfJdY/4g0TU2VKZ1rLJfTt/VXTEL
+         OM2+4KNnYU0NsHyXwFIbT3XIxpWxgPzGdZ06S9Mgx0aMAF+w4F8f0PL6uUAyKNIz63Kv
+         jZV3II1qOf+2JVC++jvmqvYsSjhfD4QQnSV29E/tYLKu0Pwbce+w4C9KCBMRwkLKICuL
+         y9yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0F076kjS66jQmT/jdnCM869O44Hd5+YZNKOUf9Kiil4=;
+        b=JbgohMTPd84xCLW+b4OBhRYAGMRluXMAf2PQOkfoGg9kqpYnMSQ1vha1G2z2+lwJyw
+         09N998ARxSvm/U+54ZPnUgU0UzBljEHbQiWahmSc+fd89CjPk/QVji3d8duW/yOHJIZo
+         pT4GwlK6woXDfnoxexYyF0Kt/sUbX5U5q1tN83cD7oghoWhUxi3krP6NvYPz6HkCqSkI
+         vH19tUsVVy2PQqpsjVNCsrSFMIqmWkR2KrU+qemAZrJ9Vu1rPchWVVc5cTjyqQjO0ktf
+         uqUPoUKBnaBuTyKetU/qBGcdclJz4MER6LxtkiITB10HPfEyE6gITpJcfgKPo9vlKBun
+         xTnw==
+X-Gm-Message-State: AJIora/YpHdbfcVvaAggNJs4yHED+gIOjE/KzJ8oc/jnV/MUmEoIPdF7
+        /WknBIZsBQT56ez/pQyIMyFt36fpakzeX1TfiBob54ftMcE=
+X-Google-Smtp-Source: AGRyM1vSlv4+f6+jF2qUzdHJ2VgN5y1pP5K+7MR3atLD/Wi9aPiJbdC9RyQUrBeTiJpuEIa9HwmAVqOt3eaen5ZgU7M=
+X-Received: by 2002:a05:6e02:1547:b0:2da:9637:7566 with SMTP id
+ j7-20020a056e02154700b002da96377566mr1680998ilu.47.1656302009676; Sun, 26 Jun
+ 2022 20:53:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Yrii4Wj+c0YuQy61@zacax395.localdomain>
+References: <20220622115014.53754-1-haoyurenzhuxia@gmail.com> <220622.86a6a4lmdv.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220622.86a6a4lmdv.gmgdl@evledraar.gmail.com>
+From:   Xiaowen Xia <haoyurenzhuxia@gmail.com>
+Date:   Mon, 27 Jun 2022 11:53:18 +0800
+Message-ID: <CAHLXgnYeR_Mwp3A31_q-T_cWw75F1jFAKrVsvm8R04Z-VaWz3A@mail.gmail.com>
+Subject: Re: [RFC PATCH] midx.c: clean up .rev file
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        derrickstolee@github.com, dyroneteng@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 26, 2022 at 08:18:09PM +0200, Fernando Ramos wrote:
+Thanks for your attention.
 
-> On 22/06/22 12:32PM, Junio C Hamano wrote:
-> >  * "vimdiff[123]" mergetool drivers have been reimplemented with a
-> >    more generic layout mechanism.
-> 
-> Hi. Maybe because this is my first contribution to git I was strangely excited
-> and decided to create a small blog post describing how the new mechanism works.
-> [...]
-> PS: Please let me know if this type of message is not appropriate for this
-> mailing list and I will never do it again... I just thought it might be good to
-> explain the new feature in a blog post to prevent it from going unnoticied
-> considering how "hidden" the new configuration variable is. Thanks!
+> Is the rest of this API thread safe, and no longer is because of this?
+> You're doing this because...
 
-No, this is very cool. Describing your changes to the greater world is
-very welcome, and letting people here know about it is good.
+* The `gettext()` and `fputs()` which calls in `die_errno(_())` are seem
+highly unlikely async-signal-safety, this may cause problems in signal
+handlers, I should remove it.
+* This is thread-safe. The *.rev file will no longer be read/written after
+creating the signal handler by `sigchain_push_common()`.
+* On the other hand, the command: `git multi-pack-index write --bitmap` will
+create an lockfile named `multi-pack-index.lock` and the signal handler
+will not affect the execution of the same command or git-process.
 
-One thing I would suggest, though: many folks on the list use the
-presence of their email in the "to" or "cc" of a message to help
-prioritize (i.e., to see responses directly to them which may need a
-response, versus general list chatter). You can imagine that Junio
-especially gets a lot of emails. :) So for something like this that's
-more of general interest than an email to a specific person, I'd usually
-either bump them down to "cc" rather than "to" (using the list address
-for "to"), or even remove them entirely from the headers (and they may
-read it from the general list like everyone else).
+The purpose of this patch is the same as what Teng Long said, to clean up the
+files generated by the process when the process exits abnormally.
 
-Congratulations on making your first contribution to Git!
-
--Peff
+Thanks.
