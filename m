@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31055C43334
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA990C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:36:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240259AbiF0Sgw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 14:36:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35130 "EHLO
+        id S240263AbiF0Sgy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 14:36:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240200AbiF0Sg3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239604AbiF0Sg3 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 27 Jun 2022 14:36:29 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1B96186E1
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:31:26 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id v65-20020a1cac44000000b003a03c76fa38so5379463wme.5
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:31:26 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB1D186DB
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:31:24 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id s1so14247123wra.9
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=myo5tcMb8Xf5bZFQBptagcWIswi5SasbgaGUzlTnphY=;
-        b=Pkx9NGOLMMbNBxQoLbAMkNOOx5KrzEO6hqNES8aisMn9SaOMLxA5WtOArU4k/Ra5u5
-         H2cfTY0vK9uAVD2JXKzyo03Hw1ntk7U8kS8AiwwksgBSt6R+xRwHNJS4vSWSfXgfdu6+
-         Y0h3Bpf0EQgJOLTR52Yq3qpx9kfPw9K57h1qFHKk93pZAMU3JR4yg9h7rjpi/M8AOVRh
-         VLyN2qBwIRDZNYZHNojVY3i33jX5CNVA59UwyldWXfcDGhnJ1c9lmo8oLxsxMYO2NAIB
-         7+NOwYkkwWGwW2ON1wiuYo82Kce/b3NsvkGTtdCUdx99BaY7IC3yfVdGxhl5GUA1Hn7f
-         Ewsg==
+        bh=N6bHGRGDaDqRNIxEMtB8llvdLvD5v5KCgVYAs2psvhI=;
+        b=OVxKD6Dm5jfr0Tbp5Ax7x3GBsOp9UlztpP6no4qdt6bk0cCGlkyFmeSHlOo0oyz2PS
+         AMOn/H2M1yjRpe5C0jQxDgCaXxSNjug0I4Llb1JlV2Oa8r/qcSLwRQQtBQ0soYicSlpf
+         dfF5PtfCMozGAxUzOTlf7kiaLH//uqrGJkA/8Qw1HEK0nFej3M0paHebWp+4YqHhTuEN
+         mHb8h/B6qJyFM+5Y1UQVQPzmGGvfaAjmLGH8MfAX2dNB2p7pkzvKum/kwkKoA507xSsS
+         lgNDe7E1FDy2f9ZXZxE/SP9huwUWT/EoenEFiVuqQ8yds8REud3EzWO1XCOdjKTOOtX/
+         AxOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=myo5tcMb8Xf5bZFQBptagcWIswi5SasbgaGUzlTnphY=;
-        b=M7nzVq0hpMrY50DRbueKc9VwDH1XIQPlChNa6lJVeeWXwUPf9lwEBQ/lMFbLeqIuOQ
-         l48aW9G81OGUU2XCoeKh8bO5sUUu5FsRKzKswPheiTWFU3kSgi1PmzoOWyyQRTvF2Sz/
-         fVUIoL7JSpzwkUPXJcbqTaDWybGL3pzD41R/u+5SBLioKI48erlljR5RqKWljyfxkVia
-         q/Mn0GtjtV7O8qVH5bTBqDZeDCRh0/SzPdsIjrlOqDTdc0JtAW6lSKXl11NXA0DxdCmq
-         BABo60SfgtXoncsMVJ3ATFV69pzVOWLEgxKrB9wwLblmt6AnbpwluwtrA5RouRuZAEx0
-         If6Q==
-X-Gm-Message-State: AJIora/Knoyy2Kk5ZXo6JRZUsCnDlp0A304+8v9Ir3e/aRQthwBqkz2t
-        FkVBmN6pWTDMednxoHnQ/xPk4R1C9+0+RA==
-X-Google-Smtp-Source: AGRyM1vEt33lKd+ebiHpefQKMF1UFfsoKKykgkqaZMvdmeS4YUW6tAzUN4mSpBWqGcfJNSafBpdQLQ==
-X-Received: by 2002:a05:600c:34d0:b0:3a0:2c07:73ac with SMTP id d16-20020a05600c34d000b003a02c0773acmr22181346wmq.85.1656354685267;
-        Mon, 27 Jun 2022 11:31:25 -0700 (PDT)
+        bh=N6bHGRGDaDqRNIxEMtB8llvdLvD5v5KCgVYAs2psvhI=;
+        b=heBSLIxPEHk1BMzprvshoF/jRxmnf4cJjs5YeB16SZEQ5EDByr+Kzx91prtOVOUAeR
+         5PLKi0x9tCUeaUD/RZDVeteNT/QvKnphrh9favtoftDDZNCkya3i17Z6ht9CdzBWDsk7
+         oCYZjBrk2259rk8buVIMZGTyRuV0CPMztY8RHk8cMknp29KwoUp3jB/OhtCpyf/KuY2R
+         Hi+koMamgiPQGPteDHfy1kJHuYx52QM8VoWO8Hq4y99Bi19/FEdwnQ/m7fviUPFgWTWX
+         hv47HSNidS5jj3Z6rwSmIQPQj9158ZYFW2QksFInnCv8LkuWsxQCyzJURyl4F7kpkYhi
+         S5mg==
+X-Gm-Message-State: AJIora9pUpleLPjcaJSLziPsOrXt0FHsXBlTlhFdooixStJW2dp6sFgV
+        CBp/tY9JK8bLgUTpRSo2oyaqsbyzVqpdNA==
+X-Google-Smtp-Source: AGRyM1sKF+whTZhI4KHVhyfOo0YuPy/UzRShWvMrln3aOQcl3hT42vDdLR51W6ZjmZ1MPJsuHE02CQ==
+X-Received: by 2002:a05:6000:1acd:b0:21d:1079:e94 with SMTP id i13-20020a0560001acd00b0021d10790e94mr4079541wry.122.1656354682881;
+        Mon, 27 Jun 2022 11:31:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9-20020a5d6089000000b0020e5b4ebaecsm11218882wrt.4.2022.06.27.11.31.24
+        by smtp.gmail.com with ESMTPSA id h13-20020adff4cd000000b002103aebe8absm11142808wrp.93.2022.06.27.11.31.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 11:31:24 -0700 (PDT)
-Message-Id: <e85f236304b0de455713c45bbcb2248d25cd0f11.1656354677.git.gitgitgadget@gmail.com>
+        Mon, 27 Jun 2022 11:31:22 -0700 (PDT)
+Message-Id: <5571e0f76ffd531986bf6c03b99bb34d00815fc3.1656354677.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
 References: <pull.1132.v3.git.1653144546.gitgitgadget@gmail.com>
         <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jun 2022 18:31:06 +0000
-Subject: [PATCH v4 05/16] bisect--helper: really retire --bisect-next-check
+Date:   Mon, 27 Jun 2022 18:31:04 +0000
+Subject: [PATCH v4 03/16] bisect: avoid double-quoting when printing the
+ failed command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,36 +74,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In 911aba14205 (bisect--helper: retire `--bisect-next-check` subcommand,
-2021-09-13), we removed the usage string and the implementation, but not
-actually the option.
+We already quote the command via `sq_quote_argv()`, no need to enclose
+the result in an extraneous pair of single-quotes.
+
+Pointed out by Elijah Newren.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/bisect--helper.c | 3 ---
- 1 file changed, 3 deletions(-)
+ builtin/bisect--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 8cfe3926dc7..75d008d7fa8 100644
+index cc38a009bdd..2345c9f773e 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -1280,7 +1280,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		BISECT_RESET = 1,
--		BISECT_NEXT_CHECK,
- 		BISECT_TERMS,
- 		BISECT_START,
- 		BISECT_AUTOSTART,
-@@ -1296,8 +1295,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
--		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
--			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
- 		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
- 			 N_("print out the bisect terms"), BISECT_TERMS),
- 		OPT_CMDMODE(0, "bisect-start", &cmdmode,
+@@ -1223,7 +1223,7 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
+ 
+ 		if (res < 0 || 128 <= res) {
+ 			error(_("bisect run failed: exit code %d from"
+-				" '%s' is < 0 or >= 128"), res, command.buf);
++				" %s is < 0 or >= 128"), res, command.buf);
+ 			break;
+ 		}
+ 
 -- 
 gitgitgadget
 
