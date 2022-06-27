@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F6A1C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 23:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 063EFC43334
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 23:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242241AbiF0XUd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 19:20:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59044 "EHLO
+        id S242119AbiF0XUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 19:20:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241934AbiF0XUY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 19:20:24 -0400
+        with ESMTP id S242014AbiF0XU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 19:20:27 -0400
 Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53E3A24096
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 16:20:23 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id o4so11166096wrh.3
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 16:20:23 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3512124093
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 16:20:25 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id n1so15090980wrg.12
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 16:20:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5JutwRJpD/70ZgoFS+vtRHakI4NctN9EOqcsuj5G/J0=;
-        b=ONh1Kb0Jggc9UoRvP+wJxJBCtxF+mQuw0Ye/EenRzM1khfhCr9WNfgUB3qjVMPQnNZ
-         yTguxsTAav8BO5MR5Y4ZXekMS39kZ3vdxZzpvUSQS2RN4ixShPj5ZJAe3W4+pDBrNBai
-         GVpST6rkl8KnIOClu0htVemFLGk7qRAyqHknsBStJvaJRiVXO+l91Ihx9FGL6mrw6fL0
-         aiVwLOKh9n1U27wa0bafTaMWdsuDaoSkWpLUwyd7iy6yZoiX7XZtRQFIxJ/Mi9jDdBLk
-         P8BEhK+/BKUX2gBA9LZWr0CxlRkEzYkcr2ttqLKYQ9FS70XJdqHK1jAHFSWx5qlGKXzI
-         9j7w==
+        bh=Zo91zgT3j+dK4VHiPk16G+LAMPUeaUatKo//jodID5g=;
+        b=F+eRzJGMo4+ErF3giCwqKJgdSWXiy0NkOUsyKOOdHh9MmruCpZwSUHeukwZ+HGIQUT
+         niqt1ciARnLOoj800Qh86qkLjVMAZ+Krlh3elc6X5dAziNB6GV0a6aIWRmMJpiSqAOrB
+         rgpELM6Z6ov/Nloe+cvrHHbEF6WkvE3evVnVeiKIIGFbLnGvgtbyt6I1mH0wPrXtpawC
+         p0dBHwVpeSc3QjFG2BhkkQJh+h/1aGuCBMlOv8VHjh8t7GfEsnW4a8O6i5S8KNdqjCqk
+         2vUCsZ5JQr3YdUkKsJO8iABgFeF/w7JL9JdWH3scQGVUXUNf73NMDF0lizu7xqCa280d
+         d74w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5JutwRJpD/70ZgoFS+vtRHakI4NctN9EOqcsuj5G/J0=;
-        b=Uw0U6mU4sVAC8bsx7vMIpsNmvcevLj49dRoSCyhSlk3V0IrwLUGwb2f75eMB8CRoHa
-         S/36DkzWEAF19+dEJuYCxPcg/wbNTHoT6+gt2pwVOB9DQoUZK3mNfW2nEo8NiM7Low7J
-         rAWtg5syX6VRC1cLkettVImZaTtxjLDCgF+ghIxs2TXdqkrBnrcJyp46KdNc1VZgi+NC
-         0kfwlBPqFrIn6t4IJFj940IprcqL2Ep6BInAAZQpz+O9IFaFiJfHw1GbsHUVq45/a2yL
-         XeQdqOw5SRiuWEgLXB04+pFMElNKvT8swkJ0vQClrLVvsl1G6k+MduNTTSUAfUuhWY77
-         HOcg==
-X-Gm-Message-State: AJIora+cFSFSB5g7chXNsu17csxVaIzSIcWf/HoAXmuFTC6VsfQmHIW3
-        yw7sReFb1rxAht4kQhS9ssNvNQ7a3B3BAg==
-X-Google-Smtp-Source: AGRyM1tCjy+usQ8btJoPlXOOSFOQXWwkxJCnU6s1Jp5vciJ5wNKkAfEqcN4GJjfWmFKPBK3Z7Y1Ayw==
-X-Received: by 2002:adf:dece:0:b0:21b:a4b0:f7e3 with SMTP id i14-20020adfdece000000b0021ba4b0f7e3mr14891981wrn.197.1656372022493;
-        Mon, 27 Jun 2022 16:20:22 -0700 (PDT)
+        bh=Zo91zgT3j+dK4VHiPk16G+LAMPUeaUatKo//jodID5g=;
+        b=tShVbSnULKVTMUvZU/HhCnjrTnweZfbdS8RAC0OSCqo2NsVaP6AMIi1auE7eyoyBue
+         1KpAxV2KCI3isAMeJn7ljoqalA7w8I/7n3GMi0mWhRq+0ljgZAACgg5MCsAE3LMdyrWm
+         BU+fN+viEZvPZvs7WL20lTnUD+XuDsYfg2lQmgY7T1Z01T9UqQMMAVypDEXpyEm/HvBb
+         uyR2xKN2Zm/xLL6t3zR0cr7Kzs6VhXIII/F7glPbpkmxs2xyOm3riIv08MK3CLmdQ91k
+         1KWu0mFOmfWKGl8JUAWtBjcj+THhERQVarDnumrpHBitsJBDE/IZen+7NnIUnPsaKBnz
+         URTQ==
+X-Gm-Message-State: AJIora8Xn/ZRVcb6T1IQEtNvE+av9BGYu/vga1OkL1NScKzGoqv32Hrq
+        cFYVT7GAmC4Y1z0hocqMeEK6H3CvAMjy8A==
+X-Google-Smtp-Source: AGRyM1ukTvIbjP62eb2OkknbasE812NYjnBbJpHLWzQX8uzNk3l6o2XxWP9/cTtZ3EljxWPResrNhA==
+X-Received: by 2002:adf:ef11:0:b0:21b:a557:b06d with SMTP id e17-20020adfef11000000b0021ba557b06dmr14839789wro.434.1656372023522;
+        Mon, 27 Jun 2022 16:20:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2-20020adfcc82000000b0021b9662a0c7sm11653389wrj.78.2022.06.27.16.20.21
+        by smtp.gmail.com with ESMTPSA id n12-20020a5d420c000000b0021b8d1b0568sm12012604wrq.52.2022.06.27.16.20.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 27 Jun 2022 16:20:22 -0700 (PDT)
-Message-Id: <57988287fc01a8baf5c4fd7326772c80bc015f3c.1656372017.git.gitgitgadget@gmail.com>
+Message-Id: <9fa13380b02174a4ff9cbe153166689561d23535.1656372017.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
 References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jun 2022 23:20:16 +0000
-Subject: [PATCH 4/5] submodule--helper update: use --super-prefix
+Date:   Mon, 27 Jun 2022 23:20:17 +0000
+Subject: [PATCH 5/5] submodule--helper: remove display path helper
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,145 +70,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-Unlike the other subcommands, "git submodule--helper update" uses the
-"--recursive-prefix" flag instead of "--super-prefix". The two flags are
-otherwise identical (they only serve to compute the 'display path' of a
-submodule), except that there is a dedicated helper function to get the
-value of "--super-prefix".
+All invocations of do_get_submodule_displaypath() pass
+get_super_prefix() as the super_prefix arg, which is exactly the same
+as get_submodule_displaypath().
 
-This inconsistency exists because "git submodule update" used to pass
-"--recursive-prefix" between shell and C (introduced in [1]) before
-"--super-prefix" was introduced (in [2]), and for simplicity, we kept
-this name when "git submodule--helper update" was created.
-
-Remove "--recursive-prefix" and its associated code from "git
-submodule--helper update", replacing it with "--super-prefix".
-
-To use "--super-prefix", module_update is marked with
-SUPPORT_SUPER_PREFIX. Note that module_clone must also be marked with
-SUPPORT_SUPER_PREFIX, otherwise the "git submodule--helper clone"
-subprocess will fail check because "--super-prefix" is propagated via
-the environment.
-
-[1] 48308681b0 (git submodule update: have a dedicated helper for
-cloning, 2016-02-29)
-[2] 74866d7579 (git: make super-prefix option, 2016-10-07)
+Replace all calls to do_get_submodule_displaypath() with
+get_submodule_displaypath(), and since it has no more callers, remove
+it.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 30 ++++++++++--------------------
- 1 file changed, 10 insertions(+), 20 deletions(-)
+ builtin/submodule--helper.c | 26 +++++++++-----------------
+ 1 file changed, 9 insertions(+), 17 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index fa8256526e9..81ea4669aab 100644
+index 81ea4669aab..73b36f47600 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -477,22 +477,18 @@ static int starts_with_dot_dot_slash(const char *const path)
+@@ -118,10 +118,11 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
+ 	return 0;
+ }
  
- struct init_cb {
- 	const char *prefix;
--	const char *superprefix;
- 	unsigned int flags;
- };
- #define INIT_CB_INIT { 0 }
- 
- static void init_submodule(const char *path, const char *prefix,
--			   const char *superprefix, unsigned int flags)
-+			   unsigned int flags)
+-static char *do_get_submodule_displaypath(const char *path,
+-					  const char *prefix,
+-					  const char *super_prefix)
++/* the result should be freed by the caller. */
++static char *get_submodule_displaypath(const char *path, const char *prefix)
  {
- 	const struct submodule *sub;
++	const char *super_prefix = get_super_prefix();
++
+ 	if (prefix && super_prefix) {
+ 		BUG("cannot have prefix '%s' and superprefix '%s'",
+ 		    prefix, super_prefix);
+@@ -137,13 +138,6 @@ static char *do_get_submodule_displaypath(const char *path,
+ 	}
+ }
+ 
+-/* the result should be freed by the caller. */
+-static char *get_submodule_displaypath(const char *path, const char *prefix)
+-{
+-	const char *super_prefix = get_super_prefix();
+-	return do_get_submodule_displaypath(path, prefix, super_prefix);
+-}
+-
+ static char *compute_rev_name(const char *sub_path, const char* object_id)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -488,7 +482,7 @@ static void init_submodule(const char *path, const char *prefix,
  	struct strbuf sb = STRBUF_INIT;
  	char *upd = NULL, *url = NULL, *displaypath;
  
--	/* try superprefix from the environment, if it is not passed explicitly */
--	if (!superprefix)
--		superprefix = get_super_prefix();
--	displaypath = do_get_submodule_displaypath(path, prefix, superprefix);
-+	displaypath = do_get_submodule_displaypath(path, prefix, get_super_prefix());
+-	displaypath = do_get_submodule_displaypath(path, prefix, get_super_prefix());
++	displaypath = get_submodule_displaypath(path, prefix);
  
  	sub = submodule_from_path(the_repository, null_oid(), path);
  
-@@ -566,7 +562,7 @@ static void init_submodule(const char *path, const char *prefix,
- static void init_submodule_cb(const struct cache_entry *list_item, void *cb_data)
- {
- 	struct init_cb *info = cb_data;
--	init_submodule(list_item->name, info->prefix, info->superprefix, info->flags);
-+	init_submodule(list_item->name, info->prefix, info->flags);
- }
+@@ -1949,9 +1943,8 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	int needs_cloning = 0;
+ 	int need_free_url = 0;
  
- static int module_init(int argc, const char **argv, const char *prefix)
-@@ -1880,7 +1876,6 @@ struct submodule_update_clone {
- 
- struct update_data {
- 	const char *prefix;
--	const char *recursive_prefix;
- 	const char *displaypath;
- 	const char *update_default;
- 	struct object_id suboid;
-@@ -1956,7 +1951,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 
- 	displaypath = do_get_submodule_displaypath(ce->name,
- 						   suc->update_data->prefix,
--						   suc->update_data->recursive_prefix);
-+						   get_super_prefix());
+-	displaypath = do_get_submodule_displaypath(ce->name,
+-						   suc->update_data->prefix,
+-						   get_super_prefix());
++	displaypath =
++		get_submodule_displaypath(ce->name, suc->update_data->prefix);
  
  	if (ce_stage(ce)) {
  		strbuf_addf(out, _("Skipping unmerged submodule '%s'\n"), displaypath);
-@@ -2399,11 +2394,11 @@ static void ensure_core_worktree(const char *path)
- 
- static void update_data_to_args(struct update_data *update_data, struct strvec *args)
+@@ -2442,9 +2435,8 @@ static int update_submodule(struct update_data *update_data)
  {
--	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
--	strvec_pushf(args, "--jobs=%d", update_data->max_jobs);
- 	if (update_data->displaypath)
--		strvec_pushf(args, "--recursive-prefix=%s/",
-+		strvec_pushf(args, "--super-prefix=%s/",
- 			     update_data->displaypath);
-+	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
-+	strvec_pushf(args, "--jobs=%d", update_data->max_jobs);
- 	if (update_data->quiet)
- 		strvec_push(args, "--quiet");
- 	if (update_data->force)
-@@ -2449,7 +2444,7 @@ static int update_submodule(struct update_data *update_data)
+ 	ensure_core_worktree(update_data->sm_path);
  
- 	update_data->displaypath = do_get_submodule_displaypath(update_data->sm_path,
- 								update_data->prefix,
--								update_data->recursive_prefix);
-+								get_super_prefix());
+-	update_data->displaypath = do_get_submodule_displaypath(update_data->sm_path,
+-								update_data->prefix,
+-								get_super_prefix());
++	update_data->displaypath = get_submodule_displaypath(
++		update_data->sm_path, update_data->prefix);
  
  	determine_submodule_update_strategy(the_repository, update_data->just_cloned,
  					    update_data->sm_path, update_data->update_default,
-@@ -2573,10 +2568,6 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "prefix", &opt.prefix,
- 			   N_("path"),
- 			   N_("path into the working tree")),
--		OPT_STRING(0, "recursive-prefix", &opt.recursive_prefix,
--			   N_("path"),
--			   N_("path into the working tree, across nested "
--			      "submodule boundaries")),
- 		OPT_STRING(0, "update", &opt.update_default,
- 			   N_("string"),
- 			   N_("rebase, merge, checkout or none")),
-@@ -2655,7 +2646,6 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 			module_list_active(&list);
- 
- 		info.prefix = opt.prefix;
--		info.superprefix = opt.recursive_prefix;
- 		if (opt.quiet)
- 			info.flags |= OPT_QUIET;
- 
-@@ -3352,9 +3342,9 @@ struct cmd_struct {
- static struct cmd_struct commands[] = {
- 	{"list", module_list, 0},
- 	{"name", module_name, 0},
--	{"clone", module_clone, 0},
-+	{"clone", module_clone, SUPPORT_SUPER_PREFIX},
- 	{"add", module_add, SUPPORT_SUPER_PREFIX},
--	{"update", module_update, 0},
-+	{"update", module_update, SUPPORT_SUPER_PREFIX},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
- 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
- 	{"init", module_init, SUPPORT_SUPER_PREFIX},
 -- 
 gitgitgadget
-
