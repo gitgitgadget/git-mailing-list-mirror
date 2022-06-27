@@ -2,90 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42B42C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 20:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA89DC433EF
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 21:04:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240492AbiF0ULq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 16:11:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56952 "EHLO
+        id S240727AbiF0VEW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 17:04:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239355AbiF0ULp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 16:11:45 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 439421FCF6
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 13:11:44 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id ej4so14642970edb.7
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 13:11:44 -0700 (PDT)
+        with ESMTP id S239552AbiF0VEU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 17:04:20 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F0EDBC37
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 14:04:19 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d3-20020a170903230300b0016a4d9ded01so5872358plh.6
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 14:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=VBONBi45XIjPq+g9/SrkzL+Ugvi8PwEm4xk1jsw6FNA=;
-        b=NJ3w8SKsmD0uzcMnCsd+YK+yMpaB/fHHQDhxyT2WiXMSzvRcwnnBZ33LlrZdt5uIic
-         z1rGcirGAkRG+lhJrpUYJjRab8mGqCfL6J8P4lCMmwNYHxyJP5miVWWeOOebM8Oa+eXR
-         yW5xMFfBUdAqSPZORgD+9z+l3X6HYFwbRrY4O+NpkeEaK7xPTEo2cb7UVn6v42v5lNa1
-         8hzPWwkJD0QspqxBYnjVamZRy6GXa4S7RjqlsUTA7G2mIp6NxMsjuLWnoHWlSYzuSriq
-         p8cun9FRsE2XTTvQOdU56aBppbLaXFsSb4y2KNpRr2uCyFPB5dJOZYWFN0sjHDS2O2lh
-         i60Q==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=ixN53yLzFd0p35sxtkBekupafIN4ZAKur4eff/iuhrI=;
+        b=i5JLP6GN7UaY9XefH5QopCoGLb/MU1PAs6+FwAdlZOvPEWhPJGcQTaOcJC5DB/VkbK
+         Bj/F73c2TK+V5WZk57z6SCRkev/C0orsbA0tLV+f5HsVUkvGPuuS7hAo1uxUHFgHlSQL
+         97m63vL2iaFX+yeF70yp/WgkxXa/DWNqOYxWUhcIh1uNlMYhwG3PKO0mm6dSRYjP7tdf
+         oC4eiJHOe7jBTLkNx52tTjvfw+Qmz8uhqMUK3YbbbV/l7V8cMyUuexAeYr0+t0DqQGzF
+         Bmg0S1QSDivMzYDmWLrEvnCFgkj47fSpBF4u3uIoOqJDsV9t/VIi2bjKsi/p5q4qx5rQ
+         yQwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=VBONBi45XIjPq+g9/SrkzL+Ugvi8PwEm4xk1jsw6FNA=;
-        b=LiT3n+dEFktd44CjfNfysKTcvLoxmN6CVbMc3ebF9Azs2j5PdgPel0q1EJcDwF6kKo
-         QeOO9hBlU3Y3IWZx688F4Jzuu5AtpXbuYaENup4OOEkCEdB27SDdFEPkX8N7FnE61vBi
-         H2cWtZs7KWr6bkEzndRpz5mm5tn8ub2ryfQNkRjk8hOy7/pV6S4B18LHXN+MEvOBN+cO
-         ibTvPuSsLWv0FcikOa4Ky9yTmO5dJmM75w9jDo/Y6X92t/kHF80aNyyKTY/fqVslVAnu
-         T8uvPWi4STEt7EHI7tzEevWYlSFU46KkAjcXmTPi22AbDoCBcnQ29PDgLJoGOy8xQmpf
-         5RQA==
-X-Gm-Message-State: AJIora91cQCV9RzlvNsS67rcgyiPat/3ZYrsSHd3AYBqplWKCAPp7n1D
-        YLRm5YU+2I8ZSRBt9hUtZqHUipIly+4=
-X-Google-Smtp-Source: AGRyM1t44UOsKw50efy/h8VgmemWDU5RHTOutgUcOHn3cagj3sf6fsq9ixHIXsQhJFS/Ur3bA3cpew==
-X-Received: by 2002:a05:6402:388b:b0:42b:5f20:c616 with SMTP id fd11-20020a056402388b00b0042b5f20c616mr18529902edb.50.1656360702448;
-        Mon, 27 Jun 2022 13:11:42 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id v8-20020aa7d648000000b004377151dfbdsm4940221edr.50.2022.06.27.13.11.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 13:11:41 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o5v5A-001fYl-Uq;
-        Mon, 27 Jun 2022 22:11:40 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 11/16] bisect--helper: return only correct exit codes
- in `cmd_*()`
-Date:   Mon, 27 Jun 2022 22:09:28 +0200
-References: <pull.1132.v3.git.1653144546.gitgitgadget@gmail.com>
- <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
- <ce508583e455a1dbb7620a238edb11dae195f00d.1656354677.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <ce508583e455a1dbb7620a238edb11dae195f00d.1656354677.git.gitgitgadget@gmail.com>
-Message-ID: <220627.86ilolhnnn.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=ixN53yLzFd0p35sxtkBekupafIN4ZAKur4eff/iuhrI=;
+        b=ALNQDtWwhhENau2YvAFm18ICD1cPi8iCBZ9v03zYR5vL3vYzmjfsvrQy75+VdVPwXh
+         4bev8ntpbRMutIByqDZcTHCP2ivYSWKsBOpXgU5o6KTOaVk6rcnnVDlopWcHv+LB14yb
+         tpXOAWmux6g/A/OindA4hRzeKDEuB1tKUgnVVDlvos8gzr6b+VZI6zkmQB+Gs36ylRJI
+         ww6KOL0RZhvQObWDIH2m9MfjTDLXHJu854iRN9h9VcVqJ6Zo/NMWj0zn48fbyv1BO+AQ
+         ivPZrVth8QwcDoCzmDtyJcHMWfFXFbTurcZzNbi+Bta1edDPPBeo57lLjiBNVXeNFGDc
+         WHIA==
+X-Gm-Message-State: AJIora9Cthd/H4v2CYNy/CkCPoolX1la/4BhYRRNQeqfzMLbaf22q91+
+        jeAw8niEt7Dz3IfmxpWekDd5H6/sGB6AMw4=
+X-Google-Smtp-Source: AGRyM1thvl9QL5RSHEM7EqXhjlAf9yPq0Nthy0BgxJbuY4J58e+2lOBjlkcojTspXprdY+uNzOacZq+CCg2OARc=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a17:90b:3802:b0:1ed:2434:eb44 with SMTP
+ id mq2-20020a17090b380200b001ed2434eb44mr22999225pjb.85.1656363859047; Mon,
+ 27 Jun 2022 14:04:19 -0700 (PDT)
+Date:   Mon, 27 Jun 2022 21:04:06 +0000
+In-Reply-To: <20220627184847.1361980-1-jonathantanmy@google.com>
+Message-Id: <20220627210406.2802452-1-calvinwan@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
+Subject: Re: [PATCH 2/3] merge-ort: shuffle the computation and cleanup of
+ potential collisions
+From:   Calvin Wan <calvinwan@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Calvin Wan <calvinwan@google.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Tan <jonathantanmy@google.com> writes:
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > @@ -2314,7 +2335,8 @@ static char *check_for_directory_rename(struct merge_options *opt,
+> >  	}
+> >  
+> >  	new_path = handle_path_level_conflicts(opt, path, side_index,
+> > -					       rename_info, collisions);
+> > +					       rename_info,
+> > +					       &collisions[side_index]);
+> 
+> Is this a fix of a latent bug? handle_path_level_conflicts() is not
+> changed in this patch.
+> 
 
-On Mon, Jun 27 2022, Johannes Schindelin via GitGitGadget wrote:
+I don't think so. IIUC this is what's happening given the callstack:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Exit codes cannot be negative, but `error()` returns -1.
-
-That's good, but...
-
-> Let's just go with the common pattern and call `die()` in
-> `cmd_bisect__helper()` when incorrect arguments were detected.
-
-...the common and correct pattern on bad options is to return 129, not
-128, which using use usage_msg_opt() instead of die() here would give
-you for free. I think this should use that instead.
+detect_and_process_renames()
+  - Now defines `struct strmap collisions[3];` and computes all
+    three collisions here
+  - Passes collisions into collect_renames()
+collect_renames()
+  - Originally defined as `struct strmap collisions;` and computed
+    collisions in here
+  - Now takes collisions as an argument
+  - Passes collisions into check_for_directory_rename()
+check_for_directory_rename()
+  - Collisions isn't used in this function at all except to pass into
+    handle_path_level_conflicts
+handle_path_level_conflicts()
+  - Expecting pointer to singular collisions, not an array so side_index
+    is now required
