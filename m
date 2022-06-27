@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7199DC43334
-	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E00DAC43334
+	for <git@archiver.kernel.org>; Mon, 27 Jun 2022 18:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237487AbiF0ShL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jun 2022 14:37:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35444 "EHLO
+        id S240203AbiF0ShM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jun 2022 14:37:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239086AbiF0Sga (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jun 2022 14:36:30 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D3DE13E03
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:31:38 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 189so5493964wmz.2
-        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:31:38 -0700 (PDT)
+        with ESMTP id S239636AbiF0Sgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jun 2022 14:36:31 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2782418E05
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:31:40 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id h14-20020a1ccc0e000000b0039eff745c53so6154986wmb.5
+        for <git@vger.kernel.org>; Mon, 27 Jun 2022 11:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/lcBQOqeRg76SKYk+xD2etkKLEfQ0I5qEgFQ6WV8kMQ=;
-        b=E0ABHq/37zTbkCJ9P5sIm4WaP1IgHAlPmypLm0Ih5aba6d0LeS3Wz95RHKle+1Xyt4
-         64KSbfnhcJbNuPFLXArZkne/zJ+hIW6wU4Dnt1b3Ua4G3QKHc7HUN915SNT3+8qss9ud
-         eL0jJAr/D41T9Qx89SVD9ozXS/0Xaxc1MD0Mgy+RL0SE47d+bcJwxisl+fE7HdlBcI/I
-         5amjHR/e/P2nLYa8WqBUeHCEpE6lH2tgVe7mWc3d3C2B2lr49VjU9EBIrSxhSkOZ8BXu
-         GHosTAQa/ljt0600IYRT3ZTTRhthV/2Zakw+MM/dI6uDChmcBDJTezcgYHqH38BJLpnU
-         M60g==
+        bh=2Kg7YV2cLc0sPso95VWf/nMyuinQpxkpBHDw1baPYHk=;
+        b=Rk9zvJSy5oY5EJpcsJQ83GfqUQgDtjs6K/ceAVlNZLK6CctiVcAdRA/wEO1ypxNAck
+         AW2bSZ8VTM6yz06jTQQvkRm+6Bv7+WrpbtnG3jSVDqRb/sSjrF+fbQJ38lcnF+Z2Hr2b
+         sKbP4UkYOb2f2dgHLgfXLAF/bk+8aOdXOvSWZ8gb/Zy6IQh0P22OohLfh8rLopNc4LA3
+         73X5/Si1dUj15j68qZnISlLs+q3PtKy0QdyApb4Y7tBGJSADTXe/CWBV6XPPGsOeFpcq
+         zDCF7HgG6yrP3b8fFqtOQx0CUnVm9nBE08N9dmf2g3CLk12TFOzKKn/m69gUsbJSaSdt
+         B3hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/lcBQOqeRg76SKYk+xD2etkKLEfQ0I5qEgFQ6WV8kMQ=;
-        b=m+G7sctE3X9kCVU6wQ4ySBy4IvccIOJ5VYHVl6kx7CwPMaBc1UTpd0xoYeV8P24JLQ
-         Cc3+gj/cJfXVdkG9Mz+AyyV8uZrbD/MA7Xct9R/2VXn1FE96EM96Oc6uvzOpLKi7fIzY
-         VWZSLUJTLkM1nw9YdvT0zIvkowfZmWiuhhbdzzBHgy4/XmG1+UJ54yycoARzZk0Gzh2Y
-         E9YcHfjyq376kaijA80kIGj+UGaA9luDow1uMtfkuLhwIzCoIy8gpRfLtZBbF2ZWFPPt
-         +OsDCNDp1JWL15PfNHUo+pbCfrPPvI2qPBcQ+2m3CNjZ1aVfm4vvdX6iUc+2mZFRWfbe
-         nEfQ==
-X-Gm-Message-State: AJIora+PB2T7n49VpBbDfFmVXk4oxRvpRR7YO8/TY3Dox+ZurZaCFU0P
-        jaDtl23MYrpgQxgBpHj2yW+Kxuk28fHA9Q==
-X-Google-Smtp-Source: AGRyM1uClBdPHurLPXAVVDNWW9nnTub80avxcXsFVewIch7byvEMF6+A4VQt+SCTouZWzTTxUYs+Xw==
-X-Received: by 2002:a1c:f710:0:b0:394:1960:e8a1 with SMTP id v16-20020a1cf710000000b003941960e8a1mr16944551wmh.154.1656354696339;
-        Mon, 27 Jun 2022 11:31:36 -0700 (PDT)
+        bh=2Kg7YV2cLc0sPso95VWf/nMyuinQpxkpBHDw1baPYHk=;
+        b=tUxTCGNNsTEWzHf84psjUZ/XuB65YpCCmWUouCCpb9dzrOyOkz3GwdWN+kcAzQEMOO
+         uj8FZoGPWSjTE+1FBdRLrMk9Z0kwMuh992YEUbgIDaygKvN3//M2DIidTc9wmRrm8OSe
+         y42oi3+POHLO4gr1FQ3Fn3WFbhEvE2dZgb2Q1OqN4Jsfw3VoVgIfZMQWREiNRhczdUAI
+         D5IVYIjt6ivCKydewaEHTMRoID2ZUJgHsPijUu5NkqCopktT3yFzoihPC+k2ARqHSVUz
+         hMsc5PRrddSrxbGf32RhD6FDBKQCbhgnG1g8hm3fUjDKYQkVi+wf1aLbLIyYep/zGPIj
+         Ekbg==
+X-Gm-Message-State: AJIora9AQ4Y94ZL8jld+HELQk+uUb3L/KZhk8veR+a1REFZD9ZVSQkwc
+        XDM51nQ0e199T9uz099x4khDXsQhK61dMA==
+X-Google-Smtp-Source: AGRyM1sqeSXsg2Qi5/GbEcbGutFM5UWvKBHSHLGeyvbPfozFXxNaJrAPdAy4dXMUXDfjTWOW5BxepQ==
+X-Received: by 2002:a1c:29c1:0:b0:39d:86c0:3ece with SMTP id p184-20020a1c29c1000000b0039d86c03ecemr16743595wmp.138.1656354698455;
+        Mon, 27 Jun 2022 11:31:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y12-20020a5d4acc000000b0021b9416fa13sm12715154wrs.90.2022.06.27.11.31.35
+        by smtp.gmail.com with ESMTPSA id e3-20020adfef03000000b0021bbd525b8esm9454564wro.45.2022.06.27.11.31.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 11:31:35 -0700 (PDT)
-Message-Id: <378d6d227372405326112fee03c377f1aff386fc.1656354677.git.gitgitgadget@gmail.com>
+        Mon, 27 Jun 2022 11:31:38 -0700 (PDT)
+Message-Id: <334664f23a8fa5d3b0df4a00ba9c7c96772ab93b.1656354677.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
 References: <pull.1132.v3.git.1653144546.gitgitgadget@gmail.com>
         <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jun 2022 18:31:15 +0000
-Subject: [PATCH v4 14/16] Turn `git bisect` into a full built-in
+Date:   Mon, 27 Jun 2022 18:31:17 +0000
+Subject: [PATCH v4 16/16] bisect: no longer try to clean up left-over
+ `.git/head-name` files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,131 +74,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Now that the shell script hands off to the `bisect--helper` to do
-_anything_ (except to show the help), it is but a tiny step to let the
-helper implement the actual `git bisect` command instead.
+As per the code comment, the `.git/head-name` files were cleaned up for
+backwards-compatibility: an old version of `git bisect` could have left
+them behind.
 
-This retires `git-bisect.sh`, concluding a multi-year journey that many
-hands helped with, in particular Pranit Bauna, Tanushree Tumane and
-Miriam Rubio.
+Now, just how old would such a version be? As of 0f497e75f05 (Eliminate
+confusing "won't bisect on seeked tree" failure, 2008-02-23), `git
+bisect` does not write that file anymore. Which corresponds to Git
+v1.5.4.4.
+
+Even if the likelihood is non-nil that there might still be users out
+there who use such an old version to start a bisection, but then decide
+to continue bisecting with a current Git version, it is highly
+improbable.
+
+So let's remove that code, at long last.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile                               |  3 +--
- builtin.h                              |  2 +-
- builtin/{bisect--helper.c => bisect.c} |  2 +-
- git-bisect.sh                          | 37 --------------------------
- git.c                                  |  2 +-
- 5 files changed, 4 insertions(+), 42 deletions(-)
- rename builtin/{bisect--helper.c => bisect.c} (99%)
- delete mode 100755 git-bisect.sh
+ bisect.c                    | 3 ---
+ t/t6030-bisect-porcelain.sh | 1 -
+ 2 files changed, 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 04d0fd1fe60..3462bad4f15 100644
---- a/Makefile
-+++ b/Makefile
-@@ -619,7 +619,6 @@ THIRD_PARTY_SOURCES =
- # interactive shell sessions without exporting it.
- unexport CDPATH
+diff --git a/bisect.c b/bisect.c
+index b63669cc9d7..00bd4ba581c 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -474,7 +474,6 @@ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
+-static GIT_PATH_FUNC(git_path_head_name, "head-name")
  
--SCRIPT_SH += git-bisect.sh
- SCRIPT_SH += git-difftool--helper.sh
- SCRIPT_SH += git-filter-branch.sh
- SCRIPT_SH += git-merge-octopus.sh
-@@ -1119,7 +1118,7 @@ BUILTIN_OBJS += builtin/am.o
- BUILTIN_OBJS += builtin/annotate.o
- BUILTIN_OBJS += builtin/apply.o
- BUILTIN_OBJS += builtin/archive.o
--BUILTIN_OBJS += builtin/bisect--helper.o
-+BUILTIN_OBJS += builtin/bisect.o
- BUILTIN_OBJS += builtin/blame.o
- BUILTIN_OBJS += builtin/branch.o
- BUILTIN_OBJS += builtin/bugreport.o
-diff --git a/builtin.h b/builtin.h
-index 40e9ecc8485..b9470f8ab4f 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -116,7 +116,7 @@ int cmd_am(int argc, const char **argv, const char *prefix);
- int cmd_annotate(int argc, const char **argv, const char *prefix);
- int cmd_apply(int argc, const char **argv, const char *prefix);
- int cmd_archive(int argc, const char **argv, const char *prefix);
--int cmd_bisect__helper(int argc, const char **argv, const char *prefix);
-+int cmd_bisect(int argc, const char **argv, const char *prefix);
- int cmd_blame(int argc, const char **argv, const char *prefix);
- int cmd_branch(int argc, const char **argv, const char *prefix);
- int cmd_bugreport(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/bisect--helper.c b/builtin/bisect.c
-similarity index 99%
-rename from builtin/bisect--helper.c
-rename to builtin/bisect.c
-index 7232d650905..380fef852f3 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect.c
-@@ -1301,7 +1301,7 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
- 	return res;
- }
- 
--int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
-+int cmd_bisect(int argc, const char **argv, const char *prefix)
+ static void read_bisect_paths(struct strvec *array)
  {
- 	int res = 0;
- 	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-diff --git a/git-bisect.sh b/git-bisect.sh
-deleted file mode 100755
-index 028d39cd9ce..00000000000
---- a/git-bisect.sh
-+++ /dev/null
-@@ -1,37 +0,0 @@
--#!/bin/sh
--
--USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|view|replay|log|run]'
--LONG_USAGE='git bisect help
--	print this long help message.
--git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
--		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
--	reset bisect state and start bisection.
--git bisect (bad|new) [<rev>]
--	mark <rev> a known-bad revision/
--		a revision after change in a given property.
--git bisect (good|old) [<rev>...]
--	mark <rev>... known-good revisions/
--		revisions before change in a given property.
--git bisect terms [--term-good | --term-bad]
--	show the terms used for old and new commits (default: bad, good)
--git bisect skip [(<rev>|<range>)...]
--	mark <rev>... untestable revisions.
--git bisect next
--	find next bisection to test and check it out.
--git bisect reset [<commit>]
--	finish bisection search and go back to commit.
--git bisect (visualize|view)
--	show bisect status in gitk.
--git bisect replay <logfile>
--	replay bisection log.
--git bisect log
--	show bisect log.
--git bisect run <cmd>...
--	use <cmd>... to automatically bisect.
--
--Please use "git help bisect" to get the full man page.'
--
--OPTIONS_SPEC=
--. git-sh-setup
--
--exec git bisect--helper "$@"
-diff --git a/git.c b/git.c
-index d7a7a82008b..1ad501058a8 100644
---- a/git.c
-+++ b/git.c
-@@ -492,7 +492,7 @@ static struct cmd_struct commands[] = {
- 	{ "annotate", cmd_annotate, RUN_SETUP | NO_PARSEOPT },
- 	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
- 	{ "archive", cmd_archive, RUN_SETUP_GENTLY },
--	{ "bisect--helper", cmd_bisect__helper, RUN_SETUP },
-+	{ "bisect", cmd_bisect, RUN_SETUP },
- 	{ "blame", cmd_blame, RUN_SETUP },
- 	{ "branch", cmd_branch, RUN_SETUP | DELAY_PAGER_CONFIG },
- 	{ "bugreport", cmd_bugreport, RUN_SETUP_GENTLY },
+@@ -1181,8 +1180,6 @@ int bisect_clean_state(void)
+ 	unlink_or_warn(git_path_bisect_run());
+ 	unlink_or_warn(git_path_bisect_terms());
+ 	unlink_or_warn(git_path_bisect_first_parent());
+-	/* Cleanup head-name if it got left by an old version of git-bisect */
+-	unlink_or_warn(git_path_head_name());
+ 	/*
+ 	 * Cleanup BISECT_START last to support the --no-checkout option
+ 	 * introduced in the commit 4796e823a.
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 7a76f204083..1d9cbf229e2 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -1000,7 +1000,6 @@ test_expect_success 'git bisect reset cleans bisection state properly' '
+ 	test_path_is_missing ".git/BISECT_LOG" &&
+ 	test_path_is_missing ".git/BISECT_RUN" &&
+ 	test_path_is_missing ".git/BISECT_TERMS" &&
+-	test_path_is_missing ".git/head-name" &&
+ 	test_path_is_missing ".git/BISECT_HEAD" &&
+ 	test_path_is_missing ".git/BISECT_START"
+ '
 -- 
 gitgitgadget
-
