@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97BE0C43334
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 835E0CCA480
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344764AbiF1KGg (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1344731AbiF1KGg (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 28 Jun 2022 06:06:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37810 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344741AbiF1KG2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 06:06:28 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ECF82E9E1
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:22 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id n1so16877866wrg.12
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:22 -0700 (PDT)
+        with ESMTP id S1344700AbiF1KGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 06:06:15 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13ECB2E9F1
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:14 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id i25so11391734wrc.13
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=c61ciYxPKYhdTlmclwFq+h1XrzaT0dRndfQht84ZoWU=;
-        b=A2NCKLqfalQzWvFsOfhflKp/Bf1JpRfIiP67ePYpVn/Gx9dHNIuEN7HCdSFFaDxlKr
-         vsOQBwTfWwfoTflZ52whP9IOHdX0ytaZzHJRJ/8kLxR6bzPAtyHu9urhsMKqO8Ta1dk7
-         W4xVKuw0CXLoU/PFEDK+xpg3rr14RVVf1wZeeKzoVlo3VvjoKaiRpbJF1AeZDqEUMbjL
-         JAliZI/C1dXnc3it8TJCQGDrngSrkoUz4A7qLocs7OlHph2Kr9GW2gLCTTDuOdJixTDo
-         Ra/U9iEltybFmFGKat1oMAWNpgpDqSimMibTBLn2GKPQpP4spbOLDRe1VZywccgue7FN
-         1zgA==
+        bh=sLdd2zI7oDIBBxozChwG9QxyE+C58IfsKhy73Uc9Zww=;
+        b=AR5yfeosf/2ujv7pbMIGzN9dZUoOmM3mxb9FVYVLna9Q+mAMnMPv5KsYNY7/gFGSUh
+         HivapZGJwl99sF/34/9NeCrWdBe5+XpoUG4iY4fw0Pga7J09VUslHObaTgY/qd6a79Y9
+         R+bERgeoSWsb48/QW2Ek7FdgBITJFRo2RFoIBkZym++UgA3CGWBnowroqs9HicHuBBQs
+         HtXF472yyvtfO1lfKHzpIt7N90eFQfK+F+rjRAJ0Sd8PpLu12xs85/aoi591MPYGRyCb
+         Ujn6o0RELz9Ydp8pbmFFUkwhnd22lNYgYTVQmVhfiuK5XXdyrGWPjaaX8K1HXCvRK6Eq
+         epkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=c61ciYxPKYhdTlmclwFq+h1XrzaT0dRndfQht84ZoWU=;
-        b=YEHYh66sqorGd7jpZuhtn/ZMpijz5PAaWrGBy+PweUo0OuQUIN4I1lYAW4AGcBKxA7
-         NC1C9DVYj7h9BV6fZ8yWTVj358ODu9Cl+JPbu+tZ0z5EEGKmI1Itt/M5U+H8Y4/hHD5O
-         w9J0czhemi9jKqVV2HwYA2yVMQuxMpXveEGDBVDR7+9lv+AyzBAVnr6yD43zL5RnnsdQ
-         gVVRo48LwTUCdn7ZhFug95cBlZOZSElXET3qKqXzs40DiwDQ2y47KMs8FxgHiygLVubo
-         uE4T2m1wgynbFEZdxgQmsvSkBEVA7NFzM0wvLdYhGlbe7ESJOf0dRwHopUguMu1CRYY9
-         +9BA==
-X-Gm-Message-State: AJIora8ABxi8MyQpBSwFM7RsZ83mdanb4gtU7dCw+BX7uMEoi8P/Ngxy
-        Baqs9gvq4Hv5D731Hn5b8tgspYGX77e8WA==
-X-Google-Smtp-Source: AGRyM1vNdevjf1GTfp5Roej6O2Ip8WHt0Bn/x23UdbcvwGLXbL5O0rtRgZcUhzTKP7WZmnXhN6ykCg==
-X-Received: by 2002:adf:e196:0:b0:219:f3c7:fd88 with SMTP id az22-20020adfe196000000b00219f3c7fd88mr16500311wrb.402.1656410780616;
-        Tue, 28 Jun 2022 03:06:20 -0700 (PDT)
+        bh=sLdd2zI7oDIBBxozChwG9QxyE+C58IfsKhy73Uc9Zww=;
+        b=D2wSvfU6pAUIJSOQ3uKMn/2B57PJBAD4opM5r+X9WQWaxuS+l+ZVUd12TmpImzEP4x
+         S6M6Ffb3Ww9TIwkMRFOloeXwp28KQBlBU4xwwgswsMUh+zWNwUK11n28tyqj2xPTZScr
+         ac/ISpzUo9oHtcKga2NKhMPHbq43FBkRm62kwkolhFtqTdyMEyu5I1ZtWrYi3Av88epr
+         gJmVFGZE4Vl/hh1IzVk5eSrLtehETxb1jXooeEAPLvev3Ripk0G2LgO6iVyFMkLt7wby
+         YGnliGRlWsM8yXAhptJn0yyWQwV4NgKHDHBXaFx+1Uf4mcEKRsOsfoIhSHkBkhODhD6z
+         uCiQ==
+X-Gm-Message-State: AJIora+ZuZ4tAWqJOxHLpE6UgvuzJCF/+LYCYD4TNpf/+APZmAY94MVC
+        9h03663YxgZstyl23XCCCT8U3INTK5ondw==
+X-Google-Smtp-Source: AGRyM1v2X0D8V4I+5l6P+geZvtwQxbkysvcCi6puKbe+NaYnTusARr+Q0asJG1PJpQ+E7e5z23JRmg==
+X-Received: by 2002:a05:6000:1885:b0:21b:ad25:8ae6 with SMTP id a5-20020a056000188500b0021bad258ae6mr16368620wri.183.1656410772249;
+        Tue, 28 Jun 2022 03:06:12 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e16-20020a5d4e90000000b0021b91d1ddbfsm12914430wru.21.2022.06.28.03.06.19
+        by smtp.gmail.com with ESMTPSA id e16-20020a5d4e90000000b0021b91d1ddbfsm12914430wru.21.2022.06.28.03.06.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 03:06:19 -0700 (PDT)
+        Tue, 28 Jun 2022 03:06:11 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 12/12] git-sh-setup.sh: remove "say" function, change last users
-Date:   Tue, 28 Jun 2022 12:05:34 +0200
-Message-Id: <patch-v4-12.12-f8f332f3c0a-20220628T095914Z-avarab@gmail.com>
+Subject: [PATCH v4 04/12] git-submodule.sh: remove unused top-level "--branch" argument
+Date:   Tue, 28 Jun 2022 12:05:26 +0200
+Message-Id: <patch-v4-04.12-52d97fd4c36-20220628T095914Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.880.gf07d56b18ba
 In-Reply-To: <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
 References: <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com> <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
@@ -68,115 +68,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the "say" function, with various rewrites of the remaining
-git-*.sh code to C and the preceding change to have git-submodule.sh
-stop using the GIT_QUIET variable there were only four uses in
-git-subtree.sh. Let's have it use an "arg_quiet" variable instead, and
-move the "say" function over to it.
+In 5c08dbbdf1a (git-submodule: fix subcommand parser, 2008-01-15) the
+"--branch" option was supported as an option to "git submodule"
+itself, i.e. "git submodule --branch" as a side-effect of its
+implementation.
 
-The only other use was a trivial message in git-instaweb.sh, since it
-has never supported the --quiet option (or similar) that code added in
-0b624b4ceee (instaweb: restart server if already running, 2009-11-22)
-can simply use "echo" instead.
+Then in b57e8119e6e (submodule: teach set-branch subcommand,
+2019-02-08) when the "set-branch" subcommand was added the assertion
+that we shouldn't have "--branch" anywhere except as an argument to
+"add" and "set-branch" was copy/pasted from the adjacent check for
+"--cache" added (or rather modified) in 496eeeb19b9 (git-submodule.sh:
+avoid "test <cond> -a/-o <cond>", 2014-06-10).
 
-The remaining in-tree hits from "say" are all for the sibling function
-defined in t/test-lib.sh. It's safe to remove this function since it
-has never been documented in Documentation/git-sh-setup.txt.
+But there's been a logic error in that check, which at a glance looked
+like it should be supporting:
+
+    git submodule --branch <branch> (add | set-branch) [<options>]
+
+But due to "||" in the condition (as opposed to "&&" for "--cache") if
+we have "--branch" here already we'll emit usage, even for "add" and
+"set-branch".
+
+So in addition to never having documented this form, it hasn't worked
+since b57e8119e6e was released with v2.22.0.
+
+So it's safe to remove this code. I.e. we don't want to support the
+form noted above, but only:
+
+    git submodule (add | set-branch) --branch <branch> [<options>]
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/subtree/git-subtree.sh | 15 ++++++++++++---
- git-instaweb.sh                |  2 +-
- git-sh-setup.sh                |  9 ---------
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ git-submodule.sh | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 1af1d9653e9..7562a395c24 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -50,6 +50,14 @@ m,message=    use the given message as the commit message for the merge commit
+diff --git a/git-submodule.sh b/git-submodule.sh
+index b99a00d9f84..20fc1b620fa 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -574,14 +574,6 @@ do
+ 	-q|--quiet)
+ 		GIT_QUIET=1
+ 		;;
+-	-b|--branch)
+-		case "$2" in
+-		'')
+-			usage
+-			;;
+-		esac
+-		branch="$2"; shift
+-		;;
+ 	--cached)
+ 		cached=1
+ 		;;
+@@ -609,12 +601,6 @@ then
+     fi
+ fi
  
- indent=0
- 
-+# Usage: say [MSG...]
-+say () {
-+	if test -z "$arg_quiet"
-+	then
-+		printf '%s\n' "$*"
-+	fi
-+}
-+
- # Usage: debug [MSG...]
- debug () {
- 	if test -n "$arg_debug"
-@@ -60,7 +68,7 @@ debug () {
- 
- # Usage: progress [MSG...]
- progress () {
--	if test -z "$GIT_QUIET"
-+	if test -z "$arg_quiet"
- 	then
- 		if test -z "$arg_debug"
- 		then
-@@ -146,6 +154,7 @@ main () {
- 	eval "$set_args"
- 
- 	# Begin "real" flag parsing.
-+	arg_quiet=
- 	arg_debug=
- 	arg_prefix=
- 	arg_split_branch=
-@@ -161,7 +170,7 @@ main () {
- 
- 		case "$opt" in
- 		-q)
--			GIT_QUIET=1
-+			arg_quiet=1
- 			;;
- 		-d)
- 			arg_debug=1
-@@ -252,7 +261,7 @@ main () {
- 	dir="$(dirname "$arg_prefix/.")"
- 
- 	debug "command: {$arg_command}"
--	debug "quiet: {$GIT_QUIET}"
-+	debug "quiet: {$arg_quiet}"
- 	debug "dir: {$dir}"
- 	debug "opts: {$*}"
- 	debug
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 4349566c891..c68f49454cd 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -102,7 +102,7 @@ resolve_full_httpd () {
- 
- start_httpd () {
- 	if test -f "$fqgitdir/pid"; then
--		say "Instance already running. Restarting..."
-+		echo "Instance already running. Restarting..."
- 		stop_httpd
- 	fi
- 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index ecb60d9e3cb..ce273fe0e48 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -57,15 +57,6 @@ die_with_status () {
- 	exit "$status"
- }
- 
--GIT_QUIET=
+-# "-b branch" is accepted only by "add" and "set-branch"
+-if test -n "$branch" && (test "$command" != add || test "$command" != set-branch)
+-then
+-	usage
+-fi
 -
--say () {
--	if test -z "$GIT_QUIET"
--	then
--		printf '%s\n' "$*"
--	fi
--}
--
- if test -n "$OPTIONS_SPEC"; then
- 	usage() {
- 		"$0" -h
+ # "--cached" is accepted only by "status" and "summary"
+ if test -n "$cached" && test "$command" != status && test "$command" != summary
+ then
 -- 
 2.37.0.880.gf07d56b18ba
 
