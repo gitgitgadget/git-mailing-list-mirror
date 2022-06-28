@@ -2,143 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8ADDC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 08:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01199C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 09:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343997AbiF1Ixy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 04:53:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51548 "EHLO
+        id S242888AbiF1JAL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 05:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243946AbiF1Ixu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 04:53:50 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92B7D2CE3D
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 01:53:49 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id n8so2587854eda.0
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 01:53:49 -0700 (PDT)
+        with ESMTP id S232339AbiF1JAK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 05:00:10 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 515D7EB3
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:00:09 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id x138so8743825pfc.3
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:00:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=j9ZkHFXlNzh+u8yXW+/eM2FDW+qLC8cD2QRsQmiBsm0=;
-        b=ZpfIEwJmvM+ClmR7ShHYMn3oGQPSy+9vGln24gafZJJdhL/K7BekkHQ0kNxq1hfx45
-         zj03wAIOJiveffRmoqlCLuKi8AMSosIUIaLm5T6Cpnknv1yOCzWiQLkbML3Sdvic5J37
-         vDdkAKw3T4s0MIf+WSK1AkPQe18j5eL22+AuDDU/Jlxj0AVgGz2tid5DLpuhyvzUKeBv
-         hPZp08XHgiCCTkAJqgn/0st8egAxlP65R0chTvi9BgH5Q692xjGn8bT7ySh2Hrpd2Mvi
-         jpckDS1P7fCvVoLdtfLMVM3majDMQtrYVhddW6lmOn0DNIIqT4MN5eblul56swEmsSOl
-         Qsng==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vMF2z65KR6aMSYEGRkpTx8kVnFq9pw6R/JlbPmmlMAI=;
+        b=Jm9XpDz9T+l3w9zaEsD+n63ADZD6vNoc5yukgfrUy2Hxw8+JWf07TgXPfNRW5WtIsZ
+         kmZ+kgwxSbj8qsRws/oc4gDTJj24duM6S2ejQfu/DGSPavs1AbNy46xSGrToSPlnhGXV
+         kERsQLVmV9SBX8I+kD8VtkVn4jDXt7AQpRzvzahBaj6hXGQPK97Kw+C46yzDLv4+xPzx
+         qNG5X/Q60DiO0lTe9KsLjeq7ccD7KwJvoGtfzboLlxLwGeuDNLNdwvVscUAaOV666GwZ
+         I2iGri4ahJaW4tmtF38WVW+PB/YY7dLi3Y4es59lLHGRb0pH2JWxCMM6IJaJiDOXKZIB
+         hQIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=j9ZkHFXlNzh+u8yXW+/eM2FDW+qLC8cD2QRsQmiBsm0=;
-        b=O+S8UNfmnqc7as8gOLnu8QL+ykAd8PKAnznELzYJb9aabedz0K7wntO6mXsDVag8e9
-         faTjwhKsmA+EDwMIFFDxJLJ5JzG+DI0goocn5UEXQMbO713PA0ooFPGPR9Z4RejJiREf
-         YNlPAe1wL+jmZV0EIUYJnihJmYU9uagusqx6+vwDo+ZJqK3WuQo3I3EqQtDvE66OMHxo
-         KvrLGqSs/k85WeVBWGvATHshZ1VlT6Q27m7u6zYymOud4J2KC2U17R3riFzhSa/yJBEw
-         GVTNDm1CMzjgtQEtJs9jNQBYLShDRUSB8Fn5+Mv7fpnoj6fQell73zfKx/hurj67NtN9
-         ha3g==
-X-Gm-Message-State: AJIora/qml9Cjct7UzoR9meBTTwzATIpWWI9i7K6mBmuTQ8aHx0RjF05
-        3EA0WgoHUmU/qSUz46BMl6cU0we8MfE=
-X-Google-Smtp-Source: AGRyM1tqSfCweMzjTe3VGRWMFHiam67pY3cRgu33MiBpmETwwen1siWGzwUC326HRHkICgGq9Puq+w==
-X-Received: by 2002:a05:6402:3708:b0:433:2d3b:ed5 with SMTP id ek8-20020a056402370800b004332d3b0ed5mr21906642edb.246.1656406427704;
-        Tue, 28 Jun 2022 01:53:47 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id m7-20020a056402050700b004356c0d7436sm9220413edv.42.2022.06.28.01.53.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 01:53:47 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o66yg-001lmS-HB;
-        Tue, 28 Jun 2022 10:53:46 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Atharva Raykar <raykar.ath@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH 4/5] submodule--helper update: use --super-prefix
-Date:   Tue, 28 Jun 2022 10:47:21 +0200
-References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
- <57988287fc01a8baf5c4fd7326772c80bc015f3c.1656372017.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <57988287fc01a8baf5c4fd7326772c80bc015f3c.1656372017.git.gitgitgadget@gmail.com>
-Message-ID: <220628.86wnd1f9t1.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vMF2z65KR6aMSYEGRkpTx8kVnFq9pw6R/JlbPmmlMAI=;
+        b=Z8byVx+43zfTerqjkjBwfiXKTu42iShNT8htSkLs3WciuomHxgBI7oVp3IOPHPNHhE
+         u+95WebExpwBYauXhp6eX3I5YQuajZ2FC6lbeczaMfZVoMFC4Ul3KGcfU+nZQx25612s
+         1mYEEQ06FFgePNv25oBUSjEJxC/hJ3uqLfmrrLtN/LZKpILok1ZGJdW/5sNqKd1arhCS
+         uViB3jxxJLCXRQueu9nJEgth+X60KyizAN5f+DE2E8zEtsUnYApHyDvg+MKVJuREeT2y
+         u0cEzVCh3yOf9qgvrjQl/6mzKXBq3OMiIw1xhBUxfQGPeKWzgqQFLcSzLZDDS4cr0Dtr
+         2FUQ==
+X-Gm-Message-State: AJIora/+JPHMZ6A7PDHnsaLsFgxlZnZcVgLn1izNNSAVhmX6mGRircBR
+        Wo5S8eb2CFEwkb0fvWu1iCo=
+X-Google-Smtp-Source: AGRyM1vg7jVQyKtLV05mKmU3wK5+k9HqkwS3M606yuIJKuYr/v6RFuduBJQ+zUi8tQV0/jHqF1Rrgg==
+X-Received: by 2002:aa7:9a88:0:b0:525:124f:5276 with SMTP id x8-20020aa79a88000000b00525124f5276mr3691563pfi.42.1656406808669;
+        Tue, 28 Jun 2022 02:00:08 -0700 (PDT)
+Received: from localhost.localdomain ([202.142.80.21])
+        by smtp.gmail.com with ESMTPSA id g26-20020aa7819a000000b0052548b87bd1sm8812380pfi.46.2022.06.28.02.00.04
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 28 Jun 2022 02:00:08 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 4/6] pack-bitmap: prepare to read lookup table
+Date:   Tue, 28 Jun 2022 14:29:50 +0530
+Message-Id: <20220628085950.19288-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <Yrol2tY4emxmYh9n@nand.local>
+References: <Yrol2tY4emxmYh9n@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau <me@ttaylorr.com> wrote:
 
-On Mon, Jun 27 2022, Glen Choo via GitGitGadget wrote:
-
-> From: Glen Choo <chooglen@google.com>
+> ...exactly my thoughts, too. It's possible that it would be faster to
+> key this search on the object_id "oid" above, and then convert each of
+> the entries in the lookup table from a uint32_t into an object_id by
+> calling nth_bitmap_object_oid() repeatedly.
 >
-> Unlike the other subcommands, "git submodule--helper update" uses the
-> "--recursive-prefix" flag instead of "--super-prefix". The two flags are
-> otherwise identical (they only serve to compute the 'display path' of a
-> submodule), except that there is a dedicated helper function to get the
-> value of "--super-prefix".
+> I *think* that what Abhradeep wrote here is going to be faster more
+> often than not since it makes more efficient use of the page cache
+> rather than switching between reads across different memory mapped
+> regions at each point in the binary search.
+>
+> But of course that depends on a number of factors. Abhradeep: if you're
+> up for it, I think it would be worth trying it both ways and seeing if
+> one produces a meaningful speed-up or slow-down over the other. Like I
+> said: my guess is that what you have now will be faster, but I don't
+> have a clear sense that that is true without trying it both ways ;-).
 
-This is a good change, it was slightly confusing that --recursive-prefix
-is left in git-submodule.sh after this, but then I remembered that I
-removed it in my ab/submodule-cleanup, and you were presumably trying to
-avoid the conflict.
+Ok. Let me try both the ways. In my opinion, I think my version has
+less searching and less computation. So, I want to stick with this
+version. But I also like to try the other one once so that we can
+get the best out of these two.
 
-Still, I think it's probably better to either base this on my series
-(re-roll incoming), or take make this truly stand-alone, and have Junio
-sort out the minor conflict.
+> I think starting off with a small array and then letting it grow
+> according to alloc_nr() would be fine here, since it will grow more and
+> more each time, so the amount of times we have to reallocate the buffer
+> will tail off over time.
 
->  static void update_data_to_args(struct update_data *update_data, struct strvec *args)
->  {
-> -	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
-> -	strvec_pushf(args, "--jobs=%d", update_data->max_jobs);
->  	if (update_data->displaypath)
-> -		strvec_pushf(args, "--recursive-prefix=%s/",
-> +		strvec_pushf(args, "--super-prefix=%s/",
->  			     update_data->displaypath);
-> +	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
-> +	strvec_pushf(args, "--jobs=%d", update_data->max_jobs);
+What should be the size of that array?
 
-I did a double-take at this, but it's just one of these cases where
-"diff" is being overly helpful in trying to find us the most minimal
-diff possible :)
+> If we were really concerned about it, we could treat the buffer as a
+> static pointer and reuse it over time (making sure to clear out the
+> portions of it we're going to reuse, or otherwise ensuring that we don't
+> read old data). But I doubt it matters much either way in practice: the
+> individual records are small (at just 4 bytes each) and entry_count is
+> often less than 1,000, so I think this probably has a vanishingly small
+> impact.
 
-> @@ -3352,9 +3342,9 @@ struct cmd_struct {
->  static struct cmd_struct commands[] = {
->  	{"list", module_list, 0},
->  	{"name", module_name, 0},
-> -	{"clone", module_clone, 0},
-> +	{"clone", module_clone, SUPPORT_SUPER_PREFIX},
->  	{"add", module_add, SUPPORT_SUPER_PREFIX},
-> -	{"update", module_update, 0},
-> +	{"update", module_update, SUPPORT_SUPER_PREFIX},
->  	{"resolve-relative-url-test", resolve_relative_url_test, 0},
->  	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
->  	{"init", module_init, SUPPORT_SUPER_PREFIX},
+Before submitting it to the mailing list, I did use the ALLOC_GROW macro
+function. But my version was worse than yours. For every iteration I was
+reallocating the array to support `size+1` positions. But later I drop
+the code as this might be very much expensive.
 
-I did my own spelunking into --super-prefix recently, and went a bit
-overboard, I don't think I'll ever submit all of these, but they're in
-my avar/git github fork:
+Then I wrote this code. As `table` array and `table_inv` array allocate
+this size of arrays (though all the indices are used), I thought it
+would not be a problem if I use an array of this size for a small amount
+of time.
 
-	f445c57490d (submodule--helper: remove unused SUPPORT_SUPER_PREFIX flags, 2022-06-27)
-	bac3def78e9 (submodule--helper.c: remove unnecessary ", 0" in init, 2022-06-27)
-	af03aa2ad40 (submodule--helper.c: create a command dispatch helper, 2022-06-27)
-	952fdec4cc0 (submodule--helper.c: make "support super prefix" a bitfield, not a flag, 2022-06-09)
-	2d30186e633 (cocci: don't use strvec_pushl() if strvec_push() will do, 2022-06-27)
-	8aa7e049360 (git.c: die earlier on bad "--super-prefix" combined with "-h", 2022-06-27)
-	b0d324e9ad2 (git: make --super-prefix truly internal-only, BUG() on misuse, 2022-06-27)
+Honestly, I don't like to realloc arrays. Because as far as I can remember,
+realloc allocates a new array internally and copies the items from the old
+array to the new array. This irritates me.
 
-So, this is a digressio, but after doing those I figured we could
-eventually get rid of --super-prefix, but it'll require some more
-make-things-a-built-in, or make-things-a-library.
+But at the same time, it is also true that in most cases we might not need
+this amount of space.
 
-But I think out of those perhaps you'd be interested in cherry-picking
-f445c57490d (submodule--helper: remove unused SUPPORT_SUPER_PREFIX
-flags, 2022-06-27) before this 4/5? I.e. before adding a new
-SUPPORT_SUPER_PREFIX flag we can remove it from those commands that
-don't use it, which clears things up a bit.
-
-The others are all mostly unrelated cleanup, and I'm only noting them in
-case you're overly curious. A web view for f445c57490d is at:
-https://github.com/avar/git/commit/f445c57490d
+Thanks :)
