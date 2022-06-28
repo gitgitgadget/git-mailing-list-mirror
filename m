@@ -2,135 +2,218 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0B72C43334
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 18:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 310B2C43334
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 19:29:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232371AbiF1Sa0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 14:30:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36176 "EHLO
+        id S232357AbiF1T31 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 15:29:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229801AbiF1SaY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 14:30:24 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4940D21809
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 11:30:23 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id y14so21284097qvs.10
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 11:30:23 -0700 (PDT)
+        with ESMTP id S232601AbiF1T2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 15:28:42 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 293171A81D
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 12:26:12 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id n12so12948520pfq.0
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 12:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=lso+PzTKUQ48N7QxUrz18Uh27btVl3Sr2zX+v4JCqtY=;
-        b=36AiF5wYKOOyNdlOM+DERiDMjNFZI+gK6rdufBH1TKusb9+fi01ZNMCZwr/hh9GHnj
-         IOH7c6CBQ8sBJeldoz2yxzbhF0UaAdeOM5JodHJHA/OPs0LtJYW0LHq5BgNKqajllr3C
-         sBZTKEPN7otUE+kgRPDPE1l3Chw4u7XAybm12AGKnetTk1jdBtcPknPziihqgl5qtmeV
-         /tR91LSur1lITAqjZqJR7j+QrF7jx59N1iJZRu6B6nSZhNIFa8E0PHNNJjxW+ydZzlTA
-         stqCanysOexpnKwps+2+eUdsw9EmBHmHX+pC+xqyTpBoJgzy3GyCjnLlNdIk86VoOFze
-         Zb+g==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=IoDl6S2XMfZLn0FqkcPVB60AgaD4yXJO8fW62t3sXQE=;
+        b=AWgm5VD26cRm7f75ZxYR5gUfgDkfpT5D1yBfx/9WA9Mxtcaf2NA1EBvNZS8Dh7uymZ
+         UcuRcl7E3R+PiKcFlTPV1cz4ha/z8jFdjsObNi/7RWtVrovKsDQfoVybOYeyyywJ6DVf
+         fJ2hiL7Vr8XbJzL7YK3VVX+HemShcOoQfxZ+H68OwAIZDh0Va1+n3AMzIk+oqlCI/8ic
+         FKeSBZZDugFGiQfp7uh9asIvkhyeuDSiO+FOk3fv1AifMIYAEIkQKd4CH5i5WvP4ktwN
+         AoBQKTpmbyXoLhSeqiWzaWBQ1ycruWnuZPzWj5u0AUNezlueOeFDw3iL5+BVDJ5DF3vU
+         vAbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=lso+PzTKUQ48N7QxUrz18Uh27btVl3Sr2zX+v4JCqtY=;
-        b=MkYAjkkZerap+FtgfX1ehKDJ95PSmc7ndAenqyeBbCEz4A0rdgE4SSRMOen6kCFtv9
-         YMHAGKmUZDtb30+jSdBfN8tWhy/RJInYphtipR15+51bjrT6Md0acK5XHMXNJ4D6N9QC
-         GJWPp5DecQtDCMrujy7w+wodcEUYVIAMG7780W8Ip0QltcVSj1L7gGZpyCMjjfqGbbh1
-         Yul5wsnuINJiyrJS9jV5B6juHclkxZ6ZU6zWid0PKUvItqXymVRbvyYm+CHRxtWJ1R7r
-         IBSI74OEaQOFW7Vsbz9nbmR0M3FIKH3bjq7VD9clsSI8rGbfbdUgjnaQt4PUauCNjx4j
-         HT4g==
-X-Gm-Message-State: AJIora/CtALpzyrnPugiBUM4CiGAnGEYI/ZqqODkS9jaZYomHMeLbeJH
-        y3tGoyTCD5CiUKEroMgoXGEw9EFn59t21A==
-X-Google-Smtp-Source: AGRyM1uPdtjF0ineHaKAdXe8rKLHrDRKqZ/h2rEoNWB2eFs1LLWnacCuo/++tnOdOF5iw6OlwRlNFQ==
-X-Received: by 2002:ac8:594a:0:b0:305:344d:b3f2 with SMTP id 10-20020ac8594a000000b00305344db3f2mr14609494qtz.102.1656441022191;
-        Tue, 28 Jun 2022 11:30:22 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h18-20020ac87772000000b002f905347586sm9456770qtu.14.2022.06.28.11.30.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 11:30:21 -0700 (PDT)
-Date:   Tue, 28 Jun 2022 14:30:20 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, pclouds@gmail.com
-Subject: [PATCH] pack-objects.h: remove outdated pahole results
-Message-ID: <1379af2e9d271b501ef3942398e7f159a9c77973.1656440978.git.me@ttaylorr.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=IoDl6S2XMfZLn0FqkcPVB60AgaD4yXJO8fW62t3sXQE=;
+        b=KbgOSh+zbWsLPldCuDNebUA1ef5+75woW7amuMroKArVLqsjvB+WKH6BxYvXL/jiRe
+         yECaBOM+ghfh+TMfLlpt8iRS+XL6SzATLPVv5DFh5WH3irGTENV/RlgGEAKJQ4eBJwFy
+         h3HrZfoMCUU7n1PP/KkgCzEoZhm3BC1iDVmwfWnNzKZYj/4sHp0t/iHPIlFVSGrL+KQI
+         0EAyxS6nSDWi12FE+nMq25zrpP+ePE6PeWG9depkbAr3clO8xLaoWus5sY5yJFW/aiPA
+         Z1eeM7W+qmrJS1nx0Wb2EETjXZZxElFGtnN5UZD+COov2OkulDEW7CeaqCMLaZgAJ2CV
+         3u9A==
+X-Gm-Message-State: AJIora/HvYueN2iNwKQsVqmW978kiPX0tJ96o2YunJJPBzkP5zmkYUKs
+        +ZVna62EydTMuVIbjU07jW0=
+X-Google-Smtp-Source: AGRyM1tU4NTsJ/j6e3C24yCufPuFW+1/zrN1711cqDmawintVWbSpLX4DuIH4+O6OB690T9lVs2p4Q==
+X-Received: by 2002:a63:a53:0:b0:411:1ba6:e5f with SMTP id z19-20020a630a53000000b004111ba60e5fmr7945211pgk.18.1656444371338;
+        Tue, 28 Jun 2022 12:26:11 -0700 (PDT)
+Received: from localhost.localdomain ([202.142.80.21])
+        by smtp.gmail.com with ESMTPSA id c126-20020a621c84000000b005252defb016sm9858588pfc.122.2022.06.28.12.26.08
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 28 Jun 2022 12:26:10 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 4/6] pack-bitmap: prepare to read lookup table extension
+Date:   Wed, 29 Jun 2022 00:55:55 +0530
+Message-Id: <20220628192555.23565-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <YrojV5aYCzxXlV3c@nand.local>
+References: <YrojV5aYCzxXlV3c@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The size and padding of `struct object_entry` is an important factor in
-determining the memory usage of `pack-objects`. For this reason,
-3b13a5f263 (pack-objects: reorder members to shrink struct object_entry,
-2018-04-14) added a comment containing some information from pahole
-indicating the size and padding of that struct.
 
-Unfortunately, this comment hasn't been updated since 9ac3f0e5b3
-(pack-objects: fix performance issues on packing large deltas,
-2018-07-22), despite the size of this struct changing many times since
-that commit.
+Ohh, sorry! Looks like I missed this comment!
 
-To see just how often the size of object_entry changes, I skimmed the
-first-parent history with this script:
+Taylor Blau <me@ttaylorr.com> wrote:
 
-    for sha in $(git rev-list --first-parent --reverse 9ac3f0e..)
-    do
-      echo -n "$sha "
-      git checkout -q $sha
-      make -s pack-objects.o 2>/dev/null
-      pahole -C object_entry pack-objects.o | sed -n \
-        -e 's/\/\* size: \([0-9]*\).*/size \1/p' \
-        -e 's/\/\*.*padding: \([0-9]*\).*/padding \1/p' | xargs
-    done | uniq -f1
+> It may be worth replacing "within map" to "within the memory mapped
+> region `map`" to make clear that this points somewhere within the mmap.
 
-In between each merge, the size of object_entry changes too often to
-record every instance here. But the important merges (along with their
-corresponding sizes and bit paddings) in chronological order are:
+Ok.
 
-    ad635e82d6 (Merge branch 'nd/pack-objects-pack-struct', 2018-05-23) size 80 padding 4
-    29d9e3e2c4 (Merge branch 'nd/pack-deltify-regression-fix', 2018-08-22) size 80 padding 9
-    3ebdef2e1b (Merge branch 'jk/pack-delta-reuse-with-bitmap', 2018-09-17) size 80 padding 8
-    33e4ae9c50 (Merge branch 'bc/sha-256', 2019-01-29) size 96 padding 8
+> I should have commented on this in an earlier round, but I wonder what
+> the behavior should be when we have BITMAP_OPT_LOOKUP_TABLE in our
+> flags, but GIT_TEST_READ_COMMIT_TABLE is disabled.
+>
+> Right now, it doesn't matter, since there aren't any flags in bits above
+> BITMAP_OPT_LOOKUP_TABLE. But in the future, if there was some
+> BITMAP_OPT_FOO that was newer than BITMAP_OPT_LOOKUP_TABLE, we would
+> want to be able to read it without needing to read the lookup table.
+>
+> At least, I think that should be true, though I would be interested to
+> hear if anybody has a differing opinion there.
 
-(indicating that the current size of the struct is 96 bytes, with 8
-padding bits).
+Oh right! I didn't think about it. In that case, we should still subtract
+The table size from the last index_size. In that way, These sections will
+Not be overlapped.
 
-Even though this comment was written in a good spirit, it is updated
-infrequently enough that is serves to confuse rather than to encourage
-contributors to update the appropriate values when the modify the
-definition of object_entry.
+> And table_size here is going to start off at zero, so the outer st_add()
+> call isn't necessary, either. This should instead be:
+>
+>     size_t table_size = st_mult(ntohl(header->entry_count),
+>                                 sizeof(uint32_t) + sizeof(uint64_t) + sizeof(uint32_t));
+>
+> It might be nice to have triplet_sz #define'd somewhere else, since
+> there are a handful of declarations in this patch that are all
+> identical. Probably something like:
+>
+>     #define BITMAP_LOOKUP_TABLE_RECORD_WIDTH (sizeof(uint32_t) + sizeof(uint64_t) + sizeof(uin32_t))
+>
+> or even:
+>
+>     /*
+>      * The width in bytes of a single record in the lookup table
+>      * extension:
+>      *
+>      *   (commit_pos, offset, xor_pos)
+>      *
+>      * whose fields are 32-, 64-, and 32-bits wide, respectively.
+>      */
+>      #define BITMAP_LOOKUP_TABLE_RECORD_WIDTH (16)
 
-For that reason, eliminate the confusion by removing the comment
-altogether.
+Seems perfect to me.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-Noticed this while reverting an old topic out of GitHub's fork, and
-realized that this comment was severely out-of-date.
+> if we decide to still recognize the lookup table extension without
+> *reading* from it when GIT_TEST_READ_COMMIT_TABLE is unset, I think we
+> should do something like:
+>
+>     if (git_env_bool("GIT_TEST_READ_COMMIT_TABLE", 1))
+>         index->table_lookup = (void *)(index_end - table_size);
+>     index_end -= table_size;
+>
+> ...where the subtraction on index_end happens unconditionally.
 
- pack-objects.h | 10 ----------
- 1 file changed, 10 deletions(-)
+Right. Thanks!
 
-diff --git a/pack-objects.h b/pack-objects.h
-index 393b9db546..579476687c 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -116,16 +116,6 @@ struct object_entry {
- 	unsigned dfs_state:OE_DFS_STATE_BITS;
- 	unsigned depth:OE_DEPTH_BITS;
- 	unsigned ext_base:1; /* delta_idx points outside packlist */
--
--	/*
--	 * pahole results on 64-bit linux (gcc and clang)
--	 *
--	 *   size: 80, bit_padding: 9 bits
--	 *
--	 * and on 32-bit (gcc)
--	 *
--	 *   size: 76, bit_padding: 9 bits
--	 */
- };
+> I wonder if we could get rid of these functions altogether and return a
+> small structure like:
+>
+>     struct bitmap_lookup_table_record {
+>         uint32_t commit_pos;
+>         uint64_t offset;
+>         uint32_t xor_pos;
+>     };
+>
+> or similar.
 
- struct packing_data {
---
-2.37.0.1.g1379af2e9d
+Ok.
+
+> Hmm. This is a little tricky to read. Here we're expecting "va" to hold
+> commit_pos from below, and "vb" to be a pointer at a lookup record.
+> Everything here is right, though I wonder if a comment or two might
+> clarify why one is "*(uint32_t *)va" and the other is "get_be32(vb)".
+
+Sure. Will add comments.
+
+> Nit: let's use the bitmap_is_midx() helper here instead of looking at
+> bitamp_git->midx directly.
+
+Ok.
+
+> First thing is to convert the commit OID we're looking for into its
+> position within the corresponding pack index or MIDX file so that we can
+> use it as a search key to locate in the lookup table. If we didn't find
+> anything, or the commit doesn't exist in our pack / MIDX, nothing to do.
+>
+> > +
+> > +	offset = triplet_get_offset(triplet);
+> > +	xor_pos = triplet_get_xor_pos(triplet);
+>
+> Otherwise, record its offset and XOR "offset".
+
+Exactly!
+
+> We already have to get the triplets in the loop above, and then we dig
+> them back out here. Would it be easier to keep track of a list of
+> pointers into the mmaped region instead of looking up these triplets
+> each time?
+
+Sure. It might be a good idea. Thanks.
+
+> > +			commit_pos = get_be32(triplet);
+> > +			offset_xor = triplet_get_offset(triplet);
+> > +
+> > +			if (nth_bitmap_object_oid(bitmap_git, &xor_oid, commit_pos) < 0) {
+>
+> Should it be an error if we can't look up the object's ID here? I'd
+> think so.
+
+I also am not sure about it. Morally, I think it is better to throw
+An error here.
+
+> Do we have a good way to make sure that we're testing this code in CI?
+> It *seems* correct to me, but of course, we should have a computer check
+> that this produces OK results, not a human ;).
+
+My current test file changes should test this code. As for now, the lookup
+Table is enabled by default, all the existing tests that include write and
+read bitmaps uses this lookup table. So, all the test case scenarios should
+Pass. So, I think it is being tested in CI. Do you have a good idea to test
+It better?
+
+> Hmm. I'm not sure I follow the purpose of tweaking
+> GIT_TEST_READ_COMMIT_TABLE like this with setenv(). Are we trying to
+> avoid reading the lookup table? If so, why? I'd rather avoid
+> manipulating the environment directly like this, and instead have a
+> function we could call to fault in all of the bitmaps (when a lookup
+> table exists, otherwise do nothing).
+
+The problem was that the `test-tool bitmap list-commit` command was
+Not printing any commits (the error that I notified you before). It
+is because of this function. As lookup table is enabled by default,
+`prepare_bitmap_git` function doesn't load each bitmap entries and
+thus the below code in this function doesn't provide the bitmapped
+commit list (because Hashtable didn't generated).
+
+        kh_foreach(bitmap_git->bitmaps, oid, value, {
+		printf("%s\n", oid_to_hex(&oid));
+	});
+
+So, the simplest fix I found was this. Should I make a function then
+(Which you suggested here)?
+
+Thanks :)
