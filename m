@@ -2,316 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F05FC43334
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 09:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2728AC433EF
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 09:13:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239382AbiF1JHH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 05:07:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34728 "EHLO
+        id S1343880AbiF1JNt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 05:13:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236430AbiF1JHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 05:07:06 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FCF51274C
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:07:05 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id u15so24344663ejc.10
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:07:05 -0700 (PDT)
+        with ESMTP id S1344046AbiF1JNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 05:13:44 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400F010FD9
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:13:43 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id t17-20020a1c7711000000b003a0434b0af7so4628400wmi.0
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=RHG9rcNgLA0gO6vgzKrvdebI+4zlyQ30om4ah8Ja95c=;
-        b=ToFMvM4Tz4B2AtgDiie6aCIMMXRQKbJF4aw4AqUSseG6bg4eQo97oJFnUVKpXzGwoh
-         PfTrz0wSN1HlW42MrzNJ9Om5U7N3T4sCNNtbhHLA7vnhP7gAysm9P2z8sF8GzTu1rsqY
-         T2ATPLoZLPi2gJx/xqC0Swxy0apPiVNWV1hFkHCK1VP34CTGPjAUufPoXmFIulDM3xIA
-         pWlY1IBZ/Nj0q7Uat1SPYqHzZ04lVhGVifjr+6cKXvaMME1tECXoIvtYx+D/eP5e00GS
-         sSvawPKfwAgbvXYoYB/AcmTIS5ponYvKYOMjXqQ1U/eBZtzoCirUPrQnrDLWadw8N+wF
-         dflw==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cddJFtEtKdlcT15DRleTmAhSwKX+753QKhUJroZG4UQ=;
+        b=f9UOdhb78w9pwIVHxCRCob3E5b7m9vdsF8C+AoB0keQI4L5ohR9dDUTknLeORKcbzm
+         Q8VVapVc5PKeHdR7pl6ikk/q1M+b+CxxILKcq6wW4c9M/itf/MD2E6WCB7lCyXByIwLQ
+         VPYEPk+EF4TvTxBFbr3IcRT8t1lxGQHPWWkWSbeWVfKkcGvCfWenC+womLlqdw8QgeAr
+         CTa4QOxLOMgFa/wB8XbWk0t8ovJY4UGiySsaX1rQfBD83KWhmh+nEFW/tcoI47w0zJnd
+         3euZQpDiNVZ+NUiwOuOf6xDvFWhpBg3H/ob3vTnufZzbKa4wZz3AziB74G1BVgeRr5V9
+         I2jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=RHG9rcNgLA0gO6vgzKrvdebI+4zlyQ30om4ah8Ja95c=;
-        b=gPgM2ZUKhT6OvTRbgRrt+uDN/GTUjUvl6rk5v2X8Xu6HcuyN2OT0hjwmZ57krDC65C
-         dynxQ4BLke1icBC+VrcSFClWz+O0tLGRFXIVxt7avbcb2xre2pwLJXdekgCY3OJ9XVTN
-         DJgwotCQH3S0kEpTV57/bcWjM+6cRjIuliia8EsvIYbf0qcmBeOfWJM5HTTZkS2UgF66
-         kGmWHtlD3rDp8uBQnSCe8b9W8cBHsSIJNpm3nfYjC2BGhCrKcws4Ra0VOuhObzzX7ciT
-         mzeR7wzbS8d3sHk9eZ3Uv8Qs76ADmoh5gZYj7hWOrZivHj5s/0uICOJdCBzsU7luCzdy
-         zlag==
-X-Gm-Message-State: AJIora8zIj6t8GZ8/bhnZgIPVojMGzcB6QvYr+1EVfXp3Fmmj0ggESFu
-        PsmEjm9OXa5GHhBMVkvualVq97UGqIQ=
-X-Google-Smtp-Source: AGRyM1t9J/MaGdC+KZ+zAg30wQXYX29vzZowWqJaE8GdkCTd52LoRyPUgDWTMqtUz3a4fbAQnqIsiA==
-X-Received: by 2002:a17:906:58c7:b0:722:f4bf:cb75 with SMTP id e7-20020a17090658c700b00722f4bfcb75mr17265269ejs.450.1656407223705;
-        Tue, 28 Jun 2022 02:07:03 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id le23-20020a170906ae1700b006f3ef214dbesm6135174ejb.36.2022.06.28.02.07.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 02:07:03 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o67BW-001mEV-AS;
-        Tue, 28 Jun 2022 11:07:02 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     derrickstolee@github.com, git@vger.kernel.org, gitster@pobox.com,
-        me@ttaylorr.com, tenglong.tl@alibaba-inc.com, git@jeffhostetler.com
-Subject: Re: [PATCH v5 4/5] pack-bitmap.c: retrieve missing i18n translations
-Date:   Tue, 28 Jun 2022 10:58:56 +0200
-References: <cover.1656403084.git.dyroneteng@gmail.com>
- <065b7c9ccb5a412526a934f9b67c8be64a40fc7f.1656403084.git.dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <065b7c9ccb5a412526a934f9b67c8be64a40fc7f.1656403084.git.dyroneteng@gmail.com>
-Message-ID: <220628.86sfnpf96x.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cddJFtEtKdlcT15DRleTmAhSwKX+753QKhUJroZG4UQ=;
+        b=StSEqro4+b8bA1VMwix3t28qn9Ls3HllN/5qeZg6yZgQiGIvVyFN3bxdcJE2aCIEsy
+         SOkMnO/ZF+WSt9nEYz+vdabuiPICjnl3ElKyB9oW5LtltZhwA0Lqxexp4iQQjOKWAg+g
+         oQyMtgb7lpNS2Eis9WFE+fBe9ewXC4Ld9wVg6XuWt843Tk79ldwvMG5yHwFf5YwjTqff
+         jSKYbWRjl7aTeD4JneLMYycqqY83JkkdYi7A+roDsaJ3cmbTt15x6tx4TMahY0OMd1Tv
+         rxPNz9QWQ+qC9zZplr4D18cfhBeobBDe/5btM5gNT7Sv0E0DqB66e6hmQ3GbqtIxxHCs
+         bWHA==
+X-Gm-Message-State: AJIora9bU3bmSOxfUozksJ69/nohUtcJXlH1L8eh0ZafjvTpLf0CQ0D6
+        dHeerA+WhpiKjH4VaezeA6V61Y5IGUA=
+X-Google-Smtp-Source: AGRyM1vHyhRaM7WXIfqpplWap7pyP517s/eSG9UQvBMegWtkzP5+Pcc5k2fg0eCfB9VYeZ2LKLDN5A==
+X-Received: by 2002:a05:600c:34c4:b0:39c:9236:4e9e with SMTP id d4-20020a05600c34c400b0039c92364e9emr25222905wmq.67.1656407621704;
+        Tue, 28 Jun 2022 02:13:41 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id 5-20020a05600c230500b0039c8a22554bsm16201312wmo.27.2022.06.28.02.13.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jun 2022 02:13:41 -0700 (PDT)
+Message-ID: <72a1a225-5d84-56c3-2652-ec7c17c18cbd@gmail.com>
+Date:   Tue, 28 Jun 2022 10:13:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Oddities in gitignore matching
+Content-Language: en-GB-large
+To:     John Thorvald Wodder II <jwodder@gmail.com>, git@vger.kernel.org
+References: <DC3C4CED-3781-4380-95E6-97F5CBE1B13C@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <DC3C4CED-3781-4380-95E6-97F5CBE1B13C@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi John
 
-On Tue, Jun 28 2022, Teng Long wrote:
+On 26/06/2022 20:34, John Thorvald Wodder II wrote:
+> First: I've found that the pattern "foo**/bar" causes the path "foo/glarch/bar" (as well as "foobie/glarch/bar") to be ignored.  However, the gitignore(5) documentation states that "**/" only has special meaning when it's "leading"; in other circumstances, the double star should be treated the same as a single star (and "foo*/bar" does not match "foo/glarch/bar").  Is this behavior of non-leading "**/" deliberate or a bug?
 
-> In pack-bitmap.c, some printed texts are translated,some are not.
-> Let's support the translations of the bitmap related output.
+I've no idea if it is deliberate or not but it seems reasonable and I 
+think it matches shells like fish, tcsh and zsh though not bash (I think 
+our documented behavior matches bash).
 
-Usually we don't go for cleanup-while-at-it, but in this case we're
-marking messages that don't conform to our CodingGudielines for
-translation, mostly because they're error messages that start with an
-upper-case letter.
+> Interestingly, checking the pattern with the wildmatch test-tool (`t/helper/test-tool wildmatch wildmatch foo/glarch/bar 'foo**/bar'`) shows that the pattern should not match the path.
+> 
+> Second: The pattern "[[:space:]]" does not match 0x0B (\v, vertical tab) or 0x0C (\f, form feed) despite the fact that the C isspace() function accepts these characters, and I cannot figure out the cause for this discrepancy.  (The pattern does match the other characters that isspace() accepts, though — tab, line feed, carriage return, and space character.)  The wildmatch test-tool agrees with this behavior, though.
 
-So I think we should fix those issues first, to avoid double-work for
-translators (well, a bit less, since they're the translation memory, but
-it's quite a bit of churn...).
+This is because git defines its own isspace() that does not treat '\v' 
+or '\f' as whitespace (see git-compat-util.h and ctype.c). I'm not sure 
+why we exclude those characters, I think the reason for defining our own 
+isspace() is to avoid the locale dependent behaviour of the standard 
+version.
 
-> -		error("Failed to load bitmap index (corrupted?)");
-> +		error(_("Failed to load bitmap index (corrupted?)"));
+I'm afraid I don't have anything useful to add for your third point
 
-e.g. here.
+Best Wishes
 
-> -		return error("Corrupted bitmap index (too small)");
-> +		return error(_("Corrupted bitmap index (too small)"));
+Phillip
 
-..and here, etc. etc.
-
-> -		return error("Unsupported version for bitmap index file (%d)", index->version);
-> +		return error(_("Unsupported version for bitmap index file (%d)"), index->version);
-
-Let's say "unsupported version '%d' for ..." instead?
-
-> -			return error("Unsupported options for bitmap index file "
-> -				"(Git requires BITMAP_OPT_FULL_DAG)");
-> +			return error(_("Unsupported options for bitmap index file "
-> +				"(Git requires BITMAP_OPT_FULL_DAG)"));
-
-I'm not sure, but shouldn't this be a BUG()?
-
-> -		error("Duplicate entry in bitmap index: %s", oid_to_hex(oid));
-> +		error(_("Duplicate entry in bitmap index: %s"), oid_to_hex(oid));
-
-Ditto upper-case, but add '%s' while at it.
-
->  	if (!strip_suffix(p->pack_name, ".pack", &len))
-> -		BUG("pack_name does not end in .pack");
-> +		BUG(_("pack_name does not end in .pack"));
-
-Do not translate BUG() messages.
-
-> -		warning("ignoring extra bitmap file: %s", buf.buf);
-> +		warning(_("ignoring extra bitmap file: %s"), buf.buf);
-
-Quote the name.
-
-> -		warning("ignoring extra bitmap file: %s", packfile->pack_name);
-> +		warning(_("ignoring extra bitmap file: %s"), packfile->pack_name);
-
-ditto.
-
->  		if (prepare_revision_walk(revs))
-> -			die("revision walk setup failed");
-> +			die(_("revision walk setup failed"));
-
-Looks good, but aside from this we should really have a tree-wide
-xprepare_revision_walk() or something, we have this copy/pasted all over
-the place...
-
-
-> -		BUG("filter_bitmap_tree_depth given non-zero limit");
-> +		BUG(_("filter_bitmap_tree_depth given non-zero limit"));
-
-Ditto BUG.
->  
->  	filter_bitmap_exclude_type(bitmap_git, tip_objects, to_filter,
->  				   OBJ_TREE);
-> @@ -1148,7 +1148,7 @@ static void filter_bitmap_object_type(struct bitmap_index *bitmap_git,
->  				      enum object_type object_type)
->  {
->  	if (object_type < OBJ_COMMIT || object_type > OBJ_TAG)
-> -		BUG("filter_bitmap_object_type given invalid object");
-> +		BUG(_("filter_bitmap_object_type given invalid object"));
->  
->  	if (object_type != OBJ_TAG)
->  		filter_bitmap_exclude_type(bitmap_git, tip_objects, to_filter, OBJ_TAG);
-> @@ -1304,14 +1304,14 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
->  		revs->ignore_missing_links = 0;
->  
->  		if (haves_bitmap == NULL)
-> -			BUG("failed to perform bitmap walk");
-> +			BUG(_("failed to perform bitmap walk"));
->  	}
-
-etc. etc.
-
->  
->  	wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap,
->  				    filter);
->  
->  	if (!wants_bitmap)
-> -		BUG("failed to perform bitmap walk");
-> +		BUG(_("failed to perform bitmap walk"));
->  
->  	if (haves_bitmap)
->  		bitmap_and_not(wants_bitmap, haves_bitmap);
-> @@ -1432,7 +1432,7 @@ uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git)
->  {
->  	struct multi_pack_index *m = bitmap_git->midx;
->  	if (!m)
-> -		BUG("midx_preferred_pack: requires non-empty MIDX");
-> +		BUG(_("midx_preferred_pack: requires non-empty MIDX"));
-
-etc. etc.
-
->  	return nth_midxed_pack_int_id(m, pack_pos_to_midx(bitmap_git->midx, 0));
->  }
->  
-> @@ -1629,15 +1629,15 @@ static void test_bitmap_type(struct bitmap_test_data *tdata,
->  	}
->  
->  	if (bitmap_type == OBJ_NONE)
-> -		die("object %s not found in type bitmaps",
-> +		die(_("object %s not found in type bitmaps"),
->  		    oid_to_hex(&obj->oid));
->  
->  	if (bitmaps_nr > 1)
-> -		die("object %s does not have a unique type",
-> +		die(_("object %s does not have a unique type"),
->  		    oid_to_hex(&obj->oid));
->  
->  	if (bitmap_type != obj->type)
-> -		die("object %s: real type %s, expected: %s",
-> +		die(_("object %s: real type %s, expected: %s"),
->  		    oid_to_hex(&obj->oid),
->  		    type_name(obj->type),
->  		    type_name(bitmap_type));
-
-quote %s for these.
-
-> @@ -1651,7 +1651,7 @@ static void test_show_object(struct object *object, const char *name,
->  
->  	bitmap_pos = bitmap_position(tdata->bitmap_git, &object->oid);
->  	if (bitmap_pos < 0)
-> -		die("Object not in bitmap: %s\n", oid_to_hex(&object->oid));
-> +		die(_("Object not in bitmap: %s\n"), oid_to_hex(&object->oid));
-
-Lose the \n here, in addition to lower-case & quote %s.
-
->  	test_bitmap_type(tdata, object, bitmap_pos);
->  
->  	bitmap_set(tdata->base, bitmap_pos);
-> @@ -1666,7 +1666,7 @@ static void test_show_commit(struct commit *commit, void *data)
->  	bitmap_pos = bitmap_position(tdata->bitmap_git,
->  				     &commit->object.oid);
->  	if (bitmap_pos < 0)
-> -		die("Object not in bitmap: %s\n", oid_to_hex(&commit->object.oid));
-> +		die(_("Object not in bitmap: %s\n"), oid_to_hex(&commit->object.oid));
-
-Ditto.
-
->  	test_bitmap_type(tdata, &commit->object, bitmap_pos);
->  
->  	bitmap_set(tdata->base, bitmap_pos);
-> @@ -1683,26 +1683,26 @@ void test_bitmap_walk(struct rev_info *revs)
->  	struct ewah_bitmap *bm;
->  
->  	if (!(bitmap_git = prepare_bitmap_git(revs->repo)))
-> -		die("failed to load bitmap indexes");
-> +		die(_("failed to load bitmap indexes"));
->  
->  	if (revs->pending.nr != 1)
-> -		die("you must specify exactly one commit to test");
-> +		die(_("you must specify exactly one commit to test"));
->  
-> -	fprintf(stderr, "Bitmap v%d test (%d entries loaded)\n",
-> +	fprintf(stderr, _("Bitmap v%d test (%d entries loaded)\n"),
->  		bitmap_git->version, bitmap_git->entry_count);
->  
->  	root = revs->pending.objects[0].item;
->  	bm = bitmap_for_commit(bitmap_git, (struct commit *)root);
->  
->  	if (bm) {
-> -		fprintf(stderr, "Found bitmap for %s. %d bits / %08x checksum\n",
-> +		fprintf(stderr, _("Found bitmap for %s. %d bits / %08x checksum\n"),
->  			oid_to_hex(&root->oid), (int)bm->bit_size, ewah_checksum(bm));
->  
->  		result = ewah_to_bitmap(bm);
->  	}
->  
->  	if (result == NULL)
-> -		die("Commit %s doesn't have an indexed bitmap", oid_to_hex(&root->oid));
-> +		die(_("Commit %s doesn't have an indexed bitmap"), oid_to_hex(&root->oid));
->  
->  	revs->tag_objects = 1;
->  	revs->tree_objects = 1;
-> @@ -1711,7 +1711,7 @@ void test_bitmap_walk(struct rev_info *revs)
->  	result_popcnt = bitmap_popcount(result);
->  
->  	if (prepare_revision_walk(revs))
-> -		die("revision walk setup failed");
-> +		die(_("revision walk setup failed"));
->  
->  	tdata.bitmap_git = bitmap_git;
->  	tdata.base = bitmap_new();
-> @@ -1719,7 +1719,7 @@ void test_bitmap_walk(struct rev_info *revs)
->  	tdata.trees = ewah_to_bitmap(bitmap_git->trees);
->  	tdata.blobs = ewah_to_bitmap(bitmap_git->blobs);
->  	tdata.tags = ewah_to_bitmap(bitmap_git->tags);
-> -	tdata.prg = start_progress("Verifying bitmap entries", result_popcnt);
-> +	tdata.prg = start_progress(_("Verifying bitmap entries"), result_popcnt);
-
-Good catch!
->  	tdata.seen = 0;
->  
->  	traverse_commit_list(revs, &test_show_commit, &test_show_object, &tdata);
-> @@ -1727,9 +1727,9 @@ void test_bitmap_walk(struct rev_info *revs)
->  	stop_progress(&tdata.prg);
->  
->  	if (bitmap_equals(result, tdata.base))
-> -		fprintf(stderr, "OK!\n");
-> +		fprintf(stderr, _("OK!\n"));
-
-Ditto don't include \n.
->  	else
-> -		die("mismatch in bitmap results");
-> +		die(_("mismatch in bitmap results"));
->  
->  	bitmap_free(result);
->  	bitmap_free(tdata.base);
-> @@ -1747,7 +1747,7 @@ int test_bitmap_commits(struct repository *r)
->  	MAYBE_UNUSED void *value;
->  
->  	if (!bitmap_git)
-> -		die("failed to load bitmap indexes");
-> +		die(_("failed to load bitmap indexes"));
->  
->  	kh_foreach(bitmap_git->bitmaps, oid, value, {
->  		printf("%s\n", oid_to_hex(&oid));
-> @@ -1825,8 +1825,8 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
->  	if (!bitmap_is_midx(bitmap_git))
->  		load_reverse_index(bitmap_git);
->  	else if (load_midx_revindex(bitmap_git->midx) < 0)
-> -		BUG("rebuild_existing_bitmaps: missing required rev-cache "
-> -		    "extension");
-> +		BUG(_("rebuild_existing_bitmaps: missing required rev-cache "
-> +		    "extension"));
->  
-
-Ditto don't translate BUG().
+> Third: While the documentation for `git-check-ignore` only states that it works on files, I've found that it also works with directory paths, as well as treating any nonexistent path ending in a slash as a directory.  For example, in a fresh repository containing only a .gitignore file with the pattern "foo/", `git-check-ignore` will accept the path "foo/" but not "foo", and if `mkdir foo` is run, it will accept both.
+> 
+> However, I've found a case in which `git-check-ignore` deviates from the actual .gitignore behavior regarding ignoring directories.  If .gitignore contains only the pattern "foo/*", then (regardless of whether a directory named "foo" exists or not), `git-check-ignore` will accept "foo/" but not "foo" — and yet, if you do `mkdir foo; touch foo/bar` and run `git status --ignored=matching --porcelain`, it shows "!! foo/bar", rather than "!! foo/" (which you get with the .gitignore pattern "foo/"), indicating that "foo/*" matches the contents of "foo" but not "foo" itself, in apparent disagreement with `git-check-ignore`.  Is this a flaw in `git-check-ignore`, or should it just not be trusted in the first place when it comes to directories?
+> 
+> These observations were made using Git version 2.36.1, installed via Homebrew on macOS 11.6.6, with test-tool compiled from commit 39c15e4855 of the Git source.
+> 
+> Thank you for your time reading & responding,
+> 
+> -- John Wodder
+> 
