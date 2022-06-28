@@ -2,104 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E25D7CCA479
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 08:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38DC6C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 08:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242463AbiF1IT3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 04:19:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43224 "EHLO
+        id S244570AbiF1ITd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 04:19:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244117AbiF1ITD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 04:19:03 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 751792DAB6
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 01:17:57 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id 136so6215832pfy.10
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 01:17:57 -0700 (PDT)
+        with ESMTP id S244154AbiF1ITE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 04:19:04 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 398D12CE1C
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 01:18:00 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id h192so11506021pgc.4
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 01:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=I++DIHmJyVPgJ9Ugs+/TvU2JN3bKx7WGDPOYDPwkYOo=;
-        b=U5KvfOK355FZ9gOat5WqlEprRof55CK6IHLKuu+sMeo3Xr9XC8+j5fuM18rrUVNHLd
-         AI5aZBC3cJnxvRk7CWScZ0/8LiQwes3VwYewH/k5PkNGv0gBa7sXjMjsYXVAI/8z4pIa
-         8Ue2jq4Z5kEK9HJkgKw1SuosF0I+VB/TERzNWCV3WeDzSeTcHnKgeEZ4AfzHBrJLjo5X
-         hconEk8CPboOOVONMsKMqTMTm4wVxhge0vMmJA9v/zoovvaYu/Cel5REwnkDhnVD9T3n
-         3/V43PzGHhrsrf30G4WZA4X8Y2oav4NDoWMUQ6NIBzzV5c4w452qQEWlskz/mhhO+OS9
-         yYdw==
+        bh=QR7dnif8nsv3nXwQqB2Q7wKuWJBI0ake6Y+kEG/nnnA=;
+        b=YAdkH3xAt8AjhZ7PzgsVSulypaZXYY6SPeg1kEhVT1kQP7aJcdK1apUBBQxFov4uQD
+         yMy1mia4wV5uX46ZlKMPzDpkt+bdCHo6/ZjduyH4a7DHIpR0I0QHXNZGk3bKqLscs+tB
+         eXCvtzbHgO/MDaOl7HcYfpQ2v6pKArjSTvVRMtpteLfbI3DWHduJwP8hVG8W5vjrwi4O
+         C9t9/okp4J984Ieidf86jvTqVSy2gySUJob8YAW8lkosxmbYtO7WBzbEewOsDK998OGl
+         LneG1eCo++6OgMS/z/Tejo4dKWQlqhur1dL2FmDGLNnhE95A0eb7TRlijme4Aw1Z8DkE
+         RnEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=I++DIHmJyVPgJ9Ugs+/TvU2JN3bKx7WGDPOYDPwkYOo=;
-        b=YGpgBlkckp/dD2QunaHq4Xpo8diU40wx1HYeQybIwduZs4NeUvM/jqIo66CP8gLKUq
-         +2R4sOV22ybfAQuGIcnixc7yoOXTcl9zRBeXLKXCVo+Y+RegXWEY5C+Qz0KccayWZJDg
-         qahU8blmUUEjyvoYzHMflKOvpYrSTsiYcfDdJBQB4qQ3i7IxS1IXaY2pOOjZnue3Ha4F
-         J4C43PpROqwsq3yqdfDnfOQYlys/FOuQAqC97XfjbZuSjCHPXiQ3ricMh4L0y9wFachp
-         xGRx78irLrRXRpkfFHQB+FjNiDCTBU1oni+TC1RXXhUoRKqFe2VoPTjAMpPcr7iKc3dR
-         /Vyg==
-X-Gm-Message-State: AJIora+OdPF0J1ixursX6+FRbNg5tAu59NkCAZ6jrLGngEAGmQu09K2g
-        ya9A5i0GA0ozlF57vDdZg5i2XMlVpUZSYbYHhYE=
-X-Google-Smtp-Source: AGRyM1vXTqpZiSuovvWZt8qz338DmuEN+5gb9vVqis0XhayMqbdVrCPhrd0g2Dmrg40rz01KRmdEHQ==
-X-Received: by 2002:a63:1249:0:b0:411:54ac:71a0 with SMTP id 9-20020a631249000000b0041154ac71a0mr3582368pgs.4.1656404276641;
-        Tue, 28 Jun 2022 01:17:56 -0700 (PDT)
+        bh=QR7dnif8nsv3nXwQqB2Q7wKuWJBI0ake6Y+kEG/nnnA=;
+        b=01+bliXOQ7ye98dp8LSHPC4meSUU4Ai/WLxM/CipAfocPkixFKCnTM+9+Sm6wvxXTu
+         IMpZhpAyD3NnCbh47MJVIM3nbIafIH967BXzmdJrxtEqiY0yJpTTzZqOpCGJTfbVX6v1
+         dGtxmb5U1OTjBAfF7/3A2CVb3Y5WntOecMdHXIJaYwNnxzKaLmYirLeTbHep3rYwZQU2
+         M48TWr7kxx5yA+F2dh0x6Y03BDwXpmO9j2a6wnm1gwa50Lh1xpK7SSWBH4jL4Lh8kgur
+         GPgTH/kIkVDOxGRSOR+QFZ+MiKMw92ZbCnUl3Y05CD1ATGI7CS0kyva6czUrdVxGoSUa
+         Cg0w==
+X-Gm-Message-State: AJIora/+jYs7PM3/0HyZq2SjqalHj4Rs+R4B9VgsaXpKsqGUiesGJRi4
+        6IxpiGp9JIhvlZ1bbQbUYSM=
+X-Google-Smtp-Source: AGRyM1tGzyKDn1dRa3uPKfhbmBQaApDNnEpzX9/FTw38sT0j6bWiwKqq8WGz7bhrnoskSjo7aPrwjQ==
+X-Received: by 2002:a63:2b16:0:b0:3fa:faf9:e6d7 with SMTP id r22-20020a632b16000000b003fafaf9e6d7mr16212267pgr.325.1656404279668;
+        Tue, 28 Jun 2022 01:17:59 -0700 (PDT)
 Received: from code-infra-dev-cbj.ea134 ([140.205.70.34])
-        by smtp.gmail.com with ESMTPSA id d9-20020a170902f14900b0016368840c41sm8551206plb.14.2022.06.28.01.17.53
+        by smtp.gmail.com with ESMTPSA id d9-20020a170902f14900b0016368840c41sm8551206plb.14.2022.06.28.01.17.56
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Jun 2022 01:17:56 -0700 (PDT)
+        Tue, 28 Jun 2022 01:17:59 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
         gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com,
         git@jeffhostetler.com
-Subject: [PATCH v5 0/5] tr2: avoid to print "interesting" config repeatedly
-Date:   Tue, 28 Jun 2022 16:17:45 +0800
-Message-Id: <cover.1656403084.git.dyroneteng@gmail.com>
+Subject: [PATCH v5 1/5] pack-bitmap.c: continue looping when first MIDX bitmap is found
+Date:   Tue, 28 Jun 2022 16:17:46 +0800
+Message-Id: <589e3f4075513b13dcd057242fa207b95371b114.1656403084.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.35.1.582.gf3b87a33da
-In-Reply-To: <cover.1655817253.git.dyroneteng@gmail.com>
-References: <cover.1655817253.git.dyroneteng@gmail.com>
+In-Reply-To: <cover.1656403084.git.dyroneteng@gmail.com>
+References: <cover.1656403084.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v4:
+In "open_midx_bitmap()", we do a loop with the MIDX(es) in repo, when
+the first one has been found, then will break out by a "return"
+directly.
 
-By Jeff Hostetler's suggestion, we can use GIT_TRACE2_CONFIG_PARAMS and
-trace2.configparams to dump "interesting" config values to the trace2 log.
-So I drop the commit [5/5] 'bitmap: add trace2 outputs during open "bitmap"
-file' in v4.
+But actually, it's better to continue the loop until we have visited
+both the MIDX in our repository, as well as any alternates (along with
+_their_ alternates, recursively).
 
-Then I found if a config key exist multiple config values in different scope
-the trace2 log will print the value repeatly but not only print the final
-active value, so a new commit "avoid to print "interesting" config repeatedly"
-is appended in v5.
+The reason for this is, there may exist more than one MIDX file in
+a repo. The "multi_pack_index" struct is actually designed as a singly
+linked list, and if a MIDX file has been already opened successfully,
+then the other MIDX files will be skipped and left with a warning
+"ignoring extra bitmap file." to the output.
 
-Finally, compared with [3/5] in v4, commit "pack-bitmap.c: retrieve missing
-i18n translations" fix every place which was missing translation in pack-bitmap.c.
+The discussion link of community:
 
-Thanks.
+  https://public-inbox.org/git/YjzCTLLDCby+kJrZ@nand.local/
 
-Teng Long (5):
-  pack-bitmap.c: continue looping when first MIDX bitmap is found
-  pack-bitmap.c: rename "idx_name" to "bitmap_name"
-  pack-bitmap.c: using error() instead of silently returning -1
-  pack-bitmap.c: retrieve missing i18n translations
-  tr2: avoid to print "interesting" config repeatedly
+Helped-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Teng Long <dyroneteng@gmail.com>
+---
+ pack-bitmap.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
- pack-bitmap.c    | 105 ++++++++++++++++++++++++-----------------------
- trace2/tr2_cfg.c |   9 +++-
- 2 files changed, 61 insertions(+), 53 deletions(-)
-
-Range-diff against v4:
-1:  d8dfe53dd4 < -:  ---------- pack-bitmap.c: make warnings support i18N when opening bitmap
--:  ---------- > 1:  589e3f4075 pack-bitmap.c: continue looping when first MIDX bitmap is found
--:  ---------- > 2:  b6b30047fc pack-bitmap.c: rename "idx_name" to "bitmap_name"
-2:  917551f2b5 = 3:  82d4493a6e pack-bitmap.c: using error() instead of silently returning -1
-3:  8735ae9979 < -:  ---------- bitmap: add trace2 outputs during open "bitmap" file
--:  ---------- > 4:  065b7c9ccb pack-bitmap.c: retrieve missing i18n translations
--:  ---------- > 5:  f3b87a33da tr2: avoid to print "interesting" config repeatedly
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 9c666cdb8b..112c2b12c6 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -494,15 +494,16 @@ static int open_pack_bitmap(struct repository *r,
+ static int open_midx_bitmap(struct repository *r,
+ 			    struct bitmap_index *bitmap_git)
+ {
++	int ret = -1;
+ 	struct multi_pack_index *midx;
+ 
+ 	assert(!bitmap_git->map);
+ 
+ 	for (midx = get_multi_pack_index(r); midx; midx = midx->next) {
+ 		if (!open_midx_bitmap_1(bitmap_git, midx))
+-			return 0;
++			ret = 0;
+ 	}
+-	return -1;
++	return ret;
+ }
+ 
+ static int open_bitmap(struct repository *r,
 -- 
 2.35.1.582.gf3b87a33da
 
