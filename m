@@ -2,85 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 157FDC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 17:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 473ADC43334
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 17:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232891AbiF1RAk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 13:00:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45068 "EHLO
+        id S232775AbiF1R2p convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 28 Jun 2022 13:28:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232922AbiF1RAT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 13:00:19 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F622251C
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 09:59:45 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5647C196DFF;
-        Tue, 28 Jun 2022 12:59:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5Tl6VdSL0D5WQAjZ7SdCM/a7t+fUaq82zpUi/G
-        GWTNk=; b=DQEVh8WlZWCfCi+PHniuKvqE/mAGajmJK6bIazMM/tvlAtTn7i30WU
-        5GekNKHV9mSKt4U7tr5kSDO3rzlMqYeRDARDnV6TS7W07o/kAwQR+eSLazoPdR03
-        /XUiu2yqDl2SKclwZkzLZV1F1QwtUWllBGXSVC7KXseJUVRtJO1QE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F006196DFE;
-        Tue, 28 Jun 2022 12:59:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D79F3196DFC;
-        Tue, 28 Jun 2022 12:59:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, Johannes.Schindelin@gmx.de
-Subject: Re: Rendering back-ticks in plaintext docs (was Re: [PATCH]
- git-rebase.txt: use back-ticks consistently)
-References: <pull.1270.git.1656364861242.gitgitgadget@gmail.com>
-        <220628.86k091f5fy.gmgdl@evledraar.gmail.com>
-        <a01c1ff7-74a7-b32f-1a1e-a8f2e840ae31@github.com>
-Date:   Tue, 28 Jun 2022 09:59:40 -0700
-In-Reply-To: <a01c1ff7-74a7-b32f-1a1e-a8f2e840ae31@github.com> (Derrick
-        Stolee's message of "Tue, 28 Jun 2022 09:20:24 -0400")
-Message-ID: <xmqqfsjolo5f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231293AbiF1R2n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 13:28:43 -0400
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1640B23D
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 10:28:43 -0700 (PDT)
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-3177f4ce3e2so124494467b3.5
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 10:28:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wgmnxfkTx4UiiZQppbMQQ5wXIogFOWwbnlWfEW33Hzw=;
+        b=dS7SCMUqv9T4+PEG3Js+sacE79Rro+c9jXoazjoghB2v5yUGd/SUEvyoTz7932N4H4
+         xGxCdhm3RjiP/vA9GKT/M1SQw1u8lmrGK89Ew9RPW6GoakW3dEri/dZTKVO3Sko/rOJ1
+         iYqaU/8EjdXdxuNbIAV8W1kApE1pX9pgLU+QwQE9WPBT/alGciVmuwTg0J/S1mDGsmCT
+         +IIdF34XQaOzU1uhlviVtNkAusokmMkYZaVavAghBZ/zKetJ7bchhOmAdUV+XbV+ybWn
+         g9Mv/3K4Yk0szaH1zYtIxwOsSJvN7+cv69YHYf+4lNTgyKh7Y4pB6Yjvq8buN4INZCax
+         +D6g==
+X-Gm-Message-State: AJIora/yPVBrZVnSZ4mWHXADqq4VlWB2kqy8Kx4GhaIFbKc23DJzqaBh
+        zqndY6Q8PshmwCO3IqC+NSaiNsswOyoWwxdNKOA=
+X-Google-Smtp-Source: AGRyM1t0dX2Lg1u9t5J6R7igBC9LnoYrzuqV0Q4Gda7yi7hKpjzEZ8/BEB2uAY03pKqWPgIVzOMRjAbLpjNGHRR52Uc=
+X-Received: by 2002:a81:5857:0:b0:31b:8e8b:ded4 with SMTP id
+ m84-20020a815857000000b0031b8e8bded4mr19631968ywb.70.1656437322242; Tue, 28
+ Jun 2022 10:28:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B4078F1C-F703-11EC-A641-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <cover.1656403084.git.dyroneteng@gmail.com> <065b7c9ccb5a412526a934f9b67c8be64a40fc7f.1656403084.git.dyroneteng@gmail.com>
+ <220628.86sfnpf96x.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220628.86sfnpf96x.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 28 Jun 2022 13:28:31 -0400
+Message-ID: <CAPig+cR9XL3dRuRrH9kCrqUqu5HwAJstgkp9eTJVBZ0TBZ+Wjw@mail.gmail.com>
+Subject: Re: [PATCH v5 4/5] pack-bitmap.c: retrieve missing i18n translations
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Teng Long <dyroneteng@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, tenglong.tl@alibaba-inc.com,
+        Jeff Hostetler <git@jeffhostetler.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+On Tue, Jun 28, 2022 at 5:13 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Tue, Jun 28 2022, Teng Long wrote:
+> >       if (bitmap_equals(result, tdata.base))
+> > -             fprintf(stderr, "OK!\n");
+> > +             fprintf(stderr, _("OK!\n"));
 
->> I see Phillip spotted some of this already, but the "exec" change here
->> looks unwanted, i.e. let's use double quotes there.
->
-> This is definitely an issue where I was looking at the HTML formatted
-> output, which respects back-ticks. Thanks for pointing out that the
-> text docs just ignore back-ticks. This seems problematic, in my opinion.
->
-> Is it possible to update our doc formatting to convert back-ticks into
-> something like single quotes? That would help these plain-text documents
-> point out these places where exact strings are very important.
->
-> I also have no idea where to look to make such a change, and it would be
-> very wide-ranging. I just think that the plaintext docs are currently a
-> lossy medium and we should work to improve that.
+As a minor additional bit of help, you can use fprintf_ln() from
+strbuf.h which will automatically output the trailing "\n":
 
-Looking at "man -l git-rebase.1" output, not the "doc-diff" output
-that renders to pure plain text by deliberately losing font
-information in the roff output, I think this change is OK.  IOW,
-"git help -m rebase" shows these marked-up parts in bold on the
-terminal (and on the paper, but who prints manual pages theres
-days?), which is what we want.
+    frpintf_ln(stderr, _("OK!"));
 
-If there is something we found in this episode that we might want to
-improve, it is doc-diff, I would think.
-
-Thanks.
+(Aside: Use of fprintf() here is a bit odd since there are no
+formatting directives in the argument, thus fputs() would have been a
+better choice, but that's a cleanup for another day and a different
+patch series, probably.)
