@@ -2,65 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB99C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26046C43334
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344775AbiF1KGo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 06:06:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37866 "EHLO
+        id S1344478AbiF1KQK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 06:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344750AbiF1KG2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 06:06:28 -0400
+        with ESMTP id S243221AbiF1KQJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 06:16:09 -0400
 Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 550FD2ED78
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:19 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id r20so16938536wra.1
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:19 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF5952FE5E
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:16:08 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id e28so11779559wra.0
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lLeJQnYqv82yoLR9KK54RSC0KTbCHFAyeRz/NxYaLis=;
-        b=Et+MT18qDu6hUSXChgmBo1F6/XW2hu7n1kJMCxZrWlch4VjGqL9eCCCysOZ5X0g5wQ
-         GAii2xk3JhyUbyWQ/yptIaN/32mm2B4Z4V13jSWngOOH/Ep+LFs6/22s/3kJ2I3BTVSO
-         mbgJ+BlOL1eO6epzne0aJ208hiqUoWKSFZx8f/juya6xVLxbPrercWKa62wXR/6E33sT
-         0dyezHN0uY1JHZA6NY4QtU9NCL6VvfzsB2vyumzG90NeofcK+VBUj2b6MCQXLpmmS8Gd
-         QtmbSuJ/onUWAVik2jGwoaqe6oa8tfx2Dj8rd5YfJeUkjLem8B65sr/Tmtr/SunHzLRO
-         Tqdw==
+        bh=o95mXQd/fDRdZYOiPl+blxJU3IJ8FNIioOC6045MADo=;
+        b=PJhqGsBJ7nN3NQAClcjXWlXn47avg66E95rkY01YkKZNwd8LAbx7EJK+Fvm1+0TrIJ
+         RXnMi5I8KZs+T/rZMzPx7JtK08BQFt8YIxCVvlgAo/vKhsfHf2FY00cRToaZqCVL4CIO
+         EzrbB5u5vGVZDwJZnBeTUq0ByyEIK2pB0EX+R+ol1199vUVPEfsKBWhDyDlX7R/5WIdB
+         zJk6iyNd5KUcwTMmoHmFOPbhcfTwdd2R+8C6tbGzrADc50J3wfestCgJZzv65YtBOipY
+         iUy4TzYF0WiO8BiRcBk1tltZNfdaxk8zeGBM/k97r6o5WnsJ5NQiCBblQki/1MG4DXDd
+         jPuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lLeJQnYqv82yoLR9KK54RSC0KTbCHFAyeRz/NxYaLis=;
-        b=4HE+7G/YDyNpXe9rrUgjQQK9n+wBUyPVQQ6i7H/GF3XhHN2cUUUgBaCb/2aKvKFCxB
-         rmYdu9Glr+1VHaYbiclYpcGk/4YdwQhkld4+7wQyMH7Lf4TJYuut1l8DUP6w5rxxGm49
-         QZrbjjuFQM6iskGO/DRJcmr3Og/F+e8TyzAmv5P5HAw5/CLAbc/6/wH5hCnE5Ed/sE3r
-         aRlr8G3vUQ83sn4JtzGMqxGG6HEHe88jZsHVwMl4Jr2VK+fTHoqHkFW/8/9ujfOxaH0S
-         2llUs3aazJV381uB6TG5sBtV1RFa3LJwNqdvoTEIOPrGhiQNTjr6fbyELNxGK/qIwR/B
-         S3KQ==
-X-Gm-Message-State: AJIora8qcOYmsCj6kZmNvofiaynhYYStQSvfxEYsODVR7fA2aDpIDz6M
-        OmLGTtLaI7fWJ4FaTcCNj8LKpS1Jrgme6g==
-X-Google-Smtp-Source: AGRyM1tC5LzsYPUotndROx/FQDRcqdDTz+TcF2SvwT+Cro1T21Mj5QyWI7kaKVj9LYCUa4Q2St5RDg==
-X-Received: by 2002:adf:ffcf:0:b0:21a:3cc0:d624 with SMTP id x15-20020adfffcf000000b0021a3cc0d624mr16942514wrs.164.1656410777524;
-        Tue, 28 Jun 2022 03:06:17 -0700 (PDT)
+        bh=o95mXQd/fDRdZYOiPl+blxJU3IJ8FNIioOC6045MADo=;
+        b=hUBN+nKNPYO3hwDrJ1nmJyjIyHLjeYhDFPm5SAuQLzyca97utsLg24QPa+MXsmff0K
+         XrUgp4WNRgTlciUqRA9ympX9ScbcWh6srJ9ahPWU9xD9+L1z6qFHwLrK37yDTdnkZoZL
+         aVex7XlOgstf9ac1q8dXIJcC4QeFoTNZJhR71/R9MJuPGBMthOT8/8KUjI5bHs3P9PGY
+         MxTTXcvZ/EZr+h1kco9NmGKFOHjMZFVobnU1zxFAQrYtf3KOE9Yimnyrc+GJUih0IzJ6
+         qFXG1s7TFdVBKZeXNY5OVnSLJ9e8s/Y+ZrP1A81O6Af81k6IdlY1hl9+DWtfDSR7ivLj
+         75ow==
+X-Gm-Message-State: AJIora9/piitJqr7K7gFuURozhFWmxCw6m/V/Zj02l7VDD9nQCQmnQz8
+        nBSsFN0EzbySU2Q2ctTJ+QcHtTvVd3FzNA==
+X-Google-Smtp-Source: AGRyM1ud38QQrN4qPQ6X4qL44UBdvj4uAdVVFgDqDuhuUx+whfg9TDddbpg1t+/HV1MwWZV5wnxr+A==
+X-Received: by 2002:adf:ef0e:0:b0:21b:9fe3:aaa7 with SMTP id e14-20020adfef0e000000b0021b9fe3aaa7mr17524322wro.695.1656411366919;
+        Tue, 28 Jun 2022 03:16:06 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e16-20020a5d4e90000000b0021b91d1ddbfsm12914430wru.21.2022.06.28.03.06.16
+        by smtp.gmail.com with ESMTPSA id r1-20020a05600c2f0100b0039c54bb28f2sm552595wmn.36.2022.06.28.03.16.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 03:06:16 -0700 (PDT)
+        Tue, 28 Jun 2022 03:16:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 09/12] submodule--helper: understand --checkout, --merge and --rebase synonyms
-Date:   Tue, 28 Jun 2022 12:05:31 +0200
-Message-Id: <patch-v4-09.12-e8ddb95dcbf-20220628T095914Z-avarab@gmail.com>
+Subject: [PATCH v3 1/8] gitweb/Makefile: define all .PHONY prerequisites inline
+Date:   Tue, 28 Jun 2022 12:15:55 +0200
+Message-Id: <patch-v3-1.8-8e85151cf3d-20220628T100936Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.880.gf07d56b18ba
-In-Reply-To: <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
-References: <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com> <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-0.8-00000000000-20220628T100936Z-avarab@gmail.com>
+References: <cover-v2-0.7-00000000000-20220531T173805Z-avarab@gmail.com> <cover-v3-0.8-00000000000-20220628T100936Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,135 +68,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Understand --checkout, --merge and --rebase synonyms for
---update={checkout,merge,rebase}, as well as the short options that
-'git submodule' itself understands.
-
-This removes a difference between the CLI API of "git submodule" and
-"git submodule--helper", making it easier to make the latter an alias
-for the former. See 48308681b07 (git submodule update: have a
-dedicated helper for cloning, 2016-02-29) for the initial addition of
---update.
+Move the '.PHONY' definition so that it's split up and accompanies the
+relevant as they're defined. This will make a subsequent diff smaller
+as we'll remove some of these, and won't need to re-edit the
+now-removed '.PHONY' line.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 30 ++++++++++++++++++++++++++++++
- git-submodule.sh            | 14 +++++++++-----
- 2 files changed, 39 insertions(+), 5 deletions(-)
+ gitweb/Makefile | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d145d53addd..e35ae0322ee 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2405,6 +2405,23 @@ static void ensure_core_worktree(const char *path)
- 	}
- }
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index f13e23c4de4..abb5c9f9ab6 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -1,5 +1,6 @@
+ # The default target of this Makefile is...
+ all::
++.PHONY: all
  
-+static const char *submodule_update_type_to_label(enum submodule_update_type type)
-+{
-+	switch (type) {
-+	case SM_UPDATE_CHECKOUT:
-+		return "checkout";
-+	case SM_UPDATE_MERGE:
-+		return "merge";
-+	case SM_UPDATE_REBASE:
-+		return "rebase";
-+	case SM_UPDATE_UNSPECIFIED:
-+	case SM_UPDATE_NONE:
-+	case SM_UPDATE_COMMAND:
-+		break;
-+	}
-+	BUG("unreachable with type %d", type);
-+}
-+
- static void update_data_to_args(struct update_data *update_data, struct strvec *args)
- {
- 	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
-@@ -2583,6 +2600,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 	struct update_data opt = UPDATE_DATA_INIT;
- 	struct list_objects_filter_options filter_options;
- 	int ret;
-+	enum submodule_update_type update_type = SM_UPDATE_UNSPECIFIED;
+ # Define V=1 to have a more verbose compile.
+ #
+@@ -45,6 +46,7 @@ HIGHLIGHT_BIN = highlight
+ -include config.mak
  
- 	struct option module_update_options[] = {
- 		OPT__FORCE(&opt.force, N_("force checkout updates"), 0),
-@@ -2604,6 +2622,15 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "update", &opt.update_default,
- 			   N_("string"),
- 			   N_("rebase, merge, checkout or none")),
-+		OPT_SET_INT(0, "checkout", &update_type,
-+			N_("use the 'checkout' update strategy (default)"),
-+			SM_UPDATE_CHECKOUT),
-+		OPT_SET_INT('m', "merge", &update_type,
-+			N_("use the 'merge' update strategy"),
-+			SM_UPDATE_MERGE),
-+		OPT_SET_INT('r', "rebase", &update_type,
-+			N_("use the 'rebase' update strategy"),
-+			SM_UPDATE_REBASE),
- 		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
- 			   N_("reference repository")),
- 		OPT_BOOL(0, "dissociate", &opt.dissociate,
-@@ -2653,6 +2680,9 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ # determine version
++.PHONY: .FORCE-GIT-VERSION-FILE
+ ../GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	$(QUIET_SUBDIR0)../ $(QUIET_SUBDIR1) GIT-VERSION-FILE
  
- 	opt.filter_options = &filter_options;
+@@ -152,6 +154,7 @@ GITWEB_REPLACE = \
+ 	-e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
+ 	-e 's|++HIGHLIGHT_BIN++|$(HIGHLIGHT_BIN)|g'
  
-+	if (update_type != SM_UPDATE_UNSPECIFIED)
-+		opt.update_default = submodule_update_type_to_label(update_type);
-+
- 	if (opt.update_default)
- 		if (parse_submodule_update_strategy(opt.update_default,
- 						    &opt.update_strategy) < 0)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1c1dc320922..7fc7119fb21 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -40,7 +40,9 @@ require_init=
- files=
- remote=
- nofetch=
--update=
-+rebase=
-+merge=
-+checkout=
- custom_name=
- depth=
- progress=
-@@ -260,7 +262,7 @@ cmd_update()
- 			force=$1
- 			;;
- 		-r|--rebase)
--			update="rebase"
-+			rebase=1
- 			;;
- 		--reference)
- 			case "$2" in '') usage ;; esac
-@@ -274,13 +276,13 @@ cmd_update()
- 			dissociate=1
- 			;;
- 		-m|--merge)
--			update="merge"
-+			merge=1
- 			;;
- 		--recursive)
- 			recursive=1
- 			;;
- 		--checkout)
--			update="checkout"
-+			checkout=1
- 			;;
- 		--recommend-shallow)
- 			recommend_shallow="--recommend-shallow"
-@@ -341,7 +343,9 @@ cmd_update()
- 		${init:+--init} \
- 		${nofetch:+--no-fetch} \
- 		${wt_prefix:+--prefix "$wt_prefix"} \
--		${update:+--update "$update"} \
-+		${rebase:+--rebase} \
-+		${merge:+--merge} \
-+		${checkout:+--checkout} \
- 		${reference:+"$reference"} \
- 		${dissociate:+"--dissociate"} \
- 		${depth:+"$depth"} \
++.PHONY: FORCE
+ GITWEB-BUILD-OPTIONS: FORCE
+ 	@rm -f $@+
+ 	@echo "x" '$(PERL_PATH_SQ)' $(GITWEB_REPLACE) "$(JSMIN)|$(CSSMIN)" >$@+
+@@ -171,15 +174,18 @@ static/gitweb.js: $(GITWEB_JSLIB_FILES)
+ 
+ ### Testing rules
+ 
++.PHONY: test
+ test:
+ 	$(MAKE) -C ../t gitweb-test
+ 
++.PHONY: test-installed
+ test-installed:
+ 	GITWEB_TEST_INSTALLED='$(DESTDIR_SQ)$(gitwebdir_SQ)' \
+ 		$(MAKE) -C ../t gitweb-test
+ 
+ ### Installation rules
+ 
++.PHONY: install
+ install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+ 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+@@ -188,10 +194,8 @@ install: all
+ 
+ ### Cleaning rules
+ 
++.PHONY: clean
+ clean:
+ 	$(RM) gitweb.cgi static/gitweb.js \
+ 		static/gitweb.min.js static/gitweb.min.css \
+ 		GITWEB-BUILD-OPTIONS
+-
+-.PHONY: all clean install test test-installed .FORCE-GIT-VERSION-FILE FORCE
+-
 -- 
 2.37.0.880.gf07d56b18ba
 
