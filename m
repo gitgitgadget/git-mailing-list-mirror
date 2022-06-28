@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F5F0CCA479
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E70F6C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344771AbiF1KGj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 06:06:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37870 "EHLO
+        id S1344757AbiF1KGl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 06:06:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344753AbiF1KG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1344752AbiF1KG2 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 28 Jun 2022 06:06:28 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63DE21DA63
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:20 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id o16so16932218wra.4
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:20 -0700 (PDT)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B83E2F00A
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:21 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id i67-20020a1c3b46000000b003a03567d5e9so7454071wma.1
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qnsvt39/xZsKKhJReg6zKy+vtczVM86rKiqEn0MU3vc=;
-        b=EMi2VK5UoyEvIsfZbdRSqqtgXyNlpLg6hPZ7O95IznyVqs8wqmn6h0rts3TUr21cCd
-         L0usukK1Qre/2Xw+JzE4Qp/39mopVKsUDrBsKuhmdEJr8iBwCVkXqlF5KwZx5yDtvHPI
-         05Hc0sW1kHtap+jMDKBSEnNnfhvS3OqW6NqkqRkwKHL9nuyCiR6klESGj11IOK/h1UTx
-         u51Z6UovdXlBoh8udIK5q8Rw9rWy2ZZcu6CShH627ZvI8x+lNUM0tz1J8NjlBzh2x6Y7
-         +PiAqyaRPi+8M9ValKv0tOhTMxrjBRwtVRPZHhcS68Y7uWvMutSQY/RLV4Sd5rSfHYpm
-         CLWA==
+        bh=dgP7+fSKm9lVlQHw/B6sEH49pbaJKzMrWPmZobYbrJo=;
+        b=C8UkH69dgoda81nlqvpxBgACoK7l880aNSgym758D/Prz2DLrzzocLbRjmVjE2tSFD
+         z/uxovx55jwM0QUxczqi6AHQmTJ80ElORTvpagTJCpOnX3w4xjZGrAjQHTb8EWKZQMeu
+         GptFaZC+6cYqjkajHsVTT8sCA4Rtbq7LHDoFt7EmbG2e9OFkK+Ckj9o25CUG0gSLhXhK
+         NlWYs7v5gqpOl9JhCzJDrSQf3VggqYHW8Mo3VOEuifbZ800N0z4ntkuvT/DMfnHdywSz
+         osH3c+2Mm5tJnU4ULhhbeQHe2E0xGnTJ3Y7nUAxwJB7SxiKBZgJUVvBm2JhF8eDtfm62
+         S0fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qnsvt39/xZsKKhJReg6zKy+vtczVM86rKiqEn0MU3vc=;
-        b=O6TRDbwon8u/uk3dtE5ZklkvtCpZMVaoLV3aIjWJu7iy2HRT8HBQBsiFNS8NEBQpfE
-         zE+lQ/rtI12tDH1GuHU0GyzuthrAx/vzsZ/m8C9CzQlulSS9EOpMMd8B8pBaInAbnyWv
-         gvjz57AGoe6xZofJpEJlTLFp61OXOVGcGwJ8VqTXt9iQTDtU1EbV2SA0dZ7iKeuzkv7g
-         5DwvMNuBpMWRKzxEptCOlWOIBcjbFrbYD2kXEz/FEThyqHeTduzuraSZqIcAxG+XYbI6
-         dnurgtJsQT8PLnaiW0Cp9YYKxY6V/F+W0W53zjz6Vij+aitaodPxJ8iVC6T4K4uoNTAi
-         ZZeA==
-X-Gm-Message-State: AJIora8nTLtfr1VOLxmgDySqnAe6HlyaB9BJXEV9VOfCx8mv2qk7IeXj
-        L3gFTibnTaTadfTphjjG35rZFvFirKdvmQ==
-X-Google-Smtp-Source: AGRyM1sjsJSOcbRvajluNZLW/C4BPuYxBbeuV8+SkN5PZ7pv7Q3Zxl8O6FMT8Sg7IWpNk5o5iJiZzA==
-X-Received: by 2002:adf:ea91:0:b0:21a:3d15:ae17 with SMTP id s17-20020adfea91000000b0021a3d15ae17mr17329937wrm.486.1656410778614;
-        Tue, 28 Jun 2022 03:06:18 -0700 (PDT)
+        bh=dgP7+fSKm9lVlQHw/B6sEH49pbaJKzMrWPmZobYbrJo=;
+        b=ReSAm1AC7yHlxQs0rYnLtgz3JwkOKmR5CrSKy5E0T12urlNzPQNPqeHwbG0UlOc0D8
+         yTAxjzmg/zF71gKByzC3jEQVYMn3MIB40nqme4Cg18XYUvSqLU+gtrBH+wmO37UDwXUt
+         SQjURlZywHZtGN+OQfbTdBtgg4VYkP5eLVu3oUVIV5F+L/9Qg1nuY+i+r+/sEkBO2+M7
+         heR+gUJmKhWscRro/9um0/Itw6fHJUIC0dqL/x9MVa7UMB0oUzPRH76p1Yjyqn4+g6W9
+         roglBP7Gk+vWnQamdD3rHpl5vNQZhi05NxGVK9D2QpwEsYpHEijSDzUuAyIcDce7Oki9
+         9ACw==
+X-Gm-Message-State: AJIora86ez/4UGY0en5zv5sdz5NS1h7mtws6WwXnSyVM20FL5Ibza9YW
+        CL61OGXWkKxP5H1CgkSNy5rZMYhSbYx9oQ==
+X-Google-Smtp-Source: AGRyM1sbVpjkGHJnektRwxfBVhy4Qf++l0kedt4yjXfWjbezc6PAPJNUB0nYQ6lt9pKdSqA7HT9gog==
+X-Received: by 2002:a05:600c:2051:b0:3a0:3c58:6ff6 with SMTP id p17-20020a05600c205100b003a03c586ff6mr23734967wmg.98.1656410779694;
+        Tue, 28 Jun 2022 03:06:19 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e16-20020a5d4e90000000b0021b91d1ddbfsm12914430wru.21.2022.06.28.03.06.17
+        by smtp.gmail.com with ESMTPSA id e16-20020a5d4e90000000b0021b91d1ddbfsm12914430wru.21.2022.06.28.03.06.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 03:06:17 -0700 (PDT)
+        Tue, 28 Jun 2022 03:06:18 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 10/12] submodule--helper: eliminate internal "--update" option
-Date:   Tue, 28 Jun 2022 12:05:32 +0200
-Message-Id: <patch-v4-10.12-abb5cb499aa-20220628T095914Z-avarab@gmail.com>
+Subject: [PATCH v4 11/12] git-submodule.sh: use "$quiet", not "$GIT_QUIET"
+Date:   Tue, 28 Jun 2022 12:05:33 +0200
+Message-Id: <patch-v4-11.12-c7eac40a0f2-20220628T095914Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.880.gf07d56b18ba
 In-Reply-To: <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
 References: <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com> <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
@@ -68,129 +68,196 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Glen Choo <chooglen@google.com>
+Remove the use of the "$GIT_QUIET" variable in favor of our own
+"$quiet", ever since b3c5f5cb048 (submodule: move core cmd_update()
+logic to C, 2022-03-15) we have not used the "say" function in
+git-sh-setup.sh, which is the only thing that's affected by using
+"GIT_QUIET".
 
-Follow-up on the preceding commit which taught "git submodule--helper
-update" to understand "--merge", "--checkout" and "--rebase" and use
-those options instead of "--update=(rebase|merge|checkout|none)" when
-the command invokes itself.
+We still want to support --quiet for our own use though, but let's use
+our own variable for that. Now it's obvious that we only care about
+passing "--quiet" to "git submodule--helper", and not to change the
+output of any "say" invocation.
 
-Unlike the preceding change this isn't strictly necessary to
-eventually change "git-submodule.sh" so that it invokes "git
-submodule--helper update" directly, but let's remove this
-inconsistency in the command-line interface. We shouldn't need to
-carry special synonyms for existing options in "git submodule--helper"
-when that command can use the primary documented names instead.
-
-But, as seen in the post-image this makes the control flow within
-"builtin/submodule--helper.c" simpler, we can now write directly to
-the "update_default" member of "struct update_data" when parsing the
-options in "module_update()".
-
-Signed-off-by: Glen Choo <chooglen@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 33 +++++++++++++--------------------
- 1 file changed, 13 insertions(+), 20 deletions(-)
+ git-submodule.sh | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index e35ae0322ee..d60f6cd9de0 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1818,7 +1818,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- static void determine_submodule_update_strategy(struct repository *r,
- 						int just_cloned,
- 						const char *path,
--						const char *update,
-+						enum submodule_update_type update,
- 						struct submodule_update_strategy *out)
- {
- 	const struct submodule *sub = submodule_from_path(r, null_oid(), path);
-@@ -1828,9 +1828,7 @@ static void determine_submodule_update_strategy(struct repository *r,
- 	key = xstrfmt("submodule.%s.update", sub->name);
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 7fc7119fb21..5e5d21c010f 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -30,6 +30,7 @@ GIT_PROTOCOL_FROM_USER=0
+ export GIT_PROTOCOL_FROM_USER
  
- 	if (update) {
--		if (parse_submodule_update_strategy(update, out) < 0)
--			die(_("Invalid update mode '%s' for submodule path '%s'"),
--				update, path);
-+		out->type = update;
- 	} else if (!repo_config_get_string_tmp(r, key, &val)) {
- 		if (parse_submodule_update_strategy(val, out) < 0)
- 			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
-@@ -1882,7 +1880,7 @@ struct update_data {
- 	const char *prefix;
- 	const char *recursive_prefix;
- 	const char *displaypath;
--	const char *update_default;
-+	enum submodule_update_type update_default;
- 	struct object_id suboid;
- 	struct string_list references;
- 	struct submodule_update_strategy update_strategy;
-@@ -2424,6 +2422,8 @@ static const char *submodule_update_type_to_label(enum submodule_update_type typ
+ command=
++quiet=
+ branch=
+ force=
+ reference=
+@@ -80,7 +81,7 @@ cmd_add()
+ 			force=$1
+ 			;;
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--progress)
+ 			progress=1
+@@ -128,7 +129,7 @@ cmd_add()
+ 		usage
+ 	fi
  
- static void update_data_to_args(struct update_data *update_data, struct strvec *args)
- {
-+	enum submodule_update_type update_type = update_data->update_default;
-+
- 	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
- 	strvec_pushf(args, "--jobs=%d", update_data->max_jobs);
- 	if (update_data->recursive_prefix)
-@@ -2447,8 +2447,10 @@ static void update_data_to_args(struct update_data *update_data, struct strvec *
- 		strvec_push(args, "--require-init");
- 	if (update_data->depth)
- 		strvec_pushf(args, "--depth=%d", update_data->depth);
--	if (update_data->update_default)
--		strvec_pushl(args, "--update", update_data->update_default, NULL);
-+	if (update_type != SM_UPDATE_UNSPECIFIED)
-+		strvec_pushf(args, "--%s",
-+			     submodule_update_type_to_label(update_type));
-+
- 	if (update_data->references.nr) {
- 		struct string_list_item *item;
- 		for_each_string_list_item(item, &update_data->references)
-@@ -2600,7 +2602,6 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 	struct update_data opt = UPDATE_DATA_INIT;
- 	struct list_objects_filter_options filter_options;
- 	int ret;
--	enum submodule_update_type update_type = SM_UPDATE_UNSPECIFIED;
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${GIT_QUIET:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${quiet:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
+ }
  
- 	struct option module_update_options[] = {
- 		OPT__FORCE(&opt.force, N_("force checkout updates"), 0),
-@@ -2619,16 +2620,13 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 			   N_("path"),
- 			   N_("path into the working tree, across nested "
- 			      "submodule boundaries")),
--		OPT_STRING(0, "update", &opt.update_default,
--			   N_("string"),
--			   N_("rebase, merge, checkout or none")),
--		OPT_SET_INT(0, "checkout", &update_type,
-+		OPT_SET_INT(0, "checkout", &opt.update_default,
- 			N_("use the 'checkout' update strategy (default)"),
- 			SM_UPDATE_CHECKOUT),
--		OPT_SET_INT('m', "merge", &update_type,
-+		OPT_SET_INT('m', "merge", &opt.update_default,
- 			N_("use the 'merge' update strategy"),
- 			SM_UPDATE_MERGE),
--		OPT_SET_INT('r', "rebase", &update_type,
-+		OPT_SET_INT('r', "rebase", &opt.update_default,
- 			N_("use the 'rebase' update strategy"),
- 			SM_UPDATE_REBASE),
- 		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
-@@ -2680,13 +2678,8 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ #
+@@ -144,7 +145,7 @@ cmd_foreach()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--recursive)
+ 			recursive=1
+@@ -159,7 +160,7 @@ cmd_foreach()
+ 		shift
+ 	done
  
- 	opt.filter_options = &filter_options;
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
+ }
  
--	if (update_type != SM_UPDATE_UNSPECIFIED)
--		opt.update_default = submodule_update_type_to_label(update_type);
--
- 	if (opt.update_default)
--		if (parse_submodule_update_strategy(opt.update_default,
--						    &opt.update_strategy) < 0)
--			die(_("bad value for update parameter"));
-+		opt.update_strategy.type = opt.update_default;
+ #
+@@ -174,7 +175,7 @@ cmd_init()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--)
+ 			shift
+@@ -190,7 +191,7 @@ cmd_init()
+ 		shift
+ 	done
  
- 	if (module_list_compute(argc, argv, prefix, &pathspec, &opt.list) < 0) {
- 		list_objects_filter_release(&filter_options);
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${GIT_QUIET:+--quiet} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${quiet:+--quiet} -- "$@"
+ }
+ 
+ #
+@@ -207,7 +208,7 @@ cmd_deinit()
+ 			force=$1
+ 			;;
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--all)
+ 			deinit_all=t
+@@ -226,7 +227,7 @@ cmd_deinit()
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${GIT_QUIET:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${quiet:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
+ }
+ 
+ #
+@@ -241,7 +242,7 @@ cmd_update()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--progress)
+ 			progress=1
+@@ -335,7 +336,7 @@ cmd_update()
+ 	done
+ 
+ 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update \
+-		${GIT_QUIET:+--quiet} \
++		${quiet:+--quiet} \
+ 		${force:+--force} \
+ 		${progress:+"--progress"} \
+ 		${remote:+--remote} \
+@@ -396,7 +397,7 @@ cmd_set_branch() {
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${quiet:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
+ }
+ 
+ #
+@@ -409,7 +410,7 @@ cmd_set_url() {
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--)
+ 			shift
+@@ -425,7 +426,7 @@ cmd_set_url() {
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${GIT_QUIET:+--quiet} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${quiet:+--quiet} -- "$@"
+ }
+ 
+ #
+@@ -496,7 +497,7 @@ cmd_status()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			;;
+ 		--cached)
+ 			cached=1
+@@ -518,7 +519,7 @@ cmd_status()
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${quiet:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
+ }
+ #
+ # Sync remote urls for submodules
+@@ -531,7 +532,7 @@ cmd_sync()
+ 	do
+ 		case "$1" in
+ 		-q|--quiet)
+-			GIT_QUIET=1
++			quiet=1
+ 			shift
+ 			;;
+ 		--recursive)
+@@ -551,7 +552,7 @@ cmd_sync()
+ 		esac
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
+ }
+ 
+ cmd_absorbgitdirs()
+@@ -572,7 +573,7 @@ do
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+-		GIT_QUIET=1
++		quiet=1
+ 		;;
+ 	--cached)
+ 		cached=1
 -- 
 2.37.0.880.gf07d56b18ba
 
