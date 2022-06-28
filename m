@@ -2,123 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24FA5C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 16:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE01BCCA479
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 16:50:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233405AbiF1Qkh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 12:40:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52408 "EHLO
+        id S229730AbiF1Qug (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 12:50:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239573AbiF1Qgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 12:36:32 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4C6C244
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 09:34:51 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id j23-20020a17090a061700b001e89529d397so5355390pjj.6
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 09:34:51 -0700 (PDT)
+        with ESMTP id S232277AbiF1Qpm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 12:45:42 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D915A2AE8
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 09:43:47 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id e131so17898257oif.13
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 09:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=x+ljXexd6pqRquODB3U9gXVWupTMH4zuui20yiJyXXo=;
-        b=GHoYivIAttEOjSaFKu/FX4akJMq1j69tDDbGpBO+7U8FdccC4+jllSmfpcV/22JuvF
-         m2qsji47Xo7M8ZyVI6KUdcY373oX6pbWWSPE1bkJY1+9OuXqOQwdlqI57+U4KyircifZ
-         s3nw3Hk3KFTh6Y2NMcbpsN2c2q3mqASgprxa8uKneoia9gLUZDajkJ4DWaoh88GywrQT
-         j6pb7hf85LiGNSQdr2BbzyuDzv73C+UUHhgfkHwa/2WAkygOAFfLpeHaonrE04qqJ3Ww
-         xEbIfe0jTCzJYP1dhuoAvdgk5XBZDElXtT3f7S76tr2ZEqvYI2fHzfwjNE4SLlThbt2X
-         gj+g==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:to:cc:references
+         :content-language:from:in-reply-to:content-transfer-encoding;
+        bh=SERiBxVec5ToMyeN7nf2NRLzDNzC6KT8PsU7ofT8BkU=;
+        b=ipP83z3TlppnF4q0mgab6AjUAFhCcGw1zCwEDNuSkeTlsK7m8NfbEDNhrInQRZ6S0w
+         ebFVJOyfud9sHnRnQHtvhN8KhnNi5DINmoNQKMnz/KbV5ogxy4d+b5vUXTj7FiJTdy9i
+         DGDF0g3MHBxV+lQzuBd66YpmAMvRm5PrC8XkhWbBeKqdxt6l0/2/7tbbqaQzxxkgfsqE
+         yJoXqcuS68TV/iRPWeb2Qz0tnokphoRbpT5W234vOct1PPIU4+JbRoy6XciMyZzGc4DV
+         pGPMjJsENK6i+wgmVaD0yndxn/BUrC9ZCvg1XlE7DejOw/Ux4uuOs4RsGOAJvKjTNwrN
+         CStA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=x+ljXexd6pqRquODB3U9gXVWupTMH4zuui20yiJyXXo=;
-        b=5C120CGp6kZykD5ujFymbldiNY6Ca2mN1y5zLXuOKDB9z+5UgAkhGHtg20PP36KdCE
-         jY6nKdc/Tnfvc/uCQ/YAhMOGe0LybskJcdo47PQc+Z2+EpaZZsIsuLP/1F+Fn2IyNOcO
-         yARnrfkzwFzDCK7nFBIZBWoMcIPVnxHBvK237S+/7yo8qV4/uIPv+0JFZe+qvqkpKETd
-         cJKbVtfpd+kY89GUhgiXpav3FFDiUgwSCwfQDC7eFQXjPElm4UG3EEbE6on67ngh1hgD
-         54xhHOLCvDPqf3QcLeGqGg4NztuHsPdiMxqZMNk7jkxlVgUb9I4/gsOU+c0MNdlRk2PQ
-         JtnQ==
-X-Gm-Message-State: AJIora/o2lN9aDlh8wfd0DsxRAedYGuPpd0hNvlb0dJDS8jdltqpuzNF
-        cjR0gZPsC+07x/wkSuizeKXfvhRV/ynXfQ==
-X-Google-Smtp-Source: AGRyM1uP1lkPOEj+VdF72RwDHKcZBgtqoTK9lIbS2dLVbmrJsfINoR3e7ixQe9gE5mnNTwqRLt1znBn9ObtoRw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:4b48:b0:1ec:fc87:691c with SMTP
- id mi8-20020a17090b4b4800b001ecfc87691cmr518253pjb.120.1656434090940; Tue, 28
- Jun 2022 09:34:50 -0700 (PDT)
-Date:   Tue, 28 Jun 2022 09:34:49 -0700
-In-Reply-To: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
-Message-Id: <kl6l4k04iw5y.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
-Subject: Re: [PATCH 0/5] submodule: remove "--recursive-prefix"
-From:   Glen Choo <chooglen@google.com>
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason" 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :to:cc:references:content-language:from:in-reply-to
+         :content-transfer-encoding;
+        bh=SERiBxVec5ToMyeN7nf2NRLzDNzC6KT8PsU7ofT8BkU=;
+        b=hbo70d5+oG4vUeX/lAbmCAaopKuRvIEqOQS28hcfPdIt4fA23bSIT1b9K+VdeLvLvp
+         a2090QZ0o4zVFae3Khq+lJ1Ywxcg0xofj9bwEBplDxMY+Wm6RFoQvuGIJ7Q11AGvF3vg
+         yfCmX1y1JGZGX7D1J5qQwixfmCnKyO6B5SGs5/1XddxWiCC/nqQe5TunvcTPTKr1ZXih
+         KSO4SHrU7sxkH97ZIVOUREfzWClz9QOvVDU9E1H381lqI9qUzbkOEBZyjpzydTCMGkTU
+         RUT3jy+LPuAMn2NnnCTdBKwit1NuC4SDA3Pdn+kLINdCoa6NdVWtT2DQ9N6BJo9HnGPh
+         pnsQ==
+X-Gm-Message-State: AJIora8L46ygJ8XCBvXsvmNmnmtSH7sdgdetK1At4jvHocAEnfAJ9rjX
+        MHq9zg9thQ0pBKVFmOwGimKsAAK81I9Jog==
+X-Google-Smtp-Source: AGRyM1sf6qG61ORtOAWjOI9HkruXDqXdrYOe8f0Fu3aom906jHaSm89vX7A30/5wBNUMK5YruBY7QA==
+X-Received: by 2002:a05:6808:f04:b0:334:379d:ae03 with SMTP id m4-20020a0568080f0400b00334379dae03mr373072oiw.24.1656434627148;
+        Tue, 28 Jun 2022 09:43:47 -0700 (PDT)
+Received: from ?IPV6:2804:d51:495a:8100:45f7:7064:6998:d39? ([2804:d51:495a:8100:45f7:7064:6998:d39])
+        by smtp.gmail.com with ESMTPSA id f26-20020a4ada5a000000b004255ed1b6d9sm7834347oou.27.2022.06.28.09.43.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jun 2022 09:43:46 -0700 (PDT)
+Message-ID: <671b375c-66e5-0164-3625-4ccfa57ece95@gmail.com>
+Date:   Tue, 28 Jun 2022 13:43:43 -0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.0
+Subject: Re: Unable to use security key to commit signing using SSH keypair
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org
+References: <97adcd90-b4d3-1114-205b-3445dd48b497@gmail.com>
+ <20220628162342.ootjobbjtxg7b7ay@fs>
+Content-Language: en-US
+From:   Marcos Alano <marcoshalano@gmail.com>
+In-Reply-To: <20220628162342.ootjobbjtxg7b7ay@fs>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 28/06/2022 13:23, Fabian Stelzer wrote:
+> On 27.06.2022 21:09, Marcos Alano wrote:
+>> Hello fellows!
+>>
+>> I'm able to sign commits using SSH keypair, but the keypair must be 
+>> located in a file. If I try to use a SSH keypair in a security key 
+>> (like an YubiKey) I get an error. I used this commands to do the test:
+>> ```
+>> ssh-keygen -t ed25519-sk -f ~/.ssh/id_ed25519_sk
+>> git config --global gpg.format ssh
+>> git config --global user.signingkey "$(cat ~/.ssh/id_ed25519_sk.pub)"
+> 
+> Did you try just putting the public keys path into user.signingkey?
+> Literal keys would need to be prefixed with `key::`
+> 
+Thank you, worked like a charm. Every documentation I read told me to 
+use the plain public key, without the path or the prefix you indicated. 
+And worked well with a regular keypair.
 
-> =3D Interactions with other series
->
-> This would have been rebased onto ab/submodule-cleanup, but it's not yet
-> clear to me if that series will be merged first. That series is almost do=
-ne,
-> but =C3=86var is still doing some digging on SUPPORT_SUPER_PREFIX [3] and=
- may
-> come back with findings that affect this series.
->
-> Fortunately, this series is only tangentially related to
-> ab/submodule-cleanup, and the conflicts are quite simple:
->
-> | this | ab/submodule-cleanup | resolution |
-> |-----------------------------+-------------------------------+----------=
------------------|
-> | push --super-prefix arg | add new "ud" var | keep both |
-> |-----------------------------+-------------------------------+----------=
------------------|
-> | remove "--recursive-prefix" | add "--checkout", "--rebase", | keep both=
- |
-> | | "--merge" | |
-> |-----------------------------+-------------------------------+----------=
------------------|
-> | add SUPPORT_SUPER_PREFIX | remove SUPPORT_SUPER_PREFIX | keep
-> ab/submodule-cleanup | | to "git submodule--helper | from "git
-> submodule--helper" | | | update" | | |
+Using the path and prefixing the public key worked.
 
-Hm, maybe I'm not using GGG correctly, but these whitespace issues seem
-pretty common (Markdown collapsing the whitespace maybe?). Maybe I need
-to blockquote the monospaced stuff.
+You have my gratitude. :)
 
-Here's the original table:
+Stay well,
+> git config --global user.signingkey ~/.ssh/id_ed25519_sk.pub
+> should be just fine.
+> 
+> Also, the private key needs to be available in your ssh agent. If in 
+> doubt you can check with a `ssh-add -L`.
+> 
+>> git commit -S --allow-empty --message="Testing"
+>> ```
+>>
+>> Bnd I get this error:
+>> ```
+>> error: Couldn't load public key sk-ssh-ed25519@openssh.com <my key 
+>> id>: No such file or directory?
+>>
+>> fatal: failed to write commit object
+>> ```
+>> I did the same thing with a plain ed25519 keypair and worked.
+>>
+>> Am I doing anything wrong or security keys aren't supported yet?
+>>
+>> Thank you for any help,
+>> -- 
+>> Marcos Alano
 
-| this                        | ab/submodule-cleanup          | resolution =
-               |
-|-----------------------------+-------------------------------+------------=
----------------|
-| push --super-prefix arg     | add new "ud" var              | keep both  =
-               |
-|-----------------------------+-------------------------------+------------=
----------------|
-| remove "--recursive-prefix" | add "--checkout", "--rebase", | keep both  =
-               |
-|                             | "--merge"                     |            =
-               |
-|-----------------------------+-------------------------------+------------=
----------------|
-| add SUPPORT_SUPER_PREFIX    | remove SUPPORT_SUPER_PREFIX   | keep ab/sub=
-module-cleanup |
-| to "git submodule--helper   | from "git submodule--helper"  |            =
-               |
-| update"                     |                               |            =
-               |
+-- 
+Marcos Alano
 
-(For the org-mode users: org-table-align fixes everything except the
-last row, presumably because of the rogue line breaks.)
