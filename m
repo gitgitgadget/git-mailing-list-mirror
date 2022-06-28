@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECBF4C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 13:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54CF9C43334
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 13:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245099AbiF1N2H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 09:28:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56710 "EHLO
+        id S1346255AbiF1N2L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 09:28:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346450AbiF1N13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 09:27:29 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B01EC3335E
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 06:26:03 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id n1so17667161wrg.12
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 06:26:03 -0700 (PDT)
+        with ESMTP id S1346489AbiF1N1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 09:27:35 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7D43293
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 06:26:11 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 189so6881967wmz.2
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 06:26:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5H1/BkGNzKZHdO7ThWj9L1t8uHwFXO4zO/yDHCP54Rw=;
-        b=SilxFcIUqc9l2yJ+nHxNDYypWi06Sr5ji15AQHLz7P7Mu2OP+ojpsTFTTg2wIq1VlB
-         e9LchsyEvP5OFe0+xq8V50HPojD7JiVH6VmR8FqXN0FJbIvcHxjLp2TRmLXRx8HlShdF
-         l4i0N7WUEX1G8JqZx9v3O6+lz4SQ6Uh0VkLzquWgj4rhXJEOw43VAZeoJHEtuknRlPyQ
-         nZDS0HBFVni1StdW843ir1iCrpjpqW75O9RyLn/mlrft/onqpvUiDQsWi1HFqsWxykAN
-         kJXNSYZHba+v6COLfuTZFZ6K0hKO+yEd+Uz94KjJayuvmTLgkvJ4Hz7NMIjgMtxJgZTp
-         Ht0w==
+        bh=5x6fg5yrJbAE2JBm8dIv01LDeHVBfYCo1j46a2PHdLQ=;
+        b=pOBe0n3PdHvFBjN3lL8gK7qsRQzlYLcR2OhvmD+SxvDDSv48Cam85PdRdYtxh+OoW5
+         3nqbstD5TgqEp+U7uu9N/ngOd5BdCykzDmngqt8GlcVbqoFAKHIGrk+By+iXJGKFUGEu
+         +XDxsmwLRVtGfksdYuqDxqgLxWtQgmNpPH+KscaCYuoHt870SPy9HpXcpnt2Z5LqW2iB
+         g0tQrizreCvlxRHkrM/g7+F2CWtVyGEbIrMi5dThCEfyKZpWkxlvYrKEVEw4yhFmz/wX
+         brfa+3mn2PnFARww6Xq1jRLqRxtjL7bgMD7oFZBaZRAebXoX5YQAsOf+VeYX9iS2sFtG
+         Tf5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5H1/BkGNzKZHdO7ThWj9L1t8uHwFXO4zO/yDHCP54Rw=;
-        b=cfo7N9FX4S4kdSuI86becn9NMzik4yyL4fuieWztw88d2ltZKUxLU7YdppY1WBhT3s
-         fxtElnf6/eE2c+QB3Lm/0cgn4F46h6lib8WxVVKiV4nv9ZXQw6K7fTKn5uDZd+3LTGhk
-         tD4zYnGtoYomjpLh0RP1RXY7wyLdqz5M7zPkyHCfe94+hDMBa9DoQsXNkg5fFXJfUYW4
-         2/RQv0j1yWaice30YTKcfAwU+kaDPMhYkoQMdrV9LUKBIh8Tk1WHsbNbzytKBrc1VTsx
-         KlnGdPOgjxzcIF+7ZzzCtnwlb1YoyKoSy23GrQEcvkJVY5a5MKz55qqXbZq6H/tJEF2M
-         oLBA==
-X-Gm-Message-State: AJIora9ZE5DgkVWz1Q8Q83jYWchptu3B/9HBHF38Q34XV8UlZz6N89qt
-        p2opyU3cig0FNv4nIexIuKj5z6gWotOhow==
-X-Google-Smtp-Source: AGRyM1uZYy87pJdagF81T5//YBqT3hdfJ710vV0oJr/eUaeE3kdWCTuPI8amIZg65rs6xxVbTvwHcw==
-X-Received: by 2002:a5d:518f:0:b0:21b:8a8c:ce4 with SMTP id k15-20020a5d518f000000b0021b8a8c0ce4mr18200882wrv.614.1656422761921;
-        Tue, 28 Jun 2022 06:26:01 -0700 (PDT)
+        bh=5x6fg5yrJbAE2JBm8dIv01LDeHVBfYCo1j46a2PHdLQ=;
+        b=DBqKzdANI/hnSOpNEJC1YAK0BYNRTHe0EhQ0uoW2EUaME5D948PiAzw2Tld4M4PZMe
+         VF0v9HwsX/eKycAaHNBqAaBVqlGe6G76apxWcKbybIszOeV5IwBSuOgGDt8jkxPv+bii
+         8JMdQP5kd5oviGeW4cwy6RNgqmX9qm3nAmlDLE5H77Z3Fo+Ojv7ZahnceHOISfJU9Dlf
+         ILkkMFan6FwF307pC/bhTBGkx3J24KRx2RUjtPBd9r1GOjnB6wxk007eBM1wFDdcQIg6
+         XdsRu/4EeYyo7pj62LCGf8qFiXeSD11KJdPtgCthbkVsCsZMundN1hUquyNge+C1qXsz
+         jTTA==
+X-Gm-Message-State: AJIora83uavJOffmGfhRGYqrYeNWUwQeYsZy53E+IMnccPiJoiGdzfjI
+        wUSPEZ49p5xDV1aD+kgfxyaMYT6E7ybZOA==
+X-Google-Smtp-Source: AGRyM1t9Q9r6wG+xOKdlKMB8cWQ1Iwf8y5fBA4qfiggFjzTkdcOMTG0DIynEK572vpfpdDc09J6eJg==
+X-Received: by 2002:a05:600c:3d92:b0:3a0:4b71:f2c4 with SMTP id bi18-20020a05600c3d9200b003a04b71f2c4mr11179788wmb.160.1656422769959;
+        Tue, 28 Jun 2022 06:26:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k19-20020a7bc413000000b003a02b135747sm17129003wmi.46.2022.06.28.06.26.01
+        by smtp.gmail.com with ESMTPSA id y15-20020a5d4acf000000b0021b9c520953sm13665690wrs.64.2022.06.28.06.26.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 06:26:01 -0700 (PDT)
-Message-Id: <fbaedc7f1f02efec251cb4df665fd3cb71f1d3b3.1656422759.git.gitgitgadget@gmail.com>
+        Tue, 28 Jun 2022 06:26:09 -0700 (PDT)
+Message-Id: <d2cfdbfc4319081d548d13bbd675c4385b1a5ba6.1656422759.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
 References: <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
         <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jun 2022 13:25:52 +0000
-Subject: [PATCH v3 1/8] t2407: test branches currently using apply backend
+Date:   Tue, 28 Jun 2022 13:25:59 +0000
+Subject: [PATCH v3 8/8] rebase: add rebase.updateRefs config option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,44 +71,94 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The tests in t2407 that verify the branch_checked_out() helper in the
-case of bisects and rebases were added by 9347303db89 (branch: check for
-bisects and rebases, 2022-06-08). However, that commit failed to check
-for rebases that are using the 'apply' backend.
-
-Add a test that checks the apply backend. The implementation was already
-correct here, but it is good to have regression tests before modifying
-the implementation further.
+The previous change added the --update-refs command-line option.  For
+users who always want this mode, create the rebase.updateRefs config
+option which behaves the same way as rebase.autoSquash does with the
+--autosquash option.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t2407-worktree-heads.sh | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ Documentation/config/rebase.txt |  3 +++
+ Documentation/git-rebase.txt    |  3 +++
+ builtin/rebase.c                |  5 +++++
+ t/t3404-rebase-interactive.sh   | 14 ++++++++++++++
+ 4 files changed, 25 insertions(+)
 
-diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
-index b6be42f74a2..4f59bc21303 100755
---- a/t/t2407-worktree-heads.sh
-+++ b/t/t2407-worktree-heads.sh
-@@ -54,7 +54,18 @@ test_expect_success 'refuse to overwrite: worktree in bisect' '
- 	grep "cannot force update the branch '\''fake-2'\'' checked out at.*wt-4" err
+diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
+index 8c979cb20f2..f19bd0e0407 100644
+--- a/Documentation/config/rebase.txt
++++ b/Documentation/config/rebase.txt
+@@ -21,6 +21,9 @@ rebase.autoStash::
+ 	`--autostash` options of linkgit:git-rebase[1].
+ 	Defaults to false.
+ 
++rebase.updateRefs::
++	If set to true enable `--update-refs` option by default.
++
+ rebase.missingCommitsCheck::
+ 	If set to "warn", git rebase -i will print a warning if some
+ 	commits are removed (e.g. a line was deleted), however the
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index e7611b4089c..1249f9ed617 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -615,6 +615,9 @@ start would be overridden by the presence of
+ 	are being rebased. Any branches that are checked out in a worktree
+ 	or point to a `squash! ...` or `fixup! ...` commit are not updated
+ 	in this way.
+++
++If the configuration variable `rebase.updateRefs` is set, then this option
++can be used to override and disable this setting.
+ 
+ INCOMPATIBLE OPTIONS
+ --------------------
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 56d82a52106..8ebc98ea505 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -802,6 +802,11 @@ static int rebase_config(const char *var, const char *value, void *data)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "rebase.updaterefs")) {
++		opts->update_refs = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "rebase.reschedulefailedexec")) {
+ 		opts->reschedule_failed_exec = git_config_bool(var, value);
+ 		return 0;
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 63a69bc073e..77478d94f3b 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1768,6 +1768,12 @@ test_expect_success '--update-refs adds label and update-ref commands' '
+ 		EOF
+ 
+ 		test_must_fail git rebase -i --autosquash --update-refs primary >todo &&
++		test_cmp expect todo &&
++
++		test_must_fail git -c rebase.autosquash=true \
++				   -c rebase.updaterefs=true \
++				   rebase -i primary >todo &&
++
+ 		test_cmp expect todo
+ 	)
  '
+@@ -1809,6 +1815,14 @@ test_expect_success '--update-refs adds commands with --rebase-merges' '
+ 				   --rebase-merges=rebase-cousins \
+ 				   --update-refs primary >todo &&
  
--test_expect_success 'refuse to overwrite: worktree in rebase' '
-+test_expect_success 'refuse to overwrite: worktree in rebase (apply)' '
-+	test_when_finished rm -rf .git/worktrees/wt-*/rebase-apply &&
++		test_cmp expect todo &&
 +
-+	mkdir -p .git/worktrees/wt-3/rebase-apply &&
-+	echo refs/heads/fake-1 >.git/worktrees/wt-3/rebase-apply/head-name &&
-+	echo refs/heads/fake-2 >.git/worktrees/wt-3/rebase-apply/onto &&
++		test_must_fail git -c rebase.autosquash=true \
++				   -c rebase.updaterefs=true \
++				   rebase -i \
++				   --rebase-merges=rebase-cousins \
++				   primary >todo &&
 +
-+	test_must_fail git branch -f fake-1 HEAD 2>err &&
-+	grep "cannot force update the branch '\''fake-1'\'' checked out at.*wt-3" err
-+'
-+
-+test_expect_success 'refuse to overwrite: worktree in rebase (merge)' '
- 	test_when_finished rm -rf .git/worktrees/wt-*/rebase-merge &&
- 
- 	mkdir -p .git/worktrees/wt-3/rebase-merge &&
+ 		test_cmp expect todo
+ 	)
+ '
 -- 
 gitgitgadget
-
