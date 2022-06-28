@@ -2,452 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54C29C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 09:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81C7DC433EF
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:00:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344506AbiF1Jvb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 05:51:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44176 "EHLO
+        id S1344522AbiF1KAk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 06:00:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241460AbiF1Jv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 05:51:29 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499E82B25B
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:51:27 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id g39-20020a05600c4ca700b003a03ac7d540so6390789wmp.3
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:51:27 -0700 (PDT)
+        with ESMTP id S1344021AbiF1KAL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 06:00:11 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CD12EA3D
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:59:44 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id be14-20020a05600c1e8e00b003a04a458c54so3246002wmb.3
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 02:59:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gb2M7eNZYq8PEaFm6RFIfzfdRvkGyr9qoHr89F8gUgg=;
-        b=DmMGU1gjX9wnk/o7yqP3GSmykrn60iLN4IHW4313UhPa7M/o1o/jToWZUUJzWBrTan
-         VsWXZAsAlm76TIP6eXdyc1Rksp5F9KK0S488GTxMb3puw+bW4HnkGaw+LCET5LGY6W5s
-         i4pY5kxO7qx243qmqaOo8OWF4SKOdvgS74xIQh5b4wiWQtPoX/Lh2HbwMq8UMprMdADW
-         bECPp4JJ2Xqu41VEFIrWOaxbez2vw6PzBE+5ULsD2L9t8Vr1bpAUGlPSBaUrxEDkP7Hn
-         FfWPg27DIhXhhmnakaZZIi+m4ONHhG8LJJdbcqNNZa+mIi8GSnUs2z8ssGW6x3MQyyF8
-         I6nw==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cLnNbMUrZ1nv8bomexN//Ey0vivquKcsMKdE902U18E=;
+        b=IOMSAhNqa4J2g/CuGnlp6AgBO0Y+IlbF9IQcT3XplkPCwQlYBgw8vYsSygk5JqWEgu
+         mSp+lp2ywwxICRHMzYYj+QkE38iKo3afBnkC0awvIjYQAwaT0UyyA7osibd8winh7SgW
+         Lsgo9Ncbcv0bzfg1NnM9c8MsJYV47vS1bGUe6gRpeA9Hc0M+nDs/Umx7E5UWEMXY2vro
+         oax3sh1N/w0Z1N65aSLxf/WVp1Hih5XB+18niPXHSjnbWqG9+RBi6moy8pq6teGTRCOd
+         tkYSU6t09wOix4CHaCSoMsluLbzp5QFr+VSoHkC/XkrrSvrnOMsFEEU4gPqFFkpUApvr
+         bn0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gb2M7eNZYq8PEaFm6RFIfzfdRvkGyr9qoHr89F8gUgg=;
-        b=HiAiLnGqPR1HTY6dSDQQvaF5Vgq/9MyZVdw3+u+TE6Sk74QdQ5gG2RLe0LPpxWk4Q+
-         LgvFWCmPEzorGr1mYno6Qjz1CoeXG4UOwKzME29vMtAmmsTGbRfFD2jOefG6eLTr+V/k
-         EBtmApJwgcJYBTtm2DNv7H2do6Hz+ZPTzXY/CFVQx5zzxL/GNFCpXTyYS0d5jXHWc++E
-         qUucgZa2kqnRqy11OtaJT3gieDBnvFlEbQG8dlwFiBT8cqxI5kkP+eRFUNMZQwJB1aSd
-         Ryk95zxF+BWjnYuyqMEZAqOp53W+cd3UOWiHAgHSlIVSFd1nT/MPXb+klQLcG7FQLjyM
-         cSPg==
-X-Gm-Message-State: AJIora+tVCpQpz4VHzySTXIUXmwFtLMMxlVQSCpF7er9dRqhs2WCH0gd
-        dg5dfWYDpzCB/BwBlqeplmGkesFXgiW2Bw==
-X-Google-Smtp-Source: AGRyM1vu2+05UfmVFh+/TR9iGqVdTLCfsNtvFYOSje9MO2QqJi9x/afAMYAOKDu1rBdf8tsFeVxhcw==
-X-Received: by 2002:a1c:19c3:0:b0:39c:6479:3ca with SMTP id 186-20020a1c19c3000000b0039c647903camr24914994wmz.27.1656409885248;
-        Tue, 28 Jun 2022 02:51:25 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b3-20020a5d6343000000b0021a36955493sm12908636wrw.74.2022.06.28.02.51.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 02:51:24 -0700 (PDT)
-Message-Id: <pull.1269.v3.git.1656409884091.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1269.v2.git.1656407664694.gitgitgadget@gmail.com>
-References: <pull.1269.v2.git.1656407664694.gitgitgadget@gmail.com>
-From:   "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jun 2022 09:51:23 +0000
-Subject: [PATCH v3] ls-files: update test style
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cLnNbMUrZ1nv8bomexN//Ey0vivquKcsMKdE902U18E=;
+        b=QzIS8AeeWJDHKeodImN15U1dd1YdmCLfNdNAfIE71+6ywjGErVYK+u+do5/oTTjyAX
+         vebqL1lBevIBe3OWonlvvqWPTeBBnZy1WwKaGYapwLXVqgY9u5GzMJYOUYnGqxN8CL0q
+         tfhkYXdnPwf1mCZKzvJwoQXyiTkPgq2YDW7d+/Og8K16oK4MLE9/KzR9O9XdA8h1WYPz
+         R99Hf23FfsFR7IVNSzmZ5WK+WMN9f4+zLuzM2zduXNMUFcJBLiCyCuzunffBVxOZW50e
+         xLc4y5/TZkAytVKqqN46OeBKFsNC1qaOQ1b+mDt6JsH97bOjkqauxiPTHgMUY9mJX+Z/
+         0vHw==
+X-Gm-Message-State: AJIora+YCKmrlQfexJuwoghzDTrW5NpRvih8k9udPkixgiyK0akOqP71
+        ya0xsCiVKwYpJWh3fvXFHhJ2qsyc8Sk=
+X-Google-Smtp-Source: AGRyM1sgF4ebfWoQ9FeZKvyO2WiDYmjbTFQReHxC2eXWqLC7KNBuhtuTlA1GGp5YBurhYg5+cIzcIg==
+X-Received: by 2002:a05:600c:1991:b0:39c:88ba:2869 with SMTP id t17-20020a05600c199100b0039c88ba2869mr19547900wmq.14.1656410382761;
+        Tue, 28 Jun 2022 02:59:42 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id t18-20020a05600c199200b003a032c88877sm22411305wmq.15.2022.06.28.02.59.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jun 2022 02:59:42 -0700 (PDT)
+Message-ID: <a821c10b-3b55-f20a-dc4c-c5b0452d7819@gmail.com>
+Date:   Tue, 28 Jun 2022 10:59:40 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Li Linchao <lilinchao@oschina.cn>,
-        Li Linchao <lilinchao@oschina.cn>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] git-rebase.txt: use back-ticks consistently
+Content-Language: en-GB-large
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, Johannes.Schindelin@gmx.de,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1270.git.1656364861242.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1270.git.1656364861242.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Li Linchao <lilinchao@oschina.cn>
+Hi Stolee
 
-Update test style in t/t30[*].sh for uniformity, that's to
-keep test title the same line with helper function itself,
-and fix some indentions.
+On 27/06/2022 22:21, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+> While inspecting the 'git rebase' documentation, I noticed that it is
+> inconsistent with how it uses back-ticks (or other punctuation) for
+> identifying Git commands, command-line arguments, or values for those
+> arguments.
+> 
+> Sometimes, an argument (like '--interactive') would appear without any
+> punctuation, causing the argument to not have any special formatting.
+> Other times, arguments or 'git rebase' itself would have single-quotes
+> giving a bold look (in the HTML documentation at least).
+> 
+> By consistently using back-ticks, these types of strings appear in a
+> monospace font with special highlighting to appear more clearly as text
+> that exists in a command-line invocation of a Git command.
+> 
+> This rather-large diff is the result of scanning git-rebase.txt and
+> adding back-ticks as appropriate. Some are adding back-ticks where there
+> was no punctuation. Others are replacing single quotes.
+> 
+> There are also a few minor cleanups in the process, such as one place
+> that did not use tabs for the first paragraph in a bulletted list.
+> Another case still referred to the dashed form, but it was the only use
+> in the file except for the heading and NAME section.
+> 
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 
-Add a new section "recommended style" in t/README to
-encourage people to use more modern style in test.
+Thanks for doing this, I think it's fine as a single patch as all the 
+changes are focussed making the quoting more consistent in a single file 
+- splitting it up would be more work for you and would not really make 
+it any easier for reviewers. I've left a few comments but it is a vast 
+improvement as is.
 
-Signed-off-by: Li Linchao <lilinchao@oschina.cn>
----
-    ls-files: update test style
-    
-    Update test style in t/t30[*].sh for uniformity, that's to keep test
-    title the same line with helper function itself.
-    
-    And update t/README to describe this test style.
-    
-    Signed-off-by: Li Linchao lilinchao@oschina.cn
+> -The current branch is reset to <upstream>, or <newbase> if the
+> ---onto option was supplied.  This has the exact same effect as
+> -`git reset --hard <upstream>` (or <newbase>).  ORIG_HEAD is set
+> +The current branch is reset to `<upstream>`, or `<newbase>` if the
+> +`--onto` option was supplied.  This has the exact same effect as
+> +`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1269%2FCactusinhand%2Fllc%2Ffix-test-title-style-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1269/Cactusinhand/llc/fix-test-title-style-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1269
+Unrelated to your change but I think we could lose the comma on this 
+line if you do re-roll.
 
-Range-diff vs v2:
+>   Note that a rebase merge works by replaying each commit from the working
+> -branch on top of the <upstream> branch.  Because of this, when a merge
+> +branch on top of the `<upstream>` branch.  Because of this, when a merge
+>   conflict happens, the side reported as 'ours' is the so-far rebased
+> -series, starting with <upstream>, and 'theirs' is the working branch.  In
+> -other words, the sides are swapped.
+> +series, starting with `<upstream>`, and 'theirs' is the working branch.
+> +In other words, the sides are swapped.
 
- 1:  775c17499d5 ! 1:  b3d80bd9cd5 ls-files: update test style
-     @@ Commit message
-          ls-files: update test style
-      
-          Update test style in t/t30[*].sh for uniformity, that's to
-     -    keep test title the same line with helper function itself.
-     +    keep test title the same line with helper function itself,
-     +    and fix some indentions.
-      
-     -    And update t/README to describe this test style.
-     +    Add a new section "recommended style" in t/README to
-     +    encourage people to use more modern style in test.
-      
-          Signed-off-by: Li Linchao <lilinchao@oschina.cn>
-      
-     @@ t/README: This test harness library does the following things:
-       
-      +Recommended style
-      +-----------------
-     -+Here are some recommented style that you should follow when you write some test cases.
-     ++Here are some recommented styles when writing test case.
-      +
-      + - Keep test title the same line with test helper function itself.
-      +
-     @@ t/README: This test harness library does the following things:
-      +
-      + - End the line with a single quote.
-      +
-     -+ - Indent the body of here-document, and cut off prefix TAB by using
-     -+ "<<-":
-     ++ - Indent the body of here-document, and use "<< -" instead of "<<" to strip prefix TAB:
-      +
-      +  test_expect_success 'test something' '
-      +      cat >expect <<-\EOF &&
-     @@ t/t3002-ls-files-dashpath.sh: filesystem.
-       
-       test_done
-      
-     - ## t/t3007-ls-files-recurse-submodules.sh ##
-     -@@ t/t3007-ls-files-recurse-submodules.sh: test_expect_success '--recurse-submodules does not support --error-unmatch' '
-     - 
-     - test_incompatible_with_recurse_submodules () {
-     - 	test_expect_success "--recurse-submodules and $1 are incompatible" "
-     --		test_must_fail git ls-files --recurse-submodules $1 2>actual &&
-     --		test_i18ngrep 'unsupported mode' actual
-     -+	test_must_fail git ls-files --recurse-submodules $1 2>actual &&
-     -+	test_i18ngrep 'unsupported mode' actual
-     - 	"
-     - }
-     - 
-     -
-       ## t/t3020-ls-files-error-unmatch.sh ##
-      @@ t/t3020-ls-files-error-unmatch.sh: test_expect_success 'setup' '
-       	git commit -m "add foo bar"
+Here when talking about "ours" and "theirs" as the parents of a merge we 
+use single quotes ...
 
+> -Because 'git rebase' replays each commit from the working branch
+> -on top of the <upstream> branch using the given strategy, using
+> -the 'ours' strategy simply empties all patches from the <branch>,
+> +Because `git rebase` replays each commit from the working branch
+> +on top of the `<upstream>` branch using the given strategy, using
+> +the `ours` strategy simply empties all patches from the `<branch>`,
 
- t/README                           | 46 ++++++++++++++++
- t/t3001-ls-files-others-exclude.sh | 42 +++++++--------
- t/t3002-ls-files-dashpath.sh       | 86 ++++++++++++++++--------------
- t/t3020-ls-files-error-unmatch.sh  | 12 ++---
- t/t3060-ls-files-with-tree.sh      |  8 +--
- 5 files changed, 123 insertions(+), 71 deletions(-)
+Here "ours" is an option argument so I think the backquotes make sense
 
-diff --git a/t/README b/t/README
-index 309a31133c6..5e0539412b4 100644
---- a/t/README
-+++ b/t/README
-@@ -547,6 +547,52 @@ This test harness library does the following things:
-    consistently when command line arguments --verbose (or -v),
-    --debug (or -d), and --immediate (or -i) is given.
- 
-+Recommended style
-+-----------------
-+Here are some recommented styles when writing test case.
-+
-+ - Keep test title the same line with test helper function itself.
-+
-+   Take test_expect_success helper for example, write it like:
-+
-+  test_expect_success 'test title' '
-+  ... test body ...
-+  '
-+
-+   Instead of:
-+
-+  test_expect_success \
-+  'test title' \
-+  '... test body ...'
-+
-+
-+ - End the line with a single quote.
-+
-+ - Indent the body of here-document, and use "<< -" instead of "<<" to strip prefix TAB:
-+
-+  test_expect_success 'test something' '
-+      cat >expect <<-\EOF &&
-+      one
-+      two
-+      three
-+      EOF
-+      test_something > actual &&
-+      test_cmp expect actual
-+  '
-+
-+   Instead of:
-+
-+  test_expect_success 'test something' '
-+      cat >expect <<\EOF &&
-+  one
-+  two
-+  three
-+  EOF
-+      test_something > actual &&
-+      test_cmp expect actual
-+  '
-+
-+
- Do's & don'ts
- -------------
- 
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
-index 48cec4e5f88..e07ac6c6dce 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -67,26 +67,26 @@ echo '!*.2
- 
- allignores='.gitignore one/.gitignore one/two/.gitignore'
- 
--test_expect_success \
--    'git ls-files --others with various exclude options.' \
--    'git ls-files --others \
-+test_expect_success 'git ls-files --others with various exclude options.' '
-+	git ls-files --others \
-        --exclude=\*.6 \
-        --exclude-per-directory=.gitignore \
-        --exclude-from=.git/ignore \
--       >output &&
--     test_cmp expect output'
-+	>output &&
-+	test_cmp expect output
-+'
- 
- # Test \r\n (MSDOS-like systems)
- printf '*.1\r\n/*.3\r\n!*.6\r\n' >.gitignore
- 
--test_expect_success \
--    'git ls-files --others with \r\n line endings.' \
--    'git ls-files --others \
-+test_expect_success 'git ls-files --others with \r\n line endings.' '
-+	git ls-files --others \
-        --exclude=\*.6 \
-        --exclude-per-directory=.gitignore \
-        --exclude-from=.git/ignore \
--       >output &&
--     test_cmp expect output'
-+	>output &&
-+	test_cmp expect output
-+'
- 
- test_expect_success 'setup skip-worktree gitignore' '
- 	git add $allignores &&
-@@ -94,14 +94,14 @@ test_expect_success 'setup skip-worktree gitignore' '
- 	rm $allignores
- '
- 
--test_expect_success \
--    'git ls-files --others with various exclude options.' \
--    'git ls-files --others \
-+test_expect_success 'git ls-files --others with various exclude options.' '
-+	git ls-files --others \
-        --exclude=\*.6 \
-        --exclude-per-directory=.gitignore \
-        --exclude-from=.git/ignore \
--       >output &&
--     test_cmp expect output'
-+	>output &&
-+	test_cmp expect output
-+'
- 
- test_expect_success !SANITIZE_LEAK 'restore gitignore' '
- 	git checkout --ignore-skip-worktree-bits $allignores &&
-@@ -283,12 +283,12 @@ test_expect_success 'pattern matches prefix completely' '
- '
- 
- test_expect_success 'ls-files with "**" patterns' '
--	cat <<\EOF >expect &&
--a.1
--one/a.1
--one/two/a.1
--three/a.1
--EOF
-+	cat <<-\EOF >expect &&
-+	a.1
-+	one/a.1
-+	one/two/a.1
-+	three/a.1
-+	EOF
- 	git ls-files -o -i --exclude "**/a.1" >actual &&
- 	test_cmp expect actual
- '
-diff --git a/t/t3002-ls-files-dashpath.sh b/t/t3002-ls-files-dashpath.sh
-index 54d22a45dfb..4dd24550eba 100755
---- a/t/t3002-ls-files-dashpath.sh
-+++ b/t/t3002-ls-files-dashpath.sh
-@@ -16,56 +16,62 @@ filesystem.
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
--test_expect_success \
--	setup \
--	'echo frotz >path0 &&
-+test_expect_success 'setup' '
-+	echo frotz >path0 &&
- 	echo frotz >./-foo &&
--	echo frotz >./--'
-+	echo frotz >./--
-+'
- 
--test_expect_success \
--    'git ls-files without path restriction.' \
--    'git ls-files --others >output &&
--     test_cmp output - <<EOF
----
---foo
--output
--path0
--EOF
-+test_expect_success 'git ls-files without path restriction.' '
-+	test_when_finished "rm -f expect" &&
-+	git ls-files --others >output &&
-+	cat >expect <<-\EOF &&
-+	--
-+	-foo
-+	output
-+	path0
-+	EOF
-+	test_cmp output expect
- '
- 
--test_expect_success \
--    'git ls-files with path restriction.' \
--    'git ls-files --others path0 >output &&
--	test_cmp output - <<EOF
--path0
--EOF
-+test_expect_success 'git ls-files with path restriction.' '
-+	test_when_finished "rm -f expect" &&
-+	git ls-files --others path0 >output &&
-+	cat >expect <<-\EOF &&
-+	path0
-+	EOF
-+	test_cmp output expect
- '
- 
--test_expect_success \
--    'git ls-files with path restriction with --.' \
--    'git ls-files --others -- path0 >output &&
--	test_cmp output - <<EOF
--path0
--EOF
-+test_expect_success 'git ls-files with path restriction with --.' '
-+	test_when_finished "rm -f expect" &&
-+	git ls-files --others -- path0 >output &&
-+	cat >expect <<-\EOF &&
-+	path0
-+	EOF
-+	test_cmp output expect
- '
- 
--test_expect_success \
--    'git ls-files with path restriction with -- --.' \
--    'git ls-files --others -- -- >output &&
--	test_cmp output - <<EOF
----
--EOF
-+test_expect_success 'git ls-files with path restriction with -- --.' '
-+	test_when_finished "rm -f expect" &&
-+	git ls-files --others -- -- >output &&
-+	cat >expect <<-\EOF &&
-+	--
-+	EOF
-+	test_cmp output expect
- '
- 
--test_expect_success \
--    'git ls-files with no path restriction.' \
--    'git ls-files --others -- >output &&
--	test_cmp output - <<EOF
----
---foo
--output
--path0
--EOF
-+test_expect_success 'git ls-files with no path restriction.' '
-+	test_when_finished "rm -f expect" &&
-+	git ls-files --others -- >output &&
-+	cat >expect <<-\EOF &&
-+	--
-+	-foo
-+	output
-+	path0
-+	EOF
-+	test_cmp output expect
-+
- '
- 
- test_done
-diff --git a/t/t3020-ls-files-error-unmatch.sh b/t/t3020-ls-files-error-unmatch.sh
-index 2cbcbc0721b..133593d23c0 100755
---- a/t/t3020-ls-files-error-unmatch.sh
-+++ b/t/t3020-ls-files-error-unmatch.sh
-@@ -19,12 +19,12 @@ test_expect_success 'setup' '
- 	git commit -m "add foo bar"
- '
- 
--test_expect_success \
--    'git ls-files --error-unmatch should fail with unmatched path.' \
--    'test_must_fail git ls-files --error-unmatch foo bar-does-not-match'
-+test_expect_success 'git ls-files --error-unmatch should fail with unmatched path.' '
-+	test_must_fail git ls-files --error-unmatch foo bar-does-not-match
-+'
- 
--test_expect_success \
--    'git ls-files --error-unmatch should succeed with matched paths.' \
--    'git ls-files --error-unmatch foo bar'
-+test_expect_success 'git ls-files --error-unmatch should succeed with matched paths.' '
-+	git ls-files --error-unmatch foo bar
-+'
- 
- test_done
-diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
-index b257c792a46..52f76f7b57f 100755
---- a/t/t3060-ls-files-with-tree.sh
-+++ b/t/t3060-ls-files-with-tree.sh
-@@ -10,7 +10,7 @@ a scenario known to trigger a crash with some versions of git.
- '
- . ./test-lib.sh
- 
--test_expect_success setup '
-+test_expect_success 'setup' '
- 
- 	# The bug we are exercising requires a fair number of entries
- 	# in a sub-directory so that add_index_entry will trigger a
-@@ -62,9 +62,9 @@ test_expect_success 'git ls-files --with-tree should succeed from subdir' '
- 	)
- '
- 
--test_expect_success \
--    'git ls-files --with-tree should add entries from named tree.' \
--    'test_cmp expected output'
-+test_expect_success 'git ls-files --with-tree should add entries from named tree.' '
-+	test_cmp expected output
-+'
- 
- test_expect_success 'no duplicates in --with-tree output' '
- 	git ls-files --with-tree=HEAD >actual &&
+> @@ -371,8 +371,8 @@ See also INCOMPATIBLE OPTIONS below.
+>   --strategy-option=<strategy-option>::
+>   	Pass the <strategy-option> through to the merge strategy.
+>   	This implies `--merge` and, if no strategy has been
+> -	specified, `-s ort`.  Note the reversal of 'ours' and
+> -	'theirs' as noted above for the `-m` option.
+> +	specified, `-s ort`.  Note the reversal of `ours` and
+> +	`theirs` as noted above for the `-m` option.
 
-base-commit: e4a4b31577c7419497ac30cebe30d755b97752c5
--- 
-gitgitgadget
+Here "ours" and "theirs" are options so using backquotes is probably the 
+right thing to do, but the text is referring to the section where they 
+are not backquoted which confused me initially.
+
+>   --verify::
+>   	Allows the pre-rebase hook to run, which is the default.  This option can
+
+Lower down some hook names are in double quotes which is probably a good 
+idea but not strictly related to your patch.
+
+> -apply backend: When applying a patch, ignore changes in whitespace in
+> +'apply backend:' When applying a patch, ignore changes in whitespace in
+
+I'm not sure if we want to say
+     'apply backend:'
+or
+     'apply' backend:
+>   
+>   -x <cmd>::
+>   --exec <cmd>::
+> -	Append "exec <cmd>" after each line creating a commit in the
+> -	final history. <cmd> will be interpreted as one or more shell
+> +	Append `exec <cmd>` after each line creating a commit in the
+
+Lower down when talking about other todo list commands we refer to them 
+as "pick" (with double quotes) so I wonder if we should use "exec 
+`<cmd>`" here as it is only <cmd> that comes from the command line argument
+
+> -git rebase has two primary backends: apply and merge.  (The apply
+> -backend used to be known as the 'am' backend, but the name led to
+> -confusion as it looks like a verb instead of a noun.  Also, the merge
+> +`git rebase` has two primary backends: `apply` and `merge`.  (The `apply`
+> +backend used to be known as the `am` backend, but the name led to
+> +confusion as it looks like a verb instead of a noun.  Also, the `merge`
+
+I think using single quotes for the backend names might make more sense 
+as they are just names.
+
+> -When the git-rebase command is run, it will first execute a "pre-rebase"
+> +When the `git rebase` command is run, it will first execute a "pre-rebase"
+
+This is the section I was referring to earlier when talking about 
+quoting hook names.
+
+Thanks for working on this, it is great to have more consistent markup 
+in the documentation
+
+Best Wishes
+
+Phillip
