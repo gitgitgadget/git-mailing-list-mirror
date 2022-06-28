@@ -2,95 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52D5CC43334
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 12:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02957C43334
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 13:01:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344919AbiF1MgJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 08:36:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34962 "EHLO
+        id S1346032AbiF1NBZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 09:01:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230292AbiF1MgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 08:36:08 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C68F2ED77
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 05:36:08 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id x20so5340695plx.6
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 05:36:08 -0700 (PDT)
+        with ESMTP id S1346009AbiF1NBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 09:01:21 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99013054B
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 06:01:20 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id u9so17036090oiv.12
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 06:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=45G9xIJlGI1uQo99Erv3dvrOnn83axxTMVf6hhEbJQU=;
-        b=MhJotHIk555AZJinoM9M9Qn+r1GztQNOPbUdU1ndclk1Zie67dnibJv1rFCf1X3xDI
-         mEwEFW9pVciQrjAwcIvwoy7stJXAkwNWUU98xATQH+1G9BEnt5f9t7sf6aFGOBA52lIy
-         iyKjPUOBVA3nyIukSbj2NjXUDRvPmqzxUrkdOkzXdpT3dQWOV/6vh4TbrNSOl4sziz1a
-         GfmjKpotnTezCrX/OwzhJjXKROKwbzv0gIw0AnFW/NOTtBxv0C1io9pU8dYyGixKvuxu
-         5OUGMp4jLPUxtNZfyBBnFxnhsa6h55vlToslxyOlsAnYbYQySa7NLgkGmWffncKsSYEG
-         wmrQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=9yc5BGZkSjtHkR/bHooQ4tIIYZ7/9dzBetbKBY8eNkI=;
+        b=ez53IZrz3NE5Q59lrz7kQgKnNkW83Eoket6Z8jqmjQYIEviKIVZUJ3cLBTdwXOxl6h
+         Y04wjEbvHNtusRsc9NyICSoy4oP/Ffzdyc653ru/g2cwIGZXR7LzncPTLV1JJtQoE6s/
+         GLsZGer22lHIHE/3+546Bd30hnFoMkjk4f+YLNW+IfPPBupN6Bb2g2tzv7fbhb8KDIiz
+         FhhzYk9e3cfYa1eyAwb4CoCR7ZAVtodXgFkU2c0TIvtp8uxb3arpwZgBH+ymVo7R9MIR
+         RYo9a4La89HB0wFICM1LC1VWqNfDGfHiXgcoy/xEDJvV/3WAsz4m1TQ5EqsvsWx6xrK8
+         9hqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=45G9xIJlGI1uQo99Erv3dvrOnn83axxTMVf6hhEbJQU=;
-        b=A7dwKXL1uCNN1ddXQeimfSaOJMuNk0kGZ8AmHP1CRVxBPZieh1gHFVcXEgbHXA1NEh
-         MHFNIbhxEiQnvBfjXR7YWN3VQX3tsUFyLVVAjhYwbJbGFPtcxsX5z8ONrZ921F5HQYqY
-         Z3SZ0O5OvPVdWHihZ/Mon5J4UojfWKxlYgXsBlqoS1muTvFWhreftVlI877KPYi/s4X1
-         Hx5/paACjJeF31cqP645heogfLlKYPXJffROIgR0DxK+Ocovr6DxjB+V/PMT1c/J1zd6
-         nmIbKbvHXQjqv2LlVDCfrBfk7o/kJJTCegnNB6w4MYH8Hnjn+0UKbmB69Fg2LR/xnM39
-         AI9w==
-X-Gm-Message-State: AJIora/4jz60ogUHHZHL31Ps9nmu6r0WdQX2fYr2eSJK9GKdIccFduN/
-        FgdGOLmyTmiTVAXOc23GPu8ewzcHx5r9D8hV+fo=
-X-Google-Smtp-Source: AGRyM1sHlvxwBw5M2SZzlIJmsCPFKhC7yOi2K+FeXbEZOVhYRIkZ6Qyn6gs4iGfEO4Zcl2STgbZoZjYKGy0hZKOrRwA=
-X-Received: by 2002:a17:90b:3505:b0:1ec:db5d:794b with SMTP id
- ls5-20020a17090b350500b001ecdb5d794bmr22528144pjb.24.1656419767215; Tue, 28
- Jun 2022 05:36:07 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9yc5BGZkSjtHkR/bHooQ4tIIYZ7/9dzBetbKBY8eNkI=;
+        b=jsLIVZpbf2ISAv8lSDkxZGVR9DRkWN8BQZhlMtRZZhR9etnxQr67u3m8sgCjvt8GhL
+         QdBXM0T2f4ub/amdmYNuOyji1xbMEXbkg0ahTEur/kVAbNF3/Ll9edUGQ57aByrnn7F+
+         tLQoRyivkiUHiraPt5fj/t89PZXIflHl2Yvslzvk/c266Yw0+ZKnylHxAv/tJ7JrdOT1
+         CLJyqNIenFacz0XahATjzjlbGbmOh0X3Gr9GK+ibD1YoMwPpWCACU48PnKDV+eORo8I5
+         1ysfW94GFiYiaQMpPAiUO0Jn91yf+ddOszLDsOIdR8gOd0iX9K/UuDFJxMki8Jzebv5i
+         4qXA==
+X-Gm-Message-State: AJIora/V+s3n1OXD/rB74HdeFk6W+jIEvIyk1By07axtvYVwTixf/ZTb
+        vTbhWeFUsB36ecXZR5tRedXFgseUcE0O
+X-Google-Smtp-Source: AGRyM1tuhPpJcMn2D5GA+zYLBAVQr1ZQ496JAeDIWc2RVeY6+pWNXPXgkSAtF70hreQKQeEc0ORgtQ==
+X-Received: by 2002:a05:6808:14cf:b0:335:3595:c62d with SMTP id f15-20020a05680814cf00b003353595c62dmr14222122oiw.88.1656421279367;
+        Tue, 28 Jun 2022 06:01:19 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9537:28a2:3225:9796? ([2600:1700:e72:80a0:9537:28a2:3225:9796])
+        by smtp.gmail.com with ESMTPSA id p25-20020a056830319900b00616d412174dsm2849413ots.78.2022.06.28.06.01.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jun 2022 06:01:19 -0700 (PDT)
+Message-ID: <6439e948-ff79-9e10-97f5-378806e25b5b@github.com>
+Date:   Tue, 28 Jun 2022 09:01:17 -0400
 MIME-Version: 1.0
-References: <CAChcVumN66OxOjag9gPqgLq7gQrgdaEkZAJabusE-gGC7LLVyw@mail.gmail.com>
- <220628.86bkudf19g.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220628.86bkudf19g.gmgdl@evledraar.gmail.com>
-From:   Pavel Rappo <pavel.rappo@gmail.com>
-Date:   Tue, 28 Jun 2022 13:35:55 +0100
-Message-ID: <CAChcVu=w8mxFtXHukZkf-VswchH_sRppCm=0XZbwh=9-Y4P8cg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
 Subject: Re: How to reduce pickaxe times for a particular repo?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+To:     Pavel Rappo <pavel.rappo@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+References: <CAChcVumN66OxOjag9gPqgLq7gQrgdaEkZAJabusE-gGC7LLVyw@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CAChcVumN66OxOjag9gPqgLq7gQrgdaEkZAJabusE-gGC7LLVyw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 28, 2022 at 12:58 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On 6/28/2022 6:50 AM, Pavel Rappo wrote:
 
-<snip>
+Hi Pavel! Welcome.
 
-> But eventually you'll simply run into the regex engine being slow
+> I have a repo of the following characteristics:
+> 
+>   * 1 branch
+>   * 100,000 commits
 
-Since I know very little about git internals, I was under a naive
-impression that a significant, if not comparable to that of regex,
-portion of pickaxe's time is spent on computing diffs between
-revisions. So I assumed that there was a way to pre-compute those
-diffs.
+This is not too large.
 
-<snip>
+>   * 1TB in size
 
->  2. Stick that into Lucene with trigram indexing, e.g. ElasticSearch
->     might make this easy.
+This _is_ large.
 
-<snip>
+>   * The tip of the branch has 55,000 files
 
-> For someone familiar with the tools involved that should be about a day
-> to get to a rough hacky solution, it's mostly gluing existing OTS
-> software together.
+And again, this is not large.
 
-<snip>
+This means you have some very large files in your repo, perhaps
+even binary files that you don't intend to search.
 
-I'll see what I can do with external systems. You see, I initially
-came from a similar repository exposed through OpenGrok. But I think
-that something was wrong with the index or query syntax because I
-couldn't find the things that I knew were there. I was able to secure
-a git repo that was close to that of OpenGrok as I found pickaxe to be
-robust albeit slow alternative for my searches.
+>   * No new commits are expected: the repo is abandoned and kept for
+> archaeological purposes.
+> 
+> Typically, a `git log -S/-G` lookup takes around a minute to complete.
+> I would like to significantly reduce that time. How can I do that? I
+> can spend up to 10x more disk space, if required. The machine has 10
+> cores and 32GB of RAM.
 
-Thanks for the suggestion.
+You are using -S<string> or -G<regex> to see which commits change the
+number of matches of that <string> or <regex>. If you don't provide a
+pathspec, then Git will search every changed file, including those
+very large binary files.
+
+Perhaps you'd like to start by providing a pathspec that limits the
+search to only the meaningful code files?
+
+As far as I know, Git doesn't have any data structures that can speed
+up content-based matches like this. The commit-graph's content-changed
+Bloom filters only help Git with questions like "did this specific file
+change?" which is not going to be a critical code path in what you're
+describing.
+
+I'm not sure what you're actually trying to ask with -S or -G, so maybe
+it is worth considering other types of queries, such as -L<n>,<m>:<file>
+or something. This is just a shot in the dark, as you might be doing the
+only thing you _can_ do to solve your problem.
+
+Thanks,
+-Stolee
