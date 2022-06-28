@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4227DC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14B35C43334
+	for <git@archiver.kernel.org>; Tue, 28 Jun 2022 10:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344718AbiF1KGR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jun 2022 06:06:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37614 "EHLO
+        id S1344677AbiF1KG3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jun 2022 06:06:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344666AbiF1KGM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jun 2022 06:06:12 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAEE9B78
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:11 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id i25so11391599wrc.13
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:11 -0700 (PDT)
+        with ESMTP id S1344682AbiF1KGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jun 2022 06:06:14 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC692E9E1
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:12 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id d17so11269139wrc.10
+        for <git@vger.kernel.org>; Tue, 28 Jun 2022 03:06:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8RkEeuNcgA106GnboT2kf6jZh6qclVic8rYXy+0Ntv4=;
-        b=p/49C3Eox4EA8MrO+1ltw7YGLYZCeEIkV3uvXj9VVEaBmpJD8U8GCYcztxE6y3UHxv
-         LK4XmxW84YhzN/Wd9bKV/1Dr8G0eNo797q0lmvPK7BwRb81nsQlGU3sCkzS9IsmlDRWx
-         ZAMFr0TEUx4ROLVOkHM5yS9WkJtT99LBb1+JsjkimalcZQzJftKtC1mSYVwDN+KkfUwj
-         mDha6d29Dg2LV0hlmShcBLLMgrHqIiwSmXcBQNjTr8dBvOhBL9oUrFA2cB+rc1NTG8ZR
-         5qw4luVGUolLGkOSS90jAcIzTitWlHw0jhX59t8yOlIgTfOQRh++aBwSMh7hvQWQF7Zx
-         OysA==
+        bh=dYGXVYml6v5OQb5wpdTIvOmJ9DEIlen3XzcVVCfN/CE=;
+        b=MrsxWPx/KTzcPPQtoZzkTzoPvEGWuc0pM2OtgiCx+GDWYJe5cjarMNE42U+oMdA9z1
+         Pg8wZ80ueBfsNQigH00zS/Ue5iZxbBwLD8LTVBihxghNo7fXuIF9QYhIwByagP70kPYg
+         nI0wQK1T2c2JQwAQo6kQAdNGFTYDPmEJe2WE9IIfGyLS8BcvU5xZC9hIxgUretTXHhGn
+         SZF+szb1GeqVKr23gvDiC0pl4b3cwHLLojwrIOqYt0wXo1lbJWK1atD5Y+6+KdycRRW/
+         QJpiCYOIZ3i9ZYR1QSeL0qlqnUgkDfGSEWPOYvJky5P9LlAYCAC3vD7GIVV+kRDTukyd
+         kWIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8RkEeuNcgA106GnboT2kf6jZh6qclVic8rYXy+0Ntv4=;
-        b=Q2PNtozSdlIwbj+QCm2Gbsx9TbEIt5yp4kGZ+2+DurcMhoa8Ad5d7GRtNPYDP9mWMz
-         GImXd/Q2MQ3oif1cETilvM4G8klPG1nMgZDZrnao4EXrF0uP+waDX4QeBxrX2JaGW9de
-         K4vj7ualA9LVaRPW7uDT7/OTt2Q3hT9bOH3DMCIcCgiotHLO9l1k8wBZFb7EXgm/VdEv
-         JUAutEkGrbKiZibcERsriIIS+txapnt1q7awd2S1Hh0BmjllNU8JxqAS0plskG1PBsmP
-         WQ0YMwaLflj1Ev8brvSoYlsqasgoFZW1O9GSgVGzOtx170QLhhUqZcuy1n5i41gSK0b4
-         pAJQ==
-X-Gm-Message-State: AJIora8KyJZ6i3LV7+Lp4hZYZFnay40Gy71FXYreGnRbxTy6KTPbIgC/
-        F5f+IvUSpnGYs9L0ahTKZPEW5bOdFUU=
-X-Google-Smtp-Source: AGRyM1vkpdZTtEmy3K+reYxmVAyEi5lEOq4P5j45vfFNKzJ6lWBoMOKIjgwmofILXQC4POurFVzN4Q==
-X-Received: by 2002:a5d:688e:0:b0:21b:9d51:25d2 with SMTP id h14-20020a5d688e000000b0021b9d5125d2mr17308364wru.286.1656410770014;
-        Tue, 28 Jun 2022 03:06:10 -0700 (PDT)
+        bh=dYGXVYml6v5OQb5wpdTIvOmJ9DEIlen3XzcVVCfN/CE=;
+        b=Vbyr6jwBiofWYo6ONTv3JtHTP/reUZKaZ3OoMRtw33fhKOoFBK0Y3i4uL98IyGq4B+
+         Mm3FXHRh5Zzoa1pNC/RfneNqqQI2VA4y+JTRnKKJewYkE6CWtYf1fSFg4NJfz6/S8TrL
+         986/ihdoN7STE6GODt/vkrmNvO3Ix7B7l50SZzQbKxSsRYAnU68rq2l7KKEBrFWEBPif
+         zvrpZmF9EiC1N0EpLJHiD9YijifNpu7sIlYeivAh/m3I+M/wPMQdEwDVPThn5UxDbIdJ
+         MqOShJZqzBmoCt7Mo5tDWRqzb+tAWm3RElVif/l+j0su4j78htoX2s7uPUI6QnXUafJy
+         0r+A==
+X-Gm-Message-State: AJIora9a3JMgRo0YPYY2kp+1ep0pj+hKhawO2mJADCc7mFRIVC/NH1/F
+        bfeMIc6y/idSYvPWBVM7zP/7EMqZt5XDpA==
+X-Google-Smtp-Source: AGRyM1s7OkwMYoCSpJn5Lq5HSjVX+kp97KzIO06NkyaOntevx8IJq+LYGO5OKL6ELS/dPaLwgFX7qw==
+X-Received: by 2002:a5d:598e:0:b0:219:ea16:5a2a with SMTP id n14-20020a5d598e000000b00219ea165a2amr16436596wri.343.1656410771222;
+        Tue, 28 Jun 2022 03:06:11 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e16-20020a5d4e90000000b0021b91d1ddbfsm12914430wru.21.2022.06.28.03.06.09
+        by smtp.gmail.com with ESMTPSA id e16-20020a5d4e90000000b0021b91d1ddbfsm12914430wru.21.2022.06.28.03.06.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 03:06:09 -0700 (PDT)
+        Tue, 28 Jun 2022 03:06:10 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 02/12] git-submodule.sh: remove unused $prefix variable
-Date:   Tue, 28 Jun 2022 12:05:24 +0200
-Message-Id: <patch-v4-02.12-7bf62497c54-20220628T095914Z-avarab@gmail.com>
+Subject: [PATCH v4 03/12] git-submodule.sh: make the "$cached" variable a boolean
+Date:   Tue, 28 Jun 2022 12:05:25 +0200
+Message-Id: <patch-v4-03.12-e4750f190f8-20220628T095914Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.880.gf07d56b18ba
 In-Reply-To: <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
 References: <cover-v3-00.12-00000000000-20220622T142012Z-avarab@gmail.com> <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
@@ -68,63 +68,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the $prefix variable which isn't used anymore, and hasn't been
-since b3c5f5cb048 (submodule: move core cmd_update() logic to C,
-2022-03-15).
+Remove the assignment of "$1" to the "$cached" variable. As seen in
+the initial implementation in 70c7ac22de6 (Add git-submodule command,
+2007-05-26) we only need to keep track of if we've seen the --cached
+option, not save the "--cached" string for later use.
 
-Before that we'd use it to invoke "git submodule--helper" with the
-"--recursive-prefix" option, but since b3c5f5cb048 that "git
-submodule--helper" option is only used when it invokes itself.
-
-So the "--recursive-prefix" option is still in use, but at this point
-only when the helper invokes itself during submodule recursion. See
-the "--recursive-prefix" option added in
-c51f8f94e5b (submodule--helper: run update procedures from C,
-2021-08-24).
+In 28f9af5d25e (git-submodule summary: code framework, 2008-03-11)
+"$1" was assigned to it, but since there was no reason to do so let's
+stop doing it. This trivial change will make it easier to reason about
+an eventual change that'll remove the cmd_summary() function in favor
+of dispatching to "git submodule--helper summary" directly.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-submodule.sh | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ git-submodule.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index bc436c4ca47..53847bbf6e2 100755
+index 53847bbf6e2..b99a00d9f84 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -41,7 +41,6 @@ files=
- remote=
- nofetch=
- update=
--prefix=
- custom_name=
- depth=
- progress=
-@@ -127,7 +126,7 @@ cmd_add()
- 		usage
- 	fi
- 
--	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper add ${GIT_QUIET:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${GIT_QUIET:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
- }
- 
- #
-@@ -189,7 +188,7 @@ cmd_init()
- 		shift
- 	done
- 
--	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper init ${GIT_QUIET:+--quiet} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${GIT_QUIET:+--quiet} -- "$@"
- }
- 
- #
-@@ -346,7 +345,6 @@ cmd_update()
- 		${init:+--init} \
- 		${nofetch:+--no-fetch} \
- 		${wt_prefix:+--prefix "$wt_prefix"} \
--		${prefix:+--recursive-prefix "$prefix"} \
- 		${update:+--update "$update"} \
- 		${reference:+"$reference"} \
- 		${dissociate:+"--dissociate"} \
+@@ -446,7 +446,7 @@ cmd_summary() {
+ 	do
+ 		case "$1" in
+ 		--cached)
+-			cached="$1"
++			cached=1
+ 			;;
+ 		--files)
+ 			files="$1"
+@@ -583,7 +583,7 @@ do
+ 		branch="$2"; shift
+ 		;;
+ 	--cached)
+-		cached="$1"
++		cached=1
+ 		;;
+ 	--)
+ 		break
 -- 
 2.37.0.880.gf07d56b18ba
 
