@@ -2,140 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB1A2C43334
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 20:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44025C43334
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 20:37:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbiF2UWI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 16:22:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49380 "EHLO
+        id S230342AbiF2Uhm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 16:37:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbiF2UWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 16:22:07 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEDDB2655C
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:22:06 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id q4so26583051qvq.8
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:22:06 -0700 (PDT)
+        with ESMTP id S230513AbiF2Uhl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 16:37:41 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ACD73EF0E
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:37:40 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id c137so12973538qkg.5
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:37:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=QWEDw7h1383VqAi3RxehxMxpwD3GDj9um2aMqaSzPts=;
-        b=C5XcTHKblWHagx9TqsGVeBiklIvei24sMPG0CyWnQCqrhSFkRMBQXlDEJ6hh0Canah
-         YyYVOinEUfdpChING9/r39HVTiDRJ+uztYZjXr5ayn5pRU/4tvalqgtroDMLkja8jCzI
-         uuqTthHL77BfTdoyHPjsMuJ+J9ooEMIHA7mJc0FEwt72AjciGI0RUOkA83cxCYMbLy4O
-         1qkJtx4XifXeMIzOx9MGJOS4Uyri+ADOryjilgUZ2y7lSkduKdFbRIXQo41d6sEzLyBE
-         b4DpspKkX3pSuXkN0wkJvqWmcFLnBRn4IayWJPbOJCrahMq2NIaTnCd+tfMPaMsC0MUH
-         Hfqg==
+        bh=aMjtplQK5CtH4CUndkzHRtu4NksJnUtad3u4iNFCmAo=;
+        b=7fGUCUD+2TpYrPyYtJFvzZTUTyxQMjjbhz/0rnbgepajSJYMrXEEVeXgrXEd1umGB0
+         Lkts5Qm2DgF2uxatbVgA6RoDaKCXGQEXUGfCB1gmCyWD5JmqXBNoX05hk00wL2dfGefN
+         +J8LP5Ov5YSfop4OzbzxUBSdaJJZ68LOhcVNinQ88w6d7H917MsDehVlrUZKq18q1hvc
+         jM9ELd4yLe4bOpMjpLbTR3mYf3wcpuxdt/IqOAezOkQBaIe4iosCYxOtO05PgQ+MHiR2
+         dPxCzJy/DjhBSjJwhFGa9Xtza7RYeZmydGsmgUX+Se9mYcIZSv8pT2L52MTKlZYXuGmV
+         20kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=QWEDw7h1383VqAi3RxehxMxpwD3GDj9um2aMqaSzPts=;
-        b=XaVghKQi2mRjcr7POSvTSclzdOkYicNG+qCRoU4I1lfcp6o1z3Rm5eyv2tiCMuT01D
-         d33J5YpJESpPViG643gxln2xxV0tq9r/7PZEeUI+kA6cQ0djCs6YJMe5V7MerIp6XKdC
-         R5igA/unYLPhvD9q1+OcPBjFkdpwexE6sxpj5xR7gHWRClkig4M6BSVfulYprW5QGJJS
-         fOyewLj7ppT3GQwHaEnvcmDiUZGUTQZeA9BYiNRSxOMJ+f2oORuoAAkx3UL3V5mJ4cks
-         ZU6o2JBcU7OA4ct4heUIbDvjaQAKq7Tdar/vw71jTxLz8vCl8Yks/09lSkAYdm8KJ8tw
-         D1ng==
-X-Gm-Message-State: AJIora+BkS9dVxyR5JLTH0g8l4bPdDVIbAKlYcmPIFduvI8vGJNbh7IM
-        yR0jDa1oVFdculsqaIPA/9oMzQ==
-X-Google-Smtp-Source: AGRyM1vbjOMHgdo0+tTVLUJeh0kzkFarPzbl/db2cUsml287obCmEDCc/xbU35lTj4jz1COyfBF/mw==
-X-Received: by 2002:a05:622a:253:b0:306:5d68:2f90 with SMTP id c19-20020a05622a025300b003065d682f90mr4277525qtx.263.1656534125832;
-        Wed, 29 Jun 2022 13:22:05 -0700 (PDT)
+        bh=aMjtplQK5CtH4CUndkzHRtu4NksJnUtad3u4iNFCmAo=;
+        b=oK6cNQ6LN+VwP00uDBDQ7Jo4PoROYWc91/9zCOEOfHgZLIF1SGMjTB/fYS0uj2fJ97
+         J1SE8aw4BeKHILi5FVfdaeHWFKr8mDsf3ChWvMqWogf5/Oyo51y8Klkb7eyjALSPjY4w
+         WWz7PbSXZatKvD91Z9Bthfsy6Z54NiKDyH+KaJLIE2H0z+svc6cIH0dONX7kBL26lGqo
+         uGMkSKXTNNr+vKYV/QZK0beSKx+pexUjmUa+EwShHLKi94/qHEGVe6eEDrRJ4l79quxb
+         v9uqE2RY6k5i1PzFrgSxdc4nE+oweweViVJ7Wl/AhQMdGvqJNZaz9inMGmq7jijUaOwi
+         DZdQ==
+X-Gm-Message-State: AJIora8BVaW+yXYNyWen5YUKMNN+B4PnZl0VEaQaogJgS1sL8tyB70/K
+        82e10TpwG4p/mnUElZTnfxFjew==
+X-Google-Smtp-Source: AGRyM1vaNQNI9PI5yb/h/apOruJfIAf1xdGLcrXUyB4vb85fioA03Qu3pDSrQYcFIIW64qmf2Xk+RA==
+X-Received: by 2002:a05:620a:4103:b0:6b1:43c9:467b with SMTP id j3-20020a05620a410300b006b143c9467bmr3400667qko.4.1656535059364;
+        Wed, 29 Jun 2022 13:37:39 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id k12-20020a05620a414c00b006aefe22d75bsm13623046qko.80.2022.06.29.13.22.05
+        by smtp.gmail.com with ESMTPSA id ay37-20020a05620a17a500b006af0d99c7fesm3144329qkb.132.2022.06.29.13.37.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 13:22:05 -0700 (PDT)
-Date:   Wed, 29 Jun 2022 16:22:04 -0400
+        Wed, 29 Jun 2022 13:37:39 -0700 (PDT)
+Date:   Wed, 29 Jun 2022 16:37:38 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 Cc:     Git <git@vger.kernel.org>,
         Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>
 Subject: Re: [PATCH v2 4/6] pack-bitmap: prepare to read lookup table
-Message-ID: <Yry0bKgayLB3GdsW@nand.local>
-References: <Yrol2tY4emxmYh9n@nand.local>
- <20220628085950.19288-1-chakrabortyabhradeep79@gmail.com>
+ extension
+Message-ID: <Yry4ElVFQEsVbqse@nand.local>
+References: <YrojV5aYCzxXlV3c@nand.local>
+ <20220628192555.23565-1-chakrabortyabhradeep79@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220628085950.19288-1-chakrabortyabhradeep79@gmail.com>
+In-Reply-To: <20220628192555.23565-1-chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 28, 2022 at 02:29:50PM +0530, Abhradeep Chakraborty wrote:
-> Taylor Blau <me@ttaylorr.com> wrote:
->
-> > ...exactly my thoughts, too. It's possible that it would be faster to
-> > key this search on the object_id "oid" above, and then convert each of
-> > the entries in the lookup table from a uint32_t into an object_id by
-> > calling nth_bitmap_object_oid() repeatedly.
+On Wed, Jun 29, 2022 at 12:55:55AM +0530, Abhradeep Chakraborty wrote:
+> > > +			commit_pos = get_be32(triplet);
+> > > +			offset_xor = triplet_get_offset(triplet);
+> > > +
+> > > +			if (nth_bitmap_object_oid(bitmap_git, &xor_oid, commit_pos) < 0) {
 > >
-> > I *think* that what Abhradeep wrote here is going to be faster more
-> > often than not since it makes more efficient use of the page cache
-> > rather than switching between reads across different memory mapped
-> > regions at each point in the binary search.
-> >
-> > But of course that depends on a number of factors. Abhradeep: if you're
-> > up for it, I think it would be worth trying it both ways and seeing if
-> > one produces a meaningful speed-up or slow-down over the other. Like I
-> > said: my guess is that what you have now will be faster, but I don't
-> > have a clear sense that that is true without trying it both ways ;-).
+> > Should it be an error if we can't look up the object's ID here? I'd
+> > think so.
 >
-> Ok. Let me try both the ways. In my opinion, I think my version has
-> less searching and less computation. So, I want to stick with this
-> version. But I also like to try the other one once so that we can
-> get the best out of these two.
+> I also am not sure about it. Morally, I think it is better to throw
+> An error here.
 
-Yeah, I agree with your general sense that the version as written is
-going to be faster. We're comparing a smaller datatype (IOW, a 4-byte
-integer that can be checked for equality in a single instruction,
-instead of comparing two 20-byte OIDs), and likely flushing the cache
-far less often.
+Yeah.
 
-But having two concrete implementations to compare will help us know for
-a fact that our intuition is correct.
-
-I'll be curious to see what you find here!
-
-> > I think starting off with a small array and then letting it grow
-> > according to alloc_nr() would be fine here, since it will grow more and
-> > more each time, so the amount of times we have to reallocate the buffer
-> > will tail off over time.
+> > Do we have a good way to make sure that we're testing this code in CI?
+> > It *seems* correct to me, but of course, we should have a computer check
+> > that this produces OK results, not a human ;).
 >
-> What should be the size of that array?
+> My current test file changes should test this code. As for now, the lookup
+> Table is enabled by default, all the existing tests that include write and
+> read bitmaps uses this lookup table. So, all the test case scenarios should
+> Pass. So, I think it is being tested in CI. Do you have a good idea to test
+> It better?
 
-I think some small, power of 2 would be a reasonable choice here.
+I think having some indication (maybe via a trace2 region?) that we're
+actually executing this code would be good. Although it's going to be
+*really* noisy, so probably not a good idea to do that in general.
 
-> > If we were really concerned about it, we could treat the buffer as a
-> > static pointer and reuse it over time (making sure to clear out the
-> > portions of it we're going to reuse, or otherwise ensuring that we don't
-> > read old data). But I doubt it matters much either way in practice: the
-> > individual records are small (at just 4 bytes each) and entry_count is
-> > often less than 1,000, so I think this probably has a vanishingly small
-> > impact.
+Stolee runs some coverage tests that show lines that we aren't
+exercising via tests. So making sure that this doesn't show up in that
+report when you run it locally would be good.
+
+See some information from him about how to run those tests locally here:
+
+    https://lore.kernel.org/git/00a57a1d-0566-8f54-26b2-0f3558bde88d@github.com/
+
+(TL;DR: run `make coverage-test` and make sure that these lines don't
+show up ;-)).
+
+> > Hmm. I'm not sure I follow the purpose of tweaking
+> > GIT_TEST_READ_COMMIT_TABLE like this with setenv(). Are we trying to
+> > avoid reading the lookup table? If so, why? I'd rather avoid
+> > manipulating the environment directly like this, and instead have a
+> > function we could call to fault in all of the bitmaps (when a lookup
+> > table exists, otherwise do nothing).
 >
-> Before submitting it to the mailing list, I did use the ALLOC_GROW macro
-> function. But my version was worse than yours. For every iteration I was
-> reallocating the array to support `size+1` positions. But later I drop
-> the code as this might be very much expensive.
+> The problem was that the `test-tool bitmap list-commit` command was
+> Not printing any commits (the error that I notified you before). It
+> is because of this function. As lookup table is enabled by default,
+> `prepare_bitmap_git` function doesn't load each bitmap entries and
+> thus the below code in this function doesn't provide the bitmapped
+> commit list (because Hashtable didn't generated).
+>
+>         kh_foreach(bitmap_git->bitmaps, oid, value, {
+> 		printf("%s\n", oid_to_hex(&oid));
+> 	});
+>
+> So, the simplest fix I found was this. Should I make a function then
+> (Which you suggested here)?
 
-That shouldn't be the case. When you have a chance, take a look at the
-alloc_nr macro, which shows how much memory we allocate at each
-step:
+I see. I remember that issue, but I think we should go about fixing it
+in a different way. Instead of tricking the code into loading all
+bitmaps by pretending the lookup table doesn't exist, we should have a
+function that forces loading in all bitmaps from the lookup table, if
+one exists. If the lookup table doesn't exist, or we have already loaded
+its entries, then that function can be noop.
 
-    #define alloc_nr(x) (((x)+16)*3/2)
+If we had something like that, we could call that function from within
+`test_bitmap_commits()` before reading the keys and values out of
+`bitmap_git->bitmaps`.
 
-Suppose we allocated 16 slots initially, so nr (the number of entries
-stored in the list) is 0 and alloc (the number of entries allocated) is
-16. Then when we try to add the 17th item, we'll pass 16 to alloc_nr
-which will allocate 48 slots. Then 96, then 168, and so on.
+An alternative approach would be to read the table directly when it
+exists, perhaps something like this:
 
-We only have to reallocate and copy the array when nr > alloc, which
-should be fairly infrequently, and happens less and less often the
-larger the array grows.
+--- 8< ---
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 9e09c5824f..3bda059b9f 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1921,22 +1921,28 @@ int test_bitmap_commits(struct repository *r)
+ {
+ 	struct bitmap_index *bitmap_git = NULL;
+ 	struct object_id oid;
+-	MAYBE_UNUSED void *value;
+-
+-	/* As this function is only used to print bitmap selected
+-	 * commits, we don't have to read the commit table.
+-	 */
+-	setenv("GIT_TEST_READ_COMMIT_TABLE", "0", 1);
+
+ 	bitmap_git = prepare_bitmap_git(r);
+ 	if (!bitmap_git)
+ 		die("failed to load bitmap indexes");
+
+-	kh_foreach(bitmap_git->bitmaps, oid, value, {
+-		printf("%s\n", oid_to_hex(&oid));
+-	});
++	if (bitmap_git->table_lookup) {
++		uint32_t i, commit_pos;
++		for (i = 0; i < bitmap_git->entry_count; i++) {
++			commit_pos = get_be32(bitmap_get_triplet(bitmap_git, i));
++			if (nth_bitmap_object_oid(bitmap_git, &oid,
++						  commit_pos) < 0)
++				return error("could not find commit at "
++					     "position %"PRIu32, commit_pos);
++			printf("%s\n", oid_to_hex(&oid));
++		}
++	} else {
++		MAYBE_UNUSED void *value;
++		kh_foreach(bitmap_git->bitmaps, oid, value, {
++			printf("%s\n", oid_to_hex(&oid));
++		});
++	}
+
+-	setenv("GIT_TEST_READ_COMMIT_TABLE", "1", 1);
+ 	free_bitmap_index(bitmap_git);
+
+ 	return 0;
+
+--- >8 ---
 
 Thanks,
 Taylor
