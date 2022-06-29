@@ -2,101 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD452CCA47C
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 15:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 721F0C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 16:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234089AbiF2P1c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 11:27:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39406 "EHLO
+        id S230057AbiF2QaH convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 29 Jun 2022 12:30:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234081AbiF2P1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 11:27:24 -0400
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A98622E9FB
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 08:27:23 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 2BD8B5C06CB
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 11:27:21 -0400 (EDT)
-Received: from imap43 ([10.202.2.93])
-  by compute4.internal (MEProxy); Wed, 29 Jun 2022 11:27:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=theknown.net; h=
-        cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:message-id:mime-version:reply-to:sender:subject
-        :subject:to:to; s=mesmtp; t=1656516441; x=1656602841; bh=r0nLov9
-        O6ZkMPjqrXaGvQ3/hs7F5PR9yE3PdusZku9Y=; b=NPJiLM//KAGqTEzGK4IRqAk
-        ssx0awD/kshuygL1wrdKIDA+IRhQohhPcOntIy3/hUUIMcHy/jXVNffyxh1CNVdK
-        ZL2vpIPciUUUHx01QXRoZtcMSB+oKX7HN8wvdczwfE0GcnfdTXaqqQq9aDZNg5u6
-        elnvURWlCgRqCcXm5Kvk=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:date:feedback-id:feedback-id:from:from:in-reply-to
-        :message-id:mime-version:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; t=1656516441; x=1656602841; bh=r0nLov9O6ZkMPjqrXaGvQ3/hs7F5
-        PR9yE3PdusZku9Y=; b=VqkzDNoPiBXj/Omttym1xa0ol92Qcy7NICSQwnPgrywd
-        PtMkL8qLCziNPqmkb0lE/6vok+8V3J/fMFHp2w+whfnSGV2frXI5NYE571xVYnck
-        E+EFgJDXrH/Oq14WOZpCAPBulGeBoxVDWJUVKn0ylDUKxcdJgdwpgKB7i9u5LtaZ
-        eYo3YC2tGDHhNi+EwqTCXnM3Gd9l+RL7DkxNxAzgopzVsMW3onyNA16IWV0uJ7P+
-        +Avf/Uw9rMXLFKg6zPeW9dLaFcQJp6Kc1YN/h1UMOIXz2IlEo7JZ3RcVG74oR3ks
-        GxlYPP9oPSBAaqJ2+5VWkcvnWzKs+7YszXtDQoFlDg==
-X-ME-Sender: <xms:WG-8YoOiucHtxetWWTp2jBiq8Nxs0hfArrm2foYq9ahvadMPVuu_uQ>
-    <xme:WG-8Yu__xfalFXM30k0AnvvraMgtup92sPhOo32uZ0YAl4xTTp18iULXHpsd4eHDb
-    9fT4Opseiew7N9Yvg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudegledgkeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtgfesthhqre
-    dtreerjeenucfhrhhomhepfdfkrghnucghhhhithhlohgtkhdfuceoihgrnhesthhhvghk
-    nhhofihnrdhnvghtqeenucggtffrrghtthgvrhhnpeeugeeghefhudehvdffgeeigeefue
-    dtudffleehhfffffduueelgfdufeefffegveenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehirghnsehthhgvkhhnohifnhdrnhgvth
-X-ME-Proxy: <xmx:WW-8YvQK8x_NQ-NFprmrUmfK0nUfASNzfFqiSlXRqZsJq9KpEGdPEQ>
-    <xmx:WW-8YgtOJuxeDGSKAlU0Gy3yNm43dWeJ3nHxQB2zW0DWHpHwuKhYgg>
-    <xmx:WW-8Ygfh1K5nCy9MODektbZxH8mdaOSyKHAttblhHBvLfwUDdY_cow>
-    <xmx:WW-8Yqq6HKu9jmwrOCxtZbTt2r8ucSURzvyeP0PenpqV9dnN2YVQ8g>
-Feedback-ID: i84894270:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id E5F892D40071; Wed, 29 Jun 2022 11:27:20 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-713-g1f035dc716-fm-20220617.001-g1f035dc7
-Mime-Version: 1.0
-Message-Id: <d2a7caa9-e2ba-457d-9fe9-92b29b5ee47a@www.fastmail.com>
-Date:   Wed, 29 Jun 2022 10:26:59 -0500
-From:   "Ian Whitlock" <ian@theknown.net>
-To:     git@vger.kernel.org
-Subject: Bug: "git-remote ls -h"
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229666AbiF2QaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 12:30:07 -0400
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 564AC2ED73
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 09:30:05 -0700 (PDT)
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-3137316bb69so153135867b3.10
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 09:30:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Y10JV8IrbzuOH6RkskhCPyhGwFTMimvxq8s+TLHS2Z4=;
+        b=4IblzfQLaPn83bEv7QpRK1uA+eQdgGdUY7cEnyeOxn+etUrQRRKfrbmx9LiLZEmW9u
+         ITsJFBng6zIIk71rmsd5TRorMCnsTJkfRQQMRsMsOlEHKrgvibhgzk+TL5I0PxydFxsf
+         JqPkWoaxBXXffEZtzpCEhqRdfcvZ0uDUehec04Y6Kiimc1pf0XSSkUAKaREwB/Jpiaju
+         zlukv0bmSMIWeAotBOse4NZO6G0TenZJ5b1X0nN1Qs0Rl7SLSRGOGeW4nxlHaWocIY6Z
+         tm7cFwBpTkghGzrb+o+q9AVxTJB0rQXHIB+9jC4PZ4/N+O//R8wGwLsOE57to5cdsch6
+         7FQw==
+X-Gm-Message-State: AJIora8lEQ1g3c4k2BeHvLpL2pp0l71Ffz0vVRMuFWxxkRnvhzVM26XV
+        e5jAW76mtNkQD1ts0cEFSmLixhDpczu1koJRGTQdAJd26ZI=
+X-Google-Smtp-Source: AGRyM1vhEt84zSdCHtr5Vockg/ZsrSklY7dCuyxrsqX98U9DnSMeLCEvtxC7XNQHA9UPF/JAYlz9AGvM6zHYae8V3kk=
+X-Received: by 2002:a81:5857:0:b0:31b:8e8b:ded4 with SMTP id
+ m84-20020a815857000000b0031b8e8bded4mr4927821ywb.70.1656520204493; Wed, 29
+ Jun 2022 09:30:04 -0700 (PDT)
+MIME-Version: 1.0
+References: <d2a7caa9-e2ba-457d-9fe9-92b29b5ee47a@www.fastmail.com>
+In-Reply-To: <d2a7caa9-e2ba-457d-9fe9-92b29b5ee47a@www.fastmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 29 Jun 2022 12:29:53 -0400
+Message-ID: <CAPig+cSnhbruJE_WBpmmypE_vzEQForooOu8KqbJ=dbaUrKKcg@mail.gmail.com>
+Subject: Re: Bug: "git-remote ls -h"
+To:     Ian Whitlock <ian@theknown.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Jun 29, 2022 at 11:39 AM Ian Whitlock <ian@theknown.net> wrote:
+> I found a bug and couldn't find another way to report it. I hope this is okay.
+> The help output for `git ls-remote` shows that `-h` should display remote HEADs, but instead the help output is displayed!
 
-I found a bug and couldn't find another way to report it. I hope this is=
- okay.
-The help output for `git ls-remote` shows that `-h` should display remot=
-e HEADs, but instead the help output is displayed!
+Thanks for the report.
 
- =E2=9E=9C git ls-remote -h    =20
-usage: git ls-remote [--heads] [--tags] [--refs] [--upload-pack=3D<exec>]
-                     [-q | --quiet] [--exit-code] [--get-url]
-                     [--symref] [<repository> [<refs>...]]
+>  ➜ git ls-remote -h
+> usage: git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]
+>                      [-q | --quiet] [--exit-code] [--get-url]
+>                      [--symref] [<repository> [<refs>...]]
 
-    -q, --quiet           do not print remote URL
-    --upload-pack <exec>  path of git-upload-pack on the remote host
-    -t, --tags            limit to tags
-    -h, --heads           limit to heads
-    --refs                do not show peeled tags
-    --get-url             take url.<base>.insteadOf into account
-    --sort <key>          field name to sort on
-    --exit-code           exit with exit code 2 if no matching refs are =
-found
-    --symref              show underlying ref in addition to the object =
-pointed by it
-    -o, --server-option <server-specific>
-                          option to transmit
+This is a known and documented behavior. The description of the `-h`
+option in the `ls-remote` help page:
 
-
-Small bug, but a bug nonetheless.
-
-Thanks for building such a lovely tool
+    Limit to only refs/heads and refs/tags, respectively. These
+    options are not mutually exclusive; when given both, references
+    stored in refs/heads and refs/tags are displayed. Note that git
+    ls-remote -h used without anything else on the command line gives
+    help, consistent with other git subcommands.
