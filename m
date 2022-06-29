@@ -2,124 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 038B8C433EF
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 18:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EC8CC433EF
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 18:46:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231828AbiF2SqN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 14:46:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57644 "EHLO
+        id S231963AbiF2SqV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 14:46:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231831AbiF2SqD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 14:46:03 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10EAB3ED36
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 11:45:53 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id k10so12699736qke.9
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 11:45:53 -0700 (PDT)
+        with ESMTP id S232025AbiF2SqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 14:46:06 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F9DA3EF29
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 11:45:57 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id v6so12765220qkh.2
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 11:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=Fm/r6W1xC6MGTRN7FqDtYknvi6INHlNbemvxryqWtzE=;
-        b=Pabr/1tgVk2y2ezOdQfW+8h7zzKAKXYWHx1uDO9vW07U7JQPetxwlQIdFyqK/ktz6A
-         tFkK2qOqYrNMM3R6sQlF3HUngMfFEd/GfAUpXMqLKlJQFsE0/PLBKOEvvsJuZxlw8WwV
-         Ps6ObT42JItImRZ68ngeg3+9lKgEsU2LxclSIWXs9jv+v1AhAezXypQklFPIvk1Zh/tM
-         hZf4uBaOtjPWivyOTbcFFm23HPuTQHsVcalA71vyOQEf+ujyr7ueRcAS3YGpEAnM+nRk
-         EfMWF16a9wdrNFUKrA4yrn7O/1+53e3nX7riGvrXHejHRPJmWuDAypIawZkWDsO2hZs5
-         37CQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=45PPgvs47uQVLRW8vx0jQD35V+xYebNEUK4soB/ZLlg=;
+        b=3YwW9cAgLIjY0yw+BEzY/YDrNzMNxA7EdvipqH3WX2axHXTbM43gvp6xwfgNLKacLO
+         AeqdZXC867Jg237AwOSLy3J6PZALLEZBXhTC+I6SobjC7b7q37jAmI4WFh5VtAitJQZu
+         rsfc5v5isXs/oCUgGTcxm/8glRNXP1p3kaoTL+v2Jt9gmvR5+Maghi/oBDETdBGJLYlu
+         C+ZueI6ApkODeFoSZ/1PXAkNwpe2Mk32pMnUqvg6g4dzgsFuSMvv5xQBMmM8E8QKluLi
+         i7AMGctqsEyqMFum3UFyTOxJ4P12CNiF0RVu0sXm9kQzc51DFgzb4/mpvSav09HNb395
+         XI5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=Fm/r6W1xC6MGTRN7FqDtYknvi6INHlNbemvxryqWtzE=;
-        b=rF2n2oF+5zeEpQU7Yxg8mM+1b2EMtAXeXGXkGVsf/lNx0ICdRts/0pUvY3yZHK3kex
-         TFQrGAkACtSRU22IR7XWn5W0yjz86TQmEbgdlENR5NajLLv4UlfIDRqzUI0YdZkgSnGt
-         nicI7uWu5JE3MJvDytXcCAiw+meZuFOdDEdmjYBe0uIVsV72nD01xoMIdihgQBfy7nNf
-         tj9i8zLhgr100KcAI8zLpI592KQvJqhNjlWnBiaEqxa+UmB/8yU5m+28sn/cnWzQaJuE
-         246k3gcz7FyZt36+nuv54Qivhn4fw+CABs9Ng+KNgmyAe3fiVSFF74LuNtSkPzMXJ3eK
-         2+bQ==
-X-Gm-Message-State: AJIora+lCMf5M/wKK3HQP5bI96SPEsy0wexlePPV4RQRDi1fOTHjZlZY
-        yCuV7d9R0yekcoJ4pB0rzfFR6xWAexRbSw==
-X-Google-Smtp-Source: AGRyM1vfiKXvM0tTJbRRPXGHykDY/NI8+SjgwR4un90rgfM9qnYmtfkJ7eIx3x1Cipvia9m+dq+wpQ==
-X-Received: by 2002:a05:620a:3183:b0:6af:40c:284d with SMTP id bi3-20020a05620a318300b006af040c284dmr3255156qkb.433.1656528351943;
-        Wed, 29 Jun 2022 11:45:51 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=45PPgvs47uQVLRW8vx0jQD35V+xYebNEUK4soB/ZLlg=;
+        b=J8AdYyIElk6Hn9aZ1MiVsw556JlsZ9dR70SWWvpnLu/PTMuroXg2hgaEsLN2XLnUHr
+         YO6XFB+zGC/rHTQxrT3hyqBjbsozluzyedli2cBg7NBHmLvdrn5ifHPT6LVE9W2HBLqC
+         8OVBSzFZKl+Tk+rFPn2ZkV3qCrAL1gv5jgynpqHh5oC5PmDY8MOjQd+ULeocfZPtR7i2
+         KNox4uIztVLH6X8XJpN6d4JOaA35CRUsgzrqlv1NJKglyeHyuPugD7o1HtKMSEEP40xE
+         rBKUgbim9PohUcwLEa3x5KBRZuzeIZuWXDMj54ikL5wFeCq21JYZuNCJIV/qxEKkpCaM
+         QIOw==
+X-Gm-Message-State: AJIora8UKoidoKHse5sUtQQxBDd6S+dt3ucHQSUix9zPcPqylA4UgHTY
+        8vSHGPSo2cGXCVtJ+PuuPAamntyFYwzarg==
+X-Google-Smtp-Source: AGRyM1vyihSNJeQOqPHifjbbZqlARKqopLF6KEeAAV1+LMHTw95CF2Rt9zcBpJ0RdVGFegd70jyM6w==
+X-Received: by 2002:a05:620a:294a:b0:6ae:fb7f:831 with SMTP id n10-20020a05620a294a00b006aefb7f0831mr3291442qkp.130.1656528356341;
+        Wed, 29 Jun 2022 11:45:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bi32-20020a05620a31a000b006af3f3b385csm6897100qkb.98.2022.06.29.11.45.50
+        by smtp.gmail.com with ESMTPSA id s12-20020a05620a29cc00b006a36b0d7f27sm14653953qkp.76.2022.06.29.11.45.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 11:45:51 -0700 (PDT)
-Date:   Wed, 29 Jun 2022 14:45:49 -0400
+        Wed, 29 Jun 2022 11:45:56 -0700 (PDT)
+Date:   Wed, 29 Jun 2022 14:45:54 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     derrickstolee@github.com, jonathantanmy@google.com,
         gitster@pobox.com
-Subject: [RFC PATCH 0/4] move pruned objects to a separate repository
-Message-ID: <cover.1656528343.git.me@ttaylorr.com>
+Subject: [RFC PATCH 1/4] builtin/repack.c: pass "out" to
+ `prepare_pack_objects`
+Message-ID: <eff341cce1f037625c247ac5f168008c8676f5f8.1656528343.git.me@ttaylorr.com>
+References: <cover.1656528343.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1656528343.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that cruft packs are available in v2.37.0, here is an interesting
-application of that new feature to enable a two-phase object pruning
-approach.
+`builtin/repack.c`'s `prepare_pack_objects()` is used to prepare a set
+of arguments to a `pack-objects` process which will generate a desired
+pack.
 
-This came out of a discussion within GitHub about ways we could support
-storing a set of pruned objects in "limbo" so that they were not
-accessible from the repository which pruned them, but instead stored in
-a cruft pack in a separate repository which lists the original one as an
-alternate.
+A future patch will add an `--expire-to` option which allows `git
+repack` to write a cruft pack containing the pruned objects out to a
+separate repository. Prepare for this by teaching that function to write
+packs to an arbitrary location specified by the caller.
 
-This makes it possible to take the collection of all pruned objects and
-store them in a cruft pack in a separate repository. This repository
-(which I have been referring to as the "expired.git") can then be used
-as a donor repository for any missing objects (like the ones described
-by the race in [1]).
+All existing callers of `prepare_pack_objects()` will pass `packtmp` for
+`out`, retaining the existing behavior.
 
-The first few patches are preparatory. The final one implements writing
-the pruned objects separately. The trick is to write another cruft pack
-to a separate repository, with two tweaks:
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ builtin/repack.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-  - the `--cruft-expiration` value is set to "never", since we want to
-    keep around all of the objects we expired in the previous step, and
-
-  - the original cruft pack appears as a pack that we are going to keep,
-    meaning all unreachable objects that are stored in the original
-    cruft pack are excluded from the one we write to the "expired.git"
-    repository.
-
-You can try this out yourself by doing something like:
-
-    $ git init --bare ../expired.git $ git repack --cruft
-    --cruft-expiration=1.day.ago -d \
-    --expire-to=../expired.git/objects/pack/pack
-
-which will create two cruft packs:
-
-  - one in the repository which ran `git repack` containing all
-    unreachable objects written within the last day, and
-  - another in the "expired.git" repository which contains all
-    unreachable objects written prior to the last day
-
-This series is an RFC for now since I'm interested in discussing whether
-or not this is a feature that people would actually want to use or not.
-But if it is, I'm happy to polish this up and turn it into a
-non-RFC-quality series ;-).
-
-In the meantime, thanks for your review!
-
-[1]: https://lore.kernel.org/git/YryF+vkosJOXf+mQ@nand.local/
-
-Taylor Blau (4):
-  builtin/repack.c: pass "out" to `prepare_pack_objects`
-  builtin/repack.c: pass "cruft_expiration" to `write_cruft_pack`
-  builtin/repack.c: write cruft packs to arbitrary locations
-  builtin/repack.c: implement `--expire-to` for storing pruned objects
-
- Documentation/git-repack.txt |   6 ++
- builtin/repack.c             |  67 ++++++++++++++++---
- t/t7700-repack.sh            | 121 +++++++++++++++++++++++++++++++++++
- 3 files changed, 186 insertions(+), 8 deletions(-)
-
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 4a7ae4cf48..025882a075 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -188,7 +188,8 @@ static void remove_redundant_pack(const char *dir_name, const char *base_name)
+ }
+ 
+ static void prepare_pack_objects(struct child_process *cmd,
+-				 const struct pack_objects_args *args)
++				 const struct pack_objects_args *args,
++				 const char *out)
+ {
+ 	strvec_push(&cmd->args, "pack-objects");
+ 	if (args->window)
+@@ -211,7 +212,7 @@ static void prepare_pack_objects(struct child_process *cmd,
+ 		strvec_push(&cmd->args,  "--quiet");
+ 	if (delta_base_offset)
+ 		strvec_push(&cmd->args,  "--delta-base-offset");
+-	strvec_push(&cmd->args, packtmp);
++	strvec_push(&cmd->args, out);
+ 	cmd->git_cmd = 1;
+ 	cmd->out = -1;
+ }
+@@ -275,7 +276,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 	FILE *out;
+ 	struct strbuf line = STRBUF_INIT;
+ 
+-	prepare_pack_objects(&cmd, args);
++	prepare_pack_objects(&cmd, args, packtmp);
+ 	cmd.in = -1;
+ 
+ 	/*
+@@ -673,7 +674,7 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+ 	FILE *in, *out;
+ 	int ret;
+ 
+-	prepare_pack_objects(&cmd, args);
++	prepare_pack_objects(&cmd, args, packtmp);
+ 
+ 	strvec_push(&cmd.args, "--cruft");
+ 	if (cruft_expiration)
+@@ -862,7 +863,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 
+ 	sigchain_push_common(remove_pack_on_signal);
+ 
+-	prepare_pack_objects(&cmd, &po_args);
++	prepare_pack_objects(&cmd, &po_args, packtmp);
+ 
+ 	show_progress = !po_args.quiet && isatty(2);
+ 
 -- 
 2.37.0.1.g1379af2e9d
+
