@@ -2,89 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A2AFC433EF
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 17:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39A08C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 17:16:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231517AbiF2RLD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 13:11:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54592 "EHLO
+        id S230239AbiF2RQw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 13:16:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230120AbiF2RLA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 13:11:00 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0975F1A818
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 10:11:00 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id z7so12496169qko.8
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 10:10:59 -0700 (PDT)
+        with ESMTP id S230081AbiF2RQv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 13:16:51 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 053143CFE2
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 10:16:51 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id m184so9774448wme.1
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 10:16:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wGKLaqaoALTeekngFIqkVERgt9u91+IwTgltGHzrHNE=;
-        b=1/brD5juQQ44QGWds4ieWVMHCftZMCaF9C6iV4bYByRArJDT7k72As79CXG0iG/QQM
-         pjoPYJHsc8xmfzEV9L+BipQLEaK9BRhuiBX1A/0tKOe3QVvsAAGvy7RgtmtbQ74hRkVN
-         re+9IUTZ6kfTI4H1a7VYOJvdLdULTlPdWy+2987YXGFuTVA8PGkodscqoETit+kztMBI
-         sSny6fvXTALTlnKBk9seRb8GXwfCiXLJP5OdtRq5vx6ue1kdWmAHPaZb4RGz+dygYeRe
-         p+Y3uOjT/groZTgRGH9LF5YDcLhve8ygvWhpc8QLOGgThZsH9IPl7k+lxHss8Rrw2zeK
-         udzQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wjCmILB/HKIJ4tXoCkcUOKEjtCtrFVbs8e97DBfPpvs=;
+        b=iVDWnLS5isX67MpXA4+qNTaTC9C3hFkIhLFd/eWlyMrXmsfK0JWayfDkfXJZeVcyh1
+         j8KzsUbYhNQwXOhdPKoYhmqYHV6lt0A1z/9xGvvuqk1ugjomuGVsyS8q1Ky2lP0mAIM0
+         AFLsLBtX54/qoTQjJ6kt3XHm/fG6eTp1zUHlW5COznlwGeiSN4ELJYW4wOdzbB3SO/1W
+         32+JSAda6O70WMs2WhbhhNl5I+Z2PvdaQuc+7F8OhkF+aTE/DnxuJ7VmL8ByLpRBe2c5
+         phFwM1nj9CoWCyI9ulgypLmmirLSxWmFY1RmEdZc/LrYfsk1IqkHeJjobsOb+O3LBzjC
+         +0eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wGKLaqaoALTeekngFIqkVERgt9u91+IwTgltGHzrHNE=;
-        b=uHa/6yml5MoTEV6kD/Y5UgWz/L/3N+nqHixOpQEgsAXGcDtDzHOgdTV6oDYvMcoSLP
-         TJVP9YBjRpM4h/GicAAAL5o2Fjh0u32z19+qRxhx/uJNyl3s0Y8V6pA2NXeT0XnzkN/b
-         HyjzHizz0Mc35hBx10QaOERkeO+1kEIoa28jO3bk5kVRMOUhcmrbJz4+P4s7zrunLI75
-         7J566Y2i/bblJcyFEHDKCY5nfdPTpGBR8/cgWudLp5agQODvxmJVAR+1QfCD5zIURFDl
-         LgmFBUs5fcDlni63Zz/q89logGYkQq9LqK6bqw9z5ePkOFbqo53v+cGP4N7DyUo136Dh
-         QTKA==
-X-Gm-Message-State: AJIora+VlHymDji/jOHpXt4Z/ljRqdDCRtyDFD2XiRrvDdsmSfdDz0tM
-        gUDtdN+n2uQhd693K0C32McZRJ3BJVS+vA==
-X-Google-Smtp-Source: AGRyM1s9GIKI2vKAUgw4XmTtr7o/QRymqPWAJ1KN1TYuTriY/UaScGk5ppAyOjnZ3G9LZfBXAUlf3w==
-X-Received: by 2002:a37:a644:0:b0:6ae:ea03:83e8 with SMTP id p65-20020a37a644000000b006aeea0383e8mr2910813qke.775.1656522658942;
-        Wed, 29 Jun 2022 10:10:58 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y17-20020a05620a25d100b006a6a5d1e240sm14982851qko.34.2022.06.29.10.10.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 10:10:58 -0700 (PDT)
-Date:   Wed, 29 Jun 2022 13:10:57 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     stolee@gmail.com
-Cc:     git@vger.kernel.org, Gregory Szorc <gregory.szorc@gmail.com>
-Subject: Re: Race condition between repack and loose-objects maintenance task
-Message-ID: <YryHoXhmkvkl6X2j@nand.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wjCmILB/HKIJ4tXoCkcUOKEjtCtrFVbs8e97DBfPpvs=;
+        b=A5b0crjcn5w2o4NM6qIscLwFDv67bxlJ0KAPxl3yiLj6LcGIvMJZ7sSbbzWSMQ3+gB
+         LEHl9fBKGQaEwzvAE1BAZNMZkqpAPxsuhbVme7TsuJo4KBpC1YpegyOmOS4+L3TYxVHg
+         sqgL90zX45ehIsWAJjRTFgpwR1y5v10AwYzcO2iYVGJL2fzBU7LP2+xSd4ZdgmFqVpR/
+         TQoXimTmS0P8pWemZe3MSRGO6zLHsr5g6ckD+KdT+7VTOeRWId1TDPGTrbSMd98ZOtS6
+         X4HXNyVpd3ftBWq2L4Aqetewa1k1UX0HggooIMzYaWkD0fdyARArXcbLP9jyO6b+Tsoj
+         BT2g==
+X-Gm-Message-State: AJIora8lWhd/e8TSL+5Rer7365EA+dSMTezG7SuiVYY2JWtzZh5/7Ef+
+        rJntWHPeJE832HOCvi1cczngGW8X0DO3fltrn1s=
+X-Google-Smtp-Source: AGRyM1sMOjc248HCeX1Z7fL88KI9fEezW7H3FSCgLbO2DXsjwl8YB3gyxXYoiO5gkYrMMzZwSK9x8pMSsZs/6wVxGHk=
+X-Received: by 2002:a05:600c:4982:b0:39c:3c0d:437c with SMTP id
+ h2-20020a05600c498200b0039c3c0d437cmr4964049wmp.38.1656523009594; Wed, 29 Jun
+ 2022 10:16:49 -0700 (PDT)
+MIME-Version: 1.0
 References: <CAKQoGamCrRMqtzziuzi8mL6E7uA3SC1WXiMGT_4rpbk1jcu_OQ@mail.gmail.com>
  <YryF+vkosJOXf+mQ@nand.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 In-Reply-To: <YryF+vkosJOXf+mQ@nand.local>
+From:   Gregory Szorc <gregory.szorc@gmail.com>
+Date:   Wed, 29 Jun 2022 10:16:38 -0700
+Message-ID: <CAKQoGakSFaNm10ZeTKc8XtTcD0JW19CZP1OwA4j7W__iBQaJfg@mail.gmail.com>
+Subject: Re: Race condition between repack and loose-objects maintenance task
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 01:03:54PM -0400, Taylor Blau wrote:
+On Wed, Jun 29, 2022 at 10:03 AM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> Hi Greg,
+>
+> On Wed, Jun 29, 2022 at 09:55:54AM -0700, Gregory Szorc wrote:
+> > 1. `git repack -A` creates loose objects
+> > 2. `git maintenance`'s `loose-objects` task deletes those loose objects
+> > 3. `git repack -A` fails to find the loose objects it just created and
+> > aborts with `fatal: unable to add recent objects`
+>
+> This is a somewhat well-known race that occurs when one Git process
+> decides unreachable objects are safe to be deleted, but an incoming push
+> or reference update makes those to-be-deleted objects reachable before
+> they are actually removed, leaving the repository in a corrupt state.
+>
+> I'm surprised that the loose-objects maintenance task deletes those
+> objects, though, since it just runs `prune-packed` or (the equivalent
+> of) `repack -d`, neither of which will actually delete objects from the
+> repository.
+>
 > I see that Stolee is already on the CC list, so perhaps he could chime
 > in on the above.
+>
+> In either case, my recommendation would be to keep those unreachable
+> objects which haven't yet aged out of the repository around for longer,
+> which will decrease the likelihood of seeing the race.
 
-I haven't looked at the maintenance code too closely as of yet, but I
-have a plausible explanation for why maintenance is removing loose
-*unreachable* objects.
+We had to lower gc.pruneExpire from its default of 1 hour because
+otherwise this would result in the creation of thousands of loose
+objects. This is normally acceptable. However, on NFS, the churn from
+lots of file creation and deletion resulted in acceptable performance
+degradation. We had to lower gc.pruneExpire to minimize the damage.
 
-Ordinarily the loose-objects task alone will not remove any loose
-objects which don't already appear in a pack. That's because we first
-try to run prune-packed, and then the equivalent of `git repack -d` to
-consolidate loose objects together into a single pack.
+> If your
+> repository has a lot of unreachable objects (such that storing each
+> one of them individually as loose is impractical), I would recommend
+> using cruft packs (e.g., by running either `git repack --cruft -d` or
+> `git gc --cruft`) to collect those unreachable objects together into a
+> single pack.
+>
+> See Documentation/technical/cruft-packs.txt for more information about
+> cruft packs.
 
-But, we only do that for the first 50,000 loose objects. Anything else
-gets left around and then is likely removed by the `git gc` task which
-is run separately, and after the loose-objects task.
-
-Using cruft packs won't change the race fundamentally, but storing the
-unreachable objects in a cruft pack will mean that you can keep more
-objects around stored together in a single pack. In other words, making
-it safe to increase the grace period beyond what you would ordinarily be
-able to do with the classic pruning mechanism.
-
-Thanks,
-Taylor
+Yes, I saw this new feature in the Git release this week and am hoping
+to roll it out to better mitigate this general problem! With cruft
+packs, I anticipate being able to restore a longer gc.pruneExpire
+value as they should mitigate the NFS performance badness we're
+working around. Thank you for confirming it should help with the
+problem.
