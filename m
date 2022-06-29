@@ -2,77 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49685CCA47C
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 07:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 570B8C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 09:22:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbiF2HMb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 03:12:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56798 "EHLO
+        id S232208AbiF2JWp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 05:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231641AbiF2HMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 03:12:24 -0400
-Received: from out28-75.mail.aliyun.com (out28-75.mail.aliyun.com [115.124.28.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1E2EDFE0
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 00:12:16 -0700 (PDT)
-X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07576645|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0910211-0.00384816-0.905131;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047211;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=4;RT=4;SR=0;TI=SMTPD_---.OFJiLNq_1656486732;
-Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.OFJiLNq_1656486732)
-          by smtp.aliyun-inc.com;
-          Wed, 29 Jun 2022 15:12:13 +0800
-Date:   Wed, 29 Jun 2022 15:12:13 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Re: [PATCH v3] ls-files: update test style
-References: <pull.1269.v2.git.1656407664694.gitgitgadget@gmail.com>, 
-        <pull.1269.v3.git.1656409884091.gitgitgadget@gmail.com>, 
-        <xmqqzghwim3m.fsf@gitster.g>
-X-Priority: 3
-X-GUID: 6F3ED98C-35B8-4458-A364-A86F7E6E7F11
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-Message-ID: <2022062915111229306214@oschina.cn>
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S230209AbiF2JWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 05:22:44 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82626377F2
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 02:22:43 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id n8so7350018eda.0
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 02:22:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=i8zzMz6aftqYQmYYme7JLTY/x+aYR9ixwsRXSz0zTTo=;
+        b=igGpWxbN9KFXeZ4d4aS+kXwq3JVY004BKAEt8140qLTr5qF5wuNgJXrU39Y8NKdTVk
+         19aiKX/EGZ5DYcpCdywwGEpZdJu5OsBfLJje0vOhqXi71JKg0E9SEoeCKpFx9xAfjMFi
+         hLHS4+ECoeRCCJ86ErOnDmPrvzLNbTtsD2bHu8JqTAX42cK3gaO64MpWvHVTsiO65Rn4
+         eoL4cTG30EPrvT7FDsPiw8CFerSPxf5qvPkisLcKF8ToXWhAYEt1Fhvo843o9i5TvaBW
+         FZcQEk0+gDp57l9q57KgxXfNu49ZoYQjre1byKujin+FzVH03uarKjgJZvTZC8WHk94m
+         VoDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=i8zzMz6aftqYQmYYme7JLTY/x+aYR9ixwsRXSz0zTTo=;
+        b=boo3upsUvf8fodzhdWXSmVmcRuc+Lv8JfwzGwqlCMFVwTPKWErj19xa3cPAyDc3LTF
+         ZSl+zF4+7lkh09hdHRSFw+9VV63iqXhBO9hGzORZA3P5RgChjvRcrnywbGWvSSsLSBao
+         0uaMcqNbLw2v149Uep2OVn1Bgk7tmD6t0oUhAJhlbSRsBDu3SY+j9XJTNeTltBMxIsba
+         laK+Ury0kqXuzwd+uMjat/s0Hvp1UPbbB/2lCCssevb47S7Mo5P170/2TejFfdQQRPcS
+         I2a02poaaN3ySttjIBU0S6i7DOlzYNVNxiql1oQW2AWHcFwD08p7JI9gbhPs+6Z382yl
+         FsbA==
+X-Gm-Message-State: AJIora8y74ukhDCx5i8KDH2s4qdj6Qb5pfYpKHuGWvmRvJZL+UNPpB7g
+        0pdW/e8QJkDk/f1M6g8jOywTgaCSLdw=
+X-Google-Smtp-Source: AGRyM1vJ4wy89QbOJZIb5detR9tRQZMEzmIhJ51I4aYZNGCeAI7itaSuW3ZWbV4cf1oWT6c0wNIhxw==
+X-Received: by 2002:a05:6402:360d:b0:435:710a:2531 with SMTP id el13-20020a056402360d00b00435710a2531mr2821411edb.377.1656494561922;
+        Wed, 29 Jun 2022 02:22:41 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id p5-20020a17090653c500b00722e8c47cc9sm1880ejo.181.2022.06.29.02.22.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jun 2022 02:22:41 -0700 (PDT)
+Message-ID: <9fd566b5-ce85-2f48-9d96-7008dc5ddd2e@gmail.com>
+Date:   Wed, 29 Jun 2022 10:22:39 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Oddities in gitignore matching
+Content-Language: en-GB-large
+To:     John Thorvald Wodder II <jwodder@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <DC3C4CED-3781-4380-95E6-97F5CBE1B13C@gmail.com>
+ <72a1a225-5d84-56c3-2652-ec7c17c18cbd@gmail.com>
+ <0871A57F-4AF4-4F45-AC56-10C1817761BB@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <0871A57F-4AF4-4F45-AC56-10C1817761BB@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cj4iTGkgTGluY2hhbyB2aWEgR2l0R2l0R2FkZ2V0IiA8Z2l0Z2l0Z2FkZ2V0QGdtYWlsLmNvbT4g
-d3JpdGVzOgo+Cj4+IGRpZmYgLS1naXQgYS90L1JFQURNRSBiL3QvUkVBRE1FCj4+IGluZGV4IDMw
-OWEzMTEzM2M2Li41ZTA1Mzk0MTJiNCAxMDA2NDQKPj4gLS0tIGEvdC9SRUFETUUKPj4gKysrIGIv
-dC9SRUFETUUKPj4gQEAgLTU0Nyw2ICs1NDcsNTIgQEAgVGhpcyB0ZXN0IGhhcm5lc3MgbGlicmFy
-eSBkb2VzIHRoZSBmb2xsb3dpbmcgdGhpbmdzOgo+PsKgwqDCoMKgIGNvbnNpc3RlbnRseSB3aGVu
-IGNvbW1hbmQgbGluZSBhcmd1bWVudHMgLS12ZXJib3NlIChvciAtdiksCj4+wqDCoMKgwqAgLS1k
-ZWJ1ZyAob3IgLWQpLCBhbmQgLS1pbW1lZGlhdGUgKG9yIC1pKSBpcyBnaXZlbi4KPj7CoAo+PiAr
-UmVjb21tZW5kZWQgc3R5bGUKPj4gKy0tLS0tLS0tLS0tLS0tLS0tCj4+ICtIZXJlIGFyZSBzb21l
-IHJlY29tbWVudGVkIHN0eWxlcyB3aGVuIHdyaXRpbmcgdGVzdCBjYXNlLgo+PiArCj4+ICsgLSBL
-ZWVwIHRlc3QgdGl0bGUgdGhlIHNhbWUgbGluZSB3aXRoIHRlc3QgaGVscGVyIGZ1bmN0aW9uIGl0
-c2VsZi4KPj4gKwo+PiArwqDCoCBUYWtlIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgaGVscGVyIGZvciBl
-eGFtcGxlLCB3cml0ZSBpdCBsaWtlOgo+PiArCj4+ICvCoCB0ZXN0X2V4cGVjdF9zdWNjZXNzICd0
-ZXN0IHRpdGxlJyAnCj4+ICvCoCAuLi4gdGVzdCBib2R5IC4uLgo+PiArwqAgJwo+Cj5JbmRlbnQg
-dGhlIGJvZHkgZnVydGhlciB0byB0aGUgcmlnaHQ/Cj4KPj4gKyAtIEluZGVudCB0aGUgYm9keSBv
-ZiBoZXJlLWRvY3VtZW50LCBhbmQgdXNlICI8PCAtIiBpbnN0ZWFkIG9mICI8PCIgdG8gc3RyaXAg
-cHJlZml4IFRBQjoKPgo+T3Zlcmx5IGxvbmcgbGluZS4KPgo+RGlkIHlvdSBtZWFuIHRvIGhhdmUg
-YSBzcGFjZSBiZXR3ZWVuICI8PCIgYW5kICItIj8gCk9wcywgSSdsbCBmaXggaXQuIFRoaXMgY2Ft
-ZSBmcm9tIGFuIGV4dGVuc2lvbiBpbiBWUyBjb2RlIHdoaWNoIGlzIHRvIHByZXZpZXcgQXNjaWlE
-b2MsCml0IG1pc3Rha2VubHkgcmVuZGVyICI8PC0iIGludG8gIjzihpAiLCBzbyBJIHB1dCBhIHNw
-YWNlIGJldHdlZW4gIjw8IiBhbmQgIi0iLgo+Cj4icHJlZml4IFRBQiIgLT4gImxlYWRpbmcgVEFC
-cyB1c2VkIGZvciBpbmRlbnRhdGlvbiIgKHBsdXJhbCBpcyB0aGUKPmltcG9ydGFudCBwYXJ0KT/C
-oCAKPgo+TWVudGlvbiBlbmQgb2YgaGVyZS1kb2N1bWVudCBtYXJrZXIgc2hvdWxkIGJ5IGRlZmF1
-bHQgYmUgcXVvdGVkLAo+dW5sZXNzIHRoZSBib2R5IG5lZWRzICR2YXJpYWJsZV9pbnRlcnBvbGF0
-aW9uPyAKU29ycnksIEkgZG9uJ3QgZ2V0IGl0LiBJIGRvbid0IHNlZSBtYW55IG9mIGVuZGluZyAi
-RU9GIiBhcmUgcXVvdGVkIGluIG91ciB0ZXN0cy4KPgo+PiArwqAgdGVzdF9leHBlY3Rfc3VjY2Vz
-cyAndGVzdCBzb21ldGhpbmcnICcKPj4gK8KgwqDCoMKgwqAgY2F0ID5leHBlY3QgPDwtXEVPRiAm
-Jgo+PiArwqDCoMKgwqDCoCBvbmUKPj4gK8KgwqDCoMKgwqAgdHdvCj4+ICvCoMKgwqDCoMKgIHRo
-cmVlCj4+ICvCoMKgwqDCoMKgIEVPRgo+PiArwqDCoMKgwqDCoCB0ZXN0X3NvbWV0aGluZyA+IGFj
-dHVhbCAmJgo+PiArwqDCoMKgwqDCoCB0ZXN0X2NtcCBleHBlY3QgYWN0dWFsCj4+ICvCoCAnCj4+
-ICsKPj4gK8KgwqAgSW5zdGVhZCBvZjoKPj4gKwo+PiArwqAgdGVzdF9leHBlY3Rfc3VjY2VzcyAn
-dGVzdCBzb21ldGhpbmcnICcKPj4gK8KgwqDCoMKgwqAgY2F0ID5leHBlY3QgPDxcRU9GICYmCj4+
-ICvCoCBvbmUKPj4gK8KgIHR3bwo+PiArwqAgdGhyZWUKPj4gK8KgIEVPRgo+PiArwqDCoMKgwqDC
-oCB0ZXN0X3NvbWV0aGluZyA+IGFjdHVhbCAmJgo+PiArwqDCoMKgwqDCoCB0ZXN0X2NtcCBleHBl
-Y3QgYWN0dWFsCj4+ICvCoCAnCj4KPgo+VGhhbmtzLg==
+On 28/06/2022 14:48, John Thorvald Wodder II wrote:
+> On 2022 Jun 28, at 05:13, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> Hi John
+>>
+>> On 26/06/2022 20:34, John Thorvald Wodder II wrote:
+>>> First: I've found that the pattern "foo**/bar" causes the path "foo/glarch/bar" (as well as "foobie/glarch/bar") to be ignored.  However, the gitignore(5) documentation states that "**/" only has special meaning when it's "leading"; in other circumstances, the double star should be treated the same as a single star (and "foo*/bar" does not match "foo/glarch/bar").  Is this behavior of non-leading "**/" deliberate or a bug?
+>>
+>> I've no idea if it is deliberate or not but it seems reasonable and I think it matches shells like fish, tcsh and zsh though not bash (I think our documented behavior matches bash).
+> 
+> OK, but it turns out that "foo**/bar" also matches just "foobar", no slash, which definitely seems wrong.
 
+Yes that definitely sounds like a bug, I've cc'd Ævar who I think is 
+more familiar with the pattern matching code than I am
+
+Best Wishes
+
+Phillip
+
+>>> Interestingly, checking the pattern with the wildmatch test-tool (`t/helper/test-tool wildmatch wildmatch foo/glarch/bar 'foo**/bar'`) shows that the pattern should not match the path.
+>>> Second: The pattern "[[:space:]]" does not match 0x0B (\v, vertical tab) or 0x0C (\f, form feed) despite the fact that the C isspace() function accepts these characters, and I cannot figure out the cause for this discrepancy.  (The pattern does match the other characters that isspace() accepts, though — tab, line feed, carriage return, and space character.)  The wildmatch test-tool agrees with this behavior, though.
+>>
+>> This is because git defines its own isspace() that does not treat '\v' or '\f' as whitespace (see git-compat-util.h and ctype.c). I'm not sure why we exclude those characters, I think the reason for defining our own isspace() is to avoid the locale dependent behaviour of the standard version.
+> 
+> Thank you for the explanation.
+> 
+> ---
+> 
+> Through further experimentation, I've discovered a fourth oddity with gitignore: If "foo//" (with two or more trailing slashes) is added to .gitignore and `mkdir -p foo/bar` is run, then `git status --ignored=matching --porcelain` won't show "foo/" or "foo/bar/" at all, which is something I'd previously only encountered for completely empty top-level directories.  This holds true no matter how deep or wide you make the directory tree at "foo/", as long as it's all-directories; once a file gets added somewhere under "foo/", the "git status" command shows "foo/" as ignored.
+> 
+> -- John Wodder
