@@ -2,93 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59342C43334
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 06:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49685CCA47C
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 07:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232268AbiF2GlM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 02:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50456 "EHLO
+        id S229656AbiF2HMb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 03:12:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232218AbiF2GlG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 02:41:06 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DD75275E8
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 23:41:04 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id p7so24792683ybm.7
-        for <git@vger.kernel.org>; Tue, 28 Jun 2022 23:41:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=JlwebwwLwnneNpxBfbd7N68XHmgzat6ggowqI23yBqo=;
-        b=gotF0VpddB8iUoKS0IGNwzhTwB2fzm5Wfxo4en1RYITLzHnZMp+z9pI0OEZBkXL9NM
-         kkgUu/Sw4eCaJTMrgB9NAA7FRcmUXTfKlSEOIFYN8cpyfeDjVWAiBJEmxoyrhx8GH7F8
-         ZwHG415YqZnAvzs02GwuIZjGrytiZEFqR8MVYJ4jYikxYvPUWkdoyoP8MFm59w//kX5l
-         WhWMDDEsJGJYtgXIe1hqyBMiwQcUCOQNHcCRK7pUYnVdrE1tXfUYPRr8bTdGbF/zNiRq
-         mSw0OCGabVPI4BU//eBTRwHWmY5dcr2bUqT6NCYaUzZFuGAvdqiAPnmqovuyh0HdgPHK
-         /LQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=JlwebwwLwnneNpxBfbd7N68XHmgzat6ggowqI23yBqo=;
-        b=i5k+A00Mv70BFLqiz++SfYiLrFsexLUAijdoqNNJsC/kxKW9OVPSWiA92SAjvePIXw
-         x2Ku4Jpi51fSzHCXlwT0XN+bbWHoH5ohASWe8DA1D8rI0tCM4tyYe7RN5EKVX0INlRLx
-         4bwjtg23MwHoGr2L+oHzSfWlMUu/M1hbom9+NlMmGIJ7zWowM5zHJWt+fOPIZyrgAeuX
-         KkgNkT78615IlOg6SlJpIRNMOGD16O/HoG9dfMaBwU834IrSjanVTEJ2j8PXAwaXiMrh
-         FnOg6bhC6uIxDNmMzZ1ua68sDpoPLGP0Bj/AuyhBVSZseYqCpzWzexsZeYil3BWkyS9D
-         qp+A==
-X-Gm-Message-State: AJIora+YdaKmVPQ5/SlMdbDLsx/wbxSDqNctcrm/cS4Zfac6PiKcMcQ3
-        0BEsPvDffeyO0Tl8w6lwGkcCKbSlG+r6KsRk0BYr7Uo1X3E=
-X-Google-Smtp-Source: AGRyM1tuWqZTaWOGTbhRu+5wCzZA5kT3VJj0Iq+4+F8538VCT58n1kgkHyh6MP3Dl4R1qltUnN6lTtkSUBgmcBb46pU=
-X-Received: by 2002:a25:b9c7:0:b0:66c:e02d:9749 with SMTP id
- y7-20020a25b9c7000000b0066ce02d9749mr1797881ybj.494.1656484863156; Tue, 28
- Jun 2022 23:41:03 -0700 (PDT)
-MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 29 Jun 2022 08:40:52 +0200
-Message-ID: <CAP8UFD3N0rs+ba-gV6BNAebKbCMEYXhfcJy65vZSqv0=wJW+Ow@mail.gmail.com>
-Subject: Draft of Git Rev News edition 88
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo <chooglen@google.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Bruno Brito <bruno@git-tower.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S231641AbiF2HMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 03:12:24 -0400
+Received: from out28-75.mail.aliyun.com (out28-75.mail.aliyun.com [115.124.28.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1E2EDFE0
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 00:12:16 -0700 (PDT)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07576645|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0910211-0.00384816-0.905131;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047211;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=4;RT=4;SR=0;TI=SMTPD_---.OFJiLNq_1656486732;
+Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.OFJiLNq_1656486732)
+          by smtp.aliyun-inc.com;
+          Wed, 29 Jun 2022 15:12:13 +0800
+Date:   Wed, 29 Jun 2022 15:12:13 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Re: [PATCH v3] ls-files: update test style
+References: <pull.1269.v2.git.1656407664694.gitgitgadget@gmail.com>, 
+        <pull.1269.v3.git.1656409884091.gitgitgadget@gmail.com>, 
+        <xmqqzghwim3m.fsf@gitster.g>
+X-Priority: 3
+X-GUID: 6F3ED98C-35B8-4458-A364-A86F7E6E7F11
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+Message-ID: <2022062915111229306214@oschina.cn>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Cj4iTGkgTGluY2hhbyB2aWEgR2l0R2l0R2FkZ2V0IiA8Z2l0Z2l0Z2FkZ2V0QGdtYWlsLmNvbT4g
+d3JpdGVzOgo+Cj4+IGRpZmYgLS1naXQgYS90L1JFQURNRSBiL3QvUkVBRE1FCj4+IGluZGV4IDMw
+OWEzMTEzM2M2Li41ZTA1Mzk0MTJiNCAxMDA2NDQKPj4gLS0tIGEvdC9SRUFETUUKPj4gKysrIGIv
+dC9SRUFETUUKPj4gQEAgLTU0Nyw2ICs1NDcsNTIgQEAgVGhpcyB0ZXN0IGhhcm5lc3MgbGlicmFy
+eSBkb2VzIHRoZSBmb2xsb3dpbmcgdGhpbmdzOgo+PsKgwqDCoMKgIGNvbnNpc3RlbnRseSB3aGVu
+IGNvbW1hbmQgbGluZSBhcmd1bWVudHMgLS12ZXJib3NlIChvciAtdiksCj4+wqDCoMKgwqAgLS1k
+ZWJ1ZyAob3IgLWQpLCBhbmQgLS1pbW1lZGlhdGUgKG9yIC1pKSBpcyBnaXZlbi4KPj7CoAo+PiAr
+UmVjb21tZW5kZWQgc3R5bGUKPj4gKy0tLS0tLS0tLS0tLS0tLS0tCj4+ICtIZXJlIGFyZSBzb21l
+IHJlY29tbWVudGVkIHN0eWxlcyB3aGVuIHdyaXRpbmcgdGVzdCBjYXNlLgo+PiArCj4+ICsgLSBL
+ZWVwIHRlc3QgdGl0bGUgdGhlIHNhbWUgbGluZSB3aXRoIHRlc3QgaGVscGVyIGZ1bmN0aW9uIGl0
+c2VsZi4KPj4gKwo+PiArwqDCoCBUYWtlIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgaGVscGVyIGZvciBl
+eGFtcGxlLCB3cml0ZSBpdCBsaWtlOgo+PiArCj4+ICvCoCB0ZXN0X2V4cGVjdF9zdWNjZXNzICd0
+ZXN0IHRpdGxlJyAnCj4+ICvCoCAuLi4gdGVzdCBib2R5IC4uLgo+PiArwqAgJwo+Cj5JbmRlbnQg
+dGhlIGJvZHkgZnVydGhlciB0byB0aGUgcmlnaHQ/Cj4KPj4gKyAtIEluZGVudCB0aGUgYm9keSBv
+ZiBoZXJlLWRvY3VtZW50LCBhbmQgdXNlICI8PCAtIiBpbnN0ZWFkIG9mICI8PCIgdG8gc3RyaXAg
+cHJlZml4IFRBQjoKPgo+T3Zlcmx5IGxvbmcgbGluZS4KPgo+RGlkIHlvdSBtZWFuIHRvIGhhdmUg
+YSBzcGFjZSBiZXR3ZWVuICI8PCIgYW5kICItIj8gCk9wcywgSSdsbCBmaXggaXQuIFRoaXMgY2Ft
+ZSBmcm9tIGFuIGV4dGVuc2lvbiBpbiBWUyBjb2RlIHdoaWNoIGlzIHRvIHByZXZpZXcgQXNjaWlE
+b2MsCml0IG1pc3Rha2VubHkgcmVuZGVyICI8PC0iIGludG8gIjzihpAiLCBzbyBJIHB1dCBhIHNw
+YWNlIGJldHdlZW4gIjw8IiBhbmQgIi0iLgo+Cj4icHJlZml4IFRBQiIgLT4gImxlYWRpbmcgVEFC
+cyB1c2VkIGZvciBpbmRlbnRhdGlvbiIgKHBsdXJhbCBpcyB0aGUKPmltcG9ydGFudCBwYXJ0KT/C
+oCAKPgo+TWVudGlvbiBlbmQgb2YgaGVyZS1kb2N1bWVudCBtYXJrZXIgc2hvdWxkIGJ5IGRlZmF1
+bHQgYmUgcXVvdGVkLAo+dW5sZXNzIHRoZSBib2R5IG5lZWRzICR2YXJpYWJsZV9pbnRlcnBvbGF0
+aW9uPyAKU29ycnksIEkgZG9uJ3QgZ2V0IGl0LiBJIGRvbid0IHNlZSBtYW55IG9mIGVuZGluZyAi
+RU9GIiBhcmUgcXVvdGVkIGluIG91ciB0ZXN0cy4KPgo+PiArwqAgdGVzdF9leHBlY3Rfc3VjY2Vz
+cyAndGVzdCBzb21ldGhpbmcnICcKPj4gK8KgwqDCoMKgwqAgY2F0ID5leHBlY3QgPDwtXEVPRiAm
+Jgo+PiArwqDCoMKgwqDCoCBvbmUKPj4gK8KgwqDCoMKgwqAgdHdvCj4+ICvCoMKgwqDCoMKgIHRo
+cmVlCj4+ICvCoMKgwqDCoMKgIEVPRgo+PiArwqDCoMKgwqDCoCB0ZXN0X3NvbWV0aGluZyA+IGFj
+dHVhbCAmJgo+PiArwqDCoMKgwqDCoCB0ZXN0X2NtcCBleHBlY3QgYWN0dWFsCj4+ICvCoCAnCj4+
+ICsKPj4gK8KgwqAgSW5zdGVhZCBvZjoKPj4gKwo+PiArwqAgdGVzdF9leHBlY3Rfc3VjY2VzcyAn
+dGVzdCBzb21ldGhpbmcnICcKPj4gK8KgwqDCoMKgwqAgY2F0ID5leHBlY3QgPDxcRU9GICYmCj4+
+ICvCoCBvbmUKPj4gK8KgIHR3bwo+PiArwqAgdGhyZWUKPj4gK8KgIEVPRgo+PiArwqDCoMKgwqDC
+oCB0ZXN0X3NvbWV0aGluZyA+IGFjdHVhbCAmJgo+PiArwqDCoMKgwqDCoCB0ZXN0X2NtcCBleHBl
+Y3QgYWN0dWFsCj4+ICvCoCAnCj4KPgo+VGhhbmtzLg==
 
-A draft of a new Git Rev News edition is available here:
-
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-88.md
-
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/582
-
-You can also reply to this email.
-
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
-
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition very late on Thursday
-June 30th.
-
-Thanks,
-Christian.
