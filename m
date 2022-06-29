@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A4DCC433EF
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 20:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B97A5C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 20:41:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231192AbiF2UlN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 16:41:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35318 "EHLO
+        id S231156AbiF2UlV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 16:41:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbiF2Ukz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 16:40:55 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D46E514027
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:40:54 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id i1so19688277wrb.11
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:40:54 -0700 (PDT)
+        with ESMTP id S230513AbiF2Uk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 16:40:57 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D005A21E23
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:40:55 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id d17so18533693wrc.10
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:40:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=LlS/R0TUCygicnqPOeo69vntyf/4E59CAGedT3e4REQ=;
-        b=XQ5o7GAe/SD3RvDLRl/jxzDBxixfQMAYHmS9NQY2P5PAVNvE+Fcc6wGFoxgKO1Nbpx
-         Y85nOj7XId710peaO1XWr8DverLd2WnFp8uKC1cd8uY1x7qYKoEv4Lv4+epRYKbE5CBg
-         0ERal4ATNFsUsLv8bL85zFyI7M3aGngKpxDErOb3v0TjMgcNAO/PLKEPxY9ZDI7uNEzg
-         iw7HsSrwVGaka+cYSgKDsU5y1KBTv6ELEoxkU/z44+PFCENxpsy5JImK6/P1KJTHK6bW
-         DXycccFx3sC8hYPQm+E1mcPNHn3U+pb9D13sA/Yel/iCjp4BgL1RuFLAWk5NFx+0TI3F
-         c5BQ==
+        bh=c3daSgqhZyWRm/HpwCJdfSqisVFlHMT0FBs106uF7NU=;
+        b=J/xmwAkUudcJzJdnyjwxg3GSLtJJv/WacLnmTDPiVnc7pfTBsCm/YTEG6YIPcf+tO2
+         RHSvlPkU4F5tnZ+rAEIUKZXm0LAVwMdtkzWn06ErxPMTO6wyY6SVa8YqBmwk7dxFeQtA
+         Q3Hb0R5o4H3FWf+xbFf7BZdwBRvdYdvWSWJO2yfJTq16PF6qs/qruStEc0NoVvrvJMzS
+         89S65/4H3AC8RE9v5ICwj2lJTnoZJGWUSahxRwoLsC8UlPxoOsigI14kAOaEYkLaBSg/
+         L1Uyjl43zu/GdM7S1ionSMnojM6o/LxNx5J6BKL8tR4f1W/zEZITN895QzRo+gNO0i9o
+         kvPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LlS/R0TUCygicnqPOeo69vntyf/4E59CAGedT3e4REQ=;
-        b=A0A9kTFOuMZfL+G9J0ES16+4Ozgig/eriiGp+yG3rG7sAj0dvbMbfW5s1Z338/xQi9
-         1xPTtH+4yd51hqZbiV4KsotCAbvgx153Yatyhn5ukleR5eps3t3lJPFdIL1dLqHzHtE2
-         lHgclbbZK6zSaTX32ImM4T+U0uFtdPHKsMvvGg6Ct5JONaUkp6Rxap8N11Fy9MeX04PT
-         TKc7vHxX91xBYnBb/WrmgPT2A+tMPYUmNZOxQ+mH40r0X4FGPF9d6lG27UHIsgPrkJzN
-         JRhOb7secTpCM/+RGdbfdlsFU2zuF+FGjsQQX9x5FunpJoi+R3So8mQFYro0p4keaRB7
-         OExQ==
-X-Gm-Message-State: AJIora87OyveiG0rdQgpQES7bm8o6FHdlaZ/DOfzVe5RWq/FTGm+f96Z
-        SnpLMnL9KdtHyicDL2SwqGVO7c7BkuIuwA==
-X-Google-Smtp-Source: AGRyM1vjSvaklvU24n1/Tf4opeoOE5JsC6Ou74O1CIvX8N8M8TkTGcHI2YP8dp2ET9GSThfzw6gmmg==
-X-Received: by 2002:adf:f052:0:b0:21b:c381:d609 with SMTP id t18-20020adff052000000b0021bc381d609mr5118834wro.453.1656535253055;
-        Wed, 29 Jun 2022 13:40:53 -0700 (PDT)
+        bh=c3daSgqhZyWRm/HpwCJdfSqisVFlHMT0FBs106uF7NU=;
+        b=2wGPKsaCSOmSdUDSokZ/pPPGDuIcGHw2yfNg0uZMUObGL2yrBuiGnurkXtiYo6FsnT
+         u4qvRFY89csvvU4H5w/4sMUXxA0yU6D7E6Ss2Msza0pCkM54x+w4uZlOhNCwTgRko0Sq
+         cVxi3I1Ua/F9d7jpzK8nMObC8OFFuyltsUrL/LDBT2MnEHHhJqddHOU5C7CrtF2xdHRp
+         gDn/YG2UhPPbWB0KsWXBFh6aXvw0RANKOMgZ1+Zd//8/Q/mzOgzNuC9lRjkbxQmE+yrv
+         xjT4RZbu0GhUGgan1+uL1kAwb7a91tZXdoAHUqMk72/RqONdQyxRLpqZl9SyLyB+6Esa
+         U5CQ==
+X-Gm-Message-State: AJIora8bNppgzXOL6tEg4Dn5QmQHFwUWbmK/qP7OWt6c5Nj67KDqtB7R
+        Ez4419vb3R/ticSHLjiNBzN1T7MRSPK6ww==
+X-Google-Smtp-Source: AGRyM1uJK65D+XBgwlxBWnwvRdTE+LxzcdDSWM9NgkXIhBlnxilv+4SXH9Yn9bUDObFiCk6WWCP61g==
+X-Received: by 2002:adf:dd05:0:b0:21d:ea5:7125 with SMTP id a5-20020adfdd05000000b0021d0ea57125mr5002837wrm.298.1656535254144;
+        Wed, 29 Jun 2022 13:40:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l4-20020a1c7904000000b003a047f64496sm4299873wme.7.2022.06.29.13.40.52
+        by smtp.gmail.com with ESMTPSA id l4-20020a1c7904000000b003a047f64496sm4299905wme.7.2022.06.29.13.40.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 13:40:52 -0700 (PDT)
-Message-Id: <bfbd11b48bf1bcd2449dcb5cfe8c27266d511bb0.1656535245.git.gitgitgadget@gmail.com>
+        Wed, 29 Jun 2022 13:40:53 -0700 (PDT)
+Message-Id: <a217e9a0640b45d21ef971d6e91cee3f1993f383.1656535245.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1248.v2.git.1656535245.gitgitgadget@gmail.com>
 References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
         <pull.1248.v2.git.1656535245.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 29 Jun 2022 20:40:44 +0000
-Subject: [PATCH v2 5/6] bundle-uri: add support for http(s):// and file://
+Date:   Wed, 29 Jun 2022 20:40:45 +0000
+Subject: [PATCH v2 6/6] fetch: add 'refs/bundle/' to log.excludeDecoration
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,145 +69,98 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The previous change created the 'git fetch --bundle-uri=<uri>' option.
-Currently, <uri> must be a filename.
+When fetching from a bundle URI, the branches of that bundle are stored
+in a different ref namespace: refs/bundles/. This namespace is intended
+to assist with later 'git fetch' negotiations with a Git server,
+allowing the client to advertise which data it already has from a bundle
+URI.
 
-Update copy_uri_to_file() to first inspect the URI for an HTTP(S) prefix
-and use git-remote-https as the way to download the data at that URI.
-Otherwise, check to see if file:// is present and modify the prefix
-accordingly.
+These references can be confusing for a user when they appear as a
+decoration in 'git log' output. Add "refs/bundles/" to the multi-valued
+log.excludeDecoration config value. This is similar to the way
+"refs/prefetch/" is hidden by background prefetch operations in 'git
+maintenance' as added by 96eaffebb (maintenance: set
+log.excludeDecoration durin prefetch, 2021-01-19).
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle-uri.c                | 65 ++++++++++++++++++++++++++++++++++++-
- t/t5558-fetch-bundle-uri.sh | 37 +++++++++++++++++++++
- 2 files changed, 101 insertions(+), 1 deletion(-)
+ Documentation/fetch-options.txt |  3 ++-
+ bundle-uri.c                    |  7 +++++++
+ t/t5558-fetch-bundle-uri.sh     | 12 +++++++++---
+ 3 files changed, 18 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 09bd1feeed8..8b801bcc2f3 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -321,4 +321,5 @@ endif::git-pull[]
+ --bundle-uri=<uri>::
+ 	Instead of fetching from a remote, fetch a bundle from the given
+ 	`<uri>` and unbundle the data into the local repository. The refs
+-	in the bundle will be stored under the `refs/bundle/*` namespace.
++	in the bundle will be stored under the hidden `refs/bundle/*`
++	namespace.
 diff --git a/bundle-uri.c b/bundle-uri.c
-index f80a3b14103..4c793843a2a 100644
+index 4c793843a2a..6e0f1cb06fd 100644
 --- a/bundle-uri.c
 +++ b/bundle-uri.c
-@@ -19,10 +19,73 @@ static void find_temp_filename(struct strbuf *name)
- 	unlink(name->buf);
- }
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "bundle-uri.h"
+ #include "bundle.h"
++#include "config.h"
+ #include "object-store.h"
+ #include "refs.h"
+ #include "run-command.h"
+@@ -153,6 +154,12 @@ int fetch_bundle_uri(struct repository *r, const char *uri)
+ 	if ((result = unbundle_from_file(r, filename.buf)))
+ 		goto cleanup;
  
-+static int download_https_uri_to_file(const char *uri, const char *file)
-+{
-+	int result = 0;
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	FILE *child_in = NULL, *child_out = NULL;
-+	struct strbuf line = STRBUF_INIT;
-+	int found_get = 0;
++	git_config_set_multivar_gently("log.excludedecoration",
++					"refs/bundle/",
++					"refs/bundle/",
++					CONFIG_FLAGS_FIXED_VALUE |
++					CONFIG_FLAGS_MULTI_REPLACE);
 +
-+	strvec_pushl(&cp.args, "git-remote-https", "origin", uri, NULL);
-+	cp.in = -1;
-+	cp.out = -1;
-+
-+	if (start_command(&cp))
-+		return 1;
-+
-+	child_in = fdopen(cp.in, "w");
-+	if (!child_in) {
-+		result = 1;
-+		goto cleanup;
-+	}
-+
-+	child_out = fdopen(cp.out, "r");
-+	if (!child_out) {
-+		result = 1;
-+		goto cleanup;
-+	}
-+
-+	fprintf(child_in, "capabilities\n");
-+	fflush(child_in);
-+
-+	while (!strbuf_getline(&line, child_out)) {
-+		if (!line.len)
-+			break;
-+		if (!strcmp(line.buf, "get"))
-+			found_get = 1;
-+	}
-+	strbuf_release(&line);
-+
-+	if (!found_get) {
-+		result = error(_("insufficient capabilities"));
-+		goto cleanup;
-+	}
-+
-+	fprintf(child_in, "get %s %s\n\n", uri, file);
-+
-+cleanup:
-+	if (child_in)
-+		fclose(child_in);
-+	if (finish_command(&cp))
-+		return 1;
-+	if (child_out)
-+		fclose(child_out);
-+	return result;
-+}
-+
- static int copy_uri_to_file(const char *uri, const char *file)
- {
-+	const char *out;
-+	if (skip_prefix(uri, "https:", &out) ||
-+	    skip_prefix(uri, "http:", &out))
-+		return download_https_uri_to_file(uri, file);
-+
-+	if (!skip_prefix(uri, "file://", &out))
-+		out = uri;
-+
- 	/* Copy as a file */
--	return copy_file(file, uri, 0444);
-+	return !!copy_file(file, out, 0);
- }
- 
- static int unbundle_from_file(struct repository *r, const char *file)
+ cleanup:
+ 	unlink(filename.buf);
+ 	strbuf_release(&filename);
 diff --git a/t/t5558-fetch-bundle-uri.sh b/t/t5558-fetch-bundle-uri.sh
-index 381e56cac20..919db6f4551 100755
+index 919db6f4551..bed4cc3e99c 100755
 --- a/t/t5558-fetch-bundle-uri.sh
 +++ b/t/t5558-fetch-bundle-uri.sh
-@@ -31,4 +31,41 @@ test_expect_success 'fetch file bundle' '
- 	test_cmp expect actual
+@@ -28,7 +28,9 @@ test_expect_success 'fetch file bundle' '
+ 	git -C fetch-to fetch --bundle-uri="$(pwd)/fetch-from/B.bundle" &&
+ 	git -C fetch-to rev-parse refs/bundles/topic >actual &&
+ 	git -C fetch-from rev-parse topic >expect &&
+-	test_cmp expect actual
++	test_cmp expect actual &&
++
++	test_config -C fetch-to log.excludedecoration refs/bundle/
  '
  
-+test_expect_success 'fetch file:// bundle' '
-+	git init fetch-file &&
-+	git -C fetch-file fetch --bundle-uri="file://$(pwd)/fetch-from/B.bundle" &&
-+	git -C fetch-file rev-parse refs/bundles/topic >actual &&
-+	git -C fetch-from rev-parse topic >expect &&
-+	test_cmp expect actual
-+'
+ test_expect_success 'fetch file:// bundle' '
+@@ -36,7 +38,9 @@ test_expect_success 'fetch file:// bundle' '
+ 	git -C fetch-file fetch --bundle-uri="file://$(pwd)/fetch-from/B.bundle" &&
+ 	git -C fetch-file rev-parse refs/bundles/topic >actual &&
+ 	git -C fetch-from rev-parse topic >expect &&
+-	test_cmp expect actual
++	test_cmp expect actual &&
 +
-+#########################################################################
-+# HTTP tests begin here
++	test_config -C fetch-file log.excludedecoration refs/bundle/
+ '
+ 
+ #########################################################################
+@@ -62,7 +66,9 @@ test_expect_success 'fetch HTTP bundle' '
+ 	git -C fetch-http fetch --bundle-uri="$HTTPD_URL/B.bundle" &&
+ 	git -C fetch-http rev-parse refs/bundles/topic >actual &&
+ 	git -C fetch-from rev-parse topic >expect &&
+-	test_cmp expect actual
++	test_cmp expect actual &&
 +
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
-+
-+test_expect_success 'fail to fetch from non-existent HTTP URL' '
-+	test_must_fail git fetch --bundle-uri="$HTTPD_URL/does-not-exist" 2>err &&
-+	grep "failed to download bundle from URI" err
-+'
-+
-+test_expect_success 'fail to fetch from non-bundle HTTP URL' '
-+	echo bogus >"$HTTPD_DOCUMENT_ROOT_PATH/bogus" &&
-+	test_must_fail git fetch --bundle-uri="$HTTPD_URL/bogus" 2>err &&
-+	grep "is not a bundle" err
-+'
-+
-+test_expect_success 'fetch HTTP bundle' '
-+	cp fetch-from/B.bundle "$HTTPD_DOCUMENT_ROOT_PATH/B.bundle" &&
-+	git init fetch-http &&
-+	git -C fetch-http fetch --bundle-uri="$HTTPD_URL/B.bundle" &&
-+	git -C fetch-http rev-parse refs/bundles/topic >actual &&
-+	git -C fetch-from rev-parse topic >expect &&
-+	test_cmp expect actual
-+'
-+
-+# Do not add tests here unless they use the HTTP server, as they will
-+# not run unless the HTTP dependencies exist.
-+
- test_done
++	test_config log.excludedecoration refs/bundle/
+ '
+ 
+ # Do not add tests here unless they use the HTTP server, as they will
 -- 
 gitgitgadget
-
