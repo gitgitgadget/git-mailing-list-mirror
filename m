@@ -2,199 +2,311 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40988C433EF
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 16:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CDAFCCA47C
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 16:58:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230264AbiF2Q6z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 12:58:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44508 "EHLO
+        id S230349AbiF2Q64 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 12:58:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229916AbiF2Q6v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 12:58:51 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B84F2018D
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 09:58:49 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id u12-20020a05600c210c00b003a02b16d2b8so7841wml.2
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 09:58:49 -0700 (PDT)
+        with ESMTP id S230072AbiF2Q6x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 12:58:53 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 543401EC66
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 09:58:52 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id e28so18240294wra.0
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 09:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=iyVg25TyBzJSyQalcg7ytuqb9ZaGxzVBiqetlv86FWE=;
-        b=Y3QRBSjD/3kJ6MOkqtoNheIxz00owLLAOADSfQJFl/KLaXcedkgKpwA7hHt5w2TfBf
-         tlWYpczZnZ9jqAo5qiKzPFdNFiV3ytffdDVxjebVdfLX1ZduBd563fiiiLYnyb+sB8tV
-         Ojnuzs9bm4QhlHiLW7/kvnfIPWPj4hIeryIMGChYUq00fucc7Fr0VsxMBuHtd3Hu4EqS
-         XbJmvbU0ccaZYKKzf+ZFdd7mwkHcJ3zRZUnpQOkl6eDGnbCY0TgRyhJCEeJtItyIicDW
-         NmaNwempw6Z7GchH5CL5Hu3jFWO2TBqiqvW0uk83FPnvDVSUkmfE/IpdwfSJaasSXmer
-         QOWg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7z820L5jUc53Ajvt4lao53i9jAByCGgiMb3eHK7TibA=;
+        b=D1RO1ucExt8BAzPrysNBbMa6FbN+m2DU9Lz/vcPShKlq9Njf0VFp8e1IdhSq3kSTE3
+         IYoCXDsXJLxKXYQiABkIPOFpS00cQ27RBTWvNW2TEePJqbtA9pqS5y53qKYSCv4SvJQA
+         zNd96kWI3KbPvU/Y3qZr6irfzKOlbe+rCRQc32i45s7qPNmVdi9qVci/OEfYF1xlGPuH
+         3HJpLeFJuy1vlDQNGW+aSjJPj46FpKm/7Lnt0PbCoXyjvXJqIupthycqNLytmujgGrZ1
+         wHWTUrsGSk/ushIR63kMBE5HicIADpa2Q/T9FzRDYMRARiyH47zpe11+iA39AA8NOMIn
+         s8MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=iyVg25TyBzJSyQalcg7ytuqb9ZaGxzVBiqetlv86FWE=;
-        b=sZykdyfb/ZhgWc4EbORDL9NAZ75hGmDizzNBjPgv2BfenXAA1qbdgQYorEGyOxltrS
-         ZfB9VDaQoUTHJzxtSq/50AMMIaZblrOxACCWCsgHQll1mw2VmZEx4lVAShSIiNEpE8IF
-         akNo/SLQDVWLcP84X6crcvhRxM74voAAQI0e5D/74DLAgj+XXfAM+e7uW4422lYrb27C
-         BpM3aQbRwg0WtpYshFA9gEXoVFn8BKE/E2rLqogyPv8VwxC/wVESZNsPdK0i8pGTM0Ul
-         bzjBEX7P5ioDa7HXK21agiLQ68ezv8HgegIjIHxPwzE2en+0cjlLn14ho9L8UFKOr3KW
-         OVzw==
-X-Gm-Message-State: AJIora+Qlghkn8eRElezhnFBucm0uzfcjB5bZI4u20DZT7szEXdsQpzG
-        sF0M1LPAdfUx3YevvmjI5+UD4wJi/xNb9Q==
-X-Google-Smtp-Source: AGRyM1tjL42MLiEK1NMmdDZIQ+OJWottDCJoDcTH6fSYW40fboeOOGUS+N83ziqX6uSfIS6EUN9oFQ==
-X-Received: by 2002:a1c:f709:0:b0:3a0:3b29:5eb2 with SMTP id v9-20020a1cf709000000b003a03b295eb2mr6727589wmh.133.1656521927291;
-        Wed, 29 Jun 2022 09:58:47 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=7z820L5jUc53Ajvt4lao53i9jAByCGgiMb3eHK7TibA=;
+        b=H0jQJjzp38ttIz2Qpz7zUxKg5PDSZ7v99+4PZN6SHsXsBwYofPX6oX0k/1MTqWUL9i
+         siRanOwzaK/LGE9IRu23UrOsBDNoHMWEyR9nWpNtcITW9S6z7wJoJwHnv4fYPZBg8Q9w
+         Ha3KFg8vje0QmNUxiqU6t825UikrY1nLRidL3lCETg23qhY4fUZkwXC3Gys+s0INjRYW
+         z9TbvhC54UWGTK+HK9Zv7KOB7xJ2Ulw/0y5HBlGY57i3QN7ijVYM7NXEv9AswwbuYAVm
+         vijYATZc914ERwFnEa9yhMUDZ6zig6zuLYIw1zZzC1BqqBRKL/wHkqFzCtfpiQ/WF0tO
+         cePA==
+X-Gm-Message-State: AJIora+48ocobGQHwbz2XSKeOw4Uz/9hnEatXv6G5SbKu4MdHG49kUWI
+        h0VSLOby1QbHVR+0Hc1V07j7aAtTQawBRA==
+X-Google-Smtp-Source: AGRyM1uXLQFkQKkNn7h6Wp/nMJtl9qqBQX2ny10vMSXWmi0ol2Qt1FvfGEpMgQFcXAiJ/pOnf5qh/A==
+X-Received: by 2002:a05:6000:18a7:b0:21d:1b28:35dd with SMTP id b7-20020a05600018a700b0021d1b2835ddmr3848703wri.465.1656521930398;
+        Wed, 29 Jun 2022 09:58:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z2-20020a5d44c2000000b0021a3d94c7bdsm17252109wrr.28.2022.06.29.09.58.46
+        by smtp.gmail.com with ESMTPSA id s8-20020a05600c384800b0039c948dbb61sm3726716wmr.26.2022.06.29.09.58.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 09:58:46 -0700 (PDT)
-Message-Id: <pull.1275.git.1656521925.gitgitgadget@gmail.com>
+        Wed, 29 Jun 2022 09:58:49 -0700 (PDT)
+Message-Id: <870bd90e47e918f37db5a8d444e5c9a5717f9c17.1656521926.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1275.git.1656521925.gitgitgadget@gmail.com>
+References: <pull.1275.git.1656521925.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 29 Jun 2022 16:58:43 +0000
-Subject: [PATCH 0/2] [RFC] scalar: prepare documentation for future work
+Date:   Wed, 29 Jun 2022 16:58:45 +0000
+Subject: [PATCH 2/2] scalar: convert README.md into a technical design doc
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     derrickstolee@github.com, Johannes.Schindelin@gmx.de,
-        gitster@pobox.com, Victoria Dye <vdye@github.com>
+        gitster@pobox.com, Victoria Dye <vdye@github.com>,
+        Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Victoria Dye <vdye@github.com>
 
-What's this series?
-===================
+Replace 'README.md' with 'technical/scalar.txt' (still in 'contrib/'). In
+addition to reformatting for asciidoc, elaborate on the background, purpose,
+and design choices that went into Scalar.
 
-The questions of "what is Scalar?" and "why is Scalar part of Git?" have
-been discussed at length already [1], but in preparation for the next few
-series I plan to submit "finishing" the initial Scalar implementation
-effort, I'd like to start by reframing its purpose.
+This document is intended to persist in the 'Documentation/technical/'
+directory after Scalar has been moved into the root of Git (out of
+'contrib/'). Before then, it will also contain a "Roadmap" section detailing
+the remaining series needed to finish the initial version of Scalar. The
+section will be removed once Scalar is moved to the repo root, but in the
+meantime serves as a guide for readers to keep up with progress on the
+feature.
 
-Beginning with the "Philosophy of Scalar" [2], much of the existing
-documentation refers to Scalar as "opinionated" - not unlike git itself.
-However, with scalar now part of Git, continuing to describe it as
-"opinionated" could unintentionally portray it as a divergence from "the
-rest of Git" and its development community.
-
-Rather than think of Scalar as an opinionated take on Git, I prefer to think
-of it as a manifestation of Git's own "opinions" for a specific use case,
-like many of the built-in commands. Over the years, developers have
-contributed tons of features - often gated behind config settings - that
-address performance issues they've encountered working in large
-repositories: untracked cache, sparse index, merge-ort, etc. Some of these
-features (like merge-ort) provide near-universal benefit to users and become
-part of Git's default configuration. More often, though, these features are
-large and difficult to prove are stable, or require some advanced manual
-configuration to use properly, or simply make the "average" Git user's
-experience worse (e.g., improving performance in in large repos, but
-degrading it in smaller repos).
-
-We've accumulated so many of these features that it's become difficult for
-users to even find all of them, let alone use them. Git "knows" these
-features exist, but also "knows" not to enable them by default because
-they're either too experimental or not helpful to most users. Scalar is a
-way for Git to take all of these features, bundle them together, and tell a
-user, "Hey, do you need to make your large repo faster? Use this!" without
-touching the default user experience.
-
-All that to say, Scalar is essentially a collection of porcelain commands
-[3] that fill a substantial UX niche in Git. Now, let's get into Scalar's
-"future state".
-
-
-A plan for Scalar
-=================
-
-Given the slightly tweaked "philosophy" above, my ultimate goal for Scalar
-is to have it contain only what is too experimental or too large
-repo-focused to be a default option or behavior in Git. Over time, some
-features may be moved out of Scalar and into Git defaults as they are proven
-stable and beneficial to the vast majority of users [4].
-
-So what do we need to get there?
-
-At a high level, the remaining work to "finalize" Scalar (past this RFC) can
-be broken into three parts:
-
- 1. Complete a few more features and subcommands of Scalar (integrate with
-    the built-in FSMonitor & implement scalar help).
- 2. Move stable, general-purpose parts of 'scalar.c' into other Git
-    builtins/libraries (mainly scalar diagnose, either as part of git
-    bug-report [5] or a new git built-in).
- 3. Move Scalar out of contrib/ and into the "top-level" of Git. Includes
-    expanded testing, especially performance testing.
-
-The first makes scalar "feature complete" enough to be valuable to large
-repo users (per my entirely subjective assessment, at least). The second
-brings it in line with the goal of making Scalar only contain what can't
-exist as a default feature of Git. Once those are finished, I think Scalar
-will be out of its "work-in-progress" phase and ready to use as a built-in
-component of Git (accompanied by sufficient testing, of course).
-
-
-What's Scalar's future?
-=======================
-
-With the completion of the tasks listed in the previous section, there's
-nothing left from the original Scalar CLI (in the Microsoft fork of Git) to
-upstream. I don't consider that the "end" of supporting Scalar because, for
-it to remain an effective tool, it'll need to stay up-to-date with the
-latest performance features introduced to Git.
-
-For example, one possible future extension might be to have Scalar enable
-the sparse index by default, especially when more built-ins are updated with
-sparse index compatibility. I'm interested in hearing what other features
-might fit well there!
-
-
-What I'm looking for
-====================
-
-The two patches in this series revise existing documentation to match the
-description above. Please let me know if 1) those revisions match your
-understanding of the above, 2) they convey the intent clearly, and (most
-importantly) 3) they reflect a reasonable direction to take Scalar. And, of
-course, if there's something I missed, I welcome any and all feedback &
-ideas!
-
-Thanks,
-
- * Victoria
-
-[1]
-https://lore.kernel.org/git/b67bbef4-e4c3-b6a7-1c7f-7d405902ef8b@gmail.com/
-
-[2]
-https://github.com/microsoft/git/blob/173a9b783a414/contrib/scalar/docs/philosophy.md
-
-[3] If you're wondering "why not call it git-scalar then?", my short answer
-is 1) backward compatibility with the original "scalar" CLI, and 2) its
-scope is larger and more persistent than a single command; Scalar works
-across multiple repos, and each Scalar subcommand has scope and
-functionality on par with a built-in command. I'm happy to talk through this
-more if people are still unsure, though!
-
-[4] That being said, Scalar's existence should not make Git more risk averse
-in accepting new general-purpose features.
-
-[5] https://lore.kernel.org/git/220517.86y1z05gja.gmgdl@evledraar.gmail.com/
-
-Victoria Dye (2):
-  scalar: reword command documentation to clarify purpose
-  scalar: convert README.md into a technical design doc
-
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
  contrib/scalar/README.md            |  82 ------------------
- contrib/scalar/scalar.txt           |   9 +-
  contrib/scalar/technical/scalar.txt | 127 ++++++++++++++++++++++++++++
- 3 files changed, 131 insertions(+), 87 deletions(-)
+ 2 files changed, 127 insertions(+), 82 deletions(-)
  delete mode 100644 contrib/scalar/README.md
  create mode 100644 contrib/scalar/technical/scalar.txt
 
-
-base-commit: e4a4b31577c7419497ac30cebe30d755b97752c5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1275%2Fvdye%2Fscalar%2Fdoc-update-rfc-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1275/vdye/scalar/doc-update-rfc-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1275
+diff --git a/contrib/scalar/README.md b/contrib/scalar/README.md
+deleted file mode 100644
+index 634b5771ed3..00000000000
+--- a/contrib/scalar/README.md
++++ /dev/null
+@@ -1,82 +0,0 @@
+-# Scalar - an opinionated repository management tool
+-
+-Scalar is an add-on to Git that helps users take advantage of advanced
+-performance features in Git. Originally implemented in C# using .NET Core,
+-based on the learnings from the VFS for Git project, most of the techniques
+-developed by the Scalar project have been integrated into core Git already:
+-
+-* partial clone,
+-* commit graphs,
+-* multi-pack index,
+-* sparse checkout (cone mode),
+-* scheduled background maintenance,
+-* etc
+-
+-This directory contains the remaining parts of Scalar that are not (yet) in
+-core Git.
+-
+-## Roadmap
+-
+-The idea is to populate this directory via incremental patch series and
+-eventually move to a top-level directory next to `gitk-git/` and to `git-gui/`. The
+-current plan involves the following patch series:
+-
+-- `scalar-the-beginning`: The initial patch series which sets up
+-  `contrib/scalar/` and populates it with a minimal `scalar` command that
+-  demonstrates the fundamental ideas.
+-
+-- `scalar-c-and-C`: The `scalar` command learns about two options that can be
+-  specified before the command, `-c <key>=<value>` and `-C <directory>`.
+-
+-- `scalar-diagnose`: The `scalar` command is taught the `diagnose` subcommand.
+-
+-- `scalar-and-builtin-fsmonitor`: The built-in FSMonitor is enabled in `scalar
+-  register` and in `scalar clone`, for an enormous performance boost when
+-  working in large worktrees. This patch series necessarily depends on Jeff
+-  Hostetler's FSMonitor patch series to be integrated into Git.
+-
+-- `scalar-gentler-config-locking`: Scalar enlistments are registered in the
+-  user's Git config. This usually does not represent any problem because it is
+-  rare for a user to register an enlistment. However, in Scalar's functional
+-  tests, Scalar enlistments are created galore, and in parallel, which can lead
+-  to lock contention. This patch series works around that problem by re-trying
+-  to lock the config file in a gentle fashion.
+-
+-- `scalar-extra-docs`: Add some extensive documentation that has been written
+-  in the original Scalar project (all subject to discussion, of course).
+-
+-- `optionally-install-scalar`: Now that Scalar is feature (and documentation)
+-  complete and is verified in CI builds, let's offer to install it.
+-
+-- `move-scalar-to-toplevel`: Now that Scalar is complete, let's move it next to
+-  `gitk-git/` and to `git-gui/`, making it a top-level command.
+-
+-The following two patch series exist in Microsoft's fork of Git and are
+-publicly available. There is no current plan to upstream them, not because I
+-want to withhold these patches, but because I don't think the Git community is
+-interested in these patches.
+-
+-There are some interesting ideas there, but the implementation is too specific
+-to Azure Repos and/or VFS for Git to be of much help in general (and also: my
+-colleagues tried to upstream some patches already and the enthusiasm for
+-integrating things related to Azure Repos and VFS for Git can be summarized in
+-very, very few words).
+-
+-These still exist mainly because the GVFS protocol is what Azure Repos has
+-instead of partial clone, while Git is focused on improving partial clone:
+-
+-- `scalar-with-gvfs`: The primary purpose of this patch series is to support
+-  existing Scalar users whose repositories are hosted in Azure Repos (which
+-  does not support Git's partial clones, but supports its predecessor, the GVFS
+-  protocol, which is used by Scalar to emulate the partial clone).
+-
+-  Since the GVFS protocol will never be supported by core Git, this patch
+-  series will remain in Microsoft's fork of Git.
+-
+-- `run-scalar-functional-tests`: The Scalar project developed a quite
+-  comprehensive set of integration tests (or, "Functional Tests"). They are the
+-  sole remaining part of the original C#-based Scalar project, and this patch
+-  adds a GitHub workflow that runs them all.
+-
+-  Since the tests partially depend on features that are only provided in the
+-  `scalar-with-gvfs` patch series, this patch cannot be upstreamed.
+diff --git a/contrib/scalar/technical/scalar.txt b/contrib/scalar/technical/scalar.txt
+new file mode 100644
+index 00000000000..d785a5c036a
+--- /dev/null
++++ b/contrib/scalar/technical/scalar.txt
+@@ -0,0 +1,127 @@
++Scalar
++======
++
++Scalar is a built-in repository management tool that optimizes Git for use in
++large repositories. It accomplishes this by helping users to take advantage of
++advanced performance features in Git. Unlike most other Git built-in commands,
++Scalar is not executed as a subcommand of 'git'; rather, it is built as a
++separate executable containing its own series of subcommands.
++
++Background
++----------
++
++Scalar was originally designed as an add-on to Git and implemented as a .NET
++Core application. It was created based on the learnings from the VFS for Git
++project (another application aimed at improving the experience of working with
++large repositories). As part of its initial implementation, Scalar relied on
++custom features in the Microsoft fork of Git that have since been integrated
++into core Git:
++
++* partial clone,
++* commit graphs,
++* multi-pack index,
++* sparse checkout (cone mode),
++* scheduled background maintenance,
++* etc
++
++With the requisite Git functionality in place and a desire to bring the benefits
++of Scalar to the larger Git community, the Scalar application itself was ported
++from C# to C and integrated upstream.
++
++Features
++--------
++
++Scalar is comprised of two major pieces of functionality: automatically
++configuring built-in Git performance features and managing repository
++enlistments.
++
++The Git performance features configured by Scalar (see "Background" for
++examples) confer substantial performance benefits to large repositories, but are
++either too experimental to enable for all of Git yet, or only benefit large
++repositories. As new features are introduced, Scalar should be updated
++accordingly to incorporate them. This will prevent the tool from becoming stale
++while also providing a path for more easily bringing features to the appropriate
++users.
++
++Enlistments are how Scalar knows which repositories on a user's system should
++utilize Scalar-configured features. This allows it to update performance
++settings when new ones are added to the tool, as well as centrally manage
++repository maintenance. The enlistment structure - a root directory with a
++`src/` subdirectory containing the cloned repository itself - is designed to
++encourage users to route build outputs outside of the repository to avoid the
++performance-limiting overhead of ignoring those files in Git.
++
++Design
++------
++
++Scalar is implemented in C and interacts with Git via a mix of child process
++invocations of Git and direct usage of `libgit.a`. Internally, it is structured
++much like other built-ins with subcommands (e.g., `git stash`), containing a
++`cmd_<subcommand>()` function for each subcommand, routed through a `cmd_main()`
++function. Most options are unique to each subcommand, with `scalar` respecting
++some "global" `git` options (e.g., `-c` and `-C`).
++
++Because `scalar` is not invoked as a Git subcommand (like `git scalar`), it is
++built and installed as its own executable in the `bin/` directory, alongside
++`git`, `git-gui`, etc.
++
++Roadmap
++-------
++
++NOTE: this section will be removed once the remaining tasks outlined in this
++roadmap are complete.
++
++Scalar is a large enough project that it is being upstreamed incrementally,
++living in `contrib/` until it is feature-complete. So far, the following patch
++series have been accepted:
++
++- `scalar-the-beginning`: The initial patch series which sets up
++  `contrib/scalar/` and populates it with a minimal `scalar` command that
++  demonstrates the fundamental ideas.
++
++- `scalar-c-and-C`: The `scalar` command learns about two options that can be
++  specified before the command, `-c <key>=<value>` and `-C <directory>`.
++
++- `scalar-diagnose`: The `scalar` command is taught the `diagnose` subcommand.
++
++Roughly speaking (and subject to change), the following series are needed to
++"finish" this initial version of Scalar:
++
++- Finish Scalar features: Enable the built-in FSMonitor in Scalar
++  enlistments and implement `scalar help`. At the end of this series, Scalar
++  should be feature-complete from the perspective of a user.
++
++- Generalize features not specific to Scalar: In the spirit of
++  making Scalar configure only what is needed for large repo performance, move
++  common utilities into other parts of Git. Some of this will be internal-only,
++  but one major change will be generalizing `scalar diagnose` for use with any
++  Git repository.
++
++- Move Scalar to toplevel: Make `scalar` a built-in component of Git by
++  moving it out of `contrib/` and into the root of `git`. The actual change will
++  be relatively small, but this series will also contain expanded testing to
++  ensure Scalar is stable and performant.
++
++Finally, there are two additional patch series that exist in Microsoft's fork of
++Git, but there is no current plan to upstream them. There are some interesting
++ideas there, but the implementation is too specific to Azure Repos and/or VFS
++for Git to be of much help in general.
++
++These still exist mainly because the GVFS protocol is what Azure Repos has
++instead of partial clone, while Git is focused on improving partial clone:
++
++- `scalar-with-gvfs`: The primary purpose of this patch series is to support
++  existing Scalar users whose repositories are hosted in Azure Repos (which does
++  not support Git's partial clones, but supports its predecessor, the GVFS
++  protocol, which is used by Scalar to emulate the partial clone).
++
++  Since the GVFS protocol will never be supported by core Git, this patch series
++  will remain in Microsoft's fork of Git.
++
++- `run-scalar-functional-tests`: The Scalar project developed a quite
++  comprehensive set of integration tests (or, "Functional Tests"). They are the
++  sole remaining part of the original C#-based Scalar project, and this patch
++  adds a GitHub workflow that runs them all.
++
++  Since the tests partially depend on features that are only provided in the
++  `scalar-with-gvfs` patch series, this patch cannot be upstreamed.
 -- 
 gitgitgadget
