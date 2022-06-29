@@ -2,85 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0C3BC43334
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 20:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB1A2C43334
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 20:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230398AbiF2UL4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 16:11:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43720 "EHLO
+        id S229944AbiF2UWI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 16:22:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbiF2ULz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 16:11:55 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E56E1D304
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:11:54 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id 2so11629021qvc.0
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:11:54 -0700 (PDT)
+        with ESMTP id S229552AbiF2UWH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 16:22:07 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEDDB2655C
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:22:06 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id q4so26583051qvq.8
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=qkWUzTR+SivCaS1uTezGLO5mqKsz9Fv73PfLXMhPTh8=;
-        b=nPOuUD9vnU3ZGSFSwP0QmXhgVu0vpGxZmKSXPNo+Tr9cG2nxcQ19GNpnwyhUfWPBvR
-         OQBtFXg9WdQn51oNx3iz5W5DPRfobvuVn2yY9gcu6Ml4GLTmh4ettLP/AbAuM8ucqhU0
-         F8Ab8j+kJCGnqS0ZCZQLMEK3nOfukEHAC2PQ20xJwbC01yIdQhAyZA30Hahg6yMi4Y79
-         uuuNc5dex3PJUwkzYKhQexSICqlUQRP2xSvXuJcvFUM7g6CPUEniTCvfZiqGIGvvGWwf
-         6LzE/H77KInQwP8veOaP/pMpTzkLh3rs7FpvjLYNgm7aE7wNqnwPPK76fH7OFRmCcMCh
-         W/Ew==
+        bh=QWEDw7h1383VqAi3RxehxMxpwD3GDj9um2aMqaSzPts=;
+        b=C5XcTHKblWHagx9TqsGVeBiklIvei24sMPG0CyWnQCqrhSFkRMBQXlDEJ6hh0Canah
+         YyYVOinEUfdpChING9/r39HVTiDRJ+uztYZjXr5ayn5pRU/4tvalqgtroDMLkja8jCzI
+         uuqTthHL77BfTdoyHPjsMuJ+J9ooEMIHA7mJc0FEwt72AjciGI0RUOkA83cxCYMbLy4O
+         1qkJtx4XifXeMIzOx9MGJOS4Uyri+ADOryjilgUZ2y7lSkduKdFbRIXQo41d6sEzLyBE
+         b4DpspKkX3pSuXkN0wkJvqWmcFLnBRn4IayWJPbOJCrahMq2NIaTnCd+tfMPaMsC0MUH
+         Hfqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=qkWUzTR+SivCaS1uTezGLO5mqKsz9Fv73PfLXMhPTh8=;
-        b=op9WIOtgk0FcRzlL7pgYVUeHlMhjOkcyDqIRlFPZJZ+8LnaU9P/7B3Ygp2+ZUppPQ3
-         76Eglp7dWa8dryeRkj3uSg1RfhLo42DSkj5GIXAzBuuckkDV6tzZIUDdAXoCwfd0sogi
-         B03b8I1hy5bj/p05aJa+56HfAy5xp+oDIwixuVF9aO9OXNb+TlHbKIDRLnGv83i53C+w
-         /xQAbgrsdmaMp6rcizQ229+0QNsrXb2DpBdY4TjHkvXcqcVfMCO3+85wtgLe2CHdOJb7
-         Nk7g2d3vm0LJ+0h8hSYZ0fS6MVyP090UAwgwg1eIbcB3chXb2BfiYE7iga0dYDEPXx85
-         A6Uw==
-X-Gm-Message-State: AJIora89U6wCoVBUj2iy/Jikk2svCooJ0uixKX3Fx722G17GIhJB7OZL
-        rz96fMY3maKwaGuLZ3eYhRZBzfjwDoPCRw==
-X-Google-Smtp-Source: AGRyM1tp3MIymQTQ8LLtRJpln87azAnJmBJ5n88z4c3E83pM+ooaXa+t25PMPyLh/OupiOZ+56+Xow==
-X-Received: by 2002:a0c:b441:0:b0:470:2e6d:cad with SMTP id e1-20020a0cb441000000b004702e6d0cadmr9300407qvf.27.1656533513513;
-        Wed, 29 Jun 2022 13:11:53 -0700 (PDT)
+        bh=QWEDw7h1383VqAi3RxehxMxpwD3GDj9um2aMqaSzPts=;
+        b=XaVghKQi2mRjcr7POSvTSclzdOkYicNG+qCRoU4I1lfcp6o1z3Rm5eyv2tiCMuT01D
+         d33J5YpJESpPViG643gxln2xxV0tq9r/7PZEeUI+kA6cQ0djCs6YJMe5V7MerIp6XKdC
+         R5igA/unYLPhvD9q1+OcPBjFkdpwexE6sxpj5xR7gHWRClkig4M6BSVfulYprW5QGJJS
+         fOyewLj7ppT3GQwHaEnvcmDiUZGUTQZeA9BYiNRSxOMJ+f2oORuoAAkx3UL3V5mJ4cks
+         ZU6o2JBcU7OA4ct4heUIbDvjaQAKq7Tdar/vw71jTxLz8vCl8Yks/09lSkAYdm8KJ8tw
+         D1ng==
+X-Gm-Message-State: AJIora+BkS9dVxyR5JLTH0g8l4bPdDVIbAKlYcmPIFduvI8vGJNbh7IM
+        yR0jDa1oVFdculsqaIPA/9oMzQ==
+X-Google-Smtp-Source: AGRyM1vbjOMHgdo0+tTVLUJeh0kzkFarPzbl/db2cUsml287obCmEDCc/xbU35lTj4jz1COyfBF/mw==
+X-Received: by 2002:a05:622a:253:b0:306:5d68:2f90 with SMTP id c19-20020a05622a025300b003065d682f90mr4277525qtx.263.1656534125832;
+        Wed, 29 Jun 2022 13:22:05 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l6-20020a37bb06000000b006a981a2c483sm13380870qkf.39.2022.06.29.13.11.53
+        by smtp.gmail.com with ESMTPSA id k12-20020a05620a414c00b006aefe22d75bsm13623046qko.80.2022.06.29.13.22.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 13:11:53 -0700 (PDT)
-Date:   Wed, 29 Jun 2022 16:11:52 -0400
+        Wed, 29 Jun 2022 13:22:05 -0700 (PDT)
+Date:   Wed, 29 Jun 2022 16:22:04 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 Cc:     Git <git@vger.kernel.org>,
         Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 3/6] pack-bitmap-write: learn
- pack.writeBitmapLookupTable and add tests
-Message-ID: <YryyCGSvR2Om3UpH@nand.local>
-References: <YrntSpG5asIPNdZz@nand.local>
- <20220627183924.16369-1-chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH v2 4/6] pack-bitmap: prepare to read lookup table
+Message-ID: <Yry0bKgayLB3GdsW@nand.local>
+References: <Yrol2tY4emxmYh9n@nand.local>
+ <20220628085950.19288-1-chakrabortyabhradeep79@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220627183924.16369-1-chakrabortyabhradeep79@gmail.com>
+In-Reply-To: <20220628085950.19288-1-chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 28, 2022 at 12:09:23AM +0530, Abhradeep Chakraborty wrote:
+On Tue, Jun 28, 2022 at 02:29:50PM +0530, Abhradeep Chakraborty wrote:
 > Taylor Blau <me@ttaylorr.com> wrote:
 >
-> > Probably both of them should take into account their separate
-> > configuration values, but cleaning up the hashcache one can be done
-> > separately outside of this series.
+> > ...exactly my thoughts, too. It's possible that it would be faster to
+> > key this search on the object_id "oid" above, and then convert each of
+> > the entries in the lookup table from a uint32_t into an object_id by
+> > calling nth_bitmap_object_oid() repeatedly.
+> >
+> > I *think* that what Abhradeep wrote here is going to be faster more
+> > often than not since it makes more efficient use of the page cache
+> > rather than switching between reads across different memory mapped
+> > regions at each point in the binary search.
+> >
+> > But of course that depends on a number of factors. Abhradeep: if you're
+> > up for it, I think it would be worth trying it both ways and seeing if
+> > one produces a meaningful speed-up or slow-down over the other. Like I
+> > said: my guess is that what you have now will be faster, but I don't
+> > have a clear sense that that is true without trying it both ways ;-).
 >
-> Actually, it does respect the `pack.writebitmaplookuptable` config.
-> As pack.writebitmaplookuptable is by default true (for this patch
-> Series), this line enables it by default. If `pack.writebitmaplookuptable`
-> Set to false, the proposed change in the `git_multi_pack_index_write_config`
-> function disables this flag.
+> Ok. Let me try both the ways. In my opinion, I think my version has
+> less searching and less computation. So, I want to stick with this
+> version. But I also like to try the other one once so that we can
+> get the best out of these two.
 
-Aha, you're absolutely right. I missed the earlier hunk. Thanks for
-pointing it out, this part looks fine to me.
+Yeah, I agree with your general sense that the version as written is
+going to be faster. We're comparing a smaller datatype (IOW, a 4-byte
+integer that can be checked for equality in a single instruction,
+instead of comparing two 20-byte OIDs), and likely flushing the cache
+far less often.
+
+But having two concrete implementations to compare will help us know for
+a fact that our intuition is correct.
+
+I'll be curious to see what you find here!
+
+> > I think starting off with a small array and then letting it grow
+> > according to alloc_nr() would be fine here, since it will grow more and
+> > more each time, so the amount of times we have to reallocate the buffer
+> > will tail off over time.
+>
+> What should be the size of that array?
+
+I think some small, power of 2 would be a reasonable choice here.
+
+> > If we were really concerned about it, we could treat the buffer as a
+> > static pointer and reuse it over time (making sure to clear out the
+> > portions of it we're going to reuse, or otherwise ensuring that we don't
+> > read old data). But I doubt it matters much either way in practice: the
+> > individual records are small (at just 4 bytes each) and entry_count is
+> > often less than 1,000, so I think this probably has a vanishingly small
+> > impact.
+>
+> Before submitting it to the mailing list, I did use the ALLOC_GROW macro
+> function. But my version was worse than yours. For every iteration I was
+> reallocating the array to support `size+1` positions. But later I drop
+> the code as this might be very much expensive.
+
+That shouldn't be the case. When you have a chance, take a look at the
+alloc_nr macro, which shows how much memory we allocate at each
+step:
+
+    #define alloc_nr(x) (((x)+16)*3/2)
+
+Suppose we allocated 16 slots initially, so nr (the number of entries
+stored in the list) is 0 and alloc (the number of entries allocated) is
+16. Then when we try to add the 17th item, we'll pass 16 to alloc_nr
+which will allocate 48 slots. Then 96, then 168, and so on.
+
+We only have to reallocate and copy the array when nr > alloc, which
+should be fairly infrequently, and happens less and less often the
+larger the array grows.
 
 Thanks,
 Taylor
