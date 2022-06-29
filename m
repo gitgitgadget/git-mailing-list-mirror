@@ -2,102 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3AD7C43334
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 20:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83A4DC433EF
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 21:50:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230201AbiF2U6i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 16:58:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45386 "EHLO
+        id S230347AbiF2Vul (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 17:50:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbiF2U6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 16:58:37 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FA933DA64
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:58:36 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id y14so26716848qvs.10
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 13:58:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+pQRnAQE4hHIsJxBTxN3O5IsN7T3xYlgd8CQFYKLQQA=;
-        b=LxsY+e5jzvlo7MM57Iczez/Q5inXyBOjjVRQz9K18OQn0qrTCv50RcJunMnKMejF56
-         HNmVrOJlcxoCCRRt6L6FMYj27pRuQ6tZrLFjzprDLL20vNGDi6+IsVa8Mcvn8xX2Vn6Y
-         9aPRMxdZGU4TxavX091CWskfrH/a7A2Jld3Wbt2asd79heKRMltz9Fp/nTYGEH/Dy1x9
-         iapuA+YmOFi1KjBJfV3AZ3mIPkE+dU6Bh4InTZY8doPLgDe2DOqnlBTAnfbFbTK8CwqK
-         qqebIoaJaf2VlzVwEVyJN/mqeuWYC+ay4b51TuRLJxw7LM7MK/IZz3v/VqMEUioI+dB5
-         /vqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+pQRnAQE4hHIsJxBTxN3O5IsN7T3xYlgd8CQFYKLQQA=;
-        b=ppe2wqegysBrna/q1pZsDhXlVUzaQB2TB0slpwrFo66AsbgiUvycOOH55ITUIc990b
-         78KojJi5ogtoY8QMYEXpAHrfZeMtS9cHVl97zbm9c6pGUH/TdTeWti72nj8v16XeMiti
-         jpWBjaWZN8qDuaSXZZjfWUqlI6hdtxqnAF2eDYivuLIPRfQE90oyQmUTIUsLzF0Pjcin
-         FD24MOKrYJqZ2QfLG6G91d66C7pNh1C7K2Hv1vvu1YBjpLYFHoTPPSubS8KrevpT0Smt
-         Fzs/LC59hLn8w+kpD4l6f5k800RUIVvE5d0uJMn2hTGh4lJkrZeGTFb5+QhS4AKLWQgK
-         pq7w==
-X-Gm-Message-State: AJIora8SVM2a1tlsRDktqI0kjk8Xxiwxnzn/zvqa/SfBSJXrzDHZQG5e
-        RsfP5w3kd0h89unHo7SPCttoLg==
-X-Google-Smtp-Source: AGRyM1sy/Bxu/Uv1O1lXgKFrSbSXHPHKiGtEfaFsADX2JiY4Jv2jSy9CYUG6l03otb2Y8j2KUq91pA==
-X-Received: by 2002:a05:6214:20e5:b0:470:3fd9:391f with SMTP id 5-20020a05621420e500b004703fd9391fmr9692971qvk.86.1656536315486;
-        Wed, 29 Jun 2022 13:58:35 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f14-20020a05620a408e00b006a5d2eb58b2sm15606084qko.33.2022.06.29.13.58.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 13:58:35 -0700 (PDT)
-Date:   Wed, 29 Jun 2022 16:58:29 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     Git <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [GSoC] Abhradeep's GSoC blogs (27 Jun, 2022 IST)
-Message-ID: <Yry89ZO0ipfafC8C@nand.local>
-References: <20220627124408.15611-1-chakrabortyabhradeep79@gmail.com>
+        with ESMTP id S229748AbiF2Vul (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 17:50:41 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A3F8E00A
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 14:50:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1656539420;
+        bh=KD6LrafHfObrh6jkgRlAvm/C7gHDTsohA5Esr1vcVS4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=b4QLjMot/tFlgKtaty9x77EbxSJ8F6tYDeJ7CDD9kcMKMifQ6Q187H5IPG5jpoIWZ
+         9ymmzCjEsbobPoVbOOxckUZUfT2H4vFndtBgf1skikm0eV+74WxL+Jdr8V2WPJrAba
+         q+wVCXV95POfLgL6AwewrjDrkrsHrT1zZwPDWTcc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.204.148] ([213.196.212.94]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4hvb-1nfpZE47rL-011mQk; Wed, 29
+ Jun 2022 23:50:20 +0200
+Date:   Wed, 29 Jun 2022 23:50:21 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH 0/2] [RFC] scalar: prepare documentation for future
+ work
+In-Reply-To: <pull.1275.git.1656521925.gitgitgadget@gmail.com>
+Message-ID: <50rqn1oo-p1p8-r3r5-4p21-o7os0non8spo@tzk.qr>
+References: <pull.1275.git.1656521925.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220627124408.15611-1-chakrabortyabhradeep79@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:gcueNgcD01aXQLfwdKb2HvSZnwN5fpd5tQDtlkIVA0Ilx62T7Np
+ 0I3ypYjbeBQMqPYnV2E65FgCIDQp78HtFGfyHL3zUkUOZl1GbJW/S93Nrn79eNzpUaX0Y9X
+ StP2hj1Ub0ri4iX/yBuQbpt1bzEguJFDIXlVVr7Xaozd+xxkBxY5sdq3AmUFJ024BSvJksK
+ Dc6yav5VNSnYMkP+mwCjg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vWe4Bxj8BNo=:llIO0ZXsBkVv1nHMZVVAMB
+ 3BZsDYqKT3WK+dPa/VjCLSKyfJ6CFI7rtOVlzKIHT850vMn5KgEEkSKz6xYTYANo4WRQq1h5r
+ /iRF625kBSM0cDmpu1qZinw2NeVH6HX4ntKtNuPMoGinPlKNl6jy3ZcT4nOeDrjHolE0x4dsE
+ m5QCdephiMZhBLaPOrj4QAt06k+B0/nsSbP+0Au7mEoxkOyNvoijUeVGntUxP5xeln8p/6lbK
+ O4U42wKRn1yf6cbtHPKpbkLj9qgh6OhBoB5BthW5L5D+YIPpt2WjZc3e0j2aqOidcZXAFmIW5
+ 67y+K2nC5CSsMDYJgOwghYpXTlg3MORy5hnstkhGqd82Jb5gKNAN6eNFIGqaCCzmuvUGpMSAx
+ xdSYaed9u3zCtc3u2yAB2ZP3imbNWQjZakbIsk5lm6CJAtmOpBoJD+VvpMMZo+2dcBWnuyijh
+ R6XpyFKOvQ54gCK9rv38XEDT8U/ezGE5du9f2mtKLpQ9ZEzNarQpdjpisQ4AZu2WaCOPEe2sc
+ AA8v2hNflFN0xRfOa+tlTXw7aUjaTS5ZOypI4lYj8V4ERha8ZGuiY3Ix3Rz/1lyJJBdxei/r8
+ xO5bzufZ5XFx0+QKYAaVVnsVuM8FP4YW7yc7vPLeb8LcMZNPpML0TIOwkxH7Zc88Ox5yxMeNX
+ kfsvJGW4sxRKKDSgScnk4lO+Do+KcqZOQpgAOEi3EmsLGBhPlB8TDBS0NTlmoGVk8+MjCgDra
+ kI2WvHxp/IAAPfVfUplKzKuUgNDV5fQwKkj0aAxGKf68BaN3/yX3vs7zsGFCwRZqDWnX2Z1uq
+ ymGMaCH9gY75EDQyJw9rWdbyP7tVdezROJt6FMcFPrN1LMRWFxhvFYAE2ba8OTqMeT0XKq/BT
+ 8dCYN/Xkzkkh+aETKzxzcsq/SV+34fokjkK/whvSZBi975Ta+e9xXLFK/filBpQvYLCS4NlC5
+ Gj6lw70/gLvvkF/B1lt50Ro+z/OSFo2WLxjG1JJ3zKGhlZc1ciDQN9SQ9qVr+I8Xiwp/H0iek
+ 6AO9K9GRajcmRLeiAkCsb1o4thLshKeItkVwoRWaVwf9taQS154EjTMgcXHzs7nfE4VSfFAg8
+ ggwBzJfiDPHv6ahlbFWD5qsi1IMBpmrcR8Pi1H3hR/6B+wSiIQYBnPpNw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Abhradeep,
+Hi Victoria,
 
-On Mon, Jun 27, 2022 at 06:14:08PM +0530, Abhradeep Chakraborty wrote:
-> Blog update
-> ------------
+thank you for an excellent example of a well-crafted cover letter.
+
+Also, thank you for your fresh perspective, I believe you raised a valid
+point when you pointed out that there are better ways to describe Scalar's
+intention than the term "opinionated".
+
+On Wed, 29 Jun 2022, Victoria Dye via GitGitGadget wrote:
+
+> A plan for Scalar
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 >
-> Title - GSoC Week 2: redesign the table format
-> Blog link - https://medium.com/@abhra303/gsoc-week-2-redesign-the-table-format-829dae755a5
+> Given the slightly tweaked "philosophy" above, my ultimate goal for Scal=
+ar
+> is to have it contain only what is too experimental or too large
+> repo-focused to be a default option or behavior in Git. Over time, some
+> features may be moved out of Scalar and into Git defaults as they are pr=
+oven
+> stable and beneficial to the vast majority of users [4].
+>
+> So what do we need to get there?
+>
+> At a high level, the remaining work to "finalize" Scalar (past this RFC)=
+ can
+> be broken into three parts:
+>
+>  1. Complete a few more features and subcommands of Scalar (integrate wi=
+th
+>     the built-in FSMonitor & implement scalar help).
+>  2. Move stable, general-purpose parts of 'scalar.c' into other Git
+>     builtins/libraries (mainly scalar diagnose, either as part of git
+>     bug-report [5] or a new git built-in).
+>  3. Move Scalar out of contrib/ and into the "top-level" of Git. Include=
+s
+>     expanded testing, especially performance testing.
+>
+> The first makes scalar "feature complete" enough to be valuable to large
+> repo users (per my entirely subjective assessment, at least). The second
+> brings it in line with the goal of making Scalar only contain what can't
+> exist as a default feature of Git. Once those are finished, I think Scal=
+ar
+> will be out of its "work-in-progress" phase and ready to use as a built-=
+in
+> component of Git (accompanied by sufficient testing, of course).
 
-As usual, another great blog post! I think you did a nice job
-summarizing the main discussion from reviewing the first round of your
-patches.
+This plan makes a ton of sense to me.
 
-You're exercising a good skill here, which is taking a big pile of
-emails and figuring out what the main areas are that you need to
-prioritize. That can be tricky, sometimes, since different reviewers
-will tend to focus on different things, and may not even agree with each
-other!
+Earlier, I tried to skip step 2, but you are absolutely correct that it
+would benefit the Git project much more if it wasn't skipped.
 
-But I think you did a nice job teasing everything apart, and the v2 that
-I've looked at already is a nice reflection of your work there.
-
-I am glad that your work updating the series to the new format proved to
-be an interesting challenge. I'm really happy with the result, so it was
-definitely time well spent!
-
-(One thing to keep in mind regarding the bug you fixed in `store_bitmap`
-would be to ask why we weren't able to see that bug in CI. Assuming that
-you encountered some other way, we should turn that into a test and make
-sure that we don't regress there in the future).
-
-Finally, your next steps sound interesting, and I'm looking forward to
-seeing what you come up with! In the meantime, keep up the great work
-:-).
-
-Thanks,
-Taylor
+Thank you for working on this!
+Dscho
