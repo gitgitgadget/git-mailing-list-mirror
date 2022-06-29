@@ -2,121 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F09EC43334
-	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 10:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDB0DC43334
+	for <git@archiver.kernel.org>; Wed, 29 Jun 2022 12:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233300AbiF2Kdc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 06:33:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43762 "EHLO
+        id S233368AbiF2Mki (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 08:40:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233039AbiF2Kdb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 06:33:31 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B6A037012
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 03:33:29 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id q6so31583596eji.13
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 03:33:29 -0700 (PDT)
+        with ESMTP id S231864AbiF2Mkh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 08:40:37 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7402A977
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 05:40:36 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id t16so24579554qvh.1
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 05:40:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=LnAMzmMOnD2gs2GA3kfcnUN0Oh7zCU1CzMVekgA/Tes=;
-        b=XnuAIIVEcFFE1OG77eY5VSeQIKP5wD/AONBZ8fcuLD4PN99Y6m0ga4u9N4v1PoYbQA
-         5cjuhoc6AhxxL+O0nSJbHZndMpTmjqXCBSSZ8njbv6nkK92tIzbKM6KBtFioQA01DFK4
-         kTtyi6uwh4F6uGygCd7i4VXsgKOJkAoVWjXPlY/SLd0sYO/+yHAPreYYcuRVJyiw9QB2
-         bBLshyaFdtjeBsmTlCqfpS+U/CDhLm2y7x1z2yMoJB3FoI/1LEAkd04NQg2B8g7bhtXx
-         OequfY+yoUEctW4H5NitYkjGhjzhq5xlfWHQsyE4H0MkbOkvTgoabbE/2dOXfLCpL5Yc
-         IZkg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=zRuQuzbz+YHuBd77D6Js1Wd6U7AUZBwzCVuuDfYtm94=;
+        b=YEUp8mAR2D06sPspRGm/y1954YwxkxowjHNQEJo01VL4fJjyQVIkUX56zN/AQFXd+8
+         NYO4sXz1sIk9+dpalfqo8DSX1xwwDmRHbuKMr6NOiUEZ37Sjp0BuN6sSANGdQg8X67A+
+         SweWLO5rr456RDbtd8ZIzoUj0xP9nJcz0oPwPIBsZ/G9o3nnocd+6Bw9v1CoQWfIQiUl
+         ZDmuaw6H0aLd3f1HW39zPyTcYyk3A7MOKIdIy7XOxhP5IL30ezVrMiuW+Vj0D4JpjexD
+         /NhoFBtgDq+Y+e0p+SII2UNGoOiiQUCGNgAV6ZuhVlpehoKGt7XzDZCNwNNEb0HZtwki
+         ySAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=LnAMzmMOnD2gs2GA3kfcnUN0Oh7zCU1CzMVekgA/Tes=;
-        b=Ul9pyZ4EA/4iKQPcgHMIuYUrMaB9fDs2OMKKYJCqoQZyl5dimJQ7SkgzkUBDuAgZW7
-         uaGKD+aweexNVdBYI8AIGbXBX8Mu4LQ1JbQgI79lUMlbD+hxcUw4DCqg3cXBE1Ld7Wlk
-         z2ilLCjUtYVy1EWE1YZv7YkTK/YVHlwGzW4wfcJmbKfpGjCzzhmW+kqPtmcrj9FF+hOh
-         46LnPb0+9e/x1rDTL9JGKalhCSRrGMs8jjmjPcGQr8IIIjxlmaQwtGEpT61hPFkcouHu
-         NZH/+8y529XzRc0TGN+ZMK25nf3nZ2HOXpbZE5FxYKt/WXS/FdKfd+ox+HDqtq+Ztxqe
-         Pc7w==
-X-Gm-Message-State: AJIora9DlB44jDNwiJvuoMo5Anz6oB9bgNXBTBnIHSPmbkHG6nAUXCMq
-        Pkz/Thrcwnr2qTJURgPLKB8r3Rpn20c=
-X-Google-Smtp-Source: AGRyM1vSS5xJa1Vvlp6PomXR76lsqPDPhT7gUhFgSZ/ZUFecGjuWsO2UpvQkhpAf9YL+dW3aMQ4uCg==
-X-Received: by 2002:a17:906:970e:b0:726:3b59:3eae with SMTP id k14-20020a170906970e00b007263b593eaemr2722109ejx.702.1656498807386;
-        Wed, 29 Jun 2022 03:33:27 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id k18-20020a056402049200b0042dcbc3f302sm9656693edv.36.2022.06.29.03.33.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 03:33:26 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o6V0f-001tpm-Ip;
-        Wed, 29 Jun 2022 12:33:25 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christoph Reiter <reiter.christoph@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] add --interactive: allow `update` to stage deleted files
-Date:   Wed, 29 Jun 2022 12:22:07 +0200
-References: <pull.1273.git.1656454964378.gitgitgadget@gmail.com>
- <xmqqr138h0wn.fsf@gitster.g> <YruJ06odaXmTOyjM@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YruJ06odaXmTOyjM@nand.local>
-Message-ID: <220629.867d4zg3nu.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=zRuQuzbz+YHuBd77D6Js1Wd6U7AUZBwzCVuuDfYtm94=;
+        b=PYx0XM5Al61fTa4ODMFxBM9GQA8aLNzdiIrKZf8Aib0ykZMUlrbabMPkRbgwqHGJK3
+         69f+1DWVCZ34RTYmdp/TULxXo0k0Z8DJsdRHgEhViB38BbzLls7yF+u76teBnPn+8UXp
+         c/AH5Y99x3ppUNxrp3KnJQncULCP7OHtkLA774gGAhlreFnXgXDtrl2Eabs2f0W5RIbD
+         tD5mZOwGn/t0Yk2FXeqHDDtDWTahoDEvPsjwQuX9Uqw/Gi8sZTuId2x7wyWbl6gf+TkX
+         DBMlWhZLlWsMWo+PV94pI61wE6DNBDu9t2KuGf4zuZOxbp7B4ZtK+yJQdKMLxVZQ/h3z
+         229g==
+X-Gm-Message-State: AJIora9xedEo6mjiwOkH8FSM4SJom+J8BGn0gAnXPEN6FWxIiuoHP5Vf
+        ljrQj7og3YgvpHLe1vUNajX8xTqGx0jg
+X-Google-Smtp-Source: AGRyM1spaI7kwBA2/PCSaEHG3SdNa30KUK7cqtkE/4hKyexIZQT/E2DvUIqk3bc4cYc4r+3yzjDWtQ==
+X-Received: by 2002:a05:622a:1992:b0:319:cb47:b3a4 with SMTP id u18-20020a05622a199200b00319cb47b3a4mr2270547qtc.472.1656506435751;
+        Wed, 29 Jun 2022 05:40:35 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:d803:95aa:58b0:8205? ([2600:1700:e72:80a0:d803:95aa:58b0:8205])
+        by smtp.gmail.com with ESMTPSA id cm10-20020a05622a250a00b0031bed25394csm3445326qtb.3.2022.06.29.05.40.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jun 2022 05:40:35 -0700 (PDT)
+Message-ID: <c8f38fcc-09f5-3dcf-02bc-58d51de6a156@github.com>
+Date:   Wed, 29 Jun 2022 08:40:34 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Subject: Re: [PATCH v2] git-rebase.txt: use back-ticks consistently
+Content-Language: en-US
+To:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, Johannes.Schindelin@gmx.de,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1270.git.1656364861242.gitgitgadget@gmail.com>
+ <pull.1270.v2.git.1656446577611.gitgitgadget@gmail.com>
+ <xmqqwnd0h30t.fsf@gitster.g> <6f229f4d-8ce8-beb5-e27c-2ea244a634a7@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <6f229f4d-8ce8-beb5-e27c-2ea244a634a7@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 6/29/22 5:31 AM, Phillip Wood wrote:
+> On 28/06/2022 22:49, Junio C Hamano wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>> @@ -537,7 +539,7 @@ See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
+>>>   -x <cmd>::
+>>>   --exec <cmd>::
+>>>       Append "exec <cmd>" after each line creating a commit in the
+>>
+>> I thought `exec <cmd>` was an improvement, just like ...
+> 
+> I'm not so sure, I thought we normally reserved backticks for command line options and this is talking about what gets added to the todo-list. I could see "exec `<cmd>`" being an improvement though. There are several other mentions of todo list commands in the documentation and I think they are all double quoted like this one.
 
-On Tue, Jun 28 2022, Taylor Blau wrote:
+This was my understanding based on the v1 feedback. I think it
+would be OK to consider this change separately, perhaps as an
+example case in a "recommended doc formatting" document.
 
-> On Tue, Jun 28, 2022 at 03:35:20PM -0700, Junio C Hamano wrote:
->> The fix looks quite straight-forward.  It is somewhat disappointing
->> that it was caught after this loooong time, but as they say, better
->> late than never.
->
-> I had the same thought, but I think that it points to something I've
-> suspected privately for a while which is that we don't actually get many
-> users to opt-in to features early when they are hidden behind a
-> configuration.
->
-> I had hoped that things like feature.experimental would cause more users
-> to try features that weren't quite ready for prime-time more often, and
-> that we'd get more and better feedback as a result.
->
-> But I think that this proves that is generally not so. I think we
-> should probably err on the side of enabling new features by default so
-> long as there is sufficiently low risk, rather than hide them behind
-> config. Or at least, not hide them behind a config variable for so long
-> (though I am guilty of this myself with the pack.writeReverseIndex,
-> which I have been meaning to flip the default on for a little while
-> now).
-
-I think we could get quite far by piggy-backing on the advice we emit
-when you haven't set user.{email,name}, or otherwise find some minimally
-annoying way to ask users to opt-in.
-
-But while an opt-out being the default isn't quite the same as just
-changing the code (as you can still toggle it off without downgrading),
-that also has the disadvantage that we'd be more conservative about
-adding such features, which is partially why we have feature.* in the
-first place.
-
-The X-Y problem of how we get early code to users who'd be able to tell
-us that it breaks has been discussed several times, and all the
-solutions are trade-offs.
-
-One thing I thought of now but I don't think has been brought up before:
-I wonder if doing "more stable" (or "LTS"?) releases would be a good
-compromise between "early bird" and long-term stability, where we'd just
-make every Nth release (say those divisible by 5) have
-feature.experimental=false.
-
-But any such scheme also quickly runs into the problem that we're just
-not adding a lot of these, and for e.g. the built-in conversion we might
-do the whole feature cycle in 3-4 releases, so such "stable" releases
-would force us to keep the code around longer.
-
+Thanks,
+-Stolee
