@@ -2,85 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C459CCA47B
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 06:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86361C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 08:34:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231657AbiF3G7M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 02:59:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60034 "EHLO
+        id S232600AbiF3IeS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 04:34:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbiF3G7L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 02:59:11 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21BD419C11
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 23:59:11 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id l2so16714720pjf.1
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 23:59:11 -0700 (PDT)
+        with ESMTP id S229925AbiF3IeQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 04:34:16 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA14F1B7A0
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 01:34:14 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id ay16so37542306ejb.6
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 01:34:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=CxBx98AAkv8x5QnXQ6YLIDr/Qg8RosJFsmtENihUQB8=;
-        b=JSHeKLMLl8QC21aYZcTEm2nUjOmosHpyAMwtdo2nkQ6BkFJmUs+m/WX4jRj0hH2rPl
-         VeXnu6+yc9atiWtDUFJ1Fvm2pa2P1eePDz/mJ3WPVv8DrpzGE8LCSlXW+IgkWGkZWb/B
-         kABWVkCfO0CKn7SHiyTpg6pQyvspQguoGRYFU6kiZcURF7/0fXLCGcfyyrPITGlE3xF3
-         Qd2R/RbSBbErH5QHRxsMqxdqozOJjLR4BUu5MpwfLvRfoQmOHaHWZolU4rnHJslQb9C6
-         bIe5CNLy75WFwzhPqBCdMv3MoZ8eomJfb7hKIIzjpXzSws+SD29J/QUFMOUu7NNxx+5/
-         XcpQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=jpElAa22wTJMkGIYE41JF3VDSuuHlRDlJxC0Tml97dw=;
+        b=hL4wH2hDHbuTSdxBy7/jlYyzma8x43HkxUW2K2aBk2Cj8KrafrzI11f6IJ8YOr7fUN
+         lAv72KvgyW0+eY5x2k/b1kmUygUR90dKm9/DA5keOiWZL+Eqa6JjuWRXWSdRp7fOXvGD
+         b8vO+VfpJfbR1KbDLA0GVgxmUKoWTQxEpRuPMGeNCmA0s3unp5FVWTE8Mb8aWwVISSSy
+         UeQMP3wwgajJvLWVi9LD+hFxjrVh/a//1uCTVw6Pa+4A4ANNgRGOmwfDjwfpM8+HGPZi
+         fkm+ubAVS/wbfDMeFaMaYoL8JR/NuS/OuXKGjxxMm66FHThC8vCS9gCb7VsqB3JzrKcr
+         I2jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=CxBx98AAkv8x5QnXQ6YLIDr/Qg8RosJFsmtENihUQB8=;
-        b=zdyneLz1w3j+OwOY5/SU9qzB20iwGPT5siOt8GxtpCKz3VkXG6um7EzV4oa2fuzfQW
-         TZq/FFdIWaNFk+vRIumvRVzH4J00OCWXHCcEUAaaj4KBzQc78VWqOCSjr/k2L11QkhBa
-         8xPgjW7fIKPCd8VS8D4dACT/AOYw6FQzL75fyoueCwx6BrmHDoQ/SW7jVlyH1DyBhL2U
-         /ckfsPmR3kXJZJqZuAhNc556cSWx9Y9vHIYemFVQNmVa7w4xfwv8a1a+4m/3GPj2axkQ
-         pqpriUJ412RM9qzJJVb05niqmFK/drKI9/pMWfBMu4rfF1LIdUddJt/hjE6sqh+rOyaB
-         uLmA==
-X-Gm-Message-State: AJIora/BVRtfXjZ15iPQuEfV/8U5cFYbxQzxHiaXXuwfDpUxM/im3bnI
-        J1g7jCCTZrm60d+V4c73/Vo=
-X-Google-Smtp-Source: AGRyM1tE3f42ModVWWaMcs+D6nOT7kMkTSyN3Z86nZOr8WWe3/J8KnilKY8Q1wnt1vkPnF+13wECiw==
-X-Received: by 2002:a17:903:1c4:b0:16a:73fd:3c6c with SMTP id e4-20020a17090301c400b0016a73fd3c6cmr13016929plh.115.1656572350429;
-        Wed, 29 Jun 2022 23:59:10 -0700 (PDT)
-Received: from localhost.localdomain ([202.142.80.154])
-        by smtp.gmail.com with ESMTPSA id 20-20020a170902ee5400b001690a7df347sm12612870plo.96.2022.06.29.23.59.06
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 29 Jun 2022 23:59:09 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=jpElAa22wTJMkGIYE41JF3VDSuuHlRDlJxC0Tml97dw=;
+        b=fTDNk4BsiTvkmgIDroYjGtQJQ3MOYbsuXf1RsWHUO+Yt/uczKgWTAyFqjvtXX5ljBC
+         mDo0fdwjHWUNMdKLGQYfMfLGWAAdTFXdwG7D+iaS8RPCLRr9WYhZLNQga9Z8sdL/EYIf
+         hZnE8LP4EohF3bBEv9MBNM+IGFwugSEHbGyFefGtoMQjnSHWJ71EPsZs6rxn8/uMuYrf
+         GFzTSHCGcSBW7QrObc0y1GzzzhNeJAI7ScgBXzHYWkUw8FhK0MGSIXNL/zyZCHIh466b
+         knEfc8LLPv2tiQ+agucBM3dYg3UKl14gp6GtQjxZZR37LkDk2llNBTRiYaP5/VnfmPx2
+         J6ng==
+X-Gm-Message-State: AJIora9brJKtRvpV3vRryQJQpnF7HP6FL64C4bYXyam6tKFhp0/LHqbh
+        Q2qC5GABYxr1qDRGKEtfPLI=
+X-Google-Smtp-Source: AGRyM1slv2jtIc+MyqrbmsCTUXuJI4GkYNkUmq/9VGyO7QD7E9X3u7bXGhzYbTetO2rAhaQT7aIePw==
+X-Received: by 2002:a17:907:3f1d:b0:726:c927:769b with SMTP id hq29-20020a1709073f1d00b00726c927769bmr7590309ejc.754.1656578053289;
+        Thu, 30 Jun 2022 01:34:13 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id h6-20020aa7cdc6000000b00435720b7a1csm12862186edw.20.2022.06.30.01.34.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jun 2022 01:34:12 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o6pcq-002B8A-0v;
+        Thu, 30 Jun 2022 10:34:12 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 4/6] pack-bitmap: prepare to read lookup table extension
-Date:   Thu, 30 Jun 2022 12:28:33 +0530
-Message-Id: <20220630065833.6333-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <Yry0bKgayLB3GdsW@nand.local>
-References: <Yry0bKgayLB3GdsW@nand.local>
+Cc:     git@vger.kernel.org, derrickstolee@github.com,
+        jonathantanmy@google.com, gitster@pobox.com,
+        Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH 0/4] move pruned objects to a separate repository
+Date:   Thu, 30 Jun 2022 10:00:27 +0200
+References: <cover.1656528343.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <cover.1656528343.git.me@ttaylorr.com>
+Message-ID: <220630.86y1xeeeik.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Taylor Blau <me@ttaylorr.com> wrote:
+On Wed, Jun 29 2022, Taylor Blau wrote:
 
-> That shouldn't be the case. When you have a chance, take a look at the
-> alloc_nr macro, which shows how much memory we allocate at each
-> step:
+> Now that cruft packs are available in v2.37.0, here is an interesting
+> application of that new feature to enable a two-phase object pruning
+> approach.
 >
->     #define alloc_nr(x) (((x)+16)*3/2)
+> This came out of a discussion within GitHub about ways we could support
+> storing a set of pruned objects in "limbo" so that they were not
+> accessible from the repository which pruned them, but instead stored in
+> a cruft pack in a separate repository which lists the original one as an
+> alternate.
 >
-> Suppose we allocated 16 slots initially, so nr (the number of entries
-> stored in the list) is 0 and alloc (the number of entries allocated) is
-> 16. Then when we try to add the 17th item, we'll pass 16 to alloc_nr
-> which will allocate 48 slots. Then 96, then 168, and so on.
->
-> We only have to reallocate and copy the array when nr > alloc, which
-> should be fairly infrequently, and happens less and less often the
-> larger the array grows.
+> This makes it possible to take the collection of all pruned objects and
+> store them in a cruft pack in a separate repository. This repository
+> (which I have been referring to as the "expired.git") can then be used
+> as a donor repository for any missing objects (like the ones described
+> by the race in [1]).
+> [...]
+> [1]: https://lore.kernel.org/git/YryF+vkosJOXf+mQ@nand.local/
 
-Ohh, I misunderstood the ALLOC_GROW function. Thanks!
+I think the best description of that race on-list is this by Jeff King,
+if so I think it would be nice to work it into a commit message (for
+4/4):
+
+	https://public-inbox.org/git/20190319001829.GL29661@sigill.intra.peff.net/
+
+Downthread of that, starting at:
+
+	https://public-inbox.org/git/878svjj4t5.fsf@evledraar.gmail.com/
+
+I describe a proposed mechanism to address the race condition, which
+seems to me be functionally the same as parts of what you're proposing
+here. I.e. the "limbo" here being the same as the proposed "gc
+quarantine".
+
+The main difference being one that this RFC leaves on the table, which
+is how you'd get these objects back into the non-cruft repository once
+they're erroneously/racily expired. I imagined that we'd add it as a
+special alternate, read it last, and make the object reading code aware
+that any object needed from such an alternate is one that we'd need to
+COR over to our primary repository:
+
+	https://public-inbox.org/git/8736lnxlig.fsf@evledraar.gmail.com/
+
+Whereas it seems like you're imagining just having the "cruft pack"
+repository around so that a support engineer can manually recover from
+corruption, or have some other out-of-tree mechanism not part of this
+RFC to (semi-?)automate that step.
+
+If you haven't it would be nice if you could read that thread & see if
+what I'm describing there is essentially a superset of what you have
+here, and if any of the concerns Jeff King brought up there are ones you
+think apply here.
+
+Particularly as there was a reference to an off-list (presumably at
+GitHub) discussion with Michael Haggerty about these sorts of races. I
+don't know if either Jeff or Michael were involved in the discussions
+you had.
+
+I think that the mechanism I proposed there was subtly different from
+what Jeff was concerned about being racy, but that thread was left
+hanging as the last reply is from me trying to clarify that point.
+
+So maybe I'm wrong, but I think if that was the case you'd also be wrong
+about this approach being viable, so it would be nice to clear that up
+:)
+
+I'd also be very interested to know if you have anything like my
+proposed auto-healing via a special alternate planned.  I think that
+would allow aggressive pruning of live repositories not by fixing our
+underlying race conditions, but by "leaning into" them as it were.
+
+I.e. we'd race even more, but as we could always auto-heal by "no, I'll
+actually need that" COR-ing the relevant object(s) back from the "gc
+quarantine" (or your "cruft repository") that would be OK.
