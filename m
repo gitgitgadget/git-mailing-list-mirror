@@ -2,115 +2,309 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7794CCA486
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C8D6C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:14:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236587AbiF3SLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 14:11:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57962 "EHLO
+        id S236619AbiF3SOV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 14:14:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236575AbiF3SLh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 14:11:37 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E64AC3C71B
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:11:35 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id fw3so12900860ejc.10
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:11:35 -0700 (PDT)
+        with ESMTP id S236320AbiF3SOE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 14:14:04 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8581D3E0E9
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:14:02 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id k22so28475350wrd.6
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:14:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=z0MrKVScdRnLjyBFux/tbDAzb7oPO43yCkMRR5tSCH4=;
-        b=MOzxTblzphmwIT7asEGjXPcFmiZRfhRhVtFvVh9gVxAaIjXsluXH0SYSEM4VNvaCp/
-         L+YpMyD2z4x7oxS9YtXs83NT6g1hrpEggDFcDsHxpQ7/iMG7G3XzgfHJ6jbIiUyz2Rid
-         NmR4HtEvr80l/0zzWYYdEtqCrZvinEmf2nT1SKQwEHtPbGHeKd7Ms9t09eueSdPgXfLX
-         YfJtSlUHzDxbbSMhWAHPnyi/7Vcldg2BeAPymaFbvDV2SbGNfFIQ37Y7NkaK2gP9rNWn
-         SWhhp8c3hrbyEVXHgCaU1BV6ve91sgn5qmDiQIB5dRgWX2zfos9Og854F4wVOVbs8z5u
-         CEbw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=qZXHGbCGytjXvch86tMixD8+T89LuBCY+4RITY27p94=;
+        b=R0OFX60ynbyZjH2gOnC5hTgaS9f9FU/2yVOq5PrPSZ6rae7CSuwL5SdfTHL7sz/0Z7
+         vcOypQw/0rCCbPUGBqgCFrhf6mlNndt2MBIPMf+xamMY46bw9NMJ5fNWlN0/POa9bVvV
+         vtFZpkVspNqeyxuTT29xP/PhtyHoel5Vh1TYYb+gjtkLhn6Gfikq9w46rsSqIsbTSNFn
+         QeParAl+Odappnpwr4jQ/uOVqIoQnyHJD26H2F/k5mvsKslUFnCwtAx0HgTzSwie6pKl
+         ot5vSZ1OCNBg2WpUNGB5eleWUx9JVxVGO+draclNe7V5v7esQhWeUtALwg8t+9+GTfLC
+         ODEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=z0MrKVScdRnLjyBFux/tbDAzb7oPO43yCkMRR5tSCH4=;
-        b=Km5ri5Nw69BNEsOpOd2DNX/7ddLmtnpLGrrzma+R9Cojzcu0XJREH5VokFFH3JvPKz
-         txSHIfuDIpyyJuFqIKgQWxWeJ1mZr/crXagZh1oE/VrfjqUsrrmEdUBfaz2vrejejJdn
-         N1OHz0YP4BfPmbJucrA5fMw/x7H/A6pMRPFfVcIPCek8PbRGpOQWv73iyzQ2Fnxcyx3a
-         P0AINH3RUK0p8+MFDd9Oo+kCgo63Qnzpm9mwo1znigdJIooJqWi2do/Ejb3Ef6aEA6kR
-         HcG3PFdEMjHxem0xCJ+V7MZuhRj/ROUg+Slu9vQ6Lb77oGc6eOdIaDeRp6fLvNritFKQ
-         RPMg==
-X-Gm-Message-State: AJIora9LuygHS+EOddgVWhQpq0uXvhQ0/Lc9UcyDQg7X7dK8j9qlKavm
-        XPQfUnjyXdkXQ+q7o8AVG8juiEcg1efQlg==
-X-Google-Smtp-Source: AGRyM1sY0Poy05wPd29KrfufVbJ09Rnva3YMi/BEmE1vAwXP5TWYIQUEK8izH3jhIVfndzBEOkjI+Q==
-X-Received: by 2002:a17:907:160f:b0:726:a7a4:c626 with SMTP id hb15-20020a170907160f00b00726a7a4c626mr10195205ejc.449.1656612694381;
-        Thu, 30 Jun 2022 11:11:34 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id w16-20020a1709061f1000b0071d3b6ed4eesm9406448ejj.160.2022.06.30.11.11.33
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=qZXHGbCGytjXvch86tMixD8+T89LuBCY+4RITY27p94=;
+        b=qgGOPaLnWx0ibrC50OuKx8qWIMtLoyFhPHuTICn+DxY+B0CupB+pehYqF1zKE4dDOF
+         u22xR+8IrpohMNRj2MszPKldhkqiUykUXaUVa1r+oeT+ZVPFS7TNPPodIn1/DQ/m0wbs
+         +RAhlK0jB7ah6/+6T+jBxzSWdrJPQaB9gsJCCHPgG3TkYQt4Z8CHLA7k0B8JfUQ6jkum
+         aGsgqSYxEQuQI92w9NAb7yFBs/d1SLlsKXXCj68zq/uY/2/xPJPCcmU7v+xVF9qY9hjt
+         J9zXd0UZZ9orqpqUCFR3T6Utwjuh1L0+NB4cpWeiqLJl7GxsguE5FcVR6C95Ul2vvmDC
+         biOQ==
+X-Gm-Message-State: AJIora8wiX6Y+srIqQUiW3dF0Fx6BZriiZHxqoCMqO8uCvNOKptInno2
+        pC09fgL+IQoCA7r4YZCcnVD9jV5WUa8=
+X-Google-Smtp-Source: AGRyM1tsNCa5MCQO5Lg7npDBkN+5SJ8T4k/5zqs6ZsmYjPlIg7+KGCyTpBY5PlZYY4gM9HVZH0TNAA==
+X-Received: by 2002:a5d:64a3:0:b0:21b:b86f:e9cc with SMTP id m3-20020a5d64a3000000b0021bb86fe9ccmr9392770wrp.156.1656612840708;
+        Thu, 30 Jun 2022 11:14:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d10-20020adff2ca000000b0021a38089e99sm20014162wrp.57.2022.06.30.11.13.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 11:11:33 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o6ydZ-002R8H-4h;
-        Thu, 30 Jun 2022 20:11:33 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: Non-interactively rewording commit messages
-Date:   Thu, 30 Jun 2022 20:10:39 +0200
-References: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
- <CAP8UFD1Ar13wqQP0ecb37saShSVj5Gxcjdpz=pckXZ7X9TRfSQ@mail.gmail.com>
- <20220630175421.wbgqnmym7ioazdzo@meerkat.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220630175421.wbgqnmym7ioazdzo@meerkat.local>
-Message-ID: <220630.86iloic97u.gmgdl@evledraar.gmail.com>
+        Thu, 30 Jun 2022 11:14:00 -0700 (PDT)
+Message-Id: <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
+References: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 30 Jun 2022 18:13:54 +0000
+Subject: [PATCH v6 0/5] config: introduce discovery.bare and protected config
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is a quick re-roll to address Ævar's comments on the tests (thanks!).
 
-On Thu, Jun 30 2022, Konstantin Ryabitsev wrote:
+This version is mostly simple refactoring, and I also removed a useless test
+assertion (see "Series history").
 
-> On Thu, Jun 30, 2022 at 07:34:54PM +0200, Christian Couder wrote:
->> > Hello, all:
->> >
->> > What's the best approach to non-interactively rewrite specific commit
->> > messages? In this particular case, I am trying to automatically retrieve code
->> > review trailers sent to the mailing list and put them into corresponding
->> > commits.
->> >
->> > For example, I have a set of commits:
->> >
->> > abcabc: This commit does foo
->> > bcdbcd: This commit does bar
->> > cdecde: This commit does baz
->> >
->> > They were all sent to the mailing list and a maintainer sent a "Reviewed-by"
->> > to the second commit. In a usual interactive rebase session this would be:
->> >
->> > pick abcabc
->> > reword bcdbcd
->> > pick cdecde
->> >
->> > When the edit screen comes up for the bcdbcd commit, the author would manually
->> > stick the new trailer into the commit message. However, I can automate all
->> > that away with b4 -- just need a sane strategy for non-interactively rewriting
->> > entire commit messages at arbitrary points in the recent history.
->> >
->> > Any pointers?
->> 
->> Have you tried `git interpret-trailers`?
->
-> I'm aware of interpret-trailers, but unless I'm missing something large, it's
-> just a way of analyzing standalone text files to retrieve or insert trailers.
-> What I'm looking for is a way to amend arbitrary commit messages within recent
-> git history.
+= Description
 
-I think what's being suggested is that once you have a program that can
-munge a commit message on stdin, you can combine it with rebase, git
-commit --amend etc. to change existing commits.q
+There is a known social engineering attack that takes advantage of the fact
+that a working tree can include an entire bare repository, including a
+config file. A user could run a Git command inside the bare repository
+thinking that the config file of the 'outer' repository would be used, but
+in reality, the bare repository's config file (which is attacker-controlled)
+is used, which may result in arbitrary code execution. See [1] for a fuller
+description and deeper discussion.
 
-The t/t7513-interpret-trailers.sh test has some examples of munging
-existing content.
+This series implements a simple way of preventing such attacks: create a
+config option, discovery.bare, that tells Git whether or not to die when it
+finds a bare repository. discovery.bare has two values:
 
+ * "always": always allow bare repositories (default), identical to current
+   behavior
+ * "never": never allow bare repositories
+
+and users/system administrators who never expect to work with bare
+repositories can secure their environments using "never". discovery.bare has
+no effect if --git-dir or GIT_DIR is passed because we are confident that
+the user is not confused about which repository is being used.
+
+This series does not change the default behavior, but in the long-run, a
+"no-embedded" option might be a safe and usable default [2]. "never" is too
+restrictive and unlikely to be the default.
+
+For security reasons, discovery.bare cannot be read from repository-level
+config (because we would end up trusting the embedded bare repository that
+we aren't supposed to trust to begin with). Since this would introduce a 3rd
+variable that is only read from 'protected/trusted configuration' (the
+others are safe.directory and uploadpack.packObjectsHook) this series also
+defines and creates a shared implementation for 'protected configuration'
+
+= Patch organization
+
+ * Patch 1 add a section on configuration scopes to our docs
+ * Patches 2-3 define 'protected configuration' and create a shared
+   implementation.
+ * Patch 4 refactors safe.directory to use protected configuration
+ * Patch 5 adds discovery.bare
+
+= Series history
+
+Changes in v6:
+
+ * Add TEST_PASSES_SANITIZE_LEAK=true
+ * Replace all sub-shells with -C and use test_config_global
+ * Change the expect_rejected helper to use "grep -F" with a more specific
+   message.
+   * This reveals that the "-c discovery.bare=" assertion in the last test
+     was passing for the wrong reason (because '' is an invalid value for
+     "discovery.bare"). I removed it because it wasn't doing anything useful
+     anyway - I was trying to make discovery.bare unset in the command line,
+     but the whole point of that test is to assert that we respect the CLI
+     arg.
+
+Changes in v5:
+
+ * Standardize the usage of "protected configuration" instead of mixing
+   "config" and "configuration". This required some unfortunate rewrapping.
+ * Remove mentions of "trustworthiness" when discussing protected
+   configuration and focus on what Git does instead.
+   * The rationale of protected vs non-protected is still kept.
+ * Fix the stale documentation entry for discovery.bare.
+ * Include a fuller description of how discovery.bare and "--git-dir"
+   interact instead of saying "has no effect".
+
+Changes in v4:
+
+ * 2/5's commit message now justifies what scopes are included in protected
+   config
+ * The global configset is now a file-scope static inside config.c
+   (previously it was a member of the_repository).
+ * Rename discovery_bare_config to discovery_bare_allowed
+ * Make discovery_bare_allowed function-scoped (instead of global).
+ * Add an expect_accepted helper to the discovery.bare tests.
+ * Add a helper to "upload-pack" that reads the protected and non-protected
+   config
+
+Changes in v3:
+
+ * Rebase onto a more recent 'master'
+ * Reframe this feature in only in terms of the 'embedded bare repo' attack.
+ * Other docs improvements (thanks Stolee in particular!)
+ * Protected config no longer uses read_very_early_config() and is only read
+   once
+ * Protected config now includes "-c"
+ * uploadpack.packObjectsHook now uses protected config instead of ignoring
+   repo config using config scopes
+
+Changes in v2:
+
+ * Rename safe.barerepository to discovery.bare and make it die()
+ * Move tests into t/t0034-discovery-bare.sh
+ * Avoid unnecessary config reading by using a static variable
+ * Add discovery.bare=cwd
+ * Fix typos
+
+= Future work
+
+ * This series does not implement the "no-embedded" option [2] and I won't
+   work on it any time soon, but I'd be more than happy to review if someone
+   sends patches.
+ * With discovery.bare, if a builtin is marked RUN_SETUP_GENTLY, setup.c
+   doesn't die() and we don't tell users why their repository was rejected,
+   e.g. "git config" gives an opaque "fatal: not in a git directory". This
+   isn't a new problem though, since safe.directory has the same issue.
+
+[1]
+https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com
+
+[2] This was first suggested in
+https://lore.kernel.org/git/5b969c5e-e802-c447-ad25-6acc0b784582@github.com
+
+Glen Choo (5):
+  Documentation/git-config.txt: add SCOPES section
+  Documentation: define protected configuration
+  config: learn `git_protected_config()`
+  safe.directory: use git_protected_config()
+  setup.c: create `discovery.bare`
+
+ Documentation/config.txt            |  2 +
+ Documentation/config/discovery.txt  | 23 +++++++++
+ Documentation/config/safe.txt       |  6 +--
+ Documentation/config/uploadpack.txt |  6 +--
+ Documentation/git-config.txt        | 77 +++++++++++++++++++++++------
+ config.c                            | 51 +++++++++++++++++++
+ config.h                            | 17 +++++++
+ setup.c                             | 59 +++++++++++++++++++++-
+ t/t0033-safe-directory.sh           | 24 ++++-----
+ t/t0035-discovery-bare.sh           | 52 +++++++++++++++++++
+ t/t5544-pack-objects-hook.sh        |  7 ++-
+ upload-pack.c                       | 27 ++++++----
+ 12 files changed, 304 insertions(+), 47 deletions(-)
+ create mode 100644 Documentation/config/discovery.txt
+ create mode 100755 t/t0035-discovery-bare.sh
+
+
+base-commit: f770e9f396d48b567ef7b37d273e91ad570a3522
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1261%2Fchooglen%2Fsetup%2Fdisable-bare-repo-config-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1261/chooglen/setup/disable-bare-repo-config-v6
+Pull-Request: https://github.com/git/git/pull/1261
+
+Range-diff vs v5:
+
+ 1:  ee9619f6ec0 = 1:  ee9619f6ec0 Documentation/git-config.txt: add SCOPES section
+ 2:  43627c05c0b = 2:  43627c05c0b Documentation: define protected configuration
+ 3:  3efe282e6b9 = 3:  3efe282e6b9 config: learn `git_protected_config()`
+ 4:  ec925823414 = 4:  ec925823414 safe.directory: use git_protected_config()
+ 5:  14411512783 ! 5:  a1323d963f9 setup.c: create `discovery.bare`
+     @@ t/t0035-discovery-bare.sh (new)
+      +
+      +test_description='verify discovery.bare checks'
+      +
+     ++TEST_PASSES_SANITIZE_LEAK=true
+      +. ./test-lib.sh
+      +
+      +pwd="$(pwd)"
+     @@ t/t0035-discovery-bare.sh (new)
+      +
+      +expect_rejected () {
+      +	test_must_fail git "$@" rev-parse --git-dir 2>err &&
+     -+	grep "discovery.bare" err
+     ++	grep -F "cannot use bare repository" err
+      +}
+      +
+      +test_expect_success 'setup bare repo in worktree' '
+     @@ t/t0035-discovery-bare.sh (new)
+      +'
+      +
+      +test_expect_success 'discovery.bare unset' '
+     -+	(
+     -+		cd outer-repo/bare-repo &&
+     -+		expect_accepted
+     -+	)
+     ++	expect_accepted -C outer-repo/bare-repo
+      +'
+      +
+      +test_expect_success 'discovery.bare=always' '
+     -+	git config --global discovery.bare always &&
+     -+	(
+     -+		cd outer-repo/bare-repo &&
+     -+		expect_accepted
+     -+	)
+     ++	test_config_global discovery.bare always &&
+     ++	expect_accepted -C outer-repo/bare-repo
+      +'
+      +
+      +test_expect_success 'discovery.bare=never' '
+     -+	git config --global discovery.bare never &&
+     -+	(
+     -+		cd outer-repo/bare-repo &&
+     -+		expect_rejected
+     -+	)
+     ++	test_config_global discovery.bare never &&
+     ++	expect_rejected -C outer-repo/bare-repo
+      +'
+      +
+      +test_expect_success 'discovery.bare in the repository' '
+     -+	(
+     -+		cd outer-repo/bare-repo &&
+     -+		# Temporarily set discovery.bare=always, otherwise git
+     -+		# config fails with "fatal: not in a git directory"
+     -+		# (like safe.directory)
+     -+		git config --global discovery.bare always &&
+     -+		git config discovery.bare always &&
+     -+		git config --global discovery.bare never &&
+     -+		expect_rejected
+     -+	)
+     ++	# discovery.bare must not be "never", otherwise git config fails
+     ++	# with "fatal: not in a git directory" (like safe.directory)
+     ++	test_config -C outer-repo/bare-repo discovery.bare always &&
+     ++	test_config_global discovery.bare never &&
+     ++	expect_rejected -C outer-repo/bare-repo
+      +'
+      +
+      +test_expect_success 'discovery.bare on the command line' '
+     -+	git config --global discovery.bare never &&
+     -+	(
+     -+		cd outer-repo/bare-repo &&
+     -+		expect_accepted -c discovery.bare=always &&
+     -+		expect_rejected -c discovery.bare=
+     -+	)
+     ++	test_config_global discovery.bare never &&
+     ++	expect_accepted -C outer-repo/bare-repo \
+     ++		-c discovery.bare=always
+      +'
+      +
+      +test_done
+
+-- 
+gitgitgadget
