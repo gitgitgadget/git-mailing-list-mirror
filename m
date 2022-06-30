@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E48B3C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9BCAC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237445AbiF3VTz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:19:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40788 "EHLO
+        id S237458AbiF3VT4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:19:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237442AbiF3VTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:19:47 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AC144578A
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:46 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id s1so363315wra.9
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:46 -0700 (PDT)
+        with ESMTP id S237380AbiF3VTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:19:49 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD3004D157
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:47 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id m6-20020a05600c3b0600b003a0489f412cso2787436wms.1
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=IxXdnnILFC293cKAlC+v8xsq2xhaWnv83MwgPd/7bsI=;
-        b=Mj7+lt/njNNiM0eA9FsITiCf+W3uzbOR/hs9+R51DJem2PcFrhYFTkfGzIySQ798DK
-         cm4kQmmSjhsh97AEaKqvyGC1mekXjdhLT0Bu5o24Lm1Jwumcsxf5Iy3+XzdLPBsmmQwS
-         A0uQNK6OxLrUn5B8HOiiLZ/LxaghstM2xpGO+heQuCHmuLaXuW3ppxmc7KX/gwIcsTk9
-         HOJuSDLUQXVB8XzfEeZojEbYe9UtFpuqI/KcvPhbJZnG8+eQqZ469DHFQ4IWx9Rpd5O0
-         NW+tdWwgHwAIZ4U/6Bd59jxcW8Fy0q0Ho89eOczDa9+CfLdR91qxOL1GbESAKa+84F03
-         FXNw==
+        bh=B/d9zfDBGBH2WfhA15IekN+oYjG+N/9fpuUdJfBvscY=;
+        b=ee9tNqYIpXpOZlGq2eTxaf80QmHVeo/OWKontjoeYpJGuPjQ3iDlC5fQTV0UKwTXHG
+         HTFL7mnc9fYW7lrJ6foXjnGeiIMgRDss+WNogVxrWRVbRAmshJ0IopTQ6fptC1z2qP1W
+         LSeGpLJ4M4ucfxBt5v4oKP1JxWuRllTjwQu6+lHnWWzrCSvD9SZvh322BblmIQtdEPRO
+         n5DK9WJCJcWQJCHyi/l4HNcTH+sjB2kYCWbn/VbR9gB2+e6Mbe+HZxuKoUWPG4K8JGmH
+         bvargQK1upPWZvGxZmDYaf22OF0/Y+kks9Mg/Jb60T5SoUOKHfMzrXVGG7bH5lovCl3q
+         UX9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=IxXdnnILFC293cKAlC+v8xsq2xhaWnv83MwgPd/7bsI=;
-        b=fesrakUoa4t2XCa0nmqcO6qZVJtFt1X0vNzpSj102kPPwwLBx67QaxzTdaVof3kH57
-         ZbvOzcUQp1fN5Dj/kKrxkxLqKHN/G5F5xFGax+9Pj9dtca7d2P1BBdeAAiD6AenXx+0b
-         v+QkGw5r+u7j3cGUH1aYRV5eTresKuAcQaMun4Oy7arnu3yfC8r+OJXfOb34LZalXf9R
-         RlitmapdfY08XTx3oa8x6SNby1CMoeGFHCcX3+Wt+K/AxyI3IICWZjivMuBPgTcTIXTo
-         xCQOrvDRz7eDylXoz2h0hvESDmniYQWuqIMppZFHkKOsYdv9i545MdzbSC8MHO6yuvET
-         B3QQ==
-X-Gm-Message-State: AJIora+CNt6RtJaH/znGSPd2OP3wAEeqCVKdIXuNQ9cVMLxSdt5J6Exd
-        mZeMRmEwI/Usk9QH/80NOs7U8N6/gCU=
-X-Google-Smtp-Source: AGRyM1uzNizanAX35vrLvYAmHIIZQkHgBULH+cSv7VidSubq5psXg8uqJuE0AlFe84iQjPlxt4jtaA==
-X-Received: by 2002:a5d:69d2:0:b0:21b:8e3f:8557 with SMTP id s18-20020a5d69d2000000b0021b8e3f8557mr10339597wrw.422.1656623984856;
-        Thu, 30 Jun 2022 14:19:44 -0700 (PDT)
+        bh=B/d9zfDBGBH2WfhA15IekN+oYjG+N/9fpuUdJfBvscY=;
+        b=wN9qiuTLPcCVk2/sivGzHihi7ARa3/FSFFTDqABzXzVKjam2gdEt0s3X4oQd6CInwQ
+         KJQd6GPiEIsun5zZcNn+JcNqM915Xm0e4B9Mm3toab1Nie9YFINJ4c7F6qnG/r5dtpYJ
+         YxfVoEsjxRumngjgUaazqlfXBInVYfcUhO4teHUExBOsJXF4DEHqWp5FQm0tPbVkPn6T
+         CSKa3PIrcpK6BLMMX8nF357LjnBxp/mk03ioecDf+8E7s8fnyCFobt4+kYw8hjcQ9qNb
+         BxIo5JmV02zcbuDVr7ZktpwGBMCvO8gLwtgwxTmx8ZZUYTuFIcxgNqljcW9p68hqXKgt
+         x+/A==
+X-Gm-Message-State: AJIora+q99YQenPp+Ksq6E4uHo6uX3W/qHKav9IQoawgVFrjP85ciDIZ
+        yLr65Xl2ZObBVmJ1G4GUZYCHNPudVmw=
+X-Google-Smtp-Source: AGRyM1sxSE9mQiGqdSz1oXo41432CAteo1OlLZ/aZptHo+CxzNqPHnwWZtK1siXcNdp71cQPE7J9Ow==
+X-Received: by 2002:a7b:c01a:0:b0:3a1:7ab1:e5dc with SMTP id c26-20020a7bc01a000000b003a17ab1e5dcmr7523731wmb.128.1656623986089;
+        Thu, 30 Jun 2022 14:19:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o6-20020adfcf06000000b0021a34023ca3sm20001029wrj.62.2022.06.30.14.19.44
+        by smtp.gmail.com with ESMTPSA id z5-20020adfe545000000b0021b81855c1csm24780322wrm.27.2022.06.30.14.19.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 14:19:44 -0700 (PDT)
-Message-Id: <da3aae9e8476af3b23363d39dba86b679c14a498.1656623978.git.gitgitgadget@gmail.com>
+        Thu, 30 Jun 2022 14:19:45 -0700 (PDT)
+Message-Id: <d9c7f69aaa6b001949e9d2b693c22c595cc9d0d6.1656623978.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
 References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
         <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Thu, 30 Jun 2022 21:19:24 +0000
-Subject: [PATCH v2 04/18] git-submodule.sh: remove unused top-level "--branch"
- argument
+Date:   Thu, 30 Jun 2022 21:19:25 +0000
+Subject: [PATCH v2 05/18] submodule--helper: have --require-init imply --init
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,73 +74,63 @@ X-Mailing-List: git@vger.kernel.org
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
  <avarab@gmail.com>
 
-In 5c08dbbdf1a (git-submodule: fix subcommand parser, 2008-01-15) the
-"--branch" option was supported as an option to "git submodule"
-itself, i.e. "git submodule --branch" as a side-effect of its
-implementation.
+Adjust code added in 0060fd1511b (clone --recurse-submodules: prevent
+name squatting on Windows, 2019-09-12) to have the internal
+--require-init option imply --init, rather than having
+"git-submodule.sh" add it implicitly.
 
-Then in b57e8119e6e (submodule: teach set-branch subcommand,
-2019-02-08) when the "set-branch" subcommand was added the assertion
-that we shouldn't have "--branch" anywhere except as an argument to
-"add" and "set-branch" was copy/pasted from the adjacent check for
-"--cache" added (or rather modified) in 496eeeb19b9 (git-submodule.sh:
-avoid "test <cond> -a/-o <cond>", 2014-06-10).
+This change doesn't make any difference now, but eliminates another
+special-case where "git submodule--helper update"'s behavior was
+different from "git submodule update". This will make it easier to
+eventually replace the cmd_update() function in git-submodule.sh.
 
-But there's been a logic error in that check, which at a glance looked
-like it should be supporting:
-
-    git submodule --branch <branch> (add | set-branch) [<options>]
-
-But due to "||" in the condition (as opposed to "&&" for "--cache") if
-we have "--branch" here already we'll emit usage, even for "add" and
-"set-branch".
-
-So in addition to never having documented this form, it hasn't worked
-since b57e8119e6e was released with v2.22.0.
-
-So it's safe to remove this code. I.e. we don't want to support the
-form noted above, but only:
-
-    git submodule (add | set-branch) --branch <branch> [<options>]
+We'll still need to keep the distinction between "--init" and
+"--require-init" in git-submodule.sh. Once cmd_update() gets
+re-implemented in C we'll be able to change variables and other code
+related to that, but not yet.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-submodule.sh | 14 --------------
- 1 file changed, 14 deletions(-)
+ builtin/submodule--helper.c | 5 ++++-
+ git-submodule.sh            | 1 -
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 5c77dfcffee..f0702d0cfa2 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2618,7 +2618,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "progress", &opt.progress,
+ 			    N_("force cloning progress")),
+ 		OPT_BOOL(0, "require-init", &opt.require_init,
+-			   N_("disallow cloning into non-empty directory")),
++			   N_("disallow cloning into non-empty directory, implies --init")),
+ 		OPT_BOOL(0, "single-branch", &opt.single_branch,
+ 			 N_("clone only one branch, HEAD or --branch")),
+ 		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+@@ -2642,6 +2642,9 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, module_update_options,
+ 			     git_submodule_helper_usage, 0);
+ 
++	if (opt.require_init)
++		opt.init = 1;
++
+ 	if (filter_options.choice && !opt.init) {
+ 		usage_with_options(git_submodule_helper_usage,
+ 				   module_update_options);
 diff --git a/git-submodule.sh b/git-submodule.sh
-index b99a00d9f84..20fc1b620fa 100755
+index 20fc1b620fa..5b9683bf766 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -574,14 +574,6 @@ do
- 	-q|--quiet)
- 		GIT_QUIET=1
- 		;;
--	-b|--branch)
--		case "$2" in
--		'')
--			usage
--			;;
--		esac
--		branch="$2"; shift
--		;;
- 	--cached)
- 		cached=1
- 		;;
-@@ -609,12 +601,6 @@ then
-     fi
- fi
- 
--# "-b branch" is accepted only by "add" and "set-branch"
--if test -n "$branch" && (test "$command" != add || test "$command" != set-branch)
--then
--	usage
--fi
--
- # "--cached" is accepted only by "status" and "summary"
- if test -n "$cached" && test "$command" != status && test "$command" != summary
- then
+@@ -251,7 +251,6 @@ cmd_update()
+ 			init=1
+ 			;;
+ 		--require-init)
+-			init=1
+ 			require_init=1
+ 			;;
+ 		--remote)
 -- 
 gitgitgadget
 
