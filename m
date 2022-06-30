@@ -2,97 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91DA3C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D453C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:00:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234841AbiF3Ry0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 13:54:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45636 "EHLO
+        id S235682AbiF3SAa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 14:00:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233070AbiF3RyZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 13:54:25 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BDE837A9F
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:54:24 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id 2so392093qvc.0
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:54:24 -0700 (PDT)
+        with ESMTP id S230363AbiF3SA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 14:00:28 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D5872A245
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:00:27 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id r20so28439960wra.1
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=emABBXQf8eD8t8JGORMXDnrzAK4kIThU1JEg+4TZy5g=;
-        b=dYPDeOmA8OlIKtlzyRLrB5i3EIcHQ9lJedXLiA+dAz+GakXTzq45urjl6N+uAjfQ35
-         cHNlbvc9TQ8i5zsaok7OSSYFDlVsvBLF97VgI3vldMirDnmbaO6rSUqWSSxJkbz2Odi9
-         aA7/LZlDQiXQpFv28zHzi5tCSv+aSNeBEEYY4=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=wpZt1MiGqApQZlUCB9tKc4a9Gu1UEEmFOp4kGkjAkik=;
+        b=fpxbLUM5O1rYVf8aEC5j/HLYPr3dnXeohe0npkp/gPP4AgDXIEQffzhIcytCSw1DFJ
+         IwewSgLarxYhrtXyQEucVNkEzAPCJ0TN3U9k7SnK2TGF3XzO0S9Pd3O4FWceQ1bviXKa
+         3x/+rZ7FW3w9YjhZ0Ab9VXfFK6ifXCiAhe3oD0x0wqfdNGWWcI687b5bYuFYXVNLN9+o
+         Bdy8npvbL+DzvGhNv9z0xR7POwKBo9LxE0H2XKxR9H0mG14s2q0RsSIyNX+qjmBf7syQ
+         rxblRvaWmQookGF4ZzXuGxiISa/VDVUtbJ5bZZGiYdg1PU7nPIl5gBVWsXvyi6u3xVOV
+         d/kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=emABBXQf8eD8t8JGORMXDnrzAK4kIThU1JEg+4TZy5g=;
-        b=sepfxsIOMNFw9a1Xj+0YXBHI1j8HNvkVKQXkKcZxuiS1KafxmLUgCTmFuHT+Q1O/+2
-         QAKHLlbmKb1QVsf6BrJPpjOHH2fJRlXiQBSR5T7jGFGPoxx9Dx3YWYUfmB/mR4SVTrT3
-         UDidg39bhKsu2JW08w0RTHShuUo8yjjviCaYFwsa2wvdsCrjsyY7ySprZVncLjhQHqib
-         NMPuEqC/9XmB2k0dwUwIJIhoARiZQpx84HGm9nArUpY3P7kQbz1APAlLOXTcBkVJQ6wv
-         Rsg8NDSAswFlSdECxDmseXp9GMC31WLskwewEzwae4wWgSIWVQTkGafH+kEgBoxKaKk7
-         eLNA==
-X-Gm-Message-State: AJIora+9Ze4dCtou9fI4COnwyVZYop/3CIpL4bDp5vFrDpbTiGaSya+t
-        CQTEiJjL1jCIRNNlxKGOJflekIFaGl60hQ==
-X-Google-Smtp-Source: AGRyM1u/zIxZt8QmwLKPMfQ3s8oTm8kp4RIy3vBIjGq67gwal0Kw5LG7LVLGoEwUx/h8IFBAViH4xg==
-X-Received: by 2002:ac8:5cc9:0:b0:304:e03b:5964 with SMTP id s9-20020ac85cc9000000b00304e03b5964mr8565083qta.433.1656611663395;
-        Thu, 30 Jun 2022 10:54:23 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id v123-20020a379381000000b006a6c230f5e0sm7358366qkd.31.2022.06.30.10.54.22
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=wpZt1MiGqApQZlUCB9tKc4a9Gu1UEEmFOp4kGkjAkik=;
+        b=hRp+7fLJBPWMubUnRAZYgiEGz/pSz+u5bpRMI6ZL7SgjtnxkNt2JK7WBvxS351q29I
+         X46IAgC92kK77jSnMDtfA+YLCdDh8riEupHU2br6ky2qxusprbr5MjgCGDTi7ijhG3rv
+         idxnND/8Uan7z5gGip2MNQ5K4ZAj3R/dejofnNFGmc7w3LDqJ1/b/gGVt1xnF5+M1vlc
+         CXc0nzO5Z6C2R+UzsBD5p9By53plXE5k7W3JsBrqkP2tclGP8jxqUDv5t7ZDD0YAOKG0
+         fiHltPnY4FWseXOut5NGGmkbtPobqWLnBs/zn4RhGzbNz6OKHnHpMG77JygBBODTOiAF
+         vA+A==
+X-Gm-Message-State: AJIora9qxwivb2VmAVwUFG0exzanBFHl/qvxk3hXSiTmpioo4iCaarz6
+        wTrqNOktY2eIJ1laLcfzjuRDnv+/ouywXQ==
+X-Google-Smtp-Source: AGRyM1tlZuPMLTsojvbrQUJBvFk/9DiBD6LhgD/L5rGamrmeMSaSQSCwgzhHlxnH+NiHIHr6B5g7qg==
+X-Received: by 2002:a05:6000:696:b0:21b:9219:b26e with SMTP id bo22-20020a056000069600b0021b9219b26emr9793674wrb.272.1656612025332;
+        Thu, 30 Jun 2022 11:00:25 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v13-20020a1cf70d000000b0039747cf8354sm7363985wmh.39.2022.06.30.11.00.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 10:54:23 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 13:54:21 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Non-interactively rewording commit messages
-Message-ID: <20220630175421.wbgqnmym7ioazdzo@meerkat.local>
-References: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
- <CAP8UFD1Ar13wqQP0ecb37saShSVj5Gxcjdpz=pckXZ7X9TRfSQ@mail.gmail.com>
+        Thu, 30 Jun 2022 11:00:24 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 01/11] check-ref-format: fix trivial memory leak
+Date:   Thu, 30 Jun 2022 20:00:11 +0200
+Message-Id: <patch-01.11-f35cf7c6ee9-20220630T175714Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.0.874.g7d3439f13c4
+In-Reply-To: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
+References: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1Ar13wqQP0ecb37saShSVj5Gxcjdpz=pckXZ7X9TRfSQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 30, 2022 at 07:34:54PM +0200, Christian Couder wrote:
-> > Hello, all:
-> >
-> > What's the best approach to non-interactively rewrite specific commit
-> > messages? In this particular case, I am trying to automatically retrieve code
-> > review trailers sent to the mailing list and put them into corresponding
-> > commits.
-> >
-> > For example, I have a set of commits:
-> >
-> > abcabc: This commit does foo
-> > bcdbcd: This commit does bar
-> > cdecde: This commit does baz
-> >
-> > They were all sent to the mailing list and a maintainer sent a "Reviewed-by"
-> > to the second commit. In a usual interactive rebase session this would be:
-> >
-> > pick abcabc
-> > reword bcdbcd
-> > pick cdecde
-> >
-> > When the edit screen comes up for the bcdbcd commit, the author would manually
-> > stick the new trailer into the commit message. However, I can automate all
-> > that away with b4 -- just need a sane strategy for non-interactively rewriting
-> > entire commit messages at arbitrary points in the recent history.
-> >
-> > Any pointers?
-> 
-> Have you tried `git interpret-trailers`?
+Fix a memory leak in "git check-ref-format" that's been present in the
+code in one form or another since 38eedc634bc (git check-ref-format
+--print, 2009-10-12), the code got substantially refactored in
+cfbe22f03f9 (check-ref-format: handle subcommands in separate
+functions, 2010-08-05).
 
-I'm aware of interpret-trailers, but unless I'm missing something large, it's
-just a way of analyzing standalone text files to retrieve or insert trailers.
-What I'm looking for is a way to amend arbitrary commit messages within recent
-git history.
+As a result we can mark a test as passing with SANITIZE=leak using
+"TEST_PASSES_SANITIZE_LEAK=true".
 
--K
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/check-ref-format.c  | 11 ++++++++---
+ t/t1402-check-ref-format.sh |  1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index bc67d3f0a83..fd0e5f86832 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -57,6 +57,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+ 	int normalize = 0;
+ 	int flags = 0;
+ 	const char *refname;
++	char *to_free = NULL;
++	int ret = 1;
+ 
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage(builtin_check_ref_format_usage);
+@@ -81,11 +83,14 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+ 
+ 	refname = argv[i];
+ 	if (normalize)
+-		refname = collapse_slashes(refname);
++		refname = to_free = collapse_slashes(refname);
+ 	if (check_refname_format(refname, flags))
+-		return 1;
++		goto cleanup;
+ 	if (normalize)
+ 		printf("%s\n", refname);
+ 
+-	return 0;
++	ret = 0;
++cleanup:
++	free(to_free);
++	return ret;
+ }
+diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
+index cabc516ae9a..5ed9d7318e0 100755
+--- a/t/t1402-check-ref-format.sh
++++ b/t/t1402-check-ref-format.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='Test git check-ref-format'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ valid_ref() {
+-- 
+2.37.0.874.g7d3439f13c4
+
