@@ -2,141 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B4BC43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BE25C43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:15:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237344AbiF3VJL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60520 "EHLO
+        id S237378AbiF3VPJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:15:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236707AbiF3VJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:09:10 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B12C31E3F0
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:09:09 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-101b4f9e825so941144fac.5
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:09:09 -0700 (PDT)
+        with ESMTP id S236291AbiF3VPI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:15:08 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D96F5326DE
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:15:07 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id l6-20020a170902ec0600b0016a1fd93c28so228762pld.17
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5Ov9hHVOnFqU/5q/vBBI6uEyoSnpvWOBVtceVf9StQU=;
-        b=PVGl4TEs2ofbGDzQ63pnEKoe46ZMA2DkJtxfxgUvnUolaNKQGhyvaRy4I6wxb3+jTi
-         pxJE+i/r3IvLqOGAY1AKG0FSZfyaqtVvQsXJe2yLoiS7V0/FQ4lVsJ9Sz7FyoBW5f7cy
-         xdBxx+IaCPNEBvxw+kDCwlw6QG0oE2+CherGxjBR6meThddfpkyddjBsmGPHX2d6xq3z
-         Nh64nCFyY45bZz16vUtcRXRk3jhmaQRIkmNKns8zpE7SDcwkJs97Ll+kkik2VPuPWLtW
-         XVZbElyIWy0D6Wtoj7PhBGz4Bn2Jr9HY1zPsB8/+ivGx/Tb7gdHEAQKxBs84ESHSU+4k
-         0uMA==
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=cMzLr4021NyFZJzaz328DinnI1ky9rT/jHmGscJGj2A=;
+        b=fWo9XurU8pua+HNtdfxzu8+gnxNIjbonnYqkHPBQXrMnX93Lxbkf3OEMqxfbPma7CU
+         StWV7W/7N6td/NYY6z67nq2hKhFMEJ/wV94+QXIEW68zFFf8b4hmOfXqPE9B+Vmj1JMi
+         CUxh0bxhq2QKjfvZdt1MalMQvhucJT/Fr8H2xj1LsAw5PJXtQ57iw+IuvSXxCR1plGwo
+         0crsEA+KRYVOE2vvrFK/2Vbit5SEv2v/4miWdmLVaMpzWOfmVCWPFpcvbb6pVdpRxHu6
+         p+n37k2quh3gcPJroZAnf8CKIJahUSM25FKIOoC/WnDKU8U1aMFiSDMccd8+B5b7Imz/
+         69xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5Ov9hHVOnFqU/5q/vBBI6uEyoSnpvWOBVtceVf9StQU=;
-        b=6SqMOmNDvusEUZgzPxNShhy3H4aayJyWOv1Gn/6Oz2Zl3IyeqR9z2DJ9H6H7nZOtOX
-         /zBQ/R/QmCca3DXZAnOvaNiVvZO5ntuYdY4PyAIi8cJWPhjon0XuYWdKSD9baWlDlc9z
-         Rw/Gcl4M8vcqQRSRcjPagDUYaNxUuPK/r6PM9oxqDUfeUzM8L3gPAe2Ov1OW9nPmeOME
-         f3DVdAnJdvZ3E/rniEhe5FhjykW3I3Gc3WQeaOYRrKQrGjZXy9aWWcWxv+uDkpNyVyFT
-         2al8CkoxVgXJLGQ99SddBjLQpbyBU0nOTDIPoNYa+Ar4ID41vFAqd/m5dK+lnSC6GBts
-         rpqA==
-X-Gm-Message-State: AJIora9t+uDutb2xnc9qNjSJrHuh7nLImidqOtlgXPrB4o771oS10C71
-        w4M3/dPMrUJ9A3bULw8DNM9GHqcZ6VdT5rdo6e35Aw==
-X-Google-Smtp-Source: AGRyM1u6dL350PyAddt9F0WYlMV9eSGAjccOBD0zcgUjfivgIwID8Kf4rU8fYwnH+Tzdx/QDv10GEJbNSPxGZLS3Bhg=
-X-Received: by 2002:a05:6870:d207:b0:101:d867:5092 with SMTP id
- g7-20020a056870d20700b00101d8675092mr6568245oac.236.1656623348916; Thu, 30
- Jun 2022 14:09:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220629224059.1016645-1-calvinwan@google.com> <kl6l35flubx8.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6l35flubx8.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Thu, 30 Jun 2022 14:08:57 -0700
-Message-ID: <CAFySSZDOC8a8q+P3hTAMmO4TCi8Aj61432CsAhgh+pKBv=owyg@mail.gmail.com>
-Subject: Re: [PATCH v3] submodule merge: update conflict error message
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
-        levraiphilippeblain@gmail.com
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=cMzLr4021NyFZJzaz328DinnI1ky9rT/jHmGscJGj2A=;
+        b=WG6dAkkoVkAl8jdiSy2QMkSX7ulY80yHg9LecQsAxqUHchWCn+qKEJGBP1kiqGxRqE
+         zGKi2xAsj0Mf6IFlA67aJ/qoUJYcMezWk7gM+HMfTBcBBX9tTBOTJjLS1jMCKoSNeoff
+         2hHq6HL0rRkAo28GkAWfYewXYX4QyE5WUM8vIaKKrzBfTEOEM/pebzQ6/R405LRN5u4K
+         MshAlTnBDFQ7O/qeAhXFE9VFjA/GmahcQkk6sl5jMq3EuWSHd9mm6zecg1aHFlZWKuKj
+         5EfqLfNSde9u8HK6xio/p0SvdLx5r29ugefeQ917PoiLse1owyOnac78moTebMLbTaqK
+         8RGg==
+X-Gm-Message-State: AJIora8Wk8Kn1yIj/9nD83PjyaXVP33VTgjFOgXk++frMfdMv5JyzEjq
+        YNmovCUcCH7ZRoTzPCdFuoDNFHMUM6YxPz2FacuD
+X-Google-Smtp-Source: AGRyM1v9rHAg9P/AEKUPJLTHskRPbfMKg/ZpXt+qmBc72RnmKJ99SzhsU/QQeVUVG11z6m8GdKxijzw2S4muLsrNHa2d
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:7e86:b0:1ec:8606:b3c4 with
+ SMTP id j6-20020a17090a7e8600b001ec8606b3c4mr13891557pjl.186.1656623707301;
+ Thu, 30 Jun 2022 14:15:07 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 14:15:04 -0700
+In-Reply-To: <Yr0OuwCyDot0wJjs@nand.local>
+Message-Id: <20220630211504.2833463-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
+Subject: Re: [RFC PATCH 0/4] move pruned objects to a separate repository
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        derrickstolee@github.com, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I notice that this is all above the "---", i.e. this becomes part of the
-> commit message when "git am"-ed. Intentional?
+Taylor Blau <me@ttaylorr.com> writes:
+> We don't usually do pruning GC's except during manual intervention or
+> upon request through a support ticket. But when we do it is often
+> infeasible to lock the entire network's push traffic and reference
+> updates. So it is not an unheard of event to encounter the race that I
+> described above.
+> 
+> The idea is that, at least for non-sensitive pruning, we would move the
+> pruned objects to a separate repository and hold them there until we
+> could run `git fsck` on the repository after pruning and verify that the
+> repository is intact. If it is, then the expired.git repository can be
+> emptied, too, permanently removing the pruned objects. If not, the
+> expired.git repository then becomes a donor for the missing objects,
+> which are used to heal the corrupt main repository. Once *that* is done,
+> and fsck comes back clean, then the expired.git repository can be
+> removed.
 
-Good catch. Not intentional at all.
+Thanks for the information. Presumably, during such pruning GCs (because
+manual intervention was needed or because of a support ticket), you
+would use a cruft expiration of "now", not something like "14 days ago".
+If so, more on this specific case later...
 
-On Thu, Jun 30, 2022 at 1:35 PM Glen Choo <chooglen@google.com> wrote:
->
-> Hi! I have a suggestion for the output text; I haven't looked closely at
-> the code changes.
->
-> Calvin Wan <calvinwan@google.com> writes:
->
-> >  Changes since v2:
-> >  [...]
-> >  Changes since v1:
-> >  [...]
->
-> I notice that this is all above the "---", i.e. this becomes part of the
-> commit message when "git am"-ed. Intentional?
->
-> > If git detects a possible merge resolution, the following is printed:
-> >
-> > --------
-> >
-> > Failed to merge submodule sub, but a possible merge resolution exists:
-> >     <commit> Merge branch '<branch1>' into <branch2>
-> >
-> >
-> > If this is correct simply add it to the index for example
-> > by using:
-> >
-> >   git update-index --cacheinfo 160000 <commit> "<submodule>"
-> >
-> > which will accept this suggestion.
-> >
-> > CONFLICT (submodule): Merge conflict in <submodule>
-> > Recursive merging with submodules is currently not supported.
-> > To manually complete the merge:
-> >  - go to submodule (<submodule>), and either update the submodule to a possible commit above or merge commit <commit>
-> >  - come back to superproject, and `git add <submodule>` to record the above merge
-> >  - resolve any other conflicts in the superproject
-> >  - commit the resulting index in the superproject
-> > Automatic merge failed; fix conflicts and then commit the result.
-> >
-> > --------
->
-> I'm hesitant to recommend a plumbing command like "git update-index" to
-> the user, especially if the user is one who needs help resolving a
-> submodule merge conflict. I also believe this would be the first time we
-> recommend "git update-index".
->
-> To do this using only porcelain commands, maybe:
->
->    git -C <submodule> checkout <commit> &&
->    git add <submodule>
->
-> (Though this might need to be broken up into two commands because I'm
-> not sure if we ever include "&&" in a help message. I'm guessing we
-> don't for portability reasons?)
->
-> > If git detects multiple possible merge resolutions, the following is printed:
-> >
-> > --------
-> >
-> > Failed to merge submodule sub, but multiple possible merges exist:
-> >     <commit> Merge branch '<branch1>' into <branch2>
-> >     <commit> Merge branch '<branch1>' into <branch3>
-> >
-> > CONFLICT (submodule): Merge conflict in <submodule>
-> > Recursive merging with submodules is currently not supported.
-> > To manually complete the merge:
-> >  - go to submodule (<submodule>), and either update the submodule to a possible commit above or merge commit <commit>
-> >  - come back to superproject, and `git add <submodule>` to record the above merge
-> >  - resolve any other conflicts in the superproject
-> >  - commit the resulting index in the superproject
-> > Automatic merge failed; fix conflicts and then commit the result.
-> >
-> > -------
->
-> For consistency, perhaps include the "here's how to use the suggestion"
-> instructions here as well?
+> > I think there is at least one more alternative that should be
+> > considered, though: since the cruft pack is unlikely to have its objects
+> > "resurrected" (since the reason why they're there is because they are
+> > unreachable), it is likely that the objects that are pruned are exactly
+> > the same as those in the craft pack. So it would be more efficient to
+> > just unconditionally rename the cruft pack to the backup destination.
+> 
+> This isn't quite right. The contents that are written into the
+> expired.git repository is everything that *didn't* end up in the cruft
+> pack.
+
+I reread what I wrote and realized that I didn't give a good description
+of what I was thinking. So hopefully this is a better one: I was
+thinking of the case in which GC is regularly run on a repo, say, every
+14 days with a 14-day expiration time. So on the first run you would
+have:
+
+  a1.pack      a2.pack (+ .mtime)
+  Reachable    Unreachable (cruft pack)
+
+and on the second run, assuming this patch set is in effect:
+
+  b1.pack      b2.pack (+ .mtime)          expired.git/b3.pack
+  Reachable    Unreachable (cruft pack)    In expired.git
+
+and my idea was that it is very likely that a2.pack and
+expired.git/b3.pack are the same, so I thought that a feature in which
+cruft packs could be moved instead of deleted would be more efficient.
+
+Going back to the specific case at the start of this email. I now see
+that my idea wouldn't work in that specific case, because you would want
+to generate expired.git packs from a repository that is unlikely to have
+cruft packs (or, at least, it is unlikely that the existing cruft packs
+match exactly what you would write in expired.git).
+
+If it is likely that cruft pack(s) would only be written in one place
+(whether in the same repository or in expired.git, but not both),
+another design option would be to be able to tell Git where to write
+cruft packs, but not give Git the ability to write cruft packs both to
+the same repository and expired.git. (Unless in your use case, Taylor,
+you envision that you would occasionally need to write cruft packs in
+both places.) That would simplify the UI and the code a bit, but not by
+much (this patch set, as written, is already elegantly written), so I
+don't feel too strongly about it and I would be happy with the current
+pattern.
+
+
