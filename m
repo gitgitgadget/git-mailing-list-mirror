@@ -2,75 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E23DC43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52103C43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236399AbiF3RcR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 13:32:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55460 "EHLO
+        id S236481AbiF3RfJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 13:35:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236319AbiF3RcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 13:32:16 -0400
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 317E727FF9
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:32:14 -0700 (PDT)
-Received: by mail-qv1-xf36.google.com with SMTP id u7so214508qvm.4
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:32:14 -0700 (PDT)
+        with ESMTP id S236478AbiF3RfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 13:35:07 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B531837A1E
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:35:06 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id h187so32806502ybg.0
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=52V7TgX6JKbtL8X1kGx0nQfGkCHzEiTjFeGXnCbgZTk=;
-        b=mBllE8ZjGay7sSwq1rwHA7duLWh6NH+Xvcc8KO9ZpVkgAj2xJ3Nk/UUJyF764JIybN
-         cfiIIP5z4rqTonB5lqeD68gqog+q1/6OC3SD6+Glit+vZWc0Sv/YN5ytJosFf24WLdxV
-         cnQb5e9x4h4WuKPVHX7t42hbomhS6dI5eeHjvlLIQkk3LXiGfLR6yWgu5X0FpIy1xnWo
-         +I/znlZ9Cu6si8GT0SF1Qj0rSd9nx49lbIwh2XXLMSg8oGDbG0pL2aaK5sWl6Bq3rxM0
-         THUE8FPTMg3GKkUYvSCt27Vvrv4ppKTLinb6xg1MJ75LusGjXS/Xd5S1+rp9xG7m27n5
-         I3uA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TY4HjP8/bnphxZ83qG8BNp41GVJFbCFQkj8+BODCTmY=;
+        b=nS6QiFq3Xa6wMDxE53djD9YcDAFIG3U5toqvQdWbyedq6+UpMHZEqxQ+3Z3zAFiZLt
+         MZrcEj428P3NH8MLJVFc34pnCqQPKXN9ssQ2cLmaqhvpRB+L9JaH4O7hhJcB1ob0UIq5
+         OW/jb5ERGsHIAW3nez3IO6JOsNjK5e/desoe4BSVHOQFvpKLFG4jGDMDrNsAVLrO6HGP
+         t1YRnFG7qfM653LV3iZd3a+XESPJqCv51rt+ECxigb/oCH9b6N2nFh3D0HslYm7XHnK0
+         N6hNcc7tQ1eiWmDdlsyKOAZv49rA3bL5kSW/7optrZzh3aGu7j4UwWwilVJ+5JXcywwc
+         Ssng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=52V7TgX6JKbtL8X1kGx0nQfGkCHzEiTjFeGXnCbgZTk=;
-        b=p6ajIlyIgSn+YEvhHK96gTPCWEXWmSsoB4Srtsr+ammA0M5NAo3XV6WbLx2t4ScFaV
-         JBPJlEUKj1UT4+RAA/6EJNhZll6leF+WneC2FqbVlr1cuH4Yot2Pbq2+XUiquZz2ZNGh
-         ez9wOvhPGyjl3AxlUdkHI3YNxLiB4P2kFnfl0lx2pSkyxyzU1b8Jd1fPwXoBFxUE/sMP
-         dQxhqPj9Xk+4xcHkN2+/IB0A933cF3qhQUmFHaZ2YpbMmnJoO9TSGvBpm2nv9w2zcWkZ
-         VPKGOnmS1cfKpcFFSCl3MN9kZeswW29LkSuqLmOCqgCIpfrWGZHvh7OJjq0LS/ZnHqRX
-         swyA==
-X-Gm-Message-State: AJIora8wGoYvBQmDSlBYVs/XQOSMK5IGf2BITX2FTP1gDO1aRjgJ1NqB
-        t4x2g95jvwJ0B4lw5ardUbJWwsiCggY=
-X-Google-Smtp-Source: AGRyM1vYHyPrZ2ex7iBToVotx77BF+8S9tMvOpVlw+GP1JX2eF3W1kPXOCmMBLdsx6ak6zlUYXBovA==
-X-Received: by 2002:a05:622a:1b9e:b0:31d:2909:bf4d with SMTP id bp30-20020a05622a1b9e00b0031d2909bf4dmr6866142qtb.283.1656610333192;
-        Thu, 30 Jun 2022 10:32:13 -0700 (PDT)
-Received: from carlos-mbp-2.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id z3-20020a05622a124300b00316a384447fsm13186629qtx.16.2022.06.30.10.32.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 10:32:12 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 10:32:11 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Non-interactively rewording commit messages
-Message-ID: <20220630173211.pnliwplmimcaygny@carlos-mbp-2.lan>
-References: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TY4HjP8/bnphxZ83qG8BNp41GVJFbCFQkj8+BODCTmY=;
+        b=CyNeGG3uczksbc9BqIm0xBegcB7j5Dl/D/vwvKQKkO/X0gsGIRu+6OSP1e8K9dOBm1
+         IHpiWFNYJxbHtFNHBWc0LTN2EvWY6+d6wRvFeXP7+qpgDg5MitI7+UjJMylcqbEbQfhd
+         /Bjf0rzT0za2R03xkL/eIRLr40sXgxm/f6kzZS332VQyPPhN7mnuJ/rhP7J+Fe17aQSA
+         sUutpI9YB69GVJ3mrME8CS0dRBC7zHnxWzED3HKg3QUjcqN/2ZLH8qqm+5msVV9pQTrN
+         njpMV9LJjiXnlU5/S+sMw5LcEd6sS41ro/BNt5ZcZCesxbb9xNfXSdpigWLP4jaQzZRK
+         BrNg==
+X-Gm-Message-State: AJIora9mIcaelGd0bidLK3jJGkeZTeIRRY+H8UqAN6ew2cAQPJxeJuyk
+        4vmbjn5ow1argGruD7UAkFnahfFygt2dMIGx2qt6R7/SY5c=
+X-Google-Smtp-Source: AGRyM1vgd8MLmgwjh0eVb3UoGaA8ir+Jwl+KTuXLEueI/XPJPMkMRqH0sS+mG/efuQTo9iLbH+SUyNc1MNveTozFL4E=
+X-Received: by 2002:a25:b9c7:0:b0:66c:e02d:9749 with SMTP id
+ y7-20020a25b9c7000000b0066ce02d9749mr11007404ybj.494.1656610505815; Thu, 30
+ Jun 2022 10:35:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
 In-Reply-To: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 30 Jun 2022 19:34:54 +0200
+Message-ID: <CAP8UFD1Ar13wqQP0ecb37saShSVj5Gxcjdpz=pckXZ7X9TRfSQ@mail.gmail.com>
+Subject: Re: Non-interactively rewording commit messages
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 30, 2022 at 11:27:57AM -0400, Konstantin Ryabitsev wrote:
-> just need a sane strategy for non-interactively rewriting
+Hi,
+
+On Thu, Jun 30, 2022 at 5:35 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> Hello, all:
+>
+> What's the best approach to non-interactively rewrite specific commit
+> messages? In this particular case, I am trying to automatically retrieve code
+> review trailers sent to the mailing list and put them into corresponding
+> commits.
+>
+> For example, I have a set of commits:
+>
+> abcabc: This commit does foo
+> bcdbcd: This commit does bar
+> cdecde: This commit does baz
+>
+> They were all sent to the mailing list and a maintainer sent a "Reviewed-by"
+> to the second commit. In a usual interactive rebase session this would be:
+>
+> pick abcabc
+> reword bcdbcd
+> pick cdecde
+>
+> When the edit screen comes up for the bcdbcd commit, the author would manually
+> stick the new trailer into the commit message. However, I can automate all
+> that away with b4 -- just need a sane strategy for non-interactively rewriting
 > entire commit messages at arbitrary points in the recent history.
+>
+> Any pointers?
 
-assuming you are still doing it by calling (albeit programmatically):
-
-  rebase --autosquash -i
-
-then you could prepare the new message by also programmatically doing
-a `git commit --fixup reword:<commit>` IMHO
-
-Carlo
+Have you tried `git interpret-trailers`?
