@@ -2,130 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8A18C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2E31C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:09:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236303AbiF3RHP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 13:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36014 "EHLO
+        id S236073AbiF3RJV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 13:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235901AbiF3RHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 13:07:13 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE2FA3BBF9
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:07:12 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id i15so34948243ybp.1
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:07:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iyfKc7aUPttDEu/V/WjkZRdh5hRev1szno0oiizxNQA=;
-        b=BHvEzgYqgktCo4xqPXTeeUxDI3XZjI3A9C9HN0wVxEWX0T48pRnEIGkj0BEvhu91gr
-         GEerf/dvhA1B9EcJz1jXzw98j29j2eD4Z/tgBugCGhd1Wvtd4LLcusgpeXpXYTn2JDBq
-         UoIK7hCmhZsbZddoLxQ1zil9UCpN3Xk17/hjiRanEL7BRCiLMeDvCaGyuvNjPCWHo6nc
-         HfsaiKCHKR2HMR0dKdGi1h/m0rc3Fwmj/fIcvxTX4DId6X31r15vBJZeURZRlVxFqD09
-         P3Z2A3IJJq0QxxM8Zg24ZhR1GfxvjUTs379HeAFbWp7SutWPPL/anYvNIG7tto53qKha
-         boRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iyfKc7aUPttDEu/V/WjkZRdh5hRev1szno0oiizxNQA=;
-        b=lD7nyxSJ15ntfwCSom4OMHi0PfpHMTMeLaB0LknJ50LhjWjr5FPULS4l3uC2RKTmYZ
-         cKEz6ASiXjt5VAsErcmh+MqC4/H3TYB821UmZduqhxG9aL7RmbdQ/S3mJ419ZR2QiVjD
-         /OsnhRiL9Wjx31rpNQIISPCnmklOVMMOlf2sNcdPWmvLe24V6zHU3lGEgOr5J3UZZaBk
-         kapPYNSTxMWecwxNTesg9fJPyhpU4aeBbPeEZq/av7XzhRTrzuybsIyDqTcrictuG0RS
-         4HTVlPZe2vQ5ccv5EYE95So4j6s9FUddNCbY7XTxJwvwkEO7mxKzNLQHA35quDCQ5yYE
-         XVPg==
-X-Gm-Message-State: AJIora9Oz8ctep6YUyuEOgDn3i5K6jWQTWK4zc5WK2o2ooZJmrmk7GAL
-        QczV1svYszIw/geUSneppDTUqLgotaLwRTAKfq0=
-X-Google-Smtp-Source: AGRyM1vj+PpW5Mx7j8WpBkjBo+SBG3z2OFer6URKsI1b+10TKoAK47SNGSADjAJTIKVjER1XdKk+tZTgHr8ZQMCQRCE=
-X-Received: by 2002:a25:9e82:0:b0:669:b38d:e93e with SMTP id
- p2-20020a259e82000000b00669b38de93emr10438637ybq.242.1656608831889; Thu, 30
- Jun 2022 10:07:11 -0700 (PDT)
+        with ESMTP id S229906AbiF3RJT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 13:09:19 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 633781A80C
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:09:15 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 781E41341D8;
+        Thu, 30 Jun 2022 13:09:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fQVROjVdXLmURJM+uEJyZJyczb0BtgAddzGnpm
+        R6YZQ=; b=MQqecWMRgXoIdHUj2uDoceyqkIAxNwQZqgMxrxscvNWLO20i4/xkXh
+        kKQ16TkIdYxxI2yPV/GZYFifLL8V1dWX+seUnejcC1TC/GkWBOhObX2cH8tQMfXR
+        uIItsqAWWchLKTdj16+LO9hq960mPxiYMy2f1+IclhPfVHGiztYvA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E3331341D7;
+        Thu, 30 Jun 2022 13:09:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCE841341D6;
+        Thu, 30 Jun 2022 13:09:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, johannes.schindelin@gmx.de, me@ttaylorr.com,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 7/8] rebase: update refs from 'update-ref' commands
+References: <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
+        <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
+        <72e0481b643e98c5670eee0bf5c199c4fb693b16.1656422759.git.gitgitgadget@gmail.com>
+        <xmqq7d50ij6f.fsf@gitster.g>
+        <f2af844e-fc6c-94fd-7cce-0451f57c6576@github.com>
+Date:   Thu, 30 Jun 2022 10:09:12 -0700
+In-Reply-To: <f2af844e-fc6c-94fd-7cce-0451f57c6576@github.com> (Derrick
+        Stolee's message of "Wed, 29 Jun 2022 09:05:44 -0400")
+Message-ID: <xmqqedz6f58n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220630142444.651948-1-siddharthasthana31@gmail.com>
- <20220630142444.651948-4-siddharthasthana31@gmail.com> <61074b4c-c48f-da89-5d03-b280b9c4fedf@gmail.com>
-In-Reply-To: <61074b4c-c48f-da89-5d03-b280b9c4fedf@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 30 Jun 2022 19:07:00 +0200
-Message-ID: <CAP8UFD2tYzoKSr7HnQ+LbCE+YWoNqo3qPQrbr7ZWAMnDt+ajCg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] cat-file: add mailmap support
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
-        git <git@vger.kernel.org>, John Cai <johncai86@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5DC4D548-F897-11EC-B120-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Derrick Stolee <derrickstolee@github.com> writes:
 
-On Thu, Jun 30, 2022 at 5:50 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> On 30/06/2022 15:24, Siddharth Asthana wrote:
-> > git cat-file is not a plumbing command anymore, especially as it gained
-> > more and more high level features like its `--batch-command` mode.
+> On 6/28/22 5:15 PM, Junio C Hamano wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> ...
+>> It would be nice to also have a test that makes sure that other
+>> people will be prevented from checking out a branch whose tips may
+>> be updated at the end.
 >
-> cat-file is definitely a plumbing command as it is intended to be used
-> by scripts. It has a number of features that are used by porcelain
-> commands but that does not make cat-file itself porcelain.
+> Patch 3 adds the tests that 'git branch -f' cannot update these refs,
 
-Ok, so maybe:
-
-"Even if git cat-file is a plumbing command, it has gained more and
-more high level features like its `--batch-command` mode."
-
-> > So
-> > tools do use it to get commit and tag contents that are then displayed
-> > to users. This content which has author, committer or tagger
-> > information, could benefit from passing through the mailmap mechanism,
-> > before being sent or displayed.
-> >
-> > This patch adds --[no-]use-mailmap command line option to the git
-> > cat-file command. It also adds --[no-]mailmap option as an alias to
-> > --[no-]use-mailmap.
->
-> I don't think we need an alias for this option, it'll just end up
-> confusing people.
-
-I am not sure if people would be more confused by the alias or by the
-fact that the "--[no-]mailmap" alias works for `git log` but not `git
-cat-file`.
-
-> > At this time, this patch only adds a command line
-> > option, but perhaps a `cat-file.mailmap` config option could be added as
-> > well in the same way as for `git log`.
->
-> As cat-file is a plumbing command that is used by scripts we should not
-> add a config option for this as it would potentially break those scripts.
-
-Yeah, we could either remove this small paragraph or add the
-explanation you give.
-
-> I like the idea of adding mailmap support to cat-file and I think this
-> patch is definitely going in the right direction.
-
-Thanks!
-
-> > +test_expect_success '--no-use-mailmap disables mailmap in cat-file' '
-> > +     test_when_finished "rm .mailmap" &&
-> > +     cat >.mailmap <<-EOF &&
-> > +     A U Thor <author@example.com> Orig <orig@example.com>
-> > +     EOF
-> > +     cat >expect <<-EOF &&
-> > +     author Orig <orig@example.com>
-> > +     EOF
-> > +     git cat-file --no-use-mailmap commit HEAD >log &&
-> > +     grep author log >actual &&
-> > +     sed -e "/^author/q" actual >log &&
->
-> This line does not have any effect on the contents of log
->
-> > +     sed -e "s/ [0-9][0-9]* [-+][0-9][0-9][0-9][0-9]$//" log >actual &&
->
-> I think you can simplify this series of commands to do
->         git cat-file ... >log
->         sed -n "/^author /s/\([^>]*>\).*/\1/p" log >actual
-
-Thanks for the suggestion!
+Ah, I didn't notice.  We are covered then.  Thanks.
