@@ -2,129 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BE25C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68F40C43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:17:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237378AbiF3VPJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:15:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36978 "EHLO
+        id S237443AbiF3VRn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:17:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236291AbiF3VPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:15:08 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D96F5326DE
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:15:07 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id l6-20020a170902ec0600b0016a1fd93c28so228762pld.17
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:15:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=cMzLr4021NyFZJzaz328DinnI1ky9rT/jHmGscJGj2A=;
-        b=fWo9XurU8pua+HNtdfxzu8+gnxNIjbonnYqkHPBQXrMnX93Lxbkf3OEMqxfbPma7CU
-         StWV7W/7N6td/NYY6z67nq2hKhFMEJ/wV94+QXIEW68zFFf8b4hmOfXqPE9B+Vmj1JMi
-         CUxh0bxhq2QKjfvZdt1MalMQvhucJT/Fr8H2xj1LsAw5PJXtQ57iw+IuvSXxCR1plGwo
-         0crsEA+KRYVOE2vvrFK/2Vbit5SEv2v/4miWdmLVaMpzWOfmVCWPFpcvbb6pVdpRxHu6
-         p+n37k2quh3gcPJroZAnf8CKIJahUSM25FKIOoC/WnDKU8U1aMFiSDMccd8+B5b7Imz/
-         69xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=cMzLr4021NyFZJzaz328DinnI1ky9rT/jHmGscJGj2A=;
-        b=WG6dAkkoVkAl8jdiSy2QMkSX7ulY80yHg9LecQsAxqUHchWCn+qKEJGBP1kiqGxRqE
-         zGKi2xAsj0Mf6IFlA67aJ/qoUJYcMezWk7gM+HMfTBcBBX9tTBOTJjLS1jMCKoSNeoff
-         2hHq6HL0rRkAo28GkAWfYewXYX4QyE5WUM8vIaKKrzBfTEOEM/pebzQ6/R405LRN5u4K
-         MshAlTnBDFQ7O/qeAhXFE9VFjA/GmahcQkk6sl5jMq3EuWSHd9mm6zecg1aHFlZWKuKj
-         5EfqLfNSde9u8HK6xio/p0SvdLx5r29ugefeQ917PoiLse1owyOnac78moTebMLbTaqK
-         8RGg==
-X-Gm-Message-State: AJIora8Wk8Kn1yIj/9nD83PjyaXVP33VTgjFOgXk++frMfdMv5JyzEjq
-        YNmovCUcCH7ZRoTzPCdFuoDNFHMUM6YxPz2FacuD
-X-Google-Smtp-Source: AGRyM1v9rHAg9P/AEKUPJLTHskRPbfMKg/ZpXt+qmBc72RnmKJ99SzhsU/QQeVUVG11z6m8GdKxijzw2S4muLsrNHa2d
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:7e86:b0:1ec:8606:b3c4 with
- SMTP id j6-20020a17090a7e8600b001ec8606b3c4mr13891557pjl.186.1656623707301;
- Thu, 30 Jun 2022 14:15:07 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 14:15:04 -0700
-In-Reply-To: <Yr0OuwCyDot0wJjs@nand.local>
-Message-Id: <20220630211504.2833463-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
-Subject: Re: [RFC PATCH 0/4] move pruned objects to a separate repository
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        derrickstolee@github.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S236857AbiF3VRl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:17:41 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C825387A7
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:17:40 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A56A55A49B;
+        Thu, 30 Jun 2022 21:17:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1656623859;
+        bh=3Uv3vZiE+OiHnltPs10QAZvEqcoEjdZWQTnVeOSi++0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=sROqzf4G6f4NWTb9zHZ4gMe1HRjQNBRyZcL+HSqySaJPCngyVQBILLoOqqTps6ANY
+         5izrVqC0jof6jBWKIOG5LAa8D6rQlwYyh9UwMenYZ3l0Y4yXqF92cO6HBAmsigUQhi
+         Rr3oPb836Ms6obBrAUjp/qvGC4Lqaz0hs8owuWsmDuEJsT90jBOSnvFxKg5Dteo1af
+         iCRwceZJ+S6SfBeJrNxg9dX7yHK0xa2eBZwXccm9NPdWsy0+d7hdWqwDS2fmk+oukL
+         yfGQHRZPl19s2uFKzc5JBrf8SRqn6PTgZNklOYpm2VTn2pN4hzrTfK3vUgbM2Ja20V
+         wBCMgPFyDGcNDeCVzf67Vf9ksJxnkcNCIkP8KjPPtH50urVcIajuPfr0TzF40dckD2
+         i/aU9WhJ7xadzaVFMHf3ORc7nU50AEGGRF0OSgLb/xx2rfbQECGv7c/GvNWyRs92zf
+         I7IHr82lOFdwHl+MD1XagRpDq1A2Vi7IiXqP6aRpdOAYxUX64Kz
+Date:   Thu, 30 Jun 2022 21:17:38 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Non-interactively rewording commit messages
+Message-ID: <Yr4S8jHKbtuBuT1z@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        git@vger.kernel.org
+References: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="eiBcGKWbIlPSFcUr"
+Content-Disposition: inline
+In-Reply-To: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
+User-Agent: Mutt/2.2.4 (2022-04-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-> We don't usually do pruning GC's except during manual intervention or
-> upon request through a support ticket. But when we do it is often
-> infeasible to lock the entire network's push traffic and reference
-> updates. So it is not an unheard of event to encounter the race that I
-> described above.
-> 
-> The idea is that, at least for non-sensitive pruning, we would move the
-> pruned objects to a separate repository and hold them there until we
-> could run `git fsck` on the repository after pruning and verify that the
-> repository is intact. If it is, then the expired.git repository can be
-> emptied, too, permanently removing the pruned objects. If not, the
-> expired.git repository then becomes a donor for the missing objects,
-> which are used to heal the corrupt main repository. Once *that* is done,
-> and fsck comes back clean, then the expired.git repository can be
-> removed.
 
-Thanks for the information. Presumably, during such pruning GCs (because
-manual intervention was needed or because of a support ticket), you
-would use a cruft expiration of "now", not something like "14 days ago".
-If so, more on this specific case later...
+--eiBcGKWbIlPSFcUr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > I think there is at least one more alternative that should be
-> > considered, though: since the cruft pack is unlikely to have its objects
-> > "resurrected" (since the reason why they're there is because they are
-> > unreachable), it is likely that the objects that are pruned are exactly
-> > the same as those in the craft pack. So it would be more efficient to
-> > just unconditionally rename the cruft pack to the backup destination.
-> 
-> This isn't quite right. The contents that are written into the
-> expired.git repository is everything that *didn't* end up in the cruft
-> pack.
+On 2022-06-30 at 15:27:57, Konstantin Ryabitsev wrote:
+> Hello, all:
+>=20
+> What's the best approach to non-interactively rewrite specific commit
+> messages? In this particular case, I am trying to automatically retrieve =
+code
+> review trailers sent to the mailing list and put them into corresponding
+> commits.
+>=20
+> For example, I have a set of commits:
+>=20
+> abcabc: This commit does foo
+> bcdbcd: This commit does bar
+> cdecde: This commit does baz
+>=20
+> They were all sent to the mailing list and a maintainer sent a "Reviewed-=
+by"
+> to the second commit. In a usual interactive rebase session this would be:
+>=20
+> pick abcabc
+> reword bcdbcd
+> pick cdecde
 
-I reread what I wrote and realized that I didn't give a good description
-of what I was thinking. So hopefully this is a better one: I was
-thinking of the case in which GC is regularly run on a repo, say, every
-14 days with a 14-day expiration time. So on the first run you would
-have:
+You can set GIT_SEQUENCE_EDITOR to a command which does this in-place on
+the file...
 
-  a1.pack      a2.pack (+ .mtime)
-  Reachable    Unreachable (cruft pack)
+> When the edit screen comes up for the bcdbcd commit, the author would man=
+ually
+> stick the new trailer into the commit message. However, I can automate all
+> that away with b4 -- just need a sane strategy for non-interactively rewr=
+iting
+> entire commit messages at arbitrary points in the recent history.
 
-and on the second run, assuming this patch set is in effect:
+=2E..and you can set GIT_EDITOR to modify the commit message in-place in
+whatever way you want, and then use git rebase -i to rebase.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-  b1.pack      b2.pack (+ .mtime)          expired.git/b3.pack
-  Reachable    Unreachable (cruft pack)    In expired.git
+--eiBcGKWbIlPSFcUr
+Content-Type: application/pgp-signature; name="signature.asc"
 
-and my idea was that it is very likely that a2.pack and
-expired.git/b3.pack are the same, so I thought that a feature in which
-cruft packs could be moved instead of deleted would be more efficient.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.35 (GNU/Linux)
 
-Going back to the specific case at the start of this email. I now see
-that my idea wouldn't work in that specific case, because you would want
-to generate expired.git packs from a repository that is unlikely to have
-cruft packs (or, at least, it is unlikely that the existing cruft packs
-match exactly what you would write in expired.git).
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYr4S8gAKCRB8DEliiIei
+gSFRAP9WOZnKnZl0vIgfJ+04k9Q2dITLfH7ps4jnm+eP+NntZgEA45NAKUVJqMWO
+zIjJQVdt2x1twawbf3kZyYsEXaafjwI=
+=lXN0
+-----END PGP SIGNATURE-----
 
-If it is likely that cruft pack(s) would only be written in one place
-(whether in the same repository or in expired.git, but not both),
-another design option would be to be able to tell Git where to write
-cruft packs, but not give Git the ability to write cruft packs both to
-the same repository and expired.git. (Unless in your use case, Taylor,
-you envision that you would occasionally need to write cruft packs in
-both places.) That would simplify the UI and the code a bit, but not by
-much (this patch set, as written, is already elegantly written), so I
-don't feel too strongly about it and I would be happy with the current
-pattern.
-
-
+--eiBcGKWbIlPSFcUr--
