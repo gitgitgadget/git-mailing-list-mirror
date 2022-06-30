@@ -2,118 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B427C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 10:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CCC3CCA47E
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 10:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233250AbiF3KTH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 06:19:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57612 "EHLO
+        id S234639AbiF3K1J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 06:27:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbiF3KS6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 06:18:58 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACA9544A3F
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:18:57 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id e28so21399804wra.0
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:18:57 -0700 (PDT)
+        with ESMTP id S234133AbiF3K0x (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 06:26:53 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D4D4F1A1
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:26:39 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id fd6so25893169edb.5
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1jijudV3EPmTrM0hNX0/0aAAkSegXMslW5NECjX1PsQ=;
-        b=PUWZghWWJjO/H1vNEv6/jp8QQnZOp8J5Jyk0YG+P21JGjPbehTpkc05vqpAWN9k1iE
-         kkd2kPDe2++kicevo6xxpYnOAB+552WpbHb7ZtogRiNvW4uxGR7L3cKVcgsYyk1VOXfc
-         bCwBHhGolQcGPoMWsHNxcXQouYRgi4D7JypxdghWJNggL50A74Yn3eg/RFFfTogmNyDd
-         OIwHNrTWdGminbNEfMc+iBPNAw3FE548i9TmXwd5fwzDQxpIfk0g3NyFA/0N9ztOUT5W
-         M2QNQjH27Jrggsqq5otXAEwO0GrhkVYMtUm9gl14lGKmY59+5I/acFqWpEIzJD0kfBB1
-         JLhg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=fcRAX5/QTk+cTepjTu+RsgNRwkSrJQC61kHNPimIgUY=;
+        b=lHzDfiZNmtOc5POcZXDoRgNLOm2IPqIcGSKOZ9aVmDW6GYIJq6EYdR6Dm+S365RvWN
+         IzMcpmvlEUfVLgvYWHTegrIZQZmq3AhdZAylCHn00sf/IHjpXQ6vLUU41iVEAnlriuCv
+         ESZN02GRC87ZItwXOKGDBbd7tYF/a5Poo3+1bBJGDHNIRmHjPRWanqua6BTr/pkMI+gC
+         V9yAGWzY0W7vNW0/+0OZUfd3D2gZQLDLb5JMYz3A5Ow7YZighW+9knnQqENt7RIWBZVX
+         sYBWTdiYQME278bW7ztR2/ETRqqkN927khdZOFeCIHfQM0By1Dtop+mpAvJlFDhEGWOX
+         FgKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1jijudV3EPmTrM0hNX0/0aAAkSegXMslW5NECjX1PsQ=;
-        b=GMup6OyD97SE6V7op0o0QnB4S7i4pKvzJjz3wxRN6XzlqdCnm3ZQBThuxKjhi3Fhhn
-         ps90WK6+kGjUqsads4+nz9XS9nW4OgCoNBS6E7zru+KDk1jzniWmRoXxIzFJ9MvwyLN6
-         VehM7ARxVzfsTzlLMbOG62GU9vRaoBCoq5kAyl5XFOIg9gtyDjVzCqTp5ahYNbWBgtFR
-         pBnEdfwUhDhqzVLOGc1dcEtXz110V6faKIQfIisaFJL/tUrmfQgu+2MIxc/lehfLS1+s
-         Ubv65/lYfHi3fqqVtrF21vYb2fHhajU3qNJPl2K7SeZv0JACm80iH0afij5JXliGLMvn
-         4Hgg==
-X-Gm-Message-State: AJIora9FHkssKoLuEO3jBO3EporV/oIC/RJHQ+Sn79QR7cEH/jISGeU0
-        uRgRt53dwtnCNAR8lEsWaAnz5Hvq1M5PwQ==
-X-Google-Smtp-Source: AGRyM1sStTVtZqC23ENOjlOA2XxSNhoSodMlj7eqdb+XWq5G37ZCxM4ATF/i3RFnPKva5GgO7VO91g==
-X-Received: by 2002:a5d:5885:0:b0:21b:c665:13f7 with SMTP id n5-20020a5d5885000000b0021bc66513f7mr7768137wrf.427.1656584336010;
-        Thu, 30 Jun 2022 03:18:56 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m1-20020a7bcb81000000b003a05621dc53sm5978427wmi.29.2022.06.30.03.18.55
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=fcRAX5/QTk+cTepjTu+RsgNRwkSrJQC61kHNPimIgUY=;
+        b=ReGazuI97kvGCWI8KUIM84zDezbia/9QqjKtp5FQszeqyVFWQHD6mU8Aqvt37asTbb
+         zHl+2CsdV9Pq0qiJYMLhthan5YsZuhfIQ4ImNvZVUbGL371eQMtVaqd5xOc6Eob92e3g
+         cTX2ujLqE6vsyQE0MGp9su2tbfvkCNiNwxkQesoAee9VqBcPpT3W4XZH18nZR3NJ0Z9K
+         eW1jlsyVUTg4foM8OW9c7Tqgin85r0e291/BLV/u/uR+nBxc1tWjYoZdij+8lacri/mf
+         Wb/ZZ63SKu5evLuCUmrI2aYf6Yk6Ys/2W/JxGoZKmuNxHhnCOKv/s31gL/KPPhc2VEMj
+         4yeQ==
+X-Gm-Message-State: AJIora8TR1SP8tiLL6/qj8NoL0UJpUnQ3uQSr7BmEQJFZIdrk5n41BPE
+        i3DnYLgdAJW4522LD6B77M4epcKoArUzfg==
+X-Google-Smtp-Source: AGRyM1u5pfpN8V/o97ZmK6O4XNrOoqB7Uw0H1st/TvYJSJE3LlpKkQQVhtYKng2Ahq2Yc6mXsABc6Q==
+X-Received: by 2002:a05:6402:26d5:b0:435:aba2:9495 with SMTP id x21-20020a05640226d500b00435aba29495mr10613423edd.133.1656584797487;
+        Thu, 30 Jun 2022 03:26:37 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id c11-20020aa7c98b000000b00435a912358dsm12902511edt.30.2022.06.30.03.26.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 03:18:55 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        rsbecker@nexbridge.com,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 3/3] config tests: fix harmless but broken "rm -r" cleanup
-Date:   Thu, 30 Jun 2022 12:18:36 +0200
-Message-Id: <patch-v2-3.3-d3f65326701-20220630T101646Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.37.0.880.gf07d56b18ba
-In-Reply-To: <cover-v2-0.3-00000000000-20220630T101646Z-avarab@gmail.com>
-References: <cover-0.3-00000000000-20220621T221928Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20220630T101646Z-avarab@gmail.com>
+        Thu, 30 Jun 2022 03:26:36 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o6rNb-002EvA-NV;
+        Thu, 30 Jun 2022 12:26:35 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/3] t6423: add tests of dual directory rename plus
+ add/add conflict
+Date:   Thu, 30 Jun 2022 12:21:29 +0200
+References: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
+ <pull.1268.v2.git.1656572225.gitgitgadget@gmail.com>
+ <bf4c03d01d5730503eb710e92a80136d5caa981a.1656572225.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <bf4c03d01d5730503eb710e92a80136d5caa981a.1656572225.git.gitgitgadget@gmail.com>
+Message-ID: <220630.86tu82e9b8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "test_when_finished" cleanup phase added in 4179b4897f2 (config:
-allow overriding of global and system configuration, 2021-04-19) has
-never worked as intended, firstly the ".config/git" is a directory, so
-we'd need the "-r" flag, but more importantly the $HOME variable
-wasn't properly quoted.
 
-We'd thus end up trying to remove the "trash" part of "trash
-directory", which wouldn't fail with "-f", since "rm -f" won't fail on
-non-existing files.
+On Thu, Jun 30 2022, Elijah Newren via GitGitGadget wrote:
 
-It's possible that this would have caused an actual failure if someone
-had a $HOME with a space character in it, such that our "rm -f" would
-fail to remove an existing directory, but in practice that probably
-never happened.
+> From: Elijah Newren <newren@gmail.com>
 
-Let's fix both the quoting issue, and the other issue cleanup issue in
-4179b4897f2, which is that we were attempting to clean up
-~/.config/git, but weren't cleaing up ~/.gitconfig.
+> +test_setup_12l () {
+> +	test_create_repo 12l_$1 &&
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t1300-config.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Can & should just be "git init", see f0d4d398e28 (test-lib: split up and
+deprecate test_create_repo(), 2021-05-10).
 
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index d3d9adbb3db..c6661e61af5 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2083,12 +2083,13 @@ test_expect_success '--show-scope with --show-origin' '
- '
- 
- test_expect_success 'override global and system config' '
--	test_when_finished rm -f "$HOME"/.config/git &&
--
-+	test_when_finished rm -f \"\$HOME\"/.gitconfig &&
- 	cat >"$HOME"/.gitconfig <<-EOF &&
- 	[home]
- 		config = true
- 	EOF
-+
-+	test_when_finished rm -rf \"\$HOME\"/.config/git &&
- 	mkdir -p "$HOME"/.config/git &&
- 	cat >"$HOME"/.config/git/config <<-EOF &&
- 	[xdg]
--- 
-2.37.0.880.gf07d56b18ba
 
+> +	(
+> +		cd 12l_$1 &&
+> +
+> +		mkdir -p sub1 sub2
+
+The "-p" here isn't needed, you're not creating recursive directories. 
+
+> +		git ls-files -s >out &&
+> +		test_line_count = 5 out &&
+
+Can't this just use test_stdout_line_count? Except...
+
+> +
+> +		git rev-parse >actual \
+> +			:0:sub3/file :0:sub3/newfile :0:sub3/sub2/other \
+> +			:2:sub1/sub2/new_add_add_file \
+> +			:3:sub1/sub2/new_add_add_file &&
+> +		git rev-parse >expect \
+> +			O:sub1/file  B:sub1/newfile O:sub2/other \
+> +			A:sub2/new_add_add_file \
+> +			B:sub1/sub2/new_add_add_file &&
+> +		test_cmp expect actual &&
+> +
+> +		git ls-files -o >actual &&
+> +		test_write_lines actual expect out >expect &&
+> +		test_cmp expect actual
+
+This test seems a bit odd, here we're just checking that we've created
+scratch files for the internal use of our test, why is it important that
+we have an "out" file, when the only reason we have it is because we
+needed it for checking the "ls-files" line count above?
+
+> +	)
+> +'
+> +
+> +test_expect_merge_algorithm failure failure '12l (A into B): Rename into each other + add/add conflict' '
+> +	test_setup_12l AintoB &&
+> +	(
+> +		cd 12l_AintoB &&
+> +
+> +		git checkout -q B^0 &&
+> +
+> +		test_must_fail git -c merge.directoryRenames=true merge -s recursive A^0 &&
+> +
+> +		git ls-files -s >out &&
+> +		test_line_count = 5 out &&
+
+ditto.
+
+> +		git rev-parse >actual \
+> +			:0:sub3/file :0:sub3/newfile :0:sub3/sub2/other \
+> +			:2:sub1/sub2/new_add_add_file \
+> +			:3:sub1/sub2/new_add_add_file &&
+> +		git rev-parse >expect \
+> +			O:sub1/file  B:sub1/newfile O:sub2/other \
+> +			B:sub1/sub2/new_add_add_file \
+> +			A:sub2/new_add_add_file &&
+> +		test_cmp expect actual &&
+> +
+> +		git ls-files -o >actual &&
+> +		test_write_lines actual expect out >expect &&
+
+ditto
