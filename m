@@ -2,114 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D209C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 13:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70865C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 14:35:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235079AbiF3NrJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 09:47:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47424 "EHLO
+        id S237114AbiF3Of6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 10:35:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234310AbiF3Nqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 09:46:53 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 697C721274
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 06:46:50 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id d2so27388913ejy.1
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 06:46:50 -0700 (PDT)
+        with ESMTP id S236067AbiF3Ofn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 10:35:43 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 078224D17D
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 07:24:56 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id g4so11734058pgc.1
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 07:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=qJ3RGGASZhurGum1NJ2sambtVw3v6GH2tymrjSp5uww=;
-        b=S/FTAcPTAN0YKVGRuPtJWDs0iiZv8SDnANL/LU439xPtp9nf0Tq6UneZbDeUGovuxf
-         5qITucXqTik/L/E/TDDcUk9tWLEPW3AdHXAEbuOlxu9fAxDrlxRXVP5qctHkOy7g6/hu
-         ZPXIr8VFh25gPZed9269VH5BcF9J0G1smIyxfA5eWPdzM5anlRUy6fbjk7tM64/vcNR0
-         Pp38UNCnoXRCRhUzkjz3r7du3AKfJS4bN/iXTYqvRjfuAmbeZGvKwHm5CSAlsD9gpFm0
-         dy1b1ZUE1O0Wc59tJ7MI4+ElmNMbIw0tyTyFwXN0aT/awkTadzuhn4q1UUhULq4MOC0l
-         RJCQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pFixnbNtSDyZVnQkArejGYyoVvy/v/rAqdLmvOS/dzc=;
+        b=ot0yNRZP7R6ojT7YRJ3cG8tMJaHwkvWVXDljRl+rfZnaqlU1m0vC3koxO5Mb2dvITC
+         p9AM9pLmRIwIEzkhW441xd3kXGdvj7WmEMbLmqdHAKX+MRyLVAHcXfDGmLm5Op5B+24o
+         k+zqjII1gfApOHcSvgrjrR8ICvBPbk6zaXXGnP4rOmnnBpjg4YqablwDq76SwrIhWFo4
+         OxbIXLWeTQDRLnpUtifsZ+jvuJIRniNk0oDMEUjp2ZvcDH0LEO9Wu/GhaLFoy1BFXN/u
+         xN9k/xPCUD5EDNVNocfo2glqPaG/9ANOUtdCu2I7uTikOhduzGmFdtHPvtZe1FmsnSwq
+         bHzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=qJ3RGGASZhurGum1NJ2sambtVw3v6GH2tymrjSp5uww=;
-        b=CzLVwp92ENnmWVK5tJhxK7cQQ9/+gAiba6c6+CNSzpwaMRBy8wNduqx2lrws59ipz3
-         qD4pmD9ZmeqWgkkKxIz0fpKzewq6yJS2oHh/RTGCreJPNgLKEJOSywaqWubFT94u04HI
-         o5uYv1GlWE/n5bSgx9S+B2VU77TFOrdEg8mNCDmcciBvQNozdboOGExKULatWeKy4+dS
-         qJzT6F2akK+fQLwIGQgAE6Q1rjKL+IQmd5OBdm+NOdi4YL9qm5OmO7muF61yUp8Ud4p4
-         5tc215fjPZCjqUTQRx+7B8PCvJ5/UQJY0gs3QQWhA6n/DmwadZlVZE505YSWGTWI88LD
-         SH9A==
-X-Gm-Message-State: AJIora9O9Zo1O6Lh6eex/Z9ia+BXZd88/zje6Li7j2R6211RXExNANBz
-        iBq28N2k/LxV5RbdPkxXGJw=
-X-Google-Smtp-Source: AGRyM1tA9kLBEhU5oomaa/f/8hc6vs2p6zhUqfxKshwDeBiky1jZKj41VoFhmwPo9Z08ISYwN/vd2Q==
-X-Received: by 2002:a17:907:8a25:b0:726:c9f2:2f5e with SMTP id sc37-20020a1709078a2500b00726c9f22f5emr8868099ejc.286.1656596808993;
-        Thu, 30 Jun 2022 06:46:48 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id r12-20020a170906c28c00b006ff52dfccf3sm9131179ejz.211.2022.06.30.06.46.47
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pFixnbNtSDyZVnQkArejGYyoVvy/v/rAqdLmvOS/dzc=;
+        b=P8iIFBZDD54OBCzCoL46tl9CqBTpChp69Z3z33itcXgNFVu3AQHgkXxPRCUXz2Unct
+         AWtt3YCTYhMOlJMu1WV8DTUmNsUKy5U/41W3CKQt4+o5O9kxtPFYycb24L+q6ZQmF5Sw
+         fMHv/KwxBPBohQseLuHylmxLIV+XmeIeEzZ6bxH5Rr5SZy+tQNNOLLbQw3jqbh/HtB25
+         uQe89jojTA4hFkj7r+pJkqD5LQeG5uRdTudk1JFzTlJTlPYY0REGuiD0t5pNzq6Ly9Sw
+         bFzNxVzcLshX0xC9sIasc5w1bMB/j2y2+zI33S+XSZ1XAdi0XOGoGmMLo9DKZGzlbBMD
+         u3Ew==
+X-Gm-Message-State: AJIora+sHqClwTsc843n2h3Gn7PeKlPhu20lInLbyGLu5e8aCO1FCr+i
+        W8FNitjs/C3KR1D6tDYNk1lQRjx1wllIYw==
+X-Google-Smtp-Source: AGRyM1tFO+BBVmU1syxSwOh1yAO3mL9HKcV3kC2AlbiI0s+QvSftKLpbtwizsLA7Vh9dp5IVEaaMMg==
+X-Received: by 2002:a05:6a00:1394:b0:525:2dc4:cff2 with SMTP id t20-20020a056a00139400b005252dc4cff2mr16321130pfg.5.1656599094933;
+        Thu, 30 Jun 2022 07:24:54 -0700 (PDT)
+Received: from HB2.. ([106.212.243.72])
+        by smtp.gmail.com with ESMTPSA id u17-20020a17090341d100b0016909678e2csm13647377ple.292.2022.06.30.07.24.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 06:46:47 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o6uVK-002LWh-Hz;
-        Thu, 30 Jun 2022 15:46:46 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han Xin <hanxin.hx@bytedance.com>, chiyutianyi@gmail.com,
-        derrickstolee@github.com, git@vger.kernel.org,
-        haiyangtand@gmail.com, jonathantanmy@google.com, me@ttaylorr.com,
-        ps@pks.im
-Subject: Re: [PATCH v3 2/2] commit-graph.c: no lazy fetch in
- lookup_commit_in_graph()
-Date:   Thu, 30 Jun 2022 15:43:48 +0200
-References: <cover.1656044659.git.hanxin.hx@bytedance.com>
- <cover.1656381667.git.hanxin.hx@bytedance.com>
- <3cdb1abd43779844b8e8dc094e2fd2da1adc461a.1656381667.git.hanxin.hx@bytedance.com>
- <220628.865yklgr6g.gmgdl@evledraar.gmail.com> <xmqq35folmgf.fsf@gitster.g>
- <5n35o008-pso2-6440-424p-q387q9n4so41@tzk.qr>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <5n35o008-pso2-6440-424p-q387q9n4so41@tzk.qr>
-Message-ID: <220630.86v8siclh5.gmgdl@evledraar.gmail.com>
+        Thu, 30 Jun 2022 07:24:54 -0700 (PDT)
+From:   Siddharth Asthana <siddharthasthana31@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH 0/3] Add support for mailmap in cat-file
+Date:   Thu, 30 Jun 2022 19:54:41 +0530
+Message-Id: <20220630142444.651948-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.37.0.3.gdab82d6f0b
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Everyone!
 
-On Thu, Jun 30 2022, Johannes Schindelin wrote:
+I am working as a GSoC mentee with GitLab organization. My project is
+to add mailmap support in GitLab. GitLab uses git cat-file to get
+commit and tag contents that are then displayed to the users. This
+content which has author, committer or tagger information, could benefit
+from passing through the mailmap mechanism, before being sent or
+displayed.
 
-> Hi Junio,
->
-> On Tue, 28 Jun 2022, Junio C Hamano wrote:
->
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->> >> +test_expect_success 'setup: prepare a repository with commit-graph c=
-ontains the commit' '
->> >> +	git init with-commit-graph &&
->> >> +	echo "$(pwd)/with-commit/.git/objects" \
->> >> +		>with-commit-graph/.git/objects/info/alternates &&
->> >
->> > nit: you can use $PWD instead of $(pwd).
->>
->> We can, and it would not make any difference on non-Windows.
->>
->> But which one should we use to cater to Windows?  $(pwd) is a full
->> path in Windows notation "C:\Program Files\Git\..." while $PWD is
->> MSYS style "/C/Program Files/Git/..." or something like that, IIRC?
->
-> Indeed, and since the `alternates` file is supposed to be read by
-> `git.exe`, a non-MSYS program, the original was good, and the nit
-> suggested the incorrect form.
+So, this patch series adds mailmap support to the git cat-file command.
+It does that by adding --[no-]use-mailmap command line option to the
+git cat-file command. It also adds --[no-]mailmap option as an alias to
+--[no-]use-mailmap.
 
-I looked at t5615-alternate-env.sh which does the equivalent of:
+I would like to thank my mentors, Christian Couder and John Cai, for all
+of their help!
+Looking forward to the reviews!
 
-	GIT_ALTERNATE_OBJECT_DIRECTORIES=3D"$PWD/one.git/objects:$PWD/two.git/obje=
-cts" \
-        	git cat-file [...]
+Siddharth Asthana (3):
+  ident: move commit_rewrite_person() to ident.c
+  ident: rename commit_rewrite_person() to rewrite_ident_line()
+  cat-file: add mailmap support
 
-We run that test on all our platforms, does the $PWD form work in the
-environment variable, but not when we write it to the "alternates" file?
-Or is there some other subtlety there that I'm missing?
+ Documentation/git-cat-file.txt |  6 +++++
+ builtin/cat-file.c             | 32 +++++++++++++++++++++-
+ cache.h                        |  8 ++++++
+ ident.c                        | 45 +++++++++++++++++++++++++++++++
+ revision.c                     | 49 ++--------------------------------
+ t/t4203-mailmap.sh             | 30 +++++++++++++++++++++
+ 6 files changed, 122 insertions(+), 48 deletions(-)
+
+
+base-commit: e4a4b31577c7419497ac30cebe30d755b97752c5
+-- 
+2.37.0.3.g2093cce7fe.dirty
 
