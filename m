@@ -2,64 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB66BC433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30310C43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235512AbiF3RZj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 13:25:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
+        id S235707AbiF3R2Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 13:28:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233282AbiF3RZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 13:25:38 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 095963969B
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:25:38 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 862361A72C7;
-        Thu, 30 Jun 2022 13:25:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=31aQ33gQN+mQxHOK5JLI1RCqUA/G5xlMGgqMbA
-        NJOLA=; b=Fn1BtdZBsWepALGvUe2ez4sMcNHVarSgtlspmJ5mkQsErxmhaCB9/u
-        vInGFGzKNeEAL5CdVKYr6xWXYykcnpX8JwudFWE7G95kDdmcLp86ba4wjZUyXImu
-        82W7ZwnR5GPyYmIdEcFLEhx9tM+SeeFEvRJluyVYp+/KjrGi9cZyM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7DED01A72C6;
-        Thu, 30 Jun 2022 13:25:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1AD271A72C5;
-        Thu, 30 Jun 2022 13:25:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, Johannes.Schindelin@gmx.de,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v3] git-rebase.txt: use back-ticks consistently
-References: <pull.1270.v2.git.1656446577611.gitgitgadget@gmail.com>
-        <pull.1270.v3.git.1656508868146.gitgitgadget@gmail.com>
-        <050620c5-6096-5abf-1723-1367f05b7d35@gmail.com>
-Date:   Thu, 30 Jun 2022 10:25:32 -0700
-In-Reply-To: <050620c5-6096-5abf-1723-1367f05b7d35@gmail.com> (Phillip Wood's
-        message of "Wed, 29 Jun 2022 16:21:35 +0100")
-Message-ID: <xmqq5ykif4hf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A60E611E-F899-11EC-9B45-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+        with ESMTP id S234201AbiF3R2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 13:28:15 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD75CE0F
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:28:13 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id u13-20020a17090a4bcd00b001eefd8fa171so54485pjl.2
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:28:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=1jM4d2HwRaD/+r6BOHkD/EAsFXrQWB9zHao/v5IweiA=;
+        b=qB0jc2LDPubC4wK9MzMi9RQ91b9Lk90HVJmjUqIfJeqaRltXDgrJ3xQJIuENPiLOAd
+         jkOiKCgAdxE8g3xNg9UQmpgQj/Jm5UjJL4b/2AIuwcuSTzadvj5OEmKJRMuqI62VCxR3
+         J/bpT/HgAXU6L/mjRNyDosHy9R/TOJ1fUhVtieXyJbttY7h9X7+v5S0gIJzG/tNcO/wD
+         obezjEHLQaX1r19Mi6tPUrcOAUNnzU6PZlsLbeF6QSQ4xrayaBv0aiJED1RRo2j9PIit
+         +UIkBG9t0KPUVSeaw40vlzBrli/NfaAW9PTuL/ZWMGuEQY50MCfXrtL8Pg3ufgIs73qd
+         Jdig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=1jM4d2HwRaD/+r6BOHkD/EAsFXrQWB9zHao/v5IweiA=;
+        b=2OLL7r3xeLWeJetAUtigtSFzxcY57zbx3DF/fADwFZXycBfuhU8scXZq1D+5HWPEfR
+         ir8bOR+QU4JO/Ab0whCDzg7jRrdxizcjMJQ2eugVuBXdpAbQ/Ki6JuoW1ZKkPrLPVcWf
+         UszplQlb9PCkRRmNcxs7PSfss3RwkTFRh8OqsYfDBSep+youK9LYtCRuc5bQwROMdWpT
+         xYMuxM+vxJmDpR+U9Y3RtP0D1xw0H2+cM0aEx08623B99SD1v5hNvXFMwuk/RTAyvzqw
+         4lm/IqCrdGV11CBQWFtOxGhxse7Vok9I08rmi9TUAlqsfZRNMV2XcMd4BFEn4YgTzj5x
+         AY/g==
+X-Gm-Message-State: AJIora+xkV5Crw5cT137ncQlMVCoFYtrpFIXC0oK7CpJAaH9eMORZdpn
+        oSnHbrTkvHhIPVSB9Ri/CZWKtua1vY3FBA==
+X-Google-Smtp-Source: AGRyM1uzjn3P/SK0WULTAqtDQBHVR5e7hj25CZkklTv8X+9Noc85RxL/VXt1Csxvd6J/1QRilhM1QgiwKWcrWg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:3307:b0:527:cbdc:d7dc with SMTP
+ id cq7-20020a056a00330700b00527cbdcd7dcmr14501342pfb.85.1656610092698; Thu,
+ 30 Jun 2022 10:28:12 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 10:28:11 -0700
+In-Reply-To: <220630.864k02e14e.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6l5ykit61g.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1261.v4.git.git.1654635432.gitgitgadget@gmail.com>
+ <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com> <14411512783fd4e2cdcc8513690377b29262f6b8.1656354994.git.gitgitgadget@gmail.com>
+ <220630.864k02e14e.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH v5 5/5] setup.c: create `discovery.bare`
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Hi Stolee
+> On Mon, Jun 27 2022, Glen Choo via GitGitGadget wrote:
 >
-> The range-diff looks fine to me
+>> From: Glen Choo <chooglen@google.com>
+>
+>> diff --git a/t/t0035-discovery-bare.sh b/t/t0035-discovery-bare.sh
+>> new file mode 100755
+>> index 00000000000..0b345d361e6
+>> --- /dev/null
+>> +++ b/t/t0035-discovery-bare.sh
+>> @@ -0,0 +1,68 @@
+>> +#!/bin/sh
+>> +
+>> +test_description=3D'verify discovery.bare checks'
+>> +
+>
+> You're missing a:
+>
+> 	TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>
+> Above this line:
+>
+>> +. ./test-lib.sh
+>
+> Which tells us that this new test doesn't leak (yay!)
 
-Will queue.  Thanks, both.
+Ah, thanks! Hooray.
+
+>> +expect_accepted () {
+>> +	git "$@" rev-parse --git-dir
+>> +}
+>
+> I think we can do away with this helper, we use the argument support
+> once, and for the rest we can inline the trivial command...
+
+That is true, having fewer test helpers can be a good idea. Though in
+this case, the helper wins out slightly (IMO at least) because of the=20
+readability/refactoring benefit.
+
+>> +
+>> +expect_rejected () {
+>> +	test_must_fail git "$@" rev-parse --git-dir 2>err &&
+>> +	grep "discovery.bare" err
+>
+> grep -F ?
+>
+> This helper is less trivial, but more obvious would be a "run command
+> and assirt xyz about the output" helper, see
+> e.g. test_stdout_line_count.
+
+This takes precedent from t0033, which does the same "run command and
+grep the result". And just as I typed this out, I remembered that
+t0033's corresponding test helper was made more specific in f62563988f
+(t0033-safe-directory: check the error message without matching the
+trash dir, 2022-04-27), because just grep-ing for the config variable
+masked some errors.
+
+It turns out the same thing is happening in the last test - I forgot
+that "-c" doesn't unset the variable (it sets the value to ''), and the
+test_must_fail passes because we fail to parse "discovery.bare", _not_
+because we forbade the repo.
+
+So besides -F, I think the only change here would be to grep on the
+specific "cannot use bare repository" message (instead of grepping for
+"discovery.bare").
+
+>> +test_expect_success 'discovery.bare unset' '
+>> +	(
+>> +		cd outer-repo/bare-repo &&
+>> +		expect_accepted
+>> +	)
+>
+> Also: Odd to use a sub-shell when the helper takes -C...
+>
+>> +'
+>> +
+>> +test_expect_success 'discovery.bare=3Dalways' '
+>> +	git config --global discovery.bare always &&
+>> +	(
+>> +		cd outer-repo/bare-repo &&
+>> +		expect_accepted
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'discovery.bare=3Dnever' '
+>> +	git config --global discovery.bare never &&
+>> +	(
+>> +		cd outer-repo/bare-repo &&
+>> +		expect_rejected
+>> +	)
+>
+> ...ditto...
+
+Ok, I'll drop the sub-shell.
+
+>
+>> +'
+>> +
+>> +test_expect_success 'discovery.bare in the repository' '
+>> +	(
+>> +		cd outer-repo/bare-repo &&
+>> +		# Temporarily set discovery.bare=3Dalways, otherwise git
+>> +		# config fails with "fatal: not in a git directory"
+>> +		# (like safe.directory)
+>> +		git config --global discovery.bare always &&
+>> +		git config discovery.bare always &&
+>> +		git config --global discovery.bare never &&
+>> +		expect_rejected
+>> +	)
+>
+> Drop the sub-shell and use test_config?
+
+Oh, I was so focused on t0033 that I hadn't realized that we had
+test_config_global. Thanks :)
+
+>> +'
+>> +
+>> +test_expect_success 'discovery.bare on the command line' '
+>> +	git config --global discovery.bare never &&
+>> +	(
+>> +		cd outer-repo/bare-repo &&
+>> +		expect_accepted -c discovery.bare=3Dalways &&
+>> +		expect_rejected -c discovery.bare=3D
+>> +	)
+>> +'
+>> +
+>> +test_done
