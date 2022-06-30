@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D453C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2AE7C43334
 	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:00:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235682AbiF3SAa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 14:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48976 "EHLO
+        id S235850AbiF3SAb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 14:00:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230363AbiF3SA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234038AbiF3SA2 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 30 Jun 2022 14:00:28 -0400
 Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D5872A245
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:00:27 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id r20so28439960wra.1
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:00:27 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A13F529813
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:00:26 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id s1so28428523wra.9
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:00:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wpZt1MiGqApQZlUCB9tKc4a9Gu1UEEmFOp4kGkjAkik=;
-        b=fpxbLUM5O1rYVf8aEC5j/HLYPr3dnXeohe0npkp/gPP4AgDXIEQffzhIcytCSw1DFJ
-         IwewSgLarxYhrtXyQEucVNkEzAPCJ0TN3U9k7SnK2TGF3XzO0S9Pd3O4FWceQ1bviXKa
-         3x/+rZ7FW3w9YjhZ0Ab9VXfFK6ifXCiAhe3oD0x0wqfdNGWWcI687b5bYuFYXVNLN9+o
-         Bdy8npvbL+DzvGhNv9z0xR7POwKBo9LxE0H2XKxR9H0mG14s2q0RsSIyNX+qjmBf7syQ
-         rxblRvaWmQookGF4ZzXuGxiISa/VDVUtbJ5bZZGiYdg1PU7nPIl5gBVWsXvyi6u3xVOV
-         d/kA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M/nK1LftP3Hz3QLm6IbWbEgWJPBrdRMDVaaiM0ohZNU=;
+        b=jktpSm8DiBZKEa7wkePyDWkk40QtUF3Ej6FnMu5evyaVYVqVE8DOmmCBN12nurjaph
+         EzTxV0UfBsMfWTHFr+J7sCdt0mV4KLde75znbi1QFC1RKSl6+BRxwWAl3Pdh8xGH0acH
+         ZBHZ3EysVjAM0drcqqA60dmhqgrO4/CuHomkpXVahh3PUwr6m996UH+SucIhAKRYTLTf
+         hjzSa6SMrpPw5XJYhMob2xXQhk+49QxENIjOp1o+KaWt36GOMTZP5Iz5Y8Kds/6J9fbd
+         8zjsGRsQup1eVRRVfmHb0ZLQSRx9YDIyJ5xsDVJvOHI4ErTExz+6oXLUTxOc+hf6a3lm
+         KeZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wpZt1MiGqApQZlUCB9tKc4a9Gu1UEEmFOp4kGkjAkik=;
-        b=hRp+7fLJBPWMubUnRAZYgiEGz/pSz+u5bpRMI6ZL7SgjtnxkNt2JK7WBvxS351q29I
-         X46IAgC92kK77jSnMDtfA+YLCdDh8riEupHU2br6ky2qxusprbr5MjgCGDTi7ijhG3rv
-         idxnND/8Uan7z5gGip2MNQ5K4ZAj3R/dejofnNFGmc7w3LDqJ1/b/gGVt1xnF5+M1vlc
-         CXc0nzO5Z6C2R+UzsBD5p9By53plXE5k7W3JsBrqkP2tclGP8jxqUDv5t7ZDD0YAOKG0
-         fiHltPnY4FWseXOut5NGGmkbtPobqWLnBs/zn4RhGzbNz6OKHnHpMG77JygBBODTOiAF
-         vA+A==
-X-Gm-Message-State: AJIora9qxwivb2VmAVwUFG0exzanBFHl/qvxk3hXSiTmpioo4iCaarz6
-        wTrqNOktY2eIJ1laLcfzjuRDnv+/ouywXQ==
-X-Google-Smtp-Source: AGRyM1tlZuPMLTsojvbrQUJBvFk/9DiBD6LhgD/L5rGamrmeMSaSQSCwgzhHlxnH+NiHIHr6B5g7qg==
-X-Received: by 2002:a05:6000:696:b0:21b:9219:b26e with SMTP id bo22-20020a056000069600b0021b9219b26emr9793674wrb.272.1656612025332;
-        Thu, 30 Jun 2022 11:00:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M/nK1LftP3Hz3QLm6IbWbEgWJPBrdRMDVaaiM0ohZNU=;
+        b=MsEttQvsuzJKYFCAgEk2qOWpTBN4BouwpVJp1fRiSdxf+NhUSW095G3G3nPXvMOqKB
+         jIbR3JJ9A3k/IA8TT4X+xbY1AB3ORClL0bUhvdB/ZZdlK9l8n7y41hD8yN+qZRYD6tWI
+         VT0no1Xq5U2yiLXov7IsrhECLNvA/bg7q9CzT2fbBWsBhoZZZFgCs8Idk0rV73uvTch8
+         BO6WU0dYCHDnlNoC6OYps1il71T7U7Uk58w7J6OBaQWc8PZyB6DY3kV9UdUr9S1DKAg0
+         Ah46hMO8Wen286djHcbhMlndn3WSrEEcpY5+/nlP8umBeeBX9KCeqSW3QO3bYN3V2+d9
+         /Bqw==
+X-Gm-Message-State: AJIora/APgYPsdd7AsXeLH71XlXrfp0hkXjqLBlw4N9e8eWlvm0ysbWd
+        QOsEldsW6ZgM+JpI67ub2cU0RWI9Htn/IA==
+X-Google-Smtp-Source: AGRyM1vwGDyN/oqXhLw7pOnv2mJvC+PHaQDlMtjHrusPXsN62bq2cLbEW12HuBWYzG4YiZdyv2LrrQ==
+X-Received: by 2002:adf:f6d0:0:b0:21b:c3f8:6230 with SMTP id y16-20020adff6d0000000b0021bc3f86230mr10015324wrp.116.1656612024608;
+        Thu, 30 Jun 2022 11:00:24 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v13-20020a1cf70d000000b0039747cf8354sm7363985wmh.39.2022.06.30.11.00.24
+        by smtp.gmail.com with ESMTPSA id v13-20020a1cf70d000000b0039747cf8354sm7363985wmh.39.2022.06.30.11.00.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 30 Jun 2022 11:00:24 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -53,12 +53,10 @@ To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 01/11] check-ref-format: fix trivial memory leak
-Date:   Thu, 30 Jun 2022 20:00:11 +0200
-Message-Id: <patch-01.11-f35cf7c6ee9-20220630T175714Z-avarab@gmail.com>
+Subject: [PATCH 00/11] built-ins: fix common memory leaks
+Date:   Thu, 30 Jun 2022 20:00:10 +0200
+Message-Id: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.874.g7d3439f13c4
-In-Reply-To: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
-References: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,64 +64,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak in "git check-ref-format" that's been present in the
-code in one form or another since 38eedc634bc (git check-ref-format
---print, 2009-10-12), the code got substantially refactored in
-cfbe22f03f9 (check-ref-format: handle subcommands in separate
-functions, 2010-08-05).
+This is a series of trivial leak-fixes which allows us to mark a
+significant number of new tests as entirely passing under
+SANITIZE=leak.
 
-As a result we can mark a test as passing with SANITIZE=leak using
-"TEST_PASSES_SANITIZE_LEAK=true".
+Now that 2da81d1efb0 (Merge branch 'ab/plug-leak-in-revisions',
+2022-06-07) has landed we're going to have more & more cases where
+fixing just one leak will allow us to mark N tests as passing in their
+entirety. This is the first stepping stone on the way to that end.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/check-ref-format.c  | 11 ++++++++---
- t/t1402-check-ref-format.sh |  1 +
- 2 files changed, 9 insertions(+), 3 deletions(-)
+Ævar Arnfjörð Bjarmason (11):
+  check-ref-format: fix trivial memory leak
+  clone: fix memory leak in copy_ref() call
+  submodule.c: free() memory from xgetcwd()
+  revert: free "struct replay_opts" members
+  cat-file: fix a memory leak in --batch-command mode
+  merge-file: refactor for subsequent memory leak fix
+  merge-file: fix memory leaks on error path
+  checkout: add a missing clear_unpack_trees_porcelain()
+  gc: fix a memory leak
+  cat-file: fix a common "struct object_context" memory leak
+  pull: fix a "struct oid_array" memory leak
 
-diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-index bc67d3f0a83..fd0e5f86832 100644
---- a/builtin/check-ref-format.c
-+++ b/builtin/check-ref-format.c
-@@ -57,6 +57,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
- 	int normalize = 0;
- 	int flags = 0;
- 	const char *refname;
-+	char *to_free = NULL;
-+	int ret = 1;
- 
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(builtin_check_ref_format_usage);
-@@ -81,11 +83,14 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
- 
- 	refname = argv[i];
- 	if (normalize)
--		refname = collapse_slashes(refname);
-+		refname = to_free = collapse_slashes(refname);
- 	if (check_refname_format(refname, flags))
--		return 1;
-+		goto cleanup;
- 	if (normalize)
- 		printf("%s\n", refname);
- 
--	return 0;
-+	ret = 0;
-+cleanup:
-+	free(to_free);
-+	return ret;
- }
-diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-index cabc516ae9a..5ed9d7318e0 100755
---- a/t/t1402-check-ref-format.sh
-+++ b/t/t1402-check-ref-format.sh
-@@ -2,6 +2,7 @@
- 
- test_description='Test git check-ref-format'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- valid_ref() {
+ builtin/cat-file.c                   | 33 +++++++++++++++++++---------
+ builtin/check-ref-format.c           | 11 +++++++---
+ builtin/checkout.c                   |  1 +
+ builtin/clone.c                      |  1 +
+ builtin/gc.c                         |  8 ++++++-
+ builtin/merge-file.c                 | 32 +++++++++++++++------------
+ builtin/pull.c                       | 16 +++++++++-----
+ builtin/revert.c                     |  3 +++
+ submodule.c                          |  3 ++-
+ t/t0028-working-tree-encoding.sh     |  1 +
+ t/t1051-large-conversion.sh          |  2 ++
+ t/t1402-check-ref-format.sh          |  1 +
+ t/t3304-notes-mixed.sh               |  1 +
+ t/t4044-diff-index-unique-abbrev.sh  |  2 ++
+ t/t4140-apply-ita.sh                 |  1 +
+ t/t5314-pack-cycle-detection.sh      |  4 ++--
+ t/t5524-pull-msg.sh                  |  1 +
+ t/t6403-merge-file.sh                |  2 ++
+ t/t6417-merge-ours-theirs.sh         |  1 +
+ t/t6422-merge-rename-corner-cases.sh |  1 +
+ t/t8007-cat-file-textconv.sh         |  2 ++
+ t/t8010-cat-file-filters.sh          |  2 ++
+ t/t9101-git-svn-props.sh             |  1 -
+ t/t9104-git-svn-follow-parent.sh     |  1 -
+ t/t9132-git-svn-broken-symlink.sh    |  1 -
+ t/t9301-fast-import-notes.sh         |  1 +
+ 26 files changed, 93 insertions(+), 40 deletions(-)
+
 -- 
 2.37.0.874.g7d3439f13c4
 
