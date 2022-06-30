@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AB55C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04602C43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237449AbiF3VUE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:20:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40846 "EHLO
+        id S237482AbiF3VUF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:20:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237446AbiF3VTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:19:53 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE3E45784
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:52 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id r20so411300wra.1
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:52 -0700 (PDT)
+        with ESMTP id S237084AbiF3VTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:19:54 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8542E45787
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:53 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id o4so398232wrh.3
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=rMOar5gUpSfWxVPjUBSxJ53KbguCezU3u+8n/3UUIWM=;
-        b=d2FKLrYk726htGHiGAHnhX+qhAw8iW8nB49dqLDHZG21O07nzdKVCjrnY6y8ynz5YZ
-         l/OcU6EgLXcKeESTUvfryxAOI6D0RvHfaA1VTMIDQyWqHLOsogSjss3HqrcnLkUk31N6
-         ejTX+XZN7woxqFSdTNhNyhhCeJ7eXbnmuO0tvU6kpDj7yc9W9MvEzVgVVcsJ2qOqzf7w
-         +s31Qw6GyE9Z34tsT8OI+Q6MyL77B8jSomDS5lQhzbn/bPaRaVbMNPIl910FgemJ1JJr
-         eseoFL5e0xyIg+gFPmonvfs2bdpCXS/CEu+0o3XNLEuVoJzU83p9O/zJKGfIKw97Wq1j
-         UDzg==
+        bh=U2SMOt3D2+JQiXyq7ZJfVCLmmaGmBPTWPAtt01OokPw=;
+        b=jO24bCaLlXEfDU6AO6cnw44xIi7WSsVHcJthJrdNfhGJ+MSx5HxTteU/rvxjlPdym1
+         nKXSnvMgiYeoyGZEzJGx7A/Qn/9SlCjU2pz3DjumweqsisPk1NWymQiMmKhpPC5bKTPp
+         N9Z5kLG7IcIfIGRhxJ4hLV5/m2L/T6a3GOQ1ODfHQPQRXJPX9NEcN5Qr6sFuap9TnZGK
+         fDJGBW3LF3mnZipXgyho/zNvVEJhswDUaLyT+fdGEj/kYnhI2xGcDLEjpxlnJY/eH7iy
+         NE2UkmekHN+pnCuWFDaQA7JIhmqJVac1GdVjcw+fkM3MTfTRY0u2dEnMYCCEZdhKzhEQ
+         BiBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=rMOar5gUpSfWxVPjUBSxJ53KbguCezU3u+8n/3UUIWM=;
-        b=pvVQGy/HMR/niX3sT3ZTHjGWYdugfxzGHw2f2o+GzwATifhjDge9ZlQptxV2o2rjFb
-         DhR87ge6sCcHrlFye4nw6PU/VKd/3Eevb52n8gaYDnyoi1qYlg3TtKIvUJLseogjdyGN
-         6Oj8/aQQwyCHPqXCPYusqTfvjCGfKfU1acs/HZQbX84+ZfaXpDfr45YYFq4AVbQXGqQh
-         yvHYUch2VsGk9LzD3z69KFkWuLNJHGANH1wat9sXVmYUXo2fzNUXSh04YlDr3q8bXTfL
-         wKb/VwrOvqDjHaRDc0wFYl1bgHAEWYow3CN1+ZgfP4Id7IEglHOTsM7OjfQz9VSmya/d
-         /h/w==
-X-Gm-Message-State: AJIora9cUoA85aHocBZXbkzHMysf9NqA3XCmc6EJujo4nWj9INlfkOna
-        Zvn0TfewOSf/tUj4igawJSf7Bd9+KTc=
-X-Google-Smtp-Source: AGRyM1smKIRMTh12G8BpyaVRu7sKO6zJDF8/sqRrFnENFJ7KuBKTF3P+6lLj3CEE65CsumK5ALwXSg==
-X-Received: by 2002:a05:6000:1148:b0:21b:a4b2:ccd3 with SMTP id d8-20020a056000114800b0021ba4b2ccd3mr10459126wrx.193.1656623990418;
-        Thu, 30 Jun 2022 14:19:50 -0700 (PDT)
+        bh=U2SMOt3D2+JQiXyq7ZJfVCLmmaGmBPTWPAtt01OokPw=;
+        b=OEXuGYiwo+d4TM+Lq6CaO6IIv0ZwWXI6ymytYIZhUEQKmNflEFOJQADH3k0hGEWPTX
+         IboIMOk2hHEaXhx02gqXETItPdAhsBT/GIIPdRG36Mtcx9WJyU2f1N9OmHtgst8GCnG4
+         jupYHE5m/Tlg0Zekq8viDo2RslSB1ByKf+hrJb64rHWXkzHqyuO6cMl2gEbZ7xCOfxES
+         ZVtaz7BLBi8ik6RMLIljJ37blw1mhwErbsT+z/l9HD3dM0UEVLLfpkjkepTSpWIqM5rA
+         RV7YR9002ErUyOYpiah7VfA1zCSTcVIvJAZN1fmVKw0j0mceYQQUQP+pFoxyeJfepDkD
+         vo4A==
+X-Gm-Message-State: AJIora95KKE0UR0Oyhq8AO/Yq61Uu9vXKYcnCbnaAmi3HYOwQKrDBGfu
+        XDLAmJvVVqchDEKLiHtGI28L7KzgC1A=
+X-Google-Smtp-Source: AGRyM1uvP9sSOs69URl1n5G1ZnKD8/stT7Cg3piyxyex8k9MtOwM5sUNUflKZV6gFEnmYH8nyJRO+A==
+X-Received: by 2002:a05:6000:1ac8:b0:21b:9239:8f28 with SMTP id i8-20020a0560001ac800b0021b92398f28mr10493142wry.517.1656623991722;
+        Thu, 30 Jun 2022 14:19:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i8-20020a05600c354800b0039c4e2ff7cfsm4268730wmq.43.2022.06.30.14.19.49
+        by smtp.gmail.com with ESMTPSA id m12-20020adffe4c000000b0020d106c0386sm19874379wrs.89.2022.06.30.14.19.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 14:19:49 -0700 (PDT)
-Message-Id: <8f12108c2951cdfa181d6be66b6def28cd007bdd.1656623978.git.gitgitgadget@gmail.com>
+        Thu, 30 Jun 2022 14:19:51 -0700 (PDT)
+Message-Id: <b788fc671bf1862a72f9fe7256affd7d152b8a6f.1656623978.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
 References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
         <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Thu, 30 Jun 2022 21:19:29 +0000
-Subject: [PATCH v2 09/18] submodule--helper: understand --checkout, --merge
- and --rebase synonyms
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 30 Jun 2022 21:19:30 +0000
+Subject: [PATCH v2 10/18] submodule--helper: eliminate internal "--update"
+ option
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,145 +65,135 @@ Cc:     Atharva Raykar <raykar.ath@gmail.com>,
         <avarab@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Glen Choo <chooglen@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
- <avarab@gmail.com>
+From: Glen Choo <chooglen@google.com>
 
-Understand --checkout, --merge and --rebase synonyms for
---update={checkout,merge,rebase}, as well as the short options that
-'git submodule' itself understands.
+Follow-up on the preceding commit which taught "git submodule--helper
+update" to understand "--merge", "--checkout" and "--rebase" and use
+those options instead of "--update=(rebase|merge|checkout|none)" when
+the command invokes itself.
 
-This removes a difference between the CLI API of "git submodule" and
-"git submodule--helper", making it easier to make the latter an alias
-for the former. See 48308681b07 (git submodule update: have a
-dedicated helper for cloning, 2016-02-29) for the initial addition of
---update.
+Unlike the preceding change this isn't strictly necessary to
+eventually change "git-submodule.sh" so that it invokes "git
+submodule--helper update" directly, but let's remove this
+inconsistency in the command-line interface. We shouldn't need to
+carry special synonyms for existing options in "git submodule--helper"
+when that command can use the primary documented names instead.
 
+But, as seen in the post-image this makes the control flow within
+"builtin/submodule--helper.c" simpler, we can now write directly to
+the "update_default" member of "struct update_data" when parsing the
+options in "module_update()".
+
+Signed-off-by: Glen Choo <chooglen@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/submodule--helper.c | 30 ++++++++++++++++++++++++++++++
- git-submodule.sh            | 14 +++++++++-----
- 2 files changed, 39 insertions(+), 5 deletions(-)
+ builtin/submodule--helper.c | 33 +++++++++++++--------------------
+ 1 file changed, 13 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 04d2620fce8..53179472d85 100644
+index 53179472d85..389b900602f 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2404,6 +2404,23 @@ static void ensure_core_worktree(const char *path)
- 	}
- }
+@@ -1818,7 +1818,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ static void determine_submodule_update_strategy(struct repository *r,
+ 						int just_cloned,
+ 						const char *path,
+-						const char *update,
++						enum submodule_update_type update,
+ 						struct submodule_update_strategy *out)
+ {
+ 	const struct submodule *sub = submodule_from_path(r, null_oid(), path);
+@@ -1828,9 +1828,7 @@ static void determine_submodule_update_strategy(struct repository *r,
+ 	key = xstrfmt("submodule.%s.update", sub->name);
  
-+static const char *submodule_update_type_to_label(enum submodule_update_type type)
-+{
-+	switch (type) {
-+	case SM_UPDATE_CHECKOUT:
-+		return "checkout";
-+	case SM_UPDATE_MERGE:
-+		return "merge";
-+	case SM_UPDATE_REBASE:
-+		return "rebase";
-+	case SM_UPDATE_UNSPECIFIED:
-+	case SM_UPDATE_NONE:
-+	case SM_UPDATE_COMMAND:
-+		break;
-+	}
-+	BUG("unreachable with type %d", type);
-+}
-+
+ 	if (update) {
+-		if (parse_submodule_update_strategy(update, out) < 0)
+-			die(_("Invalid update mode '%s' for submodule path '%s'"),
+-				update, path);
++		out->type = update;
+ 	} else if (!repo_config_get_string_tmp(r, key, &val)) {
+ 		if (parse_submodule_update_strategy(val, out) < 0)
+ 			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
+@@ -1882,7 +1880,7 @@ struct update_data {
+ 	const char *prefix;
+ 	const char *recursive_prefix;
+ 	const char *displaypath;
+-	const char *update_default;
++	enum submodule_update_type update_default;
+ 	struct object_id suboid;
+ 	struct string_list references;
+ 	struct submodule_update_strategy update_strategy;
+@@ -2423,6 +2421,8 @@ static const char *submodule_update_type_to_label(enum submodule_update_type typ
+ 
  static void update_data_to_args(struct update_data *update_data, struct strvec *args)
  {
++	enum submodule_update_type update_type = update_data->update_default;
++
  	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
-@@ -2582,6 +2599,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ 	strvec_pushf(args, "--jobs=%d", update_data->max_jobs);
+ 	if (update_data->recursive_prefix)
+@@ -2446,8 +2446,10 @@ static void update_data_to_args(struct update_data *update_data, struct strvec *
+ 		strvec_push(args, "--require-init");
+ 	if (update_data->depth)
+ 		strvec_pushf(args, "--depth=%d", update_data->depth);
+-	if (update_data->update_default)
+-		strvec_pushl(args, "--update", update_data->update_default, NULL);
++	if (update_type != SM_UPDATE_UNSPECIFIED)
++		strvec_pushf(args, "--%s",
++			     submodule_update_type_to_label(update_type));
++
+ 	if (update_data->references.nr) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, &update_data->references)
+@@ -2599,7 +2601,6 @@ static int module_update(int argc, const char **argv, const char *prefix)
  	struct update_data opt = UPDATE_DATA_INIT;
  	struct list_objects_filter_options filter_options;
  	int ret;
-+	enum submodule_update_type update_type = SM_UPDATE_UNSPECIFIED;
+-	enum submodule_update_type update_type = SM_UPDATE_UNSPECIFIED;
  
  	struct option module_update_options[] = {
  		OPT__FORCE(&opt.force, N_("force checkout updates"), 0),
-@@ -2603,6 +2621,15 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "update", &opt.update_default,
- 			   N_("string"),
- 			   N_("rebase, merge, checkout or none")),
-+		OPT_SET_INT(0, "checkout", &update_type,
-+			N_("use the 'checkout' update strategy (default)"),
-+			SM_UPDATE_CHECKOUT),
-+		OPT_SET_INT('m', "merge", &update_type,
-+			N_("use the 'merge' update strategy"),
-+			SM_UPDATE_MERGE),
-+		OPT_SET_INT('r', "rebase", &update_type,
-+			N_("use the 'rebase' update strategy"),
-+			SM_UPDATE_REBASE),
+@@ -2618,16 +2619,13 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ 			   N_("path"),
+ 			   N_("path into the working tree, across nested "
+ 			      "submodule boundaries")),
+-		OPT_STRING(0, "update", &opt.update_default,
+-			   N_("string"),
+-			   N_("rebase, merge, checkout or none")),
+-		OPT_SET_INT(0, "checkout", &update_type,
++		OPT_SET_INT(0, "checkout", &opt.update_default,
+ 			N_("use the 'checkout' update strategy (default)"),
+ 			SM_UPDATE_CHECKOUT),
+-		OPT_SET_INT('m', "merge", &update_type,
++		OPT_SET_INT('m', "merge", &opt.update_default,
+ 			N_("use the 'merge' update strategy"),
+ 			SM_UPDATE_MERGE),
+-		OPT_SET_INT('r', "rebase", &update_type,
++		OPT_SET_INT('r', "rebase", &opt.update_default,
+ 			N_("use the 'rebase' update strategy"),
+ 			SM_UPDATE_REBASE),
  		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
- 			   N_("reference repository")),
- 		OPT_BOOL(0, "dissociate", &opt.dissociate,
-@@ -2652,6 +2679,9 @@ static int module_update(int argc, const char **argv, const char *prefix)
+@@ -2679,13 +2677,8 @@ static int module_update(int argc, const char **argv, const char *prefix)
  
  	opt.filter_options = &filter_options;
  
-+	if (update_type != SM_UPDATE_UNSPECIFIED)
-+		opt.update_default = submodule_update_type_to_label(update_type);
-+
+-	if (update_type != SM_UPDATE_UNSPECIFIED)
+-		opt.update_default = submodule_update_type_to_label(update_type);
+-
  	if (opt.update_default)
- 		if (parse_submodule_update_strategy(opt.update_default,
- 						    &opt.update_strategy) < 0)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1c1dc320922..7fc7119fb21 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -40,7 +40,9 @@ require_init=
- files=
- remote=
- nofetch=
--update=
-+rebase=
-+merge=
-+checkout=
- custom_name=
- depth=
- progress=
-@@ -260,7 +262,7 @@ cmd_update()
- 			force=$1
- 			;;
- 		-r|--rebase)
--			update="rebase"
-+			rebase=1
- 			;;
- 		--reference)
- 			case "$2" in '') usage ;; esac
-@@ -274,13 +276,13 @@ cmd_update()
- 			dissociate=1
- 			;;
- 		-m|--merge)
--			update="merge"
-+			merge=1
- 			;;
- 		--recursive)
- 			recursive=1
- 			;;
- 		--checkout)
--			update="checkout"
-+			checkout=1
- 			;;
- 		--recommend-shallow)
- 			recommend_shallow="--recommend-shallow"
-@@ -341,7 +343,9 @@ cmd_update()
- 		${init:+--init} \
- 		${nofetch:+--no-fetch} \
- 		${wt_prefix:+--prefix "$wt_prefix"} \
--		${update:+--update "$update"} \
-+		${rebase:+--rebase} \
-+		${merge:+--merge} \
-+		${checkout:+--checkout} \
- 		${reference:+"$reference"} \
- 		${dissociate:+"--dissociate"} \
- 		${depth:+"$depth"} \
+-		if (parse_submodule_update_strategy(opt.update_default,
+-						    &opt.update_strategy) < 0)
+-			die(_("bad value for update parameter"));
++		opt.update_strategy.type = opt.update_default;
+ 
+ 	if (module_list_compute(argc, argv, prefix, &pathspec, &opt.list) < 0) {
+ 		list_objects_filter_release(&filter_options);
 -- 
 gitgitgadget
 
