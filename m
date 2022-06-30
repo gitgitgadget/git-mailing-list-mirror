@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B035BC43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 22:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73690C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 22:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229788AbiF3WMB (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229884AbiF3WMB (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 30 Jun 2022 18:12:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34414 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbiF3WL7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 18:11:59 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0C6F5721C
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 15:11:57 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id f8-20020a17090ac28800b001ed312c6fe1so348224pjt.8
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 15:11:57 -0700 (PDT)
+        with ESMTP id S229792AbiF3WMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 18:12:00 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7227C5721E
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 15:11:58 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id h18-20020a170902f55200b0016a4a78bd71so295715plf.9
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 15:11:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=D1dP+t2VcUQTtDSb7flUy2K/7HnobV9zYRg2bhbxpZQ=;
-        b=IYrMQsti8ee6PfNWNYyZ1gIwQpqTSoAPGH8SldbpsvyuXb3D793zZOOy1LxOfCvqKu
-         9TbcrvyWBQBWifacW3cfwMvocuVw/KEI6F6pK5G6qkOtFeMZ9x3zfax99JisFaD/521k
-         iBbiCpp0MD3SbN7o86Vv+vKq94arY9HNF0DxlGYWHpB1ex5ohkEqTn4TTsRRwvvEmHmg
-         qb865qEAHs4Ath6kMTZdIzCneXbu1j0xy0rA4wqIdslLdoDyXzh9xOboLALj4I9SEsK1
-         tkMQEJ6NwuxAkDFr/Re46veSexTYiP5RS+5eb9EGLLo3uRkR/eakepsIzSw+mPGHZccs
-         sPVA==
+         :cc;
+        bh=LVTHjkAYlaiepUv4M45wNpA3phOsy2EDVQqr3hLaclQ=;
+        b=leA1SaCrJgxU6EQt+ozatNOXwpHs96PMHSWl7iQz9/di7+cv9qRtZXLRlj4uf+C3W/
+         F/2+AYLdhwWfNi2RztVESLLX5F9VvJL1y4Yb1QJqHmc/6WKzF6PobhWian1iylrC4sMn
+         beKNNjiMZn3WFbFbT0oAUqHR0Zyo118VsbU4GqNMZbCL3vInsDJRC0cs4xUKExWDtFLV
+         ne9AfQzTG9YRyxqS5UhkSZfUOHOXO7Fi/AVHERXvIy8uOz5PuMPzsxHsrAvvnf5K4z2c
+         7fOofVlq09nuCAVrMk2qvYvv+f/LISLeJilyMOo34RA2Y+mTSzmdavjYQXyx+IUbmTUR
+         UUPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=D1dP+t2VcUQTtDSb7flUy2K/7HnobV9zYRg2bhbxpZQ=;
-        b=vcdrxLERJ9kY/k4ztca5ykwqzDAhpvLHcX8QmVkNJ9yHKllsZoXWdA5RhpoJ+WciTe
-         1zgU2WsCEwmWzcwxVFAmYI7miaq6oxSZI3+/pSR6uK9Jzfame30GZbDbIkVaSkF6/1wM
-         C3j+qnH3/rU0+5DxQWq5AISj8h96JejPuhtseAVO/2MNjiio4dhqfl19yHlJ4hKUtn9W
-         GuGuh4FDUeNF3M8Os6tn+e1M2G5IkhQlSiE+Dl3PXtwU85AN+W62lZJEHvsHPQDSmkKt
-         k87WB6H8jnOMoS3qTlRrWyzR5H6YHlH5RFiTIzh86PA3tC3XzeUQKjodHk4Gk3UcgsqH
-         E9Lw==
-X-Gm-Message-State: AJIora8RyJfPkuGQLZg5FyOu0ipz5Fn4hSN5E8rEJPQE0aUdaIJjuX5S
-        H7K+8je/T5TZ8w2MiU3HBxU+jbk1h/1hMCpdp43uFSfRolESQ9aze1BTej5WbRBmzw1kEocqM0G
-        m3oLJ3qK+4+Gr5FZIyuWfdbtzjCeKj+G12BwCZbQv9Q5h/uPC+B7K6twAVJxB7aU=
-X-Google-Smtp-Source: AGRyM1uE88QGi+49VtJrUw8FRCwTAboqwMRamBxeAg7BeUGzUsobbIYfoFmrSFiBymgTfSZUDAs2YkBPHi+tvQ==
+         :references:subject:from:to:cc;
+        bh=LVTHjkAYlaiepUv4M45wNpA3phOsy2EDVQqr3hLaclQ=;
+        b=WW9lsGzb3STqRAlAR3rZToufU6yhwtZlrSIoBqLRg++ynIL0qawWh9X+tzmUq/Gjc7
+         Mr1+kvTufAOgP9RC+pxgiMkj/9Tgh45heUE9DWsxiJZY5nyxGKxJfi8dT5Y9TiGkxFNR
+         6DZRqIadrZ02Slnyv7NHzHcsynyj0rIhmkTQbB21lp730VKZLBIkeUjDFwHbmlKP78sC
+         ARvD9mkRWjQt3tJAH+bnW58lbQ9oPQepfmFU5GuvKU8ug8MV/MWQdiAuPBKv+GuzycHG
+         LE9ioJOaofKtnPk9ZUm0dg9Yqm2Js+5HdwctpVSgi0FDIXs0bK7TcMXN/PjUB8FaEXPM
+         p9Sg==
+X-Gm-Message-State: AJIora/B9LxXKzhTeycOOyBBzlOd7lpgWzwpwsZeXMHT9ButsLdxxD8O
+        ljO8PQwOKZv5OUvdDfRvgXvEXj8xqPr2oPW/FYbjNNvIZdbbCFnjAkUiwYmnGg6RvvIiiYMw9Nx
+        rVqwewj/K+tabKt+dWwBjS+D0aV82Bcayxao4N8QhLoZn9lKi+xz19GD+Pw3TF+A=
+X-Google-Smtp-Source: AGRyM1u0cyLncqrojKO2lnsju1c/zZts7bQskFdvTI9mW7CXD+bRBpQvP0OTlTSBfsIIPdP1aPeU48jOJSBHHw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:249:b0:1e0:a8a3:3c6c with SMTP id
- t9-20020a17090a024900b001e0a8a33c6cmr321860pje.0.1656627115908; Thu, 30 Jun
- 2022 15:11:55 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 15:11:41 -0700
-In-Reply-To: <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
-Message-Id: <20220630221147.45689-1-chooglen@google.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:15cc:b0:525:8b07:71c3 with SMTP
+ id o12-20020a056a0015cc00b005258b0771c3mr17840363pfu.57.1656627117829; Thu,
+ 30 Jun 2022 15:11:57 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 15:11:42 -0700
+In-Reply-To: <20220630221147.45689-1-chooglen@google.com>
+Message-Id: <20220630221147.45689-2-chooglen@google.com>
 Mime-Version: 1.0
-References: <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
+References: <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com> <20220630221147.45689-1-chooglen@google.com>
 X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
-Subject: [PATCH v3 0/6] submodule: remove "--recursive-prefix"
+Subject: [PATCH v3 1/6] submodule--helper update: use display path helper
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -61,304 +61,160 @@ Cc:     Glen Choo <chooglen@google.com>,
         <avarab@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(resending as v3 because I accidentally included ab/submodule-cleanup in
-v2)
+There are two locations in prepare_to_clone_next_submodule() that
+manually calculate the submodule display path, but should just use
+do_get_submodule_displaypath() for consistency.
 
-Thanks =C3=86var for the feedback! I've incorporated all of the suggestions=
-,
-except breaking up the tests in 1/6 into their own patch - I wasn't
-convinced of the value of having prescriptive tests (with
-test_expect_failure), and I found it difficult to discuss descriptive tests
-(with test_expect_success) without also having the code in the same diff.
-FWIW, this version (and the previous one) "git rebase -x 'make test'"
-cleanly :)
+Do this replacement and reorder the code slightly to avoid computing
+the display path twice.
 
-Note for Junio: this version is based on ab/submodule-cleanup (and so will
-future versions).
+This code was never tested, and adding tests shows that both these sites
+have been computing the display path incorrectly ever since they were
+introduced in 48308681b0 (git submodule update: have a dedicated helper
+for cloning, 2016-02-29) [1]:
 
-=3D Description
+- The first hunk puts a "/" between recursive_prefix and ce->name, but
+  recursive_prefix already ends with "/".
+- The second hunk calls relative_path() on recursive_prefix and
+  ce->name, but relative_path() only makes sense when both paths share
+  the same base directory. This is never the case here:
+  - recursive_prefix is the path from the topmost superproject to the
+    current submodule
+  - ce->name is the path from the root of the current submodule to its
+    submodule.
+  so, e.g. recursive_prefix="super" and ce->name="submodule" produces
+  displayname="../super" instead of "super/submodule".
 
-This series is a refactor of "git submodule--helper update" that replaces
-"--recursive-prefix" with "--super-prefix" (see Background). This was
-initially motivated by:
+While we're fixing the display names, also fix inconsistent quoting of
+the submodule name.
 
- * Junio's suggestion to simplify the code [1] (in response to a memory lea=
-k
-   found by Johannes Schindelin [2]).
- * A desire to use the module_list API + get_submodule_displaypath() outsid=
-e
-   of builtin/submodule--helper.c (I expect to use this to check out
-   branches in each submodule).
+[1] I verified this by applying the tests to 48308681b0.
 
-But it also happens to remove some overly complicated/duplicated code that
-was literally converted from shell :)
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ builtin/submodule--helper.c | 21 +++++---------
+ t/t7406-submodule-update.sh | 56 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 63 insertions(+), 14 deletions(-)
 
-=3D Background
-
-When recursing into nested submodules, Git commands keep track of the path
-from the superproject to the submodule in order to print a "display path" t=
-o
-the user, e.g.
-
-  Submodule path '../super/sub/nested-sub': checked out 'abcdef'
-
-For historical reasons, "git submodule--helper update" uses
-"--recursive-prefix" for this purpose, but it should use "--super-prefix"
-instead because:
-
- * That's what every other command uses (not just submodule--helper
-   subcommands).
- * Using the "--super-prefix" helper functions makes the "git
-   submodule--helper update" code simpler
-
-=3D Patch organization
-
- * Patch 1/6 makes sure that display paths are only computed using display
-   path helper functions ([do_]get_submodule_displaypath()) and fixes some
-   display paths that we never realized were broken.
- * Patches 2-3/6 simplify and deduplicate some display path computations.
- * Patch 4/6 (authored by =C3=86var) removes SUPPORT_SUPER_PREFIX where it'=
-s not
-   needed.
-   * This doesn't affect correctness, but we want to do this eventually, so
-     do it now to make 5/6 a bit cleaner.
- * Patch 5/6 replaces "--recursive-prefix" with "--super-prefix", making
-   do_get_submodule_displaypath() obsolete.
-   * GGG outputs an odd diff; I recommend viewing it with "--histogram"
- * Patch 6/6 removes do_get_submodule_displaypath().
-
-=3D Series history
-
-Changes in v3:
-* None (resend of v2 because v2 accidentally included
-  ab/submodule-cleanup)
-
-Changes in v2:
- * Rebase onto ab/submodule-cleanup (previously master)
- * Cherry pick https://github.com/avar/git/commit/f445c57490d into 4/6
- * Style fixes in .c and tests
-
-=3D Future work
-
-At the end of this series, get_submodule_displaypath() can be moved to
-submodule.h, which would make submodule.c:get_super_prefix_or_empty()
-obsolete. I have a patch that demonstrates this (CI run: [4]), but I decide=
-d
-to keep this series more focused on "git submodule--helper update" so that
-it's easier to review.
-
-[1] https://lore.kernel.org/git/xmqq35g5xmmv.fsf@gitster.g
-[2] https://lore.kernel.org/git/877a45867ae368bf9e053caedcb6cf421e02344d.16=
-55336146.git.gitgitgadget@gmail.com
-[3] https://lore.kernel.org/git/patch-v3-02.12-082e015781e-20220622T142012Z=
--avarab@gmail.com
-[4] https://github.com/chooglen/git/actions/runs/2572557584
-
-Glen Choo (5):
-  submodule--helper update: use display path helper
-  submodule--helper: don't recreate recursive prefix
-  submodule--helper: use correct display path helper
-  submodule--helper update: use --super-prefix
-  submodule--helper: remove display path helper
-
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
-  submodule--helper: remove unused SUPPORT_SUPER_PREFIX flags
-
- builtin/submodule--helper.c | 87 ++++++++++---------------------------
- t/t7406-submodule-update.sh | 56 ++++++++++++++++++++++++
- 2 files changed, 79 insertions(+), 64 deletions(-)
-
-Range-diff against v1:
-1:  473548f2fa ! 1:  64c138df19 submodule--helper update: use display path =
-helper
-    @@ builtin/submodule--helper.c: static int prepare_to_clone_next_submod=
-ule(const st
-     -	struct strbuf displaypath_sb =3D STRBUF_INIT;
-      	struct strbuf sb =3D STRBUF_INIT;
-     -	const char *displaypath =3D NULL;
-    -+	char *displaypath =3D NULL;
-    ++	char *displaypath;
-      	int needs_cloning =3D 0;
-      	int need_free_url =3D 0;
-     =20
-    @@ builtin/submodule--helper.c: static int prepare_to_clone_next_submod=
-ule(const st
-     -		else
-     -			strbuf_addstr(&sb, ce->name);
-     -		strbuf_addf(out, _("Skipping unmerged submodule %s"), sb.buf);
-    --		strbuf_addch(out, '\n');
-    -+		strbuf_addf(out, _("Skipping unmerged submodule '%s'\n"), displaypa=
-th);
-    ++		strbuf_addf(out, _("Skipping unmerged submodule %s"), displaypath);
-    + 		strbuf_addch(out, '\n');
-      		goto cleanup;
-      	}
-     =20
-    @@ t/t7406-submodule-update.sh: test_expect_success 'submodule update -=
--filter sets
-     +	test_when_finished "rm -fr top-cloned" &&
-     +	cp -r top-clean top-cloned &&
-     +
-    -+	# Create an upstream commit in each repo
-    ++	# Create an upstream commit in each repo, starting with bottom
-     +	test_commit -C bottom upstream_commit &&
-    -+	(cd middle &&
-    -+	 git -C bottom fetch &&
-    -+	 git -C bottom checkout -f FETCH_HEAD &&
-    -+	 git add bottom &&
-    -+	 git commit -m "upstream_commit"
-    -+	) &&
-    -+	(cd top &&
-    -+	 git -C middle fetch &&
-    -+	 git -C middle checkout -f FETCH_HEAD &&
-    -+	 git add middle &&
-    -+	 git commit -m "upstream_commit"
-    -+	) &&
-    ++	# Create middle commit
-    ++	git -C middle/bottom fetch &&
-    ++	git -C middle/bottom checkout -f FETCH_HEAD &&
-    ++	git -C middle add bottom &&
-    ++	git -C middle commit -m "upstream_commit" &&
-    ++	# Create top commit
-    ++	git -C top/middle fetch &&
-    ++	git -C top/middle checkout -f FETCH_HEAD &&
-    ++	git -C top add middle &&
-    ++	git -C top commit -m "upstream_commit" &&
-     +
-     +	# Create a downstream conflict
-    -+	(cd top-cloned/middle &&
-    -+	 test_commit -C bottom downstream_commit &&
-    -+	 git add bottom &&
-    -+	 git commit -m "downstream_commit" &&
-    -+	 git fetch --recurse-submodules origin &&
-    -+	 test_must_fail git merge origin/main
-    -+	) &&
-    ++	test_commit -C top-cloned/middle/bottom downstream_commit &&
-    ++	git -C top-cloned/middle add bottom &&
-    ++	git -C top-cloned/middle commit -m "downstream_commit" &&
-    ++	git -C top-cloned/middle fetch --recurse-submodules origin &&
-    ++	test_must_fail git -C top-cloned/middle merge origin/main &&
-    ++
-     +	# Make the update of "middle" a no-op, otherwise we error out
-     +	# because of its unmerged state
-     +	test_config -C top-cloned submodule.middle.update !true &&
-     +	git -C top-cloned submodule update --recursive 2>actual.err &&
-    -+	grep "Skipping unmerged submodule .middle/bottom." actual.err
-    ++	grep -F "Skipping unmerged submodule middle/bottom" actual.err
-     +'
-     +
-     +test_expect_success 'submodule update --recursive skip submodules wit=
-h strategy=3Dnone' '
-    @@ t/t7406-submodule-update.sh: test_expect_success 'submodule update -=
--filter sets
-     +	test_commit -C top-cloned/middle/bottom downstream_commit &&
-     +	git -C top-cloned/middle config submodule.bottom.update none &&
-     +	git -C top-cloned submodule update --recursive 2>actual.err &&
-    -+	grep "Skipping submodule .middle/bottom." actual.err
-    ++	grep -F "Skipping submodule ${SQ}middle/bottom${SQ}" actual.err
-     +'
-     +
-      test_done
-2:  618053730e ! 2:  d3e803a463 submodule--helper: don't recreate recursive=
- prefix
-    @@ Commit message
-    =20
-      ## builtin/submodule--helper.c ##
-     @@ builtin/submodule--helper.c: static void update_data_to_args(struct=
- update_data *update_data, struct strvec *
-    - {
-    +=20
-      	strvec_pushl(args, "submodule--helper", "update", "--recursive", NUL=
-L);
-      	strvec_pushf(args, "--jobs=3D%d", update_data->max_jobs);
-     -	if (update_data->recursive_prefix)
-3:  7cd1c46f35 =3D 3:  1f7cf6ffaf submodule--helper: use correct display pa=
-th helper
--:  ---------- > 4:  85e65f143b submodule--helper: remove unused SUPPORT_SU=
-PER_PREFIX flags
-4:  57988287fc ! 5:  1d8b6b244d submodule--helper update: use --super-prefi=
-x
-    @@ builtin/submodule--helper.c: struct submodule_update_clone {
-      	const char *prefix;
-     -	const char *recursive_prefix;
-      	const char *displaypath;
-    - 	const char *update_default;
-    + 	enum submodule_update_type update_default;
-      	struct object_id suboid;
-     @@ builtin/submodule--helper.c: static int prepare_to_clone_next_submo=
-dule(const struct cache_entry *ce,
-     =20
-    @@ builtin/submodule--helper.c: static int prepare_to_clone_next_submod=
-ule(const st
-     +						   get_super_prefix());
-     =20
-      	if (ce_stage(ce)) {
-    - 		strbuf_addf(out, _("Skipping unmerged submodule '%s'\n"), displaypa=
-th);
-    -@@ builtin/submodule--helper.c: static void ensure_core_worktree(const=
- char *path)
-    -=20
-    - static void update_data_to_args(struct update_data *update_data, stru=
-ct strvec *args)
-    + 		strbuf_addf(out, _("Skipping unmerged submodule %s"), displaypath);
-    +@@ builtin/submodule--helper.c: static void update_data_to_args(struct=
- update_data *update_data, struct strvec *
-      {
-    + 	enum submodule_update_type update_type =3D update_data->update_defau=
-lt;
-    +=20
-     -	strvec_pushl(args, "submodule--helper", "update", "--recursive", NUL=
-L);
-     -	strvec_pushf(args, "--jobs=3D%d", update_data->max_jobs);
-      	if (update_data->displaypath)
-    @@ builtin/submodule--helper.c: static int module_update(int argc, cons=
-t char **arg
-     -			   N_("path"),
-     -			   N_("path into the working tree, across nested "
-     -			      "submodule boundaries")),
-    - 		OPT_STRING(0, "update", &opt.update_default,
-    - 			   N_("string"),
-    - 			   N_("rebase, merge, checkout or none")),
-    + 		OPT_SET_INT(0, "checkout", &opt.update_default,
-    + 			N_("use the 'checkout' update strategy (default)"),
-    + 			SM_UPDATE_CHECKOUT),
-     @@ builtin/submodule--helper.c: static int module_update(int argc, con=
-st char **argv, const char *prefix)
-      			module_list_active(&list);
-     =20
-    @@ builtin/submodule--helper.c: struct cmd_struct {
-      	{"name", module_name, 0},
-     -	{"clone", module_clone, 0},
-     +	{"clone", module_clone, SUPPORT_SUPER_PREFIX},
-    - 	{"add", module_add, SUPPORT_SUPER_PREFIX},
-    + 	{"add", module_add, 0},
-     -	{"update", module_update, 0},
-     +	{"update", module_update, SUPPORT_SUPER_PREFIX},
-      	{"resolve-relative-url-test", resolve_relative_url_test, 0},
-      	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
-    - 	{"init", module_init, SUPPORT_SUPER_PREFIX},
-    + 	{"init", module_init, 0},
-5:  9fa13380b0 ! 6:  a21e8cd174 submodule--helper: remove display path help=
-er
-    @@ builtin/submodule--helper.c: static int prepare_to_clone_next_submod=
-ule(const st
-     +		get_submodule_displaypath(ce->name, suc->update_data->prefix);
-     =20
-      	if (ce_stage(ce)) {
-    - 		strbuf_addf(out, _("Skipping unmerged submodule '%s'\n"), displaypa=
-th);
-    + 		strbuf_addf(out, _("Skipping unmerged submodule %s"), displaypath);
-     @@ builtin/submodule--helper.c: static int update_submodule(struct upd=
-ate_data *update_data)
-      {
-      	ensure_core_worktree(update_data->sm_path);
-
-base-commit: 5b893f7d81eb7feb43662ed8663e2af76a76b4c8
---=20
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 389b900602..db2d5ab799 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1947,30 +1947,23 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	const char *update_string;
+ 	enum submodule_update_type update_type;
+ 	char *key;
+-	struct strbuf displaypath_sb = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+-	const char *displaypath = NULL;
++	char *displaypath;
+ 	int needs_cloning = 0;
+ 	int need_free_url = 0;
+ 
++	displaypath = do_get_submodule_displaypath(ce->name,
++						   suc->update_data->prefix,
++						   suc->update_data->recursive_prefix);
++
+ 	if (ce_stage(ce)) {
+-		if (suc->update_data->recursive_prefix)
+-			strbuf_addf(&sb, "%s/%s", suc->update_data->recursive_prefix, ce->name);
+-		else
+-			strbuf_addstr(&sb, ce->name);
+-		strbuf_addf(out, _("Skipping unmerged submodule %s"), sb.buf);
++		strbuf_addf(out, _("Skipping unmerged submodule %s"), displaypath);
+ 		strbuf_addch(out, '\n');
+ 		goto cleanup;
+ 	}
+ 
+ 	sub = submodule_from_path(the_repository, null_oid(), ce->name);
+ 
+-	if (suc->update_data->recursive_prefix)
+-		displaypath = relative_path(suc->update_data->recursive_prefix,
+-					    ce->name, &displaypath_sb);
+-	else
+-		displaypath = ce->name;
+-
+ 	if (!sub) {
+ 		next_submodule_warn_missing(suc, out, displaypath);
+ 		goto cleanup;
+@@ -2060,7 +2053,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 					      "--no-single-branch");
+ 
+ cleanup:
+-	strbuf_release(&displaypath_sb);
++	free(displaypath);
+ 	strbuf_release(&sb);
+ 	if (need_free_url)
+ 		free((void*)url);
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 06d804e213..f0408c5cc4 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -1116,4 +1116,60 @@ test_expect_success 'submodule update --filter sets partial clone settings' '
+ 	test_cmp_config -C super-filter/submodule blob:none remote.origin.partialclonefilter
+ '
+ 
++# NEEDSWORK: Clean up the tests so that we can reuse the test setup.
++# Don't reuse the existing repos because the earlier tests have
++# intentionally disruptive configurations.
++test_expect_success 'setup clean recursive superproject' '
++	git init bottom &&
++	test_commit -C bottom "bottom" &&
++	git init middle &&
++	git -C middle submodule add ../bottom bottom &&
++	git -C middle commit -m "middle" &&
++	git init top &&
++	git -C top submodule add ../middle middle &&
++	git -C top commit -m "top" &&
++	git clone --recurse-submodules top top-clean
++'
++
++test_expect_success 'submodule update should skip unmerged submodules' '
++	test_when_finished "rm -fr top-cloned" &&
++	cp -r top-clean top-cloned &&
++
++	# Create an upstream commit in each repo, starting with bottom
++	test_commit -C bottom upstream_commit &&
++	# Create middle commit
++	git -C middle/bottom fetch &&
++	git -C middle/bottom checkout -f FETCH_HEAD &&
++	git -C middle add bottom &&
++	git -C middle commit -m "upstream_commit" &&
++	# Create top commit
++	git -C top/middle fetch &&
++	git -C top/middle checkout -f FETCH_HEAD &&
++	git -C top add middle &&
++	git -C top commit -m "upstream_commit" &&
++
++	# Create a downstream conflict
++	test_commit -C top-cloned/middle/bottom downstream_commit &&
++	git -C top-cloned/middle add bottom &&
++	git -C top-cloned/middle commit -m "downstream_commit" &&
++	git -C top-cloned/middle fetch --recurse-submodules origin &&
++	test_must_fail git -C top-cloned/middle merge origin/main &&
++
++	# Make the update of "middle" a no-op, otherwise we error out
++	# because of its unmerged state
++	test_config -C top-cloned submodule.middle.update !true &&
++	git -C top-cloned submodule update --recursive 2>actual.err &&
++	grep -F "Skipping unmerged submodule middle/bottom" actual.err
++'
++
++test_expect_success 'submodule update --recursive skip submodules with strategy=none' '
++	test_when_finished "rm -fr top-cloned" &&
++	cp -r top-clean top-cloned &&
++
++	test_commit -C top-cloned/middle/bottom downstream_commit &&
++	git -C top-cloned/middle config submodule.bottom.update none &&
++	git -C top-cloned submodule update --recursive 2>actual.err &&
++	grep -F "Skipping submodule ${SQ}middle/bottom${SQ}" actual.err
++'
++
+ test_done
+-- 
 2.37.0.rc0.161.g10f37bed90-goog
 
