@@ -2,69 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E58C2CCA47B
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 10:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47217C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 10:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232985AbiF3KnR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 06:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59898 "EHLO
+        id S233822AbiF3Kx6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 06:53:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235149AbiF3Kms (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 06:42:48 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51D3A51B18
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:41:12 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id o9so25935195edt.12
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:41:12 -0700 (PDT)
+        with ESMTP id S233788AbiF3Kx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 06:53:56 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA9BC40E6A
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:53:55 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id z19so25950078edb.11
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=0vHpNV/0cNtKNKysFah3oBXfSISd9bvULtjT1CMQ/2s=;
-        b=CD6ZMVrnwrBppgI/pJQLgo3bxUnqMKcG1yb+bdu/32A0IvMq7kkEOzEWDGiDUr6Bfq
-         PbuORQxVOqXpX7OPRx0W9yW7fUbni3oCBYTUQLItaTjGCrOES6vzWQHJa4mXfDfcDLxJ
-         /XOU3BZUpDdpx2EKiwpvy5kNB27M3KwgaFGjKxn3zNsG7Vu7eJWZUNrBhB7vknhDFqVp
-         k1YGDJc9NCOv75+bZOU2mYmSPQ2l4FovtDmpq2XjlQfFI2b2PIoyrgn+5MaI7W6rtKlb
-         AOvJMirOJaQkNztMaUzQLf6IF2dnwf6fRp2hsFtSHJE2cMqnjLOf7Y9A6S4tFXq8SIp2
-         epdQ==
+        bh=g/S1r95G4qGSJiFnzMs6pLelXPf5hd1KxaaX37hi6S4=;
+        b=nbuQTMjuj3+EUCkiasSjlTlpX0zv2XLgHnUpfDheaHcrmOPXtAB9pJ2caJUUzJfjh1
+         ZhKX0hinJvodO2TgTd/zMnh+Myo61iDfQ1LzRaT3GphrSAWFlFr0NUTkggZqPdz6snQE
+         tNYtXOTmdEeSMSd8YmiD9Kp8U07rQcGrKoujfnJjLob/llJ5l7ebEhCom/dPlJ4ogkeD
+         Q91yIQZz1zQvaWgsHUGtt0gqJF2EA/k4uovytXhv8x92AmlOu1TtU9D56LXwGwXQs8R9
+         K9NAzxBK6h8qZASXamuOhBvfJcjCpFmsCCZZX8j7s3IZTOku7R1/zN26wmp7X3OngqE+
+         rrDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=0vHpNV/0cNtKNKysFah3oBXfSISd9bvULtjT1CMQ/2s=;
-        b=Os4Dcod4E7yJcufaHCuUcrIIzbWSh1Hr5pBE37LG5pGWzkHUT11O6LFFjul+rIkOkj
-         pMUb3m4T8JrpmRV7dSDxflPIHJn/PmSqbhl8fxKzvUCNhu7HePNfOhUPCt9m3rvk9VQA
-         TkmWiuopgEIhWBMy7qxzjMucTf4I9oWORaQq9NiEtvA731C/y0hVE2Ttz2xbniU2bjuP
-         tXBHGwVx7G7Z5pOuV8GWHLzsW0ebNXVbdRLcjcZ+DzlWd0MMowBTuVZRfynlrUraOLWT
-         oKv7vdi+NXnV/ZexntnY8mx1/LG9i55q0lX+ITL6rVcQhp19qaZOuuyg49nPJ9ARWJOO
-         Pjkw==
-X-Gm-Message-State: AJIora80wOI8op3IyTpQeUUqbB9r7Rp7ys77sfYmlJa33c7EwbyzXxO/
-        Ag/oTUuUUzHnpIqzJA7aTo6/blXof6sZ1g==
-X-Google-Smtp-Source: AGRyM1uJ7c/9ziCb+VFbOWMDy8ocYC9+790fXbOGUzpnVHYixG3261kyDCkVCYJuH1PDyaXoy/Cr3w==
-X-Received: by 2002:a05:6402:d5c:b0:435:6e2f:245b with SMTP id ec28-20020a0564020d5c00b004356e2f245bmr10696328edb.145.1656585670476;
-        Thu, 30 Jun 2022 03:41:10 -0700 (PDT)
+        bh=g/S1r95G4qGSJiFnzMs6pLelXPf5hd1KxaaX37hi6S4=;
+        b=FVC1PEZzF/hx7bpHZE/VxpL2R00vYrFNGrb88y4ioV/iwf6SCuc00CwVIIuNqj790Y
+         hCaAD4SHaAnsVyHeVciHkFOkzqUD/7S8LI9RZ53CVMxp4gqltLx37KTOTt1IK8a6avih
+         3WTw2k7JzqQ7txusoujKoWDuhTA+AvI90XphUj09/X/5T65AgaflM6cgOw4E3jyJWd4+
+         IebH1ECifl+sE0MjX8BgpnjTq++mMlEbzIguhyP3uW3vQwePjFeBL4Mja4LFYL7EqJ84
+         pjKyfkQtJ71rOomrSKjScaw5NApriJQ4UuOzsHgxPJ24cKlFSQZEUj0UEQfIfdb3LEAj
+         okZg==
+X-Gm-Message-State: AJIora87hJ9l/B6ZbcD8JPNja5OVDp/inYyzl/i/H42MOQxf6EcKwe1i
+        dN+VtQBAq783+MsjPKx9+qs=
+X-Google-Smtp-Source: AGRyM1vkh6xiccdYw9OTIR9F9mXUjt0/29aR+i1S6j8YnVrJoskWE4VPnlmZdpX+Vyy+oQEW+4YKow==
+X-Received: by 2002:aa7:cb52:0:b0:437:ceef:c15b with SMTP id w18-20020aa7cb52000000b00437ceefc15bmr10842853edt.60.1656586434372;
+        Thu, 30 Jun 2022 03:53:54 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id u6-20020a170906780600b006fef557bb7asm8856571ejm.80.2022.06.30.03.41.09
+        by smtp.gmail.com with ESMTPSA id t21-20020a05640203d500b0043573c59ea0sm12596789edw.90.2022.06.30.03.53.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 03:41:09 -0700 (PDT)
+        Thu, 30 Jun 2022 03:53:53 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1o6rbg-002FT8-Qz;
-        Thu, 30 Jun 2022 12:41:08 +0200
+        id 1o6ro1-002Fuh-2b;
+        Thu, 30 Jun 2022 12:53:53 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 3/3] merge-ort: fix issue with dual rename and
- add/add conflict
-Date:   Thu, 30 Jun 2022 12:31:52 +0200
-References: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
- <pull.1268.v2.git.1656572225.gitgitgadget@gmail.com>
- <da3ae38e390df8acf86e910389d1620569a95a87.1656572226.git.gitgitgadget@gmail.com>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 0/3] xdiff: introduce memory allocation macros
+Date:   Thu, 30 Jun 2022 12:46:22 +0200
+References: <pull.1272.git.1656516334.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <da3ae38e390df8acf86e910389d1620569a95a87.1656572226.git.gitgitgadget@gmail.com>
-Message-ID: <220630.86letee8mz.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1272.git.1656516334.gitgitgadget@gmail.com>
+Message-ID: <220630.86h742e81q.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -72,128 +67,30 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jun 30 2022, Elijah Newren via GitGitGadget wrote:
+On Wed, Jun 29 2022, Phillip Wood via GitGitGadget wrote:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> There is code in both merge-recursive and merge-ort for avoiding doubly
-> transitive renames (i.e. one side renames directory A/ -> B/, and the
-> other side renames directory B/ -> C/), because this combination would
-> otherwise make a mess for new files added to A/ on the first side and
-> wondering which directory they end up in -- especially if there were
-> even more renames such as the first side renaming C/ -> D/.  In such
-> cases, it just turns "off" directory rename detection for the higher
-> order transitive cases.
->
-> The testcases added in t6423 a couple commits ago are slightly different
-> but similar in principle.  They involve a similar case of paired
-> renaming but instead of A/ -> B/ and B/ -> C/, the second side renames
-> a leading directory of B/ to C/.  And both sides add a new file
-> somewhere under the directory that the other side will rename.  While
-> the new files added start within different directories and thus could
-> logically end up within different directories, it is weird for a file
-> on one side to end up where the other one started and not move along
-> with it.  So, let's just turn off directory rename detection in this
-> case as well.
->
-> Another way to look at this is that if the source name involved in a
-> directory rename on one side is the target name of a directory rename
-> operation for a file from the other side, then we avoid the doubly
-> transitive rename.  (More concretely, if a directory rename on side D
-> wants to rename a file on side E from OLD_NAME -> NEW_NAME, and side D
-> already had a file named NEW_NAME, and a directory rename on side E
-> wants to rename side D's NEW_NAME -> NEWER_NAME, then we turn off the
-> directory rename detection for NEW_NAME to prevent the
-> NEW_NAME -> NEWER_NAME rename, and instead end up with an add/add
-> conflict on NEW_NAME.)
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-ort.c                         | 7 +++++++
->  t/t6423-merge-rename-directories.sh | 4 ++--
->  2 files changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/merge-ort.c b/merge-ort.c
-> index fa6667de18c..17db4c30e5b 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -2292,9 +2292,16 @@ static char *check_for_directory_rename(struct merge_options *opt,
->  	struct strmap_entry *rename_info;
->  	struct strmap_entry *otherinfo = NULL;
->  	const char *new_dir;
-> +	int other_side = 3 - side_index;
->  
-> +	/*
-> +	 * Cases where we don't have or don't want a directory rename for
-> +	 * this path, so we return NULL.
-> +	 */
->  	if (strmap_empty(dir_renames))
->  		return new_path;
-> +	if (strmap_get(&collisions[other_side], path))
-> +		return new_path;
+> This patch series introduces macros for allocating and growing arrays in
+> xdiff. The macros are similar to ALLOC_ARRAY()/ALLOC_GROW() from the rest of
+> the code base but return an error on failure to allow libgit2 to handle
+> memory allocation failures gracefully rather than dying. The macros
+> introduce overflow checks but these checks are currently redundant as we
+> limit the maximum file size passed to xdiff and these checks alone are
+> insufficient to safely remove the size limit. The aim of this series is to
+> make the xdiff code more readable, there should be no change in behavior (as
+> such I'm open to the argument that these are just churn and should be
+> dropped).
 
-I realize from looking at merge-recursive.c that this is carrying
-forward some legacy debt, but I find this code and the need for a
-comment more complex than it needs to. On top of master this will work
-just as well:
-	
-	diff --git a/merge-ort.c b/merge-ort.c
-	index b5015b9afd4..f5a02b1ff6f 100644
-	--- a/merge-ort.c
-	+++ b/merge-ort.c
-	@@ -2268,16 +2268,16 @@ static char *check_for_directory_rename(struct merge_options *opt,
-	 					struct strmap *collisions,
-	 					int *clean_merge)
-	 {
-	-	char *new_path = NULL;
-	+	char *new_path;
-	 	struct strmap_entry *rename_info;
-	 	struct strmap_entry *otherinfo = NULL;
-	 	const char *new_dir;
-	 
-	 	if (strmap_empty(dir_renames))
-	-		return new_path;
-	+		return NULL;
-	 	rename_info = check_dir_renamed(path, dir_renames);
-	 	if (!rename_info)
-	-		return new_path;
-	+		return NULL;
-	 	/* old_dir = rename_info->key; */
-	 	new_dir = rename_info->value;
+I think it's a good direction, but why not make such new macros
+non-XDL_* specific, add them to git-compat-util.h, and then define our
+existing macros that call xmalloc() now in terms of these new macros?
 
-I.e. we're really just making the reader squint to see that we're
-actually returning NULL here, it's only later that we have an actual
-"new path".
+I realize that it'll take a bit more careful hacking in wrapper.c and
+git-compat-util.h, but it would allow us to eventually make some other
+low-level APIs of ours use such an API.
 
-Wouldn't sticking that earlier in this series be an improvement? The
-reason you need to explain "so we return NULL" is because we're carrying
-forward this oddity, but if we just don't initialize it and return NULL
-instead...
+E.g. we have some hand-rolled replacements for "struct strbuf" in at
+least a couple of places (e.g. vreportf() in usage.c). If you pull on
+that thread you'll see that it's for no reason other than strbuf.c calls
+ALLOC_GROW(), which we'll die() in, and we don't want to die on malloc
+failure in e.g. BUG().
 
-If you want to keep this pretty much as-is I think you should add a \n
-before the (not seen in your context) "old_dir" comment seen in the
-context here above, to make it visually clear that your new comment is
-referring to these chains of returns. That could also be made clearer
-with (again, on top of master, and could be combined with the above):
-	
-	diff --git a/merge-ort.c b/merge-ort.c
-	index b5015b9afd4..a418f81a3eb 100644
-	--- a/merge-ort.c
-	+++ b/merge-ort.c
-	@@ -2278,8 +2278,6 @@ static char *check_for_directory_rename(struct merge_options *opt,
-	 	rename_info = check_dir_renamed(path, dir_renames);
-	 	if (!rename_info)
-	 		return new_path;
-	-	/* old_dir = rename_info->key; */
-	-	new_dir = rename_info->value;
-	 
-	 	/*
-	 	 * This next part is a little weird.  We do not want to do an
-	@@ -2305,6 +2303,7 @@ static char *check_for_directory_rename(struct merge_options *opt,
-	 	 * As it turns out, this also prevents N-way transient rename
-	 	 * confusion; See testcases 9c and 9d of t6043.
-	 	 */
-	+	new_dir = rename_info->value; /* old_dir = rename_info->key; */
-	 	otherinfo = strmap_get_entry(dir_rename_exclusions, new_dir);
-	 	if (otherinfo) {
-	 		path_msg(opt, rename_info->key, 1,
