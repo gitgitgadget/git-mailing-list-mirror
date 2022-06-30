@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9BCAC433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E1D0C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:19:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237458AbiF3VT4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:19:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40810 "EHLO
+        id S237266AbiF3VT5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:19:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237380AbiF3VTt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:19:49 -0400
+        with ESMTP id S237447AbiF3VTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:19:51 -0400
 Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD3004D157
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:47 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id m6-20020a05600c3b0600b003a0489f412cso2787436wms.1
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D72614D163
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:48 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id bi22-20020a05600c3d9600b003a04de22ab6so374709wmb.1
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=B/d9zfDBGBH2WfhA15IekN+oYjG+N/9fpuUdJfBvscY=;
-        b=ee9tNqYIpXpOZlGq2eTxaf80QmHVeo/OWKontjoeYpJGuPjQ3iDlC5fQTV0UKwTXHG
-         HTFL7mnc9fYW7lrJ6foXjnGeiIMgRDss+WNogVxrWRVbRAmshJ0IopTQ6fptC1z2qP1W
-         LSeGpLJ4M4ucfxBt5v4oKP1JxWuRllTjwQu6+lHnWWzrCSvD9SZvh322BblmIQtdEPRO
-         n5DK9WJCJcWQJCHyi/l4HNcTH+sjB2kYCWbn/VbR9gB2+e6Mbe+HZxuKoUWPG4K8JGmH
-         bvargQK1upPWZvGxZmDYaf22OF0/Y+kks9Mg/Jb60T5SoUOKHfMzrXVGG7bH5lovCl3q
-         UX9A==
+        bh=MmzucdxnE+bxcFGBDoEmUZB3oC12u7RlBA3TNrXoRR4=;
+        b=Ze27xuz7hzmTcvUW1ca3jYXSKeECIvUl386sLovDu0h1qBsRWfLoJTmpR9DTiKH9XP
+         tM/pDU69G2ooCBaPr/Y0tTnqNRHWsgQ1vfkwpWXHPIh+6H27/FpIKhUbdWyPu31mb+0D
+         5n+xOzs1nmLMpqvtYWvPm+no2e0pJr/TQTKSe7CGQdEwnyQnBREl3MP5omC7+sBTB8v2
+         PDyBDyREILA9YjgNqOkZEfwr1pQeTy0oZpaC1AeSBPIcOXAp+qLHy8VJjhqaV2/Ggg1t
+         r9OOOldkMoEiYRm/fr5PXFaW61Ahnh35aFoaYvnD0ykBZgosSiIwBsT27hoOYIIvcDQ9
+         P/2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=B/d9zfDBGBH2WfhA15IekN+oYjG+N/9fpuUdJfBvscY=;
-        b=wN9qiuTLPcCVk2/sivGzHihi7ARa3/FSFFTDqABzXzVKjam2gdEt0s3X4oQd6CInwQ
-         KJQd6GPiEIsun5zZcNn+JcNqM915Xm0e4B9Mm3toab1Nie9YFINJ4c7F6qnG/r5dtpYJ
-         YxfVoEsjxRumngjgUaazqlfXBInVYfcUhO4teHUExBOsJXF4DEHqWp5FQm0tPbVkPn6T
-         CSKa3PIrcpK6BLMMX8nF357LjnBxp/mk03ioecDf+8E7s8fnyCFobt4+kYw8hjcQ9qNb
-         BxIo5JmV02zcbuDVr7ZktpwGBMCvO8gLwtgwxTmx8ZZUYTuFIcxgNqljcW9p68hqXKgt
-         x+/A==
-X-Gm-Message-State: AJIora+q99YQenPp+Ksq6E4uHo6uX3W/qHKav9IQoawgVFrjP85ciDIZ
-        yLr65Xl2ZObBVmJ1G4GUZYCHNPudVmw=
-X-Google-Smtp-Source: AGRyM1sxSE9mQiGqdSz1oXo41432CAteo1OlLZ/aZptHo+CxzNqPHnwWZtK1siXcNdp71cQPE7J9Ow==
-X-Received: by 2002:a7b:c01a:0:b0:3a1:7ab1:e5dc with SMTP id c26-20020a7bc01a000000b003a17ab1e5dcmr7523731wmb.128.1656623986089;
-        Thu, 30 Jun 2022 14:19:46 -0700 (PDT)
+        bh=MmzucdxnE+bxcFGBDoEmUZB3oC12u7RlBA3TNrXoRR4=;
+        b=Jdwv1ZvAds93s2cp9h5vsClH9oZImYwPVtero9KwloQJ4ypPVGhQyNZkaDmB4K2Mwf
+         xjozvbzNj8DupCTXu7c4uqCmvWlgUtw/FS2dAKM/CEZk3cP7S59/9AeBnw0YnJdFiygq
+         RD7i0TwELuu+CkEiDQ5086tISEZDY6fUVwlfqDb22oXqSfFL+PYOSycTC/DSTEd2doXA
+         MTpZYA5PLz3Gg9y+nFKr43IRQoWJ3EwVwgkOpQjror96kOW1fRGU6cpL/LYJjFqC3bRl
+         FwAamaaRx8+cUYySoq7miS9V57rFsx4g0T/KXIGR00Bb0D75DZFBzc9xQ6eZoeVM+MMw
+         PPBg==
+X-Gm-Message-State: AJIora+9DNCOHBX57RUho3cs+adukcP4cZcTABYB6oH0uK6BiISvoRGs
+        LJnyXqWhPaBd6kVI5Cn9h921tRZtXYY=
+X-Google-Smtp-Source: AGRyM1s6H24xhTzbQsI0BC3gsnUkm3EWkHL0FncEq/Ht0Vctw2JClFnzC8awWFEVavcZ9ns3sIkx1w==
+X-Received: by 2002:a05:600c:3b1c:b0:3a1:729a:387a with SMTP id m28-20020a05600c3b1c00b003a1729a387amr10184670wms.183.1656623987102;
+        Thu, 30 Jun 2022 14:19:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z5-20020adfe545000000b0021b81855c1csm24780322wrm.27.2022.06.30.14.19.45
+        by smtp.gmail.com with ESMTPSA id g14-20020a05600c4ece00b0039c99f61e5bsm4391037wmq.5.2022.06.30.14.19.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 14:19:45 -0700 (PDT)
-Message-Id: <d9c7f69aaa6b001949e9d2b693c22c595cc9d0d6.1656623978.git.gitgitgadget@gmail.com>
+        Thu, 30 Jun 2022 14:19:46 -0700 (PDT)
+Message-Id: <0d68ee723e54330138450f29e358e5ebe1a47aa0.1656623978.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
 References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
         <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Thu, 30 Jun 2022 21:19:25 +0000
-Subject: [PATCH v2 05/18] submodule--helper: have --require-init imply --init
+Date:   Thu, 30 Jun 2022 21:19:26 +0000
+Subject: [PATCH v2 06/18] submodule update: remove "-v" option
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,63 +74,61 @@ X-Mailing-List: git@vger.kernel.org
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
  <avarab@gmail.com>
 
-Adjust code added in 0060fd1511b (clone --recurse-submodules: prevent
-name squatting on Windows, 2019-09-12) to have the internal
---require-init option imply --init, rather than having
-"git-submodule.sh" add it implicitly.
+In e84c3cf3dc3 (git-submodule.sh: accept verbose flag in cmd_update to
+be non-quiet, 2018-08-14) the "git submodule update" sub-command was
+made to understand "-v", but the option was never documented.
 
-This change doesn't make any difference now, but eliminates another
-special-case where "git submodule--helper update"'s behavior was
-different from "git submodule update". This will make it easier to
-eventually replace the cmd_update() function in git-submodule.sh.
+The only in-tree user has been this test added in
+3ad0401e9e6 (submodule update: silence underlying merge/rebase with
+"--quiet", 2020-09-30), it wasn't per-se testing --quiet, but fixing a
+bug in e84c3cf3dc3: It used to set "GIT_QUIET=0" instead of unsetting
+it on "-v", and thus we'd end up passing "--quiet" to "git
+submodule--helper" on "-v", since the "--quiet" option was passed
+using the ${parameter:+word} construct.
 
-We'll still need to keep the distinction between "--init" and
-"--require-init" in git-submodule.sh. Once cmd_update() gets
-re-implemented in C we'll be able to change variables and other code
-related to that, but not yet.
+Furthermore, even if someone had used the "-v" option they'd only be
+getting the default output. Our default in both git-submodule.sh and
+"git submodule--helper" has been to be "verbose", so the only way this
+option could have matter is if it were used as e.g.:
+
+    git submodule --quiet update -v [...]
+
+I.e. to undo the effect of a previous "--quiet" on the command-line.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/submodule--helper.c | 5 ++++-
- git-submodule.sh            | 1 -
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ git-submodule.sh            | 3 ---
+ t/t7406-submodule-update.sh | 2 +-
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 5c77dfcffee..f0702d0cfa2 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2618,7 +2618,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "progress", &opt.progress,
- 			    N_("force cloning progress")),
- 		OPT_BOOL(0, "require-init", &opt.require_init,
--			   N_("disallow cloning into non-empty directory")),
-+			   N_("disallow cloning into non-empty directory, implies --init")),
- 		OPT_BOOL(0, "single-branch", &opt.single_branch,
- 			 N_("clone only one branch, HEAD or --branch")),
- 		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
-@@ -2642,6 +2642,9 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, module_update_options,
- 			     git_submodule_helper_usage, 0);
- 
-+	if (opt.require_init)
-+		opt.init = 1;
-+
- 	if (filter_options.choice && !opt.init) {
- 		usage_with_options(git_submodule_helper_usage,
- 				   module_update_options);
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 20fc1b620fa..5b9683bf766 100755
+index 5b9683bf766..0df6b0fc974 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -251,7 +251,6 @@ cmd_update()
- 			init=1
+@@ -241,9 +241,6 @@ cmd_update()
+ 		-q|--quiet)
+ 			GIT_QUIET=1
  			;;
- 		--require-init)
--			init=1
- 			require_init=1
+-		-v)
+-			unset GIT_QUIET
+-			;;
+ 		--progress)
+ 			progress=1
  			;;
- 		--remote)
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 43f779d751c..06d804e2131 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -1074,7 +1074,7 @@ test_expect_success 'submodule update --quiet passes quietness to merge/rebase'
+ 	 git submodule update --rebase --quiet >out 2>err &&
+ 	 test_must_be_empty out &&
+ 	 test_must_be_empty err &&
+-	 git submodule update --rebase -v >out 2>err &&
++	 git submodule update --rebase >out 2>err &&
+ 	 test_file_not_empty out &&
+ 	 test_must_be_empty err
+ 	)
 -- 
 gitgitgadget
 
