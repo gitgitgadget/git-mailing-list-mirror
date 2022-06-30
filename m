@@ -2,85 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C66A0C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 15:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BAB7CCA480
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 15:34:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235769AbiF3P2D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 11:28:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36794 "EHLO
+        id S236112AbiF3PeD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 11:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235821AbiF3P2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 11:28:00 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1159F3D4B5
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 08:28:00 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id u7so7813292qvm.4
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 08:28:00 -0700 (PDT)
+        with ESMTP id S235958AbiF3Pdf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 11:33:35 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B3294133E
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 08:33:34 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id r18so19225688edb.9
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 08:33:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=dm0Kqj5Ic595mDPXP8WjVHfYFQfyGMFGyyos4RLvHq8=;
-        b=SFIjyejDsfTZUJ47AWlYp++XHa3hNxjRYyifIM2ThY9qKbtK7aJRtMiAJlWgpKO5UT
-         ZdK+AlTUnwRNAlmXf2F4RnP2gpNXd6TKNG4u+k2kYlr2g/fGAWH5VN8zxpwLfvirO4Ir
-         0Wv0btaO3FxM4IcC9BqvUgc4xhktZwL/kide4=
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=YxCaA3QOFzzWgG/pb0GBXl6WQN7b/kIYYrRfwb3agJY=;
+        b=GYrxYyQWP5rVUYrgH/zGUZErDlqkLl8VARbPC71A0o0A7KreSG0nUkSEuAPUH0RYmF
+         A6PG30zAvz6j/ID1XJ4ONwOYsU0fiRnLEntG1ecMCNzDYssGzi7/PM4+eEfZqxn/YK2v
+         UN3YFu2RFzOsCXmxUluyUenf+h9Qh1VUh9C4KnMxp3dBF1KOKLMATaT07ZD21JZmybsl
+         6QVFhJ8tU/iKFoF59Gr0ebk4S3b8ieOi77mF+6Cp0fY2EEtmzt2dYl/i6BzUjpzIGVxJ
+         LKG9kBTJY+3ENQ9Y8nUI3mqKCBWIqFWIFO+t5iLAT3h809Q1/jdXylqSj0Kflub7xZgX
+         64wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=dm0Kqj5Ic595mDPXP8WjVHfYFQfyGMFGyyos4RLvHq8=;
-        b=WK+CXaG9dVuOLgbUvj1G3lXAiA4a7+BbxM2wBdGlnnQdJ9yoACeN2oVc2rciizjhAL
-         tLk6DukM//y8cTePyfGxAOYt7jWxELENGxmQELXB8XNeTuZsFJD2uPQwZwEwtra72ANe
-         QHy3OsbMN/t6NAMNrO+Tvsan321VYtUJJDJ6g1zFsn5XDg7IbVLIvtre0e86svBSWOi/
-         vW7PUoFRPWkOuPaJGbCX1kDZXY+bH21ZpVVYrDzGl9pl3SqZPqI0GOMTwFFTKYH4kYjU
-         Jv67iBT88GXcwVtjIoiex8+FRH3lvko4hTHFb1vTrngUQNoILIZo+ZFvja1+/lLZSxJU
-         w/nA==
-X-Gm-Message-State: AJIora85rJ5q/dxFgowrL+XsLmACTPODxXOejRVUA3iEOci1vxXKqece
-        JzAKZ1IIUoWYpskyxp7Dwa4Yz8ju47VnGQ==
-X-Google-Smtp-Source: AGRyM1u2hn5nmNqZgBY0iN4o0N8ZN7x+ai0qEI/NbB56cixQQfB5UDXjajlb4BrjR8Y03TycJySW4g==
-X-Received: by 2002:ac8:5dd1:0:b0:31d:34db:e0d with SMTP id e17-20020ac85dd1000000b0031d34db0e0dmr184764qtx.592.1656602879008;
-        Thu, 30 Jun 2022 08:27:59 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id h15-20020a05620a400f00b006af147d4876sm13534443qko.30.2022.06.30.08.27.58
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 08:27:58 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 11:27:57 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     git@vger.kernel.org
-Subject: Non-interactively rewording commit messages
-Message-ID: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=YxCaA3QOFzzWgG/pb0GBXl6WQN7b/kIYYrRfwb3agJY=;
+        b=zPtyJxwromPye769kVI1MHIm5/Mm+FcDomyy+QMwn8EeyUXRijFEF+HHclcvF48baV
+         RKXjk9a5qmttHu9mAVEXtdpdUVPin8mpaj9l6PWfxVWfiEKPKyEAvNpgZmtjJrzIBUNG
+         6IldvuOgc6Up3BryC7NBM/8Z4/KTYGX0YUk0s9Mv9ATm0mqgJqtOSV6gY/cKiAnNHkoM
+         vlnoTGj23nLLABRp6i5DlUMvdkvgdev5skyL8/JV0TSqS8AVQmUn/CW/jnzoQyE3yl+N
+         BfIm9kyj9SjUXEM+Sm+GCVCfRvWI+q6GwYfLuvhatsJQxpzSfBb90YNVSTwjjSxlHbNU
+         pLEw==
+X-Gm-Message-State: AJIora/AJ7EoHs5wI2RJ8qbhKSQgcEgH6dl3wY1yxMzSR4VfFBYONzv+
+        EfeibH5bjRR6HE1BPXnwuflwyoIR5hs=
+X-Google-Smtp-Source: AGRyM1uzlUuizd19D/m5DmF1k/4HpMOh2PJN9+8vbs3gJgqEbPRFKBqcrSrDePVdY7l7w0Xbe2mmSA==
+X-Received: by 2002:a05:6402:f8d:b0:435:6df2:68a with SMTP id eh13-20020a0564020f8d00b004356df2068amr12341288edb.209.1656603212645;
+        Thu, 30 Jun 2022 08:33:32 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id j20-20020a056402239400b00439645915a4sm584673eda.49.2022.06.30.08.33.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jun 2022 08:33:32 -0700 (PDT)
+Message-ID: <ad7fff11-5ab2-d314-5e12-bdf61b854aa6@gmail.com>
+Date:   Thu, 30 Jun 2022 16:33:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/3] ident: rename commit_rewrite_person() to
+ rewrite_ident_line()
+Content-Language: en-GB-large
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>,
+        git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>
+References: <20220630142444.651948-1-siddharthasthana31@gmail.com>
+ <20220630142444.651948-3-siddharthasthana31@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20220630142444.651948-3-siddharthasthana31@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, all:
+Hi Siddharth
 
-What's the best approach to non-interactively rewrite specific commit
-messages? In this particular case, I am trying to automatically retrieve code
-review trailers sent to the mailing list and put them into corresponding
-commits.
+Welcome to the list!
 
-For example, I have a set of commits:
+On 30/06/2022 15:24, Siddharth Asthana wrote:
+> We will be using commit_rewrite_person() in git-cat-file to rewrite
+> ident line in commit/tag object buffers.
+> 
+> Following are the reason for renaming commit_rewrite_person():
+> - the function can be used not only on a commit buffer, but also on a
+>    tag object buffer, so having "commit" in its name is misleading.
+> - the function works on the ident line in the commit/tag object buffers,
+>    just like "split_ident_line()". Since these functions are related they
+>    should have similar terms for uniformity.
 
-abcabc: This commit does foo
-bcdbcd: This commit does bar
-cdecde: This commit does baz
+I'm afraid I'm not sure about this change as the interface for 
+split_ident_line() and commit_rewrite_person() are not uniform. 
+split_ident_line() takes a pointer to the beginning of the name in an 
+ident line and a length. commit_rewrite_person() takes the whole commit 
+buffer and searches for the ident line based on the argument "what". I 
+agree that having commit in the name of the function is confusing when 
+it can be used for a tag, but having line in the name when it takes a 
+whole buffer is also confusing. Maybe buffer_rewrite_person() or 
+something like that would be clearer?
 
-They were all sent to the mailing list and a maintainer sent a "Reviewed-by"
-to the second commit. In a usual interactive rebase session this would be:
+Best Wishes
 
-pick abcabc
-reword bcdbcd
-pick cdecde
+Phillip
 
-When the edit screen comes up for the bcdbcd commit, the author would manually
-stick the new trailer into the commit message. However, I can automate all
-that away with b4 -- just need a sane strategy for non-interactively rewriting
-entire commit messages at arbitrary points in the recent history.
 
-Any pointers?
-
--Konstantin
+> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: John Cai <johncai86@gmail.com>
+> ---
+>   cache.h    | 2 +-
+>   ident.c    | 2 +-
+>   revision.c | 4 ++--
+>   3 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/cache.h b/cache.h
+> index 442bfe5f6a..c8a98d8a80 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1694,7 +1694,7 @@ int split_ident_line(struct ident_split *, const char *, int);
+>    * name and email using mailmap mechanism. Signals a success with
+>    * 1 and failure with a 0.
+>    */
+> -int commit_rewrite_person(struct strbuf *buf, const char *what, struct string_list *mailmap);
+> +int rewrite_ident_line(struct strbuf *buf, const char *what, struct string_list *mailmap);
+>   
+>   /*
+>    * Compare split idents for equality or strict ordering. Note that we
+> diff --git a/ident.c b/ident.c
+> index 8c890bd474..d15f579fd5 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -347,7 +347,7 @@ int split_ident_line(struct ident_split *split, const char *line, int len)
+>   	return 0;
+>   }
+>   
+> -int commit_rewrite_person(struct strbuf *buf, const char *what, struct string_list *mailmap)
+> +int rewrite_ident_line(struct strbuf *buf, const char *what, struct string_list *mailmap)
+>   {
+>   	char *person, *endp;
+>   	size_t len, namelen, maillen;
+> diff --git a/revision.c b/revision.c
+> index da49e73cd6..0c8243a8e0 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -3790,8 +3790,8 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+>   		if (!buf.len)
+>   			strbuf_addstr(&buf, message);
+>   
+> -		commit_rewrite_person(&buf, "\nauthor ", opt->mailmap);
+> -		commit_rewrite_person(&buf, "\ncommitter ", opt->mailmap);
+> +		rewrite_ident_line(&buf, "\nauthor ", opt->mailmap);
+> +		rewrite_ident_line(&buf, "\ncommitter ", opt->mailmap);
+>   	}
+>   
+>   	/* Append "fake" message parts as needed */
