@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48F1DC43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5058BC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236636AbiF3SOZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 14:14:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32808 "EHLO
+        id S236640AbiF3SO0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 14:14:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236603AbiF3SOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 14:14:06 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B59F3FDA5
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:14:05 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id be14-20020a05600c1e8e00b003a04a458c54so85336wmb.3
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:14:05 -0700 (PDT)
+        with ESMTP id S236604AbiF3SOI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 14:14:08 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2313D1E6
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:14:06 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id r20so28486438wra.1
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gTcS6gAx+mAwu67s0Vsrg+OViPFhCGZSE7su0s70T3I=;
-        b=dPT5fRhA7pUwTjatcT8tWk38p6jgEeqSPd6wvvhRJVaAH75nSdJ4NKYB/KRRFLS07h
-         x6cD3ZnkEW3+krMkpBgenAR2YwYOQ9DLh9LZNYp+R1zRnx34WWAkotWtBBzFN2LMTLmP
-         PA7ohm5eMbxc/JPdhMnTxRcOrIVwKtxKJNbiYhptxvgNK+xk+P2U9b17L7619/x+0t+r
-         jpdjPBYhhtg7tXuXiJ0w6YkdrzxL8DRi+eg51kCmMKntYqxlBxUmhKqLfR4LRjARu+iA
-         2n/oEWeAT4LVR8DN7HahRcZwdUIT9YkDZ308SmNwXugtENWXTPpLg13kf8paut9RXQrW
-         MTTg==
+        bh=BuAOV0ZU7Afp2grKZb5gtV5C/rUTELHJYczDClikMtA=;
+        b=hhg3kytvX92pMJnfQaUONUL52GrCsHCmbZDiw5xN7Tu1WpXzlHyQLif0siD5QB+uIL
+         eRZdxwDr+KnyOk39EdFiGmEcmW84jbU+p4nwFHa/VgjZYwcz0fxr4BLNZK+d4xvNrM/q
+         76iNUdPZ2x+Mboy7sIoHy27ZPcdg8vUoglaxcOw9pwa9vfwgXBA325G4HwWVpXBDGjpK
+         swx1h4JIChOHQzy6yXeuDwifblylrFA/2+40fXXtm8TdkEtb5xJZbFnq5LQdwAAyDImc
+         kHhJyqw8L69tjBNgyL9vEwq6j0+gcu46dfK/ByFdPlPcS4ccMZ0sbgJoXJW/bU449uUo
+         x7dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gTcS6gAx+mAwu67s0Vsrg+OViPFhCGZSE7su0s70T3I=;
-        b=Yr3NR2ZnRS+4TUozzMY8Nfe0IBatN0+z9yBRhvqJyNtxFbc+cpnElBz6HB6szuCI9g
-         kzTLK9kSxK9FHOAodnu7Kb8lGjYT8vtTzisGeLreGDnrpgiTYtaFHO2bihQzCcV6DXDh
-         6F8ti4BDJPbbEhlTUhXRMV+coyHbuTyKmz53ckPY3nuHb52OP9ru14+VURT764JJwKmm
-         eIWvQIl3FFwi0juJ0ccUu+CUQLtiWekopclUhyy5RhzZ4nfebZURNtnnwAoYMSSi4HZH
-         bH/5PqzCgl4mWEz+j3S6uzWL1MCmqvFHdsvPWjCfspp5rM2nDuPaLiWjrJoSLHHpK9bY
-         eDTQ==
-X-Gm-Message-State: AJIora9oY8vVwPW0uY9RT4TjmgeJ99TwbFzscVTpWSaDihaN66+BWXry
-        IoCjgUIQZ7y4n3Ixoe+dKBshLd+2JmY=
-X-Google-Smtp-Source: AGRyM1vbtK5BVGVqa+o9ftYnZocg8gH/ZJFyHZZZ/SmiV+ulvC3bSApvSWdFJEAjKgKirKococHvdA==
-X-Received: by 2002:a05:600c:154a:b0:3a1:7002:3486 with SMTP id f10-20020a05600c154a00b003a170023486mr9504463wmg.104.1656612843508;
-        Thu, 30 Jun 2022 11:14:03 -0700 (PDT)
+        bh=BuAOV0ZU7Afp2grKZb5gtV5C/rUTELHJYczDClikMtA=;
+        b=SIgP/56sH7lxClhIXItzxiTeweie3dguKqfVR53mDbMMk5YmWlNkpjwJbH5hjgL8Yw
+         08J4RZR86aZv7e7lC96t8008BjjFxfifboSqYiHOTQHQ+OQtZMF1XlgkwGKiwbR9MAJV
+         QggV2q/zRoM9WjQcZ1lz3atJvhY7XHL3gM0yp22aj391pINLnQvVFXBV0izICy7P9cca
+         yBOS3m5AAg6Og5v7FtAS0VNTMKRWYfhCN/38TPQgc/Inx7T41Hh8Z1C9i8mQCdXYqxVZ
+         PMtoS/d7hRq9itc+7RnmVJZQnrPPqe9CK79ckEBNPqa+zTBqAjb0m1e3sNkAesiAslyg
+         T3fg==
+X-Gm-Message-State: AJIora+Q3clvxizzbUaokrZuHxGOqBP8tUVFOnI+NIAbs86jX3qFhwfK
+        HpSdW4HJfb8Zsjfhp4T24GhJo616Ho4=
+X-Google-Smtp-Source: AGRyM1soc3EspeF61OM7mEUwSGCv+3Sn6adwvAwjQNjCmGu0DZ7UxEiTH/wnxqXwOuXh1lu0eviGDQ==
+X-Received: by 2002:a5d:5405:0:b0:21b:b8a4:2482 with SMTP id g5-20020a5d5405000000b0021bb8a42482mr10158593wrv.452.1656612844919;
+        Thu, 30 Jun 2022 11:14:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l21-20020a05600c4f1500b003a02b9c47e4sm4285990wmq.27.2022.06.30.11.14.02
+        by smtp.gmail.com with ESMTPSA id u20-20020a05600c19d400b0039c4f53c4fdsm4332061wmq.45.2022.06.30.11.14.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 11:14:02 -0700 (PDT)
-Message-Id: <43627c05c0b997ea407c865b04994cba630297d6.1656612839.git.gitgitgadget@gmail.com>
+        Thu, 30 Jun 2022 11:14:04 -0700 (PDT)
+Message-Id: <3efe282e6b94c3daed77590c5f601fad34137c9c.1656612839.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com>
 References: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
         <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 30 Jun 2022 18:13:56 +0000
-Subject: [PATCH v6 2/5] Documentation: define protected configuration
+Date:   Thu, 30 Jun 2022 18:13:57 +0000
+Subject: [PATCH v6 3/5] config: learn `git_protected_config()`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,113 +74,253 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-For security reasons, there are config variables that are only trusted
-when they are specified in certain configuration scopes, which are
-sometimes referred to on-list as 'protected configuration' [1]. A future
-commit will introduce another such variable, so let's define our terms
-so that we can have consistent documentation and implementation.
+`uploadpack.packObjectsHook` is the only 'protected configuration only'
+variable today, but we've noted that `safe.directory` and the upcoming
+`discovery.bare` should also be 'protected configuration only'. So, for
+consistency, we'd like to have a single implementation for protected
+config.
 
-In our documentation, define 'protected configuration' as the system,
-global and command config scopes. As a shorthand, I will refer to
-variables that are only respected in protected config as 'protected
-configuration only', but this term is not used in the documentation.
+The primary constraints are:
 
-This definition of protected config is based on whether or not Git can
-reasonably protect the user by ignoring the configuration scope:
+1. Reading from protected configuration should be as fast as possible.
+   Nearly all "git" commands inside a bare repository will read both
+   `safe.directory` and `discovery.bare`, so we cannot afford to be
+   slow.
 
-- System, global and command line config are considered protected
-  because an attacker who has control over any of those can do plenty of
-  harm without Git, so we gain very little by ignoring those scopes.
-- On the other hand, local (and similarly, worktree) config are not
-  considered protected because it is relatively easy for an attacker to
-  control local config, e.g.:
-  - On some shared user environments, a non-admin attacker can create a
-    repository high up the directory hierarchy (e.g. C:\.git on
-    Windows), and a user may accidentally use it when their PS1
-    automatically invokes "git" commands.
+2. Protected config must be readable when the gitdir is not known.
+   `safe.directory` and `discovery.bare` both affect repository
+   discovery and the gitdir is not known at that point [1].
 
-    `safe.directory` prevents attacks of this form by making sure that
-    the user intended to use the shared repository. It obviously
-    shouldn't be read from the repository, because that would end up
-    trusting the repository that Git was supposed to reject.
-  - "git upload-pack" is expected to run in repositories that may not be
-    controlled by the user. We cannot ignore all config in that
-    repository (because "git upload-pack" would fail), but we can limit
-    the risks by ignoring `uploadpack.packObjectsHook`.
+The chosen implementation in this commit is to read protected
+configuration and cache the values in a global configset. This is
+similar to the caching behavior we get with the_repository->config.
 
-Only `uploadpack.packObjectsHook` is 'protected configuration only'. The
-following variables are intentionally excluded:
+Introduce git_protected_config(), which reads protected configuration
+and caches them in the global configset protected_config. Then, refactor
+`uploadpack.packObjectsHook` to use git_protected_config().
 
-- `safe.directory` should be 'protected configuration only', but it does
-  not technically fit the definition because it is not respected in the
-  "command" scope. A future commit will fix this.
+The protected configuration functions are named similarly to their
+non-protected counterparts, e.g. git_protected_config_check_init() vs
+git_config_check_init().
 
-- `trace2.*` happens to read the same scopes as `safe.directory` because
-  they share an implementation. However, this is not for security
-  reasons; it is because we want to start tracing so early that
-  repository-level config and "-c" are not available [2].
+In light of constraint 1, this implementation can still be improved
+since git_protected_config() iterates through every variable in
+protected_config, which may still be too expensive. There exist constant
+time lookup functions for non-protected configuration
+(repo_config_get_*()), but for simplicity, this commit does not
+implement similar functions for protected configuration.
 
-  This requirement is unique to `trace2.*`, so it does not makes sense
-  for protected configuration to be subject to the same constraints.
+An alternative that avoids introducing another configset is to continue
+to read all config using git_config(), but only accept values that have
+the correct config scope [2]. This technically fulfills constraint 2,
+because git_config() simply ignores the local and worktree config when
+the gitdir is not known. However, this would read incomplete config into
+the_repository->config, which would need to be reset when the gitdir is
+known and git_config() needs to read the local and worktree config.
+Resetting the_repository->config might be reasonable while we only have
+these 'protected configuration only' variables, but it's not clear
+whether this extends well to future variables.
 
-[1] For example,
-https://lore.kernel.org/git/6af83767-576b-75c4-c778-0284344a8fe7@github.com/
-[2] https://lore.kernel.org/git/a0c89d0d-669e-bf56-25d2-cbb09b012e70@jeffhostetler.com/
+[1] In this case, we do have a candidate gitdir though, so with a little
+refactoring, it might be possible to provide a gitdir.
+[2] This is how `uploadpack.packObjectsHook` was implemented prior to
+this commit.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- Documentation/config/uploadpack.txt |  6 +++---
- Documentation/git-config.txt        | 13 +++++++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ config.c                     | 51 ++++++++++++++++++++++++++++++++++++
+ config.h                     | 17 ++++++++++++
+ t/t5544-pack-objects-hook.sh |  7 ++++-
+ upload-pack.c                | 27 ++++++++++++-------
+ 4 files changed, 91 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/config/uploadpack.txt b/Documentation/config/uploadpack.txt
-index 32fad5bbe81..029abbefdff 100644
---- a/Documentation/config/uploadpack.txt
-+++ b/Documentation/config/uploadpack.txt
-@@ -49,9 +49,9 @@ uploadpack.packObjectsHook::
- 	`pack-objects` to the hook, and expects a completed packfile on
- 	stdout.
- +
--Note that this configuration variable is ignored if it is seen in the
--repository-level config (this is a safety measure against fetching from
--untrusted repositories).
-+Note that this configuration variable is only respected when it is specified
-+in protected config (see <<SCOPES>>). This is a safety measure against
-+fetching from untrusted repositories.
+diff --git a/config.c b/config.c
+index 9b0e9c93285..29e62f5d0ed 100644
+--- a/config.c
++++ b/config.c
+@@ -81,6 +81,18 @@ static enum config_scope current_parsing_scope;
+ static int pack_compression_seen;
+ static int zlib_compression_seen;
  
- uploadpack.allowFilter::
- 	If this option is set, `upload-pack` will support partial
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index f93d437b898..f1810952891 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -343,6 +343,7 @@ You can change the way options are read/written by specifying the path to a
- file (`--file`), or by specifying a configuration scope (`--system`,
- `--global`, `--local`, `--worktree`); see <<OPTIONS>> above.
- 
-+[[SCOPES]]
- SCOPES
- ------
- 
-@@ -380,6 +381,18 @@ Most configuration options are respected regardless of the scope it is
- defined in, but some options are only respected in certain scopes. See the
- option's documentation for the full details.
- 
-+Protected configuration
-+~~~~~~~~~~~~~~~~~~~~~~~
++/*
++ * Config that comes from trusted sources, namely:
++ * - system config files (e.g. /etc/gitconfig)
++ * - global config files (e.g. $HOME/.gitconfig,
++ *   $XDG_CONFIG_HOME/git)
++ * - the command line.
++ *
++ * This is declared here for code cleanliness, but unlike the other
++ * static variables, this does not hold config parser state.
++ */
++static struct config_set protected_config;
 +
-+Protected configuration refers to the 'system', 'global', and 'command' scopes.
-+For security reasons, certain options are only respected when they are
-+specified in protected configuration, and ignored otherwise.
-+
-+Git treats these scopes as if they are controlled by the user or a trusted
-+administrator. This is because an attacker who controls these scopes can do
-+substantial harm without using Git, so it is assumed that the user's environment
-+protects these scopes against attackers.
-+
- ENVIRONMENT
- -----------
+ static int config_file_fgetc(struct config_source *conf)
+ {
+ 	return getc_unlocked(conf->u.file);
+@@ -2378,6 +2390,11 @@ int git_configset_add_file(struct config_set *cs, const char *filename)
+ 	return git_config_from_file(config_set_callback, filename, cs);
+ }
  
++int git_configset_add_parameters(struct config_set *cs)
++{
++	return git_config_from_parameters(config_set_callback, cs);
++}
++
+ int git_configset_get_value(struct config_set *cs, const char *key, const char **value)
+ {
+ 	const struct string_list *values = NULL;
+@@ -2619,6 +2636,40 @@ int repo_config_get_pathname(struct repository *repo,
+ 	return ret;
+ }
+ 
++/* Read values into protected_config. */
++static void read_protected_config(void)
++{
++	char *xdg_config = NULL, *user_config = NULL, *system_config = NULL;
++
++	git_configset_init(&protected_config);
++
++	system_config = git_system_config();
++	git_global_config(&user_config, &xdg_config);
++
++	git_configset_add_file(&protected_config, system_config);
++	git_configset_add_file(&protected_config, xdg_config);
++	git_configset_add_file(&protected_config, user_config);
++	git_configset_add_parameters(&protected_config);
++
++	free(system_config);
++	free(xdg_config);
++	free(user_config);
++}
++
++/* Ensure that protected_config has been initialized. */
++static void git_protected_config_check_init(void)
++{
++	if (protected_config.hash_initialized)
++		return;
++	read_protected_config();
++}
++
++void git_protected_config(config_fn_t fn, void *data)
++{
++	git_protected_config_check_init();
++	configset_iter(&protected_config, fn, data);
++}
++
+ /* Functions used historically to read configuration from 'the_repository' */
+ void git_config(config_fn_t fn, void *data)
+ {
+diff --git a/config.h b/config.h
+index 7654f61c634..e3ff1fcf683 100644
+--- a/config.h
++++ b/config.h
+@@ -446,6 +446,15 @@ void git_configset_init(struct config_set *cs);
+  */
+ int git_configset_add_file(struct config_set *cs, const char *filename);
+ 
++/**
++ * Parses command line options and environment variables, and adds the
++ * variable-value pairs to the `config_set`. Returns 0 on success, or -1
++ * if there is an error in parsing. The caller decides whether to free
++ * the incomplete configset or continue using it when the function
++ * returns -1.
++ */
++int git_configset_add_parameters(struct config_set *cs);
++
+ /**
+  * Finds and returns the value list, sorted in order of increasing priority
+  * for the configuration variable `key` and config set `cs`. When the
+@@ -505,6 +514,14 @@ int repo_config_get_maybe_bool(struct repository *repo,
+ int repo_config_get_pathname(struct repository *repo,
+ 			     const char *key, const char **dest);
+ 
++/*
++ * Functions for reading protected config. By definition, protected
++ * config ignores repository config, so it is unnecessary to read
++ * protected config from any `struct repository` other than
++ * the_repository.
++ */
++void git_protected_config(config_fn_t fn, void *data);
++
+ /**
+  * Querying For Specific Variables
+  * -------------------------------
+diff --git a/t/t5544-pack-objects-hook.sh b/t/t5544-pack-objects-hook.sh
+index dd5f44d986f..54f54f8d2eb 100755
+--- a/t/t5544-pack-objects-hook.sh
++++ b/t/t5544-pack-objects-hook.sh
+@@ -56,7 +56,12 @@ test_expect_success 'hook does not run from repo config' '
+ 	! grep "hook running" stderr &&
+ 	test_path_is_missing .git/hook.args &&
+ 	test_path_is_missing .git/hook.stdin &&
+-	test_path_is_missing .git/hook.stdout
++	test_path_is_missing .git/hook.stdout &&
++
++	# check that global config is used instead
++	test_config_global uploadpack.packObjectsHook ./hook &&
++	git clone --no-local . dst2.git 2>stderr &&
++	grep "hook running" stderr
+ '
+ 
+ test_expect_success 'hook works with partial clone' '
+diff --git a/upload-pack.c b/upload-pack.c
+index 3a851b36066..09f48317b02 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1321,18 +1321,27 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
+ 		data->advertise_sid = git_config_bool(var, value);
+ 	}
+ 
+-	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
+-	    current_config_scope() != CONFIG_SCOPE_WORKTREE) {
+-		if (!strcmp("uploadpack.packobjectshook", var))
+-			return git_config_string(&data->pack_objects_hook, var, value);
+-	}
+-
+ 	if (parse_object_filter_config(var, value, data) < 0)
+ 		return -1;
+ 
+ 	return parse_hide_refs_config(var, value, "uploadpack");
+ }
+ 
++static int upload_pack_protected_config(const char *var, const char *value, void *cb_data)
++{
++	struct upload_pack_data *data = cb_data;
++
++	if (!strcmp("uploadpack.packobjectshook", var))
++		return git_config_string(&data->pack_objects_hook, var, value);
++	return 0;
++}
++
++static void get_upload_pack_config(struct upload_pack_data *data)
++{
++	git_config(upload_pack_config, data);
++	git_protected_config(upload_pack_protected_config, data);
++}
++
+ void upload_pack(const int advertise_refs, const int stateless_rpc,
+ 		 const int timeout)
+ {
+@@ -1340,8 +1349,7 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
+ 	struct upload_pack_data data;
+ 
+ 	upload_pack_data_init(&data);
+-
+-	git_config(upload_pack_config, &data);
++	get_upload_pack_config(&data);
+ 
+ 	data.stateless_rpc = stateless_rpc;
+ 	data.timeout = timeout;
+@@ -1695,8 +1703,7 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
+ 
+ 	upload_pack_data_init(&data);
+ 	data.use_sideband = LARGE_PACKET_MAX;
+-
+-	git_config(upload_pack_config, &data);
++	get_upload_pack_config(&data);
+ 
+ 	while (state != FETCH_DONE) {
+ 		switch (state) {
 -- 
 gitgitgadget
 
