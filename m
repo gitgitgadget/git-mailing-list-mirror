@@ -2,248 +2,425 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 007B8C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 05:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3BE6C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 06:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230303AbiF3FGp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 01:06:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34596 "EHLO
+        id S232663AbiF3GAI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 02:00:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbiF3FGn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 01:06:43 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2729F13E8A
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 22:06:42 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id p14so17068904pfh.6
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 22:06:42 -0700 (PDT)
+        with ESMTP id S232638AbiF3GAC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 02:00:02 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0480235A80
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 23:00:01 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id n185so10619538wmn.4
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 23:00:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=9etSmRtxq4x5JuN7JtbCFhn8yYaVs0sl7lZNBiEV5CE=;
-        b=S7USPhdwNZPowg/AmLvzlE8XDJA4f8fhSdnFG9WWxey6phTdG3RAwfjiM/vZGkzC3g
-         XnjgX3NsE2aArGY8l1Y5bhJi0D9HMFnGvNBDghXnPuGhmn1VMmvukBm+O5nfPuBy22kU
-         kUlJzKEbihROC79I8jKdL+hq8KBQTBVQ7GIg6NV0mKz+lj1RTvQ2poDS4ZNkLAHr8bJP
-         Ac9iFwLry1Ih7czW5+RNt1LQohUApULixjt53WsTY06enLPtymk48f5Oz5vA5H0+8vPv
-         b03W8T9TQ3WKeL3T5Fq/IrxtMlhiMfiszLQcpFocEVkyBMoZA8bO191bUOWVsWiT62le
-         Jk/A==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NwH8jWbNxa+zcrDPPse9zZEdHE/1xpqSZ2nE8jkoyjU=;
+        b=FxGO0f124jpC6fqfZ6h0iGOcanFH4hKzSxOcsLMmFvEkP1pQuRiw6AsPWY9gb+S2B8
+         +y8Ubl7vZ8us6w1ZdvuPr/ZxNYGuz7zzx2a/wsE1ywurCP20ak8ohd2L9Qdc6BmmDwrV
+         JOhNmMFNJ7GOhDGurvaWHQZSVX4K5g5EQ1yiXcfrFunhOahZ/mDRvFvc1528O4dM1ind
+         BCB/XKjyrxEwrzpi0gapeJUmT2imO527k/NR4sJ8qAWqXpWXzKOSkokam5w9cEXxrd8D
+         fovYYvQ1os3jRW1pnu/CYF8AONq6chwrqWejR4j+3rs0/dHAFOtPwlwVQxbj/Jk4xYIe
+         Rmhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=9etSmRtxq4x5JuN7JtbCFhn8yYaVs0sl7lZNBiEV5CE=;
-        b=fdxMC54aDC8tXHW1hmZZDtR8iF5Cpai4LzV9YT1T+5U5XxLUoMoqTl1TTiHzoFPvGz
-         B46tvrOqLhgjPlJagSzp4d5ShnWLW6xuXPZX/cmq4ukhVEw8ZfJAoiIc4xl74taTG2on
-         /lRWO23BYskwPH8ADKFIPft0uIcjYT5uMmdhs7o/WDLghKUBvsia9j2BWYKSthJQU779
-         Te+9GheTg8APOCU6h/OSlhqlEP6nOVWmRnesnbswLvP2NvQozcWsY6V9rkY4Ms/9VJN9
-         VuIhNdA9bnCUpiFdVFJPwEgrkutwiViS16BTLQYQj4l7cuNemgvBU8OPZANDko49ROel
-         jQ5A==
-X-Gm-Message-State: AJIora9A2N5etEaux5ehzOvuhTEqqXY4eeAIJRfHGdDugDKdsQ6c2UiR
-        2SZXNBdwRn69ZFV4hCW5Y7gE
-X-Google-Smtp-Source: AGRyM1u8t3ITNHUsgKrpIS+mxitBnWwaAqh/SNeeYxoNYwQI0++qadH/Zvgfhn3kU7yVoYG12c43Og==
-X-Received: by 2002:a05:6a00:4107:b0:527:fbd1:ce54 with SMTP id bu7-20020a056a00410700b00527fbd1ce54mr5415423pfb.45.1656565601522;
-        Wed, 29 Jun 2022 22:06:41 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id z1-20020a170902d54100b0016b85cdf8d3sm6248534plf.72.2022.06.29.22.06.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jun 2022 22:06:41 -0700 (PDT)
-Message-ID: <c5662c60-4a21-be94-8fe0-13c6730292dd@github.com>
-Date:   Wed, 29 Jun 2022 22:06:39 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.10.0
-Subject: Re: git bug report: 'git add' hangs in a large repo which has
- sparse-checkout file with large number of patterns in it
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Dian Xu <dianxudev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <CAKSRnEzMaQEv=3mkNWRpy6+-c0rz=R191iqheCQ2ptXFs1CQgw@mail.gmail.com>
- <96034b3f-9811-38c1-7afe-c1c9dd243f0e@github.com>
- <CABPp-BHv3TSJhnWSF8AjF_nr72vMnOFXZJKoG0juGwjz13TZ=w@mail.gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <CABPp-BHv3TSJhnWSF8AjF_nr72vMnOFXZJKoG0juGwjz13TZ=w@mail.gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=NwH8jWbNxa+zcrDPPse9zZEdHE/1xpqSZ2nE8jkoyjU=;
+        b=E9Rxn5u5EN39d8HyeYeVEiFfUl4wBtjJUcAGUtwwcplgOfDDh+AZdFC0HBpJdcRZLS
+         ajCqKTs9klzCGxM5SMdKWBci4+k5f6L41MWl6U9h6Lohi+p6V5gXZSAPXAU6cOyZBe2T
+         IlaPu3rwAsFJ08AT9sydNahS+IA1N02aAJtdrSCRLazi15Ih0sbH4NgFyOGYy1WE4ue6
+         G76Chf+BfB5UfPHwjFYSMsQuXMa10kww5tGozuYZSA7HTdLNv88ccztYZDjTh7LAWf5u
+         aopn4Rs/KYUgOO/vT7nI4tvKcil7pNKRV7iGSAYu5H+L4deIh/TeSddr2/qgIagbdHuW
+         yUTA==
+X-Gm-Message-State: AJIora+KL9OAo2ludna7xvaEmfw0wFvXr65MkMIfsfMRCP1T3AHKaYiQ
+        BEgIWLbTfDXFGHzS2yguOHZ4WhiszCptxg==
+X-Google-Smtp-Source: AGRyM1vsuBqrhAvY83b9ZkP8m7yiy7ki7jc7dpB+TTKH3JnJngcz+g6zD0kAWbLOvXLxusmbEuVYtg==
+X-Received: by 2002:a05:600c:3ac3:b0:3a0:45b6:7efb with SMTP id d3-20020a05600c3ac300b003a045b67efbmr9604014wms.183.1656568799038;
+        Wed, 29 Jun 2022 22:59:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u23-20020a7bcb17000000b0039aef592ca0sm5225784wmj.35.2022.06.29.22.59.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jun 2022 22:59:58 -0700 (PDT)
+Message-Id: <pull.1269.v4.git.1656568797328.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1269.v3.git.1656409884091.gitgitgadget@gmail.com>
+References: <pull.1269.v3.git.1656409884091.gitgitgadget@gmail.com>
+From:   "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 30 Jun 2022 05:59:57 +0000
+Subject: [PATCH v4] ls-files: update test style
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Li Linchao <lilinchao@oschina.cn>,
+        Li Linchao <lilinchao@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> On Wed, Jun 29, 2022 at 3:04 PM Victoria Dye <vdye@github.com> wrote:
->>
->> Dian Xu wrote:
->>> Dear Git developers,
->>>
->>> Reporting Issue:
->>>               'git add' hangs in a large repo which has
->>> sparse-checkout file with large number of patterns in it
->>>
->>> Found in:
->>>               Git 2.34.3. Issue occurs after 'audit for interaction
->>> with sparse-index' was introduced in add.c
->>>
->>> Reproduction steps:
->>>               1. Clone a repo which has e.g. 2 million plus files
->>>               2. Enable sparse checkout by: git config core.sparsecheckout true
->>>               3. Create a .git/info/sparse-checkout file with a large
->>> number of patterns, e.g. 16k plus lines
->>>               4. Run 'git add', which will hang>
->>> Investigations:
->>>               1. Stack trace:
->>>                        add.c: cmd_add
->>>                   -> add.c: prune_directory
->>>                   -> pathspec.c: add_pathspec_matches_against_index
->>>                   -> dir.c: path_in_sparse_checkout_1
->>>               2. In Git 2.33.3, the loop at pathspec.c line 42 runs
->>> fast, even when istate->cache_nr is at 2 million
->>>               3. Since Git 2.34.3, the newly introduced 'audit for
->>> interaction with sparse-index' (dir.c line 1459:
->>> path_in_sparse_checkout_1) decides to loop through 2 million files and
->>> match each one of them against the sparse-checkout patterns
->>>               4. This hits the O(n^2) problem thus causes 'git add' to
->>> hang (or ~1.5 hours to finish)
->>
->> Thanks for the explanation, it helped me narrow down the source to an exact
->> commit (49fdd51a23 (add: skip tracked paths outside sparse-checkout cone,
->> 2021-09-24)).
->>
->> You're correct that the `path_in_sparse_checkout()` check is slow [1].
->> However, it only runs on files that are not "hidden" with the
->> `SKIP_WORKTREE` flag. Ideally, if you're using sparse-checkout, this will
->> only be a small subset of your 2 million files.
->>
->> In your repro steps, you're adding patterns to a file then immediately
->> running `git add`. If that reflects how you're usually working with
->> sparse-checkout, `SKIP_WORKTREE` likely isn't being applied properly before
->> the `add`. You can check to see whether file(s) have the flag properly
->> applied with `git ls-files -t <file or dir names>` - each `SKIP_WORKTREE`
->> file should have an "S" next to it. "H" indicates that the flag is *not*
->> applied.
->>
->> If you see that most of the files that *should* be sparse don't have
->> `SKIP_WORKTREE` applied, you can run `git sparse-checkout reapply` (make
->> sure you don't have any modified files outside the patterns you're
->> applying!). The downside is that it'll be as slow as what you're reporting
->> for `git add`, but any subsequent `add` (or reset, status, etc.) should be
->> much faster.
->>
->> If you do all of that but things are still slow, then the way we check
->> pathspecs in `git add` would need to change (not trivial, but probably not
->> impossible either). At a cursory glance, I can think of a few options for
->> that:
->>
->> 1. Remove the `path_in_sparse_checkout()` check. It's the simplest solution,
->>    but it means you'd be able to stage files for commit outside the
->>    sparse-checkout patterns without using the '--sparse' option. I don't
->>    personally think that's a huge issue, but given that the implementation
->>    was intentionally changed *away* from this approach, I'd defer to other
->>    contributors to see if that's an okay change to make.
-> 
-> I'm strongly against this.  This just restores the original bug we
-> were trying to fix, attempts to paper over the fact that non-cone mode
-> is fundamentally O(N*M) in one small instance, and sets the precedent
-> that we can't fix further sparse-checkout-based usability bugs because
-> it might add performance bottlenecks in additional places given
-> non-cone-mode's fundamental performance design problem.  We should
-> instead (in rough priority order)
+From: Li Linchao <lilinchao@oschina.cn>
 
-I'm not sure what the bug was - although I can (and should) read through the
-list archive to find out - but the rest of your point is convincing enough
-on its own. Even if we sacrificed correctness for performance in this one
-case, there are countless other places in the code like it, and changing all
-of them could seriously hurt user experience in other ways.
+Update test style in t/t30[*].sh for uniformity, that's to
+keep test title the same line with helper function itself,
+and fix some indentions.
 
-Thanks for your perspective!
+Add a new section "recommended style" in t/README to
+encourage people to use more modern style in test.
 
-> 
-> * encourage people to adopt cone mode
-> * discourage people still using non-cone mode from having lots of patterns
+Signed-off-by: Li Linchao <lilinchao@oschina.cn>
+---
+    ls-files: update test style
+    
+    Update test style in t/t30[*].sh for uniformity, that's to keep test
+    title the same line with helper function itself.
+    
+    And update t/README to describe this test style.
+    
+    Signed-off-by: Li Linchao lilinchao@oschina.cn
 
-While I know these are the recommended best practice, I do want to
-acknowledge that switching to cone mode in some repositories is a huge lift
-or otherwise infeasible [1]. While people make that transition (if they even
-can), I don't think it's unreasonable to look for ways to improve
-performance in non-cone sparse checkout, especially if those performance
-gains can also be realized in cone mode.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1269%2FCactusinhand%2Fllc%2Ffix-test-title-style-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1269/Cactusinhand/llc/fix-test-title-style-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1269
 
-[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2205212347060.352@tvgsbejvaqbjf.bet/
+Range-diff vs v3:
 
-> * make sure people aren't misusing things (the lack of a `git
-> read-tree -mu HEAD` or `git sparse-checkout reapply` seemed very
-> suspicious)
+ 1:  b3d80bd9cd5 ! 1:  d0ee9836f23 ls-files: update test style
+     @@ t/README: This test harness library does the following things:
+      +   Take test_expect_success helper for example, write it like:
+      +
+      +  test_expect_success 'test title' '
+     -+  ... test body ...
+     ++      ... test body ...
+      +  '
+      +
+      +   Instead of:
+      +
+      +  test_expect_success \
+     -+  'test title' \
+     -+  '... test body ...'
+     ++      'test title' \
+     ++      '... test body ...'
+      +
+      +
+      + - End the line with a single quote.
+      +
+     -+ - Indent the body of here-document, and use "<< -" instead of "<<" to strip prefix TAB:
+     ++ - Indent the body of here-document, and use "<<-" instead of "<<"
+     ++   to strip leading TABs used for indentation:
+      +
+      +  test_expect_success 'test something' '
+      +      cat >expect <<-\EOF &&
 
-A warning if a particular git operation sees a lot of out-of-cone
-non-`SKIP_WORKTREE` files might help with this (and would be especially
-impactful for someone working with a sparse index). I'm not sure how to
-quantify "a lot", though.
 
-> * educate people that non-cone mode is just fundamentally slow, among
-> other problems, and that the slowness might appear in additional
-> places in the future as we fix various usability issues.
-> * provide workarounds users can adopt if they really want to persist
-> with non-cone mode with lots of patterns (e.g. add "--sparse" to their
-> "git add" commands), though warn them about the possible side effects
-> they'll face (the added files can seemingly randomly disappear in the
-> working tree with future checkout/pull/merge/rebase/reset/etc commands
-> if the added files don't match the sparsity patterns).
-> * investigate ways to optimize the code to lower the constant in the
-> O(N*M) behavior on a case-by-case basis
-> 
-> We deprecated non-cone mode in v2.37 in part because of this type of
-> issue, and I really don't want the see the deprecated side of things
-> dictating how commands work for the now-default mode.
-> 
->> 2. After every call to `ce_path_match()`, check if all pathspecs are marked
->>    as `seen` and, if so, return early. This would slow down each individual
->>    file check and wouldn't help you if a pathspec matches nothing, but
->>    prevents checking more files once all pathspecs are matched.
-> 
-> Might be interesting.  Would need some careful measurements and
-> attempts to validate how often all pathspecs are matched early in some
-> kind of way, because this would definitely slow down some cases and
-> speed others up, but I don't have a good feel for which side happens
-> more frequently in practice.
-> 
->> 3. Do some heuristic checks on the pathspecs before checking index entries.
->>    For example, exact file or directory matches could be searched in the
->>    index. This would still require falling back on the per-file checks if
->>    not all pathspecs are matched, but makes some typical use-cases much
->>    faster.
-> 
-> I'm confused.  "before checking index entries", you're checking things
-> (namely, exact file or directory matches) "in the index"?
+ t/README                           | 47 ++++++++++++++++
+ t/t3001-ls-files-others-exclude.sh | 42 +++++++--------
+ t/t3002-ls-files-dashpath.sh       | 86 ++++++++++++++++--------------
+ t/t3020-ls-files-error-unmatch.sh  | 12 ++---
+ t/t3060-ls-files-with-tree.sh      |  8 +--
+ 5 files changed, 124 insertions(+), 71 deletions(-)
 
-Sorry, I definitely wasn't clear. I mean "perform heuristic checks *per
-pathspec item* before iterating *per index entry*." Pathspecs used in `git
-add` are (at least in my experience) pretty small, so there could be
-performance gains if all the items can be marked `seen` without iterating
-over every entry of the index. I was thinking something like
-`pathspec_needs_expanded_index()` in `reset` (4d1cfc1351 (reset: make
---mixed sparse-aware, 2021-11-29)), but tailored to this particular case.
+diff --git a/t/README b/t/README
+index 309a31133c6..f662471338d 100644
+--- a/t/README
++++ b/t/README
+@@ -547,6 +547,53 @@ This test harness library does the following things:
+    consistently when command line arguments --verbose (or -v),
+    --debug (or -d), and --immediate (or -i) is given.
+ 
++Recommended style
++-----------------
++Here are some recommented styles when writing test case.
++
++ - Keep test title the same line with test helper function itself.
++
++   Take test_expect_success helper for example, write it like:
++
++  test_expect_success 'test title' '
++      ... test body ...
++  '
++
++   Instead of:
++
++  test_expect_success \
++      'test title' \
++      '... test body ...'
++
++
++ - End the line with a single quote.
++
++ - Indent the body of here-document, and use "<<-" instead of "<<"
++   to strip leading TABs used for indentation:
++
++  test_expect_success 'test something' '
++      cat >expect <<-\EOF &&
++      one
++      two
++      three
++      EOF
++      test_something > actual &&
++      test_cmp expect actual
++  '
++
++   Instead of:
++
++  test_expect_success 'test something' '
++      cat >expect <<\EOF &&
++  one
++  two
++  three
++  EOF
++      test_something > actual &&
++      test_cmp expect actual
++  '
++
++
+ Do's & don'ts
+ -------------
+ 
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index 48cec4e5f88..e07ac6c6dce 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -67,26 +67,26 @@ echo '!*.2
+ 
+ allignores='.gitignore one/.gitignore one/two/.gitignore'
+ 
+-test_expect_success \
+-    'git ls-files --others with various exclude options.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with various exclude options.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+-       >output &&
+-     test_cmp expect output'
++	>output &&
++	test_cmp expect output
++'
+ 
+ # Test \r\n (MSDOS-like systems)
+ printf '*.1\r\n/*.3\r\n!*.6\r\n' >.gitignore
+ 
+-test_expect_success \
+-    'git ls-files --others with \r\n line endings.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with \r\n line endings.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+-       >output &&
+-     test_cmp expect output'
++	>output &&
++	test_cmp expect output
++'
+ 
+ test_expect_success 'setup skip-worktree gitignore' '
+ 	git add $allignores &&
+@@ -94,14 +94,14 @@ test_expect_success 'setup skip-worktree gitignore' '
+ 	rm $allignores
+ '
+ 
+-test_expect_success \
+-    'git ls-files --others with various exclude options.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with various exclude options.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+-       >output &&
+-     test_cmp expect output'
++	>output &&
++	test_cmp expect output
++'
+ 
+ test_expect_success !SANITIZE_LEAK 'restore gitignore' '
+ 	git checkout --ignore-skip-worktree-bits $allignores &&
+@@ -283,12 +283,12 @@ test_expect_success 'pattern matches prefix completely' '
+ '
+ 
+ test_expect_success 'ls-files with "**" patterns' '
+-	cat <<\EOF >expect &&
+-a.1
+-one/a.1
+-one/two/a.1
+-three/a.1
+-EOF
++	cat <<-\EOF >expect &&
++	a.1
++	one/a.1
++	one/two/a.1
++	three/a.1
++	EOF
+ 	git ls-files -o -i --exclude "**/a.1" >actual &&
+ 	test_cmp expect actual
+ '
+diff --git a/t/t3002-ls-files-dashpath.sh b/t/t3002-ls-files-dashpath.sh
+index 54d22a45dfb..4dd24550eba 100755
+--- a/t/t3002-ls-files-dashpath.sh
++++ b/t/t3002-ls-files-dashpath.sh
+@@ -16,56 +16,62 @@ filesystem.
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+-test_expect_success \
+-	setup \
+-	'echo frotz >path0 &&
++test_expect_success 'setup' '
++	echo frotz >path0 &&
+ 	echo frotz >./-foo &&
+-	echo frotz >./--'
++	echo frotz >./--
++'
+ 
+-test_expect_success \
+-    'git ls-files without path restriction.' \
+-    'git ls-files --others >output &&
+-     test_cmp output - <<EOF
+---
+--foo
+-output
+-path0
+-EOF
++test_expect_success 'git ls-files without path restriction.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others >output &&
++	cat >expect <<-\EOF &&
++	--
++	-foo
++	output
++	path0
++	EOF
++	test_cmp output expect
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction.' \
+-    'git ls-files --others path0 >output &&
+-	test_cmp output - <<EOF
+-path0
+-EOF
++test_expect_success 'git ls-files with path restriction.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others path0 >output &&
++	cat >expect <<-\EOF &&
++	path0
++	EOF
++	test_cmp output expect
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction with --.' \
+-    'git ls-files --others -- path0 >output &&
+-	test_cmp output - <<EOF
+-path0
+-EOF
++test_expect_success 'git ls-files with path restriction with --.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others -- path0 >output &&
++	cat >expect <<-\EOF &&
++	path0
++	EOF
++	test_cmp output expect
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction with -- --.' \
+-    'git ls-files --others -- -- >output &&
+-	test_cmp output - <<EOF
+---
+-EOF
++test_expect_success 'git ls-files with path restriction with -- --.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others -- -- >output &&
++	cat >expect <<-\EOF &&
++	--
++	EOF
++	test_cmp output expect
+ '
+ 
+-test_expect_success \
+-    'git ls-files with no path restriction.' \
+-    'git ls-files --others -- >output &&
+-	test_cmp output - <<EOF
+---
+--foo
+-output
+-path0
+-EOF
++test_expect_success 'git ls-files with no path restriction.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others -- >output &&
++	cat >expect <<-\EOF &&
++	--
++	-foo
++	output
++	path0
++	EOF
++	test_cmp output expect
++
+ '
+ 
+ test_done
+diff --git a/t/t3020-ls-files-error-unmatch.sh b/t/t3020-ls-files-error-unmatch.sh
+index 2cbcbc0721b..133593d23c0 100755
+--- a/t/t3020-ls-files-error-unmatch.sh
++++ b/t/t3020-ls-files-error-unmatch.sh
+@@ -19,12 +19,12 @@ test_expect_success 'setup' '
+ 	git commit -m "add foo bar"
+ '
+ 
+-test_expect_success \
+-    'git ls-files --error-unmatch should fail with unmatched path.' \
+-    'test_must_fail git ls-files --error-unmatch foo bar-does-not-match'
++test_expect_success 'git ls-files --error-unmatch should fail with unmatched path.' '
++	test_must_fail git ls-files --error-unmatch foo bar-does-not-match
++'
+ 
+-test_expect_success \
+-    'git ls-files --error-unmatch should succeed with matched paths.' \
+-    'git ls-files --error-unmatch foo bar'
++test_expect_success 'git ls-files --error-unmatch should succeed with matched paths.' '
++	git ls-files --error-unmatch foo bar
++'
+ 
+ test_done
+diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
+index b257c792a46..52f76f7b57f 100755
+--- a/t/t3060-ls-files-with-tree.sh
++++ b/t/t3060-ls-files-with-tree.sh
+@@ -10,7 +10,7 @@ a scenario known to trigger a crash with some versions of git.
+ '
+ . ./test-lib.sh
+ 
+-test_expect_success setup '
++test_expect_success 'setup' '
+ 
+ 	# The bug we are exercising requires a fair number of entries
+ 	# in a sub-directory so that add_index_entry will trigger a
+@@ -62,9 +62,9 @@ test_expect_success 'git ls-files --with-tree should succeed from subdir' '
+ 	)
+ '
+ 
+-test_expect_success \
+-    'git ls-files --with-tree should add entries from named tree.' \
+-    'test_cmp expected output'
++test_expect_success 'git ls-files --with-tree should add entries from named tree.' '
++	test_cmp expected output
++'
+ 
+ test_expect_success 'no duplicates in --with-tree output' '
+ 	git ls-files --with-tree=HEAD >actual &&
 
-> 
->> There are almost certainly other options, and I can dig around `add.c` more
->> to see if there's anything I'm missing (although I'd love to hear other
->> ideas too!).
->>
->> Hopefully this helps!
->> - Victoria
->>
->> [1] `path_in_sparse_checkout()` is significantly faster in cone mode, but
->> with 16k patterns I'm assuming you're not using cone patterns ;)
->>
->>>
->>> Please help us take a look at this issue and let us know if you need
->>> more information.
->>>
->>> Thanks,
->>>
->>> Dian Xu
->>> Mathworks, Inc
->>> 1 Lakeside Campus Drive, Natick, MA 01760
->>> 508-647-3583
->>
-
+base-commit: e4a4b31577c7419497ac30cebe30d755b97752c5
+-- 
+gitgitgadget
