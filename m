@@ -2,189 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4722C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AF43C43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:20:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237286AbiF3VUJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:20:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40940 "EHLO
+        id S237457AbiF3VUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:20:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237442AbiF3VT4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:19:56 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B3545787
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:55 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id n185so96389wmn.4
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:55 -0700 (PDT)
+        with ESMTP id S237461AbiF3VT6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:19:58 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A1964D4ED
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:57 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id t17-20020a1c7711000000b003a0434b0af7so394959wmi.0
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=VFNypiPxjcXEoUFC0YC83wnkx7VDqrMjOqNrl9aVH3c=;
-        b=BRM1vh9VoznPXgLReSQGalVHR3szo+DQ1SrXAwq5RkdeE7TnRIMdWWW59Mib7m6Vd/
-         BKtoABHi0Qf3ph8vBgWtCHQV2lQ7Q3Vy3c5ofat+FAln2+YOt07yAeuho+sA8IaSBa0/
-         FTRUvcS99Aj6Ce0g5SzOnXPdzJn82+3PjVTL/TJX14j9XsYSxRrzXb54P+cc3E6aGkag
-         v+F+sbwtOPTqQUjrISRopIa7Kai8NgQt+G1Mfv+ycb7K7sDZ2WpAKLUFJ5LVrBJ4HGs9
-         vN8Kde9+SPBruZVAUimTig+PmdyfG/RYT0NdbyGmDfJ96paevRR/hAeCLIigfUe5bA0y
-         Yn1Q==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KW37HpirRMIvOEXY3NYMTI09bimle02oyoeYENKZT/M=;
+        b=hd6+Zpe45wKDBQuMrGjCJ5IIntF4e65CiT4HxqCRIsjxltYmBP4vJIKkuIB0lV9ltw
+         Eyv2cYsXncJGxisJGuIdNg/Ie/xyz6IhGtt5CpDt7MolOCkubEtF29MyST/Pf5DBdb3J
+         qY9kD++K8oJ7fcy5amfjuiAJ545g9EzW8g2Ff7Isg43ruKarbm1d0zjV5/QdDWhkjVpy
+         4y4QYmhIOkSJDYbB8i3VS+IOYQkuUsuxT0T8Y+0cnZk4Xh7SIOJ4PrBY88qMgxkDeoWt
+         kVCbHxojMweI0yIET8APBA7akgCEuWsmGaXICKnnfEKD8WP2UM9L4VDb3dKk4BuQ2ukD
+         ZHyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=VFNypiPxjcXEoUFC0YC83wnkx7VDqrMjOqNrl9aVH3c=;
-        b=lHElEYaSUvsMDImo7w/S6mleUNJwlkQSd2/xm0UvFky3NPc367nyn2r5x2i3TbTYPq
-         LsuDxVlyjAJ2e9CxUMs0J3iyP6vdBb2KxPLVXzSn2IGj1P5DpKSgSKX1r4YNJWGdT+Wp
-         H9yfb5UvDIDhnl7gg1jRqRX8FtG9ROm7UF6sMU8gsk9UDWUWvRGy1g/hAm/DI8o4cEoP
-         OVHKFOr+PHTma1Djmo7NvJruVY01XkluiaQEHDhoJch5EacwkuWxt0ZN0xqDZJJsBOCn
-         M2iraeqw2uw+IwqBeWu0c6y9rPz+dr8KYaKvZvDX0xTS0ZkBIQ5VOECfT0IF4aLs7FtJ
-         A20Q==
-X-Gm-Message-State: AJIora8i7G/9XSGAnVuGEJhg3ctEX79HvUPxe6Ke6O+jWxHCUWPJoggv
-        hCz7qXZnaz2bpOU5m1+IjUbKvzErRhE=
-X-Google-Smtp-Source: AGRyM1siKVCa3qMskfTp2ftQuMk/+yFYUub2u20bFnGt59OpsKAG/csM/PVlU7UuiiJm6tOOYOXcQg==
-X-Received: by 2002:a05:600c:34c4:b0:39c:9236:4e9e with SMTP id d4-20020a05600c34c400b0039c92364e9emr14146198wmq.67.1656623993888;
-        Thu, 30 Jun 2022 14:19:53 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KW37HpirRMIvOEXY3NYMTI09bimle02oyoeYENKZT/M=;
+        b=uF3ta9Q/y3OaloRfAr15WuYQO4ycf+xL2BQpQQgAKvQP+hPFvbUdQzoQ2zQmsw0+2r
+         5HZuwfQ+htSYLFJ8DmTzLYPkY+b/O6XbhuNKHw5krWCiHDrf/W+RENxho9qgF1mPguDD
+         az6cti5D/D2sySUna8ieBaX4GlVxT1KR6hNVotBvC9H8Cc5xdXGRNqeHpzVqPRu8eUok
+         zrmXfB1JdfSv0qlKT31LuMaMya/kTzWUTD32EW06nlOCJbPHfan8gEVhhY6GkaOl1g/e
+         8O+EoELvJZ/H+lDiHl7/KMjgzGMCDXAxCbhnlJE5rldvudsAxmzLpWUP1s/Qlqf0BQfC
+         TbsQ==
+X-Gm-Message-State: AJIora+PW/wisYgvHwxBVs9DzsL/YG6OI6QbL6eI16/IxHkpzS+THi9F
+        2d7fLt/vhb0WKb0+0bc6MgYjMrghPhY=
+X-Google-Smtp-Source: AGRyM1top5qYPUYp3pdKZ6L0MjFJnoZh3I8YbmO680vjmtBXbDxUTHM5D9crzjCDtnrH7M6VO8zcKg==
+X-Received: by 2002:a05:600c:4e51:b0:3a0:4e8d:1e44 with SMTP id e17-20020a05600c4e5100b003a04e8d1e44mr12652625wmq.105.1656623995302;
+        Thu, 30 Jun 2022 14:19:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x1-20020a1c7c01000000b003a02b135747sm8016823wmc.46.2022.06.30.14.19.53
+        by smtp.gmail.com with ESMTPSA id m21-20020a05600c4f5500b003a0502c620dsm3875543wmq.44.2022.06.30.14.19.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 14:19:53 -0700 (PDT)
-Message-Id: <5b893f7d81eb7feb43662ed8663e2af76a76b4c8.1656623978.git.gitgitgadget@gmail.com>
+        Thu, 30 Jun 2022 14:19:54 -0700 (PDT)
+Message-Id: <64c138df19670cc615c7bb6cda33f085c17ca837.1656623978.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
 References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com>
         <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Thu, 30 Jun 2022 21:19:32 +0000
-Subject: [PATCH v2 12/18] git-sh-setup.sh: remove "say" function, change last
- users
-MIME-Version: 1.0
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 30 Jun 2022 21:19:33 +0000
+Subject: [PATCH v2 13/18] submodule--helper update: use display path helper
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Glen Choo <chooglen@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
- <avarab@gmail.com>
+From: Glen Choo <chooglen@google.com>
 
-Remove the "say" function, with various rewrites of the remaining
-git-*.sh code to C and the preceding change to have git-submodule.sh
-stop using the GIT_QUIET variable there were only four uses in
-git-subtree.sh. Let's have it use an "arg_quiet" variable instead, and
-move the "say" function over to it.
+There are two locations in prepare_to_clone_next_submodule() that
+manually calculate the submodule display path, but should just use
+do_get_submodule_displaypath() for consistency.
 
-The only other use was a trivial message in git-instaweb.sh, since it
-has never supported the --quiet option (or similar) that code added in
-0b624b4ceee (instaweb: restart server if already running, 2009-11-22)
-can simply use "echo" instead.
+Do this replacement and reorder the code slightly to avoid computing
+the display path twice.
 
-The remaining in-tree hits from "say" are all for the sibling function
-defined in t/test-lib.sh. It's safe to remove this function since it
-has never been documented in Documentation/git-sh-setup.txt.
+This code was never tested, and adding tests shows that both these sites
+have been computing the display path incorrectly ever since they were
+introduced in 48308681b0 (git submodule update: have a dedicated helper
+for cloning, 2016-02-29) [1]:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+- The first hunk puts a "/" between recursive_prefix and ce->name, but
+  recursive_prefix already ends with "/".
+- The second hunk calls relative_path() on recursive_prefix and
+  ce->name, but relative_path() only makes sense when both paths share
+  the same base directory. This is never the case here:
+  - recursive_prefix is the path from the topmost superproject to the
+    current submodule
+  - ce->name is the path from the root of the current submodule to its
+    submodule.
+  so, e.g. recursive_prefix="super" and ce->name="submodule" produces
+  displayname="../super" instead of "super/submodule".
+
+While we're fixing the display names, also fix inconsistent quoting of
+the submodule name.
+
+[1] I verified this by applying the tests to 48308681b0.
+
+Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- contrib/subtree/git-subtree.sh | 15 ++++++++++++---
- git-instaweb.sh                |  2 +-
- git-sh-setup.sh                |  9 ---------
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ builtin/submodule--helper.c | 21 +++++---------
+ t/t7406-submodule-update.sh | 56 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 63 insertions(+), 14 deletions(-)
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 1af1d9653e9..7562a395c24 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -50,6 +50,14 @@ m,message=    use the given message as the commit message for the merge commit
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 389b900602f..db2d5ab7998 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1947,30 +1947,23 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	const char *update_string;
+ 	enum submodule_update_type update_type;
+ 	char *key;
+-	struct strbuf displaypath_sb = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+-	const char *displaypath = NULL;
++	char *displaypath;
+ 	int needs_cloning = 0;
+ 	int need_free_url = 0;
  
- indent=0
- 
-+# Usage: say [MSG...]
-+say () {
-+	if test -z "$arg_quiet"
-+	then
-+		printf '%s\n' "$*"
-+	fi
-+}
++	displaypath = do_get_submodule_displaypath(ce->name,
++						   suc->update_data->prefix,
++						   suc->update_data->recursive_prefix);
 +
- # Usage: debug [MSG...]
- debug () {
- 	if test -n "$arg_debug"
-@@ -60,7 +68,7 @@ debug () {
+ 	if (ce_stage(ce)) {
+-		if (suc->update_data->recursive_prefix)
+-			strbuf_addf(&sb, "%s/%s", suc->update_data->recursive_prefix, ce->name);
+-		else
+-			strbuf_addstr(&sb, ce->name);
+-		strbuf_addf(out, _("Skipping unmerged submodule %s"), sb.buf);
++		strbuf_addf(out, _("Skipping unmerged submodule %s"), displaypath);
+ 		strbuf_addch(out, '\n');
+ 		goto cleanup;
+ 	}
  
- # Usage: progress [MSG...]
- progress () {
--	if test -z "$GIT_QUIET"
-+	if test -z "$arg_quiet"
- 	then
- 		if test -z "$arg_debug"
- 		then
-@@ -146,6 +154,7 @@ main () {
- 	eval "$set_args"
+ 	sub = submodule_from_path(the_repository, null_oid(), ce->name);
  
- 	# Begin "real" flag parsing.
-+	arg_quiet=
- 	arg_debug=
- 	arg_prefix=
- 	arg_split_branch=
-@@ -161,7 +170,7 @@ main () {
- 
- 		case "$opt" in
- 		-q)
--			GIT_QUIET=1
-+			arg_quiet=1
- 			;;
- 		-d)
- 			arg_debug=1
-@@ -252,7 +261,7 @@ main () {
- 	dir="$(dirname "$arg_prefix/.")"
- 
- 	debug "command: {$arg_command}"
--	debug "quiet: {$GIT_QUIET}"
-+	debug "quiet: {$arg_quiet}"
- 	debug "dir: {$dir}"
- 	debug "opts: {$*}"
- 	debug
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 4349566c891..c68f49454cd 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -102,7 +102,7 @@ resolve_full_httpd () {
- 
- start_httpd () {
- 	if test -f "$fqgitdir/pid"; then
--		say "Instance already running. Restarting..."
-+		echo "Instance already running. Restarting..."
- 		stop_httpd
- 	fi
- 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index ecb60d9e3cb..ce273fe0e48 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -57,15 +57,6 @@ die_with_status () {
- 	exit "$status"
- }
- 
--GIT_QUIET=
+-	if (suc->update_data->recursive_prefix)
+-		displaypath = relative_path(suc->update_data->recursive_prefix,
+-					    ce->name, &displaypath_sb);
+-	else
+-		displaypath = ce->name;
 -
--say () {
--	if test -z "$GIT_QUIET"
--	then
--		printf '%s\n' "$*"
--	fi
--}
--
- if test -n "$OPTIONS_SPEC"; then
- 	usage() {
- 		"$0" -h
+ 	if (!sub) {
+ 		next_submodule_warn_missing(suc, out, displaypath);
+ 		goto cleanup;
+@@ -2060,7 +2053,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 					      "--no-single-branch");
+ 
+ cleanup:
+-	strbuf_release(&displaypath_sb);
++	free(displaypath);
+ 	strbuf_release(&sb);
+ 	if (need_free_url)
+ 		free((void*)url);
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 06d804e2131..f0408c5cc4a 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -1116,4 +1116,60 @@ test_expect_success 'submodule update --filter sets partial clone settings' '
+ 	test_cmp_config -C super-filter/submodule blob:none remote.origin.partialclonefilter
+ '
+ 
++# NEEDSWORK: Clean up the tests so that we can reuse the test setup.
++# Don't reuse the existing repos because the earlier tests have
++# intentionally disruptive configurations.
++test_expect_success 'setup clean recursive superproject' '
++	git init bottom &&
++	test_commit -C bottom "bottom" &&
++	git init middle &&
++	git -C middle submodule add ../bottom bottom &&
++	git -C middle commit -m "middle" &&
++	git init top &&
++	git -C top submodule add ../middle middle &&
++	git -C top commit -m "top" &&
++	git clone --recurse-submodules top top-clean
++'
++
++test_expect_success 'submodule update should skip unmerged submodules' '
++	test_when_finished "rm -fr top-cloned" &&
++	cp -r top-clean top-cloned &&
++
++	# Create an upstream commit in each repo, starting with bottom
++	test_commit -C bottom upstream_commit &&
++	# Create middle commit
++	git -C middle/bottom fetch &&
++	git -C middle/bottom checkout -f FETCH_HEAD &&
++	git -C middle add bottom &&
++	git -C middle commit -m "upstream_commit" &&
++	# Create top commit
++	git -C top/middle fetch &&
++	git -C top/middle checkout -f FETCH_HEAD &&
++	git -C top add middle &&
++	git -C top commit -m "upstream_commit" &&
++
++	# Create a downstream conflict
++	test_commit -C top-cloned/middle/bottom downstream_commit &&
++	git -C top-cloned/middle add bottom &&
++	git -C top-cloned/middle commit -m "downstream_commit" &&
++	git -C top-cloned/middle fetch --recurse-submodules origin &&
++	test_must_fail git -C top-cloned/middle merge origin/main &&
++
++	# Make the update of "middle" a no-op, otherwise we error out
++	# because of its unmerged state
++	test_config -C top-cloned submodule.middle.update !true &&
++	git -C top-cloned submodule update --recursive 2>actual.err &&
++	grep -F "Skipping unmerged submodule middle/bottom" actual.err
++'
++
++test_expect_success 'submodule update --recursive skip submodules with strategy=none' '
++	test_when_finished "rm -fr top-cloned" &&
++	cp -r top-clean top-cloned &&
++
++	test_commit -C top-cloned/middle/bottom downstream_commit &&
++	git -C top-cloned/middle config submodule.bottom.update none &&
++	git -C top-cloned submodule update --recursive 2>actual.err &&
++	grep -F "Skipping submodule ${SQ}middle/bottom${SQ}" actual.err
++'
++
+ test_done
 -- 
 gitgitgadget
 
