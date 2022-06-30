@@ -2,107 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E200C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2237EC43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237334AbiF3Vz4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:55:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45408 "EHLO
+        id S237274AbiF3V5q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:57:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236933AbiF3Vzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:55:55 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6995C564E3
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:55:54 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4249130117;
-        Thu, 30 Jun 2022 17:55:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MmpUS9H1VGV5
-        XLpXxIpWOlJ6hahn5/kEEgI494wvP3o=; b=VXP/iZlwSyhp5njontRoN31N1Px/
-        Leu7ELEGNQWlD68Q/wnnEjTKVYtYY28yT1+l1R3+zhihE9II2wfa58YEYHJrC+88
-        Bqxjh+t+Gb4dTOrn1Q5pzm9DUfS9VAihvdOlv0Xrd6L5Vz/MRPkm84UQGEwGGmZC
-        eVPl7uFdW3Z7Z+s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC330130116;
-        Thu, 30 Jun 2022 17:55:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1DF33130115;
-        Thu, 30 Jun 2022 17:55:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 01/11] check-ref-format: fix trivial memory leak
-References: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
-        <patch-01.11-f35cf7c6ee9-20220630T175714Z-avarab@gmail.com>
-Date:   Thu, 30 Jun 2022 14:55:51 -0700
-In-Reply-To: <patch-01.11-f35cf7c6ee9-20220630T175714Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 30 Jun
- 2022 20:00:11
-        +0200")
-Message-ID: <xmqqczepddeg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6957648E-F8BF-11EC-87DA-CB998F0A682E-77302942!pb-smtp2.pobox.com
+        with ESMTP id S237335AbiF3V5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:57:45 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C710F564FF
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:57:44 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id m17-20020a170902d19100b0016a0e65a433so280949plb.8
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=gBNIi2aH72IqnR3xR5nd6Cz9aBMLSMWzMj0qtv7mYw0=;
+        b=hRqdjdTRVFVbqvdcb/0/ATZTkvXtRGzfP/ZNLtLrOLR5evBC6geFWuG61XihuoXQ8N
+         gZHtRz8YpFfeXmX8NgY6UzMaXit+s0Z4yvPPFxDMKm0Dj3B45N3xvzsDTfrnhJkf0LaV
+         O6x64DnBMWMO4OaPOlNNPL7Lg+CuH/d402Ep9IiPAGFxKNmg2Bk/60S1XOKjqgUE4o2w
+         AyVmNQiy7Qh7PZ713vZguHalaZvuVIvoxEHkjxgPP4V1PjUSaM5uOeoIJM8w0jRBkEHy
+         p4Owvwzs9kxxR6+7odsw/FwoHMYNkUxY9JsRziURJSWoC+qqOd4E5NX+NgtIeU48kV5o
+         HwOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=gBNIi2aH72IqnR3xR5nd6Cz9aBMLSMWzMj0qtv7mYw0=;
+        b=btsHEvGVlrj6UA6M5HagozyxrWT6BhbR51W6MD/a4oia3z6ojesDew4bmdoPbW54Dq
+         xRX+0oZg+c6XnReb1GIEuLc+hEYARCb4pNw/av+6T1I2UNzkbViWdv7cTFtA4TKlE5KT
+         Z+SUgqVRW204nRBBJyUZ7+vCICJ3m7QfBubN+Lxpjagw7r6GFtuiFwQ4cJUxi/z1XwKs
+         97ABeqT+CVWM9xrXYOaLo4pyKTVXBseW7BbjT+25WExIh6zJopbsIIqp/+bAEW4trT36
+         9NAQyHsBpgL9H+r9Ra1aDYTAO0aLZL2hRwzEc2VXdPWN6S0RNEg0f1ahRVmfoSy2/+MY
+         sd3Q==
+X-Gm-Message-State: AJIora/1d/maW5w0gxnxVX2v+NqWyFYxOQbE2RUx5yPMXbRbYOYSm/pz
+        ozpgWwH7d+L8zUUrYvliuB3gUX6nfaP7cw==
+X-Google-Smtp-Source: AGRyM1uRX1tC8JERF3NE/77MmpnN6p7o0AiCbN1Jd9T+FUKVJQJUd0LkNH9xbZ1N7AeMw/D6KFBJto5Na8gHqA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:e850:b0:16a:209a:971a with SMTP
+ id t16-20020a170902e85000b0016a209a971amr17693132plg.163.1656626264251; Thu,
+ 30 Jun 2022 14:57:44 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 14:57:42 -0700
+In-Reply-To: <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
+Message-Id: <kl6lwncxstk9.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1282.git.git.1656372017.gitgitgadget@gmail.com> <pull.1282.v2.git.git.1656623978.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2 00/18] submodule: remove "--recursive-prefix"
+From:   Glen Choo <chooglen@google.com>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Atharva Raykar <raykar.ath@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason" 
+        <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-> index bc67d3f0a83..fd0e5f86832 100644
-> --- a/builtin/check-ref-format.c
-> +++ b/builtin/check-ref-format.c
-> @@ -57,6 +57,8 @@ int cmd_check_ref_format(int argc, const char **argv,=
- const char *prefix)
->  	int normalize =3D 0;
->  	int flags =3D 0;
->  	const char *refname;
-> +	char *to_free =3D NULL;
-> +	int ret =3D 1;
-> =20
->  	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
->  		usage(builtin_check_ref_format_usage);
-> @@ -81,11 +83,14 @@ int cmd_check_ref_format(int argc, const char **arg=
-v, const char *prefix)
-> =20
->  	refname =3D argv[i];
->  	if (normalize)
-> -		refname =3D collapse_slashes(refname);
-> +		refname =3D to_free =3D collapse_slashes(refname);
->  	if (check_refname_format(refname, flags))
-> -		return 1;
-> +		goto cleanup;
->  	if (normalize)
->  		printf("%s\n", refname);
-> =20
-> -	return 0;
-> +	ret =3D 0;
-> +cleanup:
-> +	free(to_free);
-> +	return ret;
->  }
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Nice.
+> Glen Choo (6):
+>   submodule--helper: eliminate internal "--update" option
+>   submodule--helper update: use display path helper
+>   submodule--helper: don't recreate recursive prefix
+>   submodule--helper: use correct display path helper
+>   submodule--helper update: use --super-prefix
+>   submodule--helper: remove display path helper
+>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (12):
+>   git-submodule.sh: remove unused sanitize_submodule_env()
+>   git-submodule.sh: remove unused $prefix variable
+>   git-submodule.sh: make the "$cached" variable a boolean
+>   git-submodule.sh: remove unused top-level "--branch" argument
+>   submodule--helper: have --require-init imply --init
+>   submodule update: remove "-v" option
+>   submodule--helper: rename "absorb-git-dirs" to "absorbgitdirs"
+>   submodule--helper: report "submodule" as our name in some "-h" output
+>   submodule--helper: understand --checkout, --merge and --rebase
+>     synonyms
+>   git-submodule.sh: use "$quiet", not "$GIT_QUIET"
+>   git-sh-setup.sh: remove "say" function, change last users
+>   submodule--helper: remove unused SUPPORT_SUPER_PREFIX flags
 
-> diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-> index cabc516ae9a..5ed9d7318e0 100755
-> --- a/t/t1402-check-ref-format.sh
-> +++ b/t/t1402-check-ref-format.sh
-> @@ -2,6 +2,7 @@
-> =20
->  test_description=3D'Test git check-ref-format'
-> =20
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
-> =20
->  valid_ref() {
+Looks like I accidentally submitted all of ab/submodule-cleanup... Let
+me try this again without GGG.
