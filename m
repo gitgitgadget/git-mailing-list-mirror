@@ -2,175 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDA0AC43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7794CCA486
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235668AbiF3SAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 14:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49244 "EHLO
+        id S236587AbiF3SLj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 14:11:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236494AbiF3SAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 14:00:38 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003122AC79
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:00:36 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id o19-20020a05600c4fd300b003a0489f414cso59325wmq.4
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:00:36 -0700 (PDT)
+        with ESMTP id S236575AbiF3SLh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 14:11:37 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E64AC3C71B
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:11:35 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id fw3so12900860ejc.10
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:11:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AhsCgrBaEAT4H1YdmzM9UxknebkvnB/cgI0gXCpajJs=;
-        b=V/bs+huWkZ0E3ri/fpHU2MMYU+I7+tKGTmwIgJqv4Pe2IEHntqToxwBgREvfprpa4O
-         f74tBwjoNqf7fNerFGxfRR4HbSAra4yU2Ms9uGXldTGVsfuzSBIx+P/Q/UxcAnlquXlY
-         Fq9JwnzoYcomXQe3ayAVeSid7664Fp0bOPcw6tTrciYo4UIez+Y4qz168lPEb5CT6QW7
-         5u8oUa5vRLTgc64hlDZVPQM0uW6KqRMQzj3dKHNA7E3c/6aeh1tTHnk4XY2guUwSu1He
-         ZjJ5oeci91CebLTGjT5/LACvwjjpRCjN6TcabydOPVcO+u4nBOPIfR7qOi2QeZesUuXy
-         VN0A==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=z0MrKVScdRnLjyBFux/tbDAzb7oPO43yCkMRR5tSCH4=;
+        b=MOzxTblzphmwIT7asEGjXPcFmiZRfhRhVtFvVh9gVxAaIjXsluXH0SYSEM4VNvaCp/
+         L+YpMyD2z4x7oxS9YtXs83NT6g1hrpEggDFcDsHxpQ7/iMG7G3XzgfHJ6jbIiUyz2Rid
+         NmR4HtEvr80l/0zzWYYdEtqCrZvinEmf2nT1SKQwEHtPbGHeKd7Ms9t09eueSdPgXfLX
+         YfJtSlUHzDxbbSMhWAHPnyi/7Vcldg2BeAPymaFbvDV2SbGNfFIQ37Y7NkaK2gP9rNWn
+         SWhhp8c3hrbyEVXHgCaU1BV6ve91sgn5qmDiQIB5dRgWX2zfos9Og854F4wVOVbs8z5u
+         CEbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AhsCgrBaEAT4H1YdmzM9UxknebkvnB/cgI0gXCpajJs=;
-        b=Z3mokk9q4OpfLWpEEeskLImhLH/zV6QlgDPVAmEJcBGKmHteonbV2IXwsDEkj9lAT/
-         Zw0w7zMZ4A9ofNORvsdgjz6v/0GWj6OYvuC3EpjXfF0Lz+Xg//mUWsX3vCVciflRXDej
-         PTHyCBxmyNr8wfyezW+mjhwPXhUixU4Gd55SGdGVeolBJlK82w8SenEfQzmBFBxgDlvt
-         bQAB2nWIK4EhGbqymQ38mP0oUC79kvYWuarcF2ypNFhy01kC6eHDg/5zDXouwdnG7g+Z
-         iQdUNpOewzrVm1UafBqks0MtM9hY3AnIIHGzal6p3m1GPuBgUmFpSYm5Yr04S3ndEBfW
-         qHXg==
-X-Gm-Message-State: AJIora9Hxdl2keGOYMBy/iHB3bP/xgmjALXNErdDch0kkq58KrzzAEgy
-        SfGcLeG42j4L9L/fb09YC5xQRksX0tX7tw==
-X-Google-Smtp-Source: AGRyM1u7Fp8qbv9DF4cVbHu2m09M7WFdduxWMFjBZeFwwXYzeCXvDLygjnGQffBhluV8YmeS6L4CCQ==
-X-Received: by 2002:a05:600c:3494:b0:3a0:37f0:86ad with SMTP id a20-20020a05600c349400b003a037f086admr11565514wmq.65.1656612034981;
-        Thu, 30 Jun 2022 11:00:34 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v13-20020a1cf70d000000b0039747cf8354sm7363985wmh.39.2022.06.30.11.00.34
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=z0MrKVScdRnLjyBFux/tbDAzb7oPO43yCkMRR5tSCH4=;
+        b=Km5ri5Nw69BNEsOpOd2DNX/7ddLmtnpLGrrzma+R9Cojzcu0XJREH5VokFFH3JvPKz
+         txSHIfuDIpyyJuFqIKgQWxWeJ1mZr/crXagZh1oE/VrfjqUsrrmEdUBfaz2vrejejJdn
+         N1OHz0YP4BfPmbJucrA5fMw/x7H/A6pMRPFfVcIPCek8PbRGpOQWv73iyzQ2Fnxcyx3a
+         P0AINH3RUK0p8+MFDd9Oo+kCgo63Qnzpm9mwo1znigdJIooJqWi2do/Ejb3Ef6aEA6kR
+         HcG3PFdEMjHxem0xCJ+V7MZuhRj/ROUg+Slu9vQ6Lb77oGc6eOdIaDeRp6fLvNritFKQ
+         RPMg==
+X-Gm-Message-State: AJIora9LuygHS+EOddgVWhQpq0uXvhQ0/Lc9UcyDQg7X7dK8j9qlKavm
+        XPQfUnjyXdkXQ+q7o8AVG8juiEcg1efQlg==
+X-Google-Smtp-Source: AGRyM1sY0Poy05wPd29KrfufVbJ09Rnva3YMi/BEmE1vAwXP5TWYIQUEK8izH3jhIVfndzBEOkjI+Q==
+X-Received: by 2002:a17:907:160f:b0:726:a7a4:c626 with SMTP id hb15-20020a170907160f00b00726a7a4c626mr10195205ejc.449.1656612694381;
+        Thu, 30 Jun 2022 11:11:34 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id w16-20020a1709061f1000b0071d3b6ed4eesm9406448ejj.160.2022.06.30.11.11.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 11:00:34 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 11/11] pull: fix a "struct oid_array" memory leak
-Date:   Thu, 30 Jun 2022 20:00:21 +0200
-Message-Id: <patch-11.11-022399ad652-20220630T175714Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.37.0.874.g7d3439f13c4
-In-Reply-To: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
-References: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
+        Thu, 30 Jun 2022 11:11:33 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o6ydZ-002R8H-4h;
+        Thu, 30 Jun 2022 20:11:33 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: Non-interactively rewording commit messages
+Date:   Thu, 30 Jun 2022 20:10:39 +0200
+References: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
+ <CAP8UFD1Ar13wqQP0ecb37saShSVj5Gxcjdpz=pckXZ7X9TRfSQ@mail.gmail.com>
+ <20220630175421.wbgqnmym7ioazdzo@meerkat.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220630175421.wbgqnmym7ioazdzo@meerkat.local>
+Message-ID: <220630.86iloic97u.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak introduced in 44c175c7a46 (pull: error on no merge
-candidates, 2015-06-18). As a result we can mark several tests as
-passing with SANITIZE=leak using "TEST_PASSES_SANITIZE_LEAK=true".
 
-Removing the "int ret = 0" assignment added here in a6d7eb2c7a6 (pull:
-optionally rebase submodules (remote submodule changes only),
-2017-06-23) is not a logic error, it could always have been left
-uninitialized (as "int ret"), now that we'll use the "ret" from the
-upper scope we can drop the assignment in the "opt_rebase" branch.
+On Thu, Jun 30 2022, Konstantin Ryabitsev wrote:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/pull.c               | 16 ++++++++++------
- t/t5524-pull-msg.sh          |  1 +
- t/t6417-merge-ours-theirs.sh |  1 +
- t/t9101-git-svn-props.sh     |  1 -
- 4 files changed, 12 insertions(+), 7 deletions(-)
+> On Thu, Jun 30, 2022 at 07:34:54PM +0200, Christian Couder wrote:
+>> > Hello, all:
+>> >
+>> > What's the best approach to non-interactively rewrite specific commit
+>> > messages? In this particular case, I am trying to automatically retrieve code
+>> > review trailers sent to the mailing list and put them into corresponding
+>> > commits.
+>> >
+>> > For example, I have a set of commits:
+>> >
+>> > abcabc: This commit does foo
+>> > bcdbcd: This commit does bar
+>> > cdecde: This commit does baz
+>> >
+>> > They were all sent to the mailing list and a maintainer sent a "Reviewed-by"
+>> > to the second commit. In a usual interactive rebase session this would be:
+>> >
+>> > pick abcabc
+>> > reword bcdbcd
+>> > pick cdecde
+>> >
+>> > When the edit screen comes up for the bcdbcd commit, the author would manually
+>> > stick the new trailer into the commit message. However, I can automate all
+>> > that away with b4 -- just need a sane strategy for non-interactively rewriting
+>> > entire commit messages at arbitrary points in the recent history.
+>> >
+>> > Any pointers?
+>> 
+>> Have you tried `git interpret-trailers`?
+>
+> I'm aware of interpret-trailers, but unless I'm missing something large, it's
+> just a way of analyzing standalone text files to retrieve or insert trailers.
+> What I'm looking for is a way to amend arbitrary commit messages within recent
+> git history.
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 01155ba67b2..403a24d7ca6 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -990,6 +990,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	int rebase_unspecified = 0;
- 	int can_ff;
- 	int divergent;
-+	int ret;
- 
- 	if (!getenv("GIT_REFLOG_ACTION"))
- 		set_reflog_message(argc, argv);
-@@ -1100,7 +1101,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (is_null_oid(&orig_head)) {
- 		if (merge_heads.nr > 1)
- 			die(_("Cannot merge multiple branches into empty head."));
--		return pull_into_void(merge_heads.oid, &curr_head);
-+		ret = pull_into_void(merge_heads.oid, &curr_head);
-+		goto cleanup;
- 	}
- 	if (merge_heads.nr > 1) {
- 		if (opt_rebase)
-@@ -1125,8 +1127,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (opt_rebase) {
--		int ret = 0;
--
- 		struct object_id newbase;
- 		struct object_id upstream;
- 		get_rebase_newbase_and_upstream(&newbase, &upstream, &curr_head,
-@@ -1149,12 +1149,16 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND))
- 			ret = rebase_submodules();
- 
--		return ret;
-+		goto cleanup;
- 	} else {
--		int ret = run_merge();
-+		ret = run_merge();
- 		if (!ret && (recurse_submodules == RECURSE_SUBMODULES_ON ||
- 			     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND))
- 			ret = update_submodules();
--		return ret;
-+		goto cleanup;
- 	}
-+
-+cleanup:
-+	oid_array_clear(&merge_heads);
-+	return ret;
- }
-diff --git a/t/t5524-pull-msg.sh b/t/t5524-pull-msg.sh
-index b2be3605f5a..56716e29ddf 100755
---- a/t/t5524-pull-msg.sh
-+++ b/t/t5524-pull-msg.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git pull message generation'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- dollar='$Dollar'
-diff --git a/t/t6417-merge-ours-theirs.sh b/t/t6417-merge-ours-theirs.sh
-index 62d1406119e..482b73a998f 100755
---- a/t/t6417-merge-ours-theirs.sh
-+++ b/t/t6417-merge-ours-theirs.sh
-@@ -4,6 +4,7 @@ test_description='Merge-recursive ours and theirs variants'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
-index d043e80fc34..52046e60d51 100755
---- a/t/t9101-git-svn-props.sh
-+++ b/t/t9101-git-svn-props.sh
-@@ -5,7 +5,6 @@
- 
- test_description='git svn property tests'
- 
--TEST_FAILS_SANITIZE_LEAK=true
- . ./lib-git-svn.sh
- 
- mkdir import
--- 
-2.37.0.874.g7d3439f13c4
+I think what's being suggested is that once you have a program that can
+munge a commit message on stdin, you can combine it with rebase, git
+commit --amend etc. to change existing commits.q
+
+The t/t7513-interpret-trailers.sh test has some examples of munging
+existing content.
 
