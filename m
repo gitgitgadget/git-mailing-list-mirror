@@ -2,92 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3C74C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BBD0C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 18:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236659AbiF3Se7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 14:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49896 "EHLO
+        id S236681AbiF3S4L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 14:56:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236545AbiF3Se5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 14:34:57 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B8ED39824
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:34:56 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 199621A78BB;
-        Thu, 30 Jun 2022 14:34:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=V0/0TGnBYV1U
-        R3XrOl9CFYjJgQCX3GRWuutFfhqQFqc=; b=KzTD8VbguGB4+LHasNlrlZl7YaTT
-        96kC5WRiaDr8xiLHNi/FgYnQfIclLc3h0sxGIVsrHWzJMr8J6SEuIDxWZ8og0u6D
-        D5PQ6Mg/HoER+z5920K1co1JwWROBmCBYe2vM2ifZgu4GfFkezRa6lNnnvMjocS2
-        aqFsQrAmc8H1hNA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 12E791A78BA;
-        Thu, 30 Jun 2022 14:34:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9B4E61A78B7;
-        Thu, 30 Jun 2022 14:34:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Ian Whitlock <ian@theknown.net>, Git List <git@vger.kernel.org>
-Subject: Re: Bug: "git-remote ls -h"
-References: <d2a7caa9-e2ba-457d-9fe9-92b29b5ee47a@www.fastmail.com>
-        <CAPig+cSnhbruJE_WBpmmypE_vzEQForooOu8KqbJ=dbaUrKKcg@mail.gmail.com>
-Date:   Thu, 30 Jun 2022 11:34:51 -0700
-In-Reply-To: <CAPig+cSnhbruJE_WBpmmypE_vzEQForooOu8KqbJ=dbaUrKKcg@mail.gmail.com>
-        (Eric Sunshine's message of "Wed, 29 Jun 2022 12:29:53 -0400")
-Message-ID: <xmqqpmiqdmpg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233100AbiF3S4K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 14:56:10 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B3EA35240
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 11:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1656615339;
+        bh=si6r0w6hvNmxjElnCu4oxo9ITj3gC9P21EX8AVmKY7U=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BTDCyNV+c8CaJHxvClzfXw56w+jFMlZrXoWO4PbAD7uzT8dJkEREXDcxqwasU0loz
+         mhtkKnO8MXoaWr2Odj3f91vkFuiNcZGtySx4dGx4nNDWxxtFrNkdBu5295unkxHFj5
+         vHXNEhWsD0sqASzSKk/KAADiQwBC0jZRDd0U1JLA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.204.148] ([213.196.212.94]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEUz4-1ns69B2IKg-00G2Wb; Thu, 30
+ Jun 2022 20:55:39 +0200
+Date:   Thu, 30 Jun 2022 20:55:38 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 0/5] Avoid spawning gzip in git archive
+In-Reply-To: <0aa5c101-06bf-325c-efbc-6b4ef38616c5@web.de>
+Message-ID: <ps52p06s-01nr-4ss2-r802-6nsp5nqq5199@tzk.qr>
+References: <pull.145.git.gitgitgadget@gmail.com> <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de> <nycvar.QRO.7.76.6.2206141043150.353@tvgsbejvaqbjf.bet> <0aa5c101-06bf-325c-efbc-6b4ef38616c5@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 54BA55C0-F8A3-11EC-9031-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-716461379-1656615340=:10220"
+X-Provags-ID: V03:K1:e+PhbZjhtQvYiox5obT+Sqih59AkeR0UAojnVxpX3tLW5XI0c6H
+ zpb+HlHj6bXNCKEE1fnX9RHdwv6aJeIbZP2+/znsWZOGVt/+/phDVkklQyIoKw2x9bm8Es9
+ RlqA6QD3PL1v4SBix1cWSNX07AE7EsUfGB/g4Xo7PrJuHSct7iogej7hQ6zf7yZQzyvvdWX
+ bUdwSAWS63z1P2r9CZkNA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ApdXIwzS4zw=:AaX3D4oZY8+Ist186iUJHN
+ meU9VIWz6Pfl/4WLTCFDXS2SASrXFR7i2lcv4aDhhe3SsD6fAkcjgHFrbtyO0UNUXaOAo8K/Q
+ M2qUZW1DANfmQ8MR8oS1SBjoOthpdqMAJ0qhcCzmcpNuD3cZ3Ne4oWs1vGJ7nu+xV5wJrfunY
+ pBjLOWA0oSSegsrvc34xycLtbz1a8eNAuI3dWOq5dJFBISY70LaT77fD4XZe7yu7pObcI2wtk
+ SheymOQ0WUUCNjcuRl+giYMZ7oBjpY0rQklSyNnv08G+kc4QuKgfVRDFJKka7BjWqRiDhvWGy
+ nDTggenDq8wMjjBoAdqnn2VPbahAOUlY7HUCuUoMMS8zG7oY9LN05sVWghiZYOZG/HEDEnqrR
+ /rspXlJcVbDUW9xUv6m0kRjZwR3QGI7dvhDLdvwDK3lauk/WjVIKp4IVCjsp6I6AjmG/qurm+
+ AmQbpHZ0dLpJsUL3fDUEkeu2UVfTCAJu9x3H9kFF4FyWhZ+RDwyoSNqfsPyCfpyVzRkAkI+M7
+ cpX9PoaKi6jnIYVpUHUbWRJhahgGGoF67P44m4aPpv55OwePyZfgeWbQkYtxNqdaWGO1Ya1sm
+ EU4psyLZeeTWnxeA++Bc5wKcg8uBjn6q2b1CZP398++f2qpHiop/sq7J0hLy6BiFanC1oMXqS
+ c5b/WqejsCNn8ON4k4gJhlwz741ldJp/u1+OYaUbwM8VpFtpyPDxBs7g+x7FV+vvhg9WtxTU4
+ 4tFqxv+lOsWKygPk98chfZoatB4Pd26hFN7vGg2TN4R4IYFL7KebfZrGU8R5fY1zL7YFWTaN6
+ LbFlzfQiiCIBdsbd8095OrXgGNluiBguBqhZblf3/K4EBDZt5ypI5mzxZu/dy5rlkBoLPSu58
+ 5mZ+4VUlMEw+mtV35Bc4v8z9xkP3lXYrpNJvR+fUlTEb9a5GihBVXtYLWTDD/Zq23hZsJnSNH
+ BSb1qub8gCPUfkO5tciQOB7+9rxAlqEbqhzza00K068L2HnnUeKqliJ/1X8f74hqVM+2POtqR
+ JJC0gh2QxXcsOJigpot8pf1VJEv6xHcyUG8YICpT4mi+F8GBBZ5yI+F+lgnY37k/+lcY7HbF+
+ lo8Xo8qkmUHIP442v6s4brDRb+3EpPbqn6sWQ2gigzjBn7usSwkx5F87A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Wed, Jun 29, 2022 at 11:39 AM Ian Whitlock <ian@theknown.net> wrote:
->> I found a bug and couldn't find another way to report it. I hope this =
-is okay.
->> The help output for `git ls-remote` shows that `-h` should display rem=
-ote HEADs, but instead the help output is displayed!
+--8323328-716461379-1656615340=:10220
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Ren=C3=A9,
+
+On Tue, 14 Jun 2022, Ren=C3=A9 Scharfe wrote:
+
+> Am 14.06.22 um 13:28 schrieb Johannes Schindelin:
+> >
+> > By the way, the main reason why I did not work more is that in
+> > http://madler.net/pipermail/zlib-devel_madler.net/2019-December/003308=
+.html,
+> > Mark Adler (the zlib maintainer) announced that...
+> >
+> >> [...] There are many well-tested performance improvements in zlib
+> >> waiting in the wings that will be incorporated over the next several
+> >> months. [...]
+> >
+> > This was in December 2019. And now it's June 2022 and I kind of wonder
+> > whether those promised improvements will still come.
+> >
+> > In the meantime, however, a viable alternative seems to have cropped u=
+p:
+> > https://github.com/zlib-ng/zlib-ng. Essentially, it looks as if it is =
+what
+> > zlib should have become after above-quoted announcement.
+> >
+> > In particular the CPU intrinsics support (think MMX, SSE2/3, etc) seem=
+ to
+> > be very interesting and I would not be completely surprised if buildin=
+g
+> > Git with your patches and linking against zlib-ng would paint a very
+> > favorable picture not only in terms of CPU time but also in terms of
+> > wallclock time. Sadly, I have not been able to set aside time to look =
+into
+> > that angle, but maybe I can peak your interest?
+> I was unable to preload zlib-ng using DYLD_INSERT_LIBRARIES on macOS
+> 12.4 so far.  The included demo proggy looks impressive, though:
 >
-> Thanks for the report.
+> $ hyperfine -w3 -L gzip gzip,../zlib-ng/minigzip "git -C ../linux archiv=
+e --format=3Dtar HEAD | {gzip} -c"
+> Benchmark #1: git -C ../linux archive --format=3Dtar HEAD | gzip -c
+>   Time (mean =C2=B1 =CF=83):     20.424 s =C2=B1  0.006 s    [User: 23.9=
+64 s, System: 0.432 s]
+>   Range (min =E2=80=A6 max):   20.414 s =E2=80=A6 20.434 s    10 runs
 >
->>  =E2=9E=9C git ls-remote -h
->> usage: git ls-remote [--heads] [--tags] [--refs] [--upload-pack=3D<exe=
-c>]
->>                      [-q | --quiet] [--exit-code] [--get-url]
->>                      [--symref] [<repository> [<refs>...]]
+> Benchmark #2: git -C ../linux archive --format=3Dtar HEAD | ../zlib-ng/m=
+inigzip -c
+>   Time (mean =C2=B1 =CF=83):     12.158 s =C2=B1  0.006 s    [User: 13.9=
+08 s, System: 0.376 s]
+>   Range (min =E2=80=A6 max):   12.145 s =E2=80=A6 12.166 s    10 runs
 >
-> This is a known and documented behavior. The description of the `-h`
-> option in the `ls-remote` help page:
->
->     Limit to only refs/heads and refs/tags, respectively. These
->     options are not mutually exclusive; when given both, references
->     stored in refs/heads and refs/tags are displayed. Note that git
->     ls-remote -h used without anything else on the command line gives
->     help, consistent with other git subcommands.
+> Summary
+>   'git -C ../linux archive --format=3Dtar HEAD | ../zlib-ng/minigzip -c'=
+ ran
+>     1.68 =C2=B1 0.00 times faster than 'git -C ../linux archive --format=
+=3Dtar HEAD | gzip -c'
 
-Correct.
+Intriguing.
 
-I do not mind a patch that teaches ls-remote to emit an extra line
-of hint after giving the standard short-help-usage text, telling the
-user that "git ls-remote -h origin" (replace 'origin' with whatever
-the default remote is) can be used to learn the branches at the
-remote.
+I finally managed to play around with building and packaging zlib-ng [*1*]
+(since I want to use it as a drop-in replacement for zlib, I think it is
+best to configure it with `--zlib-compat`, that way I do not have to
+fiddle with any equivalent of `LD_PRELOAD`). Here are my numbers:
 
-Thanks.
+	zlib-ng: 14.409 s =C2=B1 0.209 s
+	zlib:    26.843 s =C2=B1 0.636 s
 
+These are pretty good, which made me think that they might actually even
+help regular Git operations (because we zlib every loose object).
 
+So I tried to `fast-import` some 2500 commits from linux.git into a fresh
+repository, and the zlib-ng version takes ~51s and the zlib version takes
+~58s. At first I thought that it might be noise, but the trend seems to be
+steady. It's not a huge improvement, of course, but I think that might be
+because most of the time is spent parsing.
 
+I then tried to test the performance focusing on writing loose object, by
+using p0008 (increasing the number of files from 50 to 1500 and
+restricting it to fsyncMethod=3Dnone).
+
+Unfortunately, the numbers are not really conclusive. I do see minor
+speed-ups with zlib-ng, mostly, in the single digit percentages, though
+occasionally in the other direction. In other words, there is no clear-cut
+change, just a vague tendency. My guess: Git writes too small files (their
+contents are of the form "$basedir$test_tick.$counter") and zlib-ng's
+superior performance does not come to bear.
+
+Still, for larger workloads, zlib-ng seems to offer a quite nice and
+substantial performance improvement over zlib.
+
+Ciao,
+Dscho
+
+Footnote *1*: https://github.com/msys2/MINGW-packages/compare/master...dsc=
+ho:zlib-ng
+
+--8323328-716461379-1656615340=:10220--
