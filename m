@@ -2,154 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6116C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 09:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55F1BC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 10:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233249AbiF3JyE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 05:54:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56798 "EHLO
+        id S234589AbiF3KS7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 06:18:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230350AbiF3JyD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 05:54:03 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894711EADF
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 02:54:01 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id mf9so38018422ejb.0
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 02:54:01 -0700 (PDT)
+        with ESMTP id S234520AbiF3KS5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 06:18:57 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD1FC44765
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:18:55 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id l2-20020a05600c4f0200b0039c55c50482so1397713wmq.0
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 03:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=K+vFEERKab7F6RhNZE5nHwYr5h7Q1XZ61sjWkNYkUj0=;
-        b=bftWs3uMyipYgJCQgVrEH5FteCMVwY2HAJIA501znodSnF/HkVYqivwLJ+0aDcc4nv
-         pQPU9lUNYdMUdCFjOoXSHFG8MyjQMcb1ORd/Ykq3B6FPxzbJKGU/ccDREqFTBAtpbP30
-         +kjWGtTlFHj638k9cFoMUFb03QpBFb5C2jMVgwJ/V4TdC7eCSyb7ZF9CbR4g3MNwEIFR
-         ImU8k0qWztuLVNs08PypK9jhL/ys0UKwTrb4g1FjfyDBJ4y/mdDXfgCVnT7bLIlclgW1
-         VS/3TZGLDhE1oH3X89FH3vjZV/wL2VDYF9wTJZYCwrSRinx4aO41pgqTVlRC20nNYG3F
-         G9rw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=aEZFQkOqyYy1MZt3kx43+eLRYUgmjBXl1ASRhBSL+YU=;
+        b=MM8CY7WFy9QO6Z1VGcvRx/C2cy1fJcvSMDUgNktnPL3HdjMWn+aueIH14JwKbJ70Na
+         G0S/XOhxWSTKjVCZdcuNW6X9DpVgfCBHPq4gVPMU8abBiwgOJ2jHESJ+oYgw5+GcOS9O
+         TKInXAg8UU7EibbQezd2CQ/h5Ez9nUs6MhVHMca3xeHPbLVUpxTvvnjPxWuDCBtTQKwF
+         lwWEUFMcjTiq4egOIjUusOoWPHsZuU4JAHBG4e9EI36doh2x9spSOGJeOA36TaQo4kxM
+         F2tDf96VLNTlcrkNmPwSZ5kfYncE3p1utypeuU48Dcc7tSZzvxXfhAa0vkrIUhxy3sIs
+         VFdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=K+vFEERKab7F6RhNZE5nHwYr5h7Q1XZ61sjWkNYkUj0=;
-        b=onZX4jAn6/R2z8LznjMaU7bp22aSUnqY3umOhrZuCfFjXB9UPhHcrDmsEEp9G8mF1I
-         bsnVDXhVoM3a18WKVCjB27itmHcDbO6tSZVcAyR10nvPYO2CbLhHBSlszf7GsW3Co8Wx
-         h5fauU7bkDHG+izmjKZmb0DTsQazyMpKvZtnXdO/xbpVR2FvqlHsKJjRXOphVkkBQE8s
-         GLSP/5kNJWlmFbrEmfbsob32b2JE+Wmzs/m54qBBqldAVtvYPgk2cmVH3qSk88TnGxy4
-         DH8f82Hh8XxXb5ShfI5pHU0uDfzndOVT4mMnz/ZUQrPTPAW/jFN6v7v1jU0U3uIAr1Ea
-         HSaQ==
-X-Gm-Message-State: AJIora8906BWwmxPfw94Mw8cmkP3VIAVgK6U1Y3EqX7CNOFgVETcdfOD
-        vX1lxZEdg/3pPlmAtLSjagyKgF3EcoJZWw==
-X-Google-Smtp-Source: AGRyM1vQL8wGEb1wYZim8YBpLN8tASrD6HsCINgI9Ny9/LBN+Fi529ccRLyxVfmv0S/e1fRAikVsig==
-X-Received: by 2002:a17:906:d54f:b0:726:4424:9d31 with SMTP id cr15-20020a170906d54f00b0072644249d31mr8088459ejc.227.1656582840094;
-        Thu, 30 Jun 2022 02:54:00 -0700 (PDT)
-Received: from localhost (78-131-14-143.pool.digikabel.hu. [78.131.14.143])
-        by smtp.gmail.com with ESMTPSA id fx24-20020a170906b75800b006fec63e564bsm8813758ejb.30.2022.06.30.02.53.58
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=aEZFQkOqyYy1MZt3kx43+eLRYUgmjBXl1ASRhBSL+YU=;
+        b=17QkJZLcwGh8sYRVhqUDVJxwKWFLmrIy7D5jgG0DIrWDQ6eUlHLlMdxXKGhIkXwQMT
+         7ABFmrUABp0xZ1Njm38mXSZhF23jl0IC5f0O+Y22VAPAN+6D8xDVV+tAAHt+z3eRTZv0
+         vizKBWAVUtdNy4yoD2+pqtCyKPHxVvovvt7GyXwlbrvVpqFY5wI7AYgGsdT1IMxDglTY
+         Qi7gDRKvPr9//fV88iKi2JMqccpUh0OYTAo1jC44d0VfwkWTISfKVck/RXxA1Pt3ClR8
+         2ihLueOsRWI/mt7R+k/c0CX0yrOSqj0oYHwUFwe86qYejbS2Jf9S49ijfewTGkdR6csr
+         QUTQ==
+X-Gm-Message-State: AJIora9KT46wmsFWb+yIBOfdS+fEnze6mbYqE8gtOk5b65EStt0o7vmU
+        lCssBdTGerBXch05ixig6vR5T2oB7LoiBw==
+X-Google-Smtp-Source: AGRyM1vpEtcys1iFmIruGTrQgL6DVgvs3e/XA2AWz1aYCA4GAgEhPC+4IZHrCwv1uLj6JBf/0fvtkg==
+X-Received: by 2002:a05:600c:4149:b0:3a0:4728:60e7 with SMTP id h9-20020a05600c414900b003a0472860e7mr8981478wmm.10.1656584333923;
+        Thu, 30 Jun 2022 03:18:53 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id m1-20020a7bcb81000000b003a05621dc53sm5978427wmi.29.2022.06.30.03.18.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 02:53:59 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 11:53:57 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2] merge-ort: avoid assuming all renames detected
-Message-ID: <20220630095357.GA2123@szeder.dev>
-References: <pull.1194.git.git.1642212566346.gitgitgadget@gmail.com>
- <pull.1194.v2.git.git.1642443955836.gitgitgadget@gmail.com>
+        Thu, 30 Jun 2022 03:18:53 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        rsbecker@nexbridge.com,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/3] tests: add missing double quotes to included library paths
+Date:   Thu, 30 Jun 2022 12:18:34 +0200
+Message-Id: <patch-v2-1.3-f4ef137d076-20220630T101646Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.0.880.gf07d56b18ba
+In-Reply-To: <cover-v2-0.3-00000000000-20220630T101646Z-avarab@gmail.com>
+References: <cover-0.3-00000000000-20220621T221928Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20220630T101646Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1194.v2.git.git.1642443955836.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 17, 2022 at 06:25:55PM +0000, Elijah Newren via GitGitGadget wrote:
-> diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
-> index 035edc40b1e..f2bc8a7d2a2 100755
-> --- a/t/t6429-merge-sequence-rename-caching.sh
-> +++ b/t/t6429-merge-sequence-rename-caching.sh
-> @@ -697,4 +697,71 @@ test_expect_success 'caching renames only on upstream side, part 2' '
->  	)
->  '
->  
-> +#
-> +# The following testcase just creates two simple renames (slightly modified
-> +# on both sides but without conflicting changes), and a directory full of
-> +# files that are otherwise uninteresting.  The setup is as follows:
-> +#
-> +#   base:     unrelated/<BUNCH OF FILES>
-> +#             numbers
-> +#             values
-> +#   upstream: modify: numbers
-> +#             modify: values
-> +#   topic:    add: unrelated/foo
-> +#             modify: numbers
-> +#             modify: values
-> +#             rename: numbers -> sequence
-> +#             rename: values -> progression
-> +#
-> +# This is a trivial rename case, but we're curious what happens with a very
-> +# low renameLimit interacting with the restart optimization trying to notice
-> +# that unrelated/ looks like a trivial merge candidate.
-> +#
-> +test_expect_success 'avoid assuming we detected renames' '
-> +	git init redo-weirdness &&
-> +	(
-> +		cd redo-weirdness &&
-> +
-> +		mkdir unrelated &&
-> +		for i in $(test_seq 1 10)
-> +		do
-> +			>unrelated/$i
-> +		done &&
-> +		test_seq  2 10 >numbers &&
-> +		test_seq 12 20 >values &&
-> +		git add numbers values unrelated/ &&
-> +		git commit -m orig &&
-> +
-> +		git branch upstream &&
-> +		git branch topic &&
-> +
-> +		git switch upstream &&
-> +		test_seq  1 10 >numbers &&
-> +		test_seq 11 20 >values &&
-> +		git add numbers &&
-> +		git commit -m "Some tweaks" &&
-> +
-> +		git switch topic &&
-> +
-> +		>unrelated/foo &&
-> +		test_seq  2 12 >numbers &&
-> +		test_seq 12 22 >values &&
-> +		git add numbers values unrelated/ &&
-> +		git mv numbers sequence &&
-> +		git mv values progression &&
-> +		git commit -m A &&
-> +
-> +		#
-> +		# Actual testing
-> +		#
-> +
-> +		git switch --detach topic^0 &&
-> +
-> +		test_must_fail git -c merge.renameLimit=1 rebase upstream &&
-> +
-> +		git ls-files -u >actual &&
-> +		! test_file_is_empty actual
+Fix inclusion errors which would occur if the $TEST_DIRECTORY had $IFS
+whitespace in it.
 
-There is no 'test_file_is_empty' function, but because of the ! at the
-beginning of the line it didn't fail the test.
+See d42bab442d7 (core.fsyncmethod: tests for batch mode, 2022-04-04)
+and a242c150ebb (vimdiff: integrate layout tests in the unit tests
+framework ('t' folder), 2022-03-30) for the two relevant commits. Both
+were first released with v2.37.0-rc0 (and were also part of v2.37.0).
 
-The minimal fix would be to use 'test_file_not_empty' instead, but I
-wonder whether we should use 'test_line_count = 2' instead for a tad
-tighter check.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t3700-add.sh            | 2 +-
+ t/t3903-stash.sh          | 2 +-
+ t/t7609-mergetool--lib.sh | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-> +	)
-> +'
-> +
->  test_done
-> 
-> base-commit: 1ffcbaa1a5f10c9f706314d77f88de20a4a498c2
-> -- 
-> gitgitgadget
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 8979c8a5f03..8689b48589c 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -8,7 +8,7 @@ test_description='Test of git add, including the -- option.'
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+-. $TEST_DIRECTORY/lib-unique-files.sh
++. "$TEST_DIRECTORY"/lib-unique-files.sh
+ 
+ # Test the file mode "$1" of the file "$2" in the index.
+ test_mode_in_index () {
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 20e94881964..2a4c3fd61c0 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -9,7 +9,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+-. $TEST_DIRECTORY/lib-unique-files.sh
++. "$TEST_DIRECTORY"/lib-unique-files.sh
+ 
+ test_expect_success 'usage on cmd and subcommand invalid option' '
+ 	test_expect_code 129 git stash --invalid-option 2>usage &&
+diff --git a/t/t7609-mergetool--lib.sh b/t/t7609-mergetool--lib.sh
+index d848fe6442b..330d6d603d7 100755
+--- a/t/t7609-mergetool--lib.sh
++++ b/t/t7609-mergetool--lib.sh
+@@ -7,7 +7,7 @@ Testing basic merge tools options'
+ . ./test-lib.sh
+ 
+ test_expect_success 'mergetool --tool=vimdiff creates the expected layout' '
+-	. $GIT_BUILD_DIR/mergetools/vimdiff &&
++	. "$GIT_BUILD_DIR"/mergetools/vimdiff &&
+ 	run_unit_tests
+ '
+ 
+-- 
+2.37.0.880.gf07d56b18ba
+
