@@ -2,113 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68F40C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F17BCC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:18:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237443AbiF3VRn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:17:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38590 "EHLO
+        id S236905AbiF3VSy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:18:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236857AbiF3VRl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:17:41 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C825387A7
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:17:40 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        with ESMTP id S236381AbiF3VSx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:18:53 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C47245784
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:18:52 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4A39135B12;
+        Thu, 30 Jun 2022 17:18:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WtJGQ19i0HQKSsztncvyzXqtGQu1kzzls9nzqc
+        2ylEk=; b=dzsp9JThS4IXxa7oiiC2hCnbk4CZvsrpVY45LKGY6fyzcIZkHgXPf0
+        mUY0M5tJ2NZvPUeH1ZuWDaYfjah5aGL+asJkdRZ13G/2rE7MUVRnvCQN/oZr/E6k
+        qBS5+CbSWpidxOIggsNnkejbmE3E98GjIxHRbPzDuCgoiKDn8ioYw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9B22135B11;
+        Thu, 30 Jun 2022 17:18:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A56A55A49B;
-        Thu, 30 Jun 2022 21:17:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1656623859;
-        bh=3Uv3vZiE+OiHnltPs10QAZvEqcoEjdZWQTnVeOSi++0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=sROqzf4G6f4NWTb9zHZ4gMe1HRjQNBRyZcL+HSqySaJPCngyVQBILLoOqqTps6ANY
-         5izrVqC0jof6jBWKIOG5LAa8D6rQlwYyh9UwMenYZ3l0Y4yXqF92cO6HBAmsigUQhi
-         Rr3oPb836Ms6obBrAUjp/qvGC4Lqaz0hs8owuWsmDuEJsT90jBOSnvFxKg5Dteo1af
-         iCRwceZJ+S6SfBeJrNxg9dX7yHK0xa2eBZwXccm9NPdWsy0+d7hdWqwDS2fmk+oukL
-         yfGQHRZPl19s2uFKzc5JBrf8SRqn6PTgZNklOYpm2VTn2pN4hzrTfK3vUgbM2Ja20V
-         wBCMgPFyDGcNDeCVzf67Vf9ksJxnkcNCIkP8KjPPtH50urVcIajuPfr0TzF40dckD2
-         i/aU9WhJ7xadzaVFMHf3ORc7nU50AEGGRF0OSgLb/xx2rfbQECGv7c/GvNWyRs92zf
-         I7IHr82lOFdwHl+MD1XagRpDq1A2Vi7IiXqP6aRpdOAYxUX64Kz
-Date:   Thu, 30 Jun 2022 21:17:38 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2ECC6135B0F;
+        Thu, 30 Jun 2022 17:18:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Non-interactively rewording commit messages
-Message-ID: <Yr4S8jHKbtuBuT1z@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        git@vger.kernel.org
-References: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
+Subject: Re: [PATCH 0/3] Add support for mailmap in cat-file
+References: <20220630142444.651948-1-siddharthasthana31@gmail.com>
+Date:   Thu, 30 Jun 2022 14:18:47 -0700
+In-Reply-To: <20220630142444.651948-1-siddharthasthana31@gmail.com> (Siddharth
+        Asthana's message of "Thu, 30 Jun 2022 19:54:41 +0530")
+Message-ID: <xmqqpmipdf48.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="eiBcGKWbIlPSFcUr"
-Content-Disposition: inline
-In-Reply-To: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
-User-Agent: Mutt/2.2.4 (2022-04-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3C5EBBEE-F8BA-11EC-8F4B-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Siddharth Asthana <siddharthasthana31@gmail.com> writes:
 
---eiBcGKWbIlPSFcUr
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> So, this patch series adds mailmap support to the git cat-file command.
+> It does that by adding --[no-]use-mailmap command line option to the
+> git cat-file command. It also adds --[no-]mailmap option as an alias to
+> --[no-]use-mailmap.
 
-On 2022-06-30 at 15:27:57, Konstantin Ryabitsev wrote:
-> Hello, all:
->=20
-> What's the best approach to non-interactively rewrite specific commit
-> messages? In this particular case, I am trying to automatically retrieve =
-code
-> review trailers sent to the mailing list and put them into corresponding
-> commits.
->=20
-> For example, I have a set of commits:
->=20
-> abcabc: This commit does foo
-> bcdbcd: This commit does bar
-> cdecde: This commit does baz
->=20
-> They were all sent to the mailing list and a maintainer sent a "Reviewed-=
-by"
-> to the second commit. In a usual interactive rebase session this would be:
->=20
-> pick abcabc
-> reword bcdbcd
-> pick cdecde
+So does this kick in only with "git cat-file commit <object>" and
+never with "git cat-file $type" for non-commit object types?  For a
+payload like CREDITS file, people may want the blob contents
+filtered by applying the mailmap, so limiting it to only commits may
+or may not be the best idea.
 
-You can set GIT_SEQUENCE_EDITOR to a command which does this in-place on
-the file...
+How does/should this interact with "git cat-file -p"?
 
-> When the edit screen comes up for the bcdbcd commit, the author would man=
-ually
-> stick the new trailer into the commit message. However, I can automate all
-> that away with b4 -- just need a sane strategy for non-interactively rewr=
-iting
-> entire commit messages at arbitrary points in the recent history.
+Does it also work with the batch mode?
 
-=2E..and you can set GIT_EDITOR to modify the commit message in-place in
-whatever way you want, and then use git rebase -i to rebase.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+For a single-request-single-answer invocation like "git cat-file
+commit <object>", I think a "--[no-]use-mailmap" option is OK, but
+for something like the batch mode, we may want a way to obtain both
+the original and mapped name(s).  E.g. with this option in effect,
+in addition to the "author" and "committer" headers of the commit,
+the output may get a "mailmap-author" and "mailmap-committer" fake
+headers that show the mapped idents.
 
---eiBcGKWbIlPSFcUr
-Content-Type: application/pgp-signature; name="signature.asc"
+Soliciting too many questions mean the cover letter is doing a good
+job to pique interest from readers, and is not doing a good job to
+explain adequately what it really does ;-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.35 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYr4S8gAKCRB8DEliiIei
-gSFRAP9WOZnKnZl0vIgfJ+04k9Q2dITLfH7ps4jnm+eP+NntZgEA45NAKUVJqMWO
-zIjJQVdt2x1twawbf3kZyYsEXaafjwI=
-=lXN0
------END PGP SIGNATURE-----
-
---eiBcGKWbIlPSFcUr--
+Let's read on.
