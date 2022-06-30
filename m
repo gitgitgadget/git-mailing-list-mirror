@@ -2,72 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2E31C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A849EC43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 17:11:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236073AbiF3RJV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 13:09:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37548 "EHLO
+        id S235915AbiF3RLU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 13:11:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229906AbiF3RJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 13:09:19 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 633781A80C
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:09:15 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 781E41341D8;
-        Thu, 30 Jun 2022 13:09:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fQVROjVdXLmURJM+uEJyZJyczb0BtgAddzGnpm
-        R6YZQ=; b=MQqecWMRgXoIdHUj2uDoceyqkIAxNwQZqgMxrxscvNWLO20i4/xkXh
-        kKQ16TkIdYxxI2yPV/GZYFifLL8V1dWX+seUnejcC1TC/GkWBOhObX2cH8tQMfXR
-        uIItsqAWWchLKTdj16+LO9hq960mPxiYMy2f1+IclhPfVHGiztYvA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E3331341D7;
-        Thu, 30 Jun 2022 13:09:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCE841341D6;
-        Thu, 30 Jun 2022 13:09:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 7/8] rebase: update refs from 'update-ref' commands
-References: <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
-        <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
-        <72e0481b643e98c5670eee0bf5c199c4fb693b16.1656422759.git.gitgitgadget@gmail.com>
-        <xmqq7d50ij6f.fsf@gitster.g>
-        <f2af844e-fc6c-94fd-7cce-0451f57c6576@github.com>
-Date:   Thu, 30 Jun 2022 10:09:12 -0700
-In-Reply-To: <f2af844e-fc6c-94fd-7cce-0451f57c6576@github.com> (Derrick
-        Stolee's message of "Wed, 29 Jun 2022 09:05:44 -0400")
-Message-ID: <xmqqedz6f58n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S235361AbiF3RLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 13:11:16 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 711DC3ED0E
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:11:15 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id d2so28523371ejy.1
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 10:11:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=dvjhRwJJs23bJJXP0Lxz1WxAJra7m69lNu51vnhhjQg=;
+        b=TgxLPsUspfkKEcEgVs0lbvE/bGxhEl95T78C2DaDpS7YoS+2JxYrKm9TbGPMw2sOsT
+         la8tbKITOBrdUYCse5v4BNkXLCOJZn7HlT5wrR8I12j3tqSpeeF9B26y28jJC2BNhB6P
+         jVdBNMLhN01jFxqtLwkWceKCG5yNUskaW/wjQy79ZbByLI1cophElBiJ1H1D8KkEuCU4
+         bAmCefnv51IwhvibFtLlopsjXPUdUmHzls4QlpK0FQ9NDTiRIUCxuJRbRxaSPJBkKASK
+         J056npafyb0z6K7CyTaQjhQs+9Ze2z5xDCARpcIlWqm6Ld++pkFLZwxYaB4pDRxn0o1H
+         AdXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=dvjhRwJJs23bJJXP0Lxz1WxAJra7m69lNu51vnhhjQg=;
+        b=cxMsCXluv93lDjagHcOvJxM18ZyyE92x0CWcjVI5VONH/nnhxJT1CiQhLvwzWCxgVp
+         Y6rUbHrOs76ci5EVFkOsq4iEfF/liuaNytFK+ky9G4qdsswTYLOR1aJzGmHQdvxiimDB
+         T9FjXI4beQuYmOsNUkYOx4gCn2+4iZXExFHSiEOALdvmgsFgbaJQAfaVgB1rmfZS7ntP
+         aNIJ1pqSRd4U7wTJhVIOEwMlURYi5z8wg649r6E2jYwYpTnkcAao7ers70MF2t5GB+D5
+         r5vbULSCIgIO+uPDCFxtHtOt5yyZXHa/EkbrxOVXRFQYG4FS7410Dk9hvK1nwjDKry8h
+         JmaA==
+X-Gm-Message-State: AJIora/CPfUrjY/YixMQImdQbe/XBpVe9mJ+m20BInEl2t6cwBdB4Y+w
+        laMMJzKN+kNJGgup9vFQEkuIAYuiqLg/4e6fb5EMRGz1F+s=
+X-Google-Smtp-Source: AGRyM1s/kNcYp1lCa4wEfaySsXDrsfXv9cf6qO05OTGCYVGdq+5XyZ1lAUDZZwaYTi8gpaloxrJ0sLGkwj2ddNTmCmE=
+X-Received: by 2002:a17:907:9693:b0:726:372c:2c02 with SMTP id
+ hd19-20020a170907969300b00726372c2c02mr10063342ejc.483.1656609073812; Thu, 30
+ Jun 2022 10:11:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5DC4D548-F897-11EC-B120-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+From:   Eric D <eric.decosta@gmail.com>
+Date:   Thu, 30 Jun 2022 13:11:02 -0400
+Message-ID: <CAMxJVdH+o+H56tJ4UmD8YcsNsLuutiUXpOP=euQbomBe1kLkMw@mail.gmail.com>
+Subject: Option to allow fsmonitor to run against repos on network file systems
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+I can appreciate the concerns expressed here:
+https://github.com/git/git/commit/d989b266c1a7ef47f27cec75e90f3dfefbfa0200
 
-> On 6/28/22 5:15 PM, Junio C Hamano wrote:
->> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> ...
->> It would be nice to also have a test that makes sure that other
->> people will be prevented from checking out a branch whose tips may
->> be updated at the end.
->
-> Patch 3 adds the tests that 'git branch -f' cannot update these refs,
+However, in my environment, our file servers are very capable and have
+the requisite support. It would be great if there was an option to
+override this check and allow fsmonitor to operate against network
+filesystems.
 
-Ah, I didn't notice.  We are covered then.  Thanks.
+-Eric
