@@ -2,114 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C977C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 23:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63EFEC43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 23:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231467AbiF3Xfm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 19:35:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56566 "EHLO
+        id S232861AbiF3XkE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 19:40:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbiF3Xfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 19:35:40 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED78C59245
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 16:35:39 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id o9so822035edt.12
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 16:35:39 -0700 (PDT)
+        with ESMTP id S232442AbiF3XkD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 19:40:03 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C88B94D174
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 16:39:59 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id pk21so1022528ejb.2
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 16:39:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=mGDFRaza0q5j0pCEpR/w7n5YeKK8orYF6P0cxYaDrH4=;
-        b=dkYhUsT6GSQiZSe3Eii8f3tlh6FDQkFEc9gWhiNgSEMgufmBKTgeY2GxHoWodCoV9M
-         fCUjWq6C4EgTZgNKKFOVRA6K02aC22LANuWijkT7NdU1oR4VqG+jWWgTjhXNms5YbiJ/
-         ZSU/kSDIouXzgUKjEIHmkcJwfEEDiXteqUfPic2Z68Vb/qrjyKSGfXzuF7e3un25FI1X
-         IKri2Lo0Z3jUa1scYO740/1JDLM/vwJrlmexZfeorZbtefF8Q5gFJmKBTJnGutAMMWSa
-         dkNuXX2otJOI5tD1DVtsnZTYOxOav6XTUoxV9U+nJN9oNEKvq2TgOn0NaeuyRe0DF8Gy
-         DjHw==
+         :message-id:mime-version;
+        bh=DnVcdod5ggeFj7s21CSnifsVGHIm36ONmI706DE/a7o=;
+        b=FoPb/BGWiSVfnIiCZ6JboSDWMShgMElv1VLR4B20Rz+FIeZvIB1M3SuEbU/jhT0vmK
+         VtqFAjIWd2YL5tHeJ0LUCMNQJB/xNkvgCkavnn7l3fKKo3I6iwsHItO7/YuBGNR7woSR
+         oP0jPYLhXGNFO3BL+fj/9K8fyw+SUu7qbPaQRyNfpq7U5aBSYeFNvs04f3Gd5znQLh6v
+         uczCZ+egLuh6nAPXYyAGy9Q07cblvVJFg5DBmiTjhM8rlhUf+K2mHSE7WMwWAJ26hk4U
+         ZmAwWONlffrHc/hAsnGTJbzLgWc+yhba2a78Y6Vga9+dxmPiKXrvmSKdTzaH4zQFoQyi
+         cwZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=mGDFRaza0q5j0pCEpR/w7n5YeKK8orYF6P0cxYaDrH4=;
-        b=pmiiIgEYZrp3K7ro59IEEIsL6teLMkT6Wf+PbBRlnIG5L9LDTJYHREYkDOKXan2hN0
-         Qom2821Ii5rIOBGGvibs+GvQQZipav+wv6JoZe0CadL6xSyIMPIreQgrrNmJNm4nCGUC
-         Oz8QHSYMksHL29/bnklDdXQeREdBdRL/TMb65/fyTnFryvDgM3rDc2tYASkulJN1433o
-         iTkb6are/SuThXpow1BCfxoMVVgWfphJGIUBt6vG5h6HOU2+KDURcszL1UVrMS+jhU6l
-         xRr6Q8f2fguEpjfLqhsV0QkAMet7NQNL610e5qh9NbFivWoIBG9n/yLox4PpFFS0xN5+
-         IHLQ==
-X-Gm-Message-State: AJIora91QDwSwqxuXahIGIcxq+OMZyqcgkLnUAMoXVKgfL0KNfuLx6Os
-        dFsp57+DOU7LgMnMtAlzme0=
-X-Google-Smtp-Source: AGRyM1tYqlgIvDzijwen1x7GotvPOqFNMttukT2W1FL741XK3Dl2vD9tt7RtlUl09zUa6d2wzwMuAw==
-X-Received: by 2002:aa7:d5d3:0:b0:437:d2b6:ce25 with SMTP id d19-20020aa7d5d3000000b00437d2b6ce25mr14509151eds.280.1656632138436;
-        Thu, 30 Jun 2022 16:35:38 -0700 (PDT)
+         :in-reply-to:message-id:mime-version;
+        bh=DnVcdod5ggeFj7s21CSnifsVGHIm36ONmI706DE/a7o=;
+        b=c/4poQ7JsT2VK/BRgovjKTF3lBeNm/pmccQLw7o3LytaJ/W8qPItxJXz9SJBOOgD1C
+         IcMe47TIz5ApBJ8xBq7BuG/6ZlWhqsGsH8C/5+honmbHF6i/Vpj5Z1Chr6ditARb4vmp
+         Ujw2e+rFBc+OknaRXnQNCaED/qabZEdP/gG5nExYO0DYRHZE/dgSGceBeTT2s20WQTF/
+         YpnKP7pAX5m7wCBDB3vlPRYIdmaZcIGwuNjv0j3Bif6U/z/lh8FsSssCmx+LX9V7tV/z
+         5uQ3WSR5W7z1HRvxDprv152OvkkSIZRvRW7OmV3u4lreY/p6yC+Lgc/Gn/29vXdM0zql
+         hZ3w==
+X-Gm-Message-State: AJIora8QSarLhuZdUjA9YHkBYb1M97keFMexABoIMvRBxtdNuoIdgYNA
+        RHNP0+TjLB5HmKU68T4ajdXSD09Y933tSQ==
+X-Google-Smtp-Source: AGRyM1tP1DpgGFuxtxK2C+QKn43NZX8//BzAXHyz+0nU2dO/iDz3j6ZU4AW1pEG2AaRS+2+InX802A==
+X-Received: by 2002:a17:906:38ce:b0:715:8483:e02e with SMTP id r14-20020a17090638ce00b007158483e02emr11761878ejd.442.1656632398091;
+        Thu, 30 Jun 2022 16:39:58 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id z21-20020a170906815500b00722e7e26d22sm9675008ejw.58.2022.06.30.16.35.37
+        by smtp.gmail.com with ESMTPSA id s3-20020a1709067b8300b0070efa110afcsm9651725ejo.83.2022.06.30.16.39.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 16:35:37 -0700 (PDT)
+        Thu, 30 Jun 2022 16:39:57 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1o73hB-002cUD-Ds;
-        Fri, 01 Jul 2022 01:35:37 +0200
+        id 1o73lM-002ceC-Q8;
+        Fri, 01 Jul 2022 01:39:56 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 08/11] checkout: add a missing
- clear_unpack_trees_porcelain()
-Date:   Fri, 01 Jul 2022 01:34:00 +0200
-References: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com>
- <patch-08.11-94e28aa7ab3-20220630T175714Z-avarab@gmail.com>
- <xmqq35fldc9i.fsf@gitster.g>
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 3/3] cat-file: add mailmap support
+Date:   Fri, 01 Jul 2022 01:36:40 +0200
+References: <20220630142444.651948-1-siddharthasthana31@gmail.com>
+ <20220630142444.651948-4-siddharthasthana31@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqq35fldc9i.fsf@gitster.g>
-Message-ID: <220701.86wncxbu7q.gmgdl@evledraar.gmail.com>
+In-reply-to: <20220630142444.651948-4-siddharthasthana31@gmail.com>
+Message-ID: <220701.86sfnlbu0j.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jun 30 2022, Junio C Hamano wrote:
+On Thu, Jun 30 2022, Siddharth Asthana wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> git cat-file is not a plumbing command anymore, especially as it gained
+> more and more high level features like its `--batch-command` mode. So
+> tools do use it to get commit and tag contents that are then displayed
+> to users. This content which has author, committer or tagger
+> information, could benefit from passing through the mailmap mechanism,
+> before being sent or displayed.
 >
->> In 1c41d2805e4 (unpack_trees_options: free messages when done,
->> 2018-05-21) we started calling clear_unpack_trees_porcelain() on this
->> codepath, but missed this error path, let's also clear what we've
->> allocated in that case.
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  builtin/checkout.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/builtin/checkout.c b/builtin/checkout.c
->> index 2eefda81d8c..3d6762106e8 100644
->> --- a/builtin/checkout.c
->> +++ b/builtin/checkout.c
->> @@ -750,6 +750,7 @@ static int merge_working_tree(const struct checkout_=
-opts *opts,
->>  		refresh_cache(REFRESH_QUIET);
->>=20=20
->>  		if (unmerged_cache()) {
->> +			clear_unpack_trees_porcelain(&topts);
->>  			error(_("you need to resolve your current index first"));
->>  			return 1;
->>  		}
->
-> Does refresh_cache(REFRESH_QUIET) depend on the porcelain error
-> messages already set?  If not another way to fix it may be to delay
-> the call to setup_unpack_trees_porcelain() until it becomes needed.
->
-> But the patch as posted is certainly an improvement.
+> This patch adds --[no-]use-mailmap command line option to the git
+> cat-file command. It also adds --[no-]mailmap option as an alias to
+> --[no-]use-mailmap.
 
-Yes, that would work too, I can do it that way if you'd like.
+I think I know the answer, but I think it would be helpful to discuss
+the underlying motivations too. I.e. an obvious alternative is "why not
+just get this information out of git show/log then?".
 
-I was trying to keep these fixes as narrow as possible, and resist any
-temptations to re-arrange code so as to avoid allocations, which we can
-often do, but then instead of a 1-line diff it's 10, 50, 100... :)
+The "I think I know the answer" being that I suspect this is to cater to
+gitaly having persistent "cat-file" processes around, whereas for "git
+log" it would entail spinning up a new process per-request.
 
-In this case it'll be somewhere around 10, and just a code-move, so
-maybe that's fine...
+But maybe I'm missing something :)
+
+So not as a blocker for this change, which I think can be made small
+enough to be justified in cat-file, but just for context: If "git log"
+had a similar --batch mode, would there be a need for this change, or is
+this just adding a common case to "cat-file" to "tide us over" (as it
+were) while that sort of thing doesn't exist yet (and maybe never will
+:()?
+
