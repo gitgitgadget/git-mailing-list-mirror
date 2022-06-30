@@ -2,88 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62E7FC43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B4BC43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 21:09:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237264AbiF3VDg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 17:03:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54840 "EHLO
+        id S237344AbiF3VJL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 17:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236846AbiF3VD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:03:28 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14E02E08B
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:03:27 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 25F2F1A8DB8;
-        Thu, 30 Jun 2022 17:03:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Vzh0TXMw0mbC
-        vlmme4wur7fLr+FsPDmjrPJBK5oxlcw=; b=qFSa4QwCBMGSAj5WPWKgScrHh/DV
-        JvU6jRyhHJJTQ9zepNzsRi2B2XD8D6ph3AApdu4PdXmRsr5L+e8mqEhjbYkgy0VQ
-        dTxwZF9UP6y9RuILOkQxDwQ3w+M6al0vFlT47wxLdHtWrvzteVQeYSiHawIZ3Opb
-        BAYyNfcUX8dKJH0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1F3E41A8DB7;
-        Thu, 30 Jun 2022 17:03:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A6DF71A8DB6;
-        Thu, 30 Jun 2022 17:03:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stewart Smith <trawets@amazon.com>, git@vger.kernel.org,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH] git-send-email: Add --no-validate-email option
-References: <20220620004427.3586240-1-trawets@amazon.com>
-        <YrEMq+slLOHqw/hz@camp.crustytoothpaste.net>
-        <220622.864k0dmzl9.gmgdl@evledraar.gmail.com>
-        <YrJm6KactXg4elvD@tapette.crustytoothpaste.net>
-        <220630.868rpee6d3.gmgdl@evledraar.gmail.com>
-Date:   Thu, 30 Jun 2022 14:03:22 -0700
-In-Reply-To: <220630.868rpee6d3.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 30 Jun 2022 13:18:55 +0200")
-Message-ID: <xmqqzghtdftx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236707AbiF3VJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 17:09:10 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B12C31E3F0
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:09:09 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-101b4f9e825so941144fac.5
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 14:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5Ov9hHVOnFqU/5q/vBBI6uEyoSnpvWOBVtceVf9StQU=;
+        b=PVGl4TEs2ofbGDzQ63pnEKoe46ZMA2DkJtxfxgUvnUolaNKQGhyvaRy4I6wxb3+jTi
+         pxJE+i/r3IvLqOGAY1AKG0FSZfyaqtVvQsXJe2yLoiS7V0/FQ4lVsJ9Sz7FyoBW5f7cy
+         xdBxx+IaCPNEBvxw+kDCwlw6QG0oE2+CherGxjBR6meThddfpkyddjBsmGPHX2d6xq3z
+         Nh64nCFyY45bZz16vUtcRXRk3jhmaQRIkmNKns8zpE7SDcwkJs97Ll+kkik2VPuPWLtW
+         XVZbElyIWy0D6Wtoj7PhBGz4Bn2Jr9HY1zPsB8/+ivGx/Tb7gdHEAQKxBs84ESHSU+4k
+         0uMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5Ov9hHVOnFqU/5q/vBBI6uEyoSnpvWOBVtceVf9StQU=;
+        b=6SqMOmNDvusEUZgzPxNShhy3H4aayJyWOv1Gn/6Oz2Zl3IyeqR9z2DJ9H6H7nZOtOX
+         /zBQ/R/QmCca3DXZAnOvaNiVvZO5ntuYdY4PyAIi8cJWPhjon0XuYWdKSD9baWlDlc9z
+         Rw/Gcl4M8vcqQRSRcjPagDUYaNxUuPK/r6PM9oxqDUfeUzM8L3gPAe2Ov1OW9nPmeOME
+         f3DVdAnJdvZ3E/rniEhe5FhjykW3I3Gc3WQeaOYRrKQrGjZXy9aWWcWxv+uDkpNyVyFT
+         2al8CkoxVgXJLGQ99SddBjLQpbyBU0nOTDIPoNYa+Ar4ID41vFAqd/m5dK+lnSC6GBts
+         rpqA==
+X-Gm-Message-State: AJIora9t+uDutb2xnc9qNjSJrHuh7nLImidqOtlgXPrB4o771oS10C71
+        w4M3/dPMrUJ9A3bULw8DNM9GHqcZ6VdT5rdo6e35Aw==
+X-Google-Smtp-Source: AGRyM1u6dL350PyAddt9F0WYlMV9eSGAjccOBD0zcgUjfivgIwID8Kf4rU8fYwnH+Tzdx/QDv10GEJbNSPxGZLS3Bhg=
+X-Received: by 2002:a05:6870:d207:b0:101:d867:5092 with SMTP id
+ g7-20020a056870d20700b00101d8675092mr6568245oac.236.1656623348916; Thu, 30
+ Jun 2022 14:09:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1420734A-F8B8-11EC-AFB2-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20220629224059.1016645-1-calvinwan@google.com> <kl6l35flubx8.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6l35flubx8.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Thu, 30 Jun 2022 14:08:57 -0700
+Message-ID: <CAFySSZDOC8a8q+P3hTAMmO4TCi8Aj61432CsAhgh+pKBv=owyg@mail.gmail.com>
+Subject: Re: [PATCH v3] submodule merge: update conflict error message
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
+        levraiphilippeblain@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> I notice that this is all above the "---", i.e. this becomes part of the
+> commit message when "git am"-ed. Intentional?
 
-> I'm suggesting that we replace our own validation with that of the SMTP
-> server's, yes they're don't 1=3D1 correspond, but I think the part of t=
-he
-> Venn diagram of where that matters is too small to worry about.
+Good catch. Not intentional at all.
+
+On Thu, Jun 30, 2022 at 1:35 PM Glen Choo <chooglen@google.com> wrote:
 >
-> It has the advantage of side-stepping issues with not having
-> Email::Valid, as well as those cases where we're being overzelous about
-> RFC validation, but our local SMTP is willing to try to deliver the
-> mail.
+> Hi! I have a suggestion for the output text; I haven't looked closely at
+> the code changes.
 >
-> It's not like authors of MTAs haven't heard of that character limit, bu=
-t
-> they're also aware that that certain parts of the spec are loosely
-> enforced, and that trying delivery is often better than rejecting a mai=
-l
-> out of RFC pedantry.
-
-I am not sure if that is a healthy direction to go.
-
-If a local outbound relay is written with the knowledge that it will
-never be talking to the SMTP at the final mailbox directly, I would
-expect that it may not implement any validation at all, relying on
-the "next hop" smarthost to reject anything invalid it throws at it.
-
-So...
+> Calvin Wan <calvinwan@google.com> writes:
+>
+> >  Changes since v2:
+> >  [...]
+> >  Changes since v1:
+> >  [...]
+>
+> I notice that this is all above the "---", i.e. this becomes part of the
+> commit message when "git am"-ed. Intentional?
+>
+> > If git detects a possible merge resolution, the following is printed:
+> >
+> > --------
+> >
+> > Failed to merge submodule sub, but a possible merge resolution exists:
+> >     <commit> Merge branch '<branch1>' into <branch2>
+> >
+> >
+> > If this is correct simply add it to the index for example
+> > by using:
+> >
+> >   git update-index --cacheinfo 160000 <commit> "<submodule>"
+> >
+> > which will accept this suggestion.
+> >
+> > CONFLICT (submodule): Merge conflict in <submodule>
+> > Recursive merging with submodules is currently not supported.
+> > To manually complete the merge:
+> >  - go to submodule (<submodule>), and either update the submodule to a possible commit above or merge commit <commit>
+> >  - come back to superproject, and `git add <submodule>` to record the above merge
+> >  - resolve any other conflicts in the superproject
+> >  - commit the resulting index in the superproject
+> > Automatic merge failed; fix conflicts and then commit the result.
+> >
+> > --------
+>
+> I'm hesitant to recommend a plumbing command like "git update-index" to
+> the user, especially if the user is one who needs help resolving a
+> submodule merge conflict. I also believe this would be the first time we
+> recommend "git update-index".
+>
+> To do this using only porcelain commands, maybe:
+>
+>    git -C <submodule> checkout <commit> &&
+>    git add <submodule>
+>
+> (Though this might need to be broken up into two commands because I'm
+> not sure if we ever include "&&" in a help message. I'm guessing we
+> don't for portability reasons?)
+>
+> > If git detects multiple possible merge resolutions, the following is printed:
+> >
+> > --------
+> >
+> > Failed to merge submodule sub, but multiple possible merges exist:
+> >     <commit> Merge branch '<branch1>' into <branch2>
+> >     <commit> Merge branch '<branch1>' into <branch3>
+> >
+> > CONFLICT (submodule): Merge conflict in <submodule>
+> > Recursive merging with submodules is currently not supported.
+> > To manually complete the merge:
+> >  - go to submodule (<submodule>), and either update the submodule to a possible commit above or merge commit <commit>
+> >  - come back to superproject, and `git add <submodule>` to record the above merge
+> >  - resolve any other conflicts in the superproject
+> >  - commit the resulting index in the superproject
+> > Automatic merge failed; fix conflicts and then commit the result.
+> >
+> > -------
+>
+> For consistency, perhaps include the "here's how to use the suggestion"
+> instructions here as well?
