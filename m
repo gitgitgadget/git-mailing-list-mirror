@@ -2,144 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF06C43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 12:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFA50C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 12:22:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233737AbiF3MDl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 08:03:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47640 "EHLO
+        id S232664AbiF3MWE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 08:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233427AbiF3MDk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 08:03:40 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A028E19005
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 05:03:38 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id e2so26273831edv.3
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 05:03:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=BRNmqfZuCfdEgnPMTUl26a6IoBCQnrggO7l9MC+tSm8=;
-        b=W8EhW8ndqz/BgSROztIW2ipujdaLb27XDDg9tsWMXJY/s7IHNQA7ZAjfK7QPZGEm24
-         vBINqBgjQvFfO3U3kh1FD8ASzHav2XYJ82C+yrCkAQdPXgCL8QmnaBFsblaQB2Sm87Li
-         WpnaBJ8Tfu5MXuq4fZkq2nP1mew9xezOH+atmlmG1mSNrg0BLHXa4J0ZkVcFjn8jl9f0
-         7TDCBYgbNSJJlTrfigWZFESnKhvjwFz/lO2pipd5JpJbg5hrZ/A5FvOEGh4f4BNFTsxa
-         f5+a1VWs5L3m/z194BVN/rHal/v5BIk8CDRUDXlNqaLP+FHxYdCuqtAuXxBgJOrvIGj2
-         +CGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=BRNmqfZuCfdEgnPMTUl26a6IoBCQnrggO7l9MC+tSm8=;
-        b=C/mJMcg1Gse/MX9jUTZ2t+NDaS2lkHKPpRhir8Ciw/EeJNLYzJKRXsnl1eyYCVQHk4
-         /G35V+dsIqutv2KjVaCQK0KsdxXyCdNTrAebR3faQmj8HHx4jNOJi/fYBqdJDxqqlY9w
-         RIO146ySyyYcjeXIkCtVnzCovSlg5Egk1Ph6Z1lNyx9zgezvH/XmQOjmKD3HKELD/rKJ
-         m8IUVZoN2stb+EBt2lmq3IazAdN9flbnH/xj0Fn7zucP0ntmeZRGOxXpEvvE/npPP0ha
-         FQxtGVcyHaHssoSQN1yEGq6mMcCGK5336wDQLKcBbVq/CgWgWSHyVG2W72UpxJQoTblz
-         pPmA==
-X-Gm-Message-State: AJIora81/H13E7hpf3DNMVZPCkMVHuFCvyR6RSxdp/fQaRrInzmJD7t0
-        NW4XuJRj0eKkcBtyXL3qhgc=
-X-Google-Smtp-Source: AGRyM1uJ6lmBh9M8nUSKW8MkaYD1+TFTJhheEGyvKyCdwxnV4uxY7c6iPvJfVrTcv7+izJn6lXxbBg==
-X-Received: by 2002:a05:6402:11d1:b0:435:d76d:f985 with SMTP id j17-20020a05640211d100b00435d76df985mr10990744edw.8.1656590617077;
-        Thu, 30 Jun 2022 05:03:37 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.192])
-        by smtp.googlemail.com with ESMTPSA id t23-20020a170906609700b006fed062c68esm9089535ejj.182.2022.06.30.05.03.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jun 2022 05:03:36 -0700 (PDT)
-Message-ID: <5734b393-57c8-dc63-282e-221ee1937351@gmail.com>
-Date:   Thu, 30 Jun 2022 13:03:35 +0100
+        with ESMTP id S230288AbiF3MWC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 08:22:02 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C92620F4D
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 05:22:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1656591701;
+        bh=tb+pz7pL0ZnbdejZ+ggxEAwbQGBaO5tA4qvVwi3u0l4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PJypYDGAl9YqbZDVD5Xzf1iFybyDT/OU7jbmBepQOK8gDClXM0Xqi/XXUE8HNpbXB
+         zk39jbzgcZDTYNph72HFoRda0UqNh11c5nZ2ElqZKGuL0S/SLgLHLvhphRCzZzLvf5
+         dA+j9EU62cbEzexRAKkUA0yL0vThdB4xFGyX/BVY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.204.148] ([213.196.212.94]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mz9Z5-1nl5420pjX-00wE3l; Thu, 30
+ Jun 2022 14:21:41 +0200
+Date:   Thu, 30 Jun 2022 14:21:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Han Xin <hanxin.hx@bytedance.com>,
+        chiyutianyi@gmail.com, derrickstolee@github.com,
+        git@vger.kernel.org, haiyangtand@gmail.com,
+        jonathantanmy@google.com, me@ttaylorr.com, ps@pks.im
+Subject: Re: [PATCH v3 2/2] commit-graph.c: no lazy fetch in
+ lookup_commit_in_graph()
+In-Reply-To: <xmqq35folmgf.fsf@gitster.g>
+Message-ID: <5n35o008-pso2-6440-424p-q387q9n4so41@tzk.qr>
+References: <cover.1656044659.git.hanxin.hx@bytedance.com>        <cover.1656381667.git.hanxin.hx@bytedance.com>        <3cdb1abd43779844b8e8dc094e2fd2da1adc461a.1656381667.git.hanxin.hx@bytedance.com>        <220628.865yklgr6g.gmgdl@evledraar.gmail.com>
+ <xmqq35folmgf.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] xdiff: introduce XDL_ALLOC_GROW()
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1272.git.1656516334.gitgitgadget@gmail.com>
- <da996677f0730ec7a50d399524fb58c44dad468a.1656516334.git.gitgitgadget@gmail.com>
- <220630.86czeqe74c.gmgdl@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <220630.86czeqe74c.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-844489475-1656591701=:10220"
+X-Provags-ID: V03:K1:zGPGX7sifEp7SDygkxLA5fvCPcukO39Eda6Y1AwyZSbZoia33s/
+ D0vHErUTVx1eB6JV4Ykn2V7pEAd82Si9hNHbl7AGQsM0yQoA2g41V8p+CpIcp67lEgT0tdV
+ 0TLlrtWd7Qb46s03ANY5y5rfAsGvnZ6pRP8GnHhcsq5btita9RYt9Z7R48aAhqcy86UiUqi
+ lqdDqs7d8JQuOSVxMcwkA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bodMk46bsvk=:2Uo/cK7EFHBp7COKX7kQ+U
+ 48XyaCIxS5BIe0W7eD+Q70PnOM7psAsZ3y8gxCos9DxqcSNNLtm/ZBJKYz+OaMbvIBnAYqcDc
+ k99gs60wBaP+lZQmMUsYucrAb10CaI6wTqMlNY7No98exNIy0z0x1vZGeJ2aTRKIiXlKay4aK
+ +g+xCyh8mgreSNPZ5ketKTUXuTInPz51Sq42bv43h70X0uKssaQd2dI3pMw9+2Nf89hlmHcwW
+ SuQJ0RA9HrAPXfsxTLAt2OZqN/x2fluqTVt4fzz1eDx74LT3n8opQnQlJH54D4MwbhZBVdyXG
+ ZUKbOEDpPunk4yYAuaZR5ioINJv7Zxg+ipFuqBvz+6Ox7Jb6gv9GAYQAmrkUSeUfa2AL+wboZ
+ AdqMOMvvLX29LBspUY6IfDBp/NkHELRIvlWje1Bq6zIb7LjcivGLGY6IpGVuk8u+J/tIJarYi
+ QSqsprwdWVzKfXlpS+SlcaTgn52ZroFLsDtZAD3C+Q6ycDIQPYr4DTlX8svyH2yK0x2eawi9c
+ T75eewVfhP9i+64DbqVdK2fHlF/NU5etMfvKy5INt5q8ByEXFGujHnH6i3ddOuv2Xzi3mjHj7
+ wzevNDj8R5RfXwlPZ7DAu0GXyTkYVcPTJiRbOIyk8UzwwEBsFPYaSJb2Sq8utlPUQZCL0cTzf
+ cz68r3dB/TJKclO09TsB/J9dJ0djZ+XW0Txd1tQOFgASlGpUsIVkpou9JWwm3HdC+XNdrIrxX
+ vCXKwRn8QHsjHy7tYmN0b6mjgV3ajYt8yK7JjgT98BtFOweVVux7RO1waDPRZEUDBGnyHCpKM
+ gXsaGZ78GlOGaIL7OLgOf9yM9BXNXPMJLDv2d40wkROTCeE3F9nlUEij2Vg3YVos8PvfFVXC6
+ Jqlni1AbDJ9I5UmwUKtPFRkJ7FoCUXQx6O/WAALGrmL8Xyf3GlvPftYe0m9+xDvCGyRWQDZLS
+ T/kyRvSUYu3YFfk9hDLNjX/tQmH+nJEiRzuA8MF3L4IeBDFn9HRsRfjojrA8928y+9cXTxjbk
+ JoinBL8Rv3jMFj3RLKZZFrD48oOpAj0neOwIxV6/LuSKZc5lJMmVA9uwHAuWqZeDsEHhSkO+b
+ t7++zePIb2MybsJdrzq87KhoBk2mKGFfO0zJszzFuy817TEc7bOi3nCAg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30/06/2022 11:54, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Jun 29 2022, Phillip Wood via GitGitGadget wrote:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Add a helper to grow an array. This is analogous to ALLOC_GROW() in
->> the rest of the codebase but returns −1 on allocation failure to
->> accommodate other users of libxdiff such as libgit2.
-> 
-> Urm, does it? I just skimmed this, so maybe I missed something, but I
-> don't see where you changed the definition of xdl_malloc(),
-> xdl_realloc() etc.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-XDL_ALLOC_GROW is defined as
+--8323328-844489475-1656591701=:10220
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-+/*
-+ * Ensure array p can accommodate at least nr elements, growing the
-+ * array and updating alloc (which is the number of allocated
-+ * elements) as necessary. Frees p and returns -1 on failure, returns
-+ * 0 on success
-+ */
-+#define XDL_ALLOC_GROW(p, nr, alloc)	\
-+	(-!((nr) <= (alloc) ||		\
-+	    ((p) = xdl_alloc_grow_helper((p), (nr), &(alloc), sizeof(*(p))))))
-+
+Hi Junio,
 
-so it returns -1 if xdl_alloc_grow_helper() returns NULL, which it does 
-if there is an allocation failure or the multiplication overflows.
+On Tue, 28 Jun 2022, Junio C Hamano wrote:
 
-> And those are defined as:
-> 
-> 	#define xdl_malloc(x) xmalloc(x)
-> 	#define xdl_free(ptr) free(ptr)
-> 	#define xdl_realloc(ptr,x) xrealloc(ptr,x)
-> 
-> And for e.g. xmalloc() we do:
-> 
->          return do_xmalloc(size, 0);
-> 
-> Where that 0=gently, i.e. we'll die() instead of error(), the xrealloc()
-> then has no "gently" option.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Is the (pretty glaring, if that's the case) unstated assumption here
-> that this doesn't in fact return -1 on allocation failure, but you're
-> expected to replace the underlying xmalloc() with an implementation that
-> does?
+> >> +test_expect_success 'setup: prepare a repository with commit-graph c=
+ontains the commit' '
+> >> +	git init with-commit-graph &&
+> >> +	echo "$(pwd)/with-commit/.git/objects" \
+> >> +		>with-commit-graph/.git/objects/info/alternates &&
+> >
+> > nit: you can use $PWD instead of $(pwd).
+>
+> We can, and it would not make any difference on non-Windows.
+>
+> But which one should we use to cater to Windows?  $(pwd) is a full
+> path in Windows notation "C:\Program Files\Git\..." while $PWD is
+> MSYS style "/C/Program Files/Git/..." or something like that, IIRC?
 
-I'm not relying on the return value of xrealloc() in the macro
+Indeed, and since the `alternates` file is supposed to be read by
+`git.exe`, a non-MSYS program, the original was good, and the nit
+suggested the incorrect form.
 
-> If so I'm doubly confused by this, since you're providing alternatives
-> to e.g.:
-> 
-> 	#define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
-> 
-> So if that's the plan why would we need an XDL_ALLOC_ARRAY(), can't you
-> just check that it returns non-NULL?
- >
-> That's not possible with our current xmalloc(), but ditto for this
-> series, and apparently the compiler isn't smart enough to yell at you
-> about that...
-> 
-> I wondered if we were just missing the returns_nonnull attribute, but
-> playing around with it I couldn't get GCC at least to warn about
-> checking xmalloc()'s return value for non-NULL.
+Thank you for catching this before it was worsimproved,
+Dscho
 
-I'm not quite sure what you're saying in these last three paragraphs
-
-Best Wishes
-
-Phillip
-
+--8323328-844489475-1656591701=:10220--
