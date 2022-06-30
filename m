@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CE9CC433EF
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 00:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1599C43334
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 00:07:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230175AbiF3AHJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jun 2022 20:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38830 "EHLO
+        id S231400AbiF3AHg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jun 2022 20:07:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbiF3AHI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jun 2022 20:07:08 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89652252B0
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 17:07:04 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id fi2so35670647ejb.9
-        for <git@vger.kernel.org>; Wed, 29 Jun 2022 17:07:04 -0700 (PDT)
+        with ESMTP id S231251AbiF3AHb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jun 2022 20:07:31 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D919D2983A
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 17:07:30 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id fd6so24344667edb.5
+        for <git@vger.kernel.org>; Wed, 29 Jun 2022 17:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JjaXEPxT6rSSEMEFMQtBInTg3Tk6aFB7NO/VuHpdqMQ=;
-        b=SIziIdIZEy2ow4fpfQXouNjyesmofoHGHnqCkOXaEZ3GRwibm+WY+RnOYYRhkx4t6e
-         lgsi2TsSx5uf5uj/sOtpehglo/yiIosG63STbVS454KXPDmowSZ60eFcuDmrVs3tRMb+
-         Lrc91j33RfZV990aHVpFagC2Rjqo+wFIdse/rmMfUVW29hk4WfyJM8UaHmsyNw9y3R/m
-         2CkjiFxWRnIJQ7S7Q004PQ2+2ATiGJF8+FJhxORQRgTK4PQrZX/vUtTneYB2xsuvdZ3L
-         hTsDMSdepyPD7ucKkMJ+1wVnGwbv1vWbh8977akEfTtA36cB1RJoI/Poyb83kCmDZmx5
-         4wUw==
+        bh=uG6WDyQFFXbhxSUTXHgSydR3jHJn/UvZZQFIpWMhyUM=;
+        b=TR3dm6M/Xvzl4SpqD5QX2XJIMg8gTytwUv5wWG7ZcH4VpkU0XhXcZm2xEqFadN75KA
+         bkiqDt3WZefvFoFbTKWt3DAQRA3VExGJiq8IruioWegWj8EaKYenOAC1WMS3yj/8fwBX
+         y40/UbrmYg4ryryXXfQZcadKTF/VM8rBsaArjSoXXEFoDHxHZAf30A6yP4WsNrWeAYjE
+         Nao5KC9eOi4cqxkgrX6SEiJKD76/wA5RjrBuuIstisA2+x3oKaX3325b1LYYtJUo2Xq7
+         wJvJHiIJA6sGT8XLr3w2GEgGEpeDuFAt/nCoeVlbR4wM9lVqNLrIn8ND1jA190u49z84
+         oX4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JjaXEPxT6rSSEMEFMQtBInTg3Tk6aFB7NO/VuHpdqMQ=;
-        b=1X+wGXUBMCjDxs+dPvQIjwNiOlIutzVWUMG0KkVMGuiMkpTvNu6EEUWC4w1ql+RxCB
-         kMT0epkFimr9DjSrwuz2kCXWhsMDeEjsn1gUxORkFEp2FdknXZhE6tqDviiDez0if9Cm
-         6W/HUQOiNjXVMRYfK+O/k2eAbhcCr2kPZN6oNZo/Uo/sAmUGDQAGBLn7lDxrJNyZ3Sh9
-         9PNSTGbfToz6jVmqQuxZNT8NcNfycfUQ/Rc5LMZeUVBuD0zjCqxjSCxLlO4bHdUgRijV
-         oqnZ4VrTCfkqFJ+mmfXcqfLrK0izx3XCQzwm/tSGle5MRe0AeT2YVB2W1nOqqPvkiiIY
-         Py7Q==
-X-Gm-Message-State: AJIora9M4iOdVnaxeljYU8ZTFNdP+L6a2X5B/JfhkVS1sVR3h9jD5bXL
-        KoB8Gs2KNY6RMpDwplHZfi8qRm7pj2N6cYk1iDsoodNvFT4=
-X-Google-Smtp-Source: AGRyM1tcSNiUz3r2kgtPxWDCWwt3dkMx0CbDRp6guHNlHQLnDVkmXpQ62ZYACCb1vuPMIx6OtuzOdP3y4Qyo+Nj7Zts=
-X-Received: by 2002:a17:907:728a:b0:726:d6c8:d95c with SMTP id
- dt10-20020a170907728a00b00726d6c8d95cmr5952364ejc.269.1656547623089; Wed, 29
- Jun 2022 17:07:03 -0700 (PDT)
+        bh=uG6WDyQFFXbhxSUTXHgSydR3jHJn/UvZZQFIpWMhyUM=;
+        b=I8zv+fj4n1H/vHyD67gFi2HtkXOesuV2iZswXqaVqxSE/HpsupMb796r4Y858RfKCW
+         WZa0zEVc7s0adXXTXSrVdZc3wVFyWu75WbopJkSxeVpBLupyvGTA9ANCaK1QBPsnorUK
+         zh7JlITTaQRgcfgL+I2zUs2kxquVv9LTGZbus5+2SeRg4NDSfYEPc0WMj59+GIlF5kEN
+         KiGg/feocE3VqeGi2eLryLR/Qxs7xzJKT/xWTwuG0wfIt/t97slOIASEiejSiwgo02pd
+         +wXeSAehKsQe+Vfrvlfaz5BAXiaAu65VvUOWVC4kjsr4xUfyuf1poLvFWbLgP39/6FQX
+         AHHA==
+X-Gm-Message-State: AJIora8qZxUzYZjVPwGCTpYokLV3/37ZRx5KygVu/sNTZxwGvpkRZxar
+        4LokdajrICK9kRIjnf7MkwxfTc0RsOgBze/dbOQ=
+X-Google-Smtp-Source: AGRyM1v44tCggaFct4gcJgZk2lda7eldK/lv84y4wkFFqpWe926It7WPn2H4l7YaFnH5PCf9uRAI9rL4x8suVNPpajA=
+X-Received: by 2002:a05:6402:27cf:b0:435:dae6:26aa with SMTP id
+ c15-20020a05640227cf00b00435dae626aamr7609588ede.323.1656547649507; Wed, 29
+ Jun 2022 17:07:29 -0700 (PDT)
 MIME-Version: 1.0
 References: <69d6204184363e491acb68f744ded0991be63a47.1655871652.git.gitgitgadget@gmail.com>
- <20220627182024.1358144-1-jonathantanmy@google.com>
-In-Reply-To: <20220627182024.1358144-1-jonathantanmy@google.com>
+ <20220627223017.2852209-1-calvinwan@google.com>
+In-Reply-To: <20220627223017.2852209-1-calvinwan@google.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 29 Jun 2022 17:06:51 -0700
-Message-ID: <CABPp-BGtKQVgaf9ttwRMAE6AvH1QC3TqFcFwiAOpnm-SqKnNCQ@mail.gmail.com>
+Date:   Wed, 29 Jun 2022 17:07:18 -0700
+Message-ID: <CABPp-BFphDUrxnW0tC0yNZkHPgwSEtxod2Q4UMVjE3beaA0=dA@mail.gmail.com>
 Subject: Re: [PATCH 1/3] t6423: add tests of dual directory rename plus
  add/add conflict
-To:     Jonathan Tan <jonathantanmy@google.com>
+To:     Calvin Wan <calvinwan@google.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -61,30 +61,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 27, 2022 at 11:20 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+On Mon, Jun 27, 2022 at 3:30 PM Calvin Wan <calvinwan@google.com> wrote:
 >
 > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > This is an attempt at minimalizing a testcase reported by Glen Choo
-> > with tensorflow where merge-ort would report an assertion failure:
-> >
-> >     Assertion failed: (ci->filemask == 2 || ci->filemask == 4), function apply_directory_rename_modifications, file merge-ort.c, line 2410
->
-> First of all, thanks for this fix - I've verified with Glen Choo's test
-> cases and it does fix it.
-
-:-)
-
-> > diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-> > index 479db32cd62..296c04f8046 100755
-> > --- a/t/t6423-merge-rename-directories.sh
-> > +++ b/t/t6423-merge-rename-directories.sh
-> > @@ -5199,6 +5199,108 @@ test_expect_success '12k: Directory rename with sibling causes rename-to-self' '
-> >       )
-> >  '
-> >
 > > +# Testcase 12l, Both sides rename a directory into the other side, both add
 > > +#   a file with after directory renames are the same filename
 > > +#   Commit O: sub1/file,                 sub2/other
@@ -98,90 +77,21 @@ On Mon, Jun 27, 2022 at 11:20 AM Jonathan Tan <jonathantanmy@google.com> wrote:
 > > +#   Expected: sub3/{file, newfile, sub2/other}
 > > +#             CONFLICT (add/add): sub3/sub2/new_add_add_file
 >
-> The "expected" might need to be updated.
-
-Oops!  Yes, I kept changing and editing the testcase and the
-comments...but didn't quite get all the updates I needed when I was
-revising.
-
-> After all patches are applied,
-> this is the tree I get (note that it's "sub1/sub2/new_add_add_file, not
-> "sub3/sub2/new_add_add_file"):
+> Grammatically, I could not understand
 >
->   .
->   |-- sub1
->   |   `-- sub2
->   |       `-- new_add_add_file
->   `-- sub3
->       |-- file
->       |-- newfile
->       `-- sub2
->           `-- other
+> "both add a file with after directory renames are the same filename"
 
-Yes, that's right.
+Oops, that should be "with" -> "which".
 
-> Also, at first glance, "newfile" shouldn't belong in a minimal
-> reproduction
+> I also found the same issue with `Expected` that Jonathan mentions. I ran the
+> command separately and got
+>
+> CONFLICT (add/add): Merge conflict in sub1/sub2/new_add_add_file
 
-Ah, I can see you've looked at this very closely.  Thanks for digging
-in!   I know it's counter-intuitive at first, but the file is
-necessary in order to get the sub1/ -> sub3/ rename.  The reasoning is
-as follows: We don't need to detect a directory rename for a directory
-where the other side added no new files into that directory...because
-the whole point of directory renames is to move new files in a
-directory to the new location.  Therefore, no new files in the
-directory on one side, means no need to detect a directory rename for
-it on the other side.  For a deeper discussion of this, see commit
-c64432aacd (t6423: more involved rules for renaming directories into
-each other, 2020-10-15).
-
-
->, but it somehow changes the output. When I apply this diff
-> (to the state after all patches are applied):
->
->   diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
->   index 4286ae987c..9472fb7233 100755
->   --- a/t/t6423-merge-rename-directories.sh
->   +++ b/t/t6423-merge-rename-directories.sh
->   @@ -5237,7 +5237,6 @@ test_setup_12l () {
->
->                   git checkout B &&
->                   echo dissimilar >sub2/new_add_add_file &&
->   -               echo brand >sub1/newfile &&
->                   git add sub1 sub2 &&
->                   git mv sub2 sub1 &&
->                   test_tick &&
->   @@ -5255,14 +5254,14 @@ test_expect_merge_algorithm failure success '12l (B into A): Rename into each ot
->                   test_must_fail git -c merge.directoryRenames=true merge -s recursive B^0 &&
->
->                   git ls-files -s >out &&
->   -               test_line_count = 5 out &&
->   +               test_line_count = 4 out &&
->
->                   git rev-parse >actual \
->   -                       :0:sub3/file :0:sub3/newfile :0:sub3/sub2/other \
->   +                       :0:sub3/file :0:sub3/sub2/other \
->                           :2:sub1/sub2/new_add_add_file \
->                           :3:sub1/sub2/new_add_add_file &&
->                   git rev-parse >expect \
->   -                       O:sub1/file  B:sub1/newfile O:sub2/other \
->   +                       O:sub1/file  O:sub2/other \
->                           A:sub2/new_add_add_file \
->                           B:sub1/sub2/new_add_add_file &&
->                   test_cmp expect actual &&
->
-> I get:
->
->   .
->   |-- sub1
->   |   `-- sub2
->   |       |-- new_add_add_file
->   |       `-- other
->   `-- sub3
->       `-- file
->
-> (Note the path to "other".) I haven't figured out what's going on,
-> though.
-
-Yeah, this is the result of having no directory rename due to having
-no new files that need to be moved by a directory rename.
+Yeah, repeatedly revising stuff is fine as long as you remember to
+update all the parts.  (I was swapping which directories were named
+"sub1", "sub2" and "sub3" to see if lexicographic ordering might be
+related to why this simpler test triggered a bug in the "recursive"
+strategy but Glen's bigger testcase didn't.).  Anyway, I just missed
+updating one of the locations while doing that revision; sorry about
+that.  Will fix.
