@@ -2,130 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0095FC43334
-	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 23:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3FF4C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Jun 2022 23:31:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232846AbiF3XWR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 19:22:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45120 "EHLO
+        id S232900AbiF3Xby (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 19:31:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229677AbiF3XWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 19:22:16 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00568599DA
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 16:22:11 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 65FAE1A93B6;
-        Thu, 30 Jun 2022 19:22:11 -0400 (EDT)
+        with ESMTP id S231467AbiF3Xbx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 19:31:53 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B9F57216
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 16:31:48 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 36B941A9C42;
+        Thu, 30 Jun 2022 19:31:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SMXuY8Wl2Rez4fdYRtmpayYWg+mGMVOXgPgwyh
-        M4jqA=; b=Rk56yzDpt2x7tcBbCutlwpP8PLQ2E+Sko8MAxobN34gPRywhcsTKze
-        siBiC//2hhvijqcx+kshdAAqAzGDSSSd/PEAvM0AmTv04iPV4que3LtqEMnKT7ee
-        RByFrFZZi/mNw/L9taygXf29zPtzFmG5aT+ecYPuv5degk0assues=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5ECE61A93B5;
-        Thu, 30 Jun 2022 19:22:11 -0400 (EDT)
+        :content-type; s=sasl; bh=r9+1QgcyBvoAHtizoqEJFUUqTljNEktWqKC68I
+        WOIsU=; b=OVBlaeydMa3NM3r06XdqxMuDZbqYoEKPUQqZ3fD/K3F12S081CW8JN
+        f087k2m+i/9zKW5waKOoybcZTF8FN/M7D4dozWjggW9BYUrhFN+VdvQV9g4asMIy
+        f4DZFBA7xDTZz+/5BkWj3y45Yw53MM8kI9D2xrCrfYw3Wq8gO1wmg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 300521A9C41;
+        Thu, 30 Jun 2022 19:31:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EE0471A93B3;
-        Thu, 30 Jun 2022 19:22:07 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B0E191A9C40;
+        Thu, 30 Jun 2022 19:31:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Siddharth Asthana <siddharthasthana31@gmail.com>
 Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
         John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 1/3] ident: move commit_rewrite_person() to ident.c
+Subject: Re: [PATCH 2/3] ident: rename commit_rewrite_person() to
+ rewrite_ident_line()
 References: <20220630142444.651948-1-siddharthasthana31@gmail.com>
-        <20220630142444.651948-2-siddharthasthana31@gmail.com>
-Date:   Thu, 30 Jun 2022 16:22:06 -0700
-In-Reply-To: <20220630142444.651948-2-siddharthasthana31@gmail.com> (Siddharth
-        Asthana's message of "Thu, 30 Jun 2022 19:54:42 +0530")
-Message-ID: <xmqqo7y9buu9.fsf@gitster.g>
+        <20220630142444.651948-3-siddharthasthana31@gmail.com>
+Date:   Thu, 30 Jun 2022 16:31:43 -0700
+In-Reply-To: <20220630142444.651948-3-siddharthasthana31@gmail.com> (Siddharth
+        Asthana's message of "Thu, 30 Jun 2022 19:54:43 +0530")
+Message-ID: <xmqqa69tbue8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 75CA9BF8-F8CB-11EC-865F-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: CD8F4036-F8CC-11EC-946E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Siddharth Asthana <siddharthasthana31@gmail.com> writes:
 
-> +/*
-> + * Given a commit or tag object buffer, replaces the person's
+> We will be using commit_rewrite_person() in git-cat-file to rewrite
+> ident line in commit/tag object buffers.
+>
+> Following are the reason for renaming commit_rewrite_person():
+> - the function can be used not only on a commit buffer, but also on a
+>   tag object buffer, so having "commit" in its name is misleading.
+> - the function works on the ident line in the commit/tag object buffers,
+>   just like "split_ident_line()". Since these functions are related they
+>   should have similar terms for uniformity.
 
-I do not think you should refer to "or tag" at this point.  It is
-not designed to be used by anything other than a commit, and nobody
-passes a tag in the original code, or even after this patch is
-applied.
+"ident" is good (so is "person" in the original).
 
-> + * (author/committer/tagger) name and email with their canonical
-> + * name and email using mailmap mechanism. Signals a success with
+"rewrite" is not quite good, as you do not convey what kind of
+rewrite you are doing (it is not likely that you are upcasing their
+names, but from "rewrite" you cannot tell that is the case).  We
+should have "mailmap" somewhere in its name.
 
-"using" -> "using the"
+"line" is not good at all.  This function receives an entire buffer,
+not just a single line that was located by the caller and rewrites
+that line.  "buffer" might be an improvement over "line", but as I
+alluded to in my review on [1/3], I think this function should limit
+itself only to the header part of the commit/tag buffer, so "header"
+would be the word you want in its name.
 
-> + * 1 and failure with a 0.
+Once we say "mailmap", there is not much point in saying ident or
+person (as "mailmap" is only about the ident/person).  So
 
-I do not think 0 signals a failure.  If it makes changes, then the
-function returns a non-zero value.  0 only indicates "we made no
-modification to the buffer".
+  int apply_mailmap_to_header(struct strbuf *, struct string_list *mailmap)
 
-> +int commit_rewrite_person(struct strbuf *buf, const char *what, struct string_list *mailmap)
-> +{
-> +	char *person, *endp;
-> +	size_t len, namelen, maillen;
-> +	const char *name;
-> +	const char *mail;
-> +	struct ident_split ident;
-> +
-> +	person = strstr(buf->buf, what);
-> +	if (!person)
-> +		return 0;
+or something?
 
-I do not think it is a good idea to expose this as a public function
-as is, especially given that what you have to pass in "what" is a
-bit awkward.  The function is designed to find and replace an ident
-string in the header part, and the way it avoids a random occurence
-of author Siddharth Asthana <si...@gmail.com> in the text, not
-nececessarily in the header, is by insisting "author" to appear at
-the beginning of line by passing "\nauthor " as "what".
+> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: John Cai <johncai86@gmail.com>
 
-Also as you can see, the implementation does not make *any* effort
-to limit itself to the commit/tag header by locating the blank line
-that appears after the header part and stopping the search there.
-That may not be *your* bug, but should be fixed before exposing it
-as a public function and inflicting its bug to more callers.
-
-Also the interface forces the caller to make multiple calls if it
-wants to rewrite idents on multiple headers.  It shouldn't be the
-case.
-
-To support the existing caller better, it should be updated to
-
- * take one or more header names (like "author", "committer"), make
-   a single pass in the input buffer to locate these headers and
-   replace idents on them;
-
- * stop at the end of header, ensuring that nothing in the body of
-   the commit object is modified.
-
-Alternatively, it may not be a bad idea to simplify the interface so
-that _all_ headers are subject to be rewritten, without any need to
-the "what" parameter.  If you want to go that route, then you would
-probably have a loop over buf->buf that iterates one line at a time,
-stopping at the first empty line that denotes the end of header. For
-each line, you'd skip to the first SP that is past the header name,
-see if split_ident_line() thinks the line it got indeed has an
-ident, and use map_user() to the ident if it found.  Do that for
-each line and you are done when you reached the end of the header.
-
-Once we fix the external interface like so while being a static
-function inside revision.c and update its two callers (which will
-become just a single caller), we can move and expose it as a public
-function.
-
-Thanks.
+I think these are the other way around.  With help from two people,
+you wrote the patch and the final step before sending it out to the
+list is your sign-off.  Chronologically, in the above, your sign-off
+should come at the end.
