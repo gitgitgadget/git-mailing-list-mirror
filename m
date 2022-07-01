@@ -2,70 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7FCAC43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 18:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C7FC433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 18:18:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230365AbiGASQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 14:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44724 "EHLO
+        id S230496AbiGASSm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 14:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbiGASQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 14:16:28 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86FD314082
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 11:16:27 -0700 (PDT)
-Received: (qmail 9761 invoked by uid 109); 1 Jul 2022 18:16:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 01 Jul 2022 18:16:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27637 invoked by uid 111); 1 Jul 2022 18:16:26 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 Jul 2022 14:16:26 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 1 Jul 2022 14:16:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
-Subject: Re: [PATCH] pack-objects.h: remove outdated pahole results
-Message-ID: <Yr85+tcexG2geaPP@coredump.intra.peff.net>
-References: <1379af2e9d271b501ef3942398e7f159a9c77973.1656440978.git.me@ttaylorr.com>
+        with ESMTP id S230497AbiGASSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 14:18:41 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3539414016
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 11:18:36 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id ck6so1006397qtb.7
+        for <git@vger.kernel.org>; Fri, 01 Jul 2022 11:18:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LE99A2cP0EtJx1USbEU2N08v3K/ziBZVFontOSyUftE=;
+        b=ZNP5B6bwLNQ7nmF9jcuruRt/2D4u1PiYmpStktwYDeEyWLKclGdlk6MErvp/fyio9J
+         dC5o2amy54CBod2OElAx5NOUKcZm6C4MroZojIw4Qbnra8kG2Pi6sF9bTub8muNfe+D6
+         WeZBmyfGq25ehMlB8CQM3iaG0ZnaPhqBzQDHk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LE99A2cP0EtJx1USbEU2N08v3K/ziBZVFontOSyUftE=;
+        b=IcF2HEyIaKcQJIrmZn7FEJjig+qSAHD4b2bXlPE/5ritmZ0FHiMAgN3L/HgFXmsSQ+
+         9paK108OmJSgNDDHq4IukbVXJ3O4p4vuqrgvqyzV6xVJY5aybYeBtDWN1Cs/bo18CB+C
+         Wd0p9CiNX5M/Pd/RxQfeQdcxakvZVN2j4C8QZa483HiJsSnDvfPmJMH0h9Fyny9SN4BE
+         a3sD8Dck3qwPyPwtcl0itpqR7Q9PmP9P4n9YOr6Wop1mXN+zobn98VJXOQZmcV6B1WCi
+         N0HdsF1r5e9mUjO/Oq0YW6YDZH+DNZOzw9ax1yzZUsxcMULts3hMaacff8Iv2QYqiDAX
+         aVnA==
+X-Gm-Message-State: AJIora8UlLex1JTmw118NaHhz2ifMSKbS2KUIBVoOqkf4uvUVTRKh6Iv
+        JT6nIEokPIpXEMk5yUDgI3EZ56CeyWEP+A==
+X-Google-Smtp-Source: AGRyM1vpMzvvyQ2U6wtGlx7pn+wJZCZAkRNiAS9i6bNktnTmOMqaMoI1pDr0wVKQ5L3sQg7jZjI+nw==
+X-Received: by 2002:ac8:5981:0:b0:31d:3c4e:bd77 with SMTP id e1-20020ac85981000000b0031d3c4ebd77mr2348978qte.237.1656699515243;
+        Fri, 01 Jul 2022 11:18:35 -0700 (PDT)
+Received: from nitro.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id s9-20020ac85289000000b00304efba3d84sm15287784qtn.25.2022.07.01.11.18.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Jul 2022 11:18:34 -0700 (PDT)
+Date:   Fri, 1 Jul 2022 14:18:33 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Non-interactively rewording commit messages
+Message-ID: <20220701181833.yf3wmg2k3vyk4v6n@nitro.local>
+References: <20220630152757.yxwhijvj5xoosrws@meerkat.local>
+ <CABPp-BHX5H1co+cMS2LEt=NYB5==5e4YK_sK=h_O1-zxaNocAA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1379af2e9d271b501ef3942398e7f159a9c77973.1656440978.git.me@ttaylorr.com>
+In-Reply-To: <CABPp-BHX5H1co+cMS2LEt=NYB5==5e4YK_sK=h_O1-zxaNocAA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 28, 2022 at 02:30:20PM -0400, Taylor Blau wrote:
+On Thu, Jun 30, 2022 at 09:01:33PM -0700, Elijah Newren wrote:
+> One possibility would be to tweak
+> https://github.com/newren/git-filter-repo/blob/main/contrib/filter-repo-demos/signed-off-by,
+> modifying the line setting the 'trailer' variable to make it be a
+> Reviewed-by rather than a Signed-off-by.  You could tweak the script
+> to also make other automated commit message changes unrelated to any
+> trailers, if you wanted.
 
-> Even though this comment was written in a good spirit, it is updated
-> infrequently enough that is serves to confuse rather than to encourage
-> contributors to update the appropriate values when the modify the
-> definition of object_entry.
-> 
-> For that reason, eliminate the confusion by removing the comment
-> altogether.
+Oh, this is neat, I was unaware of git-filter-repo. It looks like exactly what
+I need for my purposes -- maybe I can just use it as a subproject. Thanks for
+the suggestion!
 
-I agree the actual numbers aren't helping anybody. We _could_ leave a
-comment that says "we store a lot of these in memory; be careful of
-where and how you add new fields to avoid increasing the struct size".
-And then people can run "pahole" before and after their changes.
-
-But then that is also true of other structs (like "struct object"), and
-we do not bother there. So it probably is fine not to annotate this
-specifically.
-
-Speaking of which, I suspect quite a lot of memory could be saved if
-"pack-objects --revs" freed the object structs it allocates during its
-traversal. Unless we're generating bitmaps, I don't think they get used
-again after the initial packing list is generated. At peak you'd
-still be storing all of the object_entry structs alongside the objects
-as you finish the traversal, but it wouldn't overlap with any memory
-used for the delta search, and of course we'd be at that peak for a much
-smaller time.
-
-Not a blocker for your patch obviously, but maybe a fun experiment in an
-adjacent area. Possibly even an ambitious #leftoverbits opportunity. :)
-
--Peff
+-K
