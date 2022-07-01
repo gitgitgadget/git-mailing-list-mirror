@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F50CC433EF
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 05:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE4FFC433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 05:23:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233842AbiGAFXf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 01:23:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39762 "EHLO
+        id S233870AbiGAFXh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 01:23:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233673AbiGAFX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233704AbiGAFX2 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 1 Jul 2022 01:23:28 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 105BE205C3
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E6B6205FF
         for <git@vger.kernel.org>; Thu, 30 Jun 2022 22:23:27 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id d17so1502207wrc.10
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 22:23:26 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id v9so1518634wrp.7
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 22:23:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AxzoeF7yxKuO2ENG2h5ng4XglA2GKbSgkHokpO7INQk=;
-        b=izQPk5hnLJj18JIhCcDNkJSN0j+yHiOrn82BUzBfrZzDzZOlnwtk7j2QjiKHer1ZkQ
-         Req6wsjHJ39W+ek0lGjC061/u04nLak7GWMeQsq9V2ojmUOveSs5Uuv6rLclSJXU7qg8
-         EPwvTWkK8tYIhZwYDEJaMgdKnPnY/ezjkpLQirGJ/AkVCyx3lYHPwMLWUaq/+zsVyAo5
-         tQb4/qMa4FepmWuEeE2yKM88o6ieaKwzy1Nv5grUcY1aHDEJMyrbw+d1EUIY+wV68ik8
-         u0Ycf50MnohwbzfudLtOFeqIsLcDsunWaB2SKVlNAk+6D/SSRF5jxaJT87binEtVyalV
-         nykg==
+        bh=YViNupEtiXbkg+Bk11DwGwiBbv9XytGRmPVUgM1L+YM=;
+        b=A5a+t3xORi3p572cXPumJ1I+7SY+UTZDl0UcMVMbvMPSsCEzAD/viLjuHOq2BsXTFu
+         5E7X6R+ImJjuYXgJkXwe0Qtnt/iU4q91HMfYAjwcShraw499vFsAkhe6ZE/2Gd4xjBHa
+         uOEHFmfDXP3dIearKSrST41MkIQQUbKkyOnaYx2ZtFgyKwFZR4uV5W4X4wpfjWR85+Vr
+         XIOf0d0tqsA+O9+dl9cGbHjCNM7YT0IxuZpEkSJ0liFvAsYCvwH3GTlaae2GnCzI+ekG
+         9kUGpLWAEw89Jz5FzTYe4U8YZT0nJMW54T1XgurBKKuBUtTt81xtNqMGTwr0V1pbxPTn
+         seLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AxzoeF7yxKuO2ENG2h5ng4XglA2GKbSgkHokpO7INQk=;
-        b=25znLinDQLTO72dxCQ7+BPCwVlqrl+8FIJ0ORVDpCbiFVFQHylVMm1/m9hu+Z1bVzS
-         1RHGIZdztIYxEzroGfKv4miWR8ajj93UHgUhEHzUjhqpDqkjRF5pni7LM4tGZeQxn73Y
-         CUehlORN4SZHEC0RmxdpSsqPPVQPdPL2HqjVg0tPNNMEu3Ub40cYt8VfhIzB78oL9UEM
-         VEWxnmDrWe0EkUiTx3JYPh0Ut+P4Zhbc5g0eumSeY/rjn1xus4Mbck7ihf9HLligDF67
-         PaM2KhGo5HB4s3N2r+j6XT1lCSy7TMyejnC+J7HEnx6uFVTHQgUoD4Kr1j235bcP1t/k
-         8S3Q==
-X-Gm-Message-State: AJIora9oIEnjBe4ukiSPiigoQuc8LBaU5WmypvSY6BMCjcFHQSS0gNiw
-        JTZmx4to6sND9/s8r8zCJG7bfIfxvK0=
-X-Google-Smtp-Source: AGRyM1sRsbL3j+2jALVWlkq8Uvp4GF66sZNO9f2DgAddlxVAq4cSRf9jGfLYcM+sfnV6TLchdHgHNw==
-X-Received: by 2002:a5d:64a4:0:b0:21d:133d:cbb4 with SMTP id m4-20020a5d64a4000000b0021d133dcbb4mr11159108wrp.208.1656653005288;
-        Thu, 30 Jun 2022 22:23:25 -0700 (PDT)
+        bh=YViNupEtiXbkg+Bk11DwGwiBbv9XytGRmPVUgM1L+YM=;
+        b=TJD/ZTqzbKn3PCDaH/egwVilQv6P0Sen8S1J1zu0qXicunHpUoG3lM4nfGxj/+ec39
+         uOU0E9sDJQurmLFdmgG93ckhtmngKYRS3m/w0tSmHhaACaXBH6xqmV/jWSfZDqZE4mgY
+         DSvgFPNPmTl2868R9k+ndT2suoscUyJDYYU49Qcz1bbXsOqrKld8//vo3xRBVCbutNPQ
+         2w2nJm/ZKFIbmrjXw0CNmmTPGJrRhv7ikiClBa8Dbs5G9uuDyv73Ll1+TPyvSiRysCoq
+         cYR+44IvmacczgKTJVyix6d29B48rz5GVf7a3WksNMqjvxEgBWDlvcoNTieu+yqINH+y
+         Brgg==
+X-Gm-Message-State: AJIora8CQwpsJyqTcnqJVPqZX5UV4oeFNOafOBRQRGNixbjwYPTlVn4o
+        vmbGBxChH33KGSXKabenU7LBecmY1NI=
+X-Google-Smtp-Source: AGRyM1uuH8qRNTR+WYjQMsoAz0SiJtpE/OSGM+k0rY5+8tX5l/ZXYtYu9+KiLRV8pc8TAJd4bsPKaQ==
+X-Received: by 2002:adf:eacd:0:b0:21b:b032:6b4a with SMTP id o13-20020adfeacd000000b0021bb0326b4amr11467916wrn.177.1656653006429;
+        Thu, 30 Jun 2022 22:23:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k1-20020adff5c1000000b0020d07d90b71sm20779761wrp.66.2022.06.30.22.23.24
+        by smtp.gmail.com with ESMTPSA id q63-20020a1c4342000000b003973c54bd69sm5214217wma.1.2022.06.30.22.23.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 22:23:24 -0700 (PDT)
-Message-Id: <f5f87acbbd281966288968288ed78fe053933786.1656653000.git.gitgitgadget@gmail.com>
+        Thu, 30 Jun 2022 22:23:25 -0700 (PDT)
+Message-Id: <d3eac3d0bf6539d81751813d89ec5158dcb57338.1656653000.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1268.v3.git.1656653000.gitgitgadget@gmail.com>
 References: <pull.1268.v2.git.1656572225.gitgitgadget@gmail.com>
         <pull.1268.v3.git.1656653000.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Jul 2022 05:23:18 +0000
-Subject: [PATCH v3 3/5] merge-ort: make a separate function for freeing struct
- collisions
+Date:   Fri, 01 Jul 2022 05:23:19 +0000
+Subject: [PATCH v3 4/5] merge-ort: shuffle the computation and cleanup of
+ potential collisions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,83 +65,104 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Calvin Wan <calvinwan@google.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@palantir.com>
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@palantir.com>
+From: Elijah Newren <newren@gmail.com>
 
-This commit makes no functional changes, it's just some code movement in
-preparation for later changes.
+Run compute_collisions() for renames on both sides of history before
+any calls to collect_renames(), and do not free the computed collisions
+until after both calls to collect_renames().  This is just a code
+reorganization at this point that doesn't make sense on its own, but
+will permit us to use the computed collision info from both sides
+within each call to collect_renames() in a subsequent commit.
 
-Signed-off-by: Elijah Newren <newren@palantir.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 38 ++++++++++++++++++++++----------------
- 1 file changed, 22 insertions(+), 16 deletions(-)
+ merge-ort.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index ff037cca8d2..1514dd173c0 100644
+index 1514dd173c0..b496f0e3803 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -2259,6 +2259,27 @@ static void compute_collisions(struct strmap *collisions,
+@@ -2335,7 +2335,8 @@ static char *check_for_directory_rename(struct merge_options *opt,
  	}
- }
  
-+static void free_collisions(struct strmap *collisions)
-+{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+
-+	/* Free each value in the collisions map */
-+	strmap_for_each_entry(collisions, &iter, entry) {
-+		struct collision_info *info = entry->value;
-+		string_list_clear(&info->source_files, 0);
-+	}
-+	/*
-+	 * In compute_collisions(), we set collisions.strdup_strings to 0
-+	 * so that we wouldn't have to make another copy of the new_path
-+	 * allocated by apply_dir_rename().  But now that we've used them
-+	 * and have no other references to these strings, it is time to
-+	 * deallocate them.
-+	 */
-+	free_strmap_strings(collisions);
-+	strmap_clear(collisions, 1);
-+}
-+
- static char *check_for_directory_rename(struct merge_options *opt,
- 					const char *path,
- 					unsigned side_index,
-@@ -3029,8 +3050,6 @@ static int collect_renames(struct merge_options *opt,
+ 	new_path = handle_path_level_conflicts(opt, path, side_index,
+-					       rename_info, collisions);
++					       rename_info,
++					       &collisions[side_index]);
+ 	*clean_merge &= (new_path != NULL);
+ 
+ 	return new_path;
+@@ -3044,16 +3045,15 @@ static int detect_regular_renames(struct merge_options *opt,
+ static int collect_renames(struct merge_options *opt,
+ 			   struct diff_queue_struct *result,
+ 			   unsigned side_index,
++			   struct strmap *collisions,
+ 			   struct strmap *dir_renames_for_side,
+ 			   struct strmap *rename_exclusions)
+ {
  	int i, clean = 1;
- 	struct strmap collisions;
+-	struct strmap collisions;
  	struct diff_queue_struct *side_pairs;
--	struct hashmap_iter iter;
--	struct strmap_entry *entry;
  	struct rename_info *renames = &opt->priv->renames;
  
  	side_pairs = &renames->pairs[side_index];
-@@ -3076,20 +3095,7 @@ static int collect_renames(struct merge_options *opt,
+-	compute_collisions(&collisions, dir_renames_for_side, side_pairs);
+ 
+ 	for (i = 0; i < side_pairs->nr; ++i) {
+ 		struct diff_filepair *p = side_pairs->queue[i];
+@@ -3069,7 +3069,7 @@ static int collect_renames(struct merge_options *opt,
+ 						      side_index,
+ 						      dir_renames_for_side,
+ 						      rename_exclusions,
+-						      &collisions,
++						      collisions,
+ 						      &clean);
+ 
+ 		possibly_cache_new_pair(renames, p, side_index, new_path);
+@@ -3095,7 +3095,6 @@ static int collect_renames(struct merge_options *opt,
  		result->queue[result->nr++] = p;
  	}
  
--	/* Free each value in the collisions map */
--	strmap_for_each_entry(&collisions, &iter, entry) {
--		struct collision_info *info = entry->value;
--		string_list_clear(&info->source_files, 0);
--	}
--	/*
--	 * In compute_collisions(), we set collisions.strdup_strings to 0
--	 * so that we wouldn't have to make another copy of the new_path
--	 * allocated by apply_dir_rename().  But now that we've used them
--	 * and have no other references to these strings, it is time to
--	 * deallocate them.
--	 */
--	free_strmap_strings(&collisions);
--	strmap_clear(&collisions, 1);
-+	free_collisions(&collisions);
+-	free_collisions(&collisions);
  	return clean;
  }
+ 
+@@ -3106,6 +3105,7 @@ static int detect_and_process_renames(struct merge_options *opt,
+ {
+ 	struct diff_queue_struct combined = { 0 };
+ 	struct rename_info *renames = &opt->priv->renames;
++	struct strmap collisions[3];
+ 	int need_dir_renames, s, i, clean = 1;
+ 	unsigned detection_run = 0;
+ 
+@@ -3155,12 +3155,22 @@ static int detect_and_process_renames(struct merge_options *opt,
+ 	ALLOC_GROW(combined.queue,
+ 		   renames->pairs[1].nr + renames->pairs[2].nr,
+ 		   combined.alloc);
++	for (int i = MERGE_SIDE1; i <= MERGE_SIDE2; i++) {
++		int other_side = 3 - i;
++		compute_collisions(&collisions[i],
++				   &renames->dir_renames[other_side],
++				   &renames->pairs[i]);
++	}
+ 	clean &= collect_renames(opt, &combined, MERGE_SIDE1,
++				 collisions,
+ 				 &renames->dir_renames[2],
+ 				 &renames->dir_renames[1]);
+ 	clean &= collect_renames(opt, &combined, MERGE_SIDE2,
++				 collisions,
+ 				 &renames->dir_renames[1],
+ 				 &renames->dir_renames[2]);
++	for (int i = MERGE_SIDE1; i <= MERGE_SIDE2; i++)
++		free_collisions(&collisions[i]);
+ 	STABLE_QSORT(combined.queue, combined.nr, compare_pairs);
+ 	trace2_region_leave("merge", "directory renames", opt->repo);
  
 -- 
 gitgitgadget
