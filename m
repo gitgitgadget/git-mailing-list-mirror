@@ -2,111 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37B52C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 19:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4CC4C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 19:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231273AbiGATsZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 15:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57064 "EHLO
+        id S231772AbiGAT4L convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 1 Jul 2022 15:56:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231334AbiGATsX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 15:48:23 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 118991CB1E
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 12:48:23 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id g14so1171580qto.9
-        for <git@vger.kernel.org>; Fri, 01 Jul 2022 12:48:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rc2z24Bqq7bC35vTwAMG4rQ9MUEO9KX4cMQfGyyEf+A=;
-        b=6NXkhBYRumKaaP0KPtO4JJz0lIVhEwSP+y/ag7s5BRzccNeE23NE7kiPCwlFFy89RX
-         X6Isvbeu4Vi0wXeZZqKWNWFRjR+O8toDxmKE7QxgrZUeJl9Fzm5DCSbIyGeR0DnDNms6
-         yWmwnpVYTuotL2RpH29oB40mK/b67stZNx0lIRVUUlpTVHth+HO1uFUCS9dbz56UL3X3
-         8IUEr1axybra5BQP75AaI0fBZtYBmdhZbSB7fnMWUh057ld0ZVyYrNqmqIc1/1yYiO9h
-         Xtx9MDplqbNaEFqs4NM3Q3UaFOKha7du7Kg5c2IkUZHTaaYc2OA+yIEABQQFivLlwW9g
-         UPbQ==
+        with ESMTP id S230094AbiGAT4K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 15:56:10 -0400
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 538B943AE0
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 12:56:09 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id h187so5877868ybg.0
+        for <git@vger.kernel.org>; Fri, 01 Jul 2022 12:56:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rc2z24Bqq7bC35vTwAMG4rQ9MUEO9KX4cMQfGyyEf+A=;
-        b=HURi2iIQYiQX0U+tdiUOIetSm9vkc/MNqzwQS2VofAEhgD0jjU2Yb8hmo1EThVX6CD
-         D4hpNpggm8qD0/x5CEvyHQu9rXTWnuydiy00+H7xwy1bsq2ONlL3qPptaDNxjgTExMjd
-         tB9r4fHIo4aARkmlggV5T1zTU90FGKK3uLL2LF0tICZw/I40jfz8kxBW4o9u+oGvu5te
-         bJguAATnMG6xwSDi6YpQVZy/vYa01mPLlikTMJxQwqJb/dyBWBFurP22zRh3wPRfxC6A
-         MCplloQGi3bZWZajHB5IMpoBtROJ8y7iuvKIgZF387nracYOx8V+XmtmBKptwwVQ9Mkt
-         orSg==
-X-Gm-Message-State: AJIora9XMGKhwqqRPQdzKNVOgk9meges1jcmBGy0HOKiMEVCln6Xp7PI
-        4Xkhi2XzAxcuFDnUfCWniP+vOj/5o4okdA==
-X-Google-Smtp-Source: AGRyM1srPWEH0PEfOcUOoi0NBWtcdUX6OBUb5FA1TJUP3gwqb3stSjIPn+Ta3roVbAqI+WBa3vyoYg==
-X-Received: by 2002:ac8:5c47:0:b0:31d:347d:d621 with SMTP id j7-20020ac85c47000000b0031d347dd621mr6919618qtj.524.1656704900926;
-        Fri, 01 Jul 2022 12:48:20 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id cc18-20020a05622a411200b0031b7441b02asm9034916qtb.89.2022.07.01.12.48.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 12:48:20 -0700 (PDT)
-Date:   Fri, 1 Jul 2022 15:48:19 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        gitster@pobox.com, pclouds@gmail.com
-Subject: Re: [PATCH] pack-objects.h: remove outdated pahole results
-Message-ID: <Yr9Pg9mRQWe1tgE+@nand.local>
-References: <1379af2e9d271b501ef3942398e7f159a9c77973.1656440978.git.me@ttaylorr.com>
- <Yr85+tcexG2geaPP@coredump.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/Qj4KtvAUBGANNl7QIZKdFS1ZoyYH+1m4VwqYw9cRpk=;
+        b=IlkSDnritttEppuXYBL/u+urbneOEARZTLxc35SWsmRFIYiqV8mMj7IGK44tRpuCHa
+         F5PMr+3HmuNGRkTBvF/0UCpv8WrjMjvhMIHxSJCv8PLLBpOcsYvsPrUgMhUUM8o+KJMF
+         oHV8BHyu1vxfLuUhhViqwkRF5quOsd9dezSVnTzhgXtspGgxFR/IXUiCQvvOSJRBqc0k
+         GEJT/11Q+6x4ZyUy05Py4DoCvm57/tNlNPos928z7/JkXWsZQ2YPkbSSprkXBLapoBSf
+         2WPR96yoLOFvfahixh5p/mKRHxOStbtydVZIzniB/sh14QoUqlICuftl8oYfaOxBINbI
+         OHJA==
+X-Gm-Message-State: AJIora+YJ4qqJUO252qK8IlYZRz48+Pq5uyBAJ5Kv9UFjc28G0dwLxgb
+        QSIoZ3LmAzKcp0LcJmSSbOt6R7a4jr0KBh4LAj0=
+X-Google-Smtp-Source: AGRyM1uAa1UKBahdDX+o3zJ0vMaf09r0yT4Twmh1pzcesccfah6V+ppNRvcmwv88Yzvq8VNmYmjOSJVcXvThKJQz9IQ=
+X-Received: by 2002:a25:33d6:0:b0:64a:9d22:f005 with SMTP id
+ z205-20020a2533d6000000b0064a9d22f005mr16592586ybz.54.1656705368479; Fri, 01
+ Jul 2022 12:56:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Yr85+tcexG2geaPP@coredump.intra.peff.net>
+References: <cover-v2-0.2-00000000000-20220621T223954Z-avarab@gmail.com>
+ <cover-v3-0.4-00000000000-20220701T102506Z-avarab@gmail.com> <patch-v3-1.4-49e9ccb5819-20220701T102506Z-avarab@gmail.com>
+In-Reply-To: <patch-v3-1.4-49e9ccb5819-20220701T102506Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 1 Jul 2022 15:55:57 -0400
+Message-ID: <CAPig+cSWpzHtv-Kv7=fibkPot=NTwKgc5_Eo_7G4fT=FnaGrxA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] cocci: add and apply a rule to find "unused" strbufs
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 01, 2022 at 02:16:26PM -0400, Jeff King wrote:
-> On Tue, Jun 28, 2022 at 02:30:20PM -0400, Taylor Blau wrote:
+On Fri, Jul 1, 2022 at 6:36 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> Add a coccinelle rule to remove "struct strbuf" initialization
+> followed by calling "strbuf_release()" function.
+
+I'm probably being overly pedantic, but I tripped over this failing to
+mention that the strbuf is not used between the initialization and the
+release. That is, I had expected it to say:
+
+    Add a coccinelle rule to remove "struct strbuf" initialization
+    followed by calling "strbuf_release()" function without any uses
+    of the strbuf in between.
+
+> See extensive commentary in the new "unused.cocci" for how it works,
+> and what it's intended to find and replace.
 >
-> > Even though this comment was written in a good spirit, it is updated
-> > infrequently enough that is serves to confuse rather than to encourage
-> > contributors to update the appropriate values when the modify the
-> > definition of object_entry.
-> >
-> > For that reason, eliminate the confusion by removing the comment
-> > altogether.
+> The inclusion of "contrib/scalar/scalar.c" is because "spatch" was
+> manually run on it (we don't usually run spatch on contrib).
 >
-> I agree the actual numbers aren't helping anybody. We _could_ leave a
-> comment that says "we store a lot of these in memory; be careful of
-> where and how you add new fields to avoid increasing the struct size".
-> And then people can run "pahole" before and after their changes.
->
-> But then that is also true of other structs (like "struct object"), and
-> we do not bother there. So it probably is fine not to annotate this
-> specifically.
+> The use of "with strict" here will be explained and amended in the
+> following commit.
 
-We have such a comment at the very type of the block comment above
-`struct object_entry`'s definition:
+Did you mean "when strict"?
 
-    "The size of struct nearly determines pack-object's memory
-    consumption. This struct is packed tight for that reason. When you
-    add or reorder something in this struct, think a bit about this".
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/contrib/coccinelle/unused.cocci b/contrib/coccinelle/unused.cocci
+> @@ -0,0 +1,61 @@
+> +// This rule finds sequences of "unused" declerations and uses of
 
-thanks to Duy back in 3b13a5f263 (pack-objects: reorder members to
-shrink struct object_entry, 2018-04-14).
+s/declerations/declarations/
 
-> Speaking of which, I suspect quite a lot of memory could be saved if
-> "pack-objects --revs" freed the object structs it allocates during its
-> traversal. Unless we're generating bitmaps, I don't think they get used
-> again after the initial packing list is generated. At peak you'd
-> still be storing all of the object_entry structs alongside the objects
-> as you finish the traversal, but it wouldn't overlap with any memory
-> used for the delta search, and of course we'd be at that peak for a much
-> smaller time.
->
-> Not a blocker for your patch obviously, but maybe a fun experiment in an
-> adjacent area. Possibly even an ambitious #leftoverbits opportunity. :)
+> +// To do do this we find (continued below)...
 
-Challenge accepted! ;-)
-
-Thanks,
-Taylor
+s/do do/do/
