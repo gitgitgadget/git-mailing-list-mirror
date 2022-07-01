@@ -2,79 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF16EC43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 17:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E483FC433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 17:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230472AbiGARrh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 13:47:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
+        id S231397AbiGARyA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 13:54:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230487AbiGARrf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 13:47:35 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5A036B74
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 10:47:33 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EF30213CB55;
-        Fri,  1 Jul 2022 13:47:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=O6A2TJOQ7XQRqCVqDo3dBBV2v2oRdQSaNZZDCt
-        HvWik=; b=q9e5NzWqMVzHAFxoekoHiXKMuRm/YolIh9y9HhqMjOcjw1M8mBzo9o
-        Fz9w6Pddvxk/50fwzIKhcj7eNF9zzdtg+28b0QTNUmjt2MTfOZeNy/anfpNo8SBd
-        rGM962XPu6rn72v1hRBAs9wgokT3f4Oa/JZ5q+ZEO+5LP+8BrEtfM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E56EC13CB54;
-        Fri,  1 Jul 2022 13:47:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 440E813CB53;
-        Fri,  1 Jul 2022 13:47:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 0/5] Avoid spawning gzip in git archive
-References: <pull.145.git.gitgitgadget@gmail.com>
-        <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
-        <nycvar.QRO.7.76.6.2206141043150.353@tvgsbejvaqbjf.bet>
-        <0aa5c101-06bf-325c-efbc-6b4ef38616c5@web.de>
-        <ps52p06s-01nr-4ss2-r802-6nsp5nqq5199@tzk.qr>
-        <038r075o-5s5r-9sop-5o02-8s84428o0r54@tzk.qr>
-        <Yr8gZT6dbCpzaR9n@coredump.intra.peff.net>
-Date:   Fri, 01 Jul 2022 10:47:28 -0700
-In-Reply-To: <Yr8gZT6dbCpzaR9n@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 1 Jul 2022 12:27:17 -0400")
-Message-ID: <xmqqy1xc913j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229553AbiGARx7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 13:53:59 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DBB03B002
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 10:53:57 -0700 (PDT)
+Received: (qmail 9515 invoked by uid 109); 1 Jul 2022 17:53:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 01 Jul 2022 17:53:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27454 invoked by uid 111); 1 Jul 2022 17:53:56 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 Jul 2022 13:53:56 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 1 Jul 2022 13:53:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     Roland Illig <roland.illig@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: undefined behavior in builtin/am.c
+Message-ID: <Yr80s8VP8ECCXKd+@coredump.intra.peff.net>
+References: <130c3636-b978-1600-df53-6a38c3414a88@gmx.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E0F752BE-F965-11EC-80CD-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <130c3636-b978-1600-df53-6a38c3414a88@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jul 01, 2022 at 07:03:18PM +0200, Roland Illig wrote:
 
-> That will spend quite a lot of time doing hash-lookups for each tree
-> entry. A better raw zlib test might be:
->
->   git cat-file --batch --batch-all-objects --unordered >/dev/null
->
-> which will just dump each object, and should mostly be zlib and delta
-> reconstruction (the --unordered is important to hit the deltas in the
-> right order).
+> The macro 'isspace' must only be called with an integer representable as
+> an 'unsigned char', or with the value of the macro EOF.
+> 
+> On platforms where plain 'char' is a signed integer type, any character
+> whose value is negative invokes undefined behavior (except for the one
+> character that by coincidence has the same value as the macro EOF).
+> 
+> To fix this, write '!isspace((unsigned char)*str)' instead.
+> 
+> I have no idea how to trigger this part of the code but for someone who
+> knows this part of Git, it should be easy. Depending on the platform,
+> this kind of error may be silently ignored or crash the program, as
+> always with undefined behavior.
 
-;-)
+We don't use the system isspace(), but instead our own macro wrappers in
+git-compat-util.h. They do the cast to unsigned char themselves.
 
-I like --unordered has the meaning "use the order Git likes" (which
-is probably the packfile offset order, which we optimize for
-minimizing seek during delta reconstruction).
+I won't be surprised if re-defining a system name as a macro is also
+technically undefined behavior, but I don't think we've found a system
+that has a problem with it in the past 17 years. :)
 
+-Peff
