@@ -2,146 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C422C43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 02:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B30BC43334
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 02:17:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232963AbiGACMk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 22:12:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43506 "EHLO
+        id S232025AbiGACRx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 22:17:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233034AbiGACM0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 22:12:26 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7293060508
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 19:12:22 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id jg5-20020a17090326c500b0016a020648bcso591653plb.19
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 19:12:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=l4pUsrUEx/+7EPda9I7NMpbfcYywsaWP95UMb/3whBI=;
-        b=mYlTmUM00VNHT8MACWMlQaWtPx0SgZBfWW7O7S5YpgWHqFxAdAIj9lxDfXj+3hFKVU
-         5mV5a7zSUdPYQ2fQ/ZczyG7ajRacOCK4/WxVJ0XMpg7OzWJw4Wx+w9XewjGeF07HY267
-         ulzugWxPQ0eWIC9gtRHve7Y91di7FCED5VYN/boVCD30tGj7egoXqnD55Zk3WiYUTujF
-         gDm6y2HuXVIuXTSTawA6Po09dobHPggVQ6ke60Q4uy1bv8Yqm5nEbDQ8TXFFW2AeJBgq
-         n+VeDZZeh+2mKkbzbr1jFY7WySpOBr+BMwv9Qji4+OKYek9xW5S9fFgiaBGxS532NG0i
-         xpcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=l4pUsrUEx/+7EPda9I7NMpbfcYywsaWP95UMb/3whBI=;
-        b=xNYn9n7frkSEBhra1nHlbvdTzKkpDvU2leOK8a9IQ9WwsVmleRt1e/M31+qjukAip6
-         9ITC4cvXu7eeKhqfdz5NcY4t9LFCysdTmsEZe8swWsNwBTZXxHUOhYJtEwPIAX5DKSFe
-         zI/gTt1lFx9AdbtJWIFsIW3HlwWqezzVxBkALyUNQT9R5CesDsFwHIE8cPeMhKGyEGkC
-         ZEOjebd6L7syKG2rM85ai5EUUEl31xxTPo5e7VEV33Wd927IAWRVLA4ONhaFV2HUnT74
-         PurYqDAqpLBe/zOHYCCQN5wUAHFkeQxSTtMS+xyjFuP5aV1Tz7WNVX9N51cGGMaFB5Sy
-         KJyQ==
-X-Gm-Message-State: AJIora+GRcSUucpFUFLlkTp4Rr8jhe+CnFqFPJeMmOyJ99Q8wAlVuPkS
-        u50EFdPr/5aOYcN74vYFFgS6sYzzwCMunfDDiIEfSif7uZ91uzQgYrPwLvNkhagcVu7mGILqBlE
-        OiPy5arR8geR7O4hTcXPS6rPWRhGyswb4CbXVqJ4NT3xF2qsKxp/H3whs9HADGfQ=
-X-Google-Smtp-Source: AGRyM1sFgg/qQqkhkoOrKQMPANUkaNongP0D8CmEa2I/VKUTuVu+ihG8nR35/DR/Lomu3LPfhZohl7AATBWAtg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:c948:b0:16a:58f4:c142 with SMTP
- id i8-20020a170902c94800b0016a58f4c142mr17859292pla.103.1656641542137; Thu,
- 30 Jun 2022 19:12:22 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 19:11:57 -0700
-In-Reply-To: <20220701021157.88858-1-chooglen@google.com>
-Message-Id: <20220701021157.88858-8-chooglen@google.com>
-Mime-Version: 1.0
-References: <20220630221147.45689-1-chooglen@google.com> <20220701021157.88858-1-chooglen@google.com>
-X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
-Subject: [PATCH v4 7/7] submodule--helper: remove display path helper
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229531AbiGACRw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 22:17:52 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 681F06051F
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 19:17:51 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B2D213782A;
+        Thu, 30 Jun 2022 22:17:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=s64gZU0RMGhc
+        9mVJdT50gokkcl9PRzM0A16GS7GU2JM=; b=E+TIl+lcWat6/r9EEz09hl2Vna0S
+        rasXWn2NmqxLY2WdJebzRoZOxdhqthXZCgWYboEZkRaANfJUz4tE3kYMnIeOmFbF
+        8HbokNYJWZpAZSsUzmrH+Kw6iTmB5jSIMr0cFa5TFHKXNiQ7mMS/gbOXrRtR4Md8
+        WPCm4ekt+t3D2EY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7546A137827;
+        Thu, 30 Jun 2022 22:17:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC73C137826;
+        Thu, 30 Jun 2022 22:17:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/9] test-tool regex: call regfree(), fix memory leaks
+References: <cover-0.9-00000000000-20220630T180129Z-avarab@gmail.com>
+        <patch-5.9-fe2a8d898f6-20220630T180129Z-avarab@gmail.com>
+Date:   Thu, 30 Jun 2022 19:17:47 -0700
+In-Reply-To: <patch-5.9-fe2a8d898f6-20220630T180129Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 1 Jul
+ 2022 01:47:05 +0200")
+Message-ID: <xmqq8rpda850.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 008ED0D4-F8E4-11EC-A4DB-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All invocations of do_get_submodule_displaypath() pass
-get_super_prefix() as the super_prefix arg, which is exactly the same
-as get_submodule_displaypath().
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Replace all calls to do_get_submodule_displaypath() with
-get_submodule_displaypath(), and since it has no more callers, remove
-it.
+> diff --git a/t/helper/test-regex.c b/t/helper/test-regex.c
+> index d6f28ca8d14..a37d1f7a546 100644
+> --- a/t/helper/test-regex.c
+> +++ b/t/helper/test-regex.c
+> @@ -24,27 +24,35 @@ static int test_regex_bug(void)
+>  	char *str =3D "=3D{}\nfred";
+>  	regex_t r;
+>  	regmatch_t m[1];
+> +	int err =3D 0;
+> =20
+>  	if (regcomp(&r, pat, REG_EXTENDED | REG_NEWLINE))
+>  		die("failed regcomp() for pattern '%s'", pat);
+> -	if (regexec(&r, str, 1, m, 0))
+> -		die("no match of pattern '%s' to string '%s'", pat, str);
+> +	if (regexec(&r, str, 1, m, 0)) {
+> +		err =3D error("no match of pattern '%s' to string '%s'", pat, str);
+> +		goto cleanup;
+> +	}
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- builtin/submodule--helper.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+Hmph.  Does it count as leaking to die() while r is still on the
+stack?  I do not mind cleaning everything up thoroughly, but I am
+curious if this is really necessary.  Apparently it is, as can be
+seen in the patch to t/t7812-grep-icase-non-ascii.sh that allows
+us to say "PASSES" with this patch.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index eb84e3a98b..405a4224c5 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -118,10 +118,11 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
- 	return 0;
- }
- 
--static char *do_get_submodule_displaypath(const char *path,
--					  const char *prefix,
--					  const char *super_prefix)
-+/* the result should be freed by the caller. */
-+static char *get_submodule_displaypath(const char *path, const char *prefix)
- {
-+	const char *super_prefix = get_super_prefix();
-+
- 	if (prefix && super_prefix) {
- 		BUG("cannot have prefix '%s' and superprefix '%s'",
- 		    prefix, super_prefix);
-@@ -137,13 +138,6 @@ static char *do_get_submodule_displaypath(const char *path,
- 	}
- }
- 
--/* the result should be freed by the caller. */
--static char *get_submodule_displaypath(const char *path, const char *prefix)
--{
--	const char *super_prefix = get_super_prefix();
--	return do_get_submodule_displaypath(path, prefix, super_prefix);
--}
--
- static char *compute_rev_name(const char *sub_path, const char* object_id)
- {
- 	struct strbuf sb = STRBUF_INIT;
-@@ -488,7 +482,7 @@ static void init_submodule(const char *path, const char *prefix,
- 	struct strbuf sb = STRBUF_INIT;
- 	char *upd = NULL, *url = NULL, *displaypath;
- 
--	displaypath = do_get_submodule_displaypath(path, prefix, get_super_prefix());
-+	displaypath = get_submodule_displaypath(path, prefix);
- 
- 	sub = submodule_from_path(the_repository, null_oid(), path);
- 
-@@ -1943,8 +1937,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	enum submodule_update_type update_type;
- 	char *key;
- 	struct update_data *ud = suc->update_data;
--	char *displaypath = do_get_submodule_displaypath(ce->name, ud->prefix,
--							 get_super_prefix());
-+	char *displaypath = get_submodule_displaypath(ce->name, ud->prefix);
- 	struct strbuf sb = STRBUF_INIT;
- 	int needs_cloning = 0;
- 	int need_free_url = 0;
-@@ -2460,9 +2453,8 @@ static int update_submodule(struct update_data *update_data)
- {
- 	ensure_core_worktree(update_data->sm_path);
- 
--	update_data->displaypath = do_get_submodule_displaypath(update_data->sm_path,
--								update_data->prefix,
--								get_super_prefix());
-+	update_data->displaypath = get_submodule_displaypath(
-+		update_data->sm_path, update_data->prefix);
- 
- 	determine_submodule_update_strategy(the_repository, update_data->just_cloned,
- 					    update_data->sm_path, update_data->update_default,
--- 
-2.37.0.rc0.161.g10f37bed90-goog
+> @@ -85,27 +93,29 @@ int cmd__regex(int argc, const char **argv)
+>  	}
+>  	git_setup_gettext();
+> =20
+> -	ret =3D regcomp(&r, pat, flags);
+> -	if (ret) {
+> +	if (regcomp(&r, pat, flags)) {
+>  		if (silent)
+> -			return ret;
+> +			return 1;
+> =20
+>  		regerror(ret, &r, errbuf, sizeof(errbuf));
+>  		die("failed regcomp() for pattern '%s' (%s)", pat, errbuf);
+>  	}
+>  	if (!str)
+> -		return 0;
+> +		goto cleanup;
 
+Ahh, OK, this one does not bother with regfree() at all.  The
+changes to the other one may be irrelevant but the changes to this
+function would be necessary to mark the test with "PASSES".
+
+> -	ret =3D regexec(&r, str, 1, m, 0);
+> -	if (ret) {
+> +	if (regexec(&r, str, 1, m, 0)) {
+> +		ret =3D 1;
+>  		if (silent || ret =3D=3D REG_NOMATCH)
+> -			return ret;
+> +			goto cleanup;
+> =20
+>  		regerror(ret, &r, errbuf, sizeof(errbuf));
+> -		die("failed regexec() for subject '%s' (%s)", str, errbuf);
+> +		error("failed regexec() for subject '%s' (%s)", str, errbuf);
+> +		goto cleanup;
+>  	}
+> =20
+> -	return 0;
+> +cleanup:
+> +	regfree(&r);
+> +	return ret;
+>  usage:
+>  	usage("\ttest-tool regex --bug\n"
+>  	      "\ttest-tool regex [--silent] <pattern>\n"
+> diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
+scii.sh
+> index ac7be547145..31c66b63c2c 100755
+> --- a/t/t7812-grep-icase-non-ascii.sh
+> +++ b/t/t7812-grep-icase-non-ascii.sh
+> @@ -2,6 +2,7 @@
+> =20
+>  test_description=3D'grep icase on non-English locales'
+> =20
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./lib-gettext.sh
+> =20
+>  doalarm () {
