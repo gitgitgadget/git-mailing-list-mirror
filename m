@@ -2,73 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38172C43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 16:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C7AC43334
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 16:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232290AbiGAQ10 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 12:27:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49778 "EHLO
+        id S232574AbiGAQou (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 12:44:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232260AbiGAQ1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 12:27:22 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7233241307
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 09:27:21 -0700 (PDT)
-Received: (qmail 8640 invoked by uid 109); 1 Jul 2022 16:27:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 01 Jul 2022 16:27:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26877 invoked by uid 111); 1 Jul 2022 16:27:17 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 Jul 2022 12:27:17 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 1 Jul 2022 12:27:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 0/5] Avoid spawning gzip in git archive
-Message-ID: <Yr8gZT6dbCpzaR9n@coredump.intra.peff.net>
-References: <pull.145.git.gitgitgadget@gmail.com>
- <217a2f4d-4fc2-aaed-f5c2-1b7e134b046d@web.de>
- <nycvar.QRO.7.76.6.2206141043150.353@tvgsbejvaqbjf.bet>
- <0aa5c101-06bf-325c-efbc-6b4ef38616c5@web.de>
- <ps52p06s-01nr-4ss2-r802-6nsp5nqq5199@tzk.qr>
- <038r075o-5s5r-9sop-5o02-8s84428o0r54@tzk.qr>
+        with ESMTP id S230000AbiGAQot (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 12:44:49 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE6F38D9F
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 09:44:47 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id E1EC75A491;
+        Fri,  1 Jul 2022 16:44:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1656693885;
+        bh=bhE0s/X605FvaDMkp9+lygRtywFvEzQBkof/cezTRkY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=cOt52hXA6RGJgqscJGqFiZyDmNt7J7+mGFt5wriWQkEtdCj82r/kDPx0PIGrqV1PL
+         E6bGCreCrzwGQ2CAmic5l1zh7W6l2Rq1v8WEANwjjiHOCQMhB0Kqdz1+2T2GbaGDHO
+         9bBnlhuTmTQzJW4tMxZTsGOMZbR8p5I5LUeOhWHEqTS1qECsL7xfD2yfOwoqsMYPSf
+         X4dVLEinWh4Yb+37XFaSxYFJATGOCevxCH2DLLDN0pl6cTFDqu4Gihqrd5qAR/0F2x
+         y1S/qi1CtG09m/ujKXvLkFnVM8CZ3S1M8GNA4aoaMDZq8KQgtVllHOzb8tgcieZ6vr
+         cyYJxWFJCrjBWiOIAMeDpHZ8/89qn4GFMpAa3RSgtlM9lOIwV8ND9ljLHVMysxWqMC
+         uY4P2YXITJHLN7VpH+V4KVsS101qGu1tZtT1oZd7xQlJ7hBM0re+43L5AouhX1qfnH
+         SObSacuUrNCn7u/iUyt802sb0o8/hxeOT31db8+fmGbsl10PwhV
+Date:   Fri, 1 Jul 2022 16:44:44 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] http: support building on RHEL6
+Message-ID: <Yr8kfCqKHwO1QqS6@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1277.git.1656692646303.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="yjeG9sqYel1B8jAo"
 Content-Disposition: inline
-In-Reply-To: <038r075o-5s5r-9sop-5o02-8s84428o0r54@tzk.qr>
+In-Reply-To: <pull.1277.git.1656692646303.gitgitgadget@gmail.com>
+User-Agent: Mutt/2.2.4 (2022-04-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 01, 2022 at 06:05:59PM +0200, Johannes Schindelin wrote:
 
-> Stolee pointed out to me that objects inside pack files are also
-> zlib-compressed, and that measuring the speed of `git rev-list --objects
-> --all --count` might therefore be a better test.
+--yjeG9sqYel1B8jAo
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That will spend quite a lot of time doing hash-lookups for each tree
-entry. A better raw zlib test might be:
+On 2022-07-01 at 16:24:06, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>=20
+> There was a bug report attached to the copy of 511cfd3bffa (http: add
+> custom hostname to IP address resolutions, 2022-05-16) in the `git/git`
+> repository on GitHub, claiming that that commit broke the build on
+> RedHat Enterprise Linux 6. The most likely explanation is that the
+> available cURL version does not support the `CURLOPT_RESOLVE` feature.
+>=20
+> Let's work around this by warning the user if they configure
+> `http.curloptResolve` if compiled against a too-old cURL version.
 
-  git cat-file --batch --batch-all-objects --unordered >/dev/null
+I don't think it's a good idea to continue to support RHEL 6.  It lost
+regular security support in 2020 and I think it's fine and even
+preferable to force people to upgrade their OS once every decade.  10
+years is, in my view, well beyond the reasonable life span of an OS.
 
-which will just dump each object, and should mostly be zlib and delta
-reconstruction (the --unordered is important to hit the deltas in the
-right order).
+There's no possible way that any Git developer can be expected to
+support RHEL 6 because it has no publicly available security support[0] and
+we can't expect developers to run or use insecure OSes at all.  It's
+also irresponsible of us to enable people to use such an OS considering
+the likelihood of compromise is substantial and the risk compromised
+systems pose to the Internet, so I think we should drop this patch.
 
-> And this is where things get a little messy: in the context of Git for
-> Windows, my local measurements indicate that zlib is better, with ~41
-> seconds using zlib vs ~52 seconds using zlib-ng (but the latter has a
-> rather large variance).
+[0] Yes, there is _extended_ security support until 2024, but that's not
+available to people who aren't already RHEL 6 users and it doesn't cover
+dependencies such as libcurl or Perl that are required to effectively
+use Git.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-That is a surprising slow-down between the two. I'd expect the command
-above to show even more pronounced results, though, as it's spending
-less time doing non-zlib things. But it's still just inflating (as
-opposed to git-archive, which is both inflating and deflating).
+--yjeG9sqYel1B8jAo
+Content-Type: application/pgp-signature; name="signature.asc"
 
--Peff
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.35 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYr8kfAAKCRB8DEliiIei
+gc8aAQCad8Zu+EUi+48tIyV2ZIlENqEcf5gA6gaZQL9n1KHh0QEA7T7Eh0G2mX+k
+Mlbqv673EsjYI+V2cet94riD4nq+IwY=
+=kX+g
+-----END PGP SIGNATURE-----
+
+--yjeG9sqYel1B8jAo--
