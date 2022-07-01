@@ -2,757 +2,303 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DC90C43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 23:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51968C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 23:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232056AbiGAXIT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 19:08:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57570 "EHLO
+        id S231602AbiGAXTO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 19:19:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230009AbiGAXIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 19:08:18 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E010326D7
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 16:08:14 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CEE113E714;
-        Fri,  1 Jul 2022 19:08:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=V
-        T+6CPXQplhLADOxdL+twaKw5msh9+xpSYACX7ZcRE4=; b=lchPLvyQ1cCzGquc3
-        ZhjOHkPHO/c5Rs/9adXuABsc5nEaz9+WjE9Ltm5yYSdqqrGVRZ46kt2YPwqdU1Kd
-        t+rdJQiTYnaHXHB93vydMDYN/cDr5j7w9eYg/O5YYr5MOR6fggIFkrZ7KnXDu53m
-        saqiboSDVdVKf39tNFJtqfEFTY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 93F3113E713;
-        Fri,  1 Jul 2022 19:08:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DEE9613E712;
-        Fri,  1 Jul 2022 19:08:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Jul 2022, #01; Fri, 1)
-X-master-at: e4a4b31577c7419497ac30cebe30d755b97752c5
-X-next-at: 8ac04bfd244e0d302aaeb6ab241eb092dcf6a733
-Date:   Fri, 01 Jul 2022 16:08:11 -0700
-Message-ID: <xmqqo7y85t44.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229496AbiGAXTN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 19:19:13 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 019713F316
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 16:19:11 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id g26so6538372ejb.5
+        for <git@vger.kernel.org>; Fri, 01 Jul 2022 16:19:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kM/QUWSF98hrNqxptYn9LXixOw/uycKw9/W7Z6IgJdM=;
+        b=UPX9C4/+K0iOjHTMzIxoLwLEUMbsXhx9869QGLtfCCfC1LjJrvwMXYLup/mWjWU4ZX
+         rJdpo69fBstgUl4Oe3lJYAb+emiu3eudZYivErr5c8PDmOKTqtihH6iYv0+u4emnnmQr
+         KVS3B0PRXVas7h4GzXuL5y7+pCvHiNpKD9WrNUgnNbSmsS3WZnlVY3rfUY/XVe2qgQgN
+         3wYx2S4o8VgM+atxqy/haT+bLY78eujwEQ3Q19rQRGCmVGqaOhDYuxzM6gXkzQVlVf1H
+         E0JhQgWxPZl3xSQytcFN20my+8dBRxwZJAeVRp3Ouv2eO12u7CZQ+EEdla3SuBnaOSce
+         o1Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kM/QUWSF98hrNqxptYn9LXixOw/uycKw9/W7Z6IgJdM=;
+        b=I5l0+AIFQWHK/bVjvF05jfwN0W7Z86Q1KpCLR11ppqnClyTimfXuyNvbC8Y9U68q70
+         FjLk5DO2clpZ8xrxa9muxN2/fvX227SGNX864FyPUWUJj0K+iPJQgIFIxgtxAGaQcu9y
+         39ou5nuxQ1T/WSK5fPz1+IJxnZgB2E9LkMlj0VZRky2FVavIqwK81zmpBdlOZ1jWzaGj
+         HsZuZpSTxrIGi4mkhfm6EvSDdoaA+mPFRkSZoQFUAp/SJSr/WYsOc0ga3X8JVUeN2jF8
+         g2cdTmZwgQkAjL26y+xeSURg1+Q8UkNsiJ54okwQ1CKzDkW6fGroM1yZNIM/HiJa29Y8
+         i+Qw==
+X-Gm-Message-State: AJIora+encpMOylFielp/4GFMrEEvbxEVhwIHBu7hevaYryxbIUAxBeF
+        g2G+zxhbUkvIL8b+SFZaZ1uxPFJWrN8hvASk3EY=
+X-Google-Smtp-Source: AGRyM1u3v01SZL6mJqMztcifGa4Q+XYbw93m4n7L3/FSk0tahK1Rkn+dBCW7XVWOILu+Sk3yohD8PugCvdm1jy5KgEc=
+X-Received: by 2002:a17:906:e98:b0:726:29c5:620a with SMTP id
+ p24-20020a1709060e9800b0072629c5620amr16955928ejf.192.1656717550474; Fri, 01
+ Jul 2022 16:19:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AE7827C8-F992-11EC-B73E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
+ <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com> <72e0481b643e98c5670eee0bf5c199c4fb693b16.1656422759.git.gitgitgadget@gmail.com>
+In-Reply-To: <72e0481b643e98c5670eee0bf5c199c4fb693b16.1656422759.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 1 Jul 2022 16:18:59 -0700
+Message-ID: <CABPp-BG++8LAwyH6P-QDj5Lu6-cevOBOjpdY7QsSdwiT0w9URA@mail.gmail.com>
+Subject: Re: [PATCH v3 7/8] rebase: update refs from 'update-ref' commands
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen',
-and aren't considered "accepted" at all.
-
-Git 2.37 final was released, many in the northan hemisphere are
-about to be in summer vacation week.  We probably will have a small
-update 2.37.1 near mid July to deal with a small "regression" in
-2.37 but otherwise things are expected to be slow, and slow is good
-;-)
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[New Topics]
-
-* ds/git-rebase-doc-markup (2022-06-30) 1 commit
- - git-rebase.txt: use back-ticks consistently
-
- Correct "git rebase" documentation mark-up.
-
- Will merge to 'next'.
- source: <pull.1270.v3.git.1656508868146.gitgitgadget@gmail.com>
-
-
-* ds/rebase-update-ref (2022-06-28) 8 commits
- - rebase: add rebase.updateRefs config option
- - rebase: update refs from 'update-ref' commands
- - rebase: add --update-refs option
- - sequencer: add update-ref command
- - sequencer: define array with enum values
- - rebase-interactive: update 'merge' description
- - branch: consider refs under 'update-refs'
- - t2407: test branches currently using apply backend
- (this branch uses ds/branch-checked-out.)
-
- "git rebase -i" learns to update branches whose tip appear in the
- rebased range.
-
- Will merge to 'next'?
- source: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
-
-
-* ds/vscode-settings (2022-06-27) 1 commit
- - vscode: improve tab size and wrapping
-
- source: <pull.1271.git.1656354587496.gitgitgadget@gmail.com>
-
-
-* js/add-i-delete (2022-06-28) 1 commit
-  (merged to 'next' on 2022-06-28 at 8ac04bfd24)
- + add --interactive: allow `update` to stage deleted files
-
- Rewrite of "git add -i" in C that appeared in Git 2.25 didn't
- correctly record a removed file to the index, which was fixed.
-
- Will merge to 'master'.
- source: <pull.1273.git.1656454964378.gitgitgadget@gmail.com>
-
-
-* tb/pack-objects-remove-pahole-comment (2022-06-28) 1 commit
- - pack-objects.h: remove outdated pahole results
-
- Comment fix.
-
- Will merge to 'next'.
- source: <1379af2e9d271b501ef3942398e7f159a9c77973.1656440978.git.me@ttaylorr.com>
-
-
-* ab/leakfix (2022-07-01) 11 commits
- - pull: fix a "struct oid_array" memory leak
- - cat-file: fix a common "struct object_context" memory leak
- - gc: fix a memory leak
- - checkout: avoid "struct unpack_trees_options" leak
- - merge-file: fix memory leaks on error path
- - merge-file: refactor for subsequent memory leak fix
- - cat-file: fix a memory leak in --batch-command mode
- - revert: free "struct replay_opts" members
- - submodule.c: free() memory from xgetcwd()
- - clone: fix memory leak in wanted_peer_refs()
- - check-ref-format: fix trivial memory leak
-
- Plug various memory leaks.
-
- source: <cover-v2-00.11-00000000000-20220701T104017Z-avarab@gmail.com>
-
-
-* ab/test-tool-leakfix (2022-07-01) 9 commits
- - test-tool delta: fix a memory leak
- - test-tool ref-store: fix a memory leak
- - test-tool bloom: fix memory leaks
- - test-tool json-writer: fix memory leaks
- - test-tool regex: call regfree(), fix memory leaks
- - test-tool urlmatch-normalization: fix a memory leak
- - test-tool {dump,scrap}-cache-tree: fix memory leaks
- - test-tool path-utils: fix a memory leak
- - test-tool test-hash: fix a memory leak
-
- Plug various memory leaks in test-tool commands.
-
- source: <cover-v2-0.9-00000000000-20220701T103503Z-avarab@gmail.com>
-
-
-* en/t6429-test-must-be-empty-fix (2022-06-30) 1 commit
- - t6429: fix use of non-existent function
-
- A test fix.
-
- Will merge to 'next'.
- source: <pull.1276.git.1656652799863.gitgitgadget@gmail.com>
-
-
-* gc/submodule-use-super-prefix (2022-06-30) 8 commits
- - submodule--helper: remove display path helper
- - submodule--helper update: use --super-prefix
- - submodule--helper: remove unused SUPPORT_SUPER_PREFIX flags
- - submodule--helper: use correct display path helper
- - submodule--helper: don't recreate recursive prefix
- - submodule--helper update: use display path helper
- - submodule--helper tests: add missing "display path" coverage
- - Merge branch 'ab/submodule-cleanup' into gc/submodule-use-super-prefix
- (this branch uses ab/submodule-cleanup.)
-
- Another step to rewrite more parts of "git submodule" in C.
-
- Will merge to 'next'?
- source: <20220701021157.88858-1-chooglen@google.com>
-
-
-* hx/lookup-commit-in-graph-fix (2022-06-30) 1 commit
- - commit-graph.c: no lazy fetch in lookup_commit_in_graph()
-
- A corner case bug where lazily fetching objects from a promisor
- remote resulted in infinite recursion has been corrected.
-
- Will merge to 'next'.
- source: <96d4bb71505d87ed501c058bbd89bfc13d08b24a.1656593279.git.hanxin.hx@bytedance.com>
-
-
-* ll/ls-files-tests-update (2022-07-01) 1 commit
- - ls-files: update test style
-
- Test update.
-
- Will merge to 'next'.
- source: <pull.1269.v5.git.1656673435357.gitgitgadget@gmail.com>
-
-
-* pw/xdiff-alloc (2022-06-30) 3 commits
- - xdiff: introduce XDL_ALLOC_GROW()
- - xdiff: introduce XDL_CALLOC_ARRAY()
- - xdiff: introduce XDL_ALLOC_ARRAY()
-
- Add a level of redirection to array allocation API in xdiff part,
- to make it easier to share with the libgit2 project.
-
- Waiting for review responses.
- source: <pull.1272.git.1656516334.gitgitgadget@gmail.com>
-
-
-* sy/mv-out-of-cone (2022-07-01) 8 commits
- - mv: add check_dir_in_index() and solve general dir check issue
- - mv: use flags mode for update_mode
- - mv: check if <destination> exists in index to handle overwriting
- - mv: check if out-of-cone file exists in index with SKIP_WORKTREE bit
- - mv: decouple if/else-if checks using goto
- - mv: update sparsity after moving from out-of-cone to in-cone
- - t1092: mv directory from out-of-cone to in-cone
- - t7002: add tests for moving out-of-cone file/directory
-
- "git mv A B" in a sparsely populated working tree can be asked to
- move a path between directories that are "in cone" (i.e. expected
- to be materialized in the working tree) and "out of cone"
- (i.e. expected to be hidden).  The handling of such cases has been
- improved.
-
- Will merge to 'next'.
- source: <20220630023737.473690-1-shaoxuan.yuan02@gmail.com>
-
---------------------------------------------------
-[Stalled]
-
-* bc/stash-export (2022-04-08) 4 commits
- - builtin/stash: provide a way to import stashes from a ref
- - builtin/stash: provide a way to export stashes to a ref
- - builtin/stash: factor out revision parsing into a function
- - object-name: make get_oid quietly return an error
-
- A mechanism to export and import stash entries to and from a normal
- commit to transfer it across repositories has been introduced.
-
- Expecting a reroll.
- cf. <YnL2d4Vr9Vr7W4Hj@camp.crustytoothpaste.net>
- source: <20220407215352.3491567-1-sandals@crustytoothpaste.net>
-
-
-* cw/remote-object-info (2022-05-06) 11 commits
- - SQUASH??? coccicheck
- - SQUASH??? ensure that coccicheck is happy
- - SQUASH??? compilation fix
- - cat-file: add --batch-command remote-object-info command
- - cat-file: move parse_cmd and DEFAULT_FORMAT up
- - transport: add object-info fallback to fetch
- - transport: add client side capability to request object-info
- - object-info: send attribute packet regardless of object ids
- - object-store: add function to free object_info contents
- - fetch-pack: move fetch default settings
- - fetch-pack: refactor packet writing
-
- A client component to talk with the object-info endpoint.
-
- Expecting a reroll.
- source: <20220502170904.2770649-1-calvinwan@google.com>
-
---------------------------------------------------
-[Cooking]
-
-* ab/squelch-empty-fsync-traces (2022-06-30) 1 commit
- . trace2: don't include "fsync" events in all trace2 logs
-
- Omit fsync-related trace2 entries when their values are all zero.
-
- Breaks tests in hx/unpack-streaming with an interesting interaction.
- source: <patch-v2-1.1-a1fc37de947-20220630T084607Z-avarab@gmail.com>
-
-
-* cl/grep-max-count (2022-06-22) 1 commit
- - grep: add --max-count command line option
-
- "git grep -m<max-hits>" is a way to limit the hits shown per file.
-
- Will merge to 'next'.
- source: <pull.1278.v4.git.git.1655927252899.gitgitgadget@gmail.com>
-
-
-* jk/revisions-doc-markup-fix (2022-06-22) 1 commit
- - revisions.txt: escape "..." to avoid asciidoc horizontal ellipsis
-
- Documentation mark-up fix.
-
- Will merge to 'next'.
- source: <YrOmsA04FZae89be@coredump.intra.peff.net>
-
-
-* tk/rev-parse-doc-clarify-at-u (2022-06-23) 1 commit
- - rev-parse: documentation adjustment - mention remote tracking with @{u}
-
- Doc update.
-
- Will merge to 'next'.
- source: <pull.1265.v2.git.1655960512385.gitgitgadget@gmail.com>
-
-
-* en/merge-tree (2022-06-22) 17 commits
- - git-merge-tree.txt: add a section on potentional usage mistakes
- - merge-tree: add a --allow-unrelated-histories flag
- - merge-tree: allow `ls-files -u` style info to be NUL terminated
- - merge-ort: optionally produce machine-readable output
- - merge-ort: store more specific conflict information
- - merge-ort: make `path_messages` a strmap to a string_list
- - merge-ort: store messages in a list, not in a single strbuf
- - merge-tree: provide easy access to `ls-files -u` style info
- - merge-tree: provide a list of which files have conflicts
- - merge-ort: remove command-line-centric submodule message from merge-ort
- - merge-ort: provide a merge_get_conflicted_files() helper function
- - merge-tree: support including merge messages in output
- - merge-ort: split out a separate display_update_messages() function
- - merge-tree: implement real merges
- - merge-tree: add option parsing and initial shell for real merge function
- - merge-tree: move logic for existing merge into new function
- - merge-tree: rename merge_trees() to trivial_merge_trees()
-
- A new command is introduced that takes two commits and computes a
- tree that would be contained in the resulting merge commit, if the
- histories leading to these two commits were to be merged, and is
- added as a new mode of "git merge-tree" subcommand.
-
- Will merge to 'next'.
- source: <pull.1122.v7.git.1655511660.gitgitgadget@gmail.com>
-
-
-* dr/i18n-die-warn-error-usage (2022-06-21) 1 commit
- - i18n: mark message helpers prefix for translation
-
- Give _() markings to fatal/warning/usage: that is shown in front of
- these messages.
-
- Will merge to 'next'.
- source: <pull.1279.v2.git.git.1655819877758.gitgitgadget@gmail.com>
-
-
-* ds/t5510-brokequote (2022-06-21) 1 commit
- - t5510: replace 'origin' with URL more carefully
-
- Test fix.
- source: <484a330e-0902-6e1b-8189-63c72dcea494@github.com>
-
-
-* en/merge-restore-to-pristine (2022-06-21) 6 commits
- - merge: do not exit restore_state() prematurely
- - merge: ensure we can actually restore pre-merge state
- - merge: make restore_state() restore staged state too
- - merge: fix save_state() to work when there are racy-dirty files
- - merge: remove unused variable
- - t6424: make sure a failed merge preserves local changes
-
- When "git merge" finds that it cannot perform a merge, it should
- restore the working tree to the state before the command was
- initiated, but in some corner cases it didn't.
-
- Needs review.
- source: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
-
-
-* rs/combine-diff-with-incompatible-options (2022-06-21) 2 commits
- - combine-diff: abort if --output is given
- - combine-diff: abort if --ignore-matching-lines is given
-
- Certain diff options are currently ignored when combined-diff is
- shown; mark them as incompatible with the feature.
-
- Will merge to 'next'.
- source: <220524.86v8tuvfl1.gmgdl@evledraar.gmail.com>
-
-
-* tk/apply-case-insensitive (2022-06-21) 3 commits
- - apply: support case-only renames in case-insensitive filesystems
- - reset: new failing test for reset of case-insensitive duplicate in index
- - t4141: test "git apply" with core.ignorecase
-
- "git apply" barfed on a patch that makes a case-only rename on a
- case-insensitive filesystem.
-
- Needs review.
- source: <pull.1257.v2.git.1655655027.gitgitgadget@gmail.com>
-
-
-* zh/ls-files-format (2022-06-27) 1 commit
- - ls-files: introduce "--format" option
-
- "git ls-files" learns the "--format" option to tweak its output.
-
- Expecting a reroll.
- cf. <CAOLTT8Tc95-aUE+uN2d8QjTJpGpGw6cBJfG+bpmyE55OcXTSRA@mail.gmail.com>
- source: <pull.1262.v4.git.1656257376109.gitgitgadget@gmail.com>
-
-
-* ab/test-quoting-fix (2022-06-30) 3 commits
- - config tests: fix harmless but broken "rm -r" cleanup
- - test-lib.sh: fix prepend_var() quoting issue
- - tests: add missing double quotes to included library paths
-
- Fixes for tests when the source directory has unusual characters in
- its path, e.g. whitespaces, double-quotes, etc.
-
- Will merge to 'next'.
- source: <cover-v2-0.3-00000000000-20220630T101646Z-avarab@gmail.com>
-
-
-* en/merge-dual-dir-renames-fix (2022-06-30) 5 commits
- - merge-ort: fix issue with dual rename and add/add conflict
- - merge-ort: shuffle the computation and cleanup of potential collisions
- - merge-ort: make a separate function for freeing struct collisions
- - merge-ort: small cleanups of check_for_directory_rename
- - t6423: add tests of dual directory rename plus add/add conflict
-
- Fixes a long-standing corner case bug around directory renames in
- the merge-ort strategy.
-
- Will merge to 'next'?
- source: <pull.1268.v3.git.1656653000.gitgitgadget@gmail.com>
-
-
-* cr/setup-bug-typo (2022-06-17) 1 commit
-  (merged to 'next' on 2022-06-17 at 8834ffe0ab)
- + setup: fix function name in a BUG() message
-
- Typofix in a BUG() message.
-
- Will cook in 'next'.
- source: <pull.1255.git.1654782920256.gitgitgadget@gmail.com>
-
-
-* zk/push-use-bitmaps (2022-06-17) 1 commit
- - send-pack.c: add config push.useBitmaps
-
- "git push" sometimes perform poorly when reachability bitmaps are
- used, even in a repository where other operations are helped by
- bitmaps.  The push.useBitmaps configuration variable is introduced
- to allow disabling use of reachability bitmaps only for "git push".
-
- Will merge to 'next'.
- source: <pull.1263.v4.git.1655492779228.gitgitgadget@gmail.com>
-
-
-* jk/remote-show-with-negative-refspecs (2022-06-17) 1 commit
- - remote: handle negative refspecs in git remote show
- (this branch is used by jk/t5505-restructure.)
-
- "git remote show [-n] frotz" now pays attention to negative
- pathspecs.
-
- Will merge to 'next'.
- source: <20220617002036.1577-2-jacob.keller@gmail.com>
-
-
-* js/commit-graph-parsing-without-repo-settings (2022-06-15) 1 commit
- - commit-graph: refactor to avoid prepare_repo_settings
-
- Expecting a reroll.
- source: <9b56496b0809cc8a25af877ea97042e2cb7f2af6.1655246092.git.steadmon@google.com>
-
-
-* jk/optim-promisor-object-enumeration (2022-06-16) 1 commit
-  (merged to 'next' on 2022-06-16 at ce0712a74c)
- + is_promisor_object(): walk promisor packs in pack-order
-
- Collection of what is referenced by objects in promisor packs have
- been optimized to inspect these objects in the in-pack order.
-
- Will cook in 'next'.
- source: <YqrTsbXbEjx0Pabn@coredump.intra.peff.net>
-
-
-* ro/mktree-allow-missing-fix (2022-06-21) 1 commit
- - mktree: do not check type of remote objects
-
- "git mktree --missing" lazily fetched objects that are missing from
- the local object store, which was totally unnecessary.
-
- Will merge to 'next'.
- source: <748f39a9-65aa-2110-cf92-7ddf81b5f507@roku.com>
-
-
-* ll/curl-accept-language (2022-06-13) 2 commits
- - PREP??? give initializer to rpc_state
- - remote-curl: send Accept-Language header to server
-
- source: <pull.1251.v3.git.1655054421697.gitgitgadget@gmail.com>
-
-
-* pb/diff-doc-raw-format (2022-06-13) 3 commits
- - diff-index.txt: update raw output format in examples
- - diff-format.txt: correct misleading wording
- - diff-format.txt: dst can be 0* SHA-1 when path is deleted, too
-
- source: <pull.1259.git.1655123383.gitgitgadget@gmail.com>
-
-
-* rs/archive-with-internal-gzip (2022-06-15) 6 commits
-  (merged to 'next' on 2022-06-17 at ab5af6acd1)
- + archive-tar: use internal gzip by default
- + archive-tar: use OS_CODE 3 (Unix) for internal gzip
- + archive-tar: add internal gzip implementation
- + archive-tar: factor out write_block()
- + archive: rename archiver data field to filter_command
- + archive: update format documentation
-
- Teach "git archive" to (optionally and then by default) avoid
- spawning an external "gzip" process when creating ".tar.gz" (and
- ".tgz") archives.
-
- Will cook in 'next'.
- source: <9df761c3-355a-ede9-7971-b32687fe9abb@web.de>
-
-
-* ds/branch-checked-out (2022-06-21) 7 commits
-  (merged to 'next' on 2022-06-21 at e42bc4566f)
- + branch: drop unused worktrees variable
- + fetch: stop passing around unused worktrees variable
-  (merged to 'next' on 2022-06-17 at c881874257)
- + branch: fix branch_checked_out() leaks
- + branch: use branch_checked_out() when deleting refs
- + fetch: use new branch_checked_out() and add tests
- + branch: check for bisects and rebases
- + branch: add branch_checked_out() helper
- (this branch is used by ds/rebase-update-ref.)
-
- Introduce a helper to see if a branch is already being worked on
- (hence should not be newly checked out in a working tree), which
- performs much better than the existing find_shared_symref() to
- replace many uses of the latter.
-
- Will cook in 'next'.
- source: <pull.1254.v2.git.1655234853.gitgitgadget@gmail.com>
-
-
-* jt/connected-show-missing-from-which-side (2022-06-10) 1 commit
- - fetch,fetch-pack: clarify connectivity check error
-
- We may find an object missing after a "git fetch" stores the
- objects it obtained from the other side, but it is not necessarily
- because the remote failed to send necessary objects.  Reword the
- messages in an attempt to help users explore other possibilities
- when they hit this error.
-
- Expecting a reroll.
- source: <20220610195247.1177549-1-jonathantanmy@google.com>
-
-
-* ab/submodule-cleanup (2022-06-28) 12 commits
- - git-sh-setup.sh: remove "say" function, change last users
- - git-submodule.sh: use "$quiet", not "$GIT_QUIET"
- - submodule--helper: eliminate internal "--update" option
- - submodule--helper: understand --checkout, --merge and --rebase synonyms
- - submodule--helper: report "submodule" as our name in some "-h" output
- - submodule--helper: rename "absorb-git-dirs" to "absorbgitdirs"
- - submodule update: remove "-v" option
- - submodule--helper: have --require-init imply --init
- - git-submodule.sh: remove unused top-level "--branch" argument
- - git-submodule.sh: make the "$cached" variable a boolean
- - git-submodule.sh: remove unused $prefix variable
- - git-submodule.sh: remove unused sanitize_submodule_env()
- (this branch is used by gc/submodule-use-super-prefix.)
-
- Further preparation to turn git-submodule.sh into a builtin.
-
- Will merge to 'next'.
- source: <cover-v4-00.12-00000000000-20220628T095914Z-avarab@gmail.com>
-
-
-* jc/resolve-undo (2022-06-09) 1 commit
-  (merged to 'next' on 2022-06-15 at c195e5a2d9)
- + revision: mark blobs needed for resolve-undo as reachable
-
- The resolve-undo information in the index was not protected against
- GC, which has been corrected.
-
- Will cook in 'next'.
- source: <xmqqfskdieqz.fsf@gitster.g>
-
-
-* ab/build-gitweb (2022-06-28) 8 commits
- - gitweb/Makefile: add a "NO_GITWEB" parameter
- - Makefile: build 'gitweb' in the default target
- - gitweb/Makefile: include in top-level Makefile
- - gitweb: remove "test" and "test-installed" targets
- - gitweb/Makefile: prepare to merge into top-level Makefile
- - gitweb/Makefile: clear up and de-duplicate the gitweb.{css,js} vars
- - gitweb/Makefile: add a $(GITWEB_ALL) variable
- - gitweb/Makefile: define all .PHONY prerequisites inline
-
- Teach "make all" to build gitweb as well.
- source: <cover-v3-0.8-00000000000-20220628T100936Z-avarab@gmail.com>
-
-
-* ab/test-without-templates (2022-06-06) 7 commits
- - tests: don't assume a .git/info for .git/info/sparse-checkout
- - tests: don't assume a .git/info for .git/info/exclude
- - tests: don't assume a .git/info for .git/info/refs
- - tests: don't assume a .git/info for .git/info/attributes
- - tests: don't assume a .git/info for .git/info/grafts
- - tests: don't depend on template-created .git/branches
- - t0008: don't rely on default ".git/info/exclude"
-
- Tweak tests so that they still work when the "git init" template
- did not create .git/info directory.
-
- Will merge to 'next'?
- source: <cover-v2-0.7-00000000000-20220603T110506Z-avarab@gmail.com>
-
-
-* ac/bitmap-format-doc (2022-06-16) 3 commits
-  (merged to 'next' on 2022-06-16 at 5591d11601)
- + bitmap-format.txt: add information for trailing checksum
- + bitmap-format.txt: fix some formatting issues
- + bitmap-format.txt: feed the file to asciidoc to generate html
-
- Adjust technical/bitmap-format to be formatted by AsciiDoc, and
- add some missing information to the documentation.
-
- Will cook in 'next'.
- source: <pull.1246.v4.git.1655355834.gitgitgadget@gmail.com>
-
-
-* hx/unpack-streaming (2022-06-13) 6 commits
- - unpack-objects: use stream_loose_object() to unpack large objects
- - core doc: modernize core.bigFileThreshold documentation
- - object-file.c: add "stream_loose_object()" to handle large object
- - object-file.c: factor out deflate part of write_loose_object()
- - object-file.c: refactor write_loose_object() to several steps
- - unpack-objects: low memory footprint for get_data() in dry_run mode
-
- Allow large objects read from a packstream to be streamed into a
- loose object file straight, without having to keep it in-core as a
- whole.
-
- Will merge to 'next'.
- source: <cover.1654914555.git.chiyutianyi@gmail.com>
-
-
-* tb/show-ref-count (2022-06-06) 2 commits
- - builtin/show-ref.c: limit output with `--count`
- - builtin/show-ref.c: rename `found_match` to `matches_nr`
-
- "git show-ref" learned to stop after emitting N refs with the new
- "--count=N" option.
-
- Expecting a reroll.
- cf. <xmqqczfl4ce1.fsf@gitster.g>
- source: <cover.1654552560.git.me@ttaylorr.com>
-
-
-* ds/bundle-uri-more (2022-06-06) 6 commits
- - fetch: add 'refs/bundle/' to log.excludeDecoration
- - bundle-uri: add support for http(s):// and file://
- - fetch: add --bundle-uri option
- - bundle-uri: create basic file-copy logic
- - remote-curl: add 'get' capability
- - docs: document bundle URI standard
-
- The "bundle URI" topic.
-
- Needs review.
- source: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
-
-
-* js/bisect-in-c (2022-06-27) 16 commits
- - bisect: no longer try to clean up left-over `.git/head-name` files
- - bisect: remove Cogito-related code
- - Turn `git bisect` into a full built-in
- - bisect: move even the command-line parsing to `bisect--helper`
- - bisect: teach the `bisect--helper` command to show the correct usage strings
- - bisect--helper: return only correct exit codes in `cmd_*()`
- - bisect--helper: move the `BISECT_STATE` case to the end
- - bisect--helper: make `--bisect-state` optional
- - bisect--helper: align the sub-command order with git-bisect.sh
- - bisect--helper: using `--bisect-state` without an argument is a bug
- - bisect--helper: really retire `--bisect-autostart`
- - bisect--helper: really retire --bisect-next-check
- - bisect--helper: retire the --no-log option
- - bisect: avoid double-quoting when printing the failed command
- - bisect run: fix the error message
- - bisect: verify that a bogus option won't try to start a bisection
-
- Final bits of "git bisect.sh" have been rewritten in C.
- source: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
-
-
-* gc/bare-repo-discovery (2022-06-30) 5 commits
- - setup.c: create `discovery.bare`
- - safe.directory: use git_protected_config()
- - config: learn `git_protected_config()`
- - Documentation: define protected configuration
- - Documentation/git-config.txt: add SCOPES section
-
- Introduce a discovery.barerepository configuration variable that
- allows users to forbid discovery of bare repositories.
-
- Will merge to 'next'?
- source: <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com>
-
-
-* gg/worktree-from-the-above (2022-06-21) 2 commits
- - dir: minor refactoring / clean-up
- - dir: traverse into repository
-
- With a non-bare repository, with core.worktree pointing at a
- directory that has the repository as its subdirectory, regressed in
- Git 2.27 days.
-
- Will merge to 'next'.
- source: <20220616234433.225-1-gg.oss@outlook.com>
- source: <20220616231956.154-1-gg.oss@outlook.com>
-
-
-* ar/send-email-confirm-by-default (2022-04-22) 1 commit
- - send-email: always confirm by default
-
- "git send-email" is changed so that by default it asks for
- confirmation before sending each message out.
-
- Will discard.
-
- I wanted to like this, and had it in the version of Git I use
- myself for daily work, but the prompting turned out to be somewhat
- distracting.
-
- Thoughts?
- source: <20220422083629.1404989-1-hi@alyssa.is>
+On Tue, Jun 28, 2022 at 6:26 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> The previous change introduced the 'git rebase --update-refs' option
+> which added 'update-ref <ref>' commands to the todo list of an
+> interactive rebase.
+>
+> Teach Git to record the HEAD position when reaching these 'update-ref'
+> commands. The ref/OID pair is stored in the
+> $GIT_DIR/rebase-merge/update-refs file. A previous change parsed this
+> file to avoid having other processes updating the refs in that file
+> while the rebase is in progress.
+>
+> Not only do we update the file when the sequencer reaches these
+> 'update-ref' commands, we then update the refs themselves at the end of
+> the rebase sequence. If the rebase is aborted before this final step,
+> then the refs are not updated.
+
+Why update with each update-ref command?  Couldn't the values be
+stored in memory and only written when we hit a conflict?
+
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  sequencer.c                   | 114 +++++++++++++++++++++++++++++++++-
+>  t/t3404-rebase-interactive.sh |  23 +++++++
+>  2 files changed, 136 insertions(+), 1 deletion(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index 915d87a0336..4fd1c0b5bce 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -36,6 +36,7 @@
+>  #include "rebase-interactive.h"
+>  #include "reset.h"
+>  #include "branch.h"
+> +#include "log-tree.h"
+>
+>  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+>
+> @@ -148,6 +149,14 @@ static GIT_PATH_FUNC(rebase_path_squash_onto, "rebase-merge/squash-onto")
+>   */
+>  static GIT_PATH_FUNC(rebase_path_refs_to_delete, "rebase-merge/refs-to-delete")
+>
+> +/*
+> + * The update-refs file stores a list of refs that will be updated at the end
+> + * of the rebase sequence. The 'update-ref <ref>' commands in the todo file
+> + * update the OIDs for the refs in this file, but the refs are not updated
+> + * until the end of the rebase sequence.
+> + */
+> +static GIT_PATH_FUNC(rebase_path_update_refs, "rebase-merge/update-refs")
+> +
+>  /*
+>   * The following files are written by git-rebase just after parsing the
+>   * command-line.
+> @@ -4058,11 +4067,110 @@ leave_merge:
+>         return ret;
+>  }
+>
+> -static int do_update_ref(struct repository *r, const char *ref_name)
+> +static int write_update_refs_state(struct string_list *refs_to_oids)
+> +{
+> +       int result = 0;
+> +       FILE *fp = NULL;
+> +       struct string_list_item *item;
+> +       char *path = xstrdup(rebase_path_update_refs());
+> +
+> +       if (safe_create_leading_directories(path)) {
+> +               result = error(_("unable to create leading directories of %s"),
+> +                              path);
+> +               goto cleanup;
+> +       }
+> +
+> +       fp = fopen(path, "w");
+> +       if (!fp) {
+> +               result = error_errno(_("could not open '%s' for writing"), path);
+> +               goto cleanup;
+> +       }
+> +
+> +       for_each_string_list_item(item, refs_to_oids)
+> +               fprintf(fp, "%s\n%s\n", item->string, oid_to_hex(item->util));
+
+Here you are storing the ref and the new oid to move it to.  Any
+reason you don't store the previous oid for the branch?  In
+particular, if someone hits a conflict, needs to resolve, and comes
+back some time much later and these intermediate branches have since
+moved on, should we actually update those branches?  (And, if we do,
+should we at least give a warning?)
+
+> +cleanup:
+> +       if (fp)
+> +               fclose(fp);
+> +       return result;
+> +}
+> +
+> +static int do_update_ref(struct repository *r, const char *refname)
+>  {
+> +       struct string_list_item *item;
+> +       struct string_list list = STRING_LIST_INIT_DUP;
+> +       int found = 0;
+> +
+> +       sequencer_get_update_refs_state(r->gitdir, &list);
+> +
+> +       for_each_string_list_item(item, &list) {
+> +               if (!strcmp(item->string, refname)) {
+> +                       struct object_id oid;
+> +                       free(item->util);
+> +                       found = 1;
+> +
+> +                       if (!read_ref("HEAD", &oid)) {
+> +                               item->util = oiddup(&oid);
+> +                               break;
+> +                       }
+> +               }
+> +       }
+> +
+> +       if (!found) {
+> +               struct object_id oid;
+> +               item = string_list_append(&list, refname);
+> +
+> +               if (!read_ref("HEAD", &oid))
+> +                       item->util = oiddup(&oid);
+> +               else
+> +                       item->util = oiddup(the_hash_algo->null_oid);
+
+Seems a little unfortunate to not use a cached value from the latest
+commit we picked (and wrote to HEAD) and instead need to re-read HEAD.
+But, I guess sequencer is written to round-trip through files, so
+maybe optimizing this here doesn't make sense given all the other
+places in sequencer where we do lots of file reading and writing.
+
+> +       }
+> +
+> +       write_update_refs_state(&list);
+> +       string_list_clear(&list, 1);
+>         return 0;
+>  }
+>
+> +static int do_update_refs(struct repository *r)
+> +{
+> +       int res = 0;
+> +       struct string_list_item *item;
+> +       struct string_list refs_to_oids = STRING_LIST_INIT_DUP;
+> +       struct ref_store *refs = get_main_ref_store(r);
+> +
+> +       sequencer_get_update_refs_state(r->gitdir, &refs_to_oids);
+> +
+> +       for_each_string_list_item(item, &refs_to_oids) {
+> +               struct object_id *oid_to = item->util;
+> +               struct object_id oid_from;
+> +
+> +               if (oideq(oid_to, the_hash_algo->null_oid)) {
+> +                       /*
+> +                        * Ref was not updated. User may have deleted the
+> +                        * 'update-ref' step.
+> +                        */
+> +                       continue;
+> +               }
+> +
+> +               if (read_ref(item->string, &oid_from)) {
+> +                       /*
+> +                        * The ref does not exist. The user probably
+> +                        * inserted a new 'update-ref' step with a new
+> +                        * branch name.
+> +                        */
+> +                       oidcpy(&oid_from, the_hash_algo->null_oid);
+> +               }
+> +
+> +               res |= refs_update_ref(refs, "rewritten during rebase",
+> +                               item->string,
+> +                               oid_to, &oid_from,
+> +                               0, UPDATE_REFS_MSG_ON_ERR);
+> +       }
+> +
+> +       string_list_clear(&refs_to_oids, 1);
+> +       return res;
+> +}
+> +
+>  static int is_final_fixup(struct todo_list *todo_list)
+>  {
+>         int i = todo_list->current;
+> @@ -4580,6 +4688,8 @@ cleanup_head_ref:
+>                 strbuf_release(&head_ref);
+>         }
+>
+> +       do_update_refs(r);
+> +
+>         /*
+>          * Sequence of picks finished successfully; cleanup by
+>          * removing the .git/sequencer directory
+> @@ -5709,6 +5819,8 @@ static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
+>                 }
+>         }
+>
+> +       write_update_refs_state(&ctx.refs_to_oids);
+> +
+>         string_list_clear(&ctx.refs_to_oids, 1);
+>         free(todo_list->items);
+>         todo_list->items = ctx.items;
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 3cd20733bc8..63a69bc073e 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1813,6 +1813,29 @@ test_expect_success '--update-refs adds commands with --rebase-merges' '
+>         )
+>  '
+>
+> +compare_two_refs () {
+> +       git rev-parse $1 >expect &&
+> +       git rev-parse $2 >actual &&
+> +       test_cmp expect actual
+> +}
+> +
+> +test_expect_success '--update-refs updates refs correctly' '
+> +       git checkout -B update-refs no-conflict-branch &&
+> +       git branch -f base HEAD~4 &&
+> +       git branch -f first HEAD~3 &&
+> +       git branch -f second HEAD~3 &&
+> +       git branch -f third HEAD~1 &&
+> +       test_commit extra2 fileX &&
+> +       git commit --amend --fixup=L &&
+> +
+> +       git rebase -i --autosquash --update-refs primary &&
+> +
+> +       compare_two_refs HEAD~3 refs/heads/first &&
+> +       compare_two_refs HEAD~3 refs/heads/second &&
+> +       compare_two_refs HEAD~1 refs/heads/third &&
+> +       compare_two_refs HEAD refs/heads/no-conflict-branch
+> +'
+> +
+>  # This must be the last test in this file
+>  test_expect_success '$EDITOR and friends are unchanged' '
+>         test_editor_unchanged
+> --
+> gitgitgadget
+>
