@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 257FAC43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 01:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB639C43334
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 01:30:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231906AbiGABWv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 21:22:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38598 "EHLO
+        id S232505AbiGABa7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 21:30:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231535AbiGABWu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 21:22:50 -0400
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2397D5A2F2
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 18:22:49 -0700 (PDT)
-Received: by mail-qv1-xf36.google.com with SMTP id u14so2475337qvv.2
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 18:22:49 -0700 (PDT)
+        with ESMTP id S231982AbiGABa6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 21:30:58 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C98738BF5
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 18:30:57 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id y14so2431845qvs.10
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 18:30:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Z6DHxnuqM7ZwWfdsfKNN0JDdpsdwElBBZzf1YhVIpeA=;
-        b=W4cP35s4FwYepcqraXdzaVUFEjQQNjtTxMRAMaDsqOWxh+UnaLtygQr3/aLQk2eeIR
-         ukimTuYU9Wfcf+e66ynJExSutBlNgR3FakZQnAP9LCcDM8V7e0sDzSNxLOtnTXxU+QlR
-         y5jbhm3cv3DQQeSAfjOnf5FmA6D3bL9TihJXyr43B+9k0dFolRuCeuAUfVGlZaHlsL3C
-         4DPrYsTf9y+ON52zkwYj4LdKJd29KPW6eTVhorS6cOyOT6k9/lg7OortzYrjeKi/BdE3
-         sSXiJJkUjUoJuIco7FEdu2+IkbEFrDzyY/GVSiMRRJ3jwm3a2CCCu9O6/KL9WqRwfLe0
-         fdKw==
+        bh=+deh4Oh+RXe1tyZVaGa3g/x9X3Mp6WmXIOUu+DXvKz4=;
+        b=ZXccsmpMnWGFHm2BaXGADC6KK3qQDnvgshC0HZ/iPfjKEezfUz3C0Heyewjfz2058D
+         1eUtfe937tXoi/u4x6nOsRe3sNEsxgQx4EOAUKIaOPyF5paQFlr/gE/DeEh55A3MfZHs
+         YJeMGHdFxVYE1LSlJ+Ny6pXWumjhApCZYNQjLvbyldRyEQkK9EvsLDzHT4PFd+bTSoHp
+         50DbY84tHiilbUS02h8vmZuN2h+uN7a24sKOfyGh88YjVWyTmNq6bw50+27//+SZ48uE
+         PQnHDPcU+iQYJl6JHU2Me63eH+okoLhDxyBeQ4zJ6LmZtE530Ia8L2YXLPuRqZ+EseRH
+         vRjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Z6DHxnuqM7ZwWfdsfKNN0JDdpsdwElBBZzf1YhVIpeA=;
-        b=r/Rjt6Ey8gp5QeMKwY1BG3TULZULr/pkvPW8On1F6/DIP2bQardikVGE+6k/gMgHUn
-         jP/h0ji9OP3TZsd5rRHG0xK7bQ4jqA9o74iF70MbaFm4KgZ/NPH05X0RDfxnQDpIbIvx
-         l8t8VuMdUh1pPc5vG+BPUmWStJbnTSBv9V1j6c+OHOF5KrSvrlRb48NrWUeSKdoYKtDz
-         Rtmr3waygvtq09j2hqojJinpeQF+6ko11yJpC1tvemzAJHIHKMN1TArpCcn2H3dQN8Fh
-         IWKY6kEBF63uuts0xsHCNqyP0klf/xHV/41/77WQDyHCL1y5zozIpzV1UYtp67u6ucg1
-         TSZA==
-X-Gm-Message-State: AJIora+Fuc+sw2ZtB05tME1hQ7yM2PCjl+N94nFWRSU34LLFfqA9Lu8h
-        y6dXOT2n1fdZelKWKPsGd5xjfg==
-X-Google-Smtp-Source: AGRyM1vH9ud5tZb19cjiu828wJ7/9CQyipo6Os32CRcAMBa8vqgDsP4lORMLRLzSYxl/8TBHMB7KkA==
-X-Received: by 2002:a0c:b258:0:b0:470:5709:4007 with SMTP id k24-20020a0cb258000000b0047057094007mr15246620qve.83.1656638568191;
-        Thu, 30 Jun 2022 18:22:48 -0700 (PDT)
+        bh=+deh4Oh+RXe1tyZVaGa3g/x9X3Mp6WmXIOUu+DXvKz4=;
+        b=5Makf1rrEw683FjKoeLhBH+gqkCOKu+CK4Dh+NvmWrs02fbH0T+TtQIMjB41OLyitr
+         meXz1pT0vXZe0OA/7jpJx6MAqj1ez8tYVcupI8iGTodW6eMYsg7k70BLWPz54eDPmXqh
+         7nRQ3YP7QfeBu1MUQZQV8G5SfbeyPqe0E083CSjOZY9AOQYxqpcz2afm33olOsubcgp3
+         LEmlH+421V9oViwnMm1QKi+XOmGielEPHxtKM/7L/ACycbo3cFyN3JWca03Ngwxghfy/
+         sfv28Y+irQQn2G61kYzu+IU4WRKqqNcT6R2ZHJFvagXha6DqmVy073/2HI8tg/wRzWjv
+         b+Qg==
+X-Gm-Message-State: AJIora/6nHn4u3zRueu8kWbgwaaLI0/NsjaiEPmNOW7syCaBtipWhXWK
+        huBSMl6KrvdaNDNwVT/Vc3m1Wg==
+X-Google-Smtp-Source: AGRyM1uFd8gFmDYiPWB4S/GhWiDx/hw0yszc5G5M1BMbP1TCYUd2qpj50NKJZSIy6iTDclMceNp9Fw==
+X-Received: by 2002:ac8:5e06:0:b0:317:ea59:60a7 with SMTP id h6-20020ac85e06000000b00317ea5960a7mr10715276qtx.534.1656639056116;
+        Thu, 30 Jun 2022 18:30:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b3-20020ac812c3000000b0031bf647b115sm4924090qtj.35.2022.06.30.18.22.47
+        by smtp.gmail.com with ESMTPSA id n8-20020a05620a222800b006ab935c1563sm15623088qkh.8.2022.06.30.18.30.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 18:22:47 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 21:22:46 -0400
+        Thu, 30 Jun 2022 18:30:55 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 21:30:54 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
@@ -58,128 +58,168 @@ Cc:     git@vger.kernel.org,
         Jonathan Tan <jonathantanmy@google.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v6 3/5] config: learn `git_protected_config()`
-Message-ID: <Yr5MZhgTBFgZh/XB@nand.local>
+Subject: Re: [PATCH v6 5/5] setup.c: create `discovery.bare`
+Message-ID: <Yr5OTq7s2qxxqsiY@nand.local>
 References: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
  <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com>
- <3efe282e6b94c3daed77590c5f601fad34137c9c.1656612839.git.gitgitgadget@gmail.com>
+ <a1323d963f917df661a8701c305d84e781a8f550.1656612839.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3efe282e6b94c3daed77590c5f601fad34137c9c.1656612839.git.gitgitgadget@gmail.com>
+In-Reply-To: <a1323d963f917df661a8701c305d84e781a8f550.1656612839.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 30, 2022 at 06:13:57PM +0000, Glen Choo via GitGitGadget wrote:
-> In light of constraint 1, this implementation can still be improved
-> since git_protected_config() iterates through every variable in
-> protected_config, which may still be too expensive. There exist constant
-> time lookup functions for non-protected configuration
-> (repo_config_get_*()), but for simplicity, this commit does not
-> implement similar functions for protected configuration.
+On Thu, Jun 30, 2022 at 06:13:59PM +0000, Glen Choo via GitGitGadget wrote:
+> If we want to protect users from such attacks by default, neither value
+> will suffice - "always" provides no protection, but "never" is
+> impractical for bare repository users. A more usable default would be to
+> allow only non-embedded bare repositories ([2] contains one such
+> proposal), but detecting if a repository is embedded is potentially
+> non-trivial, so this work is not implemented in this series.
 
-I don't quite follow along with this paragraph: it sounds like reading
-protected configuration is supposed to be as fast as possible. But you
-note that only the slower variant of reading each configuration variable
-one at a time is implemented.
+I think that everything you said in your patch message makes sense, but
+I appreciate this paragraph in particular. The historical record is
+definitely important and worth preserving here, and I hope that it'll be
+helpful to future readers who may wonder why the default wasn't chosen
+as "never".
 
-If we care about speed (and I think we should here), then would it make
-more sense to implement only the lookup functions like
-repo_config_get_*() for protected context? That would encourage usage by
-providing a more limited set of options to callers.
-
+> [1]: https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com
+> [2]: https://lore.kernel.org/git/5b969c5e-e802-c447-ad25-6acc0b784582@github.com
+>
 > Signed-off-by: Glen Choo <chooglen@google.com>
 > ---
->  config.c                     | 51 ++++++++++++++++++++++++++++++++++++
->  config.h                     | 17 ++++++++++++
->  t/t5544-pack-objects-hook.sh |  7 ++++-
->  upload-pack.c                | 27 ++++++++++++-------
->  4 files changed, 91 insertions(+), 11 deletions(-)
+>  Documentation/config.txt           |  2 ++
+>  Documentation/config/discovery.txt | 23 ++++++++++++
+>  setup.c                            | 57 +++++++++++++++++++++++++++++-
+>  t/t0035-discovery-bare.sh          | 52 +++++++++++++++++++++++++++
+>  4 files changed, 133 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/config/discovery.txt
+>  create mode 100755 t/t0035-discovery-bare.sh
 >
-> diff --git a/config.c b/config.c
-> index 9b0e9c93285..29e62f5d0ed 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -81,6 +81,18 @@ static enum config_scope current_parsing_scope;
->  static int pack_compression_seen;
->  static int zlib_compression_seen;
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index e284b042f22..9a5e1329772 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -409,6 +409,8 @@ include::config/diff.txt[]
 >
-> +/*
-> + * Config that comes from trusted sources, namely:
-
-Should we be using the word "scope" here instead of sources? I think
-it's clear enough from the context what you're referring to, but in the
-spirit of being consistent...
-
-> + * - system config files (e.g. /etc/gitconfig)
-> + * - global config files (e.g. $HOME/.gitconfig,
-> + *   $XDG_CONFIG_HOME/git)
-> + * - the command line.
-> + *
-> + * This is declared here for code cleanliness, but unlike the other
-> + * static variables, this does not hold config parser state.
-> + */
-> +static struct config_set protected_config;
+>  include::config/difftool.txt[]
+>
+> +include::config/discovery.txt[]
 > +
->  static int config_file_fgetc(struct config_source *conf)
->  {
->  	return getc_unlocked(conf->u.file);
-> @@ -2378,6 +2390,11 @@ int git_configset_add_file(struct config_set *cs, const char *filename)
->  	return git_config_from_file(config_set_callback, filename, cs);
->  }
+>  include::config/extensions.txt[]
 >
-> +int git_configset_add_parameters(struct config_set *cs)
+>  include::config/fastimport.txt[]
+> diff --git a/Documentation/config/discovery.txt b/Documentation/config/discovery.txt
+> new file mode 100644
+> index 00000000000..bbcf89bb0b5
+> --- /dev/null
+> +++ b/Documentation/config/discovery.txt
+> @@ -0,0 +1,23 @@
+> +discovery.bare::
+> +	Specifies whether Git will work with a bare repository that it
+> +	found during repository discovery. If the repository is
+
+Is it clear from the context what "discovery" means here? It's probably
+easier to describe what it isn't, which you kind of do in the next
+sentence. But it may be clearer to say something like:
+
+    Specifies whether Git will recognize bare repositories that aren't
+    specified via the top-level `--git-dir` command-line option, or the
+    `GIT_DIR` environment variable (see linkgit:git[1]).
+
+> +This defaults to `always`, but this default may change in the future.
+
+I think the default being subject to change is par for the course. It's
+probably easy enough to just say "Defaults to 'always'" and leave it at
+that.
+
+> ++
+> +If you do not use bare repositories in your workflow, then it may be
+> +beneficial to set `discovery.bare` to `never` in your global config.
+> +This will protect you from attacks that involve cloning a repository
+> +that contains a bare repository and running a Git command within that
+> +directory.
+
+I think we still don't have a great answer for people who trust some
+bare repositories (e.g., known-embedded repositories that are used for
+testing) but not others. To be clear, I think that is a fine point to
+concede with this direction.
+
+But we should be clear about that limitation by stating that Git does
+not support the "I trust some bare repositories to be safely
+discoverable but not others".
+
+> +static enum discovery_bare_allowed get_discovery_bare(void)
 > +{
-> +	return git_config_from_parameters(config_set_callback, cs);
+> +	enum discovery_bare_allowed result = DISCOVERY_BARE_ALWAYS;
+> +	git_protected_config(discovery_bare_cb, &result);
+> +	return result;
 > +}
 > +
->  int git_configset_get_value(struct config_set *cs, const char *key, const char **value)
->  {
->  	const struct string_list *values = NULL;
-> @@ -2619,6 +2636,40 @@ int repo_config_get_pathname(struct repository *repo,
->  	return ret;
->  }
+> +static const char *discovery_bare_allowed_to_string(
+> +	enum discovery_bare_allowed discovery_bare_allowed)
+> +{
+> +	switch (discovery_bare_allowed) {
+> +	case DISCOVERY_BARE_NEVER:
+> +		return "never";
+> +	case DISCOVERY_BARE_ALWAYS:
+> +		return "always";
+
+> +	default:
+> +		BUG("invalid discovery_bare_allowed %d",
+> +		    discovery_bare_allowed);
+
+Should we have a default case here since the case arms above are
+exhaustive?
+
+> +	}
+> +	return NULL;
+> +}
+> +
+>  enum discovery_result {
+>  	GIT_DIR_NONE = 0,
+>  	GIT_DIR_EXPLICIT,
+> @@ -1151,7 +1195,8 @@ enum discovery_result {
+>  	GIT_DIR_HIT_CEILING = -1,
+>  	GIT_DIR_HIT_MOUNT_POINT = -2,
+>  	GIT_DIR_INVALID_GITFILE = -3,
+> -	GIT_DIR_INVALID_OWNERSHIP = -4
+> +	GIT_DIR_INVALID_OWNERSHIP = -4,
+> +	GIT_DIR_DISALLOWED_BARE = -5,
+>  };
 >
-> +/* Read values into protected_config. */
-> +static void read_protected_config(void)
-> +{
-> +	char *xdg_config = NULL, *user_config = NULL, *system_config = NULL;
-> +
-> +	git_configset_init(&protected_config);
-> +
-> +	system_config = git_system_config();
-> +	git_global_config(&user_config, &xdg_config);
-> +
-> +	git_configset_add_file(&protected_config, system_config);
-> +	git_configset_add_file(&protected_config, xdg_config);
-> +	git_configset_add_file(&protected_config, user_config);
-> +	git_configset_add_parameters(&protected_config);
-> +
-> +	free(system_config);
-> +	free(xdg_config);
-> +	free(user_config);
-> +}
-> +
-> +/* Ensure that protected_config has been initialized. */
-> +static void git_protected_config_check_init(void)
-> +{
-> +	if (protected_config.hash_initialized)
-> +		return;
-> +	read_protected_config();
-> +}
-> +
-> +void git_protected_config(config_fn_t fn, void *data)
-> +{
-> +	git_protected_config_check_init();
+>  /*
+> @@ -1248,6 +1293,8 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+>  		}
+>
+>  		if (is_git_directory(dir->buf)) {
+> +			if (!get_discovery_bare())
 
-This may be copying from an existing pattern, but I think you could
-avoid the extra function declaration by writing git_protected_config()
-as:
+Relying on NEVER being the zero value here seems fragile to me. Should
+we check that `if (get_discovery_bare() == DISCOVERY_BARE_NEVER)` to be
+more explicit here?
 
-    if (!protected_config.hash_initialized)
-        read_protected_config();
-    configset_iter(&protected_config, fn, data);
+> +				return GIT_DIR_DISALLOWED_BARE;
+>  			if (!ensure_valid_ownership(dir->buf))
+>  				return GIT_DIR_INVALID_OWNERSHIP;
+>  			strbuf_addstr(gitdir, ".");
+> @@ -1394,6 +1441,14 @@ const char *setup_git_directory_gently(int *nongit_ok)
+>  		}
+>  		*nongit_ok = 1;
+>  		break;
+> +	case GIT_DIR_DISALLOWED_BARE:
+> +		if (!nongit_ok) {
+> +			die(_("cannot use bare repository '%s' (discovery.bare is '%s')"),
+> +			    dir.buf,
+> +			    discovery_bare_allowed_to_string(get_discovery_bare()));
+> +		}
+> +		*nongit_ok = 1;
+> +		break;
+>  	case GIT_DIR_NONE:
+>  		/*
+>  		 * As a safeguard against setup_git_directory_gently_1 returning
 
 Thanks,
 Taylor
