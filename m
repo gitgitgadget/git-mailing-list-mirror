@@ -2,171 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AD94C43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 02:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B4C8C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 02:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232589AbiGACa5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 22:30:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57538 "EHLO
+        id S232590AbiGAC55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 22:57:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233321AbiGACaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 22:30:55 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D90E4D16A
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 19:30:53 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id d2so1560758ejy.1
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 19:30:53 -0700 (PDT)
+        with ESMTP id S229750AbiGAC54 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 22:57:56 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7C495C955
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 19:57:53 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id c13so1244867eds.10
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 19:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=5PpTV5DyJJvq7S2/8yayvF8HImC4O/YwH66E8cj2HCA=;
-        b=nnF/HBAH7avpNU9JClUv+IjrVw3YSx9qFf5bQDH/6taQplG143tqmdwfrhNIgtn5KB
-         WjkY11wir1/pwrRpTktx/0088wpIJR/+r1qjuIsZjkvlHtTlMxo9v5wZslH54snHpQha
-         u0Mmz8JoSa0GYCFuRN0jqKKeK6ULOPfUC3V2MBTX9BnSjXyiX5EVP2dZB/N9tyJYcGQU
-         +PORm9kga4epJPtsSGa5ol/yXUknPJ0wAs2FLCtWrM0i0ZzzRU6yFJ+ABDiOc30FhlFz
-         QxFfvVG9Ppwf3GXkCfxyZcNX6/Wz1K1HuLlp69RolWxddcan5xqjdCxM/WqUTTUJm1br
-         hazw==
+        bh=bCLHF/tW5d/3U7s0B6zbzwgmLeiUfVxQrgEmW9ea+TI=;
+        b=LGSG/+CQg5+9XU8RniUBBBwIFvog45tzX/aVgCTq/fPAnNB4D/TYR4tBiWsSEn52Il
+         zSbhD7F/Hep08LMt0xf0LrapW6pDDcwpxtJe6Nkma1MNDlV4ppUrneHNMMM1LuQ6NwRL
+         n1qgTKyjTttTVPXX5+5ZwZ3rBjW5GYDcJnLNFUOydyemxG+ax70e8otBZxOAS2pWpqrD
+         2M6+tGnVGSydiyP/OUCrZ1KXqf2K7jjfmKKGGVnTX2UNNMfB5JwvhKEoPvi+qCrEk26Q
+         doX5tOIOX2R2LLx5SsdFhmRn8fS0qjp2ljLLiFa8xkRtD0lS6A+NSiBaX+6H+jeaFy2y
+         i2rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5PpTV5DyJJvq7S2/8yayvF8HImC4O/YwH66E8cj2HCA=;
-        b=hxhcsdMFh2umEQhP4+lPoT1Dv0dO9hWEhPle5B/pqTRLOg/I1kbs949ZntrGAAwbaq
-         Hc525lSfSyO1rryCs1Kh99PUMKsvbiilmhwKSFEZmC725k3c69mAfZKXI/IiB9Mi7i9I
-         RU/KetRoQFOkx39lSHRZYZYDMrMZ9k+/EIhyG/3qCNCk6687nGJvLyhsMLSXl/Ii4+XF
-         2wezs2iZa/nzPY6e80gZRXJbawZyF5G9mZLfm7GDgrHx4zv1Dyd3uI0g1kwh+8DobT+X
-         T7d3fznWbtpFI1NRo6q999irQUAjDHAnxe6cRIyxiOWsIYecqEMwe31WBmj75KIbXVms
-         8Asw==
-X-Gm-Message-State: AJIora/LU78RjTg/gJfkJB9Qqo8DBx7j7Ipi7zSYVDdGKxvb68+6FORv
-        J+V11wXZo6AKjvgwbyPVXhBmM/iFYo2ORbHwqKw=
-X-Google-Smtp-Source: AGRyM1u9QtMIOTW2YDQPojgV93/uG+ir5WA1usaqys7QSNYo4CjfG9nqWb1S1tk6DWrW91AOIYv3FIC1Yt4bhCKick4=
-X-Received: by 2002:a17:906:e98:b0:726:29c5:620a with SMTP id
- p24-20020a1709060e9800b0072629c5620amr12192866ejf.192.1656642652174; Thu, 30
- Jun 2022 19:30:52 -0700 (PDT)
+        bh=bCLHF/tW5d/3U7s0B6zbzwgmLeiUfVxQrgEmW9ea+TI=;
+        b=7KDjpdpV3XCigkgCwHdJyObhsd0jwK4TRuDQvWDUv4nHGwikyhq+kz556oGgRdEzwo
+         /3EFlougmDio2tQiaa1Kb8RPVWG+psRaOwWg8CLenLckXLwJTuqkN/CTH4ud4PayrzPj
+         NyZ86XVV3HdpPK0qC0ySDr1F/qgSPygBVzu6L8HyV0NSgZwpCpDD30ZItop0MR1tHsPW
+         koaLCKRzGfyLyle51o/V2x8BBiKiZy/7RdAFFjiFI5V2f4c2IlvIEQ1YMDpba/p0atps
+         8pW7k+0RaK9ZaWWc3g9Ocweb3Cr1ZKEtkDs91M3xd/o1MBOPfjF9U4gZdOQqalhLhfdb
+         PNhg==
+X-Gm-Message-State: AJIora9rJRO5O0kalmJRclX7ZKPH6/pENV7dPGQy8IgwxnhzsVBBT3jz
+        DBRTFoUshq0qMAmvrkodb4leqEQ8349pKZrXvmY=
+X-Google-Smtp-Source: AGRyM1tJtb8wpiCsRjYj4VuzCQZWNg9ZgkiRq4aosaAIM2mW4t0AkfO0444hd1lveXCC87jYJXcwSBgq7IEVMYZxcp8=
+X-Received: by 2002:a05:6402:4242:b0:437:7771:982c with SMTP id
+ g2-20020a056402424200b004377771982cmr16340967edb.146.1656644272473; Thu, 30
+ Jun 2022 19:57:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1194.git.git.1642212566346.gitgitgadget@gmail.com>
- <pull.1194.v2.git.git.1642443955836.gitgitgadget@gmail.com> <20220630095357.GA2123@szeder.dev>
-In-Reply-To: <20220630095357.GA2123@szeder.dev>
+References: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
+ <pull.1268.v2.git.1656572225.gitgitgadget@gmail.com> <bf4c03d01d5730503eb710e92a80136d5caa981a.1656572225.git.gitgitgadget@gmail.com>
+ <220630.86tu82e9b8.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220630.86tu82e9b8.gmgdl@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 30 Jun 2022 19:30:39 -0700
-Message-ID: <CABPp-BG1MARvcqgPYBNQ0P1M9jZ2b8vt9btPG1oQ5_h_YM78TQ@mail.gmail.com>
-Subject: Re: [PATCH v2] merge-ort: avoid assuming all renames detected
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Thu, 30 Jun 2022 19:57:41 -0700
+Message-ID: <CABPp-BEcojvfeuhp7rSi-O+9oEu4KpwPDwbKS-MiD1qCKde-CA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] t6423: add tests of dual directory rename plus
+ add/add conflict
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
+        Jonathan Tan <jonathantanmy@google.com>,
+        Calvin Wan <calvinwan@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 30, 2022 at 2:54 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
+On Thu, Jun 30, 2022 at 3:26 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> On Mon, Jan 17, 2022 at 06:25:55PM +0000, Elijah Newren via GitGitGadget =
-wrote:
-> > diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-s=
-equence-rename-caching.sh
-> > index 035edc40b1e..f2bc8a7d2a2 100755
-> > --- a/t/t6429-merge-sequence-rename-caching.sh
-> > +++ b/t/t6429-merge-sequence-rename-caching.sh
-> > @@ -697,4 +697,71 @@ test_expect_success 'caching renames only on upstr=
-eam side, part 2' '
-> >       )
-> >  '
-> >
-> > +#
-> > +# The following testcase just creates two simple renames (slightly mod=
-ified
-> > +# on both sides but without conflicting changes), and a directory full=
- of
-> > +# files that are otherwise uninteresting.  The setup is as follows:
-> > +#
-> > +#   base:     unrelated/<BUNCH OF FILES>
-> > +#             numbers
-> > +#             values
-> > +#   upstream: modify: numbers
-> > +#             modify: values
-> > +#   topic:    add: unrelated/foo
-> > +#             modify: numbers
-> > +#             modify: values
-> > +#             rename: numbers -> sequence
-> > +#             rename: values -> progression
-> > +#
-> > +# This is a trivial rename case, but we're curious what happens with a=
- very
-> > +# low renameLimit interacting with the restart optimization trying to =
-notice
-> > +# that unrelated/ looks like a trivial merge candidate.
-> > +#
-> > +test_expect_success 'avoid assuming we detected renames' '
-> > +     git init redo-weirdness &&
+> On Thu, Jun 30 2022, Elijah Newren via GitGitGadget wrote:
+>
+> > From: Elijah Newren <newren@gmail.com>
+>
+> > +test_setup_12l () {
+> > +     test_create_repo 12l_$1 &&
+>
+> Can & should just be "git init", see f0d4d398e28 (test-lib: split up and
+> deprecate test_create_repo(), 2021-05-10).
+
+I've switched to "git init" and even encouraged others to do the same
+in other test scripts, but since literally every other test in this
+file uses test_create_repo, I think they should all be converted at
+once and just be consistent here.  But, so we can stop having this
+conversation, after this series lands, I'll send one in to update the
+various merge testfiles that make heavy use of test_create_repo and
+convert them over.
+
 > > +     (
-> > +             cd redo-weirdness &&
+> > +             cd 12l_$1 &&
 > > +
-> > +             mkdir unrelated &&
-> > +             for i in $(test_seq 1 10)
-> > +             do
-> > +                     >unrelated/$i
-> > +             done &&
-> > +             test_seq  2 10 >numbers &&
-> > +             test_seq 12 20 >values &&
-> > +             git add numbers values unrelated/ &&
-> > +             git commit -m orig &&
-> > +
-> > +             git branch upstream &&
-> > +             git branch topic &&
-> > +
-> > +             git switch upstream &&
-> > +             test_seq  1 10 >numbers &&
-> > +             test_seq 11 20 >values &&
-> > +             git add numbers &&
-> > +             git commit -m "Some tweaks" &&
-> > +
-> > +             git switch topic &&
-> > +
-> > +             >unrelated/foo &&
-> > +             test_seq  2 12 >numbers &&
-> > +             test_seq 12 22 >values &&
-> > +             git add numbers values unrelated/ &&
-> > +             git mv numbers sequence &&
-> > +             git mv values progression &&
-> > +             git commit -m A &&
-> > +
-> > +             #
-> > +             # Actual testing
-> > +             #
-> > +
-> > +             git switch --detach topic^0 &&
-> > +
-> > +             test_must_fail git -c merge.renameLimit=3D1 rebase upstre=
-am &&
-> > +
-> > +             git ls-files -u >actual &&
-> > +             ! test_file_is_empty actual
+> > +             mkdir -p sub1 sub2
 >
-> There is no 'test_file_is_empty' function, but because of the ! at the
-> beginning of the line it didn't fail the test.
+> The "-p" here isn't needed, you're not creating recursive directories.
 
-Oops, looks like I meant test_must_be_empty.
+Indeed; will fix.
 
-> The minimal fix would be to use 'test_file_not_empty' instead, but I
-> wonder whether we should use 'test_line_count =3D 2' instead for a tad
-> tighter check.
-
-Makes sense; since this merged about half a year ago, I'll submit a
-new patch to fix this.  Thanks for catching and pointing it out!
-
-
-
+> > +             git ls-files -s >out &&
+> > +             test_line_count =3D 5 out &&
 >
-> > +     )
-> > +'
+> Can't this just use test_stdout_line_count? Except...
+
+Ooh, new function from late last year that I was unaware of.  Yeah,
+I'm happy to start using it.
+
 > > +
-> >  test_done
-> >
-> > base-commit: 1ffcbaa1a5f10c9f706314d77f88de20a4a498c2
-> > --
-> > gitgitgadget
+> > +             git rev-parse >actual \
+> > +                     :0:sub3/file :0:sub3/newfile :0:sub3/sub2/other \
+> > +                     :2:sub1/sub2/new_add_add_file \
+> > +                     :3:sub1/sub2/new_add_add_file &&
+> > +             git rev-parse >expect \
+> > +                     O:sub1/file  B:sub1/newfile O:sub2/other \
+> > +                     A:sub2/new_add_add_file \
+> > +                     B:sub1/sub2/new_add_add_file &&
+> > +             test_cmp expect actual &&
+> > +
+> > +             git ls-files -o >actual &&
+> > +             test_write_lines actual expect out >expect &&
+> > +             test_cmp expect actual
+>
+> This test seems a bit odd, here we're just checking that we've created
+> scratch files for the internal use of our test, why is it important that
+> we have an "out" file, when the only reason we have it is because we
+> needed it for checking the "ls-files" line count above?
+
+Nah, you've misunderstood the purpose of the check.  It isn't "make
+sure that these untracked files are present among whatever else might
+also be present", it's "make sure the merge step did not introduce
+*any* untracked files" (something the recursive backend periodically
+did, and they weren't cruft untracked files but stored actual merge
+results).  There wasn't a nice easy check for that, the closest was to
+translate the requirement to "make sure the only untracked files are
+the ones explicitly added by this test script", which is the check you
+see here.  I don't actually care about "actual", "expect", or "out", I
+just care that there aren't any _other_ untracked files.
