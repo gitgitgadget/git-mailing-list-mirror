@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1FC0CCA480
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 10:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 395CBC433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 10:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235420AbiGAKb2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 06:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51358 "EHLO
+        id S236018AbiGAKb3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 06:31:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234940AbiGAKb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235234AbiGAKb1 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 1 Jul 2022 06:31:27 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E3676942
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 03:31:25 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id k22so2563118wrd.6
-        for <git@vger.kernel.org>; Fri, 01 Jul 2022 03:31:25 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 780A476953
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 03:31:26 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id r20so2591923wra.1
+        for <git@vger.kernel.org>; Fri, 01 Jul 2022 03:31:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3VFLSiO/6KET+SGlh7ge6Au3MtKLtuBXO/JcZUNxAHQ=;
-        b=X61bVeqSnUFxI8ESlmdOJxq5PbICgpQvbv+LeBwBHGBw6onV9jbFDUiepwpd0QF17p
-         naZsd1MgslTE70MAUW1MzM2GVXNG0gQj/l0lUml5wiEn4jAUWJ9zDacMMh1NH5D5n1hc
-         fukrbNeeAfY+ySCO54UVd9JtKYmf0w3DjmeeCOKd4dlq4xQUsLvo1a/DmxX15jWzCHas
-         0ZcryGWAE/PgsprG30Z0fJwLaLNiIga9LNIa34Misoe0w3TiXiEVo+dz3oZD7oR90ttd
-         3Zt4mcVnR+YM3xbeG7V3zMHQKdWho+5XRRvqODpnSp+lKezAtce2naJURUlidiFWTFKU
-         7ybA==
+        bh=2PoG9QTpcWSA71vLqn1P2r/dL7HHpCVJw0aWdAz3UAE=;
+        b=JfCH1NrPp+Sh4GhmBNq1ZMuC9nYpcxEO+F8Dmch6UjfrSruHMHT/vJl0RxvKoGrGE+
+         X/X9K6ZqvStCyeAtzcEMrIyUCy6SgKtZrt8E0t6164w4FHExVgu2taKKxCyPEoCkJn8A
+         MKymx4HkjT+WJgbGLxyKgNYMqlpt0kUls+hwtmWtPUxIG1IKdv0jj+kOOJYYagJtj4VV
+         44oMJn4IC/mDM6oyWdhmyCq0dWUHtz2N8ekuecTynB9AG5yjaEZfdBQRjE2/AFdeL0Qd
+         /c4tdE6NHEqewPczxSOLrgaLFqJx1UF8+0c/UEA5A9ZGlbnBXi04fhps9xJgocXAwr3d
+         QKoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3VFLSiO/6KET+SGlh7ge6Au3MtKLtuBXO/JcZUNxAHQ=;
-        b=GXxMzi18+uA1+Lreg2Qc7NkgYf7W7PqGHvvR3+NL6qVJ6ibeZ1xN0uBVn8B3AHUcuT
-         E1i+xqS1xYHVt23RdeifzeSs1+jc9KiyuSHCJg31CnNO/FYaVo7ew6Py/rrZuAnYzGW3
-         MWPHHpytAKELaaLHsveoO2cts/2mJhlTrziVeKzEPIqDAghRBKEoK9hF3SXzdq7taJlS
-         SIdaJgl0vlnQB08hrNNMrEW+2Un9Eo2EtVJ+TU14cWvB0mp/mWddTeHXdQhOHV3frQ72
-         qDzGHGAOKXXJSY1JZhRUJ2CwABHcGpndIDtJ6OVZr1iMEhMQp3AhZrxL09puPs+BdEPy
-         L9vA==
-X-Gm-Message-State: AJIora/qMwJnutUNfTxNme1bGr4Wn4TpZ76hKFD+ctV7aaTgQgW1bQ4w
-        eQf1YuFpy7fp36mfkpjcSHu+mEMFOms0jg==
-X-Google-Smtp-Source: AGRyM1v4JleLbjFSeVEveGy6Q9INkaeWoOKmWXBDa0rsnEB+UBdAnGoBgIut4rAH+HOlRv/DQ2n0NQ==
-X-Received: by 2002:adf:fd92:0:b0:21a:3d15:91f9 with SMTP id d18-20020adffd92000000b0021a3d1591f9mr12613227wrr.262.1656671483731;
-        Fri, 01 Jul 2022 03:31:23 -0700 (PDT)
+        bh=2PoG9QTpcWSA71vLqn1P2r/dL7HHpCVJw0aWdAz3UAE=;
+        b=enFCnbMmuryptxhA0VF1Mj2uF5otky42gCDfafm90EZ1p2mW+ec8xDV2yyIzvl36nW
+         fbsU8ogHDrtLsQPcruVdsscI3OAIDUgOa8xIXWZmGNp34FhdF1r8ODatt2FUlVPjcBW1
+         sLVZ/qnC9qPMC8E5dph+caHyMFWj1JL6bKjWDJHkhxgpKBp+gA3NxLP3d7VshUJfFJNO
+         YX0ED4RFCxOweUKH1zrhkmnSa14RPzdsscGQE0FiCTgrASrvjao2bAM+fQsbdqNMD7mh
+         S2Hsbc9iHOietTg8/vKbT/23Ll9kZzgjR5NRQ93lys87QIXufX+3gb7kog8kcA0cOlnQ
+         djag==
+X-Gm-Message-State: AJIora9JP3kzz51Q5VXCm5tWDOufPy/7GrHht+1e53WeefoOv4Ahu8J8
+        IrPO3ZT6VwNkz0/0Xc+Jtv/wHcUAOU65yA==
+X-Google-Smtp-Source: AGRyM1vm+JN2yZyny6YIN6bjv+WQkRO88PAGpny6wvkQ7fsIZBSrXmFMw7GPn/DsL7l7sAymNOjq+w==
+X-Received: by 2002:adf:dd41:0:b0:21b:8201:4b66 with SMTP id u1-20020adfdd41000000b0021b82014b66mr12550582wrm.706.1656671484469;
+        Fri, 01 Jul 2022 03:31:24 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v6-20020a05600c12c600b0039c811077d3sm9712790wmd.22.2022.07.01.03.31.22
+        by smtp.gmail.com with ESMTPSA id v6-20020a05600c12c600b0039c811077d3sm9712790wmd.22.2022.07.01.03.31.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 03:31:22 -0700 (PDT)
+        Fri, 01 Jul 2022 03:31:24 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,12 +55,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/4] add and apply a rule to find "unused" init+free
-Date:   Fri,  1 Jul 2022 12:30:55 +0200
-Message-Id: <cover-v3-0.4-00000000000-20220701T102506Z-avarab@gmail.com>
+Subject: [PATCH v3 1/4] cocci: add and apply a rule to find "unused" strbufs
+Date:   Fri,  1 Jul 2022 12:30:56 +0200
+Message-Id: <patch-v3-1.4-49e9ccb5819-20220701T102506Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.900.g4d0de1cceb2
-In-Reply-To: <cover-v2-0.2-00000000000-20220621T223954Z-avarab@gmail.com>
-References: <cover-v2-0.2-00000000000-20220621T223954Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-0.4-00000000000-20220701T102506Z-avarab@gmail.com>
+References: <cover-v2-0.2-00000000000-20220621T223954Z-avarab@gmail.com> <cover-v3-0.4-00000000000-20220701T102506Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,208 +68,177 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series adds a coccinelle rule to find and remove code where the
-only reference to a variable in a given function is to malloc() &
-free() it, where "malloc" and "free" also match
-"strbuf_init/strbuf_release", and then later in the series anything
-that looks like a init/free pattern.
+Add a coccinelle rule to remove "struct strbuf" initialization
+followed by calling "strbuf_release()" function.
 
-Changes since v2:
+See extensive commentary in the new "unused.cocci" for how it works,
+and what it's intended to find and replace.
 
- * Make the wider rule revert-able, as requested by Junio in
-   https://lore.kernel.org/git/xmqqsfnw65zu.fsf@gitster.g/
+The inclusion of "contrib/scalar/scalar.c" is because "spatch" was
+manually run on it (we don't usually run spatch on contrib).
 
- * We now find and remove "malloc" followed by an optional "init" and
-   "release".
+The use of "with strict" here will be explained and amended in the
+following commit.
 
- * We now match { 0 } initializers, in addition to things that look
-   like "INIT" macros.
-
-Ævar Arnfjörð Bjarmason (4):
-  cocci: add and apply a rule to find "unused" strbufs
-  cocci: catch unused "strbuf" using an xmalloc() pattern
-  cocci: remove "when strict" from unused.cocci
-  cocci: generalize "unused" rule to cover more than "strbuf"
-
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
  builtin/fetch.c                 |  3 +-
- builtin/merge.c                 |  4 --
- builtin/repack.c                |  2 -
- contrib/coccinelle/unused.cocci | 88 +++++++++++++++++++++++++++++++++
+ builtin/merge.c                 |  2 --
+ contrib/coccinelle/unused.cocci | 61 +++++++++++++++++++++++++++++++++
  contrib/scalar/scalar.c         |  3 +-
- diff.c                          |  2 -
- 6 files changed, 90 insertions(+), 12 deletions(-)
+ diff.c                          |  2 --
+ 5 files changed, 63 insertions(+), 8 deletions(-)
  create mode 100644 contrib/coccinelle/unused.cocci
 
-Range-diff against v2:
-1:  d14036521ab ! 1:  49e9ccb5819 cocci: add and apply a rule to find "unused" variables
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    cocci: add and apply a rule to find "unused" variables
-    +    cocci: add and apply a rule to find "unused" strbufs
-     
-    -    Add a coccinelle rule to remove variable initialization followed by
-    -    calling a "release" function. See extensive commentary in the new
-    -    "unused.cocci" for how it works, and what it's intended to find and
-    -    replace.
-    +    Add a coccinelle rule to remove "struct strbuf" initialization
-    +    followed by calling "strbuf_release()" function.
-    +
-    +    See extensive commentary in the new "unused.cocci" for how it works,
-    +    and what it's intended to find and replace.
-     
-         The inclusion of "contrib/scalar/scalar.c" is because "spatch" was
-         manually run on it (we don't usually run spatch on contrib).
-    @@ Commit message
-         The use of "with strict" here will be explained and amended in the
-         following commit.
-     
-    -    1. https://lore.kernel.org/git/042d624b8159364229e95d35e9309f12b67f8173.1652977582.git.gitgitgadget@gmail.com/
-    -
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## builtin/fetch.c ##
-    @@ builtin/merge.c: static void merge_name(const char *remote, struct strbuf *msg)
-     
-      ## contrib/coccinelle/unused.cocci (new) ##
-     @@
-    -+// This rule finds sequences of "unused" declerations, init and
-    -+// release(). E.g.:
-    ++// This rule finds sequences of "unused" declerations and uses of
-    ++// "struct strbuf".
-    ++//
-    ++// I.e. this finds cases where we only declare the variable, and then
-    ++// release it, e.g.:
-     +//
-     +//	struct strbuf buf = STRBUF_INIT;
-     +//      [.. no other use of "buf" in the function ..]
-     +//	strbuf_release(&buf)
-     +//
-    ++// Or:
-    ++//
-    ++//	struct strbuf buf;
-    ++//	[.. no other use of "buf" in the function ..]
-    ++//	strbuf_init(&buf, 0);
-    ++//	[.. no other use of "buf" in the function ..]
-    ++//	strbuf_release(&buf)
-    ++//
-     +// To do do this we find (continued below)...
-     +@@
-     +type T;
-     +identifier I;
-    -+// STRBUF_INIT, but also e.g. STRING_LIST_INIT_DUP (so no anchoring)
-    -+constant INIT =~ "_INIT";
-    -+// I = get_worktrees() etc.
-    -+identifier INIT_ASSIGN1 =~ "^get_worktrees$";
-    ++// STRBUF_INIT
-    ++constant INIT_MACRO =~ "^STRBUF_INIT$";
-     +// strbuf_init(&I, ...) etc.
-    -+identifier INIT_CALL1 =~ "^[a-z_]*_init$";
-    -+// stbuf_release(), string_list_clear() etc.
-    -+identifier REL1 =~ "^[a-z_]*_(release|clear|free)$";
-    -+// release_patch(), clear_pathspec() etc.
-    -+identifier REL2 =~ "^(release|clear|free)_[a-z_]*$";
-    ++identifier INIT_CALL1 =~ "^strbuf_init$";
-    ++// strbuf_release()
-    ++identifier REL1 =~ "^strbuf_release$";
-     +@@
-     +
-     +// .. A declaration like "struct strbuf buf;"...
-     +(
-     +- T I;
-    ++// ... or "struct strbuf buf = { 0 };" ...
-    ++|
-    ++- T I = { 0 };
-     +// ... or "struct STRBUF buf = STRBUF_INIT;" ...
-     +|
-    -+- T I = INIT;
-    ++- T I = INIT_MACRO;
-     +)
-     +
-     +// ... Optionally followed by lines that make no use of "buf", "&buf"
-    @@ contrib/coccinelle/unused.cocci (new)
-     +     when strict
-     +// .. (only) make use of "buf" or "&buf" to call something like
-     +// "strbuf_init(&buf, ...)" ...
-    -+(
-     +- \( INIT_CALL1 \)( \( I \| &I \), ...);
-    -+|
-    -+// .. or e.g. "worktrees = get_worktrees();", i.e. a known "assignment
-    -+// init" ...
-    -+- I = \( INIT_ASSIGN1 \)(...);
-    -+)
-     +...>
-     +
-     +// ... and then no mention of "buf" or "&buf" until we get to a
-     +// strbuf_release(&buf) at the end ...
-    -+(
-    -+- \( REL1 \| REL2 \)( \( I \| &I \), ...);
-    -+|
-    -+- \( REL1 \| REL2 \)( \( &I \| I \) );
-    -+)
-    ++- \( REL1 \)( \( &I \| I \) );
-     +// ... and no use *after* either, e.g. we don't want to delete
-     +// init/strbuf_release() patterns, where "&buf" could be used
-     +// afterwards.
-     +  ... when != \( I \| &I \)
-     +      when strict
-    -+// Note that we're intentionally loose in accepting e.g. a
-    -+// "strbuf_init(&buf)" followed by a "string_list_clear(&buf,
-    -+// 0)". It's assumed that the compiler will catch any such invalid
-    -+// code, i.e. that our constructors/destructors don't take a "void *".
-    -+//
-     +// This rule also isn't capable of finding cases where &buf is used,
-     +// but only to e.g. pass that variable to a static function which
-     +// doesn't use it. The analysis is only function-local.
--:  ----------- > 2:  6324d3956ed cocci: catch unused "strbuf" using an xmalloc() pattern
-2:  4130dc15287 ! 3:  9a5e7208dec cocci: remove "when strict" from unused.cocci
-    @@ builtin/merge.c: static void restore_state(const struct object_id *head,
-      }
-      
-     
-    - ## builtin/repack.c ##
-    -@@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix)
-    - 	struct child_process cmd = CHILD_PROCESS_INIT;
-    - 	struct string_list_item *item;
-    - 	struct string_list names = STRING_LIST_INIT_DUP;
-    --	struct string_list rollback = STRING_LIST_INIT_NODUP;
-    - 	struct string_list existing_nonkept_packs = STRING_LIST_INIT_DUP;
-    - 	struct string_list existing_kept_packs = STRING_LIST_INIT_DUP;
-    - 	struct pack_geometry *geometry = NULL;
-    -@@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix)
-    - 	}
-    - 
-    - 	string_list_clear(&names, 0);
-    --	string_list_clear(&rollback, 0);
-    - 	string_list_clear(&existing_nonkept_packs, 0);
-    - 	string_list_clear(&existing_kept_packs, 0);
-    - 	clear_pack_geometry(geometry);
-    -
-      ## contrib/coccinelle/unused.cocci ##
-    -@@ contrib/coccinelle/unused.cocci: identifier REL2 =~ "^(release|clear|free)_[a-z_]*$";
-    +@@ contrib/coccinelle/unused.cocci: identifier REL1 =~ "^strbuf_release$";
-      // ... Optionally followed by lines that make no use of "buf", "&buf"
-      // etc., but which ...
-      <... when != \( I \| &I \)
-     -     when strict
-    + (
-      // .. (only) make use of "buf" or "&buf" to call something like
-      // "strbuf_init(&buf, ...)" ...
-    - (
-    -@@ contrib/coccinelle/unused.cocci: identifier REL2 =~ "^(release|clear|free)_[a-z_]*$";
-    +@@ contrib/coccinelle/unused.cocci: identifier REL1 =~ "^strbuf_release$";
-      // init/strbuf_release() patterns, where "&buf" could be used
-      // afterwards.
-        ... when != \( I \| &I \)
-     -      when strict
-    - // Note that we're intentionally loose in accepting e.g. a
-    - // "strbuf_init(&buf)" followed by a "string_list_clear(&buf,
-    - // 0)". It's assumed that the compiler will catch any such invalid
-    + // This rule also isn't capable of finding cases where &buf is used,
-    + // but only to e.g. pass that variable to a static function which
-    + // doesn't use it. The analysis is only function-local.
--:  ----------- > 4:  45a429b9cc9 cocci: generalize "unused" rule to cover more than "strbuf"
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index ac29c2b1ae3..8a3ae71fed0 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1113,7 +1113,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 			      struct fetch_head *fetch_head, struct worktree **worktrees)
+ {
+ 	int url_len, i, rc = 0;
+-	struct strbuf note = STRBUF_INIT, err = STRBUF_INIT;
++	struct strbuf note = STRBUF_INIT;
+ 	const char *what, *kind;
+ 	struct ref *rm;
+ 	char *url;
+@@ -1281,7 +1281,6 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 
+  abort:
+ 	strbuf_release(&note);
+-	strbuf_release(&err);
+ 	free(url);
+ 	return rc;
+ }
+diff --git a/builtin/merge.c b/builtin/merge.c
+index d9784d4891c..bbd70b17bc6 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -502,7 +502,6 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ {
+ 	struct commit *remote_head;
+ 	struct object_id branch_head;
+-	struct strbuf buf = STRBUF_INIT;
+ 	struct strbuf bname = STRBUF_INIT;
+ 	struct merge_remote_desc *desc;
+ 	const char *ptr;
+@@ -590,7 +589,6 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 		oid_to_hex(&remote_head->object.oid), remote);
+ cleanup:
+ 	free(found_ref);
+-	strbuf_release(&buf);
+ 	strbuf_release(&bname);
+ }
+ 
+diff --git a/contrib/coccinelle/unused.cocci b/contrib/coccinelle/unused.cocci
+new file mode 100644
+index 00000000000..bc26d39b313
+--- /dev/null
++++ b/contrib/coccinelle/unused.cocci
+@@ -0,0 +1,61 @@
++// This rule finds sequences of "unused" declerations and uses of
++// "struct strbuf".
++//
++// I.e. this finds cases where we only declare the variable, and then
++// release it, e.g.:
++//
++//	struct strbuf buf = STRBUF_INIT;
++//      [.. no other use of "buf" in the function ..]
++//	strbuf_release(&buf)
++//
++// Or:
++//
++//	struct strbuf buf;
++//	[.. no other use of "buf" in the function ..]
++//	strbuf_init(&buf, 0);
++//	[.. no other use of "buf" in the function ..]
++//	strbuf_release(&buf)
++//
++// To do do this we find (continued below)...
++@@
++type T;
++identifier I;
++// STRBUF_INIT
++constant INIT_MACRO =~ "^STRBUF_INIT$";
++// strbuf_init(&I, ...) etc.
++identifier INIT_CALL1 =~ "^strbuf_init$";
++// strbuf_release()
++identifier REL1 =~ "^strbuf_release$";
++@@
++
++// .. A declaration like "struct strbuf buf;"...
++(
++- T I;
++// ... or "struct strbuf buf = { 0 };" ...
++|
++- T I = { 0 };
++// ... or "struct STRBUF buf = STRBUF_INIT;" ...
++|
++- T I = INIT_MACRO;
++)
++
++// ... Optionally followed by lines that make no use of "buf", "&buf"
++// etc., but which ...
++<... when != \( I \| &I \)
++     when strict
++// .. (only) make use of "buf" or "&buf" to call something like
++// "strbuf_init(&buf, ...)" ...
++- \( INIT_CALL1 \)( \( I \| &I \), ...);
++...>
++
++// ... and then no mention of "buf" or "&buf" until we get to a
++// strbuf_release(&buf) at the end ...
++- \( REL1 \)( \( &I \| I \) );
++// ... and no use *after* either, e.g. we don't want to delete
++// init/strbuf_release() patterns, where "&buf" could be used
++// afterwards.
++  ... when != \( I \| &I \)
++      when strict
++// This rule also isn't capable of finding cases where &buf is used,
++// but only to e.g. pass that variable to a static function which
++// doesn't use it. The analysis is only function-local.
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 28176914e57..97e71fe19cd 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -687,7 +687,7 @@ static int cmd_diagnose(int argc, const char **argv)
+ 	int stdout_fd = -1, archiver_fd = -1;
+ 	time_t now = time(NULL);
+ 	struct tm tm;
+-	struct strbuf path = STRBUF_INIT, buf = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
+ 	int res = 0;
+ 
+ 	argc = parse_options(argc, argv, NULL, options,
+@@ -779,7 +779,6 @@ static int cmd_diagnose(int argc, const char **argv)
+ 	free(argv_copy);
+ 	strvec_clear(&archiver_args);
+ 	strbuf_release(&zip_path);
+-	strbuf_release(&path);
+ 	strbuf_release(&buf);
+ 
+ 	return res;
+diff --git a/diff.c b/diff.c
+index e71cf758861..d4290615aaa 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1289,7 +1289,6 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ {
+ 	static const char *nneof = " No newline at end of file\n";
+ 	const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
+-	struct strbuf sb = STRBUF_INIT;
+ 
+ 	enum diff_symbol s = eds->s;
+ 	const char *line = eds->line;
+@@ -1521,7 +1520,6 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 	default:
+ 		BUG("unknown diff symbol");
+ 	}
+-	strbuf_release(&sb);
+ }
+ 
+ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
 -- 
 2.37.0.900.g4d0de1cceb2
 
