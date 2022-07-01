@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9CD0C43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 10:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07E92C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 10:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236075AbiGAKbo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 06:31:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51512 "EHLO
+        id S236210AbiGAKbr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 06:31:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234940AbiGAKbj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235234AbiGAKbj (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 1 Jul 2022 06:31:39 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 035FB76EA4
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 03:31:30 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id i1so2532243wrb.11
-        for <git@vger.kernel.org>; Fri, 01 Jul 2022 03:31:29 -0700 (PDT)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE76876E97
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 03:31:28 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id be14-20020a05600c1e8e00b003a04a458c54so1299405wmb.3
+        for <git@vger.kernel.org>; Fri, 01 Jul 2022 03:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hvVupZRPl6Bz/NIQ/1VvyFdDa8RI8fdMFY6c2PJqfQU=;
-        b=hZfGUiQlSaYaLeC5/Q8qfxQ2+KMmoYWyoa9CZYFNRCHfcLP/jI+VpwnPsEZzvpYSXt
-         pMaOqM/Q5NX+ud1x9XrgHwmfRuC5m/tLflnJvMqEI1IS5gxtMV+xZIAPh+ewQUeB/8wb
-         ARy2AoZ941EfzhixFDeSWHGX0cZZv/hvmMI2CVFWYtx1IEull9/io32jddKfIOwKuBnp
-         5k/Bw9Wnd8Y6Ow7un8F/LYJp9256aEfVAtFv1P1mLFt2/L1nlT5VNxOlcVyqb49klVg5
-         +yZBh6iixPos6gGrUsDecCiQloq7c5VzWLhtMpb4YFJFx4bTTKpZoaJTtfEf0L0mmzel
-         5alw==
+        bh=xU52FBcfxZ9ugBZ7xxVNn67LAE+EUvzV05uvkZse/RU=;
+        b=lNqwjOHEIb3kvFfwnbMTT0cK2S1P1liqkgo/+IQPec+jdwG0w4O1tjdhZh0lofeCvy
+         Lvan9UFa+j3WRYuwEGW2vr9eOYVuAWfUgW2XWk4RxnDt3pUOmHOL6/zD2til7NQfz1ov
+         W/pdAEvySGDHDARYZ+SuCmFaPeZEk1BPrSWRcJ/DJbYSzgLRbEQkmbfClAs2rhzWK+LN
+         DIbqEBjOYJ44vNeBaMgqOvnDORYoKD4Px+Th0zsecPGZaiKGPbc9V9ap3fhdlj4SjmA8
+         MHLibVgRlzkQn4K1RghJCPhe2uqftIBICjbN1EWI09O4UqL+MVhlHIk+dnZuU73Rl8ip
+         AS0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hvVupZRPl6Bz/NIQ/1VvyFdDa8RI8fdMFY6c2PJqfQU=;
-        b=cDzz5L9Yw4lfvXoR97WUQqP+M7EFhgIZ5TJREgIWD1WulB8WqhoxeMhqoktHK9MfWB
-         QWLnsEocIjaT03EpK4OvSlBaxhILgyfh4sY6l1lgCSQ6/oZozhh6kD62CgvKiXXTzWZo
-         Go4cfIscEGBjC7mEz3ASmuS/Mqu+kyIliYk7wtOe5eLG8Y4K0jaTs0leAU04QR/nyrje
-         H+sHhaaniCbTdnXcs7f2G73wBTmQ4f4ZBsRETfqZUWa4LjYxevAQwqV+PRljgRvoqS97
-         r2WX97P7K+5tJXNNqEobn4wFY03TJszM1LVhSOIWJtctOoVn6H5mRZZpO7RhqAAPfwnw
-         SLzw==
-X-Gm-Message-State: AJIora9LZAekCxhaBXnSvsyTE1ATlKjsOJvj5HacZnffkZCw+LjqE6pe
-        7TleBkBEbmei8B7WseR9aodPleyOHRls6g==
-X-Google-Smtp-Source: AGRyM1syYHsaiDGPhVBpuneIgYxc+1iAikGYlj9HSSkUKpB8iRkiMXWM2m6EZFpw20bZZMS8fSH4EA==
-X-Received: by 2002:a5d:66c3:0:b0:21b:994a:a6fa with SMTP id k3-20020a5d66c3000000b0021b994aa6famr12614775wrw.15.1656671488047;
-        Fri, 01 Jul 2022 03:31:28 -0700 (PDT)
+        bh=xU52FBcfxZ9ugBZ7xxVNn67LAE+EUvzV05uvkZse/RU=;
+        b=CGcWLUfmR3M8V84TMLvNkTnbvuGCpwVbLEmSH83FSkfTGr1e9U7xuIIH1+7jLrq+qH
+         6+WfsmOUTL0fGeVvkFvk05VVhheD8LCVaIe7qX5inLjOSYlBvAcds1ukny+rD6GElt7w
+         epSYD6NqfJyrCiRWjLI3hCpff5yg1maR3hiN0K8Fd/iUnnj94mGleXMEmmqgM9eeT9/U
+         dylcFlYeUBEM7ECzv59/NG8H+0cLL6/1gfQ5owLTj4/OPkzvjqf/9+uRz2BEtlYB5oai
+         mZNFnogIGWHxqM2/KAQpupW2GZZ/jqXzL/cITOUN91+OEG219F9mu2mkmjjfXviuaIp5
+         jpjA==
+X-Gm-Message-State: AJIora9UHLXgK+Q6IuuIa74MmPHJi965rWfTCMZcvbskhfrCqniVljbT
+        uVel6ExutJZpAeZkpyMOKVSawbFVPg/4qg==
+X-Google-Smtp-Source: AGRyM1tthAlrmzxf8Oie4kbotTO5LZUSK1jmARD42r7LOzZmTd9xwBn0EY7NoQFSM9lxjxN13rsurw==
+X-Received: by 2002:a05:600c:acb:b0:3a0:30f8:8a45 with SMTP id c11-20020a05600c0acb00b003a030f88a45mr14892133wmr.55.1656671486935;
+        Fri, 01 Jul 2022 03:31:26 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v6-20020a05600c12c600b0039c811077d3sm9712790wmd.22.2022.07.01.03.31.26
+        by smtp.gmail.com with ESMTPSA id v6-20020a05600c12c600b0039c811077d3sm9712790wmd.22.2022.07.01.03.31.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 03:31:27 -0700 (PDT)
+        Fri, 01 Jul 2022 03:31:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 4/4] cocci: generalize "unused" rule to cover more than "strbuf"
-Date:   Fri,  1 Jul 2022 12:30:59 +0200
-Message-Id: <patch-v3-4.4-45a429b9cc9-20220701T102506Z-avarab@gmail.com>
+Subject: [PATCH v3 3/4] cocci: remove "when strict" from unused.cocci
+Date:   Fri,  1 Jul 2022 12:30:58 +0200
+Message-Id: <patch-v3-3.4-9a5e7208dec-20220701T102506Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.900.g4d0de1cceb2
 In-Reply-To: <cover-v3-0.4-00000000000-20220701T102506Z-avarab@gmail.com>
 References: <cover-v2-0.2-00000000000-20220621T223954Z-avarab@gmail.com> <cover-v3-0.4-00000000000-20220701T102506Z-avarab@gmail.com>
@@ -68,110 +68,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Generalize the newly added "unused.cocci" rule to find more than just
-"struct strbuf", let's have it find the same unused patterns for
-"struct string_list", as well as other code that uses
-similar-looking *_{release,clear,free}() and {release,clear,free}_*()
-functions.
-
-See [1] for example of code that would be covered by the
-"get_worktrees()" part of this rule. We'd still need work that the
-series is based on (we were passing "worktrees" to a function), but
-could now do the change in [1] automatically.
-
-1. https://lore.kernel.org/git/Yq6eJFUPPTv%2Fzc0o@coredump.intra.peff.net/
+Remove the "when strict" constraint from the newly introduced rule to
+find unused code. As seen in the change this will help us find cases
+where a "return" was causing spatch in the middle of our match was
+causing spatch to abort its analysis.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/repack.c                |  2 --
- contrib/coccinelle/unused.cocci | 31 ++++++++++++++++++++++++-------
- 2 files changed, 24 insertions(+), 9 deletions(-)
+ builtin/merge.c                 | 2 --
+ contrib/coccinelle/unused.cocci | 2 --
+ 2 files changed, 4 deletions(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 4a7ae4cf489..482b66f57d6 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -727,7 +727,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	struct string_list_item *item;
- 	struct string_list names = STRING_LIST_INIT_DUP;
--	struct string_list rollback = STRING_LIST_INIT_NODUP;
- 	struct string_list existing_nonkept_packs = STRING_LIST_INIT_DUP;
- 	struct string_list existing_kept_packs = STRING_LIST_INIT_DUP;
- 	struct pack_geometry *geometry = NULL;
-@@ -1117,7 +1116,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	}
+diff --git a/builtin/merge.c b/builtin/merge.c
+index bbd70b17bc6..23170f2d2a6 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -375,7 +375,6 @@ static void reset_hard(const struct object_id *oid, int verbose)
+ static void restore_state(const struct object_id *head,
+ 			  const struct object_id *stash)
+ {
+-	struct strbuf sb = STRBUF_INIT;
+ 	const char *args[] = { "stash", "apply", NULL, NULL };
  
- 	string_list_clear(&names, 0);
--	string_list_clear(&rollback, 0);
- 	string_list_clear(&existing_nonkept_packs, 0);
- 	string_list_clear(&existing_kept_packs, 0);
- 	clear_pack_geometry(geometry);
+ 	if (is_null_oid(stash))
+@@ -391,7 +390,6 @@ static void restore_state(const struct object_id *head,
+ 	 */
+ 	run_command_v_opt(args, RUN_GIT_CMD);
+ 
+-	strbuf_release(&sb);
+ 	refresh_cache(REFRESH_QUIET);
+ }
+ 
 diff --git a/contrib/coccinelle/unused.cocci b/contrib/coccinelle/unused.cocci
-index 9f0101c1350..a1b09d2d73d 100644
+index 43942f3cd4f..9f0101c1350 100644
 --- a/contrib/coccinelle/unused.cocci
 +++ b/contrib/coccinelle/unused.cocci
-@@ -1,5 +1,5 @@
- // This rule finds sequences of "unused" declerations and uses of
--// "struct strbuf".
-+// "struct strbuf" and other common types.
- //
- // I.e. this finds cases where we only declare the variable, and then
- // release it, e.g.:
-@@ -20,14 +20,18 @@
- @@
- type T;
- identifier I;
--// STRBUF_INIT
--constant INIT_MACRO =~ "^STRBUF_INIT$";
-+// STRBUF_INIT, but also e.g. STRING_LIST_INIT_DUP (so no anchoring)
-+constant INIT_MACRO =~ "_INIT";
- // x[mc]alloc() etc.
- identifier MALLOC1 =~ "^x?[mc]alloc$";
-+// I = get_worktrees() etc.
-+identifier INIT_ASSIGN1 =~ "^get_worktrees$";
- // strbuf_init(&I, ...) etc.
--identifier INIT_CALL1 =~ "^strbuf_init$";
--// strbuf_release()
--identifier REL1 =~ "^strbuf_release$";
-+identifier INIT_CALL1 =~ "^[a-z_]*_init$";
-+// stbuf_release(), string_list_clear() etc.
-+identifier REL1 =~ "^[a-z_]*_(release|clear|free)$";
-+// release_patch(), clear_pathspec() etc.
-+identifier REL2 =~ "^(release|clear|free)_[a-z_]*$";
- @@
- 
- // .. A declaration like "struct strbuf buf;"...
-@@ -52,6 +56,10 @@ identifier REL1 =~ "^strbuf_release$";
+@@ -47,7 +47,6 @@ identifier REL1 =~ "^strbuf_release$";
+ // ... Optionally followed by lines that make no use of "buf", "&buf"
+ // etc., but which ...
+ <... when != \( I \| &I \)
+-     when strict
+ (
+ // .. (only) make use of "buf" or "&buf" to call something like
  // "strbuf_init(&buf, ...)" ...
- - \( INIT_CALL1 \)( \( I \| &I \), ...);
- |
-+// .. or e.g. "worktrees = get_worktrees();", i.e. a known "assignment
-+// init" ...
-+- I = \( INIT_ASSIGN1 \)(...);
-+|
- // .. or to follow-up a "struct strbuf *buf" with e.g. "buf =
- // xmalloc(...)" (which may in turn be followed-up by a
- // "strbuf_init()", which we'll match with INIT_CALL1) ...
-@@ -61,11 +69,20 @@ identifier REL1 =~ "^strbuf_release$";
- 
- // ... and then no mention of "buf" or "&buf" until we get to a
- // strbuf_release(&buf) at the end ...
--- \( REL1 \)( \( &I \| I \) );
-+(
-+- \( REL1 \| REL2 \)( \( I \| &I \), ...);
-+|
-+- \( REL1 \| REL2 \)( \( &I \| I \) );
-+)
- // ... and no use *after* either, e.g. we don't want to delete
+@@ -67,7 +66,6 @@ identifier REL1 =~ "^strbuf_release$";
  // init/strbuf_release() patterns, where "&buf" could be used
  // afterwards.
    ... when != \( I \| &I \)
-+// Note that we're intentionally loose in accepting e.g. a
-+// "strbuf_init(&buf)" followed by a "string_list_clear(&buf,
-+// 0)". It's assumed that the compiler will catch any such invalid
-+// code, i.e. that our constructors/destructors don't take a "void *".
-+//
+-      when strict
  // This rule also isn't capable of finding cases where &buf is used,
  // but only to e.g. pass that variable to a static function which
  // doesn't use it. The analysis is only function-local.
