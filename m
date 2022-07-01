@@ -2,219 +2,289 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E342C43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 03:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E296BC43334
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 03:44:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233206AbiGADDq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jun 2022 23:03:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55818 "EHLO
+        id S234585AbiGADoe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jun 2022 23:44:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231356AbiGADDo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jun 2022 23:03:44 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47125220FC
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 20:03:43 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id e2so1296509edv.3
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 20:03:43 -0700 (PDT)
+        with ESMTP id S233836AbiGADoT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jun 2022 23:44:19 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB936EEB4
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 20:42:48 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id z41so1381879ede.1
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 20:42:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GDkZtJMU997v4ep7NKWe+NfRWM88Ib100CRrJFYoqQ0=;
-        b=Mi5b0UK+UC4OKOx9iuRTYUqsvOzCzN1lVoqxyzfRe6uMEAKKO7cIuHGZFhUy792d0J
-         aURhHHhHwAJ4kxW3YFsuz/iXAwSW+3mA5uTB2HPEV1njtslNgGAXarpoLAlHc4ZbaeWd
-         Kta8l8HufmX2fgxc70mXtq49AAi6Li/Qm2lMS8+WcxyJGCci5qum53gEskY02zdY0jmo
-         aISakSzW7y9J8iFgHT7Rj6oXLTsTj/a39PoS0lEWrYr2SN8hyEsixLQe04vCNJVukcYf
-         HV3Lcc4ZuC+YtrwBVPCSbCQB4nOL92ZBlxmZstKutSJTenCGb+DMuZhMv53Hp+c4A7fz
-         G5kg==
+         :cc;
+        bh=HGOjrMbggFTkXehhEwwW/Zu3Gnn8KUzMqwIgf+nxEbs=;
+        b=QhchbNbMZZZfOTSj0shYZU4w+1o7Ee1KRSSePw15nwC9jTaJgK6NbrL1vWCne7xNzl
+         VmKhex9nlt5e+wdGIyJEntXfJ8gkkbDVIFfrA5XSkCvo8VfBwRonZa/GGEXZa7Eaci85
+         mMpzenfmnlvNIqZ2QZDxmpXBBpk6Fokh20cljJDty9Om/XtGUgdKYy7N+XgUsFlL23V/
+         nW9XAG0HzwWqfaXPOYvksUx61zPaX2rnIOvc7kohEAWfVXPsG6Amcy62kh7QzSKoKhXA
+         Vr/PWWrf3CmZrnWiG0UmedkRwYTPolqbY2hNegKBsDW5D7DX80VEv+/J32CY6+h12eAO
+         g/Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GDkZtJMU997v4ep7NKWe+NfRWM88Ib100CRrJFYoqQ0=;
-        b=kqAQwWoCTGHz/KPdO3mooc32P8dBSVIJ1b0eI80odwXQUJL5vszfB+gl5ISaffT34A
-         yoUTw4MloTXgXPG6JJlI1nzNaH31Fc+UmWXjcAaHPiQBiY6tbj5SHix865C3uNe5dXiV
-         A+pnVZTdrDC9JzOjEbsc9XrhlaDeiEmvfFJ0pZXwly4/uC9qMiOwIxbGEwq1pi1hOwWN
-         8N9+fM7EHZFWxyr1qg2gvn1435XFOCQsqYIzjqr1BZWqwoN2/uZt+fC3sjSGDsd8dzHm
-         Z9xs7vMAPqfRRSFtBMm27U0qZUQacgai8P4vJpF9gig3IiKMCKMmrHAUzre4E7BR82rP
-         wOaA==
-X-Gm-Message-State: AJIora+mYeKJL7Y2U3rnuCblA2M8txuLj6ztL/rsc5wKa1Tm7UwGF4ax
-        QpTIoqSbOZsCR8jhX7UU+18efUFEl/m495+ULcM=
-X-Google-Smtp-Source: AGRyM1tn/Xe/O/JTT36WHmkZ8PT/nUufJY8A4psjWoSf1deUl91+m7RZeNRIvWVQkYNT04AguxttjEF8LkgOKQl3NgE=
-X-Received: by 2002:a05:6402:27cf:b0:435:dae6:26aa with SMTP id
- c15-20020a05640227cf00b00435dae626aamr15693204ede.323.1656644621824; Thu, 30
- Jun 2022 20:03:41 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=HGOjrMbggFTkXehhEwwW/Zu3Gnn8KUzMqwIgf+nxEbs=;
+        b=HdmOhiXaQpy/dMBTgR73ACIsRfgl1K5cE2U29CMqE5EA6c/dcposc4Bg0bapZW2w/S
+         93aH6YWEfYDEXcnKTKYUr4BlJ8vpWDvu8QtNXv8dREOevhW4r4Pi7RQ1JINZiwLfOEmm
+         FPRuUYNjxPjA3EZh3Yed/KDudZewSjxo0qMmmu/Tlb2WHpWUDbJTtdvQzUW76Xi8qn/F
+         AOdS9EWXgFxWDnYJoL+n82i5+0Kv6oN/5a/E6en2FHLPuhRodinhklNbpCPUyLel5t9F
+         e1OAIIKUz1kWmVFbwPhGwI7qpzaYKv46SQh/GsAEgTDxOSUIbqvdWUkfJVuoXanSwFIJ
+         D3jg==
+X-Gm-Message-State: AJIora81DIv9RNVHxNRPuWpjewdANUmF934yAVvdD1uMUHojEapjR4xH
+        0wTxr0w/kZLzCDouKWIEchLSS9YT8fXTCs0e2cnMIIVdJLc=
+X-Google-Smtp-Source: AGRyM1vmIPqgOuE3l8UjgoWR4QlXg6BUnvxApgewCmZ/3OVfrdRXDhVi8atELx/2mVLO6mwjj29ii3RDCTVgCTwWv/c=
+X-Received: by 2002:a05:6402:2999:b0:434:edcc:f12c with SMTP id
+ eq25-20020a056402299900b00434edccf12cmr15725117edb.96.1656646967286; Thu, 30
+ Jun 2022 20:42:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
- <pull.1268.v2.git.1656572225.gitgitgadget@gmail.com> <da3ae38e390df8acf86e910389d1620569a95a87.1656572226.git.gitgitgadget@gmail.com>
- <220630.86letee8mz.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220630.86letee8mz.gmgdl@evledraar.gmail.com>
+References: <CAKSRnEzMaQEv=3mkNWRpy6+-c0rz=R191iqheCQ2ptXFs1CQgw@mail.gmail.com>
+ <96034b3f-9811-38c1-7afe-c1c9dd243f0e@github.com> <CABPp-BHv3TSJhnWSF8AjF_nr72vMnOFXZJKoG0juGwjz13TZ=w@mail.gmail.com>
+ <c5662c60-4a21-be94-8fe0-13c6730292dd@github.com>
+In-Reply-To: <c5662c60-4a21-be94-8fe0-13c6730292dd@github.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 30 Jun 2022 20:03:30 -0700
-Message-ID: <CABPp-BHmuDx0+JBbar3jZRWFxFruaxSWkohy=BzOsqBUZENyvw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] merge-ort: fix issue with dual rename and add/add conflict
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+Date:   Thu, 30 Jun 2022 20:42:35 -0700
+Message-ID: <CABPp-BFRHjF7+9T8dGG=ixsezksZUNU7pm29MG2kcLEYwE06Og@mail.gmail.com>
+Subject: Re: git bug report: 'git add' hangs in a large repo which has
+ sparse-checkout file with large number of patterns in it
+To:     Victoria Dye <vdye@github.com>
+Cc:     Dian Xu <dianxudev@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Calvin Wan <calvinwan@google.com>
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 30, 2022 at 3:41 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Wed, Jun 29, 2022 at 10:06 PM Victoria Dye <vdye@github.com> wrote:
 >
-> On Thu, Jun 30 2022, Elijah Newren via GitGitGadget wrote:
->
-> > From: Elijah Newren <newren@gmail.com>
+> Elijah Newren wrote:
+> > On Wed, Jun 29, 2022 at 3:04 PM Victoria Dye <vdye@github.com> wrote:
+> >>
+> >> Dian Xu wrote:
+> >>> Dear Git developers,
+> >>>
+> >>> Reporting Issue:
+> >>>               'git add' hangs in a large repo which has
+> >>> sparse-checkout file with large number of patterns in it
+> >>>
+> >>> Found in:
+> >>>               Git 2.34.3. Issue occurs after 'audit for interaction
+> >>> with sparse-index' was introduced in add.c
+> >>>
+> >>> Reproduction steps:
+> >>>               1. Clone a repo which has e.g. 2 million plus files
+> >>>               2. Enable sparse checkout by: git config core.sparsecheckout true
+> >>>               3. Create a .git/info/sparse-checkout file with a large
+> >>> number of patterns, e.g. 16k plus lines
+> >>>               4. Run 'git add', which will hang>
+> >>> Investigations:
+> >>>               1. Stack trace:
+> >>>                        add.c: cmd_add
+> >>>                   -> add.c: prune_directory
+> >>>                   -> pathspec.c: add_pathspec_matches_against_index
+> >>>                   -> dir.c: path_in_sparse_checkout_1
+> >>>               2. In Git 2.33.3, the loop at pathspec.c line 42 runs
+> >>> fast, even when istate->cache_nr is at 2 million
+> >>>               3. Since Git 2.34.3, the newly introduced 'audit for
+> >>> interaction with sparse-index' (dir.c line 1459:
+> >>> path_in_sparse_checkout_1) decides to loop through 2 million files and
+> >>> match each one of them against the sparse-checkout patterns
+> >>>               4. This hits the O(n^2) problem thus causes 'git add' to
+> >>> hang (or ~1.5 hours to finish)
+> >>
+> >> Thanks for the explanation, it helped me narrow down the source to an exact
+> >> commit (49fdd51a23 (add: skip tracked paths outside sparse-checkout cone,
+> >> 2021-09-24)).
+> >>
+> >> You're correct that the `path_in_sparse_checkout()` check is slow [1].
+> >> However, it only runs on files that are not "hidden" with the
+> >> `SKIP_WORKTREE` flag. Ideally, if you're using sparse-checkout, this will
+> >> only be a small subset of your 2 million files.
+> >>
+> >> In your repro steps, you're adding patterns to a file then immediately
+> >> running `git add`. If that reflects how you're usually working with
+> >> sparse-checkout, `SKIP_WORKTREE` likely isn't being applied properly before
+> >> the `add`. You can check to see whether file(s) have the flag properly
+> >> applied with `git ls-files -t <file or dir names>` - each `SKIP_WORKTREE`
+> >> file should have an "S" next to it. "H" indicates that the flag is *not*
+> >> applied.
+> >>
+> >> If you see that most of the files that *should* be sparse don't have
+> >> `SKIP_WORKTREE` applied, you can run `git sparse-checkout reapply` (make
+> >> sure you don't have any modified files outside the patterns you're
+> >> applying!). The downside is that it'll be as slow as what you're reporting
+> >> for `git add`, but any subsequent `add` (or reset, status, etc.) should be
+> >> much faster.
+> >>
+> >> If you do all of that but things are still slow, then the way we check
+> >> pathspecs in `git add` would need to change (not trivial, but probably not
+> >> impossible either). At a cursory glance, I can think of a few options for
+> >> that:
+> >>
+> >> 1. Remove the `path_in_sparse_checkout()` check. It's the simplest solution,
+> >>    but it means you'd be able to stage files for commit outside the
+> >>    sparse-checkout patterns without using the '--sparse' option. I don't
+> >>    personally think that's a huge issue, but given that the implementation
+> >>    was intentionally changed *away* from this approach, I'd defer to other
+> >>    contributors to see if that's an okay change to make.
 > >
-> > There is code in both merge-recursive and merge-ort for avoiding doubly
-> > transitive renames (i.e. one side renames directory A/ -> B/, and the
-> > other side renames directory B/ -> C/), because this combination would
-> > otherwise make a mess for new files added to A/ on the first side and
-> > wondering which directory they end up in -- especially if there were
-> > even more renames such as the first side renaming C/ -> D/.  In such
-> > cases, it just turns "off" directory rename detection for the higher
-> > order transitive cases.
+> > I'm strongly against this.  This just restores the original bug we
+> > were trying to fix, attempts to paper over the fact that non-cone mode
+> > is fundamentally O(N*M) in one small instance, and sets the precedent
+> > that we can't fix further sparse-checkout-based usability bugs because
+> > it might add performance bottlenecks in additional places given
+> > non-cone-mode's fundamental performance design problem.  We should
+> > instead (in rough priority order)
+>
+> I'm not sure what the bug was - although I can (and should) read through the
+> list archive to find out - but the rest of your point is convincing enough
+> on its own. Even if we sacrificed correctness for performance in this one
+> case, there are countless other places in the code like it, and changing all
+> of them could seriously hurt user experience in other ways.
+>
+> Thanks for your perspective!
+
+:-)
+
 > >
-> > The testcases added in t6423 a couple commits ago are slightly differen=
-t
-> > but similar in principle.  They involve a similar case of paired
-> > renaming but instead of A/ -> B/ and B/ -> C/, the second side renames
-> > a leading directory of B/ to C/.  And both sides add a new file
-> > somewhere under the directory that the other side will rename.  While
-> > the new files added start within different directories and thus could
-> > logically end up within different directories, it is weird for a file
-> > on one side to end up where the other one started and not move along
-> > with it.  So, let's just turn off directory rename detection in this
-> > case as well.
+> > * encourage people to adopt cone mode
+> > * discourage people still using non-cone mode from having lots of patterns
+>
+> While I know these are the recommended best practice, I do want to
+> acknowledge that switching to cone mode in some repositories is a huge lift
+> or otherwise infeasible [1]. While people make that transition (if they even
+> can), I don't think it's unreasonable to look for ways to improve
+> performance in non-cone sparse checkout, especially if those performance
+> gains can also be realized in cone mode.
+>
+> [1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2205212347060.352@tvgsbejvaqbjf.bet/
+
+Yep, very good point.  These dovetail with why I used "encourage" and
+"discourage", and with why I had several more things that should be
+done in my list, including performance work.  I know that non-cone
+mode is important to still support.
+
+But I would also like to point out that folks sometimes aren't
+adopting cone mode out of inertia or bad assumptions about how cone
+mode operates, rather than having sound reasons.  In fact, I've even
+seen them describe conditions that sound like a perfect fit for cone
+mode and yet use their described usecase as rationale to _not_ use
+cone mode simply because they assume cone mode does something other
+than what it really does.  (See
+https://lore.kernel.org/git/CABPp-BEwMAPHGt5xD9jDU58grbrAqCdqNY9Nh8UJGLKuLbArXQ@mail.gmail.com/
+and the previous email in that thread for an example).  If even other
+Git developers do that, that suggests we do need to probe a bit and
+see if people can switch instead of just accepting they are one of the
+cases that can't.  We still have some education work to do.
+
+> > * make sure people aren't misusing things (the lack of a `git
+> > read-tree -mu HEAD` or `git sparse-checkout reapply` seemed very
+> > suspicious)
+>
+> A warning if a particular git operation sees a lot of out-of-cone
+> non-`SKIP_WORKTREE` files might help with this (and would be especially
+> impactful for someone working with a sparse index). I'm not sure how to
+> quantify "a lot", though.
+
+Yeah, this kind of reminds me of the present-despite-skipped check we
+added.  Adding something like that which always runs is probably a
+no-go, though, since this additional check would be much more
+expensive than the present-despite-skipped one.  And, like you, I'm
+also a little unsure how to quantify "a lot".
+
+However, perhaps there's a way to tackle this problem from a different
+angle.  I just noticed that the only place outside of the "git
+sparse-checkout" command that sparse checkouts are documented, in
+git-read-tree(1), that it didn't bother to give a list of steps for
+employing sparse-checkouts and that people have to figure it out by
+trial and error.  (Or read a random mailing list post or commit
+message like 94c0956b60 (sparse-checkout: create builtin with 'list'
+subcommand, 2019-11-21)).  So perhaps it's not surprising that users
+miss one of the crucial steps.  Perhaps if we fix that documentation
+to mention the necessary steps ("git config core.sparseCheckout true",
+populate $GIT_DIR/info/sparse-checkout, then either run "git read-tree
+-mu HEAD" or "git sparse-checkout reapply"), then users can discover
+and make sure to do all the steps instead of just a subset?
+
+> > * educate people that non-cone mode is just fundamentally slow, among
+> > other problems, and that the slowness might appear in additional
+> > places in the future as we fix various usability issues.
+> > * provide workarounds users can adopt if they really want to persist
+> > with non-cone mode with lots of patterns (e.g. add "--sparse" to their
+> > "git add" commands), though warn them about the possible side effects
+> > they'll face (the added files can seemingly randomly disappear in the
+> > working tree with future checkout/pull/merge/rebase/reset/etc commands
+> > if the added files don't match the sparsity patterns).
+> > * investigate ways to optimize the code to lower the constant in the
+> > O(N*M) behavior on a case-by-case basis
 > >
-> > Another way to look at this is that if the source name involved in a
-> > directory rename on one side is the target name of a directory rename
-> > operation for a file from the other side, then we avoid the doubly
-> > transitive rename.  (More concretely, if a directory rename on side D
-> > wants to rename a file on side E from OLD_NAME -> NEW_NAME, and side D
-> > already had a file named NEW_NAME, and a directory rename on side E
-> > wants to rename side D's NEW_NAME -> NEWER_NAME, then we turn off the
-> > directory rename detection for NEW_NAME to prevent the
-> > NEW_NAME -> NEWER_NAME rename, and instead end up with an add/add
-> > conflict on NEW_NAME.)
+> > We deprecated non-cone mode in v2.37 in part because of this type of
+> > issue, and I really don't want the see the deprecated side of things
+> > dictating how commands work for the now-default mode.
 > >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  merge-ort.c                         | 7 +++++++
-> >  t/t6423-merge-rename-directories.sh | 4 ++--
-> >  2 files changed, 9 insertions(+), 2 deletions(-)
+> >> 2. After every call to `ce_path_match()`, check if all pathspecs are marked
+> >>    as `seen` and, if so, return early. This would slow down each individual
+> >>    file check and wouldn't help you if a pathspec matches nothing, but
+> >>    prevents checking more files once all pathspecs are matched.
 > >
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index fa6667de18c..17db4c30e5b 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > @@ -2292,9 +2292,16 @@ static char *check_for_directory_rename(struct m=
-erge_options *opt,
-> >       struct strmap_entry *rename_info;
-> >       struct strmap_entry *otherinfo =3D NULL;
-> >       const char *new_dir;
-> > +     int other_side =3D 3 - side_index;
+> > Might be interesting.  Would need some careful measurements and
+> > attempts to validate how often all pathspecs are matched early in some
+> > kind of way, because this would definitely slow down some cases and
+> > speed others up, but I don't have a good feel for which side happens
+> > more frequently in practice.
 > >
-> > +     /*
-> > +      * Cases where we don't have or don't want a directory rename for
-> > +      * this path, so we return NULL.
-> > +      */
-> >       if (strmap_empty(dir_renames))
-> >               return new_path;
-> > +     if (strmap_get(&collisions[other_side], path))
-> > +             return new_path;
+> >> 3. Do some heuristic checks on the pathspecs before checking index entries.
+> >>    For example, exact file or directory matches could be searched in the
+> >>    index. This would still require falling back on the per-file checks if
+> >>    not all pathspecs are matched, but makes some typical use-cases much
+> >>    faster.
+> >
+> > I'm confused.  "before checking index entries", you're checking things
+> > (namely, exact file or directory matches) "in the index"?
 >
-> I realize from looking at merge-recursive.c that this is carrying
-> forward some legacy debt
+> Sorry, I definitely wasn't clear. I mean "perform heuristic checks *per
+> pathspec item* before iterating *per index entry*." Pathspecs used in `git
+> add` are (at least in my experience) pretty small, so there could be
+> performance gains if all the items can be marked `seen` without iterating
+> over every entry of the index. I was thinking something like
+> `pathspec_needs_expanded_index()` in `reset` (4d1cfc1351 (reset: make
+> --mixed sparse-aware, 2021-11-29)), but tailored to this particular case.
 
-...which was introduced by me as well...
+Ah, okay makes sense now.
 
-> , but I find this code and the need for a
-> comment more complex than it needs to. On top of master this will work
-> just as well:
+
+
+
+
 >
->         diff --git a/merge-ort.c b/merge-ort.c
->         index b5015b9afd4..f5a02b1ff6f 100644
->         --- a/merge-ort.c
->         +++ b/merge-ort.c
->         @@ -2268,16 +2268,16 @@ static char *check_for_directory_rename(s=
-truct merge_options *opt,
->                                                 struct strmap *collisions=
-,
->                                                 int *clean_merge)
->          {
->         -       char *new_path =3D NULL;
->         +       char *new_path;
->                 struct strmap_entry *rename_info;
->                 struct strmap_entry *otherinfo =3D NULL;
->                 const char *new_dir;
+> >
+> >> There are almost certainly other options, and I can dig around `add.c` more
+> >> to see if there's anything I'm missing (although I'd love to hear other
+> >> ideas too!).
+> >>
+> >> Hopefully this helps!
+> >> - Victoria
+> >>
+> >> [1] `path_in_sparse_checkout()` is significantly faster in cone mode, but
+> >> with 16k patterns I'm assuming you're not using cone patterns ;)
+> >>
+> >>>
+> >>> Please help us take a look at this issue and let us know if you need
+> >>> more information.
+> >>>
+> >>> Thanks,
+> >>>
+> >>> Dian Xu
+> >>> Mathworks, Inc
+> >>> 1 Lakeside Campus Drive, Natick, MA 01760
+> >>> 508-647-3583
+> >>
 >
->                 if (strmap_empty(dir_renames))
->         -               return new_path;
->         +               return NULL;
->                 rename_info =3D check_dir_renamed(path, dir_renames);
->                 if (!rename_info)
->         -               return new_path;
->         +               return NULL;
->                 /* old_dir =3D rename_info->key; */
->                 new_dir =3D rename_info->value;
-
-You know, while making this patch series I was asking myself, "Why
-didn't I just explicitly return NULL here?"  I don't know why I did it
-this way, but it now seems slightly odd to me too.  I decided to not
-fix it up and just provide a more targeted fix, but since it tripped
-you up, I'm happy to add this as a preparatory cleanup.
-
-> I.e. we're really just making the reader squint to see that we're
-> actually returning NULL here, it's only later that we have an actual
-> "new path".
->
-> Wouldn't sticking that earlier in this series be an improvement? The
-> reason you need to explain "so we return NULL" is because we're carrying
-> forward this oddity, but if we just don't initialize it and return NULL
-> instead...
-
-I still think the comment makes sense to add, other than the "so we
-return NULL" bit, even after this change.  But yeah, we can strike the
-"so we return NULL" part of it after this cleanup.
-
-> If you want to keep this pretty much as-is I think you should add a \n
-> before the (not seen in your context) "old_dir" comment seen in the
-> context here above, to make it visually clear that your new comment is
-> referring to these chains of returns. That could also be made clearer
-> with (again, on top of master, and could be combined with the above):
->
->         diff --git a/merge-ort.c b/merge-ort.c
->         index b5015b9afd4..a418f81a3eb 100644
->         --- a/merge-ort.c
->         +++ b/merge-ort.c
->         @@ -2278,8 +2278,6 @@ static char *check_for_directory_rename(str=
-uct merge_options *opt,
->                 rename_info =3D check_dir_renamed(path, dir_renames);
->                 if (!rename_info)
->                         return new_path;
->         -       /* old_dir =3D rename_info->key; */
->         -       new_dir =3D rename_info->value;
->
->                 /*
->                  * This next part is a little weird.  We do not want to d=
-o an
->         @@ -2305,6 +2303,7 @@ static char *check_for_directory_rename(str=
-uct merge_options *opt,
->                  * As it turns out, this also prevents N-way transient re=
-name
->                  * confusion; See testcases 9c and 9d of t6043.
->                  */
->         +       new_dir =3D rename_info->value; /* old_dir =3D rename_inf=
-o->key; */
->                 otherinfo =3D strmap_get_entry(dir_rename_exclusions, new=
-_dir);
->                 if (otherinfo) {
->                         path_msg(opt, rename_info->key, 1,
-
-Sure, seems fine.
