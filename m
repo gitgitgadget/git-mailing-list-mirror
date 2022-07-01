@@ -2,210 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25BA0C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 09:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4B27C43334
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 09:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233217AbiGAJbK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 05:31:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50430 "EHLO
+        id S236162AbiGAJhp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 05:37:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232550AbiGAJbJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 05:31:09 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 839365C9D2
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 02:31:08 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id e28so2393664wra.0
-        for <git@vger.kernel.org>; Fri, 01 Jul 2022 02:31:08 -0700 (PDT)
+        with ESMTP id S232405AbiGAJho (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 05:37:44 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA522747B7
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 02:37:42 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id e2so2235681edv.3
+        for <git@vger.kernel.org>; Fri, 01 Jul 2022 02:37:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=p2sxMHGI1HvUsfER1Dj+q8rJDXjAKrH46j3ityWD3pk=;
-        b=HwzUGUCzCinDrlkmrq7ZTlWY41GCrJFE6G3edKsI8BQ9UYzW9loHN2a123pKt9LeH7
-         NGI/Otgn9Kkwb6mtqAB1UJYQqVCiIt8Ta7JHHziYrNbZ/I3jr3ZrqdtkqlaM3bFBv2OK
-         9mpIm/4H7Ov80pbF04p/9eyExj87J59au+05NBQHulxzGsI331HVbwzILcWe1pOsr6B5
-         NVyzCEiVwV1/JrZlwz+vkmt4+HadU5RZdyVlyPNZGav7DeDYqXzfayi+urXy2dDmd/b7
-         VnefLLfyS0taEeb8KmV1RbJcZvWi9pjtTzE23jOZZkcLsHD4m9SCq/CQxXqa0ZdPrc5o
-         pe8g==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=n8bW6NR2+XB/MyqaT9dvZQfPEo6B8byJ4jqG3IW6RNY=;
+        b=m2FKzmlN7CPPNATo6SRm01nxIpJ16iqL/gRkGZaTaD6aLMJa71m/NvALuF761DUFC8
+         2b37Xd8BS6OseAoBog+d+PrLch7RZo87R1cM2bze96dDKho/pJSsetTBemDDa9yqr6tf
+         nQs9k0RlkdAGUqyta64L36HOcbfNBrmz9HIRZaH+AX0GVdQDbQ+v8OR84+jeGLIkdFrD
+         fv7IK0SXIYfuugEsYsMIJZAU2rbUi+LBTbxKpKsBn2QAyHij454EsyuXdUVFQZgBGO0l
+         EsPgfNSCNiN8Ycv19kx9lOHjV2Q3vlGZRYz3iZ/Ejtk9vLnuPG/p/ilN+FtfhQOVCoh5
+         wgAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=p2sxMHGI1HvUsfER1Dj+q8rJDXjAKrH46j3ityWD3pk=;
-        b=YFNKLqvSIG3dUqQ9ZFbn9rBne9RPzVkwARk9JCTZcT1v9mZ4zu3eiCsSZsncSNVni+
-         dfOC+xhPk45JE1fYUxHuE2kgfAza/bnvGKkolIXa11UGZ0Z64ryDE9XTOtJ60x06ojZR
-         yGObNwVhKAi3bxxW1RvAiv5pS63IuVPdPWAuFo8UpshM20dbotFYJrqSzBBPXNCBji6w
-         5rdf03CAv/fcank6PNvnNkg5DnWa/JhrViRlhcqMj8NJVuHSJkqeQm8pdMzunx0FzXiD
-         +yW42O2ILXolYC1kQVC4mvftXaZZ3tzp6Qs5frMoUScQ/UaR8b94MmQVxWLZT4nKxC8W
-         JIGw==
-X-Gm-Message-State: AJIora8jMTNyWSVerFuptdFy0p4Kj0xPnNVnCERJ3jjN7Y1HkQAGIYvQ
-        ffgg2Cd18d3aT5u5Tz/mygy66KutXak=
-X-Google-Smtp-Source: AGRyM1sJkcAZ1rynq1slv7+s+LGobs7u0QoztH+C9QfZIV0TujNeKFKckqhMF/LbjSi6001/P5RsdQ==
-X-Received: by 2002:adf:e0c9:0:b0:21b:8271:2348 with SMTP id m9-20020adfe0c9000000b0021b82712348mr11793173wri.222.1656667867001;
-        Fri, 01 Jul 2022 02:31:07 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.192])
-        by smtp.googlemail.com with ESMTPSA id y15-20020a5d4acf000000b0021b9c520953sm21873807wrs.64.2022.07.01.02.31.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Jul 2022 02:31:06 -0700 (PDT)
-Message-ID: <bee9eb82-6c6a-6467-37d1-d3797c583929@gmail.com>
-Date:   Fri, 1 Jul 2022 10:31:05 +0100
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=n8bW6NR2+XB/MyqaT9dvZQfPEo6B8byJ4jqG3IW6RNY=;
+        b=xyQF8A5NYr/wp7xDnUk/b2XoP5NQn5vek188HvwrKauDxKa+TCZmeSqaE0Jq5Ynuup
+         9RZorlGej8/dRGbom6abfr44MdymsTNqplU2fJcbgSsajr0vO+0Lt13UgYtnfbLmwfgD
+         /UXxVEIiGYcWzt469jQCFxBVnYtr5qitsRTXyee6c7oyDQiILIv5MhvBOctgkNjiPKDI
+         ZWzGbdMuo7jGC8oa4PRU/k9aJtPJjNyqSi31B/9mNhzk0OFcHNDOkt2U5Rha26I0K9MU
+         YRw5TF+MLKIpXLtNoT3KPalgapjQjnBhRKnHImTz2w6ruG4HYSaq3VJ/1JnCbYVWJud0
+         AcPw==
+X-Gm-Message-State: AJIora+oMnMeWpWP9idd3kcKsvkRwU3jhtcQkYv8V9tpQeOMSamYkA4x
+        +283aNRS6zTy2YdwECBBn51fMUKiGQa3pQ==
+X-Google-Smtp-Source: AGRyM1uf8fxqNRt5hg8ukiwvnieOOmfDMU9P/QGggaSD+xDvdQ1jercF2oyPefNIHPQ37G4UhWc80A==
+X-Received: by 2002:aa7:c309:0:b0:439:4e82:36ce with SMTP id l9-20020aa7c309000000b004394e8236cemr9309386edq.318.1656668261240;
+        Fri, 01 Jul 2022 02:37:41 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id m7-20020a056402050700b004356c0d7436sm14767213edv.42.2022.07.01.02.37.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Jul 2022 02:37:40 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1o7D5o-0039ad-48;
+        Fri, 01 Jul 2022 11:37:40 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH v2 1/3] t6423: add tests of dual directory rename plus
+ add/add conflict
+Date:   Fri, 01 Jul 2022 11:29:32 +0200
+References: <pull.1268.git.1655871651.gitgitgadget@gmail.com>
+ <pull.1268.v2.git.1656572225.gitgitgadget@gmail.com>
+ <bf4c03d01d5730503eb710e92a80136d5caa981a.1656572225.git.gitgitgadget@gmail.com>
+ <220630.86tu82e9b8.gmgdl@evledraar.gmail.com>
+ <CABPp-BEcojvfeuhp7rSi-O+9oEu4KpwPDwbKS-MiD1qCKde-CA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <CABPp-BEcojvfeuhp7rSi-O+9oEu4KpwPDwbKS-MiD1qCKde-CA@mail.gmail.com>
+Message-ID: <220701.86bku9b2cb.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 7/8] rebase: update refs from 'update-ref' commands
-Content-Language: en-US
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
- <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
- <72e0481b643e98c5670eee0bf5c199c4fb693b16.1656422759.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <72e0481b643e98c5670eee0bf5c199c4fb693b16.1656422759.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee
 
-On 28/06/2022 14:25, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
-> 
-> The previous change introduced the 'git rebase --update-refs' option
-> which added 'update-ref <ref>' commands to the todo list of an
-> interactive rebase.
-> 
-> Teach Git to record the HEAD position when reaching these 'update-ref'
-> commands. The ref/OID pair is stored in the
-> $GIT_DIR/rebase-merge/update-refs file. A previous change parsed this
-> file to avoid having other processes updating the refs in that file
-> while the rebase is in progress.
-> 
-> Not only do we update the file when the sequencer reaches these
-> 'update-ref' commands, we then update the refs themselves at the end of
-> the rebase sequence. If the rebase is aborted before this final step,
-> then the refs are not updated.
+On Thu, Jun 30 2022, Elijah Newren wrote:
 
-This looks good, I've left a few comments but it seems basically sound 
-to me.
+> On Thu, Jun 30, 2022 at 3:26 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> On Thu, Jun 30 2022, Elijah Newren via GitGitGadget wrote:
+>>
+>> > From: Elijah Newren <newren@gmail.com>
+>>
+>> > +test_setup_12l () {
+>> > +     test_create_repo 12l_$1 &&
+>>
+>> Can & should just be "git init", see f0d4d398e28 (test-lib: split up and
+>> deprecate test_create_repo(), 2021-05-10).
+>
+> I've switched to "git init" and even encouraged others to do the same
+> in other test scripts, but since literally every other test in this
+> file uses test_create_repo, I think they should all be converted at
+> once and just be consistent here.  But, so we can stop having this
+> conversation, after this series lands, I'll send one in to update the
+> various merge testfiles that make heavy use of test_create_repo and
+> convert them over.
 
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->   sequencer.c                   | 114 +++++++++++++++++++++++++++++++++-
->   t/t3404-rebase-interactive.sh |  23 +++++++
->   2 files changed, 136 insertions(+), 1 deletion(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index 915d87a0336..4fd1c0b5bce 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -36,6 +36,7 @@
->   #include "rebase-interactive.h"
->   #include "reset.h"
->   #include "branch.h"
-> +#include "log-tree.h"
->   
->   #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
->   
-> @@ -148,6 +149,14 @@ static GIT_PATH_FUNC(rebase_path_squash_onto, "rebase-merge/squash-onto")
->    */
->   static GIT_PATH_FUNC(rebase_path_refs_to_delete, "rebase-merge/refs-to-delete")
->   
-> +/*
-> + * The update-refs file stores a list of refs that will be updated at the end
-> + * of the rebase sequence. The 'update-ref <ref>' commands in the todo file
-> + * update the OIDs for the refs in this file, but the refs are not updated
-> + * until the end of the rebase sequence.
-> + */
-> +static GIT_PATH_FUNC(rebase_path_update_refs, "rebase-merge/update-refs")
-> +
->   /*
->    * The following files are written by git-rebase just after parsing the
->    * command-line.
-> @@ -4058,11 +4067,110 @@ leave_merge:
->   	return ret;
->   }
->   
-> -static int do_update_ref(struct repository *r, const char *ref_name)
-> +static int write_update_refs_state(struct string_list *refs_to_oids)
-> +{
-> +	int result = 0;
-> +	FILE *fp = NULL;
-> +	struct string_list_item *item;
-> +	char *path = xstrdup(rebase_path_update_refs());
+Sorry, genuinely I didn't mean to mention it again, just saw it scroll
+past & wondered if it was intentional. I'm fine with keeping it...
 
-This is leaked
+>> > +     (
+>> > +             cd 12l_$1 &&
+>> > +
+>> > +             mkdir -p sub1 sub2
+>>
+>> The "-p" here isn't needed, you're not creating recursive directories.
+>
+> Indeed; will fix.
 
-> +	if (safe_create_leading_directories(path)) {
-> +		result = error(_("unable to create leading directories of %s"),
-> +			       path);
-> +		goto cleanup;
-> +	}
-> +
-> +	fp = fopen(path, "w");
-> +	if (!fp) {
-> +		result = error_errno(_("could not open '%s' for writing"), path);
-> +		goto cleanup;
-> +	}
+Thanks!
 
-Can we use fopen_or_warn() here? It ignores ENOENT and ENOTDIR but I 
-don't think that should matter here.
+>> > +             git ls-files -s >out &&
+>> > +             test_line_count =3D 5 out &&
+>>
+>> Can't this just use test_stdout_line_count? Except...
+>
+> Ooh, new function from late last year that I was unaware of.  Yeah,
+> I'm happy to start using it.
+>
+>> > +
+>> > +             git rev-parse >actual \
+>> > +                     :0:sub3/file :0:sub3/newfile :0:sub3/sub2/other \
+>> > +                     :2:sub1/sub2/new_add_add_file \
+>> > +                     :3:sub1/sub2/new_add_add_file &&
+>> > +             git rev-parse >expect \
+>> > +                     O:sub1/file  B:sub1/newfile O:sub2/other \
+>> > +                     A:sub2/new_add_add_file \
+>> > +                     B:sub1/sub2/new_add_add_file &&
+>> > +             test_cmp expect actual &&
+>> > +
+>> > +             git ls-files -o >actual &&
+>> > +             test_write_lines actual expect out >expect &&
+>> > +             test_cmp expect actual
+>>
+>> This test seems a bit odd, here we're just checking that we've created
+>> scratch files for the internal use of our test, why is it important that
+>> we have an "out" file, when the only reason we have it is because we
+>> needed it for checking the "ls-files" line count above?
+>
+> Nah, you've misunderstood the purpose of the check.  It isn't "make
+> sure that these untracked files are present among whatever else might
+> also be present", it's "make sure the merge step did not introduce
+> *any* untracked files" (something the recursive backend periodically
+> did, and they weren't cruft untracked files but stored actual merge
+> results).=20
 
-> +
-> +	for_each_string_list_item(item, refs_to_oids)
-> +		fprintf(fp, "%s\n%s\n", item->string, oid_to_hex(item->util));
-> +
-> +cleanup:
-> +	if (fp)
-> +		fclose(fp);
-> +	return result;
-> +}
+Ah, thanks!
 
-> +compare_two_refs () {
-> +	git rev-parse $1 >expect &&
-> +	git rev-parse $2 >actual &&
-> +	test_cmp expect actual
-> +}
+> There wasn't a nice easy check for that, the closest was to
+> translate the requirement to "make sure the only untracked files are
+> the ones explicitly added by this test script", which is the check you
+> see here.  I don't actually care about "actual", "expect", or "out", I
+> just care that there aren't any _other_ untracked files.
 
-This is just test_cmp_rev
+I'm fine with keeping this as-is, but FWIW perhaps this pattern is more
+explicit about the intent:
 
-> +test_expect_success '--update-refs updates refs correctly' '
-> +	git checkout -B update-refs no-conflict-branch &&
-> +	git branch -f base HEAD~4 &&
-> +	git branch -f first HEAD~3 &&
-> +	git branch -f second HEAD~3 &&
-> +	git branch -f third HEAD~1 &&
-> +	test_commit extra2 fileX &&
-> +	git commit --amend --fixup=L &&
-> +
-> +	git rebase -i --autosquash --update-refs primary &&
-> +
-> +	compare_two_refs HEAD~3 refs/heads/first &&
-> +	compare_two_refs HEAD~3 refs/heads/second &&
-> +	compare_two_refs HEAD~1 refs/heads/third &&
-> +	compare_two_refs HEAD refs/heads/no-conflict-branch
-> +'
+	test_expect_success 'do merge stuff' '
+		... &&
+		rm -f expect actual &&
+		git ls-files -o ':!out' >out &&
+		test_must_be_empty out
+	'
 
-Do we need a new test for this or can we just check the refs at the end 
-of one of the tests added in the last patch?
-
->   # This must be the last test in this file
->   test_expect_success '$EDITOR and friends are unchanged' '
->   	test_editor_unchanged
-
-I forgot to say on the last patch but you could maybe add a 
-test_editor_unchanged at the end of t2407 now that there are tests which 
-call test_set_editor
-
-Thanks for working on this, it will be a really useful addition to rebase.
-
-Phillip
-
+Or piping it to ".git/out", to avoid the path exclude, but like this is
+also fine:) Thanks.
