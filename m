@@ -2,44 +2,44 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13DDEC43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 04:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 960C1C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 04:35:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233795AbiGAE15 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 1 Jul 2022 00:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
+        id S231994AbiGAEe7 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 1 Jul 2022 00:34:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbiGAE1v (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 00:27:51 -0400
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 009C5396BE
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 21:27:49 -0700 (PDT)
-Received: by mail-yb1-f174.google.com with SMTP id v38so2061114ybi.3
-        for <git@vger.kernel.org>; Thu, 30 Jun 2022 21:27:49 -0700 (PDT)
+        with ESMTP id S229984AbiGAEe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 00:34:57 -0400
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 290CE65D47
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 21:34:55 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id d5so2067139yba.5
+        for <git@vger.kernel.org>; Thu, 30 Jun 2022 21:34:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=O86vVmx/yBpMgh75GMamDZYxn7iNJRyY58piw7tfcJs=;
-        b=lP6S9y0htUX9hCOO5qXusuHYUER4KE9RJTmkkS3pU3AhUI2L7z8lGNrK7HfedzNT9k
-         xAwYYoEvLvaCnCg7Yim7JHkPFKJOQyeuGEZ6C2SrYFU9MCryKgm41SB3BxVctbkgmXDZ
-         uMSPYb7IZl/qfSX7FtMblfta8xLh4Ce3pRkkvsRsrbpXP8aqTc9VmRB/+mfIs17YNofY
-         AlpoUqHrOwhKE4B83t5ip+MReMNC1jiUGaV/F9p5Da8ha6U/ymwQ32ud9eKI4Z08FIqa
-         xuZqaQfrvv3/cUFPMilDEPwz1LJWerj85xrhvdpTDcPHNz9T2JOYGVIzIVtU5OcCyAFy
-         3g9g==
-X-Gm-Message-State: AJIora8w2fhQrrZeYNaElAvfYw71Iw3JzUhuPDfClHfLWwmin7vMiVPt
-        3TnAlMFezS/8OrX/wztIqFkr6DcRnTUzBS8WmDk=
-X-Google-Smtp-Source: AGRyM1tFn0R8nilXhBnfKe8wHcoTgvUB/mJCxxSHGLhJWNF+HZ9ksy5cKQQUlcW+n3PpW1q6S3EGlIAkjV2GgtXC1o0=
-X-Received: by 2002:a5b:982:0:b0:63e:7d7e:e2f2 with SMTP id
- c2-20020a5b0982000000b0063e7d7ee2f2mr13234432ybq.549.1656649669057; Thu, 30
- Jun 2022 21:27:49 -0700 (PDT)
+        bh=LIGFuSzZ9aFajrz7/WrL9+La3Q+G1OzGv7k2NXCT4RI=;
+        b=c9DkM33VVWJvAxfVKYJPXc11nomY32mtsTAeeQesXN9zLntKbu7ELdE73W7xMim+52
+         JQx/58QWbEeH7XGQ9+4LRkPpWK92FV3e5Kxi10JvYn/eFLclnvPC+mI/YeMokwfIzyxn
+         BCLmWkDqAgeFTIq358Qn1tUcbqr70jcM9b5BKI2hu+KS9HM3W/qRyo9XI6UomMOj1N75
+         brEGs2bSEQ09tXPgqBSFlpAgfEzZZ8I4KWkFOxtSqwJCRRMKJ2HChbJeOGltdrM9pt6Z
+         VgAfqF9Pjsvc0YZs1PpZeDKBK8PPmUZpJfTSB3nNNCTu5NRDyVEG6wlevJhZwW+2wlxM
+         XeaA==
+X-Gm-Message-State: AJIora9WfPXooDrJNqaXaVHa/QLF6Xbhd/+baqZyEVR8Q25a4/kOzpMl
+        jP7IIx6k8zSsS39wk5kXYvKaeHlmxL8Xy3ono+I7Q241ePY=
+X-Google-Smtp-Source: AGRyM1tsdoGjdJOyvE3QvkkFopohRHEHs/Ok2JO6TCLxIcCw5muxFTB8C0v4a8AA0LLx8/buWCERfc2Ih2Xmyi00nFk=
+X-Received: by 2002:a05:6902:1d0:b0:668:b5ea:10ec with SMTP id
+ u16-20020a05690201d000b00668b5ea10ecmr13395110ybh.419.1656650094284; Thu, 30
+ Jun 2022 21:34:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover-0.9-00000000000-20220630T180129Z-avarab@gmail.com> <patch-2.9-06b2dcf4f12-20220630T180129Z-avarab@gmail.com>
-In-Reply-To: <patch-2.9-06b2dcf4f12-20220630T180129Z-avarab@gmail.com>
+References: <cover-0.9-00000000000-20220630T180129Z-avarab@gmail.com> <patch-7.9-bdb467d1414-20220630T180129Z-avarab@gmail.com>
+In-Reply-To: <patch-7.9-bdb467d1414-20220630T180129Z-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 1 Jul 2022 00:27:38 -0400
-Message-ID: <CAPig+cT5jETAi5extz2tHwSzp4a=b7qqaK0S=mcjQr1m_1jAQQ@mail.gmail.com>
-Subject: Re: [PATCH 2/9] test-tool path-utils: fix a memory leak
+Date:   Fri, 1 Jul 2022 00:34:43 -0400
+Message-ID: <CAPig+cQeR6Ku-RCEa6qvrzq7wF+cSDYRUREofwDTeYNB-iw7JQ@mail.gmail.com>
+Subject: Re: [PATCH 7/9] test-tool bloom: fix a memory leak
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -50,26 +50,17 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jun 30, 2022 at 7:51 PM Ævar Arnfjörð Bjarmason
 <avarab@gmail.com> wrote:
-> Fix a memory leak in "test-tool path-utils", as a result we can mark
-> the corresponding test as passing with SANITIZE=leak using
-> "TEST_PASSES_SANITIZE_LEAK=true".
+> test-tool bloom: fix a memory leak
+>
+> Fix memory leaks introduced with these tests in f1294eaf7fb (bloom.c:
+
+pure nit: the subject talks about a single leak but the message body
+talks about multiple leaks.
+
+> introduce core Bloom filter constructs, 2020-03-30), as a result we
+> can mark almost the entirety of t0095-bloom.sh as passing with
+> SANITIZE=leak using "TEST_PASSES_SANITIZE_LEAK=true", there's still an
+> unrelated memory leak in "git commit" in one of the tests, let's skip
+> that one under SANITIZE_LEAK for now.
 >
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-> @@ -294,11 +294,13 @@ static int protect_ntfs_hfs_benchmark(int argc, const char **argv)
->  int cmd__path_utils(int argc, const char **argv)
->  {
->         if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
-> -               char *buf = xmallocz(strlen(argv[2]));
-> +               char *to_free = NULL;
-> +               char *buf = to_free = xmallocz(strlen(argv[2]));
-
-Is there a non-obvious reason that `to_free` is initialized to NULL
-before being immediately overwritten with the result of xmallocz()?
-
-Also, pure nit, but it may be a bit more idiomatic (though I could be
-wrong) written as:
-
-    char *buf, *to_free;
-    buf = to_free = xmallocz(...);
