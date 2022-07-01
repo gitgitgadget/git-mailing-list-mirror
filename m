@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E5EACCA479
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 10:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F26BC433EF
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 10:43:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236847AbiGAKnT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 06:43:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38934 "EHLO
+        id S236859AbiGAKnV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 06:43:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236344AbiGAKnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 06:43:08 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D086BC5
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 03:43:07 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id g39-20020a05600c4ca700b003a03ac7d540so3462061wmp.3
-        for <git@vger.kernel.org>; Fri, 01 Jul 2022 03:43:07 -0700 (PDT)
+        with ESMTP id S236604AbiGAKnL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 06:43:11 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744C1F09
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 03:43:08 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id k7so2571637wrc.12
+        for <git@vger.kernel.org>; Fri, 01 Jul 2022 03:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ynx/ukDtxgn6C5N+YHBkf5Ff7kNqpYhzRIuZydRw0n4=;
-        b=hc1seTXaAESYoBMiqIDPfG27dcQGJEF9+2xz5LslT3bYGWOr6TLLSNBCr5oaHbgUfF
-         bJGCc6taiY4RY701v5kzbYBpAfMtURJdClAAnoABsqY36IlVzerkotv4Y73cIGmLYKXf
-         3U0LEqjTpJXGzU9+Pg4PTJ9xbG1P0KvixnhAwKgHdsCkw9eKSBpESWBKYJmgQ6xmdK7A
-         84n77yv8g2GarQRKiU5fxrguG7CNRn75LQt6+g1bY1G4rTiSojVTEcm6L1DX3P/Jr0tU
-         R001uJ57EZQH1cUWedQ0Fxlq61c1Qvlkhdncrs8dOfmbhwhEWx1Mg4urPQM4tiP9g9He
-         A18Q==
+        bh=DkDKh64MPIHoP8xiJUsr857ldZ0TDJhZi8caQQPrj9k=;
+        b=QjMUx7bdCofWeZ8j08c6fiCRu+t3Izq171iOPzT/0EPys2fCRQCgzo8xQDkCaZs1S6
+         Iws1WsemRcXBPaoOS561mK3fqQpIqDRVfkcg0lhlHVtpeg0OidBeFunMGPUzImrHoay5
+         s7cAK8v1pKqnahgkJW8qSkQGvkFfIAMHIGR+U+C29sR1N/wSyR3Vwvk5HMnJWIue29Ln
+         O6BufFT7Jc4BzpJLbGsS7O0tnzfIdkHRUIh3KgAjUqDq8WMhBhm2mb9ww7fbgd9MFRfE
+         tX0s1B2ajMSpykXL4f9L/VTy9IM5QOIyfWG46m7DI4jr4E2QAFlAZKxiR/CcdIxOi8se
+         Djhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ynx/ukDtxgn6C5N+YHBkf5Ff7kNqpYhzRIuZydRw0n4=;
-        b=4ElqJCvCbaIy4+q4YZuq5UonzJCtV44nS3YoiDPBCn/ejylz+aXXXRivVJHVvU3LM0
-         KZsmX+2AqmKSDMnIOIqmEFevxxmNSRw1O07g1+A720ZjdM2xaS/FRJqn6RfsXywp3UQZ
-         tgPiDQsJr8B0CpwGeqpB37DzJjlTdnTPU1A42InVHYN0l03BfauV/Ldo1V7Vilb5nijU
-         /kEUIBF6eYmT/rXxfwTq14teWt3BqW3+rJOoaoH20f5Kmhf92XCnfekhMyQzYpZvqT45
-         dS3YbhMArpiJvc4rth6OmyRqJTxwe2SbC5szU80Qd8Dix3SxJLKu+UZjJdZwfAt2dii3
-         IBsQ==
-X-Gm-Message-State: AJIora89NWZhpr4z5NDV+VyNsGTmdkiDowEZDIJAmsA/Mh2YJzu9l2UJ
-        3bsXt5FBlj4i/R4uMzF4AN25kknAxkr0+w==
-X-Google-Smtp-Source: AGRyM1tXY23TvuBWXVn6zG7yhAcMBa/715vt2m10QnbXSrJwDPSSLF8AGWkRomWIF71GNhEkd3lgxw==
-X-Received: by 2002:a7b:cc10:0:b0:3a0:7d75:b576 with SMTP id f16-20020a7bcc10000000b003a07d75b576mr15603098wmh.92.1656672185880;
-        Fri, 01 Jul 2022 03:43:05 -0700 (PDT)
+        bh=DkDKh64MPIHoP8xiJUsr857ldZ0TDJhZi8caQQPrj9k=;
+        b=2feXpytDA51MBU1r443vH1aEUVFnre0eMW5C4MCV7qm/k2tMEaav+dIg951l3HMyyc
+         W1rYrpUBi3MCrY0xLsdyr5YKfFKyRRLyFv5axRU75ld0A60eLUyDPeU3RuptOu+MShIw
+         lzkQECGtIX3pv8OF8t//gxmOcBbwTGu2fbCVKIUXqYdr8u/dPSQXV38aEWRaFJtRckCa
+         ofNWRZLj+7QeBGJJpyQm59raQ9D88S95ysYijhMuj91ThnyoMOtCRKvYo7y3xVTTAU8y
+         gWNhiZKqsNwzky94peAL1/VV5nREwOpvTUL1XRcMlqkTZFIWQXfb7fQHbYdxo5ImlpAx
+         XJSw==
+X-Gm-Message-State: AJIora8IX9KuHz1n/trqQ0EGbnMzFYwTE1ZFjjpDMpQykj8XRkLENNe/
+        3khXuDdsqa9t7EFTIJzqskROrSaO3gkM0Q==
+X-Google-Smtp-Source: AGRyM1v3MF4/7leC8N6ZOPyXGMNT4dspFMo9qIXSd82jxih1fVWiINxzFFEHwq7McosGanT9dOYtAg==
+X-Received: by 2002:a5d:5234:0:b0:21b:829c:3058 with SMTP id i20-20020a5d5234000000b0021b829c3058mr12839590wra.13.1656672186780;
+        Fri, 01 Jul 2022 03:43:06 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id q63-20020a1c4342000000b003973c54bd69sm6257674wma.1.2022.07.01.03.43.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 03:43:05 -0700 (PDT)
+        Fri, 01 Jul 2022 03:43:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 03/11] submodule.c: free() memory from xgetcwd()
-Date:   Fri,  1 Jul 2022 12:42:52 +0200
-Message-Id: <patch-v2-03.11-691b178aaf0-20220701T104017Z-avarab@gmail.com>
+Subject: [PATCH v2 04/11] revert: free "struct replay_opts" members
+Date:   Fri,  1 Jul 2022 12:42:53 +0200
+Message-Id: <patch-v2-04.11-6fc895676f4-20220701T104017Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.900.g4d0de1cceb2
 In-Reply-To: <cover-v2-00.11-00000000000-20220701T104017Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20220630T175714Z-avarab@gmail.com> <cover-v2-00.11-00000000000-20220701T104017Z-avarab@gmail.com>
@@ -67,42 +67,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak in code added in bf0231c6614 (rev-parse: add
---show-superproject-working-tree, 2017-03-08), we should never have
-made the result of xgetcwd() a "const char *", as we return a
-strbuf_detach()'d value. Let's fix that and free() it when we're done
-with it.
-
-We can't mark any tests passing passing with SANITIZE=leak using
-"TEST_PASSES_SANITIZE_LEAK=true" as a result of this change, but
-e.g. "t/t1500-rev-parse.sh" now gets closer to passing.
+Call the release_revisions() function added in
+1878b5edc03 (revision.[ch]: provide and start using a
+release_revisions(), 2022-04-13) in cmd_revert(), as well as freeing
+the xmalloc()'d "revs" member itself.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- submodule.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ builtin/revert.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/submodule.c b/submodule.c
-index 4e299f578f9..06073b2e7be 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2388,7 +2388,7 @@ int get_superproject_working_tree(struct strbuf *buf)
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf one_up = STRBUF_INIT;
--	const char *cwd = xgetcwd();
-+	char *cwd = xgetcwd();
- 	int ret = 0;
- 	const char *subpath;
- 	int code;
-@@ -2451,6 +2451,7 @@ int get_superproject_working_tree(struct strbuf *buf)
- 		ret = 1;
- 		free(super_wt);
- 	}
-+	free(cwd);
- 	strbuf_release(&sb);
+diff --git a/builtin/revert.c b/builtin/revert.c
+index f84c253f4c6..2554f9099cc 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -246,6 +246,9 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 	res = run_sequencer(argc, argv, &opts);
+ 	if (res < 0)
+ 		die(_("revert failed"));
++	if (opts.revs)
++		release_revisions(opts.revs);
++	free(opts.revs);
+ 	return res;
+ }
  
- 	code = finish_command(&cp);
 -- 
 2.37.0.900.g4d0de1cceb2
 
