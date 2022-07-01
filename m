@@ -2,88 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 260ECC43334
-	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 20:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F0B1C43334
+	for <git@archiver.kernel.org>; Fri,  1 Jul 2022 20:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbiGAUnR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jul 2022 16:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43344 "EHLO
+        id S229845AbiGAUrN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jul 2022 16:47:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229845AbiGAUnP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jul 2022 16:43:15 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F62B1DA
-        for <git@vger.kernel.org>; Fri,  1 Jul 2022 13:43:13 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 421F01AE5F9;
-        Fri,  1 Jul 2022 16:43:13 -0400 (EDT)
+        with ESMTP id S229570AbiGAUrM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jul 2022 16:47:12 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A813AA5D
+        for <git@vger.kernel.org>; Fri,  1 Jul 2022 13:47:10 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B8D3F198869;
+        Fri,  1 Jul 2022 16:47:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=enA1Z5Ggcei3
-        OBOSfcRN/btH8FEhF8HZLjYmn2ordIw=; b=da1NRMGsB5o/KLFRyFsC8zBlKz6x
-        kgp29YxR/y12nkifl3IUq3oaRVa0C64TLMgHy/kUOJC0zkeqRAqxmq0XIil4usJi
-        N0WKjfglH1qrwRSgW2LY0RX9SLP3jxeHC5zNcXx45zOMcAnMIlKdbBdvXTr9eaMJ
-        vNlnP7A4S+CqCmA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3BE021AE5F8;
-        Fri,  1 Jul 2022 16:43:13 -0400 (EDT)
+        :content-type; s=sasl; bh=OuS75UtCB/ohr0xZcrQujiHIPf9J8QgkV/isg3
+        ggoZs=; b=PByNpWd6KpMj+RKvBGlZ6ORCOLi0vPQVXOybFcoPnOeV1IK2pB9oA3
+        cY3YgMgCOoLdP9SWLlhsOASFUIxpuxLK+EUbPgtPP0nhpDPz0c2RkpqIYhtSGTFj
+        94xHjDuBcryOcAzFuiUcjsSTFyVw4v37uoyMz6P92T9vWsWvmJLms=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B0C39198868;
+        Fri,  1 Jul 2022 16:47:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CD3D41AE5F7;
-        Fri,  1 Jul 2022 16:43:09 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 24536198867;
+        Fri,  1 Jul 2022 16:47:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/9] test-tool path-utils: fix a memory leak
-References: <cover-0.9-00000000000-20220630T180129Z-avarab@gmail.com>
-        <cover-v2-0.9-00000000000-20220701T103503Z-avarab@gmail.com>
-        <patch-v2-2.9-050766e6fa2-20220701T103503Z-avarab@gmail.com>
-Date:   Fri, 01 Jul 2022 13:43:08 -0700
-In-Reply-To: <patch-v2-2.9-050766e6fa2-20220701T103503Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 1 Jul
- 2022 12:37:33
-        +0200")
-Message-ID: <xmqq5ykg8syr.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Han Xin <hanxin.hx@bytedance.com>, chiyutianyi@gmail.com,
+        derrickstolee@github.com, git@vger.kernel.org,
+        haiyangtand@gmail.com, jonathantanmy@google.com, me@ttaylorr.com,
+        ps@pks.im
+Subject: Re: [PATCH v3 2/2] commit-graph.c: no lazy fetch in
+ lookup_commit_in_graph()
+References: <cover.1656044659.git.hanxin.hx@bytedance.com>
+        <cover.1656381667.git.hanxin.hx@bytedance.com>
+        <3cdb1abd43779844b8e8dc094e2fd2da1adc461a.1656381667.git.hanxin.hx@bytedance.com>
+        <220628.865yklgr6g.gmgdl@evledraar.gmail.com>
+        <xmqq35folmgf.fsf@gitster.g>
+        <5n35o008-pso2-6440-424p-q387q9n4so41@tzk.qr>
+        <220630.86v8siclh5.gmgdl@evledraar.gmail.com>
+        <xmqq5ykignwb.fsf@gitster.g>
+        <n3p471no-671q-2701-1r72-s0q02ns09053@tzk.qr>
+Date:   Fri, 01 Jul 2022 13:47:04 -0700
+In-Reply-To: <n3p471no-671q-2701-1r72-s0q02ns09053@tzk.qr> (Johannes
+        Schindelin's message of "Fri, 1 Jul 2022 21:31:26 +0200 (CEST)")
+Message-ID: <xmqq1qv48ss7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6B089AAE-F97E-11EC-9B9C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F7E2B3EC-F97E-11EC-9879-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Fix a memory leak in "test-tool path-utils", as a result we can mark
-> the corresponding test as passing with SANITIZE=3Dleak using
-> "TEST_PASSES_SANITIZE_LEAK=3Dtrue".
+> Whenever you call a non-MSYS program from an MSYS program (and remember,
+> an MSYS program is a program that uses the MSYS2 runtime that acts as a
+> POSIX emulation layer), "magic" things are done. In our context,
+> `bash.exe` is an MSYS program, and the non-MSYS program that is called is
+> `git.exe`.
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+> So what are those "magic" things? The command-line arguments and the
+> environment variables are auto-converted: everything that looks like a
+> Unix-style path (or path list, like the `PATH` environment variable) is
+> converted to a Windows-style path or path list (on Windows, the colon
+> cannot be the separator in `PATH`, therefore the semicolon is used).
 >
-> ---
->  t/helper/test-path-utils.c | 11 +++++++----
->  t/t0060-path-utils.sh      |  1 +
->  2 files changed, 8 insertions(+), 4 deletions(-)
+> And this is where it gets _really_ tricky to explain what is going on:
+> what _does_ look like a Unix-style path? The exact rules are convoluted
+> and hard to explain, but they work _most of the time_. For example,
+> `/usr/bin:/hello` is converted to `C:\Program Files\Git\usr\bin;C:\Program
+> Files\Git\hello` or something like that. But `kernel.org:/home/gitster` is
+> not, because it looks more like an SSH path. Similarly, `C:/Program Files`
+> is interpreted as a Windows-style path, even if it could technically be a
+> Unix-style path list.
 >
-> diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-> index 229ed416b0e..d20e1b7a18d 100644
-> --- a/t/helper/test-path-utils.c
-> +++ b/t/helper/test-path-utils.c
-> @@ -296,9 +296,8 @@ int cmd__path_utils(int argc, const char **argv)
->  	if (argc =3D=3D 3 && !strcmp(argv[1], "normalize_path_copy")) {
->  		char *buf =3D xmallocz(strlen(argv[2]));
->  		int rv =3D normalize_path_copy(buf, argv[2]);
-> -		if (rv)
-> -			buf =3D "++failed++";
-> -		puts(buf);
-> +		puts(rv ? "++failed++" : buf);
-> +		free(buf);
+> Now, if you call `git.exe -C /blabla <command>`, it works, because
+> `git.exe` is a non-MSYS program, therefore that `/blabla` is converted to
+> a Windows-style path before executing `git.exe`. However, when you write a
+> file via `echo /blabla >file`, that `echo` is either the Bash built-in, or
+> it is an MSYS program, and no argument conversion takes place. If you
+> _then_ ask `git.exe` to read and interpret the file as a path, it won't
+> know what to do with that Unix-style path.
+>
+> You can substitute `$PWD` for `/blabla` in all of this, and it will hold
+> true just the same.
+>
+> So what makes `pwd` special?
+>
+> Well, `pwd.exe` itself is an MSYS program, so it would still report a path
+> that `git.exe` cannot understand. But in Git's test suite, we specifically
+> override `pwd` to be a shell function that calls `pwd.exe -W`, which does
+> output Windows-style paths.
+>
+> The thing that makes that `GIT_*=$PWD git ...` call work is that the
+> environment is automagically converted because `git` is a non-MSYS
+> program. The thing that makes `echo $PWD >.git/objects/info/alternates`
+> not work is that `echo` _is_ an MSYS program (or Bash built-in, which is
+> the same thing here, for all practical purposes), so it writes the path
+> verbatim into that file, but then we expect `git.exe` to read this file
+> and interpret it as a list of paths.
 
-This version, without the need for to_free, is certainly very easy
-to understand.  Nicely done.
+----- 8< --------- 8< --------- 8< --------- 8< --------- 8< -----
 
+> Hopefully that clarifies the scenario a bit, even if it is far from a
+> concise explanation (I did edit this mail multiple times for clarity and
+> brevity, though, as I do with pretty much all of my mails).
+
+Certainly it does help.  Thanks.
+
+I wonder if it makes sense to keep a copy of the bulk of your
+response in t/ somewhere, and refer to it from t/README, to help
+fellow non-Windows developers to avoid breaking tests on Windows
+without knowing.
