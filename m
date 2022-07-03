@@ -2,120 +2,430 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F382FC433EF
-	for <git@archiver.kernel.org>; Sun,  3 Jul 2022 12:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41B0AC43334
+	for <git@archiver.kernel.org>; Sun,  3 Jul 2022 15:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232561AbiGCMMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Jul 2022 08:12:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35632 "EHLO
+        id S232624AbiGCPtQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Jul 2022 11:49:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229739AbiGCML7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jul 2022 08:11:59 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A44FF65AC
-        for <git@vger.kernel.org>; Sun,  3 Jul 2022 05:11:58 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id fz10so693308pjb.2
-        for <git@vger.kernel.org>; Sun, 03 Jul 2022 05:11:58 -0700 (PDT)
+        with ESMTP id S230446AbiGCPtP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jul 2022 11:49:15 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED8FC62E6
+        for <git@vger.kernel.org>; Sun,  3 Jul 2022 08:49:13 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id v14so10049926wra.5
+        for <git@vger.kernel.org>; Sun, 03 Jul 2022 08:49:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=YT9boOpTK1PcOTlBX7NGUK6BIw3peFYcF0YiWLtKEmY=;
-        b=lgE/c7XUHCb0P1iBsjRUkcYPslu49wmpnE6bz1HhjrMtar1gy/eVjPf6i91epFG1+o
-         JEXJepKiTecAl3R8evwFzAqRNaKj1/p9SLk8fWxIevVewtYxDh/xVEIER4q/j/vJ8V2l
-         RYPWypIojBsTVoYRERG9PWWTBQ5vk2T4k6XsCT93vGqM8IXGJ56t7fuGNqqscAc42KO3
-         ZZrHwCh5R+V2vD9ahuc9P/mRbedZDmZaKARTdPviykoMsU+chWm5vr1/Mx+xUVpwnvNA
-         xGGuuuNCIHVPKW32VL2iyED1e0zMwXxD+Y+Qm9Jm4Kq+6TqYlvVJJTiCfYQAGFlNmbCd
-         lwKw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bzN2urqS60ye2yOJ3jN7br17X0LgQPb95drMSVEZsJE=;
+        b=AjYIKca1ykpZ4u+AZC5fW5BSvRWQRcEikrS7q4sNumqF9rsvPxHy5cHiG79o2bfEb6
+         bcAvj7waccjwjGh1JFcIN5bLkw0pMFfVYSVWGtRYWzstE7ewnQguH4bIe5qlgfsB/teL
+         mZxSnHFiktWc+BTTSUlJcotw8NI4o71QK2oxFksXRY0s+fmE+DxcHZzTh8MaGYPz+//+
+         9LWWtrUo35uT+h5Y4UMcZm/f0lQciUWTt/oETOzTMT0/+xG2EZCm5a12dRwE+hjHK6qx
+         7I12uyxkTdg4hUDEJXD9sme1WUpdG/Iq6NeS2vWNnypLc+7XcUAJ3P91BL2Q9bBX0vbN
+         ZQhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YT9boOpTK1PcOTlBX7NGUK6BIw3peFYcF0YiWLtKEmY=;
-        b=iI0TGUx81XY6UkAvfxoFzp9Y79AKT/bGcFKDs+MUn54/VdI0IZxBLSqIAMF1Qs3UPj
-         M0Rwbbj13ocIeFFOPnVW3wYJpCdDLpYIGRvNRP5y/P3T59GT5tJ8NIaU0yzZIM/iS2KQ
-         W/ZVw1ZVmfdBVRy7wmsqHzmeaNdcYRdld3cQ76WyM2m9T6S9aDHcWsy62GwinMDqVQHJ
-         Gjpn/i9Rb+jNi18iBastHTmPreaXPZyxbQpFegoflGv0yDaSRYlrK5Cmhe2rSzq5HbQg
-         LBje9Ek1hIY4T4uJoGhPQKIaYyC82sBU8yvQNBwxZ37mKrsa5rcRTYYw4ef57t9VwIC9
-         bPZw==
-X-Gm-Message-State: AJIora8nl0+F0vJFauip3G5m9WAWLPa7QR0WJBq2wyqGgdtKpDJOB3Md
-        SsYpWJRznuTrfeKIAeOgyuvCIpBtrplhpeUclHiDNZEys7Ce
-X-Google-Smtp-Source: AGRyM1uB0Ow3R5DveGqnxFYMH21NDbkeP+svD91FMpTCj2A+xnVPNEhhlIegF91SsNVXWk9vqLXP3EoZoasNiqnYBJM=
-X-Received: by 2002:a17:903:1207:b0:16a:7e87:dad3 with SMTP id
- l7-20020a170903120700b0016a7e87dad3mr29890395plh.99.1656850317963; Sun, 03
- Jul 2022 05:11:57 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=bzN2urqS60ye2yOJ3jN7br17X0LgQPb95drMSVEZsJE=;
+        b=Gj9HiOOMiStU70qSUNTBKwJjp4u3FWfH4QFHTNBW7JtKtt2LWa0V5P45obC7++tZs2
+         qYc1adYWw8qX6AO4z5rdYnrbLoL3XBa2JZ3ouFiMSI1EzpZcmXhZFkfxcor0zM/HyjOE
+         pNfZotbDm1BoiawMb1zC9W8D4AoA0P0cZjFE2WKBWz12liY7n8YWFRbPcnh43u478MIv
+         Ixydx6FMzqzJAyLb4I3UcOsnLT8aGzssHxRRIjfKEMMI/lejoBDJqXR1mCmdnk6oFEXF
+         vsK5k6sxXam5lO4/0I7g4mQF8rcdFuff2RD+csFXes9NkYkygnpyXS+abVYbCyl/Ksb6
+         T1Hg==
+X-Gm-Message-State: AJIora8ibNdgd9mMIrKvK0YDWj/LH1a12g81oIldGwVMwPVP2OydTuSc
+        6coVvzugVzDMczuZfJAZx4lYOy9h7B4=
+X-Google-Smtp-Source: AGRyM1vsF4fta7q7rFzXp0BolGDCWCsV61/QIeN9DN+wGe2y7UcbeFB0FG9luXP1MDYBROyfhQID9Q==
+X-Received: by 2002:a05:6000:1b86:b0:21d:21d2:3e12 with SMTP id r6-20020a0560001b8600b0021d21d23e12mr23206589wru.515.1656863352007;
+        Sun, 03 Jul 2022 08:49:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w17-20020adf8bd1000000b0021a3c960214sm29200093wra.6.2022.07.03.08.49.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Jul 2022 08:49:10 -0700 (PDT)
+Message-Id: <pull.1269.v6.git.1656863349926.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1269.v5.git.1656673435357.gitgitgadget@gmail.com>
+References: <pull.1269.v5.git.1656673435357.gitgitgadget@gmail.com>
+From:   "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 03 Jul 2022 15:49:09 +0000
+Subject: [PATCH v6] ls-files: update test style
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
-Date:   Sun, 3 Jul 2022 15:11:46 +0300
-Message-ID: <CAMhVC3Z92hBsK0FbE4E_LV1CSxjR1zmu+MO8=iwR02BKqnwgUA@mail.gmail.com>
-Subject: Why `git am -3` apply patches that don't normally apply?
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Li Linchao <lilinchao@oschina.cn>,
+        Li Linchao <lilinchao@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Li Linchao <lilinchao@oschina.cn>
 
-From what I can see w/o `-3` `git am` follows the `patch`'es behavior.
-And the `patch`'es behavior is if there are lines in a patch that
-doesn't match the lines in the source file, it fails. For example, a
-source file:
+Update test style in t/t30[*].sh for uniformity, that's to
+keep test title the same line with helper function itself,
+and fix some indentions.
 
-11
-2
-3
+Add a new section "recommended style" in t/README to
+encourage people to use more modern style in test.
 
-A patch:
+Signed-off-by: Li Linchao <lilinchao@oschina.cn>
+---
+    ls-files: update test style
+    
+    Update test style in t/t30[*].sh for uniformity, that's to keep test
+    title the same line with helper function itself.
+    
+    And update t/README to describe this test style.
+    
+    Signed-off-by: Li Linchao lilinchao@oschina.cn
 
- 1
- 2
--3
-+33
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1269%2FCactusinhand%2Fllc%2Ffix-test-title-style-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1269/Cactusinhand/llc/fix-test-title-style-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/1269
 
-But `git am -3` will apply such a patch. That is, `patch` sees that
-the first line changed and that prevents it from applying the patch,
-but `git am -3` decides that it's okay. Why is that?
+Range-diff vs v5:
 
-A script that reproduces the issue:
+ 1:  6cbb4e5fd49 ! 1:  8dae5a70e22 ls-files: update test style
+     @@ t/README: This test harness library does the following things:
+      +      test_cmp expect actual
+      +  '
+      +
+     -+ - Quote or escape the EOF at the head of a here document when
+     -+   there is no variable interpolation in it:
+     -+
+     -+  cmd <<-"EOF"
+     -+  literal here-doc text
+     -+  EOF
+     -+
+     -+  Or:
+     ++ - Quote or escape the EOF delimiter that begins a here-document if
+     ++   there is no parameter and other expansion in it, to signal readers
+     ++   that they can skim it more casually:
+      +
+      +  cmd <<-\EOF
+     -+  literal here-doc text
+     ++  literal here-document text without any expansion
+      +  EOF
+      +
+      +
 
-    set -eux
 
-    mkdir a
-    (cd a
-    git init
-    echo '1
-    2
-    3' > a
-    git add a
-    git commit -m 1,2,3
-    sed -Ei 's/3/33/' a
-    git add a
-    git commit -m '3 -> 33'
-    git format-patch -1 HEAD)
+ t/README                           | 55 +++++++++++++++++++
+ t/t3001-ls-files-others-exclude.sh | 42 +++++++--------
+ t/t3002-ls-files-dashpath.sh       | 86 ++++++++++++++++--------------
+ t/t3020-ls-files-error-unmatch.sh  | 12 ++---
+ t/t3060-ls-files-with-tree.sh      |  8 +--
+ 5 files changed, 132 insertions(+), 71 deletions(-)
 
-    mkdir b
-    (cd b
-    git init
-    echo '11
-    2
-    3' > a
-    git add a
-    git commit -m 11,2,3
+diff --git a/t/README b/t/README
+index 309a31133c6..4f9981cf5e3 100644
+--- a/t/README
++++ b/t/README
+@@ -547,6 +547,61 @@ This test harness library does the following things:
+    consistently when command line arguments --verbose (or -v),
+    --debug (or -d), and --immediate (or -i) is given.
+ 
++Recommended style
++-----------------
++Here are some recommented styles when writing test case.
++
++ - Keep test title the same line with test helper function itself.
++
++   Take test_expect_success helper for example, write it like:
++
++  test_expect_success 'test title' '
++      ... test body ...
++  '
++
++   Instead of:
++
++  test_expect_success \
++      'test title' \
++      '... test body ...'
++
++
++ - End the line with a single quote.
++
++ - Indent the body of here-document, and use "<<-" instead of "<<"
++   to strip leading TABs used for indentation:
++
++  test_expect_success 'test something' '
++      cat >expect <<-\EOF &&
++      one
++      two
++      three
++      EOF
++      test_something > actual &&
++      test_cmp expect actual
++  '
++
++   Instead of:
++
++  test_expect_success 'test something' '
++      cat >expect <<\EOF &&
++  one
++  two
++  three
++  EOF
++      test_something > actual &&
++      test_cmp expect actual
++  '
++
++ - Quote or escape the EOF delimiter that begins a here-document if
++   there is no parameter and other expansion in it, to signal readers
++   that they can skim it more casually:
++
++  cmd <<-\EOF
++  literal here-document text without any expansion
++  EOF
++
++
+ Do's & don'ts
+ -------------
+ 
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index 48cec4e5f88..e07ac6c6dce 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -67,26 +67,26 @@ echo '!*.2
+ 
+ allignores='.gitignore one/.gitignore one/two/.gitignore'
+ 
+-test_expect_success \
+-    'git ls-files --others with various exclude options.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with various exclude options.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+-       >output &&
+-     test_cmp expect output'
++	>output &&
++	test_cmp expect output
++'
+ 
+ # Test \r\n (MSDOS-like systems)
+ printf '*.1\r\n/*.3\r\n!*.6\r\n' >.gitignore
+ 
+-test_expect_success \
+-    'git ls-files --others with \r\n line endings.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with \r\n line endings.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+-       >output &&
+-     test_cmp expect output'
++	>output &&
++	test_cmp expect output
++'
+ 
+ test_expect_success 'setup skip-worktree gitignore' '
+ 	git add $allignores &&
+@@ -94,14 +94,14 @@ test_expect_success 'setup skip-worktree gitignore' '
+ 	rm $allignores
+ '
+ 
+-test_expect_success \
+-    'git ls-files --others with various exclude options.' \
+-    'git ls-files --others \
++test_expect_success 'git ls-files --others with various exclude options.' '
++	git ls-files --others \
+        --exclude=\*.6 \
+        --exclude-per-directory=.gitignore \
+        --exclude-from=.git/ignore \
+-       >output &&
+-     test_cmp expect output'
++	>output &&
++	test_cmp expect output
++'
+ 
+ test_expect_success !SANITIZE_LEAK 'restore gitignore' '
+ 	git checkout --ignore-skip-worktree-bits $allignores &&
+@@ -283,12 +283,12 @@ test_expect_success 'pattern matches prefix completely' '
+ '
+ 
+ test_expect_success 'ls-files with "**" patterns' '
+-	cat <<\EOF >expect &&
+-a.1
+-one/a.1
+-one/two/a.1
+-three/a.1
+-EOF
++	cat <<-\EOF >expect &&
++	a.1
++	one/a.1
++	one/two/a.1
++	three/a.1
++	EOF
+ 	git ls-files -o -i --exclude "**/a.1" >actual &&
+ 	test_cmp expect actual
+ '
+diff --git a/t/t3002-ls-files-dashpath.sh b/t/t3002-ls-files-dashpath.sh
+index 54d22a45dfb..4dd24550eba 100755
+--- a/t/t3002-ls-files-dashpath.sh
++++ b/t/t3002-ls-files-dashpath.sh
+@@ -16,56 +16,62 @@ filesystem.
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+-test_expect_success \
+-	setup \
+-	'echo frotz >path0 &&
++test_expect_success 'setup' '
++	echo frotz >path0 &&
+ 	echo frotz >./-foo &&
+-	echo frotz >./--'
++	echo frotz >./--
++'
+ 
+-test_expect_success \
+-    'git ls-files without path restriction.' \
+-    'git ls-files --others >output &&
+-     test_cmp output - <<EOF
+---
+--foo
+-output
+-path0
+-EOF
++test_expect_success 'git ls-files without path restriction.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others >output &&
++	cat >expect <<-\EOF &&
++	--
++	-foo
++	output
++	path0
++	EOF
++	test_cmp output expect
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction.' \
+-    'git ls-files --others path0 >output &&
+-	test_cmp output - <<EOF
+-path0
+-EOF
++test_expect_success 'git ls-files with path restriction.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others path0 >output &&
++	cat >expect <<-\EOF &&
++	path0
++	EOF
++	test_cmp output expect
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction with --.' \
+-    'git ls-files --others -- path0 >output &&
+-	test_cmp output - <<EOF
+-path0
+-EOF
++test_expect_success 'git ls-files with path restriction with --.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others -- path0 >output &&
++	cat >expect <<-\EOF &&
++	path0
++	EOF
++	test_cmp output expect
+ '
+ 
+-test_expect_success \
+-    'git ls-files with path restriction with -- --.' \
+-    'git ls-files --others -- -- >output &&
+-	test_cmp output - <<EOF
+---
+-EOF
++test_expect_success 'git ls-files with path restriction with -- --.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others -- -- >output &&
++	cat >expect <<-\EOF &&
++	--
++	EOF
++	test_cmp output expect
+ '
+ 
+-test_expect_success \
+-    'git ls-files with no path restriction.' \
+-    'git ls-files --others -- >output &&
+-	test_cmp output - <<EOF
+---
+--foo
+-output
+-path0
+-EOF
++test_expect_success 'git ls-files with no path restriction.' '
++	test_when_finished "rm -f expect" &&
++	git ls-files --others -- >output &&
++	cat >expect <<-\EOF &&
++	--
++	-foo
++	output
++	path0
++	EOF
++	test_cmp output expect
++
+ '
+ 
+ test_done
+diff --git a/t/t3020-ls-files-error-unmatch.sh b/t/t3020-ls-files-error-unmatch.sh
+index 2cbcbc0721b..133593d23c0 100755
+--- a/t/t3020-ls-files-error-unmatch.sh
++++ b/t/t3020-ls-files-error-unmatch.sh
+@@ -19,12 +19,12 @@ test_expect_success 'setup' '
+ 	git commit -m "add foo bar"
+ '
+ 
+-test_expect_success \
+-    'git ls-files --error-unmatch should fail with unmatched path.' \
+-    'test_must_fail git ls-files --error-unmatch foo bar-does-not-match'
++test_expect_success 'git ls-files --error-unmatch should fail with unmatched path.' '
++	test_must_fail git ls-files --error-unmatch foo bar-does-not-match
++'
+ 
+-test_expect_success \
+-    'git ls-files --error-unmatch should succeed with matched paths.' \
+-    'git ls-files --error-unmatch foo bar'
++test_expect_success 'git ls-files --error-unmatch should succeed with matched paths.' '
++	git ls-files --error-unmatch foo bar
++'
+ 
+ test_done
+diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
+index b257c792a46..52f76f7b57f 100755
+--- a/t/t3060-ls-files-with-tree.sh
++++ b/t/t3060-ls-files-with-tree.sh
+@@ -10,7 +10,7 @@ a scenario known to trigger a crash with some versions of git.
+ '
+ . ./test-lib.sh
+ 
+-test_expect_success setup '
++test_expect_success 'setup' '
+ 
+ 	# The bug we are exercising requires a fair number of entries
+ 	# in a sub-directory so that add_index_entry will trigger a
+@@ -62,9 +62,9 @@ test_expect_success 'git ls-files --with-tree should succeed from subdir' '
+ 	)
+ '
+ 
+-test_expect_success \
+-    'git ls-files --with-tree should add entries from named tree.' \
+-    'test_cmp expected output'
++test_expect_success 'git ls-files --with-tree should add entries from named tree.' '
++	test_cmp expected output
++'
+ 
+ test_expect_success 'no duplicates in --with-tree output' '
+ 	git ls-files --with-tree=HEAD >actual &&
 
-    git remote add a ../a
-    git fetch a
-
-    cat a
-    cat ../a/0001-3-33.patch
-    git --no-pager log --oneline --graph --all
-    git am "$@" ../a/0001-3-33.patch  # try it w/ and w/o -3
-    git --no-pager log --oneline --graph --all)
-
-A couple of links, just in case, which have more information and show
-where it comes from:
-
-https://stackoverflow.com/a/25847019/52499
-https://gist.github.com/x-yuri/9907d5b9cbf29e84d510902a776741df
-https://gist.github.com/x-yuri/57d08f6afb10a89856d6e6a62abe30d4
-
-Regards,
-Yuri
+base-commit: e4a4b31577c7419497ac30cebe30d755b97752c5
+-- 
+gitgitgadget
