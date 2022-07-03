@@ -2,91 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6761C433EF
-	for <git@archiver.kernel.org>; Sun,  3 Jul 2022 07:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F382FC433EF
+	for <git@archiver.kernel.org>; Sun,  3 Jul 2022 12:12:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231405AbiGCHI2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Jul 2022 03:08:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35478 "EHLO
+        id S232561AbiGCMMA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Jul 2022 08:12:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231372AbiGCHI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jul 2022 03:08:26 -0400
-Received: from cressida.uberspace.de (cressida.uberspace.de [185.26.156.202])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3F495593
-        for <git@vger.kernel.org>; Sun,  3 Jul 2022 00:08:22 -0700 (PDT)
-Received: (qmail 19737 invoked by uid 989); 3 Jul 2022 07:08:20 -0000
-Authentication-Results: cressida.uberspace.de;
-        auth=pass (plain)
-Date:   Sun, 03 Jul 2022 09:08:01 +0200
-From:   Matthias Beyer <mail@beyermatthias.de>
-Subject: Re: cherry-pick with --no-rerere-autoupdate does still rerere?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <1656746869.11nc2qu6dn.astroid@takeshi.none>
-        <xmqqwncv49qm.fsf@gitster.g>
-In-Reply-To: <xmqqwncv49qm.fsf@gitster.g>
+        with ESMTP id S229739AbiGCML7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jul 2022 08:11:59 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A44FF65AC
+        for <git@vger.kernel.org>; Sun,  3 Jul 2022 05:11:58 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id fz10so693308pjb.2
+        for <git@vger.kernel.org>; Sun, 03 Jul 2022 05:11:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=YT9boOpTK1PcOTlBX7NGUK6BIw3peFYcF0YiWLtKEmY=;
+        b=lgE/c7XUHCb0P1iBsjRUkcYPslu49wmpnE6bz1HhjrMtar1gy/eVjPf6i91epFG1+o
+         JEXJepKiTecAl3R8evwFzAqRNaKj1/p9SLk8fWxIevVewtYxDh/xVEIER4q/j/vJ8V2l
+         RYPWypIojBsTVoYRERG9PWWTBQ5vk2T4k6XsCT93vGqM8IXGJ56t7fuGNqqscAc42KO3
+         ZZrHwCh5R+V2vD9ahuc9P/mRbedZDmZaKARTdPviykoMsU+chWm5vr1/Mx+xUVpwnvNA
+         xGGuuuNCIHVPKW32VL2iyED1e0zMwXxD+Y+Qm9Jm4Kq+6TqYlvVJJTiCfYQAGFlNmbCd
+         lwKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=YT9boOpTK1PcOTlBX7NGUK6BIw3peFYcF0YiWLtKEmY=;
+        b=iI0TGUx81XY6UkAvfxoFzp9Y79AKT/bGcFKDs+MUn54/VdI0IZxBLSqIAMF1Qs3UPj
+         M0Rwbbj13ocIeFFOPnVW3wYJpCdDLpYIGRvNRP5y/P3T59GT5tJ8NIaU0yzZIM/iS2KQ
+         W/ZVw1ZVmfdBVRy7wmsqHzmeaNdcYRdld3cQ76WyM2m9T6S9aDHcWsy62GwinMDqVQHJ
+         Gjpn/i9Rb+jNi18iBastHTmPreaXPZyxbQpFegoflGv0yDaSRYlrK5Cmhe2rSzq5HbQg
+         LBje9Ek1hIY4T4uJoGhPQKIaYyC82sBU8yvQNBwxZ37mKrsa5rcRTYYw4ef57t9VwIC9
+         bPZw==
+X-Gm-Message-State: AJIora8nl0+F0vJFauip3G5m9WAWLPa7QR0WJBq2wyqGgdtKpDJOB3Md
+        SsYpWJRznuTrfeKIAeOgyuvCIpBtrplhpeUclHiDNZEys7Ce
+X-Google-Smtp-Source: AGRyM1uB0Ow3R5DveGqnxFYMH21NDbkeP+svD91FMpTCj2A+xnVPNEhhlIegF91SsNVXWk9vqLXP3EoZoasNiqnYBJM=
+X-Received: by 2002:a17:903:1207:b0:16a:7e87:dad3 with SMTP id
+ l7-20020a170903120700b0016a7e87dad3mr29890395plh.99.1656850317963; Sun, 03
+ Jul 2022 05:11:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: astroid/0.16.0 (https://github.com/astroidmail/astroid)
-Message-Id: <1656831907.rjf3s99jhj.astroid@takeshi.none>
-Content-Type: multipart/signed; protocol="application/pgp-signature";
-        micalg=pgp-sha256; boundary="=-z/PxO2DXjl0b7sw1KUyC"
-X-Rspamd-Bar: -
-X-Rspamd-Report: MIME_GOOD(-0.2) SIGNED_PGP(-2) SUBJECT_ENDS_QUESTION(1) BAYES_HAM(-0.445336)
-X-Rspamd-Score: -1.645336
-Received: from unknown (HELO unkown) (::1)
-        by cressida.uberspace.de (Haraka/2.8.28) with ESMTPSA; Sun, 03 Jul 2022 09:08:19 +0200
+From:   Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
+Date:   Sun, 3 Jul 2022 15:11:46 +0300
+Message-ID: <CAMhVC3Z92hBsK0FbE4E_LV1CSxjR1zmu+MO8=iwR02BKqnwgUA@mail.gmail.com>
+Subject: Why `git am -3` apply patches that don't normally apply?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---=-z/PxO2DXjl0b7sw1KUyC
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Excerpts from Junio C Hamano's message of Juli 2, 2022 9:04 pm:
-> Matthias Beyer <mail@beyermatthias.de> writes:
->=20
->> I just experienced a `git cherry-pick <commit> --no-rerere-autoupdate` w=
-here the
->> conflict still got automatically resolved from rerere.
->=20
-> If I am not mistaken, this is totally expected.  You told the
-> command "use rerere but do not blindly accept the replayed
-> resolution into the index".
+From what I can see w/o `-3` `git am` follows the `patch`'es behavior.
+And the `patch`'es behavior is if there are lines in a patch that
+doesn't match the lines in the source file, it fails. For example, a
+source file:
 
-Ah! After over 10 years of using git, I still missed that ("update the inde=
-x" in
-the manpage). I was thinking about "cherry pick this, but don't use rerere =
-at
-all".
+11
+2
+3
 
-Thanks for clearing up my confusion!
-Matthias
+A patch:
 
+ 1
+ 2
+-3
++33
 
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen,
-Kind regards,
-Matthias Beyer
+But `git am -3` will apply such a patch. That is, `patch` sees that
+the first line changed and that prevents it from applying the patch,
+but `git am -3` decides that it's okay. Why is that?
 
---=-z/PxO2DXjl0b7sw1KUyC
-Content-Type: application/pgp-signature
+A script that reproduces the issue:
 
------BEGIN PGP SIGNATURE-----
+    set -eux
 
-iQIzBAABCAAdFiEEUJGUus1GMTrRclzcEKWX9Kitz80FAmLBQFIACgkQEKWX9Kit
-z825MA//ejKOv+rFzG0mun9QoIX96TnwY5YezsPBkFt3Cc8OoUKHRbXbVn8UOuws
-mA9oPnI7N9HPVos5iH4JfLNhy9MJ2XaEE9ZJcXQV+WxJl2/xJ9YihgoVknQjo8yT
-VuZHdwVmMeT2+QfOT3rchaWndDCz4NmQxfzHVJcHe6SXLDfDXhI53KpeDN3Q3eQW
-j9/lDoZBu5/vSlWaMvWSU5o2NxH8eK6Lm8hR7KbQKwaSWZ6tpOS/+46D3AZUDip8
-G1xbdsQhxoE94Nd6iEDKf7Nxjo/EpzO+zMFBwRZESHK/lxeq4zgvKnojraynk1aC
-DVuXzV3qqrbl3hhQ2QeDjuUUnCCH8UdOoV2djD42l84XCqtFMzJ+yhcZKA8GN/wV
-GxLQcRUhtiv1bm+0bXQA75MYXcVpCBhPUggcDMBkmpBNPB3v4UXT3K7CySm9bCMv
-NpEWwRzJa6qqld+D0K93TjGXoBjKRNDWo6wBu6TR/LHaxQK2RmePPo+2ELLtA149
-7ybgJVasm1EoXq0dl3JVTWHOGJIQhJgbbpuuNOTTSoA5b2OZFyQaJZUJiGvWoY+G
-FPoGfNlmzcGjkF9pxBwbIcKhOfUUlZyTlEnzEJ/YrdBacnwRKthtqqL9JbAQEnyu
-lxcccUFD1CT3b9x+ydrFRfQUGF7qggcXbMLxnEP8pE+7SmnUfHk=
-=UiVY
------END PGP SIGNATURE-----
+    mkdir a
+    (cd a
+    git init
+    echo '1
+    2
+    3' > a
+    git add a
+    git commit -m 1,2,3
+    sed -Ei 's/3/33/' a
+    git add a
+    git commit -m '3 -> 33'
+    git format-patch -1 HEAD)
 
---=-z/PxO2DXjl0b7sw1KUyC--
+    mkdir b
+    (cd b
+    git init
+    echo '11
+    2
+    3' > a
+    git add a
+    git commit -m 11,2,3
+
+    git remote add a ../a
+    git fetch a
+
+    cat a
+    cat ../a/0001-3-33.patch
+    git --no-pager log --oneline --graph --all
+    git am "$@" ../a/0001-3-33.patch  # try it w/ and w/o -3
+    git --no-pager log --oneline --graph --all)
+
+A couple of links, just in case, which have more information and show
+where it comes from:
+
+https://stackoverflow.com/a/25847019/52499
+https://gist.github.com/x-yuri/9907d5b9cbf29e84d510902a776741df
+https://gist.github.com/x-yuri/57d08f6afb10a89856d6e6a62abe30d4
+
+Regards,
+Yuri
