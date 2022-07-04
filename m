@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81345C433EF
-	for <git@archiver.kernel.org>; Mon,  4 Jul 2022 12:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D438C433EF
+	for <git@archiver.kernel.org>; Mon,  4 Jul 2022 13:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231734AbiGDM4c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Jul 2022 08:56:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37938 "EHLO
+        id S232850AbiGDNFK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Jul 2022 09:05:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbiGDM4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jul 2022 08:56:31 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89E713B4
-        for <git@vger.kernel.org>; Mon,  4 Jul 2022 05:56:30 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id l24so8532736ion.13
-        for <git@vger.kernel.org>; Mon, 04 Jul 2022 05:56:30 -0700 (PDT)
+        with ESMTP id S229633AbiGDNFI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jul 2022 09:05:08 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF9CC2A
+        for <git@vger.kernel.org>; Mon,  4 Jul 2022 06:05:07 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id p69so8566712iod.10
+        for <git@vger.kernel.org>; Mon, 04 Jul 2022 06:05:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=mfMhjKINi4xCZt/RB5tZXhuFUmMYKXELUobJsrn6/Bo=;
-        b=RtgMkVz1V+//UZ4oi9uuUrOAlVxXI2bY5/3o4z1/N8NMBeIb2x7CZzWd9nYPJ/cglh
-         6lpGqYAF7N+voqvFDfaZnIlEI5AagwCX8Mi3tie+wrZZkFOrwLXEtAFPDvd/p4lUg4XH
-         3sIxR6XTXVIM6Zn8q/Vwh7f/oz3BffyYmSef87uj7nwNoLTuP8DZrh5TvbT+twrzi3Y7
-         LWyR3HmgBk5PVB2Q6+/u5YI1LwzE+9sPwMsNoGjAmre25jX6h3bq/T23mRVO9TUKAizW
-         XOVYQ/+mOGPXVCw/HLErRLFdhBASOmtizl6gkk/n1XQGT4TttPDZdvk0unrg4PvhQ+vP
-         9f+A==
+        bh=igkA0DdSsjm7zBShPQJI7jVc9T10lcUHK7GLf05tevg=;
+        b=MGqaQRFhXCZ+ld/LMeBCjOY2YOSwdbjSy6PhbCdgBU8HkmSXXySuBZtgwVCfkwTizH
+         CnwctXsd3WFZn3HfkeI0jDi9ppAlZkI/aUqljW/kDnojSsVPkHn9/oUj4Xk0Ir2cgnSh
+         Tyi4TX7XaI2pkfwmSsa//D8jm7peOPC1eVbayJCmRUE/+yrWs2M5th980HzDjA1hoL3i
+         QSNH5Uzm7iaz7eJsTcXZBJBjtsYRrL1fl+t/tMvimsTU1pApgZcPTq5gvVzrRY6R//iN
+         gcHhFuTTiV3QBcTXeHtIyKAmEhgbsfv3K1DMBMpBn2G1OPZNMNZDnvh6kDozoIn361bP
+         6V/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=mfMhjKINi4xCZt/RB5tZXhuFUmMYKXELUobJsrn6/Bo=;
-        b=HH68eKBV3LTDIezGPEassbNgPuiYalY0oFB7n4i+G39h/Ekb1IcMZZbHszhfhX60Lm
-         192sfyiNUesEVvxj/5+nbrBB7FxdsP2v9deywlAmv3OFR4nsuL7XzNzqCWW1gzjur3Db
-         zKUMnj4zJ4yiUeiuFdlp9kOuHF53nPweaYFRtd1rU0TFbC1v5hZPUhVzBQCXOjodfHwf
-         S6FOhEEgkJ69UgxcgQ43Iz1egxBqAouZVZRsqegINJNAw7LfaYfZRLKFNHq9x8UMDWkj
-         JgBMXn3HMV7iFzbEdb7EgSzBbELEVm/25J2YVp90qygA5jF/puuQHWRQTL9hgycAdlUC
-         rxlg==
-X-Gm-Message-State: AJIora9VA7NITE9VKaYctb56CzPb4M1vnkywhYvS1dvkLMi2/dG7AtTm
-        IR18/2eDCU00ipd9emzrAKIj
-X-Google-Smtp-Source: AGRyM1v5it/WBt75J5gBXc4BnSs+eBas/ZR8G0ORJj4yxMsL2OtnonemaY/9SMnYQ69CAx/jS2OLQA==
-X-Received: by 2002:a02:9f17:0:b0:339:ed5d:c3e1 with SMTP id z23-20020a029f17000000b00339ed5dc3e1mr18656608jal.270.1656939389950;
-        Mon, 04 Jul 2022 05:56:29 -0700 (PDT)
+        bh=igkA0DdSsjm7zBShPQJI7jVc9T10lcUHK7GLf05tevg=;
+        b=ZOda6YUTyRA0Vy8BSv81VPowC69mtn55bctMJDOGrP83yMkAY9+7SdATvFH6BIFzVR
+         UqptfzrC8CGe91mZFv36WBKhrq2AAC30TFamivyw8ushNcppnkxeF8gyUkwEDXSZpDBf
+         fxNjHrujrwAD6eDERJoVYOVqJZCvJjYDz9xnStkflG3adyBuM9GI7S5N5q/7mivWqm0O
+         lWLuIKx6nBnDUbFb6Mrfnqzp7ApHg9Mz6djz4MFMI5zVvFtkWJgDxXPaWj0IHue1TfhX
+         l+lYEpZBlsIrjod2+ny/woB/PWA3TbnHkwNTSjqCkK8f/+Qttxwfj9A/50u5ceN6CXrA
+         yhvA==
+X-Gm-Message-State: AJIora+PhRLq4oiPUbQaz/dOJRysPuLiarw8zSM0GNm4Ya/M7PHRYCWm
+        lXIqRy59xv8BTIdFQX88VGKp
+X-Google-Smtp-Source: AGRyM1vLMgv7Lgrcn2m4QRbH2E8wADTLs4HK/zJuiqBvN/xx6gB9+Rwnbx8/F15oVmrxLdT3fbrdKQ==
+X-Received: by 2002:a02:cdc5:0:b0:339:cca1:8d3f with SMTP id m5-20020a02cdc5000000b00339cca18d3fmr17762031jap.53.1656939906471;
+        Mon, 04 Jul 2022 06:05:06 -0700 (PDT)
 Received: from [192.168.103.184] ([4.1.157.141])
-        by smtp.gmail.com with ESMTPSA id q12-20020a92d40c000000b002db01356d36sm3701395ilm.12.2022.07.04.05.56.27
+        by smtp.gmail.com with ESMTPSA id f17-20020a056638113100b003314830ab40sm13536020jar.6.2022.07.04.06.05.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Jul 2022 05:56:29 -0700 (PDT)
-Message-ID: <7dd69bb1-8bc7-3ae9-6265-bdba660b4c4a@github.com>
-Date:   Mon, 4 Jul 2022 06:56:23 -0600
+        Mon, 04 Jul 2022 06:05:06 -0700 (PDT)
+Message-ID: <5002269d-5cab-3ba4-b99e-dca0c3615118@github.com>
+Date:   Mon, 4 Jul 2022 07:05:03 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.10.0
-Subject: Re: [PATCH v3 6/8] rebase: add --update-refs option
+Subject: Re: [PATCH v3 7/8] rebase: update refs from 'update-ref' commands
 Content-Language: en-US
 To:     Elijah Newren <newren@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
@@ -65,41 +65,92 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Phillip Wood <phillip.wood123@gmail.com>
 References: <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
  <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
- <918b398d6a2264a99acadd319f780c796bbafc18.1656422759.git.gitgitgadget@gmail.com>
- <CABPp-BFqLP51q9RkJr=16+Aqq7R=tYqL5mZGUq-dvfn8LL2AMQ@mail.gmail.com>
+ <72e0481b643e98c5670eee0bf5c199c4fb693b16.1656422759.git.gitgitgadget@gmail.com>
+ <CABPp-BG++8LAwyH6P-QDj5Lu6-cevOBOjpdY7QsSdwiT0w9URA@mail.gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BFqLP51q9RkJr=16+Aqq7R=tYqL5mZGUq-dvfn8LL2AMQ@mail.gmail.com>
+In-Reply-To: <CABPp-BG++8LAwyH6P-QDj5Lu6-cevOBOjpdY7QsSdwiT0w9URA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/1/22 3:20 PM, Elijah Newren wrote:
->> +/*
->> + * For each 'pick' command, find out if the commit has a decoration in
-> Is this really limited to picks?  If someone uses --autosquash and has
-> a fixup or squash in the list, wouldn't this apply as well, or does
-> all of this apply before the transformations to fixup/squash?  Also,
-> what if the user is doing --rebase-merges and there's a merge commit
-> with a branch pointing at the merge.   Would that be included?
+On 7/1/22 5:18 PM, Elijah Newren wrote:
+> On Tue, Jun 28, 2022 at 6:26 AM Derrick Stolee via GitGitGadget
+
+>> Not only do we update the file when the sequencer reaches these
+>> 'update-ref' commands, we then update the refs themselves at the end of
+>> the rebase sequence. If the rebase is aborted before this final step,
+>> then the refs are not updated.
 > 
->> + * refs/heads/. If so, then add a 'label for-update-refs/' command.
->> + */
+> Why update with each update-ref command?  Couldn't the values be
+> stored in memory and only written when we hit a conflict?
 
-This is limited to picks (for now) mostly for the reason that the
-fixup! and squash! commits are probably getting reordered, even if
-they exist at the tip of some refs.
+I think that is a natural way to optimize the feature. I didn't
+look into that option as it seemed more error-prone to me. I'd
+be happy to be wrong here if an easy tweak makes this possible.
 
-The workflow I am optimizing for is to create fixup! and squash!
-commits at the tip of a long multi-topic series, and then those
-get reordered into the list. In that case, the only ref that is
-pointing at one of those commits is also the HEAD branch, so that
-is not updated using this mechanism.
+>> -static int do_update_ref(struct repository *r, const char *ref_name)
+>> +static int write_update_refs_state(struct string_list *refs_to_oids)
+>> +{
+>> +       int result = 0;
+>> +       FILE *fp = NULL;
+>> +       struct string_list_item *item;
+>> +       char *path = xstrdup(rebase_path_update_refs());
+>> +
+>> +       if (safe_create_leading_directories(path)) {
+>> +               result = error(_("unable to create leading directories of %s"),
+>> +                              path);
+>> +               goto cleanup;
+>> +       }
+>> +
+>> +       fp = fopen(path, "w");
+>> +       if (!fp) {
+>> +               result = error_errno(_("could not open '%s' for writing"), path);
+>> +               goto cleanup;
+>> +       }
+>> +
+>> +       for_each_string_list_item(item, refs_to_oids)
+>> +               fprintf(fp, "%s\n%s\n", item->string, oid_to_hex(item->util));
+> 
+> Here you are storing the ref and the new oid to move it to.  Any
+> reason you don't store the previous oid for the branch?  In
+> particular, if someone hits a conflict, needs to resolve, and comes
+> back some time much later and these intermediate branches have since
+> moved on, should we actually update those branches?  (And, if we do,
+> should we at least give a warning?)
 
-This is a case where I'm very interested in alternatives here, and
-maybe I should clearly mark this option as experimental so we can
-work out cases like this based on use.
+The branches don't move forward because other Git processes respect
+the update-refs file (this does not take into account third-party
+tools that don't know about that file, but we need to start somewhere).
+
+You're right that storing the old value would help us in this case
+where another tool updated the ref while we were in the middle of the
+rebase. The storage of the null OID is only to prevent writing over a
+ref when the user has removed the 'update-ref <ref>' command from the
+todo-list. It's probably better to remove the ref from the list when
+that happens.
+
+>> +       if (!found) {
+>> +               struct object_id oid;
+>> +               item = string_list_append(&list, refname);
+>> +
+>> +               if (!read_ref("HEAD", &oid))
+>> +                       item->util = oiddup(&oid);
+>> +               else
+>> +                       item->util = oiddup(the_hash_algo->null_oid);
+> 
+> Seems a little unfortunate to not use a cached value from the latest
+> commit we picked (and wrote to HEAD) and instead need to re-read HEAD.
+> But, I guess sequencer is written to round-trip through files, so
+> maybe optimizing this here doesn't make sense given all the other
+> places in sequencer where we do lots of file reading and writing.
+
+It's also possible to optimize several things, but I tried to
+minimize the amount of change to the existing methods. This is
+my first foray into this part of the code, so I don't always know
+which information is readily available. I appreciate your attention
+here.
 
 Thanks,
 -Stolee
