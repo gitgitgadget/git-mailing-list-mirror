@@ -2,138 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFC9DC43334
-	for <git@archiver.kernel.org>; Mon,  4 Jul 2022 20:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7508C433EF
+	for <git@archiver.kernel.org>; Mon,  4 Jul 2022 20:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230434AbiGDUSG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Jul 2022 16:18:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34674 "EHLO
+        id S229894AbiGDUvI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Jul 2022 16:51:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234145AbiGDUSA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jul 2022 16:18:00 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CAD12607
-        for <git@vger.kernel.org>; Mon,  4 Jul 2022 13:17:58 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id d3so9436956ioi.9
-        for <git@vger.kernel.org>; Mon, 04 Jul 2022 13:17:58 -0700 (PDT)
+        with ESMTP id S229554AbiGDUvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jul 2022 16:51:07 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 327CF1B3
+        for <git@vger.kernel.org>; Mon,  4 Jul 2022 13:51:04 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id l24so9481205ion.13
+        for <git@vger.kernel.org>; Mon, 04 Jul 2022 13:51:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=BnijjHHH8naDUtz8oIGLLfEjQBxGDyZqWc+qvgX8870=;
-        b=KTK5ljOWB1qpSJmsDzrTOZQhsPs+haLt2kzny/PQ3P+1GAI2IS9Q/1wOdrPyhRS0R4
-         YNnrxnYOGmX+sYLqHqJLSh6JAhJEJit+rQxt7E64G/Ht48ijZKiz8QWdhz5DDWG6tl5E
-         9ipbIAuhwhiEozj2gGCfG4OeVBZicmcQsmYurCAV8A6F/eVCWGrnT7p+WFk44UTtn/b0
-         dp4p3yFCOggYJgEl59kowIJyT5Xtc77kxPYZUJgRXR4ySJYaStEFeA34zmINJd2xdZrw
-         ClH6EUQAUK5oh1BrG6WKF/1Lzle2XiDD3tZ5Hlpa2RAzsx5DZ1bqeCOhcDjywe7P0iew
-         T1SA==
+        bh=y2HoS9OnPIV8l/fYVxP2fcTLaE8in7TwyKso5tmXVFg=;
+        b=XJDgvCKRZIOm5dp1csyCAWs9D+Ex5jjJFIgqrlQ+xhMlWeq713BE6NhETqwtOx3j1M
+         8zPnTUY5s/NrYmUH1sfng/0bHyx/GZ7U1T4QnHJaAO6XgYOWMy/tOgKrG01oE3q3GZxq
+         Slwb9YOEpWIjY9GOKfFay0Md87eLo1b21WOKh2be9tscb9J4jW8kR6DSkmIpasGB0qK9
+         4WSKJzmUcDbD3KQgigPWqt0laMXaGUceaDrkGtQX4b7P2TADgy6Nrqx5ypdRpOUIB4Of
+         IgSPyJKkgYQb40UmbdEJmJgbCPQlEupWH874G8js0ScCiWPyDMLnmreeyJ80fwMDEFf7
+         vscQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=BnijjHHH8naDUtz8oIGLLfEjQBxGDyZqWc+qvgX8870=;
-        b=fdiwMJOFJuMJahsbWFdM2j1bW/+/j+c9aHDzrsY9EKr9jiYQthRlWbXO7g/KH6Z0QD
-         JCPAzpEI9hkWaNFPZZgO99wgYJAefEogCXKqihSCf11MYWDevIt+ytkoooehQzPcgHmM
-         ElGUXyGpZaDMisVdxAOq+QX83uAd3tt2mb8J28rEiLIM9vOJMkpnX144obTZHQSO3a5W
-         NV/tO/HNbNbqNHUd2bUXRWzvvbggIq6ofDF2lSwsKKx7JIjCqz8Pdva9ZVFoEvE9yI4P
-         RJjts7tWG79yaLVfVbXGdKRmIkdxtJ/zS3h2KzMVV2xawPm3Oaj9U6tHqvbVu1F9jWf4
-         H+TQ==
-X-Gm-Message-State: AJIora+GpXyRryKF84GfwlmrZAkPn9SGVt9aFhAuAVCKXvpV9FTPtdKW
-        JVLe1Zd4Vo7n1WE0GHN9qwCR
-X-Google-Smtp-Source: AGRyM1tLK8oTZk0zpJ/U5y+gQnzEiz1gfDwxFkKJPohoBvgaJkBWyEl/axfVW5ZyMSJFHEyW5g9Alg==
-X-Received: by 2002:a05:6602:8d1:b0:675:3baa:d47 with SMTP id h17-20020a05660208d100b006753baa0d47mr16636142ioz.194.1656965878249;
-        Mon, 04 Jul 2022 13:17:58 -0700 (PDT)
+        bh=y2HoS9OnPIV8l/fYVxP2fcTLaE8in7TwyKso5tmXVFg=;
+        b=zdUWK+DVe6jB4j5Z3AKKRdXNFMbGzCXoT/B5hsj49F8QswcY8W6wsZAGATrzt0HnZe
+         9T39RqK8xHyrGfznaTIs75ynY8L8B031yfBfB0TQfvz8qCA8G1hqVNTZg11mzVesT2Vl
+         0MJ9T2TC8AeiI6s+pCXgW7x+GS0IRtSZb8Qxg+48nWAUHCePmEwxjTVX8BskPpVSk9jd
+         nYbU62BpLItxuapwRgFcn9PgCc6PtXYYVGfaHs8UfoKhhdcW/owk11/JopVC1IMBIJZ/
+         MqiUHz1Ft2JPaghY7iQAqBuvkmcn4We/SfkgKacfIacUlVGsl8Sal4X5gryOjjcz23a1
+         Ug8w==
+X-Gm-Message-State: AJIora+Nohl70UFmR8+Ofvm+HAejEmyyiLZFsDHs/BwfKE3nWWnRhYO2
+        18HlqYPXe3bWSPk6KVFpACto/zGxVNKP
+X-Google-Smtp-Source: AGRyM1vslbXUYLlAjVe2/q3IrtWRuSw8CvO7cugLrrMf31FQ7oCnV6XAA5AdRU+kIMZC0T8ZxZAHyA==
+X-Received: by 2002:a05:6638:34a0:b0:33c:aa2d:a88b with SMTP id t32-20020a05663834a000b0033caa2da88bmr19685150jal.296.1656967863309;
+        Mon, 04 Jul 2022 13:51:03 -0700 (PDT)
 Received: from [192.168.103.232] ([4.1.157.141])
-        by smtp.gmail.com with ESMTPSA id k30-20020a02335e000000b00339e6f88235sm13898151jak.61.2022.07.04.13.17.57
+        by smtp.gmail.com with ESMTPSA id f9-20020a056e0204c900b002dc0d2f7c7bsm1875474ils.4.2022.07.04.13.51.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Jul 2022 13:17:57 -0700 (PDT)
-Message-ID: <9662ac37-1458-8cf2-c0dd-5cd2b9107e4b@github.com>
-Date:   Mon, 4 Jul 2022 14:17:55 -0600
+        Mon, 04 Jul 2022 13:51:03 -0700 (PDT)
+Message-ID: <a154e109-3f4c-c500-3365-d47879abf30d@github.com>
+Date:   Mon, 4 Jul 2022 14:50:57 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: ds/rebase-update-re (was Re: What's cooking in git.git (Jul 2022,
- #01; Fri, 1))
+Subject: Re: commit-graph overflow generation chicken and egg
 Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>, vdye@github.com
-References: <xmqqo7y85t44.fsf@gitster.g>
- <15631ea2-6722-fd24-c8a6-0cee638b0602@github.com>
- <CABPp-BEHj6gXe+GNR8cw+UUG27E0Mn-wiBb=Dp=ZgX_2gT915w@mail.gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+References: <YqD5dgalb9EPnz85@coredump.intra.peff.net>
+ <581c7ef2-3de4-eb8a-bfbb-d4bca3522a2d@github.com>
+ <YqEuE2iAmMVLlUSu@coredump.intra.peff.net> <Yr7jY6GjUkOzHNh6@ncase>
+ <YsLE+DVa5Hd/NqdD@ncase>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BEHj6gXe+GNR8cw+UUG27E0Mn-wiBb=Dp=ZgX_2gT915w@mail.gmail.com>
+In-Reply-To: <YsLE+DVa5Hd/NqdD@ncase>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/4/22 10:58 AM, Elijah Newren wrote:
-> On Mon, Jul 4, 2022 at 6:26 AM Derrick Stolee <derrickstolee@github.com> wrote:
->>
->> On 7/1/22 5:08 PM, Junio C Hamano wrote:
->>
->>> * ds/rebase-update-ref (2022-06-28) 8 commits
->>>  - rebase: add rebase.updateRefs config option
->>>  - rebase: update refs from 'update-ref' commands
->>>  - rebase: add --update-refs option
->>>  - sequencer: add update-ref command
->>>  - sequencer: define array with enum values
->>>  - rebase-interactive: update 'merge' description
->>>  - branch: consider refs under 'update-refs'
->>>  - t2407: test branches currently using apply backend
->>>  (this branch uses ds/branch-checked-out.)
->>>
->>>  "git rebase -i" learns to update branches whose tip appear in the
->>>  rebased range.
->>>
->>>  Will merge to 'next'?
->>>  source: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
->>
->> Please expect at least one more re-roll. Here are the things I
->> intend to fix in the next re-roll, which should arrive sometime
->> this week.
->>
->> * Some commit message tweaks.
->> * Actually interrupt 'git bisect' and 'git rebase' in the tests.
->> * Be careful to update the update-refs file when the user edits
->>   the todo file.
->> * Consider storing the "before" values in the update-refs file
->>   and removing refs whose update-ref steps were removed by the
->>   user.
-> 
-> First half sounds good to me.  Not sure I understand the second half
-> about "removing refs"; do you mean actually deleting the ref, or just
-> not updating it, or something else?
+On 7/4/22 4:46 AM, Patrick Steinhardt wrote:
+> On Fri, Jul 01, 2022 at 02:07:03PM +0200, Patrick Steinhardt wrote:
 
-I mean removing it from the $GIT_DIR/rebase-merge/update-refs file
-so it is no longer blocking others from using it (and the value in
-the file can be used for a --force-with-lease type update).
+> While I still haven't been able to reproduce the error, I did find a
+> different error. Here's the reproducer, which works with Git v2.37.0 and
+> older:
 
->> * Elijah had a question about focusing on "pick" actions, not
->>   "fixup" or "squash" steps. This might be worth marking the
->>   option as experimental so we have flexibility in changing the
->>   behavior as new workflows are tested against this option.
-> 
-> This sounds good to me.  I do sometimes want to fixup or squash into a
-> commit that a branch I depend upon directly points to, so I'm worried
-> your feature may update refs incorrectly without this support.
 
-I've been using this quite a bit in my own work, and it properly
-moves fixups and squashes into the right branches, but I've only
-done that with fixups and squashes on the tip branch, not inside
-the earlier branches. It's also been really good when I rebase
-and add "break" or "edit" steps and do really complicated commit
-squashing or splitting operations.
+Hi Patrick. Thanks for taking a close look. There is
+an issue here, and it's due to using a negative
+timestamp:
 
-I'll try to collect some example runs, but it would also help a
-great deal if you added these patches to your local version of
-Git and try it own in your workflow. Use the rebase.updateRefs=true
-config setting so you don't need to think about it. Victoria has
-been testing this for me in her own workflows, so maybe she has
-ideas here.
+> + GIT_COMMITTER_DATE='1970-01-01T00:00:00 +0100'
+
+Because of the "+0100" in the time zone, this date
+becomes a negative value. The commit-graph does not
+store dates with more than 34 bits (and Git does
+not handle negative timestamps very well? Peff can
+clarify here).
+
+The commit-graph could certainly warn better here to
+say we do not have enough date bits to store this
+timestamp (the same would happen with a date beyond
+2138 or something like that).
+
+However, this is a failure since the commit-graph first
+started parsing dates in 177722b3442 (commit: integrate
+commit graph with commit parsing, 2018-04-10).
 
 Thanks,
 -Stolee
