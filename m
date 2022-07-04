@@ -2,140 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45DD1C433EF
-	for <git@archiver.kernel.org>; Mon,  4 Jul 2022 19:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFC9DC43334
+	for <git@archiver.kernel.org>; Mon,  4 Jul 2022 20:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233493AbiGDTgt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Jul 2022 15:36:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
+        id S230434AbiGDUSG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Jul 2022 16:18:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230311AbiGDTgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jul 2022 15:36:48 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F659FCB
-        for <git@vger.kernel.org>; Mon,  4 Jul 2022 12:36:48 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id 89-20020a17090a09e200b001ef7638e536so6401188pjo.3
-        for <git@vger.kernel.org>; Mon, 04 Jul 2022 12:36:48 -0700 (PDT)
+        with ESMTP id S234145AbiGDUSA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jul 2022 16:18:00 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CAD12607
+        for <git@vger.kernel.org>; Mon,  4 Jul 2022 13:17:58 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id d3so9436956ioi.9
+        for <git@vger.kernel.org>; Mon, 04 Jul 2022 13:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=j/ApqcUG2zjukOpUcGO0tWODgHcVr1h9p1q5SCM/fkg=;
-        b=QensHeYz+DzqM4YAnVlHBecCELRVopAf/w5DmUfCJ+CjZDTbXs2x0hPI7iyYFrqZvb
-         AHn7kM90FgmMY4pOu6oF1Lxll8ehsAxmmtlVV8TfDantYnZ8RwEBNy4xXMOkJ6Ta2PFb
-         xu99tF76uE8+2SDWStS+vBjoy7OCF35BO5Ka6XD+txTSfmeB1+Jg4HgAJ8UJ5iZzBoYi
-         NMbcBXpPMaW9WMTN6bv4a2/74nWm/+RAZjMax2BUMxoaw+rWKeZmfAkYaqzlsJWo9wbT
-         haeuZcR9OzKK69FsDITZyrB6Up5tZzBK9PSsWgl9F9Q7RrdCEvan9vFYZL/LVqGUIO2+
-         nnHg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=BnijjHHH8naDUtz8oIGLLfEjQBxGDyZqWc+qvgX8870=;
+        b=KTK5ljOWB1qpSJmsDzrTOZQhsPs+haLt2kzny/PQ3P+1GAI2IS9Q/1wOdrPyhRS0R4
+         YNnrxnYOGmX+sYLqHqJLSh6JAhJEJit+rQxt7E64G/Ht48ijZKiz8QWdhz5DDWG6tl5E
+         9ipbIAuhwhiEozj2gGCfG4OeVBZicmcQsmYurCAV8A6F/eVCWGrnT7p+WFk44UTtn/b0
+         dp4p3yFCOggYJgEl59kowIJyT5Xtc77kxPYZUJgRXR4ySJYaStEFeA34zmINJd2xdZrw
+         ClH6EUQAUK5oh1BrG6WKF/1Lzle2XiDD3tZ5Hlpa2RAzsx5DZ1bqeCOhcDjywe7P0iew
+         T1SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=j/ApqcUG2zjukOpUcGO0tWODgHcVr1h9p1q5SCM/fkg=;
-        b=v+76pfRNT+zYgBNwzyk8Kz79UpkYFp/8SPxLNZwxy9UMn89fHRZLkuIo5dg7r30F/e
-         OXMnaLIZHCIRFCtcCLqHLu1mp9Et+ctrEmVANE2RtA9T+XTs9RUe0I1frt1E2daycMtq
-         fTMoegamYwCpvIPWXcY3sMI6qa/Nbmb+qZ7TpXAamyS46vMOyqcCRkkRUJD+bx2MgYzi
-         ZMSqXDt/bZAp+ZlGYqsABzrU+OyZaooE8c/tcDd0FCWeoR8hhc0dudmo3uOlXBj1RMGZ
-         vYp8zj7cZiD3QgaJMdqK3xHFR4cGB/mVNqx7sCmDm+YA7qJ8L5WzPUhQJBx/B0IzDkA0
-         XcAQ==
-X-Gm-Message-State: AJIora/qWxcKuysn0NiQvANYYJJktCSaHcR5Hm1IcXxWi+OOeIUtiYqc
-        4W1+6UnjExBajDLbRavtPYyuUL+mics=
-X-Google-Smtp-Source: AGRyM1us4GfPLXKov1NTFpSQZmb6JSfmN4FhMu5d5KRoUQfd27czRjt6AI07O5xdxRlgMF/F+Vvmnw==
-X-Received: by 2002:a17:902:b186:b0:16b:d762:6d81 with SMTP id s6-20020a170902b18600b0016bd7626d81mr12807509plr.88.1656963407084;
-        Mon, 04 Jul 2022 12:36:47 -0700 (PDT)
-Received: from localhost.localdomain ([202.142.80.65])
-        by smtp.gmail.com with ESMTPSA id k78-20020a628451000000b0052840f73ce1sm5810031pfd.201.2022.07.04.12.36.44
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 04 Jul 2022 12:36:46 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Git <git@vger.kernel.org>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: [GSoC] Abhradeep's GSoC blogs (5 Jul, 2022 IST)
-Date:   Tue,  5 Jul 2022 01:06:28 +0530
-Message-Id: <20220704193628.76595-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        bh=BnijjHHH8naDUtz8oIGLLfEjQBxGDyZqWc+qvgX8870=;
+        b=fdiwMJOFJuMJahsbWFdM2j1bW/+/j+c9aHDzrsY9EKr9jiYQthRlWbXO7g/KH6Z0QD
+         JCPAzpEI9hkWaNFPZZgO99wgYJAefEogCXKqihSCf11MYWDevIt+ytkoooehQzPcgHmM
+         ElGUXyGpZaDMisVdxAOq+QX83uAd3tt2mb8J28rEiLIM9vOJMkpnX144obTZHQSO3a5W
+         NV/tO/HNbNbqNHUd2bUXRWzvvbggIq6ofDF2lSwsKKx7JIjCqz8Pdva9ZVFoEvE9yI4P
+         RJjts7tWG79yaLVfVbXGdKRmIkdxtJ/zS3h2KzMVV2xawPm3Oaj9U6tHqvbVu1F9jWf4
+         H+TQ==
+X-Gm-Message-State: AJIora+GpXyRryKF84GfwlmrZAkPn9SGVt9aFhAuAVCKXvpV9FTPtdKW
+        JVLe1Zd4Vo7n1WE0GHN9qwCR
+X-Google-Smtp-Source: AGRyM1tLK8oTZk0zpJ/U5y+gQnzEiz1gfDwxFkKJPohoBvgaJkBWyEl/axfVW5ZyMSJFHEyW5g9Alg==
+X-Received: by 2002:a05:6602:8d1:b0:675:3baa:d47 with SMTP id h17-20020a05660208d100b006753baa0d47mr16636142ioz.194.1656965878249;
+        Mon, 04 Jul 2022 13:17:58 -0700 (PDT)
+Received: from [192.168.103.232] ([4.1.157.141])
+        by smtp.gmail.com with ESMTPSA id k30-20020a02335e000000b00339e6f88235sm13898151jak.61.2022.07.04.13.17.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Jul 2022 13:17:57 -0700 (PDT)
+Message-ID: <9662ac37-1458-8cf2-c0dd-5cd2b9107e4b@github.com>
+Date:   Mon, 4 Jul 2022 14:17:55 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.11.0
+Subject: Re: ds/rebase-update-re (was Re: What's cooking in git.git (Jul 2022,
+ #01; Fri, 1))
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>, vdye@github.com
+References: <xmqqo7y85t44.fsf@gitster.g>
+ <15631ea2-6722-fd24-c8a6-0cee638b0602@github.com>
+ <CABPp-BEHj6gXe+GNR8cw+UUG27E0Mn-wiBb=Dp=ZgX_2gT915w@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CABPp-BEHj6gXe+GNR8cw+UUG27E0Mn-wiBb=Dp=ZgX_2gT915w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello developers, this is the thread where you can know about
-my weekly GSoC blog links.
+On 7/4/22 10:58 AM, Elijah Newren wrote:
+> On Mon, Jul 4, 2022 at 6:26 AM Derrick Stolee <derrickstolee@github.com> wrote:
+>>
+>> On 7/1/22 5:08 PM, Junio C Hamano wrote:
+>>
+>>> * ds/rebase-update-ref (2022-06-28) 8 commits
+>>>  - rebase: add rebase.updateRefs config option
+>>>  - rebase: update refs from 'update-ref' commands
+>>>  - rebase: add --update-refs option
+>>>  - sequencer: add update-ref command
+>>>  - sequencer: define array with enum values
+>>>  - rebase-interactive: update 'merge' description
+>>>  - branch: consider refs under 'update-refs'
+>>>  - t2407: test branches currently using apply backend
+>>>  (this branch uses ds/branch-checked-out.)
+>>>
+>>>  "git rebase -i" learns to update branches whose tip appear in the
+>>>  rebased range.
+>>>
+>>>  Will merge to 'next'?
+>>>  source: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
+>>
+>> Please expect at least one more re-roll. Here are the things I
+>> intend to fix in the next re-roll, which should arrive sometime
+>> this week.
+>>
+>> * Some commit message tweaks.
+>> * Actually interrupt 'git bisect' and 'git rebase' in the tests.
+>> * Be careful to update the update-refs file when the user edits
+>>   the todo file.
+>> * Consider storing the "before" values in the update-refs file
+>>   and removing refs whose update-ref steps were removed by the
+>>   user.
+> 
+> First half sounds good to me.  Not sure I understand the second half
+> about "removing refs"; do you mean actually deleting the ref, or just
+> not updating it, or something else?
 
-My Project - Reachability bitmap improvements
+I mean removing it from the $GIT_DIR/rebase-merge/update-refs file
+so it is no longer blocking others from using it (and the value in
+the file can be used for a --force-with-lease type update).
 
-Blog update
-------------
+>> * Elijah had a question about focusing on "pick" actions, not
+>>   "fixup" or "squash" steps. This might be worth marking the
+>>   option as experimental so we have flexibility in changing the
+>>   behavior as new workflows are tested against this option.
+> 
+> This sounds good to me.  I do sometimes want to fixup or squash into a
+> commit that a branch I depend upon directly points to, so I'm worried
+> your feature may update refs incorrectly without this support.
 
-Title - GSoC Week 3: working on further improvements
-Blog link - https://medium.com/@abhra303/gsoc-week-3-working-on-further-improvements-13a27db64cd5
+I've been using this quite a bit in my own work, and it properly
+moves fixups and squashes into the right branches, but I've only
+done that with fixups and squashes on the tip branch, not inside
+the earlier branches. It's also been really good when I rebase
+and add "break" or "edit" steps and do really complicated commit
+squashing or splitting operations.
 
-Summary -
+I'll try to collect some example runs, but it would also help a
+great deal if you added these patches to your local version of
+Git and try it own in your workflow. Use the rebase.updateRefs=true
+config setting so you don't need to think about it. Victoria has
+been testing this for me in her own workflows, so maybe she has
+ideas here.
 
-In this week, I continued to work on further improvements of 
-The bitmap-lookup-table patch series. Some of the requested
-changes are (1) Improve the documentation and fix typos (2) add
-comments (3) Disable `pack.writeBitmapLookupTable` by default
-(4) Fix alignment issues (5) Make a `bitmap_lookup_table_triple`
-struct (6) Subtract the table_size from index_end irrespective of
-the value of GIT_TEST_READ_COMMIT_TABLE.
-
-After implementing all the requested changes, I started working
-on the idea I mentioned in my previous blog as my next step. The
-idea is to stop the xor stack filling loop if the current xor
-bitmap is already stored and assign `xor_bitmap` to it. As this
-bitmap is already stored, we don't need to iterate further as we
-know all the other bitmaps that are needed to parse this bitmap
-has already been stored.
-
-My next step is to roughly implement roaring run bitmaps and
-run performance tests to check if it's really worth it.
-
-
-Previous blogs 
----------------
-
--------------------------------------------------------
-Title - GSoC Week 2: redesign the table format
-Blog link - https://medium.com/@abhra303/gsoc-week-2-redesign-the-table-format-829dae755a5
-
-Summary - 
-
-In the last week, I worked on the reviews. Some major requested
-changes are (1) Use commit positions instead of commit oids in
-the table. (2) Use 8 byte offset positions instead of 4 bytes
-(3) use iterative approach for parsing xor bitmaps (4) Use
-`<commit_pos, offset, xor_pos>` triplets.
-
-While implementing these changes, I discovered some bugs in the
-previous version. I faced errors during this time. But finally
-managed to fixed those errors. Taylor helped me to get rid of
-some errors.
-
-I think that we can optimise the parsing of xor bitmaps further
-by stopping stack filling loop when we get an already parsed
-bitmap since we know that bitmaps having xor relations with it
-has already been stored/parsed.
-
-------------------------------------------------------- 
-Title - GSoC Week 1: Let's Get started
-Blog link - https://medium.com/@abhra303/gsoc-week-1-lets-get-started-fad78ec34dcf
-
-Summary -
-
-This is the first blog that I wrote for GSoC. Taylor
-suggested that I should work on "integrating a lookup table
-extension" first as it is smaller compared to other sub-projects.
-
-The idea is to have a table at the end of .bitmap file which
-will contain the offsets (and xor-offsets) of the bitmaps of
-selected commits. Whenever git try to get the bitmap of a
-particular commit, instead of loading each bitmaps one by one,
-git will parse only the desired bitmap by using the offset and
-xor-offset of the table. This will reduce the overhead of
-loading each and every bitmap.
--------------------------------------------------------
+Thanks,
+-Stolee
