@@ -2,115 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 597DBC43334
-	for <git@archiver.kernel.org>; Tue,  5 Jul 2022 22:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98B86C43334
+	for <git@archiver.kernel.org>; Tue,  5 Jul 2022 23:05:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231937AbiGEWyd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jul 2022 18:54:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52286 "EHLO
+        id S231351AbiGEXFX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jul 2022 19:05:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbiGEWyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jul 2022 18:54:32 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DC9A10CF
-        for <git@vger.kernel.org>; Tue,  5 Jul 2022 15:54:31 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id li14so2185986ejb.2
-        for <git@vger.kernel.org>; Tue, 05 Jul 2022 15:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=TNHbzHPvvqJRlkWQhEyVr7LrjhKmiA1jtHPiybmyUxQ=;
-        b=D2Z3uafSk3pygUYxETAUwJbFTr9bS3AP+Ane+gxCjAUzFMuygFIRD+2zlM4JkgfFQ4
-         4JdJMbtYsF8jGzDHnTK1/oPjA2nApxlnlhArK+w9maKdgCN5kMfN34L3olU7rmRZ1snD
-         KUYzwd/rJ9l4fbmw22FmfKIGix1s6J7j5Ep5EiLJQocPEIpauOOGkmX5gRa8QzdqHhVm
-         ayXh+GGcoYxVu83wVK36+v+pzXDTHa5KbVieFoUtX0g7T5U6sPo3am+0kJDKTSeXRRDM
-         aYMtjS9tx52Z5nfGE/bbuDWK9hp4B67OTPBkrY2vGHhyaGUvJQs+sKd0hAtEgZiMsXXm
-         jB0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=TNHbzHPvvqJRlkWQhEyVr7LrjhKmiA1jtHPiybmyUxQ=;
-        b=1defEIL2TZQRmzl2e45/fYSIavVbbesab+p46vbQJBxPC0FwYx3ZHs27JbgTJnu+C/
-         iKi4b6PCkRILf9rzrf4NgS16trWw/tjOXL+UokuMq5yah4+aADt5XcDswOIkXDuxJqKa
-         /k/yeLjYxqm42s+dB9Z6VMirsc/M+7XWPmMo7ahyX0tR9IekPKdemcyY4o8Wh8OoYviI
-         83W60mnnYeIviahhw+DsJbMlkkiaDjuaW3hGWImCWiQX6D3vUKHx45d7u6upcreEq3cS
-         nlWXY34TODjjmpKxK9NmVAyebvq9H8BMuVCzZqDy2v001HWQJkkWcpPAV5E3DQs3T5yY
-         q3lQ==
-X-Gm-Message-State: AJIora8kN1xYjn3QQn5TwTtliXCsgkSkzaq3rkzFeiAdE54zE7aVCWPy
-        Cqj/o/rdjANS+diERGMXBLUIUeMgoM2o2w==
-X-Google-Smtp-Source: AGRyM1vDugJNnE9a8QlNScgdLB1vuH2yB0qG2t+bglWctKL7lTS95JOz8nL2InhvTXEf8pXGIpiRXw==
-X-Received: by 2002:a17:907:7ba1:b0:72a:eba6:12ba with SMTP id ne33-20020a1709077ba100b0072aeba612bamr4075836ejc.652.1657061669673;
-        Tue, 05 Jul 2022 15:54:29 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id z8-20020aa7d408000000b0043a37e1d8easm6586224edq.32.2022.07.05.15.54.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 15:54:28 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o8rR6-004Bn3-9b;
-        Wed, 06 Jul 2022 00:54:28 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
-        Xin7 Ma =?utf-8?B?6ams6ZGr?= <maxin7@xiaomi.com>
-Subject: Re: [External Mail]Re: Git fork process infinitely and never stop
-Date:   Wed, 06 Jul 2022 00:50:37 +0200
-References: <9d3b79239a314f72a099040a26ef9ad8@xiaomi.com>
- <8e1d019e-6456-ed05-7d3e-a0c4beeb35fa@gmail.com>
- <8ccd27ef3a344596b6237e98e1a5f204@xiaomi.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <8ccd27ef3a344596b6237e98e1a5f204@xiaomi.com>
-Message-ID: <220706.86k08r9nmj.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229505AbiGEXFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jul 2022 19:05:23 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E05261BEA3
+        for <git@vger.kernel.org>; Tue,  5 Jul 2022 16:05:21 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id BD6DA5A1AB;
+        Tue,  5 Jul 2022 23:05:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1657062320;
+        bh=A4JGihGyL7ELuMmDcsZ/4L8JKGfM5Wfjc3jJ4H0ROmM=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=0ZZZYjHPWy/xOSFcT2W8Wx8XCjZH4ecKgRMVqjKfpOgVcnrHT5NryC4BJ74Y/ps2v
+         iRE0RK9tdtwpTmRMrcqFIgtqSFPw0CCA2lbUdnPXNCRVjEu9UoFEIf96s4902NnD6W
+         z7G7kCnx1LJtyYRpn+Y8E4vAB1p6D1iCGwPVvBwBHbJO8Jap1AxeGPAN77Jr8FGbwk
+         HnjwK6+35DaDWMERz0qtQlx+2ApxkxLANmyBRr4DTvP49uSGK9t9g5TtoYTUKSEtQG
+         RRL+kSEioV80pxgPV80inGwNFjtlmjPauwoBed+CXAsXTk4zZ8mHQWrFu0XUXJ0c11
+         ltahoWgFeBAOYZRt2jXe2vqDt8wKBC8B+SGOVY+WLpij7Kd0eZdeFLh8RPZQlDBKtR
+         HodE7cB0EOwSejciAEJ70/oJsVKzFIS42lwplQsD6+PHBeAowEVfp3YQdDw+iD3HKI
+         GQ+4ALCtNmmm7B3bGyJkiwx5iuqFDpaACURRna2AtGsEYRpvrvK
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] sha256: add support for Nettle
+Date:   Tue,  5 Jul 2022 23:05:18 +0000
+Message-Id: <20220705230518.713218-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.36.1.507.g7c58a9bb42
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+For SHA-256, we currently have support for OpenSSL and libgcrypt because
+these two libraries contain optimized implementations that can take
+advantage of native processor instructions.  However, OpenSSL is not
+suitable for linking against for Linux distros due to licensing
+incompatibilities with the GPLv2, and libgcrypt has been less favored
+by cryptographers due to some security-related implementation issues.
 
-On Tue, Jul 05 2022, =E7=A8=8B=E6=B4=8B wrote:
+Let's add another option that's compatible with the GPLv2, which is
+Nettle.  It also has recently gained support for Intel's SHA-NI
+instructions, which compare very favorably to other implementations.
+For example, using this implementation and SHA-1 DC on a machine with
+SHA-NI, hashing a 2 GiB file with SHA-1 takes 7.582 seconds, while
+hashing the same file with SHA-256 takes 2.278 seconds.
 
-> - git version:
-> 2.36.1
-> - steps to reproduce the bug
-> : We have no idea actually. We're maintainer of our internal
-> git/gerrit. We found sometimes some user will invoke 100+ threads to
-> clone the same repository. And when we ask those guy, they say they
-> only executed the "git fetch" once. And just like the youtube videio,
-> you will find git fork a child git, and then grandson child git, and
-> loop like this forever until the server down.
-> If we copy their local repository to our own PC, and then execute `git fe=
-tch`, we can also reproduce it. It seems that some broken local git files c=
-ause this bug
-> - what you expect and actual behavior, as well as the differences
-> Mentioned above
-> - system info
->              Ubuntu  18.04
-> - miscellaneous
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Makefile        |  7 +++++++
+ hash.h          |  4 +++-
+ sha256/nettle.h | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+), 1 deletion(-)
+ create mode 100644 sha256/nettle.h
 
-I assume you can't share the repo, but perhaps try if you can reproduce
-it with a "git fast-export --anonymize" version of it, and if so whether
-you'd be willing to share that. It will publish the "shape of the
-history" of the repo, but not any meaningful data (all commits, trees,
-blobs etc. are replaced).
-
-Alternatively myself & probably some other regular contributors to git
-would be willing to look at that repo + reproduction recipe off the
-public ML, to see if we could reproduce the issue, if that sounds good
-to you contact me off-list.
-
-Or perhaps we can still figure out a reproduction for this...
-
-The YouTube video shows that you're using various options to git-fetch,
-including filters, refspecs etc. Does a plain "git fetch" reproduce
-this, and if not what's the option (try adding them one at a time &
-experiment) that needs to be added to trigger this?
-
-I somewhat suspect some --filter funny business, but that's just a
-hunch...
-
+diff --git a/Makefile b/Makefile
+index 04d0fd1fe6..ce99aecc31 100644
+--- a/Makefile
++++ b/Makefile
+@@ -182,6 +182,8 @@ include shared.mak
+ #
+ # Define BLK_SHA256 to use the built-in SHA-256 routines.
+ #
++# Define NETTLE_SHA256 to use the SHA-256 routines in libnettle.
++#
+ # Define GCRYPT_SHA256 to use the SHA-256 routines in libgcrypt.
+ #
+ # Define OPENSSL_SHA256 to use the SHA-256 routines in OpenSSL.
+@@ -1842,6 +1844,10 @@ ifdef OPENSSL_SHA256
+ 	EXTLIBS += $(LIB_4_CRYPTO)
+ 	BASIC_CFLAGS += -DSHA256_OPENSSL
+ else
++ifdef NETTLE_SHA256
++	BASIC_CFLAGS += -DSHA256_NETTLE
++	EXTLIBS += -lnettle
++else
+ ifdef GCRYPT_SHA256
+ 	BASIC_CFLAGS += -DSHA256_GCRYPT
+ 	EXTLIBS += -lgcrypt
+@@ -1850,6 +1856,7 @@ else
+ 	BASIC_CFLAGS += -DSHA256_BLK
+ endif
+ endif
++endif
+ 
+ ifdef SHA1_MAX_BLOCK_SIZE
+ 	LIB_OBJS += compat/sha1-chunked.o
+diff --git a/hash.h b/hash.h
+index 5d40368f18..ea87ae9d92 100644
+--- a/hash.h
++++ b/hash.h
+@@ -16,7 +16,9 @@
+ #include "block-sha1/sha1.h"
+ #endif
+ 
+-#if defined(SHA256_GCRYPT)
++#if defined(SHA256_NETTLE)
++#include "sha256/nettle.h"
++#elif defined(SHA256_GCRYPT)
+ #define SHA256_NEEDS_CLONE_HELPER
+ #include "sha256/gcrypt.h"
+ #elif defined(SHA256_OPENSSL)
+diff --git a/sha256/nettle.h b/sha256/nettle.h
+new file mode 100644
+index 0000000000..9b2845babc
+--- /dev/null
++++ b/sha256/nettle.h
+@@ -0,0 +1,28 @@
++#ifndef SHA256_GCRYPT_H
++#define SHA256_GCRYPT_H
++
++#include <nettle/sha2.h>
++
++typedef struct sha256_ctx nettle_SHA256_CTX;
++
++inline void nettle_SHA256_Init(nettle_SHA256_CTX *ctx)
++{
++	sha256_init(ctx);
++}
++
++inline void nettle_SHA256_Update(nettle_SHA256_CTX *ctx, const void *data, size_t len)
++{
++	sha256_update(ctx, len, data);
++}
++
++inline void nettle_SHA256_Final(unsigned char *digest, nettle_SHA256_CTX *ctx)
++{
++	sha256_digest(ctx, SHA256_DIGEST_SIZE, digest);
++}
++
++#define platform_SHA256_CTX nettle_SHA256_CTX
++#define platform_SHA256_Init nettle_SHA256_Init
++#define platform_SHA256_Update nettle_SHA256_Update
++#define platform_SHA256_Final nettle_SHA256_Final
++
++#endif
