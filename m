@@ -2,84 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC92DC433EF
-	for <git@archiver.kernel.org>; Wed,  6 Jul 2022 18:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3120C433EF
+	for <git@archiver.kernel.org>; Wed,  6 Jul 2022 18:22:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233286AbiGFSV6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jul 2022 14:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34950 "EHLO
+        id S233548AbiGFSWB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jul 2022 14:22:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229757AbiGFSVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jul 2022 14:21:55 -0400
-Received: from smtp49.i.mail.ru (smtp49.i.mail.ru [94.100.177.109])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D00A24BC3
-        for <git@vger.kernel.org>; Wed,  6 Jul 2022 11:21:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=eO9PuvNGnfOCaMFcmmwJ8MaiZp2diBYNfpDXhgmpORM=;
-        t=1657131713;x=1657221713; 
-        b=Z48ffk2qt94kCNO9WTSDSuEii7kTLb7oDPLPu8Y8OmSLBPisZIa8sXzfZNB7BrjMHbt63opUTj6bLeoGHjgQFWOAHHl/Th5lk5nFZh2tLurW+TotNO4xSIs6QCFhGQJvkoKfRpTcJGntaOAOsLVNAtJPrIQM3FdUr+Wy957ToQQ=;
-Received: by smtp49.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1o99en-0003kq-Q4; Wed, 06 Jul 2022 21:21:50 +0300
-Date:   Wed, 6 Jul 2022 21:21:49 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Jeff King <peff@peff.net>
-Cc:     Konstantin Khomoutov <kostix@bswap.ru>,
-        wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>, git@vger.kernel.org
-Subject: Re: How to display "HEAD~*" in "git log"
-Message-ID: <20220706182149.gg75w6uonm4hs5af@carbon>
-References: <17411d88-b27a-2d20-623d-85c49dc7754e@mails.ucas.ac.cn>
- <20220705092514.hsm7cou5bqvajvgq@carbon>
- <YsWebbaOJbaOZ6i7@coredump.intra.peff.net>
- <20220706162856.mkgfdr2lnjdbxgn4@carbon>
- <YsW9BI61tWGh9OJo@coredump.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YsW9BI61tWGh9OJo@coredump.intra.peff.net>
-Authentication-Results: smtp49.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
-X-Mailru-Src: smtp
-X-4EC0790: 10
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD9F90F105C9C96D1D3E73267EA8890F916ECC3AD6A98D329A6E067219DA3F780F616F92DC7E98051BB4760375299071DB00CD7E3E458798C8CDDDE7B70B5F5C79F
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE72FFC9A718DD021A9EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637889C00975665ABF68638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D83841B461E98E52BD835FE590455E94BC117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC60CDF180582EB8FBA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD18C26CFBAC0749D213D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE7B96B19DC409332107FB45A5F6E725C8D8FC6C240DEA7642DBF02ECDB25306B2B78CF848AE20165D0A6AB1C7CE11FEE37812A6222701F2156E0066C2D8992A16C4224003CC836476EA7A3FFF5B025636E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F7900637BBEA499411984DA1EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
-X-8FC586DF: 6EFBBC1D9D64D975
-X-C1DE0DAB: 9604B64F49C60606AD91A466A1DEF99B296C473AB1E142185AC9E3593CE4B31AB1881A6453793CE9274300E5CE05BD4401A9E91200F654B06469D8A8717206BB2025898894730043EECBA73F7F19507E2A0719C31494F51C9C2B6934AE262D3EE7EAB7254005DCED8DA55E71E02F9FC08E8E86DC7131B365E7726E8460B7C23C
-X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D3488E5CD2E691F55669D9E895F3ECFCB3BAFF56F3D96563B264F11A0DF464E1D072A23B43636DFF54C1D7E09C32AA3244C99B4CD59489DB95CCE5280DF335771C07101BF96129E4011927AC6DF5659F194
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojb+SzFQ2YIi8fRRzgbdsk1w==
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138E457217C5F9FD08C0001B32DA331F75FF869A2E64502ED4C13BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
+        with ESMTP id S233160AbiGFSV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jul 2022 14:21:56 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5048625EA3
+        for <git@vger.kernel.org>; Wed,  6 Jul 2022 11:21:55 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id o21-20020a17090aac1500b001ef977190efso3595282pjq.7
+        for <git@vger.kernel.org>; Wed, 06 Jul 2022 11:21:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=QvmVDqj2lzQi6Q6LBQclK2exhTO5lWjAbJ0aF8dWpbk=;
+        b=RyCpDruCMFRVnaVmpVOAH0YfDSd3m+E3V3l3h0QYIKiRBQdjn/bjubZ20GJrfxKiDi
+         0GemMCU6KSqAIdPABGk0ErDD2pSKf5JdXPz45Ft23ir9e4K63DmysU2mlDsqpb/FP4DU
+         ybWaY0NOH4TewGeGStSXJmURBUGYvGm+oy/WqYG9VcCCl0pdLYLoUbsnjYJpYR4768is
+         LhPlt5iCFZEv1FrwYubkGMbywiGzk8+ADfbL5X3AL3X2fVlKOa4rgDBzOatW8iAEMTJ+
+         q2BDjGcI0m+fp8JTuAZxny5M/7Wv4IFMIw0FuRPBLMThKEA3GkhQmidCL0HezHRnOXOq
+         uaQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=QvmVDqj2lzQi6Q6LBQclK2exhTO5lWjAbJ0aF8dWpbk=;
+        b=ZEkccnuycccAY90HKtWvbfrG5WyT0QNmW6CCv267mVNIzqOEt4lcm2SLn5ox3tuLht
+         kfabsQYKEl0IvOo6YoWzm2cS/uDEDBmxexKql5IctyxR4BzZbZQuMKhlk1mEbBe5mmiY
+         4HKnER/t8LPVBh1VD8N3TM4ebdKWtvrajeJrhxQ5zOiNmbOKYG0h3tI7Xts/x29/OUX4
+         lspfTSl4cZcNjtVlosL0RB0d9A1+gsdXkQlQE3OhQ4/58+KtY5vsNllTtfC17+5zQJ05
+         GkQmUogqibHzm7ANtvUtfSgwHD1skvHWl+5coZ7tEPclGuVpRClZ62TaZ/UosWf8wuE4
+         ThZg==
+X-Gm-Message-State: AJIora8hpJY5Hiu0v0VClmmBQ3w0/B1ila0PyvRl8Cvsvg7C67rrSVSB
+        V9IKmxIDLc14Y7Q370takq3JPlY0Z+/Lnw==
+X-Google-Smtp-Source: AGRyM1tmB9Sd9lbtE3xOWvUnNd9mMJwRZvU6vq7HQbOSceXn1RRbciWsEAj7VIXLuhAHkJLm5LfStJ4cklRV6g==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:cecc:b0:16b:da4d:7e8d with SMTP
+ id d12-20020a170902cecc00b0016bda4d7e8dmr21786573plg.82.1657131714658; Wed,
+ 06 Jul 2022 11:21:54 -0700 (PDT)
+Date:   Wed, 06 Jul 2022 11:21:53 -0700
+In-Reply-To: <Yr42b+MYsuw8ihgG@nand.local>
+Message-Id: <kl6lfsjertj2.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
+ <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com> <43627c05c0b997ea407c865b04994cba630297d6.1656612839.git.gitgitgadget@gmail.com>
+ <Yr42b+MYsuw8ihgG@nand.local>
+Subject: Re: [PATCH v6 2/5] Documentation: define protected configuration
+From:   Glen Choo <chooglen@google.com>
+To:     Taylor Blau <me@ttaylorr.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 06, 2022 at 12:49:08PM -0400, Jeff King wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
-[...]
-> > I pondered about `git name-rev` but failed to figure out how to make it accept
-> > just "HEAD" as the point of reference. Passing it "--refs=HEAD"
-> > (or "--refs HEAD", FWIW) does not appear to do what I'd expect it to: a couple
-> > of top commits are not annotated at all, and then they start to get annotated
-> > relative to "origin/HEAD". Note that I've tested this on a detached HEAD which
-> > contains an unmerged line of history.
-> 
-> Right. The problem is that it gets the set of possible ref tips with
-> for_each_ref(), which will not include HEAD. And then worse, since the
-> argument to "--refs" is a pattern, it matches junk like origin/HEAD.
+> On Thu, Jun 30, 2022 at 06:13:56PM +0000, Glen Choo via GitGitGadget wrote:
+>> @@ -380,6 +381,18 @@ Most configuration options are respected regardless of the scope it is
+>>  defined in, but some options are only respected in certain scopes. See the
+>>  option's documentation for the full details.
+>>
+>> +Protected configuration
+>> +~~~~~~~~~~~~~~~~~~~~~~~
+>> +
+>> +Protected configuration refers to the 'system', 'global', and 'command' scopes.
+>> +For security reasons, certain options are only respected when they are
+>> +specified in protected configuration, and ignored otherwise.
+>> +
+>> +Git treats these scopes as if they are controlled by the user or a trusted
+>> +administrator. This is because an attacker who controls these scopes can do
+>> +substantial harm without using Git, so it is assumed that the user's environment
+>> +protects these scopes against attackers.
+>> +
+>
+> I think this description is a good starting point, but I think I would
+> have liked to see some more from the commit description make it into the
+> documentation here.
 
-Do I assume correctly that `git for-each-ref HEAD` does nothing, successfully,
-for the very same reason?
-If so, I wonder if this should be somehow reflected in the docs.
-I mean, I have always maintained an impression that things like HEAD,
-ORIGIN_HEAD, FETCH_HEAD etc are also "refs" - because they, well, reference
-commits or branches.
+Yeah, there's a bit of a tradeoff here. Glossing over some of the
+details helps keep the documentation briefer and easier to understand
+for the less experienced/invested, but is bound to frustrate others. I'd
+appreciate any wording suggestions if you have any.
 
-The gitglossary manual page of my Git 2.30.2 states that
+> One thing that I didn't see mentioned in either is that the list of
+> protected configuration is far from exhaustive. There are dozens upon
+> dozens of configuration values that Git will happily execute as a
+> subprocess (core.editor, core.pager, core.alternateRefsCommand, to name
+> just a few).
+>
+> I don't think we should try and enumerate every possible path from
+> configuration to command execution. But it is worth noting in the
+> documentation that the list of configuration values which are only read
+> in the protected context is non-exhaustive and best-effort only.
 
-| ref
-|   A name that begins with refs/ (e.g. refs/heads/master)
-| <...>
-|   There are a few special-purpose refs that do not begin with refs/.
-|   The most notable example is HEAD.
+By referencing command execution, I think you are alluding to Stolee's
+Security Boundary discussion thread [1], and in particular, the "Example
+Security Boundary Question: Unprotected Config and Executing Code"
+section?
 
-which suggests that HEAD is a ref.
+That section discusses the problem of arbitrary command execution based
+on repository-local config, and how protected configuration might give
+us a way to prevent that. That's a reasonable extension to this series,
+though it seems a little premature to include allusions to command
+execution, especially since I don't think we're anywhere close to a
+long-term direction on what should/shouldn't be inside protected
+configuration. For example, Stolee noted that, most of the command
+execution options really do want per-repository customization, so if we
+want to continue to support that, we'll need to use protected
+configuration in a somewhat sophisticated manner (and not, e.g. only
+respect command execution options in protected configuration). Perhaps
+we could shelve this wording change until we've committed to such a
+direction.
 
+[1] https://lore.kernel.org/git/6af83767-576b-75c4-c778-0284344a8fe7@github.com
+
+> Thanks,
+> Taylor
