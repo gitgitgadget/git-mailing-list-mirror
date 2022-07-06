@@ -2,125 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C445C43334
-	for <git@archiver.kernel.org>; Wed,  6 Jul 2022 12:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35E0DC433EF
+	for <git@archiver.kernel.org>; Wed,  6 Jul 2022 12:38:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233335AbiGFM23 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jul 2022 08:28:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33086 "EHLO
+        id S231488AbiGFMiU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jul 2022 08:38:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233004AbiGFM22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jul 2022 08:28:28 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D822DF5A
-        for <git@vger.kernel.org>; Wed,  6 Jul 2022 05:28:27 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id d7-20020a056830004700b0061b8749957fso735953otp.8
-        for <git@vger.kernel.org>; Wed, 06 Jul 2022 05:28:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GiQZaigUiohrubqIFtu/MUyKftSg2vXCF9UlY2LhXpc=;
-        b=SSCbGp09nRL3+mWjVNLf1/MS8BAA4HzYcZ0LYMH7iJqhNtE5koDwnAGJHtehV/MV1R
-         GMPrYzcaOkB0tWLLoITpWRjACD71IAcXmue2ygTZXEu+lomU9hnnvSWOYt44lpYgTOap
-         G6vW2WRypvgJNx+EdtoL0t0cC12s+DBUGJ84jbTVqP1kzFsVkyzRw7TnyHOc72+9eaVf
-         cAjQEcLdM+jF28/yvOf3PFEjbcbCFNM/XlNPPrIGyEzFUTVqvVRL0AynR4tBUvjpFH4t
-         0QNWDjZht7/j573LmMmT4Zs6MarcoEiZ01gnpoEXUg01so3VDdHpzxHwpBe/jGbHvKMx
-         oWcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GiQZaigUiohrubqIFtu/MUyKftSg2vXCF9UlY2LhXpc=;
-        b=yy4YS3+4PBm1CHr4ELNURGxemQkO6TsI2lqAoQEGgSa0gndGCITvP9u8L6f/if5V0L
-         0LWVih0ybkpjBgCPl+1a1XW4t9ppD1nmcYEd8cM4RD1He77VWYVckq/c4bJ7wTVohZq8
-         PIOvIKAqK2YVzLOnWcyYqSQkvVy+iJndQf3H5ifyk0hT8IdORwrQdmovxNC4ZpZy1VIT
-         ZcpLzgobYD/BYrREc4qjhAWJLYBZiT8IwhkKxJ0AWJXRddunIxX3xTPV5vkJJo259ydh
-         /zvvKh61QPgDG1NQK5P8EiwGvH+SOUZDRo5O6eegWfqMPN29/Npk+yRg9MdlUFMXlALI
-         fqRA==
-X-Gm-Message-State: AJIora/2hnELsWE7zl992eChheDkyQbMG9XbQMMX8vDGQAd32BYMF4kg
-        mYne+OnUTEFY7TEjt1SAA9/cRyG4XqJ3trbHaoyOWK4lnm4=
-X-Google-Smtp-Source: AGRyM1s57+WK2aDGr5oIwaBLXzdYqzcQVwYgqsewY/WsPZ3NUItj+uuMiOmDVypdb5GxUx/GVjhYXB6Vk6/6QbbM/jQ=
-X-Received: by 2002:a05:6830:3106:b0:618:8052:e8b2 with SMTP id
- b6-20020a056830310600b006188052e8b2mr15395676ots.76.1657110506546; Wed, 06
- Jul 2022 05:28:26 -0700 (PDT)
+        with ESMTP id S231347AbiGFMiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jul 2022 08:38:18 -0400
+Received: from smtp47.i.mail.ru (smtp47.i.mail.ru [94.100.177.107])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BCC11E3F0
+        for <git@vger.kernel.org>; Wed,  6 Jul 2022 05:38:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:Date:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=NPvPr2bzw59Aou1kYSKwNkOCAAEups+JQhtvGpJAWnY=;
+        t=1657111095;x=1657201095; 
+        b=1WG431a+4nztuWmxCwR5afq+jRrg3oAVcn8SSzswnPvy7k3IRqQ7Lc58TUikw7O2rzns1wxa6oWDJnL5iSQdQ0GOmhwWOKyTldmDCLehaecPQL6grZz/w9L87zoMByl+77F3lIgDGrE9sMFHNs2LLikG11R2H80KY2YJE3otL84=;
+Received: by smtp47.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1o94IF-00061g-Tb; Wed, 06 Jul 2022 15:38:12 +0300
+From:   kostix@bswap.ru
+Date:   Wed, 6 Jul 2022 15:38:11 +0300
+To:     git@vger.kernel.org
+Cc:     wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>
+Subject: Re: How to display "HEAD~*" in "git log"
+Message-ID: <20220706123811.dwbuinnbtxftorae@carbon>
+References: <17411d88-b27a-2d20-623d-85c49dc7754e@mails.ucas.ac.cn>
+ <20220705092514.hsm7cou5bqvajvgq@carbon>
+ <20220705093057.5ewqobdjrqr3ul2k@carbon>
+ <a1e53e52-cb08-bbff-f58a-391932707fb7@mails.ucas.ac.cn>
 MIME-Version: 1.0
-References: <CA+X_a+z-=K5BfDpMiWAnnVma6ihh6kUXb84CCrHL5gte5WykMw@mail.gmail.com>
- <220706.867d4qa9b3.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220706.867d4qa9b3.gmgdl@evledraar.gmail.com>
-From:   Sim Tov <smntov@gmail.com>
-Date:   Wed, 6 Jul 2022 15:28:13 +0300
-Message-ID: <CA+X_a+xu3WqJH-SRh2e733Z4izARRqjWjoVEaby=0iQ+T1rfGg@mail.gmail.com>
-Subject: Re: "mixed" or "merged" submodules
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a1e53e52-cb08-bbff-f58a-391932707fb7@mails.ucas.ac.cn>
+Authentication-Results: smtp47.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
+X-Mailru-Src: smtp
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD987C0EE6E7F0A597DE8DF41BCBBF099100D095FC9B0989D88CD62213F67905E7AB8FB265928C9147A3C8C70E900462BF3A23417C815B034D1D64C754CAC7C657B
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE72F22E6DC541F75D9EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637A361B53D384D9D40EA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38B8859CA687ABA27BAFEFDC2BA7DABF654653FC193E0FCD135CC7F00164DA146DAFE8445B8C89999728AA50765F79006377C70927E34808485389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC886A7C529F68B8E5CF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C5D2C5C0A547CD2CB2D242C3BD2E3F4C64AD6D5ED66289B52698AB9A7B718F8C46E0066C2D8992A16725E5C173C3A84C3BDEAB25F016A82BABA3038C0950A5D36B5C8C57E37DE458B0BC6067A898B09E46D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE75A9E79F66F1C28F3731C566533BA786AA5CC5B56E945C8DA
+X-8FC586DF: 6EFBBC1D9D64D975
+X-C1DE0DAB: 9604B64F49C60606AD91A466A1DEF99B296C473AB1E142185AC9E3593CE4B31AB1881A6453793CE9274300E5CE05BD4401A9E91200F654B014F749A5E30D975C2025898894730043644B0C0FE0D0742B2FC08F1593422B749C2B6934AE262D3EE7EAB7254005DCED8DA55E71E02F9FC08E8E86DC7131B365E7726E8460B7C23C
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D342F9EE325F82A28A8E420FD7D8C4C8A215B4EBC67598C8E4A9B4C833165ABBB727A7D1BC4008F47F31D7E09C32AA3244C45EB50761EBF9F7A109D9DAD888DACE45A1673A01BA68E40729B2BEF169E0186
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojb+SzFQ2YIi9tIaUt24O/NQ==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138A9BAC6694E513C76A890AA0982A736DC0718431E76E8162E13BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you very much! Simple and elegant! A solution that is actually
-better than the hypothetical mixed submodules... no overhead on
-maintaining several repos...
+By the way, you can consider "going more interactive" with the approach which
+involves scripting. For instance, you can use any of the "fuzzy finders"
+such as the venerable fzf [1] to interactively select a commit to rebase -
+something like
 
-On Wed, Jul 6, 2022 at 12:18 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Tue, Jul 05 2022, Sim Tov wrote:
->
-> > Hello,
-> >
-> > here  https://stackoverflow.com/q/72770397/1876484
-> >
-> > I asked this question:
-> >
-> > I'm aware of git submodules which dwell each in its own separate direct=
-ory.
-> >
-> > 1. But is there such thing as "mixed" submodules whose content is
-> > "merged" together?
-> >
-> > For instance:
-> >
-> > - Submodule1 (path ./), consist of files `a.txt`, `b.txt` and
-> > directory `C` with the file `1.txt`
-> > - Submodule2 (path ./), consist of files `x.txt`, `y.txt` and
-> > directory `C` with the file `2.txt`
-> > - Resulting "mixed" repo of both submodules: files `a.txt`, `b.txt`,
-> > `x.txt`, `y.txt` and directory `C` with the files `1.txt`, `2.txt`
-> >
-> > 2. If it is not implemented in git - is there a workaround to achieve t=
-his?
-> >
-> > Here my use case:
-> >
-> > Both submodules - independent libraries (collection of books as plain
-> > text files), which have same structure (directories =3D book
-> > categories). I want to present the combined parent git repository as
-> > full collection of books, while both projects evolve independently and
-> > do not overlap (in terms of file names =3D books).
-> >
-> > I got a very detailed and informative answer. My question now - do you
-> > see any other practical use cases for such a feature? Would such a
-> > more general case of submodules be a good feature in git or not?
->
-> Good question, but to answer the thought experiment don't conflate
-> submodules with this, instead suppose that you have two branches A & B,
-> which have:
->
->     A: A.txt
->     B: B.txt
->
-> How will you create and maintain a third branch C which has the union of
-> the two?
->
-> The answer to that question will be the same as with the submodule case,
-> i.e. you'd need to have some third branch that you maintain (e.g. with a
-> push hook?) that would be a merge of the two, and ensure that you don't
-> have path conflicts there.
->
-> Then if you wanted to use such a branch as a submodule you'd grab that
-> down like you would any other branch.
->
+  $ git log --oneline -50 | fzf | cut -d ' ' -f 1
+
+would produce the log of the last 50 commits, allow you to interactively
+select a commit of interest by typing some of the characters of its message
+and/or hash and then print the selected hash.
+
+This can be easily combined with rebasing: for instance, if you have the above
+encantation available as an alias named "select" or a custom script named
+"git-select", you could do
+
+  $ git rebase -i $(git select)~
+
+to not even copy or memorize anyting.
+
+
+I, for one, routinely use fzf to pick a branch for checkout.
+
+
+1. https://github.com/junegunn/fzf
+
