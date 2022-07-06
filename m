@@ -2,56 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F0FC43334
-	for <git@archiver.kernel.org>; Wed,  6 Jul 2022 07:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1BCAC43334
+	for <git@archiver.kernel.org>; Wed,  6 Jul 2022 07:57:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231537AbiGFHVO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jul 2022 03:21:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42744 "EHLO
+        id S231631AbiGFH5z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jul 2022 03:57:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231556AbiGFHVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jul 2022 03:21:10 -0400
-Received: from out29-1.mail.aliyun.com (out29-1.mail.aliyun.com [115.124.29.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B76701EC50
-        for <git@vger.kernel.org>; Wed,  6 Jul 2022 00:21:08 -0700 (PDT)
-X-Alimail-AntiSpam: AC=CONTINUE;BC=0.1016298|-1;BR=01201311R551S21rulernew998_84748_2000303;CH=blue;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.12062-0.00850698-0.870873;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047188;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=5;RT=5;SR=0;TI=SMTPD_---.OLJ0L9c_1657092063;
-Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.OLJ0L9c_1657092063)
-          by smtp.aliyun-inc.com;
-          Wed, 06 Jul 2022 15:21:05 +0800
-Date:   Wed, 6 Jul 2022 15:21:06 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>, git <git@vger.kernel.org>
-Cc:     =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
-        =?utf-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>
-Subject: Re: RE: [External Mail]Re: Git fork process infinitely and never stop
-References: <9d3b79239a314f72a099040a26ef9ad8@xiaomi.com>, 
-        <8e1d019e-6456-ed05-7d3e-a0c4beeb35fa@gmail.com>, 
-        <8ccd27ef3a344596b6237e98e1a5f204@xiaomi.com>
-X-Priority: 3
-X-GUID: F22297EB-DBF8-4862-8D88-6D9B3F273548
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-Message-ID: <202207061520052718298@oschina.cn>
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S231539AbiGFH5y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jul 2022 03:57:54 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E17DB23152
+        for <git@vger.kernel.org>; Wed,  6 Jul 2022 00:57:51 -0700 (PDT)
+Received: (qmail 2280 invoked by uid 109); 6 Jul 2022 07:57:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Jul 2022 07:57:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18029 invoked by uid 111); 6 Jul 2022 07:57:50 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Jul 2022 03:57:50 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 6 Jul 2022 03:57:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH 0/3] cloning unborn HEAD when other branches are present
+Message-ID: <YsVAfudoUA5YkQWH@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pi0gZ2l0IHZlcnNpb246Cj4yLjM2LjEKPi0gc3RlcHMgdG8gcmVwcm9kdWNlIHRoZSBidWcKPjog
-V2UgaGF2ZSBubyBpZGVhIGFjdHVhbGx5LiBXZSdyZSBtYWludGFpbmVyIG9mIG91ciBpbnRlcm5h
-bCBnaXQvZ2Vycml0LiBXZSBmb3VuZCBzb21ldGltZXMgc29tZSB1c2VyIHdpbGwgaW52b2tlIDEw
-MCsgdGhyZWFkcyB0byBjbG9uZSB0aGUgc2FtZSByZXBvc2l0b3J5LiBBbmQgd2hlbiB3ZSBhc2sg
-dGhvc2UgZ3V5LCB0aGV5IHNheSB0aGV5IG9ubHkgZXhlY3V0ZWQgdGhlICJnaXQgZmV0Y2giIG9u
-Y2UuIEFuZCBqdXN0IGxpa2UgdGhlIHlvdXR1YmUgdmlkZWlvLCB5b3Ugd2lsbCBmaW5kIGdpdCBm
-b3JrIGEgY2hpbGQgZ2l0LCBhbmQgdGhlbiBncmFuZHNvbiBjaGlsZCBnaXQsIGFuZCBsb29wIGxp
-a2UgdGhpcyBmb3JldmVyIHVudGlsIHRoZSBzZXJ2ZXIgZG93bi4KPklmIHdlIGNvcHkgdGhlaXIg
-bG9jYWwgcmVwb3NpdG9yeSB0byBvdXIgb3duIFBDLCBhbmQgdGhlbiBleGVjdXRlIGBnaXQgZmV0
-Y2hgLCB3ZSBjYW4gYWxzbyByZXByb2R1Y2UgaXQuIEl0IHNlZW1zIHRoYXQgc29tZSBicm9rZW4g
-bG9jYWwgZ2l0IGZpbGVzIGNhdXNlIHRoaXMgYnVnIApTbyB0aGUgcmVwbyAiZ2l0L2dlcnJpdCIg
-aXMgaG9zdGVkIGluIHlvdXIgbG9jYWw/IGFuZCBob3cgeW91ICJjb3B5IiBpdCB0byB5b3VyIG93
-biBQQz/CoAo=
+I ran across a situation today where I was being a little clever with
+manipulating branches, and the results were confusing. Basically I have
+an old bare server-side repo with a "master" branch, and realized that I
+wanted to start a new line of history, but save the old one for
+historical purposes. So I did this in the bare repo:
 
+  cd bare.git
+  git branch -m master old-history
+  git symbolic-ref HEAD new-history
+
+to move the old one and point HEAD at the new unborn branch. Note that I
+didn't just name it "master"; now that there are two lines of history, I
+gave them identifiable and distinct names.
+
+My intent was to then clone and create the new history:
+
+  git clone bare.git local-repo
+  cd local-repo
+  git commit [etc]
+  git push
+
+I assumed that just like in the empty-repo case, the clone would start
+on "new-history". But it doesn't! This series fixes it.
+
++cc Jonathan Tan. Definitely not your bug, as the behavior has been this
+way forever. But this is very adjacent to your empty-repo unborn head
+work from 4f37d45706 (clone: respect remote unborn HEAD, 2021-02-05),
+and I think harmonizing a related case.
+
+  [1/3]: clone: drop extra newline from warning message
+  [2/3]: clone: factor out unborn head setup into its own function
+  [3/3]: clone: propagate empty remote HEAD even with other branches
+
+ builtin/clone.c        | 49 ++++++++++++++++++++++++------------------
+ t/t5702-protocol-v2.sh | 38 ++++++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+), 21 deletions(-)
+
+-Peff
