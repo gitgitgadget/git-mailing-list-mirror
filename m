@@ -2,229 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18D9DC43334
-	for <git@archiver.kernel.org>; Wed,  6 Jul 2022 17:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0064FCCA473
+	for <git@archiver.kernel.org>; Wed,  6 Jul 2022 17:49:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234329AbiGFRpQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jul 2022 13:45:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33122 "EHLO
+        id S234078AbiGFRti (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jul 2022 13:49:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234287AbiGFRov (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jul 2022 13:44:51 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B2362C113
-        for <git@vger.kernel.org>; Wed,  6 Jul 2022 10:44:21 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id i5-20020a170902c94500b0016a644a6008so8728977pla.1
-        for <git@vger.kernel.org>; Wed, 06 Jul 2022 10:44:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=A1NGksgHfP7ibCvxLFXtnxMhqCwJVmXYlQlmrYNZhvc=;
-        b=TpFN61IUn6j+0mSa2+VN2Czd9HLcQ1eXMrKBSwohO1zjdJQ+U6zr4NiHcqfnVYAK87
-         pID+CJfpnQPQkWZ4zY+Y27kpVbO8sweijvdpdXuIhJlJoOLWXKo6/4MfKyzvE8Bs/ao/
-         pYtYAcdd53MVi20F5swnDKdqE1Qdgc5Vct0zvhGoi7AppXQHklLBsv3poFT6rwiuVE5l
-         OIKXQHC+4Mf4cScb8oUsMH1btBICXIjKR4YNttju4fhtJ3iMixP3kuY6DdEXdAm2VDAq
-         dieX1A2B7JDUhwfYzUdn8ztUytCdE+XTREJBFv0RRiUoJYntHyuP1p+fmhR1bk19Nb+t
-         ED4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=A1NGksgHfP7ibCvxLFXtnxMhqCwJVmXYlQlmrYNZhvc=;
-        b=jJLMZZe0D/MdJQha/A/j+OFhFfLNPRPEetKjby7asXDB/PB3qVkroOlxvIes2DnYXz
-         Ak/s1tNFPeqI0LGqO3NDh7zF/r7fh+hA5jkIhrz7kHjX2FQ5TAHkoRioCVoc/KneLL0q
-         3+khWZKcf+HZJK37vE6/PcZA+VOgdeFLJO/PZJGBYd/5kkpqFGmXZ7TtKqr4cCJ7FuoT
-         v+K3Fp2FmDy+GXp5Jm3epXN4VSMq8jN2DQcobr1g9Ofj2J6FsY0FWlNDe+LJtJVq5t7D
-         78CKrJmALTd0I0dLU/0XndtmHl0h3/hRA02ok+2xAXKriXDwQTtN2M4YAyLOBfRSvrcb
-         qdMA==
-X-Gm-Message-State: AJIora9jTEtbRbC2pM9huuveYuIuuRFmJl63/cLhQmKJyJnxHo0ingBz
-        pRLIT78y9H0u0l7SaKnnDqEVU46P9jC49A==
-X-Google-Smtp-Source: AGRyM1s57HTiMT72tTRpijYKq/+lC9g+FuAtbDat5rKkVCQxYmj8x5SzzWZV1PWlsXYKOBNUxRnmvlQ/p2l1zA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:ad2:b0:4f1:2734:a3d9 with SMTP
- id c18-20020a056a000ad200b004f12734a3d9mr48049034pfl.61.1657129460611; Wed,
- 06 Jul 2022 10:44:20 -0700 (PDT)
-Date:   Wed, 06 Jul 2022 10:44:11 -0700
-In-Reply-To: <Yr4ka485NzadFTto@nand.local>
-Message-Id: <kl6llet6rv9w.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
- <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com> <ee9619f6ec0608f399fc924cfe9254df5e7bc431.1656612839.git.gitgitgadget@gmail.com>
- <Yr4ka485NzadFTto@nand.local>
-Subject: Re: [PATCH v6 1/5] Documentation/git-config.txt: add SCOPES section
-From:   Glen Choo <chooglen@google.com>
-To:     Taylor Blau <me@ttaylorr.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S233690AbiGFRth (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jul 2022 13:49:37 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB251DA49
+        for <git@vger.kernel.org>; Wed,  6 Jul 2022 10:49:36 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 12BCD1A63E5;
+        Wed,  6 Jul 2022 13:49:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QOxc6XLT6ATTIb0Hx0JyZQ6wAUZpx7a41/sF8W
+        1AQ70=; b=A6xUDdx9IDjerY4alOz5oCdlUTS6lIae1f5TyseiHBzP1yXxNeo8Y4
+        hJk0C8lmSPKqKRGj+HBjIfB4bfqLs7kFlzXKKt5p9KptDbK4aMv4qXfuHMZnsRML
+        xj9Cc8TNVUuq3PVRFl3JOsGJn9SB6uzUwi/q/4PPlJBUQ6HpNEbHQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0AC7D1A63E4;
+        Wed,  6 Jul 2022 13:49:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 04C6B1A63E0;
+        Wed,  6 Jul 2022 13:49:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] sha256: add support for Nettle
+References: <20220705230518.713218-1-sandals@crustytoothpaste.net>
+Date:   Wed, 06 Jul 2022 10:49:29 -0700
+In-Reply-To: <20220705230518.713218-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 5 Jul 2022 23:05:18 +0000")
+Message-ID: <xmqqedyyi11y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: FCFF4498-FD53-11EC-B5C5-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Hi! Thanks so much for lending your attention to this version again, I
-really appreciate this wording feedback in particular, because the
-Review Club reviewers and I agonized a lot over the wording and couldn't
-come up with great alternatives to what I wrote in the patch, and your
-suggestions are super helpful.
+> diff --git a/hash.h b/hash.h
+> index 5d40368f18..ea87ae9d92 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -16,7 +16,9 @@
+>  #include "block-sha1/sha1.h"
+>  #endif
+>  
+> -#if defined(SHA256_GCRYPT)
+> +#if defined(SHA256_NETTLE)
+> +#include "sha256/nettle.h"
+> +#elif defined(SHA256_GCRYPT)
+>  #define SHA256_NEEDS_CLONE_HELPER
+>  #include "sha256/gcrypt.h"
+>  #elif defined(SHA256_OPENSSL)
 
-Taylor Blau <me@ttaylorr.com> writes:
+When it does not make any semantic difference, it is preferrable to
+add a new thing after existing things.  But this sequence is meant
+to list them in the order of preference when multiple choices are
+availble, so it is OK to prepend nettle IF our intention is to favor
+it over all others.
 
-> On Thu, Jun 30, 2022 at 06:13:55PM +0000, Glen Choo via GitGitGadget wrote:
->> From: Glen Choo <chooglen@google.com>
->> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
->> index 9376e39aef2..f93d437b898 100644
->> --- a/Documentation/git-config.txt
->> +++ b/Documentation/git-config.txt
->> @@ -297,8 +297,8 @@ The default is to use a pager.
->>  FILES
->>  -----
->>
->> -If not set explicitly with `--file`, there are four files where
->> -'git config' will search for configuration options:
->> +By default, 'git config' will read configuration options from multiple
->> +files:
->>
->>  $(prefix)/etc/gitconfig::
->>  	System-wide configuration file.
->> @@ -322,27 +322,63 @@ $GIT_DIR/config.worktree::
->>  	This is optional and is only searched when
->>  	`extensions.worktreeConfig` is present in $GIT_DIR/config.
->>
->> -If no further options are given, all reading options will read all of these
->> -files that are available. If the global or the system-wide configuration
->> -file are not available they will be ignored. If the repository configuration
->> -file is not available or readable, 'git config' will exit with a non-zero
->> -error code. However, in neither case will an error message be issued.
->> +You may also provide additional configuration parameters when running any
->> +git command by using the `-c` option. See linkgit:git[1] for details.
->> +
->> +Options will be read from all of these files that are available. If the
->> +global or the system-wide configuration file are not available they will be
->> +ignored. If the repository configuration file is not available or readable,
->> +'git config' will exit with a non-zero error code. However, in neither case
->> +will an error message be issued.
->
-> Nit: the last sentence is a little awkwardly worded. Perhaps just:
-> "Note that neither case produces an error message".
+I am OK with that design choice, and I think the first paragraph of
+the proposed log message adequately justifies why, but I'd prefer to
+see it a bit more explicitly stated in the log message.
 
-Good suggestion. I didn't change this sentence, but I agree that it's
-worth improving.
+> For SHA-256, we currently have support for OpenSSL and libgcrypt because
+> these two libraries contain optimized implementations that can take
+> advantage of native processor instructions.  However, OpenSSL is not
+> suitable for linking against for Linux distros due to licensing
+> incompatibilities with the GPLv2, and libgcrypt has been less favored
+> by cryptographers due to some security-related implementation issues.
+>
+> Let's add another option that's compatible with the GPLv2, which is
+> Nettle.  It also has recently gained support for Intel's SHA-NI
+> instructions, which compare very favorably to other implementations.
+> For example, using this implementation and SHA-1 DC on a machine with
+> SHA-NI, hashing a 2 GiB file with SHA-1 takes 7.582 seconds, while
+> hashing the same file with SHA-256 takes 2.278 seconds.
 
->> -All writing options will per default write to the repository specific
->> +By default, options are only written to the repository specific
->>  configuration file. Note that this also affects options like `--replace-all`
->
-> Should we mention that this is the same as the "local" scope below?
+Perhaps "Let's add another option ..., which is Nettle, and give it
+preference over all others when multiple libraries are availalble"
+or something along that line?
 
-Also a good idea.
+> diff --git a/sha256/nettle.h b/sha256/nettle.h
+> new file mode 100644
+> index 0000000000..9b2845babc
+> --- /dev/null
+> +++ b/sha256/nettle.h
+> @@ -0,0 +1,28 @@
+> +#ifndef SHA256_GCRYPT_H
+> +#define SHA256_GCRYPT_H
 
->>  and `--unset`. *'git config' will only ever change one file at a time*.
->>
->> -You can override these rules using the `--global`, `--system`,
->> -`--local`, `--worktree`, and `--file` command-line options; see
->> -<<OPTIONS>> above.
->> +You can change the way options are read/written by specifying the path to a
->> +file (`--file`), or by specifying a configuration scope (`--system`,
->> +`--global`, `--local`, `--worktree`); see <<OPTIONS>> above.
->
-> I think this paragraph could be slightly more descriptive about what
-> `--file` does while still linking out to <<OPTIONS>> above for more
-> detailed information. In the pre-image, we say:
->
->     If not set explicitly with `--file`, there are four files will `git
->     config will search`.
->
-> So I wonder if something more descriptive in this section might be:
->
->     You can limit which configuration sources are read to or written
->     from by specifying the path of a file with the `--file` option, or
->     by specifying a scope with `--system`, `--global`, `--local`, or
->     `--worktree`. For more, see <<OPTIONS>> above.
->
-> I don't think that's so different form what you wrote, but I think it's
-> a little clearer particularly what `--file` does (instead of "change the
-> way options are read/written" it "limit[s] which configuration sources
-> are read to or written from").
+Not really ;-)
 
-I think this is _much_ clearer, actually. Thanks!
+> +
+> +#include <nettle/sha2.h>
 
->> +
->> +SCOPES
->> +------
->> +
->> +Each configuration source falls within a configuration scope. The scopes
->> +are:
->> +
->> +system::
->> +	$(prefix)/etc/gitconfig
->> +
->> +global::
->> +	$XDG_CONFIG_HOME/git/config
->> ++
->> +~/.gitconfig
->> +
->> +local::
->> +	$GIT_DIR/config
->> +
->> +worktree::
->> +	$GIT_DIR/config.worktree
->> +
->> +command::
->> +	environment variables
->> ++
->> +the `-c` option
->> +
->> +With the exception of 'command', each scope corresponds to a command line
->> +option - `--system`, `--global`, `--local`, `--worktree`.
->
-> I think a colon after "option" is more appropriate than a single "-"
-> dash character, but this is definitely a trivial matter that I have no
-> strong opinion on.
->
-> One thing that this reminds me of (which I don't think is worth taking
-> up here, but perhaps in a future series, or as #leftoverbits) would be
-> promoting these scopes behind a single option. Back in the day, you
-> could ask for values out of `git config` by specifying their type with
-> `--int`, `--bool`, or similar. In e3e042b185 (Merge branch
-> 'tb/config-type', 2018-05-08), we changed to
-> `--type=<int|bool|color|etc>`, which unified things and made it clearer
-> which options were grouped together by a single concept.
->
-> I think a similar change would make sense here, that is to replace
-> `--system`, `--global` (and so on) with `--scope=system`,
-> `--scope=global`, etc.
->
-> But that's not material to this series, and just something to think
-> about for later on if you end up thinking it's a good idea.
 
-This sounds like a great idea, actually. I agree that `--scope` is
-probably a lot easier to reason about than having N scope flags, and
-that this probably belongs in a future series.
 
->> +
->> +When reading options, specifying a scope will only read options from the
->> +files within that scope. When writing options, specifying a scope will write
->> +to the files within that scope (instead of the repository specific
->> +configuration file). See <<OPTIONS>> above for a complete description.
->>
->> +Most configuration options are respected regardless of the scope it is
->> +defined in, but some options are only respected in certain scopes. See the
->> +option's documentation for the full details.
->
-> I assume "the option's" is referring to whichever configuration variable
-> we're talking about. So it may be clearer to say "See the *respective*
-> option's documentation for more information" or similar.
-
-Good idea. Thanks again!
-
->
-> Thanks,
-> Taylor
