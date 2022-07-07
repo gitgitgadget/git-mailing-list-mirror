@@ -2,65 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A54E5C433EF
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 12:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6516AC43334
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 12:47:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235194AbiGGM06 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 08:26:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56768 "EHLO
+        id S235092AbiGGMrH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 08:47:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232086AbiGGM05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 08:26:57 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD32D1EAFC
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 05:26:56 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id r18so22904624edb.9
-        for <git@vger.kernel.org>; Thu, 07 Jul 2022 05:26:56 -0700 (PDT)
+        with ESMTP id S233808AbiGGMrG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 08:47:06 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBADF23BEA
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 05:47:01 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id v12so10368423edc.10
+        for <git@vger.kernel.org>; Thu, 07 Jul 2022 05:47:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=00jQ6DWDYVY0Z8Ru3Yr/me331PtViX5SC4RyumypU8A=;
-        b=IWQi415hn9wTfQBXNPwg7IXydIiv1omV58Jan6HSe5lBCeTi8SUE1zKYr+EhKOcli/
-         ti0LYtulcTLck2gqdg7Q7ZmRuAHO+6+Qu72lekbqRA6c3i3+2nky17Chz7ckNbnfqQAT
-         z5EMD1J4MQhPslmKPqGyQAHw9Ia5g3T0IiHXizr9u4wFGxARnFC+6txnbqB+1RCJQqK+
-         nuZUX+GCPgUMLLQz8LevSP3w3hLEllqgm8QAK/ZzrxluSyc7abPwpafvuYtG17ET6Tva
-         r4IZoBIkB5NU9jieXbgc496uId/Gl+WFQdJhjt0OE5G2cEWlsXR0h5Nn4kaK260Q9AWf
-         eU1A==
+        bh=Wk7frbMREct9lPijIkLq5KJDSYaF9pJKe0u39Vfv0Fs=;
+        b=PN9RODLsu5vm73/1rbqiw4hncIaoytP8u1+aTb5cJlcCZ0VxrAlSqelzOTks7uO0Aq
+         m5mvf9uVwM3xMbKc6PJabB0vuxT3jKHQErAqnat69Sc49CgRw7LvzC4b4fGHU2nho5MN
+         wGhcC+rVj3EewMp7MHZH41cwOHyL2agTuvuSE0v4ZsAgWIcJpG4nJYQKJPNhQR8AfyCj
+         Uis5S/aMSm/jQN9e+91RD/NgzTYpubj04XpS3qP+MDk9dFdzBCY6eTmct6nGLlnrMe92
+         /z2PGsHX432piEBCJyIkWCI82/BQoyzZfqAkqhCzsGerqfuc9j6K8+NE31VQfjRfvp8r
+         8jgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=00jQ6DWDYVY0Z8Ru3Yr/me331PtViX5SC4RyumypU8A=;
-        b=XSuqV0itWblsTRxLZbfREKEIu79GdiuvPKYxXuVPuQ+BCzjs+pEAtoWR8cqzVDZHVg
-         B9FDbNzxnj6nBiHcRzWPsAUGhMHZ7vYQ1YtxOWYExc4f/ZYfs72hw0mzJj0hJ1YU7JcA
-         jNtrJtvECqwdS+hn0Ayyjfg2zW2bav0Ivvx5DT1T+eA9K9JZhi4raW63t3KhyBgb2+f2
-         KZTJ2C4+yq0l0MVXR6EZIMJHcXvlTuO53+yCIfLnkCHZatKGZHcDvkfeMCGHG6p+56jE
-         mGGbbXOsE/mLUD/dT1MrLnq1fiySanOYh08BqGrx46XT6r4mM8DuhJP7dtbAFA2qcjBU
-         CONQ==
-X-Gm-Message-State: AJIora8E0gvlfDoTbzB4hsO5ZH3/SW8Xr4UrU4A1R0ktWrZ+3FduZTop
-        eGb7nU8VrkNVXI8G/5SeVyk=
-X-Google-Smtp-Source: AGRyM1uHPO82O4oNqR2Zpky4A1Suw48ryUriy5WyQsMEVuoisSccpGOJ5jyqOvGfFk6py0DJLhIjpA==
-X-Received: by 2002:a05:6402:4518:b0:43a:3b90:7457 with SMTP id ez24-20020a056402451800b0043a3b907457mr32320700edb.422.1657196815363;
-        Thu, 07 Jul 2022 05:26:55 -0700 (PDT)
+        bh=Wk7frbMREct9lPijIkLq5KJDSYaF9pJKe0u39Vfv0Fs=;
+        b=3wLEI0fcPiP3eVCUZF3uDThUsYC9KVu/VXZ7/SPi1M+r89cQ0okTTbzGSVpadQHPEx
+         MsFnBq/a3GEgzxsF0d4EikIHb3dKFJJahnetGgONEo5ZXe3yJwD9IeQn0NWFVvbjFA9/
+         5Fk8nnvTmGba4s/eARXCukePqV7i0YFTyp00rRmq5ruPnetoI8lmSeR0BVKJXX2vMhGP
+         ESuxXJJ0IBCw1SqDipNfgXWVKbfSHP5PEQx2cKnhVYYNEE1GmCXe4y6sCIEODhzxQxUB
+         r5CZbWdFEJ0kREdLRoNFzYJKuJS0ZuAA29qDmPWKDNAXFAveU7QtqpzLU7mWxF6SyL0L
+         b+8A==
+X-Gm-Message-State: AJIora+Myn2H8hININygiAC0vqbqAmCxJgh0ThXn70Dv74hlykRYMedu
+        GRZL+kILPqm960UiYhBQYqcV3CCTyFg=
+X-Google-Smtp-Source: AGRyM1tpRjDmcOM0pSbR1DcLH6UpizBKLepHWaf1inLwgYEYPSWnY1R/V2Xa4GhCXEGqTqopJMU1GA==
+X-Received: by 2002:a05:6402:2a08:b0:437:cdc9:d120 with SMTP id ey8-20020a0564022a0800b00437cdc9d120mr61243516edb.129.1657198020226;
+        Thu, 07 Jul 2022 05:47:00 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id j22-20020a1709066dd600b006fe8b456672sm12443968ejt.3.2022.07.07.05.26.54
+        by smtp.gmail.com with ESMTPSA id e10-20020a056402148a00b0043a1255bc68sm11374905edv.94.2022.07.07.05.46.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 05:26:54 -0700 (PDT)
+        Thu, 07 Jul 2022 05:46:59 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1o9Qas-004HEz-1R;
-        Thu, 07 Jul 2022 14:26:54 +0200
+        id 1o9QuJ-004How-0x;
+        Thu, 07 Jul 2022 14:46:59 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] builtin/mv.c: use correct type to compute size of an
- array element
-Date:   Thu, 07 Jul 2022 14:11:22 +0200
-References: <xmqq8rp54r4l.fsf@gitster.g>
+Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org,
+        Adam Zethraeus <adam.zethraeus@includedhealth.com>
+Subject: Re: bug report: pre-commit & pre-push hook output is redirected
+ differently
+Date:   Thu, 07 Jul 2022 14:40:49 +0200
+References: <CAP4e5TNdvE1gmt9bERT5sL+D3r4Fbypk57KJJ+wYHD=M=T+uWA@mail.gmail.com>
+ <xmqqa69mgdde.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqq8rp54r4l.fsf@gitster.g>
-Message-ID: <220707.86y1x585wy.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqa69mgdde.fsf@gitster.g>
+Message-ID: <220707.86tu7t84zh.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -70,149 +72,73 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Jul 06 2022, Junio C Hamano wrote:
 
-> The variables 'source', 'destination', and 'submodule_gitfile' are
-> all of type "const char **", and an element of such an array is of
-> "type const char *".
+> Adam Zethraeus <adam.zethraeus@includedhealth.com> writes:
 >
-> Noticed while running "make contrib/coccinelle/array.cocci.patch".
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>>
+>> Installed identical pre-commit and pre-push hooks:
+>>
+>> ```
+>> #!/bin/bash
+>>
+>>>&1 echo "stdout"
+>>>&2 echo "stderr"
+>> exit 1
+>> ```
+>>
+>> What did you expect to happen? (Expected behavior)
+>>
+>> `git push` and `git commit` should have the same hook behavior.
+>>
+>> What happened instead? (Actual behavior)
+>>
+>> The pre-commit hook was run with stdout redirected to stderr but the
+>> pre-push hook's output was unaltered.
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+> Without looking into it very much, the output of hooks is an area
+> with known regression at 2.36, so let me redirect it to those who
+> are likely to know it ;-)
 >
->  * There is this rule in the array.cocci file:
->
->         @@
->         type T;
->         T *dst;
->         T *src;
->         expression n;
->         @@
->         (
->         - memmove(dst, src, (n) * sizeof(*dst));
->         + MOVE_ARRAY(dst, src, n);
->         |
->         - memmove(dst, src, (n) * sizeof(*src));
->         + MOVE_ARRAY(dst, src, n);
->         |
->         - memmove(dst, src, (n) * sizeof(T));
->         + MOVE_ARRAY(dst, src, n);
->         )
->
->    but it triggered only for modes[] array among the four parallel
->    arrays that are being moved here.
->
->    There are a few tangents.
->
->    * Should we in general use sizeof(TYPE) in these cases, instead
->      of the size of the zeroth element, e.g.
->
->  		memmove(source + i, source + i + 1,
-> 			n * sizeof(source[i]));
->     
->      It would have been caught by the above Coccinelle rule (we are
->      taking the size of *dst).
->
->    * Shouldn't we have an array of struct with four members, instead
->      of four parallel arrays, e.g.
->
-> 		struct {
-> 			const char *source;
-> 			const char *destination;
-> 			enum update_mode mode;
-> 			const char *submodule_gitfile;
-> 		} *mv_file;
->
->    The latter question is important to answer before we accept
->    Coccinelle-suggested rewrite to use four MOVE_ARRAY() on these
->    four parallel arrays on top of this fix.
+> Thanks for a report.
 
-This seems to be the same sort case as noted in 7bd97d6dff3 (git: use
-COPY_ARRAY and MOVE_ARRAY in handle_alias(), 2019-09-19).
+I may be missing something, but I think this report has nothing to do
+with any recent changes or regressions, but is merely noting a behavior
+change between pre-push and some other hooks that we've had since 1.8.2,
+or since the "pre-push" hook was added in ec55559f937 (push: Add support
+for pre-push hooks, 2013-01-13).
 
-I tried (going aginst the warnings in that commit about the
-non-generality) updating the rules to catch these cases, which yielded
-the below. I wonder if we should apply some version of it. I.e. one-off
-fix these, and perhaps have the cocci rule BUG() if we see this sort of
-code again (the form technically could be used, but it seems all our
-uses of it are ones we could convert to the simpler one...).
+I tested this with a local v2.30.0, and the behavior was the same.
 
-diff --git a/add-patch.c b/add-patch.c
-index 509ca04456b..eff338d3901 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -915,10 +915,9 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
- 	file_diff->hunk_nr += splittable_into - 1;
- 	ALLOC_GROW(file_diff->hunk, file_diff->hunk_nr, file_diff->hunk_alloc);
- 	if (hunk_index + splittable_into < file_diff->hunk_nr)
--		memmove(file_diff->hunk + hunk_index + splittable_into,
--			file_diff->hunk + hunk_index + 1,
--			(file_diff->hunk_nr - hunk_index - splittable_into)
--			* sizeof(*hunk));
-+		MOVE_ARRAY(file_diff->hunk + hunk_index + splittable_into,
-+			   file_diff->hunk + hunk_index + 1,
-+			   file_diff->hunk_nr - hunk_index - splittable_into);
- 	hunk = file_diff->hunk + hunk_index;
- 	hunk->splittable_into = 1;
- 	memset(hunk + 1, 0, (splittable_into - 1) * sizeof(*hunk));
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 83a465ba831..f6187d1264a 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -282,14 +282,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- remove_entry:
- 		if (--argc > 0) {
- 			int n = argc - i;
--			memmove(source + i, source + i + 1,
--				n * sizeof(char *));
--			memmove(destination + i, destination + i + 1,
--				n * sizeof(char *));
--			memmove(modes + i, modes + i + 1,
--				n * sizeof(enum update_mode));
--			memmove(submodule_gitfile + i, submodule_gitfile + i + 1,
--				n * sizeof(char *));
-+			MOVE_ARRAY(source + i, source + i + 1, n);
-+			MOVE_ARRAY(destination + i, destination + i + 1, n);
-+			MOVE_ARRAY(modes + i, modes + i + 1, n);
-+			MOVE_ARRAY(submodule_gitfile + i,
-+				   submodule_gitfile + i + 1, n);
- 			i--;
- 		}
- 	}
-diff --git a/commit.c b/commit.c
-index 1fb1b2ea90c..c23d3e3678f 100644
---- a/commit.c
-+++ b/commit.c
-@@ -151,10 +151,9 @@ int register_commit_graft(struct repository *r, struct commit_graft *graft,
- 		   r->parsed_objects->grafts_alloc);
- 	r->parsed_objects->grafts_nr++;
- 	if (pos < r->parsed_objects->grafts_nr)
--		memmove(r->parsed_objects->grafts + pos + 1,
--			r->parsed_objects->grafts + pos,
--			(r->parsed_objects->grafts_nr - pos - 1) *
--			sizeof(*r->parsed_objects->grafts));
-+		MOVE_ARRAY(r->parsed_objects->grafts + pos + 1,
-+			   r->parsed_objects->grafts + pos,
-+			   r->parsed_objects->grafts_nr - pos - 1);
- 	r->parsed_objects->grafts[pos] = graft;
- 	unparse_commit(r, &graft->oid);
- 	return 0;
-diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.cocci
-index 9a4f00cb1bd..988ff9a3fda 100644
---- a/contrib/coccinelle/array.cocci
-+++ b/contrib/coccinelle/array.cocci
-@@ -73,6 +73,15 @@ expression n;
- + MOVE_ARRAY(dst, src, n);
- )
- 
-+@@
-+expression D;
-+expression S;
-+expression N;
-+expression Z;
-+@@
-+- memmove(D, S, (N) * Z);
-++ MOVE_ARRAY(D, S, N);
-+
- @@
- type T;
- T *ptr;
+This will "fix" it:
+	
+	diff --git a/transport.c b/transport.c
+	index 52db7a3cb09..0cc7d05e0da 100644
+	--- a/transport.c
+	+++ b/transport.c
+	@@ -1225,6 +1225,7 @@ static int run_pre_push_hook(struct transport *transport,
+	 	strvec_push(&proc.args, transport->url);
+	 
+	 	proc.in = -1;
+	+	proc.stdout_to_stderr = 1;
+	 	proc.trace2_hook_name = "pre-push";
+	 
+	 	if (start_command(&proc)) {
+
+But whether that's a fix or not depends on whether we think we should
+make this behavior consistent. I tend to think so, but it would be a
+behavior change to long-established behavior in pre-push.
+
+It *is* something we need to be careful of when converting the rest of
+the hooks to the hooks API, i.e. we need tests for how stderr/stdout is
+handled for each one.
+
+But this being different is just because some hook use the hook.c API
+(and before that the helper in run-command.c), and others use "struct
+child_process" or whatever explicitly (such as "pre-push").
+
+Since it's up to each callsite to set up the "proc" (or equivalent) some
+supply "stdout_to_stderr", some don't.
+
+From some quick grepping it seems the odd ones out are pre-push and
+proc-receive, but I only skimmed a "git grep" to find the second one,
+and may have missed others.
