@@ -2,222 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 942B6C43334
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 19:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89D51C433EF
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 19:59:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236399AbiGGTz3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 15:55:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37054 "EHLO
+        id S235894AbiGGT7Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 15:59:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235693AbiGGTz1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 15:55:27 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E151F326F8
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 12:55:26 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 196-20020a6300cd000000b0040c9c64e7e4so9120442pga.9
-        for <git@vger.kernel.org>; Thu, 07 Jul 2022 12:55:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=HEbSlLEe/1Krvk+LrCoVrfnI58TJ6rDwNAnQLJ+Xd5U=;
-        b=E6km6C8KAseaY8cxTUCg0iIAZNPHgPg8Ce3oouzZpVAdT8C9UcQWi47QYIRTENyBq6
-         34ODBaWl2b+2hB6P9NxseV5J1IPZ5OyexEkfUBAOBJmwpBf6aA+MXgw9cKnYzTmpVx5R
-         ZWqU+gjAoVDxhVgPupl0ybegPdKHWYh+G2KylRUful8XB/TIVJGSXuUFUzM3f+m8D3Qq
-         GaQMHLtD4037jvVha6+/VkX14O9R9taiqzWGUnJzgskUsui9ztTqeGnf0oqpThlNahYa
-         34xEte3+hqe1PAurvd1sRX8aoBJxZsGrM3OfN7Z/OpoD6d9sCWfkU+NDNUaeeznw3q5a
-         m1Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=HEbSlLEe/1Krvk+LrCoVrfnI58TJ6rDwNAnQLJ+Xd5U=;
-        b=IiuK5iZTEJ/gufOmQdvzt/vcKhKJqWmu9NkBaZU7Byc5QOjzaGlvWCybWQ7++tSK1B
-         cmYv9KO5T7dLUuKnowZiN+F5szk61/uVnXeGYkRC1q8d30t2nSoZSdLiNkjTObp5hrKt
-         tiUl80WkFHJc0w5+wWDpGfiH5i+47BwQ2ajbpuKXaItGqT08Js+pROec9r2/E6YK1oxM
-         5HT/RXwbpFMfhzcAfrJV6ak1FbiKw7jIRz3khrh58nCVwQfaVCCle2KAIED5+SX6ep0G
-         ukoy+VD3CtB66GX1xc/0xyTUur3UwqFTjFfs9OQkmG6+sBBadidFVLT19b5qHNmAeYKy
-         LEyQ==
-X-Gm-Message-State: AJIora9R6k9Q+VDJdyj8m571GpRsuZ1rc7Tz9uD6b0hF1XSk9gczkfzU
-        tEAFZT9zk7wOEqbcAimHzgbv0bRUEW+jBQ==
-X-Google-Smtp-Source: AGRyM1sCtr+IuJAZU8na9BADRfkUS7Hlf1oYX2SIUQoe2nfXo3AY011D7K+CgBk0b9y7eTVUx6LY1uvGQ1GFBQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:4091:b0:16b:e3d5:b2da with SMTP
- id z17-20020a170903409100b0016be3d5b2damr24053021plc.58.1657223726482; Thu,
- 07 Jul 2022 12:55:26 -0700 (PDT)
-Date:   Thu, 07 Jul 2022 12:55:18 -0700
-In-Reply-To: <Yr5OTq7s2qxxqsiY@nand.local>
-Message-Id: <kl6lh73svgt5.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
- <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com> <a1323d963f917df661a8701c305d84e781a8f550.1656612839.git.gitgitgadget@gmail.com>
- <Yr5OTq7s2qxxqsiY@nand.local>
-Subject: Re: [PATCH v6 5/5] setup.c: create `discovery.bare`
-From:   Glen Choo <chooglen@google.com>
-To:     Taylor Blau <me@ttaylorr.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S230076AbiGGT7Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 15:59:24 -0400
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CD41D0DA
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 12:59:22 -0700 (PDT)
+Received: from [10.0.2.15] ([147.147.167.40])
+        by smtp with ESMTPA
+        id 9Xego0UB6OC4k9Xehojfwp; Thu, 07 Jul 2022 20:59:20 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1657223960; bh=I52nVs3Q6r7fjVqqe6q4sg2y5WBuY/PkwYok+vgiKoQ=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=q+039vCRbJ/GmP96UAY7md95Fm+Vx4ZXx9Dq1NWOT2ngMTBTFddS70TqdfXXETmJp
+         NldhnPk8Wnij3ALVUbiiJBvAsjkau8Wjxya2GR4QLJtXLFH0d/MIz8Olwu7M844izX
+         MW2bxC33yp15nL2G32KMIipagEyJ/otwFbIn+hU+xrzCTvCifhHocmHUX398ozJ3GW
+         EEzxePDAX2lHuDKGfj/l22ibcUFfXN+uOH4zKUdeYTU/pGp8lKw125B2FJu3wJ8uJn
+         u03LSCTfCT8Sd0o/DHA2V4N2RHLunFI6ZduGBEn+4lyv46OOzLhcy3QuphdHkJm4k6
+         forZ34GINjjSA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=FsUWQknq c=1 sm=1 tr=0 ts=62c73b18
+ a=nyqnwr6A7Kzjd6EpZhiMcA==:117 a=nyqnwr6A7Kzjd6EpZhiMcA==:17
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=PKzvZo6CAAAA:8 a=qC85YyIROwbKi9NBaBwA:9
+ a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22 a=q92HNjYiIAC_jH7JDaYf:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <ee1aa051-1c01-f525-e925-a21e63682531@ramsayjones.plus.com>
+Date:   Thu, 7 Jul 2022 20:59:17 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: t0301-credential-cache test failure on cygwin
+Content-Language: en-GB
+To:     Jeff King <peff@peff.net>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <9dc3e85f-a532-6cff-de11-1dfb2e4bc6b6@ramsayjones.plus.com>
+ <YsciDznU2TqzCXP4@coredump.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <YsciDznU2TqzCXP4@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfAmbq6L6jLlJNn+TFPW7FByJofxMehhg5vcZ1k3F3asPYeeHcx+udTGeI4rlfLR9lY5fD15fqc5vwPR+TkYKbKRMStT+xzT1hIJNPsgrjqPJ9eNUvsJD
+ p/mhdFMdSUqJX4slzDCeLMVlXso47rGE7PcywU0pFDNr4lk5B4xMxFEResghSis+X9FjXEYDFlGE6fE+HLe3lw5UCsBtT8YliyU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
 
-> On Thu, Jun 30, 2022 at 06:13:59PM +0000, Glen Choo via GitGitGadget wrote:
->> [1]: https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com
->> [2]: https://lore.kernel.org/git/5b969c5e-e802-c447-ad25-6acc0b784582@github.com
+
+On 07/07/2022 19:12, Jeff King wrote:
+> On Thu, Jul 07, 2022 at 02:50:21AM +0100, Ramsay Jones wrote:
+> 
+>> Having deleted the above patch, I now had a look at the server side. Tracing
+>> out the server execution showed no surprises - everything progressed as one
+>> would expect and it 'exit(0)'-ed correctly! The relevant part of the code to
+>> process a client request (in the serve_one_client() function, lines 132-142
+>> in builtin/credential-cache--daemon.c) looks like:
 >>
->> Signed-off-by: Glen Choo <chooglen@google.com>
->> ---
->>  Documentation/config.txt           |  2 ++
->>  Documentation/config/discovery.txt | 23 ++++++++++++
->>  setup.c                            | 57 +++++++++++++++++++++++++++++-
->>  t/t0035-discovery-bare.sh          | 52 +++++++++++++++++++++++++++
->>  4 files changed, 133 insertions(+), 1 deletion(-)
->>  create mode 100644 Documentation/config/discovery.txt
->>  create mode 100755 t/t0035-discovery-bare.sh
+>> 	else if (!strcmp(action.buf, "exit")) {
+>> 		/*
+>> 		 * It's important that we clean up our socket first, and then
+>> 		 * signal the client only once we have finished the cleanup.
+>> 		 * Calling exit() directly does this, because we clean up in
+>> 		 * our atexit() handler, and then signal the client when our
+>> 		 * process actually ends, which closes the socket and gives
+>> 		 * them EOF.
+>> 		 */
+>> 		exit(0);
+>> 	}
 >>
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index e284b042f22..9a5e1329772 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -409,6 +409,8 @@ include::config/diff.txt[]
->>
->>  include::config/difftool.txt[]
->>
->> +include::config/discovery.txt[]
->> +
->>  include::config/extensions.txt[]
->>
->>  include::config/fastimport.txt[]
->> diff --git a/Documentation/config/discovery.txt b/Documentation/config/discovery.txt
->> new file mode 100644
->> index 00000000000..bbcf89bb0b5
->> --- /dev/null
->> +++ b/Documentation/config/discovery.txt
->> @@ -0,0 +1,23 @@
->> +discovery.bare::
->> +	Specifies whether Git will work with a bare repository that it
->> +	found during repository discovery. If the repository is
->
-> Is it clear from the context what "discovery" means here? It's probably
-> easier to describe what it isn't, which you kind of do in the next
-> sentence. But it may be clearer to say something like:
->
->     Specifies whether Git will recognize bare repositories that aren't
->     specified via the top-level `--git-dir` command-line option, or the
->     `GIT_DIR` environment variable (see linkgit:git[1]).
+>> Now, the comment doesn't make clear to me why "it's important that we clean
+>> up our socket first" and, indeed, whether 'socket' refers to the socket
+>> descriptor or the socket file. In the past, all of my unix-stream-socket
+>> servers have closed the socket descriptor and then unlink()-ed the socket
+>> file before exit(), with no 'atexit' calls in sight (lightly cribbed from a
+>> 30+ years old Unix Network programming book by Stevens - or was it the Comer
+>> book - or maybe the Comer and Stevens book - I forget!).
+> 
+> That comment refers to the socket file. If we close the handle to the
+> client before we clean up the socket file, then the client may finish
+> while the socket file is still there. So anybody expecting that:
+> 
+>   git credential-cache exit
+> 
+> is a sequencing operation will be fooled. One obvious thing is:
+> 
+>   git credential-cache exit
+>   git credential-cache store <some-cred
+> 
+> which is now racy; the second command may try to contact the socket for
+> the exiting daemon. It might actually handle that gracefully (because
+> the server wouldn't actually accept()) but I didn't check. But another
+> example, and the one that motivated that comment is:
+> 
+>   git credential-cache exit
+>   test_path_is_missing $HOME/.git-credential-cache/socket
+> 
+> which is exactly what our tests do. ;) See the discussion around here:
+> 
+>   https://lore.kernel.org/git/20160318061201.GA28102@sigill.intra.peff.net/
 
-Hm that's a good point and the suggestion is very well-worded. In
-addition to what you have, I think we should make reference to
-"discovery" _somewhere_ in here since the option is named
-`discovery.bare`, and this seems like a good teaching opportunity.
+I have now read (much) of that thread and it makes sense now. (Yes, I probably
+should have postponed sending the email until after researching some more today;
+lesson learned).
 
->> +This defaults to `always`, but this default may change in the future.
->
-> I think the default being subject to change is par for the course. It's
-> probably easy enough to just say "Defaults to 'always'" and leave it at
-> that.
+[snip]
+>> So, we now have three patches which 'fix' the issue. What does this tell us?
+>> Well, not an awful lot! ;-)
+> 
+> Of the three, I actually like the client-side one to check errno the
+> best. The client is mostly "best effort". If it can't talk to the daemon
+> for whatever reason, then it becomes a noop (there is nothing it can
+> retrieve from the cache, and if it's trying to write, then oh well, the
+> cached value was immediately expired!).
+> 
+> So one could argue that _every_ read error should be silently ignored.
+> Calling die_errno() is mostly a nicety for debugging a broken setup, but
+> in normal use, the outcome is the same either way (and Git will
+> certainly ignore the exit code credential-cache anyway). I prefer the
+> "ignore known harmless errors" approach, possibly because I am often the
+> one debugging. ;) If ECONNABORTED is a harmless error we see in
+> practice, I don't mind adding it to the list (under the same rationale
+> as the current ECONNRESET that is there).
 
-Makes sense.
+Yes, I was going to ask about ECONNRESET ... heh, no I'm kidding! :)
 
->> +static enum discovery_bare_allowed get_discovery_bare(void)
->> +{
->> +	enum discovery_bare_allowed result = DISCOVERY_BARE_ALWAYS;
->> +	git_protected_config(discovery_bare_cb, &result);
->> +	return result;
->> +}
->> +
->> +static const char *discovery_bare_allowed_to_string(
->> +	enum discovery_bare_allowed discovery_bare_allowed)
->> +{
->> +	switch (discovery_bare_allowed) {
->> +	case DISCOVERY_BARE_NEVER:
->> +		return "never";
->> +	case DISCOVERY_BARE_ALWAYS:
->> +		return "always";
->
->> +	default:
->> +		BUG("invalid discovery_bare_allowed %d",
->> +		    discovery_bare_allowed);
->
-> Should we have a default case here since the case arms above are
-> exhaustive?
+Yeah, if we can't determine the reason for cygwin changing behaviour
+here (and fix it in cygwin), then this is probably the simplest solution.
 
-Ah, this "default:" was suggested by Stolee in
-https://lore.kernel.org/git/7b37f3b7-58c5-1ac5-46eb-d995dc3cc33b@github.com
+ATB,
+Ramsay Jones
 
-  This case should be a "default:" in case somehow an arbitrary integer
-  value was placed in the variable. [...]
 
-I'm not sure where we stand on this kind of defensiveness. It's not
-really necessary, but I suppose having a "default:" won't hurt here,
-especially if it BUG()-s instead of silently passing.
-
->> +	}
->> +	return NULL;
->> +}
->> +
->>  enum discovery_result {
->>  	GIT_DIR_NONE = 0,
->>  	GIT_DIR_EXPLICIT,
->> @@ -1151,7 +1195,8 @@ enum discovery_result {
->>  	GIT_DIR_HIT_CEILING = -1,
->>  	GIT_DIR_HIT_MOUNT_POINT = -2,
->>  	GIT_DIR_INVALID_GITFILE = -3,
->> -	GIT_DIR_INVALID_OWNERSHIP = -4
->> +	GIT_DIR_INVALID_OWNERSHIP = -4,
->> +	GIT_DIR_DISALLOWED_BARE = -5,
->>  };
->>
->>  /*
->> @@ -1248,6 +1293,8 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
->>  		}
->>
->>  		if (is_git_directory(dir->buf)) {
->> +			if (!get_discovery_bare())
->
-> Relying on NEVER being the zero value here seems fragile to me. Should
-> we check that `if (get_discovery_bare() == DISCOVERY_BARE_NEVER)` to be
-> more explicit here?
-
-This was also originally suggested by Stolee in 
-https://lore.kernel.org/git/7b37f3b7-58c5-1ac5-46eb-d995dc3cc33b@github.com
-
-  With (some changes to return the enum), we can [...] let the caller
-  treat the response as a simple boolean.
-
-but.. your suggestion does seem less fragile. It won't really matter
-when we add a third enum and replace the "if" with a "switch", but it
-does matter if we ever muck around with the integer values of
-DISCOVER_BARE_*.
-
->> +				return GIT_DIR_DISALLOWED_BARE;
->>  			if (!ensure_valid_ownership(dir->buf))
->>  				return GIT_DIR_INVALID_OWNERSHIP;
->>  			strbuf_addstr(gitdir, ".");
->> @@ -1394,6 +1441,14 @@ const char *setup_git_directory_gently(int *nongit_ok)
->>  		}
->>  		*nongit_ok = 1;
->>  		break;
->> +	case GIT_DIR_DISALLOWED_BARE:
->> +		if (!nongit_ok) {
->> +			die(_("cannot use bare repository '%s' (discovery.bare is '%s')"),
->> +			    dir.buf,
->> +			    discovery_bare_allowed_to_string(get_discovery_bare()));
->> +		}
->> +		*nongit_ok = 1;
->> +		break;
->>  	case GIT_DIR_NONE:
->>  		/*
->>  		 * As a safeguard against setup_git_directory_gently_1 returning
->
-> Thanks,
-> Taylor
