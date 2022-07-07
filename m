@@ -2,136 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CED3C433EF
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 16:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C243C43334
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 16:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235804AbiGGQqB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 12:46:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55754 "EHLO
+        id S235884AbiGGQ5U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 12:57:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232119AbiGGQqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 12:46:01 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9E0224F05
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 09:45:59 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C0BBD13CACD;
-        Thu,  7 Jul 2022 12:45:58 -0400 (EDT)
+        with ESMTP id S231995AbiGGQ5S (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 12:57:18 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F5426AD7
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 09:57:17 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DAFB11453D4;
+        Thu,  7 Jul 2022 12:57:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RGL+EFFpkNWY0Bl2Qza2GV6SzYi4fIAW1qRsu+
-        InR6I=; b=xmdUbupGRIE8c0dA6fyjF+2Is9YRiRyUa8r+9UxuzD5cIfKm3gPBD4
-        mizv6DWnmmb1qG56OURBfzqzJGWezvFIV5jQMn1KQ7u5d9JxBzRXdXCBIvltuG8h
-        gW98eqMV+bhd8bsjY3nkouuOfnInPNLC5SI1mBMdCyLddfC5npBYc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B0E1413CACC;
-        Thu,  7 Jul 2022 12:45:58 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=qRLOnbAOAqKT
+        f2nYa4f9zlJYLddlF0hg38JRtMAXRbw=; b=jTM2AGluWsVHmyasjamUVlhdF/GB
+        Iu3UbPc8mHniuGqQ6Lc/SMAcAHy4Bi8PbxhZ7rPOjDkeCrJu2rp/CPbLmH+fwerw
+        Xoc4iwBmFlYMuKLuMvPG4HIiXrl73vdkbCtuVwU64JVdBjIyksFLqGic5BsUjVWC
+        zRO2BKo9ahcORTE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D18D01453D3;
+        Thu,  7 Jul 2022 12:57:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0AEB313CACB;
-        Thu,  7 Jul 2022 12:45:57 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EDFF31453CF;
+        Thu,  7 Jul 2022 12:57:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@jeffhostetler.com,
-        git@vger.kernel.org, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v5 4/5] pack-bitmap.c: retrieve missing i18n translations
-References: <xmqqfsjok6g1.fsf@gitster.g>
-        <20220707115912.75774-1-dyroneteng@gmail.com>
-Date:   Thu, 07 Jul 2022 09:45:56 -0700
-In-Reply-To: <20220707115912.75774-1-dyroneteng@gmail.com> (Teng Long's
-        message of "Thu, 7 Jul 2022 19:59:12 +0800")
-Message-ID: <xmqq8rp43m7v.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org,
+        Adam Zethraeus <adam.zethraeus@includedhealth.com>
+Subject: Re: bug report: pre-commit & pre-push hook output is redirected
+ differently
+References: <CAP4e5TNdvE1gmt9bERT5sL+D3r4Fbypk57KJJ+wYHD=M=T+uWA@mail.gmail.com>
+        <xmqqa69mgdde.fsf@gitster.g>
+        <220707.86tu7t84zh.gmgdl@evledraar.gmail.com>
+Date:   Thu, 07 Jul 2022 09:57:14 -0700
+In-Reply-To: <220707.86tu7t84zh.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 07 Jul 2022 14:40:49 +0200")
+Message-ID: <xmqq4jzs3lp1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 46B41BD4-FE14-11EC-BF2D-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DAC82EA4-FE15-11EC-9719-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Date: Tue, 28 Jun 2022 11:07:26 -0700, Junio C Hamano wrote:
+> I may be missing something, but I think this report has nothing to do
+> with any recent changes or regressions, but is merely noting a behavior
+> change between pre-push and some other hooks that we've had since 1.8.2=
+,
+> or since the "pre-push" hook was added in ec55559f937 (push: Add suppor=
+t
+> for pre-push hooks, 2013-01-13).
+
+"behavior change" meaning a regression of a particular hook, or
+"behavior difference" between hooks, each of which never changed the
+behavior?
+
+> I tested this with a local v2.30.0, and the behavior was the same.
+
+I guess you meant the latter.  If so, the inconsistency may be
+unfortunate, but I agree that it is not cut-and-dried that it is a
+good idea to change pre-push to spew its output to standard error
+stream.
+
+> It *is* something we need to be careful of when converting the rest of
+> the hooks to the hooks API, i.e. we need tests for how stderr/stdout is
+> handled for each one.
+
+Absolutely.
+
+> But this being different is just because some hook use the hook.c API
+> (and before that the helper in run-command.c), and others use "struct
+> child_process" or whatever explicitly (such as "pre-push").
 >
+> Since it's up to each callsite to set up the "proc" (or equivalent) som=
+e
+> supply "stdout_to_stderr", some don't.
 >
->> The verb "retrieve" is puzzling.
->
-> I use "retrieve" because I think they should be there but actually missing.
-> But If it's not appropriate here I will change another word like "add".
+> From some quick grepping it seems the odd ones out are pre-push and
+> proc-receive, but I only skimmed a "git grep" to find the second one,
+> and may have missed others.
 
-To retrieve is to get/bring something back and regaining possession
-of, which implies that the thing existed somewhere already but at a
-wrong/different place, and the only thing you are doing is to move
-it to the right place, but in this case, the translations did not
-exist.  The patch is marking more strings for translation.  And the
-act of marking them for translation will cause i18n/l10n folks to
-translate these strings, which will (finally) allow _("...") to
-retrieve the translated strings at runtime.
-
-So "retrieve" is indeed involved somewhere in the process, but using
-the verb skips a few steps.
-
-    Subject: [PATCH 4/5] pack-bitmap.c: mark more strings for translations
-
-perhaps?
-
->> If we were to do this, to avoid burdening translators with double
->> work, we probably would want to fix the "C" locale version of the
->> string, either as a preliminary clean-up before this step, or as
->> part of this step.  From Documentation/CodingGuidelines:
->
-> Yes.
->
-> Does git have any NOT "C" Locale string?
-
-Sorry, but I am not sure what you are asking.  What I meant is that
-a hunk like this from the patch in discussion:
-
- 	if (bitmap_size < 0) {
--		error("Failed to load bitmap index (corrupted?)");
-+		error(_("Failed to load bitmap index (corrupted?)"));
- 		ewah_pool_free(b);
- 		return NULL;
- 	}
-
-makes translators to first translate the above string, but we will
-fix the "C" locale version (that is, the string inside _() that is
-used as the key to the .po database when retrieving the translated
-version) to follow our error message formatting convention to read
-something like
-
-	error(_("failed to load bitmap index (corrupted?)"));
-
-or even
-
-	error(_("failed to load bitmap index (corrupted?): '%s'"),
-	      filename);
-
-And the translators have to redo the work.  If a preliminary patch
-fixed these up before bothering translators with more strings to
-translate, they do not need to translate the current, known to be
-faulty, version of messages.
-
-> Another doublt is I found something like in:
->
->     File: ./contrib/completion/git-completion.bash
->     923    LANG=C LC_ALL=C git merge -s help 2>&1
->
-> I think LC_ALL=C will override LANG=C in these cases, so I think
-> `LC_ALL=C git merge -s help 2>&1` is OK here.
-
-In practice, yes, but the code is following the convention to reduce
-common confusion caused by leaving some lower precedence but common
-environment variables (i.e. LANG) as their original values.
-
-Does the line in the completion script have anything to do with
-[PATCH 4/5], or is this merely your curiosity?  Avoid mixing in
-unrelated things into the topic, which will only make the review
-cycle unnecessarily longer, but raise a separate discussion if you
-have to.
+We'd probably need an inventory of them all anyway before we can
+push the hook.c API forward.  If the oddball ones are very small
+minority, it may be worth having a transition period and make
+backward incompatible change to unify where the output goes.  If
+they are random mixture, on the other hand, the hook.c API may have
+to gain a bit for the caller to tell where the output of the hook
+should go.
 
 Thanks.
+
