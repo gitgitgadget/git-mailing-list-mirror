@@ -2,81 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD51C43334
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 18:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE13AC43334
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 18:43:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236516AbiGGSmd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 14:42:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42124 "EHLO
+        id S236528AbiGGSnA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 14:43:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236381AbiGGSmX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 14:42:23 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AFBB2A43E
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 11:42:22 -0700 (PDT)
-Received: (qmail 6429 invoked by uid 109); 7 Jul 2022 18:42:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Jul 2022 18:42:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3443 invoked by uid 111); 7 Jul 2022 18:42:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Jul 2022 14:42:21 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 7 Jul 2022 14:42:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] builtin/mv.c: use correct type to compute size of an
- array element
-Message-ID: <YscpDTgwxUko/aZM@coredump.intra.peff.net>
-References: <xmqq8rp54r4l.fsf@gitster.g>
+        with ESMTP id S236381AbiGGSm7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 14:42:59 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82B032A43E
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 11:42:58 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id 70so6036754pfx.1
+        for <git@vger.kernel.org>; Thu, 07 Jul 2022 11:42:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=tsx/h5MMZpOfbSABBVBxBcXs0y1vjyg6ARKKmobB3Ko=;
+        b=gH/1+0x+tCYyvDoW6NNfLOSAT2KPK+HmLn+m2TxDD7RyGEjwzpISQ8TBY/iFQN4Vd4
+         8H8ezQ87bpSZAbOI8lX12L+Uu0EbTfjQNf4p+NX40DNH3MRnJNrMIE3i+ueqRbvLQMwg
+         6ftAALTdYgZRMaIHmT+XWz8G5zedfHSmZxPOVXbQQ9WDCbxJ6ffTVfxsZeO+2j8zTLFe
+         dt6TSjOpegdIn/+H489RdRYuHhuJlfIuL3vVG/r09bE2lpdYd4i/lGtkvR47AGoI3kA3
+         wAJLValBylDswF8G97HfviLYKgqAxx1QDmGhLWUzf+lh8IaewOaQVXo+r38wG/Zp9Us3
+         fSLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=tsx/h5MMZpOfbSABBVBxBcXs0y1vjyg6ARKKmobB3Ko=;
+        b=pAOmtrcauHw8QH8fvXBLJ/O9f9j92yxq5bv+gNeK1dVi5dcoJ76TM0PdSiTPLdWKZ4
+         ywqUcX5TyztxY1OLh4s8LWoz9VBoz0C5sDb2VemFX9LvfEtLxPqmQK9EWdaBCtJMST3G
+         a0hGjBIDood86LPZLF1AZfVPXnaQFWr0UpU9RVL4GPvn2nymZjVF/W9b6mEq7U1Ky1s/
+         w5cHMViGNCZzIYJDTFD3eCOJq8zNDMg48/3N27qGx/9bPjN7+OeH0Ye4Ry+szD2fRrlG
+         NN1cjOt0LczLmFSy9ZmiN8oN+aU726vzta/NAyA6BO2TYRHjOVbG3H+D5RK6jMGGFS14
+         GGWQ==
+X-Gm-Message-State: AJIora8vGmk8oTs4MdjRO1vVF7PwpvmA6+Cm3Hps6QZbg0T0UUQphx3x
+        //EbS7JxX+rxbutWkcjFmqo=
+X-Google-Smtp-Source: AGRyM1vR6HzzoLDoVAz3L++28HkHVskfg9DHIZU8E/imaMme3Nj9HN6LbWcJp0lgaM29NoN+aaDeQA==
+X-Received: by 2002:a17:902:d581:b0:16b:e6b8:4080 with SMTP id k1-20020a170902d58100b0016be6b84080mr22065971plh.146.1657219377789;
+        Thu, 07 Jul 2022 11:42:57 -0700 (PDT)
+Received: from localhost.localdomain ([202.142.80.34])
+        by smtp.gmail.com with ESMTPSA id x5-20020aa79405000000b00528a1f8e317sm4358847pfo.166.2022.07.07.11.42.55
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 07 Jul 2022 11:42:57 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 0/6] [GSoC] bitmap: integrate a lookup table extension to the bitmap format
+Date:   Fri,  8 Jul 2022 00:12:33 +0530
+Message-Id: <20220707184233.80579-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <7f7e8d91-47bc-ede4-a552-2ddc9fe98a1e@gmail.com>
+References: <7f7e8d91-47bc-ede4-a552-2ddc9fe98a1e@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq8rp54r4l.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 06, 2022 at 07:02:18PM -0700, Junio C Hamano wrote:
 
->    * Should we in general use sizeof(TYPE) in these cases, instead
->      of the size of the zeroth element, e.g.
-> 
->  		memmove(source + i, source + i + 1,
-> 			n * sizeof(source[i]));
->     
->      It would have been caught by the above Coccinelle rule (we are
->      taking the size of *dst).
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> wrote:
 
-I'm not sure I understand this. As you noted in a later email, using
-sizeof(TYPE) is less maintainable if the type of "source" changes. But
-later you mention using "*source" instead of "source[i]". I don't think
-there is a particular reason to prefer one over the other from the
-compiler perspective. I find "*source" more idiomatic (but better still
-of course is MOVE_ARRAY, which removes the choice entirely).
+>> Correct, [1/6] indeed depends on my previous patch series[2] and it
+>> is assuming that that series has already been merged.
+>
+> I suppose it's the opposite. A quick check shows that the patch applies
+> cleanly over 'master' but fails to apply over 'next' which has the
+> changes from your other patch series. So, the base branch for [1/6]
+> is 'master'. The other 5 patches clearly don't conflict.
 
->    * Shouldn't we have an array of struct with four members, instead
->      of four parallel arrays, e.g.
-> 
-> 		struct {
-> 			const char *source;
-> 			const char *destination;
-> 			enum update_mode mode;
-> 			const char *submodule_gitfile;
-> 		} *mv_file;
-> 
->    The latter question is important to answer before we accept
->    Coccinelle-suggested rewrite to use four MOVE_ARRAY() on these
->    four parallel arrays on top of this fix.
+Actually by saying "[1/6] indeed depends on my previous patch series[2]
+and it is assuming that that series has already been merged.", I wanted
+to mean that the format followed in this patch (e.g. description list,
+indentation etc.) is dependent on the format changes introduced in that
+Patch series.
 
-I think that would make the code a lot cleaner. But it looks like
-"source" and "destination" come from separate calls to
-internal_prefix_pathspec().  So you'd have to reconcile that. And
-there's some extra trickiness that sometimes "destination" comes from
-"dest_path", which _isn't_ always the same size as "source".
+If you say about the base branch, yes, you're right. The base branch is
+'Master'.
 
-So I suspect the code which uses these arrays would be cleaner with a
-struct, but the setup may get worse. :)
+> Since the first hunk of 1/6 and your other series touch the same area
+> of Documentation/technical/bitmap-format.txt, the changes conflict.
+> Junio might be able to handle this one. If not, you would need to look
+> into separate 1/6 and based it over your other series to avoid the
+> conflict.
 
--Peff
+Oh, I see. I have no problem doing that :)
+Let me know if Junio face any problem fixing the conflict.
+
+Thanks :)
