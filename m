@@ -2,257 +2,273 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D300C43334
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 16:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D3AC43334
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 16:19:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235797AbiGGQRJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 12:17:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56756 "EHLO
+        id S236286AbiGGQTB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 12:19:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235788AbiGGQRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 12:17:06 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BC81114
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 09:17:03 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id bh13so13447191pgb.4
-        for <git@vger.kernel.org>; Thu, 07 Jul 2022 09:17:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bCBwbpnvVcG3k36puu/RKxkaLjeq7Lz6ei2RFDqlNHU=;
-        b=N1MJDalJqin0KV+v+BK/IPuTNRsECo6QReYM/nJUNQintv6CGq+2ej7eaDTYrMhd2p
-         ZmEkdV3t1iL58Ob2PgWQsP7HeUsFVqaJ6sh0i7dPdpjKtgbdMBBSwgA8T5yv8a2/hzV7
-         bNcHuVkOvIKrY/9THAnQJrx17tSaP05u5sJTZP5g7CYc7+JVJpi57L0cLQK6xfiMbWGt
-         W7izFJ1J0gzFJUvHn6m75Kpu7LYDSm4+lYXZeF9y/o8V0iigQ0jXpYPLotyBYkHIDZoN
-         tur4nHodIRu45YoISzN3/QYIZ/KXHIYSoEnE4mP0nG5oP11VXK9cUzJcd1Z2XDAEmbmL
-         GPXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bCBwbpnvVcG3k36puu/RKxkaLjeq7Lz6ei2RFDqlNHU=;
-        b=oVgeLUzs5LfDioX4GQVbQud1QvjvP8Hcc/vQilqIh6LN4xZstAz4oAzcALUrU1BY1b
-         Nj45mD90GEiJObp2ZNajn+jgax2ifiadKAikHiCfHHA0muEuusKCSEbsWIoq8sAu5Yzl
-         58v2rsM/doUAipYxjyBdTHNFQNBsDcjvBL+ZSFNhMBKcWl2kW+CXQTt7tmiuUTfeAHwr
-         XTJ7sthW4YvOtCq02PzV9m+QTHo3yGeFrr50dqjpfXFvcpnTXjeddJv06x0z1IfjczFz
-         fvgXr/YeEZvTPILEcGBVqrrUC2yZ2VO2uYVgyoN/EZjGfmL57osA4GOcuTMuv97ShM4t
-         sgCg==
-X-Gm-Message-State: AJIora8ZWVfhHZrqw/M+XjGXHOCFFO4mu0pjXxrOB7wjhL2pWA0IrZrX
-        IiDOjeGNtLFodZu5ZYokbwdEoMD7A2WBg+PP
-X-Google-Smtp-Source: AGRyM1v7dZJRwETUe9X/oV4u2d9jH5NyzpNaM4qwbvzwrXGtsAMYoIEg9YlfTjjXk1ODyFA9m7LANQ==
-X-Received: by 2002:a17:902:ba93:b0:16b:f484:65d3 with SMTP id k19-20020a170902ba9300b0016bf48465d3mr14307607pls.39.1657210622784;
-        Thu, 07 Jul 2022 09:17:02 -0700 (PDT)
-Received: from HB2.. ([122.175.103.204])
-        by smtp.gmail.com with ESMTPSA id b2-20020a170902a9c200b0015ee985999dsm27996199plr.97.2022.07.07.09.17.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 09:17:02 -0700 (PDT)
-From:   Siddharth Asthana <siddharthasthana31@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 4/4] cat-file: add mailmap support
-Date:   Thu,  7 Jul 2022 21:45:54 +0530
-Message-Id: <20220707161554.6900-5-siddharthasthana31@gmail.com>
-X-Mailer: git-send-email 2.37.0.6.ga6a61a26c1.dirty
-In-Reply-To: <20220707161554.6900-1-siddharthasthana31@gmail.com>
-References: <20220630142444.651948-1-siddharthasthana31@gmail.com>
- <20220707161554.6900-1-siddharthasthana31@gmail.com>
+        with ESMTP id S236288AbiGGQS7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 12:18:59 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02AE72657C
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 09:18:57 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 24FEA1ADF31;
+        Thu,  7 Jul 2022 12:18:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GtCtFnbhrMeLo5KVxbrDD9tpjO8zJqJohTurGq
+        CWuQY=; b=LiVCcq6G9xufXIGBg0bEGA/k7V8UlToIQFPLuaztgzSRQPrBhMJEU9
+        6a5gmjkB/EDXRL3x6ZJyzZTy7e6qpjcZg7AyvSFNBJqDF659uWwE2/A6zD9SE5kc
+        BSai59iapK0N9IREiSZsTtgSvedgaxZb3BxDnPy3hm4qmSwgyqTE8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1D7F41ADF30;
+        Thu,  7 Jul 2022 12:18:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C0AEA1ADF2E;
+        Thu,  7 Jul 2022 12:18:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] sha256: add support for Nettle
+References: <20220705230518.713218-1-sandals@crustytoothpaste.net>
+        <xmqqedyyi11y.fsf@gitster.g> <xmqqilo94zc2.fsf@gitster.g>
+        <xmqqpmih2zix.fsf@gitster.g>
+Date:   Thu, 07 Jul 2022 09:18:52 -0700
+In-Reply-To: <xmqqpmih2zix.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        06 Jul 2022 23:43:50 -0700")
+Message-ID: <xmqqk08o3ngz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7E91B6A0-FE10-11EC-8309-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-cat-file is used by tools like GitLab to get commit tag contents
-that are then displayed to users. This content which has author,
-committer or tagger information, could benefit from passing through the
-mailmap mechanism before being sent or displayed.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This patch adds --[no-]use-mailmap command line option to the git
-cat-file command. It also adds --[no-]mailmap option as an alias to
---[no-]use-mailmap.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> FWIW, I needed the following to successfully build with
+>> NETTLE_SHA256=YesPlease defined.  The final linkage step complained
+>> about missing nettle_SHA256_{Init,Update,Final}() functions without
+>> the tweak.
+>> ...
+>
+> Another glitch.
+> 
+> As "make hdr-check" is pretty much indiscriminatory, my build failed
+> on a box without libnettle-dev (hence /usr/include/nettle/sha2.h
+> missing).
+> ...
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: John Cai <johncai86@gmail.com>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+Taking all together, here is a copy I have in my tree right now (see
+the range diff for what changed since your initial version).
+
+Thanks.
+
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+From e8713290975d171764768bea99d686243e23ef8e Mon Sep 17 00:00:00 2001
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Date: Tue, 5 Jul 2022 23:05:18 +0000
+Subject: [PATCH] sha256: add support for Nettle
+
+For SHA-256, we currently have support for OpenSSL and libgcrypt because
+these two libraries contain optimized implementations that can take
+advantage of native processor instructions.  However, OpenSSL is not
+suitable for linking against for Linux distros due to licensing
+incompatibilities with the GPLv2, and libgcrypt has been less favored
+by cryptographers due to some security-related implementation issues.
+
+Let's add another option that's compatible with the GPLv2, which is
+Nettle, and give it preference over all others when Nettle and other
+choices are possible.  It also has recently gained support for
+Intel's SHA-NI instructions, which compare very favorably to other
+implementations.  For example, using this implementation and SHA-1
+DC on a machine with SHA-NI, hashing a 2 GiB file with SHA-1 takes
+7.582 seconds, while hashing the same file with SHA-256 takes 2.278
+seconds.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-cat-file.txt |  6 ++++
- builtin/cat-file.c             | 31 ++++++++++++++++++-
- t/t4203-mailmap.sh             | 54 ++++++++++++++++++++++++++++++++++
- 3 files changed, 90 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 24a811f0ef..1880e9bba1 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -63,6 +63,12 @@ OPTIONS
- 	or to ask for a "blob" with `<object>` being a tag object that
- 	points at it.
+1:  3bcd13c813 ! 1:  e871329097 sha256: add support for Nettle
+    @@ Commit message
+         by cryptographers due to some security-related implementation issues.
+     
+         Let's add another option that's compatible with the GPLv2, which is
+    -    Nettle.  It also has recently gained support for Intel's SHA-NI
+    -    instructions, which compare very favorably to other implementations.
+    -    For example, using this implementation and SHA-1 DC on a machine with
+    -    SHA-NI, hashing a 2 GiB file with SHA-1 takes 7.582 seconds, while
+    -    hashing the same file with SHA-256 takes 2.278 seconds.
+    +    Nettle, and give it preference over all others when Nettle and other
+    +    choices are possible.  It also has recently gained support for
+    +    Intel's SHA-NI instructions, which compare very favorably to other
+    +    implementations.  For example, using this implementation and SHA-1
+    +    DC on a machine with SHA-NI, hashing a 2 GiB file with SHA-1 takes
+    +    7.582 seconds, while hashing the same file with SHA-256 takes 2.278
+    +    seconds.
+     
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    @@ Makefile: else
+      
+      ifdef SHA1_MAX_BLOCK_SIZE
+      	LIB_OBJS += compat/sha1-chunked.o
+    +@@ Makefile: $(SP_OBJ): %.sp: %.c %.o
+    + sparse: $(SP_OBJ)
+    + 
+    + EXCEPT_HDRS := $(GENERATED_H) unicode-width.h compat/% xdiff/%
+    ++ifndef NETTLE_SHA256
+    ++	EXCEPT_HDRS += sha256/nettle.h
+    ++endif
+    + ifndef GCRYPT_SHA256
+    + 	EXCEPT_HDRS += sha256/gcrypt.h
+    + endif
+     
+      ## hash.h ##
+     @@
+    @@ hash.h
+     
+      ## sha256/nettle.h (new) ##
+     @@
+    -+#ifndef SHA256_GCRYPT_H
+    -+#define SHA256_GCRYPT_H
+    ++#ifndef SHA256_NETTLE_H
+    ++#define SHA256_NETTLE_H
+     +
+     +#include <nettle/sha2.h>
+     +
+     +typedef struct sha256_ctx nettle_SHA256_CTX;
+     +
+    -+inline void nettle_SHA256_Init(nettle_SHA256_CTX *ctx)
+    ++static inline void nettle_SHA256_Init(nettle_SHA256_CTX *ctx)
+     +{
+     +	sha256_init(ctx);
+     +}
+     +
+    -+inline void nettle_SHA256_Update(nettle_SHA256_CTX *ctx, const void *data, size_t len)
+    ++static inline void nettle_SHA256_Update(nettle_SHA256_CTX *ctx, const void *data, size_t len)
+     +{
+     +	sha256_update(ctx, len, data);
+     +}
+     +
+    -+inline void nettle_SHA256_Final(unsigned char *digest, nettle_SHA256_CTX *ctx)
+    ++static inline void nettle_SHA256_Final(unsigned char *digest, nettle_SHA256_CTX *ctx)
+     +{
+     +	sha256_digest(ctx, SHA256_DIGEST_SIZE, digest);
+     +}
+
+
+
+ Makefile        | 10 ++++++++++
+ hash.h          |  4 +++-
+ sha256/nettle.h | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 41 insertions(+), 1 deletion(-)
+ create mode 100644 sha256/nettle.h
+
+diff --git a/Makefile b/Makefile
+index 04d0fd1fe6..52a9f97997 100644
+--- a/Makefile
++++ b/Makefile
+@@ -182,6 +182,8 @@ include shared.mak
+ #
+ # Define BLK_SHA256 to use the built-in SHA-256 routines.
+ #
++# Define NETTLE_SHA256 to use the SHA-256 routines in libnettle.
++#
+ # Define GCRYPT_SHA256 to use the SHA-256 routines in libgcrypt.
+ #
+ # Define OPENSSL_SHA256 to use the SHA-256 routines in OpenSSL.
+@@ -1842,6 +1844,10 @@ ifdef OPENSSL_SHA256
+ 	EXTLIBS += $(LIB_4_CRYPTO)
+ 	BASIC_CFLAGS += -DSHA256_OPENSSL
+ else
++ifdef NETTLE_SHA256
++	BASIC_CFLAGS += -DSHA256_NETTLE
++	EXTLIBS += -lnettle
++else
+ ifdef GCRYPT_SHA256
+ 	BASIC_CFLAGS += -DSHA256_GCRYPT
+ 	EXTLIBS += -lgcrypt
+@@ -1850,6 +1856,7 @@ else
+ 	BASIC_CFLAGS += -DSHA256_BLK
+ endif
+ endif
++endif
  
-+--[no-]mailmap::
-+--[no-]use-mailmap::
-+       Use mailmap file to map author, committer and tagger names
-+       and email addresses to canonical real names and email addresses.
-+       See linkgit:git-shortlog[1].
+ ifdef SHA1_MAX_BLOCK_SIZE
+ 	LIB_OBJS += compat/sha1-chunked.o
+@@ -3091,6 +3098,9 @@ $(SP_OBJ): %.sp: %.c %.o
+ sparse: $(SP_OBJ)
+ 
+ EXCEPT_HDRS := $(GENERATED_H) unicode-width.h compat/% xdiff/%
++ifndef NETTLE_SHA256
++	EXCEPT_HDRS += sha256/nettle.h
++endif
+ ifndef GCRYPT_SHA256
+ 	EXCEPT_HDRS += sha256/gcrypt.h
+ endif
+diff --git a/hash.h b/hash.h
+index 5d40368f18..ea87ae9d92 100644
+--- a/hash.h
++++ b/hash.h
+@@ -16,7 +16,9 @@
+ #include "block-sha1/sha1.h"
+ #endif
+ 
+-#if defined(SHA256_GCRYPT)
++#if defined(SHA256_NETTLE)
++#include "sha256/nettle.h"
++#elif defined(SHA256_GCRYPT)
+ #define SHA256_NEEDS_CLONE_HELPER
+ #include "sha256/gcrypt.h"
+ #elif defined(SHA256_OPENSSL)
+diff --git a/sha256/nettle.h b/sha256/nettle.h
+new file mode 100644
+index 0000000000..8c93f29dda
+--- /dev/null
++++ b/sha256/nettle.h
+@@ -0,0 +1,28 @@
++#ifndef SHA256_NETTLE_H
++#define SHA256_NETTLE_H
 +
- --textconv::
- 	Show the content as transformed by a textconv filter. In this case,
- 	`<object>` has to be of the form `<tree-ish>:<path>`, or `:<path>` in
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 50cf38999d..6dc750a367 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -16,6 +16,7 @@
- #include "packfile.h"
- #include "object-store.h"
- #include "promisor-remote.h"
-+#include "mailmap.h"
- 
- enum batch_mode {
- 	BATCH_MODE_CONTENTS,
-@@ -36,6 +37,19 @@ struct batch_options {
- 
- static const char *force_path;
- 
-+static struct string_list mailmap = STRING_LIST_INIT_NODUP;
-+static int use_mailmap;
++#include <nettle/sha2.h>
 +
-+char *replace_idents_using_mailmap(char *object_buf, size_t *size)
++typedef struct sha256_ctx nettle_SHA256_CTX;
++
++static inline void nettle_SHA256_Init(nettle_SHA256_CTX *ctx)
 +{
-+	struct strbuf sb = STRBUF_INIT;
-+	strbuf_attach(&sb, object_buf, *size, *size + 1);
-+	const char *headers[] = { "author ", "committer ", "tagger ", NULL };
-+	apply_mailmap_to_header(&sb, headers, &mailmap);
-+	*size = sb.len;
-+	return strbuf_detach(&sb, NULL);
++	sha256_init(ctx);
 +}
 +
- static int filter_object(const char *path, unsigned mode,
- 			 const struct object_id *oid,
- 			 char **buf, unsigned long *size)
-@@ -152,6 +166,9 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		if (!buf)
- 			die("Cannot read object %s", obj_name);
- 
-+		if (use_mailmap)
-+			buf = replace_idents_using_mailmap(buf, &size);
++static inline void nettle_SHA256_Update(nettle_SHA256_CTX *ctx, const void *data, size_t len)
++{
++	sha256_update(ctx, len, data);
++}
 +
- 		/* otherwise just spit out the data */
- 		break;
- 
-@@ -183,6 +200,9 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		}
- 		buf = read_object_with_reference(the_repository, &oid,
- 						 exp_type_id, &size, NULL);
++static inline void nettle_SHA256_Final(unsigned char *digest, nettle_SHA256_CTX *ctx)
++{
++	sha256_digest(ctx, SHA256_DIGEST_SIZE, digest);
++}
 +
-+		if (use_mailmap)
-+			buf = replace_idents_using_mailmap(buf, &size);
- 		break;
- 	}
- 	default:
-@@ -348,11 +368,15 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 		void *contents;
- 
- 		contents = read_object_file(oid, &type, &size);
++#define platform_SHA256_CTX nettle_SHA256_CTX
++#define platform_SHA256_Init nettle_SHA256_Init
++#define platform_SHA256_Update nettle_SHA256_Update
++#define platform_SHA256_Final nettle_SHA256_Final
 +
-+		if (use_mailmap)
-+			contents = replace_idents_using_mailmap(contents, &size);
-+
- 		if (!contents)
- 			die("object %s disappeared", oid_to_hex(oid));
- 		if (type != data->type)
- 			die("object %s changed type!?", oid_to_hex(oid));
--		if (data->info.sizep && size != data->size)
-+		if (data->info.sizep && size != data->size && !use_mailmap)
- 			die("object %s changed size!?", oid_to_hex(oid));
- 
- 		batch_write(opt, contents, size);
-@@ -843,6 +867,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE('s', NULL, &opt, N_("show object size"), 's'),
- 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
- 			  N_("allow -s and -t to work with broken/corrupt objects")),
-+		OPT_BOOL(0, "use-mailmap", &use_mailmap, N_("use mail map file")),
-+		OPT_ALIAS(0, "mailmap", "use-mailmap"),
- 		/* Batch mode */
- 		OPT_GROUP(N_("Batch objects requested on stdin (or --batch-all-objects)")),
- 		OPT_CALLBACK_F(0, "batch", &batch, N_("format"),
-@@ -885,6 +911,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	opt_cw = (opt == 'c' || opt == 'w');
- 	opt_epts = (opt == 'e' || opt == 'p' || opt == 't' || opt == 's');
- 
-+	if (use_mailmap)
-+		read_mailmap(&mailmap);
-+
- 	/* --batch-all-objects? */
- 	if (opt == 'b')
- 		batch.all_objects = 1;
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index 0b2d21ec55..c60a90615c 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -963,4 +963,58 @@ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--no-use-mailmap disables mailmap in cat-file' '
-+	test_when_finished "rm .mailmap" &&
-+	cat >.mailmap <<-EOF &&
-+	A U Thor <author@example.com> Orig <orig@example.com>
-+	EOF
-+	cat >expect <<-EOF &&
-+	author Orig <orig@example.com>
-+	EOF
-+	git cat-file --no-use-mailmap commit HEAD >log &&
-+	sed -n "/^author /s/\([^>]*>\).*/\1/p" log >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--use-mailmap enables mailmap in cat-file' '
-+	test_when_finished "rm .mailmap" &&
-+	cat >.mailmap <<-EOF &&
-+	A U Thor <author@example.com> Orig <orig@example.com>
-+	EOF
-+	cat >expect <<-EOF &&
-+	author A U Thor <author@example.com>
-+	EOF
-+	git cat-file --use-mailmap commit HEAD >log &&
-+	sed -n "/^author /s/\([^>]*>\).*/\1/p" log >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-mailmap disables mailmap in cat-file for annotated tag objects' '
-+	test_when_finished "rm .mailmap" &&
-+	cat >.mailmap <<-EOF &&
-+	Orig <orig@example.com> C O Mitter <committer@example.com>
-+	EOF
-+	cat >expect <<-EOF &&
-+	tagger C O Mitter <committer@example.com>
-+	EOF
-+	git tag -a -m "annotated tag" v1 &&
-+	git cat-file --no-mailmap -p v1 >log &&
-+	sed -n "/^tagger /s/\([^>]*>\).*/\1/p" log >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--mailmap enables mailmap in cat-file for annotated tag objects' '
-+	test_when_finished "rm .mailmap" &&
-+	cat >.mailmap <<-EOF &&
-+	Orig <orig@example.com> C O Mitter <committer@example.com>
-+	EOF
-+	cat >expect <<-EOF &&
-+	tagger Orig <orig@example.com>
-+	EOF
-+	git tag -a -m "annotated tag" v2 &&
-+	git cat-file --mailmap -p v2 >log &&
-+	sed -n "/^tagger /s/\([^>]*>\).*/\1/p" log >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
++#endif
 -- 
-2.37.0.6.ga6a61a26c1.dirty
+2.37.0-211-gafcdf5f063
 
