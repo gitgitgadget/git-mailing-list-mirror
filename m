@@ -2,171 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53E73C43334
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 17:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC6F7C43334
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 18:09:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235353AbiGGRyg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 13:54:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58862 "EHLO
+        id S235490AbiGGSJR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 14:09:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231572AbiGGRyf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 13:54:35 -0400
-Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [207.226.244.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C49682CDE2
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 10:54:33 -0700 (PDT)
-X-IronPort-AV: E=Sophos;i="5.92,253,1650902400"; 
-   d="scan'208";a="29313940"
-Received: from hk-mbx03.mioffice.cn (HELO xiaomi.com) ([10.56.8.123])
-  by outboundhk.mxmail.xiaomi.com with ESMTP; 08 Jul 2022 01:54:32 +0800
-Received: from BJ-MBX15.mioffice.cn (10.237.8.135) by HK-MBX03.mioffice.cn
- (10.56.8.123) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Fri, 8 Jul 2022
- 01:54:32 +0800
-Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX15.mioffice.cn
- (10.237.8.135) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Fri, 8 Jul 2022
- 01:54:31 +0800
-Received: from BJ-MBX01.mioffice.cn ([fe80::5cd6:7afe:4dcf:69a6]) by
- BJ-MBX01.mioffice.cn ([fe80::5cd6:7afe:4dcf:69a6%9]) with mapi id
- 15.02.0986.026; Fri, 8 Jul 2022 01:54:31 +0800
-From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
-To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, git <git@vger.kernel.org>
-CC:     =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
-        =?utf-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
-        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
-        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>
-Subject: RE: RE: [External Mail]Re: Git fork process infinitely and never stop
-Thread-Topic: RE: [External Mail]Re: Git fork process infinitely and never
- stop
-Thread-Index: AdiPihh3UxZZstBISFy+uEVc/YzhjAAnjPMAABMHSwAAJSsJZQANbb+gADGmLbAAAtIk4A==
-Date:   Thu, 7 Jul 2022 17:54:31 +0000
-Message-ID: <fba1ed9b4cc649c2a2d45e2fafd313fd@xiaomi.com>
-References: <9d3b79239a314f72a099040a26ef9ad8@xiaomi.com>,
-        <8e1d019e-6456-ed05-7d3e-a0c4beeb35fa@gmail.com>,
-        <8ccd27ef3a344596b6237e98e1a5f204@xiaomi.com>
- <202207061520052718298@oschina.cn>
- <e071496cfdb04cce8eac322febb6af45@xiaomi.com>
- <11f76b2382934edcb97eb201f0a78a67@xiaomi.com>
-In-Reply-To: <11f76b2382934edcb97eb201f0a78a67@xiaomi.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.237.8.11]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S230313AbiGGSJP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 14:09:15 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C711DA70
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 11:09:14 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id z14so19986046pgh.0
+        for <git@vger.kernel.org>; Thu, 07 Jul 2022 11:09:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=M0+MZB1O3axp6XqPFqk6Iz+U5W2OF6gKOGVc7QXFGZA=;
+        b=n3kimv9LRXDA+Yt76p9voi7v7X4NPC2HI0DuDcN+S2mRFbaTFaFEughq61qgFzfRsr
+         d0cLk8Q0qpI++81xpn/a8EepRW7ARBrlIvByzaItOtGCnInB8egxlA2j7UMZUITmMZ1b
+         S3F2JGvnYtWCMVacw15NehTFbytlrlkJ28uIP+r20IMHow+IezYwE1s+mYufZmNz5JM2
+         FwbZpylSrbYZJu0KMxzTfnm4fjefP5m91ja8WhKobA1MxQrRBKTyedoFkOMGUYQkfYWk
+         ntQGLYTFZxsl8RwLf2v5amVdmXIKux3JbyUvboqJ2FpuHbH6Q7pBxNS5LsBj0xY8whWo
+         0quw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=M0+MZB1O3axp6XqPFqk6Iz+U5W2OF6gKOGVc7QXFGZA=;
+        b=4CsY0XF2K8mEsYIy25myUR2U0kPWibQi4r0XYYngy2oL8C2mX6iMKMVsinngcPDN+/
+         QMU8V40/sYX/E+6oRnY0yAbSImFpXiA9aGCAVzxm4ynoYqrvDRpIatzd2/Q7y+EA4PVY
+         pjcJKARZaxKuIC6E//NuE4vLL90exYg+3pK8WA0m2kILshiTiSooClMJI5BsRmmRhvcD
+         WAxYhWcLhzK2UpFMuFHUFfBAri6GcTX9/hejdv49z7eweXYNTNLxsqdWaUVabs+C8rGc
+         +2b5xCMP6gTk9dt/Ey2Ef3DeZVzvz0Xuc+tXB6Hmcbi5blmSYuvdYZJgTe6U/XzPv1ww
+         FDqQ==
+X-Gm-Message-State: AJIora93UShRRs5zlFgwHno8iQ8HZhKWfaSO1lQIxbxjRdw+nLw99OEy
+        n5jVTqhAhDCpAmh4PWuOIhrBD21Niao=
+X-Google-Smtp-Source: AGRyM1sd8YgRY9zU5UuvMTAv3EgcD9wE6i9c3YIP4SH7/Eilj/EaRyEMDXhru+QA3BbmmnQXvI3VzA==
+X-Received: by 2002:a62:1891:0:b0:528:5d43:c3ab with SMTP id 139-20020a621891000000b005285d43c3abmr26867948pfy.79.1657217354253;
+        Thu, 07 Jul 2022 11:09:14 -0700 (PDT)
+Received: from [192.168.208.37] ([49.204.131.20])
+        by smtp.gmail.com with ESMTPSA id by5-20020a056a00400500b0052521fd6caesm20098660pfb.111.2022.07.07.11.09.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Jul 2022 11:09:13 -0700 (PDT)
+Message-ID: <7f7e8d91-47bc-ede4-a552-2ddc9fe98a1e@gmail.com>
+Date:   Thu, 7 Jul 2022 23:39:09 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3 0/6] [GSoC] bitmap: integrate a lookup table extension
+ to the bitmap format
+Content-Language: en-US
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <xmqqiloagi80.fsf@gitster.g>
+ <20220707084818.79881-1-chakrabortyabhradeep79@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20220707084818.79881-1-chakrabortyabhradeep79@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VG8gYmUgYSBzdXBwbGVtZW50Lg0KSWYgSSBkZWxldGUgLmdpdC9vYmplY3RzL2luZm8vY29tbWl0
-LWdyYXBoLCAgZXZlcnl0aGluZyB3b3JrcyB3ZWxsDQpBcyB3ZWxsIGFzIGZldGNoIHdpdGggYC1j
-IGNvcmUuY29tbWl0R3JhcGg9ZmFsc2VgDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpG
-cm9tOiDnqIvmtIsNClNlbnQ6IFRodXJzZGF5LCBKdWx5IDcsIDIwMjIgMTA6MjAgUE0NClRvOiAn
-bGlsaW5jaGFvQG9zY2hpbmEuY24nIDxsaWxpbmNoYW9Ab3NjaGluYS5jbj47ICdCYWdhcyBTYW5q
-YXlhJyA8YmFnYXNkb3RtZUBnbWFpbC5jb20+OyAnZ2l0JyA8Z2l0QHZnZXIua2VybmVsLm9yZz4N
-CkNjOiDkvZXmtakgPGhlaGFvQHhpYW9taS5jb20+OyBYaW43IE1hIOmprOmRqyA8bWF4aW43QHhp
-YW9taS5jb20+OyDlh6HlhpvovokgPGZhbmp1bmh1aUB4aWFvbWkuY29tPjsg55+z5aWJ5YW1IDxz
-aGlmZW5nYmluZ0B4aWFvbWkuY29tPg0KU3ViamVjdDogUkU6IFJFOiBbRXh0ZXJuYWwgTWFpbF1S
-ZTogR2l0IGZvcmsgcHJvY2VzcyBpbmZpbml0ZWx5IGFuZCBuZXZlciBzdG9wDQoNCkkgZm91bmQg
-YW5vdGhlciB0aGluZy4NCg0KMS4gaWYgSSBleGVjdXRlIGBnaXQgZmV0Y2ggLS1maWx0ZXI9Ymxv
-Yjpub25lIC0tcXVpZXQgLS1wcm9ncmVzcyBtaXVpIC0tcHJ1bmUgLS10YWdzICtyZWZzL2hlYWRz
-Lyo6cmVmcy9yZW1vdGVzL21pdWkvKiArcmVmcy9oZWFkcy9taXVpMTMtcy10aG9yLXZlbmRvci1z
-dGFibGU6cmVmcy9yZW1vdGVzL21pdWkvbWl1aTEzLXMtdGhvci12ZW5kb3Itc3RhYmxlYCAgb24g
-dmVyc2lvbiAyLjI1LjEuIEl0IGp1c3QgdGhyb3cgZXJyb3IgcmF0aGVyIHRoYW4gaW5maW5pdGUg
-bG9vcCwgbGlrZSB0aGlzIHlvdXR1YmUgdmlkZW8gImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dh
-dGNoP3Y9cXZZVHZWUkUwRlUmZmVhdHVyZT15b3V0dS5iZSINCg0KMi4gSSBmb3VuZCBpZiBJIGRl
-bGV0ZSAuZ2l0L29iamVjdHMsIGV2ZXJ5dGhpbmcgZ29lcyBmaW5lLiBBbmQgdGhlcmUgYXJlIG9u
-bHkgMjAgZmlsZXMgaW5zaWRlIGl0LiBTbyBJIGRlbGV0ZSB0aGVtIG9uZSBieSBvbmUgdG8gc2Vl
-IHdoaWNoIGNhdXNlIHRoZSBwcm9ibGVtLiBJdCdzIGAuZ2l0L29iamVjdHMvaW5mby9jb21taXQt
-Z3JhcGhgLiBTbyBJIHVwbG9hZCB0aGUgZmlsZSBhcyBhdHRhY2htZW50DQoNCg0KVHJlZSBiZWZv
-cmUgSSBkbyBzZWNvbmQgZXhwZXJpbWVudA0KLg0K4pSc4pSA4pSAIDIwDQrilIIgICDilJTilIDi
-lIAgNzQwOTI4Yzk4OGVkOTNkYWY5NDM4Njk2MjEyOTBkNjhmNjJiNDcNCuKUnOKUgOKUgCAyNQ0K
-4pSCICAg4pSU4pSA4pSAIGNiYjVmMDJiYmNkZTJlZmZlYmJhODRiYmM4NjZhMjllNjhhZmRmDQri
-lJzilIDilIAgMzYNCuKUgiAgIOKUlOKUgOKUgCAzYWEyZDI1YjcxYzVhZmY5ZDBkOGFkODIwN2Jj
-MjdiNDQ5MmU4Yg0K4pSc4pSA4pSAIDViDQrilIIgICDilJTilIDilIAgN2I1Y2I4ZGQ2M2JlNDhl
-MTQ2NmM5ZDk1NzQyMGE5NzY1YTgwNWUNCuKUnOKUgOKUgCA2NQ0K4pSCICAg4pSU4pSA4pSAIGUy
-NzJjMjFmMjhmYThlMjhkZDkwNGYzNTc2ZjVmMjNjZGI4MjE0DQrilJzilIDilIAgOGINCuKUgiAg
-IOKUlOKUgOKUgCAxNDhhYTU2YjdjNTU5ZTIxN2JkMzFhMTZlODg2YjE2ZTIxY2RlMQ0K4pSc4pSA
-4pSAIDk3DQrilIIgICDilJTilIDilIAgZmFlYmNhNjQ0YWU4YmZlYmNiZGM4YTFkZDhlMTc5ZTli
-NjU3ZGUNCuKUnOKUgOKUgCBhMw0K4pSCICAg4pSU4pSA4pSAIDg1MmNkYTJhZjYzMmRjYzdkZmJl
-NDY2ZDZkODYwOGMyZTA2NTIwDQrilJzilIDilIAgYTQNCuKUgiAgIOKUlOKUgOKUgCBhYThhZTc4
-MzAwMjE3YjBkYTBhYjdjNGI4ZWEyMmI1Yjc0Yjk1OA0K4pSc4pSA4pSAIGE5DQrilIIgICDilJzi
-lIDilIAgMDRlMDlkMWVlMGUwYjg5YWNkNTE5NjMyNjM5OWQ4OWRlNzA3NDINCuKUgiAgIOKUlOKU
-gOKUgCA3ZDFmZmE1YzRkYWQwODE0NjliMzU2ZDA1NzFkMGI2MTY2ZDAwZQ0K4pSc4pSA4pSAIGIz
-DQrilIIgICDilJTilIDilIAgMmI3NTAxNjZlMmQ1NGI4YmQzYWM2MmQ3YWVhZjczMmUxNGYyMGQN
-CuKUnOKUgOKUgCBiOA0K4pSCICAg4pSU4pSA4pSAIDk1Nzc5OWMzYTQ2MGJhMmUwZDI2Y2UwMDgx
-YTRkMDkyZGNmYjE3DQrilJzilIDilIAgYzUNCuKUgiAgIOKUlOKUgOKUgCBiZTAyNmIzYjg3YTFh
-ZTQzMjE3MDBlZTQ1ZmZjYjVlZWUzY2E0OA0K4pSc4pSA4pSAIGQxDQrilIIgICDilJTilIDilIAg
-ZTY1ZDI2OGQ1YTIyMzBkMWQ4NjlkNTU0OTdlMGMxZWI1OWI5YTUNCuKUnOKUgOKUgCBkZA0K4pSC
-ICAg4pSU4pSA4pSAIDQ4M2MzYzQ3NTExNzI3NWJiZjc3NjhhOTQwOTYyODQyYmQ1YWViDQrilJzi
-lIDilIAgZTINCuKUgiAgIOKUlOKUgOKUgCA2ODk5NDU4ZGM2Y2YyYzM3NDljMDczMmFjNWIwNGNj
-ZDRjNzc2NQ0K4pSc4pSA4pSAIGUzDQrilIIgICDilJTilIDilIAgMDZiMTJlMjJjNzkxNGZmODAz
-NzRiNzg1N2VlNjc4NjRhNjFiYTUNCuKUnOKUgOKUgCBlNw0K4pSCICAg4pSU4pSA4pSAIGEwY2Mx
-N2Y5OTM5YjgwYjEzNWMwZWMzODljYmNjOThhZWE3MGM3DQrilJzilIDilIAgZWINCuKUgiAgIOKU
-lOKUgOKUgCA5MTY5YTBkMjEyNDU5NGU5MjcyMGZjNmFjMWNlM2ZiMjljN2Q4Nw0K4pSc4pSA4pSA
-IGVkDQrilIIgICDilJTilIDilIAgNmE4MTUwNjBmOTYwMDMyZWNhZjcwZmVmZGJkYWU0YWM0NjYz
-MTQNCuKUnOKUgOKUgCBmOA0K4pSCICAg4pSU4pSA4pSAIDQ0MDE5NzJhMGE3MDIwYWVmODViODM1
-NjFkNzBhZjQxOTYyYTZmDQrilJzilIDilIAgaW5mbw0K4pSCICAg4pSc4pSA4pSAIGNvbW1pdC1n
-cmFwaA0K4pSCICAg4pSU4pSA4pSAIHBhY2tzDQrilJTilIDilIAgcGFjaw0KICAgIOKUnOKUgOKU
-gCBwYWNrLTAyOWQwODgyM2JkOGE4ZWFiNTEwYWQ2YWM3NWM4MjNjZmQzZWQzMWUuaWR4DQogICAg
-4pSc4pSA4pSAIHBhY2stMDI5ZDA4ODIzYmQ4YThlYWI1MTBhZDZhYzc1YzgyM2NmZDNlZDMxZS5w
-YWNrDQogICAg4pSc4pSA4pSAIHBhY2stMDI5ZDA4ODIzYmQ4YThlYWI1MTBhZDZhYzc1YzgyM2Nm
-ZDNlZDMxZS5wcm9taXNvcg0KICAgIOKUnOKUgOKUgCBwYWNrLWM5MzEwOTNhZTZjOWRmNWQzNmI3
-NzNmOTRlZmMzOGQ5ZDRiMzkxMDguaWR4DQogICAg4pSc4pSA4pSAIHBhY2stYzkzMTA5M2FlNmM5
-ZGY1ZDM2Yjc3M2Y5NGVmYzM4ZDlkNGIzOTEwOC5wYWNrDQogICAg4pSc4pSA4pSAIHBhY2stYzkz
-MTA5M2FlNmM5ZGY1ZDM2Yjc3M2Y5NGVmYzM4ZDlkNGIzOTEwOC5wcm9taXNvcg0KICAgIOKUnOKU
-gOKUgCB0bXBfaWR4X1JSbzhvbw0KICAgIOKUlOKUgOKUgCB0bXBfcGFja18xaGd1ZXENCg0KDQoN
-Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLQ0KRnJvbTog56iL5rSLDQpTZW50OiBXZWRuZXNkYXksIEp1bHkgNiwgMjAyMiAxMDow
-MyBQTQ0KVG86IGxpbGluY2hhb0Bvc2NoaW5hLmNuOyBCYWdhcyBTYW5qYXlhIDxiYWdhc2RvdG1l
-QGdtYWlsLmNvbT47IGdpdCA8Z2l0QHZnZXIua2VybmVsLm9yZz4NCkNjOiDkvZXmtakgPGhlaGFv
-QHhpYW9taS5jb20+OyBYaW43IE1hIOmprOmRqyA8bWF4aW43QHhpYW9taS5jb20+DQpTdWJqZWN0
-OiDlm57lpI06IFJFOiBbRXh0ZXJuYWwgTWFpbF1SZTogR2l0IGZvcmsgcHJvY2VzcyBpbmZpbml0
-ZWx5IGFuZCBuZXZlciBzdG9wDQoNClRvIGxpbGluY2hhbzoNCj5TbyB0aGUgcmVwbyAiZ2l0L2dl
-cnJpdCIgaXMgaG9zdGVkIGluIHlvdXIgbG9jYWw/IGFuZCBob3cgeW91ICJjb3B5IiBpdCB0byB5
-b3VyIG93biBQQz8NCjEuIGdpdC9nZXJyaXQgaXMgaG9zdGVkIG9uIHJlbW90ZSBzZXJ2ZXINCiAg
-ICAgICAgICAgICAgIDIuIEkganVzdCBzY3AgdGhlIHdob2xlIHJlcG9zaXRvcnkgb2YgdGhlIHVz
-ZXIgd2hvIHJlcHJvZHVjZSB0aGUgcHJvYmxlbSB0byBvdXIgb3duIFBDLiBBbmQgdGhlbiB3ZSBj
-YW4gcmVwcm9kdWNlIGl0IG9uIG91ciBvd24gUEMuDQoNClRvIEpvaGFubmVzOg0KPiBIb29rcyBt
-YXkgYWxzbyBwbGF5IGEgcm9sZS4NCldlIGRvIGhhdmUgc29tZSBob29rcy4gQnV0IEkgZG9uJ3Qg
-dGhpbmsgdGhleSdyZSByZWxhdGVkLiBCZWNhdXNlIGV2ZW4gSSBkZWxldGUgdGhvc2UgaG9va3Ms
-IHRoZSBwcm9ibGVtIHN0YW5kcyBzdGlsbA0KDQpUbyDDhnZhciBBcm5masO2csOwOg0KPkkgYXNz
-dW1lIHlvdSBjYW4ndCBzaGFyZSB0aGUgcmVwbywgYnV0IHBlcmhhcHMgdHJ5IGlmIHlvdSBjYW4g
-cmVwcm9kdWNlIGl0IHdpdGggYSAiZ2l0IGZhc3QtZXhwb3J0IC0tYW5vbnltaXplIiB2ZXJzaW9u
-IG9mIGl0LCBhbmQgaWYgc28gd2hldGhlciB5b3UnZCBiZSB3aWxsaW5nIHRvIHNoYXJlIHRoYXQu
-IEl0IHdpbGwgcHVibGlzaCB0aGUgInNoYXBlIG9mIHRoZSBoaXN0b3J5IiBvZiB0aGUgcmVwbywg
-YnV0IG5vdCBhbnkgbWVhbmluZ2Z1bCBkYXRhIChhbGwgY29tbWl0cywgdHJlZXMsIGJsb2JzIGV0
-Yy4gYXJlIHJlcGxhY2VkKS4NCmBnaXQgZmFzdC1leHBvcnQgLS1hbm9ueW1pemVgIGp1c3Qgb3V0
-cHV0IGlzIGVtcHR5LiBJZiBJIHRyeSBgZ2l0IGZhc3QtZXhwb3J0IC0tYW5vbnltaXplIC0tYWxs
-YCwgaXQgc2VlbXMgdG8gZmV0Y2ggZmlyc3QsIHdoaWNoIGdvZXMgaW50byB0aGUgaW5maW5pdGUg
-bG9vcCBhZ2Fpbg0KDQo+VGhlIFlvdVR1YmUgdmlkZW8gc2hvd3MgdGhhdCB5b3UncmUgdXNpbmcg
-dmFyaW91cyBvcHRpb25zIHRvIGdpdC1mZXRjaCwgaW5jbHVkaW5nIGZpbHRlcnMsIHJlZnNwZWNz
-IGV0Yy4gRG9lcyBhIHBsYWluICJnaXQgZmV0Y2giIHJlcHJvZHVjZSB0aGlzLCBhbmQgaWYgbm90
-IHdoYXQncyB0aGUgb3B0aW9uICh0cnkgYWRkaW5nIHRoZW0gb25lIGF0IGEgdGltZSAmDQo+ZXhw
-ZXJpbWVudCkgdGhhdCBuZWVkcyB0byBiZSBhZGRlZCB0byB0cmlnZ2VyIHRoaXM/DQoNCmBnaXQg
-ZmV0Y2hgIGFsc28gaGFzIHRoaXMgcHJvYmxlbS4NCg0KSSBzb21ld2hhdCBzdXNwZWN0IHNvbWUg
-LS1maWx0ZXIgZnVubnkgYnVzaW5lc3MsIGJ1dCB0aGF0J3MganVzdCBhIGh1bmNoLi4uDQpJdCBz
-ZWVtcyB0byBoYXBwZW4gYWZ0ZXIgSSB0b2xkIG15IHRlYW0gdG8gdXNlICJwYXJ0aWFsLWNsb25l
-IiBBTkQgImdpdCB2Mi4zNi4xIi4gIEknbSBub3Qgc3VyZSB3aGljaCBvbmUgaXMgdGhlIGNhdXNl
-IG9yIGJvdGggb2YgdGhlbSBjYXVzZSB0aGlzLg0KIy8qKioqKirmnKzpgq7ku7blj4rlhbbpmYTk
-u7blkKvmnInlsI/nsbPlhazlj7jnmoTkv53lr4bkv6Hmga/vvIzku4XpmZDkuo7lj5HpgIHnu5nk
-uIrpnaLlnLDlnYDkuK3liJflh7rnmoTkuKrkurrmiJbnvqTnu4TjgILnpoHmraLku7vkvZXlhbbk
-u5bkurrku6Xku7vkvZXlvaLlvI/kvb/nlKjvvIjljIXmi6zkvYbkuI3pmZDkuo7lhajpg6jmiJbp
-g6jliIblnLDms4TpnLLjgIHlpI3liLbjgIHmiJbmlaPlj5HvvInmnKzpgq7ku7bkuK3nmoTkv6Hm
-ga/jgILlpoLmnpzmgqjplJnmlLbkuobmnKzpgq7ku7bvvIzor7fmgqjnq4vljbPnlLXor53miJbp
-gq7ku7bpgJrnn6Xlj5Hku7bkurrlubbliKDpmaTmnKzpgq7ku7bvvIEgVGhpcyBlLW1haWwgYW5k
-IGl0cyBhdHRhY2htZW50cyBjb250YWluIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBmcm9tIFhJ
-QU9NSSwgd2hpY2ggaXMgaW50ZW5kZWQgb25seSBmb3IgdGhlIHBlcnNvbiBvciBlbnRpdHkgd2hv
-c2UgYWRkcmVzcyBpcyBsaXN0ZWQgYWJvdmUuIEFueSB1c2Ugb2YgdGhlIGluZm9ybWF0aW9uIGNv
-bnRhaW5lZCBoZXJlaW4gaW4gYW55IHdheSAoaW5jbHVkaW5nLCBidXQgbm90IGxpbWl0ZWQgdG8s
-IHRvdGFsIG9yIHBhcnRpYWwgZGlzY2xvc3VyZSwgcmVwcm9kdWN0aW9uLCBvciBkaXNzZW1pbmF0
-aW9uKSBieSBwZXJzb25zIG90aGVyIHRoYW4gdGhlIGludGVuZGVkIHJlY2lwaWVudChzKSBpcyBw
-cm9oaWJpdGVkLiBJZiB5b3UgcmVjZWl2ZSB0aGlzIGUtbWFpbCBpbiBlcnJvciwgcGxlYXNlIG5v
-dGlmeSB0aGUgc2VuZGVyIGJ5IHBob25lIG9yIGVtYWlsIGltbWVkaWF0ZWx5IGFuZCBkZWxldGUg
-aXQhKioqKioqLyMNCg==
+On 07-07-2022 14:18, Abhradeep Chakraborty wrote:
+> 
+> Junio C Hamano <gitster@pobox.com> wrote:
+> 
+>>>  Documentation/technical/bitmap-format.txt |  39 ++
+>>
+>> I haven't tried merging it yet, but doesn't [1/6] overlap with and
+>> semantically depend on your other series that touch the formatting
+>> of this file?
+> 
+> Correct, [1/6] indeed depends on my previous patch series[2] and it
+> is assuming that that series has already been merged.
+
+I suppose it's the opposite. A quick check shows that the patch applies
+cleanly over 'master' but fails to apply over 'next' which has the
+changes from your other patch series. So, the base branch for [1/6]
+is 'master'. The other 5 patches clearly don't conflict.
+
+> As far as it seems,
+> it will not create any merge conflicts while merging but I am not sure.
+> This would be interesting to see.
+>
+
+Since the first hunk of 1/6 and your other series touch the same area
+of Documentation/technical/bitmap-format.txt, the changes conflict.
+Junio might be able to handle this one. If not, you would need to look
+into separate 1/6 and based it over your other series to avoid the
+conflict.
+
+--
+Sivaraam
