@@ -2,114 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49842C43334
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 09:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D344FC43334
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 09:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235027AbiGGJCg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 05:02:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46792 "EHLO
+        id S234895AbiGGJPs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 05:15:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234243AbiGGJCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 05:02:34 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96194286CE
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 02:02:33 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-31caffa4a45so91962387b3.3
-        for <git@vger.kernel.org>; Thu, 07 Jul 2022 02:02:33 -0700 (PDT)
+        with ESMTP id S235044AbiGGJPn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 05:15:43 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 797372B1A3
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 02:15:42 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id n74so1816601yba.3
+        for <git@vger.kernel.org>; Thu, 07 Jul 2022 02:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7xm+1WtAaeTFsnpZ5WEJwCnmWwFrgOlfaPfFk9PAjOk=;
-        b=RYjF/unOUCvSmnqfKOUT03ilNxe2iLJzP0D93audKdX8BIQIzwhVys9GFMlhBikKnL
-         i0jsz//Ar5MZPXMojQ872oMz4VhsNgVarkTUQkXaBrB9IM2sqL4B+JO1F2SjRFM2eGgN
-         B+pza2p3EYYW3cTovsTahI3RgVSil0W+hhmB6aMxGqF1w8QQveijU5hYK8x2xbuVYfDM
-         tUozlTz/jYFShTn9qMlPFMyv0QK17mr0mHa0euHpJAF4ss+Cj3kHMC6DGNACC6lnsD0L
-         /RsPKG5oYwvOSv0DMYHAdF1fpqfuFDwEm7f1vce6qITDcmZcOR78a0BxyrRmpH/E7sJ+
-         KdPA==
+         :cc;
+        bh=aXEuqnRNqP0jkxwgC+2RohROC/AxnfaaoKYF+wQNJkw=;
+        b=J/lnGnuuEQMbbVV/GQicBrSjE6rx2XbMWS9kw3+hQxpcm9ejShuh3rN8zNE2L/8CTP
+         pm7H91kehPy/pXeuiJ79O1Nqu77xLHGw9tRmsOJYYTaCNexEe4+E6WkxJb+2P3zgrZyC
+         61ces+zXJdxFPWod2o4TliYYZ/kwn4rrXW5ZgI3mM51m/aP7HPPAjEP60emOH2KJuwia
+         8UZZbgmFELd0Sxkw8k/uhd1BejiyMo0eqx0eRGHoUJ5tw9M7v0tiVSR9rg22MV3uVCaa
+         YLmEFKMZZ7s2EQ/nekvUQKOHCIgNoV71i4kSe92L2LjGZ8dXDX6fKu6Ayg59l55GDRRl
+         XJiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7xm+1WtAaeTFsnpZ5WEJwCnmWwFrgOlfaPfFk9PAjOk=;
-        b=aCYGsudrc/90I0oGu6CYHVdQqC26zP/QgG8q2/RKKXQy76PNSVrkGfVC0pEBZsOdI3
-         7zXnmaSgNZ7F4+6xdvZv4jgSSDeJ5tLytDcgKo+cXMx0ZbfXVGiUJvt6x3riXqzC+eSu
-         zbrHGzrFdukAKJ1UaJ+Qg/2/hZyFV/tVp0VGRUSASKmFa8qiJEIFUDSQbrOK+rrY2fEm
-         Ljj67WeBBY3mh+/C9FSt9DDnEXroceSmpGNVaUwDWupFL2N1zdZoJ7UWv8uKfu7eQP4+
-         n/J75OCBUvMeDNH3v6EuYWYb9Vn+E8gpxaaFtBFDXI+rlUMLlYyxYnxAwJ79wBXIrh/H
-         DeQQ==
-X-Gm-Message-State: AJIora9w3cDA9D7qmN//88r9OWyXn3h4AstBxuxOHYNQF1pmGMHGvD6P
-        aiaUa3AMcEfulwTcnZqirsVingZtpkNY5/z3i3I=
-X-Google-Smtp-Source: AGRyM1tFSAOO8HEhObHsbmZ4htspUMzpFd/Zssy9sL3nYzrDY5SD2Zs+LSzlq5A5xGh5ynqULio+1Bw7Yu+8p2V3/vg=
-X-Received: by 2002:a81:23c4:0:b0:31c:8bf8:af81 with SMTP id
- j187-20020a8123c4000000b0031c8bf8af81mr26360656ywj.340.1657184552549; Thu, 07
- Jul 2022 02:02:32 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=aXEuqnRNqP0jkxwgC+2RohROC/AxnfaaoKYF+wQNJkw=;
+        b=uIg95NhDTffwyjIV6Kfi+GBmz1GSriSbo1LYSwjkMngf+KxjA/19guURWFxITI+O8G
+         XEfoa/jkOkfHddQTdD6QnnFxFzUylC54W2UvONKQG793fmJWO4l8cXxAhhWa92DTGiLB
+         zLcgaYYZzIltwr5cNvCwPs+u32IXW4ITD+vqoN7GgT37YsPKFtV6m8lEGQdJUa4EunGx
+         JJrXwHUgGAul4BzkdUDYukSmjYZgYTDZM5CyH9/HEFIMTtug6GT4VbwtaoR5IqE5q9TY
+         QbF32RDwtdYhXhlZ0Rp/vmW7BG8ewjFGraQgsNY9rARLwzuuqDwjnkLtIfm5S6lDA7Yv
+         2wFQ==
+X-Gm-Message-State: AJIora9a4ka86H73e8j0ga71I8kFPUIxRd54Qh7bgyBHLMIHEuUxBT05
+        wXhu58MwvQs+mzDKG2K55sCXlCyhH6YrdO2KCCKZQLPwRtM=
+X-Google-Smtp-Source: AGRyM1vAhZ8W/NMNHrQeeDVPrhr9rfzNm9G4x++MuIYi+wSwK9diz4NnfjRTh/h0HtJowpnySKSsDlqtvA2BcehbldY=
+X-Received: by 2002:a05:6902:114c:b0:66e:a56a:1783 with SMTP id
+ p12-20020a056902114c00b0066ea56a1783mr5969449ybu.13.1657185341553; Thu, 07
+ Jul 2022 02:15:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220630142444.651948-1-siddharthasthana31@gmail.com>
- <20220630142444.651948-4-siddharthasthana31@gmail.com> <220701.86sfnlbu0j.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220701.86sfnlbu0j.gmgdl@evledraar.gmail.com>
+ <20220630142444.651948-4-siddharthasthana31@gmail.com> <61074b4c-c48f-da89-5d03-b280b9c4fedf@gmail.com>
+ <CAP8UFD2tYzoKSr7HnQ+LbCE+YWoNqo3qPQrbr7ZWAMnDt+ajCg@mail.gmail.com> <xmqqletddegb.fsf@gitster.g>
+In-Reply-To: <xmqqletddegb.fsf@gitster.g>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 7 Jul 2022 11:02:21 +0200
-Message-ID: <CAP8UFD13MfoMqWSfZfucfdbQL5ypbcYNuHfm1QS8uhmQYq4_VA@mail.gmail.com>
+Date:   Thu, 7 Jul 2022 11:15:30 +0200
+Message-ID: <CAP8UFD3ohjS0p02SKwqKWBK1=sVuC9+iDT4at2R9ktCUXme9rA@mail.gmail.com>
 Subject: Re: [PATCH 3/3] cat-file: add mailmap support
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Siddharth Asthana <siddharthasthana31@gmail.com>,
         git <git@vger.kernel.org>, John Cai <johncai86@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 1, 2022 at 1:39 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
-> On Thu, Jun 30 2022, Siddharth Asthana wrote:
->
-> > git cat-file is not a plumbing command anymore, especially as it gained
-> > more and more high level features like its `--batch-command` mode. So
-> > tools do use it to get commit and tag contents that are then displayed
-> > to users. This content which has author, committer or tagger
-> > information, could benefit from passing through the mailmap mechanism,
-> > before being sent or displayed.
-> >
-> > This patch adds --[no-]use-mailmap command line option to the git
-> > cat-file command. It also adds --[no-]mailmap option as an alias to
-> > --[no-]use-mailmap.
->
-> I think I know the answer, but I think it would be helpful to discuss
-> the underlying motivations too. I.e. an obvious alternative is "why not
-> just get this information out of git show/log then?".
->
-> The "I think I know the answer" being that I suspect this is to cater to
-> gitaly having persistent "cat-file" processes around, whereas for "git
-> log" it would entail spinning up a new process per-request.
->
-> But maybe I'm missing something :)
+On Thu, Jun 30, 2022 at 11:33 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-No, you are not missing anything :)
+> Independent of what this "The output from 'cat-file commit' is
+> tweaked" feature, I wonder if we want a command that can be used as
+> a filter.  Just like "git name-rev --stdin" reads a stream of text,
+> finds commit-looking references in it, and annotates them, the
+> command (e.g. "git mailmap") would find ident-looking strings and
+> replaces with the mapped results, or something.
 
-> So not as a blocker for this change, which I think can be made small
-> enough to be justified in cat-file, but just for context: If "git log"
-> had a similar --batch mode, would there be a need for this change,
+Yeah, that might be useful. Especially one issue is that trailers like
+"Reviewed-by: ...", "Helped-by: ..." are interesting for statistics
+and replacing their content with mapped results could help improve the
+stats.
 
-One nice thing with `git cat-file` is that it works for any kind of
-git object. But yeah we could perhaps use `git show` if it had a
---batch mode, or a mix of `git cat-file` for blobs and trees, and `git
-log --batch` for commits and tag objects.
-
-> or is
-> this just adding a common case to "cat-file" to "tide us over" (as it
-> were) while that sort of thing doesn't exist yet (and maybe never will
-> :()?
-
-By the way there have been 2 GSoC contributors working on adding
-ref-filter formating support to `git cat-file` and that hasn't
-succeeded yet, mostly for performance reasons. So another way would be
-to wait until ref-filter formats support everything that pretty
-formats support, which Jaydeep is currently working on, including %aN
-(author name respecting .mailmap) and %aE (author email respecting
-.mailmap), and then wait until `git cat-file`'s --batch formats
-support ref-filter formats.
-
-But yeah, we hope the change can be made small enough to be justified
-in cat-file.
+Related to this, I wonder if `git interpret-trailers` should have a
+simple way to map trailer content.
