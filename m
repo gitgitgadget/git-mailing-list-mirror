@@ -2,107 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B380C43334
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 06:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9846C433EF
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 08:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231502AbiGGGn5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 02:43:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42422 "EHLO
+        id S235205AbiGGIs4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 04:48:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230334AbiGGGn4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 02:43:56 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158452AE0A
-        for <git@vger.kernel.org>; Wed,  6 Jul 2022 23:43:55 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 764E21AA9C9;
-        Thu,  7 Jul 2022 02:43:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=b8NKgg5WqPK8xRceht6fopYJi2QwmKG+1hmHAY
-        xCacI=; b=HIKBujM0ZaGnKPNBpnwijjDPy95cxXYtvm+Igt9ZEPqfFrm7qYI/nv
-        vwR4NZxVpqhppmaqt2yO6xvxlzG2ArJCN7hG/E1cMG8Ge4NBU/G7q8hMm0sQh+bh
-        PxQdCNLGF/NGuJ5HQ/w8y7xIsg47g1++u6v6uu30wAPMiy1Ked6D4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F3421AA9C8;
-        Thu,  7 Jul 2022 02:43:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 262DF1AA9C6;
-        Thu,  7 Jul 2022 02:43:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] sha256: add support for Nettle
-References: <20220705230518.713218-1-sandals@crustytoothpaste.net>
-        <xmqqedyyi11y.fsf@gitster.g> <xmqqilo94zc2.fsf@gitster.g>
-Date:   Wed, 06 Jul 2022 23:43:50 -0700
-In-Reply-To: <xmqqilo94zc2.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        06 Jul 2022 16:05:01 -0700")
-Message-ID: <xmqqpmih2zix.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S235125AbiGGIsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 04:48:53 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1AAD326D1
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 01:48:45 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id x184so4663648pfx.2
+        for <git@vger.kernel.org>; Thu, 07 Jul 2022 01:48:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=RRMJKk+h3JYba3kXtN6lSlvepamRyT2yQWWhTajuBKw=;
+        b=eR37OBdEsA36s9WeAmJJ6YJ5tiEi/cznJLXpsaaYMJOoLLmgRsMvTlnQmgLaLaPqsl
+         5MbcN4G7S6v1YOuBP7hR3a0uwEY+fUAWA3YkLG2i+uV7+XUWO/UG7oYGUy955XG36BjU
+         /dbAmigwW7lN3/w5GhWdjroqO5WNE4ZH8WJRlgdyCDYfI+eAgnuI58HIblAB6wbMVoVM
+         Vxa74MIEApuz5e0rP+bCGWj7SELLjWhkIix92i8XSrEW/T4xl17IEhmn4wRYdtc+kOXe
+         H8WcyniSxSJ3kAqFkIPZ+i1L2l/u403kp9/gHAnUGrsbp+8po7vul98Nk0Lo4Lf1TqEv
+         p9Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=RRMJKk+h3JYba3kXtN6lSlvepamRyT2yQWWhTajuBKw=;
+        b=sM0BYiCaQxndWLGfjdNSS5UXPSkeuD83vDoP4LWQWIaLtyZWxzODtyb0R0vGEPpIjG
+         QttWLuy4e+afgTZezLlVmnNitigYnhVJqgE2EXlx1qexYNIa0X/1LyboWZSBRgOz8Bxe
+         aDKPDT+bVCUbrYC7GU4LuAq9JiyVlJ/7k/6PrZ4o9S90iJdWABu7mL4YcxSyH2vrtncI
+         mSKgXAMqRUMr/me3F395m18xoB3i051BhPnjPMbwjz5x19eOcnn+J7hlJuz8p3cP5K2R
+         m/E0wb5ZqVbuPJpTC/y18yYwncMSjWG2ZdsP4FbJNH3FSzQRZA3kuxVpJR87emVXAj+I
+         Radg==
+X-Gm-Message-State: AJIora/otdborU84ETnwWwP6qHe0MRBEWND2Hei3JcaGnu9xYO9b8LXh
+        OG6nQIO/iuFGKEcS0EQs0oM=
+X-Google-Smtp-Source: AGRyM1vyINR1vIjED+2tkrLID9uWGbQ48Nq1e5sSnLfT4icdmZUbC130msZKSW71h6dUAX6Bhp0NlQ==
+X-Received: by 2002:a05:6a00:889:b0:510:91e6:6463 with SMTP id q9-20020a056a00088900b0051091e66463mr51403537pfj.58.1657183725251;
+        Thu, 07 Jul 2022 01:48:45 -0700 (PDT)
+Received: from localhost.localdomain ([202.142.80.34])
+        by smtp.gmail.com with ESMTPSA id l37-20020a635725000000b00411acdb1625sm13153880pgb.92.2022.07.07.01.48.42
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 07 Jul 2022 01:48:44 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 0/6] [GSoC] bitmap: integrate a lookup table extension to the bitmap format
+Date:   Thu,  7 Jul 2022 14:18:18 +0530
+Message-Id: <20220707084818.79881-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <xmqqiloagi80.fsf@gitster.g>
+References: <xmqqiloagi80.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 29FE6840-FDC0-11EC-BE4C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> FWIW, I needed the following to successfully build with
-> NETTLE_SHA256=YesPlease defined.  The final linkage step complained
-> about missing nettle_SHA256_{Init,Update,Final}() functions without
-> the tweak.
-> ...
+Junio C Hamano <gitster@pobox.com> wrote:
 
-Another glitch.
+> > This is the second version which addressed all (I think) the reviews. Please
+> > notify me if some reviews are not addressed :)
+>
+> Is this the second version that is labeled as "v3" ;-)?
 
-As "make hdr-check" is pretty much indiscriminatory, my build failed
-on a box without libnettle-dev (hence /usr/include/nettle/sha2.h
-missing).
+Hi junio,
 
-diff --git a/Makefile b/Makefile
-index ce99aecc31..52a9f97997 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3098,6 +3098,9 @@ $(SP_OBJ): %.sp: %.c %.o
- sparse: $(SP_OBJ)
- 
- EXCEPT_HDRS := $(GENERATED_H) unicode-width.h compat/% xdiff/%
-+ifndef NETTLE_SHA256
-+	EXCEPT_HDRS += sha256/nettle.h
-+endif
- ifndef GCRYPT_SHA256
- 	EXCEPT_HDRS += sha256/gcrypt.h
- endif
-diff --git a/sha256/nettle.h b/sha256/nettle.h
-index 159239a785..8c93f29dda 100644
---- a/sha256/nettle.h
-+++ b/sha256/nettle.h
-@@ -5,17 +5,17 @@
- 
- typedef struct sha256_ctx nettle_SHA256_CTX;
- 
--inline void nettle_SHA256_Init(nettle_SHA256_CTX *ctx)
-+static inline void nettle_SHA256_Init(nettle_SHA256_CTX *ctx)
- {
- 	sha256_init(ctx);
- }
- 
--inline void nettle_SHA256_Update(nettle_SHA256_CTX *ctx, const void *data, size_t len)
-+static inline void nettle_SHA256_Update(nettle_SHA256_CTX *ctx, const void *data, size_t len)
- {
- 	sha256_update(ctx, len, data);
- }
- 
--inline void nettle_SHA256_Final(unsigned char *digest, nettle_SHA256_CTX *ctx)
-+static inline void nettle_SHA256_Final(unsigned char *digest, nettle_SHA256_CTX *ctx)
- {
- 	sha256_digest(ctx, SHA256_DIGEST_SIZE, digest);
- }
+No, it is actually the third version. I forgot to update the cover
+letter :P.
+
+I am using Github's gitgitgadget to submit PRs and it
+uses PR description as the cover letter.
+
+So before submitting a new version of patchset, PR description
+must be updated which I missed this time.
+
+I wrote a reply comment[1] where you can find a summary of all the
+new changes.
+
+[1] https://lore.kernel.org/git/20220704163506.76162-1-chakrabortyabhradeep79@gmail.com/
+
+> >  Documentation/technical/bitmap-format.txt |  39 ++
+>
+> I haven't tried merging it yet, but doesn't [1/6] overlap with and
+> semantically depend on your other series that touch the formatting
+> of this file?
+
+Correct, [1/6] indeed depends on my previous patch series[2] and it
+is assuming that that series has already been merged. As far as it seems,
+it will not create any merge conflicts while merging but I am not sure.
+This would be interesting to see.
+
+[2] https://lore.kernel.org/git/pull.1246.v4.git.1655355834.gitgitgadget@gmail.com/
+
+Thanks :)
