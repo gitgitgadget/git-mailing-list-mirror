@@ -2,84 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F45AC433EF
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 19:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E9B6C433EF
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 19:17:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236770AbiGGTNB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 15:13:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33382 "EHLO
+        id S236487AbiGGTRk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 15:17:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236764AbiGGTM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 15:12:59 -0400
-Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA855C94D
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 12:12:58 -0700 (PDT)
-Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-10bec750eedso18840736fac.8
-        for <git@vger.kernel.org>; Thu, 07 Jul 2022 12:12:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=U1HR9MF9Ukpp8WcI2Uo/9oB2zUFegLUuD88CHqNzaVg=;
-        b=icklH4COoyljuEn0dT+zrpMnRedvIXJMUCZi1U18yZsNnR+gINZNziLUbDnKxq239B
-         42oXtuL29INDczjnbRd4lfkhB1ompiXto1NTgN66fVeyQGl3ELW7szrU2vn6k2d78NXu
-         3LPf3TvZXI8Po8GWbGbjc2NmKBcY47xbqP2h74/2mJ20ip9cKId3XOx6EDBT3eatNrBF
-         mQQQvY3BhEaGpTYnLqUg/AtHEmw5lIHFlp15FvQpPzKX7jQxgToLzduNszApKdEL4dUr
-         I23LIHPL2o/AlHN/YttJUnpY3neeqa3nJ7OJex/ZBNY5pKCaC0mfydd0YX3bGRjtdg3t
-         VWaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=U1HR9MF9Ukpp8WcI2Uo/9oB2zUFegLUuD88CHqNzaVg=;
-        b=QP6flgQMMBhAmgRrUtUKN682Npoue3ZW64UbehH2Pq1Iwe+9VFd+s8P5PuQtSD2FZg
-         8f4cUZGwIjbseM8W+DR5i6Nl5j/gZCn3/mDESAMcgajxNIRpKtYwtPOy5hG+2kJdzmZi
-         WDwSfS7i7OVLGwwPHRxMNAZTPe9oZXqHMcGaCCekDtbD0wMtp/7bk1O+cw1QjSDghZJy
-         PhkG8x/NNJrguZXDka8LjTC++85oTEHjeudaADBZuhtlrgefFk5ngO3EO9jivTg9V5fd
-         d61WY4XkQcSTS7a/pxxdCLsiCW4O4ojHaXXloIH+KzyeKYUT/3PkdP2qlw318h5bc50b
-         ktgg==
-X-Gm-Message-State: AJIora+OAAEjbbtsAOL2JXg3JtJ7+4CaVX46KLV08ws46jz7wg/1mDiv
-        hcC/ZopZNfHGlw1x3ZKd1smP3tTEszQxxyMAWW5F8CxRSr0=
-X-Google-Smtp-Source: AGRyM1u6USnKnQT6kUtnyLaGkKzw6i/elecrwaKK8DQZN2C0jdnCXgpMTpw144IQhW5kRehzN6xE8HYcXlZXPWJlF68=
-X-Received: by 2002:a05:6870:5714:b0:10b:bbf3:5b24 with SMTP id
- k20-20020a056870571400b0010bbbf35b24mr3847694oap.106.1657221178068; Thu, 07
- Jul 2022 12:12:58 -0700 (PDT)
+        with ESMTP id S236436AbiGGTRj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 15:17:39 -0400
+X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 07 Jul 2022 12:17:37 PDT
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 824AA59248
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 12:17:37 -0700 (PDT)
+Received: from [10.0.2.15] ([147.147.167.40])
+        by smtp with ESMTPA
+        id 9WxLoa8U1uTE09WxMoO20y; Thu, 07 Jul 2022 20:14:34 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1657221274; bh=enQv3m0YTuNr/HORH/TgxAczC/oeRI5qmYWnH03Z6XE=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=YQHQ9/uLuVj9otkGTEPZz3mTof8SzSze4QQ+UYc/f6/PqhmrDfuiIUBE3YCtPVfCS
+         rYF0Do9nU+Ct5AqWsmjgXtSq64xobzbe5DQWW6pxt5S6MkDUeZJxgjMG+dETuVgB07
+         2SGuYNJD2D12TH/ceRuqr9CZtldSASMqFe/+iHyvFdccQfZ0nNE1VwL3heF7LIGDi1
+         DiVDkkhLv4H4J0DYEP9lt23GxGnQzIF84iNGTqqSoe10xOFH1DM/zDdyh1ddac0hTD
+         veYYByIdVPd11KRj4R9G3mrMWRbMeMi62JDHr85FCAtpsDykgt3/TmKMw+lbH91EVs
+         NaMzsPOodQf8g==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=DfIEF9hW c=1 sm=1 tr=0 ts=62c7309a
+ a=nyqnwr6A7Kzjd6EpZhiMcA==:117 a=nyqnwr6A7Kzjd6EpZhiMcA==:17
+ a=IkcTkHD0fZMA:10 a=Y6dKmrH1PYL5vlQLHkAA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <fa951e27-7b7b-848c-01c8-f706f97d87e7@ramsayjones.plus.com>
+Date:   Thu, 7 Jul 2022 20:14:31 +0100
 MIME-Version: 1.0
-References: <CADS2hGpnkiPzivVDyN-PnGsQCTafqx68PxigXvBK1bv4O=p4kg@mail.gmail.com>
- <20220707170032.GR17705@kitsune.suse.cz>
-In-Reply-To: <20220707170032.GR17705@kitsune.suse.cz>
-From:   Jonas Aschenbrenner <jonas.aschenbrenner@gmail.com>
-Date:   Thu, 7 Jul 2022 21:12:47 +0200
-Message-ID: <CADS2hGoHzx4oGxZnx-DwstKLVM7w4afcYcgmPuAb=ex3WB78iA@mail.gmail.com>
-Subject: Re: Suggestion to rename "blame" of the "git blame" command to
- something more neutral
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: t0301-credential-cache test failure on cygwin
+Content-Language: en-GB
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <9dc3e85f-a532-6cff-de11-1dfb2e4bc6b6@ramsayjones.plus.com>
+ <xmqqtu7t30uv.fsf@gitster.g>
+ <4529b11a-e514-6676-f427-ffaec484e8f1@ramsayjones.plus.com>
+ <Yscl/Jx4g74RwkCK@coredump.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <Yscl/Jx4g74RwkCK@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfK5KmkojiE36aGX2nT7b6VLcrBIawt5oCEFEj4clque7nksHB6ZRIi+SYBDduA7E7Pa9Dba9F6rPPXN0LRSnHctL4YWJcCLS5CdEv+QbReHHc2DeLQfd
+ WHBCFMsh0403maBvEiD2XrJe1KjReyUtxsp9WR86f8OE1I/JSaFfj61KTAveAQET6A5GNIAeKCY48xlIWKGZAwNcHfk1/Bwfn1k=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks. I wasn't  aware of the fact that there is a "git annotate"
-command before.
-The point regarding the word "blame" seems to remain.
-Maybe the "git blame" command can be removed in a future major version
-and a flag added to "git annotate" so that "git annotate" can return
-the data in the format in which "git blame" currently returns it.
 
-On Thu, Jul 7, 2022 at 7:00 PM Michal Such=C3=A1nek <msuchanek@suse.de> wro=
-te:
->
-> On Thu, Jul 07, 2022 at 05:35:41PM +0200, Jonas Aschenbrenner wrote:
-> > Similar to the change of the default branch name from "master" to
-> > "main" to use a word which has less negative associations,
-> > I suggest to replace the word "blame" with something more neutral.
-> > Maybe "annotate". That word seems to already be used at some places
-> > for this Git feature.
->
-> Have you seen git-annotate(1)
->
-> Best regards
->
-> Michal
+
+On 07/07/2022 19:29, Jeff King wrote:
+> On Thu, Jul 07, 2022 at 04:17:08PM +0100, Ramsay Jones wrote:
+> 
+>> Also, I would like to understand why the code is written as it is
+>> currently. I'm sure there must be a good reason - I just don't know
+>> what it is! I suspect (ie I'm guessing), it has something to do with
+>> operating in a high contention context [TOCTOU on socket?] ... dunno. ;-)
+> 
+> By the way, I was slightly surprised you did not find the explanation in
+> the commit history. A blame[1] of credential-cache--daemon.c shows that
+> the comment was added by 7d5e9c9849 (credential-cache--daemon: clarify
+> "exit" action semantics, 2016-03-18) which mentions the race in the
+> tests. And then searching for that commit message in the list yields the
+> thread I linked earlier with more context[2].
+
+Heh, just 10min before I read your previous email (er, actually your
+previous, previous email) I found commit 7d5e9c9849 (credential-cache--daemon:
+clarify "exit" action semantics, 2016-03-18). I hadn't had time to dig
+any further yet (as usual I'm trying to do 3 things at the same time).
+
+What can I say? It was nearly 3am and I wanted to go bed. It took nearly
+50min just to write the email. This was just a _quick_ look remember! ;-)
+
+Sorry!
+
+ATB,
+Ramsay Jones
+
+
