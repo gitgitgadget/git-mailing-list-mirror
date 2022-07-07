@@ -2,392 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46A2EC433EF
-	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 18:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47BC2C433EF
+	for <git@archiver.kernel.org>; Thu,  7 Jul 2022 18:12:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236076AbiGGSKO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 14:10:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40384 "EHLO
+        id S235422AbiGGSMg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 14:12:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232340AbiGGSKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 14:10:10 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BD532B618
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 11:10:08 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A27A1145A54;
-        Thu,  7 Jul 2022 14:10:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=LAZiVYDDVuXr
-        tyaEqtqIa9C1Q38ihyXMzIM1JzE4uyw=; b=bQGXsBrA5JhF9cxJQHeI7lH2S7NS
-        4Jh5eqoEJL1epsEtaJSrt90+YJda5k8mSuLCFe32Zi7TrGVVhabEqN0rSd73ounJ
-        uVm7X33RlccSm1WE3WA/I1vjPNB5OXVVPgpjmZdtkRoyXs7ydDroa1D97gbINeGN
-        DqATGK707z4DfHQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6BA81145A52;
-        Thu,  7 Jul 2022 14:10:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 64C67145A51;
-        Thu,  7 Jul 2022 14:10:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] builtin/mv.c: use correct type to compute size of an
- array element
-References: <xmqq8rp54r4l.fsf@gitster.g>
-        <220707.86y1x585wy.gmgdl@evledraar.gmail.com>
-Date:   Thu, 07 Jul 2022 11:10:03 -0700
-In-Reply-To: <220707.86y1x585wy.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 07 Jul 2022 14:11:22 +0200")
-Message-ID: <xmqq1quw23r8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S235240AbiGGSMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 14:12:35 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC0741EAF8
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 11:12:33 -0700 (PDT)
+Received: (qmail 6360 invoked by uid 109); 7 Jul 2022 18:12:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Jul 2022 18:12:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3209 invoked by uid 111); 7 Jul 2022 18:12:31 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Jul 2022 14:12:31 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 7 Jul 2022 14:12:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: t0301-credential-cache test failure on cygwin
+Message-ID: <YsciDznU2TqzCXP4@coredump.intra.peff.net>
+References: <9dc3e85f-a532-6cff-de11-1dfb2e4bc6b6@ramsayjones.plus.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 072EA306-FE20-11EC-9850-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <9dc3e85f-a532-6cff-de11-1dfb2e4bc6b6@ramsayjones.plus.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Thu, Jul 07, 2022 at 02:50:21AM +0100, Ramsay Jones wrote:
 
-> On Wed, Jul 06 2022, Junio C Hamano wrote:
->
->> The variables 'source', 'destination', and 'submodule_gitfile' are
->> all of type "const char **", and an element of such an array is of
->> "type const char *".
->>
->> Noticed while running "make contrib/coccinelle/array.cocci.patch".
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>
->>  * There is this rule in the array.cocci file:
->>
->>         @@
->>         type T;
->>         T *dst;
->>         T *src;
->>         expression n;
->>         @@
->>         (
->>         - memmove(dst, src, (n) * sizeof(*dst));
->>         + MOVE_ARRAY(dst, src, n);
->>         |
->>         - memmove(dst, src, (n) * sizeof(*src));
->>         + MOVE_ARRAY(dst, src, n);
->>         |
->>         - memmove(dst, src, (n) * sizeof(T));
->>         + MOVE_ARRAY(dst, src, n);
->>         )
->>
->>    but it triggered only for modes[] array among the four parallel
->>    arrays that are being moved here.
->>
-> This seems to be the same sort case as noted in 7bd97d6dff3 (git: use
-> COPY_ARRAY and MOVE_ARRAY in handle_alias(), 2019-09-19).
+> Having deleted the above patch, I now had a look at the server side. Tracing
+> out the server execution showed no surprises - everything progressed as one
+> would expect and it 'exit(0)'-ed correctly! The relevant part of the code to
+> process a client request (in the serve_one_client() function, lines 132-142
+> in builtin/credential-cache--daemon.c) looks like:
+> 
+> 	else if (!strcmp(action.buf, "exit")) {
+> 		/*
+> 		 * It's important that we clean up our socket first, and then
+> 		 * signal the client only once we have finished the cleanup.
+> 		 * Calling exit() directly does this, because we clean up in
+> 		 * our atexit() handler, and then signal the client when our
+> 		 * process actually ends, which closes the socket and gives
+> 		 * them EOF.
+> 		 */
+> 		exit(0);
+> 	}
+> 
+> Now, the comment doesn't make clear to me why "it's important that we clean
+> up our socket first" and, indeed, whether 'socket' refers to the socket
+> descriptor or the socket file. In the past, all of my unix-stream-socket
+> servers have closed the socket descriptor and then unlink()-ed the socket
+> file before exit(), with no 'atexit' calls in sight (lightly cribbed from a
+> 30+ years old Unix Network programming book by Stevens - or was it the Comer
+> book - or maybe the Comer and Stevens book - I forget!).
 
-"This" here means "sizeof(const T) and sizeof(T) are the same and
-our Cocci rules do not trigger when a wrong one is used", and I
-agree that is exactly the same issue as fixed by 7bd97d6dff3.
+That comment refers to the socket file. If we close the handle to the
+client before we clean up the socket file, then the client may finish
+while the socket file is still there. So anybody expecting that:
 
-> I tried (going aginst the warnings in that commit about the
-> non-generality) updating the rules to catch these cases, which yielded
-> the below.
+  git credential-cache exit
 
-> I wonder if we should apply some version of it. I.e. one-off
-> fix these, and perhaps have the cocci rule BUG() if we see this sort of
-> code again (the form technically could be used, but it seems all our
-> uses of it are ones we could convert to the simpler one...).
+is a sequencing operation will be fooled. One obvious thing is:
 
-One off rewrite using an ultra-loose rule, with human vetting the
-result, may be a good idea---after all, we are encouraging our
-developers to use MOVE_ARRAY() when appropriate, so it does not
-exactly matter how you discovered a memmove() can be rewritten
-safely to MOVE_ARRAY() as long as the resulting patch is correct.
+  git credential-cache exit
+  git credential-cache store <some-cred
 
-It is a different story to add a loose automation that is designed
-to produce incorrect rewrite, and expects that humans always vet the
-outcome.  Given that we run these rules at CI (doesn't it block GGG
-submitters?), it is a bad idea.
+which is now racy; the second command may try to contact the socket for
+the exiting daemon. It might actually handle that gracefully (because
+the server wouldn't actually accept()) but I didn't check. But another
+example, and the one that motivated that comment is:
 
-> diff --git a/add-patch.c b/add-patch.c
-> index 509ca04456b..eff338d3901 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -915,10 +915,9 @@ static int split_hunk(struct add_p_state *s, struc=
-t file_diff *file_diff,
->  	file_diff->hunk_nr +=3D splittable_into - 1;
->  	ALLOC_GROW(file_diff->hunk, file_diff->hunk_nr, file_diff->hunk_alloc=
-);
->  	if (hunk_index + splittable_into < file_diff->hunk_nr)
-> -		memmove(file_diff->hunk + hunk_index + splittable_into,
-> -			file_diff->hunk + hunk_index + 1,
-> -			(file_diff->hunk_nr - hunk_index - splittable_into)
-> -			* sizeof(*hunk));
-> +		MOVE_ARRAY(file_diff->hunk + hunk_index + splittable_into,
-> +			   file_diff->hunk + hunk_index + 1,
-> +			   file_diff->hunk_nr - hunk_index - splittable_into);
+  git credential-cache exit
+  test_path_is_missing $HOME/.git-credential-cache/socket
 
-This does not look all that more readable, unfortunately.
+which is exactly what our tests do. ;) See the discussion around here:
 
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index 83a465ba831..f6187d1264a 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -282,14 +282,11 @@ int cmd_mv(int argc, const char **argv, const cha=
-r *prefix)
->  remove_entry:
->  		if (--argc > 0) {
->  			int n =3D argc - i;
-> -			memmove(source + i, source + i + 1,
-> -				n * sizeof(char *));
-> -			memmove(destination + i, destination + i + 1,
-> -				n * sizeof(char *));
-> -			memmove(modes + i, modes + i + 1,
-> -				n * sizeof(enum update_mode));
-> -			memmove(submodule_gitfile + i, submodule_gitfile + i + 1,
-> -				n * sizeof(char *));
-> +			MOVE_ARRAY(source + i, source + i + 1, n);
-> +			MOVE_ARRAY(destination + i, destination + i + 1, n);
-> +			MOVE_ARRAY(modes + i, modes + i + 1, n);
-> +			MOVE_ARRAY(submodule_gitfile + i,
-> +				   submodule_gitfile + i + 1, n);
+  https://lore.kernel.org/git/20160318061201.GA28102@sigill.intra.peff.net/
 
-This is exactly what I sent.  I guess the change in this hunk is not
-all that different from add-patch.c but somehow it makes it much
-easier to read.  Perhaps that is only because these moves are much
-simpler (i.e. shift by 1).
+A few messages up we even discuss adding an fclose(). :)
 
-> diff --git a/commit.c b/commit.c
-> index 1fb1b2ea90c..c23d3e3678f 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -151,10 +151,9 @@ int register_commit_graft(struct repository *r, st=
-ruct commit_graft *graft,
->  		   r->parsed_objects->grafts_alloc);
->  	r->parsed_objects->grafts_nr++;
->  	if (pos < r->parsed_objects->grafts_nr)
-> -		memmove(r->parsed_objects->grafts + pos + 1,
-> -			r->parsed_objects->grafts + pos,
-> -			(r->parsed_objects->grafts_nr - pos - 1) *
-> -			sizeof(*r->parsed_objects->grafts));
-> +		MOVE_ARRAY(r->parsed_objects->grafts + pos + 1,
-> +			   r->parsed_objects->grafts + pos,
-> +			   r->parsed_objects->grafts_nr - pos - 1);
+> The C standard (see C11 7.22.4.4) says that the 'exit' function first calls
+> all functions registered by 'atexit', then all open streams with unwritten
+> buffered data are flushed, all open streams are closed, and all files created
+> by the 'tmpfile' function are removed.
 
-Likewise.
+Right. That's exactly the order we're relying on: our atexit cleans up
+the socket and _then_ the descriptor to the client is closed.
 
-> diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.=
-cocci
-> index 9a4f00cb1bd..988ff9a3fda 100644
-> --- a/contrib/coccinelle/array.cocci
-> +++ b/contrib/coccinelle/array.cocci
-> @@ -73,6 +73,15 @@ expression n;
->  + MOVE_ARRAY(dst, src, n);
->  )
-> =20
-> +@@
-> +expression D;
-> +expression S;
-> +expression N;
-> +expression Z;
-> +@@
-> +- memmove(D, S, (N) * Z);
-> ++ MOVE_ARRAY(D, S, N);
+I think we could actually just call delete_tempfile() explicitly. Back
+when the code was originally written, that would require making sure our
+atexit() handler didn't do a double-cleanup, but these days it uses the
+tempfile code, which I believe does the right thing.
 
-This is definitely unwelcome, as there is nothing that ensures Z has
-the same value as sizeof(D[0]).
+I think that still wouldn't solve your cygwin problem, though; from the
+client perspective the behavior would be the same.
 
-While our eyes are on array.cocci, I have a few observations on it.
+> Anyway, I started playing around with flushing/closing of 'FILE *' streams
+> before the 'exit' call, to change the order, relative to the socket-file
+> deletion in the 'atexit' function (or the closing of the listen-socket
+> descriptor, come to that). In particular, I found that if I were to close
+> the 'in'put stream, then the client would receive an EOF and exit normally
+> (ie no error return from read_in_full() above).
 
-This is not meant specifically to you, =C3=86var, but comments by those
-more familiar with Coccinelle (and I am sure the bar to pass is
-fairly low, as I am not all that familiar) are very much
-appreciated.
+Right, but now you've introduced the race discussed above.
 
-    @@
-    expression dst, src, n, E;
-    @@
-      memcpy(dst, src, n * sizeof(
-    - E[...]
-    + *(E)
-      ))
+> Having noticed that the 'timeout' test was not failing, I decided to try
+> making the 'action=exit' code-path behave more like the timeout code, as
+> far as exiting the server is concerned.
 
-This seems to force us prefer sizeof(*(E)) over sizeof(E[i]), when
-it is used to compute the byte size of memcpy() operation.  There is
-no reason to prefer one over the other, but I presume it is there
-only for convenience for the other rules in this file (I recall
-vaguely reading somewhere that these rules do not "execute" from top
-to bottom, so I wonder how effective it is?).
+I think this introduces a similar race.
 
-    @@
-    type T;
-    T *ptr;
-    T[] arr;
-    expression E, n;
-    @@
-    (
-      memcpy(ptr, E,
-    - n * sizeof(*(ptr))
-    + n * sizeof(T)
-      )
-    |
-      memcpy(arr, E,
-    - n * sizeof(*(arr))
-    + n * sizeof(T)
-      )
-    |
-      memcpy(E, ptr,
-    - n * sizeof(*(ptr))
-    + n * sizeof(T)
-      )
-    |
-      memcpy(E, arr,
-    - n * sizeof(*(arr))
-    + n * sizeof(T)
-      )
-    )
+> Indeed, you might ask why the timeout code doesn't just 'exit(0)' as well ...
 
-Likewise, but this one is a lot worse.
+It doesn't matter there, because there's no client expecting us to exit.
+So the sequence of cleaning up our socket vs hanging up on the client
+doesn't matter. And indeed, it's unlikely to even _have_ a client here,
+as they'd have to connect and do their business right as our final
+credential was hitting its expiration.
 
-Taken alone, sizeof(*(ptr)) is far more preferrable than sizeof(T),
-because the code will be more maintainable.
+> So, we now have three patches which 'fix' the issue. What does this tell us?
+> Well, not an awful lot! ;-)
 
-    Side Note.  I know builtin/mv.c had this type mismatch between
-    the variable and sizeof() from the beginning when 11be42a4 (Make
-    git-mv a builtin, 2006-07-26) introduced both the variable
-    declaration "const char **source" and memmove() on it, but a
-    code that starts out with "char **src" with memmove() that moves
-    part of src[] and uses sizeof(char *) to compute the byte size
-    of the move would become broken the same way when a later
-    developer tightens the declaration to use "const char **src"
-    without realizing that they have to update the type used in
-    sizeof().
+Of the three, I actually like the client-side one to check errno the
+best. The client is mostly "best effort". If it can't talk to the daemon
+for whatever reason, then it becomes a noop (there is nothing it can
+retrieve from the cache, and if it's trying to write, then oh well, the
+cached value was immediately expired!).
 
-So even though I am guessing that this is to allow the later rules
-to worry only about sizeof(T), I am a bit unhappy to see the rule.
-If an existing code matched this rule and get rewritten to use
-sizeof(T), not sizeof(*(ptr)), but did not match the other rules to
-be rewritten to use COPY_ARRAY(), the overall effect would be that
-the automation made the code worse.
+So one could argue that _every_ read error should be silently ignored.
+Calling die_errno() is mostly a nicety for debugging a broken setup, but
+in normal use, the outcome is the same either way (and Git will
+certainly ignore the exit code credential-cache anyway). I prefer the
+"ignore known harmless errors" approach, possibly because I am often the
+one debugging. ;) If ECONNABORTED is a harmless error we see in
+practice, I don't mind adding it to the list (under the same rationale
+as the current ECONNRESET that is there).
 
-    @@
-    type T;
-    T *dst_ptr;
-    T *src_ptr;
-    T[] dst_arr;
-    T[] src_arr;
-    expression n;
-    @@
-    (
-    - memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
-    + COPY_ARRAY(dst_ptr, src_ptr, n)
-    |
-    - memcpy(dst_ptr, src_arr, (n) * sizeof(T))
-    + COPY_ARRAY(dst_ptr, src_arr, n)
-    |
-    - memcpy(dst_arr, src_ptr, (n) * sizeof(T))
-    + COPY_ARRAY(dst_arr, src_ptr, n)
-    |
-    - memcpy(dst_arr, src_arr, (n) * sizeof(T))
-    + COPY_ARRAY(dst_arr, src_arr, n)
-    )
-
-I take it that thanks to the earlier "meh -- between sizeof(*p) and
-sizeof(p[0]) there is no reason to prefer one over the other" and
-"oh, no, we should prefer sizeof(*p) not sizeof(typeof(*p)) but this
-one is the other way around" rules, this one only has to deal with
-sizeof(T).
-
-Am I reading it correctly?
-
-    @@
-    type T;
-    T *dst;
-    T *src;
-    expression n;
-    @@
-    (
-    - memmove(dst, src, (n) * sizeof(*dst));
-    + MOVE_ARRAY(dst, src, n);
-    |
-    - memmove(dst, src, (n) * sizeof(*src));
-    + MOVE_ARRAY(dst, src, n);
-    |
-    - memmove(dst, src, (n) * sizeof(T));
-    + MOVE_ARRAY(dst, src, n);
-    )
-
-What I find interesting is that this one seems to be able to do the
-necessary rewrite without having to do the "turn everything into
-sizeof(T) first" trick.  If this approach works well, I'd rather see
-the COPY_ARRAY() done without the first two preliminary rewrite
-rules.
-
-I wonder if the pattern in the first rule catches sizeof(dst[0])
-instead of sizeof(*dst), though.
-
-    @@
-    type T;
-    T *ptr;
-    expression n;
-    @@
-    - ptr =3D xmalloc((n) * sizeof(*ptr));
-    + ALLOC_ARRAY(ptr, n);
-
-    @@
-    type T;
-    T *ptr;
-    expression n;
-    @@
-    - ptr =3D xmalloc((n) * sizeof(T));
-    + ALLOC_ARRAY(ptr, n);
-
-Is it a no-op rewrite if we replace the above two rules with
-something like:
-
-.   @@
-.   type T;
-.   T *ptr;
-.   expression n;
-.   @@
-.   (
-.   - ptr =3D xmalloc((n) * sizeof(*ptr));
-.   + ALLOC_ARRAY(ptr, n);
-.   |
-.   - ptr =3D xmalloc((n) * sizeof(T));
-.   + ALLOC_ARRAY(ptr, n);
-.   )
-
-or even following the pattern of the next one ...
-
-.   @@
-.   type T;
-.   T *ptr;
-.   expression n;
-.   @@
-.   - ptr =3D xmalloc((n) * \( sizeof(*ptr) \| sizeof(T) \))
-.   + ALLOC_ARRAY(ptr, n);
-
-... I have to wonder?  I like the simplicity of this pattern.
-
-    @@
-    type T;
-    T *ptr;
-    expression n !=3D 1;
-    @@
-    - ptr =3D xcalloc(n, \( sizeof(*ptr) \| sizeof(T) \) )
-    + CALLOC_ARRAY(ptr, n)
-
-And this leaves xcalloc(1, ...) alone because it is a way to get a
-cleared block of memory that may not be an array at all.  Shouldn't
-we have "n !=3D 1" for xmalloc rule as well, I wonder, if only for
-consistency?
+-Peff
