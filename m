@@ -2,178 +2,276 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FF7CC43334
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 10:46:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D29BC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 11:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238039AbiGHKqJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 06:46:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51588 "EHLO
+        id S238072AbiGHLYZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 07:24:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237920AbiGHKqI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 06:46:08 -0400
-Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [207.226.244.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 31137BCA2
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 03:46:05 -0700 (PDT)
-X-IronPort-AV: E=Sophos;i="5.92,255,1650902400"; 
-   d="scan'208";a="29490673"
-Received: from hk-mbx03.mioffice.cn (HELO xiaomi.com) ([10.56.8.123])
-  by outboundhk.mxmail.xiaomi.com with ESMTP; 08 Jul 2022 18:45:10 +0800
-Received: from bj-mbx09.mioffice.cn (10.237.8.129) by HK-MBX03.mioffice.cn
- (10.56.8.123) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Fri, 8 Jul 2022
- 18:45:09 +0800
-Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by bj-mbx09.mioffice.cn
- (10.237.8.129) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Fri, 8 Jul 2022
- 18:45:08 +0800
-Received: from BJ-MBX01.mioffice.cn ([fe80::5cd6:7afe:4dcf:69a6]) by
- BJ-MBX01.mioffice.cn ([fe80::5cd6:7afe:4dcf:69a6%9]) with mapi id
- 15.02.0986.026; Fri, 8 Jul 2022 18:45:08 +0800
-From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
-To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, git <git@vger.kernel.org>
-CC:     =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
-        =?utf-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
-        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
-        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>
-Subject: RE: RE: [External Mail]Re: Git fork process infinitely and never stop
-Thread-Topic: RE: [External Mail]Re: Git fork process infinitely and never
- stop
-Thread-Index: AdiPihh3UxZZstBISFy+uEVc/YzhjAAnjPMAABMHSwAAJSsJZQANbb+gADGmLbAAAtIk4AApxeBg
-Date:   Fri, 8 Jul 2022 10:45:08 +0000
-Message-ID: <bd33fa6079c2485fb6ee741be05d3f7e@xiaomi.com>
-References: <9d3b79239a314f72a099040a26ef9ad8@xiaomi.com>,
-        <8e1d019e-6456-ed05-7d3e-a0c4beeb35fa@gmail.com>,
-        <8ccd27ef3a344596b6237e98e1a5f204@xiaomi.com>
- <202207061520052718298@oschina.cn>
- <e071496cfdb04cce8eac322febb6af45@xiaomi.com>
- <11f76b2382934edcb97eb201f0a78a67@xiaomi.com> 
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.237.8.11]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S237827AbiGHLYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 07:24:12 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA9E88F38
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 04:24:10 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id h17so16966007wrx.0
+        for <git@vger.kernel.org>; Fri, 08 Jul 2022 04:24:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=rlsOMpLev0XMZAT18z41ffZrHp6du2dh/mz6X+38sTQ=;
+        b=F5Va389dX6obarLTWlOcQiNdYoubEnU6BPxsHPSjon/HVtUinIrg8L8afDJdAqm8rd
+         0fYJ5TeaPSIz3hU0OGqSV3DQRvu8FU0ng3LwGsU2sr2nGAv1dVFPizsAJmozt/Lmz2QG
+         8maZPUKsuvNLp7ivVurwk/9sQOMr16XbybZjN2WODvnfMjo3rpwGDcwuxsmmtibwu2oi
+         F+WnB9DqgfzgkpDIfmRHUk0kVW1TqmZYoBd8o4LtqTbfQz5ZdTMLHlkDQ0pUv3ieJjuS
+         P3vj6UC4B0aOJJ/x8VsGJ1Y078NR7TKfeNAe3khZ4OxnUovsqCC+7p5S8mju3M1GfEPu
+         b5zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=rlsOMpLev0XMZAT18z41ffZrHp6du2dh/mz6X+38sTQ=;
+        b=p2tUd+hrzf22o6X6uUb1hjMcLKhLjaibubNB0KmSt52femB9/F79Nt6mwq2tkM/zn1
+         R4l8+5IngCLgBexYJE7xtVdyjKGR+gaRpuorzPl8KZ9eESpiTQMQWrKEry43qlkXaI3f
+         WISlPbC4NUqklMzhxcUqVB017G6BjcysjWsDGwccOcYK8WGByk8uxyyevUIKWerG1abI
+         rdF0C1IdVf91Vg4wF4/68jhM7kTz1Dcd81M5lPYWn88ipNhKwhOZdeZH35Jm/9UKHUtc
+         QSmLYltOIJOFh0V2593ACl7NiOSW/f2F0Id3+DFk9PeCeyYFdNjkD0IXCOxSzJ6TpmHJ
+         KeUw==
+X-Gm-Message-State: AJIora90rgJXINy/3EH8K3HPKH/4oOhGCMOj7gLZT5y8w04xEfrokT5N
+        SVD235PXHbYDXeZ8ijJUUCvknB4GWmY=
+X-Google-Smtp-Source: AGRyM1uMlNNJXp4f+dsG6i7RXdrX11ReVUWAZxPT1lAtqknJTzSQbIEYj6g6fhezgIlY5D7o7I7y7A==
+X-Received: by 2002:adf:ed45:0:b0:21d:6764:6fbc with SMTP id u5-20020adfed45000000b0021d67646fbcmr2782259wro.155.1657279448922;
+        Fri, 08 Jul 2022 04:24:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u18-20020adfdd52000000b002185d79dc7fsm17656753wrm.75.2022.07.08.04.24.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 04:24:08 -0700 (PDT)
+Message-Id: <pull.1281.v2.git.1657279447515.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1281.git.1657202265048.gitgitgadget@gmail.com>
+References: <pull.1281.git.1657202265048.gitgitgadget@gmail.com>
+From:   "Jaydeep Das via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 08 Jul 2022 11:24:07 +0000
+Subject: [PATCH v2] gpg-interface: add function for converting trust level to
+ string
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jaydeep Das <jaydeepjd.8914@gmail.com>,
+        Jaydeep Das <jaydeepjd.8914@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-QW55IGZlZWRiYWNrIG9uIHRoaXM/DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9t
-OiDnqIvmtIsNClNlbnQ6IEZyaWRheSwgSnVseSA4LCAyMDIyIDE6NTQgQU0NClRvOiAnbGlsaW5j
-aGFvQG9zY2hpbmEuY24nIDxsaWxpbmNoYW9Ab3NjaGluYS5jbj47ICdCYWdhcyBTYW5qYXlhJyA8
-YmFnYXNkb3RtZUBnbWFpbC5jb20+OyAnZ2l0JyA8Z2l0QHZnZXIua2VybmVsLm9yZz4NCkNjOiDk
-vZXmtakgPGhlaGFvQHhpYW9taS5jb20+OyBYaW43IE1hIOmprOmRqyA8bWF4aW43QHhpYW9taS5j
-b20+OyDlh6HlhpvovokgPGZhbmp1bmh1aUB4aWFvbWkuY29tPjsg55+z5aWJ5YW1IDxzaGlmZW5n
-YmluZ0B4aWFvbWkuY29tPg0KU3ViamVjdDogUkU6IFJFOiBbRXh0ZXJuYWwgTWFpbF1SZTogR2l0
-IGZvcmsgcHJvY2VzcyBpbmZpbml0ZWx5IGFuZCBuZXZlciBzdG9wDQoNClRvIGJlIGEgc3VwcGxl
-bWVudC4NCklmIEkgZGVsZXRlIC5naXQvb2JqZWN0cy9pbmZvL2NvbW1pdC1ncmFwaCwgIGV2ZXJ5
-dGhpbmcgd29ya3Mgd2VsbCBBcyB3ZWxsIGFzIGZldGNoIHdpdGggYC1jIGNvcmUuY29tbWl0R3Jh
-cGg9ZmFsc2VgDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiDnqIvmtIsNClNl
-bnQ6IFRodXJzZGF5LCBKdWx5IDcsIDIwMjIgMTA6MjAgUE0NClRvOiAnbGlsaW5jaGFvQG9zY2hp
-bmEuY24nIDxsaWxpbmNoYW9Ab3NjaGluYS5jbj47ICdCYWdhcyBTYW5qYXlhJyA8YmFnYXNkb3Rt
-ZUBnbWFpbC5jb20+OyAnZ2l0JyA8Z2l0QHZnZXIua2VybmVsLm9yZz4NCkNjOiDkvZXmtakgPGhl
-aGFvQHhpYW9taS5jb20+OyBYaW43IE1hIOmprOmRqyA8bWF4aW43QHhpYW9taS5jb20+OyDlh6Hl
-hpvovokgPGZhbmp1bmh1aUB4aWFvbWkuY29tPjsg55+z5aWJ5YW1IDxzaGlmZW5nYmluZ0B4aWFv
-bWkuY29tPg0KU3ViamVjdDogUkU6IFJFOiBbRXh0ZXJuYWwgTWFpbF1SZTogR2l0IGZvcmsgcHJv
-Y2VzcyBpbmZpbml0ZWx5IGFuZCBuZXZlciBzdG9wDQoNCkkgZm91bmQgYW5vdGhlciB0aGluZy4N
-Cg0KMS4gaWYgSSBleGVjdXRlIGBnaXQgZmV0Y2ggLS1maWx0ZXI9YmxvYjpub25lIC0tcXVpZXQg
-LS1wcm9ncmVzcyBtaXVpIC0tcHJ1bmUgLS10YWdzICtyZWZzL2hlYWRzLyo6cmVmcy9yZW1vdGVz
-L21pdWkvKiArcmVmcy9oZWFkcy9taXVpMTMtcy10aG9yLXZlbmRvci1zdGFibGU6cmVmcy9yZW1v
-dGVzL21pdWkvbWl1aTEzLXMtdGhvci12ZW5kb3Itc3RhYmxlYCAgb24gdmVyc2lvbiAyLjI1LjEu
-IEl0IGp1c3QgdGhyb3cgZXJyb3IgcmF0aGVyIHRoYW4gaW5maW5pdGUgbG9vcCwgbGlrZSB0aGlz
-IHlvdXR1YmUgdmlkZW8gImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cXZZVHZWUkUw
-RlUmZmVhdHVyZT15b3V0dS5iZSINCg0KMi4gSSBmb3VuZCBpZiBJIGRlbGV0ZSAuZ2l0L29iamVj
-dHMsIGV2ZXJ5dGhpbmcgZ29lcyBmaW5lLiBBbmQgdGhlcmUgYXJlIG9ubHkgMjAgZmlsZXMgaW5z
-aWRlIGl0LiBTbyBJIGRlbGV0ZSB0aGVtIG9uZSBieSBvbmUgdG8gc2VlIHdoaWNoIGNhdXNlIHRo
-ZSBwcm9ibGVtLiBJdCdzIGAuZ2l0L29iamVjdHMvaW5mby9jb21taXQtZ3JhcGhgLiBTbyBJIHVw
-bG9hZCB0aGUgZmlsZSBhcyBhdHRhY2htZW50DQoNCg0KVHJlZSBiZWZvcmUgSSBkbyBzZWNvbmQg
-ZXhwZXJpbWVudA0KLg0K4pSc4pSA4pSAIDIwDQrilIIgICDilJTilIDilIAgNzQwOTI4Yzk4OGVk
-OTNkYWY5NDM4Njk2MjEyOTBkNjhmNjJiNDcNCuKUnOKUgOKUgCAyNQ0K4pSCICAg4pSU4pSA4pSA
-IGNiYjVmMDJiYmNkZTJlZmZlYmJhODRiYmM4NjZhMjllNjhhZmRmDQrilJzilIDilIAgMzYNCuKU
-giAgIOKUlOKUgOKUgCAzYWEyZDI1YjcxYzVhZmY5ZDBkOGFkODIwN2JjMjdiNDQ5MmU4Yg0K4pSc
-4pSA4pSAIDViDQrilIIgICDilJTilIDilIAgN2I1Y2I4ZGQ2M2JlNDhlMTQ2NmM5ZDk1NzQyMGE5
-NzY1YTgwNWUNCuKUnOKUgOKUgCA2NQ0K4pSCICAg4pSU4pSA4pSAIGUyNzJjMjFmMjhmYThlMjhk
-ZDkwNGYzNTc2ZjVmMjNjZGI4MjE0DQrilJzilIDilIAgOGINCuKUgiAgIOKUlOKUgOKUgCAxNDhh
-YTU2YjdjNTU5ZTIxN2JkMzFhMTZlODg2YjE2ZTIxY2RlMQ0K4pSc4pSA4pSAIDk3DQrilIIgICDi
-lJTilIDilIAgZmFlYmNhNjQ0YWU4YmZlYmNiZGM4YTFkZDhlMTc5ZTliNjU3ZGUNCuKUnOKUgOKU
-gCBhMw0K4pSCICAg4pSU4pSA4pSAIDg1MmNkYTJhZjYzMmRjYzdkZmJlNDY2ZDZkODYwOGMyZTA2
-NTIwDQrilJzilIDilIAgYTQNCuKUgiAgIOKUlOKUgOKUgCBhYThhZTc4MzAwMjE3YjBkYTBhYjdj
-NGI4ZWEyMmI1Yjc0Yjk1OA0K4pSc4pSA4pSAIGE5DQrilIIgICDilJzilIDilIAgMDRlMDlkMWVl
-MGUwYjg5YWNkNTE5NjMyNjM5OWQ4OWRlNzA3NDINCuKUgiAgIOKUlOKUgOKUgCA3ZDFmZmE1YzRk
-YWQwODE0NjliMzU2ZDA1NzFkMGI2MTY2ZDAwZQ0K4pSc4pSA4pSAIGIzDQrilIIgICDilJTilIDi
-lIAgMmI3NTAxNjZlMmQ1NGI4YmQzYWM2MmQ3YWVhZjczMmUxNGYyMGQNCuKUnOKUgOKUgCBiOA0K
-4pSCICAg4pSU4pSA4pSAIDk1Nzc5OWMzYTQ2MGJhMmUwZDI2Y2UwMDgxYTRkMDkyZGNmYjE3DQri
-lJzilIDilIAgYzUNCuKUgiAgIOKUlOKUgOKUgCBiZTAyNmIzYjg3YTFhZTQzMjE3MDBlZTQ1ZmZj
-YjVlZWUzY2E0OA0K4pSc4pSA4pSAIGQxDQrilIIgICDilJTilIDilIAgZTY1ZDI2OGQ1YTIyMzBk
-MWQ4NjlkNTU0OTdlMGMxZWI1OWI5YTUNCuKUnOKUgOKUgCBkZA0K4pSCICAg4pSU4pSA4pSAIDQ4
-M2MzYzQ3NTExNzI3NWJiZjc3NjhhOTQwOTYyODQyYmQ1YWViDQrilJzilIDilIAgZTINCuKUgiAg
-IOKUlOKUgOKUgCA2ODk5NDU4ZGM2Y2YyYzM3NDljMDczMmFjNWIwNGNjZDRjNzc2NQ0K4pSc4pSA
-4pSAIGUzDQrilIIgICDilJTilIDilIAgMDZiMTJlMjJjNzkxNGZmODAzNzRiNzg1N2VlNjc4NjRh
-NjFiYTUNCuKUnOKUgOKUgCBlNw0K4pSCICAg4pSU4pSA4pSAIGEwY2MxN2Y5OTM5YjgwYjEzNWMw
-ZWMzODljYmNjOThhZWE3MGM3DQrilJzilIDilIAgZWINCuKUgiAgIOKUlOKUgOKUgCA5MTY5YTBk
-MjEyNDU5NGU5MjcyMGZjNmFjMWNlM2ZiMjljN2Q4Nw0K4pSc4pSA4pSAIGVkDQrilIIgICDilJTi
-lIDilIAgNmE4MTUwNjBmOTYwMDMyZWNhZjcwZmVmZGJkYWU0YWM0NjYzMTQNCuKUnOKUgOKUgCBm
-OA0K4pSCICAg4pSU4pSA4pSAIDQ0MDE5NzJhMGE3MDIwYWVmODViODM1NjFkNzBhZjQxOTYyYTZm
-DQrilJzilIDilIAgaW5mbw0K4pSCICAg4pSc4pSA4pSAIGNvbW1pdC1ncmFwaA0K4pSCICAg4pSU
-4pSA4pSAIHBhY2tzDQrilJTilIDilIAgcGFjaw0KICAgIOKUnOKUgOKUgCBwYWNrLTAyOWQwODgy
-M2JkOGE4ZWFiNTEwYWQ2YWM3NWM4MjNjZmQzZWQzMWUuaWR4DQogICAg4pSc4pSA4pSAIHBhY2st
-MDI5ZDA4ODIzYmQ4YThlYWI1MTBhZDZhYzc1YzgyM2NmZDNlZDMxZS5wYWNrDQogICAg4pSc4pSA
-4pSAIHBhY2stMDI5ZDA4ODIzYmQ4YThlYWI1MTBhZDZhYzc1YzgyM2NmZDNlZDMxZS5wcm9taXNv
-cg0KICAgIOKUnOKUgOKUgCBwYWNrLWM5MzEwOTNhZTZjOWRmNWQzNmI3NzNmOTRlZmMzOGQ5ZDRi
-MzkxMDguaWR4DQogICAg4pSc4pSA4pSAIHBhY2stYzkzMTA5M2FlNmM5ZGY1ZDM2Yjc3M2Y5NGVm
-YzM4ZDlkNGIzOTEwOC5wYWNrDQogICAg4pSc4pSA4pSAIHBhY2stYzkzMTA5M2FlNmM5ZGY1ZDM2
-Yjc3M2Y5NGVmYzM4ZDlkNGIzOTEwOC5wcm9taXNvcg0KICAgIOKUnOKUgOKUgCB0bXBfaWR4X1JS
-bzhvbw0KICAgIOKUlOKUgOKUgCB0bXBfcGFja18xaGd1ZXENCg0KDQoNCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KRnJvbTog
-56iL5rSLDQpTZW50OiBXZWRuZXNkYXksIEp1bHkgNiwgMjAyMiAxMDowMyBQTQ0KVG86IGxpbGlu
-Y2hhb0Bvc2NoaW5hLmNuOyBCYWdhcyBTYW5qYXlhIDxiYWdhc2RvdG1lQGdtYWlsLmNvbT47IGdp
-dCA8Z2l0QHZnZXIua2VybmVsLm9yZz4NCkNjOiDkvZXmtakgPGhlaGFvQHhpYW9taS5jb20+OyBY
-aW43IE1hIOmprOmRqyA8bWF4aW43QHhpYW9taS5jb20+DQpTdWJqZWN0OiDlm57lpI06IFJFOiBb
-RXh0ZXJuYWwgTWFpbF1SZTogR2l0IGZvcmsgcHJvY2VzcyBpbmZpbml0ZWx5IGFuZCBuZXZlciBz
-dG9wDQoNClRvIGxpbGluY2hhbzoNCj5TbyB0aGUgcmVwbyAiZ2l0L2dlcnJpdCIgaXMgaG9zdGVk
-IGluIHlvdXIgbG9jYWw/IGFuZCBob3cgeW91ICJjb3B5IiBpdCB0byB5b3VyIG93biBQQz8NCjEu
-IGdpdC9nZXJyaXQgaXMgaG9zdGVkIG9uIHJlbW90ZSBzZXJ2ZXINCiAgICAgICAgICAgICAgIDIu
-IEkganVzdCBzY3AgdGhlIHdob2xlIHJlcG9zaXRvcnkgb2YgdGhlIHVzZXIgd2hvIHJlcHJvZHVj
-ZSB0aGUgcHJvYmxlbSB0byBvdXIgb3duIFBDLiBBbmQgdGhlbiB3ZSBjYW4gcmVwcm9kdWNlIGl0
-IG9uIG91ciBvd24gUEMuDQoNClRvIEpvaGFubmVzOg0KPiBIb29rcyBtYXkgYWxzbyBwbGF5IGEg
-cm9sZS4NCldlIGRvIGhhdmUgc29tZSBob29rcy4gQnV0IEkgZG9uJ3QgdGhpbmsgdGhleSdyZSBy
-ZWxhdGVkLiBCZWNhdXNlIGV2ZW4gSSBkZWxldGUgdGhvc2UgaG9va3MsIHRoZSBwcm9ibGVtIHN0
-YW5kcyBzdGlsbA0KDQpUbyDDhnZhciBBcm5masO2csOwOg0KPkkgYXNzdW1lIHlvdSBjYW4ndCBz
-aGFyZSB0aGUgcmVwbywgYnV0IHBlcmhhcHMgdHJ5IGlmIHlvdSBjYW4gcmVwcm9kdWNlIGl0IHdp
-dGggYSAiZ2l0IGZhc3QtZXhwb3J0IC0tYW5vbnltaXplIiB2ZXJzaW9uIG9mIGl0LCBhbmQgaWYg
-c28gd2hldGhlciB5b3UnZCBiZSB3aWxsaW5nIHRvIHNoYXJlIHRoYXQuIEl0IHdpbGwgcHVibGlz
-aCB0aGUgInNoYXBlIG9mIHRoZSBoaXN0b3J5IiBvZiB0aGUgcmVwbywgYnV0IG5vdCBhbnkgbWVh
-bmluZ2Z1bCBkYXRhIChhbGwgY29tbWl0cywgdHJlZXMsIGJsb2JzIGV0Yy4gYXJlIHJlcGxhY2Vk
-KS4NCmBnaXQgZmFzdC1leHBvcnQgLS1hbm9ueW1pemVgIGp1c3Qgb3V0cHV0IGlzIGVtcHR5LiBJ
-ZiBJIHRyeSBgZ2l0IGZhc3QtZXhwb3J0IC0tYW5vbnltaXplIC0tYWxsYCwgaXQgc2VlbXMgdG8g
-ZmV0Y2ggZmlyc3QsIHdoaWNoIGdvZXMgaW50byB0aGUgaW5maW5pdGUgbG9vcCBhZ2Fpbg0KDQo+
-VGhlIFlvdVR1YmUgdmlkZW8gc2hvd3MgdGhhdCB5b3UncmUgdXNpbmcgdmFyaW91cyBvcHRpb25z
-IHRvIGdpdC1mZXRjaCwNCj5pbmNsdWRpbmcgZmlsdGVycywgcmVmc3BlY3MgZXRjLiBEb2VzIGEg
-cGxhaW4gImdpdCBmZXRjaCIgcmVwcm9kdWNlDQo+dGhpcywgYW5kIGlmIG5vdCB3aGF0J3MgdGhl
-IG9wdGlvbiAodHJ5IGFkZGluZyB0aGVtIG9uZSBhdCBhIHRpbWUgJg0KPmV4cGVyaW1lbnQpIHRo
-YXQgbmVlZHMgdG8gYmUgYWRkZWQgdG8gdHJpZ2dlciB0aGlzPw0KDQpgZ2l0IGZldGNoYCBhbHNv
-IGhhcyB0aGlzIHByb2JsZW0uDQoNCkkgc29tZXdoYXQgc3VzcGVjdCBzb21lIC0tZmlsdGVyIGZ1
-bm55IGJ1c2luZXNzLCBidXQgdGhhdCdzIGp1c3QgYSBodW5jaC4uLg0KSXQgc2VlbXMgdG8gaGFw
-cGVuIGFmdGVyIEkgdG9sZCBteSB0ZWFtIHRvIHVzZSAicGFydGlhbC1jbG9uZSIgQU5EICJnaXQg
-djIuMzYuMSIuICBJJ20gbm90IHN1cmUgd2hpY2ggb25lIGlzIHRoZSBjYXVzZSBvciBib3RoIG9m
-IHRoZW0gY2F1c2UgdGhpcy4NCiMvKioqKioq5pys6YKu5Lu25Y+K5YW26ZmE5Lu25ZCr5pyJ5bCP
-57Gz5YWs5Y+455qE5L+d5a+G5L+h5oGv77yM5LuF6ZmQ5LqO5Y+R6YCB57uZ5LiK6Z2i5Zyw5Z2A
-5Lit5YiX5Ye655qE5Liq5Lq65oiW576k57uE44CC56aB5q2i5Lu75L2V5YW25LuW5Lq65Lul5Lu7
-5L2V5b2i5byP5L2/55So77yI5YyF5ous5L2G5LiN6ZmQ5LqO5YWo6YOo5oiW6YOo5YiG5Zyw5rOE
-6Zyy44CB5aSN5Yi244CB5oiW5pWj5Y+R77yJ5pys6YKu5Lu25Lit55qE5L+h5oGv44CC5aaC5p6c
-5oKo6ZSZ5pS25LqG5pys6YKu5Lu277yM6K+35oKo56uL5Y2z55S16K+d5oiW6YKu5Lu26YCa55+l
-5Y+R5Lu25Lq65bm25Yig6Zmk5pys6YKu5Lu277yBIFRoaXMgZS1tYWlsIGFuZCBpdHMgYXR0YWNo
-bWVudHMgY29udGFpbiBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gZnJvbSBYSUFPTUksIHdoaWNo
-IGlzIGludGVuZGVkIG9ubHkgZm9yIHRoZSBwZXJzb24gb3IgZW50aXR5IHdob3NlIGFkZHJlc3Mg
-aXMgbGlzdGVkIGFib3ZlLiBBbnkgdXNlIG9mIHRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaGVy
-ZWluIGluIGFueSB3YXkgKGluY2x1ZGluZywgYnV0IG5vdCBsaW1pdGVkIHRvLCB0b3RhbCBvciBw
-YXJ0aWFsIGRpc2Nsb3N1cmUsIHJlcHJvZHVjdGlvbiwgb3IgZGlzc2VtaW5hdGlvbikgYnkgcGVy
-c29ucyBvdGhlciB0aGFuIHRoZSBpbnRlbmRlZCByZWNpcGllbnQocykgaXMgcHJvaGliaXRlZC4g
-SWYgeW91IHJlY2VpdmUgdGhpcyBlLW1haWwgaW4gZXJyb3IsIHBsZWFzZSBub3RpZnkgdGhlIHNl
-bmRlciBieSBwaG9uZSBvciBlbWFpbCBpbW1lZGlhdGVseSBhbmQgZGVsZXRlIGl0ISoqKioqKi8j
-DQo=
+From: Jaydeep Das <jaydeepjd.8914@gmail.com>
+
+Add new helper function `gpg_trust_level_to_str()` which will
+convert a given member of `enum signature_trust_level` to its
+corresponding string(in lowercase). For example, `TRUST_ULTIMATE`
+will yield the string "ultimate".
+
+This will abstract out some code in `pretty.c` relating to gpg
+signature trust levels.
+
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Hariom Verma <hariom18599@gmail.com>
+Signed-off-by: Jaydeep Das <jaydeepjd.8914@gmail.com>
+---
+    gpg-interface: add function for converting trust level to string
+    
+    Add new helper function gpg_trust_level_to_str() which will convert a
+    given member of enum signature_trust_level to its corresponding string
+    in lowercase. For example, TRUST_ULTIMATE will yield the string
+    "ultimate".
+    
+    This will abstract out some code in pretty.c relating to gpg signature
+    trust levels.
+    
+    Changes since v1:
+    
+     * gpg_trust_level_to_str() now returns the string in lowercase
+    
+    Mentored-by: Christian Couder chriscool@tuxfamily.org Mentored-by:
+    Hariom Verma hariom18599@gmail.com Signed-off-by: Jaydeep Das
+    jaydeepjd.8914@gmail.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1281%2FJDeepD%2Fgpg-wrap-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1281/JDeepD/gpg-wrap-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1281
+
+Range-diff vs v1:
+
+ 1:  fbbad9cc26a ! 1:  640decc2afe gpg-interface: add function for converting trust level to string
+     @@
+       ## Metadata ##
+     -Author: Jaydeep P Das <jaydeepjd.8914@gmail.com>
+     +Author: Jaydeep Das <jaydeepjd.8914@gmail.com>
+      
+       ## Commit message ##
+          gpg-interface: add function for converting trust level to string
+      
+          Add new helper function `gpg_trust_level_to_str()` which will
+          convert a given member of `enum signature_trust_level` to its
+     -    corresponding string. For example, `TRUST_ULTIMATE`
+     -    will yield the string "ULTIMATE".
+     +    corresponding string(in lowercase). For example, `TRUST_ULTIMATE`
+     +    will yield the string "ultimate".
+      
+          This will abstract out some code in `pretty.c` relating to gpg
+          signature trust levels.
+     @@ gpg-interface.c: const char *get_signing_key(void)
+       	return git_committer_info(IDENT_STRICT | IDENT_NO_DATE);
+       }
+       
+     -+const char *gpg_trust_level_to_str(enum signature_trust_level level){
+     ++char *gpg_trust_level_to_str(enum signature_trust_level level){
+      +	if (level < TRUST_UNDEFINED || level > TRUST_ULTIMATE)
+      +		return NULL;
+     -+	return sigcheck_gpg_trust_level[level].key;
+     ++	return xstrdup_tolower(sigcheck_gpg_trust_level[level].key);
+      +}
+      +
+       int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key)
+     @@ gpg-interface.h: size_t parse_signed_buffer(const char *buf, size_t size);
+       
+      +
+      +/*
+     -+ * Returns corresponding string for a given member of
+     ++ * Returns corresponding string in lowercase for a given member of
+      + * enum signature_trust_level. For example, `TRUST_ULTIMATE` will
+     -+ * return "ULTIMATE".
+     ++ * return "ultimate".
+      + */
+     -+const char *gpg_trust_level_to_str(enum signature_trust_level level);
+     ++char *gpg_trust_level_to_str(enum signature_trust_level level);
+      +
+       int git_gpg_config(const char *, const char *, void *);
+       void set_signing_key(const char *);
+     @@ gpg-interface.h: size_t parse_signed_buffer(const char *buf, size_t size);
+      
+       ## pretty.c ##
+      @@ pretty.c: static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+     - 	const struct commit *commit = c->commit;
+       	const char *msg = c->message;
+       	struct commit_list *p;
+     --	const char *arg, *eol;
+     -+	const char *arg, *eol, *sig_str;
+     + 	const char *arg, *eol;
+     ++	char *sig_str;
+       	size_t res;
+       	char **slot;
+       
+     @@ pretty.c: static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+      -			case TRUST_ULTIMATE:
+      -				strbuf_addstr(sb, "ultimate");
+      -				break;
+     +-			}
+      +			sig_str = gpg_trust_level_to_str(c->signature_check.trust_level);
+     -+			if (sig_str){
+     -+				const char *sig_str_lower = xstrdup_tolower(sig_str);
+     -+				strbuf_addstr(sb, sig_str_lower);
+     -+				free((char *)sig_str_lower);
+     - 			}
+     ++			if (sig_str)
+     ++				strbuf_addstr(sb, sig_str);
+     ++			free(sig_str);
+       			break;
+       		default:
+     + 			return 0;
+
+
+ gpg-interface.c |  7 +++++++
+ gpg-interface.h |  8 ++++++++
+ pretty.c        | 22 +++++-----------------
+ 3 files changed, 20 insertions(+), 17 deletions(-)
+
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 947b58ad4da..4ef660a09fc 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -165,6 +165,7 @@ static struct {
+ 	{ 0, "TRUST_", GPG_STATUS_TRUST_LEVEL },
+ };
+ 
++/* Keep the order same as enum signature_trust_level */
+ static struct {
+ 	const char *key;
+ 	enum signature_trust_level value;
+@@ -905,6 +906,12 @@ const char *get_signing_key(void)
+ 	return git_committer_info(IDENT_STRICT | IDENT_NO_DATE);
+ }
+ 
++char *gpg_trust_level_to_str(enum signature_trust_level level){
++	if (level < TRUST_UNDEFINED || level > TRUST_ULTIMATE)
++		return NULL;
++	return xstrdup_tolower(sigcheck_gpg_trust_level[level].key);
++}
++
+ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key)
+ {
+ 	return use_format->sign_buffer(buffer, signature, signing_key);
+diff --git a/gpg-interface.h b/gpg-interface.h
+index b30cbdcd3da..ce2db6f3780 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -71,6 +71,14 @@ size_t parse_signed_buffer(const char *buf, size_t size);
+ int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
+ 		const char *signing_key);
+ 
++
++/*
++ * Returns corresponding string in lowercase for a given member of
++ * enum signature_trust_level. For example, `TRUST_ULTIMATE` will
++ * return "ultimate".
++ */
++char *gpg_trust_level_to_str(enum signature_trust_level level);
++
+ int git_gpg_config(const char *, const char *, void *);
+ void set_signing_key(const char *);
+ const char *get_signing_key(void);
+diff --git a/pretty.c b/pretty.c
+index ee6114e3f0a..5ee03d6fe09 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1348,6 +1348,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	const char *msg = c->message;
+ 	struct commit_list *p;
+ 	const char *arg, *eol;
++	char *sig_str;
+ 	size_t res;
+ 	char **slot;
+ 
+@@ -1575,23 +1576,10 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 				strbuf_addstr(sb, c->signature_check.primary_key_fingerprint);
+ 			break;
+ 		case 'T':
+-			switch (c->signature_check.trust_level) {
+-			case TRUST_UNDEFINED:
+-				strbuf_addstr(sb, "undefined");
+-				break;
+-			case TRUST_NEVER:
+-				strbuf_addstr(sb, "never");
+-				break;
+-			case TRUST_MARGINAL:
+-				strbuf_addstr(sb, "marginal");
+-				break;
+-			case TRUST_FULLY:
+-				strbuf_addstr(sb, "fully");
+-				break;
+-			case TRUST_ULTIMATE:
+-				strbuf_addstr(sb, "ultimate");
+-				break;
+-			}
++			sig_str = gpg_trust_level_to_str(c->signature_check.trust_level);
++			if (sig_str)
++				strbuf_addstr(sb, sig_str);
++			free(sig_str);
+ 			break;
+ 		default:
+ 			return 0;
+
+base-commit: 30cc8d0f147546d4dd77bf497f4dec51e7265bd8
+-- 
+gitgitgadget
