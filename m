@@ -2,78 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12D29C43334
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 20:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC625C43334
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 20:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240018AbiGHUPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 16:15:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43170 "EHLO
+        id S239109AbiGHU25 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 16:28:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238380AbiGHUPp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 16:15:45 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD3B5A2C4
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 13:15:45 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C5C6145556;
-        Fri,  8 Jul 2022 16:15:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=L5G+KqQV1PZng8bOfmFTvEbuOwrO41eUvm2Cgp
-        2dIvA=; b=KzBE2CWKlWMZ1lVDeTcD/biCt1alPDQyes5t3tJoEGOkjqLivrE2rk
-        3V5GLZ0zjxcdfevkF5Q2AjxJpjOoenKea+rYTY7GkpWg4W0CRV7UBxYOmBVKmlUL
-        XY7icYtHc50e9MXzJJmb0z3KRYbyEy/BM9+bzt8h3YsUQS8QwD4jY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13E13145555;
-        Fri,  8 Jul 2022 16:15:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A725145554;
-        Fri,  8 Jul 2022 16:15:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fernando Ramos <greenfoo@u92.eu>
-Cc:     git@vger.kernel.org, mklein994@gmail.com
-Subject: Re: [PATCH] vimdiff: make layout engine more robust against user
- vim settings
-References: <20220708181024.45839-1-greenfoo@u92.eu>
-Date:   Fri, 08 Jul 2022 13:15:42 -0700
-In-Reply-To: <20220708181024.45839-1-greenfoo@u92.eu> (Fernando Ramos's
-        message of "Fri, 8 Jul 2022 20:10:24 +0200")
-Message-ID: <xmqqsfnbuzrl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S238095AbiGHU24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 16:28:56 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69062814A0
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 13:28:55 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id b26so31972067wrc.2
+        for <git@vger.kernel.org>; Fri, 08 Jul 2022 13:28:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8CJqauzFXvmbpi9VbxrKwucknUmXcHDXeNEKP6Tfo78=;
+        b=pYDzFR7BtniwPQWYDy4WzrV4wxWY8LdqubJs7iNkBojJR+3ByM45+L6p7AGnb6dMFi
+         lDw/xYtsRmoJiN1DHanURLfKM/yRNAcLzDbhqP5AwZTUpdakF841JlD9mq5q33ykZyG2
+         3LxP+vV9BS2uCcTnQDhkb+p1WkOO337E2XBKjOwP1ALE2MXvl2ZdSg5P68cCPGVMHAIg
+         xWtt3sIHvTh8Ry6eg7UiGvc9i+RV3k0pjj00aan+RmGxTH8PgNmGXyO8BxKRdFPIjmsS
+         mcMcLbqKnRVUyDRUM0YvkdsyhE7h1MICyLXH3UvF3fcAy17ynOjyNKjjblznja9O8yJ8
+         0Wuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8CJqauzFXvmbpi9VbxrKwucknUmXcHDXeNEKP6Tfo78=;
+        b=GNumnPu14aiAVb+eqTuuOCyFBxiM1+KtMqp5b53sva+FHdTdN5er4bVrFfCxwgPlGA
+         MgkKp5sqEOVviF9A9i9HCBDk1En76Sj8wWN0qildh5ZofnxVcC9jqIkzFvW88Sz1L2QM
+         7LxIpc453Z6fQuLIcR9kNZm06ta07r6hwQ0BYPU054F3+YQNAPQfJXf7B18yXztk8mWN
+         JrvIX2vLZmPh2Wf+dROKMSe2RPag6OhjsWJRbGV2z8Q+uYfS0yR+sG/H6u+ENebdglYZ
+         CNOstQQ+8qxFr+MmkwKFYFE5y/eEniHYDgxZjaDtmXFoFaUC0s+nOKKFpquPLtGvwBdR
+         IUHQ==
+X-Gm-Message-State: AJIora+y3jGWkE6bkuZ94/kH4fql0WQDRMnnwtR9z4XGYgCZ4UtHsja5
+        rtDrEgQs8dknc1KrSSjpAxTT+bun9vs=
+X-Google-Smtp-Source: AGRyM1uO6dcUWAam+DWpnORcZgSSpXnFhSlpJeCANXwt9REVscxS2J3lFOb61tUHHc5hU7kSsGgBrw==
+X-Received: by 2002:a05:6000:2cc:b0:21d:76d7:995d with SMTP id o12-20020a05600002cc00b0021d76d7995dmr5197253wry.339.1657312133943;
+        Fri, 08 Jul 2022 13:28:53 -0700 (PDT)
+Received: from localhost (94-21-146-223.pool.digikabel.hu. [94.21.146.223])
+        by smtp.gmail.com with ESMTPSA id f10-20020a1cc90a000000b003a0231af43csm2948132wmb.48.2022.07.08.13.28.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 13:28:53 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] multi-pack-index: simplify handling of unknown --options
+Date:   Fri,  8 Jul 2022 22:28:47 +0200
+Message-Id: <20220708202847.662319-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.37.0.340.g5e8d960d32
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BEA18F78-FEFA-11EC-986B-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fernando Ramos <greenfoo@u92.eu> writes:
+Although parse_options() can handle unknown --options just fine, none
+of 'git multi-pack-index's subcommands rely on it, but do it on their
+own: they invoke parse_options() with the PARSE_OPT_KEEP_UNKNOWN flag,
+then check whether there are any unparsed arguments left, and print
+usage and quit if necessary.
 
-> 'vim' has two configuration options ('splitbelow' and 'splitright') that
-> change the way the 'split' command behaves. When they are set, the
-> commands that the layout engine generates no longer work as expected.
+Let parse_options() handle unknown options instead, which, besides
+simpler code, has the additional benefit that it prints not only the
+usage but an "error: unknown option `foo'" message as well.
 
-Interesting.  Does that mean that the end-user setting that was
-problematic with the new layout engine would have also broken the
-layout before your series?
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ builtin/multi-pack-index.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-> In order to fix this we can append special keyword 'letfabove' to each
-
-Presumably "leftabove" was meant here.
-
-> 'split' and 'vertical split' subcommand found inside the command string
-> generated by the layout engine.
->
-> This works because whatever comes after 'leftabove' will temporally
-> ignore settings 'splitbelow' and 'splitright'.
->
-> Reported-by: Matthew Klein <mklein994@gmail.com>
-> Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
-
-Will queue.  Thanks.
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 5edbb7fe86..97a87ad8cb 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -134,10 +134,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+ 		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_write_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
+-	if (argc)
+-		usage_with_options(builtin_multi_pack_index_write_usage,
+-				   options);
++			     0);
+ 
+ 	FREE_AND_NULL(options);
+ 
+@@ -176,10 +173,7 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv)
+ 		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_verify_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
+-	if (argc)
+-		usage_with_options(builtin_multi_pack_index_verify_usage,
+-				   options);
++			     0);
+ 
+ 	FREE_AND_NULL(options);
+ 
+@@ -202,10 +196,7 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv)
+ 		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_expire_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
+-	if (argc)
+-		usage_with_options(builtin_multi_pack_index_expire_usage,
+-				   options);
++			     0);
+ 
+ 	FREE_AND_NULL(options);
+ 
+@@ -232,10 +223,7 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options,
+ 			     builtin_multi_pack_index_repack_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
+-	if (argc)
+-		usage_with_options(builtin_multi_pack_index_repack_usage,
+-				   options);
++			     0);
+ 
+ 	FREE_AND_NULL(options);
+ 
+-- 
+2.37.0.340.g5e8d960d32
 
