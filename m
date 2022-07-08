@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC59BC433EF
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 16:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BFD1C43334
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 16:26:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239180AbiGHQ0S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 12:26:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34860 "EHLO
+        id S239016AbiGHQ0V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 12:26:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239243AbiGHQ0C (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239247AbiGHQ0C (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 8 Jul 2022 12:26:02 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F8995C9C0
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 09:25:24 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id o19-20020a05600c511300b003a2de48b4bbso91543wms.5
-        for <git@vger.kernel.org>; Fri, 08 Jul 2022 09:25:24 -0700 (PDT)
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 808B2F6A
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 09:25:27 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id p4so3384161wms.0
+        for <git@vger.kernel.org>; Fri, 08 Jul 2022 09:25:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=pyTDyHG/r3HDiqTRrfYUdwnY/9t53YoZ0wyo4fJc38E=;
-        b=GpCdr+bWTbTkITp7S5m7Cnjjdw2zhhOllYYtDGz8z+3cYVcsCdD9y0xswTTbep7XjA
-         mzYnY6IQ3dEuVadlaZMj2LcQqtSkvFHXPkPzu8ROYTEaQSpqT/JTZvIG2x2IrpTVvAof
-         xeof0jN5uLTSu2+kf8+XwtwffdKF1tz3uXsVgPd1mRvqGxMK4uubSs/6pU9qJ7oPJdO2
-         6vxJ5B0ekukDmL0LPiLJpEdxLcoNCd/UYNeW38QvZdlczaRvMRCKPFa9B0m3qPwHn4vy
-         u5fxnr04t3WFyCL7jiWXRRlcZGBds3Qgi/mxwZo+PqEOEz/+YC7SaHcTJwu6mdoAdnN2
-         EgBg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=0yc4f6BN9XkcJKB+aBFwXZF6Glat4pFQoTqrGB7dE+4=;
+        b=BZzvCk+DxA6daALQe+lW7YEfZK6DX9vIthOFU0OgfurmqZETaVrkhZatqS1CC3FOsD
+         EgNRFIc1G3C1nlxd6MCsD2etSoL8lpuxptqNDU/haOvWSorKCwZ4UzhUgjC8cPqHV0JM
+         PtLBT37rvTpL4RKvS+0M4qMVhiCNHm7xy3cfk5T7l25fFROUA9Lxds/BjtrKC/mV+52I
+         d6ZGItIu7xDhy+2L5WcYVCk/o2Y2fhjOD+j1hiviT/gdrAZ5v2zEVsGAz0/u4my9dT8M
+         DdHMCRyTaRS3gzVbwFLAFsD8oQAgDSOGBCABn6TJHLD2SR8am3P5W7PUHeNG19QWwMVW
+         EW+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pyTDyHG/r3HDiqTRrfYUdwnY/9t53YoZ0wyo4fJc38E=;
-        b=cN/1+Sbqo53YRhQyQ5PkveFtAlmrM/1yun+w165e0YmZt7kC7Icd83nJEOSe21Hp5n
-         LveG0T0az+SCE2tGDEcdm7o4DC5bLc0sVbJcJa0cUFchHm70oXwsEktOtSSvzsotIeeD
-         YtXa+HhIW1ZNAz2vlJsHaG05oN9x6TYTn9wa3pE3nrsHjL5G3fL/fGkkFik2uTUTYQ7T
-         hUUmOWOAQAyC9NZfpAbbgJDxGi4ZSRIlrBZ0CO/bWpHNXowv4RqKZDRrHu9hUYOq61GP
-         G0vwHjj93ptAMYpgfEr6gNJO3Pf0R09K3EXzTjGM0X1BwwVh17icyx/XcwKXyw393BXF
-         bcSA==
-X-Gm-Message-State: AJIora/AED8QN/lU0boGcsIZo8DdkpKXAALc/aEJV8PS1auNtAC6QDcE
-        ypZjknuVPdJFoTP25yEmocK71KjScZc=
-X-Google-Smtp-Source: AGRyM1ufjYHylnEzBkx3xvbCNYMpD4/gUxnLHV24PR1VrCS1mLCiLjRSsrGBVkC99rxwQ5OmGHJJIg==
-X-Received: by 2002:a05:600c:3507:b0:3a1:9fbb:4d62 with SMTP id h7-20020a05600c350700b003a19fbb4d62mr600770wmq.161.1657297522474;
-        Fri, 08 Jul 2022 09:25:22 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=0yc4f6BN9XkcJKB+aBFwXZF6Glat4pFQoTqrGB7dE+4=;
+        b=uTo0ixs5lC5tyhnGOZNwpP1Q0tf59Jl38iErq8BwtddZw4zdKaiVpbyDkF0SPk9QJ/
+         J3O0JvETG/u3ZY7bgMvT8jdR7wczz9NxTM3h85I8LzoDlgxWeyVE+0y5vTL1ucs6SYbW
+         ZrrSpb+ZPo52X63KftNCly+655mLVNFrP7gNVPTM1FUJKzF7nDrbNsk9ajJ7DXhlGg5w
+         kMpHHu6D99ouKU9MI+0IjDwqeUpXUXqPnghkAo+47QaheYUcpN2eb5vdJZmkifdQxdcm
+         TnzH4uFjcfMzCJDPHp9c9EGodcK5IxJCD3JCn4YhAYSA7Umk87S79C7v1KkvDpRMtJ+B
+         tGhg==
+X-Gm-Message-State: AJIora+LzVgoumDhPNRiOWRsjgBJojvv9H12O6U6Xbn9gZmyxa3M1LHP
+        Lj3/486seYhoCNTV1u/589k1aIe+fHI=
+X-Google-Smtp-Source: AGRyM1v+e4oIF5OS6JX8Zy1NANJceDOhxXAZ5XmhKJaiuRne57yu06NU8oF9Q3bMM+nL9vPRsxYH7g==
+X-Received: by 2002:a05:600c:3b8c:b0:3a0:4cc2:2b62 with SMTP id n12-20020a05600c3b8c00b003a04cc22b62mr621016wms.185.1657297525715;
+        Fri, 08 Jul 2022 09:25:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q1-20020a1c4301000000b00397402ae674sm2638147wma.11.2022.07.08.09.25.21
+        by smtp.gmail.com with ESMTPSA id ay26-20020a5d6f1a000000b0021baf5e590dsm41308486wrb.71.2022.07.08.09.25.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 09:25:21 -0700 (PDT)
-Message-Id: <55fd62dc27d2bccfdb8ac300be23fc33d1795366.1657297520.git.gitgitgadget@gmail.com>
+        Fri, 08 Jul 2022 09:25:25 -0700 (PDT)
+Message-Id: <8c24cd7737b29d461788b71f6a94eb74c468ad33.1657297520.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1272.v2.git.1657297519.gitgitgadget@gmail.com>
 References: <pull.1272.git.1656516334.gitgitgadget@gmail.com>
         <pull.1272.v2.git.1657297519.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 08 Jul 2022 16:25:16 +0000
-Subject: [PATCH v2 1/4] xdiff: introduce XDL_ALLOC_ARRAY()
-Fcc:    Sent
+Date:   Fri, 08 Jul 2022 16:25:19 +0000
+Subject: [PATCH v2 4/4] xdiff: introduce XDL_ALLOC_GROW()
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
@@ -69,104 +69,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Add a helper to allocate an array that automatically calculates the
-allocation size. This is analogous to ALLOC_ARRAY() in the rest of the
-codebase but returns NULL if the allocation fails to accommodate other
-users of libxdiff such as libgit2. The helper will also return NULL if
-the multiplication in the allocation calculation overflows.
+Add a helper to grow an array. This is analogous to ALLOC_GROW() in
+the rest of the codebase but returns −1 on allocation failure to
+accommodate other users of libxdiff such as libgit2. It will also
+return a error if the multiplication overflows while calculating the
+new allocation size. Note that this keeps doubling on reallocation
+like the code it is replacing rather than increasing the existing size
+by half like ALLOC_GROW(). It does however copy ALLOC_GROW()'s trick
+of adding a small amount to the new allocation to avoid a lot of
+reallocations at small sizes.
+
+Note that xdl_alloc_grow_helper() uses long rather than size_t for
+`nr` and `alloc` to match the existing code.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- xdiff/xdiffi.c    | 2 +-
- xdiff/xmacros.h   | 5 +++++
- xdiff/xpatience.c | 4 ++--
- xdiff/xprepare.c  | 8 ++++----
- 4 files changed, 12 insertions(+), 7 deletions(-)
+ xdiff/xmacros.h  | 10 ++++++++++
+ xdiff/xprepare.c | 19 ++++---------------
+ xdiff/xutils.c   | 17 +++++++++++++++++
+ xdiff/xutils.h   |  3 ++-
+ 4 files changed, 33 insertions(+), 16 deletions(-)
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 758410c11ac..53e803e6bcb 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -337,7 +337,7 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	 * One is to store the forward path and one to store the backward path.
- 	 */
- 	ndiags = xe->xdf1.nreff + xe->xdf2.nreff + 3;
--	if (!(kvd = (long *) xdl_malloc((2 * ndiags + 2) * sizeof(long)))) {
-+	if (!XDL_ALLOC_ARRAY(kvd, 2 * ndiags + 2)) {
- 
- 		xdl_free_env(xe);
- 		return -1;
 diff --git a/xdiff/xmacros.h b/xdiff/xmacros.h
-index ae4636c2477..9fd3c5da91a 100644
+index 0977d1615ac..8487bb396fa 100644
 --- a/xdiff/xmacros.h
 +++ b/xdiff/xmacros.h
-@@ -49,5 +49,10 @@ do { \
- 		((unsigned long) __p[2]) << 16 | ((unsigned long) __p[3]) << 24; \
- } while (0)
+@@ -58,4 +58,14 @@ do { \
+ /* Allocate an array of nr zeroed out elements, returns NULL on failure */
+ #define XDL_CALLOC_ARRAY(p, nr)	((p) = xdl_calloc(nr, sizeof(*(p))))
  
-+/* Allocate an array of nr elements, returns NULL on failure */
-+#define XDL_ALLOC_ARRAY(p, nr)				\
-+	((p) = SIZE_MAX / sizeof(*(p)) >= (size_t)(nr)	\
-+		? xdl_malloc((nr) * sizeof(*(p)))	\
-+		: NULL)
- 
++/*
++ * Ensure array p can accommodate at least nr elements, growing the
++ * array and updating alloc (which is the number of allocated
++ * elements) as necessary. Frees p and returns -1 on failure, returns
++ * 0 on success
++ */
++#define XDL_ALLOC_GROW(p, nr, alloc)	\
++	(-!((nr) <= (alloc) ||		\
++	    ((p) = xdl_alloc_grow_helper((p), (nr), &(alloc), sizeof(*(p))))))
++
  #endif /* #if !defined(XMACROS_H) */
-diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-index 1a21c6a74b3..ce87b9084ca 100644
---- a/xdiff/xpatience.c
-+++ b/xdiff/xpatience.c
-@@ -200,7 +200,7 @@ static int binary_search(struct entry **sequence, int longest,
-  */
- static int find_longest_common_sequence(struct hashmap *map, struct entry **res)
- {
--	struct entry **sequence = xdl_malloc(map->nr * sizeof(struct entry *));
-+	struct entry **sequence;
- 	int longest = 0, i;
- 	struct entry *entry;
- 
-@@ -211,7 +211,7 @@ static int find_longest_common_sequence(struct hashmap *map, struct entry **res)
- 	 */
- 	int anchor_i = -1;
- 
--	if (!sequence)
-+	if (!XDL_ALLOC_ARRAY(sequence, map->nr))
- 		return -1;
- 
- 	for (entry = map->first; entry; entry = entry->next) {
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 105752758f2..25866a1667a 100644
+index b016570c488..c84549f6c50 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -86,7 +86,7 @@ static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
- 	memset(cf->rchash, 0, cf->hsize * sizeof(xdlclass_t *));
+@@ -111,7 +111,6 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
+ 	long hi;
+ 	char const *line;
+ 	xdlclass_t *rcrec;
+-	xdlclass_t **rcrecs;
  
- 	cf->alloc = size;
--	if (!(cf->rcrecs = (xdlclass_t **) xdl_malloc(cf->alloc * sizeof(xdlclass_t *)))) {
-+	if (!XDL_ALLOC_ARRAY(cf->rcrecs, cf->alloc)) {
+ 	line = rec->ptr;
+ 	hi = (long) XDL_HASHLONG(rec->ha, cf->hbits);
+@@ -127,14 +126,8 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
+ 			return -1;
+ 		}
+ 		rcrec->idx = cf->count++;
+-		if (cf->count > cf->alloc) {
+-			cf->alloc *= 2;
+-			if (!(rcrecs = (xdlclass_t **) xdl_realloc(cf->rcrecs, cf->alloc * sizeof(xdlclass_t *)))) {
+-
++		if (XDL_ALLOC_GROW(cf->rcrecs, cf->count, cf->alloc))
+ 				return -1;
+-			}
+-			cf->rcrecs = rcrecs;
+-		}
+ 		cf->rcrecs[rcrec->idx] = rcrec;
+ 		rcrec->line = line;
+ 		rcrec->size = rec->size;
+@@ -163,7 +156,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+ 	unsigned long hav;
+ 	char const *blk, *cur, *top, *prev;
+ 	xrecord_t *crec;
+-	xrecord_t **recs, **rrecs;
++	xrecord_t **recs;
+ 	xrecord_t **rhash;
+ 	unsigned long *ha;
+ 	char *rchg;
+@@ -190,12 +183,8 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+ 		for (top = blk + bsize; cur < top; ) {
+ 			prev = cur;
+ 			hav = xdl_hash_record(&cur, top, xpp->flags);
+-			if (nrec >= narec) {
+-				narec *= 2;
+-				if (!(rrecs = (xrecord_t **) xdl_realloc(recs, narec * sizeof(xrecord_t *))))
+-					goto abort;
+-				recs = rrecs;
+-			}
++			if (XDL_ALLOC_GROW(recs, nrec + 1, narec))
++				goto abort;
+ 			if (!(crec = xdl_cha_alloc(&xdf->rcha)))
+ 				goto abort;
+ 			crec->ptr = prev;
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index 115b2b1640b..9e36f24875d 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -432,3 +432,20 @@ int xdl_fall_back_diff(xdfenv_t *diff_env, xpparam_t const *xpp,
  
- 		xdl_free(cf->rchash);
- 		xdl_cha_free(&cf->ncha);
-@@ -178,7 +178,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+ 	return 0;
+ }
++
++void* xdl_alloc_grow_helper(void *p, long nr, long *alloc, size_t size)
++{
++	void *tmp = NULL;
++	size_t n = ((LONG_MAX - 16) / 2 >= *alloc) ? 2 * *alloc + 16 : LONG_MAX;
++	if (nr > n)
++		n = nr;
++	if (SIZE_MAX / size >= n)
++		tmp = xdl_realloc(p, n * size);
++	if (tmp) {
++		*alloc = n;
++	} else {
++		xdl_free(p);
++		*alloc = 0;
++	}
++	return tmp;
++}
+diff --git a/xdiff/xutils.h b/xdiff/xutils.h
+index fba7bae03c7..fd0bba94e8b 100644
+--- a/xdiff/xutils.h
++++ b/xdiff/xutils.h
+@@ -42,6 +42,7 @@ int xdl_emit_hunk_hdr(long s1, long c1, long s2, long c2,
+ int xdl_fall_back_diff(xdfenv_t *diff_env, xpparam_t const *xpp,
+ 		       int line1, int count1, int line2, int count2);
  
- 	if (xdl_cha_init(&xdf->rcha, sizeof(xrecord_t), narec / 4 + 1) < 0)
- 		goto abort;
--	if (!(recs = (xrecord_t **) xdl_malloc(narec * sizeof(xrecord_t *))))
-+	if (!XDL_ALLOC_ARRAY(recs, narec))
- 		goto abort;
+-
++/* Do not call this function, use XDL_ALLOC_GROW instead */
++void* xdl_alloc_grow_helper(void* p, long nr, long* alloc, size_t size);
  
- 	hbits = xdl_hashbits((unsigned int) narec);
-@@ -215,9 +215,9 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 
- 	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
- 	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
--		if (!(rindex = xdl_malloc((nrec + 1) * sizeof(*rindex))))
-+		if (!XDL_ALLOC_ARRAY(rindex, nrec + 1))
- 			goto abort;
--		if (!(ha = xdl_malloc((nrec + 1) * sizeof(*ha))))
-+		if (!XDL_ALLOC_ARRAY(ha, nrec + 1))
- 			goto abort;
- 	}
- 
+ #endif /* #if !defined(XUTILS_H) */
 -- 
 gitgitgadget
-
