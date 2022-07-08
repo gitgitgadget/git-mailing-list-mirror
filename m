@@ -2,87 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72C05C43334
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 18:14:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6967C43334
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 19:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238158AbiGHSO5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 14:14:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35918 "EHLO
+        id S239764AbiGHTBR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 15:01:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238767AbiGHSOz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 14:14:55 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E695E7D1C9
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 11:14:54 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id 316EA3200907;
-        Fri,  8 Jul 2022 14:14:54 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Fri, 08 Jul 2022 14:14:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1657304093; x=1657390493; bh=mirSj0mzYs
-        arS5dUMQM3Ouk7tmlDgjA3zCxnYQLAiog=; b=0IikfymkVBAF8iIdBGDJUXgln1
-        /GpgR8QvLu1ZYa2bN6dtGewgxTV0JhUow3WA+HDrMljbuAI+67fgfiZccdWEKmRK
-        ejx1rkx6mMg+b9BDmy7jK4krVX3RjdQztaU165NkSU58+W83tiktV05jxjtwE26s
-        Das9AzYiyOy6HmWIcj+6mJmDqx6gIVVemmfIYOgQPCAQFqWmKBPDLNgDjso35I5T
-        jiMk8FrvEdpmO4uBZHA15eZx/GrnkPmytMxWuB39TANKY3JScyuNZ9tAhTfb5JoT
-        1oQhVsrzbT2X8N+DAwqaz40tyGfXEsJvfD+/LZp7uyZL5VIApqbHupEwK7SQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; t=1657304093; x=1657390493; bh=mirSj0mzYsarS5dUMQM3Ouk7tmlD
-        gjA3zCxnYQLAiog=; b=mKGAtmF/Wm4Cuk15FOwWuMK42Vsq7xckC+IKlESRzkBf
-        iS7bV6AlfLbyrx4osHbOavqfAhH7I6vA0PJ/T5zRUV7wEs9KDWY+ELKl+1kMumzq
-        bYVSa6GchTr0DZ7AoqJLDL//u98zuWO5G40axQzjSsrVleb+QOCF8m4FdmsaSAom
-        KUOpAz7qT90uRWWEQk47jieJY6zdPErSkXiC/Yz+wTD84ga/I+L5Rww4Zs19cckR
-        VutN7MzGIZNvNVG199rC/1mZRmPWylxOdILp3NIcXIck0r7Qs1ufzgr8Kce2r5Qg
-        +RGKD772A1Gt7BfnB7u/dIoGknoYxAVsbGStH1hocA==
-X-ME-Sender: <xms:HXTIYr9NmJbse2IAAb-Lwnwbe_f6QNpUzrFRw3-ggxp-QtX11IEphA>
-    <xme:HXTIYnvQvIp7ufz4Rv75DD3gCkfO6Fogru1smBltUgxbVrIDSZ6ArSxaylzvLYkkR
-    5J3wzSV-eHWMNhl-Q>
-X-ME-Received: <xmr:HXTIYpCed4gyf5s5BG0Cu5ZqIXngb45oOCeXjY8oFBh0gg0bpQ43o4e_kXN32VWZkQuNgWfN5B8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudeijedguddvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesth
-    dtredttddtjeenucfhrhhomhephfgvrhhnrghnughoucftrghmohhsuceoghhrvggvnhhf
-    ohhosehuledvrdgvuheqnecuggftrfgrthhtvghrnhepffehveetfeejveeikeehueejie
-    evgfeuvdeifeelueeigfdttdelleehveelvdejnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
-X-ME-Proxy: <xmx:HXTIYndPB-UfjPFvR3cJharB3ppRn5lczXxyGUI6mbKe8TVj0eZGVQ>
-    <xmx:HXTIYgOEecXeq_n8zzwfNzVCJix5GTN4u2n8e2D7UoUr9RXsHKGH7w>
-    <xmx:HXTIYpmDAg9eo2I1kxCrSsGXBG8tHvzVo7txkTpq72OKxZoU3Ioz3Q>
-    <xmx:HXTIYq0y1pArFDugEX3C45I9eloaH-EUILyRCn3FjFvJPcxy3LrwiA>
-Feedback-ID: i96f14706:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Jul 2022 14:14:52 -0400 (EDT)
-Date:   Fri, 8 Jul 2022 20:14:49 +0200
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, mklein994@gmail.com
-Subject: Re: [PATCH] vimdiff: make layout engine more robust against user vim
- settings
-Message-ID: <Ysh0GWhYiyAT21Nn@zacax395.localdomain>
-References: <20220708181024.45839-1-greenfoo@u92.eu>
+        with ESMTP id S238179AbiGHTBQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 15:01:16 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B64B11EAFF
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 12:01:11 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E62F144D9A;
+        Fri,  8 Jul 2022 15:01:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tIElzTI04lrOeMisw258uARM4qbACbjaqADsC8
+        QFdh0=; b=wRJmRAEzEUXu+MJq4GJx81mvyL8CrH645H/rKIJ+3yF1nXw3LkKGrI
+        08ibzkkT+3aeaivlKl/fyR76b9bBEYvfkKrua1UHyAWUZaP3KHICP8psLla9rj0M
+        CQJD/kc8QGHU4nje2yAHL+yKWrbizUiOTSH1u8BHn1WV4PjRL4G2U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1F57144D98;
+        Fri,  8 Jul 2022 15:01:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BEBC144D97;
+        Fri,  8 Jul 2022 15:01:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?utf-8?Q?=C3=86var_Arnfj?= =?utf-8?Q?=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v7 1/5] Documentation/git-config.txt: add SCOPES section
+References: <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com>
+        <pull.1261.v7.git.git.1657234914.gitgitgadget@gmail.com>
+        <5c58db3bb2189f3b4193a682aa3b43f3bfa95796.1657234914.git.gitgitgadget@gmail.com>
+        <xmqq4jzsxze4.fsf@gitster.g>
+        <kl6l5yk77d4b.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Fri, 08 Jul 2022 12:01:06 -0700
+In-Reply-To: <kl6l5yk77d4b.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Fri, 08 Jul 2022 10:01:08 -0700")
+Message-ID: <xmqq1quvwhsd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220708181024.45839-1-greenfoo@u92.eu>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 536203AA-FEF0-11EC-81A1-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This bug was originally reported by Matthew. I have verified that the patch
-above fixes the issue but if anyone else can also test it that would be great.
+Glen Choo <chooglen@google.com> writes:
 
+>> Problem inherited from the original, but I suspect that rephrasing
+>> "not available" to "missing" (or "does not exist") may make it
+>> easier to follow.
+>> ...
+>
+> The only change I'd suggest is to expand "missing" -> "missing or
+> unreadable". The original wording is "not available", which could be
+> interpreted to cover both cases. We'd obviously also have to amend
+> "not available or readable" accordingly.
 
-> Reported-by: Matthew Klein <mklein994@gmail.com>
-> Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
+Probably.  I wonder if we should document that we at least warn when
+a file we are expected to read exists but is not readable (instead
+of simply saying "is ignored"), but other than that I agree with you.
 
-Matthew, I have added you to the "Reported-by" field. If you prefer to remain
-anonymous, please let me know and I'll create a new patch without your name.
+> Thanks! Shall I apply your suggestions, or were you planning to apply
+> them yourself?
 
-Thanks!
+Definitely not the latter ;-)
