@@ -2,166 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 895E1C43334
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 01:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB0ABC43334
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 02:27:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236299AbiGHB4d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jul 2022 21:56:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35334 "EHLO
+        id S236289AbiGHC1V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jul 2022 22:27:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236202AbiGHB4d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jul 2022 21:56:33 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20DF773902
-        for <git@vger.kernel.org>; Thu,  7 Jul 2022 18:56:32 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id g1so17597994edb.12
-        for <git@vger.kernel.org>; Thu, 07 Jul 2022 18:56:32 -0700 (PDT)
+        with ESMTP id S229846AbiGHC1U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jul 2022 22:27:20 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FF873932
+        for <git@vger.kernel.org>; Thu,  7 Jul 2022 19:27:17 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id d2so35510995ejy.1
+        for <git@vger.kernel.org>; Thu, 07 Jul 2022 19:27:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pYR7ooSWZRxE85/CofVEcYKxReLftJs+wrLWTLWWplE=;
-        b=hLsW1QD68n+juxQpwYHaYTzg0DBhVU6ugiiHcRhVhhld1XTtirqnaMCoTxJ6+y3hqs
-         vJudVqPOr0xZ9cCf/0kefo1cj4mSLP/8j7l4Jijk/4jQIJeRCWWbjLH7Fl1Esxc732vg
-         5QacDuP4uySjjlQ2DaVl9V1AvEFvDAz6bQtkcr1Lg1fhnuVOWn4IIn1YZs07MvnrPTmO
-         rawyT9zOgUnxeKb9NNiDHnl3xgwItdRwcephrKgWTOFarwAMvox0mUmc9z9Cw5LV8YaB
-         //M/WzGX2sn+d6BvsAbjyjs5wwtNxdh7NkYIMq0OpSsL0RR7hWkjjv3nJHogEbDyxign
-         AlBQ==
+        bh=R2f1TWZ2YhqqAQAfEBS5MliKKh33fgPxEYgpRrVNEds=;
+        b=f3t52jm+slV/U73qx/qNDNadxx+pvE0hZk2ydcCYTQtI9TXQihX643XJ8QMD0fBCN3
+         j33X46potqsJVIxPEnzshloxyEREBPOYPL9JaPzHwWwcE/dAk+c0FL3et9c6Af0SdwSm
+         azB4ESrDcQC+/O60/M5sylOy/OFKkhb/KJ3uzL6pSMypIAV+x+5BWEZyhAcW99Ylv9Yd
+         P1nz9wMpqAlcVWNghU7CFyRfliV1cMHFbajkSBdToAR2KxcHPmMBc3+c/OhMZ3KwFnoD
+         7xKJ4T4HJryYoCSOoG4i9EtlXqcmfCizR5bYI1hn9ujxlsHS7r02iEHMd+jeRPfn1CcH
+         AUFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pYR7ooSWZRxE85/CofVEcYKxReLftJs+wrLWTLWWplE=;
-        b=zVl3n83wi5urfOgVErBF1/uZhXxK8jX3cciCbN/RRjCcUCe+mu/VpHR2JKSJ3ZmFyM
-         04R1dcPGLhUIko5pnN7wpcvPnxGwKpn6CATLvLls5eIhKeTS2B88x0J7TtvdSMEVFf+I
-         GZwWsLLmwirtDEDNdzFtRT5sjpfgnhAQjYpU3NEiuVVF0ACZc95WodEVwH5lLwxaXlca
-         fF3S52F06veml9pVqCtfYGHjGwUiZess1GkTjUnnF444X89Ffti9wG0/60DzcDYmK//W
-         BpDF6jOQxB0uVtEIJ591aEzkU7go8UCUmUSNwGKqKg+l4YvyoP4+YxznAOBfotDGOi5B
-         jp4g==
-X-Gm-Message-State: AJIora8uKcpxnSa0kJeOEnNgT1MpEiSRR9MCbbzAfS8LJgQ1IfSlvAEU
-        wMMaMPIDQrqXXEaYCRqZM1PQuiv46ERjr4Ql2O97KP/oBBs=
-X-Google-Smtp-Source: AGRyM1uF2ssrs/kIeNVbTSHX2l6EsQ+t1u/eBqkoiRNwRRBm9Xtmz+Gyo2PF9SdQCmvCVBoxWCXfKHr4UPwjzUDTJtQ=
-X-Received: by 2002:a05:6402:4242:b0:437:7771:982c with SMTP id
- g2-20020a056402424200b004377771982cmr1543477edb.146.1657245390732; Thu, 07
- Jul 2022 18:56:30 -0700 (PDT)
+        bh=R2f1TWZ2YhqqAQAfEBS5MliKKh33fgPxEYgpRrVNEds=;
+        b=nB4ng4/QYWTBP0uw0PCBzCcJrUhql5qbdCSfYqZoyZJF9BnX+xGkM9PEia/aZDc74f
+         HIWa71tIT994fnWnBZDrwrrDOsZA7w/IKJtG1LqyQUCn49UF4mvSwuTnmjbOHxDlNqeY
+         igCBt7HSUSc9n1WYf+HvUKP5wVjcZxxpJiK9YXapnSQXAbqves0eAKINPAvRGYZ1VQdv
+         rM1dYF5QZu3fV4vdmYjQOwIDszYlBZs55ekoI90koObJffQCKqpHQVQU66XQDirS78EM
+         7IDQXmHS00q93pbobM+YotRgY0coiH9ylOKOBiqUn3W8URxrVK9EZDgeHZg7BgF+l31a
+         WD0w==
+X-Gm-Message-State: AJIora9ifz9XjYCSOgzR1+OnO43Xs1t1jEzEpF9ALF4HO8BXQGB7Yefu
+        BevH4ldzfik5iXoK8ow3aTJ/h+5Vir2XXdpTebw=
+X-Google-Smtp-Source: AGRyM1tSMdcg31GdZIwipfPMq2qcHwRsJQ8XwZn0bGJcjsPBEW16NjBo0Tq/m5aXLQvrL/9VfzI9lTIuhnYrZLN1BOo=
+X-Received: by 2002:a17:906:a245:b0:708:ce69:e38b with SMTP id
+ bi5-20020a170906a24500b00708ce69e38bmr1267992ejb.100.1657247235856; Thu, 07
+ Jul 2022 19:27:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <PH0PR08MB773203CE3206B8DEFB172B2F94839@PH0PR08MB7732.namprd08.prod.outlook.com>
-In-Reply-To: <PH0PR08MB773203CE3206B8DEFB172B2F94839@PH0PR08MB7732.namprd08.prod.outlook.com>
+References: <pull.1247.v2.git.1654634569.gitgitgadget@gmail.com>
+ <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com> <918b398d6a2264a99acadd319f780c796bbafc18.1656422759.git.gitgitgadget@gmail.com>
+ <CABPp-BFqLP51q9RkJr=16+Aqq7R=tYqL5mZGUq-dvfn8LL2AMQ@mail.gmail.com>
+ <7dd69bb1-8bc7-3ae9-6265-bdba660b4c4a@github.com> <CABPp-BHOSHYLEpH_222X_Pv_hZeDwy10zLejrVgwgf6W-pFVyw@mail.gmail.com>
+ <84da5ea6-b6a9-7756-66f4-a3832144a68e@github.com>
+In-Reply-To: <84da5ea6-b6a9-7756-66f4-a3832144a68e@github.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 7 Jul 2022 18:56:19 -0700
-Message-ID: <CABPp-BH2zuYe87xhjdp5v7M7i+EfEgLHAZgwfzJUAxGk1CFgfA@mail.gmail.com>
-Subject: Re: git describe is not returning the expected tag
-To:     Florian Pfaff <florian.pfaff@hitachivantara.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Thu, 7 Jul 2022 19:27:04 -0700
+Message-ID: <CABPp-BFQbG-qQK2biKMV7cE641BzNwk324Gn5eEFUyiz7k4c4g@mail.gmail.com>
+Subject: Re: [PATCH v3 6/8] rebase: add --update-refs option
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Jul 5, 2022 at 3:22 PM Derrick Stolee <derrickstolee@github.com> wrote:
+>
+> On 7/4/22 11:57 AM, Elijah Newren wrote:
+> > Actually, I checked out ds/rebase-update-ref just now to try it, and
+> > it seems like it does the right thing:
+> >
+> >     pick 111111 first commit
+> >     pick 222222 second commit
+> >     fixup 555555 fixup! second commit
+> >     update-ref refs/heads/branch1
+> >
+> >     pick 333333 third commit
+> >     pick 444444 fourth commit
+>
+> Thanks for trying it out! This is definitely the main goal of the
+> feature, although it is also helpful when resolving conflicts or
+> doing 'edit' steps.
+>
+> >     # Ref refs/heads/branch2 checked out at '...'
+> >
+> > The last line was very disorienting to me at first and made me think
+> > we had a bug, but the update-refs stuff is built on top of the normal
+> > rebase mechanism and branch2 will be updated by that logic rather than
+> > by the special update-refs handling.  If I add another branch with a
+> > few commits on top of branch2, then branch2 is indeed updated and
+> > after the pick of 444444 (and the additional branch, say branch3,
+> > would be updated by the normal rebase logic instead of by the
+> > update-refs handling).  So it all works correctly, but users might get
+> > worried or confused along the way wondering whether it will function
+> > correctly.
+>
+> I'll add a patch that removes the comment in the case of the HEAD
+> ref. Thanks for the idea!
 
-Thanks for the detailed report and simple reproduction steps.  Very cool.
+Thanks, that'd improve things.  I'm curious whether it'd be even
+better to have an update-ref line for HEAD, so that users don't wonder
+whether it's omitted from the updates.  (That would leave an open
+question whether you filter out HEAD before actually calling
+update-ref, or use some other mechanism to make it all work behind the
+scenes.)
 
-On Wed, Jul 6, 2022 at 11:43 PM Florian Pfaff
-<florian.pfaff@hitachivantara.com> wrote:
+> > Another part that users might find disorienting is that at the end,
+> > the rebase reports:
+> >     Successfully rebased and updated refs/heads/branch2.
+> > which is correct but totally ignores the fact that it *also* rebased
+> > and updated other branches.
 >
-> I am experimenting with git describe as we want to use this in our CI system. However, I am not getting the expected results and neither the git describe documentation nor googling nor stackoverflow have helped me understand why.
->
-> The repository
-> ==============
->
-> git log --oneline --graph
->
-> * 9a45651 (HEAD -> main) m c7
-> *   b7982a9 merged r3
-> |\
-> | * 8c2adbe (tag: v3.0.0) r3 c1
-> |/
-> * 273a50e m c6
-> *   6014487 merged r2
-> |\
-> | * aa906b8 (tag: v2.0.0) r2 c2
-> | * 716c189 r2 c1
-> |/
-> * f0e2c71 m c5
-> * d42bc37 m c4
-> *   9060516 merged r1
-> |\
-> | * 619d331 (tag: v1.0.0) r1 c2
-> | * 75f90de r1 c1
-> * | 372f1fe m c3
-> |/
-> * a27d5e4 m c2
-> * a66cb53 m c1
->
->
-> Expected result
-> ===============
->
-> When running git describe on main I'd expect   v3.0.0-x-d???????
+> Good point. I can add an extra message at the end (as well as a
+> warning for any refs that did not properly update at the end).
 
-In particular, according to the documentation, this should be named
-v3.0.0-2-g9a45651
-
-> Actual result
-> =============
->
-> What I am getting instead is  v2.0.0-13-g9a45651
-
-Even if you were to delete the v3.0.0 tag, this wouldn't be the
-correct answer.  The expected result in that case would be
-v2.0.0-5-g9a45651.  So, it finds the wrong tag AND gets the count
-wrong.
-
-> More information
-> ================
->
-> git describe --debug
-> ---------------------
->
->         # git describe --debug
->         describe HEAD
->         No exact match on refs or tags, searching to describe
->          annotated         13 v2.0.0
->          annotated         13 v1.0.0
->          annotated         14 v3.0.0
-
-and indeed, here we see that the counts are off for all the tags.  Way
-off, even in this simple repository.  The counts should be 5, 11, and
-2 rather than 13, 13, and 14.
-
->         traversed 15 commits
->         v2.0.0-13-g9a45651
->
->
-> amount of commits between tag and HEAD
-> --------------------------------------
->
->     $ git log --oneline v2.0.0..HEAD | wc -l
->     5
->
->     $ git log --oneline v3.0.0..HEAD | wc -l
->     2
-
-Here you show what the counts should be.
-
-> git version
-> -----------
->
->     I have tested 2.36.1 and 2.37.0 both on Ubuntu 20.04.4 LTS both installed from # deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu focal main
->
->
-> Script to recreate the repository
-> ---------------------------------
->
->     https://gist.github.com/twigs/bb0cbe29af55b8141c19d25de47e0eed
-
-Thanks for the script.  If you add a "sleep 1" after every commit or
-merge command, `git describe` happens to return the right output.
-Basically, `git describe` is broken.  This appears to have been
-discussed previously, see here:
-https://lore.kernel.org/git/20191008123156.GG11529@szeder.dev/, but
-looks like there was never quite as simple of a testcase as this one.
-
-If anyone's reading this and wants to dig in, and try to fix, feel
-free.  I don't have time to dig further.
+Sounds good.
