@@ -2,235 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4197C433EF
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 09:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FF7CC43334
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 10:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237165AbiGHJfk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 05:35:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55566 "EHLO
+        id S238039AbiGHKqJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 06:46:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234105AbiGHJfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 05:35:40 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E295C9D3
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 02:35:39 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id b26so29770791wrc.2
-        for <git@vger.kernel.org>; Fri, 08 Jul 2022 02:35:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2Zjw1XSHUXPnOqBYw8BiROrflI7csy0giaIEhlFk6No=;
-        b=MwFrwMorJovNeMhjIlrfjnTTURz4D0X7ThakVqUTO2ejRi9CC12y1yhCHmxRkYJR4E
-         EER2JJBaHoiqFihHflHLZ7AnUUFcrasITxBQadx4vdGZ7EiXpU3uP6ZoO7YbKgRFUnkV
-         DzNH+IgGtgwZca8LQQGfgIJ+IDnDss+0PYAMc1umNFKlfdiZo44akM3plWs27jygK4w/
-         e+AgruoFF0yC3QjBvn/Cah33OsrZeg7uQqKa0RnX9Qre/WLh4A/LML9/8f1Me4Ur1b0D
-         RXWFI5ah5DhfrPBqvqWp6NluZw6lkeTzp7fdouoG+zdoVojWOxXNv2IdUZQWONqXLzJ8
-         uImQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2Zjw1XSHUXPnOqBYw8BiROrflI7csy0giaIEhlFk6No=;
-        b=5Bq83xv+ciPMqJP7+X2uoTHoCvXSlHHM/JrHW0bTxXJekYBTnnvR9REyeK9ypIYxBy
-         lTxsd72zvuoDuuWO4J02QhC3VC3i5mpL/7BNOZUaakkNFINJHTrjLUznzV9EP+66crpT
-         i0OQLJLIE/ujTK3mYLVqPXRY9wrywDJnaiVIadoFRq79gA3iADhDPjALwxUjnrlxTLx/
-         kzFoGBchMyXiHBmZGTK8CbJxwcH1Qr3XPmSHoDMr9WY+omcpnmiiMKJiZ/bzCgTxaVaG
-         vqpDsCEFhnV7AVzRzedMq0ODf288JnQyMTl5LeRBihUgXCrujfyBVJpnVnTS7TJ/KRmr
-         MTww==
-X-Gm-Message-State: AJIora93Ou5mUGMCp1nF1KcDfRkcdNzDhimqOcHxDo9ascaoJIXparf2
-        proP4i2UFopo1kQYLCq4eFMF5+MBhuA=
-X-Google-Smtp-Source: AGRyM1se6pPw0vwN2uD9OgWxjwhWletMJZHpPvnr/rTX7ooUOOFXzdp8lRYriQnrirPaBk2ZMUnqWQ==
-X-Received: by 2002:adf:e112:0:b0:21d:7195:3a8d with SMTP id t18-20020adfe112000000b0021d71953a8dmr2467275wrz.371.1657272937329;
-        Fri, 08 Jul 2022 02:35:37 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id h8-20020adff4c8000000b0021d808826fbsm5315053wrp.44.2022.07.08.02.35.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Jul 2022 02:35:36 -0700 (PDT)
-Message-ID: <b34dcb93-df73-f5de-3c7c-7ab6c3250afe@gmail.com>
-Date:   Fri, 8 Jul 2022 10:35:29 +0100
+        with ESMTP id S237920AbiGHKqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 06:46:08 -0400
+Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [207.226.244.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 31137BCA2
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 03:46:05 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.92,255,1650902400"; 
+   d="scan'208";a="29490673"
+Received: from hk-mbx03.mioffice.cn (HELO xiaomi.com) ([10.56.8.123])
+  by outboundhk.mxmail.xiaomi.com with ESMTP; 08 Jul 2022 18:45:10 +0800
+Received: from bj-mbx09.mioffice.cn (10.237.8.129) by HK-MBX03.mioffice.cn
+ (10.56.8.123) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Fri, 8 Jul 2022
+ 18:45:09 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by bj-mbx09.mioffice.cn
+ (10.237.8.129) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Fri, 8 Jul 2022
+ 18:45:08 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::5cd6:7afe:4dcf:69a6]) by
+ BJ-MBX01.mioffice.cn ([fe80::5cd6:7afe:4dcf:69a6%9]) with mapi id
+ 15.02.0986.026; Fri, 8 Jul 2022 18:45:08 +0800
+From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, git <git@vger.kernel.org>
+CC:     =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        =?utf-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
+        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>
+Subject: RE: RE: [External Mail]Re: Git fork process infinitely and never stop
+Thread-Topic: RE: [External Mail]Re: Git fork process infinitely and never
+ stop
+Thread-Index: AdiPihh3UxZZstBISFy+uEVc/YzhjAAnjPMAABMHSwAAJSsJZQANbb+gADGmLbAAAtIk4AApxeBg
+Date:   Fri, 8 Jul 2022 10:45:08 +0000
+Message-ID: <bd33fa6079c2485fb6ee741be05d3f7e@xiaomi.com>
+References: <9d3b79239a314f72a099040a26ef9ad8@xiaomi.com>,
+        <8e1d019e-6456-ed05-7d3e-a0c4beeb35fa@gmail.com>,
+        <8ccd27ef3a344596b6237e98e1a5f204@xiaomi.com>
+ <202207061520052718298@oschina.cn>
+ <e071496cfdb04cce8eac322febb6af45@xiaomi.com>
+ <11f76b2382934edcb97eb201f0a78a67@xiaomi.com> 
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] xdiff: introduce XDL_ALLOC_GROW()
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1272.git.1656516334.gitgitgadget@gmail.com>
- <da996677f0730ec7a50d399524fb58c44dad468a.1656516334.git.gitgitgadget@gmail.com>
- <220630.86czeqe74c.gmgdl@evledraar.gmail.com>
- <5734b393-57c8-dc63-282e-221ee1937351@gmail.com>
- <0a1650bf-a7f5-0cc5-e6c9-0e02d1f542bf@gmail.com>
- <220630.86zghuclzq.gmgdl@evledraar.gmail.com>
- <fa543f66-6e86-9f95-f164-20a68705cecd@gmail.com>
- <220707.8635fd9meo.gmgdl@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <220707.8635fd9meo.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/07/2022 12:17, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Jul 06 2022, Phillip Wood wrote:
-> 
->> Hi Ævar
->>
->> On 30/06/2022 14:25, Ævar Arnfjörð Bjarmason wrote:
->>> On Thu, Jun 30 2022, Phillip Wood wrote:
->>>
->>>> On 30/06/2022 13:03, Phillip Wood wrote:
->>>>> On 30/06/2022 11:54, Ævar Arnfjörð Bjarmason wrote:
->>>>>>
->>>>>> On Wed, Jun 29 2022, Phillip Wood via GitGitGadget wrote:
->>>>>>
->>>>>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>>>>>
->>>>>>> Add a helper to grow an array. This is analogous to ALLOC_GROW() in
->>>>>>> the rest of the codebase but returns −1 on allocation failure to
->>>>>>> accommodate other users of libxdiff such as libgit2.
->>>>>>
->>>>>> Urm, does it? I just skimmed this, so maybe I missed something, but I
->>>>>> don't see where you changed the definition of xdl_malloc(),
->>>>>> xdl_realloc() etc.
->>>>
->>>> Oh I think I might have misunderstood your question. For git.git it
->>>> will still die() but for other users that arrange for xdl_realloc() to
->>>> return NULL on failure it will return -1. The same applies to the
->>>> comments in the previous two patches about XDL_[CM]ALLOC_ARRAY()
->>>> returning NULL on allocation failure.
->>> Yes, I meant that the "but returns −1 on allocation failure to
->>> accommodate other users of libxdiff such as libgit2" is really more of
->>> a:
->>> 	...but *allows for* dropping in another xmalloc(), xrealloc()
->>> 	etc. implementation that doesn't die on failure.
->>> So I think the rest of my upthread question still stands, i.e.:
->>> 	"So if that's the plan why would we need an XDL_ALLOC_ARRAY(),
->>> 	can't you just check that it [I mean ALLOC_ARRAY()] returns
->>> 	non-NULL?"
->>> I.e. if the plan is to replace the underlying x*() functions with
->>> non-fatal variants can't you use ALLOC_ARRAY() instead? I haven't tried
->>> that, but I don't see a reason we couldn't do that in principle...
->>
->> As the cover letter says, the aim of this series is not to replace
->> xmalloc() etc with non-fatal variants, it is just to make the xdiff
->> code more readable.
-> 
-> I don't think it's more readable to carry code in-tree that's
-> unreachable except when combined with code out-of-tree. I.e. this series
-> leaves us with the equivalent of:
-> 
-> 	ptr = xmalloc(...);
->          if (!ptr)
-> 		/* unreachable in git.git ... */
-> 
-> I don't think it's more readable to have code that rather trivial
-> analysis will show goes against the "__attribute__((noreturn))" we're
-> placing on our die() function.
-
-We're already in this situation. The code in xdiff is written to handle 
-allocation failures and we use an allocation function that dies instead. 
-This patch series does nothing to alter that situation.
-
-> Which is what I'm pointing out with "running with scissors". I.e. I'm
-> fully on-board with the end goal, but that can be accomplished in a way
-> that doesn't confuse humans & analyzers alike.
-> 
->> (One can already use a non-fatal allocation
->> function for xdl_malloc()) [...]
-> 
-> That just seems inviting a segfault or undefined/untested behavior
-> (whether in the sense of "undefined by C" or "untested by git.git's
-> codebase logic"). Everything around xmalloc() now assumes "never returns
-> NULL", and you want to:
-> 
->   * Make it return NULL when combined with out-of-tree-code
-
-No I do not want to alter the behavior of xmalloc() at all, that is why 
-this series does not alter the behavior of xmalloc()
-
->   * Maintain the code in git.git, where it never returns NULL, but in a
->     way where we won't have bugs when combined with a new macro that
->     behaves differently, in a way we never even test ourselves.
-
-That describes the current situation with xdiff, this series does not 
-alter that.
-
-> Isn't that correct, or am I missing something?
-
-You should note that libgit2 uses malloc() as it's default allocator, 
-seeming without issue.
-
->> I don't think that using ALLOC_ARRAY() in
->> xdiff is helpful for other users as they would have to define their
->> own array allocation macros, rather than just providing their own
->> allocation functions. I would like to reduce the friction others have
->> upstreaming xdiff patches to us, not increase it.
-> 
-> Yes, I'm totally on-board with reducing the friction in others using
-> xdiff, and would like to see more of that sort of out-of-tree use in
-> general (although for things outside of xdiff GPL v.s. LGPL concerns
-> come into play).
-> 
-> I'd even like for us to explicitly make that much easier. I.e. if you
-> want to use xdiff now you search for it, and find the at this point
-> unmaintained upstream, and if you find that git has a "newer" version
-> you'll have some trouble extracting it already.
-> 
-> After this series you'll need to start writing & maintaining your own
-> non-trivial alloc wrapper logic if you're doing that. If you get it
-> subtly wrong you'll have a buggy xdiff, and most likely users will just
-> copy/paste the git.git version from our git-compat-util.h & cache.h,
-> which is rather silly.
-
-This series does not alter what wrappers you need to write whereas your 
-suggestion of using ALLOC_ARRAY() would force more work on potential 
-xdiff users (though below I think you're suggesting we provide them in a 
-separate header so they can be reused more easily).
-
-> Which is why I'm saying we could/should do this in a much easier way,
-> i.e.:
-> 
->   * Factor out the now only-fatal-on-NULL ALLOC_GROW() such that we can
->     have a non-fatal version (ALLOC_GROW) and a non-fatal one.
-> 
->     I don't know what we'd call it. we usually have X*() meaning "fatal",
->     but these are fatal by default, maybe G* for gently? So
->     GALLOC_GROW().  Urgh, anyway, continuing with that ugly name...
-
-Further proof that naming is hard...
-
->   * Have xdiff/ use that GALLOC_GROW() & malloc(), not ALLOC_GROW() &
->     xmalloc(), as we really want to have the appropriate code flow
->     analysis etc. spot for us that we should handle NULL returns,
->     otherwise combining this code with libgit2 will be buggy/broken.
-> 
-> This makes it much easier for libgit2 to use this, as it won't need to
-> do anything special at all. Since our GALLOC_GROW() will eventualy use
-> malloc() instead of xmalloc() you don't need to define anything that
-> re-implements the GALLOC_GROW() or whatever other non-fatal versions of
-> our only-fatal helpers we have.
-> 
-> This assumes that we'd move these macros out of git-compat-util.h and a
-> new git-exernal-compat.h, or that instead of *just* copying the xdiff/
-> directory your import script would need to run some small bit of cc -E
-> and or perl/sed to one-off extract the smell bits of
-> git-exernal-compat.h or cache.h that we need.
-
-I think there is an argument that we should change our xdiff wrapper to 
-use malloc() rather than xmalloc() so we're able to test the error 
-handling. That then begs the question as to how we actually get the 
-allocation functions to fail when they're being tested. I also think 
-that is an orthogonal change that could happen with or without this 
-patch series.
-
-Best Wishes
-
-Phillip
+QW55IGZlZWRiYWNrIG9uIHRoaXM/DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9t
+OiDnqIvmtIsNClNlbnQ6IEZyaWRheSwgSnVseSA4LCAyMDIyIDE6NTQgQU0NClRvOiAnbGlsaW5j
+aGFvQG9zY2hpbmEuY24nIDxsaWxpbmNoYW9Ab3NjaGluYS5jbj47ICdCYWdhcyBTYW5qYXlhJyA8
+YmFnYXNkb3RtZUBnbWFpbC5jb20+OyAnZ2l0JyA8Z2l0QHZnZXIua2VybmVsLm9yZz4NCkNjOiDk
+vZXmtakgPGhlaGFvQHhpYW9taS5jb20+OyBYaW43IE1hIOmprOmRqyA8bWF4aW43QHhpYW9taS5j
+b20+OyDlh6HlhpvovokgPGZhbmp1bmh1aUB4aWFvbWkuY29tPjsg55+z5aWJ5YW1IDxzaGlmZW5n
+YmluZ0B4aWFvbWkuY29tPg0KU3ViamVjdDogUkU6IFJFOiBbRXh0ZXJuYWwgTWFpbF1SZTogR2l0
+IGZvcmsgcHJvY2VzcyBpbmZpbml0ZWx5IGFuZCBuZXZlciBzdG9wDQoNClRvIGJlIGEgc3VwcGxl
+bWVudC4NCklmIEkgZGVsZXRlIC5naXQvb2JqZWN0cy9pbmZvL2NvbW1pdC1ncmFwaCwgIGV2ZXJ5
+dGhpbmcgd29ya3Mgd2VsbCBBcyB3ZWxsIGFzIGZldGNoIHdpdGggYC1jIGNvcmUuY29tbWl0R3Jh
+cGg9ZmFsc2VgDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiDnqIvmtIsNClNl
+bnQ6IFRodXJzZGF5LCBKdWx5IDcsIDIwMjIgMTA6MjAgUE0NClRvOiAnbGlsaW5jaGFvQG9zY2hp
+bmEuY24nIDxsaWxpbmNoYW9Ab3NjaGluYS5jbj47ICdCYWdhcyBTYW5qYXlhJyA8YmFnYXNkb3Rt
+ZUBnbWFpbC5jb20+OyAnZ2l0JyA8Z2l0QHZnZXIua2VybmVsLm9yZz4NCkNjOiDkvZXmtakgPGhl
+aGFvQHhpYW9taS5jb20+OyBYaW43IE1hIOmprOmRqyA8bWF4aW43QHhpYW9taS5jb20+OyDlh6Hl
+hpvovokgPGZhbmp1bmh1aUB4aWFvbWkuY29tPjsg55+z5aWJ5YW1IDxzaGlmZW5nYmluZ0B4aWFv
+bWkuY29tPg0KU3ViamVjdDogUkU6IFJFOiBbRXh0ZXJuYWwgTWFpbF1SZTogR2l0IGZvcmsgcHJv
+Y2VzcyBpbmZpbml0ZWx5IGFuZCBuZXZlciBzdG9wDQoNCkkgZm91bmQgYW5vdGhlciB0aGluZy4N
+Cg0KMS4gaWYgSSBleGVjdXRlIGBnaXQgZmV0Y2ggLS1maWx0ZXI9YmxvYjpub25lIC0tcXVpZXQg
+LS1wcm9ncmVzcyBtaXVpIC0tcHJ1bmUgLS10YWdzICtyZWZzL2hlYWRzLyo6cmVmcy9yZW1vdGVz
+L21pdWkvKiArcmVmcy9oZWFkcy9taXVpMTMtcy10aG9yLXZlbmRvci1zdGFibGU6cmVmcy9yZW1v
+dGVzL21pdWkvbWl1aTEzLXMtdGhvci12ZW5kb3Itc3RhYmxlYCAgb24gdmVyc2lvbiAyLjI1LjEu
+IEl0IGp1c3QgdGhyb3cgZXJyb3IgcmF0aGVyIHRoYW4gaW5maW5pdGUgbG9vcCwgbGlrZSB0aGlz
+IHlvdXR1YmUgdmlkZW8gImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cXZZVHZWUkUw
+RlUmZmVhdHVyZT15b3V0dS5iZSINCg0KMi4gSSBmb3VuZCBpZiBJIGRlbGV0ZSAuZ2l0L29iamVj
+dHMsIGV2ZXJ5dGhpbmcgZ29lcyBmaW5lLiBBbmQgdGhlcmUgYXJlIG9ubHkgMjAgZmlsZXMgaW5z
+aWRlIGl0LiBTbyBJIGRlbGV0ZSB0aGVtIG9uZSBieSBvbmUgdG8gc2VlIHdoaWNoIGNhdXNlIHRo
+ZSBwcm9ibGVtLiBJdCdzIGAuZ2l0L29iamVjdHMvaW5mby9jb21taXQtZ3JhcGhgLiBTbyBJIHVw
+bG9hZCB0aGUgZmlsZSBhcyBhdHRhY2htZW50DQoNCg0KVHJlZSBiZWZvcmUgSSBkbyBzZWNvbmQg
+ZXhwZXJpbWVudA0KLg0K4pSc4pSA4pSAIDIwDQrilIIgICDilJTilIDilIAgNzQwOTI4Yzk4OGVk
+OTNkYWY5NDM4Njk2MjEyOTBkNjhmNjJiNDcNCuKUnOKUgOKUgCAyNQ0K4pSCICAg4pSU4pSA4pSA
+IGNiYjVmMDJiYmNkZTJlZmZlYmJhODRiYmM4NjZhMjllNjhhZmRmDQrilJzilIDilIAgMzYNCuKU
+giAgIOKUlOKUgOKUgCAzYWEyZDI1YjcxYzVhZmY5ZDBkOGFkODIwN2JjMjdiNDQ5MmU4Yg0K4pSc
+4pSA4pSAIDViDQrilIIgICDilJTilIDilIAgN2I1Y2I4ZGQ2M2JlNDhlMTQ2NmM5ZDk1NzQyMGE5
+NzY1YTgwNWUNCuKUnOKUgOKUgCA2NQ0K4pSCICAg4pSU4pSA4pSAIGUyNzJjMjFmMjhmYThlMjhk
+ZDkwNGYzNTc2ZjVmMjNjZGI4MjE0DQrilJzilIDilIAgOGINCuKUgiAgIOKUlOKUgOKUgCAxNDhh
+YTU2YjdjNTU5ZTIxN2JkMzFhMTZlODg2YjE2ZTIxY2RlMQ0K4pSc4pSA4pSAIDk3DQrilIIgICDi
+lJTilIDilIAgZmFlYmNhNjQ0YWU4YmZlYmNiZGM4YTFkZDhlMTc5ZTliNjU3ZGUNCuKUnOKUgOKU
+gCBhMw0K4pSCICAg4pSU4pSA4pSAIDg1MmNkYTJhZjYzMmRjYzdkZmJlNDY2ZDZkODYwOGMyZTA2
+NTIwDQrilJzilIDilIAgYTQNCuKUgiAgIOKUlOKUgOKUgCBhYThhZTc4MzAwMjE3YjBkYTBhYjdj
+NGI4ZWEyMmI1Yjc0Yjk1OA0K4pSc4pSA4pSAIGE5DQrilIIgICDilJzilIDilIAgMDRlMDlkMWVl
+MGUwYjg5YWNkNTE5NjMyNjM5OWQ4OWRlNzA3NDINCuKUgiAgIOKUlOKUgOKUgCA3ZDFmZmE1YzRk
+YWQwODE0NjliMzU2ZDA1NzFkMGI2MTY2ZDAwZQ0K4pSc4pSA4pSAIGIzDQrilIIgICDilJTilIDi
+lIAgMmI3NTAxNjZlMmQ1NGI4YmQzYWM2MmQ3YWVhZjczMmUxNGYyMGQNCuKUnOKUgOKUgCBiOA0K
+4pSCICAg4pSU4pSA4pSAIDk1Nzc5OWMzYTQ2MGJhMmUwZDI2Y2UwMDgxYTRkMDkyZGNmYjE3DQri
+lJzilIDilIAgYzUNCuKUgiAgIOKUlOKUgOKUgCBiZTAyNmIzYjg3YTFhZTQzMjE3MDBlZTQ1ZmZj
+YjVlZWUzY2E0OA0K4pSc4pSA4pSAIGQxDQrilIIgICDilJTilIDilIAgZTY1ZDI2OGQ1YTIyMzBk
+MWQ4NjlkNTU0OTdlMGMxZWI1OWI5YTUNCuKUnOKUgOKUgCBkZA0K4pSCICAg4pSU4pSA4pSAIDQ4
+M2MzYzQ3NTExNzI3NWJiZjc3NjhhOTQwOTYyODQyYmQ1YWViDQrilJzilIDilIAgZTINCuKUgiAg
+IOKUlOKUgOKUgCA2ODk5NDU4ZGM2Y2YyYzM3NDljMDczMmFjNWIwNGNjZDRjNzc2NQ0K4pSc4pSA
+4pSAIGUzDQrilIIgICDilJTilIDilIAgMDZiMTJlMjJjNzkxNGZmODAzNzRiNzg1N2VlNjc4NjRh
+NjFiYTUNCuKUnOKUgOKUgCBlNw0K4pSCICAg4pSU4pSA4pSAIGEwY2MxN2Y5OTM5YjgwYjEzNWMw
+ZWMzODljYmNjOThhZWE3MGM3DQrilJzilIDilIAgZWINCuKUgiAgIOKUlOKUgOKUgCA5MTY5YTBk
+MjEyNDU5NGU5MjcyMGZjNmFjMWNlM2ZiMjljN2Q4Nw0K4pSc4pSA4pSAIGVkDQrilIIgICDilJTi
+lIDilIAgNmE4MTUwNjBmOTYwMDMyZWNhZjcwZmVmZGJkYWU0YWM0NjYzMTQNCuKUnOKUgOKUgCBm
+OA0K4pSCICAg4pSU4pSA4pSAIDQ0MDE5NzJhMGE3MDIwYWVmODViODM1NjFkNzBhZjQxOTYyYTZm
+DQrilJzilIDilIAgaW5mbw0K4pSCICAg4pSc4pSA4pSAIGNvbW1pdC1ncmFwaA0K4pSCICAg4pSU
+4pSA4pSAIHBhY2tzDQrilJTilIDilIAgcGFjaw0KICAgIOKUnOKUgOKUgCBwYWNrLTAyOWQwODgy
+M2JkOGE4ZWFiNTEwYWQ2YWM3NWM4MjNjZmQzZWQzMWUuaWR4DQogICAg4pSc4pSA4pSAIHBhY2st
+MDI5ZDA4ODIzYmQ4YThlYWI1MTBhZDZhYzc1YzgyM2NmZDNlZDMxZS5wYWNrDQogICAg4pSc4pSA
+4pSAIHBhY2stMDI5ZDA4ODIzYmQ4YThlYWI1MTBhZDZhYzc1YzgyM2NmZDNlZDMxZS5wcm9taXNv
+cg0KICAgIOKUnOKUgOKUgCBwYWNrLWM5MzEwOTNhZTZjOWRmNWQzNmI3NzNmOTRlZmMzOGQ5ZDRi
+MzkxMDguaWR4DQogICAg4pSc4pSA4pSAIHBhY2stYzkzMTA5M2FlNmM5ZGY1ZDM2Yjc3M2Y5NGVm
+YzM4ZDlkNGIzOTEwOC5wYWNrDQogICAg4pSc4pSA4pSAIHBhY2stYzkzMTA5M2FlNmM5ZGY1ZDM2
+Yjc3M2Y5NGVmYzM4ZDlkNGIzOTEwOC5wcm9taXNvcg0KICAgIOKUnOKUgOKUgCB0bXBfaWR4X1JS
+bzhvbw0KICAgIOKUlOKUgOKUgCB0bXBfcGFja18xaGd1ZXENCg0KDQoNCi0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KRnJvbTog
+56iL5rSLDQpTZW50OiBXZWRuZXNkYXksIEp1bHkgNiwgMjAyMiAxMDowMyBQTQ0KVG86IGxpbGlu
+Y2hhb0Bvc2NoaW5hLmNuOyBCYWdhcyBTYW5qYXlhIDxiYWdhc2RvdG1lQGdtYWlsLmNvbT47IGdp
+dCA8Z2l0QHZnZXIua2VybmVsLm9yZz4NCkNjOiDkvZXmtakgPGhlaGFvQHhpYW9taS5jb20+OyBY
+aW43IE1hIOmprOmRqyA8bWF4aW43QHhpYW9taS5jb20+DQpTdWJqZWN0OiDlm57lpI06IFJFOiBb
+RXh0ZXJuYWwgTWFpbF1SZTogR2l0IGZvcmsgcHJvY2VzcyBpbmZpbml0ZWx5IGFuZCBuZXZlciBz
+dG9wDQoNClRvIGxpbGluY2hhbzoNCj5TbyB0aGUgcmVwbyAiZ2l0L2dlcnJpdCIgaXMgaG9zdGVk
+IGluIHlvdXIgbG9jYWw/IGFuZCBob3cgeW91ICJjb3B5IiBpdCB0byB5b3VyIG93biBQQz8NCjEu
+IGdpdC9nZXJyaXQgaXMgaG9zdGVkIG9uIHJlbW90ZSBzZXJ2ZXINCiAgICAgICAgICAgICAgIDIu
+IEkganVzdCBzY3AgdGhlIHdob2xlIHJlcG9zaXRvcnkgb2YgdGhlIHVzZXIgd2hvIHJlcHJvZHVj
+ZSB0aGUgcHJvYmxlbSB0byBvdXIgb3duIFBDLiBBbmQgdGhlbiB3ZSBjYW4gcmVwcm9kdWNlIGl0
+IG9uIG91ciBvd24gUEMuDQoNClRvIEpvaGFubmVzOg0KPiBIb29rcyBtYXkgYWxzbyBwbGF5IGEg
+cm9sZS4NCldlIGRvIGhhdmUgc29tZSBob29rcy4gQnV0IEkgZG9uJ3QgdGhpbmsgdGhleSdyZSBy
+ZWxhdGVkLiBCZWNhdXNlIGV2ZW4gSSBkZWxldGUgdGhvc2UgaG9va3MsIHRoZSBwcm9ibGVtIHN0
+YW5kcyBzdGlsbA0KDQpUbyDDhnZhciBBcm5masO2csOwOg0KPkkgYXNzdW1lIHlvdSBjYW4ndCBz
+aGFyZSB0aGUgcmVwbywgYnV0IHBlcmhhcHMgdHJ5IGlmIHlvdSBjYW4gcmVwcm9kdWNlIGl0IHdp
+dGggYSAiZ2l0IGZhc3QtZXhwb3J0IC0tYW5vbnltaXplIiB2ZXJzaW9uIG9mIGl0LCBhbmQgaWYg
+c28gd2hldGhlciB5b3UnZCBiZSB3aWxsaW5nIHRvIHNoYXJlIHRoYXQuIEl0IHdpbGwgcHVibGlz
+aCB0aGUgInNoYXBlIG9mIHRoZSBoaXN0b3J5IiBvZiB0aGUgcmVwbywgYnV0IG5vdCBhbnkgbWVh
+bmluZ2Z1bCBkYXRhIChhbGwgY29tbWl0cywgdHJlZXMsIGJsb2JzIGV0Yy4gYXJlIHJlcGxhY2Vk
+KS4NCmBnaXQgZmFzdC1leHBvcnQgLS1hbm9ueW1pemVgIGp1c3Qgb3V0cHV0IGlzIGVtcHR5LiBJ
+ZiBJIHRyeSBgZ2l0IGZhc3QtZXhwb3J0IC0tYW5vbnltaXplIC0tYWxsYCwgaXQgc2VlbXMgdG8g
+ZmV0Y2ggZmlyc3QsIHdoaWNoIGdvZXMgaW50byB0aGUgaW5maW5pdGUgbG9vcCBhZ2Fpbg0KDQo+
+VGhlIFlvdVR1YmUgdmlkZW8gc2hvd3MgdGhhdCB5b3UncmUgdXNpbmcgdmFyaW91cyBvcHRpb25z
+IHRvIGdpdC1mZXRjaCwNCj5pbmNsdWRpbmcgZmlsdGVycywgcmVmc3BlY3MgZXRjLiBEb2VzIGEg
+cGxhaW4gImdpdCBmZXRjaCIgcmVwcm9kdWNlDQo+dGhpcywgYW5kIGlmIG5vdCB3aGF0J3MgdGhl
+IG9wdGlvbiAodHJ5IGFkZGluZyB0aGVtIG9uZSBhdCBhIHRpbWUgJg0KPmV4cGVyaW1lbnQpIHRo
+YXQgbmVlZHMgdG8gYmUgYWRkZWQgdG8gdHJpZ2dlciB0aGlzPw0KDQpgZ2l0IGZldGNoYCBhbHNv
+IGhhcyB0aGlzIHByb2JsZW0uDQoNCkkgc29tZXdoYXQgc3VzcGVjdCBzb21lIC0tZmlsdGVyIGZ1
+bm55IGJ1c2luZXNzLCBidXQgdGhhdCdzIGp1c3QgYSBodW5jaC4uLg0KSXQgc2VlbXMgdG8gaGFw
+cGVuIGFmdGVyIEkgdG9sZCBteSB0ZWFtIHRvIHVzZSAicGFydGlhbC1jbG9uZSIgQU5EICJnaXQg
+djIuMzYuMSIuICBJJ20gbm90IHN1cmUgd2hpY2ggb25lIGlzIHRoZSBjYXVzZSBvciBib3RoIG9m
+IHRoZW0gY2F1c2UgdGhpcy4NCiMvKioqKioq5pys6YKu5Lu25Y+K5YW26ZmE5Lu25ZCr5pyJ5bCP
+57Gz5YWs5Y+455qE5L+d5a+G5L+h5oGv77yM5LuF6ZmQ5LqO5Y+R6YCB57uZ5LiK6Z2i5Zyw5Z2A
+5Lit5YiX5Ye655qE5Liq5Lq65oiW576k57uE44CC56aB5q2i5Lu75L2V5YW25LuW5Lq65Lul5Lu7
+5L2V5b2i5byP5L2/55So77yI5YyF5ous5L2G5LiN6ZmQ5LqO5YWo6YOo5oiW6YOo5YiG5Zyw5rOE
+6Zyy44CB5aSN5Yi244CB5oiW5pWj5Y+R77yJ5pys6YKu5Lu25Lit55qE5L+h5oGv44CC5aaC5p6c
+5oKo6ZSZ5pS25LqG5pys6YKu5Lu277yM6K+35oKo56uL5Y2z55S16K+d5oiW6YKu5Lu26YCa55+l
+5Y+R5Lu25Lq65bm25Yig6Zmk5pys6YKu5Lu277yBIFRoaXMgZS1tYWlsIGFuZCBpdHMgYXR0YWNo
+bWVudHMgY29udGFpbiBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gZnJvbSBYSUFPTUksIHdoaWNo
+IGlzIGludGVuZGVkIG9ubHkgZm9yIHRoZSBwZXJzb24gb3IgZW50aXR5IHdob3NlIGFkZHJlc3Mg
+aXMgbGlzdGVkIGFib3ZlLiBBbnkgdXNlIG9mIHRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaGVy
+ZWluIGluIGFueSB3YXkgKGluY2x1ZGluZywgYnV0IG5vdCBsaW1pdGVkIHRvLCB0b3RhbCBvciBw
+YXJ0aWFsIGRpc2Nsb3N1cmUsIHJlcHJvZHVjdGlvbiwgb3IgZGlzc2VtaW5hdGlvbikgYnkgcGVy
+c29ucyBvdGhlciB0aGFuIHRoZSBpbnRlbmRlZCByZWNpcGllbnQocykgaXMgcHJvaGliaXRlZC4g
+SWYgeW91IHJlY2VpdmUgdGhpcyBlLW1haWwgaW4gZXJyb3IsIHBsZWFzZSBub3RpZnkgdGhlIHNl
+bmRlciBieSBwaG9uZSBvciBlbWFpbCBpbW1lZGlhdGVseSBhbmQgZGVsZXRlIGl0ISoqKioqKi8j
+DQo=
