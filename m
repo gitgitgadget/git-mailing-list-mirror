@@ -2,185 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42816C433EF
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 11:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D08DC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 14:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238186AbiGHLyE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 07:54:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50182 "EHLO
+        id S237865AbiGHOUh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 10:20:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238157AbiGHLyD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 07:54:03 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E73620F6A
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 04:54:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1657281235;
-        bh=B4NBEPNkq4z1HhPDSZA0zTARIh1AQW03CPyhEQeG37U=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=iPbsnTaGrd16ZfjudY4+0wYYOVe41lnbQfqT1SxvC4EVk5LEh6UW5+hM+3Zgnz9IN
-         S/709fCR+muSXPxtIjZ/px9/7NujmOD6EQ65rhksg23S/THDNo/ESHyC+F5lio9/n5
-         VPjCcij9/ZeYH/X8AhYUZM3p9SRBPSylX4DBevaQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.14.164] ([213.196.212.225]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mo6v3-1nmYMS2cXr-00pafO; Fri, 08
- Jul 2022 13:53:55 +0200
-Date:   Fri, 8 Jul 2022 13:53:55 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Siddharth Asthana <siddharthasthana31@gmail.com>
-cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 4/4] cat-file: add mailmap support
-In-Reply-To: <20220707161554.6900-5-siddharthasthana31@gmail.com>
-Message-ID: <p3n4547s-6134-n4p9-97n5-so696qssr5n2@tzk.qr>
-References: <20220630142444.651948-1-siddharthasthana31@gmail.com> <20220707161554.6900-1-siddharthasthana31@gmail.com> <20220707161554.6900-5-siddharthasthana31@gmail.com>
+        with ESMTP id S237660AbiGHOUg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 10:20:36 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44255222A6
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 07:20:33 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id bk26so15691633wrb.11
+        for <git@vger.kernel.org>; Fri, 08 Jul 2022 07:20:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0/tIwmeiVUIwGm3nNtFylTF8maWaPmz0dqEq6vCg++I=;
+        b=EAD735qOYTtMlf4VGFXZWlJtC7i8Guw90H+sZBQDIrWba8QJIp9M7o7WGETx41h7Jt
+         ZSrmLB1vjiS1xP9Eyr1EzHOyYk869wTRTTBGpUxKx5njPyTC6wrcHeHR/dRXGhQHWUfC
+         1ZpRIztekcDIakUy78tNzo31cGkiZmZ9og90tsWDwU7UZ3c22RZ6tn+Vzr8O47ERCz45
+         LON2nmTXifY6dQ+pXkD4VboyE98cK1ikBrUD/5vW0p6iIrL6TnGU8yCv4MXBN73XTW6w
+         yJ3qzOWmLCys5xrCdeFvZaIW65fIMVl+7p9Hrh0/eBMW0p6OUpZzWrydqUBjWm4HV144
+         z9Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0/tIwmeiVUIwGm3nNtFylTF8maWaPmz0dqEq6vCg++I=;
+        b=4/OirGC3H/A5wcqerh8boyJ9hM/loWSRfT/rvJ7RmQmQtx6Qo82GUaQGDk+N03+XkB
+         D6uAnDg+JaGtP6dbSE+tHqaXRhzY34oIob5nE9pClsLzz5t8s6kM0uXWLQU1h6kpftd+
+         EKIMRkFfXAHvEhnd9Dovd0lgFheTfXEaYa/kcbEYxdYmNVzUUQ3mpXs2jLzp6TjA3QNg
+         dLCekhxYHB9drEQMntmEyZiIxaZbhzcjyC/FaF8zdOTCR6FUh8+XF/kdAk9oh9QbUcUi
+         Sl3eR1qMXfI6J0DavawV27tQrEcFPmClmyhJT/OqkgOYnwIkrWrdwy1nmmt+hxYTe3Ad
+         FcPw==
+X-Gm-Message-State: AJIora8ypj9f80PQPA8ikhML9N2CFukzkaeBDjDVIORsrLOjq2LorDtw
+        DTqPlriWmzzBP9TVzGz7dBQWSgyHdkA=
+X-Google-Smtp-Source: AGRyM1tSfsMDmJBB5CHNFxeJyWjZNYGTY45w6Z2SDNBBhUy/U92Eos/hmopkLQ4QC9F9yBkN0l8New==
+X-Received: by 2002:adf:d215:0:b0:21d:7333:9627 with SMTP id j21-20020adfd215000000b0021d73339627mr3427061wrh.526.1657290031365;
+        Fri, 08 Jul 2022 07:20:31 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id q5-20020adff945000000b0021b9585276dsm40393924wrr.101.2022.07.08.07.20.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 07:20:30 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/7] xdiff: use standard alloc macros, share them via git-shared-util.h
+Date:   Fri,  8 Jul 2022 16:20:12 +0200
+Message-Id: <cover-0.7-00000000000-20220708T140354Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.0.913.g189dca38629
+In-Reply-To: <b34dcb93-df73-f5de-3c7c-7ab6c3250afe@gmail.com>
+References: <b34dcb93-df73-f5de-3c7c-7ab6c3250afe@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TGGXWxF4WZtbmCoRMyRWcGl7tg7Hwhcde8VGPgyMrEJOkwpo6hu
- o69gECqBthoAUhkF07LGCeVOhqktIlDoJXcCk1NH5y2ry+X7pfKISqIIKEaO6O4ml9Fct2G
- dGhSHXPY/+LPIxew+GBHjTO25B5+0w7xcdwXfsxw7Ug4PFesJwjlRgxvxoAtSXQ8nakQJAS
- PzyfQra6sKj2Iv0ckTVOA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1CX0RX5MMXU=:IfyAzr4UcttoasM4Zb35ae
- DV4nBQQN2r6JidA3lPJh5/RW6I7kDpEfD8bGOX676NR7gtxFgZ5/bnXPdohAd5nhajfpJtY++
- 7m6C9lqiX+CzXD2Xxq8CN4oCX++HtkTNjs1cZYI1EhHFGMO6mw+6+VFpbRJa4c/+1XQtaYlAz
- XCp7DHfASU7PiMAJ5i753ONpByXdjTDCjMyyAL8HmV2QWdD4FTNwNxggGySM2hsazNmuGr1S4
- BQA/QJfA79crnXHP/zaPPJsyjJ6xu7wBIF9Gi+7yRj0UWqcSyd7AFQzA5OUGF9JqCK7rm8bPV
- yVDq3SdkKuvShplRqhlPZq7gJNqCR4DRgEGazLGqwlozkKhKyWrLz/D316vI/vqbSRRnYos54
- 87sDpQhg9J/T8X9AsOuvcjwCZ5bIngkq9+Ql2fPt6ByxufKLK6OMXVDbrCPv7U0AP0kPSM0Vf
- BRDA3+ziE6EOm4ohS9K3FH5iHtjNbCLhGlGMBLJu+wv5XnnUVtlxkMOphEcU24RR091oxXzwK
- Qsupca9nl7nLGljC+2o8RbkS+dlL/CQwAK4n2+q4ToE0z9co86S638gLsIH1xE51lrJ116zuv
- RY+r2G8zrdvfTrZdcfgCI6sY5cbP0Cn9UB1Zdb2s/97u1hWR4h9oLJCO/Ba7ya9M7sjZDK+uc
- fLDrRlQJ/lFrqM/AI0tgG22HtAYKuDs73/C8cKB3PNM2Ta8dF4fKtzPJ3sLpAnQEdB5ThIZwu
- Bz+7FJIeoSF7ASZ8cBUUVRowEt5qCdATcoc6Ampq3mIoh0WSaYZd7Apgx3SElhpotr6O7Dclb
- bxe8LRARMyOzZ/aF6GO4L90KucSYjK6h8fvdrEBgGz6SJ+woHt0f831YkOm/R9C2jRsRrywSn
- BG0kijE5b73Qb716hugpAKfaEQrIZfxVpBBsxrwwDXmm944BvURAE1gA0ukdWE82davb9IuH4
- sEa8K2TfEkjX9l7XqFZK2bZR8c7leZAubx4AYOozUmICqRR2SaowHo9Evf948zj2kIH91wXFr
- Gk+74lWRP/ilPWswfQK863G5gYfXyWVM4bIxHztKjjI4JyE9k7layRsqIITqcmHSonaNdqMNQ
- qsoGrRpHCmoLwqyUrwfXSV3FuK16CnVXeX1lwFDsH+C+lxKwHioGZww9g==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Siddarth,
+This series is on top of
+https://lore.kernel.org/git/pull.1272.git.1656516334.gitgitgadget@gmail.com/;
+and shows that we can factor our the allocation macros used in cache.h
+and git-compat-util.h instead of defining replacements for them and
+alloc_nr() in xdiff/*.
 
-On Thu, 7 Jul 2022, Siddharth Asthana wrote:
+The journy towards doing so is slightly longer, but I think worth
+doing, since...
 
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 50cf38999d..6dc750a367 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -36,6 +37,19 @@ struct batch_options {
+On Fri, Jul 08 2022, Phillip Wood wrote:
+
+> On 07/07/2022 12:17, Ævar Arnfjörð Bjarmason wrote:
+
+>> I don't think it's more readable to carry code in-tree that's
+>> unreachable except when combined with code out-of-tree. I.e. this series
+>> leaves us with the equivalent of:
+>>      ptr = xmalloc(...);
+>>          if (!ptr)
+>>              /* unreachable in git.git ... */
+>> I don't think it's more readable to have code that rather trivial
+>> analysis will show goes against the "__attribute__((noreturn))" we're
+>> placing on our die() function.
 >
->  static const char *force_path;
+> We're already in this situation. The code in xdiff is written to
+> handle allocation failures and we use an allocation function that dies
+> instead. This patch series does nothing to alter that situation.
+>[...]
+>> That just seems inviting a segfault or undefined/untested behavior
+>> (whether in the sense of "undefined by C" or "untested by git.git's
+>> codebase logic"). Everything around xmalloc() now assumes "never returns
+>> NULL", and you want to:
+>>   * Make it return NULL when combined with out-of-tree-code
 >
-> +static struct string_list mailmap =3D STRING_LIST_INIT_NODUP;
-> +static int use_mailmap;
-> +
-> +char *replace_idents_using_mailmap(char *object_buf, size_t *size)
+> No I do not want to alter the behavior of xmalloc() at all, that is
+> why this series does not alter the behavior of xmalloc()
+> [...]
+> I think there is an argument that we should change our xdiff wrapper
+> to use malloc() rather than xmalloc() so we're able to test the error
+> handling. That then begs the question as to how we actually get the
+> allocation functions to fail when they're being tested. I also think
+> that is an orthogonal change that could happen with or without this
+> patch series.
 
-Here, we declare the `size` parameter as a pointer to a `size_t`.
+I think part of what I was claiming upthread I was just confused
+about. I.e. yes we do use xdl_malloc() defined as xmalloc() already,
+what *is* true (and I didn't make this clear) was that your proposed
+series cements that further in place.
 
-> +{
-> +	struct strbuf sb =3D STRBUF_INIT;
-> +	strbuf_attach(&sb, object_buf, *size, *size + 1);
-> +	const char *headers[] =3D { "author ", "committer ", "tagger ", NULL }=
-;
-> +	apply_mailmap_to_header(&sb, headers, &mailmap);
-> +	*size =3D sb.len;
-> +	return strbuf_detach(&sb, NULL);
-> +}
-> +
->  static int filter_object(const char *path, unsigned mode,
->  			 const struct object_id *oid,
->  			 char **buf, unsigned long *size)
-> @@ -152,6 +166,9 @@ static int cat_one_file(int opt, const char *exp_typ=
-e, const char *obj_name,
->  		if (!buf)
->  			die("Cannot read object %s", obj_name);
->
-> +		if (use_mailmap)
-> +			buf =3D replace_idents_using_mailmap(buf, &size);
+But as 6/7 here notes 36c83197249 (xdiff: use xmalloc/xrealloc,
+2019-04-11) left us with that state of affairs for expediency, but as
+we're really close to just "properly lib-ifying" xdiff I think we
+should just do that. At the time of 36c83197249 we had ~20 calls to
+xdl_malloc(), after your series we were at ~1/2 of that (including a
+callers that 36c83197249 explicitly punted on).
 
-But here, we are once more bitten by Git's usage of last century's data
-types: the `size` variable is of type `unsigned long`.
+This larger series is something we can do later, but I'm submitting it
+as a non-RFC in case there's consensus to pick it up on top. The sum
+of the two would be smaller if they were squashed together, but I
+haven't done that here.
 
-Now, you are probably developing this patch on 64-bit Linux or macOS,
-where it just so happens that `size_t` is idempotent to `unsigned long`.
+The 1/7 is an amendmend I suggested to 47be28e51e6 (Merge branch
+'pw/xdiff-alloc-fail', 2022-03-09), since it was modifying some of the
+same lines of code...
 
-But that is not the case on 32-bit Linux nor on Windows, and therefore the
-build fails with this patch. I need this to get the build to pass:
+Ævar Arnfjörð Bjarmason (7):
+  xdiff: simplify freeing patterns around xdl_free_env()
+  git-shared-util.h: move "shared" allocation utilities here
+  git-shared-util.h: add G*() versions of *ALLOC_*()
+  xdiff: use G[C]ALLOC_ARRAY(), not XDL_CALLOC_ARRAY()
+  xdiff: use GALLOC_GROW(), not XDL_ALLOC_GROW()
+  xdiff: remove xdl_malloc() wrapper, use malloc(), not xmalloc()
+  xdiff: remove xdl_free(), use free() instead
 
-=2D- snipsnap --
-=46rom 237c783705b30ed4bcce81aeb860dc7e152fc8bf Mon Sep 17 00:00:00 2001
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Fri, 8 Jul 2022 13:47:52 +0200
-Subject: [PATCH] fixup??? cat-file: add mailmap support
+ cache.h            |  75 -----------------------------
+ git-compat-util.h  |  28 ++---------
+ git-shared-util.h  | 115 +++++++++++++++++++++++++++++++++++++++++++++
+ xdiff/xdiff.h      |   5 --
+ xdiff/xdiffi.c     |  47 ++++++++----------
+ xdiff/xhistogram.c |  15 +++---
+ xdiff/xmacros.h    |  23 ---------
+ xdiff/xmerge.c     |  57 ++++++++++++----------
+ xdiff/xpatience.c  |  14 +++---
+ xdiff/xprepare.c   |  60 +++++++++++++----------
+ xdiff/xutils.c     |  33 ++++---------
+ xdiff/xutils.h     |   2 -
+ 12 files changed, 234 insertions(+), 240 deletions(-)
+ create mode 100644 git-shared-util.h
 
-This is needed whenever `unsigned long` is different from `size_t`, e.g.
-on 32-bit Linux and on Windows.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- builtin/cat-file.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index ac852087a74..baa6aca53ce 100644
-=2D-- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -185,8 +185,13 @@ static int cat_one_file(int opt, const char *exp_type=
-, const char *obj_name,
- 		if (!buf)
- 			die("Cannot read object %s", obj_name);
-
--		if (use_mailmap)
--			buf =3D replace_idents_using_mailmap(buf, &size);
-+		if (use_mailmap) {
-+			size_t s;
-+
-+			buf =3D replace_idents_using_mailmap(buf, &s);
-+
-+			size =3D cast_size_t_to_ulong(s);
-+		}
-
- 		/* otherwise just spit out the data */
- 		break;
-@@ -222,8 +227,13 @@ static int cat_one_file(int opt, const char *exp_type=
-, const char *obj_name,
- 		buf =3D read_object_with_reference(the_repository, &oid,
- 						 exp_type_id, &size, NULL);
-
--		if (use_mailmap)
--			buf =3D replace_idents_using_mailmap(buf, &size);
-+		if (use_mailmap) {
-+			size_t s;
-+
-+			buf =3D replace_idents_using_mailmap(buf, &s);
-+
-+			size =3D cast_size_t_to_ulong(s);
-+		}
- 		break;
- 	}
- 	default:
-@@ -392,8 +402,13 @@ static void print_object_or_die(struct batch_options =
-*opt, struct expand_data *d
-
- 		contents =3D read_object_file(oid, &type, &size);
-
--		if (use_mailmap)
--			contents =3D replace_idents_using_mailmap(contents, &size);
-+		if (use_mailmap) {
-+			size_t s;
-+
-+			contents =3D replace_idents_using_mailmap(contents, &s);
-+
-+			size =3D cast_size_t_to_ulong(s);
-+		}
-
- 		if (!contents)
- 			die("object %s disappeared", oid_to_hex(oid));
-=2D-
-2.37.0.windows.1
+-- 
+2.37.0.913.g189dca38629
 
