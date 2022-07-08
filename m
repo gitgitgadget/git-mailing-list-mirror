@@ -2,83 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6967C43334
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 19:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A8DAC43334
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 19:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239764AbiGHTBR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 15:01:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50296 "EHLO
+        id S239843AbiGHTbX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 15:31:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238179AbiGHTBQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 15:01:16 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B64B11EAFF
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 12:01:11 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E62F144D9A;
-        Fri,  8 Jul 2022 15:01:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tIElzTI04lrOeMisw258uARM4qbACbjaqADsC8
-        QFdh0=; b=wRJmRAEzEUXu+MJq4GJx81mvyL8CrH645H/rKIJ+3yF1nXw3LkKGrI
-        08ibzkkT+3aeaivlKl/fyR76b9bBEYvfkKrua1UHyAWUZaP3KHICP8psLla9rj0M
-        CQJD/kc8QGHU4nje2yAHL+yKWrbizUiOTSH1u8BHn1WV4PjRL4G2U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1F57144D98;
-        Fri,  8 Jul 2022 15:01:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BEBC144D97;
-        Fri,  8 Jul 2022 15:01:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?utf-8?Q?=C3=86var_Arnfj?= =?utf-8?Q?=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v7 1/5] Documentation/git-config.txt: add SCOPES section
-References: <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com>
-        <pull.1261.v7.git.git.1657234914.gitgitgadget@gmail.com>
-        <5c58db3bb2189f3b4193a682aa3b43f3bfa95796.1657234914.git.gitgitgadget@gmail.com>
-        <xmqq4jzsxze4.fsf@gitster.g>
-        <kl6l5yk77d4b.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Fri, 08 Jul 2022 12:01:06 -0700
-In-Reply-To: <kl6l5yk77d4b.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Fri, 08 Jul 2022 10:01:08 -0700")
-Message-ID: <xmqq1quvwhsd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S239951AbiGHTbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 15:31:02 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA4E5A478
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 12:30:52 -0700 (PDT)
+Received: (qmail 9599 invoked by uid 109); 8 Jul 2022 19:30:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 Jul 2022 19:30:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14093 invoked by uid 111); 8 Jul 2022 19:30:51 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Jul 2022 15:30:51 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 8 Jul 2022 15:30:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 3/3] clone: use remote branch if it matches default
+ HEAD
+Message-ID: <YsiF6+RjEsmwviuS@coredump.intra.peff.net>
+References: <YsdyLS4UFzj0j/wB@coredump.intra.peff.net>
+ <YsdzZxS48u8sk9QD@coredump.intra.peff.net>
+ <xmqq8rp3wovj.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 536203AA-FEF0-11EC-81A1-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8rp3wovj.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+On Fri, Jul 08, 2022 at 09:28:00AM -0700, Junio C Hamano wrote:
 
->> Problem inherited from the original, but I suspect that rephrasing
->> "not available" to "missing" (or "does not exist") may make it
->> easier to follow.
->> ...
->
-> The only change I'd suggest is to expand "missing" -> "missing or
-> unreadable". The original wording is "not available", which could be
-> interpreted to cover both cases. We'd obviously also have to amend
-> "not available or readable" accordingly.
+> Jeff King <peff@peff.net> writes:
+> 
+> > +		/*
+> > +		 * We may have selected a local default branch name "foo",
+> > +		 * and even though the remote's HEAD does not point there,
+> > +		 * it may still have a "foo" branch. If so, set it up so
+> > +		 * that we can follow the usual checkout code later.
+> 
+> Very sensible.
+> 
+> > +		 *
+> > +		 * Note that for an empty repo we'll already have set
+> > +		 * option_no_checkout above, which would work against us here.
+> > +		 * But for an empty repo, find_remote_branch() can never find
+> > +		 * a match.
+> > +		 */
+> > +		our_head_points_at = find_remote_branch(mapped_refs, branch);
+> > +
+> > +		if (!option_bare && !our_head_points_at)
+> >  			install_branch_config(0, branch, remote_name, ref);
+> 
+> I may be completely confused, but shouldn't the condition read "if
+> we are not bare, and we did find the 'branch' in their refs", i.e.
+> without "!" in front of our_head_points_at?
 
-Probably.  I wonder if we should document that we at least warn when
-a file we are expected to read exists but is not readable (instead
-of simply saying "is ignored"), but other than that I agree with you.
+No. That line is for setting up the branch config for an unborn head. If
+we actually set up our_head_points_at, then the later "usual checkout
+code" mentioned above will take care of it (actually it is
+update_head(), I think).
 
-> Thanks! Shall I apply your suggestions, or were you planning to apply
-> them yourself?
+Your next thought may be: why does the unborn head code do its own
+branch config setup here, and not also rely on update_head()? I think
+it's just that update_head() is expecting to see an actual ref object,
+and we don't have one. It could probably be taught to handle this case,
+like the patch below. I'm not sure if that is more readable or not. On
+one hand, it is putting all of the HEAD symref creation and config in
+one spot. On the other, it is adding to the pile of widely scoped
+variables that have subtle precedence interactions later on in the
+function.
 
-Definitely not the latter ;-)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 0912d268a1..a776563759 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -606,7 +606,7 @@ static void update_remote_refs(const struct ref *refs,
+ }
+ 
+ static void update_head(const struct ref *our, const struct ref *remote,
+-			const char *msg)
++			const char *unborn, const char *msg)
+ {
+ 	const char *head;
+ 	if (our && skip_prefix(our->name, "refs/heads/", &head)) {
+@@ -632,6 +632,14 @@ static void update_head(const struct ref *our, const struct ref *remote,
+ 		 */
+ 		update_ref(msg, "HEAD", &remote->old_oid, NULL, REF_NO_DEREF,
+ 			   UPDATE_REFS_DIE_ON_ERR);
++	} else if (unborn && skip_prefix(unborn, "refs/heads/", &head)) {
++		/* yuck, cut and paste from the "our" block above, but we
++		 * need to make sure that we come after those other options in
++		 * the if/else chain */
++		if (create_symref("HEAD", unborn, NULL) < 0)
++			die(_("unable to update HEAD"));
++		if (!option_bare)
++			install_branch_config(0, head, remote_name, unborn);
+ 	}
+ }
+ 
+@@ -876,6 +884,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	const struct ref *refs, *remote_head;
+ 	struct ref *remote_head_points_at = NULL;
+ 	const struct ref *our_head_points_at;
++	char *unborn_head = NULL;
+ 	struct ref *mapped_refs = NULL;
+ 	const struct ref *ref;
+ 	struct strbuf key = STRBUF_INIT;
+@@ -1282,8 +1291,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		our_head_points_at = NULL;
+ 	} else {
+ 		const char *branch;
+-		const char *ref;
+-		char *ref_free = NULL;
+ 
+ 		if (!mapped_refs) {
+ 			warning(_("You appear to have cloned an empty repository."));
+@@ -1293,12 +1300,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		if (transport_ls_refs_options.unborn_head_target &&
+ 		    skip_prefix(transport_ls_refs_options.unborn_head_target,
+ 				"refs/heads/", &branch)) {
+-			ref = transport_ls_refs_options.unborn_head_target;
+-			create_symref("HEAD", ref, reflog_msg.buf);
++			unborn_head  = xstrdup(transport_ls_refs_options.unborn_head_target);
+ 		} else {
+ 			branch = git_default_branch_name(0);
+-			ref_free = xstrfmt("refs/heads/%s", branch);
+-			ref = ref_free;
++			unborn_head = xstrfmt("refs/heads/%s", branch);
+ 		}
+ 
+ 		/*
+@@ -1313,10 +1318,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		 * a match.
+ 		 */
+ 		our_head_points_at = find_remote_branch(mapped_refs, branch);
+-
+-		if (!option_bare && !our_head_points_at)
+-			install_branch_config(0, branch, remote_name, ref);
+-		free(ref_free);
+ 	}
+ 
+ 	write_refspec_config(src_ref_prefix, our_head_points_at,
+@@ -1336,7 +1337,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			   branch_top.buf, reflog_msg.buf, transport,
+ 			   !is_local);
+ 
+-	update_head(our_head_points_at, remote_head, reflog_msg.buf);
++	update_head(our_head_points_at, remote_head, unborn_head, reflog_msg.buf);
+ 
+ 	/*
+ 	 * We want to show progress for recursive submodule clones iff
+@@ -1363,6 +1364,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&key);
+ 	free_refs(mapped_refs);
+ 	free_refs(remote_head_points_at);
++	free(unborn_head);
+ 	free(dir);
+ 	free(path);
+ 	UNLEAK(repo);
