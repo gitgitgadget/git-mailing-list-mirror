@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B511BC433EF
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 14:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5766C43334
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 14:20:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237893AbiGHOUi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 10:20:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45136 "EHLO
+        id S237920AbiGHOUk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 10:20:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237641AbiGHOUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 10:20:36 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7826E24F15
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 07:20:34 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id q9so30762297wrd.8
-        for <git@vger.kernel.org>; Fri, 08 Jul 2022 07:20:34 -0700 (PDT)
+        with ESMTP id S237747AbiGHOUh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 10:20:37 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2C6124F2F
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 07:20:35 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id v16so19318075wrd.13
+        for <git@vger.kernel.org>; Fri, 08 Jul 2022 07:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sgv+eu1DihmDf2Wug9WsVqJiAHTnLTeXvP+NlvaxqxY=;
-        b=fuJCe24hurJGv7b3+AKP9YIzRpZ7cQI76zgcOTViFNyHMqS0mF4yhLWWdD+WhS21/P
-         JwPKNWdQAXhWkXg6kTsDvB9hI3gz3na/OeiCwixTGU/V6H1XvFIUXVWbPSNuqFWVzLbf
-         AJBYh8EsJg98JQHb0XZFbnBL0vWc1kB6LL6MSrzvmgmJfvxu2wXw40Gs3CGBsEUcOGYt
-         2tWtrPvs6IJGLZ+VoDu3AJt1++xOb0VXDfjw19ksiECKEfyM5Mv8EiF2K954LzLdKse3
-         Q+TfRMdOa7rApo2s37wP7w060QblcmicoiHBB6GVS+mXGf1MEkdHM0rjr1D58L3OnEUk
-         O3BQ==
+        bh=7zodhEbtxRjp+ESmro+zWyrYWci5gq5YFp1u+0UDssk=;
+        b=DxP7dKELcw30qDT6E5lVM+opvgPJ+ZOWeSVkQkdhO63BMnnwVb21aP7frHbe/nHqP5
+         Ma69ogKXTITJF+94+Jm492g8DLd3r8x86nFb22NktMnPCblx31myNMUnEoa/dIuOGw0U
+         N1W04BBfSaSs9gqR9h5BSC7O0eFUS4s1OC81WotSCFhrFsFnq7c2ZC8OAvYK3L7Ndv+I
+         dDJ2xx1XwcBFPiEf+TPLlTaDkNX2PIiS0aPZwIYw5bL9679mCUrswQzuBmKCXL0QKaW1
+         CsfpeDvwPFwQAFfjkcry6CXIKNei6lAoF1vySaIRx/O2ALQFGm27QeVY0kMVnBQdx2rc
+         mccA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sgv+eu1DihmDf2Wug9WsVqJiAHTnLTeXvP+NlvaxqxY=;
-        b=aqmksFTB3a3rxKEWpH+bx6tJxvPV5izmCrlWBpzjAGE/HSEvOGWGGvGxKowDjGmBWI
-         eE05cOBiWi/gCcbnbKU8vBRnpDALqvnSk3IaK6Cv4D/grsuxkbWMaEwHrrtbbLB2j7Bv
-         DDrfFSzxyWPJKBVmnwBP9N2iJJEg2OYgo7Pe3SxeEmoempdCI3gHRE931DipLPGH+tNt
-         BgXPu+5ivmEoTikXo6u474Es8CIQFinrx/wCSmSN5ezhF1oj4R4sAQDQbdxnuQLL9pD2
-         aUgpSAFZ5taVTbpuJFRMFspynqTr1CUq9oB9wu8zp3dsrTWpYUX5femEN3YWL37SN5Zp
-         NOAQ==
-X-Gm-Message-State: AJIora8qbrfA7NWLOqysq+EPlIHupL0RbCRANXiZNYKRP7+q4JEUrRef
-        6Gxf3oc2WlKhYmvoLQH0ThRG8hs2hqI=
-X-Google-Smtp-Source: AGRyM1ticjVXoubRd+hEPlkc/j3D1bgW2QGxjhH5nTZN0xokAyjr98JlbZLcmZy+3oqDMPfFrfv2tA==
-X-Received: by 2002:adf:fb49:0:b0:21a:3ccc:fb77 with SMTP id c9-20020adffb49000000b0021a3cccfb77mr3551098wrs.280.1657290032663;
-        Fri, 08 Jul 2022 07:20:32 -0700 (PDT)
+        bh=7zodhEbtxRjp+ESmro+zWyrYWci5gq5YFp1u+0UDssk=;
+        b=hJFMcMySFQ4vx9Q7vZrkW+1zSwAng3+D7hDhBQubJG/30XG3QsiC44G4SqkfYoPdTm
+         0hYT64lwZnXURwSJ4VqdCSPwC1J9ftg+zvx7826C0wwQ0UiYWS40ySv9BJ31Of+8bT2i
+         J9IDLVgbq8T0UmGifDEoLChv8D10zIBTDR4dG8BgBTIAZsRCzi5QyDO2bjYLw2KjXwxa
+         BN7A9EETSuGmBDjeWyj0vI6fJNZd6zkjUxGommpHq7Z16Jm4EEqJlgM17ipSTURjwuO9
+         j/0doIurXYsDqeSwa9QQAn7zh3Vli0r9ADvOx53fMZzLE7ZIOvH+0F9y34pKvXyxjy/K
+         adsQ==
+X-Gm-Message-State: AJIora9tTBi37BmWIXBDD/xxGG4lhtrSPVsWiXJrW7EUa8ZnhUgolCfH
+        v4SyB9HdRtZtPQmmUJqZLiYT8JEquGx8UA==
+X-Google-Smtp-Source: AGRyM1t/UliQbUVOInxtx/QH0PQ4EVVTeBGxWFl8YM/DuK2Z35c0waqHiXEc4SujIGGNGlQ9bD7ESA==
+X-Received: by 2002:a5d:584c:0:b0:21c:1395:f0c4 with SMTP id i12-20020a5d584c000000b0021c1395f0c4mr3606226wrf.24.1657290033939;
+        Fri, 08 Jul 2022 07:20:33 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q5-20020adff945000000b0021b9585276dsm40393924wrr.101.2022.07.08.07.20.31
+        by smtp.gmail.com with ESMTPSA id q5-20020adff945000000b0021b9585276dsm40393924wrr.101.2022.07.08.07.20.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 07:20:31 -0700 (PDT)
+        Fri, 08 Jul 2022 07:20:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/7] xdiff: simplify freeing patterns around xdl_free_env()
-Date:   Fri,  8 Jul 2022 16:20:13 +0200
-Message-Id: <patch-1.7-ad61f4e20b1-20220708T140354Z-avarab@gmail.com>
+Subject: [PATCH 2/7] git-shared-util.h: move "shared" allocation utilities here
+Date:   Fri,  8 Jul 2022 16:20:14 +0200
+Message-Id: <patch-2.7-87f4760bc05-20220708T140354Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.913.g189dca38629
 In-Reply-To: <cover-0.7-00000000000-20220708T140354Z-avarab@gmail.com>
 References: <b34dcb93-df73-f5de-3c7c-7ab6c3250afe@gmail.com> <cover-0.7-00000000000-20220708T140354Z-avarab@gmail.com>
@@ -68,246 +68,261 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the invocations of xdl_free_env() so that only the function
-that allocated the "xe" variable frees it, rather than passing it to a
-function that might use "&xe", and on failure having that function
-free it.
+Move the most common allocation utilities from cache.h and
+git-compat-util.h to a new git-shared-util.h. The idea is that xdiff/
+and other in-tree code can share this, and that external projects
+could then copy this header and include it.
 
-This simplifies the allocation management, since due to the new "{ 0
-}" initialization we can pass "&xe" to xdl_free_env() without
-accounting for the "&xe" not being initialized yet.
-
-This change was originally suggested as an amendment of the series
-that since got merged in 47be28e51e6 (Merge branch
-'pw/xdiff-alloc-fail', 2022-03-09) in [1]. The "avoid double free of
-xe2" in that series is one of the pattern we can simplify here.
-
-1. https://lore.kernel.org/git/220216.86tuczt7js.gmgdl@evledraar.gmail.com/
+They will need to include some things that git-compat-util.h does
+before that, e.g. we need a "size_t" here, and if they'll end up using
+any of the x*() functions they'll need to declare those. But doing so
+should be fairly obvious, and we can always extend this to define some
+fallback wrappers here if e.g. GIT_COMPAT_UTIL_H isn't defined.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- xdiff/xdiffi.c | 40 ++++++++++++++++------------------------
- xdiff/xmerge.c | 47 ++++++++++++++++++++++++++++-------------------
- xdiff/xutils.c | 12 ++++++++----
- 3 files changed, 52 insertions(+), 47 deletions(-)
+ cache.h           |  75 ---------------------------------
+ git-compat-util.h |  28 ++-----------
+ git-shared-util.h | 104 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 108 insertions(+), 99 deletions(-)
+ create mode 100644 git-shared-util.h
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 53e803e6bcb..6fded43e87d 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -320,15 +320,11 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	if (xdl_prepare_env(mf1, mf2, xpp, xe) < 0)
- 		return -1;
+diff --git a/cache.h b/cache.h
+index ac5ab4ef9d3..f29dbbadf77 100644
+--- a/cache.h
++++ b/cache.h
+@@ -677,81 +677,6 @@ void initialize_repository_version(int hash_algo, int reinit);
+ void sanitize_stdfds(void);
+ int daemonize(void);
  
--	if (XDF_DIFF_ALG(xpp->flags) == XDF_PATIENCE_DIFF) {
--		res = xdl_do_patience_diff(mf1, mf2, xpp, xe);
--		goto out;
--	}
-+	if (XDF_DIFF_ALG(xpp->flags) == XDF_PATIENCE_DIFF)
-+		return xdl_do_patience_diff(mf1, mf2, xpp, xe);
- 
--	if (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF) {
--		res = xdl_do_histogram_diff(mf1, mf2, xpp, xe);
--		goto out;
--	}
-+	if (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF)
-+		return xdl_do_histogram_diff(mf1, mf2, xpp, xe);
- 
- 	/*
- 	 * Allocate and setup K vectors to be used by the differential
-@@ -337,11 +333,8 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	 * One is to store the forward path and one to store the backward path.
- 	 */
- 	ndiags = xe->xdf1.nreff + xe->xdf2.nreff + 3;
--	if (!XDL_ALLOC_ARRAY(kvd, 2 * ndiags + 2)) {
+-#define alloc_nr(x) (((x)+16)*3/2)
 -
--		xdl_free_env(xe);
-+	if (!XDL_ALLOC_ARRAY(kvd, 2 * ndiags + 2))
- 		return -1;
--	}
- 	kvdf = kvd;
- 	kvdb = kvdf + ndiags;
- 	kvdf += xe->xdf2.nreff + 1;
-@@ -366,9 +359,6 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 			   kvdf, kvdb, (xpp->flags & XDF_NEED_MINIMAL) != 0,
- 			   &xenv);
- 	xdl_free(kvd);
-- out:
--	if (res < 0)
--		xdl_free_env(xe);
- 
- 	return res;
- }
-@@ -1054,19 +1044,19 @@ static void xdl_mark_ignorable_regex(xdchange_t *xscr, const xdfenv_t *xe,
- int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	     xdemitconf_t const *xecfg, xdemitcb_t *ecb) {
- 	xdchange_t *xscr;
--	xdfenv_t xe;
-+	xdfenv_t xe = { 0 };
- 	emit_func_t ef = xecfg->hunk_func ? xdl_call_hunk_func : xdl_emit_diff;
-+	int status = 0;
- 
- 	if (xdl_do_diff(mf1, mf2, xpp, &xe) < 0) {
+-/**
+- * Dynamically growing an array using realloc() is error prone and boring.
+- *
+- * Define your array with:
+- *
+- * - a pointer (`item`) that points at the array, initialized to `NULL`
+- *   (although please name the variable based on its contents, not on its
+- *   type);
+- *
+- * - an integer variable (`alloc`) that keeps track of how big the current
+- *   allocation is, initialized to `0`;
+- *
+- * - another integer variable (`nr`) to keep track of how many elements the
+- *   array currently has, initialized to `0`.
+- *
+- * Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
+- * alloc)`.  This ensures that the array can hold at least `n` elements by
+- * calling `realloc(3)` and adjusting `alloc` variable.
+- *
+- * ------------
+- * sometype *item;
+- * size_t nr;
+- * size_t alloc
+- *
+- * for (i = 0; i < nr; i++)
+- * 	if (we like item[i] already)
+- * 		return;
+- *
+- * // we did not like any existing one, so add one
+- * ALLOC_GROW(item, nr + 1, alloc);
+- * item[nr++] = value you like;
+- * ------------
+- *
+- * You are responsible for updating the `nr` variable.
+- *
+- * If you need to specify the number of elements to allocate explicitly
+- * then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
+- *
+- * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
+- * added niceties.
+- *
+- * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
+- */
+-#define ALLOC_GROW(x, nr, alloc) \
+-	do { \
+-		if ((nr) > alloc) { \
+-			if (alloc_nr(alloc) < (nr)) \
+-				alloc = (nr); \
+-			else \
+-				alloc = alloc_nr(alloc); \
+-			REALLOC_ARRAY(x, alloc); \
+-		} \
+-	} while (0)
 -
--		return -1;
-+		status = -1;
-+		goto cleanup;
- 	}
- 	if (xdl_change_compact(&xe.xdf1, &xe.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe.xdf2, &xe.xdf1, xpp->flags) < 0 ||
- 	    xdl_build_script(&xe, &xscr) < 0) {
+-/*
+- * Similar to ALLOC_GROW but handles updating of the nr value and
+- * zeroing the bytes of the newly-grown array elements.
+- *
+- * DO NOT USE any expression with side-effect for any of the
+- * arguments.
+- */
+-#define ALLOC_GROW_BY(x, nr, increase, alloc) \
+-	do { \
+-		if (increase) { \
+-			size_t new_nr = nr + (increase); \
+-			if (new_nr < nr) \
+-				BUG("negative growth in ALLOC_GROW_BY"); \
+-			ALLOC_GROW(x, new_nr, alloc); \
+-			memset((x) + nr, 0, sizeof(*(x)) * (increase)); \
+-			nr = new_nr; \
+-		} \
+-	} while (0)
 -
--		xdl_free_env(&xe);
--		return -1;
-+		status = -1;
-+		goto cleanup;
- 	}
- 	if (xscr) {
- 		if (xpp->flags & XDF_IGNORE_BLANK_LINES)
-@@ -1078,12 +1068,14 @@ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 		if (ef(&xe, xscr, ecb, xecfg) < 0) {
+ /* Initialize and use the cache information */
+ struct lock_file;
+ void preload_index(struct index_state *index,
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 58d7708296b..eb4b27f4846 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1034,31 +1034,11 @@ FILE *fopen_or_warn(const char *path, const char *mode);
+  */
+ int xstrncmpz(const char *s, const char *t, size_t len);
  
- 			xdl_free_script(xscr);
--			xdl_free_env(&xe);
--			return -1;
-+			status = -1;
-+			goto cleanup;
- 		}
- 		xdl_free_script(xscr);
- 	}
+-/*
+- * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
+- * that ptr is used twice, so don't pass e.g. ptr++.
++/**
++ * Common allocation utils, including ones xdiff uses, and thus are
++ * split into this file for sharing with external projects.
+  */
+-#define FREE_AND_NULL(p) do { free(p); (p) = NULL; } while (0)
+-
+-#define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
+-#define CALLOC_ARRAY(x, alloc) (x) = xcalloc((alloc), sizeof(*(x)))
+-#define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
+-
+-#define COPY_ARRAY(dst, src, n) copy_array((dst), (src), (n), sizeof(*(dst)) + \
+-	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) == sizeof(*(src))))
+-static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
+-{
+-	if (n)
+-		memcpy(dst, src, st_mult(size, n));
+-}
+-
+-#define MOVE_ARRAY(dst, src, n) move_array((dst), (src), (n), sizeof(*(dst)) + \
+-	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) == sizeof(*(src))))
+-static inline void move_array(void *dst, const void *src, size_t n, size_t size)
+-{
+-	if (n)
+-		memmove(dst, src, st_mult(size, n));
+-}
++#include "git-shared-util.h"
+ 
+ /*
+  * These functions help you allocate structs with flex arrays, and copy
+diff --git a/git-shared-util.h b/git-shared-util.h
+new file mode 100644
+index 00000000000..7b4479a0f72
+--- /dev/null
++++ b/git-shared-util.h
+@@ -0,0 +1,104 @@
++#ifndef GIT_SHARED_UTIL_H
++#define GIT_SHARED_UTIL_H
 +
-+cleanup:
- 	xdl_free_env(&xe);
- 
--	return 0;
-+	return status;
- }
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index af40c88a5b3..ac0cf52f3be 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -365,7 +365,7 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
- {
- 	for (; m; m = m->next) {
- 		mmfile_t t1, t2;
--		xdfenv_t xe;
-+		xdfenv_t xe = { 0 };
- 		xdchange_t *xscr, *x;
- 		int i1 = m->i1, i2 = m->i2;
- 
-@@ -387,8 +387,10 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
- 		t2.ptr = (char *)xe2->xdf2.recs[m->i2]->ptr;
- 		t2.size = xe2->xdf2.recs[m->i2 + m->chg2 - 1]->ptr
- 			+ xe2->xdf2.recs[m->i2 + m->chg2 - 1]->size - t2.ptr;
--		if (xdl_do_diff(&t1, &t2, xpp, &xe) < 0)
-+		if (xdl_do_diff(&t1, &t2, xpp, &xe) < 0) {
-+			xdl_free_env(&xe);
- 			return -1;
-+		}
- 		if (xdl_change_compact(&xe.xdf1, &xe.xdf2, xpp->flags) < 0 ||
- 		    xdl_change_compact(&xe.xdf2, &xe.xdf1, xpp->flags) < 0 ||
- 		    xdl_build_script(&xe, &xscr) < 0) {
-@@ -684,30 +686,37 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
- 		xmparam_t const *xmp, mmbuffer_t *result)
- {
--	xdchange_t *xscr1 = NULL, *xscr2 = NULL;
--	xdfenv_t xe1, xe2;
--	int status = -1;
-+	xdchange_t *xscr1, *xscr2;
-+	xdfenv_t xe1 = { 0 };
-+	xdfenv_t xe2 = { 0 };
-+	int status;
- 	xpparam_t const *xpp = &xmp->xpp;
- 
- 	result->ptr = NULL;
- 	result->size = 0;
- 
--	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0)
--		return -1;
--
--	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0)
--		goto free_xe1; /* avoid double free of xe2 */
--
-+	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0) {
-+		status = -1;
-+		goto cleanup;
-+	}
-+	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
-+		status = -1;
-+		goto cleanup;
-+	}
- 	if (xdl_change_compact(&xe1.xdf1, &xe1.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe1.xdf2, &xe1.xdf1, xpp->flags) < 0 ||
--	    xdl_build_script(&xe1, &xscr1) < 0)
--		goto out;
--
-+	    xdl_build_script(&xe1, &xscr1) < 0) {
-+		status = -1;
-+		goto cleanup;
-+	}
- 	if (xdl_change_compact(&xe2.xdf1, &xe2.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe2.xdf2, &xe2.xdf1, xpp->flags) < 0 ||
--	    xdl_build_script(&xe2, &xscr2) < 0)
--		goto out;
--
-+	    xdl_build_script(&xe2, &xscr2) < 0) {
-+		xdl_free_script(xscr1);
-+		status = -1;
-+		goto cleanup;
-+	}
-+	status = 0;
- 	if (!xscr1) {
- 		result->ptr = xdl_malloc(mf2->size);
- 		if (!result->ptr)
-@@ -731,9 +740,9 @@ int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
- 	xdl_free_script(xscr1);
- 	xdl_free_script(xscr2);
- 
--	xdl_free_env(&xe2);
-- free_xe1:
-+cleanup:
- 	xdl_free_env(&xe1);
-+	xdl_free_env(&xe2);
- 
- 	return status;
- }
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 9e36f24875d..a6f10353cff 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -414,7 +414,8 @@ int xdl_fall_back_diff(xdfenv_t *diff_env, xpparam_t const *xpp,
- 	 * ranges of lines instead of the whole files.
- 	 */
- 	mmfile_t subfile1, subfile2;
--	xdfenv_t env;
-+	xdfenv_t env = { 0 };
-+	int status = 0;
- 
- 	subfile1.ptr = (char *)diff_env->xdf1.recs[line1 - 1]->ptr;
- 	subfile1.size = diff_env->xdf1.recs[line1 + count1 - 2]->ptr +
-@@ -422,15 +423,18 @@ int xdl_fall_back_diff(xdfenv_t *diff_env, xpparam_t const *xpp,
- 	subfile2.ptr = (char *)diff_env->xdf2.recs[line2 - 1]->ptr;
- 	subfile2.size = diff_env->xdf2.recs[line2 + count2 - 2]->ptr +
- 		diff_env->xdf2.recs[line2 + count2 - 2]->size - subfile2.ptr;
--	if (xdl_do_diff(&subfile1, &subfile2, xpp, &env) < 0)
--		return -1;
-+	if (xdl_do_diff(&subfile1, &subfile2, xpp, &env) < 0) {
-+		status = -1;
-+		goto cleanup;
-+	}
- 
- 	memcpy(diff_env->xdf1.rchg + line1 - 1, env.xdf1.rchg, count1);
- 	memcpy(diff_env->xdf2.rchg + line2 - 1, env.xdf2.rchg, count2);
- 
-+cleanup:
- 	xdl_free_env(&env);
- 
--	return 0;
-+	return status;
- }
- 
- void* xdl_alloc_grow_helper(void *p, long nr, long *alloc, size_t size)
++/*
++ * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
++ * that ptr is used twice, so don't pass e.g. ptr++.
++ */
++#define FREE_AND_NULL(p) do { free(p); (p) = NULL; } while (0)
++
++#define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
++#define CALLOC_ARRAY(x, alloc) (x) = xcalloc((alloc), sizeof(*(x)))
++#define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
++
++#define COPY_ARRAY(dst, src, n) copy_array((dst), (src), (n), sizeof(*(dst)) + \
++	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) == sizeof(*(src))))
++static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
++{
++	if (n)
++		memcpy(dst, src, st_mult(size, n));
++}
++
++#define MOVE_ARRAY(dst, src, n) move_array((dst), (src), (n), sizeof(*(dst)) + \
++	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) == sizeof(*(src))))
++static inline void move_array(void *dst, const void *src, size_t n, size_t size)
++{
++	if (n)
++		memmove(dst, src, st_mult(size, n));
++}
++
++#define alloc_nr(x) (((x)+16)*3/2)
++
++/**
++ * Dynamically growing an array using realloc() is error prone and boring.
++ *
++ * Define your array with:
++ *
++ * - a pointer (`item`) that points at the array, initialized to `NULL`
++ *   (although please name the variable based on its contents, not on its
++ *   type);
++ *
++ * - an integer variable (`alloc`) that keeps track of how big the current
++ *   allocation is, initialized to `0`;
++ *
++ * - another integer variable (`nr`) to keep track of how many elements the
++ *   array currently has, initialized to `0`.
++ *
++ * Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
++ * alloc)`.  This ensures that the array can hold at least `n` elements by
++ * calling `realloc(3)` and adjusting `alloc` variable.
++ *
++ * ------------
++ * sometype *item;
++ * size_t nr;
++ * size_t alloc
++ *
++ * for (i = 0; i < nr; i++)
++ * 	if (we like item[i] already)
++ * 		return;
++ *
++ * // we did not like any existing one, so add one
++ * ALLOC_GROW(item, nr + 1, alloc);
++ * item[nr++] = value you like;
++ * ------------
++ *
++ * You are responsible for updating the `nr` variable.
++ *
++ * If you need to specify the number of elements to allocate explicitly
++ * then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
++ *
++ * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
++ * added niceties.
++ *
++ * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
++ */
++#define ALLOC_GROW(x, nr, alloc) \
++	do { \
++		if ((nr) > alloc) { \
++			if (alloc_nr(alloc) < (nr)) \
++				alloc = (nr); \
++			else \
++				alloc = alloc_nr(alloc); \
++			REALLOC_ARRAY(x, alloc); \
++		} \
++	} while (0)
++
++/*
++ * Similar to ALLOC_GROW but handles updating of the nr value and
++ * zeroing the bytes of the newly-grown array elements.
++ *
++ * DO NOT USE any expression with side-effect for any of the
++ * arguments.
++ */
++#define ALLOC_GROW_BY(x, nr, increase, alloc) \
++	do { \
++		if (increase) { \
++			size_t new_nr = nr + (increase); \
++			if (new_nr < nr) \
++				BUG("negative growth in ALLOC_GROW_BY"); \
++			ALLOC_GROW(x, new_nr, alloc); \
++			memset((x) + nr, 0, sizeof(*(x)) * (increase)); \
++			nr = new_nr; \
++		} \
++	} while (0)
++#endif
 -- 
 2.37.0.913.g189dca38629
 
