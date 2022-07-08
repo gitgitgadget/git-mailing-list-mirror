@@ -2,161 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80FDBC43334
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 18:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72C05C43334
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 18:14:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238718AbiGHSKg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 14:10:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33194 "EHLO
+        id S238158AbiGHSO5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 14:14:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238276AbiGHSKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 14:10:34 -0400
+        with ESMTP id S238767AbiGHSOz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 14:14:55 -0400
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FAAC564FF
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 11:10:32 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id ABB853200986;
-        Fri,  8 Jul 2022 14:10:29 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E695E7D1C9
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 11:14:54 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 316EA3200907;
+        Fri,  8 Jul 2022 14:14:54 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Fri, 08 Jul 2022 14:10:30 -0400
+  by compute2.internal (MEProxy); Fri, 08 Jul 2022 14:14:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
-        :content-transfer-encoding:date:date:from:from:in-reply-to
-        :message-id:mime-version:reply-to:sender:subject:subject:to:to;
-         s=fm1; t=1657303829; x=1657390229; bh=Tl9tOS+jwGtvlwxFNUqnZNwMr
-        U5caEGR1KNYoSK1SYc=; b=rx0b7hGAmMimv/CPP6vzw23Nchf4FIbPi+/CiclS1
-        yi+zjEjbuSO6piypUURCht6RWaV9oVVgtbwOjTgsDR279COhNq2t/4g9th0Xo2cr
-        qR57sh2GfufjG1I7zb9QGhrp1dC5LhLzxbem1HnS8mAIZqWU/v8XpYjEJIL2YhhQ
-        sQA2OBucMyUOkZ3mgZf2q40I31A6NNbvIPF4dDzwkzJvApSgXzzB/AUBRw/OaGk/
-        OyhQV9jY4htN4lLdwdHKYpMztXqC6COh86kBeJGFB+0kalIdifjt93juIQi5GEGv
-        N+9y+jauevyZkiFh/w77YtiMQYtZslGSNR+wa5+wCWUEw==
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1657304093; x=1657390493; bh=mirSj0mzYs
+        arS5dUMQM3Ouk7tmlDgjA3zCxnYQLAiog=; b=0IikfymkVBAF8iIdBGDJUXgln1
+        /GpgR8QvLu1ZYa2bN6dtGewgxTV0JhUow3WA+HDrMljbuAI+67fgfiZccdWEKmRK
+        ejx1rkx6mMg+b9BDmy7jK4krVX3RjdQztaU165NkSU58+W83tiktV05jxjtwE26s
+        Das9AzYiyOy6HmWIcj+6mJmDqx6gIVVemmfIYOgQPCAQFqWmKBPDLNgDjso35I5T
+        jiMk8FrvEdpmO4uBZHA15eZx/GrnkPmytMxWuB39TANKY3JScyuNZ9tAhTfb5JoT
+        1oQhVsrzbT2X8N+DAwqaz40tyGfXEsJvfD+/LZp7uyZL5VIApqbHupEwK7SQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:message-id
-        :mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-        1657303829; x=1657390229; bh=Tl9tOS+jwGtvlwxFNUqnZNwMrU5caEGR1KN
-        YoSK1SYc=; b=XaA7WsgQFwdAVOIDkZ3FXTtxK09YWSVn4XHDTQ0cs9zyVE2hUbS
-        U/JEGfEBhN7eMZpSnZNtpwRhSQw+m9q2xVtrS2nzrMyboNQJFNgKqBq2+72PNtlc
-        bUD0kyl01IYXXZTsagLHqJIJyDT0zhUCQgZUxCDJslY3fHN4M22LLpddV6orn2xm
-        Sk2u6dsKfy0qhmTmyoARpMbzrRENpPv5cEJyHx0YGj3G/5R3AS2ELoRfAAbHpnl1
-        pNo5ksk5pju5MW6ujRo6KREzx0Cb6dQqlq9tz+DhMRDOD7Z0SNi3XHpvRBPxsDQK
-        DY1bNDqNzou4827VCjxo7HuLKa60d7LJ80g==
-X-ME-Sender: <xms:FHPIYpyfogXzV6VAsNtdnrMHOao8UEF_MtqPBu4qcv1XzhyEWng6Aw>
-    <xme:FHPIYpQ5ajWIWEseZbTreitTUJLlj5WUvsxH6eNf-1xKXAv2YDVYLh07ak_R_hAZJ
-    n3Jj1sE_jxmST32-g>
-X-ME-Received: <xmr:FHPIYjXUxZFJMAwDn9vNcyTa-vh8i7yY-4nTGAbRa51IW-OfIuNKaMdUnNRTw24O_1PIZrk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudeijedguddvvdcutefuodetggdotefrod
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1657304093; x=1657390493; bh=mirSj0mzYsarS5dUMQM3Ouk7tmlD
+        gjA3zCxnYQLAiog=; b=mKGAtmF/Wm4Cuk15FOwWuMK42Vsq7xckC+IKlESRzkBf
+        iS7bV6AlfLbyrx4osHbOavqfAhH7I6vA0PJ/T5zRUV7wEs9KDWY+ELKl+1kMumzq
+        bYVSa6GchTr0DZ7AoqJLDL//u98zuWO5G40axQzjSsrVleb+QOCF8m4FdmsaSAom
+        KUOpAz7qT90uRWWEQk47jieJY6zdPErSkXiC/Yz+wTD84ga/I+L5Rww4Zs19cckR
+        VutN7MzGIZNvNVG199rC/1mZRmPWylxOdILp3NIcXIck0r7Qs1ufzgr8Kce2r5Qg
+        +RGKD772A1Gt7BfnB7u/dIoGknoYxAVsbGStH1hocA==
+X-ME-Sender: <xms:HXTIYr9NmJbse2IAAb-Lwnwbe_f6QNpUzrFRw3-ggxp-QtX11IEphA>
+    <xme:HXTIYnvQvIp7ufz4Rv75DD3gCkfO6Fogru1smBltUgxbVrIDSZ6ArSxaylzvLYkkR
+    5J3wzSV-eHWMNhl-Q>
+X-ME-Received: <xmr:HXTIYpCed4gyf5s5BG0Cu5ZqIXngb45oOCeXjY8oFBh0gg0bpQ43o4e_kXN32VWZkQuNgWfN5B8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudeijedguddvfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgggfestdekre
-    dtredttdenucfhrhhomhephfgvrhhnrghnughoucftrghmohhsuceoghhrvggvnhhfohho
-    sehuledvrdgvuheqnecuggftrfgrthhtvghrnhepgeeggeejgeettdegveevfeelffelve
-    evffettddvudfgledtgeevueefieekueelnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
-X-ME-Proxy: <xmx:FHPIYrhkoqkCAfg7q1X1WDObUG0S1DbMmXcDDtN_61lHW5hFYD4ZgQ>
-    <xmx:FHPIYrD2hcZVyx3RfIoA0asMw2ZP96MFk0E6n8QQ9QB0rBZtJGeGUg>
-    <xmx:FHPIYkLF0m1cyQf7cdBwVNdNqJDP3bml2XqVF3plv2B-Ua4XJPmQFQ>
-    <xmx:FXPIYuMpt3_dYi5Kk7I-vsTA9aRAIT9QuFKsDlG0Hb5uX0FQ1PUlZw>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesth
+    dtredttddtjeenucfhrhhomhephfgvrhhnrghnughoucftrghmohhsuceoghhrvggvnhhf
+    ohhosehuledvrdgvuheqnecuggftrfgrthhtvghrnhepffehveetfeejveeikeehueejie
+    evgfeuvdeifeelueeigfdttdelleehveelvdejnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
+X-ME-Proxy: <xmx:HXTIYndPB-UfjPFvR3cJharB3ppRn5lczXxyGUI6mbKe8TVj0eZGVQ>
+    <xmx:HXTIYgOEecXeq_n8zzwfNzVCJix5GTN4u2n8e2D7UoUr9RXsHKGH7w>
+    <xmx:HXTIYpmDAg9eo2I1kxCrSsGXBG8tHvzVo7txkTpq72OKxZoU3Ioz3Q>
+    <xmx:HXTIYq0y1pArFDugEX3C45I9eloaH-EUILyRCn3FjFvJPcxy3LrwiA>
 Feedback-ID: i96f14706:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Jul 2022 14:10:27 -0400 (EDT)
+ 8 Jul 2022 14:14:52 -0400 (EDT)
+Date:   Fri, 8 Jul 2022 20:14:49 +0200
 From:   Fernando Ramos <greenfoo@u92.eu>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, mklein994@gmail.com, greenfoo@u92.eu
-Subject: [PATCH] vimdiff: make layout engine more robust against user vim settings
-Date:   Fri,  8 Jul 2022 20:10:24 +0200
-Message-Id: <20220708181024.45839-1-greenfoo@u92.eu>
-X-Mailer: git-send-email 2.37.0
+Cc:     gitster@pobox.com, mklein994@gmail.com
+Subject: Re: [PATCH] vimdiff: make layout engine more robust against user vim
+ settings
+Message-ID: <Ysh0GWhYiyAT21Nn@zacax395.localdomain>
+References: <20220708181024.45839-1-greenfoo@u92.eu>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220708181024.45839-1-greenfoo@u92.eu>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'vim' has two configuration options ('splitbelow' and 'splitright') that
-change the way the 'split' command behaves. When they are set, the
-commands that the layout engine generates no longer work as expected.
+This bug was originally reported by Matthew. I have verified that the patch
+above fixes the issue but if anyone else can also test it that would be great.
 
-In order to fix this we can append special keyword 'letfabove' to each
-'split' and 'vertical split' subcommand found inside the command string
-generated by the layout engine.
 
-This works because whatever comes after 'leftabove' will temporally
-ignore settings 'splitbelow' and 'splitright'.
+> Reported-by: Matthew Klein <mklein994@gmail.com>
+> Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
 
-Reported-by: Matthew Klein <mklein994@gmail.com>
-Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
----
- mergetools/vimdiff | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+Matthew, I have added you to the "Reported-by" field. If you prefer to remain
+anonymous, please let me know and I'll create a new patch without your name.
 
-diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 461a89b6f9..b045b10fd7 100644
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -228,14 +228,14 @@ gen_cmd_aux () {
- 
- 	elif ! test -z "$index_horizontal_split"
- 	then
--		before="split"
-+		before="leftabove split"
- 		after="wincmd j"
- 		index=$index_horizontal_split
- 		terminate="true"
- 
- 	elif ! test -z "$index_vertical_split"
- 	then
--		before="vertical split"
-+		before="leftabove vertical split"
- 		after="wincmd l"
- 		index=$index_vertical_split
- 		terminate="true"
-@@ -310,7 +310,7 @@ gen_cmd () {
- 	#
- 	#     gen_cmd "@LOCAL , REMOTE"
- 	#     |
--	#     `-> FINAL_CMD    == "-c \"echo | vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	#     `-> FINAL_CMD    == "-c \"echo | leftabove vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
- 	#         FINAL_TARGET == "LOCAL"
- 
- 	LAYOUT=$1
-@@ -555,22 +555,22 @@ run_unit_tests () {
- 	TEST_CASE_15="  ((  (LOCAL , BASE , REMOTE) / MERGED))   +(BASE)   , LOCAL+ BASE , REMOTE+ (((LOCAL / BASE / REMOTE)) ,    MERGED   )  "
- 	TEST_CASE_16="LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL / BASE / REMOTE),MERGED"
- 
--	EXPECTED_CMD_01="-c \"echo | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_02="-c \"echo | vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_03="-c \"echo | vertical split | 1b | wincmd l | vertical split | 4b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_01="-c \"echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_02="-c \"echo | leftabove vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_03="-c \"echo | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 4b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
- 	EXPECTED_CMD_04="-c \"echo | 4b | bufdo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_05="-c \"echo | split | 1b | wincmd j | split | 4b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_06="-c \"echo | vertical split | split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_07="-c \"echo | vertical split | 4b | wincmd l | split | 1b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_08="-c \"echo | split | vertical split | 1b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_09="-c \"echo | split | 4b | wincmd j | vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_10="-c \"echo | vertical split | split | 1b | wincmd j | split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_11="-c \"echo | -tabnew | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | vertical split | 2b | wincmd l | 3b | tabnext | vertical split | split | 1b | wincmd j | split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_12="-c \"echo | vertical split | split | vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_13="-c \"echo | vertical split | split | vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | vertical split | split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_14="-c \"echo | -tabnew | vertical split | 2b | wincmd l | 3b | tabnext | vertical split | 2b | wincmd l | 1b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_15="-c \"echo | -tabnew | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | vertical split | 2b | wincmd l | 3b | tabnext | vertical split | split | 1b | wincmd j | split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_16="-c \"echo | -tabnew | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | vertical split | 2b | wincmd l | 3b | tabnext | vertical split | split | 1b | wincmd j | split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_05="-c \"echo | leftabove split | 1b | wincmd j | leftabove split | 4b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_06="-c \"echo | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_07="-c \"echo | leftabove vertical split | 4b | wincmd l | leftabove split | 1b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_08="-c \"echo | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_09="-c \"echo | leftabove split | 4b | wincmd j | leftabove vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_10="-c \"echo | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_11="-c \"echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_12="-c \"echo | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_13="-c \"echo | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_14="-c \"echo | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | 2b | wincmd l | 1b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_15="-c \"echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_16="-c \"echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
- 
- 	EXPECTED_TARGET_01="MERGED"
- 	EXPECTED_TARGET_02="LOCAL"
--- 
-2.37.0
-
+Thanks!
