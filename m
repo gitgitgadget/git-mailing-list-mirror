@@ -2,119 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D261C43334
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 11:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42816C433EF
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 11:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237661AbiGHL3K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 07:29:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55982 "EHLO
+        id S238186AbiGHLyE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 07:54:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231217AbiGHL3G (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 07:29:06 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3551904F6
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 04:29:04 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id z41so26545625ede.1
-        for <git@vger.kernel.org>; Fri, 08 Jul 2022 04:29:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4Lz+eJe1HivvSv0vTrPPHeimcF7+p/3R/te7FeKIW5k=;
-        b=OFGwh9EpqsSD/O5XQlEk3t8ZRixlwNy/DTJ7bGTIYOj2kyMDHqbSmRyejfTQSpzrey
-         1FysC0VGn3U6gcT9EqNeVvBQmFHEHArhGJrMRLRIlDJBwkDJ/T98/hUKwALn3islqs1U
-         XYoJgeIfQJEamtf+ItrXZwlChT6HpF+cC5V4g=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4Lz+eJe1HivvSv0vTrPPHeimcF7+p/3R/te7FeKIW5k=;
-        b=vuakQdXSMXbn4ZuzxNtM2KF11XHVpt5wWXHVj3Owg00mJuuHC7/QloJBManhUQGg5a
-         JzaM2vula+vFpW+/4l8hSmhseOlukazcAz1UZ6KqYzvM/H+RI2PNTKuesFEPkYbsB6VS
-         yedrlInn2tOhA34VvUSEvwwAS9dAYGp9ko1NJFChmCB0q17xPCid6JAtylORVtf0b8Op
-         ERrfH7UaziOQCDr4I389JNjPwt1FWuDk9s9QCnc2EfjqbKmO+fid4XkX8nKmeXjIQR3v
-         4OiaIwNubJQz2lIfy0ipCC333mkR0QLphA0qLMYUOnWZ3GQ1ZLd2a2+OCVWvCOh6k2lA
-         EHcg==
-X-Gm-Message-State: AJIora8lfhdFHoqj+xP+a6cSV6ztDSVuTUVYfHUa3RAgRj5cuKNXIH6q
-        LjPqMgesd/R6DYdsERcEoxQSAouKWISht0GVxjbtyQHS59VY09K0Olc=
-X-Google-Smtp-Source: AGRyM1tE97Z9laRQF2BK3MzX7khq/NZluAFdCs3k+hFJ86zNyf4Af4NdR8p6O/h7q6QUGNEwLco2V3ElMhgVl5kUcFY=
-X-Received: by 2002:a05:6402:294c:b0:43a:91a9:a691 with SMTP id
- ed12-20020a056402294c00b0043a91a9a691mr4273377edb.182.1657279743157; Fri, 08
- Jul 2022 04:29:03 -0700 (PDT)
+        with ESMTP id S238157AbiGHLyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 07:54:03 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E73620F6A
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 04:54:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1657281235;
+        bh=B4NBEPNkq4z1HhPDSZA0zTARIh1AQW03CPyhEQeG37U=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=iPbsnTaGrd16ZfjudY4+0wYYOVe41lnbQfqT1SxvC4EVk5LEh6UW5+hM+3Zgnz9IN
+         S/709fCR+muSXPxtIjZ/px9/7NujmOD6EQ65rhksg23S/THDNo/ESHyC+F5lio9/n5
+         VPjCcij9/ZeYH/X8AhYUZM3p9SRBPSylX4DBevaQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.14.164] ([213.196.212.225]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mo6v3-1nmYMS2cXr-00pafO; Fri, 08
+ Jul 2022 13:53:55 +0200
+Date:   Fri, 8 Jul 2022 13:53:55 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
+cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 4/4] cat-file: add mailmap support
+In-Reply-To: <20220707161554.6900-5-siddharthasthana31@gmail.com>
+Message-ID: <p3n4547s-6134-n4p9-97n5-so696qssr5n2@tzk.qr>
+References: <20220630142444.651948-1-siddharthasthana31@gmail.com> <20220707161554.6900-1-siddharthasthana31@gmail.com> <20220707161554.6900-5-siddharthasthana31@gmail.com>
 MIME-Version: 1.0
-References: <pull.1285.git.git.1657267260405.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1285.git.git.1657267260405.gitgitgadget@gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Fri, 8 Jul 2022 13:28:51 +0200
-Message-ID: <CAPMMpohwP1U4pr-G=fDDu_AHTY-2mn8hn8zBf-pAsmm=w0mSzw@mail.gmail.com>
-Subject: Re: [PATCH] git-p4: fix bug with encoding of p4 client name
-To:     Kilian Kilger via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Kilian Kilger <kkilger@gmail.com>,
-        Kilian Kilger <kilian.kilger@sap.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TGGXWxF4WZtbmCoRMyRWcGl7tg7Hwhcde8VGPgyMrEJOkwpo6hu
+ o69gECqBthoAUhkF07LGCeVOhqktIlDoJXcCk1NH5y2ry+X7pfKISqIIKEaO6O4ml9Fct2G
+ dGhSHXPY/+LPIxew+GBHjTO25B5+0w7xcdwXfsxw7Ug4PFesJwjlRgxvxoAtSXQ8nakQJAS
+ PzyfQra6sKj2Iv0ckTVOA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1CX0RX5MMXU=:IfyAzr4UcttoasM4Zb35ae
+ DV4nBQQN2r6JidA3lPJh5/RW6I7kDpEfD8bGOX676NR7gtxFgZ5/bnXPdohAd5nhajfpJtY++
+ 7m6C9lqiX+CzXD2Xxq8CN4oCX++HtkTNjs1cZYI1EhHFGMO6mw+6+VFpbRJa4c/+1XQtaYlAz
+ XCp7DHfASU7PiMAJ5i753ONpByXdjTDCjMyyAL8HmV2QWdD4FTNwNxggGySM2hsazNmuGr1S4
+ BQA/QJfA79crnXHP/zaPPJsyjJ6xu7wBIF9Gi+7yRj0UWqcSyd7AFQzA5OUGF9JqCK7rm8bPV
+ yVDq3SdkKuvShplRqhlPZq7gJNqCR4DRgEGazLGqwlozkKhKyWrLz/D316vI/vqbSRRnYos54
+ 87sDpQhg9J/T8X9AsOuvcjwCZ5bIngkq9+Ql2fPt6ByxufKLK6OMXVDbrCPv7U0AP0kPSM0Vf
+ BRDA3+ziE6EOm4ohS9K3FH5iHtjNbCLhGlGMBLJu+wv5XnnUVtlxkMOphEcU24RR091oxXzwK
+ Qsupca9nl7nLGljC+2o8RbkS+dlL/CQwAK4n2+q4ToE0z9co86S638gLsIH1xE51lrJ116zuv
+ RY+r2G8zrdvfTrZdcfgCI6sY5cbP0Cn9UB1Zdb2s/97u1hWR4h9oLJCO/Ba7ya9M7sjZDK+uc
+ fLDrRlQJ/lFrqM/AI0tgG22HtAYKuDs73/C8cKB3PNM2Ta8dF4fKtzPJ3sLpAnQEdB5ThIZwu
+ Bz+7FJIeoSF7ASZ8cBUUVRowEt5qCdATcoc6Ampq3mIoh0WSaYZd7Apgx3SElhpotr6O7Dclb
+ bxe8LRARMyOzZ/aF6GO4L90KucSYjK6h8fvdrEBgGz6SJ+woHt0f831YkOm/R9C2jRsRrywSn
+ BG0kijE5b73Qb716hugpAKfaEQrIZfxVpBBsxrwwDXmm944BvURAE1gA0ukdWE82davb9IuH4
+ sEa8K2TfEkjX9l7XqFZK2bZR8c7leZAubx4AYOozUmICqRR2SaowHo9Evf948zj2kIH91wXFr
+ Gk+74lWRP/ilPWswfQK863G5gYfXyWVM4bIxHztKjjI4JyE9k7layRsqIITqcmHSonaNdqMNQ
+ qsoGrRpHCmoLwqyUrwfXSV3FuK16CnVXeX1lwFDsH+C+lxKwHioGZww9g==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes sense to me, and I don't see anything wrong with the "form"
-(and nor does GitGitGadget).
+Hi Siddarth,
 
-Not sure whether formal review sign-off is used on this list, I don't
-tend to see it, but do I see "Reviewed-by" on patches, so FWIW:
+On Thu, 7 Jul 2022, Siddharth Asthana wrote:
 
-Reviewed-by: Tao Klerks <tao@klerks.biz>
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 50cf38999d..6dc750a367 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -36,6 +37,19 @@ struct batch_options {
+>
+>  static const char *force_path;
+>
+> +static struct string_list mailmap =3D STRING_LIST_INIT_NODUP;
+> +static int use_mailmap;
+> +
+> +char *replace_idents_using_mailmap(char *object_buf, size_t *size)
 
+Here, we declare the `size` parameter as a pointer to a `size_t`.
 
-On Fri, Jul 8, 2022 at 10:01 AM Kilian Kilger via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+> +{
+> +	struct strbuf sb =3D STRBUF_INIT;
+> +	strbuf_attach(&sb, object_buf, *size, *size + 1);
+> +	const char *headers[] =3D { "author ", "committer ", "tagger ", NULL }=
+;
+> +	apply_mailmap_to_header(&sb, headers, &mailmap);
+> +	*size =3D sb.len;
+> +	return strbuf_detach(&sb, NULL);
+> +}
+> +
+>  static int filter_object(const char *path, unsigned mode,
+>  			 const struct object_id *oid,
+>  			 char **buf, unsigned long *size)
+> @@ -152,6 +166,9 @@ static int cat_one_file(int opt, const char *exp_typ=
+e, const char *obj_name,
+>  		if (!buf)
+>  			die("Cannot read object %s", obj_name);
 >
-> From: Kilian Kilger <kilian.kilger@sap.com>
->
-> The Perforce client name can contain arbitrary characters
-> which do not decode to UTF-8. Use the fallback strategy
-> implemented in metadata_stream_to_writable_bytes() also
-> for the client name.
->
-> Signed-off-by: Kilian Kilger <kkilger@gmail.com>
-> ---
->     git-p4: Fix bug with encoding of P4 client name
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1285%2Fcohomology%2Fmaint-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1285/cohomology/maint-v1
-> Pull-Request: https://github.com/git/git/pull/1285
->
->  git-p4.py | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index 8fbf6eb1fe3..e65d6a2b0e1 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -854,12 +854,12 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
->              if bytes is not str:
->                  # Decode unmarshalled dict to use str keys and values, except for:
->                  #   - `data` which may contain arbitrary binary data
-> -                #   - `desc` or `FullName` which may contain non-UTF8 encoded text handled below, eagerly converted to bytes
-> +                #   - `desc` or `client` or `FullName` which may contain non-UTF8 encoded text handled below, eagerly converted to bytes
->                  #   - `depotFile[0-9]*`, `path`, or `clientFile` which may contain non-UTF8 encoded text, handled by decode_path()
->                  decoded_entry = {}
->                  for key, value in entry.items():
->                      key = key.decode()
-> -                    if isinstance(value, bytes) and not (key in ('data', 'desc', 'FullName', 'path', 'clientFile') or key.startswith('depotFile')):
-> +                    if isinstance(value, bytes) and not (key in ('data', 'desc', 'FullName', 'path', 'clientFile', 'client') or key.startswith('depotFile')):
->                          value = value.decode()
->                      decoded_entry[key] = value
->                  # Parse out data if it's an error response
-> @@ -871,6 +871,8 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
->                      continue
->              if 'desc' in entry:
->                  entry['desc'] = metadata_stream_to_writable_bytes(entry['desc'])
-> +            if 'client' in entry:
-> +                entry['client'] = metadata_stream_to_writable_bytes(entry['client'])
->              if 'FullName' in entry:
->                  entry['FullName'] = metadata_stream_to_writable_bytes(entry['FullName'])
->              if cb is not None:
->
-> base-commit: e4a4b31577c7419497ac30cebe30d755b97752c5
-> --
-> gitgitgadget
+> +		if (use_mailmap)
+> +			buf =3D replace_idents_using_mailmap(buf, &size);
+
+But here, we are once more bitten by Git's usage of last century's data
+types: the `size` variable is of type `unsigned long`.
+
+Now, you are probably developing this patch on 64-bit Linux or macOS,
+where it just so happens that `size_t` is idempotent to `unsigned long`.
+
+But that is not the case on 32-bit Linux nor on Windows, and therefore the
+build fails with this patch. I need this to get the build to pass:
+
+=2D- snipsnap --
+=46rom 237c783705b30ed4bcce81aeb860dc7e152fc8bf Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Fri, 8 Jul 2022 13:47:52 +0200
+Subject: [PATCH] fixup??? cat-file: add mailmap support
+
+This is needed whenever `unsigned long` is different from `size_t`, e.g.
+on 32-bit Linux and on Windows.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ builtin/cat-file.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index ac852087a74..baa6aca53ce 100644
+=2D-- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -185,8 +185,13 @@ static int cat_one_file(int opt, const char *exp_type=
+, const char *obj_name,
+ 		if (!buf)
+ 			die("Cannot read object %s", obj_name);
+
+-		if (use_mailmap)
+-			buf =3D replace_idents_using_mailmap(buf, &size);
++		if (use_mailmap) {
++			size_t s;
++
++			buf =3D replace_idents_using_mailmap(buf, &s);
++
++			size =3D cast_size_t_to_ulong(s);
++		}
+
+ 		/* otherwise just spit out the data */
+ 		break;
+@@ -222,8 +227,13 @@ static int cat_one_file(int opt, const char *exp_type=
+, const char *obj_name,
+ 		buf =3D read_object_with_reference(the_repository, &oid,
+ 						 exp_type_id, &size, NULL);
+
+-		if (use_mailmap)
+-			buf =3D replace_idents_using_mailmap(buf, &size);
++		if (use_mailmap) {
++			size_t s;
++
++			buf =3D replace_idents_using_mailmap(buf, &s);
++
++			size =3D cast_size_t_to_ulong(s);
++		}
+ 		break;
+ 	}
+ 	default:
+@@ -392,8 +402,13 @@ static void print_object_or_die(struct batch_options =
+*opt, struct expand_data *d
+
+ 		contents =3D read_object_file(oid, &type, &size);
+
+-		if (use_mailmap)
+-			contents =3D replace_idents_using_mailmap(contents, &size);
++		if (use_mailmap) {
++			size_t s;
++
++			contents =3D replace_idents_using_mailmap(contents, &s);
++
++			size =3D cast_size_t_to_ulong(s);
++		}
+
+ 		if (!contents)
+ 			die("object %s disappeared", oid_to_hex(oid));
+=2D-
+2.37.0.windows.1
+
