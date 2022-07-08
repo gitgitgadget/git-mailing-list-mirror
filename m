@@ -2,139 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 832E3C43334
-	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 22:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A887EC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Jul 2022 22:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237640AbiGHW3d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jul 2022 18:29:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
+        id S237884AbiGHWh5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jul 2022 18:37:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237223AbiGHW3c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jul 2022 18:29:32 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E18F13B455
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 15:29:31 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id sb34so39855018ejc.11
-        for <git@vger.kernel.org>; Fri, 08 Jul 2022 15:29:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=UZaaBLGxIxMqh3qwzL2wFOOQqwmwImsfh598c9m2Ka0=;
-        b=eCHlvhXkZZtmd/cDc8P74tQ75JwpWJYv2/iiTahpHDu080yMZpBtooOfFm2lXGbZ3k
-         em0acw+kqGyIOc8ucjm814Gg66Tbkg+2uU8rPjSXgVBEeshFcxrlvnrUmdFJGK1E07JJ
-         GoM2jRG6z91akFrE8FYO4PG4shudsYbaCLwvp2C8H3zqoaOzXnIvQcGbOcDMGy23+ZxN
-         VxfVA0glyA7ymv1f/jENyXcwFdWRaqspefM7UFgLrp1crzN1k0LcRKFQiTayyLjvza/Z
-         tXQCbUMu8JvEKbcQpg9VtUJsBtKIKS8Tn4gOYDop8bg6U6HMWiwoo49ayW2zvzEFzm/y
-         68xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=UZaaBLGxIxMqh3qwzL2wFOOQqwmwImsfh598c9m2Ka0=;
-        b=KiCF6k796LbA+adsyReSeKYkYDvWhm/KZQD2dT+QybFqL36cUABcCmDDYzQEzNm6n3
-         kYOxtH+6ScSHIuDNFGpbGMyFV1j1v6bYwD88G8P9afLZ4XOHY66jZOQPA4ZIHnvnoYsk
-         5/HAGWKgDzr4wjqESGnXarM7gp2Kop1UAEk66KFLAplaQDuiH1Es9Seqf2/q6PaLZa6d
-         Vf2UUdOAn/dHfxorGjp1aDvjPvMg1QPCH+N470RmAwgM/c+GabpcOlxvxEtVgY4lh+ti
-         clyD/re9bJzYcU47IucYIQnELHQkUgmmx+9IZhHA/wKN4RZO43Crqay7xj8Z5XUeh/z+
-         StRw==
-X-Gm-Message-State: AJIora8GjjqV7qCfwM1hiQcSdvCqv9oJiLDMu1FtUwlqwYtgPhtBBR7V
-        5zzF/EZTjIwx4+oxLGKWhDxQOdhzX/DHAQ==
-X-Google-Smtp-Source: AGRyM1sAgS/6O2Q6SIG+ehmhpeit1SN5cwASBcLq3gooB0T05peNnQBYM6KRzHxoKXajx4gQcRH3Xw==
-X-Received: by 2002:a17:907:1dc6:b0:72a:5e9a:91be with SMTP id og6-20020a1709071dc600b0072a5e9a91bemr5889472ejc.730.1657319369613;
-        Fri, 08 Jul 2022 15:29:29 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id c12-20020a170906d18c00b00727c6da69besm14012519ejz.38.2022.07.08.15.29.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 15:29:28 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1o9wTY-0003y9-1l;
-        Sat, 09 Jul 2022 00:29:28 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 4/4] xdiff: introduce XDL_ALLOC_GROW()
-Date:   Sat, 09 Jul 2022 00:17:42 +0200
-References: <pull.1272.git.1656516334.gitgitgadget@gmail.com>
- <pull.1272.v2.git.1657297519.gitgitgadget@gmail.com>
- <8c24cd7737b29d461788b71f6a94eb74c468ad33.1657297520.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <8c24cd7737b29d461788b71f6a94eb74c468ad33.1657297520.git.gitgitgadget@gmail.com>
-Message-ID: <220709.86v8s78chj.gmgdl@evledraar.gmail.com>
+        with ESMTP id S237841AbiGHWhz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jul 2022 18:37:55 -0400
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8573C13B46C
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 15:37:54 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id D1F2E3200915;
+        Fri,  8 Jul 2022 18:37:51 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Fri, 08 Jul 2022 18:37:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1657319871; x=1657406271; bh=y+vEnugj98
+        Dm6q8RhLgvDBz9gp73DPn/GSNn9bZOiYM=; b=SOWNwgoRS/z08UgMXCLygC956I
+        l1bqTKe+966lS/aFZl7gYJe/A9K8lzFKn8Ej+yNo2Gq5A2JmDxk+a7TxdVrUVrQ/
+        OJ94iPpLvG7gJnscLdlgtnykXeKcAdrwsJJEdbmRoiFRgKds+xCavCNhDG7KwVyO
+        1pNRgxxGKJ10U30vrAttU5MxEr7Vb+XVD6YManb8ApH2Z4j0/n8WiO+RtOqayg8k
+        RsC1Ze+Ndh+RfPxQmrg2wJhOcTUm8vxSxitT4diTL1LiWctb8ppue2/K2zzVvc/x
+        pqFDRhacM+E18SWATqxvEtuRJxN/fso/3FhdsQK5qhJnF3gR8427sjshSB+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1657319871; x=1657406271; bh=y+vEnugj98Dm6q8RhLgvDBz9gp73
+        DPn/GSNn9bZOiYM=; b=yrgcUSTnBw0d4yYgwlwS6aLFwcwMhdl8D2EAOXCWgSaP
+        24rYk73/e+p32VfX0SgXOk9adzBQ7LL5Jqk9RUtkX1e+ouIS9ui/Y2/D+uw7Ap6F
+        0VPRLF9og4X1afOvyCBpEP4MDb9u7NS7FlDs2UcOdQBNCpxRVXhQGOnwpVyqfZaf
+        /VShaTfd4F9XVWbvftvSnlvmNY6/vsRT/4BaneTB8nfiFsIrI8gCDi6F18dXP0Z4
+        db4ShxZULLIOUx6z4QMWKfjyaou42AeXpdhKtG4L5smKzg9jk1drig9k62BsKyQn
+        sqXnuyH7YqVV8pgnTqYJ+PqGHb/radxSgkkgZOo38A==
+X-ME-Sender: <xms:v7HIYuDoLEqbVfEIUYC3BihynCJ0vyuGUS6x5k0YabegWyMeshQp5g>
+    <xme:v7HIYoiDziQs8TDqM7dPgwd6v4v_c0yMGc4cdyAKnRZkE1t9Af56af0a8i5_lKQsc
+    h3XQVvTa-2O1m1Juw>
+X-ME-Received: <xmr:v7HIYhmJ2l5qZ9iW77UxpgRWY_dP7NpJlA7r3SbvYSUGawrpVUvEWJu9x3CEtHunKwd331TCbfI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudeikedguddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttd
+    ertddttdejnecuhfhrohhmpefhvghrnhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhho
+    ohesuhelvddrvghuqeenucggtffrrghtthgvrhhnpeffheevteefjeevieekheeujeeive
+    fguedvieefleeuiefgtddtleelheevledvjeenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:v7HIYsxBKBCt6igtzuivCyBAS7XVK3_sjKiDgbM8cL63wmdvRGaniw>
+    <xmx:v7HIYjQQldiVLGZRMkeHLXeMawMWty9hhkMAg8hw9xtenoqZUPGiFQ>
+    <xmx:v7HIYnY63azD7CG1HuiCC5s4ggNcaoi9UHy7PoXUaUUsDdGDTQiNSw>
+    <xmx:v7HIYqI64WdGsdAuiU1FMpxz5GCSps4yEBlqFYepfw_gRQuU1YQncg>
+Feedback-ID: i96f14706:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 8 Jul 2022 18:37:50 -0400 (EDT)
+Date:   Sat, 9 Jul 2022 00:37:47 +0200
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, mklein994@gmail.com
+Subject: Re: [PATCH] vimdiff: make layout engine more robust against user vim
+ settings
+Message-ID: <YsixuwhSwTCapW5L@zacax395.localdomain>
+References: <20220708181024.45839-1-greenfoo@u92.eu>
+ <xmqqsfnbuzrl.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqsfnbuzrl.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Jul 08 2022, Phillip Wood via GitGitGadget wrote:
-
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 22/07/08 01:15PM, Junio C Hamano wrote:
 >
-> Add a helper to grow an array. This is analogous to ALLOC_GROW() in
-> the rest of the codebase but returns =E2=88=921 on allocation failure to
-> accommodate other users of libxdiff such as libgit2.=20
-> [...]
-> +		if (XDL_ALLOC_GROW(cf->rcrecs, cf->count, cf->alloc))
-> +void* xdl_alloc_grow_helper(void *p, long nr, long *alloc, size_t size)
-> +{
-> +	void *tmp =3D NULL;
-> +	size_t n =3D ((LONG_MAX - 16) / 2 >=3D *alloc) ? 2 * *alloc + 16 : LONG=
-_MAX;
-> +	if (nr > n)
-> +		n =3D nr;
-> +	if (SIZE_MAX / size >=3D n)
-> +		tmp =3D xdl_realloc(p, n * size);
-> +	if (tmp) {
-> +		*alloc =3D n;
-> +	} else {
-> +		xdl_free(p);
-> +		*alloc =3D 0;
-> +	}
-> +	return tmp;
-> +}
+> Interesting.  Does that mean that the end-user setting that was
+> problematic with the new layout engine would have also broken the
+> layout before your series?
 
-Whether you agree with the entire approach in my series-on-top[1] or not
-(and it looks like not), this way of doing it seems needlessly complex.
+Surprisingly enough, no. Turns out the commands used before the new layout
+engine was introduced did *not* use 'split' nor 'vertical split' (which are the
+commands affected by those two global settings).
 
-I.e. the whole "pass the size" business is here because you're wanting
-to use this as an expression, which ALLOC_GROW() isn't able to do.
+Instead, it relayed on the fact that 'vim -d' always opens splits vertically and
+then readjusted window positions with 'wincmd [HJKL]'.
 
-But you've also changed every single callsite anyway.
+The old way was limited in the amount of things that could be achieved and
+that's why it was changed... but I completely missed those two global settings
+capable of changing the behaviour of the new commands.
 
-So why not just change:
 
-    if (XDL_ALLOC_GROW(recs, ...))
+> > In order to fix this we can append special keyword 'letfabove' to each
+> 
+> Presumably "leftabove" was meant here.
 
-To:
+You are right. Sorry.
 
-    XDL_ALLOC_GROW(recs, ...);
-    if (!recs)
 
-And do away with needing to pass this through a function where we get
-the size, and thus losing the type information before we can call
-sizeof().
+> Will queue.  Thanks.
 
-Then, as that series shows the implementation here could be pretty much
-an exact line-for-line copy of what we have in cache.h, including the
-same alloc_nr(), all without casts etc.
-
-All of which seems much simpler than trying to maintain the constraint
-that this must be usable in an expression.
-
-Your commit message sort-of addresses this by mentioning that this
-"returns =E2=88=921 on allocation failure to accommodate other users of lib=
-xdiff
-such as libgit2".
-
-But since libgit2 won't use this, but only a copy of this xdiff code in
-libgit2 I don't see how that makes sense. We're only talking about using
-this in the xdiff code we maintain, and even if libgit2 wanted to use it
-it could deal with not being able to use it in an expression, no?
-=20=20=20=20=09
-1. https://lore.kernel.org/git/patch-5.7-3665576576f-20220708T140354Z-avara=
-b@gmail.com/
+Thank you!
