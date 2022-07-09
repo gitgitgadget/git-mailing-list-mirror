@@ -2,111 +2,254 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8DB4C433EF
-	for <git@archiver.kernel.org>; Sat,  9 Jul 2022 07:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19E33C433EF
+	for <git@archiver.kernel.org>; Sat,  9 Jul 2022 08:16:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbiGIHxi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jul 2022 03:53:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45230 "EHLO
+        id S229603AbiGIIQr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Jul 2022 04:16:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbiGIHxi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jul 2022 03:53:38 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D35545143E
-        for <git@vger.kernel.org>; Sat,  9 Jul 2022 00:53:36 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id 72so804722pge.0
-        for <git@vger.kernel.org>; Sat, 09 Jul 2022 00:53:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=g0hhur2xIe7ULWYZviYw0Mz7PJy9TKcfIpImLTv3Lt0=;
-        b=me4ijyAQS0Ygwmqna+uZFblyWaDS1q68IQhzokTYzfA336yo+DXlDgq5W9toHM0CS0
-         hN/KaJcYNP7yf1yFMOGh9Plao0f64k3LPt8sDd0s4l7wYPEiifErpFEwHK3RBUZ6zyom
-         XvO+jwL/P9JPW0HTF0yRC/UuPkA4LBFfu7UW61K5EHtFMhZhvRkN7JGwfAXwjoPWBziD
-         ZNCYDYVd3HoJiEioaQ06ckBZqgkkryyIsPKh5+f5vIWgJUYM1gWmJBZ+cwICE0mSJd0n
-         nzkldPD1FKX7e01cj4lfvcXnP4OZ0eaVep3wksYRu/w7MKijuPlVye7e9qU2APQJfMvO
-         EPSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=g0hhur2xIe7ULWYZviYw0Mz7PJy9TKcfIpImLTv3Lt0=;
-        b=FKtZu6sLnzmJbJl2pyZDMWRI4/ELwLxjX43z30kLEZm1YnGsK/veDgMDa1TO0FL511
-         k7oYbKAw7HjbGh12l7Nzvnl8PT4CHVLXHBEd2tywPBftxKgpEmYbdvgfHAG6b0IyMgzu
-         B+o7ZXxVqgiE7PfBcIUS48Zndc6VLv+IfaHpN26xjIDZxVW+HO39OIv6mytoe+8Lj0ou
-         HxFTyBYSagc8GxTl+ITb7D2PpapRCaKhtAIrp9IR+ZHdR33U3UNFw+mwVBKTIyIV/e6s
-         cotVjOWhhHJNwasspqF0v/g5v8ntwp4RmUeJZVRl+lL0L4O6+qpqzvs3qW9BTBcSGbgS
-         aaBA==
-X-Gm-Message-State: AJIora+NGCYzejReC7NuWSvLSDG3Nf+8/Pp0c11mXow9+Istb+PBJLtI
-        +mIS9IY2Ybrp50aIsut9Gko=
-X-Google-Smtp-Source: AGRyM1tSaHuAf1+sfc6q4bOmd856tUVDS23t+Id6VuH/ecWFumeGQQgHLEls90kx62gc5SAZOQFgLQ==
-X-Received: by 2002:a63:2cc6:0:b0:411:4fd6:49cb with SMTP id s189-20020a632cc6000000b004114fd649cbmr6626711pgs.365.1657353216219;
-        Sat, 09 Jul 2022 00:53:36 -0700 (PDT)
-Received: from localhost.localdomain ([202.142.80.202])
-        by smtp.gmail.com with ESMTPSA id g124-20020a625282000000b00518e1251197sm863038pfb.148.2022.07.09.00.53.32
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 09 Jul 2022 00:53:35 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/6] Documentation/technical: describe bitmap lookup table extension
-Date:   Sat,  9 Jul 2022 13:23:10 +0530
-Message-Id: <20220709075310.83848-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <ac52cfea-edb0-b68b-36e2-ab45d2959727@iee.email>
-References: <ac52cfea-edb0-b68b-36e2-ab45d2959727@iee.email>
+        with ESMTP id S229588AbiGIIQq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jul 2022 04:16:46 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2515747BF
+        for <git@vger.kernel.org>; Sat,  9 Jul 2022 01:16:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1657354589;
+        bh=YMPV96t6ONhu0nb3PmiYI+SoSWFctt/ZEholvmsLUUM=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=llF7pFMJ3Hh+QZBfClmIpYYH6ebdfYM656L2qKonDtmrsTDBAyZ8qChHcFKncWC/j
+         gBjs0m8nUxpui5DkiWK8lhhvImNeUs2MGn6tJ2OPkijUNF44M29lj2vVEEBf+jgGIS
+         byvX1X8GkkEEtiGfImOJKGLzJHTYrYe7oZjUpbsE=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MQxo5-1nyK2k14gZ-00Nkd1; Sat, 09
+ Jul 2022 10:16:29 +0200
+Message-ID: <95432eb4-e66a-5c04-9267-f71391fbe277@web.de>
+Date:   Sat, 9 Jul 2022 10:16:28 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.0.1
+Subject: Re: [PATCH] builtin/mv.c: use correct type to compute size of an
+ array element
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+References: <xmqq8rp54r4l.fsf@gitster.g>
+ <220707.86y1x585wy.gmgdl@evledraar.gmail.com> <xmqq1quw23r8.fsf@gitster.g>
+ <cb866b8c-dcc6-557f-da23-1c1972619a8a@web.de>
+Content-Language: en-US
+In-Reply-To: <cb866b8c-dcc6-557f-da23-1c1972619a8a@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ei2k57xWlqJqMmxczlsIayP2KzCBQp13QHK7iDBORuiz+zq1Ha3
+ FD91VYaZiwyzfGKtqykufNxEnUhPS0zA+mkIbwT+vG7PPmHLZmaCwToXeGmCHRVIJeHl59a
+ ZhHv8PoPBiimwZUsrPSTzlJ9G2LJxQd0gklXd+H2fzTU0+5MqBt7ysvprGTEPAVTj31pa3C
+ AiCJg0An1HU3RVq25RETQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rmWqR1akoDA=:I5k5Vdok3D0cVD/uqXHucN
+ kZSO9gseDefODqljGqm+UfjnzGv0kv1JN6Bv0fm3y5gheI6Q5gWFqAmfYLu8/V/Zc17Bf3LPH
+ WeXmWJm+KUIYTZ7nOXD3ey3T/ktvWs6XGez6/rsXArz5xm2/zL3/dumI5UdJ6D4EcrA5/sJI+
+ Tx7PLp66pHj+n6nIL6bDbfVlcXDttpcn4wGl+ZqD7H8KUUOUoYjki0GAzrI06zT3BKYAKm9cd
+ elJTSJVRnuZ7XqzJfgASzaHLMV7tOvEQJshTHsNr/uLsA+iFIR95UtxRtMt4KnOH+Wr108RRz
+ btEgJSuMLZWMUVM/4iI/AMAaQ2PqS9vzTwzjFMdU7KNgUlXnKEb7ch8Rdw9fH4L7C9c7ZQTF+
+ Jq0iq7SpagagZU5t5MCZuUFy7d9k1kgPZeZEN3Dq9+LMATDT3DJkQDbeqdKwVEmtW1rZWcQ6V
+ kaHuakpA2DbJ39SAAsoTyf/8xjiHb4NMjZOFRSsE44aWhHRQPIGglQgaNJTJvTJtMggTYrqbu
+ ThP4ToQ3JhWTp3Jrj6s1lMJfQPOqsyNgUZQKL5qarqCaGfnbWvkZxqMgU2v8ckXrLooQUU36M
+ Qb9zJhu+ZEktNMNEzgSVXA8whD3kN/bDbyYA4QaPYgYL17k/V1T3AbiQCJf02l35ikGc/Xx6a
+ DLe1mAnK3uCn/wcDaX9LtOqv3a4uhSffynvucSZJ2bshFXg1bUgiVfChrQ+OjBVB/HyG8EtMy
+ MRo9FCnfP3CYpqYsu6eHcbwtTkRVC35eI4+Rd/JF9UCHdHAisw1H1chdhz5K6xJ67eTNwreXq
+ nG9P0n9atBDO7oN1jQ1H2dYaDxGbNNRLTxw00TZw8oBmyqkBJ0HcqNblbnco1ckQS3ibbBEE0
+ 207Zv/TJ3Eq4vwqaq5iOpAv4xoNSuvKRW86/h/qsMXje4BUReRgGPF3waKXGqweihak6xdsXh
+ i8di75rBr+VMda1bY1KY1SfAsPtMf43ua44OuDvJETK3GGPW028TKUKqZ8Nv5VnI7mB0PfIa9
+ q18CuIRiKc/uY9HnD93bcIuqMnh5u9OFM8ErB4j2DZGoXaSgJu2XV94IeOVcg7+afj9rk/uZs
+ wPT8UAo1K2mqwNgQSecyKdUcjOe4MR8Fbcp
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Hello Philip,
-
-Philip Oakley <philipoakley@iee.email> wrote:
-
-> Not sure if this is new in this extension, but should there be a link or
-> two to the basics of XOR compression and some of the bitmap look up
-> techniques?
+Am 07.07.22 um 21:11 schrieb Ren=C3=A9 Scharfe:
+> Am 07.07.22 um 20:10 schrieb Junio C Hamano:
+>>     @@
+>>     type T;
+>>     T *dst_ptr;
+>>     T *src_ptr;
+>>     T[] dst_arr;
+>>     T[] src_arr;
+>>     expression n;
+>>     @@
+>>     (
+>>     - memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
+>>     + COPY_ARRAY(dst_ptr, src_ptr, n)
+>>     |
+>>     - memcpy(dst_ptr, src_arr, (n) * sizeof(T))
+>>     + COPY_ARRAY(dst_ptr, src_arr, n)
+>>     |
+>>     - memcpy(dst_arr, src_ptr, (n) * sizeof(T))
+>>     + COPY_ARRAY(dst_arr, src_ptr, n)
+>>     |
+>>     - memcpy(dst_arr, src_arr, (n) * sizeof(T))
+>>     + COPY_ARRAY(dst_arr, src_arr, n)
+>>     )
+>>
+>> I take it that thanks to the earlier "meh -- between sizeof(*p) and
+>> sizeof(p[0]) there is no reason to prefer one over the other" and
+>> "oh, no, we should prefer sizeof(*p) not sizeof(typeof(*p)) but this
+>> one is the other way around" rules, this one only has to deal with
+>> sizeof(T).
+>>
+>> Am I reading it correctly?
 >
-> It's not always obvious if these techniques are 'heuristic' and only
-> have partial commit data, or they have all the commits listed, Nor
-> how/why they work. My point is more about giving new readers a hand-up
-> in their understanding, rather than simple implementation details for
-> those who already know what is going on. For example, are there any
-> external articles that you found helpful in getting started that could
-> be referenced somewhere in the docs?
+> Yes.  Without the ugly normalization step in the middle could either
+> use twelve cases instead of four here or use inline alternatives,
+> e.g.:
+>
+> type T;
+> T *dst_ptr;
+> T *src_ptr;
+> T[] dst_arr;
+> T[] src_arr;
+> expression n;
+> @@
+> (
+> - memcpy(dst_ptr, src_ptr, (n) * \( sizeof(*(dst_ptr)) \| sizeof(*(src_p=
+tr)) \| sizeof(T) \) )
+> + COPY_ARRAY(dst_ptr, src_ptr, n)
+> |
+> - memcpy(dst_ptr, src_arr, (n) * \( sizeof(*(dst_ptr)) \| sizeof(*(src_a=
+rr)) \| sizeof(T) \) )
+> + COPY_ARRAY(dst_ptr, src_arr, n)
+> |
+> - memcpy(dst_arr, src_ptr, (n) * \( sizeof(*(dst_arr)) \| sizeof(*(src_p=
+tr)) \| sizeof(T) \) )
+> + COPY_ARRAY(dst_arr, src_ptr, n)
+> |
+> - memcpy(dst_arr, src_arr, (n) * \( sizeof(*(dst_arr)) \| sizeof(*(src_a=
+rr)) \| sizeof(T) \) )
+> + COPY_ARRAY(dst_arr, src_arr, n)
+> )
+>
+> I seem to remember that rules like this missed some cases, but perhaps
+> that's no longer an issue with the latest Coccinelle version?
 
-As this series is only about adding a lookup-table extension (and not
-about bitmap itself), I am not sure whether it's good to include those
-things in this series. But I agree with your point that it should be
-able build a logical understanding among the new readers.
+Not a problem, it seems; at least Coccinelle 1.1.1 is still able to
+recreate the conversions from 45ccef87b3 (use COPY_ARRAY, 2016-09-25)
+and 921d49be86 (use COPY_ARRAY for copying arrays, 2019-06-15) with the
+patch below, which removes the normalization rules.  It increases the
+processing time for array.cocci from 53s to 66s for me, though.  Worth
+the increased precision and clarity?
 
-There are some external articles[1] which talk about bitmap internals.
-But I think it would be better if we can make a new doc file (may be
-`Documentation/technical/reachability-bitmaps.txt` or similar) rather
-than putting those details in the `bitmap-format.txt` (As the name 
-suggests, this file should only contain format details of bitmaps).
-That file would provide the answers of "Why bitmaps", "how they are
-stored",  "How they are fetched", "how they work with pack-objects,
-git-fetch, midx etc.", "Detailed explanation of each bitmap extension"
-, and lastly "what are the future works" (if any).
+Ren=C3=A9
 
-What do you think?
+=2D--
+ contrib/coccinelle/array.cocci | 82 +++++++++++++++++-----------------
+ 1 file changed, 40 insertions(+), 42 deletions(-)
 
-> Separately I'm preparing a short series on adding 'reachability bitmap'
-> and 'commit graph' (among other stuff) to the glossary as part of giving
-> folks [0] stepping stones to cross the chasm of understanding
+diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.coc=
+ci
+index 9a4f00cb1b..aa75937950 100644
+=2D-- a/contrib/coccinelle/array.cocci
++++ b/contrib/coccinelle/array.cocci
+@@ -1,60 +1,58 @@
+ @@
+-expression dst, src, n, E;
++type T;
++T *dst_ptr;
++T *src_ptr;
++expression n;
+ @@
+-  memcpy(dst, src, n * sizeof(
+=2D- E[...]
+-+ *(E)
+-  ))
++- memcpy(dst_ptr, src_ptr, (n) * \( sizeof(T)
++-                                \| sizeof(*(dst_ptr))
++-                                \| sizeof(*(src_ptr))
++-                                \| sizeof(dst_ptr[...])
++-                                \| sizeof(src_ptr[...])
++-                                \) )
+++ COPY_ARRAY(dst_ptr, src_ptr, n)
 
-Great!
+ @@
+ type T;
+-T *ptr;
+-T[] arr;
+-expression E, n;
++T *dst_ptr;
++T[] src_arr;
++expression n;
+ @@
+-(
+-  memcpy(ptr, E,
+=2D- n * sizeof(*(ptr))
+-+ n * sizeof(T)
+-  )
+-|
+-  memcpy(arr, E,
+=2D- n * sizeof(*(arr))
+-+ n * sizeof(T)
+-  )
+-|
+-  memcpy(E, ptr,
+=2D- n * sizeof(*(ptr))
+-+ n * sizeof(T)
+-  )
+-|
+-  memcpy(E, arr,
+=2D- n * sizeof(*(arr))
+-+ n * sizeof(T)
+-  )
+-)
++- memcpy(dst_ptr, src_arr, (n) * \( sizeof(T)
++-                                \| sizeof(*(dst_ptr))
++-                                \| sizeof(*(src_arr))
++-                                \| sizeof(dst_ptr[...])
++-                                \| sizeof(src_arr[...])
++-                                \) )
+++ COPY_ARRAY(dst_ptr, src_arr, n)
 
-Thanks :)
+ @@
+ type T;
+-T *dst_ptr;
++T[] dst_arr;
+ T *src_ptr;
++expression n;
++@@
++- memcpy(dst_arr, src_ptr, (n) * \( sizeof(T)
++-                                \| sizeof(*(dst_arr))
++-                                \| sizeof(*(src_ptr))
++-                                \| sizeof(dst_arr[...])
++-                                \| sizeof(src_ptr[...])
++-                                \) )
+++ COPY_ARRAY(dst_arr, src_ptr, n)
++
++@@
++type T;
+ T[] dst_arr;
+ T[] src_arr;
+ expression n;
+ @@
+-(
+=2D- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
+-+ COPY_ARRAY(dst_ptr, src_ptr, n)
+-|
+=2D- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
+-+ COPY_ARRAY(dst_ptr, src_arr, n)
+-|
+=2D- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
+-+ COPY_ARRAY(dst_arr, src_ptr, n)
+-|
+=2D- memcpy(dst_arr, src_arr, (n) * sizeof(T))
++- memcpy(dst_arr, src_arr, (n) * \( sizeof(T)
++-                                \| sizeof(*(dst_arr))
++-                                \| sizeof(*(src_arr))
++-                                \| sizeof(dst_arr[...])
++-                                \| sizeof(src_arr[...])
++-                                \) )
+ + COPY_ARRAY(dst_arr, src_arr, n)
+-)
 
-[1] https://github.blog/2015-09-22-counting-objects/, https://github.blog/2021-04-29-scaling-monorepo-maintenance/
+ @@
+ type T;
+=2D-
+2.37.0
