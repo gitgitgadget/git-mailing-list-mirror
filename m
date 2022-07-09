@@ -2,227 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CB62C433EF
-	for <git@archiver.kernel.org>; Sat,  9 Jul 2022 04:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAB0FC43334
+	for <git@archiver.kernel.org>; Sat,  9 Jul 2022 05:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbiGIEnr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jul 2022 00:43:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40072 "EHLO
+        id S229493AbiGIFET (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Jul 2022 01:04:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiGIEno (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jul 2022 00:43:44 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7E1A3139E
-        for <git@vger.kernel.org>; Fri,  8 Jul 2022 21:43:40 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id o4so727437wrh.3
-        for <git@vger.kernel.org>; Fri, 08 Jul 2022 21:43:40 -0700 (PDT)
+        with ESMTP id S229459AbiGIFES (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jul 2022 01:04:18 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0529813E3E
+        for <git@vger.kernel.org>; Fri,  8 Jul 2022 22:04:16 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-31cac89d8d6so5583347b3.2
+        for <git@vger.kernel.org>; Fri, 08 Jul 2022 22:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=s01/5l71Mzv9N4DXLcMoWcHbo+PHiwqiE6fTyFtjoig=;
-        b=eWOlm+BOYmKbVNbRbayOxpQlGjVBdjrKhj/uplJ7c2BDMTXjoDEF3eOxRcKV/XCeFL
-         nWMvfjOF46bEg9sHUGn4GRdTxASLDyO3Tah0P22MDBuLfBzS/KiEHHudIwtO0g0LuAy9
-         un6g/ALSPXhlv8+b+pqrEvaWtTLiyMrOwQRAGzY5kLLNl4DNNGhUlZV40k4J6VGmmQKL
-         2CJS/SMt1dvNzxFGl6l0dR+IgpYP6dfzwcgPuQBY9zZ5oV882GEmXfQgVH9uf2taRewa
-         TodbI2X9XR4HU+9FMIEsSwJbO6xVeRueoBFQf09oUgF3CD6x/F8NnAGQJOth7F4ENYPQ
-         cWYw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=gTQoYFZvpp+KbrO+W89cguqpzoWCO/MpXk5WY9EwNp4=;
+        b=XIMjbvEMhMhBaxV6GSujNl6SgLMoOpgvpbT79cBi6JY6uHoi2JRtcQ1dnnv6eEUzer
+         vW5veigZjJopMzWIgMxaRpKCLQI36pbokUXF1IRUIznFrZVzIcHkmQrBuP0oVbC55aus
+         liKRqUf3UQOMQa7mhcl5pGlI3+mEGjRi/SmFt5ZHyHjs/SPj4E0vr6Ar2b59MqCC2vqz
+         IOZzaAcOBxwvu5ega+BXphed7Q9GEQpvSW5D4fTo9MaeCLb6az0C4qKsaulLDAs7G7fK
+         WAi8aRA3EftTu4b0gsxBzwxb5b7PPEkhr3+RYbtJFQylf5UKtXyy4YKpRJIzcDPfMw3W
+         4POg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=s01/5l71Mzv9N4DXLcMoWcHbo+PHiwqiE6fTyFtjoig=;
-        b=Fl+AoofsYmw2BSUbBHMGjtYFXiR4+QofKFcBpMK+rjAhR3Sp+IgdRdc98BQxZsXnnc
-         3YTPnKyN4K8hl3ZuMuUbpJXrlVaaEmVfbGVkjS7QvM62BEzcMk0NGqCfW/XP+mnIwK6U
-         iKiny+WoQQ/c12k6/CQX/RiPYcb7XSEC9M1AKq45tsQsYVP5HyKLXKuWeqS2KuVM1J4C
-         aIMpVm9917HdemBpbP0LENRkTQ3ZoKiu2CrHUzsYqJmPw0LKhbWsNDdPUmtZBT0100Wp
-         yR2y9oZbP1tdpEeah0puT8xIGDXUQiSHetIeGdilR9sDfHz5mfZ8kfkEXb3dAnvum6KJ
-         Xavw==
-X-Gm-Message-State: AJIora+O8Gs4rtSpXczzVlnq9HXXKQ/8K7uZ36Dnhq9yv0ich0PuTMeb
-        re5UInWjYEADFA737ww1vG2NBgRoyfM=
-X-Google-Smtp-Source: AGRyM1sQlni0MOW5IlEZW6gnanQvKeSiLZV6pF9PfANypFZ7UZ5I8aRF69rwDs+2rO6hoIIKw/O4qg==
-X-Received: by 2002:a5d:6c63:0:b0:21d:3fb7:e112 with SMTP id r3-20020a5d6c63000000b0021d3fb7e112mr6419133wrz.256.1657341818933;
-        Fri, 08 Jul 2022 21:43:38 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f12-20020adff58c000000b0021004d7d75asm503358wro.84.2022.07.08.21.43.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 21:43:38 -0700 (PDT)
-Message-Id: <pull.1281.v3.git.1657341817595.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1281.v2.git.1657279447515.gitgitgadget@gmail.com>
-References: <pull.1281.v2.git.1657279447515.gitgitgadget@gmail.com>
-From:   "Jaydeep Das via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 09 Jul 2022 04:43:37 +0000
-Subject: [PATCH v3] gpg-interface: add function for converting trust level to
- string
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gTQoYFZvpp+KbrO+W89cguqpzoWCO/MpXk5WY9EwNp4=;
+        b=BXZG0joKLxtqO8Q7MgqfSFPwdDi8cisWG9IG4fHavgwOwbvnRGmWoF4KRpa7KMkfN3
+         67kRnCUQ7n0uirqDkXc7BUJaW5WcemuBg/AM2Khf/2zL4xOixcVx0IXDmDbaIZmss/3E
+         4miXGQ10sxPnPYFgA4e0vaY2MTUHWXWAbSM/ryp5KrfIYdedin1G9afB8WeUNezGqHvS
+         HhpqPqCx+XDCcEnrr1O+VKrdGp40CJ1bv6jb0eniz6bT1MzoUgbqrccwhSkWi2xzFlvu
+         h3mjYbq7vLadmhFhfWiwcp5yBOl1ZhaAIpnJoPNfj5pMvMWjpw8BH6dGlPXhM1rMT78W
+         Zp7w==
+X-Gm-Message-State: AJIora/BACj8lmDkzcmFrTNAwHwyhGgEvdFW2DypnU0SAx5Xb6v+0/Ef
+        niBdykzPWjwBRbeoD4CwywsG7Wqo3/qGjgqrtYw=
+X-Google-Smtp-Source: AGRyM1viYQO8GSygep24/Ny9/B5H9+BJB9MV065zYK1yOxFMhiL0QVYK33QKt5lYhCSJafG9yX2JBBXV6JBex00avBs=
+X-Received: by 2002:a0d:ea47:0:b0:31c:9814:dd81 with SMTP id
+ t68-20020a0dea47000000b0031c9814dd81mr7815785ywe.346.1657343055072; Fri, 08
+ Jul 2022 22:04:15 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Jaydeep Das <jaydeepjd.8914@gmail.com>,
-        Jaydeep Das <jaydeepjd.8914@gmail.com>
+References: <20220630142444.651948-1-siddharthasthana31@gmail.com>
+ <20220707161554.6900-1-siddharthasthana31@gmail.com> <20220707161554.6900-2-siddharthasthana31@gmail.com>
+ <YshESKSHfpcQf/dI@danh.dev> <CAP8UFD116xMnp27pxW8WNDf6PRJxnnwWtcy2TNHU_KyV2ZVA1g@mail.gmail.com>
+ <YsjTif0TjYBzBXfh@danh.dev>
+In-Reply-To: <YsjTif0TjYBzBXfh@danh.dev>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 9 Jul 2022 07:04:03 +0200
+Message-ID: <CAP8UFD0p+Ty1Fx-vBoX6N0Ahg+Z_JCYe_Jypk7Mag=yY2yzbqg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] revision: improve commit_rewrite_person()
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jaydeep Das <jaydeepjd.8914@gmail.com>
+On Sat, Jul 9, 2022 at 3:02 AM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <=
+congdanhqx@gmail.com> wrote:
+>
+> Add list back to cc
 
-Add new helper function `gpg_trust_level_to_str()` which will
-convert a given member of `enum signature_trust_level` to its
-corresponding string (in lowercase). For example, `TRUST_ULTIMATE`
-will yield the string "ultimate".
+Sorry for not keeping the list in Cc by mistake.
 
-This will abstract out some code in `pretty.c` relating to gpg
-signature trust levels.
+> On 2022-07-08 23:23:07+0200, Christian Couder <christian.couder@gmail.com=
+> wrote:
+> > On Fri, Jul 8, 2022 at 4:50 PM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Da=
+nh <congdanhqx@gmail.com> wrote:
+> > >
+> > > On 2022-07-07 21:45:51+0530, Siddharth Asthana <siddharthasthana31@gm=
+ail.com> wrote:
+> >
+> > > > By simplyfying the interface of the commit_rewrite_person(), we als=
+o
+> > >
+> > > s/simplyfying/simplifying/
+> >
+> > Thanks for noticing the typos!
+> >
+> > > > +static void commit_rewrite_person(struct strbuf *buf, const char *=
+*headers, struct string_list *mailmap)
+> > > > +{
+> > > > +     size_t buf_offset =3D 0;
+> > > > +
+> > > > +     if (!mailmap)
+> > > > +             return;
+> > > > +
+> > > > +     for (;;) {
+> > > > +             const char *person, *line =3D buf->buf + buf_offset;
+> > > > +             int i, linelen =3D strchrnul(line, '\n') - line + 1;
+> > >
+> > > Would you mind to change those lines to avoid mixed of declaration an=
+d
+> > > expression.
+> >
+> > I am not sure we have some clear guidelines on this.
+>
+> Yes, we don't have a clear guidelines on this, but this would sure
+> matches into mixed declaration and expression. And some variables are
+> initialized and some aren't in the same line. I was confused in my
+> first glance.
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Hariom Verma <hariom18599@gmail.com>
-Signed-off-by: Jaydeep Das <jaydeepjd.8914@gmail.com>
----
-    gpg-interface: add function for converting trust level to string
-    
-    Add new helper function gpg_trust_level_to_str() which will convert a
-    given member of enum signature_trust_level to its corresponding string
-    in lowercase. For example, TRUST_ULTIMATE will yield the string
-    "ultimate".
-    
-    This will abstract out some code in pretty.c relating to gpg signature
-    trust levels.
-    
-    Changes since v1:
-    
-     * gpg_trust_level_to_str() now returns the string in lowercase.
-    
-    Changes since v2:
-    
-     * Updated docs.
-    
-    Mentored-by: Christian Couder chriscool@tuxfamily.org Mentored-by:
-    Hariom Verma hariom18599@gmail.com Signed-off-by: Jaydeep Das
-    jaydeepjd.8914@gmail.com
+Yeah, it might be clearer to avoid having some variables both declared
+and initialized while others are only declared on the same line.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1281%2FJDeepD%2Fgpg-wrap-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1281/JDeepD/gpg-wrap-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1281
+> > > Also, I think i and linelen should be ssize_t instead.
+> >
+> > Could you explain why?
+> >
+> > I think 'i' is changed only in:
+> >
+> > for (i =3D 0; headers[i]; i++)
+> >
+> > and therefore cannot be n=C3=A9gative.
+> >
+> > While linelen is set only in:
+> >
+> > linelen =3D strchrnul(line, '\n') - line + 1;
+> >
+> > and therefore cannot be n=C3=A9gative either.
+>
+> Yes, both of them can't be negative. As I explained in the part you
+> removed.  However, I choose ssize_t in my reply because it's
+> a ptrdiff_t.
+>
+> So, size_t is an obviously a better choice.
+> Either size_t and ssize_t could be used in this case, but not int.
 
-Range-diff vs v2:
+I am Ok with size_t. Thanks for the explanations!
 
- 1:  640decc2afe ! 1:  933d6caa916 gpg-interface: add function for converting trust level to string
-     @@ Commit message
-      
-          Add new helper function `gpg_trust_level_to_str()` which will
-          convert a given member of `enum signature_trust_level` to its
-     -    corresponding string(in lowercase). For example, `TRUST_ULTIMATE`
-     +    corresponding string (in lowercase). For example, `TRUST_ULTIMATE`
-          will yield the string "ultimate".
-      
-          This will abstract out some code in `pretty.c` relating to gpg
-     @@ gpg-interface.h: size_t parse_signed_buffer(const char *buf, size_t size);
-      +/*
-      + * Returns corresponding string in lowercase for a given member of
-      + * enum signature_trust_level. For example, `TRUST_ULTIMATE` will
-     -+ * return "ultimate".
-     ++ * return "ultimate". Since it uses xstrdup_tolower(), which uses
-     ++ * xmallocz(), the caller has to free up the memory for returned string
-     ++ * after usage.
-      + */
-      +char *gpg_trust_level_to_str(enum signature_trust_level level);
-      +
+> >>> +
+> >>> +             if (!linelen || linelen =3D=3D 1)
+> >>> +                     /* End of header */
+> >>> +                     return;
+> >>
+> >>And I think linelen will never be 0 or negative,
+> >>even if linelen could be 0, I think we want "linelen !=3D 0"
+> >>for integer comparision.
 
-
- gpg-interface.c |  7 +++++++
- gpg-interface.h | 10 ++++++++++
- pretty.c        | 22 +++++-----------------
- 3 files changed, 22 insertions(+), 17 deletions(-)
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 947b58ad4da..4ef660a09fc 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -165,6 +165,7 @@ static struct {
- 	{ 0, "TRUST_", GPG_STATUS_TRUST_LEVEL },
- };
- 
-+/* Keep the order same as enum signature_trust_level */
- static struct {
- 	const char *key;
- 	enum signature_trust_level value;
-@@ -905,6 +906,12 @@ const char *get_signing_key(void)
- 	return git_committer_info(IDENT_STRICT | IDENT_NO_DATE);
- }
- 
-+char *gpg_trust_level_to_str(enum signature_trust_level level){
-+	if (level < TRUST_UNDEFINED || level > TRUST_ULTIMATE)
-+		return NULL;
-+	return xstrdup_tolower(sigcheck_gpg_trust_level[level].key);
-+}
-+
- int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key)
- {
- 	return use_format->sign_buffer(buffer, signature, signing_key);
-diff --git a/gpg-interface.h b/gpg-interface.h
-index b30cbdcd3da..eda8b32015c 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -71,6 +71,16 @@ size_t parse_signed_buffer(const char *buf, size_t size);
- int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
- 		const char *signing_key);
- 
-+
-+/*
-+ * Returns corresponding string in lowercase for a given member of
-+ * enum signature_trust_level. For example, `TRUST_ULTIMATE` will
-+ * return "ultimate". Since it uses xstrdup_tolower(), which uses
-+ * xmallocz(), the caller has to free up the memory for returned string
-+ * after usage.
-+ */
-+char *gpg_trust_level_to_str(enum signature_trust_level level);
-+
- int git_gpg_config(const char *, const char *, void *);
- void set_signing_key(const char *);
- const char *get_signing_key(void);
-diff --git a/pretty.c b/pretty.c
-index ee6114e3f0a..5ee03d6fe09 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1348,6 +1348,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	const char *msg = c->message;
- 	struct commit_list *p;
- 	const char *arg, *eol;
-+	char *sig_str;
- 	size_t res;
- 	char **slot;
- 
-@@ -1575,23 +1576,10 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 				strbuf_addstr(sb, c->signature_check.primary_key_fingerprint);
- 			break;
- 		case 'T':
--			switch (c->signature_check.trust_level) {
--			case TRUST_UNDEFINED:
--				strbuf_addstr(sb, "undefined");
--				break;
--			case TRUST_NEVER:
--				strbuf_addstr(sb, "never");
--				break;
--			case TRUST_MARGINAL:
--				strbuf_addstr(sb, "marginal");
--				break;
--			case TRUST_FULLY:
--				strbuf_addstr(sb, "fully");
--				break;
--			case TRUST_ULTIMATE:
--				strbuf_addstr(sb, "ultimate");
--				break;
--			}
-+			sig_str = gpg_trust_level_to_str(c->signature_check.trust_level);
-+			if (sig_str)
-+				strbuf_addstr(sb, sig_str);
-+			free(sig_str);
- 			break;
- 		default:
- 			return 0;
-
-base-commit: 30cc8d0f147546d4dd77bf497f4dec51e7265bd8
--- 
-gitgitgadget
+maybe `if (linelen <=3D1)` is just a simpler check.
