@@ -2,105 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5B5CC433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E75B6CCA479
 	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 21:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbiGJVwt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 17:52:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34058 "EHLO
+        id S229497AbiGJVuU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 17:50:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiGJVws (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 17:52:48 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3CDCDF64
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 14:52:47 -0700 (PDT)
-Received: from host-78-147-178-211.as13285.net ([78.147.178.211] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1oAer7-0000fd-Fj;
-        Sun, 10 Jul 2022 22:52:46 +0100
-Message-ID: <e45c4fc1-3a30-726c-51f3-00caeca0a552@iee.email>
-Date:   Sun, 10 Jul 2022 22:52:45 +0100
+        with ESMTP id S229463AbiGJVuS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 17:50:18 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32F99DF64
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 14:50:17 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7E2E65A1BA
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 21:50:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1657489816;
+        bh=oJDlAv/GuPZuvlZKIZzQXjDqMM6kUMf62d8adE9D/f8=;
+        h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
+         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+        b=F+WMXfOwlPWLufs/PODhhFFADLNMCDdOs703wfyf8W2Ap6htLY4A6RZBbfy70YqHe
+         XKQaNwYl9kdBGwfyetzjzrYmQb8Ib7CFKVb1TAF8Zc28fxaP8+uqz/z2Vvu/I6MrGk
+         dDtvZHsWxGNiHlJw+VuYxjlPhEULmF76fAMLxJvYWOuqtudRIYY6JmWns45s8nu3fk
+         PsF+bSCmoOl0CuNDkhtRJD+1GcDBVF5M7GcmRsmSyV/4MgCXRQ1o2L9MBcIpHOsk3i
+         RmL+L9HcLpnK+yS3s28/TeCaaFnXvg+tJL3ojTWNvWj4XHnCXtLf957/bbrnw6AN7/
+         IiuoKaYNNpnJrnYAcs+QinRLjalJvonhgEBbcyIHylHhyO3X4YvdqTwwnqswZYOWPT
+         OpURLuhwIBrgSnRYTzq0/UtnOm2qxXF8osGPVtp7Ny+/hWYG+7ULW0SxskKUldNZzv
+         cBKtQTtEAFnm0m72ZSs1Fk0Uy155iZfWpa78DZYDsUF9+la5leU
+Date:   Sun, 10 Jul 2022 21:50:15 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Subject: Automatic code formatting
+Message-ID: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 4/4] doc add: renormalize is not idempotent for CRCRLF
-Content-Language: en-GB
-To:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
- <d3b8ed97a105ea1d7e656c964b7eee378e11ede6.1657385781.git.gitgitgadget@gmail.com>
- <xmqqilo6t2qy.fsf@gitster.g>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <xmqqilo6t2qy.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="F2i2YTbfD0DrSroo"
+Content-Disposition: inline
+User-Agent: Mutt/2.2.4 (2022-04-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/07/2022 22:06, Junio C Hamano wrote:
-> "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Philip Oakley <philipoakley@iee.email>
->>
->> Bug report
->>  https://lore.kernel.org/git/AM0PR02MB56357CC96B702244F3271014E8DC9@AM0PR02MB5635.eurprd02.prod.outlook.com/
->> noted that a file containing /r/r/n needed renormalising twice.
-> Did you mean backslash, not forward?
 
-Correct. Too many years of Windows.
->
->> This is by design. Lone CR characters, not paired with an LF, are left
->> unchanged. Note the lack of idempotentness of the "clean" filter in the
->> documentation.
-> OK.
->
->
->> Renormalize was introduced at 9472935d81e (add: introduce "--renormalize",
->> Torsten Bögershausen, 2017-11-16)
-> Does this need to be said "HERE", rather than leaving it to run "git
-> blame" for those who became curious?
+--F2i2YTbfD0DrSroo
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It was a misguided reminder to cc Torsten about his recollection of the
-CRCRLF issue. I'll remove it. I see Torsten has also commented.
->
->> Signed-off-by: Philip Oakley <philipoakley@iee.email>
->> ---
->>  Documentation/git-add.txt | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
->> index 11eb70f16c7..c4a5ad11a6b 100644
->> --- a/Documentation/git-add.txt
->> +++ b/Documentation/git-add.txt
->> @@ -188,7 +188,8 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
->>  	forcibly add them again to the index.  This is useful after
->>  	changing `core.autocrlf` configuration or the `text` attribute
->>  	in order to correct files added with wrong CRLF/LF line endings.
->> -	This option implies `-u`.
->> +	This option implies `-u`. Lone CR characters are untouched, so
->> +	cleaning *^* not idempotent. A CRCRLF sequence cleans to CRLF.
-> Lack of verb BE somewhere. 
-'^' It took me three re-reads to see my mistyping as my head knew what
-I'd meant to write, I've marked above as a note to self.
-Aside: Are there any guides / suggestions / how-to's for on-line
-reviewing that you can recommend o
-> Do we expect our readers all understand the math-y word? 
-Ok. It's mainly used in the test directory, and fsmonitor.h, but not in
-the user docs.
+In the past, we've discussed the possibility of using an automatic code
+formatter for Git.  That discussion has, as we've seen, not led to us
+using one.  I'd like to reopen the discussion and provide a couple
+reasons why I think it's a good idea.
 
->  It is not
-> too hard to explain it to math-uninitiated, e.g.
->
->     This option implies `-u`.  Note that running renormalize again
->     on the result of running renormalize may make it even "more
->     normal".  A CR-CR-LF sequence would first renormalize to CR-LF
->     (the first CR, a lone CR, is left intact, and CR-LF that follows
->     normalizes to LF).  If you run renormalize again, the resulting
->     CR-LF will normalize down to LF.
->
-Torsten had a shorter suggestion I'll also look at.
+We've spent a lot of work encouraging newcomers to contribute to Git.
+It's demoralizing when your code comes back with many code style nits to
+fix, and it leads to a barrier to contribution.  I also find that I am
+likely to take longer to reroll a series if there are many nits to be
+fixed, and I find that code style comments are a frequent discussion
+topic on my series (even though I generally try to be cognizant of
+them).
 
-Philip
+Having a code formatting tool means that the work for a contributor to
+format the file properly consists of about two keystrokes.  This
+substantially reduces the amount of time that contributors must spend
+thinking about code formatting and simplifies it to an automatic process
+that, if we choose, can even be verified in CI.
+
+Most projects written in languages like Rust or Go use an automatic
+formatter.  In Go's case, the formatter is specifically stated to be a
+fixed style that is nobody's favourite, but because there's an automatic
+formatter, everybody just uses it.  Personally, I don't love our coding
+style now (I'm a 4-space person in C), but I would love it a lot more if
+I didn't have to think about it.  I am substantially less picky about
+what the style is than that we have an automated tool to tidy our code,
+and I'm okay with us producing the occasional slightly suboptimal style
+for the improved efficiency we get.
+
+The impetus for me bringing this up is that I'm rebasing the
+SHA-1/SHA-256 interop work to continue work on it and I find myself
+spending a lot of time cleaning up formatting that I could instead be
+spending on debugging why my tests are failing or writing new code.  I
+would like to spend less time on boring scut work and more time solving
+interesting problems, as I'm sure we all would.
+
+I should point out that most platforms (and all major platforms) have
+clang and therefore I think clang-format should be a fine choice.  It's
+highly configurable and will let us pick a style that most resembles the
+one we have now. However, I'm not picky and if we like something else
+better, great.  As long as the option we pick is shipped in Debian, I'm
+for it.
+
+I should note that we already have a .clang-format file, so we can
+already use clang-format.  However, we cannot blindly apply it because
+it produces output that is not always conformant with our style.  My
+proposal here is to define our style in terms of the formatter to avoid
+this problem.
+
+Hopefully we can move forward with this discussion and come to some
+productive resolution.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--F2i2YTbfD0DrSroo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.35 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYstJlgAKCRB8DEliiIei
+gWQPAQCdSFCAiZFAeoqo/CNkrwHxmA/00pbU5zvl0Llsomw6QAEA6AJ6q25yYkJo
+4BUFkK2bCRVouSqTW/mawzp72DLfbws=
+=QHiF
+-----END PGP SIGNATURE-----
+
+--F2i2YTbfD0DrSroo--
