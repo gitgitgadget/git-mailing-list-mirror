@@ -2,115 +2,235 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2B87C43334
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 15:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 471CEC43334
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 15:10:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbiGJPBS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 11:01:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56020 "EHLO
+        id S229530AbiGJPK3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 11:10:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiGJPBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 11:01:17 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56AB5DE98
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 08:01:15 -0700 (PDT)
-Received: from host-78-147-178-211.as13285.net ([78.147.178.211] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1oAYQq-0003Nq-F5;
-        Sun, 10 Jul 2022 16:01:13 +0100
-Message-ID: <d70a4505-60ef-82c4-5497-499ac788782a@iee.email>
-Date:   Sun, 10 Jul 2022 16:01:11 +0100
+        with ESMTP id S229450AbiGJPKZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 11:10:25 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC9E3A197
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 08:10:23 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id ez10so4965481ejc.13
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 08:10:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=6WXMpLt8HIf4+NZ9AN5ydIe+fgCsyWJ7JtqW5iJEqz4=;
+        b=g9feg+3jioBALMOYAVYw15Qxojan6om747sLJbVjAPebaySqTC4ZgjlF8RFkJJOntS
+         5l34RFoCgpFGU4gd4KPCKxJ9GhlAbgC2R1Wy6QPeqMnSg7oohidrlU2PBDrWHcJN/l6p
+         D8uPc8hRTF2cbN5qJbTCZOwGXYMG/MLW95cJxgAoUWm0PxXFEQFIbU5vbM2J4UH3xAx7
+         ZwDEdAcpvTysch7vYX6Cw9AnODSsdFxb3o9QIHRvXoGrNApCNJHTA5llSsDhuxUQFyPw
+         fKOguxVD3bU7jL8A7s3nUO+80uCoCSCC6YzwM3flIvIiIxcVhisnaouJBqY4q1ewxR57
+         OFfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=6WXMpLt8HIf4+NZ9AN5ydIe+fgCsyWJ7JtqW5iJEqz4=;
+        b=TObumYFU6Jsgi1fgUohwgtCDlw7fS/quQSIVEwBlSDwh+gplavxFcF69HFLVvX0d7l
+         9SbefmDBo43cCJsx+SKCszuMJJvs1UwzQ7byDyS02SA30cY6TbpS7ixQjKdKjmYPsBw5
+         WL++/Z0NVyEwWtxWwmGF+UTA18jI3+cUuxgNrtiPfeX5zRXrhnPBvbsm4sCZvKFfvxtF
+         E9kd88Huat9/GuXcpw3DIysFhElbYct8l+a4g2hM700aPm2e3UuFkyKSFW/oE3fTgyPW
+         93dyC5M2//dYBHchON+FBw6z3DVOcTC+H86vE77OX73HRZjKaVNM1RKxitNXhLsu1NrM
+         0kuw==
+X-Gm-Message-State: AJIora9ejn/7hxxqt3Ft+3eoXXs9mej3DNRZWCXGpEfoAtkc0hXM/jbs
+        fBccMWB8h4SZEqy1nmvsK/6G9p2kZK0=
+X-Google-Smtp-Source: AGRyM1sMTeeCJSx383qU6rPWumyYilkPuw5jxLLQfznSu9KbeM+UfbBy5yGvf29K2IdhVBQMQXEUPg==
+X-Received: by 2002:a17:906:8448:b0:72b:5659:9873 with SMTP id e8-20020a170906844800b0072b56599873mr42486ejy.117.1657465822225;
+        Sun, 10 Jul 2022 08:10:22 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id a25-20020aa7cf19000000b0043a56c0ededsm2857152edy.74.2022.07.10.08.10.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 Jul 2022 08:10:21 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oAYZg-000BWH-Ns;
+        Sun, 10 Jul 2022 17:10:20 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] cocci: avoid normalization rules for memcpy
+Date:   Sun, 10 Jul 2022 16:45:35 +0200
+References: <xmqq8rp54r4l.fsf@gitster.g>
+ <220707.86y1x585wy.gmgdl@evledraar.gmail.com> <xmqq1quw23r8.fsf@gitster.g>
+ <cb866b8c-dcc6-557f-da23-1c1972619a8a@web.de>
+ <95432eb4-e66a-5c04-9267-f71391fbe277@web.de> <xmqqmtdhsf1z.fsf@gitster.g>
+ <ded153d4-4aea-d4da-11cb-ec66d181e4c9@web.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <ded153d4-4aea-d4da-11cb-ec66d181e4c9@web.de>
+Message-ID: <220710.86ilo580mb.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v3 1/6] Documentation/technical: describe bitmap lookup
- table extension
-Content-Language: en-GB
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     Git <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <ac52cfea-edb0-b68b-36e2-ab45d2959727@iee.email>
- <20220709075310.83848-1-chakrabortyabhradeep79@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <20220709075310.83848-1-chakrabortyabhradeep79@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/07/2022 08:53, Abhradeep Chakraborty wrote:
-> Hello Philip,
+
+On Sun, Jul 10 2022, Ren=C3=A9 Scharfe wrote:
+
+> Some of the rules for using COPY_ARRAY instead of memcpy with sizeof are
+> intended to reduce the number of sizeof variants to deal with.  They can
+> have unintended side effects if only they match, but not the one for the
+> COPY_ARRAY conversion at the end.
+
+Since ab/cocci-unused is marked for "next" it would be really nice to
+have this based on top so we can add tests for these transformations
+(the topic adds a way to do that).
+
+But if you don't feel like  doing that this is fine too.
+
+> diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.co=
+cci
+> index 9a4f00cb1b..aa75937950 100644
+> --- a/contrib/coccinelle/array.cocci
+> +++ b/contrib/coccinelle/array.cocci
+> @@ -1,60 +1,58 @@
+> -@@
+> -expression dst, src, n, E;
+> -@@
+> -  memcpy(dst, src, n * sizeof(
+> -- E[...]
+> -+ *(E)
+> -  ))
+> -
+> -@@
+> -type T;
+> -T *ptr;
+> -T[] arr;
+> -expression E, n;
+> -@@
+> -(
+> -  memcpy(ptr, E,
+> -- n * sizeof(*(ptr))
+> -+ n * sizeof(T)
+> -  )
+> -|
+> -  memcpy(arr, E,
+> -- n * sizeof(*(arr))
+> -+ n * sizeof(T)
+> -  )
+> -|
+> -  memcpy(E, ptr,
+> -- n * sizeof(*(ptr))
+> -+ n * sizeof(T)
+> -  )
+> -|
+> -  memcpy(E, arr,
+> -- n * sizeof(*(arr))
+> -+ n * sizeof(T)
+> -  )
+> -)
+> -
+>  @@
+>  type T;
+>  T *dst_ptr;
+>  T *src_ptr;
+> -T[] dst_arr;
+> -T[] src_arr;
+>  expression n;
+>  @@
+> -(
+> -- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
+> +- memcpy(dst_ptr, src_ptr, (n) * \( sizeof(T)
+> +-                                \| sizeof(*(dst_ptr))
+> +-                                \| sizeof(*(src_ptr))
+> +-                                \| sizeof(dst_ptr[...])
+> +-                                \| sizeof(src_ptr[...])
+> +-                                \) )
+>  + COPY_ARRAY(dst_ptr, src_ptr, n)
+> -|
+> -- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
+> +
+> +@@
+> +type T;
+> +T *dst_ptr;
+> +T[] src_arr;
+> +expression n;
+> +@@
+> +- memcpy(dst_ptr, src_arr, (n) * \( sizeof(T)
+> +-                                \| sizeof(*(dst_ptr))
+> +-                                \| sizeof(*(src_arr))
+> +-                                \| sizeof(dst_ptr[...])
+> +-                                \| sizeof(src_arr[...])
+> +-                                \) )
+>  + COPY_ARRAY(dst_ptr, src_arr, n)
+> -|
+> -- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
+> +
+> +@@
+> +type T;
+> +T[] dst_arr;
+> +T *src_ptr;
+> +expression n;
+> +@@
+> +- memcpy(dst_arr, src_ptr, (n) * \( sizeof(T)
+> +-                                \| sizeof(*(dst_arr))
+> +-                                \| sizeof(*(src_ptr))
+> +-                                \| sizeof(dst_arr[...])
+> +-                                \| sizeof(src_ptr[...])
+> +-                                \) )
+>  + COPY_ARRAY(dst_arr, src_ptr, n)
+> -|
+> -- memcpy(dst_arr, src_arr, (n) * sizeof(T))
+> +
+> +@@
+> +type T;
+> +T[] dst_arr;
+> +T[] src_arr;
+> +expression n;
+> +@@
+> +- memcpy(dst_arr, src_arr, (n) * \( sizeof(T)
+> +-                                \| sizeof(*(dst_arr))
+> +-                                \| sizeof(*(src_arr))
+> +-                                \| sizeof(dst_arr[...])
+> +-                                \| sizeof(src_arr[...])
+> +-                                \) )
+>  + COPY_ARRAY(dst_arr, src_arr, n)
+> -)
 >
-> Philip Oakley <philipoakley@iee.email> wrote:
->
->> Not sure if this is new in this extension, but should there be a link or
->> two to the basics of XOR compression and some of the bitmap look up
->> techniques?
->>
->> It's not always obvious if these techniques are 'heuristic' and only
->> have partial commit data, or they have all the commits listed, Nor
->> how/why they work. My point is more about giving new readers a hand-up
->> in their understanding, rather than simple implementation details for
->> those who already know what is going on. For example, are there any
->> external articles that you found helpful in getting started that could
->> be referenced somewhere in the docs?
-> As this series is only about adding a lookup-table extension (and not
-> about bitmap itself), I am not sure whether it's good to include those
-> things in this series. 
+>  @@
+>  type T;
 
-Thanks for the clarification. I must have slight misread some of the
-discussions and falsely thought it was the XOR compression (which is a
-technique I wasn't really aware of), that was being provided by the
-extension - Where would it be best for me to look up the background to
-your "extension" project?
+Hrm, this seems like a lot of repetition, it's here in the rules you're
+editing already, but these repeated "sizeof" make it a lot more verbose.
 
+Isn't there a way to avoid this by simply wrapping this across lines, I
+didn't test, but I think you can do this sort of thing in the cocci
+grammar:
 
-> But I agree with your point that it should be
-> able build a logical understanding among the new readers.
+- memcpy(
+- COPY_ARRAY(
+  (
+  dst_arr
+  |
+  dst_ptr
+  )
+  ,
+  (
+  src_arr
+  |
+  src_ptr
+  )
+  ,
+  (n) *
+-  [your big sizeof alternate here]
+  )
 
-*nod*
->
-> There are some external articles[1] which talk about bitmap internals.
-> But I think it would be better if we can make a new doc file (may be
-> `Documentation/technical/reachability-bitmaps.txt` or similar) rather
-> than putting those details in the `bitmap-format.txt` 
+I.e. you want to preserve whatever we match in the 1st and 2nd
+arguments, but only want to munge part of the 3rd argument. The cocci
+grammar can "reach into" lines like that, it doesn't need to be limited
+to line-based diffs.
 
-Thanks for the two links. In general I agree about the format document.
+But I didn't try it in this caes, and maybe there's a good reason for
+why it can't happen in this case...
 
-> (As the name 
-> suggests, this file should only contain format details of bitmaps).
-> That file would provide the answers of "Why bitmaps", "how they are
-> stored",  "How they are fetched", "how they work with pack-objects,
-> git-fetch, midx etc.", "Detailed explanation of each bitmap extension"
-> , and lastly "what are the future works" (if any).
-
-One thing I've realised on reflection is that I'm unclear how the
-'reachability bitmaps' and the 'commit-graph file' techniques relate to
-each other (and to the ODB DAG), and what features they pick out within
-their heuristic, explained at just enough level to allow folks to
-appreciate what the options that select them will do for their use case.
-
->
-> What do you think?
-
-I'd be happy to collate contributions, suggestions and thoughts.
-
-Trying to create these good introductory descriptions can be really
-difficult, as you can only step into the same river once (the 'reading
-for the first time problem' of not being able to un-hear the
-explanations of others when reading a 2nd draft...)
->
->> Separately I'm preparing a short series on adding 'reachability bitmap'
->> and 'commit graph' (among other stuff) to the glossary as part of giving
->> folks [0] stepping stones to cross the chasm of understanding
-> Great!
->
-> Thanks :)
->
-> [1] https://github.blog/2015-09-22-counting-objects/, https://github.blog/2021-04-29-scaling-monorepo-maintenance/
-Thank you.
+I also wonder if that won't be a lot faster, i.e. if you can condense
+this all into one rule it won't need to match this N times, but maybe
+the overall complexity of the rules makes it come out to the same thing
+in the end...
