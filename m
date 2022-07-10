@@ -2,73 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1D68C43334
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 21:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AD6AC433EF
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 22:04:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbiGJVzC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 17:55:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35180 "EHLO
+        id S229476AbiGJWEh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 18:04:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiGJVzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 17:55:00 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13FDBBCA7
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 14:54:59 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5223C12DA4F;
-        Sun, 10 Jul 2022 17:54:56 -0400 (EDT)
+        with ESMTP id S229456AbiGJWEh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 18:04:37 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4CD511A0E
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 15:04:33 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 18182123360;
+        Sun, 10 Jul 2022 18:04:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=5eUk3mrwcPw3
-        2hW+YLeuzpZE6ultVJPOHwPjUK5hcyI=; b=X30YvLuE+6RPCiQvIWSFVpc4eC0K
-        d+aXRo83cidNS/XsxksgO9zcZQkVHP7u6Plpx2daP9ESmyy46qmMdxOgy20fIpc7
-        pFHYM8725DJzXDJtIEt46gN1x3hMt5T39D/o2U6F4CPeoKguKS9KbeCWPGR3EZpA
-        YgVkPHDiivALV1s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4964C12DA4B;
-        Sun, 10 Jul 2022 17:54:56 -0400 (EDT)
+        :content-type; s=sasl; bh=PeQzVO/Vx+0kfeAWxa+LSIOORA3HGW1sRpXDQ+
+        RBaJ4=; b=aFsM+Ni/1YU07R99dzhYqsuh/LEV5E5yJgoH4JJlp5Uow9M0Nc4ql2
+        EEcw8Bcp+7xagfpOd/hcylPGHTgWgBCORE1D3E0rKoKJI2Nt/lSvnKUYHyq+XjFc
+        5QzIYQm8D9ZGdynJZzGaHUxM59h0Omn8qYLFUNbiy8h81JnKY+b6c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EBD712335F;
+        Sun, 10 Jul 2022 18:04:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AE54912DA4A;
-        Sun, 10 Jul 2022 17:54:55 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EBD912335E;
+        Sun, 10 Jul 2022 18:04:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] multi-pack-index: simplify handling of unknown --options
-References: <20220708202847.662319-1-szeder.dev@gmail.com>
-        <xmqqh73ruxc8.fsf@gitster.g> <20220710151645.GA2038@szeder.dev>
-Date:   Sun, 10 Jul 2022 14:54:54 -0700
-In-Reply-To: <20220710151645.GA2038@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Sun, 10 Jul 2022 17:16:45 +0200")
-Message-ID: <xmqq1qusr5u9.fsf@gitster.g>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 4/4] doc add: renormalize is not idempotent for CRCRLF
+References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
+        <d3b8ed97a105ea1d7e656c964b7eee378e11ede6.1657385781.git.gitgitgadget@gmail.com>
+        <xmqqilo6t2qy.fsf@gitster.g>
+        <e45c4fc1-3a30-726c-51f3-00caeca0a552@iee.email>
+Date:   Sun, 10 Jul 2022 15:04:31 -0700
+In-Reply-To: <e45c4fc1-3a30-726c-51f3-00caeca0a552@iee.email> (Philip Oakley's
+        message of "Sun, 10 Jul 2022 22:52:45 +0100")
+Message-ID: <xmqqsfn8pqts.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EF405032-009A-11ED-8313-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 470484EA-009C-11ED-915C-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Philip Oakley <philipoakley@iee.email> writes:
 
->> > Let parse_options() handle unknown options instead, which, besides
->> > simpler code, has the additional benefit that it prints not only the
->> > usage but an "error: unknown option `foo'" message as well.
->>=20
->> Yes, I agree that getting rid of KEEP_UNKNOWN is a very good idea
->> for this reason.  But I suspect that we still need the "did we get
->> an extra argument we do not know what to do with?" check.
->
-> Uh, indeed.  I got too trigger-happy with deleting lines.
-> Updated patch below.
+>>> +	This option implies `-u`. Lone CR characters are untouched, so
+>>> +	cleaning *^* not idempotent. A CRCRLF sequence cleans to CRLF.
+>> Lack of verb BE somewhere. 
+> '^' It took me three re-reads to see my mistyping as my head knew what
+> I'd meant to write, I've marked above as a note to self.
+> Aside: Are there any guides / suggestions / how-to's for on-line
+> reviewing that you can recommend o
 
-OK.  I suspect that a test would have caught the breakage in the
-original.  Would it make sense to add one now?
-
-Thanks, will queue.
+Sorry, but I do not know of any good "trick" to fight against our
+common tendency to easily miss trivial typoes and thinkos in what we
+ourselves wrote.  We can be surprisingly blind to what a colleague
+can spot immediately, and that is why it helps to have a thorough
+read-through by a reviewer with fresh eyes.  When I was a more
+prolific contributor, I sometimes tried to read aloud what I wrote
+to myself, both docs and code, and caught silly mistakes before
+sending them out to the list, but I do not recommend it to others.
