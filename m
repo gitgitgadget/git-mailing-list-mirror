@@ -2,78 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E71EDC433EF
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 05:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78014C43334
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 05:45:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229642AbiGJFiV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 01:38:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45142 "EHLO
+        id S229564AbiGJFpH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 01:45:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbiGJFiU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 01:38:20 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 593E714D25
-        for <git@vger.kernel.org>; Sat,  9 Jul 2022 22:38:19 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5760014E125;
-        Sun, 10 Jul 2022 01:38:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=m2gHp3DkFahgCoH1tRnjvpUtw
-        zLPR7LdCymRH3hWo2I=; b=j29FH/PQL/VGYMp8ra5Z3M2DHUnsSyCmjep/EhC4h
-        ugJx/j6NuYniVlFD9vvLa7rLSk3yS8KR0T0KyzbJycqcfYPdM91QydWd054lvPda
-        ZtZKtBQK1jVTz8uUY6g5XtVLC8IfMdV2INXJwV8fCyBFc6F0uJHKxQU1TtMDGH/e
-        EA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4ECC514E124;
-        Sun, 10 Jul 2022 01:38:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ADD7914E123;
-        Sun, 10 Jul 2022 01:38:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] builtin/mv.c: use correct type to compute size of an
- array element
-References: <xmqq8rp54r4l.fsf@gitster.g>
-        <220707.86y1x585wy.gmgdl@evledraar.gmail.com>
-        <xmqq1quw23r8.fsf@gitster.g>
-        <cb866b8c-dcc6-557f-da23-1c1972619a8a@web.de>
-        <95432eb4-e66a-5c04-9267-f71391fbe277@web.de>
-Date:   Sat, 09 Jul 2022 22:38:16 -0700
-Message-ID: <xmqqmtdhsf1z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229482AbiGJFpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 01:45:06 -0400
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594CE12AB8
+        for <git@vger.kernel.org>; Sat,  9 Jul 2022 22:45:05 -0700 (PDT)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-31c8bb90d09so21760347b3.8
+        for <git@vger.kernel.org>; Sat, 09 Jul 2022 22:45:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pzVtegjA6lA94mFr9sZz8flj78IB4DLsRbypGCjRXgs=;
+        b=gfho1IdrZY/WeQQ6G42qpr3zaR7njJnGWbYjjGXxqekAXPBXq7mCQidMsJjxqWViyZ
+         arwT/0QUDKDbMA17Zo84XWaSlZK92h3ScqhcAROJ0NJkZ38AExlWQsDD775b3zaxldEQ
+         +SwoK+cqsgPXpn03uqXWJFu9tTNNNZIiNNugnXt0Xo9XuzNwycVjtWR+vILcyV8i1qKh
+         fUYhOe/BjB5O1mhmlgOPgHlSq08HW1ZMQEGlsPyzRVVCRQ47eNlofwOLYhiSjnq77Hsg
+         xcabbdkKRtW8vxG45ogYLQHP1qWqxdu5QqKvHmM7Mw3LlXlxyJ4q/IeHgTcSPqThJ2aH
+         l8jg==
+X-Gm-Message-State: AJIora8lbNgBJNUl89O0ox6EffivgQ/4y7TifxdSh6E0UQE5gv7HUNVa
+        g0A+9ksoa3R+h6Y7PdH6eovlRrAl6Q1qKR8ySWQKXPyd9dE=
+X-Google-Smtp-Source: AGRyM1tOTTdkVbM5wmBUTIro7NZEERMixomDt+EC/RaIHypMC8RMhTZhKqlYSCr6yQGWumEbbRX454i/PsnVY7D5Q48=
+X-Received: by 2002:a81:b50:0:b0:31c:cd9a:c875 with SMTP id
+ 77-20020a810b50000000b0031ccd9ac875mr13638270ywl.411.1657431904479; Sat, 09
+ Jul 2022 22:45:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 801ED97C-0012-11ED-BAAC-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1281.git.1657202265048.gitgitgadget@gmail.com>
+ <pull.1281.v2.git.1657279447515.gitgitgadget@gmail.com> <CAPig+cTX76ZMG_S-qOX_JDxYVWXRvtP2Ref4k8uM1KJaDwX9=w@mail.gmail.com>
+ <xmqqwncmt3el.fsf@gitster.g>
+In-Reply-To: <xmqqwncmt3el.fsf@gitster.g>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 10 Jul 2022 01:44:53 -0400
+Message-ID: <CAPig+cScKabgrh80e5rqWX8cnNEgvxP9JyVJCu+afBOJk_yopg@mail.gmail.com>
+Subject: Re: [PATCH v2] gpg-interface: add function for converting trust level
+ to string
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jaydeep Das via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jaydeep Das <jaydeepjd.8914@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Sat, Jul 9, 2022 at 4:52 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > On Fri, Jul 8, 2022 at 7:28 AM Jaydeep Das via GitGitGadget
+> >> + * Returns corresponding string in lowercase for a given member of
+> >> + * enum signature_trust_level. For example, `TRUST_ULTIMATE` will
+> >> + * return "ultimate".
+> >> +char *gpg_trust_level_to_str(enum signature_trust_level level);
+> >
+> > It would be a good idea to update the function documentation to
+> > mention that the caller is responsible for freeing the returned
+> > string.
+>
+> Given that there are small and fixed number of trust level strings,
+> I actually think that it would be more reasonable to return a static
+> string to the caller, something along the lines of the attached, so
+> that callers do not have to worry about freeing it.
 
-> Not a problem, it seems; at least Coccinelle 1.1.1 is still able to
-> recreate the conversions from 45ccef87b3 (use COPY_ARRAY, 2016-09-25)
-> and 921d49be86 (use COPY_ARRAY for copying arrays, 2019-06-15) with the
-> patch below, which removes the normalization rules. =20
+I also am not a fan of making the caller free the result, and thought
+of mentioning it but didn't know if the approach implemented by this
+patch was suggested by an earlier reviewer.
 
-The result certainly is cleaner and also looks much less error
-prone.
+> Perhaps along the lines of ...
+>
+> +static struct sigcheck_gpg_trust_level {
+>         const char *key;
+>         enum signature_trust_level value;
+> +       const char *downcased;
+>  } sigcheck_gpg_trust_level[] = {
+>
+> +const char *gpg_trust_level_to_string(enum signature_trust_level level)
+> +{
+> +       struct sigcheck_gpg_trust_level *trust;
+> +
+> +       if (level < 0 || ARRAY_SIZE(sigcheck_gpg_trust_level) <= level)
+> +               BUG("invalid trust_level requested: %d", level);
+> +
+> +       trust = &sigcheck_gpg_trust_level[level];
+> +       if (trust->value != level)
+> +               BUG("sigcheck_gpg_trust_level[] unsorted");
+> +
+> +       if (!trust->downcased)
+> +               trust->downcased = xstrdup_tolower(trust->key);
+> +       return trust->downcased;
+> +}
 
-> It increases the
-> processing time for array.cocci from 53s to 66s for me, though.  Worth
-> the increased precision and clarity?
+Given the small, fixed number of trust levels, and if the list is
+unlikely to change much in the future, I might suggest simply
+initializing the fields at compile-time rather than on-demand at
+run-time:
 
-I would say so.  For manual tests that humans stare at their
-progress waiting for their completion, every second may matter, but
-a check that makes us wait for more than 30 seconds *and* forces us
-to be extra careful when vetting its validity is worse than a check
-that takes 10 more seconds with much less risk of broken output.
-
+    static struct {
+        const char *key;
+        const char *display_key;
+        enum signature_trust_level value;
+    } sigcheck_gpg_trust_level[] = {
+        { "UNDEFINED", "undefined", TRUST_UNDEFINED },
+        { "NEVER", "never", TRUST_NEVER },
+        { "MARGINAL", "marginal", TRUST_MARGINAL },
+        { "FULLY", "fully", TRUST_FULLY },
+        { "ULTIMATE", "ultimate", TRUST_ULTIMATE },
+    };
