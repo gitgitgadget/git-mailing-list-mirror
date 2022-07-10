@@ -2,81 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5313FC433EF
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 08:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3FA9C43334
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 10:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbiGJIOF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 04:14:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41450 "EHLO
+        id S229492AbiGJKGM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 06:06:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiGJIOE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 04:14:04 -0400
-X-Greylist: delayed 91 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 10 Jul 2022 01:14:03 PDT
-Received: from impout004.msg.chrl.nc.charter.net (impout004aa.msg.chrl.nc.charter.net [47.43.20.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFE6011816
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 01:14:03 -0700 (PDT)
-Received: from localhost.localdomain ([97.71.114.58])
-        by cmsmtp with ESMTPA
-        id AS3Ho8LP3lJREAS3LopDXL; Sun, 10 Jul 2022 08:12:31 +0000
-Authentication-Results: sunshineco.com; none
-X-Authority-Analysis: v=2.4 cv=Ctusz10D c=1 sm=1 tr=0 ts=62ca89ef
- a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
- a=MQzyZ3sn3-HCdPjj7zMA:9 a=jYKBPJSq9nmHKCndOPe9:22
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Han Xin <chiyutianyi@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] unpack-objects: fix compilation warning/error due to missing braces
-Date:   Sun, 10 Jul 2022 04:11:35 -0400
-Message-Id: <20220710081135.74964-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.37.0.236.gcef32db0b6.dirty
+        with ESMTP id S229450AbiGJKGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 06:06:11 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA4425EA
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 03:06:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1657447553;
+        bh=yq8Gu8Op/RzbazV/BlEWDVz4xmiUGOnVM8kzrEBje+E=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=BO4opeltTrPJSeawRnd6a2lNl0XBbidB24tMvoW1eiZ7Up4TIt9ILkbBkCmEx+Ggr
+         i6mfGw7UGLTLr4knORtEiqTvJ26qcrpxHiGKkVToxQaEXXJ49XaqDdIhN4GlvvwSoE
+         SO5ofIYW59wbiCsXw8amASbyZMk6NHqJAjxoIXko=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MJnrX-1nr2EK1WBd-00Jv6Y; Sun, 10
+ Jul 2022 12:05:53 +0200
+Message-ID: <ded153d4-4aea-d4da-11cb-ec66d181e4c9@web.de>
+Date:   Sun, 10 Jul 2022 12:05:51 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfKRnJM/aj8nxfeiIURVjpYh78LrIHL71sFKoCMKi1N5BdDgT08l+yqr4Tqxc9ip4cXVCHfJO8Nbm+Gp5NKPFJXbht6OR0SmHOFdcH8V6gFqxawLSfvOj
- sBP3DmcAlWBbe8JAaC3JGOHRJzPDCJmGyaRaMnhR/gDuCplwcsBGspzE4KkLhk3Bz7vqCQvSGAgUkEi1XoXEvSZP9JSit4RzJR9slcUxAfqbwMh3AGWFTngT
- QvxQ0hQMd8GvJkhhNJ6I/LgAZimEgMZ1BTghu+o17M+lcuwox5aEEenkJDPrTHHJ
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.0.1
+Subject: [PATCH] cocci: avoid normalization rules for memcpy
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <xmqq8rp54r4l.fsf@gitster.g>
+ <220707.86y1x585wy.gmgdl@evledraar.gmail.com> <xmqq1quw23r8.fsf@gitster.g>
+ <cb866b8c-dcc6-557f-da23-1c1972619a8a@web.de>
+ <95432eb4-e66a-5c04-9267-f71391fbe277@web.de> <xmqqmtdhsf1z.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqmtdhsf1z.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:kDHloF/f6r1W0Gr/rilmwtyRI+oNI88Vy6JLWJvcNSwJ7bg/PdV
+ NJ69UgqfxaQLloiWZF9f3/LUUe0iQ0HVjJLwfVU4nONnDi+K3wiNU8zsHqwTAMTxvmYnllu
+ hrTAkqXgZCG5nqaj6av67pk5G5FDkXRRyHneOo/n+Q0u6WiJNeGh0NtMQDhJJnR8hHLMphB
+ NBjXB+v1Rw2NTlPQLSybg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XHEMXp2TCXQ=:jmh+biAG1/K9wtrTuKc3r9
+ yVKcRjLqybZfoXfbQFjuThV7nktDlNtBV/lsOkQl4lpn2eJuQP0IK3iiDIlkyuFnr6StL1Q6m
+ POsVjxE8l4mfJNAj5kjT3+VLS7LArHmo0alRefpdefM5vwamKnkdHgdFLPc4fKSRo10bhdJ3G
+ U1rQQyQbt3KwHP/28hg1I2queyC6l+lB+fzoHLFyVTMxLJGpY8ADFzUo0tDTfq/zMxFNTmhAX
+ YtmHGZJJmh1wD0LZZVPbNtqXBMkicgkxhl0Hv6RI/PyWdLqfI44tstza+jND+7B5rMnDQC7mg
+ tLBoHMYghNA6NRtBFISXQrkHpp7emInRYW+v3Z6Ra9iBQM4TtG5J1LOZ+qs0y3Uz0xo8u1XPJ
+ MlfJ4F0WiAiz3Bmc9nI83USjFusTkO+N/sENefv70034P89NPjnuLNXIGnMaGnIK3NoXRu+8w
+ sEx/qMplvgdmwJ9mOMXfyOj5Db4MaTb7SS7i2xbXX/BTmR+nJ0k+CpJ8TDPeILM1fId0Dm6m1
+ 7GLmeuVysnuIdyq+ClpyriOYwS1M45uy7G3CQPm+wcCCZdaNNzkYt0W1BwwVHQgPYZQbEnSJK
+ BBN76Srp+i6Ton/PVxqtQjrXtdihX1p5443GVVIz3wuwufZfmAVBAIkFJKT7dSm58HNndivi0
+ znKlpyz1BGXRUHVRy/InmAZ5SScJmtl8aKYA4+UkzFb/2WA6vnZQ2k4SUuh7VQjt3dbjW/IxP
+ OdXOSoVmGokTX98fF7GOTTtAlHO4KqVZYFene7XHX7++bU5GOIS+CCcHXVrZGGhHj8NopVvC+
+ yMiu7BMv0fnBT6tM+pxQ7glEtZU/HLPsbsfL0POVYn7EQTA//uMEnmN2eHDkiRyptuU1vCqcj
+ SyV5yCVy9oejs352/fT2DEm+0sUwYTpUKN4iCh8/3XIqDTck+kXyfjXpYoIXe6SrOYkumVD4H
+ iVQbRR2BBTUf57NmUFbj/eHMrNBFGF717FY8Ew4QjGgcTH06gCNrj2eUMVHY6RURXC4KyevyH
+ /oiuBsDTXgFzS5QamF7r/wkSmCLlcmT3l5qWuTNOh0yi9ZIOscbq/h8yQnpsyRUXGPYJJUSEe
+ 2AtO8di/y5orYzpwUaR6XBAXbgoJ0JfrNCd
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On macOS High Sierra (10.13), Apple's `clang`[1] complains about missing
-braces around initialization of a subobject, which is problematic when
-building with `DEVELOPER=YesPlease` which enables `-Werror`:
+Some of the rules for using COPY_ARRAY instead of memcpy with sizeof are
+intended to reduce the number of sizeof variants to deal with.  They can
+have unintended side effects if only they match, but not the one for the
+COPY_ARRAY conversion at the end.
 
-    builtin/unpack-objects.c:388:26: error: suggest braces around
-        initialization of subobject [-Werror,-Wmissing-braces]
-            git_zstream zstream = { 0 };
+Avoid these side effects by instead using a self-contained rule for each
+combination of array and pointer for source and destination which lists
+all sizeof variants inline.
 
-[1]: `cc --version` => "Apple LLVM version 10.0.0 (clang-1000.10.44.4)"
+This lets "make contrib/coccinelle/array.cocci.patch" take 15% longer on
+my machine, but gives peace of mind that no incomplete transformation
+will be generated.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Patch generated with --patience for easier reading.
 
-Notes:
-    This is atop 'hx/unpack-streaming' which is already in 'next'.
-    All the CI builds are fine with this change.
+ contrib/coccinelle/array.cocci | 92 +++++++++++++++++-----------------
+ 1 file changed, 45 insertions(+), 47 deletions(-)
 
-    As I understand it, this should be a safe change; the fields which
-    follow `z_stream z` in `git_zstream` will be initialized to zero
-    since the first field has an explicit initializer.
+diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.coc=
+ci
+index 9a4f00cb1b..aa75937950 100644
+=2D-- a/contrib/coccinelle/array.cocci
++++ b/contrib/coccinelle/array.cocci
+@@ -1,60 +1,58 @@
+-@@
+-expression dst, src, n, E;
+-@@
+-  memcpy(dst, src, n * sizeof(
+=2D- E[...]
+-+ *(E)
+-  ))
+-
+-@@
+-type T;
+-T *ptr;
+-T[] arr;
+-expression E, n;
+-@@
+-(
+-  memcpy(ptr, E,
+=2D- n * sizeof(*(ptr))
+-+ n * sizeof(T)
+-  )
+-|
+-  memcpy(arr, E,
+=2D- n * sizeof(*(arr))
+-+ n * sizeof(T)
+-  )
+-|
+-  memcpy(E, ptr,
+=2D- n * sizeof(*(ptr))
+-+ n * sizeof(T)
+-  )
+-|
+-  memcpy(E, arr,
+=2D- n * sizeof(*(arr))
+-+ n * sizeof(T)
+-  )
+-)
+-
+ @@
+ type T;
+ T *dst_ptr;
+ T *src_ptr;
+-T[] dst_arr;
+-T[] src_arr;
+ expression n;
+ @@
+-(
+=2D- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
++- memcpy(dst_ptr, src_ptr, (n) * \( sizeof(T)
++-                                \| sizeof(*(dst_ptr))
++-                                \| sizeof(*(src_ptr))
++-                                \| sizeof(dst_ptr[...])
++-                                \| sizeof(src_ptr[...])
++-                                \) )
+ + COPY_ARRAY(dst_ptr, src_ptr, n)
+-|
+=2D- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
++
++@@
++type T;
++T *dst_ptr;
++T[] src_arr;
++expression n;
++@@
++- memcpy(dst_ptr, src_arr, (n) * \( sizeof(T)
++-                                \| sizeof(*(dst_ptr))
++-                                \| sizeof(*(src_arr))
++-                                \| sizeof(dst_ptr[...])
++-                                \| sizeof(src_arr[...])
++-                                \) )
+ + COPY_ARRAY(dst_ptr, src_arr, n)
+-|
+=2D- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
++
++@@
++type T;
++T[] dst_arr;
++T *src_ptr;
++expression n;
++@@
++- memcpy(dst_arr, src_ptr, (n) * \( sizeof(T)
++-                                \| sizeof(*(dst_arr))
++-                                \| sizeof(*(src_ptr))
++-                                \| sizeof(dst_arr[...])
++-                                \| sizeof(src_ptr[...])
++-                                \) )
+ + COPY_ARRAY(dst_arr, src_ptr, n)
+-|
+=2D- memcpy(dst_arr, src_arr, (n) * sizeof(T))
++
++@@
++type T;
++T[] dst_arr;
++T[] src_arr;
++expression n;
++@@
++- memcpy(dst_arr, src_arr, (n) * \( sizeof(T)
++-                                \| sizeof(*(dst_arr))
++-                                \| sizeof(*(src_arr))
++-                                \| sizeof(dst_arr[...])
++-                                \| sizeof(src_arr[...])
++-                                \) )
+ + COPY_ARRAY(dst_arr, src_arr, n)
+-)
 
- builtin/unpack-objects.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 43789b8ef2..c606c92e37 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -385,7 +385,7 @@ static const void *feed_input_zstream(struct input_stream *in_stream,
- 
- static void stream_blob(unsigned long size, unsigned nr)
- {
--	git_zstream zstream = { 0 };
-+	git_zstream zstream = {{ 0 }};
- 	struct input_zstream_data data = { 0 };
- 	struct input_stream in_stream = {
- 		.read = feed_input_zstream,
--- 
-2.37.0.236.gcef32db0b6.dirty
-
+ @@
+ type T;
+=2D-
+2.37.0
