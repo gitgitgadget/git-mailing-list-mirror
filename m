@@ -2,69 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C17AC433EF
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 22:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E13EC433EF
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 22:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229477AbiGJWZh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 18:25:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47164 "EHLO
+        id S229639AbiGJW44 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 18:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiGJWZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 18:25:36 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 920BDE34
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 15:25:35 -0700 (PDT)
-Received: from host-78-147-178-211.as13285.net ([78.147.178.211] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1oAfMr-0003D2-CX;
-        Sun, 10 Jul 2022 23:25:34 +0100
-Message-ID: <b9094655-2116-547f-15cb-0a4cce07a960@iee.email>
-Date:   Sun, 10 Jul 2022 23:25:32 +0100
+        with ESMTP id S229463AbiGJW4y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 18:56:54 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C09217644
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 15:56:53 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3693C19F5C0;
+        Sun, 10 Jul 2022 18:56:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hLOso/HAFTJXm7yrqHl4JCsTeDbd4aStfU4c+P
+        utbGY=; b=LBsqsn3ocD7smbrLCOfr7K11r2VeC/DaUi/ox3FB4YCqehrQySpigG
+        PoCDB8CEUZZqBgrFG7WIoMxIogBdQLSHUQUvYygQjwLJPdw2HMxgaNtAUEQGMmLl
+        rFlpSKrXp3PrNxTHWkK+s5RKzwFBf78Y8gSJrdmSWVM1H3FlHd4DE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2F9E619F5BF;
+        Sun, 10 Jul 2022 18:56:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D323E19F5BE;
+        Sun, 10 Jul 2022 18:56:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2022, #02; Fri, 8)
+References: <xmqq4jzquiok.fsf@gitster.g>
+Date:   Sun, 10 Jul 2022 15:56:48 -0700
+In-Reply-To: <xmqq4jzquiok.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+        09 Jul 2022 13:36:59 -0700")
+Message-ID: <xmqqk08kpoen.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 4/4] doc add: renormalize is not idempotent for CRCRLF
-Content-Language: en-GB
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
- <d3b8ed97a105ea1d7e656c964b7eee378e11ede6.1657385781.git.gitgitgadget@gmail.com>
- <xmqqilo6t2qy.fsf@gitster.g> <e45c4fc1-3a30-726c-51f3-00caeca0a552@iee.email>
- <xmqqsfn8pqts.fsf@gitster.g>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <xmqqsfn8pqts.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 950EC0FE-00A3-11ED-BA92-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/07/2022 23:04, Junio C Hamano wrote:
-> Philip Oakley <philipoakley@iee.email> writes:
->
->>>> +	This option implies `-u`. Lone CR characters are untouched, so
->>>> +	cleaning *^* not idempotent. A CRCRLF sequence cleans to CRLF.
->>> Lack of verb BE somewhere. 
->> '^' It took me three re-reads to see my mistyping as my head knew what
->> I'd meant to write, I've marked above as a note to self.
->> Aside: Are there any guides / suggestions / how-to's for on-line
->> reviewing that you can recommend o
-> Sorry, but I do not know of any good "trick" to fight against our
-> common tendency to easily miss trivial typoes and thinkos in what we
-> ourselves wrote.  We can be surprisingly blind to what a colleague
-> can spot immediately, and that is why it helps to have a thorough
-> read-through by a reviewer with fresh eyes.  When I was a more
-> prolific contributor, I sometimes tried to read aloud what I wrote
-> to myself, both docs and code, and caught silly mistakes before
-> sending them out to the list, but I do not recommend it to others.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks. There does appear to be a lack of literature or articles in this
-area of on-list reviewing
+> Here are the topics that have been cooking in my tree.  Commits
+> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+> topic is stable enough to be used and are candidate to be in a
+> future release).  Commits prefixed with '-' are only in 'seen',
+> and aren't considered "accepted" at all.
 
-I've not even seen an list of snippets collated from email advice. 
-Other than the email etiquette's starter for ten on don't top post ;-)
+In this edition of the report, the topics that were kept on hold in
+the 'next' branch were by mistake left with the "Will cook in 'next'"
+label, but please consider them as "Will merge to 'master'" material.
 
---
-Philip
+Namely, the following 6 topics are already marked for 'master' in my
+updated copy of the "What's cooking" report and will be merged down
+accordingly.
+
+> * cr/setup-bug-typo (2022-06-17) 1 commit
+> * jk/optim-promisor-object-enumeration (2022-06-16) 1 commit
+> * rs/archive-with-internal-gzip (2022-06-15) 6 commits
+> * ds/branch-checked-out (2022-06-21) 7 commits
+> * jc/resolve-undo (2022-06-09) 1 commit
+> * ac/bitmap-format-doc (2022-06-16) 3 commits
+
+Thanks.
