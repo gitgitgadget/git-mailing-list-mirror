@@ -2,74 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AD6AC433EF
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 22:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED278C43334
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 22:08:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229476AbiGJWEh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 18:04:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39220 "EHLO
+        id S229570AbiGJWIK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 18:08:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiGJWEh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 18:04:37 -0400
+        with ESMTP id S229456AbiGJWIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 18:08:09 -0400
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4CD511A0E
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 15:04:33 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB0F313E38
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 15:08:08 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 18182123360;
-        Sun, 10 Jul 2022 18:04:33 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AE6C12352C;
+        Sun, 10 Jul 2022 18:08:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PeQzVO/Vx+0kfeAWxa+LSIOORA3HGW1sRpXDQ+
-        RBaJ4=; b=aFsM+Ni/1YU07R99dzhYqsuh/LEV5E5yJgoH4JJlp5Uow9M0Nc4ql2
-        EEcw8Bcp+7xagfpOd/hcylPGHTgWgBCORE1D3E0rKoKJI2Nt/lSvnKUYHyq+XjFc
-        5QzIYQm8D9ZGdynJZzGaHUxM59h0Omn8qYLFUNbiy8h81JnKY+b6c=
+        :content-type; s=sasl; bh=PorI6DscxPrA5mkQAHxLBknpg6X+zIsKI2scJJ
+        WQ50k=; b=YcJBeHJti2EyT3/ktvabJuGkjmYvPja+RY6GLFHhaqzAU9iXXjNEMZ
+        zJ+DHrRZWpuybu5kh/LZK8AbY8EdyzU9X+QDzwHpxMxYwIKD4Z7hAsh4MdnY6VeC
+        2tOYFNuTUfup8DLfGxseCpGqeqL91tH8RmqlmlvAHmVQ5u0HMa0R8=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EBD712335F;
-        Sun, 10 Jul 2022 18:04:33 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EACA3123528;
+        Sun, 10 Jul 2022 18:08:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EBD912335E;
-        Sun, 10 Jul 2022 18:04:32 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 34DB3123525;
+        Sun, 10 Jul 2022 18:08:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/4] doc add: renormalize is not idempotent for CRCRLF
-References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
-        <d3b8ed97a105ea1d7e656c964b7eee378e11ede6.1657385781.git.gitgitgadget@gmail.com>
-        <xmqqilo6t2qy.fsf@gitster.g>
-        <e45c4fc1-3a30-726c-51f3-00caeca0a552@iee.email>
-Date:   Sun, 10 Jul 2022 15:04:31 -0700
-In-Reply-To: <e45c4fc1-3a30-726c-51f3-00caeca0a552@iee.email> (Philip Oakley's
-        message of "Sun, 10 Jul 2022 22:52:45 +0100")
-Message-ID: <xmqqsfn8pqts.fsf@gitster.g>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Automatic code formatting
+References: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net>
+Date:   Sun, 10 Jul 2022 15:08:05 -0700
+In-Reply-To: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net> (brian
+        m. carlson's message of "Sun, 10 Jul 2022 21:50:15 +0000")
+Message-ID: <xmqqo7xwpqnu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 470484EA-009C-11ED-915C-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C7065EF2-009C-11ED-B064-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->>> +	This option implies `-u`. Lone CR characters are untouched, so
->>> +	cleaning *^* not idempotent. A CRCRLF sequence cleans to CRLF.
->> Lack of verb BE somewhere. 
-> '^' It took me three re-reads to see my mistyping as my head knew what
-> I'd meant to write, I've marked above as a note to self.
-> Aside: Are there any guides / suggestions / how-to's for on-line
-> reviewing that you can recommend o
+> I should point out that most platforms (and all major platforms) have
+> clang and therefore I think clang-format should be a fine choice.  It's
+> highly configurable and will let us pick a style that most resembles the
+> one we have now. However, I'm not picky and if we like something else
+> better, great.  As long as the option we pick is shipped in Debian, I'm
+> for it.
 
-Sorry, but I do not know of any good "trick" to fight against our
-common tendency to easily miss trivial typoes and thinkos in what we
-ourselves wrote.  We can be surprisingly blind to what a colleague
-can spot immediately, and that is why it helps to have a thorough
-read-through by a reviewer with fresh eyes.  When I was a more
-prolific contributor, I sometimes tried to read aloud what I wrote
-to myself, both docs and code, and caught silly mistakes before
-sending them out to the list, but I do not recommend it to others.
+As long as the options in clang-format we choose to use would
+reformat the current codebase without disrupting too much, I would
+be happy to see this done.  It would probably need a bit of work but
+hopefully clang-format is flexible enough to accomodate our style to
+allow us do this.
