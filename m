@@ -2,76 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DA45C433EF
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 16:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76908C43334
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 17:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbiGJQjY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 12:39:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44162 "EHLO
+        id S229502AbiGJRyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 13:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiGJQjY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 12:39:24 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F37110FDE
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 09:39:23 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E0DC919D4C6;
-        Sun, 10 Jul 2022 12:39:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1t/B+w/ouUU1
-        yad5rpM7QZ/HOC+KuWQ8OuXbOj+0xrc=; b=s/hfOqv67qMncICZlYWnozE2/RVi
-        llHCz3aMOLx5MaRH222Mx1D1DHcKsHm/i0qyvv0fq0DJ7djJ+2E35DUysPi58H8Y
-        QU6RIz6cU72SbbpWOWXxajk0hXBZqMBpSwIxRsf5pISclcrA6fMXTC8XSOgFtnGe
-        8EKLlsPHVVz9BF4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D9FED19D4C5;
-        Sun, 10 Jul 2022 12:39:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8CB0519D4C4;
-        Sun, 10 Jul 2022 12:39:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] sha256: add support for Nettle
-References: <20220705230518.713218-1-sandals@crustytoothpaste.net>
-        <20220710132907.1499365-1-sandals@crustytoothpaste.net>
-        <220710.86mtdh81ty.gmgdl@evledraar.gmail.com>
-Date:   Sun, 10 Jul 2022 09:39:18 -0700
-In-Reply-To: <220710.86mtdh81ty.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sun, 10 Jul 2022 16:41:23 +0200")
-Message-ID: <xmqqwnckrkg9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D86F6428-006E-11ED-AD6B-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229463AbiGJRyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 13:54:21 -0400
+Received: from out29-145.mail.aliyun.com (out29-145.mail.aliyun.com [115.124.29.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4B4A11837
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 10:54:12 -0700 (PDT)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.2888728|-1;BR=01201311R181S99rulernew998_84748_2000303;CH=blue;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0142504-0.00391198-0.981838;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047213;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=2;RT=2;SR=0;TI=SMTPD_---.OP1o-6Y_1657475649;
+Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.OP1o-6Y_1657475649)
+          by smtp.aliyun-inc.com;
+          Mon, 11 Jul 2022 01:54:10 +0800
+Date:   Mon, 11 Jul 2022 01:54:10 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Re: What's cooking in git.git (Jul 2022, #02; Fri, 8)
+References: <xmqq4jzquiok.fsf@gitster.g>, 
+        <202207102031058469922@oschina.cn>, 
+        <xmqq7d4lrkyb.fsf@gitster.g>
+X-Priority: 3
+X-GUID: ED8D33FD-9CA1-4A17-8F1C-BF7654627636
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+Message-ID: <202207110151444952947@oschina.cn>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> This just carries forward existing technical debt, but it's unfortunate
-> that we don't catch OPENSSL_SHA256 overridding NETTLE_SHA256, and error
-> if both are defined.
-
-You are mistaken, unless I am ;-) =20
-
-Allowing users to list whatever is available, instead of requiring
-all users to choose only one, is a deliberate feature in the
-arrangement, so it is not unfortunate and it would be breaking
-end-user expectation if we gave an error when more than one is
-given (and it would be easier to write and maintain autoconf rules
-for the feature---we do not want to have two places that makes
-decisions on precedence).
-
+PiJsaWxpbmNoYW9Ab3NjaGluYS5jbiIgPGxpbGluY2hhb0Bvc2NoaW5hLmNuPiB3cml0ZXM6Cj4K
+Pj4+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPj4+
+W1N0YWxsZWRdCj4+Pgo+Pj4qIGxsL2N1cmwtYWNjZXB0LWxhbmd1YWdlICgyMDIyLTA2LTEzKSAy
+IGNvbW1pdHMKPj4+IC0gUFJFUD8/PyBnaXZlIGluaXRpYWxpemVyIHRvIHJwY19zdGF0ZQo+Pj4g
+LSByZW1vdGUtY3VybDogc2VuZCBBY2NlcHQtTGFuZ3VhZ2UgaGVhZGVyIHRvIHNlcnZlcgo+Pj4K
+Pj4+IHNvdXJjZTogPHB1bGwuMTI1MS52My5naXQuMTY1NTA1NDQyMTY5Ny5naXRnaXRnYWRnZXRA
+Z21haWwuY29tPgo+PiB3aGF0IHNob3VsZCBJIGRvIGlmIHRoZSBzdGF0ZSBpcyBzdGFsbGVkPwo+
+Cj5TZW5kIGEgcmVzcG9uc2UgdG8gdGhlIGRpc2N1c3Npb24gdGhyZWFkIGFuZC9vciBwb3NzaWJs
+eSBhbiB1cGRhdGVkCj5hbmQgY29ycmVjdGVkIHBhdGNoIHRvIGZpeCBjb21waWxhdGlvbiBpc3N1
+ZXMsIHBlcmhhcHM/Ck9oLCBJIHRob3VnaHQgaXQgd2FzIGRvbmUuIEN1cnJlbnRseSBhcyBJIGNh
+biBzZWUsIHRoaXMgcGF0Y2ggaXMgYSBjb21wbGV0ZSBhbmQKbWluaW1hbCBpbXBsZW1lbnRhdGlv
+biwgYXQgbGVhc3QgaXQgZml4ZXMgdGhlIGNvbnNpc3RlbmN5IG9mIHRoZSBIVFRQIHByb3RvY29s
+LgpUaGUgbmV3IGlucHV0IGFmdGVyIHlvdSBmaXhlZCAicnBjX3N0YXRl4oCdaW5pdGlhbGl6YXRp
+b24gaXNzdWUgaXMganVzdMKgZGlzY3Vzc2luZwp0aGUgZnV0dXJlIHdvcmsgSSBndWVzcz8KCg==
 
