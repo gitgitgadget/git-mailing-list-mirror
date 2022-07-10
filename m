@@ -2,96 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6959BC43334
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 20:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BCA5C433EF
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 21:37:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229625AbiGJUmt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 16:42:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59324 "EHLO
+        id S229490AbiGJVhl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 17:37:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbiGJUms (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 16:42:48 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFA71CE1D
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 13:42:47 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6B63119EA78;
-        Sun, 10 Jul 2022 16:42:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8lWW2M3KQGFSIktM3tekn64b53/kAysy/zPIv6
-        jbD7w=; b=ZkBjNdRfhBV6ofXMvaXXOH6sQ9n82q+o/WlIQTYP601WTb2xpaVs5x
-        VF55d+3c/gdHKWL/c6EUv4/uDCqNdSrdX1sGW3jXiYLjJ+JctFATW9CMdjmFKSMQ
-        5uWp+pJlJJzANfXrwQQfw1FF0NWnZ/NsYxVQTo8A6sP2p/GeF6Ppk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6334819EA77;
-        Sun, 10 Jul 2022 16:42:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0C71C19EA76;
-        Sun, 10 Jul 2022 16:42:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>
-Subject: Re: [PATCH] rev-parse: respect push.autosetupremote when evaluating
- @{push}
-References: <pull.1279.git.1657480594123.gitgitgadget@gmail.com>
-Date:   Sun, 10 Jul 2022 13:42:42 -0700
-In-Reply-To: <pull.1279.git.1657480594123.gitgitgadget@gmail.com> (Tao Klerks
-        via GitGitGadget's message of "Sun, 10 Jul 2022 19:16:33 +0000")
-Message-ID: <xmqq5yk4r96l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229463AbiGJVhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 17:37:40 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 184281115F
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 14:37:39 -0700 (PDT)
+Received: from host-78-147-178-211.as13285.net ([78.147.178.211] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1oAecS-0008yN-Dn;
+        Sun, 10 Jul 2022 22:37:36 +0100
+Message-ID: <5551bd33-cf95-3201-0a00-23e02ef41de3@iee.email>
+Date:   Sun, 10 Jul 2022 22:37:35 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D960FC3A-0090-11ED-9D17-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 2/4] glossary: add commit graph description
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
+ <32777cae24de91b0fb873ea04a802630ab85aafe.1657385781.git.gitgitgadget@gmail.com>
+ <xmqqedyut22w.fsf@gitster.g>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <xmqqedyut22w.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Junio,
 
-> +	if (branch && (!branch->merge || !branch->merge[0])) {
-> +		repo_config_get_bool(the_repository,
-> +				     "push.autosetupremote",
-> +				     &autosetupremote);
-> +		if (autosetupremote)
-> +			return tracking_for_push_dest(remote, branch->refname, err);
+On 09/07/2022 22:20, Junio C Hamano wrote:
+> "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> +[[def_commit_graph]]commit graph::
+>> +	The commit-graph file is a supplemental data structure that
+>> +	accelerates commit graph walks. The existing Object Data Base (ODB)
+>> +	is the definitive commit graph. The "commit-graph" file is stored
+>> +	either in the .git/objects/info directory or in the info directory
+>> +	of an alternate object database.
+> While it says nothing technically incorrect, I suspect "The existing
+> object data base is the definitive commit graph" may invite unneeded
+> confusion.
 
-Before the first push of the branch X where we are asking for
-X@{push}, i.e. there is not the corresponding branch over there yet
-and we do not have the remote-tracking branch for it yet, what does
-this function return?  If it continues to error out, then I think
-this patch may make sense, but ...
+I probably over-shortened the original text I was summarising
+(technical/commit-graph.txt intro).
+>
+> I think you wanted to say that the DAG formed by traversing the
+> pointers recorded in the objects is the authoritative source of
+> truth and the commit-graph file is merely a precomputed cache
+.. of that graph. *nod*
+>  and
+> can be safely lost, 
 
-> +		{
-> +			const char *up;
-> +			up = default_missing_upstream(remote, branch, err);
-> +			if (up)
-> +				return up;
-> +			return branch_get_upstream(branch, err);
+I wasn't particularly thinking of that aspect .. Perhaps more that it
+accelerates commit graph walks..
+> but I am not sure the above description conveys
+> that to anybody who does not already know it.
+>
+>     The commits in the object data base form a directed acyclic
+>     graph (DAG) by commits referring to their parent commits.
+>     Pieces of information from individual commit objects that are
+>     needed to traverse the DAG are pre-computed in the commit-graph
+>     file and stored in ...
+>
+> is my attempt---I am not very happy or proud about it, but it may be
+> easier to follow.
 
-... shouldn't the precedence order the other way around here ...
+I wanted to keepseparate from the graph file definition, the rather
+fuzzy relationship between the overall ODB (staging area, and loads of
+other stuff), and the way the DAG is generated, which also needs the
+selected refs to start the traverse..
 
-> +		}
->  	case PUSH_DEFAULT_UNSPECIFIED:
->  	case PUSH_DEFAULT_SIMPLE:
->  		{
->  			const char *up, *cur;
->  
-> +			up = default_missing_upstream(remote, branch, err);
-> +			if (up)
-> +				return up;
-> +
->  			up = branch_get_upstream(branch, err);
->  			if (!up)
->  				return NULL;
+In a wider context, it's not clear to me just how the commit graph file
+content is chosen relative to the full depth DAG from all local refs.
+The reachability bit maps have a similar info gap.
 
-... and here?  That is, if branch_get_upstream() finds an explicitly
-configured one, shouldn't we use that and fall back to the new
-"missing" code path only when there isn't an explicitly configured
-one?
+--
+Philip
+
+[sorry for erratic responses - currently isolating with covid]
 
