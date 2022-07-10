@@ -2,235 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 471CEC43334
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 15:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD51CC433EF
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 15:16:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbiGJPK3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 11:10:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34474 "EHLO
+        id S229601AbiGJPQv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 11:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiGJPKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 11:10:25 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC9E3A197
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 08:10:23 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id ez10so4965481ejc.13
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 08:10:23 -0700 (PDT)
+        with ESMTP id S229450AbiGJPQt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 11:16:49 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FDAACE25
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 08:16:48 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id dn9so5018538ejc.7
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 08:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=6WXMpLt8HIf4+NZ9AN5ydIe+fgCsyWJ7JtqW5iJEqz4=;
-        b=g9feg+3jioBALMOYAVYw15Qxojan6om747sLJbVjAPebaySqTC4ZgjlF8RFkJJOntS
-         5l34RFoCgpFGU4gd4KPCKxJ9GhlAbgC2R1Wy6QPeqMnSg7oohidrlU2PBDrWHcJN/l6p
-         D8uPc8hRTF2cbN5qJbTCZOwGXYMG/MLW95cJxgAoUWm0PxXFEQFIbU5vbM2J4UH3xAx7
-         ZwDEdAcpvTysch7vYX6Cw9AnODSsdFxb3o9QIHRvXoGrNApCNJHTA5llSsDhuxUQFyPw
-         fKOguxVD3bU7jL8A7s3nUO+80uCoCSCC6YzwM3flIvIiIxcVhisnaouJBqY4q1ewxR57
-         OFfQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Q2ipaIc24+FLVRLwGVnq7YL35lFioywc3R1Z5lLwHRc=;
+        b=Fn+8o+208QyuCx3uuPv54NHPZRCuAGJftCxRYNABC7jD9ofrwTx5hndrxipzsXvW3X
+         SrIK5dmOwSKD0D+1gHAFhiLTyrMQCZCSTZZQuGVbKjLmkHE3itC/RhG4hbgi9M/wwBlC
+         pfvmOcxiHOLiABbcRi2O3E4EtWEce1CzEkTmmN6Bf9l3zFBh2Vejxr0rRj7+FU/ZTo7R
+         Opys47V0PbuZ5TSJrWAnGs4ZwuNuWqh1iqKlX4Cyfg6USHfj3rMiTTkO4gDi1TZ02Ofj
+         BoTMu8HffJ7dDqkFS/6p5v73gT061UIm8yh4eYZleihRSKAi+D6hhfnDhIkxQ0RMd4+a
+         U2tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=6WXMpLt8HIf4+NZ9AN5ydIe+fgCsyWJ7JtqW5iJEqz4=;
-        b=TObumYFU6Jsgi1fgUohwgtCDlw7fS/quQSIVEwBlSDwh+gplavxFcF69HFLVvX0d7l
-         9SbefmDBo43cCJsx+SKCszuMJJvs1UwzQ7byDyS02SA30cY6TbpS7ixQjKdKjmYPsBw5
-         WL++/Z0NVyEwWtxWwmGF+UTA18jI3+cUuxgNrtiPfeX5zRXrhnPBvbsm4sCZvKFfvxtF
-         E9kd88Huat9/GuXcpw3DIysFhElbYct8l+a4g2hM700aPm2e3UuFkyKSFW/oE3fTgyPW
-         93dyC5M2//dYBHchON+FBw6z3DVOcTC+H86vE77OX73HRZjKaVNM1RKxitNXhLsu1NrM
-         0kuw==
-X-Gm-Message-State: AJIora9ejn/7hxxqt3Ft+3eoXXs9mej3DNRZWCXGpEfoAtkc0hXM/jbs
-        fBccMWB8h4SZEqy1nmvsK/6G9p2kZK0=
-X-Google-Smtp-Source: AGRyM1sMTeeCJSx383qU6rPWumyYilkPuw5jxLLQfznSu9KbeM+UfbBy5yGvf29K2IdhVBQMQXEUPg==
-X-Received: by 2002:a17:906:8448:b0:72b:5659:9873 with SMTP id e8-20020a170906844800b0072b56599873mr42486ejy.117.1657465822225;
-        Sun, 10 Jul 2022 08:10:22 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id a25-20020aa7cf19000000b0043a56c0ededsm2857152edy.74.2022.07.10.08.10.21
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Q2ipaIc24+FLVRLwGVnq7YL35lFioywc3R1Z5lLwHRc=;
+        b=bYPr4D04dG2UbGWBu+9qkNSeR2c96pjiK2t2oMhn6MR/FeiL4UlYbd4ObtIdnQIkSh
+         xSLDK4SPnk7DnzNTUEydfg6u3+zbxJoSZQ9u89pUHWym1J60T1QOqPzx3pLdPB7MhK9Y
+         ld0bjRHSD7IorFo+RKHo9+DT2ld06EWNMLWzxE73diqW6Qg0CyddmerEhDt1FChbJqxw
+         UHZ6X6bWMqm2wMgUulNIvtfNr/TKE71UwrXsv0SEmfxV3IwX/y7WfJ6S0PJafSo/ApQn
+         ikupSpwPp0ThlRZvOPrDiUTh7DwoPi7vBhV4jgbrlMFZEWdf4LFoKHZ4iW9sPdFLsXBH
+         HjJw==
+X-Gm-Message-State: AJIora/PcfGi2+E6S0MGIk3IR0ghtFtzekXlxpbZ1Ui84OWxt4wstDW1
+        7ZNmjO+bgvBBY5Avu0nzPfA=
+X-Google-Smtp-Source: AGRyM1sErOPotFQ3oIMbI6CWiMdTIsNYYtgLPhWObsGQaVHGOpwy+DrNtPNdBKrVnAOLxVsPofI+vQ==
+X-Received: by 2002:a17:907:75e9:b0:72b:2ddb:41fe with SMTP id jz9-20020a17090775e900b0072b2ddb41femr12341364ejc.329.1657466207188;
+        Sun, 10 Jul 2022 08:16:47 -0700 (PDT)
+Received: from localhost (94-21-146-223.pool.digikabel.hu. [94.21.146.223])
+        by smtp.gmail.com with ESMTPSA id j11-20020a50ed0b000000b0043a6b86f024sm2844264eds.67.2022.07.10.08.16.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Jul 2022 08:10:21 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oAYZg-000BWH-Ns;
-        Sun, 10 Jul 2022 17:10:20 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] cocci: avoid normalization rules for memcpy
-Date:   Sun, 10 Jul 2022 16:45:35 +0200
-References: <xmqq8rp54r4l.fsf@gitster.g>
- <220707.86y1x585wy.gmgdl@evledraar.gmail.com> <xmqq1quw23r8.fsf@gitster.g>
- <cb866b8c-dcc6-557f-da23-1c1972619a8a@web.de>
- <95432eb4-e66a-5c04-9267-f71391fbe277@web.de> <xmqqmtdhsf1z.fsf@gitster.g>
- <ded153d4-4aea-d4da-11cb-ec66d181e4c9@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <ded153d4-4aea-d4da-11cb-ec66d181e4c9@web.de>
-Message-ID: <220710.86ilo580mb.gmgdl@evledraar.gmail.com>
+        Sun, 10 Jul 2022 08:16:46 -0700 (PDT)
+Date:   Sun, 10 Jul 2022 17:16:45 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] multi-pack-index: simplify handling of unknown --options
+Message-ID: <20220710151645.GA2038@szeder.dev>
+References: <20220708202847.662319-1-szeder.dev@gmail.com>
+ <xmqqh73ruxc8.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqh73ruxc8.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Jul 08, 2022 at 02:08:07PM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > Although parse_options() can handle unknown --options just fine, none
+> > of 'git multi-pack-index's subcommands rely on it, but do it on their
+> > own: they invoke parse_options() with the PARSE_OPT_KEEP_UNKNOWN flag,
+> > then check whether there are any unparsed arguments left, and print
+> > usage and quit if necessary.
+> 
+> The existing code check if there are any unparsed arguments or
+> options.  
+> 
+> Omitting PARSE_OPT_KEEP_UNKNOWN allows parse_options() to deal with
+> unknown options by complaining, but it happily leaves non-options on
+> the command line and reports how many of them there are.
+> 
+> Doesn't this patch make
+> 
+> 	$ git multi-pack-index write what-is-this-extra-arg-doing-here
+> 
+> silently ignore the extra argument instead of barfing on it?
+> 
+> > Let parse_options() handle unknown options instead, which, besides
+> > simpler code, has the additional benefit that it prints not only the
+> > usage but an "error: unknown option `foo'" message as well.
+> 
+> Yes, I agree that getting rid of KEEP_UNKNOWN is a very good idea
+> for this reason.  But I suspect that we still need the "did we get
+> an extra argument we do not know what to do with?" check.
 
-On Sun, Jul 10 2022, Ren=C3=A9 Scharfe wrote:
+Uh, indeed.  I got too trigger-happy with deleting lines.
+Updated patch below.
 
-> Some of the rules for using COPY_ARRAY instead of memcpy with sizeof are
-> intended to reduce the number of sizeof variants to deal with.  They can
-> have unintended side effects if only they match, but not the one for the
-> COPY_ARRAY conversion at the end.
+  ---  >8  ---
 
-Since ab/cocci-unused is marked for "next" it would be really nice to
-have this based on top so we can add tests for these transformations
-(the topic adds a way to do that).
+Subject: multi-pack-index: simplify handling of unknown --options
 
-But if you don't feel like  doing that this is fine too.
+Although parse_options() can handle unknown --options just fine, none
+of 'git multi-pack-index's subcommands rely on it, but do it on their
+own: they invoke parse_options() with the PARSE_OPT_KEEP_UNKNOWN flag,
+then check whether there are any unparsed arguments left, and print
+usage and quit if necessary.
 
-> diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.co=
-cci
-> index 9a4f00cb1b..aa75937950 100644
-> --- a/contrib/coccinelle/array.cocci
-> +++ b/contrib/coccinelle/array.cocci
-> @@ -1,60 +1,58 @@
-> -@@
-> -expression dst, src, n, E;
-> -@@
-> -  memcpy(dst, src, n * sizeof(
-> -- E[...]
-> -+ *(E)
-> -  ))
-> -
-> -@@
-> -type T;
-> -T *ptr;
-> -T[] arr;
-> -expression E, n;
-> -@@
-> -(
-> -  memcpy(ptr, E,
-> -- n * sizeof(*(ptr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(arr, E,
-> -- n * sizeof(*(arr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(E, ptr,
-> -- n * sizeof(*(ptr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(E, arr,
-> -- n * sizeof(*(arr))
-> -+ n * sizeof(T)
-> -  )
-> -)
-> -
->  @@
->  type T;
->  T *dst_ptr;
->  T *src_ptr;
-> -T[] dst_arr;
-> -T[] src_arr;
->  expression n;
->  @@
-> -(
-> -- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
-> +- memcpy(dst_ptr, src_ptr, (n) * \( sizeof(T)
-> +-                                \| sizeof(*(dst_ptr))
-> +-                                \| sizeof(*(src_ptr))
-> +-                                \| sizeof(dst_ptr[...])
-> +-                                \| sizeof(src_ptr[...])
-> +-                                \) )
->  + COPY_ARRAY(dst_ptr, src_ptr, n)
-> -|
-> -- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
-> +
-> +@@
-> +type T;
-> +T *dst_ptr;
-> +T[] src_arr;
-> +expression n;
-> +@@
-> +- memcpy(dst_ptr, src_arr, (n) * \( sizeof(T)
-> +-                                \| sizeof(*(dst_ptr))
-> +-                                \| sizeof(*(src_arr))
-> +-                                \| sizeof(dst_ptr[...])
-> +-                                \| sizeof(src_arr[...])
-> +-                                \) )
->  + COPY_ARRAY(dst_ptr, src_arr, n)
-> -|
-> -- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
-> +
-> +@@
-> +type T;
-> +T[] dst_arr;
-> +T *src_ptr;
-> +expression n;
-> +@@
-> +- memcpy(dst_arr, src_ptr, (n) * \( sizeof(T)
-> +-                                \| sizeof(*(dst_arr))
-> +-                                \| sizeof(*(src_ptr))
-> +-                                \| sizeof(dst_arr[...])
-> +-                                \| sizeof(src_ptr[...])
-> +-                                \) )
->  + COPY_ARRAY(dst_arr, src_ptr, n)
-> -|
-> -- memcpy(dst_arr, src_arr, (n) * sizeof(T))
-> +
-> +@@
-> +type T;
-> +T[] dst_arr;
-> +T[] src_arr;
-> +expression n;
-> +@@
-> +- memcpy(dst_arr, src_arr, (n) * \( sizeof(T)
-> +-                                \| sizeof(*(dst_arr))
-> +-                                \| sizeof(*(src_arr))
-> +-                                \| sizeof(dst_arr[...])
-> +-                                \| sizeof(src_arr[...])
-> +-                                \) )
->  + COPY_ARRAY(dst_arr, src_arr, n)
-> -)
->
->  @@
->  type T;
+Drop that PARSE_OPT_KEEP_UNKNOWN flag to let parse_options() handle
+unknown options instead, which has the additional benefit that it
+prints not only the usage but an "error: unknown option `foo'" message
+as well.
 
-Hrm, this seems like a lot of repetition, it's here in the rules you're
-editing already, but these repeated "sizeof" make it a lot more verbose.
+Do leave the unparsed arguments check to catch any unexpected
+non-option arguments, though, e.g. 'git multi-pack-index write foo'.
 
-Isn't there a way to avoid this by simply wrapping this across lines, I
-didn't test, but I think you can do this sort of thing in the cocci
-grammar:
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ builtin/multi-pack-index.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-- memcpy(
-- COPY_ARRAY(
-  (
-  dst_arr
-  |
-  dst_ptr
-  )
-  ,
-  (
-  src_arr
-  |
-  src_ptr
-  )
-  ,
-  (n) *
--  [your big sizeof alternate here]
-  )
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 5edbb7fe86..8f24d59a75 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -134,7 +134,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+ 		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_write_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
++			     0);
+ 	if (argc)
+ 		usage_with_options(builtin_multi_pack_index_write_usage,
+ 				   options);
+@@ -176,7 +176,7 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv)
+ 		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_verify_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
++			     0);
+ 	if (argc)
+ 		usage_with_options(builtin_multi_pack_index_verify_usage,
+ 				   options);
+@@ -202,7 +202,7 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv)
+ 		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_expire_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
++			     0);
+ 	if (argc)
+ 		usage_with_options(builtin_multi_pack_index_expire_usage,
+ 				   options);
+@@ -232,7 +232,7 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options,
+ 			     builtin_multi_pack_index_repack_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
++			     0);
+ 	if (argc)
+ 		usage_with_options(builtin_multi_pack_index_repack_usage,
+ 				   options);
+-- 
+2.37.0.340.g5e8d960d32
 
-I.e. you want to preserve whatever we match in the 1st and 2nd
-arguments, but only want to munge part of the 3rd argument. The cocci
-grammar can "reach into" lines like that, it doesn't need to be limited
-to line-based diffs.
-
-But I didn't try it in this caes, and maybe there's a good reason for
-why it can't happen in this case...
-
-I also wonder if that won't be a lot faster, i.e. if you can condense
-this all into one rule it won't need to match this N times, but maybe
-the overall complexity of the rules makes it come out to the same thing
-in the end...
