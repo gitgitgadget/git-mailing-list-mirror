@@ -2,68 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9213C433EF
-	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 15:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEAB5C433EF
+	for <git@archiver.kernel.org>; Sun, 10 Jul 2022 16:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbiGJPUj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 11:20:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39700 "EHLO
+        id S229639AbiGJQ2i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 12:28:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbiGJPUi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 11:20:38 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 480FDBF62
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 08:20:35 -0700 (PDT)
-Received: from host-78-147-178-211.as13285.net ([78.147.178.211] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1oAYjZ-000AKm-Bj;
-        Sun, 10 Jul 2022 16:20:33 +0100
-Message-ID: <60285079-cb1d-56bf-b36b-e32b3f23158c@iee.email>
-Date:   Sun, 10 Jul 2022 16:20:32 +0100
+        with ESMTP id S229497AbiGJQ2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 12:28:37 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12204639B
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 09:28:33 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 33EBF19640C;
+        Sun, 10 Jul 2022 12:28:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kCa1V4/FtKMsUaj8VCELOY8fsER9xYfbpjEHUG
+        QFZV8=; b=EHtElZiSVOS/5VQ6SgNuXhbQ+JJK2v/foVn7JZtnMb3uykKRk06lrG
+        GFda6YRZiwPsfTMd+Y6s11oZ91FWFGvTFErR0sIObM7x5OV60QxndU5mqth75B7u
+        PEIgl4ExUyQAUqO+4hhXTWdfeigDuoEaml1sRhjzaBI39xFW43dsA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2CF5D19640B;
+        Sun, 10 Jul 2022 12:28:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D34D9196409;
+        Sun, 10 Jul 2022 12:28:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     lilinchao@oschina.cn
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jul 2022, #02; Fri, 8)
+References: <xmqq4jzquiok.fsf@gitster.g> <202207102031058469922@oschina.cn>
+Date:   Sun, 10 Jul 2022 09:28:28 -0700
+In-Reply-To: <202207102031058469922@oschina.cn> (lilinchao@oschina.cn's
+        message of "Sun, 10 Jul 2022 20:32:06 +0800")
+Message-ID: <xmqq7d4lrkyb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 0/4] Add some Glossary terms, and extra renormalize
- information.
-Content-Language: en-GB
-To:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
- <xmqqa69it1g9.fsf@gitster.g>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <xmqqa69it1g9.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 552CC93A-006D-11ED-8234-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+"lilinchao@oschina.cn" <lilinchao@oschina.cn> writes:
 
-On 09/07/2022 22:34, Junio C Hamano wrote:
->> The first patch [1/4] is to show OBD as an abbreviation to avoid a UNA [0]
-> Avoiding unnecessary TLA is even better than avoiding.  As I didn't
-> see in the other three patches that we need to use the OBD acronym,
-> perhaps we can omit this step?
->
-This came from seeing `ODB` in a couple of tech docs (commit-graph and
-parallel-checkout) and an 'odb' option in pack-redundant, which I should
-have noted in the commit message.
+>>--------------------------------------------------
+>>[Stalled]
+>>
+>>* ll/curl-accept-language (2022-06-13) 2 commits
+>> - PREP??? give initializer to rpc_state
+>> - remote-curl: send Accept-Language header to server
+>>
+>> source: <pull.1251.v3.git.1655054421697.gitgitgadget@gmail.com>
+> what should I do if the state is stalled?
 
-I'll update the commit message to clarify that we are using that TLA,
-though we aren't always consistent in our distinctions between concepts
-and implementation in many places (e.g. Object Store vs Repository;
-Staging area..; etc.)
-
-TLAs, UNAs, etc. have been a bug-bear of mine from doing large
-engineering collaborations.
-
---
-Philip
-
-(for completeness;-)
-ODB Object Data Base.
-TLA Three Letter Abbreviation.
-UNA Un-Named Abbreviation.
+Send a response to the discussion thread and/or possibly an updated
+and corrected patch to fix compilation issues, perhaps?
