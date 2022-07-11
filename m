@@ -2,287 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3765BC43334
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 17:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9C47C43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 17:48:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbiGKRLn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 13:11:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49910 "EHLO
+        id S229907AbiGKRsB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 13:48:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbiGKRLm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 13:11:42 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C4BE33A29
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 10:11:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1657559481;
-        bh=k8R3WpHbimvHyf9Ap1MY4dKcS58sD19UTs4dKGXl/iw=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=AJO8KVkn8ul4zvGbQoMT6lCnuTiUu+Nw9tKYfXDNbO57FBIwuVMUP3rZbM3+5sLmp
-         KGVzn3s6qV4v5ghAhacULfyvcbpvAdpSxBLmpGLKSmE5IaFJN9Qai2ajHU365olTha
-         7wGb1gwdLG4g05qlbLYLOXVEikPNQfxWUDoMAlok=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MqqTb-1npNYO1LpB-00maGk; Mon, 11
- Jul 2022 19:11:21 +0200
-Message-ID: <e29e424f-c214-a912-fba8-107c5e402b8a@web.de>
-Date:   Mon, 11 Jul 2022 19:11:18 +0200
+        with ESMTP id S229891AbiGKRr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 13:47:58 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4499E509FC
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 10:47:57 -0700 (PDT)
+Received: (qmail 8605 invoked by uid 109); 11 Jul 2022 17:47:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 11 Jul 2022 17:47:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21798 invoked by uid 111); 11 Jul 2022 17:47:55 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Jul 2022 13:47:55 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 11 Jul 2022 13:47:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Olaf Hering <olaf@aepfle.de>
+Subject: Re: [PATCH] ref-filter: disable save_commit_buffer while traversing
+Message-ID: <YsxiSwQGvLhzNQrt@coredump.intra.peff.net>
+References: <Ysw4JtoHW1vWmqhz@coredump.intra.peff.net>
+ <220711.8635f77j7s.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.0.1
-Subject: Re: [PATCH] cocci: avoid normalization rules for memcpy
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq8rp54r4l.fsf@gitster.g>
- <220707.86y1x585wy.gmgdl@evledraar.gmail.com> <xmqq1quw23r8.fsf@gitster.g>
- <cb866b8c-dcc6-557f-da23-1c1972619a8a@web.de>
- <95432eb4-e66a-5c04-9267-f71391fbe277@web.de> <xmqqmtdhsf1z.fsf@gitster.g>
- <ded153d4-4aea-d4da-11cb-ec66d181e4c9@web.de>
- <220710.86ilo580mb.gmgdl@evledraar.gmail.com>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <220710.86ilo580mb.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lMKbOsq5gh9PWxqcp6EjnnvYlKRodrTuej18Mz7GT8G8c9edJuA
- Xb9xp7vni4wA87j4UI7GOgsEV0EeNQsNRyZ8G0QSBa8UCfG22MV2DbDg+WrGkyqjfv7YqFx
- N+rE5BamJvoGVtTaKN9fX0whSb/ATua+VmMhdESmOdv7UTBKtrU9faCJmAdPdM/87bx8Y2x
- 4oc4+Tga7usfLqcFHH7Jw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Scxp2f6IxbE=:kvCFuPJZwg3+TiDZQvlpPr
- aY3aBUksct1Z8CoCeoeYWxkKqW8Y68ZRsaBjuW0H2zxvOSgm4/r79EYKWUokNIroER6fYQChB
- /MPWL6O10PdBRp2I8u5WjO2KFiAac0HYrgGgdgvCCMPqLR8CcLWejjAC8TmEhAqxcm8bP9ZXM
- 3/1+YpsksXZ/EEEXYExAZQk7vR+92Majk/tJXWW0mUhjA2RcWvAD1f1l2i2RYsly8yRyUxxNn
- /1Jmr735GahbK5SM7YQHhjewdyhmI4aSn7dirtVV6i8QnSM/UYRlPK8RhH+HRmrW/fBjse0Zs
- IVR+gusSfaGr8SFtqbw2emlpYLRkUtgbVBJbwXjj4sLo9QV0ZxMWNff9zfNpq62r2Lg0QHjJ1
- F1F3TNjt8693Byf8duZMSG6yzNsBSyvUdEk37vgJjNoqzLOdD6gNKBcthLndOo4F//cu7T5Yy
- xD0jWFQnuMvVc5koT79nScAN85auFGWhpyYJBoEbk6Qt9bKsBZVAjk0q0pvH0C1Jh037AbiXj
- l+aQUyL8n8UP6PcdeKmLYyooLPVXuZpc1bC+6pIZpAxu93WIYIwFRZ1R52QqxohfDNi1cNn8W
- R3y+sLfnmAZzGevx3tj65qRFZgewBanGsQR1H2t0QGuj62J0jlNJ/sI+3sPFiKz2aSTBLw7Ui
- ppm9s0cN39nOUU72JFeHb2upXvJ1Oer9Q7T2mdbtKNbBFtsrbtQwtX9k39/FBWoDcwbV8UfDO
- B9u2Bcu441IsFxcQEzd3mkPWyAn0uW+IsiVwWQQW9CXSPoheA8HgY0afW1j6xdFpZ29K4e7ky
- GrVeyBVf1sKrlQI1tURLh5FmglwldtRewi52qGCWc1DI64j8gYz0GaHD4zKRlmtoO6dTt01/A
- 9ThoXC3hK1hOOqxWUrrFQAoe9PRPh+EdN/9AGIlHNX0dIQn2cL3ssuV+tVwG2dsjUR6cz8Ytr
- FbCQn2PgJxqOFXhfSkT9NFoDJv4Hd8bmwhJwzopMF6OBcoV5o9+nnSVp7vO2M0UBTsJLTsK4f
- yAt9htUfbky8nvqnb9z7kXiev9TZ2X057o7ujyJY1mO+ompcsTASqGh44YVwrxdhe/Ik+tQEF
- 60apAxbZLUDAL/ZCQFG1/mwZYWq9OeDn1y1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220711.8635f77j7s.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.07.22 um 16:45 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Sun, Jul 10 2022, Ren=C3=A9 Scharfe wrote:
->
->> Some of the rules for using COPY_ARRAY instead of memcpy with sizeof ar=
-e
->> intended to reduce the number of sizeof variants to deal with.  They ca=
-n
->> have unintended side effects if only they match, but not the one for th=
-e
->> COPY_ARRAY conversion at the end.
->
-> Since ab/cocci-unused is marked for "next" it would be really nice to
-> have this based on top so we can add tests for these transformations
-> (the topic adds a way to do that).
+On Mon, Jul 11, 2022 at 05:12:37PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Testing semantic patches sounds like a good idea.  We can add tests later,
-once that feature landed.
+> Hrm, so for doing the format we're leaving some performance on the table
+> as we're currently not making use of this cache, so this makes nothing
+> worse on that front.
+> 
+> But doesn't this approach then also close the door on using the same
+> cache for performance improvements in that area? I.e. spotting that
+> we've already parsed that commit, so we can get it from the cache?
 
->
-> But if you don't feel like  doing that this is fine too.
->
->> diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.=
-cocci
->> index 9a4f00cb1b..aa75937950 100644
->> --- a/contrib/coccinelle/array.cocci
->> +++ b/contrib/coccinelle/array.cocci
->> @@ -1,60 +1,58 @@
->> -@@
->> -expression dst, src, n, E;
->> -@@
->> -  memcpy(dst, src, n * sizeof(
->> -- E[...]
->> -+ *(E)
->> -  ))
->> -
->> -@@
->> -type T;
->> -T *ptr;
->> -T[] arr;
->> -expression E, n;
->> -@@
->> -(
->> -  memcpy(ptr, E,
->> -- n * sizeof(*(ptr))
->> -+ n * sizeof(T)
->> -  )
->> -|
->> -  memcpy(arr, E,
->> -- n * sizeof(*(arr))
->> -+ n * sizeof(T)
->> -  )
->> -|
->> -  memcpy(E, ptr,
->> -- n * sizeof(*(ptr))
->> -+ n * sizeof(T)
->> -  )
->> -|
->> -  memcpy(E, arr,
->> -- n * sizeof(*(arr))
->> -+ n * sizeof(T)
->> -  )
->> -)
->> -
->>  @@
->>  type T;
->>  T *dst_ptr;
->>  T *src_ptr;
->> -T[] dst_arr;
->> -T[] src_arr;
->>  expression n;
->>  @@
->> -(
->> -- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
->> +- memcpy(dst_ptr, src_ptr, (n) * \( sizeof(T)
->> +-                                \| sizeof(*(dst_ptr))
->> +-                                \| sizeof(*(src_ptr))
->> +-                                \| sizeof(dst_ptr[...])
->> +-                                \| sizeof(src_ptr[...])
->> +-                                \) )
->>  + COPY_ARRAY(dst_ptr, src_ptr, n)
->> -|
->> -- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
->> +
->> +@@
->> +type T;
->> +T *dst_ptr;
->> +T[] src_arr;
->> +expression n;
->> +@@
->> +- memcpy(dst_ptr, src_arr, (n) * \( sizeof(T)
->> +-                                \| sizeof(*(dst_ptr))
->> +-                                \| sizeof(*(src_arr))
->> +-                                \| sizeof(dst_ptr[...])
->> +-                                \| sizeof(src_arr[...])
->> +-                                \) )
->>  + COPY_ARRAY(dst_ptr, src_arr, n)
->> -|
->> -- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
->> +
->> +@@
->> +type T;
->> +T[] dst_arr;
->> +T *src_ptr;
->> +expression n;
->> +@@
->> +- memcpy(dst_arr, src_ptr, (n) * \( sizeof(T)
->> +-                                \| sizeof(*(dst_arr))
->> +-                                \| sizeof(*(src_ptr))
->> +-                                \| sizeof(dst_arr[...])
->> +-                                \| sizeof(src_ptr[...])
->> +-                                \) )
->>  + COPY_ARRAY(dst_arr, src_ptr, n)
->> -|
->> -- memcpy(dst_arr, src_arr, (n) * sizeof(T))
->> +
->> +@@
->> +type T;
->> +T[] dst_arr;
->> +T[] src_arr;
->> +expression n;
->> +@@
->> +- memcpy(dst_arr, src_arr, (n) * \( sizeof(T)
->> +-                                \| sizeof(*(dst_arr))
->> +-                                \| sizeof(*(src_arr))
->> +-                                \| sizeof(dst_arr[...])
->> +-                                \| sizeof(src_arr[...])
->> +-                                \) )
->>  + COPY_ARRAY(dst_arr, src_arr, n)
->> -)
->>
->>  @@
->>  type T;
->
-> Hrm, this seems like a lot of repetition, it's here in the rules you're
-> editing already, but these repeated "sizeof" make it a lot more verbose.
->
-> Isn't there a way to avoid this by simply wrapping this across lines, I
-> didn't test, but I think you can do this sort of thing in the cocci
-> grammar:
->
-> - memcpy(
-> - COPY_ARRAY(
->   (
->   dst_arr
->   |
->   dst_ptr
->   )
->   ,
->   (
->   src_arr
->   |
->   src_ptr
->   )
->   ,
->   (n) *
-> -  [your big sizeof alternate here]
->   )
+Yes, it does close that door, or at least make it more challenging. But
+I suspect it's not a very fruitful door in the first place:
 
-Hmm, that would match many more combinations, e.g. this one:
+  - it only helps at all if your sort field or format dereferences the
+    tag to get to the commit
 
-void f(int *a, int *b, long n, int c[1]) {
-	memcpy(a, b, n * sizeof(*c));
-}
+  - it only helps if you actually use the traversal options
 
-The elements of a, b and c have the same type, so replacing c with a
-(which a conversion to COPY_ARRAY would do) would produce the same
-object code.  I can't come up with a plausible scenario like above and
-where a type change of c down the line would cause problems, but I
-also can't convince myself that no such thing can exist.  Tricky.
+  - done naively, it's a tradeoff. You might traverse a million commits,
+    but display only a handful of them. Is using all of that memory
+    worth avoiding re-inflating a few commits? Certainly you can come up
+    with a pathological case, but I doubt that it helps in practice.
 
-And I can't get it to format the whitespace around the third argument
-of COPY_ARRAY nicely in all cases.
+  - you _could_ do it less naively by caching only the commits directly
+    pointed to by refs. But the depths of the traversals don't know what
+    those are. So you'd probably do it by pre-loading those commits
+    before any traversal, which would work just fine before or after my
+    patch. But I probably wouldn't because of the extra code complexity,
+    and because...
 
-And it takes 37% longer on my machine.
+  - if the commit is in a commit-graph file, then pre-loading it is
+    actively harmful (because you might not need it anyway!). So really,
+    the best performance will come from just having a commit graph. I
+    don't see the point in writing more code to micro-optimize the
+    fallback case. For this patch, it's just that the existing code is
+    being actively stupid.
 
-But it sure is more compact. :)
+> B.t.w. did you try to benchmark this with --no-contains too, I tried e.g.:
+> 
+>     ./git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"
 
-@@
-type T;
-T *dst_ptr;
-T *src_ptr;
-T[] dst_arr;
-T[] src_arr;
-expression n;
-@@
-- memcpy
-+ COPY_ARRAY
-  (
-  \( dst_ptr \| dst_arr \) ,
-  \( src_ptr \| src_arr \) ,
-- (n) *  \( sizeof(T)
--        \| sizeof(*(dst_ptr))
--        \| sizeof(*(dst_arr))
--        \| sizeof(*(src_ptr))
--        \| sizeof(*(src_arr))
--        \| sizeof(dst_ptr[...])
--        \| sizeof(dst_arr[...])
--        \| sizeof(src_ptr[...])
--        \| sizeof(src_arr[...])
--        \)
-+ n
-  )
+I didn't, but doing it now showed the same 5% speedup.
 
->
-> I.e. you want to preserve whatever we match in the 1st and 2nd
-> arguments, but only want to munge part of the 3rd argument. The cocci
-> grammar can "reach into" lines like that, it doesn't need to be limited
-> to line-based diffs.
->
-> But I didn't try it in this caes, and maybe there's a good reason for
-> why it can't happen in this case...
->
-> I also wonder if that won't be a lot faster, i.e. if you can condense
-> this all into one rule it won't need to match this N times, but maybe
-> the overall complexity of the rules makes it come out to the same thing
-> in the end...
+> Which gives me:
+> 
+> 	$ git hyperfine -L rev HEAD~1,HEAD -s 'make CFLAGS=-O3' './git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"' -w 1 
+> 	Benchmark 1: ./git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"' in 'HEAD~1
+> 	  Time (mean ± σ):      1.437 s ±  0.107 s    [User: 1.252 s, System: 0.082 s]
+> 	  Range (min … max):    1.306 s …  1.653 s    10 runs
+> 	 
+> 	Benchmark 2: ./git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"' in 'HEAD
+> 	  Time (mean ± σ):      1.335 s ±  0.044 s    [User: 1.230 s, System: 0.050 s]
+> 	  Range (min … max):    1.260 s …  1.417 s    10 runs
+> 	 
+> 	Summary
+> 	  './git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"' in 'HEAD' ran
+> 	    1.08 ± 0.09 times faster than './git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"' in 'HEAD~1'
+
+Isn't that showing that it's slightly faster with my patch? It's not as
+fast as your "just --contains" example, but the exact improvement will
+depend on how many commits your particular query has to traverse (and
+from the improved overall time, it seems that "just --contains" is
+traversing less). And I'd expect a fair bit of noise here. This really
+isn't making anything faster; it's just using less memory, so any
+speedup is coming from things like less-full memory caches.
+
+BTW, I picked "--contains 1da177e4c3" in linux.git because I thought it
+would have to traverse a lot (because that's the oldest commit), but it
+actually isn't the worst case. Just asking about "--contains HEAD"
+requires more traversal, but still shows a speed improvement (7.45s
+before my patch, 7.26s after).
+
+But I was curious about the heap savings there, since the numbers should
+be larger. And indeed they are. Here's peak heap for two runs:
+
+  1093721590 ./git.old --no-pager tag --contains HEAD
+   218077941 ./git.new --no-pager tag --contains HEAD
+
+Whoops, that is indeed 1GB of heap, which is what Olaf was seeing
+(though I don't know what repo he's using, it's roughly proportional to
+the number of commits). And 200MB afterwards. So indeed, I'd expect this
+patch (or the hackier version I showed earlier) to make a significant
+dent in his workload.
+
+Of course the even better solution is to use commit-graphs. That drops
+the memory usage to a few megabytes, and the time to only a few
+milliseconds (because generation numbers let us avoid most of the
+traversal).
+
+-Peff
