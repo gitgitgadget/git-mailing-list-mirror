@@ -2,104 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95398C433EF
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 18:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6724FC43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 19:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231331AbiGKSGl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 14:06:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37560 "EHLO
+        id S231397AbiGKTIL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 15:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbiGKSGk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 14:06:40 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70DA72B634
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 11:06:39 -0700 (PDT)
-Received: (qmail 8644 invoked by uid 109); 11 Jul 2022 18:06:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 11 Jul 2022 18:06:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22061 invoked by uid 111); 11 Jul 2022 18:06:38 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Jul 2022 14:06:38 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 11 Jul 2022 14:06:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v6 11/27] revisions API users: add "goto cleanup" for
- release_revisions()
-Message-ID: <YsxmrRCSpze1csHz@coredump.intra.peff.net>
-References: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
- <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
- <patch-v6-11.27-e93791b6242-20220413T195935Z-avarab@gmail.com>
+        with ESMTP id S230453AbiGKTIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 15:08:09 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BA63C8CC
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 12:08:09 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id r136so913146oie.11
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 12:08:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=w4dIaHrYR+biHesLLbWcKwVKb1me20CyNdXau23ABxc=;
+        b=Dkm0AYNaV1xfLbeUA+BtjjLYjKwTPCoRD8Sp9yOxm+qdATz8rq+OGYO7UNU0cgIei7
+         EfFjfLIWUHpzcozcuT1ncvNtBLj0MNsLmCYuY5lFKkp25KPkaEE1k2b2f6mEPc4W5lzd
+         3FqrZ+Un10ZHHlJSgQjMzJ0+rTAqh8w34nixsFCsAl6nwki0XKoI3MWOyKm0P1oZQwK2
+         iqWur0Lk7mHpsWPCTMkdERZlLv1q/Pl3stNhg/Yb2/ltJaf6B0hPb2eyzU2zWwm+Heoj
+         lx6+Tc0ED7EESTrz2HX1Do+v7i5zkRP48rOxdeEKmK05bFO4Oa9+uS6354+u1K9Cv7ZC
+         SkYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=w4dIaHrYR+biHesLLbWcKwVKb1me20CyNdXau23ABxc=;
+        b=Iv1mb2SDJiTy46qzBBit9lhgWQdZi5dNzX4ZgfjRSHvx2nkQcr0pByHR20UgvpxnSd
+         cT2s89eaiFM8G/dMlXoHfV9aKRdkIDYy0YG+KEVCPq6eaH0Hz2GTSXObjzmf6HkZr8B2
+         oyrgPwABU+i29p135s+tNdiRdUQUsZux67hXLsntawW+FQf5DdJ6/xKNy+NePLZDDmVk
+         0DLiQ2YbjGZZLFYSMZsnz0aU+9EYQ2tyO2+DsHOpsKazcNzLN/tbdLDozrNQ6yVvQJlt
+         gyuPDunm+BoN3joZgBKor0ttj62BGUY5zs27b7A4IuCqOoeg5zvDfb0ePubadIBZ5oXS
+         Gclg==
+X-Gm-Message-State: AJIora+zOmuFKEq3IiHH9AwuTjICB15uJxy856f7Ar7LlNk2xOSNiA/4
+        NxknNeha7SfwVvzEHHvye6fl0ceqBB7b+cL7golZ5u/Sg1g=
+X-Google-Smtp-Source: AGRyM1s7msA88f4Zc7nZn97YPfvA7DeznmA7GWgAp4o/hyTS2ZbGc8M/dnlfX1DHu5zvWs/RDyZ7Lfv0IPc9mibWFBQ=
+X-Received: by 2002:a05:6808:14d2:b0:339:de9f:5df1 with SMTP id
+ f18-20020a05680814d200b00339de9f5df1mr8058440oiw.93.1657566487843; Mon, 11
+ Jul 2022 12:08:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v6-11.27-e93791b6242-20220413T195935Z-avarab@gmail.com>
+From:   Gerriko io <gerriko.iot@gmail.com>
+Date:   Mon, 11 Jul 2022 20:07:56 +0100
+Message-ID: <CALF=2ANR8PBSU3h_RjakdG6Sh3iUyM6CM8QsxzMMhwtLuAWJqw@mail.gmail.com>
+Subject: Local Folder was overwritten by old repository due to reset command
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 10:01:40PM +0200, Ævar Arnfjörð Bjarmason wrote:
+It is not everyday you find all your work gone and there's no way of
+restoring the work locally.
 
-> diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-> index 70103c40952..2bfaf9ba7ae 100644
-> --- a/builtin/diff-files.c
-> +++ b/builtin/diff-files.c
-> @@ -77,8 +77,12 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
->  
->  	if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
->  		perror("read_cache_preload");
-> -		return -1;
-> +		result = -1;
-> +		goto cleanup;
->  	}
-> +cleanup:
->  	result = run_diff_files(&rev, options);
-> -	return diff_result_code(&rev.diffopt, result);
-> +	result = diff_result_code(&rev.diffopt, result);
-> +	release_revisions(&rev);
-> +	return result;
->  }
+I am quite dumbfounded as to what has just happened as I was working
+with git to try and push changes to GitHub. In the process I was
+having some difficulties while learning and was trying out a few
+things including reset command. The problem is that when working in
+the Linux terminal you are unaware of the changes made to folders and
+files.
 
-A bit late, but I happened to notice Coverity complaining about this
-code. And indeed, this patch seems pretty broken. If
-read_cache_preload() fails, we assign "-1" to result and jump to
-cleanup.
+With this reset command there were no warnings of any overwrites and
+the deleted files are not even in my Linux Rubbish bin.
 
-But then the first thing we do in cleanup is overwrite result! That
-hides the error (depending on how run_diff_files behaves if the cache
-load failed, but one can imagine it thinks there are no files to diff).
+How is this possible - this bypasses all the most fundamental rules of
+a computer OS!
 
-Should the cleanup label come after the call to run_diff_files()?
+Surely there are ways to avoid this especially as default behaviour. I
+can assume with flags you might be able but as default there needs
+flashing lights for noobs.
 
-I was also somewhat confused by the double-assignment of "result" in the
-cleanup label. But I think that is because diff_result_code() is
-massaging the current value of "result" into the right thing. But in
-that case, should the "-1" from earlier be passed to diff_result_code()?
-I think probably not (and certainly it was not before your patch). Which
-would imply that the label should go after that, like:
+BR
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 2bfaf9ba7a..92cf6e1e92 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -80,9 +80,9 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 		result = -1;
- 		goto cleanup;
- 	}
--cleanup:
- 	result = run_diff_files(&rev, options);
- 	result = diff_result_code(&rev.diffopt, result);
-+cleanup:
- 	release_revisions(&rev);
- 	return result;
- }
-
--Peff
+Colin.
