@@ -2,79 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0029C433EF
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 02:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D003C433EF
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 03:51:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229614AbiGKCl0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jul 2022 22:41:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43334 "EHLO
+        id S229479AbiGKDvh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jul 2022 23:51:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbiGKClZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jul 2022 22:41:25 -0400
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76C18165A4
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 19:41:24 -0700 (PDT)
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-31cac89d8d6so36126257b3.2
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 19:41:24 -0700 (PDT)
+        with ESMTP id S229450AbiGKDvg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jul 2022 23:51:36 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F0116583
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 20:51:36 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id 73so3680453pgb.10
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 20:51:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=CtAsLOJWenVVgopdtkQkLhhzJeMg2kcy+nVniRLyqf8=;
+        b=e7am3bnSoMZEuG3jaVl5bCkC8GHzzscJMmM2I5ibp8LePB/qSU0UjsVEDSb/UJEDWm
+         58/YxeOZTYlz3clysiJdqVOKkUpXAHaIOeck459c/ZN20I8OBrkDPdw8i9AEScvsAgmf
+         GNQkAuvtjylep0UESlSlnKmxqbmDRpAT44nGcNryqftOVxsJCImuvwf2FHw3L0iXcQ28
+         HCUQePkf99IcIUAMbEFulxRgTo8nNMjjNbEBQKedo3dptcxGh7IAhHXkidzeecQKmBcz
+         Tjxn+gp3JLGx4f79fkTq9oZz+Wd8n0W6FpaS6fVwLafrWAXBJGTWhfesm0xqHF5ftPKM
+         KFow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tDOV0sCHHqpFefzMX77tOzWhJnzmHeHMeGL5i7qDQGY=;
-        b=sCbxjOYSUg8dLGCZVDYWxPczSEB6jcW4xs4d0cj76C3nDxBv6ZszJve0jLCv/oXvkk
-         a2OuHQsiMPUcXYlF7fpeil6PJBybuf5WQi9zHZ0CtURTd8oJzYtXibJIcS2lce2iLchr
-         He7eQfQuo+ZiR0F/V4l9kFUvOTQQWSuzZ2RcGq58lVezfTI9sGQb2RdqSLrfuK63xT4o
-         lTq8W8v5ZsudUneGHHu/o03E4p5/59Z5PmZg+4mE1qSK205mDwK3uR6Ucsz9LNoNpWKW
-         k85bpI0FHTvMVZ0PR15Z2tV7iTfbyAmNtj6M1TAg9alR8E8AxPwqRfPSTjjtZwb2/82K
-         dJGg==
-X-Gm-Message-State: AJIora9nVYpzHO4vSKSr/IARo7r/LsK8wklgGvApfoEQ573tYf4D7Ov0
-        T1YvyxhbTWkMT5weJ0RBmUCTHUi3Bv4QJm7eqtuPN8fikmA=
-X-Google-Smtp-Source: AGRyM1vGyBBJirZcLwKIUUAfDBk1HlKBufmCQxLSc3+A1DyNNvvBKiAmQn1wgKg5re3za+f79SOSDfJIcDQzZawpaYE=
-X-Received: by 2002:a81:b50:0:b0:31c:cd9a:c875 with SMTP id
- 77-20020a810b50000000b0031ccd9ac875mr17759350ywl.411.1657507283637; Sun, 10
- Jul 2022 19:41:23 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=CtAsLOJWenVVgopdtkQkLhhzJeMg2kcy+nVniRLyqf8=;
+        b=DgjZmzSMRbbg/4DrZi3KQ3rOXSJkIijjCXe71c0gAzd1ILGXaZLLO261AlE79m9Lyt
+         VXA8HMIccW1RUR0oVXIasET5BMsO6V0aGBiy/M4AdA7m1G9bl/msa3UnGd8sPOu1XBy+
+         mcCWCBlELtSIq1nX64LsjIEDzNJfGcMec7WkCy9wBQNlr8ifktigpPIWI7zdm/LaKmDS
+         aolRGHLBzaBtbV6yZmyfMIuSDD+rLhMoLLR6oIRqOpjFtj050RUgCb2AK6ciea44Dicp
+         gNDl9oanCCiwKRU8feU7bBH8VGy/33SL8Zd/Zq3UMjzb3CCErN24FoKLYTKxhQQYYdGh
+         ekrA==
+X-Gm-Message-State: AJIora/u/z7pdkPZY8xUdKZo2LRHxkCGjJ8qhw3H6tjUEPuoKBmPGCMv
+        9f1dUonXkmBUT9Kk3E6k3Ow=
+X-Google-Smtp-Source: AGRyM1utanfjRYGJHGtDwJ1X3VHh8lbsLdQ1YGfAiMUIz8U7kXYPX1/p4unlJHJYLXrVBzdYlZIfSg==
+X-Received: by 2002:a63:ea55:0:b0:412:290c:9694 with SMTP id l21-20020a63ea55000000b00412290c9694mr14420031pgk.39.1657511495502;
+        Sun, 10 Jul 2022 20:51:35 -0700 (PDT)
+Received: from ?IPV6:2409:4065:e85:380b:f208:953e:c36:cf3f? ([2409:4065:e85:380b:f208:953e:c36:cf3f])
+        by smtp.gmail.com with ESMTPSA id c14-20020a170902d48e00b0016befc83c6bsm3487102plg.165.2022.07.10.20.51.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Jul 2022 20:51:34 -0700 (PDT)
+Message-ID: <ac3f12de-a421-dfec-dd2c-e1aae2393515@gmail.com>
+Date:   Mon, 11 Jul 2022 09:21:28 +0530
 MIME-Version: 1.0
-References: <20220710081135.74964-1-sunshine@sunshineco.com> <CAO0brD0PBXDqe2HDdjg1ZhXWoYZihQ0=SY80UR+Cy3xRqqH8Sg@mail.gmail.com>
-In-Reply-To: <CAO0brD0PBXDqe2HDdjg1ZhXWoYZihQ0=SY80UR+Cy3xRqqH8Sg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 10 Jul 2022 22:41:12 -0400
-Message-ID: <CAPig+cQJWgerk08j=1b=aWRZsKBu3BnEACQuiqktU4BwzM-xaA@mail.gmail.com>
-Subject: Re: [PATCH] unpack-objects: fix compilation warning/error due to
- missing braces
-To:     Han Xin <chiyutianyi@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2] gpg-interface: add function for converting trust level
+ to string
+Content-Language: en-US
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Jaydeep Das via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <pull.1281.git.1657202265048.gitgitgadget@gmail.com>
+ <pull.1281.v2.git.1657279447515.gitgitgadget@gmail.com>
+ <CAPig+cTX76ZMG_S-qOX_JDxYVWXRvtP2Ref4k8uM1KJaDwX9=w@mail.gmail.com>
+ <xmqqwncmt3el.fsf@gitster.g>
+ <CAPig+cScKabgrh80e5rqWX8cnNEgvxP9JyVJCu+afBOJk_yopg@mail.gmail.com>
+From:   Jaydeep Das <jaydeepjd.8914@gmail.com>
+In-Reply-To: <CAPig+cScKabgrh80e5rqWX8cnNEgvxP9JyVJCu+afBOJk_yopg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 10, 2022 at 10:00 PM Han Xin <chiyutianyi@gmail.com> wrote:
-> On Sun, Jul 10, 2022 at 4:12 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On macOS High Sierra (10.13), Apple's `clang`[1] complains about missing
-> > braces around initialization of a subobject, which is problematic when
-> > building with `DEVELOPER=YesPlease` which enables `-Werror`:
-> >
-> >     builtin/unpack-objects.c:388:26: error: suggest braces around
-> >         initialization of subobject [-Werror,-Wmissing-braces]
-> >             git_zstream zstream = { 0 };
-> >
-> > [1]: `cc --version` => "Apple LLVM version 10.0.0 (clang-1000.10.44.4)"
-> > -       git_zstream zstream = { 0 };
-> > +       git_zstream zstream = {{ 0 }};
->
-> Not a comment, just wondering, when should I use "{ { 0 } }" and when
-> should I use "{ 0 }"?
->
-> I didn't get the error with "Apple clang version 13.0.0
-> (clang-1300.0.29.30)",  because it's
-> a higher version ?
 
-I don't have a good answer. More modern `clang` versions don't seem to
-complain about plain old `{0}` here, but the older `clang` with which
-I'm stuck does complain. Aside from actually building the project with
-an older `clang` (or older Apple-specific `clang`), it may be
-sufficient to inspect the structure that's being initialized to see if
-the first element is itself a subobject. However, I'm not sure it's
-worth the effort to do so considering how rare this problem seems to
-be.
+
+On 7/10/22 11:14, Eric Sunshine wrote:
+  
+> I also am not a fan of making the caller free the result, and thought
+> of mentioning it but didn't know if the approach implemented by this
+> patch was suggested by an earlier reviewer.
+> 
+> 
+> Given the small, fixed number of trust levels, and if the list is
+> unlikely to change much in the future, I might suggest simply
+> initializing the fields at compile-time rather than on-demand at
+> run-time:
+> 
+>      static struct {
+>          const char *key;
+>          const char *display_key;
+>          enum signature_trust_level value;
+>      } sigcheck_gpg_trust_level[] = {
+>          { "UNDEFINED", "undefined", TRUST_UNDEFINED },
+>          { "NEVER", "never", TRUST_NEVER },
+>          { "MARGINAL", "marginal", TRUST_MARGINAL },
+>          { "FULLY", "fully", TRUST_FULLY },
+>          { "ULTIMATE", "ultimate", TRUST_ULTIMATE },
+>      };
+
+Will do in next patch.
+
+Thanks,
+Jaydeep
