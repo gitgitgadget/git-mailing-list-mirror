@@ -2,99 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00523C433EF
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 11:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AEF0C43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 12:20:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230229AbiGKLnU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 07:43:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58074 "EHLO
+        id S229879AbiGKMU6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 08:20:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230183AbiGKLmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 07:42:54 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF05A219A
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 04:37:45 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id r10so452800wrv.4
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 04:37:45 -0700 (PDT)
+        with ESMTP id S229543AbiGKMU5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 08:20:57 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10D6E1758A
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 05:20:56 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id w12so5260896edd.13
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 05:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GljN58UmSWv9ZCZ3wcziFOnC3XNhg25DsEjzL8nO6nM=;
-        b=alxvCqO65fE5RQAXVA44uLVftVGyKJ9wzjkNhvOZS3GTok/FBEzsgyvkdIOEK9YvNM
-         9sQkqVE+CnCgF8iLdrpxj2N5oQl8NGjdybG6JszgjvDnKU6JoS0oK18/iJUMnWNtoTq3
-         /Cy+xfafrquQVbbxC6dMcNHzU856i3kFgh8zuHXYAMRHvs81nNMrj43OMgb0roOoaeLb
-         VGPzX3OrftpNWoeP5V7B1HT5u345lKxHDd/aX8BQgn+rlvoaY3pvV8LNEAVqszkWFvi9
-         19yOVZ7WhNEXDA1RgZxcmtHAqkLHImprlmlT9nCC52NyOFJLT87hHa+JD4rYzzgj0w1J
-         QpxQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=IZM2K72xWO72dzi6mAc+/4PQJLqIJ0u+hR7eSUeEyak=;
+        b=ZNCIJWdforI28Mv7QkKnmGMt2JfJtbl5ZAP/Ftpyv74fNZxNv8Te5f9P7CcyIGCWGO
+         OzKUzT0vuMxZ/0WQXcRko7TUIhq891ymnqwh6izeEYYH3XwHPqujMu6fQtSSzn98fi5A
+         J1JM7ab1+/YPu4YqE59sTrYZNFUgd8EMABRVYonnZl0l+kW4xC7OcNMapY5mD9DTdxIR
+         SpQwr0g2BCTLbiR9by/xSGTuyOdg2rD8DAK4zpKAqMMai+ecpVfRGnGbfXqZyBroF0RV
+         kOPvCU4wXVHfGF1sHbog0+n2CADus8+j6iqOqZBVkTYIaqq/wwYwuOhdRw0iN2ZlgyMG
+         1rjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GljN58UmSWv9ZCZ3wcziFOnC3XNhg25DsEjzL8nO6nM=;
-        b=WMNtwPIBD/RJV/TlRJ2DnWRzu7MNML/5GMvE5wLS1A7KFuMaLxbZsja83t06CqbQXq
-         k842h+P4zxbil0MrDy1DR+j2ZqKal3j+gKVoKqAv80T4gX9sLvuM679IAjDYi1MeJLZv
-         RJM3GWwXUr2DU+hZaJnchgkL+yBnUVhzBngxp9W/HkjhyP1tC/tzbXT5JDwMZ1FkcESH
-         X4/fCCcOqWA+nR/tucM5LAn+9oLYLty7WIp/U2xbtoavSPArcu25J/swelb9pIwR3iaC
-         UduL0A2Nl2PLElkB9/h9s1XA6NxldnV2kslY+cuszesxJvESZ1qEbW4l+hx27io6cM8n
-         VWlQ==
-X-Gm-Message-State: AJIora+vdLfTyvs4HCMPIxexu2NvzI179fehqdpJNCcUFt6m+gjGBfgy
-        Bst615N9Vkm8UbyNDfDMj594YnLy01QyEQ==
-X-Google-Smtp-Source: AGRyM1tB5l+IXRCVDiMHgWKd4w933tCWCAJzt4MH3GiQ1KcNxvg/iplLQnlOUVy1Gy+3dRbY0Klj6Q==
-X-Received: by 2002:a5d:4807:0:b0:21d:925b:d867 with SMTP id l7-20020a5d4807000000b0021d925bd867mr15430451wrq.354.1657539464148;
-        Mon, 11 Jul 2022 04:37:44 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b17-20020adff911000000b0021d819c8f6dsm5562463wrr.39.2022.07.11.04.37.42
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=IZM2K72xWO72dzi6mAc+/4PQJLqIJ0u+hR7eSUeEyak=;
+        b=ceCS7L/jItVpNi7eAthE07Xba7vBzET6dEMSgfnJ0fi944QAR9Q8XA0xAPYhidV067
+         bdM9uuRGvIIm1g4NA3OyRBU/la2sDJE4sBpsP3yF0RzajVc2ruH93dDrYsgy1SHzffgs
+         dSDRcCpsqaN+4KvX4c/ioqsnlbjVaqSCJNxLUbk2wwOR59km0bd+XzktX9RIu4Qa04TD
+         dNksEZFyyIa/AP3C8vld8YuKDWwaUl1PBjI+pCa/GNZfGPoCOst6lHlhEQXDwF0X5gNt
+         ewPES314nzFUiGZCTwbEL1A1wJn2nfrkQ4tZiw4nBjlr6DYeKs5X5IJoAS7BK99E9P+C
+         besg==
+X-Gm-Message-State: AJIora8E2edOi64OZG+1taU/5Vk5zo3WD9u4tyIT6I42idiRgI85YP4O
+        cnc7V7ioDHP2B/UuYZ4b/Pc=
+X-Google-Smtp-Source: AGRyM1v0J84djEVnx+w7qsDDIk1RK9UaZsR2VaJRoCj/ea9R5sRKUWWIz+Az1xfjMFWd1Cmh2P9eGw==
+X-Received: by 2002:a05:6402:42cb:b0:43a:5df2:bb5d with SMTP id i11-20020a05640242cb00b0043a5df2bb5dmr24664589edc.36.1657542054567;
+        Mon, 11 Jul 2022 05:20:54 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id q7-20020a1709060e4700b006fe89cafc42sm2653281eji.172.2022.07.11.05.20.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 04:37:42 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 4/4] .clang-format: don't indent "goto" labels
-Date:   Mon, 11 Jul 2022 13:37:28 +0200
-Message-Id: <RFC-patch-4.4-e3a95c62bda-20220711T110019Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.37.0.913.g189dca38629
-In-Reply-To: <RFC-cover-0.4-00000000000-20220711T110019Z-avarab@gmail.com>
-References: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net> <RFC-cover-0.4-00000000000-20220711T110019Z-avarab@gmail.com>
+        Mon, 11 Jul 2022 05:20:53 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oAsPE-000q1p-TI;
+        Mon, 11 Jul 2022 14:20:52 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
+        Jonas Aschenbrenner <jonas.aschenbrenner@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Suggestion to rename "blame" of the "git blame" command to
+ something more neutral
+Date:   Mon, 11 Jul 2022 13:47:06 +0200
+References: <CADS2hGpnkiPzivVDyN-PnGsQCTafqx68PxigXvBK1bv4O=p4kg@mail.gmail.com>
+        <220710.86r12t82ea.gmgdl@evledraar.gmail.com>
+        <20220710145502.GT17705@kitsune.suse.cz> <xmqq1qutrkm8.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqq1qutrkm8.fsf@gitster.g>
+Message-ID: <220711.86sfn77sd7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This change is a slightly mixed bag, we have a lot of "goto" labels
-that are indented by exactly one space.
 
-Before & after this change running "make style-all-diff-apply" will
-yield:
+On Sun, Jul 10 2022, Junio C Hamano wrote:
 
-	509 files changed, 13042 insertions(+), 12745 deletions(-)
-	510 files changed, 13039 insertions(+), 12742 deletions(-)
+> Michal Such=C3=A1nek <msuchanek@suse.de> writes:
+>
+>>> What do you think about this old patch of mine to add a 'git praise'?:
+>>> https://lore.kernel.org/git/20190401101246.21418-1-avarab@gmail.com/
+>>
+>> Since you are asking .. I think it completely misses the point.
+>>
+>> I would consider it effective if users of git-praise(1) needed no
+>> knowledge of existence of git-blame(1).
+>
+> I think you are the one who completely misses the point of him
+> sending the URL (hint: what is the date of the patch?)
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- .clang-format | 3 +++
- 1 file changed, 3 insertions(+)
+I wrote it as a joke, but that was in 2019, and I think at that time the
+idea that we needed to do anything about the "master" nomenclature was
+equally far-fetched, but here we are.
 
-diff --git a/.clang-format b/.clang-format
-index 5a106d959be..56d7e8f9def 100644
---- a/.clang-format
-+++ b/.clang-format
-@@ -148,6 +148,9 @@ SpacesInSquareBrackets: false
- # clang-format 12.
- BitFieldColonSpacing: None
- 
-+# Do not indent "goto" labels, they should be flushed left.
-+IndentGotoLabels: false
-+
- # Insert a space after '{' and before '}' in struct initializers
- Cpp11BracedListStyle: false
- 
--- 
-2.37.0.913.g189dca38629
+While I wrote it as an in-joke, I think some version of it might be
+something we'd want to integrate, whether that's (optionally?)
+advertising git-annotate over git-blame, adding a git-praise or whatever
+else.
 
+Clearly some users care enough about this particular thing to keep
+showing up with some regularity to point it out.
+
+Personally I think the "git-blame" argument has a lot more weight than
+the "master" one. The latter seems to be the result of language zealotry
+extending to usage that really doesn't have anything meaningfully to do
+with the underlying issue at play (i.e. a US-based political movement
+that seems to have had its zenith in 2020).
+
+Whereas I'm pretty sure that "blame" really does mean "blame" in the bad
+sense of the word, but "in a good way".
+
+I.e. I tihnk it's part of a history of playful language use deriving
+from early hacker circles, *nix command nomanclature etc. The BSDs in
+particular have a lot of that (e.g. "daemon" etc.).
+
+Now, I think making a fuzz about this sort of thing is a bit silly, but
+on the other hand git's used in a lot of different environments.
+
+Depending on the proposed change adding a "blame" alias (or promoting an
+existing one) might be a lot smaller of a change than everything around
+"init.defaultBranch", so *shrug*.
+
+In any case, I think anyone interested in pushing this forward (and I'm
+not) needs to come up with some patches to move it forward, or explain
+in some detail what is/isn't OK about some existing ones (e.g. my April
+1st, 2019 "git-praise" patch).
+
+I understand Michal's and Jonas's upthread suggestions as us doing a
+s/blame/praise/g or whatever on the codebase. For backwards
+compatibility concerns that would be a non-starter.
+
+But users "having no knowledge of [the other command]" can stop short of
+that, and that seems like a good idea in any case. E.g. we have a
+long-standing wart of "git stage -h" referring to itself as "git-add",
+and "annotate" has the same issue.
+
+There's really no reason we shouldn't fix that, i.e. if we have an alias
+and a user uses it, we should at least refer back to it consistently
+when we talk about the command the user invoked.
