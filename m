@@ -2,163 +2,287 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C08BC43334
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 16:54:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3765BC43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 17:11:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbiGKQyQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 12:54:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40372 "EHLO
+        id S229629AbiGKRLn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 13:11:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbiGKQyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 12:54:13 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B05EF3E754
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 09:54:10 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id eq6so7022671edb.6
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 09:54:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=aw7H02FgaEiR7dErs/hrkQZV3LXea09Kru6/D2/AH+Q=;
-        b=jBtCjkLkTddZ8imIwjTQCjNhfdGG/fFvXGgKi5Gz7ctZ7lUOowsm4BJAvCMj1uOboo
-         0+HLHc0g1u2/zCRDhP7hulOhmZQFSlH00+bYPSmb5rHBgFYIbll6rz4KYyGJkx+3m4HI
-         7wweMVgm/NfqDNu8uJp+0IpmWV04dt8se+b3rkTrBKE7UqohXIXsaiR1GB3f/kUpkqht
-         A/0USgYezXsX/3W85wUHTQA9y+l28FP7g5rq/gpvYW9whg5SS86BCyK2vM/Ewdak10MI
-         HhzkLjN8z/JeFhqaHAKWBRsXBYFPKAu6HoSFqfiTFW4vHNQImm25Qp1P+lwzSTketeY4
-         CeTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=aw7H02FgaEiR7dErs/hrkQZV3LXea09Kru6/D2/AH+Q=;
-        b=3FDdWYkDUWM9kGSRwk3ul2LOK/9aABXQa59H5asOUzB6hCcFWG8xqWBDW5H6o74rE4
-         dNWKovH/6IAyPlAJUYcG+uu6zo3dAa16YrvkIcb3RFeaIBiqF8UvG0B5jDOouhoPsloF
-         vaXcE44XaOokJKV+cO3OMumpwST/whLUEApAMwUg0nV9nYUGQMi2+HVvhpFuY7brWmLv
-         YBLHA/3HUPrK0S/xouCVXQIR0dxj2CEB1dQxC1/nIyn1kxKr7yNvZCKT/SyqdQZBa9Xs
-         u+gpNw1tRLewYi3GDsqwtN2yBWTs5zOnN0SKXPq8QFd8RbtRbFFQOWE7EjXGKlbeUNU+
-         Bi0Q==
-X-Gm-Message-State: AJIora/wwjYHFZ7i1w7Dgt7cdS207gJarB5IEvHtiTSjDu0z9t4FUp1L
-        3G15QrfA0/yLi5IBNFBairmx8iVnupHq4fuYtgcdwQN9
-X-Google-Smtp-Source: AGRyM1sp4jxSsmP13UW6/84XJg6qYt+hcYfOh6vT9YxmaLP15GjQB9IioUDk0PMfdbFlNNINN9Y/PLOhxO8vMpQAe9Q=
-X-Received: by 2002:a05:6402:4255:b0:43a:c03f:1aa4 with SMTP id
- g21-20020a056402425500b0043ac03f1aa4mr18482744edb.146.1657558449269; Mon, 11
- Jul 2022 09:54:09 -0700 (PDT)
+        with ESMTP id S229500AbiGKRLm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 13:11:42 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C4BE33A29
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 10:11:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1657559481;
+        bh=k8R3WpHbimvHyf9Ap1MY4dKcS58sD19UTs4dKGXl/iw=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=AJO8KVkn8ul4zvGbQoMT6lCnuTiUu+Nw9tKYfXDNbO57FBIwuVMUP3rZbM3+5sLmp
+         KGVzn3s6qV4v5ghAhacULfyvcbpvAdpSxBLmpGLKSmE5IaFJN9Qai2ajHU365olTha
+         7wGb1gwdLG4g05qlbLYLOXVEikPNQfxWUDoMAlok=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MqqTb-1npNYO1LpB-00maGk; Mon, 11
+ Jul 2022 19:11:21 +0200
+Message-ID: <e29e424f-c214-a912-fba8-107c5e402b8a@web.de>
+Date:   Mon, 11 Jul 2022 19:11:18 +0200
 MIME-Version: 1.0
-References: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net>
- <006c01d894aa$3b9f33b0$b2dd9b10$@nexbridge.com> <Yst1tmpBU0DHdi5P@tapette.crustytoothpaste.net>
- <007f01d894c5$8b1cd3a0$a1567ae0$@nexbridge.com>
-In-Reply-To: <007f01d894c5$8b1cd3a0$a1567ae0$@nexbridge.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 11 Jul 2022 09:53:58 -0700
-Message-ID: <CABPp-BF0vCE4pzKEhjzNaJAOQYkYQ3Wvt+H5guzD3aZLdMO8kQ@mail.gmail.com>
-Subject: Re: Automatic code formatting
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.0.1
+Subject: Re: [PATCH] cocci: avoid normalization rules for memcpy
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq8rp54r4l.fsf@gitster.g>
+ <220707.86y1x585wy.gmgdl@evledraar.gmail.com> <xmqq1quw23r8.fsf@gitster.g>
+ <cb866b8c-dcc6-557f-da23-1c1972619a8a@web.de>
+ <95432eb4-e66a-5c04-9267-f71391fbe277@web.de> <xmqqmtdhsf1z.fsf@gitster.g>
+ <ded153d4-4aea-d4da-11cb-ec66d181e4c9@web.de>
+ <220710.86ilo580mb.gmgdl@evledraar.gmail.com>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <220710.86ilo580mb.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lMKbOsq5gh9PWxqcp6EjnnvYlKRodrTuej18Mz7GT8G8c9edJuA
+ Xb9xp7vni4wA87j4UI7GOgsEV0EeNQsNRyZ8G0QSBa8UCfG22MV2DbDg+WrGkyqjfv7YqFx
+ N+rE5BamJvoGVtTaKN9fX0whSb/ATua+VmMhdESmOdv7UTBKtrU9faCJmAdPdM/87bx8Y2x
+ 4oc4+Tga7usfLqcFHH7Jw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Scxp2f6IxbE=:kvCFuPJZwg3+TiDZQvlpPr
+ aY3aBUksct1Z8CoCeoeYWxkKqW8Y68ZRsaBjuW0H2zxvOSgm4/r79EYKWUokNIroER6fYQChB
+ /MPWL6O10PdBRp2I8u5WjO2KFiAac0HYrgGgdgvCCMPqLR8CcLWejjAC8TmEhAqxcm8bP9ZXM
+ 3/1+YpsksXZ/EEEXYExAZQk7vR+92Majk/tJXWW0mUhjA2RcWvAD1f1l2i2RYsly8yRyUxxNn
+ /1Jmr735GahbK5SM7YQHhjewdyhmI4aSn7dirtVV6i8QnSM/UYRlPK8RhH+HRmrW/fBjse0Zs
+ IVR+gusSfaGr8SFtqbw2emlpYLRkUtgbVBJbwXjj4sLo9QV0ZxMWNff9zfNpq62r2Lg0QHjJ1
+ F1F3TNjt8693Byf8duZMSG6yzNsBSyvUdEk37vgJjNoqzLOdD6gNKBcthLndOo4F//cu7T5Yy
+ xD0jWFQnuMvVc5koT79nScAN85auFGWhpyYJBoEbk6Qt9bKsBZVAjk0q0pvH0C1Jh037AbiXj
+ l+aQUyL8n8UP6PcdeKmLYyooLPVXuZpc1bC+6pIZpAxu93WIYIwFRZ1R52QqxohfDNi1cNn8W
+ R3y+sLfnmAZzGevx3tj65qRFZgewBanGsQR1H2t0QGuj62J0jlNJ/sI+3sPFiKz2aSTBLw7Ui
+ ppm9s0cN39nOUU72JFeHb2upXvJ1Oer9Q7T2mdbtKNbBFtsrbtQwtX9k39/FBWoDcwbV8UfDO
+ B9u2Bcu441IsFxcQEzd3mkPWyAn0uW+IsiVwWQQW9CXSPoheA8HgY0afW1j6xdFpZ29K4e7ky
+ GrVeyBVf1sKrlQI1tURLh5FmglwldtRewi52qGCWc1DI64j8gYz0GaHD4zKRlmtoO6dTt01/A
+ 9ThoXC3hK1hOOqxWUrrFQAoe9PRPh+EdN/9AGIlHNX0dIQn2cL3ssuV+tVwG2dsjUR6cz8Ytr
+ FbCQn2PgJxqOFXhfSkT9NFoDJv4Hd8bmwhJwzopMF6OBcoV5o9+nnSVp7vO2M0UBTsJLTsK4f
+ yAt9htUfbky8nvqnb9z7kXiev9TZ2X057o7ujyJY1mO+ompcsTASqGh44YVwrxdhe/Ik+tQEF
+ 60apAxbZLUDAL/ZCQFG1/mwZYWq9OeDn1y1
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 10, 2022 at 6:31 PM <rsbecker@nexbridge.com> wrote:
+Am 10.07.22 um 16:45 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >
-> On July 10, 2022 8:59 PM, brian m. carlson wrote:
-> >On 2022-07-10 at 22:13:01, rsbecker@nexbridge.com wrote:
-> >>
-> >> Being one of the platforms that will be specifically excluded from
-> >> this proposal, I would like to offer an alternative. Before that,
-> >> please remember that not everything is Linux. My suggestion is to
-> >> create infrastructure to automatically format on add/commit. This
-> >> could be pluggable relatively simply with clean filter that is
-> >> language specific - perhaps with a helper option that installs the
-> >> formatter easily (because clean filters are notoriously painful to
-> >> install for newbies from my observations). It would be nice to have
-> >> something in perl that is more portable and pervasive than clang -
-> >> although perl could launch clang where available. I think having
-> >> infrastructure for code formatting that is built into git is actually
-> >> highly desirable - assuming that it is not unduly difficult to install
-> >> those. It would extend beyond git contributions, but the contributors
-> >> could be told (Contributor's Guide) that then need to follow standard
-> >> X, which may very well be clang format. There are java formatters, php
-> >> and perl formatters, even COBOL and TAL formatters. My position is
-> >> that having a standard way to plug these in is a more general plan
-> >> that would reach a larger community. Git contributions could then just
-> >> leverage standard git functionality.
-> >
-> >I am willing to acknowledge the fact that not everybody has clang on the=
-ir
-> >preferred platform.  However, I assume you do have a laptop or desktop w=
-ith
-> >which you access your platform (since I believe it's a server
-> >platform) and that you can install software there, or that you have the =
-ability to
-> >run some sort of virtualization framework on some system.
-> >
-> >I am in general not very willing to say that we can't use or have useful=
- developer
-> >tools because of uncommon platforms.  Linux, Windows, macOS, and (I beli=
-eve)
-> >FreeBSD, NetBSD, and OpenBSD all support clang and related tools, and I =
-don't
-> >think it's unreasonable for us to expect that someone can have access to=
- such a
-> >system as part of development, even if that's in a VM.  Those six operat=
-ing
-> >systems plus Chrome OS constitute the overwhelming majority of desktop a=
-nd
-> >laptop systems, and there are several options which are free (both as in=
- speech
-> >and beer).
-> >
-> >Moreover, clang and LLVM are extremely portable[0].  As a practical matt=
-er, any
-> >platform wanting to support software written in Rust (a popular and grow=
-ing
-> >language) will likely need LLVM, and there is also a lot of software in =
-C and C++
-> >that only supports GCC-compatible compilers.  I do feel that providing s=
-upport for
-> >modern toolchains is an important part of providing a viable OS port, an=
-d that we
-> >should be able to rely on porters for that OS to do that work.  I realiz=
-e that LLVM is
-> >not yet ported to your system, but I believe it's going to functionally =
-need to
-> >happen sooner or later.  When it does, you'll be able to send patches di=
-rectly
-> >without needing to copy to another OS to format the code.
+> On Sun, Jul 10 2022, Ren=C3=A9 Scharfe wrote:
 >
-> I should point out that gcc will *never* according to our latest intel, b=
-e supported on my platforms. *Never* is, of course, an indeterminate defini=
-tion, but until various matters I cannot legally discuss change, which are =
-not likely for at least 5 years, anything depending on gcc is out of the pi=
-cture and unavailable, including clang. I understand the position regarding=
- git contributions, but I am trying to get the point across that formatting=
- code to a standard is a more general desire than just git contributions. I=
-t is a broad desire/requirement that should be considered. Rather than maki=
-ng processes git-contribution-specific, providing a more general solution t=
-hat git contributors can use is more effective.
+>> Some of the rules for using COPY_ARRAY instead of memcpy with sizeof ar=
+e
+>> intended to reduce the number of sizeof variants to deal with.  They ca=
+n
+>> have unintended side effects if only they match, but not the one for th=
+e
+>> COPY_ARRAY conversion at the end.
+>
+> Since ab/cocci-unused is marked for "next" it would be really nice to
+> have this based on top so we can add tests for these transformations
+> (the topic adds a way to do that).
 
-I don't understand why this matters to the proposal, though.  My
-experience with projects adopting code-formatting is that there are
-always some people who just don't use it (e.g. because they use a
-different IDE that doesn't integrate with it, or they never bother
-installing the extra tool, etc.).  Such users run the risk of having
-automated CI jobs flag their code with a problem, and then they have
-to go back and fix it, but it's still a net win because reviewers
-don't have to spend time catching those problems, and the original
-folks would have had to fix their code anyway.  In fact, in some
-projects, I've been one of those users and having the project use a
-code formatter that I didn't want to bother to set up and run didn't
-negatively impact me at all.
+Testing semantic patches sounds like a good idea.  We can add tests later,
+once that feature landed.
 
-Whether or not we have an automatic formatter, you're still
-responsible to fix your code to match the project's guidelines.  I
-don't think that becomes any harder, because if we have an automatic
-formatter, the _most_ that changes is there's a flag day where the
-style is adjusted slightly.  After that point, all you have to do is
-the same as today: look at the surrounding code to see the format and
-follow it.  So, from what I can see, you lose nothing from this
-proposal if it is implemented.
+>
+> But if you don't feel like  doing that this is fine too.
+>
+>> diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.=
+cocci
+>> index 9a4f00cb1b..aa75937950 100644
+>> --- a/contrib/coccinelle/array.cocci
+>> +++ b/contrib/coccinelle/array.cocci
+>> @@ -1,60 +1,58 @@
+>> -@@
+>> -expression dst, src, n, E;
+>> -@@
+>> -  memcpy(dst, src, n * sizeof(
+>> -- E[...]
+>> -+ *(E)
+>> -  ))
+>> -
+>> -@@
+>> -type T;
+>> -T *ptr;
+>> -T[] arr;
+>> -expression E, n;
+>> -@@
+>> -(
+>> -  memcpy(ptr, E,
+>> -- n * sizeof(*(ptr))
+>> -+ n * sizeof(T)
+>> -  )
+>> -|
+>> -  memcpy(arr, E,
+>> -- n * sizeof(*(arr))
+>> -+ n * sizeof(T)
+>> -  )
+>> -|
+>> -  memcpy(E, ptr,
+>> -- n * sizeof(*(ptr))
+>> -+ n * sizeof(T)
+>> -  )
+>> -|
+>> -  memcpy(E, arr,
+>> -- n * sizeof(*(arr))
+>> -+ n * sizeof(T)
+>> -  )
+>> -)
+>> -
+>>  @@
+>>  type T;
+>>  T *dst_ptr;
+>>  T *src_ptr;
+>> -T[] dst_arr;
+>> -T[] src_arr;
+>>  expression n;
+>>  @@
+>> -(
+>> -- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
+>> +- memcpy(dst_ptr, src_ptr, (n) * \( sizeof(T)
+>> +-                                \| sizeof(*(dst_ptr))
+>> +-                                \| sizeof(*(src_ptr))
+>> +-                                \| sizeof(dst_ptr[...])
+>> +-                                \| sizeof(src_ptr[...])
+>> +-                                \) )
+>>  + COPY_ARRAY(dst_ptr, src_ptr, n)
+>> -|
+>> -- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
+>> +
+>> +@@
+>> +type T;
+>> +T *dst_ptr;
+>> +T[] src_arr;
+>> +expression n;
+>> +@@
+>> +- memcpy(dst_ptr, src_arr, (n) * \( sizeof(T)
+>> +-                                \| sizeof(*(dst_ptr))
+>> +-                                \| sizeof(*(src_arr))
+>> +-                                \| sizeof(dst_ptr[...])
+>> +-                                \| sizeof(src_arr[...])
+>> +-                                \) )
+>>  + COPY_ARRAY(dst_ptr, src_arr, n)
+>> -|
+>> -- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
+>> +
+>> +@@
+>> +type T;
+>> +T[] dst_arr;
+>> +T *src_ptr;
+>> +expression n;
+>> +@@
+>> +- memcpy(dst_arr, src_ptr, (n) * \( sizeof(T)
+>> +-                                \| sizeof(*(dst_arr))
+>> +-                                \| sizeof(*(src_ptr))
+>> +-                                \| sizeof(dst_arr[...])
+>> +-                                \| sizeof(src_ptr[...])
+>> +-                                \) )
+>>  + COPY_ARRAY(dst_arr, src_ptr, n)
+>> -|
+>> -- memcpy(dst_arr, src_arr, (n) * sizeof(T))
+>> +
+>> +@@
+>> +type T;
+>> +T[] dst_arr;
+>> +T[] src_arr;
+>> +expression n;
+>> +@@
+>> +- memcpy(dst_arr, src_arr, (n) * \( sizeof(T)
+>> +-                                \| sizeof(*(dst_arr))
+>> +-                                \| sizeof(*(src_arr))
+>> +-                                \| sizeof(dst_arr[...])
+>> +-                                \| sizeof(src_arr[...])
+>> +-                                \) )
+>>  + COPY_ARRAY(dst_arr, src_arr, n)
+>> -)
+>>
+>>  @@
+>>  type T;
+>
+> Hrm, this seems like a lot of repetition, it's here in the rules you're
+> editing already, but these repeated "sizeof" make it a lot more verbose.
+>
+> Isn't there a way to avoid this by simply wrapping this across lines, I
+> didn't test, but I think you can do this sort of thing in the cocci
+> grammar:
+>
+> - memcpy(
+> - COPY_ARRAY(
+>   (
+>   dst_arr
+>   |
+>   dst_ptr
+>   )
+>   ,
+>   (
+>   src_arr
+>   |
+>   src_ptr
+>   )
+>   ,
+>   (n) *
+> -  [your big sizeof alternate here]
+>   )
+
+Hmm, that would match many more combinations, e.g. this one:
+
+void f(int *a, int *b, long n, int c[1]) {
+	memcpy(a, b, n * sizeof(*c));
+}
+
+The elements of a, b and c have the same type, so replacing c with a
+(which a conversion to COPY_ARRAY would do) would produce the same
+object code.  I can't come up with a plausible scenario like above and
+where a type change of c down the line would cause problems, but I
+also can't convince myself that no such thing can exist.  Tricky.
+
+And I can't get it to format the whitespace around the third argument
+of COPY_ARRAY nicely in all cases.
+
+And it takes 37% longer on my machine.
+
+But it sure is more compact. :)
+
+@@
+type T;
+T *dst_ptr;
+T *src_ptr;
+T[] dst_arr;
+T[] src_arr;
+expression n;
+@@
+- memcpy
++ COPY_ARRAY
+  (
+  \( dst_ptr \| dst_arr \) ,
+  \( src_ptr \| src_arr \) ,
+- (n) *  \( sizeof(T)
+-        \| sizeof(*(dst_ptr))
+-        \| sizeof(*(dst_arr))
+-        \| sizeof(*(src_ptr))
+-        \| sizeof(*(src_arr))
+-        \| sizeof(dst_ptr[...])
+-        \| sizeof(dst_arr[...])
+-        \| sizeof(src_ptr[...])
+-        \| sizeof(src_arr[...])
+-        \)
++ n
+  )
+
+>
+> I.e. you want to preserve whatever we match in the 1st and 2nd
+> arguments, but only want to munge part of the 3rd argument. The cocci
+> grammar can "reach into" lines like that, it doesn't need to be limited
+> to line-based diffs.
+>
+> But I didn't try it in this caes, and maybe there's a good reason for
+> why it can't happen in this case...
+>
+> I also wonder if that won't be a lot faster, i.e. if you can condense
+> this all into one rule it won't need to match this N times, but maybe
+> the overall complexity of the rules makes it come out to the same thing
+> in the end...
