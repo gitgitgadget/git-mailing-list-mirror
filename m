@@ -2,92 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45A11C43334
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 04:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8F3CC43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 04:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229592AbiGKEL6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 00:11:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54790 "EHLO
+        id S229674AbiGKEif (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 00:38:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbiGKEL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 00:11:56 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08BFB18B29
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 21:11:56 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id j3so3785905pfb.6
-        for <git@vger.kernel.org>; Sun, 10 Jul 2022 21:11:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YMQccnbGAyJcFTnGFVxiHRUAt49HAtI6sp8BkTciq4s=;
-        b=SLJq6yIZARxDSxxwEpFu4WTX6SfGqZBzZ8CsQazEFYhfKqTfQQ5FIL640KhhSPvxiE
-         bxNCCtggKJX9/yLJlBDfxZaZWElDL4Cv3XFudkUcNX1BtsdvzBnA6VvBQSPeFqRpxQX/
-         6l+rYpwsQ1xVh3i28IqQPztyX/hetOGq5F/MTGIFfYvAAjZgvFZmWqcu9oGbXHpvQJUt
-         dZSBuLB1mlI583ImWxZNInJJ7Uw1RPTA/AnE9E5DX4r9jRCEytbH1jpphjDwu4OYuHMT
-         yXLHiegqaHFCKBcYRkMFOpIeF3ho9jaEY86s/8Q0y3Mn4qjMMkSFHMEptX4QlckPppoa
-         gjuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YMQccnbGAyJcFTnGFVxiHRUAt49HAtI6sp8BkTciq4s=;
-        b=ZKTvu1FlZmwrJ0FuJhmAgbK5RukJh+tWNgxmSgnWQ8sMl2ohoS9cby7zba4zwSDYkm
-         8IGzXweCmJzffNjFJBMkf3IV2CGV+WL6K8+xEF6Vr1Uh4ZP4hYyP8qqUTadkGss9PaY7
-         8ViEk0Q1bTBHPRngRb0zzsq4uUKIrW5it4RZapkTDOcmoqieL8ctouFjIaMeC4gYS8pl
-         SgK6dABgQ8+3SCFjl73lzgABC6EfgQ6LXsxN8uJ9w9iKW4crSefij/HA3BwDMuUC1X2U
-         2IpYZsdJtfQlBP/2IT1QeR2O5lLCZks6eoELnafMuKEn7+ejOilDXf7QUxbAj6rW48J6
-         GP8g==
-X-Gm-Message-State: AJIora9l/qYkcM54KldPeFsI250MwQBlLFwCFRUPcGC1HCZjAi8MTEps
-        6Rs3W9ItOcAt0AFnPURtlqw=
-X-Google-Smtp-Source: AGRyM1u/uS69ZGr8kQRk7j5d0ARXlkL7VksP2pGkZAmFmJAoYKJ+usokzwMNl3kCGmCsYej46537DA==
-X-Received: by 2002:aa7:8649:0:b0:52a:baae:16c9 with SMTP id a9-20020aa78649000000b0052abaae16c9mr10214783pfo.26.1657512715416;
-        Sun, 10 Jul 2022 21:11:55 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.102])
-        by smtp.gmail.com with ESMTPSA id x24-20020aa78f18000000b0052ab6590290sm3623371pfr.88.2022.07.10.21.11.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 10 Jul 2022 21:11:55 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     git@jeffhostetler.com
-Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v5 5/5] tr2: avoid to print "interesting" config repeatedly
-Date:   Mon, 11 Jul 2022 12:11:48 +0800
-Message-Id: <20220711041148.15760-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.35.0.rc0.679.g6d80778db5
-In-Reply-To: <838e1273-b704-bd11-e9ed-e25390989027@jeffhostetler.com>
-References: <838e1273-b704-bd11-e9ed-e25390989027@jeffhostetler.com>
+        with ESMTP id S229544AbiGKEie (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 00:38:34 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03088BEB
+        for <git@vger.kernel.org>; Sun, 10 Jul 2022 21:38:32 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C71FD1259D3;
+        Mon, 11 Jul 2022 00:38:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tRuXZwGvmuEHRCMEyggExIjahLYYUn+iYtBruu
+        gOG+0=; b=wLLMS47TR8SYM1W+JyoowZmiYinQGHivZKZBdwpqEy3NOFWpqrmJbl
+        3XRsqkP2fV3Gb+ZFZ/hGqfNXKofkAhbr+XoDngLiySAXl1SH7YOiTxxeKj0pc60L
+        bIcN3ruceInUdPMBtFB21+SleCybI+N+CXjwLEhrGnJ7HKCE2mMcE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AB6D11259D1;
+        Mon, 11 Jul 2022 00:38:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 059951259D0;
+        Mon, 11 Jul 2022 00:38:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Han Xin <chiyutianyi@gmail.com>, Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] unpack-objects: fix compilation warning/error due to
+ missing braces
+References: <20220710081135.74964-1-sunshine@sunshineco.com>
+        <CAO0brD0PBXDqe2HDdjg1ZhXWoYZihQ0=SY80UR+Cy3xRqqH8Sg@mail.gmail.com>
+        <CAPig+cQJWgerk08j=1b=aWRZsKBu3BnEACQuiqktU4BwzM-xaA@mail.gmail.com>
+Date:   Sun, 10 Jul 2022 21:38:29 -0700
+In-Reply-To: <CAPig+cQJWgerk08j=1b=aWRZsKBu3BnEACQuiqktU4BwzM-xaA@mail.gmail.com>
+        (Eric Sunshine's message of "Sun, 10 Jul 2022 22:41:12 -0400")
+Message-ID: <xmqq7d4kp8l6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 50B443EA-00D3-11ED-845B-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> I agree.  Let's not try to dedup these.  IIRC, the tr2_cfg_cb()
-> machinery runs during a "read early" or "read very early" scan of
-> the config values and the program is still starting up (in some
-> sense).  For example, the command line may not have been fully
-> processed yet (again, IIRC).  So injecting a call here to force an
-> explicit lookup could cause problems.
+> On Sun, Jul 10, 2022 at 10:00 PM Han Xin <chiyutianyi@gmail.com> wrote:
+>> On Sun, Jul 10, 2022 at 4:12 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> > On macOS High Sierra (10.13), Apple's `clang`[1] complains about missing
+>> > braces around initialization of a subobject, which is problematic when
+>> > building with `DEVELOPER=YesPlease` which enables `-Werror`:
+>> >
+>> >     builtin/unpack-objects.c:388:26: error: suggest braces around
+>> >         initialization of subobject [-Werror,-Wmissing-braces]
+>> >             git_zstream zstream = { 0 };
+>> >
+>> > [1]: `cc --version` => "Apple LLVM version 10.0.0 (clang-1000.10.44.4)"
+>> > -       git_zstream zstream = { 0 };
+>> > +       git_zstream zstream = {{ 0 }};
+>>
+>> Not a comment, just wondering, when should I use "{ { 0 } }" and when
+>> should I use "{ 0 }"?
+>>
+>> I didn't get the error with "Apple clang version 13.0.0
+>> (clang-1300.0.29.30)",  because it's
+>> a higher version ?
+>
+> I don't have a good answer. More modern `clang` versions don't seem to
+> complain about plain old `{0}` here, but the older `clang` with which
+> I'm stuck does complain.
 
+I think, from the language-lawyer perspective, "{ 0 }" is how we
+should spell these initialization when we are not using designated
+initializers, even when the first member of the struct happens to be
+a struct.
 
-The "read early" or "read very early" is a little abtract for me I think, I will
-take a further look.
+The older clang that complains at you is simply buggy, and I think
+we had the same issue with older sparse.
 
-
-> And I don't think it is worth the effort.  Let's just log the
-> context (system, global, local) as you described in the previous
-> version and be happy that we get multiple-but-now-qualified values.
-
-Yes.
-
-> Also, your new qualification would help us answer support questions
-> using telemetry where a user thought they had a feature on (say
-> globally) but was actually off at another level (say locally).
-
-That's certainly my original thought.
-
-
-Thanks.
