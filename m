@@ -2,77 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6724FC43334
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 19:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6B7DCCA47B
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 19:19:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231397AbiGKTIL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 15:08:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48576 "EHLO
+        id S229822AbiGKTT7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 15:19:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230453AbiGKTIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 15:08:09 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BA63C8CC
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 12:08:09 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id r136so913146oie.11
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 12:08:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=w4dIaHrYR+biHesLLbWcKwVKb1me20CyNdXau23ABxc=;
-        b=Dkm0AYNaV1xfLbeUA+BtjjLYjKwTPCoRD8Sp9yOxm+qdATz8rq+OGYO7UNU0cgIei7
-         EfFjfLIWUHpzcozcuT1ncvNtBLj0MNsLmCYuY5lFKkp25KPkaEE1k2b2f6mEPc4W5lzd
-         3FqrZ+Un10ZHHlJSgQjMzJ0+rTAqh8w34nixsFCsAl6nwki0XKoI3MWOyKm0P1oZQwK2
-         iqWur0Lk7mHpsWPCTMkdERZlLv1q/Pl3stNhg/Yb2/ltJaf6B0hPb2eyzU2zWwm+Heoj
-         lx6+Tc0ED7EESTrz2HX1Do+v7i5zkRP48rOxdeEKmK05bFO4Oa9+uS6354+u1K9Cv7ZC
-         SkYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=w4dIaHrYR+biHesLLbWcKwVKb1me20CyNdXau23ABxc=;
-        b=Iv1mb2SDJiTy46qzBBit9lhgWQdZi5dNzX4ZgfjRSHvx2nkQcr0pByHR20UgvpxnSd
-         cT2s89eaiFM8G/dMlXoHfV9aKRdkIDYy0YG+KEVCPq6eaH0Hz2GTSXObjzmf6HkZr8B2
-         oyrgPwABU+i29p135s+tNdiRdUQUsZux67hXLsntawW+FQf5DdJ6/xKNy+NePLZDDmVk
-         0DLiQ2YbjGZZLFYSMZsnz0aU+9EYQ2tyO2+DsHOpsKazcNzLN/tbdLDozrNQ6yVvQJlt
-         gyuPDunm+BoN3joZgBKor0ttj62BGUY5zs27b7A4IuCqOoeg5zvDfb0ePubadIBZ5oXS
-         Gclg==
-X-Gm-Message-State: AJIora+zOmuFKEq3IiHH9AwuTjICB15uJxy856f7Ar7LlNk2xOSNiA/4
-        NxknNeha7SfwVvzEHHvye6fl0ceqBB7b+cL7golZ5u/Sg1g=
-X-Google-Smtp-Source: AGRyM1s7msA88f4Zc7nZn97YPfvA7DeznmA7GWgAp4o/hyTS2ZbGc8M/dnlfX1DHu5zvWs/RDyZ7Lfv0IPc9mibWFBQ=
-X-Received: by 2002:a05:6808:14d2:b0:339:de9f:5df1 with SMTP id
- f18-20020a05680814d200b00339de9f5df1mr8058440oiw.93.1657566487843; Mon, 11
- Jul 2022 12:08:07 -0700 (PDT)
+        with ESMTP id S229622AbiGKTT6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 15:19:58 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C60BEE1A
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 12:19:57 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id A81A53F4161;
+        Mon, 11 Jul 2022 15:19:56 -0400 (EDT)
+Received: from jeffhost-mbp.local (unknown [IPv6:2600:1008:b064:efb1:d9c7:dcfd:b3c3:5b0])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id D007C3F4149;
+        Mon, 11 Jul 2022 15:19:55 -0400 (EDT)
+Subject: Re: [PATCH v6 7/7] tr2: dump names if config exist in multiple scopes
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
+        gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+References: <cover.1657540174.git.dyroneteng@gmail.com>
+ <c45ead51ffc5a9176493d627da8332d35a31d87c.1657540174.git.dyroneteng@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <9934c512-7e82-b024-5292-71a0ebcf2351@jeffhostetler.com>
+Date:   Mon, 11 Jul 2022 15:19:53 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-From:   Gerriko io <gerriko.iot@gmail.com>
-Date:   Mon, 11 Jul 2022 20:07:56 +0100
-Message-ID: <CALF=2ANR8PBSU3h_RjakdG6Sh3iUyM6CM8QsxzMMhwtLuAWJqw@mail.gmail.com>
-Subject: Local Folder was overwritten by old repository due to reset command
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <c45ead51ffc5a9176493d627da8332d35a31d87c.1657540174.git.dyroneteng@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is not everyday you find all your work gone and there's no way of
-restoring the work locally.
 
-I am quite dumbfounded as to what has just happened as I was working
-with git to try and push changes to GitHub. In the process I was
-having some difficulties while learning and was trying out a few
-things including reset command. The problem is that when working in
-the Linux terminal you are unaware of the changes made to folders and
-files.
 
-With this reset command there were no warnings of any overwrites and
-the deleted files are not even in my Linux Rubbish bin.
+On 7/11/22 8:44 AM, Teng Long wrote:
+> When we specify GIT_TRACE2_CONFIG_PARAMS or trace2.configparams,
+> trace2 will prints "interesting" config values to log. Sometimes,
+> when a config set in multiple scope files, the following output
+> looks like (the irrelevant fields are omitted here as "..."):
+> 
+> ...| def_param    |  ...  | core.multipackindex:false
+> ...| def_param    |  ...  | core.multipackindex:false
+> ...| def_param    |  ...  | core.multipackindex:false
+> 
+> As the log shows, even each config in different scope is dumped, but
+> we don't know which scope it comes from. Therefore, it's better to
+> add the scope names as well to make them be more recognizable. For
+> example, when execute:
+> 
+>      $ GIT_TRACE2_PERF=1 \
+>      > GIT_TRACE2_CONFIG_PARAMS=core.multipackIndex \
+>      > git rev-list --test-bitmap HEAD"
+> 
+> The following is the ouput (the irrelevant fields are omitted here
+> as "..."):
+> 
+> Format normal:
+> ... git.c:461 ... def_param scope:system core.multipackindex=false
+> ... git.c:461 ... def_param scope:global core.multipackindex=false
+> ... git.c:461 ... def_param scope:local core.multipackindex=false
+> 
+> Format perf:
+> 
+> ... | def_param    | ... | scope:system | core.multipackindex:false
+> ... | def_param    | ... | scope:global | core.multipackindex:false
+> ... | def_param    | ... | scope:local  | core.multipackindex:false
+> 
+> Format event:
+> 
+> {"event":"def_param", ... ,"scope":"system","param":"core.multipackindex","value":"false"}
+> {"event":"def_param", ... ,"scope":"global","param":"core.multipackindex","value":"false"}
+> {"event":"def_param", ... ,"scope":"local","param":"core.multipackindex","value":"false"}
+> 
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> ---
+>   trace2/tr2_tgt_event.c  | 3 +++
+>   trace2/tr2_tgt_normal.c | 5 ++++-
+>   trace2/tr2_tgt_perf.c   | 9 +++++++--
+>   3 files changed, 14 insertions(+), 3 deletions(-)
+> 
+> diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+> index c5c8cfbbaa..37a3163be1 100644
+> --- a/trace2/tr2_tgt_event.c
+> +++ b/trace2/tr2_tgt_event.c
+> @@ -479,9 +479,12 @@ static void fn_param_fl(const char *file, int line, const char *param,
+>   {
+>   	const char *event_name = "def_param";
+>   	struct json_writer jw = JSON_WRITER_INIT;
+> +	enum config_scope scope = current_config_scope();
+> +	const char *scope_name = config_scope_name(scope);
+>   
+>   	jw_object_begin(&jw, 0);
+>   	event_fmt_prepare(event_name, file, line, NULL, &jw);
+> +	jw_object_string(&jw, "scope", scope_name);
+>   	jw_object_string(&jw, "param", param);
+>   	jw_object_string(&jw, "value", value);
+>   	jw_end(&jw);
+> diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+> index c42fbade7f..69f8033077 100644
+> --- a/trace2/tr2_tgt_normal.c
+> +++ b/trace2/tr2_tgt_normal.c
+> @@ -298,8 +298,11 @@ static void fn_param_fl(const char *file, int line, const char *param,
+>   			const char *value)
+>   {
+>   	struct strbuf buf_payload = STRBUF_INIT;
+> +	enum config_scope scope = current_config_scope();
+> +	const char *scope_name = config_scope_name(scope);
+>   
+> -	strbuf_addf(&buf_payload, "def_param %s=%s", param, value);
+> +	strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
+> +		    value);
+>   	normal_io_write_fl(file, line, &buf_payload);
+>   	strbuf_release(&buf_payload);
+>   }
+> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+> index a1eff8bea3..8cb792488c 100644
+> --- a/trace2/tr2_tgt_perf.c
+> +++ b/trace2/tr2_tgt_perf.c
+> @@ -441,12 +441,17 @@ static void fn_param_fl(const char *file, int line, const char *param,
+>   {
+>   	const char *event_name = "def_param";
+>   	struct strbuf buf_payload = STRBUF_INIT;
+> +	struct strbuf scope_payload = STRBUF_INIT;
+> +	enum config_scope scope = current_config_scope();
+> +	const char *scope_name = config_scope_name(scope);
+>   
+>   	strbuf_addf(&buf_payload, "%s:%s", param, value);
+> +	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
+>   
+> -	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
+> -			 &buf_payload);
+> +	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
+> +			 scope_payload.buf, &buf_payload);
+>   	strbuf_release(&buf_payload);
+> +	strbuf_release(&scope_payload);
+>   }
+>   
+>   static void fn_repo_fl(const char *file, int line,
+> 
 
-How is this possible - this bypasses all the most fundamental rules of
-a computer OS!
+Nicely done.
 
-Surely there are ways to avoid this especially as default behaviour. I
-can assume with flags you might be able but as default there needs
-flashing lights for noobs.
+Thanks for your attention on this.
+Jeff
 
-BR
-
-Colin.
