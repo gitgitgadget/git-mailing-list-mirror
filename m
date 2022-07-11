@@ -2,157 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6B7DCCA47B
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 19:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72611C43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 19:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbiGKTT7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 15:19:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59508 "EHLO
+        id S229928AbiGKTVX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 15:21:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbiGKTT6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 15:19:58 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C60BEE1A
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 12:19:57 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id A81A53F4161;
-        Mon, 11 Jul 2022 15:19:56 -0400 (EDT)
-Received: from jeffhost-mbp.local (unknown [IPv6:2600:1008:b064:efb1:d9c7:dcfd:b3c3:5b0])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        with ESMTP id S229807AbiGKTVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 15:21:22 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 953773AB14
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 12:21:21 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D1CC31A6112;
+        Mon, 11 Jul 2022 15:21:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ShC2PlOUiZLG
+        6Sb9C7xtjediai4Xel3N/8FSwx8RNCY=; b=k0nv4PATUpmn1WC9Q4F/Yt/1nmSJ
+        nesP5gcW834DW0qyfcqpD/UDQBqvQSzuQhywU8+Q5jVhCHKWYuxfeXqTRxggPYGx
+        qJJgmt/h1sozfh/Aj71n9TEBVkMZRRqRstqaZ/b4+3m+LOjSKh8/hW3e43ZOGkbo
+        pXwQInypBGId0eI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B6E7C1A6111;
+        Mon, 11 Jul 2022 15:21:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id D007C3F4149;
-        Mon, 11 Jul 2022 15:19:55 -0400 (EDT)
-Subject: Re: [PATCH v6 7/7] tr2: dump names if config exist in multiple scopes
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-References: <cover.1657540174.git.dyroneteng@gmail.com>
- <c45ead51ffc5a9176493d627da8332d35a31d87c.1657540174.git.dyroneteng@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <9934c512-7e82-b024-5292-71a0ebcf2351@jeffhostetler.com>
-Date:   Mon, 11 Jul 2022 15:19:53 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 49AA81A610D;
+        Mon, 11 Jul 2022 15:21:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
+        Jonas Aschenbrenner <jonas.aschenbrenner@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Suggestion to rename "blame" of the "git blame" command to
+ something more neutral
+References: <CADS2hGpnkiPzivVDyN-PnGsQCTafqx68PxigXvBK1bv4O=p4kg@mail.gmail.com>
+        <220710.86r12t82ea.gmgdl@evledraar.gmail.com>
+        <20220710145502.GT17705@kitsune.suse.cz> <xmqq1qutrkm8.fsf@gitster.g>
+        <220711.86sfn77sd7.gmgdl@evledraar.gmail.com>
+Date:   Mon, 11 Jul 2022 12:21:16 -0700
+In-Reply-To: <220711.86sfn77sd7.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 11 Jul 2022 13:47:06 +0200")
+Message-ID: <xmqqwncjo3pv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <c45ead51ffc5a9176493d627da8332d35a31d87c.1657540174.git.dyroneteng@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A3102EEE-014E-11ED-8824-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> On Sun, Jul 10 2022, Junio C Hamano wrote:
+>
+>> Michal Such=C3=A1nek <msuchanek@suse.de> writes:
+>>
+>>>> What do you think about this old patch of mine to add a 'git praise'=
+?:
+>>>> https://lore.kernel.org/git/20190401101246.21418-1-avarab@gmail.com/
+>>>
+>>> Since you are asking .. I think it completely misses the point.
+>>>
+>>> I would consider it effective if users of git-praise(1) needed no
+>>> knowledge of existence of git-blame(1).
+>>
+>> I think you are the one who completely misses the point of him
+>> sending the URL (hint: what is the date of the patch?)
+>
+> I wrote it as a joke, but that was in 2019, and I think at that time th=
+e
+> idea that we needed to do anything about the "master" nomenclature was
+> equally far-fetched, but here we are.
+
+Comparing master/main with blame/anything-else is apples and
+oranges, though.
+
+The switch of (not the feature to configure) the default was
+palatable only because it benefited even those who did not mind the
+continued use of the word 'master', those who found 'main' just as
+problematic as 'master', or anybody in between, simply because the
+major hosting sites and existing projects were or have already
+migrated.  In such an external reality, using 'master' as the
+hard-coded default would have forced more people to configure when
+they start their project, whether they liked or hated the word
+'master' [*1*].
+
+"git blame" is completely different.  Nobody cares if you do not
+find a "blame" offensive word [*2*], nobody should care if you typed
+"git blame", and nobody should dictate you to stop using "git blame"
+nor eradicating "blame" from our source.
+
+Let this thread just stop, please.
 
 
-On 7/11/22 8:44 AM, Teng Long wrote:
-> When we specify GIT_TRACE2_CONFIG_PARAMS or trace2.configparams,
-> trace2 will prints "interesting" config values to log. Sometimes,
-> when a config set in multiple scope files, the following output
-> looks like (the irrelevant fields are omitted here as "..."):
-> 
-> ...| def_param    |  ...  | core.multipackindex:false
-> ...| def_param    |  ...  | core.multipackindex:false
-> ...| def_param    |  ...  | core.multipackindex:false
-> 
-> As the log shows, even each config in different scope is dumped, but
-> we don't know which scope it comes from. Therefore, it's better to
-> add the scope names as well to make them be more recognizable. For
-> example, when execute:
-> 
->      $ GIT_TRACE2_PERF=1 \
->      > GIT_TRACE2_CONFIG_PARAMS=core.multipackIndex \
->      > git rev-list --test-bitmap HEAD"
-> 
-> The following is the ouput (the irrelevant fields are omitted here
-> as "..."):
-> 
-> Format normal:
-> ... git.c:461 ... def_param scope:system core.multipackindex=false
-> ... git.c:461 ... def_param scope:global core.multipackindex=false
-> ... git.c:461 ... def_param scope:local core.multipackindex=false
-> 
-> Format perf:
-> 
-> ... | def_param    | ... | scope:system | core.multipackindex:false
-> ... | def_param    | ... | scope:global | core.multipackindex:false
-> ... | def_param    | ... | scope:local  | core.multipackindex:false
-> 
-> Format event:
-> 
-> {"event":"def_param", ... ,"scope":"system","param":"core.multipackindex","value":"false"}
-> {"event":"def_param", ... ,"scope":"global","param":"core.multipackindex","value":"false"}
-> {"event":"def_param", ... ,"scope":"local","param":"core.multipackindex","value":"false"}
-> 
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> ---
->   trace2/tr2_tgt_event.c  | 3 +++
->   trace2/tr2_tgt_normal.c | 5 ++++-
->   trace2/tr2_tgt_perf.c   | 9 +++++++--
->   3 files changed, 14 insertions(+), 3 deletions(-)
-> 
-> diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-> index c5c8cfbbaa..37a3163be1 100644
-> --- a/trace2/tr2_tgt_event.c
-> +++ b/trace2/tr2_tgt_event.c
-> @@ -479,9 +479,12 @@ static void fn_param_fl(const char *file, int line, const char *param,
->   {
->   	const char *event_name = "def_param";
->   	struct json_writer jw = JSON_WRITER_INIT;
-> +	enum config_scope scope = current_config_scope();
-> +	const char *scope_name = config_scope_name(scope);
->   
->   	jw_object_begin(&jw, 0);
->   	event_fmt_prepare(event_name, file, line, NULL, &jw);
-> +	jw_object_string(&jw, "scope", scope_name);
->   	jw_object_string(&jw, "param", param);
->   	jw_object_string(&jw, "value", value);
->   	jw_end(&jw);
-> diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-> index c42fbade7f..69f8033077 100644
-> --- a/trace2/tr2_tgt_normal.c
-> +++ b/trace2/tr2_tgt_normal.c
-> @@ -298,8 +298,11 @@ static void fn_param_fl(const char *file, int line, const char *param,
->   			const char *value)
->   {
->   	struct strbuf buf_payload = STRBUF_INIT;
-> +	enum config_scope scope = current_config_scope();
-> +	const char *scope_name = config_scope_name(scope);
->   
-> -	strbuf_addf(&buf_payload, "def_param %s=%s", param, value);
-> +	strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
-> +		    value);
->   	normal_io_write_fl(file, line, &buf_payload);
->   	strbuf_release(&buf_payload);
->   }
-> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-> index a1eff8bea3..8cb792488c 100644
-> --- a/trace2/tr2_tgt_perf.c
-> +++ b/trace2/tr2_tgt_perf.c
-> @@ -441,12 +441,17 @@ static void fn_param_fl(const char *file, int line, const char *param,
->   {
->   	const char *event_name = "def_param";
->   	struct strbuf buf_payload = STRBUF_INIT;
-> +	struct strbuf scope_payload = STRBUF_INIT;
-> +	enum config_scope scope = current_config_scope();
-> +	const char *scope_name = config_scope_name(scope);
->   
->   	strbuf_addf(&buf_payload, "%s:%s", param, value);
-> +	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
->   
-> -	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
-> -			 &buf_payload);
-> +	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
-> +			 scope_payload.buf, &buf_payload);
->   	strbuf_release(&buf_payload);
-> +	strbuf_release(&scope_payload);
->   }
->   
->   static void fn_repo_fl(const char *file, int line,
-> 
+[Footnotes]
 
-Nicely done.
+*1* Admittedly we helped the migration of these people by improving
+the auto-detection in "git clone" of what the upstream uses, and
+adding the configurability to "git init", so we weren't impartial
+bystander who passibly adjusted to the prevailing wind, but we
+weren't the only one who were setting the policy and forcing other
+folks to adopt it.
 
-Thanks for your attention on this.
-Jeff
-
+*2* After all, if the tool finds an old mistake you made, blaming
+the earlier breakage to you, why are you making a big fuss about it?
+You already made a mistake in the commit "git blame" found; even if
+(figuratively) you are playing the "I must always be right" game,
+admitting your past mistake does not make you even more wrong.  It
+is what you did in the past, and you can simply acknowledge the fact
+and move on, with th easpiration that the next time you would be
+more careful.  The world would become a better place and the first
+step in that journey is to admit your past mistakes and accept the
+blame.
