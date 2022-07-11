@@ -2,153 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 967A5C43334
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 14:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46180C43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 14:56:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbiGKO4Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 10:56:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50820 "EHLO
+        id S229670AbiGKO4d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 10:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbiGKO4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 10:56:24 -0400
-Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927A27172C
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 07:56:22 -0700 (PDT)
-Received: from [10.0.2.15] ([147.147.167.40])
-        by smtp with ESMTPA
-        id AupfotprzaLeZAupgofW69; Mon, 11 Jul 2022 15:56:20 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1657551380; bh=MkEfrUWQCuVu2weys1F7Y/MdH6d955hYrIIzlhzafaQ=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=UnawglTav8hMadYxT3zoqMzBUzJGDYsaDx2ejn0yrfxms3Kl6In3pCl0gLg7NiQyi
-         JmHLnQHwBfr0OsKK0kL/3RaZPYshMEbt2Tx/5kEwNQ5uozzh5+Y6z6kHX8QFH9P6FE
-         gxJ0RCXXATD00BFwvpiDMsBn5wJ3RCXGp4lBc221LTU6ekAxxUOJvKdlDabjz10xVl
-         Z+vxEw5aCMLqNRNMb3YbCdGZTrboNXb7kR13m/TAyFfw2vXQhTDIf4asBdASrlQsrz
-         ujTScTnS7zoYz0YC0TXmWh7AfIXwDFZ7U1w0YPJJpsOFm5KFfutdq+FrXp3HAuyW2f
-         ebLJPBgOxXHyQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=D+hUl9dj c=1 sm=1 tr=0 ts=62cc3a14
- a=nyqnwr6A7Kzjd6EpZhiMcA==:117 a=nyqnwr6A7Kzjd6EpZhiMcA==:17
- a=IkcTkHD0fZMA:10 a=uROMCa6cPbON8WaM-xYA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <51972253-c1a1-8be7-39f5-3093ac83ffb1@ramsayjones.plus.com>
-Date:   Mon, 11 Jul 2022 15:56:19 +0100
+        with ESMTP id S229495AbiGKO4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 10:56:32 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2491671BC7
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 07:56:31 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id y8so6596404eda.3
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 07:56:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=xy8KLNFbDuvZ/EQ49bCCLLufQCXhcBPicsp7dlRUEbU=;
+        b=F2iOzYO03FcFJGDZwgqrt9F4fGPqJnQKI75j9LnQ0cKA0ZlDyX16bmhPEvsG+hfqC0
+         cYMDx550uVYKrACKTgJ8b30XEoq8BTnq3QtZPEo2+8zPMRWuIDwqMMkCW1TL5k0d4o0J
+         OPtTDFb6EBmvNdcHpq2Ter+lDkWZQZ0fezTSgkpCX4RSQ7LZldU990Hdkcvl1pnIlKmJ
+         yjo/0Ud9aisqG5uKq1P2qhDzTB5+P7ifLnjMA2xLi7RE84DQ0OIoL3u5u6yBfn5jsWku
+         5dBqFgAa+fJavThL0WvsmerwSSRYmVwRoCb0QSgSDkGKkRqQ9xn+zdODRnCMZgnwjOCh
+         VTKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=xy8KLNFbDuvZ/EQ49bCCLLufQCXhcBPicsp7dlRUEbU=;
+        b=RfPrz9XEUVnfMP1rfZfcRuVFTTZLrEpbvFb20FJdHn6atVnO/jspmWRwfNVT3DrXDy
+         csN8BOzX6DfNKww5uCZBL/L5gF3pvPt1NUYGvVL6X0vTwU8eN5psg3D1qjBAV5oRP/Ds
+         FDDDKZIg2xZm6OVcxckDwFWcSGkUX9HOYVM4I5i1NVSN3J+Hr6mLQQ5ArnckfiPJpscI
+         rWXHFobAXBayeBbW1i/3jOMiDc1FlUrWWpcUwk7T7n2mLWClRKgb6QrukwYFCsGQz+4G
+         B5uFpCPhmrlbPapQ6IulNSG14HeDZhFcA+v2nsNu7HJyDZ1kKhyihxgFL6CEVxBe8/fp
+         zX6A==
+X-Gm-Message-State: AJIora8Jdf5ituoGBXBygtDgUBSNHyzHVBAd1/hsYCO1x437VPZYjq6b
+        iMPWWojLysacJvuyaJUtJM4=
+X-Google-Smtp-Source: AGRyM1vhntufo5LIvZLFYbukbdHj0oUtfi5P+xVorVegj/MHpeco2dSRONDtH/TTNLZEz0k39PG5Cg==
+X-Received: by 2002:aa7:d143:0:b0:43a:88f4:4ec1 with SMTP id r3-20020aa7d143000000b0043a88f44ec1mr25784549edo.141.1657551389548;
+        Mon, 11 Jul 2022 07:56:29 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id q20-20020a17090676d400b0072a815f3344sm2733163ejn.137.2022.07.11.07.56.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jul 2022 07:56:28 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oAupo-000v64-2a;
+        Mon, 11 Jul 2022 16:56:28 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     derrickstolee@github.com, git@jeffhostetler.com,
+        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v6 5/7] pack-bitmap.c: using error() instead of silently
+ returning -1
+Date:   Mon, 11 Jul 2022 16:53:48 +0200
+References: <cover.1657540174.git.dyroneteng@gmail.com>
+ <52783555e206060465743b5587580a6bd4a1f008.1657540174.git.dyroneteng@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <52783555e206060465743b5587580a6bd4a1f008.1657540174.git.dyroneteng@gmail.com>
+Message-ID: <220711.86bktv7l5v.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: t0301-credential-cache test failure on cygwin
-Content-Language: en-GB
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-References: <9dc3e85f-a532-6cff-de11-1dfb2e4bc6b6@ramsayjones.plus.com>
- <xmqqtu7t30uv.fsf@gitster.g>
- <4529b11a-e514-6676-f427-ffaec484e8f1@ramsayjones.plus.com>
- <CA+kUOakjnOxs_FGojdZXaiaY4+68pvyBHsbue+AQHp7PLXqNJw@mail.gmail.com>
- <CA+kUOak29RkU-ooMgOz8yCg9-q6vb1VfdP8_VLay_V650ttwjA@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <CA+kUOak29RkU-ooMgOz8yCg9-q6vb1VfdP8_VLay_V650ttwjA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfP+jkvsxcux8RkK3KJJuzimd7L2HkOBXRqiy/eplimNL6vXtTdeHj4LgzeMERL5qZ6TqvnKGBMfhLWG80k1PP1sM7eRgmEpqKDXtD188XKNb4qr4ybM8
- 9ZQBQ1U3ff8oMTsp0+99vNVpvV+sDk5SXRQ37l6llZvSsfprju0hfUATVBRpiH1HF23hBUyxVS3kX4YqWzMSYuCzSbrVOKnD1EE=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Mon, Jul 11 2022, Teng Long wrote:
 
-On 11/07/2022 14:39, Adam Dinwoodie wrote:
-[snip]
+Good to report errno now, however...
 
-> 
-> Minor progress update: I've now confirmed the failure was introduced by
-> a change in the Cygwin library between the binaries for Cygwin versions
-> 3.2.0-1 and 3.3.1-1. Specifically, the test passes with Cygwin from the
-> 27 October 2021 package archive[0], and fails with Cygwin from the 28
-> October 2021 archive[1], and the only difference between the two that
-> has any chance of being relevant is that bump in the Cygwin release.
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> ---
+>  pack-bitmap.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 319eb721d8..fbe3f58aff 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -327,7 +327,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+>  
+>  	if (fstat(fd, &st)) {
+>  		close(fd);
+> -		return -1;
+> +		return error_errno(_("cannot fstat bitmap file"));
 
-Heh, I was just about to email you with similar news! I had a look at
-my setup.log to see what I actually updated (and from what) and the
-only thing that seemed to make sense was an update of the cygwin .dll
-from v3.2.0-1 to v3.3.2-1 (I will add below an extract from my setup.log
-for that day, in case you see anything else of interest).
+This is a logic error, as fstat() failed, but you're reproting errno()
+after our call to close(), at which point it's anyone's guess what
+"errno" is. It's only meaningful immediately after a system call.
 
-[The previous entry was for 25th October 2021 and had some more interesting
-entries, like binutils, libcurl, etc., but I don't think it is relevant]
+So either:
 
-Sorry I didn't think to look sooner.
+    error_errno(....);
+    close(fd);
+    return -1;
 
-Happy Hunting!
+Or even better:
 
-ATB,
-Ramsay Jones
+    error_errno(...)
+    if (close(fd))
+        warning_errno("cannot close() bitmap file");
+    return -1;
 
---- >8 ---
+Although that last one may be too pedantic.
 
-[snip]
-2021/11/09 02:52:01 Augmented Transaction List:
-2021/11/09 02:52:01    0 install cygwin               3.3.2-1  
-2021/11/09 02:52:01    1   erase cygwin               3.2.0-1  
-2021/11/09 02:52:01    2 install cygwin-debuginfo     3.3.2-1  
-2021/11/09 02:52:01    3   erase cygwin-debuginfo     3.2.0-1  
-2021/11/09 02:52:01    4 install cygwin-devel         3.3.2-1  
-2021/11/09 02:52:01    5   erase cygwin-devel         3.2.0-1  
-2021/11/09 02:52:01    6 install cygwin-doc           3.3.2-1  
-2021/11/09 02:52:01    7   erase cygwin-doc           3.2.0-1  
-2021/11/09 02:52:01    8 install perl-DateTime-Locale 1.33-1   
-2021/11/09 02:52:01    9   erase perl-DateTime-Locale 1.32-1   
-2021/11/09 02:52:01   10 install perl-URI             5.10-1   
-2021/11/09 02:52:01   11   erase perl-URI             5.09-1   
-2021/11/09 02:52:01   12 install libpcre2_8_0         10.39-1  
-2021/11/09 02:52:01   13   erase libpcre2_8_0         10.38-1  
-2021/11/09 02:52:01   14 install libpcre2_16_0        10.39-1  
-2021/11/09 02:52:01   15   erase libpcre2_16_0        10.38-1  
-2021/11/09 02:52:01   16 install libopenldap2_5_0     2.5.9-1  
-2021/11/09 02:52:01   17   erase libopenldap2_5_0     2.5.8-1  
-2021/11/09 02:52:01   18 install libidn12             1.38-1   
-2021/11/09 02:52:01   19 install libarchive13         3.5.2-2  
-2021/11/09 02:52:01   20   erase libarchive13         3.5.2-1  
-2021/11/09 02:52:01   21 install git                  2.33.1-1 
-2021/11/09 02:52:01   22   erase git                  2.33.0-1 
-2021/11/09 02:52:01   23 install gawk                 5.1.1-1  
-2021/11/09 02:52:01   24   erase gawk                 5.1.0-1  
-2021/11/09 02:52:01   25 install perl-libwww-perl     6.58-1   
-2021/11/09 02:52:01   26   erase perl-libwww-perl     6.57-1   
-2021/11/09 02:52:01   27 install libpcre2-posix3      10.39-1  
-2021/11/09 02:52:01   28   erase libpcre2-posix3      10.38-1  
-2021/11/09 02:52:01   29 install lynx                 2.8.9-13 
-2021/11/09 02:52:01   30   erase lynx                 2.8.7-2  
-2021/11/09 02:52:01   31 install gitk                 2.33.1-1 
-2021/11/09 02:52:01   32   erase gitk                 2.33.0-1 
-2021/11/09 02:52:01   33 install git-email            2.33.1-1 
-2021/11/09 02:52:01   34   erase git-email            2.33.0-1 
-2021/11/09 02:52:01   35 install git-gui              2.33.1-1 
-2021/11/09 02:52:01   36   erase git-gui              2.33.0-1 
-[snip]
-2021/11/09 02:52:19 Uninstalling cygwin
-2021/11/09 02:52:19 Uninstalling cygwin-debuginfo
-2021/11/09 02:52:20 Uninstalling cygwin-devel
-2021/11/09 02:52:20 Uninstalling cygwin-doc
-2021/11/09 02:52:26 Uninstalling perl-DateTime-Locale
-2021/11/09 02:52:28 Uninstalling perl-URI
-2021/11/09 02:52:29 Uninstalling libpcre2_8_0
-2021/11/09 02:52:29 Uninstalling libpcre2_16_0
-2021/11/09 02:52:29 Uninstalling libopenldap2_5_0
-2021/11/09 02:52:29 Uninstalling libarchive13
-2021/11/09 02:52:29 Uninstalling git
-2021/11/09 02:52:30 Uninstalling gawk
-2021/11/09 02:52:30 Uninstalling perl-libwww-perl
-2021/11/09 02:52:31 Uninstalling libpcre2-posix3
-2021/11/09 02:52:31 Uninstalling lynx
-2021/11/09 02:52:31 Uninstalling gitk
-2021/11/09 02:52:31 Uninstalling git-email
-2021/11/09 02:52:31 Uninstalling git-gui
-[snip]
-2021/11/09 02:55:50 Changing gid to Administrators
-2021/11/09 02:55:54 note: In-use files have been replaced. You need to reboot as soon as possible to activate the new versions. Cygwin may operate incorrectly until you reboot.
-2021/11/09 02:55:54 Ending cygwin install
+>  	}
+>  
+>  	if (bitmap_git->pack || bitmap_git->midx) {
+> @@ -350,8 +350,10 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+>  	if (load_bitmap_header(bitmap_git) < 0)
+>  		goto cleanup;
+>  
+> -	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum))
+> +	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum)) {
+> +		error(_("checksum doesn't match in MIDX and bitmap"));
+>  		goto cleanup;
+> +	}
+>  
+>  	if (load_midx_revindex(bitmap_git->midx) < 0) {
+>  		warning(_("multi-pack bitmap is missing required reverse index"));
+> @@ -390,7 +392,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+>  
+>  	if (fstat(fd, &st)) {
+>  		close(fd);
+> -		return -1;
+> +		return error_errno(_("cannot fstat bitmap file"));
+
+Same issue here.
