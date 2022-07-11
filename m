@@ -2,133 +2,218 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66FF7C43334
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 11:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFDBBC43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 11:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231299AbiGKL1u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 07:27:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
+        id S230028AbiGKLnO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 07:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231267AbiGKL1Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 07:27:25 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9B271729
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 04:04:15 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id bh13so4430678pgb.4
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 04:04:15 -0700 (PDT)
+        with ESMTP id S230376AbiGKLmw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 07:42:52 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27A03E82
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 04:37:39 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id r14so6633376wrg.1
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 04:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3i42qct7wNmt/XvGVw0k3Tpq4Z/9jZjuaEOkjTAXfM4=;
-        b=FDDCCs+80oPTo9lw3YabjAnQMvEhDi3nqg0Xem8/PhKgHESg/jRWIdPwbd9EjV+4Jq
-         UKkUO36KmN9dD1CtmPObPmL4g+Wi5BBx9mMPvSyTAVeQUCWIKdsB33eAdfG8UXNT+7p1
-         mkWDEjuK55zFjWLzuR0MUZvccVnSwIaQ+AgmN6qn6tIyjmQ9O6HztZgxUncG9ZR1DvWW
-         R84DUnuFJu0Dis+YaeUYZNZ7CjGhWo3c/Q3/NpC/kShVKR+bWIOvpktfzZ9nYEZkv0JU
-         wcmBUW8FNEJB69dJfSyJXBRtuLSXxWpmqKOpLudAGEbUxOkzEN0hWeBgi9V/irFPFCcg
-         A+2w==
+        bh=NCDCdC4D6RE10Ee/IG9XYG/ByOeBHb23CwofGa/bfKY=;
+        b=QByXCj/e6p3f4ui3VVtpE+2bByx7qKpzl5hpwFY2wS0YB/KkfIDN6YMxVpgAdYVRzE
+         JOtNukBa8bhe1JPU2wGlhQlFJ9XFuRAeqsrdVi1g3I3Q3VlZpDwioBF3dHtUF9kL6Ubm
+         ZyFOWCN5MEQNdDKzBrl/yjDhJN+LQjH46cs4tthle1PsOz0fSFm4X/BXi0wVfsrgO7nO
+         Ko8VU62K0X291CIoxmdXQ3BL/68jgYAWQJtk/zdjYF8h+Oj/9ueZSuby6gZLGPy03Yaw
+         7sB6RrT/g+96rR7uvAttdGpCmPNYlLmIkvmgkryIMpqPnR42u2a4qWkvssZFxAANu2mK
+         Djpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3i42qct7wNmt/XvGVw0k3Tpq4Z/9jZjuaEOkjTAXfM4=;
-        b=y74oGB8O+3/skPFYWr9bwsetMtLxZ1eiGm4GbGU2EYrqzENr1WmLjKbIhkhYfBDVjJ
-         mMDfMQvU0ifVeBTjS4mDX+RTxBPThyvJJGpVkK5S430VHYcF9vjCR7enUlGG/DmXX82L
-         erFNQ7ermNEcZiscC8V2L0ENfGaB4cvQAO7cEqP1XusgvVF9Wscqwy/V5G7ba2DWXyGq
-         e2sLp/AFuxqKrSAfqDnE49ArZWY3RVfH8TQfSJlV9oo/QK2HQ16oxqbwbVMkgCRqVUpc
-         vWFGOzP6rXECSq1kO050YwggRAwuyudDNJaMvgq3Bakn4cOSaChPOl078YqRaH2l4CGe
-         Hnig==
-X-Gm-Message-State: AJIora9t4E8vw0NploulTMOphMtiCDMvjbC0uyxzfvKSLcpJW2RZLPjN
-        D6Ltn+p18Tm2VCL5g38ZGKHSxwGbfXw=
-X-Google-Smtp-Source: AGRyM1uqqsAGZ2UZm8IF7CzD9ioNVmnT2ikmv05GjNg/zvGQM5sKgmm+9hV1UCUTwJ8i2Ph9hzS+ag==
-X-Received: by 2002:a65:6cc8:0:b0:3fe:2b89:cc00 with SMTP id g8-20020a656cc8000000b003fe2b89cc00mr15749397pgw.599.1657537454437;
-        Mon, 11 Jul 2022 04:04:14 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.102])
-        by smtp.gmail.com with ESMTPSA id lj1-20020a17090b344100b001e87bd6f6c2sm6732708pjb.50.2022.07.11.04.04.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jul 2022 04:04:14 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
-        git@jeffhostetler.com, git@vger.kernel.org, me@ttaylorr.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v5 4/5] pack-bitmap.c: retrieve missing i18n translations
-Date:   Mon, 11 Jul 2022 19:04:03 +0800
-Message-Id: <20220711110403.47391-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.35.0.rc0.676.g60105b7097.dirty
-In-Reply-To: <xmqq8rp43m7v.fsf@gitster.g>
-References: <xmqq8rp43m7v.fsf@gitster.g>
+        bh=NCDCdC4D6RE10Ee/IG9XYG/ByOeBHb23CwofGa/bfKY=;
+        b=RotMxoR3Pdppw0LARM7JYpeyA77AS8e7cv+EfbkJsupdFgGHiESx/Uxi75Vjo8hE8u
+         rsp6U64Yy5GmlRKHga/wuMu4i9gZg/EU0lgi+6gpKGGmD7/C1p5mo/8LzEBk81YWuFZ/
+         scmVch3sGkJ4MVQ+whXUINJP33jFp1F0UqcAWfSsT7HJnpPqP2eFK/+b4amn2s/o6HX0
+         i/b2Afvat8L4j/TVTQdf8WBMyXxgKyi/D7Uy7MwoXCVcl7+/BDyUv3OsoOAgaoRHqnkc
+         QRJRlewJyBp3OtDXcOna7temzhf6C/X74OmW9sSJuG1FYRLMYOey1fGLRN35Hy2IU5M3
+         Uvng==
+X-Gm-Message-State: AJIora/AMiEyDSvFH4djyfOGCFVeFaJ0JrwhgSko4o+aoEaTSDq083IR
+        8IEvROTxh8b716UB47R3Uyk8lmvheSE=
+X-Google-Smtp-Source: AGRyM1sJ8NlFp+PdGAkfh/dN/H0HifpdlmKzGHxZc/5B3+ypSgceHfmAVhz0wImXzmYzKHOkCd+xkQ==
+X-Received: by 2002:a5d:5703:0:b0:21d:6c55:4986 with SMTP id a3-20020a5d5703000000b0021d6c554986mr16822828wrv.455.1657539457237;
+        Mon, 11 Jul 2022 04:37:37 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id b17-20020adff911000000b0021d819c8f6dsm5562463wrr.39.2022.07.11.04.37.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jul 2022 04:37:36 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH 0/4] make headway towards a clean "clang-format"
+Date:   Mon, 11 Jul 2022 13:37:24 +0200
+Message-Id: <RFC-cover-0.4-00000000000-20220711T110019Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.0.913.g189dca38629
+In-Reply-To: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net>
+References: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> To retrieve is to get/bring something back and regaining possession
-> of, which implies that the thing existed somewhere already but at a
-> wrong/different place, and the only thing you are doing is to move
-> it to the right place, but in this case, the translations did not
-> exist.  The patch is marking more strings for translation.  And the
-> act of marking them for translation will cause i18n/l10n folks to
-> translate these strings, which will (finally) allow _("...") to
-> retrieve the translated strings at runtime.
->
-> So "retrieve" is indeed involved somewhere in the process, but using
-> the verb skips a few steps.
->
->     Subject: [PATCH 4/5] pack-bitmap.c: mark more strings for translations
->
-> perhaps?
+On Sun, Jul 10 2022, brian m. carlson wrote:
 
-Yes. The explanation is clear.
+> Having a code formatting tool means that the work for a contributor to
+> format the file properly consists of about two keystrokes.  This
+> substantially reduces the amount of time that contributors must spend
+> thinking about code formatting and simplifies it to an automatic process
+> that, if we choose, can even be verified in CI.
 
+I'm generally in favor of this, or more specifically I'm generally in
+favor of whatever we can do to make
+Documentation/{SubmittingPatches,CodingGuidelines}, t/README,
+po/README.md and whatever other "checklist" document we have more
+automated.
 
-> Sorry, but I am not sure what you are asking.  What I meant is that
-> a hunk like this from the patch in discussion:
-> 
->  	if (bitmap_size < 0) {
-> -		error("Failed to load bitmap index (corrupted?)");
-> +		error(_("Failed to load bitmap index (corrupted?)"));
->  		ewah_pool_free(b);
->  		return NULL;
->  	}
-> 
-> makes translators to first translate the above string, but we will
-> fix the "C" locale version (that is, the string inside _() that is
-> used as the key to the .po database when retrieving the translated
-> version) to follow our error message formatting convention to read
-> something like
-> 
-> 	error(_("failed to load bitmap index (corrupted?)"));
-> 
-> or even
-> 
-> 	error(_("failed to load bitmap index (corrupted?): '%s'"),
-> 	      filename);
-> 
-> And the translators have to redo the work.  If a preliminary patch
-> fixed these up before bothering translators with more strings to
-> translate, they do not need to translate the current, known to be
-> faulty, version of messages.
+So we could generally waste less time in asking contributors to read and
+internalize these documents, or in fixing submission mistakes, and more
+time on worthwhile work.
 
-Yes. I understand a bit of that, maybe.  So, if the string is not C locale,
-translator will redo because it cannot be a translate key. Another scence is,
-if the string is not following the guideline like capitalized first letter,
-translator will redo too, we should avoid that. 
+Whether using an automatic formatter would land us on the right side of
+that trade-off is something I'm not sure about, but if it would: Great!
 
-> In practice, yes, but the code is following the convention to reduce
-> common confusion caused by leaving some lower precedence but common
-> environment variables (i.e. LANG) as their original values.
+But!
 
-OK.
+> I should note that we already have a .clang-format file, so we can
+> already use clang-format.  However, we cannot blindly apply it because
+> it produces output that is not always conformant with our style.  My
+> proposal here is to define our style in terms of the formatter to avoid
+> this problem.
 
-> Does the line in the completion script have anything to do with
-> [PATCH 4/5], or is this merely your curiosity?  Avoid mixing in
-> unrelated things into the topic, which will only make the review
-> cycle unnecessarily longer, but raise a separate discussion if you
-> have to.
+I think this is very premature at this point.
 
-Curiosity. 
-Sorry for that, I will raise a separate one next time.
+I experimented a while ago (low number of months) with clang-format for
+the first time, and found that the delta between what it proposed as
+changes and what it *should* propose was needlessly high.
 
-Thanks.
+This RFC is a cleaned-up & updated version of those WIP experiments I
+made. I think this series is "ready" in that it's a sensible
+improvement, and having a "make style-all" family of rules is very
+useful to check how .clang-format behaves.
+
+But I think we're far short of declaring that we should simply refer
+to clang-format against our shipped .clang-format configuration as our
+canonical style.
+
+At the end of this series we're at a 60% shorter suggested diff from
+clang-format, but that still leaves ~13k lines of diff on top of
+"master".
+
+And, as 0[2-4]/04 note adjusting those rules isn't always clear, and
+there's the major question of what to do about "ColumnLimit", and
+things like "BitFieldColonSpacing" which require a much newer version
+of clang than we're probably comfortable with requiring.
+
+Someone more interested than me in this (i.e. you:) should really be
+building on top of this, i.e. running:
+
+	make style-all-diff-apply
+
+And seeing what general categories these differences fall into, and
+whether clang-format has any more options that we've set in the wrong
+way, or which we're missing.
+
+There's clearly a lot of changes in the resulting diff that we should
+have per our style guide, e.g. there's a lot of "}\nelse {" (bad!)
+v.s. "} else {" (good!) and the like.
+
+Before we get to a "clean diff" we could at some point "invert" our
+style guide. I.e. instead of saying "code should be like XYZ", we
+could say:
+
+	run clang-format, but it might report some differences, as
+	long as it's one of the below known-cases that's OK.
+
+I.e. we could one-off search-replace all the "}\nelse {" etc. cases to
+the "} else {" form, and then we wouldn't have to waste words on that
+in Documentation/CodingGuidelines.
+
+But I *really* don't think we can declare that clang-format is some
+source of truth before doing much or all of that work. If you think
+nits are annoying now consider e.g. this change to advice.c:
+	
+	diff --git a/advice.c b/advice.c
+	index 6fda9edbc24..e0e453d68d1 100644
+	--- a/advice.c
+	+++ b/advice.c
+	@@ -35,6 +35,7 @@ static struct {
+	 	const char *key;
+	 	int enabled;
+	 } advice_setting[] = {
+	+	[ADVICE_FOO]					= { "foo", 1 },f
+	 	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo", 1 },
+	 	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec", 1 },
+	 	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile", 1 },
+
+I'll spare you the full diff, but if you do that and run "make style"
+it'll spew out a ~100 line diff at you, as it re-indents and
+re-formats that entire block.
+
+That *is* a rather extreme example, most of its suggestions are 1-5
+line diffs.
+
+But if there's one hill I'm willing to die on it's that we should
+never introduce any sort of "landmine checks" in this codebase.
+
+Those are checks where we don't e.g. assert that the style of git.c is
+OK, but rather just run a "diff" on your specific change.
+
+Then if it happens to change any code that was *already in violation*
+will make it your problem to fix that. I.e. the landmine was already
+there, but you just happened to walk over that path, and *boom*.
+
+But I'm not an unreasonable zealot about that:) E.g. as running the
+"make style-all-diff-apply" target here shows you around 40% of our
+*.[ch] files don't have any suggested changes.
+
+That's around 30% with just 1/4, i.e. a 10% "gain" is made with the
+2-4/4 rule changes here.
+
+So, in combination with updating .clang-format we could start making
+headway earlier by e.g. whitelisting files (or globs, or directories)
+that are already "style clean".
+
+It would be a bit annoying if we needed to move code from a "dirty" to
+a "clean" file, but we mostly don't do that, so I'd think that would
+be OK.
+
+But I think like other "partial asserts" (such as the "linux-leaks" CI
+job) such an approach really would need to proceed in parallel with
+fixing the remaining cases, even though that might take a while.
+
+I.e. we'd want to have some assurances that we'd either be willing to
+live with a fully clang-format'd codebase, or at least that the
+special-casing of the style rules wasn't too widespread. We have a bit
+of "/* clang format (off|on) */" already, and e.g. for the likes of
+advice.c that would be OK, but having it be a common pattern would be
+annoying.
+
+Ævar Arnfjörð Bjarmason (4):
+  Makefile: add a style-all targets for .clang-format testing
+  .clang-format: Add a BitFieldColonSpacing=None rule
+  .clang-format: do not enforce a ColumnLimit
+  .clang-format: don't indent "goto" labels
+
+ .clang-format | 17 +++++++++----
+ Makefile      | 67 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 79 insertions(+), 5 deletions(-)
+
+-- 
+2.37.0.913.g189dca38629
+
