@@ -2,91 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84DB5C433EF
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 21:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9F16C43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 21:27:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231381AbiGKVW0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 17:22:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40114 "EHLO
+        id S229667AbiGKV1Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 17:27:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbiGKVWY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 17:22:24 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14EC12A71A
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 14:22:23 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 792F01A6CFC;
-        Mon, 11 Jul 2022 17:22:21 -0400 (EDT)
+        with ESMTP id S229593AbiGKV1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 17:27:14 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172C6326CC
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 14:27:09 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 597E7135F65;
+        Mon, 11 Jul 2022 17:27:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=c7e40sFABKcILYNTTGvX2ot/bIE+kd/b1SmKjZ
-        Sy/r8=; b=mDTuv7jTcow0WIm6tVdtZVsdmYwyuHgyTSa4bCFm/ZDG0P/WFruMo1
-        hF+moLnqcZAIyYgl9ZVc4NfvfrKbcH+qIrmdn8lcnOI7zaRD1+8wbUnCGtFcJYU/
-        4PKT8leluYbnTrnDqf+D0EsOAa5hrHhc/y6V+v/5xK+9Epg65oMGw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7163D1A6CFB;
-        Mon, 11 Jul 2022 17:22:21 -0400 (EDT)
+        :content-type; s=sasl; bh=4+VGdnwXLIKyfCTf2jvsKMdaUh/RkUS2at1vHK
+        lpP4M=; b=T7yxftXah65V6qgsQ2wp0WnpyGNUkU5A8XgKSIufYqnGmF8T9jAlzf
+        J4K5jLJ2b5hfZmtq2mdO5ES36poQz/Mtiii+9UOkunvTgui0FlmwrR3EBmOxsM50
+        ueDrL3x//Ac8raEXM6lKtdkP2xByZ8HYk/DqJcxvrXDrsD4FcOHL8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4CBF9135F63;
+        Mon, 11 Jul 2022 17:27:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EE5091A6CF9;
-        Mon, 11 Jul 2022 17:22:16 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7631A135F62;
+        Mon, 11 Jul 2022 17:27:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@jeffhostetler.com,
-        git@vger.kernel.org, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v6 4/7] pack-bitmap.c: don't ignore ENOENT silently
-References: <cover.1657540174.git.dyroneteng@gmail.com>
-        <009cc49a18f2846c24256102e07437894ac16908.1657540174.git.dyroneteng@gmail.com>
-Date:   Mon, 11 Jul 2022 14:22:15 -0700
-In-Reply-To: <009cc49a18f2846c24256102e07437894ac16908.1657540174.git.dyroneteng@gmail.com>
-        (Teng Long's message of "Mon, 11 Jul 2022 20:44:00 +0800")
-Message-ID: <xmqqpmibmjjs.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Olaf Hering <olaf@aepfle.de>
+Subject: Re: [PATCH] ref-filter: disable save_commit_buffer while traversing
+References: <Ysw4JtoHW1vWmqhz@coredump.intra.peff.net>
+Date:   Mon, 11 Jul 2022 14:27:06 -0700
+In-Reply-To: <Ysw4JtoHW1vWmqhz@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 11 Jul 2022 10:48:06 -0400")
+Message-ID: <xmqqilo3mjbp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8A2AB046-015F-11ED-99DF-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 37530BEC-0160-11ED-AB9F-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> When finished call git_open(), instead of ignoring ENOENT silently
-> and return error_errno(_("cannot stat...")), it's better to check
-> the ENOENT before then output the warning.
+>   - Note that all of this assumes you don't have a commit-graph file. if
+>     you do, then the heap usage is even lower, and the runtime is 10x
+>     faster. So in that sense this is not urgent, as there's a much
+>     better solution. But since it's such an obvious and easy win for
+>     fallback cases (including commits which aren't yet in the graph
+>     file), there's no reason not to.
 
-Both the title and the body describes a complete opposite of what
-the patch does, doesn't it?
+Sounds sensible.
 
-	pack-bitmap.c: do not ignore error when opening a bitmap file
-
-	Calls to git_open() to open the pack bitmap file and
-	multi-pack bitmap file do not report any error when they
-	fail.  These files are optional and it is not an error if
-	open failed due to ENOENT, but we shouldn't be ignoring
-	other kinds of errors.
-
-or something?
-
-> +	if (fd < 0) {
-> +		if (errno != ENOENT)
-> +			warning("'%s' cannot open '%s'", strerror(errno), bitmap_name);
-> +		free(bitmap_name);
-
-Showing the errno is good, but I do not think it should be enclosed
-in single quotes.
-
-One thing you should consider when writing a "this is an optional
-file and not finding it is perfectly fine" logic like this one is
-that you may or may not want to ignore ENOTDIR.  ENOTDIR is what you
-get when you say open("a/b") and "a" exists as something other than
-a directory.  If you have a path with a slash in bitmap_name, and if
-in a sane and healthy repository the leading path should always
-exist (i.e. the file "a/b" may be missing, but the directory "a/"
-should be there), then getting ENOTDIR is a noteworthy event.  There
-may be cases where ENOTDIR can justifiably and should be ignored.
-
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Just pulling this out of the discussion in:
+>
+>   https://lore.kernel.org/git/YswuaPx6Mk7YkIim@coredump.intra.peff.net/
+>
+> as it's an easy win.
+>
+> I doubt that anyone even cares about restoring the value of
+> save_commit_buffer. So this _could_ be a one-liner turning it off,
+> rather than doing the save/restore dance. I was mostly erring on the
+> conservative side, but maybe fewer lines of code is a worthwhile thing.
+>
+>  ref-filter.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index d3c90e5dbe..bdf39fa761 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -2405,13 +2405,17 @@ static void reach_filter(struct ref_array *array,
+>  int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int type)
+>  {
+>  	struct ref_filter_cbdata ref_cbdata;
+> +	int save_commit_buffer_orig;
+>  	int ret = 0;
+>  
+>  	ref_cbdata.array = array;
+>  	ref_cbdata.filter = filter;
+>  
+>  	filter->kind = type & FILTER_REFS_KIND_MASK;
+>  
+> +	save_commit_buffer_orig = save_commit_buffer;
+> +	save_commit_buffer = 0;
+> +
+>  	init_contains_cache(&ref_cbdata.contains_cache);
+>  	init_contains_cache(&ref_cbdata.no_contains_cache);
+>  
+> @@ -2444,6 +2448,7 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+>  	reach_filter(array, filter->reachable_from, INCLUDE_REACHED);
+>  	reach_filter(array, filter->unreachable_from, EXCLUDE_REACHED);
+>  
+> +	save_commit_buffer = save_commit_buffer_orig;
+>  	return ret;
+>  }
