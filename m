@@ -2,124 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC009C433EF
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 14:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8374C433EF
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 14:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231531AbiGKOlk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 10:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35204 "EHLO
+        id S231697AbiGKOsK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 10:48:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbiGKOlg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 10:41:36 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E542C41D36
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 07:41:35 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id l23so9193196ejr.5
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 07:41:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Um47RI759H4qgyMRcEthfZ71rzZOnTtGxkFr+Px74JY=;
-        b=XG0gestFRtnpEaH4BcYIiAnjKgVcUjPSGYw0MwYeZ3QFpV2oZOzWFAeOCllz35x/l0
-         7tiJ6szkTLCWiRsvpCPRXejIx9yOD48wPF0dZ3fod3Rf6GPthYHTKPOVStYTo26htrdL
-         mlXVi0Oh0idQWcS1jfeRDh3V2fQsV1BoXEPbmKz6QtWEPXn96s63RufHDS8iTRK8SdC8
-         z2pHVJ3eZ2d3q7ECS1Abd004QQJGwan/64j5Zg95fdixezTQk6QH1iIgEj58pZ58+YcU
-         hky+zJwnPkr6kIVNL4X7KG5L3/fWml5ui7ztvd9/bgFVZFG59reEx763Hi3JAE3iYIBx
-         B4zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Um47RI759H4qgyMRcEthfZ71rzZOnTtGxkFr+Px74JY=;
-        b=p2j1b9A8ZJM1u0c0VG/kyPVWFEAwulxfeU0RQtteSAodO+ExuBJTWSYPCIJnJhDOQI
-         ggDxxWJKd+0Us2Y6/66YEIGh9qLWfsXH1+E0sOr1WtzwWZ0YwIY6rOCvvtbLA1V5IuUt
-         wsY/YBZzlJz3cUK9tmBAetlWkIrOwDOtifgYl84HgD94oRmKOJ48soBj51piC46etQCx
-         JTrWuqOcYV6zr6oPxbXKUp1Q+UulXYbmMAwsL77CKCR0AleTKXTJqBCDSGgSBkJpsJre
-         r0ky3+Tr+oZ/+XCVITa29p8SMUMj+3cQWRij3ZMh7qZwZfWCqrhYKz8ked3a7T/aTpAT
-         NtMw==
-X-Gm-Message-State: AJIora8pX6uLva0r7pWNyzDf/KQb7nODnrxKOmWfYONJmfM5PMBkePkx
-        9W123EHgW5cU6pZ9JUp8Lb8=
-X-Google-Smtp-Source: AGRyM1tunH7b2jnNn0fjPAOXD3us2WgQWikeeyAAePkve5mxU5yyiwUbH9DMx0vkf93e1P4HRHcHtw==
-X-Received: by 2002:a17:907:9687:b0:726:3afa:fc7b with SMTP id hd7-20020a170907968700b007263afafc7bmr18873273ejc.82.1657550494454;
-        Mon, 11 Jul 2022 07:41:34 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id lz21-20020a170906fb1500b0072aa38d768esm2767537ejb.64.2022.07.11.07.41.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 07:41:33 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oAubM-000uY7-Lo;
-        Mon, 11 Jul 2022 16:41:32 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     derrickstolee@github.com, git@jeffhostetler.com,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v6 7/7] tr2: dump names if config exist in multiple scopes
-Date:   Mon, 11 Jul 2022 16:40:21 +0200
-References: <cover.1657540174.git.dyroneteng@gmail.com>
- <c45ead51ffc5a9176493d627da8332d35a31d87c.1657540174.git.dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <c45ead51ffc5a9176493d627da8332d35a31d87c.1657540174.git.dyroneteng@gmail.com>
-Message-ID: <220711.86fsj77lur.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231461AbiGKOsI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 10:48:08 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E4506D2F7
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 07:48:07 -0700 (PDT)
+Received: (qmail 8319 invoked by uid 109); 11 Jul 2022 14:48:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 11 Jul 2022 14:48:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20222 invoked by uid 111); 11 Jul 2022 14:48:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Jul 2022 10:48:06 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 11 Jul 2022 10:48:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Olaf Hering <olaf@aepfle.de>
+Subject: [PATCH] ref-filter: disable save_commit_buffer while traversing
+Message-ID: <Ysw4JtoHW1vWmqhz@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Various ref-filter options like "--contains" or "--merged" may cause us
+to traverse large segments of the history graph. It's counter-productive
+to have save_commit_buffer turned on, as that will instruct the commit
+code to cache in-memory the object contents for each commit we traverse.
 
-On Mon, Jul 11 2022, Teng Long wrote:
+This increases the amount of heap memory used while providing little or
+no benefit, since we're not actually planning to display those commits
+(which is the usual reason that tools like git-log want to keep them
+around). We can easily disable this feature while ref-filter is running.
+This lowers peak heap (as measured by massif) for running:
 
-> When we specify GIT_TRACE2_CONFIG_PARAMS or trace2.configparams,
-> trace2 will prints "interesting" config values to log. Sometimes,
-> when a config set in multiple scope files, the following output
-> looks like (the irrelevant fields are omitted here as "..."):
->
-> ...| def_param    |  ...  | core.multipackindex:false
-> ...| def_param    |  ...  | core.multipackindex:false
-> ...| def_param    |  ...  | core.multipackindex:false
->
-> As the log shows, even each config in different scope is dumped, but
-> we don't know which scope it comes from. Therefore, it's better to
-> add the scope names as well to make them be more recognizable. For
-> example, when execute:
->
->     $ GIT_TRACE2_PERF=1 \
->     > GIT_TRACE2_CONFIG_PARAMS=core.multipackIndex \
->     > git rev-list --test-bitmap HEAD"
->
-> The following is the ouput (the irrelevant fields are omitted here
-> as "..."):
->
-> Format normal:
-> ... git.c:461 ... def_param scope:system core.multipackindex=false
-> ... git.c:461 ... def_param scope:global core.multipackindex=false
-> ... git.c:461 ... def_param scope:local core.multipackindex=false
->
-> Format perf:
->
-> ... | def_param    | ... | scope:system | core.multipackindex:false
-> ... | def_param    | ... | scope:global | core.multipackindex:false
-> ... | def_param    | ... | scope:local  | core.multipackindex:false
->
-> Format event:
->
-> {"event":"def_param", ... ,"scope":"system","param":"core.multipackindex","value":"false"}
-> {"event":"def_param", ... ,"scope":"global","param":"core.multipackindex","value":"false"}
-> {"event":"def_param", ... ,"scope":"local","param":"core.multipackindex","value":"false"}
+  git tag --contains 1da177e4c3
 
-This seems sensible on its face, but...
+in linux.git from ~100MB to ~20MB. It also seems to improve runtime by
+4-5% (600ms vs 630ms).
 
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> ---
->  trace2/tr2_tgt_event.c  | 3 +++
->  trace2/tr2_tgt_normal.c | 5 ++++-
->  trace2/tr2_tgt_perf.c   | 9 +++++++--
->  3 files changed, 14 insertions(+), 3 deletions(-)
+A few points to note:
 
-... we really should update Documentation/technical/api-trace2.txt here too.
+  - it should be safe to temporarily disable save_commit_buffer like
+    this. The saved buffers are accessed through get_commit_buffer(),
+    which treats the saved ones like a cache, and loads on-demand from
+    the object database on a cache miss. So any code that was using this
+    would not be wrong, it might just incur an extra object lookup for
+    some objects. But...
 
-It does say "..." currently, so we're not lying there, but since we now
-add "scope" unconditionally...
+  - I don't think any ref-filter related code is using the cache. While
+    it's true that an option like "--format=%(*contents:subject)" or
+    "--sort=*authordate" will need to look at the commit contents,
+    ref-filter doesn't use get_commit_buffer() to do so! It always reads
+    the objects directly via read_object_file(), though it does avoid
+    re-reading objects if the format can be satisfied without them.
+
+    Timing "git tag --format=%(*authordate)" shows that we're the same
+    before and after, as expected.
+
+  - Note that all of this assumes you don't have a commit-graph file. if
+    you do, then the heap usage is even lower, and the runtime is 10x
+    faster. So in that sense this is not urgent, as there's a much
+    better solution. But since it's such an obvious and easy win for
+    fallback cases (including commits which aren't yet in the graph
+    file), there's no reason not to.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Just pulling this out of the discussion in:
+
+  https://lore.kernel.org/git/YswuaPx6Mk7YkIim@coredump.intra.peff.net/
+
+as it's an easy win.
+
+I doubt that anyone even cares about restoring the value of
+save_commit_buffer. So this _could_ be a one-liner turning it off,
+rather than doing the save/restore dance. I was mostly erring on the
+conservative side, but maybe fewer lines of code is a worthwhile thing.
+
+ ref-filter.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index d3c90e5dbe..bdf39fa761 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2405,13 +2405,17 @@ static void reach_filter(struct ref_array *array,
+ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int type)
+ {
+ 	struct ref_filter_cbdata ref_cbdata;
++	int save_commit_buffer_orig;
+ 	int ret = 0;
+ 
+ 	ref_cbdata.array = array;
+ 	ref_cbdata.filter = filter;
+ 
+ 	filter->kind = type & FILTER_REFS_KIND_MASK;
+ 
++	save_commit_buffer_orig = save_commit_buffer;
++	save_commit_buffer = 0;
++
+ 	init_contains_cache(&ref_cbdata.contains_cache);
+ 	init_contains_cache(&ref_cbdata.no_contains_cache);
+ 
+@@ -2444,6 +2448,7 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+ 	reach_filter(array, filter->reachable_from, INCLUDE_REACHED);
+ 	reach_filter(array, filter->unreachable_from, EXCLUDE_REACHED);
+ 
++	save_commit_buffer = save_commit_buffer_orig;
+ 	return ret;
+ }
+ 
+-- 
+2.37.0.424.g982e2d45d0
