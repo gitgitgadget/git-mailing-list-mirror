@@ -2,134 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0292FC433EF
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 11:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66FF7C43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 11:27:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231276AbiGKLZs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 07:25:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43268 "EHLO
+        id S231299AbiGKL1u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 07:27:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231273AbiGKLZS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 07:25:18 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4461B655BA
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 03:57:13 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id w12so5003564edd.13
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 03:57:13 -0700 (PDT)
+        with ESMTP id S231267AbiGKL1Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 07:27:25 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9B271729
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 04:04:15 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id bh13so4430678pgb.4
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 04:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=dbUyMyY0VXMfTuF80NXCme4mmp0hbrGlDQme1FFBpXo=;
-        b=XO+WIegmA0tkITBgbWuSqQo3QgAsjAkaUZeq4xpTpKmhrha2w/mTXijjT0jfbTQJm1
-         CGb5hKzkY1xhYECnXcOhsavR8ccxzFDFLdHGLbLhUXPEnAj+YXEddpX0OMhYNQEkLrtx
-         slPJsNtkuqowvui+2xliIcqLGnUCeBao2eu/Xf/Gc2HYAwvBK7uUNFU7q/TkoTYi6c4/
-         3ipTCkGYa9DAWASMWJrS3kuut9gR0cTSjfRyJSGYKMbtjLMBh4tv3T6p2bjCwRlImuzq
-         LT3E+ZZiF7/g6OZhxklPnjb9nlA2/Mx7Rd2ntVX6OzocDBgqTETgROG5Ni5F2JMhdhkF
-         6cdg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3i42qct7wNmt/XvGVw0k3Tpq4Z/9jZjuaEOkjTAXfM4=;
+        b=FDDCCs+80oPTo9lw3YabjAnQMvEhDi3nqg0Xem8/PhKgHESg/jRWIdPwbd9EjV+4Jq
+         UKkUO36KmN9dD1CtmPObPmL4g+Wi5BBx9mMPvSyTAVeQUCWIKdsB33eAdfG8UXNT+7p1
+         mkWDEjuK55zFjWLzuR0MUZvccVnSwIaQ+AgmN6qn6tIyjmQ9O6HztZgxUncG9ZR1DvWW
+         R84DUnuFJu0Dis+YaeUYZNZ7CjGhWo3c/Q3/NpC/kShVKR+bWIOvpktfzZ9nYEZkv0JU
+         wcmBUW8FNEJB69dJfSyJXBRtuLSXxWpmqKOpLudAGEbUxOkzEN0hWeBgi9V/irFPFCcg
+         A+2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=dbUyMyY0VXMfTuF80NXCme4mmp0hbrGlDQme1FFBpXo=;
-        b=PMkK4SXaLKJQo2cZazTm2oGayK8YIC9SMQQAs9nWDruOl/dtwcmsxiK+M6IIxK4MA5
-         Wnow3IJ20a/K/3EL4CEONqocpvwM2tL7JmdhWBe/Fb8f+gX4YUIHAocI519Rj3wvKzz9
-         P9XweTiVJQ3318TnX/P5XBqUn3Opy4mt/QW1FAFt+/8tb7faBMf8jSdAit3kExbzkamu
-         pAhbCsmOOxnJhNLG6gsjmjJFuN4iYa78fSHXPRfBhtBW9GJfqNT13fXcdnZV5al/bxNK
-         r9svqR77WRspGZn8mcBbVm7SjvnQEHPwZNxzdnzgDPIGf+H/WJfx9ho7h8oTYuTjMzMe
-         kZ5A==
-X-Gm-Message-State: AJIora/rwPx5uLcVgt72b/Xzq+NfBS1aQnDnRkPgOqCVdp4lOm7w6MlJ
-        SjKq/ryZLEWKs77qug3AjkMsJZRxmqE=
-X-Google-Smtp-Source: AGRyM1vf/Y4avL9eSq4Q4OSVF60AMwOQF+6pUkcMQTHtvGUNROP4I9+O2cAATPYXEF+d0VlfSejezw==
-X-Received: by 2002:a05:6402:51ce:b0:43a:d409:b3e8 with SMTP id r14-20020a05640251ce00b0043ad409b3e8mr6211674edd.166.1657537031645;
-        Mon, 11 Jul 2022 03:57:11 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id g8-20020a056402114800b0043a587eb95dsm4144483edw.5.2022.07.11.03.57.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 03:57:10 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oAr6E-000n7R-1h;
-        Mon, 11 Jul 2022 12:57:10 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 0/6] add and apply a rule to find "unused" init+free
-Date:   Mon, 11 Jul 2022 12:54:03 +0200
-References: <cover-v3-0.4-00000000000-20220701T102506Z-avarab@gmail.com>
- <cover-v4-0.6-00000000000-20220705T134033Z-avarab@gmail.com>
- <YsvwLIfjZffUWOP/@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YsvwLIfjZffUWOP/@coredump.intra.peff.net>
-Message-ID: <220711.86wncj7w8p.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3i42qct7wNmt/XvGVw0k3Tpq4Z/9jZjuaEOkjTAXfM4=;
+        b=y74oGB8O+3/skPFYWr9bwsetMtLxZ1eiGm4GbGU2EYrqzENr1WmLjKbIhkhYfBDVjJ
+         mMDfMQvU0ifVeBTjS4mDX+RTxBPThyvJJGpVkK5S430VHYcF9vjCR7enUlGG/DmXX82L
+         erFNQ7ermNEcZiscC8V2L0ENfGaB4cvQAO7cEqP1XusgvVF9Wscqwy/V5G7ba2DWXyGq
+         e2sLp/AFuxqKrSAfqDnE49ArZWY3RVfH8TQfSJlV9oo/QK2HQ16oxqbwbVMkgCRqVUpc
+         vWFGOzP6rXECSq1kO050YwggRAwuyudDNJaMvgq3Bakn4cOSaChPOl078YqRaH2l4CGe
+         Hnig==
+X-Gm-Message-State: AJIora9t4E8vw0NploulTMOphMtiCDMvjbC0uyxzfvKSLcpJW2RZLPjN
+        D6Ltn+p18Tm2VCL5g38ZGKHSxwGbfXw=
+X-Google-Smtp-Source: AGRyM1uqqsAGZ2UZm8IF7CzD9ioNVmnT2ikmv05GjNg/zvGQM5sKgmm+9hV1UCUTwJ8i2Ph9hzS+ag==
+X-Received: by 2002:a65:6cc8:0:b0:3fe:2b89:cc00 with SMTP id g8-20020a656cc8000000b003fe2b89cc00mr15749397pgw.599.1657537454437;
+        Mon, 11 Jul 2022 04:04:14 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.102])
+        by smtp.gmail.com with ESMTPSA id lj1-20020a17090b344100b001e87bd6f6c2sm6732708pjb.50.2022.07.11.04.04.12
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Jul 2022 04:04:14 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     gitster@pobox.com
+Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
+        git@jeffhostetler.com, git@vger.kernel.org, me@ttaylorr.com,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v5 4/5] pack-bitmap.c: retrieve missing i18n translations
+Date:   Mon, 11 Jul 2022 19:04:03 +0800
+Message-Id: <20220711110403.47391-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.35.0.rc0.676.g60105b7097.dirty
+In-Reply-To: <xmqq8rp43m7v.fsf@gitster.g>
+References: <xmqq8rp43m7v.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Jul 11 2022, Jeff King wrote:
-
-> On Tue, Jul 05, 2022 at 03:46:54PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> To retrieve is to get/bring something back and regaining possession
+> of, which implies that the thing existed somewhere already but at a
+> wrong/different place, and the only thing you are doing is to move
+> it to the right place, but in this case, the translations did not
+> exist.  The patch is marking more strings for translation.  And the
+> act of marking them for translation will cause i18n/l10n folks to
+> translate these strings, which will (finally) allow _("...") to
+> retrieve the translated strings at runtime.
 >
->> This series adds a coccinelle rule to find and remove code where the
->> only reference to a variable in a given function is to malloc() &
->> free() it, where "malloc" and "free" also match
->> "strbuf_init/strbuf_release", and then later in the series anything
->> that looks like a init/free pattern.
+> So "retrieve" is indeed involved somewhere in the process, but using
+> the verb skips a few steps.
 >
-> As before, I'm perfectly happy with the actual transformations here.
-
-Thanks!
-
->> Changes since v3[1]
->>=20
->>  * Add a "coccicheck-test" target in an early and new patch, the
->>    structure mirrors that of coccinelle.git's own tests. As the
->>    diffstat shows we have a *.c and *.res file which is C code
->>    before/after a *.cocci rule is applied.
+>     Subject: [PATCH 4/5] pack-bitmap.c: mark more strings for translations
 >
-> I have mixed feelings on this. I'm not opposed per se, and I even like
-> the fact that it provides examples of what we expect a rule to do. But I
-> worry about a world where the cost of using coccinelle goes up because
-> now transformations need to have tests along with them. The idea of
-> cocci is to make your life a little simpler and more efficient when
-> fixing up the code base (as opposed to perl, etc).
+> perhaps?
 
-That's fair, and I suppose we could add some really complex tests that
-e.g. include the original headers.
+Yes. The explanation is clear.
 
-But right now these just work on stand-alone *.c files with no includes,
-and the runtime is thus trivial. So I thought it was OK to run it along
-with the main job.
 
-> But if it comes with a bunch of boilerplate tasks, that might no
-> longer be the case. I'm already often on the fence about using cocci
-> just because of the hours I've sunk into debugging and puzzling things
-> out.
->
-> I dunno. Maybe the bar is higher for stuff like this that we expect to
-> continue to find problems as time goes on (because it is not "here is a
-> transition", but "this is a common and easy mistake to make").
->
-> So again, I'm not really opposed to this patch in particular, but I want
-> to express caution at the direction we might be going, and at applying
-> new rules over-zealously.
+> Sorry, but I am not sure what you are asking.  What I meant is that
+> a hunk like this from the patch in discussion:
+> 
+>  	if (bitmap_size < 0) {
+> -		error("Failed to load bitmap index (corrupted?)");
+> +		error(_("Failed to load bitmap index (corrupted?)"));
+>  		ewah_pool_free(b);
+>  		return NULL;
+>  	}
+> 
+> makes translators to first translate the above string, but we will
+> fix the "C" locale version (that is, the string inside _() that is
+> used as the key to the .po database when retrieving the translated
+> version) to follow our error message formatting convention to read
+> something like
+> 
+> 	error(_("failed to load bitmap index (corrupted?)"));
+> 
+> or even
+> 
+> 	error(_("failed to load bitmap index (corrupted?): '%s'"),
+> 	      filename);
+> 
+> And the translators have to redo the work.  If a preliminary patch
+> fixed these up before bothering translators with more strings to
+> translate, they do not need to translate the current, known to be
+> faulty, version of messages.
 
-Yeah, we definitely need to be more careful with "ongoing" rules like
-these, but hopefully between the tests & lack of false positives this
-one looks sane...
+Yes. I understand a bit of that, maybe.  So, if the string is not C locale,
+translator will redo because it cannot be a translate key. Another scence is,
+if the string is not following the guideline like capitalized first letter,
+translator will redo too, we should avoid that. 
 
->>  * We now catch init/reset patterns as well as init/release fully
->>    (i.e. for the "struct strbuf" early on)
->
-> Yeah, that makes sense.
->
-> -Peff
+> In practice, yes, but the code is following the convention to reduce
+> common confusion caused by leaving some lower precedence but common
+> environment variables (i.e. LANG) as their original values.
 
+OK.
+
+> Does the line in the completion script have anything to do with
+> [PATCH 4/5], or is this merely your curiosity?  Avoid mixing in
+> unrelated things into the topic, which will only make the review
+> cycle unnecessarily longer, but raise a separate discussion if you
+> have to.
+
+Curiosity. 
+Sorry for that, I will raise a separate one next time.
+
+Thanks.
