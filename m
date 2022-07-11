@@ -2,161 +2,541 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93F82C43334
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 15:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5DB4C43334
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 16:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbiGKPij (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 11:38:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33200 "EHLO
+        id S230443AbiGKQyH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 12:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbiGKPig (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 11:38:36 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A023EAA
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 08:38:35 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id h23so9452084ejj.12
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 08:38:35 -0700 (PDT)
+        with ESMTP id S230450AbiGKQyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 12:54:01 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46FEC33422
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 09:53:59 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id n185so3372426wmn.4
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 09:53:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=+KXI+bYPzehXywhZWOhMeVhckAo69JzhS0c5Ifpj33g=;
-        b=Xwqsruc9vCRkvqcvVUiixAE3/hdQicUHR4v964piB4fau54U4O8tnmvB7/6n2BNAjc
-         dXze061NS66t+EJd5x+iM+QQGGOakK5Prydg3nasJiCN0QbSPpyxS6XHWL5NFM6tdkzA
-         CD9k3KxlwfvSmnaghGg2tForWpISkEBTmM/qPX3v+rewIX71Lj758CmueP+Ii9fh+EwQ
-         rKSQ1mVog5CWMlTtfF6H7K2WvJXGU8e/q1BQasUBD+UfMu/NiwkMvBDjbtXocRs/sQl8
-         LByPe5Gqc49wSGJfRQe0CwM6pLWLNPh0f1oiwxF7L2Aqz8Jl++WcgDKFIx574cRdb0Ge
-         6auA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=DCeVlMOkxsEYglSZMyB3jq0zsf4jyrU6Ulr0Oj1sSGI=;
+        b=YKiIhgrSst7++HOfvvRXNmHt33LDhYMYqH/o05JhelCNoZBKjVcUI4371YAyuzm6PL
+         DBFbWQ63/B+mOepcxbM7ruIms99AhjV31yyqp1G7Pcz/QL7n41WgL+vosAcnpTwCmBf9
+         fNEW0Xo7qcydBGZOvGNA4v6esTzDAI+gqNHD8DuN4PyNa8454bqwqYOUouOzue1t6L2d
+         t7JtsDVXQV12f4Yg3BmjCXtbtWUbmtHmJmwkVMZyv75ZGoUddWswN7XdIsG3eKAQ55Eq
+         ZBcfa16JZgCe3hU06GHE8tpZ7Krk/af8tlvOaJ3Mz09w8l9PZ6ZVjG1U4ObUn32LLPuS
+         XWSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=+KXI+bYPzehXywhZWOhMeVhckAo69JzhS0c5Ifpj33g=;
-        b=GWx0VAxmp1zUrieqvbQajAl2SxPISZF+4bKbBieIuSMzeMxwN2xoyx1u7kqDbEdYD5
-         2vx8PM0Qm61Qrn9pJXWTVG/0pSipum6TMO1GtaFAlUMouBhzs6DHL32UbnZWI3RkneSF
-         WZbko7N49RhFX3PsHlpz3JTrNhI/4J38Q+493siyfqqqJoECEpJa1IPijajDzMpDr4QU
-         kt9zk4csFzvzkgbCK+h/KAuShmxOjnKcgnHQrjtioRxJHHtYkQfBrDsoNL1v/9Xy79+o
-         1/gTZ4as6HZKy1Xr1JkFmMBJyCyujVYMDY0TN8nS0GOvJXtL9YB+aCDLBJi58Xg0XP2T
-         6Azg==
-X-Gm-Message-State: AJIora+95vr3b1Mbf9I7Y9nltJ9DJd5UsqAhKnSFc9FrG1eMcISYfLTN
-        2Gehvio8nrrFQYK/lo5RexFdVxgFbFPKVQ==
-X-Google-Smtp-Source: AGRyM1tl0YXMqmaUszJ4q4RKIVyJORw6hsr3V7wOXyGJB4m/1R9KeijwKJr8/VNUb8SU+V4HsPrqtw==
-X-Received: by 2002:a17:907:3f13:b0:72b:167d:2c22 with SMTP id hq19-20020a1709073f1300b0072b167d2c22mr19579927ejc.473.1657553913560;
-        Mon, 11 Jul 2022 08:38:33 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id kx23-20020a170907775700b0072af12590fesm2741497ejc.207.2022.07.11.08.38.32
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=DCeVlMOkxsEYglSZMyB3jq0zsf4jyrU6Ulr0Oj1sSGI=;
+        b=UE2N+ak5a25ljl3vGzMqhcABWHLmjg+siJHKadb0jSspSQjD45luMMlpTL/A8Pv9Zt
+         oXBoc9SORuMRi8NGTzmVBO1bdsJgsb8gd5a8VHG1marS5no/Yq/cUnVsNw+nGDcE2Ex8
+         Z6vomOJbE1lZbC+msA8FeNmCHDCXmoF1vf6VFnEBomvIex5RpAp09qeBooEaMOy6ny+P
+         cu0Sqv4r0t3JBrP1xdfuc4Jgdp8k8zT7GT6b3FEXdkxqb5pSOPUiXfG8B8ZS5UV3ZtTy
+         vhEIoWWFIIU0u56rhhn2Ri2jjqbYpcTRe4D8dI87AWNnBzE7SUenlJi8k3iPbEPJjuIT
+         vqwA==
+X-Gm-Message-State: AJIora91HUMEMd/WRyUmlOs5mlFok924AJy6D4G9G9lkf6fMoH0RXOrh
+        D884GA312ziO9EGbXhj8qBQCwbz4CAo=
+X-Google-Smtp-Source: AGRyM1tDEXkkCa3H4WfI0RFANf6mmOtNC2XofygmVuyMypTac/zwaEvWbvdWj7YOQTgl9BmmUIGniw==
+X-Received: by 2002:a05:600c:4f83:b0:3a1:7310:62e7 with SMTP id n3-20020a05600c4f8300b003a1731062e7mr17322807wmq.84.1657558437115;
+        Mon, 11 Jul 2022 09:53:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 24-20020a05600c22d800b003a0375c4f73sm7069430wmg.44.2022.07.11.09.53.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 08:38:32 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oAvUV-000wiw-U8;
-        Mon, 11 Jul 2022 17:38:31 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Olaf Hering <olaf@aepfle.de>
-Subject: Re: [PATCH] ref-filter: disable save_commit_buffer while traversing
-Date:   Mon, 11 Jul 2022 17:12:37 +0200
-References: <Ysw4JtoHW1vWmqhz@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <Ysw4JtoHW1vWmqhz@coredump.intra.peff.net>
-Message-ID: <220711.8635f77j7s.gmgdl@evledraar.gmail.com>
+        Mon, 11 Jul 2022 09:53:56 -0700 (PDT)
+Message-Id: <pull.1262.v6.git.1657558435532.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1262.v5.git.1657002760815.gitgitgadget@gmail.com>
+References: <pull.1262.v5.git.1657002760815.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 11 Jul 2022 16:53:55 +0000
+Subject: [PATCH v6] ls-files: introduce "--format" option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: ZheNing Hu <adlternative@gmail.com>
 
-On Mon, Jul 11 2022, Jeff King wrote:
+Add a new option --format that output index enties
+informations with custom format, taking inspiration
+from the option with the same name in the `git ls-tree`
+command.
 
-> Various ref-filter options like "--contains" or "--merged" may cause us
-> to traverse large segments of the history graph. It's counter-productive
-> to have save_commit_buffer turned on, as that will instruct the commit
-> code to cache in-memory the object contents for each commit we traverse.
->
-> This increases the amount of heap memory used while providing little or
-> no benefit, since we're not actually planning to display those commits
-> (which is the usual reason that tools like git-log want to keep them
-> around). We can easily disable this feature while ref-filter is running.
-> This lowers peak heap (as measured by massif) for running:
->
->   git tag --contains 1da177e4c3
->
-> in linux.git from ~100MB to ~20MB. It also seems to improve runtime by
-> 4-5% (600ms vs 630ms).
->
-> A few points to note:
->
->   - it should be safe to temporarily disable save_commit_buffer like
->     this. The saved buffers are accessed through get_commit_buffer(),
->     which treats the saved ones like a cache, and loads on-demand from
->     the object database on a cache miss. So any code that was using this
->     would not be wrong, it might just incur an extra object lookup for
->     some objects. But...
->
->   - I don't think any ref-filter related code is using the cache. While
->     it's true that an option like "--format=3D%(*contents:subject)" or
->     "--sort=3D*authordate" will need to look at the commit contents,
->     ref-filter doesn't use get_commit_buffer() to do so! It always reads
->     the objects directly via read_object_file(), though it does avoid
->     re-reading objects if the format can be satisfied without them.
->
->     Timing "git tag --format=3D%(*authordate)" shows that we're the same
->     before and after, as expected.
+--format cannot used with -s, -o, -k, -t, --resolve-undo,
+--deduplicate and --eol.
 
-Hrm, so for doing the format we're leaving some performance on the table
-as we're currently not making use of this cache, so this makes nothing
-worse on that front.
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    ls-files: introduce "--format" options
+    
+    v5->v6:
+    
+     1. Some code cleaning suggested by Ævar.
 
-But doesn't this approach then also close the door on using the same
-cache for performance improvements in that area? I.e. spotting that
-we've already parsed that commit, so we can get it from the cache?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1262%2Fadlternative%2Fzh%2Fls-file-format-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1262/adlternative/zh/ls-file-format-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/1262
 
-B.t.w. did you try to benchmark this with --no-contains too, I tried e.g.:
+Range-diff vs v5:
 
-    ./git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"
+ 1:  1ce69d6202a ! 1:  57ed2c15728 ls-files: introduce "--format" option
+     @@ builtin/ls-files.c: static char *ps_matched;
+       
+       static const char *tag_cached = "";
+       static const char *tag_unmerged = "";
+     -@@ builtin/ls-files.c: static void write_eolinfo(struct index_state *istate,
+     - 	}
+     - }
+     - 
+     -+static void write_index_eolinfo_to_buf(struct strbuf *sb, struct index_state *istate,
+     -+				       const struct cache_entry *ce)
+     -+{
+     -+	const char *i_txt = "";
+     -+	if (ce && S_ISREG(ce->ce_mode))
+     -+		i_txt = get_cached_convert_stats_ascii(istate, ce->name);
+     -+	strbuf_addstr(sb, i_txt);
+     -+}
+     -+
+     -+static void write_worktree_eolinfo_to_buf(struct strbuf *sb, const char *path)
+     -+{
+     -+	struct stat st;
+     -+	const char *w_txt = "";
+     -+	if (!lstat(path, &st) && S_ISREG(st.st_mode))
+     -+		w_txt = get_wt_convert_stats_ascii(path);
+     -+	strbuf_addstr(sb, w_txt);
+     -+}
+     -+
+     -+static void write_eolattr_to_buf(struct strbuf *sb, struct index_state *istate,
+     -+				 const char *path)
+     -+{
+     -+	strbuf_addstr(sb, get_convert_attr_ascii(istate, path));
+     -+}
+     -+
+     - static void write_name(const char *name)
+     - {
+     - 	/*
+      @@ builtin/ls-files.c: static void write_name(const char *name)
+       				   stdout, line_terminator);
+       }
+     @@ builtin/ls-files.c: static void show_submodule(struct repository *superproject,
+      +	const char *end;
+      +	const char *p;
+      +	size_t len = strbuf_expand_literal_cb(sb, start, NULL);
+     ++	struct stat st;
+     ++
+      +	if (len)
+      +		return len;
+      +	if (*start != '(')
+     @@ builtin/ls-files.c: static void show_submodule(struct repository *superproject,
+      +		strbuf_add_unique_abbrev(sb, &data->ce->oid, abbrev);
+      +	else if (skip_prefix(start, "(stage)", &p))
+      +		strbuf_addf(sb, "%d", ce_stage(data->ce));
+     -+	else if (skip_prefix(start, "(eolinfo:index)", &p))
+     -+		write_index_eolinfo_to_buf(sb, data->istate, data->ce);
+     -+	else if (skip_prefix(start, "(eolinfo:worktree)", &p))
+     -+		write_worktree_eolinfo_to_buf(sb, data->pathname);
+     ++	else if (skip_prefix(start, "(eolinfo:index)", &p) &&
+     ++		 S_ISREG(data->ce->ce_mode))
+     ++		strbuf_addstr(sb, get_cached_convert_stats_ascii(data->istate,
+     ++								 data->ce->name));
+     ++	else if (skip_prefix(start, "(eolinfo:worktree)", &p) &&
+     ++		 !lstat(data->pathname, &st) && S_ISREG(st.st_mode))
+     ++		strbuf_addstr(sb, get_wt_convert_stats_ascii(data->pathname));
+      +	else if (skip_prefix(start, "(eolattr)", &p))
+     -+		write_eolattr_to_buf(sb, data->istate, data->pathname);
+     ++		strbuf_addstr(sb, get_convert_attr_ascii(data->istate,
+     ++			      data->pathname));
+      +	else if (skip_prefix(start, "(path)", &p))
+      +		write_name_to_buf(sb, data->pathname);
+      +	else
+     @@ builtin/ls-files.c: static void show_submodule(struct repository *superproject,
+      +
+      +static void show_ce_fmt(struct repository *repo, const struct cache_entry *ce,
+      +			const char *format, const char *fullname) {
+     -+
+      +	struct show_index_data data = {
+      +		.pathname = fullname,
+      +		.istate = repo->index,
+      +		.ce = ce,
+      +	};
+     -+
+      +	struct strbuf sb = STRBUF_INIT;
+     ++
+      +	strbuf_expand(&sb, format, expand_show_index, &data);
+      +	strbuf_addch(&sb, line_terminator);
+      +	fwrite(sb.buf, sb.len, 1, stdout);
+      +	strbuf_release(&sb);
+     -+	return;
+      +}
+      +
+       static void show_ce(struct repository *repo, struct dir_struct *dir,
+     @@ t/t3013-ls-files-format.sh (new)
+      +	test_cmp expect actual
+      +'
+      +
+     -+test_expect_success 'git ls-files --format eolinfo:index' '
+     -+	cat >expect <<-\EOF &&
+     -+	lf
+     -+	lf
+     -+	EOF
+     -+	git ls-files --format="%(eolinfo:index)" >actual &&
+     -+	test_cmp expect actual
+     -+'
+     -+
+     -+test_expect_success 'git ls-files --format eolinfo:worktree' '
+     -+	cat >expect <<-\EOF &&
+     -+	lf
+     -+	lf
+     -+	EOF
+     -+	git ls-files --format="%(eolinfo:worktree)" >actual &&
+     -+	test_cmp expect actual
+     -+'
+     -+
+     -+test_expect_success 'git ls-files --format eolattr' '
+     -+	printf "\n\n" >expect &&
+     -+	git ls-files --format="%(eolattr)" >actual &&
+     ++HT='	'
+     ++WS='    '
+     ++test_expect_success 'git ls-files --format v.s. --eol' '
+     ++	git ls-files --eol >expect 2>err &&
+     ++	test_must_be_empty err &&
+     ++	git ls-files --format="i/%(eolinfo:index)${WS}w/%(eolinfo:worktree)${WS}attr/${WS}${WS}${WS}${WS} ${HT}%(path)" >actual 2>err &&
+     ++	test_must_be_empty err &&
+      +	test_cmp expect actual
+      +'
+      +
 
-Which gives me:
 
-	$ git hyperfine -L rev HEAD~1,HEAD -s 'make CFLAGS=3D-O3' './git -P tag --=
-contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"' -w 1=20
-	Benchmark 1: ./git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e=
- -- "v*"' in 'HEAD~1
-	  Time (mean =C2=B1 =CF=83):      1.437 s =C2=B1  0.107 s    [User: 1.252 =
-s, System: 0.082 s]
-	  Range (min =E2=80=A6 max):    1.306 s =E2=80=A6  1.653 s    10 runs
-=09=20
-	Benchmark 2: ./git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e=
- -- "v*"' in 'HEAD
-	  Time (mean =C2=B1 =CF=83):      1.335 s =C2=B1  0.044 s    [User: 1.230 =
-s, System: 0.050 s]
-	  Range (min =E2=80=A6 max):    1.260 s =E2=80=A6  1.417 s    10 runs
-=09=20
-	Summary
-	  './git -P tag --contains 88ce3ef636b --no-contains a39b4003f0e -- "v*"' =
-in 'HEAD' ran
-	    1.08 =C2=B1 0.09 times faster than './git -P tag --contains 88ce3ef636=
-b --no-contains a39b4003f0e -- "v*"' in 'HEAD~1'
-=09
-Whereas just --contains shows the benefit you're noting:
-=09
-	$ git hyperfine -L rev HEAD~1,HEAD -s 'make CFLAGS=3D-O3' './git -P tag --=
-contains 88ce3ef636b -- "v*"' -w 1=20
-	Benchmark 1: ./git -P tag --contains 88ce3ef636b -- "v*"' in 'HEAD~1
-	  Time (mean =C2=B1 =CF=83):      1.068 s =C2=B1  0.102 s    [User: 0.886 =
-s, System: 0.068 s]
-	  Range (min =E2=80=A6 max):    0.889 s =E2=80=A6  1.272 s    10 runs
-=09=20
-	Benchmark 2: ./git -P tag --contains 88ce3ef636b -- "v*"' in 'HEAD
-	  Time (mean =C2=B1 =CF=83):     931.6 ms =C2=B1  39.9 ms    [User: 865.3 =
-ms, System: 34.3 ms]
-	  Range (min =E2=80=A6 max):   880.5 ms =E2=80=A6 990.1 ms    10 runs
-=09=20
-	Summary
-	  './git -P tag --contains 88ce3ef636b -- "v*"' in 'HEAD' ran
-	    1.15 =C2=B1 0.12 times faster than './git -P tag --contains 88ce3ef636=
-b -- "v*"' in 'HEAD~1'
+ Documentation/git-ls-files.txt | 38 +++++++++++++-
+ builtin/ls-files.c             | 93 +++++++++++++++++++++++++++++++++
+ t/t3013-ls-files-format.sh     | 94 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 224 insertions(+), 1 deletion(-)
+ create mode 100755 t/t3013-ls-files-format.sh
 
-But this is against git.git on a loaded system, so maybe it means
-nothing...
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 0dabf3f0ddc..97d4cebba9f 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -20,7 +20,7 @@ SYNOPSIS
+ 		[--exclude-standard]
+ 		[--error-unmatch] [--with-tree=<tree-ish>]
+ 		[--full-name] [--recurse-submodules]
+-		[--abbrev[=<n>]] [--] [<file>...]
++		[--abbrev[=<n>]] [--format=<format>] [--] [<file>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -192,6 +192,13 @@ followed by the  ("attr/<eolattr>").
+ 	to the contained files. Sparse directories will be shown with a
+ 	trailing slash, such as "x/" for a sparse directory "x".
+ 
++--format=<format>::
++	A string that interpolates `%(fieldname)` from the result being shown.
++	It also interpolates `%%` to `%`, and `%xx` where `xx` are hex digits
++	interpolates to character with hex code `xx`; for example `%00`
++	interpolates to `\0` (NUL), `%09` to `\t` (TAB) and %0a to `\n` (LF).
++	--format cannot be combined with `-s`, `-o`, `-k`, `-t`, `--resolve-undo`
++	and `--eol`.
+ \--::
+ 	Do not interpret any more arguments as options.
+ 
+@@ -223,6 +230,35 @@ quoted as explained for the configuration variable `core.quotePath`
+ (see linkgit:git-config[1]).  Using `-z` the filename is output
+ verbatim and the line is terminated by a NUL byte.
+ 
++It is possible to print in a custom format by using the `--format`
++option, which is able to interpolate different fields using
++a `%(fieldname)` notation. For example, if you only care about the
++"objectname" and "path" fields, you can execute with a specific
++"--format" like
++
++	git ls-files --format='%(objectname) %(path)'
++
++FIELD NAMES
++-----------
++Various values from structured fields can be used to interpolate
++into the resulting output. For each outputting line, the following
++names can be used:
++
++objectmode::
++	The mode of the file which is recorded in the index.
++objectname::
++	The name of the file which is recorded in the index.
++stage::
++	The stage of the file which is recorded in the index.
++eolinfo:index::
++eolinfo:worktree::
++	The <eolinfo> (see the description of the `--eol` option) of
++	the contents in the index or in the worktree for the path.
++eolattr::
++	The <eolattr> (see the description of the `--eol` option)
++	that applies to the path.
++path::
++	The pathname of the file which is recorded in the index.
+ 
+ EXCLUDE PATTERNS
+ ----------------
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index e791b65e7e9..6376dbcccc6 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -11,6 +11,7 @@
+ #include "quote.h"
+ #include "dir.h"
+ #include "builtin.h"
++#include "strbuf.h"
+ #include "tree.h"
+ #include "cache-tree.h"
+ #include "parse-options.h"
+@@ -48,6 +49,7 @@ static char *ps_matched;
+ static const char *with_tree;
+ static int exc_given;
+ static int exclude_args;
++static const char *format;
+ 
+ static const char *tag_cached = "";
+ static const char *tag_unmerged = "";
+@@ -85,6 +87,15 @@ static void write_name(const char *name)
+ 				   stdout, line_terminator);
+ }
+ 
++static void write_name_to_buf(struct strbuf *sb, const char *name)
++{
++	const char *rel = relative_path(name, prefix_len ? prefix : NULL, sb);
++	if (line_terminator)
++		quote_c_style(rel, sb, NULL, 0);
++	else
++		strbuf_add(sb, rel, strlen(rel));
++}
++
+ static const char *get_tag(const struct cache_entry *ce, const char *tag)
+ {
+ 	static char alttag[4];
+@@ -222,6 +233,72 @@ static void show_submodule(struct repository *superproject,
+ 	repo_clear(&subrepo);
+ }
+ 
++struct show_index_data {
++	const char *pathname;
++	struct index_state *istate;
++	const struct cache_entry *ce;
++};
++
++static size_t expand_show_index(struct strbuf *sb, const char *start,
++			       void *context)
++{
++	struct show_index_data *data = context;
++	const char *end;
++	const char *p;
++	size_t len = strbuf_expand_literal_cb(sb, start, NULL);
++	struct stat st;
++
++	if (len)
++		return len;
++	if (*start != '(')
++		die(_("bad ls-files format: element '%s' "
++		      "does not start with '('"), start);
++
++	end = strchr(start + 1, ')');
++	if (!end)
++		die(_("bad ls-files format: element '%s'"
++		      "does not end in ')'"), start);
++
++	len = end - start + 1;
++	if (skip_prefix(start, "(objectmode)", &p))
++		strbuf_addf(sb, "%06o", data->ce->ce_mode);
++	else if (skip_prefix(start, "(objectname)", &p))
++		strbuf_add_unique_abbrev(sb, &data->ce->oid, abbrev);
++	else if (skip_prefix(start, "(stage)", &p))
++		strbuf_addf(sb, "%d", ce_stage(data->ce));
++	else if (skip_prefix(start, "(eolinfo:index)", &p) &&
++		 S_ISREG(data->ce->ce_mode))
++		strbuf_addstr(sb, get_cached_convert_stats_ascii(data->istate,
++								 data->ce->name));
++	else if (skip_prefix(start, "(eolinfo:worktree)", &p) &&
++		 !lstat(data->pathname, &st) && S_ISREG(st.st_mode))
++		strbuf_addstr(sb, get_wt_convert_stats_ascii(data->pathname));
++	else if (skip_prefix(start, "(eolattr)", &p))
++		strbuf_addstr(sb, get_convert_attr_ascii(data->istate,
++			      data->pathname));
++	else if (skip_prefix(start, "(path)", &p))
++		write_name_to_buf(sb, data->pathname);
++	else
++		die(_("bad ls-files format: %%%.*s"), (int)len, start);
++
++	return len;
++}
++
++static void show_ce_fmt(struct repository *repo, const struct cache_entry *ce,
++			const char *format, const char *fullname) {
++	struct show_index_data data = {
++		.pathname = fullname,
++		.istate = repo->index,
++		.ce = ce,
++	};
++	struct strbuf sb = STRBUF_INIT;
++
++	strbuf_expand(&sb, format, expand_show_index, &data);
++	strbuf_addch(&sb, line_terminator);
++	fwrite(sb.buf, sb.len, 1, stdout);
++	strbuf_release(&sb);
++}
++
+ static void show_ce(struct repository *repo, struct dir_struct *dir,
+ 		    const struct cache_entry *ce, const char *fullname,
+ 		    const char *tag)
+@@ -236,6 +313,12 @@ static void show_ce(struct repository *repo, struct dir_struct *dir,
+ 				  max_prefix_len, ps_matched,
+ 				  S_ISDIR(ce->ce_mode) ||
+ 				  S_ISGITLINK(ce->ce_mode))) {
++		if (format) {
++			show_ce_fmt(repo, ce, format, fullname);
++			print_debug(ce);
++			return;
++		}
++
+ 		tag = get_tag(ce, tag);
+ 
+ 		if (!show_stage) {
+@@ -675,6 +758,9 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 			 N_("suppress duplicate entries")),
+ 		OPT_BOOL(0, "sparse", &show_sparse_dirs,
+ 			 N_("show sparse directories in the presence of a sparse index")),
++		OPT_STRING_F(0, "format", &format, N_("format"),
++			     N_("format to use for the output"),
++			     PARSE_OPT_NONEG),
+ 		OPT_END()
+ 	};
+ 	int ret = 0;
+@@ -699,6 +785,13 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	for (i = 0; i < exclude_list.nr; i++) {
+ 		add_pattern(exclude_list.items[i].string, "", 0, pl, --exclude_args);
+ 	}
++
++	if (format && (show_stage || show_others || show_killed ||
++		show_resolve_undo || skipping_duplicates || show_eol || show_tag))
++			usage_msg_opt("--format cannot used with -s, -o, -k, -t"
++				      "--resolve-undo, --deduplicate, --eol",
++				      ls_files_usage, builtin_ls_files_options);
++
+ 	if (show_tag || show_valid_bit || show_fsmonitor_bit) {
+ 		tag_cached = "H ";
+ 		tag_unmerged = "M ";
+diff --git a/t/t3013-ls-files-format.sh b/t/t3013-ls-files-format.sh
+new file mode 100755
+index 00000000000..baf03f9096e
+--- /dev/null
++++ b/t/t3013-ls-files-format.sh
+@@ -0,0 +1,94 @@
++#!/bin/sh
++
++test_description='git ls-files --format test'
++
++TEST_PASSES_SANITIZE_LEAK=true
++. ./test-lib.sh
++
++for flag in -s -o -k -t --resolve-undo --deduplicate --eol
++do
++	test_expect_success "usage: --format is incompatible with $flag" '
++		test_expect_code 129 git ls-files --format="%(objectname)" $flag
++	'
++done
++
++test_expect_success 'setup' '
++	echo o1 >o1 &&
++	echo o2 >o2 &&
++	git add o1 o2 &&
++	git add --chmod +x o1 &&
++	git commit -m base
++'
++
++test_expect_success 'git ls-files --format objectmode' '
++	cat >expect <<-\EOF &&
++	100755
++	100644
++	EOF
++	git ls-files --format="%(objectmode)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format objectname' '
++	oid1=$(git hash-object o1) &&
++	oid2=$(git hash-object o2) &&
++	cat >expect <<-EOF &&
++	$oid1
++	$oid2
++	EOF
++	git ls-files --format="%(objectname)" >actual &&
++	test_cmp expect actual
++'
++
++HT='	'
++WS='    '
++test_expect_success 'git ls-files --format v.s. --eol' '
++	git ls-files --eol >expect 2>err &&
++	test_must_be_empty err &&
++	git ls-files --format="i/%(eolinfo:index)${WS}w/%(eolinfo:worktree)${WS}attr/${WS}${WS}${WS}${WS} ${HT}%(path)" >actual 2>err &&
++	test_must_be_empty err &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format path' '
++	cat >expect <<-\EOF &&
++	o1
++	o2
++	EOF
++	git ls-files --format="%(path)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format with -m' '
++	echo change >o1 &&
++	cat >expect <<-\EOF &&
++	o1
++	EOF
++	git ls-files --format="%(path)" -m >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format with -d' '
++	echo o3 >o3 &&
++	git add o3 &&
++	rm o3 &&
++	cat >expect <<-\EOF &&
++	o3
++	EOF
++	git ls-files --format="%(path)" -d >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format imitate --stage' '
++	git ls-files --stage >expect &&
++	git ls-files --format="%(objectmode) %(objectname) %(stage)%x09%(path)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format with --debug' '
++	git ls-files --debug >expect &&
++	git ls-files --format="%(path)" --debug >actual &&
++	test_cmp expect actual
++'
++
++test_done
+
+base-commit: ab336e8f1c8009c8b1aab8deb592148e69217085
+-- 
+gitgitgadget
