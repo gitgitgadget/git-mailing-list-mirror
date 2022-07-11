@@ -2,65 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C375BC433EF
-	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 08:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D325C433EF
+	for <git@archiver.kernel.org>; Mon, 11 Jul 2022 08:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbiGKIBP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jul 2022 04:01:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41644 "EHLO
+        id S229953AbiGKIUJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jul 2022 04:20:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbiGKIBO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jul 2022 04:01:14 -0400
-X-Greylist: delayed 3769 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Jul 2022 01:01:12 PDT
-Received: from ns29.pws-dns.net (ns29.pws-dns.net [176.9.29.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 277C010B7
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 01:01:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=alirezaarabi.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        Message-ID:Subject:To:From:Date:MIME-Version:Sender:Reply-To:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=GzN2mh+1cw0IOYtCBTvUcTlAo7K9nFgmOJOrqesb/no=; b=iuphRDorQxZfhro2Eg9yQShBKt
-        Hy4g27/JljJm1zKVgho7T6AtiDrNdyPpoCWp/KQO5w6cHqbBxI6HYsVM3w36AZ6R7f+479zoknqak
-        445oypwKpTsze3IDee5Oba4P4aHnkbzeNuAEsz7GZH6vxPckGW3dWLEHwLUgOD5/6/9HTIwLf8Azb
-        S7JeBFy/ws6oOX7xkB952Ohzg/SmAXQQEb4upZSSvJnfQ+s7+1IxFmlGcn8SsXbIX8dXkuscHP7Jc
-        zZ2xmn/0otdWEHGWXY6uwsEHIVwlgjWTNaTMhSU7fTahDf/xMwUzdyndYbi3GvaOU62wMEECEGHE/
-        Fsg1nSMg==;
-Received: from [::1] (port=47930 helo=dena.pws-dns.net)
-        by dena.pws-dns.net with esmtpa (Exim 4.95)
-        (envelope-from <me@alirezaarabi.com>)
-        id 1oAnN7-0001kn-Gr
-        for git@vger.kernel.org;
-        Mon, 11 Jul 2022 11:28:21 +0430
+        with ESMTP id S229926AbiGKIUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jul 2022 04:20:06 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 511A61EC53
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 01:20:00 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id y4so5282051edc.4
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 01:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Ri10uvbPfp/p+d4+yt+9NHT2HSxGGFCBesaakmZ4l58=;
+        b=CX4hXrL2PhPxNgmg8Al//THsO2ibOGiVnvNTod3HCAuYVJ4PszfStzcYgdN0SVCuC1
+         Creve7NvLlEHzZydKUyL9IMni7ilsObsF1yiP9x7mAJi1WP3sex2UOPvSDIJi7BANXJU
+         k31/hhLeaXQpP7PN4G4vW3uVr3DcfSyyRDC+wLU8Ou96p+/tPfOigIlMs/JKKZq0+Hsa
+         FxABF3uXPY0AJ3He9kw4h7mLysLtphzO0GQ0gOlpC46cMSVcA0jBAkz7LeUQ8V/ylL7q
+         vT7ubCHwr9N6r3u6N31daXp6Gc9+rIQMuL/+YmETfxxYcFHIussm9+eXoK6jlxKvKtBM
+         SvpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ri10uvbPfp/p+d4+yt+9NHT2HSxGGFCBesaakmZ4l58=;
+        b=SiuV0xh4ZyeFuWxNn/RclUwM8TU29BU7nKwkcGZrWEUN8RIlDVHyd1RQ0alkXi8hdp
+         q/34cDWyYZkDtNHhqCGD5XdlJ6hQxABKdXm6o1LPCOiKlW4bIGVfm0jjspnsWActffd0
+         EEbta335seNAjGk2HdOSM838zyHDhscoZmSV6isFZyUIX+kEbMZF+zQO434e2da0P3Sj
+         Hps2Vnpiw5aeU9WVubWp0eVoOlsLF0JsIco08ZaL4FDpw1ziux4PM/C3hPJvV9S2DiAS
+         UOtlNhFBlrP3RKUGLmossVe/0f5m82ojsJTTH8tKGgSczh8Z7NnzssyUxHP39t3j31Pw
+         45Cw==
+X-Gm-Message-State: AJIora/D1GjJK0/U7OzpoPyEC8dJI0AFKQIW4uUhnmEsjbKgOGbfIAum
+        SdIh4oWY0Ab7x0VxIrUVt5P0r89nb7Q=
+X-Google-Smtp-Source: AGRyM1vspASDJfHRFilXJSaSSTE3G6SwAeVTPmSxOdxSIzuMSs22IBNvo4LL3isKclpNtSk6ncgebQ==
+X-Received: by 2002:a05:6402:2a08:b0:437:cdc9:d120 with SMTP id ey8-20020a0564022a0800b00437cdc9d120mr22940604edb.129.1657527598644;
+        Mon, 11 Jul 2022 01:19:58 -0700 (PDT)
+Received: from localhost (94-21-146-223.pool.digikabel.hu. [94.21.146.223])
+        by smtp.gmail.com with ESMTPSA id lb7-20020a170907784700b0072b1738a1d7sm2427889ejc.214.2022.07.11.01.19.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jul 2022 01:19:58 -0700 (PDT)
+Date:   Mon, 11 Jul 2022 10:19:56 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: fsck segfault (was: Re: [PATCH] revision: mark blobs needed for
+ resolve-undo as reachable)
+Message-ID: <20220711081956.GB2038@szeder.dev>
+References: <xmqqfskdieqz.fsf@gitster.g>
 MIME-Version: 1.0
-Date:   Mon, 11 Jul 2022 11:28:21 +0430
-From:   me@alirezaarabi.com
-To:     git@vger.kernel.org
-Subject: Suggestion for 'git add' CLI
-User-Agent: Roundcube Webmail/1.4.12
-Message-ID: <84b593cf1bacc4541a7a4ca24a5e98fa@alirezaarabi.com>
-X-Sender: me@alirezaarabi.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - dena.pws-dns.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - alirezaarabi.com
-X-Get-Message-Sender-Via: dena.pws-dns.net: authenticated_id: me@alirezaarabi.com
-X-Authenticated-Sender: dena.pws-dns.net: me@alirezaarabi.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfskdieqz.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hi there, I have a suggestion about git CLI.when I use 'git add -A' or 
-'git add --all' it stages all of my files but when I use git add 
-<file_name> it adds the file name to the stage, not all files. but when 
-I use ' git add <file_name> --all ' it also works and adds all the files 
-to the stage. I think it's better to provide a warning for this 
-situation. thank you.
+On Thu, Jun 09, 2022 at 04:44:20PM -0700, Junio C Hamano wrote:
+> +static int fsck_resolve_undo(struct index_state *istate)
+> +{
+> +	struct string_list_item *item;
+> +	struct string_list *resolve_undo = istate->resolve_undo;
+> +
+> +	if (!resolve_undo)
+> +		return 0;
+> +
+> +	for_each_string_list_item(item, resolve_undo) {
+> +		const char *path = item->string;
+> +		struct resolve_undo_info *ru = item->util;
+> +		int i;
+> +
+> +		if (!ru)
+> +			continue;
+> +		for (i = 0; i < 3; i++) {
+> +			struct object *obj;
+> +
+> +			if (!ru->mode[i] || !S_ISREG(ru->mode[i]))
+> +				continue;
+> +
+> +			obj = parse_object(the_repository, &ru->oid[i]);
+
+parse_object() can return NULL ...
+
+> +			if (!obj) {
+
+... and here is the if statement to show an error in that case ...
+
+> +				error(_("%s: invalid sha1 pointer in resolve-undo"),
+> +				      oid_to_hex(&ru->oid[i]));
+> +				errors_found |= ERROR_REFS;
+> +			}
+> +			obj->flags |= USED;
+
+... but then there is this line which might dereference that NULL
+pointer.
+
+Perhaps all we would need is a 'continue' at the end of that 'if
+(!obj)' block, or an else block for the last three statements, which
+should result in the same control flow?  Dunno.
+
+> +			fsck_put_object_name(&fsck_walk_options, &ru->oid[i],
+> +					     ":(%d):%s", i, path);
+> +			mark_object_reachable(obj);
+> +		}
+> +	}
+> +	return 0;
+> +}
