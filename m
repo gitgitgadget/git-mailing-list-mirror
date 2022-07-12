@@ -2,120 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F4E0C433EF
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 07:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D59DFCCA47C
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 07:04:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232248AbiGLHC0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 03:02:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44304 "EHLO
+        id S232329AbiGLHEG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 03:04:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232241AbiGLHCZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 03:02:25 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B693F8CC91
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 00:02:22 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id u12so12661338eja.8
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 00:02:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=x4IU0Lx87X4qFfGk9+Tg271vluOnqHbiqT4AHKLfFTc=;
-        b=Rr44nCHPuTrCuNJzlD7MYRo/MyqI7jKGt3w8tJsKR7Iev4cf9Ch8UVwIg/9zoRNo1v
-         NmNVcONAfUNbgPxXlonlFIcuLCe+j/sB3ZS727ONwV9ayKUXB4NqTBrFpKDBxrY60HXH
-         Lsq4o8lUH9LuxEJCEJRGaHE++/CqxhSfYRiMH5SoX0lyZvNV8fAaWrpgHQ9jNC9eDPZE
-         Ene6HpShPnbS1+QU4G5GiNPoVhZ7LvPNVbz+bxu/kmQyAbyl9J0Hsj9ZSNRPUpOD/fVA
-         Y/tBAP+igglfJYf0/vInYbYOpU54FxFKl/bGUAcY3s/lOeUkp/9HpSQm5Ul2vGUUV/X4
-         cPDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=x4IU0Lx87X4qFfGk9+Tg271vluOnqHbiqT4AHKLfFTc=;
-        b=xTEDdKQ+SaNv1hmTwkSH4nOrSJtwynemQGza6xWlrfG/TupMnfrMAyS2RI6WtGkXmm
-         TrYMEgX2lGppEqOBLLv77XSmaXmEzD2FajrUeB0+W6bnoQowTbscG49fzZG+yCvaKDfN
-         bSRNdhdZc3op84U3z9kuKexHbVIv0Qp77Ms//2Km871fxXB15tdhg7lg55I4iSNPZ2V2
-         +Tc1Ef+ZVAnBTxOcK/0uarvP6DMLUs1J5FuyAPqLW5SlyVo15tBNTtSXoKkMKlIBd8LL
-         ZwCEjo22HtFH5sS8bfoagRNUBf994jb7WHML2TFSCgN5cfO0hwaMp1Hcs1zdsxZViPU6
-         jCsg==
-X-Gm-Message-State: AJIora9hD6RnbKjHIQhW1qi1jrbslZ2LLz9KAG2NtjXwG5/Qx5Sg5Bjm
-        YpbgArLTLETI7qZzFWPu3s0=
-X-Google-Smtp-Source: AGRyM1sQq+jPU+ckhPGz2ZWpXi97LGMU9gjkRIj8NC//1TFgh4kdJKuSK14dAOpxny8LhURSlop6qw==
-X-Received: by 2002:a17:907:2c54:b0:72b:64bd:cbf7 with SMTP id hf20-20020a1709072c5400b0072b64bdcbf7mr6331547ejc.116.1657609341152;
-        Tue, 12 Jul 2022 00:02:21 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id f10-20020a05640214ca00b0043a09f6fc24sm5565675edx.47.2022.07.12.00.02.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 00:02:20 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oB9uV-0018q6-FX;
-        Tue, 12 Jul 2022 09:02:19 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+        with ESMTP id S232285AbiGLHDx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 03:03:53 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040361D0EA
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 00:03:46 -0700 (PDT)
+Received: (qmail 10490 invoked by uid 109); 12 Jul 2022 07:03:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jul 2022 07:03:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27804 invoked by uid 111); 12 Jul 2022 07:03:45 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jul 2022 03:03:45 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Jul 2022 03:03:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 2/4] .clang-format: Add a BitFieldColonSpacing=None
- rule
-Date:   Tue, 12 Jul 2022 08:56:46 +0200
-References: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net>
- <RFC-cover-0.4-00000000000-20220711T110019Z-avarab@gmail.com>
- <RFC-patch-2.4-cb69bfa0d0d-20220711T110019Z-avarab@gmail.com>
- <YsynY24oV47q7YxU@tapette.crustytoothpaste.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YsynY24oV47q7YxU@tapette.crustytoothpaste.net>
-Message-ID: <220712.86czea6cg4.gmgdl@evledraar.gmail.com>
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH] diff-files: move misplaced cleanup label
+Message-ID: <Ys0c0ePxPOqZ/5ck@coredump.intra.peff.net>
+References: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
+ <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
+ <patch-v6-11.27-e93791b6242-20220413T195935Z-avarab@gmail.com>
+ <YsxmrRCSpze1csHz@coredump.intra.peff.net>
+ <220711.86tu7n5ryf.gmgdl@evledraar.gmail.com>
+ <Ys0at7pMPUrrmEaB@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <Ys0at7pMPUrrmEaB@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Jul 11 2022, brian m. carlson wrote:
+Commit 0139c58ab9 (revisions API users: add "goto cleanup" for
+release_revisions(), 2022-04-13) converted an early return in
+cmd_diff_files() into a goto. But it put the cleanup label too early: if
+read_cache_preload() returns an error, we'll set result to "-1", but
+then jump to calling run_diff_files(), overwriting our result.
 
-> [[PGP Signed Part:Undecided]]
-> On 2022-07-11 at 11:37:26, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Formatting bitfield as "unsigned foo:1" is the usual style in this
->> project, not "unsigned foo : 1", which clang-format will use by
->> default.
->>=20
->> Before & after this change running "make style-all-diff-apply" will
->> yield:
->>=20
->> 	582 files changed, 32029 insertions(+), 29794 deletions(-)
->> 	579 files changed, 32065 insertions(+), 29818 deletions(-)
->>=20
->> However this highlights a major limitation in this approach, because
->> clang-format v12 or newer is required for this rule, but that version
->> was only released in April 2021.
->
-> This isn't supported on Debian stable, which has clang 11.  I think we
-> should expect that to be a viable development target here, and I know
-> it's what some Git developers actually use.
->
-> I think for now we should drop this patch, and we can reconsider it in
-> the future.
+We should jump past the call to run_diff_files(). Likewise, we should go
+past diff_result_code(), which is expecting to see a code from an actual
+diff, not a negative error code.
 
-That makes sense, but the unanswered question is still how we should
-relate this to your proposal of standardizing on clang-format.
+In practice, I suspect this bug cannot actually be triggered, because
+read_cache_preload() does not seem to ever return an error. Its return
+value (eventually) comes from do_read_index(), which gives the number of
+cache entries found, and calls die() on error. Still, it makes sense to
+fix the inadvertent change from 0139c58ab9 first, and we can look into
+the overall error handling of read_cache() separately (which is present
+in many other callsites).
 
-I.e. this & maybe AlignArrayOfStructures (and probably some other
-things) are probably things we'd like to enable to closely match the
-style we have now (in the case of that setting, because we've converted
-the rest to designated initializers).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is on top of ab/plug-leak-in-revisions, though it's long since
+graduated to master.
 
-So we'd be left with one of:
-=20
- 1. Just formatting according to the style an older version supports,
-    even if it's not the preferred one.
+The read_cache() thing is weird. The error checking was introduced back
+in 6304c29d51 (diff-files: do not play --no-index games, 2008-05-23).
+And even back then, I don't see it ever returning -1. Yet then, as well
+as now, running "git grep 'read_cache.*< 0'" turns up many hits. So I'm
+not sure if I'm missing a case, or if it's cargo-culting gone wild.
 
- 2. Require the newer version, after all you don't *need* to use
-    clang-format, it's OK that we can run it somewhere...
+Still, I don't plan to dig further into it anytime soon. Removing the
+error handling from those sites is relatively low reward, with high risk
+for introducing a bug.
 
- 3. Fix some things now, maintain some whitelist of exceptions, and work
-    towards parity (possibly with running a newer clang-format e.g. in
-    CI).
+ builtin/diff-files.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- 4. Something else...?
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index 2bfaf9ba7a..92cf6e1e92 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -80,9 +80,9 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+ 		result = -1;
+ 		goto cleanup;
+ 	}
+-cleanup:
+ 	result = run_diff_files(&rev, options);
+ 	result = diff_result_code(&rev.diffopt, result);
++cleanup:
+ 	release_revisions(&rev);
+ 	return result;
+ }
+-- 
+2.37.0.497.g676cb53800
+
