@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1D41C43334
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 23:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77919C43334
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 23:10:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233227AbiGLXKe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 19:10:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40084 "EHLO
+        id S233845AbiGLXKl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 19:10:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiGLXKb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 19:10:31 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 799EC9B1A9
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:30 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id l2so3673683qvt.2
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:30 -0700 (PDT)
+        with ESMTP id S233195AbiGLXKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 19:10:34 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BDD9B9C7
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:33 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id q13so2335103qkc.9
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=nYNZgAuTiOavJ/JkYhkf8y8k5mtvvNKydg1YsBBm4zc=;
-        b=PL41dNT6JLV/c/PgGGeoyX/HbQxvcdK2c+gLPURKP3Uig+IWwy9HSusr4ZjTc3OL5x
-         o6oGFLc4SymiFhFSfQeEEhEy+whtc5iU5R5mlxfcd+ZKNeEGMA0RhDclioD+jfkZCCZb
-         T05WnVfAUPfuUDzpxct+Ajcr737B1zWuODnVTCHgJHQm4yYOGeeWHqqLYjCeMnJ4l0np
-         vesEwc2tYFl0NKbV2ez6GlQr1RabR22dqqwBTmoV/3RB9gnAC7BLFlbPmhi1YqBMAkhM
-         5hIxWA0j/V18P3+Hh6iKekqLMMXzWX6ygPYvzxv7XsZAge1ZUMKi7kLBtDXm/lNxUSWN
-         kjIg==
+        bh=xQDAKvb0FE2cG0PUsInWPKPYo/rQ4AnDRWkJClFki68=;
+        b=DVxnpv1PavN9R33Sx8OOGcWH/jNSDeA4j/aLD612g8di+DK/04+j2X5Qvm2on9eLHo
+         K8WgpUzyQDmLmb2YGaQT7xFNpxWcUX4Q4JAt8TS4Ici5xpZxh/O2wLx07H7/MJRVCV+n
+         nTt5XlYIIAauYfMG3tIAa4MNTG/iiahP0gYJFd5Rwmq8gKuBBC2Tzw3rHnCgQuCyg3YU
+         dUDLWUkgIGK60V8+Kd0qusOmXCNwq8nTKgbUY1ssPQrT0iVlyPwU7mLTFeQdwojODAuh
+         qyr5ssAkamwuPncQcXzvQVbWUZDyteFr/eNRT5jDx3BTL8SPDcciZPXo5lWNJx+N6Bws
+         JhoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=nYNZgAuTiOavJ/JkYhkf8y8k5mtvvNKydg1YsBBm4zc=;
-        b=re03D2U1ZuzTd3qMNqnoDyOSlXOaCAPFkw/Ic+jB3XVNrg3pfBq8xrfEUZkvpZ9VHN
-         RA86+SjAP5J33FYn8QewMf/y3QsnWZtGh16A1asad5T5iQpHqRd8IpfwUu+OQ7VwoUDg
-         SV/uMAOg2e2tSkWBhV6FCrMS2u7szqf1p9I3aMQAU31E2UO+CK9dxnL3YsW/GRROqvwF
-         kKbuv5olUtiTDtr4Dx27DVsfxL6uzs+CWmmqvHOKsLxeP4dRqGg/L87m2GOpj/SRH9Zd
-         QrKKh2RrJ1blSf7nDpcymWJkUK3YJDV483lQBZzZC4Dve6Q2k6QjxLZMSAGM64LyghhR
-         T0BA==
-X-Gm-Message-State: AJIora+Gum2yxdrg2Fu3laQEl97bItQ5Xzm8MXDGKeyi8/qBCxA/Yx2b
-        nq1ZfFzfGSJowV7Cjx0Mn5Bd7rfHGcfcjg==
-X-Google-Smtp-Source: AGRyM1tbUYaD3CRhRQAzbjun4gSomXP3vr6tStaabyF6EE6WXhHfr3vycJm3elnGZ8pHwv2uUDBmWQ==
-X-Received: by 2002:a05:6214:2302:b0:470:2d10:b6e4 with SMTP id gc2-20020a056214230200b004702d10b6e4mr656074qvb.72.1657667429493;
-        Tue, 12 Jul 2022 16:10:29 -0700 (PDT)
+        bh=xQDAKvb0FE2cG0PUsInWPKPYo/rQ4AnDRWkJClFki68=;
+        b=1zAd96stNl4gYoV7x8UitHxFsVIGC2DantjthKOhU0CidkOEQoGUm1D5bi1qDIvKF9
+         n5HZopai2yLKi0x1BU8x7Xo30cxClhCHZczjexLWfWPaq83VfzzL/fxTumJvyPyUDtoS
+         cFB1WL4eLMjIyekkpHWnt6YLhEG+IAEqP9whkqHHij1IpGaESG3Em88b/gNHa/1bfaoM
+         b89OyQsAKWJ/oHE8RNOdBZkzMdmZjLa6/Y55d9gwhxdkyds1cGQe5vuC2hiKxJ44PSLN
+         dHxwv6cHX99wLcxbJPYyEune3sryq/XZsjJEeEq2g70yJoTo7JjIzihxZtTwf2CWLF0v
+         JjCg==
+X-Gm-Message-State: AJIora/L47ZMsjW1TnumGRPsTEUyEdMY/IpJPxpBErxYuIRCqdV7m1KO
+        6eWj7HUnPBkqoiPM4dkQKRACuahzF5QYdg==
+X-Google-Smtp-Source: AGRyM1tG0zC+wrmxwNoXRn68/TRmniLcHXa6QqeZ1M6LKbCp5OrcNOH9BQOaERD/DKfqiJf0qgcp4Q==
+X-Received: by 2002:a05:620a:210f:b0:6b5:9575:9084 with SMTP id l15-20020a05620a210f00b006b595759084mr514266qkl.587.1657667432028;
+        Tue, 12 Jul 2022 16:10:32 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m3-20020a05620a24c300b006b53fe19c41sm10798902qkn.14.2022.07.12.16.10.28
+        by smtp.gmail.com with ESMTPSA id c7-20020ac87dc7000000b003172da668desm8692370qte.50.2022.07.12.16.10.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 16:10:29 -0700 (PDT)
-Date:   Tue, 12 Jul 2022 19:10:28 -0400
+        Tue, 12 Jul 2022 16:10:31 -0700 (PDT)
+Date:   Tue, 12 Jul 2022 19:10:31 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, derrickstolee@github.com, peff@peff.net,
         ps@pks.im, wfc@wfchandler.org
-Subject: [PATCH 1/3] t5318: demonstrate commit-graph generation v2 corruption
-Message-ID: <0a49c86037bac200bb23e1abf9f67363e99c4b7c.1657667404.git.me@ttaylorr.com>
+Subject: [PATCH 2/3] commit-graph: introduce `repo_find_commit_pos_in_graph()`
+Message-ID: <e988c974119edbabc06dae6d24810fc0bafbdc94.1657667404.git.me@ttaylorr.com>
 References: <cover.1657667404.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -63,73 +63,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When upgrading a commit-graph using generation v1 to one using
-generation v2, it is possible to force Git into a corrupt state where it
-(incorrectly) believes that a GDO2 chunk is necessary, *after* deciding
-not to write one.
+Low-level callers in systems that are adjacent to the commit-graph (like
+the changed-path Bloom filter code) could benefit from being able to
+call a function like `parse_commit_in_graph()` without modifying the
+corresponding commit slab data.
 
-This makes subsequent reads using the commit-graph produce the following
-error message:
+This is useful in contexts where that slab data is being used to prepare
+for an upcoming commit-graph write, where Git must be careful to avoid
+clobbering any of that data during a read operation.
 
-    fatal: commit-graph requires overflow generation data but has none
+Introduce a low-level variant of `parse_commit_in_graph()` which returns
+the graph position of a given commit only, without modifying any of the
+slab data.
 
-Demonstrate this bug by increasing our test coverage to include a
-minimal example of upgrading a commit-graph from generation v1 to v2.
-The only notable components of this test are:
-
-  - The committer date of the commit is chosen carefully so that the
-    offset underflows when computed using a v1 generation number, but
-    would not overflow when using v2 generation numbers.
-
-  - The upgrade to generation number v2 must read in the v1 generation
-    numbers, which we can do by passing `--changed-paths`, which will
-    force the commit-graph internals to call `fill_commit_graph_info()`.
-
-A future patch will squash this bug.
-
-Reported-by: Jeff King <peff@peff.net>
-Reproduced-by: Will Chandler <wfc@wfchandler.org>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t5318-commit-graph.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ commit-graph.c | 12 +++++++++---
+ commit-graph.h | 15 +++++++++++++++
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index fbf0d64578..4d9f62f22d 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -811,4 +811,31 @@ test_expect_success 'set up and verify repo with generation data overflow chunk'
+diff --git a/commit-graph.c b/commit-graph.c
+index 92d4503336..1c34ae1ea4 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -889,6 +889,14 @@ static int find_commit_pos_in_graph(struct commit *item, struct commit_graph *g,
+ 	}
+ }
  
- graph_git_behavior 'generation data overflow chunk repo' repo left right
++int repo_find_commit_pos_in_graph(struct repository *r, struct commit *c,
++				  uint32_t *pos)
++{
++	if (!prepare_commit_graph(r))
++		return 0;
++	return find_commit_pos_in_graph(c, r->objects->commit_graph, pos);
++}
++
+ struct commit *lookup_commit_in_graph(struct repository *repo, const struct object_id *id)
+ {
+ 	struct commit *commit;
+@@ -946,9 +954,7 @@ int parse_commit_in_graph(struct repository *r, struct commit *item)
+ void load_commit_graph_info(struct repository *r, struct commit *item)
+ {
+ 	uint32_t pos;
+-	if (!prepare_commit_graph(r))
+-		return;
+-	if (find_commit_pos_in_graph(item, r->objects->commit_graph, &pos))
++	if (repo_find_commit_pos_in_graph(r, item, &pos))
+ 		fill_commit_graph_info(item, r->objects->commit_graph, pos);
+ }
  
-+test_expect_failure 'overflow during generation version upgrade' '
-+	git init overflow-v2-upgrade &&
-+	(
-+		cd overflow-v2-upgrade &&
+diff --git a/commit-graph.h b/commit-graph.h
+index 2e3ac35237..f23b9e9026 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -40,6 +40,21 @@ int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
+  */
+ int parse_commit_in_graph(struct repository *r, struct commit *item);
+ 
++/*
++ * Fills `*pos` with the graph position of `c`, and returns 1 if `c` is
++ * found in the commit-graph belonging to `r`, or 0 otherwise.
++ * Initializes the commit-graph belonging to `r` if it hasn't been
++ * already.
++ *
++ * Note: this is a low-level helper that does not alter any slab data
++ * associated with `c`. Useful in circumstances where the slab data is
++ * already being modified (e.g., writing the commit-graph itself).
++ *
++ * In most cases, callers should use `parse_commit_in_graph()` instead.
++ */
++int repo_find_commit_pos_in_graph(struct repository *r, struct commit *c,
++				  uint32_t *pos);
 +
-+		# This commit will have a date at two seconds past the Epoch,
-+		# and a (v1) generation number of 1, since it is a root commit.
-+		#
-+		# The offset will then be computed as 2-1, which will underflow
-+		# to 2^31, which is greater than the v2 offset small limit of
-+		# 2^31-1.
-+		#
-+		# This is sufficient to need a large offset table for the v2
-+		# generation numbers.
-+		test_commit --date "@2 +0000" base &&
-+		git repack -d &&
-+
-+		# Test that upgrading from generation v1 to v2 correctly
-+		# produces the overflow table.
-+		git -c commitGraph.generationVersion=1 commit-graph write &&
-+		git -c commitGraph.generationVersion=2 commit-graph write \
-+			--changed-paths &&
-+
-+		git rev-list --all
-+	)
-+'
-+
- test_done
+ /*
+  * Look up the given commit ID in the commit-graph. This will only return a
+  * commit if the ID exists both in the graph and in the object database such
 -- 
 2.37.0.1.g1379af2e9d
 
