@@ -2,119 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C14AC43334
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 16:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B4F1C433EF
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 16:07:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233992AbiGLQCF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 12:02:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41306 "EHLO
+        id S233871AbiGLQHH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 12:07:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233737AbiGLQB6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 12:01:58 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58761C636F
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 09:01:58 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id z12-20020a17090a7b8c00b001ef84000b8bso11907922pjc.1
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 09:01:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/Kf1ZrTxsNquj+8HmY+9BNF8akGssrqY/D2f970GbMw=;
-        b=c+ir5RdU49udOWl3bnAyRZqMen0qNJ3RZQKqKEgtjZd3ZJ8Dz2w4BgzrumlV3fg7wJ
-         +C04Nw+65NMDlsk5QoAyshtCDndHPqSsRXWCy47nWXp+KIzOHUV0fAeACT8tM6bHL9Qr
-         wEoQts4lQ7VNtNwa1o1xVUpXgZU3v1dA6eE+NLG+GrctRsYzhRRwg3of5R/XhD2PP10c
-         e0Op1uCxsZB56iq073yGsZAfnpN11RFN65OxLrek1p6sberJumkEl8IhpaYOcOz+s1sP
-         85Cf4y/SwznGC137DLKzMNsoHOj4toyj9eAxWbG5PiAHhXDHIhdDJM6KdGWGRGAKZ0JI
-         DCag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=/Kf1ZrTxsNquj+8HmY+9BNF8akGssrqY/D2f970GbMw=;
-        b=MO1iKuTlUsA4jw3tyfwPzQgROs46uia5Ev5p8HqWD4vg46TExbzMK2WBbgzPkCX58m
-         MY8lBaWFoGC4Kzm+GeJUkHtvFycg8iF1AkRwG6IOm4Em7CK0G3t+g3CbzDmLWZcf6Zkb
-         VfLutkgWiiatsAZm1DMLgXQCQsubLELavJeo+coBwdTDaFOm81WK5U1Y6d1IudW2ChJv
-         J4VUnh8kbUNJ7JifR1opAPq5Qn6FlDPLpwUTnlaSTcRiY0SvdIqUyGpuVAz4Hk+XBtLw
-         f+oYpboCpT8Zl9+yIxQY7GC9EnogVouG4CsfuTx6rajK1QiV+6ggzLiNdR1pwqplceDn
-         8W0Q==
-X-Gm-Message-State: AJIora/b7qDRHu3S60IZsDD8uaBj1ZIdFEOmX+oX5WpcETYBJcoE0ZjT
-        5/8S2KVAjBCbrju9OKVJIrWmD1hLS8byzN0m
-X-Google-Smtp-Source: AGRyM1tcGVfgl5WJQh5m7tK4sUmVAqAtFvkp8V/Buo9iWZiNH/fX57QmJJalX0hAQoJb7Pg7KZ9LUg==
-X-Received: by 2002:a17:90b:4f4a:b0:1f0:65d:d888 with SMTP id pj10-20020a17090b4f4a00b001f0065dd888mr5296194pjb.136.1657641717658;
-        Tue, 12 Jul 2022 09:01:57 -0700 (PDT)
-Received: from [192.168.1.7] ([223.230.62.254])
-        by smtp.gmail.com with ESMTPSA id k8-20020a170902c40800b00163ffbc4f74sm7112058plk.49.2022.07.12.09.01.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jul 2022 09:01:56 -0700 (PDT)
-Message-ID: <3167df9e-574c-cc00-1e00-43e81b049b6f@gmail.com>
-Date:   Tue, 12 Jul 2022 21:31:49 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3 0/4] Add support for mailmap in cat-file
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
+        with ESMTP id S232400AbiGLQGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 12:06:52 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95BFBC8E92
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 09:06:44 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D6E851327C2;
+        Tue, 12 Jul 2022 12:06:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=M2Q9ix8yN2hxZJxGPXoW8nq6X2HwC1gLdW1J/w
+        3PpzQ=; b=lYbA80Dz0V8OTIoJ+dfmyDhUmglOxxZhiFnjAdIS00nnvq0dGY6s8T
+        BIMBGuE7cwpiwjlt1iZ+omPVtTASmp0Q/ep5wwQ6AlNtLx+uNqtWz93GbSqh87nR
+        fEVpEevaDAjjwG8bX8+gErgAqjtchKD7zRTotpH4RAvBCRAYnpWoU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD2CF1327C0;
+        Tue, 12 Jul 2022 12:06:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 215711327BF;
+        Tue, 12 Jul 2022 12:06:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
+        git@vger.kernel.org, phillip.wood123@gmail.com,
         congdanhqx@gmail.com, christian.couder@gmail.com, avarab@gmail.com,
         johncai86@gmail.com
+Subject: Re: [PATCH v3 0/4] Add support for mailmap in cat-file
 References: <20220707161554.6900-1-siddharthasthana31@gmail.com>
- <20220709154149.165524-1-siddharthasthana31@gmail.com>
- <xmqqv8s5sf8x.fsf@gitster.g> <50s3714q-8p5n-2379-65r4-17304426rp93@tzk.qr>
- <xmqqwnciifgv.fsf@gitster.g>
-From:   Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <xmqqwnciifgv.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        <20220709154149.165524-1-siddharthasthana31@gmail.com>
+        <xmqqv8s5sf8x.fsf@gitster.g>
+        <50s3714q-8p5n-2379-65r4-17304426rp93@tzk.qr>
+        <xmqqwnciifgv.fsf@gitster.g>
+Date:   Tue, 12 Jul 2022 09:06:41 -0700
+In-Reply-To: <xmqqwnciifgv.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        12 Jul 2022 07:16:16 -0700")
+Message-ID: <xmqqy1wygvse.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9E89A356-01FC-11ED-A511-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-
-On 12/07/22 19:46, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->> This patch introduced new test cases that rely on the side effects of
->> the earlier test case `set up symlink tests`. However, that test case is
->> guarded behind the `SYMLINKS` prereq, therefore it is not run e.g. on
->> Windows.
-> 
-> Ah, that explains why it only fails there.
-> 
->> Let's fix that by removing the prereq from the `set up` test case, and
->> adjusting its title to reflect its broadened responsibility.
->>
->> -test_expect_success SYMLINKS 'set up symlink tests' '
->> +test_expect_success 'set up symlink/--use-mailmap tests' '
->>   	git commit --allow-empty -m foo --author="Orig <orig@example.com>" &&
->>   	echo "New <new@example.com> <orig@example.com>" >map &&
->>   	rm -f .mailmap
-> 
-> OK, this sets up
-> 
->   * one commit that can be used in a test, authored by "Orig" person;
->   * the "map" file that maps the "Orig" person; and
->   * ensures .mailmap is not there.
-> 
-> with the intention to make a symbolic link that points at the "map"
-> to use as the mailmap file in later tests.  This step does not require
-> symbolic links at all, but because the point of this set-up is to serve
-> the later tests, all requiring symbolic link support, it was OK to have
-> the prerequisite.
-> 
 > The cat-file tests does not have to use the "map" file to do its
 > thing at all.  In fact, these tests prepare their own .mailmap file
 > inside them.  But because it chose to run in the history prepared by
 > previous tests, it broke, because without SYMLINKS, the sought-for
 > commit does not get created.
-> 
-> Makes sense.  I would have retitled it to s/set up/prepare for/ but
-> that is minor.
-> 
-> Thanks.  Siddharth, please squash the fix in when rerolling.
-> 
-Thanks a ton Johannes and Junio for helping me fix the test :D
-Will squash the fix in v4!
+
+So, an alternative solution is to keep the existing tests on
+symlinks totally unrelated to these new tests.  These cat-file tests
+can prepare the commit to munge at the beginning of the sequence,
+and then do its thing.  This way, a platform without symlink support
+does not have to create the "map" file that nobody uses, something
+like the attached.
+
+I do not have strong preference either way, though.
+
+ t/t4203-mailmap.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git c/t/t4203-mailmap.sh w/t/t4203-mailmap.sh
+index c60a90615c..cd1cab3e54 100755
+--- c/t/t4203-mailmap.sh
++++ w/t/t4203-mailmap.sh
+@@ -963,6 +963,11 @@ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'prepare for cat-file --mailmap' '
++	rm -f .mailmap &&
++	git commit --allow-empty -m foo --author="Orig <orig@example.com>"
++'
++
+ test_expect_success '--no-use-mailmap disables mailmap in cat-file' '
+ 	test_when_finished "rm .mailmap" &&
+ 	cat >.mailmap <<-EOF &&
