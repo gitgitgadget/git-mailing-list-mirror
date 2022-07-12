@@ -2,118 +2,234 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BF2FC433EF
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 13:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03AB5C433EF
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 13:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233171AbiGLNQy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 09:16:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60146 "EHLO
+        id S233190AbiGLNyL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 09:54:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233041AbiGLNQo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 09:16:44 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F00B9B62A4
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:16:26 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id p13so4810177ilq.0
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:16:26 -0700 (PDT)
+        with ESMTP id S229954AbiGLNyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 09:54:10 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3792963931
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:54:09 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id r76so7858686iod.10
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:54:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=NEtYCevmRVUg++HOh7rUmEnSk2zvm72eIKUtjiltYTs=;
-        b=VLJM/ftmgeA8KroszDvt9ZlsACoyM2oNGe8cR0GO66YLXmHJH97A9VhMuI9HHfgJQ7
-         MOMncvjZlcQCfUXuEih2K6dyukhjf6nLx3N9Vrl9D2aYMrrdb/jWGF9EErx29XMhZPuH
-         r8C96y3ZcX9f1DFyT3wwgg11itPvN/rtobV9/2uu3byf9oY6O5yWuRQ6mKGvs7/LWwrS
-         fiCM53CfIB6D+umwWScvcBphUNqoJviCg5wic6rnHwEUStlLg+CnFHFBxeJOWe9V0+AG
-         8ndwIWh2TZFFioKXq3EvUgfYNbMo9uDeC/LtRPoPNh1Me5nXng4384oK/PqaLTmMVICR
-         dQwQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ivpdtI9VhxWAC6hOKc5Hs4IdqEgMa+hj4L8yF2BoXwE=;
+        b=N+khiZDPgUilm1LEU+axMJ0bKdsMas8vfZWSKuLMCbRuXLYyvkWjicGt3e6fL12JSh
+         upOHYOe+cpkpyWSuzADzuyq0eaXsBX7fhsNvP8peIhiqNOssq7Z7adUWOdqPGO0AQ8jN
+         gqFXlpi2U3NnHrDACPaYXrxVvNLjX98XNvenpA71EXx6X4U2LXA2VpZGkhVaUK/6gho5
+         sOYhTuedPiewADGE2y3iYbCmkZ89VplDt7eWIhz2WnZS9RNM7h0DVRtjYtZVkR9PpiyZ
+         NrA05drUNGkGIgP5dAtjd9KtW0bEF6HuI67yV7u0i7hMKpwj6cd5FBdWjALs7r6wxhYH
+         sdBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=NEtYCevmRVUg++HOh7rUmEnSk2zvm72eIKUtjiltYTs=;
-        b=m3z8u7jvYb4eeB/2X7GV5E5+O3RSSyPQJW8mt27ALXmr5MVAgRR0NUqnqgfrXl5RJv
-         Scevd64hRPgAn0ua5tcUZj4mdMThM9q4KLCwawil92ILQqf34s8K/X8V+OtJPi9DYhDq
-         8i7I1DcUeHH30T29RsyNwL1uNaD5qoovizau29MtO4KhOEoxyw7+mxxtJXOYJErinuUr
-         wm4LtNJDsh4uUpAxZ0xA/3X+TyIbIdNF0X5bXdTtMxKkwCz3RnPFp/fiQuAb9zPfmeao
-         OkeP3kmfszsvBmM80eWI6CDG6HSeG4BtAYGB6oRgTcQNJjCa5h8ufoknkzR4xUdw7muq
-         OsMg==
-X-Gm-Message-State: AJIora+J6t+CBSA0VMGOrGjqFsxqQyak/c9gdE+CaLDo+kF/twbs54N7
-        ZG4Cpce2t27CC5zMo7h9sXquIHkW4hlV
-X-Google-Smtp-Source: AGRyM1v5D5c81PF4rmtTHz2vr0MJeBj+lXe0z3TQu6mK4icRT0b9CgZ2g439dKagsYaK5pSek260Wg==
-X-Received: by 2002:a05:6e02:2188:b0:2dc:7546:1ea9 with SMTP id j8-20020a056e02218800b002dc75461ea9mr7166607ila.136.1657631784782;
-        Tue, 12 Jul 2022 06:16:24 -0700 (PDT)
-Received: from [192.168.0.180] ([199.102.122.24])
-        by smtp.gmail.com with ESMTPSA id p6-20020a02b006000000b0032b3a7817acsm4062182jah.112.2022.07.12.06.16.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jul 2022 06:16:24 -0700 (PDT)
-Message-ID: <b0b3917e-cec8-37bf-0482-e3d5f207eda0@github.com>
-Date:   Tue, 12 Jul 2022 07:16:22 -0600
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ivpdtI9VhxWAC6hOKc5Hs4IdqEgMa+hj4L8yF2BoXwE=;
+        b=4zlbSKdmnYhKKDAfjiQlIQtwqIuzR5gCg3Peg98oBZ/g9MeCpnh4aPmEP6exR1Aoo/
+         5DtrEGZezT96pD5gls82V2vxiqBtSFncG7Pw22nkZQcCWXOwFVBkJpHV24dq5889CVRO
+         odf2SFGjUfc2oU1LLbMeRAgpBmPoHVljj6xEq6kVr/xtgtZ2WGGZ816iZXK12AmYzPJb
+         d63bX74PlrQ4laX2zpDzN5PPSGKiZFry5r8RhalkFpv8WCaLqBGQv5Y7yesSnQ7EnAWX
+         cc7ArRihWRjuSmVzj4BDviv3o4zCSd+UNp98PlODHnC+zbbRSgNFZsqMbWKndojMBMHz
+         VDLw==
+X-Gm-Message-State: AJIora91aM7WdAxnlinNBasuTs2Jpo5Bm5sxCoCCM+EeUj+7xYcH9rgo
+        S52XiJUDMkzTDL47hYDBca3eoWP1IV+65lCD7gYKoRCza/g0bg==
+X-Google-Smtp-Source: AGRyM1s87BUs4FS6XNMVQuI5+duDeHli3hlewGtqqYtVowsCQskVmb8SpVUJ3m31l5NJnf6RA8VwTaIjiXmqUSvQ8WA=
+X-Received: by 2002:a05:6638:12ca:b0:33c:c664:64fe with SMTP id
+ v10-20020a05663812ca00b0033cc66464femr13489790jas.67.1657634048630; Tue, 12
+ Jul 2022 06:54:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: [GSoC] Week 3 and week 4 status update
-Content-Language: en-US
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Git List <git@vger.kernel.org>
-References: <CAJyCBOSrhxbCcDX5oWBuNEWOxQu2Rmk+T+paORLzoLF=iaBH1Q@mail.gmail.com>
- <803773d1-25b6-e62b-18fa-efd9fdc92c97@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <803773d1-25b6-e62b-18fa-efd9fdc92c97@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.1262.v5.git.1657002760815.gitgitgadget@gmail.com>
+ <pull.1262.v6.git.1657558435532.gitgitgadget@gmail.com> <xmqqleszl2p0.fsf@gitster.g>
+In-Reply-To: <xmqqleszl2p0.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 12 Jul 2022 21:53:57 +0800
+Message-ID: <CAOLTT8RSo83ZBXbT_MLigD946_xHjnX-aS76D_K7=ScbMR=nYw@mail.gmail.com>
+Subject: Re: [PATCH v6] ls-files: introduce "--format" option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/12/22 2:24 AM, Shaoxuan Yuan wrote:
-> Hi Git community,
-> 
-> Here is Shaoxuan Yuan.
-> 
-> I'm writing to share my latest progress [1] from GSoC week 3 and week 4.
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B47=E6=9C=8812=E6=97=
+=A5=E5=91=A8=E4=BA=8C 06:11=E5=86=99=E9=81=93=EF=BC=9A
+>
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > Add a new option --format that output index enties ...
+>
+> Let's quote the options and use the Oxford comma.
+>
+>     ls-files: introduce "--format" option
+>
+>     Add a new option "--format" that outputs index entries in a
+>     custom format, taking inspiration from the option with the same
+>     name in the `git ls-tree` command.
+>
+>     "--format" cannot used with "-s", "-o", "-k", "-t", "--resolve-undo",
+>     "--deduplicate", and "--eol".
+>
+> > +It is possible to print in a custom format by using the `--format`
+> > +option, which is able to interpolate different fields using
+>
+> So we use the term "field" to mean different piece of information we
+> can present.  The definition of what fields are available come later
+> and the presentation order is a bit awkward, but hopefully the text
+> is understandable as-is.
+>
 
-Thanks for the report!
+OK.
 
-> This week I'm working to ship a PATCH v5 [2] (please reference all the
-> code here) to address the issues raised in PATCH v4 [3].
+> > +a `%(fieldname)` notation. For example, if you only care about the
+> > +"objectname" and "path" fields, you can execute with a specific
+> > +"--format" like
+> > +
+> > +     git ls-files --format=3D'%(objectname) %(path)'
+>
+> And the example makes it pretty clear.  OK.
+>
+> > +FIELD NAMES
+> > +-----------
+> > +Various values from structured fields can be used to interpolate
+>
+> Are we dealing with unstructured fields, too?  If not, let's drop
+> "structured".
+>
 
-(I think this is left over from earlier?)
+OK (copy from git-ls-tree.txt too)
 
-> The good news is, that PATCH v5 is being queued into the 'next' branch, which
-> means it could potentially be merged into 'master'. It marks that this stage
-> of work is almost done.
+> > +into the resulting output. For each outputting line, the following
+> > +names can be used:
+>
+> "outputting line" sounds like a non language.
+>
+>
+>     The way each path is shown can be customized by using the
+>     `--format=3D<format>` option, where the %(fieldname) in the
+>     <format> string for various aspects of the index entry are
+>     interpolated.  The following "fieldname" are understood:
+>
+> perhaps?
+>
 
-In fact, the latest "What's Cooking" says this:
+This will indeed be better.
 
-* sy/mv-out-of-cone (2022-07-01) 8 commits
-  (merged to 'next' on 2022-07-08 at 654970fdb7)
- + mv: add check_dir_in_index() and solve general dir check issue
- + mv: use flags mode for update_mode
- + mv: check if <destination> exists in index to handle overwriting
- + mv: check if out-of-cone file exists in index with SKIP_WORKTREE bit
- + mv: decouple if/else-if checks using goto
- + mv: update sparsity after moving from out-of-cone to in-cone
- + t1092: mv directory from out-of-cone to in-cone
- + t7002: add tests for moving out-of-cone file/directory
+> > +{
+> > +     struct show_index_data *data =3D context;
+> > +     const char *end;
+> > +     const char *p;
+> > +     size_t len =3D strbuf_expand_literal_cb(sb, start, NULL);
+> > +     struct stat st;
+> > +
+> > +     if (len)
+> > +             return len;
+> > +     if (*start !=3D '(')
+> > +             die(_("bad ls-files format: element '%s' "
+> > +                   "does not start with '('"), start);
+> > +
+> > +     end =3D strchr(start + 1, ')');
+> > +     if (!end)
+> > +             die(_("bad ls-files format: element '%s'"
+> > +                   "does not end in ')'"), start);
+> > +
+> > +     len =3D end - start + 1;
+> > +     if (skip_prefix(start, "(objectmode)", &p))
+>
+>
+> Using skip_prefix() not for the purpose of skipping (notice that
+> nobody uses p at all) is ugly.  We already computed start and end
+> (hence the length), so we should be able to do much better than
+> this.
+>
 
- "git mv A B" in a sparsely populated working tree can be asked to
- move a path between directories that are "in cone" (i.e. expected
- to be materialized in the working tree) and "out of cone"
- (i.e. expected to be hidden).  The handling of such cases has been
- improved.
+Agree. I check the parsing format part of ref-filter.c, we just need to fin=
+d the
+atom's begin pos and end pos, then we can use memcmp() to know what's the
+type of atom.
 
- Will merge to 'master'.
- source: <20220630023737.473690-1-shaoxuan.yuan02@gmail.com>
+> But let's let it pass, as it was copy-pasted from existing code in
+> ls-tree.c::expand_show_tree().
+>
 
-So, it is already in 'next' and will merge to 'master' soon. You
-should expect those commits to be final (barring anything drastic
-noticed during the cooking phase) so you can send your next set
-of patches. Just make sure to point out in the cover letter that
-they are based on sy/mv-out-of-cone. That branch is available in
-the gitgitgadget/git repository so you can base a PR against it,
-if you want.
+Yeah, maybe we can optimize it later.
 
-Thanks,
--Stolee
+> > +     else if (skip_prefix(start, "(eolinfo:index)", &p) &&
+> > +              S_ISREG(data->ce->ce_mode))
+> > +             strbuf_addstr(sb, get_cached_convert_stats_ascii(data->is=
+tate,
+> > +                                                              data->ce=
+->name));
+>
+> This is outright wrong, isn't it?
+>
+> It is unlikely to see such a trivial error in the 6th round of a
+> series after other reviewers looked at it many times, so perhaps I
+> am missing something?  Or perhaps this is a new code added in this
+> round.
+>
+> If you ask for %(eolinfo:index) for an index entry that is not a
+> regular file, this "else if" will not trigger, and the control will
+> eventually fall through to hit "bad ls-files format" but what you
+> detected is not a bad format at all.  Once the skip_prefix() hits,
+> you should be committed to handle that "field" and never let the
+> other choices in this if/elif/ cascade to see it.
+>
+> It is OK to interpolate %(eolinfo:index) to an empty string for a
+> gitlink and a symbolic link, but the right way to do so would
+> probably be:
+>
+>         else if (skip_prefix(start, "(eolinfo:index)", &p) {
+>                 if (S_ISREG(data->ce->ce_mode))
+>                         strbuf_addstr(...);
+>         } else ...
+>
+
+Yeah, but we would use "{", "}" again, so just revert this code to v5,
+which uses a
+ wrap function.
+
+> > +     else if (skip_prefix(start, "(eolinfo:worktree)", &p) &&
+> > +              !lstat(data->pathname, &st) && S_ISREG(st.st_mode))
+> > +             strbuf_addstr(sb, get_wt_convert_stats_ascii(data->pathna=
+me));
+>
+> Likewise.
+>
+> > +test_expect_success 'setup' '
+> > +     echo o1 >o1 &&
+> > +     echo o2 >o2 &&
+> > +     git add o1 o2 &&
+> > +     git add --chmod +x o1 &&
+> > +     git commit -m base
+> > +'
+>
+> Apparently, this set-up is too trivial to uncover the above bug that
+> can be spotted in 10 seconds of staring at the code.  Perhaps add a
+> symbolic link (use "git update-index --cacheinfo" and you do not
+> have to worry about Windows), a subdirectory and a submodule?
+>
+
+Ah, Just looking at the c code, I took a long time (more than 10 minutes) t=
+o
+find out where the mistake was. But yeah, use a subdirectory can quickly
+meet the error,  so I need to add more cases here.
+
+Thanks for your review.
+
+ZheNing Hu
