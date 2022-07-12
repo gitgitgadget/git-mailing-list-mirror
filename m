@@ -2,188 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DBEBCCA483
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 20:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 028F3C433EF
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 20:48:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234789AbiGLUHr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 16:07:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47890 "EHLO
+        id S230222AbiGLUsQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 16:48:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234102AbiGLUHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 16:07:39 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC9BBB41A0
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 13:07:22 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id v67-20020a1cac46000000b003a1888b9d36so48113wme.0
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 13:07:22 -0700 (PDT)
+        with ESMTP id S233504AbiGLUsK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 16:48:10 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4429854667
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 13:48:09 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-31c9d560435so79036627b3.21
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 13:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bi+z7dkLzTkyZRVmX2i1PwNtT+m3jdLnkYhyd+rAfdQ=;
-        b=g7Na8OFXLV9IRJ/mGYguidJFNqlzWZ2qHd0DVmBzkm7AYRUYMN4T0+6MYiecmwHYfo
-         ryfgFpUrncjyauT5fiyJHiXVECfuG9pIDWkmZADvP7fw/jFFqK/4z3C5kOKvsHeOslRC
-         7qvdj9yYj8LeDVunha9Ryzg5F72KkWfN0NXqjQm9C3OUFBjRX/YpljBLCJ7rov07wYqD
-         TUg0fDQ7D0HMCIwiOLm9zyOUoLNvp+lgu+tX8NFMxszNue2DM4HBq6PaE2E88HlQbwku
-         Rp4AQisZSxyrYClzTdEBJzEgwEN75PXiUBLUKozyTDtafytD6GfhxA5XOdheQz0YuqYo
-         pORw==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=xfqFkAKDr50ukYcTwVb/k2yKE3zzvuWndi9ob2oDupM=;
+        b=V/e71Ak4S03iqPNvOOfttNxItert+w1km/Kk6blIAGKBJ+JO/17aJCu/RIupBsx9Wb
+         f0RtPdjDpractB578gAgC4dBVS+A8P1qdswcYb4cQQ1RJkfJaI+p1aQm6N9OWCwSVgza
+         Mx1L5lBR/x+3kvTvXtKapNA+mU/mcWmXvjkbgF+BUb6b0/mCTbI+AwOEZnsSLfXBOEBf
+         +w9W4bwsSMw3yIF3m10M6kSiMLMmQBj0FO1t+mp2lPGLcpMvZxjIRtHUG7t7yiH2kc1K
+         IkNyAVUxSIuLSi3gjfAgI2mvysn2GC1AKASMo6JMGOyI+BZGHfdDP+bUxxvukzjqSiG+
+         hEGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bi+z7dkLzTkyZRVmX2i1PwNtT+m3jdLnkYhyd+rAfdQ=;
-        b=totP4LdLL9w0RS8B2G5gpIODkn5EaUa0NOr+6SXna1tS02dVbtJFNI7l8bEh3xShf/
-         bNJbMUfYzI7oRdm2xGmrBb4ytS1kDfqjGUt8/3qhHxQdEtIzeO5SreVzMybTLVIQuB8h
-         agcReeKqI1lUsH8fZqHhhA1Kykuy2X/EQXMsSXDS7OOH4ngpmF5h9zXnALkTcyubmg8D
-         sApXsXVMjKOzxevYr1fqf4pjufL+bukHulIIBLERnH983BI8X65D97j93nBZdT5qNoj4
-         M8+6UNKwAOtk536u+CU8UviOUCsW1GdlfPD9u32TQcWdNtHebxGJzkwYlleL+GQYKJaS
-         2HwA==
-X-Gm-Message-State: AJIora8tj7lu800po60HR/Cis6Kle743u7tMLaPBCD9wn+eRtlJP/hWr
-        bH2assgZ5F+Y0cg9eHVQwpitlsZ4zuqaIQ==
-X-Google-Smtp-Source: AGRyM1sh98bqGsQK3S7FaIAbJzlKsLaBqYpo3Gr/is2F9hjINOKojOesSpKlDtFvHVA8NnmVuDp68g==
-X-Received: by 2002:a05:600c:4f55:b0:3a1:f1c5:2107 with SMTP id m21-20020a05600c4f5500b003a1f1c52107mr5759626wmq.114.1657656441185;
-        Tue, 12 Jul 2022 13:07:21 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b5-20020adfe305000000b0021d8c8c79dbsm8929448wrj.65.2022.07.12.13.07.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 13:07:20 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Teng Long <dyroneteng@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 7/7] docs: move multi-pack-index docs to man section 5
-Date:   Tue, 12 Jul 2022 22:07:02 +0200
-Message-Id: <patch-v3-7.7-aabdc4a4151-20220712T195419Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.37.0.932.g7b7031e73bc
-In-Reply-To: <cover-v3-0.7-00000000000-20220712T195419Z-avarab@gmail.com>
-References: <cover-v2-0.5-00000000000-20211212T194047Z-avarab@gmail.com> <cover-v3-0.7-00000000000-20220712T195419Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=xfqFkAKDr50ukYcTwVb/k2yKE3zzvuWndi9ob2oDupM=;
+        b=t3+EMJBJekkHYTnHQ0b9943V3K1vUPeCkOcAClRgN5RExfUzhkpeXlh2dq6wjb9DN+
+         VC2+VL9TK+on5xpoxuxt9wHyDi3fwlIrwdzzzcEeM2e3KBEur2K4GaPlyjP5dDO6Feo+
+         c2sVLQMdtYVxmZe6wdM7ldhK1NaQTxz45F8/qA0K38OBfjYa3g5CerMcktNS9BykKLfG
+         tqCHLDMqqr2UjreRJiQSM9OrGG3JuizW3cJk2/MBqxxHKWWCIAyehZZOyUGwBX0eBrt1
+         051Dy6mbsoDy23ffcYJfTIqxh/1VR20OvyprIGPVcblobzmcIzjT6ktVAWtJ4gf5s5fS
+         VptA==
+X-Gm-Message-State: AJIora/PchfR8JJRHIeu/Wg83YPw1ZHOM701YriigZrHcL2eE1gqyHgO
+        U/3D0MFLcFd2IRlj9igslvrK72Oe5spfMQ==
+X-Google-Smtp-Source: AGRyM1vHxCbq+fTMpqjEbLVIfjesZ5wObpki2c2CVgtfWsWk/0dDwd8gVd0YRB6+5dP7PQAE39PTclVmOVGGpg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a25:910f:0:b0:66e:ca44:9463 with SMTP id
+ v15-20020a25910f000000b0066eca449463mr182974ybl.0.1657658888555; Tue, 12 Jul
+ 2022 13:48:08 -0700 (PDT)
+Date:   Tue, 12 Jul 2022 13:47:59 -0700
+In-Reply-To: <220709.86zghj8d6i.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6lv8s25a80.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
+ <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com> <220701.861qv5d8v7.gmgdl@evledraar.gmail.com>
+ <kl6lr134spi0.fsf@chooglen-macbookpro.roam.corp.google.com> <220709.86zghj8d6i.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH v6 0/5] config: introduce discovery.bare and protected config
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Continue the move of existing Documentation/technical/* protocol and
-file-format documentation into our main documentation space by moving
-the multi-pack-index documentation over.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/Makefile                        |  2 +-
- Documentation/git-multi-pack-index.txt        |  5 +++--
- ...dex.txt => gitformat-multi-pack-index.txt} | 20 +++++++++++++++++--
- Documentation/gitformat-pack.txt              |  5 +++++
- command-list.txt                              |  1 +
- 5 files changed, 28 insertions(+), 5 deletions(-)
- rename Documentation/{technical/multi-pack-index.txt => gitformat-multi-pack-index.txt} (94%)
+Thanks for following up. I'm a concerned that this thread will be
+unproductive if all we're doing is reiterating our own opinions. I'm ok
+if the conclusion is "agree to disagree", but let's not spend too much
+time talking circles around one another (myself included, of course:)).
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 0e87d5151df..51c3e3a489a 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -28,6 +28,7 @@ MAN5_TXT += gitformat-bundle.txt
- MAN5_TXT += gitformat-chunk.txt
- MAN5_TXT += gitformat-commit-graph.txt
- MAN5_TXT += gitformat-index.txt
-+MAN5_TXT += gitformat-multi-pack-index.txt
- MAN5_TXT += gitformat-pack-bitmap.txt
- MAN5_TXT += gitformat-pack-cruft.txt
- MAN5_TXT += gitformat-pack-protocol.txt
-@@ -109,7 +110,6 @@ TECH_DOCS += SubmittingPatches
- TECH_DOCS += ToolsForGit
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/long-running-process-protocol
--TECH_DOCS += technical/multi-pack-index
- TECH_DOCS += technical/pack-heuristics
- TECH_DOCS += technical/parallel-checkout
- TECH_DOCS += technical/partial-clone
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index a48c3d5ea63..a147e047c91 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -127,8 +127,9 @@ $ git multi-pack-index verify
- 
- SEE ALSO
- --------
--See link:technical/multi-pack-index.html[The Multi-Pack-Index Design
--Document] and linkgit:gitformat-pack[5] for more information on the
-+
-+See linkgit:git-multi-pack-index[1] and
-+linkgit:gitformat-multi-pack-index[5] for more information on the
- multi-pack-index feature and its file format.
- 
- 
-diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/gitformat-multi-pack-index.txt
-similarity index 94%
-rename from Documentation/technical/multi-pack-index.txt
-rename to Documentation/gitformat-multi-pack-index.txt
-index f2221d2b441..3bca1e7b10d 100644
---- a/Documentation/technical/multi-pack-index.txt
-+++ b/Documentation/gitformat-multi-pack-index.txt
-@@ -1,5 +1,17 @@
--Multi-Pack-Index (MIDX) Design Notes
--====================================
-+gitformat-multi-pack-index(5)
-+=============================
-+
-+NAME
-+----
-+gitformat-multi-pack-index - The multi-pack-index file format
-+
-+SYNOPSIS
-+--------
-+[verse]
-+$GIT_DIR/objects/pack/multi-pack-index
-+
-+DESCRIPTION
-+-----------
- 
- The Git object directory contains a 'pack' directory containing
- packfiles (with suffix ".pack") and pack-indexes (with suffix
-@@ -98,3 +110,7 @@ Related Links
- 
- [2] https://lore.kernel.org/git/alpine.DEB.2.20.1803091557510.23109@alexmv-linux/
-     Git Merge 2018 Contributor's summit notes (includes discussion of MIDX)
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/gitformat-pack.txt b/Documentation/gitformat-pack.txt
-index 5b21d0f2521..06b469c6944 100644
---- a/Documentation/gitformat-pack.txt
-+++ b/Documentation/gitformat-pack.txt
-@@ -507,6 +507,11 @@ packs arranged in MIDX order (with the preferred pack coming first).
- The MIDX's reverse index is stored in the optional 'RIDX' chunk within
- the MIDX itself.
- 
-+SEE ALSO
-+--------
-+
-+linkgit:gitformat-multi-pack-index[5]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/command-list.txt b/command-list.txt
-index fad553784d9..685ce8077d3 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -212,6 +212,7 @@ gitformat-bundle                        gitformats
- gitformat-chunk                         gitformats
- gitformat-commit-graph                  gitformats
- gitformat-index                         gitformats
-+gitformat-multi-pack-index              gitformats
- gitformat-pack                          gitformats
- gitformat-pack-bitmap                   gitformats
- gitformat-pack-cruft                    gitformats
--- 
-2.37.0.932.g7b7031e73bc
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
+> On Fri, Jul 01 2022, Glen Choo wrote:
+>>> The "more narrow" and "more secure" go hand-in-hand, since if you work
+>>> on such servers you'd turn this to "always" because you want to read
+>>> such config, but then be left vulnerable to the actual (and muche rarer=
+)
+>>> exploit we're trying to prevent.
+>>
+>> The point that we're not defending bare repo users is fair, but maybe
+>> the group we're trying to protect isn't really dedicated Git-serving
+>> servers. This exploit requires you to have a bare repo inside the
+>> working tree of a non-bare repo. So I think this is less of an issue for
+>> a server, and more for "mixed-use" environments with both regular and
+>> bare clones.
+>
+> Yes, but this is only something that's even a question because of an
+> artificial limitation your proposal here suffers from.
+>
+> I.e. in trying to detect nefarious repos where you've got "looks like
+> bare" content *tracked* in another repo you're conflating it with *any
+> bare repo*.
+>
+> And the only reason we're doing that seems to me to be a premature
+> optimization.
+
+Right, I hear you. Besides performance, let me offer the perspective
+that I should have led with in the previous email. In this thread and
+the original "embedded bare repo" one [1], there is a huge diversity of
+opinion on what the default behavior should be, e.g.:
+
+- How do we detect an embedded bare repo (fsck check? walk up [and check
+  if it's tracked]?)
+- What to do when we detect one (ignore the config? block the repo?)
+- How to preserve workflows that rely on embedded bare repos (some kind
+  of (global|per-repo) exception list? allow the repo but not the
+  config?)
+
+And rightfully so! There are a lot of options here, so we want to make
+sure we get the defaults right. But at the same time that implies a
+pretty slow, difficult process.
+
+On the other hand, I haven't seen nearly as much disagreement on "just
+refuse to work with bare repos" because it's so restrictive that it
+probably won't be the default. So it'll have no effect on most users,
+but still confers protection for the subset of users who can benefit
+from it. For those who want the problem fixed _today_ (e.g. my
+employer), this seems like simple, low-hanging fruit that buys time for
+us to find good default.
+
+FWIW, when time permits I'd be happy to work on that good default (which
+will probably be some variant of "walk up"), and to pay off the tech
+debt introduced by this implementation (I have some ideas about how we
+could improve the config API to achieve this [2]). Hopefully that helps
+allay some of your concerns?
+
+[1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.c=
+orp.google.com
+[2] https://lore.kernel.org/git/kl6lr13fi9qn.fsf@chooglen-macbookpro.roam.c=
+orp.google.com
