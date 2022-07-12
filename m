@@ -2,63 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3AA8C43334
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 16:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD93AC43334
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 16:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234219AbiGLQHL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 12:07:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45614 "EHLO
+        id S234228AbiGLQHP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 12:07:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234118AbiGLQGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 12:06:52 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B925CCAF23
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 09:06:45 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id z12-20020a17090a7b8c00b001ef84000b8bso11933752pjc.1
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 09:06:45 -0700 (PDT)
+        with ESMTP id S234203AbiGLQGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 12:06:55 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963DECB442
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 09:06:51 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id 72so8032117pge.0
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 09:06:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4smoM5IS9sKj85Y/s/3hX7g+RPVXasmSklS4E1Bgg0k=;
-        b=B/wUui39WwCkmXx1GCa9MSJGhQ7N3ZRT9M0wniUt2CVuqyyMXinz9KSPF2sxHxY58E
-         TgTkqUmAfI7rrhjQF2A28llWA/EBzDJy1bUsEm8SFp7vXnom+tCSInZOGHrzRUBYubIT
-         1nwjCb+jOK0mNGGlm96fJ8mf91MZ01g6toTuzYgoSDU3FZNZJhyp6cpMeImpMyPt0vyj
-         eG15VeqRm0IFksLAU9TYJP1TlXN8v1Lx8LyWGPUGrq5ONSkhhOHse0Zdd8HjPZ8YYwop
-         EzboXM/Tpaeg7fJw0uT2V8fRk3CEBDK9g9pI94Flhsn6LIF93YwoGtqbzYhDwF1ayot6
-         LArw==
+        bh=pVNAQ+ZfOMv2yKI1iHlzflyugwyXQWFM6NDBeidxkPg=;
+        b=Vzix40OPA+/09+orxMoKzuPHq5MHUVCIoKrHATq4+1ENqtaeYqxEd+2/V4ezZfywmp
+         3QXCUzpUmz5st/EFbWoOczmObqQAHnTS1dTsDi4NFaPQEAxX53xC4l+z5HNNpa1TsGj1
+         kilEyCOOC+ORWlaB7daoFCf+RB34IiTlONbNE9YwU6MahY3vDMSH302vWQXFi/37FBxN
+         ga8BKxJbkRq+Ge0lYu8jRazyLTiK85C+dD4x4jGAPgDh9jOIaFpl+a157bAQKu9hBqEZ
+         Zu2baEWvg9sIIQsZxkt1/u5E4D0Ba3q+gffAqDhU9QMQHcRKuqjN2r68daDQIGQZ3f5W
+         mctQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4smoM5IS9sKj85Y/s/3hX7g+RPVXasmSklS4E1Bgg0k=;
-        b=Gy6GES9YQ+eixwr1Vw7DWazEAAJkUAvjvELnSUjaMZKFeaTPLuaD5euY3M6ogbxnBT
-         yBxS6k5AVfBs9xyc359GEOL0HDrUDuE7lrbXAFJEsYaTpXja1RSzowcghPPzFzKL+3L+
-         mtfu+zrIV6NJe148vcWEP24EOnN8G4aCju4tNqKSWDNLE1AoohlckyGd7ZZ+atukyRsl
-         WUDf2fJEsW8MbybWSgHEdbaYroB7JnleI4uQEyA3czmJyHPv1eC7R1SJv5x19TYi3Ans
-         r/3duoWDb7AlGOHO/r04UZBYIxly4J9w0be0F6zAMXReJpjz6Qvv9XGY2XmR3fX1+0T0
-         PPmg==
-X-Gm-Message-State: AJIora/P/SjPNj7DsR324AxljyYZErqIXIjTJr6wkLOgR3qspsReLpmO
-        DX7wZIPUW8YOHPmTi5q8UwvCm0oO/hPjYX5G
-X-Google-Smtp-Source: AGRyM1sLgwbIdbK7yVJD5lu7amiUHlpeGxvHGnTMipaUCg+At84fwEDpluYPw8HOul+8e/oaZ2uhSQ==
-X-Received: by 2002:a17:90a:9f01:b0:1ef:76bd:e46c with SMTP id n1-20020a17090a9f0100b001ef76bde46cmr5118373pjp.197.1657642004715;
-        Tue, 12 Jul 2022 09:06:44 -0700 (PDT)
+        bh=pVNAQ+ZfOMv2yKI1iHlzflyugwyXQWFM6NDBeidxkPg=;
+        b=mmhE2JjB23C+S0svTmiwGZZskUxKuLT0JwqmQRJXfhJkrUz+Jt1QOl3sSDcxehElwe
+         LsJ5mlLy+0vhjCP8YeYA5LOS+7KNdNXmBD2iEo9j1iPyE4FhKEkHfWt+neeg+1uL14Ap
+         H1JFT0WPG/2U/k2/fFFZxou4/lSIT+po05FhPaWS3Dwm1kxeHBzfFOJPmEkJHyQRkbVf
+         Um2/wvT+QDdOm2I+W3z74Cem64z3jbvMIHe/NlLJ87PUaP6QTatDkX6q1NvmojA3cNbA
+         FZZx/BGmKd648cegVIVN2ZkbP4vSOdEncgTSuPcC3YsjbBcrz2YvJgSP+YPLC3iPakXA
+         AEeA==
+X-Gm-Message-State: AJIora9b9ZLyszeaF2PudOsVd+w6ck9d7ov7UDowjGO5BcTB6ILQZBmt
+        gmtmCbSbAOgfuRpuA7QDU+RPpvKxvFnDiDio
+X-Google-Smtp-Source: AGRyM1s/I61GRxh8hZpaHt/mLd7cAN5I6p/EkGOBLHNXpFiPtt52j6m2mPQtCBSCdjcPUgeP+uCeLg==
+X-Received: by 2002:a63:d14b:0:b0:419:57b9:d444 with SMTP id c11-20020a63d14b000000b0041957b9d444mr3920430pgj.619.1657642010604;
+        Tue, 12 Jul 2022 09:06:50 -0700 (PDT)
 Received: from HB2.. ([223.230.62.254])
-        by smtp.gmail.com with ESMTPSA id u188-20020a6260c5000000b0050dc7628183sm7232376pfb.93.2022.07.12.09.06.40
+        by smtp.gmail.com with ESMTPSA id u188-20020a6260c5000000b0050dc7628183sm7232376pfb.93.2022.07.12.09.06.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 09:06:43 -0700 (PDT)
+        Tue, 12 Jul 2022 09:06:49 -0700 (PDT)
 From:   Siddharth Asthana <siddharthasthana31@gmail.com>
 To:     git@vger.kernel.org
 Cc:     phillip.wood123@gmail.com, congdanhqx@gmail.com,
         christian.couder@gmail.com, avarab@gmail.com, gitster@pobox.com,
         Johannes.Schindelin@gmx.de, johncai86@gmail.com,
         Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH v4 0/4] Add support for mailmap in cat-file
-Date:   Tue, 12 Jul 2022 21:36:30 +0530
-Message-Id: <20220712160634.213956-1-siddharthasthana31@gmail.com>
+Subject: [PATCH v4 1/4] revision: improve commit_rewrite_person()
+Date:   Tue, 12 Jul 2022 21:36:31 +0530
+Message-Id: <20220712160634.213956-2-siddharthasthana31@gmail.com>
 X-Mailer: git-send-email 2.37.0.6.g69b7ad898b
-In-Reply-To: <20220709154149.165524-1-siddharthasthana31@gmail.com>
+In-Reply-To: <20220712160634.213956-1-siddharthasthana31@gmail.com>
 References: <20220709154149.165524-1-siddharthasthana31@gmail.com>
+ <20220712160634.213956-1-siddharthasthana31@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,103 +67,138 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks a lot for helping me fix the broken test Johannes and Junio! :D
+The function, commit_rewrite_person(), is designed to find and replace
+an ident string in the header part, and the way it avoids a random
+occurrence of "author A U Thor <author@example.com" in the text is by
+insisting "author" to appear at the beginning of line by passing
+"\nauthor " as "what".
 
-= Description
+The implementation also doesn't make any effort to limit itself to the
+commit header by locating the blank line that appears after the header
+part and stopping the search there. Also, the interface forces the
+caller to make multiple calls if it wants to rewrite idents on multiple
+headers. It shouldn't be the case.
 
-This patch series adds mailmap support to the git-cat-file command. It
-adds the mailmap support only for the commit and tag objects by
-replacing the idents for "author", "committer" and "tagger" headers. The
-mailmap only takes effect when --[no-]-use-mailmap or --[no-]-mailmap
-option is passed to the git cat-file command. The changes will work with
-the batch mode as well.
+To support the existing caller better, update commit_rewrite_person()
+to:
+- Make a single pass in the input buffer to locate headers named
+  "author" and "committer" and replace idents on them.
+- Stop at the end of the header, ensuring that nothing in the body of
+  the commit object is modified.
 
-So, if one wants to enable mailmap they can use either of the following
-commands:
-$ git cat-file --use-mailmap -p <object>
-$ git cat-file --use-mailmap <type> <object>
+The return type of the function commit_rewrite_person() has also been
+changed from int to void. This has been done because the caller of the
+function doesn't do anything with the return value of the function.
 
-To use it in the batch mode, one can use the following command:
-$ git cat-file --use-mailmap --batch
+By simplifying the interface of the commit_rewrite_person(), we also
+intend to expose it as a public function. We will also be renaming the
+function in a future commit to a different name which clearly tells that
+the function replaces idents in the header of the commit buffer.
 
-= Patch Organization
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: John Cai <johncai86@gmail.com>
+Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+---
+ revision.c | 48 ++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 38 insertions(+), 10 deletions(-)
 
-- The first patch improves the commit_rewrite_person() by restricting it 
-  to traverse only through the header part of the commit object buffer.
-  It also adds an argument called headers which the callers can pass. 
-  The function will replace idents only on these  passed headers. 
-  Thus, the caller won't have to make repeated calls to the function.
-- The second patch moves commit_rewrite_person() to ident.c to expose it
-  as a public function so that it can be used to replace idents in the
-  headers of desired objects.
-- The third patch renames commit_rewrite_person() to a name which
-  describes its functionality clearly. It is renamed to
-  apply_mailmap_to_header().
-- The last patch adds mailmap support to the git cat-file command. It
-  adds the required documentation and tests as well.
-
-Changes in v4:
-- This patch series introduces new test cases for testing the mailmap
-  mechanism in git-cat-file command. These tests rely on the side
-  effects of the earlier test case `set up symlink tests`. However, that
-  test case is guarded behind the `SYMLINKS` prereq, therefore it is not
-  run e.g. on Windows. This caused the --use-mailmap tests to fail on 
-  Windows. So, that has been fixed by removing the prereq from `set up`
-  test case.
-- The `set up symlink tests` has also been renamed to `prepare for
-  symlink/--use-mailmap tests` to reflect its broadened responsibility.
-
-Siddharth Asthana (4):
-  revision: improve commit_rewrite_person()
-  ident: move commit_rewrite_person() to ident.c
-  ident: rename commit_rewrite_person() to apply_mailmap_to_header()
-  cat-file: add mailmap support
-
- Documentation/git-cat-file.txt |  6 +++
- builtin/cat-file.c             | 43 +++++++++++++++++++-
- cache.h                        |  6 +++
- ident.c                        | 72 ++++++++++++++++++++++++++++++++++
- revision.c                     | 50 ++---------------------
- t/t4203-mailmap.sh             | 56 +++++++++++++++++++++++++-
- 6 files changed, 184 insertions(+), 49 deletions(-)
-
-Range-diff against v3:
-1:  9e95326c58 = 1:  9e95326c58 revision: improve commit_rewrite_person()
-2:  d9395cb8b2 = 2:  d9395cb8b2 ident: move commit_rewrite_person() to ident.c
-3:  355bbda25e = 3:  355bbda25e ident: rename commit_rewrite_person() to apply_mailmap_to_header()
-4:  69b7ad898b ! 4:  ac532965b4 cat-file: add mailmap support
-    @@ Commit message
-         cat-file command. It also adds --[no-]mailmap option as an alias to
-         --[no-]use-mailmap.
-     
-    +    This patch also introduces new test cases to test the mailmap mechanism in
-    +    git cat-file command.
-    +
-    +    The tests added in this patch series rely on the side effects of the earlier
-    +    test case `set up symlink tests`. However, that test case is guarded behind the
-    +    `SYMLINKS` prereq, therefore it is not run e.g. on Windows which can cause the
-    +    added tests to fail on Windows. So, fix that by removing the prereq from the
-    +    `set up` test case, and adjusting its title to reflect its broadened responsibility.
-    +
-         Mentored-by: Christian Couder <christian.couder@gmail.com>
-         Mentored-by: John Cai <johncai86@gmail.com>
-         Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-    @@ builtin/cat-file.c: int cmd_cat_file(int argc, const char **argv, const char *pr
-      		batch.all_objects = 1;
-     
-      ## t/t4203-mailmap.sh ##
-    +@@ t/t4203-mailmap.sh: test_expect_success 'find top-level mailmap from subdir' '
-    + 	test_cmp expect actual
-    + '
-    + 
-    +-test_expect_success SYMLINKS 'set up symlink tests' '
-    ++test_expect_success 'prepare for symlink/--use-mailmap tests' '
-    + 	git commit --allow-empty -m foo --author="Orig <orig@example.com>" &&
-    + 	echo "New <new@example.com> <orig@example.com>" >map &&
-    + 	rm -f .mailmap
-     @@ t/t4203-mailmap.sh: test_expect_success SYMLINKS 'symlinks not respected in-tree' '
-      	test_cmp expect actual
-      '
+diff --git a/revision.c b/revision.c
+index 211352795c..1939c56c67 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3755,19 +3755,17 @@ int rewrite_parents(struct rev_info *revs, struct commit *commit,
+ 	return 0;
+ }
+ 
+-static int commit_rewrite_person(struct strbuf *buf, const char *what, struct string_list *mailmap)
++/*
++ * Returns the difference between the new and old length of the ident line.
++ */
++static ssize_t rewrite_ident_line(const char* person, struct strbuf *buf, struct string_list *mailmap)
+ {
+-	char *person, *endp;
++	char *endp;
+ 	size_t len, namelen, maillen;
+ 	const char *name;
+ 	const char *mail;
+ 	struct ident_split ident;
+ 
+-	person = strstr(buf->buf, what);
+-	if (!person)
+-		return 0;
+-
+-	person += strlen(what);
+ 	endp = strchr(person, '\n');
+ 	if (!endp)
+ 		return 0;
+@@ -3784,6 +3782,7 @@ static int commit_rewrite_person(struct strbuf *buf, const char *what, struct st
+ 
+ 	if (map_user(mailmap, &mail, &maillen, &name, &namelen)) {
+ 		struct strbuf namemail = STRBUF_INIT;
++		size_t newlen;
+ 
+ 		strbuf_addf(&namemail, "%.*s <%.*s>",
+ 			    (int)namelen, name, (int)maillen, mail);
+@@ -3792,14 +3791,42 @@ static int commit_rewrite_person(struct strbuf *buf, const char *what, struct st
+ 			      ident.mail_end - ident.name_begin + 1,
+ 			      namemail.buf, namemail.len);
+ 
++		newlen = namemail.len;
++
+ 		strbuf_release(&namemail);
+ 
+-		return 1;
++		return newlen - (ident.mail_end - ident.name_begin + 1);
+ 	}
+ 
+ 	return 0;
+ }
+ 
++static void commit_rewrite_person(struct strbuf *buf, const char **headers, struct string_list *mailmap)
++{
++	size_t buf_offset = 0;
++
++	if (!mailmap)
++		return;
++
++	for (;;) {
++		const char *person, *line;
++		size_t i, linelen;
++
++		line = buf->buf + buf_offset;
++		linelen = strchrnul(line, '\n') - line + 1;
++
++		if (linelen <= 1)
++			/* End of header */
++			return;
++
++		buf_offset += linelen;
++
++		for (i = 0; headers[i]; i++)
++			if (skip_prefix(line, headers[i], &person))
++				buf_offset += rewrite_ident_line(person, buf, mailmap);
++	}
++}
++
+ static int commit_match(struct commit *commit, struct rev_info *opt)
+ {
+ 	int retval;
+@@ -3832,11 +3859,12 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+ 		strbuf_addstr(&buf, message);
+ 
+ 	if (opt->grep_filter.header_list && opt->mailmap) {
++		const char *commit_headers[] = { "author ", "committer ", NULL };
++
+ 		if (!buf.len)
+ 			strbuf_addstr(&buf, message);
+ 
+-		commit_rewrite_person(&buf, "\nauthor ", opt->mailmap);
+-		commit_rewrite_person(&buf, "\ncommitter ", opt->mailmap);
++		commit_rewrite_person(&buf, commit_headers, opt->mailmap);
+ 	}
+ 
+ 	/* Append "fake" message parts as needed */
 -- 
 2.37.0.6.g69b7ad898b
 
