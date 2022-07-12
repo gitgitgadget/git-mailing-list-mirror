@@ -2,104 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1574DC43334
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 23:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87E3EC43334
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 23:10:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233360AbiGLXDA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 19:03:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33898 "EHLO
+        id S232055AbiGLXKa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 19:10:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231161AbiGLXC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 19:02:59 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB91D64E2B
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:02:58 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id o26so7502486qkl.6
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:02:58 -0700 (PDT)
+        with ESMTP id S229514AbiGLXK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 19:10:28 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AF859B1A9
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:27 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id f12so7436658qka.12
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=mjKoXPv8EOiS1ocCRta34FO4HQ988K/7LSJ80W0YaCo=;
-        b=Fx1P8bdsqZqkjMP7mPDjdKZhe4Hc1CAe1Xb+wrvAolNsvo4wDmud5n8LKr7BsHpJ76
-         dIlNBzjZNZUJ+cAoxITJcp6wY4qk1sOBPAPO6s72D9ePGzretiWqw47XDHJtoIrFAvDl
-         dlk74ucfz/flbokHw5/C8QaCkdlwibZXOu6zyk6yX9wlnvmVF01QMRr9rV1b1Qw/0Ba6
-         Ul+VCV2i4tsU5+TacMx/mUnPJdrxrmRaUYnCOXO+7/9P32iKoCWxomofoTzMd2UctG/D
-         fcce/8qAhzLa2FSNNV0wJ1Afh1XbAGw6u5/vkvUwwj8E5Dnd0ikgurtV4moCLAMv7Bbw
-         AXTA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=BcdxbO9FCqNwh1Y7GgtrAvJ2qFmJzahX0FaTfDpkpPY=;
+        b=MARwSUqWLOOvyrcpwBt3YkKEAudENowlupmbwzqXfUuj2EQRsxWLTfqKSczHjPHmp+
+         2Vp9RKnrtOFJ/S2EbNyAhlOH8Sxtg9UeuOZzu/OUGB6kxPnfqcj96TSz20FFeEWDFze+
+         8dfmi8Y+UW+/Nqp0eXTyls8hZWt23uWsM/R7j41jMWEqCBuJxe6L5Mq5E34vsSyL6ZM9
+         aL3Qt122hwYMbutSIZEjgsSzJSKIfD9nJLc9DD0f4BC/zPLwOtc+ASqTRyL/SsU68LVa
+         bDn6qXPEQ9onppr7pn3mkiySlZBxPPM+8zNhlajDgQLvVGgdMLj2duejJ3qreA4cAkzz
+         zxNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=mjKoXPv8EOiS1ocCRta34FO4HQ988K/7LSJ80W0YaCo=;
-        b=bFI2OkGiEnFBpY/Ukr7n+hg93qTH17nQNMGAUV9SZkxmvGn6/BY7dy9TTj0KAXBXWJ
-         Lyc2hm9J83sr2EE3KB6dAYrn28hkz80SIRsxfcy1oKSDEG0fWL6ZZPaY5NZjFE5LLMnr
-         O06ocBwNKYsuOTH22edEZ7bzhtsEY4vvJZgMAbKuM2v1EV1sVHQD558mpzsOA/njeGWD
-         zUEAAYh/wdrELFBNo20Z2+qZRnLVE65ce0kygNYLgyCpC2v4HpAda/6cyLzTDiqZZy5H
-         URnct2wQ6eHxkz72wsPhkVXsJc1T3L3creRjG6zDgUmbOTrYN3s0PAruZyQRAzMWajZZ
-         8HOw==
-X-Gm-Message-State: AJIora8qNFyetWdPvixWsTw1gxBiUUASLLt1KDzfZg1UYV5dAhyAXt1s
-        AMr4u3Mu+dkRWN2+yzU9RduxCZMRMAdmglRMKh3/cygcsoE=
-X-Google-Smtp-Source: AGRyM1tzOqH0c15YHKS4DYpV67W2jo4ovCMbpInrP8EKvQDsFL/wAdQHUW+dulW6YzNweikLCoNErKakJLkarHwrRAA=
-X-Received: by 2002:a37:b802:0:b0:6b5:8330:55a with SMTP id
- i2-20020a37b802000000b006b58330055amr517477qkf.778.1657666977845; Tue, 12 Jul
- 2022 16:02:57 -0700 (PDT)
-MIME-Version: 1.0
-From:   Britton Kerin <britton.kerin@gmail.com>
-Date:   Tue, 12 Jul 2022 15:02:47 -0800
-Message-ID: <CAC4O8c9izkV5vbnE6MH8-RwnxRbUONxJxYZO+hb1J0ewuDtX+w@mail.gmail.com>
-Subject: BUG: git-check-ignore documentation doesn't come close to describing
- what it really does
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=BcdxbO9FCqNwh1Y7GgtrAvJ2qFmJzahX0FaTfDpkpPY=;
+        b=3Waw2mqQb9nSUdgPIxLW4+aAu//eeejiYNY6UdO2siUWUZ5nAPGh7j/Qb8G8uslQ8X
+         zD1jrkZy92fv6LdXoo38A0GdTVVtj2Qd/I0fJ9MVn+5uDPc3Wnxgl+LEMxyJB2WZTZNk
+         Z3c1Yky0PpTOXu32FgyqVT9vF+7EuUZrRzu93uvWA3yrn8FrzSroC6OTYIA4TsTvzePz
+         vHvdNTxtctyrt93qr5j4N9XeQ0Is8cfrNtaDEFeq3MfcxLLirksVJk10YXTERAuKrngm
+         iROOpVyVqEQANOHNLIIqOUv5YityjSOKEma0ndrntsC+4FWe61vqnhw2FL7GHiQBtEai
+         69OA==
+X-Gm-Message-State: AJIora+MND+/dYPIvguBv+EA+q8FZKo3P7FKKPR9c/TZ280vE9XfIwEk
+        0HXgtyqPML9YukbVF3MRdM4a+h7Xi7Jv0A==
+X-Google-Smtp-Source: AGRyM1uLx8/7Nk40FgexHnCqV/+MGDLNTRCNAKYLxKhVue6VzxMLzaxSiwv+zMa7G31KeKhnBzzvVQ==
+X-Received: by 2002:a05:620a:2845:b0:6a9:b149:8d31 with SMTP id h5-20020a05620a284500b006a9b1498d31mr565220qkp.86.1657667426561;
+        Tue, 12 Jul 2022 16:10:26 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id w20-20020a05620a0e9400b006b5b1d632bbsm848434qkm.99.2022.07.12.16.10.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jul 2022 16:10:26 -0700 (PDT)
+Date:   Tue, 12 Jul 2022 19:10:18 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     gitster@pobox.com, derrickstolee@github.com, peff@peff.net,
+        ps@pks.im, wfc@wfchandler.org
+Subject: [PATCH 0/3] commit-graph: fix corruption during generation v2 upgrade
+Message-ID: <cover.1657667404.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It begins:
+This brief series resolves a bug where a commit-graph would become
+corrupt when upgrading from generation number v1 to v2, as originally
+reported in [1].
 
-       For each pathname given via the command-line or from a file via
---stdin, check whether
-       the file is excluded by .gitignore (or other input files to the
-exclude mechanism) and output
-       the path if it is excluded.
+Some speculation occurred as to what might be causing that bug in the
+thread beginning at [1], until the problem was explained in more detail
+by Will Chandler in [2].
 
-In fact it just reports matches from .gitignore etc:
+The crux of the issue, as is described in [2] and [3], is that the
+commit_graph_data slab is reused for read and write operations involving
+the commit-graph, leading to situations where data computed in
+preparation of a write is clobbered by a read of existing data.
 
-     $ cat .gitignore
-     *.o
-     !*.dont_ignore
-     $ ls
-     bar.o.dont_ignore  foo.o
-     $ git check-ignore -v -n *
-     .gitignore:2:!*.dont_ignore bar.o.dont_ignore
-     .gitignore:1:*.o foo.o
-     $ # Even more confusing without -v -n:
-     $ git check-ignore *
-     bar.o.dont_ignore
-     foo.o
+The first patch demonstrates the issue, and the second patch prepares to
+fix it by introducing a helper function. The crux of the issue is
+described and fixed in the third patch.
 
-The EXIT STATUS section is even more wrong:
+[1]: https://lore.kernel.org/git/YqD5dgalb9EPnz85@coredump.intra.peff.net/
+[2]: https://lore.kernel.org/git/DD88D523-0ECA-4474-9AA5-1D4A431E532A@wfchandler.org/
+[3]: https://lore.kernel.org/git/YsS7H4i5DqUZVQ5i@nand.local/
 
-     EXIT STATUS
-            0
-                One or more of the provided paths is ignored.
+Taylor Blau (3):
+  t5318: demonstrate commit-graph generation v2 corruption
+  commit-graph: introduce `repo_find_commit_pos_in_graph()`
+  commit-graph: fix corrupt upgrade from generation v1 to v2
 
-            1
-                None of the provided paths are ignored.
+ bloom.c                 | 10 +++++-----
+ commit-graph.c          | 12 +++++++++---
+ commit-graph.h          | 15 +++++++++++++++
+ t/t5318-commit-graph.sh | 27 +++++++++++++++++++++++++++
+ 4 files changed, 56 insertions(+), 8 deletions(-)
 
-            128
-                A fatal error was encountered.
-
-but:
-
-     $ if git check-ignore foo.o.dont_ignore; then echo exited true;
-else echo exited false; fi
-     foo.o.dont_ignore
-     exited true
-     $
-
-IMO the behavior of git-check-ignore is the correct and useful
-behavior and the documentation should simply be fixed to reflect the
-fact that it just lists matching entries rather than wrongly claiming
-that it returns the overall result of the ignore calculation.
-
-Britton
+-- 
+2.37.0.1.g1379af2e9d
