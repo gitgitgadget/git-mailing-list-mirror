@@ -2,105 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21AA5C433EF
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 15:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBE0EC43334
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 15:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233010AbiGLPVe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 11:21:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54408 "EHLO
+        id S233553AbiGLPiD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 11:38:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233044AbiGLPVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 11:21:18 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85F821FCF7
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 08:18:31 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id t25so14488156lfg.7
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 08:18:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=AEYrrThKrMdlv0M2jjWpsCY3sUHp407xzu6rPuwKqBI=;
-        b=GDF+wcjjD5hygYVCXL3cUn02SFn/W9lwUh5YXFa/g1csd/aqUVeYYAri4I+sKPImnB
-         xF00djSTA4rXF+jEzPm8L/q3oqsMBI6pAG4wZpdCKbrA9vCse6SCFOKMTBr0TvuwOZPI
-         +UP5z/sxUtu7qcGVIAvU1Zp3rvfnyDOuYLFdayDo29eyiNCKX5sDNueCuGrcVpLAH5tl
-         hNUYWlKuGMYNa6TufqsxjR1P6W1PUGlFU8/4tGgzx3xgCg3q4ViNKTbrNd7qNchil9hB
-         6z51QF1v1DNkIxbnWV+K4jKheG95XVHHL9sVYPhOyD1IjV2RW6/6klPdH/glmJ2hocY+
-         pRsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=AEYrrThKrMdlv0M2jjWpsCY3sUHp407xzu6rPuwKqBI=;
-        b=0p+aHFavXYXCYJXKeMe36RVATLKd0K7cR7KVpKGsYx4vLa3MfUalC12byap17VDXR4
-         eXxAjKA+OE+KtJMhYYWJ356i+EX/hcxjmMi7MyrxV0bb2KS5ZkikWW3pybx4hF/Khh2f
-         BPTV0beMHD7DBVI3B4d2Y0Z4ayoxyYOp3+jwudDUmIQv+zkFZmRXisRy/Ljbv5xtFMPd
-         5lJYF6xJE5UN/k0qeLO6/btuKIv4iFmvUnuI/lTq90/yPp/gQtjCCHr0D1rYUNrKXWCK
-         GSGvEWGc8Wpk02ZeHXODJTLJlOOxKGtqaVVZ6W8BX5EfPlpiu7CsLqyNth2dDgn0Emxm
-         wO4A==
-X-Gm-Message-State: AJIora8i1+jdtTBGVFjfVXIlXwXgKIYKnYvyZvm2L76s1BmZCJ9Pj2Ih
-        gP/lCdnJcJRpJOkLZ7OaE0fiFQOFzXQ=
-X-Google-Smtp-Source: AGRyM1uW84i/T82Mc69csEBd+3mxIRwPa4sWR52RD5NPOE+ojfIIji+Ma4/hCOUGpRxT41U3ndiQPA==
-X-Received: by 2002:a05:6512:2814:b0:481:981:23d7 with SMTP id cf20-20020a056512281400b00481098123d7mr16207157lfb.75.1657639109335;
-        Tue, 12 Jul 2022 08:18:29 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id h28-20020a2ea49c000000b0025d71ab224fsm1104082lji.55.2022.07.12.08.18.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 08:18:28 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Thomas Guyot <tguyot@gmail.com>, Jeff King <peff@peff.net>,
-        Gerriko io <gerriko.iot@gmail.com>, git@vger.kernel.org
-Subject: Re: Why is reflog so obscure?
-References: <CALF=2ANoq1eL-RqK_dLaVThoxbvfhzgPJXFHyD1kX8CFCPx3XA@mail.gmail.com>
-        <f0bb8ee8-9b38-45a7-a54b-24cf245bb3c8@gmail.com>
-        <Ys0e9MxIWQj/pVXx@coredump.intra.peff.net>
-        <a8d2a61d-b86f-9b89-6391-36c58c390a12@gmail.com>
-        <xmqqo7xuif46.fsf@gitster.g>
-Date:   Tue, 12 Jul 2022 18:18:27 +0300
-In-Reply-To: <xmqqo7xuif46.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        12 Jul 2022 07:23:53 -0700")
-Message-ID: <87ilo2we9o.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        with ESMTP id S229749AbiGLPiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 11:38:00 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6432761B19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 08:37:59 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6A49D13C098;
+        Tue, 12 Jul 2022 11:37:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=13kNzP2QcLcDbduYsffnXhMQQG0IHurduAO9Ij
+        6rXX8=; b=S0f6TLVWNHEpPbGLB85R04A4biLv7WK9G5XME0JSVKE4czf4FRs5NC
+        AxmuJ5Iq6lXXdVwKGPuasJxRNYxamIg1nDBBJ6foIML4JEed30YwP2f5W4X4VADc
+        /xv1k6SWf6fGIV+fl6JXleIf4Soi/DH/TEP8883m43Q52EFilBiiA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61E2313C097;
+        Tue, 12 Jul 2022 11:37:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C0FE913C096;
+        Tue, 12 Jul 2022 11:37:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de, me@ttaylorr.com,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v4 00/12] rebase: update branches in multi-part topic
+References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
+        <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
+Date:   Tue, 12 Jul 2022 08:37:56 -0700
+In-Reply-To: <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Tue, 12 Jul 2022 13:06:53
+        +0000")
+Message-ID: <xmqq8royibor.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 9ABF475C-01F8-11ED-8472-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Thomas Guyot <tguyot@gmail.com> writes:
+> This series is based on ds/branch-checked-out.
+> ...
+> Updates in v4
+> =============
 >
->> Thanks for clarifying that - I suspected it since we can do
->> <branch>@{<date>} although I didn't find any reference branch reflogs
->> in the documentation. I could've missed it... Is there a way to read a 
->> branch reflog?
+> This version took longer than I'd hoped (I had less time to work on it than
+> anticipated) but it also has some major updates. These major updates are
+> direct responses to the significant review this series has received. Thank
+> you!
 >
->     $ git reflog ;# lists entries of reflog of HEAD, starting at HEAD@{0}
->     $ git reflog HEAD ;# same
->     $ git reflog HEAD@{4} ;# same, starting at HEAD@{4}
->     $ git reflog master ;# entries of reflog of "master"
->     $ git reflog master@{0} ;# same
->     $ git reflog master@{now} ;# same, show with timestamps
->     $ git reflog master@{4.minutes} ;# same, starting at master@{4.minutes}
->
-> For the branch that is currently checked out, you can omit the name
-> when you use any of the @{...} notation, so 
->
->     $ git reflog @{0}
->     $ git reflog @{now}
->
-> are often the easiest ways to view what you did on the current
-> branch.
+>  * The update-refs file now stores "ref/before/after" triples (still
+>    separated by lines). This allows us to store the "before" OID of a ref in
+>    addition to the "after" that we will write to that ref at the end of the
+>    rebase. This allows us to do a "force-with-lease" update. The
+>    branch_checked_out() updates should prevent Git from updating those refs
+>    while under the rebase, but older versions and third-party tools don't
+>    have that protection.
 
-Very handy, thanks! Would be nice to have this in EXAMPLES section of
-corresponding manual page.
+Nice.
 
-Honestly, I tried (admittedly not very hard) to figure how to get dates
-from "git reflog" a few times, but every time I gave up, so this (along
-with the --dates option turning dates output on) is not very
-discoverable.
+>  * The update-refs file is updated with every update to the todo-list file.
+>    This allows for some advanced changes to the file, including removing,
+>    adding, and duplicating 'update-ref' commands.
+>  * The message at the end of the rebase process now lists which refs were
+>    updated with the update-ref steps. This includes any ref updates that
+>    fail.
+>  * The branch_checked_out() tests now use 'git bisect' and 'git rebase' as
+>    black-boxes instead of testing their internals directly.
+>
+> Here are the more minor updates:
+>
+>  * Dropped an unnecessary stat() call.
+>  * Updated commit messages to include extra details, based on confusion in
+>    last round.
+>  * The HEAD branch no longer appears as a comment line in the initial todo
+>    list.
+>  * The update-refs file is now written using a lockfile.
+>  * Tests now use test_cmp_rev.
+>  * A memory leak ('path' variable) is resolved.
 
--- 
-Sergey Organov
+Interesting.
+
+This is a tangent, but may serve as some food for thought.
+
+When I queue (or develop myself) a topic that depends on another
+topic, I often do
+
+    $ git checkout --detach vX.Y.Z ;# choose an appropriate base
+    $ git merge --into derived-topic base-topic
+    $ develop develop (or "git am")
+
+which would end up in
+
+    vX.Y.Z -----M---A---B---C derived-topic
+               /
+     base-topic
+
+so that "git log --first-parent --oneline master.." would show the
+commits in the topic plus the fact that it depends on which other
+topic recorded in a single merge commit.  A topic that depends on
+two or more topics can be handled the same way.
+
+One good thing about this arrangement, unlike the "totally linear"
+one depicted at the top of your cover letter, is that it is easier
+to rebuild each topic independently and the first-parent view is
+still useful.  If you futz with the base topic in a totally linear
+history, "log --decorate" of the derived topic would no longer tell
+you where the old iteration of the base topic ended.
+
+It would be very nice to see the update-ref feature (or something
+like that) makes it easy to deal with such a topology, too.
+
