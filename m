@@ -2,126 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97DA0C433EF
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 08:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D1C1CCA47C
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 08:24:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232543AbiGLIB7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 04:01:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34990 "EHLO
+        id S229559AbiGLIYg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 04:24:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbiGLIB6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 04:01:58 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E363A24958
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 01:01:56 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id o5-20020a17090a3d4500b001ef76490983so7197426pjf.2
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 01:01:56 -0700 (PDT)
+        with ESMTP id S230503AbiGLIY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 04:24:26 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC4FB59271
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 01:24:25 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id 70so6897645pfx.1
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 01:24:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FW+bR43PxAahbHlC6G2mxYq1ah3vde7GbWi8Z8slbTE=;
-        b=U4EnlcE4AUZAhTk0zAnoYg3XSFB0SOFd/xgpzFai+9cdrbExujG86vjz2MrwgJUHw/
-         0aGq05R5maD9wCSuHA5Y8cAKzNyIovhEmaDQWbwBIzidkyzx2kMJ94283WMLQmPITvEc
-         iLbhd+gPt+PJBzSB2exPzWjYz6h4hwmY6o9oslRotULvB/9nXnYlbv4U9QRXet939Rue
-         byu/FVvnXIaTmr7TIkLSrlnzH/338/sR1eHLZU8VJRzl6WxNhwpG8KQUHcRJWqZJqGWg
-         XvtSKKYoSniQht1l7ZTVl7VvfKzNI0ViHP7ZiCNxA5FK+ufte5ljkpO/3CHgNKElbSiw
-         xtZA==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:references:in-reply-to:content-transfer-encoding;
+        bh=N6mT7S9VNDq8poN6tOsQYGY+ii0WrZyVkRpteOn6S2g=;
+        b=eYcnbdWkQ2TABKbRyFUAS5BRIyG+pCrqeFX+aDC/bqTxeRwGcsFlutaxYcxRRYFwHi
+         Vc4hNkH9UdpX8AuQBzfymmKeHM1OBovitMADaORpaLPnjofYsQEvEwwNmvb1QnuWNdyU
+         Biy6GG9bJ/eP9BDyt3my3MLv/dBfpefEDml8oKSSVgUP1KscC/rZb7FujSclykuAbemj
+         uu15ZKlkQAQlYgMbkXg2agXUUkGPWpHSDO0trhAhxf7xafoOV8CPKNzbH0oxShVlO4dC
+         6zFE8pM81RjPKcyD92kUswPbfNSEu6Qp7SInyOfHh61sdsBPJl0LTo3QlEzzYvf5ab6Q
+         gv7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FW+bR43PxAahbHlC6G2mxYq1ah3vde7GbWi8Z8slbTE=;
-        b=emwcGtHsTLioJ3X/M0IN/XqdG1ERqPLIlhH0j/GkazDF3vixLM3TqplSRiq5ZhORnn
-         9sFO1E/eo0WYEXL6Pwv7449W/XLdhuKOqD7wfji+nz5nOrul35hZgF22je7sXDJPp4k6
-         ao3tGPZUSfQg7Lgpj0F472iwPWKMeAEiybWwz/9DpdGjddEZJL20sGS6vqCbFkQ9+01H
-         K+nooMqu96gclVYDGV2R/5RN0yx7PtVC4B9qpRN/mjS4TQ+cBSA4GTWDyc1jKAJLz7zW
-         L0ErG9/xyp7b6dvakJ1nWVsobZ603JRh9SG0+Wnbu/k84F4KXmwkywU4DBQtS5dlzShb
-         uLag==
-X-Gm-Message-State: AJIora+LavnWfFjc+A66BHMtt4mvbJpThXuND+hUl+uQVioqk910o4cX
-        4Zg4yaAas7YWZv6usY9fI3ghvA==
-X-Google-Smtp-Source: AGRyM1vQpsv+RWxenRvx4aLS7FacOnMdaPUzSXCMf2a+tP8LkjKF8llOrpd3aXhYfSqlX/9QIMCKiw==
-X-Received: by 2002:a17:903:1252:b0:16b:a568:4f7d with SMTP id u18-20020a170903125200b0016ba5684f7dmr22959377plh.103.1657612916378;
-        Tue, 12 Jul 2022 01:01:56 -0700 (PDT)
-Received: from JMHNXMC7VH.bytedance.net ([139.177.225.231])
-        by smtp.gmail.com with ESMTPSA id r26-20020aa7963a000000b0052ac12e7596sm4988574pfg.114.2022.07.12.01.01.51
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 12 Jul 2022 01:01:56 -0700 (PDT)
-From:   Han Xin <hanxin.hx@bytedance.com>
-To:     hanxin.hx@bytedance.com
-Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
-        git@vger.kernel.org, haiyangtand@gmail.com,
-        jonathantanmy@google.com, peff@peff.net, git@grubix.eu,
-        me@ttaylorr.com, Junio C Hamano <gitster@pobox.com>, ps@pks.im
-Subject: [PATCH v1] t5330: remove run_with_limited_processses()
-Date:   Tue, 12 Jul 2022 16:01:43 +0800
-Message-Id: <20220712080143.11843-1-hanxin.hx@bytedance.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <cover.1656593279.git.hanxin.hx@bytedance.com>
-References: <cover.1656593279.git.hanxin.hx@bytedance.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:references:in-reply-to
+         :content-transfer-encoding;
+        bh=N6mT7S9VNDq8poN6tOsQYGY+ii0WrZyVkRpteOn6S2g=;
+        b=BGBH7MHYfMLPJKFTzN3pZ6VMFz+6edwwR6u87ZFIhA4JRaYjwzAdQ/g3GwejXGUouk
+         fy8nnMbtjag4iaYBKB65WLQVN/XlyGK43MknPEAHGx+oKlNH/mBQZf4eKfuFHXSryLLr
+         sSwVyOXPlrCVBXB66q7DuIDmEzCZ4VnZ2XS0Cq/UEsZK2YBvrfFqFoXgzXDRbsJc38WL
+         Bksige8Ud205+mBupp80Ot7oEA93vG6gH6c0G6AlicMP1YNZ/AxLl76n7MSeFdqWpMiK
+         YtE5h9CrELi0UK1TjUusSp9GyGOkze5tCywo+42rORq/FMJuq8mPhjxJN4wopB9YZkvW
+         w9ZA==
+X-Gm-Message-State: AJIora83k1yiZYu8rmmjGgmTg9EfU2f+nrgyhuCX9dA6exVDj1Ms+/N0
+        oiKWkJmBfEs313Fa7iJmi0aHcu4S7CComJsO
+X-Google-Smtp-Source: AGRyM1sq+ftEFBD/wUY3Xqyq9FxgNH1fVhrODnRuyvaX7vHr6lCq/hAC7QFEZZO9JCr87lStFz/IFw==
+X-Received: by 2002:a63:ee10:0:b0:40d:7f37:77c4 with SMTP id e16-20020a63ee10000000b0040d7f3777c4mr18757597pgi.28.1657614265071;
+        Tue, 12 Jul 2022 01:24:25 -0700 (PDT)
+Received: from [127.0.0.1] ([128.1.248.98])
+        by smtp.gmail.com with ESMTPSA id g124-20020a625282000000b00518e1251197sm6310775pfb.148.2022.07.12.01.24.23
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Jul 2022 01:24:24 -0700 (PDT)
+Message-ID: <803773d1-25b6-e62b-18fa-efd9fdc92c97@gmail.com>
+Date:   Tue, 12 Jul 2022 16:24:19 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: [GSoC] Week 3 and week 4 status update
+Content-Language: en-US
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+To:     Git List <git@vger.kernel.org>
+References: <CAJyCBOSrhxbCcDX5oWBuNEWOxQu2Rmk+T+paORLzoLF=iaBH1Q@mail.gmail.com>
+In-Reply-To: <CAJyCBOSrhxbCcDX5oWBuNEWOxQu2Rmk+T+paORLzoLF=iaBH1Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-run_with_limited_processses() is used to end the loop faster when an
-infinite loop happen. But "ulimit" is tied to the entire development
-station, and the test will fail due to too many other processes or using
-"--stress".
+Hi Git community,
 
-Without run_with_limited_processses() the infinite loop can also be
-stopped due to global configrations or quotas, and the verification
-still works fine. So let's remove run_with_limited_processses().
+Here is Shaoxuan Yuan.
 
-Signed-off-by: Han Xin <hanxin.hx@bytedance.com>
+I'm writing to share my latest progress [1] from GSoC week 3 and week 4.
+
+You can read them when you are free, and generously give me some
+advice if possible!
+
 ---
- t/t5330-no-lazy-fetch-with-commit-graph.sh | 25 +---------------------
- 1 file changed, 1 insertion(+), 24 deletions(-)
+Summary of the week 3 and week 4
 
-diff --git a/t/t5330-no-lazy-fetch-with-commit-graph.sh b/t/t5330-no-lazy-fetch-with-commit-graph.sh
-index be33334229..2cc7fd7a47 100755
---- a/t/t5330-no-lazy-fetch-with-commit-graph.sh
-+++ b/t/t5330-no-lazy-fetch-with-commit-graph.sh
-@@ -4,28 +4,6 @@ test_description='test for no lazy fetch with the commit-graph'
- 
- . ./test-lib.sh
- 
--run_with_limited_processses () {
--	# bash and ksh use "ulimit -u", dash uses "ulimit -p"
--	if test -n "$BASH_VERSION"
--	then
--		ulimit_max_process="-u"
--	elif test -n "$KSH_VERSION"
--	then
--		ulimit_max_process="-u"
--	fi
--	(ulimit ${ulimit_max_process-"-p"} 512 && "$@")
--}
--
--test_lazy_prereq ULIMIT_PROCESSES '
--	run_with_limited_processses true
--'
--
--if ! test_have_prereq ULIMIT_PROCESSES
--then
--	skip_all='skipping tests for no lazy fetch with the commit-graph, ulimit processes not available'
--	test_done
--fi
--
- test_expect_success 'setup: prepare a repository with a commit' '
- 	git init with-commit &&
- 	test_commit -C with-commit the-commit &&
-@@ -59,8 +37,7 @@ test_expect_success 'fetch any commit from promisor with the usage of the commit
- 	git -C with-commit-graph config remote.origin.partialclonefilter blob:none &&
- 	test_commit -C with-commit any-commit &&
- 	anycommit=$(git -C with-commit rev-parse HEAD) &&
--
--	run_with_limited_processses env GIT_TRACE="$(pwd)/trace.txt" \
-+	GIT_TRACE="$(pwd)/trace.txt" \
- 		git -C with-commit-graph fetch origin $anycommit 2>err &&
- 	! grep "fatal: promisor-remote: unable to fork off fetch subprocess" err &&
- 	grep "git fetch origin" trace.txt >actual &&
--- 
-2.36.1
+At this stage, the main focus is on making `git-sparse-checkout` work better
+with `git-mv`. With the ongoing "from out-of-cone to in-cone" clearing
+up, I'm also working to make the complementary "from in-cone to out-of-cone"
+possible. Read the previous blogs on GSoC to get a better context.
 
+In the meantime, some experiments towards integration with `sparse-index`
+have also started, which are based on the latest work "from in-cone to
+out-of-cone" boiling in my branch.
+
+This week I'm working to ship a PATCH v5 [2] (please reference all the
+code here) to address the issues raised in PATCH v4 [3].
+
+The good news is, that PATCH v5 is being queued into the 'next' branch, 
+which
+means it could potentially be merged into 'master'. It marks that this stage
+of work is almost done.
+
+[1] https://ffyuanda.github.io/blog/GSoC-week-3-4/
+[2] 
+https://lore.kernel.org/git/20220630023737.473690-1-shaoxuan.yuan02@gmail.com/
+[3] 
+https://lore.kernel.org/git/20220623114120.12768-1-shaoxuan.yuan02@gmail.com/
+
+Thanks & Regards,
+Shaoxuan
