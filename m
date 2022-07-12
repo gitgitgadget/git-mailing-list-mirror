@@ -2,168 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53B6FC433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 00:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90239C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 01:09:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbiGMARl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 20:17:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48528 "EHLO
+        id S232805AbiGMBJp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 21:09:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiGMARj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 20:17:39 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C73E27CE7
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 17:17:37 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id ss3so11098971ejc.11
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 17:17:37 -0700 (PDT)
+        with ESMTP id S232716AbiGMBJn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 21:09:43 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F047C48E0
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 18:09:42 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id j22so17304156ejs.2
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 18:09:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+LnjrLhlhFu+de5A1iOJFzLSg6M4a+X2v91qeHaPWRU=;
-        b=i7GNQN2G04WBUQBtQmFE9Taxq6la1w7i1XUSdOr1EqOuXdsl6h2GMxukdf+Opy7RAa
-         Qi/C1vAiQoj9zZDEA+rOmbd185IMVqYA+0wrpUCAoczna8fUbE5EUP3H2tDn6ixSHRTr
-         Pz98tEh7QJ+6x8Dji/iamuEhRwXYONudFJCl/BJKGvySp2p7WJyNE6By80LhhTuxWYWc
-         fqMqaU1NJkrdiPw/8cyC/PR1UMbeXI+C5IwdlkpSe3ExnqwXfuIMPVlbk8XwQGhTYoQz
-         0R1NG8gZomaf1oTLTzMI8KbkL9DmTCP370qFnk1IdlVbX0VewxhxgIKR03Sa7svckPpS
-         TF2g==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Sdnzk6ZfP5L0XH2fOUayrsbDiszJ8vLOAhD0tvWrvEs=;
+        b=NdZoHnzLL4mgC1uZBtYnXx8JsNtI+Jm47TJ6FBlL9L4B5WnwTrKaberCKim/2nW3pc
+         noFmbYjj6wfsPYwOIoJwYbZI234nq0Oe71BScm8tlknvkmHer1MNfpymkArW5xC2A6sd
+         8xp8XIc//qiqAzbANOO3J1ypFu1qUqBsrEMCe2HBDeq8ODZMyDwFShAgECfINUxqHf5J
+         OFrJH8JDwFrInkByaUe1ZbSzulFgUpdBFuQYOS9JaVSrYEEuWc7z4JOZQTs4RpjSMj1J
+         vuvhoBgm/MjRYwMjG1gdZTT943we6/zQy9LRho39ROdpYcg/g+tR/AVqyndb6NSD90SP
+         Ip4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+LnjrLhlhFu+de5A1iOJFzLSg6M4a+X2v91qeHaPWRU=;
-        b=v78ZYwrA+jVmOxu3mA0/STUNWgVL0Bqu6JBNMyOEEBq7jyXzqlGdcLbbw2aFo0/24O
-         x7nMOwo6HMN5J2d/TKgncaxzkP5t9AofWBKg7VNx+VxvnZcDpAmyDgwNY5E6SEH6n+Ca
-         AYXu2f9x++DEta0g2cMS3KiOfgCWeNWuEMFByIbZnMmlhdK7+6yCGgc/9QYeMenIFC2i
-         5iJApLX5TjW9Dt0BWHMebBrOdl3gKxoy0v9rbOGTvlhSkxFtqGl/wLiDKfc930jeE0gY
-         oWWmb4TQ7p0qdincYA3RttLHwaf/5GynnmSYt5rzF+GH6JLU+EU1RbEBEYPTGfq+HiZq
-         7Ddw==
-X-Gm-Message-State: AJIora/i0BLHkxRtbB/BMDVu5ag8QHgkCLN22wlO1Qm6og07l1Rg3uFq
-        W83agd6qcdF9C3b8j+UTSBmwUO+t2X4+wgB1M5xGBcnzyzw=
-X-Google-Smtp-Source: AGRyM1sS3na/J6gb22R/lkVd7ZQ/wcDHM1eiEM1N8auuMG+ORnC6O6D5PVdHhp/9PVueEmTC5Yi8aYkLB8x5db9H0gU=
-X-Received: by 2002:a17:906:6a15:b0:72b:8ce2:9f9f with SMTP id
- qw21-20020a1709066a1500b0072b8ce29f9fmr766347ejc.100.1657671455164; Tue, 12
- Jul 2022 17:17:35 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Sdnzk6ZfP5L0XH2fOUayrsbDiszJ8vLOAhD0tvWrvEs=;
+        b=wDaDbSIWjDXZBMYdDGDRe9N8FHDikIIymiKB74zp2jmSZnVgXSFLlYLfqTDBXW6S8T
+         /mM+vFFYGdWVXnHubXuZQhgi1OOPyaxxNGJNWXOpP/shVvaEurQOTjrEnFwUm7UrrRNJ
+         iqlqmhWliG/dzH7KB0CZ0oknHcnyULGainv2tDDrInNuCNdF4d1CcW96N7O5L0lPCruJ
+         tN0thnuyhgzk+qJxHqQ4Xoev/tD2bSo+SxwLzFXUyFQefTkpyMheM48d/CmloFGqv89W
+         1ErpHPZb9qGGs0CVHZfNf8Az0RHhxDG1s3iVSS7AHRFoj3d89DhEDxbK2vf+QRB1rOXq
+         TBwg==
+X-Gm-Message-State: AJIora/xDP8i8DK47q8Q+5KkyQHuwALmfkNAl6BEg6Zl/pNvoKJbzAj8
+        AtU5AsQdTJ8fpmPQApXAzDI=
+X-Google-Smtp-Source: AGRyM1tusjg3ngFzlcncsY8XVCV7earm/guhIzMbB7r8dwpcCJEhbrWW1evO/GEnjoaEZc1dzjsJZg==
+X-Received: by 2002:a17:906:5055:b0:6ff:1dfb:1e2c with SMTP id e21-20020a170906505500b006ff1dfb1e2cmr923436ejk.200.1657674580747;
+        Tue, 12 Jul 2022 18:09:40 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id w13-20020aa7dccd000000b00435a62d35b5sm6905831edu.45.2022.07.12.18.09.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jul 2022 18:09:40 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oBQsl-001cJG-2r;
+        Wed, 13 Jul 2022 03:09:39 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v6 0/5] config: introduce discovery.bare and protected
+ config
+Date:   Wed, 13 Jul 2022 01:53:24 +0200
+References: <pull.1261.v5.git.git.1656354994.gitgitgadget@gmail.com>
+        <pull.1261.v6.git.git.1656612839.gitgitgadget@gmail.com>
+        <220701.861qv5d8v7.gmgdl@evledraar.gmail.com>
+        <kl6lr134spi0.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <220709.86zghj8d6i.gmgdl@evledraar.gmail.com>
+        <kl6lv8s25a80.fsf@chooglen-macbookpro.roam.corp.google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <kl6lv8s25a80.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220713.86v8s14y3w.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAC4O8c9izkV5vbnE6MH8-RwnxRbUONxJxYZO+hb1J0ewuDtX+w@mail.gmail.com>
-In-Reply-To: <CAC4O8c9izkV5vbnE6MH8-RwnxRbUONxJxYZO+hb1J0ewuDtX+w@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 12 Jul 2022 17:17:23 -0700
-Message-ID: <CABPp-BG5qjp9Rx+=CCeLMiOH2Bqpa3kmBWRWdu7fTtPM-H=3kA@mail.gmail.com>
-Subject: Re: BUG: git-check-ignore documentation doesn't come close to
- describing what it really does
-To:     Britton Kerin <britton.kerin@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Thanks for the report.
+On Tue, Jul 12 2022, Glen Choo wrote:
 
-On Tue, Jul 12, 2022 at 4:34 PM Britton Kerin <britton.kerin@gmail.com> wrote:
+> Thanks for following up. I'm a concerned that this thread will be
+> unproductive if all we're doing is reiterating our own opinions. I'm ok
+> if the conclusion is "agree to disagree", but let's not spend too much
+> time talking circles around one another (myself included, of course:)).
+
+Yes, I have not been following up here to merely repeat what's been said
+before, but...
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> It begins:
+>> On Fri, Jul 01 2022, Glen Choo wrote:
+>>>> The "more narrow" and "more secure" go hand-in-hand, since if you work
+>>>> on such servers you'd turn this to "always" because you want to read
+>>>> such config, but then be left vulnerable to the actual (and muche rare=
+r)
+>>>> exploit we're trying to prevent.
+>>>
+>>> The point that we're not defending bare repo users is fair, but maybe
+>>> the group we're trying to protect isn't really dedicated Git-serving
+>>> servers. This exploit requires you to have a bare repo inside the
+>>> working tree of a non-bare repo. So I think this is less of an issue for
+>>> a server, and more for "mixed-use" environments with both regular and
+>>> bare clones.
+>>
+>> Yes, but this is only something that's even a question because of an
+>> artificial limitation your proposal here suffers from.
+>>
+>> I.e. in trying to detect nefarious repos where you've got "looks like
+>> bare" content *tracked* in another repo you're conflating it with *any
+>> bare repo*.
+>>
+>> And the only reason we're doing that seems to me to be a premature
+>> optimization.
 >
->        For each pathname given via the command-line or from a file via
-> --stdin, check whether
->        the file is excluded by .gitignore (or other input files to the
-> exclude mechanism) and output
->        the path if it is excluded.
+> Right, I hear you. Besides performance,[...]
 
-I suspect we're having an aliasing problem that you're not
-recognizing.  "ignored" and "excluded" are used interchangeably, note
-that patterns from the $GIT_DIR/info/exclude files and patterns from
-the file pointed to by core.excludesFile are also lumped together with
-the patterns from all the .gitignore files (see the gitignore manual
-page).  Further, the internal code refers to them all as "excludes"
-not as "ignores".
+...have been following up because it's still genuinely unclear to me
+what data or design constraints led to this solution. I.e. in [1] you
+noted ("[...]" interjection is mine):
 
-(And then we adopted the same syntax for sparse checkouts, except we
-used it to mark things that should be included, and we referred
-everyone to the documentation about "excludes" to learn the format for
-what to "include".  Ugh.)
+	"I don't see how we could implement this [the "walk-up" method]
+	without imposing a big penalty to all bare repo users[...]."
 
+[Continued below]
+
+> let me offer the perspective
+> that I should have led with in the previous email. In this thread and
+> the original "embedded bare repo" one [1], there is a huge diversity of
+> opinion on what the default behavior should be, e.g.:
+
+I read that thread over again, and some of the highlights were:
+
+ * brian asking if we can't basically do the "walk up" method:
+   https://lore.kernel.org/git/Yk9hONuCIVIq6ieV@camp.crustytoothpaste.net/
+
+ * Taylor wondering how much we need to worry about this attack (among
+   other things) & worrying about legitimate "bare repo" workflows being
+   broken: https://lore.kernel.org/git/YloTQH35r2xVdPm1@nand.local/ &
+   https://lore.kernel.org/git/Ylobp7sntKeWTLDX@nand.local/
+
+But most importantly, here's something I hadn't noticed before:
+
+ * Emily talking about the supposed slowness of the "walk up" method:
+   https://lore.kernel.org/git/CAJoAoZkgnnvdymuBsM9Ja3+eYSnyohr=3DFQZMVX_uz=
+Z_pkQhgaw@mail.gmail.com/
+
+I.e.:
+
+	"wantonly scanning up the filesystem for any gitdir above the
+	current one is really expensive. When I tried that approach for
+	the purposes of including some shared config between
+	superproject and submodules, it slowed down the Git test suite
+	by something like 3-5x."
+
+Which I'm now 99.99% certain based on past context[2] is a misstatement
+or misrecollection about an early version of
+submodule.superprojectGitDir v.s. what setup.c would do.
+
+I.e. that 3-5x slowness referred to git-submodule.sh shelling out to
+"git rev-parse", it's not a reference to the expense of the few syscalls
+we'd need to make to discover a parent git directory.
+
+Did you hear about the directory walking being a performance concern
+from Emily, or was it an independent discovery?
+
+It seems as though this might have come about because of a
+misrecollection about the git-rev-parse(1)/git-submodule.sh v.s. setup.c
+performance with reference to submodule.superprojectGitDir, and that
+we've now got a design that's optimized to avoid a performance problem
+that doesn't exist, at the cost of accuracy.
+
+And not to reiterate, but I think the performance isn't a concern
+per-se, but rather that performance concerns seem to have driven one
+design over another.
+
+> - How do we detect an embedded bare repo (fsck check? walk up [and check
+>   if it's tracked]?)
+> - What to do when we detect one (ignore the config? block the repo?)
+> - How to preserve workflows that rely on embedded bare repos (some kind
+>   of (global|per-repo) exception list? allow the repo but not the
+>   config?)
 >
-> In fact it just reports matches from .gitignore etc:
+> And rightfully so! There are a lot of options here, so we want to make
+> sure we get the defaults right. But at the same time that implies a
+> pretty slow, difficult process.
 
-Yes, it outputs the paths that are excluded, as the documentation
-said.  Perhaps there's a way to reword it to make this clearer?  I
-don't think we can get rid of the alias given the fact that
-$GIT_DIR/info/exclude and core.excludesFile are hard-coded and must be
-kept for backward compatibility.  But suggestions to improve the
-wording would be great.
+I saw some implementation discussion about how we'd do this with fsck,
+which is one thing, but I don't really see the trickyness or ambiguity
+on the client side.
 
-Maybe it'd be as simple as replacing "is excluded" with "matches an
-ignore/exclude rule"?
+I.e. we know when we'd "find a repo", so that's the criteria we'd use to
+ignore such a contained repo or not. The only trickyness seems to come
+about if the approach we pick is one where we conflate embedded bare
+repos v.s. non-embedded bare repos.
 
->      $ cat .gitignore
->      *.o
->      !*.dont_ignore
->      $ ls
->      bar.o.dont_ignore  foo.o
->      $ git check-ignore -v -n *
->      .gitignore:2:!*.dont_ignore bar.o.dont_ignore
->      .gitignore:1:*.o foo.o
->      $ # Even more confusing without -v -n:
->      $ git check-ignore *
->      bar.o.dont_ignore
->      foo.o
+> On the other hand, I haven't seen nearly as much disagreement on "just
+> refuse to work with bare repos" because it's so restrictive that it
+> probably won't be the default. So it'll have no effect on most users,
+> but still confers protection for the subset of users who can benefit
+> from it. For those who want the problem fixed _today_ (e.g. my
+> employer), this seems like simple, low-hanging fruit that buys time for
+> us to find good default.
 >
-> The EXIT STATUS section is even more wrong:
->
->      EXIT STATUS
->             0
->                 One or more of the provided paths is ignored.
+> FWIW, when time permits I'd be happy to work on that good default (which
+> will probably be some variant of "walk up"), and to pay off the tech
+> debt introduced by this implementation (I have some ideas about how we
+> could improve the config API to achieve this [2]). Hopefully that helps
+> allay some of your concerns?
 
-"is ignored", meaning "matches an ignore/exclude rule".  Perhaps we
-should update the docs with that textual change?
+It really just seems like a dead end to me, sorry.
 
->             1
->                 None of the provided paths are ignored.
+I.e. we know what the security problem is, but the side-effects of this
+approach are such that we'll probably never turn it on by default.
 
-and replace "are ignored" with the same phrase here?
+So that'll mean that the vast majority of users who could benefit from
+the security mitigation won't even know about the config, or if they do
+might not have it turned on.
 
->
->             128
->                 A fatal error was encountered.
->
-> but:
->
->      $ if git check-ignore foo.o.dont_ignore; then echo exited true;
-> else echo exited false; fi
->      foo.o.dont_ignore
+And yes, we might end up with a better design later, but then we'll have
+to still support this config mechanism, potentially deprecate it etc.
 
-So the filename matched one of the rules, causing the filename to be printed.
+> [1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam=
+.corp.google.com
+> [2] https://lore.kernel.org/git/kl6lr13fi9qn.fsf@chooglen-macbookpro.roam=
+.corp.google.com
 
->      exited true
-
-and it returned a 0 exit status, since one of the provided paths was
-ignored, as documented.
-
->      $
->
-> IMO the behavior of git-check-ignore is the correct and useful
-> behavior
-
-I'm with you here.
-
-> and the documentation should simply be fixed
-
-Yes, I agree it's easy to misinterpret.  Would my suggested changes help?
-
-> to reflect the
-> fact that it just lists matching entries rather than wrongly claiming
-> that it returns the overall result of the ignore calculation.
-
-I think I understood where the problems were in the documentation that
-could lead to misinterpretations in the other two cases you mentioned
-earlier in your email, but I don't understand this one.  Even the
-first sentence you quoted included the phrase that it could "output
-the path", so I'm not sure where you think it claims that it'd return
-the overall result of the ignore calculation.  Could you point out
-what in the document led you to believe it was claiming this?  Maybe I
-could suggest wording improvements for it as well.  Or maybe you have
-some.
+1. https://lore.kernel.org/git/kl6lee1z8mcm.fsf@chooglen-macbookpro.roam.co=
+rp.google.com/
+2. https://lore.kernel.org/git/211109.86v912dtfw.gmgdl@evledraar.gmail.com/
