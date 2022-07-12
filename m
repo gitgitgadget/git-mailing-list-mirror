@@ -2,148 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2394C433EF
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 12:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B254FC433EF
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 13:00:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232433AbiGLMe7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 08:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51846 "EHLO
+        id S232308AbiGLNAj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 09:00:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232416AbiGLMe6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 08:34:58 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF7C2C100
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 05:34:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1657629280;
-        bh=2pw1fLFRxBGcFTK31mto9KeDKXexxnl0jxK/m7MfQ5Q=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SfyY4SQx9l3EPsfhrdzMWEJryFjLtDtK9RQ0jLhT5clVTWEvrdoD8PsWVGPBGW8ac
-         RWx1px/wzCf6ohB2Yzv27ihzCqXogNwBGblUZgmAGYIANpcYYDFAjzbCXMvnFfiKeM
-         GweRQeHNdxINhGsHeQ5P4f9OaaSgxPOeODzqwoVo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.17.180.6] ([213.196.212.225]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMGNC-1nt1ir3huY-00JJjL; Tue, 12
- Jul 2022 14:34:39 +0200
-Date:   Tue, 12 Jul 2022 14:34:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
-        git@vger.kernel.org, phillip.wood123@gmail.com,
-        congdanhqx@gmail.com, christian.couder@gmail.com, avarab@gmail.com,
-        johncai86@gmail.com
-Subject: Re: [PATCH v3 0/4] Add support for mailmap in cat-file
-In-Reply-To: <xmqqv8s5sf8x.fsf@gitster.g>
-Message-ID: <50s3714q-8p5n-2379-65r4-17304426rp93@tzk.qr>
-References: <20220707161554.6900-1-siddharthasthana31@gmail.com> <20220709154149.165524-1-siddharthasthana31@gmail.com> <xmqqv8s5sf8x.fsf@gitster.g>
+        with ESMTP id S229829AbiGLNAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 09:00:38 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3CBB23DE
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:00:36 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id q7so9757441lji.12
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XME4x+qLSvAGLpnTokaDzODdJA/3iK9SlBlLXBMbcGk=;
+        b=Acss9KwYhmc+rO2wwwop1Wi0VCz7/CfXkKapqFX25qydDX3lkl4Tu5O0ID5MzQNCja
+         qJZK0Or5OLTxpe9QFbpcUSZhcA/35LS3dfu1DGPxDpVAQPrSB367+Xt+Xl0UHZodU6Vi
+         utI0kJ0tyRrJsI1GEYnopUo8Z2/IhlskGZYXlvPeoOTrj4Z89NU32vyXwvAp5ftc8Zp1
+         C4LiF9J9DEFgPMq2ZxH4WAjspu4Now/4MttkV2M7FpMtjKhlh6hZZdNga9epHSIAQQVN
+         DsfSy43JX9Wql9YRV6XT+Ulx7rC5y/I+opYmNMud2S107Otf3ki3WPTVRgJLiox8oQSr
+         qxmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XME4x+qLSvAGLpnTokaDzODdJA/3iK9SlBlLXBMbcGk=;
+        b=YaD6D+LQqrgtGPtk4wsWBtjVVGnbHfh8O+2icPrMijnlbR7b/iYjkP9gpX+I7Lp7ye
+         g5g5uX4Jn4iJ5dEN2l2CQxqSy8QK619hx+YR/BsJoAECedOSPpbAXMT9EN0h2xNFx8jm
+         F95mcvM/zOt/uhqZt68+UBy2aSgB8Zidttt0e6NB9XkRHS2BLAxjwHH8B025JE7sodT2
+         fPomY9x/MhwyUkRsXPAykq/8hGMUtqztlxl/i5fiytv0WhfOJJn2r0XtT8g9oLf64EaW
+         ELu7DZ3LQqAB2mOyJzOmLKcp9OabGB6rHDJ8dC/OiAtZKxSG84mrz7JHxtSK7ISrnVix
+         QW4Q==
+X-Gm-Message-State: AJIora9UO7KmDG7fwjrBT3oT84CwjeL2GhVGxohoouh4esrR1xo2ilv8
+        LUXuvV7G7VK20qdNW3rktsmblvEzY9DuRRJyL3ipzrek7cMHcA==
+X-Google-Smtp-Source: AGRyM1tkz1UQmNj0W2XVz/Mg5nLFFI+qNgQyF9yIb5B7QEa17mi008TukJ3WxDqnzZsxA/q0w9Cgqn0rl2BEfhIOKkI=
+X-Received: by 2002:a2e:3018:0:b0:25d:5ba0:d20a with SMTP id
+ w24-20020a2e3018000000b0025d5ba0d20amr11054758ljw.24.1657630833191; Tue, 12
+ Jul 2022 06:00:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:8SJHzfQtsoqv9rU1dQDZbA8/gJki+XKUzvKXrUV/t8pAoi3RPhe
- MRSsjJSeqAUhlQ+X9VWR/hWgVfE1yTkxSzEthgdGYBqygOyzpwyXk1cRv8Fzn75gBGH/dIb
- VRa0dPu9Qbtki3is8pxdNl6JgwxXoIMADyObdgaI1RdFIwD+BzeVL2opWDn9Rigdv2Op17E
- rzhTuVHlf28hhMXn9vFkg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ztYEbDKII90=:mlOgyqkHf0U/6V9/ePJVLS
- g6r6WrvU9iQMa8W5/iBgoR3sWG6dJiGzDYDdcojiCOYLbloDRcxq8mCeHSan1NI/OOrgIqcEQ
- /GysKgttuFO7WV9jtoMbAG11uSF2KTUhTJrA8IJbPMeyHXyNVF3iOjX03jPYarfwSN3NyAxFC
- +qduAlg4jLE5SA/MwLFFewTslygvEEwuLDjK4eNwTgamF3vT7PlKwyOY6hfExxwXr/tMkyYjo
- Ibf21g5CgAyZGeX/WfsDJSRhZ+UGPrpKWma/A+shTLu/TTwRkNpfHprMFRVV3IdB4wHc1sjfi
- kF+LDjA5+CqOq7ppPJu94W2MROfnje7z43wVPZPk5s6egsqg6+pJjQ9IvhKwZSeKFEiT3vjtq
- XY/jRIkX/QQHeqqWritWL1ZevyYvtzLuAE5URwRImcs04D4HYQRtE9tuYGqm0avZx/i27dGqT
- U6EJBByWaXGCgEIiK3f2/AOTkSSs9u09T784IZ/rJ+TEr4HiIweJBm4CPv2KSd93Y0F/XIS2q
- IMVQry/+J02xKXgWzGlZgsbgCArVar+rO5cNvJjzQvRqrbO2kFAV97ESPcOoJrsLsbg9/7Mn5
- GFXwnIuDBjdfdEd4yfqHeQIQlLVLcg5X1yrikSDEZ7SZ3sWL0MTpDTg9WnFxega3NshL/wNo+
- 4EM6wZ7ClZAKrUUfC+ytlvu9hFyszWSzuMQNipfXfqGFNjsSoA/4gn4IG8hXCNPpuEBSs+JYz
- CI7OqZtyVI0kOytikdHsNqoz1cN4L2OcOtikvOrT/kiWrKUyQi/MIkD2Aw6GamQ0PA2m6/1aj
- mqJcqyCFN3oxB+3XmVpH7xBnNqeKPCy3rVnM3UUF45HjXbpMhQjKdDJLHSCvcOGPb+mKhfJqc
- 27eOkkY7wDumwEqJtR5BiMpUOoCeVBYNV1qyXka5X17ffmI/bm5wm+3bytm4BIHecvdfqFNdD
- mO5VPUdYa6Et5cIlpZryzXtpB2BA9hzwmJQp5aiaHZTsNFp9G17V3pU1uIPKPUs/vCg7j+HXY
- 3ROohIBSbryidWavgG9I7JqLbs/tTqpemPgNeJvdBgPOPigEfB80kJpdqSoKkgFiJEMq29Voz
- v2WWpJPUbUGZ8CuaShZsuGXbjeVp06rrRq4sF/6Tefc20HBu1Iafh/KzA==
-Content-Transfer-Encoding: quoted-printable
+References: <CAKSRnEzMaQEv=3mkNWRpy6+-c0rz=R191iqheCQ2ptXFs1CQgw@mail.gmail.com>
+ <96034b3f-9811-38c1-7afe-c1c9dd243f0e@github.com> <CABPp-BHv3TSJhnWSF8AjF_nr72vMnOFXZJKoG0juGwjz13TZ=w@mail.gmail.com>
+ <c5662c60-4a21-be94-8fe0-13c6730292dd@github.com> <CABPp-BFRHjF7+9T8dGG=ixsezksZUNU7pm29MG2kcLEYwE06Og@mail.gmail.com>
+ <CAKSRnEx2seC41QCe8sQOPf0=VNqHB6GkZ3M_CpGmOZRS0FS1gA@mail.gmail.com>
+ <CABPp-BHgwaWNEJnSer0-jw8+53NDuRWLvtXp4U_JJ8T_t-bTpQ@mail.gmail.com>
+ <CAMwyc-Q7dEwo7AzFTYXrX-0i+b80ikzv_MCzTr7ZKaCPKwcERw@mail.gmail.com>
+ <CAKSRnEwda+WomBQbvjZ+hry+k2vGO4ukR42f66tHqxO7LdU_sA@mail.gmail.com> <CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com>
+In-Reply-To: <CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com>
+From:   Dian Xu <dianxudev@gmail.com>
+Date:   Tue, 12 Jul 2022 09:00:21 -0400
+Message-ID: <CAKSRnEz6xg6jiTqaVtYf+32kEzS0jydiajbTnvK7qy_Po=y=uA@mail.gmail.com>
+Subject: Re: git bug report: 'git add' hangs in a large repo which has
+ sparse-checkout file with large number of patterns in it
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Victoria Dye <vdye@github.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Siddarth,
-
-On Sat, 9 Jul 2022, Junio C Hamano wrote:
-
-> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+On Thu, Jul 7, 2022 at 9:53 PM Elijah Newren <newren@gmail.com> wrote:
 >
-> > =3D Patch Organization
+> On Tue, Jul 5, 2022 at 6:08 AM Dian Xu <dianxudev@gmail.com> wrote:
 > >
-> > - The first patch improves the commit_rewrite_person() by restricting =
-it
-> >   to traverse only through the header part of the commit object buffer=
-.
-> >   It also adds an argument called headers which the callers can pass.
-> >   The function will replace idents only on these  passed headers.
-> >   Thus, the caller won't have to make repeated calls to the function.
-> > - The second patch moves commit_rewrite_person() to ident.c to expose =
-it
-> >   as a public function so that it can be used to replace idents in the
-> >   headers of desired objects.
-> > - The third patch renames commit_rewrite_person() to a name which
-> >   describes its functionality clearly. It is renamed to
-> >   apply_mailmap_to_header().
-> > - The last patch adds mailmap support to the git cat-file command. It
-> >   adds the required documentation and tests as well.
-> >
-> > Changes in v3:
-> > - The decl-after-statement warnings have been fixed in all the patches=
-.
-> > - In commit_rewrite_person(), the data type of linelen and i variables
-> >   have been changed from int to size_t.
-> > - The return type of replace_idents_using_mailmap() function, size_t,
-> >   has been explicitly typecasted to unsigned long using the
-> >   cast_size_t_to_ulong() helper method.
+> > Hi Elijah,
 >
-> https://github.com/git/git/actions/runs/2642867380 seems to tell us
-> that tests added by this series are broken on Windows.  I am not
-> sure what exactly in this series depends on being LF-only system,
-> but the symptom makes me suspect that is the cause of the problem.
+> Hi Dian,
+>
+> Please don't top post on this list.  It'd also help to respond to the
+> relevant email instead of picking a different email in the thread to
+> put your answers in.  Anyway, that aside...
+>
+> > Please see answers below:
+> >
+> > 1.  H: 2.27m; S: 7.7k; Total: 2.28m
+> >
+> > 2.  Sure I will run 'reapply' after the sparse-checkout file has
+> > changed. Just curious, do I have to run 'reapply' if 'checkout' is the
+> > next immediate cmd? I thought 'checkout' does the updating index as
+> > well
+> >
+> > 3.  I simply added one file only, 'git add' and 'git add --sparse'
+> > still hang. Let me know if you need me to send you any debug info from
+> > pathspec.c/dir.c
+> >
+> > 4.  Good to know and we are investigating if we have a way out from --no-cone
+> >
+> > 5.  I should've been clearer: The experiment done here uses 2.37.0
+>
+> Thanks for providing these details.  It was enough to at least get me
+> started, and from my experiments, it appears the arguments to `git
+> add` are important.  In particular, I could not trigger this when
+> passing actual filenames that existed.  I could when passing a fake
+> filename.  Here's the concrete steps I used to reproduce:
+>
+>     git clone git@github.com:newren/gvfs-like-git-bomb
+>     cd gvfs-like-git-bomb
+>
+>     git init attempt
+>     cd attempt
+>     ../make-a-git-bomb.sh
+>
+>     time git checkout bomb
+>
+>     echo "/*" >.git/info/sparse-checkout
+>     echo '!/bomb/j/j/' >>.git/info/sparse-checkout
+>     for i in $(seq 1 10000); do
+>         printf '!some/random/file/path-%05d\n' $i
+>     done >>.git/info/sparse-checkout
+>     git config core.sparseCheckout true
+>     time git sparse-checkout reapply
+>
+>     echo hello >world
+>     time git add --sparse world nonexistent
+>     time git rm --cached --sparse world nonexistent
+>     time git add world nonexistent
+>     time git rm --cached world nonexistent
+>
+> This sequence of steps will (1) clone a repo with 2 files, (2) create
+> another repository in subdirectory 'attempt' that has 1000001 files
+> (but only two unique files, and only six or so unique trees) in a
+> branch called 'bomb', (3) check it out, (4) create 10002 patterns for
+> the sparse-checkout file (only the first 2 of which match anything)
+> which will leave ~99% of files still present (990001 files checked out
+> and 10000 files sparse) and turn on sparsity, (5) measure how long it
+> takes to add and remove a file from the index, both with and without
+> the --sparse flag, but always listing an extra path that won't match
+> anything.
+>
+> The timings I see for the setup steps are:
+>     4m10.444s  checkout bomb
+>     1m0.380s   sparse-checkout reapply
+>
+> And the timings for the add/rm steps are:
+>     4m43.353s  add --sparse world nonexistent
+>     9m25.666s  add world nonexistent
+>     0m0.129s  rm --cached --sparse world nonexistent
+>     9m23.601s  rm --cached world nonexistent
+>
+> which shows that 'rm' also has a performance problem without the
+> '--sparse' flag (which seems like another bug).
+>
+> Now, if I remove the 'nonexistent' argument from the commands, then
+> the timings drop to:
+>     0m0.236s   add --sparse world
+>     0m0.233s   add world
+>     0m0.175s   rm --cached --sparse world
+>     4m43.744s  rm --cached world
+>
+> So, I can reproduce some slowness.  'rm' without --sparse seems
+> buggily slow for either set, whereas 'add' is only slow when given a
+> fake path.  You never mentioned anything about the arguments you were
+> passing to `git add`, so I don't know whether you are using specific
+> filenames that just don't exist (like I did above), or globs that
+> perhaps match some files, or something else.  That might be useful to
+> know.  But there appears to be something here for both 'add' and 'rm'
+> that we could look into optimizing.  I don't have time right now.  I'm
+> not sure if someone else has some time to look into it; if no one else
+> does, I'll eventually try to get back to it.
 
-It has nothing to do with LF-only, but everything to do with symlinks (I
-suspected that when I saw the skipped test cases at
-https://github.com/git/git/runs/7292710632?check_suite_focus=3Dtrue#step:5=
-:195,
-and could validate that suspicion via disabling the test cases by
-inverting the prereq: this caused the very same symptoms even in a Linux
-setup):
+Hi Elijah,
 
-=2D- snipsnap --
-=46rom 5bc6d52c95401f60e67312823ed406bd5a3c1026 Mon Sep 17 00:00:00 2001
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Tue, 12 Jul 2022 14:28:05 +0200
-Subject: [PATCH] fixup??? cat-file: add mailmap support
+Thank you for sharing the reproduction steps. I believe they represent
+our workflow.
 
-This patch introduced new test cases that rely on the side effects of
-the earlier test case `set up symlink tests`. However, that test case is
-guarded behind the `SYMLINKS` prereq, therefore it is not run e.g. on
-Windows.
+We use 'git add <path_to_file>', where path_to_file is an existing
+file, which is also within sparse-checkout shape.
 
-Let's fix that by removing the prereq from the `set up` test case, and
-adjusting its title to reflect its broadened responsibility.
+Not sure this is related but we also use --reference while setting up the clone.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- t/t4203-mailmap.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index c60a90615cc..94afd4717a2 100755
-=2D-- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -932,7 +932,7 @@ test_expect_success 'find top-level mailmap from subdi=
-r' '
- 	test_cmp expect actual
- '
-
--test_expect_success SYMLINKS 'set up symlink tests' '
-+test_expect_success 'set up symlink/--use-mailmap tests' '
- 	git commit --allow-empty -m foo --author=3D"Orig <orig@example.com>" &&
- 	echo "New <new@example.com> <orig@example.com>" >map &&
- 	rm -f .mailmap
-=2D-
-2.37.0.rc2.windows.1.7.g45a475aeb84
-
+Dian Xu
+Mathworks, Inc
+1 Lakeside Campus Drive, Natick, MA 01760
+508-647-3583
