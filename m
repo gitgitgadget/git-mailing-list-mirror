@@ -2,183 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B254FC433EF
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 13:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63EDAC433EF
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 13:07:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232308AbiGLNAj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 09:00:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47396 "EHLO
+        id S232750AbiGLNHO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 09:07:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229829AbiGLNAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 09:00:38 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3CBB23DE
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:00:36 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id q7so9757441lji.12
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:00:36 -0700 (PDT)
+        with ESMTP id S229703AbiGLNHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 09:07:12 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA673B4BD2
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:07:11 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id c131-20020a1c3589000000b003a2cc290135so5178400wma.2
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 06:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XME4x+qLSvAGLpnTokaDzODdJA/3iK9SlBlLXBMbcGk=;
-        b=Acss9KwYhmc+rO2wwwop1Wi0VCz7/CfXkKapqFX25qydDX3lkl4Tu5O0ID5MzQNCja
-         qJZK0Or5OLTxpe9QFbpcUSZhcA/35LS3dfu1DGPxDpVAQPrSB367+Xt+Xl0UHZodU6Vi
-         utI0kJ0tyRrJsI1GEYnopUo8Z2/IhlskGZYXlvPeoOTrj4Z89NU32vyXwvAp5ftc8Zp1
-         C4LiF9J9DEFgPMq2ZxH4WAjspu4Now/4MttkV2M7FpMtjKhlh6hZZdNga9epHSIAQQVN
-         DsfSy43JX9Wql9YRV6XT+Ulx7rC5y/I+opYmNMud2S107Otf3ki3WPTVRgJLiox8oQSr
-         qxmQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=B2UUSkn8ScIFAe2WU+SPqQszPoZhEEitNoSzZ6/SYFg=;
+        b=MmIvAlYsGbE5o2HWWSVsSpILrra1q+bVzO90inbqf0e3luVYilOlo4bcAoEHh08XZN
+         AYMgRf3G7GhrNUHSSSzwCIL7UCTvfP1TK7eFnxR/zIKINxf1cXCpBYZZRG1GrDAnBDid
+         WHeT/14UKtjaAL0FQzdTSFcyW19K9w1Dc1FKswpimeRnfwF/pZ18GjBjAgjhrBFs+4NU
+         Aruzf22xRbTXl5w+OFvx0TxG0ZRi5WQAZQKKHiG9q6iiiMr4WENwO5TdXslitAQ6wpwu
+         wDfunlY5dwTa7AbcO9lzXvX1id738XpxjgBXNnv97GRHya5pJrrbMywhyCVYgocWRzGF
+         /51w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XME4x+qLSvAGLpnTokaDzODdJA/3iK9SlBlLXBMbcGk=;
-        b=YaD6D+LQqrgtGPtk4wsWBtjVVGnbHfh8O+2icPrMijnlbR7b/iYjkP9gpX+I7Lp7ye
-         g5g5uX4Jn4iJ5dEN2l2CQxqSy8QK619hx+YR/BsJoAECedOSPpbAXMT9EN0h2xNFx8jm
-         F95mcvM/zOt/uhqZt68+UBy2aSgB8Zidttt0e6NB9XkRHS2BLAxjwHH8B025JE7sodT2
-         fPomY9x/MhwyUkRsXPAykq/8hGMUtqztlxl/i5fiytv0WhfOJJn2r0XtT8g9oLf64EaW
-         ELu7DZ3LQqAB2mOyJzOmLKcp9OabGB6rHDJ8dC/OiAtZKxSG84mrz7JHxtSK7ISrnVix
-         QW4Q==
-X-Gm-Message-State: AJIora9UO7KmDG7fwjrBT3oT84CwjeL2GhVGxohoouh4esrR1xo2ilv8
-        LUXuvV7G7VK20qdNW3rktsmblvEzY9DuRRJyL3ipzrek7cMHcA==
-X-Google-Smtp-Source: AGRyM1tkz1UQmNj0W2XVz/Mg5nLFFI+qNgQyF9yIb5B7QEa17mi008TukJ3WxDqnzZsxA/q0w9Cgqn0rl2BEfhIOKkI=
-X-Received: by 2002:a2e:3018:0:b0:25d:5ba0:d20a with SMTP id
- w24-20020a2e3018000000b0025d5ba0d20amr11054758ljw.24.1657630833191; Tue, 12
- Jul 2022 06:00:33 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=B2UUSkn8ScIFAe2WU+SPqQszPoZhEEitNoSzZ6/SYFg=;
+        b=6wharE3f1uGSPj4NJYHsodKjn6c8HjEaFr/YES/1yDEKHkL8VEgcg3PhuzPB2jp737
+         9dlZIQgYsym82eGtXROL7989gks0jgAiS5/49YWWNw62bGCe9nBGkhkSN3rfJQzMU43w
+         O32ZhOl4OBiQxxL6zrqjxtrZSydS77KghrnwRcxgP8dS0KTqEUAe+ihHUE5s85BUMxHR
+         /wm3mrk3uQJGbB295kpOGs9WwLqzU1ENkIsRtizM2r1XIYJVuFT/IpWu9H1RBZ5SJ+km
+         i09I8C+qDERasq14ThXWkG31VRlFHGaWUkluXL4W4tFHcNVBOjH1jvUaArRMO8istbnC
+         4PDQ==
+X-Gm-Message-State: AJIora9HUjkleSyNxrekVVWAyK3+vLejxBPoBs3qknaU5cfVqrl2wQQA
+        En43qSN5rYyAiMpRM6BUDFBxN99FhCA=
+X-Google-Smtp-Source: AGRyM1ug4IKWAUGndOLKJ/iIXg/HE3mmTiOlHfnJp0b01DEG+DR2VjR8K4ZwzerGsKGCAyZ30Or1rg==
+X-Received: by 2002:a05:600c:34c9:b0:3a0:5072:9abe with SMTP id d9-20020a05600c34c900b003a050729abemr3722538wmq.8.1657631229932;
+        Tue, 12 Jul 2022 06:07:09 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ay38-20020a05600c1e2600b003a2cf1ba9e2sm9865084wmb.6.2022.07.12.06.07.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jul 2022 06:07:08 -0700 (PDT)
+Message-Id: <9e53a27017ac18eefef2c077a905efecab07861d.1657631226.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
+References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
+        <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 12 Jul 2022 13:06:54 +0000
+Subject: [PATCH v4 01/12] t2407: test bisect and rebase as black-boxes
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAKSRnEzMaQEv=3mkNWRpy6+-c0rz=R191iqheCQ2ptXFs1CQgw@mail.gmail.com>
- <96034b3f-9811-38c1-7afe-c1c9dd243f0e@github.com> <CABPp-BHv3TSJhnWSF8AjF_nr72vMnOFXZJKoG0juGwjz13TZ=w@mail.gmail.com>
- <c5662c60-4a21-be94-8fe0-13c6730292dd@github.com> <CABPp-BFRHjF7+9T8dGG=ixsezksZUNU7pm29MG2kcLEYwE06Og@mail.gmail.com>
- <CAKSRnEx2seC41QCe8sQOPf0=VNqHB6GkZ3M_CpGmOZRS0FS1gA@mail.gmail.com>
- <CABPp-BHgwaWNEJnSer0-jw8+53NDuRWLvtXp4U_JJ8T_t-bTpQ@mail.gmail.com>
- <CAMwyc-Q7dEwo7AzFTYXrX-0i+b80ikzv_MCzTr7ZKaCPKwcERw@mail.gmail.com>
- <CAKSRnEwda+WomBQbvjZ+hry+k2vGO4ukR42f66tHqxO7LdU_sA@mail.gmail.com> <CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com>
-In-Reply-To: <CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com>
-From:   Dian Xu <dianxudev@gmail.com>
-Date:   Tue, 12 Jul 2022 09:00:21 -0400
-Message-ID: <CAKSRnEz6xg6jiTqaVtYf+32kEzS0jydiajbTnvK7qy_Po=y=uA@mail.gmail.com>
-Subject: Re: git bug report: 'git add' hangs in a large repo which has
- sparse-checkout file with large number of patterns in it
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Victoria Dye <vdye@github.com>,
-        Git Mailing List <git@vger.kernel.org>,
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 7, 2022 at 9:53 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Jul 5, 2022 at 6:08 AM Dian Xu <dianxudev@gmail.com> wrote:
-> >
-> > Hi Elijah,
->
-> Hi Dian,
->
-> Please don't top post on this list.  It'd also help to respond to the
-> relevant email instead of picking a different email in the thread to
-> put your answers in.  Anyway, that aside...
->
-> > Please see answers below:
-> >
-> > 1.  H: 2.27m; S: 7.7k; Total: 2.28m
-> >
-> > 2.  Sure I will run 'reapply' after the sparse-checkout file has
-> > changed. Just curious, do I have to run 'reapply' if 'checkout' is the
-> > next immediate cmd? I thought 'checkout' does the updating index as
-> > well
-> >
-> > 3.  I simply added one file only, 'git add' and 'git add --sparse'
-> > still hang. Let me know if you need me to send you any debug info from
-> > pathspec.c/dir.c
-> >
-> > 4.  Good to know and we are investigating if we have a way out from --no-cone
-> >
-> > 5.  I should've been clearer: The experiment done here uses 2.37.0
->
-> Thanks for providing these details.  It was enough to at least get me
-> started, and from my experiments, it appears the arguments to `git
-> add` are important.  In particular, I could not trigger this when
-> passing actual filenames that existed.  I could when passing a fake
-> filename.  Here's the concrete steps I used to reproduce:
->
->     git clone git@github.com:newren/gvfs-like-git-bomb
->     cd gvfs-like-git-bomb
->
->     git init attempt
->     cd attempt
->     ../make-a-git-bomb.sh
->
->     time git checkout bomb
->
->     echo "/*" >.git/info/sparse-checkout
->     echo '!/bomb/j/j/' >>.git/info/sparse-checkout
->     for i in $(seq 1 10000); do
->         printf '!some/random/file/path-%05d\n' $i
->     done >>.git/info/sparse-checkout
->     git config core.sparseCheckout true
->     time git sparse-checkout reapply
->
->     echo hello >world
->     time git add --sparse world nonexistent
->     time git rm --cached --sparse world nonexistent
->     time git add world nonexistent
->     time git rm --cached world nonexistent
->
-> This sequence of steps will (1) clone a repo with 2 files, (2) create
-> another repository in subdirectory 'attempt' that has 1000001 files
-> (but only two unique files, and only six or so unique trees) in a
-> branch called 'bomb', (3) check it out, (4) create 10002 patterns for
-> the sparse-checkout file (only the first 2 of which match anything)
-> which will leave ~99% of files still present (990001 files checked out
-> and 10000 files sparse) and turn on sparsity, (5) measure how long it
-> takes to add and remove a file from the index, both with and without
-> the --sparse flag, but always listing an extra path that won't match
-> anything.
->
-> The timings I see for the setup steps are:
->     4m10.444s  checkout bomb
->     1m0.380s   sparse-checkout reapply
->
-> And the timings for the add/rm steps are:
->     4m43.353s  add --sparse world nonexistent
->     9m25.666s  add world nonexistent
->     0m0.129s  rm --cached --sparse world nonexistent
->     9m23.601s  rm --cached world nonexistent
->
-> which shows that 'rm' also has a performance problem without the
-> '--sparse' flag (which seems like another bug).
->
-> Now, if I remove the 'nonexistent' argument from the commands, then
-> the timings drop to:
->     0m0.236s   add --sparse world
->     0m0.233s   add world
->     0m0.175s   rm --cached --sparse world
->     4m43.744s  rm --cached world
->
-> So, I can reproduce some slowness.  'rm' without --sparse seems
-> buggily slow for either set, whereas 'add' is only slow when given a
-> fake path.  You never mentioned anything about the arguments you were
-> passing to `git add`, so I don't know whether you are using specific
-> filenames that just don't exist (like I did above), or globs that
-> perhaps match some files, or something else.  That might be useful to
-> know.  But there appears to be something here for both 'add' and 'rm'
-> that we could look into optimizing.  I don't have time right now.  I'm
-> not sure if someone else has some time to look into it; if no one else
-> does, I'll eventually try to get back to it.
+From: Derrick Stolee <derrickstolee@github.com>
 
-Hi Elijah,
+The tests added by d2ba271aad0 (branch: check for bisects and rebases,
+2022-06-14) modified hidden state to verify the branch_checked_out()
+helper. While this indeed checks that the method implementation is _as
+designed_, it doesn't show that it is _correct_. Specifically, if 'git
+bisect' or 'git rebase' change their back-end for preserving refs, then
+these tests do not demonstrate that drift as a bug in
+branch_checked_out().
 
-Thank you for sharing the reproduction steps. I believe they represent
-our workflow.
+Modify the tests in t2407 to actually rely on a paused bisect or rebase.
+This requires adding the !SANITIZE_LEAK prereq for tests using those
+builtins. The logic is still tested for leaks in the final test which
+does set up that back-end directly for an error state that should not be
+possible using Git commands.
 
-We use 'git add <path_to_file>', where path_to_file is an existing
-file, which is also within sparse-checkout shape.
+Reported-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ t/t2407-worktree-heads.sh | 57 +++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 26 deletions(-)
 
-Not sure this is related but we also use --reference while setting up the clone.
+diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
+index b6be42f74a2..100ab286d5c 100755
+--- a/t/t2407-worktree-heads.sh
++++ b/t/t2407-worktree-heads.sh
+@@ -7,13 +7,18 @@ TEST_PASSES_SANITIZE_LEAK=true
+ 
+ test_expect_success 'setup' '
+ 	test_commit init &&
+-	git branch -f fake-1 &&
+-	git branch -f fake-2 &&
+ 
+ 	for i in 1 2 3 4
+ 	do
++		git checkout -b conflict-$i &&
++		echo "not I" >$i.t &&
++		git add $i.t &&
++		git commit -m "will conflict" &&
++
++		git checkout - &&
+ 		test_commit $i &&
+ 		git branch wt-$i &&
++		git branch fake-$i &&
+ 		git worktree add wt-$i wt-$i || return 1
+ 	done &&
+ 
+@@ -44,26 +49,26 @@ test_expect_success 'refuse to overwrite: checked out in worktree' '
+ 	done
+ '
+ 
+-test_expect_success 'refuse to overwrite: worktree in bisect' '
+-	test_when_finished rm -rf .git/worktrees/wt-*/BISECT_* &&
++test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in bisect' '
++	test_when_finished git -C wt-4 bisect reset &&
+ 
+-	touch .git/worktrees/wt-4/BISECT_LOG &&
+-	echo refs/heads/fake-2 >.git/worktrees/wt-4/BISECT_START &&
++	# Set up a bisect so HEAD no longer points to wt-4.
++	git -C wt-4 bisect start &&
++	git -C wt-4 bisect bad wt-4 &&
++	git -C wt-4 bisect good wt-1 &&
+ 
+-	test_must_fail git branch -f fake-2 HEAD 2>err &&
+-	grep "cannot force update the branch '\''fake-2'\'' checked out at.*wt-4" err
++	test_must_fail git branch -f wt-4 HEAD 2>err &&
++	grep "cannot force update the branch '\''wt-4'\'' checked out at.*wt-4" err
+ '
+ 
+-test_expect_success 'refuse to overwrite: worktree in rebase' '
+-	test_when_finished rm -rf .git/worktrees/wt-*/rebase-merge &&
++test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in rebase' '
++	test_when_finished git -C wt-2 rebase --abort &&
+ 
+-	mkdir -p .git/worktrees/wt-3/rebase-merge &&
+-	touch .git/worktrees/wt-3/rebase-merge/interactive &&
+-	echo refs/heads/fake-1 >.git/worktrees/wt-3/rebase-merge/head-name &&
+-	echo refs/heads/fake-2 >.git/worktrees/wt-3/rebase-merge/onto &&
++	# This will fail part-way through due to a conflict.
++	test_must_fail git -C wt-2 rebase conflict-2 &&
+ 
+-	test_must_fail git branch -f fake-1 HEAD 2>err &&
+-	grep "cannot force update the branch '\''fake-1'\'' checked out at.*wt-3" err
++	test_must_fail git branch -f wt-2 HEAD 2>err &&
++	grep "cannot force update the branch '\''wt-2'\'' checked out at.*wt-2" err
+ '
+ 
+ test_expect_success !SANITIZE_LEAK 'refuse to fetch over ref: checked out' '
+@@ -77,24 +82,24 @@ test_expect_success !SANITIZE_LEAK 'refuse to fetch over ref: checked out' '
+ '
+ 
+ test_expect_success !SANITIZE_LEAK 'refuse to fetch over ref: worktree in bisect' '
+-	test_when_finished rm -rf .git/worktrees/wt-*/BISECT_* &&
++	test_when_finished git -C wt-4 bisect reset &&
+ 
+-	touch .git/worktrees/wt-4/BISECT_LOG &&
+-	echo refs/heads/fake-2 >.git/worktrees/wt-4/BISECT_START &&
++	# Set up a bisect so HEAD no longer points to wt-4.
++	git -C wt-4 bisect start &&
++	git -C wt-4 bisect bad wt-4 &&
++	git -C wt-4 bisect good wt-1 &&
+ 
+-	test_must_fail git fetch server +refs/heads/fake-2:refs/heads/fake-2 2>err &&
++	test_must_fail git fetch server +refs/heads/wt-4:refs/heads/wt-4 2>err &&
+ 	grep "refusing to fetch into branch" err
+ '
+ 
+ test_expect_success !SANITIZE_LEAK 'refuse to fetch over ref: worktree in rebase' '
+-	test_when_finished rm -rf .git/worktrees/wt-*/rebase-merge &&
++	test_when_finished git -C wt-3 rebase --abort &&
+ 
+-	mkdir -p .git/worktrees/wt-4/rebase-merge &&
+-	touch .git/worktrees/wt-4/rebase-merge/interactive &&
+-	echo refs/heads/fake-1 >.git/worktrees/wt-4/rebase-merge/head-name &&
+-	echo refs/heads/fake-2 >.git/worktrees/wt-4/rebase-merge/onto &&
++	# This will fail part-way through due to a conflict.
++	test_must_fail git -C wt-3 rebase conflict-3 &&
+ 
+-	test_must_fail git fetch server +refs/heads/fake-1:refs/heads/fake-1 2>err &&
++	test_must_fail git fetch server +refs/heads/wt-3:refs/heads/wt-3 2>err &&
+ 	grep "refusing to fetch into branch" err
+ '
+ 
+-- 
+gitgitgadget
 
-Dian Xu
-Mathworks, Inc
-1 Lakeside Campus Drive, Natick, MA 01760
-508-647-3583
