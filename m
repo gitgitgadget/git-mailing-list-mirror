@@ -2,71 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBE87C43334
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 14:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B3CC43334
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 17:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233539AbiGLOZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 10:25:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42170 "EHLO
+        id S233200AbiGLRJm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 13:09:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230409AbiGLOZZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 10:25:25 -0400
-Received: from cressida.uberspace.de (cressida.uberspace.de [185.26.156.202])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8676CB5D1F
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 07:25:22 -0700 (PDT)
-Received: (qmail 12599 invoked by uid 989); 12 Jul 2022 14:25:19 -0000
-Authentication-Results: cressida.uberspace.de;
-        auth=pass (plain)
-From:   Matthias Beyer <mail@beyermatthias.de>
-Cc:     Matthias Beyer <mail@beyermatthias.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Add note that conflict resolution is still performed
-Date:   Tue, 12 Jul 2022 16:04:50 +0200
-Message-Id: <20220712140450.1288726-1-mail@beyermatthias.de>
-X-Mailer: git-send-email 2.36.0
-In-Reply-To: <xmqq4jzvla9x.fsf@gitster.g>
-References: <xmqq4jzvla9x.fsf@gitster.g>
+        with ESMTP id S230015AbiGLRJk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 13:09:40 -0400
+X-Greylist: delayed 158 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 12 Jul 2022 10:09:38 PDT
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A310A26AF9;
+        Tue, 12 Jul 2022 10:09:38 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B8DC13C9FE;
+        Tue, 12 Jul 2022 13:06:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=w0UKyYdQ1A+V1udZfVAXLlWWc
+        FkkGbvbz51v1rTX1/k=; b=RE3OnpXVoYq5NOlkZEVfSBiZlV93QbcG1Apn9xzvs
+        CchKu5jUf5S2JHPNLp7MJpIdjTA7sPyZcDm/dXcOp9RiEtQevy6cx1iHkfZnHBFS
+        z1Ba6MRhCkh9eVZfh/OX0a4b8FeywLSBfY7qqLqkFY5q63nYGRIbtZRfjgnyF9Dp
+        uY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 521B313C9FD;
+        Tue, 12 Jul 2022 13:06:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AED7B13C9FC;
+        Tue, 12 Jul 2022 13:06:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git v2.37.1 and others
+Date:   Tue, 12 Jul 2022 10:06:57 -0700
+Message-ID: <xmqqv8s2fefi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Original-Authentication-Results: cressida.uberspace.de;
-        auth=pass (plain)
-X-Rspamd-Bar: /
-X-Rspamd-Report: BAYES_HAM(-2.864109) R_MISSING_CHARSET(0.5) MIME_GOOD(-0.1) MID_CONTAINS_FROM(1) FORGED_RECIPIENTS(1)
-X-Rspamd-Score: -0.464109
-Received: from unknown (HELO unkown) (::1)
-        by cressida.uberspace.de (Haraka/2.8.28) with ESMTPSA; by cressida.uberspace.de (Haraka/2.8.28) with ESMTPSA; Tue, 12 Jul 2022 16:06:34 +0200
-Apparently-To: <mail@beyermatthias.de>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0A2F8064-0205-11ED-AA91-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-To:     unlisted-recipients:; (no To-header on input)
 
-We should note that conflict resolution is still performed, even if
-`--no-rerere-autoupdate` is specified, to make sure users do not get
-confused by the setting and assume this disables rerere conflict
-resultion all together.
+Git v2.37.1, together with v2.30.5, v2.31.4, v2.32.3, v2.33.4,
+v2.34.4, v2.35.4, and v2.36.2 for older maintenance tracks, are now
+available at the usual places.
 
-CC: Phillip Wood <phillip.wood@dunelm.org.uk>
-CC: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Matthias Beyer <mail@beyermatthias.de>
----
- Documentation/git-cherry-pick.txt | 2 ++
- 1 file changed, 2 insertions(+)
+These are to address CVE-2022-29187, where the fixes in v2.36.1 and
+below to address CVE-2022-24765 released earlier may not have been
+complete.
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 78dcc9171f..730a4590af 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -160,6 +160,8 @@ effect to your index in a row.
- --no-rerere-autoupdate::
- 	Allow the rerere mechanism to update the index with the
- 	result of auto-conflict resolution if possible.
-+	If `--no-rerere-autoupdate` is specified, the conflict resolution is
-+	still performed, but the index is not updated.
- 
- SEQUENCER SUBCOMMANDS
- ---------------------
--- 
-2.36.0
+The tarballs are found at:
 
+    https://www.kernel.org/pub/software/scm/git/
+
+The following public repositories all have a copy of the 'v2.37.1'
+tag and other tags for older maintenance tracks.
+
+  url =3D https://git.kernel.org/pub/scm/git/git
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://github.com/gitster/git
+
+----------------------------------------------------------------
+
+Git 2.37.1 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This release merges up the fixes that appear in v2.30.5, v2.31.4,
+v2.32.3, v2.33.4, v2.34.4, v2.35.4, and v2.36.2 to address the
+security issue CVE-2022-29187; see the release notes for these
+versions for details.
+
+Fixes since Git 2.37
+--------------------
+
+ * Rewrite of "git add -i" in C that appeared in Git 2.25 didn't
+   correctly record a removed file to the index, which is an old
+   regression but has become widely known because the C version has
+   become the default in the latest release.
+
+ * Fix for CVE-2022-29187.
+
+----------------------------------------------------------------
+
+Git v2.30.5 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This release contains minor fix-ups for the changes that went into
+Git 2.30.3 and 2.30.4, addressing CVE-2022-29187.
+
+ * The safety check that verifies a safe ownership of the Git
+   worktree is now extended to also cover the ownership of the Git
+   directory (and the `.git` file, if there is any).
+
+Carlo Marcelo Arenas Bel=C3=B3n (1):
+      setup: tighten ownership checks post CVE-2022-24765
