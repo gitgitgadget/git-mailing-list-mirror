@@ -2,88 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D9B2CCA47F
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 06:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FA99C433EF
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 06:37:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231811AbiGLG3C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 02:29:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50160 "EHLO
+        id S229818AbiGLGhP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 02:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231666AbiGLG3B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 02:29:01 -0400
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6A22D118
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 23:28:59 -0700 (PDT)
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-3137316bb69so70888607b3.10
-        for <git@vger.kernel.org>; Mon, 11 Jul 2022 23:28:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kQL7PJjZsh0YCXcXC47010pKja5AtRpsTtd8haixyfs=;
-        b=pgGloJGr3Qfn6YNM6RfnMLDYoM2bK3fE6KNzwKkEl/bBEgNpz3g4PgyxgGWaVJrjxT
-         cMPyU+J7zM3yDTO0iV9jVcYJP365JDbz6u9zkMqRbBcTzEc6pvQJ8BphnX8iRjYJrQR6
-         awrf9c0TjKtjcdpFA8u97GD5L1ywxumd6v82s/crfQt0nChqFp5gw4n37kh+mWv+pw75
-         5qM90XshhM/8SL8ZEGEoC+nPbOC4LRFP2ZWAFg2EEvj2Dy2Kb/QQW/2aEdTSG88GDRRi
-         Gv7v3HHODt86xjxKT99Ai/dEHAGsGRjrBeURbJsbNv5HfDOz9uM2nB5hRmfmw2FhGcOB
-         DLEQ==
-X-Gm-Message-State: AJIora8EA7ZEqZV8LdQe4hQndw5ypBIbme0jkLkYROSneCvfteKGdlYz
-        pK4Ju+xikhfQietpq048i5hSZdcRM1I0vOYY2nQ=
-X-Google-Smtp-Source: AGRyM1vue3TxhI4EEV287NtKol8+iiyFiLpJbaE0apE/kdvPm5A56zjyFhM5cdwjqrfN76veG4lUafaYOi6BTgf44qI=
-X-Received: by 2002:a81:1148:0:b0:31c:ad1f:774f with SMTP id
- 69-20020a811148000000b0031cad1f774fmr22477580ywr.13.1657607339027; Mon, 11
- Jul 2022 23:28:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220710081135.74964-1-sunshine@sunshineco.com>
- <CAO0brD0PBXDqe2HDdjg1ZhXWoYZihQ0=SY80UR+Cy3xRqqH8Sg@mail.gmail.com>
- <CAPig+cQJWgerk08j=1b=aWRZsKBu3BnEACQuiqktU4BwzM-xaA@mail.gmail.com> <xmqq7d4kp8l6.fsf@gitster.g>
-In-Reply-To: <xmqq7d4kp8l6.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 12 Jul 2022 02:28:48 -0400
-Message-ID: <CAPig+cQMJcUc4gpRDpR=Q8M44rTjUA7SWgXNmzrnDH7V12z0dQ@mail.gmail.com>
-Subject: Re: [PATCH] unpack-objects: fix compilation warning/error due to
- missing braces
+        with ESMTP id S229629AbiGLGhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 02:37:13 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 918EE2612B
+        for <git@vger.kernel.org>; Mon, 11 Jul 2022 23:37:11 -0700 (PDT)
+Received: (qmail 10266 invoked by uid 109); 12 Jul 2022 06:37:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jul 2022 06:37:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27476 invoked by uid 111); 12 Jul 2022 06:37:10 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jul 2022 02:37:10 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Jul 2022 02:37:09 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han Xin <chiyutianyi@gmail.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Han Xin <hanxin.hx@bytedance.com>,
+        Michael J Gruber <git@grubix.eu>, chiyutianyi@gmail.com,
+        derrickstolee@github.com, git@vger.kernel.org,
+        haiyangtand@gmail.com, jonathantanmy@google.com, me@ttaylorr.com,
+        ps@pks.im
+Subject: Re: [External] Re: [PATCH v4 1/1] commit-graph.c: no lazy fetch in
+ lookup_commit_in_graph()
+Message-ID: <Ys0WlWFIuhP8b2hb@coredump.intra.peff.net>
+References: <cover.1656381667.git.hanxin.hx@bytedance.com>
+ <cover.1656593279.git.hanxin.hx@bytedance.com>
+ <96d4bb71505d87ed501c058bbd89bfc13d08b24a.1656593279.git.hanxin.hx@bytedance.com>
+ <165736941632.704481.18414237954289110814.git@grubix.eu>
+ <Ysw9LmBFGbRy9L7c@coredump.intra.peff.net>
+ <xmqqk08jo147.fsf@gitster.g>
+ <CAKgqsWVD2108f0PyJGp6mVKp2cGd_V_MiiQO3SAPm+LEHcb2mA@mail.gmail.com>
+ <xmqq1quqkiq2.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1quqkiq2.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 11, 2022 at 12:38 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > On Sun, Jul 10, 2022 at 10:00 PM Han Xin <chiyutianyi@gmail.com> wrote:
-> >> On Sun, Jul 10, 2022 at 4:12 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> >> > [1]: `cc --version` => "Apple LLVM version 10.0.0 (clang-1000.10.44.4)"
-> >> > -       git_zstream zstream = { 0 };
-> >> > +       git_zstream zstream = {{ 0 }};
-> >>
-> >> Not a comment, just wondering, when should I use "{ { 0 } }" and when
-> >> should I use "{ 0 }"?
-> >
-> > I don't have a good answer. More modern `clang` versions don't seem to
-> > complain about plain old `{0}` here, but the older `clang` with which
-> > I'm stuck does complain.
->
-> I think, from the language-lawyer perspective, "{ 0 }" is how we
-> should spell these initialization when we are not using designated
-> initializers, even when the first member of the struct happens to be
-> a struct.
->
-> The older clang that complains at you is simply buggy, and I think
-> we had the same issue with older sparse.
+On Mon, Jul 11, 2022 at 10:23:01PM -0700, Junio C Hamano wrote:
 
-I can't tell from your response whether or not you intend to pick up
-this patch. I don't disagree that older clang may be considered buggy
-in this regard, but older clang versions still exist in the wild, and
-we already support them by applying `{{0}}` when appropriate:
+> > The tricky thing about using ulimit is that it's tied to the entire development
+> > station. I have tried to run the test without any limit [1], it did finally be
+> > canceled after 6 hours.
+> 
+> I am not worried so much about developer workstation, which people
+> are sitting in front of.  They can ^C any runaway test way before 6
+> hours just fine.
+> 
+> I am assuming that we do not have to be worried about CI settings
+> too much, either, as they should already be prepared to catch
+> run-away processes.
 
-    % git grep -n '{ *{ *0 *} *}'
-    builtin/merge-file.c:31: xmparam_t xmp = {{0}};
-    builtin/worktree.c:262: struct config_set cs = { { 0 } };
-    oidset.h:25:#define OIDSET_INIT { { 0 } }
-    worktree.c:840: struct config_set cs = { { 0 } };
+Agreed. Also, I think that although it's natural to worry about a bug we
+know about causing an infinite loop, it's much more likely that a _new_
+bug will cause one. I.e., every test we already carry is a candidate to
+accidentally loop forever in this way. This is just the one we happen to
+have seen. Once fixed, I don't know that it's at any more risk of
+reocurring than any other problem.
 
-so the change made by this patch is in line with existing practice on
-this project.
+-Peff
