@@ -2,95 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87E3EC43334
-	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 23:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1D41C43334
+	for <git@archiver.kernel.org>; Tue, 12 Jul 2022 23:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232055AbiGLXKa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 19:10:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40052 "EHLO
+        id S233227AbiGLXKe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 19:10:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiGLXK2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 19:10:28 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AF859B1A9
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:27 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id f12so7436658qka.12
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:27 -0700 (PDT)
+        with ESMTP id S229514AbiGLXKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 19:10:31 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 799EC9B1A9
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:30 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id l2so3673683qvt.2
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 16:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=BcdxbO9FCqNwh1Y7GgtrAvJ2qFmJzahX0FaTfDpkpPY=;
-        b=MARwSUqWLOOvyrcpwBt3YkKEAudENowlupmbwzqXfUuj2EQRsxWLTfqKSczHjPHmp+
-         2Vp9RKnrtOFJ/S2EbNyAhlOH8Sxtg9UeuOZzu/OUGB6kxPnfqcj96TSz20FFeEWDFze+
-         8dfmi8Y+UW+/Nqp0eXTyls8hZWt23uWsM/R7j41jMWEqCBuJxe6L5Mq5E34vsSyL6ZM9
-         aL3Qt122hwYMbutSIZEjgsSzJSKIfD9nJLc9DD0f4BC/zPLwOtc+ASqTRyL/SsU68LVa
-         bDn6qXPEQ9onppr7pn3mkiySlZBxPPM+8zNhlajDgQLvVGgdMLj2duejJ3qreA4cAkzz
-         zxNg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nYNZgAuTiOavJ/JkYhkf8y8k5mtvvNKydg1YsBBm4zc=;
+        b=PL41dNT6JLV/c/PgGGeoyX/HbQxvcdK2c+gLPURKP3Uig+IWwy9HSusr4ZjTc3OL5x
+         o6oGFLc4SymiFhFSfQeEEhEy+whtc5iU5R5mlxfcd+ZKNeEGMA0RhDclioD+jfkZCCZb
+         T05WnVfAUPfuUDzpxct+Ajcr737B1zWuODnVTCHgJHQm4yYOGeeWHqqLYjCeMnJ4l0np
+         vesEwc2tYFl0NKbV2ez6GlQr1RabR22dqqwBTmoV/3RB9gnAC7BLFlbPmhi1YqBMAkhM
+         5hIxWA0j/V18P3+Hh6iKekqLMMXzWX6ygPYvzxv7XsZAge1ZUMKi7kLBtDXm/lNxUSWN
+         kjIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=BcdxbO9FCqNwh1Y7GgtrAvJ2qFmJzahX0FaTfDpkpPY=;
-        b=3Waw2mqQb9nSUdgPIxLW4+aAu//eeejiYNY6UdO2siUWUZ5nAPGh7j/Qb8G8uslQ8X
-         zD1jrkZy92fv6LdXoo38A0GdTVVtj2Qd/I0fJ9MVn+5uDPc3Wnxgl+LEMxyJB2WZTZNk
-         Z3c1Yky0PpTOXu32FgyqVT9vF+7EuUZrRzu93uvWA3yrn8FrzSroC6OTYIA4TsTvzePz
-         vHvdNTxtctyrt93qr5j4N9XeQ0Is8cfrNtaDEFeq3MfcxLLirksVJk10YXTERAuKrngm
-         iROOpVyVqEQANOHNLIIqOUv5YityjSOKEma0ndrntsC+4FWe61vqnhw2FL7GHiQBtEai
-         69OA==
-X-Gm-Message-State: AJIora+MND+/dYPIvguBv+EA+q8FZKo3P7FKKPR9c/TZ280vE9XfIwEk
-        0HXgtyqPML9YukbVF3MRdM4a+h7Xi7Jv0A==
-X-Google-Smtp-Source: AGRyM1uLx8/7Nk40FgexHnCqV/+MGDLNTRCNAKYLxKhVue6VzxMLzaxSiwv+zMa7G31KeKhnBzzvVQ==
-X-Received: by 2002:a05:620a:2845:b0:6a9:b149:8d31 with SMTP id h5-20020a05620a284500b006a9b1498d31mr565220qkp.86.1657667426561;
-        Tue, 12 Jul 2022 16:10:26 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nYNZgAuTiOavJ/JkYhkf8y8k5mtvvNKydg1YsBBm4zc=;
+        b=re03D2U1ZuzTd3qMNqnoDyOSlXOaCAPFkw/Ic+jB3XVNrg3pfBq8xrfEUZkvpZ9VHN
+         RA86+SjAP5J33FYn8QewMf/y3QsnWZtGh16A1asad5T5iQpHqRd8IpfwUu+OQ7VwoUDg
+         SV/uMAOg2e2tSkWBhV6FCrMS2u7szqf1p9I3aMQAU31E2UO+CK9dxnL3YsW/GRROqvwF
+         kKbuv5olUtiTDtr4Dx27DVsfxL6uzs+CWmmqvHOKsLxeP4dRqGg/L87m2GOpj/SRH9Zd
+         QrKKh2RrJ1blSf7nDpcymWJkUK3YJDV483lQBZzZC4Dve6Q2k6QjxLZMSAGM64LyghhR
+         T0BA==
+X-Gm-Message-State: AJIora+Gum2yxdrg2Fu3laQEl97bItQ5Xzm8MXDGKeyi8/qBCxA/Yx2b
+        nq1ZfFzfGSJowV7Cjx0Mn5Bd7rfHGcfcjg==
+X-Google-Smtp-Source: AGRyM1tbUYaD3CRhRQAzbjun4gSomXP3vr6tStaabyF6EE6WXhHfr3vycJm3elnGZ8pHwv2uUDBmWQ==
+X-Received: by 2002:a05:6214:2302:b0:470:2d10:b6e4 with SMTP id gc2-20020a056214230200b004702d10b6e4mr656074qvb.72.1657667429493;
+        Tue, 12 Jul 2022 16:10:29 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w20-20020a05620a0e9400b006b5b1d632bbsm848434qkm.99.2022.07.12.16.10.25
+        by smtp.gmail.com with ESMTPSA id m3-20020a05620a24c300b006b53fe19c41sm10798902qkn.14.2022.07.12.16.10.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 16:10:26 -0700 (PDT)
-Date:   Tue, 12 Jul 2022 19:10:18 -0400
+        Tue, 12 Jul 2022 16:10:29 -0700 (PDT)
+Date:   Tue, 12 Jul 2022 19:10:28 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, derrickstolee@github.com, peff@peff.net,
         ps@pks.im, wfc@wfchandler.org
-Subject: [PATCH 0/3] commit-graph: fix corruption during generation v2 upgrade
-Message-ID: <cover.1657667404.git.me@ttaylorr.com>
+Subject: [PATCH 1/3] t5318: demonstrate commit-graph generation v2 corruption
+Message-ID: <0a49c86037bac200bb23e1abf9f67363e99c4b7c.1657667404.git.me@ttaylorr.com>
+References: <cover.1657667404.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1657667404.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This brief series resolves a bug where a commit-graph would become
-corrupt when upgrading from generation number v1 to v2, as originally
-reported in [1].
+When upgrading a commit-graph using generation v1 to one using
+generation v2, it is possible to force Git into a corrupt state where it
+(incorrectly) believes that a GDO2 chunk is necessary, *after* deciding
+not to write one.
 
-Some speculation occurred as to what might be causing that bug in the
-thread beginning at [1], until the problem was explained in more detail
-by Will Chandler in [2].
+This makes subsequent reads using the commit-graph produce the following
+error message:
 
-The crux of the issue, as is described in [2] and [3], is that the
-commit_graph_data slab is reused for read and write operations involving
-the commit-graph, leading to situations where data computed in
-preparation of a write is clobbered by a read of existing data.
+    fatal: commit-graph requires overflow generation data but has none
 
-The first patch demonstrates the issue, and the second patch prepares to
-fix it by introducing a helper function. The crux of the issue is
-described and fixed in the third patch.
+Demonstrate this bug by increasing our test coverage to include a
+minimal example of upgrading a commit-graph from generation v1 to v2.
+The only notable components of this test are:
 
-[1]: https://lore.kernel.org/git/YqD5dgalb9EPnz85@coredump.intra.peff.net/
-[2]: https://lore.kernel.org/git/DD88D523-0ECA-4474-9AA5-1D4A431E532A@wfchandler.org/
-[3]: https://lore.kernel.org/git/YsS7H4i5DqUZVQ5i@nand.local/
+  - The committer date of the commit is chosen carefully so that the
+    offset underflows when computed using a v1 generation number, but
+    would not overflow when using v2 generation numbers.
 
-Taylor Blau (3):
-  t5318: demonstrate commit-graph generation v2 corruption
-  commit-graph: introduce `repo_find_commit_pos_in_graph()`
-  commit-graph: fix corrupt upgrade from generation v1 to v2
+  - The upgrade to generation number v2 must read in the v1 generation
+    numbers, which we can do by passing `--changed-paths`, which will
+    force the commit-graph internals to call `fill_commit_graph_info()`.
 
- bloom.c                 | 10 +++++-----
- commit-graph.c          | 12 +++++++++---
- commit-graph.h          | 15 +++++++++++++++
+A future patch will squash this bug.
+
+Reported-by: Jeff King <peff@peff.net>
+Reproduced-by: Will Chandler <wfc@wfchandler.org>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
  t/t5318-commit-graph.sh | 27 +++++++++++++++++++++++++++
- 4 files changed, 56 insertions(+), 8 deletions(-)
+ 1 file changed, 27 insertions(+)
 
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index fbf0d64578..4d9f62f22d 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -811,4 +811,31 @@ test_expect_success 'set up and verify repo with generation data overflow chunk'
+ 
+ graph_git_behavior 'generation data overflow chunk repo' repo left right
+ 
++test_expect_failure 'overflow during generation version upgrade' '
++	git init overflow-v2-upgrade &&
++	(
++		cd overflow-v2-upgrade &&
++
++		# This commit will have a date at two seconds past the Epoch,
++		# and a (v1) generation number of 1, since it is a root commit.
++		#
++		# The offset will then be computed as 2-1, which will underflow
++		# to 2^31, which is greater than the v2 offset small limit of
++		# 2^31-1.
++		#
++		# This is sufficient to need a large offset table for the v2
++		# generation numbers.
++		test_commit --date "@2 +0000" base &&
++		git repack -d &&
++
++		# Test that upgrading from generation v1 to v2 correctly
++		# produces the overflow table.
++		git -c commitGraph.generationVersion=1 commit-graph write &&
++		git -c commitGraph.generationVersion=2 commit-graph write \
++			--changed-paths &&
++
++		git rev-list --all
++	)
++'
++
+ test_done
 -- 
 2.37.0.1.g1379af2e9d
+
