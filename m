@@ -2,80 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C07FC43334
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 14:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87FDCCCA481
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 14:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235923AbiGMOYS convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 13 Jul 2022 10:24:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57682 "EHLO
+        id S236589AbiGMOmy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 10:42:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233250AbiGMOYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 10:24:13 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2087623160;
-        Wed, 13 Jul 2022 07:24:12 -0700 (PDT)
-Received: from Mazikeen (ec2-99-79-53-255.ca-central-1.compute.amazonaws.com [99.79.53.255])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 26DENsUJ022968
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 13 Jul 2022 10:23:59 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     <rsbecker@nexbridge.com>, "'Junio C Hamano'" <gitster@pobox.com>,
-        <git@vger.kernel.org>
-Cc:     "'Linux Kernel'" <linux-kernel@vger.kernel.org>,
-        <git-packagers@googlegroups.com>
-References: <xmqqv8s2fefi.fsf@gitster.g> <01af01d896b1$a48e32f0$edaa98d0$@nexbridge.com>
-In-Reply-To: <01af01d896b1$a48e32f0$edaa98d0$@nexbridge.com>
-Subject: RE: [Test Failures] Git v2.37.1 (was RE: [ANNOUNCE] Git v2.37.1 and others)
-Date:   Wed, 13 Jul 2022 10:23:47 -0400
-Organization: Nexbridge Inc.
-Message-ID: <01b101d896c4$31761bd0$94625370$@nexbridge.com>
+        with ESMTP id S236585AbiGMOmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 10:42:47 -0400
+Received: from dalaran.tastycake.net (dalaran.tastycake.net [IPv6:2001:ba8:0:1c0::1:1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6868B32ECE
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 07:42:45 -0700 (PDT)
+Received: from c.a.1.d.d.f.6.c.f.8.d.f.b.e.b.6.d.a.0.2.5.1.e.d.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:de15:20ad:6beb:fd8f:c6fd:d1ac] helo=lucy.dinwoodie.org)
+        by dalaran.tastycake.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <adam@dinwoodie.org>)
+        id 1oBdZY-0001dI-6A; Wed, 13 Jul 2022 15:42:40 +0100
+Received: from adam by lucy.dinwoodie.org with local (Exim 4.94.2)
+        (envelope-from <adam@dinwoodie.org>)
+        id 1oBdZW-003rXC-VR; Wed, 13 Jul 2022 15:42:39 +0100
+Date:   Wed, 13 Jul 2022 15:42:38 +0100
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: t0301-credential-cache test failure on cygwin
+Message-ID: <CA+kUOam-_3qR7YguPyUmyC2dWi2M1cy6Hg4Pveak+f40qtYBvA@mail.gmail.com>
+References: <9dc3e85f-a532-6cff-de11-1dfb2e4bc6b6@ramsayjones.plus.com>
+ <xmqqtu7t30uv.fsf@gitster.g>
+ <4529b11a-e514-6676-f427-ffaec484e8f1@ramsayjones.plus.com>
+ <CA+kUOakjnOxs_FGojdZXaiaY4+68pvyBHsbue+AQHp7PLXqNJw@mail.gmail.com>
+ <CA+kUOak29RkU-ooMgOz8yCg9-q6vb1VfdP8_VLay_V650ttwjA@mail.gmail.com>
+ <51972253-c1a1-8be7-39f5-3093ac83ffb1@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQOax8rq/kYLSctl3duwOPHxjLu0zAJkQfEUqeS4cGA=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <51972253-c1a1-8be7-39f5-3093ac83ffb1@ramsayjones.plus.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 13, 2022 8:11 AM, I wrote:
->On July 12, 2022 1:07 PM, Junio C Hamano wrote:
->>Git v2.37.1, together with v2.30.5, v2.31.4, v2.32.3, v2.33.4, v2.34.4,
->>v2.35.4, and
->>v2.36.2 for older maintenance tracks, are now available at the usual places.
->>
->>These are to address CVE-2022-29187, where the fixes in v2.36.1 and
->>below to address CVE-2022-24765 released earlier may not have been complete.
+On Mon, 11 Jul 2022 at 15:56, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
+> On 11/07/2022 14:39, Adam Dinwoodie wrote:
+> [snip]
 >
->Following are net new test failures with 2.37.1 compared with 2.37.0 are as follows
->on NonStop ia64 and x86 platforms:
+> >
+> > Minor progress update: I've now confirmed the failure was introduced by
+> > a change in the Cygwin library between the binaries for Cygwin versions
+> > 3.2.0-1 and 3.3.1-1. Specifically, the test passes with Cygwin from the
+> > 27 October 2021 package archive[0], and fails with Cygwin from the 28
+> > October 2021 archive[1], and the only difference between the two that
+> > has any chance of being relevant is that bump in the Cygwin release.
 >
->t5516-fetch-push subtests 53, 113
->
->t5545-push-options subtest 9
+> Heh, I was just about to email you with similar news! I had a look at
+> my setup.log to see what I actually updated (and from what) and the
+> only thing that seemed to make sense was an update of the cygwin .dll
+> from v3.2.0-1 to v3.3.2-1 (I will add below an extract from my setup.log
+> for that day, in case you see anything else of interest).
 
-Test passes when not run in Jenkins CI/CD
+Having now spent far more time than I'd like wrangling the Cygwin build
+infrastructure, I've found the change in the Cygwin code that introduced
+the break. But I'm afraid progressing beyond this -- and in particular
+making any sort of judgement about appropriate next steps -- is beyond
+what I'm going to have time for in the foreseeable future.
 
->t5601-clone subtest 8
+(On the plus side, this has given me the kick to actually work out how
+to do this sort of investigation, so if and when I get to investigating
+the other test failures that also seem to be caused by changes in the
+Cygwin environment, I now have a much better idea what I'm doing!)
 
-Test passes when not run in Jenkins CI/CD
+Relevant commit is below:
 
->t7502-commit-porcelain subtests 20-26, 29-33, 42-47
+https://cygwin.com/git/?p=newlib-cygwin.git;a=commitdiff;h=ef95c03522f65d5956a8dc82d869c6bc378ef3f9
 
-Test passes when not run in Jenkins CI/CD
+commit ef95c03522f65d5956a8dc82d869c6bc378ef3f9 (HEAD, refs/bisect/bad)
+Author: Corinna Vinschen <corinna@vinschen.de>
+Date:   Tue Apr 6 21:35:43 2021 +0200
 
->t7528-signed-commit-ssh subtests 4, 5
+    Cygwin: select: Fix FD_CLOSE handling
+    
+    An FD_CLOSE event sets a socket descriptor ready for writing.
+    This is incorrect if the FD_CLOSE is a result of shutdown(SHUT_RD).
+    Only set the socket descriptor ready for writing if the FD_CLOSE
+    is indicating an connection abort or reset error condition.
+    
+    This requires to tweak fhandler_socket_wsock::evaluate_events.
+    FD_CLOSE in conjunction with FD_ACCEPT/FD_CONNECT special cases
+    a shutdown condition by setting an error code.  This is correct
+    for accept/connect, but not for select.  In this case, make sure
+    to return with an error code only if FD_CLOSE indicates a
+    connection error.
+    
+    Signed-off-by: Corinna Vinschen <corinna@vinschen.de>
 
-Test passes when not run in Jenkins CI/CD 
-
-So it looks like a Jenkins/git test interaction is the issue here. I'm wondering whether running the test with </dev/null and 2>/dev/null might make a difference when running in Jenkins. The tty where Jenkins was started is in a permanently disconnected state.
-
-Mostly ignore the subtest failures, but still, would like to know why these subtests in particular.
-
---Randall
-
+diff --git a/winsup/cygwin/fhandler_socket_inet.cc b/winsup/cygwin/fhandler_socket_inet.cc
+index bc08d3cf1..4ecb31a27 100644
+--- a/winsup/cygwin/fhandler_socket_inet.cc
++++ b/winsup/cygwin/fhandler_socket_inet.cc
+@@ -361,20 +361,30 @@ fhandler_socket_wsock::evaluate_events (const long event_mask, long &events,
+ 	  wsock_events->events |= FD_WRITE;
+ 	  wsock_events->connect_errorcode = 0;
+ 	}
+-      /* This test makes accept/connect behave as on Linux when accept/connect
+-         is called on a socket for which shutdown has been called.  The second
+-	 half of this code is in the shutdown method. */
+       if (events & FD_CLOSE)
+ 	{
+-	  if ((event_mask & FD_ACCEPT) && saw_shutdown_read ())
++	  if (evts.iErrorCode[FD_CLOSE_BIT])
+ 	    {
+-	      WSASetLastError (WSAEINVAL);
++	      WSASetLastError (evts.iErrorCode[FD_CLOSE_BIT]);
+ 	      ret = SOCKET_ERROR;
+ 	    }
+-	  if (event_mask & FD_CONNECT)
++	  /* This test makes accept/connect behave as on Linux when accept/
++	     connect is called on a socket for which shutdown has been called.
++	     The second half of this code is in the shutdown method.  Note that
++	     we only do this when called from accept/connect, not from select.
++	     In this case erase == false, just as with read (MSG_PEEK). */
++	  if (erase)
+ 	    {
+-	      WSASetLastError (WSAECONNRESET);
+-	      ret = SOCKET_ERROR;
++	      if ((event_mask & FD_ACCEPT) && saw_shutdown_read ())
++		{
++		  WSASetLastError (WSAEINVAL);
++		  ret = SOCKET_ERROR;
++		}
++	      if (event_mask & FD_CONNECT)
++		{
++		  WSASetLastError (WSAECONNRESET);
++		  ret = SOCKET_ERROR;
++		}
+ 	    }
+ 	}
+       if (erase)
+diff --git a/winsup/cygwin/select.cc b/winsup/cygwin/select.cc
+index 956cd9bc1..b493ccc11 100644
+--- a/winsup/cygwin/select.cc
++++ b/winsup/cygwin/select.cc
+@@ -1709,15 +1709,18 @@ peek_socket (select_record *me, bool)
+   fhandler_socket_wsock *fh = (fhandler_socket_wsock *) me->fh;
+   long events;
+   /* Don't play with the settings again, unless having taken a deep look into
+-     Richard W. Stevens Network Programming book.  Thank you. */
++     Richard W. Stevens Network Programming book and how these flags are
++     defined in Winsock.  Thank you. */
+   long evt_mask = (me->read_selected ? (FD_READ | FD_ACCEPT | FD_CLOSE) : 0)
+ 		| (me->write_selected ? (FD_WRITE | FD_CONNECT | FD_CLOSE) : 0)
+ 		| (me->except_selected ? FD_OOB : 0);
+   int ret = fh->evaluate_events (evt_mask, events, false);
+   if (me->read_selected)
+     me->read_ready |= ret || !!(events & (FD_READ | FD_ACCEPT | FD_CLOSE));
+   if (me->write_selected)
+-    me->write_ready |= ret || !!(events & (FD_WRITE | FD_CONNECT | FD_CLOSE));
++    /* Don't check for FD_CLOSE here.  Only an error case (ret == -1)
++       will set ready for writing. */
++    me->write_ready |= ret || !!(events & (FD_WRITE | FD_CONNECT));
+   if (me->except_selected)
+     me->except_ready |= !!(events & FD_OOB);
+ 
