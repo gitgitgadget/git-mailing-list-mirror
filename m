@@ -2,126 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6803C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 09:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 808CDC43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 11:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235791AbiGMJiT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 05:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56088 "EHLO
+        id S234772AbiGMLE1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 07:04:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234525AbiGMJiR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 05:38:17 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85F6A24F20
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 02:38:16 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id r14so14706942wrg.1
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 02:38:16 -0700 (PDT)
+        with ESMTP id S236240AbiGMLEH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 07:04:07 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D02CB5006A
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 04:04:01 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id m16so13584457edb.11
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 04:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=FGVX9KoBylOsaZWGny7jddtuY0jHozuPldudk7xxyis=;
-        b=lyGJBP1uPT4S0KDXawa/uwXUdzo57ktN9eI3VIo6sIRbbR+V+VMFfJzkxzvRtmfzqt
-         Clv29KKCG5uNyX4OmZJ2PXBPSCNmkZNr0HdBTnXG4IUVFwuqbS00L6Nm6MaSWqpyo09D
-         eRBATBoYSI+conybM8/RZRQlk60Bc7dDPUAd3uT4PAxVlYdyeoxStlCdhiPYe6VVovze
-         jp91BJ2GKTpMEiVH6fueS5j5ZPgvop0rdY8Qt0aVyekGbFbfqOxGSzNsY/LV2O/T3SSv
-         g+jNAkpaDSyvmUJgaj4fEz4ipANkhdIL+6Q5hJ02hCCDUUth9ObdTmPRFR5iP/d8tG5e
-         z+Ig==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=2hnT+FVoA1KWE9QSQoRBmbYVdjD7ZHY+VE33dPJR2wE=;
+        b=iUH+Dxj0uN1QKfP/YwoIhcgWsRqK6sufD6TgImMMzDJNMlr6oPiW89owHYSGvPt2zZ
+         E2Qg3GpSGxpeB1x626jJzsTj/ooGmhpqe8s6GitjcIw+tiptLzndwvYwoI8eJONkWl23
+         KVg7557kGFl8CCodu/Kd9mM5X4l4EEw00ANcumdECA6rDWNF8hkC2ORQNHRqgmdsA5q1
+         ENxYOrP4rbMmv1IaSGY+iZhFdWmjxZfrO5jc33VtwrKNNCwjLqhGecyCH8xPGOJZ9ocN
+         e7ilsBFyAnBjlUCBt0VwOCVGedsSQ02xbyTApbZ8xBaV+vO0eLmaQ0CWyOtNgDJuC69J
+         1GDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=FGVX9KoBylOsaZWGny7jddtuY0jHozuPldudk7xxyis=;
-        b=0KPt0H7utwfyDEmnWZ6Ey+NMeyBhrsaw2DxjpPrKsX7Oc6LJ1HaNHI6WC4NmounAhJ
-         wY9hHHNGNI1C1ShKpFFxokbRG5pYqOZiWyW3sV+FJC/Tx5L2z/DgHW6NEAS5+tMT8kjO
-         EsJkSjIuWZavIRUjEan6e4aICzA7AOLO9P+q9s6TfzB/y5yW5+3BZcAtLvBLpdcS0LBF
-         u5ZY5Yfyss4YBcx1eGbKKOnOIRwVVbLgni/8EKVAaNRTGGCcroxizWkECum8HHXH6jxs
-         dTphkhtxbUoW1IZOsTxEChlLykygTt3co/6wvm5A+4IyIAGgXqnP142X1MwpYhZND6Fw
-         4B+g==
-X-Gm-Message-State: AJIora+9nwMq2AFiDmU60nZECSKpinbeu+AsmhD9+t0ZKrrYMjhihdRA
-        Rry0nJ1hhbouuoZ8L/lBUg8=
-X-Google-Smtp-Source: AGRyM1s09vbyy4DvdXQNH+Wjcqq5DaTnmrIkx++azwo/DMCXOsdHjk1Vcz20T9EYb2noDcPpOXcMbw==
-X-Received: by 2002:a5d:5703:0:b0:21d:ada4:e827 with SMTP id a3-20020a5d5703000000b0021dada4e827mr2299588wrv.579.1657705095038;
-        Wed, 13 Jul 2022 02:38:15 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id f12-20020a05600c4e8c00b003a2fde6ef62sm537902wmq.7.2022.07.13.02.38.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Jul 2022 02:38:14 -0700 (PDT)
-Message-ID: <46f70aff-59f1-01ca-8f1f-b07b230011bc@gmail.com>
-Date:   Wed, 13 Jul 2022 10:38:13 +0100
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=2hnT+FVoA1KWE9QSQoRBmbYVdjD7ZHY+VE33dPJR2wE=;
+        b=ov9/eZ4A/bLAmUk2LMyKZCvTGRs87Zoc5CXe1ctthCBdW8w8cySuKcxNWEXPvA1RoN
+         lP9MNav0l4KYouqMK0mAKt1gKMIurAQ5itcM15jYt/qSEhlHT0+bw1Wtl8Tzbld6RcWE
+         TckZ16l8IMYADro674y9PrKR0Vv0ECmIjU9r9yk9FJIpx/IvBRV19d2bpkYaIS5DW0sj
+         0YFLtVHVEq5x+yeXxKYDNmyQyjquNHNOYBQCIAv1IJL2zFAFxUp8nxUaf6FiWjVP8y1c
+         488hcAozEmyHz+MpRrl+4GHHfKEqKlkwtooNnEHDWXEmRvPo9dGi05y0MY51n1yx2tK8
+         uGgA==
+X-Gm-Message-State: AJIora/vLj3j5HRVfS3wJ8EQMYqJoiV57Du2qKFZvNUTaXkx2reljZk6
+        aOMhLA7+ihfuGJXNktq6gwU=
+X-Google-Smtp-Source: AGRyM1uayYD+1KZP5vU2q11wlydhRzrqiKDh2/iT4HZ8LfP1du4C5E6ESqhubSFcj8VyWqMqxlHV1A==
+X-Received: by 2002:a05:6402:4301:b0:43a:e374:1557 with SMTP id m1-20020a056402430100b0043ae3741557mr4135393edc.229.1657710240255;
+        Wed, 13 Jul 2022 04:04:00 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id h4-20020a50ed84000000b0043a85d7d15esm7661579edr.12.2022.07.13.04.03.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jul 2022 04:03:59 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oBa9u-001gvm-Ar;
+        Wed, 13 Jul 2022 13:03:58 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/7] xdiff: use GALLOC_GROW(), not XDL_ALLOC_GROW()
+Date:   Wed, 13 Jul 2022 12:48:22 +0200
+References: <b34dcb93-df73-f5de-3c7c-7ab6c3250afe@gmail.com>
+ <cover-0.7-00000000000-20220708T140354Z-avarab@gmail.com>
+ <patch-5.7-3665576576f-20220708T140354Z-avarab@gmail.com>
+ <c2bc5c79-e71b-f9dc-ba97-261d3454e150@gmail.com>
+ <220711.861qur9ays.gmgdl@evledraar.gmail.com>
+ <e86cac3b-4e05-be20-41d8-ed5006463556@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <e86cac3b-4e05-be20-41d8-ed5006463556@gmail.com>
+Message-ID: <220713.86edyp46ld.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 4/4] xdiff: introduce XDL_ALLOC_GROW()
-Content-Language: en-GB-large
-To:     Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1272.git.1656516334.gitgitgadget@gmail.com>
- <pull.1272.v2.git.1657297519.gitgitgadget@gmail.com>
- <8c24cd7737b29d461788b71f6a94eb74c468ad33.1657297520.git.gitgitgadget@gmail.com>
- <220709.86v8s78chj.gmgdl@evledraar.gmail.com>
- <bb1c85e4-50be-04a5-3c9f-f4c4dab6a50e@gmail.com>
- <Ys0gerokoiLC9llA@coredump.intra.peff.net>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <Ys0gerokoiLC9llA@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff
 
-It's great to see you back on the list
+On Wed, Jul 13 2022, Phillip Wood wrote:
 
-On 12/07/2022 08:19, Jeff King wrote:
-> On Mon, Jul 11, 2022 at 11:00:06AM +0100, Phillip Wood wrote:
-> 
->>> But you've also changed every single callsite anyway.
+> Hi =C3=86var
+>
+> On 11/07/2022 11:48, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Mon, Jul 11 2022, Phillip Wood wrote:
+>>=20
+>>> Hi =C3=86var
 >>>
->>> So why not just change:
+>>> On 08/07/2022 15:20, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>>> Replace the recently introduced XDL_ALLOC_GROW() with invocations of
+>>>> the GALLOC_GROW() from git-shared-util.h.
+>>>> As this change shows the macro + function indirection of
+>>>> XDL_ALLOC_GROW() is something we needed only because the two callsites
+>>>> we used it in wanted to use it as an expression, and we thus had to
+>>>> pass the "sizeof" down.
+>>>> Let's just check the value afterwards instead, which allows us to
+>>>> use
+>>>> the shared macro, we can also remove xdl_reallo(), this was its last
+>>>> user.
 >>>
->>>       if (XDL_ALLOC_GROW(recs, ...))
->>>
->>> To:
->>>
->>>       XDL_ALLOC_GROW(recs, ...);
->>>       if (!recs)
->>
->> Because I think it's ugly, we'd never define a function as void(int* result,
->> args...) and I don't think we should do that for a macro where we can avoid
->> it. The existing ALLOC_* macros make sense as statements because they die on
->> failure.
-> 
-> Those macros are already unlike functions, though. They take a variable
-> _name_, not a pointer to a variable, and assign to it. A version which
-> looked like a function would have to be:
-> 
->    if (XDL_ALLOC_GROW(&recs, ...))
-> 
-> So in my head I read them as assignment statements already, making the
-> expression-like form a bit jarring.
+>>> I don't think this expression->statement change is an
+>>> improvement.
+>> I think the use-as-statement is prettier too, but I think the
+>> uglyness
+>> of having to pass down the sizeof() & re-implementing the macro version
+>> of the alloc-or-die variant outweights that.
+>
+> I think this is partly a choice between prioritizing ease of
+> implementation or ease of use for callers.
+>
+>>> This change also removes the overflow checks that are
+>>> present in XDL_ALLOC_GROW()[...]
+>> We end up calling st_mult(), which does that overflow check. Do you
+>> mean
+>> that the POC shimmy layer I showed in another reply for libgit2 doesn't
+>> have an st_mult() that detects overflows?
+>
+> I was referring to
+>
+> #define alloc_nr(x) (((x)+16)*3/2)
+>
+> in cache.h. XDL_ALLOC_GROW() detects overflows when growing the number
+> of items as well as when calculating the number of bytes to allocate.
+>
+>> That's true, but as noted downthread of that we can & could ship that as
+>> part of the shimmy layer, but that's unrelated to this change.
+>> In your pre-image you use LONG_MAX instead of UINTMAX_MAX & I don't
+>> see
+>> (but maybe I haven't looked at it carefully enough) how it does the same
+>> dying on overflows. Doesn't it just fall back to LONG_MAX?
+>
+> It does not die on overflow as we want to return errors rather than
+> die in the xdiff code. It uses long to match the existing code.
+>
+>> Part of this is that it's not clear to me from your commit(s) why you
+>> need to rewrite alloc_nr() and rewrite (or drop?) st_mult().
+>
+> So that we don't die on overflow and so that the xdiff code is self
+> contained.
+>
+> I'm a bit disappointed that this patch seems to have been written
+> without really taking the time to understand exactly what the code it
+> is replacing is doing.
 
-I see what you're saying, I agree it is not exactly analogous. I tend to 
-think of assignment as an expression because it returns the value that's 
-being assigned, though here it's a bit muddy because the assignment is 
-hidden inside the macro and there is no tell-tale '&' as there would be 
-if it were calling function.
+Well, there's a lot to understand :) So it's also an implicit comment on
+the complexity of your series.
 
-> Just my two cents. I don't care _too_ much either way, but I'd probably
-> be swayed if one implementation is much simpler than the other.
+In case it wasn't clear the main thrust of what I've been commenting on
+here is asking why what you have here needs to *structurally* look the
+way it does, i.e. why you think the malloc() & free() naming can't
+resolve to libgit2's wrappers (per the thread ending at [1]).
 
-I don't think there is much difference in the complexity in this case. 
-In general I think that using a function with a macro wrapper can make 
-the implementation more readable as the function it is not littered with 
-the extra parentheses and backslashes that the same code in a macro 
-requires.
+And, if we can't end up with an xdiff/* in our tree that doesn't have
+return value checking flying in the face of xmalloc's NORETURN()
+behavior on allocation failures.
 
-Best Wishes
+But yes, the suggested replacement isn't behaving exactly as yours does,
+but I think that's just an implementation detail as far as the stuctural
+questions above go. I.e.:
 
-Phillip
+ * You're trying to fix a long-standing overflow issue in alloc_nr(),
+   but in such a way that only leaves xdiff/* with the fix.
+
+   Can't we address that seperately (e.g. turning alloc_nr into a static
+   inline function using the st_* helper), and then make xdiff and
+   cache.h use that new shared helper?
+
+ * You seem to be set on the idea that you absolutely must be rewriting
+   large parts of the existing allocation macro, because you'd really
+   like to use it as an expression v.s. a statement.
+
+   I really disagree with that trade-off, i.e. the whole endeavor of
+   duplicating the implementation in ways that are mostly the same but
+   not quite (e.g. that alloc_grow case) doesn't seem worth it
+   v.s. sharing the behavior.
+
+   But likewise it seems to be an implementation detail of your series
+   that we can't have both, i.e. if you're set on using these as an
+   expression factoring the shared behavior in cache.h out into some
+   static inline functions, then calling those from both variants.
+
+1. https://lore.kernel.org/git/220711.865yk47x54.gmgdl@evledraar.gmail.com/
