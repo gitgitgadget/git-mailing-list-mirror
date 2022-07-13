@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FD10C43334
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A85CC43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:16:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236280AbiGMNQt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 09:16:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39318 "EHLO
+        id S235444AbiGMNQv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 09:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236181AbiGMNQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 09:16:39 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58ED66335
+        with ESMTP id S236185AbiGMNQk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 09:16:40 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 953ED12D27
         for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:16:36 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id r10so9313734wrv.4
+Received: by mail-wr1-x42f.google.com with SMTP id z12so15472668wrq.7
         for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:16:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OmZbS6YzIAmUCogA+OdgBOA0PZ4LHSGCDj1zill1wG4=;
-        b=qpdYHlVzGJenPL6fVS07mrUkbCur5xPteq2JX51xSI8kEEb8Fy0ydPddiuyqsldQsC
-         XPw6IscIM5gZ30sARZEZG4LP8vHZnkmz/2oJcgvnodJAJKBAg8uSuKepxGkYbZPjqInS
-         hDulfk+SyNDG09awsBGuukyH6h4oJ6VvWPwjDlOR6nfWf2a/8FCu8LIUJVeZPU/+qAEl
-         7QuqKQXfzYPGfhqRBhQja5g+hSF1OHsWuo7U8QWPfmtlGMw4U+LyC8FPSBKRMIBdG5CX
-         5JMCDAMWJGJnUBHsBkPxg3zmzQsPaQ4Ab9IrXDbkLkS3sEvgJM716n1qunL4QMsoabzo
-         4pHA==
+        bh=k2IR5AYMQjDQMTEKCnHr8D5TPBFdEWrjobcPUsIQycw=;
+        b=qp2r2y4U9hW9SsoAMh9vrM5F5f8KxieN/X39Oi26WCYK+MLH1NBBSS+Aajdx91pakF
+         k6/atrFBMr1H9AhviyoSv6LqaCSgfMFFHFW3LBW+Rhgpk1DOVCoJLE647bQAj/c2c5bY
+         suYNq3L81jSJ/PU6r2XKNbRR4hCK6HQJfcgnWsknoXwkwV/Bvbgdl+gYFiQQMgVwDhZd
+         b5CFyEABI8/P4WOVpIpHUyFqkrFaMW6C/iCFaslnydj+jDvkNigFctHrEUuNKW9cOE0G
+         199jwxn8lGSLznlDBiQeEpYdiueZJvZNHntYXvoI9jYjLyuyeYOpUslnsLtHwvUgCtQ9
+         FPNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OmZbS6YzIAmUCogA+OdgBOA0PZ4LHSGCDj1zill1wG4=;
-        b=Hey5mNlvnRDqgqzohUDY4h3eAcIbEe6if8xvY/PDIdagbyZegINdtCjor2wC30rScI
-         O9Gt86uxBDm+qzfvg5CQkiIJhT+MOhZNzKavD5n3ELXtbynBk0Uf+FtbOklxhXKv9n1s
-         UDmGHVmuM7O/+h7/wmhB46JMOzG56flc6CI5eEN9kvuEBUFzGp/9naVfo1KZv9AgIW4W
-         D4Sh5tpjEA8ywT75Hd02iKebjTeeD35afa3DXI3JEfBUdjdtWgTdyq4alAEHAekNQYDZ
-         HfaorSAA9sGfHOnPWkeIbb4hxFeU1xzqCQXRw7QtY2m7UpI0j0Lj0ytXeMNv/OuTihqj
-         oWxw==
-X-Gm-Message-State: AJIora9Ur7ajQYG+Ql8w17YSpNYK5Nqy3KvWVfHynYSKIjC9WfiwyV2X
-        qY8F2sBZ1Voo0H5sdezwExqvk2kLG+5iWA==
-X-Google-Smtp-Source: AGRyM1u+Cn8l7J1B/r05ypc68M3gcSClChRxI7Q42cA218pe9Xsb0kIDOc/l0kF9eZEU2Ik9T/cZng==
-X-Received: by 2002:a05:6000:2cc:b0:21d:76d7:995d with SMTP id o12-20020a05600002cc00b0021d76d7995dmr3358116wry.339.1657718195559;
-        Wed, 13 Jul 2022 06:16:35 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t63-20020a1c4642000000b003a2e05a81b3sm2216352wma.8.2022.07.13.06.16.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=k2IR5AYMQjDQMTEKCnHr8D5TPBFdEWrjobcPUsIQycw=;
+        b=OQdmA0C+76r6UBq6jxjdLZmSXsuHWBJsD6ezJc1LLHfCPcDgO4s3KeXjAcKfSGqKNW
+         3plIxbdNcLvj/XYI/ZwyZLR4YHxmv/Etb4I0KaLD63w3jr3rpLgI6JpbwGtHUHFZ40G9
+         mVgQTkRp4DiB+cejrQ9tRTHuIuyHSA9IAsgvNGMKFjgLowD+1EZpAeZhC0Og5V5yfD6r
+         wLR4UYTlbVi3sQGkkSO29e6M3oL+Ont5cuAtZKpJaM92vVVea/OihpveGfxnydDPpvoN
+         +EmRKtMncPQCY2Pbh4wj8mM2CeVlQPyuY4yemWys86MqTfuPnft3h5Tkg7U0tbeNk3T2
+         nRVg==
+X-Gm-Message-State: AJIora+kZZSDxmZjvnvigOYnhiOqUmLrNMLOh+4unuZJtt5EITIn9c5z
+        8xlT2u1otNrbzCmhnvOv3FdUMAtN8Ylpbg==
+X-Google-Smtp-Source: AGRyM1u1WVfgMSaTslp9Tlm1DCUWerd5woBTbgLELmuQnjPZ5GE+NFWU8+JLB4LFLgT2u9ZjxxdfDA==
+X-Received: by 2002:a5d:5985:0:b0:21d:b6aa:23f5 with SMTP id n5-20020a5d5985000000b0021db6aa23f5mr3385089wri.18.1657718194353;
         Wed, 13 Jul 2022 06:16:34 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id t63-20020a1c4642000000b003a2e05a81b3sm2216352wma.8.2022.07.13.06.16.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jul 2022 06:16:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 10/11] submodule--helper: fix a leak with repo_clear()
-Date:   Wed, 13 Jul 2022 15:16:15 +0200
-Message-Id: <patch-10.11-e6c633256f3-20220713T131601Z-avarab@gmail.com>
+Subject: [PATCH 09/11] submodule--helper: free "char *" in "struct update_data"
+Date:   Wed, 13 Jul 2022 15:16:14 +0200
+Message-Id: <patch-09.11-7b36f71879e-20220713T131601Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.932.g7b7031e73bc
 In-Reply-To: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
@@ -69,54 +69,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Call repo_clear() in ensure_core_worktree() to free the "struct
-repository". Fixes a leak that's been here since
-74d4731da1f (submodule--helper: replace connect-gitdir-workingtree by
-ensure-core-worktree, 2018-08-13).
+Make the update_data_release() function free the "recursive_prefix"
+and "displaypath" members when appropriate. For the former it could
+come from either "argv" or from our own allocation, so we need to keep
+track of a "to_free" sibling seperately.
+
+For "displaypath" it's always ours, so the "const char *" type was
+wrong to begin with, it should be a "char *" instead.
+
+For update_submodule() we'll free() these as we go along, it's called
+in a loop by update_submodules(), and we'll need to free the "last"
+one.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c        | 1 +
- t/t2403-worktree-move.sh           | 1 +
- t/t7412-submodule-absorbgitdirs.sh | 1 +
- 3 files changed, 3 insertions(+)
+ builtin/submodule--helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 0bac39880d2..d9fab5d77da 100644
+index 2b44f391f15..0bac39880d2 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2486,6 +2486,7 @@ static void ensure_core_worktree(const char *path)
- 		free(abs_path);
- 		strbuf_release(&sb);
- 	}
-+	repo_clear(&subrepo);
+@@ -1949,7 +1949,7 @@ static void submodule_update_clone_release(struct submodule_update_clone *suc)
+ 
+ struct update_data {
+ 	const char *prefix;
+-	const char *displaypath;
++	char *displaypath;
+ 	enum submodule_update_type update_default;
+ 	struct object_id suboid;
+ 	struct string_list references;
+@@ -1987,6 +1987,7 @@ struct update_data {
+ 
+ static void update_data_release(struct update_data *ud)
+ {
++	free(ud->displaypath);
+ 	module_list_release(&ud->list);
  }
  
- static const char *submodule_update_type_to_label(enum submodule_update_type type)
-diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
-index a4e1a178e0a..1168e9f9982 100755
---- a/t/t2403-worktree-move.sh
-+++ b/t/t2403-worktree-move.sh
-@@ -2,6 +2,7 @@
- 
- test_description='test git worktree move, remove, lock and unlock'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
-index 1cfa150768d..2859695c6d2 100755
---- a/t/t7412-submodule-absorbgitdirs.sh
-+++ b/t/t7412-submodule-absorbgitdirs.sh
-@@ -6,6 +6,7 @@ This test verifies that `git submodue absorbgitdirs` moves a submodules git
- directory into the superproject.
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup a real submodule' '
 -- 
 2.37.0.932.g7b7031e73bc
 
