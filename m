@@ -2,191 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1A69C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 15:42:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9111DC43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 16:02:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231678AbiGMPmz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 11:42:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47540 "EHLO
+        id S236663AbiGMQCS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 12:02:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229861AbiGMPmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 11:42:54 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD29F33377
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 08:42:52 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id l42so6687893wms.5
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 08:42:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=xEcIh2X2gzLSpz+MAI+HD1K1CNpMUBTVnTRdhCvMHZE=;
-        b=dkfHLiecB5GVRKf5b5LqCiYE5vEM33pOLTCiJDAW1KL5zXNHvtbvi30lX6r681VA+0
-         JNlsb1TkCUpRe97UsRMBNcf0t6zlpZ6OZq4UD05Tu5uqq2z9Q9Q/yGk/gQ+8G/aAgzTY
-         3alBi0TpqVRnvyWFl8U/F7jf+llh4fhx7J2leNk/IMzdInsZTCRfjGVk/BB3gX4u4e/f
-         PK88zbAxqe6KdUEUHjjiiZzvqMrIwItfjrgHEWdhJuyKJbHxqIiLh9mheuqq0+R57jKa
-         InGMcRkyWPNdMMk6DzuBmAOEuC0ZYVxO8zuL4vQnYRe1K7/7hHZ2Yir0omIF/SO06lNH
-         GnpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xEcIh2X2gzLSpz+MAI+HD1K1CNpMUBTVnTRdhCvMHZE=;
-        b=Eoz03ZgFgy/fbmlYba7QgfvvNHXrSp9ZSG8Lg05T7Jw/rKDsd5MTkeWUuB4htZ3Nwb
-         ibHQju/iMZO0xGrvwx6v19LFU/GphvFw9PspimtgCuoB+byyRuGtDA+lTX2CyrDU/k6/
-         uE/47tvBOA/TR/T1ewaLPvEPb4rBUE4/sqRHfQUTcPwMQllaOuUTuT0PxspjfpvpWX6F
-         /OYT10sNtjZuNwykId8Inra/7EY6Ydg/OpRtxZhiUJ69naZSS9R83MqiSiLGdVzomNee
-         pj5MG17zMHsxIom9foXHPQAwQAbKsV9RBW6WuBzKpvhF4igpZVgSM5uaQW3PbIND54hL
-         sbRA==
-X-Gm-Message-State: AJIora+BRTmU6ImteXm8Z5JTbPb/0rcZ92cFhWfBfGCn7y6+gaTrNbAd
-        Mw64sKBc7CxgTjomiUw5+kzMO6aKO8E=
-X-Google-Smtp-Source: AGRyM1ti9CGuDni3g67WzZ2kSgcLc3MBzJy2MNM0r2IiNCN/t4m7eKjuWXcmeFG10WHoKxzFL5rx1A==
-X-Received: by 2002:a05:600c:a198:b0:3a2:f88a:65c0 with SMTP id id24-20020a05600ca19800b003a2f88a65c0mr4282842wmb.25.1657726970958;
-        Wed, 13 Jul 2022 08:42:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c1-20020a5d4cc1000000b0021dac657337sm6282824wrt.75.2022.07.13.08.42.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jul 2022 08:42:50 -0700 (PDT)
-Message-Id: <pull.1287.git.1657726969774.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 13 Jul 2022 15:42:49 +0000
-Subject: [PATCH] mergetool(vimdiff): allow paths to contain spaces again
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S237123AbiGMQCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 12:02:02 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B2D12C64B
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 09:01:59 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 84C461AE50C;
+        Wed, 13 Jul 2022 12:01:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=u5LXwN693sSL
+        0N45j9qo7Fqi7KzyGsBmQXUa8lyhIw0=; b=sKRVll+40Cpjwj2bDwQCBp4gIS4p
+        bRMvmkB3j8yBN1+YQBvQsZYBD1Z0R/F3rFJoRp6lmLZoamAAVdH+HzXqsMBAo/qF
+        7DCgSN7yQ7FAnl5kauL3ppNaWlLodAJQbNxjtyyBzX+wCj9sdil7JveHLm0EVfHH
+        dRLZUnFSeosiZlc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7D2BA1AE50B;
+        Wed, 13 Jul 2022 12:01:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2C3E81AE50A;
+        Wed, 13 Jul 2022 12:01:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: js/bisect-in-c, was Re: What's cooking in git.git (Jul 2022,
+ #03; Mon, 11)
+References: <xmqqo7xufee7.fsf@gitster.g>
+        <s3726r9p-r96o-7793-0qrq-o54rs4npr972@tzk.qr>
+        <220713.865yk1456z.gmgdl@evledraar.gmail.com>
+Date:   Wed, 13 Jul 2022 09:01:52 -0700
+In-Reply-To: <220713.865yk1456z.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 13 Jul 2022 13:18:39 +0200")
+Message-ID: <xmqqtu7ldmrz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Fernando Ramos <greenfoo@u92.eu>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1D5061DE-02C5-11ED-A1CC-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-In 0041797449d (vimdiff: new implementation with layout support,
-2022-03-30), we introduced a completely new implementation of the
-`vimdiff` backend for `git mergetool`.
+> I'm not claiming that we always use 129 when we're fed bad options etc.=
+,
+> but rather that that's what parse_options() does, so at this point most
+> commands do that consistently.
+> =09
+> 	./git --blah >/dev/null 2>&1; echo $?
+> 	129
+> 	./git status --blah >/dev/null 2>&1; echo $?
+> 	129
+>
+> But yes, you can find exceptions still, e.g. try that with "git log" an=
+d
+> it'll return 128.
 
-In this implementation, we no longer call `vim` directly but we
-accumulate in the variable `FINAL_CMD` an arbitrary number of commands
-for `vim` to execute, which necessitates the use of `eval` to split the
-commands properly into multiple command-line arguments.
+Yup, that was my understanding as well.  We may have existing
+breakage that we shouldn't be actively imitating when we do not have
+to.
 
-That same `eval` command also needs to pass the paths to `vim`, and
-while it looks as if they are quoted correctly, that quoting only
-reaches the `eval` instruction and is lost after that, therefore paths
-that contain whitespace characters (or other characters that are
-interpreted by the POSIX shell) are handled incorrectly.
+> Which, I'm not saying should hold this series up, but just that having
+> reviewed it for a few iterations I'm not comfortable saying we haven't
+> missed something else, and given the nature of the past whack-a-mole
+> fixes it looks like you haven't really looked it either.
 
-This is a simple reproducer:
+"We haven't missed" is not something we can comfortably say, ever,
+aobut a series with any meaningful size.  I am not so worried about
+it, if it is your only worries.  Would it make it less likely to
+have introduced unintended bugs if we find a way to keep using
+parse-options?
 
-	git init -b main bam-merge-fail
-	cd bam-merge-fail
-	echo a>"a file.txt"
-	git add "a file.txt"
-	git commit -m "added 'a file.txt'"
-	echo b>"a file.txt"
-	git add "a file.txt"
-	git commit -m "diverged b 'a file.txt'"
-	git checkout -b c HEAD~
-	echo c>"a file.txt"
-	git add "a file.txt"
-	git commit -m "diverged c 'a file.txt'"
-	git checkout main
-	git merge c
-	git mergetool --tool=vimdiff
-
-With Git v2.37.0/v2.37.1, this will open 7 buffers, not four, and not
-display the correct contents at all.
-
-To fix this, let's not expand the variables containing the path
-parameters before passing them to the `eval` command, but let that
-command expand the variables instead.
-
-This fixes https://github.com/git-for-windows/git/issues/3945
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    mergetool(vimdiff): allow paths to contain spaces again
-    
-    In https://github.com/git-for-windows/git/issues/3945, it was reported
-    that as of v2.37.0, git mergetool --tool=vimdiff fails to handle paths
-    containing spaces. Let's fix that.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1287%2Fdscho%2Ffix-vimdiff-with-spaces-in-paths-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1287/dscho/fix-vimdiff-with-spaces-in-paths-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1287
-
- mergetools/vimdiff | 39 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 35 insertions(+), 4 deletions(-)
-
-diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 461a89b6f98..59e1e2f5ca5 100644
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -414,8 +414,8 @@ merge_cmd () {
- 
- 	if $base_present
- 	then
--		eval "$merge_tool_path" \
--			-f "$FINAL_CMD" "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
-+		eval '"$merge_tool_path"' \
-+			-f "$FINAL_CMD" '"$LOCAL"' '"$BASE"' '"$REMOTE"' '"$MERGED"'
- 	else
- 		# If there is no BASE (example: a merge conflict in a new file
- 		# with the same name created in both braches which didn't exist
-@@ -424,8 +424,8 @@ merge_cmd () {
- 		FINAL_CMD=$(echo "$FINAL_CMD" | \
- 			sed -e 's:2b:quit:g' -e 's:3b:2b:g' -e 's:4b:3b:g')
- 
--		eval "$merge_tool_path" \
--			-f "$FINAL_CMD" "$LOCAL" "$REMOTE" "$MERGED"
-+		eval '"$merge_tool_path"' \
-+			-f "$FINAL_CMD" '"$LOCAL"' '"$REMOTE"' '"$MERGED"'
- 	fi
- 
- 	ret="$?"
-@@ -614,6 +614,37 @@ run_unit_tests () {
- 		fi
- 	done
- 
-+	# verify that `merge_cmd` handles paths with spaces
-+	record_parameters () {
-+		>actual
-+		for arg
-+		do
-+			echo "$arg" >>actual
-+		done
-+	}
-+
-+	base_present=1
-+	LOCAL='lo cal'
-+	BASE='ba se'
-+	REMOTE="' '"
-+	MERGED='mer ged'
-+	merge_tool_path=record_parameters
-+
-+	merge_cmd vimdiff || at_least_one_ko=true
-+
-+	cat >expect <<-\EOF
-+	-f
-+	-c
-+	echo | split | vertical split | 1b | wincmd l | vertical split | quit | wincmd l | 2b | wincmd j | 3b | tabdo windo diffthis
-+	-c
-+	tabfirst
-+	lo cal
-+	' '
-+	mer ged
-+	EOF
-+
-+	diff -u expect actual || at_least_one_ko=true
-+
- 	if test "$at_least_one_ko" = "true"
- 	then
- 		return 255
-
-base-commit: 980145f7470e20826ca22d7343494712eda9c81d
--- 
-gitgitgadget
+> I'm referring to e.g. the thread ending at [3], where I pointed out tha=
+t
+> "git <subcommand> -h" was broken, you apparently tested one of the
+> subcommands and concluded it wasn't broken, but clearly not all of them=
+.
+>
+> Which, I'd be less concerned about if as pointed out in [1] we don't
+> have entirte bisect sub-commands that don't have any test coverage at
+> all, so whatever coverage we have probably has major gaps.
+>
+> 1. https://lore.kernel.org/git/220627.86mtdxhnwk.gmgdl@evledraar.gmail.=
+com/
+> 2. https://lore.kernel.org/git/220523.865ylwzgji.gmgdl@evledraar.gmail.=
+com/
+> 3. https://lore.kernel.org/git/220225.86ilt27uln.gmgdl@evledraar.gmail.=
+com/
