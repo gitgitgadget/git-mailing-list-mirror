@@ -2,349 +2,583 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A77C2C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 04:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C503BC43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 06:08:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231836AbiGMEU1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 00:20:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53180 "EHLO
+        id S234203AbiGMGIB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 02:08:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230335AbiGMEUZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 00:20:25 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE47BD9E30
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 21:20:24 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id t189so13049465oie.8
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 21:20:24 -0700 (PDT)
+        with ESMTP id S230249AbiGMGH7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 02:07:59 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44D8CB96B2
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 23:07:57 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id r127-20020a1c4485000000b003a2fb7c1274so134148wma.1
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 23:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=zKlczGZnEdTIehLxrSQrD7hERd+eIj7V06hkjpY872o=;
-        b=j/Os+QR1D99TEKj48uSNC6vSPoa7AsvZOYSkvIMQ5Ccq/abk032yDQynxG7rZDl87w
-         10s7XnEGchhUsUFEFb816Gbu9VGEmUegohdTxnhaa/FZS/G9IFDf9HddocsXOp2SHhke
-         a5estpdBlwmTNp49wyMnLYs/jUPqtKZ9BSk743yy3LKrja5wTJnE4/mVrQoYnVLSMIqa
-         8g/4qjnoQN66U7b45XsxNsMjHQglY56bo2+Vdp8oxu+GufePFo8STRGF7Q5AAQx25u/z
-         +92OyUFBGEd5IKKPDctImsSa2DGD8/we7TmqCF1S6Oouxa8a/51BJwv5c9jcXZBRUpxY
-         84Hw==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sRM8udGSxb+U7fp++jcW/CueAN0Be58lzWPuMoxjWoY=;
+        b=Wscm0PWrKPv0pbmVPNXzIAyK87Wpq+3wFGLZiMCoRXFZqd33orPKQcPSstszELInys
+         dV9CoiVZqNFaZ9IIHpIaZ1UXTXwBModykM7mg+gYru+C+qM1q5pubELGTlbsGnzWRu9d
+         Ww9LPXa/eghkOtHfb8Po7uuO8XOdtbxxZJMbDQurKcLI0bsVevcdIVqm5xcPmPmaVl4M
+         lidvbriaBgl22CFirWTMRcnLR8tZRMWEdWAwtyUAbhLAz8nfmQlySbd8eaARtMHycJea
+         hbMACJ3BvYDf6Nox64vR+2RQmJ1SRriKSnHvP7FpZuELq844GS5EaKzOQOFsQ8qbKOoa
+         vM+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zKlczGZnEdTIehLxrSQrD7hERd+eIj7V06hkjpY872o=;
-        b=smc+KJFkYnzS/2XhSYo2QAxRVCtj2Gu7+TEQZNRWbhGnaZZH731zwx9VuSgh1GGHh2
-         y+JYgfxc4e+skktWf/Y7mT2iXdVqDbT/eqbXGln0shwt9h38pGd4+EsEE5w4S9huvHws
-         foF2IA8hRE+qwLkVfwbLEkgI72bvDFjrOOcmHXJP/U4ZCQ6PoOJbVfX2grUfQBuNee4+
-         vPS+wGTMa85qU2a8fuxjeA3KoODCypuK0SMXxbzJ8RKLAXZDSMa96MDepn8wlNqiKkjt
-         sD5NaOK2QzVxtGmvpwX8b4eDSU14qpp98EAtUJdkVRVQYDNBcD3qlwiQCZtEIhZiq7Yp
-         l4xQ==
-X-Gm-Message-State: AJIora+iLuvijZT3g8pTWAINVCgQRvgXykXb8NBMJIS/MCXwUOUzSkHm
-        i0OLMRlsjuLnvSemZTd0YXIYBs24HtrNnA==
-X-Google-Smtp-Source: AGRyM1t7u2YO+7HwRGp2VDSIl4Mgb71BYVygSo72tZYXPl+7fNZKDm/r9kwt7XrrHzpa8T0UonmUog==
-X-Received: by 2002:a05:6808:90c:b0:33a:2219:e197 with SMTP id w12-20020a056808090c00b0033a2219e197mr828844oih.93.1657686023323;
-        Tue, 12 Jul 2022 21:20:23 -0700 (PDT)
-Received: from mango.meuintelbras.local ([177.32.109.17])
-        by smtp.gmail.com with ESMTPSA id eh40-20020a056870f5a800b000f342d078fasm5649062oab.52.2022.07.12.21.20.21
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=sRM8udGSxb+U7fp++jcW/CueAN0Be58lzWPuMoxjWoY=;
+        b=R2PN4ah/TYUSbF4uy6nOT4PzvT/W3+02Atkns3FWBC4R2mSYwhViGFQJTW/9ETiXvF
+         Jx69oKPwfHz5FH/tnPTgEnDo1rKBtCJewTf3hOzFq4+Rhg27gLNRCCwWSMtM77PWIZ1o
+         lxG0z9JFH06vlbk5f3s9+zIojWIpDMm3UObZYphZRDQPaGqUiy8KCVEkvJ7bw6p/mczc
+         gJSd7S4043kWB9h/wA2WfkeIyhSCOG9nk45sa54JMhdTa7qVtlS2bKCErvz5IK3ApYm1
+         7Yo5Uwf3NE9JukFCtSMU8T/cJ1iYyV2v94mP1Md2T+kCDVPdAHaY8kPWK7vdfvlGzSFr
+         Lm8A==
+X-Gm-Message-State: AJIora/F0k3myt5QJIvx9n9jzR/hpQd3kmPwBCW5DtudmrYX7Uq5M/nC
+        ITt9GmQpLIgNSGjfYMXDFATfdkYrtwI=
+X-Google-Smtp-Source: AGRyM1vqdWxCgw9qT0PAB6mx0LSZLjHSoZ++HdT+e0jWLATfjfEer8oZmizs0xjvGtultjIxcqbL2Q==
+X-Received: by 2002:a05:600c:3788:b0:3a2:f2a5:4e61 with SMTP id o8-20020a05600c378800b003a2f2a54e61mr4103788wmr.196.1657692475078;
+        Tue, 12 Jul 2022 23:07:55 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j21-20020a05600c405500b0039c811077d3sm1036224wmm.22.2022.07.12.23.07.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 21:20:22 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Subject: [PATCH 3/3] checkout: fix two bugs on the final count of updated entries
-Date:   Wed, 13 Jul 2022 01:19:57 -0300
-Message-Id: <5e9452be66d75e94ca595228e568dce133e388ab.1657685948.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.37.0
-In-Reply-To: <cover.1657685948.git.matheus.bernardino@usp.br>
-References: <cover.1657685948.git.matheus.bernardino@usp.br>
-MIME-Version: 1.0
+        Tue, 12 Jul 2022 23:07:54 -0700 (PDT)
+Message-Id: <pull.1262.v7.git.1657692472994.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1262.v6.git.1657558435532.gitgitgadget@gmail.com>
+References: <pull.1262.v6.git.1657558435532.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 13 Jul 2022 06:07:52 +0000
+Subject: [PATCH v7] ls-files: introduce "--format" option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At the end of `git checkout <pathspec>`, we get a message informing how
-many entries were updated in the working tree. However, this number can
-be inaccurate for two reasons:
+From: ZheNing Hu <adlternative@gmail.com>
 
-1) Delayed entries currently get counted twice.
-2) Failed entries are included in the count.
+Add a new option "--format" that outputs index entries
+informations in a custom format, taking inspiration
+from the option with the same name in the `git ls-tree`
+command.
 
-The first problem happens because the counter is first incremented
-before inserting the entry in the delayed checkout queue, and once again
-when finish_delayed_checkout() calls checkout_entry(). And the second
-happens because the counter is incremented too early in
-checkout_entry(), before the entry was in fact checked out. Fix that by
-moving the count increment further down in the call stack and removing
-the duplicate increment on delayed entries. Note that we have to keep
-a per-entry reference for the counter (both on parallel checkout and
-delayed checkout) because not all entries are always accumulated at the
-same counter. See checkout_worktree(), at builtin/checkout.c for an
-example.
+"--format" cannot used with "-s", "-o", "-k", "-t",
+" --resolve-undo","--deduplicate" and "--eol".
 
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- builtin/checkout.c                  |  2 +-
- convert.h                           |  6 ++++-
- entry.c                             | 34 +++++++++++++++++------------
- entry.h                             |  3 +--
- parallel-checkout.c                 | 10 ++++++---
- parallel-checkout.h                 |  4 +++-
- t/t0021-conversion.sh               |  2 +-
- t/t2080-parallel-checkout-basics.sh |  2 +-
- unpack-trees.c                      |  2 +-
- 9 files changed, 40 insertions(+), 25 deletions(-)
+    ls-files: introduce "--format" options
+    
+    v6->v7:
+    
+     1. Change documents helped by Junio.
+     2. Fix bug of parsing format.
+     3. Add more test cases for other mode index entries (120000 and
+        160000).
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2eefda81d8..df3f1663d7 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -417,7 +417,7 @@ static int checkout_worktree(const struct checkout_opts *opts,
- 	mem_pool_discard(&ce_mem_pool, should_validate_cache_entries());
- 	remove_marked_cache_entries(&the_index, 1);
- 	remove_scheduled_dirs();
--	errs |= finish_delayed_checkout(&state, &nr_checkouts, opts->show_progress);
-+	errs |= finish_delayed_checkout(&state, opts->show_progress);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1262%2Fadlternative%2Fzh%2Fls-file-format-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1262/adlternative/zh/ls-file-format-v7
+Pull-Request: https://github.com/gitgitgadget/git/pull/1262
+
+Range-diff vs v6:
+
+ 1:  57ed2c15728 ! 1:  9ca22edba94 ls-files: introduce "--format" option
+     @@ Metadata
+       ## Commit message ##
+          ls-files: introduce "--format" option
+      
+     -    Add a new option --format that output index enties
+     -    informations with custom format, taking inspiration
+     +    Add a new option "--format" that outputs index entries
+     +    informations in a custom format, taking inspiration
+          from the option with the same name in the `git ls-tree`
+          command.
+      
+     -    --format cannot used with -s, -o, -k, -t, --resolve-undo,
+     -    --deduplicate and --eol.
+     +    "--format" cannot used with "-s", "-o", "-k", "-t",
+     +    " --resolve-undo","--deduplicate" and "--eol".
+      
+          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+      
+     @@ Documentation/git-ls-files.txt: quoted as explained for the configuration variab
+      +
+      +FIELD NAMES
+      +-----------
+     -+Various values from structured fields can be used to interpolate
+     -+into the resulting output. For each outputting line, the following
+     -+names can be used:
+     ++The way each path is shown can be customized by using the
+     ++`--format=<format>` option, where the %(fieldname) in the
+     ++<format> string for various aspects of the index entry are
+     ++interpolated.  The following "fieldname" are understood:
+      +
+      +objectmode::
+      +	The mode of the file which is recorded in the index.
+     @@ builtin/ls-files.c: static void write_name(const char *name)
+      +static void write_name_to_buf(struct strbuf *sb, const char *name)
+      +{
+      +	const char *rel = relative_path(name, prefix_len ? prefix : NULL, sb);
+     ++
+      +	if (line_terminator)
+      +		quote_c_style(rel, sb, NULL, 0);
+      +	else
+     -+		strbuf_add(sb, rel, strlen(rel));
+     ++		strbuf_addstr(sb, rel);
+      +}
+      +
+       static const char *get_tag(const struct cache_entry *ce, const char *tag)
+     @@ builtin/ls-files.c: static void show_submodule(struct repository *superproject,
+      +};
+      +
+      +static size_t expand_show_index(struct strbuf *sb, const char *start,
+     -+			       void *context)
+     ++				void *context)
+      +{
+      +	struct show_index_data *data = context;
+      +	const char *end;
+     @@ builtin/ls-files.c: static void show_submodule(struct repository *superproject,
+      +		strbuf_add_unique_abbrev(sb, &data->ce->oid, abbrev);
+      +	else if (skip_prefix(start, "(stage)", &p))
+      +		strbuf_addf(sb, "%d", ce_stage(data->ce));
+     -+	else if (skip_prefix(start, "(eolinfo:index)", &p) &&
+     -+		 S_ISREG(data->ce->ce_mode))
+     -+		strbuf_addstr(sb, get_cached_convert_stats_ascii(data->istate,
+     -+								 data->ce->name));
+     -+	else if (skip_prefix(start, "(eolinfo:worktree)", &p) &&
+     -+		 !lstat(data->pathname, &st) && S_ISREG(st.st_mode))
+     -+		strbuf_addstr(sb, get_wt_convert_stats_ascii(data->pathname));
+     ++	else if (skip_prefix(start, "(eolinfo:index)", &p))
+     ++		strbuf_addstr(sb, S_ISREG(data->ce->ce_mode) ?
+     ++			      get_cached_convert_stats_ascii(data->istate,
+     ++			      data->ce->name) : "");
+     ++	else if (skip_prefix(start, "(eolinfo:worktree)", &p))
+     ++		strbuf_addstr(sb, !lstat(data->pathname, &st) &&
+     ++			      S_ISREG(st.st_mode) ?
+     ++			      get_wt_convert_stats_ascii(data->pathname) : "");
+      +	else if (skip_prefix(start, "(eolattr)", &p))
+      +		strbuf_addstr(sb, get_convert_attr_ascii(data->istate,
+      +			      data->pathname));
+     @@ t/t3013-ls-files-format.sh (new)
+      +done
+      +
+      +test_expect_success 'setup' '
+     -+	echo o1 >o1 &&
+     -+	echo o2 >o2 &&
+     -+	git add o1 o2 &&
+     -+	git add --chmod +x o1 &&
+     ++	printf "LINEONE\nLINETWO\nLINETHREE\n" >o1.txt &&
+     ++	printf "LINEONE\r\nLINETWO\r\nLINETHREE\r\n" >o2.txt &&
+     ++	printf "LINEONE\r\nLINETWO\nLINETHREE\n" >o3.txt &&
+     ++	ln -s o3.txt o4.txt &&
+     ++	git add "*.txt" &&
+     ++	git add --chmod +x o1.txt &&
+     ++	git update-index --add --cacheinfo 160000 $(git hash-object o1.txt) o5.txt &&
+      +	git commit -m base
+      +'
+      +
+     -+test_expect_success 'git ls-files --format objectmode' '
+     -+	cat >expect <<-\EOF &&
+     -+	100755
+     -+	100644
+     -+	EOF
+     ++test_expect_success 'git ls-files --format objectmode v.s. -s' '
+     ++	git ls-files -s | awk "{print \$1}" >expect &&
+      +	git ls-files --format="%(objectmode)" >actual &&
+      +	test_cmp expect actual
+      +'
+      +
+     -+test_expect_success 'git ls-files --format objectname' '
+     -+	oid1=$(git hash-object o1) &&
+     -+	oid2=$(git hash-object o2) &&
+     -+	cat >expect <<-EOF &&
+     -+	$oid1
+     -+	$oid2
+     -+	EOF
+     ++test_expect_success 'git ls-files --format objectname v.s. -s' '
+     ++	git ls-files -s | awk "{print \$2}" >expect &&
+      +	git ls-files --format="%(objectname)" >actual &&
+      +	test_cmp expect actual
+      +'
+      +
+     -+HT='	'
+     -+WS='    '
+      +test_expect_success 'git ls-files --format v.s. --eol' '
+     -+	git ls-files --eol >expect 2>err &&
+     ++	git ls-files --eol >tmp &&
+     ++	sed -e "s/	/ /g" -e "s/  */ /g" tmp >expect 2>err &&
+      +	test_must_be_empty err &&
+     -+	git ls-files --format="i/%(eolinfo:index)${WS}w/%(eolinfo:worktree)${WS}attr/${WS}${WS}${WS}${WS} ${HT}%(path)" >actual 2>err &&
+     ++	git ls-files --format="i/%(eolinfo:index) w/%(eolinfo:worktree) attr/%(eolattr) %(path)" >actual 2>err &&
+      +	test_must_be_empty err &&
+      +	test_cmp expect actual
+      +'
+      +
+     -+test_expect_success 'git ls-files --format path' '
+     -+	cat >expect <<-\EOF &&
+     -+	o1
+     -+	o2
+     -+	EOF
+     ++test_expect_success 'git ls-files --format path v.s. -s' '
+     ++	git ls-files -s | awk "{print \$4}" >expect &&
+      +	git ls-files --format="%(path)" >actual &&
+      +	test_cmp expect actual
+      +'
+      +
+      +test_expect_success 'git ls-files --format with -m' '
+     -+	echo change >o1 &&
+     ++	echo change >o1.txt &&
+      +	cat >expect <<-\EOF &&
+     -+	o1
+     ++	o1.txt
+     ++	o5.txt
+      +	EOF
+      +	git ls-files --format="%(path)" -m >actual &&
+      +	test_cmp expect actual
+      +'
+      +
+      +test_expect_success 'git ls-files --format with -d' '
+     -+	echo o3 >o3 &&
+     -+	git add o3 &&
+     -+	rm o3 &&
+     ++	echo o6 >o6.txt &&
+     ++	git add o6.txt &&
+     ++	rm o6.txt &&
+      +	cat >expect <<-\EOF &&
+     -+	o3
+     ++	o5.txt
+     ++	o6.txt
+      +	EOF
+      +	git ls-files --format="%(path)" -d >actual &&
+      +	test_cmp expect actual
+
+
+ Documentation/git-ls-files.txt | 39 +++++++++++++-
+ builtin/ls-files.c             | 95 ++++++++++++++++++++++++++++++++++
+ t/t3013-ls-files-format.sh     | 87 +++++++++++++++++++++++++++++++
+ 3 files changed, 220 insertions(+), 1 deletion(-)
+ create mode 100755 t/t3013-ls-files-format.sh
+
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 0dabf3f0ddc..d7986419c25 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -20,7 +20,7 @@ SYNOPSIS
+ 		[--exclude-standard]
+ 		[--error-unmatch] [--with-tree=<tree-ish>]
+ 		[--full-name] [--recurse-submodules]
+-		[--abbrev[=<n>]] [--] [<file>...]
++		[--abbrev[=<n>]] [--format=<format>] [--] [<file>...]
  
- 	if (opts->count_checkout_paths) {
- 		if (nr_unmerged)
-diff --git a/convert.h b/convert.h
-index 5ee1c32205..0a6e4086b8 100644
---- a/convert.h
-+++ b/convert.h
-@@ -53,7 +53,11 @@ struct delayed_checkout {
- 	enum ce_delay_state state;
- 	/* List of filter drivers that signaled delayed blobs. */
- 	struct string_list filters;
--	/* List of delayed blobs identified by their path. */
-+	/*
-+	 * List of delayed blobs identified by their path. The `util` member
-+	 * holds a counter pointer which must be incremented when/if the
-+	 * associated blob gets checked out.
-+	 */
- 	struct string_list paths;
- };
+ DESCRIPTION
+ -----------
+@@ -192,6 +192,13 @@ followed by the  ("attr/<eolattr>").
+ 	to the contained files. Sparse directories will be shown with a
+ 	trailing slash, such as "x/" for a sparse directory "x".
  
-diff --git a/entry.c b/entry.c
-index 1c9df62b30..616e4f073c 100644
---- a/entry.c
-+++ b/entry.c
-@@ -157,12 +157,11 @@ static int remove_available_paths(struct string_list_item *item, void *cb_data)
++--format=<format>::
++	A string that interpolates `%(fieldname)` from the result being shown.
++	It also interpolates `%%` to `%`, and `%xx` where `xx` are hex digits
++	interpolates to character with hex code `xx`; for example `%00`
++	interpolates to `\0` (NUL), `%09` to `\t` (TAB) and %0a to `\n` (LF).
++	--format cannot be combined with `-s`, `-o`, `-k`, `-t`, `--resolve-undo`
++	and `--eol`.
+ \--::
+ 	Do not interpret any more arguments as options.
  
- 	available = string_list_lookup(available_paths, item->string);
- 	if (available)
--		available->util = (void *)item->string;
-+		available->util = item->util;
- 	return !available;
+@@ -223,6 +230,36 @@ quoted as explained for the configuration variable `core.quotePath`
+ (see linkgit:git-config[1]).  Using `-z` the filename is output
+ verbatim and the line is terminated by a NUL byte.
+ 
++It is possible to print in a custom format by using the `--format`
++option, which is able to interpolate different fields using
++a `%(fieldname)` notation. For example, if you only care about the
++"objectname" and "path" fields, you can execute with a specific
++"--format" like
++
++	git ls-files --format='%(objectname) %(path)'
++
++FIELD NAMES
++-----------
++The way each path is shown can be customized by using the
++`--format=<format>` option, where the %(fieldname) in the
++<format> string for various aspects of the index entry are
++interpolated.  The following "fieldname" are understood:
++
++objectmode::
++	The mode of the file which is recorded in the index.
++objectname::
++	The name of the file which is recorded in the index.
++stage::
++	The stage of the file which is recorded in the index.
++eolinfo:index::
++eolinfo:worktree::
++	The <eolinfo> (see the description of the `--eol` option) of
++	the contents in the index or in the worktree for the path.
++eolattr::
++	The <eolattr> (see the description of the `--eol` option)
++	that applies to the path.
++path::
++	The pathname of the file which is recorded in the index.
+ 
+ EXCLUDE PATTERNS
+ ----------------
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index e791b65e7e9..6f3ebcaaff7 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -11,6 +11,7 @@
+ #include "quote.h"
+ #include "dir.h"
+ #include "builtin.h"
++#include "strbuf.h"
+ #include "tree.h"
+ #include "cache-tree.h"
+ #include "parse-options.h"
+@@ -48,6 +49,7 @@ static char *ps_matched;
+ static const char *with_tree;
+ static int exc_given;
+ static int exclude_args;
++static const char *format;
+ 
+ static const char *tag_cached = "";
+ static const char *tag_unmerged = "";
+@@ -85,6 +87,16 @@ static void write_name(const char *name)
+ 				   stdout, line_terminator);
  }
  
--int finish_delayed_checkout(struct checkout *state, int *nr_checkouts,
--			    int show_progress)
-+int finish_delayed_checkout(struct checkout *state, int show_progress)
++static void write_name_to_buf(struct strbuf *sb, const char *name)
++{
++	const char *rel = relative_path(name, prefix_len ? prefix : NULL, sb);
++
++	if (line_terminator)
++		quote_c_style(rel, sb, NULL, 0);
++	else
++		strbuf_addstr(sb, rel);
++}
++
+ static const char *get_tag(const struct cache_entry *ce, const char *tag)
  {
- 	int errs = 0;
- 	unsigned processed_paths = 0;
-@@ -227,7 +226,7 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts,
- 						       strlen(path->string), 0);
- 				if (ce) {
- 					display_progress(progress, ++processed_paths);
--					errs |= checkout_entry(ce, state, NULL, nr_checkouts);
-+					errs |= checkout_entry(ce, state, NULL, path->util);
- 					filtered_bytes += ce->ce_stat_data.sd_size;
- 					display_throughput(progress, filtered_bytes);
- 				} else
-@@ -266,7 +265,8 @@ void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
- 
- /* Note: ca is used (and required) iff the entry refers to a regular file. */
- static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca,
--		       const struct checkout *state, int to_tempfile)
-+		       const struct checkout *state, int to_tempfile,
-+		       int *nr_checkouts)
- {
- 	unsigned int ce_mode_s_ifmt = ce->ce_mode & S_IFMT;
- 	struct delayed_checkout *dco = state->delayed_checkout;
-@@ -279,6 +279,7 @@ static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca
- 	struct stat st;
- 	const struct submodule *sub;
- 	struct checkout_metadata meta;
-+	static int scratch_nr_checkouts;
- 
- 	clone_checkout_metadata(&meta, &state->meta, &ce->oid);
- 
-@@ -333,9 +334,15 @@ static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca
- 			ret = async_convert_to_working_tree_ca(ca, ce->name,
- 							       new_blob, size,
- 							       &buf, &meta, dco);
--			if (ret && string_list_has_string(&dco->paths, ce->name)) {
--				free(new_blob);
--				goto delayed;
-+			if (ret) {
-+				struct string_list_item *item =
-+					string_list_lookup(&dco->paths, ce->name);
-+				if (item) {
-+					item->util = nr_checkouts ? nr_checkouts
-+							: &scratch_nr_checkouts;
-+					free(new_blob);
-+					goto delayed;
-+				}
- 			}
- 		} else {
- 			ret = convert_to_working_tree_ca(ca, ce->name, new_blob,
-@@ -392,6 +399,8 @@ static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca
- 					   ce->name);
- 		update_ce_after_write(state, ce , &st);
- 	}
-+	if (nr_checkouts)
-+		(*nr_checkouts)++;
- delayed:
- 	return 0;
- }
-@@ -476,7 +485,7 @@ int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
- 			convert_attrs(state->istate, &ca_buf, ce->name);
- 			ca = &ca_buf;
- 		}
--		return write_entry(ce, topath, ca, state, 1);
-+		return write_entry(ce, topath, ca, state, 1, nr_checkouts);
- 	}
- 
- 	strbuf_reset(&path);
-@@ -540,18 +549,15 @@ int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
- 
- 	create_directories(path.buf, path.len, state);
- 
--	if (nr_checkouts)
--		(*nr_checkouts)++;
--
- 	if (S_ISREG(ce->ce_mode) && !ca) {
- 		convert_attrs(state->istate, &ca_buf, ce->name);
- 		ca = &ca_buf;
- 	}
- 
--	if (!enqueue_checkout(ce, ca))
-+	if (!enqueue_checkout(ce, ca, nr_checkouts))
- 		return 0;
- 
--	return write_entry(ce, path.buf, ca, state, 0);
-+	return write_entry(ce, path.buf, ca, state, 0, nr_checkouts);
+ 	static char alttag[4];
+@@ -222,6 +234,73 @@ static void show_submodule(struct repository *superproject,
+ 	repo_clear(&subrepo);
  }
  
- void unlink_entry(const struct cache_entry *ce)
-diff --git a/entry.h b/entry.h
-index 252fd24c2e..9be4659881 100644
---- a/entry.h
-+++ b/entry.h
-@@ -43,8 +43,7 @@ static inline int checkout_entry(struct cache_entry *ce,
- }
++struct show_index_data {
++	const char *pathname;
++	struct index_state *istate;
++	const struct cache_entry *ce;
++};
++
++static size_t expand_show_index(struct strbuf *sb, const char *start,
++				void *context)
++{
++	struct show_index_data *data = context;
++	const char *end;
++	const char *p;
++	size_t len = strbuf_expand_literal_cb(sb, start, NULL);
++	struct stat st;
++
++	if (len)
++		return len;
++	if (*start != '(')
++		die(_("bad ls-files format: element '%s' "
++		      "does not start with '('"), start);
++
++	end = strchr(start + 1, ')');
++	if (!end)
++		die(_("bad ls-files format: element '%s'"
++		      "does not end in ')'"), start);
++
++	len = end - start + 1;
++	if (skip_prefix(start, "(objectmode)", &p))
++		strbuf_addf(sb, "%06o", data->ce->ce_mode);
++	else if (skip_prefix(start, "(objectname)", &p))
++		strbuf_add_unique_abbrev(sb, &data->ce->oid, abbrev);
++	else if (skip_prefix(start, "(stage)", &p))
++		strbuf_addf(sb, "%d", ce_stage(data->ce));
++	else if (skip_prefix(start, "(eolinfo:index)", &p))
++		strbuf_addstr(sb, S_ISREG(data->ce->ce_mode) ?
++			      get_cached_convert_stats_ascii(data->istate,
++			      data->ce->name) : "");
++	else if (skip_prefix(start, "(eolinfo:worktree)", &p))
++		strbuf_addstr(sb, !lstat(data->pathname, &st) &&
++			      S_ISREG(st.st_mode) ?
++			      get_wt_convert_stats_ascii(data->pathname) : "");
++	else if (skip_prefix(start, "(eolattr)", &p))
++		strbuf_addstr(sb, get_convert_attr_ascii(data->istate,
++			      data->pathname));
++	else if (skip_prefix(start, "(path)", &p))
++		write_name_to_buf(sb, data->pathname);
++	else
++		die(_("bad ls-files format: %%%.*s"), (int)len, start);
++
++	return len;
++}
++
++static void show_ce_fmt(struct repository *repo, const struct cache_entry *ce,
++			const char *format, const char *fullname) {
++	struct show_index_data data = {
++		.pathname = fullname,
++		.istate = repo->index,
++		.ce = ce,
++	};
++	struct strbuf sb = STRBUF_INIT;
++
++	strbuf_expand(&sb, format, expand_show_index, &data);
++	strbuf_addch(&sb, line_terminator);
++	fwrite(sb.buf, sb.len, 1, stdout);
++	strbuf_release(&sb);
++}
++
+ static void show_ce(struct repository *repo, struct dir_struct *dir,
+ 		    const struct cache_entry *ce, const char *fullname,
+ 		    const char *tag)
+@@ -236,6 +315,12 @@ static void show_ce(struct repository *repo, struct dir_struct *dir,
+ 				  max_prefix_len, ps_matched,
+ 				  S_ISDIR(ce->ce_mode) ||
+ 				  S_ISGITLINK(ce->ce_mode))) {
++		if (format) {
++			show_ce_fmt(repo, ce, format, fullname);
++			print_debug(ce);
++			return;
++		}
++
+ 		tag = get_tag(ce, tag);
  
- void enable_delayed_checkout(struct checkout *state);
--int finish_delayed_checkout(struct checkout *state, int *nr_checkouts,
--			    int show_progress);
-+int finish_delayed_checkout(struct checkout *state, int show_progress);
- 
- /*
-  * Unlink the last component and schedule the leading directories for
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 31a3d0ee1b..4f6819f240 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -143,7 +143,8 @@ static int is_eligible_for_parallel_checkout(const struct cache_entry *ce,
+ 		if (!show_stage) {
+@@ -675,6 +760,9 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 			 N_("suppress duplicate entries")),
+ 		OPT_BOOL(0, "sparse", &show_sparse_dirs,
+ 			 N_("show sparse directories in the presence of a sparse index")),
++		OPT_STRING_F(0, "format", &format, N_("format"),
++			     N_("format to use for the output"),
++			     PARSE_OPT_NONEG),
+ 		OPT_END()
+ 	};
+ 	int ret = 0;
+@@ -699,6 +787,13 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	for (i = 0; i < exclude_list.nr; i++) {
+ 		add_pattern(exclude_list.items[i].string, "", 0, pl, --exclude_args);
  	}
- }
- 
--int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca)
-+int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca,
-+		     int *checkout_counter)
- {
- 	struct parallel_checkout_item *pc_item;
- 
-@@ -159,6 +160,7 @@ int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca)
- 	memcpy(&pc_item->ca, ca, sizeof(pc_item->ca));
- 	pc_item->status = PC_ITEM_PENDING;
- 	pc_item->id = parallel_checkout.nr;
-+	pc_item->checkout_counter = checkout_counter;
- 	parallel_checkout.nr++;
- 
- 	return 0;
-@@ -200,7 +202,8 @@ static int handle_results(struct checkout *state)
- 
- 		switch(pc_item->status) {
- 		case PC_ITEM_WRITTEN:
--			/* Already handled */
-+			if (pc_item->checkout_counter)
-+				(*pc_item->checkout_counter)++;
- 			break;
- 		case PC_ITEM_COLLIDED:
- 			/*
-@@ -225,7 +228,8 @@ static int handle_results(struct checkout *state)
- 			 * add any extra overhead.
- 			 */
- 			ret |= checkout_entry_ca(pc_item->ce, &pc_item->ca,
--						 state, NULL, NULL);
-+						 state, NULL,
-+						 pc_item->checkout_counter);
- 			advance_progress_meter();
- 			break;
- 		case PC_ITEM_PENDING:
-diff --git a/parallel-checkout.h b/parallel-checkout.h
-index 80f539bcb7..c575284005 100644
---- a/parallel-checkout.h
-+++ b/parallel-checkout.h
-@@ -31,7 +31,8 @@ void init_parallel_checkout(void);
-  * entry is not eligible for parallel checkout. Otherwise, enqueue the entry
-  * for later write and return 0.
-  */
--int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca);
-+int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca,
-+		     int *checkout_counter);
- size_t pc_queue_size(void);
- 
- /*
-@@ -68,6 +69,7 @@ struct parallel_checkout_item {
- 	struct cache_entry *ce;
- 	struct conv_attrs ca;
- 	size_t id; /* position in parallel_checkout.items[] of main process */
-+	int *checkout_counter;
- 
- 	/* Output fields, sent from workers. */
- 	enum pc_item_status status;
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 00df9b5c18..1c840348bd 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -1132,7 +1132,7 @@ do
- 	'
- done
- 
--test_expect_failure PERL 'delayed checkout correctly reports the number of updated entries' '
-+test_expect_success PERL 'delayed checkout correctly reports the number of updated entries' '
- 	rm -rf repo &&
- 	git init repo &&
- 	(
-diff --git a/t/t2080-parallel-checkout-basics.sh b/t/t2080-parallel-checkout-basics.sh
-index 6fd7e4c4b2..950361d767 100755
---- a/t/t2080-parallel-checkout-basics.sh
-+++ b/t/t2080-parallel-checkout-basics.sh
-@@ -230,7 +230,7 @@ test_expect_success SYMLINKS 'parallel checkout checks for symlinks in leading d
- # check the final report including sequential, parallel, and delayed entries
- # all at the same time. So we must have finer control of the parallel checkout
- # variables.
--test_expect_failure PERL '"git checkout ." report should not include failed entries' '
-+test_expect_success PERL '"git checkout ." report should not include failed entries' '
- 	write_script rot13-filter.pl "$PERL_PATH" \
- 		<"$TEST_DIRECTORY"/t0021/rot13-filter.pl &&
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index d561ca01ed..8a454e03bf 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -487,7 +487,7 @@ static int check_updates(struct unpack_trees_options *o,
- 		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold,
- 					      progress, &cnt);
- 	stop_progress(&progress);
--	errs |= finish_delayed_checkout(&state, NULL, o->verbose_update);
-+	errs |= finish_delayed_checkout(&state, o->verbose_update);
- 	git_attr_set_direction(GIT_ATTR_CHECKIN);
- 
- 	if (o->clone)
++
++	if (format && (show_stage || show_others || show_killed ||
++		show_resolve_undo || skipping_duplicates || show_eol || show_tag))
++			usage_msg_opt("--format cannot used with -s, -o, -k, -t"
++				      "--resolve-undo, --deduplicate, --eol",
++				      ls_files_usage, builtin_ls_files_options);
++
+ 	if (show_tag || show_valid_bit || show_fsmonitor_bit) {
+ 		tag_cached = "H ";
+ 		tag_unmerged = "M ";
+diff --git a/t/t3013-ls-files-format.sh b/t/t3013-ls-files-format.sh
+new file mode 100755
+index 00000000000..e62bce70f3b
+--- /dev/null
++++ b/t/t3013-ls-files-format.sh
+@@ -0,0 +1,87 @@
++#!/bin/sh
++
++test_description='git ls-files --format test'
++
++TEST_PASSES_SANITIZE_LEAK=true
++. ./test-lib.sh
++
++for flag in -s -o -k -t --resolve-undo --deduplicate --eol
++do
++	test_expect_success "usage: --format is incompatible with $flag" '
++		test_expect_code 129 git ls-files --format="%(objectname)" $flag
++	'
++done
++
++test_expect_success 'setup' '
++	printf "LINEONE\nLINETWO\nLINETHREE\n" >o1.txt &&
++	printf "LINEONE\r\nLINETWO\r\nLINETHREE\r\n" >o2.txt &&
++	printf "LINEONE\r\nLINETWO\nLINETHREE\n" >o3.txt &&
++	ln -s o3.txt o4.txt &&
++	git add "*.txt" &&
++	git add --chmod +x o1.txt &&
++	git update-index --add --cacheinfo 160000 $(git hash-object o1.txt) o5.txt &&
++	git commit -m base
++'
++
++test_expect_success 'git ls-files --format objectmode v.s. -s' '
++	git ls-files -s | awk "{print \$1}" >expect &&
++	git ls-files --format="%(objectmode)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format objectname v.s. -s' '
++	git ls-files -s | awk "{print \$2}" >expect &&
++	git ls-files --format="%(objectname)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format v.s. --eol' '
++	git ls-files --eol >tmp &&
++	sed -e "s/	/ /g" -e "s/  */ /g" tmp >expect 2>err &&
++	test_must_be_empty err &&
++	git ls-files --format="i/%(eolinfo:index) w/%(eolinfo:worktree) attr/%(eolattr) %(path)" >actual 2>err &&
++	test_must_be_empty err &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format path v.s. -s' '
++	git ls-files -s | awk "{print \$4}" >expect &&
++	git ls-files --format="%(path)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format with -m' '
++	echo change >o1.txt &&
++	cat >expect <<-\EOF &&
++	o1.txt
++	o5.txt
++	EOF
++	git ls-files --format="%(path)" -m >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format with -d' '
++	echo o6 >o6.txt &&
++	git add o6.txt &&
++	rm o6.txt &&
++	cat >expect <<-\EOF &&
++	o5.txt
++	o6.txt
++	EOF
++	git ls-files --format="%(path)" -d >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format imitate --stage' '
++	git ls-files --stage >expect &&
++	git ls-files --format="%(objectmode) %(objectname) %(stage)%x09%(path)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files --format with --debug' '
++	git ls-files --debug >expect &&
++	git ls-files --format="%(path)" --debug >actual &&
++	test_cmp expect actual
++'
++
++test_done
+
+base-commit: ab336e8f1c8009c8b1aab8deb592148e69217085
 -- 
-2.37.0
-
+gitgitgadget
