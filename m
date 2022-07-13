@@ -2,108 +2,199 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2386EC433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 22:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92253C43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 23:04:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231377AbiGMWlt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 18:41:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42322 "EHLO
+        id S229602AbiGMXEd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 19:04:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229842AbiGMWls (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 18:41:48 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7B44E602
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 15:41:47 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 134-20020a63018c000000b0040cf04213a1so5901969pgb.6
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 15:41:47 -0700 (PDT)
+        with ESMTP id S229597AbiGMXEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 19:04:30 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BFA73E753
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 16:04:30 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id 1-20020a17090a190100b001f05565f004so179212pjg.0
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 16:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=7XQKQj2nf7GUR7EN3cT09PET8gsi+4kR7kNGlWZ1AOg=;
-        b=pvosBI3S6dJerW4XHPfnUmfYIqKTZVPUJL2VKcHdiSzchyUbjNnQz65XfZJoUj37e5
-         E3nFKsVmjINGT/U6izsMrs1dOuabR4V3ZUvxFab7xq5g9xgYKxTkcMBCRRmQr8TOUCjX
-         Du5F9DlgW/4V7DoEZ60EvDZ6lIu4qIZR3jmk8mvG5TG8Z1OQN5JmxOQpuKQ2i0RhR7wy
-         Q4k2x38rdXwjxBarPqhf3Aq+WvECZDoGpGBurouMZ3kUZ/PKzvk8N3L7/Q5PUSJP9HdX
-         aVXYpfM0MR+IQgphB5WN8+vsaRZUNFlCme/RvehtXEep8OAoiXztYp2OEB2N78Bcp+9w
-         H+yA==
+         :cc:content-transfer-encoding;
+        bh=rc44Il0ihyu1qeyx/SInMl85XKI4jfxldOTf3D2B+WE=;
+        b=m5Eg16yHmQea18XY0zxobTK71dkTyNDt78wvAwWBO4Tq4Pcsa/q95bLhDwIk/inI6c
+         GI3CH+rxwae8myHMcwMZZyszRXniKIGpdbi7ptyR3N+YRsO88BoIoHgVMtV9C1strt6r
+         6cC+XL7uUgPahxeZ7yHCLArSZbTJh1f9tX6zNqQoL0zsL3YxkyCPaO9gVfjw/RceA4T6
+         3f4DN+/2fHXv3WbT7+NLYvzp2L7ad1tR5dP7ohzEmbLG9Wdc2PcldLeL9/R7iAjZsW7q
+         8WAs+vasL1Md/2kPGrnsS+HafDkwrWzPcb311k8Q1wRXYn//lj3EAW2kNQvlBTxtlB31
+         h+RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=7XQKQj2nf7GUR7EN3cT09PET8gsi+4kR7kNGlWZ1AOg=;
-        b=X2KPbF8eju6rR5fpKcZOPwMucuCrZhCTGWBP2KuI703csd9GT6AAuzIHlBmyEvC8Nb
-         3+rO0V5x5XmsrZd8cK5E5AZv5bDBmz1o/GluMfMIc2ijEr2qhhNEshqxTqMLzHvPxF1w
-         ic1EOYwVoVUso5r+bH/Dd5f5v4VXoWMkqXAXw7QYwlVFmaf4S0n0UqkD7foz6LayKQP0
-         Lw6GnpmDHZ44e7c0TQr1oTavVLyKohqlc7YPpZQBJk0XZQkvGO7tpX3h5mKhAK94wvUF
-         u3/3QYyrYwGUqMKxxtWj10ccgI9Jn7x7nbQpJY98wqJZYLeCGYSnb9n4KLfwMvZb6jqK
-         9xPw==
-X-Gm-Message-State: AJIora8v/HCYZzmwhQh+WOMrp9g7EhmXGYjNh0fOf7/9QyfvTtS+Ghbv
-        rt8d4Ys/J/hrUfeLhL1Sa8rEEMCo7GjFZg==
-X-Google-Smtp-Source: AGRyM1vRrkixsg0MU01uiYa/aPDHT5avzzGDL8I1J8PwGfSQdquXnMPr+RqYM2D5BPQIB2quUnockGd1024lQw==
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=rc44Il0ihyu1qeyx/SInMl85XKI4jfxldOTf3D2B+WE=;
+        b=X+/h+NWyQe0VnSDH0IZr2bytwTVEgEeeBv6ipsly1ucgBszi7zlgTIpEMe7Kn8BBOL
+         PNoBZEjPhbrJSIbsHsd0bE6lNy8PhihuMo6xAjp3cKy9YqX1GSNYx4EB85oNc2NJANkc
+         HmD4q0gO6Fz10U0H8S/xHl+9jo977ZRrSdsRfBKOV2a2UzN5MsLtKEVlcH+C9nrEjuXW
+         aMUSoTCfKwxxQAPNGgtOwEr6bLh+CMbUMs6U4SeWJ2A6TvsOCb3v53G9tOWHyaiP0WQt
+         PF13nxqpLFN9x3AQvrr3/bqDHo3lFdsLysL2bBZcfrjEw8jqEnFmB1X5U2OxGTTdFkAV
+         iHHg==
+X-Gm-Message-State: AJIora8MvaOoVDj90fjH53yQ7rH75yRoCgTBEajn2t5aq5j3wKYiLRet
+        aio0A9PKExklqTyonaTfiNGc7luOg2VGmA==
+X-Google-Smtp-Source: AGRyM1vGryO/sCkE59DJEw3IwX/6L5oVgm29QwZ0sF0V7UNybjg0Fz4tpKKfW3M3/kDx1LRNXgbPJzqwd+9k/g==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:da92:b0:16b:ecee:28a8 with SMTP
- id j18-20020a170902da9200b0016becee28a8mr5202476plx.71.1657752106645; Wed, 13
- Jul 2022 15:41:46 -0700 (PDT)
-Date:   Wed, 13 Jul 2022 15:41:44 -0700
-In-Reply-To: <xmqqy1wwaey8.fsf@gitster.g>
-Message-Id: <kl6lbkts63fb.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a63:5d45:0:b0:419:ab8f:c022 with SMTP id
+ o5-20020a635d45000000b00419ab8fc022mr1500158pgm.557.1657753469606; Wed, 13
+ Jul 2022 16:04:29 -0700 (PDT)
+Date:   Wed, 13 Jul 2022 16:04:27 -0700
+In-Reply-To: <220713.86o7xs3g76.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6l8row62dg.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
- <patch-02.11-4049362e9b4-20220713T131601Z-avarab@gmail.com>
- <kl6lfsj4684n.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqy1wwaey8.fsf@gitster.g>
-Subject: Re: [PATCH 02/11] submodule--helper: replace memset() with { 0 }-initialization
+ <patch-03.11-e5ec6945409-20220713T131601Z-avarab@gmail.com>
+ <kl6lmtdc6hhp.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <kl6lilo06g82.fsf@chooglen-macbookpro.roam.corp.google.com> <220713.86o7xs3g76.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 03/11] submodule--helper: fix "module_clone_data" memory leaks
 From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org, Atharva Raykar <raykar.ath@gmail.com>,
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
         Prathamesh Chavan <pc44800@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Glen Choo <chooglen@google.com> writes:
+> On Wed, Jul 13 2022, Glen Choo wrote:
 >
->> Ok. I wonder if we could reduce this kind of churn in the future by
->> adding this to CodingGuidelines, e.g. "always use { 0 } for stack
->> variables". Tangentially, do we require { NULL } when the first element
->> is a pointer? (I'm not sure because this isn't in CodingGuidelines
->> either AFAICT.)
+>> Glen Choo <chooglen@google.com> writes:
+>>
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>>
+>>>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>>>> index 73717be957c..23ab9c7e349 100644
+>>>> --- a/builtin/submodule--helper.c
+>>>> +++ b/builtin/submodule--helper.c
+>>>> @@ -1511,6 +1511,7 @@ static int module_deinit(int argc, const char **=
+argv, const char *prefix)
+>>>>  struct module_clone_data {
+>>>>  	const char *prefix;
+>>>>  	const char *path;
+>>>> +	char *path_free;
+>>>>  	const char *name;
+>>>>  	const char *url;
+>>>>  	const char *depth;
+>>>> @@ -1527,6 +1528,11 @@ struct module_clone_data {
+>>>>  	.single_branch =3D -1, \
+>>>>  }
+>>>> =20
+>>>> +static void module_clone_data_release(struct module_clone_data *cd)
+>>>> +{
+>>>> +	free(cd->path_free);
+>>>> +}
+>>>> +
+>>>>  struct submodule_alternate_setup {
+>>>>  	const char *submodule_name;
+>>>>  	enum SUBMODULE_ALTERNATE_ERROR_MODE {
+>>>> @@ -1651,9 +1657,9 @@ static int clone_submodule(struct module_clone_d=
+ata *clone_data)
+>>>> =20
+>>>>  	if (!is_absolute_path(clone_data->path)) {
+>>>>  		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
+>>>> -		clone_data->path =3D strbuf_detach(&sb, NULL);
+>>>> +		clone_data->path =3D clone_data->path_free =3D strbuf_detach(&sb, N=
+ULL);
+>>>>  	} else {
+>>>> -		clone_data->path =3D xstrdup(clone_data->path);
+>>>> +		clone_data->path =3D clone_data->path_free =3D xstrdup(clone_data->=
+path);
+>>>>  	}
+>>>
+>>> Hm, having .path_free doesn't seem necessary. If I'm reading the code
+>>> correctly,
+>>>
+>>> - in module_clone() we set clone_data.path from argv
+>>> - then we unconditionally call clone_submodule(), which does all of the
+>>>   hard work
+>>> - in clone_submodule(), we always hit this conditional, which means tha=
+t
+>>>   past this point, clone_data.path is always free()-able.
+>>>
+>>> which suggests that we don't need clone_data.path_free at all. I suspec=
+t
+>>> that just this
+>>>
+>>>    static void module_clone_data_release(struct module_clone_data *cd)
+>>>    {
+>>>    	free(cd->path);
+>>>    }
+>>>
+>>> is enough to plug the leak (though admittedly, I haven't properly teste=
+d
+>>> the leak because it's been a PITA to set up locally).
+>>>
+>>> That's a pretty hacky suggestion though, since we're still using the
+>>> same member to hold free()-able and non-free()-able memory....
+>>
+>> Ah, here's a wacky idea (whose feasibility I haven't thought about at
+>> all) that would make things a lot cleaner. If we had something like
+>> OPT_STRING_DUP, that xstrdup()-s the value from argv when we parse it,
+>> then we could drop the "const" from clone_data.path and just free() it.
 >
-> A valiable can legitimately be left uninitialized, or initialized to
-> a known value that is not zero using designated initializers.  So
-> saying something like
+> I suppose so, it might make some things simpler, of course at the cost
+> of needlessly duplicating things.
 >
->     When zero-initializing an auto variable that is a struct or
->     union in its definition, use "{ 0 }", whether the first member
->     in the struct is of a number, a pointer, or a compound type.
->
-> may be OK.  I do not think we would want to say "always use X", as
-> the world is not that simple..
+> But we also have various common patterns such as string_lists where some
+> elements are dup'd, some aren't, and need to deal with that. I think
+> just having common idioms for tracking the dupe is usually better,
+> e.g. in the case of a string list stick the pointer to free in "util".
 
-Thanks. Also, I made a typo here, I meant to be more specific with
-regards to memset(), like:
+Hm, sounds fair. "Sometimes dup and sometimes not" sounds like an
+inevitability. I'm not experienced enough to know better, and folks
+whose opinion I sought seem to agree with you.
 
-  When zero-initializing an auto variable that is a struct or
-  union in its definition, use "{ 0 }", whether the first member
-  in the struct is of a number, a pointer, or a compound type. _Do not
-  use memset()._
-
-Unless there really is a legitimate reason to use memset(&my_auto_var, 0
-sizeof(my_autovar)) that I've missed?
-
-> We do favor designated initializers over traditional initialization
-> in the order of members these days, so something like
+> I think in this case the patch as-is is better than your suggestions,
+> because it's a less fragile pattern, we explicitly mark when we dup
+> something that's sometimes a dup, and sometimes not.
 >
->     When declaring a struct/union variable or an array with initial
->     value to some members or elements, consider using designated
->     initializers, instead of listing the values in the order of
->     members in the definition of the struct.
+> Whereas if we do it with the xstrdup() at the start it requires more
+> moving things around, and if we have a new user who parses the same
+> argument we'll bug out on that free().
 >
-> would also be good.
+> What do you think?
 
-Thanks. If I have time I'll send that proposal to CodingGuidelines, or
-someone else can send it (I don't mind either way).
+Frankly I'm ok with moving things around; I think the code could use
+a little cleaning up :) But yeah, I think my suggestion isn't so great -
+it's a bit weird to keep around an auto variable that exists only to be
+dup-ed to the thing we care about. We can forget about that.
+
+I do think that it's worth avoiding the "sometimes dup, sometimes not"
+pattern if we can, though (of course these are just my non-C instincts
+talking), and we can do that here if we just choose not to assign back
+to .path. Something like:
+
+  struct module_clone_data {
+    const char *prefix;
+  -	const char *path;
+  +	char *path;
+  +	const char *path_argv;
+
+  ...
+
+   	if (!is_absolute_path(clone_data->path)) {
+  -		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
+  +		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path_argv);
+  +		clone_data->path =3D strbuf_detach(&sb, NULL);
+   	} else {
+  -		clone_data->path =3D xstrdup(clone_data->path);
+  +		clone_data->path =3D xstrdup(clone_data->path_argv);
+   	}
+
+would be clearer to me since the const pointer never points to something
+that the struct actually owns.
+
+But if the "=3D .to_free =3D " idiom is well-understood and accepted to the
+point that we don't need to actively avoid "sometimes dup, sometimes
+not", then we should drop my suggestion and just go with your patch :)
