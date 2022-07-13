@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F738C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C472C43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236258AbiGMNQn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 09:16:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
+        id S236259AbiGMNQo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 09:16:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236188AbiGMNQg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 09:16:36 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50958A191
+        with ESMTP id S236215AbiGMNQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 09:16:37 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11BD0E4F
         for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:16:34 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id r127-20020a1c4485000000b003a2fb7c1274so739084wma.1
+Received: by mail-wr1-x42b.google.com with SMTP id z12so15472516wrq.7
         for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:16:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tQmzShT7Je3PaWIUEp8jdQdwVx8CAAGRUYVGVw/PTrE=;
-        b=IIRCOJyMismLL5jBn5TKRaKlKkvstLsz+JTwqW4pPYgp4pGiC+4WnkwA6itZ+rAr82
-         ie6m+NXrUzE2ZTRnxABUk15JoUt39VdlD/qo8d4v3QFsw6l8NXOM1yhFPM8xFo6y++yg
-         z7Zq91aAza02fXNeYgBoIDD92GH4ezPYRVaEFb8iVzDc84CcPFvHSQNBY1B4c9XHnv0o
-         Ls25kMO+5oQa8yLUnqsaSnw7vIasyGfs4c64kqH0RYWr6ugW23iHQOtSB0/efzASKi7G
-         OnZrloGttF1A6wkUM1WYFDLqp+7SUHTu7ieuCgSHBtgTWMNRguv6cBCqF7FJbvHUJ6yS
-         or/A==
+        bh=QKY6NYDDq6NtOQXjMPNnhM2DPgBkcOaPOKNh9JVbgHw=;
+        b=OVgszPq1KAZrHfyTHvl3mFp377w4OoLzNqDI9B+QBd2e4hy3oeZIpzlM/6Qei8kJOH
+         aekd4w5SA2odEVb6VhYkb1cVuINPX7USp8JP6IUPmyc0In8EZ2yI+osDGSEI7BEVchrJ
+         PbmAL9SqkPy+zcOHpyONEuRFldNtsQ+QUg5X5P8mnbOSU3SQqLqaH+5cqn1MFqe7fiSu
+         SL6QSG47pob4Zljl4C+MDInVdmIMQanc8nk+trp92yA3OkfKdqvWqJ720JdgLtkDxsFM
+         9s+D7c7XAAIZqlsYkHAIaZrNFpjBhKH+ADojuXNqfZTRIQO+wJLjtsZRISlOAONxyqya
+         cMSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tQmzShT7Je3PaWIUEp8jdQdwVx8CAAGRUYVGVw/PTrE=;
-        b=q7eROYLJM8Qz7/s5+Q/zdnUMt6brVsNJjmZOF4w6t+inKthWU55qCshlJH8Aq3hQsv
-         qvsJcduwN3gp49M5rL+wq8KgCKkIGVCrDOWxkqZ7WcxuEg37r0B2NmIpvg75rU0IOw/J
-         D0vvxyD786VNmetG+9Mch4p5nRmlIeXlxm9cLqqoWcpDgwmy570/49KhMTTTDFL7xG1/
-         kFPJ6ie1O1L1Z8cPB+cmU9XwmwcTFlV+yyc1rv2wcMrGGOqI+YVJpoxIpdGvyJYbXGYe
-         DqgBhxItyF3HPkJKHmAj1IK0XypFHRNCBr0nZjOQE5dt+7gg8JG6cfBpAwf5HnRP5+Eu
-         9Yyg==
-X-Gm-Message-State: AJIora9wUwPgZusYLSniLyrxJIu7o4dU1O3BlZRXIthpyBxCSX7qjqma
-        crDqrFofGKSyLzJ383txvOmk2dVXBZXRlw==
-X-Google-Smtp-Source: AGRyM1u37LBI8LZIIW3v7uBUdx2chRfAesbBQ0ujO1CY6wrQALAU6cz//dkwkb5M5TXieEPOTDVfwA==
-X-Received: by 2002:a7b:cc82:0:b0:3a2:f0c8:c5d4 with SMTP id p2-20020a7bcc82000000b003a2f0c8c5d4mr3673467wma.86.1657718192377;
-        Wed, 13 Jul 2022 06:16:32 -0700 (PDT)
+        bh=QKY6NYDDq6NtOQXjMPNnhM2DPgBkcOaPOKNh9JVbgHw=;
+        b=aQQrqee+OHmcILZuAdV9mSJj/2Cjfzucjcbb98/ifgsOFdw9vFipPhm2k82E5Hs93P
+         ialJtirVByE6R1WgLOX9w0y8Ho58E6CsDw58G5aaJvPae7nOJyMQCZhpwAIOzU+5pUdG
+         ZP4Cm/dFMtAFCTDX1xaVWPp3LmU1GBeuy5N2Hw5hty8j5YiKAjg9cEYjmLzom/0RBRQp
+         7AE0epiSNDOGXhP+dntjQh0n3qkTQHvmecNfPdcCm+P73BipNXBSnoEq74m1Hki+A5AN
+         XboDtzs0P7VfyRZtTH2rB9qPnHnTZNoEtdQMYzCT+IIu7n2M1z8z3mSRjHZu7stWNIbm
+         DFXg==
+X-Gm-Message-State: AJIora/kcb9rp7hYoJIJgMGRxigs9Tfejq020eV5z44NfXusYPYbYek7
+        5/sh1FV797H5z5A2b8tUNS14usUCICkHNA==
+X-Google-Smtp-Source: AGRyM1ty5B2BxkF4l8b78kCjrh6t/F9IhsCaprDn/C8IQVdluWEBx6L4mHtRXNdg3TrxgiyqzdYN+g==
+X-Received: by 2002:adf:d1e8:0:b0:21d:ac9c:983d with SMTP id g8-20020adfd1e8000000b0021dac9c983dmr3137382wrd.629.1657718193291;
+        Wed, 13 Jul 2022 06:16:33 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t63-20020a1c4642000000b003a2e05a81b3sm2216352wma.8.2022.07.13.06.16.31
+        by smtp.gmail.com with ESMTPSA id t63-20020a1c4642000000b003a2e05a81b3sm2216352wma.8.2022.07.13.06.16.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jul 2022 06:16:31 -0700 (PDT)
+        Wed, 13 Jul 2022 06:16:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 07/11] submodule--helper: fix "errmsg_str" memory leak
-Date:   Wed, 13 Jul 2022 15:16:12 +0200
-Message-Id: <patch-07.11-f8c20bbf266-20220713T131601Z-avarab@gmail.com>
+Subject: [PATCH 08/11] submodule--helper: fix "sm_path" and other "module_cb_list" leaks
+Date:   Wed, 13 Jul 2022 15:16:13 +0200
+Message-Id: <patch-08.11-c8bb7bb7bb3-20220713T131601Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.932.g7b7031e73bc
 In-Reply-To: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
@@ -69,62 +69,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak introduced in e83e3333b57 (submodule: port submodule
-subcommand 'summary' from shell to C, 2020-08-13), to do that stop
-juggling around the "errmsg" and "struct strbuf", let's instead move
-the "struct strbuf errmsg" to the top-level.
+Fix leaks in "struct module_cb_list" and the "struct module_cb" which
+it contains, these fixes leaks in e83e3333b57 (submodule: port
+submodule subcommand 'summary' from shell to C, 2020-08-13).
 
-Now we don't need to strbuf_detach() it anymore, but we do need to
-ensure that we pass NULL to print_submodule_summary() when we have no
-error message.
+The "sm_path" should always have been a "char *", not a "const
+char *", we always create it with xstrdup().
+
+We can't mark any tests passing passing with SANITIZE=leak using
+"TEST_PASSES_SANITIZE_LEAK=true" as a result of this change, but
+"t7401-submodule-summary.sh" gets closer to passing as a result of
+this change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ builtin/submodule--helper.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index a964dbeec38..a05578a7382 100644
+index a05578a7382..2b44f391f15 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -932,7 +932,8 @@ static void generate_submodule_summary(struct summary_cb *info,
- {
- 	char *displaypath, *src_abbrev = NULL, *dst_abbrev;
- 	int missing_src = 0, missing_dst = 0;
--	char *errmsg = NULL;
-+	char *errmsg;
-+	struct strbuf errmsg_str = STRBUF_INIT;
- 	int total_commits = -1;
+@@ -828,9 +828,13 @@ struct module_cb {
+ 	struct object_id oid_src;
+ 	struct object_id oid_dst;
+ 	char status;
+-	const char *sm_path;
++	char *sm_path;
+ };
+ #define MODULE_CB_INIT { 0 }
++static void module_cb_release(struct module_cb *mcb)
++{
++	free(mcb->sm_path);
++}
  
- 	if (!info->cached && oideq(&p->oid_dst, null_oid())) {
-@@ -1032,7 +1033,6 @@ static void generate_submodule_summary(struct summary_cb *info,
- 		 * submodule, i.e., deleted or changed to blob
- 		 */
- 		if (S_ISGITLINK(p->mod_dst)) {
--			struct strbuf errmsg_str = STRBUF_INIT;
- 			if (missing_src && missing_dst) {
- 				strbuf_addf(&errmsg_str, "  Warn: %s doesn't contain commits %s and %s\n",
- 					    displaypath, oid_to_hex(&p->oid_src),
-@@ -1043,10 +1043,10 @@ static void generate_submodule_summary(struct summary_cb *info,
- 					    oid_to_hex(&p->oid_src) :
- 					    oid_to_hex(&p->oid_dst));
- 			}
--			errmsg = strbuf_detach(&errmsg_str, NULL);
- 		}
- 	}
+ struct module_cb_list {
+ 	struct module_cb **entries;
+@@ -838,6 +842,19 @@ struct module_cb_list {
+ };
+ #define MODULE_CB_LIST_INIT { 0 }
  
-+	errmsg = errmsg_str.len ? errmsg_str.buf : NULL;
- 	print_submodule_summary(info, errmsg, total_commits,
- 				displaypath, src_abbrev,
- 				dst_abbrev, p);
-@@ -1054,6 +1054,7 @@ static void generate_submodule_summary(struct summary_cb *info,
- 	free(displaypath);
- 	free(src_abbrev);
- 	free(dst_abbrev);
-+	strbuf_release(&errmsg_str);
++static void module_cb_list_release(struct module_cb_list *mcbl)
++{
++	int i;
++
++	for (i = 0; i < mcbl->nr; i++) {
++		struct module_cb *mcb = mcbl->entries[i];
++
++		module_cb_release(mcb);
++		free(mcb);
++	}
++	free(mcbl->entries);
++}
++
+ struct summary_cb {
+ 	int argc;
+ 	const char **argv;
+@@ -1183,6 +1200,7 @@ static int compute_summary_module_list(struct object_id *head_oid,
+ cleanup:
+ 	strvec_clear(&diff_args);
+ 	release_revisions(&rev);
++	module_cb_list_release(&list);
+ 	return ret;
  }
  
- static void prepare_submodule_summary(struct summary_cb *info,
 -- 
 2.37.0.932.g7b7031e73bc
 
