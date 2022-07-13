@@ -2,117 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90F2FC433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82F5AC43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:21:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236062AbiGMNU6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 09:20:58 -0400
+        id S235830AbiGMNVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 09:21:00 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235923AbiGMNU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 09:20:56 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12EF163CB
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:20:54 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id bu1so14303405wrb.9
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:20:53 -0700 (PDT)
+        with ESMTP id S235845AbiGMNU5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 09:20:57 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BBF5A44A
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:20:55 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id c131-20020a1c3589000000b003a2cc290135so1213139wma.2
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=1FW04XezbpV7EfNEvnaA1v6PMONCZhE2I3DNxIfMhTI=;
-        b=R58cmGq2twYoQmfYFhv6+sSYWQYcsCVcwdCAq8X7rgXeoGMWqhZZiY0r3ByyQTnjH7
-         R30IHvBrZyGY1UwaIOXwvRGy/pG0fA8jeNyu/hN/CwpZht762a3iurV3gYEnfc+mv+9O
-         vmjV6QGPxz4trEhk6ngpg/Z7IdkLtxtBIUmU/qQWn2kJFrDD9DPkBSD8Y5DfmK0JN5TX
-         tLCuSjmcoFswzha+2p/aMys/3lqyHMfAzsPQmt81pDfIBZ2PHrFUuurNSE7HxKTOB/97
-         gwBYXlocM2q3AhzP4G5KBllvr7jq9xjXHF+1BJGDXM8fLdZ+QCRcWvt9vBI7iaUHkh4h
-         Dk2Q==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NMFt49jdQBSiJIxaB/Gr3ILjVtOdeH/cbNOqJwr7YR4=;
+        b=QodVmbUo4rVH9dHyLvZtmPyAtrLdJ/trL9GrMxpVIPN8j9az2t8KbnFmcoE0J5rVVC
+         A4X1oSKEavq8oe44V63kIN9wPMHWGIzWjaR9ygK2/lx/0bCGgztUA1bt/x604XtSrFEX
+         Nb7F1CWqZfBfd+DPvYnY0juZYreOreIae5PDbV7RRlyzh8Q3pX+t2RV0oSfuXPpEwxva
+         OUkLd8BVAnH8v5kKHD81LSkloMgKRTj5qbQy4aR9UjF2FAHVfUaErpsrA+FFY11a17wb
+         26qHdS5XI6KsI7kTd1sXsGG9KosxCKhwdNb9RoibuU5E+pyTm+XTbuqIaVhGXABQaUtD
+         GzgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=1FW04XezbpV7EfNEvnaA1v6PMONCZhE2I3DNxIfMhTI=;
-        b=qx9YhBZGVu9Td0/U5NKWhyfgsYBATvmB+pIxJgbn9R2mVVeGLftiVAgVKb+7OdCm4u
-         u4VoCiUp9ifAvhLoBVZEyOduLTFKWRqFgcJfJ1p94ekz8OpDRgiAgXqxk0/UxOKWiP7q
-         +NRJnJp8ilCBrvnGBI7GGHEBW+Wumf3vOJm3LjZ009W8W/8XL9MMLGrf5YlokXivXnB3
-         hDtJEOMu15r8SaQ1TN3UmocKDbAaxPMkXXUIg0YxWs3pTB6rRC69S7U9WwCy2Vp8exzt
-         gRO78fBeQjuBywy8O1t1fm5DemnrD/LWqn2T/bu9tPyVHERisRWqjzx++4M4STEea6o0
-         R0Xg==
-X-Gm-Message-State: AJIora8IzBMLNX+fjjhfGxE6NWdXGHW0fHivJkguN5NH+yp+Mj8+7wvw
-        +dFJqtR7HDdAol33Q1idiKOdnTdDbjk=
-X-Google-Smtp-Source: AGRyM1u2lLxljNopZ8yWmEtIHNnlzP8VsDqnTEIp39hD2W07ccHoV/M0Gf1Xdblza6+m5msbceuyfg==
-X-Received: by 2002:adf:e405:0:b0:21d:86b6:a286 with SMTP id g5-20020adfe405000000b0021d86b6a286mr3277097wrm.29.1657718452041;
-        Wed, 13 Jul 2022 06:20:52 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=NMFt49jdQBSiJIxaB/Gr3ILjVtOdeH/cbNOqJwr7YR4=;
+        b=0Bn+d9fd5kMo3SG82DtuqGkE3OzG0PfXEz7d0ljyGlmcjlNrSy0+Erl+Tq3iMvvnpQ
+         HD27d7GdqEUnYnd5galJ3kRiiq+tA+KMpslPrH7AZLHj2oxYEBnk5u4/BEEJN9gldlzg
+         QCV8lbiWd/PsonSbAaO3v/I/l+2dUV0JdNU2txECJnrTdD7r6H9jXkzb5xQ/SaGxndMf
+         hUQQjDSUA6Xn1y3YdaZMmh9J/2jFKqFxc6/MyQg37Mj+t4wjKrQa87tJUjoQsbr575H3
+         RjPGphhZ9eRLGt7BAVR6SIaHf2g31DGEK9eXc7DV0i22s9Kp32bxrvg2Plxr/FGbCbHs
+         q1Ew==
+X-Gm-Message-State: AJIora8h4YM6loIhMbaQOPGq6l0a07TeQuyWttlx2/pv2a9ei5gc45GD
+        me1mqln4u20QETd+Xd4awmzG7aMd1X4=
+X-Google-Smtp-Source: AGRyM1s+v05wPdciLOWJpEm1f/Pm1XJp28r6NhQMnjxF3hfjfD/ib3CoYWL3bG7uRtd5N0CK03MBGw==
+X-Received: by 2002:a05:600c:1d9e:b0:3a2:f365:29ee with SMTP id p30-20020a05600c1d9e00b003a2f36529eemr5014895wms.24.1657718453383;
+        Wed, 13 Jul 2022 06:20:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i2-20020a05600011c200b0021d68a504cbsm10989035wrx.94.2022.07.13.06.20.51
+        by smtp.gmail.com with ESMTPSA id ay15-20020a05600c1e0f00b003a2fb1224d9sm1875852wmb.19.2022.07.13.06.20.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jul 2022 06:20:51 -0700 (PDT)
-Message-Id: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
+        Wed, 13 Jul 2022 06:20:52 -0700 (PDT)
+Message-Id: <ec81aac05c40318755f5311a20e8f9cc55d289fc.1657718450.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
+References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 13 Jul 2022 13:20:47 +0000
-Subject: [PATCH 0/3] Use "allowlist" and "denylist" tree-wide
+Date:   Wed, 13 Jul 2022 13:20:48 +0000
+Subject: [PATCH 1/3] Documentation: use allowlist and denylist
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, johannes.schindelin@gmx.de,
+        Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The terms "allowlist" and "denylist" are self-defining. One "allows" things
-while the other "denies" things.
+From: Derrick Stolee <derrickstolee@github.com>
 
-These are better terms over "whitelist" and "blacklist" which require prior
-knowledge of the terms or cultural expectations around what each color
-"means".
+Using "allowlist" and "denylist" is a more precise definition of the
+functionality they provide. The previous color-based words assume
+cultural interpretation to provide the meaning.
 
-This series replaces (almost) all uses of these terms with allowlist and
-denylist. The only exceptions are in release notes for older Git versions.
+Focus on replacements in the Documentation/ directory since these are
+not functional uses.
 
-There is no meaningful functional change, although one logging message in
-daemon.c is changed and I'm unfamiliar with exactly how that might be
-consumed.
-
-Some recommend using "blocklist", but I personally prefer "denylist". To me,
-"blocking" something seems permanent. "Denying" something seems ephemeral
-and related to a specific request being denied due to some (possibly
-mutable) state. I'm open to suggestions here. There are many fewer
-replacements needed in this case.
-
-I did not make any change to our CodingGuidelines. Hopefully having clear
-usage throughout the codebase will be enough to promote using consistent
-terminology.
-
-Thanks, -Stolee
-
-Derrick Stolee (3):
-  Documentation: use allowlist and denylist
-  t/*: use allowlist
-  *: use allowlist and denylist
-
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
  Documentation/git-cvsserver.txt |  2 +-
  Documentation/git-daemon.txt    | 10 +++++-----
  Documentation/git.txt           |  2 +-
- daemon.c                        |  8 ++++----
- git-cvsserver.perl              |  2 +-
- sha1dc/sha1.c                   | 12 ++++++------
- t/README                        |  4 ++--
- t/lib-proto-disable.sh          |  6 +++---
- t/t5812-proto-disable-http.sh   |  2 +-
- t/t5815-submodule-protos.sh     |  4 ++--
- t/t9400-git-cvsserver-server.sh |  2 +-
- t/test-lib-functions.sh         |  2 +-
- t/test-lib.sh                   |  2 +-
- transport.c                     |  8 ++++----
- 14 files changed, 33 insertions(+), 33 deletions(-)
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-
-base-commit: e4a4b31577c7419497ac30cebe30d755b97752c5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1274%2Fderrickstolee%2Fallow-deny-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1274/derrickstolee/allow-deny-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1274
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 4dc57ed2547..40ea1f3af8e 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -313,7 +313,7 @@ circumstances, allowing easier restricted usage through git-shell.
+ 
+ GIT_CVSSERVER_BASE_PATH takes the place of the argument to --base-path.
+ 
+-GIT_CVSSERVER_ROOT specifies a single-directory whitelist. The
++GIT_CVSSERVER_ROOT specifies a single-directory allowlist. The
+ repository must still be configured to allow access through
+ git-cvsserver, as described above.
+ 
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index fdc28c041c7..ff74a90aead 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -33,7 +33,7 @@ It verifies that the directory has the magic file "git-daemon-export-ok", and
+ it will refuse to export any Git directory that hasn't explicitly been marked
+ for export this way (unless the `--export-all` parameter is specified). If you
+ pass some directory paths as 'git daemon' arguments, you can further restrict
+-the offers to a whitelist comprising of those.
++the offers to a allowlist comprising of those.
+ 
+ By default, only `upload-pack` service is enabled, which serves
+ 'git fetch-pack' and 'git ls-remote' clients, which are invoked
+@@ -50,7 +50,7 @@ OPTIONS
+ 	Match paths exactly (i.e. don't allow "/foo/repo" when the real path is
+ 	"/foo/repo.git" or "/foo/repo/.git") and don't do user-relative paths.
+ 	'git daemon' will refuse to start when this option is enabled and no
+-	whitelist is specified.
++	allowlist is specified.
+ 
+ --base-path=<path>::
+ 	Remap all the path requests as relative to the given path.
+@@ -73,7 +73,7 @@ OPTIONS
+ 	%IP for the server's IP address, %P for the port number,
+ 	and %D for the absolute path of the named repository.
+ 	After interpolation, the path is validated against the directory
+-	whitelist.
++	allowlist.
+ 
+ --export-all::
+ 	Allow pulling from all directories that look like Git repositories
+@@ -218,7 +218,7 @@ standard output to be sent to the requestor as an error message when
+ it declines the service.
+ 
+ <directory>::
+-	A directory to add to the whitelist of allowed directories. Unless
++	A directory to add to the allowlist of allowed directories. Unless
+ 	--strict-paths is specified this will also include subdirectories
+ 	of each named directory.
+ 
+@@ -264,7 +264,7 @@ git		9418/tcp		# Git Version Control System
+ 
+ 'git daemon' as inetd server::
+ 	To set up 'git daemon' as an inetd service that handles any
+-	repository under the whitelisted set of directories, /pub/foo
++	repository under the allowlisted set of directories, /pub/foo
+ 	and /pub/bar, place an entry like the following into
+ 	/etc/inetd all on one line:
+ +
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 302607a4967..384718ee677 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -887,7 +887,7 @@ for full details.
+ 	protocols has `protocol.<name>.allow` set to `always`
+ 	(overriding any existing configuration). In other words, any
+ 	protocol not mentioned will be disallowed (i.e., this is a
+-	whitelist, not a blacklist). See the description of
++	allowlist, not a denylist). See the description of
+ 	`protocol.allow` in linkgit:git-config[1] for more details.
+ 
+ `GIT_PROTOCOL_FROM_USER`::
 -- 
 gitgitgadget
+
