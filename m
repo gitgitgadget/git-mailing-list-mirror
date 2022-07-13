@@ -2,204 +2,249 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A89EC433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BE2DC433EF
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:27:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235925AbiGMNYU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 09:24:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50026 "EHLO
+        id S236155AbiGMN1S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 09:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236222AbiGMNYT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 09:24:19 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96EE610B0
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:24:15 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id t1so4093685ejd.12
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:24:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=B8Q3fFsBEK2tmHkfeKJpX6lmpRt2DxgAYbx3tXQs6F0=;
-        b=Fq5P/fl1RCs/3dX0rsW9t0v8Sm5FoHi3i+JO4gEPDeTeXMR/kcmZk0wxWEAtKzTqCB
-         yqvZMDW34LXECuBFCmplcADfk4klojMh50tRFsSSaHF0GSvcZ+DPaPVAx8Dho+qTdE4Z
-         rfTGi7oZwMtvh0LKj5Mmmu/Kr8+tD/0LZXs1duMVdIsYiVlyq3/8Rn32F0snpF+Jh7QL
-         fwmxv7m/VOl4fEkaD/ckdwoT0iUBEKHssan1ZRdO2N6SWXWK/qvPP61eWZnbl3V3fUqh
-         To4EL0k++aeTN9q+SaMmjIR/5wed67L4DoUAU8Ks9ZQ42sDpGkqPHeFh3rx5wbAzma1B
-         TGxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=B8Q3fFsBEK2tmHkfeKJpX6lmpRt2DxgAYbx3tXQs6F0=;
-        b=t1G1LDfUQVs2gGBLiDqPYXVlJ6KXPvR7hNNpHs5VKQtZUfgvYsp+3WCmI9OiUbGxcq
-         fu+xyruJAzMmKx9PTwz90LN7iGRz2wxCKbyZgn5RW6yhGlXB4Wh43JkVx/ankGlRXKYy
-         EFW3Fk/pFbLHU5tpBDeYcsYufSwM5EaHID9pbTZmEKdsX7ue/k7bT+jhKHr5jmewIALs
-         HMgF55J1lwEuh1Qszv6TcCknkPI3TiItLbOFSeDTk2109Mn0kTRyc8AbtuOqq6GKbS3Q
-         Grp5XH8AP6lyS3F6ol5cxPk7gr7/Swf5l6PWBiP8xMY6mv8oG8ICMkFFqPxQK+v7yhmp
-         eEPQ==
-X-Gm-Message-State: AJIora+t85icKn0IJIaSBK3ceQ4AtnIpS6+NTR3sIPzDINbMNixk4WAG
-        HGZcAWMQ+xHwEHkvdBbbYQg=
-X-Google-Smtp-Source: AGRyM1sPUKy74n4nBglf/tYsig3ClzuUBRAe3qE+iUjFCo0V4SBbR+XYxkTtgAWPQhIMmW6OPyLxsw==
-X-Received: by 2002:a17:907:2724:b0:72b:526f:6389 with SMTP id d4-20020a170907272400b0072b526f6389mr3514985ejl.289.1657718653952;
-        Wed, 13 Jul 2022 06:24:13 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id q7-20020a1709060e4700b006fe89cafc42sm5017259eji.172.2022.07.13.06.24.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jul 2022 06:24:13 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oBcLc-001kzN-N6;
-        Wed, 13 Jul 2022 15:24:12 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 7/7] xdiff: remove xdl_free(), use free() instead
-Date:   Wed, 13 Jul 2022 15:18:29 +0200
-References: <b34dcb93-df73-f5de-3c7c-7ab6c3250afe@gmail.com>
- <cover-0.7-00000000000-20220708T140354Z-avarab@gmail.com>
- <patch-7.7-a1bf9a94f0a-20220708T140354Z-avarab@gmail.com>
- <6b8fc0e8-c446-1275-12f3-e6520de9584d@gmail.com>
- <220708.86czef9t6y.gmgdl@evledraar.gmail.com>
- <dcde61a3-4d96-6cd5-f05e-45781599f8bd@gmail.com>
- <220711.865yk47x54.gmgdl@evledraar.gmail.com>
- <bbfa1340-9cab-35d7-2245-f6f8369d5cd4@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <bbfa1340-9cab-35d7-2245-f6f8369d5cd4@gmail.com>
-Message-ID: <220713.861qup403n.gmgdl@evledraar.gmail.com>
+        with ESMTP id S235794AbiGMN1M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 09:27:12 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FDA6B480
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:27:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1657718824;
+        bh=RwBPpDx3fM3sIbuzWjHNdkTvCzjeMPg8rZDw3iTWE+A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PpjqmtdkLxNO4KgJZhxrNOOgzKlYem0tCUSg1GkV8I+GEcDrINCrI8ZvEDGKQ6EkO
+         Bg2O94XIcKJmEpoL4LUm/nSIO45VGowfrWX/nwGBeS8LekFzDov1t4173IBP3jgOtY
+         beMGXFdzE3WZzh7Bh5Ed2d2djRwDQW1I6Ev+4NU8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.180.6] ([213.196.212.225]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M42nS-1oBcOO2cAC-0005Zx; Wed, 13
+ Jul 2022 15:27:04 +0200
+Date:   Wed, 13 Jul 2022 15:27:02 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 3/3] *: use allowlist and denylist
+In-Reply-To: <8aaceedb7a8f9d95550ef4a2d147c837ede6acec.1657718450.git.gitgitgadget@gmail.com>
+Message-ID: <r5351157-0p62-7rp4-p254-04rn0r63o515@tzk.qr>
+References: <pull.1274.git.1657718450.gitgitgadget@gmail.com> <8aaceedb7a8f9d95550ef4a2d147c837ede6acec.1657718450.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:iw0sO6nMUX03jMgEhNkILWpg9AZ5GueXrwcYwKoAkd1GKqtmqAp
+ hibVHk1HwkTKjFMobUfgK/scUyUUOwmDYebNSu1YF8W32yOSG8VcXcVTXzCL1NEnz/O8/1n
+ DFIwC4jQy4/7VJHljH7BmFU9uqvJ5FqPQqh6R7MSyinzXS+exkLCUBcnyd+HnQ6ZC+skX4A
+ iNrFXCMHoYoh+LneaXDmw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YPZgn/sccCo=:2oSVADeVeg4bD/ZWCLjxoX
+ QDOtfYNjc2FJDUWzUvgC2/PfVKSHw9tag0SB4pJiGAdvosZ85D4o+UPTmrhU7V4U9AIGAv1LA
+ Xmf+o0gUEvOJ5LvLfYE7idbTNWz9gTj19Im7ipP354fhuKQGHkeqMlOwUtGKgRuxKbVHiMY0C
+ qpo6aobmjdVxybWBXHmubcIjLDyJkFX4fJmkyCR5gi0PWAQrLA95xNeS/TVHaPgcPRTvAJxHd
+ r4knlPYPM5gJOriPYvmwYIMF6XBBS+AVBDb8G8+kMAPj73Tv5NhP+E0DdZjNz24moQaWZBYeU
+ Qmcj6F9CxJY0zxxN+77u5/6Xvw5+K7OglXwsxAESBlKwsnn37qLJeyHam8P8dNp6MIuSkwAlb
+ YFg0GaGYArXUwzaLuyz92AZPWXNsUakcedwSayaydu4ZyNDLIlr8ykYJUcZUs4+N71+DOA/Xk
+ EBHNVZzsiJSUzr4oWbNK9XGKUSp3mpmJnhNn1yODsa1RJ0WpVx0uWqTVx8Gtq8qgxfRa+Z5fG
+ U4RW3XkV4+z5tiX9YXQWxQhBvhbJ2EbFKhQwqvEeCZLYNblGzPUdrCIov45SjMmYeK4eg0aFP
+ rxhliSN2IOgcJ2musfC7I1tW0plh4PaP7+FpEBq4vNm7HBHqALF3cuOGkPdjU0Os0GOS/H2zg
+ BOHuPda88w3yM0PDoi/J2H6DttGKl0xurONo5yOrdvLIIunPMyprfv9GsWoXssmJtnxTHgA38
+ FwR68sAgADXDZZBFesJ58ZRs/qweHJ0sYdqOLYodhG0YpeP4NsOanutp46QaQHTJbKAxAyeqg
+ 3QQyikEs6okZNxprgsF/yyd74jjQohHqpi3j6282qzwAPC3CtUwuutjvf3Bb3cBvOf5VfnN6Z
+ XbSSi8k9s6u1CEm4kIwswAIx/XENPMGrkg8BnNMRQ9t+Dzw6Xs6wG/+P0wPcZzOEUUgzQA1is
+ o51uGc+WuosM8gCloEqCM70svieLS5w0XqbjnoYugY8y9xvINlztDUgkM0J68gG3+w6mbUrgk
+ IGvy/kO1RoQgJhYn2isYtiFHfIYu0zVhn1IJH0uu+NGv6w+pBk4WXxgNqesdUBiBco/M+z92n
+ gYZCYex8tLL4mmTKTRq79o7cRGxXPKhE22EwFWil4hHK1Z0Q6JhXv3pUpe+oJh4SWAXhqqXYg
+ FdO58=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Stolee,
 
-On Wed, Jul 13 2022, Phillip Wood wrote:
+On Wed, 13 Jul 2022, Derrick Stolee via GitGitGadget wrote:
 
-> On 11/07/2022 11:02, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Mon, Jul 11 2022, Phillip Wood wrote:
-> [...]
->>> Thanks for showing this, it is really helpful to see a concrete
->>> example. I was especially interested to see how you went about the
->>> conversion without redefining standard library functions or
->>> introducing non-namespaced identifiers in files that included
->>> xdiff.h. Unfortunately you have not done that and so I don't think the
->>> approach above is viable   for a well behaved library.
->> Why? Because there's some header where doing e.g.:
->> 	#include "git2/something.h"
->> Will directly include git-xdiff.h by proxy into the user's program?
+> From: Derrick Stolee <derrickstolee@github.com>
 >
-> No because you're redefining malloc() and introducing ALLOC_GROW() etc
-> in=20
-> src/libgit2/{Blame_git.c,Diff_xdiff.c,Merge_file.c,Patch_generate.c,Check=
-out.c}
-> and
-> Test/libgit2/merge/files.c. It is not expected that including xdiff.h
-> will change a bunch of symbols in the file it is included in.
+> Using "allowlist" and "denylist" is a more precise definition of the
+> functionality they provide. The previous color-based words assume
+> cultural interpretation to provide the meaning.
+>
+> These changes to the Git codebase are mostly cosmetic. Several comments
+> are updated. The renamed protocol_allowlist() method is local to
+> transport.c so does not update any header file API definition. There are
+> some untranslated error messages that are reworded, so this _might_
+> affect error parsers. However, two of the three error messages are
+> around option parsing, so they are "fast failures". The one perhaps
+> meaningful change is the logerror() in daemon.c.
 
-...which is why if you read to the sha1collisiondetection commit below
-you'd follow that up with including a header at the end of xdiff.h which
-would do:
+I do consider `git daemon` less important these days because we have two
+transports that are secure (which `git://` is not): HTTPS and SSH. That
+suggests that the `daemon.c` change might have a very low impact to begin
+with.
 
-	#undef malloc
+The other changes affect `cvsserver` which I consider even less important.
+In fact, I would be in favor of deprecating it soon and of deleting it in
+due time.
 
-etc., so you wouldn't leak that macro beyond the code that needs it, and
-you wouldn't leak the xdl_* macros either, which are purely needed
-internally in that code. So even aside from my suggestion of doing it
-this way it seems to me the structure has macro hygene issues worth
-fixing, see e.g. how we have refs-internal.h v.s. refs.h in git.git for
-similar reasons.
+All the changes in this patch look good to me: ACK!
 
->> I admit I didn't check that, and assumed that these were only
->> included
->> by other *.c files in libgit2 itself. I.e. it would compile xdiff for
->> its own use, but then expose its own API.
->> Anyway, if it is directly included in some user-exposed *.h file
->> then
->> yes, you don't want to overwrite their "malloc", but that's a small
->> matter of doing an "#undef malloc" at the end (which as the below
->> linked-to patch shows we'd support by having macros like
->> SHA1DC_CUSTOM_TRAILING_INCLUDE_UBC_CHECK_C).
->> Aside from what I'm proposing here doing such "undef at the end"
->> seems
->> like a good idea in any case, because if there is any macro leakage here
->> you're e.g. re-defining "XDL_BUG" and other things that aren't clearly
->> in the libgit2 namespace now, no?
->>=20
->>>> Now, I think that's obviously worth adjusting, e.g. the series I've got
->>>> here could make this easier for libgit2 by including st_mult() at leas=
-t,
->>>> I'm not sure what you want to do about regexec_buf().
->>>> For the monkeypatching you do now of creating a "git-xdiff.h" I
->>>> think it
->>>> would be very good to get a patch like what I managed to get
->>>> sha1collisiondetection.git to accept for our own use-case, which allows
->>>> us to use their upstream code as-is from a submodule:
->>>> 	https://github.com/cr-marcstevens/sha1collisiondetection/commit/b45fc=
-ef
->>>
->>> Thanks for the link, That's a really good example where all the
->>> identifiers are namespaced and the public include file does not
->>> pollute the code that is including it. If you come up with something
->>> like that where the client code can set up same #defines for malloc,
->>> calloc, realloc and free that would be a good way forward.
->> I don't need to come up with that, you've got the linker to do that.
->> I.e. for almost any "normal" use of xdiff you'd simply compile it
->> with
->> its reference to malloc(), and then you either link that library that
->> already links to libc into your program.
->> So if you use a custom malloc the xdiff code might still use libc
->> malloc, or you'd link the two together and link the resulting program
->> with your own custom malloc.
->> As explained in the previous & linked-to threads this is how almost
->> everyone would include & use such a library, and indeed that's how git
->> itself can use malloc() and free() in its sources, but have options to
->> link to libc malloc, nedmalloc etc.
->> But instead of using the linker to resolve "malloc" to git__malloc
->> you'd
->> like to effectively include the upstream *.[ch] files directly, and
->> pretend as though the upstream source used git__malloc() or whatever to
->> begin with.
->> I don't really understand why you can't just do that at the linker
->> level, especially as doing so guards you better against namespace
->> pollution. But whatever, the suggestion(s) above assume you've got a
->> good reason, but show that we don't need to prefix every standard
->> function just to accommodate that.
->> Instead we can just provide a knob to include a header of yours
->> after
->> all others have been included (which the libgit2 monkeypatches to xdiff
->> already include), and have that header define "malloc" as "git__malloc",
->> "BUG" as "GIT_ASSERT" etc.
->> And yes, if you're in turn providing an interface where others will
->> then
->> include your header that's doing that you'll need to apply some
->> namespacing paranoia, namely to "#undef malloc" etc.
->> But none of that requires git to carry prefixed versions of standard
->> functions you'd wish to replace, which the patches here show.
->>=20
->>> I do not think we should require projects to be defining there own
->>> versions of [C]ALLOC_*() and BUG() just to use xdiff.
->> No, I don't think so either. I.e. the idea with these patches is
->> that we
->> could bundle up xdiff/* and git-shared-util.h into one distributed
->> libgit, which down the road we could even roll independent releases for
->> (as upstream seems to have forever gone away).
->> Whereas the proposals coming out of libgit2[1] for generalizing
->> xdiff/
->> for general use seem to stop just short of the specific hacks we need to
->> get it running for libgit2, but e.g. leave "xdl_malloc" defined as
->> "xmalloc".
->> That isn't a standard library function, and therefore the first
->> thing
->> you'd need to do when using it as a library is to find out how git.git
->> uses that, and copy/paste it or define your own replacement.
->> Whereas I think it should be the other way around, we should
->> e.g. ship a
->> shimmy BUG() that calls fprintf(stderr, ...) and abort(), but for
->> advanced users such as libgit2 guard those with "ifndef" or whatever, so
->> you can have it call GIT_ASSERT() and the like instead.
->> 1. https://lore.kernel.org/git/20220209013354.GB7@abe733c6e288/
+Thank you!
+Dscho
 
-^ I.e. this.
+>
+> After this change, the only remaining uses of the previous words are
+> in release notes for older versions of Git.
+>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  daemon.c           |  8 ++++----
+>  git-cvsserver.perl |  2 +-
+>  sha1dc/sha1.c      | 12 ++++++------
+>  transport.c        |  8 ++++----
+>  4 files changed, 15 insertions(+), 15 deletions(-)
+>
+> diff --git a/daemon.c b/daemon.c
+> index 58f1077885c..ed7c53b1110 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -279,7 +279,7 @@ static const char *path_ok(const char *directory, st=
+ruct hostinfo *hi)
+>  		/* The validation is done on the paths after enter_repo
+>  		 * appends optional {.git,.git/.git} and friends, but
+>  		 * it does not use getcwd().  So if your /pub is
+> -		 * a symlink to /mnt/pub, you can whitelist /pub and
+> +		 * a symlink to /mnt/pub, you can allowlist /pub and
+>  		 * do not have to say /mnt/pub.
+>  		 * Do not say /pub/.
+>  		 */
+> @@ -298,7 +298,7 @@ static const char *path_ok(const char *directory, st=
+ruct hostinfo *hi)
+>  			return path;
+>  	}
+>
+> -	logerror("'%s': not in whitelist", path);
+> +	logerror("'%s': not in allowlist", path);
+>  	return NULL;		/* Fallthrough. Deny by default */
+>  }
+>
+> @@ -403,7 +403,7 @@ static int run_service(const char *dir, struct daemo=
+n_service *service,
+>  	 * a "git-daemon-export-ok" flag that says that the other side
+>  	 * is ok with us doing this.
+>  	 *
+> -	 * path_ok() uses enter_repo() and does whitelist checking.
+> +	 * path_ok() uses enter_repo() and does allowlist checking.
+>  	 * We only need to make sure the repository is exported.
+>  	 */
+>
+> @@ -1444,7 +1444,7 @@ int cmd_main(int argc, const char **argv)
+>  		cred =3D prepare_credentials(user_name, group_name);
+>
+>  	if (strict_paths && (!ok_paths || !*ok_paths))
+> -		die("option --strict-paths requires a whitelist");
+> +		die("option --strict-paths requires a allowlist");
+>
+>  	if (base_path && !is_directory(base_path))
+>  		die("base-path '%s' does not exist or is not a directory",
+> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> index 4c8118010a8..7d13b0a5ac1 100755
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -152,7 +152,7 @@ $state->{allowed_roots} =3D [ @ARGV ];
+>
+>  # don't export the whole system unless the users requests it
+>  if ($state->{'export-all'} && !@{$state->{allowed_roots}}) {
+> -    die "--export-all can only be used together with an explicit whitel=
+ist\n";
+> +    die "--export-all can only be used together with an explicit allowl=
+ist\n";
+>  }
+>
+>  # Environment handling for running under git-shell
+> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+> index dede2cbddf9..b4a5f23c1ec 100644
+> --- a/sha1dc/sha1.c
+> +++ b/sha1dc/sha1.c
+> @@ -86,30 +86,30 @@
+>         defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || =
+\
+>         defined(__sparc))
+>  /*
+> - * Should define Big Endian for a whitelist of known processors. See
+> + * Should define Big Endian for a allowlist of known processors. See
+>   * https://sourceforge.net/p/predef/wiki/Endianness/ and
+>   * http://www.oracle.com/technetwork/server-storage/solaris/portingtoso=
+laris-138514.html
+>   */
+>  #define SHA1DC_BIGENDIAN
+>
+> -/* Not under GCC-alike or glibc or *BSD or newlib or <processor whiteli=
+st> */
+> +/* Not under GCC-alike or glibc or *BSD or newlib or <processor allowli=
+st> */
+>  #elif (defined(_AIX) || defined(__hpux))
+>
+>  /*
+> - * Defines Big Endian on a whitelist of OSs that are known to be Big
+> + * Defines Big Endian on a allowlist of OSs that are known to be Big
+>   * Endian-only. See
+>   * https://lore.kernel.org/git/93056823-2740-d072-1ebd-46b440b33d7e@fel=
+t.demon.nl/
+>   */
+>  #define SHA1DC_BIGENDIAN
+>
+> -/* Not under GCC-alike or glibc or *BSD or newlib or <processor whiteli=
+st> or <os whitelist> */
+> +/* Not under GCC-alike or glibc or *BSD or newlib or <processor allowli=
+st> or <os allowlist> */
+>  #elif defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
+>  /*
+>   * As a last resort before we do anything else we're not 100% sure
+> - * about below, we blacklist specific processors here. We could add
+> + * about below, we denylist specific processors here. We could add
+>   * more, see e.g. https://wiki.debian.org/ArchitectureSpecificsMemo
+>   */
+> -#else /* Not under GCC-alike or glibc or *BSD or newlib or <processor w=
+hitelist> or <os whitelist> or <processor blacklist> */
+> +#else /* Not under GCC-alike or glibc or *BSD or newlib or <processor a=
+llowlist> or <os allowlist> or <processor denylist> */
+>
+>  /* We do nothing more here for now */
+>  /*#error "Uncomment this to see if you fall through all the detection"*=
+/
+> diff --git a/transport.c b/transport.c
+> index 52db7a3cb09..321bbe382cc 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -940,7 +940,7 @@ static int external_specification_len(const char *ur=
+l)
+>  	return strchr(url, ':') - url;
+>  }
+>
+> -static const struct string_list *protocol_whitelist(void)
+> +static const struct string_list *protocol_allowlist(void)
+>  {
+>  	static int enabled =3D -1;
+>  	static struct string_list allowed =3D STRING_LIST_INIT_DUP;
+> @@ -1020,9 +1020,9 @@ static enum protocol_allow_config get_protocol_con=
+fig(const char *type)
+>
+>  int is_transport_allowed(const char *type, int from_user)
+>  {
+> -	const struct string_list *whitelist =3D protocol_whitelist();
+> -	if (whitelist)
+> -		return string_list_has_string(whitelist, type);
+> +	const struct string_list *allowlist =3D protocol_allowlist();
+> +	if (allowlist)
+> +		return string_list_has_string(allowlist, type);
+>
+>  	switch (get_protocol_config(type)) {
+>  	case PROTOCOL_ALLOW_ALWAYS:
+> --
+> gitgitgadget
+>
