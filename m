@@ -2,115 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8831CCCA479
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 18:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55729C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 18:34:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236391AbiGMSdX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 14:33:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36840 "EHLO
+        id S231860AbiGMSes (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 14:34:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230451AbiGMSdV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 14:33:21 -0400
-Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 862A11573F
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 11:33:20 -0700 (PDT)
-Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-10c0d96953fso15159937fac.0
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 11:33:20 -0700 (PDT)
+        with ESMTP id S230451AbiGMSer (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 14:34:47 -0400
+Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C25201A5
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 11:34:46 -0700 (PDT)
+Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-10c0e6dd55eso15076568fac.7
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 11:34:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=+/5w2gLWgGq9NHRQzmyBoEqbh3PYKFqIM6KlMZwKvAQ=;
-        b=DhMcDLvXiGU26coPbork2Ot4ex+BvN/7s/cVN5Ta3DbQu5RL0F9PIrOlP9pSAFMjVR
-         q58b9x2VxiDZG8hCOLFxGOdZ8q0hXDcTh48d0KvoltW0CQONDVawem53YRyQagypX7c3
-         /hogxMdtDvZ6/wRtCixjddsTQgV0aSAP3hBnxak4PIewb9LJIlSYnS6gG4cR28udyjxn
-         HItcZEIT46x5bfzP4eL1hGrs4jovgm3z/eZhy14/TYyz1tWoju2FI6rV+I9DsADgTopM
-         ilmOxsvJ1XWrV/qMNqCDWcdD1G3f6WllxXuLsqXX54kfc8RphRxXovKJBShIqi+WbNuG
-         u4kA==
+        bh=ryhZdUrvrZxUA7vCEd+sq5IQVO9pXfe3cGt0InKmeRs=;
+        b=fSmNfLrirnIybWyvbmkCOi2lQXrEY72QSe7IiDgTGAySg6lljUjKZigyZ1kkMJP45G
+         T1wXoQsOwfEpq/vYvMLXWk8wceM9nVgU8XUo0qofjagQ1i7sTnNXo7Y17XKNQFC9Iq5f
+         NzX/cXQSd5iw/lJwvvlXMtw4NfQ06YlALoR+PUnhKl27ZUxkZO4rOo6gmdHSZ48H0cq2
+         9oCVLPiwyfi5jgfh0hGYhpoK2mXcCDewqocSxOvtJY0yOurb2KSwVML5u0ks4xgTW8G+
+         5etFUddVKh2rr0ow0dCHopUo6xEbozgbEnkHGfSA3Mfk4zqIA7ddXsEaeT0gUDjlnROF
+         eTWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=+/5w2gLWgGq9NHRQzmyBoEqbh3PYKFqIM6KlMZwKvAQ=;
-        b=1pJ8Xg+ZkCeDPGbzTzQcyDf76LmQckmhbqf3XQwgiRBUb+syrA+OGt6bmwdQXpNlSs
-         L8SD7pd0SvIhQvJ4y1/UpBMTQgzQ0gs1LbXgfbO95BFGbwcxnpCGCkPFIaeg+Wm6RmeT
-         rAdsEvua5pRQ35Lq8S/sFYtbaKSkqCZwH1R39ZvqyYaQPkuMkrkj7OjA4DWYaaDRCtBR
-         sbyq1o0JXB2Qhhtu0aVSlZuh4Y2hE0Of/HPLNDMwBcpDtdfNc9uN/DVbukHrq/qY6l9L
-         oToXlpfNHJBIIRZw3qucHLnukR/LznrjLz19WvjAKhIF/kZ2jIWuSpnwlOcissI8bMZn
-         MSZw==
-X-Gm-Message-State: AJIora8qOjyy7EqGvF9WXzLzFwFAlbmxawCgP1gSI0rTwdWyQeTZBQ9a
-        NiOVlOZCau8VEjPnXAcfEa+j
-X-Google-Smtp-Source: AGRyM1v3wXJjlFfLxjsmlUrJ7KsUzhpYo87MajDwZBrA48zmA5Tq83vhkPwGym59lSMQlCTux7j1JQ==
-X-Received: by 2002:a05:6871:606:b0:10b:f881:e606 with SMTP id w6-20020a056871060600b0010bf881e606mr5455527oan.293.1657737199835;
-        Wed, 13 Jul 2022 11:33:19 -0700 (PDT)
+        bh=ryhZdUrvrZxUA7vCEd+sq5IQVO9pXfe3cGt0InKmeRs=;
+        b=3704WhceV+t4HiX+KisjdnLR8aqIh++sWsVX2nr27H78AMH6FkdfZaE6v2EkOn/6sU
+         61UPNtG0SjKOuxwZ+5kLAUFYsPUE2NVEsV/uk9zvf8Q4KWso0ejvfoDoL3fv+GUZmckR
+         VT46PQiK2KI0pwg4Za2vwc36UEnA6EKwIsR7kO6PmuEOO2PFprvu8fdAl+ztrDeWOjr+
+         GePdRwZ2extExC8dKuS8E1mv2g4V44z8x1dLLDSsdwCyadp1HZ1WrAo0bNiudjdrOF/U
+         gfK0XbrwZM5SmHgi6jwEAE8yG5mn2XVPRZgrgZO8/rydOwtiIGQuFBZv2ntR9dfJM26D
+         Kw3g==
+X-Gm-Message-State: AJIora/1PlymTrYPfLsb4b4fDL/FibcE+S2ZtsLLrd9hlkim1gWza5Ov
+        ipQ+ktJYn685bK78Zyv99+eq
+X-Google-Smtp-Source: AGRyM1s40KTrgrVzDrChKBkKkbEH3aBvPRijHfREGVtbr3RmJBNU7VgLkFU0hXKzc9jCWNzeTlnFcA==
+X-Received: by 2002:a05:6870:e997:b0:10c:66f1:8bbb with SMTP id r23-20020a056870e99700b0010c66f18bbbmr5338545oao.243.1657737286219;
+        Wed, 13 Jul 2022 11:34:46 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:3507:5998:f07a:ba19? ([2600:1700:e72:80a0:3507:5998:f07a:ba19])
-        by smtp.gmail.com with ESMTPSA id s3-20020acadb03000000b0032e442f6a72sm5558493oig.40.2022.07.13.11.33.18
+        by smtp.gmail.com with ESMTPSA id j23-20020a544817000000b0033a0ef748a8sm3028682oij.54.2022.07.13.11.34.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Jul 2022 11:33:19 -0700 (PDT)
-Message-ID: <647a4cf7-ef1f-284b-37e2-4dceb3cfae1d@github.com>
-Date:   Wed, 13 Jul 2022 14:33:05 -0400
+        Wed, 13 Jul 2022 11:34:46 -0700 (PDT)
+Message-ID: <6b117636-d3e3-5ae9-5419-439689efb763@github.com>
+Date:   Wed, 13 Jul 2022 14:34:33 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 0/3] Use "allowlist" and "denylist" tree-wide
+Subject: Re: [PATCH 1/3] Documentation: use allowlist and denylist
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
+To:     Jeff King <peff@peff.net>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de
+Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de
 References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
- <xmqqk08hdm05.fsf@gitster.g>
+ <ec81aac05c40318755f5311a20e8f9cc55d289fc.1657718450.git.gitgitgadget@gmail.com>
+ <Ys7i/GWSNRHqSZNQ@coredump.intra.peff.net>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqk08hdm05.fsf@gitster.g>
+In-Reply-To: <Ys7i/GWSNRHqSZNQ@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/13/2022 12:18 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 7/13/2022 11:21 AM, Jeff King wrote:
+> On Wed, Jul 13, 2022 at 01:20:48PM +0000, Derrick Stolee via GitGitGadget wrote:
 > 
->> The terms "allowlist" and "denylist" are self-defining. One "allows" things
->> while the other "denies" things.
+>> Using "allowlist" and "denylist" is a more precise definition of the
+>> functionality they provide. The previous color-based words assume
+>> cultural interpretation to provide the meaning.
 >>
->> These are better terms over "whitelist" and "blacklist" which require prior
->> knowledge of the terms or cultural expectations around what each color
->> "means".
+>> Focus on replacements in the Documentation/ directory since these are
+>> not functional uses.
 > 
-> Half Devil's advocate mode on, as I got up on the wrong side of the
-> bed this morning.
+> Thanks, the direction looks reasonable to me. I knew at least about the
+> one for protocol.*, which I think I introduced, and had been meaning to
+> grep for others.
 > 
-> I am very much for consistent uses of allow/deny and I think it is a
-> good idea to review and apply this series.
+> I think you need some grammatical fixups, though. E.g.:
 > 
-> But I'd prefer to see us more honest to ourselves.  Like it or not,
-> the code comment and documentation are targetted toward those who
-> can read English, and when you say something is whitelisted in
-> English, you know exactly what it means, due to shared knowledge of
-> historical use of the word.
+>> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+>> index fdc28c041c7..ff74a90aead 100644
+>> --- a/Documentation/git-daemon.txt
+>> +++ b/Documentation/git-daemon.txt
+>> @@ -33,7 +33,7 @@ It verifies that the directory has the magic file "git-daemon-export-ok", and
+>>  it will refuse to export any Git directory that hasn't explicitly been marked
+>>  for export this way (unless the `--export-all` parameter is specified). If you
+>>  pass some directory paths as 'git daemon' arguments, you can further restrict
+>> -the offers to a whitelist comprising of those.
+>> +the offers to a allowlist comprising of those.
 > 
-> We are doing this change in the name of inclusion.  I find it
-> intellectually dishonest to avoid saying that true reason, and
-> instead say the allow/deny pair is more "precise".  They are not
-> more precise.  In fact, the fact why you have to choose between deny
-> and block and defend deny over block shows that these words are less
-> precise.  People who use white/black do not have to choose between
-> black and other colors and say "white/red may be OK but we choose
-> black because..." to defend the choice of their words.
+> You'd want s/a/an/ here.
+
+Thank you for the careful attention to detail. I should have
+been more careful when switching from a consonant to a vowel.
+>>  'git daemon' as inetd server::
+>>  	To set up 'git daemon' as an inetd service that handles any
+>> -	repository under the whitelisted set of directories, /pub/foo
+>> +	repository under the allowlisted set of directories, /pub/foo
+>>  	and /pub/bar, place an entry like the following into
+>>  	/etc/inetd all on one line:
 > 
-> The reason we do this change is because the project thinks that it
-> is the right thing to encourage the adoption of these more inclusive
-> words, together with other projects that did the same.
+> This one is more gut feeling.  Somehow "allowlisted" as an adjective
+> seems more awkward than "whitelisted". Probably because I've just seen
+> "whitelisted" so many more times. Or maybe it just crosses my personal
+> line of too many syllables. ;)
 > 
-> In addition, they are words more widely accepted in today's world,
-> and new folks are more likely to be educated with these words.  As
-> time goes by, the historical white/black will be less understood, so
-> it makes it a future-proofing change, as well.
- 
-I like how you start by saying you are playing devil's advocate,
-but then go on to add more reasons to support the work. It's good
-feedback to make the case stronger.
+> I don't know if there's an easy way around it. I don't have a suggestion
+> that's better than "allowlist" for the general term, and we want to use
+> the terms consistently. You could probably write it as:
+> 
+>   ...any repository under the set of directories in the allowlist...
+> 
+> but I'm sure somebody probably likes that less. :) So I register it only
+> as a suggestion, not a request for a change.
+
+I think that is the natural way to reword here, but I'll take some
+time to think of alternatives before sending v2.
 
 Thanks,
 -Stolee
