@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6ADEC433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:10:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64AB2C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236063AbiGMNKy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 09:10:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59802 "EHLO
+        id S236087AbiGMNK7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 09:10:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235930AbiGMNKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 09:10:47 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDEDDD59
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:10:45 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id v16so15412309wrd.13
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:10:45 -0700 (PDT)
+        with ESMTP id S236021AbiGMNKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 09:10:50 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D80AC1B
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:10:48 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id o4so15460486wrh.3
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=53NYxiy7JsQ4Nwv2ppG0ucODnzkND7IHCh4AsyJODHc=;
-        b=aa/z5ZDlsG2fVNftBGhZ5YYoaytHPN36yy1I0LKZRFRDaeSw3wPczhJz71gzSSEZeR
-         If8kbIbcJHSNHH+vzCeeR9f2skIiM2PEmh4o5Z5zgw0YjK9glO4Fs96p0d2RPs3LHClc
-         YHDxi+pPag8t7in4JphNyTTqQS/kMWpSUT7wAjBtmhQfiy2e1vVtiSe59FPru7VTpwQK
-         fFKWRh/FSLT9A8DeHIn8DUlVc+FAA4f+1zkdb6ypGnPEnrz0LB8vmZqRxOa0OkNp/z0T
-         herY3Kv5wfWrXBPaX85jBrB3RgIss+vTlkVZglwS24v+dRNB6y3tR8WtvmhyAVM+0FhG
-         Fd3g==
+        bh=gI835caINGX5JrD/1LW0PGVcj2NTdLr/tKFjIRcWZUo=;
+        b=XoeS1JTGFndhF/HBf4Iw6hHWGFqfAU2cc5s9mmwp7eoD3QhT1uIaiS1I3mdxJVHHyo
+         U1lGatGfWDPQHh818CGdkYQm9kPsCYtm5/XDSeAKqpAL0IqXkxcQI81KRFWRfa6pSOxM
+         u8hD5Eg4KeI6fqYadTFzSKc40SCwhmlIOhZM0C71CIyooyeMMm66FFihqueNr96sacma
+         scajyJ1yEi7dSozLjGDznnH27E3DaTOsBjhoACrg7ck9o0HqdFph+fAhpP/7AozEagpR
+         S0ox3CM6P6q0ZMObbWVNJNRndNYa/QirPPtmyrR3kxAzCc04weMquVoCaFRQlvv79TMh
+         /HWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=53NYxiy7JsQ4Nwv2ppG0ucODnzkND7IHCh4AsyJODHc=;
-        b=LSfIGWCr7hBG9oEqD6/74IZ4KWSRSkZY402UCASgIqjOBCbinEKu2Aud5OWRHVEpFP
-         EBuFFhaVQU2CQJH66FOrdI61dj/8o9SZEk3hNGWSWVThL+yweFi8ZpPj3nkruoLUWDWM
-         BTquh99qa9H/z7cz+n3kHyhLounnk2nakFHal4h/X6obNKQj/DBmPtzBUkqKcOWc50yE
-         XHnzAXvNqkqByMULlrpBAHTFQDEDDdWh5Qrl6igaoZBaSvuVcy9c1FloxKoySKZt23rB
-         nhsGrwZ2Vm3sQ5WfOEoRZmcgrfcamLqXjG2iqYiJpDtAfOI8ycEqtqV9UB9LovcWV3Xb
-         jmbA==
-X-Gm-Message-State: AJIora9oehUW8fPAnqIZjb9NezsbLgI1iJ7Wo7+0PAs1jwn4kyYy6KCS
-        EqdrmygQ2sseiGzYRHL/T2FNcJy4vfCg/A==
-X-Google-Smtp-Source: AGRyM1sdVeKa8nismnbrlq79VFn7uAa3uBPWD8EsdDGkM64Cd1BZzaq07mN89pPke9VCBNYkJfbb1g==
-X-Received: by 2002:adf:e7cf:0:b0:21d:60e0:a71a with SMTP id e15-20020adfe7cf000000b0021d60e0a71amr3523550wrn.38.1657717845192;
-        Wed, 13 Jul 2022 06:10:45 -0700 (PDT)
+        bh=gI835caINGX5JrD/1LW0PGVcj2NTdLr/tKFjIRcWZUo=;
+        b=hwwSicUuU3YGf49bxvk5M2gatN/30wpCvTzll8O4ivzTpScdJGnDgYyWJTF6OhswWY
+         7/2FDBpCoRm1462HTlARL00Bc6OAS6fvY+HY5nlP0JJ/SgxbygLmUM10xHaiH7zdUXl5
+         vl++EZOpKi4P0ef3kHz2vtoqTXG90bkBgPNL0vXRBFhPBT20C4SFGluDkDpERoW4poMv
+         nwh9+kwRroUyTAlvTsYMGaREsboajHxbI/n7bx18VJKE+ulm1sx47d5/aIpZZZXWd+ob
+         ti526ArHVZhPAhpLkqQi+DGRld39NF7poqqPeYuRn9cXVzS+ZKgz4jhIsXznXK01XOdx
+         afPA==
+X-Gm-Message-State: AJIora+LNpDMgXNh63Q3Z7tP8q8LBl8xieJQ3cGAQebn06iMNjy8Egli
+        nUB1P/3BSudhNE0z1xCz7v080kXFSaQGCA==
+X-Google-Smtp-Source: AGRyM1tNkt9Lb/tQanGwZRFZ8mM+3yb5kT0oIxlZVrQTO1i+26F3UvDeiC3phUmye08+/V6vv/C47Q==
+X-Received: by 2002:a05:6000:144f:b0:21d:a3cc:a6fa with SMTP id v15-20020a056000144f00b0021da3cca6famr3256817wrx.191.1657717847505;
+        Wed, 13 Jul 2022 06:10:47 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d15-20020a05600c34cf00b0039c4d022a44sm2183653wmq.1.2022.07.13.06.10.43
+        by smtp.gmail.com with ESMTPSA id d15-20020a05600c34cf00b0039c4d022a44sm2183653wmq.1.2022.07.13.06.10.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jul 2022 06:10:44 -0700 (PDT)
+        Wed, 13 Jul 2022 06:10:46 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/6] log: fix common "rev.pending" memory leak in "git show"
-Date:   Wed, 13 Jul 2022 15:10:33 +0200
-Message-Id: <patch-4.6-9bff7b10197-20220713T130511Z-avarab@gmail.com>
+Subject: [PATCH 6/6] revisions API: don't leak memory on argv elements that need free()-ing
+Date:   Wed, 13 Jul 2022 15:10:35 +0200
+Message-Id: <patch-6.6-4a581a4a6ce-20220713T130511Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.0.932.g7b7031e73bc
 In-Reply-To: <cover-0.6-00000000000-20220713T130511Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20220713T130511Z-avarab@gmail.com>
@@ -66,163 +66,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a very common memory leak introduced in 5d7eeee2ac6 (git-show: grok blobs,
-trees and tags, too, 2006-12-14).
+Add a "free_removed_argv_elements" member to "struct
+setup_revision_opt", and use it to fix several memory leaks, e.g. the
+one with a "XXX" comment added in 8a534b61241 (bisect: use argv_array
+API, 2011-09-13).
 
-When "git show" displays commits it needs to temporarily clobbers the
-"rev.pending" array, but by doing so we'll fail to
-release_revisions(), as we have for most other uses of "struct
-rev_info" since 2da81d1efb0 (Merge branch 'ab/plug-leak-in-revisions',
-2022-06-07).
+We have various memory leaks in APIs that take and munge "const
+char **argv", e.g. parse_options(). Sometimes these APIs are given the
+"argv" we get to the "main" function, in which case we don't leak
+memory, but other times we're giving it the "v" member of a "struct
+strvec" we created.
 
-In the preceding commit this code was made to use a more extendable
-pattern, which we can now complete. Once we've clobbered our
-"rev.pending" and invoked "cmd_log_walk_no_free()" we need to
-"object_array_clear()" our newly created "rev.pending" to avoid
-leaking the memory related to the one member array we've created.
+There's several potential ways to fix those sort of leaks, we could
+add a "nodup" mode to "struct strvec", which would work for the cases
+where we push constant strings to it. But that wouldn't work as soon
+as we used strvec_pushf(), or otherwise needed to duplicate or create
+a string for that "struct strvec".
 
-But more importantly we need to set "rev.pending" back to the original
-we squirreled away in the "cp" variable, so that we'll make use of the
-release_revisions() added in f6bfea0ad01 (revisions API users: use
-release_revisions() in builtin/log.c, 2022-04-13). In f6bfea0ad01 this
-memory leak was noted as an outstanding TODO, but it's now been fixed.
+Let's instead make it the responsibility of the revisions API. If it's
+going to clobber elements of argv it can also free() them, which it
+will now do if instructed to do so via "free_removed_argv_elements".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/log.c                                    | 2 ++
- t/t0203-gettext-setlocale-sanity.sh              | 1 +
- t/t1020-subdirectory.sh                          | 1 +
- t/t3307-notes-man.sh                             | 1 +
- t/t3920-crlf-messages.sh                         | 2 ++
- t/t4069-remerge-diff.sh                          | 1 +
- t/t7007-show.sh                                  | 1 +
- t/t7503-pre-commit-and-pre-merge-commit-hooks.sh | 1 +
- t/t9122-git-svn-author.sh                        | 1 -
- t/t9162-git-svn-dcommit-interactive.sh           | 1 -
- 10 files changed, 10 insertions(+), 2 deletions(-)
+ bisect.c                    | 6 ++++--
+ builtin/submodule--helper.c | 5 ++++-
+ remote.c                    | 5 ++++-
+ revision.c                  | 2 ++
+ revision.h                  | 3 ++-
+ t/t2020-checkout-detach.sh  | 1 +
+ 6 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index e0f40798d45..77ec256a8ae 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -747,6 +747,8 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 			memcpy(&rev.pending, &blank, sizeof(rev.pending));
- 			add_object_array(o, name, &rev.pending);
- 			ret = cmd_log_walk_no_free(&rev);
-+			object_array_clear(&rev.pending);
-+			memcpy(&rev.pending, &cp, sizeof(rev.pending));
- 			break;
- 		default:
- 			ret = error(_("unknown type: %d"), o->type);
-diff --git a/t/t0203-gettext-setlocale-sanity.sh b/t/t0203-gettext-setlocale-sanity.sh
-index 0ce1f22eff6..86cff324ff1 100755
---- a/t/t0203-gettext-setlocale-sanity.sh
-+++ b/t/t0203-gettext-setlocale-sanity.sh
-@@ -5,6 +5,7 @@
+diff --git a/bisect.c b/bisect.c
+index 6afb98be7a1..38b3891f3a6 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -653,6 +653,9 @@ static void bisect_rev_setup(struct repository *r, struct rev_info *revs,
+ 			     const char *bad_format, const char *good_format,
+ 			     int read_paths)
+ {
++	struct setup_revision_opt opt = {
++		.free_removed_argv_elements = 1,
++	};
+ 	int i;
  
- test_description="The Git C functions aren't broken by setlocale(3)"
+ 	repo_init_revisions(r, revs, prefix);
+@@ -669,8 +672,7 @@ static void bisect_rev_setup(struct repository *r, struct rev_info *revs,
+ 	if (read_paths)
+ 		read_bisect_paths(rev_argv);
  
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./lib-gettext.sh
+-	setup_revisions(rev_argv->nr, rev_argv->v, revs, NULL);
+-	/* XXX leak rev_argv, as "revs" may still be pointing to it */
++	setup_revisions(rev_argv->nr, rev_argv->v, revs, &opt);
+ }
  
- test_expect_success 'git show a ISO-8859-1 commit under C locale' '
-diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
-index 9fdbb2af80e..45eef9457fe 100755
---- a/t/t1020-subdirectory.sh
-+++ b/t/t1020-subdirectory.sh
-@@ -6,6 +6,7 @@
- test_description='Try various core-level commands in subdirectory.
- '
+ static void bisect_common(struct rev_info *revs)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index c597df7528e..c4e47c1b15a 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1114,6 +1114,9 @@ static int compute_summary_module_list(struct object_id *head_oid,
+ {
+ 	struct strvec diff_args = STRVEC_INIT;
+ 	struct rev_info rev;
++	struct setup_revision_opt opt = {
++		.free_removed_argv_elements = 1,
++	};
+ 	struct module_cb_list list = MODULE_CB_LIST_INIT;
+ 	int ret = 0;
  
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-read-tree.sh
+@@ -1131,7 +1134,7 @@ static int compute_summary_module_list(struct object_id *head_oid,
+ 	init_revisions(&rev, info->prefix);
+ 	rev.abbrev = 0;
+ 	precompose_argv_prefix(diff_args.nr, diff_args.v, NULL);
+-	setup_revisions(diff_args.nr, diff_args.v, &rev, NULL);
++	setup_revisions(diff_args.nr, diff_args.v, &rev, &opt);
+ 	rev.diffopt.output_format = DIFF_FORMAT_NO_OUTPUT | DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = submodule_summary_callback;
+ 	rev.diffopt.format_callback_data = &list;
+diff --git a/remote.c b/remote.c
+index b19e3a2f015..f05b50b1dd1 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2169,6 +2169,9 @@ static int stat_branch_pair(const char *branch_name, const char *base,
+ 	struct object_id oid;
+ 	struct commit *ours, *theirs;
+ 	struct rev_info revs;
++	struct setup_revision_opt opt = {
++		.free_removed_argv_elements = 1,
++	};
+ 	struct strvec argv = STRVEC_INIT;
  
-diff --git a/t/t3307-notes-man.sh b/t/t3307-notes-man.sh
-index 1aa366a410e..ae316502c45 100755
---- a/t/t3307-notes-man.sh
-+++ b/t/t3307-notes-man.sh
-@@ -4,6 +4,7 @@ test_description='Examples from the git-notes man page
+ 	/* Cannot stat if what we used to build on no longer exists */
+@@ -2203,7 +2206,7 @@ static int stat_branch_pair(const char *branch_name, const char *base,
+ 	strvec_push(&argv, "--");
  
- Make sure the manual is not full of lies.'
+ 	repo_init_revisions(the_repository, &revs, NULL);
+-	setup_revisions(argv.nr, argv.v, &revs, NULL);
++	setup_revisions(argv.nr, argv.v, &revs, &opt);
+ 	if (prepare_revision_walk(&revs))
+ 		die(_("revision walk setup failed"));
  
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
-index 0276edbe3d3..4c661d4d54a 100755
---- a/t/t3920-crlf-messages.sh
-+++ b/t/t3920-crlf-messages.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='Test ref-filter and pretty APIs for commit and tag messages using CRLF'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- LIB_CRLF_BRANCHES=""
-diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
-index 35f94957fce..9e7cac68b1c 100755
---- a/t/t4069-remerge-diff.sh
-+++ b/t/t4069-remerge-diff.sh
-@@ -2,6 +2,7 @@
- 
- test_description='remerge-diff handling'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # This test is ort-specific
-diff --git a/t/t7007-show.sh b/t/t7007-show.sh
-index d6cc69e0f2c..f908a4d1abc 100755
---- a/t/t7007-show.sh
-+++ b/t/t7007-show.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git show'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-index ad1eb64ba0d..aa004b70a8d 100755
---- a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-+++ b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-@@ -5,6 +5,7 @@ test_description='pre-commit and pre-merge-commit hooks'
+diff --git a/revision.c b/revision.c
+index 211352795c5..3fa84247d33 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2748,6 +2748,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 			const char *arg = argv[i];
+ 			if (strcmp(arg, "--"))
+ 				continue;
++			if (opt && opt->free_removed_argv_elements)
++				free((char *)argv[i]);
+ 			argv[i] = NULL;
+ 			argc = i;
+ 			if (argv[i + 1])
+diff --git a/revision.h b/revision.h
+index e576845cdd1..bb91e7ed914 100644
+--- a/revision.h
++++ b/revision.h
+@@ -375,7 +375,8 @@ struct setup_revision_opt {
+ 	const char *def;
+ 	void (*tweak)(struct rev_info *, struct setup_revision_opt *);
+ 	unsigned int	assume_dashdash:1,
+-			allow_exclude_promisor_objects:1;
++			allow_exclude_promisor_objects:1,
++			free_removed_argv_elements:1;
+ 	unsigned revarg_opt;
+ };
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
+index bc46713a43e..2eab6474f8d 100755
+--- a/t/t2020-checkout-detach.sh
++++ b/t/t2020-checkout-detach.sh
+@@ -4,6 +4,7 @@ test_description='checkout into detached HEAD state'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- test_expect_success 'root commit' '
-diff --git a/t/t9122-git-svn-author.sh b/t/t9122-git-svn-author.sh
-index 527ba3d2932..0fc289ae0f0 100755
---- a/t/t9122-git-svn-author.sh
-+++ b/t/t9122-git-svn-author.sh
-@@ -2,7 +2,6 @@
- 
- test_description='git svn authorship'
- 
--TEST_FAILS_SANITIZE_LEAK=true
- . ./lib-git-svn.sh
- 
- test_expect_success 'setup svn repository' '
-diff --git a/t/t9162-git-svn-dcommit-interactive.sh b/t/t9162-git-svn-dcommit-interactive.sh
-index e2aa8ed88a9..b3ce033a0d3 100755
---- a/t/t9162-git-svn-dcommit-interactive.sh
-+++ b/t/t9162-git-svn-dcommit-interactive.sh
-@@ -4,7 +4,6 @@
- 
- test_description='git svn dcommit --interactive series'
- 
--TEST_FAILS_SANITIZE_LEAK=true
- . ./lib-git-svn.sh
- 
- test_expect_success 'initialize repo' '
+ check_detached () {
 -- 
 2.37.0.932.g7b7031e73bc
 
