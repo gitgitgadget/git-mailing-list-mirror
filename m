@@ -2,167 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87FDCCCA481
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 14:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3205C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 15:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236589AbiGMOmy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 10:42:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46586 "EHLO
+        id S230440AbiGMPVh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 11:21:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236585AbiGMOmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 10:42:47 -0400
-Received: from dalaran.tastycake.net (dalaran.tastycake.net [IPv6:2001:ba8:0:1c0::1:1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6868B32ECE
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 07:42:45 -0700 (PDT)
-Received: from c.a.1.d.d.f.6.c.f.8.d.f.b.e.b.6.d.a.0.2.5.1.e.d.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:de15:20ad:6beb:fd8f:c6fd:d1ac] helo=lucy.dinwoodie.org)
-        by dalaran.tastycake.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        (envelope-from <adam@dinwoodie.org>)
-        id 1oBdZY-0001dI-6A; Wed, 13 Jul 2022 15:42:40 +0100
-Received: from adam by lucy.dinwoodie.org with local (Exim 4.94.2)
-        (envelope-from <adam@dinwoodie.org>)
-        id 1oBdZW-003rXC-VR; Wed, 13 Jul 2022 15:42:39 +0100
-Date:   Wed, 13 Jul 2022 15:42:38 +0100
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: t0301-credential-cache test failure on cygwin
-Message-ID: <CA+kUOam-_3qR7YguPyUmyC2dWi2M1cy6Hg4Pveak+f40qtYBvA@mail.gmail.com>
-References: <9dc3e85f-a532-6cff-de11-1dfb2e4bc6b6@ramsayjones.plus.com>
- <xmqqtu7t30uv.fsf@gitster.g>
- <4529b11a-e514-6676-f427-ffaec484e8f1@ramsayjones.plus.com>
- <CA+kUOakjnOxs_FGojdZXaiaY4+68pvyBHsbue+AQHp7PLXqNJw@mail.gmail.com>
- <CA+kUOak29RkU-ooMgOz8yCg9-q6vb1VfdP8_VLay_V650ttwjA@mail.gmail.com>
- <51972253-c1a1-8be7-39f5-3093ac83ffb1@ramsayjones.plus.com>
+        with ESMTP id S235702AbiGMPVg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 11:21:36 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930E243303
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 08:21:34 -0700 (PDT)
+Received: (qmail 15084 invoked by uid 109); 13 Jul 2022 15:21:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 Jul 2022 15:21:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13159 invoked by uid 111); 13 Jul 2022 15:21:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Jul 2022 11:21:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 13 Jul 2022 11:21:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/3] Documentation: use allowlist and denylist
+Message-ID: <Ys7i/GWSNRHqSZNQ@coredump.intra.peff.net>
+References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
+ <ec81aac05c40318755f5311a20e8f9cc55d289fc.1657718450.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <51972253-c1a1-8be7-39f5-3093ac83ffb1@ramsayjones.plus.com>
+In-Reply-To: <ec81aac05c40318755f5311a20e8f9cc55d289fc.1657718450.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 11 Jul 2022 at 15:56, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
-> On 11/07/2022 14:39, Adam Dinwoodie wrote:
-> [snip]
->
-> >
-> > Minor progress update: I've now confirmed the failure was introduced by
-> > a change in the Cygwin library between the binaries for Cygwin versions
-> > 3.2.0-1 and 3.3.1-1. Specifically, the test passes with Cygwin from the
-> > 27 October 2021 package archive[0], and fails with Cygwin from the 28
-> > October 2021 archive[1], and the only difference between the two that
-> > has any chance of being relevant is that bump in the Cygwin release.
->
-> Heh, I was just about to email you with similar news! I had a look at
-> my setup.log to see what I actually updated (and from what) and the
-> only thing that seemed to make sense was an update of the cygwin .dll
-> from v3.2.0-1 to v3.3.2-1 (I will add below an extract from my setup.log
-> for that day, in case you see anything else of interest).
+On Wed, Jul 13, 2022 at 01:20:48PM +0000, Derrick Stolee via GitGitGadget wrote:
 
-Having now spent far more time than I'd like wrangling the Cygwin build
-infrastructure, I've found the change in the Cygwin code that introduced
-the break. But I'm afraid progressing beyond this -- and in particular
-making any sort of judgement about appropriate next steps -- is beyond
-what I'm going to have time for in the foreseeable future.
+> Using "allowlist" and "denylist" is a more precise definition of the
+> functionality they provide. The previous color-based words assume
+> cultural interpretation to provide the meaning.
+> 
+> Focus on replacements in the Documentation/ directory since these are
+> not functional uses.
 
-(On the plus side, this has given me the kick to actually work out how
-to do this sort of investigation, so if and when I get to investigating
-the other test failures that also seem to be caused by changes in the
-Cygwin environment, I now have a much better idea what I'm doing!)
+Thanks, the direction looks reasonable to me. I knew at least about the
+one for protocol.*, which I think I introduced, and had been meaning to
+grep for others.
 
-Relevant commit is below:
+I think you need some grammatical fixups, though. E.g.:
 
-https://cygwin.com/git/?p=newlib-cygwin.git;a=commitdiff;h=ef95c03522f65d5956a8dc82d869c6bc378ef3f9
+> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+> index fdc28c041c7..ff74a90aead 100644
+> --- a/Documentation/git-daemon.txt
+> +++ b/Documentation/git-daemon.txt
+> @@ -33,7 +33,7 @@ It verifies that the directory has the magic file "git-daemon-export-ok", and
+>  it will refuse to export any Git directory that hasn't explicitly been marked
+>  for export this way (unless the `--export-all` parameter is specified). If you
+>  pass some directory paths as 'git daemon' arguments, you can further restrict
+> -the offers to a whitelist comprising of those.
+> +the offers to a allowlist comprising of those.
 
-commit ef95c03522f65d5956a8dc82d869c6bc378ef3f9 (HEAD, refs/bisect/bad)
-Author: Corinna Vinschen <corinna@vinschen.de>
-Date:   Tue Apr 6 21:35:43 2021 +0200
+You'd want s/a/an/ here.
 
-    Cygwin: select: Fix FD_CLOSE handling
-    
-    An FD_CLOSE event sets a socket descriptor ready for writing.
-    This is incorrect if the FD_CLOSE is a result of shutdown(SHUT_RD).
-    Only set the socket descriptor ready for writing if the FD_CLOSE
-    is indicating an connection abort or reset error condition.
-    
-    This requires to tweak fhandler_socket_wsock::evaluate_events.
-    FD_CLOSE in conjunction with FD_ACCEPT/FD_CONNECT special cases
-    a shutdown condition by setting an error code.  This is correct
-    for accept/connect, but not for select.  In this case, make sure
-    to return with an error code only if FD_CLOSE indicates a
-    connection error.
-    
-    Signed-off-by: Corinna Vinschen <corinna@vinschen.de>
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 302607a4967..384718ee677 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -887,7 +887,7 @@ for full details.
+>  	protocols has `protocol.<name>.allow` set to `always`
+>  	(overriding any existing configuration). In other words, any
+>  	protocol not mentioned will be disallowed (i.e., this is a
+> -	whitelist, not a blacklist). See the description of
+> +	allowlist, not a denylist). See the description of
+>  	`protocol.allow` in linkgit:git-config[1] for more details.
 
-diff --git a/winsup/cygwin/fhandler_socket_inet.cc b/winsup/cygwin/fhandler_socket_inet.cc
-index bc08d3cf1..4ecb31a27 100644
---- a/winsup/cygwin/fhandler_socket_inet.cc
-+++ b/winsup/cygwin/fhandler_socket_inet.cc
-@@ -361,20 +361,30 @@ fhandler_socket_wsock::evaluate_events (const long event_mask, long &events,
- 	  wsock_events->events |= FD_WRITE;
- 	  wsock_events->connect_errorcode = 0;
- 	}
--      /* This test makes accept/connect behave as on Linux when accept/connect
--         is called on a socket for which shutdown has been called.  The second
--	 half of this code is in the shutdown method. */
-       if (events & FD_CLOSE)
- 	{
--	  if ((event_mask & FD_ACCEPT) && saw_shutdown_read ())
-+	  if (evts.iErrorCode[FD_CLOSE_BIT])
- 	    {
--	      WSASetLastError (WSAEINVAL);
-+	      WSASetLastError (evts.iErrorCode[FD_CLOSE_BIT]);
- 	      ret = SOCKET_ERROR;
- 	    }
--	  if (event_mask & FD_CONNECT)
-+	  /* This test makes accept/connect behave as on Linux when accept/
-+	     connect is called on a socket for which shutdown has been called.
-+	     The second half of this code is in the shutdown method.  Note that
-+	     we only do this when called from accept/connect, not from select.
-+	     In this case erase == false, just as with read (MSG_PEEK). */
-+	  if (erase)
- 	    {
--	      WSASetLastError (WSAECONNRESET);
--	      ret = SOCKET_ERROR;
-+	      if ((event_mask & FD_ACCEPT) && saw_shutdown_read ())
-+		{
-+		  WSASetLastError (WSAEINVAL);
-+		  ret = SOCKET_ERROR;
-+		}
-+	      if (event_mask & FD_CONNECT)
-+		{
-+		  WSASetLastError (WSAECONNRESET);
-+		  ret = SOCKET_ERROR;
-+		}
- 	    }
- 	}
-       if (erase)
-diff --git a/winsup/cygwin/select.cc b/winsup/cygwin/select.cc
-index 956cd9bc1..b493ccc11 100644
---- a/winsup/cygwin/select.cc
-+++ b/winsup/cygwin/select.cc
-@@ -1709,15 +1709,18 @@ peek_socket (select_record *me, bool)
-   fhandler_socket_wsock *fh = (fhandler_socket_wsock *) me->fh;
-   long events;
-   /* Don't play with the settings again, unless having taken a deep look into
--     Richard W. Stevens Network Programming book.  Thank you. */
-+     Richard W. Stevens Network Programming book and how these flags are
-+     defined in Winsock.  Thank you. */
-   long evt_mask = (me->read_selected ? (FD_READ | FD_ACCEPT | FD_CLOSE) : 0)
- 		| (me->write_selected ? (FD_WRITE | FD_CONNECT | FD_CLOSE) : 0)
- 		| (me->except_selected ? FD_OOB : 0);
-   int ret = fh->evaluate_events (evt_mask, events, false);
-   if (me->read_selected)
-     me->read_ready |= ret || !!(events & (FD_READ | FD_ACCEPT | FD_CLOSE));
-   if (me->write_selected)
--    me->write_ready |= ret || !!(events & (FD_WRITE | FD_CONNECT | FD_CLOSE));
-+    /* Don't check for FD_CLOSE here.  Only an error case (ret == -1)
-+       will set ready for writing. */
-+    me->write_ready |= ret || !!(events & (FD_WRITE | FD_CONNECT));
-   if (me->except_selected)
-     me->except_ready |= !!(events & FD_OOB);
- 
+Ditto here.
+
+>  'git daemon' as inetd server::
+>  	To set up 'git daemon' as an inetd service that handles any
+> -	repository under the whitelisted set of directories, /pub/foo
+> +	repository under the allowlisted set of directories, /pub/foo
+>  	and /pub/bar, place an entry like the following into
+>  	/etc/inetd all on one line:
+
+This one is more gut feeling.  Somehow "allowlisted" as an adjective
+seems more awkward than "whitelisted". Probably because I've just seen
+"whitelisted" so many more times. Or maybe it just crosses my personal
+line of too many syllables. ;)
+
+I don't know if there's an easy way around it. I don't have a suggestion
+that's better than "allowlist" for the general term, and we want to use
+the terms consistently. You could probably write it as:
+
+  ...any repository under the set of directories in the allowlist...
+
+but I'm sure somebody probably likes that less. :) So I register it only
+as a suggestion, not a request for a change.
+
+-Peff
