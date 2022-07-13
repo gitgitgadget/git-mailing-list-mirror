@@ -2,80 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37C93C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 753BCC43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 13:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235133AbiGMNAb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 09:00:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47564 "EHLO
+        id S235933AbiGMNKr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 09:10:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234609AbiGMNA3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 09:00:29 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66D80C61
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:00:28 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id a9so18921401lfk.11
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:00:28 -0700 (PDT)
+        with ESMTP id S235923AbiGMNKn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 09:10:43 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18059E35
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:10:42 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id v14so15444892wra.5
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 06:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Yb0Vqb2HCHOucZSUzQ6R11Ijh0cbM80txB01v7MSHg4=;
-        b=g+OG88wdVwZEkqXxfzg3YIsoPZaq69tPPqo3PHL5W8N/kZi4HIQOaquk/lVxYN2LNX
-         49BHRj4tlopS2P9VjgGbamopgePcKOOsC9UgzejE3t0QZrAegNs+eZIPud6ccZkkF8kn
-         wNuLSS7qUDkQXFf1NP/J3/OOHtnwSHFfRVHAHBxu5ImXrbuFB4js0rdkdVE/Y9ioTCXU
-         DhmPLcyxsKim42tN5aWoO5S0Lab2X8XpnaqoFlYs66dN+g+inqIycnicsFwrdV4zH01/
-         L6gp+n9Mw8t0wkg+KdOieJyi2sWboLRz1mQL07j/Ksbndkidq673eXmVPPVcamUjOL0c
-         z4Zg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9hrS53QNCCMaJZ5AJtcawz6MjnEE6LW9/fBG34HK0LE=;
+        b=OVk4mqIPUoVuVSI4D695pylnZPpdc/X2R4vRT6MJSayZSy+x/8GFY3LZV5fxAUwOwq
+         iMBRFXnSUXOtsHVCO/Sjo9yaOCWxlk33smiWH6+FOMRFrnJjiRfwFUoE01aJsdA+Xfmh
+         OmPjlQ91jNON882j9efb+XBziofp+Ueq1vMkpEVI1QXWl1g3HyGMhcZsiA2UPesKV4RN
+         J8AT/wk+2f/F/Nr5roUZVu7mgOrRnqbWEK8hCYW9JqGvwn8yW9m7wbKruTwSqlytFrk+
+         R0a612NWlQRiexJqiGU/JsF0ZW0SrXqBDidq3sovXKeOWAoMb5rSYKzG2DsdApkaUj2a
+         VMHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Yb0Vqb2HCHOucZSUzQ6R11Ijh0cbM80txB01v7MSHg4=;
-        b=4196IF1QaRL6JYeB9YvAQVYDNBiSqsXWcOyu9zaEWxa1w/xi+/EjqDWKdxdZSOp9Xr
-         02I0aNrF3weas/Izrlj2sTYrA9BeAvJ/TCD7lXa9GUHC81C6HoydqKMYRGLdJCgPSI6H
-         drRBhfE5HSP3ADVXzPUWrvZUaZm0M1LX7ahTD+3VYSRgEyu2C1KgT9K95O4A6vtTBfLA
-         JFfe2e1O6naLZTQi1UiM5djg19wl8vh6jNDycGt84s1tRnR3vfOMJJaDDlHshfNYRFbu
-         AhT8Z6++QRQT9eKIebLLTv2o9hb06aNUVbidMQUImoTi7GjOo1cv07D0DcEiDQYcnosH
-         PUzA==
-X-Gm-Message-State: AJIora9Q4Vinyb6qRbGmEB6hiLZG0ViVQPQT1+ICXFb5iUrQqZpg9oeZ
-        VR7nG+EIQUsAsGqO/ibB0RIdZYb89FDmYH4ShAJV8gG65ZA=
-X-Google-Smtp-Source: AGRyM1vEf+M2dcFeAbAoOlJIXb6xumzGDDH+L1ANkMYgKTOYm++h00RR4Lm9wQYt7AumyNtyURXXV6Y8hqWeAAKrOTg=
-X-Received: by 2002:a05:6512:1318:b0:482:ae30:fc77 with SMTP id
- x24-20020a056512131800b00482ae30fc77mr1954038lfu.279.1657717225803; Wed, 13
- Jul 2022 06:00:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9hrS53QNCCMaJZ5AJtcawz6MjnEE6LW9/fBG34HK0LE=;
+        b=pnlSN6m9IsIXHPEnhhQvei6TjjSJ38Zx8zKUpS0MooqsAdy5AbB1nnoOtwXKe2Gr6M
+         MhjFdBJr04UJ/zdn7iozn130IGwkj4HyW1IMS1zJZ7KDRpbiW22tTCQv3HdLcRYpzTjA
+         v8S0a7KLgBS39ODn9X406EIvsjrPGt1ir3TdwckRrzGn1TV6MmxVRksdQwIjvLUuFLMY
+         S7cj4rpq6PY0SjAskBTXgvoYczSm03MMaTFR3z6iN1TsdCOksm6imWvehXfyGC/m/enE
+         OQ9QGswm30F9MI8S/01uq+zrP8ck10rAJDF4b3Vo8Ne9ENr2DRfZ0SrEsfOTZK0m1EsH
+         gaYA==
+X-Gm-Message-State: AJIora8u5OjSqav1K54NCvsIXJ8kdTK+A0Dl2VMahIb0+4ZPXKnZd1dY
+        GxBDz+odmGst+DWXQKvsctlgtbvvXYanuw==
+X-Google-Smtp-Source: AGRyM1vXz2ikpqnmAnPljSJjMbpwBwhDRU4z7gWieAmEpFiKJwSWEOgh7OosrUOO1rHH8UNrx1CkoA==
+X-Received: by 2002:a5d:5581:0:b0:20f:fc51:7754 with SMTP id i1-20020a5d5581000000b0020ffc517754mr3277656wrv.413.1657717840260;
+        Wed, 13 Jul 2022 06:10:40 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id d15-20020a05600c34cf00b0039c4d022a44sm2183653wmq.1.2022.07.13.06.10.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jul 2022 06:10:39 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/6] revisions API: fix more memory leaks
+Date:   Wed, 13 Jul 2022 15:10:29 +0200
+Message-Id: <cover-0.6-00000000000-20220713T130511Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.0.932.g7b7031e73bc
 MIME-Version: 1.0
-References: <cover.1657685948.git.matheus.bernardino@usp.br>
- <8da18a0a8c34a1c10d55bcdda725817db586f763.1657685948.git.matheus.bernardino@usp.br>
- <220713.86a69d461f.gmgdl@evledraar.gmail.com> <CAHd-oW6AeOGv=zQ=9Udtzwau=5XbQkhuctVDa0=4PoMTSU20HQ@mail.gmail.com>
-In-Reply-To: <CAHd-oW6AeOGv=zQ=9Udtzwau=5XbQkhuctVDa0=4PoMTSU20HQ@mail.gmail.com>
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-Date:   Wed, 13 Jul 2022 10:00:13 -0300
-Message-ID: <CAHd-oW4rBe5db8RFZa0S4OJd1RT3sXyBEW_QX8QqL8SJtWTm8g@mail.gmail.com>
-Subject: Re: [PATCH 2/3] checkout: show bug about failed entries being
- included in final report
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 13, 2022 at 8:15 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Wed, Jul 13 2022, Matheus Tavares wrote:
-> >
-> > +             a_blob=3D"$(git rev-parse :parallel-ineligible.a)" &&
-> > +             dir=3D"$(echo "$a_blob" | cut -c 1-2)" &&
-> > +             file=3D"$(echo "$a_blob" | cut -c 3-)" &&
->
-> Can't this use test_oid_to_path?
-[...]
-> > +             test "$(ls *.b | wc -l)" -eq 3 &&
-> > +             test "$(ls *.a | wc -l)" -eq 0
->
-> And this test_stdout_line_count?
+This short series fixes a couple of mistakes in 1-2/6 that snuck in in
+the revisions_release() series, those compliment the already queued
+jk/diff-files-cleanup-fix.
 
-Sure! Thanks for pointing that out. Will change.
+The rest of this fixes a few tricky remaining memory leaks, allowing
+us to mark the tests seen in the diffstat as passing with
+SANITIZE=leak.
+
+The "git show" leak in 4/6 in particular showed up in a lot of places
+in our test suite, so fixing it really helps us to accelerate towards
+marking more entire tests as leak-free.
+
+Passing CI for this series can be found at:
+https://github.com/avar/git/tree/avar/follow-up-release-revisions-fixes
+
+Ævar Arnfjörð Bjarmason (6):
+  bisect.c: add missing "goto" for release_revisions()
+  test-fast-rebase helper: use release_revisions() (again)
+  log: make the intent of cmd_show()'s "rev.pending" juggling clearer
+  log: fix common "rev.pending" memory leak in "git show"
+  bisect.c: partially fix bisect_rev_setup() memory leak
+  revisions API: don't leak memory on argv elements that need free()-ing
+
+ bisect.c                                      | 28 +++++++++++--------
+ builtin/log.c                                 | 22 ++++++++-------
+ builtin/submodule--helper.c                   |  5 +++-
+ remote.c                                      |  5 +++-
+ revision.c                                    |  2 ++
+ revision.h                                    |  3 +-
+ t/helper/test-fast-rebase.c                   |  2 --
+ t/t0203-gettext-setlocale-sanity.sh           |  1 +
+ t/t1020-subdirectory.sh                       |  1 +
+ t/t2020-checkout-detach.sh                    |  1 +
+ t/t3307-notes-man.sh                          |  1 +
+ t/t3920-crlf-messages.sh                      |  2 ++
+ t/t4069-remerge-diff.sh                       |  1 +
+ t/t7007-show.sh                               |  1 +
+ ...3-pre-commit-and-pre-merge-commit-hooks.sh |  1 +
+ t/t9122-git-svn-author.sh                     |  1 -
+ t/t9162-git-svn-dcommit-interactive.sh        |  1 -
+ 17 files changed, 50 insertions(+), 28 deletions(-)
+
+-- 
+2.37.0.932.g7b7031e73bc
+
