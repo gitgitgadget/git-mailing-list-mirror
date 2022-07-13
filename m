@@ -2,146 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87A25C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 17:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D88F1C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 17:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231612AbiGMRG0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 13:06:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38178 "EHLO
+        id S235042AbiGMRiA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 13:38:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229807AbiGMRGY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 13:06:24 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB6772E9F8
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 10:06:23 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1FFFD1B4D89;
-        Wed, 13 Jul 2022 13:06:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=h9cWIfdRDblk7WVcdqaWNZzLQVkY4x2qA7cD+k
-        Z0L4Y=; b=EWceUM3XcQxfuu7ci7Uhac9iAkmknF47Of8l8hn/sy0sTg0+WCLHR+
-        jayAl4QpcjoYmMjHwF9ynpZmzYnufx+alnrROIWM/FFgf+5QD0Pcb2ogVrj7Sze1
-        jM9s68neYnuNWUF8FF/nN0mBAuD3N9WBpAmBzBCSwQmeCln/1lmio=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1862D1B4D88;
-        Wed, 13 Jul 2022 13:06:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 720621B4D87;
-        Wed, 13 Jul 2022 13:06:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Britton Kerin <britton.kerin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: BUG: git-check-ignore documentation doesn't come close to
- describing what it really does
-References: <CAC4O8c9izkV5vbnE6MH8-RwnxRbUONxJxYZO+hb1J0ewuDtX+w@mail.gmail.com>
-        <CABPp-BG5qjp9Rx+=CCeLMiOH2Bqpa3kmBWRWdu7fTtPM-H=3kA@mail.gmail.com>
-Date:   Wed, 13 Jul 2022 10:06:16 -0700
-In-Reply-To: <CABPp-BG5qjp9Rx+=CCeLMiOH2Bqpa3kmBWRWdu7fTtPM-H=3kA@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 12 Jul 2022 17:17:23 -0700")
-Message-ID: <xmqqtu7lc587.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1C030666-02CE-11ED-BF17-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+        with ESMTP id S229654AbiGMRh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 13:37:59 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD4E2CDC8
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 10:37:57 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id x12-20020a62fb0c000000b0052af899ae7cso1973672pfm.6
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 10:37:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=+PTrflZO3l9piqpwnuy3yUXc1S1284PGSoonnFRRT0E=;
+        b=LjBm4pmiuAqOA5Xc2eOYg9PfJvS2A4FjEPmt5/v2MRzOMStkKZkT9c1gHKA1eQdS4l
+         b9TB/jRUaUzVSZJCsWS0CverUrgGhDuv2RRUmIoohFdkK65GwaLmYcP/LwLvN9PbBJYy
+         je3fBeDe6NbLpyNpfzIcniW96mczl9ltiPTu6YKnmLLM9tYDgSkZqzy6WtC1taNXcg9E
+         pdmonGo5FibkN6pWc7e3je/C0ziJzEWErbd0aLrv5sZFV+JFwb9ouuu7mqt6ytaSEAAt
+         Sana72KYGi56DgdFOYMdaagHDqBLjLpjA7NiYDAxdOVJqklQsJr/m5mQid2f9r7xbKmH
+         fKMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=+PTrflZO3l9piqpwnuy3yUXc1S1284PGSoonnFRRT0E=;
+        b=WWPzQThDd8FhOhLKkZTQaEtrufC+Pd6mzm81atzr5TuXGKkQQ7iFefwigLLKuQWv9N
+         qTiNhVVADPBQhqxGjp8QhP0ACwp5BmMHWGXc+e7X9pwv3x/4N04msNUDeTILHbL7MZ2y
+         yQdEIt/cXldrww23KtgK0HcFDVUdEqoRNDfSvEY41PluQy1JQ3J7+wSz5pYNTMGKVlgm
+         TT4lpal0W5mj1DglHJnGUQIxrZ9hPJCj+ou399I3Zo7IvpPzi8zh5sZGbG+XC7goQfYZ
+         17OovPr16vrpYDrGA0cpSdDS7t+kMNuNlXMMGr4AqSNjqlXXYV+IZTofWnQDPGaAWaXc
+         GH1Q==
+X-Gm-Message-State: AJIora9BoJxr3JooZaQoI0PVr6723CoAKgRUsBYt6lQfrn517wV3wOPT
+        MeP235AlaCQK1dCi2qBTuRY/5rd9C+PxgQ==
+X-Google-Smtp-Source: AGRyM1u4SbBMwbPM9AurdTKeTxIsSFWk4XwR5zePldPom28eHyXhAMiFE4W6LB7aCtNNgUmTZMwTt5lGlnV7Xw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a62:1a8b:0:b0:528:d505:1a06 with SMTP id
+ a133-20020a621a8b000000b00528d5051a06mr4324258pfa.78.1657733876741; Wed, 13
+ Jul 2022 10:37:56 -0700 (PDT)
+Date:   Wed, 13 Jul 2022 10:37:54 -0700
+In-Reply-To: <patch-03.11-e5ec6945409-20220713T131601Z-avarab@gmail.com>
+Message-Id: <kl6lmtdc6hhp.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com> <patch-03.11-e5ec6945409-20220713T131601Z-avarab@gmail.com>
+Subject: Re: [PATCH 03/11] submodule--helper: fix "module_clone_data" memory leaks
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> I suspect we're having an aliasing problem that you're not
-> recognizing.  "ignored" and "excluded" are used interchangeably, note
-> that patterns from the $GIT_DIR/info/exclude files and patterns from
-> the file pointed to by core.excludesFile are also lumped together with
-> the patterns from all the .gitignore files (see the gitignore manual
-> page).  Further, the internal code refers to them all as "excludes"
-> not as "ignores".
+> The "path" member can come from "argv" (i.e. not malloc'd), or it can
+> be something we determine at runtime. In the latter case let's save
+> away a pointer to free() to avoid leaking memory.
 
-All true.
+[...]
 
-> Yes, it outputs the paths that are excluded, as the documentation
-> said.  Perhaps there's a way to reword it to make this clearer?  I
-> don't think we can get rid of the alias given the fact that
-> $GIT_DIR/info/exclude and core.excludesFile are hard-coded and must be
-> kept for backward compatibility.  But suggestions to improve the
-> wording would be great.
->
-> Maybe it'd be as simple as replacing "is excluded" with "matches an
-> ignore/exclude rule"?
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 73717be957c..23ab9c7e349 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1511,6 +1511,7 @@ static int module_deinit(int argc, const char **arg=
+v, const char *prefix)
+>  struct module_clone_data {
+>  	const char *prefix;
+>  	const char *path;
+> +	char *path_free;
+>  	const char *name;
+>  	const char *url;
+>  	const char *depth;
+> @@ -1527,6 +1528,11 @@ struct module_clone_data {
+>  	.single_branch =3D -1, \
+>  }
+> =20
+> +static void module_clone_data_release(struct module_clone_data *cd)
+> +{
+> +	free(cd->path_free);
+> +}
+> +
+>  struct submodule_alternate_setup {
+>  	const char *submodule_name;
+>  	enum SUBMODULE_ALTERNATE_ERROR_MODE {
+> @@ -1651,9 +1657,9 @@ static int clone_submodule(struct module_clone_data=
+ *clone_data)
+> =20
+>  	if (!is_absolute_path(clone_data->path)) {
+>  		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
+> -		clone_data->path =3D strbuf_detach(&sb, NULL);
+> +		clone_data->path =3D clone_data->path_free =3D strbuf_detach(&sb, NULL=
+);
+>  	} else {
+> -		clone_data->path =3D xstrdup(clone_data->path);
+> +		clone_data->path =3D clone_data->path_free =3D xstrdup(clone_data->pat=
+h);
+>  	}
 
-I smell a continuation of 7ec8125f (check-ignore: fix documentation
-and implementation to match, 2020-02-18), which appears in 2.26 and
-later (the way the negative entries in the ignore/exclude mechanism
-gets handled has changed in Git 2.26, and the documentation has been
-updated).
+Hm, having .path_free doesn't seem necessary. If I'm reading the code
+correctly,
 
-"Is excluded" is perfectly fine, I think.  The first use of that
-verb in the documentation should be a bit more careful, e.g. "is
-excluded (aka ignored)" or something.
+- in module_clone() we set clone_data.path from argv
+- then we unconditionally call clone_submodule(), which does all of the
+  hard work
+- in clone_submodule(), we always hit this conditional, which means that
+  past this point, clone_data.path is always free()-able.
 
->> IMO the behavior of git-check-ignore is the correct and useful
->> behavior
->
-> I'm with you here.
+which suggests that we don't need clone_data.path_free at all. I suspect
+that just this
 
-Yup, with the old "huh?" fixed in Git 2.26 (which was there simply
-because check-ignore was not used to be a serious end-user facing
-program but was more of a debugging aid), I think the behaviour of
-the command we have today is what we want.
+   static void module_clone_data_release(struct module_clone_data *cd)
+   {
+   	free(cd->path);
+   }
 
->> and the documentation should simply be fixed
->
-> Yes, I agree it's easy to misinterpret.  Would my suggested changes help?
->
->> to reflect the
->> fact that it just lists matching entries rather than wrongly claiming
->> that it returns the overall result of the ignore calculation.
->
-> I think I understood where the problems were in the documentation that
-> could lead to misinterpretations in the other two cases you mentioned
-> earlier in your email, but I don't understand this one.  Even the
-> first sentence you quoted included the phrase that it could "output
-> the path", so I'm not sure where you think it claims that it'd return
-> the overall result of the ignore calculation.  Could you point out
-> what in the document led you to believe it was claiming this?  Maybe I
-> could suggest wording improvements for it as well.  Or maybe you have
-> some.
+is enough to plug the leak (though admittedly, I haven't properly tested
+the leak because it's been a PITA to set up locally).
 
-It does return *the* matching entry that decided the path's fate.
+That's a pretty hacky suggestion though, since we're still using the
+same member to hold free()-able and non-free()-able memory. Instead,
+maybe we could move this "clone_data.path =3D freeable" logic into
+module_clone(), like:
 
-    $ (echo '/no-such-*'; echo '!/no-such-*') >>.git/info/exclude
-    $ git check-ignore -v no-such-directory; echo $?
-    .git/info/exclude:14:!/no-such-*	no-such-directory
-    0
+  diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+  index 73717be957..d67d4b9647 100644
+  --- a/builtin/submodule--helper.c
+  +++ b/builtin/submodule--helper.c
+  @@ -1649,13 +1649,6 @@ static int clone_submodule(struct module_clone_dat=
+a *clone_data)
+    sm_gitdir =3D absolute_pathdup(sb.buf);
+    strbuf_reset(&sb);
 
-Exit status section needs a bit more work.  It used to be OK to say
-"success (0) is returned when we found a path that is ignored", but
-these days, it is not whether there are ignored paths in the input.
+  -	if (!is_absolute_path(clone_data->path)) {
+  -		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
+  -		clone_data->path =3D strbuf_detach(&sb, NULL);
+  -	} else {
+  -		clone_data->path =3D xstrdup(clone_data->path);
+  -	}
+  -
+    if (validate_submodule_git_dir(sm_gitdir, clone_data->name) < 0)
+      die(_("refusing to create/use '%s' in another submodule's "
+            "git dir"), sm_gitdir);
+  @@ -1745,12 +1738,13 @@ static int module_clone(int argc, const char **ar=
+gv, const char *prefix)
+    int dissociate =3D 0, quiet =3D 0, progress =3D 0, require_init =3D 0;
+    struct module_clone_data clone_data =3D MODULE_CLONE_DATA_INIT;
+    struct list_objects_filter_options filter_options =3D { 0 };
+  +	const char *clone_path;
 
-It signals if we found an entry in the list of exclude/ignore
-patterns that actively affects the path's fate.  In our project, if
-we ask the fate of hello.c
+    struct option module_clone_options[] =3D {
+      OPT_STRING(0, "prefix", &clone_data.prefix,
+          N_("path"),
+          N_("alternative anchor for relative paths")),
+  -		OPT_STRING(0, "path", &clone_data.path,
+  +		OPT_STRING(0, "path", &clone_path,
+          N_("path"),
+          N_("where the new submodule will be cloned to")),
+      OPT_STRING(0, "name", &clone_data.name,
+  @@ -1795,6 +1789,15 @@ static int module_clone(int argc, const char **arg=
+v, const char *prefix)
+    clone_data.require_init =3D !!require_init;
+    clone_data.filter_options =3D &filter_options;
 
-    $ git check-itnore -v hello.c; echo $?
-    1
-
-because we do not say explicitly that .c files are usually tracked
-sources.  If we did this:
-
-    $ echo >>.git/info/exclude '!*.c'
-
-to explicitly say that .c files are never ignored, it changes the
-picture:
-
-    $ git check-itnore -v hello.c; echo $?
-    .git/info/exclude:15:!*.c	hello.c
-    0
-
-
+  +	if (!is_absolute_path(clone_path)) {
+  +		struct strbuf sb =3D STRBUF_INIT;
+  +		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_path);
+  +		clone_data.path =3D strbuf_detach(&sb, NULL);
+  +		strbuf_release(&sb);
+  +	} else {
+  +		clone_data.path =3D xstrdup(clone_path);
+  +	}
+  +
+    if (argc || !clone_data.url || !clone_data.path || !*(clone_data.path))
+      usage_with_options(git_submodule_helper_usage,
+            module_clone_options);
