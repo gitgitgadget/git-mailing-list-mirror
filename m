@@ -2,82 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3582BCCA47F
-	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 01:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90413C43334
+	for <git@archiver.kernel.org>; Wed, 13 Jul 2022 01:27:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233333AbiGMBZl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jul 2022 21:25:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60552 "EHLO
+        id S233530AbiGMB1F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jul 2022 21:27:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233270AbiGMBZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jul 2022 21:25:38 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47482B1857
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 18:25:37 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id os14so17333521ejb.4
-        for <git@vger.kernel.org>; Tue, 12 Jul 2022 18:25:37 -0700 (PDT)
+        with ESMTP id S233553AbiGMB1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jul 2022 21:27:03 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FF7C922B
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 18:27:02 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id l11so16874760ybu.13
+        for <git@vger.kernel.org>; Tue, 12 Jul 2022 18:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=zZZbhhGLcFB/6cKM+CQXc0TBXLQMvRH5PasZ7+VemhI=;
-        b=Q9o+kNe2tW9IIn87bCXD/6cjYWRWG8cJ2GKOcItyyAZoJpWLV3OjQTb2DlH7bBjDE0
-         +ZlNdCBHoIeQVdDhLqmRK0Cm27LGy7+N+V3IWw0ngEea6zv2PC6IOArVe1AuItw/4LRg
-         +OIfUEGilV7kIY+xjn6+ZTxHuwsR/LW7g23kDpxO99fkdltmp0jO3oEhbi+9N5TTpKWk
-         ZhK0AqwseagclDqZWNgEhTqJy0Ctit4MUyVYEfjjhgHo5ISUTI7JL0a/GRiwKd+5eNHG
-         6DMkUmlsFaitVp96+kHp4JDdkBwhfAfsMO7Md9VtwWequmMuTy8lAJIWH1lAgJRsVimn
-         yMrg==
+        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mK0hOrFnDzNiJ8GahXeA+8fJi93N3FdLVVhYFZeQ5dc=;
+        b=KsqZ9DNxYeb0inRh9k+6Rjfwuzg+dEXF5Clc/XcqP7L+URO10ryzQWhAkg4WFoQZaV
+         EuU+nHrmVIlAB5dotwahA0vvTW+BqfhZ+4MXy+BWOFgS9Bb78YaMGOxAtMDIRZeunbtn
+         bX7B+20iMaZHkiinsB5D5zrALvq/i6tUxv4Iol+FKjUAMhsEqb+VUiAVPXwn/zyQ9IjL
+         CTIPLcyowO230p5E9BLD1CbP6SaejU0Q32BbAC0jgf4/GnFR1+EXsTcMKM2ASBv9xYS4
+         hVbG8Lvzs+OUppqE3IjRRafNtDl6MDRLbfItjDrSC1dUBZHfP0cfpci22hwQpD9MOKRx
+         31lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=zZZbhhGLcFB/6cKM+CQXc0TBXLQMvRH5PasZ7+VemhI=;
-        b=sUHYhbm3rVHsMX6qTSeGIcOLfCVenEJESqyzi/QddUNh9sAaURm4LALMSiNVTYuNo6
-         MKyuCGB/dgaCwnGaSsHWjNN5AaSbbWOpMee13DyK/FgWq+B+T4THUfj8FGvJ4zO+Kwui
-         IgKJ/LuunOzUtbUqlqytvZzX5W2IQ5EfRFEZqmlOQzy2hhMWAy3XTnmBW8r+6tRZfKKP
-         JpGN2BSXd9OWeO2LfaKq3fRD2mPqVKCH80uK4thUCYFOi0QK2IAH7J58o73wnPyaGa4Z
-         RWpy929mAH9dqgavx64lS+sLvBKPCV77Z4qFYqEokItvLUEZJWYrAOIb8sSfYqEgleSz
-         iPqw==
-X-Gm-Message-State: AJIora8MfhRu3Q62kLl4iWfjeBVwdPnSJU6WLykFzbdlctLLO0b76ohr
-        TcGXy54+H8lFi3T+Kn/3mSXg0Q2m7m//kg==
-X-Google-Smtp-Source: AGRyM1sO3yyluvKut9yq6NMHdxWSgv7fp0ktD+3qXDjU8020tGUwYm9GpQPgul8Fd7Yv3WVyqU5tDg==
-X-Received: by 2002:a17:907:2e02:b0:72b:7f58:34a7 with SMTP id ig2-20020a1709072e0200b0072b7f5834a7mr929394ejc.525.1657675535432;
-        Tue, 12 Jul 2022 18:25:35 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id kx23-20020a170907775700b0072af12590fesm4294409ejc.207.2022.07.12.18.25.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 18:25:34 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oBR8A-001cmP-38;
-        Wed, 13 Jul 2022 03:25:34 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
-        congdanhqx@gmail.com, christian.couder@gmail.com,
-        gitster@pobox.com, Johannes.Schindelin@gmx.de, johncai86@gmail.com
-Subject: Re: [PATCH v4 1/4] revision: improve commit_rewrite_person()
-Date:   Wed, 13 Jul 2022 03:25:24 +0200
-References: <20220709154149.165524-1-siddharthasthana31@gmail.com>
- <20220712160634.213956-1-siddharthasthana31@gmail.com>
- <20220712160634.213956-2-siddharthasthana31@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220712160634.213956-2-siddharthasthana31@gmail.com>
-Message-ID: <220713.86mtdd4xdd.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mK0hOrFnDzNiJ8GahXeA+8fJi93N3FdLVVhYFZeQ5dc=;
+        b=cxN0yadCMLuqib7hjDAjIL55uj7Xq2kZRkqlRlzEDQMDki2+C4lu/bCBnoJaYiHs9u
+         hpWFuT8iA1/77Du2QeGYvqdMzi1XCBEFA9lycXsxsiV52HfLqmFUt3xUnRGW0+lEfrxr
+         S8Y8RvJ84L0S1OQ9UrbDCIL4lRKq8NYcMY1mzMrj0axdxNbltMa5hhTRWBzjY14zyfvB
+         vG8EVb69o4e2xLDJPFfu2X4Hd/Scj618P7S5vloyZ4+I7xmNDPCXjXb7ViW+m8dtFoEU
+         gWsaJGxfPCHx41cpUSa04GHI+zL1b60T0g1ybgNbMrf8HOSQNKfwNx8xmLNBBSguz+64
+         2mog==
+X-Gm-Message-State: AJIora9ljGJ6XDet4UP5OYmwOQBfJtqgQ9kusdSK0oP8Wgh4Nz2g+I85
+        9Wkvgn7D8yQx9Tj0TeZr8qm1s7XhKcjUZ9ti9iemeuM2kJXYSg==
+X-Google-Smtp-Source: AGRyM1vCa3he2fUBqJ0eUoW2faRTjFmP2/iwTxXJuR79iA51JHT3HJ4I6yvTSP62XBbzCuXm9B/N10yOxDpXIzI6hpo=
+X-Received: by 2002:a25:4284:0:b0:66f:83b6:64bf with SMTP id
+ p126-20020a254284000000b0066f83b664bfmr1221481yba.586.1657675621577; Tue, 12
+ Jul 2022 18:27:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1656593279.git.hanxin.hx@bytedance.com> <cover.1657604799.git.hanxin.hx@bytedance.com>
+ <3ffeed50deb2d292cef0a518085d60d22c5dd79b.1657604799.git.hanxin.hx@bytedance.com>
+ <220712.86zghe4q0c.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220712.86zghe4q0c.gmgdl@evledraar.gmail.com>
+From:   Han Xin <hanxin.hx@bytedance.com>
+Date:   Wed, 13 Jul 2022 09:26:50 +0800
+Message-ID: <CAKgqsWWYGVh_ViPjEn8ezUMysGnxqu9xMkydT+vbuDE_GSWz_w@mail.gmail.com>
+Subject: Re: Re: [PATCH v5 1/1] commit-graph.c: no lazy fetch in lookup_commit_in_graph()
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     chiyutianyi@gmail.com, derrickstolee@github.com,
+        git@vger.kernel.org, haiyangtand@gmail.com,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, Michael J Gruber <git@grubix.eu>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jul 12, 2022 at 5:52 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> > +test_expect_success 'fetch any commit from promisor with the usage of =
+the commit graph' '
+> > +     # setup promisor and prepare any commit to fetch
+> > +     git -C with-commit-graph remote add origin "$(pwd)/with-commit" &=
+&
+> > +     git -C with-commit-graph config remote.origin.promisor true &&
+> > +     git -C with-commit-graph config remote.origin.partialclonefilter =
+blob:none &&
+> > +     test_commit -C with-commit any-commit &&
+> > +     anycommit=3D$(git -C with-commit rev-parse HEAD) &&
+> > +     GIT_TRACE=3D"$(pwd)/trace.txt" \
+> > +             git -C with-commit-graph fetch origin $anycommit 2>err &&
+> > +     ! grep "fatal: promisor-remote: unable to fork off fetch subproce=
+ss" err &&
+>
+> This part seems quite odd, we tested the exit code, so here we're being
+> paranoid about not getting a specific "fatal" error message.
+>
+> It seems more worthwhile to test the warnings we emit, which in this
+> case seem to be duplicated (but that's probably an existing issue...).
+>
 
-On Tue, Jul 12 2022, Siddharth Asthana wrote:
+So you mean the grep here is redundant?
 
-> -static int commit_rewrite_person(struct strbuf *buf, const char *what, struct string_list *mailmap)
-> +/*
-> + * Returns the difference between the new and old length of the ident line.
-> + */
-> +static ssize_t rewrite_ident_line(const char* person, struct strbuf *buf, struct string_list *mailmap)
+>
+> > +     grep "git fetch origin" trace.txt >actual &&
+> > +     test_line_count =3D 1 actual
+> > +'
+>
+> I wondered if "test_subcomand" here would be better, i.e. fewer things
+> scraping GIT_TRACE, and using the machine-readable GIT_TRACE2_EVENT
+> instead...
 
-All tests pass with this as size_t, instead of size_t. Let's use that
-here instead?
+I threw this question up front but got no response.
+
+When using test_subcommand() we should give all the args,
+if we remove or add any args later, this test case will always
+pass even without this fix. So, is this test case still strict?
+
+    GIT_TRACE2_EVENT=3D"$(PWD)/trace.txt" \
+        git -C with-commit-graph fetch origin $anycommit &&
+    test_subcommand ! git -c fetch.negotiationAlgorithm=3Dnoop \
+        fetch origin --no-tags --no-write-fetch-head \
+        --recurse-submodules=3Dno --filter=3Dblob:none \
+        --stdin <trace.txt
+
+Existing usages are as follows, and they all have fewer parameters:
+
+     test_subcommand ! git gc --quiet <run-config.txt &&
+
+     test_subcommand ! git multi-pack-index write --no-progress <trace-A
+
+     test_subcommand ! git pack-refs --all --prune \
+          <incremental-daily.txt &&
+
+Thanks
+-Han Xin
