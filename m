@@ -2,115 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 282E4C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 16:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 117CDC43334
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 16:17:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239602AbiGNQOh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 12:14:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43198 "EHLO
+        id S238858AbiGNQRt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 12:17:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239263AbiGNQOZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 12:14:25 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2397361D5A
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 09:14:23 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D16E142F5F;
-        Thu, 14 Jul 2022 12:14:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NfUXLbzdIWWwQdzqgrS/uZJrwocTqDa0EACi6I
-        TlSaU=; b=qOCS8JX82Nls0nWKyIGWJadPuJmqAlRMuFvCTQYom3k9RcOOc2Udsd
-        /Oaz6ntpNdXOrQlcWZ7UG9Su48DFoVaHOSJWOInb9DrdxW+iXTWButSFdUgaBfVU
-        3htM63/7NVS4vgMp5aPls9VFhfysi/M0OOC1zQ8I+OB1xn7M6Qxmk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4606F142F5E;
-        Thu, 14 Jul 2022 12:14:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7F51142F5D;
-        Thu, 14 Jul 2022 12:14:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] tests: fix incorrect --write-junit-xml code
-References: <pull.1288.git.1657789234416.gitgitgadget@gmail.com>
-Date:   Thu, 14 Jul 2022 09:14:20 -0700
-In-Reply-To: <pull.1288.git.1657789234416.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Thu, 14 Jul 2022 09:00:34
-        +0000")
-Message-ID: <xmqq35f38yeb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229493AbiGNQRr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 12:17:47 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D093661D70
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 09:17:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1657815459;
+        bh=JPt8spO7EtdeQU98XVFReWlb5HqQVo3cwfLW1E1EXaE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=G9L3VCtnTxHdRjtn2u+1nKMud5lUBm7D15P11eFrijBbZ6fWCbf2WfK+cKfIOwlWR
+         l8TFLKqNudXJKPPb3Erj7N90pMPWZ+ons0grctWyrk+4xywRxp28tXjltgW3m+Oqj/
+         CAaOwQ6Fc9ST46CjBGdzJq7ymi0Ij0fURV/OJrxI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.21.23.67] ([89.1.215.236]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYNNy-1nzMMT1eBm-00VNAm; Thu, 14
+ Jul 2022 18:17:39 +0200
+Date:   Thu, 14 Jul 2022 18:17:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
+Subject: Re: gc/bare-repo-discovery (was Re: What's cooking in git.git (Jul
+ 2022, #03; Mon, 11))
+In-Reply-To: <xmqq8roxdlhe.fsf@gitster.g>
+Message-ID: <5ps2q552-1rr3-7161-4181-31556pp2ns12@tzk.qr>
+References: <xmqqo7xufee7.fsf@gitster.g>        <kl6lpmia55ys.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqq8roxdlhe.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 05504B96-0390-11ED-9C58-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:s/nAnADZmAPDiKPAZyn5g8VfC8d3LnjvBX96xk1WnogkiojZj+0
+ A6Lo2ucald3BySIB6mla+xZ5QGxSfW+3mKHLX29X+ml4bgJNnY99L7f9169SlA6jnbqTeen
+ dJoy6cpJ2sGPbVvjh5sOhHvqZKOkZSk/WQ0k/F03qH/lDeT1hiL8S3K4Sv6Be5TeamxwUtI
+ m3xciw8vbAoBQkl4SpXAw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:X/iRPcQIUrw=:4cA3yz3pqWQ9tAxUsZl72H
+ OM8F5WFzdN67RarheJfCC3M0JIlWgrL7bTdeJbtI0YGM7weqpojksSDg5N6RPNni0dUyQCWfF
+ zjimmO+qB5HmDI0jXlVpqfQ/DMbNZBj0fk9hwklEssHmn7OxnXpE/XieiMut1Eu4NOoLu8Cxq
+ u4vEKojRKw7ltFWE9yrxfdsdNzM4GnWCZsqOoGnOa/yRtHlB3MBO7cnBzQd/mzEFz0vkBFIWJ
+ W8iQ4iaZmEppphymFNvIr97SlLbg/ix188b6t0kKjimlTibTdUTW8wjrYmLlA2qzU17HDLk3X
+ Pv82+TfARW1QQRfYLDZ+LHVx8F4PCM5E+MqQNIIdgvvKLlosK7uwQPod58jyjpryFgr10pavK
+ hArCfMsu2mleBFbBiLFGAZZHCoUNcD3UQOJPZWoik04+7Vv2FXbDK4LBKHf1DgKq03klDATJd
+ fqst+e+4HLps8UKUeM1svVGFZICH3NP8t3f0wZi5U51j1O1hJqNDZPHrUuXlJE4uBjT6tTZFz
+ cYSq5FE1VKzUMmDfGnzNZ4PGT7rR4m9ZolQQe6KCHctvdxQFM2N1VVFsktY5ALwA/M7DO79tZ
+ OSEzLIFGkOp25eZP/jDuFQv28Q952gFnFfItPjR6eGORzd1daMiwsPVqqZpLUffiaHFhiOfns
+ +qcyuXfX993KuPJnoeN71xoLpl35Fo/717LoNDHDphR520nnQLUON+rSQhWQhHVC5Sj2qQ+/l
+ l3lhce1v+Ebj0RfH115iiB8oE0hmmssoIOOThQDnKXWg9sy5fRmXopNQuVoynHecYwUUuBmM0
+ 6lQ9Hlbjk279OH+ffGS+QQE6ydbJ5V0VptfO+NPHywfaV4trQoZQ9/12c6MMzUvC11T7f4CiE
+ W3pNvMxFqrAxhxFLxZGrfMcqxad0hcVRGubTVxzH2daSpkOl4QmAVueW2TSIcSUcq7t2x7frw
+ J7bxdIgPWw29DUwuBfr6Ty5BCaUGSvHmXi07pav3ltw710+3cT+i6mG4EBKSZKIjVZL1oUcmS
+ w15pK9sW1q/1ZOoXa3PivyBLAyMocBrrJJM9FP42ZIhgI51ZEFIwfOOJR+Y97iiAnExefplJb
+ eoVCIUpXYbHR3xNW4Dk1NWF18hKIsz9b2VeS9I8Wz3QxJE+q2sL/excqQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi,
 
->     Unfortunately, I noticed this regression no earlier than when I needed
->     to validate Git for Windows v2.37.1. Since v2.37.1 was an embargoed
->     release, I could not use GitHub Actions for the CI testing, so I had to
->     reinstate Git's Azure Pipeline.
+On Wed, 13 Jul 2022, Junio C Hamano wrote:
 
-I wonder if it would make your life easier if the same GitHub
-Actions CI stuff were available for the Cabal repository we use for
-embargoed work, by allowing you to use the same validation for usual
-releases and the enbargoed ones?
-
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
->  t/test-lib-junit.sh | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+> Glen Choo <chooglen@google.com> writes:
 >
-> diff --git a/t/test-lib-junit.sh b/t/test-lib-junit.sh
-> index c959183c7e2..79c31c788b9 100644
-> --- a/t/test-lib-junit.sh
-> +++ b/t/test-lib-junit.sh
-> @@ -46,7 +46,7 @@ finalize_test_case_output () {
->  	shift
->  	case "$test_case_result" in
->  	ok)
-> -		set "$*"
-> +		set -- "$*"
->  		;;
->  	failure)
->  		junit_insert="<failure message=\"not ok $test_count -"
-> @@ -65,17 +65,17 @@ finalize_test_case_output () {
->  			junit_insert="$junit_insert<system-err>$(xml_attr_encode \
->  				"$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")</system-err>"
->  		fi
-> -		set "$1" "      $junit_insert"
-> +		set -- "$1" "      $junit_insert"
->  		;;
->  	fixed)
-> -		set "$* (breakage fixed)"
-> +		set -- "$* (breakage fixed)"
->  		;;
->  	broken)
-> -		set "$* (known breakage)"
-> +		set -- "$* (known breakage)"
->  		;;
->  	skip)
->  		message="$(xml_attr_encode --no-lf "$skipped_reason")"
-> -		set "$1" "      <skipped message=\"$message\" />"
-> +		set -- "$1" "      <skipped message=\"$message\" />"
->  		;;
->  	esac
+> > I also noted your distaste for the `discovery.*` namespace (fair
+> > enough). To avoid a reroll-of-the-reroll, I was hoping that we could
+> > agree on something on-list (thread here [1]) before I send out the nex=
+t
+> > version.
+>
+> I found your idea of adding this new one in the safe.* hierarchy
+> quite reasonable.  "safe.discoveredBareRepository =3D yes / no" may be
+> quote a mouthful, but I do not think I can think of anything better.
 
-OK.  Ancient shells did not understand "--" and it was idiomatic to
-say "set x ...; shift", but we already do assume "set --" is usable
-everywhere we care about in many of our scripts and tests.
+I would find `safe.bareRepository =3D true` or `false` more intuitive, and
+more concise.
 
-Looks good to me.
+And if there should be an option to ignore bare repositories when
+discovering a Git repository, it could be a tristate, with `ignore` being
+the value to trigger that mode.
 
-Thanks.  Will queue.
+Thanks,
+Dscho
