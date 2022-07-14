@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 923BBC43334
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 19:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB5B1C43334
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 19:40:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240625AbiGNTkJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 15:40:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41138 "EHLO
+        id S240671AbiGNTkM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 15:40:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240579AbiGNTj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 15:39:59 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5D0BCBB
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:39:58 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id bk26so3890391wrb.11
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:39:58 -0700 (PDT)
+        with ESMTP id S240612AbiGNTkA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 15:40:00 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A20CE1007
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:39:59 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id c131-20020a1c3589000000b003a2cc290135so3656017wma.2
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:39:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RGDbRm9Pks4vmfqob4fy12ZJBmfseF25WvQRYLgkgLk=;
-        b=HOWI471MjGHi82luuKkDE2RMPj/ENxol+svQeRhYjiboBPsrzCONENYCmmw1jaHHxI
-         tcC6kqjKx04yMntj0/o982qL+VJs9pc8f9qMlTESbUBk3Rh8jQyvL8XjrvaB+CKKfmgJ
-         Y7/Fj2JXSS8+7jBzRje2+IvBA6GMbpjgu+DnRc11JO7Q4qntUIPUbvfJWkjvw2UqMNE2
-         3hv1qkWVMvrouTeDH35qWzNFdMNIk5hGRV6IdvJHvPYYvOOKV4P2YlOJDtZZU/UgBT7z
-         10oenG9Mtm6WBOB/Ssf5b0nDFAr3VChJ+mMMq7Juj4SuSoIoNkJ8Q2PYHkx1O+KBLZup
-         69jA==
+        bh=VXcQ/XYGJF9+zRwBf2FIM7RUWzPBNwae1i2D7wouGU8=;
+        b=hntpwM2c6ub2UsFYm9kd5z6w1XvfnJXIQM7IecNuuVqvgWc3kLVH+Hpg26/nRSuTAk
+         xhcCU4ZgmdWecvAmA5jrL6JolbsFoCeInyO0R9ZCtvFV/PhIoyQmUvjGSFqdDynLyW9k
+         uF7KFLMxHMTOcnTrdpavZml/DmnsJiU4ItKdwcYabPhKwkrSW27n3bUdAIdFTu6XIpWK
+         9Oyl6jyJvtKxkWE9QF5zmDzHDV9fmihEQ0A51rp/fUgVkk4S6jr45eTm6wp++0y/fHps
+         764K/P1md0e1RVgBaw9dvuAcgXVcHhoCkKjvR3nsuS4Mq3X3z0ycC5Fnhby4QZPc+b39
+         Lqlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RGDbRm9Pks4vmfqob4fy12ZJBmfseF25WvQRYLgkgLk=;
-        b=OKUA4D8pZM/pHo4U6UFqWSEdNLnab4fd4Hs01RJ1SXvvAGBFHkQsPBstoDU8OuyBkV
-         GoRvLTXpuwh+3Oeo4ztEsqh8S/puZBt6rE3p4yc8GiWAQR/TKbhYuQJKBgnzE0eDLE1P
-         bXYrd0BNWX2TZoE40q+mbe1sp1pBMHBOKt9jlPd1tLUjWobFZD1U9fVyOzfhHS/5MME7
-         Izf/EQOLVgy83AMROlssxZROGSp5R2IsVuLCJH+QqJhGPElJLtOkEXhHgBYBrVYQRD7D
-         7UgFn6+h+naEGi/+Ff3SnDF4Y4pGJTzWLLzvezGXOZQpCp/EGVfBUPritW6eSndjg3/5
-         Ymqg==
-X-Gm-Message-State: AJIora8aEq5ffc8+/1F+b5Gj1idBmn/nVyGyFefslPJiRc618KFDFvcG
-        rldx5Yg+JyxoGLmhLjqCx7mqX2/K0LsRFA==
-X-Google-Smtp-Source: AGRyM1uuXDGnpPai6MNMbywy4mg6ZdfbLLQaXvYaLnlaG/4379mpa+Lon+nurT59iEMVt4BbK2wcgw==
-X-Received: by 2002:adf:f9c3:0:b0:21d:7b3d:d924 with SMTP id w3-20020adff9c3000000b0021d7b3dd924mr9774196wrr.536.1657827596796;
-        Thu, 14 Jul 2022 12:39:56 -0700 (PDT)
+        bh=VXcQ/XYGJF9+zRwBf2FIM7RUWzPBNwae1i2D7wouGU8=;
+        b=m5hkIgr4wHYQr4eVryWy2Crhx4Mz9kEVGg5gh8GqloHmKoTxToL45/4sRs88yKwYZB
+         d+27UbmwTRTuMFRviTLnBjOqasHkdyVQZDwESll7diHue8GpWdtvNi3hiw40f3kGFEvj
+         Nb6qYiy3MvI4MPno/ZPeNJQ86kTkN4I25NofRE7A/+tOUFanKmZodTnqMtoH1fODaKmG
+         ul6/sTGI9eXtk4UKWX/qVEgaEWIPDhHN54INFuYOZZ24ExIzhW0L5l10phWQuSirEbff
+         B3rFshohpgKbfyWtr0QLinwd7tGf/WeL0BLHwLasTwCH04kYw165XfRzoYUvk5JwxqzG
+         mbmg==
+X-Gm-Message-State: AJIora8VpuU0Gi4gUSOD/OaDuQ6nuUJmgbjHmhuRUCLSQ2EU9Gm15JQn
+        MJDlc++ffz7yMPnVNmISZsqcsM4udAr16A==
+X-Google-Smtp-Source: AGRyM1vmcWwx/oubAX3Hqsc7IZFjfInF8eUOBlp5LXFrIv4fJRJAeiFU5Y5fntnXrtBT/8unKPe1JA==
+X-Received: by 2002:a7b:c413:0:b0:3a1:8f03:29d0 with SMTP id k19-20020a7bc413000000b003a18f0329d0mr17280628wmi.160.1657827597871;
+        Thu, 14 Jul 2022 12:39:57 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05600018c900b0021dac657337sm2145145wrq.75.2022.07.14.12.39.55
+        by smtp.gmail.com with ESMTPSA id w9-20020a05600018c900b0021dac657337sm2145145wrq.75.2022.07.14.12.39.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 12:39:55 -0700 (PDT)
+        Thu, 14 Jul 2022 12:39:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/10] CI: make "$jobname" explicit, remove fallback
-Date:   Thu, 14 Jul 2022 21:39:41 +0200
-Message-Id: <patch-04.10-5d1df78d0de-20220714T193808Z-avarab@gmail.com>
+Subject: [PATCH 05/10] CI/lib.sh: stop adding leading whitespace to $MAKEFLAGS
+Date:   Thu, 14 Jul 2022 21:39:42 +0200
+Message-Id: <patch-05.10-ee36d4eb2a9-20220714T193808Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.996.g651fc6e809f
 In-Reply-To: <cover-00.10-00000000000-20220714T193808Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20220714T193808Z-avarab@gmail.com>
@@ -71,99 +71,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the $jobname fallback last adjusted in b011fabd6e0 (ci/lib.sh:
-encapsulate Travis-specific things, 2019-01-27).
+In a8c51f77d16 (ci: clear and mark MAKEFLAGS exported just once,
+2019-02-07) the assignment of MAKEFLAGS was done up-front to
+future-proof this code for the bug fixed in 406f93ae488 (ci: make sure
+we build Git parallel, 2019-02-07).
 
-This makes all of our CI jobs have an explicit $jobname, and removes
-the special-case of the Windows jobs implicitly setting one (that they
-don't currently use).
-
-This is a follow-up to my 25715419bf4 (CI: don't run "make test" twice
-in one job, 2021-11-23), since then all the jobs except the Windows
-jobs have had an explicit $jobname.
-
-In the case of the Windows jobs we were using a jobname of windows-gcc
-for both, due to picking "gcc" as a default fallback for "$CC" in
-ci/lib.sh.
-
-Since we'll need this to run ci/lib.sh it makes sense to move the
-check to the top of the file.
+But since 4a6e4b96026 (CI: remove Travis CI support, 2021-11-23) the
+--jobs=10 has been an invariant here, so let's assign --jobs=$NPROC to
+the MAKEFLAGS right away, this gets rid of the leading whitespace from
+the $MAKEFLAGS variable, as it would previously be empty on the first
+assignment.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml |  7 +++++++
- ci/lib.sh                  | 12 +++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ ci/lib.sh | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index cd1f52692a5..8b7697df9fb 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -79,6 +79,8 @@ jobs:
- 
-   windows-build:
-     name: win build
-+    env:
-+      jobname: windows-build
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-     runs-on: windows-latest
-@@ -100,6 +102,8 @@ jobs:
-         path: artifacts
-   windows-test:
-     name: win test
-+    env:
-+      jobname: windows-test
-     runs-on: windows-latest
-     needs: [windows-build]
-     strategy:
-@@ -134,6 +138,7 @@ jobs:
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-     env:
-+      jobname: vs-build
-       NO_PERL: 1
-       GIT_CONFIG_PARAMETERS: "'user.name=CI' 'user.email=ci@git'"
-     runs-on: windows-latest
-@@ -183,6 +188,8 @@ jobs:
-         path: artifacts
-   vs-test:
-     name: win+VS test
-+    env:
-+      jobname: vs-test
-     runs-on: windows-latest
-     needs: vs-build
-     strategy:
 diff --git a/ci/lib.sh b/ci/lib.sh
-index fcb79c83087..969ba2ff0d0 100755
+index 969ba2ff0d0..3591919ba44 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -8,6 +8,13 @@
- # are installed.
- set -e
+@@ -75,8 +75,11 @@ handle_failed_tests () {
+ # GitHub Action doesn't set TERM, which is required by tput
+ export TERM=${TERM:-dumb}
  
-+# Starting assertions
-+if test -z "$jobname"
-+then
-+	echo "error: must set a CI jobname in the environment" >&2
-+	exit 1
-+fi
++# How many jobs to run in parallel?
++NPROC=10
 +
- if test true != "$GITHUB_ACTIONS"
- then
- 	begin_group () { :; }
-@@ -119,11 +126,6 @@ else
- 	exit 1
- fi
+ # Clear MAKEFLAGS that may come from the outside world.
+-export MAKEFLAGS=
++export MAKEFLAGS=--jobs=$NPROC
  
--if test -z "$jobname"
--then
--	jobname="$CI_OS_NAME-$CC"
--fi
--
- export DEVELOPER=1
- export DEFAULT_TEST_TARGET=prove
- export GIT_TEST_CLONE_2GB=true
+ if test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
+ then
+@@ -84,9 +87,8 @@ then
+ 	# We are running in Azure Pipelines
+ 	CC="${CC:-gcc}"
+ 
+-	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
++	export GIT_PROVE_OPTS="--timer --jobs $NPROC --state=failed,slow,save"
+ 	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
+-	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+ 	test Windows_NT != "$AGENT_OS" ||
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+ elif test true = "$GITHUB_ACTIONS"
+@@ -115,9 +117,8 @@ then
+ 		return 1
+ 	}
+ 
+-	export GIT_PROVE_OPTS="--timer --jobs 10"
++	export GIT_PROVE_OPTS="--timer --jobs $NPROC"
+ 	export GIT_TEST_OPTS="--verbose-log -x --github-workflow-markup"
+-	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+ 	test Windows != "$RUNNER_OS" ||
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+ else
 -- 
 2.37.1.996.g651fc6e809f
 
