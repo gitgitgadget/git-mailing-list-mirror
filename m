@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C57D3C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 18:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ACE4C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 18:20:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240536AbiGNSMM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 14:12:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59110 "EHLO
+        id S238658AbiGNSUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 14:20:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240546AbiGNSMJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 14:12:09 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DCD468DE2
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 11:12:08 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id g67-20020a636b46000000b0040e64eee874so1580503pgc.4
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 11:12:08 -0700 (PDT)
+        with ESMTP id S232377AbiGNSUJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 14:20:09 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F1225B799
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 11:20:08 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id i15-20020a17090a2a0f00b001ef826b921dso1781563pjd.5
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 11:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=81KSJu50ooAt3tSGZ1n6xhQbmrKnFZN/I6334clMoEw=;
-        b=Cfhvjlk4WS47EIQ13iqcHtrhfnI4XpPeBJm0oli3jNnX5ULvo2UCKWGri5NPmkKhcq
-         MklPG3yuypgUVKF426rGs0/+zVHeX4DgiIgLzM8aOt2KYqvl6YSIV2lUbn+UpRVeVcK6
-         2nT0ftnBnXTFWzd4AbtTNmHQUUrlQXBWdhiP9KUZyTfp2wn8TekWkBhwxojoI5qb4+1m
-         0IWtLg9WRHj/xZHZOSkST63QPzUlpYEp454mZnyer1bfslzYXSPAb48xkutZKBHkYkqs
-         DT9L0m2ySPP/bQ/SBOxKgkS4NfA91NFyJRLHfQsjnHFshsvihD7/0VrkNz0xGakfzPUU
-         wIjQ==
+        bh=x6ca5j6W0xuEMQ24Frev7xrT+gU9T6lrILmd7+Q7iLE=;
+        b=I/XM8ZtmGNYo/+5pYhWp0SO0L1m5xDjTpY8cluz+QEV8rWgBZ25LSQSMF52IDw/D7H
+         VBGKgBo930WE6g+RtFsyq4WgU5vpjt3po64TNBC2LSwBdhkBoaTSn+2nCo/YKqQagEOj
+         9ym3XVpg2etrK5VY+nPborLtGkeD9ysoVHAGf29auyC2qlXZboGX5sO3dqZ0rl3J/3xW
+         E4RrrMshJyHYOWdKyDxFm8PKB/g4xIa6km1Pkzg7XxRsnySjSV/6ePpqibT8NP7CWno7
+         Q3QTGPXC/kSeDIcpw6O/6PaAVvJqgtsx1Q/Mwp2BbPF3cA7PRALoOC88z9YnE7P2ennP
+         /+rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=81KSJu50ooAt3tSGZ1n6xhQbmrKnFZN/I6334clMoEw=;
-        b=QC/DMTnZIS1rTEmG4eLS8AnbFgiD2H/M1mwUzlZrPx2lJq5KLX679e2HCKWkAJumxf
-         GI2XWnj1iz61fzQHrjralJDH02GPdsJGO5stNN73lzuo/oHJRtXFPHkgd9booEON5t5c
-         OBLr9GOHqgD6P2PPUWFershYEd/oub+QvZczq227egGiZmNMJ2rjvYzrI0FCn1vM8mO4
-         qn+iKbgbnqkTxQSEVXl0z+EsUhIQLdhrUMOMfdaDbf3X1uGS5rs8NyarUWJiJMSwMEg3
-         Dcip4Iv+abCoPI9rl0F0u7YkR4riuMnS/n/0r7pMvhKsRf4Gf7cjgt/IHL3eXg9s+Xq9
-         74Wg==
-X-Gm-Message-State: AJIora/vNgLOwbj6dwzM26cQyjt9KBF+0iH5njapBbaYR/e2MfCKGpQM
-        0aZrN4CkWN45xp0v6IVHn2u/A5E0LRMk6Q==
-X-Google-Smtp-Source: AGRyM1uOe8CaRxEzYLHqmmtkSjFpTbUMAyGV81HQAcdqBUm+RDcqB0WWYpBXOkVeGtaE3WORnOdrqFeaEK1MBg==
+        bh=x6ca5j6W0xuEMQ24Frev7xrT+gU9T6lrILmd7+Q7iLE=;
+        b=a9gn0GnuQO2l4EvUQpmQbhpNBS0vM9ahndUeXalGIJmmyEI2sS6DuGgoEdZcKkMTav
+         vtjDa4325t/qIbJCjrDRHpofM4mcPl2s9ItKq+IQymSJVR7d6yJMUHdqpR8fuxilB0Bn
+         i+FWClJdkK5FxsPsCr8bJchAf+D+G/CQiA1cwut4Z6c8PG+mabCcIcI66c2z91CXZ/iy
+         Yi6xFGTRgPSQ0uRz+V5g/5nhV80LlKoyc48tr2yowte2xqClZkmoEqwqG3/ZTKinD6fr
+         X2yo1dz+/MsJDMLJZgNAQ3BIxptUcNYPHBEZoGIBid2gcab9Wg+dWsZOnjvbmwQzon0W
+         QUJg==
+X-Gm-Message-State: AJIora8NnLIPOfPvskDj4wK/kUERsdC01jkJpfjZqVSWlZ6ZKUcHSEwU
+        OYY7Alsu+f97s7KOk+TmudFlP/II318Wqw==
+X-Google-Smtp-Source: AGRyM1uJc/iTMIsTkf+RExUi60T+twdQjkgazarqoKKLKW0LBkfTVFZSFukzBaZ0l8H1omtRJuHmr3F+EzodDA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:c792:b0:16b:e725:6f65 with SMTP
- id w18-20020a170902c79200b0016be7256f65mr9540543pla.58.1657822328085; Thu, 14
- Jul 2022 11:12:08 -0700 (PDT)
-Date:   Thu, 14 Jul 2022 11:11:59 -0700
-In-Reply-To: <patch-06.11-b9984e982db-20220713T131601Z-avarab@gmail.com>
-Message-Id: <kl6lzghb4l8w.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:90b:38cc:b0:1f0:afd4:cb82 with SMTP
+ id nn12-20020a17090b38cc00b001f0afd4cb82mr6917363pjb.83.1657822807835; Thu,
+ 14 Jul 2022 11:20:07 -0700 (PDT)
+Date:   Thu, 14 Jul 2022 11:20:06 -0700
+In-Reply-To: <patch-07.11-f8c20bbf266-20220713T131601Z-avarab@gmail.com>
+Message-Id: <kl6lwncf4kvd.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
-References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com> <patch-06.11-b9984e982db-20220713T131601Z-avarab@gmail.com>
-Subject: Re: [PATCH 06/11] submodule--helper: add and use *_release() functions
+References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com> <patch-07.11-f8c20bbf266-20220713T131601Z-avarab@gmail.com>
+Subject: Re: [PATCH 07/11] submodule--helper: fix "errmsg_str" memory leak
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
         git@vger.kernel.org
@@ -66,53 +66,127 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Add release functions for "struct module_list", "struct
-> submodule_update_clone" and "struct update_data". For now we're
-> leaving some of the "struct update_data" members, we'll deal with
-> those in a subsequent commit.
+> Fix a memory leak introduced in e83e3333b57 (submodule: port submodule
+> subcommand 'summary' from shell to C, 2020-08-13), to do that stop
+> juggling around the "errmsg" and "struct strbuf", let's instead move
+> the "struct strbuf errmsg" to the top-level.
+>
+> Now we don't need to strbuf_detach() it anymore, but we do need to
+> ensure that we pass NULL to print_submodule_summary() when we have no
+> error message.
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
+>  builtin/submodule--helper.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
 > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 2099c5774b2..a964dbeec38 100644
+> index a964dbeec38..a05578a7382 100644
 > --- a/builtin/submodule--helper.c
 > +++ b/builtin/submodule--helper.c
-> @@ -1910,6 +1921,13 @@ struct submodule_update_clone {
->  };
->  #define SUBMODULE_UPDATE_CLONE_INIT { 0 }
+> @@ -932,7 +932,8 @@ static void generate_submodule_summary(struct summary=
+_cb *info,
+>  {
+>  	char *displaypath, *src_abbrev =3D NULL, *dst_abbrev;
+>  	int missing_src =3D 0, missing_dst =3D 0;
+> -	char *errmsg =3D NULL;
+> +	char *errmsg;
+> +	struct strbuf errmsg_str =3D STRBUF_INIT;
+>  	int total_commits =3D -1;
 > =20
-> +static void submodule_update_clone_release(struct submodule_update_clone=
- *suc)
-> +{
-> +	/* Not "update_data", owned by update_data_release() */
-> +	free(suc->update_clone);
-> +	free(suc->failed_clones);
-> +}
-> +
+>  	if (!info->cached && oideq(&p->oid_dst, null_oid())) {
+> @@ -1032,7 +1033,6 @@ static void generate_submodule_summary(struct summa=
+ry_cb *info,
+>  		 * submodule, i.e., deleted or changed to blob
+>  		 */
+>  		if (S_ISGITLINK(p->mod_dst)) {
+> -			struct strbuf errmsg_str =3D STRBUF_INIT;
+>  			if (missing_src && missing_dst) {
+>  				strbuf_addf(&errmsg_str, "  Warn: %s doesn't contain commits %s and =
+%s\n",
+>  					    displaypath, oid_to_hex(&p->oid_src),
+> @@ -1043,10 +1043,10 @@ static void generate_submodule_summary(struct sum=
+mary_cb *info,
+>  					    oid_to_hex(&p->oid_src) :
+>  					    oid_to_hex(&p->oid_dst));
+>  			}
+> -			errmsg =3D strbuf_detach(&errmsg_str, NULL);
+>  		}
+>  	}
+> =20
+> +	errmsg =3D errmsg_str.len ? errmsg_str.buf : NULL;
+>  	print_submodule_summary(info, errmsg, total_commits,
+>  				displaypath, src_abbrev,
+>  				dst_abbrev, p);
+> @@ -1054,6 +1054,7 @@ static void generate_submodule_summary(struct summa=
+ry_cb *info,
+>  	free(displaypath);
+>  	free(src_abbrev);
+>  	free(dst_abbrev);
+> +	strbuf_release(&errmsg_str);
+>  }
+> =20
+>  static void prepare_submodule_summary(struct summary_cb *info,
+> --=20
+> 2.37.0.932.g7b7031e73bc
 
-To make this ownership clearer, should we also make
-submodule_update_clone.update_data const? i.e.
+What do you think of getting rid of "char *errmsg" altogether? We can
+replace it with errmsg_str.buf and do the length check in
+print_submodule_summary():
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index a964dbeec3..79fd901e5a 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1906,7 +1906,7 @@ struct submodule_update_clone {
- 	int current;
-=20
- 	/* configuration parameters which are passed on to the children */
--	struct update_data *update_data;
-+	const struct update_data *update_data;
-=20
- 	/* to be consumed by update_submodule() */
- 	struct update_clone_data *update_clone;
-@@ -2003,7 +2003,7 @@ static int prepare_to_clone_next_submodule(const stru=
-ct cache_entry *ce,
- 	const char *update_string;
- 	enum submodule_update_type update_type;
- 	char *key;
--	struct update_data *ud =3D suc->update_data;
-+	const struct update_data *ud =3D suc->update_data;
- 	char *displaypath =3D get_submodule_displaypath(ce->name, ud->prefix);
- 	struct strbuf sb =3D STRBUF_INIT;
- 	int needs_cloning =3D 0;
+  diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+  index a964dbeec3..f9f0de7e83 100644
+  --- a/builtin/submodule--helper.c
+  +++ b/builtin/submodule--helper.c
+  @@ -896,7 +896,7 @@ static void print_submodule_summary(struct summary_cb=
+ *info, char *errmsg,
+    else
+      printf(" (%d):\n", total_commits);
+
+  -	if (errmsg) {
+  +	if (errmsg && *errmsg) {
+      printf(_("%s"), errmsg);
+    } else if (total_commits > 0) {
+      struct child_process cp_log =3D CHILD_PROCESS_INIT;
+  @@ -932,7 +932,7 @@ static void generate_submodule_summary(struct summary=
+_cb *info,
+  {
+    char *displaypath, *src_abbrev =3D NULL, *dst_abbrev;
+    int missing_src =3D 0, missing_dst =3D 0;
+  -	char *errmsg =3D NULL;
+  +	struct strbuf errmsg_str =3D STRBUF_INIT;
+    int total_commits =3D -1;
+
+    if (!info->cached && oideq(&p->oid_dst, null_oid())) {
+  @@ -1032,7 +1032,6 @@ static void generate_submodule_summary(struct summa=
+ry_cb *info,
+      * submodule, i.e., deleted or changed to blob
+      */
+      if (S_ISGITLINK(p->mod_dst)) {
+  -			struct strbuf errmsg_str =3D STRBUF_INIT;
+        if (missing_src && missing_dst) {
+          strbuf_addf(&errmsg_str, "  Warn: %s doesn't contain commits %s a=
+nd %s\n",
+                displaypath, oid_to_hex(&p->oid_src),
+  @@ -1043,17 +1042,17 @@ static void generate_submodule_summary(struct sum=
+mary_cb *info,
+                oid_to_hex(&p->oid_src) :
+                oid_to_hex(&p->oid_dst));
+        }
+  -			errmsg =3D strbuf_detach(&errmsg_str, NULL);
+      }
+    }
+
+  -	print_submodule_summary(info, errmsg, total_commits,
+  +	print_submodule_summary(info, errmsg_str.buf, total_commits,
+          displaypath, src_abbrev,
+          dst_abbrev, p);
+
+    free(displaypath);
+    free(src_abbrev);
+    free(dst_abbrev);
+  +	strbuf_release(&errmsg_str);
+  }
+
+  static void prepare_submodule_summary(struct summary_cb *info,
+
