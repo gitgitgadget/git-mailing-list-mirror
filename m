@@ -2,127 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1FB0C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 15:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 282E4C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 16:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240462AbiGNPoD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 11:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50060 "EHLO
+        id S239602AbiGNQOh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 12:14:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240436AbiGNPoA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 11:44:00 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA8FE1C935
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 08:43:52 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id n185so1285146wmn.4
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 08:43:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=IQyccFinT+ZoD8RZBHFM1ksXeaX6pkGsPEmF2UJuFGc=;
-        b=pM6hh5Cm2U9uhYu9peOa34TeWvJZ/oruE5B1s8PjF+2L09rFULifLFBQzEcL5dNDgw
-         YTMgMnlSPMX/LCDLiROSKmaK45QinuJNYrI1Oa/o2aS6i1EYDR2YIQ7Z0TGBErCOUodY
-         qHypAHcgQr4plh4LWqDK8NPMvIuv2yTKpi8O1vwjXpQZHXtnTazmvIq2Vi1us5VJuBUt
-         eGKbdDCEcRNfcmjPizU20wpfDiQXSYqNXFunW/JYABml1W+WkUKETPv8DhmIVIaaXyOk
-         Px1ePC9rKPaJbZ5KUKYRwIfjaNbm+F9PtClcdELSeWRJfhU9lyK7RzKQgOs/7cEEAUIb
-         qzsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=IQyccFinT+ZoD8RZBHFM1ksXeaX6pkGsPEmF2UJuFGc=;
-        b=2BLYw/LpimWP5fQ0VhCUVNKiebtEwL1/H2siiVnPy25w1L78iCDbMZtXSEApnWnuli
-         5lHqb4nKlPVa5SBR2RzvGBkVs9VvrPFZ1nD6uc3M4Qk1QEwYNJRO84uRhf+3GqZEm2/y
-         DkW1nqIbgfiJ6LMjYzPWRMSO4UJ34LzkxHj8ZQt+rMZ/YkjNRKqNGdBGhXxLtu+FBG7i
-         9j8lTE7gdnQ/RBEMaq+HIOdLi4GaKhIy/VIJdQ8s/yASPTlXX1sAh833mx3TzEWVn+p7
-         JGjR0Xj4MI9eDy58DUnlETi0a/3RDw7rk5oyTSr02vEESxebHj6M/cNfJ9YpYoj51FNm
-         d3Qw==
-X-Gm-Message-State: AJIora+M0NKX/DUzEb2znxF187SURx2pZFZNOf7fXL1krP6rVRrtnUbX
-        h2FRhR48iLhe8KBT/tKIp9bCHD3uQx4=
-X-Google-Smtp-Source: AGRyM1sP3m20xUw23wORdM6pHUWsJKgwM9qzqi7NRWTLTgiDyrsV51DktodFgrAzZJTv/LJOyENdCA==
-X-Received: by 2002:a05:600c:3591:b0:3a0:563a:49d3 with SMTP id p17-20020a05600c359100b003a0563a49d3mr9377411wmq.60.1657813430813;
-        Thu, 14 Jul 2022 08:43:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p129-20020a1c2987000000b003a2d47d3051sm2566945wmp.41.2022.07.14.08.43.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 08:43:50 -0700 (PDT)
-Message-Id: <pull.1290.git.1657813429221.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 14 Jul 2022 15:43:49 +0000
-Subject: [PATCH] shortlog: use a stable sort
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        with ESMTP id S239263AbiGNQOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 12:14:25 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2397361D5A
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 09:14:23 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D16E142F5F;
+        Thu, 14 Jul 2022 12:14:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NfUXLbzdIWWwQdzqgrS/uZJrwocTqDa0EACi6I
+        TlSaU=; b=qOCS8JX82Nls0nWKyIGWJadPuJmqAlRMuFvCTQYom3k9RcOOc2Udsd
+        /Oaz6ntpNdXOrQlcWZ7UG9Su48DFoVaHOSJWOInb9DrdxW+iXTWButSFdUgaBfVU
+        3htM63/7NVS4vgMp5aPls9VFhfysi/M0OOC1zQ8I+OB1xn7M6Qxmk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4606F142F5E;
+        Thu, 14 Jul 2022 12:14:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7F51142F5D;
+        Thu, 14 Jul 2022 12:14:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] tests: fix incorrect --write-junit-xml code
+References: <pull.1288.git.1657789234416.gitgitgadget@gmail.com>
+Date:   Thu, 14 Jul 2022 09:14:20 -0700
+In-Reply-To: <pull.1288.git.1657789234416.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Thu, 14 Jul 2022 09:00:34
+        +0000")
+Message-ID: <xmqq35f38yeb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 05504B96-0390-11ED-9C58-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-When sorting the output of `git shortlog` by count, a list of authors in
-alphabetical order is then sorted by contribution count. Obviously, the
-idea is to maintain the alphabetical order for items with identical
-contribution count.
+>     Unfortunately, I noticed this regression no earlier than when I needed
+>     to validate Git for Windows v2.37.1. Since v2.37.1 was an embargoed
+>     release, I could not use GitHub Actions for the CI testing, so I had to
+>     reinstate Git's Azure Pipeline.
 
-At the moment, this job is performed by `qsort()`. As that function is
-not guaranteed to implement a stable sort algorithm, this can lead to
-inconsistent and/or surprising behavior: items with identical
-contribution count could lose their alphabetical sub-order.
+I wonder if it would make your life easier if the same GitHub
+Actions CI stuff were available for the Cabal repository we use for
+embargoed work, by allowing you to use the same validation for usual
+releases and the enbargoed ones?
 
-The `qsort()` in MS Visual C's runtime does _not_ implement a stable
-sort algorithm, and under certain circumstances this even causes a test
-failure in t4201.21 "shortlog can match multiple groups", where two
-authors both are listed with 2 contributions, and are listed in inverse
-alphabetical order.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Let's instead use the stable sort provided by `git_stable_qsort()` to
-avoid this inconsistency.
+>  t/test-lib-junit.sh | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/t/test-lib-junit.sh b/t/test-lib-junit.sh
+> index c959183c7e2..79c31c788b9 100644
+> --- a/t/test-lib-junit.sh
+> +++ b/t/test-lib-junit.sh
+> @@ -46,7 +46,7 @@ finalize_test_case_output () {
+>  	shift
+>  	case "$test_case_result" in
+>  	ok)
+> -		set "$*"
+> +		set -- "$*"
+>  		;;
+>  	failure)
+>  		junit_insert="<failure message=\"not ok $test_count -"
+> @@ -65,17 +65,17 @@ finalize_test_case_output () {
+>  			junit_insert="$junit_insert<system-err>$(xml_attr_encode \
+>  				"$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")</system-err>"
+>  		fi
+> -		set "$1" "      $junit_insert"
+> +		set -- "$1" "      $junit_insert"
+>  		;;
+>  	fixed)
+> -		set "$* (breakage fixed)"
+> +		set -- "$* (breakage fixed)"
+>  		;;
+>  	broken)
+> -		set "$* (known breakage)"
+> +		set -- "$* (known breakage)"
+>  		;;
+>  	skip)
+>  		message="$(xml_attr_encode --no-lf "$skipped_reason")"
+> -		set "$1" "      <skipped message=\"$message\" />"
+> +		set -- "$1" "      <skipped message=\"$message\" />"
+>  		;;
+>  	esac
 
-This is a companion to 2049b8dc65 (diffcore_rename(): use a stable sort,
-2019-09-30).
+OK.  Ancient shells did not understand "--" and it was idiomatic to
+say "set x ...; shift", but we already do assume "set --" is usable
+everywhere we care about in many of our scripts and tests.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    shortlog: use a stable sort
-    
-    This is another fall-out from validating Git for Windows v2.37.1 via the
-    reinstated Azure Pipeline.
-    
-    The most valid question a reviewer might have about this patch is: "But
-    why does our current CI not fail in the vs-test job?". The answer is
-    surprisingly trivial: Because our CMake-based definition universally
-    defines INTERNAL_QSORT
-    [https://github.com/git/git/blob/v2.37.1/contrib/buildsystems/CMakeLists.txt#L227],
-    which should actually not even be necessary, while the Azure Pipeline I
-    used still calls make vcxproj to generate the Visual Studio build
-    definition and does not define that flag.
+Looks good to me.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1290%2Fdscho%2Fshortlog-requires-stable-sort-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1290/dscho/shortlog-requires-stable-sort-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1290
-
- builtin/shortlog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 35825f075e3..086dfee45aa 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -443,7 +443,7 @@ void shortlog_output(struct shortlog *log)
- 	struct strbuf sb = STRBUF_INIT;
- 
- 	if (log->sort_by_number)
--		QSORT(log->list.items, log->list.nr,
-+		STABLE_QSORT(log->list.items, log->list.nr,
- 		      log->summary ? compare_by_counter : compare_by_list);
- 	for (i = 0; i < log->list.nr; i++) {
- 		const struct string_list_item *item = &log->list.items[i];
-
-base-commit: bbea4dcf42b28eb7ce64a6306cdde875ae5d09ca
--- 
-gitgitgadget
+Thanks.  Will queue.
