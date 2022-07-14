@@ -2,256 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46167C43334
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 19:40:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5374C43334
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 19:46:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240737AbiGNTka (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 15:40:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41644 "EHLO
+        id S240704AbiGNTqA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 15:46:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240681AbiGNTkT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 15:40:19 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D644A67C83
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:40:04 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id r2so2887906wrs.3
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:40:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=67zCS8QrRmMaaIxEzKVkATJBA2wVj3iyoC5a4Md1UR0=;
-        b=mVQqHW/2Kd4oYpLh1V9NrGy8bdzEh+g5b5zqve0ek6LDqhxdE4mQNMF04/GNRGi3ao
-         KXHwMZNR+9zMbw9rhEK/+fg9iUNeU7DL7hGnueZiu6AjEDsktZ5r62kNJQioGFXlf9VU
-         0sQ0qDRCYIIfbXX8DvSbm9Z7PO/FcPIi5OfL38uTyckfLhQxOKcw5i33QA9FF6XYCQxl
-         PGnknKcZ4Ab/tSf6k+BLbcQiTmio6NBbf0lvYzvqixf1w8sSf9rBIb5eLEKeApC93mdX
-         yz3hi5mHGSbfQqC3j3opBnOumtnocC/GUv3dMdqnESdND1JMbdTGf+30rZCmOm39ASs/
-         H/qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=67zCS8QrRmMaaIxEzKVkATJBA2wVj3iyoC5a4Md1UR0=;
-        b=mG/nZiQ/d/YWklBFBxBGVtsCbPnma5pzNZyBvQPTUBTBYFCfONId4dAwnXFQA9/fEj
-         BVZWl/Et+jxCog52sByCDPE724PdEphGszds54HFHajB4htcC6ObngizkpRRzxdredPn
-         UPoIK75J7kSw7sGfBrPaSWbDfRSrr9gAeLCYHLGmUyTXUtup3Zy6sJm3DAVD96S7+VCu
-         4Tnjo+P6U263xiG65s/05xQBRp7daOy3i+BnvOV0qXK3yJuBEUJz71Y/ZQ1zyxXDpoPP
-         0RGDz0sfGy+CV3lq6/D3A5l32eDi+LD4qt087E9iLnOV6ZGFqPlBTKQz/mwldywiPVxQ
-         T9Vw==
-X-Gm-Message-State: AJIora/H9KBG4YPOYRhpoJiVGCCzljevUfP7EMP3rC42zSZMS0uy92Sg
-        aS0QnOhtDIVM/VHxtOCL6m/a8h+tkkSSyQ==
-X-Google-Smtp-Source: AGRyM1uiiaEW8yJ89YXIBg4c1kBRKJTFgi8tDQDdzxPxhr63wnwSh20OTk2eUgCRb0cDutpok78JOw==
-X-Received: by 2002:a5d:434a:0:b0:21d:aa7e:b1bb with SMTP id u10-20020a5d434a000000b0021daa7eb1bbmr9974017wrr.619.1657827603065;
-        Thu, 14 Jul 2022 12:40:03 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05600018c900b0021dac657337sm2145145wrq.75.2022.07.14.12.40.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 12:40:02 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 09/10] CI: have "static-analysis" run a "make ci-static-analysis" target
-Date:   Thu, 14 Jul 2022 21:39:46 +0200
-Message-Id: <patch-09.10-95b9c3797c0-20220714T193808Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.37.1.996.g651fc6e809f
-In-Reply-To: <cover-00.10-00000000000-20220714T193808Z-avarab@gmail.com>
-References: <cover-00.10-00000000000-20220714T193808Z-avarab@gmail.com>
+        with ESMTP id S232415AbiGNTp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 15:45:58 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478856BC33
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:45:57 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 79E3B196409;
+        Thu, 14 Jul 2022 15:45:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3exvSjzAr/YmKLhTsfwdJG6pI/2OUE65TScnnQ
+        NcilE=; b=ox2qcIFqYfwEB9yaIon8f2Qc2sWkt/UfIG0Qy8mXDEvd+r2PjmPK7U
+        L59OgrSt3RkCyYJyN976yw3Uvl/xGVNhjGqW7WJPHGT0krw4wmzg+Pv3DgvsOY9J
+        mfO0VIBKIjdAjZ+8mTte/II876j33Xk6jlhBU8kpXbhCMU4YKlu7A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 66273196408;
+        Thu, 14 Jul 2022 15:45:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 02D55196407;
+        Thu, 14 Jul 2022 15:45:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/3] doc: notes: unify configuration variables definitions
+References: <cover.1657819649.git.matheus.bernardino@usp.br>
+        <d39e826756e79ce7fe270175ad0d5ae523528af9.1657819649.git.matheus.bernardino@usp.br>
+Date:   Thu, 14 Jul 2022 12:45:51 -0700
+In-Reply-To: <d39e826756e79ce7fe270175ad0d5ae523528af9.1657819649.git.matheus.bernardino@usp.br>
+        (Matheus Tavares's message of "Thu, 14 Jul 2022 14:44:04 -0300")
+Message-ID: <xmqqzghb4gwg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 91E50BCE-03AD-11ED-8383-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make it easier to run the CI logic locally by creating
-"ci-static-analysis" target.
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
-Now the "check-coccicheck" logic added in 0860a7641ba (travis-ci: fail
-if Coccinelle static analysis found something to transform,
-2018-07-23) can be easily tested outside of CI, and likewise the
-sanity check added in 0e7696c64db (ci: disallow directional
-formatting, 2021-11-04).
+>  	`cat_sort_uniq`.  Defaults to `manual`.  See "NOTES MERGE STRATEGIES"
+> -	section of linkgit:git-notes[1] for more information on each strategy.
+> +	section
+> +ifdef::git-notes[above]
+> +ifndef::git-notes[of linkgit:git-notes[1]]
+> +	for more information on each strategy.
 
-These targets could be improved, the "hdr-check" target will re-do all
-of its work every time it's run, and could with a change similar to my
-c234e8a0ecf (Makefile: make the "sparse" target non-.PHONY,
-2021-09-23). The same goes for the new
-"ci-check-directional-formatting" target.
+This is the first use of the single line ifdef/ifndef in our
+Documentation.  I assume you have verified the rendered output on
+both AsciiDoc and AsciiDoctor?
 
-But without those improvements being able to easily run a 1=1
-equivalent of the checks we do in CI during a local build is already
-an improvement.
+> -	"notes.mergeStrategy".  See the "NOTES MERGE STRATEGIES" section in
+> -	linkgit:git-notes[1] for more information on the available strategies.
+> +	"notes.mergeStrategy".  See the "NOTES MERGE STRATEGIES" section
+> +ifdef::git-notes[above]
+> +ifndef::git-notes[in linkgit:git-notes[1]]
+> +	for more information on the available strategies.
 
-This change will also make the CI check faster, since we can take
-advantage of parallelism across these "make" invocations. The "make
-coccicheck" command in particular takes a long to finish its last job,
-at the end we might only have one job pegging 100% of one CPU
-core. Now any extra cores will be free to run the rest of the targets
-under "ci-static-analysis".
+Ditto.
 
-Because we're now going to invoke "make" directly from the CI recipe
-we'll need to amend the new "setenv" wrapper to write the "MAKEFLAGS"
-and other variables to "$GITHUB_ENV".
+>  notes.displayRef::
+> -	The (fully qualified) refname from which to show notes when
+> -	showing commit messages.  The value of this variable can be set
+> -	to a glob, in which case notes from all matching refs will be
+> -	shown.  You may also specify this configuration variable
+> -	several times.  A warning will be issued for refs that do not
+> -	exist, but a glob that does not match any refs is silently
+> -	ignored.
+> -+
+> -This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
+> -environment variable, which must be a colon separated list of refs or
+> -globs.
+> -+
+> -The effective value of "core.notesRef" (possibly overridden by
+> -GIT_NOTES_REF) is also implicitly added to the list of refs to be
+> -displayed.
+> +	Which ref (or refs, if a glob or specified more than once), in
+> +	addition to the default set by `core.notesRef` or
+> +	`GIT_NOTES_REF`, to read notes from when showing commit
+> +	messages with the 'git log' family of commands.
+> +	This setting can be overridden on the command line or by the
+> +	`GIT_NOTES_DISPLAY_REF` environment variable.
+> +	See linkgit:git-log[1].
 
-In my testing the "static-analysis" job runs in just over 10 minutes
-without this change, but this change cuts just over a minute off the
-runtime.
+This is unrelated to the "unify description in git-foo.txt and
+config/foo.txt in the documentation" topic, isn't it?
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- .github/workflows/main.yml |  6 ++++--
- Makefile                   | 29 +++++++++++++++++++++++++++++
- ci/lib.sh                  |  7 ++++++-
- ci/run-static-analysis.sh  | 32 --------------------------------
- shared.mak                 |  1 +
- 5 files changed, 40 insertions(+), 35 deletions(-)
- delete mode 100755 ci/run-static-analysis.sh
+I haven't formed an opinion on the updated text, and it makes it
+harder to review when the content change is mixed in the "unify
+description in two places" topic, so I won't comment on the change
+of the contents.  Please split them into two steps (a step with only
+content change, and then another step to remove the duplicated one
+by making one include the other).  Same comment applies to [2/3].
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 8b7697df9fb..fa6d861c75a 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -319,9 +319,11 @@ jobs:
-     runs-on: ubuntu-18.04
-     steps:
-     - uses: actions/checkout@v2
-+    - run: ci/lib.sh
-+      env:
-+        NO_CI_GROUPS: 1
-     - run: ci/install-dependencies.sh
--    - run: ci/run-static-analysis.sh
--    - run: ci/check-directional-formatting.bash
-+    - run: make ci-static-analysis
-   sparse:
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-diff --git a/Makefile b/Makefile
-index 04d0fd1fe60..c328e190d64 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3147,6 +3147,20 @@ coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/c
- # See contrib/coccinelle/README
- coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
- 
-+.PHONY: check-coccicheck
-+check-coccicheck: coccicheck
-+	$(QUIET_CHECK)for cocci_patch in contrib/coccinelle/*.patch; do \
-+		if test -s "$$cocci_patch"; then \
-+			echo "Coccinelle suggests the following changes in '$$cocci_patch':"; \
-+			cat "$$cocci_patch"; \
-+			fail=UnfortunatelyYes; \
-+		fi \
-+	done; \
-+	if test -n "$$fail"; then \
-+		echo "error: Coccinelle suggested some changes"; \
-+		exit 1; \
-+	fi
-+
- .PHONY: coccicheck coccicheck-pending
- 
- ### Installation rules
-@@ -3589,3 +3603,18 @@ $(FUZZ_PROGRAMS): all
- 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
- 
- fuzz-all: $(FUZZ_PROGRAMS)
-+
-+### CI "check" targets
-+#
-+# These targets are run from the CI, see .github/workflows/main.yml,
-+# but can also be run manually to run the same assertions locally.
-+
-+.PHONY: ci-check-directional-formatting
-+ci-check-directional-formatting:
-+	$(QUIET_CHECK)ci/check-directional-formatting.bash
-+
-+.PHONY: ci-static-analysis
-+ci-static-analysis: ci-check-directional-formatting
-+ci-static-analysis: check-coccicheck
-+ci-static-analysis: hdr-check
-+ci-static-analysis: check-pot
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 67b7b32a0f1..14d0af2fa7f 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -15,7 +15,7 @@ then
- 	exit 1
- fi
- 
--if test true != "$GITHUB_ACTIONS"
-+if test true != "$GITHUB_ACTIONS" || test -n "$NO_CI_GROUPS"
- then
- 	begin_group () { :; }
- 	end_group () { :; }
-@@ -89,6 +89,11 @@ setenv () {
- 
- 	eval "$key=\"$val\""
- 	eval "export $key"
-+	eval "export $key=\"$val\""
-+	if test -n "$GITHUB_ENV"
-+	then
-+		echo "$key=$val" >>"$GITHUB_ENV"
-+	fi
- }
- 
- check_unignored_build_artifacts () {
-diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-deleted file mode 100755
-index faae31f0078..00000000000
---- a/ci/run-static-analysis.sh
-+++ /dev/null
-@@ -1,32 +0,0 @@
--#!/bin/sh
--#
--# Perform various static code analysis checks
--#
--
--. ${0%/*}/lib.sh
--
--make coccicheck
--
--set +x
--
--fail=
--for cocci_patch in contrib/coccinelle/*.patch
--do
--	if test -s "$cocci_patch"
--	then
--		echo "$(tput setaf 1)Coccinelle suggests the following changes in '$cocci_patch':$(tput sgr0)"
--		cat "$cocci_patch"
--		fail=UnfortunatelyYes
--	fi
--done
--
--if test -n "$fail"
--then
--	echo "$(tput setaf 1)error: Coccinelle suggested some changes$(tput sgr0)"
--	exit 1
--fi
--
--make hdr-check ||
--exit 1
--
--make check-pot
-diff --git a/shared.mak b/shared.mak
-index 4330192e9c3..3bd846aaf9e 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -58,6 +58,7 @@ ifndef V
- ## Used in "Makefile"
- 	QUIET_CC       = @echo '   ' CC $@;
- 	QUIET_AR       = @echo '   ' AR $@;
-+	QUIET_CHECK    = @echo '   ' CHECK $@;
- 	QUIET_LINK     = @echo '   ' LINK $@;
- 	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
- 	QUIET_LNCP     = @echo '   ' LN/CP $@;
--- 
-2.37.1.996.g651fc6e809f
+>  notes.rewrite.<command>::
+>  	When rewriting commits with <command> (currently `amend` or
+> -	`rebase`) and this variable is set to `true`, Git
+> -	automatically copies your notes from the original to the
+> -	rewritten commit.  Defaults to `true`, but see
+> -	"notes.rewriteRef" below.
+> +	`rebase`), if this variable is `false`, git will not copy
+> +	notes from the original to the rewritten commit.  Defaults to
+> +	`true`.  See also "`notes.rewriteRef`" below.
+> ++
+> +This setting can be overridden by the `GIT_NOTES_REWRITE_REF`
+> +environment variable.
 
+Ditto.
+
+>  notes.rewriteMode::
+> -	When copying notes during a rewrite (see the
+> -	"notes.rewrite.<command>" option), determines what to do if
+> -	the target commit already has a note.  Must be one of
+> -	`overwrite`, `concatenate`, `cat_sort_uniq`, or `ignore`.
+> -	Defaults to `concatenate`.
+> +	When copying notes during a rewrite, what to do if the target
+> +	commit already has a note.  Must be one of `overwrite`,
+> +	`concatenate`, `cat_sort_uniq`, or `ignore`.  Defaults to
+> +	`concatenate`.
+>  +
+>  This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+>  environment variable.
+
+We are losing the mention of "notes.rewrite.<command>", which is
+outside the "unify" topic, isn't it?
+
+>  notes.rewriteRef::
+>  	When copying notes during a rewrite, specifies the (fully
+> -	qualified) ref whose notes should be copied.  The ref may be a
+> -	glob, in which case notes in all matching refs will be copied.
+> -	You may also specify this configuration several times.
+> +	qualified) ref whose notes should be copied.  May be a glob,
+> +	in which case notes in all matching refs will be copied.  You
+> +	may also specify this configuration several times.
+>  +
+>  Does not have a default value; you must configure this variable to
+>  enable note rewriting.  Set it to `refs/notes/commits` to enable
+>  rewriting for the default commit notes.
+>  +
+> -This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
+> -environment variable, which must be a colon separated list of refs or
+> -globs.
+> +Can be overridden with the `GIT_NOTES_REWRITE_REF` environment variable.
+
+Ditto.
+
+Thanks.
