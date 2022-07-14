@@ -2,96 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C5A2C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 00:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FD13C43334
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 00:13:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231633AbiGNAD6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jul 2022 20:03:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38792 "EHLO
+        id S231357AbiGNANh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jul 2022 20:13:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbiGNAD5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jul 2022 20:03:57 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D682B1CD
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 17:03:56 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id g6so274756qtu.2
-        for <git@vger.kernel.org>; Wed, 13 Jul 2022 17:03:56 -0700 (PDT)
+        with ESMTP id S229954AbiGNANg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jul 2022 20:13:36 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94CB3273
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 17:13:32 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id z23so539619eju.8
+        for <git@vger.kernel.org>; Wed, 13 Jul 2022 17:13:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=521BAo8XBHZBecGHOxLyGVBA5UONU07KXVBWw4ySDog=;
-        b=VFO41DwvpZu118ETb9UjEHMlTiTKqFxavf5K7GYDghCf/DX59pmHUugT67MSVx5vru
-         rsFX5BYvvyUG+rUqZXUmO/czUSRkldy9rzX5hdZ78czUMXTaDNLHaC1BVgP76NJif0gV
-         0eiJHjKanV9zb1U2kaM6Kw5Bu9audlqwcDBQHQXuW3aiNYvriZn+1pYnaK+jCw+OQ4k5
-         lGNZ7mksoRxukEOmNHN6LGzVNSTm8Q86I6jtdNpclAWTON6c/ltdnSLgMj3PCAQ4IqXg
-         eeggHT4zpDZfORLQHrfPs9gE8tmlNrZQh+wwowS8c2Ze0YXBaoSBqejJIE1aV++IF7cU
-         KFMQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=SaSiPKb2cY+ydieVfKwTmcpirS6LvPAJpBS04vy8hoI=;
+        b=UhMgK8H5+WSc/PCIhexBkxLGFZaCvaHNxbo0Lj5r/YtkApHoD5gxwFHR1rCAarGwpJ
+         fScSSHvKKDoOt7vqCOxTD7tkU9jPhADhfMTSRqivLdTGtzWVv3T8Mnv/3oKRwSjxooZm
+         kFKcLzR0ND4ysARMDC+1IarOikxWHSDTAmm1/g2sSQzI7QEyXuAUJ27TDPOAB1TmSW19
+         9skn8q+a4Bg+5TW3zQjdFb91YfAIT4xfhoRTJHBcrNds4q9FdfSR5R5Ge2S8/Ejbn0L7
+         BdH6S32L7o4+zEu2Moobzmfi3aqOEgYszrW99DUIT7wc9eTa8Iu0EMk4zsbareo3DR88
+         Jwng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=521BAo8XBHZBecGHOxLyGVBA5UONU07KXVBWw4ySDog=;
-        b=tvYWBeJ08iYPC50FtYRmuPihKMTtpNwrohS9mxQF8hCBfDALBoebS3fuS+UGswXFqX
-         vkJ+QCs8f1Irkwc9fGyt5vHpmjYn4lC3u35KxPKkygHdQ7hjnWlZNqQxL/BUmGePim+f
-         xBjI4pp+V0KfWGVb2/s6zUXDepbopIGYoBF3wQtiWEUt4Cypk+Gml6hZij8yGiSPSLXh
-         YUKk/W1F5QiK9VfqMNV81orPdJ3DsX7JflU/0HU5oPbvdr9AjJ7qQv00i7a3T5O7/Krr
-         pRTHbtbYc5RgS0v+Y62STugdeL/MAUC+vETUwhccPcYCGvfDzj9sDFj4f9BnaePVomMT
-         vDQQ==
-X-Gm-Message-State: AJIora+vXs5EKGV2IH+GoBQtH+smWOeaMsxvOngy8EzsjhEPJX3AoaPd
-        fGVXeWRQoupo93kMENPJEGa1ZzEj16cYNr1e
-X-Google-Smtp-Source: AGRyM1s8qaKIqzx0EIcVIwGJSHbHJr5VyhpUcBwCtV0WR750OuPldGlk3LMaxFeF3Z1Gw0yju2YC4A==
-X-Received: by 2002:a05:622a:110e:b0:31e:b568:b5a5 with SMTP id e14-20020a05622a110e00b0031eb568b5a5mr5469459qty.54.1657757035240;
-        Wed, 13 Jul 2022 17:03:55 -0700 (PDT)
-Received: from ?IPV6:2605:2a00:8000:dead:55a4:52ad:2bdc:5b8c? ([2605:2a00:8000:dead:55a4:52ad:2bdc:5b8c])
-        by smtp.gmail.com with ESMTPSA id r14-20020ac867ce000000b0031eb47652dcsm154059qtp.59.2022.07.13.17.03.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Jul 2022 17:03:55 -0700 (PDT)
-Message-ID: <c12c14a9-9948-a47c-35a0-869f95d95bb9@gmail.com>
-Date:   Wed, 13 Jul 2022 20:03:53 -0400
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=SaSiPKb2cY+ydieVfKwTmcpirS6LvPAJpBS04vy8hoI=;
+        b=z9KYA8xX2fVBbqKf85ctUWBSh2jNNOHk3yIsu22IIIPpn2KiKISBrM1Le1LbVhp2Xi
+         QjOMXFd4sXyklsv5VzM0ceqw+9R3X5ubavMtBihf4DDKZmPVsVqpQRelUpSFDujJ8HQo
+         5lmMlah8HD5RwY8UWD6j4O0cdW1N+xqvIroFSXkjT+I2R3wnAKZyigPMTfXSSe8QNFCv
+         A7jKABn3w68QS0OXmvd5g3cZimgwBgIc0a3a5MWxWGHZv2VKrbirVvNChGX0r5lrgEWb
+         0vKQ1CFOk8WGq0fZq2dZ8uGeK5sy+sRKUrdHProPBRbQivad812njlEmRYPA10kwCu3q
+         0xbg==
+X-Gm-Message-State: AJIora+MG4l1QF39pbQ+dI7tTzf+hoCu1dZgNO06j690cZrfM/KMyr0V
+        MWWn5/EkZC8yj9ZLjU+VZGg=
+X-Google-Smtp-Source: AGRyM1vWszrKUMd6Pl+mZwmXE2dQOTgqFdA91hnNfWDXO/0r9JKxwZcH3XmGQP8e8s0WaH+xtD9U6A==
+X-Received: by 2002:a17:906:8a45:b0:72b:31d4:d537 with SMTP id gx5-20020a1709068a4500b0072b31d4d537mr6018177ejc.170.1657757611138;
+        Wed, 13 Jul 2022 17:13:31 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id b19-20020a17090636d300b00722e7e48dfdsm8579ejc.218.2022.07.13.17.13.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jul 2022 17:13:30 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oBmTy-0022ta-01;
+        Thu, 14 Jul 2022 02:13:30 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [PATCH 03/11] submodule--helper: fix "module_clone_data" memory
+ leaks
+Date:   Thu, 14 Jul 2022 02:06:56 +0200
+References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
+ <patch-03.11-e5ec6945409-20220713T131601Z-avarab@gmail.com>
+ <kl6lmtdc6hhp.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <kl6lilo06g82.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <220713.86o7xs3g76.gmgdl@evledraar.gmail.com>
+ <kl6l8row62dg.fsf@chooglen-macbookpro.roam.corp.google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <kl6l8row62dg.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220714.86k08g361i.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: Why is reflog so obscure?
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Gerriko io <gerriko.iot@gmail.com>,
-        git@vger.kernel.org
-References: <CALF=2ANoq1eL-RqK_dLaVThoxbvfhzgPJXFHyD1kX8CFCPx3XA@mail.gmail.com>
- <f0bb8ee8-9b38-45a7-a54b-24cf245bb3c8@gmail.com>
- <Ys0e9MxIWQj/pVXx@coredump.intra.peff.net>
- <a8d2a61d-b86f-9b89-6391-36c58c390a12@gmail.com> <xmqqo7xuif46.fsf@gitster.g>
- <87ilo2we9o.fsf@osv.gnss.ru> <xmqq4jzmib3n.fsf@gitster.g>
-From:   Thomas Guyot <tguyot@gmail.com>
-In-Reply-To: <xmqq4jzmib3n.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-07-12 11:50, Junio C Hamano wrote:
-> Sergey Organov <sorganov@gmail.com> writes:
+
+On Wed, Jul 13 2022, Glen Choo wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>> [...]
+>> What do you think?
 >
->> Very handy, thanks! Would be nice to have this in EXAMPLES section of
->> corresponding manual page.
->>
->> Honestly, I tried (admittedly not very hard) to figure how to get dates
->> from "git reflog" a few times, but every time I gave up, so this (along
->> with the --dates option turning dates output on) is not very
->> discoverable.
-> Heh, I wouldn't have bothered writing the message you are responding
-> to if it were documented already ;-)
+> Frankly I'm ok with moving things around; I think the code could use
+> a little cleaning up :)=20
+
+Yeah, but this whole part of it is something we'll be throwing away
+entirely anyway, so I wanted to leave it at just fixing the memory leaks
+as narrowly as possible for now.
+
+I.e. we invoke "clone" from submodule--helper itself, which we don't
+need to do if we just invoke it as a function, in which case this whole
+argv v.s. dynamically generated difference goes away.
+
+Well, we'll have a constant string in some cases, but we'll likely
+either strdup them all with a strvec, or more likely pass the arguments
+with custom "options" struct or something.
+
+> But yeah, I think my suggestion isn't so great -
+> it's a bit weird to keep around an auto variable that exists only to be
+> dup-ed to the thing we care about. We can forget about that.
 >
-> Patches welcome.
+> I do think that it's worth avoiding the "sometimes dup, sometimes not"
+> pattern if we can, though (of course these are just my non-C instincts
+> talking), and we can do that here if we just choose not to assign back
+> to .path. Something like:
+>
+>   struct module_clone_data {
+>     const char *prefix;
+>   -	const char *path;
+>   +	char *path;
+>   +	const char *path_argv;
+>
+>   ...
+>
+>    	if (!is_absolute_path(clone_data->path)) {
+>   -		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
+>   +		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path_argv=
+);
+>   +		clone_data->path =3D strbuf_detach(&sb, NULL);
+>    	} else {
+>   -		clone_data->path =3D xstrdup(clone_data->path);
+>   +		clone_data->path =3D xstrdup(clone_data->path_argv);
+>    	}
+>
+> would be clearer to me since the const pointer never points to something
+> that the struct actually owns.
 
-Indeed these are great! I was thinking the same thing, I can work on a 
-patch shortly.
+I think that actually makes a lot of sense, I'll probably just change it
+to that. I'll mull over this again when I get to re-rolling this
+(depending on future comments), thanks!
 
-Regards,
+> But if the "=3D .to_free =3D " idiom is well-understood and accepted to t=
+he
+> point that we don't need to actively avoid "sometimes dup, sometimes
+> not", then we should drop my suggestion and just go with your patch :)
 
---
-Thomas
-
+FWIW "git grep ' =3D to_free =3D ' finds a fair bit of them, but luckily we
+usually don't need to play that particular game...
