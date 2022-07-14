@@ -2,162 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5374C43334
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 19:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3601C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 19:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240704AbiGNTqA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 15:46:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
+        id S240711AbiGNTri (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 15:47:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232415AbiGNTp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 15:45:58 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478856BC33
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:45:57 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 79E3B196409;
-        Thu, 14 Jul 2022 15:45:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3exvSjzAr/YmKLhTsfwdJG6pI/2OUE65TScnnQ
-        NcilE=; b=ox2qcIFqYfwEB9yaIon8f2Qc2sWkt/UfIG0Qy8mXDEvd+r2PjmPK7U
-        L59OgrSt3RkCyYJyN976yw3Uvl/xGVNhjGqW7WJPHGT0krw4wmzg+Pv3DgvsOY9J
-        mfO0VIBKIjdAjZ+8mTte/II876j33Xk6jlhBU8kpXbhCMU4YKlu7A=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 66273196408;
-        Thu, 14 Jul 2022 15:45:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 02D55196407;
-        Thu, 14 Jul 2022 15:45:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] doc: notes: unify configuration variables definitions
-References: <cover.1657819649.git.matheus.bernardino@usp.br>
-        <d39e826756e79ce7fe270175ad0d5ae523528af9.1657819649.git.matheus.bernardino@usp.br>
-Date:   Thu, 14 Jul 2022 12:45:51 -0700
-In-Reply-To: <d39e826756e79ce7fe270175ad0d5ae523528af9.1657819649.git.matheus.bernardino@usp.br>
-        (Matheus Tavares's message of "Thu, 14 Jul 2022 14:44:04 -0300")
-Message-ID: <xmqqzghb4gwg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232415AbiGNTrh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 15:47:37 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5046BC3F
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:47:36 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id o31-20020a17090a0a2200b001ef7bd037bbso4143055pjo.0
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:47:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=UgblyLX+F6G6AH2EfiydlBVrFvVtThY5FJGaTV7+tj8=;
+        b=GCA6gTFAk93DhsMKgbtTn0KdaYPElST1mNJrMVg1674LNJe7n4FMGGrciki/7A1HVU
+         njVJPs7X48w7EcMhcZJ+N25qHaQhzKwEze1L6vE9CqX4wHC8tdZ5kb7zJaBTmBtD+8ae
+         z+W77ENR78kp46Or3Er1kZAK9+dY8b7aL44DAe39kU17IDewXAcm9osio3BRDUVnDiV6
+         YGiz//j1jLK+tjddIAUlvA4RQz/tWG3DDK8azaFstPpLBpZV7fTNfePP+hnlh+UOS97y
+         07XEOc/8fnCgqtsRf1CY1cdnY1XFc6Jn8tCVWxYq113x0af3QivJF3o47AtrPqsKtXMg
+         +xeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=UgblyLX+F6G6AH2EfiydlBVrFvVtThY5FJGaTV7+tj8=;
+        b=K3TIfNlzFCT7liBtqy8Yn00AOKnsR1jX7Qc9dTcdhrKATuhVT9V7500QDnQcLa3I69
+         9hAzr6lDpDOWETN04dt9iqmCGiUr57kI1XBLGvpnII5o/O61GGmUh1eWO1fl0Ir07qA6
+         bsC9I13+bz6uObDwFXG9P6sIZrB6gY+w1E+OtXK/OJsjKTnLzWEeLWUJSn8efCKpgBGg
+         ktIAh3zoDD5b0y9syHOav8PnqxZ81gX1WQXnQRMLJu7FovErhh0p40Q3RYpds6LfipSo
+         aDB8V/SewV/d04de6Z/TQwXov9SfL6e0fSmbnF6qC/7YQRdXDBv3/tdmLdTNoWOXYGnv
+         nvuw==
+X-Gm-Message-State: AJIora8cjk5oVvICOgxBsgQ1Pj0WrkB9HWB8sgMXa0MUK/5aRdWCFxAW
+        oxPAcAtXINoTryww4i0ov5IT
+X-Google-Smtp-Source: AGRyM1sf9HH13kKbFTpQr4TwSBt6IEonjf8VLnxNUXirk8BOn3tQp6+OzoPq4uzpxFnZrmuKf5U0XQ==
+X-Received: by 2002:a17:90a:7c05:b0:1ee:e40c:589b with SMTP id v5-20020a17090a7c0500b001eee40c589bmr11525454pjf.78.1657828056076;
+        Thu, 14 Jul 2022 12:47:36 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id i6-20020a62c106000000b0052594a3ba89sm2100431pfg.65.2022.07.14.12.47.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Jul 2022 12:47:35 -0700 (PDT)
+Message-ID: <a1580785-e35c-9a2d-7fa1-c3d7fc62883b@github.com>
+Date:   Thu, 14 Jul 2022 12:47:34 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 91E50BCE-03AD-11ED-8383-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Subject: Re: "reject arguments in cone-mode that look like patterns" doesn't
+ work in macos-12
+Content-Language: en-US
+To:     fawaz ahmed0 <fawazahmed0@hotmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <BL0PR13MB42750BC5C4837B7B0BD1885EF1889@BL0PR13MB4275.namprd13.prod.outlook.com>
+ <BL0PR13MB427533B25CCFE6A37F7619E8F1889@BL0PR13MB4275.namprd13.prod.outlook.com>
+ <4f4d5d03-2a0d-19c1-fd2e-80ab86aa1145@github.com>
+ <BL0PR13MB427538CEAD5481CCBF6D195DF1889@BL0PR13MB4275.namprd13.prod.outlook.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <BL0PR13MB427538CEAD5481CCBF6D195DF1889@BL0PR13MB4275.namprd13.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares <matheus.bernardino@usp.br> writes:
+fawaz ahmed0 wrote:
 
->  	`cat_sort_uniq`.  Defaults to `manual`.  See "NOTES MERGE STRATEGIES"
-> -	section of linkgit:git-notes[1] for more information on each strategy.
-> +	section
-> +ifdef::git-notes[above]
-> +ifndef::git-notes[of linkgit:git-notes[1]]
-> +	for more information on each strategy.
+Hi Fawaz,
 
-This is the first use of the single line ifdef/ifndef in our
-Documentation.  I assume you have verified the rendered output on
-both AsciiDoc and AsciiDoctor?
+Please make sure you "Reply-all" to include the mailing list in the
+discussion, and make sure to inline or bottom-post your replies.
 
-> -	"notes.mergeStrategy".  See the "NOTES MERGE STRATEGIES" section in
-> -	linkgit:git-notes[1] for more information on the available strategies.
-> +	"notes.mergeStrategy".  See the "NOTES MERGE STRATEGIES" section
-> +ifdef::git-notes[above]
-> +ifndef::git-notes[in linkgit:git-notes[1]]
-> +	for more information on the available strategies.
+> I assume it's v2.37, you can reproduce it on github actions macos 12.
 
-Ditto.
+Per the virtual environment specification [1] linked in the runner execution
+[2], the Git version used on these agents is 2.36.1. 
 
->  notes.displayRef::
-> -	The (fully qualified) refname from which to show notes when
-> -	showing commit messages.  The value of this variable can be set
-> -	to a glob, in which case notes from all matching refs will be
-> -	shown.  You may also specify this configuration variable
-> -	several times.  A warning will be issued for refs that do not
-> -	exist, but a glob that does not match any refs is silently
-> -	ignored.
-> -+
-> -This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
-> -environment variable, which must be a colon separated list of refs or
-> -globs.
-> -+
-> -The effective value of "core.notesRef" (possibly overridden by
-> -GIT_NOTES_REF) is also implicitly added to the list of refs to be
-> -displayed.
-> +	Which ref (or refs, if a glob or specified more than once), in
-> +	addition to the default set by `core.notesRef` or
-> +	`GIT_NOTES_REF`, to read notes from when showing commit
-> +	messages with the 'git log' family of commands.
-> +	This setting can be overridden on the command line or by the
-> +	`GIT_NOTES_DISPLAY_REF` environment variable.
-> +	See linkgit:git-log[1].
+[1] https://github.com/actions/virtual-environments/blob/macOS-12/20220627.3/images/macos/macos-12-Readme.md
+[2] https://github.com/fawazahmed0/currency-api/runs/7312663698?check_suite_focus=true#step:1:11
 
-This is unrelated to the "unify description in git-foo.txt and
-config/foo.txt in the documentation" topic, isn't it?
+> 
+> My github actions workflow didn't fail, even when I was setting pattern in cone mode.
+> 
+> please see: https://github.com/fawazahmed0/currency-api/actions/runs/2660320076/workflow#L31
 
-I haven't formed an opinion on the updated text, and it makes it
-harder to review when the content change is mixed in the "unify
-description in two places" topic, so I won't comment on the change
-of the contents.  Please split them into two steps (a step with only
-content change, and then another step to remove the duplicated one
-by making one include the other).  Same comment applies to [2/3].
+Based on the commands you linked, combined with the fact that cone mode was
+not made the default until v2.37, you're setting a wildcard pattern in *non*
+cone mode. If you want to use cone mode in version v2.36, try running 'git
+sparse-checkout reapply --cone' after your clone to set the appropriate
+config.
 
->  notes.rewrite.<command>::
->  	When rewriting commits with <command> (currently `amend` or
-> -	`rebase`) and this variable is set to `true`, Git
-> -	automatically copies your notes from the original to the
-> -	rewritten commit.  Defaults to `true`, but see
-> -	"notes.rewriteRef" below.
-> +	`rebase`), if this variable is `false`, git will not copy
-> +	notes from the original to the rewritten commit.  Defaults to
-> +	`true`.  See also "`notes.rewriteRef`" below.
-> ++
-> +This setting can be overridden by the `GIT_NOTES_REWRITE_REF`
-> +environment variable.
+> 
+> 
+> 
+> 
+> From: Victoria Dye <vdye@github.com>
+> Sent: Friday, July 15, 2022 12:48 AM
+> To: fawaz ahmed0 <fawazahmed0@hotmail.com>; git@vger.kernel.org <git@vger.kernel.org>
+> Subject: Re: "reject arguments in cone-mode that look like patterns" doesn't work in macos-12 
+>  
+> fawaz ahmed0 wrote:
+>> Please refer: https://github.com/git/git/commit/8dd7c4739bded62175bea1f7518d993b39b51f90#commitcomment-78433458
+>>
+>>
+>> Using patterns in cone mode should fail, but it doesn't seem to fail on macOS-12(github actions)
+> 
+> Can you confirm which version is being used on that MacOS agent? For
+> example, you could add a call to 'git version' in the workflow and see what
+> it prints out. I suspect that the agent may be using an older version of
+> Git, which would mean that the sparse-checkout is initialized in *non* cone
+> mode.
+> 
+> For what it's worth, my local development machine is also MacOS 12 (running
+> Git v2.37), and I'm correctly seeing the error in a cone mode
+> sparse-checkout.
+> 
+>>
+>> Step to reproduce(try in macOS-12):
+>>
+>> git clone --filter=blob:none --no-checkout --depth 1 --sparse https://github.com/fawazahmed0/currency-api.git . 
+>> git sparse-checkout add 'latest/*'
+>>
+>> Thanks
+>> Fawaz Ahmed
 
-Ditto.
-
->  notes.rewriteMode::
-> -	When copying notes during a rewrite (see the
-> -	"notes.rewrite.<command>" option), determines what to do if
-> -	the target commit already has a note.  Must be one of
-> -	`overwrite`, `concatenate`, `cat_sort_uniq`, or `ignore`.
-> -	Defaults to `concatenate`.
-> +	When copying notes during a rewrite, what to do if the target
-> +	commit already has a note.  Must be one of `overwrite`,
-> +	`concatenate`, `cat_sort_uniq`, or `ignore`.  Defaults to
-> +	`concatenate`.
->  +
->  This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
->  environment variable.
-
-We are losing the mention of "notes.rewrite.<command>", which is
-outside the "unify" topic, isn't it?
-
->  notes.rewriteRef::
->  	When copying notes during a rewrite, specifies the (fully
-> -	qualified) ref whose notes should be copied.  The ref may be a
-> -	glob, in which case notes in all matching refs will be copied.
-> -	You may also specify this configuration several times.
-> +	qualified) ref whose notes should be copied.  May be a glob,
-> +	in which case notes in all matching refs will be copied.  You
-> +	may also specify this configuration several times.
->  +
->  Does not have a default value; you must configure this variable to
->  enable note rewriting.  Set it to `refs/notes/commits` to enable
->  rewriting for the default commit notes.
->  +
-> -This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
-> -environment variable, which must be a colon separated list of refs or
-> -globs.
-> +Can be overridden with the `GIT_NOTES_REWRITE_REF` environment variable.
-
-Ditto.
-
-Thanks.
