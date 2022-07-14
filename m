@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 666CDC433EF
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 19:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46167C43334
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 19:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240733AbiGNTk3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 15:40:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41312 "EHLO
+        id S240737AbiGNTka (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 15:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240650AbiGNTkT (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240681AbiGNTkT (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 14 Jul 2022 15:40:19 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B5B675A0
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:40:05 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id r10so3923192wrv.4
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D644A67C83
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:40:04 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id r2so2887906wrs.3
         for <git@vger.kernel.org>; Thu, 14 Jul 2022 12:40:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5IpB1WaWFqwrOFCg2h5vGzP4eena/PfGuElhSyAnirk=;
-        b=fl2gUPekHzOcPDr5FMrB226iq5iCimd3wPBgKKLJR0AaYApmigUHH6BHnveC1R48xT
-         1Wd1LL1ZGlYg+p+47MFQF49VVHRJkndojlzQaDmcnAxRqmx7m0w4yWYxkzD7JjpdyU4F
-         ipkBAA6uwWmifaEKFiGcV+nTnLlfYRN/RlhF7VNKmyk0dO2rZVILzlcn7kQNiVWcRLop
-         XkRJEE132TC0YB5Ql52w+n6/diHBba1t+OMZOI7drGCPcD9alPjddPlFSrX2tRfVbKDi
-         2lZPhqJFU9qpQC1/3h0X24PrDVqzpS69R1MRCVc3rbFGXF1rEhVK82s/mN+pVKAoDA2O
-         3NaA==
+        bh=67zCS8QrRmMaaIxEzKVkATJBA2wVj3iyoC5a4Md1UR0=;
+        b=mVQqHW/2Kd4oYpLh1V9NrGy8bdzEh+g5b5zqve0ek6LDqhxdE4mQNMF04/GNRGi3ao
+         KXHwMZNR+9zMbw9rhEK/+fg9iUNeU7DL7hGnueZiu6AjEDsktZ5r62kNJQioGFXlf9VU
+         0sQ0qDRCYIIfbXX8DvSbm9Z7PO/FcPIi5OfL38uTyckfLhQxOKcw5i33QA9FF6XYCQxl
+         PGnknKcZ4Ab/tSf6k+BLbcQiTmio6NBbf0lvYzvqixf1w8sSf9rBIb5eLEKeApC93mdX
+         yz3hi5mHGSbfQqC3j3opBnOumtnocC/GUv3dMdqnESdND1JMbdTGf+30rZCmOm39ASs/
+         H/qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5IpB1WaWFqwrOFCg2h5vGzP4eena/PfGuElhSyAnirk=;
-        b=JhjYWOkakYWXRyRUvIjjpoMkqtW63NdOkZQFCbHZFGOZx/yBY+IHDbo7eqBNEm568P
-         +oKyUxe/YrU3vdy92KMVSzSnnVIN+1itWdxAukNo6LRaokfiu7tA9phqMrDEG3VdUvet
-         1evOXPRp0x8+fn0lNuhDyyUaT4dnB3yz13vnszE4umvkss1e2LSa3wjuL3Lwu9x0BC1Y
-         hE5ge/4+YfpAdc3qL1JgyovNysJ2ZnO6qq4CcsN/lZnQsbNwKalHbS7HtmFkV9nNFKCt
-         aLlW3Iu/+OsA0vIGCNYR4NKI1ILtVg5WvfCwJO3LCmUnXCLEAeR9wnygRkDIajqHhjaZ
-         k+hw==
-X-Gm-Message-State: AJIora9gwxVnNS7r90Ig7n5J4qaUvq01YEgz6A+xzXzf/la7S2XRNRdx
-        AgpD47og82gW4nGf4mroh8gy1eHGlczWWg==
-X-Google-Smtp-Source: AGRyM1uTiFzqcpCx0NsAOqknZOI7BlJ6tJlFc6qUYjVZIaevtYUA7PstxYVqF/t5jqtzOuuqnHYSAQ==
-X-Received: by 2002:a05:6000:2aa:b0:21d:ac4f:587c with SMTP id l10-20020a05600002aa00b0021dac4f587cmr9832535wry.675.1657827604267;
-        Thu, 14 Jul 2022 12:40:04 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05600018c900b0021dac657337sm2145145wrq.75.2022.07.14.12.40.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=67zCS8QrRmMaaIxEzKVkATJBA2wVj3iyoC5a4Md1UR0=;
+        b=mG/nZiQ/d/YWklBFBxBGVtsCbPnma5pzNZyBvQPTUBTBYFCfONId4dAwnXFQA9/fEj
+         BVZWl/Et+jxCog52sByCDPE724PdEphGszds54HFHajB4htcC6ObngizkpRRzxdredPn
+         UPoIK75J7kSw7sGfBrPaSWbDfRSrr9gAeLCYHLGmUyTXUtup3Zy6sJm3DAVD96S7+VCu
+         4Tnjo+P6U263xiG65s/05xQBRp7daOy3i+BnvOV0qXK3yJuBEUJz71Y/ZQ1zyxXDpoPP
+         0RGDz0sfGy+CV3lq6/D3A5l32eDi+LD4qt087E9iLnOV6ZGFqPlBTKQz/mwldywiPVxQ
+         T9Vw==
+X-Gm-Message-State: AJIora/H9KBG4YPOYRhpoJiVGCCzljevUfP7EMP3rC42zSZMS0uy92Sg
+        aS0QnOhtDIVM/VHxtOCL6m/a8h+tkkSSyQ==
+X-Google-Smtp-Source: AGRyM1uiiaEW8yJ89YXIBg4c1kBRKJTFgi8tDQDdzxPxhr63wnwSh20OTk2eUgCRb0cDutpok78JOw==
+X-Received: by 2002:a5d:434a:0:b0:21d:aa7e:b1bb with SMTP id u10-20020a5d434a000000b0021daa7eb1bbmr9974017wrr.619.1657827603065;
         Thu, 14 Jul 2022 12:40:03 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id w9-20020a05600018c900b0021dac657337sm2145145wrq.75.2022.07.14.12.40.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Jul 2022 12:40:02 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 10/10] CI: have "static-analysis" run "check-builtins", not "documentation"
-Date:   Thu, 14 Jul 2022 21:39:47 +0200
-Message-Id: <patch-10.10-5ef362505c1-20220714T193808Z-avarab@gmail.com>
+Subject: [PATCH 09/10] CI: have "static-analysis" run a "make ci-static-analysis" target
+Date:   Thu, 14 Jul 2022 21:39:46 +0200
+Message-Id: <patch-09.10-95b9c3797c0-20220714T193808Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.996.g651fc6e809f
 In-Reply-To: <cover-00.10-00000000000-20220714T193808Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20220714T193808Z-avarab@gmail.com>
@@ -71,56 +71,187 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the "make check-builtins" check from the "documentation" job to
-the "static-analysis" job.
+Make it easier to run the CI logic locally by creating
+"ci-static-analysis" target.
 
-The "check-builtins" target added in c74390e4a1d (cherry is built-in,
-do not ship git-cherry.sh, 2006-11-05) is unrelated to the
-documentation, so it's odd that b98712b9aa9 (travis-ci: build
-documentation, 2016-05-04) added it to the "documentation" job.
+Now the "check-coccicheck" logic added in 0860a7641ba (travis-ci: fail
+if Coccinelle static analysis found something to transform,
+2018-07-23) can be easily tested outside of CI, and likewise the
+sanity check added in 0e7696c64db (ci: disallow directional
+formatting, 2021-11-04).
 
-Let's just move it to the "ci-static-analysis" target, and while we're
-at it improve the output with $(QUIET_CHECK).
+These targets could be improved, the "hdr-check" target will re-do all
+of its work every time it's run, and could with a change similar to my
+c234e8a0ecf (Makefile: make the "sparse" target non-.PHONY,
+2021-09-23). The same goes for the new
+"ci-check-directional-formatting" target.
+
+But without those improvements being able to easily run a 1=1
+equivalent of the checks we do in CI during a local build is already
+an improvement.
+
+This change will also make the CI check faster, since we can take
+advantage of parallelism across these "make" invocations. The "make
+coccicheck" command in particular takes a long to finish its last job,
+at the end we might only have one job pegging 100% of one CPU
+core. Now any extra cores will be free to run the rest of the targets
+under "ci-static-analysis".
+
+Because we're now going to invoke "make" directly from the CI recipe
+we'll need to amend the new "setenv" wrapper to write the "MAKEFLAGS"
+and other variables to "$GITHUB_ENV".
+
+In my testing the "static-analysis" job runs in just over 10 minutes
+without this change, but this change cuts just over a minute off the
+runtime.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile                 | 3 ++-
- ci/test-documentation.sh | 1 -
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ .github/workflows/main.yml |  6 ++++--
+ Makefile                   | 29 +++++++++++++++++++++++++++++
+ ci/lib.sh                  |  7 ++++++-
+ ci/run-static-analysis.sh  | 32 --------------------------------
+ shared.mak                 |  1 +
+ 5 files changed, 40 insertions(+), 35 deletions(-)
+ delete mode 100755 ci/run-static-analysis.sh
 
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 8b7697df9fb..fa6d861c75a 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -319,9 +319,11 @@ jobs:
+     runs-on: ubuntu-18.04
+     steps:
+     - uses: actions/checkout@v2
++    - run: ci/lib.sh
++      env:
++        NO_CI_GROUPS: 1
+     - run: ci/install-dependencies.sh
+-    - run: ci/run-static-analysis.sh
+-    - run: ci/check-directional-formatting.bash
++    - run: make ci-static-analysis
+   sparse:
+     needs: ci-config
+     if: needs.ci-config.outputs.enabled == 'yes'
 diff --git a/Makefile b/Makefile
-index c328e190d64..c2b0a728df5 100644
+index 04d0fd1fe60..c328e190d64 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3520,7 +3520,7 @@ check-docs::
- ### Make sure built-ins do not have dups and listed in git.c
- #
- check-builtins::
--	./check-builtins.sh
-+	$(QUIET_CHECK)./check-builtins.sh
+@@ -3147,6 +3147,20 @@ coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/c
+ # See contrib/coccinelle/README
+ coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
  
- ### Test suite coverage testing
- #
-@@ -3615,6 +3615,7 @@ ci-check-directional-formatting:
++.PHONY: check-coccicheck
++check-coccicheck: coccicheck
++	$(QUIET_CHECK)for cocci_patch in contrib/coccinelle/*.patch; do \
++		if test -s "$$cocci_patch"; then \
++			echo "Coccinelle suggests the following changes in '$$cocci_patch':"; \
++			cat "$$cocci_patch"; \
++			fail=UnfortunatelyYes; \
++		fi \
++	done; \
++	if test -n "$$fail"; then \
++		echo "error: Coccinelle suggested some changes"; \
++		exit 1; \
++	fi
++
+ .PHONY: coccicheck coccicheck-pending
  
- .PHONY: ci-static-analysis
- ci-static-analysis: ci-check-directional-formatting
-+ci-static-analysis: check-builtins
- ci-static-analysis: check-coccicheck
- ci-static-analysis: hdr-check
- ci-static-analysis: check-pot
-diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index 9e0652c30dd..41e2b126311 100755
---- a/ci/test-documentation.sh
-+++ b/ci/test-documentation.sh
-@@ -14,7 +14,6 @@ filter_log () {
- 	    "$1"
+ ### Installation rules
+@@ -3589,3 +3603,18 @@ $(FUZZ_PROGRAMS): all
+ 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
+ 
+ fuzz-all: $(FUZZ_PROGRAMS)
++
++### CI "check" targets
++#
++# These targets are run from the CI, see .github/workflows/main.yml,
++# but can also be run manually to run the same assertions locally.
++
++.PHONY: ci-check-directional-formatting
++ci-check-directional-formatting:
++	$(QUIET_CHECK)ci/check-directional-formatting.bash
++
++.PHONY: ci-static-analysis
++ci-static-analysis: ci-check-directional-formatting
++ci-static-analysis: check-coccicheck
++ci-static-analysis: hdr-check
++ci-static-analysis: check-pot
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 67b7b32a0f1..14d0af2fa7f 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -15,7 +15,7 @@ then
+ 	exit 1
+ fi
+ 
+-if test true != "$GITHUB_ACTIONS"
++if test true != "$GITHUB_ACTIONS" || test -n "$NO_CI_GROUPS"
+ then
+ 	begin_group () { :; }
+ 	end_group () { :; }
+@@ -89,6 +89,11 @@ setenv () {
+ 
+ 	eval "$key=\"$val\""
+ 	eval "export $key"
++	eval "export $key=\"$val\""
++	if test -n "$GITHUB_ENV"
++	then
++		echo "$key=$val" >>"$GITHUB_ENV"
++	fi
  }
  
--make check-builtins
- make check-docs
- 
- # Build docs with AsciiDoc
+ check_unignored_build_artifacts () {
+diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
+deleted file mode 100755
+index faae31f0078..00000000000
+--- a/ci/run-static-analysis.sh
++++ /dev/null
+@@ -1,32 +0,0 @@
+-#!/bin/sh
+-#
+-# Perform various static code analysis checks
+-#
+-
+-. ${0%/*}/lib.sh
+-
+-make coccicheck
+-
+-set +x
+-
+-fail=
+-for cocci_patch in contrib/coccinelle/*.patch
+-do
+-	if test -s "$cocci_patch"
+-	then
+-		echo "$(tput setaf 1)Coccinelle suggests the following changes in '$cocci_patch':$(tput sgr0)"
+-		cat "$cocci_patch"
+-		fail=UnfortunatelyYes
+-	fi
+-done
+-
+-if test -n "$fail"
+-then
+-	echo "$(tput setaf 1)error: Coccinelle suggested some changes$(tput sgr0)"
+-	exit 1
+-fi
+-
+-make hdr-check ||
+-exit 1
+-
+-make check-pot
+diff --git a/shared.mak b/shared.mak
+index 4330192e9c3..3bd846aaf9e 100644
+--- a/shared.mak
++++ b/shared.mak
+@@ -58,6 +58,7 @@ ifndef V
+ ## Used in "Makefile"
+ 	QUIET_CC       = @echo '   ' CC $@;
+ 	QUIET_AR       = @echo '   ' AR $@;
++	QUIET_CHECK    = @echo '   ' CHECK $@;
+ 	QUIET_LINK     = @echo '   ' LINK $@;
+ 	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
+ 	QUIET_LNCP     = @echo '   ' LN/CP $@;
 -- 
 2.37.1.996.g651fc6e809f
 
