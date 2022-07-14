@@ -2,69 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44681C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 22:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA91DC433EF
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 23:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240614AbiGNWsi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 18:48:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55444 "EHLO
+        id S239335AbiGNXAB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 19:00:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbiGNWsh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 18:48:37 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02357BED
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 15:48:35 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0CCFF197968;
-        Thu, 14 Jul 2022 18:48:35 -0400 (EDT)
+        with ESMTP id S229481AbiGNXAA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 19:00:00 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A4BF474E0
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 15:59:58 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EBAC1454F3;
+        Thu, 14 Jul 2022 18:59:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DN44HTBwhEyRQ22keYqdgDgSU8JI6GxLcYaI5F
-        sCfOM=; b=vjdb4dYuhEwdW/LbSCxBotLCGjgsx4EOxoIdUj1t2LfE6m4VO+k1nK
-        CY2s9BEOeThNx1/2uzwLgESdVkbFVil1+qJlRDlfiLlHvCiu+RK2uSHW5m2g0G0H
-        8Xa5/l8YF4p2dJ/bgp5nDFbncuQpZKSzabVQEOlU9qBabFwsPfkzg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 055DA197965;
-        Thu, 14 Jul 2022 18:48:35 -0400 (EDT)
+        :content-type; s=sasl; bh=P8o1l6W1V6mal8t9tB0glYPsfHd19to5U/ek0m
+        DHVko=; b=vW5DCwruaCF2aO7HBaAcnQjfP+RMos+5bQgRaVI+/NiVCtfO/H/4np
+        WGFYkeeyhqCwG6JNNmeu4BQZ2W/p/hIjN5xyeIaF85bzVLeCA7twvtl63zw7J0gj
+        pFwfnp8Tsw/8sq6x9FWm/8OvqL05IDkRoIN42UDSqexJ73v3notRk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 75BF41454F2;
+        Thu, 14 Jul 2022 18:59:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A6208197964;
-        Thu, 14 Jul 2022 18:48:31 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDDF51454F1;
+        Thu, 14 Jul 2022 18:59:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com
-Subject: Re: [PATCH v4] commit-graph: pass repo_settings instead of repository
-References: <Yjt6mLIfw0V3aVTO@nand.local>
-        <fd70b6119153b165a62ee4f693dbe47031cfb2be.1657834657.git.steadmon@google.com>
-Date:   Thu, 14 Jul 2022 15:48:30 -0700
-In-Reply-To: <fd70b6119153b165a62ee4f693dbe47031cfb2be.1657834657.git.steadmon@google.com>
-        (Josh Steadmon's message of "Thu, 14 Jul 2022 14:43:06 -0700")
-Message-ID: <xmqqtu7j2tvl.fsf@gitster.g>
+To:     Paul Kinzelman <paul@kinzelman.com>
+Cc:     git@vger.kernel.org
+Subject: Re: moving a repository question
+References: <2e592944-edb8-2d49-981a-8ad220f97e82@kinzelman.com>
+Date:   Thu, 14 Jul 2022 15:59:55 -0700
+In-Reply-To: <2e592944-edb8-2d49-981a-8ad220f97e82@kinzelman.com> (Paul
+        Kinzelman's message of "Thu, 14 Jul 2022 16:06:34 -0600")
+Message-ID: <xmqqilnz2tck.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 15C4E5FE-03C7-11ED-8CAC-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: AE285726-03C8-11ED-BCFB-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Paul Kinzelman <paul@kinzelman.com> writes:
 
-> From: Taylor Blau <me@ttaylorr.com>
+> I barely qualify as a novice on git, so my apologies in advance if this is a
+> stupid question.
 >
-> The parse_commit_graph() function takes a 'struct repository *' pointer,
-> but it only ever accesses config settings (either directly or through
-> the .settings field of the repo struct). Move all relevant config
-> settings into the repo_settings struct, and update parse_commit_graph()
-> and its existing callers so that it takes 'struct repo_settings *'
-> instead.
+> Is everything that git needs stored in the .git tree?
 
-Sounds good.  Will queue.
+Depends on what you want to do with "Git".
 
-I think this is ready to be merged down to 'next' by now?
+If you only copy .git/ and no file from the working tree, your "git
+status" in the new location will report "you removed all the files
+and you have nothing", for example.  If you are willing to do "git
+reset --hard" after making such a copy of ".git/", it may be OK.  If
+you had local changes in the working tree before taking a copy of
+.git/, doing "git reset --hard" in the new location may not recover
+the local changes in the original, so it may not be good and you may
+have to copy the working tree files as well.
 
-Thanks.
+If you are using multiple worktrees linked to the repository,
+copying .git/ is an absolute no-no.  Locations of secondary
+worktrees are recorded in .git/ somewhere and copying them literally
+would mean the new copy would mistakenly think that these secondary
+worktrees linked to the original repository are linked to the new
+copy instead.  There may be other things that will cause confusions
+when copied.
+
+"git clone" will of course sidestep all of these problems.
