@@ -2,237 +2,438 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C591C43334
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 14:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9346BC433EF
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 14:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239169AbiGNOn0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 10:43:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52030 "EHLO
+        id S239382AbiGNOvE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 10:51:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232090AbiGNOnZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 10:43:25 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB505924C
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 07:43:23 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id r18so2684215edb.9
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 07:43:23 -0700 (PDT)
+        with ESMTP id S239343AbiGNOvB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 10:51:01 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3408564E7
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 07:50:59 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id f9so811966qkl.8
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 07:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=VE7cq3UPN+3AfnZ3n27xwxKEJ+944A6USZhwnVRtyyc=;
-        b=iyzPoiDmBzoO5YhJNEL3d56560S6oZ4mdObzoEtf2+UjAw06rfAOPuj0ogKCfmWybw
-         vkJR6yPBxKSxHOUNv6+KSDF0Nse6yzRSzfNsCfo71cedQB1/XlPP5ZJlTRrBGJSTFkDw
-         7Ov43tBNmWG4b30aCP74Vf3Ib/Y76+Rp6QUJupv4S9cScEWS7P1hwUc6d9n60Mb37ptw
-         Yjpt137tNOh97uCXNqPaImvt3FINRr5P5Mfpx5YAh02tNiCrwa+0RMGz6bl/1R5uty+D
-         yXcKtwMXnP7P5tg3psFKwt6go15U03VOaDANrwELcYeqMbnF34/29M5p67FHH8VV9bt5
-         H3XQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to;
+        bh=Cq1viy9cQ+JbnHEey5YrI6kvoxlv2riKI9/rku5Sa0s=;
+        b=caeYEWW5VHvi+9AAOUCtqw6uXxceYJQkrK8Xk9izVNkL2t53Mf1vAGK7Sb6iVw0+Q0
+         cjO1ZaZSgRnZMMwyvNUSh3/n3Zymb6Yey5RWV0YamBArDymBn+JubEDB6Vq8xkZVPSiS
+         JaqBgWRoJhtddlpDGmqtgl7OcXODkX1eO2093FsQTOg67gl0aC3OfvldXu+dwtfvqUb9
+         O1hmNNDR9TPYJgAUIMMoclZyQnFedOh1Xu0P8dRfnje7wV2+2/EYFhzoJ7/Okkz65MEK
+         xzYGSnBTVVEnDjHa8TARl4jzCCLq5nVRtKv2HH+VAG6cCD3jIdctEKxdHlYJ92ySOacP
+         BlIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=VE7cq3UPN+3AfnZ3n27xwxKEJ+944A6USZhwnVRtyyc=;
-        b=GDzhEcesTF2eyGIr4lnyKpY5ECt//HlnPA8VORm8ZVZflhKHripXWWoF38FYx3BuZv
-         JtgejVC59PPFkvUuGMHIGGvpNBxh/+gYoCeWrqROIFyitVKCAK8nmxGCaeRwvCvgFnGX
-         Ddk99pVMb9Q4L+q5v4/BMcTz7GbDkaGHWS72F4OFOEQ+LvCGP/ItaKSP6ZjHNmjDlijw
-         z2s3LNY/2TYz7ii19GyXZO//ySdBasrawTAFIzU2cw1nDUpY5eXHHM57Xr1BNLzxBJ/p
-         +mXL4UyMVtIkKuWDlp8AY3vZSH0VDR69Hhp6iC3PxSXiXJv8HzfhxczeFh8vmNAEIZhH
-         C6CQ==
-X-Gm-Message-State: AJIora8dJ5m6sC4NawaFTYVMs0xawxo1ovrAjJY+apuo94XK7G3vIFpd
-        gT0rrNfcp2oy4WdhvpMCQHA=
-X-Google-Smtp-Source: AGRyM1sohdgXbyaL+6frQdedGhuGJXMpb9Nj9c9/nunu4YkBOpvbwmFWHgEmCJhjAipzctDe6woRxw==
-X-Received: by 2002:a05:6402:c44:b0:431:52cc:f933 with SMTP id cs4-20020a0564020c4400b0043152ccf933mr12847728edb.41.1657809802255;
-        Thu, 14 Jul 2022 07:43:22 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ek9-20020a056402370900b0042de3d661d2sm1147345edb.1.2022.07.14.07.43.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 07:43:20 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oC03j-002KkD-BM;
-        Thu, 14 Jul 2022 16:43:19 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH 05/11] submodule--helper: free() leaking
- {run,capture}_command() argument
-Date:   Thu, 14 Jul 2022 16:43:01 +0200
-References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
- <patch-05.11-76eab92c8b6-20220713T131601Z-avarab@gmail.com>
- <kl6l5yk05psl.fsf@chooglen-macbookpro.roam.corp.google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <kl6l5yk05psl.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <220714.86r12n21rs.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to;
+        bh=Cq1viy9cQ+JbnHEey5YrI6kvoxlv2riKI9/rku5Sa0s=;
+        b=yJF71yjeeQ11iWHEhLC5+99+bauWqQei7ow1x6XcAn+yEnXeqZTKXUumb8n1i0oFSs
+         wEFNfc9Viwk3P/KKSyL4i20v83eD08nuXkfXn2UbR52DApaTK+0nv6zLYKdHTqpZDhrx
+         lVWo9t0B82C0J8BPFrjOgVIQgjTGKY1pm6ZtqVF3yl9IIrywsTpPz9nr93sigkT/B0HU
+         IaVQgdzVZO/mDsg973FluEgsHAhGrFp53pyqb4oaU+lUEgmyxBpplxCv9t4VLR/NLNSR
+         lHvbM4M1toMcDKqj10GB81qa5aNfGp0q+fLkXSm2Qla75WA05DhIfmXFFsxwixiGXwAJ
+         sw5A==
+X-Gm-Message-State: AJIora/Bjkfi3xrGZuZXWFo9T7gE5eIAwEKH90vYGn8KFtKsaUHrYCwt
+        3XtzuTDHG4LQo/aZXRc8kvLD
+X-Google-Smtp-Source: AGRyM1v1sJt0EwC9ppb2V+hePfAoagT7NnMzWqfR0clk/Pk/lfFIlbqv86vPQkqBKmPFdbgLCUFgIw==
+X-Received: by 2002:a05:620a:24d6:b0:6b5:70bb:154a with SMTP id m22-20020a05620a24d600b006b570bb154amr6484580qkn.701.1657810258016;
+        Thu, 14 Jul 2022 07:50:58 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:b902:f215:a426:27bb? ([2600:1700:e72:80a0:b902:f215:a426:27bb])
+        by smtp.gmail.com with ESMTPSA id u12-20020a37ab0c000000b006b554958bb1sm1502404qke.26.2022.07.14.07.50.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Jul 2022 07:50:57 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="------------Z5bZ0C60AaL3RsBu0R82wk40"
+Message-ID: <73311eba-244b-3c88-d0b9-f97f426f1de6@github.com>
+Date:   Thu, 14 Jul 2022 10:50:56 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.11.0
+Subject: Re: [PATCH v4 00/12] rebase: update branches in multi-part topic
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de, me@ttaylorr.com,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
+ <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
+ <xmqq8royibor.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq8royibor.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is a multi-part message in MIME format.
+--------------Z5bZ0C60AaL3RsBu0R82wk40
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 13 2022, Glen Choo wrote:
+On 7/12/22 11:37 AM, Junio C Hamano wrote:> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> This is a tangent, but may serve as some food for thought.
+> 
+> When I queue (or develop myself) a topic that depends on another
+> topic, I often do
+> 
+>     $ git checkout --detach vX.Y.Z ;# choose an appropriate base
+>     $ git merge --into derived-topic base-topic
+>     $ develop develop (or "git am")
+> 
+> which would end up in
+> 
+>     vX.Y.Z -----M---A---B---C derived-topic
+>                /
+>      base-topic
+> 
+> so that "git log --first-parent --oneline master.." would show the
+> commits in the topic plus the fact that it depends on which other
+> topic recorded in a single merge commit.  A topic that depends on
+> two or more topics can be handled the same way.
+> 
+> One good thing about this arrangement, unlike the "totally linear"
+> one depicted at the top of your cover letter, is that it is easier
+> to rebuild each topic independently and the first-parent view is
+> still useful.  If you futz with the base topic in a totally linear
+> history, "log --decorate" of the derived topic would no longer tell
+> you where the old iteration of the base topic ended.
+> 
+> It would be very nice to see the update-ref feature (or something
+> like that) makes it easy to deal with such a topology, too.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> Free the "dir" member of "struct child_process" that various functions
->> in submodule-helper.c allocate allocates with xstrdup().
->>
->> Since the "dir" argument is "const char *" let's keep a
->> "char *to_free" variable around for this rather than casting when we
->> call free().
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  builtin/submodule--helper.c | 41 +++++++++++++++++++++++++++----------
->>  1 file changed, 30 insertions(+), 11 deletions(-)
->>
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index a8e439e59b8..2099c5774b2 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -2198,27 +2198,36 @@ static int is_tip_reachable(const char *path, st=
-ruct object_id *oid)
->>  	struct child_process cp =3D CHILD_PROCESS_INIT;
->>  	struct strbuf rev =3D STRBUF_INIT;
->>  	char *hex =3D oid_to_hex(oid);
->> +	char *to_free;
->> +	int ret;
->>=20=20
->>  	cp.git_cmd =3D 1;
->> -	cp.dir =3D xstrdup(path);
->> +	cp.dir =3D to_free =3D xstrdup(path);
->>  	cp.no_stderr =3D 1;
->>  	strvec_pushl(&cp.args, "rev-list", "-n", "1", hex, "--not", "--all", N=
-ULL);
->>=20=20
->>  	prepare_submodule_repo_env(&cp.env);
->>=20=20
->> -	if (capture_command(&cp, &rev, GIT_MAX_HEXSZ + 1) || rev.len)
->> -		return 0;
->> +	if (capture_command(&cp, &rev, GIT_MAX_HEXSZ + 1) || rev.len) {
->> +		ret =3D 0;
->> +		goto cleanup;
->> +	}
->>=20=20
->> -	return 1;
->> +	ret =3D 1;
->> +cleanup:
->> +	free(to_free);
->> +	return ret;
->>  }
->>=20=20
->>  static int fetch_in_submodule(const char *module_path, int depth, int q=
-uiet, struct object_id *oid)
->>  {
->>  	struct child_process cp =3D CHILD_PROCESS_INIT;
->> +	char *to_free;
->> +	int ret;
->>=20=20
->>  	prepare_submodule_repo_env(&cp.env);
->>  	cp.git_cmd =3D 1;
->> -	cp.dir =3D xstrdup(module_path);
->> +	cp.dir =3D to_free =3D xstrdup(module_path);
->>=20=20
->>  	strvec_push(&cp.args, "fetch");
->>  	if (quiet)
->> @@ -2232,7 +2241,9 @@ static int fetch_in_submodule(const char *module_p=
-ath, int depth, int quiet, str
->>  		free(remote);
->>  	}
->>=20=20
->> -	return run_command(&cp);
->> +	ret =3D run_command(&cp);
->> +	free(to_free);
->> +	return ret;
->>  }
->>=20=20
->>  static int run_update_command(struct update_data *ud, int subforce)
->> @@ -2240,6 +2251,8 @@ static int run_update_command(struct update_data *=
-ud, int subforce)
->>  	struct child_process cp =3D CHILD_PROCESS_INIT;
->>  	char *oid =3D oid_to_hex(&ud->oid);
->>  	int must_die_on_failure =3D 0;
->> +	char *to_free;
->> +	int ret;
->>=20=20
->>  	switch (ud->update_strategy.type) {
->>  	case SM_UPDATE_CHECKOUT:
->> @@ -2273,7 +2286,7 @@ static int run_update_command(struct update_data *=
-ud, int subforce)
->>  	}
->>  	strvec_push(&cp.args, oid);
->>=20=20
->> -	cp.dir =3D xstrdup(ud->sm_path);
->> +	cp.dir =3D to_free =3D xstrdup(ud->sm_path);
->>  	prepare_submodule_repo_env(&cp.env);
->>  	if (run_command(&cp)) {
->>  		switch (ud->update_strategy.type) {
->> @@ -2301,11 +2314,14 @@ static int run_update_command(struct update_data=
- *ud, int subforce)
->>  			exit(128);
->>=20=20
->>  		/* the command failed, but update must continue */
->> -		return 1;
->> +		ret =3D 1;
->> +		goto cleanup;
->>  	}
->>=20=20
->> -	if (ud->quiet)
->> -		return 0;
->> +	if (ud->quiet) {
->> +		ret =3D 0;
->> +		goto cleanup;
->> +	}
->>=20=20
->>  	switch (ud->update_strategy.type) {
->>  	case SM_UPDATE_CHECKOUT:
->> @@ -2329,7 +2345,10 @@ static int run_update_command(struct update_data =
-*ud, int subforce)
->>  		    submodule_strategy_to_string(&ud->update_strategy));
->>  	}
->>=20=20
->> -	return 0;
->> +	ret =3D 0;
->> +cleanup:
->> +	free(to_free);
->> +	return ret;
->>  }
->>=20=20
->>  static int run_update_procedure(struct update_data *ud)
->
-> I assume I'm missing something, but couldn't we achieve the same result
-> by just removing the xstrdup() calls? i.e. we only leak .dir (which we
-> don't clear because it's const), so couldn't we just assign to it
-> without xstrdup() and not have to worry about free()-ing it?
->
-> I didn't see a correctness reason for us to xstrdup(), and indeed, t7406
-> passes with the change I just described (which I believe covers all of
-> the sites here). In fact, we already have one site that does exactly
-> this in the recursive part of update_submodule():
->
-> 	if (update_data->recursive) {
-> 		struct child_process cp =3D CHILD_PROCESS_INIT;
-> 		struct update_data next =3D *update_data;
-> 		int res;
->
-> 		next.prefix =3D NULL;
-> 		oidcpy(&next.oid, null_oid());
-> 		oidcpy(&next.suboid, null_oid());
->
-> 		cp.dir =3D update_data->sm_path;
->
-> Tangentially related question (primarily for my own learning): in all of
-> these hunks, the string being xstrdup()-ed is update_data.sm_path, which
-> is only ever set in update_submodules():
->
-> 		update_data->sm_path =3D ucd.sub->path;
->
-> where ucd.sub->path is a "const char *". So we never have to worry about
-> free()-ing update_data.sm_path, right? (Your patch doesn't attempt to
-> free() it, which sounds correct.)
+Your topology is an interesting one, but --update-refs isn't limited to
+linear history.
 
-Yes, do'h! That's a much better fix, and only 3 lines of getting rid of
-the xstrdup(). I'll re-roll with that.
+(Begin aside)
+
+One goal of this feature is to make it easier to manage the topics that
+are being juggled in friendly forks. For example, git-for-windows/git and
+microsoft/git have some topics that evolve version-to-version but might be
+cleaned up and sent upstream. Both of these forks use 'git rebase
+--rebase-merges=rebase-cousins' when consuming new upstream versions to
+keep the merge structure of these new topics. However, we lose the branch
+names and need to reconstruct them from the context of the merge commits.
+
+With --update-refs, we can automatically rewrite the branches that are
+included in these individual topics. That might make it simpler to extract
+a series to send upstream.
+
+One test in this series does test such a case with the --rebase-merges
+option.
+
+(End aside)
+
+Back to your topology, I wonder what your rebase command looks like when
+tracking those topics.
+
+The goal of --update-refs is to help rebase multiple branches at the same
+time, and with your example here, it would imply you want to rebase both
+dependent topics.
+
+ Before:
+
+  A---B----C---M---Q1---Q2---Q3 <-- refs/heads/Q
+   \          /
+    P1--P2--P3 <-- refs/heads/P
+
+ After rebasing both topics simultaneously (with 'git rebase --update-refs
+ C' while Q is checked out):
+
+  A---B---C---D---P1---P2---P3---Q1---Q2---Q3
+			    ^              ^
+			refs/heads/P  refs/heads/Q
+
+But it seems what you mean to say is to update the merge commit M, which
+means that the 'P' branch above has been updated independently of the 'Q'
+branch, so we need to update 'Q' after-the-fact. I'm not sure what that
+rebase would look like, indepdendent of updating refs.
+
+Do you have an example rebase command that manipulates the commits the
+way you want? Then I can better understand how the --update-refs could fit
+in with that. (Or maybe the point of your tangent is that there isn't an
+option.)
+
+If instead we thought about an example like re-rolling the 'next' branch
+entirely on top of the 'master' branch, then we have an example that is
+closer to the friendly fork example. (I know this isn't a realistic
+scenario since we don't rewrite the commits already merged to 'next', but
+it's an interesting stress test.)
+
+While having 'next' checked out, I ran
+
+  git rebase -i --update-refs --rebase-merges=rebase-cousins master
+
+and it updated all of the branches currently in the region master..next.
+I've attached the output of
+
+  git -c log.excludeDecoration="refs/remotes/*" \
+        log --oneline --graph --boundary master..next
+
+just to show what this looks like.
+
+Thanks,
+-Stolee
+--------------Z5bZ0C60AaL3RsBu0R82wk40
+Content-Type: text/plain; charset=UTF-8; name="rebase-result.txt"
+Content-Disposition: attachment; filename="rebase-result.txt"
+Content-Transfer-Encoding: base64
+
+KiAgIGJkZjJkOGU5ZTEgTWVyZ2UgYnJhbmNoICdsbC9jdXJsLWFjY2VwdC1sYW5ndWFnZScg
+aW50byBuZXh0CnxcICAKfCAqIGIwYzRhZGNkZDcgcmVtb3RlLWN1cmw6IHNlbmQgQWNjZXB0
+LUxhbmd1YWdlIGhlYWRlciB0byBzZXJ2ZXIKKiB8ICAgMzZmY2Y3NjA1MyBNZXJnZSBicmFu
+Y2ggJ2prL2RpZmYtZmlsZXMtY2xlYW51cC1maXgnIGludG8gbmV4dAp8XCBcICAKfCAqIHwg
+MDQzOTNhZTdmNyBkaWZmLWZpbGVzOiBtb3ZlIG1pc3BsYWNlZCBjbGVhbnVwIGxhYmVsCiog
+fCB8ICAgM2Y2Y2NhZjU4YyBNZXJnZSBicmFuY2ggJ3JzL2NvY2NpLWFycmF5LWNvcHknIGlu
+dG8gbmV4dAp8XCBcIFwgIAp8ICogfCB8IGRjNTc0MTMyYTAgY29jY2k6IGF2b2lkIG5vcm1h
+bGl6YXRpb24gcnVsZXMgZm9yIG1lbWNweQoqIHwgfCB8ICAgMjEyNWQzODQ3ZCBNZXJnZSBi
+cmFuY2ggJ2prL3JlZi1maWx0ZXItZGlzY2FyZC1jb21taXQtYnVmZmVyJyBpbnRvIG5leHQK
+fFwgXCBcIFwgIAp8ICogfCB8IHwgMzU5YjAxY2E4NCByZWYtZmlsdGVyOiBkaXNhYmxlIHNh
+dmVfY29tbWl0X2J1ZmZlciB3aGlsZSB0cmF2ZXJzaW5nCiogfCB8IHwgfCAgIGZkMGUxMGE5
+MGYgTWVyZ2UgYnJhbmNoICdqay9jbG9uZS11bmJvcm4tY29uZnVzaW9uJyBpbnRvIG5leHQK
+fFwgXCBcIFwgXCAgCnwgKiB8IHwgfCB8IDJlYjVkMzgzODYgY2xvbmU6IG1vdmUgdW5ib3Ju
+IGhlYWQgY3JlYXRpb24gdG8gdXBkYXRlX2hlYWQoKQp8ICogfCB8IHwgfCA3M2EwODU4MjI0
+IGNsb25lOiB1c2UgcmVtb3RlIGJyYW5jaCBpZiBpdCBtYXRjaGVzIGRlZmF1bHQgSEVBRAp8
+ICogfCB8IHwgfCA1NGEwYzE4OTZjIGNsb25lOiBwcm9wYWdhdGUgZW1wdHkgcmVtb3RlIEhF
+QUQgZXZlbiB3aXRoIG90aGVyIGJyYW5jaGVzCnwgKiB8IHwgfCB8IDUxZmE2MWJhM2UgY2xv
+bmU6IGRyb3AgZXh0cmEgbmV3bGluZSBmcm9tIHdhcm5pbmcgbWVzc2FnZQp8IHwgfC8gLyAv
+ICAKfCB8L3wgfCB8ICAgCiogfCB8IHwgfCAgIDA1ZDZmYmUwZTUgTWVyZ2UgYnJhbmNoICdo
+eC9sb29rdXAtY29tbWl0LWluLWdyYXBoLWZpeCcgaW50byBuZXh0CnxcIFwgXCBcIFwgIAp8
+ICogfCB8IHwgfCA4NTRkNjJkOWZlIHQ1MzMwOiByZW1vdmUgcnVuX3dpdGhfbGltaXRlZF9w
+cm9jZXNzc2VzKCkKKiB8IHwgfCB8IHwgICA1Mzg2MjI4YTI4IE1lcmdlIGJyYW5jaCAnamMv
+cmVzb2x2ZS11bmRvJyBpbnRvIG5leHQKfFwgXCBcIFwgXCBcICAKfCAqIHwgfCB8IHwgfCBi
+MjM3ZTgxNTE2IGZzY2s6IGRvIG5vdCBkZXJlZmVyZW5jZSBOVUxMIHdoaWxlIGNoZWNraW5n
+IHJlc29sdmUtdW5kbyBkYXRhCiogfCB8IHwgfCB8IHwgICBhMzRhNDQzNWQ5IE1lcmdlIGJy
+YW5jaCAnc2cvbXVsdGktcGFjay1pbmRleC1wYXJzZS1vcHRpb25zLWZpeCcgaW50byBuZXh0
+CnxcIFwgXCBcIFwgXCBcICAKfCAqIHwgfCB8IHwgfCB8IGNjNzRhZmI4M2YgbXVsdGktcGFj
+ay1pbmRleDogc2ltcGxpZnkgaGFuZGxpbmcgb2YgdW5rbm93biAtLW9wdGlvbnMKfCB8IHxf
+fF98LyAvIC8gIAp8IHwvfCB8IHwgfCB8ICAgCiogfCB8IHwgfCB8IHwgICA1N2IzNmIyZTli
+IE1lcmdlIGJyYW5jaCAnYmMvbmV0dGxlLXNoYTI1NicgaW50byBuZXh0CnxcIFwgXCBcIFwg
+XCBcICAKfCAqIHwgfCB8IHwgfCB8IGU1NTU3MzU4MzYgc2hhMjU2OiBhZGQgc3VwcG9ydCBm
+b3IgTmV0dGxlCnwgfC8gLyAvIC8gLyAvICAKKiB8IHwgfCB8IHwgfCAgIDExY2Y2MDhkMTAg
+TWVyZ2UgYnJhbmNoICdray9wNC1jbGllbnQtbmFtZS1lbmNvZGluZy1maXgnIGludG8gbmV4
+dAp8XCBcIFwgXCBcIFwgXCAgCnwgKiB8IHwgfCB8IHwgfCAzNGY2N2M5NjE5IGdpdC1wNDog
+Zml4IGJ1ZyB3aXRoIGVuY29kaW5nIG9mIHA0IGNsaWVudCBuYW1lCnwgfC8gLyAvIC8gLyAv
+ICAKKiB8IHwgfCB8IHwgfCAgIDk5YTkzNDIyNjMgTWVyZ2UgYnJhbmNoICdqZC9ncGctaW50
+ZXJmYWNlLXRydXN0LWxldmVsLXN0cmluZycgaW50byBuZXh0CnxcIFwgXCBcIFwgXCBcICAK
+fCAqIHwgfCB8IHwgfCB8IDgwMzk3OGRhNDkgZ3BnLWludGVyZmFjZTogYWRkIGZ1bmN0aW9u
+IGZvciBjb252ZXJ0aW5nIHRydXN0IGxldmVsIHRvIHN0cmluZwp8IHwvIC8gLyAvIC8gLyAg
+CiogfCB8IHwgfCB8IHwgICA0Nzk0MmU5YWM3IE1lcmdlIGJyYW5jaCAnYWIvY29jY2ktdW51
+c2VkJyBpbnRvIG5leHQKfFwgXCBcIFwgXCBcIFwgIAp8ICogfCB8IHwgfCB8IHwgMDZmNWY4
+OTQwYyBjb2NjaTogZ2VuZXJhbGl6ZSAidW51c2VkIiBydWxlIHRvIGNvdmVyIG1vcmUgdGhh
+biAic3RyYnVmIgp8ICogfCB8IHwgfCB8IHwgNGY0MGY2Y2I3MyBjb2NjaTogYWRkIGFuZCBh
+cHBseSBhIHJ1bGUgdG8gZmluZCAidW51c2VkIiBzdHJidWZzCnwgKiB8IHwgfCB8IHwgfCA3
+YTlhMTBiMTBlIGNvY2NpOiBoYXZlICJjb2NjaWNoZWNreywtcGVuZGluZ30iIGRlcGVuZCBv
+biAiY29jY2ljaGVjay10ZXN0Igp8ICogfCB8IHwgfCB8IHwgZjdmZjY1OTdhNyBjb2NjaTog
+YWRkIGEgImNvY2NpY2hlY2stdGVzdCIgdGFyZ2V0IGFuZCB0ZXN0ICouY29jY2kgcnVsZXMK
+fCAqIHwgfCB8IHwgfCB8IGFmMGFhNjkwNGIgTWFrZWZpbGUgJiAuZ2l0aWdub3JlOiBpZ25v
+cmUgJiBjbGVhbiAiZ2l0LnJlcyIsIG5vdCAiKi5yZXMiCnwgKiB8IHwgfCB8IHwgfCA3YjYz
+ZWE1NzUwIE1ha2VmaWxlOiByZW1vdmUgbWFuZGF0b3J5ICJzcGF0Y2giIGFyZ3VtZW50cyBm
+cm9tIFNQQVRDSF9GTEFHUwoqIHwgfCB8IHwgfCB8IHwgICA5NzIwOTUwNDcyIE1lcmdlIGJy
+YW5jaCAnZ2Mvc3VibW9kdWxlLXVzZS1zdXBlci1wcmVmaXgnIGludG8gbmV4dAp8XCBcIFwg
+XCBcIFwgXCBcICAKfCAqIHwgfCB8IHwgfCB8IHwgNWFkODcyNzFjZiBzdWJtb2R1bGUtLWhl
+bHBlcjogcmVtb3ZlIGRpc3BsYXkgcGF0aCBoZWxwZXIKfCAqIHwgfCB8IHwgfCB8IHwgZDdh
+NzE0ZmRkYyBzdWJtb2R1bGUtLWhlbHBlciB1cGRhdGU6IHVzZSAtLXN1cGVyLXByZWZpeAp8
+ICogfCB8IHwgfCB8IHwgfCBiMGY4YjIxMzA1IHN1Ym1vZHVsZS0taGVscGVyOiByZW1vdmUg
+dW51c2VkIFNVUFBPUlRfU1VQRVJfUFJFRklYIGZsYWdzCnwgKiB8IHwgfCB8IHwgfCB8IDU4
+Y2VjMjk4ZjEgc3VibW9kdWxlLS1oZWxwZXI6IHVzZSBjb3JyZWN0IGRpc3BsYXkgcGF0aCBo
+ZWxwZXIKfCAqIHwgfCB8IHwgfCB8IHwgY2I0OWUxZThkMyBzdWJtb2R1bGUtLWhlbHBlcjog
+ZG9uJ3QgcmVjcmVhdGUgcmVjdXJzaXZlIHByZWZpeAp8ICogfCB8IHwgfCB8IHwgfCA2MThi
+ODQ0NWQ5IHN1Ym1vZHVsZS0taGVscGVyIHVwZGF0ZTogdXNlIGRpc3BsYXkgcGF0aCBoZWxw
+ZXIKfCAqIHwgfCB8IHwgfCB8IHwgOGZjMzZjMzlkOSBzdWJtb2R1bGUtLWhlbHBlciB0ZXN0
+czogYWRkIG1pc3NpbmcgImRpc3BsYXkgcGF0aCIgY292ZXJhZ2UKfCAqIHwgfCB8IHwgfCB8
+IHwgICBjOWUyMjFiMTI0IE1lcmdlIGJyYW5jaCAnYWIvc3VibW9kdWxlLWNsZWFudXAnIGlu
+dG8gZ2Mvc3VibW9kdWxlLXVzZS1zdXBlci1wcmVmaXgKfCB8XCBcIFwgXCBcIFwgXCBcICAK
+fCB8IHxffC8gLyAvIC8gLyAvICAKfCB8L3wgfCB8IHwgfCB8IHwgICAKKiB8IHwgfCB8IHwg
+fCB8IHwgICAxNzJkNGQyYTJiIE1lcmdlIGJyYW5jaCAnZW4vbWVyZ2UtZHVhbC1kaXItcmVu
+YW1lcy1maXgnIGludG8gbmV4dAp8XCBcIFwgXCBcIFwgXCBcIFwgIAp8ICogfCB8IHwgfCB8
+IHwgfCB8IDhmZTY3M2VlMWQgbWVyZ2Utb3J0OiBmaXggaXNzdWUgd2l0aCBkdWFsIHJlbmFt
+ZSBhbmQgYWRkL2FkZCBjb25mbGljdAp8ICogfCB8IHwgfCB8IHwgfCB8IDJlZjViMDBlYmEg
+bWVyZ2Utb3J0OiBzaHVmZmxlIHRoZSBjb21wdXRhdGlvbiBhbmQgY2xlYW51cCBvZiBwb3Rl
+bnRpYWwgY29sbGlzaW9ucwp8ICogfCB8IHwgfCB8IHwgfCB8IGIzNDY4YzIwNTUgbWVyZ2Ut
+b3J0OiBtYWtlIGEgc2VwYXJhdGUgZnVuY3Rpb24gZm9yIGZyZWVpbmcgc3RydWN0IGNvbGxp
+c2lvbnMKfCAqIHwgfCB8IHwgfCB8IHwgfCBhNDcxOWQ5ZTQ2IG1lcmdlLW9ydDogc21hbGwg
+Y2xlYW51cHMgb2YgY2hlY2tfZm9yX2RpcmVjdG9yeV9yZW5hbWUKfCAqIHwgfCB8IHwgfCB8
+IHwgfCA3MGZhZTYyOWU2IHQ2NDIzOiBhZGQgdGVzdHMgb2YgZHVhbCBkaXJlY3RvcnkgcmVu
+YW1lIHBsdXMgYWRkL2FkZCBjb25mbGljdAp8IHwgfF98X3xffF98LyAvIC8gIAp8IHwvfCB8
+IHwgfCB8IHwgfCAgIAoqIHwgfCB8IHwgfCB8IHwgfCAgIDlmYzUxZjRiZGQgTWVyZ2UgYnJh
+bmNoICdhYi90ZXN0LXdpdGhvdXQtdGVtcGxhdGVzJyBpbnRvIG5leHQKfFwgXCBcIFwgXCBc
+IFwgXCBcICAKfCAqIHwgfCB8IHwgfCB8IHwgfCBjOGFiMmFhOWNlIHRlc3RzOiBkb24ndCBh
+c3N1bWUgYSAuZ2l0L2luZm8gZm9yIC5naXQvaW5mby9zcGFyc2UtY2hlY2tvdXQKfCAqIHwg
+fCB8IHwgfCB8IHwgfCA5MTM3NjlhMzYwIHRlc3RzOiBkb24ndCBhc3N1bWUgYSAuZ2l0L2lu
+Zm8gZm9yIC5naXQvaW5mby9leGNsdWRlCnwgKiB8IHwgfCB8IHwgfCB8IHwgYWY0ZWIzN2Rm
+NyB0ZXN0czogZG9uJ3QgYXNzdW1lIGEgLmdpdC9pbmZvIGZvciAuZ2l0L2luZm8vcmVmcwp8
+ICogfCB8IHwgfCB8IHwgfCB8IDUzODNmN2Y5ZGUgdGVzdHM6IGRvbid0IGFzc3VtZSBhIC5n
+aXQvaW5mbyBmb3IgLmdpdC9pbmZvL2F0dHJpYnV0ZXMKfCAqIHwgfCB8IHwgfCB8IHwgfCBk
+YzdlOGMzYjNhIHRlc3RzOiBkb24ndCBhc3N1bWUgYSAuZ2l0L2luZm8gZm9yIC5naXQvaW5m
+by9ncmFmdHMKfCAqIHwgfCB8IHwgfCB8IHwgfCBmZGM0ODljNjZjIHRlc3RzOiBkb24ndCBk
+ZXBlbmQgb24gdGVtcGxhdGUtY3JlYXRlZCAuZ2l0L2JyYW5jaGVzCnwgKiB8IHwgfCB8IHwg
+fCB8IHwgN2ExY2IyOWY2MSB0MDAwODogZG9uJ3QgcmVseSBvbiBkZWZhdWx0ICIuZ2l0L2lu
+Zm8vZXhjbHVkZSIKfCB8LyAvIC8gLyAvIC8gLyAvICAKKiB8IHwgfCB8IHwgfCB8IHwgICA4
+ZDQ0NmU3ZGY4IE1lcmdlIGJyYW5jaCAnYWIvYnVpbGQtZ2l0d2ViJyBpbnRvIG5leHQKfFwg
+XCBcIFwgXCBcIFwgXCBcICAKfCAqIHwgfCB8IHwgfCB8IHwgfCBhMzUyNThjNjJhIGdpdHdl
+Yi9NYWtlZmlsZTogYWRkIGEgIk5PX0dJVFdFQiIgcGFyYW1ldGVyCnwgKiB8IHwgfCB8IHwg
+fCB8IHwgZDNiODI3NDA4YyBNYWtlZmlsZTogYnVpbGQgJ2dpdHdlYicgaW4gdGhlIGRlZmF1
+bHQgdGFyZ2V0CnwgKiB8IHwgfCB8IHwgfCB8IHwgYWZmYzNiNzU1YyBnaXR3ZWIvTWFrZWZp
+bGU6IGluY2x1ZGUgaW4gdG9wLWxldmVsIE1ha2VmaWxlCnwgKiB8IHwgfCB8IHwgfCB8IHwg
+Mjc0MzhlZjVlMCBnaXR3ZWI6IHJlbW92ZSAidGVzdCIgYW5kICJ0ZXN0LWluc3RhbGxlZCIg
+dGFyZ2V0cwp8ICogfCB8IHwgfCB8IHwgfCB8IGI4MmQ2NmViMGMgZ2l0d2ViL01ha2VmaWxl
+OiBwcmVwYXJlIHRvIG1lcmdlIGludG8gdG9wLWxldmVsIE1ha2VmaWxlCnwgKiB8IHwgfCB8
+IHwgfCB8IHwgNTY0ZWJkZTNkMyBnaXR3ZWIvTWFrZWZpbGU6IGNsZWFyIHVwIGFuZCBkZS1k
+dXBsaWNhdGUgdGhlIGdpdHdlYi57Y3NzLGpzfSB2YXJzCnwgKiB8IHwgfCB8IHwgfCB8IHwg
+MWUwOGZhNWUyYiBnaXR3ZWIvTWFrZWZpbGU6IGFkZCBhICQoR0lUV0VCX0FMTCkgdmFyaWFi
+bGUKfCAqIHwgfCB8IHwgfCB8IHwgfCA3ZGVjZGI5YjRhIGdpdHdlYi9NYWtlZmlsZTogZGVm
+aW5lIGFsbCAuUEhPTlkgcHJlcmVxdWlzaXRlcyBpbmxpbmUKKiB8IHwgfCB8IHwgfCB8IHwg
+fCAgIDNhYjY4OTEzN2EgTWVyZ2UgYnJhbmNoICdhYi90ZXN0LXRvb2wtbGVha2ZpeCcgaW50
+byBuZXh0CnxcIFwgXCBcIFwgXCBcIFwgXCBcICAKfCAqIHwgfCB8IHwgfCB8IHwgfCB8IGY0
+MGE2OTM0NTAgdGVzdC10b29sIGRlbHRhOiBmaXggYSBtZW1vcnkgbGVhawp8ICogfCB8IHwg
+fCB8IHwgfCB8IHwgMzRlNjkxMjg4ZCB0ZXN0LXRvb2wgcmVmLXN0b3JlOiBmaXggYSBtZW1v
+cnkgbGVhawp8ICogfCB8IHwgfCB8IHwgfCB8IHwgOTc5NDYzM2I0ZSB0ZXN0LXRvb2wgYmxv
+b206IGZpeCBtZW1vcnkgbGVha3MKfCAqIHwgfCB8IHwgfCB8IHwgfCB8IDFjYWFhODU4Y2Mg
+dGVzdC10b29sIGpzb24td3JpdGVyOiBmaXggbWVtb3J5IGxlYWtzCnwgKiB8IHwgfCB8IHwg
+fCB8IHwgfCBhMjBiMGRjNzk2IHRlc3QtdG9vbCByZWdleDogY2FsbCByZWdmcmVlKCksIGZp
+eCBtZW1vcnkgbGVha3MKfCAqIHwgfCB8IHwgfCB8IHwgfCB8IDFjMzQzZTVhZWYgdGVzdC10
+b29sIHVybG1hdGNoLW5vcm1hbGl6YXRpb246IGZpeCBhIG1lbW9yeSBsZWFrCnwgKiB8IHwg
+fCB8IHwgfCB8IHwgfCA5YWZhNDZkNGE2IHRlc3QtdG9vbCB7ZHVtcCxzY3JhcH0tY2FjaGUt
+dHJlZTogZml4IG1lbW9yeSBsZWFrcwp8ICogfCB8IHwgfCB8IHwgfCB8IHwgZTI4N2E1YjBh
+NCB0ZXN0LXRvb2wgcGF0aC11dGlsczogZml4IGEgbWVtb3J5IGxlYWsKfCAqIHwgfCB8IHwg
+fCB8IHwgfCB8IDMzMGNhODUwMWIgdGVzdC10b29sIHRlc3QtaGFzaDogZml4IGEgbWVtb3J5
+IGxlYWsKfCB8IHxffC8gLyAvIC8gLyAvIC8gIAp8IHwvfCB8IHwgfCB8IHwgfCB8ICAgCiog
+fCB8IHwgfCB8IHwgfCB8IHwgICBiOTE4M2EwNWM1IE1lcmdlIGJyYW5jaCAnYWIvbGVha2Zp
+eCcgaW50byBuZXh0CnxcIFwgXCBcIFwgXCBcIFwgXCBcICAKfCAqIHwgfCB8IHwgfCB8IHwg
+fCB8IGVjZTM5NzRiYTYgcHVsbDogZml4IGEgInN0cnVjdCBvaWRfYXJyYXkiIG1lbW9yeSBs
+ZWFrCnwgKiB8IHwgfCB8IHwgfCB8IHwgfCAyNzQ3MmI1MTk1IGNhdC1maWxlOiBmaXggYSBj
+b21tb24gInN0cnVjdCBvYmplY3RfY29udGV4dCIgbWVtb3J5IGxlYWsKfCAqIHwgfCB8IHwg
+fCB8IHwgfCB8IDU1OTE2YmJhMGYgZ2M6IGZpeCBhIG1lbW9yeSBsZWFrCnwgKiB8IHwgfCB8
+IHwgfCB8IHwgfCAzM2QwZGRhNjMzIGNoZWNrb3V0OiBhdm9pZCAic3RydWN0IHVucGFja190
+cmVlc19vcHRpb25zIiBsZWFrCnwgKiB8IHwgfCB8IHwgfCB8IHwgfCBlNzJlMTJjYzAyIG1l
+cmdlLWZpbGU6IGZpeCBtZW1vcnkgbGVha3Mgb24gZXJyb3IgcGF0aAp8ICogfCB8IHwgfCB8
+IHwgfCB8IHwgNDgwYTBlMzBhNyBtZXJnZS1maWxlOiByZWZhY3RvciBmb3Igc3Vic2VxdWVu
+dCBtZW1vcnkgbGVhayBmaXgKfCAqIHwgfCB8IHwgfCB8IHwgfCB8IGQ5MGRhZmJlMzEgY2F0
+LWZpbGU6IGZpeCBhIG1lbW9yeSBsZWFrIGluIC0tYmF0Y2gtY29tbWFuZCBtb2RlCnwgKiB8
+IHwgfCB8IHwgfCB8IHwgfCBmZDc0YWM5NWFjIHJldmVydDogZnJlZSAic3RydWN0IHJlcGxh
+eV9vcHRzIiBtZW1iZXJzCnwgKiB8IHwgfCB8IHwgfCB8IHwgfCBiYzU3YmExZDU0IHN1Ym1v
+ZHVsZS5jOiBmcmVlKCkgbWVtb3J5IGZyb20geGdldGN3ZCgpCnwgKiB8IHwgfCB8IHwgfCB8
+IHwgfCA3NGEwNmE5ZjIxIGNsb25lOiBmaXggbWVtb3J5IGxlYWsgaW4gd2FudGVkX3BlZXJf
+cmVmcygpCnwgKiB8IHwgfCB8IHwgfCB8IHwgfCA5OWI2YzQ1ZDhmIGNoZWNrLXJlZi1mb3Jt
+YXQ6IGZpeCB0cml2aWFsIG1lbW9yeSBsZWFrCnwgfC8gLyAvIC8gLyAvIC8gLyAvICAKKiB8
+IHwgfCB8IHwgfCB8IHwgfCAgIDU0MmY4ZmVjN2UgTWVyZ2UgYnJhbmNoICdqYy9idWlsdGlu
+LW12LW1vdmUtYXJyYXknIGludG8gbmV4dAp8XCBcIFwgXCBcIFwgXCBcIFwgXCAgCnwgKiB8
+IHwgfCB8IHwgfCB8IHwgfCA0OTAxYTM2YjRiIGJ1aWx0aW4vbXYuYzogdXNlIHRoZSBNT1ZF
+X0FSUkFZKCkgbWFjcm8gaW5zdGVhZCBvZiBtZW1tb3ZlKCkKfCB8IHxffC8gLyAvIC8gLyAv
+IC8gIAp8IHwvfCB8IHwgfCB8IHwgfCB8ICAgCiogfCB8IHwgfCB8IHwgfCB8IHwgICAxYjVk
+OGMwMmNmIE1lcmdlIGJyYW5jaCAnZnIvdmltZGlmZi1sYXlvdXQtZml4JyBpbnRvIG5leHQK
+fFwgXCBcIFwgXCBcIFwgXCBcIFwgIAp8ICogfCB8IHwgfCB8IHwgfCB8IHwgYTYyZWZiYWFi
+YiB2aW1kaWZmOiBtYWtlIGxheW91dCBlbmdpbmUgbW9yZSByb2J1c3QgYWdhaW5zdCB1c2Vy
+IHZpbSBzZXR0aW5ncwp8IHwvIC8gLyAvIC8gLyAvIC8gLyAgCiogfCB8IHwgfCB8IHwgfCB8
+IHwgICBmMDIyNDE0ZTMxIE1lcmdlIGJyYW5jaCAnaHgvbG9va3VwLWNvbW1pdC1pbi1ncmFw
+aC1maXgnIGludG8gbmV4dAp8XCBcIFwgXCBcIFwgXCBcIFwgXCAgCnwgfCB8X3xffF98X3xf
+fC8gLyAvICAKfCB8L3wgfCB8IHwgfCB8IHwgfCAgIAp8ICogfCB8IHwgfCB8IHwgfCB8IGE0
+ZDYwYTYyMjEgY29tbWl0LWdyYXBoLmM6IG5vIGxhenkgZmV0Y2ggaW4gbG9va3VwX2NvbW1p
+dF9pbl9ncmFwaCgpCnwgfC8gLyAvIC8gLyAvIC8gLyAgCiogfCB8IHwgfCB8IHwgfCB8ICAg
+OTA3OTBjNDQ1NSBNZXJnZSBicmFuY2ggJ2FiL3N1Ym1vZHVsZS1jbGVhbnVwJyBpbnRvIG5l
+eHQKfFwgXCBcIFwgXCBcIFwgXCBcICAKfCB8IHxffF98LyAvIC8gLyAvICAKfCB8L3wgfCB8
+IHwgfCB8IHwgICAKfCAqIHwgfCB8IHwgfCB8IHwgNWI4OTNmN2Q4MSBnaXQtc2gtc2V0dXAu
+c2g6IHJlbW92ZSAic2F5IiBmdW5jdGlvbiwgY2hhbmdlIGxhc3QgdXNlcnMKfCAqIHwgfCB8
+IHwgfCB8IHwgMmVlYzQ2MzczOSBnaXQtc3VibW9kdWxlLnNoOiB1c2UgIiRxdWlldCIsIG5v
+dCAiJEdJVF9RVUlFVCIKfCAqIHwgfCB8IHwgfCB8IHwgYjc4OGZjNjcxYiBzdWJtb2R1bGUt
+LWhlbHBlcjogZWxpbWluYXRlIGludGVybmFsICItLXVwZGF0ZSIgb3B0aW9uCnwgKiB8IHwg
+fCB8IHwgfCB8IDhmMTIxMDhjMjkgc3VibW9kdWxlLS1oZWxwZXI6IHVuZGVyc3RhbmQgLS1j
+aGVja291dCwgLS1tZXJnZSBhbmQgLS1yZWJhc2Ugc3lub255bXMKfCAqIHwgfCB8IHwgfCB8
+IHwgMzZkNDUxNjNiNiBzdWJtb2R1bGUtLWhlbHBlcjogcmVwb3J0ICJzdWJtb2R1bGUiIGFz
+IG91ciBuYW1lIGluIHNvbWUgIi1oIiBvdXRwdXQKfCAqIHwgfCB8IHwgfCB8IHwgNmU1NTZj
+NDEyZSBzdWJtb2R1bGUtLWhlbHBlcjogcmVuYW1lICJhYnNvcmItZ2l0LWRpcnMiIHRvICJh
+YnNvcmJnaXRkaXJzIgp8ICogfCB8IHwgfCB8IHwgfCAwZDY4ZWU3MjNlIHN1Ym1vZHVsZSB1
+cGRhdGU6IHJlbW92ZSAiLXYiIG9wdGlvbgp8ICogfCB8IHwgfCB8IHwgfCBkOWM3ZjY5YWFh
+IHN1Ym1vZHVsZS0taGVscGVyOiBoYXZlIC0tcmVxdWlyZS1pbml0IGltcGx5IC0taW5pdAp8
+ICogfCB8IHwgfCB8IHwgfCBkYTNhYWU5ZTg0IGdpdC1zdWJtb2R1bGUuc2g6IHJlbW92ZSB1
+bnVzZWQgdG9wLWxldmVsICItLWJyYW5jaCIgYXJndW1lbnQKfCAqIHwgfCB8IHwgfCB8IHwg
+NzU3ZDA5Mjc5NyBnaXQtc3VibW9kdWxlLnNoOiBtYWtlIHRoZSAiJGNhY2hlZCIgdmFyaWFi
+bGUgYSBib29sZWFuCnwgKiB8IHwgfCB8IHwgfCB8IDk2MGZhZDk4ZTggZ2l0LXN1Ym1vZHVs
+ZS5zaDogcmVtb3ZlIHVudXNlZCAkcHJlZml4IHZhcmlhYmxlCnwgKiB8IHwgfCB8IHwgfCB8
+IDg1Nzc1MjU1ZjEgZ2l0LXN1Ym1vZHVsZS5zaDogcmVtb3ZlIHVudXNlZCBzYW5pdGl6ZV9z
+dWJtb2R1bGVfZW52KCkKKiB8IHwgfCB8IHwgfCB8IHwgICBkMWNlNWE5NjQ5IE1lcmdlIGJy
+YW5jaCAnc3kvbXYtb3V0LW9mLWNvbmUnIGludG8gbmV4dAp8XCBcIFwgXCBcIFwgXCBcIFwg
+IAp8ICogfCB8IHwgfCB8IHwgfCB8IGI5MWEyYjY1OTQgbXY6IGFkZCBjaGVja19kaXJfaW5f
+aW5kZXgoKSBhbmQgc29sdmUgZ2VuZXJhbCBkaXIgY2hlY2sgaXNzdWUKfCAqIHwgfCB8IHwg
+fCB8IHwgfCAyNGVhODFkOWFjIG12OiB1c2UgZmxhZ3MgbW9kZSBmb3IgdXBkYXRlX21vZGUK
+fCAqIHwgfCB8IHwgfCB8IHwgfCA4YTI2YTM5MTVmIG12OiBjaGVjayBpZiA8ZGVzdGluYXRp
+b24+IGV4aXN0cyBpbiBpbmRleCB0byBoYW5kbGUgb3ZlcndyaXRpbmcKfCAqIHwgfCB8IHwg
+fCB8IHwgfCA2NjQ1YjAzY2E1IG12OiBjaGVjayBpZiBvdXQtb2YtY29uZSBmaWxlIGV4aXN0
+cyBpbiBpbmRleCB3aXRoIFNLSVBfV09SS1RSRUUgYml0CnwgKiB8IHwgfCB8IHwgfCB8IHwg
+Nzg4OTc1NWJhZSBtdjogZGVjb3VwbGUgaWYvZWxzZS1pZiBjaGVja3MgdXNpbmcgZ290bwp8
+ICogfCB8IHwgfCB8IHwgfCB8IDcwN2ZhMmY3NmEgbXY6IHVwZGF0ZSBzcGFyc2l0eSBhZnRl
+ciBtb3ZpbmcgZnJvbSBvdXQtb2YtY29uZSB0byBpbi1jb25lCnwgKiB8IHwgfCB8IHwgfCB8
+IHwgMTE0M2NjMDFiNyB0MTA5MjogbXYgZGlyZWN0b3J5IGZyb20gb3V0LW9mLWNvbmUgdG8g
+aW4tY29uZQp8ICogfCB8IHwgfCB8IHwgfCB8IDM2Nzg0NGU1YjcgdDcwMDI6IGFkZCB0ZXN0
+cyBmb3IgbW92aW5nIG91dC1vZi1jb25lIGZpbGUvZGlyZWN0b3J5CnwgfCB8X3wvIC8gLyAv
+IC8gLyAgCnwgfC98IHwgfCB8IHwgfCB8ICAgCiogfCB8IHwgfCB8IHwgfCB8ICAgOTczMTZh
+OTZlZCBNZXJnZSBicmFuY2ggJ2h4L3VucGFjay1zdHJlYW1pbmcnIGludG8gbmV4dAp8XCBc
+IFwgXCBcIFwgXCBcIFwgIAp8ICogfCB8IHwgfCB8IHwgfCB8IGFhZjgxMjIzZjQgdW5wYWNr
+LW9iamVjdHM6IHVzZSBzdHJlYW1fbG9vc2Vfb2JqZWN0KCkgdG8gdW5wYWNrIGxhcmdlIG9i
+amVjdHMKfCAqIHwgfCB8IHwgfCB8IHwgfCAzYzNjYTBiMGMxIGNvcmUgZG9jOiBtb2Rlcm5p
+emUgY29yZS5iaWdGaWxlVGhyZXNob2xkIGRvY3VtZW50YXRpb24KfCAqIHwgfCB8IHwgfCB8
+IHwgfCAyYjYwNzBhYzRjIG9iamVjdC1maWxlLmM6IGFkZCAic3RyZWFtX2xvb3NlX29iamVj
+dCgpIiB0byBoYW5kbGUgbGFyZ2Ugb2JqZWN0CnwgKiB8IHwgfCB8IHwgfCB8IHwgMjFlN2Q4
+ODE0MCBvYmplY3QtZmlsZS5jOiBmYWN0b3Igb3V0IGRlZmxhdGUgcGFydCBvZiB3cml0ZV9s
+b29zZV9vYmplY3QoKQp8ICogfCB8IHwgfCB8IHwgfCB8IDk3YTlkYjZmZmIgb2JqZWN0LWZp
+bGUuYzogcmVmYWN0b3Igd3JpdGVfbG9vc2Vfb2JqZWN0KCkgdG8gc2V2ZXJhbCBzdGVwcwp8
+ICogfCB8IHwgfCB8IHwgfCB8IGExYmY1Y2EyOWYgdW5wYWNrLW9iamVjdHM6IGxvdyBtZW1v
+cnkgZm9vdHByaW50IGZvciBnZXRfZGF0YSgpIGluIGRyeV9ydW4gbW9kZQoqIHwgfCB8IHwg
+fCB8IHwgfCB8ICAgYjQ4NDZkMGRhYSBNZXJnZSBicmFuY2ggJ2VuL21lcmdlLXRyZWUnIGlu
+dG8gbmV4dAp8XCBcIFwgXCBcIFwgXCBcIFwgXCAgCnwgKiB8IHwgfCB8IHwgfCB8IHwgfCA3
+MjYwZTg3MjQ4IGdpdC1tZXJnZS10cmVlLnR4dDogYWRkIGEgc2VjdGlvbiBvbiBwb3RlbnRp
+b25hbCB1c2FnZSBtaXN0YWtlcwp8ICogfCB8IHwgfCB8IHwgfCB8IHwgNzk3NjcyMWQxNyBt
+ZXJnZS10cmVlOiBhZGQgYSAtLWFsbG93LXVucmVsYXRlZC1oaXN0b3JpZXMgZmxhZwp8ICog
+fCB8IHwgfCB8IHwgfCB8IHwgN2M0OGIyNzgyMiBtZXJnZS10cmVlOiBhbGxvdyBgbHMtZmls
+ZXMgLXVgIHN0eWxlIGluZm8gdG8gYmUgTlVMIHRlcm1pbmF0ZWQKfCAqIHwgfCB8IHwgfCB8
+IHwgfCB8IGRlOTA1ODExNDEgbWVyZ2Utb3J0OiBvcHRpb25hbGx5IHByb2R1Y2UgbWFjaGlu
+ZS1yZWFkYWJsZSBvdXRwdXQKfCAqIHwgfCB8IHwgfCB8IHwgfCB8IGNiMjYwNzc1OWUgbWVy
+Z2Utb3J0OiBzdG9yZSBtb3JlIHNwZWNpZmljIGNvbmZsaWN0IGluZm9ybWF0aW9uCnwgKiB8
+IHwgfCB8IHwgfCB8IHwgfCAyNzE1ZThhOTMxIG1lcmdlLW9ydDogbWFrZSBgcGF0aF9tZXNz
+YWdlc2AgYSBzdHJtYXAgdG8gYSBzdHJpbmdfbGlzdAp8ICogfCB8IHwgfCB8IHwgfCB8IHwg
+NmRlYmI3NTI3YiBtZXJnZS1vcnQ6IHN0b3JlIG1lc3NhZ2VzIGluIGEgbGlzdCwgbm90IGlu
+IGEgc2luZ2xlIHN0cmJ1Zgp8ICogfCB8IHwgfCB8IHwgfCB8IHwgYjUyMGJjNmNhYSBtZXJn
+ZS10cmVlOiBwcm92aWRlIGVhc3kgYWNjZXNzIHRvIGBscy1maWxlcyAtdWAgc3R5bGUgaW5m
+bwp8ICogfCB8IHwgfCB8IHwgfCB8IHwgN2ZhMzMzODg3MCBtZXJnZS10cmVlOiBwcm92aWRl
+IGEgbGlzdCBvZiB3aGljaCBmaWxlcyBoYXZlIGNvbmZsaWN0cwp8ICogfCB8IHwgfCB8IHwg
+fCB8IHwgYTQwNDBjZmEzNSBtZXJnZS1vcnQ6IHJlbW92ZSBjb21tYW5kLWxpbmUtY2VudHJp
+YyBzdWJtb2R1bGUgbWVzc2FnZSBmcm9tIG1lcmdlLW9ydAp8ICogfCB8IHwgfCB8IHwgfCB8
+IHwgZmFlMjZjZTc5YyBtZXJnZS1vcnQ6IHByb3ZpZGUgYSBtZXJnZV9nZXRfY29uZmxpY3Rl
+ZF9maWxlcygpIGhlbHBlciBmdW5jdGlvbgp8ICogfCB8IHwgfCB8IHwgfCB8IHwgYTFhNzgx
+MTk3NSBtZXJnZS10cmVlOiBzdXBwb3J0IGluY2x1ZGluZyBtZXJnZSBtZXNzYWdlcyBpbiBv
+dXRwdXQKfCAqIHwgfCB8IHwgfCB8IHwgfCB8IGEzNGVkYWU2OGEgbWVyZ2Utb3J0OiBzcGxp
+dCBvdXQgYSBzZXBhcmF0ZSBkaXNwbGF5X3VwZGF0ZV9tZXNzYWdlcygpIGZ1bmN0aW9uCnwg
+KiB8IHwgfCB8IHwgfCB8IHwgfCAxZjBjM2EyOWRhIG1lcmdlLXRyZWU6IGltcGxlbWVudCBy
+ZWFsIG1lcmdlcwp8ICogfCB8IHwgfCB8IHwgfCB8IHwgNmVjNzU1YTBlMSBtZXJnZS10cmVl
+OiBhZGQgb3B0aW9uIHBhcnNpbmcgYW5kIGluaXRpYWwgc2hlbGwgZm9yIHJlYWwgbWVyZ2Ug
+ZnVuY3Rpb24KfCAqIHwgfCB8IHwgfCB8IHwgfCB8IDU1ZTQ4ZjZiZjcgbWVyZ2UtdHJlZTog
+bW92ZSBsb2dpYyBmb3IgZXhpc3RpbmcgbWVyZ2UgaW50byBuZXcgZnVuY3Rpb24KfCAqIHwg
+fCB8IHwgfCB8IHwgfCB8IDcwMTc2YjcwMTUgbWVyZ2UtdHJlZTogcmVuYW1lIG1lcmdlX3Ry
+ZWVzKCkgdG8gdHJpdmlhbF9tZXJnZV90cmVlcygpCiogfCB8IHwgfCB8IHwgfCB8IHwgfCAg
+IGQzNDBhMDNlODkgTWVyZ2UgYnJhbmNoICdnZy93b3JrdHJlZS1mcm9tLXRoZS1hYm92ZScg
+aW50byBuZXh0CnxcIFwgXCBcIFwgXCBcIFwgXCBcIFwgIAp8ICogfCB8IHwgfCB8IHwgfCB8
+IHwgfCAyOTlmODhhM2IzIGRpcjogbWlub3IgcmVmYWN0b3JpbmcgLyBjbGVhbi11cAp8ICog
+fCB8IHwgfCB8IHwgfCB8IHwgfCA5OTJiYjJlZmY5IGRpcjogdHJhdmVyc2UgaW50byByZXBv
+c2l0b3J5CnwgfCB8X3xffF98LyAvIC8gLyAvIC8gIAp8IHwvfCB8IHwgfCB8IHwgfCB8IHwg
+ICAKKiB8IHwgfCB8IHwgfCB8IHwgfCB8ICAgYTA2ZGVkMDg1MSBNZXJnZSBicmFuY2ggJ2pj
+L3Jlc29sdmUtdW5kbycgaW50byBuZXh0CnxcIFwgXCBcIFwgXCBcIFwgXCBcIFwgIAp8IHwv
+IC8gLyAvIC8gLyAvIC8gLyAvICAKfC98IHwgfCB8IHwgfCB8IC8gLyAvICAgCnwgfCB8X3xf
+fF98X3xffC8gLyAvICAgIAp8IHwvfCB8IHwgfCB8IHwgfCB8ICAgICAKfCAqIHwgfCB8IHwg
+fCB8IHwgfCAwYzJkOGE1YjI4IHJldmlzaW9uOiBtYXJrIGJsb2JzIG5lZWRlZCBmb3IgcmVz
+b2x2ZS11bmRvIGFzIHJlYWNoYWJsZQp8LyAvIC8gLyAvIC8gLyAvIC8gIAp8IG8gLyAvIC8g
+LyAvIC8gLyBmNzcwZTlmMzk2IEdpdCAyLjM3LXJjMgp8ICAvIC8gLyAvIC8gLyAvICAKfCBv
+IC8gLyAvIC8gLyAvIGFiMzM2ZThmMWMgU2V2ZW50aCBiYXRjaAp8ICAvIC8gLyAvIC8gLyAg
+CnwgfCBvIC8gLyAvIC8gODE2OGQ1ZTljMiBHaXQgMi4zNy1yYzAKfCB8ICAvIC8gLyAvICAK
+fCB8IG8gLyAvIC8gMjY2OGUzNjA4ZSBTaXh0aCBiYXRjaAp8IHwgIC8gLyAvICAKfCB8IG8g
+LyAvIDMwY2M4ZDBmMTQgQSByZWdyZXNzaW9uIGZpeCBmb3IgMi4zNwp8IHwgIC8gLyAgCnwg
+byAvIC8gZTRhNGIzMTU3NyBHaXQgMi4zNwp8ICAvIC8gIApvIC8gLyA0ZTJhNGQxZGQ0IFRo
+ZSBzZWNvbmQgYmF0Y2gKIC8gLyAgCm8gLyA1NGM4YTdjMzc5IHJldmlzaW9ucyBBUEk6IGFk
+ZCBhIFRPRE8gZm9yIGRpZmZfZnJlZSgmcmV2cy0+ZGlmZm9wdCkKIC8gIApvIDFlNTkxNzhl
+M2YgU3luYyB3aXRoICdtYWludCcK
+
+--------------Z5bZ0C60AaL3RsBu0R82wk40--
