@@ -2,128 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0482C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 15:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1FB0C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 15:44:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240172AbiGNP0F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 11:26:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33144 "EHLO
+        id S240462AbiGNPoD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 11:44:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240160AbiGNP0D (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 11:26:03 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22AA046DAB
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 08:26:00 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id d10so2145285pfd.9
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 08:26:00 -0700 (PDT)
+        with ESMTP id S240436AbiGNPoA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 11:44:00 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA8FE1C935
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 08:43:52 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id n185so1285146wmn.4
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 08:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kjXRfhg7sKEK+LEAgloEIlI8uQMUtUj6eg+/oYFW1N8=;
-        b=NHSz+UkIV07K8dJQJbj+nZeEus/Nl8PSlYTG85c3uetl2HmNZgEChQqd5B9DHcHe7v
-         5R95NYmoAZQrWDEt9RwIXwpdkW5X6O0COU4YZWdPOHT+LBSUYCBbWn5Q36JHN3w6uA+F
-         6dvL8ucS8aPZ9nSUJ+b8FphT7BYM5D/WLpqIzrhHXy1iYWLnnBlEENaQMdmHJ04iAqTj
-         zybKQztkkzpubGL3BcVasjHufHvY90eB+zNBzIbX97znmOUXzgoFIwNaIiqNYUwcHyMs
-         jMsTxV0eoauof/i8WkvGGf/BX5ED8whGnXgrU0T/mc2U9GBPbIJ6m1TKABwxsAUGxwnm
-         Qnfw==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=IQyccFinT+ZoD8RZBHFM1ksXeaX6pkGsPEmF2UJuFGc=;
+        b=pM6hh5Cm2U9uhYu9peOa34TeWvJZ/oruE5B1s8PjF+2L09rFULifLFBQzEcL5dNDgw
+         YTMgMnlSPMX/LCDLiROSKmaK45QinuJNYrI1Oa/o2aS6i1EYDR2YIQ7Z0TGBErCOUodY
+         qHypAHcgQr4plh4LWqDK8NPMvIuv2yTKpi8O1vwjXpQZHXtnTazmvIq2Vi1us5VJuBUt
+         eGKbdDCEcRNfcmjPizU20wpfDiQXSYqNXFunW/JYABml1W+WkUKETPv8DhmIVIaaXyOk
+         Px1ePC9rKPaJbZ5KUKYRwIfjaNbm+F9PtClcdELSeWRJfhU9lyK7RzKQgOs/7cEEAUIb
+         qzsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kjXRfhg7sKEK+LEAgloEIlI8uQMUtUj6eg+/oYFW1N8=;
-        b=SrU9VY8HixGNSDqyteQJ61NE8JIv3E56L11HbdQGXbCuuq1jaEUiCrMX7QcuoWVNTn
-         Azu5lmTXt2DVMq+adofVpkpwUPAPFH9TMm/nmDZhyOxygCjVPJJuIU/imClBv2upOdmp
-         XW+tHPSOXIRsATBBbSKqsp5yJrkU+/twhUJda/nyMihPDVEUVKky7c3kwJSVuOFMiyf4
-         dIT9sfHkOY+lq3PVy25S6cYyIvWodkkRL9WRNIoOnczRdqPBv7kqllJ9t/1zK7sj/EJV
-         3Li0BiHVfMtSEG6KT7GJ0+K+RztKqzQuBLryL97bq5xeVNxwU6wGwd3K5UxgBjU7tSDl
-         bPTw==
-X-Gm-Message-State: AJIora9Y4941SzegmYzxH9zNP+60gfd/ai/smk/VWDKYylVHvYhs4Jcw
-        O1vy1MTBYu47tJ0KWGEPUgU=
-X-Google-Smtp-Source: AGRyM1uEqfy5NoO/LHSJp1NxGQZ+tG3gLPReuSdXRzeovvooKIPszR3Y7hwNu7abd819+UKjpmVUBQ==
-X-Received: by 2002:a63:8341:0:b0:415:c973:18b1 with SMTP id h62-20020a638341000000b00415c97318b1mr8355297pge.292.1657812359480;
-        Thu, 14 Jul 2022 08:25:59 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.98])
-        by smtp.gmail.com with ESMTPSA id u19-20020a627913000000b00528c0e516fesm1834472pfc.152.2022.07.14.08.25.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Jul 2022 08:25:58 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
-        git@jeffhostetler.com, git@vger.kernel.org, me@ttaylorr.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v6 4/7] pack-bitmap.c: don't ignore ENOENT silently
-Date:   Thu, 14 Jul 2022 23:25:52 +0800
-Message-Id: <20220714152552.3932-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.35.0.rc0.679.gacb6c2f483
-In-Reply-To: <xmqqpmibmjjs.fsf@gitster.g>
-References: <xmqqpmibmjjs.fsf@gitster.g>
-MIME-Version: 1.0
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=IQyccFinT+ZoD8RZBHFM1ksXeaX6pkGsPEmF2UJuFGc=;
+        b=2BLYw/LpimWP5fQ0VhCUVNKiebtEwL1/H2siiVnPy25w1L78iCDbMZtXSEApnWnuli
+         5lHqb4nKlPVa5SBR2RzvGBkVs9VvrPFZ1nD6uc3M4Qk1QEwYNJRO84uRhf+3GqZEm2/y
+         DkW1nqIbgfiJ6LMjYzPWRMSO4UJ34LzkxHj8ZQt+rMZ/YkjNRKqNGdBGhXxLtu+FBG7i
+         9j8lTE7gdnQ/RBEMaq+HIOdLi4GaKhIy/VIJdQ8s/yASPTlXX1sAh833mx3TzEWVn+p7
+         JGjR0Xj4MI9eDy58DUnlETi0a/3RDw7rk5oyTSr02vEESxebHj6M/cNfJ9YpYoj51FNm
+         d3Qw==
+X-Gm-Message-State: AJIora+M0NKX/DUzEb2znxF187SURx2pZFZNOf7fXL1krP6rVRrtnUbX
+        h2FRhR48iLhe8KBT/tKIp9bCHD3uQx4=
+X-Google-Smtp-Source: AGRyM1sP3m20xUw23wORdM6pHUWsJKgwM9qzqi7NRWTLTgiDyrsV51DktodFgrAzZJTv/LJOyENdCA==
+X-Received: by 2002:a05:600c:3591:b0:3a0:563a:49d3 with SMTP id p17-20020a05600c359100b003a0563a49d3mr9377411wmq.60.1657813430813;
+        Thu, 14 Jul 2022 08:43:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p129-20020a1c2987000000b003a2d47d3051sm2566945wmp.41.2022.07.14.08.43.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Jul 2022 08:43:50 -0700 (PDT)
+Message-Id: <pull.1290.git.1657813429221.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 14 Jul 2022 15:43:49 +0000
+Subject: [PATCH] shortlog: use a stable sort
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> Both the title and the body describes a complete opposite of what
-> the patch does, doesn't it?
->
-> 	pack-bitmap.c: do not ignore error when opening a bitmap file
->
-> 	Calls to git_open() to open the pack bitmap file and
-> 	multi-pack bitmap file do not report any error when they
-> 	fail.  These files are optional and it is not an error if
-> 	open failed due to ENOENT, but we shouldn't be ignoring
-> 	other kinds of errors.
->
-> or something?
+When sorting the output of `git shortlog` by count, a list of authors in
+alphabetical order is then sorted by contribution count. Obviously, the
+idea is to maintain the alphabetical order for items with identical
+contribution count.
 
-Yes, will apply, thanks for this detailed assistent.
+At the moment, this job is performed by `qsort()`. As that function is
+not guaranteed to implement a stable sort algorithm, this can lead to
+inconsistent and/or surprising behavior: items with identical
+contribution count could lose their alphabetical sub-order.
 
-> > +	if (fd < 0) {
-> > +		if (errno != ENOENT)
-> > +			warning("'%s' cannot open '%s'", strerror(errno), bitmap_name);
-> > +		free(bitmap_name);
->
-> Showing the errno is good, but I do not think it should be enclosed
-> in single quotes.
+The `qsort()` in MS Visual C's runtime does _not_ implement a stable
+sort algorithm, and under certain circumstances this even causes a test
+failure in t4201.21 "shortlog can match multiple groups", where two
+authors both are listed with 2 contributions, and are listed in inverse
+alphabetical order.
 
-Yes, it should not be enclosed around and by Ævar Arnfjörð Bjarmason's advice
-the "warning" should be replaced by "warning_errno", I agree with that,
-so, I think at the same time it solves this problem.
+Let's instead use the stable sort provided by `git_stable_qsort()` to
+avoid this inconsistency.
 
-> One thing you should consider when writing a "this is an optional
-> file and not finding it is perfectly fine" logic like this one is
-> that you may or may not want to ignore ENOTDIR.
+This is a companion to 2049b8dc65 (diffcore_rename(): use a stable sort,
+2019-09-30).
 
-$ errno ENOTDIR
-ENOTDIR 20 Not a directory
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    shortlog: use a stable sort
+    
+    This is another fall-out from validating Git for Windows v2.37.1 via the
+    reinstated Azure Pipeline.
+    
+    The most valid question a reviewer might have about this patch is: "But
+    why does our current CI not fail in the vs-test job?". The answer is
+    surprisingly trivial: Because our CMake-based definition universally
+    defines INTERNAL_QSORT
+    [https://github.com/git/git/blob/v2.37.1/contrib/buildsystems/CMakeLists.txt#L227],
+    which should actually not even be necessary, while the Azure Pipeline I
+    used still calls make vcxproj to generate the Visual Studio build
+    definition and does not define that flag.
 
->ENOTDIR is what you
-> get when you say open("a/b") and "a" exists as something other than
-> a directory.  If you have a path with a slash in bitmap_name, and if
-> in a sane and healthy repository the leading path should always
-> exist (i.e. the file "a/b" may be missing, but the directory "a/"
-> should be there), then getting ENOTDIR is a noteworthy event.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1290%2Fdscho%2Fshortlog-requires-stable-sort-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1290/dscho/shortlog-requires-stable-sort-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1290
 
-Make sense, and I tried to move "pack" away and touch a new file named "pack",
-then executed "git fsck", it will show the result about ENOTDIR:
+ builtin/shortlog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-$ git fsck
-Checking object directories: 100% (256/256), done.
-error: unable to open object pack directory: /Users/tenglong.tl/Downloads/dyrone/.git/objects/pack: Not a directory
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 35825f075e3..086dfee45aa 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -443,7 +443,7 @@ void shortlog_output(struct shortlog *log)
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+ 	if (log->sort_by_number)
+-		QSORT(log->list.items, log->list.nr,
++		STABLE_QSORT(log->list.items, log->list.nr,
+ 		      log->summary ? compare_by_counter : compare_by_list);
+ 	for (i = 0; i < log->list.nr; i++) {
+ 		const struct string_list_item *item = &log->list.items[i];
 
-So, this is how it works in git I think, caller should also print the "errno"
-when deal error and warning,  append errno string as the last part and the
-first part is to describe what's wrong happened in git.
-
-> There may be cases where ENOTDIR can justifiably and should be ignored.
-
-Yes. If I understand it correctly, I think it's the current scene.
-
-For example, if this happens in case like "./pack" is a non-directory, then
-we print warning which contains ENOTDIR description under current change.
-
-Thanks.
+base-commit: bbea4dcf42b28eb7ce64a6306cdde875ae5d09ca
+-- 
+gitgitgadget
