@@ -2,75 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F10EEC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 06:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 607B9C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 06:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230074AbiGOGBN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 02:01:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47894 "EHLO
+        id S230024AbiGOGbB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 02:31:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230063AbiGOGBI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 02:01:08 -0400
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BD367A502
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 23:01:06 -0700 (PDT)
-Received: from bsmtp2.bon.at (unknown [192.168.181.106])
-        by bsmtp5.bon.at (Postfix) with ESMTPS id 4Lkghc4fKtz5vHQ
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 08:01:04 +0200 (CEST)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4LkghW1CXyz5tlB;
-        Fri, 15 Jul 2022 08:00:59 +0200 (CEST)
-Message-ID: <b7fffe99-63fb-3899-6a6d-882b72b9512f@kdbg.org>
-Date:   Fri, 15 Jul 2022 08:00:58 +0200
+        with ESMTP id S231747AbiGOGai (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 02:30:38 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0CD23BC2
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 23:30:25 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BDF2F1A50F4;
+        Fri, 15 Jul 2022 02:30:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Nd2Rab1SiTd6GvaqywHJBX9Cxri+NfM+gGcIO+
+        PgKdk=; b=KH/kIYQDAU2EO2tjPlJJXGJPjWlEYXjdtcvtP3rBLjJJE6ak1lpDDe
+        L5fZ4S3QppjFPecUtI2H3zC1qCvyjzYiAQJXzkyGtZd9okMEHLC6yATmb9LBiz5W
+        LAAckFGU9reUyRqFG/AFtp9PJVuKsxbOoAPQTNmixZqO/ZoX/ijyw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A9C521A50F3;
+        Fri, 15 Jul 2022 02:30:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2EA111A50F2;
+        Fri, 15 Jul 2022 02:30:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 0/3] Remove use of "whitelist"
+References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
+        <pull.1274.v2.git.1657852722.gitgitgadget@gmail.com>
+Date:   Thu, 14 Jul 2022 23:30:19 -0700
+In-Reply-To: <pull.1274.v2.git.1657852722.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Fri, 15 Jul 2022 02:38:39
+        +0000")
+Message-ID: <xmqq5yjy3n2c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [RFC][PATCH] mingw: avoid mktemp() in mkstemp() implementation
-Content-Language: en-US
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <7265e37f-fd29-3579-b840-19a1df52a59f@web.de>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <7265e37f-fd29-3579-b840-19a1df52a59f@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 99EC32B6-0407-11ED-AB93-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.07.22 um 05:58 schrieb René Scharfe:
-> The implementation of mkstemp() for MinGW uses mktemp() and open()
-> without the flag O_EXCL, which is racy.  It's not a security problem
-> for now because all of its callers only create files within the
-> repository (incl. worktrees).  Replace it with a call to our more
-> secure internal function, git_mkstemp_mode(), to prevent possible
-> future issues.
-> 
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->  compat/mingw.c | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
-> 
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 2607de93af..b5502997e2 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1059,10 +1059,7 @@ char *mingw_mktemp(char *template)
-> 
->  int mkstemp(char *template)
->  {
-> -	char *filename = mktemp(template);
-> -	if (!filename)
-> -		return -1;
-> -	return open(filename, O_RDWR | O_CREAT, 0600);
-> +	return git_mkstemp_mode(template, 0600);
->  }
-> 
->  int gettimeofday(struct timeval *tv, void *tz)
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I hate such an obvious layering violation. But we have already a ton of
-them elsewhere (calling xmalloc from compat/, for example), so this is
-just a rant, not an objection.
+> The word "whitelist" has cultural implications that make its use
+> non-inclusive.
+>
+> A previous version of this series recommended the replacement of
+> "allowlist", but that term is still new and not accepted by some common
+> dictionaries.
+>
+> Instead, this version avoids the use of "whitelist" by rewording the
+> sentences that use it. In many cases, this improves readability since the
+> term is used suddenly without other context (and in some cases, is not
+> necessary at all).
+>
+> There is one case where "whitelist" is replaced with "allow_list" but that
+> is because we are operating on a string list parsed from the
+> GIT_ALLOW_PROTOCOL environment variable.
+>
+> Thanks, -Stolee
 
--- Hannes
+Maybe I am biased, but for all the changes in these patches, I find
+the updated text far easier to understand than a mere replacing of
+the words s/white/allow/, even if I pretend that allowlist is
+considered by everybody a proper part of English vocabulary.  After
+all, I think most of the places did not have to say "whitelist" in
+the first place.
+
+Will queue.
+
+Thanks.
