@@ -2,156 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DDA7CCA47F
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 14:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C618C43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 14:28:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233141AbiGOOAY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 10:00:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58426 "EHLO
+        id S229768AbiGOO2P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 10:28:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235238AbiGOOAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 10:00:02 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C318E371A2
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 06:59:59 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id y4so6414430edc.4
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 06:59:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=np2oA32J9RcnyXheivbD5iW+gexnoKe4hLGbCA0x4BE=;
-        b=Ez2mBr31iHXmDgmuxe1qWmKYt1K7DDYC+W0VindY3XUdcI+ao+R9K8o7P5LDl+5c57
-         tOF6iXCh/dg7IFQCSD0rZVXHsPcD4sJTLA+4kOKtNQHJrColI7Yvc268hl49Xj5Vd7n6
-         UkiqBprsGdNVkxsyATe1NoVsFHs9scfQVNNOYs8Rxn3qX2y2ncfkqgx8KLfWuNH6r1F9
-         4ov4N90bsoHKy5JwNMquEEARjaLxgWWDy3UiIpyAYVIf4XbaW1dGSV/Twf/ljHV1FBHC
-         f/3tPZ3wT+0gPBPbD8GRPzoJ8qNBYpQWm7NZgRhtUSJX/aWqKH/OFdkVtLlH2CdPjD9P
-         DpHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=np2oA32J9RcnyXheivbD5iW+gexnoKe4hLGbCA0x4BE=;
-        b=UIaetUWKJkzFsfzGPCVCzmiWPV9mrTcc9tvDQWENcAuYtP+/R0lydBJcZqcD6EUedi
-         DyiyY3ghYrD2dd9SsTpJNew8Pg7nwWpSKs/Ew6jwUm8CFvpSKBpFqF7OzDIHAZqCFH3U
-         90BPXpbUbmRVQbwzvLKplS7aGUbGi36ANDt3Gj1dYgj2CiHSk0gMPyKTh01I1XGDx4f9
-         wL64qwSXD1zS6PqXwblClRt0A9fxc2bZlDEupUBzZb/Ul+ALz1nhphgUujbey3Y0HUwK
-         AZ8ZEtLiMN4ImjO8TfuQkfRcJDsxStlOFv9Y0hGymdw+rzXBEOVJR5gr+VEMfuQ7pcTm
-         iHCw==
-X-Gm-Message-State: AJIora/R5GRfmFDLmPO893BmQBsbeKPAA1fXFvrMXTZ3P8lo9X9W5UTu
-        I/xtyhc0zZIabEybQYF6jJDcI92ncBNRig==
-X-Google-Smtp-Source: AGRyM1vzyRM8o+/yDcFB2gUvQAcr7GYBLRg1g87cs0SG6gfXevWAvMd2CG7tIXWW96tG/s19fnHIXQ==
-X-Received: by 2002:a05:6402:3593:b0:43a:a259:2518 with SMTP id y19-20020a056402359300b0043aa2592518mr19195985edc.117.1657893598273;
-        Fri, 15 Jul 2022 06:59:58 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id p20-20020a17090653d400b0072eec799e52sm1299260ejo.145.2022.07.15.06.59.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jul 2022 06:59:57 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oCLrH-002lhd-Qd;
-        Fri, 15 Jul 2022 15:59:55 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Neeraj Singh <neerajsi@microsoft.com>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: ab/squelch-empty-fsync-traces & hx/unpack-streaming bug (was:
- What's cooking in git.git (Jul 2022, #04; Wed, 13))
-Date:   Fri, 15 Jul 2022 15:40:13 +0200
-References: <xmqq7d4g8onl.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqq7d4g8onl.fsf@gitster.g>
-Message-ID: <220715.86bktqzdb8.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229452AbiGOO2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 10:28:14 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9430A5D0C9
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 07:28:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1657895278;
+        bh=nRA43C+pOfp7qBSLzxQQRrx8N//aOcU92xtue0RHZsI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=KjC/9XBwtL1+amdwvmAfzAkNZTBk8RueYj/YVTLt4v3ek7BgCszSqcrtVkvCczN4f
+         nBjPE0Q3fq2kqmyBPKN7uKuDFY7/cZU9HDhawGDTfDvX+Qg+U8tpa5EY8h1DnOpXaA
+         YN7iXZWreWyCGUJIvW6vwBYYW1AfIzOtlD0PA2W4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.21.23.67] ([89.1.215.236]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQMuX-1npzvb17wn-00MKqR; Fri, 15
+ Jul 2022 16:27:58 +0200
+Date:   Fri, 15 Jul 2022 16:27:54 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC][PATCH] mingw: avoid mktemp() in mkstemp() implementation
+In-Reply-To: <7265e37f-fd29-3579-b840-19a1df52a59f@web.de>
+Message-ID: <s2ooq33p-sn76-o2q9-8471-4411rp1ppq7s@tzk.qr>
+References: <7265e37f-fd29-3579-b840-19a1df52a59f@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-646679950-1657895279=:184"
+X-Provags-ID: V03:K1:mJVpd/ijin6alOYmiO4VX+925SfnFZrYG45lZw6631a9xD1xQS8
+ yLUxOVKjMoo49JbWh2gGNsTJTt9qG6WGM41rSBfwzkqnaivHNGZe7OUOpchUnq+QTM7fh1L
+ TeiCyiA5EKOmsuxQei6dnfnUMClrenMr4z9aH7nM3MzAdCOpm22hKWvHam13yVKac8VyhyZ
+ UAi6fe2ugbwHl1uxVY0cw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HMY65Ceo2mg=:+9y2XnAK727LqUK69zW10n
+ a9wK7qKZF5O2mK4u59YAzKPPh9Z68wNsgXlYrXsJiSjsgwRG7dcnEKp3k72Bph9ZyldMxFp2b
+ y5/A0M2RY+S10OgCJfpXMpbTMFKPQTwxFFnLV+6Qy14rWU9RUBMANNN4SEqcaQ4Lunzpzopx/
+ Y4U/EhR4Cdry6yShBOJrbMts1A8+nRondqFF0561+XevaKW9IPYTE8ficDI96bCGyOHCzLlW9
+ 8UhLYjTIKp1Gq/Z/vNOhnwaNeXOaZl1rtVvuSy8zQUkj6OhdqMeB2MpOsau9Dz9cnWqLMOIpf
+ 41fNTRaEpbEBBrJaANrUpEI0ejRMt3dgpF1JB+FpneWeKFUunTpkisErKxnOhoYEvVxfR2aUU
+ 1opbvvMKczTMfCwXrlQiZDooZYb0hiNnUaTmHczydw4bs7panbNfTcE7janGdd1m11yObxJiY
+ Kd2W2XBGNgIUK7IGiKVwVwboWEB6zxwYaby8Cg3I9FkjME/PjHQG46wqkYp6qf/FDMiCn41bp
+ RE6E6ZnS4KJpMENBf5E3EctdrVGXpQVH8agAW5mUdI/LquRu2UNWuhqoPV9wrghpaKtJ+nt/0
+ Rrn6Lbz7HxEtJX1aUmg6PfhMbKQ1bfBYpMN/zTCLeO0rIEIj3GwsUI3A5qj7RWOUz9qOoLNKy
+ +o/KQNwojpGsIgWN+gwpdwDlHfwSJIsRanKh1J6TzvmgKZBc7H+qgwil5gFRgNiZpFKWXe7ED
+ e1t7mVs1GKOJ77Dg7ZfFQ9gYIDQaO7olnRSqHBoWIc1YoMrifw83uJXr3UUrYvtq2/moATvxb
+ C0a1zxljNjLJAWtd5JMnA/smzWV9WcA46JzXi7FJclb6UR/By6umscreDGhodDjUPM5XvpvND
+ WSXwKENDd+xnmbBBmit3R1Ew38K4aH9u44rU6ysOVfZP0PJ6r5HJGnVWNdZt9vKpEsqc1qfeD
+ i61uUhsK3xXC0utAeylel5cZsSy3gI5AtIYGphuyLIbSftOr85/nER+o0o5+4TD20cViUczau
+ WetpLmrwS8kgITHPIrY+3mn5VNjgzfRnmtYkixgiQ+cQvnyiZMVEXhiCgV2gK0GALRzKl8lWO
+ cZPN7ZSeYPKTKqUp2jGqglcmV5eYPvH6ZP4XdLgWODe66NObyyBGiVp/Q==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, Jul 13 2022, Junio C Hamano wrote:
+--8323328-646679950-1657895279=:184
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> * ab/squelch-empty-fsync-traces (2022-06-30) 1 commit
->  . trace2: don't include "fsync" events in all trace2 logs
+Hi Ren=C3=A9,
+
+On Fri, 15 Jul 2022, Ren=C3=A9 Scharfe wrote:
+
+> The implementation of mkstemp() for MinGW uses mktemp() and open()
+> without the flag O_EXCL, which is racy.  It's not a security problem
+> for now because all of its callers only create files within the
+> repository (incl. worktrees).  Replace it with a call to our more
+> secure internal function, git_mkstemp_mode(), to prevent possible
+> future issues.
+
+Excellent analysis! And thank you for noticing and fixing it!
+
+I agree with what you wrote, there is one instance where not only files
+inside the `.git` directory are created but also files in the worktree:
+`ll-merge.c` has some code to write out files in the worktree before
+calling an external merge driver.
+
+I believe that your assessment is correct, and that this cannot
+realistically be exploited (the only attack vector I came up with involved
+a shared repository, a symbolic link to overwrite/corrupt some files only
+writable by the attack's target, and some rather narrow TOCTOU window
+between that `mktemp()` and the `open()` call).
+
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 2607de93af..b5502997e2 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -1059,10 +1059,7 @@ char *mingw_mktemp(char *template)
 >
->  Omit fsync-related trace2 entries when their values are all zero.
+>  int mkstemp(char *template)
+>  {
+> -	char *filename =3D mktemp(template);
+> -	if (!filename)
+> -		return -1;
+> -	return open(filename, O_RDWR | O_CREAT, 0600);
+> +	return git_mkstemp_mode(template, 0600);
+
+It is also much simpler to reason about the post image of this patch than
+about the pre image.
+
+ACK!
+
+Thank you so much!
+Dscho
+
+>  }
 >
->  Breaks tests in hx/unpack-streaming with an interesting interaction.
->  source: <patch-v2-1.1-a1fc37de947-20220630T084607Z-avarab@gmail.com>
-
-[...]
-
-> * hx/unpack-streaming (2022-06-13) 6 commits
->   (merged to 'next' on 2022-07-08 at 4eb375ec2f)
->  + unpack-objects: use stream_loose_object() to unpack large objects
->  + core doc: modernize core.bigFileThreshold documentation
->  + object-file.c: add "stream_loose_object()" to handle large object
->  + object-file.c: factor out deflate part of write_loose_object()
->  + object-file.c: refactor write_loose_object() to several steps
->  + unpack-objects: low memory footprint for get_data() in dry_run mode
+>  int gettimeofday(struct timeval *tv, void *tz)
+> --
+> 2.37.0
 >
->  Allow large objects read from a packstream to be streamed into a
->  loose object file straight, without having to keep it in-core as a
->  whole.
->
->  Will merge to 'master'.
->  source: <cover.1654914555.git.chiyutianyi@gmail.com>
 
-I hadn't had time to look at this until now. There's some interesting
-behavior here.
-
-The code to check the hardware flush was added in aaf81223f48
-(unpack-objects: use stream_loose_object() to unpack large objects,
-2022-06-11) (that series is now on master).
-
-But as my ab/squelch-empty-fsync-traces notes we always add this to the
-event, so the:
-
-	grep fsync/hardware-flush trace2.txt &&
-
-Is equivalent to:
-
-	true &&
-
-I.e. it's not testing worthwhile at all. The reason you're seeing a
-failure is deu to 412e4caee38 (tests: disable fsync everywhere,
-2021-10-29), i.e. our tests disable fsync(). What you have queued will
-pass as:
-
-	GIT_TEST_FSYNC=true ./t5351-unpack-large-objects.sh
-
-But I think that would be meaningless, since we'll write out that on
-FSYNC_HARDWARE_FLUSH whether we actually support "bulk" or not. AFAICT
-the way to detect if we support "bulk" at all is to check for
-fsync/writeout-only.
-
-*Except* that we we unconditionally increment the "writeout only"
-counter, even if we don't actually support that "bulk" mode. We're just
-doing a regular fsync().
-
-So, narrowly it looks easy to "fix" my ab/squelch-empty-fsync-traces, I
-could apply this on top:
-
-diff --git a/t/t5351-unpack-large-objects.sh b/t/t5351-unpack-large-objects.sh
-index 8ce8aa3b147..29cab843eb9 100755
---- a/t/t5351-unpack-large-objects.sh
-+++ b/t/t5351-unpack-large-objects.sh
-@@ -53,8 +53,12 @@ BATCH_CONFIGURATION='-c core.fsync=loose-object -c core.fsyncmethod=batch'
- test_expect_success 'unpack big object in stream (core.fsyncmethod=batch)' '
- 	prepare_dest 1m &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+	GIT_TEST_FSYNC=true \
- 		git -C dest.git $BATCH_CONFIGURATION unpack-objects <pack-$PACK.pack &&
--	grep fsync/hardware-flush trace2.txt &&
-+	grep fsync/ trace2.txt >wo.txt &&
-+	sed -e "s/.*value\":\"//" -e "s/\".*//" <wo.txt >actual &&
-+	test_write_lines 6 1 >expect &&
-+	test_cmp expect actual &&
- 	test_dir_is_empty dest.git/objects/pack &&
- 	git -C dest.git cat-file --batch-check="%(objectname)" <obj-list >current &&
- 	cmp obj-list current
-
-But does this make any sense in the larger scheme of things?  I.e. the
-trace2 logging isn't at all logging that we're actually doing with
-fsync, but what we intended to do based on the application logic, is
-that intended & OK or not?
+--8323328-646679950-1657895279=:184--
