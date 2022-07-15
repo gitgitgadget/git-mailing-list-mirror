@@ -2,122 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C618C43334
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 14:28:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97AFAC43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 14:34:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbiGOO2P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 10:28:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51188 "EHLO
+        id S231424AbiGOOeC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 10:34:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiGOO2O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 10:28:14 -0400
+        with ESMTP id S231622AbiGOOeB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 10:34:01 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9430A5D0C9
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 07:28:12 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7B510FDA
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 07:33:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1657895278;
-        bh=nRA43C+pOfp7qBSLzxQQRrx8N//aOcU92xtue0RHZsI=;
+        s=badeba3b8450; t=1657895635;
+        bh=FBYza/m5azF4reqX0WkOy+N2cuZB+OLh+oLrV3N+KOs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KjC/9XBwtL1+amdwvmAfzAkNZTBk8RueYj/YVTLt4v3ek7BgCszSqcrtVkvCczN4f
-         nBjPE0Q3fq2kqmyBPKN7uKuDFY7/cZU9HDhawGDTfDvX+Qg+U8tpa5EY8h1DnOpXaA
-         YN7iXZWreWyCGUJIvW6vwBYYW1AfIzOtlD0PA2W4=
+        b=XcS4ro6ui/0dOEdxuB2rFnXokkdqNO3uhYtpk9aF75x072Ll5x3djIsghQ32CQu/s
+         cV4sklolLoN6xMlUFZdkH2qyPTmlona/xlzqStK/P5owsqUZDUM8IFSLZr5Ii/8K/d
+         RVuV3KVmohmJkz9Kws1HsHN6eWRnGDeKRuJyFZyI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.21.23.67] ([89.1.215.236]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQMuX-1npzvb17wn-00MKqR; Fri, 15
- Jul 2022 16:27:58 +0200
-Date:   Fri, 15 Jul 2022 16:27:54 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvsEx-1nN0ej323T-00stw0; Fri, 15
+ Jul 2022 16:33:55 +0200
+Date:   Fri, 15 Jul 2022 16:33:53 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC][PATCH] mingw: avoid mktemp() in mkstemp() implementation
-In-Reply-To: <7265e37f-fd29-3579-b840-19a1df52a59f@web.de>
-Message-ID: <s2ooq33p-sn76-o2q9-8471-4411rp1ppq7s@tzk.qr>
-References: <7265e37f-fd29-3579-b840-19a1df52a59f@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/3] Allow debugging unsafe directories' ownership
+In-Reply-To: <xmqqy1wv2x1n.fsf@gitster.g>
+Message-ID: <8rqqnqp1-q613-ron6-6q8s-n7sq57o980q9@tzk.qr>
+References: <pull.1286.git.1657700238.gitgitgadget@gmail.com> <3480381b8b99142bcc0213957a43d68a962c52d9.1657700238.git.gitgitgadget@gmail.com> <xmqq5yk0dcvk.fsf@gitster.g> <xmqqy1wv2x1n.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-646679950-1657895279=:184"
-X-Provags-ID: V03:K1:mJVpd/ijin6alOYmiO4VX+925SfnFZrYG45lZw6631a9xD1xQS8
- yLUxOVKjMoo49JbWh2gGNsTJTt9qG6WGM41rSBfwzkqnaivHNGZe7OUOpchUnq+QTM7fh1L
- TeiCyiA5EKOmsuxQei6dnfnUMClrenMr4z9aH7nM3MzAdCOpm22hKWvHam13yVKac8VyhyZ
- UAi6fe2ugbwHl1uxVY0cw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HMY65Ceo2mg=:+9y2XnAK727LqUK69zW10n
- a9wK7qKZF5O2mK4u59YAzKPPh9Z68wNsgXlYrXsJiSjsgwRG7dcnEKp3k72Bph9ZyldMxFp2b
- y5/A0M2RY+S10OgCJfpXMpbTMFKPQTwxFFnLV+6Qy14rWU9RUBMANNN4SEqcaQ4Lunzpzopx/
- Y4U/EhR4Cdry6yShBOJrbMts1A8+nRondqFF0561+XevaKW9IPYTE8ficDI96bCGyOHCzLlW9
- 8UhLYjTIKp1Gq/Z/vNOhnwaNeXOaZl1rtVvuSy8zQUkj6OhdqMeB2MpOsau9Dz9cnWqLMOIpf
- 41fNTRaEpbEBBrJaANrUpEI0ejRMt3dgpF1JB+FpneWeKFUunTpkisErKxnOhoYEvVxfR2aUU
- 1opbvvMKczTMfCwXrlQiZDooZYb0hiNnUaTmHczydw4bs7panbNfTcE7janGdd1m11yObxJiY
- Kd2W2XBGNgIUK7IGiKVwVwboWEB6zxwYaby8Cg3I9FkjME/PjHQG46wqkYp6qf/FDMiCn41bp
- RE6E6ZnS4KJpMENBf5E3EctdrVGXpQVH8agAW5mUdI/LquRu2UNWuhqoPV9wrghpaKtJ+nt/0
- Rrn6Lbz7HxEtJX1aUmg6PfhMbKQ1bfBYpMN/zTCLeO0rIEIj3GwsUI3A5qj7RWOUz9qOoLNKy
- +o/KQNwojpGsIgWN+gwpdwDlHfwSJIsRanKh1J6TzvmgKZBc7H+qgwil5gFRgNiZpFKWXe7ED
- e1t7mVs1GKOJ77Dg7ZfFQ9gYIDQaO7olnRSqHBoWIc1YoMrifw83uJXr3UUrYvtq2/moATvxb
- C0a1zxljNjLJAWtd5JMnA/smzWV9WcA46JzXi7FJclb6UR/By6umscreDGhodDjUPM5XvpvND
- WSXwKENDd+xnmbBBmit3R1Ew38K4aH9u44rU6ysOVfZP0PJ6r5HJGnVWNdZt9vKpEsqc1qfeD
- i61uUhsK3xXC0utAeylel5cZsSy3gI5AtIYGphuyLIbSftOr85/nER+o0o5+4TD20cViUczau
- WetpLmrwS8kgITHPIrY+3mn5VNjgzfRnmtYkixgiQ+cQvnyiZMVEXhiCgV2gK0GALRzKl8lWO
- cZPN7ZSeYPKTKqUp2jGqglcmV5eYPvH6ZP4XdLgWODe66NObyyBGiVp/Q==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:BcdNi3iIuu6jYsaiPy6NfMfhntwwnL5WUHD+6tQ8/Hw2qW/YaHc
+ ZNeFuYacFRZSledT3xjJ8MI7PEwuF0ne4ZhmW07c1bbtSNVY3ozwSLAKFOXxJr3j6SEuFYa
+ Z7pyf1JLyOZeLRorXGeDqSdQ6boEUTejP3rFbBlGewj2ghTCkhuJdGdwnRjxk7mKB3XS968
+ KWlrvfxL82LaSPchS8GLQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ijO6VW/iEAQ=:ubKda3G0hneP5MK7Fsour+
+ hfZMrMJxyGGiF5gMr2ZJSKGRJ0wxKEsW6XXEZUj8ZbCHhk2lfPWZ+Y1PmCRa8lGtF0gFvEpVd
+ M4aTRdLmcEmZfr+yq4a/6tvqIlqPvxe18yM7ER1HdD5RIntkTLK3BXUekbGWdQAYPB9iOOfKH
+ h4BLlKrjGNxuMI1HVub4iPNwTppCLn4zdt5UVy9MZ+VgCjoDn4pks2Z8+RPURGP9M1AcPIH6j
+ IGkNM8aGpUerHpTtDKH9k7aNZ0jWACVZesMZgTZ8dwblA/mgTpWP3cyJpHCMUq9ZlWzWWt6+H
+ RdOvXuBpOSbWHD9iPB+GPNGyZizVELVTZX4phdqC+7VJvkL/0OGemI2JTZ9H6GhPAlTl0aSA9
+ ptds/zGE+Ra/+7OPm3J8EaJou5dHsRuwrkzRk2nSpB2BFGlYaOPdsKa4pOUvSWY6JZJj5A7oS
+ xPGDloCzhW56kli0v0whNEcWkkJdSr9Wk0Y/Y1bRCtEDdsPptpqOM0ySIhw7iFEH3bw0tqLjY
+ O+Re9BeqbkIPISIw7PhxHb6lV0X/4KIsPp3kgQ3hTJckdwmgo/7yFmaz3EGkRVkh4idhaAVn1
+ KZye3pXRJ/Jmfz4CZCCuej6WAwcNgaDVIubRnbWobrGRh1NLPs0elrtacpRglQkZxv1i3P1xk
+ 9C0+U8cCqp9ufw8H0VlY7HxZ1dc2gYuAi4xWBs6Ff+WE3FvZvKrd7ZBnSXnuaqdv0tH8zyr56
+ 4YypEurUhKQB9JIGVzPo2Z0TRv20syEofqswBWsEwpuqPbinyAsKQi/8d9FWmZrJzYuh6VWVo
+ QMbgdxaZUtVPybzLbEk3jUbjgRsyFEZYrs1LMyw0/7/Rs+64pFX5fyAM1j2kt3gqtovWXbvkD
+ 1oT7UzTUPSYIFg+PoCOWJZ8906qmLZL1op4wxmjyq2j6tHDHYZJOU8P6ULFHgRz5fUhKPfur+
+ ILy1Y+mFwhpK8jBcacmKJDGv409X9zRj9+yTAAr6ED3RbSGl1Z77SXIJrWjObDBl814Ve8Q0I
+ vSz6cR2c6gAFl0ypv4pvGW+EWYzWJL4+ImraRfAjwczrtbSCMyVilUfjp2rxIUj1xxP6vKu6D
+ A2FewxwxoUYlhXXlpzh6CtG5RBwqW2z7YsadWtnSTlAX9EnqJicjnJzfw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-646679950-1657895279=:184
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 14 Jul 2022, Junio C Hamano wrote:
 
-Hi Ren=C3=A9,
-
-On Fri, 15 Jul 2022, Ren=C3=A9 Scharfe wrote:
-
-> The implementation of mkstemp() for MinGW uses mktemp() and open()
-> without the flag O_EXCL, which is racy.  It's not a security problem
-> for now because all of its callers only create files within the
-> repository (incl. worktrees).  Replace it with a call to our more
-> secure internal function, git_mkstemp_mode(), to prevent possible
-> future issues.
-
-Excellent analysis! And thank you for noticing and fixing it!
-
-I agree with what you wrote, there is one instance where not only files
-inside the `.git` directory are created but also files in the worktree:
-`ll-merge.c` has some code to write out files in the worktree before
-calling an external merge driver.
-
-I believe that your assessment is correct, and that this cannot
-realistically be exploited (the only attack vector I came up with involved
-a shared repository, a symbolic link to overwrite/corrupt some files only
-writable by the attack's target, and some rather narrow TOCTOU window
-between that `mktemp()` and the `open()` call).
-
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 2607de93af..b5502997e2 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1059,10 +1059,7 @@ char *mingw_mktemp(char *template)
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->  int mkstemp(char *template)
->  {
-> -	char *filename =3D mktemp(template);
-> -	if (!filename)
-> -		return -1;
-> -	return open(filename, O_RDWR | O_CREAT, 0600);
-> +	return git_mkstemp_mode(template, 0600);
+> > ... I am not sure about this part.  Do we have any other codepath to
+> > show "to debug, run the program with this" suggestion?  Adding it in
+> > the documentation is probably good, but this is an extra message
+> > that is much larger than the "owned by X but you are Y" message that
+> > would be shown.  With or without the environment set, the output
+> > will become noisier with this patch.  I wonder if we are better off
+> > giving the information that is given in the warning (in compat/ part
+> > of the patch) _unconditionally_ in the message, which would make it
+> > less noisy overall.
+>
+> I am wondering if passing a struct to allow is_path_owned_by*()
+> helper(s) to report the detail of the failures they discover a
+> cleaner way to do this.  To illustrate what I meant, along the
+> lines of the following patch, with any additional code to actually
+> stuff messages in the strbuf report, in the is_path_owned_by*()
+> implementation.
 
-It is also much simpler to reason about the post image of this patch than
-about the pre image.
+I like it! Let me play with this, after this coming week (during which I
+plan to be mostly offline).
 
-ACK!
-
-Thank you so much!
+Thanks,
 Dscho
 
+>
+> I am perfectly OK if we make it a debug-only option by hiding this
+> behind an environment variable, but if we were to do so, I do not
+> want to see us advertize the environment variable in the die()
+> message (a debug-only option can be documented, but not worth
+> surfacing in and contaminating the usual UI output).
+>
+> Comments?
+>
+>  compat/mingw.c    |  2 +-
+>  git-compat-util.h |  3 ++-
+>  setup.c           | 12 +++++++++---
+>  3 files changed, 12 insertions(+), 5 deletions(-)
+>
+> diff --git c/compat/mingw.c w/compat/mingw.c
+> index 2607de93af..f12b7df16d 100644
+> --- c/compat/mingw.c
+> +++ w/compat/mingw.c
+> @@ -2673,7 +2673,7 @@ static PSID get_current_user_sid(void)
+>  	return result;
 >  }
 >
->  int gettimeofday(struct timeval *tv, void *tz)
-> --
-> 2.37.0
+> -int is_path_owned_by_current_sid(const char *path)
+> +int is_path_owned_by_current_sid(const char *path, struct strbuf *repor=
+t)
+>  {
+>  	WCHAR wpath[MAX_PATH];
+>  	PSID sid =3D NULL;
+> diff --git c/git-compat-util.h w/git-compat-util.h
+> index 58d7708296..de34b0ea7e 100644
+> --- c/git-compat-util.h
+> +++ w/git-compat-util.h
+> @@ -487,7 +487,8 @@ static inline void extract_id_from_env(const char *e=
+nv, uid_t *id)
+>  	}
+>  }
 >
-
---8323328-646679950-1657895279=:184--
+> -static inline int is_path_owned_by_current_uid(const char *path)
+> +struct strbuf;
+> +static inline int is_path_owned_by_current_uid(const char *path, struct=
+ strbuf *report)
+>  {
+>  	struct stat st;
+>  	uid_t euid;
+> diff --git c/setup.c w/setup.c
+> index 09b6549ba9..ed823585f7 100644
+> --- c/setup.c
+> +++ w/setup.c
+> @@ -1143,12 +1143,18 @@ static int ensure_valid_ownership(const char *gi=
+tfile,
+>  	struct safe_directory_data data =3D {
+>  		.path =3D worktree ? worktree : gitdir
+>  	};
+> +	struct strbuf report =3D STRBUF_INIT;
+>
+>  	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
+> -	   (!gitfile || is_path_owned_by_current_user(gitfile)) &&
+> -	   (!worktree || is_path_owned_by_current_user(worktree)) &&
+> -	   (!gitdir || is_path_owned_by_current_user(gitdir)))
+> +	    (!gitfile || is_path_owned_by_current_user(gitfile, &report)) &&
+> +	    (!worktree || is_path_owned_by_current_user(worktree, &report)) &&
+> +	    (!gitdir || is_path_owned_by_current_user(gitdir, &report))) {
+> +		if (report.len) {
+> +			fputs(report.buf, stderr);
+> +			strbuf_release(&report);
+> +		}
+>  		return 1;
+> +	}
+>
+>  	/*
+>  	 * data.path is the "path" that identifies the repository and it is
+>
