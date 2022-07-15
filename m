@@ -2,98 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CA37C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 18:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6C6FC43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 18:27:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbiGOSXv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 14:23:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46442 "EHLO
+        id S230113AbiGOS1Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 14:27:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230003AbiGOSXn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 14:23:43 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A4DCD44
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 11:23:38 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id j22so10402700ejs.2
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 11:23:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FCg6iIJhee7SbG0IxG4oxz8eY1AHqvZEmGEZxQZwpwM=;
-        b=kHhZ319mncGQ+6keAvdkmPALCBmVOw8PuCo3d4BiEsT42PyjlWYO/wEV3OkdHBQEq0
-         l6Pkxy1EQDv9gpNu2lr6kGst/Mzz/P2q9nhCpABAcBP1fWgyYnIAZhes+C/hG4wG+aWj
-         M6khhQkWEE5uXnLMStLerhBT+kPAdNURlLCmMpnT549eF2LZNoWtdrgP/lyZ+02Jw3Bh
-         JB9EqD1es5R7BAUI8WhiIKKym88JE4sHouUgDXLgpcKtJ/owyzTUsgpjDL6iBUaZZnhR
-         TWCKjb0uFJaJ6Sb0W/IwDQMiZS7gKnHPUmk926iFoaqeNABPNbyHVUQ1Ay7z8d3W4m/d
-         ITag==
+        with ESMTP id S229527AbiGOS1W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 14:27:22 -0400
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF09D68DE5
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 11:27:20 -0700 (PDT)
+Received: by mail-io1-f48.google.com with SMTP id u20so4486443iob.8
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 11:27:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FCg6iIJhee7SbG0IxG4oxz8eY1AHqvZEmGEZxQZwpwM=;
-        b=mO3E+5PU7m05hKkje8qsTrdhxe4fx4ntF2UPP0J+m+/fGzAEH2BUG/yOEpEt1IeT70
-         drSw8tRrTkV9/3J5y4vNzlotyIq+xELUZ48nD4IN5ZW+GWzxGo0j6pGD716PEkBREZ2o
-         mpAw8b9la17Zp06z/7nNdc8C69BS5kEuT3VOUjx9sobS4jCnutA5yRcVtzeoks7bWlBO
-         KiZaUO4tgA165ZUB95RmvUIywK3wb5/Bn4ZqF36PiAXnNXGFKgmqxUwXjg/DnPD9B4Yx
-         3jy3Ag68oN01YJ9dctObjg+2mP35diZLsAmxncX2Xvo0KRD4G2lgiIIyluu+CvJOudHh
-         w00A==
-X-Gm-Message-State: AJIora8s2TKjFmsEdcEGjVxL7L7EOfhvwhjxpwP9QDcRd6jNsv5XeB1x
-        ep7OFwQAf0mbqtMOFQcCPyeWF7hnrBtwB1PI95E=
-X-Google-Smtp-Source: AGRyM1tkmGP/eLkga5Xa/whCZMdOX7mMrcpMYHT0SJFVLYdqGhYYXGhwAb5vWOFd/4XZDp0yvUbyEuh1l6Nhk/yvIAY=
-X-Received: by 2002:a17:906:58cf:b0:722:e4e1:c174 with SMTP id
- e15-20020a17090658cf00b00722e4e1c174mr14798954ejs.85.1657909416839; Fri, 15
- Jul 2022 11:23:36 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
+         :subject:reply-to:to:references:content-language:in-reply-to
+         :content-transfer-encoding;
+        bh=kf2GFzfszWmTFm/3x38DbkjRug1sp8LnwsrRADc8tJ4=;
+        b=uLls/RJGp0y4qdHL88ScKYKhWwlStr5BXHASD0BP9BodNIkGecYfEg0LrY54kusMWF
+         IxUL4cpddVRjEY95Dl1h6KgfH4AkQu9UfE2grm166zX39Vaj5MDK4UU0L5BqHF4p/e3a
+         D2ZiWLeqsv1Z7F5tLrvh1mPHDYsWLXigcUNiVhYa7l+w94GMtS9FvhN0Naa+Jaxcr/EN
+         uV5yxH0dSK+fjE29dXmeJ5Hx05jRtJuZAnf5tn1kp5NICpM+woRJTUylFWdkK51oAVxD
+         iATGa1S6t6754UP4AseFkKMHANugylMvGB3cJNQ4mcFqNspKtifJWXgAiW8vQCDz9zSS
+         8i2w==
+X-Gm-Message-State: AJIora8HADK6aWkvKz6/3aGVOQU9Ux1pnMDItjPmk9NvAR5wHU5rpSFm
+        wtuKOxQiyUZrr9L30pBy0phifHlQSHA=
+X-Google-Smtp-Source: AGRyM1vzXYHg8C9LXtbzBIvvyxAUOYE0xDu6ek2z6yLuhefOT7o3ttBB9WhuisG4e4YSXVUz+UAz9g==
+X-Received: by 2002:a05:6638:3d85:b0:33f:5727:826c with SMTP id ci5-20020a0566383d8500b0033f5727826cmr8124407jab.292.1657909639542;
+        Fri, 15 Jul 2022 11:27:19 -0700 (PDT)
+Received: from [10.0.0.141] (c-174-62-43-211.hsd1.nm.comcast.net. [174.62.43.211])
+        by smtp.gmail.com with ESMTPSA id e12-20020a02860c000000b0032e21876ea8sm2187536jai.72.2022.07.15.11.27.18
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Jul 2022 11:27:18 -0700 (PDT)
+Message-ID: <9ccd1e5b-f8f7-f6c9-9e1b-0058ec71cda5@kinzelman.com>
+Date:   Fri, 15 Jul 2022 12:27:05 -0600
 MIME-Version: 1.0
-References: <pull.1266.v2.git.1656249017.gitgitgadget@gmail.com>
- <pull.1266.v3.git.1656924376.gitgitgadget@gmail.com> <a155c1e2ebacf54c451a069499325cdf280606fc.1656924376.git.gitgitgadget@gmail.com>
- <YtDWmAg3R/eRpl0V@nand.local>
-In-Reply-To: <YtDWmAg3R/eRpl0V@nand.local>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Fri, 15 Jul 2022 23:53:25 +0530
-Message-ID: <CAPOJW5zkUDo7C7knyQWJCpMowWEbKd0ea=MP67L1R4VkDqH17A@mail.gmail.com>
-Subject: Re: [PATCH v3 5/6] bitmap-lookup-table: add performance tests for
- lookup table
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+From:   Paul Kinzelman <paul@kinzelman.com>
+Subject: RDP over VPN can't see a .git directory to be able to pull
+Reply-To: paul@kinzelman.com
+To:     git@vger.kernel.org
+References: <2e592944-edb8-2d49-981a-8ad220f97e82@kinzelman.com>
+ <xmqqilnz2tck.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqilnz2tck.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 15, 2022 at 8:23 AM Taylor Blau <me@ttaylorr.com> wrote:
->
-> Having "lookup=false" in this test definitely helps visually
-> differentiate which tests have a bitmap with and without the lookup
-> table.
->
-> I think we should take a slightly different approach for these
-> performance tests. I think the first change to the t/perf tests in this
-> series should only enable `pack.writeReverseIndex`. That patch would be
-> a good place to highlight the benefit of enabling the on-disk reverse
-> index by showing a before and after of running p5310 before and after
-> that commit.
->
-> Then the patch after that should look like this one, which runs the
-> suite with and without the lookup table. That should give us a sense of:
->
->   - bitmaps without a lookup table or reverse index
->   - bitmaps without a lookup table, but with a reverse index
->   - bitamps with a reverse index and a lookup table
->
-> ...which I think are the most interesting combinations (I wouldn't
-> expect many or any users to have lookup tables enabled without reverse
-> indexes).
->
-> I think that would allow us to drop the last patch in this version of
-> the series. But I'm definitely open to other testing strategies for the
-> performance tests (including this one!) if you have different thoughts
-> about what the best way to go about this is.
+I'm trying to 'git pull' between two W10 systems over a VPN with RDP.
 
-Got it. Thanks !
+I map my local C:\ drive to drive s:\ on the remote system so on the remote
+system, I can see my local C:\ drive that has the repository
+On the remote system, I do
+     git pull s:\gitrepository
+but it says
+     ...does not appear to be a git repository, could not read from 
+remote repository
 
-> Thanks,
-> Taylor
+In a command line window on the remote system, I do
+     dir s:\gitrepository
+and the .git directory is not shown in the listing. All the other files are
+including the .gitignore file (has a dot at the start).
+
+But I can do
+     dir s:\gitrepository\.git
+and all the files and subfolders under .git are there.
+
+I've set the "Show hidden files, folders, and drives" radio button in 
+the Folder
+Options | View window if that matters.
+
+Any idea why the .git directory is being blocked from being seen unless
+specifically specified, but I can see the .gitignore file just fine?
