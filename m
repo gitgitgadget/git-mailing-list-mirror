@@ -2,101 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAF6AC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 16:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A95DC43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 17:29:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235125AbiGOQ7R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 12:59:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42714 "EHLO
+        id S230127AbiGOR3y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 13:29:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235116AbiGOQ7O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 12:59:14 -0400
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 066602CCB7
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 09:59:14 -0700 (PDT)
-Received: by mail-io1-f48.google.com with SMTP id q14so4299492iod.3
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 09:59:13 -0700 (PDT)
+        with ESMTP id S229933AbiGOR3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 13:29:50 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A696632447
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 10:29:48 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id l16-20020a170902f69000b0016bf6a77effso2335496plg.2
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 10:29:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=oWPDI93y8N+vFLHMZbjlTIfvqdGvKATsgtY/hC8+lR8=;
+        b=Oh7jyx4xPw0nMRDfSWWBku1q/rurMAYLy5BGcnhPc43DKOB55gSlI7HbhM82t+j+6+
+         jBsWjejg74EH6WLRlUmRPMcAm+1Ci6+odNNZu97LCvpMlaGs+V/GrQ0SMvZGYkJbTREA
+         NFUMBbWfVCLNpLoO44DLHY4g2XRC54WYSvxpaZFGukxNi3GwzjcFowopA4lwEZOD9FDo
+         F+b7gwDsyKRWGYQlJuG/83Yatc73oA5W6fJPWaeu0XEgHNr2ChtSzQwCwrgR+aTc2JAs
+         V1gorM1PRoaHJg9WjSMLZXwJCZkRWk3sRbyYi6dhX5ScGqGpGmcmzz8BSwmViFDNMqv5
+         Zklg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=kGtAn3jIAIsrQHRLIb+nJ2ELEmdKnMtRNl2igk9/03k=;
-        b=v3flV6pHDgsIxSxl8bvG+wH3wK0oTazV8z8fukaJHJzx35RA2PmLfXGUPAWFQmht76
-         5Vxj9kGjzK1uZk+diQEA8y3KmpPh9qo2itFXh2w5GRZlbZI9SN/WC02JmIDW5XV4ouDW
-         xYB4n19YbmsJ6lKx5BLoUz97a1nQybhbX/rc+SyAkIX2G3lvzu9B49EBxCDPG8SLhDz5
-         4QYXPQ5sW2s4LCLTj+WoUE5axfl/atJMtlG9FrAz9VUJsee9aMgyN8tptTw6eDBS2kSt
-         JP0QAHbOack+xh0f739lASRuTH1cG7jUq9UzIZIwWxgj2OvDgaQDrG2CI6VyZIXENtyZ
-         gzCg==
-X-Gm-Message-State: AJIora/LBRIYyltCKQPirLX6tnZ7TXP0sGo4tPrdF3vUuK+M1JDj35pd
-        0Q0QgXThxoQcB0F538D5w9c=
-X-Google-Smtp-Source: AGRyM1vuh7IqjmGWaBwVtNSvJkEt+2/pyNbT2UOigg2SEGhXsAw32QPMcKibGgEvh0v1zdLfsVzgKA==
-X-Received: by 2002:a05:6602:340b:b0:67b:8189:23c5 with SMTP id n11-20020a056602340b00b0067b818923c5mr7433315ioz.52.1657904348429;
-        Fri, 15 Jul 2022 09:59:08 -0700 (PDT)
-Received: from [10.0.0.141] (c-174-62-43-211.hsd1.nm.comcast.net. [174.62.43.211])
-        by smtp.gmail.com with ESMTPSA id g26-20020a05663810fa00b00339d244c4a6sm2172924jae.23.2022.07.15.09.59.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Jul 2022 09:59:07 -0700 (PDT)
-Message-ID: <337199fe-4e5a-3f07-7ae6-2867e5cc3410@kinzelman.com>
-Date:   Fri, 15 Jul 2022 10:59:06 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Reply-To: paul@kinzelman.com
-Subject: Re: moving a repository question
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <2e592944-edb8-2d49-981a-8ad220f97e82@kinzelman.com>
- <xmqqilnz2tck.fsf@gitster.g>
-From:   Paul Kinzelman <paul@kinzelman.com>
-In-Reply-To: <xmqqilnz2tck.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=oWPDI93y8N+vFLHMZbjlTIfvqdGvKATsgtY/hC8+lR8=;
+        b=pQ6zqTcHVGhDXndBltu0qF5y05EKYQ5aKj1pM2tPy/1kn/ravQhDyazYKwjxzz2pMe
+         N0E3BQ6kcXWQdVucCXtSAd8sehvsN2WM++Z4T0XgBMexCXt9OxSXmZdZ0E3M3hU2q2cg
+         8uwImEEc3CXK4doLkZnWyO0EPoR2n6hNTewQZ3K0BNj/ZEGUWKODp7kkWDmC9WSxjeNJ
+         EAbhmIOFmVmTIDX6kTNXGjYeM605RvgqVZvo7OaSt8RIDTrIfK471riKtk3HjpzVv2J/
+         ILDCHq2FlmXH9+S77ouRZzEknhaJiTbfGD+yfPibpzz44JWZ+lzNmDJ7cZSxzxuAP4c+
+         cXvw==
+X-Gm-Message-State: AJIora8cYBfu72i0CNtpRq56yU97SGyV0HlOYVQrzbq6EmLYigL1R4h9
+        nkU+m1QCZyiNNdZHJuI2R0++v3dK7dxlwJv6iVVba1VgrHhf/0A6jy4/T25Uwxg5YnUBrvuV7+Y
+        zBkluGP02XCV0ASB0krUlBp+rF/8shSeit4XZO4zDCtACQWc3oh/12ApQMSrT6KrI1Z+AldtLGv
+        ij
+X-Google-Smtp-Source: AGRyM1tQXX81PGRdNRz+WZw4ftHIc6480fjvO3fggDttAcgfqNUfRqceHbXOi91Qjk3jGOl6cd1AcDd0VK4AlSTeAWcd
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:903:245:b0:16b:9b6d:20bc with
+ SMTP id j5-20020a170903024500b0016b9b6d20bcmr14255836plh.14.1657906188011;
+ Fri, 15 Jul 2022 10:29:48 -0700 (PDT)
+Date:   Fri, 15 Jul 2022 10:29:42 -0700
+Message-Id: <20220715172943.2681492-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.0.170.g444d1eabd0-goog
+Subject: [PATCH] fetch-pack: write effective filter to trace2
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Part of my question is just understanding git, it's different from another
-source control tool I've used.
+Administrators of a managed Git environment (like the one at $DAYJOB)
+might want to quantify the performance change of fetches with and
+without partial clone from the client's point of view. Therefore, log
+the effective filter being sent to the server whenever a fetch (or
+clone) occurs. Note that this is not necessarily the same as what's
+specified on the CLI, because during a fetch, the configured filter is
+used whenever a filter is not specified on the CLI.
 
-The other part is if I'm having trouble networking computers together,
-I'm wondering if I could copy everything under .git to a flash drive,
-then write the tree to another PC, and expect everything to work? And when
-they are able to network with each other, they should be in sync
-(assuming vanilla, no changes, no uncommitted files, etc.), and
-I could modify a file on one machine and expect that the other
-copied tree would be able to fetch it?
+This is implemented for protocol v0, v1, and v2.
 
-Note, I'm talking a very vanilla case here, no complexity like you were
-mentioning, no branches, no uncommitted files, no multiple worktrees,
-no changes in files, no nothing. Just a straight simple single project.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ fetch-pack.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-On 7/14/2022 4:59 PM, Junio C Hamano wrote:
-> Paul Kinzelman <paul@kinzelman.com> writes:
->
->> I barely qualify as a novice on git, so my apologies in advance if this is a
->> stupid question.
->>
->> Is everything that git needs stored in the .git tree?
-> Depends on what you want to do with "Git".
->
-> If you only copy .git/ and no file from the working tree, your "git
-> status" in the new location will report "you removed all the files
-> and you have nothing", for example.  If you are willing to do "git
-> reset --hard" after making such a copy of ".git/", it may be OK.  If
-> you had local changes in the working tree before taking a copy of
-> .git/, doing "git reset --hard" in the new location may not recover
-> the local changes in the original, so it may not be good and you may
-> have to copy the working tree files as well.
->
-> If you are using multiple worktrees linked to the repository,
-> copying .git/ is an absolute no-no.  Locations of secondary
-> worktrees are recorded in .git/ somewhere and copying them literally
-> would mean the new copy would mistakenly think that these secondary
-> worktrees linked to the original repository are linked to the new
-> copy instead.  There may be other things that will cause confusions
-> when copied.
->
-> "git clone" will of course sidestep all of these problems.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index cb6647d657..dec8743bec 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -392,7 +392,10 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 	if (server_supports_filtering && args->filter_options.choice) {
+ 		const char *spec =
+ 			expand_list_objects_filter_spec(&args->filter_options);
++		trace2_data_string("fetch", the_repository, "fetch/effective-filter", spec);
+ 		packet_buf_write(&req_buf, "filter %s", spec);
++	} else {
++		trace2_data_string("fetch", the_repository, "fetch/effective-filter", "none");
+ 	}
+ 	packet_buf_flush(&req_buf);
+ 	state_len = req_buf.len;
+@@ -1328,9 +1331,12 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 		const char *spec =
+ 			expand_list_objects_filter_spec(&args->filter_options);
+ 		print_verbose(args, _("Server supports filter"));
++		trace2_data_string("fetch", the_repository, "fetch/effective-filter", spec);
+ 		packet_buf_write(&req_buf, "filter %s", spec);
+-	} else if (args->filter_options.choice) {
+-		warning("filtering not recognized by server, ignoring");
++	} else {
++		if (args->filter_options.choice)
++			warning("filtering not recognized by server, ignoring");
++		trace2_data_string("fetch", the_repository, "fetch/effective-filter", "none");
+ 	}
+ 
+ 	if (server_supports_feature("fetch", "packfile-uris", 0)) {
+-- 
+2.37.0.170.g444d1eabd0-goog
 
