@@ -2,158 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DC0AC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 17:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CA37C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 18:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbiGORsE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 13:48:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51356 "EHLO
+        id S229912AbiGOSXv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 14:23:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230028AbiGORr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 13:47:58 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7DD42F03C
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 10:47:55 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DD7B41A8FF6;
-        Fri, 15 Jul 2022 13:47:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZV6eSMvQZ0kOBtgaNP/bMI7uVrgXQx5+PCWC6R
-        kRD7A=; b=Uqjn56CWsTrzab2tNVh95OnpUiplw+ECUNaguM4fdKsyFDqIv4bJrQ
-        OAP/s9Z7PIw3ATHVl1jX2gwY1TpxX9fsGFMea8KaUYH+eBL0VUoc7Jnwa/47oKsi
-        kBgKrrv2cHfHU1fB5fkBTXbCuRyMs4BaIPbcsSo2knKuDHVSVQhZ0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D5C141A8FF5;
-        Fri, 15 Jul 2022 13:47:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 781891A8FF2;
-        Fri, 15 Jul 2022 13:47:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pierre Garnier <pgarnier@mega.com>
-Subject: Re: [PATCH] refs: work around network caching on Windows
-References: <pull.1291.git.1657872416216.gitgitgadget@gmail.com>
-        <CAPig+cT17vZcsf2pGQh-S6UjZib3=4Am7RVf=gQq_sDZzKD08w@mail.gmail.com>
-Date:   Fri, 15 Jul 2022 10:47:50 -0700
-In-Reply-To: <CAPig+cT17vZcsf2pGQh-S6UjZib3=4Am7RVf=gQq_sDZzKD08w@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 15 Jul 2022 04:29:11 -0400")
-Message-ID: <xmqqy1wuz2rd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230003AbiGOSXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 14:23:43 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A4DCD44
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 11:23:38 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id j22so10402700ejs.2
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 11:23:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FCg6iIJhee7SbG0IxG4oxz8eY1AHqvZEmGEZxQZwpwM=;
+        b=kHhZ319mncGQ+6keAvdkmPALCBmVOw8PuCo3d4BiEsT42PyjlWYO/wEV3OkdHBQEq0
+         l6Pkxy1EQDv9gpNu2lr6kGst/Mzz/P2q9nhCpABAcBP1fWgyYnIAZhes+C/hG4wG+aWj
+         M6khhQkWEE5uXnLMStLerhBT+kPAdNURlLCmMpnT549eF2LZNoWtdrgP/lyZ+02Jw3Bh
+         JB9EqD1es5R7BAUI8WhiIKKym88JE4sHouUgDXLgpcKtJ/owyzTUsgpjDL6iBUaZZnhR
+         TWCKjb0uFJaJ6Sb0W/IwDQMiZS7gKnHPUmk926iFoaqeNABPNbyHVUQ1Ay7z8d3W4m/d
+         ITag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FCg6iIJhee7SbG0IxG4oxz8eY1AHqvZEmGEZxQZwpwM=;
+        b=mO3E+5PU7m05hKkje8qsTrdhxe4fx4ntF2UPP0J+m+/fGzAEH2BUG/yOEpEt1IeT70
+         drSw8tRrTkV9/3J5y4vNzlotyIq+xELUZ48nD4IN5ZW+GWzxGo0j6pGD716PEkBREZ2o
+         mpAw8b9la17Zp06z/7nNdc8C69BS5kEuT3VOUjx9sobS4jCnutA5yRcVtzeoks7bWlBO
+         KiZaUO4tgA165ZUB95RmvUIywK3wb5/Bn4ZqF36PiAXnNXGFKgmqxUwXjg/DnPD9B4Yx
+         3jy3Ag68oN01YJ9dctObjg+2mP35diZLsAmxncX2Xvo0KRD4G2lgiIIyluu+CvJOudHh
+         w00A==
+X-Gm-Message-State: AJIora8s2TKjFmsEdcEGjVxL7L7EOfhvwhjxpwP9QDcRd6jNsv5XeB1x
+        ep7OFwQAf0mbqtMOFQcCPyeWF7hnrBtwB1PI95E=
+X-Google-Smtp-Source: AGRyM1tkmGP/eLkga5Xa/whCZMdOX7mMrcpMYHT0SJFVLYdqGhYYXGhwAb5vWOFd/4XZDp0yvUbyEuh1l6Nhk/yvIAY=
+X-Received: by 2002:a17:906:58cf:b0:722:e4e1:c174 with SMTP id
+ e15-20020a17090658cf00b00722e4e1c174mr14798954ejs.85.1657909416839; Fri, 15
+ Jul 2022 11:23:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3F649A7C-0466-11ED-A84D-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <pull.1266.v2.git.1656249017.gitgitgadget@gmail.com>
+ <pull.1266.v3.git.1656924376.gitgitgadget@gmail.com> <a155c1e2ebacf54c451a069499325cdf280606fc.1656924376.git.gitgitgadget@gmail.com>
+ <YtDWmAg3R/eRpl0V@nand.local>
+In-Reply-To: <YtDWmAg3R/eRpl0V@nand.local>
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Date:   Fri, 15 Jul 2022 23:53:25 +0530
+Message-ID: <CAPOJW5zkUDo7C7knyQWJCpMowWEbKd0ea=MP67L1R4VkDqH17A@mail.gmail.com>
+Subject: Re: [PATCH v3 5/6] bitmap-lookup-table: add performance tests for
+ lookup table
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
->> The underlying culprit is that `GetFileAttributesExW()` that is called from
->> `mingw_lstat()` can raise an error `ERROR_PATH_NOT_FOUND`, which is
->> translated to `ENOTDIR`, as opposed to `ENOENT` as expected on Linux.
->> ...
->> @@ -480,7 +480,7 @@ static int load_contents(struct snapshot *snapshot)
->> -               if (errno == ENOENT) {
->> +               if (errno == ENOENT || errno == ENOTDIR) {
+On Fri, Jul 15, 2022 at 8:23 AM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> The first question which popped into my mind upon reading the patch
-> was why these changes need to be made to files-backend.c and
-> packed-backend.c rather than "fixing" mingw_lstat() to return ENOENT
-> instead of ENOTDIR. Patching mingw_lstat() seems more tractable and
-> less likely to lead to discovery of other code in the future which
-> needs to be patched in a similar way to how files-backend.c and
-> packed-backend.c are being patched here.
+> Having "lookup=false" in this test definitely helps visually
+> differentiate which tests have a bitmap with and without the lookup
+> table.
 >
-> Perhaps it's a silly question and the answer is perfectly obvious to
-> folks directly involved in Git development on Windows, but the commit
-> message doesn't seem to answer it for people who don't have such
-> inside knowledge.
+> I think we should take a slightly different approach for these
+> performance tests. I think the first change to the t/perf tests in this
+> series should only enable `pack.writeReverseIndex`. That patch would be
+> a good place to highlight the benefit of enabling the on-disk reverse
+> index by showing a before and after of running p5310 before and after
+> that commit.
+>
+> Then the patch after that should look like this one, which runs the
+> suite with and without the lookup table. That should give us a sense of:
+>
+>   - bitmaps without a lookup table or reverse index
+>   - bitmaps without a lookup table, but with a reverse index
+>   - bitamps with a reverse index and a lookup table
+>
+> ...which I think are the most interesting combinations (I wouldn't
+> expect many or any users to have lookup tables enabled without reverse
+> indexes).
+>
+> I think that would allow us to drop the last patch in this version of
+> the series. But I'm definitely open to other testing strategies for the
+> performance tests (including this one!) if you have different thoughts
+> about what the best way to go about this is.
 
-FWIW, I had the same reaction.  ENOTDIR does not mean an attempt to
-access "test_dir/test_tag" failed because "test_dir" did not
-exist---it means "test_dir" exists as something that is not a
-directory (hence there is no way "test_dir/test_file" to exist).
+Got it. Thanks !
 
-In the example scenario in the proposed log message, a new tag
-"test_dir/test_tag" is created, and (even though the proposed log
-message does not explicitly say so) presumably, "test_dir" needs to
-be created while doing so.  A failure to access "test_dir/test_file"
-due to lack of "test_dir" shouldn't report ENOTDIR but should report
-ENOENT.  So something is fishy.
-
-Unless the internal implementation of the filesystem creates a
-placeholder that is not a directory at "test_dir", returns the
-control to the application, and does further work to turn that
-placeholder object into a directory in the background, and the
-application attempts to create "test_dir/test_tag" in the meantime,
-racing with the filesystem, or something silly like that?
-
-It sounds like a platform specific bug that is not specific to the
-ref-files subsystem.  If it can be fixed at lstat() emulation, that
-would benefit other checks for ENOENT.
-
-Having said all that.
-
-Stepping back a bit, one situation where we would want to special
-case ENOENT is when we have an optional file at known location and
-it is OK for the file to be missing.  We may attempt to read from
-"$XDG_CONFIG_HOME/git/config" and it may fail due to ENOENT or
-ENOTDIR because the user may not be using XDG config location at all
-(hence $XDG_CONFIG_HOME or XDG_CONFIG_HOME/git may be missing) or
-the leading directories may be there but not the file at the leaf
-level.  In such a use case, we should ignore ENOTDIR just like we
-ignore ENOENT as an error that does not matter.
-
-In any case, the posted patch may hide a repository corruption from
-the codepath affected and cause it to silently return a bogus
-answer.  The first hunk touches read_ref_internal() where "path"
-variable contains the path we expect to find the on-disk loose ref
-file
-
-	if (lstat(path, &st) < 0) {
-		int ignore_errno;
-		myerr = errno;
-		if (myerr != ENOENT || skip_packed_refs)
-			goto out;
-		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
-				      referent, type, &ignore_errno)) {
-			myerr = ENOENT;
-			goto out;
-		}
-		ret = 0;
-		goto out;
-	}
-
-The idea is that a ref does not have to exist as a loose ref file,
-so an error from lstat() is not immediately an error.  If the ref
-were previously packed, then we should fall back to read it from the
-packed-ref file.
-
-So we say that if the error is *NOT* ENOENT, we jump to 'out' label
-to report the failed lstat() as an error".  Otherwise we proceed to
-attempt to read from the packed-ref file.  Is there any case where
-an attempt to read from a loose ref fails with ENOTDIR and it is OK
-that we can proceed without reading from the packed-refs file?
-
-If we have a branch "js/foo" that is packed, and then if we removed
-it, and then created a branch "js", the original "js/foo" should not
-be in the packed-refs file, but supposed a repository is corrupt and
-"js/foo" remains in the packed-refs file.  Now imagine that we ask
-for "js/foo".  What happens?
-
-We fail to lstat ".git/refs/heads/js/foo" due to ENOTDIR, because
-the "js" branch exists loose at ".git/refs/heads/js".  In the
-original, because ENOTDIR is not ENOENT, we jumped to "out" to
-report the error.  The patched code to allow ENOTDIR will instead
-happily read the stale version of "js/foo" out of the packed-refs
-file.
-
+> Thanks,
+> Taylor
