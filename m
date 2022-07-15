@@ -2,115 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 433CFC43334
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 16:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A442CC43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 16:53:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234258AbiGOQw4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 12:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36880 "EHLO
+        id S234358AbiGOQx4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 12:53:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbiGOQwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 12:52:54 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A2634BD1D
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 09:52:51 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id a9so4151425qtw.10
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 09:52:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ffZD/bc7pcj0GXgrcg+W/tW0akI2Ful53iXzgXfn0yg=;
-        b=eT56UDHz/tjU0WC7CGxOMnJItWA99CZU8B7VZiBYrGNBYOYtyuhOqY7ow9Sws/5c87
-         JPNd0jK+rTBYiYPVrjoRIKk7UY/hHL2jQU2A73WV7PDjt2h1To1Ixpn3iEmDNDqywJ8S
-         8FdjORqnGk5+wlFB1twcE/te9ikCXIZfjUZ5klhMVj4+RQNM8Whl+8Sd1pOjE8v/gPP+
-         LQPuHydrU5vi3NRUSFjW91mCfdgBb6w0l6hcB7nvF4wkNBKG5kLANtRiKeXTqo1TQZ0T
-         wytD/4IR+NfeuE76sMkLUrNlYoBoXei97T2llAsQ+KfwwLeTqKcJCGHUywkxi9RgUw22
-         qfaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ffZD/bc7pcj0GXgrcg+W/tW0akI2Ful53iXzgXfn0yg=;
-        b=zk1iBmxF3Z8eG8HaCni7bMZ1tRk+zC3VCCAnrEfIBRrkTOdAIeR1R2ZhakNu1E84UJ
-         I18/VJRAoSwJ00KDb7MDHGKmjRHdFuOF/7pzU1IZe7kqufVayJFvCPoKoHACzu4+dmLv
-         wUPI+Q90sIpOh9T6tNO3Wh+yzipkj583Lag5oNZs6mf8z9oU4Dfb7ZYKocWk9x0BPTmp
-         p0mkYyRGe2Dfz5YYeFQZqeEehNHHANZxbrfb1sw2LonPr6/hfUyfLs+pL3CYxClgndEw
-         QWIJ9jQ5m1XJqGBr6Fsqc7wMxt/ArXi9MbB2RKp86nlxAdVI9wvkaSDdsqr6GnIbjz2r
-         0MqQ==
-X-Gm-Message-State: AJIora8hcC+beeBBBI0iWDatywfajnob28LB6Vv+RHg1nPBZTc53niB5
-        F2IUsVIXXn3jBmTJyj7oDlbX
-X-Google-Smtp-Source: AGRyM1upxXsUakD3ppvBe/ul4Dxj//iqvkEXy0Y+xYEHEYpULlHGfMDvABcUf1LHHmkvoWhY8SAtOg==
-X-Received: by 2002:a05:622a:60b:b0:31d:4455:c630 with SMTP id z11-20020a05622a060b00b0031d4455c630mr12916211qta.216.1657903970187;
-        Fri, 15 Jul 2022 09:52:50 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:34ca:20bc:bde7:c407? ([2600:1700:e72:80a0:34ca:20bc:bde7:c407])
-        by smtp.gmail.com with ESMTPSA id y206-20020a3764d7000000b006b5652edb93sm4196274qkb.48.2022.07.15.09.52.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Jul 2022 09:52:49 -0700 (PDT)
-Message-ID: <b213abee-430b-0365-7e89-558208f3051a@github.com>
-Date:   Fri, 15 Jul 2022 12:52:48 -0400
+        with ESMTP id S234288AbiGOQxw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 12:53:52 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D667DED0
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 09:53:51 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A62511A8A64;
+        Fri, 15 Jul 2022 12:53:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=b8W7FwOEprTs
+        10JcZgIBW7+fclg3BZlm9D5wj8nAT5M=; b=PG7O32pcDqo3OfKsnnThpZW05tQb
+        yqb/ANzHfnTAhT2EvwlN8uPS/tBvyXrGCMS6wpbjX2dhx9icO8WgfduJ2dwrl19G
+        81/Im+7Twuy91Gbf1VF855CYU4V0jXXLCBd2WwXd/lz2ohuszaEAZ9L01bIDeOn/
+        aSdRJBICVMcLqSI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9F6421A8A63;
+        Fri, 15 Jul 2022 12:53:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4D9D31A8A62;
+        Fri, 15 Jul 2022 12:53:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-repack doc: remove discussion of ancient caveat
+References: <patch-1.1-363f84a3fa7-20220715T075114Z-avarab@gmail.com>
+Date:   Fri, 15 Jul 2022 09:53:46 -0700
+In-Reply-To: <patch-1.1-363f84a3fa7-20220715T075114Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 15 Jul
+ 2022 09:51:28 +0200")
+Message-ID: <xmqqsfn21fmt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 2/2] scalar: convert README.md into a technical design doc
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com
-References: <pull.1275.git.1656521925.gitgitgadget@gmail.com>
- <870bd90e47e918f37db5a8d444e5c9a5717f9c17.1656521926.git.gitgitgadget@gmail.com>
- <994f2efd-0789-afad-ba0d-27da9692b289@github.com>
- <ee9ea998-fb9d-1bf0-635a-e1627c7c1c40@github.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ee9ea998-fb9d-1bf0-635a-e1627c7c1c40@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B1B6A6FE-045E-11ED-A2B0-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/11/2022 7:05 PM, Victoria Dye wrote:
-> Derrick Stolee wrote:
->> On 6/29/2022 12:58 PM, Victoria Dye via GitGitGadget wrote:
->>> From: Victoria Dye <vdye@github.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
->> It can be helpful to include the details of what steps to take to compile and
->> test the 'scalar' executable. That documentation will then be updated when
->> Scalar moves out of contrib/.
->>
-> 
-> As part of the move out of 'contrib/', I was planning on having Scalar built
-> and installed the same as any built-in (albeit in 'bin/' - like 'gitk',
-> 'git-cvsserver', etc. - rather than 'libexec/git-core'). In that case, there
-> won't be any special steps needed to build/install 'scalar', so any
-> instructions here would be temporary. I could include those instructions in
-> the meantime, but with Scalar incomplete, I'm not sure whether that would be
-> valuable.
+> The backwards compatibility caveat discussed her hasn't been a concern
+> for anyone after Git v1.6.0. Let's simply remove it, I daresay
+> nobody's concerned these days with having git clients running older
+> than 2008-era git.
 
-Ok, I think you don't need those extra steps if the plan is to compile and
-test by default. I think we might want to consider the installation steps
-and whether or not distributors will want to have an opt-in option for the
-scalar binary at that point. Fine to leave that until later.
+For the purpose of this message, Git 1.6.0 has no significance.
+Anything newer than 1.4.4 should be able to understand packfiles
+that use delta-base-offset, even though they may not have used
+delta-base-offset when writing a new one.
 
->> You mention "performant" which makes me think that performance tests are intended
->> to be part of this change. It makes me think it would be interesting to have our
->> existing performance tests create a mode where they compare a "vanilla" Git repo
->> to one registered with Scalar, but otherwise runs the same tests already in the
->> t/perf/ test scripts. This is a wide aside so feel free to ignore me.
->>
-> 
-> This is a really interesting idea! My original plan was to add some basic
-> tests around the operations 'scalar' should (directly or indirectly) speed
-> up. I think I'll still need to do that anyway (e.g., for things like 'scalar
-> clone' vs 'git clone'), but I'll also try to find a (repeatable) way to
-> compare standard repo vs. Scalar enlistment performance in the existing perf
-> tests.
+That's all academic.  I wouldn't have written the above if the
+proposed log message stopped here.  But with the rest of proposed
+log message that hints that the above statement is backed by a solid
+study of history, it is wrong to write a wrong version number there.
 
-It's tricky since our performance tests don't clone across a network boundary,
-but maybe we could create a new class of tests to operate against a Git server
-specified by the tester. Definitely out of scope for this series.
+I agree that it is safe to say that anything before Git 2.0.0 is
+irrelevant at this point (I would actually say before Git 2.16.0,
+i.e. anything older than 3-4 years).
 
-Thanks,
--Stolee
+> See b6945f570ac (git-repack: repo.usedeltabaseoffset, 2006-10-13) and
+> 9f17688d93c (update git-repack documentation wrt
+> repack.UseDeltaBaseOffset, 2010-02-04) for the commits that previously
+> introduced and adjusted this documentation.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  Documentation/git-repack.txt | 10 ----------
+>  1 file changed, 10 deletions(-)
+>
+> diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.tx=
+t
+> index 0bf13893d81..fe1eac37090 100644
+> --- a/Documentation/git-repack.txt
+> +++ b/Documentation/git-repack.txt
+> @@ -218,16 +218,6 @@ CONFIGURATION
+>  Various configuration variables affect packing, see
+>  linkgit:git-config[1] (search for "pack" and "delta").
+> =20
+> -By default, the command passes `--delta-base-offset` option to
+> -'git pack-objects'; this typically results in slightly smaller packs,
+> -but the generated packs are incompatible with versions of Git older th=
+an
+> -version 1.4.4. If you need to share your repository with such ancient =
+Git
+> -versions, either directly or via the dumb http protocol, then you
+> -need to set the configuration variable `repack.UseDeltaBaseOffset` to
+> -"false" and repack. Access from old Git versions over the native proto=
+col
+> -is unaffected by this option as the conversion is performed on the fly
+> -as needed in that case.
+> -
+>  Delta compression is not used on objects larger than the
+>  `core.bigFileThreshold` configuration variable and on files with the
+>  attribute `delta` set to false.
