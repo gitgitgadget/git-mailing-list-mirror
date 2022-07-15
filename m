@@ -2,100 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01B8EC43334
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 19:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 806E9C43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 20:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230345AbiGOT6x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 15:58:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57878 "EHLO
+        id S231234AbiGOUKQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 16:10:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbiGOT6w (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 15:58:52 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762B6140AD
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 12:58:46 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 19so6834196ljz.4
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 12:58:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BV8Hz1b05YwrcPLmewb42015RsZ03q0Mbt/9CeHssY4=;
-        b=FBlx/inkE9VLzo+yU0zxu0/TT5YK/sY4umb4731D5AFoLUYRvZvpedWJafeGTR+Q2N
-         eUK/uQDLBAe4wvKDycEOiJQrbul39+wLRc1C/tIpqSjMaMCX8vUi/Wc/+NEiK5e9AYCd
-         wFdEyvjuLDC3zWaR1p/w1gEKtskpjG9VE5mkBEJ4zNQf+IK0hd/KfztCC5H9WoX1qy9x
-         xbBJzBBq/J9aZAEceiEnB8byStEsWEjTs8ILZSVl9TbjY1XyyTYKvjAX40bL2FhYuao2
-         Lyjsg7AMCZLymflL//eO+nN4nfpJABH4dvoCI/LGl4sP/F+P0P/TKbnTth+YVsMDRlhl
-         RC6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BV8Hz1b05YwrcPLmewb42015RsZ03q0Mbt/9CeHssY4=;
-        b=cyxBUJqY0HoHSuCGZbdGUrfX8RhXZkq5xWlXMN3KlYxrNNPY3LIlhLIDiGlyLQz+Li
-         9mjk9kp2qUmuy4+h1zNfejBkNOh7eyDWLoGUlsngr0EzMMCce4tM5hviUuZUusLDVvdm
-         TOBwUNHMud5DYZq97f6TJ6wEbFTNVOUo4WQdJr1yuMbleC9ouf13XAsamnHnbA0fewYz
-         sFE1aMeCx/MMoGkGS4bm5LyKBzdZz3dTOnsSpshUFFGSS/PycWazOMa+SieuW8npVARq
-         eqhUuL6JIeHZ5v1yty47CJdRapzT/2LyE18t1BP4yg3ZZn2H1uU9QT7gCgMJH7SRuIym
-         Jiog==
-X-Gm-Message-State: AJIora96ZCrQrgkmiPLG5TvaWKp1zzGFwtyB+e0cFGRPKpw3M2jXGtcw
-        jkF3A2MBcYm5oYY4nnMarevaNeRjzH0SkJ9LpRZ3DKFvrpsYhQ==
-X-Google-Smtp-Source: AGRyM1t6UnrM81GOUa27Ad8W5Rjd/1s+fnOPew3hFVkTZu4vWR2zj7zyGnOXT6x/uZH57vtBejIIEQ1u55JWvBD9eoc=
-X-Received: by 2002:a2e:8255:0:b0:25d:8d25:b291 with SMTP id
- j21-20020a2e8255000000b0025d8d25b291mr6773950ljh.334.1657915123359; Fri, 15
- Jul 2022 12:58:43 -0700 (PDT)
+        with ESMTP id S229546AbiGOUKO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 16:10:14 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B6C4C625
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 13:10:13 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6223419F434;
+        Fri, 15 Jul 2022 16:10:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QBs5J33pw2PU/7ABsc6pUizXqX5OKKQEmnIr2t
+        op3zU=; b=BgLafQ1sutTJ2K6P7yLzRCzbNIWz0BjbwbJrV4CR89a7wF9u7MBxMp
+        b9vGDsUKzdbUt9XoJYMW5qkXmnA7Hz/awSZpRB3K5K6aEvG9EvwPhi/xEYV8L0fC
+        B0gUN2FHS+h1yQOEAEFoWDSbM9RSZMo2zAHdsRazbX6RZ2viNAEiA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5AD7019F433;
+        Fri, 15 Jul 2022 16:10:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AB71919F424;
+        Fri, 15 Jul 2022 16:10:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: write effective filter to trace2
+References: <20220715190956.2908637-1-jonathantanmy@google.com>
+Date:   Fri, 15 Jul 2022 13:10:04 -0700
+In-Reply-To: <20220715190956.2908637-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Fri, 15 Jul 2022 12:09:56 -0700")
+Message-ID: <xmqqfsj2yw6b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1657819649.git.matheus.bernardino@usp.br> <220714.86ilnz1j1i.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220714.86ilnz1j1i.gmgdl@evledraar.gmail.com>
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-Date:   Fri, 15 Jul 2022 16:58:31 -0300
-Message-ID: <CAHd-oW4zHA1YLX-5B1vYTA1f8PocziUCi0WxvSEkFUuf2GqKxg@mail.gmail.com>
-Subject: Re: [PATCH 0/3] doc: unify config info on some cmds
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1E2D926E-047A-11ED-8CAA-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Em qui, 14 de jul de 2022 18:27, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> escreveu:
->
->
-> Here's a cleaned up version of what I have, which I figure is probably
-> better linked-to than contributing to my E-Mail quota :):
->
->         https://github.com/git/git/compare/master...avar:git:avar/doc-con=
-fig-includes
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Thanks for sharing your version!
+>> >> This is implemented for protocol v0, v1, and v2.
+>> 
+>> Is that different to say "for all protocols"?  I am wondering if it
+>> is worth saying (unlike in a hypothetical case where we do not
+>> support v0 and v1 we may want to state why we only support v2).
+>
+> I wrote it that way to avoid confusion with things like HTTP (which is a
+> protocol, at least in its name). Maybe better would be "This is
+> implemented for all protocols (v0, v1, and v2)".
 
-> The one thing I'd like you to reconsider is to drop the idea of adding
-> these "ifndef::git-grep[]" defines and the like. In your version it
-> yields an arguably better result.
->
-> But I think what we should be going for is the more general direction
-> outlined above, at which point that becomes quite a mess of
-> ifdefs. I.e. config/gc/rerere.txt would need to know what it's going to
-> get include in, which would be N number of manpages in the genreal case,
-> not just "main or config" as this series leaves it.
->
-> I think the solution I have to that in 1/9 in that first series is a
-> better trade-off, i.e. we just (eventually, your series doesn't need to
-> do that) include some standard wording saying that what you're looking
-> at in git-CMD(1) is transcluded as-is from the relevant part of
-> git-config(1). I.e.:
->
->         Everything below this line in this section is selectively include=
-d
->         from the linkgit:git-config[1] documentation. The content is the =
-same
->         as what's found there:
->
-> What do you think about doing that instead?
+I still wonder if it is better left unsaid.  When adding a new
+thing, it would not be noteworthy if the new thing is available no
+matter what protocol is being used, no?
 
-I like the includes/* idea, and I agree that it is a more sensible way
-forward than the many 'ifndef[]::git-cmd.txt's :) Your linked changes
-also cover a wider range of cmds than my series does. So I'd be happy
-to have them as a replacement to this series.
+>> >> +		trace2_data_string("fetch", the_repository, "fetch/effective-filter", spec);
+>> >>   		packet_buf_write(&req_buf, "filter %s", spec);
+>> >> +	} else {
+>> >> +		trace2_data_string("fetch", the_repository, "fetch/effective-filter", "none");
+>> 
+>> Do we show "none" anywhere else where an expanded list objects
+>> filter spec is expected?
+>
+> Hmm...no, we don't.
+>
+>> I am wondering two things: 
+>> 
+>>  - The lack of this line would be a cleaner implementation of a
+>>    signal to say "this client did not ask any filtering".
+>
+> I think the presence is important to distinguish "no filtering" versus
+> someone using an old Git version that does not emit such traces, but I'm
+> open to changing the "none" to "none-specified" or something like that.
+
+OK.
+
+>>  - It would be good if we keep what report here more-or-less the
+>>    same as what we can pass "--filter=" on the command line of
+>>    "git pack-objects".
+>
+> My intent is to report what is being sent to the server in the fetch
+> request.
+
+Then I'd be OK with a design that reports "none", if we send "none"
+to the server in this case.  If not, then I do not think we should.
+
+Perhaps report an empty string or not reporting at all?  After all,
+the reader knows the client version and capability in the log so it
+is easy to tell between 'no filter was used' and 'too old to report
+the filter', no?  I dunno.
+
+
+
