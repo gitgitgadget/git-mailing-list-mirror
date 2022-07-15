@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6ACCC43334
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 11:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBCDAC43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 11:18:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232268AbiGOLBf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 07:01:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56588 "EHLO
+        id S232691AbiGOLSG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 07:18:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232274AbiGOLBe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 07:01:34 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F0A186891
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 04:01:33 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id k30so5803604edk.8
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 04:01:33 -0700 (PDT)
+        with ESMTP id S229550AbiGOLSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 07:18:05 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 855218723E
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 04:18:03 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id y8so5881609eda.3
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 04:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=5eoj/uVgCwtaQoYerGXczC90ewpk3CDrdvGeb4XnMXc=;
-        b=ITw3xaBjkDg8I8kmleD6+I9O79ICo3/0gJ14LE1ahzzDfCjN60eEob/co9Ngsubpj2
-         nQSuztPlWLnt4WRFbQqUMNlw8AbyaN7/q0Sp2sSCwX+3lX9JaXH85bNiRNocV5dqny9U
-         FvKaLakHxP3HLuw2O/jEKj8xjrCkKsFkOmFW/U++8TkOudYjl3ii4wkGt5ahocULk9fa
-         hnMRE8e2pGJj98VrH9QZwIE9XvAdybwe3+MOUDF6D/XMr2L/3cT0ox2dnJ9l73KJjbya
-         HccaPpOmAUxRYAgKy1jWa7L2VLUrew3/vovv4TYLiL9BaP5Jj88ApikRr4iEvNKqTkwr
-         9KCA==
+        bh=w/cASJRXvmVbx6MELbDrpgMv3QSseHrtM6Lp4Qbm9/Q=;
+        b=ZVAe1TZoDnx3kKY9tVBxI3nw42T7YeWo8zPkV5UcZzFG0cYF2QoeNBifgt4lAUTngA
+         1bkwsdu7lruluABAX+gU2uJpm/9g/8XZwcfNlBa1PYQJkN0B8mCGGcFZenYFxEIpFOZi
+         HmWmlobKf+H6UXlwZTjJPO/Eh90MCjCvjpdZV9LMxEnqcH2c+BoDC4DRPC5NFi75JyPU
+         NteJ2zeogQPhdMwWhsCdDXzCrLdKxSkg5Nl3eF/Rt0AVQ/A6Y7axVsI2jhde75OzdV7b
+         vLln7QTPgTFU+4wGABkibow/ToQK8nH5oCHiNwcrU7v5mE+VFOkFmNldV0pld5eeS01J
+         NcXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=5eoj/uVgCwtaQoYerGXczC90ewpk3CDrdvGeb4XnMXc=;
-        b=X7z1gPfM3LlWe53VFxEM/8AkPpJMkarBQzuwZA+6KjlhRyFwvOLk4gqpvL12DiMeCX
-         br+3CfwSuTBgvlQkB5Pmx92mLWW9/tSgavA8xn/Goq91M700erDwkATbWgixirU+r9xK
-         fz09AoL3CEhVBMTbpxQxp/2HGdmwZeFsKthHPN214hFnwvQZr9g8Z93QvKf2zX42pIo/
-         ziGutucthaYS1JNpYF+6enatttkj/aL2b5qh/jYmm2pblhST6t32hXZ4OoAoUNmAGc4g
-         xK5kPKiha5itfoIwti7Ryy2LSZuOpj7dJ/LAUtc9EV2F1WnT4qENDQTN3GbLwuk+wMB2
-         lLxQ==
-X-Gm-Message-State: AJIora9Y2v36iYZ8+BI+SHVVmwrzCTJVJuH6XajcswOWpXVgJuYQyb5n
-        rN45KO1CJGcEEtZ1WpFGBl4PD/51LaCkig==
-X-Google-Smtp-Source: AGRyM1tMMbS2dLw52z0oXK6kV+Cp/edIEO5rdL5FNyWrngYv7RGHDD0ghrIkClW4GHYNgOlxX8pV5A==
-X-Received: by 2002:a05:6402:3488:b0:43a:e33d:7d26 with SMTP id v8-20020a056402348800b0043ae33d7d26mr17939737edc.279.1657882891453;
-        Fri, 15 Jul 2022 04:01:31 -0700 (PDT)
+        bh=w/cASJRXvmVbx6MELbDrpgMv3QSseHrtM6Lp4Qbm9/Q=;
+        b=gaw5WdOAkiE7jNyNKUDPRHoQZzx00fV02H2Wl/IX64oKVBvdKtP1fkiqewQZCLIZ/V
+         HKO1sWqn04np66OTrW79a95PkuIlpw9wVJrmBF0/jlmG3UPMyJpjd863kUa08EX1m8dk
+         4WYOsSxPL/AWWJS2k8MNvi/ZAR3Q36C4pVMU8Ti9mBvpNWaBspY1MWkfZwNzbIUYGNCX
+         5wwwMAEM4Aj62xcRnIXZbNNYhV9Meok19YSoumQPgAawOFCtkeBVSnwgXdnPeScQH+2X
+         0yTAlCgb0BPBFIfojl7dmGf0z6whlv06b8U3MRiScUcUkrTe7JuGDXAA7NCOs/tzM1Ws
+         3woA==
+X-Gm-Message-State: AJIora8yEliwGaTeEg+cHjwk/H0wqMsK5Daxfnm0S/fnP9sr7Hoo0fOj
+        fWHAeuGvbTVDNv36NRc/bX8=
+X-Google-Smtp-Source: AGRyM1tjX0KTOtfPux/tUFyey2c5PQMcgTTFEyWHxpi3sRMYyA9ykcwyhZqx5psd0mn4+mWlNkJLYA==
+X-Received: by 2002:a05:6402:4252:b0:43a:9232:dafc with SMTP id g18-20020a056402425200b0043a9232dafcmr18003203edb.243.1657883881944;
+        Fri, 15 Jul 2022 04:18:01 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id a9-20020a05640213c900b0043b0951f7b1sm2653279edx.41.2022.07.15.04.01.30
+        by smtp.gmail.com with ESMTPSA id v20-20020a1709060b5400b0071cbc7487e1sm1907631ejg.69.2022.07.15.04.18.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jul 2022 04:01:30 -0700 (PDT)
+        Fri, 15 Jul 2022 04:18:01 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1oCJ4b-002fbF-Nn;
-        Fri, 15 Jul 2022 13:01:29 +0200
+        id 1oCJKa-002g9I-62;
+        Fri, 15 Jul 2022 13:18:00 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
         Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 1/3] Documentation: remove use of whitelist
-Date:   Fri, 15 Jul 2022 12:47:48 +0200
+Subject: Re: [PATCH v2 2/3] t/*: avoid "whitelist"
+Date:   Fri, 15 Jul 2022 13:02:50 +0200
 References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
  <pull.1274.v2.git.1657852722.gitgitgadget@gmail.com>
- <19632a2d2459114484dcdaddd4db0d22dfd64fa7.1657852722.git.gitgitgadget@gmail.com>
+ <3c3c8c20bcb4e570d25a676ad1f29877762adb82.1657852722.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <19632a2d2459114484dcdaddd4db0d22dfd64fa7.1657852722.git.gitgitgadget@gmail.com>
-Message-ID: <220715.86sfn2zlkm.gmgdl@evledraar.gmail.com>
+In-reply-to: <3c3c8c20bcb4e570d25a676ad1f29877762adb82.1657852722.git.gitgitgadget@gmail.com>
+Message-ID: <220715.86o7xqzkt3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,101 +74,105 @@ X-Mailing-List: git@vger.kernel.org
 On Fri, Jul 15 2022, Derrick Stolee via GitGitGadget wrote:
 
 > From: Derrick Stolee <derrickstolee@github.com>
-> [...]
-> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-> index fdc28c041c7..7a0539cb411 100644
-> --- a/Documentation/git-daemon.txt
-> +++ b/Documentation/git-daemon.txt
-> @@ -32,8 +32,8 @@ that service if it is enabled.
->  It verifies that the directory has the magic file "git-daemon-export-ok", and
->  it will refuse to export any Git directory that hasn't explicitly been marked
->  for export this way (unless the `--export-all` parameter is specified). If you
-> -pass some directory paths as 'git daemon' arguments, you can further restrict
-> -the offers to a whitelist comprising of those.
-> +pass some directory paths as 'git daemon' arguments, the offers are limited to
-> +repositories within those directories.
+>
+> The word "whitelist" has cultural implications that are not inclusive.
+> Thankfully, it is not difficult to reword and avoid its use.
+>
+> Focus on changes in the test scripts, since most of the changes are in
+> comments and test names. The renamed test_allow_var helper is only used
+> once inside the widely-used test_proto helper.
+>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  t/README                        | 9 ++++-----
+>  t/lib-proto-disable.sh          | 6 +++---
+>  t/t5812-proto-disable-http.sh   | 2 +-
+>  t/t5815-submodule-protos.sh     | 4 ++--
+>  t/t9400-git-cvsserver-server.sh | 2 +-
+>  t/test-lib-functions.sh         | 2 +-
+>  t/test-lib.sh                   | 2 +-
+>  7 files changed, 13 insertions(+), 14 deletions(-)
+>
+> diff --git a/t/README b/t/README
+> index 309a31133c6..56d5ebb5798 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -367,11 +367,10 @@ GIT_TEST_SPLIT_INDEX=<boolean> forces split-index mode on the whole
+>  test suite. Accept any boolean values that are accepted by git-config.
 >  
->  By default, only `upload-pack` service is enabled, which serves
->  'git fetch-pack' and 'git ls-remote' clients, which are invoked
-> @@ -50,7 +50,7 @@ OPTIONS
->  	Match paths exactly (i.e. don't allow "/foo/repo" when the real path is
->  	"/foo/repo.git" or "/foo/repo/.git") and don't do user-relative paths.
->  	'git daemon' will refuse to start when this option is enabled and no
-> -	whitelist is specified.
-> +	specific directories are specified.
+>  GIT_TEST_PASSING_SANITIZE_LEAK=<boolean> when compiled with
+> -SANITIZE=leak will run only those tests that have whitelisted
+> -themselves as passing with no memory leaks. Tests can be whitelisted
+> -by setting "TEST_PASSES_SANITIZE_LEAK=true" before sourcing
+> -"test-lib.sh" itself at the top of the test script. This test mode is
+> -used by the "linux-leaks" CI target.
+> +SANITIZE=leak will run only those tests that have marked themselves as
+> +passing with no memory leaks by setting "TEST_PASSES_SANITIZE_LEAK=true"
+> +before sourcing "test-lib.sh" itself at the top of the test script. This
+> +test mode is used by the "linux-leaks" CI target.
 
-Structurally this series should be changed so that like changes are
-coupled together, this would be much easier to review with the daemon.c
-changes in 3/3.
+It's hard to improve your own verbage, but I think in this case my
+original version can be improved still:
 
-But that also shows that this change is needed, but really lacking
-compared to what we could do here, which is that both the the SYNOPSIS
-and the heading here should be, respectively:
+	GIT_TEST_PASSING_SANITIZE_LEAK=<bool> when compiled with
+	SANITIZE=leak will, when true, only run those tests that declare
+	themselves leak-free by setting "TEST_PASSES_SANITIZE_LEAK=true"
+	before sourcing "test-lib.sh". This test mode is used by the
+	"linux-leaks" CI target.
 
+> -test_expect_success 'curl redirects respect whitelist' '
+> +test_expect_success 'curl redirects respect allowed protocols' '
 
-    [--strict-paths=<path>...]
+Isn't the real problem here that this is inaccurate with regards to
+"curl", i.e. AFAIK from browsing transport.c the whitelist of protocols
+has nothing to do with curl, we parse that out and apply it before we
+ever get to the specific transport layer.
 
-And:
+So this should just be "http(s) transport respects GIT_ALLOW_PROTOCOL",
+no?
 
-    --strict-paths=<path>...:
+> -test_description='test protocol whitelisting with submodules'
+> +test_description='test protocol restrictions with submodules'
 
-I.e. all we're trying to get across here is "this option has a mandatory
-argument", so let's just say something like that explicitly? I think in
-this case we don't need the prose at all, the synopsis + heading + error
-would be enough.
+Minor: I think this shows the awkwardness of using a word derived from
+"allow". Before we could use "whitelist" and "whitelisting"
+consistentlry, but now you have "allowed", "allowlist", "restrictions"
+etc.
 
-More generally: As I noted on v1 I think the underlying motivation for
-the series is mistaken, but I'm also happy for any excuse people can
-find to improve our documentation.
+I guess you could say "test protocol allowances..." or something? Meh.
 
-But as I pointed out on your similar earlier series to expunge gendered
-pronouns from the docs I think best practices in our docs just happen to
-align with what you want.
+> -test_expect_success 'user can override whitelist' '
+> +test_expect_success 'user can override with environment variable' '
 
-I.e. in that case we prefer a style that isn't introducing "actors"
-anyway, so even without that motivation the prose could be improved.
+Override what? This is a non-improvement. Saying "how" with "environment
+variable" is good, but we dropped any mention of what's being tested.
 
-And ditto here, I think the use of the term "whitelist" is fine in and
-of itself, but in this case we can clearly improve the docs anyway.
+> -test_expect_success 'req_Root failure (export-all w/o whitelist)' \
+> +test_expect_success 'req_Root failure (export-all w/o directory)' \
+>    '! (cat request-anonymous | git-cvsserver --export-all pserver >log 2>&1 || false)'
 
-I just think that the origin of the change really shows in this case, I
-haven't yet reviewed the rest but suspect I'll find something
-similar. I.e. there's a clear improvement to be made, but since it was
-first made with s/whitelist/allowlist/g, and now an attempt to
-s/whitelist//g in some form we lose sight of the larger picture.
+Is it really that we don't have any directiory whatsoever, in that case
+I think this is a canditate for splitting up. I.e. the test didn't test
+what it was intending to test?
 
-Which in thihs case is that perhaps the sentence isn't needed at all,
-and that the synopsis & title is the real thing worth fixing.
+But if it's really "without <whatever you call the list of stuff you
+don't want>" we should still say that, no?
 
-So, if what motivates doc improvements in your case is working on your
-local dictionary black^Hdenylist :): great, we can probably improve our
-docs in any case. But please spend a bit of time eyeballing the change
-without an eye to that motivation, sometimes we can improve it much more
-without much effert...
+> -		# (Temporary?) whitelist of things we can't easily
+> +		# (Temporary?) list of things we can't easily
+>  		# pretend not to support
 
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 302607a4967..dd5061563eb 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -886,8 +886,7 @@ for full details.
->  	`protocol.allow` is set to `never`, and each of the listed
->  	protocols has `protocol.<name>.allow` set to `always`
->  	(overriding any existing configuration). In other words, any
-> -	protocol not mentioned will be disallowed (i.e., this is a
-> -	whitelist, not a blacklist). See the description of
-> +	protocol not mentioned will be disallowed. See the description of
->  	`protocol.allow` in linkgit:git-config[1] for more details.
->  
->  `GIT_PROTOCOL_FROM_USER`::
+We've had this since my dfe1a17df9b (tests: add a special setup where
+prerequisites fail, 2019-05-13), so we can probably just drop
+"(Temporary?)" there while we're at it...
 
-I agree with Junio's earlier feedback about "in other words" being a
-telltale sign of prose that needs improving.
+> -# skip non-whitelisted tests when compiled with SANITIZE=leak
+> +# skip unmarked tests when compiled with SANITIZE=leak
 
-But the point of the previous prose (such as it was) was to elaborate on
-th existing "allow" to say "oh, allow means the same as whitelist",
-surely?
+This subtly changes the meaning in a way I didn't intend when writing
+this. I.e. the existing wording could be improved, but some of what
+we're skipping isn't "unmarked", it's explicitly marked as "false"
+(which we assume by default).
 
-So I think we really could just delete this "in other words" entirely,
-i.e. it's basically saying "you are allowed to eat ice cream (in other
-words, you are not disallowed)", it's not adding anything anymore. The
-"(...)" can just be removed.
+I.e. I read this new wording as saying "skip <unset>", whereas the
+previous can encompas "<unset,false>", just not "<true>"...
