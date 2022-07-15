@@ -2,86 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 576F9C43334
-	for <git@archiver.kernel.org>; Thu, 14 Jul 2022 23:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99B24C43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 00:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240282AbiGNX0N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 19:26:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47030 "EHLO
+        id S241148AbiGOARS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 20:17:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbiGNX0M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 19:26:12 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9533F3C14C
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 16:26:11 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id y3so2677088qtv.5
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 16:26:11 -0700 (PDT)
+        with ESMTP id S232908AbiGOARS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 20:17:18 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03CCE73913
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 17:17:17 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id t37-20020a635365000000b0041965b8ec8eso1978326pgl.0
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 17:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=X80gUb1Qzwg7GYYTFmDr21oL6cB6ZNuDHFDvVyOjvQk=;
-        b=Tigiki48S76dWBPnLRkpuUMHDdxjJ52XRca12Zk8uFZu+81X7dkMEFdpyPp/z2GL+x
-         xcaKGs9rHnqnnq/fPIl7Ed/J0wmG0Yd31pER+Q9T1RaeNhaDVBMYQYQwlKaC/x8E3wll
-         chp1+5OnascbGbcgo5rqRrcrOJ9p1ZwTxqiQIfZlg5olCDCqMNeFagzneSYyk1j7Hv6y
-         vYTN7O4heIM7TY++XXpIVdkvbfGFQBjxiD++QLeNHBfn1t4JFYRXo1I9ukEWA5BA739M
-         7IIC4l29VIHUEI1Ax3p4FaozzItMk1OcdtxO1AZ70ugWBc5JmCKAdVSqgdSNT6A/fWLk
-         3wdg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=9LswFKdqdrpn4fDGQuSvH3elF6VPj2Uvbb3luYii+nc=;
+        b=AnXke6NSwuJXvDthlI0zrnG8PsXGI0f2FNteLEoNZqvJ3TjIpSdLatZ+GJGSzzE9x9
+         CmJg92RNu38c5ssY8DafejnJUPfPKa/TlcLFMM+WFJrcGJVUoV6cfB9OCuI1E4Uv5y8/
+         9mol6z1YTJtYu/uenJgAcF256E+pYBZvwQ3FM+52y/CzRGYlz2c/M7wJrBMwOvFIiu2i
+         WT9AwzYMmAgbPkQaLaNAYeMkTy/6SCklvS/BSN3pX0gbzTiVHcgYdrkduoIg+zui3Ol+
+         GUtGEObXwF7YhHwm8erILBoRKuZ7D8jauZpwJjz+EVLPYI1FUpr1d+46GDqmrbB1aTnC
+         5HmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=X80gUb1Qzwg7GYYTFmDr21oL6cB6ZNuDHFDvVyOjvQk=;
-        b=aBl20qZn1hdBGs/nFv262u+GpnbUMj2OZUt+dz3AFUJV/k9B1hxD5aURTLNb1HIQpH
-         bO7J+azgxxSoSyCsg0Ojc9Abvt3JMsr3OjRk+zaHLkcB7Gn7Khvd1zWXU/8Lf4lRHYcf
-         KUEtYS5tGStVZPVXVSO08T5Jg4Q1qeURXWpr/PbsB/+i5DGQKgun7U/pnvb78+jc9q8R
-         9UnTa307BKhrkNB4QUbtafn9fML3oHIt0sJln/FcoHm6Wo4e+8j8Iv5G9HOfxg/ZnkI7
-         zLAu9XnMBH7pl4nDylOjBhU3Pxj45VcfkB/P1QWABKYRZzw5frSQyZuJ9KiZy4pAMNJQ
-         Om+g==
-X-Gm-Message-State: AJIora+gzeTqhyjdY8GG4pTJ7zKwlm/A+W+g86Ix4D0zlruGAzuW4rdd
-        teDr+gwN9SX9r7IWOjb6w6XFIQ==
-X-Google-Smtp-Source: AGRyM1uEOnBfnZYj6UOnBfMdDq+60bwQ+QqfAK3XARDWr3zJERGSK0Xr1ufMnEh4sK4SbLPTAQUZmw==
-X-Received: by 2002:a05:622a:1014:b0:319:7601:c22 with SMTP id d20-20020a05622a101400b0031976010c22mr10347287qte.509.1657841170769;
-        Thu, 14 Jul 2022 16:26:10 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bv6-20020a05622a0a0600b0031eb5342520sm2466639qtb.15.2022.07.14.16.26.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 16:26:10 -0700 (PDT)
-Date:   Thu, 14 Jul 2022 19:26:09 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH v3 2/6] pack-bitmap-write.c: write lookup table extension
-Message-ID: <YtCmESpC7DmNhAcm@nand.local>
-References: <pull.1266.v2.git.1656249017.gitgitgadget@gmail.com>
- <pull.1266.v3.git.1656924376.gitgitgadget@gmail.com>
- <5e9b985e39b0b9edee7af55dd8b0698a20062cf7.1656924376.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5e9b985e39b0b9edee7af55dd8b0698a20062cf7.1656924376.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=9LswFKdqdrpn4fDGQuSvH3elF6VPj2Uvbb3luYii+nc=;
+        b=0RZ2d1aZcxREJ4OwVCBpcnFCf8YCbyTt4svhxWbJWm3oL+9SYBFgIgN+YZ4EWDOCvp
+         quRfuCsMAU9kgfQDThlvgUimEXDz378Y6TqHZgtT/Pr4x7djYmTZq9qaK34fYH4P+jpn
+         YO8hyuLXlWaduHcugVXzJlijfSbwI8kVWgNVCj+cK11NnI9Y9C3tdlldLfNVikd6egun
+         eoytJBfgunY5HLMkP5eyu7lavuyMGpCrfhp26DHTFcG8ELKlrgUKU+oIencXySAlj0Bl
+         HJ3YVTcVg4YKO7HsbMnufcAYWgbbGYka30AiknT/2c73gyAZFWWdhMjmxHS0jd6PMysD
+         fM5A==
+X-Gm-Message-State: AJIora+9QNLTb5ruuiBgFZPX//EJoOB0PEHBTEp/4y8QDCuCdT2891+8
+        9g3vv/pbD/CNP5kJl/BQ/FKaEJdTnM3WLw==
+X-Google-Smtp-Source: AGRyM1twZzMqFMK04IjMBMDiEXWQ3tChAS5f1U07Jpswef6csNMAZpUIS8VIDSJnJ1ZqAR9z2zEE1Aa+m9rD3Q==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:ce0e:b0:16c:7977:9d74 with SMTP
+ id k14-20020a170902ce0e00b0016c79779d74mr10263065plg.92.1657844236548; Thu,
+ 14 Jul 2022 17:17:16 -0700 (PDT)
+Date:   Thu, 14 Jul 2022 17:17:14 -0700
+In-Reply-To: <220714.86v8s00y1z.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6lr12ntek5.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
+ <patch-02.11-4049362e9b4-20220713T131601Z-avarab@gmail.com>
+ <kl6lfsj4684n.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqy1wwaey8.fsf@gitster.g> <kl6lbkts63fb.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <220714.86v8s00y1z.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 02/11] submodule--helper: replace memset() with { 0 }-initialization
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 04, 2022 at 08:46:12AM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
-> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> On Wed, Jul 13 2022, Glen Choo wrote:
+> Anyway, I was curious about this so I tried the following locally:
+> =09
+> 	@@
+> 	type T;
+> 	identifier I;
+> 	@@
+> 	- T I;
+> 	+ T I =3D { 0 };
+> 	... when strict
+> 	    when !=3D \( I \| &I \)
+> 	(
+> 	- memset(&I, 0, sizeof(I));
+> 	|
+> 	- memset(&I, 0, sizeof(T));
+> 	)
+> =09
 >
-> The bitmap lookup table extension was documented by an earlier
-> change, but Git does not yet know how to write that extension.
+> Which aside from whitespace issues (that I've asked the cocci ML about)
+> yields a sane result...
+>> ....... If I have time I'll send that proposal to CodingGuidelines, or
+>> someone else can send it (I don't mind either way).
 
-This and the first patch both look in great shape to me. I haven't had a
-chance to take a close look through the remaining four patches, but I
-anticipate that they are in similarly-good shape.
+Adding an extra cocci check sounds like a great addition alongside the
+CodingGuidelines change (automatically checking the rule is way better
+than doing it manually of course). The fact that { 0 } is wrapped around
+two lines is annoying, e.g.
 
-I'll have some more time to finish reviewing this tomorrow morning. I
-want to give it a closer inspection this round to make sure that
-everything is correct (and that we're assembling the various orderings
-the right way by stepping through it in a debugger, etc., etc.).
+  -	struct update_callback_data data;
+  +	struct update_callback_data data =3D {
+  +		0
+  +	};
+    struct rev_info rev;
 
-Thanks for all of your patience :-).
+  -	memset(&data, 0, sizeof(data));
+    data.flags =3D flags;
 
-Thanks,
-Taylor
+but since it goes away with "make style", I'm tempted to say that this
+check is worth having. Is it too confusing to have coccinelle recommend
+something that we expect users to fix afterwards?
