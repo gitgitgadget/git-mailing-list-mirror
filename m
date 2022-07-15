@@ -2,96 +2,282 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A2E2C43334
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 09:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E95FBC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 10:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233542AbiGOJff (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 05:35:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52222 "EHLO
+        id S231236AbiGOKM6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 06:12:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232191AbiGOJfe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 05:35:34 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5476D7B7BD
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 02:35:33 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id mf4so8018428ejc.3
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 02:35:33 -0700 (PDT)
+        with ESMTP id S230407AbiGOKM5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 06:12:57 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55A62220F0
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 03:12:56 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id b6so2008723wmq.5
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 03:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ULYXZWinK37+HTk8RI5f92xLpN5E6FIUUa8Tbcdb140=;
-        b=hHKpP3+xJUDX0jRT+gKgd2AbMR6pGK34Hr5xZYNrVYQaDeNLNj3TNdnTGFr2lQru/e
-         cEIPvrGDBJbJvKK+K9NvAnFZYsZplansojFAYH8rppW0wFqHqjk2QJMwsCaQcTh8ZBiF
-         VNewr5SZVtz9jcL2RvZGuzxhg6xuogzNOwQd70ED7zDwNhR1KNvyjDvD0sTgpZVq6qTf
-         Ndpkl8dRpudcKoqAY1fOzoY2GYoJjSjtDBGMhtfbn7TkTBZ3bhKLK4yYnD3bQ4R+NPW2
-         GLodkNNH4p/diOqld/5+NoVVCdE4T6z5W1SKSIN/oYWKXYJVzjQG5cVKaAkLoe9spyPj
-         jrDg==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=AeYAcF8az/63KjLmtvoy3m7R+RKPApaQgYXwdtPDnsw=;
+        b=klAM6zdwxK7bsyTxdmQEati5ZrHf+eaLy8qfQQ4jVsw2hR6v4UGlXV8Tg4/GFlAXPJ
+         4vKhXT45hfgtivhDNM4ZqlIHTV6wGpEV+14WH2L7wdlojYR4IsG/q2mqGLM8Q9X7Zrzz
+         Hu8ir3AKIi+ZGE8zudTKZ9hQdDdOHC07jYMCxVqfx4k9/mmCUfO+ZgJgBWOKKL2uXCXV
+         DSoYt4V+bVobLrpDq+gITiCHCOS1FfSJiZFjSXYJ8ByCBN6j8J7nHF2Yq+TZBWfmamn2
+         TzlYiin9HAtuJzJ1Zusi70X+BJura5+NJc7yArtF8MtsB+6GlUR2n24SugMnYMEnVyLL
+         FKtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ULYXZWinK37+HTk8RI5f92xLpN5E6FIUUa8Tbcdb140=;
-        b=bvAgAlTTZum9pnQMcydSXj/tXto1l4q9yrUitGjl4MyNNG8vP0gC2RACe3xS8VEZAD
-         qg72KwKwC2eWV1uIOhjlT+KlCV55UeF7VbnQwgednvwmsLaoaarHC2+4lID031y82eNN
-         vWAD4SpWRQ9mgt0/XLX2u7SFEWG6QIiqhVJpoH5nqh2pjhBQiqNYS9GqFKyPCZbQltvb
-         CBqA3MyIJV7iRxfeTwULXUlxmy4ZppJ0DLpWFTGjmr2qRn902+p0TgGMZ6vhbjDrV593
-         QIr6XcpEDQwvr/ExtBfwC+sXw62T6U+7NWAACr1F8rKLE4tQwUVgTk5JO0cam033se3i
-         EaFA==
-X-Gm-Message-State: AJIora9mPmITYqkUm9ZCZJCxxWAjYwsrrmrEvTAMsH2DtvEUmw6HUTG8
-        pT9tEqNf/1ydUhK84DYzwMrt/OGqSnq+5g==
-X-Google-Smtp-Source: AGRyM1sm+w1ga82XF9DmbMAl1LtHsR4mfAMG0uwk3Erc7DzQZTzjehTvQLehgFugMiWRS0NmBl6jDw==
-X-Received: by 2002:a17:907:75e3:b0:72b:198a:b598 with SMTP id jz3-20020a17090775e300b0072b198ab598mr12967209ejc.401.1657877731848;
-        Fri, 15 Jul 2022 02:35:31 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id l9-20020a1709060cc900b007263713cfe9sm1827577ejh.169.2022.07.15.02.35.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jul 2022 02:35:31 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oCHjN-002cjh-I1;
-        Fri, 15 Jul 2022 11:35:29 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] tests: fix incorrect --write-junit-xml code
-Date:   Fri, 15 Jul 2022 11:25:23 +0200
-References: <pull.1288.git.1657789234416.gitgitgadget@gmail.com>
- <xmqq35f38yeb.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqq35f38yeb.fsf@gitster.g>
-Message-ID: <220715.865yjy1zxa.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=AeYAcF8az/63KjLmtvoy3m7R+RKPApaQgYXwdtPDnsw=;
+        b=lzJpKFxWrUwQYU29WmX1f4OGUpM/dAc4TFADQ51rFu5UO70Lqf8ntXd65NTkrBQlFm
+         RJ8kWyLPY3szbPeeXg6bkg/WyrikqNZfpcCtARd8BTFvGBJQRD+M2vaz9b7WobPJzIaG
+         fK9SNmM6exjzAO+tHNrj8oWW59361YAlX1h9EuPeVXrTCRMwSu2JEMVVOuEnAP00q4NJ
+         Mgnd3W8x53BIC9Xj6a+zMLkDWkQ3wZV3eLje0Xbk9ZJJJBGl/zGpjOdZpnBZFUK6yLJ+
+         sox1Xj8y9cPreKIq/BcXeSu4ikFrixuhWonFGHbewnW1B25L+5RiKzP66GPDRB8O+Dbz
+         PUQQ==
+X-Gm-Message-State: AJIora+fuRICObOfMPjrRfubBga1q4XlFXvmP+Y5DEHTySXWmaHHL2Ux
+        s1hc/2e/KUe0uKg8IVpkVaM=
+X-Google-Smtp-Source: AGRyM1t5ku2kBfHPSpoRQHwIIUr8jDN42FcDyMIJ40tIzUerhO26ZPfMDmh9Eh6yWBfh92kNOPo4fA==
+X-Received: by 2002:a05:600c:4e90:b0:3a0:57d6:4458 with SMTP id f16-20020a05600c4e9000b003a057d64458mr13523229wmq.198.1657879974728;
+        Fri, 15 Jul 2022 03:12:54 -0700 (PDT)
+Received: from [192.168.1.201] ([31.185.185.192])
+        by smtp.googlemail.com with ESMTPSA id i16-20020a05600c355000b003a2f88b2559sm8368834wmq.44.2022.07.15.03.12.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Jul 2022 03:12:54 -0700 (PDT)
+Message-ID: <11ff21b9-7169-00c5-95c0-130675ffe2ae@gmail.com>
+Date:   Fri, 15 Jul 2022 11:12:53 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 12/12] sequencer: notify user of --update-refs activity
+Content-Language: en-US
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
+ <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
+ <d5cd4b49e46bc2c186c6e89333360a975700c99a.1657631226.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <d5cd4b49e46bc2c186c6e89333360a975700c99a.1657631226.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/07/2022 14:07, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+> When the user runs 'git rebase -i --update-refs', the end message still
+> says only
+> 
+>    Successfully rebased and updated <HEAD-ref>.
+> 
+> Update the sequencer to collect the successful (and unsuccessful) ref
+> updates due to the --update-refs option, so the end message now says
+> 
+>    Successfully rebased and updated <HEAD-ref>.
+>    Updated the following refs with --update-refs:
+> 	refs/heads/first
+> 	refs/heads/third
+>    Failed to update the following refs with --update-refs:
+> 	refs/heads/second
+> 
+> To test this output, we need to be very careful to format the expected
+> error to drop the leading tab characters. Also, we need to be aware that
+> the verbose output from 'git rebase' is writing progress lines which
 
-On Thu, Jul 14 2022, Junio C Hamano wrote:
+s/is writing/writes/ ?
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
->>     Unfortunately, I noticed this regression no earlier than when I needed
->>     to validate Git for Windows v2.37.1. Since v2.37.1 was an embargoed
->>     release, I could not use GitHub Actions for the CI testing, so I had to
->>     reinstate Git's Azure Pipeline.
->
-> I wonder if it would make your life easier if the same GitHub
-> Actions CI stuff were available for the Cabal repository we use for
-> embargoed work, by allowing you to use the same validation for usual
-> releases and the enbargoed ones?
+> don't use traditional newlines but clear the line after every progress
+> item is complete.
 
-Isn't it. Looking at
-e.g. https://github.com/git/cabal/actions/runs/2284056293 (private link)
-that's the CI run for the latest push to "master" (same as
-https://github.com/git/git/commit/e8005e4871f130c4e402ddca2032c111252f070a).
+I was a bit confused by the reference to "verbose output" in this 
+paragraph. When the user passes --verbose then we do actually use NL, it 
+is when the user does not pass verbose that we use CR instead.
 
-So I didn't get this idea that we must have Azure to resurrect for
-"private CI", don't we have that already, and anyone can use it by
-re-pushing git.git to a private repo (the limitation being that on
-GitHub you can't make a private fork of a public repo)?
+> When opening the error file in an editor, these lines
+> are visible, but when looking at the diff in a terminal those lines
+> disappear because of the characters that delete the previous characters.
+> Use 'sed' to clear those progress lines and clear the tabs so we can get
+> an exact match on our expected output.
+
+Thanks for the comprehensive commit message and for implementing an 
+excellent suggestion from Elijah. I wonder if it makes sense to 
+distinguish between the current branch and all the others when writing 
+the update message as we do here or if all the refs should just be in a 
+single list. I also think it doesn't matter much and we can change it 
+later if we want.
+
+ From the last test it looks like we are already printing something when 
+we fail to update a ref (possibly this comes from the refs backend code) 
+I don't think it hurts to print a summary of them all after that though.
+
+> Reported-by: Elijah Newren <newren@gmail.com>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>   sequencer.c                   | 40 +++++++++++++++++++++++++++++------
+>   t/t3404-rebase-interactive.sh | 35 +++++++++++++++++++++++++++---
+>   2 files changed, 66 insertions(+), 9 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 82ef062d497..bdc67c66f3e 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4257,17 +4257,20 @@ static int do_update_ref(struct repository *r, const char *refname)
+>   	return 0;
+>   }
+>   
+> -static int do_update_refs(struct repository *r)
+> +static int do_update_refs(struct repository *r, int quiet)
+>   {
+>   	int res = 0;
+>   	struct string_list_item *item;
+>   	struct string_list refs_to_oids = STRING_LIST_INIT_DUP;
+>   	struct ref_store *refs = get_main_ref_store(r);
+> +	struct strbuf update_msg = STRBUF_INIT;
+> +	struct strbuf error_msg = STRBUF_INIT;
+>   
+>   	sequencer_get_update_refs_state(r->gitdir, &refs_to_oids);
+>   
+>   	for_each_string_list_item(item, &refs_to_oids) {
+>   		struct update_ref_record *rec = item->util;
+> +		int loop_res;
+>   
+>   		if (oideq(&rec->after, the_hash_algo->null_oid)) {
+>   			/*
+> @@ -4277,13 +4280,38 @@ static int do_update_refs(struct repository *r)
+>   			continue;
+>   		}
+>   
+> -		res |= refs_update_ref(refs, "rewritten during rebase",
+> -				       item->string,
+> -				       &rec->after, &rec->before,
+> -				       0, UPDATE_REFS_MSG_ON_ERR);
+> +		loop_res = refs_update_ref(refs, "rewritten during rebase",
+> +					   item->string,
+> +					   &rec->after, &rec->before,
+> +					   0, UPDATE_REFS_MSG_ON_ERR);
+> +		res |= loop_res;
+> +
+> +		if (quiet)
+> +			continue;
+> +
+> +		if (loop_res)
+> +			strbuf_addf(&error_msg, "\t%s\n", item->string);
+> +		else
+> +			strbuf_addf(&update_msg, "\t%s\n", item->string);
+> +	}
+> +
+> +	if (!quiet &&
+
+As you skip adding anything to the strbufs when quiet is true you don't 
+really need this test
+
+> +	    (update_msg.len || error_msg.len)) {
+> +		fprintf(stderr,
+> +			_("Updated the following refs with %s:\n%s"),
+> +			"--update-refs",
+> +			update_msg.buf);
+
+This will be printed even if all the updates falied
+
+> +
+> +		if (res)
+> +			fprintf(stderr,
+> +				_("Failed to update the following refs with %s:\n%s"),
+> +				"--update-refs",
+> +				error_msg.buf);
+>   	}
+>   
+>   	string_list_clear(&refs_to_oids, 1);
+> +	strbuf_release(&update_msg);
+> +	strbuf_release(&error_msg);
+>   	return res;
+>   }
+>   
+> @@ -4804,7 +4832,7 @@ cleanup_head_ref:
+>   		strbuf_release(&head_ref);
+>   	}
+>   
+> -	do_update_refs(r);
+> +	do_update_refs(r, opts->quiet);
+>   
+>   	/*
+>   	 * Sequence of picks finished successfully; cleanup by
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 4b7b77a4123..ef902b5431f 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1836,12 +1836,26 @@ test_expect_success '--update-refs updates refs correctly' '
+>   	test_commit extra2 fileX &&
+>   	git commit --amend --fixup=L &&
+>   
+> -	git rebase -i --autosquash --update-refs primary &&
+> +	git rebase -i --autosquash --update-refs primary 2>err &&
+>   
+>   	test_cmp_rev HEAD~3 refs/heads/first &&
+>   	test_cmp_rev HEAD~3 refs/heads/second &&
+>   	test_cmp_rev HEAD~1 refs/heads/third &&
+> -	test_cmp_rev HEAD refs/heads/no-conflict-branch
+> +	test_cmp_rev HEAD refs/heads/no-conflict-branch &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	Successfully rebased and updated refs/heads/update-refs.
+> +	Updated the following refs with --update-refs:
+> +		refs/heads/first
+> +		refs/heads/no-conflict-branch
+> +		refs/heads/second
+> +		refs/heads/third
+> +	EOF
+> +
+> +	# Clear "Rebasing (X/Y)" progress lines and drop leading tabs.
+> +	sed -e "s/Rebasing.*Successfully/Successfully/g" -e "s/^\t//g" \
+> +		<err >err.trimmed &&
+> +	test_cmp expect err.trimmed
+>   '
+>   
+>   test_expect_success 'respect user edits to update-ref steps' '
+> @@ -1980,7 +1994,22 @@ test_expect_success '--update-refs: check failed ref update' '
+>   	git rev-parse third >.git/refs/heads/second &&
+>   
+>   	git rebase --continue 2>err &&
+> -	grep "update_ref failed for ref '\''refs/heads/second'\''" err
+> +	grep "update_ref failed for ref '\''refs/heads/second'\''" err &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	Updated the following refs with --update-refs:
+> +		refs/heads/first
+> +		refs/heads/no-conflict-branch
+> +		refs/heads/third
+> +	Failed to update the following refs with --update-refs:
+> +		refs/heads/second
+> +	EOF
+> +
+> +	# Clear "Rebasing (X/Y)" progress lines and drop leading tabs.
+> +	tail -n 6 err >err.last &&
+
+I'm curious as to why we need tail here but not in the test above.
+
+This is looking good, I'd be happy enough to see it merged as is.
+
+Best Wishes
+
+Phillip
+
+> +	sed -e "s/Rebasing.*Successfully/Successfully/g" -e "s/^\t//g" \
+> +		<err.last >err.trimmed &&
+> +	test_cmp expect err.trimmed
+>   '
+>   
+>   # This must be the last test in this file
 
