@@ -2,125 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38D69C43334
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 19:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01B8EC43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 19:58:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230179AbiGOTKB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 15:10:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47708 "EHLO
+        id S230345AbiGOT6x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 15:58:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbiGOTKA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 15:10:00 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1BAA3CBD3
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 12:09:59 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id pg9-20020a17090b1e0900b001f076f7d15eso5666438pjb.5
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 12:09:59 -0700 (PDT)
+        with ESMTP id S229648AbiGOT6w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 15:58:52 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762B6140AD
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 12:58:46 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 19so6834196ljz.4
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 12:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=9TI9L20yT8c6oF2huUx0tZF3u+N1NnPLMBRhU2Ha+Ec=;
-        b=k7o6gOvP5C2Qan/wjTh3HbMmYPLoztrsV5d/c7Hd91lbGyIfT5ffSfgFwjC4dpR1+m
-         AnS8c03ylhqRL7ozC5Ti2X9pU1Fd9VzkXxEy+/z6PiCl8CRgwY/oNmZddlBtm4OqgKHN
-         OH0R6zGKWrHErJHUluZKvCoLZB7C/BvITYtiGl1Stm2W6Zu6Op1uQLlb3aKgeJUnLHvN
-         +on+B0XTHPO22v31PJ5Mv5kWOa5ct21zuIJjCph3DOXkAY0nKOjK28Q/voIIoVathhym
-         gSaaVOy351C3DU2lzMQfXJaXT1SgY7kYWI42/RxFrnad1RVmxkgxPZPuhP3z8Sg/SQp+
-         v47g==
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BV8Hz1b05YwrcPLmewb42015RsZ03q0Mbt/9CeHssY4=;
+        b=FBlx/inkE9VLzo+yU0zxu0/TT5YK/sY4umb4731D5AFoLUYRvZvpedWJafeGTR+Q2N
+         eUK/uQDLBAe4wvKDycEOiJQrbul39+wLRc1C/tIpqSjMaMCX8vUi/Wc/+NEiK5e9AYCd
+         wFdEyvjuLDC3zWaR1p/w1gEKtskpjG9VE5mkBEJ4zNQf+IK0hd/KfztCC5H9WoX1qy9x
+         xbBJzBBq/J9aZAEceiEnB8byStEsWEjTs8ILZSVl9TbjY1XyyTYKvjAX40bL2FhYuao2
+         Lyjsg7AMCZLymflL//eO+nN4nfpJABH4dvoCI/LGl4sP/F+P0P/TKbnTth+YVsMDRlhl
+         RC6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=9TI9L20yT8c6oF2huUx0tZF3u+N1NnPLMBRhU2Ha+Ec=;
-        b=OeNt+I1/LmnweUZfwYWJAmRl0AmXzKfhKs9sp3llGKEd9JmBsz5M1xBSLF4/z0033N
-         yuj1HRsPmOG57qj+aqxOzE+g1imNhqCjaXYLE7R7G+6ip+XIzDokwhZKxYg+BDMaNDLQ
-         G1p1USsKyXTPUs1/8AG35q395c59/lLwVBA5GRZnc1iSrG5x/88HCwgY83LdUwz24Aey
-         hA47ydw/+aUAvhcxvionfcwkpd3OxxjAGVCaTpxct2hCeorNYA2Mb0ksR8zLfBIS7R30
-         ERbTNVw0uthfuFjyu9xvMxZbYX3rmdkhA13IVkAkYVxArGPzkt42ku3sQ9Sk1VJ9l3W+
-         /BtQ==
-X-Gm-Message-State: AJIora++xJ7tjsRDzUiGj4kTBgtZgVC4QbCSlAicX/Fr6T0cROlaQg1a
-        6rV5Z4ET0YuAucXkQ5qoQbchaVD1zyr/muGRsFg5
-X-Google-Smtp-Source: AGRyM1sIJlqOzdJSOVEre1o7v0eHnX7Dh8LdOnsr257nGmpda9HPh+FAgrsbWk9D3gvvGmZdaChCQaHzmKvFyez97Qq6
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90b:181:b0:1ef:c348:6835 with
- SMTP id t1-20020a17090b018100b001efc3486835mr911346pjs.1.1657912199026; Fri,
- 15 Jul 2022 12:09:59 -0700 (PDT)
-Date:   Fri, 15 Jul 2022 12:09:56 -0700
-In-Reply-To: <xmqqmtdaz0vt.fsf@gitster.g>
-Message-Id: <20220715190956.2908637-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.37.0.170.g444d1eabd0-goog
-Subject: Re: [PATCH] fetch-pack: write effective filter to trace2
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BV8Hz1b05YwrcPLmewb42015RsZ03q0Mbt/9CeHssY4=;
+        b=cyxBUJqY0HoHSuCGZbdGUrfX8RhXZkq5xWlXMN3KlYxrNNPY3LIlhLIDiGlyLQz+Li
+         9mjk9kp2qUmuy4+h1zNfejBkNOh7eyDWLoGUlsngr0EzMMCce4tM5hviUuZUusLDVvdm
+         TOBwUNHMud5DYZq97f6TJ6wEbFTNVOUo4WQdJr1yuMbleC9ouf13XAsamnHnbA0fewYz
+         sFE1aMeCx/MMoGkGS4bm5LyKBzdZz3dTOnsSpshUFFGSS/PycWazOMa+SieuW8npVARq
+         eqhUuL6JIeHZ5v1yty47CJdRapzT/2LyE18t1BP4yg3ZZn2H1uU9QT7gCgMJH7SRuIym
+         Jiog==
+X-Gm-Message-State: AJIora96ZCrQrgkmiPLG5TvaWKp1zzGFwtyB+e0cFGRPKpw3M2jXGtcw
+        jkF3A2MBcYm5oYY4nnMarevaNeRjzH0SkJ9LpRZ3DKFvrpsYhQ==
+X-Google-Smtp-Source: AGRyM1t6UnrM81GOUa27Ad8W5Rjd/1s+fnOPew3hFVkTZu4vWR2zj7zyGnOXT6x/uZH57vtBejIIEQ1u55JWvBD9eoc=
+X-Received: by 2002:a2e:8255:0:b0:25d:8d25:b291 with SMTP id
+ j21-20020a2e8255000000b0025d8d25b291mr6773950ljh.334.1657915123359; Fri, 15
+ Jul 2022 12:58:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1657819649.git.matheus.bernardino@usp.br> <220714.86ilnz1j1i.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220714.86ilnz1j1i.gmgdl@evledraar.gmail.com>
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+Date:   Fri, 15 Jul 2022 16:58:31 -0300
+Message-ID: <CAHd-oW4zHA1YLX-5B1vYTA1f8PocziUCi0WxvSEkFUuf2GqKxg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] doc: unify config info on some cmds
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Jeff Hostetler <git@jeffhostetler.com> writes:
-> 
-> > On 7/15/22 1:29 PM, Jonathan Tan wrote:
-> >> Administrators of a managed Git environment (like the one at $DAYJOB)
-> >> might want to quantify the performance change of fetches with and
-> >> without partial clone from the client's point of view. Therefore, log
-> >> the effective filter being sent to the server whenever a fetch (or
-> >> clone) occurs. Note that this is not necessarily the same as what's
-> >> specified on the CLI, because during a fetch, the configured filter is
-> >> used whenever a filter is not specified on the CLI.
-> >> This is implemented for protocol v0, v1, and v2.
-> 
-> Is that different to say "for all protocols"?  I am wondering if it
-> is worth saying (unlike in a hypothetical case where we do not
-> support v0 and v1 we may want to state why we only support v2).
+Em qui, 14 de jul de 2022 18:27, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> escreveu:
+>
+>
+> Here's a cleaned up version of what I have, which I figure is probably
+> better linked-to than contributing to my E-Mail quota :):
+>
+>         https://github.com/git/git/compare/master...avar:git:avar/doc-con=
+fig-includes
 
-I wrote it that way to avoid confusion with things like HTTP (which is a
-protocol, at least in its name). Maybe better would be "This is
-implemented for all protocols (v0, v1, and v2)". I'll make that change
-in the commit message (after the other questions are discussed).
+Thanks for sharing your version!
 
-> >> diff --git a/fetch-pack.c b/fetch-pack.c
-> >> index cb6647d657..dec8743bec 100644
-> >> --- a/fetch-pack.c
-> >> +++ b/fetch-pack.c
-> >> @@ -392,7 +392,10 @@ static int find_common(struct fetch_negotiator *negotiator,
-> >>   	if (server_supports_filtering && args->filter_options.choice) {
-> >>   		const char *spec =
-> >>   			expand_list_objects_filter_spec(&args->filter_options);
-> >> +		trace2_data_string("fetch", the_repository, "fetch/effective-filter", spec);
-> >>   		packet_buf_write(&req_buf, "filter %s", spec);
-> >> +	} else {
-> >> +		trace2_data_string("fetch", the_repository, "fetch/effective-filter", "none");
-> 
-> Do we show "none" anywhere else where an expanded list objects
-> filter spec is expected?
+> The one thing I'd like you to reconsider is to drop the idea of adding
+> these "ifndef::git-grep[]" defines and the like. In your version it
+> yields an arguably better result.
+>
+> But I think what we should be going for is the more general direction
+> outlined above, at which point that becomes quite a mess of
+> ifdefs. I.e. config/gc/rerere.txt would need to know what it's going to
+> get include in, which would be N number of manpages in the genreal case,
+> not just "main or config" as this series leaves it.
+>
+> I think the solution I have to that in 1/9 in that first series is a
+> better trade-off, i.e. we just (eventually, your series doesn't need to
+> do that) include some standard wording saying that what you're looking
+> at in git-CMD(1) is transcluded as-is from the relevant part of
+> git-config(1). I.e.:
+>
+>         Everything below this line in this section is selectively include=
+d
+>         from the linkgit:git-config[1] documentation. The content is the =
+same
+>         as what's found there:
+>
+> What do you think about doing that instead?
 
-Hmm...no, we don't.
-
-> I am wondering two things: 
-> 
->  - The lack of this line would be a cleaner implementation of a
->    signal to say "this client did not ask any filtering".
-
-I think the presence is important to distinguish "no filtering" versus
-someone using an old Git version that does not emit such traces, but I'm
-open to changing the "none" to "none-specified" or something like that.
-
->  - It would be good if we keep what report here more-or-less the
->    same as what we can pass "--filter=" on the command line of
->    "git pack-objects".
-
-My intent is to report what is being sent to the server in the fetch
-request.
-
-> If "--filter=none" meant "this --filter passes everything", then
-> saying "none" here makes perfect sense wrt the latter, but I doubt
-> it is the case.
-
---filter=none does not work (a user would have to specify --no-filter),
-although it conceptually makes sense. I just wanted to have something
-show up to indicate that we are using a Git version that would emit a
-trace.
-
+I like the includes/* idea, and I agree that it is a more sensible way
+forward than the many 'ifndef[]::git-cmd.txt's :) Your linked changes
+also cover a wider range of cmds than my series does. So I'd be happy
+to have them as a replacement to this series.
