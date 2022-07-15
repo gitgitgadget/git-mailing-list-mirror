@@ -2,87 +2,263 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 607B9C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 06:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4866AC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 07:24:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbiGOGbB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jul 2022 02:31:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41220 "EHLO
+        id S231189AbiGOHYE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jul 2022 03:24:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231747AbiGOGai (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jul 2022 02:30:38 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0CD23BC2
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 23:30:25 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BDF2F1A50F4;
-        Fri, 15 Jul 2022 02:30:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Nd2Rab1SiTd6GvaqywHJBX9Cxri+NfM+gGcIO+
-        PgKdk=; b=KH/kIYQDAU2EO2tjPlJJXGJPjWlEYXjdtcvtP3rBLjJJE6ak1lpDDe
-        L5fZ4S3QppjFPecUtI2H3zC1qCvyjzYiAQJXzkyGtZd9okMEHLC6yATmb9LBiz5W
-        LAAckFGU9reUyRqFG/AFtp9PJVuKsxbOoAPQTNmixZqO/ZoX/ijyw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A9C521A50F3;
-        Fri, 15 Jul 2022 02:30:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2EA111A50F2;
-        Fri, 15 Jul 2022 02:30:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 0/3] Remove use of "whitelist"
-References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
-        <pull.1274.v2.git.1657852722.gitgitgadget@gmail.com>
-Date:   Thu, 14 Jul 2022 23:30:19 -0700
-In-Reply-To: <pull.1274.v2.git.1657852722.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Fri, 15 Jul 2022 02:38:39
-        +0000")
-Message-ID: <xmqq5yjy3n2c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230054AbiGOHYD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jul 2022 03:24:03 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E717FFD39
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 00:24:01 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id n9so2126932ilq.12
+        for <git@vger.kernel.org>; Fri, 15 Jul 2022 00:24:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=hzgDzJE178SartGJtRzLI5wXh2xHkY5TPRAvIkytMbc=;
+        b=fMcYVJpw8P3Yj5sf+gZ/PdOmIgEMrReyhBm7jUZx4nJY4u4wsvm45GZHJ8DPy3CgLK
+         yGPjVMvvpbgYgKNghciER+qWwA1Uuqe4K0yLh+Emo49T13tI/Lu1skM3i9PrHan9ZyRg
+         i9pg4BxwFkROqgJjYfUt01lD/FTEN28jXTZzLrnpfJAXDxpk660m/IzIl+zvca+KecVG
+         4FfiwcgSsQA1LOSG9L9B1SXVph7LePGfJZofAH1MtgevLbUJpOE9zltDCIK3F+dIEHBp
+         tmNcW+BtO7OSJYG8qczHe0Y3uXNrcgykZXzFFH/7F2IK1VzGR4sVaKQMqdnoE5CFzRNI
+         NoVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=hzgDzJE178SartGJtRzLI5wXh2xHkY5TPRAvIkytMbc=;
+        b=Oa9+2WUYWOBW5vJsEabFDIk/5tOFWexWfGSSCXWQoNXm3/dMoiE9XhmACo3FUf7Eqw
+         LBxziqGIV6um770Q2wCUdhqXODTvuOWNzacho6vceGMurZ2p33SSB2PSOn/ySTICXCCp
+         Zn2szCItx2zRIXB+jcz98tplkvDbExQ86CQJbsIXPjRqKWyFg56WpmxcQs/V3uz2Lwd9
+         oLTZs5t8lq7T1PwiyGiKiL/0axfu1sfwGtrQB0xA6NWHMB716Fpp92U+sZFU4xGVsnib
+         HETlJrrpewLn/iqHSccWtiea/N6a4o4E8j0082v1GXtKXjL80jggEU3UXBITbYsiugrB
+         sghA==
+X-Gm-Message-State: AJIora9gUtWt2X0Mrj1u60Z2XHGb2dtQAduYhUpEEFlmTdB46iLlMEcM
+        6hOsx9hl/8+ho+HsK5sGbE3rQD1mWcb0WZ0rMQYr9hlhpdeia9yE
+X-Google-Smtp-Source: AGRyM1txOXU9LxGRgkr53rZSrRlp3c3s5rCfJVUMy9m4EGe1FHEjrnzmypiaylxf3yaC6zh4r7pjwbqAhOdE9xBiEeo=
+X-Received: by 2002:a92:c08a:0:b0:2dc:2d67:6046 with SMTP id
+ h10-20020a92c08a000000b002dc2d676046mr6465187ile.236.1657869841080; Fri, 15
+ Jul 2022 00:24:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 99EC32B6-0407-11ED-AB93-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+From:   void f <fvoidcn@gmail.com>
+Date:   Fri, 15 Jul 2022 15:23:50 +0800
+Message-ID: <CA+dtV-gLyXSXAkG_0bBKC6TRN5Rcu6ct=wTAjkPDuGmBDv13Og@mail.gmail.com>
+Subject: Add a new config to tell Git only check files matched sparse-checkout patterns.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From ce8ed96edd72d0c7d57303c0a8b5e734daefeefe Mon Sep 17 00:00:00 2001
+From: fvoidCN <fvoidcn@gmail.com>
+Date: Fri, 15 Jul 2022 14:33:37 +0800
+Subject: [PATCH] repo_read_index: add config
+ `sparse.onlyCheckFilesMatchPatterns` to tell Git only check files matched
+ sparse-checkout patterns.
 
-> The word "whitelist" has cultural implications that make its use
-> non-inclusive.
->
-> A previous version of this series recommended the replacement of
-> "allowlist", but that term is still new and not accepted by some common
-> dictionaries.
->
-> Instead, this version avoids the use of "whitelist" by rewording the
-> sentences that use it. In many cases, this improves readability since the
-> term is used suddenly without other context (and in some cases, is not
-> necessary at all).
->
-> There is one case where "whitelist" is replaced with "allow_list" but that
-> is because we are operating on a string list parsed from the
-> GIT_ALLOW_PROTOCOL environment variable.
->
-> Thanks, -Stolee
+By Default with sparse checkouts, all files with SKIP_WORKTREE bit
+in the index must check whether exists in the worktree. And Git will
+expand all of that files in the index and must traverse recursively
+in the worktree. This option can be used to tell Git that just check
+files which can match the sparse-checkout patterns.
 
-Maybe I am biased, but for all the changes in these patches, I find
-the updated text far easier to understand than a mere replacing of
-the words s/white/allow/, even if I pretend that allowlist is
-considered by everybody a proper part of English vocabulary.  After
-all, I think most of the places did not have to say "whitelist" in
-the first place.
+It is useful when you are using a visual file system in order to
+on-demand loading working tree lazily. It can control which directory
+should load by using sparse-checkout patterns. But it doesn't want to
+visit other directory which haven't been load but just have an empty
+directory for the entry of the file loading switch. In default model,
+Git would traverse root direcotry recursively however all files would
+be loaded, this behaviour would very expensive. With
+`sparse.onlyCheckFilesMatchPatterns` model, Git would just check the
+path witch only matched the sparse-checkout patterns to prevent loading
+all the directory.
 
-Will queue.
+Signed-off-by: fvoid <fvoidcn@gmail.com>
+---
+ Documentation/config/sparse.txt  | 25 ++++++++++++++++
+ cache.h                          |  1 +
+ config.c                         |  5 ++++
+ environment.c                    |  1 +
+ sparse-index.c                   | 19 ++++++++----
+ t/t1090-sparse-checkout-scope.sh | 50 ++++++++++++++++++++++++++++++++
+ 6 files changed, 95 insertions(+), 6 deletions(-)
 
-Thanks.
+diff --git a/Documentation/config/sparse.txt b/Documentation/config/sparse.txt
+index aff49a8d3a..f71716f446 100644
+--- a/Documentation/config/sparse.txt
++++ b/Documentation/config/sparse.txt
+@@ -25,3 +25,28 @@ Regardless of this setting, Git does not check for
+ present-despite-skipped files unless sparse checkout is enabled, so
+ this config option has no effect unless `core.sparseCheckout` is
+ `true`.
++
++sparse.onlyCheckFilesMatchPatterns::
++    By Default with sparse checkouts, all files with SKIP_WORKTREE bit
++    in the index must check whether exists in the worktree. And Git will
++    expand all of that files in the index and must traverse recursively
++    in the worktree. This option can be used to tell Git that just check
++    files which can match the sparse-checkout patterns.
+++
++The default is `false`, which allows Git to automatically recover
++from the list of files in the index and working tree falling out of
++sync.
+++
++Set this to `true` if you just hope Git maintain the consistency
++between the presence of working tree files and sparsity patterns
++confining to which match the sparse-checkout patterns.For example,
++if you are using a visual file system in order to on-demand loading
++working tree lazily. It can control which directory should load by
++using sparse-checkout patterns. But it doesn't want to visit other
++directory which haven't been load but just have an empty directory
++for the entry of the file loading switch.
+++
++Regardless of this setting, Git does not check for
++present-despite-skipped files unless sparse checkout is enabled, so
++this config option has no effect unless `core.sparseCheckout` is
++`true`.
+\ No newline at end of file
+diff --git a/cache.h b/cache.h
+index ac5ab4ef9d..d1ed717403 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1074,6 +1074,7 @@ extern int protect_ntfs;
+ extern int core_apply_sparse_checkout;
+ extern int core_sparse_checkout_cone;
+ extern int sparse_expect_files_outside_of_patterns;
++extern int sparse_only_check_files_match_patterns;
+
+ /*
+  * Returns the boolean value of $GIT_OPTIONAL_LOCKS (or the default value).
+diff --git a/config.c b/config.c
+index 9b0e9c9328..5ab9719479 100644
+--- a/config.c
++++ b/config.c
+@@ -1758,6 +1758,11 @@ static int git_default_sparse_config(const char
+*var, const char *value)
+      return 0;
+   }
+
++  if (!strcmp(var, "sparse.onlycheckfilesmatchpatterns")) {
++     sparse_only_check_files_match_patterns = git_config_bool(var, value);
++     return 0;
++  }
++
+   /* Add other config variables here and to Documentation/config/sparse.txt. */
+   return 0;
+ }
+diff --git a/environment.c b/environment.c
+index b3296ce7d1..0ee4190c7d 100644
+--- a/environment.c
++++ b/environment.c
+@@ -73,6 +73,7 @@ int grafts_replace_parents = 1;
+ int core_apply_sparse_checkout;
+ int core_sparse_checkout_cone;
+ int sparse_expect_files_outside_of_patterns;
++int sparse_only_check_files_match_patterns;
+ int merge_log_config = -1;
+ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ unsigned long pack_size_limit_cfg;
+diff --git a/sparse-index.c b/sparse-index.c
+index e4a54ce194..264f4965e2 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -502,14 +502,21 @@ void
+clear_skip_worktree_from_present_files(struct index_state *istate)
+   for (i = 0; i < istate->cache_nr; i++) {
+      struct cache_entry *ce = istate->cache[i];
+
+-     if (ce_skip_worktree(ce) &&
+-         path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+-        if (S_ISSPARSEDIR(ce->ce_mode)) {
+-           ensure_full_index(istate);
+-           goto restart;
++     if (ce_skip_worktree(ce)) {
++        if (sparse_only_check_files_match_patterns &&
++            !path_in_sparse_checkout(ce->name, istate)){
++           continue;
++        }
++
++        if (path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
++           if (S_ISSPARSEDIR(ce->ce_mode)) {
++              ensure_full_index(istate);
++              goto restart;
++           }
++           ce->ce_flags &= ~CE_SKIP_WORKTREE;
+         }
+-        ce->ce_flags &= ~CE_SKIP_WORKTREE;
+      }
++
+   }
+ }
+
+diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-scope.sh
+index d1833c0f31..da8173ebe5 100755
+--- a/t/t1090-sparse-checkout-scope.sh
++++ b/t/t1090-sparse-checkout-scope.sh
+@@ -71,6 +71,56 @@ test_expect_success 'skip-worktree on files outside
+sparse patterns' '
+   test_cmp expect actual
+ '
+
++test_expect_success 'skip-worktree on files only matched patterns. default' '
++  git clean -f . &&
++  git update-index  --refresh &&
++  git sparse-checkout disable &&
++  git sparse-checkout set --no-cone "a*" &&
++  test_config sparse.expectFilesOutsideOfPatterns false &&
++  git checkout-index --all --ignore-skip-worktree-bits &&
++
++  git ls-files -t >output &&
++  ! grep ^S output >actual &&
++  test_must_be_empty actual
++'
++
++test_expect_success 'skip-worktree on files only matched patterns.
+b,c not in patterns' '
++  git clean -f . &&
++  git update-index  --refresh &&
++  git sparse-checkout disable &&
++  git sparse-checkout set --no-cone "a*" &&
++  test_config sparse.onlyCheckFilesMatchPatterns true &&
++  git checkout-index --all --ignore-skip-worktree-bits &&
++
++  git ls-files -t >output &&
++  cat <<-\EOF >expect &&
++  H a
++  S b
++  S c
++  EOF
++  test_cmp expect output >>actual &&
++  test_must_be_empty actual
++'
++
++test_expect_success 'skip-worktree on files only matched patterns.
+file b in patterns c is not' '
++  git clean -f . &&
++  git update-index  --refresh &&
++  git sparse-checkout disable &&
++  git sparse-checkout set --no-cone "a*" &&
++  test_config sparse.onlyCheckFilesMatchPatterns true &&
++  echo "b*" >>.git/info/sparse-checkout &&
++  git checkout-index --all --ignore-skip-worktree-bits &&
++
++  git ls-files -t >output &&
++  cat <<-\EOF >expect &&
++  H a
++  H b
++  S c
++  EOF
++  test_cmp expect output >>actual &&
++  test_must_be_empty actual
++'
++
+ test_expect_success 'in partial clone, sparse checkout only fetches
+needed blobs' '
+   test_create_repo server &&
+   git clone "file://$(pwd)/server" client &&
+-- 
+2.36.1
