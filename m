@@ -2,83 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2EFFC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 02:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61B1AC43334
+	for <git@archiver.kernel.org>; Fri, 15 Jul 2022 02:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241132AbiGOCZv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jul 2022 22:25:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38486 "EHLO
+        id S240810AbiGOCed (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jul 2022 22:34:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbiGOCZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jul 2022 22:25:49 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B474122B39
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 19:25:48 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id p81so2949182iod.2
-        for <git@vger.kernel.org>; Thu, 14 Jul 2022 19:25:48 -0700 (PDT)
+        with ESMTP id S229541AbiGOCeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jul 2022 22:34:31 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 391491BEB9
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 19:34:30 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id b2so2046354plx.7
+        for <git@vger.kernel.org>; Thu, 14 Jul 2022 19:34:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=jwDV73jsvmF+tqJ4aal08kPDPY79HY4z/rCEjxvC2os=;
-        b=UgPw9isy7EH9QzDAWOjkjclQqjfncRTxVqeZaYfdeXffp/xxKP1g/QGgtO52bQX6vX
-         h4oRWiefjkPmrTAXoKEZ3Fq+9BMcl7C8hUzZTF04DOGZxHqIkte3Deh99wJ0cQEsWLvc
-         QJ5NBp/igryc8DqLWhujGbdF/c0tFM+kFKHnbgK7qVZtvvQsJDkX82zrMuTHwx1T2v+o
-         oAbYu5N3KMUoBokCLwxTimIuNxXlQlkkCv+H/vSX2n6dKK/qzAFnI2TFsQVGCC5Cvyv7
-         9alJH21zEk3cYammfNn+IqYjZUtXkyoMEfNIuA0b4ya/n5DV0iUuuATkq+JZg7eQLARd
-         wZeA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jZCzMMmsBaRvRqtIafGo+jgscFLGdn8RjpbuAWnQU4Y=;
+        b=JogSXnNnJyNXR1CSU6Uud1fyg39giDCEQaKtUhvQqEEfFimlx1wNRspeo8LwSvx2FN
+         imUTLcDcOD+sYeQSNXzZmzS7fGizWxOiBCA8lUPRX7v/OkoUlQ1nXhPkt+k8uYkyL3nj
+         30LmK/kIkoYJPukWZQ0c+MUbmApnqoDkF5Wk2cfsBrto6bgexdsb8wMei5OV69SZDsO1
+         BUVQwS7YWjz2Uc6sBQirapRjj33QxECtMOGOWmZz2sFuJ1l6oRkij64PvjW8yvZl9ylZ
+         Wy95qD58JNzR0blyPLt2DoZ5Ar77sGP4A1wFat+sC0dz5byoWWqKk4kG/nx5EMP2Y9I0
+         BRew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=jwDV73jsvmF+tqJ4aal08kPDPY79HY4z/rCEjxvC2os=;
-        b=dp4R2XJMVWeU06psWxAijVqvhBsXXtbFnU9q7aqB1gETFMhcQWs2AJNRL/b7jd2+5x
-         QcZd+/152NgaZnaXgKfuF3lzTOnYmbVDqAKH7dZY5LAmhMmjGHzavBiEGfulv7i2OoC9
-         YjT31/qTJAfp00dYYhMxCXvbG0qCM77Wu1CeN5S5UXtzF6Nv0/q7q28nVyjl+fCkCtj6
-         XA+JwOEC5HRijtuFO50S+5sq6Zen/enWVAF242TXeMnXgmSZ9nc6YC+AFNnbp1qVX3vs
-         Zi0wFHv3DHhWb98V2jiIiiQ0IVdmLtH68GOawMKd33vw/XZbKeJelL2UJpsh10NNjw6o
-         jVOQ==
-X-Gm-Message-State: AJIora/pLb5rkUbnxsK087dT+/9i4E/HWZRtib4n3IO+2x5pVqdjA6NU
-        V2auEs0qZGLiEkpKwVWXXuNt
-X-Google-Smtp-Source: AGRyM1v2BhfLH11Bnm0nvf5PGLU38vO7LonUb8z4wecinhDrr8UbRPpvfm9YR6f50cJDvIu+8/wQmA==
-X-Received: by 2002:a02:ad05:0:b0:33f:6c88:b061 with SMTP id s5-20020a02ad05000000b0033f6c88b061mr6622892jan.172.1657851948134;
-        Thu, 14 Jul 2022 19:25:48 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:a446:d79d:69be:6b29? ([2600:1700:e72:80a0:a446:d79d:69be:6b29])
-        by smtp.gmail.com with ESMTPSA id f19-20020a022413000000b00339ceeec5edsm1440843jaa.12.2022.07.14.19.25.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jul 2022 19:25:47 -0700 (PDT)
-Message-ID: <52d432b9-acda-16dc-2536-9b6c66279836@github.com>
-Date:   Thu, 14 Jul 2022 22:25:46 -0400
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jZCzMMmsBaRvRqtIafGo+jgscFLGdn8RjpbuAWnQU4Y=;
+        b=AWOPRXoeIHTi+NTDFEp2Xm6W/qE+qLN3yPtY/fOoQZ6pQnTLte4Ib2dxMGBbDqgrEA
+         hmUcxbN8ekLdqwUyMkpkMcB4yrG+E5Zbn5KM7jkGGTnPJLG4QD6YiYQyYMP4a24gBMKV
+         ErjY229M/nBeTpjzrJQ3jpQtSDtqLsNZ1IC2XI12vdBiyFL6C4yoGNY6N5LLVMurWHDV
+         mSQU+oSOLps98sEBrhPT2/wy0qW7bG+qidNb8taFlAuCJ0wFX8YIq+zcbFTZfY5d5srQ
+         x81IHn+ZmX2rtJ3icHrBX7ZcLM5jsHrJ5bl2sjujVbwSVDImgqUcV7ObxupZMor2ZT8U
+         WK0g==
+X-Gm-Message-State: AJIora+v1oUFZ3gjKgLTVMppQcYv6gRnG+ojeeo4ewEXouLGWEYx9qQd
+        Mnim+Ohjx6azHGEnsJZFEaI=
+X-Google-Smtp-Source: AGRyM1ueIGVcYmannJNe+NJmCp6vcDDO2yz1DxsD+zvDlU24BUNPpf5p//roCQ4Lwy9b4jOc3EJ0zA==
+X-Received: by 2002:a17:90b:38c2:b0:1f0:59c0:55c with SMTP id nn2-20020a17090b38c200b001f059c0055cmr13219734pjb.166.1657852469556;
+        Thu, 14 Jul 2022 19:34:29 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.99])
+        by smtp.gmail.com with ESMTPSA id l13-20020a170903120d00b0016bedecdd65sm2223299plh.159.2022.07.14.19.34.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 Jul 2022 19:34:28 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     avarab@gmail.com
+Cc:     derrickstolee@github.com, dyroneteng@gmail.com,
+        git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
+        me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v6 5/7] pack-bitmap.c: using error() instead of silently returning -1
+Date:   Fri, 15 Jul 2022 10:34:22 +0800
+Message-Id: <20220715023422.6257-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.35.0.rc0.679.gacb6c2f483
+In-Reply-To: <220711.86bktv7l5v.gmgdl@evledraar.gmail.com>
+References: <220711.86bktv7l5v.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 0/3] Use "allowlist" and "denylist" tree-wide
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, johannes.schindelin@gmx.de
-References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
- <220713.86wncg3hnj.gmgdl@evledraar.gmail.com> <xmqqedyoabqp.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqedyoabqp.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/13/2022 6:28 PM, Junio C Hamano wrote:
-> If we can rephrase without using these invented words, we should do
-> so, especially when the result becomes even easier to read than the
-> original that used "whitelist".  I've shown a few examples in my
-> other messages in this thread.
+Ævar Arnfjörð Bjarmason writes:
 
-Based on those examples, I agree that the best thing to do is to
-rephrase to avoid the term altogether. This avoids confusion when
-the reader does not know the term, as well as sometimes being more
-consistent with the phrasing in the same document.
 
-Thanks,
--Stolee
+> This is a logic error, as fstat() failed, but you're reproting errno()
+> after our call to close(), at which point it's anyone's guess what
+> "errno" is. It's only meaningful immediately after a system call.
+>
+> So either:
+>
+>     error_errno(....);
+>     close(fd);
+>     return -1;
+>
+> Or even better:
+>
+>     error_errno(...)
+>     if (close(fd))
+>         warning_errno("cannot close() bitmap file");
+>     return -1;
+>
+> Although that last one may be too pedantic.
+> ...
+> Same issue here.
+
+
+Yes, this will be fixed in next patch.
+
+Thanks.
