@@ -2,35 +2,35 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82716C433EF
-	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 17:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 894D6C433EF
+	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 17:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232235AbiGPRBc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Jul 2022 13:01:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56652 "EHLO
+        id S229802AbiGPRCr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Jul 2022 13:02:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232217AbiGPRBY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jul 2022 13:01:24 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B76B220192
-        for <git@vger.kernel.org>; Sat, 16 Jul 2022 10:01:23 -0700 (PDT)
+        with ESMTP id S229648AbiGPRCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jul 2022 13:02:46 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 279951F62E
+        for <git@vger.kernel.org>; Sat, 16 Jul 2022 10:02:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1657990878;
-        bh=2PBc5Mm97PDs6p4eVbaOqO0otjiRK9R0XgecFLIufvI=;
+        s=dbaedf251592; t=1657990958;
+        bh=buZGKpC0RpNv9sOGu9nmHwy8/TYE97mnrVNiOTjp/S4=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=hJtA1IYBG+a0BKjk2ggwpdvKR9JyM+7cx9pY5unrFmU1jJwWzSFCC5l/KSphJm+IX
-         zcUU5APuzNMTIHaVDYPYYjhUDXkZqwo7SEs8SDP1HE2L7/pGl1NbGhZUmkQJGMuirq
-         JMnCR+BXGtfhCU6b/xR/OmiVp1LXAc3W7yhOYbCU=
+        b=SPXH9wtgVF2N4POx45Ovj3bzrwBIyRt20GEheOc0TBuVUlN5Vqn9KAAaXw8emsRLE
+         0qjRpVhGz+Hbgjal0COZK4nObsW1ouk9joRo7g1aSl4bYn3QpyB6vH1vwzWTaXE0IZ
+         a5qFrQ5mi869H4//iMpj9k21T+KJn+C/Wf0oNP18=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MJFhX-1nx0Uv2Fbf-00KpWv; Sat, 16
- Jul 2022 19:01:18 +0200
-Message-ID: <a041739a-cf0c-ac8d-c8ec-5c046575f59a@web.de>
-Date:   Sat, 16 Jul 2022 19:01:18 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mx0N5-1nJHxF2ikN-00yJ8L; Sat, 16
+ Jul 2022 19:02:38 +0200
+Message-ID: <2fd427e6-2f3c-66d1-bcc5-6bb1e0f59f08@web.de>
+Date:   Sat, 16 Jul 2022 19:02:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.0.2
-Subject: [PATCH 09/10] packfile: use DEFINE_LIST_SORT
+Subject: [PATCH 10/10] mergesort: remove llist_mergesort()
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -39,88 +39,161 @@ References: <4d7cd286-398e-215c-f2bd-aa7e8207be4f@web.de>
 In-Reply-To: <4d7cd286-398e-215c-f2bd-aa7e8207be4f@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:c3b2zSJwD/w/2vIdfS3w53gkzn2VK8cVhNJ6gk7G04TE5UX0zzL
- kO0VroPiZdd+kwdVn8ak7UTOSWkOMMPDE+3KUH++7SYARvc53RhFEX5obDlG8iM9bae46L6
- pIq/np0IL9pnR0uPAO6+wvINR8pAMCZwn58TWpLHYvthLwgdtTFQ9XsXbgKeEVPbcgTUoZy
- tqwLVVQf/3PAS5htSU0qQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:tIIJFPm8NBg=:84BKTMxaiErJRcCNowDuoE
- bOQ2xg0M4/K9b4d/H86gID3iMnUvmSC5fhfwZNnZ42lnfWSjM32VEa3qSMaCoK2rm02ktyagt
- tyAYDfMbgXBDoEuWAjRp2PU+iaxiXH6G3Gq7IDCqd0hHOotmNO5CUFKSQOiAgufzrukknbF3w
- HHbGpgLPXaUejwOk56/E+eG6cRZV0PSUvhCRQGQB5DOF3g8It89nu4iPbRKBHOOcoYIyCdtnz
- E3X58LroEpuvhxLMuooOlqRMMZSxddjR6bDzUT6fsBOqR6kjabkw8oJ8ud/U2eRROmdAcA+z0
- 5T+sb/FsuMRx0goAuF+y7v3T5pqY76nD8t2avFvV4pSGMc+2g+fv213Ey4lnxq1X8Er1VxoqD
- U4+lEi1cq7FPkrG8FE3WSCycL6UA/Oxgrcw1iq2MBZnyhM1ym5UV0osTGvqWUulR2XBgLyOrp
- jzR1Q8s8UNJj545fQXjolbVjUvVV2wi4YrqI1FUPwT5+/Xjjk3YIIT41vsYJQsV2nGZ55JrSf
- sFC9bfkbY5EcaI7YubaVnkl9gm5M8/gtKvpEJcOZeap7PMDCw20LN70lhIsVki1/NsFc7wQv0
- o1r433vMFzotLK9VFsh1kGX9QQx5X1CEBIfaCHUk4nufEqRp8eUWg2Dov3By4lAbEK/U+H7iA
- bZrS/RVHObFUm6UoQ2IVKjuOXBmgfcPK52p+mMUiIliCL34GbTohM+jzW5i4f1fNSJe26k3nH
- M1p6hHWYHHif85zrwCiX9HVQhQOfwUl55Iq/5r9EhoW6wQ7bhgGNlGrd5tOzRLM6agNQUoyRt
- TKl2/yA0+YEDcNxl+E8Z5awNZwOV34LcDv7+Tw70v315O8l4gy9kxp2lp6jlpTsOBF3HTn1yK
- +ipDWaB1zq24ljKwNT7erWYh8nC2brXh5/F+tEXS4WKWpcj7W096kNyBsWnTvxs5MYoOCaQyv
- nj4GXbS/hQjiMpC0N0NGATbn0Mtst113go75JO595E01I01Gk6GFUoEg7HDfVT9HDIYntIxUN
- ElRUsZxD1ya+p67QPcCY0QopgZfW5yVbakgP0BXwjUaLiCQD9IjgmItWl8lbjHysNPBnRD/pQ
- s5LZ3WtXnBIE6jz2xlKW8/9TmR363YLVMHESmAZv3dzG//3H/+L3O/wHg==
+X-Provags-ID: V03:K1:n6Zaf3h+uHXPe6GyZwxNh2pxegFOKkL1TKnsc43Tzzu29CMT53L
+ +9s7v+hxLYuXWXzEF9BeKhJcyq82ih+tFiapi1NgIy5Vs5Vy2bCklXWgh6Ek9mQsKIWeU3z
+ anvbWqWp4HsPbcEOVGi9rIoZMajHBfxacC7frdhJDBRM2tXwfB3oW9Tu0SH/n4vc12b9Hl5
+ vHc3dLjfIqLdOIGDxArBA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bHZ9ifs8JIQ=:rQ4q6jxVIlQmZZTK02FS8d
+ TQqzgzceUZOkmOL1JgYJVoSNf356U5qya9mdatEuhghW8E/Kvk5KiTaGuBDeP7X57GBHK37Tf
+ repCgL/o5MINL85inak919pvt7iisZ6qoQBSM31cyRx8VC5L0JZzo+bgzp4f+ynnz6/F6LLme
+ fMkPPXW3a55CDn6RmqpHy6EdoehkNIMMsp+iLepNLpioF28T+Tygjzr019qCHrLpCG/biU543
+ Vtk3CF191RE/Zru9yC6msikS/yKZIIlVW1EM1ivuhRtnUPD/0t8emzNR9XDyJYO7namLrEM4b
+ cW+XlmL+9UQlhEsbZVE2fKwDJbP9WNWJZIMLUVIVwBleUGNmB60PWsw6IDvM+6mrHeGpd6xEu
+ M6sgJ2ZPyBQ/VQhPLbRCF9efNY6lRjA6pG584WyEuA3Bdjt2kGx/3PNZo4R3Djsjs6fST3LWe
+ H56axXVdcdAY/g5DYGYfveEOuNdlfxGd7YzgWcoJpfgHpLxl2TEf/UU4O/KxRygOdsjhNCtM7
+ ESzEUUlmVD6fpa4md1ZmhyqSQFRLxGQKmbcLp0pJzlKa/rXkIB+EwoctfHHA95J8/TFJBdSlv
+ P241mDEzdwV4Ju/PxM9q3sxjRmEKJZkyqVP+yVd9uSOSL3y68ZWZ4SmNDRLgnCr3lzIYffhwG
+ TQsczMI05BL9RER9zeNGuHvpBWIotDFPyH05Jqc8BGJ6MeGB26BO8DBiMWNsaskgNN46XsM3j
+ pq9ophdOIfugE3TV8ZLI3NQAQPMtLWp0+P5hvqrzEFDKPq6YTdb60ZOMWAt4RrmfgGWI5vBCZ
+ 1fHd+cqRkCMY7CqLixzIQsBXX8yJjh+czsCpHABV7FDUlOJy/684MIUg5FlplYsOF0dGaTtBM
+ 7pJTxllEC7HJlC0EdIMR10U3sSV1+I9qL/KzdvXe7Gi4CX6w2bBQw7xK9C9XLu4lxJGHO6Eea
+ z+bhkmXuXdr64cfSGZzDcTSF/rQfp+komN7EmCCkF5QMYVWhkHlJ6dyZLqccIR5FkO++5eGQx
+ MSlmNR0JU5ncb5iR9iaT/n/l4MoG63PAZ+Jk2r2g8AjLcWEFThkI7WrxGnpcsEkVjX3Foczsa
+ OYRjFDAwL8FAk/zvexMpCbAiyDwrSo9mFk+adHdTf6sFsFG5KUSupFABQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Build a typed sort function for packed_git lists using DEFINE_LIST_SORT
-instead of calling llist_mergesort().  This gets rid of the next pointer
-accessor functions and their calling overhead at the cost of slightly
-increased object text size.
-
-Before:
-__TEXT	__DATA	__OBJC	others	dec	hex
-20218	320	0	110936	131474	20192	packfile.o
-
-With this patch:
-__TEXT	__DATA	__OBJC	others	dec	hex
-20430	320	0	112619	133369	208f9	packfile.o
+Now that all of its callers are gone, remove llist_mergesort().
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- packfile.c | 18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+ Makefile    |  1 -
+ mergesort.c | 76 -----------------------------------------------------
+ mergesort.h | 13 ---------
+ 3 files changed, 90 deletions(-)
+ delete mode 100644 mergesort.c
 
-diff --git a/packfile.c b/packfile.c
-index ed69fe457b..6b0eb9048e 100644
-=2D-- a/packfile.c
-+++ b/packfile.c
-@@ -941,20 +941,10 @@ unsigned long repo_approximate_object_count(struct r=
-epository *r)
- 	return r->objects->approximate_object_count;
- }
-
--static void *get_next_packed_git(const void *p)
+diff --git a/Makefile b/Makefile
+index 04d0fd1fe6..d41705dc31 100644
+=2D-- a/Makefile
++++ b/Makefile
+@@ -984,7 +984,6 @@ LIB_OBJS +=3D merge-ort.o
+ LIB_OBJS +=3D merge-ort-wrappers.o
+ LIB_OBJS +=3D merge-recursive.o
+ LIB_OBJS +=3D merge.o
+-LIB_OBJS +=3D mergesort.o
+ LIB_OBJS +=3D midx.o
+ LIB_OBJS +=3D name-hash.o
+ LIB_OBJS +=3D negotiator/default.o
+diff --git a/mergesort.c b/mergesort.c
+deleted file mode 100644
+index 6bda3a1c0e..0000000000
+=2D-- a/mergesort.c
++++ /dev/null
+@@ -1,76 +0,0 @@
+-#include "cache.h"
+-#include "mergesort.h"
+-
+-/* Combine two sorted lists.  Take from `list` on equality. */
+-static void *llist_merge(void *list, void *other,
+-			 void *(*get_next_fn)(const void *),
+-			 void (*set_next_fn)(void *, void *),
+-			 int (*compare_fn)(const void *, const void *))
 -{
--	return ((const struct packed_git *)p)->next;
+-	void *result =3D list, *tail;
+-	int prefer_list =3D compare_fn(list, other) <=3D 0;
+-
+-	if (!prefer_list) {
+-		result =3D other;
+-		SWAP(list, other);
+-	}
+-	for (;;) {
+-		do {
+-			tail =3D list;
+-			list =3D get_next_fn(list);
+-			if (!list) {
+-				set_next_fn(tail, other);
+-				return result;
+-			}
+-		} while (compare_fn(list, other) < prefer_list);
+-		set_next_fn(tail, other);
+-		prefer_list ^=3D 1;
+-		SWAP(list, other);
+-	}
 -}
 -
--static void set_next_packed_git(void *p, void *next)
+-/*
+- * Perform an iterative mergesort using an array of sublists.
+- *
+- * n is the number of items.
+- * ranks[i] is undefined if n & 2^i =3D=3D 0, and assumed empty.
+- * ranks[i] contains a sublist of length 2^i otherwise.
+- *
+- * The number of bits in a void pointer limits the number of objects
+- * that can be created, and thus the number of array elements necessary
+- * to be able to sort any valid list.
+- *
+- * Adding an item to this array is like incrementing a binary number;
+- * positional values for set bits correspond to sublist lengths.
+- */
+-void *llist_mergesort(void *list,
+-		      void *(*get_next_fn)(const void *),
+-		      void (*set_next_fn)(void *, void *),
+-		      int (*compare_fn)(const void *, const void *))
 -{
--	((struct packed_git *)p)->next =3D next;
+-	void *ranks[bitsizeof(void *)];
+-	size_t n =3D 0;
+-
+-	if (!list)
+-		return NULL;
+-
+-	for (;;) {
+-		int i;
+-		size_t m;
+-		void *next =3D get_next_fn(list);
+-		if (next)
+-			set_next_fn(list, NULL);
+-		for (i =3D 0, m =3D n;; i++, m >>=3D 1) {
+-			if (m & 1)
+-				list =3D llist_merge(ranks[i], list, get_next_fn,
+-						   set_next_fn, compare_fn);
+-			else if (next)
+-				break;
+-			else if (!m)
+-				return list;
+-		}
+-		n++;
+-		ranks[i] =3D list;
+-		list =3D next;
+-	}
 -}
-+DEFINE_LIST_SORT(static, sort_packs, struct packed_git, next);
+diff --git a/mergesort.h b/mergesort.h
+index 7b44355283..7c36f08bd5 100644
+=2D-- a/mergesort.h
++++ b/mergesort.h
+@@ -1,19 +1,6 @@
+ #ifndef MERGESORT_H
+ #define MERGESORT_H
 
--static int sort_pack(const void *a_, const void *b_)
-+static int sort_pack(const struct packed_git *a, const struct packed_git =
-*b)
- {
--	const struct packed_git *a =3D a_;
--	const struct packed_git *b =3D b_;
- 	int st;
-
- 	/*
-@@ -981,9 +971,7 @@ static int sort_pack(const void *a_, const void *b_)
-
- static void rearrange_packed_git(struct repository *r)
- {
--	r->objects->packed_git =3D llist_mergesort(
--		r->objects->packed_git, get_next_packed_git,
--		set_next_packed_git, sort_pack);
-+	sort_packs(&r->objects->packed_git, sort_pack);
- }
-
- static void prepare_packed_git_mru(struct repository *r)
+-/*
+- * Sort linked list in place.
+- * - get_next_fn() returns the next element given an element of a linked =
+list.
+- * - set_next_fn() takes two elements A and B, and makes B the "next" ele=
+ment
+- *   of A on the list.
+- * - compare_fn() takes two elements A and B, and returns negative, 0, po=
+sitive
+- *   as the same sign as "subtracting" B from A.
+- */
+-void *llist_mergesort(void *list,
+-		      void *(*get_next_fn)(const void *),
+-		      void (*set_next_fn)(void *, void *),
+-		      int (*compare_fn)(const void *, const void *));
+-
+ /* Combine two sorted lists.  Take from `list` on equality. */
+ #define DEFINE_LIST_MERGE_INTERNAL(name, type)				\
+ static type *name##__merge(type *list, type *other,			\
 =2D-
 2.37.1
