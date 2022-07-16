@@ -2,35 +2,35 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7316BC43334
-	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 16:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E7ABC433EF
+	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 16:59:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231883AbiGPQ60 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Jul 2022 12:58:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53604 "EHLO
+        id S231896AbiGPQ7L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Jul 2022 12:59:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229821AbiGPQ6Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jul 2022 12:58:25 -0400
+        with ESMTP id S229821AbiGPQ7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jul 2022 12:59:10 -0400
 Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A980B1EEFF
-        for <git@vger.kernel.org>; Sat, 16 Jul 2022 09:58:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AD21D11A
+        for <git@vger.kernel.org>; Sat, 16 Jul 2022 09:59:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1657990701;
-        bh=YDfkxxYE6PZhiH5TAOTdSYIijUTWHjzAFeXWclhw4JQ=;
+        s=dbaedf251592; t=1657990745;
+        bh=ryiAVfB/Kx7xMQB2asycsKme0OLkizPNC8z6/stXibM=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=rkgwH0GZR6V8xI8pjrqRogQkdjrWSHTgqSimudzjBtvv0a9gW0WUKb1hbdp4pgmQx
-         m/S31VVg+ZHg8OCUV4T1mFyQrgRQ68tGAknCfuizO4wXYj762Q8Y/JaFirMwQkFc01
-         e6UqB8IqV5DARuUFFccRLJyrF53KmvkLpwBhHmFs=
+        b=VRx64lr3k8+3BWkCySkqbfCBCmJ4w1jjC9Pjuthk3CUp36jiKOZE1F1JKF7IfHsol
+         Ry7fUPSEsF1WwERxzBUFFJlCshR3APtFII9Yr1L6tApBnp5zpnjMldLIe0xCFhc+eX
+         OsUKXY6TZjxmAP6ErQZ7Dp2PCA8eq4Y+P7wxbmlQ=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MN6BN-1nwSmu1WWD-00J905; Sat, 16
- Jul 2022 18:58:21 +0200
-Message-ID: <11f185bd-0117-7f1f-c97c-19cfb0de1384@web.de>
-Date:   Sat, 16 Jul 2022 18:58:20 +0200
+Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Ma0PY-1o0ZNF2tuO-00WAhL; Sat, 16
+ Jul 2022 18:59:05 +0200
+Message-ID: <396b927e-5bbd-1b7d-669e-8e22740b5295@web.de>
+Date:   Sat, 16 Jul 2022 18:59:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.0.2
-Subject: [PATCH 06/10] blame: use DEFINE_LIST_SORT
+Subject: [PATCH 07/10] commit: use DEFINE_LIST_SORT
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -39,125 +39,93 @@ References: <4d7cd286-398e-215c-f2bd-aa7e8207be4f@web.de>
 In-Reply-To: <4d7cd286-398e-215c-f2bd-aa7e8207be4f@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:XY1IRe4wQi/JGm6AxE3Fm9ntGUGreRMTKtFBhL6l3Ka+BZ4CQpK
- YoaM57nE8tPy4hc9fKEWFRG8GQhaeChCA3fnfkopX24OcmicdG6hDvljEPtzBozPNeaTL/J
- CtjxRO5suBhrdUrrWTgCAU/EhsW9YLVR8VD8COFH6JYZQISp+KuCH9fRlf7+2Q7ETBmm9u2
- wQTDGNArx43nq/YA5OBCw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:La4eu1O1mcI=:jbr88lfGNusRa0O6eSx7j/
- vD6CkUAU9Pic7nIY3XrP23/uXg+/KwfujIghCvF34KMhcKKGjYbvJQD9cjjgNmHmMIi95EliL
- vGMknrnh8FG92YnTGTEG4ne0EeiunIUg2zem45zTagZRhiSxGmVjV5n+DUTrDFUsyZdXBR0bL
- u/TkTwfui163DExgZjVjDXiILkLklpwLQupPuArp0k3Z/2WARFvF29RCDKODY5XfESKABX7Af
- 4Ecmc2gJI9X3ZmwCnAMLF/Cb1sZDVJRrTD9Dpy5Gkj/ct2JkPacfFfmRf59H1AUA1kTNQ7Oj/
- x910exIU5vzdt/CoHVigWj+BZ2YZo6PBtDTdRI+TGvvKS2lpZ+qHu2XSbEQzRSahmySZhtvPO
- 2z6AdY1638QZHlJoT0JFNDzlPl4WAeIRflhflVAnxtmZwC44dTUp9mOceF8WSqs3Q0jFE2BMH
- nMIWWhT318lOHp55R6v27VCLIm+m/oxXxxeHXN+zAqFWizMW9yL8i1CezQPfT2KKcC0TG8UAF
- +KFomg9G2OG1s3HIWA/veY2iw9osWlGcEw3327schmFeoF/sE3tz1WXttcrgyKhYvSIzi8uoq
- 2mT74jB2PL4qYcSF+Mt0BBZJMmcNjMrMrquqebhicLofQtcDw7bwo2ZOi506bmy5ONthBRDlF
- Kz7bTH6WWfllueZlYMzDY0K5JM69pllK8vt3rYKc4cRZXWPK9YU2xOAXGs27spDbhfZSApX9p
- EH+LF9pLqDGopmQHseDaATMKs4F92F4JDiy6cMIycYr9jRftKDnjI6ulC/OoVlbOZkKplpX1l
- QCvtYurkxixJuxALAl5/iSqGRav27gMMiz3zHfXuWA98kjsNT6V/DZcYTd7436R4AIGKyTogU
- lC6voWOwJRDwlJbuHuJDGUbusuT+68G0lRC7NUuXGRYo8ngCW7SXVCQ7wnWJcpl5hB/OVJsLh
- O/VlamUPJZIBTodQKX81l2nm0/wj8IAxyxEcomoSNkRMICz9iTdIIs6dbPY+M6VqH1lTUqDF0
- EkEp8/oeQN/6TGySbcE/xYNF1luJ+HXEeNOKhdpiMkokJzKRSx7h189VnFvohFM+j++oN5Fmv
- WLWivD+O1Tu3y2OZjLnduYQmeXFDTRYXtk60Qx9z4RRoPjr6WrDqEY0Cg==
+X-Provags-ID: V03:K1:pMfAzpF4gVnD7DxVtK0mXlZXiaiwgxyj4CxP8VzJpRIJLXHHGti
+ KcmMAdpmArdDD0rPdZsFkQ1476oUXf9Uv1UK4SL9a2Rxwu/VRH+qB6OMPvzGNNe+lFUSV8K
+ GFZms8ytTGHIkfRnQqAKt8KVJ8NczxcjA7uaLeBrJRRWlqEHoSczbRAsx7NQTkjlsvY83iC
+ bfec7mjThSnzBWcZJyKvQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:M4PZw6H3/k0=:wvV+l8c3yvVRx6llHVS5TM
+ izFYFRuFbbh5Wyoekhcu3l0MGjo0WBhUAV6zkOotl1X2dIYtTCWg6158EbF3AZ0jd7CVJeVgN
+ t2JFhkDOk54UwPVIvtWDiMQvy0ALqGRz7+e8uutdmR9oPdK9W+m5zwA6bQ9R19ek6AzZStNVm
+ UilqwEvBJfNXt21VfDUckh7M4laRIVp0xi6o6MuvPqLWkUk/YLGkFBlTPhlMinMVsVm4iJlAt
+ m+dboJ1mGkxF5hIoVDkLggbCwKH2HVYDQDcb7ok+j9RgXwqHqkbuJyi7IvnBcTQ9MiHaLpusL
+ RzUuxqsjoVuzNE5zhsrcy0LbkRsH3UT19IkyPAsuGdL4pOqN7TBecYPGvr59a788dpo/lP/As
+ 5wcX7dGTnmt3rlgf/90xhmz/nt50QkZMnljpARQiThWjVIuT5twtYnwXyfI3rg5tREmQdxvW5
+ bYNhoRYrouk6l6pKZUAVVzViCUcgiHwcLJqN96WROgjT33q0PgeGQxp+p0Zl7XY8Ggl+4et5e
+ bOgIB6+qqxWqOEZDyN77MQrjZRvov0npqVl/Ua1Y5VktD2Mes8CC8059173qud7ryfGjS3jpq
+ LkGrXAbGeCu1gkYR5Bb0DBLulStEFCPNCvcZGPZtzvZiiZXcCgUfsK2FIIrn++qjrlpbi8MDV
+ I00j3lSrlt/x5FyjrVl7YrKeU6LH0oTsCTMeRhPpcLIZQQAC+Jz6Pvb7ZTEH8deL5pHVM771Y
+ 7UmoEXzyd6RyGTi4oKCAUjI0wp0lpoeEXhhX63VgnF/5oLUHuLt6SiMUZRUdCMbXF8bdDA4aO
+ k31LDffF/UiQbk5hM4OPoQPOMuSBto+Lq5554REaEv898TC7M0ey51kVAmuC/q4ClMKrtTQTS
+ APCY8jyOUA36TH+tOGumnrjJvsoCIdwYFA50g3Bbavbt4dOImMxjyz9eCHrA5OP8NoUpYDqxc
+ IMAqj5l6McFVFvATKw9OyOCbMlAgQ5PI1Db+rEMwELYlsHkfJriITplvjLhUzDMweo11AijwZ
+ yEHzn2Jvn45O1DXeI9B+ZgZSZZNXQj5BWKLuiIz4tVxxvVh38zu6VLNn3cFjBsEBu3QenqaqC
+ RcXuCMRfpphQ1YunxooPxEM9l/dJ3XxRtLQIy6BcInc4egztvc/NYlRIQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Build a typed sort function for blame entries using DEFINE_LIST_SORT
-instead of calling llist_mergesort().  This gets rid of the next pointer
-accessor functions and their calling overhead at the cost of a slightly
-increased object text size.
+Use DEFINE_LIST_SORT to build a typed sort function for commit_list
+entries instead of calling llist_mergesort().  This gets rid of the next
+pointer accessor functions and their calling overhead at the cost of a
+slightly increased object text size.
 
 Before:
 __TEXT	__DATA	__OBJC	others	dec	hex
-24621	56	0	147515	172192	2a0a0	blame.o
+18795	92	0	104654	123541	1e295	commit.o
 
 With this patch:
 __TEXT	__DATA	__OBJC	others	dec	hex
-25229	56	0	151702	176987	2b35b	blame.o
+18963	92	0	106094	125149	1e8dd	commit.o
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- blame.c | 30 +++++++++---------------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
+ commit.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index da1052ac94..8bfeaa1c63 100644
-=2D-- a/blame.c
-+++ b/blame.c
-@@ -1098,30 +1098,22 @@ static struct blame_entry *blame_merge(struct blam=
-e_entry *list1,
- 	}
+diff --git a/commit.c b/commit.c
+index 1fb1b2ea90..0db461f973 100644
+=2D-- a/commit.c
++++ b/commit.c
+@@ -642,10 +642,11 @@ struct commit_list * commit_list_insert_by_date(stru=
+ct commit *item, struct comm
+ 	return commit_list_insert(item, pp);
  }
 
--static void *get_next_blame(const void *p)
+-static int commit_list_compare_by_date(const void *a, const void *b)
++static int commit_list_compare_by_date(const struct commit_list *a,
++				       const struct commit_list *b)
+ {
+-	timestamp_t a_date =3D ((const struct commit_list *)a)->item->date;
+-	timestamp_t b_date =3D ((const struct commit_list *)b)->item->date;
++	timestamp_t a_date =3D a->item->date;
++	timestamp_t b_date =3D b->item->date;
+ 	if (a_date < b_date)
+ 		return 1;
+ 	if (a_date > b_date)
+@@ -653,20 +654,11 @@ static int commit_list_compare_by_date(const void *a=
+, const void *b)
+ 	return 0;
+ }
+
+-static void *commit_list_get_next(const void *a)
 -{
--	return ((struct blame_entry *)p)->next;
+-	return ((const struct commit_list *)a)->next;
 -}
 -
--static void set_next_blame(void *p1, void *p2)
+-static void commit_list_set_next(void *a, void *next)
 -{
--	((struct blame_entry *)p1)->next =3D p2;
+-	((struct commit_list *)a)->next =3D next;
 -}
-+DEFINE_LIST_SORT(static, sort_blame_entries, struct blame_entry, next);
++DEFINE_LIST_SORT(static, commit_list_sort, struct commit_list, next);
 
- /*
-  * Final image line numbers are all different, so we don't need a
-  * three-way comparison here.
-  */
-
--static int compare_blame_final(const void *p1, const void *p2)
-+static int compare_blame_final(const struct blame_entry *e1,
-+			       const struct blame_entry *e2)
+ void commit_list_sort_by_date(struct commit_list **list)
  {
--	return ((struct blame_entry *)p1)->lno > ((struct blame_entry *)p2)->lno
--		? 1 : -1;
-+	return e1->lno > e2->lno ? 1 : -1;
+-	*list =3D llist_mergesort(*list, commit_list_get_next, commit_list_set_n=
+ext,
+-				commit_list_compare_by_date);
++	commit_list_sort(list, commit_list_compare_by_date);
  }
 
--static int compare_blame_suspect(const void *p1, const void *p2)
-+static int compare_blame_suspect(const struct blame_entry *s1,
-+				 const struct blame_entry *s2)
- {
--	const struct blame_entry *s1 =3D p1, *s2 =3D p2;
- 	/*
- 	 * to allow for collating suspects, we sort according to the
- 	 * respective pointer value as the primary sorting criterion.
-@@ -1138,8 +1130,7 @@ static int compare_blame_suspect(const void *p1, con=
-st void *p2)
-
- void blame_sort_final(struct blame_scoreboard *sb)
- {
--	sb->ent =3D llist_mergesort(sb->ent, get_next_blame, set_next_blame,
--				  compare_blame_final);
-+	sort_blame_entries(&sb->ent, compare_blame_final);
- }
-
- static int compare_commits_by_reverse_commit_date(const void *a,
-@@ -1964,9 +1955,7 @@ static void pass_blame_to_parent(struct blame_scoreb=
-oard *sb,
- 		    parent, target, 0);
- 	*d.dstq =3D NULL;
- 	if (ignore_diffs)
--		newdest =3D llist_mergesort(newdest, get_next_blame,
--					  set_next_blame,
--					  compare_blame_suspect);
-+		sort_blame_entries(&newdest, compare_blame_suspect);
- 	queue_blames(sb, parent, newdest);
-
- 	return;
-@@ -2383,8 +2372,7 @@ static int num_scapegoats(struct rev_info *revs, str=
-uct commit *commit, int reve
-  */
- static void distribute_blame(struct blame_scoreboard *sb, struct blame_en=
-try *blamed)
- {
--	blamed =3D llist_mergesort(blamed, get_next_blame, set_next_blame,
--				 compare_blame_suspect);
-+	sort_blame_entries(&blamed, compare_blame_suspect);
- 	while (blamed)
- 	{
- 		struct blame_origin *porigin =3D blamed->suspect;
+ struct commit *pop_most_recent_commit(struct commit_list **list,
 =2D-
 2.37.1
