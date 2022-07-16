@@ -2,159 +2,378 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB9F4C43334
-	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 06:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23699C433EF
+	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 07:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231686AbiGPGbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Jul 2022 02:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51594 "EHLO
+        id S229571AbiGPHlM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Jul 2022 03:41:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231676AbiGPGbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jul 2022 02:31:11 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5158A23BF9
-        for <git@vger.kernel.org>; Fri, 15 Jul 2022 23:30:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1657953049;
-        bh=Z+8O6YOV5eCWOBinzh8XpLVudVs4WsfxQMyj8KHJJ2E=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=m8EeEztI2bYCwsJma3M8YPH6uDpXmRdu75Efy4JgTR9VKOzx8zwiUEOZ5ci8wTEuz
-         oTC2L5FjkYBQjdfi6Z2gWVHOIblgfy9EgJzUB0Y4KXlDUdYTKeot2Jlj9NU3j2VIpX
-         QBxppAqz67B7Wou0RI7nmJv1sVFuHfmCSmbrLQ44=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M2ggX-1oFcOc0oPv-003uMW; Sat, 16
- Jul 2022 08:30:49 +0200
-Message-ID: <7da25e7e-e3c6-77a9-2b8f-7407e92605b9@web.de>
-Date:   Sat, 16 Jul 2022 08:30:47 +0200
+        with ESMTP id S229436AbiGPHlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jul 2022 03:41:11 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24AEE201AF
+        for <git@vger.kernel.org>; Sat, 16 Jul 2022 00:41:10 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id 72so6327965pge.0
+        for <git@vger.kernel.org>; Sat, 16 Jul 2022 00:41:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=/atULR2DqHI/rggd9HsFoKvV/OapAGQUmyI3tiWTevM=;
+        b=jeHiX+vLAhGRJnLFdlRi0Og7VgRDvJ/X6mtCBJx+ueWn4ye0r4lsCzvqY4+AFJVj00
+         u+H8rNIjhq2dJhpGC1YFwy8zdjMRV6BxpN6rXYNd32wKyJjtypXJWdtGw5knifkczGp1
+         Pd7tTqt8LoYmw/u2mboxHHQ5w/IgXmeigBTVdiEZEeJS1O0ywkJyf87lsPfzKXdIEPVi
+         E0ffq4Oi5y2Oqr1wazjRBXmY9Imy42eCxXbuxXbsZr5MPTVHU1MaaAGwUyYcUDaGuy6F
+         BETOPZq29CEj/eJxEjs+0KHvW4XAwxzqZKW6OPuU1ECxBM5xomcvkuy4J+eSMcMMMkjC
+         U6yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=/atULR2DqHI/rggd9HsFoKvV/OapAGQUmyI3tiWTevM=;
+        b=gBDA1FR1cnWPvVcbI+mirWBaY2fC/Fw589uKz2+v2gWW2/nnIsrD/JQ1bFoV5zCwRc
+         h8WhoPT54gNAK7M5gDhr9Dndp2/OT8TeBNbjiuPFCx+L80T5Uje7hxMB2rchm3edYgCd
+         Z53B8pfolciMwLs8Y7VsqwyKeeWarytYcPzdreqfPwAkITnGYguDgEojKjQgkqPpN9fS
+         Nq9IpSKRo2rfWEvYF8HjRgJEjt5lcGmWK3MptFjrDoJCRcSJf4yplPevEwO8TuSWhiSg
+         pf6IhHQd3Zrgzajny7Ae2LKOQIM19UYDtbof67adyY+9YrADYseJ+I6BGIun4TZ6rrAm
+         892g==
+X-Gm-Message-State: AJIora9qcL/GKJArO22LqRulqBbxXEtDqy9Zel82tRtOqVc5d6N3mElq
+        fMXCQqxDikNleOVQ+Ql6lqk5oLlJ0iaNX+pe
+X-Google-Smtp-Source: AGRyM1u+LQ6QLA7MEeX0vsMvddG4bIHtjXosh5qllhARGBOknXk2KA7cZTbNLm+xsksp+6eP4342Aw==
+X-Received: by 2002:a05:6a00:228e:b0:52b:13d2:2627 with SMTP id f14-20020a056a00228e00b0052b13d22627mr15867947pfe.42.1657957269011;
+        Sat, 16 Jul 2022 00:41:09 -0700 (PDT)
+Received: from HB2.. ([110.225.168.189])
+        by smtp.gmail.com with ESMTPSA id i27-20020a63541b000000b004161e62a3a5sm4325923pgb.78.2022.07.16.00.41.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Jul 2022 00:41:08 -0700 (PDT)
+From:   Siddharth Asthana <siddharthasthana31@gmail.com>
+To:     git@vger.kernel.org
+Cc:     phillip.wood123@gmail.com, congdanhqx@gmail.com,
+        christian.couder@gmail.com, avarab@gmail.com, gitster@pobox.com,
+        Johannes.Schindelin@gmx.de, johncai86@gmail.com,
+        Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH v5 0/4] Add support for mailmap in cat-file
+Date:   Sat, 16 Jul 2022 13:10:51 +0530
+Message-Id: <20220716074055.1786231-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.37.1.120.g001f220fb8
+In-Reply-To: <20220712160634.213956-1-siddharthasthana31@gmail.com>
+References: <20220712160634.213956-1-siddharthasthana31@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.0.2
-Subject: Re: [RFC][PATCH] mingw: avoid mktemp() in mkstemp() implementation
-To:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <7265e37f-fd29-3579-b840-19a1df52a59f@web.de>
- <b7fffe99-63fb-3899-6a6d-882b72b9512f@kdbg.org> <xmqq1qum2uvy.fsf@gitster.g>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq1qum2uvy.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:6aqJn6qWX5r6VNE24VR/yPc2nAvD7lv5xMrmoyrWxKjKTnV5IoI
- W+UuwOlXRn+G5g6kW/LEfB4ouoJahDyl/HzYf88IHDjNfQL88twtmKoac66Oe/ykcX0W32o
- kLUBUIHGO7GAfCm5mI3dltQWGlECZbzHTVYJ2DzK0cJNclHEyRCA3GL6cyK2ZngQQtcJE3h
- RyR/py6R7CMzLHid7fXfg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ug/8lrmrb78=:aDQqJFbNoWqKFZHBVc9hn+
- uLzIHBqOmR3I6t0fzrRdZt2TA5LdVOgZ1fonBI8HswETu0ByUixhOsLdSqKcfvkZyRmmY+iw0
- ssUlLZ2QWtPtivXfqRaQF+b+xJVU2F/o4eT+frldBAKklUZlxDLbIdAxFKpVDknYIKsjeQda3
- kn36iTj2TtIdL4C2egwcayGYJmLX7YwEm45u9Q4sPPatBiismdCSpJ7f/f/eLBkUjqKOyloHM
- hog8I4aCDEDXuWbWxY/iZeTrPq58Ibt8O6bOcw7v1RYAbtPC7YwATIeYaoCdCLwSqOSqQ+EdM
- 0dI8dhCen652bKHd1t88BRSHf38+V0lXDe1ChQEKvSZJ9Df15MbPgf7Z2QZzw83RPAzZns7RL
- y54ML2UHXsUIFrW8p1CLGVvATydF+JZOxNk1VXxIllLE+nRQqenQWPbuxx0jPFbhljnPU4FtH
- tYH/IGH8bz/A00b3C71bGZ0JLB81SDaFrCS4CvF1qzXGVwYSAe5jTaPp3LCrtmbPSofo4Pl/W
- mAa1idJ/rg3XTB+GvZ9OZJhVQQJ+bS7+1IWK0SRdz0f010J4QeEZW9laRbutffd38xWZEQf2N
- AxadMjK4VeuYOU39eHXpSmjsndNynV3AMzJSLzDlPZqh/If+EERlUD0NEV9SerJ3hYruhSZ8K
- tLgfEAbG5ZIjIMb7WRkpp1gOKSVRmeEL09dtBYwLkgmWW4Z+kgzzXG/Lw0C+PapLOdQl+UhKA
- 1oe1tI6385b3zsJdN1iHxL3aeJA7cfhpk8HwHKaScXIMgHNXCpZjuNuwWup020S947w/ldLFR
- WSkZovNsNkPty4zl2G6vVeTjx66HSd9tMv0yDN6jc7+sfS/rFJg4P6U2YXDHBt1LocPUSkOam
- eirKB9u4o6ianKzfh02B+oHt3IbdF5I+GwFhrjg58dcvgWLriaQ1LnsjV5O4Fg1IxcIAT9QNB
- SKCIU6R9Sy2Sj0+4rXB73o9sCWRnOxLjG5XLDTr+S0gx1sES29Nu+Uzq8jGkj957TeCpWfTja
- uHTukAA+J7GxOrn0pWeNEtURFHOE4COHLYkhyifNmWrtE2KlkAA0XaW49Q8nejFBH6aDsVReC
- 0Ca/WseZHe1U0zyr9SX0P3z0NsrhrKmszh1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.07.22 um 18:38 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
->
->>> diff --git a/compat/mingw.c b/compat/mingw.c
->>> index 2607de93af..b5502997e2 100644
->>> --- a/compat/mingw.c
->>> +++ b/compat/mingw.c
->>> @@ -1059,10 +1059,7 @@ char *mingw_mktemp(char *template)
->>>
->>>  int mkstemp(char *template)
->>>  {
->>> -	char *filename =3D mktemp(template);
->>> -	if (!filename)
->>> -		return -1;
->>> -	return open(filename, O_RDWR | O_CREAT, 0600);
->>> +	return git_mkstemp_mode(template, 0600);
->>>  }
->>>
->>>  int gettimeofday(struct timeval *tv, void *tz)
->>
->> I hate such an obvious layering violation. But we have already a ton of
->> them elsewhere (calling xmalloc from compat/, for example), so this is
->> just a rant, not an objection.
->
-> There is intended behaviour difference between xmalloc() and
-> malloc() that justifies your "layering violation" observation.  A
-> low level library replacement implemented in compat/ should not call
-> die() when it fails to obtain memory and instead report an error.
->
-> But it is unclear git_mkstemp_mode() and some others in wrapper.c
-> fall into the same category.  With the posted implementation above,
-> the end result is how the platform that lack working mkstemp() would
-> implement it.
+Thanks a lot Johannes and Junio for helping me identify and fix the memory
+corruption in commit_rewrite_person()!  :)
 
-We'd have a problem if git_mkstemp_mode() depended on mkstemp().  It
-doesn't now, but if it is ever turned into a mkstemp() wrapper then it
-would fall flat on its face, but only on Windows.
+= Description
 
-> If we were to do something to make it "cleaner", I suspect that the
-> above implementatoin of mkstemp() can be moved out of compat/mingw.c
-> and made reusable by _anybody_ who lack mkstemp(), just like we ship
-> memmem() emulation for anybody who lack it in contrib/memmem.c
+This patch series adds mailmap support to the git-cat-file command. It
+adds the mailmap support only for the commit and tag objects by
+replacing the idents for "author", "committer" and "tagger" headers. The
+mailmap only takes effect when --[no-]-use-mailmap or --[no-]-mailmap
+option is passed to the git cat-file command. The changes will work with
+the batch mode as well.
 
-All other platforms seem to have a native mkstemp().  There may still
-be interest in using our own if the native implementation is inferior,
-e.g. uses a weak RNG and/or doesn't retry.
+So, if one wants to enable mailmap they can use either of the following
+commands:
+$ git cat-file --use-mailmap -p <object>
+$ git cat-file --use-mailmap <type> <object>
 
-We could also convert the handful of mkstemp() callers (two if we
-ignore reftable/) to use git_mkstemp_mode().  One of them is quite
-tempting for the code deduplication aspect alone (see below)..
+To use it in the batch mode, one can use the following command:
+$ git cat-file --use-mailmap --batch
 
-Ren=C3=A9
+= Patch Organization
 
+- The first patch improves the commit_rewrite_person() by restricting it 
+  to traverse only through the header part of the commit object buffer.
+  It also adds an argument called headers which the callers can pass. 
+  The function will replace idents only on these  passed headers. 
+  Thus, the caller won't have to make repeated calls to the function.
+- The second patch moves commit_rewrite_person() to ident.c to expose it
+  as a public function so that it can be used to replace idents in the
+  headers of desired objects.
+- The third patch renames commit_rewrite_person() to a name which
+  describes its functionality clearly. It is renamed to
+  apply_mailmap_to_header().
+- The last patch adds mailmap support to the git cat-file command. It
+  adds the required documentation and tests as well.
 
-=2D--
- wrapper.c | 19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+Changes in v5:
+- In commit_rewrite_person(), we make calls to rewrite_ident_line(),
+  where the strbuf can grow. This moves the buffer to a new address,
+  which invalidates the `line` pointer, which still points at the same
+  address . This issue has been fixed by breaking out of the inner for
+  loop as soon as there we find a match for any commit headers that we
+  are passing to the function.
+- The commit_rewrite_person() no longer has a `linelen` variable and
+  instead we now rely on `buf_offset` for navigating through the buffer.
+- Some overly long lines have been wrapped.
 
-diff --git a/wrapper.c b/wrapper.c
-index 1c3c970080..77ca923040 100644
-=2D-- a/wrapper.c
-+++ b/wrapper.c
-@@ -439,24 +439,7 @@ FILE *fopen_or_warn(const char *path, const char *mod=
-e)
+Siddharth Asthana (4):
+  revision: improve commit_rewrite_person()
+  ident: move commit_rewrite_person() to ident.c
+  ident: rename commit_rewrite_person() to apply_mailmap_to_header()
+  cat-file: add mailmap support
 
- int xmkstemp(char *filename_template)
- {
--	int fd;
--	char origtemplate[PATH_MAX];
--	strlcpy(origtemplate, filename_template, sizeof(origtemplate));
--
--	fd =3D mkstemp(filename_template);
--	if (fd < 0) {
--		int saved_errno =3D errno;
--		const char *nonrelative_template;
--
--		if (strlen(filename_template) !=3D strlen(origtemplate))
--			filename_template =3D origtemplate;
--
--		nonrelative_template =3D absolute_path(filename_template);
--		errno =3D saved_errno;
--		die_errno("Unable to create temporary file '%s'",
--			nonrelative_template);
--	}
--	return fd;
-+	return xmkstemp_mode(filename_template, 0600);
- }
+ Documentation/git-cat-file.txt |  6 +++
+ builtin/cat-file.c             | 43 ++++++++++++++++++-
+ cache.h                        |  6 +++
+ ident.c                        | 75 ++++++++++++++++++++++++++++++++++
+ revision.c                     | 50 ++---------------------
+ t/t4203-mailmap.sh             | 59 ++++++++++++++++++++++++++
+ 6 files changed, 191 insertions(+), 48 deletions(-)
 
- /* Adapted from libiberty's mkstemp.c. */
-=2D-
-2.37.0
+Range-diff against v4:
+1:  9e95326c58 ! 1:  8c29ad9351 revision: improve commit_rewrite_person()
+    @@ Commit message
+         Mentored-by: Christian Couder <christian.couder@gmail.com>
+         Mentored-by: John Cai <johncai86@gmail.com>
+         Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+    +    Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+         Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+     
+      ## revision.c ##
+    @@ revision.c: int rewrite_parents(struct rev_info *revs, struct commit *commit,
+     +/*
+     + * Returns the difference between the new and old length of the ident line.
+     + */
+    -+static ssize_t rewrite_ident_line(const char* person, struct strbuf *buf, struct string_list *mailmap)
+    ++static ssize_t rewrite_ident_line(const char *person, struct strbuf *buf,
+    ++								  struct string_list *mailmap)
+      {
+     -	char *person, *endp;
+     +	char *endp;
+    @@ revision.c: static int commit_rewrite_person(struct strbuf *buf, const char *wha
+      	return 0;
+      }
+      
+    -+static void commit_rewrite_person(struct strbuf *buf, const char **headers, struct string_list *mailmap)
+    ++static void commit_rewrite_person(struct strbuf *buf, const char **header,
+    ++								  struct string_list *mailmap)
+     +{
+     +	size_t buf_offset = 0;
+     +
+    @@ revision.c: static int commit_rewrite_person(struct strbuf *buf, const char *wha
+     +
+     +	for (;;) {
+     +		const char *person, *line;
+    -+		size_t i, linelen;
+    ++		size_t i;
+     +
+     +		line = buf->buf + buf_offset;
+    -+		linelen = strchrnul(line, '\n') - line + 1;
+    ++		if (!*line || *line == '\n')
+    ++			return; /* End of header */
+     +
+    -+		if (linelen <= 1)
+    -+			/* End of header */
+    -+			return;
+    ++		for (i = 0; header[i]; i++)
+    ++			if (skip_prefix(line, header[i], &person)) {
+    ++				rewrite_ident_line(person, buf, mailmap);
+    ++				break;
+    ++			}
+     +
+    -+		buf_offset += linelen;
+    -+
+    -+		for (i = 0; headers[i]; i++)
+    -+			if (skip_prefix(line, headers[i], &person))
+    -+				buf_offset += rewrite_ident_line(person, buf, mailmap);
+    ++		buf_offset = strchrnul(buf->buf + buf_offset, '\n') - buf->buf;
+    ++		if (buf->buf[buf_offset] == '\n')
+    ++			++buf_offset;
+     +	}
+     +}
+     +
+2:  d9395cb8b2 ! 2:  ccb7f72fcb ident: move commit_rewrite_person() to ident.c
+    @@ cache.h: struct ident_split {
+     + * Given a commit object buffer and the commit headers, replaces the idents
+     + * in the headers with their canonical versions using the mailmap mechanism.
+     + */
+    -+void commit_rewrite_person(struct strbuf *buf, const char **commit_headers, struct string_list *mailmap);
+    ++void commit_rewrite_person(struct strbuf *, const char **, struct string_list *);
+     +
+      /*
+       * Compare split idents for equality or strict ordering. Note that we
+    @@ ident.c: int split_ident_line(struct ident_split *split, const char *line, int l
+     +/*
+     + * Returns the difference between the new and old length of the ident line.
+     + */
+    -+static ssize_t rewrite_ident_line(const char* person, struct strbuf *buf, struct string_list *mailmap)
+    ++static ssize_t rewrite_ident_line(const char *person, struct strbuf *buf,
+    ++								  struct string_list *mailmap)
+     +{
+     +	char *endp;
+     +	size_t len, namelen, maillen;
+    @@ ident.c: int split_ident_line(struct ident_split *split, const char *line, int l
+     +	return 0;
+     +}
+     +
+    -+void commit_rewrite_person(struct strbuf *buf, const char **headers, struct string_list *mailmap)
+    ++void commit_rewrite_person(struct strbuf *buf, const char **header,
+    ++						   struct string_list *mailmap)
+     +{
+     +	size_t buf_offset = 0;
+     +
+    @@ ident.c: int split_ident_line(struct ident_split *split, const char *line, int l
+     +
+     +	for (;;) {
+     +		const char *person, *line;
+    -+		size_t i, linelen;
+    ++		size_t i;
+     +
+     +		line = buf->buf + buf_offset;
+    -+		linelen = strchrnul(line, '\n') - line + 1;
+    -+
+    -+		if (linelen <= 1)
+    -+			/* End of header */
+    -+			return;
+    -+
+    -+		buf_offset += linelen;
+    -+
+    -+		for (i = 0; headers[i]; i++)
+    -+			if (skip_prefix(line, headers[i], &person))
+    -+				buf_offset += rewrite_ident_line(person, buf, mailmap);
+    ++		if (!*line || *line == '\n')
+    ++			return; /* End of header */
+    ++
+    ++		for (i = 0; header[i]; i++)
+    ++			if (skip_prefix(line, header[i], &person)) {
+    ++				rewrite_ident_line(person, buf, mailmap);
+    ++				break;
+    ++			}
+    ++
+    ++		buf_offset = strchrnul(buf->buf + buf_offset, '\n') - buf->buf;
+    ++		if (buf->buf[buf_offset] == '\n')
+    ++			++buf_offset;
+     +	}
+     +}
+      
+    @@ revision.c: int rewrite_parents(struct rev_info *revs, struct commit *commit,
+     -/*
+     - * Returns the difference between the new and old length of the ident line.
+     - */
+    --static ssize_t rewrite_ident_line(const char* person, struct strbuf *buf, struct string_list *mailmap)
+    +-static ssize_t rewrite_ident_line(const char *person, struct strbuf *buf,
+    +-								  struct string_list *mailmap)
+     -{
+     -	char *endp;
+     -	size_t len, namelen, maillen;
+    @@ revision.c: int rewrite_parents(struct rev_info *revs, struct commit *commit,
+     -	return 0;
+     -}
+     -
+    --static void commit_rewrite_person(struct strbuf *buf, const char **headers, struct string_list *mailmap)
+    +-static void commit_rewrite_person(struct strbuf *buf, const char **header,
+    +-								  struct string_list *mailmap)
+     -{
+     -	size_t buf_offset = 0;
+     -
+    @@ revision.c: int rewrite_parents(struct rev_info *revs, struct commit *commit,
+     -
+     -	for (;;) {
+     -		const char *person, *line;
+    --		size_t i, linelen;
+    +-		size_t i;
+     -
+     -		line = buf->buf + buf_offset;
+    --		linelen = strchrnul(line, '\n') - line + 1;
+    --
+    --		if (linelen <= 1)
+    --			/* End of header */
+    --			return;
+    --
+    --		buf_offset += linelen;
+    --
+    --		for (i = 0; headers[i]; i++)
+    --			if (skip_prefix(line, headers[i], &person))
+    --				buf_offset += rewrite_ident_line(person, buf, mailmap);
+    +-		if (!*line || *line == '\n')
+    +-			return; /* End of header */
+    +-
+    +-		for (i = 0; header[i]; i++)
+    +-			if (skip_prefix(line, header[i], &person)) {
+    +-				rewrite_ident_line(person, buf, mailmap);
+    +-				break;
+    +-			}
+    +-
+    +-		buf_offset = strchrnul(buf->buf + buf_offset, '\n') - buf->buf;
+    +-		if (buf->buf[buf_offset] == '\n')
+    +-			++buf_offset;
+     -	}
+     -}
+     -
+3:  355bbda25e ! 3:  38c18fd10d ident: rename commit_rewrite_person() to apply_mailmap_to_header()
+    @@ cache.h: struct ident_split {
+     + * Given a commit or tag object buffer and the commit or tag headers, replaces
+     + * the idents in the headers with their canonical versions using the mailmap mechanism.
+       */
+    --void commit_rewrite_person(struct strbuf *buf, const char **commit_headers, struct string_list *mailmap);
+    -+void apply_mailmap_to_header(struct strbuf *buf, const char **headers, struct string_list *mailmap);
+    +-void commit_rewrite_person(struct strbuf *, const char **, struct string_list *);
+    ++void apply_mailmap_to_header(struct strbuf *, const char **, struct string_list *);
+      
+      /*
+       * Compare split idents for equality or strict ordering. Note that we
+     
+      ## ident.c ##
+    -@@ ident.c: static ssize_t rewrite_ident_line(const char* person, struct strbuf *buf, struct
+    +@@ ident.c: static ssize_t rewrite_ident_line(const char *person, struct strbuf *buf,
+      	return 0;
+      }
+      
+    --void commit_rewrite_person(struct strbuf *buf, const char **headers, struct string_list *mailmap)
+    -+void apply_mailmap_to_header(struct strbuf *buf, const char **headers, struct string_list *mailmap)
+    +-void commit_rewrite_person(struct strbuf *buf, const char **header,
+    +-						   struct string_list *mailmap)
+    ++void apply_mailmap_to_header(struct strbuf *buf, const char **header,
+    ++							 struct string_list *mailmap)
+      {
+      	size_t buf_offset = 0;
+      
+4:  ac532965b4 ! 4:  0a459d4c53 cat-file: add mailmap support
+    @@ Commit message
+         This patch also introduces new test cases to test the mailmap mechanism in
+         git cat-file command.
+     
+    -    The tests added in this patch series rely on the side effects of the earlier
+    -    test case `set up symlink tests`. However, that test case is guarded behind the
+    -    `SYMLINKS` prereq, therefore it is not run e.g. on Windows which can cause the
+    -    added tests to fail on Windows. So, fix that by removing the prereq from the
+    -    `set up` test case, and adjusting its title to reflect its broadened responsibility.
+    -
+         Mentored-by: Christian Couder <christian.couder@gmail.com>
+         Mentored-by: John Cai <johncai86@gmail.com>
+         Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+    @@ builtin/cat-file.c: int cmd_cat_file(int argc, const char **argv, const char *pr
+      		batch.all_objects = 1;
+     
+      ## t/t4203-mailmap.sh ##
+    -@@ t/t4203-mailmap.sh: test_expect_success 'find top-level mailmap from subdir' '
+    - 	test_cmp expect actual
+    - '
+    - 
+    --test_expect_success SYMLINKS 'set up symlink tests' '
+    -+test_expect_success 'prepare for symlink/--use-mailmap tests' '
+    - 	git commit --allow-empty -m foo --author="Orig <orig@example.com>" &&
+    - 	echo "New <new@example.com> <orig@example.com>" >map &&
+    - 	rm -f .mailmap
+     @@ t/t4203-mailmap.sh: test_expect_success SYMLINKS 'symlinks not respected in-tree' '
+      	test_cmp expect actual
+      '
+      
+    ++test_expect_success 'prepare for cat-file --mailmap' '
+    ++	rm -f .mailmap &&
+    ++	git commit --allow-empty -m foo --author="Orig <orig@example.com>"
+    ++'
+    ++
+     +test_expect_success '--no-use-mailmap disables mailmap in cat-file' '
+     +	test_when_finished "rm .mailmap" &&
+     +	cat >.mailmap <<-EOF &&
+-- 
+2.37.1.120.g001f220fb8
 
