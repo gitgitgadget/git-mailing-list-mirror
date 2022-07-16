@@ -2,57 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5B6EC433EF
-	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 19:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94AB4C433EF
+	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 19:30:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbiGPTUj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Jul 2022 15:20:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40104 "EHLO
+        id S232256AbiGPTar (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Jul 2022 15:30:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229694AbiGPTUi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jul 2022 15:20:38 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9E9F17E37
-        for <git@vger.kernel.org>; Sat, 16 Jul 2022 12:20:34 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id g1so5197654qki.7
-        for <git@vger.kernel.org>; Sat, 16 Jul 2022 12:20:34 -0700 (PDT)
+        with ESMTP id S232145AbiGPTar (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jul 2022 15:30:47 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D24E1EAF9
+        for <git@vger.kernel.org>; Sat, 16 Jul 2022 12:30:46 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id v28so4443529qkg.13
+        for <git@vger.kernel.org>; Sat, 16 Jul 2022 12:30:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KB99zNyM+q1wBBADq2dkyLUsjrbZcGAWG5oQMcnxWiM=;
-        b=FZbwSp/Wd2+W6FtTqETorSWHjPLS7QaBM0BO4vCoJQGvUjFx6fp6gh1HPT7AsYdGNi
-         Q7s2z8qnSlOBGbdsMzunVJCtZ2HeH32il+6ny2T5uo8aKrvlX9ng+5CW6Ldw6RvCf4AN
-         J8GjUHRC02yh5Myh07QtTEpKGoBEiI/iwtE4QVmOwv/S/wf0yD8qqJgqkfHfF5dNjLBb
-         5fnfJQWuMmpakRr9ILcUZAB0hefmNrsNx/YOafpokn4WCsL4nY1DgOwrfEul47sVgM/X
-         XfOcRIlxhHwvMt++zUioyvAPuW+F/gYZuaOEwhaTX9R/bEQ7Pw2tAr3CFV0x8Yyqxmkq
-         PKxQ==
+        bh=QVO3C+KBCWlOv3fahazuYPXEpUADLL400AqDkMr0+cs=;
+        b=eHfDd/Vgacb4+yMGA0Xoljxc229ldejG9HDLSAz9E4J6e1gRd6jlLAATyic0GxQaQs
+         poTDkCjPUvUdyVG9fnAbiBAypg81e8yedAlAfEk7kRMwqZEt2D8OzujYNzPHPic0ea6n
+         SMmDpK6iPdlEUIRTI1Rz24L/qcgIfWpivNE2yvD4V4SQ4k7ZlkyOW2XeqEY+gwJoLklf
+         61Nkpxw469hBBVwwdlF/K+mvhejGOuRLxpitn1TsgWfus+eZSdIUXAEHWfjArdauKu6f
+         5WVFkGOzIMj/SjVSa91Y/nTiaRBUBkiWjhL0zbIdF6URGaWWnWibeOlfc6y6BqrEHA6W
+         8e1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KB99zNyM+q1wBBADq2dkyLUsjrbZcGAWG5oQMcnxWiM=;
-        b=jV94Ct7oExECVGj4iG7Y2xZVj/8qLiZKCSTAT1h2ODO2crH//DMvVVao7cg0LhwjUW
-         rusUKdV0+aN1j9NVeb4gFQYLzpkUmTQNPMBl3n8UyZq5VqCoeHr14pgMkBCoUjbLLlrd
-         et29FqOFVvfi7q6wW6gQMsbYMkLejzztPb+zBjddEJXX2r+8jYjklHjf4/c8w3qIKB0F
-         eBaE63SZZLSW8Zoqj+fhwKjXSiGur4AmWyBrSgp36tyAkWeX2vPEIkNpm7BhJj1WZ2TL
-         h/Jx7dSPaVFIoNJKLh9J4xKYj7R8crZNyCRZpfT1LvDoh0LOx9iq9DiECTDYDMSyxtZS
-         y8sA==
-X-Gm-Message-State: AJIora872nA5LUuLHwABSoQPMiAc32EJlqn3m5zsuPgFAjJ4vqdHzkfq
-        Q7DAyQpy2vtSbs0/ovFrxDctRQKtRaALQ/hPlAM=
-X-Google-Smtp-Source: AGRyM1s1lw3DAnNp6alCZTS7jgRIWd1QjeK7542LpF7UDcuFaKICJtptQfexfqfICvRsGAlnhGD+C6NKy9LbIDUottU=
-X-Received: by 2002:a05:620a:1786:b0:6af:6e0f:596c with SMTP id
- ay6-20020a05620a178600b006af6e0f596cmr13035448qkb.227.1657999233779; Sat, 16
- Jul 2022 12:20:33 -0700 (PDT)
+        bh=QVO3C+KBCWlOv3fahazuYPXEpUADLL400AqDkMr0+cs=;
+        b=y5ZHh4JmCHxvCpOilaDew5LbwzxvzTfRBBC6baTa2uPQzo39Mk46nytwA/0ssBaRWo
+         qMrG8WNWwnMiULAq3mm/DYlicmJSBjVTcFhN+WQSKkboYMd/rvMU6WPr/uantJ4+40Mg
+         cknV1Z1Guttbo0pjNSXOQfYlnm5WW+rEQaOJgQMugZK/hq3uCwVv4izXy/TvpSA49xM7
+         fwJFwJambzyVWvXPNObCP+vg2HkFACV3683ATAhK/Q0Ovkvhc3zr05NckaqaSwiL2zTy
+         tDuFNaqQ/yx7Iykb7d4K+3bmOhPI+TteZ+lQQ9GPfVM8NCf2ZqiM8rmkb4iwE1M/wXhM
+         j0OA==
+X-Gm-Message-State: AJIora9iWzzofb0qNJd1BHF/wvrir4YPoBE0sFEEM/wTpMA5oaSZ3YMl
+        PM2q09bHGnc86Fl5cD2RG0AyBbjcF1VIld07WVo=
+X-Google-Smtp-Source: AGRyM1tRu5Lv+37TPaAwMQGTv4gf00GX3guiwW1C/Riyw8Ohb76J4gsrUu2uA5PNVa+47ceCfimzvPJ7pXUS22GNOA8=
+X-Received: by 2002:a05:620a:4547:b0:6b5:879c:5891 with SMTP id
+ u7-20020a05620a454700b006b5879c5891mr13227967qkp.187.1657999845368; Sat, 16
+ Jul 2022 12:30:45 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
- <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com> <29c7c76805abb9b8afd44a65cb39d8f9d3c95892.1657631226.git.gitgitgadget@gmail.com>
-In-Reply-To: <29c7c76805abb9b8afd44a65cb39d8f9d3c95892.1657631226.git.gitgitgadget@gmail.com>
+ <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com> <3ec2cc922f971af4e4a558188cf139cc0c0150d6.1657631226.git.gitgitgadget@gmail.com>
+In-Reply-To: <3ec2cc922f971af4e4a558188cf139cc0c0150d6.1657631226.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 16 Jul 2022 12:20:23 -0700
-Message-ID: <CABPp-BF_F3X4ZMQpV7DRkt-ZzLS2erMKHJAbL6s2eQRxahEg=Q@mail.gmail.com>
-Subject: Re: [PATCH v4 09/12] sequencer: rewrite update-refs as user edits
- todo list
+Date:   Sat, 16 Jul 2022 12:30:34 -0700
+Message-ID: <CABPp-BENsp3uc7J_xS0gr_yjWQ25NVuJbdHzCMEcaaGYvLEiKA@mail.gmail.com>
+Subject: Re: [PATCH v4 07/12] rebase: add --update-refs option
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -71,31 +70,35 @@ On Tue, Jul 12, 2022 at 6:07 AM Derrick Stolee via GitGitGadget
 >
 > From: Derrick Stolee <derrickstolee@github.com>
 >
-> An interactive rebase provides opportunities for the user to edit the
-> todo list. The --update-refs option initializes the list with some
-> 'update-ref <ref>' steps, but the user could add these manually.
-> Further, the user could add or remove these steps during pauses in the
-> interactive rebase.
+[...]
 >
-> Add a new method, todo_list_filter_update_refs(), that scans a todo_list
-> and compares it to the stored update-refs file. There are two actions
-> that can happen at this point:
->
-> 1. If a '<ref>/<before>/<after>' triple in the update-refs file does not
->    have a matching 'update-ref <ref>' command in the todo-list _and_ the
->    <after> value is the null OID, then remove that triple. Here, the
->    user removed the 'update-ref <ref>' command before it was executed,
->    since if it was executed then the <after> value would store the
->    commit at that position.
->
-> 2. If a 'update-ref <ref>' command in the todo-list does not have a
->    matching '<ref>/<before>/<after>' triple in the update-refs file,
->    then insert a new one. Store the <before> value to be the current
->    OID pointed at by <ref>. This is handled inside of the
->    init_update_ref_record() helper method.
->
-> We can test that this works by rewriting the todo-list several times in
-> the course of a rebase. Check that each ref is locked or unlocked for
-> updates after each todo-list update. We an also verify that the ref
+> +--update-refs::
+> +--no-update-refs::
+> +       Automatically force-update any branches that point to commits that
+> +       are being rebased. Any branches that are checked out in a worktree
+> +       or point to a `squash! ...` or `fixup! ...` commit are not updated
+> +       in this way.
 
-s/an/can/ ?
+I think the second sentence here should be split.  In particular, I
+don't think I understand the second half of the second sentence.  Do
+you intend to say here that branches pointing to a `squash!` or
+`fixup!` will instead update the first `pick` in the ancestry of such
+a commit, rather than that such branches are entirely excluded from
+any updates?  That's what I observed in my testing of your v3, at
+least, and that's the behavior I'd expect this feature to implement,
+but this documentation doesn't match.
+
+[...]
+> @@ -5660,6 +5764,9 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>                 item->arg_len = item->arg_offset = item->flags = item->offset_in_buf = 0;
+>         }
+>
+> +       if (update_refs && todo_list_add_update_ref_commands(todo_list))
+> +               return -1;
+> +
+
+As a tangent, I find it interesting that you add the update-ref
+commands as a post-processing step rather than as a part of
+sequencer_make_script().  I don't think you need to change anything,
+but I am curious due to my git-replay work if you find it advantageous
+to do it this way.
