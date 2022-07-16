@@ -2,35 +2,35 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98DECC433EF
-	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 16:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6F87C43334
+	for <git@archiver.kernel.org>; Sat, 16 Jul 2022 16:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231697AbiGPQ4i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Jul 2022 12:56:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52638 "EHLO
+        id S231738AbiGPQ5Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Jul 2022 12:57:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230448AbiGPQ4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jul 2022 12:56:37 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02F721EECB
-        for <git@vger.kernel.org>; Sat, 16 Jul 2022 09:56:35 -0700 (PDT)
+        with ESMTP id S229683AbiGPQ5Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jul 2022 12:57:24 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E231EEDD
+        for <git@vger.kernel.org>; Sat, 16 Jul 2022 09:57:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1657990592;
-        bh=ZHs1iXbVbXaVw++047CRpV2JS/Why4c2OfaUdEZ4T+g=;
+        s=dbaedf251592; t=1657990639;
+        bh=P0Ldh/u8BxpmuQnbuXD1I8hnP1si1Hm0NES5D0boh88=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=OznOkL+gRsoA3pNXiMzNu0clX5BWQ2TJtmnQ7IIT1vd22HFZkDzuy5rcf62zOWVVc
-         leaGtEXl7XgqLQ5WSpydDV8trR5EGbnULnjHiXR08F0abOl4XEQJU7dKjXikurDXzQ
-         c9luoKGvarYtmrkFcgjxBt7oizQYG/wmmZH+sNHY=
+        b=YlTawgs6Qc2SY9LTw7PzDghHnqkPQD7aCoHYSUkU75K+iYgA8ijWd5RdLT5q6V+Ys
+         3arXvmD9I8dXG/FqQf/fADRYo2BkgIOGf6ZUkDV6i7GvKhi79qkIL4QnSz3Px6HlbF
+         kxRTvOj2Pkk6MPeVuUr+laBrLbHwekfK9eIYRFY4=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.29] ([79.203.19.130]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MCGWc-1oKyZO1che-009cgG; Sat, 16
- Jul 2022 18:56:32 +0200
-Message-ID: <dda728d4-eedc-c4c6-034e-0a5a03ed9059@web.de>
-Date:   Sat, 16 Jul 2022 18:56:32 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mpl0r-1nlMlX4C6v-00q4jO; Sat, 16
+ Jul 2022 18:57:19 +0200
+Message-ID: <54b6a68e-9e2d-c3ec-d6d0-e5dd9a81d391@web.de>
+Date:   Sat, 16 Jul 2022 18:57:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.0.2
-Subject: [PATCH 04/10] test-mergesort: use DEFINE_LIST_SORT_DEBUG
+Subject: [PATCH 05/10] test-mergesort: use DEFINE_LIST_SORT
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -39,113 +39,110 @@ References: <4d7cd286-398e-215c-f2bd-aa7e8207be4f@web.de>
 In-Reply-To: <4d7cd286-398e-215c-f2bd-aa7e8207be4f@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:5zvVqOiGSj+I8UlajZWWsivRsEfT902OfOKVdeQapYx0KCV4uEh
- y+1FOg4lhF+74D9yDQip1yQvxu20Y3UMBeaBB//aYwz+XV4KntPT7r/ToarSVSCfHNo9UhE
- hQwJKxdw6zbssgr9cKFAWOy22dlyCLKn9YYBsqMuHMHeHYCFtLKHhsTQP+4urGvultK9ek3
- j9JcVpHzlNkH395YCyMBw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GBhaQeWRxzY=:rQix5elWVPriWcmuAr5n0x
- KP2N7jb/0T5LNLy4YIul1Gi9tm6JricW9NRdw0SKby0brm/u+gqNatxUqAzULOdJob11teZzU
- w+ai1sBEJf+J8lKXMG08fhKQCf2CV0zlhaH92EUgQ/CpMqj4zjxMtareyLIOlIyy0wqNxCTQo
- IW2k/BSUSXpOjH+HoeJn0KljujZsFe4nFZe9wRJQeKdbIPohTfFEuM7yum0i47+Z0JomDOqCy
- 6k9Q0TnjLb+ZUYGsfN3PwEhhuEnSZnoEhGtcLqtlw1G5XXlUBpENJz98vsuvh1BjnqoqkUSdd
- aRFA6Fcqpedjd/hqjssfplM+8g+i7J9duvOVJkyJ1tK1KVTEgR8RYMSWmvS3MRoulbivjxX8z
- MarDuv7dCvfXye/2pyXKZfgTKYFDoU31BoRFwVuy9xykTX41Z5+B00sZMXCaqjLvjHIBsHYUJ
- sZa0KQM1XVVOXcltjAjM121Kscan+PrFuPGeTfxEBpFN8N6PiRovF2Lq8lNiMUkd8mPwH+v8Y
- wm1NR3AJRsQNRfWQmvr0GdzBMAm61DAL1flfs/MXwX1JWyyM4ZzK4OSKB5iCPZPpRBLTp8bV5
- fzHLUAVDWJQ/hy9U5impbw6Ugb1FkOs/h1GtocvFYF7y5W61SdDhITxbfhH7JjPqFMk7JYFdg
- 50XuK5qcst105ruDgnzmDRNDPA2wN9ZGF6GevYYG9U8ORp0MqTYEGRJ2LiZfgN20GcKEDCRXP
- qdzJY1jabfjeC6VPR8oITIdr6B1yhVjlnn4iyxAyD2kkGugJiC/SBXvUMYfzAgNZhx/jBDDrK
- /t2rHhiRAQ4mUyTQiRvh2H6GxOJvAoJ8B4cLdg9S6AeU+RMJPnqoQ0SB7BuHjPaMITb9Ny7QB
- FveIGjNKIFVTj8yOlNzSGtG6XexFsGXaJAtINuM+x9OI+8Q/P2gRLYf9NGbF+tRsurUtw57ap
- xmMgyUvjQbPuFG4w2OkD4ko14odOpPlZGzVQG07m1yMlbs867WscJPZRDYF/xvcwsC5+77yz4
- UDoKTVNfsQtdHPUYfHgOCRrrpugoGsgzRTIbbhWIeqEXlsdTQEjUwkYf/LaL4An/j0J6lC9Y9
- cL2zMdTpV6kN5VCRRm+sFZyf6nuyknjNAJ5osLNpzi/ZgKG9V6kh+qaJw==
+X-Provags-ID: V03:K1:YTQSZQAe/p4jr+Y7sfN0sooPLb1FTVE/DzXVZ17bzPcgQorfXSL
+ XaAiAWyK9XuPqRuDUtBSBpvz69KU1/Bcgh+rQKaIKJZL2FiOownMvyRs5o+vbuUo/auH65v
+ vTS6mA0hKa3yXDg9rmpVjoiWzBMyh0iZps00DN+cKtLu068hL1Fzpbx+pz0maC0bSPUs1Mq
+ bn4jwkF7bfxLV67ofPiSg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rwr/te9R23E=:dm1xb8MFODmBeEATQ/evNa
+ cC4LMrve3X8/FPR548mdaG22cUy6IfxpSyi/NQrPqIhzH6IMBNDU+WXkmcqQdrtW6seoLJLq7
+ cUWjEG2BO0NNkzY3GZ7N6vswWFLPfKQ8dB0KkrGqKRPSGOv3i136LdJERQsOXefFqUvysqpkb
+ qDbHMf2+KbBSdRyxmho/xhzoPedEPvx8dlVrMZ2uSDkUaKCaOEyzQTvPwHWTcZLzuHWu5aQzv
+ PszpfPGRbVv4wya9TQcK3d2AUltWrNGLOx1aLfo6h12jyQjgcpjo1GP4/U2T913IO38Qjbegw
+ eCFEGKzWFOW55zmiEkWgxlaZ441GT/P04abqd43M/kETc9M7oAPHwJ0yC3IVw7+cLJ2YhtXGZ
+ rtuy3Cfjz+EVLnhLxV8VxiFIoiJSYa5vYtyBfejQAYIPOHeKKG2wYSyjrVXDLBvgHvHDPrGbL
+ 78m96b9RT1LgV/V6hkck735eqwa4fqu8jp4nL5Gv6JPOU6tdYf/EjUeLQZ2VlgqgDpu4pCLa4
+ vFNIJxazZvAdodM33lxaVb5RFVeie3j9HCpcqQl44ZA3THthsl0Tdlvp8s9L3NewKfpEbZLUn
+ 2q4xfdbS2/rXWpVpyflWYx+iKie6NGYNmVOYbfsHCOepjhVnJVwUMfS4KHquHWTRLCXuQLciB
+ YIlRDA/vGtRgHuczjcQhlGNfmC9CFA0iHJ6jPgFys49eptKW1UldZ6txbpj21mHidQLiXJX7n
+ Yms3A9cVEM0Z+3aGiumLPzu/H/RAOsqw3WI0E66PAJJLKCYu8Bg57bN5gSMNIuviN9aODQ82f
+ 4UY0zXa7xBpaBtGigfSI8KshIrIA8HZPnoo2H5NYr9ewbmUcgJFehBjqEuO3LFbxVjLkcqewa
+ 8YFjRE7yiFot8kzCfvrn4ksEoRXHwA6cKEYYznCFfiY951OBJM8GE+geJOsjI4tXn6nXeX2fw
+ PZh85ts6lLOlfcW2ap8vu4XT9DkhCReDMPfP0TpwVheGh9wbjUkklZvZFBa0BXdYjQRgywmli
+ Hbkznf3aG0gK90/yzC0b6tL3Txuv0Vztne+mzbh4gB0nSg7HtXGT1a/DvSsaPSFC6u3AI2RiD
+ GJxHt/tqfxeLdessIHywYrz/f6TQomDuLhpjEmo2RC09pxoWdRdHDPzYQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Define a typed sort function using DEFINE_LIST_SORT_DEBUG for the
-mergesort sanity check instead of using llist_mergesort().  This gets
+Build a typed sort function for the mergesort performance test tool
+using DEFINE_LIST_SORT instead of calling llist_mergesort().  This gets
 rid of the next pointer accessor functions and improves the performance
-at the cost of slightly bigger object text.
+at the cost of a slightly higher object text size.
 
 Before:
-Benchmark 1: t/helper/test-tool mergesort test
-  Time (mean =C2=B1 =CF=83):     108.4 ms =C2=B1   0.2 ms    [User: 106.7 =
-ms, System: 1.2 ms]
-  Range (min =E2=80=A6 max):   108.0 ms =E2=80=A6 108.8 ms    27 runs
-
-__TEXT	__DATA	__OBJC	others	dec	hex
-6251	276	0	23172	29699	7403	t/helper/test-mergesort.o
-
-With this patch:
-Benchmark 1: t/helper/test-tool mergesort test
-  Time (mean =C2=B1 =CF=83):      94.0 ms =C2=B1   0.2 ms    [User: 92.4 m=
-s, System: 1.1 ms]
-  Range (min =E2=80=A6 max):    93.7 ms =E2=80=A6  94.5 ms    31 runs
+0071.12: llist_mergesort() unsorted    0.24(0.22+0.01)
+0071.14: llist_mergesort() sorted      0.12(0.10+0.01)
+0071.16: llist_mergesort() reversed    0.12(0.10+0.01)
 
 __TEXT	__DATA	__OBJC	others	dec	hex
 6407	276	0	24701	31384	7a98	t/helper/test-mergesort.o
 
+With this patch:
+0071.12: DEFINE_LIST_SORT unsorted     0.22(0.21+0.01)
+0071.14: DEFINE_LIST_SORT sorted       0.11(0.10+0.01)
+0071.16: DEFINE_LIST_SORT reversed     0.11(0.10+0.01)
+
+__TEXT	__DATA	__OBJC	others	dec	hex
+6615	276	0	25832	32723	7fd3	t/helper/test-mergesort.o
+
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/helper/test-mergesort.c | 19 ++++---------------
- t/t0071-sort.sh           |  2 +-
- 2 files changed, 5 insertions(+), 16 deletions(-)
+ t/helper/test-mergesort.c | 15 +++------------
+ t/perf/p0071-sort.sh      |  4 ++--
+ 2 files changed, 5 insertions(+), 14 deletions(-)
 
 diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
-index ebf68f7de8..93d15d59a1 100644
+index 93d15d59a1..202e54a7ff 100644
 =2D-- a/t/helper/test-mergesort.c
 +++ b/t/helper/test-mergesort.c
-@@ -273,21 +273,11 @@ struct number {
- 	struct number *next;
+@@ -13,19 +13,10 @@ struct line {
+ 	struct line *next;
  };
 
--static void *get_next_number(const void *a)
+-static void *get_next(const void *a)
 -{
--	stats.get_next++;
--	return ((const struct number *)a)->next;
+-	return ((const struct line *)a)->next;
 -}
 -
--static void set_next_number(void *a, void *b)
+-static void set_next(void *a, void *b)
 -{
--	stats.set_next++;
--	((struct number *)a)->next =3D b;
+-	((struct line *)a)->next =3D b;
 -}
-+DEFINE_LIST_SORT_DEBUG(static, sort_numbers, struct number, next,
-+		       stats.get_next++, stats.set_next++);
++DEFINE_LIST_SORT(static, sort_lines, struct line, next);
 
--static int compare_numbers(const void *av, const void *bv)
-+static int compare_numbers(const struct number *an, const struct number *=
-bn)
+-static int compare_strings(const void *a, const void *b)
++static int compare_strings(const struct line *x, const struct line *y)
  {
--	const struct number *an =3D av, *bn =3D bv;
- 	int a =3D an->value, b =3D bn->value;
- 	stats.compare++;
- 	return (a > b) - (a < b);
-@@ -325,8 +315,7 @@ static int test(const struct dist *dist, const struct =
-mode *mode, int n, int m)
- 	*tail =3D NULL;
+-	const struct line *x =3D a, *y =3D b;
+ 	return strcmp(x->text, y->text);
+ }
 
- 	stats.get_next =3D stats.set_next =3D stats.compare =3D 0;
--	list =3D llist_mergesort(list, get_next_number, set_next_number,
--			       compare_numbers);
-+	sort_numbers(&list, compare_numbers);
+@@ -47,7 +38,7 @@ static int sort_stdin(void)
+ 		p =3D line;
+ 	}
 
- 	QSORT(arr, n, compare_ints);
- 	for (i =3D 0, curr =3D list; i < n && curr; i++, curr =3D curr->next) {
-diff --git a/t/t0071-sort.sh b/t/t0071-sort.sh
-index 6f9a501c72..ba8ad1d1ca 100755
-=2D-- a/t/t0071-sort.sh
-+++ b/t/t0071-sort.sh
-@@ -5,7 +5,7 @@ test_description=3D'verify sort functions'
- TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
+-	lines =3D llist_mergesort(lines, get_next, set_next, compare_strings);
++	sort_lines(&lines, compare_strings);
 
--test_expect_success 'llist_mergesort()' '
-+test_expect_success 'DEFINE_LIST_SORT_DEBUG' '
- 	test-tool mergesort test
- '
+ 	while (lines) {
+ 		puts(lines->text);
+diff --git a/t/perf/p0071-sort.sh b/t/perf/p0071-sort.sh
+index ed366e2e12..ae4ddac864 100755
+=2D-- a/t/perf/p0071-sort.sh
++++ b/t/perf/p0071-sort.sh
+@@ -40,11 +40,11 @@ done
 
+ for file in unsorted sorted reversed
+ do
+-	test_perf "llist_mergesort() $file" "
++	test_perf "DEFINE_LIST_SORT $file" "
+ 		test-tool mergesort sort <$file >actual
+ 	"
+
+-	test_expect_success "llist_mergesort() $file sorts like sort(1)" "
++	test_expect_success "DEFINE_LIST_SORT $file sorts like sort(1)" "
+ 		test_cmp_bin sorted actual
+ 	"
+ done
 =2D-
 2.37.1
