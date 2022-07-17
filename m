@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EA44C43334
-	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 16:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FE5AC433EF
+	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 16:45:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232792AbiGQQln (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jul 2022 12:41:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57412 "EHLO
+        id S232902AbiGQQpA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jul 2022 12:45:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbiGQQlm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jul 2022 12:41:42 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E31EC13D4A
-        for <git@vger.kernel.org>; Sun, 17 Jul 2022 09:41:41 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id n138so6368808iod.4
-        for <git@vger.kernel.org>; Sun, 17 Jul 2022 09:41:41 -0700 (PDT)
+        with ESMTP id S229536AbiGQQo7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jul 2022 12:44:59 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AE161056B
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 09:44:58 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id d4so4940523ilc.8
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 09:44:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=53f+0W/EFdqLQh3uq0QCzUer3TVjndjidzh16uSFQec=;
-        b=atkHjgLG9CdYOEVhkdCULhkz7x6QUWQgpmLFz95ZoxFLjqKBpqhkyMW00VfTxBdBkE
-         p1OvEobRTwcmzDueEtyYDqJBXZS8Bak0OBg/UB0jDCbOxURJB/dlAg2fdb2cuW2Xs4fr
-         MHx7n6wZKQosXRvfCv5HQvDtMqiptkrNaPYD5vcavH3wkqhTvx8IaEqDbGel6dN9eM62
-         Zev8CdibRrf16OBu/Hhp6LBqXMyn1FYKYksIHRhoUaIQX80Y1L4V22rD/YKq7q1LllOo
-         V3fJPE6itJHfWQ9MH86wO4BDasnrBLlkvM7iwaWOgPvCkSJEA29dzRVdlmrlVPCuMppS
-         Vt0A==
+        bh=7rbwXFxyJDrQDGqykeK3Jx6HMlPBNBEfMHtWYAEgEkY=;
+        b=nUaKQmOxOS9bQBWx4f/N9XlVKI5af9YPpLFFrVQQrdmRFEU9PaUCoic8uCGhtcCvnY
+         0y+hUuRA8WEuWRQltVLa3MflRQytndiZQPikg4h066a1YJo4SvIrjF595r9BPUXSSGWA
+         9l58jZCwn0KmYUehG8wRiIBT807Ry7nAZfHGb0Qths4lnKyyLJCZpOausuHwVRZ2hSxT
+         zSk2jQMxLlxvrT8gyoFjHwN2BHLbDn7vOoWsZJ4G6z6fkd+h04jb4ABR9V7Hq0aUYPW3
+         HV0/xLMUBw4FFkczMqAC2bRgOGfCbisKFufi5k6iVfOCh3lXZ587EW6kpw81Jl2PMGlP
+         +ljg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=53f+0W/EFdqLQh3uq0QCzUer3TVjndjidzh16uSFQec=;
-        b=kI1eCL1eEI0tRuqtTofWKmZLo8tZSiMXSytHwA+ZpZkBsIvfiCf1g97F0oebgY0x10
-         iubYLdVxTyO1QVeYfsPDrMXMPYR93P4UWTxeKU4hX5/TzhVK/IrCQjeDmmN9pSfYvqTh
-         8alMQzT7TEV2KhIfqI3TGWRI7h1OiQoQZq2dOrevTVeKeGd3KgTgd4IuAz2SSOpMLJte
-         Y15QoyEj2QPUKAyUUSk2PlrDcCLOg9e7syilONakZdp9rA8nF2bP6IeQIs5YUTEvFFA/
-         8Gu/j+HmrS2dBitanVpeMKsuWb/7QrnMdGXAHu4vEgR+LQuACnvFT8f7/QUyYVJYDjLm
-         9z7g==
-X-Gm-Message-State: AJIora+fVYAyyUyB2fqmCnBhiUS2xF4wo2hhEBwt/JFD0Bn7+6pFi4dc
-        8QJkiU8Xs1LTiAT0ezxD/Uvyz9DSmL/xVxeIQT3oJWmUoo905Q==
-X-Google-Smtp-Source: AGRyM1vBdgqNHL5vBf8c3Ah5lOIsCjKaNWDP0+1MppP+NXTzeyzHyP0az8hbQfdAW2Dgnf2tLm+L2H2T+k/lJ/5at20=
-X-Received: by 2002:a05:6602:15c6:b0:67a:33d1:6c73 with SMTP id
- f6-20020a05660215c600b0067a33d16c73mr11714880iow.156.1658076101229; Sun, 17
- Jul 2022 09:41:41 -0700 (PDT)
+        bh=7rbwXFxyJDrQDGqykeK3Jx6HMlPBNBEfMHtWYAEgEkY=;
+        b=3Q00RHl58Fkn3mO4n0Ba1Rs1F9MpmZJqTdVtS2O8vovlEmwGfHUcFQSuMLYBA83ihE
+         Kdr/ebaDg3KgclBLWee7R8LROxyI7jI+a4XhRfq8BrhZJrYyJ+LL10/5gwfSP/2E0I+q
+         +cGDwfvE/L7J2Xuh51JXNbkcuQFgomg8w7RkDkHnIUOLqIIq0UeE8sUpyL6oxC4VbKbT
+         75Sk/KK85JdpWbKlULjZnG1t6ub1EYvyArmqevjxYdw26FSDg4Fjl3LC+8ILFxTx8oa0
+         DEz9JYFMcJa4ccH9hiyqziGeJe6tr4WfB3YXUvQ5vL9L/MvM9Ml08JKpFn+uGJfaQ1Bj
+         v98w==
+X-Gm-Message-State: AJIora+SOTnnh71IxhU6WVyUi2JnKf8JvnCGnxFDhh2oUs1NBPYuQcf+
+        9yNi/0lOcPB+pTcZkyRLF/QQNaqZUXvfcSrpbbPg1yBpeTLdEA==
+X-Google-Smtp-Source: AGRyM1uYE9SXiGFM+I/wi0YMC6ZOT2VR7HHz+YYzOA/3uZHgNZrf3P2Kqoyp6JOJNCU/u1wycqOdHre9Gkvnccxet3E=
+X-Received: by 2002:a05:6e02:174a:b0:2dc:7bc5:f810 with SMTP id
+ y10-20020a056e02174a00b002dc7bc5f810mr11930423ill.254.1658076297780; Sun, 17
+ Jul 2022 09:44:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1231.git.1652977582.gitgitgadget@gmail.com>
- <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com> <a03075167c1f4410a1b4f415313f11a7e1c3a594.1655621424.git.gitgitgadget@gmail.com>
-In-Reply-To: <a03075167c1f4410a1b4f415313f11a7e1c3a594.1655621424.git.gitgitgadget@gmail.com>
+ <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com> <0783b48c121fe74051c13e7d9118d1a5b7cb9aa9.1655621424.git.gitgitgadget@gmail.com>
+In-Reply-To: <0783b48c121fe74051c13e7d9118d1a5b7cb9aa9.1655621424.git.gitgitgadget@gmail.com>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 18 Jul 2022 00:41:30 +0800
-Message-ID: <CAOLTT8TCmDfbbakfXhAoFfx+4Zwn0brcdL0_hEM=u-eSAfjzMQ@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] merge: ensure we can actually restore pre-merge state
+Date:   Mon, 18 Jul 2022 00:44:46 +0800
+Message-ID: <CAOLTT8QtqVotu8Y0JYDFdxz2p2MvRitGgrfLJ_yCnT0XZoB40Q@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] merge: do not exit restore_state() prematurely
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -65,51 +65,56 @@ Elijah Newren via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2022=E5=B9=
 >
 > From: Elijah Newren <newren@gmail.com>
 >
-> Merge strategies can fail -- not just have conflicts, but give up and
-> say that they are unable to handle the current type of merge.  However,
-> they can also make changes to the index and working tree before giving
-> up; merge-octopus does this, for example.  Currently, we do not expect
-> the individual strategies to clean up after themselves, but instead
-> expect builtin/merge.c to do so.  For it to be able to, it needs to save
-> the state before trying the merge strategy so it can have something to
-> restore to.  Therefore, remove the shortcut bypassing the save_state()
-> call.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  builtin/merge.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 2dc56fab70b..aaee8f6a553 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -1663,12 +1663,10 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
->          * tree in the index -- this means that the index must be in
->          * sync with the head commit.  The strategies are responsible
->          * to ensure this.
-> +        *
-> +        * Stash away the local changes so that we can try more than one.
+> @@ -398,7 +398,9 @@ static void restore_state(const struct object_id *hea=
+d,
 >          */
-> -       if (use_strategies_nr =3D=3D 1 ||
-> -           /*
-> -            * Stash away the local changes so that we can try more than =
-one.
-> -            */
-> -           save_state(&stash))
-> +       if (save_state(&stash))
->                 oidclr(&stash);
+>         run_command_v_opt(args, RUN_GIT_CMD);
 >
->         for (i =3D 0; !merge_was_ok && i < use_strategies_nr; i++) {
+> -       refresh_cache(REFRESH_QUIET);
+> +refresh_cache:
+> +       if (discard_cache() < 0 || read_cache() < 0)
+> +               die(_("could not read index"));
+>  }
+>
+
+We don't need to check discard_cache() return value,
+it's equal to zero constantly.
+
+>  /* This is called when no merge was necessary. */
+> diff --git a/t/t7607-merge-state.sh b/t/t7607-merge-state.sh
+> new file mode 100755
+> index 00000000000..655478cd0b3
+> --- /dev/null
+> +++ b/t/t7607-merge-state.sh
+> @@ -0,0 +1,25 @@
+> +#!/bin/sh
+> +
+> +test_description=3D"Test that merge state is as expected after failed me=
+rge"
+> +
+> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'set up custom strategy' '
+> +       test_commit --no-tag "Initial" base base &&
+> +git show-ref &&
+> +
+> +       for b in branch1 branch2 branch3
+> +       do
+> +               git checkout -b $b main &&
+> +               test_commit --no-tag "Change on $b" base $b
+> +       done &&
+> +
+> +       git checkout branch1 &&
+> +       test_must_fail git merge branch2 branch3 &&
+> +       git diff --exit-code --name-status &&
+> +       test_path_is_missing .git/MERGE_HEAD
+> +'
+> +
+
+Little typo: less a small tab before "git show ref"?
+
+> +test_done
 > --
 > gitgitgadget
->
-
-So now we will not make "stash" empty even if we are using
-only one merge strategy (e.g. octopus), so we can reset to
-the original state correctly.
-
-Good.
-
-ZheNing Hu
