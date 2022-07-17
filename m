@@ -2,76 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9D3CC433EF
-	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 17:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9621BC433EF
+	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 20:00:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230403AbiGQRNb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jul 2022 13:13:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41352 "EHLO
+        id S229783AbiGQUAY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jul 2022 16:00:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbiGQRNa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jul 2022 13:13:30 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E0BC13FA0
-        for <git@vger.kernel.org>; Sun, 17 Jul 2022 10:13:27 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id d12so15838411lfq.12
-        for <git@vger.kernel.org>; Sun, 17 Jul 2022 10:13:27 -0700 (PDT)
+        with ESMTP id S229535AbiGQUAX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jul 2022 16:00:23 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B1FB05
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 13:00:22 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id d17so7556072qvs.0
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 13:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9mNskoA/iVPwTcluFIJONlMmoZabzT4Q0hbY6oQh/kA=;
-        b=C9wjPtb5IZ1LcNkjAdIuCnFDXjxlo5qVGh+jgnXbxhtBMxYXJ5jeaYSpQBo0pL1q+Y
-         ot0BiEw0sTNdSGHhqabmUXM84orAahy1mpatrFyAsXrUkx8Mj8+HuJnHUWIMJlW3J/7F
-         ZPX6B3u0/LSl6D6tn6T8j0mH5w9LEJxYDORXrpJiHAyxTWvh1VoWyatWy2SrpS6VuiWP
-         zMoX8Y9y4ORepwROxZN6eFuukgD4mipgBJBtX1u2OEVlKfLLXlaTdavCxW66iMOvuFm7
-         Cbdx/W7VduOG5b0qPS74xAOBiOoA8SNSOL120T2BvPhhs9Di9AnIHMYb6LWIGYeEVTiG
-         kUBg==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=bC3j7Kcsm5CKBCTt+DmoDTQySqUhDd/KHzyNE3vdRnM=;
+        b=s7hqRt+o+jjeM85046ucgvn6vsmfpasZEoLLSS8IbiYR9RqIuwlWB349IzksQkfzM/
+         69/K1O7FC3/aBHY1DkYC/Tg5aek6FBWved+tIMfLpyGEBRSnqExNRWbh2p8Z6Xah9dtm
+         3B+a23KE1GZw+VXDLAR8vryn/sfMqD8ukMQOXlD73s0C689nwiUGdZSy/GJx0HjQlujp
+         LtQcnr3d42j8VxR24jiIOzeYnyGz87JKUYU+9whbfpcLT0tXpMhB8x/bAjQww/UEHCWy
+         Me8Y+LKK5Z6Rqib0j/FpTQsjMbvbgtOI+6UwYRImM2WqSYbGsJerRWfQcK0JKevH7R+3
+         uP1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9mNskoA/iVPwTcluFIJONlMmoZabzT4Q0hbY6oQh/kA=;
-        b=Lm7AQ/2RFoVRIbYjfWfeealO+F9ozneRTMD9wbMcMfKvHfgo8jY6ZB3IX4pe12GeM3
-         2/i2pTIHyG3MFQ8a3ErD6VbkSimMr+kYvxmoHlN835GJnEFHjXwAw3lQs1djZarbHaIq
-         Xvu32qyEtInSf8PiX8SQxKysQJV8ldKqsGcgntCQdn1yILQNgcfJefmqqmx+n+6VfX0Y
-         nRwRcWixNNdSNsP6VPybYUjdXFOKbNAs4hd0ldIW2JXZZ8ql7A91b0fhlhzYp0Q/0fv4
-         nPhPFom2bsmuoxp5N4ImYgnEi0A1Gmy0IQRmQSwEspNXM5tuqcS+l04gDz+EMaUw1SB7
-         Rwnw==
-X-Gm-Message-State: AJIora/z5CogBzyl6BB4eeZ0Y3dAfLAwP2Z89SqsgehSq5nI4Di5GNlK
-        XGcCP0y4dMsCah3LaaU7Equ3r9dypPe4WdDJB9INlJSZK3M=
-X-Google-Smtp-Source: AGRyM1v5xEVxzjl8TlSl9ZHLzNKSrlkHAIWrzmt6at1XoJiRQJmJwy2/wY6QUY8lVBQM2Ii6V3o9jKzk7Xns8uJLYys=
-X-Received: by 2002:ac2:4c52:0:b0:48a:1830:f589 with SMTP id
- o18-20020ac24c52000000b0048a1830f589mr8940159lfk.245.1658078005592; Sun, 17
- Jul 2022 10:13:25 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=bC3j7Kcsm5CKBCTt+DmoDTQySqUhDd/KHzyNE3vdRnM=;
+        b=TVXm3Zh+X2rAVqnWxBXbNmGo8F7638rECklcSktDo6l8iOBnqXK1n662B6POctf0cU
+         y7lMLujafDUGL2XZdOqMXRgqJ+X/byLJWVlUvm0KSsbkTqLNJsq0F9alBPFq4MbUuknG
+         cxyAtO95vQ9DdQYxPvFZKc9SE3x3fAtSV8SvnKdb30UjsRHkWQQrfqhheZAantXWK2io
+         Cf58Fs1y/K4qV5sQX301bofCE9TxeF8YH0e1Zk5To+N5tJyhI3n1r8lqvWMoJEPf9yXW
+         u6z4cyvHccyHOLwaTn+aipi86abbXkhp7YQQWPClyei1pasbBQD9oszWqypBDAkRatAh
+         2d9g==
+X-Gm-Message-State: AJIora/igse6q0nfFVq4ytN5PbXhfC2y202OMHvTsLKrDDPEeIz43hpT
+        w61TTBC8et4xtqmUlK7m5/EdgR4wgiZWzw==
+X-Google-Smtp-Source: AGRyM1sylnq2pSam3n82Y05CxU320s5qGP4bfPiDcWvlt3YgL1c26etem2DuD87Wl70EKWusocAM3Q==
+X-Received: by 2002:a05:6214:19eb:b0:472:fc8b:e071 with SMTP id q11-20020a05621419eb00b00472fc8be071mr19507838qvc.71.1658088020934;
+        Sun, 17 Jul 2022 13:00:20 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id dt26-20020a05620a479a00b006b5cefa8877sm7937547qkb.105.2022.07.17.13.00.20
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Jul 2022 13:00:20 -0700 (PDT)
+Date:   Sun, 17 Jul 2022 16:00:19 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Subject: [ANNOUNCE] Contributor's Summit Registration, Sept 14, 2020, Chicago
+Message-ID: <YtRqU5rAOsLw5s03@nand.local>
 MIME-Version: 1.0
-References: <cover.1657819649.git.matheus.bernardino@usp.br>
- <220714.86ilnz1j1i.gmgdl@evledraar.gmail.com> <CAHd-oW4zHA1YLX-5B1vYTA1f8PocziUCi0WxvSEkFUuf2GqKxg@mail.gmail.com>
- <220716.867d4dze37.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220716.867d4dze37.gmgdl@evledraar.gmail.com>
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-Date:   Sun, 17 Jul 2022 14:13:14 -0300
-Message-ID: <CAHd-oW6ompHPJ_8X6XqwBJs8mda52a=NJge7=AwVwuEg-9VHZw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] doc: unify config info on some cmds
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 16, 2022 at 4:55 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> I can submit what I've got as a v2 if you'd like, but I'd be just as
-> happy with you picking this up & running with it, whether that's seeing
-> what you'd like to integrate into your series here, or perhaps rebasing
-> your patches on the 1st patch I have (the one that introduces those
-> "Everything below this..." template)
->
-> But OTOH if you're going to drop the "ifndef" idea I think what you'd
-> come up with will be identical to the patch bodies I've got for the bits
-> you modified, so perhaps it's easier if I just submit mine...
+Hi again,
 
-Yup, that's what I thought too. Feel free to do so, if you like :)
+Following up on my earlier announcement[1], I have some more details for
+the Contributor Summit at Git Merge this year:
+
+  When: September 14th, 12-5pm CDT (UTC-5)
+  Where: Convene (131 S Dearborn) Chicago, Illinois, USA
+  What: Contributor's Summit
+  Who: All contributors to Git or related projects in the Git ecosystem
+       are invited; if you're not sure if you qualify, please ask!
+
+Registration is now open, though we haven't posted a link to it on the
+site. If you'd like to register early, you can use the following link
+below:
+
+    https://www.eventbrite.com/e/git-merge-2022-tickets-386396170347
+
+If you are planning on attending the Contributor's Summit, please send
+me an email off-list for a special code to use when registering. This
+covers both the Contributor's Summit and main registration, so don't
+register twice :-).
+
+As with previous years, you'll have the option of attending for free, or
+paying the $125 conference fee (all of which goes to Software Freedom
+Conservancy). Please indicate your preference when emailing me, since
+there is a separate code for each.
+
+If you need financial assistance with covering travel / lodging costs,
+please reach out to the Git PLC at <git@sfconservancy.org> as soon as
+possible.
+
+A few other pieces of miscellanea:
+
+  - We're still working out the exact details of an A/V setup for the
+    Contributor's Summit, but the plan is (as in years past) to have
+    some way for folks to be able to join remotely.
+
+  - We'll have some sort of experts panel at the main conference. The
+    exact format is TBD, but if you are interested in being on that
+    panel, please let me know off-list.
+
+  - We have a Google Spreadsheet that is being used to collect and vote
+    on topics to discuss at the Contributor's Summit[2]. If you'd like a
+    link to that, please also contact me off-list.
+
+The main conference schedule and agenda should be up sometime this week
+at the usual location below:
+
+    https://git-merge.com
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/YqjEAEPYEJMUx8Wu@nand.local/
+[2]: https://lore.kernel.org/git/YtHuuE42bogVLOGn@nand.local/
