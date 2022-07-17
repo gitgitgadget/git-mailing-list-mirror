@@ -2,102 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69C73C43334
-	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 03:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F1D9C433EF
+	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 11:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232572AbiGQDqk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Jul 2022 23:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58362 "EHLO
+        id S230003AbiGQL2L convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 17 Jul 2022 07:28:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiGQDqW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jul 2022 23:46:22 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02CAB165BB
-        for <git@vger.kernel.org>; Sat, 16 Jul 2022 20:46:21 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id m16so2253695qka.12
-        for <git@vger.kernel.org>; Sat, 16 Jul 2022 20:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iGFq4IfEIP8/T6lzoM4k2R5Y/DB/Z/C5qBqPMyhun24=;
-        b=dHskxwgLT+hxKZwSh/F69cc0klCA16o8SMfXPNZzeaF3Kqo92u7480URIEz4Pu5Fe/
-         hWaT02rctJoSegFu46b0YJ6JL+MSQlUu9Mt3h1emceAwSegKWDfDDNby+CFNweqMj/lJ
-         +FaUE5I9GBTT1gsadn0sMKBYW/983FYHu08LM6qMkttGcIcZOVtwsvwRHPHNehIIPZ3l
-         YceARPw9Cee7kSzK3KtjiUoWygd+nMFtue6v1+JWGs2BFurlMVhZcTnf+0889Ohre1iH
-         frTFuA3ZfJfFWuYK2jnsBBqnyu2zaMIfxwUlrbzj5ZFjKgb8ZWmx1V/r9HVL9F4e1R0u
-         Y9Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iGFq4IfEIP8/T6lzoM4k2R5Y/DB/Z/C5qBqPMyhun24=;
-        b=AzM2OKScy/6JmS/w93/J3bHNCm4Z1XaKAtwos7zk6LYj024ECZ0h5YUssT1gYEr+FD
-         Z48d0jUdIR1vqMwGwK54QU3v2OPXY/D/CfWaFlBJcRDa/QE5TRxKHlIcePVnKVSnaH0c
-         Chho+tRyXhdfnPYRXahyCCNQKZ15pvC62hGVgKne7z7xvBTuILIKLibZZpFUyyoJSXF7
-         /IqAj3QlkAUCJiW5DBpfy1ijxBb5ftfYlybUzu3KMf13+y2uOf9oRIVOjH7miCobbJYh
-         qJV0dmbcJjNYUtJzFeHWOl85PXs5kdi2AcPDMIdvMjYhIud2Brd1GanBs8C2WIEz/Qdd
-         hATA==
-X-Gm-Message-State: AJIora9R3CsemvYwpyLmc7wYr2ppzsIWLeD2I8vXxxobsnXz56hYhkoU
-        WnZreGnRMVsn3MkhKqZobrQqvGoYsm2WoQYNGf0=
-X-Google-Smtp-Source: AGRyM1vPgLtRK9Sgj6Nd3jI/1MoYvHCYnwMzWGK4iewYndCyKgMnQ3yWbZyXMn9WGBzaPn6MwXUN/QiHN8kb/2MJKyM=
-X-Received: by 2002:a05:620a:4547:b0:6b5:879c:5891 with SMTP id
- u7-20020a05620a454700b006b5879c5891mr13920558qkp.187.1658029579982; Sat, 16
- Jul 2022 20:46:19 -0700 (PDT)
+        with ESMTP id S229487AbiGQL2D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jul 2022 07:28:03 -0400
+X-Greylist: delayed 404 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 17 Jul 2022 04:27:59 PDT
+Received: from mail-gateway-shared13.cyon.net (mail-gateway-shared13.cyon.net [194.126.200.66])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 566CE14D3C
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 04:27:59 -0700 (PDT)
+Received: from s019.cyon.net ([149.126.4.28])
+        by mail-gateway-shared13.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim)
+        (envelope-from <bb@drbeat.li>)
+        id 1oD2Km-0007Di-Ha
+        for git@vger.kernel.org; Sun, 17 Jul 2022 13:21:12 +0200
+Received: from [10.20.10.232] (port=21452 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.95)
+        (envelope-from <bb@drbeat.li>)
+        id 1oD2Kl-00GLsK-Dn;
+        Sun, 17 Jul 2022 13:21:11 +0200
+Received: by drbeat.li (Postfix, from userid 1000)
+        id 124E9180322; Sun, 17 Jul 2022 13:21:11 +0200 (CEST)
+Date:   Sun, 17 Jul 2022 13:21:11 +0200
+From:   Beat Bolli <dev@drbeat.li>
+To:     David Chmelik <dchmelik@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: 'git clone,' build makes user non-writable files (should be
+ option keep user-writable)
+Message-ID: <YtPwp/OSD2X6Q/Ol@zbox.drbeat.li>
+References: <822787da-bc26-0d72-a5c4-808a3d10126e@gmail.com>
 MIME-Version: 1.0
-References: <xmqq7d4g8onl.fsf@gitster.g>
-In-Reply-To: <xmqq7d4g8onl.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 16 Jul 2022 20:46:09 -0700
-Message-ID: <CABPp-BFzehrH19zRSbLBB42nEs50_UCcfV2B22ZJFYtPCX=Zsw@mail.gmail.com>
-Subject: en/merge-restore-to-pristine (Was: Re: What's cooking in git.git (Jul
- 2022, #04; Wed, 13))
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <822787da-bc26-0d72-a5c4-808a3d10126e@gmail.com>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi ZheNing,
+On Fri, Jul 15, 2022 at 03:35:49AM -0700, David Chmelik wrote:
 
-On Wed, Jul 13, 2022 at 7:36 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> * en/merge-restore-to-pristine (2022-06-21) 6 commits
->  - merge: do not exit restore_state() prematurely
->  - merge: ensure we can actually restore pre-merge state
->  - merge: make restore_state() restore staged state too
->  - merge: fix save_state() to work when there are racy-dirty files
->  - merge: remove unused variable
->  - t6424: make sure a failed merge preserves local changes
->
->  When "git merge" finds that it cannot perform a merge, it should
->  restore the working tree to the state before the command was
->  initiated, but in some corner cases it didn't.
->
->  Needs review.
->  source: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
+[resend with reply-to-all]
 
-Looks like other reviewers aren't stepping forward (this has been in
-"Needs review" for the last 6 "What's cooking" reports), which may
-suggest others aren't as interested in this fix.  Since this was for
-an issue you reported, and which you even volunteered to help
-shepherd[1], perhaps you could step forward as a reviewer even if
-you're not that familiar with the code?  Some things to look at and
-report on:
+> What did you do before the bug happened?
+> 'git clone,' built various software (with gcc, BSD & GNU make, autotools,
+> cmake, etc.)
+> 
+> What did you expect to happen?
+> Option: keep cloned/built/etc. files user-writable.
+> 
+> What happened instead?
+> Needed chmod or 'sudo rm -rf.'
+> 
+> What's different between what you expected and what actually happened?
+> Option: keep cloned/built/etc. files user-writable, otherwise (has been said
+> 15+ years) encourages 'sudo rm -rf.'
+> 
+> Anything else you want to add:
+>         I try/test/debug (and report bugs) many software commits but don't
+> commit so need cloned/built/etc. files writable as user & even system-wide
+> options: who hasn't made 'rm -rf' mistakes? (unrelated but someone might
+> claim is: I don't use non-UNIX-like OS that shell alias 'rm -rf' to confirm
+> every file (potentially thousands) and though made my own alias (confirm
+> once) it's longer, sometimes unavailable so don't always use (many people
+> don't)... software should always have user-writable files option.)  Below
+> indicates GNU/Linux but also have often used git on *BSD/Unix.  I'm not on
+> git mailing list but you can CC me all replies.
 
-  * Does it fix the issue?  (You reported that v1 did, again at [1],
-but perhaps you could retest for v2?)
-  * Does it appear I've addressed the issues Junio brought up about v1?
-  * Even if you can't analyze the changes deeply, you can respond to
-my patches with a "walk through" where you try to explain what the
-different hunks of the patches are doing in your own words.  Even
-folks unfamiliar with code areas can sometimes catch simple mistakes
-that way, and even if you catch nothing, it means there's another
-person more familiar with that code area.
+When building software as the current user, the build artefacts are
+owned by this user.
 
-I've had a little more time lately, so if you or someone does catch
-something in the review, I can try to update the series.
+Are you building the software using Docker containers that run as root?
 
-[1] https://lore.kernel.org/git/CAOLTT8RpGGioOyaMw5tkeWXmHpOaBW9UH8JghUvBRQ50ZcDdYQ@mail.gmail.com/
+Regards, Beat
