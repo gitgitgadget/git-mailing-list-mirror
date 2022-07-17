@@ -2,132 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11FB4C433EF
-	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 22:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EB08CCA480
+	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 22:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbiGQWLh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jul 2022 18:11:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40262 "EHLO
+        id S231629AbiGQWZa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jul 2022 18:25:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbiGQWLf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jul 2022 18:11:35 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C61FE11441
-        for <git@vger.kernel.org>; Sun, 17 Jul 2022 15:11:32 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E9CCE13E34E;
-        Sun, 17 Jul 2022 18:11:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oW+sFnO5iJ3cwrGdBbdhw0GhAKaYrTzCNPZrTn
-        3O610=; b=V7iAoaX2HqiSBfkidGA7QHvCxqa79/21G+KdzB7Waxta0yuB2woDys
-        0RvSaOZLRuxhQadAfNx8ngIOrozGWgkNsWc3gkFe2UX7MENzVQjOupCOMag0tAsJ
-        3gDvIEw3Ewh8mev0alIcfld8HKwm8ZcU9gdNy9pS6iunkr4s901NM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E03F713E34C;
-        Sun, 17 Jul 2022 18:11:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 52CA213E34B;
-        Sun, 17 Jul 2022 18:11:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
-        congdanhqx@gmail.com, christian.couder@gmail.com, avarab@gmail.com,
-        Johannes.Schindelin@gmx.de, johncai86@gmail.com
-Subject: Re: [PATCH v5 1/4] revision: improve commit_rewrite_person()
-References: <20220712160634.213956-1-siddharthasthana31@gmail.com>
-        <20220716074055.1786231-1-siddharthasthana31@gmail.com>
-        <20220716074055.1786231-2-siddharthasthana31@gmail.com>
-Date:   Sun, 17 Jul 2022 15:11:30 -0700
-In-Reply-To: <20220716074055.1786231-2-siddharthasthana31@gmail.com>
-        (Siddharth Asthana's message of "Sat, 16 Jul 2022 13:10:52 +0530")
-Message-ID: <xmqqo7xnv17x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231547AbiGQWZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jul 2022 18:25:28 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 117EE1275F
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 15:25:28 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id w29so6943487qtv.9
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 15:25:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yw8FQXwMzHzBWh5jKNlrXYuGGn/hS/SLNjCf0r7ET0k=;
+        b=MZF+0WTr9l8eSzOcGjYAluxzN8DByUnusYc62TzU3XidGaoPNwUP2WIpZ3f940nECF
+         WwEqMdYOMkZV/+RsH/aqm/LVoNK20UQQn3kdbZnDVtQlPtqU8tQaDGm5TbWAkCU9gaay
+         zi5cSTo7tMlVtxObsOFCYeS8GiIJaL5rr/hT4eIN3c6YONpiVWVrTudgyr6LcZ+UGX2G
+         jRx7URW/wmUvcw/GQnz4YkyuMtevXCqsA9SzMuq6F9okoYQzBOt/tpmQioeAh+8sEIeM
+         u25WcgGIfr00SfyrME3aLkccQ1dG480d7N+rmCZEC5yOeNLT1xcwcBylqlDcQeof7srF
+         8SaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yw8FQXwMzHzBWh5jKNlrXYuGGn/hS/SLNjCf0r7ET0k=;
+        b=AihEfd4VvTXeBWt4P3AeRNhtUiiTQ3/5+VddRu8XslzmBRaJfQ3v9zSzuC3g+ncSHA
+         nxEeGVYZxoKy5IdYaQmfJ7k/ZYcQ+w00m5yqGmxNDzwbQxJzOzg7dewTFPPH921s0CbF
+         /Nl5VcSDuu4BfYfR5f1hJXyI5M2zYDef2ixCx0Y2FlTCoWtIB0aOJNn3H5BDVjaPLRS0
+         dzp153If7fkQAoVCJhW3AWbUCdnEtLB/SqeVgbPcW2We0ofPOxcP8Yr8uJNnHJ6G6Cir
+         CeJzfaSSzEZdNbvkX7geskP/1igUblm3cwkULtkyvP+/QteQpMcUzx6cHPXuwNkoA4M4
+         F5hA==
+X-Gm-Message-State: AJIora/uHqZ0j1E790iephAiUId9CbzsnGW9kEKwLG+qOJQiqs/j5i2+
+        ZoZgM6V7MesoNm6uB3WhALDBqw==
+X-Google-Smtp-Source: AGRyM1tHhLhqX6zF6/4DaJvXD+0rS9ZAV9QdN6Jqe9jvVq+P0PfpJDZdY9huPRkhmFf6lwyudNu+Hw==
+X-Received: by 2002:a05:622a:1651:b0:31d:3248:ad77 with SMTP id y17-20020a05622a165100b0031d3248ad77mr19765535qtj.213.1658096727150;
+        Sun, 17 Jul 2022 15:25:27 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id f8-20020a05620a280800b006a6ce613c7csm3800227qkp.89.2022.07.17.15.25.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Jul 2022 15:25:26 -0700 (PDT)
+Date:   Sun, 17 Jul 2022 18:25:25 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        =?utf-8?B?VL3AjENWVL3AjENWdmFy?= Arnfjjjrrr Bjarmason 
+        <avarab@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: Can I use CRoaring library in Git?
+Message-ID: <YtSMVcc59LP1j+Ys@nand.local>
+References: <CAPOJW5x4McofC5fxBvsRAzum28wmeDJCMTMRmY_0oy=32JjKqQ@mail.gmail.com>
+ <220716.86y1wtxhok.gmgdl@evledraar.gmail.com>
+ <CAPOJW5zNsETYwD=MXCFLn91qaemgooPN-JB1sx7KagkKxOXTnQ@mail.gmail.com>
+ <e574ac20-c287-c395-5bc3-b481d81764c7@gmail.com>
+ <xmqqzgh7v1q3.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6995894C-061D-11ED-889F-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzgh7v1q3.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+On Sun, Jul 17, 2022 at 03:00:36PM -0700, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+>
+> > The EWAH case is a bit different. The original EWAH implementation
+> > [ewah-cpp] was in C++. It was then ported to C [ewah-c] by Git
+> > contributors [ewah-git]. The ported version has been relicensed under
+> > GPLv2 with Deniel Lemire's permission.
+> >
+> > The case with CRoaring is that the implementation already exists in C
+> > [croaring] and that is the one which is licensed under Apache V2. I'm
+> > not sure how relicensing works for already existing code.
+>
+> As long as the author says they are willing to relicense, that would
+> "work".  It is entirely up to them.
 
-> +/*
-> + * Returns the difference between the new and old length of the ident line.
-> + */
-> +static ssize_t rewrite_ident_line(const char *person, struct strbuf *buf,
-> +								  struct string_list *mailmap)
+Yes, using an existing library would be my vast preference. Not only
+because it reduces the amount of work needed to prove out this new
+concept (that Roaring+Run provides a speed or space advantage when
+compared to EWAH), but because:
 
-Line-folding is a good idea, but why do we use such a deep
-indentation?  In this project, tab-width is 8.
+  - the existing implementation is widely-used, and would give us
+    confidence in adopting a "battle-tested" implementation
 
-> +static void commit_rewrite_person(struct strbuf *buf, const char **header,
-> +								  struct string_list *mailmap)
+  - there is a standard serialization format that is understood in the
+    various language re-implementations of CRoaring
 
-Likewise.
+The latter point is important for users like libgit2 and JGit who would
+also be able to adopt an "off the shelf" solution and have the bitmaps
+be read according to the standard format.
 
-> +{
-> +	size_t buf_offset = 0;
-> +
-> +	if (!mailmap)
-> +		return;
-> +
-> +	for (;;) {
-> +		const char *person, *line;
-> +		size_t i;
-> +
-> +		line = buf->buf + buf_offset;
-> +		if (!*line || *line == '\n')
-> +			return; /* End of header */
-> +
-> +		for (i = 0; header[i]; i++)
-> +			if (skip_prefix(line, header[i], &person)) {
-> +				rewrite_ident_line(person, buf, mailmap);
+> Assuming that we can clear the licensing issues (or we can write our
+> own implementation from spec), how would the transition plan look
+> like?  Does our bitmap format carry enough metadata to allow
+> existing clients who never saw anything but ewah bitmaps to say "ah,
+> this bitmap file uses encoding I do not understand" and gracefully
+> fall back to not using the bitmap?
 
-If the return value of rewrite_ident_line() is never used, perhaps
-stop computing the return value in that function and make it return
-"void".  I personally thought it was clever to return "how much does
-the ident part grew/shrunk?" from the helper and use it to adjust,
-but I do not mind to scrap the clever-ness if some folks may find it
-harder to understand.
+Yes, the version field alone does this, since the existing readers know
+to ignore a bitmap whose version they do not understand.
 
-> +				break;
-> +			}
-> +
-> +		buf_offset = strchrnul(buf->buf + buf_offset, '\n') - buf->buf;
+I assume that Abhradeep will want to pursue some format redesign as part
+of the transition, though, at least to see if changing the format beyond
+a version bump and new compression scheme is worthwhile.
 
-And this is a "easier-to-understand but need to scan the buffer once
-again, only to figure out what we ought to already know" version.
-
-> +		if (buf->buf[buf_offset] == '\n')
-> +			++buf_offset;
-
-Prefer post-increment when there is no reason to favor pre-increment
-over post-increment, i.e. write this as "buf_offset++".
-
-> +	}
-> +}
-> +
->  static int commit_match(struct commit *commit, struct rev_info *opt)
->  {
->  	int retval;
-> @@ -3832,11 +3862,12 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
->  		strbuf_addstr(&buf, message);
->  
->  	if (opt->grep_filter.header_list && opt->mailmap) {
-> +		const char *commit_headers[] = { "author ", "committer ", NULL };
-> +
->  		if (!buf.len)
->  			strbuf_addstr(&buf, message);
->  
-> -		commit_rewrite_person(&buf, "\nauthor ", opt->mailmap);
-> -		commit_rewrite_person(&buf, "\ncommitter ", opt->mailmap);
-> +		commit_rewrite_person(&buf, commit_headers, opt->mailmap);
->  	}
->  
->  	/* Append "fake" message parts as needed */
+Thanks,
+Taylor
