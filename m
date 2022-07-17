@@ -2,55 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05327C43334
-	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 13:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 298A4C43334
+	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 14:43:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbiGQNhC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jul 2022 09:37:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55084 "EHLO
+        id S229933AbiGQOnI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jul 2022 10:43:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiGQNhB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jul 2022 09:37:01 -0400
-Received: from omta012.uswest2.a.cloudfilter.net (omta012.uswest2.a.cloudfilter.net [35.164.127.235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 839E912D2A
-        for <git@vger.kernel.org>; Sun, 17 Jul 2022 06:37:00 -0700 (PDT)
-Received: from cxr.smtp.a.cloudfilter.net ([10.0.17.148])
-        by cmsmtp with ESMTP
-        id D2mCopKUKFZt0D4SBoPXJ7; Sun, 17 Jul 2022 13:37:00 +0000
-Received: from thunderbird.smith.home ([68.231.83.103])
-        by cmsmtp with ESMTPSA
-        id D4SAo2b0hqzBCD4SBo9FyH; Sun, 17 Jul 2022 13:36:59 +0000
-Authentication-Results: cox.net; auth=pass (PLAIN) smtp.auth=ischis2@cox.net
-X-Authority-Analysis: v=2.4 cv=P9ApOwMu c=1 sm=1 tr=0 ts=62d4107b
- a=5LiH+hCkRbbaxi2S5Ofzgw==:117 a=5LiH+hCkRbbaxi2S5Ofzgw==:17
- a=kj9zAlcOel0A:10 a=RgO8CyIxsXoA:10 a=OiUnmQINgBxGPQu4R14A:9
- a=CjuIK1q_8ugA:10 a=QYH75iMubAgA:10
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 6C3391961FFD;
-        Sun, 17 Jul 2022 06:36:58 -0700 (MST)
-From:   Stephen & Linda Smith <ischis2@cox.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Branch next doesn't look like it was pushed
-Date:   Sun, 17 Jul 2022 06:36:58 -0700
-Message-ID: <2680398.mvXUDI8C0e@thunderbird>
-In-Reply-To: <xmqqr12kwxhs.fsf@gitster.g>
-References: <12032556.O9o76ZdvQC@thunderbird> <xmqqr12kwxhs.fsf@gitster.g>
+        with ESMTP id S229536AbiGQOnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jul 2022 10:43:07 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A48C8DF66
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 07:43:05 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id l2so7151884qvt.2
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 07:43:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=RWdvsNwfFQ1tG195FTT0HULbxf0KIXXJMn5dwmbirbk=;
+        b=OlGqYudsQ6R79BmcRLhqkzqyLDfgmTh90953v1rp4LRPnKEeMUwBnKY5X/EBa7mseX
+         k+h/nrP9gEzcySglG2xKCXo6B7AxiN8T5I0SFhcgU6LX+xNvBrhjD6VwMniwsrLVT1mh
+         eXjiDolF6QtzoeYV65Wk5rPgbx4xuU5TmGYa/+D5+n5YwSBGm3zToItCltsvyAsFoPb3
+         l9R3FIap4+1QbTJp35ZzdohFi9jO8stNkfXPunJtKIsHuIo+0d4ab+a88zBEDSYiOKWE
+         QRFISIzEd9PSnNJaECOUtK1582yKgDj4mhuX7zrfSQypSXzyFvnurw5R3va06B9QyHEq
+         RtGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=RWdvsNwfFQ1tG195FTT0HULbxf0KIXXJMn5dwmbirbk=;
+        b=8Hm870eWvW/hfQeR//ul9MDQ+yksaDvgCdkWeTs43YRHOLxv6sWTBDWxAs40qMkj3n
+         2iK+/tbCb/Yx5uGtOX9F4CsMKklj3OaophCNbu0SJBDQq9A4pOMCoCTneHdMCK+2TcQh
+         K+auzdRdLQr5bfrb8rHwTpdbuf9JlAUv11kuvwL1EYjW2leqwS78TKpWsTVd4Ogk/OUw
+         kZcIw9PdfksaUOD4QwnmM2SRYzsj8DZnrWOfHhTMI1x8y8RNwRqAuKwBW9s4ITFKJ5pz
+         NroiOZvyYOpbONGUcYL6UQvlezIcq+kJYmFExWTmTTpZIYtvfnmPEteaUiWlyyRysciJ
+         9/3Q==
+X-Gm-Message-State: AJIora+6mAanq1tfqbdrUaAPn83E59y2W7KDG8ZI8pyHU2TcGfZUC0SF
+        eUxNj7NqbnsmLgBQ7kw/UAbk
+X-Google-Smtp-Source: AGRyM1tPgjJxK3GaTy9oa+JxCrq5ud+VIbLRfiewTZ/8s+lmvId6EDpCsutyojHyWBg10QzIszy5iw==
+X-Received: by 2002:ad4:5942:0:b0:473:80ce:7c4d with SMTP id eo2-20020ad45942000000b0047380ce7c4dmr18386821qvb.100.1658068984724;
+        Sun, 17 Jul 2022 07:43:04 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:841f:e099:cbef:4067? ([2600:1700:e72:80a0:841f:e099:cbef:4067])
+        by smtp.gmail.com with ESMTPSA id k13-20020a05620a414d00b006a981a2c483sm9352387qko.39.2022.07.17.07.43.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 17 Jul 2022 07:43:04 -0700 (PDT)
+Message-ID: <62456232-26af-6883-1f89-53f16863d2d5@github.com>
+Date:   Sun, 17 Jul 2022 10:43:03 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-CMAE-Envelope: MS4xfD2RotfbZ+l9xeI4PxDkVHb28RDb+DOhjfthEIbB9zy5ysn6ZwcVDayWGXCY3CDjSTZmhpKhjaLY/olOCuHxaCKKeVz3b2kShvMXzkpOP2ajEq1r80Jo
- tCCZZhFltfxOW6m54VVPYCozgo9q6hfZJzCFF9lYXKKuYtkss5PTLt4RJMWvTue118Y43RPRFMV0+M2Q5A0i9bOr63Y/hrC4qZFE3StUKH2ypZ3LCIN4ttfH
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.11.0
+Subject: Re: Can I use CRoaring library in Git?
+Content-Language: en-US
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+References: <CAPOJW5x4McofC5fxBvsRAzum28wmeDJCMTMRmY_0oy=32JjKqQ@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CAPOJW5x4McofC5fxBvsRAzum28wmeDJCMTMRmY_0oy=32JjKqQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Saturday, July 16, 2022 2:36:47 PM MST Junio C Hamano wrote:
-> The 'next' branch is designed to be always
-> a descendant of 'master', unless I screw up, and I'd appreciate if
-> you let me know when it happens.  Right now, it is not the case,
-> though.
+On 7/16/22 9:50 AM, Abhradeep Chakraborty wrote:
+> Hello,
+> 
+> I need the CRoaring[1] library to use roaring bitmaps. But it has
+> Apache license v2 which is not compatible with GPLv2[2].
+> 
+> Is there a way to use the CRoaring library in Git? Taylor told me that
+> contrib/persistent-https tree is also licensed under Apache License
+> version 2.
+> 
+> [1] https://github.com/RoaringBitmap/CRoaring
+> [2] https://www.apache.org/licenses/GPL-compatibility.html
 
-I thought it had been, but you are right.    Sorry.
+I know that working around a license would be the the optimal way to get a
+battle-tested implementation. Its API should be close enough to the EWAH
+bitmap implementation that we can transition between the formats easily.
+Continue pursuing that for now.
 
+However, we always have the option of implementing a version from scratch
+based on the description in the paper [3]. The benefit there is that we
+would only need to implement what we need from the format and logic, and
+we could even get some benefits from exposing some of the internals to the
+rest of Git's codebase.
 
+[3] https://arxiv.org/pdf/1603.06549.pdf
+
+I mention this because I made an independent C# implementation of
+Roaring+Run for the Azure Repos back-end. The way that the bitmaps are
+split into "chunks" of 65k positions was helpful with how the object order
+was set up: older objects were in early chunks and so deltas only needed
+the later chunks. When using a chunk, we could lazy-load and unload each
+chunk as we went through the object order.
+
+So, if we really want to try this, an independent implementation might be
+the way to start, at least as a prototype while pursuing the licensing
+angle.
+
+Thanks,
+-Stolee 
