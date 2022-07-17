@@ -2,72 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E40C5C43334
-	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 20:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E54C3C43334
+	for <git@archiver.kernel.org>; Sun, 17 Jul 2022 22:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230256AbiGQUBq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jul 2022 16:01:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48230 "EHLO
+        id S231429AbiGQWAq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jul 2022 18:00:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiGQUBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jul 2022 16:01:45 -0400
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A403C1208E
-        for <git@vger.kernel.org>; Sun, 17 Jul 2022 13:01:44 -0700 (PDT)
-Received: by mail-qv1-xf36.google.com with SMTP id kh20so7515946qvb.5
-        for <git@vger.kernel.org>; Sun, 17 Jul 2022 13:01:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wIQd+uoq8QMeefUEt+Gsmt4NsebSfBQ9cmln7mBCi84=;
-        b=AM3dPn5+M3HT6PTLLLTQwE/O1zchwj3FY/HjakEAdmPGRhJldjtJ27n13Ms4RfUE4G
-         2wxBeMDgWKIPzl6Le0OZ695cE64Sw6PAeBV0N2iPQbxCvLgA50yiybZzfLKWlmsxcaig
-         YqEF5TqvS4lNSbSvzJyRdvF3m32EumQZnSm1AIuMjm2Db4fpE+tstWlOKdPjn+Z9OLmZ
-         8rLlFv3EG0Rr9BlCZN+Qo8Nf0YL18Qg2k9Iaz8DpC63d7c5D9GOBMhO5XnW+OGzMZdGw
-         9Ny7EuXwYxO0L9cbFM8USmTL0QZVdVtFGym9VL3OGGO+0MdCyRJJjYUH1g8n/FhUz/fY
-         8VbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wIQd+uoq8QMeefUEt+Gsmt4NsebSfBQ9cmln7mBCi84=;
-        b=JJW/vXOG4qnZoVHQOvZwNPuhLEe1K5V+rfbLSgLk37UJvgQI6NzBe3Q0lxxTM2N2qb
-         5SK46aw8LKwWMWOz1/2ykucR4rPTQ3FlqSHPRPglhmtAYNqN3QYv08EcqEHV1N4SBmT4
-         Q0SMdM5EAgpXEC5phDLy2DyKidB3Xvz6lAtCjn+bWL24E/FIJx4+3NItkCZpKgy92GvC
-         jnof0kr2CfwbDQc/VVVZCpNhgNGfTHmOtIFyNQFbFlCx0s8jPnNDxZJebAgAKZtNxLD/
-         U1bz+IDwuVfxshesbVlSwURKUzFiOiMsjZF6KGSaEguar2p4bsaAj7OjS9QyAVwNxAev
-         rYiQ==
-X-Gm-Message-State: AJIora9+SKSjEGimMyr1THluzFI3+VBQehpL+M4IUDwyO00nq5bd8Frh
-        WrZHpp4GdYhkItL3ALy8SLcsbM9ow5eXjw==
-X-Google-Smtp-Source: AGRyM1viGU+RTepuw/7633ubzylJ9OeLuO0Q3InaT6L0oK3CIYcctmveCw/IlnJP02OZnlaquJenJA==
-X-Received: by 2002:a0c:ca14:0:b0:472:f2ed:a51d with SMTP id c20-20020a0cca14000000b00472f2eda51dmr18766349qvk.58.1658088103452;
-        Sun, 17 Jul 2022 13:01:43 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bm17-20020a05620a199100b006b5cccf62fbsm7785870qkb.46.2022.07.17.13.01.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Jul 2022 13:01:43 -0700 (PDT)
-Date:   Sun, 17 Jul 2022 16:01:42 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Contributor's Summit Registration, Sept 14, 2022,
- Chicago
-Message-ID: <YtRqpk2uKrfZxqO1@nand.local>
-References: <YtRqU5rAOsLw5s03@nand.local>
+        with ESMTP id S229544AbiGQWAp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jul 2022 18:00:45 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14D2ACE3A
+        for <git@vger.kernel.org>; Sun, 17 Jul 2022 15:00:43 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BB67146F0A;
+        Sun, 17 Jul 2022 18:00:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pUr5dptRR/REWnuhWu02Nh/lSrjvnPBE3DxHM8
+        bCRYg=; b=PSwhYPSojXc8z7qscd4NeyIUpJdsiABoNutTjpVnq45hLJ8GeO5HGN
+        Hlc6VsB/UVQIyTS01K3jhXhoZ9/mf61+hjcFNP2KfosJoqaeoLerLJkBQF/BQXvg
+        a7/Ua2C5q3eI8O5htIJ+mcXrB4LR64IuX4NYy52eSKaHEAVBzD5Ro=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 72C5C146F09;
+        Sun, 17 Jul 2022 18:00:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CD6BC146F08;
+        Sun, 17 Jul 2022 18:00:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: Can I use CRoaring library in Git?
+References: <CAPOJW5x4McofC5fxBvsRAzum28wmeDJCMTMRmY_0oy=32JjKqQ@mail.gmail.com>
+        <220716.86y1wtxhok.gmgdl@evledraar.gmail.com>
+        <CAPOJW5zNsETYwD=MXCFLn91qaemgooPN-JB1sx7KagkKxOXTnQ@mail.gmail.com>
+        <e574ac20-c287-c395-5bc3-b481d81764c7@gmail.com>
+Date:   Sun, 17 Jul 2022 15:00:36 -0700
+In-Reply-To: <e574ac20-c287-c395-5bc3-b481d81764c7@gmail.com> (Kaartic
+        Sivaraam's message of "Sun, 17 Jul 2022 17:55:32 +0530")
+Message-ID: <xmqqzgh7v1q3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YtRqU5rAOsLw5s03@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E411C4A8-061B-11ED-8C1B-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 17, 2022 at 04:00:19PM -0400, Taylor Blau wrote:
-> Hi again,
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-In case it wasn't obvious, the subject line should read "Sept 14, 2022",
-not "2020".
+> The EWAH case is a bit different. The original EWAH implementation
+> [ewah-cpp] was in C++. It was then ported to C [ewah-c] by Git
+> contributors [ewah-git]. The ported version has been relicensed under
+> GPLv2 with Deniel Lemire's permission.
+>
+> The case with CRoaring is that the implementation already exists in C
+> [croaring] and that is the one which is licensed under Apache V2. I'm
+> not sure how relicensing works for already existing code.
 
-Thanks,
-Taylor
+As long as the author says they are willing to relicense, that would
+"work".  It is entirely up to them.
+
+> I suppose we could enquire Daniel Lemire about using the Apache licensed
+> code for Git. Let's hope for the best.
+
+Request to relicense it so that we can use it in our GPLv2 project.
+Relicensing it under GPLv2, MIT, or BSD, would work for us.
+
+Assuming that we can clear the licensing issues (or we can write our
+own implementation from spec), how would the transition plan look
+like?  Does our bitmap format carry enough metadata to allow
+existing clients who never saw anything but ewah bitmaps to say "ah,
+this bitmap file uses encoding I do not understand" and gracefully
+fall back to not using the bitmap?
+
+Thanks.
