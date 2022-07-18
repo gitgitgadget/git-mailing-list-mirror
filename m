@@ -2,140 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF6F4C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 19:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C33B9C433EF
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 19:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234653AbiGRTKZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 15:10:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33212 "EHLO
+        id S235802AbiGRT0J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 15:26:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234234AbiGRTKY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 15:10:24 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000B92DA8F
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 12:10:23 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id fy29so21933293ejc.12
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 12:10:23 -0700 (PDT)
+        with ESMTP id S235129AbiGRT0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 15:26:08 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94DD2C10B
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 12:26:07 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id mf4so23165419ejc.3
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 12:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=iEErxfbHvMlZ9E90qU/YhTt8rrzASLF/lrOpmBepTPM=;
-        b=BHNS9f1bz6S4W6bBg/XJhkOLzNs6VhfnBKcWD91Sjnn2x25mnAllNSmeBhuUx9HmGf
-         zUdITENJrecRSYXCiDwV1uCX7tmYILAuRBvf9FjHjQXjpWhXpce/a2H6zGiGl69PoPJt
-         xkjO0iK8lCO/YT4I77drts0HP/+xVFMvENNAqwq6WeOVtL7YeI/eCk2ztTpj4K+0MZhE
-         XGgOq4op+MHmHcA9+HGe5HMpOwUtK2dfUw9sIiss3JVgjGerzm6lFBPP8YXvt6xmv9Ne
-         LFv/jsmPaR/3p+mM3885vFqPh/EILaFLxGxGaiSz0e7iQq4JepEgJzYL25yWV3OpHZlP
-         QNbg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2NAo2/LOjW7YC5CLG8s0hhkVZ1Mz+mwrt20sKSwQdgY=;
+        b=GDLh0tT7w2trMVTThD1h+MR04y6FoodsvCTWSjdiA+enEQp/IBb9C/KGSXqbGlzych
+         pDoAM8+TUYr790Xamnnq3M0mVyI2ALvyw8LDqiA+hkDw3EqtJ5ZF6KKMyIPzoafKIdLG
+         oehG9KU+rPmYcAqzvEwsiFsjCstltkTHoyXaIJvykr1RER30mGmwTUWRTrjNyifWF5vR
+         zqpSXdCDZigVpBXc0NSfynYviwmaOHG02XxFTvnUXHE4Iky/f12FcDIzD1UPjC/Q47oz
+         hlxw2EJ8XMSG1ex4sgMS5ezY86QYGOjm2g2MlDbU/xm2RSGXNfV0u+kH1z7cv1Hj1NAm
+         x7pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=iEErxfbHvMlZ9E90qU/YhTt8rrzASLF/lrOpmBepTPM=;
-        b=yvPnCZEAeARDvTV5tsmYZ+p0NCXGdFI2Dm1PPv33BqdmsuKMgyPL5eHrGD4y7upDoG
-         GXvprY/aWCz5ms9tC7JR3MTU7giFx+nU59tZx19V5w3Y2jSi9vAGznwFc/EPNdZDXhTx
-         lVqRoN6SObfsNI8+h77HweQdIODinfyviZypZz5zZ7vwE9yjEo2m++rGTEOTJD2gqIE5
-         i7vP7fJaefkLre7ayalLB0HA5kix40kj6dHA+QFZis4QkVPtkz2cy/PBR4QtmeuQImco
-         vHpSrPed+aHIDttKF9tRk9tRExwsUI8rLndYTlW3B70xzEuvONDjaoibk+AKfAGwBA89
-         bFLA==
-X-Gm-Message-State: AJIora9ZEbiz9AuPmH/DpuJv7drQNJ3jJoQZaLjwTf/Ofsym85Uj85lO
-        4qbCYb1T+HAKGL66zcqnlVQ=
-X-Google-Smtp-Source: AGRyM1uMhkfB6XQ+wRff1ot2XLg5ecPANJrZwHTiqseER/KXZzQ7A2guqhD81RH3ZbwZ5HI/NmnISw==
-X-Received: by 2002:a17:906:9c84:b0:6e0:7c75:6f01 with SMTP id fj4-20020a1709069c8400b006e07c756f01mr27459746ejc.103.1658171422460;
-        Mon, 18 Jul 2022 12:10:22 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id j22-20020a170906051600b0072b36cbcdaasm5750757eja.92.2022.07.18.12.10.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 12:10:21 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oDW8K-003Kn4-PB;
-        Mon, 18 Jul 2022 21:10:20 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, derrickstolee@github.com,
-        git@jeffhostetler.com, git@vger.kernel.org, me@ttaylorr.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v7 0/7] trace2: dump scope when print "interesting" config
-Date:   Mon, 18 Jul 2022 21:07:30 +0200
-References: <cover.1657540174.git.dyroneteng@gmail.com>
- <cover.1658159745.git.dyroneteng@gmail.com> <xmqqa696fdva.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqa696fdva.fsf@gitster.g>
-Message-ID: <220718.86edyiw82r.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2NAo2/LOjW7YC5CLG8s0hhkVZ1Mz+mwrt20sKSwQdgY=;
+        b=zlYPG7aE/J2nKVCiM+26qwlhFigj+7O/58o1hKD4Zr8cToBYdai8vTm/iN0CWhqVZc
+         dIPe8QT+sruDBZeSRbke87lHWA43aOxL+w746sy2vWo39Vs4wi3Xmsw/LNGhWOXlROzG
+         FbeU2hZPssQHo9oziWy5S1xandixCZO/2NkWNLstYcwP2DtvSyyWPd3i/puymQdR4kuE
+         aGXnxxUJGF84spu0zPy/as69Mhzr2sRQtPQGjUcTg07KVd6UaTEWDRlR7DGi0GoGV+ur
+         TDAVs61hi7nuSuqRfaU3UiHftpuQwKMSmjIwT0FFRYL8WCDzg/k9frS/VJjqwY8KhFiP
+         f5dA==
+X-Gm-Message-State: AJIora/IvnSPhsmhMEXSb7fbWM/NlgGNDnC1uQP0A/x2VRJGHXTnxN3F
+        GC9I2n6JU6tzEptXbGguC85MplOQRJgQ93jYR58bC66rBZKKEQ==
+X-Google-Smtp-Source: AGRyM1vYzMq1/yrhwY2QjSiXiM46JA557CW563/I/+HZIy8eDco+yLjG2T2dMXl9qo/Ar32xAXtW6F0bXdAyUchzexw=
+X-Received: by 2002:a17:907:7fa9:b0:72f:36fd:ef89 with SMTP id
+ qk41-20020a1709077fa900b0072f36fdef89mr4945088ejc.433.1658172366098; Mon, 18
+ Jul 2022 12:26:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1266.v2.git.1656249017.gitgitgadget@gmail.com>
+ <pull.1266.v3.git.1656924376.gitgitgadget@gmail.com> <e64362621d235f2c79f52e984de7a2a2794e2842.1656924376.git.gitgitgadget@gmail.com>
+ <YtDVDu7VKgAcvRse@nand.local> <CAPOJW5y+ywbiT2XBYYNN+y73+V98Ro33D1bgZQveQLTPfrgE_g@mail.gmail.com>
+ <YtHoJ90N6rmDmn6M@nand.local> <CAN0heSoA=wv4syJ3VOe92QPpjPHyqUPJ8+Pv+mbB0-TiiieVmw@mail.gmail.com>
+In-Reply-To: <CAN0heSoA=wv4syJ3VOe92QPpjPHyqUPJ8+Pv+mbB0-TiiieVmw@mail.gmail.com>
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Date:   Tue, 19 Jul 2022 00:55:54 +0530
+Message-ID: <CAPOJW5zEJJwx+1_4MrpwPVnpV=i_82obO-uqAcYJGJDS6y=31w@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] pack-bitmap: prepare to read lookup table extension
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Abhradeep Chakraborty via GitGitGadget 
+        <gitgitgadget@gmail.com>, git <git@vger.kernel.org>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Jul 18 2022, Junio C Hamano wrote:
-
-> Teng Long <dyroneteng@gmail.com> writes:
+On Mon, Jul 18, 2022 at 2:37 PM Martin =C3=85gren <martin.agren@gmail.com> =
+wrote:
 >
->> Changes since v6:
->>
->> 1. [1/7] Fixed the mistitled commit mesage.
->>
->>    [PATCH v6 1/7] "clean: fixed issues related to text output format"
->>
->>    to:
->>
->>    [PATCH v7 1/7] "pack-bitmap.c: fix formatting of error messages"
->>
->> 2. [4/7] replace "warning()" to "warning_errno()" and rewrite commit message.
->>
->> 3. [5/7] fix the logic error, move "error_errno()" before close(fd) to
->>    avoid errno lost.
->>
->> 4. [7/7] update Documentation/technical/api-trace2.txt here too.
->>
->> Thanks.
->>
->> Teng Long (7):
->>   pack-bitmap.c: fix formatting of error messages
->>   pack-bitmap.c: mark more strings for translations
->>   pack-bitmap.c: rename "idx_name" to "bitmap_name"
->>   pack-bitmap.c: do not ignore error when opening a bitmap file
->>   pack-bitmap.c: using error() instead of silently returning -1
->>   pack-bitmap.c: continue looping when first MIDX bitmap is found
->>   tr2: dump names if config exist in multiple scopes
+> Hi Abhradeep and Taylor,
 >
-> This has been "cooking" on the list for quite some time and I found
-> that all parts that I had comments on earlier iterations are now in
-> good shape.
+> I very much enjoy following from a distance Abhradeep's work on this
+> series and all the reviewing and mentoring. I don't grasp anywhere near
+> all the details, but I've looked into this a bit:
+
+Thanks!
+
+>   "The compar routine is expected to have two arguments which point to
+>   the key object and to an array member, in that order, [...]"
 >
-> Fellow reviewers, how does this round look?  The only gripe I have
-> is that the last one seems totally disconnected from the rest, but
-> That's minor.
+> I think it would help to make this something like
+>
+>   static int triplet_cmp(const void *key, const void *array_item)
+>
+> to really highlight this asymmetric nature of this function, or to make
+> clear how the values flow through our call-chain through something like
+>
+>   static int triplet_cmp(const void *commit_pos, const void *table_entry)
 
-Yeah likewise, it even applies directly on master. But I can live with
-it :)
+Nice. Will update it.
 
-One minor nit is that something like this (which needs to be fleshened
-up) should be fixed up into 7/7 (and maybe we want to keep the "..."?):
+> Would it make sense to let the `const void *key` directly carry the
+> 32-bit value and hope that `sizeof(key) >=3D sizeof(uint32_t)`? That's
+> probably too magical, "just" to save on dereferencing.
 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 49bb1ca1924..ce544982a37 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -716,7 +716,7 @@ The "exec_id" field is a command-unique id and is only useful if the
- ------------
- {
- 	"event":"def_param",
--	...
-+	"scope": ...
- 	"param":"core.abbrev",
- 	"value":"7"
- }
+I do not have any particular opinion here. I will do whatever you think is =
+best.
 
-And that the addition to api-trace2.txt seems to partially be something
-that should just link to Documentation/config/trace2.txt, i.e. it's
-generally documenting an existing facility.
+> One thing that could perhaps make things clearer is if
+> `bsearch_triplet()` did take the position directly, rather than as a
+> pointer:
+>
+> -static int bsearch_triplet(uint32_t *commit_pos,
+> +static int bsearch_triplet(uint32_t commit_pos,
+>                            struct bitmap_index *bitmap_git,
+>                            struct bitmap_lookup_table_triplet *triplet)
+>  {
+> -       unsigned char *p =3D bsearch(commit_pos,
+> bitmap_git->table_lookup, bitmap_git->entry_count,
+> +       unsigned char *p =3D bsearch(&commit_pos,
+> bitmap_git->table_lookup, bitmap_git->entry_count,
+>                                    BITMAP_LOOKUP_TABLE_TRIPLET_WIDTH,
+> triplet_cmp);
+>
+>
+> Also, maybe s/bsearch_triplet/&_by_pos/ could clarify the intent of this
+> function?
 
-I think it would be great in any case to have that 7/7 split into what
-we do now & docs for that, and then the minor addition of "scope".
+Ok, sure!
 
-The rest all looks good to me, and seems to fully address the feedback
-in previous rounds.
+Thanks :)
