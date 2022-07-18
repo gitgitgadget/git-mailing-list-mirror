@@ -2,107 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44D99C43334
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 09:20:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44742C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 10:05:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233793AbiGRJUQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 05:20:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48224 "EHLO
+        id S233507AbiGRKF4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 06:05:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233821AbiGRJUK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 05:20:10 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC3756557
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 02:20:09 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id t3so14436986edd.0
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 02:20:09 -0700 (PDT)
+        with ESMTP id S233313AbiGRKFz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 06:05:55 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDC1C2ACA
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 03:05:54 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id t1so18406653lft.8
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 03:05:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sLVkM4ar8dqoEM8WociKDgjeUqczQVDER3GI9A4hUJ4=;
-        b=jIDRI8UlylqSVwCTQn5Z1HdiNdhwItuhmzdlbBljhTpBOWVJXtz9/F9qK8lzcxc3U2
-         bMUJdiWQtuhMpW7t+ZmvpZQsbF0WoMNV7J5OIQ7VRCw7n3WAohEWZ2WuZJQCqMlUzejV
-         wqP5OxCPqt+Gr3fstdFXGySnYGfWQ01xd8zeABZDu0F9RBb3q6iuCHgJPSQ03HEDVF5a
-         9/aEqNgbG127BMqxW5wJ1tl+FnEL1BWoaJrkXb6FuJJmnUjnx0hZwjmkklQtPWXjpNd9
-         fJtTlCH9v/svk3jGI1HrxVP6c3yGEoFzSASAXzO0trF0QO8ST+fB/o9SBBlJ52VvugJq
-         Y0UQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HyEggtzbax+W8LAq6rQTz7fkXdhPepW+fs7ghaaD9sg=;
+        b=l+pwpZ/9hEgiATPBCTNbQeq42jObak4RpRGhdA1vKcBrdHazo/PgCp8oUy9hOqO650
+         XsJurtUeyFRbwkf5XuJZDSYtzaD3Y+zFmP1Fx9nrhbkIua+tDTVZ/7w+S3JJhnJHxnrt
+         0w5FdxRiy0d4zGPChomlo7FI6qKXNMZy4PRTg3fGHpZIfAt4QjUjGKb+LGxG7nrIZz4l
+         LqCiLNIp4rpe4DSaNj5I30dQ9cibtSgyaJEluS24WcAj0DrYY8YIxFeeQ8PU44HDJEmE
+         AwMpiSenhR5yN30XNZ6zL/RiV7dIcZ5Frvw5jzz4MviZL5P7JYD8zIJD3ktq4aAPYPbs
+         aJdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sLVkM4ar8dqoEM8WociKDgjeUqczQVDER3GI9A4hUJ4=;
-        b=O4C9KFqCRcDoKrPBGzSwhOL1xKlG9JCYD13yrnRbIYT5Od3MZfr7zEKfHm2TIMbMxX
-         qfGGg6H6am/jPm1hpeJZxorMVSKQ6Cz9stWwA98FrY1FowqAUYuOHgiEChjGKOA5lk9h
-         4bGnLjC3O5ISYj1+82qAw1/k6ejkJTGMKGmWhHycayVKNvgfks0lQLpp1h9FKYcFQA/y
-         6fgHI5Oxef4IE5LnIflrnVFlSvUoBdSM+bm/Flgp+coV6wYS9YSaK2hPIt3GOTMiUXr+
-         yonPnaaXoGhjTg9PWxcOjtAc3IQtCec3nTVJq+FpnlTyFr1J/ygvqRxbgfEfrwr1VE9P
-         Tq/g==
-X-Gm-Message-State: AJIora+qFbd1hvGFhTWidGEMi0KYF4K7BaXTPI7ARts7tAGVdR2jekZt
-        3bhDY7rwjB6ROcED3XroJUefTSigHs4=
-X-Google-Smtp-Source: AGRyM1tSKpZtAaB8eTSMkdSITYINNcKR74KZP5KPOl6O8+JvacpEUfgEXLpCz1PRm3hK3C51DSmo6w==
-X-Received: by 2002:aa7:d955:0:b0:43a:7241:4cf9 with SMTP id l21-20020aa7d955000000b0043a72414cf9mr34439109eds.247.1658136008368;
-        Mon, 18 Jul 2022 02:20:08 -0700 (PDT)
-Received: from localhost (92-249-246-211.pool.digikabel.hu. [92.249.246.211])
-        by smtp.gmail.com with ESMTPSA id kw20-20020a170907771400b006fe8ac6bc69sm5349861ejc.140.2022.07.18.02.20.07
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HyEggtzbax+W8LAq6rQTz7fkXdhPepW+fs7ghaaD9sg=;
+        b=R4YfNN55omtN3uGX3xHyCvQAFbaBAT0E2uqMCjuHnRZdTCCmPcU4POOoOb34fpi/VY
+         WDujRPJ0LWcQI5rMOhDthIuB+U1uI7ChXQJPW7FIueBYlr+HupqkpAsHRZDpEsxUva+J
+         PC3E0wG9+pxwjfj+KPXENJ8y9AO8puYdiMdT4F/1fcGB1TiDAFvHImHjxukVvZG9rfmO
+         Euvr8K+Q70HVFhQs+ggfQwXrSOfdByu6UFiz4w6GS/7an7cP25FU/6EHV+Yzhj3kUDR/
+         UYJMtU2drnklYlm7heSad37W5ZbIJqRWFMO4CUjvZgrmDAhTIE9tMzSsUl/S0bEJdYGi
+         AApQ==
+X-Gm-Message-State: AJIora8u6ZD+Koo+87+0TnFY+3b35yX8gkUuZxgtWPrf6N29V1IxcGjk
+        khhoXwBzbdg6nlHj66TM4heJ+IgegUE=
+X-Google-Smtp-Source: AGRyM1u8Npw2rBWHTqjHuisL3+jDqajfpvbKiL9ZKhovjfoe5u4wR0bzuPppWKquONAusBGiO0aBmQ==
+X-Received: by 2002:a05:6512:344e:b0:489:f4ad:88d8 with SMTP id j14-20020a056512344e00b00489f4ad88d8mr15914948lfr.297.1658138752625;
+        Mon, 18 Jul 2022 03:05:52 -0700 (PDT)
+Received: from localhost.localdomain (81-231-137-145-no600.tbcn.telia.com. [81.231.137.145])
+        by smtp.gmail.com with ESMTPSA id c12-20020a056512238c00b0047968606114sm2509482lfv.111.2022.07.18.03.05.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 02:20:08 -0700 (PDT)
-Date:   Mon, 18 Jul 2022 11:20:06 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        newren@gmail.com, avarab@gmail.com, dyroneteng@gmail.com,
-        Johannes.Schindelin@gmx.de,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 1/6] docs: document bundle URI standard
-Message-ID: <20220718092006.GB5616@szeder.dev>
-References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
- <pull.1248.v2.git.1656535245.gitgitgadget@gmail.com>
- <d444042dc4dcc1f9b218ca851fcf603a3afce92f.1656535245.git.gitgitgadget@gmail.com>
+        Mon, 18 Jul 2022 03:05:51 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+Subject: [PATCH] config/core.txt: fix minor issues for `core.sparseCheckoutCone`
+Date:   Mon, 18 Jul 2022 12:05:30 +0200
+Message-Id: <20220718100530.2068354-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.37.1.373.g4dd4a117ec
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d444042dc4dcc1f9b218ca851fcf603a3afce92f.1656535245.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 08:40:40PM +0000, Derrick Stolee via GitGitGadget wrote:
-> diff --git a/Documentation/technical/bundle-uri.txt b/Documentation/technical/bundle-uri.txt
-> new file mode 100644
-> index 00000000000..a0230a902a4
-> --- /dev/null
-> +++ b/Documentation/technical/bundle-uri.txt
+The sparse checkout feature can be used in "cone mode" or "non-cone
+mode". In this one instance in the documentation, we refer to the latter
+as "non cone mode" with whitespace rather than a hyphen. Align this with
+the rest of our documentation.
 
-> +Implementation Plan
-> +-------------------
-> +
-> +This design document is being submitted on its own as an aspirational
-> +document, with the goal of implementing all of the mentioned client
-> +features over the course of several patch series. Here is a potential
-> +outline for submitting these features:
-> +
-> +1. Integrate bundle URIs into `git clone` with a `--bundle-uri` option.
-> +   This will include a new `git fetch --bundle-uri` mode for use as the
-> +   implementation underneath `git clone`. The initial version here will
-> +   expect a single bundle at the given URI.
-> +
-> +2. Implement the ability to parse a bundle list from a bundle URI and
-> +   update the `git fetch --bundle-uri` logic to properly distinguish
-> +   between `bundle.mode` options. Specifically design the feature so
-> +   that the config format parsing feeds a list of key-value pairs into the
-> +   bundle list logic.
-> +
-> +3. Create the `bundle-uri` protocol v2 verb so Git servers can advertise
+A few words later in the same paragraph, there's mention of "a more
+flexible patterns". Drop that leading "a" to fix the grammar.
 
-s/verb/command/ or s/verb/request/
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ BTW, Elijah, it seems like you've recently started using different
+ e-mail addresses, even within the same series [1]. Not sure if that's
+ intentional or not? I decided to cc the one you've used by far the most
+ rather than spamming all of your accounts.
 
-'bundle-uri' is not a verb, but even if it were, the protocol v2
-documentation talks only about commands and requests, but never
-mentions a single "verb".
+ [1] https://lore.kernel.org/git/pull.1268.v4.git.1656984823.gitgitgadget@gmail.com/
 
-> +   bundle URIs using the key-value pairs. Plug into the existing key-value
-> +   input to the bundle list logic. Allow `git clone` to discover these
-> +   bundle URIs and bootstrap the client repository from the bundle data.
-> +   (This choice is an opt-in via a config option and a command-line
-> +   option.)
+ Documentation/config/core.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 3ea3124f7f..37afbaf5a4 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -722,8 +722,8 @@ core.sparseCheckout::
+ core.sparseCheckoutCone::
+ 	Enables the "cone mode" of the sparse checkout feature. When the
+ 	sparse-checkout file contains a limited set of patterns, this
+-	mode provides significant performance advantages. The "non
+-	cone mode" can be requested to allow specifying a more flexible
++	mode provides significant performance advantages. The "non-cone
++	mode" can be requested to allow specifying more flexible
+ 	patterns by setting this variable to 'false'. See
+ 	linkgit:git-sparse-checkout[1] for more information.
+ 
+-- 
+2.37.1.373.g4dd4a117ec
+
