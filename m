@@ -2,161 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BD9FC433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 09:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65D0FC43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 09:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234024AbiGRJGC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 05:06:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
+        id S234083AbiGRJHG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 05:07:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231806AbiGRJGB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 05:06:01 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD55EE033
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 02:06:00 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id d16so16036228wrv.10
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 02:06:00 -0700 (PDT)
+        with ESMTP id S233954AbiGRJHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 05:07:06 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C22011810
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 02:07:05 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id a15so11208355pjs.0
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 02:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6TWy1XvWcXP1BNqP7KIzAtZdBM57Mc/sLlELXogCIdk=;
-        b=A5tBkkpqR3fJdFbRELi8b2cJtDvBn0rWSCSz68nAcy3h+RQIUD/RdZFclxZ59Vsbp5
-         foBCufh0nvhw1E1O8ywiMu2uGmL7ZsPhAXx9ZL4Jgn5lSfQfbuqJRs0jQXrgs2F3HxpK
-         ix/V6lAYoFtqV4RHvNmZYPzU9e7xg4XLTGS42vtcCXqPKLEBDUf2dMN0ntbzkjgmRoUS
-         yyK1bN1Hqlf3zFgL97TKqB92zarG0tOaM/TTktbTWDBH5ND9LrnYKBUwUwTkX+P19Jo5
-         9ZvXIQwqCuQfrHPj8YbOakW2tG7lNMnRL+suM+mwGlt3HWs8GWAPinvc7ayRhMOGACUU
-         w2OQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8hyRJVTeEi7R88LqQn3Pn2gngj+1muSE2vG5dzob8pA=;
+        b=iiADzssQbt5nv8qzwgljOm4/LeV6pwXEOXo10Nu36yZD6KwcpmD+e/BMhXEaK7pE+h
+         LnCN6GgSzSGrEIXoYnYLSrx9/ZJQEnb+hT3J06o2/dtG1pHEN8Uv2EI3Yc1z+KAirsoQ
+         vt7FgIqLM49uQhzJhF1N6HoKNlUIwWSxvJwHOjYz3MQQ8N69YT9vlwKWHfWCAcvl4WYk
+         A2bWB3x+rFthdOatFu3ARAEURoUcUpRhlrRsA6X9RfzXKZFbl240jLpfsnjYc03UPghw
+         0Wak5h7/nUqxaL29OAovIxIdmfvwVuNTyfsd0WF/otgVA6gyJKtgt+Jb/hE6aK6vP9QA
+         +gdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6TWy1XvWcXP1BNqP7KIzAtZdBM57Mc/sLlELXogCIdk=;
-        b=KiQCheyCnbBMPD9/UyX3BRPr3u5HU4jLLw22N1PtUuEj8WNMzhQJYn7h0t5WVV2ZzP
-         4kKmuJqBFKuD27eAg2/omD8EFawd8HpZiDMQelqIkVnXUj4i55RHfJuDklNZoM48n0mc
-         E2131xR8MO3ZtCx/aqBu1uG83sgRKEhbLu0mxBvXQtVY36izHrf3+TuTiqb9K9vRHb5S
-         h6XcuRfOEaKl2se1EWJsj6dsQfcxBSJnRMEiQBcqRTQ1dQPvhUbwEZ9nzOKfcDwc5gvM
-         BEFZY6adfRObaXZtV9PPcvuCgS3p9Il/F5gvwPPYm98u/hLF79e/VIL/KAAJjplKa2sV
-         VPEw==
-X-Gm-Message-State: AJIora83ukmPPINwhh3u9nJwe0pp9KMnSygHvJ0iG9qk1R4rn6Fm/L0G
-        Jc2umRaKlup6YpXE8xr+z8+wSFBGVf8=
-X-Google-Smtp-Source: AGRyM1vUMsNAVEh7q6LCFja7ugV0A30uynkeoWsiM6dz4OI7eHtbwzENxd6blIsipkfvdm2mKIhO8Q==
-X-Received: by 2002:a5d:44d1:0:b0:21d:7471:2094 with SMTP id z17-20020a5d44d1000000b0021d74712094mr22159383wrr.374.1658135159265;
-        Mon, 18 Jul 2022 02:05:59 -0700 (PDT)
-Received: from localhost (92-249-246-211.pool.digikabel.hu. [92.249.246.211])
-        by smtp.gmail.com with ESMTPSA id t64-20020a1c4643000000b003a30c3d0c9csm11286064wma.8.2022.07.18.02.05.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 02:05:58 -0700 (PDT)
-Date:   Mon, 18 Jul 2022 11:05:57 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-        me@ttaylorr.com, Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v4 07/12] rebase: add --update-refs option
-Message-ID: <20220718090557.GA5616@szeder.dev>
-References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
- <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
- <3ec2cc922f971af4e4a558188cf139cc0c0150d6.1657631226.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8hyRJVTeEi7R88LqQn3Pn2gngj+1muSE2vG5dzob8pA=;
+        b=7NsxoVKtXJs4xkzZ5Z9MMehAZiozNPSwY0rhMM7Vpa0l0XrDfPWflxQyBaBLPA0Ozq
+         Tfx2Z0AJSzgk5JYiDMQCYml5zSCLeSlcl/1iHssLtCmomEBG0Gn2nsmx6zqr9bNwFAn6
+         LKm0oUhjnAAgv1DvwKZ1LyUAFdxcNUB8zN4+9NTzocq5LmGYMzVP98W2FNepsw/fHLkp
+         CZhdLQHay85MDhtelu6B5E/+CYMfggqFLpRwbSvDGztciTHQtsvm+QbpZJ8cBXXSQcJy
+         tCXw4O7FBIxkCoTYyNfQhgPaqH7aPpU4PTUoDZoACm/hcMeOOavxHkwL2mP+rGQnmCeY
+         1kEA==
+X-Gm-Message-State: AJIora9sTdKAV2EkLuwP6iuXVEKAbB6M0xUpuEgi4E/qjiYfDPYznipC
+        rShc/5SKMWWn73bLOQlvs0Yo+Ndqljv53bAXEr4=
+X-Google-Smtp-Source: AGRyM1sesrnk0cJ9tHQePnC8DNC6A4Xtu3Ak767r8GA8zclnyMYqicTzVBrIQHvg2DZlagt4Jd+xfBmqvLmmCIAH2qI=
+X-Received: by 2002:a17:902:b215:b0:168:da4b:c925 with SMTP id
+ t21-20020a170902b21500b00168da4bc925mr26054842plr.155.1658135224652; Mon, 18
+ Jul 2022 02:07:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3ec2cc922f971af4e4a558188cf139cc0c0150d6.1657631226.git.gitgitgadget@gmail.com>
+References: <pull.1266.v2.git.1656249017.gitgitgadget@gmail.com>
+ <pull.1266.v3.git.1656924376.gitgitgadget@gmail.com> <e64362621d235f2c79f52e984de7a2a2794e2842.1656924376.git.gitgitgadget@gmail.com>
+ <YtDVDu7VKgAcvRse@nand.local> <CAPOJW5y+ywbiT2XBYYNN+y73+V98Ro33D1bgZQveQLTPfrgE_g@mail.gmail.com>
+ <YtHoJ90N6rmDmn6M@nand.local>
+In-Reply-To: <YtHoJ90N6rmDmn6M@nand.local>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 18 Jul 2022 11:06:53 +0200
+Message-ID: <CAN0heSoA=wv4syJ3VOe92QPpjPHyqUPJ8+Pv+mbB0-TiiieVmw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] pack-bitmap: prepare to read lookup table extension
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Abhradeep Chakraborty via GitGitGadget 
+        <gitgitgadget@gmail.com>, git <git@vger.kernel.org>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 12, 2022 at 01:07:00PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
-> 
-> When working on a large feature, it can be helpful to break that feature
-> into multiple smaller parts that become reviewed in sequence. During
-> development or during review, a change to one part of the feature could
-> affect multiple of these parts. An interactive rebase can help adjust
-> the multi-part "story" of the branch.
-> 
-> However, if there are branches tracking the different parts of the
-> feature, then rebasing the entire list of commits can create commits not
-> reachable from those "sub branches". It can take a manual step to update
-> those branches.
-> 
-> Add a new --update-refs option to 'git rebase -i' that adds 'update-ref
-> <ref>' steps to the todo file whenever a commit that is being rebased is
-> decorated with that <ref>. At the very end, the rebase process updates
-> all of the listed refs to the values stored during the rebase operation.
-> 
-> Be sure to iterate after any squashing or fixups are placed. Update the
-> branch only after those squashes and fixups are complete. This allows a
-> --fixup commit at the tip of the feature to apply correctly to the sub
-> branch, even if it is fixing up the most-recent commit in that part.
-> 
-> One potential problem here is that refs decorating commits that are
-> already marked as "fixup!" or "squash!" will not be included in this
-> list. Generally, the reordering of the "fixup!" and "squash!" is likely
-> to change the relative order of these refs, so it is not recommended.
-> The workflow here is intended to allow these kinds of commits at the tip
-> of the rebased branch while the other sub branches come along for the
-> ride without intervention.
-> 
-> This change update the documentation and builtin to accept the
-> --update-refs option as well as updating the todo file with the
-> 'update-ref' commands. Tests are added to ensure that these todo
-> commands are added in the correct locations.
-> 
-> This change does _not_ include the actual behavior of tracking the
-> updated refs and writing the new ref values at the end of the rebase
-> process. That is deferred to a later change.
-> 
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  Documentation/git-rebase.txt  |   8 +++
->  builtin/rebase.c              |   5 ++
->  sequencer.c                   | 107 ++++++++++++++++++++++++++++++++++
->  sequencer.h                   |   1 +
->  t/t2407-worktree-heads.sh     |  22 +++++++
->  t/t3404-rebase-interactive.sh |  70 ++++++++++++++++++++++
->  6 files changed, 213 insertions(+)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 262fb01aec0..e7611b4089c 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -609,6 +609,13 @@ provided. Otherwise an explicit `--no-reschedule-failed-exec` at the
->  start would be overridden by the presence of
->  `rebase.rescheduleFailedExec=true` configuration.
->  
-> +--update-refs::
+Hi Abhradeep and Taylor,
 
-So the option is called '--update-refs', but ...
+I very much enjoy following from a distance Abhradeep's work on this
+series and all the reviewing and mentoring. I don't grasp anywhere near
+all the details, but I've looked into this a bit:
 
-> +--no-update-refs::
-> +	Automatically force-update any branches that point to commits that
+On Sat, 16 Jul 2022 at 00:37, Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Fri, Jul 15, 2022 at 10:08:17PM +0530, Abhradeep Chakraborty wrote:
+> > On Fri, Jul 15, 2022 at 8:16 AM Taylor Blau <me@ttaylorr.com> wrote:
+> > >
+> > > On Mon, Jul 04, 2022 at 08:46:14AM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
+> > > > +/*
+> > > > + * Searches for a matching triplet. `va` is a pointer
+> > > > + * to the wanted commit position value. `vb` points to
+> > > > + * a triplet in lookup table. The first 4 bytes of each
+> > > > + * triplet (pointed by `vb`) are compared with `*va`.
+> > > > + */
+> > > > +static int triplet_cmp(const void *va, const void *vb)
+> > > > +{
+> > > > +
+> > > > +     uint32_t a = *(uint32_t *)va;
+> > >
+> > > The comment you added is definitely helpful, but I still think that this
+> > > line is a little magical. `*va` isn't really a pointer to a `uint32_t`,
+> > > but a pointer to the start of a triplet, which just *happens* to have a
+> > > 4-byte integer at the beginning of it.
 
-... its description talks about "branches".
+Yeah, this all looks quite magical with the casting, and with the
+asymmetric handling of `va` and `vb`.
 
-> +	are being rebased. Any branches that are checked out in a worktree
-> +	or point to a `squash! ...` or `fixup! ...` commit are not updated
-> +	in this way.
-> +
->  INCOMPATIBLE OPTIONS
->  --------------------
->  
+> > Are you sure about this? As far as I know, the first parameter of such
+> > comparing functions is always a pointer to the given key that we need
+> > to search for and the second parameter points to each element of an
+> > array.
 
-> @@ -1124,6 +1126,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		OPT_BOOL(0, "autosquash", &options.autosquash,
->  			 N_("move commits that begin with "
->  			    "squash!/fixup! under -i")),
-> +		OPT_BOOL(0, "update-refs", &options.update_refs,
-> +			 N_("update local refs that point to commits "
+Yes, that matches my understanding and the man-page for bsearch(3):
 
-And its short help talks about "local refs".
+  "The compar routine is expected to have two arguments which point to
+  the key object and to an array member, in that order, [...]"
 
-I think at least the documentation and short help should use
-consistent terminology.
+I think it would help to make this something like
 
-> +			    "that are being rebased")),
->  		{ OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
->  			N_("GPG-sign commits"),
->  			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+  static int triplet_cmp(const void *key, const void *array_item)
+
+to really highlight this asymmetric nature of this function, or to make
+clear how the values flow through our call-chain through something like
+
+  static int triplet_cmp(const void *commit_pos, const void *table_entry)
+
+Because we really do rely on this promise of bsearch(3) -- if we would
+instantiate a 'dummy' triplet carrying the key, we wouldn't need to (but
+we would instead need to have our `cmp` function constantly re-read the
+same value, including doing the byteswap).
+
+Would it make sense to let the `const void *key` directly carry the
+32-bit value and hope that `sizeof(key) >= sizeof(uint32_t)`? That's
+probably too magical, "just" to save on dereferencing.
+
+One thing that could perhaps make things clearer is if
+`bsearch_triplet()` did take the position directly, rather than as a
+pointer:
+
+-static int bsearch_triplet(uint32_t *commit_pos,
++static int bsearch_triplet(uint32_t commit_pos,
+                           struct bitmap_index *bitmap_git,
+                           struct bitmap_lookup_table_triplet *triplet)
+ {
+-       unsigned char *p = bsearch(commit_pos,
+bitmap_git->table_lookup, bitmap_git->entry_count,
++       unsigned char *p = bsearch(&commit_pos,
+bitmap_git->table_lookup, bitmap_git->entry_count,
+                                   BITMAP_LOOKUP_TABLE_TRIPLET_WIDTH,
+triplet_cmp);
+
+
+Also, maybe s/bsearch_triplet/&_by_pos/ could clarify the intent of this
+function?
+
+> > I think "`va is a pointer to the wanted commit position value" is not
+> > that descriptive. Maybe "`va` is a pointer to the given key" is
+> > better. What do you think?
+>
+> Yes, the first argument to the comparison function used in bsearch() is
+
+s/first/second/
+
+> a pointer to some element in the array. I just meant that that array is
+> the bitmap_git->table_lookup region, so each element isn't actually a
+> uint32_t array, but the whole thing is an array of (uint32_t, uint64_t,
+> uint32_t) triplets.
+>
+> What you wrote here is fine, and I don't even think that the comment
+> needs updating. If you did want to clarify, I think you could say
+> something along the lines of what you wrote above ("`va` is a pointer to
+> an array element") and add something along the lines of "where the array
+> is the lookup table region of the .bitmap".
+
+I mentioned a few ideas for clarifying things above. I do think it would
+be a good idea to differentiate the names of `va` and `vb` to make the
+fundamental asymmetry between them clearer. The rest of my comments are
+really just musings.
+
+I originally started looking at this because I wanted to see why the
+casting to a `uint32_t *` and dereferencing it was safe. The reason is,
+we're always handling the same pointer to a `uint32_t` on the stack, so
+alignment is guaranteed.
+
+
+Martin
