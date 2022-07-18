@@ -2,93 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DDB2C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 17:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 941BAC433EF
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 17:56:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235833AbiGRRfT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 13:35:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52448 "EHLO
+        id S234096AbiGRR4u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 13:56:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235834AbiGRRfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 13:35:14 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E70092CDCF
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:35:13 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id k7so6349816qkj.2
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ZW5VP0ROfD76nsDDo0dMj9vazir9yG4WUcQHu6iS5Ic=;
-        b=ZN5ObvicB+FtJvorLYfZJjxNEjOfveRyHzJ+RRnra7y2ODunzBRy60CsbWM5TAehC4
-         paYHkHCiGUiLCq9ObK9PP2SEK+25yL7P2v53lgr8Omv57qwH86ZXvCIpRqWUk+c2v4es
-         apE0opY3kkDFHFWt8TLMtGG8KQ1RyNfGjMP3A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ZW5VP0ROfD76nsDDo0dMj9vazir9yG4WUcQHu6iS5Ic=;
-        b=Gn80gpGUjs479vrgoyjZhreJCB0Zhkrm+mGWtO+oqqA7A6eYRU/jVIxs59XmQ66faM
-         I2Vwi+8tS59Guo+njxe0e5OOU5qr6GfwZDZpoowXd++xrVXkSVxdFaUeqShu4CNTiRMr
-         bNnS9azMsaEVbvIDCkcwo0XXels1HnOgmwS0EMLH6QwR8x4H8HVEm+GEgVeVvcNKrkAU
-         jj7SNf+xsUc0/+iqtyZKi3l/n2zj6lsKcqpXhbqfQi0UyCHmZYx/q/oXm3FnNeQ6pHPx
-         oDGfsDxP5JFRT3/qEm9uqng3DHwGYEY7XxdOENU/Zhp3wGJ533Rf+AvjmWTTcUoT0jq3
-         JgZA==
-X-Gm-Message-State: AJIora8K9BBmQHq15W3qUyETv0p50YiSKFlTha2uDlpuxIEOIP2pGWm3
-        VnIeAuIELizOCaBbUsP1HwfNX8pz7/268g==
-X-Google-Smtp-Source: AGRyM1twSZLV1OkC0n2LSgSy0l2oZbOdO8eoBXeznjtj8HlqbgmonOtQWDR/I160r11Hr/D+/3TF+g==
-X-Received: by 2002:a05:620a:4086:b0:6b1:e044:3f66 with SMTP id f6-20020a05620a408600b006b1e0443f66mr18458987qko.500.1658165713038;
-        Mon, 18 Jul 2022 10:35:13 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id y13-20020a05620a25cd00b006af20edff0csm12136496qko.58.2022.07.18.10.35.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 10:35:12 -0700 (PDT)
-Date:   Mon, 18 Jul 2022 13:35:11 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Stephen Finucane <stephen@that.guru>
-Cc:     git@vger.kernel.org
-Subject: Re: Feature request: provide a persistent IDs on a commit
-Message-ID: <20220718173511.rje43peodwdprsid@meerkat.local>
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+        with ESMTP id S233923AbiGRR4t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 13:56:49 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A89D42D1FD
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:56:48 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 94E8D14CD5B;
+        Mon, 18 Jul 2022 13:56:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=RspgGKIuFg/2RcmLLF8MG6D17ZmbfkCyFE4OK9
+        n5WNI=; b=pGvDKQGZ5nmgSzQ69w+dWYVD3FDNIZAY7TVPTFx4ylr8NTCuap6c4g
+        YjU9S67zkmeiQ+GKGKi8qV/HpI96k9TkNHrHuOZLgeln6fmHqPTnpXbU8G3PGDpm
+        9hwy4L27b7UNIaLTUOlTrpOlVTfQP+pv5hmm7bUisQlGiKFCAcn7k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C3BA14CD5A;
+        Mon, 18 Jul 2022 13:56:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 033DC14CD58;
+        Mon, 18 Jul 2022 13:56:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: write effective filter to trace2
+In-Reply-To: <20220718161823.3363013-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Mon, 18 Jul 2022 09:18:23 -0700")
+References: <20220718161823.3363013-1-jonathantanmy@google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Date:   Mon, 18 Jul 2022 10:56:45 -0700
+Message-ID: <xmqqa696qp7m.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+Content-Type: text/plain
+X-Pobox-Relay-ID: FDD43A54-06C2-11ED-97CF-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 18, 2022 at 06:18:11PM +0100, Stephen Finucane wrote:
-> ...to track evolution of a patch through time.
-> 
-> tl;dr: How hard would it be to retrofit an 'ChangeID' concept à la the 'Change-
-> ID' trailer used by Gerrit into git core?
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-I just started working on this for b4, with the notable difference that the
-change-id trailer is used in the cover letter instead of in individual
-commits, which moves the concept of "change" from a single commit to a series
-of commits. IMO, it's much more useful in that scope, because as series are
-reviewed and iterated, individual patches can get squashed, split up or
-otherwise transformed.
+> ... that the user is not using, but fetch is I/O-intensive enough
+> and having the empty message is useful enough (not only do we not need
+> to know which versions have this feature, but we also can be sure that
+> the message wasn't excluded because of some unexpected log filtering or
+> something like that) that I think we should have the empty message. I'll
+> put it in v2 but we can easily remove it if we decide that we don't want
+> it.
 
-You can see my test commits here:
-https://lore.kernel.org/linux-patches/20220707-my-new-branch-v1-0-8d355bae1bb5@linuxfoundation.org/
+As long as it is clearly documented that "none" is given explicitly
+when no filtering is requested (Jeff's point of making it possible
+to tell the reason why we are not requesting is still valid), I
+think it would be OK.  If we are giving enough log entries for
+"fetch" operation, another "empty" message would not hurt (if the
+trace for "fetch" is otherwise very quiet, then an unused "empty"
+may become distracting, but I somehow do not think it is the case).
 
-You will notice that each cover letter has the following in the basement:
-
-    ---
-    base-commit: 88084a3df1672e131ddc1b4e39eeacfd39864acf
-    change-id: 20220707-my-new-branch-[uniquerandomstr]
-
-There are 3 revisions of the series and you can locate all of them by
-searching for that trailer:
-https://lore.kernel.org/linux-patches/?q=%22change-id%3A+20220707-my-new-branch-1325e0e7fd1c%22
-
-Note, that "b4 submit" is in the early experimental stage and will likely
-undergo significant changes in the next few weeks, so I wouldn't treat it as
-any more than curiosity at this point.
-
--K
+Thanks.
