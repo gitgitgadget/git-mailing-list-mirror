@@ -2,106 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E51C5C43334
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 16:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 669C3C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 17:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234807AbiGRQ4E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 12:56:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50170 "EHLO
+        id S235311AbiGRRAd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 13:00:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234761AbiGRQ4B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 12:56:01 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 989A22BB23
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 09:55:57 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id l24so9732999ion.13
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 09:55:57 -0700 (PDT)
+        with ESMTP id S235276AbiGRRAc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 13:00:32 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A6332B19A
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:00:31 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id 64-20020a621643000000b0052b51cf6b2aso697524pfw.0
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=oQo/1QnBIca5ro9Fdy0SbIpyZvZWYP7e2Vmnmp8HAgk=;
-        b=HqRWU1NxPjF6KMHfUbL0d4BibiMfZzQdMv4G4rby8fjNvjwb2xtieZPZ/Gu38Vvjto
-         GkGxanXtYiWd2YXjgYBS1sp/mrphdAefKaoNQMyCLUZLflrtWeNSvTDEaBYEGA9Gt0CF
-         pvqkOBs+DM6wh0LcCBffr//1ssQJGFqawu3Uq7nzyCf900pPvxNSs61RBuxLeO3LOI9a
-         SRR+fevv41wfA1BROsNbRak6Eq8EQUkL5pXGzV9rnDrfdP58nLcBmThAveCkWVhhNjFH
-         zR9+0Ye3fk7qJ6ssmtSplKMk33m2uUy0DNV7iFBTQ/+JpNhtL4dzA8Cx67Yd5a2fHuW7
-         VU2g==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=J8syxYIygx+y/CTsfqy2MONsgf4cpgTz1E53anGIwuw=;
+        b=cSzIvw2C5GnV+QrEi4DY1V+XfpDY2oIDTuJCb+UaXsNlrHsCPPqJQw/+Vbgd52VtKd
+         1j3TmDAODOMoZDW2h6hqcOp6CVZj5Bmt8ByHUWSZ+n9Ns9OyMwuPkc+TDbVDrXy+A3dd
+         P7Gb8tsXS4Wle7bSMwCd2Yn7qGiO4pKI7yIFjZCDTG+mqifCJdYiRjzzv4K52FhoaoJC
+         j33UeGlvKCGwkbp7BsCz55ra//nKv0tOX9CHMOKHSmDqN0SMPOGXaHAkpaZE3RLqxLYW
+         4X4X7KbKLUKp7fWpG1cj6R7bz+90Aqe1RfHrcMYCRDHKlUwVlXzuw0CfhM2N82wVeAC5
+         IhUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=oQo/1QnBIca5ro9Fdy0SbIpyZvZWYP7e2Vmnmp8HAgk=;
-        b=ePoJ9FOiGJ4qrmcBkh2msyy2Ohc/VBNKRis699oRJzWKlKolhTHNFvLOKiu+B3OWYT
-         MfSDICP2PinbKhxZej6jdBXYzWHT/w9hep4l0abggjM7Nre/HKBFSPaSNAfA5Z0mHN+n
-         0WD6DVVJmfXu9cfh0LQ3wq3kNNUQvZOwzofR6hHmHf0ojZIX52pSlCwlzu0SA7CkJ7Sd
-         Xa11jYNQVDZUbygCkPGia7PO2upa0ngXVH/Jzwbq8Rm9YQN37F+97A00kk9snJjdvxyp
-         vGWLxAuBGq68ULU+N6+RZPPy4lip4siH1KguwgqMCejtklpeOFyCTBAQ/xE+xqLl8D8o
-         I6CQ==
-X-Gm-Message-State: AJIora8tbWF6T2Y8mZGGpZq6R+kdU1S3WQz3jfaM0wQZ6zUvcXMAKb5C
-        woobKdM5kZmpE4h7IlvwxNzQ
-X-Google-Smtp-Source: AGRyM1uWXV9kyGRZ3fbUUQ3nna6j0yp2nILhDtX7bBAXMgr96YA/wSX11VVbfhbfwJK4usPgU0MrOQ==
-X-Received: by 2002:a6b:5f03:0:b0:67b:ef4d:e3ed with SMTP id t3-20020a6b5f03000000b0067bef4de3edmr6026852iob.45.1658163356892;
-        Mon, 18 Jul 2022 09:55:56 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:74b1:e8b4:99c9:4baf? ([2600:1700:e72:80a0:74b1:e8b4:99c9:4baf])
-        by smtp.gmail.com with ESMTPSA id x1-20020a923001000000b002dc1d6652cesm4947151ile.13.2022.07.18.09.55.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Jul 2022 09:55:56 -0700 (PDT)
-Message-ID: <11aa9b43-adea-4e90-9c70-ab3579aa445f@github.com>
-Date:   Mon, 18 Jul 2022 12:55:54 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v4 07/12] rebase: add --update-refs option
-Content-Language: en-US
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-        me@ttaylorr.com, Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
- <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
- <3ec2cc922f971af4e4a558188cf139cc0c0150d6.1657631226.git.gitgitgadget@gmail.com>
- <20220718090557.GA5616@szeder.dev>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220718090557.GA5616@szeder.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=J8syxYIygx+y/CTsfqy2MONsgf4cpgTz1E53anGIwuw=;
+        b=EhFUWersqsJgqbMVDVEmWTfDK0q/hMpQG+bMg5uhKvuJr2lmc2RaiwucXOhJt7o/KI
+         8PxjRBDFC4q27+bfaNjViLZZEDoHobG5xjcsSS9+nIqjsUOzu+cauYQ6C7A1cJvcPnMg
+         euwnR20KU1tCsHqoPwUw7XSwsreQvNDScqGVztfgtlPgXx99XScniX1MUfvn2T8jNFGk
+         pZ5s5bubL/jGv0pFN3JALe47XdWfxDXf5z0FKl0w/EL6C7KXkA/IzC6GZpKtoc/mH++A
+         i4YB8vBDQGFu++dzLZS3a19J1XEpAB/8f2SC/FePTMiabjF7aczIreM8aTDKdGvs1FA3
+         834g==
+X-Gm-Message-State: AJIora+uFRuGj20HTqUKHiSnI0WpgY7edcxAjrQfVCNQ5LpaPU3Na18U
+        YTE2Hl0uvW/Eb3rPl22MlX7H3ak2AupG+OoOoC2wqmVyIZ87NMdXyLHaYb8IB4WkXdiX+fj/Hi2
+        oFqVC+IJtcgpPedarwy41Qo75tU/XnKJ4b9GeSipqEMVBaZdBffYKIumG649xzcqpqUGb5aRp+i
+        XE
+X-Google-Smtp-Source: AGRyM1vv1BtZjqUF8+aqMwztNMGorjZdtiLWM0Ojb7dRmama0J/56PJ9xI9pnqhMg0YrBOflOirZR1fOyx/my/Y38beG
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90b:350b:b0:1f0:23d9:57eb with
+ SMTP id ls11-20020a17090b350b00b001f023d957ebmr38905541pjb.17.1658163630938;
+ Mon, 18 Jul 2022 10:00:30 -0700 (PDT)
+Date:   Mon, 18 Jul 2022 10:00:27 -0700
+In-Reply-To: <20220715172943.2681492-1-jonathantanmy@google.com>
+Message-Id: <20220718170027.3993042-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20220715172943.2681492-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.37.0.170.g444d1eabd0-goog
+Subject: [PATCH v2] fetch-pack: write effective filter to trace2
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        git@jeffhostetler.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/18/2022 5:05 AM, SZEDER Gábor wrote:
-> On Tue, Jul 12, 2022 at 01:07:00PM +0000, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <derrickstolee@github.com>
+Administrators of a managed Git environment (like the one at $DAYJOB)
+might want to quantify the performance change of fetches with and
+without filters from the client's point of view, and also detect if a
+server does not support it. Therefore, log the filter information being
+sent to the server whenever a fetch (or clone) occurs. Note that this is
+not necessarily the same as what's specified on the CLI, because during
+a fetch, the configured filter is used whenever a filter is not
+specified on the CLI.
 
->> +--update-refs::
-> 
-> So the option is called '--update-refs', but ...
-> 
->> +--no-update-refs::
->> +	Automatically force-update any branches that point to commits that
-> 
-> ... its description talks about "branches".
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Thanks everyone for your comments. I've renamed the keys and
+distinguished the case in which the server does not support filters
+following Jeff's suggestions.
 
->> +		OPT_BOOL(0, "update-refs", &options.update_refs,
->> +			 N_("update local refs that point to commits "
-> 
-> And its short help talks about "local refs".
-> 
-> I think at least the documentation and short help should use
-> consistent terminology.
+A few small discussion points:
+ - whether we need the print_verbose now that we have traces
+ - should we log if no filter is specified
+ - if yes, what key should it be logged under (I used "filter/none" for
+   now)
+---
+ fetch-pack.c | 40 ++++++++++++++++++++++++++--------------
+ 1 file changed, 26 insertions(+), 14 deletions(-)
 
-Thanks for catching this. I think I should use "branches" here, but
-keep the name "--update-refs". The biggest reason is that it provides
-a nice parallel with the "update-ref" sequencer command. This command
-allows updating _any_ ref, such as lightweight tags in refs/tags/*
-or even refs in refs/my/namespace/*.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index cb6647d657..68820f9a1a 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -292,6 +292,29 @@ static void mark_tips(struct fetch_negotiator *negotiator,
+ 	return;
+ }
+ 
++static void write_and_trace_filter(struct fetch_pack_args *args,
++				   struct strbuf *req_buf,
++				   int server_supports_filter)
++{
++	if (args->filter_options.choice) {
++		const char *spec =
++			expand_list_objects_filter_spec(&args->filter_options);
++		if (server_supports_filter) {
++			print_verbose(args, _("Server supports filter"));
++			packet_buf_write(req_buf, "filter %s", spec);
++			trace2_data_string("fetch", the_repository,
++					   "filter/effective", spec);
++		} else {
++			warning("filtering not recognized by server, ignoring");
++			trace2_data_string("fetch", the_repository,
++					   "filter/unsupported", spec);
++		}
++	} else {
++		trace2_data_string("fetch", the_repository,
++				   "filter/none", "");
++	}
++}
++
+ static int find_common(struct fetch_negotiator *negotiator,
+ 		       struct fetch_pack_args *args,
+ 		       int fd[2], struct object_id *result_oid,
+@@ -389,11 +412,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 			packet_buf_write(&req_buf, "deepen-not %s", s->string);
+ 		}
+ 	}
+-	if (server_supports_filtering && args->filter_options.choice) {
+-		const char *spec =
+-			expand_list_objects_filter_spec(&args->filter_options);
+-		packet_buf_write(&req_buf, "filter %s", spec);
+-	}
++	write_and_trace_filter(args, &req_buf, server_supports_filtering);
+ 	packet_buf_flush(&req_buf);
+ 	state_len = req_buf.len;
+ 
+@@ -1323,15 +1342,8 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 		die(_("Server does not support shallow requests"));
+ 
+ 	/* Add filter */
+-	if (server_supports_feature("fetch", "filter", 0) &&
+-	    args->filter_options.choice) {
+-		const char *spec =
+-			expand_list_objects_filter_spec(&args->filter_options);
+-		print_verbose(args, _("Server supports filter"));
+-		packet_buf_write(&req_buf, "filter %s", spec);
+-	} else if (args->filter_options.choice) {
+-		warning("filtering not recognized by server, ignoring");
+-	}
++	write_and_trace_filter(args, &req_buf,
++			       server_supports_feature("fetch", "filter", 0));
+ 
+ 	if (server_supports_feature("fetch", "packfile-uris", 0)) {
+ 		int i;
+-- 
+2.37.0.170.g444d1eabd0-goog
 
-The --update-refs option doesn't create the commands to update tags
-or refs in places other than refs/heads/*.
-
-Thanks,
--Stolee
