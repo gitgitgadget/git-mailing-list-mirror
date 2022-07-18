@@ -2,102 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99E1DC433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 13:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2987C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 13:15:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235344AbiGRNJW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 09:09:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33418 "EHLO
+        id S234621AbiGRNPi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 09:15:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235442AbiGRNJR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 09:09:17 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1325A12D07
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 06:09:11 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id b26so16983230wrc.2
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 06:09:11 -0700 (PDT)
+        with ESMTP id S234674AbiGRNPd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 09:15:33 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0080A765B
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 06:15:31 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id v12so15205035edc.10
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 06:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=idw5F4ihiqT9fao3wSxA0bl/C9ECqqkSscBG+BMh2ao=;
-        b=M3X1tJtyt4iT/VadfRRteERCFCRechRmsGUkuICxuin88xSmO78vLzjKlgyNdXEXQ6
-         WI6S+eIKhzhv9E+JICNfz8llz/4eO79A9ASiU/na+D16Y0x5wFG3s1FTl0QytuAdiMQu
-         N+9WL/VG6NsfhLosSiUn54J33HtIRB9Cq15JB1m0h2vzt0FdwxnAozDsuLRngUYNcEjC
-         2emGi2o8DgrxqAcipqfK0EgeoK4oj7/f8zmZhTdJkYfv7jVepp0KaAcY4fU9Z5WL57Tz
-         VrLvpQzMb4ePgwPNW+oJ3xgUfUn7+cNxOY8Th7OvY0soBAfv35dWKMJ+G046hZVYNF1M
-         HnYg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tPUxFboO7IrOW2km+s0ietA1Tc1vsXBkOv14j6rtr9I=;
+        b=C+p35yKLbZQppcKs3W8p27LM8Cy2nCDKmmQwa9wWY+WCKa3acBxcqIw5f+wzDngile
+         EchCmnRrcHJBi69ivluh18taz83oI53Y4FV+RFXUOMigXlMgpvf8GUgEZl5Z/uZ+mtWB
+         06L5JgXYMKguSOwaCURD9oxpPBhNAFFI8hu8DDoxA/YhrMLd5i6X4wMntT3cYKXvU8zP
+         3LdI0BeKbI9Y9c3bE3ZIZYUm5yAtldVTITijG2+iRliCwZvcREiKl3wmaSyea3lcMVas
+         neM0tiaAOALGe2S9cxWAM+ph0S2W42D6z7N86jxoXnetpazZBarTOKTIYs00y30inWyU
+         fx6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=idw5F4ihiqT9fao3wSxA0bl/C9ECqqkSscBG+BMh2ao=;
-        b=hup/tyMyI4UnFnDQEHN5IticYPdEfA4Ar2m9YBeghbjEoOgNZ74+Jrg8szNWzetYNq
-         k18hfiW9EzZppoQvmzTPOcXpJmU1s1j1qmlo6HRzftugmXaGX4QIaErYOD4IXzlhFHR5
-         GnquLyIBoMJiAEhxL/gNn0o/Ps7WDNYaIGte503ac3VhESQHDD467MA1ZF3xXtYEXec/
-         UjR3A5HPddQ3MF6rLRcuoycOAgA6UIiNbilZYa9HCrv9RD9eAfU8ZB8bv8QznNfsDOlg
-         WGxtJqaWlXczV3WPuu6cwjji72gPCCodaZNHqLoN4hwgkoUlHcgP0hTrnCsq4iICtzHE
-         1wZA==
-X-Gm-Message-State: AJIora8hz/lRzRMENK4sqg7LiStq8a7KV+D0MG8MblUgXVho6Ls9EXZ/
-        4ghD7YSWgBYSRTIy75JmNhI=
-X-Google-Smtp-Source: AGRyM1tzinf3zY99/3eV0tS/5EkUhIBR2paddvrh/8GiU66nBKPxT3o1iuZHL6UYYmW/IwNiRAyUwA==
-X-Received: by 2002:a05:6000:18ad:b0:21d:9aca:379 with SMTP id b13-20020a05600018ad00b0021d9aca0379mr22601097wri.312.1658149749687;
-        Mon, 18 Jul 2022 06:09:09 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id p26-20020a1c545a000000b0039c454067ddsm16308719wmi.15.2022.07.18.06.09.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Jul 2022 06:09:09 -0700 (PDT)
-Message-ID: <9f295edc-a821-ab46-3a93-e4b6d72a816a@gmail.com>
-Date:   Mon, 18 Jul 2022 14:09:07 +0100
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tPUxFboO7IrOW2km+s0ietA1Tc1vsXBkOv14j6rtr9I=;
+        b=WhvsG8ksznrsHRiLtQvsvq8v5VI+3w8u9UvB1kSoHxQ3GX6XMS5ctpsa3j2cEtj+K2
+         onN4bLgJiNG7s1QoaA+QP/Ks39DWPl6cVD5/8gpB+CCsLav1BtlK2YvKdHw9nSf9EKnS
+         IW9ZRMaYXtvHIlQrXldfLcP+dm2I5wnlt46BYKe0ioQlwm/zN7Fm1ytACZdHhUfGWlLO
+         sRoS+NcfLoCF80KgeL9oF5FCk2d5zvN7pmlQaqrhfnQ2cZ5hMAKa6Wh30nLqB5AA9ZUp
+         tiIDV5RBvzkfH4CFlRRYvVGQFSvtxbGH44uLA4BNFucPRbyMFdhV47zdiJzttbodQZxQ
+         bquQ==
+X-Gm-Message-State: AJIora+t+Ibkyjq5DZHr5gzbyizj/6lM05Tsbd8SR4teVmb66ffl8fWD
+        zDg9OmphNj95ExdZFYzB1g54sOIh6Xs2VpTr93Y=
+X-Google-Smtp-Source: AGRyM1sAY2/pQurAxeOQayY0TzTMp+zUUarygN+KqWhbjdOV6PbHxnqfJxqzPQU3njmfXW4oLZxSYtbNeyIgk0Sdn98=
+X-Received: by 2002:aa7:dd16:0:b0:43a:e850:a245 with SMTP id
+ i22-20020aa7dd16000000b0043ae850a245mr36069579edv.127.1658150130392; Mon, 18
+ Jul 2022 06:15:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 09/12] sequencer: rewrite update-refs as user edits
- todo list
-Content-Language: en-GB-large
-To:     Derrick Stolee <derrickstolee@github.com>,
-        phillip.wood@dunelm.org.uk,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
- <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
- <29c7c76805abb9b8afd44a65cb39d8f9d3c95892.1657631226.git.gitgitgadget@gmail.com>
- <7a471a98-09d1-78cb-d6dd-a7faaa9071ba@gmail.com>
- <638f6b51-0045-f08e-fa63-d16a571d0099@github.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <638f6b51-0045-f08e-fa63-d16a571d0099@github.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAPOJW5x4McofC5fxBvsRAzum28wmeDJCMTMRmY_0oy=32JjKqQ@mail.gmail.com>
+ <CAPOJW5wVYcmTA6kpf=kGEofziq1RLCg2haCMrye=EXaPLzb7Tw@mail.gmail.com> <9c909270-cbd5-0356-0418-4b2d3e105c93@github.com>
+In-Reply-To: <9c909270-cbd5-0356-0418-4b2d3e105c93@github.com>
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Date:   Mon, 18 Jul 2022 18:45:19 +0530
+Message-ID: <CAPOJW5wgqjN=J=+oSdz1+ZnazBGJZXtTRSWziNBZtuiUg5Kd=g@mail.gmail.com>
+Subject: Re: Can I use CRoaring library in Git?
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee
+On Mon, Jul 18, 2022 at 5:48 PM Derrick Stolee <derrickstolee@github.com> wrote:
+>
+> On 7/18/22 7:48 AM, Abhradeep Chakraborty wrote:
+> > I just got to know that CRoaring doesn't support Big Endian systems (till now) -
+> >
+> > https://groups.google.com/g/roaring-bitmaps/c/CzLmIRnYlps
+> >
+> > What do you think about this?
+>
+> Git cares enough about compatibility that that might be a
+> deal-breaker for taking the code as-is. If we _did_ take it
+> as-is, then we would need to not make it available on such
+> machines using compiler macros.
 
-On 15/07/2022 14:13, Derrick Stolee wrote:
-> On 7/15/2022 6:27 AM, Phillip Wood wrote:
-> [...]
-> I think both of these concerns would be excellent for a follow-up,
-> since they would shave off some rough edges. I hesitate to add them
-> to this series since it has been growing quite a bit already.
+Yeah, we can't use the code as-is. We might need to make some
+Git-favourable changes on top of it if we use the library.
 
-Yes that makes sense (and applies to pretty much all of my other 
-suggestions as well). This series is looking good and it makes sense to 
-get it merged and hopefully get some user feedback before making any 
-tweaks. I'm going to off the list most of the next three weeks, so I 
-probably wont reply promptly to any reroll. I think that what you've got 
-in this version is pretty much ready so I'd be very happy to see this 
-topic merged by the time I get back on the list.
+I still haven't asked him about Relicensing. Let us see what others say.
 
-Best Wishes
-
-Phillip
-
-> Thanks,
-> -Stolee
+Thanks :)
