@@ -2,77 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E41A6C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 19:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05CC1C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 19:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236141AbiGRTfn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 15:35:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56018 "EHLO
+        id S236262AbiGRTrX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 15:47:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236113AbiGRTfh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 15:35:37 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744EAE00D
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 12:35:36 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 782041452E7;
-        Mon, 18 Jul 2022 15:35:35 -0400 (EDT)
+        with ESMTP id S234128AbiGRTrW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 15:47:22 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AA8F2D1E3
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 12:47:19 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9E7681BEFF6;
+        Mon, 18 Jul 2022 15:47:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QMTpCMOCNcG7IbgKpKnQUea35Pe7TcNgw80yQf
-        Pfypw=; b=KU94CnqLVtJ4Dhp5pBuerj/CyJF5xwW7ACAUQfxcipTviJ9yNA64WZ
-        Ql6qktkANtXWUuzQyVggn0I8FqYEbka5B47+3wChoAKkLDy7tDW+C931jjVC49dP
-        KwvqFh2cJ1cCKAMxCY8Yjw3wf5IVDswI2IWiRrcl/CR5ymYwxyliQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D8FE1452E6;
-        Mon, 18 Jul 2022 15:35:35 -0400 (EDT)
+        :content-type; s=sasl; bh=3NuBiNX3H5CGPcgu5OscvFbjh6LzdduQ2QX7M6
+        6YqIM=; b=cB3yW9/7TFF7DX7Bmjat4hzMt6uUGkjTyGQSH5oYFhu6Yhl13MQPEy
+        9ligchrTjYREBnfU1PIgoiyekCCiLePQavbVii7mPxKFaJikzwETd0cit65TqfxW
+        yMVzbL8SnNJtIt97lHMwlCZebMY3donkNEZwa1sm7n2Q52a1bG6vU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 972DC1BEFF5;
+        Mon, 18 Jul 2022 15:47:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.92.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C90A91452E5;
-        Mon, 18 Jul 2022 15:35:34 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 460411BEFF4;
+        Mon, 18 Jul 2022 15:47:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 07/12] rebase: add --update-refs option
-References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
-        <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
-        <3ec2cc922f971af4e4a558188cf139cc0c0150d6.1657631226.git.gitgitgadget@gmail.com>
-        <20220718090557.GA5616@szeder.dev>
-        <11aa9b43-adea-4e90-9c70-ab3579aa445f@github.com>
-Date:   Mon, 18 Jul 2022 12:35:33 -0700
-In-Reply-To: <11aa9b43-adea-4e90-9c70-ab3579aa445f@github.com> (Derrick
-        Stolee's message of "Mon, 18 Jul 2022 12:55:54 -0400")
-Message-ID: <xmqq4jzefc3e.fsf@gitster.g>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com
+Subject: Re: [PATCH v2] fetch-pack: write effective filter to trace2
+References: <20220715172943.2681492-1-jonathantanmy@google.com>
+        <20220718170027.3993042-1-jonathantanmy@google.com>
+Date:   Mon, 18 Jul 2022 12:47:14 -0700
+In-Reply-To: <20220718170027.3993042-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Mon, 18 Jul 2022 10:00:27 -0700")
+Message-ID: <xmqqwncadwzh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CB1425A8-06D0-11ED-A345-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6C95B9E0-06D2-11ED-8433-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> ... I think I should use "branches" here, but
-> keep the name "--update-refs". The biggest reason is that it provides
-> a nice parallel with the "update-ref" sequencer command. This command
-> allows updating _any_ ref, such as lightweight tags in refs/tags/*
-> or even refs in refs/my/namespace/*.
->
-> The --update-refs option doesn't create the commands to update tags
-> or refs in places other than refs/heads/*.
+> +static void write_and_trace_filter(struct fetch_pack_args *args,
+> +				   struct strbuf *req_buf,
+> +				   int server_supports_filter)
+> +{
+> +	if (args->filter_options.choice) {
+> +		const char *spec =
+> +			expand_list_objects_filter_spec(&args->filter_options);
+> +		if (server_supports_filter) {
+> +			print_verbose(args, _("Server supports filter"));
+> +			packet_buf_write(req_buf, "filter %s", spec);
+> +			trace2_data_string("fetch", the_repository,
+> +					   "filter/effective", spec);
+> +		} else {
+> +			warning("filtering not recognized by server, ignoring");
+> +			trace2_data_string("fetch", the_repository,
+> +					   "filter/unsupported", spec);
+> +		}
+> +	} else {
+> +		trace2_data_string("fetch", the_repository,
+> +				   "filter/none", "");
+> +	}
+> +}
 
-I guess it would make the choice of "branch" the most appropriate.
+The previous round already had the same issue, but this makes it
+even worse by introducing a function that makes it clear that it
+mixes quite unrelated two features (i.e. write the filter to the
+other end, which MUST be done for correct operation of the protocol,
+and write a log to trace2, which may not be even necessary when we
+are not logging at all).
 
-I was hoping that we can repoint refs in private namespaces that are
-not branches with the option.  But as long as the underlying
-"update-ref" instruction can be used by advanced users, that is OK.
+Can we make the code a bit better structured, I have to wonder, by
+having two separate phases of processing, one for the operation
+proper, and the other for the logging/debugging?
+
+In a sense, we can say that the only purpose this helper function is
+to tell the server end what the filter we use is by renaming it; it
+is OK to have debugging statements and logging code as part of the
+implementation of such a function.
+
+I actually like that direction better.  A helper function may exist
+*ONLY* to trace, in which case, having "trace" in its name would
+make perfect sense.  A helper function may exist to perform the real
+work, but it may log what it did to perform the real work as well.
+I think the latter shouldn't have "trace" in its name at all, or our
+helpers will all be called do_FOO_and_trace(), do_BAR_and_debug(),
+etc., which is nonsense.  Just calling do_FOO() and do_BAR(), and
+then having them log or trace as needed, is fine.
+
+Will queue, anyway.
+
+Thanks.
