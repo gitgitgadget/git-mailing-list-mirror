@@ -2,89 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1988C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 14:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72869C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 14:51:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235200AbiGROIq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 10:08:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34752 "EHLO
+        id S234786AbiGROvQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 10:51:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233338AbiGROIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 10:08:46 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B85E827CD1
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 07:08:44 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id D6F193F40F3;
-        Mon, 18 Jul 2022 10:08:43 -0400 (EDT)
-Received: from jeffhost-mbp.local (unknown [74.205.145.90])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A4E8B3F4090;
-        Mon, 18 Jul 2022 10:08:43 -0400 (EDT)
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: [PATCH] fetch-pack: write effective filter to trace2
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-References: <20220715172943.2681492-1-jonathantanmy@google.com>
- <770e3c15-90ea-7d6c-4854-608c0ad8cbaa@jeffhostetler.com>
- <xmqqmtdaz0vt.fsf@gitster.g>
-Message-ID: <de8d38fc-23e3-b876-87e8-7b4193bff44c@jeffhostetler.com>
-Date:   Mon, 18 Jul 2022 10:08:42 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S234789AbiGROvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 10:51:11 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E4A7275D0
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 07:51:05 -0700 (PDT)
+Received: (qmail 32184 invoked by uid 109); 18 Jul 2022 14:51:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Jul 2022 14:51:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9826 invoked by uid 111); 18 Jul 2022 14:51:04 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Jul 2022 10:51:04 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 18 Jul 2022 10:51:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] log: make the intent of cmd_show()'s "rev.pending"
+ juggling clearer
+Message-ID: <YtVzWMKRezUYuhkn@coredump.intra.peff.net>
+References: <cover-0.6-00000000000-20220713T130511Z-avarab@gmail.com>
+ <patch-3.6-7f3bf3f0e40-20220713T130511Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqmtdaz0vt.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-3.6-7f3bf3f0e40-20220713T130511Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jul 13, 2022 at 03:10:32PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 88a5e98875a..e0f40798d45 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -668,10 +668,12 @@ static void show_setup_revisions_tweak(struct rev_info *rev,
+>  int cmd_show(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct rev_info rev;
+> -	struct object_array_entry *objects;
+> +	struct object_array blank = OBJECT_ARRAY_INIT;
+> +	struct object_array cp = OBJECT_ARRAY_INIT;
 
-On 7/15/22 2:28 PM, Junio C Hamano wrote:
-> Jeff Hostetler <git@jeffhostetler.com> writes:
-> 
->> On 7/15/22 1:29 PM, Jonathan Tan wrote:
-...
->>> +		trace2_data_string("fetch", the_repository, "fetch/effective-filter", "none");
-> 
-> At the first glance, this seems to lose data, because you should be
-> able to use expand_list_objects_filter_spec() to report the filter
-> spec.  But this is reporting the filter that was actually in effect,
-> so it is OK.
-> 
-> But the same question about "none" remains.
+I'm not sure what "cp" stands for. Maybe just "pending" would be a more
+descriptive name?
 
-Yeah, the use of "none" gave me pause, but I didn't have a better idea
-at the time.  I guess we have:
-(a) requested, supported, used.
-(b) "none used because the server doesn't support it" and
-(c) "none used because the user didn't request it" cases,
-right?
+> @@ -698,12 +700,11 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+>  	if (!rev.no_walk)
+>  		return cmd_log_deinit(cmd_log_walk(&rev), &rev);
+>  
+> -	count = rev.pending.nr;
+> -	objects = rev.pending.objects;
+> +	memcpy(&cp, &rev.pending, sizeof(rev.pending));
 
-Perhaps it would be better to do:
-     if (server_supports_filtering && args->filter_options.choice)
-         trace2_data_string("fetch", r, "filter/effective", spec);
-     else
-         trace2_data_string("fetch", r, "filter/unsupported", spec);
+OK, so now "cp" is a copy of the original "rev.pending". But that
+original is still in place. If I understand the intent of this code
+correctly, we'd never want to look at it again. The only place that
+should do so is the call to cmd_log_walk_no_free():
 
-Using two different keywords.
+>  		case OBJ_COMMIT:
+> -			rev.pending.nr = rev.pending.alloc = 0;
+> -			rev.pending.objects = NULL;
+> +			memcpy(&rev.pending, &blank, sizeof(rev.pending));
+>  			add_object_array(o, name, &rev.pending);
+>  			ret = cmd_log_walk_no_free(&rev);
+>  			break;
 
-So that the log only contains "filter/effective" when it was actually
-used.  And there is no "filter/effective" event when (for whatever
-reason) it was not in effect.
+but both before and after your patch, we clear rev.pending before doing
+so.
 
-Then the "filter/unsupported" event helps you with debugging.  Did they
-hit a server that doesn't support filtering or did they have a typo in
-their filter spec?
+So perhaps it would make the intent more clear if we fully transferred
+ownership out of the rev struct? I.e., something like:
 
-Then don't emit a message at all for the "not requested" case.  And you
-can use the Git version number to know how to interpret it.  There are
-other places where we don't bother sending messages where the value is
-a zero or empty.
+  memcpy(&cp, &rev.pending, sizeof(rev.pending));
+  memcpy(&rev.pending, &blank, sizeof(rev.pending));
+  for (i = 0; i < cp.nr; i++) {
+     ...stuff...
+  }
+  object_array_clear(&cp);
 
-Jeff
+> @@ -726,7 +727,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+>  			if (!o)
+>  				ret = error(_("could not read object %s"),
+>  					    oid_to_hex(oid));
+> -			objects[i].item = o;
+> +			cp.objects[i].item = o;
+>  			i--;
+>  			break;
+>  		}
+
+Wow, this "overwrite the current item and back up one" strategy is truly
+horrific. But it's neither here nor there for your series; you don't
+make it any worse, and because "item" is not a free-able pointer, you
+don't need to worry about it for leaking.
+
+I suspect the cleaner way of doing it would be to push all of this
+switch logic into a function, and then call the function recursively
+when dereferencing a tag. But let's put that aside so as not to distract
+from your goal.
+
+-Peff
