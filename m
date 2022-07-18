@@ -2,279 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FCB0CCA479
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 19:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84DCEC43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 20:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236221AbiGRTvq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 15:51:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42904 "EHLO
+        id S234227AbiGRUMx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 16:12:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236334AbiGRTvh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 15:51:37 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F7CD32044
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 12:51:36 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id 89-20020a17090a09e200b001ef7638e536so19221990pjo.3
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 12:51:36 -0700 (PDT)
+        with ESMTP id S231495AbiGRUMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 16:12:50 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8458A29C89
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 13:12:47 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-10bffc214ffso26849856fac.1
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 13:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DKCy/SfIGt6Fn8dq+wjVnzZz8PJRGxrn87FqhSSqHOQ=;
-        b=eUNPpfgZje/w+WR5NHlLL3XcSogf75TjTcmmUhqdirNRGI+rY5y4aU4DmysVg2TJsv
-         UYLaLxbZc8nE2RYVTXYWN00k3rU3VlGcu/UdroqSysZ8oe1hFg6bKgl4/VLJ7mwtHH9y
-         ErsuVY4XonWwJYEftNEIR0//KjcwNs0EIJCFMxiqtu0Dhnt05l34vOcE1uojWSOs+TJ0
-         juSSaSpQNOUtPt0zb43t6J3BQNje1IBS/4cyR9vx0CDvh19cyrUKtRTNpg7ktTJWfkEn
-         ei2kV/JSGit9HNPwUsgAhuAqXOwxhsBjZ4nEeAF0SsPrzpNYrziv9TQ+cPdK5ivlsYx0
-         PbvA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=21I/us/nOf/954HX3RnlsxxFA/v+MAD1lSmFK9Vs7QI=;
+        b=I2xdEBwn7kkZ9H0mewu+chu3+LCZtB7D0wGiK9MKsETxCJmpjXOcySbPlQFYBYIBr0
+         h750GLt7+WrrON2oLLDqcoE08sx8bCwsx1i02+pfK+9lXK745IJ0cG68rCDc7xG4KGY9
+         pP6oGWQ49yKDGD+k1QzIU4TScryCDFTa61cR67XTnlF2xWTi4PgHTOTvHnvopr8PuJ9f
+         mtSJAcjQVFpRcq97jyYRaAlMgux6To7a9iHO1n++0DbQH6xFAUpWRfAYR/C/aTu+N9Iv
+         NpAomVtibA5dMxqCkp0TAIk59XSlxuqbLUWYSNKQoyb4vxQjZJgejEqS6SI5wClpv/d2
+         fjjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DKCy/SfIGt6Fn8dq+wjVnzZz8PJRGxrn87FqhSSqHOQ=;
-        b=YgPF/pQJK8tqUx634B8bDB0oWnNsgbepd1JLKqKJLxU6fOKGqXl89CxW7OnabBZKZx
-         U9osOMTqi3RXK+OSQntwNiFp6g18w0JdFgYI8AYtqRZUijq4w1yQ8BiuEyBnBd4bMtPs
-         pRBBjuNcsXD2gQPDyfOH9mvEIb6m+j2h6HzfFXG5J/4pVMzM3l9QP5oPorS0ozmMT0Ak
-         33Bps6ef+ekNn7F43tT43aV2Tl2O4s6t1dYJ0KIZht3yrlN2pdzCDBcszxhZggSIU/Rr
-         OwGKr3BUTT6DDafoKWYBQwwGA7nseHq1ozHOR7RxBo7CWUQAqX+/SXGS3frRfGSCVncS
-         Px6w==
-X-Gm-Message-State: AJIora8joe/YKF5siZQeoR+8eKpXK5BltW9nntaoicb5odeTwcC3VQg9
-        VZ5sm7dOnLuheSWzvN/CdD1cB6IjqJvNgA==
-X-Google-Smtp-Source: AGRyM1uOJZxKI2HIbPO3DL1+uxX0wtt8c8onZpqsBPMpZSFdV8JB0V+y60j1Sck6M5gYBYP9TKk1yg==
-X-Received: by 2002:a17:90b:3b82:b0:1f0:73e1:8426 with SMTP id pc2-20020a17090b3b8200b001f073e18426mr35593651pjb.209.1658173894934;
-        Mon, 18 Jul 2022 12:51:34 -0700 (PDT)
-Received: from HB2.. ([106.212.244.137])
-        by smtp.gmail.com with ESMTPSA id s13-20020a170902b18d00b0016c35b21901sm9855838plr.195.2022.07.18.12.51.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 12:51:34 -0700 (PDT)
-From:   Siddharth Asthana <siddharthasthana31@gmail.com>
-To:     git@vger.kernel.org
-Cc:     phillip.wood123@gmail.com, congdanhqx@gmail.com,
-        christian.couder@gmail.com, avarab@gmail.com, gitster@pobox.com,
-        Johannes.Schindelin@gmx.de, johncai86@gmail.com,
-        Siddharth Asthana <siddharthasthana31@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v6 4/4] cat-file: add mailmap support
-Date:   Tue, 19 Jul 2022 01:21:02 +0530
-Message-Id: <20220718195102.66321-5-siddharthasthana31@gmail.com>
-X-Mailer: git-send-email 2.37.1.120.g63d6f8c201
-In-Reply-To: <20220718195102.66321-1-siddharthasthana31@gmail.com>
-References: <20220716074055.1786231-1-siddharthasthana31@gmail.com>
- <20220718195102.66321-1-siddharthasthana31@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=21I/us/nOf/954HX3RnlsxxFA/v+MAD1lSmFK9Vs7QI=;
+        b=LiWdyv0eYIaWCRsfQJVvtAiNHbiRwCh1bt2ftEKswMC8vUEhUgDmGG76F1uy2aQHOQ
+         BrAgZiOUoISf4xZ6783FtiCbQRNQPdTdpZiYUurbLIk3umDRX+/fyqFZsKYtwcgWMC/Z
+         Tvuwgo5WisU8YZSyK2JOzdgXSKgIHmaFpmnSKZ4JcfG5pCZcr56hxfB9k9WUBN3jGZ1L
+         psp/b1YHXKrXkntIqJ6T5+hVmHJiY9Un/Ugt4WtL0SauCpDvma9g1K63/fX+JYizLiZr
+         2+F81PWv5UIowdFWgxdDoFj7DaLVHsDY/M15QpTJWiYv4RedgzE9B5NHpGlcYvsDHWFw
+         wl/Q==
+X-Gm-Message-State: AJIora90lf3aCTOkJrsOdg7xTg1X2wa/qOtHo44YJxJF42ND5PkbbjHg
+        buhEsXDqeqSSnNgT72BTbOy+kaxq78z30JV0Kq0=
+X-Google-Smtp-Source: AGRyM1uyHjPE3C6sii7vfca3wsTbsoUS1bDxqWv8RywqoFR14gr5dT66wUv6EZcqvV52ya4meWRuqL+PTpTekNFcAco=
+X-Received: by 2002:a05:6870:61ca:b0:10c:1358:4eaf with SMTP id
+ b10-20020a05687061ca00b0010c13584eafmr18226384oah.111.1658175166861; Mon, 18
+ Jul 2022 13:12:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CA+X_a+ycefqvz0LaO0KK1LuTqgE=iUhooPRXeo3mq-zXkp+nCA@mail.gmail.com>
+ <220715.86fsj2zeqn.gmgdl@evledraar.gmail.com> <CA+X_a+zbG_CDP6D0zxozRoUmBeWm4dVxQ=xYRqFeWrk+FR5p0g@mail.gmail.com>
+In-Reply-To: <CA+X_a+zbG_CDP6D0zxozRoUmBeWm4dVxQ=xYRqFeWrk+FR5p0g@mail.gmail.com>
+From:   Sim Tov <smntov@gmail.com>
+Date:   Mon, 18 Jul 2022 23:12:35 +0300
+Message-ID: <CA+X_a+w-tDv+Qq7dnjSaFrFpYanwBbx77UGFpDinyeWUYQaB2w@mail.gmail.com>
+Subject: Re: git: detect file creator
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-cat-file is used by tools like GitLab to get commit tag contents
-that are then displayed to users. This content which has author,
-committer or tagger information, could benefit from passing through the
-mailmap mechanism before being sent or displayed.
+> Thank you very much, again, for the very useful suggestions!
+>
+> > > 1. Do you have an idea how can I list all the files **created** (not
+> > > authored / committed) by a user, so I can implement a fair characters
+> > > counting?
+> >
+> > If you want to adapt your current script perhaps --diff-filter helps,
+> > but...
+>
+> I added `--diff-filter=AR` to my original command like this:
+>
+> git log --use-mailmap --no-merges --diff-filter=AR
+> --author="CertainEditor" --name-only --pretty=format:""
+>
+> and it seems to do the job! May I have missed/messed something here?
 
-This patch adds --[no-]use-mailmap command line option to the git
-cat-file command. It also adds --[no-]mailmap option as an alias to
---[no-]use-mailmap.
-
-This patch also introduces new test cases to test the mailmap mechanism in
-git cat-file command.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: John Cai <johncai86@gmail.com>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
----
- Documentation/git-cat-file.txt |  6 ++++
- builtin/cat-file.c             | 43 ++++++++++++++++++++++++-
- t/t4203-mailmap.sh             | 59 ++++++++++++++++++++++++++++++++++
- 3 files changed, 107 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 24a811f0ef..1880e9bba1 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -63,6 +63,12 @@ OPTIONS
- 	or to ask for a "blob" with `<object>` being a tag object that
- 	points at it.
- 
-+--[no-]mailmap::
-+--[no-]use-mailmap::
-+       Use mailmap file to map author, committer and tagger names
-+       and email addresses to canonical real names and email addresses.
-+       See linkgit:git-shortlog[1].
-+
- --textconv::
- 	Show the content as transformed by a textconv filter. In this case,
- 	`<object>` has to be of the form `<tree-ish>:<path>`, or `:<path>` in
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 50cf38999d..4b68216b51 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -16,6 +16,7 @@
- #include "packfile.h"
- #include "object-store.h"
- #include "promisor-remote.h"
-+#include "mailmap.h"
- 
- enum batch_mode {
- 	BATCH_MODE_CONTENTS,
-@@ -36,6 +37,22 @@ struct batch_options {
- 
- static const char *force_path;
- 
-+static struct string_list mailmap = STRING_LIST_INIT_NODUP;
-+static int use_mailmap;
-+
-+static char *replace_idents_using_mailmap(char *, size_t *);
-+
-+static char *replace_idents_using_mailmap(char *object_buf, size_t *size)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *headers[] = { "author ", "committer ", "tagger ", NULL };
-+
-+	strbuf_attach(&sb, object_buf, *size, *size + 1);
-+	apply_mailmap_to_header(&sb, headers, &mailmap);
-+	*size = sb.len;
-+	return strbuf_detach(&sb, NULL);
-+}
-+
- static int filter_object(const char *path, unsigned mode,
- 			 const struct object_id *oid,
- 			 char **buf, unsigned long *size)
-@@ -152,6 +169,12 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		if (!buf)
- 			die("Cannot read object %s", obj_name);
- 
-+		if (use_mailmap) {
-+			size_t s = size;
-+			buf = replace_idents_using_mailmap(buf, &s);
-+			size = cast_size_t_to_ulong(s);
-+		}
-+
- 		/* otherwise just spit out the data */
- 		break;
- 
-@@ -183,6 +206,12 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		}
- 		buf = read_object_with_reference(the_repository, &oid,
- 						 exp_type_id, &size, NULL);
-+
-+		if (use_mailmap) {
-+			size_t s = size;
-+			buf = replace_idents_using_mailmap(buf, &s);
-+			size = cast_size_t_to_ulong(s);
-+		}
- 		break;
- 	}
- 	default:
-@@ -348,11 +377,18 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 		void *contents;
- 
- 		contents = read_object_file(oid, &type, &size);
-+
-+		if (use_mailmap) {
-+			size_t s = size;
-+			contents = replace_idents_using_mailmap(contents, &s);
-+			size = cast_size_t_to_ulong(s);
-+		}
-+
- 		if (!contents)
- 			die("object %s disappeared", oid_to_hex(oid));
- 		if (type != data->type)
- 			die("object %s changed type!?", oid_to_hex(oid));
--		if (data->info.sizep && size != data->size)
-+		if (data->info.sizep && size != data->size && !use_mailmap)
- 			die("object %s changed size!?", oid_to_hex(oid));
- 
- 		batch_write(opt, contents, size);
-@@ -843,6 +879,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE('s', NULL, &opt, N_("show object size"), 's'),
- 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
- 			  N_("allow -s and -t to work with broken/corrupt objects")),
-+		OPT_BOOL(0, "use-mailmap", &use_mailmap, N_("use mail map file")),
-+		OPT_ALIAS(0, "mailmap", "use-mailmap"),
- 		/* Batch mode */
- 		OPT_GROUP(N_("Batch objects requested on stdin (or --batch-all-objects)")),
- 		OPT_CALLBACK_F(0, "batch", &batch, N_("format"),
-@@ -885,6 +923,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	opt_cw = (opt == 'c' || opt == 'w');
- 	opt_epts = (opt == 'e' || opt == 'p' || opt == 't' || opt == 's');
- 
-+	if (use_mailmap)
-+		read_mailmap(&mailmap);
-+
- 	/* --batch-all-objects? */
- 	if (opt == 'b')
- 		batch.all_objects = 1;
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index 0b2d21ec55..cd1cab3e54 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -963,4 +963,63 @@ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'prepare for cat-file --mailmap' '
-+	rm -f .mailmap &&
-+	git commit --allow-empty -m foo --author="Orig <orig@example.com>"
-+'
-+
-+test_expect_success '--no-use-mailmap disables mailmap in cat-file' '
-+	test_when_finished "rm .mailmap" &&
-+	cat >.mailmap <<-EOF &&
-+	A U Thor <author@example.com> Orig <orig@example.com>
-+	EOF
-+	cat >expect <<-EOF &&
-+	author Orig <orig@example.com>
-+	EOF
-+	git cat-file --no-use-mailmap commit HEAD >log &&
-+	sed -n "/^author /s/\([^>]*>\).*/\1/p" log >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--use-mailmap enables mailmap in cat-file' '
-+	test_when_finished "rm .mailmap" &&
-+	cat >.mailmap <<-EOF &&
-+	A U Thor <author@example.com> Orig <orig@example.com>
-+	EOF
-+	cat >expect <<-EOF &&
-+	author A U Thor <author@example.com>
-+	EOF
-+	git cat-file --use-mailmap commit HEAD >log &&
-+	sed -n "/^author /s/\([^>]*>\).*/\1/p" log >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-mailmap disables mailmap in cat-file for annotated tag objects' '
-+	test_when_finished "rm .mailmap" &&
-+	cat >.mailmap <<-EOF &&
-+	Orig <orig@example.com> C O Mitter <committer@example.com>
-+	EOF
-+	cat >expect <<-EOF &&
-+	tagger C O Mitter <committer@example.com>
-+	EOF
-+	git tag -a -m "annotated tag" v1 &&
-+	git cat-file --no-mailmap -p v1 >log &&
-+	sed -n "/^tagger /s/\([^>]*>\).*/\1/p" log >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--mailmap enables mailmap in cat-file for annotated tag objects' '
-+	test_when_finished "rm .mailmap" &&
-+	cat >.mailmap <<-EOF &&
-+	Orig <orig@example.com> C O Mitter <committer@example.com>
-+	EOF
-+	cat >expect <<-EOF &&
-+	tagger Orig <orig@example.com>
-+	EOF
-+	git tag -a -m "annotated tag" v2 &&
-+	git cat-file --mailmap -p v2 >log &&
-+	sed -n "/^tagger /s/\([^>]*>\).*/\1/p" log >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.37.1.120.g63d6f8c201
-
+Now I see that if one editor renames(/moves) the files created by
+another editor - the former gets credits on all the characters inside
+those renamed files.
+This is bad. And it seemingly stems from the fact that in
+`--diff-filter=AR` means `A` OR `R`. Is there a way to do `A` OR (`A`
+AND `R`), meaning if a file was
+renamed then list it only if he also was created by that same author...
