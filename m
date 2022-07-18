@@ -2,277 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 314E9C43334
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 17:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55D26C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 17:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235537AbiGRRDn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 13:03:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55878 "EHLO
+        id S231367AbiGRRRH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 13:17:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235283AbiGRRDm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 13:03:42 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D492BB3E
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:03:41 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id c203-20020a4a4fd4000000b0043566a4e265so2397697oob.2
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:03:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ye+fy5WTzGcAKLB4XaZEKMUUMnGpB3gacN1A6RYWd4Q=;
-        b=inyUfj/1Vy769e0m4uBPY+g/31LEOKhLW2wgIOwMb+1h+mjWX3Fw+8thWRe2nwa06K
-         TNecRPmPWaUScz/rQ79ajsVAcJfXEwg8MDsb6skk0m5LiX6RJzRajKuT/Q+KygoUgsw5
-         3QpQ7pL/smNq7PrbkWS3OwibwWQA88JEOgSHK1sW8pgxq83qwpCMYhDWLyhpZR1k1YnP
-         nlK01lqHHkuCNcXBh6iO2ssc6zvQwshpjGAQvafCsu1y2i0b4CBlX4Lpcs1wLcd44a6F
-         fKxILHIjhEZ/92AYsb1zp4Gs8IZYB+FmyZmBM8Kb3UhhcaB/OMOU09AdrUd33Wc73iMi
-         vU8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ye+fy5WTzGcAKLB4XaZEKMUUMnGpB3gacN1A6RYWd4Q=;
-        b=wCPgmKVgED9n4Gowl9SvUyJcy4vp8+izNjNg+D9+D/F80GV89LM05gSj1Vqdd9kqEE
-         kkZA9m8CVejh2kX35I8p9RHCiDedLUgLcZLSV6lPPvMT99b0FDy+rDnF/6eXZ9mDg6Y2
-         b2WnXgXUNmqbc4VXy9KaUifCD2yduotlnxeYyZJt2mNwlFyOpQcJcEMi7xxYatsgzt5v
-         Af6t5P957urvnJFyNkaJiv9ME8UAmYlrEmJ+8B0arH0r4qvv20aY6v8nGgHpd16VibcS
-         36YTJDvKwdKRxdzakK+wjNfLub4nFOe+UBaQhs/+g3CipJmv+U/fUV22lBTNxC0w4eIQ
-         F9Jw==
-X-Gm-Message-State: AJIora+VD5EfEGMyO98iJH4ERfwdmvYrebaS8dRXvMYAd8to/5951YFU
-        JOVHFpoLh45xS18pDGefYoYuXfrwsLoX5ZNttHi2Wm4sDPrTBg==
-X-Google-Smtp-Source: AGRyM1vRp33YiRLgx32yo1dtG16VrC1MsFd7b3m2MwX9McA/EAdBQWuRalHyNq4LNlyO4YSGjfH5OEcEilZQCUaRbXA=
-X-Received: by 2002:a4a:c702:0:b0:428:8037:e5a3 with SMTP id
- n2-20020a4ac702000000b004288037e5a3mr9806426ooq.71.1658163820610; Mon, 18 Jul
- 2022 10:03:40 -0700 (PDT)
+        with ESMTP id S230263AbiGRRRG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 13:17:06 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 091DA2C131
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:17:05 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8DA3D1BE278;
+        Mon, 18 Jul 2022 13:17:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=llu0f66LFcIn
+        RYFNgODa6rIPudDb8+Z3dUSVLNXVU3k=; b=AdALWHsDSXiFzOBNDrqEpmxdFbtf
+        u8yQot3Gq6JFW5y0aK7x3Z4RaHkD8SFgSBv8ysdVOtQWpYMsGRdrj5m1MzowinaL
+        TnIT3/zfxdKnI2PXghqSBZAmXkICbZwMl5KjxHu4GXsffFAJkX64qr7dHhDbDmdC
+        2W0KjRIYEsT67Kk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 85B1C1BE277;
+        Mon, 18 Jul 2022 13:17:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 27A981BE275;
+        Mon, 18 Jul 2022 13:17:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH v4 2/8] git docs: split "User-facing file formats" off
+ from "Guides"
+References: <cover-v3-0.7-00000000000-20220712T195419Z-avarab@gmail.com>
+        <cover-v4-0.8-00000000000-20220718T132911Z-avarab@gmail.com>
+        <patch-v4-2.8-883c483d4e7-20220718T132911Z-avarab@gmail.com>
+Date:   Mon, 18 Jul 2022 10:17:00 -0700
+In-Reply-To: <patch-v4-2.8-883c483d4e7-20220718T132911Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 18 Jul
+ 2022 15:29:28
+        +0200")
+Message-ID: <xmqqlesqqr1v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220629224059.1016645-1-calvinwan@google.com>
- <20220712231935.2979727-1-calvinwan@google.com> <7roq6p2s-17rn-477p-7n60-5p10926on785@tzk.qr>
-In-Reply-To: <7roq6p2s-17rn-477p-7n60-5p10926on785@tzk.qr>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Mon, 18 Jul 2022 10:03:29 -0700
-Message-ID: <CAFySSZD-GRwXvaK4sPJUOzU78GiJLunP7tZtF4i7nZ+f8i8WAg@mail.gmail.com>
-Subject: Re: [PATCH v4] submodule merge: update conflict error message
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, chooglen@google.com, gitster@pobox.com,
-        newren@gmail.com, levraiphilippeblain@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 70588B44-06BD-11ED-9140-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> No matter how hard I tried to stare at the code, no matter whether I
-> looked at `cw/submodule-merge-messages` or `seen`, I cannot see how this
-> `grep` could ever succeed when `GIT_TEST_MERGE_ALGORITHM=recursive`: only
-> the `ort` code has been taught this new trick.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-I definitely overlooked this removing the merge-recursive section of
-my code. Thanks
-for catching this!
+> We take a wide view of what's considered a "user format", it's not
+> just a file format, but e.g. githooks(5) also belongs, since the
+> layout of the ".git/hooks/" and the placement of hooks in it is
+> something the user might be expected to interact with.
 
-On Fri, Jul 15, 2022 at 5:57 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Calvin,
->
-> On Tue, 12 Jul 2022, Calvin Wan wrote:
->
-> > diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
-> > index 178413c22f..cc1a312661 100755
-> > --- a/t/t6437-submodule-merge.sh
-> > +++ b/t/t6437-submodule-merge.sh
-> > @@ -103,8 +103,25 @@ test_expect_success 'setup for merge search' '
-> >        echo "file-c" > file-c &&
-> >        git add file-c &&
-> >        git commit -m "sub-c") &&
-> > -     git commit -a -m "c" &&
-> > +     git commit -a -m "c")
-> > +'
-> > +
-> > +test_expect_success 'merging should conflict for non fast-forward' '
-> > +     (cd merge-search &&
-> > +      git checkout -b test-nonforward-a b &&
-> > +       if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-> > +       then
-> > +             test_must_fail git merge c >actual
-> > +       else
-> > +             test_must_fail git merge c 2> actual
-> > +       fi &&
-> > +      sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> > +      grep "$sub_expect" actual &&
->
-> No matter how hard I tried to stare at the code, no matter whether I
-> looked at `cw/submodule-merge-messages` or `seen`, I cannot see how this
-> `grep` could ever succeed when `GIT_TEST_MERGE_ALGORITHM=recursive`: only
-> the `ort` code has been taught this new trick.
->
-> In fact, when I run this locally with
-> `GIT_TEST_MERGE_ALGORITHM=recursive`, it not only fails (as shown here:
-> https://github.com/gitgitgadget/git/runs/7349612861?check_suite_focus=true#step:4:1833
-> and here:
-> https://github.com/gitgitgadget/git/runs/7326925485?check_suite_focus=true#step:4:1820),
-> it also leaves no error message in `actual`.
->
-> So you probably want to move the `sub_expect` assignment and the `grep`
-> into the `ort` clause of the conditional above.
->
-> With this fixup, things seem to work over here:
->
-> -- snip --
-> diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
-> index cc1a3126619..3892d0bf742 100755
-> --- a/t/t6437-submodule-merge.sh
-> +++ b/t/t6437-submodule-merge.sh
-> @@ -111,12 +111,12 @@ test_expect_success 'merging should conflict for non fast-forward' '
->          git checkout -b test-nonforward-a b &&
->           if test "$GIT_TEST_MERGE_ALGORITHM" = ort
->           then
-> -               test_must_fail git merge c >actual
-> +               test_must_fail git merge c >actual &&
-> +               sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> +               grep "$sub_expect" actual
->           else
->                 test_must_fail git merge c 2> actual
->           fi &&
-> -        sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> -        grep "$sub_expect" actual &&
->          git reset --hard)
->  '
->
-> @@ -153,13 +153,13 @@ test_expect_success 'merging should conflict for non fast-forward (resolution ex
->           git rev-parse sub-d > ../expect) &&
->           if test "$GIT_TEST_MERGE_ALGORITHM" = ort
->           then
-> -               test_must_fail git merge c >actual
-> +               test_must_fail git merge c >actual &&
-> +               sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> +               grep "$sub_expect" actual
->           else
->                 test_must_fail git merge c 2> actual
->           fi &&
->          grep $(cat expect) actual > /dev/null &&
-> -        sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> -        grep "$sub_expect" actual &&
->          git reset --hard)
->  '
->
-> @@ -180,14 +180,14 @@ test_expect_success 'merging should fail for ambiguous common parent' '
->          ) &&
->          if test "$GIT_TEST_MERGE_ALGORITHM" = ort
->          then
-> -               test_must_fail git merge c >actual
-> +               test_must_fail git merge c >actual &&
-> +               sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> +               grep "$sub_expect" actual
->          else
->                 test_must_fail git merge c 2> actual
->          fi &&
->         grep $(cat expect1) actual > /dev/null &&
->         grep $(cat expect2) actual > /dev/null &&
-> -       sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> -       grep "$sub_expect" actual &&
->         git reset --hard)
->  '
->
-> @@ -227,8 +227,11 @@ test_expect_success 'merging should fail for changes that are backwards' '
->
->         git checkout -b test-backward e &&
->         test_must_fail git merge f >actual &&
-> -       sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-d)" &&
-> -       grep "$sub_expect" actual)
-> +       if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-> +       then
-> +               sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-d)" &&
-> +               grep "$sub_expect" actual
-> +       fi)
->  '
->
-> -- snap --
->
-> > +      git reset --hard)
->
-> It would be better to move this before the subshell like this:
->
->         test_when_finished "git -C merge-search reset --hard" &&
->
-> Ciao,
-> Dscho
->
-> > +'
-> >
-> > +test_expect_success 'finish setup for merge-search' '
-> > +     (cd merge-search &&
-> >       git checkout -b d a &&
-> >       (cd sub &&
-> >        git checkout -b sub-d sub-b &&
-> > @@ -129,9 +146,9 @@ test_expect_success 'merge with one side as a fast-forward of the other' '
-> >        test_cmp expect actual)
-> >  '
-> >
-> > -test_expect_success 'merging should conflict for non fast-forward' '
-> > +test_expect_success 'merging should conflict for non fast-forward (resolution exists)' '
-> >       (cd merge-search &&
-> > -      git checkout -b test-nonforward b &&
-> > +      git checkout -b test-nonforward-b b &&
-> >        (cd sub &&
-> >         git rev-parse sub-d > ../expect) &&
-> >         if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-> > @@ -141,6 +158,8 @@ test_expect_success 'merging should conflict for non fast-forward' '
-> >               test_must_fail git merge c 2> actual
-> >         fi &&
-> >        grep $(cat expect) actual > /dev/null &&
-> > +      sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> > +      grep "$sub_expect" actual &&
-> >        git reset --hard)
-> >  '
-> >
-> > @@ -167,6 +186,8 @@ test_expect_success 'merging should fail for ambiguous common parent' '
-> >        fi &&
-> >       grep $(cat expect1) actual > /dev/null &&
-> >       grep $(cat expect2) actual > /dev/null &&
-> > +     sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-c)" &&
-> > +     grep "$sub_expect" actual &&
-> >       git reset --hard)
-> >  '
-> >
-> > @@ -205,7 +226,9 @@ test_expect_success 'merging should fail for changes that are backwards' '
-> >       git commit -a -m "f" &&
-> >
-> >       git checkout -b test-backward e &&
-> > -     test_must_fail git merge f)
-> > +     test_must_fail git merge f >actual &&
-> > +     sub_expect="go to submodule (sub), and either merge commit $(git -C sub rev-parse --short sub-d)" &&
-> > +     grep "$sub_expect" actual)
-> >  '
-> >
-> >
-> > diff --git a/t/t7402-submodule-rebase.sh b/t/t7402-submodule-rebase.sh
-> > index 8e32f19007..f1bb29681f 100755
-> > --- a/t/t7402-submodule-rebase.sh
-> > +++ b/t/t7402-submodule-rebase.sh
-> > @@ -104,7 +104,7 @@ test_expect_success 'rebasing submodule that should conflict' '
-> >       test_tick &&
-> >       git commit -m fourth &&
-> >
-> > -     test_must_fail git rebase --onto HEAD^^ HEAD^ HEAD^0 &&
-> > +     test_must_fail git rebase --onto HEAD^^ HEAD^ HEAD^0 >actual_output &&
-> >       git ls-files -s submodule >actual &&
-> >       (
-> >               cd submodule &&
-> > @@ -112,7 +112,9 @@ test_expect_success 'rebasing submodule that should conflict' '
-> >               echo "160000 $(git rev-parse HEAD^^) 2  submodule" &&
-> >               echo "160000 $(git rev-parse HEAD) 3    submodule"
-> >       ) >expect &&
-> > -     test_cmp expect actual
-> > +     test_cmp expect actual &&
-> > +     sub_expect="go to submodule (submodule), and either merge commit $(git -C submodule rev-parse --short HEAD^0)" &&
-> > +     grep "$sub_expect" actual_output
-> >  '
-> >
-> >  test_done
-> >
-> > base-commit: ab336e8f1c8009c8b1aab8deb592148e69217085
-> > --
-> > 2.37.0.144.g8ac04bfd2-goog
-> >
-> >
-> >
+I am afraid it is a bit big a stretch.  Other documents that fall
+into the user-format category all have "format" the users must
+follow while writing the "contents" in the file.  ".gitignore" has
+certain format and syntax and the document describes what effect the
+file has, based on the contents of the file that follows the syntax.
+
+A hook can be written in any language, even though our UNIX lineage
+makes our samples all in written in the shell, so there is no
+"format" for the users to follow that we should force upon them.
+
+If we can come up with a word that is more appropriate than
+"format", it would be great.  If we do not place too much emphasis
+on "format", I agree that both "gitignore" and "githook" fall into
+the same category, because they define how the contents written in
+these files affect the operation of Git commands.
+
+> -With no options and no '<command>' or '<guide>' given, the synopsis of=
+ the 'git'
+> +With no options and no '<command>', '<guide>' or '<doc>' given, the sy=
+nopsis of the 'git'
+
+At some point, we will have enough <doc> that it would probably
+become meaningless to treat <guide> as a separate class, no?
+Guides, user-supplied customization files, and implementation
+details of on-disk files that may help reimplementations of Git, all
+will become <doc>.
+
+> @@ -26,8 +27,8 @@ printed on the standard output.
+>  If the option `--guides` or `-g` is given, a list of the
+>  Git concept guides is also printed on the standard output.
+> =20
+> -If a command, or a guide, is given, a manual page for that command or
+> -guide is brought up. The 'man' program is used by default for this
+> +If a command or other documentation is given, the relevant manual page
+> +will be brought up. The 'man' program is used by default for this
+
+Good.
