@@ -2,62 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01431C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 08:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A7FEC43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 08:56:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233704AbiGRIgQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 04:36:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42128 "EHLO
+        id S233410AbiGRI4v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 04:56:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232852AbiGRIgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 04:36:09 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85D381928C
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 01:36:08 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id cp18-20020a17090afb9200b001ef79e8484aso12022433pjb.1
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 01:36:08 -0700 (PDT)
+        with ESMTP id S233510AbiGRI4u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 04:56:50 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51DBDAE4F
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 01:56:49 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id j29-20020a05600c1c1d00b003a2fdafdefbso6906319wms.2
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 01:56:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QBERGd9QTGycZD9k1UY1oIvNdlJ4d0oBFETyyadVZxw=;
-        b=n6N7Y9r3T/zaAxdd7EFfSUNQAr+DXFt71leefzhPjbX1MnzlMpVEytxNlZpy70MG0i
-         ZuJpY+n+nEGXoU0H0Vpj79ToLMkByJhxC+brClucVrfvBrApoBvBzDWdfubf64eVC+q7
-         dKENfVICUxFeGnZrjLgjpGFSLiOBGDb2Lawxl+Im6hCmyIm6A6mU16kHpJZhCu5WFhjd
-         yezPGeHnRefJ+LqiUPDR2x+01e7UeyktNqmtAm+IQbGowRUPCwG2vJlvmrfUX54kXzrU
-         ce/fAnfoq/gqm8csqDRDx+AOsx6XF/8B3Dr25RsTzsgoc7ix3slrayv/TWALtffOzcBe
-         jUOQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nrcacq+l3FkWlUuxOxQkOjl46KYNtYfrLG9ZTmefnf4=;
+        b=YhXYA/bvDZ/0HvevZfBljBp+Pl9Ak53ndjgz33jk6pV+08iU9mV3VIAoZ9PK7D36wv
+         Y3d6bLcpQQK3LLbbd8uZSGhiMctkOfplHBExgBQDPm5No5dx1VOKAEDNZh1IipydQVK9
+         E02OVS/Y6Y/VTBkv0MDnM5j0QcQzFCQ83185ipC03IX0cSa3R6OAlTqn4lZl7RRJ3Q7e
+         beG5ut7BZ02Gb9h/9FJmTxIspLvFw6qNh/P436pvNLEkBH88OkZp5YfoX7OiUSy0afgd
+         /Wd/Fo6+VXqrnXQhDiDjxgx3f1GU4H9w1WKbK8CX4wEJ4ANZTg5ACBqQrObjTj4WdiQl
+         LzPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QBERGd9QTGycZD9k1UY1oIvNdlJ4d0oBFETyyadVZxw=;
-        b=4gNsZcCL2Rx5E7F5l7nYK/O8RF7DVtxAaIQnh6kyfFZlNkPNemlR9lT7PzXRhwrXZP
-         zbfIWEuoVt5+mhQPkmSF+BRfEb2RJNfBmVZtWKU4rP623jy5CHlYvoIT4YS0f88VtUWm
-         RAIzU1OVWE6/BcBraj73oobgVdKvYJ/BsDT5PaXXX/8mdafsmO0z9Dg8rS3jLyirppi3
-         vyvRIg+ztVbVikle03EWKdBfE3XAhCHtO3PNecaDwQjrdAenVua1qjpZ4Ia49m8DmvMQ
-         A1SWeiLhVjeXDYJEGlqjAs52VWHrtTXHjEAKoEdHlVw8QIgOKAHRDtWKa4aA5cSkdr7J
-         wp7w==
-X-Gm-Message-State: AJIora9+bYSG+kNYaX94GZHLDLOwc+A3BUomZzmlvXAEXh4xSRk2plPC
-        mXGb4f/kmKvot6iR4XgO3CQ=
-X-Google-Smtp-Source: AGRyM1tsrRP71pgzmm6Q/aXNdxu1k4Nc2sSN5d0RqraVO/JKNj0S7bo77PqDOGgrexhc73zevn3+NQ==
-X-Received: by 2002:a17:903:22c8:b0:16c:4068:cd with SMTP id y8-20020a17090322c800b0016c406800cdmr27301212plg.59.1658133367919;
-        Mon, 18 Jul 2022 01:36:07 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.101])
-        by smtp.gmail.com with ESMTPSA id n5-20020a17090a394500b001f1694dafb1sm5076975pjf.44.2022.07.18.01.36.05
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jul 2022 01:36:07 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     avarab@gmail.com
-Cc:     derrickstolee@github.com, dyroneteng@gmail.com,
-        git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
-        me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v6 0/7] trace2: dump scope when print "interesting" config
-Date:   Mon, 18 Jul 2022 16:36:00 +0800
-Message-Id: <20220718083600.11803-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.35.0.rc0.679.gc613175da2
-In-Reply-To: <220711.867d4j7kuj.gmgdl@evledraar.gmail.com>
-References: <220711.867d4j7kuj.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nrcacq+l3FkWlUuxOxQkOjl46KYNtYfrLG9ZTmefnf4=;
+        b=gbj1qapNeSPaOGHK225xjSJh8gFLO6Lp6EF+TqxMrDYNs0jfLxf3+M/sGvQ/2DiQR+
+         W6DSNWCpYWdVRCqPoNFKuFV4F/Mvy4LsjBkspJxSQ0VvsNyuM9eHUJTHGOmSgwRC6DPm
+         bPYL07+v3srO3MoqvzdHR2k+aFzd5FYI9N+f0yO9FLkTsMElLZprwh0S0269cp17TSCy
+         OrOIYxAPcah43NzIMNfY0S4WcC5jyxBUOEUTYtYg8OQ+kHJFfhVVWDD5LWdhAMo9cSGy
+         oMBrLuDnQaV0R9sIkN6DFXqCpDtKsYSCKH4re9mSWdeu2AvXZgCIWJYrDILBsuhbRwfA
+         lEiQ==
+X-Gm-Message-State: AJIora9p8uBqWtxHFO19Fn31Triz4bJllYd+pybzrnhOCioitKprwLAz
+        QftyRlHiST+e0Pc2KI132LaoUL0cOs8=
+X-Google-Smtp-Source: AGRyM1tspN8NDZPMjrIi8JrDWqRYs3/9ZKJcM61OX7TPi+he9Zd5enydfHA/z7y97ccsfkSnxqxMoQ==
+X-Received: by 2002:a05:600c:1908:b0:3a3:f85:702a with SMTP id j8-20020a05600c190800b003a30f85702amr13085822wmq.157.1658134607869;
+        Mon, 18 Jul 2022 01:56:47 -0700 (PDT)
+Received: from localhost (92-249-246-211.pool.digikabel.hu. [92.249.246.211])
+        by smtp.gmail.com with ESMTPSA id f20-20020a7bc8d4000000b003a2e42ae9a4sm1134762wml.14.2022.07.18.01.56.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jul 2022 01:56:47 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] index-format.txt: remove outdated list of supported extensions
+Date:   Mon, 18 Jul 2022 10:56:40 +0200
+Message-Id: <20220718085640.7395-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.37.1.527.g8ff01757f9
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,86 +61,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+The first section of 'Documentation/technical/index-format.txt'
+mentions that "Git currently supports cache tree and resolve undo
+extensions", but then goes on, and in the "Extensions" section
+describes not only these two, but six other extensions [1].
 
-> I left some minor comments, another thing I'd just like to note, but it
-> largely pre-dates this series, so we can leave it for now is that I
-> found our mismatching reporting of the *.bitmap and/or *.pack kind of odd.
+Remove this sentence, as it's misleading about the status of all those
+other extensions.
 
-Ok.
+Alternatively we could keep that sentence and update the list of
+extensions, but that might well lead to a recurring issue, because
+apparently this list is never updated when a new index extension is
+added.
 
-> I.e. this bit (a diff on top):
->
-> 	diff --git a/pack-bitmap.c b/pack-bitmap.c
-> 	index 7e69093d5a8..8a8be5f6cad 100644
-> 	--- a/pack-bitmap.c
-> 	+++ b/pack-bitmap.c
-> 	@@ -381,23 +381,25 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
->
-> 	 	bitmap_name = pack_bitmap_filename(packfile);
-> 	 	fd = git_open(bitmap_name);
-> 	+	free(bitmap_name);
->
-> 	 	if (fd < 0) {
-> 	 		if (errno != ENOENT)
-> 	-			warning("'%s' cannot open '%s'", strerror(errno), bitmap_name);
-> 	-		free(bitmap_name);
-> 	+			warning_errno("cannot open bitmap for pack '%s'",
-> 	+				      packfile->pack_name);
-> 	 		return -1;
-> 	 	}
-> 	-	free(bitmap_name);
->
-> 	 	if (fstat(fd, &st)) {
-> 	 		close(fd);
-> 	-		return error_errno(_("cannot fstat bitmap file"));
-> 	+		return error_errno(_("cannot fstat() bitmap file for pack '%s'"),
-> 	+				   packfile->pack_name);
-> 	 	}
->
-> 	 	if (bitmap_git->pack || bitmap_git->midx) {
-> 	 		/* ignore extra bitmap file; we can only handle one */
-> 	 		warning(_("ignoring extra bitmap file: '%s'"), packfile->pack_name);
-> 	+		/* ^^ because here we refer to the pack file, not the bitmap file */
-> 	 		close(fd);
-> 	 		return -1;
-> 	 	}
->
-> As tha shows we sometimes talk about the path for the pack when
-> something is wrong with the bitmap, but other times the *.bitmap
-> associated with the pack.
+[1] Split index, untracked cache, FS monitor cache, end of index
+    entry, index entry offset table and sparse directory entries.
 
-I think the reason is, the single-pack-bitmap filename based on the pack
-filename as "pack-$hash.bitmap" format and the multi-pack-bitmap filename based
-on the multi-pack-index as "multi-pack-index-$hash.bitmap" format. So, if want
-to open single-pack-bitmap, the corresponding  packfile is needed. if want to
-open multi-pack-bitmap, the multi-pack-index file is needed, then initialize
-fields in "bitmap_index" like mmap, etc.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ Documentation/technical/index-format.txt | 2 --
+ 1 file changed, 2 deletions(-)
 
-That'"s probably where these two methods and inputs come from and make the
-"path" different:
+diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
+index 65da0daaa5..f691c20ab0 100644
+--- a/Documentation/technical/index-format.txt
++++ b/Documentation/technical/index-format.txt
+@@ -26,8 +26,6 @@ Git index format
+      Extensions are identified by signature. Optional extensions can
+      be ignored if Git does not understand them.
+ 
+-     Git currently supports cache tree and resolve undo extensions.
+-
+      4-byte extension signature. If the first byte is 'A'..'Z' the
+      extension is optional and can be ignored.
+ 
+-- 
+2.37.1.527.g8ff01757f9
 
-  static int open_pack_bitmap_1(struct bitmap_index *bitmap_git,
-                                struct packed_git *packfile)
-  static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
-                                struct multi_pack_index *midx)
-
-By the way, I think maybe the "multi-pack-index" filename maybe could change
-to "multi-pack-index-$hash.idx", it could map the current multi-pack-bitmap
-filename "multi-pack-index-$sha.bitmap", and ".idx" could be consistent with
-single-pack-index file. Maybe it's better I think, but it also should consider
-the backend compatibility.
-
-> Also a pre-existing issue: Why are we getting as far as opening a
-> *.bitmap file, if we then find that we have "bitmap_git->pack ||
-> bitmap_git->midx" already, and then ignore it? Maybe I've missed
-> something...
->
-> All of the same oddness applies to open_midx_bitmap_1, except with "path
-> to the midx" in place of "*.pack" above.
-
-I'm not quite sure but in the code I think it's purposed to get the "fd" first
-by "open..()", then get the bitmap file size by "fstat()", finally "mmap" the
-bitmap file for some struct data initialization work.
-
-Thanks.
