@@ -2,100 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44742C43334
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 10:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D663C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 10:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233507AbiGRKF4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 06:05:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53566 "EHLO
+        id S234071AbiGRKWg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 06:22:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233313AbiGRKFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 06:05:55 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDC1C2ACA
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 03:05:54 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id t1so18406653lft.8
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 03:05:54 -0700 (PDT)
+        with ESMTP id S234107AbiGRKWc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 06:22:32 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF3051D325
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 03:22:29 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id x91so14611512ede.1
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 03:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=HyEggtzbax+W8LAq6rQTz7fkXdhPepW+fs7ghaaD9sg=;
-        b=l+pwpZ/9hEgiATPBCTNbQeq42jObak4RpRGhdA1vKcBrdHazo/PgCp8oUy9hOqO650
-         XsJurtUeyFRbwkf5XuJZDSYtzaD3Y+zFmP1Fx9nrhbkIua+tDTVZ/7w+S3JJhnJHxnrt
-         0w5FdxRiy0d4zGPChomlo7FI6qKXNMZy4PRTg3fGHpZIfAt4QjUjGKb+LGxG7nrIZz4l
-         LqCiLNIp4rpe4DSaNj5I30dQ9cibtSgyaJEluS24WcAj0DrYY8YIxFeeQ8PU44HDJEmE
-         AwMpiSenhR5yN30XNZ6zL/RiV7dIcZ5Frvw5jzz4MviZL5P7JYD8zIJD3ktq4aAPYPbs
-         aJdA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=/B6roQWNlwh+gD2vCA+voFXqgmcGeWtugI1ZuLjj8KU=;
+        b=laSGA5U86HxcvMjP1PSocgD3jNUUa2/A64pqNxM8IHqqmIoyNR11tqDnPhGqaJvjCW
+         7gfemNoki7HyWhs9NlFLYsk18SEx0wBb7NmaimFYmtbsBtd9Qg/P8NtJtF+kWOgsMqlp
+         aWD4FjBnDRcGdiLzjACLtm3DGZNJXPKaz+Ud4j3GO0ciodF4eV30BRb9HPHctv6jWkwA
+         JpyAJ4Hlk9YrkPgaCkBTr7Q63+SxpDzETh8+nIwV79wePyDtQgDNMW3Jbqz4pYdA1nUq
+         OuMN+SIdbZc4FeUfj9P5/o01lvgGfJnsKMOsXVNoKDbY+OthaGVNvn6EUKOfQzH9kVO+
+         k68Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=HyEggtzbax+W8LAq6rQTz7fkXdhPepW+fs7ghaaD9sg=;
-        b=R4YfNN55omtN3uGX3xHyCvQAFbaBAT0E2uqMCjuHnRZdTCCmPcU4POOoOb34fpi/VY
-         WDujRPJ0LWcQI5rMOhDthIuB+U1uI7ChXQJPW7FIueBYlr+HupqkpAsHRZDpEsxUva+J
-         PC3E0wG9+pxwjfj+KPXENJ8y9AO8puYdiMdT4F/1fcGB1TiDAFvHImHjxukVvZG9rfmO
-         Euvr8K+Q70HVFhQs+ggfQwXrSOfdByu6UFiz4w6GS/7an7cP25FU/6EHV+Yzhj3kUDR/
-         UYJMtU2drnklYlm7heSad37W5ZbIJqRWFMO4CUjvZgrmDAhTIE9tMzSsUl/S0bEJdYGi
-         AApQ==
-X-Gm-Message-State: AJIora8u6ZD+Koo+87+0TnFY+3b35yX8gkUuZxgtWPrf6N29V1IxcGjk
-        khhoXwBzbdg6nlHj66TM4heJ+IgegUE=
-X-Google-Smtp-Source: AGRyM1u8Npw2rBWHTqjHuisL3+jDqajfpvbKiL9ZKhovjfoe5u4wR0bzuPppWKquONAusBGiO0aBmQ==
-X-Received: by 2002:a05:6512:344e:b0:489:f4ad:88d8 with SMTP id j14-20020a056512344e00b00489f4ad88d8mr15914948lfr.297.1658138752625;
-        Mon, 18 Jul 2022 03:05:52 -0700 (PDT)
-Received: from localhost.localdomain (81-231-137-145-no600.tbcn.telia.com. [81.231.137.145])
-        by smtp.gmail.com with ESMTPSA id c12-20020a056512238c00b0047968606114sm2509482lfv.111.2022.07.18.03.05.51
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=/B6roQWNlwh+gD2vCA+voFXqgmcGeWtugI1ZuLjj8KU=;
+        b=qZ9OBzx+MSLlSg6C55aGnhEsBQW8DqQrf/NrJu1o8tiEcRAJdBJ5k6yrVymNbTccXk
+         bwa9VDuAzEp5YAhMZw5ci7axoWmULeYLL+ttyM2ZFnBx7NnW3PIK4Ehaq7bdQd7Y7YP+
+         SYheIF4kaa/UFOSx1bCB4V0aHshB8CQJv3Twe76zhzMXxVxQ9pSqI0ZK5qrGu6GIPN03
+         N2LV84clpw2zWmzl9c7W0ToULKAI6eO9qu2rteNiEEuDSXyaeFROzuxMR6YFzTQrkafi
+         wCLlUe1NqBSuMJWyVH99ks/h+ri4J1ymDyaEGzeaZjbifo12STOg7D/jIIR+QHr09kk2
+         /7hg==
+X-Gm-Message-State: AJIora/toFhfS1bAQzkZoEIviOfsIWGRVazL+pjPMeb/0/iw6hSeHsPn
+        x+ApGzLvDnUBYcP3IZ2/v6vVJ/3y0ck=
+X-Google-Smtp-Source: AGRyM1s0HYxUkBDQxrMIpLanlxKa+8mctJanM6KmJZiV+ai+hqHApC06Y4Ewm4YaGf4O7ibbJnJSWw==
+X-Received: by 2002:a05:6402:194f:b0:43a:298f:f39c with SMTP id f15-20020a056402194f00b0043a298ff39cmr35698822edz.106.1658139747902;
+        Mon, 18 Jul 2022 03:22:27 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id ek9-20020a056402370900b0042de3d661d2sm8248948edb.1.2022.07.18.03.22.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 03:05:51 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH] config/core.txt: fix minor issues for `core.sparseCheckoutCone`
-Date:   Mon, 18 Jul 2022 12:05:30 +0200
-Message-Id: <20220718100530.2068354-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.37.1.373.g4dd4a117ec
+        Mon, 18 Jul 2022 03:22:27 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oDNtS-003392-Ht;
+        Mon, 18 Jul 2022 12:22:26 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <jch@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Glen Choo <chooglen@google.com>
+Subject: jk/diff-files-cleanup-fix + related un-picked-up ab/* (was: What's
+ cooking in git.git (Jul 2022, #05; Sun, 17))
+Date:   Mon, 18 Jul 2022 12:15:00 +0200
+References: <xmqq7d4bt8n4.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqq7d4bt8n4.fsf@gitster.g>
+Message-ID: <220718.86h73eyb31.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The sparse checkout feature can be used in "cone mode" or "non-cone
-mode". In this one instance in the documentation, we refer to the latter
-as "non cone mode" with whitespace rather than a hyphen. Align this with
-the rest of our documentation.
 
-A few words later in the same paragraph, there's mention of "a more
-flexible patterns". Drop that leading "a" to fix the grammar.
+On Sun, Jul 17 2022, Junio C Hamano wrote:
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- BTW, Elijah, it seems like you've recently started using different
- e-mail addresses, even within the same series [1]. Not sure if that's
- intentional or not? I decided to cc the one you've used by far the most
- rather than spamming all of your accounts.
+> * jk/diff-files-cleanup-fix (2022-07-12) 1 commit
+>   (merged to 'next' on 2022-07-13 at 9db5235d01)
+>  + diff-files: move misplaced cleanup label
+>
+>  An earlier attempt to plug leaks placed a clean-up label to jump to
+>  at a bogus place, which as been corrected.
+>
+>  Will merge to 'master'.
+>  source: <Ys0c0ePxPOqZ/5ck@coredump.intra.peff.net>
 
- [1] https://lore.kernel.org/git/pull.1268.v4.git.1656984823.gitgitgadget@gmail.com/
+(As noted before) that fix looks good, thanks Jeff!
 
- Documentation/config/core.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+But here's a gentle *poke* about picking up [1], which is a related
+follow-up series (but applies directly on master).
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 3ea3124f7f..37afbaf5a4 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -722,8 +722,8 @@ core.sparseCheckout::
- core.sparseCheckoutCone::
- 	Enables the "cone mode" of the sparse checkout feature. When the
- 	sparse-checkout file contains a limited set of patterns, this
--	mode provides significant performance advantages. The "non
--	cone mode" can be requested to allow specifying a more flexible
-+	mode provides significant performance advantages. The "non-cone
-+	mode" can be requested to allow specifying more flexible
- 	patterns by setting this variable to 'false'. See
- 	linkgit:git-sparse-checkout[1] for more information.
- 
--- 
-2.37.1.373.g4dd4a117ec
+It fixes some other minor issues in my earlier release_revisions()
+series, and then goes on to fix other common memory leaks that didn't
+make it into that initial series.
 
+These in particular & somewhat tricky or non-obvious, and could use
+careful review:
+
+    https://lore.kernel.org/git/patch-4.6-9bff7b10197-20220713T130511Z-avarab@gmail.com/
+    https://lore.kernel.org/git/patch-6.6-4a581a4a6ce-20220713T130511Z-avarab@gmail.com/
+
+The latter of those proposes to fix what's a common leak pattern in the
+codebase in a particular way, I'd be interested to know what people
+think of that approach.
+
+There was a related earlier discussion between me and Glen at:
+
+	https://lore.kernel.org/git/220713.86o7xs3g76.gmgdl@evledraar.gmail.com/
+
+I.e. whether we should do an xstrdup() (or equivalent) in those cases,
+so we wouldn't have to mix up free()-able data (strvec etc) with
+un-free() able (main()'s "argv") in various APIs.
+
+There are more drastic ways to address it, but I think that 6/6 is the
+best trade-off in terms of a narrow fix & fixing that class of leak.
+
+1. https://lore.kernel.org/git/cover-0.6-00000000000-20220713T130511Z-avarab@gmail.com/
