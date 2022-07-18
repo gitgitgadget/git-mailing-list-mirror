@@ -2,107 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55D26C43334
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 17:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E46F8C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 17:23:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231367AbiGRRRH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 13:17:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
+        id S233567AbiGRRXY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 13:23:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbiGRRRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 13:17:06 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 091DA2C131
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:17:05 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8DA3D1BE278;
-        Mon, 18 Jul 2022 13:17:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=llu0f66LFcIn
-        RYFNgODa6rIPudDb8+Z3dUSVLNXVU3k=; b=AdALWHsDSXiFzOBNDrqEpmxdFbtf
-        u8yQot3Gq6JFW5y0aK7x3Z4RaHkD8SFgSBv8ysdVOtQWpYMsGRdrj5m1MzowinaL
-        TnIT3/zfxdKnI2PXghqSBZAmXkICbZwMl5KjxHu4GXsffFAJkX64qr7dHhDbDmdC
-        2W0KjRIYEsT67Kk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 85B1C1BE277;
-        Mon, 18 Jul 2022 13:17:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 27A981BE275;
-        Mon, 18 Jul 2022 13:17:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Teng Long <dyroneteng@gmail.com>
-Subject: Re: [PATCH v4 2/8] git docs: split "User-facing file formats" off
- from "Guides"
-References: <cover-v3-0.7-00000000000-20220712T195419Z-avarab@gmail.com>
-        <cover-v4-0.8-00000000000-20220718T132911Z-avarab@gmail.com>
-        <patch-v4-2.8-883c483d4e7-20220718T132911Z-avarab@gmail.com>
-Date:   Mon, 18 Jul 2022 10:17:00 -0700
-In-Reply-To: <patch-v4-2.8-883c483d4e7-20220718T132911Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 18 Jul
- 2022 15:29:28
-        +0200")
-Message-ID: <xmqqlesqqr1v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 70588B44-06BD-11ED-9140-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+        with ESMTP id S231274AbiGRRXW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 13:23:22 -0400
+X-Greylist: delayed 303 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 18 Jul 2022 10:23:19 PDT
+Received: from mail-108-mta10.mxroute.com (mail-108-mta10.mxroute.com [136.175.108.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C13124BFF
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 10:23:19 -0700 (PDT)
+Received: from filter006.mxroute.com ([140.82.40.27] filter006.mxroute.com)
+ (Authenticated sender: mN4UYu2MZsgR)
+ by mail-108-mta10.mxroute.com (ZoneMTA) with ESMTPSA id 182125150040000261.001
+ for <git@vger.kernel.org>
+ (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256);
+ Mon, 18 Jul 2022 17:18:15 +0000
+X-Zone-Loop: 45134e70ac3b64323297b0d8c6a374b0d6ed5fe1a746
+X-Originating-IP: [140.82.40.27]
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=that.guru;
+        s=x; h=MIME-Version:Content-Transfer-Encoding:Content-Type:Date:To:From:
+        Subject:Message-ID:Sender:Reply-To:Cc:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=uMVhDqpO1GIKb2q5MB/HMcbcbkDXbp0qtoIBmKLsF70=; b=BL8kz+Gwj0rDOiTw14zbHinPLM
+        TlvjTsp+8veIPl1C/LXRhZlXT/CjI4DEEnacdRmbPHRul4V0v6crb9lDW69fYWwQ6N19eyLf8PAwS
+        tbh49kjTXTTsLCeWow7i0B7TWGx0zZ7cRgiAuVXSFE/OpRfVeADb/+xrafnpp2ujEy/vas6/jGnp/
+        0CkMnpqX1M61bCaOoP8DQlcGqvsTVzG5uObLaqY7BJZmvm4rjtqINAYzYU3bDOD403Om5lDXK8p/q
+        iRNOmXY9Fd3uJkKQTD1FE/XxQPcs9siwx3fhf8YCDKUjGNs+ACWl31bufBBmOHDMg72oTHHaC92TD
+        0LM2SLTA==;
+Message-ID: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+Subject: Feature request: provide a persistent IDs on a commit
+From:   Stephen Finucane <stephen@that.guru>
+To:     git@vger.kernel.org
+Date:   Mon, 18 Jul 2022 18:18:11 +0100
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.3 (3.44.3-1.fc36) 
+MIME-Version: 1.0
+X-AuthUser: stephen@that.guru
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+...to track evolution of a patch through time.
 
-> We take a wide view of what's considered a "user format", it's not
-> just a file format, but e.g. githooks(5) also belongs, since the
-> layout of the ".git/hooks/" and the placement of hooks in it is
-> something the user might be expected to interact with.
+tl;dr: How hard would it be to retrofit an 'ChangeID' concept =C3=A0 la the=
+ 'Change-
+ID' trailer used by Gerrit into git core?
 
-I am afraid it is a bit big a stretch.  Other documents that fall
-into the user-format category all have "format" the users must
-follow while writing the "contents" in the file.  ".gitignore" has
-certain format and syntax and the document describes what effect the
-file has, based on the contents of the file that follows the syntax.
+Firstly, apologies in advance if this is the wrong forum to post a feature
+request. I help maintain the Patchwork project [1], which a web-based tool =
+that
+provides a mechanism to track the state of patches submitted to a mailing l=
+ist
+and make sure stuff doesn't slip through the crack. One of our long-term go=
+als
+has been to track the evolution of an individual patch through multiple
+revisions. This is surprisingly hard goal because oftentimes there isn't a =
+whole
+lot to work with. One can try to guess whether things are the same by inspe=
+cting
+the metadata of the commit (subject, author, commit message, and the diff
+itself) but each of these metadata items are subject to arbitrary changes a=
+nd
+are therefore fallible.
 
-A hook can be written in any language, even though our UNIX lineage
-makes our samples all in written in the shell, so there is no
-"format" for the users to follow that we should force upon them.
+One of the mechanisms I've seen used to address this is the 'Change-ID' tra=
+iler
+used by Gerrit. For anyone that hasn't seen this, the Gerrit server provide=
+s a
+git commit hook that you can install locally. When installed, this appends =
+a
+'Change-ID' trailer to each and every commit message. In this way, the evol=
+ution
+of a patch (or a "change", in Gerrit parlance) can be tracked through time =
+since
+the Change ID provides an authoritative answer to the question "is this sti=
+ll
+the same patch". Unfortunately, there are still some obvious downside to th=
+is
+approach. Not only does this additional trailer clutter your commit message=
+s but
+it's also something the user must install themselves. While Gerrit can insi=
+st
+that this is installed before pushing a change, this isn't an option for an=
+y of
+the common forges nor is it something git-send-email supports.
 
-If we can come up with a word that is more appropriate than
-"format", it would be great.  If we do not place too much emphasis
-on "format", I agree that both "gitignore" and "githook" fall into
-the same category, because they define how the contents written in
-these files affect the operation of Git commands.
+I imagine most people working with mailing list based workflows have their =
+own
+client side tooling to support this while software forges like GitHub and G=
+itLab
+simply don't bother tracking version history between individual commits in =
+a
+pull/merge request. IMO though, it would be fantastic if third party tools
+weren't necessary though. What I suspect we want is a persistent ID (or rat=
+her
+UUID) that never changes regardless of how many times a patch is cherry-pic=
+ked,
+rebased, or otherwise modified, similar to the Author and AuthorDate fields=
+.
+Like Author and AuthorDate, it would be part of the core git commit metadat=
+a
+rather than something in the commit message like Signed-Off-By or Change-ID=
+.
 
-> -With no options and no '<command>' or '<guide>' given, the synopsis of=
- the 'git'
-> +With no options and no '<command>', '<guide>' or '<doc>' given, the sy=
-nopsis of the 'git'
+Has such an idea ever been explored? Is it even possible? Would it be broad=
+ly
+useful?
 
-At some point, we will have enough <doc> that it would probably
-become meaningless to treat <guide> as a separate class, no?
-Guides, user-supplied customization files, and implementation
-details of on-disk files that may help reimplementations of Git, all
-will become <doc>.
+Cheers,
+Stephen
 
-> @@ -26,8 +27,8 @@ printed on the standard output.
->  If the option `--guides` or `-g` is given, a list of the
->  Git concept guides is also printed on the standard output.
-> =20
-> -If a command, or a guide, is given, a manual page for that command or
-> -guide is brought up. The 'man' program is used by default for this
-> +If a command or other documentation is given, the relevant manual page
-> +will be brought up. The 'man' program is used by default for this
-
-Good.
+[1] github.com/getpatchwork/patchwork/
