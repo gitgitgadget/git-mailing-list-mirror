@@ -2,112 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C93A0C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 15:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CE2CC43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 15:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233462AbiGRPpw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 11:45:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56354 "EHLO
+        id S234082AbiGRPqB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 11:46:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231625AbiGRPpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 11:45:50 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55FB310FEE
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 08:45:49 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id o7so20020274lfq.9
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 08:45:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qWSxoM3bUNBMsIKJaHnK9kyFe0QqA/cXo7zmvc4tWGM=;
-        b=Z+a8Pcvf22kD7Ifg/8lUD9X+hG+aixtSOZQuH9j+/4HDVdFgcRPUkcf5qw7IC8K3b9
-         pLsznR3xzbxKe16wMRZiMxJMtvz5G/GeLQ5lWnww53NAatm4+shdYzOWM5PAZ71c5VDx
-         u0kdAzil5av15PkusXjZPLahgzY4ektd41w8E4J/58VBHeWZ165SsFVeG1aAOozFuGz5
-         LsBOybcOhOZUGAC/+cZroTyOknkc+aXXC+pEYlXfbL8WCleN4ihtPSFkaTQKab+zLLay
-         Ac6ObuoY5Zud7DPlxM1+F7aBp60P0AgfVBYrAevWCDWWyNnsU2+HTNo/3X1Ln22FskRC
-         y1CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qWSxoM3bUNBMsIKJaHnK9kyFe0QqA/cXo7zmvc4tWGM=;
-        b=0CERf18ldM3Sc2cX+SdtHdAGlGL/yB79VM3e/q/azKiqwmQnMUBVLjFpjKPE2Ke+Ma
-         WTlDoQ7694A2u89aaJOO+D+4OOxhyGpRP+JSDGm6VhI0+GlP8w0cX/q05fBOZlUtwgo2
-         w5ZlViryjlr1HfqZ5drRlUTSaD44oKhJxn28HWNo+Va7nW9/eb7/hgwMin75KM+80K6I
-         CAZpZruoGVm3EjYvkZznj85r210LQFpOdoeDf4faQuWkg0r9VkYk0kHvnXuanbfh+koV
-         MTQq+LrZ8dXG6Qu7+ZsJ9CjX7zYTRm9Q0H5gbwj2BvYeS/dLjf8S8HUf7q06PiEl360K
-         9Weg==
-X-Gm-Message-State: AJIora/nbs52YhuShcFdLFVoPds3Jo3gdPznCgWGRG0bFnfLl1mdUx/k
-        SOoNBabJh4dg/C9sektVjn1XKWQB7zY=
-X-Google-Smtp-Source: AGRyM1v1sUWArXFPL8Be2LriTWeWp+fDp0rv9iVejzx+Da3zvYd38ImPT4Yl86b7jdcuxr5u+RagTg==
-X-Received: by 2002:a05:6512:2315:b0:489:cbc1:886a with SMTP id o21-20020a056512231500b00489cbc1886amr14123853lfu.428.1658159147146;
-        Mon, 18 Jul 2022 08:45:47 -0700 (PDT)
-Received: from localhost.localdomain (81-231-137-145-no600.tbcn.telia.com. [81.231.137.145])
-        by smtp.gmail.com with ESMTPSA id a2-20020a19e302000000b00489e50cf274sm2652686lfh.229.2022.07.18.08.45.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 08:45:46 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] t4200: drop irrelevant code
-Date:   Mon, 18 Jul 2022 17:43:22 +0200
-Message-Id: <20220718154322.2177166-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.37.1.373.g4dd4a117ec
+        with ESMTP id S233635AbiGRPqA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 11:46:00 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3993118E03
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 08:45:59 -0700 (PDT)
+Received: (qmail 32335 invoked by uid 109); 18 Jul 2022 15:45:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Jul 2022 15:45:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10422 invoked by uid 111); 18 Jul 2022 15:45:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Jul 2022 11:45:53 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 18 Jul 2022 11:45:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] revisions API: don't leak memory on argv elements
+ that need free()-ing
+Message-ID: <YtWAMP0ROFseFs6B@coredump.intra.peff.net>
+References: <cover-0.6-00000000000-20220713T130511Z-avarab@gmail.com>
+ <patch-6.6-4a581a4a6ce-20220713T130511Z-avarab@gmail.com>
+ <YtV4KmrTBkmcx6m3@coredump.intra.peff.net>
+ <220718.86zgh6wiwa.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <220718.86zgh6wiwa.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While setting up an unresolved merge for `git rerere`, we run `git
-rev-parse` and `git fmt-merge-msg` to create a variable `$fifth` and a
-commit-message file `msg`, which we then never actually use. This has
-been like that since these tests were added in 672d1b789b ("rerere:
-migrate to parse-options API", 2010-08-05). This does exercise `git
-rev-parse` and `git fmt-merge-msg`, but doesn't contribute to testing
-`git rerere`. Drop these lines.
+On Mon, Jul 18, 2022 at 05:13:05PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Reported-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- This is quite late fallout from Eric's review [1] of some commits that
- have already gone in.
+> > But if you went just a little further and made the option "rev should
+> > own its own argv", then I think you can simplify life for callers even
+> > more. They could construct a strvec themselves and then hand it off to
+> > the rev_info, to be cleaned up when release_revisions() is called (and
+> > of course freeing the "--" when we overwrite it in the interim, as you
+> > do here).
+> >
+> > Then all of the bisect callers from the previous patch could avoid
+> > having to deal with the strvec at all. They'd call bisect_rev_setup(),
+> > which would internally attach the memory to rev_info.
+> 
+> Yes, I experimented with this, and it's a solid approach.
+> 
+> But it's a much larger change, particularly since we'd also want to
+> update the API itself to take take "const" in the appropriate places to
+> do it properly.
 
- [1] https://lore.kernel.org/git/CAPig+cSjHg2-WYqdkZAS0ye1goj_=5RN3mdjt0-4kSBqNm6WLg@mail.gmail.com/
+Hmm. I was thinking that we'd just have rev_info.we_own_our_argv, and
+then release it in release_revisions(). But actually, rev_info does not
+hold onto the argv at all! It's totally processed in setup_revisions().
 
- t/t4200-rerere.sh | 3 ---
- 1 file changed, 3 deletions(-)
+And there it either:
 
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 9f8c76dffb..7025cfdae5 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -358,23 +358,20 @@ test_expect_success 'set up an unresolved merge' '
- 	headblob=$(git rev-parse version2:file3) &&
- 	mergeblob=$(git rev-parse fifth:file3) &&
- 	cat >expected.unresolved <<-EOF &&
- 	100644 $headblob 2	file3
- 	100644 $mergeblob 3	file3
- 	EOF
- 
- 	test_might_fail git config --unset rerere.autoupdate &&
- 	git reset --hard &&
- 	git checkout version2 &&
--	fifth=$(git rev-parse fifth) &&
--	echo "$fifth		branch fifth of ." |
--	git fmt-merge-msg >msg &&
- 	ancestor=$(git merge-base version2 fifth) &&
- 	test_must_fail git merge-recursive "$ancestor" -- HEAD fifth &&
- 
- 	git ls-files --stage >failedmerge &&
- 	cp file3 file3.conflict &&
- 
- 	git ls-files -u >actual &&
- 	test_cmp expected.unresolved actual
- '
- 
--- 
-2.37.1.373.g4dd4a117ec
+  - becomes part of prune_data (in which case a copy is made)
 
+  - is passed to handle_revisions_opt(), etc, in which case it is parsed
+    but not held onto (it's possible that some string option holds onto
+    a pointer, but the only one I found is --filter, which makes a
+    copy).
+
+  - is passed to handle_revision_arg(), but these days
+    add_rev_cmdline(), etc, make copies. As they must, otherwise --stdin
+    would be totally buggy.
+
+So I actually wonder if the comment in bisect_rev_setup() is simply
+wrong. It was correct in 2011 when I wrote it, but things changed in
+df835d3a0c (add_rev_cmdline(): make a copy of the name argument,
+2013-05-25), etc.
+
+In that case, we could replace your patch 5 in favor of just calling
+strvec_clear() at the end of bisect_rev_setup(). It's possible there's a
+case I'm missing that makes this generally not-safe, but in the case of
+bisect_rev_setup() there's a very limited set of items in our argv in
+the first place. Doing so also passes the test suite with
+SANITIZE=address, though again, this is just exercising the very limited
+bisect options here.
+
+-Peff
