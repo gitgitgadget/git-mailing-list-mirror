@@ -2,89 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78152C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 20:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F674C43334
+	for <git@archiver.kernel.org>; Mon, 18 Jul 2022 20:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236097AbiGRUkY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jul 2022 16:40:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44120 "EHLO
+        id S235833AbiGRUqr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jul 2022 16:46:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236094AbiGRUkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jul 2022 16:40:20 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 070D632449
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 13:40:16 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-10c0119dd16so27033849fac.6
-        for <git@vger.kernel.org>; Mon, 18 Jul 2022 13:40:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xjbO9Y06QIPruHeFGvBJp6z57X6wN3nd4Y3w5ClOuZM=;
-        b=IztgpJGb90xgEexghMB/Al6PqN+HsGYGTrJ9S/tDGUBLo64mz4sY+lozfsRt4MXh97
-         vkKM1yL8kp45UvF88VVZva/1Osd04T4s8EShuXhghwnKzMMhMj2LEHonJOz1xl0NjzXO
-         csXPOHpIiRsD/D4ud6Bdlc7AVLqcTbkfjwePuXs9RGmTYMen3itQoAkB2THYRP4R55QJ
-         4lvuRhBYBjHNMWfCK6UWTvqt4fGhx1Xsd6jCsRTRMV4x/ztE68/n1nCRwGdxeAFDBc9R
-         XbFzHyLPH8I0Ks/X2KDeYonj9OS8CkOKxieg8LWn2egOwbRW3sRQ1gZ/ShP1Nl4HC5H7
-         1NuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xjbO9Y06QIPruHeFGvBJp6z57X6wN3nd4Y3w5ClOuZM=;
-        b=AVSmnQ9woQQ14yYuike0M3Dv6EWAukFIIguKZWi9hXfW730Qo8Aa+Ggv4OGNRkZWgm
-         sjzPXKmOKnDPKMBjwejh38JvRT/jxZ7kN+YOeUzLntfgIFgf2sBCn6yLD3ruBhOXRewL
-         yYUobVeBciuVA/NbEc6jIT0eWg2Pv/zB/XeEF+zd3VfjyXl7ejx6IiHTFQfLxFPdRfo6
-         36VqHG1p8zOZtzYC2PKznprkX1ULXmfnJxB5Z9oV0qBadghjryOPHNKtGl4W0SHiSXCk
-         9L6a3w2uhBVd/lllh57ww4pWVaoCOBzZyve+OYa/VoAFRgnIZSuTYIPWPjqW6xkKOJ8X
-         ctOQ==
-X-Gm-Message-State: AJIora+sOu7K38XbVLoBTNFwdSQsNgKYZRONzikbpYf0Ms7FSbb3QiwP
-        qbprzKSjCokB5M5VaKGjb80i92ID4aZ9NePcvKQ1ltuVTkQ=
-X-Google-Smtp-Source: AGRyM1vlNWMSiTVAGdqRak+qEsqfU/kpmRHpEa8VFywFaWI22wSCpti9P8UZ7+oe3FjvRgtgPMbbpU0WNWrRyH/WWgA=
-X-Received: by 2002:a05:6870:61ca:b0:10c:1358:4eaf with SMTP id
- b10-20020a05687061ca00b0010c13584eafmr18278185oah.111.1658176815084; Mon, 18
- Jul 2022 13:40:15 -0700 (PDT)
+        with ESMTP id S229585AbiGRUqq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jul 2022 16:46:46 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E6927669
+        for <git@vger.kernel.org>; Mon, 18 Jul 2022 13:46:46 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 6E9233F4813;
+        Mon, 18 Jul 2022 16:46:45 -0400 (EDT)
+Received: from jeffhost-mbp.lan (unknown [74.205.145.90])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 3DFF23F4808;
+        Mon, 18 Jul 2022 16:46:45 -0400 (EDT)
+Subject: Re: Possible git bug when working with Microsoft Mapped drives
+To:     paul@kinzelman.com, git@vger.kernel.org
+References: <f946c577-d3d6-212c-cec5-a6c63856b77d@kinzelman.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <b5931787-3589-102f-cfeb-caeb8a07e149@jeffhostetler.com>
+Date:   Mon, 18 Jul 2022 16:46:44 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <CA+X_a+ycefqvz0LaO0KK1LuTqgE=iUhooPRXeo3mq-zXkp+nCA@mail.gmail.com>
- <220715.86fsj2zeqn.gmgdl@evledraar.gmail.com> <CA+X_a+zbG_CDP6D0zxozRoUmBeWm4dVxQ=xYRqFeWrk+FR5p0g@mail.gmail.com>
- <CA+X_a+w-tDv+Qq7dnjSaFrFpYanwBbx77UGFpDinyeWUYQaB2w@mail.gmail.com>
-In-Reply-To: <CA+X_a+w-tDv+Qq7dnjSaFrFpYanwBbx77UGFpDinyeWUYQaB2w@mail.gmail.com>
-From:   Sim Tov <smntov@gmail.com>
-Date:   Mon, 18 Jul 2022 23:40:04 +0300
-Message-ID: <CA+X_a+zd52cB2h9txxxUeNV0t5s4-ARj+ApDb2+q=MYrY4-dwg@mail.gmail.com>
-Subject: Re: git: detect file creator
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <f946c577-d3d6-212c-cec5-a6c63856b77d@kinzelman.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Thank you very much, again, for the very useful suggestions!
-> >
-> > > > 1. Do you have an idea how can I list all the files **created** (not
-> > > > authored / committed) by a user, so I can implement a fair characters
-> > > > counting?
-> > >
-> > > If you want to adapt your current script perhaps --diff-filter helps,
-> > > but...
-> >
-> > I added `--diff-filter=AR` to my original command like this:
-> >
-> > git log --use-mailmap --no-merges --diff-filter=AR
-> > --author="CertainEditor" --name-only --pretty=format:""
-> >
-> > and it seems to do the job! May I have missed/messed something here?
->
-> Now I see that if one editor renames(/moves) the files created by
-> another editor - the former gets credits on all the characters inside
-> those renamed files.
-> This is bad. And it seemingly stems from the fact that in
-> `--diff-filter=AR` means `A` OR `R`. Is there a way to do `A` OR (`A`
-> AND `R`), meaning if a file was
-> renamed then list it only if he also was created by that same author...
 
-PS: the only way I see to approach it is to create a mechanism that
-will prevent renaming
-files by anyone except for the file creator (the one who Added file).
-Can such a commit hook be created? If yes - how?
+
+On 7/18/22 4:28 PM, Paul Kinzelman wrote:
+> I'm using git version 2.37.1.windows.1 and Windows 10
+> 
+> I've got two systems which are miles apart and so are not on the same
+> LAN, and I have connected them together using the ui.com VPN and M$
+> RDP/TSclient. I mapped each system's C: drive to be accessed by the
+> other system as Drive X: and I can transfer files back and forth
+> initiated on each system.
+> 
+> I can also see all the repository files on the source system, including
+> the tree of files under the .git directory. Note I had to unhide the
+> .git folder so that I could see that folder from the other system.
+> 
+> However, when I run 'git clone' on one system to get the repository from
+> the other system, git seems to think the repository on the other
+> system is empty when it's not. As I said, I can even do a directory
+> and see all the other files.
+> 
+> Any suggestions would be appreciated. Thanks!
+> -Paul Kinzelman, Peralta NM
+> 
+
+I can't duplicate your setup, so I'll just speculate out loud
+here.  I have to wonder if the "X:" drive letters are tricking
+Git to thinking that the remote instance is actually local and
+Git is trying to use some shortcuts. (For example, it might
+hardlink them rather than copy them on Linux.)
+
+So I'm wondering if "--no-local" or "--no-hardlinks" or using
+a file URL rather than a pathname might make it behave differently.
+
+Again, this is just a guess.
+
+There are also some GIT_TRACE* environment variables that might
+be helpful if the above doesn't help.
+
+Jeff
+
+https://git-scm.com/docs/git-clone
+
