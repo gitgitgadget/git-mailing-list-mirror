@@ -2,107 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3677CCA47F
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 17:25:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7FC8C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 17:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239023AbiGSRZN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 13:25:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50538 "EHLO
+        id S238794AbiGSRag (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 13:30:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235602AbiGSRZK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 13:25:10 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5C7D2E2
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 10:25:06 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id z12so22642031wrq.7
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 10:25:06 -0700 (PDT)
+        with ESMTP id S238537AbiGSRaf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 13:30:35 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAD9652FC6
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 10:30:34 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id i5so642660ila.6
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 10:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=6Wdk0yWu2g6RpIm6FVVGaxjmnLOMG+LIbB99uWjB4ic=;
-        b=cNZKCnfZ7bHvkvUaVMtJIwQNRbncMAr1mRekiwcNvE+twi990PmtQI7b++UQroC5X/
-         kHUTVFKqtNt91MO5nmRvudiWXBYN7FkB9Jqj+PtZWI1z4qggTOSQnkHr2CLti0YZavFC
-         oaNfEPAwGItykFVwbEL3/XianeBS0Wdt7Z/T2LC+4VC5+Pe39PRgAl2sy2sV3XxkXPU2
-         vWDQmsvdsnlrtg/HuDM+MgY3B8Mi4FTGj+ksghGAiBcEJaiEPlnoqfbuCQ8xGH3RmExS
-         GQGuSZurH0E5psx9ydaTyvDy9j0jO1iS8RDMlw4v/F0Pv4MngLjRrR6kT+V3z1D4xR9t
-         DJuA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=UAsTZHgwgali7Cyhu6BLw7hIkoOhbv9V0n1/CW5yT6c=;
+        b=TTJke7ZD8zxUpajiRL2pHIFLSDve5nMQjfJTyrlzMbOgK27Awzdlprb73tMhpziv0Y
+         MsmZHhuR6uExhlqstkCxMKCk1uF1u+dy00rYCRAvKObUbTFdJhcailmeXl65UohQ/zRi
+         JYBAWq8YQooaVFXnB+zWq+8Eu+4xOgZgpMsXs0ONEYnrQlOEjfGTG1ykP0fRXGxer4hk
+         L9IumRlZAINhFbcgDQ8QGIbmE4DwSI9yMpZ/wuDZFJRSAUPqfLVEgbi6oiVH26hrsv80
+         QKYcg3HDjI/Dymamk5ZbOJpnSY4qo1QT7zzZAlD7Gc1AuL6BUOGtqoOj/KWiGbHYbFMi
+         GMYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6Wdk0yWu2g6RpIm6FVVGaxjmnLOMG+LIbB99uWjB4ic=;
-        b=4FwEQ5SubK4Xfr0hA1GW6rkwKAVSBJ84gEdQp+unn/cXmlbBTH+cJQvFOARtyCKDRU
-         3v61HIYaJkRTtEmitNKFIAv89AhQVgp3xvfigncaMDR3ENJdWenAOemG59KTyB1B4OwD
-         E3mLwhdAD1ibStCNOyQu1j0CW+OLYqyc1bx4CdIDcUEkFsFDk7cLED93mUaeMHYyXg7F
-         yftDeaOkKmoIX79/0PcJmq8+SCNQmxx0uD+KJ8zQTC0JjKdsHL3pKyN/fZ0lNj0VLvuo
-         DCewlBYSJ5Q2TH27AIRoFXIrwLbIUWTNBAy1TPc/DOQOu+I9aYJy64SigNSYtp9/p/vY
-         3fNQ==
-X-Gm-Message-State: AJIora+zmTMIpIXvzTvibhHsmIn5tM2IP/br9Vw820NrPij2gL0jaUGJ
-        sYSSIL1IDAI96P/pip1ZvnDjMXzDYug=
-X-Google-Smtp-Source: AGRyM1v7qOQh3+ekM7723Pe8MuYTkNCtyHrstzW0W0BmhcYWqQe0RWc5LjPXwuvuO6oUFltEEbj1dw==
-X-Received: by 2002:a5d:5847:0:b0:21d:b75e:12d0 with SMTP id i7-20020a5d5847000000b0021db75e12d0mr26799869wrf.208.1658251505121;
-        Tue, 19 Jul 2022 10:25:05 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b003a31fd05e0fsm5347038wms.2.2022.07.19.10.25.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 10:25:04 -0700 (PDT)
-Message-Id: <pull.1293.git.1658251503775.gitgitgadget@gmail.com>
-From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 17:25:03 +0000
-Subject: [PATCH] osx-keychain: fix compiler warning
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=UAsTZHgwgali7Cyhu6BLw7hIkoOhbv9V0n1/CW5yT6c=;
+        b=fwEgGRD4sHoHVaVbqd493TrgFm6vCOa1iOEgRDNyHVPiMW/kdOaGg/QsZ5OaMs+h1k
+         lCtMkBg6ZXnmkFH6xIPoZrbFdP/wCR5w6sdfar48B8w7AnOoBFcB4X4phHA84pREDfxB
+         kLBVbTvOgJpuZHPWq9O1yjJBywXlE7p4DkHtWi9vjWpvAZGMERuExiIz1fn9HLc4Hc9+
+         2NTdCfpVFGAnh2QcaHZ4mZhevwYzF9GW8IaiPqteZ4O0RhO2mre7aJK/Ey92kEnLOPSc
+         vgQ4OAHXi9dq1Z2u1kw3MusoT/Jbcp4PRC+B2xf/vPqDDtCS9ziVNLmUxZRpobqd2yEe
+         NgOw==
+X-Gm-Message-State: AJIora+HgUdBIHLEfvRxV/GMPqXAuy6Bw50MOVxisX6/ysIBhNqx4ygT
+        lcyXplptZhGU8oAtkZoWoVP0
+X-Google-Smtp-Source: AGRyM1v5CyqW30N2Vvg3TuLNvhA9pSQcOBPGrIHOqNpo3JhXQiyv4ksM9LaSbUsBvxq1xEB1qU9z0Q==
+X-Received: by 2002:a05:6e02:174d:b0:2dc:5fe0:eae1 with SMTP id y13-20020a056e02174d00b002dc5fe0eae1mr15701308ill.235.1658251834011;
+        Tue, 19 Jul 2022 10:30:34 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:3950:7a99:4a4a:8622? ([2600:1700:e72:80a0:3950:7a99:4a4a:8622])
+        by smtp.gmail.com with ESMTPSA id s4-20020a056e021a0400b002d3ad9791dcsm5966332ild.27.2022.07.19.10.30.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Jul 2022 10:30:33 -0700 (PDT)
+Message-ID: <19ab5c2b-6506-18c1-b8c1-b96074442edf@github.com>
+Date:   Tue, 19 Jul 2022 13:30:32 -0400
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] osx-keychain: fix compiler warning
+Content-Language: en-US
+To:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, Lessley Dennington <lessleydennington@gmail.com>
+References: <pull.1293.git.1658251503775.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1293.git.1658251503775.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lessley Dennington <lessleydennington@gmail.com>
+On 7/19/2022 1:25 PM, Lessley Dennington via GitGitGadget wrote:
+> From: Lessley Dennington <lessleydennington@gmail.com>
+> 
+> Update git-credential-osxkeychain.c to remove 'format string is not a string
+> literal (potentially insecure)' compiler warning by treating the string as
+> an argument.
 
-Update git-credential-osxkeychain.c to remove 'format string is not a string
-literal (potentially insecure)' compiler warning by treating the string as
-an argument.
+>  	if (!argv[1])
+> -		die(usage);
+> +		die("%s", usage);
 
-Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
----
-    osx-keychain: fix compiler warning
-    
-    Running make in contrib/credential/osxkeychain currently shows the
-    following warning:
-    
-    warning: format string is not a string literal (potentially insecure)
-    
-    This small change to treat the string as an argument fixes the issue.
-    
-    Thanks, Lessley
+Thanks for preparing this for upstream. I reviewed this change as we
+were doing related things in the microsoft/git fork. LGTM here, too.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1293%2Fldennington%2Ffix-osx-keychain-warning-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1293/ldennington/fix-osx-keychain-warning-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1293
-
- contrib/credential/osxkeychain/git-credential-osxkeychain.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-index 0b44a9b7cc6..bf77748d602 100644
---- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-+++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-@@ -168,7 +168,7 @@ int main(int argc, const char **argv)
- 		"usage: git credential-osxkeychain <get|store|erase>";
- 
- 	if (!argv[1])
--		die(usage);
-+		die("%s", usage);
- 
- 	read_credential();
- 
-
-base-commit: 71a8fab31b70c417e8f5b5f716581f89955a7082
--- 
-gitgitgadget
+Thanks,
+-Stolee
