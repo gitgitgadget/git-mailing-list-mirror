@@ -2,108 +2,337 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8370AC433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 10:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 018F0C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 11:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237338AbiGSK5z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 06:57:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44216 "EHLO
+        id S235812AbiGSL0Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 07:26:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237381AbiGSK5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 06:57:50 -0400
-Received: from mail-108-mta106.mxroute.com (mail-108-mta106.mxroute.com [136.175.108.106])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD3E2402E8
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 03:57:45 -0700 (PDT)
-Received: from filter006.mxroute.com ([140.82.40.27] filter006.mxroute.com)
- (Authenticated sender: mN4UYu2MZsgR)
- by mail-108-mta106.mxroute.com (ZoneMTA) with ESMTPSA id 182161b4b0e0000261.003
- for <git@vger.kernel.org>
- (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256);
- Tue, 19 Jul 2022 10:57:43 +0000
-X-Zone-Loop: 7f56bc616c9f907b310a3cab880e4006ec5285570217
-X-Originating-IP: [140.82.40.27]
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=that.guru;
-        s=x; h=MIME-Version:Content-Transfer-Encoding:Content-Type:References:
-        In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=7aEpwk2P8lStQHuOtJFZAj08vhcu9XFlJxzAOZsOVFQ=; b=APXffpYRdADUMV8EeLP6HSonoH
-        W8djC2JwSgv27EFzxFpipOe3nP8xx0HCzO+URl/0QR5bSzDWoG8BF17S24zDu4r05cOEA0Br5Oc46
-        Tk6DbUP/zECRHUM7G/ITmn3g1rUOA2RptW/zBvA1XSyqqEJge00jtXyIytPgsgaMSw194bEIMfbc6
-        KLBzoQeStDFq8HuNQD7PhX+GQ7sNDtWVRbb/fv9yqF5Y/z4kfFNK+aE90ugXjW0OJNPJneI/pEdX3
-        Ap0+JpM37Yhx+hmG7AUKzZjEgRPk/uhfOCTD18ypVG9G105hIjrc1LplbY158CchAh6NxRQqkQrXM
-        PXORPrsg==;
-Message-ID: <e2d73c87ae798de6d1dd21fe14371b8cdc65228f.camel@that.guru>
-Subject: Re: Feature request: provide a persistent IDs on a commit
-From:   Stephen Finucane <stephen@that.guru>
-To:     Michal =?ISO-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     git@vger.kernel.org
-Date:   Tue, 19 Jul 2022 11:57:39 +0100
-In-Reply-To: <20220718190403.GT17705@kitsune.suse.cz>
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
-         <20220718173511.rje43peodwdprsid@meerkat.local>
-         <20220718190403.GT17705@kitsune.suse.cz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.3 (3.44.3-1.fc36) 
+        with ESMTP id S233263AbiGSL0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 07:26:23 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1E5412ABB
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 04:26:20 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id y9so13223661pff.12
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 04:26:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=YcXWj4nEHXy1/oHuVB+SP4Vq4oPQPeX+L2IVIXYNW+Q=;
+        b=IhfUjqVuS2k/69qY7Vbqf1DZImW/6GFTcj7nHldWBsbWXc0CerLj9896T9IbJVke2W
+         yNeM0j2sBHdqytSK08mNmkNZeqfQ9Uzzy4UcosmmGrnQxr9xtiijH5h/6O3dGdNRvF2m
+         gpwVpzlZZ01NiHx5RQSPQvWE//lCaDg2hVwRyQbcgOJ1aRgoAGugh8iOKrIKBo5iAlDX
+         PehMisjlgJQmc16UBfjQZQVKYvJuXGZsAXFaP274n6Wk5asuYYo0POWHa2jqnXTrUWQf
+         Fxi3DGKazHCuWbpAokPBL98bHd0S8V9xlre4DUISTz+ULIl5q373n1sTQRPdsiJrRZ4l
+         2CfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YcXWj4nEHXy1/oHuVB+SP4Vq4oPQPeX+L2IVIXYNW+Q=;
+        b=vAohj8Y8dlng8exvLZprUbnaZM1r9RLHVDGgGXkTtKkYQ+E/d5qfCapcpyzMaNPxhk
+         XzTC27xXyl+riTx9RficFn2861UMs3qEgqZb40nnWxe/h5WcK5JWO6jG02l+LoDBPq3c
+         blnr9r0OIVkUl2Ai1lAClx1JMNGBOSZzVW+1+BUhg/+RvgETq/nBcG+CHqV5iM02/Iu3
+         JDigqlSh5cg/16iE6yeQ5J/j+VRiMJEsmdKyj+/mkpch+yHGpvePeO2NlfwQlK6XA22x
+         Asr+jEz8x3wAWxsxvNrWnzAntxE9vK5KkauKR5p7+NAVa6wxGKKp+J3j2xa8UxLfqc3W
+         7KXA==
+X-Gm-Message-State: AJIora/aJDcNf3ne84Q3RvpTzHHGeBF8rlJrJeE3AFFrutrXyv84hHbN
+        d2r7S6CdxOYNaZh+3EGg9RL/pcNh+/0KYw==
+X-Google-Smtp-Source: AGRyM1tVqhB/QovvJi00OMgNC3U98u2+7FKzi2ubjfw4ixQ/ixVrFk7otiDqS71zhAuh8Z9uPjNChQ==
+X-Received: by 2002:a63:2605:0:b0:419:f2d0:d247 with SMTP id m5-20020a632605000000b00419f2d0d247mr17151729pgm.477.1658229979965;
+        Tue, 19 Jul 2022 04:26:19 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.97])
+        by smtp.gmail.com with ESMTPSA id c128-20020a624e86000000b00525231e15ccsm11142681pfb.113.2022.07.19.04.26.16
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Jul 2022 04:26:19 -0700 (PDT)
+From:   "tenglong.tl" <dyroneteng@gmail.com>
+X-Google-Original-From: "tenglong.tl" <tenglong.tl@tenglongtldeMacBook-Pro.local>
+To:     avarab@gmail.com
+Cc:     derrickstolee@github.com, dyroneteng@gmail.com,
+        git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
+        me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v7 0/7] trace2: dump scope when print "interesting" config
+Date:   Tue, 19 Jul 2022 19:26:12 +0800
+Message-Id: <20220719112612.46679-1-tenglong.tl@tenglongtldeMacBook-Pro.local>
+X-Mailer: git-send-email 2.35.0.rc0.679.gc613175da2
+In-Reply-To: <220718.86edyiw82r.gmgdl@evledraar.gmail.com>
+References: <220718.86edyiw82r.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-X-AuthUser: stephen@that.guru
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2022-07-18 at 21:04 +0200, Michal Such=C3=A1nek wrote:
-> On Mon, Jul 18, 2022 at 01:35:11PM -0400, Konstantin Ryabitsev wrote:
-> > On Mon, Jul 18, 2022 at 06:18:11PM +0100, Stephen Finucane wrote:
-> > > ...to track evolution of a patch through time.
-> > >=20
-> > > tl;dr: How hard would it be to retrofit an 'ChangeID' concept =C3=A0 =
-la the 'Change-
-> > > ID' trailer used by Gerrit into git core?
-> >=20
-> > I just started working on this for b4, with the notable difference that=
- the
-> > change-id trailer is used in the cover letter instead of in individual
-> > commits, which moves the concept of "change" from a single commit to a =
-series
-> > of commits. IMO, it's much more useful in that scope, because as series=
- are
-> > reviewed and iterated, individual patches can get squashed, split up or
-> > otherwise transformed.
->=20
-> You can turn that around and say that IDs of individual commits are more
-> powerful because they are preserved as series are reviewed, split,
-> merged, and commits cherry-picked.
+> Yeah likewise, it even applies directly on master. But I can live with
+> it :)
 
-There's also the fact that many communities insist on small, atomic commits=
-:
-they're much easier to review. It stands to reason that reviewing a series =
-on a
-patch-by-patch basis is also much easier, as is reviewing a series _revisio=
-n_ on
-a patch-by-patch basis. To be able to do this though, you need to be able t=
-o map
-patch revisions to their predecessors/successors and well as the series
-revisions. I don't see how you realistically rely on a series-only identifi=
-er.
+Sorry, may I ask what's the recommanded way to deal this, alway use
+tag or master on update?
 
-There's no reason 'git-format-patch' couldn't allow you to set an
-AuthorID/ChangeID/<whatever we want to call this field> value for a cover
-letter, though it obviously would need to be done manually since cover lett=
-ers
-aren't git objects.
+> One minor nit is that something like this (which needs to be fleshened
+> up) should be fixed up into 7/7 (and maybe we want to keep the "..."?):
+>
+> diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+> index 49bb1ca1924..ce544982a37 100644
+> --- a/Documentation/technical/api-trace2.txt
+> +++ b/Documentation/technical/api-trace2.txt
+> @@ -716,7 +716,7 @@ The "exec_id" field is a command-unique id and is only useful if the
+>  ------------
+>  {
+>  	"event":"def_param",
+> -	...
+> +	"scope": ...
+>  	"param":"core.abbrev",
+>  	"value":"7"
+>  }
 
-  git send-email \
-    --reroll-count 2 \
-    --series-id 300628e5-8b27-45fe-be71-95417f7ccd6f
-    main
+I do a little check, the json format in this scenario is like :
 
-Stephen
+{
+  "event": "def_param",
+  "sid": "20220719T075535.279369Z-H1b0a19dc-P000093db",
+  "thread": "main",
+  "time": "2022-07-19T07:55:35.280720Z",
+  "file": "git.c",
+  "line": 461,
+  "scope": "global",
+  "param": "color.ui",
+  "value": "always"
+}
 
->=20
-> Thanks
->=20
-> Michal
+So, I think this is ok maybe:
 
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index bb13ca3db8..d66da52686 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -717,6 +717,7 @@ The "exec_id" field is a command-unique id and is only useful if the
+ {
+        "event":"def_param",
+        ...
++       "scope":...
+        "param":"core.abbrev",
+        "value":"7"
+ }
+
+> And that the addition to api-trace2.txt seems to partially be something
+> that should just link to Documentation/config/trace2.txt, i.e. it's
+> generally documenting an existing facility.
+
+Do you mean the modification about `trace2.configParams` and you suggest
+to make a link to Documentation/config/trace2.txt(actually as git-config[1])
+in /Documentation/technical/api-trace2.txt?
+
+> I think it would be great in any case to have that 7/7 split into what
+> we do now & docs for that, and then the minor addition of "scope".
+
+Let me try to understand this, it's better to split [7/7] into two commits.
+
+First commit is to add docs in /Documentation/technical/api-trace2.txt to let
+reader to find the print-config ability, by the way link the doc about the
+GIT_TRACE2_CONFIG_PARAM and trace2.configparami in git-config[1].
+
+Like:
+
+commit 2db47572d4462e3788a92fd355b97df13b9bcc39
+Author: Teng Long <dyroneteng@gmail.com>
+Date:   Tue Jul 19 17:30:35 2022 +0800
+
+    api-trace2.txt: add docs to print config
+
+    It's supported to print "interesting" config value to tr2 log by
+    setting the "GIT_TRACE2_CONFIG_PARAMS" environment variable and
+    the "trace2.configparam" config, let's add the related docs.
+
+    Signed-off-by: Teng Long <dyroneteng@gmail.com>
+
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index bb13ca3db8..4e411f3306 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -1207,6 +1207,45 @@ at offset 508.
+ This example also shows that thread names are assigned in a racy manner
+ as each thread starts and allocates TLS storage.
+
++Print Configs::
++
++         Dump "interesting" config values to trace2 log.
+++
++The environment variable `GIT_TRACE2_CONFIG_PARAMS` and configuration
++`trace2.configparams` can be used to output config values which you care
++about(see linkgit:git-config[1). For example, assume that we want to
++config different `color.ui` values in multiple scopes, such as:
+++
++----------------
++$ git config --system color.ui never
++$ git config --global color.ui always
++$ git config --local color.ui auto
++$ git config --list --show-scope | grep 'color.ui'
++system  color.ui=never
++global  color.ui=always
++local   color.ui=auto
++----------------
+++
++Then, mark the config `color.ui` as "interesting" config with
++`GIT_TRACE2_CONFIG_PARAMS`:
+++
++----------------
++$ export GIT_TRACE2_PERF_BRIEF=1
++$ export GIT_TRACE2_PERF=~/log.perf
++$ export GIT_TRACE2_CONFIG_PARAMS=color.ui
++$ git version
++...
++$ cat ~/log.perf
++d0 | main                     | version      |     |           |           |              | ...
++d0 | main                     | start        |     |  0.000260 |           |              | /opt/git/master/bin/git version
++d0 | main                     | cmd_ancestry |     |           |           |              | ancestry:[bash sshd sshd sshd systemd]
++d0 | main                     | cmd_name     |     |           |           |              | version (version)
++d0 | main                     | def_param    |     |           |           |              | color.ui:never
++d0 | main                     | def_param    |     |           |           |              | color.ui:always
++d0 | main                     | def_param    |     |           |           |              | color.ui:auto
++d0 | main                     | exit         |     |  0.000470 |           |              | code:0
++d0 | main                     | atexit       |     |  0.000477 |           |              | code:0
++----------------
+ == Future Work
+
+Second is actually what we do in [7/7], modify to support print scope names
+and update the docs which based on what we just add in the first commit
+
+Like:
+
+
+commit 615ab4864fce6b8042778aa78799ac2656785710 (HEAD -> tl/bitmap-append-trace2-outputs)
+Author: Teng Long <dyroneteng@gmail.com>
+Date:   Thu Jul 7 21:48:32 2022 +0800
+
+    tr2: dump names if config exist in multiple scopes
+
+    When we specify GIT_TRACE2_CONFIG_PARAMS or trace2.configparams,
+    trace2 will prints "interesting" config values to log. Sometimes,
+    when a config set in multiple scope files, the following output
+    looks like (the irrelevant fields are omitted here as "..."):
+
+    ...| def_param    |  ...  | core.multipackindex:false
+    ...| def_param    |  ...  | core.multipackindex:false
+    ...| def_param    |  ...  | core.multipackindex:false
+
+    As the log shows, even each config in different scope is dumped, but
+    we don't know which scope it comes from. Therefore, it's better to
+    add the scope names as well to make them be more recognizable. For
+    example, when execute:
+
+        $ GIT_TRACE2_PERF=1 \
+        > GIT_TRACE2_CONFIG_PARAMS=core.multipackIndex \
+        > git rev-list --test-bitmap HEAD"
+
+    The following is the ouput (the irrelevant fields are omitted here
+    as "..."):
+
+    Format normal:
+    ... git.c:461 ... def_param scope:system core.multipackindex=false
+    ... git.c:461 ... def_param scope:global core.multipackindex=false
+    ... git.c:461 ... def_param scope:local core.multipackindex=false
+
+    Format perf:
+
+    ... | def_param    | ... | scope:system | core.multipackindex:false
+    ... | def_param    | ... | scope:global | core.multipackindex:false
+    ... | def_param    | ... | scope:local  | core.multipackindex:false
+
+    Format event:
+
+    {"event":"def_param", ... ,"scope":"system","param":"core.multipackindex","value":"false"}
+    {"event":"def_param", ... ,"scope":"global","param":"core.multipackindex","value":"false"}
+    {"event":"def_param", ... ,"scope":"local","param":"core.multipackindex","value":"false"}
+
+    Signed-off-by: Teng Long <dyroneteng@gmail.com>
+
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 4e411f3306..50f1e0c259 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -717,6 +717,7 @@ The "exec_id" field is a command-unique id and is only useful if the
+ {
+        "event":"def_param",
+        ...
++       "scope":...
+        "param":"core.abbrev",
+        "value":"7"
+ }
+@@ -1240,9 +1241,9 @@ d0 | main                     | version      |     |           |           |
+ d0 | main                     | start        |     |  0.000260 |           |              | /opt/git/master/bin/git version
+ d0 | main                     | cmd_ancestry |     |           |           |              | ancestry:[bash sshd sshd sshd systemd]
+ d0 | main                     | cmd_name     |     |           |           |              | version (version)
+-d0 | main                     | def_param    |     |           |           |              | color.ui:never
+-d0 | main                     | def_param    |     |           |           |              | color.ui:always
+-d0 | main                     | def_param    |     |           |           |              | color.ui:auto
++d0 | main                     | def_param    |     |           |           | scope:system | color.ui:never
++d0 | main                     | def_param    |     |           |           | scope:global | color.ui:always
++d0 | main                     | def_param    |     |           |           | scope:local  | color.ui:auto
+ d0 | main                     | exit         |     |  0.000470 |           |              | code:0
+ d0 | main                     | atexit       |     |  0.000477 |           |              | code:0
+ ----------------
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index c5c8cfbbaa..37a3163be1 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -479,9 +479,12 @@ static void fn_param_fl(const char *file, int line, const char *param,
+ {
+        const char *event_name = "def_param";
+        struct json_writer jw = JSON_WRITER_INIT;
++       enum config_scope scope = current_config_scope();
++       const char *scope_name = config_scope_name(scope);
+
+        jw_object_begin(&jw, 0);
+        event_fmt_prepare(event_name, file, line, NULL, &jw);
++       jw_object_string(&jw, "scope", scope_name);
+        jw_object_string(&jw, "param", param);
+        jw_object_string(&jw, "value", value);
+        jw_end(&jw);
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index c42fbade7f..69f8033077 100644
+--- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -298,8 +298,11 @@ static void fn_param_fl(const char *file, int line, const char *param,
+                        const char *value)
+ {
+        struct strbuf buf_payload = STRBUF_INIT;
++       enum config_scope scope = current_config_scope();
++       const char *scope_name = config_scope_name(scope);
+
+-       strbuf_addf(&buf_payload, "def_param %s=%s", param, value);
++       strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
++                   value);
+        normal_io_write_fl(file, line, &buf_payload);
+        strbuf_release(&buf_payload);
+ }
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index a1eff8bea3..8cb792488c 100644
+--- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -441,12 +441,17 @@ static void fn_param_fl(const char *file, int line, const char *param,
+ {
+        const char *event_name = "def_param";
+        struct strbuf buf_payload = STRBUF_INIT;
++       struct strbuf scope_payload = STRBUF_INIT;
++       enum config_scope scope = current_config_scope();
++       const char *scope_name = config_scope_name(scope);
+
+        strbuf_addf(&buf_payload, "%s:%s", param, value);
++       strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
+
+-       perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
+-                        &buf_payload);
++       perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
++                        scope_payload.buf, &buf_payload);
+        strbuf_release(&buf_payload);
++       strbuf_release(&scope_payload);
+ }
+
+ static void fn_repo_fl(const char *file, int line,
+
+
+Am I understand accurately?
+Thanks.
