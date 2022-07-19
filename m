@@ -2,83 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA107C43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D2E7C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:23:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239998AbiGSSQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 14:16:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48142 "EHLO
+        id S240109AbiGSSX5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 14:23:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233818AbiGSSQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 14:16:58 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 415F748E92
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:16:57 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id e69so4974103iof.5
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=+bzCKCZbDPQXsI3YU8PttZzIl9kG7royEyDMv3bTJGY=;
-        b=TYICfyqGxyCTkhrstmSvkQcQAyJ7EAmbj2eBQ2qT2evDalkeLQ/eq/Q+dTyQGT3jZq
-         SwMtg7EUsbXKYw/NU+KmughquIn88JF7GdwJ7LtITaQ24sdrV0AV0XYC0zT/XFyLOM1p
-         pXQoTlIKc92n5V9iJi/nGi+U336zjcB21/JZDFCxapXGLVCA1UlLm71W/ARbPTMWrJz4
-         +nLizDDPipT531ZeQq2uCWqyu0AVI4oNjgCrakIzPb6YdlV9vy36aWeirylbsttMJa74
-         qvZcdKow6tLw4pIOHMdxKjChIskjc+8MYyGMcC2tHzc3QnOR/NilMb6oETdWw0Xv9Zwi
-         0Qtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=+bzCKCZbDPQXsI3YU8PttZzIl9kG7royEyDMv3bTJGY=;
-        b=2hAI0JzJjfozSUzctvNntgIQGfMSzBHDVwJQt3VPXFUHAFe2F+8CX5APi6ylRfyFzV
-         qyIJasQqckSgyu690ZN5W4TszJFFJY9qDEcN+oMHCOhf50EjMsdy+ZYK+Yp07Hg9u2z3
-         p3E7d0VEWrZLDHwEDQiFNWPIQ92YyeSFWLS3MNq19stCzFX3vDFOrub8Xz5Yty0Q77Lq
-         jTKAnNkoBqNn93qN//fhpfYEMEc0QPDiSMhIOE5RN13Li5DMfYUpBU3bWSrqBPogyLzq
-         58pxsM1c18tTryJ0jIT+ee8Akx/74aUgqsgJYFR6DnfI9i+ed6baKbafiOInjqqWxMI0
-         MLGA==
-X-Gm-Message-State: AJIora/nO8UIAzSwJdMtigd0h0hiRfj/oM1jexQ89PFbaZ/XpnSbFigj
-        ZMAA6nGk01FTbf1Q5om/p2ft
-X-Google-Smtp-Source: AGRyM1t9yBAN5n2yGHu2VwG7DpIOmde4cXaf/isBoZPrKrAbxmiG34vz5tpIvOhWtvdt9091oD9k9g==
-X-Received: by 2002:a6b:4909:0:b0:66a:e3fc:e7b2 with SMTP id u9-20020a6b4909000000b0066ae3fce7b2mr15738292iob.29.1658254616618;
-        Tue, 19 Jul 2022 11:16:56 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:3950:7a99:4a4a:8622? ([2600:1700:e72:80a0:3950:7a99:4a4a:8622])
-        by smtp.gmail.com with ESMTPSA id a19-20020a027353000000b0033f3fcba96bsm6996907jae.100.2022.07.19.11.16.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jul 2022 11:16:56 -0700 (PDT)
-Message-ID: <16b9fd86-ba06-47b6-84f2-38a6e53e45fc@github.com>
-Date:   Tue, 19 Jul 2022 14:16:54 -0400
+        with ESMTP id S235139AbiGSSX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 14:23:56 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E56C5C968
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:23:55 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C101F197B1D;
+        Tue, 19 Jul 2022 14:23:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=waA0o4SqNenj5gZbDtcPnOympwly3ftdn0Og1X
+        ROFJQ=; b=Qs+flcZHPimPoZJlHYe80WFH6XTkXm3SKEs26DFCyUGys1YPgUjTqb
+        lX5N7oKe+QV40nSokH/nLqF0zegIPphJLpkNuY2KcEQ62JGALda5ergz2uB24RFk
+        MWBjICz7LlCS1QOhIGe4DRSmOo7+HCFcvM0pR1+BX6PagnVd6dqbM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B8FD8197B1C;
+        Tue, 19 Jul 2022 14:23:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4D024197B1A;
+        Tue, 19 Jul 2022 14:23:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Celeste Liu <coelacanthus@outlook.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Raman Gupta <rocketraman@gmail.com>
+Subject: Re: [PATCH v3] contrib/rerere-train: avoid useless gpg sign in
+ training
+References: <PH7PR14MB5594A27B9295E95ACA4D6A69CE8F9@PH7PR14MB5594.namprd14.prod.outlook.com>
+Date:   Tue, 19 Jul 2022 11:23:50 -0700
+In-Reply-To: <PH7PR14MB5594A27B9295E95ACA4D6A69CE8F9@PH7PR14MB5594.namprd14.prod.outlook.com>
+        (Celeste Liu's message of "Wed, 20 Jul 2022 01:21:44 +0800")
+Message-ID: <xmqqcze1arm1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v1 0/7] mv: from in-cone to out-of-cone
-Content-Language: en-US
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
-Cc:     vdye@github.com, gitster@pobox.com
-References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F0663796-078F-11ED-B3AB-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/19/2022 9:28 AM, Shaoxuan Yuan wrote:
-> This is a sister series to the previous "from out-of-cone to in-cone" [1]
-> series. This series is trying to make the opposite operation possible for
-> 'mv', namely move <source>, which is in-cone, to <destination>, which is
-> out-of-cone.
-> 
-> Other than the main task, there are also some minor fixes done.
+Celeste Liu <coelacanthus@outlook.com> writes:
 
-I'm happy to see that the main task is less complicated than the previous
-case, because of your hard work refactoring some things.
+> Users may have configured "git merge" to always require GPG
+> signing the resulting commits. We are not running "git merge" to
+> re-create merge commits, but merely to replay merge conflicts,
+> and we will immediately discard the resulting commits; there
+> is no point in signing them.
+>
+> Override such configuration that forces useless signing from the
+> command line with the "--no-gpg-sign" option.
+>
+> Signed-off-by: Celeste Liu <coelacanthus@outlook.com>
+> ---
+> v2: add problem detail in commit message.
+> v3: more detailed reason
 
-I still have some ideas about how to break up the change to be a bit more
-readable. Most of my comments on this v1 are nits, though. Good work!
+Makes sense.
 
-Thanks,
--Stolee
+Not a suggestion to change anything, but another possibility may be
+to run the command with the --no-commit option, perhaps.  If we ever
+gained more features added a knob to enable it by default, we would
+need to add --no-that-feature as well to refuse it, just like we are
+doing so for GPG here, and telling the command that there is no need
+to make a commit could turn out to be an easier way to do so for all
+extra features that will be invented in the future.
+
+Thanks.  Will queue.
+
+>
+>  contrib/rerere-train.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
+> index 26b724c8c6..bd01e430ef 100755
+> --- a/contrib/rerere-train.sh
+> +++ b/contrib/rerere-train.sh
+> @@ -75,7 +75,7 @@ do
+>  		continue
+>  	fi
+>  	git checkout -q "$parent1^0"
+> -	if git merge $other_parents >/dev/null 2>&1
+> +	if git merge --no-gpg-sign $other_parents >/dev/null 2>&1
+>  	then
+>  		# Cleanly merges
+>  		continue
