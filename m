@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B32DC433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74449C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239634AbiGSSeR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 14:34:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33548 "EHLO
+        id S240145AbiGSSeS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 14:34:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239712AbiGSSeD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 14:34:03 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAD595D593
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:34:01 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id h17so22951679wrx.0
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:34:01 -0700 (PDT)
+        with ESMTP id S238514AbiGSSeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 14:34:04 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C625C9FF
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:34:03 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id c22so1301370wmr.2
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6hrat/jW19G/2h96a4zwXbC4NuHToQ5PdMlR+xh9Vx8=;
-        b=Z8Y+RM81AKPjsxGB06wDeubfWR13IzhkaQIwREhk5Dcf431BgcR7BSwpH3OhA7KnrI
-         PU/9TRPkpDzuUfFKnUVkMIyDll8OMgoXBfVJdN4DHwh9mzPB7uFG43xTFcwv0PQ1lvzc
-         0FQCnbREk8YgUMXPjUo0yVtFLhpfFaTcd+q4y7Q+T71oyY1uqpPIZmiPEHQDkgL9SAdo
-         F0UJw+UsRIQRz99iYowcwBHo0sjTHCabfepu5mEiB3Ws8Hw6RGb+x60e+yGuuKyvQn2/
-         gC9QFxILqqVYbSTTSO7CSBc9Perk9kTQ+LVnv6JezRdSNRL1sg5mWZY9BqMs5cgRvRbe
-         BZ+g==
+        bh=oDTEvPcVWKPtgQDp+Kz23rFft4+tqEdSecqk4vR4/N4=;
+        b=gdUcNGdDUUVLlhXvsMdPItZGdwiADc9RZEIKZZHuQ6fkc6MeRwkvhafBBdmS/j/pIP
+         PaFf9ir4DWTIoNyV3tIgFPL/gbSoCkik5ySxN538L5uEkKPgU5FtuEHl0i8s9okUAi1E
+         l+R44HITgcEZ+Pe2ZWG54W1J5082OMzWuMHEwzN46XBvhvTO68B4GEQTeSa70PPHIiSf
+         fCSzJcWOBG5vfgnKzlsncpRkoJdiUfSMmJvge+IoxLccvVfLmqjWB+weXIFIb5nZUpPh
+         qFJln8xiPN5IF7miTVbbayxKEjSgZ4LLoslPqJbQAkTe1xypue6ZeTe0IFSS69KoCYs9
+         qe1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6hrat/jW19G/2h96a4zwXbC4NuHToQ5PdMlR+xh9Vx8=;
-        b=4xAgyYhbv8LJOT4X0fzzkR/+mXg5sOWxl6XXV5izLIQQfnv0krUS7TuUgNkkdpYjvY
-         DeUsrR0WUjB5dPl0bx281Wto04jT4DxpgI+ganBNin7no8ZxyGqcwqrtEIBbb0pE9mFD
-         omolLCSORcbJrjlzdHyAWNcxMNFiW+U0ZGT7jjaxGMvEE4W5M0hGWLi2/IrExQm2rOww
-         rpVX7VmX7n1NxJ26kOPn24+szS7lGDtmxYFlgfH7nLvNdJPQTm3eHvXBtAJdMv+XtTVt
-         Zmt1irGSy++GQs9tdic+BV+2+5dG1D3BFXDbfhYuDSRfzMbJzwxX9/UOB4Ub8gwoj5Sg
-         x2KQ==
-X-Gm-Message-State: AJIora83fXwg9+Rwag4Ux/4BUOCErRunhLRi/gqGT/CSAJ6mz+e3d2Wn
-        N5VqTeNYqtntFzju2Dc0lvGhO90qoDs=
-X-Google-Smtp-Source: AGRyM1vgKiZs65jCM8T0M2zf599ssArjZV+yTxw5iefA9ppWpfstwdIAt0altT1O6EAFnlusPaCR8Q==
-X-Received: by 2002:adf:fd42:0:b0:21e:4357:3f38 with SMTP id h2-20020adffd42000000b0021e43573f38mr2119550wrs.620.1658255639929;
-        Tue, 19 Jul 2022 11:33:59 -0700 (PDT)
+        bh=oDTEvPcVWKPtgQDp+Kz23rFft4+tqEdSecqk4vR4/N4=;
+        b=fwyuhHtgi9zRIhRyaeCN7t317FjI1/mFTHumM4Fw/DeTz8wTbXUmM6GLWER2v+Nmxv
+         iiaagW52cXMaBJ+sv8hKHLdTUsoZT/9AuY6ypuHg+AwI8KfQjfO/tUe0zWe6IVj5t1cK
+         P8pKd9AhHSTOuZhYfjuuHLff8yyCDq0buIjPiM4fbGpffbeSAwdwNyB1TeF4UPOyYu6K
+         qOokcgZl6OTwYuOW+2v/Y3H5G044IPbNU4PuJj+SsZyEGAl6WOaBDQIyReGNES2Ovn1Z
+         vcw9aoZIRtja95Drjz6tObs/snKLQHdu0so20D4YXRCqvsTrOpxABHFuqO7wSv1273lK
+         EoMw==
+X-Gm-Message-State: AJIora9j0vZPJ8FjclgQosX2B2dylPAXP7SIbP2kDkiqC4lc3HRQvMds
+        F+N1BXUMaESsIi4Q11Y2iTLTOvyZxFE=
+X-Google-Smtp-Source: AGRyM1tyfaiSUtzcDgEk7izVMiy6BhIRYcFPAj4RA8pZX+2fPEhNv66VqEIZjspWPhfMWtFoaAxJrA==
+X-Received: by 2002:a05:600c:4e07:b0:3a1:8548:4dd7 with SMTP id b7-20020a05600c4e0700b003a185484dd7mr569578wmq.170.1658255642221;
+        Tue, 19 Jul 2022 11:34:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l2-20020adff482000000b0021b9585276dsm14034721wro.101.2022.07.19.11.33.59
+        by smtp.gmail.com with ESMTPSA id t64-20020a1c4643000000b003a30c3d0c9csm16105378wma.8.2022.07.19.11.34.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 11:33:59 -0700 (PDT)
-Message-Id: <a73b02568f3aa35c6db219b01040379c4d120067.1658255624.git.gitgitgadget@gmail.com>
+        Tue, 19 Jul 2022 11:34:01 -0700 (PDT)
+Message-Id: <ec080ce1e90c2593a7d2f44e2cc1655aad5756eb.1658255624.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 References: <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
         <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 18:33:42 +0000
-Subject: [PATCH v5 10/12] rebase: add rebase.updateRefs config option
+Date:   Tue, 19 Jul 2022 18:33:44 +0000
+Subject: [PATCH v5 12/12] sequencer: notify user of --update-refs activity
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,95 +72,169 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The previous change added the --update-refs command-line option.  For
-users who always want this mode, create the rebase.updateRefs config
-option which behaves the same way as rebase.autoSquash does with the
---autosquash option.
+When the user runs 'git rebase -i --update-refs', the end message still
+says only
 
+  Successfully rebased and updated <HEAD-ref>.
+
+Update the sequencer to collect the successful (and unsuccessful) ref
+updates due to the --update-refs option, so the end message now says
+
+  Successfully rebased and updated <HEAD-ref>.
+  Updated the following refs with --update-refs:
+	refs/heads/first
+	refs/heads/third
+  Failed to update the following refs with --update-refs:
+	refs/heads/second
+
+To test this output, we need to be very careful to format the expected
+error to drop the leading tab characters. Also, we need to be aware that
+the verbose output from 'git rebase' is writing progress lines which
+don't use traditional newlines but clear the line after every progress
+item is complete. When opening the error file in an editor, these lines
+are visible, but when looking at the diff in a terminal those lines
+disappear because of the characters that delete the previous characters.
+Use 'sed' to clear those progress lines and clear the tabs so we can get
+an exact match on our expected output.
+
+Reported-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/config/rebase.txt |  3 +++
- Documentation/git-rebase.txt    |  3 +++
- builtin/rebase.c                |  5 +++++
- t/t3404-rebase-interactive.sh   | 14 ++++++++++++++
- 4 files changed, 25 insertions(+)
+ sequencer.c                   | 40 +++++++++++++++++++++++++++++------
+ t/t3404-rebase-interactive.sh | 37 ++++++++++++++++++++++++++++----
+ 2 files changed, 67 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
-index 8c979cb20f2..f19bd0e0407 100644
---- a/Documentation/config/rebase.txt
-+++ b/Documentation/config/rebase.txt
-@@ -21,6 +21,9 @@ rebase.autoStash::
- 	`--autostash` options of linkgit:git-rebase[1].
- 	Defaults to false.
+diff --git a/sequencer.c b/sequencer.c
+index 1602649332b..96e1d58ede8 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4261,26 +4261,54 @@ static int do_update_ref(struct repository *r, const char *refname)
+ 	return 0;
+ }
  
-+rebase.updateRefs::
-+	If set to true enable `--update-refs` option by default.
+-static int do_update_refs(struct repository *r)
++static int do_update_refs(struct repository *r, int quiet)
+ {
+ 	int res = 0;
+ 	struct string_list_item *item;
+ 	struct string_list refs_to_oids = STRING_LIST_INIT_DUP;
+ 	struct ref_store *refs = get_main_ref_store(r);
++	struct strbuf update_msg = STRBUF_INIT;
++	struct strbuf error_msg = STRBUF_INIT;
+ 
+ 	if ((res = sequencer_get_update_refs_state(r->gitdir, &refs_to_oids)))
+ 		return res;
+ 
+ 	for_each_string_list_item(item, &refs_to_oids) {
+ 		struct update_ref_record *rec = item->util;
++		int loop_res;
+ 
+-		res |= refs_update_ref(refs, "rewritten during rebase",
+-				       item->string,
+-				       &rec->after, &rec->before,
+-				       0, UPDATE_REFS_MSG_ON_ERR);
++		loop_res = refs_update_ref(refs, "rewritten during rebase",
++					   item->string,
++					   &rec->after, &rec->before,
++					   0, UPDATE_REFS_MSG_ON_ERR);
++		res |= loop_res;
 +
- rebase.missingCommitsCheck::
- 	If set to "warn", git rebase -i will print a warning if some
- 	commits are removed (e.g. a line was deleted), however the
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index dfd847d6615..305255f1e15 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -614,6 +614,9 @@ start would be overridden by the presence of
- 	Automatically force-update any branches that point to commits that
- 	are being rebased. Any branches that are checked out in a worktree
- 	are not updated in this way.
-++
-+If the configuration variable `rebase.updateRefs` is set, then this option
-+can be used to override and disable this setting.
- 
- INCOMPATIBLE OPTIONS
- --------------------
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index fd64897132a..dbb91895687 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -802,6 +802,11 @@ static int rebase_config(const char *var, const char *value, void *data)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "rebase.updaterefs")) {
-+		opts->update_refs = git_config_bool(var, value);
-+		return 0;
++		if (quiet)
++			continue;
++
++		if (loop_res)
++			strbuf_addf(&error_msg, "\t%s\n", item->string);
++		else
++			strbuf_addf(&update_msg, "\t%s\n", item->string);
 +	}
 +
- 	if (!strcmp(var, "rebase.reschedulefailedexec")) {
- 		opts->reschedule_failed_exec = git_config_bool(var, value);
- 		return 0;
++	if (!quiet &&
++	    (update_msg.len || error_msg.len)) {
++		fprintf(stderr,
++			_("Updated the following refs with %s:\n%s"),
++			"--update-refs",
++			update_msg.buf);
++
++		if (res)
++			fprintf(stderr,
++				_("Failed to update the following refs with %s:\n%s"),
++				"--update-refs",
++				error_msg.buf);
+ 	}
+ 
+ 	string_list_clear(&refs_to_oids, 1);
++	strbuf_release(&update_msg);
++	strbuf_release(&error_msg);
+ 	return res;
+ }
+ 
+@@ -4800,7 +4828,7 @@ cleanup_head_ref:
+ 		strbuf_release(&buf);
+ 		strbuf_release(&head_ref);
+ 
+-		if (do_update_refs(r))
++		if (do_update_refs(r, opts->quiet))
+ 			return -1;
+ 	}
+ 
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index bebf9b4def7..1a27bb0626d 100755
+index 1a27bb0626d..688b01e3eb6 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -1772,6 +1772,12 @@ test_expect_success '--update-refs adds label and update-ref commands' '
- 		EOF
+@@ -1840,12 +1840,26 @@ test_expect_success '--update-refs updates refs correctly' '
+ 	test_commit extra2 fileX &&
+ 	git commit --amend --fixup=L &&
  
- 		test_must_fail git rebase -i --autosquash --update-refs primary >todo &&
-+		test_cmp expect todo &&
-+
-+		test_must_fail git -c rebase.autosquash=true \
-+				   -c rebase.updaterefs=true \
-+				   rebase -i primary >todo &&
-+
- 		test_cmp expect todo
- 	)
- '
-@@ -1813,6 +1819,14 @@ test_expect_success '--update-refs adds commands with --rebase-merges' '
- 				   --rebase-merges=rebase-cousins \
- 				   --update-refs primary >todo &&
+-	git rebase -i --autosquash --update-refs primary &&
++	git rebase -i --autosquash --update-refs primary 2>err &&
  
-+		test_cmp expect todo &&
+ 	test_cmp_rev HEAD~3 refs/heads/first &&
+ 	test_cmp_rev HEAD~3 refs/heads/second &&
+ 	test_cmp_rev HEAD~1 refs/heads/third &&
+-	test_cmp_rev HEAD refs/heads/no-conflict-branch
++	test_cmp_rev HEAD refs/heads/no-conflict-branch &&
 +
-+		test_must_fail git -c rebase.autosquash=true \
-+				   -c rebase.updaterefs=true \
-+				   rebase -i \
-+				   --rebase-merges=rebase-cousins \
-+				   primary >todo &&
++	cat >expect <<-\EOF &&
++	Successfully rebased and updated refs/heads/update-refs.
++	Updated the following refs with --update-refs:
++		refs/heads/first
++		refs/heads/no-conflict-branch
++		refs/heads/second
++		refs/heads/third
++	EOF
 +
- 		test_cmp expect todo
- 	)
++	# Clear "Rebasing (X/Y)" progress lines and drop leading tabs.
++	sed -e "s/Rebasing.*Successfully/Successfully/g" -e "s/^\t//g" \
++		<err >err.trimmed &&
++	test_cmp expect err.trimmed
  '
+ 
+ test_expect_success 'respect user edits to update-ref steps' '
+@@ -1983,8 +1997,23 @@ test_expect_success '--update-refs: check failed ref update' '
+ 	# the lock in the update-refs file.
+ 	git rev-parse third >.git/refs/heads/second &&
+ 
+-	git rebase --continue 2>err &&
+-	grep "update_ref failed for ref '\''refs/heads/second'\''" err
++	test_must_fail git rebase --continue 2>err &&
++	grep "update_ref failed for ref '\''refs/heads/second'\''" err &&
++
++	cat >expect <<-\EOF &&
++	Updated the following refs with --update-refs:
++		refs/heads/first
++		refs/heads/no-conflict-branch
++		refs/heads/third
++	Failed to update the following refs with --update-refs:
++		refs/heads/second
++	EOF
++
++	# Clear "Rebasing (X/Y)" progress lines and drop leading tabs.
++	tail -n 6 err >err.last &&
++	sed -e "s/Rebasing.*Successfully/Successfully/g" -e "s/^\t//g" \
++		<err.last >err.trimmed &&
++	test_cmp expect err.trimmed
+ '
+ 
+ # This must be the last test in this file
 -- 
 gitgitgadget
-
