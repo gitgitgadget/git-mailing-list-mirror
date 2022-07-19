@@ -2,116 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ACC2CCA481
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 11:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31975C43334
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 13:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237710AbiGSL7e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 07:59:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54934 "EHLO
+        id S243421AbiGSNSJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 09:18:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237765AbiGSL7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 07:59:15 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD165474F4
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 04:57:31 -0700 (PDT)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out1.suse.de (Postfix) with ESMTP id 8B079223BC;
-        Tue, 19 Jul 2022 11:57:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1658231850; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=0DA2I3Xwv1bI71vSA6AeGr0Qhp3agEqx+hS2hvpP3tA=;
-        b=EBRL2VMSkP9VcNc0F3HIXY8fM/rvcaRNh+0I/pzBREWWdRZwIch09TAJ9+qsnAx5Cm7ibb
-        /goFtB1veEXl0a/V8wYfakhR9lIIbf8V5VnWjVocVYQLAR0I8KLQUj/F9X0uZl+uukfi+1
-        GLaRCRgyHG1GWfqcoi7z/jRzYLotkfM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1658231850;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=0DA2I3Xwv1bI71vSA6AeGr0Qhp3agEqx+hS2hvpP3tA=;
-        b=KICEehiXpRGbdvD1TqtNyUpaFI5isoBYYCRlRTduuTWwg/gGQkbISIQyXBL59tMK7UY5uq
-        Ftrm84FQ24VHR3BA==
-Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id 6A94A2C145;
-        Tue, 19 Jul 2022 11:57:30 +0000 (UTC)
-Date:   Tue, 19 Jul 2022 13:57:29 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Stephen Finucane <stephen@that.guru>, git@vger.kernel.org
-Subject: Re: Feature request: provide a persistent IDs on a commit
-Message-ID: <20220719115729.GV17705@kitsune.suse.cz>
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com>
- <61333be26339440d9bae8f12fd1a4faeb5e68ab6.camel@that.guru>
- <220719.86y1wpuy5o.gmgdl@evledraar.gmail.com>
+        with ESMTP id S237976AbiGSNRs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 09:17:48 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA3C952DE6
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 05:34:24 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id q43-20020a17090a17ae00b001f1f67e053cso2098823pja.4
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 05:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=atWfqfWcIElWOxA5awoQIX+uZb2TSLtP200Tkd/MLs4=;
+        b=Q5/fDTpsaU2zy0nw6E/+35LBKx9MvG1+2jy7mamqNMJKmjjYE9qxZKSeUFolxcDPTS
+         t+Af0lVwnXac5Ezcowp8lDHChdaegoCl5lHPSvul4RjdDmBa/QZS50c4luYzhxPE/TzF
+         9no/9S4N26JUYb7e02+fx+1VCqUvVAQwYtP1LP19fOPNL9A8sWepVD1wQZtfIETHGn67
+         jbSDzGvYPK5rZRYX3+mW0gXgBo169mqxnZLWuGBwAhXuRvFx/D6ZgCZhSHKCuOwcfmE7
+         DbulA52gGX1I+7qiPXxr2j8auCVnt8BbRt92lGt4df1ZfakZbwnFwUYxClqnSd70UErt
+         AiSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=atWfqfWcIElWOxA5awoQIX+uZb2TSLtP200Tkd/MLs4=;
+        b=5pcaapG+wR8QEglpwYbIxfxVdrhbj2ZKh4WdTCPVRxZWY2YOs/fOKA1+RloX2cyF4z
+         5vCtwfqIeSZH9AgUBZOEDffpa6ayVM5xHWuZK4EWRs2osUwT9vX0lwHjmtuHNB2CJOEO
+         21+nxBiAAc6LNXVxnKT9F0Xr+h44M4Oytu5Q4S1pXXYiu42rko0Ncgtu/VXQx61tDl54
+         lvMpCFe9Nn1lzfUkKhLIRKhSM8Is6pTisss3HvAqFEg9uhIsx5+8LrpRmrM8Vrm8n9cl
+         IbiVCeIxoF1t6abRp45eSQfcdTEtbcZMFHCPPJcdzQ5MPKIeOJ+QNHFqMnR51mT9smv5
+         6HOA==
+X-Gm-Message-State: AJIora/m4tcSiA1s3Yk2rU4JDh4pkCXTsIc+6F29kh6i2jTtpxf5mzeI
+        0jz5EMfky0ZZsgo8GbwngXM=
+X-Google-Smtp-Source: AGRyM1s7yBcA6fH5kP2pnjrf7YIupzs46kd/cTBiEvwAmN/b68IWxK6E3Z+m+S+4cbA51OnpCqTbvw==
+X-Received: by 2002:a17:90b:1e0e:b0:1ef:97f9:dfb5 with SMTP id pg14-20020a17090b1e0e00b001ef97f9dfb5mr45055181pjb.217.1658234064104;
+        Tue, 19 Jul 2022 05:34:24 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.97])
+        by smtp.gmail.com with ESMTPSA id ml16-20020a17090b361000b001ef76dbae28sm11394992pjb.36.2022.07.19.05.34.21
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Jul 2022 05:34:23 -0700 (PDT)
+From:   "tenglong.tl" <dyroneteng@gmail.com>
+X-Google-Original-From: "tenglong.tl" <tenglong.tl@tenglongtldeMacBook-Pro.local>
+To:     avarab@gmail.com
+Cc:     derrickstolee@github.com, dyroneteng@gmail.com,
+        git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
+        me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v7 0/7] trace2: dump scope when print "interesting" config
+Date:   Tue, 19 Jul 2022 20:34:16 +0800
+Message-Id: <20220719123416.51367-1-tenglong.tl@tenglongtldeMacBook-Pro.local>
+X-Mailer: git-send-email 2.35.0.rc0.679.gc613175da2
+In-Reply-To: <220719.86tu7duxl3.gmgdl@evledraar.gmail.com>
+References: <220719.86tu7duxl3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220719.86y1wpuy5o.gmgdl@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 19, 2022 at 01:09:02PM +0200, ∆var Arnfjˆr Bjarmason wrote:
-> 
-> On Tue, Jul 19 2022, Stephen Finucane wrote:
-> 
-> > On Mon, 2022-07-18 at 20:50 +0200, ∆var Arnfjˆr Bjarmason wrote:
-> >> On Mon, Jul 18 2022, Stephen Finucane wrote:
-> >> 
-> >> > ...to track evolution of a patch through time.
-> >> > 
-> >> > tl;dr: How hard would it be to retrofit an 'ChangeID' concept ‡ la the 'Change-
-> >> > ID' trailer used by Gerrit into git core?
-> >> > 
-> >> > Firstly, apologies in advance if this is the wrong forum to post a feature
-> >> > request. I help maintain the Patchwork project [1], which a web-based tool that
-> >> > provides a mechanism to track the state of patches submitted to a mailing list
-> >> > and make sure stuff doesn't slip through the crack. One of our long-term goals
-> >> > has been to track the evolution of an individual patch through multiple
-> >> > revisions. This is surprisingly hard goal because oftentimes there isn't a whole
-> >> > lot to work with. One can try to guess whether things are the same by inspecting
-> >> > the metadata of the commit (subject, author, commit message, and the diff
-> >> > itself) but each of these metadata items are subject to arbitrary changes and
-> >> > are therefore fallible.
-> >> > 
-> >> > One of the mechanisms I've seen used to address this is the 'Change-ID' trailer
-> >> > used by Gerrit. For anyone that hasn't seen this, the Gerrit server provides a
-> >> > git commit hook that you can install locally. When installed, this appends a
-> >> > 'Change-ID' trailer to each and every commit message. In this way, the evolution
-> >> > of a patch (or a "change", in Gerrit parlance) can be tracked through time since
-> >> > the Change ID provides an authoritative answer to the question "is this still
-> >> > the same patch". Unfortunately, there are still some obvious downside to this
-> >> > approach. Not only does this additional trailer clutter your commit messages but
-> >> > it's also something the user must install themselves. While Gerrit can insist
-> >> > that this is installed before pushing a change, this isn't an option for any of
-> >> > the common forges nor is it something git-send-email supports.
-> >> 
-> >> git format-patch+send-email will send your trailers along as-is, how
-> >> doesn't it support Change-Id. Does it need some support that any other
-> >> made-up trailer doesn't?
-> >
-> > It supports sending the trailers, sure. What it doesn't support is insisting you
-> > send this specific trailer (Change-Id). Only Gerrit can do this (server side,
-> > thankfully, which means you don't need to ask all contributors to install this
-> > hook if you want to rely on it for tooling, CI, etc.).
-> 
-> Ah, it's still unclear to me what you're proposing here though. That
-> send-email always (generates?) or otherwise insists on the trailer, that
-> it can be configured ot add it?
+√Üvar Arnfj√∂r√∞ Bjarmason <avarab@gmail.com> writes:
 
-And isn't send-email time too late?
+> We generally submit patches on a single "topic", what a "topic" is is
+> often fuzzy, and sometimes a topic that's mostly trying to do X will fix
+> or change some unrelated Y "while at it".
+>
+> But patch or patches at the end of a series don't depend on anything
+> that comes before them, and could be "cherry-pick"'d directly on top of
+> "master" that's generally a sign that you should be submitting two sets
+> of patches, not one.
+>
+> Per
+> https://lore.kernel.org/git/2016ef2e342c2ec6517afa8ec3e57035021fb965.1650547400.git.dyroneteng@gmail.com/
+> the "let's log config" is just something you happened to run into on
+> this topic, but it might have just as well been some other command.
+>
+> So I think it's better to split it up into its own topic.
 
-That would mean that you get new ID for every version of the patch sent.
+Make sense.
 
-Thanks
+> Yes, that sound good, although I'd make that "scope" line be:
+>
+> 	"scope": "global" | "worktree" | <add more things to the list here>
+>
+> Or just say:
+>
+> 	"scope": <a string that 'git config --show-scope' would return>,
+>
+> Which covers all the possibilities, without hardcoding them there.
 
-Michal
+I think I'd like to prefer the second way, thanks for the input.
+
+> I mean that part of what you're adding is about this new "scope"
+> feature, but another part just seems to be explaining how the
+> trace2.configParams works in general.
+>
+> For the "works in general" let's either link to git-config(1), or if
+> that explanation is lacking improve it & link to it.
+
+Yes, I think the current explanation is OK for me in git-config[1], so
+I add the link as in previous reply (Search: 2db47572d4462e3788a92fd355b97df13b9bcc39) :
+
++`trace2.configparams` can be used to output config values which you care
++about(see linkgit:git-config[1).
+
+> Yes, something like that, although it's a bit odd to discuss "scope"
+> here and not have the trace show it yet, but that's fixed below.:
+
+Yes, because I want the result to be more obvious, if a config only in single
+scope maybe it's a litter harder to remember "Wo, what looks like if config is
+in multiple scopes?(although it's intentional)"
+
+> Yes, exactly! That makes it much clearer what the functional change was
+> about, i.e. we can see what parts of the trace are now different (the
+> scope is added to the trace).
+
+Yes.
+
+Thanks.
