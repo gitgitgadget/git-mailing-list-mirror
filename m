@@ -2,136 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A2F8C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 14:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CFE8C43334
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 14:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237863AbiGSOSH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 10:18:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58634 "EHLO
+        id S239008AbiGSOcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 10:32:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237949AbiGSORx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 10:17:53 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 789087E33A
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 06:50:54 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id l15so11083411qvo.11
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 06:50:54 -0700 (PDT)
+        with ESMTP id S238890AbiGSOcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 10:32:01 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A77713EBE
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 07:21:06 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id r24so4470768qtx.6
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 07:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=N5Y4P2dCwIEg3pcBZLodagVD2fMesBbfWQHJSyrygmk=;
-        b=Jo1RvWILJRlnyCAJuTWjRXSHIUq1Sx/YgwDqRoNyWRRDNdPLhmmrG0sNzdjLlJKod8
-         GImkBAdBkTpDGC+wIhz1hpxINicAVIw2kXvU1PPNVJh93rkCLleS2R5BgasTp5kygOF5
-         1vnF6RXxBWQm+4HKVBpIi2wGjV9j2ItlBA0esaz0B+xO8054XYQO/tFZB+UZJVimL7VN
-         Cy61pGoBklEW+UYEFF74q/LdzqV1ll4XkXGede5TNukcgXYGUuM80Q1FMistzBaetojr
-         ktJLiOhFGp2Rdcl2Bbfz0EXBas6Nfskcl7pwUT2zc9HVTTtzMmK0og6PA5lzX1AqRWoT
-         P+FQ==
+        bh=l+KmQIQf55DG+d1QMp3DrxI3fQ7Uw6IlsHE6kNv1bNw=;
+        b=Pmy8sYY8TQMoecQc167qYw8RY9DjtFp4VKgxkYObdaIp71IB51rObTsmtVIiLYR9Om
+         UMPuVNC5HljF+8s7attqiaJGMqMnqp+tXUAzP0kLosNWf+fDtn6D8XXjVUyyACxQJ0DI
+         YyBOwYXvgdUPVAd/kLbaPWcJeg3bOrfFdpfdYDJfpNFbnE7tCbDq1MtpJsOjwx+RqR9P
+         pwIoU3WwYfNtigshGEP7sNviVlynLx0V1ZAK7cRTJ1f44sN8T8IcEz/XywS5iGs4bJmK
+         4WzH7SbB9tDmD32K3ain+MvnJYjCf6nkY+0ZPibqY7eUIrukSRI/knnf0ql3Xncrskse
+         5s3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=N5Y4P2dCwIEg3pcBZLodagVD2fMesBbfWQHJSyrygmk=;
-        b=poPWtsmX9xq6GyeBrTtg8wbf1mbf2ZjZXGMajbEoV9qnEn3ledJVzwJA6pVUEVcF9t
-         RrldGZZa83Jg/2i8IeuLlS+rqt+Y4Ne6PP9XtP4LRqyguKzYVkIS4g8bLVypVHcvTplD
-         k5QrK3NSIdHhjRfwt2Z/XCeTKkzRvBoiK1x3YGSyqLKQug5mC1vYgySR7HaJq5Gc8NXb
-         7LgT0UBQEKq34EVoyPaYuBzQKEr+9wZBt/BAGzWwuufsaYWwS7jgFZL0ZnNNU8Lqrj1m
-         33CnEyqIaeP77sadD7+V9QIdUQSFkTRYS6yG+kotlkaYdrxo+2JZ1rm5Nf8H2q2R+Ct7
-         g3tQ==
-X-Gm-Message-State: AJIora8YtS9ceX3fQWZPFXpFV41qlOomwHox7ASm5e0Cpkj/9v/MTCx1
-        qjbBEaUQCGs9pxs8HFtYMy/+XPC6GKzH
-X-Google-Smtp-Source: AGRyM1vTLS3XYt+3d8+kfNEXLRiebg5h3M9hzjwO0BwRriaRR32Xz/Spr6VNhJKtFZ0xCX6vwSx+aw==
-X-Received: by 2002:ad4:5bee:0:b0:473:10b5:e767 with SMTP id k14-20020ad45bee000000b0047310b5e767mr25705111qvc.39.1658238653555;
-        Tue, 19 Jul 2022 06:50:53 -0700 (PDT)
+        bh=l+KmQIQf55DG+d1QMp3DrxI3fQ7Uw6IlsHE6kNv1bNw=;
+        b=0KYVSab2f+wiAaMlEkA1VoBEG1mbiVE6UCQG2zlaALMbfaWVnq/9LsGFFl7H08dIOk
+         +6vdZC2hjdNvesTlVTAzEXyVR3EmAepf0o47fzFWyP+bCxsnUBYgf4ZZ2wm0e1ialwpl
+         rSCTu9trpSegr9/w6eDRFvfHoSmY33GglUQTSXsu2zlbkTAY3whM6dU9tB2AJ8WGn+Se
+         QJXa7+EfKau18vyQVcrEh9JtGULktq1qq/sBTB018JqSKEneJwa15HSlSFumVNBb+Il2
+         xeczzbH+l6SanyxHxn8JkoeMGK2UhMM8lqKxyl1nZaSZMg01a4pluPl8ku+C2+tcLe1Q
+         rhqQ==
+X-Gm-Message-State: AJIora8PNtZQyOaOhzGnsNBcUMkEUYc7SHPZZENuBOl3PGYV5z6RIPeJ
+        TouNZYCFvRwfxeaUAHoEhKY9
+X-Google-Smtp-Source: AGRyM1u1npSRu10+mE9l2jmtAtrt6X2OyzmRbXtFkmcO3Ru4T67ncdJw/zyK47yCrV55qyV3pZnU+w==
+X-Received: by 2002:ac8:7e92:0:b0:31e:f40e:55b9 with SMTP id w18-20020ac87e92000000b0031ef40e55b9mr6032244qtj.477.1658240465940;
+        Tue, 19 Jul 2022 07:21:05 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:3950:7a99:4a4a:8622? ([2600:1700:e72:80a0:3950:7a99:4a4a:8622])
-        by smtp.gmail.com with ESMTPSA id x6-20020a05620a258600b006a65c58db99sm14778676qko.64.2022.07.19.06.50.52
+        by smtp.gmail.com with ESMTPSA id o17-20020a05620a2a1100b006b5d6ab6a3bsm11047539qkp.76.2022.07.19.07.21.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jul 2022 06:50:53 -0700 (PDT)
-Message-ID: <335a5d52-ea9b-565b-396d-6543451aa027@github.com>
-Date:   Tue, 19 Jul 2022 09:50:51 -0400
+        Tue, 19 Jul 2022 07:21:05 -0700 (PDT)
+Message-ID: <0fe031b8-1eec-7407-4e5c-cae298ddeb8e@github.com>
+Date:   Tue, 19 Jul 2022 10:21:04 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH] midx: reduce memory pressure while writing bitmaps
+Subject: Re: [PATCH v2 1/3] Documentation: remove use of whitelist
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        vdye@github.com, chakrabortyabhradeep79@gmail.com
-References: <pull.1292.git.1658176565751.gitgitgadget@gmail.com>
- <220718.867d4aw0k3.gmgdl@evledraar.gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+        Jeff King <peff@peff.net>
+References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
+ <pull.1274.v2.git.1657852722.gitgitgadget@gmail.com>
+ <19632a2d2459114484dcdaddd4db0d22dfd64fa7.1657852722.git.gitgitgadget@gmail.com>
+ <220715.86sfn2zlkm.gmgdl@evledraar.gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220718.867d4aw0k3.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220715.86sfn2zlkm.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/18/2022 5:47 PM, Ævar Arnfjörð Bjarmason wrote:
+On 7/15/2022 6:47 AM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> On Mon, Jul 18 2022, Derrick Stolee via GitGitGadget wrote:
+> On Fri, Jul 15 2022, Derrick Stolee via GitGitGadget wrote:
 > 
 >> From: Derrick Stolee <derrickstolee@github.com>
 >> [...]
->> It is unfortunate that the lifetime of the 'entries' array is less
->> clear. To make this simpler, I added a few things to try and prevent an
->> accidental reference:
->>
->>  1. Using FREE_AND_NULL() we will at least get a segfault from reading a
->>     NULL pointer instead of a use-after-free.
->>
->>  2. 'entries_nr' is also set to zero to make any loop that would iterate
->>     over the entries be trivial.
->>
->>  3. Set the 'ctx' pointer to NULL within write_midx_bitmap() so it does
->>     not get another reference later. This requires adding a local copy
->>     of 'pack_order' giving us a reference that we can use later in the
->>     method.
->>
->>  4. Add significant comments in write_midx_bitmap() and
->>     write_midx_internal() to add warnings for future authors who might
->>     accidentally add references to this cleared memory.
->> [...]
->> +	/*
->> +	 * Remove the ctx.entries to reduce memory pressure.
->> +	 * Nullify 'ctx' to help avoid adding new references to ctx->entries.
->> +	 */
->> +	FREE_AND_NULL(ctx->entries);
->> +	ctx->entries_nr = 0;
->> +	pack_order = ctx->pack_order;
->> +	ctx = NULL;
+>> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+>> index fdc28c041c7..7a0539cb411 100644
+>> --- a/Documentation/git-daemon.txt
+>> +++ b/Documentation/git-daemon.txt
+>> @@ -32,8 +32,8 @@ that service if it is enabled.
+>>  It verifies that the directory has the magic file "git-daemon-export-ok", and
+>>  it will refuse to export any Git directory that hasn't explicitly been marked
+>>  for export this way (unless the `--export-all` parameter is specified). If you
+>> -pass some directory paths as 'git daemon' arguments, you can further restrict
+>> -the offers to a whitelist comprising of those.
+>> +pass some directory paths as 'git daemon' arguments, the offers are limited to
+>> +repositories within those directories.
+>>  
+>>  By default, only `upload-pack` service is enabled, which serves
+>>  'git fetch-pack' and 'git ls-remote' clients, which are invoked
+>> @@ -50,7 +50,7 @@ OPTIONS
+>>  	Match paths exactly (i.e. don't allow "/foo/repo" when the real path is
+>>  	"/foo/repo.git" or "/foo/repo/.git") and don't do user-relative paths.
+>>  	'git daemon' will refuse to start when this option is enabled and no
+>> -	whitelist is specified.
+>> +	specific directories are specified.
 > 
-> After this change this is a ~70 line function, but only 3 lines at the
-> top actually use ctx for anything:
->     
-> 	/* the bug check for ctx.nr... */
-> 	prepare_midx_packing_data(&pdata, ctx);
-> 	commits = find_commits_for_midx_bitmap(&commits_nr, refs_snapshot, ctx);
-> 
-> Did you consider just splitting it up so that that there's a "prepare
-> write" function? Then you don't need to worry about the scoping of ctx.
+> Structurally this series should be changed so that like changes are
+> coupled together, this would be much easier to review with the daemon.c
+> changes in 3/3.
 
-I did not, and that's a good suggestion. Extracting these prepare steps
-into write_midx_internal() works to reduce the complexity and make the
-early free()ing more clear.
+Sure. That makes sense. The point here is that git-daemon's documentation
+and error messages currently make the word "whitelist" a critical point to
+understanding how the feature works. Instead, we can explain it more
+clearly using other language. Since this is the biggest place where such
+important is placed on the word, then making the changes isolated to this
+command makes sense.
  
-> I'd think that would be better, then you also wouldn't need to implement
-> your own free-ing, nothing after this seems to use ctx->entries_nr (but
-> I just skimmed it), so it could just fall through to the free() at the
-> end of write_midx_internal() (the only caller), couldn't it?
+> But that also shows that this change is needed, but really lacking
+> compared to what we could do here, which is that both the the SYNOPSIS
+> and the heading here should be, respectively:
+> 
+> 
+>     [--strict-paths=<path>...]
+> 
+> And:
+> 
+>     --strict-paths=<path>...:
+> 
+> I.e. all we're trying to get across here is "this option has a mandatory
+> argument", so let's just say something like that explicitly? I think in
+> this case we don't need the prose at all, the synopsis + heading + error
+> would be enough.
 
-I think this paragraph misunderstands the point. The bitmaps are being
-computed and written before the MIDX lock file completes, so the free()
-of the entries array is after the bitmaps are computed. To reduce the
-memory pressure (by ~25%) by freeing early is the point of this patch.
+This example is misunderstanding that --strict-paths is a boolean
+option and changes how the list of "undecorated" arguments at the end
+is interpreted.
 
-We still want that free(ctx.entries) after the cleanup: label for the
-error cases, but for the "happy path" we can free early.
+The point is that there is an optional list of directories given as
+arguments, and the --strict-paths mode changes those directories to
+not include recursive subdirectories as repo roots.
+>>  	`protocol.allow` is set to `never`, and each of the listed
+>>  	protocols has `protocol.<name>.allow` set to `always`
+>>  	(overriding any existing configuration). In other words, any
+>> -	protocol not mentioned will be disallowed (i.e., this is a
+>> -	whitelist, not a blacklist). See the description of
+>> +	protocol not mentioned will be disallowed. See the description of
+>>  	`protocol.allow` in linkgit:git-config[1] for more details.
+>>  
+>>  `GIT_PROTOCOL_FROM_USER`::
+> 
+> I agree with Junio's earlier feedback about "in other words" being a
+> telltale sign of prose that needs improving.
+> 
+> But the point of the previous prose (such as it was) was to elaborate on
+> th existing "allow" to say "oh, allow means the same as whitelist",
+> surely?
+> 
+> So I think we really could just delete this "in other words" entirely,
+> i.e. it's basically saying "you are allowed to eat ice cream (in other
+> words, you are not disallowed)", it's not adding anything anymore. The
+> "(...)" can just be removed.
 
-By doing the refactoring, this point of having an earlier free() makes
-things more clear.
+I guess I stopped at the first level of "in other words", that being the
+"i.e." parenthetical. I didn't realize that this was already nested inside
+an aside that was unnecessary.
 
 Thanks,
 -Stolee
