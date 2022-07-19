@@ -2,112 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4513C43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 14:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A2F8C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 14:18:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239010AbiGSOKk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 10:10:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42548 "EHLO
+        id S237863AbiGSOSH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 10:18:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238889AbiGSOKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 10:10:14 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B14A558DF
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 06:29:07 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id g126so13542460pfb.3
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 06:29:07 -0700 (PDT)
+        with ESMTP id S237949AbiGSORx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 10:17:53 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 789087E33A
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 06:50:54 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id l15so11083411qvo.11
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 06:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UScBClZnkEceahuoH1MI9Ww5n76d07CQMztc0SOra9Y=;
-        b=SltP4f+J3qXjxiTppId9J59+kMWeiirQBM50AB8H0597bJO5sb+OI/bKbV8YT5Tcai
-         T7l32srLb15QdTT5TWPjyiIX6+BOPvJwVMUu7YBR04yiLvFcZ+HQbo0WGNjmIuVVaEUV
-         PxOm1GBEAKZaePjR+aLV3E550kKwknbVeoy8nEAUkyYj71MU7evJwiz9pVjJzERKG64y
-         fa1XaJk7LAcx7xc9Be7DQYEg5jpFeMgnwhD9mBNcULfuTqgzmWegBefbKD1MvfVr/qSd
-         DvpIvJ6A77HolnXqA7NFytpXJ/7pRV1PT4vZoC9kSFwjOOeLYHR9aNy9gNTtqvSGyDjZ
-         YnKw==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=N5Y4P2dCwIEg3pcBZLodagVD2fMesBbfWQHJSyrygmk=;
+        b=Jo1RvWILJRlnyCAJuTWjRXSHIUq1Sx/YgwDqRoNyWRRDNdPLhmmrG0sNzdjLlJKod8
+         GImkBAdBkTpDGC+wIhz1hpxINicAVIw2kXvU1PPNVJh93rkCLleS2R5BgasTp5kygOF5
+         1vnF6RXxBWQm+4HKVBpIi2wGjV9j2ItlBA0esaz0B+xO8054XYQO/tFZB+UZJVimL7VN
+         Cy61pGoBklEW+UYEFF74q/LdzqV1ll4XkXGede5TNukcgXYGUuM80Q1FMistzBaetojr
+         ktJLiOhFGp2Rdcl2Bbfz0EXBas6Nfskcl7pwUT2zc9HVTTtzMmK0og6PA5lzX1AqRWoT
+         P+FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UScBClZnkEceahuoH1MI9Ww5n76d07CQMztc0SOra9Y=;
-        b=UDL1k68RFgymGphGaJadUslAuVX0G9ysRz3G2CTT37G+IsBZjZ2oHhy0/yBD0gc4N4
-         ZQGzwKWB29UjzbYJO3QytrFuf6atmfS2HvOJNTv6Pd3NPXbKhCiS3N8os3BGSxuqI/sL
-         JkFUHPzD0/X1lDzIqtQ3Np+gS534P+LNEBTmHI5H+HjqLuAiBfkwmGM5TIiVreKIuGfp
-         29URIej6r8ODOFUM2NJxsReXi2VB/sznKgITE68GwRYddFuEGpijocQz+VL5by29bpwU
-         I0k+IgD4wzCq76em+QZreds6P8Iy/bfU2uJLchrHNRaTRXE9D+HM++EbD6YxrnTXDXJ7
-         iOyw==
-X-Gm-Message-State: AJIora/9MMZC5aEkI2AcUG/1O7PgGs6gr6RP5SaHE/tCAf4+idMElh2y
-        QNUxnq8g206Y4GbUOWRmOfz2HYI8skUZdpBd
-X-Google-Smtp-Source: AGRyM1sj6TtSZKqyiLGli6UjSTX83NnqOLGVYyTZqS7NUaaVYeIWBuJS7oN2h77WjyIiaHIOHLP4bw==
-X-Received: by 2002:a05:6a00:815:b0:52a:dea8:269b with SMTP id m21-20020a056a00081500b0052adea8269bmr33716797pfk.66.1658237346979;
-        Tue, 19 Jul 2022 06:29:06 -0700 (PDT)
-Received: from ffyuanda.localdomain ([101.206.227.243])
-        by smtp.gmail.com with ESMTPSA id r9-20020a170902be0900b0016be834d544sm624424pls.237.2022.07.19.06.29.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 06:29:06 -0700 (PDT)
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-To:     git@vger.kernel.org
-Cc:     vdye@github.com, derrickstolee@github.com, gitster@pobox.com,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [PATCH v1 7/7] mv: check overwrite for in-to-out move
-Date:   Tue, 19 Jul 2022 21:28:09 +0800
-Message-Id: <20220719132809.409247-8-shaoxuan.yuan02@gmail.com>
-X-Mailer: git-send-email 2.37.0
-In-Reply-To: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
-References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=N5Y4P2dCwIEg3pcBZLodagVD2fMesBbfWQHJSyrygmk=;
+        b=poPWtsmX9xq6GyeBrTtg8wbf1mbf2ZjZXGMajbEoV9qnEn3ledJVzwJA6pVUEVcF9t
+         RrldGZZa83Jg/2i8IeuLlS+rqt+Y4Ne6PP9XtP4LRqyguKzYVkIS4g8bLVypVHcvTplD
+         k5QrK3NSIdHhjRfwt2Z/XCeTKkzRvBoiK1x3YGSyqLKQug5mC1vYgySR7HaJq5Gc8NXb
+         7LgT0UBQEKq34EVoyPaYuBzQKEr+9wZBt/BAGzWwuufsaYWwS7jgFZL0ZnNNU8Lqrj1m
+         33CnEyqIaeP77sadD7+V9QIdUQSFkTRYS6yG+kotlkaYdrxo+2JZ1rm5Nf8H2q2R+Ct7
+         g3tQ==
+X-Gm-Message-State: AJIora8YtS9ceX3fQWZPFXpFV41qlOomwHox7ASm5e0Cpkj/9v/MTCx1
+        qjbBEaUQCGs9pxs8HFtYMy/+XPC6GKzH
+X-Google-Smtp-Source: AGRyM1vTLS3XYt+3d8+kfNEXLRiebg5h3M9hzjwO0BwRriaRR32Xz/Spr6VNhJKtFZ0xCX6vwSx+aw==
+X-Received: by 2002:ad4:5bee:0:b0:473:10b5:e767 with SMTP id k14-20020ad45bee000000b0047310b5e767mr25705111qvc.39.1658238653555;
+        Tue, 19 Jul 2022 06:50:53 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:3950:7a99:4a4a:8622? ([2600:1700:e72:80a0:3950:7a99:4a4a:8622])
+        by smtp.gmail.com with ESMTPSA id x6-20020a05620a258600b006a65c58db99sm14778676qko.64.2022.07.19.06.50.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Jul 2022 06:50:53 -0700 (PDT)
+Message-ID: <335a5d52-ea9b-565b-396d-6543451aa027@github.com>
+Date:   Tue, 19 Jul 2022 09:50:51 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] midx: reduce memory pressure while writing bitmaps
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        vdye@github.com, chakrabortyabhradeep79@gmail.com
+References: <pull.1292.git.1658176565751.gitgitgadget@gmail.com>
+ <220718.867d4aw0k3.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220718.867d4aw0k3.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add checking logic for overwritng when moving from in-cone to
-out-of-cone. It is the index version of the original overwrite logic.
+On 7/18/2022 5:47 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Jul 18 2022, Derrick Stolee via GitGitGadget wrote:
+> 
+>> From: Derrick Stolee <derrickstolee@github.com>
+>> [...]
+>> It is unfortunate that the lifetime of the 'entries' array is less
+>> clear. To make this simpler, I added a few things to try and prevent an
+>> accidental reference:
+>>
+>>  1. Using FREE_AND_NULL() we will at least get a segfault from reading a
+>>     NULL pointer instead of a use-after-free.
+>>
+>>  2. 'entries_nr' is also set to zero to make any loop that would iterate
+>>     over the entries be trivial.
+>>
+>>  3. Set the 'ctx' pointer to NULL within write_midx_bitmap() so it does
+>>     not get another reference later. This requires adding a local copy
+>>     of 'pack_order' giving us a reference that we can use later in the
+>>     method.
+>>
+>>  4. Add significant comments in write_midx_bitmap() and
+>>     write_midx_internal() to add warnings for future authors who might
+>>     accidentally add references to this cleared memory.
+>> [...]
+>> +	/*
+>> +	 * Remove the ctx.entries to reduce memory pressure.
+>> +	 * Nullify 'ctx' to help avoid adding new references to ctx->entries.
+>> +	 */
+>> +	FREE_AND_NULL(ctx->entries);
+>> +	ctx->entries_nr = 0;
+>> +	pack_order = ctx->pack_order;
+>> +	ctx = NULL;
+> 
+> After this change this is a ~70 line function, but only 3 lines at the
+> top actually use ctx for anything:
+>     
+> 	/* the bug check for ctx.nr... */
+> 	prepare_midx_packing_data(&pdata, ctx);
+> 	commits = find_commits_for_midx_bitmap(&commits_nr, refs_snapshot, ctx);
+> 
+> Did you consider just splitting it up so that that there's a "prepare
+> write" function? Then you don't need to worry about the scoping of ctx.
 
-Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
----
- builtin/mv.c                  | 12 ++++++++++++
- t/t7002-mv-sparse-checkout.sh |  2 +-
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index d35994c443..5ed3bd3431 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -365,6 +365,18 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			goto act_on_entry;
- 		}
+I did not, and that's a good suggestion. Extracting these prepare steps
+into write_midx_internal() works to reduce the complexity and make the
+early free()ing more clear.
  
-+		if (ignore_sparse &&
-+		    (dst_mode & SKIP_WORKTREE_DIR) &&
-+		    index_entry_exists(&the_index, dst, strlen(dst))) {
-+			bad = _("destination exists in the index");
-+			if (force) {
-+				if (verbose)
-+					warning(_("overwriting '%s'"), dst);
-+				bad = NULL;
-+			} else {
-+				goto act_on_entry;
-+			}
-+		}
- 		/*
- 		 * We check if the paths are in the sparse-checkout
- 		 * definition as a very final check, since that
-diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-index dafe15b9cf..5d810f3af0 100755
---- a/t/t7002-mv-sparse-checkout.sh
-+++ b/t/t7002-mv-sparse-checkout.sh
-@@ -323,7 +323,7 @@ test_expect_success 'move clean path from in-cone to out-of-cone' '
- 	grep -x "S folder1/d" actual
- '
- 
--test_expect_failure 'move clean path from in-cone to out-of-cone overwrite' '
-+test_expect_success 'move clean path from in-cone to out-of-cone overwrite' '
- 	test_when_finished "cleanup_sparse_checkout" &&
- 	setup_sparse_checkout &&
- 	echo "sub/file1 overwrite" >sub/file1 &&
--- 
-2.37.0
+> I'd think that would be better, then you also wouldn't need to implement
+> your own free-ing, nothing after this seems to use ctx->entries_nr (but
+> I just skimmed it), so it could just fall through to the free() at the
+> end of write_midx_internal() (the only caller), couldn't it?
 
+I think this paragraph misunderstands the point. The bitmaps are being
+computed and written before the MIDX lock file completes, so the free()
+of the entries array is after the bitmaps are computed. To reduce the
+memory pressure (by ~25%) by freeing early is the point of this patch.
+
+We still want that free(ctx.entries) after the cleanup: label for the
+error cases, but for the "happy path" we can free early.
+
+By doing the refactoring, this point of having an earlier free() makes
+things more clear.
+
+Thanks,
+-Stolee
