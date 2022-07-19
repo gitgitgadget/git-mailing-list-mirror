@@ -2,111 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC8EFC43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 21:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E963EC43334
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 21:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237758AbiGSVCP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 17:02:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47990 "EHLO
+        id S232482AbiGSVDR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 17:03:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230311AbiGSVCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 17:02:14 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C976481C6
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:02:12 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id F2C6A3F47EF;
-        Tue, 19 Jul 2022 17:02:11 -0400 (EDT)
-Received: from jeffhost-mbp.local (unknown [74.205.145.90])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        with ESMTP id S230311AbiGSVDQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 17:03:16 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2359B50076
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:03:14 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 276D11270A8;
+        Tue, 19 Jul 2022 17:03:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YC2IgS9bdM/bLbchiLUJM9jxHueox3veXvmt0o
+        KjBEc=; b=p8UsrOaE2tsm5zKxV7q//tqaIkuHN27M1/AelcsZMQoVtPd/AJQvjM
+        vv9qZLI+IeqwiDeyr6Ddsw6VNvykHTGxfuEO2W7eCkA/E1NEXZ2ylRa+/yZWxUwl
+        kaHoQB6WCZ2s/PqAtfxMjZ4hxWmlg9gpSPXvoe1axkY93e9SgDvCY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1FD381270A7;
+        Tue, 19 Jul 2022 17:03:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id B66CE3F47F9;
-        Tue, 19 Jul 2022 17:02:11 -0400 (EDT)
-Subject: Re: Possible git bug when working with Microsoft Mapped drives
-To:     paul@kinzelman.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <f946c577-d3d6-212c-cec5-a6c63856b77d@kinzelman.com>
- <b5931787-3589-102f-cfeb-caeb8a07e149@jeffhostetler.com>
- <YtXS1s66fw/UCvLU@tapette.crustytoothpaste.net>
- <d4a77fd1-6be7-6466-8c94-6e2552184094@kinzelman.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e39ce708-afbf-4524-187c-20dcd979a061@jeffhostetler.com>
-Date:   Tue, 19 Jul 2022 17:02:10 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8E7621270A6;
+        Tue, 19 Jul 2022 17:03:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, derrickstolee@github.com, git@jeffhostetler.com,
+        git@vger.kernel.org, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v7 7/7] tr2: dump names if config exist in multiple scopes
+References: <cover.1658159745.git.dyroneteng@gmail.com>
+        <a01ae8478d3a8545241c5b064b6d369a330ee59f.1658159746.git.dyroneteng@gmail.com>
+Date:   Tue, 19 Jul 2022 14:03:11 -0700
+In-Reply-To: <a01ae8478d3a8545241c5b064b6d369a330ee59f.1658159746.git.dyroneteng@gmail.com>
+        (Teng Long's message of "Tue, 19 Jul 2022 00:46:06 +0800")
+Message-ID: <xmqq4jzcak8g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <d4a77fd1-6be7-6466-8c94-6e2552184094@kinzelman.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
+Content-Type: text/plain
+X-Pobox-Relay-ID: 335C36FC-07A6-11ED-9C2C-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Could you maybe create an issue against GFW for this so that we don't
-forget about it?
+Teng Long <dyroneteng@gmail.com> writes:
 
-https://github.com/git-for-windows/git/issues
+> Subject: Re: [PATCH v7 7/7] tr2: dump names if config exist in multiple scopes
 
-Jeff
+This make it sound as if we do not show the scope if a configuration
+variable appears only in one scope, but I do not see how the updated
+code achieves that.  Instead, it seems that it shows the scope
+unconditionally in addition to the key-value pair.
 
+If that is the case, a retitle is in order.  Also this should
+probably be a separate topic, unrelated from the other 6 patches.
 
-On 7/18/22 5:55 PM, Paul Kinzelman wrote:
-> Thank you! Jeff was right on, but I didn't want to create extra noise
-> on the elist, so I replied just to him.
-> 
-> His suggestion of the --no-hardlinks
-> caused it to work!
-> 
-> Might be good to test to see if a drive letter is on a remote system
-> and do that automagically.
-> 
-> On 7/18/2022 3:38 PM, brian m. carlson wrote:
->> On 2022-07-18 at 20:46:44, Jeff Hostetler wrote:
->>> On 7/18/22 4:28 PM, Paul Kinzelman wrote:
->>>> I'm using git version 2.37.1.windows.1 and Windows 10
->>>>
->>>> I've got two systems which are miles apart and so are not on the same
->>>> LAN, and I have connected them together using the ui.com VPN and M$
->>>> RDP/TSclient. I mapped each system's C: drive to be accessed by the
->>>> other system as Drive X: and I can transfer files back and forth
->>>> initiated on each system.
->>>>
->>>> I can also see all the repository files on the source system, including
->>>> the tree of files under the .git directory. Note I had to unhide the
->>>> .git folder so that I could see that folder from the other system.
->>>>
->>>> However, when I run 'git clone' on one system to get the repository 
->>>> from
->>>> the other system, git seems to think the repository on the other
->>>> system is empty when it's not. As I said, I can even do a directory
->>>> and see all the other files.
->>> I can't duplicate your setup, so I'll just speculate out loud
->>> here.  I have to wonder if the "X:" drive letters are tricking
->>> Git to thinking that the remote instance is actually local and
->>> Git is trying to use some shortcuts. (For example, it might
->>> hardlink them rather than copy them on Linux.)
->>>
->>> So I'm wondering if "--no-local" or "--no-hardlinks" or using
->>> a file URL rather than a pathname might make it behave differently.
->> It may also be the case that the remote file system lacks some
->> functionality that Git needs.  For example, Windows can support mapping
->> HTTP DAV resources as drives, but the DAV protocol is incapable of
->> providing certain operations that Git expects of a file system (Git
->> roughly needs something that's POSIX compliant, but can paper over case
->> insensitivity) and thus such a disk simply can't work with Git.
->>
->> This may end up looking like the file system is empty because, for
->> example, the function to query directory contents may return an error.
->> The contents may not actually be empty, but because they cannot be
->> enumerated in the way Git needs them to be, it appears that way.
->>
->> Again, I don't know if this is the case here, but you're the second
->> person recently to have seen problems with using RDP for this purpose.
->> You may wish to try SFTP, which should work (at least it does for Unix
->> systems), or possibly SMB/CIFS (which may or may not work, but I believe
->> it typically does).
-> 
