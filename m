@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E238C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 21:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98C06C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 21:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239595AbiGSVFr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 17:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50860 "EHLO
+        id S240386AbiGSVFv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 17:05:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239940AbiGSVFj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 17:05:39 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0DF633A00
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:05:38 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id id17so2596503wmb.1
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:05:38 -0700 (PDT)
+        with ESMTP id S230285AbiGSVFq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 17:05:46 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77F0043E6E
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:05:41 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id bk26so23396473wrb.11
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:05:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WZ52TPE5gW29BRFBtyrwCRZaU3DHLxmsF+cD+CmLmpE=;
-        b=gsI3MdM9wfGvS0YIS/B+f7vHUHFd16Seqzu8IBZu9s0OA6h46XD4j5BLyhuB4QNeq5
-         aYAqf46cYCMRmdRoyrNK4fM7nRUd+neluxIsQfWZlJ7mWpuisNCMtGffRUg7rW8DVsB1
-         2O3IPtxnXisyt1oXeB+crXVIks+gSFLXTmilygGIGTSAvnVdBUMi8nqY35jbfTCOoWgL
-         QaSvhP8aUh3nNngoUJbSJX5tmxjytmkgNJYryWD5pWwEVMAsMcgA1eLFgja1cDsPL/QW
-         h5ekUHipg9ewOZdIr2+CxSAIx5qymZwA7kFRaypPqFeRiKLOCgrrSLxHKXtzu+xNb65M
-         88MA==
+        bh=x7Rg9SpeL11hgJ3A6zJ0dEgsvWACSZlCMRNCw1d6AJw=;
+        b=DR7iulZ0rb8Co/VC2ySj0AY7RmECdbUGGLXUKa9Umj0ROclJ10M3yPO3AQCxv13ayl
+         5R29QTfODl3oOWWuPgbPLboTefIZdp4DbMbfPQ6tTqsM2huyqnOazw7ooh6wqO4hiqTE
+         baeb5jqbCzsS7Ciji6zVguadFTHfjA+Lx9a/u6EF0KnwrXzYMgnKSU0sd+BIgiDsdSBx
+         7bbOC5JA/uvY7aI1AxRFd6lE+E23gUONT5bhflOD9rGC3NfUtBKcoZf99wzeuD2bNd9G
+         GCG9vdlNxgKdkhcSocGxgwV/c+YlFTum+Hkt5fXxEAOmSySi1aPjeH+M0+eHt38piWhY
+         6cFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WZ52TPE5gW29BRFBtyrwCRZaU3DHLxmsF+cD+CmLmpE=;
-        b=nH1QKZSJ4MprRSnkKgL7qZ2k2mQODH2bPPyREBprBn83CPYUEpJ2RvPZs6Iptwb/JZ
-         iihumIMqcNfrHgtrRcEyJ2qyvnvdG+0DhpUEj/MBYns6kxC9Ebw0w75w1PmsqpJ+Zz7U
-         4wC/9Zx+4Go+zhqFY8TKF8Gf6nYJMUQ5JBAaRxttct3QKJo/N8aR6kz7secPVkEgHHgt
-         WF1E0G8wtGGnaSD3vVbah37oO1zzcaQdMly0VxkXEwAMPMrjJ20ugDtdC+PZ7a7cqm3Q
-         gujSKE2nBI5CgVYYMfeA27yimGzin/AV9VBAeb+t5bPb4r+gH055rvr+kANd8oq5opG9
-         k9ug==
-X-Gm-Message-State: AJIora/LM16oapPRIHUFikRPOECYbKSrKwA2+Pqa5qoDxXasJt8ffsP3
-        oe5ojpGr5i56+lVZCBUc8UAW9QRIhgd+xQ==
-X-Google-Smtp-Source: AGRyM1vuMD29kljsl0GpHzt78YL1xIymZnduShGQLqsed8egsOcLI3ESNeQQprVSc5sNYM5+x6/rFQ==
-X-Received: by 2002:a05:600c:35ca:b0:3a3:253b:708b with SMTP id r10-20020a05600c35ca00b003a3253b708bmr972816wmq.86.1658264736941;
-        Tue, 19 Jul 2022 14:05:36 -0700 (PDT)
+        bh=x7Rg9SpeL11hgJ3A6zJ0dEgsvWACSZlCMRNCw1d6AJw=;
+        b=tSPlxd2LMz03Qgz+NG3MTHaCg+bFKmWfCd7HQa3QMF/lUck1zUV97neWoAbP2jN9ls
+         BjCe1RWIKTJiol0PL7NXp1xRoleu2ZdqHQKH0h6jN1iUJ9Kir0lrvROHBJkyncmBcSIu
+         Txpo3u34xz8IOXoNfzm3XD09nDtYqanEVytDbieIaSu8z5bM8yBODFNR11WwqmWm+myJ
+         6II2TfVBa1Yt7Up30KHjW+SncZ9kuR8LgaK6pSmX1huvEWHf5dEPhWjMHYdIjXJxdyfv
+         AFuucrV1ZaI/lsYhSS9/9I/rpH6TANcIz4WBi/7yCltYoTjhKIjUTxlsozY2QJgDQn7Q
+         Es1w==
+X-Gm-Message-State: AJIora9QSOruMaIRWB1+IGD6nkWz4581Xf1xhmHlXxV9MDSGlR5z+uPH
+        YJgUqzCWxkWP6oodG0RG/tNQZjMH9bTadA==
+X-Google-Smtp-Source: AGRyM1uZKagZnk676aIiJWm0C+x+pHS4HW0tZb9ydwk8iNwsO+aFYxfCeLQvDYjgYdiqbgPN/UHEdA==
+X-Received: by 2002:adf:f412:0:b0:21d:8aa4:e796 with SMTP id g18-20020adff412000000b0021d8aa4e796mr28223925wro.79.1658264739737;
+        Tue, 19 Jul 2022 14:05:39 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m24-20020a05600c461800b003a050a391e8sm75091wmo.38.2022.07.19.14.05.35
+        by smtp.gmail.com with ESMTPSA id m24-20020a05600c461800b003a050a391e8sm75091wmo.38.2022.07.19.14.05.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 14:05:35 -0700 (PDT)
+        Tue, 19 Jul 2022 14:05:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/10] test-lib.sh: add a --invert-exit-code switch
-Date:   Tue, 19 Jul 2022 23:05:18 +0200
-Message-Id: <patch-04.10-4aab7af60e3-20220719T205710Z-avarab@gmail.com>
+Subject: [PATCH 07/10] test-lib.sh: add a GIT_TEST_PASSING_SANITIZE_LEAK=check mode
+Date:   Tue, 19 Jul 2022 23:05:21 +0200
+Message-Id: <patch-07.10-0961df2ab6c-20220719T205710Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1063.gd87c5b8cc23
 In-Reply-To: <cover-00.10-00000000000-20220719T205710Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20220719T205710Z-avarab@gmail.com>
@@ -67,178 +67,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the ability to have those tests that fail return 0, and those
-tests that succeed return 1. This is useful e.g. to run "--stress"
-tests on tests that fail 99% of the time on some setup, i.e. to smoke
-out the flaky run which yielded success.
+Add a new "GIT_TEST_PASSING_SANITIZE_LEAK=check" mode to the
+test-lib.sh.
 
-In a subsequent commit a new SANITIZE=leak mode will make use of this.
+As noted in the updated "t/README" this compliments the existing
+"GIT_TEST_PASSING_SANITIZE_LEAK=true" mode added in
+956d2e4639b (tests: add a test mode for SANITIZE=leak, run it in CI,
+2021-09-23).
+
+It does so by adding the ability to check that there's a 1=1
+correspondence between those tests that are marked as passing with
+SANITIZE=leak, and those tests that are leak-free. I.e. a test that
+passes with SANITIZE=leak but isn't marked as such with
+TEST_PASSES_SANITIZE_LEAK=true will error out.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0000-basic.sh | 72 ++++++++++++++++++++++++++++++++++++++++++++++++
- t/test-lib.sh    | 36 +++++++++++++++++++++++-
- 2 files changed, 107 insertions(+), 1 deletion(-)
+ t/README            | 10 ++++++++++
+ t/t9700-perl-git.sh |  6 ++++++
+ t/test-lib.sh       | 34 ++++++++++++++++++++++++++--------
+ 3 files changed, 42 insertions(+), 8 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 17a268ccd1b..502b4bcf9ea 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -578,6 +578,78 @@ test_expect_success 'subtest: --run invalid range end' '
- 	EOF_ERR
- '
+diff --git a/t/README b/t/README
+index c2f996656d3..7b7082386ae 100644
+--- a/t/README
++++ b/t/README
+@@ -371,6 +371,16 @@ declared themselves as leak-free by setting
+ "TEST_PASSES_SANITIZE_LEAK=true" before sourcing "test-lib.sh". This
+ test mode is used by the "linux-leaks" CI target.
  
-+test_expect_success 'subtest: --invert-exit-code without --immediate' '
-+	run_sub_test_lib_test_err full-pass \
-+		--invert-exit-code &&
-+	check_sub_test_lib_test_err full-pass \
-+		<<-\EOF_OUT 3<<-EOF_ERR
-+	ok 1 - passing test #1
-+	ok 2 - passing test #2
-+	ok 3 - passing test #3
-+	# passed all 3 test(s)
-+	1..3
-+	# faking up non-zero exit with --invert-exit-code
-+	EOF_OUT
-+	EOF_ERR
-+'
++GIT_TEST_PASSING_SANITIZE_LEAK=check checks that our
++"TEST_PASSES_SANITIZE_LEAK=true" markings are current. The "check" is
++particularly useful with "--immediate", but otherwise acts the same
++for tests that have "TEST_PASSES_SANITIZE_LEAK=true" set. For those
++that don't have it set it runs them, and considers them passing
++without errors a failure (by providing "--invert-exit-code"). Thus the
++"check" mode can be used e.g. with "git rebase --exec" to ensure that
++there's a 1=1 mapping between "TEST_PASSES_SANITIZE_LEAK=true" and
++those tests that pass under "SANITIZE=leak".
 +
-+test_expect_success 'subtest: --invert-exit-code with --immediate: all passed' '
-+	run_sub_test_lib_test_err full-pass \
-+		--invert-exit-code --immediate &&
-+	check_sub_test_lib_test_err full-pass \
-+		<<-\EOF_OUT 3<<-EOF_ERR
-+	ok 1 - passing test #1
-+	ok 2 - passing test #2
-+	ok 3 - passing test #3
-+	# passed all 3 test(s)
-+	1..3
-+	# faking up non-zero exit with --invert-exit-code
-+	EOF_OUT
-+	EOF_ERR
-+'
-+
-+test_expect_success 'subtest: --invert-exit-code without --immediate: partial pass' '
-+	run_sub_test_lib_test partial-pass \
-+		--invert-exit-code &&
-+	check_sub_test_lib_test partial-pass <<-\EOF
-+	ok 1 - passing test #1
-+	not ok 2 - # TODO induced breakage (--invert-exit-code): failing test #2
-+	#	false
-+	ok 3 - passing test #3
-+	# failed 1 among 3 test(s)
-+	1..3
-+	# faked up failures as TODO & now exiting with 0 due to --invert-exit-code
-+	EOF
-+'
-+
-+test_expect_success 'subtest: --invert-exit-code with --immediate: partial pass' '
-+	run_sub_test_lib_test partial-pass \
-+		--invert-exit-code --immediate &&
-+	check_sub_test_lib_test partial-pass \
-+		<<-\EOF_OUT 3<<-EOF_ERR
-+	ok 1 - passing test #1
-+	not ok 2 - # TODO induced breakage (--invert-exit-code): failing test #2
-+	#	false
-+	1..2
-+	# faked up failures as TODO & now exiting with 0 due to --invert-exit-code
-+	EOF_OUT
-+	EOF_ERR
-+'
-+
-+test_expect_success 'subtest: --invert-exit-code --immediate: got a failure' '
-+	run_sub_test_lib_test partial-pass \
-+		--invert-exit-code --immediate &&
-+	check_sub_test_lib_test_err partial-pass \
-+		<<-\EOF_OUT 3<<-EOF_ERR
-+	ok 1 - passing test #1
-+	not ok 2 - # TODO induced breakage (--invert-exit-code): failing test #2
-+	#	false
-+	1..2
-+	# faked up failures as TODO & now exiting with 0 due to --invert-exit-code
-+	EOF_OUT
-+	EOF_ERR
-+'
-+
- test_expect_success 'subtest: tests respect prerequisites' '
- 	write_and_run_sub_test_lib_test prereqs <<-\EOF &&
+ GIT_TEST_SANITIZE_LEAK_LOG=true will log memory leaks to
+ "test-results/$TEST_NAME.leak/trace.*" files. Useful in combination
+ with "GIT_TEST_PASSING_SANITIZE_LEAK" to check if we're falsely
+diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
+index 102c133112c..faba941117d 100755
+--- a/t/t9700-perl-git.sh
++++ b/t/t9700-perl-git.sh
+@@ -11,6 +11,12 @@ if ! test_have_prereq PERL; then
+ 	test_done
+ fi
  
++if test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check" && test_have_prereq SANITIZE_LEAK
++then
++	skip_all='SANITIZE=leak and GIT_TEST_PASSING_SANITIZE_LEAK=check do not combine with test_external'
++	test_done
++fi
++
+ perl -MTest::More -e 0 2>/dev/null || {
+ 	skip_all="Perl Test::More unavailable, skipping test"
+ 	test_done
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 118720493bb..7f730b0f94f 100644
+index 73600c4d887..747bf6c50e5 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -238,6 +238,9 @@ parse_option () {
- 			;;
- 		esac
- 		;;
-+	--invert-exit-code)
-+		invert_exit_code=t
-+		;;
- 	*)
- 		echo "error: unknown test option '$opt'" >&2; exit 1 ;;
- 	esac
-@@ -788,15 +791,31 @@ test_ok_ () {
- 	finalize_test_case_output ok "$@"
- }
- 
-+_invert_exit_code_failure_end_blurb () {
-+	say_color warn "# faked up failures as TODO & now exiting with 0 due to --invert-exit-code"
-+}
+@@ -1447,17 +1447,34 @@ fi
+ # skip non-whitelisted tests when compiled with SANITIZE=leak
+ if test -n "$SANITIZE_LEAK"
+ then
+-	if test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
++	# Normalize with test_bool_env
++	passes_sanitize_leak=
 +
- test_failure_ () {
- 	failure_label=$1
- 	test_failure=$(($test_failure + 1))
--	say_color error "not ok $test_count - $1"
-+	local pfx=""
-+	if test -n "$invert_exit_code" # && test -n "$HARNESS_ACTIVE"
++	# We need to see TEST_PASSES_SANITIZE_LEAK in "git
++	# env--helper" (via test_bool_env)
++	export TEST_PASSES_SANITIZE_LEAK
++	if test_bool_env TEST_PASSES_SANITIZE_LEAK false
 +	then
-+		pfx="# TODO induced breakage (--invert-exit-code):"
++		passes_sanitize_leak=t
 +	fi
-+	say_color error "not ok $test_count - ${pfx:+$pfx }$1"
- 	shift
- 	printf '%s\n' "$*" | sed -e 's/^/#	/'
- 	if test -n "$immediate"
++
++	if test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check"
  	then
- 		say_color error "1..$test_count"
+-		# We need to see it in "git env--helper" (via
+-		# test_bool_env)
+-		export TEST_PASSES_SANITIZE_LEAK
 +		if test -n "$invert_exit_code"
 +		then
-+			finalize_test_output
-+			_invert_exit_code_failure_end_blurb
-+			GIT_EXIT_OK=t
-+			exit 0
++			BAIL_OUT "cannot use --invert-exit-code under GIT_TEST_PASSING_SANITIZE_LEAK=check"
 +		fi
- 		_error_exit
+ 
+-		if ! test_bool_env TEST_PASSES_SANITIZE_LEAK false
++		if test -z "$passes_sanitize_leak"
+ 		then
+-			skip_all="skipping $this_test under GIT_TEST_PASSING_SANITIZE_LEAK=true"
+-			test_done
++			say "in GIT_TEST_PASSING_SANITIZE_LEAK=check mode, setting --invert-exit-code for TEST_PASSES_SANITIZE_LEAK != true"
++			invert_exit_code=t
+ 		fi
++	elif test -z "$passes_sanitize_leak" &&
++	     test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
++	then
++		skip_all="skipping $this_test under GIT_TEST_PASSING_SANITIZE_LEAK=true"
++		test_done
  	fi
- 	finalize_test_case_output failure "$failure_label" "$@"
-@@ -1242,6 +1261,14 @@ test_done () {
- 			} ||
- 			error "Tests passed but test cleanup failed; aborting"
- 		fi
-+
-+		if test -z "$skip_all" && test -n "$invert_exit_code"
-+		then
-+			say_color warn "# faking up non-zero exit with --invert-exit-code"
-+			GIT_EXIT_OK=t
-+			exit 1
-+		fi
-+
- 		test_at_end_hook_
  
- 		GIT_EXIT_OK=t
-@@ -1254,6 +1281,13 @@ test_done () {
- 			say "1..$test_count"
- 		fi
- 
-+		if test -n "$invert_exit_code"
-+		then
-+			_invert_exit_code_failure_end_blurb
-+			GIT_EXIT_OK=t
-+			exit 0
-+		fi
-+
- 		GIT_EXIT_OK=t
- 		exit 1 ;;
- 
+ 	if test_bool_env GIT_TEST_SANITIZE_LEAK_LOG false
+@@ -1476,7 +1493,8 @@ then
+ 		prepend_var LSAN_OPTIONS : log_path=\"$TEST_RESULTS_SAN_FILE\"
+ 		export LSAN_OPTIONS
+ 	fi
+-elif test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
++elif test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check" ||
++     test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
+ then
+ 	BAIL_OUT "GIT_TEST_PASSING_SANITIZE_LEAK=true has no effect except when compiled with SANITIZE=leak"
+ fi
 -- 
 2.37.1.1062.g385eac7fccf
 
