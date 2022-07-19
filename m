@@ -2,84 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B187CC43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 19:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78918C43334
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 19:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235061AbiGSTa2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 15:30:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50922 "EHLO
+        id S237796AbiGSToi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 15:44:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232193AbiGSTa0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 15:30:26 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D186328718
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 12:30:25 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id s188so1740054oie.0
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 12:30:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=plDS12j95FKMAwG95otkHwOTGnYuycrShRW317VBpNw=;
-        b=n0ofAAz6FGeBX9Vt4pFoZqw/rd75pY/Gh2m8L7IUS7rSia69LUTdhQ/D9VCdybx43d
-         OJqPzbuSKbTsE0cyNO7GK0pGq7jkDgAWMPNTzgPlBvLxAa0i3ORp58RXogDtJ3VJXOM9
-         uQWDWvuVXsXjAdzbeHOlqXWTeMvW5Z/bTVfc6ApAD6upQNmSxpZ836wo/TZCdr0uTW0D
-         IcqF0YevoSLk0NECMjOPFHvF2vGbxk3DzmCsCmbzozHVclCgdFT1F5uZWqyUxlQ65iZz
-         h2PAn0rj9vA/CPjGW2b7kWzcUGTsHwosI/rICoGnLyc8cgHSSTdP/i6Tx7U+3oydWs+4
-         wNXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=plDS12j95FKMAwG95otkHwOTGnYuycrShRW317VBpNw=;
-        b=b3vjO7waHMxD4f78C7O3nAtX1wsQ9OONBxZ74pH2r6tRB6NuPPLYpmh0UhKsfJfuF4
-         mg3ISMYJc7TUVFv5g9TOydKpUWxZA29kkOfTiiaghA9cykspe16/debCdmmy4Hi7+tyg
-         f8LxxIn5nEURa1QK4fFQAx7aUpRqzw9QUPe1mQXERHr/ld2X5CWZlwQVhsoXSBa1BHhh
-         MBw4f9SnmuAgXixPoeGd1wDQZ1glBXVpNwQwFLt6PUUhgwOi9ZTI1Ia/N9Kw6M3nHwv9
-         D/0xnvaE+DEvG6kTOcuTw2UtKooLlA0tMpGkhD5K/IUvZaUZ3xEv5S5+C52BrrF2K73k
-         ZBZw==
-X-Gm-Message-State: AJIora/Gl3EzEXxxG5ORIuxtWUOwLNoxdlGDfyhk7+JlRnLU+OHfLEC4
-        36hfyOVeUuWhjjc84k9c4IYWZdVgD3oXYLOMZqWIwA==
-X-Google-Smtp-Source: AGRyM1tuFJuJpGnLyWN8lLTue9gTw2ZnFgnJQ/Sr0Kr6bBLfhtYxLqBVrIeloR+5H0VXjFJQQVEPxHp2lTbWf8rbazU=
-X-Received: by 2002:a54:4e94:0:b0:33a:3462:1d71 with SMTP id
- c20-20020a544e94000000b0033a34621d71mr522039oiy.236.1658259025004; Tue, 19
- Jul 2022 12:30:25 -0700 (PDT)
+        with ESMTP id S229379AbiGSToi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 15:44:38 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5732352DEB
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 12:44:37 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE9BC12677D;
+        Tue, 19 Jul 2022 15:44:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=2i+Hcic49V3U2/I2fLkOWEKOOB+WJzPlLQqTkAo1kV0=; b=W0PG
+        GuLSBBoG3vQAGLCLLwzlTZRjX7YJ4VjscrMDaxke0Iu8UwLZqvaXr8axCKFh91JU
+        QxaJIsEYPg8Ozb2iINjfb2ENqVg1D31FAiDzM4i9qKesiaV/Uf4avrnYVU6s4jFr
+        T74CuWGZ4znhB+HkkBLAVsmmuuYMJiq3luwf+EE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A4BE812677C;
+        Tue, 19 Jul 2022 15:44:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 16A5212677B;
+        Tue, 19 Jul 2022 15:44:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, johannes.schindelin@gmx.de,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/3] t/*: avoid "whitelist"
+References: <pull.1274.git.1657718450.gitgitgadget@gmail.com>
+        <pull.1274.v2.git.1657852722.gitgitgadget@gmail.com>
+        <3c3c8c20bcb4e570d25a676ad1f29877762adb82.1657852722.git.gitgitgadget@gmail.com>
+        <220715.86o7xqzkt3.gmgdl@evledraar.gmail.com>
+        <75cc0f43-d9a5-45d3-5e36-dd20acfebf50@github.com>
+Date:   Tue, 19 Jul 2022 12:44:34 -0700
+Message-ID: <xmqqwnc8anvh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220712231935.2979727-1-calvinwan@google.com>
- <20220718214349.3379328-1-calvinwan@google.com> <xmqqzgh5d2s5.fsf@gitster.g>
-In-Reply-To: <xmqqzgh5d2s5.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Tue, 19 Jul 2022 12:30:13 -0700
-Message-ID: <CAFySSZDqMVV=Zv9hVa+S9=fhuvCTZvZUL50qMfSJHh4KTpm5RA@mail.gmail.com>
-Subject: Re: [PATCH v5] submodule merge: update conflict error message
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, chooglen@google.com, newren@gmail.com,
-        levraiphilippeblain@gmail.com, Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 381CE142-079B-11ED-AE6E-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The stuff to help reviewers who may have seen earlier round are
-> usually written in the cover letter, or after the three-dash line.
-Ah I see since this patch doesn't have a cover letter, I should put
-all the reviewer-centric stuff after the three-dash line.
+Derrick Stolee <derrickstolee@github.com> writes:
 
-> > +     if (csub && csub->nr > 0) {
-> > +             int i;
-> > +             printf(_("Recursive merging with submodules currently only supports trivial cases.\n"
-> > +                     "Please manually handle the merging of each conflicted submodule.\n"
-> > +                     "This can be accomplished with the following steps:\n"));
+>> 	GIT_TEST_PASSING_SANITIZE_LEAK=<bool> when compiled with
+>> 	SANITIZE=leak will, when true, only run those tests that declare
+>> 	themselves leak-free by setting "TEST_PASSES_SANITIZE_LEAK=true"
+>> 	before sourcing "test-lib.sh". This test mode is used by the
+>> 	"linux-leaks" CI target.
 >
-> This makes me wonder if these "helpful but verbose" messages should
-> use the advise mechanism.
+> Another iteration:
+>
+>   GIT_TEST_PASSING_SANITIZE_LEAK=<bool> focuses the test suite on finding
+>   memory leaks. When the variable is true and Git is compiled with
+>   SANITIZE=leak, only run those tests that declare themselves leak-free by
+>   setting "TEST_PASSES_SANITIZE_LEAK=true" before sourcing "test-lib.sh".
+>   This test mode is used by the "linux-leaks" CI target.
 
-I agree. The only loss of information if someone turned off this message
-would be the commit id that possibly needs to be merged.
-
-> Also, those reviewers who care about l10n
-> may suggest use of printf_ln() to lose the LF at the end of these
-> messages (i.e. not just the above one, but others we see below as
-> well).
-
-ack
+Sounds good.  These scripts opt into the sanitize-leak tests by
+declaring themselves to be leak-free and that is captured very well
+without using the *list word ;-)
