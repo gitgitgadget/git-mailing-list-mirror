@@ -2,341 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7DE3C43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 11:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EDC7C43334
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 11:46:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237363AbiGSLmS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 07:42:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45728 "EHLO
+        id S232130AbiGSLqm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 07:46:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234794AbiGSLmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 07:42:17 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB37F3F304
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 04:42:15 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id l23so26666719ejr.5
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 04:42:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=aIXC4LanwAn0BxKty3hRbWxThvE35RC7oKtkz7kB97c=;
-        b=PhhyKcQQ/+MXXLKaT0mhseQwLfxWaXHEkpQDeyfp3biXdnLWa9BJnARzkmteP9whR1
-         hNRr/yHCHnxzTVaVXX2JRQ/UNBq2ohmvcNFJmmZm+10rO/OAlCslRF+zfJ2nugbPT2eB
-         EXBevz7T9+BbstOWOLL9DBXk6lgpnSRFoeVK17+PbySGY0de7f0geZxjoqMK8jqmMnb/
-         ftBp2T3Nl0utIm5mV8m0PI8Y3BOZXNePfe+RgvH8Kh+KUYNrnt+iihLiueNZa60r2BuW
-         hYAZD2gRvvmxBKEpo6c0sqF/L3wSdqpGkbrcNRkNbzBqmU4uVo4vMQ46SLORglJBl3Xy
-         hT3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=aIXC4LanwAn0BxKty3hRbWxThvE35RC7oKtkz7kB97c=;
-        b=UfRliiTPqNZTJoVmNkqs804/r7x8iVBAXdqJvRBX09bApx02w0lo3v0znetOrr533o
-         z7Q5jN9oE6XMcO5CtfnBQT9h7mU1eQESgQuT2jdJ/sbWvDxgz5zVYm8LUaWv3+P+t2i1
-         sQOYrF9dyDSdxGWNfTNE+1KjICRUYigNHIfS90iIvyMo263VpVB6V6j0vpB1Fj8//rF9
-         UacEke1rt0QFQ9fTfQkHvguGtfTTtuVCiKTnXMw22JfrFpfTLkeKbqfGCUGuXTgb5/A/
-         yDSv1uXU+JCr2MYB9gHxkWogDf9AYrCH5t2q4G1B/YmheSVsmBNSXrqLSsNZYOooRzDo
-         Au7Q==
-X-Gm-Message-State: AJIora9w7CIV7iFjAgs+KWMGHynWnShlmuikvs8BoNZnAshfv2cd20An
-        g6/XAC+fh1l3QJw0B4Jt/Pq2BOaH+NN2rg==
-X-Google-Smtp-Source: AGRyM1v33Jvqbe1lliqmMNMkRki7ExeB7SCXqYNyEyo/xS+44a+0h2cnZS0wBBgRHk5CYnz3Sv0OZw==
-X-Received: by 2002:a17:907:7241:b0:72b:347b:17a1 with SMTP id ds1-20020a170907724100b0072b347b17a1mr31592310ejc.32.1658230934055;
-        Tue, 19 Jul 2022 04:42:14 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id sz20-20020a1709078b1400b0072b31307a79sm6566938ejc.60.2022.07.19.04.42.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 04:42:12 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oDlcB-003cex-P2;
-        Tue, 19 Jul 2022 13:42:11 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Stephen Finucane <stephen@that.guru>
-Cc:     git@vger.kernel.org
-Subject: Re: Feature request: provide a persistent IDs on a commit
-Date:   Tue, 19 Jul 2022 13:09:02 +0200
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com>
- <61333be26339440d9bae8f12fd1a4faeb5e68ab6.camel@that.guru>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <61333be26339440d9bae8f12fd1a4faeb5e68ab6.camel@that.guru>
-Message-ID: <220719.86y1wpuy5o.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229478AbiGSLqk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 07:46:40 -0400
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10olkn2029.outbound.protection.outlook.com [40.92.41.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FBDA13F29
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 04:46:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UoHgMacAIv7eDj4SA0qppptTPHVRbVb+ynqHrzRlwBKLahWMqY73pJBtq+VF5h3Md2cVMnkVSnk14oqfWK1Ob7V3kNiDs1yvCxbia8O1m3Yb/7r+RKd+hA/Hq1c0mVcHF3iziPt5Ul6evUeCqRdh2hDO6ocDMWhTUdVg3A60QwdbIMUsTFotN9mpM5M08sWdHu/DMSadLSqEr33kCEgcQNLebxKn6rCThyVjgofP+XUQiVHtvetQeenN91Molbjn9jIUbFi/RPMZJrpuDmTmx9nPs1MFGCUO3222cOJVUbH+dzi6ChKOg9w0RJgSItmgZrzPMAXifjDYrn0ng7iz+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=h2+SF2Q+PRRme7pDKXIu00QiYV9krhHZq1e2CHZKg/U=;
+ b=E/4gYUvC9WB5kBUETsthdkIRjRpCkOOBb1HGoYvMIsp8Dh20ZwXVD1O5jxmQPQ8KcTwZwvt5lV+TKFPWUdhpqiPZ9lVLvDoJOD61BJwEptiMkfB4JBFmllkUDrfJA1Lb3gFap4l2E85gy10TD9l9jVCbgXxzugodsIan76w5+z9p1R9utiSXMEttxpkEoR+URbdl1U0/c8dS3Ao4VlDpl08L0GkDurHDvfGpZ4gX4jrAwakodkkLKLxaq/SEHHxcRuo9Y4Y/QZLl42XPzEUfuEpecvvfr26jMxtGiK7y6V9CqIXnlUY9GRt1rWFAh4yDkZKf2UD4PQppmHpZV/T2Kg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h2+SF2Q+PRRme7pDKXIu00QiYV9krhHZq1e2CHZKg/U=;
+ b=eoa0pqhZZsnxsW6x9yl6jHSKNRyaWEYOxJ7PjALC4bGpzd53g7nZ+X/dpMLdsHL+dC2XgmGVovpS/b9SXLXwe4kTay1DZ+JFFlN5ISRGE9XuoYGk6qwTs/AbnWvaeT7DtUjoFVRC/Z00jNuCEvbg5lW/xqdJmh2zlgWK0bHqArl5/M4FyN/NPOsI+ZbL+Qn57jK0Cji1mgiEp5SpPaWpOM9fDe4X7tHMDHZ3OWOqN55IptyuqRvLbWcdUlCLyw6Bz8sjpIKh6ktH1yg7pf9WlyoMT8eMqs+lFaTSNJs6Rg94ymUAyMzMexvDRG0mU5grJGtrDnOYFNsiwzSG0oTpkw==
+Received: from PH7PR14MB5594.namprd14.prod.outlook.com (2603:10b6:510:1f6::17)
+ by MN2PR14MB3440.namprd14.prod.outlook.com (2603:10b6:208:1b0::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5438.20; Tue, 19 Jul
+ 2022 11:46:38 +0000
+Received: from PH7PR14MB5594.namprd14.prod.outlook.com
+ ([fe80::9102:6337:5382:5f07]) by PH7PR14MB5594.namprd14.prod.outlook.com
+ ([fe80::9102:6337:5382:5f07%9]) with mapi id 15.20.5438.014; Tue, 19 Jul 2022
+ 11:46:37 +0000
+From:   Celeste Liu <coelacanthus@outlook.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Raman Gupta <rocketraman@gmail.com>,
+        Celeste Liu <coelacanthus@outlook.com>
+Subject: [PATCH] contrib/rerere-train: avoid useless gpg sign in training
+Date:   Tue, 19 Jul 2022 19:40:46 +0800
+Message-ID: <PH7PR14MB5594D28D5CF94BD30DB9D3C4CE8F9@PH7PR14MB5594.namprd14.prod.outlook.com>
+X-Mailer: git-send-email 2.37.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-TMN:  [UfAasDfrAtwAGVxdKIAu1rdGpxWX+MxZuqgVPhaMqKj0usmHY2VF0hsDB6YfHo+y]
+X-ClientProxiedBy: TYAPR01CA0088.jpnprd01.prod.outlook.com
+ (2603:1096:404:2c::28) To PH7PR14MB5594.namprd14.prod.outlook.com
+ (2603:10b6:510:1f6::17)
+X-Microsoft-Original-Message-ID: <20220719114046.317399-1-coelacanthus@outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 9adef641-56f2-4dd2-4db8-08da697c56a3
+X-MS-Exchange-SLBlob-MailProps: mBRmoEB1kyIpDFlCVXgVLAF7DwjwsNmcMhBWBytetWdRicSIkdYLDJJvhSP/+0JDyQ+vrFerocAzCr4kITsFHg4eGJqo0DMzY652BiYGbZvo+p35xE0pKq89q23Baa0LJTGt/phP0TijSsRQb5YE3AnrJjfmwWOLTUW3wIkIHa3zpZQBPpAbM2FZVWatSU0PhOOiQINRfRUPrywwhbWICOzxts6MgLKMfInBaW8esLjJRu9kmx/GjWGnwRAnRrsHHaUw8oHuGVAuEICPo5DSu3UDcb89lf2vRdKWzzlegyFh752ktluwDGMyxZc3lM1uCl+E+tXLWtpKblIk4E6accHd1QUXbH3ripIurbhVmu10ZsdgRQyzhz6JEpHtgrWsYIxfKxKcXhreh1VU0Qp+S9WD66oB4ssxWklpuQZUehe14E6UNrDjLG/19dhv38boy/n71+AJ51rzEPZNwGmgs28W2WgjQH7qb5TvZoApvpohJi7AK5ed5nRcqJR8M83arh+J+TFmGETrDSK+6G13oHXlqa0L1UL7xnGcxwglEibddJE7GeACKRTEQo5p77wPloBwyi5m//hOwNpej4tXRkWLMDp65OQeUphKfgalCH1u5l3arloSSSLr+AjHwmaUD+gUpTCAv4RDBNlpNB/p8N2eHFNkFV752rKiK9N2yAGTe/s5n1cyv7s2i38n7pTPAeX6MTYuCw/TK25qVke0I6a/JgmLZGb+gxMFnq7+VU0rmxHIBnV6yOdBlc8mvoTokimKWlODrAE=
+X-MS-TrafficTypeDiagnostic: MN2PR14MB3440:EE_
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: nA5t/Jtdjxr+b0WA32AgrDKlFYPiHr1wR3fw4bh5qiW4NOuyPTD3nLSglfm0NGKKs+7sKub7dPwcTmWPzdxS4NYH4FcKh30bLUCH+C2t9B6gbp3DYAu/lRshV7R+DRktmvNdpyf1rtI42s5IB4ilLzQ9cBS+ewvM4DoG+CPgkTcNcnzyi61rYH6ZM5CrE5tlv5B65fUSUQPPlV6BlgU4EwLgSXrssZxFrvfBt/zkv4Qzpm6nxhz54V0ZYMW5/7WHMzygP5cnFFZgMqjm6APQebewugDtxI345QfwNdIYQ3wFH8xjO2sFjR+OgX3yM4lDyMs2ejxD5vnKZr3GD7vu9qqaMrvm+mfJ0my96U+Rx7jvgIaVcqvqPf8uZ9UWaNYy+rDLEPKp4d0qJYiRwYtbJznmPmemeYsslmRguSMMzAH5irU0hoDivmvUBvJG6dNIVccoheO6qSKJTXxAfUA12wFd5wafTxQT4ICk22bn+3mLx1WVvUAibD/4ItyHlQy++7CLOLGNSYaVaAETqBrNmMoTjZV7Q/bB7JG2X0TmMe1fvXR8e/L8dilOzuJu2E3BrlYVIA0dIbJ2RgdVTcLeBfWSulpCaCx2QyY3ga4dENa3g+D8r47mQEaBQH0HECrp
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?WIIavDwdvaJzrCPI/FLxXt9CcXs12bmnaTuXPinkHsR0ANAEuhBWULt+GDsg?=
+ =?us-ascii?Q?W65hoDQLIZIkfuctZRYDIHF9Nw3lwj6jMApK0m7r45nXqngrHeEyVKbsxKfq?=
+ =?us-ascii?Q?6GaAXDX8o4Q4BcEP8N157KemD7hKEI9gKvGZMHSk4McZEzDRJGVWFCRpsOr6?=
+ =?us-ascii?Q?NKH02r0WhMHgr8jOIRXKhZgFVjx2J6sIYTxKLFaHew509j+wG2ff9hPBYiSx?=
+ =?us-ascii?Q?W2kyheEU3peVp1+O+XWbh0DSPJAhtarjT2lXm+xWlhqAdJ8yRH5dhXX7G7nK?=
+ =?us-ascii?Q?P7QberF/F6HGE3fFRZcleObSTa73h/5MFx15aKhRNmSweurdhMNJCC/E517W?=
+ =?us-ascii?Q?+vSI/yipFLcuJNv3dtjOl0SzGzx+8r06/SeCJZUO1iQS6ITsoo8FCaXCjyaZ?=
+ =?us-ascii?Q?RG6kkbIg/Oje82PwcI0vJwBDvl7E47ovOaDTlBXhW5tyXVctV9cVu5QB855y?=
+ =?us-ascii?Q?DlmgGHnqNZUCQvuSd6WiU15meWdUzqapboLYVpEMKqEQR1OgAz/gE6XkKv5C?=
+ =?us-ascii?Q?yTbPfDO+M0Qe2AyT/11cAbBMcHL0tiSvCQzA6ZA6v8UmpjgB6JIyGhamcvLm?=
+ =?us-ascii?Q?4BZoNKReHWCa4vM9PS9w8P8B2ey439tY3ifQZVlYrn49nXurcDEr5vKNgkUX?=
+ =?us-ascii?Q?TD6kT1t9JWN7peLWZP7OV0574btxr9XBsJdMqCQfFyLdt7WL6HC5gLwwjCNO?=
+ =?us-ascii?Q?8YKrVFGnHQA6JlDqG34/cL/0vYsJ5W+10t0F7dTgNxVS9MrLK9B8DVqD6Iss?=
+ =?us-ascii?Q?0jZYMczGoC0MvtlAIreXtpGTRE15aAb5DZiztMmFaNer/sD6ozZA7Jy+9Obo?=
+ =?us-ascii?Q?40TlA/U4GAN/iZTNCrWraMo+KtdussnWyp9QnU6JlfrqrFtkLDBEo8p8lirw?=
+ =?us-ascii?Q?lUkKHVujJAR4blR9NQ7xGYrqZIEs1JiXe8s92LAaAUTVIlgzR7M1sKNA+xCi?=
+ =?us-ascii?Q?lSjvBB5MvGlpWlpqizJKeiLqAjEqe08ix6/zu8CHpmnGMGp0ZNFJdVbzsGTc?=
+ =?us-ascii?Q?XB7mOWKXDhYr0PzETdoeeJeBFVDYW32+5ZSSRWf1lwpeo2bbXz3Ot1uyp+WM?=
+ =?us-ascii?Q?ttneqzugS5tf/Agncrqp0Fj/E8OazQ5DRQZsyug/3iOyvbTWFZoMJ/0KIeKQ?=
+ =?us-ascii?Q?zr6iOYOcK80udOHZzd8K1hoCQOlHcd2KLL67MUHbeeGTbkyrwciRt3gyDX/7?=
+ =?us-ascii?Q?Q5mQ4K1tNVvtIT7Uyt1fDtAOjX/tDTEHKd+6mgoQj9L1liXO31lCF1pJywAY?=
+ =?us-ascii?Q?s+fzlg2BJkWwjhEO7vknYmSBuR5V5U5P214r8hYpz+ClEzrftaPqVISS7Jld?=
+ =?us-ascii?Q?BQxlMgzw1Xt9EeLFBorikNkfIQXef5F9Ge2LpBJXIZE1zvccpA4xaCZgoJb5?=
+ =?us-ascii?Q?sIR2qJU=3D?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9adef641-56f2-4dd2-4db8-08da697c56a3
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR14MB5594.namprd14.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jul 2022 11:46:37.9263
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR14MB3440
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Signed-off-by: Celeste Liu <coelacanthus@outlook.com>
+---
+ contrib/rerere-train.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Tue, Jul 19 2022, Stephen Finucane wrote:
-
-> On Mon, 2022-07-18 at 20:50 +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- wrote:
->> On Mon, Jul 18 2022, Stephen Finucane wrote:
->>=20
->> > ...to track evolution of a patch through time.
->> >=20
->> > tl;dr: How hard would it be to retrofit an 'ChangeID' concept =C3=A0 l=
-a the 'Change-
->> > ID' trailer used by Gerrit into git core?
->> >=20
->> > Firstly, apologies in advance if this is the wrong forum to post a fea=
-ture
->> > request. I help maintain the Patchwork project [1], which a web-based =
-tool that
->> > provides a mechanism to track the state of patches submitted to a mail=
-ing list
->> > and make sure stuff doesn't slip through the crack. One of our long-te=
-rm goals
->> > has been to track the evolution of an individual patch through multiple
->> > revisions. This is surprisingly hard goal because oftentimes there isn=
-'t a whole
->> > lot to work with. One can try to guess whether things are the same by =
-inspecting
->> > the metadata of the commit (subject, author, commit message, and the d=
-iff
->> > itself) but each of these metadata items are subject to arbitrary chan=
-ges and
->> > are therefore fallible.
->> >=20
->> > One of the mechanisms I've seen used to address this is the 'Change-ID=
-' trailer
->> > used by Gerrit. For anyone that hasn't seen this, the Gerrit server pr=
-ovides a
->> > git commit hook that you can install locally. When installed, this app=
-ends a
->> > 'Change-ID' trailer to each and every commit message. In this way, the=
- evolution
->> > of a patch (or a "change", in Gerrit parlance) can be tracked through =
-time since
->> > the Change ID provides an authoritative answer to the question "is thi=
-s still
->> > the same patch". Unfortunately, there are still some obvious downside =
-to this
->> > approach. Not only does this additional trailer clutter your commit me=
-ssages but
->> > it's also something the user must install themselves. While Gerrit can=
- insist
->> > that this is installed before pushing a change, this isn't an option f=
-or any of
->> > the common forges nor is it something git-send-email supports.
->>=20
->> git format-patch+send-email will send your trailers along as-is, how
->> doesn't it support Change-Id. Does it need some support that any other
->> made-up trailer doesn't?
->
-> It supports sending the trailers, sure. What it doesn't support is insist=
-ing you
-> send this specific trailer (Change-Id). Only Gerrit can do this (server s=
-ide,
-> thankfully, which means you don't need to ask all contributors to install=
- this
-> hook if you want to rely on it for tooling, CI, etc.).
-
-Ah, it's still unclear to me what you're proposing here though. That
-send-email always (generates?) or otherwise insists on the trailer, that
-it can be configured ot add it?
-
-That send-email have some "pre-send-email" hook? Something else?
-
-I'd think for projects that care about this they're likely to have a
-centralized enough workflow that it can be checked on the remote side,
-whether that's some sanity check on the applier's "git am" pipeline, or
-a "pre-receive" hook.
-
->> > I imagine most people working with mailing list based workflows have t=
-heir own
->> > client side tooling to support this while software forges like GitHub =
-and GitLab
->> > simply don't bother tracking version history between individual commit=
-s in a
->> > pull/merge request.
->>=20
->> It's far from ideal, but at least GitLab shows a diff on a push to a MR,
->> including if it's force-pushed. I'm not sure about GitHub.
->
-> GitHub does not. Simply piling multiple additional "fix" commits onto the=
- PR
-> branch results in a less horrible review experience since you can maintain
-> context, alas at the cost of a rotten git log. We don't need to debate th=
-e pros
-> and cons of the various forges though :)
-
-Yes, I'm only mentioning it because it's worth looking at existing
-"solutions" that are in use in the wild, however flawed those may be.
-
->> > IMO though, it would be fantastic if third party tools
->> > weren't necessary though. What I suspect we want is a persistent ID (o=
-r rather
->> > UUID) that never changes regardless of how many times a patch is cherr=
-y-picked,
->> > rebased, or otherwise modified, similar to the Author and AuthorDate f=
-ields.
->> > Like Author and AuthorDate, it would be part of the core git commit me=
-tadata
->> > rather than something in the commit message like Signed-Off-By or Chan=
-ge-ID.
->> >=20
->> > Has such an idea ever been explored? Is it even possible? Would it be =
-broadly
->> > useful?
->>=20
->> This has come up a bunch of times. I think that the thing git itself
->> should be doing is to lean into the same notion that we use for tracking
->> renames. I.e. we don't, we analyze history after-the-fact and spot the
->> renames for you.
->
-> Any idea where I'd find previous discussions on this? I did look, and the=
- only
-> proposal I found was an old one that seemed to suggest including the Chan=
-ge-Id
-> commit-msg hook with git itself which is not what I'm suggesting here.
-
-At the time I was punting on finding the links, and just working off
-vague recollection, and hoping you'd go list spelunking.
-
-But I since recalled some details, I think the most relevant thing is
-this discussion about a "git evolve":
-
-    https://lore.kernel.org/git/CAPL8ZivFmHqS2y+WmNR6faRMnuahiqwPVYsV99NiJ1=
-QLHOs9fQ@mail.gmail.com/
-
-Which I think you'll find useful, especially as mercurial has an
-existing implementation. The wider context for that "git evolve" is (I
-believe) people at Google who maintain Gerrit trying to "upstream" the
-Change-Id.
-
-Now, it hasn't landed in git.git, and it's been a few years, but going
-through the details of why it fizzled out will be useful to you, if
-you're interested in driving something like this forward.
-
-There's also these two proposals from Eric Raymond:
-
-	https://lore.kernel.org/git/20190515191605.21D394703049@snark.thyrsus.com/
-	https://lore.kernel.org/git/20190521013250.3506B470485F@snark.thyrsus.com/
-
-Which I'm linking to here not because I think they're viable, as you can
-see from my participation in those threads I think what he suggested is
-an architectural dead end as far as git is concerned.
-
-But rather because it's conceptually adjacent (you could in principle
-use nanosecond timestamps as a poor man's UUID), and much of the
-follow-up discussion is about format changes in general, and if/when
-those might be viable.
-
->> We have some of that in git already, as git-patch-id, and more recently
->> git-range-diff. Both are flawed in a bunch of ways, and it's easy to run
->> into edge cases where they don't spot something that they "should"
->> have. Where "should" exists in the mind of the user.
->
-> That's a fair point and is of course what we (Patchwork) have to do curre=
-ntly.
-> Patchwork can track relations between individual patches but doesn't atte=
-mpt to
-> generate these relations itself. Instead, we rely on third-party tooling.=
- The
-> PaStA tool was one such example of a tool that could do this [1]. I can't
-> imagine a tool like Gerrit would ever work without this concept of an
-> authoritative (and arbitrary) identifier to track a patch's identity thro=
-ugh
-> time, hence its reliance on the Change-Id trailer.
-
-I haven't used Gerrit or Patchwork, so much of this is from ignorance on
-that front, but I have spent a lot of time thinking about this in the
-context of git in general.
-
-I think as users of git go the git project itself makes very heavy use
-of this, i.e. sequences of patches are substantially rewritten, split,
-squashed etc. all the time, or even split into two or more sets of
-submissions.
-
-Having said all that I can't see how a Change-Id isn't a Bad Idea(TM)
-for all the same reasons that pre-git SCMs file formats that track
-renames explicitly were a bad idea.
-
-I.e. yes you can come up with cases where that's "better" than what git
-does, but they didn't handle splitting/merging files etc.
-
-Similarly what happens when you have 3 patches each with their own
-Change-Id and you split them into 4 patches. Is the Change-Id 1=3D1 or
-1=3Dmany. I'm suggesting that you'd want a solution that can be many=3Dmany.
-
-And also, that those many=3Dmany should be dynamically configurable and
-inferred after the fact. E.g. range-diff will commits that are similar
-enough that two authors with no knowledge of each other independently
-came up with.
-
-I think that range-diff is still lacking in a lot of ways, in particular:
-
- * It matches entire commits (log + diff) on a similarity score, I've
-   often wanted a way to "weigh" it, so e.g. a matching hunk would have
-   3x the matching score of a matching commit message.
-
-   Now it often "gives up", you can give it a higher --creation-factor,
-   but that's "global", so for a large range you'll often start
-   including irrelevant things as well.
-
- * It only does 1=3D1 attribution, and e.g. currently can't find/represent
-   a case where a commit with 3 hunks got split into two commits, with 2
-   and 1 hunks, respectively. It'll (usually) show a diff to the new 2
-   hunk commit, but the "new" 1 hunk will be shown as new.
-
-   We could continue to drill down and find such "unattributed" hunks.
-
-> Perhaps we could flip this on its head. What would be the _downsides_ of
-> providing a persistent, arbitrary identifier on a commit similar to Autho=
-r and
-> AuthorDate fields? There's obviously some work involved in implementing i=
-t but
-> assuming that was already done, what would break/be worse as a result?
-
-That "Repository formats matter", to borrow a phrase from a classic post
-about git[1]. Once you provide a way to do something it will be used,
-and when that something has inherent limitations (think SCM rename
-tracking) used to the exclusion of others.
-
-You can't provide something like that as an opt-in and "upstream" it
-without it inevetably trickling into a lot of areas of Git's UX.
-
-To continue the rename example, now you can just re-arrange your source
-tree and not worry about micro-managing it with "git mv" (in the "svn
-mv" sense), git will figure it out after the fact.
-
-That's a sinificant UX benefit, we can provide a *much simpler* UX as a
-result.
-
-What would be the harm of an optional "rename tracking" header? After
-all the heuristic sometimes "fails".
-
-The harm would be that if you really wanted to lean into that (even
-optionally) you'd be forced to add that to all sorts of tooling, not
-just the cheap convenience that is "git mv" currently.
-
-Likewise everything from "cherry-pick" to "rebase" to "commit" would
-inevitably have to learn some way to know about, carry forward and ask
-the user about Change-Id's and their preservation. Don't you think so?
-
-Otherwise they'd be much too easy to lose track of, and if they only
-reason we did all that is because we didn't think enough about the "work
-it out after" approach that would be a bad investment of time.
-
-But I may be wrong about all of that, I think one thing that would
-really help clarify this & similar proposals is if people pushing it
-forward came up with some basic tests for it, i.e. just something like
-a:
-
-    series-v1/
-    series-v2/
-
-Where those two directories would be the "git format-patch" output (or
-whatever) of two versions of a series that Gerrit or Patchwork are now
-managing, along with some (plain text?) manual mapping of which things
-in v1 correspond to v2.
-
-We could then compare how that manual attribution performs v.s. trying
-to find which things match (range-diff) afterwards.
-
-1. https://keithp.com/blog/Repository_Formats_Matter/
+diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
+index 26b724c8c6..bd01e430ef 100755
+--- a/contrib/rerere-train.sh
++++ b/contrib/rerere-train.sh
+@@ -75,7 +75,7 @@ do
+ 		continue
+ 	fi
+ 	git checkout -q "$parent1^0"
+-	if git merge $other_parents >/dev/null 2>&1
++	if git merge --no-gpg-sign $other_parents >/dev/null 2>&1
+ 	then
+ 		# Cleanly merges
+ 		continue
+-- 
+2.37.1
 
