@@ -2,106 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D305C43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 15:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41605CCA47F
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 15:59:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238920AbiGSPxF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 11:53:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58194 "EHLO
+        id S239708AbiGSP7f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 11:59:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236048AbiGSPxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 11:53:04 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47A721D0E2
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 08:53:04 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-10c8e8d973eso32408344fac.5
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 08:53:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=TdgekbrjBze2CImvmCCbhyaM1jBMii6QU3g1VAFz/UY=;
-        b=JizMzTpgNME+hqoWxNQIAy1YUTGBUD5Nid48b5sp0zQOb3VKlusc+TXEcUKOX1dBBI
-         mSpQ3tK9GHwMGEhSljcE1WE6sVycGP4wF8hrLY/w9cynKwSIenWWvKyW2P7ZiisaUJSV
-         I5cEUwwuI3Qs9r1APuT483h0A9Ns/j6x80cJtTEarcWdRDC9OBS8vR6oF3LYAKbWxtSR
-         mgWteSqWawtMRXo5ogvDhlbStDp0NTn/Lljq7bJxAeIIs8GxI4u1Vk8SEtAus9MsRbws
-         deyVBMLKFtgUz8lbpcN0XuKzQEdpDbhBB1susZQdcBaRlrmaHNyFMcDRrXarTnvdRQnL
-         7LrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=TdgekbrjBze2CImvmCCbhyaM1jBMii6QU3g1VAFz/UY=;
-        b=jqqofkC4H2CqKw0hRaAJ8z4ucL55E2jwupmEklhISNGkn0fvAtBdLchTryxqdisv3Z
-         AYtMhK1Fla7C0eHmgDwhc5gta5AWbP6SAfdGEG5BEbEVeQW77qVvQWxjUJTIb6VJ7whH
-         lzdljs20mlvsGQGJuxgEahvX7VTt7n3DFw+lN5pY+SHa0F+7uXI22v1Rlipjx0SOlQ88
-         OZ3/4cTIgzudJMBI4NBR304IhgUJPRMo+f6ZxPxQdJTVtrJP2ZXuVqIPKsK7Slx7H9Jv
-         osfFM//vPRqpCN7c+nn/qkYL+ruEqsmYsseRmEgQ6jQC51n+cC9BcpsVE26fCGNpFcSC
-         Nu1A==
-X-Gm-Message-State: AJIora/S8XHgBuBsCHNW0liGiXTAh7cei42aFPP8YScvFf1MvGc+oNLC
-        XdnIyQJ385wbeqHV0u2pCv4P
-X-Google-Smtp-Source: AGRyM1tf16aqxfUi/crn33aWubkYV6geWbC3/H6DT6zCVE4BCO4ITKVqFizbH8wasJLXAHmkOvAOAg==
-X-Received: by 2002:a05:6870:ac0f:b0:10b:f3f5:26b2 with SMTP id kw15-20020a056870ac0f00b0010bf3f526b2mr21612956oab.271.1658245983614;
-        Tue, 19 Jul 2022 08:53:03 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:3950:7a99:4a4a:8622? ([2600:1700:e72:80a0:3950:7a99:4a4a:8622])
-        by smtp.gmail.com with ESMTPSA id i3-20020a4aa6c3000000b00435785e7b49sm5618900oom.19.2022.07.19.08.53.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jul 2022 08:53:03 -0700 (PDT)
-Message-ID: <6b6746cb-2456-0733-32ed-c0a7a3f57087@github.com>
-Date:   Tue, 19 Jul 2022 11:53:01 -0400
+        with ESMTP id S237857AbiGSP7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 11:59:34 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D991A5B79B
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 08:59:33 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 45F3F19AD23;
+        Tue, 19 Jul 2022 11:59:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YwfzGAW8yNzjZjhbRdyLvqkeLU4LC/n1AYluVb
+        6+PAU=; b=pye5p4lbAwmn5X0gJSnhORiaxKZeCXW/X10kvJ9arntq0gFQH2PAna
+        HCAR7qkQD44fMDoyrEpbqU925Z7VY353GerRrRi9biyewpT52mK6epUBOITGKQdk
+        vGQECys1tDO+v6jxijriSaSGsQd/6zxYv2Aj/TC4UBFsSeKtS99l0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D7B519AD22;
+        Tue, 19 Jul 2022 11:59:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C961A19AD20;
+        Tue, 19 Jul 2022 11:59:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        chakrabortyabhradeep79@gmail.com,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 3/3] midx: reduce memory pressure while writing bitmaps
+References: <pull.1292.git.1658176565751.gitgitgadget@gmail.com>
+        <pull.1292.v2.git.1658244366.gitgitgadget@gmail.com>
+        <98e72f71b6bec6f5c2df4139ca3df37d97ddcf54.1658244366.git.gitgitgadget@gmail.com>
+Date:   Tue, 19 Jul 2022 08:59:28 -0700
+In-Reply-To: <98e72f71b6bec6f5c2df4139ca3df37d97ddcf54.1658244366.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 19 Jul 2022
+        15:26:06 +0000")
+Message-ID: <xmqq8ropccv3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v4 07/12] rebase: add --update-refs option
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1247.v3.git.1656422759.gitgitgadget@gmail.com>
- <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
- <3ec2cc922f971af4e4a558188cf139cc0c0150d6.1657631226.git.gitgitgadget@gmail.com>
- <20220718090557.GA5616@szeder.dev>
- <11aa9b43-adea-4e90-9c70-ab3579aa445f@github.com>
- <xmqq4jzefc3e.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq4jzefc3e.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C5C009C2-077B-11ED-96E2-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/18/2022 3:35 PM, Junio C Hamano wrote:
-> Derrick Stolee <derrickstolee@github.com> writes:
-> 
->> ... I think I should use "branches" here, but
->> keep the name "--update-refs". The biggest reason is that it provides
->> a nice parallel with the "update-ref" sequencer command. This command
->> allows updating _any_ ref, such as lightweight tags in refs/tags/*
->> or even refs in refs/my/namespace/*.
->>
->> The --update-refs option doesn't create the commands to update tags
->> or refs in places other than refs/heads/*.
-> 
-> I guess it would make the choice of "branch" the most appropriate.
-> 
-> I was hoping that we can repoint refs in private namespaces that are
-> not branches with the option.  But as long as the underlying
-> "update-ref" instruction can be used by advanced users, that is OK.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I would like to keep the --update-refs name for a couple reasons:
+> diff --git a/midx.c b/midx.c
+> index e2dd808b35d..772ab7d2944 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -1451,6 +1451,15 @@ static int write_midx_internal(const char *object_dir,
+>  
+>  		commits = find_commits_for_midx_bitmap(&commits_nr, refs_snapshot, &ctx);
+>  
+> +		/*
+> +		 * The previous steps translated the information from
+> +		 * 'entries' into information suitable for constructing
+> +		 * bitmaps. We no longer need that array, so clear it to
+> +		 * reduce memory pressure.
+> +		 */
+> +		FREE_AND_NULL(ctx.entries);
+> +		ctx.entries_nr = 0;
+> +
+>  		if (write_midx_bitmap(midx_name.buf, midx_hash, &pdata,
+>  				      commits, commits_nr, ctx.pack_order,
+>  				      refs_snapshot, flags) < 0) {
 
-1. 'update-ref' is the right name for the sequencer command. Having
-   a parallel there is helpful for learning about the option.
+As the reduced helper, thanks to step [1/3], only takes the
+pack_order[] array, without being even aware of other members in the
+ctx struct, it is immediately obvious that this early freeing is
+safe for this call.  It is a bit messy.
 
-2. We could extend the boolean '--update-refs' option into a more
-   advanced multi-valued '--update-refs=<refspec>' option to allow
-   advanced users to specify a ref namespace that they want included.
+I've been staring at the code and was wondering if we can just get
+rid of pack_order member from the context, and make pack_order a
+separate local variable that belong to this function.  The separate
+variable needs to be packaged together with ctx back to please the
+chunk-format API, so it may require more boilerplate code and may
+not be an overall win.
 
-Thanks,
--Stolee
+> @@ -1459,6 +1468,10 @@ static int write_midx_internal(const char *object_dir,
+>  			goto cleanup;
+>  		}
+>  	}
+> +	/*
+> +	 * NOTE: Do not use ctx.entries beyond this point, since it might
+> +	 * have been freed in the previous if block.
+> +	 */
+
+OK.
+
+>  	if (ctx.m)
+>  		close_object_store(the_repository->objects);
+
