@@ -2,132 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3531C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 21:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36E9AC433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 21:36:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239518AbiGSVbj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 17:31:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41372 "EHLO
+        id S232712AbiGSVgv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 17:36:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234436AbiGSVbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 17:31:38 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5172630F78
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:31:36 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DC9D19D33C;
-        Tue, 19 Jul 2022 17:31:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=g6UWgXXJ+Hrb
-        YLanOQU40kqhvuKDGCvubnlClM/Yo/s=; b=QxkFNfJTefIwv3QcYEhvXBMOiQAW
-        c0Udc7Y29Q7wugP3s1zLYyZkLWc3LQ1WUH5uyNMyiFMbumux9/rVfO0Gz3UH6e7e
-        H2DAzqF956vLu53oTJ0Tzo+UpzLmRquOHun6zB0dsdNOxLKz8jW1y38maCP83Eot
-        jI19u0/bjiAVp5c=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2544D19D33B;
-        Tue, 19 Jul 2022 17:31:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AD67E19D333;
-        Tue, 19 Jul 2022 17:31:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH v2 02/24] submodule--helper: fix a leak in
- "clone_submodule"
-References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
-        <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com>
-        <patch-v2-02.24-130a396b837-20220719T204458Z-avarab@gmail.com>
-Date:   Tue, 19 Jul 2022 14:31:31 -0700
-In-Reply-To: <patch-v2-02.24-130a396b837-20220719T204458Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 19 Jul
- 2022 22:46:53
-        +0200")
-Message-ID: <xmqqpmi094cs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236814AbiGSVgt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 17:36:49 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09579B855
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:36:48 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id f24-20020a1cc918000000b003a30178c022so136975wmb.3
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 14:36:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=ym+FJD9otbcILoWeD+FoU+KcsjU/Feh3pvIkGIp++20=;
+        b=OQCD5G98d+yz9OCAgPptaAY9w2OHcIiZp4emBs6BeGK7Et8DS4jq+mKo/6BTt7V5et
+         945l8CGZM0cyHkKYyfYKQZVPZOAKBmKevVBFAha0VT4gYRZUDksr04yQWGUBGpgCCsDa
+         Sm1440BCuCCOXjLJe+AKxvYmonGxlu7A3NNYO5ipWR+70EqA4rC6V36ugT38+pX/EDiJ
+         pFDhqV/YpPTAd0ihfXIXMQr5XCCnwv0cx/cUMuYyY1JHHjxWBlk1JDOottQHKov7bGmW
+         nLbJpfAQfwp4j2yzG1huiMeRrZZ8yBH73pWHxnuWud1X1uM0QYKJZNlqfr5FqiMdfuX6
+         G4zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=ym+FJD9otbcILoWeD+FoU+KcsjU/Feh3pvIkGIp++20=;
+        b=0WYVMvtdDTlZm3lXoWOU2aNi+OLRNlfMGIzibEaTFwV9+YpJtW+GkT5cvAM256MjtH
+         H1dAm+dClP5gpkfaTrkeTne/Vve3ZEg6NM/trfQihU3AmWzRvyHRaqI7MDU5bFfBXEnv
+         93UYX6rNNuZvgkYe+z4KC6y2Cnw4ZIPtCn6Xa9huzJyo1m3owSY9HlBQFzXnzpWnHJjI
+         BfaB1RKh9izhYTO7+HfluoOz5a1wbiBgH4h2RrTWfDdNgaZKqkU3dAlszeZ1IGVeCq7W
+         nz0TgOdynPzaaVVX/WcODK5qQu5nuQ3do42cfLmVQBiIa58Rm86VQHa8Plp24WfcFHqO
+         tYEA==
+X-Gm-Message-State: AJIora/sdpy73abmuHI+nJIK6Uh3LEOShTnsqS68TAi0xCxflOcn34Hz
+        /jtRpesnh9zZNvdkLVqODJ+quO/4igs6JYvgf/rKHWD99tA=
+X-Google-Smtp-Source: AGRyM1su/vtvK0WAQFhSwV5op5wk1uzGOJeCmnwimKcL+qso0UvMQwRGQTgZkeOciUZdT5jnksfkZrD0J7FJRA6phS4=
+X-Received: by 2002:a1c:2944:0:b0:3a2:fece:29de with SMTP id
+ p65-20020a1c2944000000b003a2fece29demr1006427wmp.115.1658266606598; Tue, 19
+ Jul 2022 14:36:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 28B73374-07AA-11ED-8154-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+From:   Kache Hit <kache.hit@gmail.com>
+Date:   Tue, 19 Jul 2022 14:36:35 -0700
+Message-ID: <CAC7ZvybvykKQyMWcZoKXxFDu_amnkxZCDq2C6KHoyhmHN2tcKw@mail.gmail.com>
+Subject: BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hi. Output of git bugreport:
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 73717be957c..4155d2450e0 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1644,6 +1644,7 @@ static int clone_submodule(struct module_clone_da=
-ta *clone_data)
->  	char *sm_alternate =3D NULL, *error_strategy =3D NULL;
->  	struct strbuf sb =3D STRBUF_INIT;
->  	struct child_process cp =3D CHILD_PROCESS_INIT;
-> +	char *to_free =3D NULL;
-> =20
->  	submodule_name_to_gitdir(&sb, the_repository, clone_data->name);
->  	sm_gitdir =3D absolute_pathdup(sb.buf);
-> @@ -1651,9 +1652,9 @@ static int clone_submodule(struct module_clone_da=
-ta *clone_data)
-> =20
->  	if (!is_absolute_path(clone_data->path)) {
->  		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
-> -		clone_data->path =3D strbuf_detach(&sb, NULL);
-> +		clone_data->path =3D to_free =3D strbuf_detach(&sb, NULL);
->  	} else {
-> -		clone_data->path =3D xstrdup(clone_data->path);
-> +		clone_data->path =3D clone_data->path;
->  	}
+---
 
-WTH?  Shouldn't the entire else-clause just go?
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-> =20
->  	if (validate_submodule_git_dir(sm_gitdir, clone_data->name) < 0)
-> @@ -1737,6 +1738,7 @@ static int clone_submodule(struct module_clone_da=
-ta *clone_data)
->  	strbuf_release(&sb);
->  	free(sm_gitdir);
->  	free(p);
-> +	free(to_free);
->  	return 0;
->  }
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-The caller passes clone_data to us, we may have stuffed an allocated
-piece of memory in there when we had to make it absolute, and we
-free it but let the clone_data structure smuggle the now-stale
-pointer out of the function, so that the caller may be able to abuse
-it?
+Wanted to retain git tree structure when pulling latest and rebasing.
+First indication of error was the `rebase -r` of the merge commit
 
-That leaves a bad taste in my mouth.  Doesn't it in yours?
+What did you expect to happen? (Expected behavior)
 
-If the caller is *NOT* allowed to rely on the value in
-clone_data->path after we return, perhaps
+successful --rebase-merges rebase of my commits on top of master
 
-+	free(to_free);
-+	clone_data->path =3D NULL;
+What happened instead? (Actual behavior)
 
-But stepping back a bit, would it make more sense to introduce a
-local variable "path" and leave clone_data->path alone, after we
-decide to either compute an absolute path out of it, or we decide
-to use the path as is, i.e.
+```sh
+=E2=9D=AF git rebase -r master
+BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+(179457 > 1040)
+zsh: abort      git rebase -r master
+```
 
-	if (!is_absolute_path(...)) {
-		...
-		to_free =3D path =3D strbuf_detach(&sb, NULL);
-	} ... {
-		path =3D clone_data->path;
-		to_free =3D NULL;
-	}
+What's different between what you expected and what actually happened?
 
-and after that, never use clone_data->path but work solely on the
-local "path"?  A quick scan tells me that no line in the rest of the
-function passes the whole clone_data to other helpers, so it may just
-be a matter of s/clone_data->path/path/g perhaps?
+Anything else you want to add:
+
+I'm currently "stuck" in this state, not sure how to recover or repro:
+
+```sh
+=E2=9D=AF git s
+BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+(179457 > 1040)
+error: git died of signal 6
+
+=E2=9D=AF git log
+
+=E2=9D=AF git d head~
+error: git died of signal 6
+BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+(179457 > 1040)
+
+=E2=9D=AF git log # works
+
+=E2=9D=AF git status
+BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+(179457 > 1040)
+zsh: abort      git status
+
+=E2=9D=AF git commit --amend
+BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+(179457 > 1040)
+zsh: abort      git commit --amend
+
+=E2=9D=AF git checkout head
+fatal: Unable to create '/Users/XXXXX/YYYYY/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.  #
+All of this was run while git bugreport was running
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+
+=E2=9D=AF rm /Users/XXXXX/YYYYY/.git/index.lock
+
+=E2=9D=AF git checkout head
+BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+(179457 > 1040)
+zsh: abort      git checkout head
+
+=E2=9D=AF git checkout head
+fatal: Unable to create '/Users/XXXXX/YYYYY/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+```
+
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.37.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 20.6.0 Darwin Kernel Version 20.6.0: Tue Feb 22 21:10:41
+PST 2022; root:xnu-7195.141.26~1/RELEASE_X86_64 x86_64
+compiler info: clang: 13.0.0 (clang-1300.0.29.30)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
+pre-commit
+pre-push
