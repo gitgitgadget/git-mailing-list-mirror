@@ -2,69 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E04A8C43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46849C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:46:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240190AbiGSSeV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 14:34:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33526 "EHLO
+        id S235457AbiGSSp7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 14:45:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238800AbiGSSeE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 14:34:04 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5C025B078
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:34:02 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id a11so3349758wmq.3
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:34:02 -0700 (PDT)
+        with ESMTP id S229529AbiGSSp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 14:45:58 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EDE755099
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:45:57 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id r2so21912035wrs.3
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=W9LE5F7vTwtXAWGBMDv2szsK46Ek/X4Dk7Y4zvegjpw=;
-        b=hwMauZEDKk3l0/k8jwhBLzGTsteEY+lJY43EwM7D2CP3eyBGQ1xm7ib1GhErzxgfXs
-         UmgTlkZx9y+OUVfUGEJs2o7jBGexhfHIGMG3N0v91cEzsT9rNc/rlP3GTUAaUUzRwiUM
-         +LqpcRHB8KcL2vNNqmO5HOgORX8T2ZyzY/RbdKhGo33GJcdk2+ncoxG/HMFgIYXKCfZn
-         hgVWSy6V9L639WHnLt3e5ZsbCP0J++2O5wQqhim1caWdsaZhzZRDqJxeNMeY3YasqG2i
-         G/DKTFNv5yZqUYaWJaX9MZZbTAbcfDGdF6D8CeRIdfyUkV+V0nZm8blenTRjfqz4gW5J
-         EBOw==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=2EJabEl5RK0eROvj+DJNsSQ2oxiXqi8xQEi3x4gQiGY=;
+        b=RRAZDmj4a+i6eDWeYxymu//WIRkNBRkQ+QtSFugBYtc5Cu00v2mOYKE/8AtJAClOLA
+         yzF/jimoFLHrqlHXyL2AiFNZZ+sIal9v8TovcSkxTXY7txR9Rbe5HAnAhWNXHAzzdgfs
+         XXBVpD3r++deyTG7vDCSHciqdiS9fiuMkzxsZk/GdxohJZCefsITYFwkBSrngEO0lz0k
+         41r+4I44F0jtp9B3Lzt28tCVlq94b+yoqFfomy1gcRPux1sDwCRz18vyYOLlrQuMWi3s
+         Cu4kl+VSPRNohTrG1mpf8DOvBSm9XyUPQKQXkSqmo/Fxez5qQNTh64+Y1r6TxuWYjUe0
+         rVWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=W9LE5F7vTwtXAWGBMDv2szsK46Ek/X4Dk7Y4zvegjpw=;
-        b=JsONqA+cBzQvhVoygr/gNB3j5e3N8GYFTTvN5jsgHXouC0M2pEGGXxbZejfaeVCpL7
-         m6elx5zahoa1wc8K8SFii4k2Wu6JZ6nGaGrKgNXgBhunId8JrP5VzSXyg+3lTxB3ydsa
-         i/ag6WON9DVhUVtAg35mDhO2Ncd9JBdtib9LDAI+Tw47iUGPuFfbHU1HIsHsudSbGEXv
-         J8XeaIQQ6J6nuwdE8mbF04Q0bW2VVP+nJgLqYyU4zCq+3TXXQWKQugVUYszpGdDaLyAq
-         Ygg6sjvCFvwRzN230wqIuvuRcenc6he1bvjB7AtOlZ48NAJWLzkFiWKr4XkrUHfB28Zr
-         vffA==
-X-Gm-Message-State: AJIora/PHbNmL/o9Eu1lOLNI0aXA6ps8VNcA015WIcpwwNa805hhJZon
-        jR2o85KY8+SAD9IYBf7fryBauq6s62g=
-X-Google-Smtp-Source: AGRyM1tYO4rVfT/ZVWWCtO76f6X6B3umtvE1sdxyWJn3e84wOl7xaLOBI28RiXCd6z8i7D9Y3YlMNQ==
-X-Received: by 2002:a05:600c:3554:b0:3a3:1d70:9101 with SMTP id i20-20020a05600c355400b003a31d709101mr530776wmq.61.1658255641092;
-        Tue, 19 Jul 2022 11:34:01 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2EJabEl5RK0eROvj+DJNsSQ2oxiXqi8xQEi3x4gQiGY=;
+        b=P/Umrc86CHFDbvGEVEKIVMEdlZGHONBMoHUqp92kcePa9CC+vFrGhtvh8oKNZNeCdO
+         lpSSdIUJUkTITihIAZhQsbH8d39KRoyb2aPaJ6DeOEnc4R/SgMgjuhlPvJQG43mtGOcM
+         uGY0P2YPnLcCLyavdE+iceeFqu/VgsGf6faYb8SWsLFw6jumlF8oVt5QkQ9RMPerb6FB
+         vNn4lYCypf/R083DwVViYdcrVrWkfgiAZOMP8Z9XdNJZnS9+/ZETmOQYLrkpBcu2XPQ7
+         DRZMwlNGMiHRhc1/XmZgcPDNcBnJtx3UVlJXpPW0vQ9FBxM5vOATjtIcVGUSs2DvMJhj
+         J6xA==
+X-Gm-Message-State: AJIora/quto+R99T8+CYe3W+eROfv0U9y2ot7HuJzUrLl0q0BA1O4rWa
+        2JtMbf7gAK0nujJGI8VOAhQhxXT2JHw=
+X-Google-Smtp-Source: AGRyM1uYoeYQO9N/+RE4OAKNgiGsXazeG3cFCe4Z6Fiy5AZVw1iWDNo/NHYdh1qfdf+djX5Ek9FhrQ==
+X-Received: by 2002:a5d:64eb:0:b0:21d:75bb:a2f3 with SMTP id g11-20020a5d64eb000000b0021d75bba2f3mr27366609wri.118.1658256355857;
+        Tue, 19 Jul 2022 11:45:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a18-20020a5d4572000000b0021d6e14a9ccsm13812678wrc.16.2022.07.19.11.34.00
+        by smtp.gmail.com with ESMTPSA id z16-20020adff1d0000000b0021d65675583sm13960758wro.52.2022.07.19.11.45.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 11:34:00 -0700 (PDT)
-Message-Id: <2a6577974c7f72c075cb403b4b2573c6d1c7f033.1658255624.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
-References: <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
-        <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
+        Tue, 19 Jul 2022 11:45:55 -0700 (PDT)
+Message-Id: <pull.1294.git.1658256354725.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 18:33:43 +0000
-Subject: [PATCH v5 11/12] sequencer: ignore HEAD ref under --update-refs
+Date:   Tue, 19 Jul 2022 18:45:54 +0000
+Subject: [PATCH] compat/win32: correct for incorrect compiler warning
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
+Cc:     gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,53 +64,69 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-When using the 'git rebase -i --update-refs' option, the todo list is
-populated with 'update-ref' commands for all tip refs in the history
-that is being rebased. Refs that are checked out by some worktree are
-instead added as a comment to warn the user that they will not be
-updated.
+The 'win build' job of our CI build is failing with the following error:
 
-Until now, this included the HEAD ref, which is being updated by the
-rebase process itself, regardless of the --update-refs option. Remove
-the comment in this case by ignoring any decorations that match the HEAD
-ref.
+compat/win32/syslog.c: In function 'syslog':
+compat/win32/syslog.c:53:17: error: pointer 'pos' may be used after \
+				    'realloc' [-Werror=use-after-free]
+   53 |                 memmove(pos + 2, pos + 1, strlen(pos));
+    CC compat/poll/poll.o
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compat/win32/syslog.c:47:23: note: call to 'realloc' here
+   47 |                 str = realloc(str, st_add(++str_len, 1));
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Reported-by: Elijah Newren <newren@gmail.com>
+However, between this realloc() and the use we have a line that resets
+the value of 'pos'. Thus, this error is incorrect. It is likely due to a
+new version of the compiler on the CI machines.
+
+Instead of waiting for a new compiler, create a new variable to avoid
+this error.
+
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- sequencer.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+    Fix error in response to compiler bug
+    
+    See [1] for an example of this error in the wild.
+    
+    [1]
+    https://github.com/gitgitgadget/git/runs/7413762368?check_suite_focus=true#step:4:297
+    
+    Thanks, -Stolee
 
-diff --git a/sequencer.c b/sequencer.c
-index 67812c0294f..1602649332b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5853,12 +5853,25 @@ static int add_decorations_to_list(const struct commit *commit,
- 				   struct todo_add_branch_context *ctx)
- {
- 	const struct name_decoration *decoration = get_name_decoration(&commit->object);
-+	const char *head_ref = resolve_ref_unsafe("HEAD",
-+						  RESOLVE_REF_READING,
-+						  NULL,
-+						  NULL);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1294%2Fderrickstolee%2Frealloc-error-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1294/derrickstolee/realloc-error-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1294
+
+ compat/win32/syslog.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
+index 1f8d8934cc9..0af18d88825 100644
+--- a/compat/win32/syslog.c
++++ b/compat/win32/syslog.c
+@@ -44,6 +44,7 @@ void syslog(int priority, const char *fmt, ...)
  
- 	while (decoration) {
- 		struct todo_item *item;
- 		const char *path;
- 		size_t base_offset = ctx->buf->len;
+ 	while ((pos = strstr(str, "%1")) != NULL) {
+ 		size_t offset = pos - str;
++		char *new_pos;
+ 		char *oldstr = str;
+ 		str = realloc(str, st_add(++str_len, 1));
+ 		if (!str) {
+@@ -51,9 +52,9 @@ void syslog(int priority, const char *fmt, ...)
+ 			warning_errno("realloc failed");
+ 			return;
+ 		}
+-		pos = str + offset;
+-		memmove(pos + 2, pos + 1, strlen(pos));
+-		pos[1] = ' ';
++		new_pos = str + offset;
++		memmove(new_pos + 2, new_pos + 1, strlen(new_pos));
++		new_pos[1] = ' ';
+ 	}
  
-+		/*
-+		 * If the branch is the current HEAD, then it will be
-+		 * updated by the default rebase behavior.
-+		 */
-+		if (head_ref && !strcmp(head_ref, decoration->name)) {
-+			decoration = decoration->next;
-+			continue;
-+		}
-+
- 		ALLOC_GROW(ctx->items,
- 			ctx->items_nr + 1,
- 			ctx->items_alloc);
+ 	switch (priority) {
+
+base-commit: 71a8fab31b70c417e8f5b5f716581f89955a7082
 -- 
 gitgitgadget
-
