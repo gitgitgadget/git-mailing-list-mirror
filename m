@@ -2,129 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24C49C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 09:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4B43C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 10:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237266AbiGSJSr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 05:18:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46836 "EHLO
+        id S235663AbiGSKsL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 06:48:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237118AbiGSJSM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 05:18:12 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE0927B30
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 02:18:10 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id tk8so14626387ejc.7
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 02:18:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Q+NA3phPyewrrTXNTo6H+sI4p8BOf5MClE/v0NDykhY=;
-        b=ZgraV9LkY0uknWH7NmixMg2sCMdf7G1iTPEH39RJaH4yHbYXnQfZotcZMnb7p8hUhE
-         e+03MFG0HgEcC/OGQCY7maVNoBpsgqEaygsPqXq8Ke/DwoBC7udAVcyJbQDzRiO71JOQ
-         SS0mYr3az7etegKrAnM1bnb9flt/xGcuiF1wtJFWdb3eKjtfDGRLvx4uMdaZcPwX4WRZ
-         6ew9asTDcJDs904H6/Z0jpL2wDSjfRxsOAobEd9GXrkGXxxAMdZhXtjkpNUJjmXFNcO7
-         M7hqqtumza5AUKN3R4RC+ssROLFg/OazWKMI6icK0GbZC22QQ/hI1bjo9FvuQ3x6KcTR
-         +DNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Q+NA3phPyewrrTXNTo6H+sI4p8BOf5MClE/v0NDykhY=;
-        b=nOPzFZ/yFhBP+vq6uoEbeZxCtbkT2IH87DnRbg9sqDMP/KMl/2haHTBFL4wAw0P0ot
-         7ysY6y1+tvbk8T61uIvYeEsgZ8Qh0J5INSwqqwADMHT2D3ZzDFKm9k7yJdRKQYKo5k7O
-         Jevba6B63PLe5Ksml7LvQJZDMbRKODZqIwkScOtzDTn09r9ocSIuoNlX/IUzr9OW5CEh
-         L/EqKQJmuenNkom7A6ek5M/GJs9FKedLGxfOriMihsfr7lPLmVxQm3QvWqJjpAiPwmPh
-         vI10y96TuM4Kwv1vgMw/AGYk6l9SCH9olGzd0N4CuWvIawwaU5GLvjk4F43iuTgsnMmp
-         w3Vg==
-X-Gm-Message-State: AJIora/iLUmQauAlmaU3tf/8z9HBKEWP77zPV6vSf7FKItW7vwz4kY2U
-        2ATNm4pJqZMNZffdDtm45A6yLEKjiZogXw==
-X-Google-Smtp-Source: AGRyM1slHwcAbeJt2mjbMqlhjEy0/nkhR2kv/MkQBwbKDGnX4ukSXTNOyxmTcjmTeOxt6WItsVbvpQ==
-X-Received: by 2002:a17:907:b17:b0:72a:edb8:7529 with SMTP id h23-20020a1709070b1700b0072aedb87529mr28486511ejl.749.1658222289378;
-        Tue, 19 Jul 2022 02:18:09 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id v18-20020a170906293200b007052b183d51sm6430015ejd.132.2022.07.19.02.18.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 02:18:08 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oDjMl-003Xxc-4I;
-        Tue, 19 Jul 2022 11:18:07 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S235602AbiGSKsF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 06:48:05 -0400
+Received: from mail-108-mta89.mxroute.com (mail-108-mta89.mxroute.com [136.175.108.89])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E6AA21824
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 03:48:03 -0700 (PDT)
+Received: from filter006.mxroute.com ([140.82.40.27] filter006.mxroute.com)
+ (Authenticated sender: mN4UYu2MZsgR)
+ by mail-108-mta89.mxroute.com (ZoneMTA) with ESMTPSA id 1821612660e0000261.002
+ for <git@vger.kernel.org>
+ (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256);
+ Tue, 19 Jul 2022 10:48:00 +0000
+X-Zone-Loop: 5aefb20475ab2ed86d61b06293c709815c8b1367c9f9
+X-Originating-IP: [140.82.40.27]
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=that.guru;
+        s=x; h=MIME-Version:Content-Transfer-Encoding:Content-Type:References:
+        In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=XKj26ecOF//3sugbKasXvu+5fkRD2WAHx8L/6RCC1pY=; b=IV4EHIBwiJRby4EPrjOGwReA3w
+        Y4nZ4akdJY5G04QMo8hEZIG3PXS5GDd9BAUkeyWyk/hVCHy1KXLSlC4yfOtQh8kaHe5WW6xnmXhzF
+        lOX0z5dHBvtUuTs65E69gD/OScDq6+K2sYrz2KbVO49tbBYu2VRH8JVl5th59P/WTxmcVC67vuU/C
+        PLqGAUk6G74mw025z5mp/7FKSaDewhPjl/1UpO6wWVtFYywcEJIEQ2hn4ydRVeIAn05XpCbodQNfX
+        hoU8BJD60kHE3V+5b/HCPl9Z3amBf+M5qDBQBqFyZ6JmBNpdRZcmpIJgxyQe7/d2+Rol8wxMjegv4
+        HmgPMC0A==;
+Message-ID: <61333be26339440d9bae8f12fd1a4faeb5e68ab6.camel@that.guru>
+Subject: Re: Feature request: provide a persistent IDs on a commit
+From:   Stephen Finucane <stephen@that.guru>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-repack doc: remove discussion of ancient caveat
-Date:   Tue, 19 Jul 2022 11:07:29 +0200
-References: <patch-1.1-363f84a3fa7-20220715T075114Z-avarab@gmail.com>
- <xmqqsfn21fmt.fsf@gitster.g> <220716.8635f1zdg3.gmgdl@evledraar.gmail.com>
- <xmqq1qujt334.fsf@gitster.g> <220718.86tu7eyhvz.gmgdl@evledraar.gmail.com>
- <xmqqk089ewbx.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqk089ewbx.fsf@gitster.g>
-Message-ID: <220719.8635exwje8.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Date:   Tue, 19 Jul 2022 11:47:55 +0100
+In-Reply-To: <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com>
+References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+         <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.3 (3.44.3-1.fc36) 
+MIME-Version: 1.0
+X-AuthUser: stephen@that.guru
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 2022-07-18 at 20:50 +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason w=
+rote:
+> On Mon, Jul 18 2022, Stephen Finucane wrote:
+>=20
+> > ...to track evolution of a patch through time.
+> >=20
+> > tl;dr: How hard would it be to retrofit an 'ChangeID' concept =C3=A0 la=
+ the 'Change-
+> > ID' trailer used by Gerrit into git core?
+> >=20
+> > Firstly, apologies in advance if this is the wrong forum to post a feat=
+ure
+> > request. I help maintain the Patchwork project [1], which a web-based t=
+ool that
+> > provides a mechanism to track the state of patches submitted to a maili=
+ng list
+> > and make sure stuff doesn't slip through the crack. One of our long-ter=
+m goals
+> > has been to track the evolution of an individual patch through multiple
+> > revisions. This is surprisingly hard goal because oftentimes there isn'=
+t a whole
+> > lot to work with. One can try to guess whether things are the same by i=
+nspecting
+> > the metadata of the commit (subject, author, commit message, and the di=
+ff
+> > itself) but each of these metadata items are subject to arbitrary chang=
+es and
+> > are therefore fallible.
+> >=20
+> > One of the mechanisms I've seen used to address this is the 'Change-ID'=
+ trailer
+> > used by Gerrit. For anyone that hasn't seen this, the Gerrit server pro=
+vides a
+> > git commit hook that you can install locally. When installed, this appe=
+nds a
+> > 'Change-ID' trailer to each and every commit message. In this way, the =
+evolution
+> > of a patch (or a "change", in Gerrit parlance) can be tracked through t=
+ime since
+> > the Change ID provides an authoritative answer to the question "is this=
+ still
+> > the same patch". Unfortunately, there are still some obvious downside t=
+o this
+> > approach. Not only does this additional trailer clutter your commit mes=
+sages but
+> > it's also something the user must install themselves. While Gerrit can =
+insist
+> > that this is installed before pushing a change, this isn't an option fo=
+r any of
+> > the common forges nor is it something git-send-email supports.
+>=20
+> git format-patch+send-email will send your trailers along as-is, how
+> doesn't it support Change-Id. Does it need some support that any other
+> made-up trailer doesn't?
 
-On Mon, Jul 18 2022, Junio C Hamano wrote:
+It supports sending the trailers, sure. What it doesn't support is insistin=
+g you
+send this specific trailer (Change-Id). Only Gerrit can do this (server sid=
+e,
+thankfully, which means you don't need to ask all contributors to install t=
+his
+hook if you want to rely on it for tooling, CI, etc.).
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> Which I may have misread, but I understood as going beyond suggesting
->> that we cover #2 over (or in addition to) #1, and into speculation that
->> the change being suggested here was suspect because I hadn't carried out
->> a "solid study of history".
->
-> OK, so there was a study of history, but the resulting commit did
-> not interpret and reflect what's significant in the history
-> correctly.  Sorry for mischaracterizing your mistake.
->
-> Lets put it this way.  Here is a statement:
->
->     Since 1.6.0, people started to need to worry more about
->     compatibility with 1.4.4 and older.
->
-> Now that statement, while it may be still correct, is irrelevant.
-> Why?
->
-> Even if there were tons of people who still use 1.6.0 (or 1.5.3 for
-> that matter, which happens to be one of my favorite releases in the
-> era), as long as nobody uses 1.4.4 or older, we can safely remove
-> such a statement from our end-user facing documentation set.  Some
-> archaeologists in us may care, but it is irrelevant to the general
-> public, as long as 1.4.4 or older have died out.  "As continued use
-> of 1.4.4 by people stopped being an issue long time ago, remove the
-> warning about interoperability" is the only thing we need to say
-> about this change.  We can add "that we needed to add in 1.6.0 era"
-> at the end but that is already too verbose.
->
-> Please do not be one of those folks we had to deal with in the past
-> who for whatever reason cannot admit that they were wrong.
+> > I imagine most people working with mailing list based workflows have th=
+eir own
+> > client side tooling to support this while software forges like GitHub a=
+nd GitLab
+> > simply don't bother tracking version history between individual commits=
+ in a
+> > pull/merge request.
+>=20
+> It's far from ideal, but at least GitLab shows a diff on a push to a MR,
+> including if it's force-pushed. I'm not sure about GitHub.
 
-I won't, and I think on the subject of documentation & commit messages
-you (as in me, in this case) have already lost the "argument" if you're
-having to explain what was meant by the text, which clearly should be
-self-contained enough to resolve any such ambiguities by itself.
+GitHub does not. Simply piling multiple additional "fix" commits onto the P=
+R
+branch results in a less horrible review experience since you can maintain
+context, alas at the cost of a rotten git log. We don't need to debate the =
+pros
+and cons of the various forges though :)
 
-I was just replying to clarify what I was trying to go for in the v1,
-which in my mind isn't an argument *for* that version, but just an
-explanation. I.e. sometimes the solution is to more clearly phrase what
-I was going for, and sometimes it's to take another approach entirely.
+>=20
+> > IMO though, it would be fantastic if third party tools
+> > weren't necessary though. What I suspect we want is a persistent ID (or=
+ rather
+> > UUID) that never changes regardless of how many times a patch is cherry=
+-picked,
+> > rebased, or otherwise modified, similar to the Author and AuthorDate fi=
+elds.
+> > Like Author and AuthorDate, it would be part of the core git commit met=
+adata
+> > rather than something in the commit message like Signed-Off-By or Chang=
+e-ID.
+> >=20
+> > Has such an idea ever been explored? Is it even possible? Would it be b=
+roadly
+> > useful?
+>=20
+> This has come up a bunch of times. I think that the thing git itself
+> should be doing is to lean into the same notion that we use for tracking
+> renames. I.e. we don't, we analyze history after-the-fact and spot the
+> renames for you.
 
-In in case, I we may have crossed in E-Mails, here's a re-rolled v2:
+Any idea where I'd find previous discussions on this? I did look, and the o=
+nly
+proposal I found was an old one that seemed to suggest including the Change=
+-Id
+commit-msg hook with git itself which is not what I'm suggesting here.
 
-    https://lore.kernel.org/git/patch-v2-1.1-98b6de56019-20220719T000847Z-a=
-varab@gmail.com/
+> We have some of that in git already, as git-patch-id, and more recently
+> git-range-diff. Both are flawed in a bunch of ways, and it's easy to run
+> into edge cases where they don't spot something that they "should"
+> have. Where "should" exists in the mind of the user.
 
-I tried to make the dates & versions involved clear, and also to work in
-your preference for v2.0.0 (or possibly later) as a cut-off.
+That's a fair point and is of course what we (Patchwork) have to do current=
+ly.
+Patchwork can track relations between individual patches but doesn't attemp=
+t to
+generate these relations itself. Instead, we rely on third-party tooling. T=
+he
+PaStA tool was one such example of a tool that could do this [1]. I can't
+imagine a tool like Gerrit would ever work without this concept of an
+authoritative (and arbitrary) identifier to track a patch's identity throug=
+h
+time, hence its reliance on the Change-Id trailer.
 
-It may not at all be what you had in mind, or maybe you're willing to
-queue it as-is, just let me know & I'll adjust it.
+Perhaps we could flip this on its head. What would be the _downsides_ of
+providing a persistent, arbitrary identifier on a commit similar to Author =
+and
+AuthorDate fields? There's obviously some work involved in implementing it =
+but
+assuming that was already done, what would break/be worse as a result?
 
-Thanks a lot for the review, and sorry about the misunderstanding.
+Stephen
+
+[1] https://rsarky.github.io/2020/08/10/pasta-patchwork.html
