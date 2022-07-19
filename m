@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D90DC433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7EBBC43334
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:34:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237117AbiGSSeO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 14:34:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33546 "EHLO
+        id S238978AbiGSSeP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 14:34:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239007AbiGSSeD (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239634AbiGSSeD (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 19 Jul 2022 14:34:03 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EDB35D0C1
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:59 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id j29-20020a05600c1c1d00b003a2fdafdefbso9695885wms.2
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:59 -0700 (PDT)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D845D58C
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:34:00 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id u14-20020a05600c00ce00b003a323062569so1488586wmm.4
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:34:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZzirPXEIG/9zSZTSCNq1F5K8eCdqtL6TGpZfO6CMUkI=;
-        b=IbzNpXTLmt6acDRTsepZV32j+F0oHTnCb5a2TvkVlYNuZ2tqxDgaWePh7zSDZsHJIA
-         LcFyf8XiKNTSYnTtGNKQq6Z2ACxDuuPXggZ0ws6zholEaefZA25s4yFUMs4axnt2EE7U
-         oD0cDn9Fc0YW4LP9o/g17cbCvYN1ATCwMhK36QWC3WY2HKzLetbc5JvJ5C1PluVQ8l0T
-         Oc0+PbwkWJh8S8BSC7Y0siokqMj7TTLngEBB9DWGW+rPsbn2SYFDCbWExP13kp8YrN7W
-         LH5kEdNhjAfq2UfbeEUG9JMj8rlbFZfwUeFe5A2UKFdCn5DsY/DoeuVPSNj0WW+EDMkQ
-         NKfA==
+        bh=+4eicZFhBlESE6N6mI6Lf04NSa4z0ge68yncLaLBnQQ=;
+        b=hHS7N0OTZcCTUUWCdDoCpzBeYFRZ1rW2TgPbrXdDNoZdcQKSY3zfG3fJR0L0oFI7/+
+         3EOF36KiDJZaH2fr20D3rI29IpBN6M6Q9OhZWX/bFv8yAlI9BWpaRxTmCfituUN6NCWO
+         uCKtGPPD+x/sSwsvGLy8pOxxSv6A3mn0grypet7Z9rBSgO3Ewr1E8aLJaSRhfe+dEYk0
+         kBmuzGg8ds8kLWvNJqor1xAeNB1eGXYsFw0dg3axUXrnj1s9lL9a60Nfs3hRGnSHz7pR
+         Ysmng9vBVi2+KcODCf4qKhiT9Ybk3z/qYx/RJXiK/LjpYdYjFstJbbFrPL3PSKXwSxT+
+         HsAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZzirPXEIG/9zSZTSCNq1F5K8eCdqtL6TGpZfO6CMUkI=;
-        b=2b1GeF5q4feKD9yK+po1GQAhNvufM7rT5kSx+foDCVJIZrj/RrbOCa8iYDeIXq7xYh
-         IRgSjLaKdbcw2PSiIejtwe3oXW9QD7m0zL/gCPWp0c1nthHtvl/g96J/deub0t6tvRn7
-         hSnBexg5pC1ZgpKezGMm+0VeMmxfSjqPRlAb0zDdxtS6tz97p4IkjmdZaIWQ1Q8lp2j1
-         f98YhmPqGCvx+aS7z4RXtAv8JfxVTnZ6QuVxaYMAS/CAx7Y6SdiynzhXCgnIrz50QDGl
-         Xm8bVzTQIynJkKFHzeogp6Mj4A+c2KhkCwidsZVmf7AV7m7Engy/IOYpY1JnhtYvUk50
-         5c7w==
-X-Gm-Message-State: AJIora9NRUcyEnF+CSPvVCOvenvIU7bHhtvwB/1kV97CsLzCR+TA+PRK
-        c9pcKlydXODjzWvIF7sK1cHwfGEksI4=
-X-Google-Smtp-Source: AGRyM1tXmC39+/wrhLQq+qyjNY6quiFZOZ2cuYnGbnVKihvSw3CR+VwDTD0gQ7Gl1HmVhumBcN+F5A==
-X-Received: by 2002:a1c:241:0:b0:3a3:142d:b65 with SMTP id 62-20020a1c0241000000b003a3142d0b65mr522679wmc.171.1658255637438;
-        Tue, 19 Jul 2022 11:33:57 -0700 (PDT)
+        bh=+4eicZFhBlESE6N6mI6Lf04NSa4z0ge68yncLaLBnQQ=;
+        b=is1yFlsY+zbgVeRub9ujbVQ42vecqGmkyAW4OD4stdfeTlpUiiJK7NCHq48uAsmve0
+         PYzbqmLFPwejymclLepEjVhF2iyXfcVqddo0dgJ+VrCxyn43ay7LIpEGJ/UfZxRynHvN
+         WG/Scj93bSd/a+rx0Th8W3Zo8aT190N8rGH0ZLnwLafaL97KRF6E4HlOtRrckM7QoULE
+         1vTAZK/0jiVMyxBh8hvY+oK8CGNEI2zOwgREx+g3DS2F4/HPjBuHT+UenHiKT9faSSqT
+         tMJzEA6iRC5e/Cc8e+skb4MrzoRrLzI7MPl3yBwiGmhIHKGAB7j5XgLnG23Z+TGEEAF2
+         +96w==
+X-Gm-Message-State: AJIora9JH9H/VyCD37HVBnv1kR9mESP9GHdWFjGKnASNjf45g2ZSy4rw
+        AVqlkuKzuoDCW/CAKbvnpSR6qFE3E0k=
+X-Google-Smtp-Source: AGRyM1tHm/xC6OZIpRmU2HIA5bfqjkDE/IxV3oktZPMA6U+iq1TSuEe2Q8Qn/vgWt/UL9/01QmQS5w==
+X-Received: by 2002:a7b:c8da:0:b0:3a3:19e:4a3a with SMTP id f26-20020a7bc8da000000b003a3019e4a3amr544621wml.201.1658255638749;
+        Tue, 19 Jul 2022 11:33:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l24-20020a05600c089800b003a327b98c0asm465038wmp.22.2022.07.19.11.33.56
+        by smtp.gmail.com with ESMTPSA id d3-20020adfe883000000b0021d7ff34df7sm16861103wrm.117.2022.07.19.11.33.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 11:33:56 -0700 (PDT)
-Message-Id: <e7a91bdffbd9a1fe0eda9a5a264f7734aadbf688.1658255624.git.gitgitgadget@gmail.com>
+        Tue, 19 Jul 2022 11:33:57 -0700 (PDT)
+Message-Id: <95e2bbcedb1740f240a0a470822549d63075cc46.1658255624.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 References: <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
         <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 18:33:40 +0000
-Subject: [PATCH v5 08/12] rebase: update refs from 'update-ref' commands
+Date:   Tue, 19 Jul 2022 18:33:41 +0000
+Subject: [PATCH v5 09/12] sequencer: rewrite update-refs as user edits todo
+ list
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,271 +73,363 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The previous change introduced the 'git rebase --update-refs' option
-which added 'update-ref <ref>' commands to the todo list of an
+An interactive rebase provides opportunities for the user to edit the
+todo list. The --update-refs option initializes the list with some
+'update-ref <ref>' steps, but the user could add these manually.
+Further, the user could add or remove these steps during pauses in the
 interactive rebase.
 
-Teach Git to record the HEAD position when reaching these 'update-ref'
-commands. The ref/before/after triple is stored in the
-$GIT_DIR/rebase-merge/update-refs file. A previous change parsed this
-file to avoid having other processes updating the refs in that file
-while the rebase is in progress.
+Add a new method, todo_list_filter_update_refs(), that scans a todo_list
+and compares it to the stored update-refs file. There are two actions
+that can happen at this point:
 
-Not only do we update the file when the sequencer reaches these
-'update-ref' commands, we then update the refs themselves at the end of
-the rebase sequence. If the rebase is aborted before this final step,
-then the refs are not updated. The 'before' value is used to ensure that
-we do not accidentally obliterate a ref that was updated concurrently
-(say, by an older version of Git or a third-party tool).
+1. If a '<ref>/<before>/<after>' triple in the update-refs file does not
+   have a matching 'update-ref <ref>' command in the todo-list _and_ the
+   <after> value is the null OID, then remove that triple. Here, the
+   user removed the 'update-ref <ref>' command before it was executed,
+   since if it was executed then the <after> value would store the
+   commit at that position.
 
-Now that the 'git rebase --update-refs' command is implemented to write
-to the update-refs file, we can remove the fake construction of the
-update-refs file from a test in t2407-worktree-heads.sh.
+2. If a 'update-ref <ref>' command in the todo-list does not have a
+   matching '<ref>/<before>/<after>' triple in the update-refs file,
+   then insert a new one. Store the <before> value to be the current
+   OID pointed at by <ref>. This is handled inside of the
+   init_update_ref_record() helper method.
 
+We can test that this works by rewriting the todo-list several times in
+the course of a rebase. Check that each ref is locked or unlocked for
+updates after each todo-list update. We can also verify that the ref
+update fails if a concurrent process updates one of the refs after the
+rebase process records the "locked" ref location.
+
+To help these tests, add a new 'set_replace_editor' helper that will
+replace the todo-list with an exact file.
+
+Reported-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- sequencer.c                   | 120 +++++++++++++++++++++++++++++++++-
- t/t2407-worktree-heads.sh     |  21 ++----
- t/t3404-rebase-interactive.sh |  17 +++++
- 3 files changed, 140 insertions(+), 18 deletions(-)
+ rebase-interactive.c          |   6 ++
+ sequencer.c                   |  96 +++++++++++++++++++++++
+ sequencer.h                   |  12 +++
+ t/lib-rebase.sh               |  15 ++++
+ t/t3404-rebase-interactive.sh | 139 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 268 insertions(+)
 
-diff --git a/sequencer.c b/sequencer.c
-index a4ee2799d6f..ce8c7d8cd3a 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -36,6 +36,7 @@
- #include "rebase-interactive.h"
- #include "reset.h"
- #include "branch.h"
-+#include "log-tree.h"
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index 1ff07647af3..7407c593191 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -146,6 +146,12 @@ int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+ 		return -4;
+ 	}
  
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-@@ -193,6 +194,21 @@ struct update_ref_record {
- 	struct object_id after;
- };
- 
-+static struct update_ref_record *init_update_ref_record(const char *ref)
-+{
-+	struct update_ref_record *rec;
++	/*
++	 * See if branches need to be added or removed from the update-refs
++	 * file based on the new todo list.
++	 */
++	todo_list_filter_update_refs(r, new_todo);
 +
-+	CALLOC_ARRAY(rec, 1);
-+
-+	oidcpy(&rec->before, null_oid());
-+	oidcpy(&rec->after, null_oid());
-+
-+	/* This may fail, but that's fine, we will keep the null OID. */
-+	read_ref(ref, &rec->before);
-+
-+	return rec;
-+}
-+
- static int git_sequencer_config(const char *k, const char *v, void *cb)
- {
- 	struct replay_opts *opts = cb;
-@@ -4081,11 +4097,97 @@ leave_merge:
- 	return ret;
- }
- 
--static int do_update_ref(struct repository *r, const char *ref_name)
-+static int write_update_refs_state(struct string_list *refs_to_oids)
-+{
-+	int result = 0;
-+	struct lock_file lock = LOCK_INIT;
-+	FILE *fp = NULL;
-+	struct string_list_item *item;
-+	char *path;
-+
-+	if (!refs_to_oids->nr)
-+		return 0;
-+
-+	path = rebase_path_update_refs(the_repository->gitdir);
-+
-+	if (safe_create_leading_directories(path)) {
-+		result = error(_("unable to create leading directories of %s"),
-+			       path);
-+		goto cleanup;
-+	}
-+
-+	if (hold_lock_file_for_update(&lock, path, 0) < 0) {
-+		result = error(_("another 'rebase' process appears to be running; "
-+				 "'%s.lock' already exists"),
-+			       path);
-+		goto cleanup;
-+	}
-+
-+	fp = fdopen_lock_file(&lock, "w");
-+	if (!fp) {
-+		result = error_errno(_("could not open '%s' for writing"), path);
-+		rollback_lock_file(&lock);
-+		goto cleanup;
-+	}
-+
-+	for_each_string_list_item(item, refs_to_oids) {
-+		struct update_ref_record *rec = item->util;
-+		fprintf(fp, "%s\n%s\n%s\n", item->string,
-+			oid_to_hex(&rec->before), oid_to_hex(&rec->after));
-+	}
-+
-+	result = commit_lock_file(&lock);
-+
-+cleanup:
-+	free(path);
-+	return result;
-+}
-+
-+static int do_update_ref(struct repository *r, const char *refname)
- {
-+	struct string_list_item *item;
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+
-+	if (sequencer_get_update_refs_state(r->gitdir, &list))
-+		return -1;
-+
-+	for_each_string_list_item(item, &list) {
-+		if (!strcmp(item->string, refname)) {
-+			struct update_ref_record *rec = item->util;
-+			if (read_ref("HEAD", &rec->after))
-+				return -1;
-+			break;
-+		}
-+	}
-+
-+	write_update_refs_state(&list);
-+	string_list_clear(&list, 1);
  	return 0;
  }
  
-+static int do_update_refs(struct repository *r)
+diff --git a/sequencer.c b/sequencer.c
+index ce8c7d8cd3a..67812c0294f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4143,6 +4143,102 @@ cleanup:
+ 	return result;
+ }
+ 
++/*
++ * Parse the update-refs file for the current rebase, then remove the
++ * refs that do not appear in the todo_list (and have not had updated
++ * values stored) and add refs that are in the todo_list but not
++ * represented in the update-refs file.
++ *
++ * If there are changes to the update-refs list, then write the new state
++ * to disk.
++ */
++void todo_list_filter_update_refs(struct repository *r,
++				  struct todo_list *todo_list)
 +{
-+	int res = 0;
-+	struct string_list_item *item;
-+	struct string_list refs_to_oids = STRING_LIST_INIT_DUP;
-+	struct ref_store *refs = get_main_ref_store(r);
++	int i;
++	int updated = 0;
++	struct string_list update_refs = STRING_LIST_INIT_DUP;
 +
-+	if ((res = sequencer_get_update_refs_state(r->gitdir, &refs_to_oids)))
-+		return res;
++	sequencer_get_update_refs_state(r->gitdir, &update_refs);
 +
-+	for_each_string_list_item(item, &refs_to_oids) {
-+		struct update_ref_record *rec = item->util;
++	/*
++	 * For each item in the update_refs list, if it has no updated
++	 * value and does not appear in the todo_list, then remove it
++	 * from the update_refs list.
++	 */
++	for (i = 0; i < update_refs.nr; i++) {
++		int j;
++		int found = 0;
++		const char *ref = update_refs.items[i].string;
++		size_t reflen = strlen(ref);
++		struct update_ref_record *rec = update_refs.items[i].util;
 +
-+		res |= refs_update_ref(refs, "rewritten during rebase",
-+				       item->string,
-+				       &rec->after, &rec->before,
-+				       0, UPDATE_REFS_MSG_ON_ERR);
++		/* OID already stored as updated. */
++		if (!is_null_oid(&rec->after))
++			continue;
++
++		for (j = 0; !found && j < todo_list->total_nr; j++) {
++			struct todo_item *item = &todo_list->items[j];
++			const char *arg = todo_list->buf.buf + item->arg_offset;
++
++			if (item->command != TODO_UPDATE_REF)
++				continue;
++
++			if (item->arg_len != reflen ||
++			    strncmp(arg, ref, reflen))
++				continue;
++
++			found = 1;
++		}
++
++		if (!found) {
++			free(update_refs.items[i].string);
++			free(update_refs.items[i].util);
++
++			update_refs.nr--;
++			MOVE_ARRAY(update_refs.items + i, update_refs.items + i + 1, update_refs.nr - i);
++
++			updated = 1;
++			i--;
++		}
 +	}
 +
-+	string_list_clear(&refs_to_oids, 1);
-+	return res;
++	/*
++	 * For each todo_item, check if its ref is in the update_refs list.
++	 * If not, then add it as an un-updated ref.
++	 */
++	for (i = 0; i < todo_list->total_nr; i++) {
++		struct todo_item *item = &todo_list->items[i];
++		const char *arg = todo_list->buf.buf + item->arg_offset;
++		int j, found = 0;
++
++		if (item->command != TODO_UPDATE_REF)
++			continue;
++
++		for (j = 0; !found && j < update_refs.nr; j++) {
++			const char *ref = update_refs.items[j].string;
++
++			found = strlen(ref) == item->arg_len &&
++				!strncmp(ref, arg, item->arg_len);
++		}
++
++		if (!found) {
++			struct string_list_item *inserted;
++			struct strbuf argref = STRBUF_INIT;
++
++			strbuf_add(&argref, arg, item->arg_len);
++			inserted = string_list_insert(&update_refs, argref.buf);
++			inserted->util = init_update_ref_record(argref.buf);
++			strbuf_release(&argref);
++			updated = 1;
++		}
++	}
++
++	if (updated)
++		write_update_refs_state(&update_refs);
++	string_list_clear(&update_refs, 1);
 +}
 +
- static int is_final_fixup(struct todo_list *todo_list)
+ static int do_update_ref(struct repository *r, const char *refname)
  {
- 	int i = todo_list->current;
-@@ -4601,6 +4703,9 @@ cleanup_head_ref:
+ 	struct string_list_item *item;
+diff --git a/sequencer.h b/sequencer.h
+index e671d7e0743..98f3bcc1658 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -132,6 +132,18 @@ void todo_list_release(struct todo_list *todo_list);
+ const char *todo_item_get_arg(struct todo_list *todo_list,
+ 			      struct todo_item *item);
  
- 		strbuf_release(&buf);
- 		strbuf_release(&head_ref);
++/*
++ * Parse the update-refs file for the current rebase, then remove the
++ * refs that do not appear in the todo_list (and have not had updated
++ * values stored) and add refs that are in the todo_list but not
++ * represented in the update-refs file.
++ *
++ * If there are changes to the update-refs list, then write the new state
++ * to disk.
++ */
++void todo_list_filter_update_refs(struct repository *r,
++				  struct todo_list *todo_list);
 +
-+		if (do_update_refs(r))
-+			return -1;
- 	}
- 
- 	/*
-@@ -5676,7 +5781,7 @@ static int add_decorations_to_list(const struct commit *commit,
- 
- 			sti = string_list_insert(&ctx->refs_to_oids,
- 						 decoration->name);
--			sti->util = oiddup(the_hash_algo->null_oid);
-+			sti->util = init_update_ref_record(decoration->name);
- 		}
- 
- 		item->offset_in_buf = base_offset;
-@@ -5696,7 +5801,7 @@ static int add_decorations_to_list(const struct commit *commit,
-  */
- static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
- {
--	int i;
-+	int i, res;
- 	static struct string_list decorate_refs_exclude = STRING_LIST_INIT_NODUP;
- 	static struct string_list decorate_refs_exclude_config = STRING_LIST_INIT_NODUP;
- 	static struct string_list decorate_refs_include = STRING_LIST_INIT_NODUP;
-@@ -5732,7 +5837,16 @@ static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
- 		}
- 	}
- 
-+	res = write_update_refs_state(&ctx.refs_to_oids);
+ /* Call this to setup defaults before parsing command line options */
+ void sequencer_init_config(struct replay_opts *opts);
+ int sequencer_pick_revisions(struct repository *repo,
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index ec6b9b107da..b57541356bd 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -207,3 +207,18 @@ check_reworded_commits () {
+ 		>reword-log &&
+ 	test_cmp reword-expected reword-log
+ }
 +
- 	string_list_clear(&ctx.refs_to_oids, 1);
++# usage: set_replace_editor <file>
++#
++# Replace the todo file with the exact contents of the given file.
++set_replace_editor () {
++	cat >script <<-\EOF &&
++	cat FILENAME >"$1"
 +
-+	if (res) {
-+		/* we failed, so clean up the new list. */
-+		free(ctx.items);
-+		return res;
-+	}
++	echo 'rebase -i script after editing:'
++	cat "$1"
++	EOF
 +
- 	free(todo_list->items);
- 	todo_list->items = ctx.items;
- 	todo_list->nr = ctx.items_nr;
-diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
-index 8a03f14df8d..50815acd3e8 100755
---- a/t/t2407-worktree-heads.sh
-+++ b/t/t2407-worktree-heads.sh
-@@ -81,25 +81,16 @@ test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in rebase (mer
- 	grep "cannot force update the branch '\''wt-2'\'' checked out at.*wt-2" err
- '
- 
--test_expect_success 'refuse to overwrite: worktree in rebase with --update-refs' '
--	test_when_finished rm -rf .git/worktrees/wt-3/rebase-merge &&
--
--	mkdir -p .git/worktrees/wt-3/rebase-merge &&
--	touch .git/worktrees/wt-3/rebase-merge/interactive &&
-+test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in rebase with --update-refs' '
-+	test_when_finished git -C wt-3 rebase --abort &&
- 
--	cat >.git/worktrees/wt-3/rebase-merge/update-refs <<-EOF &&
--	refs/heads/fake-3
--	$(git rev-parse HEAD~1)
--	$(git rev-parse HEAD)
--	refs/heads/fake-4
--	$(git rev-parse HEAD)
--	$(git rev-parse HEAD)
--	EOF
-+	git branch -f can-be-updated wt-3 &&
-+	test_must_fail git -C wt-3 rebase --update-refs conflict-3 &&
- 
- 	for i in 3 4
- 	do
--		test_must_fail git branch -f fake-$i HEAD 2>err &&
--		grep "cannot force update the branch '\''fake-$i'\'' checked out at.*wt-3" err ||
-+		test_must_fail git branch -f can-be-updated HEAD 2>err &&
-+		grep "cannot force update the branch '\''can-be-updated'\'' checked out at.*wt-3" err ||
- 			return 1
- 	done
- '
++	sed -e "s/FILENAME/$1/g" <script | write_script fake-editor.sh &&
++	test_set_editor "$(pwd)/fake-editor.sh"
++}
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 75c0b90fae1..2fffcf5d5fb 100755
+index 2fffcf5d5fb..bebf9b4def7 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -1817,6 +1817,23 @@ test_expect_success '--update-refs adds commands with --rebase-merges' '
- 	)
+@@ -1834,6 +1834,145 @@ test_expect_success '--update-refs updates refs correctly' '
+ 	test_cmp_rev HEAD refs/heads/no-conflict-branch
  '
  
-+test_expect_success '--update-refs updates refs correctly' '
-+	git checkout -B update-refs no-conflict-branch &&
++test_expect_success 'respect user edits to update-ref steps' '
++	git checkout -B update-refs-break no-conflict-branch &&
 +	git branch -f base HEAD~4 &&
 +	git branch -f first HEAD~3 &&
 +	git branch -f second HEAD~3 &&
 +	git branch -f third HEAD~1 &&
-+	test_commit extra2 fileX &&
-+	git commit --amend --fixup=L &&
++	git branch -f unseen base &&
 +
-+	git rebase -i --autosquash --update-refs primary &&
++	# First, we will add breaks to the expected todo file
++	cat >fake-todo-1 <<-EOF &&
++	pick $(git rev-parse HEAD~3)
++	break
++	update-ref refs/heads/second
++	update-ref refs/heads/first
 +
-+	test_cmp_rev HEAD~3 refs/heads/first &&
-+	test_cmp_rev HEAD~3 refs/heads/second &&
-+	test_cmp_rev HEAD~1 refs/heads/third &&
++	pick $(git rev-parse HEAD~2)
++	pick $(git rev-parse HEAD~1)
++	update-ref refs/heads/third
++
++	pick $(git rev-parse HEAD)
++	update-ref refs/heads/no-conflict-branch
++	EOF
++
++	# Second, we will drop some update-refs commands (and move one)
++	cat >fake-todo-2 <<-EOF &&
++	update-ref refs/heads/second
++
++	pick $(git rev-parse HEAD~2)
++	update-ref refs/heads/third
++	pick $(git rev-parse HEAD~1)
++	break
++
++	pick $(git rev-parse HEAD)
++	EOF
++
++	# Third, we will:
++	# * insert a new one (new-branch),
++	# * re-add an old one (first), and
++	# * add a second instance of a previously-stored one (second)
++	cat >fake-todo-3 <<-EOF &&
++	update-ref refs/heads/unseen
++	update-ref refs/heads/new-branch
++	pick $(git rev-parse HEAD)
++	update-ref refs/heads/first
++	update-ref refs/heads/second
++	EOF
++
++	(
++		set_replace_editor fake-todo-1 &&
++		git rebase -i --update-refs primary &&
++
++		# These branches are currently locked.
++		for b in first second third no-conflict-branch
++		do
++			test_must_fail git branch -f $b base || return 1
++		done &&
++
++		set_replace_editor fake-todo-2 &&
++		git rebase --edit-todo &&
++
++		# These branches are currently locked.
++		for b in second third
++		do
++			test_must_fail git branch -f $b base || return 1
++		done &&
++
++		# These branches are currently unlocked for checkout.
++		for b in first no-conflict-branch
++		do
++			git worktree add wt-$b $b &&
++			git worktree remove wt-$b || return 1
++		done &&
++
++		git rebase --continue &&
++
++		set_replace_editor fake-todo-3 &&
++		git rebase --edit-todo &&
++
++		# These branches are currently locked.
++		for b in second third first unseen
++		do
++			test_must_fail git branch -f $b base || return 1
++		done &&
++
++		# These branches are currently unlocked for checkout.
++		for b in no-conflict-branch
++		do
++			git worktree add wt-$b $b &&
++			git worktree remove wt-$b || return 1
++		done &&
++
++		git rebase --continue
++	) &&
++
++	test_cmp_rev HEAD~2 refs/heads/third &&
++	test_cmp_rev HEAD~1 refs/heads/unseen &&
++	test_cmp_rev HEAD~1 refs/heads/new-branch &&
++	test_cmp_rev HEAD refs/heads/first &&
++	test_cmp_rev HEAD refs/heads/second &&
 +	test_cmp_rev HEAD refs/heads/no-conflict-branch
++'
++
++test_expect_success '--update-refs: check failed ref update' '
++	git checkout -B update-refs-error no-conflict-branch &&
++	git branch -f base HEAD~4 &&
++	git branch -f first HEAD~3 &&
++	git branch -f second HEAD~2 &&
++	git branch -f third HEAD~1 &&
++
++	cat >fake-todo <<-EOF &&
++	pick $(git rev-parse HEAD~3)
++	break
++	update-ref refs/heads/first
++
++	pick $(git rev-parse HEAD~2)
++	update-ref refs/heads/second
++
++	pick $(git rev-parse HEAD~1)
++	update-ref refs/heads/third
++
++	pick $(git rev-parse HEAD)
++	update-ref refs/heads/no-conflict-branch
++	EOF
++
++	(
++		set_replace_editor fake-todo &&
++		git rebase -i --update-refs base
++	) &&
++
++	# At this point, the values of first, second, and third are
++	# recorded in the update-refs file. We will force-update the
++	# "second" ref, but "git branch -f" will not work because of
++	# the lock in the update-refs file.
++	git rev-parse third >.git/refs/heads/second &&
++
++	git rebase --continue 2>err &&
++	grep "update_ref failed for ref '\''refs/heads/second'\''" err
 +'
 +
  # This must be the last test in this file
