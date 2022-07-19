@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8D74C43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7D34C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238928AbiGSSeG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 14:34:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33492 "EHLO
+        id S240148AbiGSSeI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 14:34:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238431AbiGSSeC (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238688AbiGSSeC (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 19 Jul 2022 14:34:02 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9CD15D0E1
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:55 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id n12so10030850wrc.8
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:55 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 989DD5D0EA
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:56 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id a5so22855940wrx.12
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lQm7mXvTWwEQQhstrvWPOyiMvz0zhL33U5US1aO4raQ=;
-        b=GuHk+eUYW8vTo1Vp0221TnCW6L4zDKXe48KBYJaYTXLntRE3e+w9LChl8RTi1YYZog
-         /+od0xcjyyvJ9RAtKQdUCnmCR3c4CDdfpdDlFAQXqQFh96SuGbw3mub6e/XE/D+pjbN9
-         ldmAVm+fa0eQOaW3BhBqPM9WfRUeo0kG1HdZAEamxCnTnhGZV51odP2KvvsLFf7dmKDk
-         ZoQk2Q1SOG1Hv/GL09jduvNhuI7TW1LAw71MLPrvN6tVZC/2KayJ/QEDYA49lbXPn0im
-         fTCV3uJ0MzLU66gr16DpToVZM5m2VcUNYm+2s/TXiAOh7SpH+5cd35zBEbORTEnppMw/
-         qlbg==
+        bh=d63QqvRU2VpxTaCaClZN5NrhUCrW+qPKp3gtb7pegQ0=;
+        b=CiVQ8iokxoc6vH9Fz48eWXcHUddqJELEhU/dQM0nZL4lClGQvuLjha71+/FMh2JL2m
+         1H5hYRQCdidacHIlZhxtk/0lIBhDoSZzJAeEHtN5Ge1lfgkWuaum5e6YOQmnx4YXUOP9
+         4rE5qDEeuTPtTtNJq0XHCGc5KFnp9QRTr3vVH5ColkGcgDRF7dC9kMSQzlCRwj2qHfMf
+         KNB6+qUgCy2mtnJwlHQ02QLDCSGIsfqX6jW06bXeTqtiXKBIZpR9Fcx2XqJgpI9nShBG
+         zN0Mj6Nl4ZvTBVxqcDWL6BlYVQ6sLD4CjpW6s4EyIVtLtzf37wuyHdgt367oPcy8GnGu
+         5FhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lQm7mXvTWwEQQhstrvWPOyiMvz0zhL33U5US1aO4raQ=;
-        b=BLemTWE1HvD/9s9xngXlIOdOnA893uFvwAweNNqBi+4Js+8NQWRXH4dujycbbZrLP6
-         0l8XAHO6+U0KuhoITQeqTY5A/sLz7IUE5XLUumtltAZErszfbKS4M8ye18xvyOo7ekkQ
-         9O9C48RUWHm8MmZOHH2NgcTGyyZYjv6SKjRowQ+yQOW+xwXrYaTeaFGcH3ovNSdiKXkF
-         8dJBdcoW1sjhZE7S5+Ah+/F5suUSLztW1UNv+yB+ZqnMrD5coz0uJcEfK7cnEdEdnXZy
-         Reu7cEilhqSoVHqYHN8u7ms6BD/ftsajrKkOTKzhV24TJLgoOLCW3z/tgtYO3HYmx8f/
-         +U/g==
-X-Gm-Message-State: AJIora/pZvsZBCKvs+TTSx7j2spZL0Y/DmZ9m7Q6W2NMBF3VEFLR7929
-        KfEnI8kEyv0As7J4TZsnngaUN0AKXo4=
-X-Google-Smtp-Source: AGRyM1toDJp5SjmXsnVgk829XDExpb5eSCmM4eJcxRqQv0atDIRrc2dCj8uJp0KhVaARGw10EmtxLQ==
-X-Received: by 2002:a05:6000:1888:b0:21d:beeb:785c with SMTP id a8-20020a056000188800b0021dbeeb785cmr26025119wri.34.1658255633712;
-        Tue, 19 Jul 2022 11:33:53 -0700 (PDT)
+        bh=d63QqvRU2VpxTaCaClZN5NrhUCrW+qPKp3gtb7pegQ0=;
+        b=cMiQ83Fjs38sZwzT+GW2O5fOucAkYqmtWtJ09Hm2M9YSepDceaBg55Objhb1AR1ge3
+         PULXxIvJgWh0LfnWDciWL56ZZ1lY2eOcyuAKRjijlIAIZyNjDjUaa26b2MLNomQSTeV/
+         JiFApV9J2QFecNtA3MTiY5FsMeq+UpFQEcVuTcO0WQxA0kbvsNxhM9Xr2e/2XZTHIWES
+         5JXHehGJUy/uvJKFqrSBA98Nmh4qGdsjlPyOSGyJsaxxWiQY2w+k8KjJByYKEdxDdHLl
+         HGLpaNQ4jAUtYjbTPI9modl0YUb0UGQtjvjODH50NHUzcjH/KG6etznpqksYF+wSL1Qc
+         j9yw==
+X-Gm-Message-State: AJIora+k7W6qTnW0tgE+suUUfTmED2SOHgTq6/oVge6KomemNxy8FaRh
+        gaGKMuAWZmD8s+5NRDSAiaNl09qZ6gI=
+X-Google-Smtp-Source: AGRyM1v28zNvySTVaOtosVWiyaU5Siv0n2603PMf/8K55q7ird6b1qG0KXzT4fVwtDpBzrh0hQorWA==
+X-Received: by 2002:a05:6000:18a1:b0:21d:b2d0:ad47 with SMTP id b1-20020a05600018a100b0021db2d0ad47mr29138587wri.271.1658255634807;
+        Tue, 19 Jul 2022 11:33:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l20-20020a1c7914000000b003a2f6367049sm18540393wme.48.2022.07.19.11.33.52
+        by smtp.gmail.com with ESMTPSA id v6-20020a5d6106000000b0021d9233e7e6sm16637427wrt.54.2022.07.19.11.33.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 11:33:52 -0700 (PDT)
-Message-Id: <4c086d477f08d8e73a59861d34251aa94a26ba13.1658255624.git.gitgitgadget@gmail.com>
+        Tue, 19 Jul 2022 11:33:54 -0700 (PDT)
+Message-Id: <7b3d660196062d169627024e838be1ae6b905bd2.1658255624.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 References: <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
         <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 18:33:37 +0000
-Subject: [PATCH v5 05/12] sequencer: define array with enum values
+Date:   Tue, 19 Jul 2022 18:33:38 +0000
+Subject: [PATCH v5 06/12] sequencer: add update-ref command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,58 +72,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The todo_command_info array defines which strings match with which
-todo_command enum values. The array is defined in the same order as the
-enum values, but if one changed without the other, then we would have
-unexpected results.
+Add the boilerplate for an "update-ref" command in the sequencer. This
+connects to the current no-op do_update_ref() which will be filled in
+after more connections are created.
 
-Make it easier to see changes to the enum and this array by using the
-enum values as the indices of the array.
+The syntax in the todo list will be "update-ref <ref-name>" to signal
+that we should store the current commit as the value for updating
+<ref-name> at the end of the rebase.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- sequencer.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ rebase-interactive.c |  3 +++
+ sequencer.c          | 14 +++++++++++++-
+ sequencer.h          |  1 +
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index 22394224faa..1ff07647af3 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -57,6 +57,9 @@ void append_todo_help(int command_count,
+ "        create a merge commit using the original merge commit's\n"
+ "        message (or the oneline, if no original merge commit was\n"
+ "        specified); use -c <commit> to reword the commit message\n"
++"u, update-ref <ref> = track a placeholder for the <ref> to be updated\n"
++"                      to this position in the new commits. The <ref> is\n"
++"                      updated at the end of the rebase\n"
+ "\n"
+ "These lines can be re-ordered; they are executed from top to bottom.\n");
+ 	unsigned edit_todo = !(shortrevisions && shortonto);
 diff --git a/sequencer.c b/sequencer.c
-index 7d131d06cc3..2711182e43f 100644
+index 2711182e43f..0dc9c05c5bb 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1708,20 +1708,20 @@ static struct {
- 	char c;
- 	const char *str;
- } todo_command_info[] = {
--	{ 'p', "pick" },
--	{ 0,   "revert" },
--	{ 'e', "edit" },
--	{ 'r', "reword" },
--	{ 'f', "fixup" },
--	{ 's', "squash" },
--	{ 'x', "exec" },
--	{ 'b', "break" },
--	{ 'l', "label" },
--	{ 't', "reset" },
--	{ 'm', "merge" },
--	{ 0,   "noop" },
--	{ 'd', "drop" },
--	{ 0,   NULL }
-+	[TODO_PICK] = { 'p', "pick" },
-+	[TODO_REVERT] = { 0,   "revert" },
-+	[TODO_EDIT] = { 'e', "edit" },
-+	[TODO_REWORD] = { 'r', "reword" },
-+	[TODO_FIXUP] = { 'f', "fixup" },
-+	[TODO_SQUASH] = { 's', "squash" },
-+	[TODO_EXEC] = { 'x', "exec" },
-+	[TODO_BREAK] = { 'b', "break" },
-+	[TODO_LABEL] = { 'l', "label" },
-+	[TODO_RESET] = { 't', "reset" },
-+	[TODO_MERGE] = { 'm', "merge" },
-+	[TODO_NOOP] = { 0,   "noop" },
-+	[TODO_DROP] = { 'd', "drop" },
-+	[TODO_COMMENT] = { 0,   NULL },
- };
+@@ -1719,6 +1719,7 @@ static struct {
+ 	[TODO_LABEL] = { 'l', "label" },
+ 	[TODO_RESET] = { 't', "reset" },
+ 	[TODO_MERGE] = { 'm', "merge" },
++	[TODO_UPDATE_REF] = { 'u', "update-ref" },
+ 	[TODO_NOOP] = { 0,   "noop" },
+ 	[TODO_DROP] = { 'd', "drop" },
+ 	[TODO_COMMENT] = { 0,   NULL },
+@@ -2480,7 +2481,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+ 			     command_to_string(item->command));
  
- static const char *command_to_string(const enum todo_command command)
+ 	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
+-	    item->command == TODO_RESET) {
++	    item->command == TODO_RESET || item->command == TODO_UPDATE_REF) {
+ 		item->commit = NULL;
+ 		item->arg_offset = bol - buf;
+ 		item->arg_len = (int)(eol - bol);
+@@ -4079,6 +4080,11 @@ leave_merge:
+ 	return ret;
+ }
+ 
++static int do_update_ref(struct repository *r, const char *ref_name)
++{
++	return 0;
++}
++
+ static int is_final_fixup(struct todo_list *todo_list)
+ {
+ 	int i = todo_list->current;
+@@ -4454,6 +4460,12 @@ static int pick_commits(struct repository *r,
+ 				return error_with_patch(r, item->commit,
+ 							arg, item->arg_len,
+ 							opts, res, 0);
++		} else if (item->command == TODO_UPDATE_REF) {
++			struct strbuf ref = STRBUF_INIT;
++			strbuf_add(&ref, arg, item->arg_len);
++			if ((res = do_update_ref(r, ref.buf)))
++				reschedule = 1;
++			strbuf_release(&ref);
+ 		} else if (!is_noop(item->command))
+ 			return error(_("unknown command %d"), item->command);
+ 
+diff --git a/sequencer.h b/sequencer.h
+index 3ae541bb145..2cf5c1b9a38 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -95,6 +95,7 @@ enum todo_command {
+ 	TODO_LABEL,
+ 	TODO_RESET,
+ 	TODO_MERGE,
++	TODO_UPDATE_REF,
+ 	/* commands that do nothing but are counted for reporting progress */
+ 	TODO_NOOP,
+ 	TODO_DROP,
 -- 
 gitgitgadget
 
