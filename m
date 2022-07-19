@@ -2,131 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46849C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15C69C43334
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 19:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235457AbiGSSp7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 14:45:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42986 "EHLO
+        id S237521AbiGSTHP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 15:07:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbiGSSp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 14:45:58 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EDE755099
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:45:57 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id r2so21912035wrs.3
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:45:57 -0700 (PDT)
+        with ESMTP id S230104AbiGSTHO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 15:07:14 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A165C45048
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 12:07:13 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-10c0052da61so33185427fac.12
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 12:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=2EJabEl5RK0eROvj+DJNsSQ2oxiXqi8xQEi3x4gQiGY=;
-        b=RRAZDmj4a+i6eDWeYxymu//WIRkNBRkQ+QtSFugBYtc5Cu00v2mOYKE/8AtJAClOLA
-         yzF/jimoFLHrqlHXyL2AiFNZZ+sIal9v8TovcSkxTXY7txR9Rbe5HAnAhWNXHAzzdgfs
-         XXBVpD3r++deyTG7vDCSHciqdiS9fiuMkzxsZk/GdxohJZCefsITYFwkBSrngEO0lz0k
-         41r+4I44F0jtp9B3Lzt28tCVlq94b+yoqFfomy1gcRPux1sDwCRz18vyYOLlrQuMWi3s
-         Cu4kl+VSPRNohTrG1mpf8DOvBSm9XyUPQKQXkSqmo/Fxez5qQNTh64+Y1r6TxuWYjUe0
-         rVWw==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gy++yN2l2UZq9snjsW7Ve3M3M8EQldjG/tnoupwpqYo=;
+        b=jaSfm0eY/j46tMB7Rej1Oiehwa8A1aMHdfQqziv8u+6zqytVTbgGf77uzJHtYk3XmS
+         tWwsPGAp1U1qfPIB0MMRG5V0iCz5+onOSYuho9dPuR+a8Jdmvb3xcqRC5Y/nh7kGYu6V
+         m6P4oReebPXKT4bbtZAY0yp1e/6/F0kCXjKPgWEPzVddy6e1V8xcOHDFByI64j4522JE
+         NKSeJ6HMEaWHGfFvfvRRwjGVVPSLeZQdGNwqSwE/O3XJtA6odTKBD3Up0l46L8l1ieLU
+         r847Q0luJ4y9HAST7EyxBW8C0ttgilYJuCoNzbxHbFqsZqYuYkjQkCv/+q3ubb7AYkkP
+         7JGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=2EJabEl5RK0eROvj+DJNsSQ2oxiXqi8xQEi3x4gQiGY=;
-        b=P/Umrc86CHFDbvGEVEKIVMEdlZGHONBMoHUqp92kcePa9CC+vFrGhtvh8oKNZNeCdO
-         lpSSdIUJUkTITihIAZhQsbH8d39KRoyb2aPaJ6DeOEnc4R/SgMgjuhlPvJQG43mtGOcM
-         uGY0P2YPnLcCLyavdE+iceeFqu/VgsGf6faYb8SWsLFw6jumlF8oVt5QkQ9RMPerb6FB
-         vNn4lYCypf/R083DwVViYdcrVrWkfgiAZOMP8Z9XdNJZnS9+/ZETmOQYLrkpBcu2XPQ7
-         DRZMwlNGMiHRhc1/XmZgcPDNcBnJtx3UVlJXpPW0vQ9FBxM5vOATjtIcVGUSs2DvMJhj
-         J6xA==
-X-Gm-Message-State: AJIora/quto+R99T8+CYe3W+eROfv0U9y2ot7HuJzUrLl0q0BA1O4rWa
-        2JtMbf7gAK0nujJGI8VOAhQhxXT2JHw=
-X-Google-Smtp-Source: AGRyM1uYoeYQO9N/+RE4OAKNgiGsXazeG3cFCe4Z6Fiy5AZVw1iWDNo/NHYdh1qfdf+djX5Ek9FhrQ==
-X-Received: by 2002:a5d:64eb:0:b0:21d:75bb:a2f3 with SMTP id g11-20020a5d64eb000000b0021d75bba2f3mr27366609wri.118.1658256355857;
-        Tue, 19 Jul 2022 11:45:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z16-20020adff1d0000000b0021d65675583sm13960758wro.52.2022.07.19.11.45.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 11:45:55 -0700 (PDT)
-Message-Id: <pull.1294.git.1658256354725.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 18:45:54 +0000
-Subject: [PATCH] compat/win32: correct for incorrect compiler warning
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gy++yN2l2UZq9snjsW7Ve3M3M8EQldjG/tnoupwpqYo=;
+        b=pPYHzm2HHFRJqOsrJIWWr57woKG69fwitJqmbCZJbQfB+BTmGCIEvmmj2EN7pLxFsO
+         Fk2AQLAOMG+9lmuy6fag8Myk+Uxbtujj3ha6dZKbyc/gVHLqASQOsNM5Bj/eukvnEYr9
+         0uDfr2Kt3tnXBmXLrdaGRv0ZO7IibrK69oc/a+OZWIdcbAWbZ1J+b/txMkTFoHs7DOsY
+         yRbkKhKgtu5510zL9d5uCu1wZgrrco2HhoW93V7SsQRI7+otrB3CM3aVjHCJfS3Y9nn1
+         wpS4PELbDwu5yRQNZ2D/Ig18a2puGRAchq7pMycyNYUNh1q3T9upq5JFyjZvj7bVpRz5
+         yS7w==
+X-Gm-Message-State: AJIora9RcMBXuxUaXsF8Pp6KKeJTugS1EQO9BRY82v1mY+9v8/FBKbLI
+        KwraeLGiDuSlfCRex79hAwpTLsSMQN0EpV664XmS6A==
+X-Google-Smtp-Source: AGRyM1vo0VFMhdFL9iVOdhVeET1GWhgPNe7Tv8JK+bIT6hBxvxRB3eV+CviRFMzp9VEnVjDD4rTi1ngoLnEXAgnJ+cY=
+X-Received: by 2002:a05:6870:8328:b0:10c:fdf5:3be2 with SMTP id
+ p40-20020a056870832800b0010cfdf53be2mr515050oae.4.1658257632883; Tue, 19 Jul
+ 2022 12:07:12 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+References: <20220712231935.2979727-1-calvinwan@google.com>
+ <20220718214349.3379328-1-calvinwan@google.com> <xmqqsfmxd17s.fsf@gitster.g>
+In-Reply-To: <xmqqsfmxd17s.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Tue, 19 Jul 2022 12:07:02 -0700
+Message-ID: <CAFySSZDoNX_5mxdKaT8JWkpYxBFxivQc_p2q_4bQk6YsT8QeZA@mail.gmail.com>
+Subject: Re: [PATCH v5] submodule merge: update conflict error message
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, chooglen@google.com, newren@gmail.com,
+        levraiphilippeblain@gmail.com, Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+> These work on the result of calling find_first_merges(), but is it
+> possible that we are asked to call this function more than once
+> because we see conflicted submodule updates at two or more paths?
 
-The 'win build' job of our CI build is failing with the following error:
+This does get called multiple times if we see conflicted submodule
+updates at two or more paths.
 
-compat/win32/syslog.c: In function 'syslog':
-compat/win32/syslog.c:53:17: error: pointer 'pos' may be used after \
-				    'realloc' [-Werror=use-after-free]
-   53 |                 memmove(pos + 2, pos + 1, strlen(pos));
-    CC compat/poll/poll.o
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compat/win32/syslog.c:47:23: note: call to 'realloc' here
-   47 |                 str = realloc(str, st_add(++str_len, 1));
-      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> I may be misreading the code, but find_first_merges(), either the
+> version we see in this file, or the one in merge-recursive.c, or its
+> original introduced in 68d03e4a (Implement automatic fast-forward
+> merge for submodules, 2010-07-07), look safe to be called twice.  It
+> runs the get_revision() machinery, smudging the object flags while
+> walking the history, but I do not see any code that cleans up these
+> flags for the second traversal.
 
-However, between this realloc() and the use we have a line that resets
-the value of 'pos'. Thus, this error is incorrect. It is likely due to a
-new version of the compiler on the CI machines.
+I don't quite understand which flags need to be cleaned up for the
+second traversal.
 
-Instead of waiting for a new compiler, create a new variable to avoid
-this error.
+> Also, this is not a new problem, but I am afraid that the logic to
+> find existing merges in find_first_merges() might be overly loose.
+> It tries to find existing merges that can reach the two commits, and
+> then finds, among these merges, the one that is not descendant of
+> any other such merges.  Don't we end up finding a merge M
+>
+>     A---o---M
+>            /
+>           B
+>
+> when a superproject merge needs a merge of A and B in the submodule?
+> That is certainly a merge that contains both A and B and it may be
+> closer to A and B than any other existing merges, but it still may
+> not be a merge between A and B (in the depicted case, an extra
+> commit 'o' nobody ordered is included for free in the result).  I am
+> not seeing how existing code tries to avoid such a situation.
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
-    Fix error in response to compiler bug
-    
-    See [1] for an example of this error in the wild.
-    
-    [1]
-    https://github.com/gitgitgadget/git/runs/7413762368?check_suite_focus=true#step:4:297
-    
-    Thanks, -Stolee
+It is true that we find merge M and it isn't representative of a merge of A
+and B in the submodule. In this case, the existing code prints:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1294%2Fderrickstolee%2Frealloc-error-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1294/derrickstolee/realloc-error-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1294
+"Failed to merge submodule %s, but a possible merge resolution exists: %s"
 
- compat/win32/syslog.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+While this part doesn't claim M to be a guaranteed merge resolution, my
+change adds this line:
 
-diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
-index 1f8d8934cc9..0af18d88825 100644
---- a/compat/win32/syslog.c
-+++ b/compat/win32/syslog.c
-@@ -44,6 +44,7 @@ void syslog(int priority, const char *fmt, ...)
- 
- 	while ((pos = strstr(str, "%1")) != NULL) {
- 		size_t offset = pos - str;
-+		char *new_pos;
- 		char *oldstr = str;
- 		str = realloc(str, st_add(++str_len, 1));
- 		if (!str) {
-@@ -51,9 +52,9 @@ void syslog(int priority, const char *fmt, ...)
- 			warning_errno("realloc failed");
- 			return;
- 		}
--		pos = str + offset;
--		memmove(pos + 2, pos + 1, strlen(pos));
--		pos[1] = ' ';
-+		new_pos = str + offset;
-+		memmove(new_pos + 2, new_pos + 1, strlen(new_pos));
-+		new_pos[1] = ' ';
- 	}
- 
- 	switch (priority) {
+"or update to an existing commit which has merged those changes such as
+one listed above"
 
-base-commit: 71a8fab31b70c417e8f5b5f716581f89955a7082
--- 
-gitgitgadget
+Instead of adding more verbosity to this language, it seems like a better
+idea to remove "such as one listed above" entirely (and subsequently any
+of my code that flags merge resolutions).
