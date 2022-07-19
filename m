@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEBA6C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 15:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67473C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 15:26:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239503AbiGSP01 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 11:26:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56720 "EHLO
+        id S239310AbiGSP0h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 11:26:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239307AbiGSP0N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 11:26:13 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77F4C47B9F
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 08:26:12 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id n12so9275838wrc.8
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 08:26:12 -0700 (PDT)
+        with ESMTP id S238263AbiGSP0W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 11:26:22 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B36104E879
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 08:26:13 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id r1-20020a05600c35c100b003a326685e7cso676168wmq.1
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 08:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=L0VgCE7BNwD2RRZldiUuB5UO+HFFNItEiJ81+HhosQM=;
-        b=j/E+KWmblagTzLKK3+7cUyKFf6I4WHYsE7EBsyOxsNUd4Zv7K4j3YbAu3NJuztc9l8
-         tbSEQEzIbnvot+CY7eUr3ASoEWldFqnSsS+lTKlzb5Umrl3BwP2i3fGXYa0DiyfnhokX
-         32PMAberPnluGJsp0n9scWuhXwn9t1c1bv8LpRRE2iUusumWXjVl3XmgDLybDdGdnJTb
-         mKdWWe7J+FiAcIk9iDPCjcEZfK1nGSgv34AOha82JWVE/lADJ9lICfWLHRsXdCqQC+zs
-         uCkr2v3dxujOGz3QSeFcabiVQqYOIZkC25jxUpV/bRAgwy4zMZUX9NJkL2Rr52ZbxhzF
-         wohQ==
+        bh=tD3JE1An8MKdjZpK024W+LQGEwJuZTKrnjqH91Cqw5Y=;
+        b=X+822jOPtkLLQXDwFNQ/WQ+vUI3BloJC4x67ECXNGfqL9WAxVqAc4jjeDTJdDDJDMz
+         hTN39SXqDfJgarq2AEzGrAr+5+pyDKvZ+K4zr7cv2YuQ47S9mSj0CVtsbETxZ2wUMh7a
+         q7jxKVenSmUIqbpzpEMPjowUj3VR81UGMipnKy6Cxw1bUPMioNtaXNXRhf7z74lXXL7D
+         /+mbIE/thiU9hOF2prr3Q33MdKGiNmBqSzaLBBAUcMB7T714h//uk14zX5foOOXaxOaZ
+         0Kkrojt/I7ANm7efeQvn0RMRTYZ+v+jEpIlH4t+cSJagPre4ZOucOPQYjCAPfnwFv1Jb
+         Mnaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=L0VgCE7BNwD2RRZldiUuB5UO+HFFNItEiJ81+HhosQM=;
-        b=Ys7eFRbxVkSzWD3f+i3M/5LEMNYbJVJxXgIoGBcBG8iJ0+9dCt3jVgqmpTaNW6eXof
-         LSsKLReYrL8TpYASxSRD/8NydXwlv3qLlNauYeR9AWN/SQZJ+zMHkOAnJ+hlqbAyzN+r
-         kHQlUfnv2iPjl2p6m+CtK/PVsp7Q3iUIVN7Q53x7WHxkmIl/+dDox6IJQLTz448wN0+2
-         DG/3aLIz3BW6XAEELQlAxQ6+Kr6I22mpM8/FWt7S57BIHKB2pHg1nipImeUKp9Q0ZPi8
-         3fD60PhiHILHl1DlWLMsAYPfPxD1BkLw28uYrhGrdcLRrHuazsSTsmfM3NaDf/h2lE1k
-         ZXRg==
-X-Gm-Message-State: AJIora94qPodW8Ztuuslo1IuGQYHz1hnnR59W5DU8EBTcIdYAylv23QK
-        YDA5YDRf/PIbbtuQxpo9RYn0J3cm5eQ=
-X-Google-Smtp-Source: AGRyM1sMXmhn1/OlluUCOU9Nd3AalkWJ5N/GWvHmXd7hRkLSRGY/aoZKoHPnoXrwa2oPzL13DVHgrw==
-X-Received: by 2002:a05:6000:185:b0:21d:7ffc:4916 with SMTP id p5-20020a056000018500b0021d7ffc4916mr27601194wrx.692.1658244370682;
-        Tue, 19 Jul 2022 08:26:10 -0700 (PDT)
+        bh=tD3JE1An8MKdjZpK024W+LQGEwJuZTKrnjqH91Cqw5Y=;
+        b=JgFqzAKbmhF2rVx9bSV4yglj5hcj7lOGKSIvKSD9tE3F13vxrbrP7zKfk7RoF/+QPL
+         MPmIIF0bsZHyVemAjc8rlSXDoYDNxLTGMpdOHRK+/Y7mJkzkLEsOwQagfc2TyVYG2n+T
+         v6OsEwPiaIct/wspzc52ow8Q1a6/xuZ34HWqCsDrVTzTp9sGtauzr+TIXsL+u9y1bZNY
+         R0GkkqlH3a+fu4bT0yVr6HDEYUu7rQk0OcKNIcLDh3XBM+cRd3WsxhJ0pk0DEYNQbuVL
+         0FioThaNe+l19/vqMpD/W/swyzuWqtqPho//h1NbGgmqcY216VS82cglI92oui799Zs+
+         Ke7g==
+X-Gm-Message-State: AJIora+KPiDDIusc4nBhjgT9kmcszTj5+19n+Oh3G3Y91vLMh1UqocEz
+        h14+kZWB006F36VhGoUNie/lcOo/jH8=
+X-Google-Smtp-Source: AGRyM1sgv2radMGEA5wqw8rwdoEgz35CaVrZ1MFiQEfKEN3mlkm2fweABBupYgfhtBpqihEQod75Uw==
+X-Received: by 2002:a05:600c:2d09:b0:3a3:1062:ce61 with SMTP id x9-20020a05600c2d0900b003a31062ce61mr18038860wmf.138.1658244371834;
+        Tue, 19 Jul 2022 08:26:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bl13-20020adfe24d000000b0021d6d9c0bd9sm2182469wrb.82.2022.07.19.08.26.09
+        by smtp.gmail.com with ESMTPSA id d16-20020a05600c049000b0039c96b97359sm18478899wme.37.2022.07.19.08.26.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 08:26:10 -0700 (PDT)
-Message-Id: <4dfb7ae5112ebf69de779d59522477cfe6f3b210.1658244366.git.gitgitgadget@gmail.com>
+        Tue, 19 Jul 2022 08:26:11 -0700 (PDT)
+Message-Id: <98e72f71b6bec6f5c2df4139ca3df37d97ddcf54.1658244366.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1292.v2.git.1658244366.gitgitgadget@gmail.com>
 References: <pull.1292.git.1658176565751.gitgitgadget@gmail.com>
         <pull.1292.v2.git.1658244366.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 15:26:05 +0000
-Subject: [PATCH v2 2/3] midx: extract bitmap write setup
+Date:   Tue, 19 Jul 2022 15:26:06 +0000
+Subject: [PATCH v2 3/3] midx: reduce memory pressure while writing bitmaps
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,123 +70,121 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The write_midx_bitmap() method is a long method that does a lot of
-steps. It requires the write_midx_context struct for use in
-prepare_midx_packing_data() and find_commits_for_midx_bitmap(), but
-after that only needs the pack_order array.
+We noticed that some 'git multi-pack-index write --bitmap' processes
+were running with very high memory. It turns out that a lot of this
+memory is required to store a list of every object in the written
+multi-pack-index, with a second copy that has additional information
+used for the bitmap writing logic.
 
-This is a messy, but completely non-functional refactoring. The code is
-only being moved around to reduce visibility of the write_midx_context
-during the longest part of computing reachability bitmaps.
+Using 'valgrind --tool=massif' before this change, the following chart
+shows how memory load increased and was maintained throughout the
+process:
+
+    GB
+4.102^                                                             ::
+     |              @  @::@@::@@::::::::@::::::@@:#:::::::::::::@@:: :
+     |         :::::@@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |      :::: :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |    :::: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |    : :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |    : :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |   :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |   :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |   :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |   :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |   :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |   :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     |   :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     | @ :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     | @ :: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     | @::: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     | @::: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     | @::: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+     | @::: :: : :: @@:@: @ ::@ ::: ::::@: ::: @@:#:::::: :: : :@ :: :
+   0 +--------------------------------------------------------------->
+
+It turns out that the 'struct write_midx_context' data is persisting
+through the life of the process, including the 'entries' array. This
+array is used last inside find_commits_for_midx_bitmap() within
+write_midx_bitmap(). If we free (and nullify) the array at that point,
+we can free a decent chunk of memory before the bitmap logic adds more
+to the memory footprint.
+
+Here is the massif memory load chart after this change:
+
+    GB
+3.111^      #
+     |      #                              :::::::::::@::::::::::::::@
+     |      #        ::::::::::::::::::::::::: : :: : @:: ::::: :: ::@
+     |     @#  :::::::::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |     @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |  :::@#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |  :: @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |  :: @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+     |  :: @#::: ::: :::::: :::: :: : :::::::: : :: : @:: ::::: :: ::@
+   0 +--------------------------------------------------------------->
+
+The previous change introduced a refactoring of write_midx_bitmap() to
+make it more clear how much of the 'struct write_midx_context' instance
+is needed at different parts of the process. In addition, the following
+defensive programming measures were put in place:
+
+ 1. Using FREE_AND_NULL() we will at least get a segfault from reading a
+    NULL pointer instead of a use-after-free.
+
+ 2. 'entries_nr' is also set to zero to make any loop that would iterate
+    over the entries be trivial.
+
+ 3. Add significant comments in write_midx_internal() to add warnings
+    for future authors who might accidentally add references to this
+    cleared memory.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- midx.c | 56 ++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 32 insertions(+), 24 deletions(-)
+ midx.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/midx.c b/midx.c
-index 5f0dd386b02..e2dd808b35d 100644
+index e2dd808b35d..772ab7d2944 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -1053,40 +1053,35 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
- 	return cb.commits;
- }
+@@ -1451,6 +1451,15 @@ static int write_midx_internal(const char *object_dir,
  
--static int write_midx_bitmap(char *midx_name, unsigned char *midx_hash,
--			     struct write_midx_context *ctx,
-+static int write_midx_bitmap(const char *midx_name,
-+			     const unsigned char *midx_hash,
-+			     struct packing_data *pdata,
-+			     struct commit **commits,
-+			     uint32_t commits_nr,
-+			     uint32_t *pack_order,
- 			     const char *refs_snapshot,
- 			     unsigned flags)
- {
--	struct packing_data pdata;
--	struct pack_idx_entry **index;
--	struct commit **commits = NULL;
--	uint32_t i, commits_nr;
-+	int ret, i;
- 	uint16_t options = 0;
--	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name, hash_to_hex(midx_hash));
--	int ret;
--
--	if (!ctx->entries_nr)
--		BUG("cannot write a bitmap without any objects");
-+	struct pack_idx_entry **index;
-+	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name,
-+					hash_to_hex(midx_hash));
+ 		commits = find_commits_for_midx_bitmap(&commits_nr, refs_snapshot, &ctx);
  
- 	if (flags & MIDX_WRITE_BITMAP_HASH_CACHE)
- 		options |= BITMAP_OPT_HASH_CACHE;
- 
--	prepare_midx_packing_data(&pdata, ctx);
--
--	commits = find_commits_for_midx_bitmap(&commits_nr, refs_snapshot, ctx);
--
- 	/*
- 	 * Build the MIDX-order index based on pdata.objects (which is already
- 	 * in MIDX order; c.f., 'midx_pack_order_cmp()' for the definition of
- 	 * this order).
- 	 */
--	ALLOC_ARRAY(index, pdata.nr_objects);
--	for (i = 0; i < pdata.nr_objects; i++)
--		index[i] = &pdata.objects[i].idx;
-+	ALLOC_ARRAY(index, pdata->nr_objects);
-+	for (i = 0; i < pdata->nr_objects; i++)
-+		index[i] = &pdata->objects[i].idx;
- 
- 	bitmap_writer_show_progress(flags & MIDX_PROGRESS);
--	bitmap_writer_build_type_index(&pdata, index, pdata.nr_objects);
-+	bitmap_writer_build_type_index(pdata, index, pdata->nr_objects);
- 
- 	/*
- 	 * bitmap_writer_finish expects objects in lex order, but pack_order
-@@ -1101,16 +1096,16 @@ static int write_midx_bitmap(char *midx_name, unsigned char *midx_hash,
- 	 * happens between bitmap_writer_build_type_index() and
- 	 * bitmap_writer_finish().
- 	 */
--	for (i = 0; i < pdata.nr_objects; i++)
--		index[ctx->pack_order[i]] = &pdata.objects[i].idx;
-+	for (i = 0; i < pdata->nr_objects; i++)
-+		index[pack_order[i]] = &pdata->objects[i].idx;
- 
- 	bitmap_writer_select_commits(commits, commits_nr, -1);
--	ret = bitmap_writer_build(&pdata);
-+	ret = bitmap_writer_build(pdata);
- 	if (ret < 0)
- 		goto cleanup;
- 
- 	bitmap_writer_set_checksum(midx_hash);
--	bitmap_writer_finish(index, pdata.nr_objects, bitmap_name, options);
-+	bitmap_writer_finish(index, pdata->nr_objects, bitmap_name, options);
- 
- cleanup:
- 	free(index);
-@@ -1443,8 +1438,21 @@ static int write_midx_internal(const char *object_dir,
- 	if (flags & MIDX_WRITE_REV_INDEX &&
- 	    git_env_bool("GIT_TEST_MIDX_WRITE_REV", 0))
- 		write_midx_reverse_index(midx_name.buf, midx_hash, &ctx);
++		/*
++		 * The previous steps translated the information from
++		 * 'entries' into information suitable for constructing
++		 * bitmaps. We no longer need that array, so clear it to
++		 * reduce memory pressure.
++		 */
++		FREE_AND_NULL(ctx.entries);
++		ctx.entries_nr = 0;
 +
- 	if (flags & MIDX_WRITE_BITMAP) {
--		if (write_midx_bitmap(midx_name.buf, midx_hash, &ctx,
-+		struct packing_data pdata;
-+		struct commit **commits;
-+		uint32_t commits_nr;
-+
-+		if (!ctx.entries_nr)
-+			BUG("cannot write a bitmap without any objects");
-+
-+		prepare_midx_packing_data(&pdata, &ctx);
-+
-+		commits = find_commits_for_midx_bitmap(&commits_nr, refs_snapshot, &ctx);
-+
-+		if (write_midx_bitmap(midx_name.buf, midx_hash, &pdata,
-+				      commits, commits_nr, ctx.pack_order,
+ 		if (write_midx_bitmap(midx_name.buf, midx_hash, &pdata,
+ 				      commits, commits_nr, ctx.pack_order,
  				      refs_snapshot, flags) < 0) {
- 			error(_("could not write multi-pack bitmap"));
- 			result = 1;
+@@ -1459,6 +1468,10 @@ static int write_midx_internal(const char *object_dir,
+ 			goto cleanup;
+ 		}
+ 	}
++	/*
++	 * NOTE: Do not use ctx.entries beyond this point, since it might
++	 * have been freed in the previous if block.
++	 */
+ 
+ 	if (ctx.m)
+ 		close_object_store(the_repository->objects);
 -- 
 gitgitgadget
-
