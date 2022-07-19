@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AF50C43334
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1D2FCCA483
 	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:32:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240126AbiGSSc0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 14:32:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60136 "EHLO
+        id S240138AbiGSSc1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 14:32:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240127AbiGSScX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 14:32:23 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C9C85A16D
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:32:22 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id a11so3347314wmq.3
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:32:21 -0700 (PDT)
+        with ESMTP id S239551AbiGSScY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 14:32:24 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4444857E15
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:32:23 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id j1so18423398wrs.4
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yEtHhVCIrZpEIOt+KxyhRfN9vJ6zK1xLKVAOv4WTj+A=;
-        b=B0JnRAiTwOlf+4wYDg6nxxct8WCyFFhJTb4z2jGo9mgX3bxVrkYfIRba1oIGaMggyc
-         ioMB6Eg+MnTOvw93bIXcfbw6sBJlQe240vfDjiYTqMgrRJ+aodOyICm6NBdwSZzN87oC
-         bdYJkOsfpUafhO2+Z11Im68irqssSbWb2ynsDvadinX/IXLbayw5XWNpGC1uUJf5o4jr
-         5KCHqWQeeSHy7/8jCYx+6utKahcWkOYuKXp1Jyj2X0xOBbtvJvTris8q+4uf6Klob6G9
-         K8gbPd89T4Ba85xuJmZf2b0frZuLGzf4iYyYKYGdUmdqSQZcQazCIePfZ3B7HmFkKygF
-         crWg==
+        bh=/E+2Jd6OxKlN9Tyqjv9wdk1ekcImn1lNmwNLQccL7cE=;
+        b=OpybqMoM54/+3Mbdre7GPWqyaQjwe10KF4REuooiQgD2YIYVX8LvfAh36z1C5RaNkZ
+         j1P1XvaGihd0Ut2hO4YyjYJy7sJDBYO74/D2QdujlNKHXep6v33A4FJGSoOr48BI5YCK
+         7sU6ypXbQjTm48Qp9cWoIh1SN5fOcfvhXRlGcickWctqRu5u5uZ8jRFnSdsZS9YmAFk3
+         BUBbcURMKwIzZZvlSKYp0ZD4zBSWMovp5FZX6MBY4XOPheieIlvrpsXTxI0iCfkR9ac4
+         FvLICsAXNxmRwpADnkr9iNHAfqJOZfgSRj4zz7iM08V1ZKaAFqj+eH55NeEoypg67Z5X
+         7F5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yEtHhVCIrZpEIOt+KxyhRfN9vJ6zK1xLKVAOv4WTj+A=;
-        b=JcwUJ7vA9ci0UbAI4B6A1RJ3ctZ219S+b3Ot+2kaiBXY1DmdTU7VQvW5R3zmCtRz2K
-         rwDRHryFMO6abMk1uWogY9GNoZXmYhBd7SNgQgENqdbECFBfXd8pEmztjoUQW4o8IuNK
-         fZxN2F5uAbKA73tyRIjt0dr6Mtdz/jc9+HbhYfdn5KMuJCASUHO+lweP6UceaJlUzjO0
-         DyObOKw6rN/eNyAz0BVXnBBi7xYUurgOl8rUw98KcA+EWukWzeea5SjEjM1omAQrkp7c
-         i04EmRRTYUywopWxIn2IEw2zmT0Rn2dL4AJPAO9UFWdPdS6PNoCUWnSXLmbdqxY+dUpf
-         S/IQ==
-X-Gm-Message-State: AJIora/XyxtyBs9gPphDnZSqMkPylhqVkfMvSyb2QYp2HV+K8fsjQHiS
-        nUjUg3BWBqP9K2/Vc5WtrGO1ZXmLFq0=
-X-Google-Smtp-Source: AGRyM1uumF6EmILigpSfrfzEaXualLvyLhePWAYXJ86Cj8EFzS9nFZaOfgZ0RmvXOIIk9szQrjttDw==
-X-Received: by 2002:a7b:c8da:0:b0:3a3:19e:4a3a with SMTP id f26-20020a7bc8da000000b003a3019e4a3amr540011wml.201.1658255540145;
-        Tue, 19 Jul 2022 11:32:20 -0700 (PDT)
+        bh=/E+2Jd6OxKlN9Tyqjv9wdk1ekcImn1lNmwNLQccL7cE=;
+        b=1I79FDhzGd7JWFDGHjmFGMrH/Q8D1DrFDKh0dL4X+blKE4WG9nokKck8PKwY+ByOzq
+         gK3loauq5aa0OaIZ85pArW0Vo/n1eN6Ct2G7YkoDkMBoDO6bQ1MhxNGhhq4vJDJMzYxR
+         ihkgDhjkHDHldnRn7rpx3mRG7KVYhcRCRQm6drLeimyuGk0nA/ngG9lMRrvWDXmt5/0T
+         WdVnlZqeBqLjop1R42AWSwl0UaxL3r7eCJGLtVox22J81Nuombd9lnid9j38GfCLkTmP
+         G4kLtoSaAD2/jcnH6hgEooNyoM0w61DrBZuLL6awAGL8BGfZoy5XnpqIrDEZ64Najx9h
+         Zxgg==
+X-Gm-Message-State: AJIora+W2o4+vPWUk4eVdAKY04Sz0vpeIUxu0Pz0Ital7irEC7FOqRty
+        IgzGA99V1pmQqjYJiidHqK+1Wt0jEIE=
+X-Google-Smtp-Source: AGRyM1tkHEr9+UesDuIT7JVpDBD32bbLYccusz+qBRs8aXtH/SNR0TRb/MVjuK16qpGgudfs3U6Fqg==
+X-Received: by 2002:adf:f3c7:0:b0:21d:9349:7a5 with SMTP id g7-20020adff3c7000000b0021d934907a5mr27993769wrp.23.1658255541293;
+        Tue, 19 Jul 2022 11:32:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v12-20020adfe28c000000b0021e2e1b17d9sm2836044wri.51.2022.07.19.11.32.19
+        by smtp.gmail.com with ESMTPSA id h4-20020a1c2104000000b00397402ae674sm23385872wmh.11.2022.07.19.11.32.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 11:32:19 -0700 (PDT)
-Message-Id: <d5ca7bffac0679823c78228e6d06ea9545dc4325.1658255537.git.gitgitgadget@gmail.com>
+        Tue, 19 Jul 2022 11:32:20 -0700 (PDT)
+Message-Id: <db32444b87917089aaef7d501cc0e2a7fa969d97.1658255537.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1274.v3.git.1658255537.gitgitgadget@gmail.com>
 References: <pull.1274.v2.git.1657852722.gitgitgadget@gmail.com>
         <pull.1274.v3.git.1658255537.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 18:32:13 +0000
-Subject: [PATCH v3 1/5] daemon: clarify directory arguments
+Date:   Tue, 19 Jul 2022 18:32:14 +0000
+Subject: [PATCH v3 2/5] git-cvsserver: clarify directory list
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,134 +71,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The undecorated arguments to the 'git-daemon' command provide a list of
-directories. When at least one directory is specified, then 'git-daemon'
-only serves requests that are within that directory list. The boolean
-'--strict-paths' option makes the list more explicit in that
-subdirectories are no longer included.
+The documentation and error messages for git-cvsserver include some
+references to a "whitelist" that is not otherwise included in the
+documentation. When different parts of the documentation do not use
+common language, this can lead to confusion as to how things are meant
+to operate.
 
-The existing documentation and error messages around this directory list
-refer to it and its behavior as a "whitelist". The word "whitelist" has
-cultural implications that are not inclusive.  Thankfully, it is not
-difficult to reword and avoid its use. In the process, we can define the
-purpose of this directory list directly.
+Further, the word "whitelist" has cultural implications that make its
+use non-inclusive. Thankfully, we can remove it while increasing
+clarity.
 
-In Documentation/git-daemon.txt, rewrite the OPTIONS section around the
-'<directory>' option. Add additional clarity to the other options that
-refer to these directories.
+Update Documentation/git-cvsserver.txt in a similar way to the previous
+change to Documentation/git-daemon.txt. The optional '<directory>...'
+list can specify a list of allowed directories. We refer to that list
+directly inside of the documentation for the GIT_CVSSERVER_ROOT
+environment variable.
 
-Some error messages can also be improved in daemon.c. The
-'--strict-paths' option requires '<directory>' arguments, so refer to
-that section of the documentation directly. A logerror() call points out
-that a requested directory is not in the specified directory list. We
-can use "list" here without any loss of information.
+While modifying this documentation, update the environment variables to
+use a list format. We use the modern way of tabbing the description of
+each variable in this section. We do _not_ update the description of
+'<directory>...' to use tabs this way since the rest of the items in the
+OPTIONS list do not use this modern formatting.
+
+A single error message in the actual git-cvsserver.perl code refers to
+the whitelist during argument parsing. Instead, refer to the directory
+list that has been clarified in the documentation.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-daemon.txt | 21 +++++++++++----------
- daemon.c                     |  8 ++++----
- 2 files changed, 15 insertions(+), 14 deletions(-)
+ Documentation/git-cvsserver.txt | 19 ++++++++++---------
+ git-cvsserver.perl              |  2 +-
+ t/t9400-git-cvsserver-server.sh |  2 +-
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index fdc28c041c7..236df516c73 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -32,8 +32,8 @@ that service if it is enabled.
- It verifies that the directory has the magic file "git-daemon-export-ok", and
- it will refuse to export any Git directory that hasn't explicitly been marked
- for export this way (unless the `--export-all` parameter is specified). If you
--pass some directory paths as 'git daemon' arguments, you can further restrict
--the offers to a whitelist comprising of those.
-+pass some directory paths as 'git daemon' arguments, the offers are limited to
-+repositories within those directories.
- 
- By default, only `upload-pack` service is enabled, which serves
- 'git fetch-pack' and 'git ls-remote' clients, which are invoked
-@@ -50,7 +50,7 @@ OPTIONS
- 	Match paths exactly (i.e. don't allow "/foo/repo" when the real path is
- 	"/foo/repo.git" or "/foo/repo/.git") and don't do user-relative paths.
- 	'git daemon' will refuse to start when this option is enabled and no
--	whitelist is specified.
-+	directory arguments are provided.
- 
- --base-path=<path>::
- 	Remap all the path requests as relative to the given path.
-@@ -73,7 +73,7 @@ OPTIONS
- 	%IP for the server's IP address, %P for the port number,
- 	and %D for the absolute path of the named repository.
- 	After interpolation, the path is validated against the directory
--	whitelist.
-+	list.
- 
- --export-all::
- 	Allow pulling from all directories that look like Git repositories
-@@ -218,9 +218,11 @@ standard output to be sent to the requestor as an error message when
- it declines the service.
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 4dc57ed2547..53f111bc0ac 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -63,11 +63,10 @@ Print version information and exit
+ Print usage information and exit
  
  <directory>::
--	A directory to add to the whitelist of allowed directories. Unless
--	--strict-paths is specified this will also include subdirectories
--	of each named directory.
-+	The remaining arguments provide a list of directories. If any
-+	directories are specified, then the `git-daemon` process will
-+	serve a requested directory only if it is contained in one of
-+	these directories. If `--strict-paths` is specified, then the
-+	requested directory must match one of these directories exactly.
+-You can specify a list of allowed directories. If no directories
+-are given, all are allowed. This is an additional restriction, gitcvs
+-access still needs to be enabled by the `gitcvs.enabled` config option
+-unless `--export-all` was given, too.
+-
++The remaining arguments provide a list of directories. If no directories
++are given, then all are allowed. Repositories within these directories
++still require the `gitcvs.enabled` config option, unless `--export-all`
++is specified.
  
- SERVICES
- --------
-@@ -264,9 +266,8 @@ git		9418/tcp		# Git Version Control System
+ LIMITATIONS
+ -----------
+@@ -311,11 +310,13 @@ ENVIRONMENT
+ These variables obviate the need for command-line options in some
+ circumstances, allowing easier restricted usage through git-shell.
  
- 'git daemon' as inetd server::
- 	To set up 'git daemon' as an inetd service that handles any
--	repository under the whitelisted set of directories, /pub/foo
--	and /pub/bar, place an entry like the following into
--	/etc/inetd all on one line:
-+	repository within `/pub/foo` or `/pub/bar`, place an entry like
-+	the following into `/etc/inetd` all on one line:
- +
- ------------------------------------------------
- 	git stream tcp nowait nobody  /usr/bin/git
-diff --git a/daemon.c b/daemon.c
-index 58f1077885c..0ae7d12b5c1 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -279,7 +279,7 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
- 		/* The validation is done on the paths after enter_repo
- 		 * appends optional {.git,.git/.git} and friends, but
- 		 * it does not use getcwd().  So if your /pub is
--		 * a symlink to /mnt/pub, you can whitelist /pub and
-+		 * a symlink to /mnt/pub, you can include /pub and
- 		 * do not have to say /mnt/pub.
- 		 * Do not say /pub/.
- 		 */
-@@ -298,7 +298,7 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
- 			return path;
- 	}
+-GIT_CVSSERVER_BASE_PATH takes the place of the argument to --base-path.
++GIT_CVSSERVER_BASE_PATH::
++	This variable replaces the argument to --base-path.
  
--	logerror("'%s': not in whitelist", path);
-+	logerror("'%s': not in directory list", path);
- 	return NULL;		/* Fallthrough. Deny by default */
+-GIT_CVSSERVER_ROOT specifies a single-directory whitelist. The
+-repository must still be configured to allow access through
+-git-cvsserver, as described above.
++GIT_CVSSERVER_ROOT::
++	This variable specifies a single directory, replacing the
++	`<directory>...` argument list. The repository still requires the
++	`gitcvs.enabled` config option, unless `--export-all` is specified.
+ 
+ When these environment variables are set, the corresponding
+ command-line arguments may not be used.
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 4c8118010a8..7b757360e28 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -152,7 +152,7 @@ $state->{allowed_roots} = [ @ARGV ];
+ 
+ # don't export the whole system unless the users requests it
+ if ($state->{'export-all'} && !@{$state->{allowed_roots}}) {
+-    die "--export-all can only be used together with an explicit whitelist\n";
++    die "--export-all can only be used together with an explicit '<directory>...' list\n";
  }
  
-@@ -403,7 +403,7 @@ static int run_service(const char *dir, struct daemon_service *service,
- 	 * a "git-daemon-export-ok" flag that says that the other side
- 	 * is ok with us doing this.
- 	 *
--	 * path_ok() uses enter_repo() and does whitelist checking.
-+	 * path_ok() uses enter_repo() and checks for included directories.
- 	 * We only need to make sure the repository is exported.
- 	 */
+ # Environment handling for running under git-shell
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 210ddf09e30..379b19f2f85 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -221,7 +221,7 @@ test_expect_success 'req_Root (export-all)' \
+   'cat request-anonymous | git-cvsserver --export-all pserver "$WORKDIR" >log 2>&1 &&
+    sed -ne \$p log | grep "^I LOVE YOU\$"'
  
-@@ -1444,7 +1444,7 @@ int cmd_main(int argc, const char **argv)
- 		cred = prepare_credentials(user_name, group_name);
+-test_expect_success 'req_Root failure (export-all w/o whitelist)' \
++test_expect_success 'req_Root failure (export-all w/o directory list)' \
+   '! (cat request-anonymous | git-cvsserver --export-all pserver >log 2>&1 || false)'
  
- 	if (strict_paths && (!ok_paths || !*ok_paths))
--		die("option --strict-paths requires a whitelist");
-+		die("option --strict-paths requires '<directory>' arguments");
- 
- 	if (base_path && !is_directory(base_path))
- 		die("base-path '%s' does not exist or is not a directory",
+ test_expect_success 'req_Root (everything together)' \
 -- 
 gitgitgadget
 
