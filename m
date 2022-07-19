@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5CB0C43334
-	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2DFFC43334
+	for <git@archiver.kernel.org>; Tue, 19 Jul 2022 18:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238086AbiGSSdz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jul 2022 14:33:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33160 "EHLO
+        id S238316AbiGSSeD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jul 2022 14:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237117AbiGSSdv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jul 2022 14:33:51 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 074DF5A2DD
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:51 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id c22so1301035wmr.2
-        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:50 -0700 (PDT)
+        with ESMTP id S237949AbiGSSdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jul 2022 14:33:54 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E60E5B078
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:52 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 8-20020a05600c024800b003a2fe343db1so9700937wmj.1
+        for <git@vger.kernel.org>; Tue, 19 Jul 2022 11:33:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2uRRWueLbS1MmS8wlJxUl94o4kalllPCtK153o7kM6c=;
-        b=g6QIVwVwCk4chWdA3x9RAuUgpOld2qUUTKHxodxzA+ISjGoRy8ulq5xtyc9bSIwc7N
-         VW5JTdCLr8yI0WTem2VFdvBpEUIPnR3H1W2+YRozlJAuG2QW2ruUDJWCgNI793FX+Eg0
-         it+dvQ4/yyzUtNXqLyo4mC8feI4ilR7TYoKS251lPW+cnzjBYTKmSrDmEDe9cQCbDwcr
-         9ui50/UqhZrBDl32uKq1hy9vFgrilTqveTm/OTd1Pzb6E8Xf55SfSM/IhIezm8ybXAyv
-         HkblIO7lHUtr+OsR3WVRgvMt/ZfAMXLdzXvrcM2Lc5hiI8fYv2TrKhKc6D715X0yQzmH
-         P6iA==
+        bh=erOXUEg/g3i+8IJ3MAOgO9Z72yLC4GPeee8xOGkU9fc=;
+        b=J8EUOFYi2++jnr5uEZjU/xhxIGtVXtLzxQ3TmTHYZjEDyhQVTFVUC6J7+epkDVYfM9
+         FlfdHUlcSmmmv4G8TjN+BhmaD6oTgsXLQ1vyUNSH5kbHLLNq0Qrkswc7vyKchqUPUVyw
+         rOV1VcgZRuLUj1duVGlMIkBlabBLAJcrj4/8XoIAXOKBWX5qmQpWOSheWK0PmRDkBB3c
+         s2H8v6XRWOSufiNClLFNOM360iFkmMa5nwd8g9wyZ7a0+UjShESUlb04qgnvsni2SsHa
+         e5ksyDiA5TBiC/p7pQhtcXecAyc0YzDvuymsEYrRE3DjKSvrYwBnHrjuhdi/gW2SqXWO
+         XPfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2uRRWueLbS1MmS8wlJxUl94o4kalllPCtK153o7kM6c=;
-        b=XmKFGJplNiefCe6tUZBhYLyPYHsMHNdCwZd1lpqVZL02cRw24StUqXm2q3rQL4PftH
-         J89eeefOQXuQCNYazbQz91hJwTD0JGDpOIsXyEJ3S5kItSqrI9/zKfw49lVoJzDsrqKw
-         CpyC0x0w7NswOVwxNhVRuAOZt5KdHCya2Hphu5IqnkdOE3cz/ap3liH/MIfwj5XivZ1A
-         ++EJA0XVRw1Wm5pdjiQ0s7KxJz4cEyuow3TqUjedQcI5V+tAQAKGA9/wWNOKu58M9/HI
-         CwKPrEZhyWe1ybr4wocw8XXFDs7bgMS9PxvhBUmk8CRR3V2VkFnEC2z1kYOjuGmKq9gi
-         U4lQ==
-X-Gm-Message-State: AJIora9ZGRvlePgSlnuXGWJCLs+tI/TwMgeCihsPNrP3e5zYZREaeoLY
-        +LwLuSwARQslr4dZbi2y7aZW2YYjKeI=
-X-Google-Smtp-Source: AGRyM1uzhZ7i1tlGJwF4dwC3K9KM0Jpyhf0OxI4SZ5Q/Ryp4N+HYzzATAiVRLZ4CbhPRWXdbeqywfA==
-X-Received: by 2002:a1c:730c:0:b0:3a2:fd70:ee3 with SMTP id d12-20020a1c730c000000b003a2fd700ee3mr542762wmb.168.1658255629226;
-        Tue, 19 Jul 2022 11:33:49 -0700 (PDT)
+        bh=erOXUEg/g3i+8IJ3MAOgO9Z72yLC4GPeee8xOGkU9fc=;
+        b=LzHey9cexrYBgpBwo01K4hg2rmQt/y9OvcopKCZ2qOut99uUCy4ORoAGBTmJSPImHi
+         fONzIKRUmODLbdHsg/9xsnQywQsdfgIXpA4N/18YuVgslu7LkFSjeiw6ZUpR9T/T4TK+
+         e3A2jqkjCQbssHFfTH6lIlAHWuUSS3fSpsigjCFPS7y4bpqteEB4QPl1m34L1GOwzD32
+         HDi4wuzLwH/iWhD0MPmGh8Hu7lWAqFlmxXt0mBKo6QeHWL2om7Z7cbpGFofS2YLeWIHe
+         3lSnhYmjUZOj8+kg2RQjw++4lHVgnEAkai0CFvTrhO3qKufDpU3VCYnwGus54RgeOodJ
+         uutg==
+X-Gm-Message-State: AJIora/LO2VB4kUngbkPiHgFFpKoOsroBqV5kJ33nE26DBNrxzvqN1nX
+        tFaqghGJFMxUr9yYDKtX3m7DjVIcxiE=
+X-Google-Smtp-Source: AGRyM1taWuQysH3mKtPnbyQUd2t6n6U4JfULNeOuKazFpZtW46cLJwJ8JhO0SS8rN+SV89PK8wViug==
+X-Received: by 2002:a05:600c:4e11:b0:3a1:967a:7693 with SMTP id b17-20020a05600c4e1100b003a1967a7693mr557278wmq.58.1658255630527;
+        Tue, 19 Jul 2022 11:33:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u18-20020adfdb92000000b0021e43b4edf0sm1257267wri.20.2022.07.19.11.33.48
+        by smtp.gmail.com with ESMTPSA id p6-20020adfe606000000b0021d73772c87sm2257055wrm.91.2022.07.19.11.33.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 11:33:48 -0700 (PDT)
-Message-Id: <540a3be256f8a0ca57ae0ed90cc04190a28e91e1.1658255624.git.gitgitgadget@gmail.com>
+        Tue, 19 Jul 2022 11:33:49 -0700 (PDT)
+Message-Id: <1089a0edb7318c3102af26e98ce1837a402bf455.1658255624.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 References: <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
         <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jul 2022 18:33:34 +0000
-Subject: [PATCH v5 02/12] t2407: test branches currently using apply backend
+Date:   Tue, 19 Jul 2022 18:33:35 +0000
+Subject: [PATCH v5 03/12] branch: consider refs under 'update-refs'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,43 +72,222 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The tests in t2407 that verify the branch_checked_out() helper in the
-case of bisects and rebases were added by 9347303db89 (branch: check for
-bisects and rebases, 2022-06-08). However, that commit failed to check
-for rebases that are using the 'apply' backend.
+The branch_checked_out() helper helps commands like 'git branch' and
+'git fetch' from overwriting refs that are currently checked out in
+other worktrees.
 
-Add a test that checks the apply backend. The implementation was already
-correct here, but it is good to have regression tests before modifying
-the implementation further.
+A future update to 'git rebase' will introduce a new '--update-refs'
+option which will update the local refs that point to commits that are
+being rebased. To avoid collisions as the rebase completes, we want to
+make the future data store for these refs to be considered by
+branch_checked_out().
+
+The data store is a plaintext file inside the 'rebase-merge' directory
+for that worktree. The file lists refnames followed by two OIDs, each on
+separate lines. The OIDs will be used to store the original values of
+the refs and the to-be-written values as the rebase progresses, but can
+be ignored at the moment.
+
+Create a new sequencer_get_update_refs_state() method that parses this
+file and populates a struct string_list with the ref-OID pairs. We can
+then use this list to add to the current_checked_out_branches strmap
+used by branch_checked_out().
+
+To properly navigate to the rebase directory for a given worktree,
+extract the static strbuf_worktree_gitdir() method to a public API
+method.
+
+We can test that this works without having Git write this file by
+artificially creating one in our test script, at least until 'git rebase
+--update-refs' is implemented and we can use it directly.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t2407-worktree-heads.sh | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ branch.c                  | 13 +++++++
+ sequencer.c               | 74 +++++++++++++++++++++++++++++++++++++++
+ sequencer.h               |  9 +++++
+ t/t2407-worktree-heads.sh | 23 ++++++++++++
+ 4 files changed, 119 insertions(+)
 
+diff --git a/branch.c b/branch.c
+index 526e8237673..f252c4eef6c 100644
+--- a/branch.c
++++ b/branch.c
+@@ -365,6 +365,7 @@ static void prepare_checked_out_branches(void)
+ 		char *old;
+ 		struct wt_status_state state = { 0 };
+ 		struct worktree *wt = worktrees[i++];
++		struct string_list update_refs = STRING_LIST_INIT_DUP;
+ 
+ 		if (wt->is_bare)
+ 			continue;
+@@ -400,6 +401,18 @@ static void prepare_checked_out_branches(void)
+ 			strbuf_release(&ref);
+ 		}
+ 		wt_status_state_free_buffers(&state);
++
++		if (!sequencer_get_update_refs_state(get_worktree_git_dir(wt),
++						     &update_refs)) {
++			struct string_list_item *item;
++			for_each_string_list_item(item, &update_refs) {
++				old = strmap_put(&current_checked_out_branches,
++						 item->string,
++						 xstrdup(wt->path));
++				free(old);
++			}
++			string_list_clear(&update_refs, 1);
++		}
+ 	}
+ 
+ 	free_worktrees(worktrees);
+diff --git a/sequencer.c b/sequencer.c
+index 8c3ed3532ac..7d131d06cc3 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -147,6 +147,20 @@ static GIT_PATH_FUNC(rebase_path_squash_onto, "rebase-merge/squash-onto")
+  */
+ static GIT_PATH_FUNC(rebase_path_refs_to_delete, "rebase-merge/refs-to-delete")
+ 
++/*
++ * The update-refs file stores a list of refs that will be updated at the end
++ * of the rebase sequence. The 'update-ref <ref>' commands in the todo file
++ * update the OIDs for the refs in this file, but the refs are not updated
++ * until the end of the rebase sequence.
++ *
++ * rebase_path_update_refs() returns the path to this file for a given
++ * worktree directory. For the current worktree, pass the_repository->gitdir.
++ */
++static char *rebase_path_update_refs(const char *wt_git_dir)
++{
++	return xstrfmt("%s/rebase-merge/update-refs", wt_git_dir);
++}
++
+ /*
+  * The following files are written by git-rebase just after parsing the
+  * command-line.
+@@ -169,6 +183,15 @@ static GIT_PATH_FUNC(rebase_path_no_reschedule_failed_exec, "rebase-merge/no-res
+ static GIT_PATH_FUNC(rebase_path_drop_redundant_commits, "rebase-merge/drop_redundant_commits")
+ static GIT_PATH_FUNC(rebase_path_keep_redundant_commits, "rebase-merge/keep_redundant_commits")
+ 
++/**
++ * A 'struct update_refs_record' represents a value in the update-refs
++ * list. We use a string_list to map refs to these (before, after) pairs.
++ */
++struct update_ref_record {
++	struct object_id before;
++	struct object_id after;
++};
++
+ static int git_sequencer_config(const char *k, const char *v, void *cb)
+ {
+ 	struct replay_opts *opts = cb;
+@@ -5901,3 +5924,54 @@ int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
+ 
+ 	return 0;
+ }
++
++int sequencer_get_update_refs_state(const char *wt_dir,
++				    struct string_list *refs)
++{
++	int result = 0;
++	FILE *fp = NULL;
++	struct strbuf ref = STRBUF_INIT;
++	struct strbuf hash = STRBUF_INIT;
++	struct update_ref_record *rec = NULL;
++
++	char *path = rebase_path_update_refs(wt_dir);
++
++	fp = fopen(path, "r");
++	if (!fp)
++		goto cleanup;
++
++	while (strbuf_getline(&ref, fp) != EOF) {
++		struct string_list_item *item;
++
++		CALLOC_ARRAY(rec, 1);
++
++		if (strbuf_getline(&hash, fp) == EOF ||
++		    get_oid_hex(hash.buf, &rec->before)) {
++			warning(_("update-refs file at '%s' is invalid"),
++				  path);
++			result = -1;
++			goto cleanup;
++		}
++
++		if (strbuf_getline(&hash, fp) == EOF ||
++		    get_oid_hex(hash.buf, &rec->after)) {
++			warning(_("update-refs file at '%s' is invalid"),
++				  path);
++			result = -1;
++			goto cleanup;
++		}
++
++		item = string_list_insert(refs, ref.buf);
++		item->util = rec;
++		rec = NULL;
++	}
++
++cleanup:
++	if (fp)
++		fclose(fp);
++	free(path);
++	free(rec);
++	strbuf_release(&ref);
++	strbuf_release(&hash);
++	return result;
++}
+diff --git a/sequencer.h b/sequencer.h
+index da64473636b..3ae541bb145 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -232,4 +232,13 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose);
+ int sequencer_get_last_command(struct repository* r,
+ 			       enum replay_action *action);
+ int sequencer_determine_whence(struct repository *r, enum commit_whence *whence);
++
++/**
++ * Append the set of ref-OID pairs that are currently stored for the 'git
++ * rebase --update-refs' feature if such a rebase is currently happening.
++ *
++ * Localized to a worktree's git dir.
++ */
++int sequencer_get_update_refs_state(const char *wt_dir, struct string_list *refs);
++
+ #endif /* SEQUENCER_H */
 diff --git a/t/t2407-worktree-heads.sh b/t/t2407-worktree-heads.sh
-index 100ab286d5c..a67ce5fb003 100755
+index a67ce5fb003..97f5c87f8c8 100755
 --- a/t/t2407-worktree-heads.sh
 +++ b/t/t2407-worktree-heads.sh
-@@ -61,7 +61,17 @@ test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in bisect' '
- 	grep "cannot force update the branch '\''wt-4'\'' checked out at.*wt-4" err
+@@ -81,6 +81,29 @@ test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in rebase (mer
+ 	grep "cannot force update the branch '\''wt-2'\'' checked out at.*wt-2" err
  '
  
--test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in rebase' '
-+test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in rebase (apply)' '
-+	test_when_finished git -C wt-2 rebase --abort &&
++test_expect_success 'refuse to overwrite: worktree in rebase with --update-refs' '
++	test_when_finished rm -rf .git/worktrees/wt-3/rebase-merge &&
 +
-+	# This will fail part-way through due to a conflict.
-+	test_must_fail git -C wt-2 rebase --apply conflict-2 &&
++	mkdir -p .git/worktrees/wt-3/rebase-merge &&
++	touch .git/worktrees/wt-3/rebase-merge/interactive &&
 +
-+	test_must_fail git branch -f wt-2 HEAD 2>err &&
-+	grep "cannot force update the branch '\''wt-2'\'' checked out at.*wt-2" err
++	cat >.git/worktrees/wt-3/rebase-merge/update-refs <<-EOF &&
++	refs/heads/fake-3
++	$(git rev-parse HEAD~1)
++	$(git rev-parse HEAD)
++	refs/heads/fake-4
++	$(git rev-parse HEAD)
++	$(git rev-parse HEAD)
++	EOF
++
++	for i in 3 4
++	do
++		test_must_fail git branch -f fake-$i HEAD 2>err &&
++		grep "cannot force update the branch '\''fake-$i'\'' checked out at.*wt-3" err ||
++			return 1
++	done
 +'
 +
-+test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in rebase (merge)' '
- 	test_when_finished git -C wt-2 rebase --abort &&
- 
- 	# This will fail part-way through due to a conflict.
+ test_expect_success !SANITIZE_LEAK 'refuse to fetch over ref: checked out' '
+ 	test_must_fail git fetch server +refs/heads/wt-3:refs/heads/wt-3 2>err &&
+ 	grep "refusing to fetch into branch '\''refs/heads/wt-3'\''" err &&
 -- 
 gitgitgadget
 
