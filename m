@@ -2,317 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC875CCA480
-	for <git@archiver.kernel.org>; Wed, 20 Jul 2022 14:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 835D3C43334
+	for <git@archiver.kernel.org>; Wed, 20 Jul 2022 16:08:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239620AbiGTOFm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jul 2022 10:05:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53542 "EHLO
+        id S232427AbiGTQI6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jul 2022 12:08:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235978AbiGTOFf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jul 2022 10:05:35 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0A131A38F
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 07:05:24 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id i132-20020a1c3b8a000000b003a2fa488efdso1415558wma.4
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 07:05:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XjUJzE9yaJxw0bRYj+H2dvhx/HHTOWok2rfeh+O2nmc=;
-        b=XXSQIL/a23NpNAOPUBAl7BMiVmt1FXwfPxh4KMDiOyQf2UjG2IH77sSu3fC7UiUgEf
-         vmJtWtPxnvTiK4k5tdbdBlmBuRfzphv8Ic0GmtfdjKKH941FnV/51i+VOkLcTHN2gf7c
-         jQBRFw23owFA5CjBi/8J6RaQbOlDdBVXmrxc+7oKVe5ZcNNzaZEHtUSv1MNg14dNMcVF
-         1CbURXGy+fWg6YcQ/kfa3yKRfmjMNAYlE2W9TCewSWnAZoaUNLGaxmBUKp/klM0j1DZ+
-         SnfHisW3INiFfA1Usghx/zuIGiRwv0cr8+uF13SG/oTiOKYT2ZJ26XXyWQztt1y3dLtU
-         rIlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XjUJzE9yaJxw0bRYj+H2dvhx/HHTOWok2rfeh+O2nmc=;
-        b=S6HIOtoN922OU1fPrt7+8zyddsDESrsHV/OR5hRfe4ZXraLu8H9MgmTT+S4E+thdrt
-         ntXzeouT8AxZ9w4mPd6NMNiL9J3ZEuEi4kHNuW9nOHA1ZuNbkXuD/EG2y2xn8p5j1Aty
-         nQ9aCT13WIEAgcAOSyuDkQvGMz/PdGq28H/ZUthCY6XCwxWkl7GGBhIIdEjScphO5sbz
-         CxLVVeZz08kwek047V2ZCmSFPlrldEap0EVJJsxtbkS/ssIec/Q1/MRmhM+iGX3+uaud
-         blXzWxUwnO/7pQU/QJQ9+o34vPI7p5m3xYGY3lfjCrPKDkmK8V1g54ETDXJ0kJjyUHPB
-         rOMw==
-X-Gm-Message-State: AJIora++8f008oQMTRWpdq6WGpVbvUemE4Qdnc6KykHVJp0Iyr46TIgj
-        n7vSZHjMqTnXVQKY4dOT4dyylORZv+w=
-X-Google-Smtp-Source: AGRyM1sVdJr7/yO/0vbQHwZ1sYDQAr/PUphTCWrlbW/dZXrL0VoOwds6quOOhKuoDPmS6XHUB/VqMg==
-X-Received: by 2002:a05:600c:5128:b0:3a3:2160:7a7b with SMTP id o40-20020a05600c512800b003a321607a7bmr4012805wms.204.1658325922828;
-        Wed, 20 Jul 2022 07:05:22 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a6-20020adfdd06000000b0021b970a68f9sm15768327wrm.26.2022.07.20.07.05.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 07:05:22 -0700 (PDT)
-Message-Id: <52f7d8359ee766442ca03f0b47a491bcb2fab81b.1658325914.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
-References: <pull.1266.v3.git.1656924376.gitgitgadget@gmail.com>
-        <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
-From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 20 Jul 2022 14:05:13 +0000
-Subject: [PATCH v4 6/6] bitmap-lookup-table: add performance tests for lookup
- table
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229469AbiGTQI5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jul 2022 12:08:57 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38BAF4AD56
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 09:08:55 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 88FE512E85D;
+        Wed, 20 Jul 2022 12:08:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=75hxNS3yrl6ug75oxVzxVHaebkqfwoclyl6wsC
+        mRX8U=; b=lQ/JkqfYeHo8M6aNb/cC3IcxBZoDpZNGHUp3UEVXA/DggE0WSl8Su5
+        wOIP1pGkFAYuwoYyt3ftE+lzqFO0em4c5ol4matgjiHG6+GTVB6dqM104xkwsOXC
+        KSCqjuNeNR3ZlfATBgFb1pr/m5uNwN9/bwfMnwLJKKYltrkxwvV0U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7F81C12E85C;
+        Wed, 20 Jul 2022 12:08:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.92.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E1FD612E85B;
+        Wed, 20 Jul 2022 12:08:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Moritz Baumann via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>,
+        Moritz Baumann <moritz.baumann@sap.com>
+Subject: Re: [PATCH] git-p4: fix crlf handling for utf16 files on Windows
+References: <pull.1294.git.git.1658294873702.gitgitgadget@gmail.com>
+Date:   Wed, 20 Jul 2022 09:08:52 -0700
+In-Reply-To: <pull.1294.git.git.1658294873702.gitgitgadget@gmail.com> (Moritz
+        Baumann via GitGitGadget's message of "Wed, 20 Jul 2022 05:27:53
+        +0000")
+Message-ID: <xmqqilnr4vhn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 40648FCA-0846-11ED-B959-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+"Moritz Baumann via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Add performance tests to verify the performance of lookup table with
-`pack.writeReverseIndex` enabled. This is to check the performance
-when the above configuration is set.
+> From: Moritz Baumann <moritz.baumann@sap.com>
 
-Lookup table makes Git run faster in most of the cases. Below is the
-result of `t/perf/p5310-pack-bitmaps.sh`.`perf/p5326-multi-pack-bitmaps.sh`
-gives similar result. The repository used in the test is linux kernel.
+Can you describe briefly what problem is being solved and how the
+change solves it in this place above your Sign-off?  The title says
+"fix", without saying how the behaviour by the current code is
+"broken", so that is one thing you can describe.  It talks about
+"UTF-16 files on Windows", but does it mean git-p4 running on
+Windows or git-p4 running anywhere that (over the wire) talks with
+P4 running on Windows?  IOW, would the same problem trigger if you
+are on macOS but the contents of the file you exchange with P4
+happens to be in UTF-16?
 
-Test                                                      this tree
----------------------------------------------------------------------------
-5310.4: repack to disk (lookup=false)                   296.55(256.53+14.52)
-5310.5: simulated clone                                 15.64(8.88+1.39)
-5310.6: simulated fetch                                 1.65(2.75+0.20)
-5310.7: pack to file (bitmap)                           48.71(30.20+7.58)
-5310.8: rev-list (commits)                              0.61(0.41+0.08)
-5310.9: rev-list (objects)                              4.38(4.26+0.09)
-5310.10: rev-list with tag negated via --not            0.07(0.02+0.04)
-         --all (objects)
-5310.11: rev-list with negative tag (objects)           0.05(0.01+0.03)
-5310.12: rev-list count with blob:none                  0.08(0.03+0.04)
-5310.13: rev-list count with blob:limit=1k              7.29(6.92+0.30)
-5310.14: rev-list count with tree:0                     0.08(0.03+0.04)
-5310.15: simulated partial clone                        9.45(8.12+0.41)
-5310.17: clone (partial bitmap)                         21.00(15.04+2.39)
-5310.18: pack to file (partial bitmap)                  47.98(38.13+5.23)
-5310.19: rev-list with tree filter (partial bitmap)     0.70(0.07+0.20)
-5310.22: repack to disk (lookup=true)                   255.92(188.13+20.47)
-5310.23: simulated clone                                13.78(8.84+1.09)
-5310.24: simulated fetch                                0.52(0.63+0.14)
-5310.25: pack to file (bitmap)                          44.34(28.94+6.84)
-5310.26: rev-list (commits)                             0.48(0.31+0.06)
-5310.27: rev-list (objects)                             4.02(3.93+0.07)
-5310.28: rev-list with tag negated via --not            0.04(0.00+0.03)
-         --all (objects)
-5310.29: rev-list with negative tag (objects)           0.04(0.00+0.03)
-5310.30: rev-list count with blob:none                  0.04(0.01+0.03)
-5310.31: rev-list count with blob:limit=1k              6.48(6.23+0.22)
-5310.32: rev-list count with tree:0                     0.04(0.01+0.03)
-5310.33: simulated partial clone                        8.30(7.21+0.36)
-5310.35: clone (partial bitmap)                         20.34(15.00+2.41)
-5310.36: pack to file (partial bitmap)                  46.45(38.05+5.20)
-5310.37: rev-list with tree filter (partial bitmap)     0.61(0.06+0.20)
+These are the things you can describe to help those who are not you
+(i.e. without access to an environment similar to what you saw the
+problem on) understand the issue and help them convince themselves
+that the patch they are seeing is a sensible solution.  Without any,
+it is hard to evaluate.
 
-Test 4-15 are tested without using lookup table. Same tests are
-repeated in 16-30 (using lookup table).
+> Signed-off-by: Moritz Baumann <moritz.baumann@sap.com>
+> ---
 
-Mentored-by: Taylor Blau <me@ttaylorr.com>
-Co-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
----
- t/perf/p5310-pack-bitmaps.sh       | 65 +++++++++++---------
- t/perf/p5326-multi-pack-bitmaps.sh | 95 +++++++++++++++++-------------
- 2 files changed, 91 insertions(+), 69 deletions(-)
+> diff --git a/git-p4.py b/git-p4.py
+> index 8fbf6eb1fe3..0a9d7e2ed7c 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -3148,7 +3148,7 @@ class P4Sync(Command, P4UserMap):
+>                      raise e
+>              else:
+>                  if p4_version_string().find('/NT') >= 0:
+> -                    text = text.replace(b'\r\n', b'\n')
+> +                    text = text.replace(b'\x0d\x00\x0a\x00', b'\x0a\x00')
+>                  contents = [text]
+>  
+>          if type_base == "apple":
 
-diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
-index 6e8abcd5b21..adc753b6177 100755
---- a/t/perf/p5310-pack-bitmaps.sh
-+++ b/t/perf/p5310-pack-bitmaps.sh
-@@ -17,39 +17,50 @@ test_expect_success 'setup bitmap config' '
- 	git config pack.writeReverseIndex true
- '
- 
--# we need to create the tag up front such that it is covered by the repack and
--# thus by generated bitmaps.
--test_expect_success 'create tags' '
--	git tag --message="tag pointing to HEAD" perf-tag HEAD
--'
-+test_bitmap () {
-+	local enabled="$1"
- 
--test_perf 'repack to disk' '
--	git repack -ad
--'
-+	# we need to create the tag up front such that it is covered by the repack and
-+	# thus by generated bitmaps.
-+	test_expect_success 'create tags' '
-+		git tag --message="tag pointing to HEAD" perf-tag HEAD
-+	'
- 
--test_full_bitmap
-+	test_expect_success "use lookup table: $enabled" '
-+		git config pack.writeBitmapLookupTable '"$enabled"'
-+	'
- 
--test_expect_success 'create partial bitmap state' '
--	# pick a commit to represent the repo tip in the past
--	cutoff=$(git rev-list HEAD~100 -1) &&
--	orig_tip=$(git rev-parse HEAD) &&
-+	test_perf "repack to disk (lookup=$enabled)" '
-+		git repack -ad
-+	'
- 
--	# now kill off all of the refs and pretend we had
--	# just the one tip
--	rm -rf .git/logs .git/refs/* .git/packed-refs &&
--	git update-ref HEAD $cutoff &&
-+	test_full_bitmap
- 
--	# and then repack, which will leave us with a nice
--	# big bitmap pack of the "old" history, and all of
--	# the new history will be loose, as if it had been pushed
--	# up incrementally and exploded via unpack-objects
--	git repack -Ad &&
-+	test_expect_success "create partial bitmap state (lookup=$enabled)" '
-+		# pick a commit to represent the repo tip in the past
-+		cutoff=$(git rev-list HEAD~100 -1) &&
-+		orig_tip=$(git rev-parse HEAD) &&
- 
--	# and now restore our original tip, as if the pushes
--	# had happened
--	git update-ref HEAD $orig_tip
--'
-+		# now kill off all of the refs and pretend we had
-+		# just the one tip
-+		rm -rf .git/logs .git/refs/* .git/packed-refs &&
-+		git update-ref HEAD $cutoff &&
-+
-+		# and then repack, which will leave us with a nice
-+		# big bitmap pack of the "old" history, and all of
-+		# the new history will be loose, as if it had been pushed
-+		# up incrementally and exploded via unpack-objects
-+		git repack -Ad &&
-+
-+		# and now restore our original tip, as if the pushes
-+		# had happened
-+		git update-ref HEAD $orig_tip
-+	'
-+
-+	test_partial_bitmap
-+}
- 
--test_partial_bitmap
-+test_bitmap false
-+test_bitmap true
- 
- test_done
-diff --git a/t/perf/p5326-multi-pack-bitmaps.sh b/t/perf/p5326-multi-pack-bitmaps.sh
-index f2fa228f16a..1f4c7103529 100755
---- a/t/perf/p5326-multi-pack-bitmaps.sh
-+++ b/t/perf/p5326-multi-pack-bitmaps.sh
-@@ -6,47 +6,58 @@ test_description='Tests performance using midx bitmaps'
- 
- test_perf_large_repo
- 
--# we need to create the tag up front such that it is covered by the repack and
--# thus by generated bitmaps.
--test_expect_success 'create tags' '
--	git tag --message="tag pointing to HEAD" perf-tag HEAD
--'
--
--test_expect_success 'start with bitmapped pack' '
--	git repack -adb
--'
--
--test_perf 'setup multi-pack index' '
--	git multi-pack-index write --bitmap
--'
--
--test_expect_success 'drop pack bitmap' '
--	rm -f .git/objects/pack/pack-*.bitmap
--'
--
--test_full_bitmap
--
--test_expect_success 'create partial bitmap state' '
--	# pick a commit to represent the repo tip in the past
--	cutoff=$(git rev-list HEAD~100 -1) &&
--	orig_tip=$(git rev-parse HEAD) &&
--
--	# now pretend we have just one tip
--	rm -rf .git/logs .git/refs/* .git/packed-refs &&
--	git update-ref HEAD $cutoff &&
--
--	# and then repack, which will leave us with a nice
--	# big bitmap pack of the "old" history, and all of
--	# the new history will be loose, as if it had been pushed
--	# up incrementally and exploded via unpack-objects
--	git repack -Ad &&
--	git multi-pack-index write --bitmap &&
--
--	# and now restore our original tip, as if the pushes
--	# had happened
--	git update-ref HEAD $orig_tip
--'
--
--test_partial_bitmap
-+test_bitmap () {
-+	local enabled="$1"
-+
-+	# we need to create the tag up front such that it is covered by the repack and
-+	# thus by generated bitmaps.
-+	test_expect_success 'create tags' '
-+		git tag --message="tag pointing to HEAD" perf-tag HEAD
-+	'
-+
-+	test_expect_success "use lookup table: $enabled" '
-+		git config pack.writeBitmapLookupTable '"$enabled"'
-+	'
-+
-+	test_expect_success "start with bitmapped pack (lookup=$enabled)" '
-+		git repack -adb
-+	'
-+
-+	test_perf "setup multi-pack index (lookup=$enabled)" '
-+		git multi-pack-index write --bitmap
-+	'
-+
-+	test_expect_success "drop pack bitmap (lookup=$enabled)" '
-+		rm -f .git/objects/pack/pack-*.bitmap
-+	'
-+
-+	test_full_bitmap
-+
-+	test_expect_success "create partial bitmap state (lookup=$enabled)" '
-+		# pick a commit to represent the repo tip in the past
-+		cutoff=$(git rev-list HEAD~100 -1) &&
-+		orig_tip=$(git rev-parse HEAD) &&
-+
-+		# now pretend we have just one tip
-+		rm -rf .git/logs .git/refs/* .git/packed-refs &&
-+		git update-ref HEAD $cutoff &&
-+
-+		# and then repack, which will leave us with a nice
-+		# big bitmap pack of the "old" history, and all of
-+		# the new history will be loose, as if it had been pushed
-+		# up incrementally and exploded via unpack-objects
-+		git repack -Ad &&
-+		git multi-pack-index write --bitmap &&
-+
-+		# and now restore our original tip, as if the pushes
-+		# had happened
-+		git update-ref HEAD $orig_tip
-+	'
-+
-+	test_partial_bitmap
-+}
-+
-+test_bitmap false
-+test_bitmap true
- 
- test_done
--- 
-gitgitgadget
+OK, the part being touched is inside this context:
+
+        if type_base == "utf16":
+            # ...
+            # But ascii text saved as -t utf16 is completely mangled.
+            # Invoke print -o to get the real contents.
+            #
+            # On windows, the newlines will always be mangled by print, so put
+            # them back too.  This is not needed to the cygwin windows version,
+            # just the native "NT" type.
+            #
+
+            try:
+                text = ...
+            except Exception as e:
+                ...
+            else:
+                if p4_version_string().find('/NT') >= 0:
+                    text = text.replace(b'\r\n', b'\n')
+                contents = [text]
+
+So the intent of the existing code is "we know we are dealing with
+UTF-16 text, and after successfully reading 'text' without
+exception, we need to convert CRLF back to LF if we are on 'the
+native NT type'".  Presumably 'text' that came from
+p4_read_pipe(... raw=True) is not unicode string but just a bunch of
+bytes, so each "char" is represented as two-byte sequence in UTF-16?
+
+With that (speculative) understanding, I can guess that the patch
+makes sense, but the patch should not make readers guess.
+
+Thanks.
