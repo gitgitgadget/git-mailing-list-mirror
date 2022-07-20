@@ -2,130 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29901C43334
-	for <git@archiver.kernel.org>; Wed, 20 Jul 2022 17:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E30AC43334
+	for <git@archiver.kernel.org>; Wed, 20 Jul 2022 18:17:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235613AbiGTRiC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jul 2022 13:38:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33228 "EHLO
+        id S230121AbiGTSRv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jul 2022 14:17:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241305AbiGTRhu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jul 2022 13:37:50 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD9F65D60
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 10:37:45 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7D8271A456F;
-        Wed, 20 Jul 2022 13:37:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SKCivFgZAWcAMdIDTFskLFCJu/kFGQa5jofVnu
-        6c7xU=; b=QawYVTIEqWb3rVq0wr0TP+QpQczEILebrxOiQuw+0zcHf8hiuOUW3s
-        zl33QmwySMamd1EVLKBXra/Fe/FGm/L5Ebmp2dabf0gmZ9jJ9EJVDfrq+NH1kTV2
-        RHYOdKIC6h8m5l7xrJQI6k/IsAHb6V7x4JVunJw9xyGZPIQKcOEO0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D3551A456E;
-        Wed, 20 Jul 2022 13:37:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.92.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0279D1A456B;
-        Wed, 20 Jul 2022 13:37:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH v8] ls-files: introduce "--format" option
-References: <pull.1262.v7.git.1657692472994.gitgitgadget@gmail.com>
-        <pull.1262.v8.git.1658334983053.gitgitgadget@gmail.com>
-Date:   Wed, 20 Jul 2022 10:37:40 -0700
-In-Reply-To: <pull.1262.v8.git.1658334983053.gitgitgadget@gmail.com> (ZheNing
-        Hu via GitGitGadget's message of "Wed, 20 Jul 2022 16:36:22 +0000")
-Message-ID: <xmqqbktj3ct7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230091AbiGTSRu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jul 2022 14:17:50 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7122C63904
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 11:17:48 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id n12so14423448wrc.8
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 11:17:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=z0cyL2G7rRCD38bFO/lfjNpunGPbxN9v5PK3AbAyJcI=;
+        b=ZLBC5ifSGpAAc/BIPhAbJexRryqMG3LB9kB7JLP51LZRW5hkk7Qg3VofOeSm4JYNBA
+         2aqwN1poSAwVDcIADQf+O6GdKb8l5Z/EFXv2mD6nonA37h06PAfaAwWGCdNEhrCc01TP
+         ah0dMh2KfTYM3rN0S7rcwwGsHk3Cx0yOleuKoSnQgI7nTHd8bu1SfarA6WP/VimwqZtZ
+         L6zHSUHXX3Poh2TqC5wdLhf3TXttmnxspFgSUDbNRDAnSH+Q1Ab0q7iw2ha8R38N2+0Z
+         2bOzCef5PrWeX4B5f3OCCqybleXFpfDcr33aY8/oTLg51dl8JiOwyO4uLr52fCF/h0C9
+         skYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=z0cyL2G7rRCD38bFO/lfjNpunGPbxN9v5PK3AbAyJcI=;
+        b=3VvhouL5QgolA3WaC5BQlKS7d7Ml5Ppa9zX9Zky2YmhbHvSUd0wkn0lqRlTvt3aWh9
+         OnsvaAmLugk+9sEsiBq1xnuBmqf6IyZ7XU81hADJUF7I2MM2i+zgxXzJc8gdHtAQ83sF
+         3ta+/SyKBW0+G96OB6gSObVgfwcdMT9HQ/5bq7TdW3yZtucrZcC550/agzapmD5eDn6D
+         kG3QpiNcFJSMFQT4iRg5v7zmzdyJWu7LoWidp3fo5S81YTSO5a/zRG3vxOpkYKlvdiDh
+         rOvqkdYWK5CaplGLt/ouDWECxsfYUel9ZKb+lVYTa7dA+Ix94pAVB5Yb7dy7aGiO26zx
+         Gu7A==
+X-Gm-Message-State: AJIora+tQgIE66lopKGJCLQetCpGvLJ8nth6Wwyd5LYNOsIbSzMnisFs
+        pZYSA58sKtLwIFX55kyF8o4QzRyUg04=
+X-Google-Smtp-Source: AGRyM1uutMOHuZeRRtkOkr19DuMu3/Px4RBMEWdYJ+X7Myvi8iflB7CSv/8hillRGu3/F1TWhKzNzQ==
+X-Received: by 2002:a5d:5888:0:b0:21d:754b:7afb with SMTP id n8-20020a5d5888000000b0021d754b7afbmr31206848wrf.117.1658341066640;
+        Wed, 20 Jul 2022 11:17:46 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p15-20020a05600c358f00b003a32297598csm3846397wmq.43.2022.07.20.11.17.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jul 2022 11:17:46 -0700 (PDT)
+Message-Id: <pull.1294.v2.git.git.1658341065221.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1294.git.git.1658294873702.gitgitgadget@gmail.com>
+References: <pull.1294.git.git.1658294873702.gitgitgadget@gmail.com>
+From:   "Moritz Baumann via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 20 Jul 2022 18:17:45 +0000
+Subject: [PATCH v2] git-p4: fix CR LF handling for utf16 files
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A82E1502-0852-11ED-BBD8-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>,
+        "Baumann, Moritz" <moritz.baumann@sap.com>,
+        Moritz Baumann <moritz.baumann@sap.com>,
+        Moritz Baumann <moritz.baumann@sap.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Moritz Baumann <moritz.baumann@sap.com>
 
-It's been quite many iterations, so I'll just comment on the range-diff.
+Perforce silently replaces LF with CR LF for "utf16" files if the client
+is a native Windows client. Since git's autocrlf logic does not undo
+this transformation for UTF-16 encoded files, git-p4 replaces CR LF with
+LF during the sync if the file type "utf16" is detected and the Perforce
+client platform indicates that this conversion is performed.
 
->      -+			usage_msg_opt("--format cannot used with -s, -o, -k, -t"
->      ++			usage_msg_opt("--format cannot used with -s, -o, -k, -t, "
->       +				      "--resolve-undo, --deduplicate, --eol",
->       +				      ls_files_usage, builtin_ls_files_options);
+Windows only runs on little-endian architectures, therefore the encoding
+of the byte stream received from the Perforce client is UTF-16-LE and
+the relevant byte sequence is 0D 00 0A 00.
 
-Looks good.
+Signed-off-by: Moritz Baumann <moritz.baumann@sap.com>
+---
+    git-p4: fix crlf handling for utf16 files on Windows
 
->      @@ t/t3013-ls-files-format.sh (new)
->       +	printf "LINEONE\nLINETWO\nLINETHREE\n" >o1.txt &&
->       +	printf "LINEONE\r\nLINETWO\r\nLINETHREE\r\n" >o2.txt &&
->       +	printf "LINEONE\r\nLINETWO\nLINETHREE\n" >o3.txt &&
->      -+	ln -s o3.txt o4.txt &&
->      -+	git add "*.txt" &&
->      -+	git add --chmod +x o1.txt &&
->      -+	git update-index --add --cacheinfo 160000 $(git hash-object o1.txt) o5.txt &&
->      ++	git add . &&
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1294%2Fmbs-c%2Ffix-crlf-conversion-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1294/mbs-c/fix-crlf-conversion-v2
+Pull-Request: https://github.com/git/git/pull/1294
 
-We may want to be a bit more strict (like "o?.txt") but because we
-know this is the first 'setup' step, let's let it pass.
+Range-diff vs v1:
 
->      ++	oid=$(git hash-object o1.txt) &&
->      ++	git update-index --add --cacheinfo 120000 $oid o4.txt &&
->      ++	git update-index --add --cacheinfo 160000 $oid o5.txt &&
->      ++	git update-index --add --cacheinfo 100755 $oid o6.txt &&
-
-It is a bit inconvenient that --cacheinfo takes only fully-spelled
-raw object name that we need to use $oid like this (otherwise we
-would be able to write ":o1.txt" instead), but (1) it is not a fault
-of this patch, and (2) update-index is a plumbing command meant for
-scripts, so it is not too big a problem.
-
->       +	git commit -m base
->       +'
->       +
->       +test_expect_success 'git ls-files --format objectmode v.s. -s' '
->      -+	git ls-files -s | awk "{print \$1}" >expect &&
->      ++	git ls-files -s >files &&
->      ++	cut -d" " -f1 files >expect &&
-
-Either "awk" or "cut" is fine and flipping between them is a bit
-distracting.  Cutting the pipe into two is a good move.
-
-But is this testing the right thing?
-
-> +test_expect_success 'git ls-files --format objectmode v.s. -s' '
-> +	git ls-files -s >files &&
-> +	cut -d" " -f1 files >expect &&
-> +	git ls-files --format="%(objectmode)" >actual &&
-> +	test_cmp expect actual
-> +'
-
-It only looks at the first column of the "-s" output, and we are
-implicitly assuming that the order of output does not change between
-the "-s" output and "--format=<format>" output.  I wonder if it is
-more useful and less error prone to come up with a format string
-that 100% reproduces the "ls-files -s" output and compare the two,
-e.g. 
-
-	format="%(objectmode) %(objectname) %(stage)	%(path)" &&
-	git ls-files -s >expect &&
-	git ls-files --format="$format" >actual &&
-	test_cmp expect actual
-
-I do not know if the $format I wrote without looking at the doc is
-correct, but you get the idea.
-
-Thanks.
+ 1:  4a7a14eec28 ! 1:  4d0043712d3 git-p4: fix crlf handling for utf16 files on Windows
+     @@ Metadata
+      Author: Moritz Baumann <moritz.baumann@sap.com>
+      
+       ## Commit message ##
+     -    git-p4: fix crlf handling for utf16 files on Windows
+     +    git-p4: fix CR LF handling for utf16 files
+     +
+     +    Perforce silently replaces LF with CR LF for "utf16" files if the client
+     +    is a native Windows client. Since git's autocrlf logic does not undo
+     +    this transformation for UTF-16 encoded files, git-p4 replaces CR LF with
+     +    LF during the sync if the file type "utf16" is detected and the Perforce
+     +    client platform indicates that this conversion is performed.
+     +
+     +    Windows only runs on little-endian architectures, therefore the encoding
+     +    of the byte stream received from the Perforce client is UTF-16-LE and
+     +    the relevant byte sequence is 0D 00 0A 00.
+      
+          Signed-off-by: Moritz Baumann <moritz.baumann@sap.com>
+      
 
 
+ git-p4.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-p4.py b/git-p4.py
+index 8fbf6eb1fe3..0a9d7e2ed7c 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -3148,7 +3148,7 @@ class P4Sync(Command, P4UserMap):
+                     raise e
+             else:
+                 if p4_version_string().find('/NT') >= 0:
+-                    text = text.replace(b'\r\n', b'\n')
++                    text = text.replace(b'\x0d\x00\x0a\x00', b'\x0a\x00')
+                 contents = [text]
+ 
+         if type_base == "apple":
+
+base-commit: bbea4dcf42b28eb7ce64a6306cdde875ae5d09ca
+-- 
+gitgitgadget
