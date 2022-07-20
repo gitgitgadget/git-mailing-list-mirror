@@ -2,117 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57BDBCCA480
-	for <git@archiver.kernel.org>; Wed, 20 Jul 2022 13:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EE0AC433EF
+	for <git@archiver.kernel.org>; Wed, 20 Jul 2022 14:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234574AbiGTNWW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jul 2022 09:22:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49822 "EHLO
+        id S231520AbiGTOFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jul 2022 10:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233360AbiGTNWR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jul 2022 09:22:17 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49B904D167
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 06:22:16 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id h145so14227317iof.9
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 06:22:16 -0700 (PDT)
+        with ESMTP id S229712AbiGTOFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jul 2022 10:05:19 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB5BDE9E
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 07:05:18 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id z13so6715638wro.13
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 07:05:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=/HfrYPhO9SW1mQmLGn/RTljQ3OM27px+2knS8U55nyo=;
-        b=XkiDkkFt0s+HDWiWBCRNNCkrlsFehc8zNoojYdwjhstWhLOkPVH7+qILiLa/5DpICm
-         yJPSzYuJCZQs7qemgqGNbmwuT4+w654K1ZhO6rQNqLibc2DARvsJCikjILx2ul0YSvtX
-         o3lEVehrQ+6Z32cgpomrWkyF9VxFr9WeYB48TC1MH2GGIEaX3wOAYCWrua1K3G4dWW6Q
-         ItnnYKF0eUAE+vl8KpjqxvFfO6O4cOmrv6V/WRwpW5kzeseBkNB1BsNocEac+GaaWEfS
-         L0cMN0l42WaTmVT/+wNcx/FeDSU4YDyeUaOVpGoBRHYy/PXmDRr6iD7vjkvW69JYGMqT
-         txTA==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tuzgIEkmu5CcuDnt05w4QEo8w5u0tq3gF7F/WJurB4o=;
+        b=FxKXQ4MFpwSNqctHSs8R61F7anPPg178ohEyPU+CwZfVKry/I4nlPlgHno+5ElKRE6
+         c4MQZxqCEG/xGQagT+J5YygMsUpqE2J1qzssp70ECFAi25uh3EzMXUgs9f6JxTdmbYMK
+         taXJLxiZO95/GUvfZkD/FadoK1jf3hHcrzJWG8ZdL25x8kT/957Ysu1Pop6eXB242gto
+         +ZkCi5RKHEeXcyaUNDocJymUTPJDruET7DYb+qzuzE3/jOLqOZtfzDOzTf5sLaSKm701
+         kSbs7B5Vg7o2eQCp5yI+EytY+TLJPPnBc9qGjWJZKkOKqs+exbwaWfeLykG1VdUTt6jm
+         6xPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=/HfrYPhO9SW1mQmLGn/RTljQ3OM27px+2knS8U55nyo=;
-        b=Z2Ipy6FwygwCdLJXoCu5oAL2SwbIyecinEbhvv7toax2NMWNPNQ1uG1afvQa2tuG4W
-         RswD7WBFYDLgw0Fgc4yt8prl4N6IAqjvSikCtuY5NT4/LO7m0WmBqbL7TDYn4BEePcm6
-         +7NPMUZVBX0ie0mAY+ClOKQOW2Grc1rHJmOQJtRFjUCAaO+8lha3futGKtPRyKTzVL+z
-         MIw0hGRCTW/PvunI6c6Tu3aGHKtbLs3jY86qwynKq4yPY5qH2KbVFLdfsEZnsgxW6XYT
-         1vX2H3O/48qENY2M6xa74tnlbS7smrQ36G+1IKuNJHK0tzlQJYm1kb1eBO3jEnnZoSWA
-         +I8A==
-X-Gm-Message-State: AJIora/wJaTR0tNwJERjyiCKURRa0Tx46MlgUIH3Mvo87rGXcLUT+0Tj
-        y0dDx4voS/vIqd8LgKIfNh9J
-X-Google-Smtp-Source: AGRyM1tKCm+fPrjuZyeHTZDHHOzwmewL01/t8xvhy+HulnRT9Uhe43UG6vCVHNa4IFwauH2zwfj/Bg==
-X-Received: by 2002:a05:6638:140e:b0:33f:7beb:6a1 with SMTP id k14-20020a056638140e00b0033f7beb06a1mr19782436jad.3.1658323335630;
-        Wed, 20 Jul 2022 06:22:15 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:c7c:f36e:1f84:a1ca? ([2600:1700:e72:80a0:c7c:f36e:1f84:a1ca])
-        by smtp.gmail.com with ESMTPSA id p13-20020a02c80d000000b00339e2f0a9bfsm7814377jao.13.2022.07.20.06.22.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Jul 2022 06:22:15 -0700 (PDT)
-Message-ID: <e3b6e656-c20c-8eeb-a302-3274c8ab1f77@github.com>
-Date:   Wed, 20 Jul 2022 09:22:13 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: ds/* (was Re: What's cooking in git.git (Jul 2022, #06; Tue, 19))
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Taylor Blau <ttaylorr@github.com>
-References: <xmqqpmi04m1f.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqpmi04m1f.fsf@gitster.g>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=tuzgIEkmu5CcuDnt05w4QEo8w5u0tq3gF7F/WJurB4o=;
+        b=zEyzcEMwNNGwkh4Uet8UrYzPdB51DXgPkWHGPMYA4xa1aRJ/LQQc7H7y3jTumj6oTr
+         EQtRa8ba8J+3ffK43k+0v5hSWrH5tGhXogcZFmR3K1KDfzf8WYGii7idZ9x689/9A0fQ
+         c/2e/Mrt0YZdRgq7mBZu8TkClaiCznwHmveltb29cFWIndygJ7MkReGUzQ7aDfej8tg0
+         g0gFa03xzH/gXzZK2EvpJLiHtOFKeWGZR6Cl7g3MbHXhTwGTdk8p1VYTTjnhKbWA/gFU
+         hN31J9U7GYPS6KuuJ7nek5ascb9dQPbvClZloQf8WxFHzt9N0n5INuIK1F/lO052sNHh
+         g8ig==
+X-Gm-Message-State: AJIora+nQzSqT0hMY/llHRnKosYif89Zwl7ensIHFpWxin6gZynReWDW
+        bOGh46M3QFhp4cWUTQWB79JYTdfnQyI=
+X-Google-Smtp-Source: AGRyM1s3kavNjlTvq9D51R8csWuo10amz2tfJG5phX5A6sikXn6foeE04iVarjsrG+Fn++ZQ/Ggjpw==
+X-Received: by 2002:a05:6000:1f19:b0:21d:a50f:212d with SMTP id bv25-20020a0560001f1900b0021da50f212dmr30917187wrb.578.1658325916359;
+        Wed, 20 Jul 2022 07:05:16 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r11-20020a05600c35cb00b003a2d6f26babsm2780066wmq.3.2022.07.20.07.05.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jul 2022 07:05:15 -0700 (PDT)
+Message-Id: <f72bf11e6efb4690ae808c0b56c3991c2b1ef266.1658325914.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
+References: <pull.1266.v3.git.1656924376.gitgitgadget@gmail.com>
+        <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
+From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 20 Jul 2022 14:05:08 +0000
+Subject: [PATCH v4 1/6] Documentation/technical: describe bitmap lookup table
+ extension
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/19/2022 9:20 PM, Junio C Hamano wrote:
+From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 
-> * ds/midx-with-less-memory (2022-07-19) 3 commits
->  - midx: reduce memory pressure while writing bitmaps
->  - midx: extract bitmap write setup
->  - pack-bitmap-write: use const for hashes
-> 
->  The codepath to write multi-pack index has been taught to release a
->  large chunk of memory that holds an array of objects in the packs,
->  as soon as it is done with the array, to reduce memory consumption.
-> 
->  Will merge to 'next'?
->  source: <pull.1292.v2.git.1658244366.gitgitgadget@gmail.com>
+When reading bitmap file, Git loads each and every bitmap one by one
+even if all the bitmaps are not required. A "bitmap lookup table"
+extension to the bitmap format can reduce the overhead of loading
+bitmaps which stores a list of bitmapped commit id pos (in the midx
+or pack, along with their offset and xor offset. This way git can
+load only the necessary bitmaps without loading the previous bitmaps.
 
-The actual functional change is very small and safe. I don't expect
-significant edits to follow the latest version, but I'm happy to wait
-a few more days if someone wants to chime in.
+Older versions of Git ignore the lookup table extension and don't
+throw any kind of warning or error while parsing the bitmap file.
 
-> * ds/rebase-update-ref (2022-07-19) 13 commits
->  - sequencer: notify user of --update-refs activity
->  - sequencer: ignore HEAD ref under --update-refs
->  - rebase: add rebase.updateRefs config option
->  - sequencer: rewrite update-refs as user edits todo list
->  - rebase: update refs from 'update-ref' commands
->  - rebase: add --update-refs option
->  - sequencer: add update-ref command
->  - sequencer: define array with enum values
->  - rebase-interactive: update 'merge' description
->  - branch: consider refs under 'update-refs'
->  - t2407: test branches currently using apply backend
->  - t2407: test bisect and rebase as black-boxes
->  - Merge branch 'ds/branch-checked-out' into ds/rebase-update-ref
-> 
->  "git rebase -i" learns to update branches whose tip appear in the
->  rebased range.
-> 
->  Will merge to 'next'?
->  source: <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
+Add some information for the new "bitmap lookup table" extension in the
+bitmap-format documentation.
 
-The most recent version was finally an iteration of small fixes,
-and not a rework of anything substantial. There are several things
-being saved for a possible follow-up, but I'm eager to see more
-people give this a try. I'll watch closely for any need to forward-
-fix anything in this area.
+Mentored-by: Taylor Blau <me@ttaylorr.com>
+Co-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Co-Authored-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+---
+ Documentation/technical/bitmap-format.txt | 39 +++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-Thanks,
--Stolee
+diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
+index 04b3ec21785..c30dc177643 100644
+--- a/Documentation/technical/bitmap-format.txt
++++ b/Documentation/technical/bitmap-format.txt
+@@ -67,6 +67,17 @@ MIDXs, both the bit-cache and rev-cache extensions are required.
+ 			pack/MIDX. The format and meaning of the name-hash is
+ 			described below.
+ 
++			** {empty}
++			BITMAP_OPT_LOOKUP_TABLE (0x10): :::
++			If present, the end of the bitmap file contains a table
++			containing a list of `N` <commit_pos, offset, xor_row>
++			triplets. The format and meaning of the table is described
++			below.
+++
++NOTE: Unlike the xor_offset used to compress an individual bitmap,
++`xor_row` stores an *absolute* index into the lookup table, not a location
++relative to the current entry.
++
+ 		4-byte entry count (network byte order)
+ 
+ 			The total count of entries (bitmapped commits) in this bitmap index.
+@@ -205,3 +216,31 @@ Note that this hashing scheme is tied to the BITMAP_OPT_HASH_CACHE flag.
+ If implementations want to choose a different hashing scheme, they are
+ free to do so, but MUST allocate a new header flag (because comparing
+ hashes made under two different schemes would be pointless).
++
++Commit lookup table
++-------------------
++
++If the BITMAP_OPT_LOOKUP_TABLE flag is set, the last `N * (4 + 8 + 4)`
++bytes (preceding the name-hash cache and trailing hash) of the `.bitmap`
++file contains a lookup table specifying the information needed to get
++the desired bitmap from the entries without parsing previous unnecessary
++bitmaps.
++
++For a `.bitmap` containing `nr_entries` reachability bitmaps, the table
++contains a list of `nr_entries` <commit_pos, offset, xor_row> triplets
++(sorted in the ascending order of `commit_pos`). The content of i'th
++triplet is -
++
++	* {empty}
++	commit_pos (4 byte integer, network byte order): ::
++	It stores the object position of a commit (in the midx or pack
++	index).
++
++	* {empty}
++	offset (8 byte integer, network byte order): ::
++	The offset from which that commit's bitmap can be read.
++
++	* {empty}
++	xor_row (4 byte integer, network byte order): ::
++	The position of the triplet whose bitmap is used to compress
++	this one, or `0xffffffff` if no such bitmap exists.
+-- 
+gitgitgadget
+
