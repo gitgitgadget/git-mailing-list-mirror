@@ -2,100 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D771C433EF
-	for <git@archiver.kernel.org>; Wed, 20 Jul 2022 21:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 590B3C43334
+	for <git@archiver.kernel.org>; Wed, 20 Jul 2022 22:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231349AbiGTVXI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jul 2022 17:23:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49516 "EHLO
+        id S229665AbiGTWKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jul 2022 18:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231171AbiGTVWc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jul 2022 17:22:32 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3FA5FAC2
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 14:22:25 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id h8so5144834wrw.1
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 14:22:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Sds5qdUmtcEs2RU0lBvQ1fXJAg86A6GoOCREG/Rvv2A=;
-        b=F4THC5oaWIhYqJrhU3aMCpowW2Y51i7AnM5tBZHhY+hSzQTGB2NDxP8I/8wAnAxOc4
-         jx5GbWUgcaihWYc2UulqPG3/2Ztk6zM5U/UMCSyc3zUWl5mkYwOGe6aCWfQG/C+1IIjI
-         wpzTDuCzsPU3rXRPTADyXIq9E5g/8sU8eDC6/kfoUdvel263rYIjwo412F9IxADpA0EX
-         n8TW//dIOnpqOaRpnfNxQSl+qoHgKrkzkCoJ4AeFA7RzLFHTp3PxFH0mIfsig8qBJhG2
-         5TEOlJ85vZsNWm+IuTnZ+9OVNWt2h5BO4vfItr49GveN43NMQRyzwz/c6BOF0TOEVITE
-         w0qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Sds5qdUmtcEs2RU0lBvQ1fXJAg86A6GoOCREG/Rvv2A=;
-        b=ie1kA012D/UDV0idMaehAUc42hG9mrFtAxCtaHsJAagPVFiti9VJqAzqhIvi1gaJks
-         q1QYEu20haEVRo9QnYNMsIS3L7dvtpuR0/6SZKLuP8UUht2foD74uKmX63kdc4aIvB5B
-         BOJeyUFj2MA25ohQnkQY5RcF0m0CZFD4tUH6uNlqfWwFURNOfKkMaZ2Sd9/dJj2bYx83
-         PuWoMry8mHaTHW3Hal/jDeboh987o2GEiIaqbMwb+XrzoBVliP6smP8hUcUrmta2bnlO
-         eT5ZEh2OsGYRbTIGMmSXq4+k85W4OrJVjgb6yGv4+QBfbaEE0XuxMzlxGXQ2Mew3EB2H
-         aKhg==
-X-Gm-Message-State: AJIora8JKSgfeomGYOGTXeoesmyWsYHd7DN2OqT0FyZKIn1pfFK8FcyT
-        kMRAy594wzoEJFtlv+bcESSaA/KLTMz0gA==
-X-Google-Smtp-Source: AGRyM1ud3nYOFQYq/V5zG9zED3rfyYhysm/16I9WmN90JiVw/ymDNnuWU/VWNjrcZDfKZWC3YaUY7w==
-X-Received: by 2002:a5d:6489:0:b0:21d:a9a1:3511 with SMTP id o9-20020a5d6489000000b0021da9a13511mr31040868wri.626.1658352144811;
-        Wed, 20 Jul 2022 14:22:24 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 8-20020a05600c024800b003a0375c4f73sm3605441wmj.44.2022.07.20.14.22.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 14:22:23 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 14/14] CI: use "GIT_TEST_SANITIZE_LEAK_LOG=true" in linux-leaks
-Date:   Wed, 20 Jul 2022 23:21:52 +0200
-Message-Id: <patch-v2-14.14-eaa35d1bc59-20220720T211221Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.37.1.1064.gc96144cf387
-In-Reply-To: <cover-v2-00.14-00000000000-20220720T211221Z-avarab@gmail.com>
-References: <cover-00.10-00000000000-20220719T205710Z-avarab@gmail.com> <cover-v2-00.14-00000000000-20220720T211221Z-avarab@gmail.com>
+        with ESMTP id S229379AbiGTWKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jul 2022 18:10:31 -0400
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A3C615A26
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 15:10:29 -0700 (PDT)
+Received: from cwcc.thunk.org (pool-173-48-118-63.bstnma.fios.verizon.net [173.48.118.63])
+        (authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 26KMAK8v031000
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 20 Jul 2022 18:10:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+        t=1658355023; bh=EWSXfcwm2S4YXaYhShMrZ2fT4mQEDn5jpVbK2sWcHhQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=A9wou3qVrMfvGt2QtCZtkFNrxQKAYgDrZdnpVgLSk5T26B7pWXyNxuyezdfPAAbUL
+         e9udfeQHC0JPFYv2wXgoV30cA0Ipc55Oa9pokGQTAzD8nGuv44CwxGVxL9TJXklO2o
+         ke1DoLrEy/7JLUC2MZnVyAfU6NfbRGFsPJrEBD6Ltlr+/rUYrzzyt63usU4ydjXty6
+         oMJaggG7UXLAsukz4/TrewlVHlgwICuTtwKN0OTnUvd42SIFnmFPMTCPdD0wjRfNEi
+         bYBewt6CC+vJQifbuNqTTVoaZl5waEzSnrG7omF4MnsnnCtfdXG3l7GuB2olQUw5wp
+         P4tn1KntcK/Eg==
+Received: by cwcc.thunk.org (Postfix, from userid 15806)
+        id 252A515C3EBF; Wed, 20 Jul 2022 18:10:20 -0400 (EDT)
+Date:   Wed, 20 Jul 2022 18:10:20 -0400
+From:   "Theodore Ts'o" <tytso@mit.edu>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Glen Choo <chooglen@google.com>,
+        Stephen Finucane <stephen@that.guru>, git@vger.kernel.org
+Subject: Re: Feature request: provide a persistent IDs on a commit
+Message-ID: <Yth9TCCEXfmagaaw@mit.edu>
+References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+ <20220718173511.rje43peodwdprsid@meerkat.local>
+ <kl6lo7xmt8qw.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <20220720192144.mxdemgcdjxb2klgl@nitro.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220720192144.mxdemgcdjxb2klgl@nitro.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As noted in a preceding commit the leak checking done by
-"GIT_TEST_PASSING_SANITIZE_LEAK=true" (added in [1]) is incomplete
-without combining it with "GIT_TEST_SANITIZE_LEAK_LOG=true".
+On Wed, Jul 20, 2022 at 03:21:44PM -0400, Konstantin Ryabitsev wrote:
+> The kernel community has repeatedly rejected per-patch Change-id trailers
+> because they carry no meaningful information outside of the gerrit system on
+> which they were created. Seeing a Change-Id trailer in a commit tells you
+> nothing about the history of that commit unless you know the gerrit system on
+> which this patch was reviewed (and have access to it, which is not a given).
 
-Let's run our CI with that, to ensure that we catch cases where our
-tests are missing the abort() exit code resulting from a leak for
-whatever reason. The reasons for that are discussed in detail in a
-preceding commit.
+The "no meaningful information outside of the gerrit system" is the
+key.  This was extensively discussed in the
+ksummit-discuss@lists.linux-foundation.org mailing list in late August
+2019, subject line "Allowing something Change-Id (or something like
+it) in kernel commits".  Quoting from Linus Torvalds:
 
-1. 956d2e4639b (tests: add a test mode for SANITIZE=leak, run it in
-   CI, 2021-09-23)
+    From: Linus Torvalds
+    Date: Thu, 22 Aug 2019 17:17:05 -0700
+    Message-Id: CAHk-=whFbgy4RXG11c_=S7O-248oWmwB_aZOcWzWMVh3w7=RCw@mail.gmail.com
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- ci/lib.sh | 1 +
- 1 file changed, 1 insertion(+)
+    No. That's not it at all. It's not "dislike gerrit".
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index f095519f8db..1b0cc2b57db 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -276,6 +276,7 @@ linux-musl)
- linux-leaks)
- 	export SANITIZE=leak
- 	export GIT_TEST_PASSING_SANITIZE_LEAK=true
-+	export GIT_TEST_SANITIZE_LEAK_LOG=true
- 	;;
- esac
- 
--- 
-2.37.1.1064.gc96144cf387
+    It's "dislike pointless garbage".
 
+    If the gerrit database is public and searchable using the uuid, then
+    that would make the uuid useful to outsiders. And instead of just
+    putting a UUID (which is hard to look up unless you know where it came
+    from), make it be that "Link:" that gives not just the UUID, but also
+    gives you the metadata for that UUID to be looked up.
+
+    But so far, in every single case the uuid's I've ever seen have been
+    pointless garbage, that aren't useful in general to public open source
+    developers, and as such shouldn't be in the git tree.
+
+    See the difference?
+
+    So if you guys make the gerrit database actually public, and then
+    start adding "Link: ..." tags so that we can see what they point to, I
+    think people will be more than supportive of it.
+
+    But if it's some stupid and pointless UUID that is useful to nobody
+    outside of google (or special magical groups of people associated with
+    it), then I will personally continue to be very much against it.
+
+So....  imagine if we had some kind of search service, maybe homed at
+lore.kernel.org, where given a particular "Change Id" --- and it could
+look either like a Gerrit-style Change-Id or something else like a URL
+or URL-like (it matters not) the search service could give you a list
+of:
+
+  * All mailing list threads where the body contained the "Change-Id:
+    XXX" id, so we could find the previous versions of the commit, and
+    the reviews that took place on a mailing list.  (And this could be
+    either a pointer to lore.kernel.org and/or a patchwork URL.)
+
+  * All URL's to public gerrit servers where that patch may have been reviewed.
+
+  * A list of git Commit ID's from a set of "interesting" git trees
+    (e.g., the upstream Linux tree, the Long Term Stable trees, maybe
+    some other interesting trees ala Android Common, etc.
+
+If we had such a thing, as opposed to something that only worked in a
+closed private garden like an internal Gerrit server sitting behind a
+corporate firewall, even if the patch initially was developed in a
+closed private Gerrit ecosystem --- if the moment it was published for
+external upstream review, it would get captured by this search
+service, then the Change ID would be useful.  And if that Change ID
+could also be used to find out how the patch was ported to various
+stable or productg trees, then it would be even more useful --- and
+then people would probably find it to be useful, and resistance to
+having a per-commit Change-ID would probably drop, or perhaps, even
+enthusiastically embraced, because people could actually see the
+*value* behind it.
+
+To do this, we would need to have various tools, such as Patchwork,
+Gerrit, Git, public-inbox, etc., treat Change-ID as a first-class
+indexed object, so that you could quickly map from a Change-ID to a
+git commit in a particular git tree (if present), or to set of
+public-inbox URL's, or a set of patchwork URL's, etc.
+
+And then we would need some kind of aggregation service which would
+aggregate the information from all of the various sources
+(public-inbox, git, Gerrit, Patchwork, etc.) and then gave users a
+single "front door" where they could submit a Change-Id, and find all
+the patch history, patch review comments, and later, patch backports
+and forward ports.
+
+The question is ---- is this doable?   And who will do the work?   :-)
+
+    	     	     	     	       - Ted
