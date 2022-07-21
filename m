@@ -2,223 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F567C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 13:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 709A2C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 13:58:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229552AbiGUN2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 09:28:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36866 "EHLO
+        id S229713AbiGUN6e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 09:58:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbiGUN2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 09:28:04 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB3F77539F
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:28:02 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id z3so1828857plb.1
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:28:02 -0700 (PDT)
+        with ESMTP id S229576AbiGUN6d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 09:58:33 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21EDA1D332
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:58:29 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id g12so1844345pfb.3
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Zh/fxE2huoURY/N4uIVhnv214EIBsTv6+fIvpkctvEc=;
-        b=pMU3hD1txERiuE6sO2O+/X/rgsHQm6L4ETrM9hGDEOPPqgIGhZWBVYpj4O9S0ZZnSy
-         VQ+Rj41UGw/5YTJ4mLA6uNXup37NSIgPYPZo1gKCqhpgN5vUnhFmJRtdKduAX7GXGCyz
-         5d9gnepHJXSkEIPiOb7f10VD0TAbrEW40/D2vYkGbp+E8Azv9laZjXtCYAFDM4lV2SyW
-         Urar5uAsgYIHlTeriNL06VRGL1Xl1+gg/aywlCBX39hXPQCuczeV+pOrwO39pxPnCLGD
-         T/l4XYzKHlD1aOBpFrzx7wCBgCeGrlMStt0XXgHohiHb/ZeLjIBvwDRnPwbQH7knT6L2
-         DOOQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Y0aaOHPKesPOOFECu0uFjHkZda4cxsSeBi2lpzVTPmM=;
+        b=W4LCGUSb220QphU/EypJIkYYzyCyapITByZqq93PlnX+sFScnIMynRl/CMKQqelFDx
+         3EiLeaphx4W0osHUly+lA7u2j3EO4IuSBJMjHUA2lW8GzdWEGc5rcNsnwMnp1h1sJMZr
+         MdkW6JZz2EBwhjqvDIl8hljw3u/0eOtEnFPTL6MPWqVMcFV9oxTUGrNYLx0Jll8ZA9wm
+         Je8MZcgkK/rf127W/xVFCi21gWZ8472yunv4z9YRH9NUWAyoBmMC+G+JYLDqDhUI1xO7
+         /GJR6Jm+pkNh0X17wioEFfpqywl9NvrCRv5FS9RrWXAPdcg9KjwHl3T0Yp+XQ269CrrG
+         gppg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Zh/fxE2huoURY/N4uIVhnv214EIBsTv6+fIvpkctvEc=;
-        b=dKYZIG5Jkbq9KwAcS+ucndu/+SUUIGyCJIJ0fRWCB/tmuR8Q8JCZOOF+1JPpp2jYRe
-         R7xnjiFUtYUdUVtBobDdzlX0kFtQlVVh/8/ONc5/wb0hDtMMWRfW2NgBgqGIdxTeCPt/
-         Tdcl9npIoykx3P0PdD4q1Vz3Eah3avIVEnUGsQdRScvVTbHdLWEQGdGnCpnbwwA5sjd8
-         29A55kRoCMRJyo5m8L9wI69QcHUWeR5zm5zTk7EUskL55P28RIZdemkwhWRcrtGytwcd
-         OEcsx/eHkRLeFLFo8DTLoCFmV10FpbfVQFBncMJSgHo9IIWZHGNWvg5UEAWsN688DzUm
-         kqGg==
-X-Gm-Message-State: AJIora9uYjtg4TE1jpDx16wnBknI8U2Un3d02VIYaG7BXtPXDVTdptMs
-        8u7799kL7YpvO/5KvzZ8pVWIfFjSYho=
-X-Google-Smtp-Source: AGRyM1tTT+HYMFirYx+rziNfCTpFBogQCdC2oWK5FLmI1Tf8wUZDSPLQxnuxoks8q3wCnknPQ3VPTA==
-X-Received: by 2002:a17:90b:17c9:b0:1f0:5678:5142 with SMTP id me9-20020a17090b17c900b001f056785142mr11577959pjb.205.1658410081784;
-        Thu, 21 Jul 2022 06:28:01 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.102])
-        by smtp.gmail.com with ESMTPSA id q13-20020a65684d000000b00419cde333eesm1467326pgt.64.2022.07.21.06.27.59
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Jul 2022 06:28:01 -0700 (PDT)
-From:   "tenglong.tl" <dyroneteng@gmail.com>
-X-Google-Original-From: "tenglong.tl" <tenglong.tl@alibaba-inc.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, --cc=avarab@gmail.com, git@jeffhostetler.com,
-        tenglong.tl@alibaba-inc.com, Teng Long <dyroneteng@gmail.com>
-Subject: [PATCH 2/2] tr2: shows scope unconditionally in addition to key-value pair
-Date:   Thu, 21 Jul 2022 21:27:48 +0800
-Message-Id: <20220721132748.37848-3-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.37.1.1.g8cbb44ffc4.dirty
-In-Reply-To: <20220721132748.37848-1-tenglong.tl@alibaba-inc.com>
-References: <20220721132748.37848-1-tenglong.tl@alibaba-inc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Y0aaOHPKesPOOFECu0uFjHkZda4cxsSeBi2lpzVTPmM=;
+        b=I36tZ7rLbCONIJxNlnfD+QTDUUWs4sDs0ESy5i+2CUy0XQrt/GwHRHBRSZTOoAPZE6
+         nPt8q37Gsru4Ku0Z/9GiBFOa9H8oFJx4xzET1CvYw2+65E8mb1NAw51DeqIppFUERgwi
+         0xXfW4ObrVE1N9BKjmqQydUQvLPZShq6vGj0UQBhuqA0S2A8lGqOQPycrawRzuJ6/c7z
+         Y7siTFqi09XrIvJetWMZfFR2ispNOtPc68N8/3Qkn58/Bo+UJRjs7Tl65ay4ssU1KQGS
+         WzIhyLvFWcfoysfArfIjuctfCShFxBM4rUijuw54iQTMtZ4FWcI9faEijTB7Jxe8uadP
+         TNZA==
+X-Gm-Message-State: AJIora8HghQmxvMbdmBfKz8tMTEh7CKJBXhA+/naCCf/gTD/4Uhsu9r9
+        aAZBaZpVUUoHoS62PAYxTCI=
+X-Google-Smtp-Source: AGRyM1s0ePV/48ujtEBrBoweNW6wye7KbC84fuFGq3EmoCFSFNQWSDhXqomNjh8HFwQC24tpbtM41w==
+X-Received: by 2002:a05:6a00:1410:b0:528:5a5a:d846 with SMTP id l16-20020a056a00141000b005285a5ad846mr44999671pfu.9.1658411908540;
+        Thu, 21 Jul 2022 06:58:28 -0700 (PDT)
+Received: from [127.0.0.1] ([45.138.210.17])
+        by smtp.gmail.com with ESMTPSA id q27-20020a635c1b000000b0041a390f276esm1536631pgb.40.2022.07.21.06.58.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Jul 2022 06:58:28 -0700 (PDT)
+Message-ID: <0af9c29a-2071-6aa3-28ce-9b9127789644@gmail.com>
+Date:   Thu, 21 Jul 2022 21:58:23 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v1 2/7] mv: add documentation for check_dir_in_index()
+Content-Language: en-US
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     vdye@github.com, gitster@pobox.com, git@vger.kernel.org
+References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
+ <20220719132809.409247-3-shaoxuan.yuan02@gmail.com>
+ <228ad533-477c-f16e-220d-61e52d9aee26@github.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+In-Reply-To: <228ad533-477c-f16e-220d-61e52d9aee26@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Teng Long <dyroneteng@gmail.com>
+On 7/20/2022 1:43 AM, Derrick Stolee wrote:
+ >> + *
+ >> + * Note: *always* check the directory is not on-disk before this 
+function
+ >> + * (i.e. using lstat());
+ >> + * otherwise it may return a false positive for a partially sparsified
+ >> + * directory.
+ >
+ > I'm not sure what you mean by a "false positive" in this case.
+ > The directory exists in the index, which is what the method is
+ > defined as checking. This does not say anything about the
+ > worktree.
+ >
+ > Perhaps that's the real problem? Someone might interpret this
+ > as meaning the directory does not exist in the worktree? That
+ > would mean that this doc update needs to be changed significantly
+ > to say "Note that this does not imply anything about the state
+ > of the worktree" or something.
 
-When we specify GIT_TRACE2_CONFIG_PARAMS or trace2.configparams,
-trace2 will prints "interesting" config values to log. Sometimes,
-when a config set in multiple scope files, the following output
-looks like (the irrelevant fields are omitted here as "..."):
+This method assumes that the directory being checking does not exist
+in the working tree, but the method itself does not check this. And
+if the user does not make sure the directory is absent from the
+worktree, this method may return a success for a partially sparsified
+directory, which is not intended.
 
-...| def_param    |  ...  | core.multipackindex:false
-...| def_param    |  ...  | core.multipackindex:false
-...| def_param    |  ...  | core.multipackindex:false
+ > But I think I'd rather just see this patch be dropped, unless I
+ > am missing something important.
 
-As the log shows, even each config in different scope is dumped, but
-we don't know which scope it comes from. Therefore, it's better to
-add the scope names as well to make them be more recognizable. For
-example, when execute:
+I found Victoria's paraphrase [1] makes my point much clearer.
 
-    $ GIT_TRACE2_PERF=1 \
-    > GIT_TRACE2_CONFIG_PARAMS=core.multipackIndex \
-    > git rev-list --test-bitmap HEAD"
-
-The following is the ouput (the irrelevant fields are omitted here
-as "..."):
-
-Format normal:
-... git.c:461 ... def_param scope:system core.multipackindex=false
-... git.c:461 ... def_param scope:global core.multipackindex=false
-... git.c:461 ... def_param scope:local core.multipackindex=false
-
-Format perf:
-
-... | def_param    | ... | scope:system | core.multipackindex:false
-... | def_param    | ... | scope:global | core.multipackindex:false
-... | def_param    | ... | scope:local  | core.multipackindex:false
-
-Format event:
-
-{"event":"def_param", ... ,"scope":"system","param":"core.multipackindex","value":"false"}
-{"event":"def_param", ... ,"scope":"global","param":"core.multipackindex","value":"false"}
-{"event":"def_param", ... ,"scope":"local","param":"core.multipackindex","value":"false"}
-
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- Documentation/technical/api-trace2.txt | 20 +++++++++++++++-----
- trace2/tr2_tgt_event.c                 |  3 +++
- trace2/tr2_tgt_normal.c                |  5 ++++-
- trace2/tr2_tgt_perf.c                  |  9 +++++++--
- 4 files changed, 29 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index dcd0429037..229f31ab31 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -717,6 +717,7 @@ The "exec_id" field is a command-unique id and is only useful if the
- {
- 	"event":"def_param",
- 	...
-+	scope: <a string that 'git config --show-scope' would return>
- 	"param":"core.abbrev",
- 	"value":"7"
- }
-@@ -1213,10 +1214,17 @@ Print Configs::
- +
- The environment variable `GIT_TRACE2_CONFIG_PARAMS` and configuration
- `trace2.configparams` can be used to output config values which you care
--about(see linkgit:git-config[1). For example:
-+about(see linkgit:git-config[1). For example assume that we want to config
-+different `color.ui` values in multiple scopes, such as:
- +
- ----------------
--$ git config color.ui auto
-+$ git config --system color.ui never
-+$ git config --global color.ui always
-+$ git config --local color.ui auto
-+$ git config --list --show-scope | grep 'color.ui'
-+system  color.ui=never
-+global  color.ui=always
-+local   color.ui=auto
- ----------------
- +
- Then, mark the config `color.ui` as "interesting" config with
-@@ -1232,11 +1240,13 @@ $ cat ~/log.perf
- d0 | main                     | version      |     |           |           |              | ...
- d0 | main                     | start        |     |  0.001642 |           |              | /usr/local/bin/git version
- d0 | main                     | cmd_name     |     |           |           |              | version (version)
--d0 | main                     | def_param    |     |           |           |              | color.ui:auto
-+d0 | main                     | def_param    |     |           |           | scope:system | color.ui:never
-+d0 | main                     | def_param    |     |           |           | scope:global | color.ui:always
-+d0 | main                     | def_param    |     |           |           | scope:local  | color.ui:auto
- d0 | main                     | data         | r0  |  0.002100 |  0.002100 | fsync        | fsync/writeout-only:0
- d0 | main                     | data         | r0  |  0.002126 |  0.002126 | fsync        | fsync/hardware-flush:0
--d0 | main                     | exit         |     |  0.002142 |           |              | code:0
--d0 | main                     | atexit       |     |  0.002161 |           |              | code:0
-+d0 | main                     | exit         |     |  0.000470 |           |              | code:0
-+d0 | main                     | atexit       |     |  0.000477 |           |              | code:0
- ----------------
- == Future Work
- 
-diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index c5c8cfbbaa..37a3163be1 100644
---- a/trace2/tr2_tgt_event.c
-+++ b/trace2/tr2_tgt_event.c
-@@ -479,9 +479,12 @@ static void fn_param_fl(const char *file, int line, const char *param,
- {
- 	const char *event_name = "def_param";
- 	struct json_writer jw = JSON_WRITER_INIT;
-+	enum config_scope scope = current_config_scope();
-+	const char *scope_name = config_scope_name(scope);
- 
- 	jw_object_begin(&jw, 0);
- 	event_fmt_prepare(event_name, file, line, NULL, &jw);
-+	jw_object_string(&jw, "scope", scope_name);
- 	jw_object_string(&jw, "param", param);
- 	jw_object_string(&jw, "value", value);
- 	jw_end(&jw);
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index c42fbade7f..69f8033077 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -298,8 +298,11 @@ static void fn_param_fl(const char *file, int line, const char *param,
- 			const char *value)
- {
- 	struct strbuf buf_payload = STRBUF_INIT;
-+	enum config_scope scope = current_config_scope();
-+	const char *scope_name = config_scope_name(scope);
- 
--	strbuf_addf(&buf_payload, "def_param %s=%s", param, value);
-+	strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
-+		    value);
- 	normal_io_write_fl(file, line, &buf_payload);
- 	strbuf_release(&buf_payload);
- }
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index a1eff8bea3..8cb792488c 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -441,12 +441,17 @@ static void fn_param_fl(const char *file, int line, const char *param,
- {
- 	const char *event_name = "def_param";
- 	struct strbuf buf_payload = STRBUF_INIT;
-+	struct strbuf scope_payload = STRBUF_INIT;
-+	enum config_scope scope = current_config_scope();
-+	const char *scope_name = config_scope_name(scope);
- 
- 	strbuf_addf(&buf_payload, "%s:%s", param, value);
-+	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
- 
--	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
--			 &buf_payload);
-+	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
-+			 scope_payload.buf, &buf_payload);
- 	strbuf_release(&buf_payload);
-+	strbuf_release(&scope_payload);
- }
- 
- static void fn_repo_fl(const char *file, int line,
--- 
-2.37.1.1.g8cbb44ffc4.dirty
+--
+Thanks,
+Shaoxuan
 
