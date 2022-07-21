@@ -2,80 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F2E0C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 18:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56DF9C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 18:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232636AbiGUSCk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 14:02:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53072 "EHLO
+        id S232441AbiGUSGy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 14:06:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232620AbiGUSCg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 14:02:36 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 827D58C594
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:02:33 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6FC251AD205;
-        Thu, 21 Jul 2022 14:02:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=HBc3Ww8tYe90
-        s30g+abRnT1Q+Fa4eF9hxVs5xOG5Fsc=; b=K54PVtKOvkpC+R7k0vPP1ZdCSts+
-        XcEe4yKTJW30/bwnhDwkyPzD35yHVNXu4FryByf9QDalSYVhs19ds3mYksaZ0hvW
-        8ITbFD3kt+g3uCOxI6WEkPtgIVlOlcg7VFsCVUmzllGPI1D9ogOGsrP4H9Ec35J5
-        22DOmqAXRX/zt2A=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 67B951AD203;
-        Thu, 21 Jul 2022 14:02:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4AAA51AD202;
-        Thu, 21 Jul 2022 14:02:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: On-branch topic description support?
-References: <xmqqilnr1hff.fsf@gitster.g>
-        <220721.86mtd2tqct.gmgdl@evledraar.gmail.com>
-        <xmqqwnc6idxr.fsf@gitster.g>
-        <220721.86a692tkva.gmgdl@evledraar.gmail.com>
-Date:   Thu, 21 Jul 2022 11:02:26 -0700
-In-Reply-To: <220721.86a692tkva.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 21 Jul 2022 19:49:31 +0200")
-Message-ID: <xmqqy1wmgx8t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229992AbiGUSGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 14:06:53 -0400
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1E7F89A41
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:06:52 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-10cf9f5b500so3468868fac.2
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ostif-org.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qntWBDMsdMRKWc+w5F1/OTZDQm9GZx1PwC3PqysOI34=;
+        b=TUOpEbj8K8w+CsDBY7efV27LVmHceS4fp6ueAGu6/OGpsGHkGINn8U9inqeWZ7Oc2H
+         gJgSjQbINGsXklSvn0SjIz+J3TQYS1AHoGG7TryX44tRUg4fcyJH03ZX0exFyQ95xkID
+         2CijJ+qJua0Wxe2srfVSx5OGogDMTjhtQ9nJCyTbxG3db8pExeWVEmLGvZblVsqbTPKU
+         6pi3R3rBQoeM/FJgCDNHQZEX8X02qsyhOs+CBRnjJj4A9q8/PwVvatm2zfQZNErLxMtg
+         bz+Wn4BKg0+rzFlPv5Wkv3g0eyGA7PlGKPP8/pywR+EXnfIDFvw60K0Zxw1vnoL5Qn/n
+         F0Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qntWBDMsdMRKWc+w5F1/OTZDQm9GZx1PwC3PqysOI34=;
+        b=fV+a9DIjJjsH4UCL/o25qgCabS7diPnpBrj4qCl8WF77P0Vk+NQtZxY8yZWZxBX6Fz
+         AevG2Wz7Ef3a+EOxOHYNjwPN9AkMgkAtqkO40+xYGulFxPDiQV//H6Sj601g/itVoapr
+         SrHuwx7nqLwnRhnWSZeIQKe/DagZy4uNWS4vX2fzfntONMrCQUxVBG6Fqg98XbAmPege
+         F3BmJ9xp2ucptYXQCVCfTtq+BAcb0wlGCXjPbeg3i6v0fwJY9SvA+NfUSgbZ4Wyu7rix
+         xdz4daIqV7I6sNj9+aMQDTpRQRlqOEAvRh+y6DhiS+KCdp35DlgK7RVkmd7MZRWBpfxM
+         sPPA==
+X-Gm-Message-State: AJIora//C4j9mGlO7NhPSJPxafD52S/dHPB7o/PqhPP3LgiEWX2zD5ZS
+        fwhx+VuS+R3D3St0+VTu21vFCY22Bmxt9X+3FDpDJz61vGRXXA==
+X-Google-Smtp-Source: AGRyM1v08pTF5raK/52r4o3d2rdB+YTV+WunFOCaNSeNN7wZCgtyd4qXBI1a0csQA1tjrgKKYkOy3wNjDe7hYI+RI18=
+X-Received: by 2002:a05:6870:c1cd:b0:fe:1295:6e34 with SMTP id
+ i13-20020a056870c1cd00b000fe12956e34mr5871925oad.137.1658426812158; Thu, 21
+ Jul 2022 11:06:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 47E544B8-091F-11ED-9788-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CADKuG0uzh3syzgfiPLepiTLXNzkoYhLFX1h-DE3C7c8j6HXALQ@mail.gmail.com>
+ <xmqq8romicil.fsf@gitster.g>
+In-Reply-To: <xmqq8romicil.fsf@gitster.g>
+From:   Amir Montazery <amir@ostif.org>
+Date:   Thu, 21 Jul 2022 13:06:41 -0500
+Message-ID: <CADKuG0vVGsC9tFr8bUrC48yhhkyg0Rrafyf39TYhPNXE1ak6mA@mail.gmail.com>
+Subject: Re: Coordinated Security Audit for git. Contacts needed
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Thank you for the reply and information Junio.
 
-> But this is worse in that "git rebase" will get rid of it by default.
+Apologies for the mixup. I thank the community members for your time
+and consideration. If anyone is interested in providing some direction
+or help with the source code review, supply chain security, or
+customizing a new setup of CodeQL for git, please let me know. I
+understand you're all likely very busy so we will keep it as brief as
+possible. I can be reached at amir@ostif.org.
 
-FWIW, I think I like this much better than Konstantin's "there is an
-empty commit at the bottom", for exactly the same reason why I like
-the original "empty commit at the tip", i.e. simply because we can
-strip away the "extra" commit that holds the topic description
-without having to change all the "real" commits.
+Thank you again. Hope everyone's summer is going well!
 
-In fact, I thought one of the newer "b4" subcommands that is used to
-accept a patch series with a cover letter creates exactly this sort
-of topology, when told to apply the topic to the tip of the
-integration branch?  I do prefer to see a tool that it can use the
-same "format" of data for both input and output, and I think your
-"there is a redundant merge commit at the tip, with topic
-description" topology can be that input format, which would be
-recreated at the receiving end if the receiver happens to have the
-same base when applying it and the final integration branch was also
-at the same base.
 
+On Thu, Jul 21, 2022 at 12:47 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Amir Montazery <amir@ostif.org> writes:
+>
+> > We would love to collaborate to establish communication channels with
+> > key maintainers. Would it be possible for one of us to join one of
+>
+> We do not call people "maintainers", but "developers" and/or
+> "contributors".
+>
+> > your community meetings for 5 minutes? Or is there a key person we
+> > should be engaging?
+>
+> There is no "community meetings" other than the informal "stand-up"
+> irc discussion that is biweekly.  The log of the latest is at
+> https://colabti.org/irclogger/irclogger_log/git-devel?date=2022-07-18
+> but generally speaking we are not into "synchronous" communication.
+>
+> You come to this mailing list and start talking, and that is how you
+> are heard by community members, which you're already doing fine ;-).
+>
+> In case you are not familiar with Git, you can see output from
+>
+>         git shortlog --no-merges -s -n --since=2.years | head
+>
+> to see who have been the active contributors.
+>
+> Thanks.
+>
+
+
+-- 
+Amir Montazery
+Managing Director
+Open Source Technology Improvement Fund
+https://ostif.org/
+https://calendly.com/ostif
