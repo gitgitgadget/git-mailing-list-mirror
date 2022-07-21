@@ -2,98 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA5FC43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 14:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3779C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 14:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231809AbiGUOWU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 10:22:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34094 "EHLO
+        id S229540AbiGUOlP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 10:41:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbiGUOWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 10:22:04 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F03C85D51
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:21:57 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id x1so201690plb.3
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:21:57 -0700 (PDT)
+        with ESMTP id S229480AbiGUOlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 10:41:14 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDFEE7C19E
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:41:13 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id l3so1431967qkl.3
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:41:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=anbos-de.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=u7qBlqjKQq+7ESgiTIptTy19LExvr94Aa/Uzs1+Pw4I=;
-        b=JZXoglNFKjzrEek/nD9KGYBCOyMImANur34UaMeIRLz38N8NcZlGOIAzIsWChOUfen
-         cW080VXu9Q5Mr59WBxE+9/vxLj7lgmBu9iwJ0p+sbyVkHvQZzAB9aBToMhx0Ftxi2m7Y
-         NornZKq2Chf+VNZ7PmMJfHwqU5Pr3jPPWpJW8qE7kpubo5Er0s9yjpzHeBW6ktnvDlZo
-         OlmKc0cQlb+BP4YTSdzA11u0+Z73g/sMHWj6t6X5uFFfQE6VXjJ+tgVFmsCjq5mku4pl
-         ljnqj+cRhLuLZ+upabq+Hl1DkhPRB0+oSNJ36UbJhCr4P3ul7v2IVwk60iCt5e1e9njg
-         tWcw==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=k7B2rWB6gQh78LVsmlQOPhTPEUdxIyDK946ctTfXb2E=;
+        b=B/Q1inqy+acKblOzho6zOcLa9bx8o7qjXaWTfppwkf0Q3wMf6HowOZGOXXdEJeS9dw
+         OAuJyRyw55S+YzdCeWb4LO928Hs/kBcFEiGmiY+a4x+AOtTBrfCY8R6hfchW/QizKw1h
+         c2YagYbGE0A4Sw9S37IS6HGMpg8WSw4lBwzn0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=u7qBlqjKQq+7ESgiTIptTy19LExvr94Aa/Uzs1+Pw4I=;
-        b=1wJ8Cuz+4LrGUNj+9Hh7/j/l0IQYZwZtYddpa9TnsRZhCHovr+hN5dVlF6srJEu70p
-         TEwG0MjXGefTr0DBSdW4LO/NCzP3mBVWT/czRk97LjfQ2LCz9AazE3GgaT0Sk252XlTR
-         raqclaFUer36P+ysln2ON4ROoXRsn/ErzEhFpKzxhk3MO3oJlArZY9UvOz5PPU7ZcZ3Z
-         dENCAVdH/J9eEt9zFR+9G1qe/l2Spm58ool3KwBccBlAQYxK5mIcfZ0BJ70ADE+qbaNC
-         SfAxfxLLCbepPNN58rbPJOe5XlPVrbuVK57L0afopibcVZtsS/CaeeIka2xBE9oG8fFD
-         jCjg==
-X-Gm-Message-State: AJIora9DvfywPWautAGFDE/E+XDULxqwrIkTZ7/nBhiaucS4xcai/VjA
-        6ybsiKJCPUXbmcESekHtKWGgOE4Werpx/EOXkq6IEX8pFKnJLQ==
-X-Google-Smtp-Source: AGRyM1sgPBPrqcrBtZB3OHHwLUhJ51cLJ5MhDXBBViYAn5XX9ukzgsjfPcrkKoLz8LBaJA9mYUs+pNkQ72CC1NSOMN4=
-X-Received: by 2002:a17:902:7285:b0:16c:ce55:9dba with SMTP id
- d5-20020a170902728500b0016cce559dbamr31579548pll.156.1658413316565; Thu, 21
- Jul 2022 07:21:56 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=k7B2rWB6gQh78LVsmlQOPhTPEUdxIyDK946ctTfXb2E=;
+        b=IMZEJJ10AqSxp0HCEnXXd/ZezyjLizu3pydIjonZiUexMOHVRY4MBl8HHF/kmufYb8
+         53gxWBnl33cH7eFy0y/5gr5OPRrBvlbzxw0QEZ0sJutJHZcGlvVqAHZFRNdNYzT194mc
+         I2u6my26PSK5ZVEl+HspMz1n31WiqECa3QbEocRVxwbn6mViPhj0I9Pkif8biBn3dpwy
+         XYJHB44deUVRGdEQ33ERu5VveQiIRoWpdiuyQaQUD3tgKMR9ylwvpBSoQ+nO/KljxbWR
+         uR0NfCmAlGfmpQ2IYJpfHM6+SOyziK+JNpzeee8TpBqSdg1M0CFiexLVr3mMfh1cJZqQ
+         +xBA==
+X-Gm-Message-State: AJIora/GEM+B79XDkt5+OFfoQwKa8QD0tK7lA75L71piy/Xt3JLJnq6D
+        I8Nh9HA8gvrMsRjqv4rE18e+DQb44T2yHw==
+X-Google-Smtp-Source: AGRyM1u58tnXuM47/xPFPXN/T1OzfMYfaw84W/iUaCRy0yTbbEMR7LXVg6NmTnLJcBBUKutwJyNKBg==
+X-Received: by 2002:a37:555:0:b0:6b5:dace:f589 with SMTP id 82-20020a370555000000b006b5dacef589mr16997686qkf.444.1658414473054;
+        Thu, 21 Jul 2022 07:41:13 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id y8-20020a05622a120800b0031ec38da567sm1518885qtx.0.2022.07.21.07.41.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 07:41:12 -0700 (PDT)
+Date:   Thu, 21 Jul 2022 10:41:11 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: On-branch topic description support?
+Message-ID: <20220721144111.w2fsowjgwjecjlek@meerkat.local>
+References: <xmqqilnr1hff.fsf@gitster.g>
+ <CABPp-BFm2c2Mpdj6pTR2-WPEsnQWTJpH70xrZoqUrwOed9o9=w@mail.gmail.com>
 MIME-Version: 1.0
-From:   "Bossert, Andre" <anb0s@anbos.de>
-Date:   Thu, 21 Jul 2022 16:21:46 +0200
-Message-ID: <CALzBCsFjw3DfY=gbL+23XL0MwKJHv_-znSADfh7XBrmMv51hyg@mail.gmail.com>
-Subject: git citool / gui and signed commits
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFm2c2Mpdj6pTR2-WPEsnQWTJpH70xrZoqUrwOed9o9=w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Wed, Jul 20, 2022 at 10:25:19PM -0700, Elijah Newren wrote:
+> Seems mostly reasonable, but I'm curious about one thing:
+> 
+> The cover letter material often includes stuff that would not make
+> sense for the merge message (e.g. "Rebased this version on master
+> because of conflicts with ...", "Changes since v3", "I'm a little
+> unsure of the logic in Patch 5", "Patch 3 might be controversial; take
+> a look", etc.)  Would there be some kind of syntax for specifying the
+> part of the cover letter meant to be used in the merge commit message,
+> or would we just start out with it pre-populating the commit message
+> and expect the integrator to cull out the irrelevant parts?
 
-using commit and tag signing and now also enabled it as default.
+Maybe reuse the scissors line, but throw away stuff after the scissors? E.g.:
 
-To circumvent the necessity to commit every change on git bash in
-order to sign it, I chose to edit the global .gitconfig and set the
-following parameters:
+    Subject: [PATCH v2 0/3] Implement foo
 
-```
-[commit]
-  gpgsign = true
+    This implements foo that is needed to...
+    ...
+    ...
+    ...
 
-[tag]
-  gpgSign = true
-```
+    Signed-off-by: De Veloper <dev@example.com>
+    Link: https://example.com/foo
 
-Now using git gui the problem is, this only seems to work as expected if I
-- amend changes to the previous commit
-- create a new commit with the previous commit being **_not signed_**
+    -- >8 --
 
-In case I want to create a new commit and the previous commit is
-**_signed_**  I fail with the following error:
+    Note: I'm not sure about....
 
-```
-child process exited abnormally
-child process exited abnormally
-    while executing
-"close $fd_ot"
-    (procedure "commit_committree" line 24)
-    invoked from within
-"commit_committree file1ed02482210
-9a6a25477c6f52d405158e68974da5cf41afe5d6 .git/GITGUI_EDITMSG"
-```
+    ---
 
-Workarounds are available, true - but "git citool" is pretty
-convenient to review changes before stashing them, add the message and
-commit in one go.
+    Changes in v2:
+     - Rewrote using libfoo
+     - ...
 
-I'm trying to understand the tcl code but may be someone uses signing
-and has idea or more insights for me...
+    ---
+    Diffstat, range-diff, etc.
 
-Regards
-Andre (anb0s)
-eMail: anb0s@anbos.de
+    ---
+    base-commit: abcde
+    change-id: abcde-foobarbaz
+
+-K
