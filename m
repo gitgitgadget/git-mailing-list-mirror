@@ -2,65 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26A1EC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 10:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 653C2C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 11:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230149AbiGUKUG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 06:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48582 "EHLO
+        id S231636AbiGUL6L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 07:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232854AbiGUKUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 06:20:03 -0400
-Received: from fallback9.mail.ru (fallback9.mail.ru [94.100.178.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1186282397
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 03:20:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=YmUBqTBCIiBrplE735yP78LQH9y6G1wZIfK5Hw+RK0c=;
-        t=1658398800;x=1658488800; 
-        b=CgH0hK6H8nJjIMW2XEVcEA7667gsUgiajfiJVvDBu/OpVrWoQlucZnhuuKcYgpMw+lDd1EbX93h+9rsnvBHI1CrfHxqrlqjzV1wxmTPWr6dg6KaPs3w6Ni9ot++LRZLDfXYDtWW7CYULLTpfV2aUDw9ItHuCVfSMz8RJdTEsu6Q=;
-Received: from [10.161.22.26] (port=38020 helo=smtp56.i.mail.ru)
-        by fallback9.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
-        id 1oETHh-0005dG-M1
-        for git@vger.kernel.org; Thu, 21 Jul 2022 13:19:58 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=YmUBqTBCIiBrplE735yP78LQH9y6G1wZIfK5Hw+RK0c=;
-        t=1658398797;x=1658488797; 
-        b=kwk3+Cr1gDfmGzlS8knIj1UZJJ7uUZy12xxxqSrCeygeMpX5UbqlRiApdRY0gpqXdRTnF6LZu6IY6NQisJrbiSGF9Mo4XmfZao/zBE1XYnakFBDV/qzizBUHkhS5+i0cKLY3pe14Fkr8xASj/H8C4b6q2BUxRMXUqhzJMvm5DKQ=;
-Received: by smtp56.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1oETHX-0008Hg-Gu; Thu, 21 Jul 2022 13:19:48 +0300
-Date:   Thu, 21 Jul 2022 13:19:48 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Yuri <yuri@rawbw.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What is the URL of git's bug tracker?
-Message-ID: <20220721101948.2i3nyroxrexg4voi@carbon>
-References: <a5f48218-94ad-195e-97bc-b29c4a588903@tsoft.com>
+        with ESMTP id S229777AbiGUL6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 07:58:10 -0400
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C376B2FFDA
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 04:58:09 -0700 (PDT)
+Received: by mail-ua1-x92d.google.com with SMTP id 94so612537uau.8
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 04:58:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=G7UigfGbMHMuPk0oCLIzJyTmoLtS4d6WGoLew4dCkTo=;
+        b=YWsGWpfR9oNSLWTySsO+CnAhsDCTdYFm7uDU4oDp1biWWR86y45i7ZeTq9+10hMsY6
+         TqHDB9zNJnYZEK693r3XeQRLIQ0oAHJ31jjN2qphUYFq+n9yxuqjmq7FbQL/tlEsFkOp
+         ScqsCNMTWBm2MTBOOyNrYcCMXdTByObs+WdguvVuZkwuWNE4wMRwFK2iu8VT8lBssqk0
+         0yblvCS34GYCWpzMiz1psFfe06uh3kFgGESlRFSNjXWuenDSKlOBJ8sv4+UnL8HE7eZ0
+         402ZcoOIUOTzdZlIv08Po6AldZvWLKq8nzJ/McbyiefAaxy6pH3bWYiCjm2xOpzd9MNj
+         Dj4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=G7UigfGbMHMuPk0oCLIzJyTmoLtS4d6WGoLew4dCkTo=;
+        b=xNQNkI7JRI1JmG1dxnppwZZgnT8vIMZ8eEI+SaVMljaTXCqOfLvZmunrJDZSi4zRXd
+         8hnZkhI/OAO/t8NiFyQzZf+nmuE2xcPc5lUyDbAAG3bR2wYN23leH3P2fKfayDPx/APW
+         JPzKH/IMO4dB1svQ+cIxcwaa3DDKA4de/HR8QFO7lz75ItyFGJKrN9vuTQy4tygrOnCk
+         xlqJ6hos/rdv6FHMnzTmqpK2+2TLsk7JjJOAgtkph9uN2B7caycyNO0PkrCMqjLvMq1Y
+         NvuykPqkhu0Fu3xaLlMv9J7e2IK/Eu1tMsIZevj0itkrVRbSOkcMy9a693HxHQYqb8+l
+         t+gw==
+X-Gm-Message-State: AJIora9CUfNGHLV0jkp+iFJvv+jDevtilpYpUfKusyuE1qnDATpQizDq
+        TEz6VDDqgL1gLMMlr0/nFfnwCzdiFDzUEffQsaU29g==
+X-Google-Smtp-Source: AGRyM1tPfPrbaDXrLerh0zbCRbvz7sbJWzO2OeYcdpRRil1BQ8ntEpOY2VdS1cjaeEFO2nZmhVSr8j+GrOFHfPzeP0Q=
+X-Received: by 2002:a9f:3dc6:0:b0:384:54ca:ad6f with SMTP id
+ e6-20020a9f3dc6000000b0038454caad6fmr1976921uaj.26.1658404688842; Thu, 21 Jul
+ 2022 04:58:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a5f48218-94ad-195e-97bc-b29c4a588903@tsoft.com>
-X-Mailru-Src: smtp
-X-7564579A: B8F34718100C35BD
-X-77F55803: 4F1203BC0FB41BD97CF746166DCF1A14BE760233AC8E22E47EA253427DB1765D182A05F5380850408F2410DBAC5D0378CACCA1A33C5EF9E350BEEBA1351F4123DB840A1ECBE0B2D1
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE742D9BD90C58D50E0EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637652CD06254D2F21C8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D863B756C9CAD97E5E3766ACF28EF2F3F8117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC9A5316AB2425A401A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD18618001F51B5FD3F9D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE902A1BE408319B296E0066C2D8992A164AD6D5ED66289B52698AB9A7B718F8C46E0066C2D8992A16725E5C173C3A84C3248D4B72C2FE64EABA3038C0950A5D36B5C8C57E37DE458B0BC6067A898B09E46D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE7D151390FFDBF6399731C566533BA786AA5CC5B56E945C8DA
-X-C1DE0DAB: 9604B64F49C60606AD91A466A1DEF99B296C473AB1E142185AC9E3593CE4B31AB1881A6453793CE9274300E5CE05BD4401A9E91200F654B014F749A5E30D975CFA8BF14A15ACDE8817E63546B65DCBDC548209C311C8C7949C2B6934AE262D3EE7EAB7254005DCED8DA55E71E02F9FC08E8E86DC7131B365E7726E8460B7C23C
-X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34728AF701C68E453949FC7F09B1E1CD97098C5607D5161C2E27F60E857191354DC34BFDA27AC2B04F1D7E09C32AA3244CBFCC3A233186DAFC0B15403586EFE6238A6D4CC6FBFAC251729B2BEF169E0186
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojCpIjidmGf5IZQe3EVly/Pg==
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD1383B1ACB111E59820F4DD2E5DF8411A4741BF7D38345F38D0213BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-7564579A: B8F34718100C35BD
-X-77F55803: 6242723A09DB00B4BD2EB812D5A6E5F731000615283782356E138021201CF8A7049FFFDB7839CE9EC0D173356325119702BC881E6EB0BA0B545DE3D5B3AED24861A06ADD3E7EDBCC
-X-7FA49CB5: 0D63561A33F958A515297C8CA4DD852332F3B62FDE23EE452F9BA6D440DA6B888941B15DA834481FA18204E546F3947C4E7D9683544204AFF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637BA2F0AEB80054583389733CBF5DBD5E9B5C8C57E37DE458BD9DD9810294C998ED8FC6C240DEA76428AA50765F790063776C4598447C51BFFD81D268191BDAD3DBD4B6F7A4D31EC0BEA7A3FFF5B025636AAAE862A0553A39223F8577A6DFFEA7C3B6C7E47A292E8D043847C11F186F3C59DAA53EE0834AAEE
-X-C1DE0DAB: 9604B64F49C60606AD91A466A1DEF99B296C473AB1E142185AC9E3593CE4B31AB1881A6453793CE9274300E5CE05BD44CFFBF5018520E3986C71B82FD9533928FA8BF14A15ACDE88089944164162222E82CA770A51E2ECFC9C2B6934AE262D3EE7EAB7254005DCED8DA55E71E02F9FC08E8E86DC7131B365E7726E8460B7C23C
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojCpIjidmGf5K8XqA+/r8hpA==
-X-Mailru-MI: 8000000000000800
-X-Mras: Ok
+References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+ <20220718173511.rje43peodwdprsid@meerkat.local> <kl6lo7xmt8qw.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <20220720192144.mxdemgcdjxb2klgl@nitro.local> <Yth9TCCEXfmagaaw@mit.edu>
+In-Reply-To: <Yth9TCCEXfmagaaw@mit.edu>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 21 Jul 2022 13:57:56 +0200
+Message-ID: <CAFQ2z_Mc6Z-FyFkUURMCM11yQTH+Y2PLBrAKB-16BXv159=oOA@mail.gmail.com>
+Subject: Re: Feature request: provide a persistent IDs on a commit
+To:     "Theodore Ts'o" <tytso@mit.edu>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Glen Choo <chooglen@google.com>,
+        Stephen Finucane <stephen@that.guru>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is none - please read https://git-scm.com/community
+On Thu, Jul 21, 2022 at 12:10 AM Theodore Ts'o <tytso@mit.edu> wrote:
+> On Wed, Jul 20, 2022 at 03:21:44PM -0400, Konstantin Ryabitsev wrote:
+> > The kernel community has repeatedly rejected per-patch Change-id traile=
+rs
+> > because they carry no meaningful information outside of the gerrit syst=
+em on
+> > which they were created. Seeing a Change-Id trailer in a commit tells y=
+ou
+> > nothing about the history of that commit unless you know the gerrit sys=
+tem on
+> > which this patch was reviewed (and have access to it, which is not a gi=
+ven).
+>
+> The "no meaningful information outside of the gerrit system" is the
+> key.  This was extensively discussed in the
+> ksummit-discuss@lists.linux-foundation.org mailing list in late August
+> 2019, subject line "Allowing something Change-Id (or something like
+> it) in kernel commits".  Quoting from Linus Torvalds:
+>
+>     From: Linus Torvalds
+>     Date: Thu, 22 Aug 2019 17:17:05 -0700
+>     Message-Id: CAHk-=3DwhFbgy4RXG11c_=3DS7O-248oWmwB_aZOcWzWMVh3w7=3DRCw=
+@mail.gmail.com
+>
+>     No. That's not it at all. It's not "dislike gerrit".
+>
+>     It's "dislike pointless garbage".
+>
+>     If the gerrit database is public and searchable using the uuid, then
+>     that would make the uuid useful to outsiders. And instead of just
+>     putting a UUID (which is hard to look up unless you know where it cam=
+e
+>     from), make it be that "Link:" that gives not just the UUID, but also
+>     gives you the metadata for that UUID to be looked up.
+>..
+>     So if you guys make the gerrit database actually public, and then
+>     start adding "Link: ..." tags so that we can see what they point to, =
+I
+>     think people will be more than supportive of it.
 
-JFTR note that the Windows port of Git does have a bug tracker hosted
-on Github: https://github.com/git-for-windows/git/issues
+Support for the "Link:" footer as a change ID has been implemented in
+Gerrit as of https://gerrit.googlesource.com/gerrit/+/8cab93302d9c35316d691=
+e848b67e687a68182b5
+(available in Gerrit 3.3 and onwards).  I'm not sure if it has seen
+much use, though.
 
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
