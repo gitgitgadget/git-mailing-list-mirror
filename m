@@ -2,94 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 049F3CCA489
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 19:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3ABCC433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 19:34:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233646AbiGUTQa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 15:16:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57462 "EHLO
+        id S229761AbiGUTez (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 15:34:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232170AbiGUTQM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 15:16:12 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B3D2BB
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:15:54 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id o1so2049407qkg.9
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:15:54 -0700 (PDT)
+        with ESMTP id S229547AbiGUTey (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 15:34:54 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA16988F1D
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:34:53 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id m10so1990508qvu.4
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=pARWb+STPdUSmWCizw92/cSY5ORhJCLhzFFugTmPrY4=;
-        b=hwlG2bNwXikXp8kKpyF5h7AHmYvJCxGR5y5iLo+rrvhFkm3etvblCUujbroqjNvE2y
-         NkyAqtBFwn4j7l18DKzjH9zuhYy05EOlvm99qsUCl0QPkfv74Fq5M011iX7KovjzuY4o
-         J/wsY0lP5zo0UcU6qaSRey49RqztJ1VHMip70WWhSOvy9IyFnVBPejaW3XZZRTDsOFJ3
-         Yz/8MZvaZyVaQOMFVZ7WSDojTEsVe2LrZz45fSuKgZlNJSxIlrBWbuhAse+W/n7B7pEO
-         Ar1qdlPXyeXhKWmVyx4l34WHk+mQB5yC0G0FIhLq3TkXQKZ2SrK2eI922ok4WFQy9jCh
-         OziQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ICcRSTtcJuYPx/t/1CMI/Zvugf9Rn5Zg8MI/Msglu+Y=;
+        b=ZBOhyEEzG/G5zypgtmmN9wqlHNDQwQd5GXLFrPlZvBmqLt2AKvWt8495YqJdInoyZR
+         RDGXftS5O2+7yEi22WO2Gflo3oUDPyrMI3QEVNP8e0JoyaRRWYtA5U9KAZxfK1sUlviS
+         0EhawmHrPkRHtXtdNLJzmPgZOt1d1h1kJuCrrmVOQUGRTbGY0NYDMSv02iEB5a9UOLIK
+         ePVB1Y8PIaUcQnMy6bIiFI62snXvlr/t7GZiFIBUwb6hmABmF1k87AmsDu9GFkak18r3
+         Hwp2OGtpjxN1EYCALeGtI+KQG7Rvj3B3LCx388jRZvCnd0L7aQKiVfwqHv+AkM0kLqpV
+         7WeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=pARWb+STPdUSmWCizw92/cSY5ORhJCLhzFFugTmPrY4=;
-        b=qNm4NbXzfEKFoG4UYR7h2bLRwGGDhziFzschO8XKttZ1asDFOASIxls343Dfb4mbeD
-         cs6t3N+EYrqtlVrTgKFc+27x2vxEoI0oDBpGxhtvgXFRHA5Eviklz7aZqKKE8zvns4Kt
-         H9UHZPQ/Byg/YnHwF8Y21UE+5LhTE001WMq864mZdlyaNzy8CTI9thjna1Mc9eKCLV8E
-         aERiABv4i7xc92rCWVlSXtgnJeF8rlCB70wyXuLrP1oMvBE2yPVBPf4YgI9jh2/KdRHF
-         KIBwmbDQgmoV81VeGvsuooZ4VrEn5TElAfAkw5P/pnus6ZsgFl1g5pKj5/oH4bR9pJDX
-         xNwQ==
-X-Gm-Message-State: AJIora8VvvzFnGCOYbPRx6DM2ojp8gwE/mEEn4DjdFWQoa8dodPyuS/g
-        hyjkZAGKVOw/pKxQd3er1tmW14KOfnKWKg==
-X-Google-Smtp-Source: AGRyM1vlRcZKS1FGFVr8FykZrvNRoNGIDdyGYomML9oS3hepNs05aUjDaxCfOJK9VWHm2AM6ZOJhBg==
-X-Received: by 2002:a37:8245:0:b0:6b5:9078:267 with SMTP id e66-20020a378245000000b006b590780267mr28623079qkd.684.1658430953034;
-        Thu, 21 Jul 2022 12:15:53 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x7-20020a05620a258700b006a65c58db99sm2120069qko.64.2022.07.21.12.15.51
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 12:15:52 -0700 (PDT)
-Date:   Thu, 21 Jul 2022 15:15:51 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Subject: [ANNOUNCE] Git Merge 2022 Registration & Schedule
-Message-ID: <Ytml52E1Qe7FeV44@nand.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ICcRSTtcJuYPx/t/1CMI/Zvugf9Rn5Zg8MI/Msglu+Y=;
+        b=eaVXrldmOKEOcQLGJr0L1rcp28ev6+haYdmMgTotN+bP3VrkpzKYf2FdKNTUncG7vh
+         L7Q9houB00tpuM/cOkPw69aDsZpYDlfJZhmnwXQD63X3XpdIp1JR/38D9eUrEKhHU/gE
+         BU7i9NeUYzf9GI1I83m8xCqu5Fx13y5zNrZrHOt6gbfnouRlZRNVUsYJMA/YNVBpfLQZ
+         YjozDBJ0hsknkYejhnAbhiVB4Y6Wsluw0/XgVhCK3Kr+1GKCkN76GWa9MJ5tyV8cAlye
+         GuHlagkdx/QhcvD2XPAxM7xEelu6/Ruis65aSL5aPhaAudo8TpXugYILLAiIbtq5/Syb
+         2Z2w==
+X-Gm-Message-State: AJIora+VtL63jfU/mQuU2q9rdLzC915OCyF7OUG9ztpvoFlvo7AQqB8C
+        E/Xrt58zs4baxp06sziA+aMWmx6Pqkh0D2kVl4o=
+X-Google-Smtp-Source: AGRyM1trXv3+1TCvE/iLVNv1gOmFhAEktHsT2V7eZka8RGYBd/juJED3PJhzxntQSD4UYdNUgBt4pPKzVr4puq5aHho=
+X-Received: by 2002:ad4:5ae9:0:b0:473:62ef:601a with SMTP id
+ c9-20020ad45ae9000000b0047362ef601amr94408qvh.69.1658432092825; Thu, 21 Jul
+ 2022 12:34:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <CABPp-BEK+SJh2uF=rrM-f1u9diMQJ7D3H0fJLdzWpyOww=ys+w@mail.gmail.com>
+ <xmqqy1wmlbnn.fsf@gitster.g>
+In-Reply-To: <xmqqy1wmlbnn.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 21 Jul 2022 12:34:42 -0700
+Message-ID: <CABPp-BEqWX3Nr2HDxwS9d-_QjcKb_jS=fSjsP_Pbutw7-P5gbg@mail.gmail.com>
+Subject: Re: Question: How to find the commits in the ancestry path of seen
+ down to _and_ including a given topic?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everybody,
+On Thu, Jul 21, 2022 at 8:37 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > A simple question that I'm spinning out of [1]: How can I get `git
+> > log` to show the commits in the ancestry path from seen, back to *and
+> > including* a given topic (but not commits from unrelated topics)?
+>
+> Drawing of a sample history, please.
+>
+> I feel stupid asking this, but I do not think I even understand what
+> the question is X-<.
+>
+> Commits that are ancestors of 'seen' and are descendants of the tip
+> of the topic?
 
-The Git Merge 2022 speakers, schedule, and ticket registration are all
-live. The main details are:
+What you said *plus* commits from the topic itself.  From this graph:
 
-  When: September 14th and 15th
-  Where: Morgan Manufacturing (401 N Morgan), Chicago, Illinois, USA
-  What: Workshops on the 14th, main conference on the 15th
+    A---B---C---J---K <-- main
+            |\       \
+            | \       N---------------O---P---Q <-- seen
+            |  \     /               /
+            |   L---M  <-- topic    /
+             \                     /
+              D---E---F---G---H---I  <-- other_topic
 
-and the website is up at: https://git-merge.com.
+I want the commits L-Q.  If I run
 
-The website has links to:
+   git log --ancestry-path topic..seen
 
-  - Speaker biographies
-  - (Tentative) schedule for the main conference day
-  - Registration information
+I only get N-Q, missing L & M.  If I run
 
-Like before, if you are interested in coming to the Contributor's
-Summit, more details are in [1].
+   git log --ancestry-path main..seen
 
-I encourage you to read [1] as well as [2], but the most important piece
-of info is that you should register for the Contributor's Summit
-separately, and that that ticket is good for both the Contributor's
-Summit and main conference, so no need to register twice.
+then I get D-Q, providing me with D-I and J-K that I don't want.
 
-If you have any questions, please feel free to respond here, or
-off-list. I am tremendously excited about this event, and I can't wait
-to see everybody in Chicago soon!
+The closest I seem to be able to get is
 
-Thanks,
-Taylor
+   git log --ancestry-path topic~${commits_in_topic_minus_one}..seen
 
-[1]: https://lore.kernel.org/git/YtRqU5rAOsLw5s03@nand.local/
-[2]: https://lore.kernel.org/git/YqjEAEPYEJMUx8Wu@nand.local/
+which includes all commits I want except the first commit of the topic
+branch.
+
+
+An example, from git.git; 5b893f7d81 is a topic (ab/submodule-cleanup)
+with 12 commits, and ac0248bfba is some older version of 'next' .  I
+want all 12 commits in that topic plus all commits that are both
+descendants of that tip and ancestors of that old version of 'next',
+which adds up to 36 commits.  (Note that this includes the 12 commits
+in ab/submodule clean, 9 commits from gc/submodule-use-super-prefix
+since that happens to be a descendant of ab/submodule-cleanup, and
+about 15 merge commits from merging other topics into next, but does
+not include those other 15 topics.)  If I run (notice the "11" instead
+of "12"):
+
+   git log --oneline --ancestry-path 5b893f7d81~11..ac0248bfba | wc -l
+
+it reports 35 commits -- it's just missing the first commit from the
+topic.  If I change "11" to "12" to try to get that first commit too:
+
+   git log --oneline --ancestry-path 5b893f7d81~11..ac0248bfba | wc -l
+
+then it reports 228 commits, 192 of which I don't want.
