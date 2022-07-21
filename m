@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30433C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 14:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77214C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 14:04:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230462AbiGUOEO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 10:04:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43390 "EHLO
+        id S230496AbiGUOEX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 10:04:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229986AbiGUOEM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 10:04:12 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 783C4402FE
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:04:11 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id p26-20020a1c545a000000b003a2fb7c1274so3402176wmi.1
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:04:11 -0700 (PDT)
+        with ESMTP id S230466AbiGUOEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 10:04:23 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA5DE4D4ED
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:04:20 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id k11so1977867wrx.5
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Ke8B8nt0IhSyl5td1v4aRd3G0H4fL5e7Atz+VoHk6lY=;
-        b=bZGWDtKe7HhwAgATangxOoEDy27XjaJcm2qH9sLOSSxXtZ8YrQqt/oSV061Vn2Nufz
-         5PYxJyd0CfULQddgvK+XXilsvLyUJCzmPx1ileGT/BFTPgCZw6hscesLZlDUQnCoc9hN
-         7pE3CDkq9kf2rYbpYCHkHLT+xBe9kPrTVlt5LkG2d4426RFgswsZUvg1exJ9kOnrk32j
-         JaqGEnD3Xhe7R+Y3ZpB1L0aAFqpLCZ/SulxOBt2s5V05+5EI0GlEw6T1NsnYwhfyPHJJ
-         a6SP+wWvep/oC8eV1VHGKR0EjZ3pX107iT0g+PR8EPJRgd5I+Vfz4/o5tyZknbqRofjD
-         xf8A==
+        bh=qYCQ1K+NwDXEp3ahjkGHfmOOsNr/abxgWX3HuUDWmM0=;
+        b=Uitv7TcmWI/PxyCRQQvZOA00tkwpW3MbB1CKIoLfYAPAcEUuoTK5KlHVemGVyD93aC
+         9ZUC1+f+mUqwfHe2l93Hmt6PsoTNEZD8TzX4RT6YKH8eTGoeC1YJ1AE8K9AV72sUVGfR
+         yTZBKILtPb7dS+u7SrrHai6h2D7ztzhbUgPgcnNh9kCONaqHR+/sjEANSkUkFwyShbc/
+         neDefAwflqiZuRI3jl74DH+H+oWxghphTLSThoMwaSxJOy6wOAijMREd825Frk9iqr/u
+         Q5oxeFz+hk+htk0xpFZ4XySjPEVgsdWqC8ZrUTFwP2CCgsj3NuRiTWRPB6yVhrUzx0aT
+         WNNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Ke8B8nt0IhSyl5td1v4aRd3G0H4fL5e7Atz+VoHk6lY=;
-        b=ynDU7cqmuQd1r9QfJOk0E/fvrBBsbrQdZyUNi+YjfSHxuDtiLxzjVr0Mu4E9T/UfVD
-         ZyzlVQLmxYKgyBH6VOmm00gK1vXIXqQo65gPlVyEhSODaU5meer6uY+GIKGVQ7kokXAP
-         M529ghColXzIcEMMLStgFfbWo5lC2iDv5UtqurLIhA/pEAIOi24yLrOk+sspjSW0dEad
-         mXUHSOvWc9EeL4UCUQbRSKIwNsFo2hODzvYn95s/C/dAnFhYR1LiVu7H94pkcdpiLePw
-         O/eyCUtN079QR3RzYnd9Sdc4hYhuo6putJyobUH4LOOQ7N0plgAbEnE4vEUBiF0zKwsd
-         xMVQ==
-X-Gm-Message-State: AJIora+a9HLrB807usHIY2LBuIvtdxp6pdbA5gPj4VW662okPuPFUOQR
-        iSJZ0TgIfmwDpjUf0pE0XzM=
-X-Google-Smtp-Source: AGRyM1vdQLIv3hexkssvslyZjSaBDqH7AOEM5IxNbEgtegPK27vcwGDaoVKo+ZA8mR1hgz8DrBhE6g==
-X-Received: by 2002:a05:600c:a03:b0:39e:4f0c:938c with SMTP id z3-20020a05600c0a0300b0039e4f0c938cmr8425901wmp.145.1658412249767;
-        Thu, 21 Jul 2022 07:04:09 -0700 (PDT)
+        bh=qYCQ1K+NwDXEp3ahjkGHfmOOsNr/abxgWX3HuUDWmM0=;
+        b=Gjk19ARZ4owkHjURH86ZJirwbjHRVlENDXw/h04eY+8ipJcLgCw6wgKaP+ufJ7u+vZ
+         Iq9ydkns6fegwCKQd/XuGT/AqZSLfXI8UPcymwLcKeu9Bha/2LiRkA8gQQiQQN2QeqW/
+         DBZiGv9vPH7i+SaqE1fF6XMaYLVxuLfqBExOg4aq+xkC4KFN/LxSh32rq+Aew0dTlc84
+         mgHe8icfGVx3x81YbKuoyF2mi2SvbQDGw8E0zjh7THfxJFWVaiKGdX9mnIBy7HHY7YT2
+         D/1YXNLbP4eY58HKi7//kuPe1I7xyRkQJezwn30Zk7dRAWl4CE68ABPkTx4bKYkCDLzV
+         x7WA==
+X-Gm-Message-State: AJIora+pz/CzOI/ArkYv1JCnTr6plhmLH47low4oACeg5t/zyRNk54gr
+        LxxA4y6wqCcsZGsuzy9f9A4=
+X-Google-Smtp-Source: AGRyM1uTa1S6wO9zgFc+IyZt4X3LKyQTjuoJS+154vVSjIqZYYlyLGQevwYBme2njV75woCjiQc2Og==
+X-Received: by 2002:adf:dcc2:0:b0:21e:526e:524c with SMTP id x2-20020adfdcc2000000b0021e526e524cmr3218837wrm.202.1658412258895;
+        Thu, 21 Jul 2022 07:04:18 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id f7-20020a1c3807000000b003a3080eacb9sm2051963wma.24.2022.07.21.07.04.08
+        by smtp.gmail.com with ESMTPSA id q17-20020a05600000d100b0021e428a9286sm2064475wrx.50.2022.07.21.07.04.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 07:04:09 -0700 (PDT)
-Message-ID: <bb96c7a0-8da3-1be7-f1a6-a46ad673002e@gmail.com>
-Date:   Thu, 21 Jul 2022 15:04:08 +0100
+        Thu, 21 Jul 2022 07:04:18 -0700 (PDT)
+Message-ID: <96f742e9-3274-6b8c-b6b6-9d12624f42c5@gmail.com>
+Date:   Thu, 21 Jul 2022 15:04:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 09/12] sequencer: rewrite update-refs as user edits
- todo list
+Subject: Re: [PATCH v5 00/12] rebase: update branches in multi-part topic
 Content-Language: en-GB-large
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -67,9 +66,8 @@ Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, me@ttaylorr.com,
         Derrick Stolee <derrickstolee@github.com>
 References: <pull.1247.v4.git.1657631225.gitgitgadget@gmail.com>
  <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
- <95e2bbcedb1740f240a0a470822549d63075cc46.1658255624.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <95e2bbcedb1740f240a0a470822549d63075cc46.1658255624.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1247.v5.git.1658255624.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -78,96 +76,530 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Stolee
 
-On 19/07/2022 19:33, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
-> 
-> +void todo_list_filter_update_refs(struct repository *r,
-> +				  struct todo_list *todo_list)
-> +{
-> +	int i;
-> +	int updated = 0;
-> +	struct string_list update_refs = STRING_LIST_INIT_DUP;
-> +
-> +	sequencer_get_update_refs_state(r->gitdir, &update_refs);
-> +
-> +	/*
-> +	 * For each item in the update_refs list, if it has no updated
-> +	 * value and does not appear in the todo_list, then remove it
-> +	 * from the update_refs list.
-> +	 */
-> +	for (i = 0; i < update_refs.nr; i++) {
-> +		int j;
-> +		int found = 0;
-> +		const char *ref = update_refs.items[i].string;
-> +		size_t reflen = strlen(ref);
-> +		struct update_ref_record *rec = update_refs.items[i].util;
-> +
-> +		/* OID already stored as updated. */
-> +		if (!is_null_oid(&rec->after))
-> +			continue;
-> +
-> +		for (j = 0; !found && j < todo_list->total_nr; j++) {
-> +			struct todo_item *item = &todo_list->items[j];
-> +			const char *arg = todo_list->buf.buf + item->arg_offset;
-> +
-> +			if (item->command != TODO_UPDATE_REF)
-> +				continue;
-> +
-> +			if (item->arg_len != reflen ||
-> +			    strncmp(arg, ref, reflen))
-> +				continue;
-> +
-> +			found = 1;
-> +		}
-> +
-> +		if (!found) {
-> +			free(update_refs.items[i].string);
-> +			free(update_refs.items[i].util);
-> +
-> +			update_refs.nr--;
-> +			MOVE_ARRAY(update_refs.items + i, update_refs.items + i + 1, update_refs.nr - i);
-> +
-> +			updated = 1;
-> +			i--;
-> +		}
-> +	}
-> +
-> +	/*
-> +	 * For each todo_item, check if its ref is in the update_refs list.
-> +	 * If not, then add it as an un-updated ref.
-> +	 */
-> +	for (i = 0; i < todo_list->total_nr; i++) {
-> +		struct todo_item *item = &todo_list->items[i];
-> +		const char *arg = todo_list->buf.buf + item->arg_offset;
-> +		int j, found = 0;
-> +
-> +		if (item->command != TODO_UPDATE_REF)
-> +			continue;
-> +
-> +		for (j = 0; !found && j < update_refs.nr; j++) {
-> +			const char *ref = update_refs.items[j].string;
-> +
-> +			found = strlen(ref) == item->arg_len &&
-> +				!strncmp(ref, arg, item->arg_len);
-> +		}
-> +
-> +		if (!found) {
-> +			struct string_list_item *inserted;
-> +			struct strbuf argref = STRBUF_INIT;
-> +
-> +			strbuf_add(&argref, arg, item->arg_len);
-> +			inserted = string_list_insert(&update_refs, argref.buf);
-> +			inserted->util = init_update_ref_record(argref.buf);
-> +			strbuf_release(&argref);
-> +			updated = 1;
-> +		}
-> +	}
-> +
-> +	if (updated)
-> +		write_update_refs_state(&update_refs);
-
-We should return an error if write_update_refs_state() fails
+I'm afraid I've only had time to have a quick look at patches 8 & 9. The 
+error propagation is looking better but I did notice a couple of calls 
+to write_update_refs_state() where we don't propagate the return value.
 
 Best Wishes
 
 Phillip
+
+On 19/07/2022 19:33, Derrick Stolee via GitGitGadget wrote:
+> This series is based on ds/branch-checked-out.
+> 
+> This is a feature I've wanted for quite a while. When working on the sparse
+> index topic, I created a long RFC that actually broke into three topics for
+> full review upstream. These topics were sequential, so any feedback on an
+> earlier one required updates to the later ones. I would work on the full
+> feature and use interactive rebase to update the full list of commits.
+> However, I would need to update the branches pointing to those sub-topics.
+> 
+> This series adds a new --update-refs option to 'git rebase' (along with a
+> rebase.updateRefs config option) that adds 'update-ref' commands into the
+> TODO list. This is powered by the commit decoration machinery.
+> 
+> As an example, here is my in-progress bundle URI RFC split into subtopics as
+> they appear during the TODO list of a git rebase -i --update-refs:
+> 
+> pick 2d966282ff3 docs: document bundle URI standard
+> pick 31396e9171a remote-curl: add 'get' capability
+> pick 54c6ab70f67 bundle-uri: create basic file-copy logic
+> pick 96cb2e35af1 bundle-uri: add support for http(s):// and file://
+> pick 6adaf842684 fetch: add --bundle-uri option
+> pick 6c5840ed77e fetch: add 'refs/bundle/' to log.excludeDecoration
+> update-ref refs/heads/bundle-redo/fetch
+> 
+> pick 1e3f6546632 clone: add --bundle-uri option
+> pick 9e4a6fe9b68 clone: --bundle-uri cannot be combined with --depth
+> update-ref refs/heads/bundle-redo/clone
+> 
+> pick 5451cb6599c bundle-uri: create bundle_list struct and helpers
+> pick 3029c3aca15 bundle-uri: create base key-value pair parsing
+> pick a8b2de79ce8 bundle-uri: create "key=value" line parsing
+> pick 92625a47673 bundle-uri: unit test "key=value" parsing
+> pick a8616af4dc2 bundle-uri: limit recursion depth for bundle lists
+> pick 9d6809a8d53 bundle-uri: parse bundle list in config format
+> pick 287a732b54c bundle-uri: fetch a list of bundles
+> update-ref refs/heads/bundle-redo/list
+> 
+> pick b09f8226185 protocol v2: add server-side "bundle-uri" skeleton
+> pick 520204dcd1c bundle-uri client: add minimal NOOP client
+> pick 62e8b457b48 bundle-uri client: add "git ls-remote-bundle-uri"
+> pick 00eae925043 bundle-uri: serve URI advertisement from bundle.* config
+> pick 4277440a250 bundle-uri client: add boolean transfer.bundleURI setting
+> pick caf4599a81d bundle-uri: allow relative URLs in bundle lists
+> pick df255000b7e bundle-uri: download bundles from an advertised list
+> pick d71beabf199 clone: unbundle the advertised bundles
+> pick c9578391976 t5601: basic bundle URI tests
+> # Ref refs/heads/bundle-redo/rfc-3 checked out at '/home/stolee/_git/git-bundles'
+> 
+> update-ref refs/heads/bundle-redo/advertise
+> 
+> 
+> Here is an outline of the series:
+> 
+>   * Patch 1 updates some tests for branch_checked_out() to use 'git bisect'
+>     and 'git rebase' as black-boxes instead of manually editing files inside
+>     $GIT_DIR. (Thanks, Junio!)
+>   * Patch 2 updates some tests for branch_checked_out() for the 'apply'
+>     backend.
+>   * Patch 3 updates branch_checked_out() to parse the
+>     rebase-merge/update-refs file to block concurrent ref updates and
+>     checkouts on branches selected by --update-refs.
+>   * Patch 4 updates the todo list documentation to remove some unnecessary
+>     dots in the 'merge' command. This makes it consistent with the 'fixup'
+>     command before we document the 'update-ref' command.
+>   * Patch 5 updates the definition of todo_command_info to use enum values as
+>     array indices.
+>   * Patches 6-8 implement the --update-refs logic itself.
+>   * Patch 9 specifically updates the update-refs file every time the user
+>     edits the todo-list (Thanks Phillip!)
+>   * Patch 10 adds the rebase.updateRefs config option similar to
+>     rebase.autoSquash.
+>   * Patch 11 ignores the HEAD ref when creating the todo list instead of
+>     making a comment (Thanks Elijah!)
+>   * Patch 12 adds messaging to the end of the rebase stating which refs were
+>     updated (Thanks Elijah!)
+> 
+> During review, we have identified some areas that would be good for
+> #leftoverbits:
+> 
+>   * Warn the user when they add an 'update-ref ' command but is checked out
+>     in another worktree.
+>   * The checks in patch 9 are quadratic. They could be sped up using
+>     hashtables.
+>   * Consider whether we should include an 'update-ref ' command for the HEAD
+>     ref, so that all refs are updated in the same way. This might help
+>     confused users.
+>   * The error message for failed ref updates could include information on the
+>     commit IDs that would have been used. This can help the user fix the
+>     situation by updating the refs manually.
+>   * Modify the --update-refs option from a boolean to an
+>     optionally-string-parameter that specifies refspecs for the 'update-ref'
+>     commands.
+> 
+> 
+> Updates in v5
+> =============
+> 
+>   * Rename 'wt_dir' to 'wt_git_dir' for clarity.
+>   * The documented behavior around 'fixup!' and 'squash!' commits was
+>     incorrect, so update the commit message, documentation, and test to
+>     demonstrate the actual behavior.
+>   * Use CALLOC_ARRAY() to be more idiomatic.
+>   * Be much more careful about propagating errors.
+>   * Commit message typo: "We an" to "We can"
+>   * Remove unnecessary null OID check when writing refs, since those would
+>     already be removed by a previous step.
+> 
+> 
+> Updates in v4
+> =============
+> 
+> This version took longer than I'd hoped (I had less time to work on it than
+> anticipated) but it also has some major updates. These major updates are
+> direct responses to the significant review this series has received. Thank
+> you!
+> 
+>   * The update-refs file now stores "ref/before/after" triples (still
+>     separated by lines). This allows us to store the "before" OID of a ref in
+>     addition to the "after" that we will write to that ref at the end of the
+>     rebase. This allows us to do a "force-with-lease" update. The
+>     branch_checked_out() updates should prevent Git from updating those refs
+>     while under the rebase, but older versions and third-party tools don't
+>     have that protection.
+>   * The update-refs file is updated with every update to the todo-list file.
+>     This allows for some advanced changes to the file, including removing,
+>     adding, and duplicating 'update-ref' commands.
+>   * The message at the end of the rebase process now lists which refs were
+>     updated with the update-ref steps. This includes any ref updates that
+>     fail.
+>   * The branch_checked_out() tests now use 'git bisect' and 'git rebase' as
+>     black-boxes instead of testing their internals directly.
+> 
+> Here are the more minor updates:
+> 
+>   * Dropped an unnecessary stat() call.
+>   * Updated commit messages to include extra details, based on confusion in
+>     last round.
+>   * The HEAD branch no longer appears as a comment line in the initial todo
+>     list.
+>   * The update-refs file is now written using a lockfile.
+>   * Tests now use test_cmp_rev.
+>   * A memory leak ('path' variable) is resolved.
+> 
+> 
+> Updates in v3
+> =============
+> 
+>   * The branch_checked_out() API was extracted to its own topic and is now
+>     the ds/branch-checked-out branch. This series is now based on that one.
+>   * The for_each_decoration() API was removed, since it became trivial once
+>     it did not take a commit directly.
+>   * The branch_checked_out() tests did not verify the rebase-apply data (for
+>     the apply backend), so that is fixed.
+>   * Instead of using the 'label' command and a final 'update-refs' command in
+>     the todo list, use a new 'update-ref ' command. This command updates the
+>     rebase-merge/update-refs file with the OID of HEAD at these steps. At the
+>     very end of the rebase sequence, those refs are updated to the stored OID
+>     values (assuming that they were not removed by the user, in which case we
+>     notice that the OID is the null OID and we do nothing).
+>   * New tests are added.
+>   * The todo-list comment documentation has some new formatting updates, but
+>     also includes a description of 'update-refs' in this version.
+> 
+> 
+> Updates in v2
+> =============
+> 
+> As recommended by the excellent feedback, I have removed the 'exec' commands
+> in favor of the 'label' commands and a new 'update-refs' command at the very
+> end. This way, there is only one step that updates all of the refs at the
+> end instead of updating refs during the rebase. If a user runs 'git rebase
+> --abort' in the middle, then their refs are still where they need to be.
+> 
+> Based on some of the discussion, it seemed like one way to do this would be
+> to have an 'update-ref ' command that would take the place of these 'label'
+> commands. However, this would require two things that make it a bit awkward:
+> 
+>   1. We would need to replicate the storage of those positions during the
+>      rebase. 'label' already does this pretty well. I've added the
+>      "for-update-refs/" label to help here.
+>   2. If we want to close out all of the refs as the rebase is finishing, then
+>      that "step" becomes invisible to the user (and a bit more complicated to
+>      insert). Thus, the 'update-refs' step performs this action. If the user
+>      wants to do things after that step, then they can do so by editing the
+>      TODO list.
+> 
+> Other updates:
+> 
+>   * The 'keep_decorations' parameter was renamed to 'update_refs'.
+>   * I added tests for --rebase-merges=rebase-cousins to show how these labels
+>     interact with other labels and merge commands.
+>   * I changed the order of the insertion of these update-refs labels to be
+>     before the fixups are rearranged. This fixes a bug where the tip commit
+>     is a fixup! so its decorations are never inspected (and they would be in
+>     the wrong place even if they were). The fixup! commands are properly
+>     inserted between a pick and its following label command. Tests
+>     demonstrate this is correct.
+>   * Numerous style choices are updated based on feedback.
+> 
+> Thank you for all of the detailed review and ideas in this space. I
+> appreciate any more ideas that can make this feature as effective as it can
+> be.
+> 
+> Thanks, -Stolee
+> 
+> Derrick Stolee (12):
+>    t2407: test bisect and rebase as black-boxes
+>    t2407: test branches currently using apply backend
+>    branch: consider refs under 'update-refs'
+>    rebase-interactive: update 'merge' description
+>    sequencer: define array with enum values
+>    sequencer: add update-ref command
+>    rebase: add --update-refs option
+>    rebase: update refs from 'update-ref' commands
+>    sequencer: rewrite update-refs as user edits todo list
+>    rebase: add rebase.updateRefs config option
+>    sequencer: ignore HEAD ref under --update-refs
+>    sequencer: notify user of --update-refs activity
+> 
+>   Documentation/config/rebase.txt |   3 +
+>   Documentation/git-rebase.txt    |  10 +
+>   branch.c                        |  13 +
+>   builtin/rebase.c                |  10 +
+>   rebase-interactive.c            |  15 +-
+>   sequencer.c                     | 474 +++++++++++++++++++++++++++++++-
+>   sequencer.h                     |  23 ++
+>   t/lib-rebase.sh                 |  15 +
+>   t/t2407-worktree-heads.sh       | 103 +++++--
+>   t/t3404-rebase-interactive.sh   | 273 ++++++++++++++++++
+>   10 files changed, 895 insertions(+), 44 deletions(-)
+> 
+> 
+> base-commit: 9bef0b1e6ec371e786c2fba3edcc06ad040a536c
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1247%2Fderrickstolee%2Frebase-keep-decorations-v5
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1247/derrickstolee/rebase-keep-decorations-v5
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1247
+> 
+> Range-diff vs v4:
+> 
+>    1:  9e53a27017a =  1:  9e53a27017a t2407: test bisect and rebase as black-boxes
+>    2:  540a3be256f =  2:  540a3be256f t2407: test branches currently using apply backend
+>    3:  bf301a054e3 !  3:  1089a0edb73 branch: consider refs under 'update-refs'
+>       @@ sequencer.c: static GIT_PATH_FUNC(rebase_path_squash_onto, "rebase-merge/squash-
+>        + * rebase_path_update_refs() returns the path to this file for a given
+>        + * worktree directory. For the current worktree, pass the_repository->gitdir.
+>        + */
+>       -+static char *rebase_path_update_refs(const char *wt_dir)
+>       ++static char *rebase_path_update_refs(const char *wt_git_dir)
+>        +{
+>       -+	return xstrfmt("%s/rebase-merge/update-refs", wt_dir);
+>       ++	return xstrfmt("%s/rebase-merge/update-refs", wt_git_dir);
+>        +}
+>        +
+>         /*
+>    4:  dec95681d2b =  4:  d1cce4f06aa rebase-interactive: update 'merge' description
+>    5:  b2c09600918 =  5:  4c086d477f0 sequencer: define array with enum values
+>    6:  fa7ecb718cf =  6:  7b3d6601960 sequencer: add update-ref command
+>    7:  3ec2cc922f9 !  7:  7efb55e4f14 rebase: add --update-refs option
+>       @@ Commit message
+>            --fixup commit at the tip of the feature to apply correctly to the sub
+>            branch, even if it is fixing up the most-recent commit in that part.
+>        
+>       -    One potential problem here is that refs decorating commits that are
+>       -    already marked as "fixup!" or "squash!" will not be included in this
+>       -    list. Generally, the reordering of the "fixup!" and "squash!" is likely
+>       -    to change the relative order of these refs, so it is not recommended.
+>       -    The workflow here is intended to allow these kinds of commits at the tip
+>       -    of the rebased branch while the other sub branches come along for the
+>       -    ride without intervention.
+>       -
+>            This change update the documentation and builtin to accept the
+>            --update-refs option as well as updating the todo file with the
+>            'update-ref' commands. Tests are added to ensure that these todo
+>       @@ Documentation/git-rebase.txt: provided. Otherwise an explicit `--no-reschedule-f
+>        +--no-update-refs::
+>        +	Automatically force-update any branches that point to commits that
+>        +	are being rebased. Any branches that are checked out in a worktree
+>       -+	or point to a `squash! ...` or `fixup! ...` commit are not updated
+>       -+	in this way.
+>       ++	are not updated in this way.
+>        +
+>         INCOMPATIBLE OPTIONS
+>         --------------------
+>       @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
+>         			 N_("move commits that begin with "
+>         			    "squash!/fixup! under -i")),
+>        +		OPT_BOOL(0, "update-refs", &options.update_refs,
+>       -+			 N_("update local refs that point to commits "
+>       ++			 N_("update branches that point to commits "
+>        +			    "that are being rebased")),
+>         		{ OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
+>         			N_("GPG-sign commits"),
+>       @@ t/t3404-rebase-interactive.sh: test_expect_success 'ORIG_HEAD is updated correct
+>        +	git branch -f second HEAD~3 &&
+>        +	git branch -f third HEAD~1 &&
+>        +	git commit --allow-empty --fixup=third &&
+>       ++	git branch -f is-not-reordered &&
+>       ++	git commit --allow-empty --fixup=HEAD~4 &&
+>        +	git branch -f shared-tip &&
+>        +	(
+>        +		set_cat_todo_editor &&
+>        +
+>        +		cat >expect <<-EOF &&
+>        +		pick $(git log -1 --format=%h J) J
+>       ++		fixup $(git log -1 --format=%h update-refs) fixup! J # empty
+>        +		update-ref refs/heads/second
+>        +		update-ref refs/heads/first
+>        +		pick $(git log -1 --format=%h K) K
+>        +		pick $(git log -1 --format=%h L) L
+>       -+		fixup $(git log -1 --format=%h update-refs) fixup! L # empty
+>       ++		fixup $(git log -1 --format=%h is-not-reordered) fixup! L # empty
+>        +		update-ref refs/heads/third
+>        +		pick $(git log -1 --format=%h M) M
+>        +		update-ref refs/heads/no-conflict-branch
+>       ++		update-ref refs/heads/is-not-reordered
+>        +		update-ref refs/heads/shared-tip
+>        +		EOF
+>        +
+>    8:  fb5f64c5201 !  8:  e7a91bdffbd rebase: update refs from 'update-ref' commands
+>       @@ sequencer.c: struct update_ref_record {
+>         
+>        +static struct update_ref_record *init_update_ref_record(const char *ref)
+>        +{
+>       -+	struct update_ref_record *rec = xmalloc(sizeof(*rec));
+>       ++	struct update_ref_record *rec;
+>       ++
+>       ++	CALLOC_ARRAY(rec, 1);
+>        +
+>        +	oidcpy(&rec->before, null_oid());
+>        +	oidcpy(&rec->after, null_oid());
+>       @@ sequencer.c: leave_merge:
+>         
+>        -static int do_update_ref(struct repository *r, const char *ref_name)
+>        +static int write_update_refs_state(struct string_list *refs_to_oids)
+>       - {
+>       ++{
+>        +	int result = 0;
+>        +	struct lock_file lock = LOCK_INIT;
+>        +	FILE *fp = NULL;
+>       @@ sequencer.c: leave_merge:
+>        +}
+>        +
+>        +static int do_update_ref(struct repository *r, const char *refname)
+>       -+{
+>       + {
+>        +	struct string_list_item *item;
+>        +	struct string_list list = STRING_LIST_INIT_DUP;
+>        +
+>       -+	sequencer_get_update_refs_state(r->gitdir, &list);
+>       ++	if (sequencer_get_update_refs_state(r->gitdir, &list))
+>       ++		return -1;
+>        +
+>        +	for_each_string_list_item(item, &list) {
+>        +		if (!strcmp(item->string, refname)) {
+>        +			struct update_ref_record *rec = item->util;
+>       -+			read_ref("HEAD", &rec->after);
+>       ++			if (read_ref("HEAD", &rec->after))
+>       ++				return -1;
+>        +			break;
+>        +		}
+>        +	}
+>       @@ sequencer.c: leave_merge:
+>        +	struct string_list refs_to_oids = STRING_LIST_INIT_DUP;
+>        +	struct ref_store *refs = get_main_ref_store(r);
+>        +
+>       -+	sequencer_get_update_refs_state(r->gitdir, &refs_to_oids);
+>       ++	if ((res = sequencer_get_update_refs_state(r->gitdir, &refs_to_oids)))
+>       ++		return res;
+>        +
+>        +	for_each_string_list_item(item, &refs_to_oids) {
+>        +		struct update_ref_record *rec = item->util;
+>        +
+>       -+		if (oideq(&rec->after, the_hash_algo->null_oid)) {
+>       -+			/*
+>       -+			 * Ref was not updated. User may have deleted the
+>       -+			 * 'update-ref' step.
+>       -+			 */
+>       -+			continue;
+>       -+		}
+>       -+
+>        +		res |= refs_update_ref(refs, "rewritten during rebase",
+>        +				       item->string,
+>        +				       &rec->after, &rec->before,
+>       @@ sequencer.c: leave_merge:
+>         {
+>         	int i = todo_list->current;
+>        @@ sequencer.c: cleanup_head_ref:
+>       +
+>       + 		strbuf_release(&buf);
+>         		strbuf_release(&head_ref);
+>       ++
+>       ++		if (do_update_refs(r))
+>       ++			return -1;
+>         	}
+>         
+>       -+	do_update_refs(r);
+>       -+
+>         	/*
+>       - 	 * Sequence of picks finished successfully; cleanup by
+>       - 	 * removing the .git/sequencer directory
+>        @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+>         
+>         			sti = string_list_insert(&ctx->refs_to_oids,
+>       @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+>         		}
+>         
+>         		item->offset_in_buf = base_offset;
+>       +@@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+>       +  */
+>       + static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
+>       + {
+>       +-	int i;
+>       ++	int i, res;
+>       + 	static struct string_list decorate_refs_exclude = STRING_LIST_INIT_NODUP;
+>       + 	static struct string_list decorate_refs_exclude_config = STRING_LIST_INIT_NODUP;
+>       + 	static struct string_list decorate_refs_include = STRING_LIST_INIT_NODUP;
+>        @@ sequencer.c: static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
+>         		}
+>         	}
+>         
+>       -+	write_update_refs_state(&ctx.refs_to_oids);
+>       ++	res = write_update_refs_state(&ctx.refs_to_oids);
+>        +
+>         	string_list_clear(&ctx.refs_to_oids, 1);
+>       ++
+>       ++	if (res) {
+>       ++		/* we failed, so clean up the new list. */
+>       ++		free(ctx.items);
+>       ++		return res;
+>       ++	}
+>       ++
+>         	free(todo_list->items);
+>         	todo_list->items = ctx.items;
+>       + 	todo_list->nr = ctx.items_nr;
+>        
+>         ## t/t2407-worktree-heads.sh ##
+>        @@ t/t2407-worktree-heads.sh: test_expect_success !SANITIZE_LEAK 'refuse to overwrite: worktree in rebase (mer
+>    9:  29c7c76805a !  9:  95e2bbcedb1 sequencer: rewrite update-refs as user edits todo list
+>       @@ Commit message
+>        
+>            We can test that this works by rewriting the todo-list several times in
+>            the course of a rebase. Check that each ref is locked or unlocked for
+>       -    updates after each todo-list update. We an also verify that the ref
+>       +    updates after each todo-list update. We can also verify that the ref
+>            update fails if a concurrent process updates one of the refs after the
+>            rebase process records the "locked" ref location.
+>        
+>   10:  c0022d07579 ! 10:  a73b02568f3 rebase: add rebase.updateRefs config option
+>       @@ Documentation/config/rebase.txt: rebase.autoStash::
+>        
+>         ## Documentation/git-rebase.txt ##
+>        @@ Documentation/git-rebase.txt: start would be overridden by the presence of
+>       + 	Automatically force-update any branches that point to commits that
+>         	are being rebased. Any branches that are checked out in a worktree
+>       - 	or point to a `squash! ...` or `fixup! ...` commit are not updated
+>       - 	in this way.
+>       + 	are not updated in this way.
+>        ++
+>        +If the configuration variable `rebase.updateRefs` is set, then this option
+>        +can be used to override and disable this setting.
+>   11:  d53b4ff2cee = 11:  2a6577974c7 sequencer: ignore HEAD ref under --update-refs
+>   12:  d5cd4b49e46 ! 12:  ec080ce1e90 sequencer: notify user of --update-refs activity
+>       @@ sequencer.c: static int do_update_ref(struct repository *r, const char *refname)
+>        +	struct strbuf update_msg = STRBUF_INIT;
+>        +	struct strbuf error_msg = STRBUF_INIT;
+>         
+>       - 	sequencer_get_update_refs_state(r->gitdir, &refs_to_oids);
+>       + 	if ((res = sequencer_get_update_refs_state(r->gitdir, &refs_to_oids)))
+>       + 		return res;
+>         
+>         	for_each_string_list_item(item, &refs_to_oids) {
+>         		struct update_ref_record *rec = item->util;
+>        +		int loop_res;
+>         
+>       - 		if (oideq(&rec->after, the_hash_algo->null_oid)) {
+>       - 			/*
+>       -@@ sequencer.c: static int do_update_refs(struct repository *r)
+>       - 			continue;
+>       - 		}
+>       -
+>        -		res |= refs_update_ref(refs, "rewritten during rebase",
+>        -				       item->string,
+>        -				       &rec->after, &rec->before,
+>       @@ sequencer.c: static int do_update_refs(struct repository *r)
+>         }
+>         
+>        @@ sequencer.c: cleanup_head_ref:
+>       + 		strbuf_release(&buf);
+>         		strbuf_release(&head_ref);
+>       - 	}
+>         
+>       --	do_update_refs(r);
+>       -+	do_update_refs(r, opts->quiet);
+>       +-		if (do_update_refs(r))
+>       ++		if (do_update_refs(r, opts->quiet))
+>       + 			return -1;
+>       + 	}
+>         
+>       - 	/*
+>       - 	 * Sequence of picks finished successfully; cleanup by
+>        
+>         ## t/t3404-rebase-interactive.sh ##
+>        @@ t/t3404-rebase-interactive.sh: test_expect_success '--update-refs updates refs correctly' '
+>       @@ t/t3404-rebase-interactive.sh: test_expect_success '--update-refs updates refs c
+>         
+>         test_expect_success 'respect user edits to update-ref steps' '
+>        @@ t/t3404-rebase-interactive.sh: test_expect_success '--update-refs: check failed ref update' '
+>       + 	# the lock in the update-refs file.
+>         	git rev-parse third >.git/refs/heads/second &&
+>         
+>       - 	git rebase --continue 2>err &&
+>       +-	git rebase --continue 2>err &&
+>        -	grep "update_ref failed for ref '\''refs/heads/second'\''" err
+>       ++	test_must_fail git rebase --continue 2>err &&
+>        +	grep "update_ref failed for ref '\''refs/heads/second'\''" err &&
+>        +
+>        +	cat >expect <<-\EOF &&
+> 
