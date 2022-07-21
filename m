@@ -2,169 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE966C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 14:13:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B906C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 14:17:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229592AbiGUON5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 10:13:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52474 "EHLO
+        id S230071AbiGUORs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 10:17:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbiGUONw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 10:13:52 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1D952FD5
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:13:51 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id b133so1876658pfb.6
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:13:51 -0700 (PDT)
+        with ESMTP id S229571AbiGUORr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 10:17:47 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 303F665D72
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:17:46 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id n12so2477003wrc.8
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 07:17:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=4LRNIFLK8LohSIZtD6wHE3bprQEY24yljhwCLEiA+UI=;
-        b=F+RO9T+PrdUZClqAyHOKKz7GZ1+lS9KoKRlkEoWv8woLbQ0aCEImMOwsdKgd5S297U
-         Bc/fW7sNaLCXjSPpRaCDfbEyhK1PjnffmPWcP0Z5V2ABLk+vFxjaHcwbNb2AZ5cmiV1o
-         OQ5ERbvE5yOKBm83qHgPhte4D4N2I+IQFz3jlW0gs5CW7TLm6qxxXYzOc4k4J250/B8f
-         fxAO2EENjUeJrseDeWpOm+5MjDXCaaREwBwRsdDQJlzPcY3cVfcVkGBN0KAe131NDNtZ
-         Ysm22s36Dv8qjgVVj/PtLOKchzDGHCxQdSyoE2KpH2G+JsuVDTC3m1gK3z1k5vMzuX0c
-         oYsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+        h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=4LRNIFLK8LohSIZtD6wHE3bprQEY24yljhwCLEiA+UI=;
-        b=csVdpwb2jDtX/aXqpo4UkqvI+5NBbeRZUFZ9OXjaTHz1D5yFXQYdjXieWfv8oB7xmn
-         74jprgYWHqNV1gSDxh/Q8fWAXIUuWNIEPx82b5N7zXDPpACk1QjStauafkKIzbpz55Lh
-         OTT6vW0CC3taZrqVSPzSFYjsciWlfOp9SBudemF4fkJw41CcBxNAGHh8YJRyDzisQjsi
-         cQB1ijSdqiCkheoxYu2TGn/o6/VVeLK6TOdwHUd117gj4ncB1JGPDoMH/KT0uPJgQPfM
-         bpaigZzbDri1x/+3BJ6CaLEFarcaV0gGUi6F1x0rq5pmEiNCEY7vi8aZf0LuZrEiQw28
-         5lIA==
-X-Gm-Message-State: AJIora9wQqOJzeNuzmMXIw9WmEaG7FRYLDyNoMaowpFh9bHfNehpwhkO
-        RmaZsEr9GDPLUYucbb5ICf4=
-X-Google-Smtp-Source: AGRyM1somVUbjq3XW/BiOS++i2k/Smhu5zT/vRmQNy8lDefB01dOb1+XVlj4JEYzWmwcDR2wyQcl3w==
-X-Received: by 2002:a63:3fc1:0:b0:41a:604c:9d22 with SMTP id m184-20020a633fc1000000b0041a604c9d22mr8621677pga.519.1658412831124;
-        Thu, 21 Jul 2022 07:13:51 -0700 (PDT)
-Received: from [127.0.0.1] ([45.138.210.17])
-        by smtp.gmail.com with ESMTPSA id j12-20020a170903024c00b00163e06e1a99sm1801527plh.120.2022.07.21.07.13.48
+        bh=5kjjkpoek4P8MgLTS9gLgGFKHzKUW9wcqj5zOWpWLQk=;
+        b=EQatKxMaLH4yh3D/YSTROVPyBi/aSJIKNb859b4mHKZYin4nkuRGMcTNNl2jK3iWCR
+         vPdz0c3pFGGzPYpEQq3EZ2oi57l6PcQH/Jj+bwexqnNOrX0dpz7opj8lmgBbhv2bYvA9
+         3ATyXmYYkmDDCwhfYzKT5DatUMQ5dTx+OANTHvXlnMshIwI2UPW85WUINQEpMiTo+ipZ
+         mZG0esMhNrSDc6tdC8Ubqz65fbbqVgbiCLAHp9sT7Tn0KIVWgu0e8gueN6y487KCb6Mm
+         9uiQQendn2yHwBOTpcoExGDYSUHEiRcOLqjFxGO+C3tWuCVcnOKlnBhm5ueQFfRzaRn3
+         9oHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=5kjjkpoek4P8MgLTS9gLgGFKHzKUW9wcqj5zOWpWLQk=;
+        b=3h3A7wfslzQS13vA43nJaFzUciRl14N1WZURQQuU4YtstNh+7MM0Ac3m4mbkPBLmc8
+         rv/Y0Nviq022vgIJp7VX3h3O3zgGjIFCn1DfV1uTPRCwqliAvxix3DHpXIf/yyS4YCET
+         hzR3ATjzadwxkvo5RPPGCUzZo9VKwLFqGRaLRBj912UD6H2V1pqMD0wEewY5gH52uiQp
+         /M41o7OEux4rtAR+rWr5SmdNObPLIuRoO9tm6FhxoZaG5UrDjpFz5TGOQn/joNv9NnZ5
+         136Yl7jlz1FAxKnnu9GzhsLk5J7DjsK/kDwGS458BPks5YD50dNsJV8rsw2yruotRAln
+         Dv2g==
+X-Gm-Message-State: AJIora9thoIR4I4imzC5yqO5DxVGQVW7C27B1SZSHTMn4d//Mmjlnlpx
+        Yci/7TtnFbBDO76hdr9NSLQ=
+X-Google-Smtp-Source: AGRyM1tfYQGgNF3Kch5PBgfhLzacqQ1/6S221vTcw01Gr67oOrbj8KBUYWh76If+UNcJb3gNr0hvyA==
+X-Received: by 2002:adf:e9cf:0:b0:21d:7b89:da5 with SMTP id l15-20020adfe9cf000000b0021d7b890da5mr34214025wrn.346.1658413064620;
+        Thu, 21 Jul 2022 07:17:44 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id v13-20020a5d4a4d000000b0021dff3cf67asm2067950wrs.10.2022.07.21.07.17.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 07:13:50 -0700 (PDT)
-Message-ID: <ab96cbe0-f256-ea5e-8356-db11d2b773f4@gmail.com>
-Date:   Thu, 21 Jul 2022 22:13:44 +0800
+        Thu, 21 Jul 2022 07:17:44 -0700 (PDT)
+Message-ID: <653c6a24-df30-2b06-4cf7-f01bd6012d55@gmail.com>
+Date:   Thu, 21 Jul 2022 15:17:43 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v1 4/7] mv: check if <destination> is a SKIP_WORKTREE_DIR
-Content-Language: en-US
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     vdye@github.com, gitster@pobox.com, git@vger.kernel.org
-References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
- <20220719132809.409247-5-shaoxuan.yuan02@gmail.com>
- <95263c88-6894-87bb-4d52-84d8d1cc5671@github.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-In-Reply-To: <95263c88-6894-87bb-4d52-84d8d1cc5671@github.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] compat/win32: correct for incorrect compiler warning
+Content-Language: en-GB-large
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>
+References: <pull.1294.git.1658256354725.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1294.git.1658256354725.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Stolee
 
+> diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
+> index 1f8d8934cc9..0af18d88825 100644
+> --- a/compat/win32/syslog.c
+> +++ b/compat/win32/syslog.c
+> @@ -44,6 +44,7 @@ void syslog(int priority, const char *fmt, ...)
+>   
+>   	while ((pos = strstr(str, "%1")) != NULL) {
+>   		size_t offset = pos - str;
+> +		char *new_pos;
+>   		char *oldstr = str;
+>   		str = realloc(str, st_add(++str_len, 1));
 
-On 7/20/2022 1:59 AM, Derrick Stolee wrote:
- > On 7/19/2022 9:28 AM, Shaoxuan Yuan wrote:
- >> Originally, <destination> is assumed to be in the working tree. If it is
- >> not found as a directory, then it is determined to be either a 
-regular file
- >> path, or error out if used under the second form (move into a directory)
- >> of 'git-mv'. Such behavior is not ideal, mainly because Git does not
- >> look into the index for <destination>, which could potentially be a
- >> SKIP_WORKTREE_DIR, which we need to determine for the later "moving from
- >> in-cone to out-of-cone" patch.
- >>
- >> Change the logic so that Git first check if <destination> is a directory
- >> with all its contents sparsified (a SKIP_WORKTREE_DIR). If yes,
- >> then treat <destination> as a directory exists in the working tree, and
- >
- > "treat <destination> as a directory exists in the working tree" is a bit
- > akward, and the rest of the sentence struggles with that. Starting with
- > "If yes," we could rewrite as follows:
- >
- >   If <destination> is such a sparse directory, then we should modify the
- >   index the same way as we would if this were a non-sparse directory. We
- >   must be careful to ensure that the <destination> is marked with
- >   SKIP_WORKTREE_DIR.
- >
- > (Note that I don't equate this as doing the same thing, just operating on
- > the index.)
+Not related to your patch but this context line looks suspicious as 
+str_len is incremented without checking for overflow. I did wonder if it 
+should be using a post increment instead and was using the st_add() to 
+check if that overflowed but str_len is an int so we'd still have 
+undefined behavior.
 
-This wording sounds more natural, thanks for the rewrite!
+Best Wishes
 
- >> If no, continue the original checking logic.
- >
- > I think this part doesn't need to be there, but I don't feel strongly
- > about it.
- >
- >> Also add a `dst_w_slash` to reuse the result from `add_slash()`, which
- >> was everywhere and can be simplified.
- >
- >>      else if (!lstat(dest_path[0], &st) &&
- >>              S_ISDIR(st.st_mode)) {
- >> -        dest_path[0] = add_slash(dest_path[0]);
- >> -        destination = internal_prefix_pathspec(dest_path[0], argv, 
-argc, DUP_BASENAME);
- >> +        destination = internal_prefix_pathspec(dst_w_slash, argv, 
-argc, DUP_BASENAME);
- >
- > Hm. I find it interesting how this works even if the directory is _not_
- > present in the index. Is there a test that checks this kind of setup?
- >
- >     git init &&
- >     >file &&
- >     git add file &&
- >     git commit -m init &&
- >     mkdir dir &&
- >     git mv file dir/
- >
- > Locally, this indeed works with the following 'git status' detail:
- >
- >         renamed:    file -> dir/file
-
-In my impression, 'git-mv' does not seem to care about whether the
-<destination> directory is in index? Given that `rename()` works so
-long as the directory is in the working tree, and `rename_index_entry_at()`
-cares even less about the <destination> dir?
-
- >>      } else {
- >> -        if (argc != 1)
- >> +        if (!path_in_sparse_checkout(dst_w_slash, &the_index) &&
- >> +            !check_dir_in_index(dst_w_slash)) {
- >> +            destination = internal_prefix_pathspec(dst_w_slash, 
-argv, argc, DUP_BASENAME);
- >> +            dst_mode |= SKIP_WORKTREE_DIR;
- >
- > Looks like we are assigning dst_mode here, but not using it. I wonder if
- > you'll get a compiler error if you build this patch with DEVELOPER=1.
- >
- > You can test all of the commits in your series using this command:
- >
- >   git rebase -x "make -j12 DEVELOPER=1" <base>
-
-Oops, it seems that I was doing the wrong way. I only run test on the
-tip of the branch, without actually testing individual commits.
-Will do this.
-
- >> +    if (dst_w_slash != dest_path[0])
- >> +        free((char *)dst_w_slash);
- >
- > Good that you are freeing this here. You might also want to set it to 
-NULL
- > just in case.
-
-I was using the `FREE_AND_NULL()` macro, but I wasn't sure since other
-places in 'git-mv' only use `free()`. Though I think it is better to
-`FREE_AND_NULL()`.
-
---
-Thanks,
-Shaoxuan
-
+Phillip
