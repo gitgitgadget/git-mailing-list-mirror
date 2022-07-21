@@ -2,98 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26F01C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 12:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30139C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 13:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233270AbiGUMO2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 08:14:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55192 "EHLO
+        id S229550AbiGUN2F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 09:28:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232469AbiGUMO1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 08:14:27 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67041863F4
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 05:14:26 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id c24so1102339qkm.4
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 05:14:26 -0700 (PDT)
+        with ESMTP id S229437AbiGUN17 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 09:27:59 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E30E753A7
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:27:58 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id pc13so1610455pjb.4
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:27:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=04+BvsbdxGKJT2WNs1WjsLHwv1NXrDOwKqsNdD5pNL0=;
-        b=H73hTqE/oEeO7SRKR0i5R+td3H+cyvGGPK+6Z1JoQEV6KMbU87vc8b/QbKsTSXNNcS
-         Vo1v2fYGwOgYkuvIRRGst5Cj9Q0q8UJimW8aogc8Q1fJq5mSMx6dn6r82Qh3T0FAMPep
-         2NuHx7WPmn8J5XZGxtFNHKZOQ6aqp6O7p4UX5sgdbJGWt4csXjkiexF6zDE/MAS7aL+6
-         uhh7jqd7mYLDg8myDtSs3s0Sg7F1jBem5sNPdFQqfpcKqFpLBh2UT9vtXOpzBrfN7m3/
-         ElBVjbzW6p1z55lv5SO5w7mysAOPiR6pY8nbZQnDqnf13ipyNxPStCBJEFAfY+OLXxjn
-         Pmkg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WaBlNt0gBf/M0my++7FF5VM9fGrehEMNlerhqeR4dNE=;
+        b=j/Moubk2GEGT6HvwsxulVINknt88V4g1D+BqZln33+wJ3/4BSNP9vTRaLIqVsugPsI
+         vY7eqPfXTUkWUtTNQlU4uRxUZ02IxV2ILmC47KpA55H9jr+6qlsGW8+X7MUfFSG9ZfjM
+         TNXXgQ0JdAOelExPGA+/RtGato6ZfePr/4qFiy/HkQKYQi2WC8Bo60neHQc30mvSdcwi
+         JVpK0xiqOLIlIZ23qKhuzGTWfc8XtddpdNkcjZsIJN54eaSpbc+mjzZlkCrGcZE4nzx0
+         BpnWzFBmpZafYl7lj2w7D2PtHefUvj+JrgUa3fSz0iPWBzAmDd6YqgDqrSQpGqz22Qnv
+         mGiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=04+BvsbdxGKJT2WNs1WjsLHwv1NXrDOwKqsNdD5pNL0=;
-        b=S3fJemCa7J0iF/kPepjURsqX9WqOmltjwNJsRMcdtBI3IXJCnc+JsCCZQppKSIRC9/
-         AYckRw93HHf44K7vQF4r0gixuz/a5eojt/zcSdjmcOYEiDPg6QlBHXAeaEePv8QLUw8X
-         jWqVCdYkQRR3QViF1tv5WAnzXo+zxgdHuoSvZCBYH/hsCuDz2pC87gFNbQ8L9SZ2DvTI
-         FBINy1zD5VUKZIAWUtvQKO4iWeeMXf2QeKVxEEUSGS8//ppG6a0L/cRprHoSUYI4q/5C
-         eyL9WMPYxACc0WK6107uEAq5S64G1jrc0jg0Y+SyGuZuZVS67rgit3xelGuXX8LtxLVe
-         xJtg==
-X-Gm-Message-State: AJIora+BwRDdWlwk7Ks+XGTCn90MycNbCBjLlaGBK1Sx2LkayKA/C/D3
-        O97/suhE+/FMUY404QVUYoyLM0D9D6T4
-X-Google-Smtp-Source: AGRyM1uMTg7A9SqlWRAGhuRiPIbN00kzy+EJ1mhgNImheI35u11mkQhPl5xy6wwlhO40U7/JuQEdOA==
-X-Received: by 2002:a05:620a:460e:b0:6b6:1df9:1fc3 with SMTP id br14-20020a05620a460e00b006b61df91fc3mr1836284qkb.217.1658405665465;
-        Thu, 21 Jul 2022 05:14:25 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:8099:5229:7961:505e? ([2600:1700:e72:80a0:8099:5229:7961:505e])
-        by smtp.gmail.com with ESMTPSA id v33-20020a05622a18a100b0031f0b43629dsm1288323qtc.23.2022.07.21.05.14.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 05:14:25 -0700 (PDT)
-Message-ID: <304fd857-db62-7a1a-a9a9-cbfa93c2a00c@github.com>
-Date:   Thu, 21 Jul 2022 08:14:23 -0400
+        bh=WaBlNt0gBf/M0my++7FF5VM9fGrehEMNlerhqeR4dNE=;
+        b=Q+TpkS1lZHGvN/fs+9VK5isvHD5/WRlQ0aJCYk1laiFrKAavO3BDysnjy+OVP48+J9
+         7eHmb2SddAk6uA+hyUu9oC6jYASbdd6mv5BrpzQIMnAcUgzpIcXcE/E5BJ2/0hNsx1cM
+         5rwJm+2+dPTbJCIJ//U9lj394IFGIorGWIZq62ScZANUFoqbmwndz4rIKnS7S9IH35E1
+         pDVb2zYgod63ouVCP4o/M9BA3E4y+7Bu1i/PqkeEINF81QSAMAOKO+xw9WAs1STRH4I5
+         AnH6vxmAIHMa9oXacP/hnemv6Aqx8Z1H0/CwCf/7Gv7XuvsmCcDiAcdfBxVkAPi8rzSh
+         UJDw==
+X-Gm-Message-State: AJIora9LxLV0Mpzy7YMdgAMn1CFNTT7rNKYMjjEm5wtBu4ZpQpiN+gtz
+        JcKeaF/t7s4QiwkGxfhIQ3SeNOC1734=
+X-Google-Smtp-Source: AGRyM1uAVL6r/OArEdoAXpRKZGfUanmizLyBVbVrSWmTmQweGXNLHdeO7wuQPRx8iOpZiHtEOAMiTQ==
+X-Received: by 2002:a17:90b:1e04:b0:1f0:61a4:d747 with SMTP id pg4-20020a17090b1e0400b001f061a4d747mr11465845pjb.58.1658410077413;
+        Thu, 21 Jul 2022 06:27:57 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.102])
+        by smtp.gmail.com with ESMTPSA id q13-20020a65684d000000b00419cde333eesm1467326pgt.64.2022.07.21.06.27.55
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Jul 2022 06:27:56 -0700 (PDT)
+From:   "tenglong.tl" <dyroneteng@gmail.com>
+X-Google-Original-From: "tenglong.tl" <tenglong.tl@alibaba-inc.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, --cc=avarab@gmail.com, git@jeffhostetler.com,
+        tenglong.tl@alibaba-inc.com, Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH 0/2] tr2: shows the scope unconditionally with config 
+Date:   Thu, 21 Jul 2022 21:27:46 +0800
+Message-Id: <20220721132748.37848-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.37.1.1.g8cbb44ffc4.dirty
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: Can I use CRoaring library in Git?
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-References: <CAPOJW5x4McofC5fxBvsRAzum28wmeDJCMTMRmY_0oy=32JjKqQ@mail.gmail.com>
- <CAPOJW5yJDq046nhq0V-syAg4ttoy++rBtq_RHSXPAKhtDDw6jQ@mail.gmail.com>
- <xmqq7d47m1t2.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq7d47m1t2.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/21/2022 2:12 AM, Junio C Hamano wrote:
-> Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com> writes:
-> 
->> On Sat, Jul 16, 2022 at 7:20 PM Abhradeep Chakraborty
->> <chakrabortyabhradeep79@gmail.com> wrote:
->>>
->>> Hello,
->>>
->>> I need the CRoaring[1] library to use roaring bitmaps. But it has
->>> Apache license v2 which is not compatible with GPLv2[2].
->>
->> I have reached out to Daniel and he agreed to make CRoaring
->> dual-licensed under MIT and Apachev2[1].
->> Now, I can use CRoaring, right?
->>
->> [1] https://groups.google.com/g/roaring-bitmaps/c/0d7KoA79k3A
->>
->> Thanks :)
-> 
-> Nice.
+From: Teng Long <dyroneteng@gmail.com>
 
-Great news! Thanks for reaching out. I'm pleasantly surprised at
-the turnaround. Good luck integrating it into the Git codebase!
+This series is separated from :
 
--Stolee
+  https://public-inbox.org/git/a01ae8478d3a8545241c5b064b6d369a330ee59f.1658159746.git.dyroneteng@gmail.com/
+
+and now move to a independent topic now.
+
+Thanks.
+
+
+Teng Long (2):
+  api-trace2.txt: print config key-value pair
+  tr2: shows scope unconditionally in addition to key-value pair
+
+ Documentation/technical/api-trace2.txt | 41 ++++++++++++++++++++++++++
+ trace2/tr2_tgt_event.c                 |  3 ++
+ trace2/tr2_tgt_normal.c                |  5 +++-
+ trace2/tr2_tgt_perf.c                  |  9 ++++--
+ 4 files changed, 55 insertions(+), 3 deletions(-)
+
+-- 
+2.37.1.1.g8cbb44ffc4.dirty
+
