@@ -2,95 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13085C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 18:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6538C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 18:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233105AbiGUSsm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 14:48:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36122 "EHLO
+        id S233270AbiGUS6q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 14:58:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbiGUSsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 14:48:39 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57DA88AEFF
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:48:38 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-10d6e8990b9so3596279fac.7
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:48:38 -0700 (PDT)
+        with ESMTP id S229489AbiGUS6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 14:58:37 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BAD38C163
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:58:36 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id e69so4343988ybh.2
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=R+odcbyUo/1jC1G0qAzol+6WiFd6JCbpjAUQoXc7LyQ=;
-        b=PmOBtwCsNThgmITC4/pngeQVo0MKOa2b0UZNh9BDMBMGU7uLrur4mv4n/iLeV9snpS
-         AbAR6Z0DpU0RS2WJCkCRESkZ9Tj3vWHDunzSByHCyHWICF5Km6+mHHXCz2HGPRpm44XJ
-         x1tmcp3zVLVCa01dkC1AR5Tj4l9A4tyip0ZwOKi6OZ2PNmyhB5G+zTDVXvi1X48ZgVxG
-         zM3btBF4B0IifAR2IZw7dEGO0dtVMFCefbq/u4VsWP8SZjGFondlMcV2nWvDttlABdiA
-         YjpAAXDmz1DpsVLKp/pwwegNu/TdX6QYWt1ATT5M/jLf+hS4YWuhdNM/t6oIKFe/QN87
-         CM1g==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9ZkzTVnJm2Hlwc2t0MC2C+KWgU2ngIi9MX9Lu13hxDg=;
+        b=oUnDi6JIZN5TpIQDpJaCNVSKUza7o0YXX+/klh/TNnUyz57P3ExSk+48cFhhpTkT4f
+         1scRCy1bZV1wMkzAroBAPgJtHaElTjClMKC64DQXzix5jGIz7OACXaTS7xbZKAgLACCB
+         rH9M3ZaMVX/GSOV4suK+CiOiNyABNBQFqIrC21n3jU3EAl6boGebwhKelgTUmalHLgOt
+         Bkj6RP4i+xzVCUDjIduNEJphYyawB1odrRUN4GsOGkojTv1m2FbWIkUBMMgXkJOKc7/x
+         veTqa593469HEhuWozrxVKueMEDzJuZzYWbtJt3qQDhwM3G5n9lRcwGtN6R3NWbgamAN
+         iKdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=R+odcbyUo/1jC1G0qAzol+6WiFd6JCbpjAUQoXc7LyQ=;
-        b=SzVYgdOuoygoYLsxTFwbai9eLZpP7U9cP/kYm4nIo0oWdbdMI7xqSNr9PA/i+9mzZg
-         7Su3azSj/OAe0IFwk6N6SlJFDY1oA65J8YUJFRY5yUyssdCunQD4ALw6jNP+oLNuGxZN
-         lwKXPgDHAhl6YFvrfdm36f7GqAtrpGCTzKzAOm4QYIHEnmL5ErV90efRAlTpZF+Ljumj
-         3dye4/ADy9v+NkQyPBUX8kGRf3M/KyByaKfzgv0jH0oxh6mxey01LFTixbb+ir3tWqRw
-         6+EWaYEsly3nNGBzgp16hE0sFicOugowNZFrdh1JhgPl12Vc2vVSxU2l0DerIvJ6QVTM
-         de1w==
-X-Gm-Message-State: AJIora9qi+/xJ1yp3XigX3WFO2Dv0u8+MPkuCKbBI7RHTkEYgQOUSVA2
-        SWlGaiXU3uqiPcWE5RVTBM2KljXjHqX6
-X-Google-Smtp-Source: AGRyM1uLa6mQn+a1lHoIIGjCxUb9GRkh5ZoRKaoH477I3muSC/HZNhoEHuxwukLun557lmcNdEXr7g==
-X-Received: by 2002:a05:6870:899d:b0:10c:b531:17b1 with SMTP id f29-20020a056870899d00b0010cb53117b1mr5851777oaq.271.1658429317595;
-        Thu, 21 Jul 2022 11:48:37 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:8099:5229:7961:505e? ([2600:1700:e72:80a0:8099:5229:7961:505e])
-        by smtp.gmail.com with ESMTPSA id k23-20020a056870959700b000f5f4ad194bsm1321239oao.25.2022.07.21.11.48.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 11:48:37 -0700 (PDT)
-Message-ID: <571ad4e2-e6de-35a2-0d58-2329cf8684ab@github.com>
-Date:   Thu, 21 Jul 2022 14:48:35 -0400
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9ZkzTVnJm2Hlwc2t0MC2C+KWgU2ngIi9MX9Lu13hxDg=;
+        b=FLlplzL3sFCY3dyribL+aFb6B/XApKkBGnimLv9Zp+MPNmz4ZEn/l0tItxKpod+Bfj
+         0md4gdJhZnb1qe9sUCPNbgBQ8LjjT277546dpY7bhIrqiyZ1Ylfljosq9MK/JEQAHXQM
+         0g7IykZ/NF+/ZULSmXwuXEYI4DgPcehY0uac52/Co1dnCs+MZARBrz0/eYedWghVU/Co
+         +LBG5nOXXHRoityLfffprjhD2FktRtk4QSOfh22pxNOpuf23bI0XUMKd8FbRe5l1zO2t
+         FR3jLzrOI13iSzd47SeXDPntsdUFPyohYplKGGSRKPbgnf7D54SaCRfi0R8khLNxp+0l
+         sSdw==
+X-Gm-Message-State: AJIora/g2Z5U8AT6TW82LBR983mTTfKK+7X4C0rlo4sCvTSKMp9Qnqys
+        pu7M9QfVHSZv44CIYQH/Y0c/fUIMFibzw61ttey2KCkw
+X-Google-Smtp-Source: AGRyM1sde/lgvrw43Pirc9OXw/0SMA4bNk6zHco9vLPQ7lQ/y/bKeN4d0BmxOUWONW5WaXcbJzezq3Hu6Wt959TwUZE=
+X-Received: by 2002:a25:6a57:0:b0:66e:c1bf:4a2 with SMTP id
+ f84-20020a256a57000000b0066ec1bf04a2mr40864219ybc.263.1658429915490; Thu, 21
+ Jul 2022 11:58:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: Question: How to find the commits in the ancestry path of seen
- down to _and_ including a given topic?
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <CABPp-BEK+SJh2uF=rrM-f1u9diMQJ7D3H0fJLdzWpyOww=ys+w@mail.gmail.com>
- <xmqqy1wmlbnn.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqy1wmlbnn.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+ <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com> <87a692e8vj.fsf@vps.thesusis.net>
+In-Reply-To: <87a692e8vj.fsf@vps.thesusis.net>
+From:   Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Date:   Thu, 21 Jul 2022 11:58:24 -0700
+Message-ID: <CAE1pOi1pS76iXU8j=A54wPGHC7qofxrPDAO4uyy0d6yMxeQwvw@mail.gmail.com>
+Subject: Re: Feature request: provide a persistent IDs on a commit
+To:     Phillip Susi <phill@thesusis.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stephen Finucane <stephen@that.guru>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/21/2022 11:37 AM, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
-> 
->> A simple question that I'm spinning out of [1]: How can I get `git
->> log` to show the commits in the ancestry path from seen, back to *and
->> including* a given topic (but not commits from unrelated topics)?
-> 
-> Drawing of a sample history, please.
-> 
-> I feel stupid asking this, but I do not think I even understand what
-> the question is X-<.
-> 
-> Commits that are ancestors of 'seen' and are descendants of the tip
-> of the topic?
+On Thu, Jul 21, 2022 at 9:39 AM Phillip Susi <phill@thesusis.net> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+> > This has come up a bunch of times. I think that the thing git itself
+> > should be doing is to lean into the same notion that we use for trackin=
+g
+> > renames. I.e. we don't, we analyze history after-the-fact and spot the
+> > renames for you.
+>
+> I've never been a big fan of that quality of git because it is
+> inherently unreliable.
 
-Have you tried 
+Indeed, which would be fine ... if there were a way to tell Git, "no
+this is not a rename" or "hey, you missed this rename" but there
+isn't.
 
-  git log --graph --oneline --boundary --ancestry-path <A>...<B>
-
-The triple dots show the symmetric diff, and the --boundary shows
-the possible merge-bases. The --ancestry-path option seems to trim
-the output significantly in the example I tried.
-
-Thanks,
--Stolee
+Reading previous messages, it seems like the
+after-the-fact-rename-heuristic makes the Git code simpler. That is a
+perfectly valid argument for not supporting "explicit" renames but I
+have seen several messages from which I inferred that rename handling
+was deemed a "solved problem". And _that_, at least in my experience,
+is definitely not the case.
