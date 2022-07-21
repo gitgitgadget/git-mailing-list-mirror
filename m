@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F008C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 08:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E23BC43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 08:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232419AbiGUIQx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 04:16:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48190 "EHLO
+        id S232261AbiGUIRC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 04:17:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232231AbiGUIQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 04:16:43 -0400
+        with ESMTP id S232297AbiGUIQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 04:16:45 -0400
 Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0FEC7D78C
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:41 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id h8so1154075wrw.1
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E3607D7B6
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:44 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id k11so676586wrx.5
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=xRjx3GHengqE4lF7ebtLjKNtoNDHdxoCL7MPpYxY6xg=;
-        b=mh6+MtQSKvTJW5Q4VMc952EXx6KZC64bCMozDoyEnJ3BEq1LeTekylG/g9G9aOiw9U
-         Ob+zrOLzOdKSqcXCddoZ5Xaq3oirTEw2jOc+OvZBRqr5Yz8t+Oxq0QiAuxVJNq2bIQun
-         aJYhvi8LmU5z36mLjhJC8eaYrFwWs5uPWxAdilmCBl53WpqBSqhaNpPrLXmAvviQ4+Ay
-         oztsv1RuKFdsVXUy5Vb22qzKh0TxUiJ31SvWyTKN2myxqWIHtF+zyFlzK/YRdvrM9mH4
-         uK3EqkK3U4CtQt8d2TTS2WJyg8FNvX0BICAton0QERcUDtXuphnQib5+fj85lHLIxVEA
-         vzow==
+        bh=8hOFrkxXUiIasWHVohoJoM+SqtUciFu2UG5GIzqdmgU=;
+        b=EZjJqDssuqERMfUuVTspAKXG3kvQHiGZQ9m0Hto6qTZH5GvJAr/IqK60/AL7XgP0yR
+         sRVK0BVqGGBrzKIHBfH0/AiARaNu+809A2lcS0q0kEIRmovKkwFB0Ub1bUP5uFxGs9gg
+         KoO38AgHYMC6cFaFi2P4roU446KtCrQHupMujLR+LsnnZDQIEhM6J3lpCYNk2xAlSpgH
+         J+DiTKMB2ZYgESrwG3V9+igtImVdy3+r3+FX0M74gwhDVCprRTFOu4X2LpcDSlbpXzTi
+         kMbbaJJFuhDxpDOxjVZw9XF3BFRU653xBWkLXzF1UPb6qEUJ1zM4z+GUyBnExCjubIZd
+         vMPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xRjx3GHengqE4lF7ebtLjKNtoNDHdxoCL7MPpYxY6xg=;
-        b=w3CGOGxACB5jM6olB6sYuj7KA03FGVIzArfxeURLl/KZLVrBvw+I4kKPVn/NNpnjOO
-         VgtE1tzFsz8H0WE9E+cXNgh9R4xl1PnCkosUsyBtqX5IKzDRUwgM4luORSeWAdKwC62q
-         RTaaGXd/G2nGqerELMgYmLzxgKUEc4wrVqWKYqCD31NesEx3WQCewQ16LGELXahawZWC
-         3LenJ8+Qce1KDXpfv/nhqXy3XDeF0WW7ufXLX/TomMVY2Nh4NpgqFsuI4Q53xo0ohW7I
-         mTBkVtBsbTKOCKDGQg1aBwYz5JnoqIpvQ1LP2NRm8iPsYq/mTeg9nRLQVdzc+vnJszpp
-         4LmQ==
-X-Gm-Message-State: AJIora8cLbY831RE4vTFc49+dwAyKeg2Uo/GExUs8gNlcMSLob1+2Qg/
-        xWOVh0p5xFlvweeabjtJbj11rzK+7EA=
-X-Google-Smtp-Source: AGRyM1suq1JM2iLna2VLRoRT0WfFflbFyxWmciSCIcP1oDvPYWoLmQXtBKJAlLQsvTzkfQy1fpJJBQ==
-X-Received: by 2002:a5d:6e8d:0:b0:21e:48a4:b267 with SMTP id k13-20020a5d6e8d000000b0021e48a4b267mr5227239wrz.507.1658391400106;
-        Thu, 21 Jul 2022 01:16:40 -0700 (PDT)
+        bh=8hOFrkxXUiIasWHVohoJoM+SqtUciFu2UG5GIzqdmgU=;
+        b=VvbpJtJR9bBu0gIw7muz90vEgNWRx46GTsCVG3/G/QQapg+YHzPe0fkiZJ2OGq9dwC
+         WlrMPWPhKsd/QGkYk4XihcyzdiuWGv2T4NzEpN5vwiqBSiq36xkhtG8W8YC9p3PwCUSl
+         5k+kvwEO06ZOC3TYUyUXXFkP84qnLFcA0I9L1OCfbi442UGBDVp5MS8eDzh4XURYIKQi
+         1iVM5Y0pUD7Kn4RMEp+9TJa5L7WHE5qsgjCe5FnWrul94F92HuFLfw5eCpdTKn14MPQS
+         XDR0nuUpau+QyT1BwiRcs8SQoYR+xlukZ82EBLJ5V/oK3VWlYNFTGmXgXIYy27Xrmxj7
+         cWEQ==
+X-Gm-Message-State: AJIora+GkcW9c9gc4hjpwUBTLMNDwqkif3i2LweL5rVmt0tsLp4nK04i
+        tSnQ/K6ci/2ys7iTLXa7W105rQugPVI=
+X-Google-Smtp-Source: AGRyM1u6J54yzUOfS73YYRazpKGFia/hzkkJozlAVuJkCUm4KVe/G7ojLqumrabCuvkdUyQkExxRKQ==
+X-Received: by 2002:a5d:414a:0:b0:21d:6be5:1765 with SMTP id c10-20020a5d414a000000b0021d6be51765mr34246617wrq.419.1658391402536;
+        Thu, 21 Jul 2022 01:16:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z4-20020adfd0c4000000b0021d7b41255esm1100696wrh.98.2022.07.21.01.16.38
+        by smtp.gmail.com with ESMTPSA id j23-20020a05600c1c1700b003a32251c3f9sm5732267wms.5.2022.07.21.01.16.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 01:16:39 -0700 (PDT)
-Message-Id: <64700338a28b04be93d8d4bc8b2c75cab75ab5cd.1658391391.git.gitgitgadget@gmail.com>
+        Thu, 21 Jul 2022 01:16:42 -0700 (PDT)
+Message-Id: <887967c1f3fd6f03cf1d0bb3c19ed16819541092.1658391391.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
 References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
         <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Jul 2022 08:16:28 +0000
-Subject: [PATCH v3 4/7] merge: fix save_state() to work when there are
- stat-dirty files
+Date:   Thu, 21 Jul 2022 08:16:30 +0000
+Subject: [PATCH v3 6/7] merge: ensure we can actually restore pre-merge state
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,60 +72,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When there are stat-dirty files, but no files are modified,
-`git stash create` exits with unsuccessful status.  This causes merge
-to fail.  Copy some code from sequencer.c's create_autostash to refresh
-the index first to avoid this problem.
+Merge strategies can:
+  * succeed with a clean merge
+  * succeed with a conflicted merge
+  * fail to handle the given type of merge
+
+If one is thinking in terms of automatic mergeability, they would use
+the word "fail" instead of "succeed" for the second bullet, but I am
+focusing here on ability of the merge strategy to handle the given
+inputs, not on whether the given inputs are mergeable.  The third
+category is about the merge strategy failing to know how to handle the
+given data; examples include:
+
+  * Passing more than 2 branches to 'recursive' or 'ort'
+  * Passing 2 or fewer branches to 'octopus'
+  * Trying to do more complicated merges with 'resolve' (I believe
+    directory/file conflicts will cause it to bail.)
+  * Octopus running into a merge conflict for any branch OTHER than
+    the final one (see the "exit 2" codepath of commit 98efc8f3d8
+    ("octopus: allow manual resolve on the last round.", 2006-01-13))
+
+That final one is particularly interesting, because it shows that the
+merge strategy can muck with the index and working tree, and THEN bail
+and say "sorry, this strategy cannot handle this type of merge; use
+something else".
+
+Further, we do not currently expect the individual strategies to clean
+up after themselves, but instead expect builtin/merge.c to do so.  For
+it to be able to, it needs to save the state before trying the merge
+strategy so it can have something to restore to.  Therefore, remove the
+shortcut bypassing the save_state() call.
+
+There is another bug on the restore_state() side of things, so no
+testcase will be added until the next commit when we have addressed that
+issue as well.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge.c                          |  8 ++++++++
- t/t6424-merge-unrelated-index-changes.sh | 11 +++++++++++
- 2 files changed, 19 insertions(+)
+ builtin/merge.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index dec7375bf2a..4170c30317e 100644
+index f807bf335bd..11bb4bab0a1 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -313,8 +313,16 @@ static int save_state(struct object_id *stash)
- 	int len;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf buffer = STRBUF_INIT;
-+	struct lock_file lock_file = LOCK_INIT;
-+	int fd;
- 	int rc = -1;
+@@ -1686,12 +1686,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	 * tree in the index -- this means that the index must be in
+ 	 * sync with the head commit.  The strategies are responsible
+ 	 * to ensure this.
++	 *
++	 * Stash away the local changes so that we can try more than one
++	 * and/or recover from merge strategies bailing while leaving the
++	 * index and working tree polluted.
+ 	 */
+-	if (use_strategies_nr == 1 ||
+-	    /*
+-	     * Stash away the local changes so that we can try more than one.
+-	     */
+-	    save_state(&stash))
++	if (save_state(&stash))
+ 		oidclr(&stash);
  
-+	fd = repo_hold_locked_index(the_repository, &lock_file, 0);
-+	refresh_cache(REFRESH_QUIET);
-+	if (0 <= fd)
-+		repo_update_index_if_able(the_repository, &lock_file);
-+	rollback_lock_file(&lock_file);
-+
- 	strvec_pushl(&cp.args, "stash", "create", NULL);
- 	cp.out = -1;
- 	cp.git_cmd = 1;
-diff --git a/t/t6424-merge-unrelated-index-changes.sh b/t/t6424-merge-unrelated-index-changes.sh
-index 8b749e19083..3019d030e07 100755
---- a/t/t6424-merge-unrelated-index-changes.sh
-+++ b/t/t6424-merge-unrelated-index-changes.sh
-@@ -268,6 +268,17 @@ test_expect_success 'subtree' '
- 	test_path_is_missing .git/MERGE_HEAD
- '
- 
-+test_expect_success 'avoid failure due to stat-dirty files' '
-+	git reset --hard &&
-+	git checkout B^0 &&
-+
-+	# Make "a" be stat-dirty
-+	test-tool chmtime =+1 a &&
-+
-+	# stat-dirty file should not prevent stash creation in builtin/merge.c
-+	git merge -s resolve -s recursive D^0
-+'
-+
- test_expect_success 'resolve && recursive && ort' '
- 	git reset --hard &&
- 	git checkout B^0 &&
+ 	for (i = 0; !merge_was_ok && i < use_strategies_nr; i++) {
 -- 
 gitgitgadget
 
