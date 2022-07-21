@@ -2,82 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94859C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 15:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E841AC43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 15:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232358AbiGUPob (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 11:44:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35914 "EHLO
+        id S232880AbiGUPsl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 11:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233132AbiGUPoA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 11:44:00 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C1058BABE
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 08:39:58 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id w29so1515578qtv.9
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 08:39:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=EVNAkVqc1N5VjtpNwBIkU4FBAY+b11W1Ir4htMDRDyc=;
-        b=FlLrunSAYrc8D0Urct3ZBhbSnp/ia4elbre3lXbeflirTVtOkH0m4+y4ZAaAm2wVVe
-         QPlF9+W8qcQpUry47B2yydW4tUPH1wc9iTZiktcKIj7G60QJvpX3pzFPLgaMa+EcbEdJ
-         vRhqQHRMb5t012vww0tFhzGA13CW1jyxxwrpQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=EVNAkVqc1N5VjtpNwBIkU4FBAY+b11W1Ir4htMDRDyc=;
-        b=1dCu+n+vXAXd9t9s3gKEcoQYWeAFK8Nb/GfWBQo7hJRbSQfiqtiEekAWks0NIJjCjp
-         ZTbIiK/yivqUsgXRnnvfvdF3LnFuvAOPqk0bKhphZI5Mm8wD1vTcYJsZK5Iip1p5VBOJ
-         7jIYerJ+2zD7cIxRwqZ2sdJDDHdBBlNX+v+DOVSGdAyniP3VGqlhFI17w/aXKry06mzi
-         rvHBGv/2wgP90Dv26S0QhcTH3F3mKYhuUyQ3LEQ9qyBzx63tSFgxQlbiQcJWQ9Ph/Q+T
-         HMR5IRhNNz7L1ibezl95oh+QZt0wshgNh+ASCu2XGGK+CcoWe6j+CNpFtwsCvoHALNSY
-         G+SA==
-X-Gm-Message-State: AJIora/elloGm202940+Hj6HklbRL6yhoW3hSNsC/4b91NBzuXQpTXti
-        Q1Ztg5F/xUNCxb6eIj7p+3V7rA==
-X-Google-Smtp-Source: AGRyM1sGMQk8yiGdfJ7tFkdZjsSk8X1JE5pqy8+fPDkHRz4p2fdAUQ3y/Sl2x6izibkXJzB8vHYs6w==
-X-Received: by 2002:ac8:5b56:0:b0:31e:fa8c:852e with SMTP id n22-20020ac85b56000000b0031efa8c852emr12126595qtw.503.1658417997471;
-        Thu, 21 Jul 2022 08:39:57 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id fu24-20020a05622a5d9800b0031b7441b02asm1362286qtb.89.2022.07.21.08.39.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 08:39:57 -0700 (PDT)
-Date:   Thu, 21 Jul 2022 11:39:55 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     rsbecker@nexbridge.com
-Cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: On-branch topic description support?
-Message-ID: <20220721153955.lnfqfilri24i2yw6@meerkat.local>
-References: <xmqqilnr1hff.fsf@gitster.g>
- <xmqq35eumrp8.fsf@gitster.g>
- <010101d89d16$a97184a0$fc548de0$@nexbridge.com>
+        with ESMTP id S233446AbiGUPs2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 11:48:28 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5739288E2C
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 08:47:40 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DC9731A9461;
+        Thu, 21 Jul 2022 11:47:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RtmrBo51I/DdYt3+LhzJN+BCE5pNx79giqpPR5
+        2ZVUk=; b=snWwn1JEeFgOrjWzbCc+OdhhsNDtHz296V+BdUzqw4QpgO7SCtjGBT
+        HICjtCxSq1sReOK59bvSStezXLV/aJvVUFjLLJJoa+oYBgm8QAb2laRPLsajR6PG
+        L83MVffipNPBF5h+2Cmq+EF+lqaGtnJGAIzmcZuTR6VgiTL2PUzDg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D4B941A9460;
+        Thu, 21 Jul 2022 11:47:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 807051A945F;
+        Thu, 21 Jul 2022 11:47:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 1/7] merge-ort-wrappers: make printed message match
+ the one from recursive
+References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
+        <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
+        <e39b2e15ece14ba2b1118ae95e0d90ed60589b41.1658391391.git.gitgitgadget@gmail.com>
+Date:   Thu, 21 Jul 2022 08:47:35 -0700
+In-Reply-To: <e39b2e15ece14ba2b1118ae95e0d90ed60589b41.1658391391.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Thu, 21 Jul 2022
+        08:16:25 +0000")
+Message-ID: <xmqqsfmulb6w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <010101d89d16$a97184a0$fc548de0$@nexbridge.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 716AC618-090C-11ED-9A44-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 21, 2022 at 11:29:20AM -0400, rsbecker@nexbridge.com wrote:
-> I might be missing something here, but could not a description follow
-> similar semantics to how git describe works on tags? Anchor the description
-> on the commit where the branch was spawned, then determine the appropriate
-> description based on things like --first-parent. Again, I'm probably in the
-> weeds.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I think the trouble is that "commit where the branch was spawned" is not
-reliable due to:
+>  	if (head && repo_index_has_changes(opt->repo, head, &sb)) {
+> -		fprintf(stderr, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+> +		struct strbuf err = STRBUF_INIT;
+> +		strbuf_addstr(&err, "error: ");
+> +		strbuf_addf(&err, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+>  		    sb.buf);
+> +		strbuf_addch(&err, '\n');
+> +		fputs(err.buf, stderr);
+> +		strbuf_release(&err);
 
-- rebasing the work on a different branch
-- reordering commits (including the first commit in the series)
+Makes me wonder why this is not a mere
 
-This is the main reason why I actually want to stick the empty commit with the
-cover letter not at the tip of the branch, but at the start of the series, so
-as to clearly demarcate where the series of commits we're interested in
-starts (at least while the author is working on them -- when it sent off
-upstream that commit can get removed/moved).
+	error(_("Your local chagnes ... by merge:\n  %s"), sb.buf);
 
--K
+that reuses the exact string.  The err() function in merge-recursive.c 
+is strangely complex (and probably buggy---if it is not buffering
+output, it adds "error: " prefix to opt->obuf before calling vaddf
+to add the message, and then sends that to error() to give it
+another "error: " prefix), but all the above does is to send a
+message to standard error stream.
+
+>  		strbuf_release(&sb);
+>  		return -1;
+>  	}
