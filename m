@@ -2,121 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D4BFC43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 07:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1EDFC43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 08:16:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229945AbiGUHtF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 03:49:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56198 "EHLO
+        id S232198AbiGUIQs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 04:16:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229672AbiGUHtE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 03:49:04 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58F292C12A
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 00:49:03 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id l3so733018qkl.3
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 00:49:03 -0700 (PDT)
+        with ESMTP id S232338AbiGUIQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 04:16:37 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A917D1F9
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:36 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id d16so1113594wrv.10
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=6XEGGYXaU/NGOrc/EPpwqwlJmxfyDRT0DkXZ17yrr/o=;
-        b=LbqP+0KJuo6m9VBE//nnhVcxtIgoPJ1hTK/ve9xtkZrNx+HNb84B3ePaNLNNYfOAfC
-         /ZVW5jdpDpdMwLSHR89Z0nAsWaQq/zVhy6U2VLhPKHMNFU0yPMvXfiiWraI33i0WK5MS
-         fzFMLp2e7atnQju4Q8Ut7DI19w8Rk1FDTZ2cyXhEHsxu5IYpeLxUmYtGIEOAa6zoaPsB
-         g4OXQS7Bj4L9cu/eDGZWRE/UBXpwUZp12VjMJ6DEND0UzFCw5ypxMYsrpg0FheMHeE4w
-         +9nWgMJN2x/0QuiwikVVrDLzXIbKyKBdLpGcVtjlm58ZR5Ww5qWJjG4zKPf7jm8qG6Xx
-         sJQw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=UJOy9RRNI32Tpa2zF9+YdiUGBIaJj9d1+SEvkhyYRPQ=;
+        b=MlJycEPxdi1t69H3GUDhsP2xcCLVGkWIkmW3cE2hh1uZd47APkSf+U212sbfHZJ8yw
+         inxyP91QncSLx+JUk4XXKb6fULaip6eeXtcsHvffC4FCoALgnqWBSoqEaf5q1x95b4c1
+         XjptQ9wVsc1HNrIUbM7ZHAtJif0XXXYR9mda9QVoYsvs36iMYFOBxavavS/5LdJViDjs
+         aqyDGDCdnpx4ARiF8y8oPcl2984rnY5cODwWNa7SJnlvzBz+dcWcohfUCmgAeLnYjDq2
+         4ArM7O1Ujebq67mGdtI+dOV/GL5l8uqAcsPW3xZ9MhEWol7mgm5+gox30jFlQylzVmu4
+         VzNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6XEGGYXaU/NGOrc/EPpwqwlJmxfyDRT0DkXZ17yrr/o=;
-        b=on584XkJVcRC/smT2n5H9fQVCr9EeurjsOswOW8kNK3hrA74LLBeaezU0z9ooFz58X
-         6pO/NNhYtTppxKDd176tBzLGu0nr3eSFJPvBGB4F9FfTdtAlEIerwNTzNjgwghkAMQ9W
-         +ggdU0uaOyl/lyoWU3EyWXfsHlDL0tEVv75n7Ko3SqGHsg6WA8EML+hcYhn1o6VvKu4U
-         0nnRgwb8Y2r1NMpJeDhFFOZRWoBic6EBRidh8sttUQWrbQSP21PH6n1+0Ug3GZvjbOqf
-         Nae2KI7mDBIq3JhFNm2UGjTmqbi3K7vQESgzL8j5FuruZZ1CXd+a4Dvn4Z+967aiNP8m
-         L+gg==
-X-Gm-Message-State: AJIora8kMQmfxkKjdFp8U3uYk/CQUe6hnbUpCdEX5YUsiRUvUOgWiSTY
-        fK7WqeyC1KqE6QDkeTq6XS/Bg0Ki6JqOTYILh30=
-X-Google-Smtp-Source: AGRyM1ucoKhvmzKbgcYqjfLNAfzBzMsOcBn511V0sOYLjWRXkXpCNhOpSp8UMu496X8gCzw7cdQnoCbYPIiyJUFC5oE=
-X-Received: by 2002:a05:620a:741:b0:6b5:ee4f:35e8 with SMTP id
- i1-20020a05620a074100b006b5ee4f35e8mr11840064qki.131.1658389742345; Thu, 21
- Jul 2022 00:49:02 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=UJOy9RRNI32Tpa2zF9+YdiUGBIaJj9d1+SEvkhyYRPQ=;
+        b=oDDDVUee11Kmdwa78wvtQ4QTEQmIb6Dz2nEWM8hqegGxRTcpUjeaSfp9gy3jxdB62K
+         gXbGs7wb/tmrOAsZMFDUp/2zWTnwEqpqhcnJzQe7mpGHvaVIJDw6dyhWs+ABAwIjQ94B
+         zjvXlxS1dZ/VqsdeTvyF0MeV+Rd7xTUud9ukTiqudq1xTbJ4X9Xb8n0tum6m9plq3HQ1
+         MtnxTXFYju/LkPCj/XQp6YOZFttXt6aMy3p68rFnjHUhK8eqHdyrHpESejsjgufp86NV
+         YhiTgA1vkANXDlqY4yjz1JSDcw8OAgD+EDe8n5vQOvv6HaKtiyTsCEu6a/KV0peTpvhv
+         NJyA==
+X-Gm-Message-State: AJIora+ZaMSMK1EEvwc4GvzlSpLwpzAnDQmGaunwdLR1FqhZYAdENHev
+        WombeRuot9bvpldO4tuDPrlpjChYoE8=
+X-Google-Smtp-Source: AGRyM1swvItQvWpjdmcAmzujK4aErbucPRSHgzTrvIUWKXCjMqrYAY5KJohjcSuGDebhOB/TvrgHEw==
+X-Received: by 2002:a05:6000:1049:b0:21e:584f:3574 with SMTP id c9-20020a056000104900b0021e584f3574mr378405wrx.274.1658391394330;
+        Thu, 21 Jul 2022 01:16:34 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k7-20020a7bc407000000b003a32251c3f0sm1077432wmi.33.2022.07.21.01.16.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 01:16:33 -0700 (PDT)
+Message-Id: <e39b2e15ece14ba2b1118ae95e0d90ed60589b41.1658391391.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
+References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
+        <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 21 Jul 2022 08:16:25 +0000
+Subject: [PATCH v3 1/7] merge-ort-wrappers: make printed message match the one
+ from recursive
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <cover-0.2-00000000000-20220721T063543Z-avarab@gmail.com> <patch-2.2-5d8baa9cbc4-20220721T063543Z-avarab@gmail.com>
-In-Reply-To: <patch-2.2-5d8baa9cbc4-20220721T063543Z-avarab@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 21 Jul 2022 00:48:51 -0700
-Message-ID: <CABPp-BFiNXM_2kfOQ+BnC5bWVEVZTk2kiFNuPSPPsz+5owM9kA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] string-list API users: manually use string_list_init_*()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     ZheNing Hu <adlternative@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 20, 2022 at 11:39 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> Convert various code that didn't use string_list_init_*() to do so, in
-> cases where the only thing being allocated was the string list we can
-> change from CALLOC_ARRAY() to ALLOC_ARRAY(), the string_list_init_*()
-> function will zero out the memory.
->
-> This covers cases that weren't matched by tho coccinelle rule in the
+From: Elijah Newren <newren@gmail.com>
 
-s/tho/the/ ?
+When the index does not match HEAD, the merge strategies are responsible
+to detect that condition and abort.  The merge-ort-wrappers had code to
+implement this and meant to copy the error message from merge-recursive
+but deviated in two ways, both due to the message in merge-recursive
+being processed by another function that made additional changes:
+  * It added an implicit "error: " prefix
+  * It added an implicit trailing newline
 
-> preceding commit, which is conservative enough to care about the type
-> of what we're modifying.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  notes-utils.c | 4 ++--
->  reflog-walk.c | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/notes-utils.c b/notes-utils.c
-> index d7d18e30f5a..73559d24ec8 100644
-> --- a/notes-utils.c
-> +++ b/notes-utils.c
-> @@ -129,8 +129,8 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite=
-(const char *cmd)
->         c->cmd =3D cmd;
->         c->enabled =3D 1;
->         c->combine =3D combine_notes_concatenate;
-> -       CALLOC_ARRAY(c->refs, 1);
-> -       c->refs->strdup_strings =3D 1;
-> +       ALLOC_ARRAY(c->refs, 1);
-> +       string_list_init_dup(c->refs);
+Add these things, but do so in a couple extra steps to avoid having
+translators need to translate another not-quite-identical string.
 
-But c->refs is a struct string_list *; why doesn't cocci recognize
-this one and convert it?
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort-wrappers.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
->         c->refs_from_env =3D 0;
->         c->mode_from_env =3D 0;
->         if (rewrite_mode_env) {
-> diff --git a/reflog-walk.c b/reflog-walk.c
-> index 7aa6595a51f..2b17408f9a4 100644
-> --- a/reflog-walk.c
-> +++ b/reflog-walk.c
-> @@ -120,7 +120,7 @@ struct reflog_walk_info {
->  void init_reflog_walk(struct reflog_walk_info **info)
->  {
->         CALLOC_ARRAY(*info, 1);
-> -       (*info)->complete_reflogs.strdup_strings =3D 1;
-> +       string_list_init_dup(&((*info)->complete_reflogs));
+diff --git a/merge-ort-wrappers.c b/merge-ort-wrappers.c
+index ad041061695..d2c416bb5c0 100644
+--- a/merge-ort-wrappers.c
++++ b/merge-ort-wrappers.c
+@@ -10,8 +10,13 @@ static int unclean(struct merge_options *opt, struct tree *head)
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+ 	if (head && repo_index_has_changes(opt->repo, head, &sb)) {
+-		fprintf(stderr, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
++		struct strbuf err = STRBUF_INIT;
++		strbuf_addstr(&err, "error: ");
++		strbuf_addf(&err, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+ 		    sb.buf);
++		strbuf_addch(&err, '\n');
++		fputs(err.buf, stderr);
++		strbuf_release(&err);
+ 		strbuf_release(&sb);
+ 		return -1;
+ 	}
+-- 
+gitgitgadget
 
-Makes sense.
-
->  }
->
->  void reflog_walk_info_release(struct reflog_walk_info *info)
-> --
-> 2.37.1.1095.g64a1e8362fd
->
