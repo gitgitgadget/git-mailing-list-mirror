@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 117C6C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4CDEC43334
 	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 08:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232375AbiGUIQs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 04:16:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47924 "EHLO
+        id S229600AbiGUIQv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 04:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232073AbiGUIQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 04:16:39 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3539E7D78D
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:38 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id c187-20020a1c35c4000000b003a30d88fe8eso2798181wma.2
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:38 -0700 (PDT)
+        with ESMTP id S232166AbiGUIQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 04:16:41 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 479447D79E
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:40 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 8-20020a05600c024800b003a2fe343db1so394443wmj.1
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 01:16:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oJKU0DYK+KWZ02t/kXg5ErC65dSKzBhSfDLskTnhx64=;
-        b=qk886gVq5kF39R4ZFKtJUm5MEklKRNvMFGZNNABvdHrWxQAlLWW8rcQ/8GYUx5aAXp
-         TqnlEYvR26evzmsuZLYUMNUaZZLuQRi+T1yIxjCTvldgLU9IlxTOJyv2XlIB4XrSnrzm
-         1UZ6LX/NW6zpXaDGX9cagym8dk0nYv05yNVZbp5pzzz3TUmTTxErH6F7pMCswHJwfe/C
-         EY0dD7+2hrecUXh8eff4kOiPMIz/O/EQf55YVTvHFx+UjqBp1ePZVac+Rd7Ec2xq3Sm7
-         7HkiABxP9EniK/Vu3MSndV9gsYc+jZDdMfvzYZywzrwyZSOGZvhMukin9asMRQ1Z3pF0
-         zQ+Q==
+        bh=wOGAeuZYYD1ywCQx5iNnhf8S8m5LJhjzC4NvFsDfZec=;
+        b=gB5t0o8ALLbBnzufumDxXNxnc87DscrghDDMXJpMvOniJj35XEDmkdzt+f/GXEc34F
+         udh+pMXZcwNYRN7GQvu8DYkHbhIM9cVysKFPeJBzVKYvvVnlzkhoDlAVPlx+ow+M36hp
+         2jzT4I4gcjYMV9gz6fr8p6KasApNJb1IO+5BZi/29Mhgd+kLmvnYVnrklfPvHbnT2pLF
+         67Q5VMj2hMa4/NjaCNIFuxDP2bi+1xtHx26lEOGNrF0jW/sn/JobA806OdvrHsxOBZmu
+         s3IfSvQ/RZCaufb/AT/ANBRdvbsx8OsobMKfSNkB+TRGTYN1rlyhDK2XthUzhatBJ1ae
+         RSlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oJKU0DYK+KWZ02t/kXg5ErC65dSKzBhSfDLskTnhx64=;
-        b=gNLvRMx3QrVe1YnBb2J+6J/rcM9hibOtU4rmfuTgVA/WmJfdqx0LelEVdgJyX3rYVq
-         icguHI1P07xAqOAT5QkDWKVNY9Sgt2aGuEW1DZCsj7XGmEMig8L8vKgb9gTEEddbVl0r
-         /MtQFZBMFPA07zB5u3b/uNA+pCub/XhlGzKTrRjxLfZI9pcllocTQJhrFh0SmBPBnDI6
-         SGrkjQ3SOprICoEIcipKqFqhSdXIXdGaqKZREsXTxoCa0dub4XMsA+HZMUxQbO5hIfb6
-         6J0KkKJXYHGabDYN9cHyh35VqHGpX2yxqRVOey5T4YD1hgLSyRPRKYjm0GKbSIAhjI2B
-         eYYw==
-X-Gm-Message-State: AJIora/UDJJuczV07dLF3lDKlLj3XUMFEqx0+xres8B5i0JSybEzZCKq
-        vB2xe2tv8oBKk5V8LFgNBwqOU65R72I=
-X-Google-Smtp-Source: AGRyM1vGbXEW0PoYPfnGESaB6T4RNKv+i2pWcah5V+a0H2dLuKMavcbHax8OesR13I3c2mYnRYXKbQ==
-X-Received: by 2002:a7b:c30d:0:b0:3a1:861a:b9bc with SMTP id k13-20020a7bc30d000000b003a1861ab9bcmr7164084wmj.97.1658391396152;
-        Thu, 21 Jul 2022 01:16:36 -0700 (PDT)
+        bh=wOGAeuZYYD1ywCQx5iNnhf8S8m5LJhjzC4NvFsDfZec=;
+        b=Ju4dr/QieLwikAu8ib+iY0qVNz1a8KWr9cmJt/ZSBwMkjFFLDjWoKhAJ1Oj/DcuUgK
+         Z2zWs9XDZtTlul5ZFjOBhzfh8M/25e4YtC24XWmYVG4R1vrnvQ9HMdV4+OJUIQduWYkp
+         HclziLNEztgW4b/RgSG0RySGWtiftGTbSZuoqhJFqFjEFv1CfFRhf6ZYZ7RJ1fR68hYL
+         npY79FTK8S1JPSorgKZhJs2PGWEImr0zDSZcdYjNTLbzn2//eMNiL+BWsvXQ4TM8RiVB
+         xjq0H1+cGibW9Bb256+4bgpqrLJczp1xCuRfvnWi5crW+rh2FD6G2g8HYeonadvb5LKF
+         YAzw==
+X-Gm-Message-State: AJIora9NkdP19o9dPgM0se/2kdggczRLJ2aFswpFe8pEp/ma8AoQBBSB
+        qCWSztbRFKHdIszglpVlmFsPKZVMg2o=
+X-Google-Smtp-Source: AGRyM1sYeU6O97GoSQsyv5Yz3FV7R07JQKSdSxlu3hzP9prUCQrxnJX1mkpIlOmuGwTrJXUjSTHpQw==
+X-Received: by 2002:a05:600c:19d2:b0:3a3:2cdb:cc02 with SMTP id u18-20020a05600c19d200b003a32cdbcc02mr4697298wmq.182.1658391398485;
+        Thu, 21 Jul 2022 01:16:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d1-20020adfe2c1000000b0021e491fd250sm1135162wrj.89.2022.07.21.01.16.34
+        by smtp.gmail.com with ESMTPSA id n17-20020a05600c4f9100b003a02cbf862esm1037646wmq.13.2022.07.21.01.16.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 01:16:35 -0700 (PDT)
-Message-Id: <2810dec7608d68a5a7906e70f88278c5ab9aa0e2.1658391391.git.gitgitgadget@gmail.com>
+        Thu, 21 Jul 2022 01:16:37 -0700 (PDT)
+Message-Id: <b41853e3f9908ab458bcb28684d817677e32367b.1658391391.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
 References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
         <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Jul 2022 08:16:26 +0000
-Subject: [PATCH v3 2/7] merge-resolve: abort if index does not match HEAD
+Date:   Thu, 21 Jul 2022 08:16:27 +0000
+Subject: [PATCH v3 3/7] merge: do not abort early if one strategy fails to
+ handle the merge
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,125 +73,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-As noted in commit 9822175d2b ("Ensure index matches head before
-invoking merge machinery, round N", 2019-08-17), we have had a very
-long history of problems with failing to enforce the requirement that
-index matches HEAD when starting a merge.  One of the commits
-referenced in the long tale of issues arising from lax enforcement of
-this requirement was commit 55f39cf755 ("merge: fix misleading
-pre-merge check documentation", 2018-06-30), which tried to document
-the requirement and noted there were some exceptions.  As mentioned in
-that commit message, the `resolve` strategy was the one strategy that
-did not have an explicit index matching HEAD check, and the reason it
-didn't was that I wasn't able to discover any cases where the
-implementation would fail to catch the problem and abort, and didn't
-want to introduce unnecessary performance overhead of adding another
-check.
+builtin/merge is setup to allow multiple strategies to be specified,
+and it will find the "best" result and use it.  This is defeated if
+some of the merge strategies abort early when they cannot handle the
+merge.  Fix the logic that calls recursive and ort to not do such an
+early abort, but instead return "2" or "unhandled" so that the next
+strategy can try to handle the merge.
 
-Well, today I discovered a testcase where the implementation does not
-catch the problem and so an explicit check is needed.  Add a testcase
-that previously would have failed, and update git-merge-resolve.sh to
-have an explicit check.  Note that the code is copied from 3ec62ad9ff
-("merge-octopus: abort if index does not match HEAD", 2016-04-09), so
-that we reuse the same message and avoid making translators need to
-translate some new message.
+Coming up with a testcase for this is somewhat difficult, since
+recursive and ort both handle nearly any two-headed merge (there is
+a separate code path that checks for non-two-headed merges and
+already returns "2" for them).  So use a somewhat synthetic testcase
+of having the index not match HEAD before the merge starts, since all
+merge strategies will abort for that.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge.c                          | 20 ++++++++++++++++++
- git-merge-resolve.sh                     | 10 +++++++++
- t/t6424-merge-unrelated-index-changes.sh | 26 ++++++++++++++++++++++++
- 3 files changed, 56 insertions(+)
+ builtin/merge.c                          |  6 ++++--
+ t/t6402-merge-rename.sh                  |  2 +-
+ t/t6424-merge-unrelated-index-changes.sh | 16 ++++++++++++++++
+ t/t6439-merge-co-error-msgs.sh           |  1 +
+ 4 files changed, 22 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index 23170f2d2a6..13884b8e836 100644
+index 13884b8e836..dec7375bf2a 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -1599,6 +1599,26 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		 */
- 		refresh_cache(REFRESH_QUIET);
- 		if (allow_trivial && fast_forward != FF_ONLY) {
-+			/*
-+			 * Must first ensure that index matches HEAD before
-+			 * attempting a trivial merge.
-+			 */
-+			struct tree *head_tree = get_commit_tree(head_commit);
-+			struct strbuf sb = STRBUF_INIT;
-+
-+			if (repo_index_has_changes(the_repository, head_tree,
-+						   &sb)) {
-+				struct strbuf err = STRBUF_INIT;
-+				strbuf_addstr(&err, "error: ");
-+				strbuf_addf(&err, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
-+					    sb.buf);
-+				strbuf_addch(&err, '\n');
-+				fputs(err.buf, stderr);
-+				strbuf_release(&err);
-+				strbuf_release(&sb);
-+				return -1;
-+			}
-+
- 			/* See if it is really trivial. */
- 			git_committer_info(IDENT_STRICT);
- 			printf(_("Trying really trivial in-index merge...\n"));
-diff --git a/git-merge-resolve.sh b/git-merge-resolve.sh
-index 343fe7bccd0..77e93121bf8 100755
---- a/git-merge-resolve.sh
-+++ b/git-merge-resolve.sh
-@@ -5,6 +5,16 @@
- #
- # Resolve two trees, using enhanced multi-base read-tree.
- 
-+. git-sh-setup
-+
-+# Abort if index does not match HEAD
-+if ! git diff-index --quiet --cached HEAD --
-+then
-+    gettextln "Error: Your local changes to the following files would be overwritten by merge"
-+    git diff-index --cached --name-only HEAD -- | sed -e 's/^/    /'
-+    exit 2
-+fi
-+
- # The first parameters up to -- are merge bases; the rest are heads.
- bases= head= remotes= sep_seen=
- for arg
+@@ -754,8 +754,10 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 		else
+ 			clean = merge_recursive(&o, head, remoteheads->item,
+ 						reversed, &result);
+-		if (clean < 0)
+-			exit(128);
++		if (clean < 0) {
++			rollback_lock_file(&lock);
++			return 2;
++		}
+ 		if (write_locked_index(&the_index, &lock,
+ 				       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+ 			die(_("unable to write %s"), get_index_file());
+diff --git a/t/t6402-merge-rename.sh b/t/t6402-merge-rename.sh
+index 3a32b1a45cf..772238e582c 100755
+--- a/t/t6402-merge-rename.sh
++++ b/t/t6402-merge-rename.sh
+@@ -210,7 +210,7 @@ test_expect_success 'updated working tree file should prevent the merge' '
+ 	echo >>M one line addition &&
+ 	cat M >M.saved &&
+ 	git update-index M &&
+-	test_expect_code 128 git pull --no-rebase . yellow &&
++	test_expect_code 2 git pull --no-rebase . yellow &&
+ 	test_cmp M M.saved &&
+ 	rm -f M.saved
+ '
 diff --git a/t/t6424-merge-unrelated-index-changes.sh b/t/t6424-merge-unrelated-index-changes.sh
-index b6e424a427b..f35d3182b86 100755
+index f35d3182b86..8b749e19083 100755
 --- a/t/t6424-merge-unrelated-index-changes.sh
 +++ b/t/t6424-merge-unrelated-index-changes.sh
-@@ -114,6 +114,32 @@ test_expect_success 'resolve, non-trivial' '
+@@ -268,4 +268,20 @@ test_expect_success 'subtree' '
  	test_path_is_missing .git/MERGE_HEAD
  '
  
-+test_expect_success 'resolve, trivial, related file removed' '
++test_expect_success 'resolve && recursive && ort' '
 +	git reset --hard &&
 +	git checkout B^0 &&
 +
-+	git rm a &&
-+	test_path_is_missing a &&
++	test_seq 0 10 >a &&
++	git add a &&
 +
-+	test_must_fail git merge -s resolve C^0 &&
++	sane_unset GIT_TEST_MERGE_ALGORITHM &&
++	test_must_fail git merge -s resolve -s recursive -s ort C^0 >output 2>&1 &&
 +
-+	test_path_is_missing a &&
-+	test_path_is_missing .git/MERGE_HEAD
++	grep "Trying merge strategy resolve..." output &&
++	grep "Trying merge strategy recursive..." output &&
++	grep "Trying merge strategy ort..." output &&
++	grep "No merge strategy handled the merge." output
 +'
 +
-+test_expect_success 'resolve, non-trivial, related file removed' '
-+	git reset --hard &&
-+	git checkout B^0 &&
-+
-+	git rm a &&
-+	test_path_is_missing a &&
-+
-+	test_must_fail git merge -s resolve D^0 &&
-+
-+	test_path_is_missing a &&
-+	test_path_is_missing .git/MERGE_HEAD
-+'
-+
- test_expect_success 'recursive' '
- 	git reset --hard &&
- 	git checkout B^0 &&
+ test_done
+diff --git a/t/t6439-merge-co-error-msgs.sh b/t/t6439-merge-co-error-msgs.sh
+index 5bfb027099a..52cf0c87690 100755
+--- a/t/t6439-merge-co-error-msgs.sh
++++ b/t/t6439-merge-co-error-msgs.sh
+@@ -47,6 +47,7 @@ test_expect_success 'untracked files overwritten by merge (fast and non-fast for
+ 		export GIT_MERGE_VERBOSITY &&
+ 		test_must_fail git merge branch 2>out2
+ 	) &&
++	echo "Merge with strategy ${GIT_TEST_MERGE_ALGORITHM:-ort} failed." >>expect &&
+ 	test_cmp out2 expect &&
+ 	git reset --hard HEAD^
+ '
 -- 
 gitgitgadget
 
