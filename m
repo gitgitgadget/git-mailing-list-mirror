@@ -2,100 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97DDCC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 20:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25187C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 20:15:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231853AbiGUUG3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 16:06:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42026 "EHLO
+        id S232388AbiGUUPh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 16:15:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233582AbiGUUGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 16:06:10 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0694D8EEE0
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 13:05:55 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D6A501ADE6F;
-        Thu, 21 Jul 2022 16:05:54 -0400 (EDT)
+        with ESMTP id S229436AbiGUUPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 16:15:35 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C5552BB23
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 13:15:34 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5984F136DA5;
+        Thu, 21 Jul 2022 16:15:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BmHwipAST9JoPIMOc/cSZNeF2D0bI/jGMQCjio
-        cbeHM=; b=QLQkREUOyd4vyA4DF/l2sbIwip73ycXN846g15eq6tJzFvEGcCFJB6
-        Hs7kaCwWOdweHNG3UdMiQ8ZpZ/x+kMwD5+XCxEqnNavZ2U/nUSeB8HMaBX80edD4
-        4BeQAJ9CDna7VuV/RUJhVEU994myQ7TSrerw4X85fy+Si8RS1G8MA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF70E1ADE6E;
-        Thu, 21 Jul 2022 16:05:54 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=D+jBG5KRDd7V
+        05dKK0kH4eyQ0KKKgTNrBV+L0wbbtD0=; b=USu0JL32qwGGp8WWZtnRaxTx351Z
+        BMcgoqVceOW98SmW4qD42fdP+0PrQYY24VTrIxb5JvdngORtej/DLSEt9MQgbtw5
+        MW4TE9NY7csLFooow6+qzVDERPPimVQPo6poSHaAfeGt10Iyop5LKU1FlrEKud8q
+        JhngibPxt6AKrqs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C8D8136DA4;
+        Thu, 21 Jul 2022 16:15:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.40.190])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7C6A91ADE6C;
-        Thu, 21 Jul 2022 16:05:51 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AFAC9136DA3;
+        Thu, 21 Jul 2022 16:15:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        ZheNing Hu <adlternative@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v3 1/7] merge-ort-wrappers: make printed message match
- the one from recursive
-References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
-        <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
-        <e39b2e15ece14ba2b1118ae95e0d90ed60589b41.1658391391.git.gitgitgadget@gmail.com>
-        <xmqqsfmulb6w.fsf@gitster.g>
-        <CABPp-BEddgN5QmFkfejC6jZXMAGTivQBtV8YQ8Jq0EZzPhAM8Q@mail.gmail.com>
-Date:   Thu, 21 Jul 2022 13:05:50 -0700
-In-Reply-To: <CABPp-BEddgN5QmFkfejC6jZXMAGTivQBtV8YQ8Jq0EZzPhAM8Q@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 21 Jul 2022 12:51:50 -0700")
-Message-ID: <xmqq1quegrj5.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: re-mentioning --preserve-merges in the docs
+References: <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
+        <pull.195.v3.git.1631048712.gitgitgadget@gmail.com>
+        <2d7a4a2c564aaafbf8da97cf017766163c77b70b.1631048713.git.gitgitgadget@gmail.com>
+        <220721.86wnc6s2uh.gmgdl@evledraar.gmail.com>
+Date:   Thu, 21 Jul 2022 13:15:31 -0700
+In-Reply-To: <220721.86wnc6s2uh.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 21 Jul 2022 21:02:14 +0200")
+Message-ID: <xmqqwnc6fcik.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8525B3A6-0930-11ED-86C6-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DF93CC6E-0931-11ED-B57D-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Thu, Jul 21, 2022 at 8:47 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> >       if (head && repo_index_has_changes(opt->repo, head, &sb)) {
->> > -             fprintf(stderr, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
->> > +             struct strbuf err = STRBUF_INIT;
->> > +             strbuf_addstr(&err, "error: ");
->> > +             strbuf_addf(&err, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
->> >                   sb.buf);
->> > +             strbuf_addch(&err, '\n');
->> > +             fputs(err.buf, stderr);
->> > +             strbuf_release(&err);
->>
->> Makes me wonder why this is not a mere
->>
->>         error(_("Your local chagnes ... by merge:\n  %s"), sb.buf);
->>
->> that reuses the exact string.  The err() function in merge-recursive.c
->> is strangely complex (and probably buggy---if it is not buffering
->> output, it adds "error: " prefix to opt->obuf before calling vaddf
->> to add the message, and then sends that to error() to give it
->> another "error: " prefix), but all the above does is to send a
->> message to standard error stream.
+> On Tue, Sep 07 2021, Johannes Schindelin via GitGitGadget wrote:
 >
-> Ah, that would be nicer; thanks for the pointer.  I would still need
-> to prefix it with an
->     strbuf_addch(&sb, '\n');
-> but two lines certainly beats six.
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> [...]
+>> --p::
+>> ---preserve-merges::
+>> -	[DEPRECATED: use `--rebase-merges` instead] Recreate merge commits
+>> -	instead of flattening the history by replaying commits a merge commi=
+t
+>> -	introduces. Merge conflict resolutions or manual amendments to merge
+>> -	commits are not preserved.
+>
+> [In reply to an old commit]
+>
+> I opened "man git-rebase" today due to an on-list discussion and went
+> through pretty much:
+>
+>  1. /preserve-merges # fails
+>  2. skimming the SYNOPSIS, forgetting what the new thing is called
+>  3. Paging down, eventually findinging & remembering the new thing is
+>     "--rebase-merges".
+>
+> I wonder if there's objections to reinstating this in the docs
+> somewhere, just as something like:
+>
+> 	--preserve-merges:
+> 		An old "rebase" backend which is no longer supported,
+> 		and which was removed from git in version v2.35.0.
+>
+> We don't do that with all flags that we've dropped, but perhaps this on=
+e
+> was well known enough to not leave readers hanging...
 
-Your "strbuf" version uses the same format string as my error()
-thing and then manually add one LF at the end, before sending it to
-fputs(), which, unlike puts() does not add any extra LF at the end.
+My impression is that we consider that we have done so already for a
+few releases by keeping "DEPRECATED: use rebase-merges", exactly
+because "this one was well known enough", and now it is time to go
+one step further, i.e. drop it from the document like the quoted
+patch does, while recognising an attempt to use the option and
+giving a custom message than the bog-standard "unknown option".
 
-error() gives a terminating newline at the end.
+    $ git rebase --preserve-merges
+    fatal: --preserve-merges was replaced by --rebase-merges
+    Note: Your `pull.rebase` configuration may also be set to 'preserve',
+    which is no longer supported; use 'merges' instead
 
-Do you still need to add one more?
+The next step will be to drop that custom error support, I think.
