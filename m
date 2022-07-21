@@ -2,114 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC293C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 21:14:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35424C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 21:16:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233603AbiGUVOR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 17:14:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33398 "EHLO
+        id S233785AbiGUVQr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 17:16:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbiGUVOP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 17:14:15 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4973509F4
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 14:14:14 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id x11so2251247qts.13
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 14:14:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HOtX0U5LcsQK2KA70uJ7ra0ooEr66kaj7Gc4GE8wFvs=;
-        b=KytFSx1FAu82hhoY8ophkn/PCebP9rRSg/k0uiMAPU43rKu7qycuAPw8oSPSs9X8xz
-         iE1Z0gk+iW7lW8d0MfiG6wCbK5vd9WVVEHxntoW3mNehYa94jr6yfHFcExP6AubFUwHQ
-         ukkAREWJEsLb3uKHEZQb5JZ4e6dhuyHhn34o36dhy5344gRiS3XDAM4KKC9VAMPPfx8g
-         i/MtjrjIZuLiTUgJmV869FznI52+i+9RoP/MwBPbl/XPI04yv7PmJwTyJpMdJC2HkaGO
-         APMNmxdA5ehg1d/QTsLeZLlUEInj4NT6166dYo+Ir5zsp1VGXfEqja+Tm2NXybCdX3vG
-         LrBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HOtX0U5LcsQK2KA70uJ7ra0ooEr66kaj7Gc4GE8wFvs=;
-        b=72q35dXnG3s8opEF9rwI1z2vES4PI7cJCeTrpGZUXm5vB2x4sDQHdjPZ+Jor/vT3oz
-         sio13UXPgAKfy6PRrU4mtMrFAleIbRG91Sku+jQjw5IIRTm7FJ6uobm4+vEyeX8pBMxB
-         3owWDBB2OS0F4YfNpHzpgTgwygtWpPiefse4eT7w52/S5eYhsTg4Xwx7QPHxQnyqZceM
-         YMV+p3yWE9vxIp6ZQ4b6wyCxMiAo6RIbI6hyoxyhDwnJFHbW+IkjQyOYUd/vzurQu2h8
-         8QZYR07uQAXKRVCacy2MeHPeW8Xv8uyreHeUKqVXS9V/1T1FgfKI1dzKHAxu3ksYLzx8
-         8x4g==
-X-Gm-Message-State: AJIora+WNoOmv4X9aOlX1MAogO25iPdH5t3MMG9VPJ9TkvYSJNCsg3CE
-        d4/Y+FMOXr0NgBlS8F+bcD4lgs1Sw2Y6TLt1EPM=
-X-Google-Smtp-Source: AGRyM1vsSwSpq1YiFcfON9VKDhRNMqGsHFcbvPBquFysUCcYhbDt+v+PHpYCML44GNFAdBoivLXMXAMKAoFEmsd2Au0=
-X-Received: by 2002:ac8:6bc3:0:b0:31e:dc36:6cf8 with SMTP id
- b3-20020ac86bc3000000b0031edc366cf8mr492694qtt.470.1658438053755; Thu, 21 Jul
- 2022 14:14:13 -0700 (PDT)
+        with ESMTP id S233632AbiGUVQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 17:16:45 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39E0A5C963
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 14:16:43 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BC18E1AB57C;
+        Thu, 21 Jul 2022 17:16:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JMe4NoU7w7S2
+        sbvcrexDepUzLvAiBVt4HL4Y6QtYUV0=; b=qTZskE7tmzMPJHai2snHD69hb5aB
+        enJopxb078UiucW+ApkIDU8o2utP2JRKzSsbYw1Arp4ZKw7B68AU3ELEReUZutSL
+        fKiGjvsQWvlqYNLowYloGermgIs9EDvSBsMAgndxC+Hhf4sj6H0esnWVJLLba1BB
+        5WKTsGUo3vqv5h8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B486A1AB57B;
+        Thu, 21 Jul 2022 17:16:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 901741AB573;
+        Thu, 21 Jul 2022 17:16:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [PATCH v3 02/26] submodule--helper: stop conflating "sb" in
+ clone_submodule()
+References: <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com>
+        <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com>
+        <patch-v3-02.26-32e4ae7ead5-20220721T191249Z-avarab@gmail.com>
+Date:   Thu, 21 Jul 2022 14:16:36 -0700
+In-Reply-To: <patch-v3-02.26-32e4ae7ead5-20220721T191249Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 21 Jul
+ 2022 21:12:58
+        +0200")
+Message-ID: <xmqqlesmf9or.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
- <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com> <e39b2e15ece14ba2b1118ae95e0d90ed60589b41.1658391391.git.gitgitgadget@gmail.com>
- <xmqqsfmulb6w.fsf@gitster.g> <CABPp-BEddgN5QmFkfejC6jZXMAGTivQBtV8YQ8Jq0EZzPhAM8Q@mail.gmail.com>
- <xmqq1quegrj5.fsf@gitster.g>
-In-Reply-To: <xmqq1quegrj5.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 21 Jul 2022 14:14:03 -0700
-Message-ID: <CABPp-BGttaVetjRnxYM8ti0fHNcvsNYc9NcWXKQwH4Qqbii9wg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] merge-ort-wrappers: make printed message match the
- one from recursive
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        ZheNing Hu <adlternative@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6801C9F4-093A-11ED-806F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 21, 2022 at 1:05 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Thu, Jul 21, 2022 at 8:47 AM Junio C Hamano <gitster@pobox.com> wrote:
-> >>
-> >> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >>
-> >> >       if (head && repo_index_has_changes(opt->repo, head, &sb)) {
-> >> > -             fprintf(stderr, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
-> >> > +             struct strbuf err = STRBUF_INIT;
-> >> > +             strbuf_addstr(&err, "error: ");
-> >> > +             strbuf_addf(&err, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
-> >> >                   sb.buf);
-> >> > +             strbuf_addch(&err, '\n');
-> >> > +             fputs(err.buf, stderr);
-> >> > +             strbuf_release(&err);
-> >>
-> >> Makes me wonder why this is not a mere
-> >>
-> >>         error(_("Your local chagnes ... by merge:\n  %s"), sb.buf);
-> >>
-> >> that reuses the exact string.  The err() function in merge-recursive.c
-> >> is strangely complex (and probably buggy---if it is not buffering
-> >> output, it adds "error: " prefix to opt->obuf before calling vaddf
-> >> to add the message, and then sends that to error() to give it
-> >> another "error: " prefix), but all the above does is to send a
-> >> message to standard error stream.
-> >
-> > Ah, that would be nicer; thanks for the pointer.  I would still need
-> > to prefix it with an
-> >     strbuf_addch(&sb, '\n');
-> > but two lines certainly beats six.
->
-> Your "strbuf" version uses the same format string as my error()
-> thing and then manually add one LF at the end, before sending it to
-> fputs(), which, unlike puts() does not add any extra LF at the end.
->
-> error() gives a terminating newline at the end.
->
-> Do you still need to add one more?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Ah, sorry, my mistake.  I somehow thought error() just added the
-"error: " prefix.  So, indeed, this is just a change from
-fprintf(stderr, ...) to error(...).  No second newline needed.
+> -static int clone_submodule(struct module_clone_data *clone_data)
+> +static char *clone_submodule_sm_gitdir(const char *name)
+>  {
+> -	char *p, *sm_gitdir;
+> -	char *sm_alternate =3D NULL, *error_strategy =3D NULL;
+>  	struct strbuf sb =3D STRBUF_INIT;
+> -	struct child_process cp =3D CHILD_PROCESS_INIT;
+> +	char *sm_gitdir;
+> =20
+> -	submodule_name_to_gitdir(&sb, the_repository, clone_data->name);
+> +	submodule_name_to_gitdir(&sb, the_repository, name);
+>  	sm_gitdir =3D absolute_pathdup(sb.buf);
+> -	strbuf_reset(&sb);
+> +	strbuf_release(&sb);
+> +
+> +	return sm_gitdir;
+> +}
 
-Thanks!
+OK.
+
+> +static int clone_submodule(struct module_clone_data *clone_data)
+> +{
+> +	char *p;
+> +	char *sm_gitdir =3D clone_submodule_sm_gitdir(clone_data->name);
+> +	char *sm_alternate =3D NULL, *error_strategy =3D NULL;
+> +	struct child_process cp =3D CHILD_PROCESS_INIT;
+> =20
+>  	if (!is_absolute_path(clone_data->path)) {
+> +		struct strbuf sb =3D STRBUF_INIT;
+> +
+>  		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
+>  		clone_data->path =3D strbuf_detach(&sb, NULL);
+
+This looks like a roundabout way to say xstrfmt().
+
+>  	} else {
+> @@ -1705,6 +1715,8 @@ static int clone_submodule(struct module_clone_da=
+ta *clone_data)
+>  			die(_("clone of '%s' into submodule path '%s' failed"),
+>  			    clone_data->url, clone_data->path);
+>  	} else {
+> +		struct strbuf sb =3D STRBUF_INIT;
+> +
+>  		if (clone_data->require_init && !access(clone_data->path, X_OK) &&
+>  		    !is_empty_dir(clone_data->path))
+>  			die(_("directory not empty: '%s'"), clone_data->path);
+> @@ -1712,7 +1724,7 @@ static int clone_submodule(struct module_clone_da=
+ta *clone_data)
+>  			die(_("could not create directory '%s'"), clone_data->path);
+>  		strbuf_addf(&sb, "%s/index", sm_gitdir);
+>  		unlink_or_warn(sb.buf);
+> -		strbuf_reset(&sb);
+> +		strbuf_release(&sb);
+
+Ditto.
+
+>  	}
+> =20
+>  	connect_work_tree_and_git_dir(clone_data->path, sm_gitdir, 0);
+> @@ -1734,7 +1746,6 @@ static int clone_submodule(struct module_clone_da=
+ta *clone_data)
+>  	free(sm_alternate);
+>  	free(error_strategy);
+> =20
+> -	strbuf_release(&sb);
+>  	free(sm_gitdir);
+>  	free(p);
+>  	return 0;
