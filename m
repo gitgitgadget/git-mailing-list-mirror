@@ -2,94 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68E2CC43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 16:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A84AACCA485
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 16:57:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbiGUQuG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 12:50:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54358 "EHLO
+        id S232783AbiGUQ5V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 12:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232478AbiGUQuF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 12:50:05 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BBDD89EA4
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:50:03 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id j3so2600938oif.8
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:50:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ostif-org.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=HEXlHXubCZwGuOrvGczC0nm+d9eapl7iV4h8gjkWCio=;
-        b=w99iQkQApNBixG2acunL3c5Hlzhty4W7/FyitGeZtJVQfwiUK3T++PhT9lHT1y8m7r
-         yGypajrsvFTBHJFyDkC+5ghrrpDRpJkDqL0yVhSL1kRBPkWQ6vEVKKLf0SPxNF+bAG4G
-         DipJtVFRDI60NSRW0robTvKsXdWPJjWkKlaPIFxWnAPAUiB9ZXXNb0HP8yzvVBM0XEX8
-         66i4+rg1tFZ5HHkiSKLrimvze+iHCbTcQVwKqoeQcVaea+5FQMYjYWmd15MUC3iXitUt
-         2bHHabicPkRUcBQA990CJmCfyUA78AvXpAM5Gclzpsj51lmgVAsqdxyompSeiaRKefir
-         tDqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=HEXlHXubCZwGuOrvGczC0nm+d9eapl7iV4h8gjkWCio=;
-        b=cSmgTOQfKqnzxF0BmwZrOBPQhd7Mn+8O/GBYpqH06fiHSIh/hOeCSPRh2FPHYls/0/
-         wbiGcY7Jjty5i7asshZaH5lTnL00irwSf3P3zrjKY2H8qfi8/HKVAIyqfHH7+0Fg8QwU
-         MrjYhuOgvPZu7tJFATCKqH/TGoAq1sQ+4RQlTmpdE1SOyM8FHrTAOEUOo/MUMkRyEJs2
-         +0oOWQjCnWMly4mQ0yO8XrHdtu55tT2rnN+CxDkq1gjbV+QgOBw1EbLMfayxAIBeF7Vm
-         6KetgtdZKkLd02a8FaDDvmi9QNRu5Z+aN5ovdYZnY5gPAYzsh3NXRRqXZefPSRPc6LPm
-         DpEw==
-X-Gm-Message-State: AJIora9cZxwTOOPPifYHIRxoKyfMApyxBcPkMx5zcaxKf22AKQbMLAoQ
-        aqa/FoMpihIQopth0DD+qIL0kYsRh0NvX5diPT47PwNX/5PuZQ==
-X-Google-Smtp-Source: AGRyM1urZpXDFz9qNK9brZeFKqeIimdu02J19cnOyiAouuJLOcLfRejdpc+AP2JAc57ewj7um3rCpuP/z+a93ldl1WM=
-X-Received: by 2002:a05:6808:20f:b0:33a:73c7:8ea1 with SMTP id
- l15-20020a056808020f00b0033a73c78ea1mr5162887oie.137.1658422202448; Thu, 21
- Jul 2022 09:50:02 -0700 (PDT)
+        with ESMTP id S231961AbiGUQ5U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 12:57:20 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7967789A6A
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:57:15 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F1DE41ACB22;
+        Thu, 21 Jul 2022 12:57:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=EHjDJ2n90krIsQGm/JEiplJKh0rC0l5zem83Cd
+        CRTS8=; b=EDrLapntiHHiVwOSCEpVmfAMeHVHHv38idjMFhxTuMBXDPfwfF4nz/
+        IItNhbSy5hlz9jiJWcH5dkVoS1Lh1msWtd3vGLvqoxHyD4vsgpV8AIKp9z9W8beF
+        5E6gETyKnU4XxLaiog9+AKG9TuMllAkOO2H3J6yT9x7L8HvQ3UoRs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EA4331ACB21;
+        Thu, 21 Jul 2022 12:57:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 932BB1ACB20;
+        Thu, 21 Jul 2022 12:57:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "tenglong.tl" <dyroneteng@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, git@jeffhostetler.com,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH 2/2] tr2: shows scope unconditionally in addition to
+ key-value pair
+In-Reply-To: <20220721132748.37848-3-tenglong.tl@alibaba-inc.com> (tenglong
+        tl's message of "Thu, 21 Jul 2022 21:27:48 +0800")
+References: <20220721132748.37848-1-tenglong.tl@alibaba-inc.com>
+        <20220721132748.37848-3-tenglong.tl@alibaba-inc.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Date:   Thu, 21 Jul 2022 09:57:10 -0700
+Message-ID: <xmqqh73ajteh.fsf@gitster.g>
 MIME-Version: 1.0
-From:   Amir Montazery <amir@ostif.org>
-Date:   Thu, 21 Jul 2022 11:49:51 -0500
-Message-ID: <CADKuG0uzh3syzgfiPLepiTLXNzkoYhLFX1h-DE3C7c8j6HXALQ@mail.gmail.com>
-Subject: Coordinated Security Audit for git. Contacts needed
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 29F4A60A-0916-11ED-8B7B-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello git maintainers,
+"tenglong.tl" <dyroneteng@gmail.com> writes:
 
-The Open Source Technology Improvement Fund, Inc (https://ostif.org)
-has put together a coalition of 18 security professionals and
-researchers to conduct a holistic security review of git. The
-objective of this email is to inform you of the effort and seek
-collaboration.  We feel that the more we can engage and collaborate
-with git maintainers, the more effective and impactful our security
-review can be. An overview of the teams and work packages is as
-follows:
+> diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+> index dcd0429037..229f31ab31 100644
+> --- a/Documentation/technical/api-trace2.txt
+> +++ b/Documentation/technical/api-trace2.txt
+> @@ -717,6 +717,7 @@ The "exec_id" field is a command-unique id and is only useful if the
+>  {
+>  	"event":"def_param",
+>  	...
+> +	scope: <a string that 'git config --show-scope' would return>
+>  	"param":"core.abbrev",
+>  	"value":"7"
+>  }
 
-Git Security Audit Work Packages:
+Everything in these examples use concrete values and follow the real
+syntax (e.g. param is enclosed in double-quotes and so is its value
+core.abbrev; even though core.abbrev is not the only param that can
+be reported by a def-param event, it is used as a concrete example.
+The same story goes for value).  The new "scope" thing stands out
+like a sore thumb.  I think the above should read more like
 
-Git source code review and threat modeling: This will be done by the
-team at x41 d-sec with support from Gitlab reps.
+	"event":"def_param",
+	...
+	"scope":"global",
+	"param":"core.abbrev",
+	"value":"7"
 
-Supply chain security / CI infrastructure review with Chainguard and
-support from Gitlab.
+or something.  Pick your favourite value for scope.
 
-A new setup of CodeQL for git with Xavier, Turbo and their team from Github.
+Other than that, these two patches make quite a lot of sense.
 
-
-We would love to collaborate to establish communication channels with
-key maintainers. Would it be possible for one of us to join one of
-your community meetings for 5 minutes? Or is there a key person we
-should be engaging?
-
-
-We thank you for maintaining a key and critical piece of software for
-the open source community and beyond.
-
-Thanks again,
-Amir
-
--- 
-Amir Montazery
-Managing Director
-Open Source Technology Improvement Fund
-https://ostif.org/
-https://calendly.com/ostif
+Thanks.
