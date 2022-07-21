@@ -2,137 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD8E8C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 19:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 049F3CCA489
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 19:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229719AbiGUTP3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 15:15:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58064 "EHLO
+        id S233646AbiGUTQa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 15:16:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233560AbiGUTOu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 15:14:50 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E557D8D5F7
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:14:28 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id h206-20020a1c21d7000000b003a2fa488efdso1329875wmh.4
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:14:28 -0700 (PDT)
+        with ESMTP id S232170AbiGUTQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 15:16:12 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B3D2BB
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:15:54 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id o1so2049407qkg.9
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0qX+2Kje057Xg7xHBIA7J9T8jY8Egoygt24/m7iQF0w=;
-        b=g7iH/unb2C7oILssr3FgDdVVObWQjKOrUUBg+JBl6Fu5de7Nbyg3wRL+DdqsTpap2U
-         4O6GsNT6JKKuTxeKjSgBSVmSeLEyN3Yq8BIO5VDWxPe1b6afEnI4fcaPZ91viy20681/
-         sLwC3dvseB9FOW/zwhny7rdGhhyuvpXxD8/KuoHQcjmxen6QuJ1AYUPLuhTM1IUHoILO
-         PI3q8kB+GIP7GtAwqd0rQMSZkBsKPnBzu7o8BN371Bj2ld3adeYpPXkzF9e8lb0mkjzG
-         wWinRcQOW/VSI2Eajk4rxbsJhFC3bCMilzASwULzQkE4K/r+dhJ8bkaubCNtRsE2acYc
-         dl/Q==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=pARWb+STPdUSmWCizw92/cSY5ORhJCLhzFFugTmPrY4=;
+        b=hwlG2bNwXikXp8kKpyF5h7AHmYvJCxGR5y5iLo+rrvhFkm3etvblCUujbroqjNvE2y
+         NkyAqtBFwn4j7l18DKzjH9zuhYy05EOlvm99qsUCl0QPkfv74Fq5M011iX7KovjzuY4o
+         J/wsY0lP5zo0UcU6qaSRey49RqztJ1VHMip70WWhSOvy9IyFnVBPejaW3XZZRTDsOFJ3
+         Yz/8MZvaZyVaQOMFVZ7WSDojTEsVe2LrZz45fSuKgZlNJSxIlrBWbuhAse+W/n7B7pEO
+         Ar1qdlPXyeXhKWmVyx4l34WHk+mQB5yC0G0FIhLq3TkXQKZ2SrK2eI922ok4WFQy9jCh
+         OziQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0qX+2Kje057Xg7xHBIA7J9T8jY8Egoygt24/m7iQF0w=;
-        b=zyDpGlQnzxam1RjyY07H9k5wXJNDQTGLW9YpTK0ffYHaqEUEtQjLH2c3fJfAvrdN2a
-         Ry/M1eR4z+C2FNXSE1ZuIhs0NkMg8GT6ZoAhs07cWCHp71yCNxjJ6MZlNmrdYkQlekY6
-         VOvIkxQsKjm+s0L6pOZNWarHgnRqxPBkA1AcKhUgc+SLnVIa0qDPEjWNGQuT6pVTJUon
-         lKKCTchzBsU2RUCGvsfQHE/Lb7Pm6Up1VuyslkE8jUnBEaiOvQyurLgty/HR/8IQP+8I
-         PUnJalBpqXCILanJaqcSkrT+R3MPb5bf87wwTIki/IwtGQRXqUYwhA65RgaYi1YT2Omx
-         MyBg==
-X-Gm-Message-State: AJIora8L/VG4VGNFolZ5wOXvPpAfT13W6tOoHPSnakd3aoKY9XpxUVu4
-        LzRqTXXP5qEJLCEDjI1crSDtm6XC1QlPDA==
-X-Google-Smtp-Source: AGRyM1u9tGTNYLh0uVmTt0P+8pAwAiWTmN18mPduwnO6epyKG6MjqKFF8ef5bXTacsh6Op6RjEuUHQ==
-X-Received: by 2002:a05:600c:2116:b0:3a3:7f:f3cc with SMTP id u22-20020a05600c211600b003a3007ff3ccmr9638095wml.28.1658430867189;
-        Thu, 21 Jul 2022 12:14:27 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h13-20020a05600016cd00b0021e4e9f6450sm2630637wrf.84.2022.07.21.12.14.24
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=pARWb+STPdUSmWCizw92/cSY5ORhJCLhzFFugTmPrY4=;
+        b=qNm4NbXzfEKFoG4UYR7h2bLRwGGDhziFzschO8XKttZ1asDFOASIxls343Dfb4mbeD
+         cs6t3N+EYrqtlVrTgKFc+27x2vxEoI0oDBpGxhtvgXFRHA5Eviklz7aZqKKE8zvns4Kt
+         H9UHZPQ/Byg/YnHwF8Y21UE+5LhTE001WMq864mZdlyaNzy8CTI9thjna1Mc9eKCLV8E
+         aERiABv4i7xc92rCWVlSXtgnJeF8rlCB70wyXuLrP1oMvBE2yPVBPf4YgI9jh2/KdRHF
+         KIBwmbDQgmoV81VeGvsuooZ4VrEn5TElAfAkw5P/pnus6ZsgFl1g5pKj5/oH4bR9pJDX
+         xNwQ==
+X-Gm-Message-State: AJIora8VvvzFnGCOYbPRx6DM2ojp8gwE/mEEn4DjdFWQoa8dodPyuS/g
+        hyjkZAGKVOw/pKxQd3er1tmW14KOfnKWKg==
+X-Google-Smtp-Source: AGRyM1vlRcZKS1FGFVr8FykZrvNRoNGIDdyGYomML9oS3hepNs05aUjDaxCfOJK9VWHm2AM6ZOJhBg==
+X-Received: by 2002:a37:8245:0:b0:6b5:9078:267 with SMTP id e66-20020a378245000000b006b590780267mr28623079qkd.684.1658430953034;
+        Thu, 21 Jul 2022 12:15:53 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id x7-20020a05620a258700b006a65c58db99sm2120069qko.64.2022.07.21.12.15.51
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 12:14:25 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Thu, 21 Jul 2022 12:15:52 -0700 (PDT)
+Date:   Thu, 21 Jul 2022 15:15:51 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 26/26] submodule--helper: fix a configure_added_submodule() leak
-Date:   Thu, 21 Jul 2022 21:13:22 +0200
-Message-Id: <patch-v3-26.26-581ce0872c0-20220721T191249Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.37.1.1095.g0bd6f54ba8a
-In-Reply-To: <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com>
-References: <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com> <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com>
+Subject: [ANNOUNCE] Git Merge 2022 Registration & Schedule
+Message-ID: <Ytml52E1Qe7FeV44@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix config API a memory leak added in a452128a36c (submodule--helper:
-introduce add-config subcommand, 2021-08-06) by using the *_tmp()
-variant of git_config_get_string().
+Hi everybody,
 
-In this case we're only checking whether
-the (repo|git)_config_get_string() call is telling us that the
-"submodule.active" key exists.
+The Git Merge 2022 speakers, schedule, and ticket registration are all
+live. The main details are:
 
-As with the preceding commit we'll find many other such patterns in
-the codebase if we go fishing. E.g. "git gc" leaks in the code added
-in 61f7a383d3b (maintenance: use 'incremental' strategy by default,
-2020-10-15). Similar code in "git gc" added in
-b08ff1fee00 (maintenance: add --schedule option and config,
-2020-09-11) doesn't leak, but we could avoid the malloc() & free() in
-that case.
+  When: September 14th and 15th
+  Where: Morgan Manufacturing (401 N Morgan), Chicago, Illinois, USA
+  What: Workshops on the 14th, main conference on the 15th
 
-A coccinelle rule to find those would find and fix some leaks, and
-cases where we're doing needless malloc() + free()'s but only care
-about the key existence, or are copying
-the (repo|git)_config_get_string() return value right away.
+and the website is up at: https://git-merge.com.
 
-But as with the preceding commit let's punt on all of that for now,
-and just narrowly fix this specific case in submodule--helper.
+The website has links to:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/submodule--helper.c    | 4 ++--
- t/t7413-submodule-is-active.sh | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+  - Speaker biographies
+  - (Tentative) schedule for the main conference day
+  - Registration information
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 37c145b3ede..fdf96c5d424 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3261,7 +3261,7 @@ static int config_submodule_in_gitmodules(const char *name, const char *var, con
- static void configure_added_submodule(struct add_data *add_data)
- {
- 	char *key;
--	char *val = NULL;
-+	const char *val;
- 	struct child_process add_submod = CHILD_PROCESS_INIT;
- 	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
- 
-@@ -3306,7 +3306,7 @@ static void configure_added_submodule(struct add_data *add_data)
- 	 * is_submodule_active(), since that function needs to find
- 	 * out the value of "submodule.active" again anyway.
- 	 */
--	if (!git_config_get_string("submodule.active", &val)) {
-+	if (!git_config_get_string_tmp("submodule.active", &val)) {
- 		/*
- 		 * If the submodule being added isn't already covered by the
- 		 * current configured pathspec, set the submodule's active flag
-diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
-index c8e7e983317..c4c1f86f3d2 100755
---- a/t/t7413-submodule-is-active.sh
-+++ b/t/t7413-submodule-is-active.sh
-@@ -6,6 +6,7 @@ This test verifies that `git submodue--helper is-active` correctly identifies
- submodules which are "active" and interesting to the user.
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
--- 
-2.37.1.1095.g0bd6f54ba8a
+Like before, if you are interested in coming to the Contributor's
+Summit, more details are in [1].
 
+I encourage you to read [1] as well as [2], but the most important piece
+of info is that you should register for the Contributor's Summit
+separately, and that that ticket is good for both the Contributor's
+Summit and main conference, so no need to register twice.
+
+If you have any questions, please feel free to respond here, or
+off-list. I am tremendously excited about this event, and I can't wait
+to see everybody in Chicago soon!
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/YtRqU5rAOsLw5s03@nand.local/
+[2]: https://lore.kernel.org/git/YqjEAEPYEJMUx8Wu@nand.local/
