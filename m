@@ -2,118 +2,212 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 653C2C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 11:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C805EC43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 12:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231636AbiGUL6L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 07:58:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40322 "EHLO
+        id S233400AbiGUMBQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 08:01:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbiGUL6K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 07:58:10 -0400
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C376B2FFDA
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 04:58:09 -0700 (PDT)
-Received: by mail-ua1-x92d.google.com with SMTP id 94so612537uau.8
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 04:58:09 -0700 (PDT)
+        with ESMTP id S229777AbiGUMBN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 08:01:13 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E6C21A821
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 05:01:12 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id d16so1915886wrv.10
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 05:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=G7UigfGbMHMuPk0oCLIzJyTmoLtS4d6WGoLew4dCkTo=;
-        b=YWsGWpfR9oNSLWTySsO+CnAhsDCTdYFm7uDU4oDp1biWWR86y45i7ZeTq9+10hMsY6
-         TqHDB9zNJnYZEK693r3XeQRLIQ0oAHJ31jjN2qphUYFq+n9yxuqjmq7FbQL/tlEsFkOp
-         ScqsCNMTWBm2MTBOOyNrYcCMXdTByObs+WdguvVuZkwuWNE4wMRwFK2iu8VT8lBssqk0
-         0yblvCS34GYCWpzMiz1psFfe06uh3kFgGESlRFSNjXWuenDSKlOBJ8sv4+UnL8HE7eZ0
-         402ZcoOIUOTzdZlIv08Po6AldZvWLKq8nzJ/McbyiefAaxy6pH3bWYiCjm2xOpzd9MNj
-         Dj4Q==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=MZfpUxHJEGA2VH+oD+Q2rifpvJEeOwhigUwvcPg6HOs=;
+        b=OkMtBLT0qk5Hz/gz+G0eoVwjIzsArS+OcSLOjnJ5BvSE3258iRIQEFuyVc9d361a+Y
+         o3XmsVd3S6S47UaJsZErtSATNwOyqgF2u2a8jMUVpwlywyRfeh6ZEYfAQmWQRwSdb4Qy
+         5vQdo27waY+VBiT6GVa5yLpSb7is7JCgvKTg5+al8wplkcdKnYBnMZQXdcfP+pL4JRlv
+         WISB7cF5cAmNgh3vf9SNGACnIHdR/PJXBbOgST935TxQ5j5DAWP1wOsbAV3KorUOcTE8
+         nqhJOoWL0DcakXye91bFMT2WPYCM/FmxUHWdFEAJV6MGAjdEDMb7naIwqY7uBoB3dNAf
+         TSVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=G7UigfGbMHMuPk0oCLIzJyTmoLtS4d6WGoLew4dCkTo=;
-        b=xNQNkI7JRI1JmG1dxnppwZZgnT8vIMZ8eEI+SaVMljaTXCqOfLvZmunrJDZSi4zRXd
-         8hnZkhI/OAO/t8NiFyQzZf+nmuE2xcPc5lUyDbAAG3bR2wYN23leH3P2fKfayDPx/APW
-         JPzKH/IMO4dB1svQ+cIxcwaa3DDKA4de/HR8QFO7lz75ItyFGJKrN9vuTQy4tygrOnCk
-         xlqJ6hos/rdv6FHMnzTmqpK2+2TLsk7JjJOAgtkph9uN2B7caycyNO0PkrCMqjLvMq1Y
-         NvuykPqkhu0Fu3xaLlMv9J7e2IK/Eu1tMsIZevj0itkrVRbSOkcMy9a693HxHQYqb8+l
-         t+gw==
-X-Gm-Message-State: AJIora9CUfNGHLV0jkp+iFJvv+jDevtilpYpUfKusyuE1qnDATpQizDq
-        TEz6VDDqgL1gLMMlr0/nFfnwCzdiFDzUEffQsaU29g==
-X-Google-Smtp-Source: AGRyM1tPfPrbaDXrLerh0zbCRbvz7sbJWzO2OeYcdpRRil1BQ8ntEpOY2VdS1cjaeEFO2nZmhVSr8j+GrOFHfPzeP0Q=
-X-Received: by 2002:a9f:3dc6:0:b0:384:54ca:ad6f with SMTP id
- e6-20020a9f3dc6000000b0038454caad6fmr1976921uaj.26.1658404688842; Thu, 21 Jul
- 2022 04:58:08 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=MZfpUxHJEGA2VH+oD+Q2rifpvJEeOwhigUwvcPg6HOs=;
+        b=4CtmlcRvBeAaa+rPDuzG0aKGLMzySapLwwaQSzVxndsfiN8ZklqHn13GItmn4nD9pb
+         5dJ/+13H1VNt6gOU5wcsZLvHwIFYXqjGjYUYA1JQz3tFlnL/NTmDCWTcNiE6atiVbFUr
+         sZiBfKKVu9zQCJj+AOM9sHbMnqmSMNPaivi+3kuVUNCvwWqMNUneHYfPCWJi5g7AqWNP
+         npAv0ELo2/sHwgK3jKxH2Up6fYtgCDFWNLtDxrbtKdPDf+hd6GJbAYXyvEwVyBWn9MtT
+         Oo/XXcg69xppPKqLvfhouYTGh1czwNqeokwXfgKSakqproiMittLEXnXIYHfI+B1GRcM
+         WnVg==
+X-Gm-Message-State: AJIora/M4n773FqqL7dx3v5T6w2bu5y2qfiOF4k3hOvFXm1Zw6kMj/CH
+        CuwX/SedtqXTKcfjVUrXLC/weUgtwfpPBw==
+X-Google-Smtp-Source: AGRyM1tF0hLO1GWe3tZ9CZu/6dApqwRcAEm28b7MDc4ex8ryMiSHLXDGgxJaMW/FjfyGAahzqFUcFg==
+X-Received: by 2002:a5d:6908:0:b0:21e:4fe3:cd1f with SMTP id t8-20020a5d6908000000b0021e4fe3cd1fmr4260047wru.476.1658404869888;
+        Thu, 21 Jul 2022 05:01:09 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id x3-20020a05600c420300b003a3200bc788sm5226069wmh.33.2022.07.21.05.01.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 05:01:09 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/6] string-list API user: fix API use, some with coccinelle
+Date:   Thu, 21 Jul 2022 14:00:47 +0200
+Message-Id: <cover-v2-0.6-00000000000-20220721T111808Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.1.1095.g64a1e8362fd
+In-Reply-To: <cover-0.2-00000000000-20220721T063543Z-avarab@gmail.com>
+References: <cover-0.2-00000000000-20220721T063543Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <20220718173511.rje43peodwdprsid@meerkat.local> <kl6lo7xmt8qw.fsf@chooglen-macbookpro.roam.corp.google.com>
- <20220720192144.mxdemgcdjxb2klgl@nitro.local> <Yth9TCCEXfmagaaw@mit.edu>
-In-Reply-To: <Yth9TCCEXfmagaaw@mit.edu>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 21 Jul 2022 13:57:56 +0200
-Message-ID: <CAFQ2z_Mc6Z-FyFkUURMCM11yQTH+Y2PLBrAKB-16BXv159=oOA@mail.gmail.com>
-Subject: Re: Feature request: provide a persistent IDs on a commit
-To:     "Theodore Ts'o" <tytso@mit.edu>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Glen Choo <chooglen@google.com>,
-        Stephen Finucane <stephen@that.guru>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 21, 2022 at 12:10 AM Theodore Ts'o <tytso@mit.edu> wrote:
-> On Wed, Jul 20, 2022 at 03:21:44PM -0400, Konstantin Ryabitsev wrote:
-> > The kernel community has repeatedly rejected per-patch Change-id traile=
-rs
-> > because they carry no meaningful information outside of the gerrit syst=
-em on
-> > which they were created. Seeing a Change-Id trailer in a commit tells y=
-ou
-> > nothing about the history of that commit unless you know the gerrit sys=
-tem on
-> > which this patch was reviewed (and have access to it, which is not a gi=
-ven).
->
-> The "no meaningful information outside of the gerrit system" is the
-> key.  This was extensively discussed in the
-> ksummit-discuss@lists.linux-foundation.org mailing list in late August
-> 2019, subject line "Allowing something Change-Id (or something like
-> it) in kernel commits".  Quoting from Linus Torvalds:
->
->     From: Linus Torvalds
->     Date: Thu, 22 Aug 2019 17:17:05 -0700
->     Message-Id: CAHk-=3DwhFbgy4RXG11c_=3DS7O-248oWmwB_aZOcWzWMVh3w7=3DRCw=
-@mail.gmail.com
->
->     No. That's not it at all. It's not "dislike gerrit".
->
->     It's "dislike pointless garbage".
->
->     If the gerrit database is public and searchable using the uuid, then
->     that would make the uuid useful to outsiders. And instead of just
->     putting a UUID (which is hard to look up unless you know where it cam=
-e
->     from), make it be that "Link:" that gives not just the UUID, but also
->     gives you the metadata for that UUID to be looked up.
->..
->     So if you guys make the gerrit database actually public, and then
->     start adding "Link: ..." tags so that we can see what they point to, =
-I
->     think people will be more than supportive of it.
+A larger v2, this:
 
-Support for the "Link:" footer as a change ID has been implemented in
-Gerrit as of https://gerrit.googlesource.com/gerrit/+/8cab93302d9c35316d691=
-e848b67e687a68182b5
-(available in Gerrit 3.3 and onwards).  I'm not sure if it has seen
-much use, though.
+ * Renames string_list.cocci to string-list.cocci (to be consistent
+   with the string-list.[ch])
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
+ * Answers Elijah's question about why the previous 2/2 left out one
+   case, it's due to --disable-worth-trying-opt. That's now split out
+   into its own commit.
+
+   FWIW it's the only case with "make coccicheck" that we've "missed",
+   including existing rules, but we just got lucky there.
+
+   I have some follow-up patches to fix various such bugs in our
+   coccicheck, but let's leave the larger fixes for now.
+
+ * The new 4/6 duplicates Junio's
+   https://lore.kernel.org/git/xmqq7d471dns.fsf@gitster.g/, but now
+   we've got a coccinelle rule for it and similar inverse cases. It's
+   still the only in-tree case, but it's probably good to keep the
+   rule around regardless.
+
+   I could also eject that *.C change and say this is based on
+   Junio's, or both could make the same change and "merge" will sort
+   it out. I do think 4/6 is a bit easier to read with an actual case
+   where we change things, but then again there's the added tests...
+
+ * A new 5/6 tweaks some "strdup_strings" dancing to a simpler
+   pattern, this is adjusted from my local WIP branch of larger
+   string_list API fixes.
+
+ * A new 6/6 fixes a confusing case of dup v.s. nodup to use a more
+   obvious callback pattern where we don't flip-flop.
+
+Ævar Arnfjörð Bjarmason (6):
+  string_list API users + cocci: use string_list_init_dup()
+  cocci: apply string_list.cocci with --disable-worth-trying-opt
+  reflog-walk.c: use string_list_init_dup()
+  cocci: add "string_list" rule to swap "DUP" <-> "NODUP"
+  string-list API users: don't tweak "strdup_strings" to free dupes
+  notes.c: make "struct string_list display_notes_refs" non-static
+
+ bisect.c                                 |  7 +++---
+ builtin/remote.c                         |  3 +--
+ contrib/coccinelle/string-list.cocci     | 26 ++++++++++++++++++++++
+ contrib/coccinelle/tests/string-list.c   | 20 +++++++++++++++++
+ contrib/coccinelle/tests/string-list.res | 18 +++++++++++++++
+ notes-utils.c                            |  4 ++--
+ notes.c                                  | 28 ++++++++++++++----------
+ reflog-walk.c                            |  2 +-
+ refs.c                                   |  4 ++--
+ resolve-undo.c                           |  8 +++----
+ revision.c                               |  4 ++--
+ 11 files changed, 95 insertions(+), 29 deletions(-)
+ create mode 100644 contrib/coccinelle/string-list.cocci
+ create mode 100644 contrib/coccinelle/tests/string-list.c
+ create mode 100644 contrib/coccinelle/tests/string-list.res
+
+Range-diff against v1:
+1:  c89758491e7 ! 1:  61a62bdf8e9 string_list API users + cocci: use string_list_init_dup()
+    @@ Commit message
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    - ## contrib/coccinelle/string_list.cocci (new) ##
+    + ## contrib/coccinelle/string-list.cocci (new) ##
+     @@
+     +@@
+     +struct string_list *P;
+    @@ contrib/coccinelle/string_list.cocci (new)
+     +- (P)->strdup_strings = 1;
+     ++ string_list_init_dup(P);
+     
+    - ## contrib/coccinelle/tests/string_list.c (new) ##
+    + ## contrib/coccinelle/tests/string-list.c (new) ##
+     @@
+     +int init(void)
+     +{
+    @@ contrib/coccinelle/tests/string_list.c (new)
+     +	list->strdup_strings = 1;
+     +}
+     
+    - ## contrib/coccinelle/tests/string_list.res (new) ##
+    + ## contrib/coccinelle/tests/string-list.res (new) ##
+     @@
+     +int init(void)
+     +{
+2:  5d8baa9cbc4 ! 2:  33e551a2f4c string-list API users: manually use string_list_init_*()
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    string-list API users: manually use string_list_init_*()
+    +    cocci: apply string_list.cocci with --disable-worth-trying-opt
+     
+    -    Convert various code that didn't use string_list_init_*() to do so, in
+    -    cases where the only thing being allocated was the string list we can
+    -    change from CALLOC_ARRAY() to ALLOC_ARRAY(), the string_list_init_*()
+    -    function will zero out the memory.
+    +    Apply the new string-list.cocci added in the preceding commit with
+    +    --disable-worth-trying-opt. For optimization purposes we run spatch in
+    +    a mode where even though we run it with --all-includes we'll miss some
+    +    changes because we don't use --disable-worth-trying-opt.
+     
+    -    This covers cases that weren't matched by tho coccinelle rule in the
+    -    preceding commit, which is conservative enough to care about the type
+    -    of what we're modifying.
+    +    This is because without that option it'll take a look at
+    +    notes-utils.c, and conclude that it doesn't need to process
+    +    it (irrelevant output excluded with "[...]"):
+    +
+    +            $ spatch --sp-file contrib/coccinelle/string-list.cocci --patch . notes-utils.c
+    +            [...]
+    +            (ONCE) Expected tokens string_list strdup_strings CALLOC_ARRAY
+    +            Skipping: notes-utils.c
+    +
+    +    This is just one of the known (and probably some unknown) issues where
+    +    our "make coccicheck" fails to include changes for whatever
+    +    reason. That should be fixed more generally, but let's just fix this
+    +    manually for now.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ notes-utils.c: struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char
+      	c->refs_from_env = 0;
+      	c->mode_from_env = 0;
+      	if (rewrite_mode_env) {
+    -
+    - ## reflog-walk.c ##
+    -@@ reflog-walk.c: struct reflog_walk_info {
+    - void init_reflog_walk(struct reflog_walk_info **info)
+    - {
+    - 	CALLOC_ARRAY(*info, 1);
+    --	(*info)->complete_reflogs.strdup_strings = 1;
+    -+	string_list_init_dup(&((*info)->complete_reflogs));
+    - }
+    - 
+    - void reflog_walk_info_release(struct reflog_walk_info *info)
+-:  ----------- > 3:  62aab32ae77 reflog-walk.c: use string_list_init_dup()
+-:  ----------- > 4:  2d858c49243 cocci: add "string_list" rule to swap "DUP" <-> "NODUP"
+-:  ----------- > 5:  8c0ac6cbd96 string-list API users: don't tweak "strdup_strings" to free dupes
+-:  ----------- > 6:  b0de7a63d1c notes.c: make "struct string_list display_notes_refs" non-static
+-- 
+2.37.1.1095.g64a1e8362fd
+
