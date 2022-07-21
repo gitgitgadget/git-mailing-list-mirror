@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A609AC43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 16:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 606F3C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 16:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232109AbiGUQQF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 12:16:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43216 "EHLO
+        id S233872AbiGUQQQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 12:16:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233865AbiGUQPQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 12:15:16 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2EEE89A9C
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:14:54 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id d8so2973856wrp.6
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:14:54 -0700 (PDT)
+        with ESMTP id S233892AbiGUQPg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 12:15:36 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E4BA8875B
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:15:03 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id h9so3015502wrm.0
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5sYHUrvd4MfXcyiiIa55wbrWHJ17C85AkaCrY0SdD4E=;
-        b=ZiboUseQuI51HDr4bTq76e7UqsN+P7DZ86SvX2Ir52fZAMQU3jGnmP8oIxmQjhChmE
-         GTLtAxyaWjtafGfemp/2XF4StUOsnGAdKW2cxiSB96kycBnKPMlK3J7Bd4rOR/ebA0wG
-         Q/2dlBdmFZnYTS0jNFmkGPyYNaJBiBO9LeFrbakxgXEhybJ76Jrd83i6LtaeqOzUSRwr
-         Vv/iSVIPSQvQSKIgRcaj4HxeKq5Y1loa/Cr+y1tzbs4g2ZwChXplpDUpoZQ6VSXHCqUe
-         ovvT5V3WvA+aOjfSETWIPZm3WB8MpEk/NWUFJpzRSPuEPvjUa7ozQXOfGxpAb7O3JwEg
-         j8gw==
+        bh=VGZgbRJXVVS7kjQjlDffbZsCmWs5Aa/G8caZ6wN4zv0=;
+        b=EUJxntsSgf8uDnrejFq/s5Gz0XklH2eUdY26DrHq97DK2LNEEnsdCqnL4jTzU/xscF
+         z01I3jqBFil4Y0Fc8Ty1xNHRMuEb+42k6Roi6soAxSM6Gba8qiNIzdS0Fy5CHe7az8s9
+         BAAUOYsAxyLB0+RfXtjnj/aOlTLw8Lc6mIcp3RzcxwcrP7WHoOTcfQ75CvFFnlB8dh7X
+         mNA7KLrMJfsHnnBx0SKupJU2ZtP2q6Shf22B9EHF/b267IgBgLQogZAjKePQf/uMdWUw
+         qIVbhNeCktNBpeE5CChQNifDPlHwo45OZf+/tvBpVnlmsXcpK2/FlLSt78PMQeZfJ/xd
+         Af9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5sYHUrvd4MfXcyiiIa55wbrWHJ17C85AkaCrY0SdD4E=;
-        b=lqUjJDH2HREU4eQK/NHNxZc8XKXK4+JMWuBsx7Nb9f63bi4IQ5g5aRWfdq00GO3hid
-         cGanSUfwRmajstJq0QmVAa0mHz88VfJurXJ4A1JMjDwHMWGVwpRWbk34eRh/Us9GDHnF
-         CmpYxo2btF34nB6PNkXdKAAu1Mu1xTOdRhNcL6Hc3sD350UfT24cuVKUCZd5OUOxCn10
-         hntX7Fn9N5AZSrLc+LCqnx8w/Ad/cIlmg4hFN3c48CaeeEnJveLXO18kNlfBZ2hQC38U
-         XDuYADztibchQAIMwAhKOQNPGrxqKjZInduvyhgG/VAHAL4O5MYqMnVR8uDUjB6L6fmu
-         dlRw==
-X-Gm-Message-State: AJIora+ng4CG2yjcOoTy1QwMhsG9c635AU+Zcbn4lUB7nBgz1pjk9llM
-        xIfi+H4EVullJW4qpeTspI4129UBg8T+mg==
-X-Google-Smtp-Source: AGRyM1vAb6SfqZRuTrG0aC2AO11TjhPJGh1Moik/lvxbD2k5eDd57s4MeBZTrOIFhyeFIdJgssOKLQ==
-X-Received: by 2002:adf:ef0b:0:b0:21e:489f:a258 with SMTP id e11-20020adfef0b000000b0021e489fa258mr7213832wro.19.1658420068742;
-        Thu, 21 Jul 2022 09:14:28 -0700 (PDT)
+        bh=VGZgbRJXVVS7kjQjlDffbZsCmWs5Aa/G8caZ6wN4zv0=;
+        b=BYPzucFXyK0SNjiVshubwcSWzEETGy8sipKYSETjfUp+uM2eHGrbXkXVIc3Q+YBKAu
+         D2CCbwvyq+M8Xa0JljK8OHy0GqEaFCcU3xam8exsfYZ+SrZAEEl0Z79Il8lmHtqwuNtx
+         4/xeI5Rdbgnx8VGtDtg6k2pVR1FAALvCGoOsqQsdjI/D3rCnon0yZZNwOqp6/8N2vtL4
+         Z20+Mag7k8PvnL2RgnF/J21D2Es/OhMeC5fB141gaAT9PdZXGRe7EgaP/or7cbg8pPCs
+         s0Osxu/EhxIkXxHKdWzb66Z1xFkd1P3m45sPlOlBR8ZLmAi4kBuW/ezX8p87FzB7H0Iq
+         et0A==
+X-Gm-Message-State: AJIora8VOa0Y1ZVSljWVrxMGtKO0GeKOj94cfvFUUaz1vU34OAdGUHZ4
+        MUfKAvvB4jfB3dEE1cJOa41tQxKIHajPRg==
+X-Google-Smtp-Source: AGRyM1uo5YUeqNe/vI54RfCMsUpE+lhsgRjdtIbyVruk077LJvpWlxCo6Q6ZDTGtNzKkWjI56IkIew==
+X-Received: by 2002:a05:6000:1f0b:b0:21d:6dae:7d04 with SMTP id bv11-20020a0560001f0b00b0021d6dae7d04mr35570234wrb.414.1658420071045;
+        Thu, 21 Jul 2022 09:14:31 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n21-20020a05600c4f9500b003a2f2bb72d5sm8498608wmq.45.2022.07.21.09.14.26
+        by smtp.gmail.com with ESMTPSA id n21-20020a05600c4f9500b003a2f2bb72d5sm8498608wmq.45.2022.07.21.09.14.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 09:14:27 -0700 (PDT)
+        Thu, 21 Jul 2022 09:14:29 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Teng Long <dyroneteng@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 8/9] docs: move http-protocol docs to man section 5
-Date:   Thu, 21 Jul 2022 18:13:57 +0200
-Message-Id: <patch-v5-8.9-8f8214addfd-20220721T160721Z-avarab@gmail.com>
+Subject: [PATCH v5 9/9] docs: move multi-pack-index docs to man section 5
+Date:   Thu, 21 Jul 2022 18:13:58 +0200
+Message-Id: <patch-v5-9.9-19601ac36a2-20220721T160721Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1095.g64a1e8362fd
 In-Reply-To: <cover-v5-0.9-00000000000-20220721T160721Z-avarab@gmail.com>
 References: <cover-v4-0.8-00000000000-20220718T132911Z-avarab@gmail.com> <cover-v5-0.9-00000000000-20220721T160721Z-avarab@gmail.com>
@@ -73,155 +73,116 @@ X-Mailing-List: git@vger.kernel.org
 
 Continue the move of existing Documentation/technical/* protocol and
 file-format documentation into our main documentation space by moving
-the http-protocol.txt documentation over. I'm renaming it to
-"protocol-http" to be consistent with other things in the new
-gitformat-protocol-* namespace.
+the multi-pack-index documentation over.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
  Documentation/Makefile                        |  2 +-
- Documentation/git-upload-pack.txt             |  6 ++--
- ...http-protocol.txt => gitprotocol-http.txt} | 29 ++++++++++++++++---
- Documentation/gitprotocol-pack.txt            |  2 +-
- Documentation/gitprotocol-v2.txt              |  4 +--
+ Documentation/git-multi-pack-index.txt        |  4 ++--
+ ...dex.txt => gitformat-multi-pack-index.txt} | 20 +++++++++++++++++--
+ Documentation/gitformat-pack.txt              |  5 +++++
  command-list.txt                              |  1 +
- 6 files changed, 33 insertions(+), 11 deletions(-)
- rename Documentation/{technical/http-protocol.txt => gitprotocol-http.txt} (98%)
+ 5 files changed, 27 insertions(+), 5 deletions(-)
+ rename Documentation/{technical/multi-pack-index.txt => gitformat-multi-pack-index.txt} (94%)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index cd09ccd8c13..6efac142e3e 100644
+index 6efac142e3e..522d6011e7a 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -37,6 +37,7 @@ MAN5_TXT += gitmailmap.txt
- MAN5_TXT += gitmodules.txt
- MAN5_TXT += gitprotocol-capabilities.txt
- MAN5_TXT += gitprotocol-common.txt
-+MAN5_TXT += gitprotocol-http.txt
- MAN5_TXT += gitprotocol-pack.txt
- MAN5_TXT += gitprotocol-v2.txt
- MAN5_TXT += gitrepository-layout.txt
-@@ -107,7 +108,6 @@ TECH_DOCS += SubmittingPatches
- TECH_DOCS += ToolsForGit
+@@ -28,6 +28,7 @@ MAN5_TXT += gitformat-bundle.txt
+ MAN5_TXT += gitformat-chunk.txt
+ MAN5_TXT += gitformat-commit-graph.txt
+ MAN5_TXT += gitformat-index.txt
++MAN5_TXT += gitformat-multi-pack-index.txt
+ MAN5_TXT += gitformat-pack-cruft.txt
+ MAN5_TXT += gitformat-pack.txt
+ MAN5_TXT += gitformat-signature.txt
+@@ -109,7 +110,6 @@ TECH_DOCS += ToolsForGit
  TECH_DOCS += technical/bitmap-format
  TECH_DOCS += technical/hash-function-transition
--TECH_DOCS += technical/http-protocol
  TECH_DOCS += technical/long-running-process-protocol
- TECH_DOCS += technical/multi-pack-index
+-TECH_DOCS += technical/multi-pack-index
  TECH_DOCS += technical/pack-heuristics
-diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
-index 3409e0d36d1..3f89d640772 100644
---- a/Documentation/git-upload-pack.txt
-+++ b/Documentation/git-upload-pack.txt
-@@ -39,9 +39,9 @@ OPTIONS
- --http-backend-info-refs::
- 	Used by linkgit:git-http-backend[1] to serve up
- 	`$GIT_URL/info/refs?service=git-upload-pack` requests. See
--	"Smart Clients" in link:technical/http-protocol.html[the HTTP
--	transfer protocols] documentation and "HTTP Transport" in the
--	linkgit:gitprotocol-v2[5] documentation. Also understood by
-+	"Smart Clients" in linkgit:gitprotocol-http[5] and "HTTP
-+	Transport" in in the linkgit:gitprotocol-v2[5]
-+	documentation. Also understood by
- 	linkgit:git-receive-pack[1].
+ TECH_DOCS += technical/parallel-checkout
+ TECH_DOCS += technical/partial-clone
+diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
+index a48c3d5ea63..0ffa8b852cd 100644
+--- a/Documentation/git-multi-pack-index.txt
++++ b/Documentation/git-multi-pack-index.txt
+@@ -127,8 +127,8 @@ $ git multi-pack-index verify
  
- <directory>::
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/gitprotocol-http.txt
-similarity index 98%
-rename from Documentation/technical/http-protocol.txt
-rename to Documentation/gitprotocol-http.txt
-index 8bd672d55bb..ccc13f0a407 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/gitprotocol-http.txt
-@@ -1,5 +1,19 @@
--HTTP transfer protocols
--=======================
-+gitprotocol-http(5)
-+===================
+ SEE ALSO
+ --------
+-See link:technical/multi-pack-index.html[The Multi-Pack-Index Design
+-Document] and linkgit:gitformat-pack[5] for more information on the
++See linkgit:git-multi-pack-index[1] and
++linkgit:gitformat-multi-pack-index[5] for more information on the
+ multi-pack-index feature and its file format.
+ 
+ 
+diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/gitformat-multi-pack-index.txt
+similarity index 94%
+rename from Documentation/technical/multi-pack-index.txt
+rename to Documentation/gitformat-multi-pack-index.txt
+index f2221d2b441..3bca1e7b10d 100644
+--- a/Documentation/technical/multi-pack-index.txt
++++ b/Documentation/gitformat-multi-pack-index.txt
+@@ -1,5 +1,17 @@
+-Multi-Pack-Index (MIDX) Design Notes
+-====================================
++gitformat-multi-pack-index(5)
++=============================
 +
 +NAME
 +----
-+gitprotocol-http - Git HTTP-based protocols
-+
++gitformat-multi-pack-index - The multi-pack-index file format
 +
 +SYNOPSIS
 +--------
 +[verse]
-+<over-the-wire-protocol>
-+
++$GIT_DIR/objects/pack/multi-pack-index
 +
 +DESCRIPTION
 +-----------
  
- Git supports two HTTP based transfer protocols.  A "dumb" protocol
- which requires only a standard HTTP server on the server end of the
-@@ -512,11 +526,18 @@ the id obtained through ref discovery as old_id.
+ The Git object directory contains a 'pack' directory containing
+ packfiles (with suffix ".pack") and pack-indexes (with suffix
+@@ -98,3 +110,7 @@ Related Links
  
- TODO: Document this further.
- 
--
--References
-+REFERENCES
- ----------
- 
- http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
- http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
-+
-+SEE ALSO
-+--------
-+
- linkgit:gitprotocol-pack[5]
- linkgit:gitprotocol-capabilities[5]
+ [2] https://lore.kernel.org/git/alpine.DEB.2.20.1803091557510.23109@alexmv-linux/
+     Git Merge 2018 Contributor's summit notes (includes discussion of MIDX)
 +
 +GIT
 +---
 +Part of the linkgit:git[1] suite
-diff --git a/Documentation/gitprotocol-pack.txt b/Documentation/gitprotocol-pack.txt
-index 93b30b88450..dd4108b7a3b 100644
---- a/Documentation/gitprotocol-pack.txt
-+++ b/Documentation/gitprotocol-pack.txt
-@@ -17,7 +17,7 @@ Git supports transferring data in packfiles over the ssh://, git://, http:// and
- file:// transports.  There exist two sets of protocols, one for pushing
- data from a client to a server and another for fetching data from a
- server to a client.  The three transports (ssh, git, file) use the same
--protocol to transfer data. http is documented in http-protocol.txt.
-+protocol to transfer data. http is documented in linkgit:gitprotocol-http[5].
+diff --git a/Documentation/gitformat-pack.txt b/Documentation/gitformat-pack.txt
+index 546c99f8871..68328bada6b 100644
+--- a/Documentation/gitformat-pack.txt
++++ b/Documentation/gitformat-pack.txt
+@@ -507,6 +507,11 @@ packs arranged in MIDX order (with the preferred pack coming first).
+ The MIDX's reverse index is stored in the optional 'RIDX' chunk within
+ the MIDX itself.
  
- The processes invoked in the canonical Git implementation are 'upload-pack'
- on the server side and 'fetch-pack' on the client side for fetching data;
-diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
-index d6105e07408..c9c0f9160b2 100644
---- a/Documentation/gitprotocol-v2.txt
-+++ b/Documentation/gitprotocol-v2.txt
-@@ -53,7 +53,7 @@ Initial Client Request
- In general a client can request to speak protocol v2 by sending
- `version=2` through the respective side-channel for the transport being
- used which inevitably sets `GIT_PROTOCOL`.  More information can be
--found in linkgit:gitprotocol-pack[5] and `http-protocol.txt`, as well as the
-+found in linkgit:gitprotocol-pack[5] and linkgit:gitprotocol-http[5], as well as the
- `GIT_PROTOCOL` definition in `git.txt`. In all cases the
- response from the server is the capability advertisement.
- 
-@@ -77,7 +77,7 @@ HTTP Transport
- ~~~~~~~~~~~~~~
- 
- When using the http:// or https:// transport a client makes a "smart"
--info/refs request as described in `http-protocol.txt` and requests that
-+info/refs request as described in linkgit:gitprotocol-http[5] and requests that
- v2 be used by supplying "version=2" in the `Git-Protocol` header.
- 
-    C: GET $GIT_URL/info/refs?service=git-upload-pack HTTP/1.0
++SEE ALSO
++--------
++
++linkgit:gitformat-multi-pack-index[5]
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/command-list.txt b/command-list.txt
-index 4f30a6c30c8..e3a5d417792 100644
+index e3a5d417792..1215250c9ae 100644
 --- a/command-list.txt
 +++ b/command-list.txt
-@@ -225,6 +225,7 @@ gitmodules                              userinterfaces
- gitnamespaces                           guide
- gitprotocol-capabilities                developerinterfaces
- gitprotocol-common                      developerinterfaces
-+gitprotocol-http                       developerinterfaces
- gitprotocol-pack                        developerinterfaces
- gitprotocol-v2                          developerinterfaces
- gitremote-helpers                       guide
+@@ -213,6 +213,7 @@ gitformat-bundle                        developerinterfaces
+ gitformat-chunk                         developerinterfaces
+ gitformat-commit-graph                  developerinterfaces
+ gitformat-index                         developerinterfaces
++gitformat-multi-pack-index              developerinterfaces
+ gitformat-pack                          developerinterfaces
+ gitformat-pack-cruft                    developerinterfaces
+ gitformat-signature                     developerinterfaces
 -- 
 2.37.1.1095.g64a1e8362fd
 
