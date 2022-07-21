@@ -2,74 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A15E1C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 16:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E93CC433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 16:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231371AbiGUQYn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 12:24:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57772 "EHLO
+        id S230238AbiGUQ0Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 12:26:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233608AbiGUQYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 12:24:41 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B3C88E02
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:24:39 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 060431355A8;
-        Thu, 21 Jul 2022 12:24:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=k75D9nC2Mb8V
-        24Km7yYmV+KQbX7YRySAopDb/gcVtTE=; b=qYEUrp30AxcBr/ZhisedTvtVzEPf
-        nqvTb13vzc2Wx4PdwKe0C6jFIe3SzDPa4q9CjRpaHDVg1TINey1XwgYypWMrHPfj
-        JtE6YkwX3a9WvR4vEphXF+SHL59AGFNdY8Tm1ne+6Svc8TwE2zmzHR5VODpkAH3i
-        /Me4umawDt9+2SU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFFD31355A7;
-        Thu, 21 Jul 2022 12:24:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54BDC1355A6;
-        Thu, 21 Jul 2022 12:24:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 5/7] merge: make restore_state() restore staged state
- too
-References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
-        <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
-        <91c495c770e3f7f91ae655a503bdd1cd99935e40.1658391391.git.gitgitgadget@gmail.com>
-Date:   Thu, 21 Jul 2022 09:24:37 -0700
-In-Reply-To: <91c495c770e3f7f91ae655a503bdd1cd99935e40.1658391391.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Thu, 21 Jul 2022
-        08:16:29 +0000")
-Message-ID: <xmqq8roml9h6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229576AbiGUQ0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 12:26:24 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A054C88E00
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:26:23 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id l3so1677228qkl.3
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 09:26:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=K2qEBpe3pUomyWh1pSOGaZwehFbImH7cjAJ+PEbKkE8=;
+        b=g2s4mzlQ8Ol8UNuGssQUe30G0AJ4Fax+J2UuuPa56cWoIAsUo7FTntQLtMPrgZVEEQ
+         EJEmgC6cpIeQfAnC3vcbzUDo4fOolap/af93I15nYnKyrzqAF4LsCGMXDPn8teficr9u
+         9sCsj39sBD5h3xK7kfwUYKV2fuVM6nfbiNAtY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=K2qEBpe3pUomyWh1pSOGaZwehFbImH7cjAJ+PEbKkE8=;
+        b=BBnYK0m+hlvP/D9sw0+QvOdumGatVYmlMIjsuvXQTcoDHORGwyu3gAdrCGANMOUTBP
+         UaaECntyQc/gRG1FUG2AGv83V3tz9j3Y/NMlJDUaO+Mrqxo+lZ4FKZEn3uZ0aX4zZiig
+         1Z2yzM+th1mTozRBO05nUqYla85AuTFjI+u6CpohQwdMYsktWK/yQfNkdx/EPiMuhlpA
+         9qwjpLz6PZQyFGR0pFKOe4OTqFK5pDHVMbcCSHrUYsLHFv+w17qtWVdzC3l05BKwa36b
+         HvzFQyA7kcaaDeKw7TwrOPYv1oQgq+00bRd2hOwWaNNEQU8S+Bl9rWVkZwf9Urs5lvfM
+         wH0w==
+X-Gm-Message-State: AJIora95Rm+TB0FQx4UHJajxGHTvEFA3tK0LcjNkD1hY/jZ5jWIJeKN0
+        Dq3tubZcaJWbi5k7/8lYbSMEhMMTohmvJw==
+X-Google-Smtp-Source: AGRyM1u9TPZAn7h5xz/5ypkWNQOIWQQfrzxTOLK2O0VOPAz2oZTwflWaqtDWu6THP3NMkOnGu+Vlwg==
+X-Received: by 2002:a05:620a:4043:b0:6b5:f695:69cc with SMTP id i3-20020a05620a404300b006b5f69569ccmr12702370qko.31.1658420782727;
+        Thu, 21 Jul 2022 09:26:22 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id d21-20020ac85ad5000000b0031ea1ad6c5asm1583613qtd.75.2022.07.21.09.26.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 09:26:22 -0700 (PDT)
+Date:   Thu, 21 Jul 2022 12:26:20 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: On-branch topic description support?
+Message-ID: <20220721162620.f5ffcedkbvvdhhu7@meerkat.local>
+References: <xmqqilnr1hff.fsf@gitster.g>
+ <220721.86mtd2tqct.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9DBA5814-0911-11ED-BE83-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220721.86mtd2tqct.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Jul 21, 2022 at 04:53:18PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> I tried now with "git rebase --rebase-merges -i", and it supports it
+> properly, i.e. I could re-arrange it so that it's:
+> 
+>               A---C---B---M topic
+>              / \         /
+>         X---Y   ---------
+>              \
+>               master
 
-> =C2=A0 =C2=A0* stash the changes, in order to clean up after the strate=
-gies
-> =C2=A0 =C2=A0* try all the merge strategies in turn, each of which repo=
-rt they
->      cannot function due to the index not matching HEAD
-> =C2=A0 =C2=A0* restore the changes via "git stash apply"
+This is clever, but it has a hard restriction that nothing happens to A:
 
-A tangent that does not make much difference in the end, but I am
-finding these lines curious and somewhat annoying.  Why do we have
-&nbsp; sandwitching the plain whitespace only on lines that begin
-with an asterisk?
+- you can't move it so it's B---A---C---M
+- you can't squash A+B
+
+Unless all the tools are taught to properly modify the merge commit.
+
+Or am I not reading this right?
+
+-K
