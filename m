@@ -2,105 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1EF8C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 17:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 954A4C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 17:51:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231736AbiGURt7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 13:49:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42982 "EHLO
+        id S231935AbiGURv3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 13:51:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbiGURt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 13:49:58 -0400
-Received: from mail-ot1-x349.google.com (mail-ot1-x349.google.com [IPv6:2607:f8b0:4864:20::349])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 088DA33A26
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 10:49:57 -0700 (PDT)
-Received: by mail-ot1-x349.google.com with SMTP id t9-20020a05683022e900b0061c99c2e074so1084647otc.8
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 10:49:57 -0700 (PDT)
+        with ESMTP id S231940AbiGURv1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 13:51:27 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B1882F89
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 10:51:25 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id g1so3062656edb.12
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 10:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=wpfeGkjTx3awVErzpJH5R3ZGlyRC8L63+BU9F6CMfuk=;
-        b=crRljKhTkb7StMa09hHZropb8hBbPBa8ObYTBZ22usIINUN/eT1Cc0QbLb3P4tHu/p
-         YOIVkGtSNBpWGkGY5CTq/byXqEM2QZevmWdEgcItk66dCsir8vzNxRWbCC76faz1a3IH
-         yipC+c9+Aiog44kWID1qD3J6t1c5BAaWFy4X8woH6C+kqxT0xlAqXjPwlj7gUbX28k0w
-         SUcRv6b69wWqki2rKBAl9SAgIRvvSvWULUSecXB/KjYzF5UmVxsQ5dM1UbnnvzS3hQeJ
-         j4L1814KX3tEEhiPy3wIIQ55DtU1YY7HQN2jrxo9qGgWdRwHtBHALJm/C88fH9MARAtf
-         WDag==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=MK5mMKr8sQRgZYtnNql0FmMmHoCT85kQ1ka8uvZ7E2o=;
+        b=h7+7bwQuU43OgO7QIba2NL1fiJNLKUf/N7Br08VKk2sHnhS/2X8BohNqiOXKkV7MlP
+         2Co0q3ABKdB13bfzYwJSQE+ALT7OjffY0VmyjHAiaGGORtKpUYLcBY2njTT86g76tVxd
+         ZRlLGxnjH7AMTvgtARqmcKfizGIE4KlN5ABqy+OqPwNp7xWWqJ10O1tCm5xws36RlPQV
+         e6LPYsbkJaQwNqExNvKfCqsTpFDCzxzcxv8c2XJSUOKq/vxmT2GaMcVZ6VqkvEZ1nGw5
+         S1LI3NI5maA3MCSyqG3LcdSovCsu8J+ZCW9kW2w8NqmFUOOCrMqjuplmVj68J9zuIm/6
+         hyZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=wpfeGkjTx3awVErzpJH5R3ZGlyRC8L63+BU9F6CMfuk=;
-        b=aybeTw5B8qOXY6QTzbRHVWxVwAvyoztDkNPi1wChPYPd2dEbaicnF5Wqv3KUWLcNN4
-         1iHXLhxwpU4KelzjyuoXTglNUM5urHLgjxchiVOLQ+x5/bBgINXcL/wfuoV5kJAIPWTA
-         KnifsSC105BZI+xh1L0rEh4YNbBTh4MKVLaX8zbfrgxnCVbXDFqwayb9PjyvmYttkWUB
-         vcYGvmz5E/C8hmg9wFJzHs5oXbEtbM08ExpQHdBBBc0KGljWMjcvrluSY9pXX3zoAFY1
-         01UGALxPdf0AtBkwaH4pbUAGiwYz0pCRx8QN43GMlCv7g4bz25wLGTyOdCKI+VIylu24
-         TWmA==
-X-Gm-Message-State: AJIora+ysRL/0q2/NvQnPCquMj0qLQL3+SQEbggGwmAx4+6j81FsTMYZ
-        84AfzS3aEWndmM9iBNggRMdqy88wyfNDSA==
-X-Google-Smtp-Source: AGRyM1t2tt0abii9MTvIwUmgakCE3i7qrDEz14iHzkX0v4o16rw7wPN5VSB/OCONoVe7s+kfCjCp2XBAMl5AiA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6808:bd5:b0:337:e765:263c with SMTP
- id o21-20020a0568080bd500b00337e765263cmr5492838oik.102.1658425796441; Thu,
- 21 Jul 2022 10:49:56 -0700 (PDT)
-Date:   Thu, 21 Jul 2022 10:49:54 -0700
-In-Reply-To: <patch-v2-04.24-9fb60485c3e-20220719T204458Z-avarab@gmail.com>
-Message-Id: <kl6ledyetkxp.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <cover-00.11-00000000000-20220713T131601Z-avarab@gmail.com>
- <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com> <patch-v2-04.24-9fb60485c3e-20220719T204458Z-avarab@gmail.com>
-Subject: Re: [PATCH v2 04/24] submodule--helper: fix most "struct pathspec"
- memory leaks
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=MK5mMKr8sQRgZYtnNql0FmMmHoCT85kQ1ka8uvZ7E2o=;
+        b=XpuZ6LLB0lFwAf1xOO3rMnuAWjH+dB86ps1FKvu7b/wBr3t748M2uUTLOKz31l7ofy
+         SToU71/cAXDQO6YnfmH98cx08u5zAPO6PxYCCK9D17zHYuHj9k8dK3kbudlehIoKF1Lx
+         f0R9+XmAGa5j9VlIAgle+slFSGBsXFaNDukOTgi/CqaRoKio9Qvhh8AikSZeusTk06j6
+         XdL10Y3t5QuF4x8axsMNNmvJ5cSLunZArVd7pnc+eo8I8nAdUVDGkeduf+y9epDTP/AD
+         Jf5unQ8hrOHu4gooW/PVkQazjxZ8TIw6OfTTBkbDMZ083gOWvUdJ/mxxlsL24NhT25AN
+         RkAQ==
+X-Gm-Message-State: AJIora82b770f3KAyn/OmmlH6qvXMLbJN0fMyaU9ZEGf0Kcz+YwZs77c
+        UHnYOamCHDHyXK0WBkIXsb7mtS7/Wy9vyw==
+X-Google-Smtp-Source: AGRyM1vQYrPRhhPXyPttZITKwxg2U8yelm251pVyUiyygKO5a09tQ2996lSAEoz6q96GdTecMEkFYg==
+X-Received: by 2002:a05:6402:520c:b0:43a:aba8:84ae with SMTP id s12-20020a056402520c00b0043aaba884aemr60570758edd.198.1658425883465;
+        Thu, 21 Jul 2022 10:51:23 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id da24-20020a056402177800b0043bbea24595sm1343513edb.31.2022.07.21.10.51.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 10:51:22 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oEaKX-004k9u-CG;
+        Thu, 21 Jul 2022 19:51:21 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: On-branch topic description support?
+Date:   Thu, 21 Jul 2022 19:49:31 +0200
+References: <xmqqilnr1hff.fsf@gitster.g>
+ <220721.86mtd2tqct.gmgdl@evledraar.gmail.com> <xmqqwnc6idxr.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqwnc6idxr.fsf@gitster.g>
+Message-ID: <220721.86a692tkva.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Call clear_pathspec() at the end of various functions that work with
-> and allocate a "struct pathspec".
+On Thu, Jul 21 2022, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  builtin/submodule--helper.c | 115 +++++++++++++++++++++++++-----------
->  1 file changed, 81 insertions(+), 34 deletions(-)
+>> To steal and amend a diagram from git-merge(1), we now have turned this:
+>>
+>>
+>>               A---B---C topic
+>>              /=20
+>>         X---Y
+>>              \
+>>               master
+>>
+>> Into this:
+>>
+>>               A---B---C---M topic
+>>              / \         /
+>>         X---Y   ---------
+>>              \
+>>               master
 >
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index b36919b66c5..28c5fdb8954 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1105,7 +1129,7 @@ static int compute_summary_module_list(struct objec=
-t_id *head_oid,
->  	struct strvec diff_args =3D STRVEC_INIT;
->  	struct rev_info rev;
->  	struct module_cb_list list =3D MODULE_CB_LIST_INIT;
-> -	int ret =3D 0;
-> +	int ret;
-> =20
->  	strvec_push(&diff_args, get_diff_cmd(diff_cmd));
->  	if (info->cached)
-> @@ -1145,6 +1169,7 @@ static int compute_summary_module_list(struct objec=
-t_id *head_oid,
->  	else
->  		run_diff_files(&rev, 0);
->  	prepare_submodule_summary(info, &list);
-> +	ret =3D 0;
->  cleanup:
->  	strvec_clear(&diff_args);
->  	release_revisions(&rev);
+> If you mean your topic have 3 commits, then I think you want the
+> first parent of M to be Y, not A, but I agree the above arrangement
+> can also represent what I was discussing.
 
-This function doesn't use a pathspec at all. Was it changed for
-consistency reasons or perhaps an accidental inclusion?
+Yes, sorry. The diagram is incorrect, but not the commands I posted,
+i.e. one of the parents is "master".
 
-All the other hunks look correct.
+> The thing is, it is unclear if such an artificial merge is an easy
+> thing to maintain by individual contributors.  "rebase -i" with some
+> extra options people are not familiar with may be able to reproduce
+> the topology without losing information after you accumulate more
+> commits on top of M (e.g. you build D and E on top of M and now you
+> want to make it A-B-C-D-E merged into Y with M that records the tree
+> of E; you'd amend M's message to talk also about D and E), but
+> "it is possible" is different from "people are comfortable doing".
+
+Yes, it's magical, but so is an empty commit having a new "CL"
+meaning. I'd think both would require relevant tooling to be aware of
+them.
+
+But this is worse in that "git rebase" will get rid of it by default.
+
+> If M did not have a backpointer to the other parent, and instead
+> were an empty commit, then you recreated what I wrote in the message
+> you are responding to.
+
+Yes, that's the difference between the two.
