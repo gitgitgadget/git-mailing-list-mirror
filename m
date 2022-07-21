@@ -2,133 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69259C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 17:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF4FAC43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 18:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231978AbiGURxK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 13:53:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45708 "EHLO
+        id S229694AbiGUSBV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 14:01:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231967AbiGURxI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 13:53:08 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F6986C39
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 10:53:07 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id os14so4464027ejb.4
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 10:53:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=d7ZYaecReRjed94qUJBJlnXmd2n3xPF5JzPOjK6G2dc=;
-        b=ok9CywJWPTrXiJlBMC84R+dnC7/bkeu73Xp+irSLjlWnFTWd1l9yQx8iDlCred3qHB
-         0fiQvvaC747DyC+8V6Itvp3CIiYYNDZCWZCpB0zo7JUnm9ejlQb4tSqgOfLoObcNost6
-         +WiDmrQTcZQmwCqnYypK7htD3eXvFizLKUyWFZtPYKDPOEUqeUk0+1OJu580isZtzEF5
-         8Oe8Z8wZqXfUJNJowtTigPB4Q8X4lj7rGnk1g1aGWT2KW/8Fe1D4lusP/S8EYD3QzqQC
-         PEm1vd6mTc0wNJ86JkD1v/83QKDYbcZlYADrCGLSqD2bjTN2ptVovsU5s0YufZH+lcUY
-         fgyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=d7ZYaecReRjed94qUJBJlnXmd2n3xPF5JzPOjK6G2dc=;
-        b=B+Po7pacnHTKGlqOMk2PqlhIt3580HvKOLskxAwqPP6Fk9joftw3xdSIzAepV7Efu1
-         caVpW9JZ6vsWunVn7q0ZTfKqQ8d3clvFenRykSOVFhnR6pb8Hms63y7wmmd8TNsc9j0s
-         H3t5ETkwg4HpgQrJGjc9Rx3eHd9lxeIyXRvyYJ/PNe2a59h7bvwjX7YOpZPWMd7agjDf
-         5MeU07zneGpHKmRlsuL2WEmeVq7TILaditiS15P2fFQw7XhpKxGZaT4plZEb0FAR8t8t
-         YYRBeQ8eqLBLdwWUr/Z5SgsGrNIlPCW8/OyhDUCa5s4GCF4sWSgwQIKuBXYw0PA8AEKM
-         3NSQ==
-X-Gm-Message-State: AJIora/HZplYMuKnNFp+OU1eSaInKUPNLzY+kJz5/i+jEIFaOhGFjogJ
-        4flWE476iNP04I4VtFvQzHI=
-X-Google-Smtp-Source: AGRyM1uOTHo0hDw2j6yugQJt95JwJnYtCu7kc7IvgJS7NavyCxZLNLSkMJvjaAILPCJ6QUDxp4EsVw==
-X-Received: by 2002:a17:907:2816:b0:72b:4fc3:1b3e with SMTP id eb22-20020a170907281600b0072b4fc31b3emr39797955ejc.601.1658425985582;
-        Thu, 21 Jul 2022 10:53:05 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id t6-20020a170906608600b0072ecef772acsm1085589ejj.2.2022.07.21.10.53.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 10:53:04 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oEaMB-004kET-PP;
-        Thu, 21 Jul 2022 19:53:03 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        git@vger.kernel.org
-Subject: Re: On-branch topic description support?
-Date:   Thu, 21 Jul 2022 19:51:51 +0200
-References: <xmqqilnr1hff.fsf@gitster.g>
- <220721.86mtd2tqct.gmgdl@evledraar.gmail.com>
- <20220721162620.f5ffcedkbvvdhhu7@meerkat.local>
- <xmqqk086id1k.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqk086id1k.fsf@gitster.g>
-Message-ID: <220721.865yjqtksg.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229449AbiGUSBU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 14:01:20 -0400
+Received: from smtp42.i.mail.ru (smtp42.i.mail.ru [94.100.177.102])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DACE8AB34
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:01:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=3N4huf1bQeTcGuDU60oB8WFzLtKWAy8Up+F7L6wLxKw=;
+        t=1658426479;x=1658516479; 
+        b=ySRGPOMtOVR9QPcfVYlziqaf8zwlfhX75JuVeb4NCXeKWWbBmyhb3ve4SiW+euZihvgs/DbUua4CoNmkEeGy039ttkMg9ueIe9efYnTDsRrf6LKDzRTY6NJU7WJOwQPwh6cGYt+OmlaDjNzEBSBTd1LVgMhXEF6aerlz38/G+5E=;
+Received: by smtp42.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1oEaU7-0002U0-L1; Thu, 21 Jul 2022 21:01:16 +0300
+Date:   Thu, 21 Jul 2022 21:01:14 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     Yuri <yuri@rawbw.com>
+Cc:     Konstantin Khomoutov <kostix@bswap.ru>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: What is the URL of git's bug tracker?
+Message-ID: <20220721180114.xruauebr3sbhd5pm@carbon>
+References: <a5f48218-94ad-195e-97bc-b29c4a588903@tsoft.com>
+ <20220721101948.2i3nyroxrexg4voi@carbon>
+ <98dc2e8e-58b6-80ad-65da-2bd1cc5dffc2@tsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <98dc2e8e-58b6-80ad-65da-2bd1cc5dffc2@tsoft.com>
+Authentication-Results: smtp42.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
+X-Mailru-Src: smtp
+X-4EC0790: 10
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD97CF746166DCF1A14175DB02E8104EEF6DD7BCBC51A1D3769182A05F538085040FB3B6A0CC338FDC9E847018880549B1E86C47754ED4DE6BBFA7B540623652973
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77E216A0E97507353EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063745476ED688D943148638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8E7C2744839A4BC01153B96E2A0752186117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCC493A577044FAF45A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F44604297287769387670735201E561CDFBCA1751FC26CFBAC0749D213D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE902A1BE408319B298FBB52F5C7ECD1BBD8FC6C240DEA7642DBF02ECDB25306B2B78CF848AE20165D0A6AB1C7CE11FEE3AD74539164518AE5302FCEF25BFAB345C4224003CC836476EA7A3FFF5B025636E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F79006371F24DFF1B2961425731C566533BA786AA5CC5B56E945C8DA
+X-C1DE0DAB: 9604B64F49C60606AD91A466A1DEF99B296C473AB1E142185AC9E3593CE4B31AB1881A6453793CE9274300E5CE05BD4401A9E91200F654B08B38D1BE91256DA7FA8BF14A15ACDE885CDBB0B204FCC5BB65062D4210B136E09C2B6934AE262D3EE7EAB7254005DCED8DA55E71E02F9FC08E8E86DC7131B365E7726E8460B7C23C
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34AC632F0BE69382F3B5A3EBC6286684048F1930118152D2936F9C0E1F99475D85B664D2A94EB83D7D1D7E09C32AA3244C1415CC607CCCBDE2F9DC95A983EB347E33C9DC155518937FFACE5A9C96DEB163
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj3bHwMIIbugyLewBpvSOq8g==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD1387FFEEF6EEFDB8A18D987450BFCBBFF61D13F9F2D60A37E3C13BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jul 21, 2022 at 09:49:22AM -0700, Yuri wrote:
 
-On Thu, Jul 21 2022, Junio C Hamano wrote:
+[...]
 
-> Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
->
->> On Thu, Jul 21, 2022 at 04:53:18PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason wrote:
->>> I tried now with "git rebase --rebase-merges -i", and it supports it
->>> properly, i.e. I could re-arrange it so that it's:
->>>=20
->>>               A---C---B---M topic
->>>              / \         /
->>>         X---Y   ---------
->>>              \
->>>               master
->>
->> This is clever, but it has a hard restriction that nothing happens to A:
->>
->> - you can't move it so it's B---A---C---M
->> - you can't squash A+B
->>
->> Unless all the tools are taught to properly modify the merge commit.
->>
->> Or am I not reading this right?
->
-> I think the drawing is about a two-commit topic that has B and C
->
-> Or the drawing is wrong and M's other parent should have been Y.
-> IOW, "git merge-base M^1 M^2" is the bottom of the topic (and our
-> ranges always exclude the bottom end, X..Y does not include X but
-> does include Y).  "git rev-list M^1...M^2" are the commits on the
-> topic.
->
-> Then you can shuffle A--B--C in whatever way you like with "rebase
-> -i" or "filter-branch", using "git merge-base M^1 M^2" as the base.
+> On 04-09-2021 I reported to this ML the bug that git-2.31.0 printed stray
+> messages during 'git stash push' command.
 
-Yes, those last two should be:
+Looks like it's [1].
 
-              A---B---C---M topic
-             /           /
-        X---Y------------
-             \
-              master
+[...]
+> Now in git-2.37.1 this bug is still there,
+> Is it forgotten about? Is the fix planned? Is it fixed but not yet released?
+> 
+> It's impossible to say without a bug tracker.
 
-And:
+Well, I'm going to share your pain on this but honestly, from personal
+experience with F/OSS, I can say that a conventional bug tracker is not going
+to help much in cases like yours: if this problem has been filed as an issue
+the only things it would gain is some ID attached and a web page available.
+I mean, it would not somehow move it closer to getting fixed - simply due to
+the apparent lack of interest among those familiar with the code.
+Hence at best it would just sit there, and at worst - closed by some bot due
+to lack of activity.
 
-              A---C---B---M topic
-             /          /
-        X---Y-----------
-             \
-              master
+By the way, if you're interested you could search the ML archives for past
+discussions of this topic. For an example, see [2].
 
-I.e. you could re-arrange it so that it's:
 
-              C---B---A---M topic
-             /          /
-        X---Y-----------
-             \
-              master
+ 1. https://public-inbox.org/git/e493ca9b-c686-68ea-cd8d-c7b13766d65e@rawbw.com/
+ 2. https://lore.kernel.org/git/211023.861r4ck8jw.gmgdl@evledraar.gmail.com/
 
-Or whatever, sorry about that mix-up.
