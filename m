@@ -2,77 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76734C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 15:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29D9FC43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 15:19:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230399AbiGUPFr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 11:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52912 "EHLO
+        id S229701AbiGUPTm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 11:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbiGUPFp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 11:05:45 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EED54E096
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 08:05:44 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 504D71A9100;
-        Thu, 21 Jul 2022 11:05:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=w//NnfQ0JR66a55uWoY/mUdVulmJgDpEnu8cT+
-        0wIeY=; b=qE3R6guiDqcvRsE/5aWH42XftN+6FhzbZR1EliA4aRelTGcjOBMbXE
-        wABSGfOZ93PZigWJndHOCxfql77USZ4XiauPyUgj6OnrgyyjF1Zwia8SNQ9q+zIE
-        /7L1CB5+90d9xRq55ApABoEFPyeosyHEguZexSwtpjl/Vq+YT6QpA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A0001A90FF;
-        Thu, 21 Jul 2022 11:05:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A48F31A90FE;
-        Thu, 21 Jul 2022 11:05:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229616AbiGUPTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 11:19:41 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B77B33FA23
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 08:19:40 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id y9so1483920qtv.5
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 08:19:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=IsmYRizNfHodRnXJ9iJHQ/QoaXs+FD+1s46+dZpU9x8=;
+        b=DjppkqUr90al/vnMreiwPSV+jrlI+5onZCTrnoZaqeIPLVTLoTM26SB0YDONB4Qg4k
+         TmlQgdyNxhtRsDx7IhHoHlimiuOyrsQR1nJHGRaYWbQCMAcXGZkmElbntfu0nzJmFbeQ
+         GUddEs6+8nqqmnHXyRF9omRrmLa5sIHKdOKMU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=IsmYRizNfHodRnXJ9iJHQ/QoaXs+FD+1s46+dZpU9x8=;
+        b=odrDRY4kojKQCsw3B+1Q3CNxiOfM9BhejY+9KMiBxHagPXB7VfRx2mGkOX9opyYTKM
+         vSeK7M6QF+yGke5xTub1DI9b3BZNto6WmEWkGLInhAt+v9Ud+CElGl2b5swS1g9j4Nkg
+         s0ZxpN7K1k+tOOGprWGEJmY/JlufZezkgnlYZ8st3LKG1JaFfPtx9uRxYdtCZC/8qyOU
+         EWnlbJ8ixLv2WC3++UY0+8/eSGXyKqcatJsNCYE0LuEI63W1Y34LGhapJviklkK+T7Fc
+         S2oz+P0OKQsjLa/uD4atukcKGRpwnAc17O6TdyUHa6Io5K1gn/JsfJ1oU3wh6DsVsrck
+         Ug4Q==
+X-Gm-Message-State: AJIora9PAMmJvMVY8U/rvIZqiaklFTAN1i6RWXE2MHdXDJCOfCQFzlSc
+        s15hnC8B9Q+UF6kGqTCL//AKmVuPJlcQ8Q==
+X-Google-Smtp-Source: AGRyM1sC3ITQtB/CCa2O8FGnrGdvEEZqJDDy9n0QZ4Ft+aHubVD66mWv85Uo+dYhLBBj1KfEqTSbjw==
+X-Received: by 2002:ac8:5c86:0:b0:31f:1702:2d59 with SMTP id r6-20020ac85c86000000b0031f17022d59mr1944570qta.531.1658416779646;
+        Thu, 21 Jul 2022 08:19:39 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id o64-20020a37be43000000b006b59cf38b12sm1457834qkf.126.2022.07.21.08.19.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 08:19:39 -0700 (PDT)
+Date:   Thu, 21 Jul 2022 11:19:37 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To:     git@vger.kernel.org
-Subject: Re: On-branch topic description support?
-References: <xmqqilnr1hff.fsf@gitster.g>
-Date:   Thu, 21 Jul 2022 08:05:39 -0700
-In-Reply-To: <xmqqilnr1hff.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        20 Jul 2022 16:40:52 -0700")
-Message-ID: <xmqq35eumrp8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Cc:     newren@gmail.com
+Subject: [filter-repo] How to reorder commits
+Message-ID: <20220721151937.adgufwkj3uxkk3yb@meerkat.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 95D95808-0906-11ED-AEBA-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Elijah:
 
->  * "git merge" would learn an option to recognize that the branch
->    being merged has such an empty commit at the tip, and instead
->    merge the parent of the tip of the branch into the integration
->    branch, while using the log message of the discarded tip commit
->    in the log message of the merge itself.
+It seems filter-repo can be used to easily reorder commits, but I'm not able
+to quite figure out how to do it with callbacks. My goal is:
 
-An issue that needs to be worked out at the Porcelain level is that
-this layout will make "git branch --[no-]merged master", which is an
-effective way to list what's in and what's left out of the 'master'
-integration branch, more or less useless.  A topic branch with the
-cover letter commit at the tip may want to be merged to 'next' and
-then after cooking for a while merged down to 'master', and each
-time it gets merged, the merge has to leave the cover letter commit
-alone.  In spirit, such a merge commit merges the topic "fully", but
-at the topological level, the topic is not (and will never be)
-merged fully, and "git branch --merged next" will not show.
+- keep the cover letter at the start of the series in order to cleanly
+  delineate where their work starts (and thus avoid potential problems with
+  rebases and finding fork-points with base branches, which tends to give
+  newbies trouble)
+- when the author is ready to submit their work, move the cover letter to the
+  tip of the branch and tag it as "foo-bar-v1"
+- when the author is ready to work on their changes, they run --reroll and we
+  move the cover letter back to the start of the series, adding any necessary
+  template "changes in vX" entries to it
 
-I guess once the topic hits the oldest integration track that it
-meant to go, we could "pop" the cover letter commit out of the
-topic, and at that point it would appear to have been merged to
-'master' as well as to 'next'.  But it would be nice if we did not
-have to discard the cover letter commit only to please "git branch".
-IOW, it would be helpful to teach "git branch --[no-]merged" to
-compute the "right thing" in such a layout.
+(or maybe it will go completely differently -- it's all very fluid right now)
+
+Basically, is git-filter-repo the right tool to reorder commits, or is it best
+to go directly with fast-export/fast-import?
+
+Thanks in advance,
+Konstantin
