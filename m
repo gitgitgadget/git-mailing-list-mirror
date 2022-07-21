@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21571C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 06:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9A6FC433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 06:51:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231977AbiGUGv4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 02:51:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38940 "EHLO
+        id S232035AbiGUGv6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 02:51:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230058AbiGUGvx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 02:51:53 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D28342ADA
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 23:51:52 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id v5so502580wmj.0
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 23:51:52 -0700 (PDT)
+        with ESMTP id S231996AbiGUGv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 02:51:56 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEDA143E76
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 23:51:53 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id a5so832265wrx.12
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 23:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YlD+1cF2W6YAC1TF8qxd2/lm+nSauRSxGyMf5TpkcvI=;
-        b=QFKHLKvWiRcVTJ82CyPyOaJ65Y8hYQeVkWdznrrHK/EiP1P3DhUbRhnWrqfvOlpsdC
-         E7TcZjJNO8Czlj7p+nUYO8wymqVzy7OdiE+S0woEHSaRhYyevqmZldJkQqBBT5px8j+i
-         I/XBO+T/kK2R6lkIt2Gq7td+EvjpG4hxlwulDLbm2n0vO/TF5UcL69+sP6wUgn/xdnLB
-         pAhW/ZCRHIolMMO43of8Qrw8oIkPmt7fNI6vhZ+UNw0ECjS1G9cfBGmZEaZEugbZosva
-         o54sIPHOj06FFQ4Dq3bTVVc7gyvqBO7iNgvB7t0Wci9rWJgh0BJQ+6EQHGjFrN6qEbVW
-         XTZg==
+        bh=CHPlOvB9BolXygdxbu2hs/4D26c34RrvRAp87yASSEI=;
+        b=CynMtHrODB5ZySz2rMNNJQB7MyqGmrNqz4zUPspD1aWUW/ZpkPv5Z368ljSXsxuehR
+         SXMPHAKJQ1kjbarHR6DwhvevXhXfKq7FQ6lhjTdVkYgIbD8R6CWXVRS/aHiUOyPKXowN
+         fttJfFbiDH2du64Jl5tEPN/55pjIY0A8xeRyTEx5wrhAwDbWKtuox0ZLRtFZ4/V1xyo2
+         /83bTAOhtzi61MtBSNBz098mbWUNpBS7E8eyHCkDU+B3pO1pcEWAPn3KqqNktqTBFaXN
+         UHZm9YvR9ippxsjgXCZal0IiMNTqTxZZqLfLnL8ANOWzWZYN5UHfym5XJqavyScVGd/3
+         guSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YlD+1cF2W6YAC1TF8qxd2/lm+nSauRSxGyMf5TpkcvI=;
-        b=EiQaafxAperhdR2xFbx3lbGVb+IQ8VWivj6IyUnPHM/S4HFpGb6rlBeej54s6sm9Kh
-         wf8dOZyLncEsxsbpuPX/GvA0l0G6RtEOb5mdmAMSyCSioIMuX7wapWCpzofUo3fjth5W
-         epyE8ka11RoMg/UljXKD9YLMJRjTDstK2NsMRtAY/LDzlAy2uZQZ6ViYbSiqkCSVcxFU
-         l6L+ZMiB//HaUASXUKDDlOk13KUAIgK+aKmHLd3w/PLCBZlX/pfCC6GMC4aToy8eiR0T
-         XezVJAW0a76HTIUHho6dB7KtgYj5UVxWYNG+aEF7FvdLYAOlh9QQ5oBlyqK+jaGE4y1I
-         Tucg==
-X-Gm-Message-State: AJIora/8qApZBr+GuT9VxoBbs+gnJN9hgJinvcDC/zMe0w2QZNGQ0oVH
-        86PgWVMNj58bcHISqQgNzUNJYE4BvTd4aw==
-X-Google-Smtp-Source: AGRyM1sCFBIeUyTbNj6m4LXZB9zr2iEz4uxDXpw/5kkfhA0OUEKQGVNvmj4JwTeHv2vIV2zl+eXKXw==
-X-Received: by 2002:a05:600c:4eca:b0:3a1:9a2a:e373 with SMTP id g10-20020a05600c4eca00b003a19a2ae373mr7093980wmq.153.1658386310453;
-        Wed, 20 Jul 2022 23:51:50 -0700 (PDT)
+        bh=CHPlOvB9BolXygdxbu2hs/4D26c34RrvRAp87yASSEI=;
+        b=X8Kq/w5hkrrqxaD67peeBy3GNMkCqw+2O4mx3x4WQDgz1WZTKKGG1aqyTkwPDuu+xo
+         qa/5FF/U25RRfUxwTxoXLB9qZ5ibvvvFMtEHGaMzsoA97ZVD+N8+A+viT1vsS/T5qwGu
+         ZpK2RrcNxNHWhBtiMFud1DNem06y8jSc/pqlFxtuhFcwhscufzCsvWLDW9WNwmFn/XVo
+         MrlqwtJxFsQn+k93bs6CcL+WgCdoBt+JOjCdznHLmVerh6dm+hOh1K+aF65W8sLy7KoN
+         NrDmY4lAyUnPu94ECVMiVvcWNg3AQGBSOkLa0rPJ2cgRmVTkLxZlKi1jO7h6hGXF2THb
+         EZjg==
+X-Gm-Message-State: AJIora9zw1WB1EesKIZ2qQARywd5KEpGN0Vc42aD+FWMBxSnE+90TLts
+        ttkQ6qhc4G4XvJMfqDazADoV2To13cufPg==
+X-Google-Smtp-Source: AGRyM1uxoCFF2RWwYKRZU1PxeGLVQjeyqEOKg+rqlxt9yEAyIH8sUyrncPAgYJJmaWDNKmzH0nj71A==
+X-Received: by 2002:adf:e310:0:b0:21e:3e46:81f8 with SMTP id b16-20020adfe310000000b0021e3e4681f8mr8123784wrj.188.1658386311859;
+        Wed, 20 Jul 2022 23:51:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n124-20020a1c2782000000b003a2c67aa6c0sm1006746wmn.23.2022.07.20.23.51.49
+        by smtp.gmail.com with ESMTPSA id n124-20020a1c2782000000b003a2c67aa6c0sm1006746wmn.23.2022.07.20.23.51.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 23:51:49 -0700 (PDT)
+        Wed, 20 Jul 2022 23:51:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/6] t/lib-patch-mode.sh: fix ignored "git" exit codes
-Date:   Thu, 21 Jul 2022 08:51:39 +0200
-Message-Id: <patch-2.6-85c6ab40e91-20220721T064349Z-avarab@gmail.com>
+Subject: [PATCH 3/6] auto-crlf tests: check "git checkout" exit code
+Date:   Thu, 21 Jul 2022 08:51:40 +0200
+Message-Id: <patch-3.6-cfc1abbf7e3-20220721T064349Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1095.g64a1e8362fd
 In-Reply-To: <cover-0.6-00000000000-20220721T064349Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20220721T064349Z-avarab@gmail.com>
@@ -66,52 +66,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix code added in b319ef70a94 (Add a small patch-mode testing library,
-2009-08-13) to use &&-chaining and test_cmp instead of interpolating
-"git" commands in a "test" statement.
+Don't hide the exit code from the "git checkout" we run to checkout
+our attributes file.
 
 This fixes cases where we'd have e.g. missed memory leaks under
-SANITIZE=leak, this code doesn't leak now as far as I can tell, but I
-discovered it while looking at leaks in related code.
-
-The "cat _head >expect" here is redundant, we could simply give
-"_head" to "test_cmp", but let's be consistent in using the "expect"
-and "actual" names for clarity.
+SANITIZE=leak, this code doesn't leak (the relevant "git checkout"
+leak has been fixed), but in a past version of git we'd continue past
+this failure under SANITIZE=leak when these invocations had errored
+out, even under "--immediate".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/lib-patch-mode.sh | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ t/t0027-auto-crlf.sh | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/t/lib-patch-mode.sh b/t/lib-patch-mode.sh
-index cfd76bf987b..887554933c2 100644
---- a/t/lib-patch-mode.sh
-+++ b/t/lib-patch-mode.sh
-@@ -29,8 +29,13 @@ set_and_save_state () {
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+index 7f80f463930..03b955b774f 100755
+--- a/t/t0027-auto-crlf.sh
++++ b/t/t0027-auto-crlf.sh
+@@ -293,11 +293,17 @@ checkout_files () {
+ 	pfx=eol_${ceol}_crlf_${crlf}_attr_${attr}_ &&
+ 	for f in LF CRLF LF_mix_CR CRLF_mix_LF LF_nul
+ 	do
+-		rm crlf_false_attr__$f.txt &&
+-		if test -z "$ceol"; then
+-			git checkout -- crlf_false_attr__$f.txt
++		if test -z "$ceol"
++		then
++			test_expect_success "setup $f checkout" '
++				rm crlf_false_attr__$f.txt &&
++				git checkout -- crlf_false_attr__$f.txt
++			'
+ 		else
+-			git -c core.eol=$ceol checkout -- crlf_false_attr__$f.txt
++			test_expect_success "setup $f checkout with core.eol=$ceol" '
++				rm crlf_false_attr__$f.txt &&
++				git -c core.eol=$ceol checkout -- crlf_false_attr__$f.txt
++			'
+ 		fi
+ 	done
  
- # verify_state <path> <expected-worktree-content> <expected-index-content>
- verify_state () {
--	test "$(cat "$1")" = "$2" &&
--	test "$(git show :"$1")" = "$3"
-+	echo "$2" >expect &&
-+	cat "$1" >actual &&
-+	test_cmp expect actual &&
-+
-+	echo "$3" >expect
-+	git show :"$1" >actual &&
-+	test_cmp expect actual
- }
- 
- # verify_saved_state <path>
-@@ -46,5 +51,7 @@ save_head () {
- }
- 
- verify_saved_head () {
--	test "$(cat _head)" = "$(git rev-parse HEAD)"
-+	cat _head >expect &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp expect actual
- }
 -- 
 2.37.1.1095.g64a1e8362fd
 
