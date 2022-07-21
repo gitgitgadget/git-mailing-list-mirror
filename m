@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE5B4C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 19:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6299C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 19:14:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233585AbiGUTOx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 15:14:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
+        id S233603AbiGUTO6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 15:14:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233588AbiGUTOT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 15:14:19 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 193998E1F4
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:14:13 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id k11so3161807wrx.5
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:14:12 -0700 (PDT)
+        with ESMTP id S233610AbiGUTOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 15:14:21 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B188E4C8
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:14:15 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 8-20020a05600c024800b003a2fe343db1so1332125wmj.1
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 12:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3RNlS1TR4hBewdyukg+RzozAukrveUc4ncZ7hug1a3Q=;
-        b=LhjmClWdd1bfHaHtUca8XaS9Ct0z39JeZgPVhfX7Vjd2rRDDFkslLXQIRjqQjI4bMY
-         Ihp3uDgTGgRyPgdrl/WKtJ3DeK91Zz+TD3s/hOUf2fMkXj57A5Wi3j0McvOOYUKiCZoc
-         w/zd14F09dD9b8Jl6zBm++mVFSvCLINVlLArXF1MmstDF9sT+hWwaSXj+/ohd0oLFKHi
-         f4j+sXH0bp+6ZqkybJPvz8R9GGEyCXYKcN4RzYrb9J3MvfMzEEXwQvwuHsdjXaMNpRsu
-         lXnzphxHwGnYRjf7Jx2kiFZ4wkQ/v8klFSjt3uwblh+I9tBvTzoRijpuzkYwBa9zA555
-         NkIQ==
+        bh=myLC+ZqfQqTXEIgftN8DvdkREXdtkzgV+aYv8VPorLA=;
+        b=PRv0oueqLVcPERAgcgRKNSXHmuWkIFDW7nM+yMa1h+FOvvlGfJYIZtCQeuueAkcPff
+         sA4w3vuOCUsM26YbDuqQb/9caakeggf/f8A8Ix7pHJqwp68glw6khO1BnirQgKIRt4a5
+         mG2WnZ7awxILKcd2YLfaNcJZmqZYRH1VT6UdZze6Qt3iuFjl4Y0FMinf7iodDgaN4v+t
+         HUarTdUqLWE0lx6NXztHbqRH4/Z9aZ0E0njffBv1iVkkYXgaX+0Zfh9CtcARk6CtMYms
+         DW5oFc+fEqIza+4bzFQV02Ogi11wX4qUDp9NSc5bMbiVv1CyzcBtefMuKW203RRsAo6J
+         8VHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3RNlS1TR4hBewdyukg+RzozAukrveUc4ncZ7hug1a3Q=;
-        b=xtZTJSaqsLeFGcmqWJIKf28HPlUscujEAgA03DEGzG0/AmqjNWWFw8U/DNsujL+Lhw
-         vf53ZqZs4BttHMyi+CR9cbd3dNKvSH0f8uQGjw4lAIlHQJLNbuZp8MgFI9hW/trvzeHJ
-         16A7t7s16zBfhlsynvtnPusU2hDJLM/2eOWgCIUiry4KuE6W6SORkoYOoVu+SUP8ln4m
-         cyYai9uaDdgh+hcRZ/13EO3kc29hTJAvrdANCiqHq9i5LnbHRk0Y4Lqy8DJGpIuMIGVz
-         27IzyBTkrKfRB7V+GmG3uz89O5naxxCPtP5Kaf3SSsrTegr5jdrx3nbIXUFYYMMsLlNm
-         CfIQ==
-X-Gm-Message-State: AJIora+2YPyzJ+XKk+z8P7D+U+KYCrCdlFZzfY4NZB/MeO7lCjoaBdoq
-        JVLWQvM4piRHVgwiky4k/IpCzFcFRb9p/Q==
-X-Google-Smtp-Source: AGRyM1tAAE/cE0gZTL5pLumK4CKmgqbfOVZqbAeNmCBDpQbagdH6RWdwhRX1ve7+dQKmz6dl58+PBw==
-X-Received: by 2002:adf:f548:0:b0:21e:4348:3991 with SMTP id j8-20020adff548000000b0021e43483991mr10290306wrp.130.1658430851184;
-        Thu, 21 Jul 2022 12:14:11 -0700 (PDT)
+        bh=myLC+ZqfQqTXEIgftN8DvdkREXdtkzgV+aYv8VPorLA=;
+        b=k/62WjHKBlFlbdOfM4sYVLvz/b31/ATHalDjE2XPe4WYAgpW3JZDkseXlTrIuux5o1
+         KrFBgCTgDvxn7o+dEY/vwOZCYW4hwywNt0jV72dyc1XD+piWuzRCG2MVdhBCnNmWMFK8
+         XWyhH4SpudDXx8JUAyRJp0G3ul28q9Z1aeA/NYFLl7xVt1TfCL0vcSuTTzKMghXkyE2/
+         Gr7xav19DpLc0eaFA9/fiojduX/LbDiOyapIBgN/hrnVrgJ+EoHUYkC3OAxLkT5dTZKC
+         H8ZWP9TNRV6CC+2lNz0DCz3i683S4UUBObo/FnjIcNIPfPeaAVM/4r0k3rIYQFNlx390
+         93IA==
+X-Gm-Message-State: AJIora9vAEuFt5N3/NU/FKXQKCRIre+Jl978YWMYcZH4uCERa/lRYgAI
+        UVV/nJvzZbI19zUppbVxwTi49+XyHMYpsA==
+X-Google-Smtp-Source: AGRyM1uruA23abTru56albnyMmkHzr0C5jjZAIKxdQ4K1Dq9ZQ8pYqS0ryynw1sStJgbxpYfjzN/8Q==
+X-Received: by 2002:a05:600c:1c83:b0:3a3:1f70:25a5 with SMTP id k3-20020a05600c1c8300b003a31f7025a5mr9541783wms.54.1658430853384;
+        Thu, 21 Jul 2022 12:14:13 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h13-20020a05600016cd00b0021e4e9f6450sm2630637wrf.84.2022.07.21.12.14.09
+        by smtp.gmail.com with ESMTPSA id h13-20020a05600016cd00b0021e4e9f6450sm2630637wrf.84.2022.07.21.12.14.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 12:14:10 -0700 (PDT)
+        Thu, 21 Jul 2022 12:14:11 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 18/26] submodule--helper: fix a leak in module_add()
-Date:   Thu, 21 Jul 2022 21:13:14 +0200
-Message-Id: <patch-v3-18.26-01566d63926-20220721T191249Z-avarab@gmail.com>
+Subject: [PATCH v3 19/26] submodule--helper: fix a memory leak in print_status()
+Date:   Thu, 21 Jul 2022 21:13:15 +0200
+Message-Id: <patch-v3-19.26-7ef89abed86-20220721T191249Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1095.g0bd6f54ba8a
 In-Reply-To: <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com>
 References: <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com> <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com>
@@ -69,37 +69,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a leak in module_path(), since a6226fd772b (submodule--helper:
-convert the bulk of cmd_add() to C, 2021-08-10), we've been freeing
-add_data.sm_path, but in this case we clobbered it, and didn't free
-the value we clobbered.
+Fix a leak in print_status(), the compute_rev_name() function
+implemented in this file will return a strbuf_detach()'d value, or
+NULL.
 
-This makes test 28 of "t/t7400-submodule-basic.sh" ("submodule add in
-subdirectory") pass when we're compiled with SANITIZE=leak..
+This leak has existed since this code was added in
+a9f8a37584a (submodule: port submodule subcommand 'status' from shell
+to C, 2017-10-06), but in 0b5e2ea7cf3 (submodule--helper: don't print
+null in 'submodule status', 2018-04-18) we added a "const"
+intermediate variable for the return value, that "const" should be
+removed.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ builtin/submodule--helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 04b5141c0f9..0fb720d3a16 100644
+index 0fb720d3a16..4decbdcdc5c 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -3395,8 +3395,11 @@ static int module_add(int argc, const char **argv, const char *prefix)
- 	else
- 		add_data.sm_path = xstrdup(argv[1]);
+@@ -637,10 +637,11 @@ static void print_status(unsigned int flags, char state, const char *path,
+ 	printf("%c%s %s", state, oid_to_hex(oid), displaypath);
  
--	if (prefix && *prefix && !is_absolute_path(add_data.sm_path))
--		add_data.sm_path = xstrfmt("%s%s", prefix, add_data.sm_path);
-+	if (prefix && *prefix && !is_absolute_path(add_data.sm_path)) {
-+		char *sm_path = add_data.sm_path;
-+		add_data.sm_path = xstrfmt("%s%s", prefix, sm_path);
-+		free(sm_path);
-+	}
+ 	if (state == ' ' || state == '+') {
+-		const char *name = compute_rev_name(path, oid_to_hex(oid));
++		char *name = compute_rev_name(path, oid_to_hex(oid));
  
- 	if (starts_with_dot_dot_slash(add_data.repo) ||
- 	    starts_with_dot_slash(add_data.repo)) {
+ 		if (name)
+ 			printf(" (%s)", name);
++		free(name);
+ 	}
+ 
+ 	printf("\n");
 -- 
 2.37.1.1095.g0bd6f54ba8a
 
