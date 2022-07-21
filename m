@@ -2,85 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82000C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 15:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20D8BCCA48B
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 15:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229906AbiGUP3b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 11:29:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42054 "EHLO
+        id S233079AbiGUPjp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 11:39:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbiGUP3a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 11:29:30 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A58667A51E
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 08:29:29 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 26LFTPbu036823
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 21 Jul 2022 11:29:26 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <xmqqilnr1hff.fsf@gitster.g> <xmqq35eumrp8.fsf@gitster.g>
-In-Reply-To: <xmqq35eumrp8.fsf@gitster.g>
-Subject: RE: On-branch topic description support?
-Date:   Thu, 21 Jul 2022 11:29:20 -0400
-Organization: Nexbridge Inc.
-Message-ID: <010101d89d16$a97184a0$fc548de0$@nexbridge.com>
+        with ESMTP id S233132AbiGUPjN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 11:39:13 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC2688F33
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 08:37:37 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 434BD137A3A;
+        Thu, 21 Jul 2022 11:37:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s0KOCrmkR5siOe18Cv9DJCE2deIbFI1A7naq5o
+        cKOLU=; b=mgeCm7kBGCR+a9iv0ChA4K4nu7SI8evJCx7PKa7CvuUu7NDXiXQzXH
+        OUoZJwPFjDDITSQRn8rohiImu8aEPJiAPWZUZ7YDGoxbcIv3qcT9pD3U0CW33h2r
+        fXRpKHx5EnZH/RjnmjxeAbDxYbLnt2/z6X7JFyg+mh2EuY/F9p28o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3ACF0137A39;
+        Thu, 21 Jul 2022 11:37:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3C44F137A38;
+        Thu, 21 Jul 2022 11:37:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Question: How to find the commits in the ancestry path of seen
+ down to _and_ including a given topic?
+References: <CABPp-BEK+SJh2uF=rrM-f1u9diMQJ7D3H0fJLdzWpyOww=ys+w@mail.gmail.com>
+Date:   Thu, 21 Jul 2022 08:37:32 -0700
+In-Reply-To: <CABPp-BEK+SJh2uF=rrM-f1u9diMQJ7D3H0fJLdzWpyOww=ys+w@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 21 Jul 2022 00:23:53 -0700")
+Message-ID: <xmqqy1wmlbnn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQEkKUYbAx2+J5zTwv5GK2so27+hNQITrdhNruE82GA=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 09D60AD6-090B-11ED-B59E-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 21, 2022 11:06 AM, Junio C Hamano wrote:
->Junio C Hamano <gitster@pobox.com> writes:
->
->>  * "git merge" would learn an option to recognize that the branch
->>    being merged has such an empty commit at the tip, and instead
->>    merge the parent of the tip of the branch into the integration
->>    branch, while using the log message of the discarded tip commit
->>    in the log message of the merge itself.
->
->An issue that needs to be worked out at the Porcelain level is that this
-layout will
->make "git branch --[no-]merged master", which is an effective way to list
-what's in
->and what's left out of the 'master'
->integration branch, more or less useless.  A topic branch with the cover
-letter
->commit at the tip may want to be merged to 'next' and then after cooking
-for a
->while merged down to 'master', and each time it gets merged, the merge has
-to
->leave the cover letter commit alone.  In spirit, such a merge commit merges
-the
->topic "fully", but at the topological level, the topic is not (and will
-never be)
->merged fully, and "git branch --merged next" will not show.
->
->I guess once the topic hits the oldest integration track that it meant to
-go, we
->could "pop" the cover letter commit out of the topic, and at that point it
-would
->appear to have been merged to 'master' as well as to 'next'.  But it would
-be nice if
->we did not have to discard the cover letter commit only to please "git
-branch".
->IOW, it would be helpful to teach "git branch --[no-]merged" to compute the
->"right thing" in such a layout.
+Elijah Newren <newren@gmail.com> writes:
 
-I might be missing something here, but could not a description follow
-similar semantics to how git describe works on tags? Anchor the description
-on the commit where the branch was spawned, then determine the appropriate
-description based on things like --first-parent. Again, I'm probably in the
-weeds.
---Randall
+> A simple question that I'm spinning out of [1]: How can I get `git
+> log` to show the commits in the ancestry path from seen, back to *and
+> including* a given topic (but not commits from unrelated topics)?
 
+Drawing of a sample history, please.
+
+I feel stupid asking this, but I do not think I even understand what
+the question is X-<.
+
+Commits that are ancestors of 'seen' and are descendants of the tip
+of the topic?
