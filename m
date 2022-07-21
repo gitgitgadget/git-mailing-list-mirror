@@ -2,97 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6CF2C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 18:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13085C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 18:48:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233029AbiGUSro (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 14:47:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35778 "EHLO
+        id S233105AbiGUSsm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 14:48:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbiGUSrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 14:47:43 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2CA21260
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:47:42 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 605AD138FBC;
-        Thu, 21 Jul 2022 14:47:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OLgJb3SI81cZfFgIO4k6+ispVInCHOD1/s7zfO
-        1FS5Q=; b=JrZLqG6PJksfzwU19HVXy8d14KeWATosZE1wbwpZmS4Xv76IECRm1i
-        e5eGxW3bbJiVdNKApidohE0MVAALuxgS835za6+neAger3uJBIABHvCvDmqPOKNQ
-        wMOGZFPrDFfiNkXsjMJf1zpj4lRwpiyNoTdkDs35tQBdoD4J3fYfI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54846138FBB;
-        Thu, 21 Jul 2022 14:47:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1A92138FBA;
-        Thu, 21 Jul 2022 14:47:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Amir Montazery <amir@ostif.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Coordinated Security Audit for git. Contacts needed
-References: <CADKuG0uzh3syzgfiPLepiTLXNzkoYhLFX1h-DE3C7c8j6HXALQ@mail.gmail.com>
-        <xmqq8romicil.fsf@gitster.g>
-        <CADKuG0vVGsC9tFr8bUrC48yhhkyg0Rrafyf39TYhPNXE1ak6mA@mail.gmail.com>
-Date:   Thu, 21 Jul 2022 11:47:39 -0700
-In-Reply-To: <CADKuG0vVGsC9tFr8bUrC48yhhkyg0Rrafyf39TYhPNXE1ak6mA@mail.gmail.com>
-        (Amir Montazery's message of "Thu, 21 Jul 2022 13:06:41 -0500")
-Message-ID: <xmqqmtd2gv5g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229547AbiGUSsj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 14:48:39 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57DA88AEFF
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:48:38 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-10d6e8990b9so3596279fac.7
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 11:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=R+odcbyUo/1jC1G0qAzol+6WiFd6JCbpjAUQoXc7LyQ=;
+        b=PmOBtwCsNThgmITC4/pngeQVo0MKOa2b0UZNh9BDMBMGU7uLrur4mv4n/iLeV9snpS
+         AbAR6Z0DpU0RS2WJCkCRESkZ9Tj3vWHDunzSByHCyHWICF5Km6+mHHXCz2HGPRpm44XJ
+         x1tmcp3zVLVCa01dkC1AR5Tj4l9A4tyip0ZwOKi6OZ2PNmyhB5G+zTDVXvi1X48ZgVxG
+         zM3btBF4B0IifAR2IZw7dEGO0dtVMFCefbq/u4VsWP8SZjGFondlMcV2nWvDttlABdiA
+         YjpAAXDmz1DpsVLKp/pwwegNu/TdX6QYWt1ATT5M/jLf+hS4YWuhdNM/t6oIKFe/QN87
+         CM1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=R+odcbyUo/1jC1G0qAzol+6WiFd6JCbpjAUQoXc7LyQ=;
+        b=SzVYgdOuoygoYLsxTFwbai9eLZpP7U9cP/kYm4nIo0oWdbdMI7xqSNr9PA/i+9mzZg
+         7Su3azSj/OAe0IFwk6N6SlJFDY1oA65J8YUJFRY5yUyssdCunQD4ALw6jNP+oLNuGxZN
+         lwKXPgDHAhl6YFvrfdm36f7GqAtrpGCTzKzAOm4QYIHEnmL5ErV90efRAlTpZF+Ljumj
+         3dye4/ADy9v+NkQyPBUX8kGRf3M/KyByaKfzgv0jH0oxh6mxey01LFTixbb+ir3tWqRw
+         6+EWaYEsly3nNGBzgp16hE0sFicOugowNZFrdh1JhgPl12Vc2vVSxU2l0DerIvJ6QVTM
+         de1w==
+X-Gm-Message-State: AJIora9qi+/xJ1yp3XigX3WFO2Dv0u8+MPkuCKbBI7RHTkEYgQOUSVA2
+        SWlGaiXU3uqiPcWE5RVTBM2KljXjHqX6
+X-Google-Smtp-Source: AGRyM1uLa6mQn+a1lHoIIGjCxUb9GRkh5ZoRKaoH477I3muSC/HZNhoEHuxwukLun557lmcNdEXr7g==
+X-Received: by 2002:a05:6870:899d:b0:10c:b531:17b1 with SMTP id f29-20020a056870899d00b0010cb53117b1mr5851777oaq.271.1658429317595;
+        Thu, 21 Jul 2022 11:48:37 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:8099:5229:7961:505e? ([2600:1700:e72:80a0:8099:5229:7961:505e])
+        by smtp.gmail.com with ESMTPSA id k23-20020a056870959700b000f5f4ad194bsm1321239oao.25.2022.07.21.11.48.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Jul 2022 11:48:37 -0700 (PDT)
+Message-ID: <571ad4e2-e6de-35a2-0d58-2329cf8684ab@github.com>
+Date:   Thu, 21 Jul 2022 14:48:35 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 993938D2-0925-11ED-B7F6-CB998F0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: Question: How to find the commits in the ancestry path of seen
+ down to _and_ including a given topic?
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CABPp-BEK+SJh2uF=rrM-f1u9diMQJ7D3H0fJLdzWpyOww=ys+w@mail.gmail.com>
+ <xmqqy1wmlbnn.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqy1wmlbnn.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amir Montazery <amir@ostif.org> writes:
+On 7/21/2022 11:37 AM, Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
+> 
+>> A simple question that I'm spinning out of [1]: How can I get `git
+>> log` to show the commits in the ancestry path from seen, back to *and
+>> including* a given topic (but not commits from unrelated topics)?
+> 
+> Drawing of a sample history, please.
+> 
+> I feel stupid asking this, but I do not think I even understand what
+> the question is X-<.
+> 
+> Commits that are ancestors of 'seen' and are descendants of the tip
+> of the topic?
 
->> There is no "community meetings" other than the informal "stand-up"
->> irc discussion that is biweekly.  The log of the latest is at
->> https://colabti.org/irclogger/irclogger_log/git-devel?date=2022-07-18
->> but generally speaking we are not into "synchronous" communication.
+Have you tried 
 
-The next one is on Aug 1st, it seems, according to https://tinyurl.com/gitCal
+  git log --graph --oneline --boundary --ancestry-path <A>...<B>
 
-    The Git Standup is currently happening every two weeks at 18:00 UTC
-    in the #git-devel channel on irc.libera.chat and its log can be
-    found at https://j.mp/gitdevlog
+The triple dots show the symmetric diff, and the --boundary shows
+the possible merge-bases. The --ancestry-path option seems to trim
+the output significantly in the example I tried.
 
-Coming to it may be a good way to "get to know" some folks who work
-on the project.
-
-> ... If anyone is interested in providing some direction
-> or help with the source code review, supply chain security, or
-> customizing a new setup of CodeQL for git, please let me know.
-
-All new code (with a small exception) go through the patch review on
-this list, so reviewing patches posted here and archived at
-
-    https://lore.kernel.org/git/
-
-with special focus on the security aspect (which is the forte of
-you folks) may be great.  A patchwork instance that captures the
-traffic can be seen at
-
-    https://patchwork.kernel.org/project/git/list/
-
-I am not sure what the best place to start in auditing existing
-codebase, though.
-
-Even though linking with libraries that are unpatched for known
-vulnerabilities and/or are compromised would be a problem for
-end-users, because we as the project only make sourc releases and do
-not make binary distribution, supply-chain issues may not be as big
-an issue to the project.  Our friends at the "Git for Windows"
-project does one for their platform, and may use your help in the
-area, though.
-
-Thanks.
+Thanks,
+-Stolee
