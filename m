@@ -2,97 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D1DBC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 01:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15601C43334
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 01:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229515AbiGUBKK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jul 2022 21:10:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55468 "EHLO
+        id S229951AbiGUBhT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jul 2022 21:37:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbiGUBKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jul 2022 21:10:08 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DF5F103B
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 18:10:07 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id i4so104579qvv.7
-        for <git@vger.kernel.org>; Wed, 20 Jul 2022 18:10:07 -0700 (PDT)
+        with ESMTP id S229515AbiGUBhR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jul 2022 21:37:17 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A92459A1
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 18:37:16 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id l14so331120qtv.4
+        for <git@vger.kernel.org>; Wed, 20 Jul 2022 18:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=k48JGSqmj/eE6cuZ0L0H+oAlZp0hypOCvb25kZ5kBGA=;
-        b=gT8+CFbm9VVo8H4T+/nGlSskmmnvmAcxy6UXaV56Vn5BRJjbRyuXEM1ETMSfRhQuH+
-         pCg9Eje2rSzK9Ase1ckjiA0yG/N1P84juGxKeN3RuXlbPruzHCRaf9wqvY+dae3cFj+B
-         vVuq22ZgsXahF5OBxhkh1DC/xhwUo7xUQEK8h1RxJWZuJVPZeGj6z/ksK6hvnHapHr1+
-         AwfofldtF9UZX5UDI3WU6JNHf5Jon/T/SgnCdCMqVnNsarVt9HGYsKUHK/9sRvA3AFS/
-         6mTDDY5g3kle1u4bNMQPOpfL/8P51n4eUeT5Po/ACzMkn3IjZ4vBDxjOgiJZDFw49jm+
-         cxOw==
+         :cc;
+        bh=tiAVuG/QEWShrq5pHWRQaA5nX6nflt9r7LsT1WZRfNM=;
+        b=NxwSsBuwDVwU0gBzqi6RJUG/+ZxCXqhDTaCvUHL3ullWKUoDLpYDcrk+PwoNuYqhiu
+         8WLBzmU0DwRCPmqm7PREwBCet0u1Sx/TbR3Tf+s4Yk3mzy+O05vMW1l+t08XW8yfReRY
+         LLUSECbhI69KXzcUfvVLc7PryUOliB2Zkw7ysTE+1cWoTkksYz/a8GcrxG+3QPEU5ZXN
+         LcIR8AypC2x6dbe1/iLnzps0JPzsYRwAla5ibzXU6riHW4USyGWc6VP5mhl/VfAu82LI
+         gajt3BK+iJhCLMPSwmf16pRii2CLV0HDtmFcPC5jDn4XjYiT+Rl4uoquL9gkD6egUf/6
+         a/EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=k48JGSqmj/eE6cuZ0L0H+oAlZp0hypOCvb25kZ5kBGA=;
-        b=cm96qzVewTuH0PCZE7XW+Q/owKbr144Sri4LzMlCSZ+oit0YcGSqn/M7pbzseQ/Oto
-         RjRarfP5Jcsr6V8F3BOk5pvwa+YL6ZfNPfIU8DxSciCS6UkJTNqAfDwLDLDbqA6Ykai7
-         1hVldu9iuJfaveL15GvBxd5GEak3fybCPOLcF9NRqNF8NkK1jYQap1ToxNs9+OroXt1x
-         DkApltJZr4lES2aJM5wpz841F0qG87Acu7YbcLS12o0r3HcjhPGPjJEFu0iafG45tuBs
-         a3chnASuCBTT3vgI7HkZwcR8Ier3VSD3Amm8aJOXcwifFrDeiTGYvm7NQQ9CqanD3Ot8
-         pqBQ==
-X-Gm-Message-State: AJIora8CTMNirf31HKfkrwkg75xXiWtlM4fBu9NwozozDiZKuG1nrWyN
-        Hm+hQJp4lTsA20mqvj+/8+zXZvBfZm2W0Ws/oXI=
-X-Google-Smtp-Source: AGRyM1unDx8NwuQJ4iAtPQa9DdrLlI1VKljOPQMrcWCMszQYAqJlVHX0GTGR+s1oH6XgFeJqqAqLh9Z1sK2KdxGqSiA=
-X-Received: by 2002:a05:6214:519a:b0:473:6d83:17e9 with SMTP id
- kl26-20020a056214519a00b004736d8317e9mr31121786qvb.115.1658365806347; Wed, 20
- Jul 2022 18:10:06 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=tiAVuG/QEWShrq5pHWRQaA5nX6nflt9r7LsT1WZRfNM=;
+        b=P31Dq0IrneaCizOSkQClQ3Tr/GG6rB57D2gA/YPNlY8+aEaip50CEB/HlNkRazKXXB
+         BHmzw4flPsnr2+lEANsYFCv1JwsFoeXb58Ode5477hWEC7MOlmGgHVTZfNjZEkK6+1y9
+         79PPxAyk4C9D0yakO446XDH3UyqClQe/FUUBBEWjbZ/aw1sf3/63zte2dNx3TAv/btLY
+         pMi0k0tM8QNlU/f/7+Urai8vkmbF1g4WoMloVbZBytqHsspSzVIm5b3l8c7UkLLQVoa+
+         nWwrfsUQ085C7W2wJwjjPVMGmEPMpOuBcXXV/2S6mAOafHelyr924pO4qnG9gUIS1FOu
+         WeWw==
+X-Gm-Message-State: AJIora9YrrcGnw3FEszVjcafMfiW785DcL25Zmy3YiwBGIDxow3NMVxS
+        IxNNOCwW5sKXloY0ulKfPzoGrXBsxocznny55l/p8uDQkWY=
+X-Google-Smtp-Source: AGRyM1sOZUvz8L4LdFmi5szyrd9h80kVLmc/52sOifaylSjfv02afEmQgopMUA9IpLAOeQRFd/dcngpETTZUqIu0A0E=
+X-Received: by 2002:a05:622a:1391:b0:31e:f6b2:d3aa with SMTP id
+ o17-20020a05622a139100b0031ef6b2d3aamr11185623qtk.523.1658367435850; Wed, 20
+ Jul 2022 18:37:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1231.git.1652977582.gitgitgadget@gmail.com>
- <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com> <89e5e633241e45a0c4b18289ab2fafdaabc8191e.1655621424.git.gitgitgadget@gmail.com>
- <CAOLTT8THesUrMtov0L=pHKNfdABYvHeue6OzHre-sQD36=2e=g@mail.gmail.com> <xmqqo7xk7m73.fsf@gitster.g>
-In-Reply-To: <xmqqo7xk7m73.fsf@gitster.g>
+ <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com> <4a8b7c9e06df36444b94b929b2558f40e3f72e81.1655621424.git.gitgitgadget@gmail.com>
+ <xmqqsfmw66gq.fsf@gitster.g> <xmqq7d4865t6.fsf@gitster.g>
+In-Reply-To: <xmqq7d4865t6.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Jul 2022 18:09:55 -0700
-Message-ID: <CABPp-BGMzyJR3C2EREXV5y50N30c9EuVTt9mExcxnfQT2ot3Vg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] merge: fix save_state() to work when there are
- racy-dirty files
+Date:   Wed, 20 Jul 2022 18:37:05 -0700
+Message-ID: <CABPp-BEfpwmEcR3TR8xu_+1TQfOvOTQceNE7-H76rsno6TmFPg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] merge: make restore_state() restore staged state too
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu <adlternative@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        ZheNing Hu <adlternative@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 19, 2022 at 3:49 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Jul 19, 2022 at 4:28 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> ZheNing Hu <adlternative@gmail.com> writes:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> > Elijah Newren via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2022=
-=E5=B9=B46=E6=9C=8819=E6=97=A5=E5=91=A8=E6=97=A5 14:50=E5=86=99=E9=81=93=EF=
-=BC=9A
-> >>
+> > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
 > >> From: Elijah Newren <newren@gmail.com>
 > >>
-> >> When there are racy-dirty files, but no files are modified,
-> >> `git stash create` exits with unsuccessful status.  This causes merge
-> >> to fail.  Refresh the index first to avoid this problem.
->
-> Racily dirty?  Or just being stat-dirty is sufficient to cause the
-> "stash create" to fail?
->
-> > I just want to show what sence will meet this errors:
+> >> merge can be invoked with uncommitted changes, including staged changes.
+> >> merge is responsible for restoring this state if some of the merge
+> >> strategies make changes.  However, it was not restoring staged changes
+> >> due to the lack of the "--index" option to "git stash apply".  Add the
+> >> option to fix this shortcoming.
 > >
-> > 1. touch file
-> > 2. git add file
-> > 3. git stash push (user may do it before git merge)
-> > 4. touch file (update file but not update its content)
-> > 5. git merge (call git stash create and return 1)
->
-> I think, from the above reproduction recipe, that the breakage does
-> not depend on racily-clean index entries (i.e. file touched within
-> the same timestamp as the last write of the index without changing
-> their size).  So s/racy-dirty/stat-dirty/ (both on the title and the
-> body) would be a sufficient fix.
+> > Shouldn't this be testable?
 
-Yep, stat-dirty.  I'll fix up the title and body; thanks.
+Yes, I will add a test.
+
+> I actually take this part (which implied that the change is a good
+> idea) back. I think we have clearly documented for the past 17
+> years that you can have local changes but your index must match the
+> HEAD before you start your merge.
+
+Actually, we don't enforce that the index must match HEAD in all
+cases, as noted in commit 55f39cf755 ("merge: fix misleading pre-merge
+check documentation", 2018-06-30).  That commit also pointed out how
+the documentation was a bit unclear in this area.
+
+We also apparently fail to enforce the condition in at least two cases
+that weren't a valid exception, which I just found while working on a
+testcase for this patch.  (Thus, we have one more sordid tale to add
+to the saga in commit 9822175d2b ("Ensure index matches head before
+invoking merge machinery, round N", 2019-08-17))
+
+However, the failed enforcement and the "valid" special exceptions
+aren't too relevant here, so...
+
+> If "stash apply" vs "stash apply --index" makes any difference,
+> there is something wrong.  We should be aborting the "git merge"
+> even before we even start mucking with the working tree and the
+> index with strategies, no?  I think it is the bug, if this change
+> makes any difference, to be fixed---we shouldn't be proceeding to
+> even create a stash with index changes to begin with.
+
+I agree with you that generally if the index does not match HEAD, then
+(A) we should abort the merge, and (B) the working tree and index need
+to be left intact when the merge aborts.
+
+But I don't think your conclusion follows from those two items,
+because of the last sentence of this comment:
+
+   /*
+    * At this point, we need a real merge.  No matter what strategy
+    * we use, it would operate on the index, possibly affecting the
+    * working tree, and when resolved cleanly, have the desired
+    * tree in the index -- this means that the index must be in
+    * sync with the head commit.  The strategies are responsible
+    * to ensure this.
+    */
+
+Due to this requirement, if a user has staged changes before starting
+the merge, builtin/merge.c will:
+
+   * stash the changes
+   * try all the merge strategies in turn, each of which report they
+cannot function due to index not matching HEAD
+   * restore the changes via "git stash apply"
+
+This sequence has the net effect of not quite cleanly aborting the
+merge -- it also unstashes the user's changes.
+
+One way to fix this problem is the simple patch I proposed.  An
+alternative fix would be to rip out the extra code from all the merge
+strategies that enforces the index matches HEAD requirement, and then
+adding enforcement of that condition early in builtin/merge.c.  That
+alternative fix probably would have saved us from a lot of the
+headache detailed in commit 9822175d2b above, but it may also make
+recursive and ort a bit slower (which had relied on unpack-trees to do
+some of this checking, and thus they'd have some redundant checks).
