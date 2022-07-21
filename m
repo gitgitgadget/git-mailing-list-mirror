@@ -2,60 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30139C43334
-	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 13:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01ABDC433EF
+	for <git@archiver.kernel.org>; Thu, 21 Jul 2022 13:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbiGUN2F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jul 2022 09:28:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36818 "EHLO
+        id S229508AbiGUN2J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jul 2022 09:28:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiGUN17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jul 2022 09:27:59 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E30E753A7
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:27:58 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id pc13so1610455pjb.4
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:27:58 -0700 (PDT)
+        with ESMTP id S229456AbiGUN2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jul 2022 09:28:01 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7757874E3B
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:28:00 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id w7so1815013plp.5
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 06:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WaBlNt0gBf/M0my++7FF5VM9fGrehEMNlerhqeR4dNE=;
-        b=j/Moubk2GEGT6HvwsxulVINknt88V4g1D+BqZln33+wJ3/4BSNP9vTRaLIqVsugPsI
-         vY7eqPfXTUkWUtTNQlU4uRxUZ02IxV2ILmC47KpA55H9jr+6qlsGW8+X7MUfFSG9ZfjM
-         TNXXgQ0JdAOelExPGA+/RtGato6ZfePr/4qFiy/HkQKYQi2WC8Bo60neHQc30mvSdcwi
-         JVpK0xiqOLIlIZ23qKhuzGTWfc8XtddpdNkcjZsIJN54eaSpbc+mjzZlkCrGcZE4nzx0
-         BpnWzFBmpZafYl7lj2w7D2PtHefUvj+JrgUa3fSz0iPWBzAmDd6YqgDqrSQpGqz22Qnv
-         mGiA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LONWvmsaRSaPDjHSBi8NOTXxibMQ5Yw/e9PnEl/UgKU=;
+        b=i0F3ZVIBh4SMKq9Uy2uhT7/AJyf6mUq8gqRS+uuSvF/ZWb2oQ24cxaJXNGftbguaVM
+         +J9kZ43xiw6/OobA7hPLitZxL9nQoNZQnqGo1J7sfepngcCquwLP625/IChIeWOxEWfI
+         e9kIai3HaLSBe3XgfEV5IBcPwJauGVVUbvg92G84+OsKiXzJ+GKXdkddpQXiCWZL1Fs3
+         H3Gd7C6lYf9pDJumkpA1HkvO+t4QniR1Mer8Z/iGWF8CjJmgcWNa7VvjjcocU6sume93
+         eBlHjrRQ6W/A/pALdG2jQH8Wt8N3T83oI7x8iTNo9EJVEauRpWWhF767QKMIB+BEb748
+         fCcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WaBlNt0gBf/M0my++7FF5VM9fGrehEMNlerhqeR4dNE=;
-        b=Q+TpkS1lZHGvN/fs+9VK5isvHD5/WRlQ0aJCYk1laiFrKAavO3BDysnjy+OVP48+J9
-         7eHmb2SddAk6uA+hyUu9oC6jYASbdd6mv5BrpzQIMnAcUgzpIcXcE/E5BJ2/0hNsx1cM
-         5rwJm+2+dPTbJCIJ//U9lj394IFGIorGWIZq62ScZANUFoqbmwndz4rIKnS7S9IH35E1
-         pDVb2zYgod63ouVCP4o/M9BA3E4y+7Bu1i/PqkeEINF81QSAMAOKO+xw9WAs1STRH4I5
-         AnH6vxmAIHMa9oXacP/hnemv6Aqx8Z1H0/CwCf/7Gv7XuvsmCcDiAcdfBxVkAPi8rzSh
-         UJDw==
-X-Gm-Message-State: AJIora9LxLV0Mpzy7YMdgAMn1CFNTT7rNKYMjjEm5wtBu4ZpQpiN+gtz
-        JcKeaF/t7s4QiwkGxfhIQ3SeNOC1734=
-X-Google-Smtp-Source: AGRyM1uAVL6r/OArEdoAXpRKZGfUanmizLyBVbVrSWmTmQweGXNLHdeO7wuQPRx8iOpZiHtEOAMiTQ==
-X-Received: by 2002:a17:90b:1e04:b0:1f0:61a4:d747 with SMTP id pg4-20020a17090b1e0400b001f061a4d747mr11465845pjb.58.1658410077413;
-        Thu, 21 Jul 2022 06:27:57 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LONWvmsaRSaPDjHSBi8NOTXxibMQ5Yw/e9PnEl/UgKU=;
+        b=mBnoDKSeZ3naHoz7BMOdJwUbT0t+hGnZmlLLh6giw8zL5A59VbbfBJil1NzaZHlos7
+         I11jcD8ExwgeE4O7fSPoYRmp//r1nsBulO5Ikmvd6PTCHBq9m7LfgQwesVNG05WOpMSv
+         C3pGJffqrzNdBMtFgSjatgL4XeRu041U3YDwK0UuEUdQqUuxG2QYP3sTq9qoUEt32Ty0
+         Lia92oOXnWOyeTZppYzxccj48SZXMw7aGdGft1Tgd2AZ9XmbCyAKlUZRgvjJl2A7LFDX
+         O8YKCtOInZ8anTeMhYZCb2Qf7KnW81ea3OPulI3WvAFsREbKMzdxUdW/s9rVVp51yOGh
+         lwPw==
+X-Gm-Message-State: AJIora+gtMyra0WgYmnFCTMbO93LjCgjAkVEZyT4OAJ+BG1WCkVvWhNz
+        ap25SLPJayuQYWmx/h1Us2+13h+MTzc=
+X-Google-Smtp-Source: AGRyM1s5JPelJuFfXgzWpWQI32EKgkxcpe18NU70HAAU3/6qgEQbvC4jqCoo1vGfIoLfD8u4V68aiQ==
+X-Received: by 2002:a17:90a:8541:b0:1f2:1393:77f6 with SMTP id a1-20020a17090a854100b001f2139377f6mr11543658pjw.210.1658410079654;
+        Thu, 21 Jul 2022 06:27:59 -0700 (PDT)
 Received: from localhost.localdomain ([205.204.117.102])
-        by smtp.gmail.com with ESMTPSA id q13-20020a65684d000000b00419cde333eesm1467326pgt.64.2022.07.21.06.27.55
+        by smtp.gmail.com with ESMTPSA id q13-20020a65684d000000b00419cde333eesm1467326pgt.64.2022.07.21.06.27.57
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Jul 2022 06:27:56 -0700 (PDT)
+        Thu, 21 Jul 2022 06:27:59 -0700 (PDT)
 From:   "tenglong.tl" <dyroneteng@gmail.com>
 X-Google-Original-From: "tenglong.tl" <tenglong.tl@alibaba-inc.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, --cc=avarab@gmail.com, git@jeffhostetler.com,
         tenglong.tl@alibaba-inc.com, Teng Long <dyroneteng@gmail.com>
-Subject: [PATCH 0/2] tr2: shows the scope unconditionally with config 
-Date:   Thu, 21 Jul 2022 21:27:46 +0800
-Message-Id: <20220721132748.37848-1-tenglong.tl@alibaba-inc.com>
+Subject: [PATCH 1/2] api-trace2.txt: print config key-value pair
+Date:   Thu, 21 Jul 2022 21:27:47 +0800
+Message-Id: <20220721132748.37848-2-tenglong.tl@alibaba-inc.com>
 X-Mailer: git-send-email 2.37.1.1.g8cbb44ffc4.dirty
+In-Reply-To: <20220721132748.37848-1-tenglong.tl@alibaba-inc.com>
+References: <20220721132748.37848-1-tenglong.tl@alibaba-inc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -64,25 +66,58 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Teng Long <dyroneteng@gmail.com>
 
-This series is separated from :
+It's supported to print "interesting" config key-value paire
+to tr2 log by setting "GIT_TRACE2_CONFIG_PARAMS" environment
+variable and the "trace2.configparam" config, let's add the
+related docs in Documentaion/technical/api-trace2.txt.
 
-  https://public-inbox.org/git/a01ae8478d3a8545241c5b064b6d369a330ee59f.1658159746.git.dyroneteng@gmail.com/
+Signed-off-by: Teng Long <dyroneteng@gmail.com>
+---
+ Documentation/technical/api-trace2.txt | 31 ++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-and now move to a independent topic now.
-
-Thanks.
-
-
-Teng Long (2):
-  api-trace2.txt: print config key-value pair
-  tr2: shows scope unconditionally in addition to key-value pair
-
- Documentation/technical/api-trace2.txt | 41 ++++++++++++++++++++++++++
- trace2/tr2_tgt_event.c                 |  3 ++
- trace2/tr2_tgt_normal.c                |  5 +++-
- trace2/tr2_tgt_perf.c                  |  9 ++++--
- 4 files changed, 55 insertions(+), 3 deletions(-)
-
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 77a150b30e..dcd0429037 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -1207,6 +1207,37 @@ at offset 508.
+ This example also shows that thread names are assigned in a racy manner
+ as each thread starts and allocates TLS storage.
+ 
++Print Configs::
++
++	  Dump "interesting" config values to trace2 log.
+++
++The environment variable `GIT_TRACE2_CONFIG_PARAMS` and configuration
++`trace2.configparams` can be used to output config values which you care
++about(see linkgit:git-config[1). For example:
+++
++----------------
++$ git config color.ui auto
++----------------
+++
++Then, mark the config `color.ui` as "interesting" config with
++`GIT_TRACE2_CONFIG_PARAMS`:
+++
++----------------
++$ export GIT_TRACE2_PERF_BRIEF=1
++$ export GIT_TRACE2_PERF=~/log.perf
++$ export GIT_TRACE2_CONFIG_PARAMS=color.ui
++$ git version
++...
++$ cat ~/log.perf
++d0 | main                     | version      |     |           |           |              | ...
++d0 | main                     | start        |     |  0.001642 |           |              | /usr/local/bin/git version
++d0 | main                     | cmd_name     |     |           |           |              | version (version)
++d0 | main                     | def_param    |     |           |           |              | color.ui:auto
++d0 | main                     | data         | r0  |  0.002100 |  0.002100 | fsync        | fsync/writeout-only:0
++d0 | main                     | data         | r0  |  0.002126 |  0.002126 | fsync        | fsync/hardware-flush:0
++d0 | main                     | exit         |     |  0.002142 |           |              | code:0
++d0 | main                     | atexit       |     |  0.002161 |           |              | code:0
++----------------
+ == Future Work
+ 
+ === Relationship to the Existing Trace Api (api-trace.txt)
 -- 
 2.37.1.1.g8cbb44ffc4.dirty
 
