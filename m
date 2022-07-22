@@ -2,215 +2,282 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D7AFC43334
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 08:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2480C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 10:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234914AbiGVIUH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 04:20:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45114 "EHLO
+        id S234865AbiGVKqW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 06:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234918AbiGVITs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 04:19:48 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C9B9E2A6
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 01:19:44 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id g12so3908656pfb.3
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 01:19:44 -0700 (PDT)
+        with ESMTP id S229980AbiGVKqV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 06:46:21 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 375119D527
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 03:46:20 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id g1so5326355edb.12
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 03:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RjlArnORTzLu2tZdWlkVXjtNTFr9wJcfwBVzeUSmAQQ=;
-        b=SqtkjRvmejICqyXBzDU8QLxOTB53y72e96tlww6srPRDFsIb0O0ufwRF1Ymct3Di1V
-         jxJVBpPlvzoiFU/vCAVA6mSI9z0gC+tgkFbTEhl4vse42qJpMQRR+EI/uTsbENQiF9WQ
-         xQtTQTTvCerKjEjHR4IxbOoozGIiakkDq34nSbBDWiIL8NkCe7/fUtI7tqrqnaGq1DjU
-         YGCN4hWBfLNHbyHcm7BQ9Mwob0NGLkV+F5mrzC1mdpKGl+QPJf61pmgSOa5dyDZOhKq4
-         JGpAsWmNKTbHWbedcVA6KDsKuhLYNilC0gfYLZrdZFGeS3UZezLzjkx8sLVUN5bSQ4FH
-         rJXw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=lFdzmauNNchYLVEBmucpYjbEnb93MjAFNVCpM7SF/ys=;
+        b=LZCiwOYets+4zcEQSpremrIbyr1Q1F1r6XJFG23DhG21z9jVuexeudwicrHgurw+/R
+         B+dETenn9lOY+D1E/Qs8WvNWSHDTfG2DlHfUbISf2lnJpRzjNxSKcXeoa2lidPutut2X
+         Q/UfXugAd8mk04w0qDf/gKChvS8C80ChVIdz3snoJks31KUBy2M3PYHPn9vUQVQNNEsv
+         uwrG4ykt863sH3GmIRxJpHIGYQ7Icc7gp0BXzL72ZnA1ofqma/rgP3Q7QaozCFk5mylB
+         LvCERJOzpQTf7NZPKpquvYdK/1tlZIa1SNfws82vI0nxkm0WJvwNJqDaM9cyvYJgUyyv
+         fekQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RjlArnORTzLu2tZdWlkVXjtNTFr9wJcfwBVzeUSmAQQ=;
-        b=guzxDA7zq0oOznTMLhDWxZ+1/pcyWLI6RqDy6T0xkj8zaW7kTMzqinUMLlLB3qItVj
-         aLrbU4RTPdWFirzHNZz/lzD5V1LCUNWMemSAxTIZ4loR+3oUMfNsw/ZUziFK1BMGXCBC
-         r6a7QSAaqBrmUC2LoRCBCs401h/FQUKDTcDN8pDiX9i50KXigf6K2kNT81MUExTb5Aw0
-         KiWF5XPb5kMtQANFAW2YlVpCfrVl3ySJIdWBHSxMnnDdGfmqT2J2UF5btLuhBiPJisoB
-         K4Vgm2tZYVHuTxG1d0/H29Or3GSOp9+oUhhJWaLIVRMnhmu+obpa5ix8K4za787+/36I
-         kvQA==
-X-Gm-Message-State: AJIora9mQY7hHo5zMh244qyKvxQhQrBjwn4613tFpTvDMFahr+28Nrsm
-        r5vi+1qjRuOY76xLt6XAKGI=
-X-Google-Smtp-Source: AGRyM1vpW19i2hYPj8+50SnX/v22gXKVScYvSnhjDCIHdOYuZcONj65STpnLpNxEv7Ld/D+xgx0Eeg==
-X-Received: by 2002:aa7:9afa:0:b0:528:bbf7:e444 with SMTP id y26-20020aa79afa000000b00528bbf7e444mr2321054pfp.71.1658477983957;
-        Fri, 22 Jul 2022 01:19:43 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.102])
-        by smtp.gmail.com with ESMTPSA id q9-20020aa78429000000b00528d580cb45sm3188734pfn.127.2022.07.22.01.19.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Jul 2022 01:19:43 -0700 (PDT)
-From:   "tenglong.tl" <dyroneteng@gmail.com>
-X-Google-Original-From: "tenglong.tl" <tenglong.tl@alibaba-inc.com>
-To:     dyroneteng@gmail.com
-Cc:     avarab@gmail.com, git@jeffhostetler.com, git@vger.kernel.org,
-        gitster@pobox.com, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v1 2/2] tr2: shows scope unconditionally in addition to key-value pair
-Date:   Fri, 22 Jul 2022 16:19:32 +0800
-Message-Id: <78575cca0b3ef4acb1bb42a00ccd3104f3fa4cea.1658472474.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.37.1.1.g8cbb44ffc4.dirty
-In-Reply-To: <cover.1658472474.git.dyroneteng@gmail.com>
-References: <cover.1658472474.git.dyroneteng@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=lFdzmauNNchYLVEBmucpYjbEnb93MjAFNVCpM7SF/ys=;
+        b=MIlt4AYGEN/mzynLLcBnG7HVASfP+ovauaa8KwLphgFDGCvfVeswLpl5VTCZOJiqWJ
+         GS5klPIKUigovNwANrwPJzqjw3xxz2Qqzqq9T033CGo/ulzPLPG68DHyY1LGmFMUBqQb
+         ey9fPBu9AGMQJSG6yI1dDHfH+f5o7ywdyRIEMHbT5EgB9qG8e2jEbE0anqqqaaMMJdpZ
+         lCRfkqtJaO+Y8QXxwmD2daHTfw0HdQR4MSNJztIFiQP4/QpdIxYCEasPZ+62zrJ4qdj8
+         9WkW/ayBGV5NnFBPC33l0JRjWSd9OXMtdDUbWz6O8QvjDpGi41QAOvF0C0P2NoTwRgDJ
+         dorw==
+X-Gm-Message-State: AJIora8+/NaiefCuDGB6u9tmPdd0k3pMB2gaoEV/5eV7rLTipxHY9FpE
+        Pjf0lExFfu4rh2OHDoE9ca4DFC/ta74ZHQ==
+X-Google-Smtp-Source: AGRyM1ulAyS62a+m0VMq7lTCGCW+K0B1XAK0Ib18egNPmojhQdyhcKsd1Q0lyek2NWgF7LIYg11Ztw==
+X-Received: by 2002:a05:6402:48d:b0:43a:cccd:89d9 with SMTP id k13-20020a056402048d00b0043acccd89d9mr3003273edv.257.1658486778207;
+        Fri, 22 Jul 2022 03:46:18 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id 17-20020a170906301100b00722e50e259asm1878668ejz.102.2022.07.22.03.46.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Jul 2022 03:46:17 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oEqAi-005HG3-TR;
+        Fri, 22 Jul 2022 12:46:16 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 2/7] merge-resolve: abort if index does not match HEAD
+Date:   Fri, 22 Jul 2022 12:27:55 +0200
+References: <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
+ <pull.1231.v4.git.1658466942.gitgitgadget@gmail.com>
+ <b79f44e54b9611fa2b10a4e1cb666992d006951c.1658466942.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <b79f44e54b9611fa2b10a4e1cb666992d006951c.1658466942.git.gitgitgadget@gmail.com>
+Message-ID: <220722.86sfmts9vr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Teng Long <dyroneteng@gmail.com>
 
-When we specify GIT_TRACE2_CONFIG_PARAMS or trace2.configparams,
-trace2 will prints "interesting" config values to log. Sometimes,
-when a config set in multiple scope files, the following output
-looks like (the irrelevant fields are omitted here as "..."):
+On Fri, Jul 22 2022, Elijah Newren via GitGitGadget wrote:
 
-...| def_param    |  ...  | core.multipackindex:false
-...| def_param    |  ...  | core.multipackindex:false
-...| def_param    |  ...  | core.multipackindex:false
+> From: Elijah Newren <newren@gmail.com>
+>
+> As noted in commit 9822175d2b ("Ensure index matches head before
+> invoking merge machinery, round N", 2019-08-17), we have had a very
+> long history of problems with failing to enforce the requirement that
+> index matches HEAD when starting a merge.  One of the commits
+> referenced in the long tale of issues arising from lax enforcement of
+> this requirement was commit 55f39cf755 ("merge: fix misleading
+> pre-merge check documentation", 2018-06-30), which tried to document
+> the requirement and noted there were some exceptions.  As mentioned in
+> that commit message, the `resolve` strategy was the one strategy that
+> did not have an explicit index matching HEAD check, and the reason it
+> didn't was that I wasn't able to discover any cases where the
+> implementation would fail to catch the problem and abort, and didn't
+> want to introduce unnecessary performance overhead of adding another
+> check.
+>
+> Well, today I discovered a testcase where the implementation does not
+> catch the problem and so an explicit check is needed.  Add a testcase
+> that previously would have failed, and update git-merge-resolve.sh to
+> have an explicit check.  Note that the code is copied from 3ec62ad9ff
+> ("merge-octopus: abort if index does not match HEAD", 2016-04-09), so
+> that we reuse the same message and avoid making translators need to
+> translate some new message.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  builtin/merge.c                          | 20 ++++++++++++++++++
+>  git-merge-resolve.sh                     | 10 +++++++++
+>  t/t6424-merge-unrelated-index-changes.sh | 26 ++++++++++++++++++++++++
+>  3 files changed, 56 insertions(+)
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 23170f2d2a6..13884b8e836 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -1599,6 +1599,26 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		 */
+>  		refresh_cache(REFRESH_QUIET);
+>  		if (allow_trivial && fast_forward != FF_ONLY) {
+> +			/*
+> +			 * Must first ensure that index matches HEAD before
+> +			 * attempting a trivial merge.
+> +			 */
+> +			struct tree *head_tree = get_commit_tree(head_commit);
+> +			struct strbuf sb = STRBUF_INIT;
+> +
+> +			if (repo_index_has_changes(the_repository, head_tree,
+> +						   &sb)) {
+> +				struct strbuf err = STRBUF_INIT;
+> +				strbuf_addstr(&err, "error: ");
+> +				strbuf_addf(&err, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+> +					    sb.buf);
+> +				strbuf_addch(&err, '\n');
 
-As the log shows, even each config in different scope is dumped, but
-we don't know which scope it comes from. Therefore, it's better to
-add the scope names as well to make them be more recognizable. For
-example, when execute:
+At first glance I was expecting this to construct an error message to
+emit it somewhere else that stderr, so I wondered if you couldn't use
+the "error_routine" facility to avoid re-inventing "error: " etc.,
+but...
 
-    $ GIT_TRACE2_PERF=1 \
-    > GIT_TRACE2_CONFIG_PARAMS=core.multipackIndex \
-    > git rev-list --test-bitmap HEAD"
+> +				fputs(err.buf, stderr);
 
-The following is the ouput (the irrelevant fields are omitted here
-as "..."):
+...we emit it to stderr anyway...?
 
-Format normal:
-... git.c:461 ... def_param scope:system core.multipackindex=false
-... git.c:461 ... def_param scope:global core.multipackindex=false
-... git.c:461 ... def_param scope:local core.multipackindex=false
+> +				strbuf_release(&err);
+> +				strbuf_release(&sb);
+> +				return -1;
+> +			}
+> +
+>  			/* See if it is really trivial. */
+>  			git_committer_info(IDENT_STRICT);
+>  			printf(_("Trying really trivial in-index merge...\n"));
+> diff --git a/git-merge-resolve.sh b/git-merge-resolve.sh
+> index 343fe7bccd0..77e93121bf8 100755
+> --- a/git-merge-resolve.sh
+> +++ b/git-merge-resolve.sh
+> @@ -5,6 +5,16 @@
+>  #
+>  # Resolve two trees, using enhanced multi-base read-tree.
+>  
+> +. git-sh-setup
+> +
+> +# Abort if index does not match HEAD
+> +if ! git diff-index --quiet --cached HEAD --
+> +then
+> +    gettextln "Error: Your local changes to the following files would be overwritten by merge"
+> +    git diff-index --cached --name-only HEAD -- | sed -e 's/^/    /'
+> +    exit 2
+> +fi
 
-Format perf:
+(The "..." continued below)
 
-... | def_param    | ... | scope:system | core.multipackindex:false
-... | def_param    | ... | scope:global | core.multipackindex:false
-... | def_param    | ... | scope:local  | core.multipackindex:false
+Just in trying to poke holes in this I made this an "exit 0", and
+neither of the tests you added failed, but the last one ("resolve &&
+recursive && ort") in the t6424*.sh will fail, is that intentional?
 
-Format event:
+I don't know enough about the context here, but given our *.sh->C
+migration elsewhere it's a bit unfortunate to see more *.sh code added
+back. We have "git merge" driving this, isn't it OK to have it make this
+check before invoking "resolve" (may be a stupid question).
 
-{"event":"def_param", ... ,"scope":"system","param":"core.multipackindex","value":"false"}
-{"event":"def_param", ... ,"scope":"global","param":"core.multipackindex","value":"false"}
-{"event":"def_param", ... ,"scope":"local","param":"core.multipackindex","value":"false"}
+For this code in particular it:
 
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- Documentation/technical/api-trace2.txt | 19 ++++++++++++++-----
- trace2/tr2_tgt_event.c                 |  3 +++
- trace2/tr2_tgt_normal.c                |  5 ++++-
- trace2/tr2_tgt_perf.c                  |  9 +++++++--
- 4 files changed, 28 insertions(+), 8 deletions(-)
+ * Uses spaces, not tabs
+ * We lose the diff-index .. --name-only exit code (segfault), but so
+   did the older version
+ * I wonder if bending over backwards to emit the exact message we
+   emitted before is worth it
 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index ddc0bfb9c9..534cfa98fa 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -1214,10 +1214,17 @@ Print Configs::
- +
- The environment variable `GIT_TRACE2_CONFIG_PARAMS` and configuration
- `trace2.configparams` can be used to output config values which you care
--about(see linkgit:git-config[1). For example:
-+about(see linkgit:git-config[1). For example assume that we want to config
-+different `color.ui` values in multiple scopes, such as:
- +
- ----------------
--$ git config color.ui auto
-+$ git config --system color.ui never
-+$ git config --global color.ui always
-+$ git config --local color.ui auto
-+$ git config --list --show-scope | grep 'color.ui'
-+system  color.ui=never
-+global  color.ui=always
-+local   color.ui=auto
- ----------------
- +
- Then, mark the config `color.ui` as "interesting" config with
-@@ -1233,11 +1240,13 @@ $ cat ~/log.perf
- d0 | main                     | version      |     |           |           |              | ...
- d0 | main                     | start        |     |  0.001642 |           |              | /usr/local/bin/git version
- d0 | main                     | cmd_name     |     |           |           |              | version (version)
--d0 | main                     | def_param    |     |           |           |              | color.ui:auto
-+d0 | main                     | def_param    |     |           |           | scope:system | color.ui:never
-+d0 | main                     | def_param    |     |           |           | scope:global | color.ui:always
-+d0 | main                     | def_param    |     |           |           | scope:local  | color.ui:auto
- d0 | main                     | data         | r0  |  0.002100 |  0.002100 | fsync        | fsync/writeout-only:0
- d0 | main                     | data         | r0  |  0.002126 |  0.002126 | fsync        | fsync/hardware-flush:0
--d0 | main                     | exit         |     |  0.002142 |           |              | code:0
--d0 | main                     | atexit       |     |  0.002161 |           |              | code:0
-+d0 | main                     | exit         |     |  0.000470 |           |              | code:0
-+d0 | main                     | atexit       |     |  0.000477 |           |              | code:0
- ----------------
- == Future Work
- 
-diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index c5c8cfbbaa..37a3163be1 100644
---- a/trace2/tr2_tgt_event.c
-+++ b/trace2/tr2_tgt_event.c
-@@ -479,9 +479,12 @@ static void fn_param_fl(const char *file, int line, const char *param,
- {
- 	const char *event_name = "def_param";
- 	struct json_writer jw = JSON_WRITER_INIT;
-+	enum config_scope scope = current_config_scope();
-+	const char *scope_name = config_scope_name(scope);
- 
- 	jw_object_begin(&jw, 0);
- 	event_fmt_prepare(event_name, file, line, NULL, &jw);
-+	jw_object_string(&jw, "scope", scope_name);
- 	jw_object_string(&jw, "param", param);
- 	jw_object_string(&jw, "value", value);
- 	jw_end(&jw);
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index c42fbade7f..69f8033077 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -298,8 +298,11 @@ static void fn_param_fl(const char *file, int line, const char *param,
- 			const char *value)
- {
- 	struct strbuf buf_payload = STRBUF_INIT;
-+	enum config_scope scope = current_config_scope();
-+	const char *scope_name = config_scope_name(scope);
- 
--	strbuf_addf(&buf_payload, "def_param %s=%s", param, value);
-+	strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
-+		    value);
- 	normal_io_write_fl(file, line, &buf_payload);
- 	strbuf_release(&buf_payload);
- }
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index a1eff8bea3..8cb792488c 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -441,12 +441,17 @@ static void fn_param_fl(const char *file, int line, const char *param,
- {
- 	const char *event_name = "def_param";
- 	struct strbuf buf_payload = STRBUF_INIT;
-+	struct strbuf scope_payload = STRBUF_INIT;
-+	enum config_scope scope = current_config_scope();
-+	const char *scope_name = config_scope_name(scope);
- 
- 	strbuf_addf(&buf_payload, "%s:%s", param, value);
-+	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
- 
--	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
--			 &buf_payload);
-+	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
-+			 scope_payload.buf, &buf_payload);
- 	strbuf_release(&buf_payload);
-+	strbuf_release(&scope_payload);
- }
- 
- static void fn_repo_fl(const char *file, int line,
--- 
-2.37.1.1.g8cbb44ffc4.dirty
+If you just make this something like (untested):
 
+	{
+		gettext "error: " &&
+		gettextln "Your local..."
+	}
+
+You could re-use the translation from the *.c one (and the "error: " one
+we'll get from usage.c).
+
+That leaves "\n %s" as the difference, but we could just remove that
+from the _() and emit it unconditionally, no?
+
+
+>  # The first parameters up to -- are merge bases; the rest are heads.
+>  bases= head= remotes= sep_seen=
+>  for arg
+> diff --git a/t/t6424-merge-unrelated-index-changes.sh b/t/t6424-merge-unrelated-index-changes.sh
+> index b6e424a427b..f35d3182b86 100755
+> --- a/t/t6424-merge-unrelated-index-changes.sh
+> +++ b/t/t6424-merge-unrelated-index-changes.sh
+> @@ -114,6 +114,32 @@ test_expect_success 'resolve, non-trivial' '
+>  	test_path_is_missing .git/MERGE_HEAD
+>  '
+>  
+> +test_expect_success 'resolve, trivial, related file removed' '
+> +	git reset --hard &&
+> +	git checkout B^0 &&
+> +
+> +	git rm a &&
+> +	test_path_is_missing a &&
+> +
+> +	test_must_fail git merge -s resolve C^0 &&
+> +
+> +	test_path_is_missing a &&
+> +	test_path_is_missing .git/MERGE_HEAD
+> +'
+> +
+> +test_expect_success 'resolve, non-trivial, related file removed' '
+> +	git reset --hard &&
+> +	git checkout B^0 &&
+> +
+> +	git rm a &&
+> +	test_path_is_missing a &&
+> +
+> +	test_must_fail git merge -s resolve D^0 &&
+> +
+> +	test_path_is_missing a &&
+> +	test_path_is_missing .git/MERGE_HEAD
+> +'
+> +
+>  test_expect_success 'recursive' '
+>  	git reset --hard &&
+>  	git checkout B^0 &&
+
+...I tried with this change on top, it seems to me like you'd want this
+in any case, it passes the tests both with & without the C code change,
+so can't we just use error() here?
+	
+	diff --git a/builtin/merge.c b/builtin/merge.c
+	index 7fb4414ebb7..64def49734a 100644
+	--- a/builtin/merge.c
+	+++ b/builtin/merge.c
+	@@ -1621,13 +1621,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+	 
+	 			if (repo_index_has_changes(the_repository, head_tree,
+	 						   &sb)) {
+	-				struct strbuf err = STRBUF_INIT;
+	-				strbuf_addstr(&err, "error: ");
+	-				strbuf_addf(&err, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+	-					    sb.buf);
+	-				strbuf_addch(&err, '\n');
+	-				fputs(err.buf, stderr);
+	-				strbuf_release(&err);
+	+				error(_("Your local changes to the following files would be overwritten by merge:\n  %s"),
+	+				      sb.buf);
+	 				strbuf_release(&sb);
+	 				return -1;
+	 			}
+	diff --git a/t/t6424-merge-unrelated-index-changes.sh b/t/t6424-merge-unrelated-index-changes.sh
+	index c96649448fa..1df130b9ee6 100755
+	--- a/t/t6424-merge-unrelated-index-changes.sh
+	+++ b/t/t6424-merge-unrelated-index-changes.sh
+	@@ -96,7 +96,12 @@ test_expect_success 'resolve, trivial' '
+	 
+	 	touch random_file && git add random_file &&
+	 
+	-	test_must_fail git merge -s resolve C^0 &&
+	+	sed -e "s/^> //g" >expect <<-\EOF &&
+	+	> error: Your local changes to the following files would be overwritten by merge:
+	+	>   random_file
+	+	EOF
+	+	test_must_fail git merge -s resolve C^0 2>actual &&
+	+	test_cmp expect actual &&
+	 	test_path_is_file random_file &&
+	 	git rev-parse --verify :random_file &&
+	 	test_path_is_missing .git/MERGE_HEAD
+	
