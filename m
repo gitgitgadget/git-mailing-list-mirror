@@ -2,102 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A5C7C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 20:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A59E5C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 20:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231630AbiGVUgt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 16:36:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59838 "EHLO
+        id S232335AbiGVUqJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 16:46:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229679AbiGVUgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 16:36:48 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ACAB82453
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 13:36:47 -0700 (PDT)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out2.suse.de (Postfix) with ESMTP id BF4B9200E4;
-        Fri, 22 Jul 2022 20:36:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1658522205; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=OpPXH2kyKZubJdpYbI5DhC1ttDmZZyMc+9G0UD4QVk4=;
-        b=wJMcWrgVo7N2dC/3ZMKtYQIxpYpWrrBj7wNTq+68RLCaQ4rVcVr8N27A45R8SW1PSx7WMF
-        oclKWzJQz6+gzA53VgBJBlswoWQERhy0FpDG2+8d1Tk83ysHc64rseNa/3f7k9QjzNkhck
-        ihwC9hC4FnLekELvVIjVLJ930VI1MUg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1658522205;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=OpPXH2kyKZubJdpYbI5DhC1ttDmZZyMc+9G0UD4QVk4=;
-        b=8ybr8mbbUsa2J6qHsDzapQozjxU5gFJnL1ZW4bo8gpH8V9DCJDO3WMiCspvIBFtLfSsmuv
-        JVPsoaDaXwEH4zCg==
-Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id D02622C161;
-        Fri, 22 Jul 2022 20:36:44 +0000 (UTC)
-Date:   Fri, 22 Jul 2022 22:36:42 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-        Phillip Susi <phill@thesusis.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Stephen Finucane <stephen@that.guru>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: Feature request: provide a persistent IDs on a commit
-Message-ID: <20220722203642.GD17705@kitsune.suse.cz>
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com>
- <87a692e8vj.fsf@vps.thesusis.net>
- <CAE1pOi1pS76iXU8j=A54wPGHC7qofxrPDAO4uyy0d6yMxeQwvw@mail.gmail.com>
- <6426b5c3-0a09-f641-9876-3534b0abd96d@iee.email>
+        with ESMTP id S230482AbiGVUqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 16:46:08 -0400
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0D7C30550
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 13:46:05 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 7029E320094A;
+        Fri, 22 Jul 2022 16:46:02 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Fri, 22 Jul 2022 16:46:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1658522761; x=1658609161; bh=QXAPH+axE8
+        HMjwO4kVgeCmU2KO4rArMd/6mrwmtoLNw=; b=WABtv7sALvddCxiWgSMDM4o1nQ
+        z/NIUaQlxY9+TT9yQH+rDaMf7Z03patv/N96ESW+VadkJdvtHKKfcxY0mb2f4lxL
+        YZ9lBQq988R3MQDy9FSjXN44Pg+rdPez5W0eKh+WvCp3aAarjXEKxomuzErnxdgV
+        hk3UPre9XL89nfx4WvovcGSsC2cQJ6Ruq+ZBJqoCFkolm4U+uM4iMnk4KcgNWR4S
+        iVwG/Rqcr3UUuaS9JA7zRga4wW3n+oc2nyDbsHCkrDzcZtXMEJJVZHA+6d5dcIfj
+        llAgCbGJVK90k0LULkfCmuRkXUNxrpk/bE4bxofRtLfeZ+I4D46b5c2kVvmg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1658522761; x=1658609161; bh=QXAPH+axE8HMjwO4kVgeCmU2KO4r
+        ArMd/6mrwmtoLNw=; b=oyNfEGJbhSQhVYox+sGd042OHIdRBQunbv0bCrBZvM6l
+        ymwj/fKqoAFMzJF4kMK5xGHaw98CCBvZbkcn63VOfKwfK3QVP/vXbPhqTWaXtOUc
+        PRRYeOQZxSXasEejeeRWyvUIavxVhkrI2ib2Jg6quLuXywP1Om6QginQmouOmNxC
+        d+zSqHqqLUtEZMaY6dL4XqXmf08nl51rXVHZVS/8Y2OEgJrJvsT0YiY/uvd4RLUM
+        dWvfPlrso28UoGnBCtZjnQkdvUSJPLttpJKeeeHy3iusI6agtUw8k326BywBeK5s
+        qzJKLnDym2uUdH0a/q2xvGQONV3ylJyXCo9FXBn0Eg==
+X-ME-Sender: <xms:iQzbYmOnh7xBbh2SIEe6OEl27Nh2P5kalLLhoTa1vKINMxP91qfWGw>
+    <xme:iQzbYk9TX5fWs8pWYR52hhrfLW1aGTZ6m7eNCZagUGzgbX7IN6QpQh6KBWBgP8zFj
+    Q0bPPcTcE8S58tWIA>
+X-ME-Received: <xmr:iQzbYtTKo163xOkpDQdRzsW1MX6iSe4nQCkIJjirCCiv-X7KCsjzxsoBDA0sIG_9QIy-im3yFf0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvddtvddgudehgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttdejnecuhfhrohhmpefhvghr
+    nhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrg
+    htthgvrhhnpeefleetgeefhfduieeitdegieehhfduudfhuddttdekgfduhfduieefteek
+    hfduveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
+X-ME-Proxy: <xmx:iQzbYmtAS4zXzDpa0VkZnrsVfOhEavCGsT7HA82dV7QVFk6AB6B_gA>
+    <xmx:iQzbYudT0sDZDHy6rLDBgdPgx0wBj8190vpFzM37SPgbFqEc4Pc46Q>
+    <xmx:iQzbYq3fyTwO9mh-vDTDczhtSK4lYpJBNy_D3FXDIAcfDuZUveqmgg>
+    <xmx:iQzbYiHOg7ILfN6TyJ7-kvLdDeIPwOkakVYSoXA-sB2FZsbWRjxfYw>
+Feedback-ID: i96f14706:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 22 Jul 2022 16:46:00 -0400 (EDT)
+Date:   Fri, 22 Jul 2022 22:45:57 +0200
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Claudio Ebel <claudio.ebel@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Changed diff3 view from =?utf-8?B?Mi4z?= =?utf-8?B?NiDihpI=?=
+ 2.67 for vimdiff
+Message-ID: <YtsMhb0XUPw2EekJ@zacax395.localdomain>
+References: <99c80fc2-0f94-a607-ca71-c45961c07e2b@web.de>
+ <CAN0heSrCocuKA+8UvU8dH_bsM4Xg8L3M8O4W0buXkUc3uCxpGA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6426b5c3-0a09-f641-9876-3534b0abd96d@iee.email>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAN0heSrCocuKA+8UvU8dH_bsM4Xg8L3M8O4W0buXkUc3uCxpGA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 22, 2022 at 09:08:56PM +0100, Philip Oakley wrote:
-> On 21/07/2022 19:58, Hilco Wijbenga wrote:
-> > On Thu, Jul 21, 2022 at 9:39 AM Phillip Susi <phill@thesusis.net> wrote:
-> >> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> >>
-> >>> This has come up a bunch of times. I think that the thing git itself
-> >>> should be doing is to lean into the same notion that we use for tracking
-> >>> renames. I.e. we don't, we analyze history after-the-fact and spot the
-> >>> renames for you.
-> >> I've never been a big fan of that quality of git because it is
-> >> inherently unreliable.
-> > Indeed, which would be fine ... if there were a way to tell Git, "no
-> > this is not a rename" or "hey, you missed this rename" but there
-> > isn't.
-> >
-> > Reading previous messages, it seems like the
-> > after-the-fact-rename-heuristic makes the Git code simpler. That is a
-> > perfectly valid argument for not supporting "explicit" renames but I
-> > have seen several messages from which I inferred that rename handling
-> > was deemed a "solved problem". And _that_, at least in my experience,
-> > is definitely not the case.
-> 
-> Part of the rename problem is that there can be many different routes to
-> the same result, and often the route used isn't the one 'specified' by
-> those who wish a complicated rename process to have happened 'their
-> way', plus people forget to record what they actually did. Attempting to
-> capture what happened still results major gaps in the record.
 
-Doesn't git have rebase?
+> There exists at least one vimdiff bugfix [2] in git.git's current
+> 'master' branch that is not yet in any released version. If you are able
+> to build Git from source, you could try that version to see if it fixes
+> your problem. As far as I understand, that patch relates to end-user vim
+> settings, and you did write that you nuked your .vimrc, so maybe that
+> patch doesn't quite match your problem, although from the original
+> report [3], it does seem similar.
 
-It is not required that the rename is captured perfectly every time so
-long as it can be amended later.
+Hi Claudio.
 
-Thanks
+As Martin just said, this looks *very* similar to the behaviour you would
+experience if you had vim configured to open splits "in reverse" (when compared
+to the default settings).
 
-Michal
+You can make this test to confirm whether this is the case or not: try to run
+this command:
+
+    vim -c "echo | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis" -c "tabfirst" local.txt base.txt remote.txt merged.txt
+
+(note: this is the same command git 2.37 uses when running
+`git mergetool -t vimdiff`)
+
+It should open 4 windows with the following layout:
+
+    -------------------------------
+    |  local  |  base  |  remote  |
+    -------------------------------
+    |           merged            |
+    -------------------------------
+
+If you see something different, please then try to run this other command :
+
+    vim -c "echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis" -c "tabfirst" local.txt base.txt remote.txt merged.txt
+
+(note: this is the same command git will run in a *future* version)
+
+Notice that this new command is exactly the same as the previous one but
+including keyword `leftabove` before all `split` and `vertical split` commands.
+
+If you run this command and this time it displays the expected layout, you have
+two options:
+
+    A) Wait for the next git version where this will be fixed :)
+       (as Martin pointed out, the patch can be found in [1])
+
+    B) Update your .vimrc to include these two lines:
+
+         set nosplitbelow
+         set nosplitright
+
+       ...or, alternatively, update your .vimrc *not* to have these two lines
+       (as both options are disabled by default):
+
+         set splitbelow
+         set splitright
+
+
+> Since redirecting HOME works, I wonder if you do have some other config
+> file after all. Maybe you have more than just one vimrc?
+
+This is also what I suspect.
+
+You can make this experiment to confirm this theory:
+
+  1. Run "vim" and then ":set splitbelow?"
+
+  2. Run "HOME= vim" and then ":set splitbelow?"
+
+If the returned string is different ("splitbelow" in one case and "nosplitbelow"
+in the other one) it means you have a ".vimrc" (or something else) somewhere in
+your $HOME that is changing vim's default settings.
+
+By the way, you can list all scripts "sourced" by a vim instance by running this
+command from inside vim:
+
+    :scriptnames
+
+That will help you find the "rogue" script inside your $HOME.
+Note that it could happen that some of the other vim scripts you have sets those
+variables without you noticing!... in that case you can also change their value
+back *at the end* of your "~/.vimrc"
+
+
+Fernando.
+
+
+[1] https://lore.kernel.org/git/20220708181024.45839-1-greenfoo@u92.eu/
+
