@@ -2,128 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19486C43334
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 23:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 835C7C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 23:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231594AbiGVXTC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 19:19:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33836 "EHLO
+        id S231594AbiGVXZT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 19:25:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbiGVXTC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 19:19:02 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C144D12B
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 16:19:00 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id bz13so4565519qtb.7
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 16:19:00 -0700 (PDT)
+        with ESMTP id S229611AbiGVXZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 19:25:18 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F9F14037
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 16:25:16 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id g24so4598464qtu.2
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 16:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yNr86PxL0hEt/XNa+l01Rg4krYPvnZ4GVzAO7x7i8D8=;
-        b=C4/BgYVP3WWU5Dc8GS+mzZJN3smHAKCvqc8b+fHwOtW/aWw1QJ0ZNnZGGb/cbK0E/F
-         6nCm0gC81TFtxz75IJGQQhJw4Lb5DbXJlGbkD0Epm9ZavQqvLpBAYoam9xhHKPSrcwEi
-         x8aVKWrrfePlo4Oda5r4owjLUfMJ5Q2E7x9QDMdhWo55rVTn8uaLs81k2KKs6PkOt/Qg
-         FJkX7r46Bc5bo6m08EcV2GFQT2uZx2eqBIuzJH1YhGzLGIZZ62fl7Lup16/pYtd8efm7
-         vUoxdth2sqSiCJIqpEzoTsiiNuQDGMY7JmUanHqnBSv6X0tQk9ROtaObDF1NFS7AA4ag
-         NpdQ==
+        bh=aJvRu8beo900uflJMRhHQMv9MwPCKqfCf1osMLJsa4k=;
+        b=k9EuxW3U+AlrMZ8GPNcxajAxEZvf8eDLDai7ov1jfm/y5WvFgmIWSAVtXhvoL8o7Ps
+         BWSFm7OfLyTHDb4yO4CZ6TUM+P2cXUxSZLYzYgzT2kIZpXlY4e3Rezb2YzpSH1R4fWKT
+         LpZbsPYU7B0C+YO7KRHk02D+OjaOUgsxQ0YOce6gNs+HasERjztBn1zD4GMy9rn6UC7D
+         +lMxphLncanaHr91tg0oG52GHRFdmVy9Qq76jLGTiecVvI34AP+RLHS/dnAPAEjglGRu
+         2fqF2/UOy+eyE9CDLzO/FoF3cKTvHxO16vJ5UCWVXiLEmyZSN0+/2H/XydTjwOpLzN9X
+         TY7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yNr86PxL0hEt/XNa+l01Rg4krYPvnZ4GVzAO7x7i8D8=;
-        b=QTozrIYJHXFxVY1nP2TJwQlchF0/16gUoIN+6jiknkS5yWuDB5nJbdsaxGyFJdbdb1
-         mMD8jif+0WPUh70KXfue7E2cbwHlbeN5fn5o2cs3vqsrQclJt0LdwA+bfnzvAOkEXFiu
-         ZuInvHBIMCTtWEKVCr8/0TFAPryPDZGtWnxoyww6M+DvUu9ZQEqE3V+XuVsGW7Dd5Jsq
-         iycqSWAANHnYDVuij1Jm7T/ShGtEauu7chQi9azpuhQZzwC85iM0Oat8l5e39WNneW8h
-         UTtkgxuh1fSp3zIska6Zf2i95nTd3humXpvYj06iYyyvERYWckoB5aXfKEh5fqcLnGxk
-         P8vQ==
-X-Gm-Message-State: AJIora/DPZ1fvU0p3QO/3Ui6EBI+wHi3EVzTA6FUcf3SD1Zw29ICXADU
-        TTTrvg2tzA3YY0pUh6nqKztV9j57qC8po7b2MpD2+A/ZEkY=
-X-Google-Smtp-Source: AGRyM1vGGYukFlsTwqKdv1PHsmlxewj3rdYv5+MxxWjxtxwNgrEu7MK+xz1ybkQfpxckHYoSObwz6eZ/OhE/2kSQK3Q=
-X-Received: by 2002:a05:622a:412:b0:31e:daba:4fc9 with SMTP id
- n18-20020a05622a041200b0031edaba4fc9mr2158475qtx.541.1658531939245; Fri, 22
- Jul 2022 16:18:59 -0700 (PDT)
+        bh=aJvRu8beo900uflJMRhHQMv9MwPCKqfCf1osMLJsa4k=;
+        b=tYk1TlZ2toM76T9DfAydDRXBI2YhisWMOiw3rKEq9WWXUv6Vx/BntL9VyUEIE1dW/4
+         /hc0n+rq79EaZ86b41LDFievpgKGnfq8vjwbWHOj3XKtDuQ+iuYgd0LK+Zop6uD9eocm
+         w4cmvvIW5lP+2fNNV9rdWpRgl4u86cSA4DGD+zrKFJWBOjSD5XOMZ1e5MaF4FLAkEMfC
+         Mbz4yYxlNJbpIyC2Up3irsdmsVsG26ZVgjImjiO2hgNRFirwAUtPf28/xoWG8z1hEESP
+         8LkHXoHnUUeHmYGoJPKCDHtClFXl5JtdkVyMqJ56Iy+OugngqdpFV6gMkTYTqENG2SuL
+         OVOQ==
+X-Gm-Message-State: AJIora9ZBgbMbR3BbvtaSYaxknIGOfBWlMUsr324vtlTBr265eLkez/O
+        Ii4j3ocjqtae1NqomzKV+eUSGHSTm0N6bu1sdbz+3riX75o=
+X-Google-Smtp-Source: AGRyM1txPGRFza8+Xt9a/ih1MRqQKDhZ0fQpCzzsHVvjxsik4MIt5ogAzPBoz4cdRyPAdD4Dw2VsXzp9MK/leq5hOv8=
+X-Received: by 2002:ac8:5c87:0:b0:31f:188e:b1f with SMTP id
+ r7-20020ac85c87000000b0031f188e0b1fmr2271866qta.153.1658532315454; Fri, 22
+ Jul 2022 16:25:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220721151937.adgufwkj3uxkk3yb@meerkat.local>
-In-Reply-To: <20220721151937.adgufwkj3uxkk3yb@meerkat.local>
+References: <CABPp-BEK+SJh2uF=rrM-f1u9diMQJ7D3H0fJLdzWpyOww=ys+w@mail.gmail.com>
+ <xmqqy1wmlbnn.fsf@gitster.g> <CABPp-BEqWX3Nr2HDxwS9d-_QjcKb_jS=fSjsP_Pbutw7-P5gbg@mail.gmail.com>
+ <8315230c-f79c-8027-9711-6e21a4bc25c4@github.com>
+In-Reply-To: <8315230c-f79c-8027-9711-6e21a4bc25c4@github.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 22 Jul 2022 16:18:48 -0700
-Message-ID: <CABPp-BE2391i7syZJUK1Nqjk9VZhSxqto0pb7xBLDZR_fY3FXA@mail.gmail.com>
-Subject: Re: [filter-repo] How to reorder commits
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Fri, 22 Jul 2022 16:25:04 -0700
+Message-ID: <CABPp-BF+8aqysioP_e27Q9kJ02rE2SuSqXu+XphzKWnk5a_Q+A@mail.gmail.com>
+Subject: Re: Question: How to find the commits in the ancestry path of seen
+ down to _and_ including a given topic?
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 21, 2022 at 8:19 AM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
+On Fri, Jul 22, 2022 at 4:06 AM Derrick Stolee <derrickstolee@github.com> wrote:
 >
-> Elijah:
+> On 7/21/22 3:34 PM, Elijah Newren wrote:
+> > On Thu, Jul 21, 2022 at 8:37 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> Elijah Newren <newren@gmail.com> writes:
+> >>
+> >>> A simple question that I'm spinning out of [1]: How can I get `git
+> >>> log` to show the commits in the ancestry path from seen, back to *and
+> >>> including* a given topic (but not commits from unrelated topics)?
+> >>
+> >> Drawing of a sample history, please.
+> >>
+> >> I feel stupid asking this, but I do not think I even understand what
+> >> the question is X-<.
+> >>
+> >> Commits that are ancestors of 'seen' and are descendants of the tip
+> >> of the topic?
+> >
+> > What you said *plus* commits from the topic itself.  From this graph:
+> >
+> >     A---B---C---J---K <-- main
+> >             |\       \
+> >             | \       N---------------O---P---Q <-- seen
+> >             |  \     /               /
+> >             |   L---M  <-- topic    /
+> >              \                     /
+> >               D---E---F---G---H---I  <-- other_topic
+> >
+> > I want the commits L-Q.  If I run
 >
-> It seems filter-repo can be used to easily reorder commits, but I'm not able
-> to quite figure out how to do it with callbacks. My goal is:
+> Here is the thing I misunderstood. "topic" is already in "seen", so
+> a seen...topic won't work at all.
 >
-> - keep the cover letter at the start of the series in order to cleanly
->   delineate where their work starts (and thus avoid potential problems with
->   rebases and finding fork-points with base branches, which tends to give
->   newbies trouble)
-> - when the author is ready to submit their work, move the cover letter to the
->   tip of the branch and tag it as "foo-bar-v1"
-> - when the author is ready to work on their changes, they run --reroll and we
->   move the cover letter back to the start of the series, adding any necessary
->   template "changes in vX" entries to it
+> This idea is complicated by the fact that you have a concrete idea
+> of which commits are in "topic", but you really can't do that without
+> a definition of what it's based on. $(git merge-base main topic)
+> would get you C, but then there are multiple paths from Q to C that
+> don't go through topic.
 >
-> (or maybe it will go completely differently -- it's all very fluid right now)
+> You can pull out that "first" commit in topic with this:
 >
-> Basically, is git-filter-repo the right tool to reorder commits, or is it best
-> to go directly with fast-export/fast-import?
+>   git revlist -1 --reverse main..topic
 >
-> Thanks in advance,
-> Konstantin
+> but it only works if topic is a linear branch off of a single point
+> in the history of main.
+>
+> > The closest I seem to be able to get is
+> >
+> >    git log --ancestry-path topic~${commits_in_topic_minus_one}..seen
+> >
+> > which includes all commits I want except the first commit of the topic
+> > branch.
+>
+> If you add --boundary, you should get that last commit as you want.
 
-Generally, it makes no sense to reorder commits in filter-repo, nor
-does it make sense to do so using fast-export/fast-import directly.
-fast-export/fast-import don't "apply a diff" to get a new tree, they
-say "Make these files have these exact contents".  Perhaps an example
-would help to explain what I mean...
+It is nice that there's a way to get at least the commits I want (and
+which is more limited than "C..topic"), but unfortunately this adds 16
+extraneous commits to the 36 I want:
 
-Let's say you have a repository where some commit has a file
-consisting of the numbers 2-9 on separate lines.  Then you had two
-more commits after this one: Commit A has numbers 1-9 (i.e. inserting
-a new first line with a "1"), and commit B has numbers 1-10 (i.e.
-adding "10" to the last line of the file).  If you reverse those two
-commits in the fast-export/fast-import stream, then B will still have
-the numbers 1-10 and A will still have the numbers 1-9 in the file.
-That makes it look like B added both lines, and then A removed the
-final line, and the end result is a file with one less line than you
-had before you reversed the commits.
+    $ git log --oneline --ancestry-path --boundary
+5b893f7d81~11..ac0248bfba | wc -l
+    52
 
-So, generally, I think you should use a rebase-like tool for
-reordering commits rather than anything based on
-fast-export/fast-import.
+I guess what I really want is something like (made up syntax):
 
+    git log --ancestry-path=${tip_of_topic} main..seen
 
-Now, with an empty commit you wouldn't run into these issues and so
-you could get away with reordering.  But there is another issue: in
-the fast-import stream, you have to list all ancestors of a commit
-before you list the commit.  And git-filter-repo parses commits as it
-goes.  So you'd have to cache a commit or range of commits without
-outputting them, and then later dump them once the new parents have
-been output first.  I think a rebase-like tool would probably be
-better for this job, but if you really want to, you could probably get
-this working in filter-repo with a script similar to the ones in
-contrib/filter-repo-demos, but making sure to use steps something like
-the following:
-  * Avoid commits getting dumped by setting "commit.dumped = 1" (a
-"lie" which prevents git-filter-repo from immediately outputting the
-commit after your callback)
-  * Save the commits in a list somewhere
-  * As you are processing the commit(s) that need to be moved earlier
-modify the parents of these commit(s) (i.e. the commit.parents field)
-appropriately
-  * After you've output the commit(s) that needed to be moved earlier,
-iterate through the saved commit(s) and modify their parents and call
-commit.dump() on them.
+and have that be translated as listing commits in main..seen which has
+$tip_of_topic directly within its ancestry path somewhere along the
+line (i.e. either (1) has $tip_of_topic as an ancestor, or (2) has
+$tip_of_topic as a descendant, or (3) is $tip_of_topic).  Then I'd get
+exactly the 36 commits I want.  It'd be backward compatible too, since
+a plain `--ancestry-path` with no stuck argument could just default to
+using the bottom commit(s) in the range, as it does now.
