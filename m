@@ -2,118 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D187EC43334
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 06:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C991C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 07:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231913AbiGVGoz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 02:44:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48218 "EHLO
+        id S233417AbiGVHUF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 03:20:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230089AbiGVGoy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 02:44:54 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419A287C2C
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 23:44:54 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id p81so3042301iod.2
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 23:44:54 -0700 (PDT)
+        with ESMTP id S231742AbiGVHUD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 03:20:03 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7495310B
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 00:20:02 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id k16so3877890pls.8
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 00:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=wK2VAgBcJdJW6d/3nITh7pp46Fl4JA5buqy5ySIdh3E=;
-        b=b/BN093jj0dg1xTkvtl/A7hVaAFcLE2bcPykMvsYiD/CpSgWUs+L0GFxquNhwwV/oK
-         1eRLMbVaGXBCSh+2UIMc+Fx/t5/m6zTqRbq16hgMnD1byL/tIW+REdRtpAv1y4k+Ld4O
-         LG3ubAdfJmeDBPSVGGeZ2VuX5FT/O7SU7xLp08CIXnI4BxK8IL3yS/dVz9BGOtUcMe+t
-         gH5pEMj6t9EWWj7r8IWtqUf/Uw/qQcikM2scdx65NowUlPdOMI2sAjg9erk6MFEIWpi8
-         03k0Uju/vuH7WG/PqtUWccc9BzJVJ1vOeigiM5oFYNJcHaravA3AF4d2nX2+1qii6ZOm
-         To9g==
+        bh=DxaECAExdW7tdhSV0Aw0pZtWJ6HPzRn3AVX3hp3/COs=;
+        b=Ma4W/W+daslvDYYptWwtuHPUQ+g4A0GcL7OjqxZxJlR4i7+ZUCXwn/WbsPJLXTisFh
+         sTJDxybcHTDWJz+f8PdLDvUNaLm5k/AsTxsVrP2vzI8YqWk1dkeZSbfwVC0BcbQaDLGW
+         S20aw1qQRhBjkzL5jedgBgr2dgKOdVmDTOAxjlGFkE5o+h2UIPqXEJ0OEKlOEaoqtz1w
+         aEtnu+PWcG/oYEgdq/8O/P4S7aZcAxrnjN1+L+seuy6zjVue0G8F18xwBycnZdgbSpcC
+         6LpYgUORCSRRsbtRL6mSHAgu+bHH1GCbyuh7tb/3lA7G9ApEyyENKkwSUWAKh9cHD0kX
+         m6rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wK2VAgBcJdJW6d/3nITh7pp46Fl4JA5buqy5ySIdh3E=;
-        b=Y6lt2A3fN4gHZ929cEN9M2lAivxYp+oMnyORdUPvkPhWtiMfI8aF4B/3dRSXqK+5GB
-         bBRU4/JcLPdrxh/K9mWIhfrjRGd4gySfbK7vcGNsUDrnaFT3/M7IJ+U6bogpaJsSjuA4
-         X8i0AU+0rJPy1HfwcAZycOX+mUHohOMS9bW9KhWKVjqkxlO4m85QsL7p163aw12Wlcri
-         4Im3QJ1MSlj2fRObYAlrL71uS1u961JTYC5kKoFmN7xF0mXyMqgXZ/ani+Id7u2yu/VR
-         5BV108/Zl+xO4V2/zS9RPkE1pnwMFD9M0Rbx3eOObKmgaXyGv3yB+eQuYoAXMRaBMncL
-         +fEg==
-X-Gm-Message-State: AJIora/nmhDol5BgtFEZG1kBcAfwtvfDlp3omu/qQdUv6WA90D9psedq
-        ZYGlClOD4bA3WJcXyAvYOZwTjfkAg+dQIEw0BK0=
-X-Google-Smtp-Source: AGRyM1u4aG1YSQNdu0mhp+ivV70Fk0i9fe1Ik85Csxua1Mj+tEe5PSgBODE3X7Frc08B48H8YwuN4XY24aH+Jxf7IPM=
-X-Received: by 2002:a6b:b883:0:b0:67b:a3a5:7c6 with SMTP id
- i125-20020a6bb883000000b0067ba3a507c6mr855401iof.135.1658472293690; Thu, 21
- Jul 2022 23:44:53 -0700 (PDT)
+        bh=DxaECAExdW7tdhSV0Aw0pZtWJ6HPzRn3AVX3hp3/COs=;
+        b=j2Pq1VTL0JjMFuEHnLUeaf9P8PXIL2KFm/gsYF6Cro7xEImDoibiyIJmfAZ19UXWKn
+         WMnHSgeCRn1W79BHEE6mTYq27IR9mh7FryrLZBV7QazsqLUEz3PSj0Df4uZBdYjoSpV5
+         Uh+1LGPgo3i7Fy2PA2dubR3EDzcZctxe+KemDU7+Zrscwh0faYYt9ZwAYKTbwfsJ+xiA
+         ld0aBsGSggqxHfCfb9m5AmB8kzyztBbf6aspeFzjVQKvDTyPVO2VaUFUVC+LCfcLKtkH
+         bR/iShLJ6SIDEwySEpTZwzUWIQcwd7kNyya0unY9H4yt6ReFBBjjhcbKBSj24Z73ApMd
+         w2ww==
+X-Gm-Message-State: AJIora+k1KkosMqb/NZ/ZeAREcGsY6GSbZ/DGpmlfXnjawls9pFGD2Eo
+        HQA0a0mvAr7M3lvZCPnOpyqQiH25gc1aisLlDQSiTPmD8Dg=
+X-Google-Smtp-Source: AGRyM1uUScGhaEnJ6R4/4N9NG/U+HrFb6mhaYIN3+JOq0jFeDGy6iODAP96/1C8UvMqu1lPmzBcHLlzGvsA/3MOxZqA=
+X-Received: by 2002:a17:90a:887:b0:1f2:af6:4d20 with SMTP id
+ v7-20020a17090a088700b001f20af64d20mr15853718pjc.190.1658474401886; Fri, 22
+ Jul 2022 00:20:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1262.v7.git.1657692472994.gitgitgadget@gmail.com>
- <pull.1262.v8.git.1658334983053.gitgitgadget@gmail.com> <xmqqbktj3ct7.fsf@gitster.g>
-In-Reply-To: <xmqqbktj3ct7.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 22 Jul 2022 14:44:42 +0800
-Message-ID: <CAOLTT8RjLoooT7t+ucFqa9P=8TiVL3M+ZgcEY7qVhRbjB=9OhA@mail.gmail.com>
-Subject: Re: [PATCH v8] ls-files: introduce "--format" option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+References: <xmqqpmi04m1f.fsf@gitster.g> <b908b42b-2cd5-12b2-b47d-abecfb370429@web.de>
+In-Reply-To: <b908b42b-2cd5-12b2-b47d-abecfb370429@web.de>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 22 Jul 2022 09:19:50 +0200
+Message-ID: <CAN0heSrpXq0bKW5E70a421GhDXDFnvT+=txw=rPQJu47n65TSw@mail.gmail.com>
+Subject: Re: rs/mergesort (was: What's cooking in git.git (Jul 2022, #06; Tue, 19))
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B47=E6=9C=8821=E6=97=
-=A5=E5=91=A8=E5=9B=9B 01:37=E5=86=99=E9=81=93=EF=BC=9A
+On Fri, 22 Jul 2022 at 00:14, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 >
-> >       +       git commit -m base
-> >       +'
-> >       +
-> >       +test_expect_success 'git ls-files --format objectmode v.s. -s' '
-> >      -+       git ls-files -s | awk "{print \$1}" >expect &&
-> >      ++       git ls-files -s >files &&
-> >      ++       cut -d" " -f1 files >expect &&
->
-> Either "awk" or "cut" is fine and flipping between them is a bit
-> distracting.  Cutting the pipe into two is a good move.
->
-> But is this testing the right thing?
->
+> Am 20.07.2022 um 03:20 schrieb Junio C Hamano:
+> > * rs/mergesort (2022-07-17) 10 commits
 
-Yes, I am sure about that cut can do the same thing as awk, and it can
-specify its delimiter.
+> A confirmation that performance improves or at least doesn't get worse
+> on other platforms as well would be a good.  The numbers I gave in the
+> commit messages were for macOS 12.4 on an M1.
+>
+> I managed to install the Git SDK on a Windows 11 laptop with a Ryzen
+> 5800H, and it gives me mixed results:
 
-> > +test_expect_success 'git ls-files --format objectmode v.s. -s' '
-> > +     git ls-files -s >files &&
-> > +     cut -d" " -f1 files >expect &&
-> > +     git ls-files --format=3D"%(objectmode)" >actual &&
-> > +     test_cmp expect actual
-> > +'
->
-> It only looks at the first column of the "-s" output, and we are
-> implicitly assuming that the order of output does not change between
-> the "-s" output and "--format=3D<format>" output.  I wonder if it is
-> more useful and less error prone to come up with a format string
-> that 100% reproduces the "ls-files -s" output and compare the two,
-> e.g.
->
->         format=3D"%(objectmode) %(objectname) %(stage)    %(path)" &&
->         git ls-files -s >expect &&
->         git ls-files --format=3D"$format" >actual &&
->         test_cmp expect actual
->
+FWIW, here are my measurements on a Core i7-8700T running Ubuntu 20.04:
 
-See test case: 'git ls-files --format imitate --stage' which just do such t=
-hing,
-maybe I should change its name to 'git ls-files --format v.s. -s'?
+On e72d93e88c (The fifth batch, 2022-07-19):
+0071.12: llist_mergesort() unsorted    0.42(0.38+0.03)
+0071.14: llist_mergesort() sorted      0.17(0.14+0.02)
+0071.16: llist_mergesort() reversed    0.16(0.10+0.05)
 
-> I do not know if the $format I wrote without looking at the doc is
-> correct, but you get the idea.
->
-> Thanks.
->
->
+Benchmark 1: t/helper/test-tool mergesort test
+  Time (mean =C2=B1 =CF=83):     143.9 ms =C2=B1   0.4 ms    [User: 143.6 m=
+s, System: 0.3 ms]
+  Range (min =E2=80=A6 max):   143.1 ms =E2=80=A6 144.7 ms    20 runs
 
-Thanks
+After patch 1 (mergesort: unify ranks loops):
+0071.12: llist_mergesort() unsorted    0.41(0.36+0.05)
+0071.14: llist_mergesort() sorted      0.17(0.12+0.05)
+0071.16: llist_mergesort() reversed    0.16(0.12+0.04)
+
+Benchmark 1: t/helper/test-tool mergesort test
+  Time (mean =C2=B1 =CF=83):     141.5 ms =C2=B1   0.5 ms    [User: 141.1 m=
+s, System: 0.5 ms]
+  Range (min =E2=80=A6 max):   141.0 ms =E2=80=A6 142.9 ms    21 runs
+
+After patch 2 (mergesort: tighten merge loop):
+0071.12: llist_mergesort() unsorted    0.42(0.39+0.03)
+0071.14: llist_mergesort() sorted      0.17(0.10+0.06)
+0071.16: llist_mergesort() reversed    0.16(0.11+0.04)
+
+Benchmark 1: t/helper/test-tool mergesort test
+  Time (mean =C2=B1 =CF=83):     142.6 ms =C2=B1   0.9 ms    [User: 142.1 m=
+s, System: 0.6 ms]
+  Range (min =E2=80=A6 max):   141.9 ms =E2=80=A6 145.3 ms    21 runs
+
+After patch 5 (test-mergesort: use DEFINE_LIST_SORT):
+0071.12: DEFINE_LIST_SORT unsorted     0.40(0.35+0.04)
+0071.14: DEFINE_LIST_SORT sorted       0.16(0.11+0.04)
+0071.16: DEFINE_LIST_SORT reversed     0.16(0.11+0.05)
+
+Benchmark 1: t/helper/test-tool mergesort test
+  Time (mean =C2=B1 =CF=83):     123.3 ms =C2=B1   0.5 ms    [User: 123.0 m=
+s, System: 0.4 ms]
+  Range (min =E2=80=A6 max):   122.7 ms =E2=80=A6 125.2 ms    23 runs
+
+Martin
