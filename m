@@ -2,91 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72192C43334
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 19:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48989C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 19:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236527AbiGVTlJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 15:41:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42536 "EHLO
+        id S236553AbiGVTnO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 15:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236523AbiGVTlI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 15:41:08 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42864643EE
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 12:41:07 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9319819B2B1;
-        Fri, 22 Jul 2022 15:41:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=H8rfCGVZzXB4
-        B8pYt1Q6b7omu05OK2qWyX0aTFY03c8=; b=jKPDNXW/YBQOu8ymqTflQ/tL5j8P
-        Ma16JpRk0bXz78tNr8gslyCEIgnfMsMDui4+q+bjkeyW6OmICUqLtydumO+dxnCG
-        7lJaXg6Ga1dih/BWvsxKlHx8xS9hcveGUSlaUAqX7IDi4WsEuvCvN6CwbsUucpSF
-        OW7MCbPxwi5+B88=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8CB1319B2B0;
-        Fri, 22 Jul 2022 15:41:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 36F4D19B2AF;
-        Fri, 22 Jul 2022 15:41:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Joey Hess <id@joeyh.name>, git@vger.kernel.org,
-        Tao Klerks <tao@klerks.biz>
-Subject: Re: git write-tree segfault with core.untrackedCache true and
- nonexistent index
-References: <YtrdPguYs3a3xekv@kitenet.net>
-        <20220722192559.718264-1-martin.agren@gmail.com>
-Date:   Fri, 22 Jul 2022 12:41:01 -0700
-In-Reply-To: <20220722192559.718264-1-martin.agren@gmail.com> ("Martin
-        =?utf-8?Q?=C3=85gren=22's?= message of "Fri, 22 Jul 2022 21:25:59 +0200")
-Message-ID: <xmqq35etc4vm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236535AbiGVTnN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 15:43:13 -0400
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B4947822C
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 12:43:08 -0700 (PDT)
+Received: by mail-oo1-xc29.google.com with SMTP id p5-20020a4a4805000000b0043548dba757so1016298ooa.8
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 12:43:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=irjGQ5YkZaU4IT7CgQADlwEpZyQEiOKj2SrpYotObBA=;
+        b=TLG2kqf5phRGaQDarDCBOq8VPvKpacrivlcl04Zs12H+aX0tT2yo8VwoDEqoX0C2/h
+         Sk89wU4gq9R/cFxcnhwhzoc0E0VGPF5WAaX50WfHifeID0bpKX3KPHV1mleiyWUVhNX0
+         bdztK8YcFN2I7JPaaSDms2skN6oqijhevhNNWtjy41teB77FV7ODuepki10/jyaBcg//
+         60PkiQOB/WImqsvb9Se3UvqDLftzR5oGUsFsN+Xa/vvlGgHZByG/XjUerY4IocJvQ/1h
+         qu6H3HPXHw2ztjsI9R/6yuuEvQ/WekkwEx56wJrorEmH2D/EWBB0pzQMJhuCyTsN4uNb
+         ot9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=irjGQ5YkZaU4IT7CgQADlwEpZyQEiOKj2SrpYotObBA=;
+        b=yWMCTi5+4LQpJMald43eJTwfZgHgGUGi9sx3gEqggK5gmnykMxMj00vUTio03YhC1O
+         lJ+JHX2zatsdVlPajqtXI1auMsTxo3AO27IOfgbr3g6Jym6r1nJl5RDcsMUXoLchuuIh
+         iDE4TPcB+dduUhgjCpAyb9o8PFoeLY4Hmpa1zziNMwyAwwWsBiAVbZEiznTT+d6r35mN
+         fG34NXtsXcXzJi4jZ2iMH/MWlPrhUYWMO1yOwC98YHAoRwKjT7kgsJKgxIRShEo6zx6k
+         5sIB3/K5Rp4yWm0RKdEdG4/ToNLU8dNbnr3AsX+R7kq9hTlSx5N9NgxF2hnK9JCIMnOo
+         InJA==
+X-Gm-Message-State: AJIora9erhSRSYDbHrk/l7xzcmKyriQvrd9Pc4u2p5EbESL456Bq4KOL
+        IofPSMnV99WBb50PrI0gZIlAePIhEyGj+w==
+X-Google-Smtp-Source: AGRyM1s+QU9LidvYC73bVGaE8TgZp2bkSMpUnRxis1WPmiY2dhMVa0NzjJpM6J/kMqckXPfpMXgd5g==
+X-Received: by 2002:a4a:b10a:0:b0:435:476c:ad98 with SMTP id a10-20020a4ab10a000000b00435476cad98mr561852ooo.33.1658518986255;
+        Fri, 22 Jul 2022 12:43:06 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.109.17])
+        by smtp.gmail.com with ESMTPSA id w4-20020a4aa444000000b0041ba884d42csm2162093ool.42.2022.07.22.12.43.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Jul 2022 12:43:05 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, larsxschneider@gmail.com,
+        christian.couder@gmail.com
+Subject: [PATCH 0/2] t0021: convert perl script to C test-tool helper
+Date:   Fri, 22 Jul 2022 16:42:48 -0300
+Message-Id: <cover.1658518769.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 387856C8-09F6-11ED-90CB-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+This addresses the "left over bits" comment from [1], converting the
+t0021/rot13-filter.pl script to a C test-tool helper in order to drop
+the PERL dependency from tests using this script.
 
-> I can't help but think that e6a653554b was just unlucky enough to
-> dereference `istate->repo` and that the real issue is that we're missin=
-g
->
-> 	if (!istate->repo)
-> 		istate->repo =3D the_repository;
->
-> in some strategic place a fair bit earlier. It seems to me like the dif=
-f
-> below is just papering over the real bug. It's not obvious to me where
-> that check would want to go, though. Tao, do you have an idea?
+This series builds on top of mt/checkout-count-fix, also adjusting the
+script invocations from that patchset.
 
-I am not Tao, but thanks for starting to analyze the real issue.
+[1]: https://lore.kernel.org/git/xmqqfsj4dhfi.fsf@gitster.g/
 
-It seems that there are two public entry points to dir.c API that
-end up calling new_untracked_cache_flags().
+Matheus Tavares (2):
+  t/t0021: convert the rot13-filter.pl script to C
+  t/t0021: replace old rot13-filter.pl uses with new test-tool cmd
 
-One is read_directory(), which is the only caller of
-validate_untracked_cache() that calls new_untracked_cache_flags().
-The callers of read_directory() are supposed to give istate, and it
-is quite unlikely they are throwing an istate with NULL in
-istate->repo, simply because read_directory() already makes abundant
-use of istate->repo.
+ Makefile                                |   1 +
+ pkt-line.c                              |  13 +-
+ pkt-line.h                              |   2 +
+ t/helper/test-rot13-filter.c            | 396 ++++++++++++++++++++++++
+ t/helper/test-tool.c                    |   1 +
+ t/helper/test-tool.h                    |   1 +
+ t/t0021-conversion.sh                   |  71 ++---
+ t/t0021/rot13-filter.pl                 | 247 ---------------
+ t/t2080-parallel-checkout-basics.sh     |   7 +-
+ t/t2082-parallel-checkout-attributes.sh |   7 +-
+ 10 files changed, 450 insertions(+), 296 deletions(-)
+ create mode 100644 t/helper/test-rot13-filter.c
+ delete mode 100644 t/t0021/rot13-filter.pl
 
-The other one is add_untracked_cache().
-
-Perhaps backtrace to see where the istate came from would quickly
-reveal where the real issue lies?
-
-Thanks.
-
+-- 
+2.37.1
 
