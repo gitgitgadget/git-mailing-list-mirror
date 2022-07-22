@@ -2,90 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3283C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 18:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EA06C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 18:47:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236348AbiGVSkm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 14:40:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54016 "EHLO
+        id S236439AbiGVSri (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 14:47:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236238AbiGVSkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 14:40:39 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49A1613F23
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 11:40:38 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8774D19AB73;
-        Fri, 22 Jul 2022 14:40:37 -0400 (EDT)
+        with ESMTP id S235586AbiGVSrg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 14:47:36 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27DF9A9B9F
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 11:47:35 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 954C41B55C6;
+        Fri, 22 Jul 2022 14:47:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=n+UPzX6r+skhEyqEFTDDyuYpDqXqWrLLKY+p/Q
-        FnA1U=; b=PeK1+yo1SQJxkbWYEcuAvotihniv1rvdLSqYngwYn5fOzeCmpM4gEP
-        Po9lh++OUS1vEnATK8WXIii/DkoBHNazaP7KizptLT6IAFDT+PNfkXvyMWHUCWlU
-        CB7MW+n0orOAMkWigSVbL++lKvppF+2JOdl8CNfspQyocaBqM4qKo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7EEEF19AB72;
-        Fri, 22 Jul 2022 14:40:37 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=NxG8ao+knraX
+        Pkix+VYMQFCQ53+iaLmeVo8oisYxo8Q=; b=Lg9JVE+8SlPgug5t80Wt8Q4uY2Ff
+        KC/Z+SUV+SNazr4rsyIjW7WTzGuBNHq6xXpjnfJ+B8JEnV3F39NsMtLDpt1CmAVZ
+        tKQXFfscUXlFVM1Y+2Jah9V1sUxkAvBX6iufQyShRUZAtqWuMnhkVCcOIdlID5So
+        vTb4yl/IGb9Jn5E=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E69A1B55C5;
+        Fri, 22 Jul 2022 14:47:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.40.190])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 33C5319AB6A;
-        Fri, 22 Jul 2022 14:40:33 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D6D591B55C3;
+        Fri, 22 Jul 2022 14:47:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, vdye@github.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH v1 4/7] mv: check if <destination> is a SKIP_WORKTREE_DIR
-In-Reply-To: <25ca0c62-e3b4-e96a-4c44-285bcfef2143@github.com> (Derrick
-        Stolee's message of "Fri, 22 Jul 2022 08:48:08 -0400")
-References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
-        <20220719132809.409247-5-shaoxuan.yuan02@gmail.com>
-        <95263c88-6894-87bb-4d52-84d8d1cc5671@github.com>
-        <ab96cbe0-f256-ea5e-8356-db11d2b773f4@gmail.com>
-        <25ca0c62-e3b4-e96a-4c44-285bcfef2143@github.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [PATCH v3 02/26] submodule--helper: stop conflating "sb" in
+ clone_submodule()
+References: <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com>
+        <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com>
+        <patch-v3-02.26-32e4ae7ead5-20220721T191249Z-avarab@gmail.com>
+        <xmqqlesmf9or.fsf@gitster.g>
+        <220722.86y1wlqmqr.gmgdl@evledraar.gmail.com>
+Date:   Fri, 22 Jul 2022 11:47:29 -0700
+In-Reply-To: <220722.86y1wlqmqr.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 22 Jul 2022 15:50:32 +0200")
+Message-ID: <xmqq8rolc7cu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-Date:   Fri, 22 Jul 2022 11:40:32 -0700
-Message-ID: <xmqqczdxc7of.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C4D0796A-09ED-11ED-9295-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BDC401C2-09EE-11ED-AFB3-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->>> Good that you are freeing this here. You might also want to set it to NULL
->>> just in case.
->> 
->> I was using the `FREE_AND_NULL()` macro, but I wasn't sure since other
->> places in 'git-mv' only use `free()`. Though I think it is better to
->> `FREE_AND_NULL()`.
+>> This looks like a roundabout way to say xstrfmt().
 >
-> free() is generally the way to go if it is clear that the variable
-> is about to go out-of-scope and could not possibly be referenced
-> again. Since there is a lot more of the current code block to go,
-> nulling the variable is good defensive programming.
+> Yes, I can fix this and others while I'm at it, but a lot of things lik=
+e
+> that in this code are funny uses of APIs that we could improve.
+>
+> I think it's probably best to just leave these for now.
 
-NULLing it out is better when a potential misuse of the pointer
-after it got freed will be caught by dereferencing NULL.
-
-There however are pointer members of structures wher they represent
-optional data.  Access to such a member goes like so:
-
-	if (structure->optinal_member)
-		do_things(structure->optional_member);
-
-When you are done using such a structure and clearing it, after
-releasing the resource held by the member, it is better to leave it
-dangling than assigning NULL to it.  If somebody reuses that
-structure and the control enters a codepath like the above one to
-use the "optional" pointer, uncleared dangling pointer will likely
-be caught at runtime; setting it to NULL will paper over it.  We've
-seen many bugs caused by a premature releasing of a member that was
-hidden exactly by such a use of FREE_AND_NULL() few relases ago.
-
-Thanks.
+Agreed.  We could instead have a separate series to fix API usage
+before these and then build leak-plugging on top, or the other way
+around, and in general "clean then plug" would make it easier to
+review the plugging patches (simply because it would be working on
+clean code, not code that misuses the API in strange ways), but it
+is too late now.  Lets make sure we do not forget to revisit the API
+misuse but lets avoid mixing it into the series.
