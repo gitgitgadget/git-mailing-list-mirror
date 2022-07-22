@@ -2,129 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64DE5C43334
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 13:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05673C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 13:51:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233798AbiGVNXS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 09:23:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39130 "EHLO
+        id S233627AbiGVNva (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 09:51:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbiGVNXR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 09:23:17 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67FF914093
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:23:16 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id b10so4378237pjq.5
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:23:16 -0700 (PDT)
+        with ESMTP id S229605AbiGVNv3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 09:51:29 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32C42743F5
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:51:28 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id v12so5930537edc.10
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:51:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=reply-to:subject:to:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=pN1dbpZSwg7+7VvbMcL3wgphNgvUAWPnuuM3ieQL7GM=;
-        b=k9139zFZqYdSyqK7LgVkHcE5oHmDQjH++tRUQgFKMOnEnOT1BYRQgLxXSrhWWGwDXJ
-         58X7EBvw7Od5j9ZXsdkNx3IvUS8/gY8jULfkX8KNHXrEyT5BAcGz4iInJs6hY931wCcq
-         eGoJnaMZjUD+5YwEKG8UNaC+tnap82VnzzppzWoYv7nAperrb677DZ9wUAkYkwNTfZxy
-         6qDFP7len6zBLwy41kX8ovXIIiUEiEMvkhGpnN8fuEys84/YqNPAR18gYFwx0SXvtjv9
-         w1CAUysMMi7R5XMBytL917l0TbzIfx8H9ObjX/H3jsJL6wN9jkQUZ9XRMEF71+DsB7MX
-         JT1Q==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=v2TDGTpjWTVqzDj8/YNNylZ1oF3bUiwe+DNW186zmBU=;
+        b=K9TKF5pnihswfmtfxieniS142mx/O3NJNvlCJWUGNcpVHL+WHUmlmbcjFnA2S0chcR
+         S6arwH0m5ZtGBj4TT1qP0rwC+BiA0IXWDdu5ZjCMMArH6j/lED/0FS9OfuZb6XZPs56u
+         B35/UlgBO9QOX0sMD277Bj2k9UuPnG83vLQX7cT5L0fw2bbSiQQBsvSFpM+vqAuTXhVY
+         lmtQ6MvQi7dFi35mUC8BWq7Xndt5ytgTIY65jPsNY191zU6ThNONvBeXRNeGWMN2sDrX
+         ecGlh3vkoqRN3/jOOZhPgKG+/ywFIuW+pqz8aVDdxPvQH4B9BKHhuYQRr6B98o+/1M/q
+         a12A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=pN1dbpZSwg7+7VvbMcL3wgphNgvUAWPnuuM3ieQL7GM=;
-        b=kxmacJhV4lE6mdNJAPXF5s9ffjkFQspv2AoRACn5IMdVQNmsBd6g4/U2EJkufQd4D0
-         IxbVY1n5duqYxKpVYxDWxw7eEhVn862Td6q0kLlPPoP4qy8q0tPyN9cvck2xZqPkKK21
-         ceAOSD/250xhnbZNQBxuw/fNNe5DLAyfuPKpM5RFBP8fA73wAplV8x67dXdjg2/ZHb+4
-         AJLub540cw6ZxVoXGdutl+CP7/usBD8zgteHDEJleDNZNDMCg7pd2oLEU2vMotrKfIdy
-         vOpabHb746njvZSlZ70bbeRDdUmxDlRdARXqlNM8OXxB5MoLKTV/U3tRoUoe1ZGmmgbZ
-         o6rA==
-X-Gm-Message-State: AJIora9pstXXZJAmjMt4ne4DEbSfAvsSVjX8xo5a8tp17Qo1fGCDHl9F
-        BYbI9hCfeZZ2ji777qhHeLY6k5eBfMOPag==
-X-Google-Smtp-Source: AGRyM1uDaxEAc9bLV9zMFK3jp22tVjFClc/GfPZM22Jzb8uxdV2SuqPWlyJR3n+bLdMwAFDPJlHQdQ==
-X-Received: by 2002:a17:902:ec90:b0:16d:2e8f:27cb with SMTP id x16-20020a170902ec9000b0016d2e8f27cbmr381889plg.12.1658496194736;
-        Fri, 22 Jul 2022 06:23:14 -0700 (PDT)
-Received: from cosmos.melik.windwireless.net (melik.windwireless.net. [206.63.237.146])
-        by smtp.gmail.com with ESMTPSA id g126-20020a625284000000b00518285976cdsm3889213pfb.9.2022.07.22.06.23.13
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Jul 2022 06:23:14 -0700 (PDT)
-Reply-To: davidnchmelik@gmail.com
-Subject: Re: 'git clone,' build makes user non-writable files (should be
- option keep user-writable)
-To:     git-l <git@vger.kernel.org>
-References: <822787da-bc26-0d72-a5c4-808a3d10126e@gmail.com>
- <YtPtQ6qsIviyTBF2@zbox.drbeat.li>
-From:   David Chmelik <dchmelik@gmail.com>
-Message-ID: <158251f2-9fa4-45b7-4c24-907c94602b6e@gmail.com>
-Date:   Fri, 22 Jul 2022 06:23:05 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=v2TDGTpjWTVqzDj8/YNNylZ1oF3bUiwe+DNW186zmBU=;
+        b=y98/Rb811KoBP3qV32yIYn33EI9JvYTYzJVCIZiooIPhopvzLAGA2GkV6NRPrUhMny
+         4yIu236Blydlpnt/JhpU15t9j1yQS07xPqgCMUc6+ekVZUMZMGF7kPszPWoJDNQGuQdO
+         B0Cd/zgTW+6Icq7SSPmzGpaIDiwJ4oG4iHiZgqn61Y3GlzWyyx+nUrsI8L5afmaId2iV
+         1LzL1qklQ7y65eIqdpNEfIREJJtPIVRKgIYmuBI5XiThNIdsnua1V8SLVzrL9EUXO3TL
+         HrfOOQi+9FayXrPLUqGcqPutrNXgn+Sq8FJdhzng/JIfGIJetbbS6FvVA+OY7LsRepkg
+         tOaQ==
+X-Gm-Message-State: AJIora81Z9ZRTmlMRpfAI0V9s1iuCzM709ILnktLjAWw8gscKBfYYWN8
+        UCoVRRZ9M/FJ+ohLpXsTAH4=
+X-Google-Smtp-Source: AGRyM1tzGOZ7vO1PSh/oompwcY3o0yGDF+O2/rTL1Yb/nDZNnzbei9jXHHVGg0oyCjMzDjdGbKgI7A==
+X-Received: by 2002:a05:6402:529a:b0:43b:b8e4:fca5 with SMTP id en26-20020a056402529a00b0043bb8e4fca5mr821617edb.344.1658497886433;
+        Fri, 22 Jul 2022 06:51:26 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id ej22-20020a056402369600b00437d3e6c4c7sm2564647edb.53.2022.07.22.06.51.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Jul 2022 06:51:25 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oEt3s-005L8u-VN;
+        Fri, 22 Jul 2022 15:51:24 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [PATCH v3 02/26] submodule--helper: stop conflating "sb" in
+ clone_submodule()
+Date:   Fri, 22 Jul 2022 15:50:32 +0200
+References: <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com>
+ <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com>
+ <patch-v3-02.26-32e4ae7ead5-20220721T191249Z-avarab@gmail.com>
+ <xmqqlesmf9or.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqlesmf9or.fsf@gitster.g>
+Message-ID: <220722.86y1wlqmqr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <YtPtQ6qsIviyTBF2@zbox.drbeat.li>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/17/22 4:06 AM, Beat Bolli wrote:
-> On Fri, Jul 15, 2022 at 03:35:49AM -0700, David Chmelik wrote:
->> What did you do before the bug happened?
->> 'git clone,' built various software (with gcc, BSD & GNU make, autotools,
->> cmake, etc.)
->>
->> What did you expect to happen?
->> Option: keep cloned/built/etc. files user-writable.
->>
->> What happened instead?
->> Needed chmod or 'sudo rm -rf.'
->>
->> What's different between what you expected and what actually happened?
->> Option: keep cloned/built/etc. files user-writable, otherwise (has been said
->> 15+ years) encourages 'sudo rm -rf.'
->>
->> Anything else you want to add:
->>          I try/test/debug (and report bugs) many software commits but don't
->> commit so need cloned/built/etc. files writable as user & even system-wide
->> options: who hasn't made 'rm -rf' mistakes? (unrelated but someone might
->> claim is: I don't use non-UNIX-like OS that shell alias 'rm -rf' to confirm
->> every file (potentially thousands) and though made my own alias (confirm
->> once) it's longer, sometimes unavailable so don't always use (many people
->> don't)... software should always have user-writable files option.)  Below
->> indicates GNU/Linux but also have often used git on *BSD/Unix.  I'm not on
->> git mailing list but you can CC me all replies.
-> When building software as the current user, the build artefacts are
-> owned by this user.
-Ownership, permissions are different: one can own files yet have zero 
-permission to write/delete and be denied that.  After cloning, 
-archiving, building most/all projects I tried from (hundreds/thousands) 
-git commits I typically/always had zero permission to write/delete some 
-files/directories within--despite owning--which led to more steps to 
-delete and temptation to sudo 'rm -rf' (or preferably alias or script 
-such as 'rm -RfI' (FreeBSD UNIX) or 'rm -rf --interactive=once' (GNU) 
-but may not always be available).
 
-> Are you building the software using Docker containers that run as root?
-I don't use containers.  I noticed some projects' cmake & 'sudo make 
-install' put root-owned files in build directory but doesn't seem to 
-happen with other build systems--especially not plain make (BSD nor GNU 
-nor with autotools)--still-used by almost all projects I try commits from.
-         So, I don't think root is the problem; IIRC usually problem was 
-cloned directories had one or more subdirectories (such as .git* or 
-files/subdirectories further in those) that were/became user 
-non-writeable so I ended up writing a bash function (on SlackWiki.com & 
-docs.Slackware.com) to make git clones user-writable: should be by 
-default (before & after building in .git*, etc.) and/or a 
-well-documented beginner/easy option (is it even an option?) because 
-surely many more people only test than commit.  Instructions say 'git 
-clone URL' assuming someone will commit rather than only test and want 
-to avoid user-non-writeable files (I doubt I even need .git* 
-subdirectories until ever start committing (don't plan to: I only like 
-decimal-numbered tarballs made manually rather than version control) so 
-would rather opt-out).  I don't recall commits from three other/older 
-major version control systems be(com)ing user non-writeable (though all 
-less-used apart from on classic UNIX/*BSD I don't use much anymore 
-besides servers but wish had more hardware support to be more 
-desktop-useable).
+On Thu, Jul 21 2022, Junio C Hamano wrote:
+
+>> +static int clone_submodule(struct module_clone_data *clone_data)
+>> +{
+>> +	char *p;
+>> +	char *sm_gitdir = clone_submodule_sm_gitdir(clone_data->name);
+>> +	char *sm_alternate = NULL, *error_strategy = NULL;
+>> +	struct child_process cp = CHILD_PROCESS_INIT;
+>>  
+>>  	if (!is_absolute_path(clone_data->path)) {
+>> +		struct strbuf sb = STRBUF_INIT;
+>> +
+>>  		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
+>>  		clone_data->path = strbuf_detach(&sb, NULL);
+>
+> This looks like a roundabout way to say xstrfmt().
+
+Yes, I can fix this and others while I'm at it, but a lot of things like
+that in this code are funny uses of APIs that we could improve.
+
+I think it's probably best to just leave these for now.
+
+But I also don't mind adding another commit to this already large series
+to search/replace the relevant strbuf_detach() with xstrfmt()....
+
+Just let me know...
