@@ -2,110 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0C9AC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 13:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64DE5C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 13:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235155AbiGVNUl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 09:20:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37330 "EHLO
+        id S233798AbiGVNXS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 09:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235055AbiGVNUc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 09:20:32 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A303186E6
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:20:31 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-10d867a8358so6257255fac.10
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:20:31 -0700 (PDT)
+        with ESMTP id S229605AbiGVNXR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 09:23:17 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67FF914093
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:23:16 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id b10so4378237pjq.5
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=Fv3oVVEM4SCHXrKj6+Z+WqnOLimdVptVnKh+QjUCQJg=;
-        b=NQBJUy0E9fd5Dy/O4K+flDRPUWydVLx63a1F9GYexZhPvCx8hOSGiOX5oPTP7dzX3I
-         3joqEba0j7zmxir4YB0e7OBg5y9dXOO4cBkzO54m0SlRIwtpNg0PTQ1ND6mnwSBVPY2f
-         XeQ7ChlLZCVQKMIjA+6WAZL4Mo8C9kLkk9/gD6IPmoC8XIYOuOzXF4hwmpmW2whELbOm
-         Spe/4TjDD08cdBmWWOh4n5yASL3MOoCBhRsWYsttdwduDyptseRssCPqigGHXzsIO5Lb
-         2Rul0ZN9GC3nncCfY76ZxjCd/LZj+kJmndM89fcmTWmTJFYLxDg5xmmnSepGjVOITaRe
-         iQxA==
+        d=gmail.com; s=20210112;
+        h=reply-to:subject:to:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=pN1dbpZSwg7+7VvbMcL3wgphNgvUAWPnuuM3ieQL7GM=;
+        b=k9139zFZqYdSyqK7LgVkHcE5oHmDQjH++tRUQgFKMOnEnOT1BYRQgLxXSrhWWGwDXJ
+         58X7EBvw7Od5j9ZXsdkNx3IvUS8/gY8jULfkX8KNHXrEyT5BAcGz4iInJs6hY931wCcq
+         eGoJnaMZjUD+5YwEKG8UNaC+tnap82VnzzppzWoYv7nAperrb677DZ9wUAkYkwNTfZxy
+         6qDFP7len6zBLwy41kX8ovXIIiUEiEMvkhGpnN8fuEys84/YqNPAR18gYFwx0SXvtjv9
+         w1CAUysMMi7R5XMBytL917l0TbzIfx8H9ObjX/H3jsJL6wN9jkQUZ9XRMEF71+DsB7MX
+         JT1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Fv3oVVEM4SCHXrKj6+Z+WqnOLimdVptVnKh+QjUCQJg=;
-        b=lWGGBqtKqa997Ji0mJqQimmpGfXmW5z72SPYq6VuAZ2VARneEgL2rSGPdEnRqav4c2
-         ZSux0Bk1gxwpLll8Lni+PuJrtfCh0z0w+grWtVFoxD2FebbKfQfB6pe7Exx87nEgT9Ub
-         dNke+HLll7t02EzC00O371Lmt/CEz6+u2FwmXMWEm4SWVuGjWtpH2igWeCIqRKZBcU9p
-         bRuU51Jsbyff2mUyCdc1Mnv9IqmSZ7M7MTShpf423Sv8vgizP+Z5ulEfAV8+cr0k8Q2L
-         uRQDt0nl40C4zS2vIDwbqRua21fwobeNiwor6cG/hu8k39KAV1AtJiNbRlGsbRjRT78N
-         fquA==
-X-Gm-Message-State: AJIora9mtWVVRy3UPGBuhDhKD1CCOjeLS+16kXXZ47XqAaUYm0mVgwRK
-        LS3h/MuG9aXibTidcpAkD5r8
-X-Google-Smtp-Source: AGRyM1vtD7ZndMFtGHZc7wH1ymcDINElXgJawSgPo1MoBdRZL0MsunLVSACC2UB2QSELtetCqFkyqA==
-X-Received: by 2002:a05:6870:818f:b0:10d:8870:6906 with SMTP id k15-20020a056870818f00b0010d88706906mr6209893oae.35.1658496030642;
-        Fri, 22 Jul 2022 06:20:30 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:89e1:7440:c819:d192? ([2600:1700:e72:80a0:89e1:7440:c819:d192])
-        by smtp.gmail.com with ESMTPSA id q8-20020a4ae648000000b0043540f7701esm1831236oot.31.2022.07.22.06.20.29
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=pN1dbpZSwg7+7VvbMcL3wgphNgvUAWPnuuM3ieQL7GM=;
+        b=kxmacJhV4lE6mdNJAPXF5s9ffjkFQspv2AoRACn5IMdVQNmsBd6g4/U2EJkufQd4D0
+         IxbVY1n5duqYxKpVYxDWxw7eEhVn862Td6q0kLlPPoP4qy8q0tPyN9cvck2xZqPkKK21
+         ceAOSD/250xhnbZNQBxuw/fNNe5DLAyfuPKpM5RFBP8fA73wAplV8x67dXdjg2/ZHb+4
+         AJLub540cw6ZxVoXGdutl+CP7/usBD8zgteHDEJleDNZNDMCg7pd2oLEU2vMotrKfIdy
+         vOpabHb746njvZSlZ70bbeRDdUmxDlRdARXqlNM8OXxB5MoLKTV/U3tRoUoe1ZGmmgbZ
+         o6rA==
+X-Gm-Message-State: AJIora9pstXXZJAmjMt4ne4DEbSfAvsSVjX8xo5a8tp17Qo1fGCDHl9F
+        BYbI9hCfeZZ2ji777qhHeLY6k5eBfMOPag==
+X-Google-Smtp-Source: AGRyM1uDaxEAc9bLV9zMFK3jp22tVjFClc/GfPZM22Jzb8uxdV2SuqPWlyJR3n+bLdMwAFDPJlHQdQ==
+X-Received: by 2002:a17:902:ec90:b0:16d:2e8f:27cb with SMTP id x16-20020a170902ec9000b0016d2e8f27cbmr381889plg.12.1658496194736;
+        Fri, 22 Jul 2022 06:23:14 -0700 (PDT)
+Received: from cosmos.melik.windwireless.net (melik.windwireless.net. [206.63.237.146])
+        by smtp.gmail.com with ESMTPSA id g126-20020a625284000000b00518285976cdsm3889213pfb.9.2022.07.22.06.23.13
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Jul 2022 06:20:30 -0700 (PDT)
-Message-ID: <c34e7106-4409-27db-80b4-44219f5b1518@github.com>
-Date:   Fri, 22 Jul 2022 09:20:26 -0400
+        Fri, 22 Jul 2022 06:23:14 -0700 (PDT)
+Reply-To: davidnchmelik@gmail.com
+Subject: Re: 'git clone,' build makes user non-writable files (should be
+ option keep user-writable)
+To:     git-l <git@vger.kernel.org>
+References: <822787da-bc26-0d72-a5c4-808a3d10126e@gmail.com>
+ <YtPtQ6qsIviyTBF2@zbox.drbeat.li>
+From:   David Chmelik <dchmelik@gmail.com>
+Message-ID: <158251f2-9fa4-45b7-4c24-907c94602b6e@gmail.com>
+Date:   Fri, 22 Jul 2022 06:23:05 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 6/6] fetch: add 'refs/bundle/' to log.excludeDecoration
-Content-Language: en-US
-To:     Josh Steadmon <steadmon@google.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        newren@gmail.com, avarab@gmail.com, dyroneteng@gmail.com,
-        Johannes.Schindelin@gmx.de
-References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
- <pull.1248.v2.git.1656535245.gitgitgadget@gmail.com>
- <a217e9a0640b45d21ef971d6e91cee3f1993f383.1656535245.git.gitgitgadget@gmail.com>
- <YtnJd+jxDXW4L10R@google.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <YtnJd+jxDXW4L10R@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <YtPtQ6qsIviyTBF2@zbox.drbeat.li>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/21/2022 5:47 PM, Josh Steadmon wrote:
-> On 2022.06.29 20:40, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <derrickstolee@github.com>
+On 7/17/22 4:06 AM, Beat Bolli wrote:
+> On Fri, Jul 15, 2022 at 03:35:49AM -0700, David Chmelik wrote:
+>> What did you do before the bug happened?
+>> 'git clone,' built various software (with gcc, BSD & GNU make, autotools,
+>> cmake, etc.)
 >>
->> When fetching from a bundle URI, the branches of that bundle are stored
->> in a different ref namespace: refs/bundles/. This namespace is intended
->> to assist with later 'git fetch' negotiations with a Git server,
->> allowing the client to advertise which data it already has from a bundle
->> URI.
+>> What did you expect to happen?
+>> Option: keep cloned/built/etc. files user-writable.
 >>
->> These references can be confusing for a user when they appear as a
->> decoration in 'git log' output. Add "refs/bundles/" to the multi-valued
->> log.excludeDecoration config value. This is similar to the way
->> "refs/prefetch/" is hidden by background prefetch operations in 'git
->> maintenance' as added by 96eaffebb (maintenance: set
->> log.excludeDecoration durin prefetch, 2021-01-19).
+>> What happened instead?
+>> Needed chmod or 'sudo rm -rf.'
+>>
+>> What's different between what you expected and what actually happened?
+>> Option: keep cloned/built/etc. files user-writable, otherwise (has been said
+>> 15+ years) encourages 'sudo rm -rf.'
+>>
+>> Anything else you want to add:
+>>          I try/test/debug (and report bugs) many software commits but don't
+>> commit so need cloned/built/etc. files writable as user & even system-wide
+>> options: who hasn't made 'rm -rf' mistakes? (unrelated but someone might
+>> claim is: I don't use non-UNIX-like OS that shell alias 'rm -rf' to confirm
+>> every file (potentially thousands) and though made my own alias (confirm
+>> once) it's longer, sometimes unavailable so don't always use (many people
+>> don't)... software should always have user-writable files option.)  Below
+>> indicates GNU/Linux but also have often used git on *BSD/Unix.  I'm not on
+>> git mailing list but you can CC me all replies.
+> When building software as the current user, the build artefacts are
+> owned by this user.
+Ownership, permissions are different: one can own files yet have zero 
+permission to write/delete and be denied that.  After cloning, 
+archiving, building most/all projects I tried from (hundreds/thousands) 
+git commits I typically/always had zero permission to write/delete some 
+files/directories within--despite owning--which led to more steps to 
+delete and temptation to sudo 'rm -rf' (or preferably alias or script 
+such as 'rm -RfI' (FreeBSD UNIX) or 'rm -rf --interactive=once' (GNU) 
+but may not always be available).
 
->> +	git_config_set_multivar_gently("log.excludedecoration",
->> +					"refs/bundle/",
->> +					"refs/bundle/",
->> +					CONFIG_FLAGS_FIXED_VALUE |
->> +					CONFIG_FLAGS_MULTI_REPLACE);
->> +
-> 
-> I dislike the idea of modifying the user's config as a side effect here.
-> Since it's a cosmetic issue, can we drop this patch and figure out
-> better default values for log.excludedecoration?
-
-You're right.
-
-log.excludeDecoration was initially created precisely for enabling it
-within the prefetch maintenance task, but it would be better to change
-which decoration set is shown by default. I'll pull this patch out of
-this series and bring out another one that rethinks this entire space.
-
-Thanks,
--Stolee
+> Are you building the software using Docker containers that run as root?
+I don't use containers.  I noticed some projects' cmake & 'sudo make 
+install' put root-owned files in build directory but doesn't seem to 
+happen with other build systems--especially not plain make (BSD nor GNU 
+nor with autotools)--still-used by almost all projects I try commits from.
+         So, I don't think root is the problem; IIRC usually problem was 
+cloned directories had one or more subdirectories (such as .git* or 
+files/subdirectories further in those) that were/became user 
+non-writeable so I ended up writing a bash function (on SlackWiki.com & 
+docs.Slackware.com) to make git clones user-writable: should be by 
+default (before & after building in .git*, etc.) and/or a 
+well-documented beginner/easy option (is it even an option?) because 
+surely many more people only test than commit.  Instructions say 'git 
+clone URL' assuming someone will commit rather than only test and want 
+to avoid user-non-writeable files (I doubt I even need .git* 
+subdirectories until ever start committing (don't plan to: I only like 
+decimal-numbered tarballs made manually rather than version control) so 
+would rather opt-out).  I don't recall commits from three other/older 
+major version control systems be(com)ing user non-writeable (though all 
+less-used apart from on classic UNIX/*BSD I don't use much anymore 
+besides servers but wish had more hardware support to be more 
+desktop-useable).
