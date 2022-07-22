@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC65CC43334
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 05:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C8EC43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 05:16:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231180AbiGVFQC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 01:16:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51252 "EHLO
+        id S233037AbiGVFQD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 01:16:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231621AbiGVFPx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 01:15:53 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499D2248D9
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 22:15:52 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id x23-20020a05600c179700b003a30e3e7989so1864842wmo.0
-        for <git@vger.kernel.org>; Thu, 21 Jul 2022 22:15:52 -0700 (PDT)
+        with ESMTP id S231735AbiGVFPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 01:15:55 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 473B82494E
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 22:15:53 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id m17so4712171wrw.7
+        for <git@vger.kernel.org>; Thu, 21 Jul 2022 22:15:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8hOFrkxXUiIasWHVohoJoM+SqtUciFu2UG5GIzqdmgU=;
-        b=QhzcS0EjpJu52JI1LqiLWmes3yNAIJ9s2iuAM4kxVDO7ttNkt8AH8N/LKS5VaNpVDm
-         Eanwjtiytt4HYsBB9X9psWCWidH0fZJJIxpPFJe1SKtQBM5Cb6maTvvZItyl6xJZZml0
-         XmGpoTnA1i0YekzypbKkqjCh3XvJZFdzjtUWaQslEPLw15vhNhoGhRRegMXn8UgB45ZY
-         X6Y4P8w4it5+uTLpYURYon4o9p8LxBPEtxD9dgvWhSziFkBQqqiRV+oi2jgo0ED9b2Jn
-         i6z2SUmkTc7jCGk7wImaIKJbIXYG/FUahuT641kEzVwl7yVH9VaUOto8Oj40J3riqm0f
-         XZTQ==
+        bh=9InglnYuYAH/AdHw7kf0W+m4eVbt4/lAXFozLEovVSQ=;
+        b=jE1gPPvUY1P1MUXSbseaZPU+JIQkX17XDx/U+On37bGVektk9oyrnOeKCWul3JY8ab
+         0Gown8Lwt9Ph5JSrcZB1DGHrRlJ33wKT6LybV95+/OQGnwaKduU6eIvLOQrA1cP30Kag
+         RzAh0oaLER4gD0Kams/TUSPaSjjazbWDUaiMasDgIXSi5MSuYBtbykwu/kz9ZviJRRue
+         YDnphQCHFZ8sRVVCp+NAYMELiGrP+uB6mmusKqVHUtKgSigxkg5bM7LDtvBguPXTCELB
+         nFr/RnGNhOJwUHiZm9pXxXfQjnOinDXU9ZY2OdKUbXmCuYK5VitHOiZzSmvd+gx3nl3L
+         ENeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8hOFrkxXUiIasWHVohoJoM+SqtUciFu2UG5GIzqdmgU=;
-        b=ggnf6jNQJndD/tfcuXGEuJm1GPiqB5SuUYzYyBRtBN86ci96mfFApOAr51LhWZi0oS
-         tIaEYw1UVGj8MnnQxxP8ZGIJZtVrSevHtG8c7cvuTYFwWMHbCug+HG5qqx8OMJ4LAH8/
-         WSAynaQcBAnkCwaDeZiNWQUEJEKbc512tX/PkMpjUkpQUvmpjRsNeYX+ZFNyfc64pd68
-         H6iMNMwfgBHQBpMq5PhdY+VVdSZXiVsVMkwTzLTSlH7jwi57WBLRE2wRBlgyFOyaeHDx
-         NVvEYssZ2mkxdzMEvbq5B6M+8rxqdDndiYh5fu75RSO/39w2C1+IR+jPlT3LSAbSCQzU
-         55RA==
-X-Gm-Message-State: AJIora/PegO0nf/yVGRpiVcHxP6X7Fmr8onghiKUqzRg7jjyw3XHBgoN
-        6SOhy/6dxbhRwvoSklz6Vo6IQhe7Iu0=
-X-Google-Smtp-Source: AGRyM1t4DY5UxpKej/IHKsa524/XZ64Gzo8YyFSBzvauXi9Jiz6xyE00ZspK01+L12Cle8muQz1tfA==
-X-Received: by 2002:a05:600c:4f08:b0:3a1:99ed:4f1f with SMTP id l8-20020a05600c4f0800b003a199ed4f1fmr10750143wmq.199.1658466950434;
-        Thu, 21 Jul 2022 22:15:50 -0700 (PDT)
+        bh=9InglnYuYAH/AdHw7kf0W+m4eVbt4/lAXFozLEovVSQ=;
+        b=nIWMz+jpHurGeB4y3fRxifbNbMKp0JGucnjMI6ymvgUOGomsownuaICnt92DSMFqY2
+         dGHObZmhSNz2j0uHKpUdY+2Iig6JP1+YGXjo4sSWrKNkaS/9gFmw4193wGSlzNnjBziB
+         YMLD4eTzpBSRGjIIy96qE24Mi5jAsdrE5pZmw2/qh7mCMgMVqUS9wW0vtIFEwnn4yVuJ
+         4bUH01U2BEu4qYSfDkJggMtQ9jGBL7f+DilzDjy8PSGYSp1irl2g6FZ2xQizS8mxqm2N
+         vPozgOT3l9DCwT0LOQDZ7xUaIHa9xDkg/auIwNTeODwh9JW7naj4r3A2C//d0gwKv5wz
+         xgdQ==
+X-Gm-Message-State: AJIora8AHUVD6NF7NjHfmfVqHRqsBFNlftJ1xq6j953w/LWXk5Rz47m9
+        F9LimOMIBO/cpwb+lAc49MypaQ3FV40=
+X-Google-Smtp-Source: AGRyM1tYxMAh50kSR3AwY3t44NncDYuThKrKvbWwZin7XzXr0hQWW+h34TCQrPourL9bZNeLhSKYVg==
+X-Received: by 2002:a5d:588f:0:b0:21d:a516:f57b with SMTP id n15-20020a5d588f000000b0021da516f57bmr1085177wrf.685.1658466951512;
+        Thu, 21 Jul 2022 22:15:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d6-20020a5d6446000000b0021db2dcd0aasm4258504wrw.108.2022.07.21.22.15.49
+        by smtp.gmail.com with ESMTPSA id k6-20020a5d5186000000b0021e571a99d5sm2964204wrv.17.2022.07.21.22.15.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 22:15:49 -0700 (PDT)
-Message-Id: <ad5354c219cc266972d4ea37a7e0acf9a981ffec.1658466942.git.gitgitgadget@gmail.com>
+        Thu, 21 Jul 2022 22:15:51 -0700 (PDT)
+Message-Id: <6212d572604cd8ec5c57ab0c66da53bd95ed6005.1658466942.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1231.v4.git.1658466942.gitgitgadget@gmail.com>
 References: <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
         <pull.1231.v4.git.1658466942.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Jul 2022 05:15:41 +0000
-Subject: [PATCH v4 6/7] merge: ensure we can actually restore pre-merge state
+Date:   Fri, 22 Jul 2022 05:15:42 +0000
+Subject: [PATCH v4 7/7] merge: do not exit restore_state() prematurely
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,68 +71,123 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Merge strategies can:
-  * succeed with a clean merge
-  * succeed with a conflicted merge
-  * fail to handle the given type of merge
+Previously, if the user:
 
-If one is thinking in terms of automatic mergeability, they would use
-the word "fail" instead of "succeed" for the second bullet, but I am
-focusing here on ability of the merge strategy to handle the given
-inputs, not on whether the given inputs are mergeable.  The third
-category is about the merge strategy failing to know how to handle the
-given data; examples include:
+* Had no local changes before starting the merge
+* A merge strategy makes changes to the working tree/index but returns
+  with exit status 2
 
-  * Passing more than 2 branches to 'recursive' or 'ort'
-  * Passing 2 or fewer branches to 'octopus'
-  * Trying to do more complicated merges with 'resolve' (I believe
-    directory/file conflicts will cause it to bail.)
-  * Octopus running into a merge conflict for any branch OTHER than
-    the final one (see the "exit 2" codepath of commit 98efc8f3d8
-    ("octopus: allow manual resolve on the last round.", 2006-01-13))
+Then we'd call restore_state() to clean up the changes and either let
+the next merge strategy run (if there is one), or exit telling the user
+that no merge strategy could handle the merge.  Unfortunately,
+restore_state() did not clean up the changes as expected; that function
+was a no-op if the stash was a null, and the stash would be null if
+there were no local changes before starting the merge.  So, instead of
+"Rewinding the tree to pristine..." as the code claimed, restore_state()
+would leave garbage around in the index and working tree (possibly
+including conflicts) for either the next merge strategy or for the user
+after aborting the merge.  And in the case of aborting the merge, the
+user would be unable to run "git merge --abort" to get rid of the
+unintended leftover conflicts, because the merge control files were not
+written as it was presumed that we had restored to a clean state
+already.
 
-That final one is particularly interesting, because it shows that the
-merge strategy can muck with the index and working tree, and THEN bail
-and say "sorry, this strategy cannot handle this type of merge; use
-something else".
+Fix the main problem by making sure that restore_state() only skips the
+stash application if the stash is null rather than skipping the whole
+function.
 
-Further, we do not currently expect the individual strategies to clean
-up after themselves, but instead expect builtin/merge.c to do so.  For
-it to be able to, it needs to save the state before trying the merge
-strategy so it can have something to restore to.  Therefore, remove the
-shortcut bypassing the save_state() call.
+However, there is a secondary problem -- since merge.c forks
+subprocesses to do the cleanup, the in-memory index is left out-of-sync.
+While there was a refresh_cache(REFRESH_QUIET) call that attempted to
+correct that, that function would not handle cases where the previous
+merge strategy added conflicted entries.  We need to drop the index and
+re-read it to handle such cases.
 
-There is another bug on the restore_state() side of things, so no
-testcase will be added until the next commit when we have addressed that
-issue as well.
+(Alternatively, we could stop forking subprocesses and instead call some
+appropriate function to do the work which would update the in-memory
+index automatically.  For now, just do the simple fix.)
 
+Also, add a testcase checking this, one for which the octopus strategy
+fails on the first commit it attempts to merge, and thus which it
+cannot handle at all and must completely bail on (as per the "exit 2"
+code path of commit 98efc8f3d8 ("octopus: allow manual resolve on the
+last round.", 2006-01-13)).
+
+Reported-by: ZheNing Hu <adlternative@gmail.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/merge.c        | 10 ++++++----
+ t/t7607-merge-state.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 4 deletions(-)
+ create mode 100755 t/t7607-merge-state.sh
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index f807bf335bd..11bb4bab0a1 100644
+index 11bb4bab0a1..7fb4414ebb7 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -1686,12 +1686,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	 * tree in the index -- this means that the index must be in
- 	 * sync with the head commit.  The strategies are responsible
- 	 * to ensure this.
-+	 *
-+	 * Stash away the local changes so that we can try more than one
-+	 * and/or recover from merge strategies bailing while leaving the
-+	 * index and working tree polluted.
- 	 */
--	if (use_strategies_nr == 1 ||
--	    /*
--	     * Stash away the local changes so that we can try more than one.
--	     */
--	    save_state(&stash))
-+	if (save_state(&stash))
- 		oidclr(&stash);
+@@ -386,11 +386,11 @@ static void restore_state(const struct object_id *head,
+ 	const char *args[] = { "stash", "apply", "--index", "--quiet",
+ 			       NULL, NULL };
  
- 	for (i = 0; !merge_was_ok && i < use_strategies_nr; i++) {
+-	if (is_null_oid(stash))
+-		return;
+-
+ 	reset_hard(head, 1);
+ 
++	if (is_null_oid(stash))
++		goto refresh_cache;
++
+ 	args[4] = oid_to_hex(stash);
+ 
+ 	/*
+@@ -399,7 +399,9 @@ static void restore_state(const struct object_id *head,
+ 	 */
+ 	run_command_v_opt(args, RUN_GIT_CMD);
+ 
+-	refresh_cache(REFRESH_QUIET);
++refresh_cache:
++	if (discard_cache() < 0 || read_cache() < 0)
++		die(_("could not read index"));
+ }
+ 
+ /* This is called when no merge was necessary. */
+diff --git a/t/t7607-merge-state.sh b/t/t7607-merge-state.sh
+new file mode 100755
+index 00000000000..fc33d57357b
+--- /dev/null
++++ b/t/t7607-merge-state.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++
++test_description="Test that merge state is as expected after failed merge"
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++. ./test-lib.sh
++
++test_expect_success 'set up custom strategy' '
++	test_commit --no-tag "Initial" base base &&
++
++	for b in branch1 branch2 branch3
++	do
++		git checkout -b $b main &&
++		test_commit --no-tag "Change on $b" base $b || return 1
++	done &&
++
++	git checkout branch1 &&
++	# This is a merge that octopus cannot handle.  Note, that it does not
++	# just hit conflicts, it completely fails and says that it cannot
++	# handle this type of merge.
++	test_expect_code 2 git merge branch2 branch3 >output 2>&1 &&
++	grep "fatal: merge program failed" output &&
++	grep "Should not be doing an octopus" output &&
++
++	# Make sure we did not leave stray changes around when no appropriate
++	# merge strategy was found
++	git diff --exit-code --name-status &&
++	test_path_is_missing .git/MERGE_HEAD
++'
++
++test_done
 -- 
 gitgitgadget
-
