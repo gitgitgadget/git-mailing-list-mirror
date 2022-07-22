@@ -2,116 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C991C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 07:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 075DCC43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 07:53:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233417AbiGVHUF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 03:20:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46108 "EHLO
+        id S234638AbiGVHxI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 03:53:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231742AbiGVHUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 03:20:03 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7495310B
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 00:20:02 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id k16so3877890pls.8
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 00:20:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DxaECAExdW7tdhSV0Aw0pZtWJ6HPzRn3AVX3hp3/COs=;
-        b=Ma4W/W+daslvDYYptWwtuHPUQ+g4A0GcL7OjqxZxJlR4i7+ZUCXwn/WbsPJLXTisFh
-         sTJDxybcHTDWJz+f8PdLDvUNaLm5k/AsTxsVrP2vzI8YqWk1dkeZSbfwVC0BcbQaDLGW
-         S20aw1qQRhBjkzL5jedgBgr2dgKOdVmDTOAxjlGFkE5o+h2UIPqXEJ0OEKlOEaoqtz1w
-         aEtnu+PWcG/oYEgdq/8O/P4S7aZcAxrnjN1+L+seuy6zjVue0G8F18xwBycnZdgbSpcC
-         6LpYgUORCSRRsbtRL6mSHAgu+bHH1GCbyuh7tb/3lA7G9ApEyyENKkwSUWAKh9cHD0kX
-         m6rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DxaECAExdW7tdhSV0Aw0pZtWJ6HPzRn3AVX3hp3/COs=;
-        b=j2Pq1VTL0JjMFuEHnLUeaf9P8PXIL2KFm/gsYF6Cro7xEImDoibiyIJmfAZ19UXWKn
-         WMnHSgeCRn1W79BHEE6mTYq27IR9mh7FryrLZBV7QazsqLUEz3PSj0Df4uZBdYjoSpV5
-         Uh+1LGPgo3i7Fy2PA2dubR3EDzcZctxe+KemDU7+Zrscwh0faYYt9ZwAYKTbwfsJ+xiA
-         ld0aBsGSggqxHfCfb9m5AmB8kzyztBbf6aspeFzjVQKvDTyPVO2VaUFUVC+LCfcLKtkH
-         bR/iShLJ6SIDEwySEpTZwzUWIQcwd7kNyya0unY9H4yt6ReFBBjjhcbKBSj24Z73ApMd
-         w2ww==
-X-Gm-Message-State: AJIora+k1KkosMqb/NZ/ZeAREcGsY6GSbZ/DGpmlfXnjawls9pFGD2Eo
-        HQA0a0mvAr7M3lvZCPnOpyqQiH25gc1aisLlDQSiTPmD8Dg=
-X-Google-Smtp-Source: AGRyM1uUScGhaEnJ6R4/4N9NG/U+HrFb6mhaYIN3+JOq0jFeDGy6iODAP96/1C8UvMqu1lPmzBcHLlzGvsA/3MOxZqA=
-X-Received: by 2002:a17:90a:887:b0:1f2:af6:4d20 with SMTP id
- v7-20020a17090a088700b001f20af64d20mr15853718pjc.190.1658474401886; Fri, 22
- Jul 2022 00:20:01 -0700 (PDT)
+        with ESMTP id S229783AbiGVHxH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 03:53:07 -0400
+X-Greylist: delayed 303 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 22 Jul 2022 00:53:06 PDT
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5189A69C
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 00:53:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1658476385;
+        bh=g1P4wDtWrmSTywxleAHqPT3DcHnwKdKyICYDCbIDdBY=;
+        h=X-UI-Sender-Class:Date:From:Subject:To;
+        b=Q8broVqpiFWCOaHgsN0VsKPJEuFjVGjBWmH7Z9NBVFhEqqbNrhzeNCTcd9xxaYvud
+         h77Uz4iznXQlKlWP0UwARzQEUuKf2ax04FQnNSyj9Dp5NMpzLdXVYSygO7JLzZAmU3
+         z0FxMZEwtCF2E01Fa9vijB0EBGyiyhyevjTNuQ/U=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.0.52] ([95.223.75.100]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mfc4g-1nZ7yk0Wjo-00g7jq for
+ <git@vger.kernel.org>; Fri, 22 Jul 2022 09:48:02 +0200
+Message-ID: <99c80fc2-0f94-a607-ca71-c45961c07e2b@web.de>
+Date:   Fri, 22 Jul 2022 09:48:01 +0200
 MIME-Version: 1.0
-References: <xmqqpmi04m1f.fsf@gitster.g> <b908b42b-2cd5-12b2-b47d-abecfb370429@web.de>
-In-Reply-To: <b908b42b-2cd5-12b2-b47d-abecfb370429@web.de>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 22 Jul 2022 09:19:50 +0200
-Message-ID: <CAN0heSrpXq0bKW5E70a421GhDXDFnvT+=txw=rPQJu47n65TSw@mail.gmail.com>
-Subject: Re: rs/mergesort (was: What's cooking in git.git (Jul 2022, #06; Tue, 19))
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Content-Language: en-US
+From:   Claudio Ebel <claudio.ebel@web.de>
+Subject: =?UTF-8?Q?Changed_diff3_view_from_2=2e36_=e2=86=92_2=2e67_for_vimdi?=
+ =?UTF-8?Q?ff?=
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:AT1V7ULQFIBMzP7+MLtuAxdTTwxhbc7n36CuspNzbEwbCYbPJdW
+ 9nPEPPh3tHrICpTTYekx/saNtKQTQn9Okk6vuU5xGQ54biCSjGdlEauTDdZQwzOk4SmPZ1g
+ p3p1UVuoF6lX6Pm7w+CfErEp3248cvuU8KGPu3IZD8gRqx0Z9/0kmU5hSq6AoppDjDP7/Sg
+ p5mLk6UUoqoSfN6kgeB9Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dEcDAtniovk=:I9VkZS/mYxi+ZFtdShkcQ3
+ //4jj3vKJLROlOOjBnTBxFFCk/pfN7lMRE8GoDDWGHIPhgZz30q8sciNul0ULD23KoYn4Ob62
+ 09offSvK/bv6y5CqWLaH5SpDnm+ju5jir7i67e9v4sM/vGvGa+G6MAeGy1O/CFt8bKQpBsp5D
+ 2588Ei/Ec5P+RoCwelYEf5fwdAx12XZ0b9Nlfyw2gIEqR50u6zfC4Kpo/4lgbc99lZykaXd3B
+ gn9je6HL5/uuWUYA4b6OYxCR5/Akolw7dpcLOwXvv9XplLxkS6W15uvErBW4alArujstDIp7n
+ Mk6DscPPwgRUgVb1UP2xf0iOh4NpXLh9o1OZ2BO9zM84iX3MF/HvjMUohqKtMRkrIBAI+M5sI
+ VjxXK+ZtxCnUw/bXal5ti3Kf8WtRqPeoYYO6bNY4PrdmRsd4JQiryZIUktztSJodU0amNl+l5
+ GwCaUA9h6SFMzwKHN3bjWUhdZZxg+U4PsE5ro0dKv1QNEp1XIl1OD3K3RCHE7vr7oRe/138Z8
+ kOjOlKqa1SwPjo5oD/32ywNnJsZBahygN1FCyqI3YKLRMo13rOs4WZ2Yg5/XoWDcsSHYspTay
+ eN7aJrrmmgSbXs/ZwAdnlBwGZ86rjkqu00QXWgmf517yQmm1d0k/25fouI7TVRzDjy1INq0cP
+ e/iZzc2ZNT72dJHyHPjqmmevJmntIk+DsvDT2XYviwDook6sqKgjtg73nmf/NGK1QIrqr0cZa
+ 7NgH1T6g9chGG4yqlkjcSozfme4es+E2KlcV/9yMgdW984QMnjt17Q5btGs5ZMH+vAGH+h7tx
+ rNXOIZKayjX+QpqAkmJUa8Iikuspc3kldwOlFWeAiJ0h4YDOOFgK8WtVIokPPkKKWdwALfi52
+ AKPA9hOiTB6hQZyp/qOkxsdF/DUlAe7yQ0MZTlObshqK4jVBw6uGYnc0cvUNFv4IgJ5MXZ3+r
+ hCwtkkX3nAn9XoMawneJjPae0N3DjSyDZx5/KRyxoNIHejU39Cpq/uvR1OmU04JbqnGjsWzwF
+ g4PWEzZHYYlzFhbBSNEypUmt5GRdb9xn0vRr/n9Yrr8wjl3bX/bq1sDBYyNG46QCP+O69aUpE
+ HCRzlswowR+rm+8WhNUe5PS5BBINSq0wYDYM/Q3XMjrSu0bQtP3Y7viGQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 22 Jul 2022 at 00:14, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->
-> Am 20.07.2022 um 03:20 schrieb Junio C Hamano:
-> > * rs/mergesort (2022-07-17) 10 commits
+Hi all,
 
-> A confirmation that performance improves or at least doesn't get worse
-> on other platforms as well would be a good.  The numbers I gave in the
-> commit messages were for macOS 12.4 on an M1.
->
-> I managed to install the Git SDK on a Windows 11 laptop with a Ryzen
-> 5800H, and it gives me mixed results:
+when solving a merge conflict using Git and Vim as mergetool, I get a tota=
+lly different view than I expected and am used to. In the past, I followed=
+ this blog post (https://www.rosipov.com/blog/use-vimdiff-as-git-mergetool=
+/), where the result is a view with four windows: LOCAL | BASE | REMOTE an=
+d then the file below. Now I get four windows as well, but LOCAL at the to=
+p and then LOCAL | LOCAL | file.
 
-FWIW, here are my measurements on a Core i7-8700T running Ubuntu 20.04:
+First I was not able to figure out if the problem lies within Git or Vim. =
+I removed my global .gitconfig as well as the .vimrc but neither helped. W=
+hat finally helped was to disguise the HOME directory for Git via this com=
+mand:
 
-On e72d93e88c (The fifth batch, 2022-07-19):
-0071.12: llist_mergesort() unsorted    0.42(0.38+0.03)
-0071.14: llist_mergesort() sorted      0.17(0.14+0.02)
-0071.16: llist_mergesort() reversed    0.16(0.10+0.05)
+$ git merge octodog
+$ HOME=3D  git mergetool
 
-Benchmark 1: t/helper/test-tool mergesort test
-  Time (mean =C2=B1 =CF=83):     143.9 ms =C2=B1   0.4 ms    [User: 143.6 m=
-s, System: 0.3 ms]
-  Range (min =E2=80=A6 max):   143.1 ms =E2=80=A6 144.7 ms    20 runs
+My git version:
 
-After patch 1 (mergesort: unify ranks loops):
-0071.12: llist_mergesort() unsorted    0.41(0.36+0.05)
-0071.14: llist_mergesort() sorted      0.17(0.12+0.05)
-0071.16: llist_mergesort() reversed    0.16(0.12+0.04)
+$ git --version
+git version 2.37.1
 
-Benchmark 1: t/helper/test-tool mergesort test
-  Time (mean =C2=B1 =CF=83):     141.5 ms =C2=B1   0.5 ms    [User: 141.1 m=
-s, System: 0.5 ms]
-  Range (min =E2=80=A6 max):   141.0 ms =E2=80=A6 142.9 ms    21 runs
+Then I tried older Git versions, 2.37.0 showed the same behavior but Git 2=
+.36.1 showed the old view.
 
-After patch 2 (mergesort: tighten merge loop):
-0071.12: llist_mergesort() unsorted    0.42(0.39+0.03)
-0071.14: llist_mergesort() sorted      0.17(0.10+0.06)
-0071.16: llist_mergesort() reversed    0.16(0.11+0.04)
+Minimal working example (for bash):
 
-Benchmark 1: t/helper/test-tool mergesort test
-  Time (mean =C2=B1 =CF=83):     142.6 ms =C2=B1   0.9 ms    [User: 142.1 m=
-s, System: 0.6 ms]
-  Range (min =E2=80=A6 max):   141.9 ms =E2=80=A6 145.3 ms    21 runs
+$ cd $(mktemp -d)
+$ git init
+$ # =E2=80=93=E2=80=93=E2=80=93 config mergetool
+$ git config merge.tool vimdiff
+$ git config merge.conflictstyle diff3
+$ git config mergetool.prompt false
+$ # =E2=80=93=E2=80=93=E2=80=93 create merge conflict
+$ echo -e 'cat\ndog\noctopus\noctocat' > animals.txt
+$ git add animals.txt
+$ git commit -am 'Initial commit'
+$ git checkout -b octodog
+$ sed -i 's/octopus/octodog/' animals.txt
+$ git commit -am "Replace octopus with an octodog"
+$ git checkout master
+$ sed -i 's/octopus/octoman/' animals.txt
+$ git commit -am "Replace octopus with an octoman"
+$ # =E2=80=93=E2=80=93=E2=80=93 trigger behavior
+$ git merge octodog
+$ git mergetool
 
-After patch 5 (test-mergesort: use DEFINE_LIST_SORT):
-0071.12: DEFINE_LIST_SORT unsorted     0.40(0.35+0.04)
-0071.14: DEFINE_LIST_SORT sorted       0.16(0.11+0.04)
-0071.16: DEFINE_LIST_SORT reversed     0.16(0.11+0.05)
+How can I get the old view back? Is this a bug or a feature of Git? Should=
+ I write the Vim guys?
 
-Benchmark 1: t/helper/test-tool mergesort test
-  Time (mean =C2=B1 =CF=83):     123.3 ms =C2=B1   0.5 ms    [User: 123.0 m=
-s, System: 0.4 ms]
-  Range (min =E2=80=A6 max):   122.7 ms =E2=80=A6 125.2 ms    23 runs
+This behavior is independent of directory as well as host, it occurs on a =
+different machine as well.
 
-Martin
+Thanks in advance,
+Claudio
