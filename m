@@ -2,157 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 418D3C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 11:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B8D5C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 11:07:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234515AbiGVLEy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 07:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40204 "EHLO
+        id S229671AbiGVLHA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 07:07:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234023AbiGVLEh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 07:04:37 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42858BB8E1
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:04:25 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id m8so5397158edd.9
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:04:25 -0700 (PDT)
+        with ESMTP id S234394AbiGVLG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 07:06:57 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D931F40BDE
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:06:53 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id c24so3311171qkm.4
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=g3271ZZz/v6Wmgsi/i0DjFp74rTLbefTZiebTesr448=;
-        b=cG/MIIHET1H0VFFvugCDU8HV23n+2GupMUfOkrbzRDNBOC0Fmym6UMtYE0UVNv71RW
-         IPj3q3Xn4IBNBDceFisU1Hls9+OhGGZ9tHMStFANwGQdyADyOqSGEECR21AIdP9DbM47
-         x69xIYbhhX6CzgMWOgBkHJ9PmWHBNGLQOFy1iZhsnIZqJUT38SQXy5bwZBUUTLVwl3GP
-         mVvyUUJaSQHplbkq95jBQFJ4rzxG15vuOCKZHnDuPtN0D5zSH7JOIwpTiEWfe9QfzVzJ
-         43iUScs1DHG9LxL4Arfpb6zbcdYH1CW9cC7Z7LTlYJz6JiiF5BbsvtX/lNfEaDyHp2Ra
-         eEFQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=R2PU0R9YV4x/i9J9Rzvk6kOn7vjMT4IZzDIEfh+TaAc=;
+        b=fd7v2tnNM2Iw4OnLiPLCmG17D7WfYfNKODiqJv25HkR/k8qmD3YLdJHHcOFBM26M4/
+         HMmC2LzkzYzMhV1R8l9f5kJc6Mdpvs1r/x1i6F7iOhNDdURruoM68coak/VCiqU4BuEg
+         bpwPCGYRKAMC0vixNgmu5jgc4jzGj1TQxa7ida+RuV657Vnf3rix52p1D/pacrzoSXtk
+         lqDZD6ZPOStxx88/iCLPPQWiiwY4rXw4Sot9q43WamoV7BHaqT6wyA5taIkL+Zdz4zNQ
+         QdUfFqQxGPWp3DmjCLbrCUo6nXlwU8gdVG6oxjxy+Hs+8LnlAg1S1OFtz7roMqlkoWzr
+         na3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=g3271ZZz/v6Wmgsi/i0DjFp74rTLbefTZiebTesr448=;
-        b=6QuwN84tgZqvXr7cdqPlXwY07HlO9aJ/FhqaM4GWaYvuFqzDQUy2iccD/SGlNNRTGR
-         e3wSEr881X0tgKQb2V9mS/JeHi0XNPuu+bw/pQQq6a1Op0Wah6BAXh9J8bFafSZozXuw
-         QhbbRPNLx8fvGlCZzl68Q897jGMUqOpdssTmXw59byDGcU6Dv/A6xqDz7sMLdy9bZIZP
-         39276dJU33KP3DD6VZ3u/ecwy96ir3I1rvQqJtJXB/ptB3JocVJNlmdDjhgY3MMkmgAT
-         NesuqSjR5N1XmjCkNsfEdYfr1rjeAgFS2MvGLHmb66zAUzbHj3MUZdHUrPxW5QgNrjlU
-         OZ7Q==
-X-Gm-Message-State: AJIora8HIwi2TSrZrAtqQJ08Fpn7/En5HoQ6WyzeslNZT3C7NdlEkoRr
-        9mjlKl/SRO8qrLOAmP8WGNc=
-X-Google-Smtp-Source: AGRyM1svUTxPyoJZIKOCGUZ4dBXQ2GX98m5+wZEfyVj+YSlzBYGjytp/x29id66JHdbZWQg0tzwOBA==
-X-Received: by 2002:a05:6402:3046:b0:43b:c9c1:864e with SMTP id bs6-20020a056402304600b0043bc9c1864emr50849edb.32.1658487863348;
-        Fri, 22 Jul 2022 04:04:23 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id bf26-20020a0564021a5a00b0043a8286a18csm2373707edb.30.2022.07.22.04.04.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jul 2022 04:04:22 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oEqSD-005Huo-VF;
-        Fri, 22 Jul 2022 13:04:21 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "tenglong.tl" <dyroneteng@gmail.com>
-Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v1 1/2] api-trace2.txt: print config key-value pair
-Date:   Fri, 22 Jul 2022 12:59:12 +0200
-References: <cover.1658472474.git.dyroneteng@gmail.com>
- <32f8b9ae6bb6aff0ce55ee494c4c0d40c672752b.1658472474.git.dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <32f8b9ae6bb6aff0ce55ee494c4c0d40c672752b.1658472474.git.dyroneteng@gmail.com>
-Message-ID: <220722.86fsits91m.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=R2PU0R9YV4x/i9J9Rzvk6kOn7vjMT4IZzDIEfh+TaAc=;
+        b=r0FFMRjZVgw/7DEUlN6FtZ0go+qWNyBYnjuo5hRDY/rg6NghIuUCnwms181Rlq32ut
+         vLfoHIzMoX4G2kvObz3fwS7RVU5BdmSaiiqO7+MbvXZgRtLbXbgdgMNrYWbEr/MNjkIT
+         xOaJyC2FEDj3OBE/4JUhwlp8G/MzH7Y2j8yoMaynMLiMwhBsW1XBBO8gZ1dUxX88Cu4b
+         XhVMjyDN6YtABSTZXOlfPAhtW/VlMmPTgZYAZnib7MXx0cDmnJD6cLL1gFHVOSRmfDmo
+         3LiGER3KNtH5b/+/OEsheSYAi3Kzuk2sWQ0+TSN2A7X4enZMypllQqTk2ZBir1anb3rk
+         Uqwg==
+X-Gm-Message-State: AJIora/pctrWweuPwoftEKBjiSzpK9dXiaLuwZTh9+R/TGbuENnBMhH3
+        75vWPLGSPLxZDWvC/aL69vVv
+X-Google-Smtp-Source: AGRyM1tZ+ur1H9N14zFwokSBvoM9SpZAjSMCTZ0awKHFxkN7EnBydPHMdeu+y+vk35epRiPouv9M/A==
+X-Received: by 2002:a05:620a:4913:b0:6b6:300:54ad with SMTP id ed19-20020a05620a491300b006b6030054admr69278qkb.68.1658488012638;
+        Fri, 22 Jul 2022 04:06:52 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:150f:b81d:4401:9526? ([2600:1700:e72:80a0:150f:b81d:4401:9526])
+        by smtp.gmail.com with ESMTPSA id dt4-20020a05620a478400b006b5cb0c512asm3280125qkb.101.2022.07.22.04.06.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Jul 2022 04:06:52 -0700 (PDT)
+Message-ID: <8315230c-f79c-8027-9711-6e21a4bc25c4@github.com>
+Date:   Fri, 22 Jul 2022 07:06:51 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.11.0
+Subject: Re: Question: How to find the commits in the ancestry path of seen
+ down to _and_ including a given topic?
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CABPp-BEK+SJh2uF=rrM-f1u9diMQJ7D3H0fJLdzWpyOww=ys+w@mail.gmail.com>
+ <xmqqy1wmlbnn.fsf@gitster.g>
+ <CABPp-BEqWX3Nr2HDxwS9d-_QjcKb_jS=fSjsP_Pbutw7-P5gbg@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CABPp-BEqWX3Nr2HDxwS9d-_QjcKb_jS=fSjsP_Pbutw7-P5gbg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 7/21/22 3:34 PM, Elijah Newren wrote:
+> On Thu, Jul 21, 2022 at 8:37 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+>>> A simple question that I'm spinning out of [1]: How can I get `git
+>>> log` to show the commits in the ancestry path from seen, back to *and
+>>> including* a given topic (but not commits from unrelated topics)?
+>>
+>> Drawing of a sample history, please.
+>>
+>> I feel stupid asking this, but I do not think I even understand what
+>> the question is X-<.
+>>
+>> Commits that are ancestors of 'seen' and are descendants of the tip
+>> of the topic?
+> 
+> What you said *plus* commits from the topic itself.  From this graph:
+> 
+>     A---B---C---J---K <-- main
+>             |\       \
+>             | \       N---------------O---P---Q <-- seen
+>             |  \     /               /
+>             |   L---M  <-- topic    /
+>              \                     /
+>               D---E---F---G---H---I  <-- other_topic
+> 
+> I want the commits L-Q.  If I run
 
-On Fri, Jul 22 2022, tenglong.tl wrote:
+Here is the thing I misunderstood. "topic" is already in "seen", so
+a seen...topic won't work at all.
 
-> From: Teng Long <dyroneteng@gmail.com>
->
-> It's supported to print "interesting" config key-value paire
-> to tr2 log by setting "GIT_TRACE2_CONFIG_PARAMS" environment
-> variable and the "trace2.configparam" config, let's add the
-> related docs in Documentaion/technical/api-trace2.txt.
->
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> ---
->  Documentation/technical/api-trace2.txt | 32 ++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
->
-> diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-> index 77a150b30e..ddc0bfb9c9 100644
-> --- a/Documentation/technical/api-trace2.txt
-> +++ b/Documentation/technical/api-trace2.txt
-> @@ -717,6 +717,7 @@ The "exec_id" field is a command-unique id and is only useful if the
->  {
->  	"event":"def_param",
->  	...
-> +	"scope":"global",
->  	"param":"core.abbrev",
->  	"value":"7"
->  }
-> @@ -1207,6 +1208,37 @@ at offset 508.
->  This example also shows that thread names are assigned in a racy manner
->  as each thread starts and allocates TLS storage.
->  
-> +Print Configs::
-> +
-> +	  Dump "interesting" config values to trace2 log.
-> ++
-> +The environment variable `GIT_TRACE2_CONFIG_PARAMS` and configuration
-> +`trace2.configparams` can be used to output config values which you care
-> +about(see linkgit:git-config[1). For example:
+This idea is complicated by the fact that you have a concrete idea
+of which commits are in "topic", but you really can't do that without
+a definition of what it's based on. $(git merge-base main topic)
+would get you C, but then there are multiple paths from Q to C that
+don't go through topic.
 
-I didn't notice this before, but this is an addition to a long section
-where the examples are ------- delimited, starting with "in this
-example.." usually.
+You can pull out that "first" commit in topic with this:
 
-So this "print configs" seems like on odd continuation. Shouldn't this
-copy the template of "Thread Events::" above. I.e. something like (I
-have not tried to asciidoc render this):
-	
-	Config (def param) Events::
-		We can optionally emit configuration events, see
-		`trace2.configParams` in linkgit:git-config[1] for how to enable
-		it.
-	+
-	< your example below would follow this>
+  git revlist -1 --reverse main..topic
 
-I.e. re my earlier mention of git-config we it explains
-GIT_TRACE2_CONFIG_PARAMS, so perhaps it suffices to just link to
-linkgit:git-config[1] for that.
+but it only works if topic is a linear branch off of a single point
+in the history of main.
 
-Also a nit: trace2.configParams, not trace2.configparams.
-	
-> ++
-> +----------------
-> +$ git config color.ui auto
-> +----------------
-> ++
-> +Then, mark the config `color.ui` as "interesting" config with
-> +`GIT_TRACE2_CONFIG_PARAMS`:
-> ++
-> +----------------
-> +$ export GIT_TRACE2_PERF_BRIEF=1
-> +$ export GIT_TRACE2_PERF=~/log.perf
-> +$ export GIT_TRACE2_CONFIG_PARAMS=color.ui
-> +$ git version
-> +...
-> +$ cat ~/log.perf
-> +d0 | main                     | version      |     |           |           |              | ...
-> +d0 | main                     | start        |     |  0.001642 |           |              | /usr/local/bin/git version
-> +d0 | main                     | cmd_name     |     |           |           |              | version (version)
-> +d0 | main                     | def_param    |     |           |           |              | color.ui:auto
-> +d0 | main                     | data         | r0  |  0.002100 |  0.002100 | fsync        | fsync/writeout-only:0
-> +d0 | main                     | data         | r0  |  0.002126 |  0.002126 | fsync        | fsync/hardware-flush:0
-> +d0 | main                     | exit         |     |  0.002142 |           |              | code:0
-> +d0 | main                     | atexit       |     |  0.002161 |           |              | code:0
-> +----------------
->  == Future Work
->  
->  === Relationship to the Existing Trace Api (api-trace.txt)
+> The closest I seem to be able to get is
+> 
+>    git log --ancestry-path topic~${commits_in_topic_minus_one}..seen
+> 
+> which includes all commits I want except the first commit of the topic
+> branch.
 
+If you add --boundary, you should get that last commit as you want.
+
+Thanks,
+-Stolee
