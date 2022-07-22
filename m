@@ -2,127 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B8D5C43334
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 11:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEB2FC433EF
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 11:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229671AbiGVLHA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 07:07:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43384 "EHLO
+        id S230509AbiGVLKR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 07:10:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234394AbiGVLG5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 07:06:57 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D931F40BDE
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:06:53 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id c24so3311171qkm.4
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:06:53 -0700 (PDT)
+        with ESMTP id S229880AbiGVLKP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 07:10:15 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D2212608
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:10:13 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1013ecaf7e0so5887932fac.13
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=R2PU0R9YV4x/i9J9Rzvk6kOn7vjMT4IZzDIEfh+TaAc=;
-        b=fd7v2tnNM2Iw4OnLiPLCmG17D7WfYfNKODiqJv25HkR/k8qmD3YLdJHHcOFBM26M4/
-         HMmC2LzkzYzMhV1R8l9f5kJc6Mdpvs1r/x1i6F7iOhNDdURruoM68coak/VCiqU4BuEg
-         bpwPCGYRKAMC0vixNgmu5jgc4jzGj1TQxa7ida+RuV657Vnf3rix52p1D/pacrzoSXtk
-         lqDZD6ZPOStxx88/iCLPPQWiiwY4rXw4Sot9q43WamoV7BHaqT6wyA5taIkL+Zdz4zNQ
-         QdUfFqQxGPWp3DmjCLbrCUo6nXlwU8gdVG6oxjxy+Hs+8LnlAg1S1OFtz7roMqlkoWzr
-         na3w==
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NNSRCveNuh9MnLZbDRS0O2LSxGleFDvrwAq5yLNlEsI=;
+        b=VC0rNPb6bZYILuq3S2eOfJ2fUh4yYn8doju6OsV/fP2TDzXaI53r9MIT9i2Iw63AJr
+         6nSfsXuSe/H1DDu+JdJqcz5XBCxSd8L2HSZHMtYyHFXKEda0DgxqXMUMQWNgjM7cKF7I
+         jU348UJxlTkVkv2Ql2TajXuSF4jTsI8ioo0EXh6AgPiIj4g7pUsjD7gUCbSxRe+8t0vP
+         NRLqbFOXMYE15hYyk5D6P8heuT16W4Y7mwexxVPZS+i1vnRXVb4iRbnO6SYfpEcLoD4g
+         3qIQygxbym9zWRvpoUuSaibxcynJSXgNoc2yXygPRJTocm5DAyL+XBXXSh1rNQRrhbon
+         o+Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=R2PU0R9YV4x/i9J9Rzvk6kOn7vjMT4IZzDIEfh+TaAc=;
-        b=r0FFMRjZVgw/7DEUlN6FtZ0go+qWNyBYnjuo5hRDY/rg6NghIuUCnwms181Rlq32ut
-         vLfoHIzMoX4G2kvObz3fwS7RVU5BdmSaiiqO7+MbvXZgRtLbXbgdgMNrYWbEr/MNjkIT
-         xOaJyC2FEDj3OBE/4JUhwlp8G/MzH7Y2j8yoMaynMLiMwhBsW1XBBO8gZ1dUxX88Cu4b
-         XhVMjyDN6YtABSTZXOlfPAhtW/VlMmPTgZYAZnib7MXx0cDmnJD6cLL1gFHVOSRmfDmo
-         3LiGER3KNtH5b/+/OEsheSYAi3Kzuk2sWQ0+TSN2A7X4enZMypllQqTk2ZBir1anb3rk
-         Uqwg==
-X-Gm-Message-State: AJIora/pctrWweuPwoftEKBjiSzpK9dXiaLuwZTh9+R/TGbuENnBMhH3
-        75vWPLGSPLxZDWvC/aL69vVv
-X-Google-Smtp-Source: AGRyM1tZ+ur1H9N14zFwokSBvoM9SpZAjSMCTZ0awKHFxkN7EnBydPHMdeu+y+vk35epRiPouv9M/A==
-X-Received: by 2002:a05:620a:4913:b0:6b6:300:54ad with SMTP id ed19-20020a05620a491300b006b6030054admr69278qkb.68.1658488012638;
-        Fri, 22 Jul 2022 04:06:52 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:150f:b81d:4401:9526? ([2600:1700:e72:80a0:150f:b81d:4401:9526])
-        by smtp.gmail.com with ESMTPSA id dt4-20020a05620a478400b006b5cb0c512asm3280125qkb.101.2022.07.22.04.06.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Jul 2022 04:06:52 -0700 (PDT)
-Message-ID: <8315230c-f79c-8027-9711-6e21a4bc25c4@github.com>
-Date:   Fri, 22 Jul 2022 07:06:51 -0400
+        bh=NNSRCveNuh9MnLZbDRS0O2LSxGleFDvrwAq5yLNlEsI=;
+        b=t6wk6HHbJhx0d4WnPpohjogqD+DVRfJ74l8icKEMl9Rfkzp8kcZtupb3vrXqIB0iGQ
+         E6Kuskswa0u0kTBiCrs7mkWv74+dwmT5FUrpP90jjaxWQxvHq59tQ3XSq69Z/FkvSGi5
+         5Vcl1iXLX7VpGlSlV+QrfKvVNF1jAvPy1cH0NOZrpoZtT1e122zXuvDohonCe8zEB7j5
+         I7Zwq6tcr3fX7ajsM2ED6P9XRAmj2LnyYWD/sYxrdC2W07wQbhhNN+QBib20e24nENpJ
+         hEZ/rpzCChOwIrqq+zns2MBgwZY82/f5X0yPaC03+ybq2YbT2aazqQogl6Llb0T7vATz
+         aB6w==
+X-Gm-Message-State: AJIora+HqIrQj/2lf/S6XqQKnskC30iWzHAzK6ZKte9v5l8PTCwtxQey
+        mOrAsL6/Z40Mm3re37Ehn7Fewi8eYCZUqw==
+X-Google-Smtp-Source: AGRyM1thAJpnhlP+3XuFk/AitzhWIG/Od4wdwLdQTZjG4PBl62Bk4/ku3GD0JFUOGxlhXRUZXcw8/w==
+X-Received: by 2002:a05:6870:e248:b0:10d:215d:1b41 with SMTP id d8-20020a056870e24800b0010d215d1b41mr7517592oac.179.1658488212298;
+        Fri, 22 Jul 2022 04:10:12 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.109.17])
+        by smtp.gmail.com with ESMTPSA id p28-20020a056870831c00b0010c727a3c79sm1979783oae.26.2022.07.22.04.10.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Jul 2022 04:10:11 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com
+Subject: [PATCH] pkt-line.h: move comment closer to the associated code
+Date:   Fri, 22 Jul 2022 08:10:05 -0300
+Message-Id: <6a14443c101fa132498297af6d7a483520688d75.1658488203.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: Question: How to find the commits in the ancestry path of seen
- down to _and_ including a given topic?
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <CABPp-BEK+SJh2uF=rrM-f1u9diMQJ7D3H0fJLdzWpyOww=ys+w@mail.gmail.com>
- <xmqqy1wmlbnn.fsf@gitster.g>
- <CABPp-BEqWX3Nr2HDxwS9d-_QjcKb_jS=fSjsP_Pbutw7-P5gbg@mail.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BEqWX3Nr2HDxwS9d-_QjcKb_jS=fSjsP_Pbutw7-P5gbg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/21/22 3:34 PM, Elijah Newren wrote:
-> On Thu, Jul 21, 2022 at 8:37 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Elijah Newren <newren@gmail.com> writes:
->>
->>> A simple question that I'm spinning out of [1]: How can I get `git
->>> log` to show the commits in the ancestry path from seen, back to *and
->>> including* a given topic (but not commits from unrelated topics)?
->>
->> Drawing of a sample history, please.
->>
->> I feel stupid asking this, but I do not think I even understand what
->> the question is X-<.
->>
->> Commits that are ancestors of 'seen' and are descendants of the tip
->> of the topic?
-> 
-> What you said *plus* commits from the topic itself.  From this graph:
-> 
->     A---B---C---J---K <-- main
->             |\       \
->             | \       N---------------O---P---Q <-- seen
->             |  \     /               /
->             |   L---M  <-- topic    /
->              \                     /
->               D---E---F---G---H---I  <-- other_topic
-> 
-> I want the commits L-Q.  If I run
+ec9a37d ("pkt-line.[ch]: remove unused packet_read_line_buf()",
+2021-10-14) removed the "src_buffer" and "src_len" parameters from
+packet_read(), only leaving them at packet_read_with_status(). Let's
+also update the function documentation by moving the comment about these
+parameters from the former to the latter.
 
-Here is the thing I misunderstood. "topic" is already in "seen", so
-a seen...topic won't work at all.
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ pkt-line.h | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-This idea is complicated by the fact that you have a concrete idea
-of which commits are in "topic", but you really can't do that without
-a definition of what it's based on. $(git merge-base main topic)
-would get you C, but then there are multiple paths from Q to C that
-don't go through topic.
+diff --git a/pkt-line.h b/pkt-line.h
+index 6d2a63db23..1f623de60a 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -49,14 +49,6 @@ void packet_fflush(FILE *f);
+  * Read a packetized line into the buffer, which must be at least size bytes
+  * long. The return value specifies the number of bytes read into the buffer.
+  *
+- * If src_buffer and *src_buffer are not NULL, it should point to a buffer
+- * containing the packet data to parse, of at least *src_len bytes.  After the
+- * function returns, src_buf will be incremented and src_len decremented by the
+- * number of bytes consumed.
+- *
+- * If src_buffer (or *src_buffer) is NULL, then data is read from the
+- * descriptor "fd".
+- *
+  * If options does not contain PACKET_READ_GENTLE_ON_EOF, we will die under any
+  * of the following conditions:
+  *
+@@ -104,6 +96,14 @@ int packet_length(const char lenbuf_hex[4]);
+  * returns an 'enum packet_read_status' which indicates the status of the read.
+  * The number of bytes read will be assigned to *pktlen if the status of the
+  * read was 'PACKET_READ_NORMAL'.
++ *
++ * If src_buffer and *src_buffer are not NULL, it should point to a buffer
++ * containing the packet data to parse, of at least *src_len bytes.  After the
++ * function returns, src_buf will be incremented and src_len decremented by the
++ * number of bytes consumed.
++ *
++ * If src_buffer (or *src_buffer) is NULL, then data is read from the
++ * descriptor "fd".
+  */
+ enum packet_read_status {
+ 	PACKET_READ_EOF,
+-- 
+2.37.1
 
-You can pull out that "first" commit in topic with this:
-
-  git revlist -1 --reverse main..topic
-
-but it only works if topic is a linear branch off of a single point
-in the history of main.
-
-> The closest I seem to be able to get is
-> 
->    git log --ancestry-path topic~${commits_in_topic_minus_one}..seen
-> 
-> which includes all commits I want except the first commit of the topic
-> branch.
-
-If you add --boundary, you should get that last commit as you want.
-
-Thanks,
--Stolee
