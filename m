@@ -2,123 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ECF6C43334
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 10:49:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43DD6C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 10:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229682AbiGVKtU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 06:49:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56246 "EHLO
+        id S234953AbiGVKtg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 06:49:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234638AbiGVKtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 06:49:19 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 662B6BB8C4
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 03:49:13 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id r186so4140463pgr.2
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 03:49:13 -0700 (PDT)
+        with ESMTP id S233716AbiGVKte (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 06:49:34 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 928AFA9B9A
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 03:49:30 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id y8so5378971eda.3
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 03:49:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=SUxB0IftdniIh/MiHuUabU9szr05bHmX6LcWehIY5rA=;
-        b=D5swnkp0fu00eePHKzyXrllSn/xK8n19oqC4n2JHx4UaIPpJnnjnRTLp6goO6GM5nj
-         7/qFvBN+5vl5diUld+KdwItpNZ2HNggv/kN4qHQzGB0yAUzgiPj2SVSEjzM34WhhBGrc
-         Ciepp21Vby9tUQnuMFW+WV2Cx2wh8EOD5XinlHbubZkKTNKVdXN+OrP/NdkYzvi6mMl4
-         gZg3Pw/sb502z9ljyu0KJcRHMaF2um34VcsXUKvorWkUWqKy8jQMhbWJsET8+aRFax1O
-         fpsz360VHkZOS2/Nkp7Tiu1lvFsrouDlRmq9R0f+lhDjQyi/darMAPbC0rvkPQOdkuwe
-         a2WQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=gvpdDgjrWczVUFxbYOE3+eTp2346OqCMadhQCvkHWNw=;
+        b=kxJKknR8iiccDX00jEs4ZZl66au7xBUvHKWd5L7f9cWCvwI9cq0WSP84Lr3mTZ3HTA
+         lee9CgbAweVGZnaKpsqYlEX4SC+pQLDBRQd332CfA622PMehjl3pBcmH1dQZIh80YKWW
+         hJz87EgG/lGvyGM6ptX+URjwsupJ+c8E4QKGAzvtTdTFxofUxMyweIMPuZRR1hOTvjC8
+         VSHYtMFtjtqiAblKZwrwYY7Fc5R3PCMSO3WF0sHuPtK+YIpcH1pMD5weShxdsXYePg4O
+         3K7OcoNkgiJnfmhxV6YbkXwIC+Ewtw9vmHylb/vdKmw5xTL9GVSC1nirfdDeSaHcOTZe
+         hzXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SUxB0IftdniIh/MiHuUabU9szr05bHmX6LcWehIY5rA=;
-        b=ey0KFoTXCeLgN1FsSIzYnezhbY8NNLBuv+2IZ/elFmrccf+yLsXeWBn8gF5qiUWE+P
-         GZS9uaYDuHolTTZmjO+8e0MwMtxxbQzR2kzCaR57I60sDUYWHA+oJNms9D4mdZP9Q9Yy
-         aEfEzo3OSP9WrUNbDde5XyPoAYUM4efjNFjoUCM5nydtXG9XrF9YBKz9DTZbAGFCj9M6
-         lfy1VNU7J4X2D3l5tSaCf9L8eA87CwBLtcsfzg0JASWEwBWWMzbCOkFRPU5gHqpw3P1h
-         G81yHIf8uOSBUXwpP3qoupwvZSZNiPvODMW1lHAW5b2qEXuAV4e8AkZ3j9rxbPTzv+mt
-         LYkA==
-X-Gm-Message-State: AJIora9WPzr3vnHh1zZKHYqIMWRvD983E08G64A8/p2odKa+bep/AuG4
-        EcqtShxC4zM2FAoDm39cHIsmOKln9eiFE3w36GcdMQFCk1E=
-X-Google-Smtp-Source: AGRyM1uYrc5vUhD+gu0xe4b/5DNfWXvegUayFoosCJhqNK6rqp3Q4uuPgybAxaZ2ztZkBpCkwuHQfLU6lCOYxY291Oo=
-X-Received: by 2002:a63:3f43:0:b0:41a:5e8f:b084 with SMTP id
- m64-20020a633f43000000b0041a5e8fb084mr2695464pga.145.1658486952756; Fri, 22
- Jul 2022 03:49:12 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=gvpdDgjrWczVUFxbYOE3+eTp2346OqCMadhQCvkHWNw=;
+        b=K3Tzf1/vinw/OBtHMKpUr/Gp06vjinNTpM6lazx2A6Tapu32oVrDNbPQ5Fvw7uvb4D
+         MuEMItAejk4o3jVsuEQgDusl64vUTBMXYgC1bpfu7TdshrUUeyCVWbfzCUf0tTjit72W
+         wd4/Q4h2pO1bGvvqKDPEww3w7Vx7V2wrNuaW/IR3H1uxYIyuCUpCwV1UWh4su8OJ6pJ7
+         Gq0oRJ3uCC16G4NG792iBo/LHqJnSqtU4foPrAYdkdhM/EDgh3Eu1Q5Ia9IePNs/P1iS
+         Wbiybf5HAxQa9+qELQOPQDBEhbOUVGYaC/T/yAnUCVT7ZcqhC1cL2mte8gVuD6aNJhDc
+         zJuA==
+X-Gm-Message-State: AJIora8xiM1jXdJ+bCkjdsoKI+5B3rEE3c/mgmgE1BH3RzwIAYpqDUTi
+        K3TkLew7WiVw8VC5KjGeVCzO6i4xD3dZ7w==
+X-Google-Smtp-Source: AGRyM1sZiH7YRk6gEmuMWkIVNE8dRc7Mf1ZiGhNPp/aB/z9BGHXguWqtZpBwPVIVVgidgC2favKLIQ==
+X-Received: by 2002:a05:6402:26d5:b0:43a:bf2a:c27b with SMTP id x21-20020a05640226d500b0043abf2ac27bmr2974672edd.61.1658486968452;
+        Fri, 22 Jul 2022 03:49:28 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id g8-20020a170906594800b00722e7e48dfdsm1832286ejr.218.2022.07.22.03.49.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Jul 2022 03:49:27 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oEqDn-005HNh-3N;
+        Fri, 22 Jul 2022 12:49:27 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 3/7] merge: do not abort early if one strategy fails
+ to handle the merge
+Date:   Fri, 22 Jul 2022 12:47:54 +0200
+References: <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
+ <pull.1231.v4.git.1658466942.gitgitgadget@gmail.com>
+ <02930448ea1fbf7084b9d78813908b6355304457.1658466942.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <02930448ea1fbf7084b9d78813908b6355304457.1658466942.git.gitgitgadget@gmail.com>
+Message-ID: <220722.86o7xhs9qg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <99c80fc2-0f94-a607-ca71-c45961c07e2b@web.de>
-In-Reply-To: <99c80fc2-0f94-a607-ca71-c45961c07e2b@web.de>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 22 Jul 2022 12:49:01 +0200
-Message-ID: <CAN0heSrCocuKA+8UvU8dH_bsM4Xg8L3M8O4W0buXkUc3uCxpGA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Changed_diff3_view_from_2=2E36_=E2=86=92_2=2E67_for_vimdif?=
-        =?UTF-8?Q?f?=
-To:     Claudio Ebel <claudio.ebel@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Fernando Ramos <greenfoo@u92.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Claudio,
 
-On Fri, 22 Jul 2022 at 10:40, Claudio Ebel <claudio.ebel@web.de> wrote:
+On Fri, Jul 22 2022, Elijah Newren via GitGitGadget wrote:
+
+> From: Elijah Newren <newren@gmail.com>
 >
-> when solving a merge conflict using Git and Vim as mergetool, I get a tot=
-ally different view than I expected and am used to. In the past, I followed=
- this blog post (https://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/=
-), where the result is a view with four windows: LOCAL | BASE | REMOTE and =
-then the file below. Now I get four windows as well, but LOCAL at the top a=
-nd then LOCAL | LOCAL | file.
+> builtin/merge is setup to allow multiple strategies to be specified,
+> and it will find the "best" result and use it.  This is defeated if
+> some of the merge strategies abort early when they cannot handle the
+> merge.  Fix the logic that calls recursive and ort to not do such an
+> early abort, but instead return "2" or "unhandled" so that the next
+> strategy can try to handle the merge.
 >
-> First I was not able to figure out if the problem lies within Git or Vim.=
- I removed my global .gitconfig as well as the .vimrc but neither helped. W=
-hat finally helped was to disguise the HOME directory for Git via this comm=
-and:
+> Coming up with a testcase for this is somewhat difficult, since
+> recursive and ort both handle nearly any two-headed merge (there is
+> a separate code path that checks for non-two-headed merges and
+> already returns "2" for them).  So use a somewhat synthetic testcase
+> of having the index not match HEAD before the merge starts, since all
+> merge strategies will abort for that.
 >
-> $ git merge octodog
-> $ HOME=3D  git mergetool
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  builtin/merge.c                          |  6 ++++--
+>  t/t6402-merge-rename.sh                  |  2 +-
+>  t/t6424-merge-unrelated-index-changes.sh | 16 ++++++++++++++++
+>  t/t6439-merge-co-error-msgs.sh           |  1 +
+>  4 files changed, 22 insertions(+), 3 deletions(-)
 >
-> My git version:
->
-> $ git --version
-> git version 2.37.1
->
-> Then I tried older Git versions, 2.37.0 showed the same behavior but Git =
-2.36.1 showed the old view.
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 13884b8e836..dec7375bf2a 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -754,8 +754,10 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+>  		else
+>  			clean = merge_recursive(&o, head, remoteheads->item,
+>  						reversed, &result);
+> -		if (clean < 0)
+> -			exit(128);
+> +		if (clean < 0) {
+> +			rollback_lock_file(&lock);
+> +			return 2;
+> +		}
+>  		if (write_locked_index(&the_index, &lock,
+>  				       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+>  			die(_("unable to write %s"), get_index_file());
+> diff --git a/t/t6402-merge-rename.sh b/t/t6402-merge-rename.sh
+> index 3a32b1a45cf..772238e582c 100755
+> --- a/t/t6402-merge-rename.sh
+> +++ b/t/t6402-merge-rename.sh
+> @@ -210,7 +210,7 @@ test_expect_success 'updated working tree file should prevent the merge' '
+>  	echo >>M one line addition &&
+>  	cat M >M.saved &&
+>  	git update-index M &&
+> -	test_expect_code 128 git pull --no-rebase . yellow &&
+> +	test_expect_code 2 git pull --no-rebase . yellow &&
+>  	test_cmp M M.saved &&
+>  	rm -f M.saved
+>  '
+> diff --git a/t/t6424-merge-unrelated-index-changes.sh b/t/t6424-merge-unrelated-index-changes.sh
+> index f35d3182b86..8b749e19083 100755
+> --- a/t/t6424-merge-unrelated-index-changes.sh
+> +++ b/t/t6424-merge-unrelated-index-changes.sh
+> @@ -268,4 +268,20 @@ test_expect_success 'subtree' '
+>  	test_path_is_missing .git/MERGE_HEAD
+>  '
+>  
+> +test_expect_success 'resolve && recursive && ort' '
+> +	git reset --hard &&
+> +	git checkout B^0 &&
+> +
+> +	test_seq 0 10 >a &&
+> +	git add a &&
+> +
+> +	sane_unset GIT_TEST_MERGE_ALGORITHM &&
+> +	test_must_fail git merge -s resolve -s recursive -s ort C^0 >output 2>&1 &&
+> +
+> +	grep "Trying merge strategy resolve..." output &&
+> +	grep "Trying merge strategy recursive..." output &&
+> +	grep "Trying merge strategy ort..." output &&
+> +	grep "No merge strategy handled the merge." output
+> +'
 
-I'm not a vimdiff expert by any means, but having three windows
-containing LOCAL seems like a bug to me... For what it's worth, I can't
-reproduce -- everything looks good to me.
+Ah, re my feedback on 2/7 I hadn't read ahead. This is the test I
+mentioned as failing with the code added in 2/7 if it's tweaked to be
+s/exit 2/exit 0/.
 
-There was some work on vimdiff in the v2.37.0 cycle -- I'm cc-ing the
-author of those patches. (He also wrote about the work at [1].)
+So it's a bit odd to have code added in 2/7 that's tested in 3/7. I
+think this would be much easier to understand if these tests came before
+all these code changes, so then as the changes are made we can see how
+the behavior changes.
 
-There exists at least one vimdiff bugfix [2] in git.git's current
-'master' branch that is not yet in any released version. If you are able
-to build Git from source, you could try that version to see if it fixes
-your problem. As far as I understand, that patch relates to end-user vim
-settings, and you did write that you nuked your .vimrc, so maybe that
-patch doesn't quite match your problem, although from the original
-report [3], it does seem similar.
+But short of that at least having the relevant part of this for 2/7 in
+that commit would be better, i.e. the thing that tests that new
+"diff-index" check in some way...
 
-Since redirecting HOME works, I wonder if you do have some other config
-file after all. Do you have a ~/.config/git/config file? Maybe,
-similarly, you have more than just one vimrc?
-
-There's also a patch to handle whitespace in paths [4], but it's not yet
-in git.git's master branch (it's only in the 'next' branch so far). From
-your description, it doesn't quite sound like the failure mode that
-patch author described, though. If you're interested in trying it out,
-you could either `git am` the patch in [4], or you could try `git merge
-ccc7b5148` into, e.g., current master.
-
-[1] https://u92.eu/blog/git-vimdiff/
-[2] https://lore.kernel.org/git/20220708181024.45839-1-greenfoo@u92.eu/
-[3] https://lore.kernel.org/git/CACRpdvnuAYY0U1_3uD8zKgtq05+bgwjzXpZKomro6g=
-qYDNrjGg@mail.gmail.com/
-[4] https://lore.kernel.org/git/pull.1287.v2.git.1657809063728.gitgitgadget=
-@gmail.com/
-
-Martin
