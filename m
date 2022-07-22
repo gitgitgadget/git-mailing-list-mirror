@@ -2,109 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEB2FC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 11:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAD48C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 11:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230509AbiGVLKR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 07:10:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46480 "EHLO
+        id S230134AbiGVLSm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 07:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbiGVLKP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 07:10:15 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D2212608
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:10:13 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1013ecaf7e0so5887932fac.13
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:10:13 -0700 (PDT)
+        with ESMTP id S229671AbiGVLSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 07:18:41 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BDAF4C625
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:18:39 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id t3so5490072edd.0
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 04:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NNSRCveNuh9MnLZbDRS0O2LSxGleFDvrwAq5yLNlEsI=;
-        b=VC0rNPb6bZYILuq3S2eOfJ2fUh4yYn8doju6OsV/fP2TDzXaI53r9MIT9i2Iw63AJr
-         6nSfsXuSe/H1DDu+JdJqcz5XBCxSd8L2HSZHMtYyHFXKEda0DgxqXMUMQWNgjM7cKF7I
-         jU348UJxlTkVkv2Ql2TajXuSF4jTsI8ioo0EXh6AgPiIj4g7pUsjD7gUCbSxRe+8t0vP
-         NRLqbFOXMYE15hYyk5D6P8heuT16W4Y7mwexxVPZS+i1vnRXVb4iRbnO6SYfpEcLoD4g
-         3qIQygxbym9zWRvpoUuSaibxcynJSXgNoc2yXygPRJTocm5DAyL+XBXXSh1rNQRrhbon
-         o+Yg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=njtSrl6cBjaOtV224kKTRJfS2G5IGu2B2VvdfB3kWKg=;
+        b=Wah/fkOIQI3ofQhcvQxvNebRPe6bP2I/VtbzcmXjRcg0g/tXxKkj+ZDJEpZBbl7Hsv
+         B6oa2Nya72Yz3L9PNIuUeXMDayuxCHpeCYzl+JJfFbj9kUiWe67vjaU7U7j0L/4nDvWE
+         TQC5NiKemyWalAI4uPH4+chzHxZYkwWCYUAdYF3lVNSRH+uKmALOqr/1kK6l7kgkm1E2
+         HgAqUtcc8wrwSQ4WpJJ+EPA2DGaBSbhfKMQgGbYMFitoJd843maok2o6zU0q0zkMYtwZ
+         4fGCsuKHLZskN90Pvqr7g4LPA7A0tRjqKQ0crlpxEM+1qewydqYCRd4jFmv7E/4v+qHC
+         N8GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NNSRCveNuh9MnLZbDRS0O2LSxGleFDvrwAq5yLNlEsI=;
-        b=t6wk6HHbJhx0d4WnPpohjogqD+DVRfJ74l8icKEMl9Rfkzp8kcZtupb3vrXqIB0iGQ
-         E6Kuskswa0u0kTBiCrs7mkWv74+dwmT5FUrpP90jjaxWQxvHq59tQ3XSq69Z/FkvSGi5
-         5Vcl1iXLX7VpGlSlV+QrfKvVNF1jAvPy1cH0NOZrpoZtT1e122zXuvDohonCe8zEB7j5
-         I7Zwq6tcr3fX7ajsM2ED6P9XRAmj2LnyYWD/sYxrdC2W07wQbhhNN+QBib20e24nENpJ
-         hEZ/rpzCChOwIrqq+zns2MBgwZY82/f5X0yPaC03+ybq2YbT2aazqQogl6Llb0T7vATz
-         aB6w==
-X-Gm-Message-State: AJIora+HqIrQj/2lf/S6XqQKnskC30iWzHAzK6ZKte9v5l8PTCwtxQey
-        mOrAsL6/Z40Mm3re37Ehn7Fewi8eYCZUqw==
-X-Google-Smtp-Source: AGRyM1thAJpnhlP+3XuFk/AitzhWIG/Od4wdwLdQTZjG4PBl62Bk4/ku3GD0JFUOGxlhXRUZXcw8/w==
-X-Received: by 2002:a05:6870:e248:b0:10d:215d:1b41 with SMTP id d8-20020a056870e24800b0010d215d1b41mr7517592oac.179.1658488212298;
-        Fri, 22 Jul 2022 04:10:12 -0700 (PDT)
-Received: from mango.meuintelbras.local ([177.32.109.17])
-        by smtp.gmail.com with ESMTPSA id p28-20020a056870831c00b0010c727a3c79sm1979783oae.26.2022.07.22.04.10.10
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=njtSrl6cBjaOtV224kKTRJfS2G5IGu2B2VvdfB3kWKg=;
+        b=ywB7np8jxfFpbWp0tGH4wEqFHkzu8zayMf10OkL6C0kdqH8al61DKZruXXEJWmQa0u
+         orHRMzGcnnoWgSNd6UhAabuZraBN4FuM2eg8GcogzIcmxMuwbQanC9RmzoZOmVu2gyvg
+         wx72cMBsDCVQrWaalJLLPIRW2Zfvvj2i/CBtIC7cceWXq06BqE3YMIgLQJ1E7YjLQpHv
+         UZ9hT+YigPoE2fX7t22I5xzyhLyir/05GuNpU88OA4BuJ8DLy0RDUVsXSd6vK/syM9AE
+         fdcoI+W57yvN8HIOm0N2mmPzBWMtxrvoGqABvduGcZE5GZmCCKKkWw+xvzgV3q4R62xz
+         Y72w==
+X-Gm-Message-State: AJIora8HPll0jtyRaWWrU6YBFb06LS+F5Ceg9181WMBTSxiMwR5HmU3R
+        vKHnBKzsWGileIES57M1m2A=
+X-Google-Smtp-Source: AGRyM1tErysh5t1lS5dy4+Pva5bRCOzRrEKp9AuO/WsUCfuzxVwEVEO2fd3Xlr9hSr2uSxo5K8/CwA==
+X-Received: by 2002:aa7:c0d0:0:b0:43b:b6d5:2977 with SMTP id j16-20020aa7c0d0000000b0043bb6d52977mr59112edp.199.1658488717862;
+        Fri, 22 Jul 2022 04:18:37 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id l10-20020a170906938a00b006f3ef214daesm1929725ejx.20.2022.07.22.04.18.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jul 2022 04:10:11 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com
-Subject: [PATCH] pkt-line.h: move comment closer to the associated code
-Date:   Fri, 22 Jul 2022 08:10:05 -0300
-Message-Id: <6a14443c101fa132498297af6d7a483520688d75.1658488203.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.37.1
+        Fri, 22 Jul 2022 04:18:36 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oEqg0-005ISm-AF;
+        Fri, 22 Jul 2022 13:18:36 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: Can I use CRoaring library in Git?
+Date:   Fri, 22 Jul 2022 13:07:47 +0200
+References: <CAPOJW5x4McofC5fxBvsRAzum28wmeDJCMTMRmY_0oy=32JjKqQ@mail.gmail.com>
+        <CAPOJW5yJDq046nhq0V-syAg4ttoy++rBtq_RHSXPAKhtDDw6jQ@mail.gmail.com>
+        <xmqq7d47m1t2.fsf@gitster.g>
+        <304fd857-db62-7a1a-a9a9-cbfa93c2a00c@github.com>
+        <220721.86r12etvly.gmgdl@evledraar.gmail.com>
+        <CAPOJW5zA1FnLDWXgRza3WLCHK0ER7ZUkdyq-kcPm4-TsW9U2nA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <CAPOJW5zA1FnLDWXgRza3WLCHK0ER7ZUkdyq-kcPm4-TsW9U2nA@mail.gmail.com>
+Message-ID: <220722.86bkths8dv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ec9a37d ("pkt-line.[ch]: remove unused packet_read_line_buf()",
-2021-10-14) removed the "src_buffer" and "src_len" parameters from
-packet_read(), only leaving them at packet_read_with_status(). Let's
-also update the function documentation by moving the comment about these
-parameters from the former to the latter.
 
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- pkt-line.h | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+On Thu, Jul 21 2022, Abhradeep Chakraborty wrote:
 
-diff --git a/pkt-line.h b/pkt-line.h
-index 6d2a63db23..1f623de60a 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -49,14 +49,6 @@ void packet_fflush(FILE *f);
-  * Read a packetized line into the buffer, which must be at least size bytes
-  * long. The return value specifies the number of bytes read into the buffer.
-  *
-- * If src_buffer and *src_buffer are not NULL, it should point to a buffer
-- * containing the packet data to parse, of at least *src_len bytes.  After the
-- * function returns, src_buf will be incremented and src_len decremented by the
-- * number of bytes consumed.
-- *
-- * If src_buffer (or *src_buffer) is NULL, then data is read from the
-- * descriptor "fd".
-- *
-  * If options does not contain PACKET_READ_GENTLE_ON_EOF, we will die under any
-  * of the following conditions:
-  *
-@@ -104,6 +96,14 @@ int packet_length(const char lenbuf_hex[4]);
-  * returns an 'enum packet_read_status' which indicates the status of the read.
-  * The number of bytes read will be assigned to *pktlen if the status of the
-  * read was 'PACKET_READ_NORMAL'.
-+ *
-+ * If src_buffer and *src_buffer are not NULL, it should point to a buffer
-+ * containing the packet data to parse, of at least *src_len bytes.  After the
-+ * function returns, src_buf will be incremented and src_len decremented by the
-+ * number of bytes consumed.
-+ *
-+ * If src_buffer (or *src_buffer) is NULL, then data is read from the
-+ * descriptor "fd".
-  */
- enum packet_read_status {
- 	PACKET_READ_EOF,
--- 
-2.37.1
+> On Thu, Jul 21, 2022 at 7:29 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> It's great that the primary author of the library wants to release it
+>> under a compatible license.
+>>
+>> But I feel like I'm missing something here, don't we still need the
+>> other contributors to that code to sign off on such a license change,
+>> and for us to be comfortable with integrating such code?
+>
+> As far as I see their commits, they don't use sign-off in any of their co=
+mmits.
+
+That's unrelated, that's just a convention linux.git & git.git (and
+maybe some others) use to mean "I pinky promise this is my work, or can
+be licensed under the project terms".
+
+It doesn't impact how copyright or software licencing works in general.
+
+> I know what you want to mean but the license text uses "The CRoaring
+> authors" rather than "Daniel Lemire". Below is the text -
+>
+>     /*
+>     * MIT License
+>     *
+>     * Copyright 2016-2022 The CRoaring authors
+>    *
+>    * Permission is hereby granted, free of charge, to any
+>    * person obtaining a copy of this software and associated
+>      ...
+>    */
+>
+> So, isn't it enough for us?
+
+That's a commonly used shorthand for not having to exhaustively list all
+authors everywhere, but it's unrelated to the process by which
+dual-licencing can happen after the fact.
+
+If you and I come up with a 1000 line file together (each contributing
+500 lines) and it says "copyright <this file's authors> and we license
+it under the GPLv3" that doesn't give either of us permission to then
+re-license the work later without the other copyright holder's approval.
+
+>> My understanding (again, not a lawyer and all that) is that such
+>> transitions happen one of a few ways:
+>>
+>>  A. One entity had been assigned copyright in the first place, and can
+>>     re-license the work. E.g. the FSF requiring copyright assignments
+>>     for anything non-trivial.
+>>
+>>  B. The license itself has an "upgrade" clause (e.g. GPLv2 "or later"
+>>     projects being GPLv3 compatible).
+>>
+>>  C. All copyright holders (or near enough) agree to
+>>     relicense. E.g. OpenStreetMap went through this process at some
+>>     point.
+>
+> I got your point here. I am sure that "All copyright holders" have no
+> problem with this relicensing.
+
+Yes, that seems unlikely in practice. But I'm asking because it's not
+obvious from the linked-to discussion that anyone except the primary
+author decided this.
+
+So if we integrate it into git.git and one of those people /would/ have
+a problem with it we'd be the ones in trouble.
+
+> Daniel already said in his comment[1] that they do not have any problem w=
+ith it.
+>
+> [1] https://groups.google.com/g/roaring-bitmaps/c/0d7KoA79k3A/m/t8e09-wPA=
+gAJ
+
+Anyway, I don't see much of a point in two non-lawyers continuing this
+discussion, I just asked in case there was something obvious I was
+missing. E.g. the primary author is a professor, perhaps all (or
+substantial amount of) the contributors were students at the same
+university, and some copyright assignment etc. happened behind the
+scenes.
+
+I think it would be prudent if/when we decide to integrate this code to
+ask our contacts at the SFC to give this a once-over, luckily we do have
+actual laywers to call on if needed :)
 
