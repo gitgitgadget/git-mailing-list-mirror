@@ -2,133 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE63C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 22:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19486C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 23:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236916AbiGVWqf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 18:46:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43234 "EHLO
+        id S231594AbiGVXTC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 19:19:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236149AbiGVWqe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 18:46:34 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DA6AD
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 15:46:33 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-31e7055a61dso61349927b3.11
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 15:46:33 -0700 (PDT)
+        with ESMTP id S229611AbiGVXTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 19:19:02 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C144D12B
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 16:19:00 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id bz13so4565519qtb.7
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 16:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2a4AYwLij4bP7qSPKJzeDcCLxAJ7NBx2ZnmNl5bS6tI=;
-        b=q47zrm68TJRAkk8cM/7dH4W/xn1v7FYfHB3AK/1kcjkhH/rFbifD9+xyr9UBRM78G7
-         sRF497pSgTjbx8EzVLJ497EXAqllY7+UrA+doVG5jQTrepqBDX4DY1kAFmc6zGvIY4pL
-         64Ke0GxWmoWt8FcWPVUK37eKEfQTPSLSYgSylPVYI/K1mIKcs4HEZ3Fscm6I5yIHqn7s
-         ggt35fjxBuFuTu13TGOSlN4keuu2nKQ6LkrxxQ4/EomI4IBIYbFUtFXetrkUZkxAvBDf
-         Rj7feHGAn2Pprgi1L61tXC5r4XhOIQEEry7hxVEecALr2Hy9RYyDZE+VMJITtj8FkebA
-         6TFQ==
+         :cc;
+        bh=yNr86PxL0hEt/XNa+l01Rg4krYPvnZ4GVzAO7x7i8D8=;
+        b=C4/BgYVP3WWU5Dc8GS+mzZJN3smHAKCvqc8b+fHwOtW/aWw1QJ0ZNnZGGb/cbK0E/F
+         6nCm0gC81TFtxz75IJGQQhJw4Lb5DbXJlGbkD0Epm9ZavQqvLpBAYoam9xhHKPSrcwEi
+         x8aVKWrrfePlo4Oda5r4owjLUfMJ5Q2E7x9QDMdhWo55rVTn8uaLs81k2KKs6PkOt/Qg
+         FJkX7r46Bc5bo6m08EcV2GFQT2uZx2eqBIuzJH1YhGzLGIZZ62fl7Lup16/pYtd8efm7
+         vUoxdth2sqSiCJIqpEzoTsiiNuQDGMY7JmUanHqnBSv6X0tQk9ROtaObDF1NFS7AA4ag
+         NpdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2a4AYwLij4bP7qSPKJzeDcCLxAJ7NBx2ZnmNl5bS6tI=;
-        b=I9XIiMPadHdFHBUMZf4RUXIoRJITSYeuhEpwnXqgIM41aOFMSkfMo9ur1pBrCjOQVK
-         yN2IGMJIzeys28+nATuHzV8ntflFbwKExfH9t68y9ifz+LpLYNf78zNOzW2w6OWv8TpF
-         Nc9Ex1z1h5bdW1BMNqK8VlGjTvG80frSqDbHCY8gXXfWm9jn3H14AqLgQmg0KUepwMnW
-         m4dYQgaM9UWj8D2C5vkF0yHWzvaY6212ues4DasOWni4jhaKuDVOP9lNXGLrqB4SsJj9
-         9xJkitvr4yP00wh/si0b3EKArOC9wBpS+G3OZoN8ryWdaQYx3tbBRkN4BZ2AklRkxr2u
-         f21A==
-X-Gm-Message-State: AJIora9ieBJXJ/EZXV/Ta8C2z0M2lt4oe98beuLhYJZwujN2Iz4UpBhq
-        sRSBE+SIKY6BiifTCUFftpbc8AL5wJa5Wki9vnQ=
-X-Google-Smtp-Source: AGRyM1v5bPfrg9djkClkBqZp32gCkZoKNetvehxb44XLY4tHyEKAbEi5pDj4N15CwUtHSqGGyat5+2shqejiuDMdTj4=
-X-Received: by 2002:a81:7d55:0:b0:31e:6f02:30d4 with SMTP id
- y82-20020a817d55000000b0031e6f0230d4mr1854579ywc.375.1658529992875; Fri, 22
- Jul 2022 15:46:32 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=yNr86PxL0hEt/XNa+l01Rg4krYPvnZ4GVzAO7x7i8D8=;
+        b=QTozrIYJHXFxVY1nP2TJwQlchF0/16gUoIN+6jiknkS5yWuDB5nJbdsaxGyFJdbdb1
+         mMD8jif+0WPUh70KXfue7E2cbwHlbeN5fn5o2cs3vqsrQclJt0LdwA+bfnzvAOkEXFiu
+         ZuInvHBIMCTtWEKVCr8/0TFAPryPDZGtWnxoyww6M+DvUu9ZQEqE3V+XuVsGW7Dd5Jsq
+         iycqSWAANHnYDVuij1Jm7T/ShGtEauu7chQi9azpuhQZzwC85iM0Oat8l5e39WNneW8h
+         UTtkgxuh1fSp3zIska6Zf2i95nTd3humXpvYj06iYyyvERYWckoB5aXfKEh5fqcLnGxk
+         P8vQ==
+X-Gm-Message-State: AJIora/DPZ1fvU0p3QO/3Ui6EBI+wHi3EVzTA6FUcf3SD1Zw29ICXADU
+        TTTrvg2tzA3YY0pUh6nqKztV9j57qC8po7b2MpD2+A/ZEkY=
+X-Google-Smtp-Source: AGRyM1vGGYukFlsTwqKdv1PHsmlxewj3rdYv5+MxxWjxtxwNgrEu7MK+xz1ybkQfpxckHYoSObwz6eZ/OhE/2kSQK3Q=
+X-Received: by 2002:a05:622a:412:b0:31e:daba:4fc9 with SMTP id
+ n18-20020a05622a041200b0031edaba4fc9mr2158475qtx.541.1658531939245; Fri, 22
+ Jul 2022 16:18:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com> <87a692e8vj.fsf@vps.thesusis.net>
- <CAE1pOi1pS76iXU8j=A54wPGHC7qofxrPDAO4uyy0d6yMxeQwvw@mail.gmail.com>
- <6426b5c3-0a09-f641-9876-3534b0abd96d@iee.email> <20220722203642.GD17705@kitsune.suse.cz>
-In-Reply-To: <20220722203642.GD17705@kitsune.suse.cz>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 22 Jul 2022 15:46:22 -0700
-Message-ID: <CA+P7+xr+k35RXoGv-O96fsfOJ+sg65HrVvt-3JKYAzerA0TJRw@mail.gmail.com>
-Subject: Re: Feature request: provide a persistent IDs on a commit
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-        Phillip Susi <phill@thesusis.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stephen Finucane <stephen@that.guru>,
-        Git Users <git@vger.kernel.org>
+References: <20220721151937.adgufwkj3uxkk3yb@meerkat.local>
+In-Reply-To: <20220721151937.adgufwkj3uxkk3yb@meerkat.local>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 22 Jul 2022 16:18:48 -0700
+Message-ID: <CABPp-BE2391i7syZJUK1Nqjk9VZhSxqto0pb7xBLDZR_fY3FXA@mail.gmail.com>
+Subject: Re: [filter-repo] How to reorder commits
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 22, 2022 at 1:42 PM Michal Such=C3=A1nek <msuchanek@suse.de> wr=
-ote:
+On Thu, Jul 21, 2022 at 8:19 AM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
 >
-> On Fri, Jul 22, 2022 at 09:08:56PM +0100, Philip Oakley wrote:
-> > On 21/07/2022 19:58, Hilco Wijbenga wrote:
-> > > On Thu, Jul 21, 2022 at 9:39 AM Phillip Susi <phill@thesusis.net> wro=
-te:
-> > >> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason <avarab@gmail.com> writes:
-> > >>
-> > >>> This has come up a bunch of times. I think that the thing git itsel=
-f
-> > >>> should be doing is to lean into the same notion that we use for tra=
-cking
-> > >>> renames. I.e. we don't, we analyze history after-the-fact and spot =
-the
-> > >>> renames for you.
-> > >> I've never been a big fan of that quality of git because it is
-> > >> inherently unreliable.
-> > > Indeed, which would be fine ... if there were a way to tell Git, "no
-> > > this is not a rename" or "hey, you missed this rename" but there
-> > > isn't.
-> > >
-> > > Reading previous messages, it seems like the
-> > > after-the-fact-rename-heuristic makes the Git code simpler. That is a
-> > > perfectly valid argument for not supporting "explicit" renames but I
-> > > have seen several messages from which I inferred that rename handling
-> > > was deemed a "solved problem". And _that_, at least in my experience,
-> > > is definitely not the case.
-> >
-> > Part of the rename problem is that there can be many different routes t=
-o
-> > the same result, and often the route used isn't the one 'specified' by
-> > those who wish a complicated rename process to have happened 'their
-> > way', plus people forget to record what they actually did. Attempting t=
-o
-> > capture what happened still results major gaps in the record.
+> Elijah:
 >
-> Doesn't git have rebase?
+> It seems filter-repo can be used to easily reorder commits, but I'm not able
+> to quite figure out how to do it with callbacks. My goal is:
 >
-> It is not required that the rename is captured perfectly every time so
-> long as it can be amended later.
+> - keep the cover letter at the start of the series in order to cleanly
+>   delineate where their work starts (and thus avoid potential problems with
+>   rebases and finding fork-points with base branches, which tends to give
+>   newbies trouble)
+> - when the author is ready to submit their work, move the cover letter to the
+>   tip of the branch and tag it as "foo-bar-v1"
+> - when the author is ready to work on their changes, they run --reroll and we
+>   move the cover letter back to the start of the series, adding any necessary
+>   template "changes in vX" entries to it
 >
-> Thanks
+> (or maybe it will go completely differently -- it's all very fluid right now)
 >
-> Michal
+> Basically, is git-filter-repo the right tool to reorder commits, or is it best
+> to go directly with fast-export/fast-import?
+>
+> Thanks in advance,
+> Konstantin
 
-Rebase is typically reserved only to modify commits which are not yet
-"permanent". Once a commit starts being referenced by many others it
-becomes more and more difficult to rebase it. Any rebase effectively
-creates a new commit.
+Generally, it makes no sense to reorder commits in filter-repo, nor
+does it make sense to do so using fast-export/fast-import directly.
+fast-export/fast-import don't "apply a diff" to get a new tree, they
+say "Make these files have these exact contents".  Perhaps an example
+would help to explain what I mean...
 
-There are multiple threads discussing renames and handling them in git
-in the past which are worth re-reading, including at least
+Let's say you have a repository where some commit has a file
+consisting of the numbers 2-9 on separate lines.  Then you had two
+more commits after this one: Commit A has numbers 1-9 (i.e. inserting
+a new first line with a "1"), and commit B has numbers 1-10 (i.e.
+adding "10" to the last line of the file).  If you reverse those two
+commits in the fast-export/fast-import stream, then B will still have
+the numbers 1-10 and A will still have the numbers 1-9 in the file.
+That makes it look like B added both lines, and then A removed the
+final line, and the end result is a file with one less line than you
+had before you reversed the commits.
 
-https://public-inbox.org/git/Pine.LNX.4.58.0504141102430.7211@ppc970.osdl.o=
-rg/
+So, generally, I think you should use a rebase-like tool for
+reordering commits rather than anything based on
+fast-export/fast-import.
 
-A fuller analysis here too:
-https://public-inbox.org/git/Pine.LNX.4.64.0510221251330.10477@g5.osdl.org/
 
-As mentioned above in this thread, depending on what context you are
-using, a change to a commit could be many to many: i.e. a commit which
-splits into 2, or 3 commits merging into one, or 3 commits splitting
-apart and then becoming 2 commits. When that happens, what "change id"
-do you use for each commit?
+Now, with an empty commit you wouldn't run into these issues and so
+you could get away with reordering.  But there is another issue: in
+the fast-import stream, you have to list all ancestors of a commit
+before you list the commit.  And git-filter-repo parses commits as it
+goes.  So you'd have to cache a commit or range of commits without
+outputting them, and then later dump them once the new parents have
+been output first.  I think a rebase-like tool would probably be
+better for this job, but if you really want to, you could probably get
+this working in filter-repo with a script similar to the ones in
+contrib/filter-repo-demos, but making sure to use steps something like
+the following:
+  * Avoid commits getting dumped by setting "commit.dumped = 1" (a
+"lie" which prevents git-filter-repo from immediately outputting the
+commit after your callback)
+  * Save the commits in a list somewhere
+  * As you are processing the commit(s) that need to be moved earlier
+modify the parents of these commit(s) (i.e. the commit.parents field)
+appropriately
+  * After you've output the commit(s) that needed to be moved earlier,
+iterate through the saved commit(s) and modify their parents and call
+commit.dump() on them.
