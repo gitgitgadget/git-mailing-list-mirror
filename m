@@ -2,100 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05673C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 13:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 928E7C43334
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 13:53:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233627AbiGVNva (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 09:51:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58994 "EHLO
+        id S231902AbiGVNxA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 09:53:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbiGVNv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 09:51:29 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32C42743F5
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:51:28 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id v12so5930537edc.10
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:51:28 -0700 (PDT)
+        with ESMTP id S231603AbiGVNw5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 09:52:57 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 750187820B
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:52:55 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-1013ecaf7e0so6326250fac.13
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 06:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=v2TDGTpjWTVqzDj8/YNNylZ1oF3bUiwe+DNW186zmBU=;
-        b=K9TKF5pnihswfmtfxieniS142mx/O3NJNvlCJWUGNcpVHL+WHUmlmbcjFnA2S0chcR
-         S6arwH0m5ZtGBj4TT1qP0rwC+BiA0IXWDdu5ZjCMMArH6j/lED/0FS9OfuZb6XZPs56u
-         B35/UlgBO9QOX0sMD277Bj2k9UuPnG83vLQX7cT5L0fw2bbSiQQBsvSFpM+vqAuTXhVY
-         lmtQ6MvQi7dFi35mUC8BWq7Xndt5ytgTIY65jPsNY191zU6ThNONvBeXRNeGWMN2sDrX
-         ecGlh3vkoqRN3/jOOZhPgKG+/ywFIuW+pqz8aVDdxPvQH4B9BKHhuYQRr6B98o+/1M/q
-         a12A==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=4A6BHNDJc2qyRYriSofI/FYU97QtJ7l1EsV255oA5J8=;
+        b=Ih2mTSjZQO+abt7uwUBphRVdgiH3WxKwkuMiisU334S3RC48oyNelRuXyXGfzac3Ar
+         4R+BFLPDR/puneNjyFiBcvDEFZcBtFT6V9LfW45TC8QKiJDmAAJWzwIUiDfJmyTo3Oow
+         vgZcyM6IJvGy7mQkHBF9xZQkhxkLfWWZyPlqraS0sKoF0WTLc6wxJAjdhvTUd/ZkTEdv
+         qfYFLnzUriGpRandUKErVApyLldau0Hf084EpCvGqRyid/xN+OcLmVknvAsTUaajbCnP
+         mIpla8RpK9/z+vTp/+AsgECw6o1kpCvN3kLkl5NVdMnh8rCxpRnuzqOXh96B3uXKqLRS
+         rulA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=v2TDGTpjWTVqzDj8/YNNylZ1oF3bUiwe+DNW186zmBU=;
-        b=y98/Rb811KoBP3qV32yIYn33EI9JvYTYzJVCIZiooIPhopvzLAGA2GkV6NRPrUhMny
-         4yIu236Blydlpnt/JhpU15t9j1yQS07xPqgCMUc6+ekVZUMZMGF7kPszPWoJDNQGuQdO
-         B0Cd/zgTW+6Icq7SSPmzGpaIDiwJ4oG4iHiZgqn61Y3GlzWyyx+nUrsI8L5afmaId2iV
-         1LzL1qklQ7y65eIqdpNEfIREJJtPIVRKgIYmuBI5XiThNIdsnua1V8SLVzrL9EUXO3TL
-         HrfOOQi+9FayXrPLUqGcqPutrNXgn+Sq8FJdhzng/JIfGIJetbbS6FvVA+OY7LsRepkg
-         tOaQ==
-X-Gm-Message-State: AJIora81Z9ZRTmlMRpfAI0V9s1iuCzM709ILnktLjAWw8gscKBfYYWN8
-        UCoVRRZ9M/FJ+ohLpXsTAH4=
-X-Google-Smtp-Source: AGRyM1tzGOZ7vO1PSh/oompwcY3o0yGDF+O2/rTL1Yb/nDZNnzbei9jXHHVGg0oyCjMzDjdGbKgI7A==
-X-Received: by 2002:a05:6402:529a:b0:43b:b8e4:fca5 with SMTP id en26-20020a056402529a00b0043bb8e4fca5mr821617edb.344.1658497886433;
-        Fri, 22 Jul 2022 06:51:26 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ej22-20020a056402369600b00437d3e6c4c7sm2564647edb.53.2022.07.22.06.51.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jul 2022 06:51:25 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oEt3s-005L8u-VN;
-        Fri, 22 Jul 2022 15:51:24 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH v3 02/26] submodule--helper: stop conflating "sb" in
- clone_submodule()
-Date:   Fri, 22 Jul 2022 15:50:32 +0200
-References: <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com>
- <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com>
- <patch-v3-02.26-32e4ae7ead5-20220721T191249Z-avarab@gmail.com>
- <xmqqlesmf9or.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqlesmf9or.fsf@gitster.g>
-Message-ID: <220722.86y1wlqmqr.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=4A6BHNDJc2qyRYriSofI/FYU97QtJ7l1EsV255oA5J8=;
+        b=5przrPBz29ysVtFVBSEk3B2w3itL/eI5ptWR0nHzhxRmTxPiKd+pUW2MGjUtaj2yNn
+         xsWHe3dsAh85+1NiuknhBtDJnhCk/qhYIloFIjHffP8I190ZC57676qLrh4HbhlgwyWp
+         YlAtX3a2AW2bvowGg7TuGkOCeQTgRZSt3iIviCtmmvtjhzwNIi6Sns2RbvzapTkDUps/
+         yGd5GjJDhgokp8MTVEJ6ZucQNZv6luede7ATGPjQYmaKt3yLTLjQjVVaBcicIB/wyWOb
+         7LEX29XQcnsAhC+2asIsAt6qiff+3JQZKMEduINxErU75vxZ0pSiSGYAv76uUVWsJuY6
+         ndDA==
+X-Gm-Message-State: AJIora+d6BTzGGuOM7+4DVHoOAxuhN59Lz8ryH+r+Cgxi+aE2z091JEW
+        Uj6Wx0XBKND6aTDLq+CPb7s1
+X-Google-Smtp-Source: AGRyM1v0+fWggOc/m92usfnn0QIC+qVcjxsTBKQ0NsDZwAaJLHa9b+YUKvNgU0wfPSEJSGNsFpnufQ==
+X-Received: by 2002:a05:6870:5a3:b0:10d:514a:939a with SMTP id m35-20020a05687005a300b0010d514a939amr29401oap.1.1658497974676;
+        Fri, 22 Jul 2022 06:52:54 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:89e1:7440:c819:d192? ([2600:1700:e72:80a0:89e1:7440:c819:d192])
+        by smtp.gmail.com with ESMTPSA id n18-20020a05680803b200b003358e034f72sm1772832oie.7.2022.07.22.06.52.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Jul 2022 06:52:54 -0700 (PDT)
+Message-ID: <4ca1e9db-8603-0ba8-51e4-9bffe2a62ffe@github.com>
+Date:   Fri, 22 Jul 2022 09:52:50 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 1/6] docs: document bundle URI standard
+Content-Language: en-US
+To:     Matthew John Cheetham <mjcheetham@outlook.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        git@vger.kernel.org
+References: <pull.1248.git.1654545325.gitgitgadget@gmail.com>
+ <pull.1248.v2.git.1656535245.gitgitgadget@gmail.com>
+ <d444042dc4dcc1f9b218ca851fcf603a3afce92f.1656535245.git.gitgitgadget@gmail.com>
+ <AS8PR03MB8689A38CDA60565FED96EC99C0919@AS8PR03MB8689.eurprd03.prod.outlook.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <AS8PR03MB8689A38CDA60565FED96EC99C0919@AS8PR03MB8689.eurprd03.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Jul 21 2022, Junio C Hamano wrote:
-
->> +static int clone_submodule(struct module_clone_data *clone_data)
->> +{
->> +	char *p;
->> +	char *sm_gitdir = clone_submodule_sm_gitdir(clone_data->name);
->> +	char *sm_alternate = NULL, *error_strategy = NULL;
->> +	struct child_process cp = CHILD_PROCESS_INIT;
->>  
->>  	if (!is_absolute_path(clone_data->path)) {
->> +		struct strbuf sb = STRBUF_INIT;
+On 7/21/2022 8:09 AM, Matthew John Cheetham wrote:> I had a few questions and suggestions; below.
+> 
+> On 2022-06-29 21:40, Derrick Stolee via GitGitGadget wrote:> +Assuming a `200 OK` response from the server, the content at the URL is
+>> +inspected. First, Git attempts to parse the file as a bundle file of
+>> +version 2 or higher. If the file is not a bundle, then the file is parsed
+>> +as a plain-text file using Git's config parser. The key-value pairs in
+>> +that config file are expected to describe a list of bundle URIs. If
+>> +neither of these parse attempts succeed, then Git will report an error to
+>> +the user that the bundle URI provided erroneous data.
 >> +
->>  		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
->>  		clone_data->path = strbuf_detach(&sb, NULL);
->
-> This looks like a roundabout way to say xstrfmt().
+>> +Any other data provided by the server is considered erroneous.
+> 
+> I wonder if it may be worth considering adding an optional server requirement ("MAY" not "MUST") to provide a `Content-Type` header indicating if the response is a bundle list (or bundle) to skip straight to parsing the correct type of file? Eg "application/x-git-bundle-list"?
+> 
+> Even the simplest of content servers should be able to set Content-Type. If not falling back to 'try parse bundle else try parse bundle list' is still OK.
+This is an interesting idea. We should keep it in mind for a future
+extension, since the Git client needs to do some work to parse the
+header and communicate that upwards to the logic that parses the file. 
+>> +bundle.mode::
+>> +    (Required) This value has one of two values: `all` and `any`. When `all`
+>> +    is specified, then the client should expect to need all of the listed
+>> +    bundle URIs that match their repository's requirements. When `any` is
+>> +    specified, then the client should expect that any one of the bundle URIs
+>> +    that match their repository's requirements will suffice. Typically, the
+>> +    `any` option is used to list a number of different bundle servers
+>> +    located in different geographies.
+> 
+> Do you forsee any future where we'd want or need to specify 'sets' of bundles where "all" _of_ "any" particular set would be required?
+> Eg. there are 3 sets of bundles (A, B, C), and the client would need to download all bundles belonging to any of A, B, or C? Where ABC would be different geo-distributed sets?
 
-Yes, I can fix this and others while I'm at it, but a lot of things like
-that in this code are funny uses of APIs that we could improve.
+The bundle.heuristic space is open-ended to allow for different ways to
+scan the bundle list and download a subset, so that might be a way to
+extend this in the future.
 
-I think it's probably best to just leave these for now.
+I think what you're hinting at is a single "global" bundle list that knows
+about all of the bundles scattered across the world and it groups bundles
+by geography, even though the list knows about multiple geos. Is that what
+you mean?
 
-But I also don't mind adding another commit to this already large series
-to search/replace the relevant strbuf_detach() with xstrfmt()....
+> I guess what I'm getting at here is with this design (which I appreciate is intentionally flexible), there are several different ways a server could direct a client to bundles stored in a nearby geography:
+> 
+> 1. Serve an "all" bundle list with geo-located bundle URIs?
+> 2. Serve a global "any" bundle list with each single bundle in a different geography (specified by `location`)
+> 3. Serve a single bundle (not a list) with a different
 
-Just let me know...
+I think this item 3 is incomplete. What were you going to say?
+
+I'll assume for now that you just mean "3. Serve a single bundle (not a
+list)."
+
+> Are any of these going to be preferred over another for potential client optimisations?
+
+I could do better in this document of giving clear examples of how a
+bundle provider could organize bundles. As the client becomes more
+sophisticated, then different organizations become "unlocked" as something
+the client can understand and use efficiently. That also sets the stage
+for how to add extensions: the client change can be paired with an example
+bundle provider organization.
+
+The bundle provider setup that I personally think will work best is:
+
+ 1. The origin Git server advertises a bundle list in "any" mode. Each URI
+    is a static URI that corresponds to a different geography. The client
+    picks the closest one and stores that URI in local config.
+
+ 2. Each static URI provides a bundle list in "all" mode with the
+    creationToken heuristic. The bundles are sorted by creation time, and
+    new bundles are created on roughly a daily basis, but it could be
+    a wider time frame if not enough Git data is added every day. The
+    creationTokens are added as appending to this order, but after the
+    list has some fixed length, the oldest bundles are merged into a single
+    bundle. That merged bundle is then assigned the maximum creationToken
+    of the bundles used to create it.
+
+This comes from experience in how the GVFS Cache Server prefetch packfiles
+are created. To support those very-active repos, there's another layer of
+"hourly" packs that are merged into "daily" packs; those daily packs are
+merged into a giant "everything old" pack after 30 days. This means that
+there is a maximum of 1 + 30 + 23 packs at any given time.
+
+>> +
+>> +bundle.heuristic::
+>> +    If this string-valued key exists, then the bundle list is designed to
+>> +    work well with incremental `git fetch` commands. The heuristic signals
+>> +    that there are additional keys available for each bundle that help
+>> +    determine which subset of bundles the client should download.
+>> +
+>> +The remaining keys include an `<id>` segment which is a server-designated
+>> +name for each available bundle.
+> 
+> Case-sensitive ID? A-Za-z0-9 only? "Same as Git config rules"?
+
+I would say "Same as Git config rules" in general, but we could try to be
+more strict here, if we want.
+
+>> +bundle.<id>.location::
+>> +    This string value advertises a real-world location from where the bundle
+>> +    URI is served. This can be used to present the user with an option for
+>> +    which bundle URI to use or simply as an informative indicator of which
+>> +    bundle URI was selected by Git. This is only valuable when
+>> +    `bundle.mode` is `any`.
+> 
+> I assume `location` is just an opaque string that is just used for info or display purposes? Does it make sense for other 'display' type strings like 'name' or 'message'?
+
+We should definitely give this key another look when we get around to
+building the UX around choosing from a list in "any" mode with human-
+readable information like this.
+
+>> +Advertising Bundle URIs
+>> +-----------------------
+>> +
+> ...
+>> +The client could choose an arbitrary bundle URI as an option _or_ select
+>> +the URI with best performance by some exploratory checks. It is up to the
+>> +bundle provider to decide if having multiple URIs is preferable to a
+>> +single URI that is geodistributed through server-side infrastructure.
+> 
+> Would it make sense for the client to pick the first bundle URI rather than an arbitrary one? The server could use information about the request (origin IP/geography) to provide a sorted list of URIs by physical distance to the client.
+> 
+> I guess if arbitrary is 'random' then this provides some client-side load balancing over multiple potential servers too. Interested in your thoughts behind what would be 'best practice' for a bundle server here.
+
+I tend to think of the client as being the "smartest" participant in this
+exchange. The origin Git server is just serving lines from its local config
+and isn't thinking at all about the client's network topology. If instead
+the bundle provider (not the Git server) organizes to have a single URI
+listing all of the geographic options, then that server could do smarter
+things, for sure. It might be able to do that reordering to take advantage
+of the Git client picking the first option (before the client has the
+capability to test the connections to all of them for the fastest link).
+
+>> +If the bundle provider does not provide a heuristic, then the client
+>> +should attempt to inspect the bundle headers before downloading the full
+>> +bundle data in case the bundle tips already exist in the client
+>> +repository.
+> 
+> Would this default behaviour also be considered another explicit heurisitic option? For example: `bundle.heuristic=default` or `inspect`.
+> Is it ever likely that the default behaviour would change?
+
+I think that if there is no explicit heuristic, then this is the only way
+the client can avoid downloading all of the bundle content.
+
+>> +* The client receives a response other than `200 OK` (such as `404 Not Found`,
+>> +  `401 Not Authorized`, or `500 Internal Server Error`). The client should
+>> +  use the `credential.helper` to attempt authentication after the first
+>> +  `401 Not Authorized` response, but a second such response is a failure.
+> 
+> I'd probably say a 500 is not solvable with a different set of credentials, but potentially a retry or just `die`. Do we attempt to `credential_fill()` with anything other than a 401 (or maybe 403 or 404) elsewhere in Git?
+
+This is poorly worded, and I should group 400-level errors in one bullet
+and 500 errors as its own category. The implementation uses the same
+"retry with credentials" logic that other HTTPS connections make, so the
+logic should be shared there. This document should point to another place
+that documents that contract, especially in case it changes in the future.
+
+Thanks!
+-Stolee
