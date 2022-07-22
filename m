@@ -2,81 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A5EEC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 22:00:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE63C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Jul 2022 22:46:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236726AbiGVWA1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jul 2022 18:00:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60368 "EHLO
+        id S236916AbiGVWqf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jul 2022 18:46:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236720AbiGVWAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jul 2022 18:00:25 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E044D1AF25
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 15:00:23 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id k16so5611076pls.8
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 15:00:23 -0700 (PDT)
+        with ESMTP id S236149AbiGVWqe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jul 2022 18:46:34 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DA6AD
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 15:46:33 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-31e7055a61dso61349927b3.11
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 15:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=RztH4CmqD/r3Lr4MCe13E+UGFlct2+ay9mICHwrIiHA=;
-        b=IA1XWlrYh+YDXSyGuAFdO6VkrRjWYRMJhopanZfRm1LWchojm6uCQZGkc04bwOgtvq
-         z09qlRRaeXuWbqt03C0ueXe6aVNMj6oFca56cD2mw5SkpKQ5WCUlC37Kl16egYLRbpnl
-         wBXvZtO6oLkMz+bkDSysRA/6rsPinQuOtBppvQdlFqT1fMfgkQyUfkDza38PeIQw17TG
-         n8fUFRDAiWpDjcvt2o1O140wLUmv/UIVPreKWUNda7IHz6/2FlKpIYUUOoGseyjE7PkZ
-         lgOE5p+pBcEUAQAIwMZdtUuMHQIwrkZ2Gi/pK7SikHzBPYkZP+ur/nSOeJT7rS4PhJwr
-         KcbA==
+        bh=2a4AYwLij4bP7qSPKJzeDcCLxAJ7NBx2ZnmNl5bS6tI=;
+        b=q47zrm68TJRAkk8cM/7dH4W/xn1v7FYfHB3AK/1kcjkhH/rFbifD9+xyr9UBRM78G7
+         sRF497pSgTjbx8EzVLJ497EXAqllY7+UrA+doVG5jQTrepqBDX4DY1kAFmc6zGvIY4pL
+         64Ke0GxWmoWt8FcWPVUK37eKEfQTPSLSYgSylPVYI/K1mIKcs4HEZ3Fscm6I5yIHqn7s
+         ggt35fjxBuFuTu13TGOSlN4keuu2nKQ6LkrxxQ4/EomI4IBIYbFUtFXetrkUZkxAvBDf
+         Rj7feHGAn2Pprgi1L61tXC5r4XhOIQEEry7hxVEecALr2Hy9RYyDZE+VMJITtj8FkebA
+         6TFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RztH4CmqD/r3Lr4MCe13E+UGFlct2+ay9mICHwrIiHA=;
-        b=Gpx9ARRb92JPWmNiqZqxECJhGP9Tw+nwGDqajOycnkp37uR8zW4XnAdU+XkGUWKZd+
-         xuQHDQgU4POiPNYr3j2rSipBtcMmdZUmOk63T6NCVadOBXKuikkWRxpQrZc5hIB4OtO1
-         EmLn3JTjZ0/uRO6rAwuohINf6rQR3sdmpHXSCir+F6dF/2G1zRubCdVTp0cHXq7KzzYV
-         NkyUNwIsAwptYiwDagSvGZbBafvL3kxM6PEj1hDhfH1vcZTSSWrwWXffVxgv/az2De/A
-         0D9VXfk9xgTJfb6+pFsU0HJeEoUctWdkI6SshwSxFyv2CJuBxbmGtIkxDiPceY6cSEQN
-         NWrQ==
-X-Gm-Message-State: AJIora9VO3PS52o442D6JOyiWGs8h5d5rdJHLT6UXUFVpfLz5CiTCpTC
-        WYfoKZ2weoEoQggsuKDl++eC1ksi7sWV3ZogeLLML/4npv0=
-X-Google-Smtp-Source: AGRyM1tLSgM9w627K/zSFBZtTgLKQ8ccgcYgt/Vk8oDtv3mFP5poOqjHgAUoaFIGqLw13OrVgugqYKC++/uPgwgQ9Lk=
-X-Received: by 2002:a17:902:e74a:b0:16c:3bdf:26bd with SMTP id
- p10-20020a170902e74a00b0016c3bdf26bdmr1894140plf.116.1658527223245; Fri, 22
- Jul 2022 15:00:23 -0700 (PDT)
+        bh=2a4AYwLij4bP7qSPKJzeDcCLxAJ7NBx2ZnmNl5bS6tI=;
+        b=I9XIiMPadHdFHBUMZf4RUXIoRJITSYeuhEpwnXqgIM41aOFMSkfMo9ur1pBrCjOQVK
+         yN2IGMJIzeys28+nATuHzV8ntflFbwKExfH9t68y9ifz+LpLYNf78zNOzW2w6OWv8TpF
+         Nc9Ex1z1h5bdW1BMNqK8VlGjTvG80frSqDbHCY8gXXfWm9jn3H14AqLgQmg0KUepwMnW
+         m4dYQgaM9UWj8D2C5vkF0yHWzvaY6212ues4DasOWni4jhaKuDVOP9lNXGLrqB4SsJj9
+         9xJkitvr4yP00wh/si0b3EKArOC9wBpS+G3OZoN8ryWdaQYx3tbBRkN4BZ2AklRkxr2u
+         f21A==
+X-Gm-Message-State: AJIora9ieBJXJ/EZXV/Ta8C2z0M2lt4oe98beuLhYJZwujN2Iz4UpBhq
+        sRSBE+SIKY6BiifTCUFftpbc8AL5wJa5Wki9vnQ=
+X-Google-Smtp-Source: AGRyM1v5bPfrg9djkClkBqZp32gCkZoKNetvehxb44XLY4tHyEKAbEi5pDj4N15CwUtHSqGGyat5+2shqejiuDMdTj4=
+X-Received: by 2002:a81:7d55:0:b0:31e:6f02:30d4 with SMTP id
+ y82-20020a817d55000000b0031e6f0230d4mr1854579ywc.375.1658529992875; Fri, 22
+ Jul 2022 15:46:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqq35etc4vm.fsf@gitster.g> <20220722212232.833188-1-martin.agren@gmail.com>
- <xmqqtu78bz25.fsf@gitster.g>
-In-Reply-To: <xmqqtu78bz25.fsf@gitster.g>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 23 Jul 2022 00:00:11 +0200
-Message-ID: <CAN0heSqQLhM=mGhOVKyR+fqM3hm3na+dZhx+HPnq+UJFaGudVA@mail.gmail.com>
-Subject: Re: [PATCH] read-cache: make `do_read_index()` always set up `istate->repo`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>,
-        Tao Klerks <tao@klerks.biz>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>
+References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+ <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com> <87a692e8vj.fsf@vps.thesusis.net>
+ <CAE1pOi1pS76iXU8j=A54wPGHC7qofxrPDAO4uyy0d6yMxeQwvw@mail.gmail.com>
+ <6426b5c3-0a09-f641-9876-3534b0abd96d@iee.email> <20220722203642.GD17705@kitsune.suse.cz>
+In-Reply-To: <20220722203642.GD17705@kitsune.suse.cz>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 22 Jul 2022 15:46:22 -0700
+Message-ID: <CA+P7+xr+k35RXoGv-O96fsfOJ+sg65HrVvt-3JKYAzerA0TJRw@mail.gmail.com>
+Subject: Re: Feature request: provide a persistent IDs on a commit
+To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+        Phillip Susi <phill@thesusis.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stephen Finucane <stephen@that.guru>,
+        Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 22 Jul 2022 at 23:46, Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Jul 22, 2022 at 1:42 PM Michal Such=C3=A1nek <msuchanek@suse.de> wr=
+ote:
 >
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
+> On Fri, Jul 22, 2022 at 09:08:56PM +0100, Philip Oakley wrote:
+> > On 21/07/2022 19:58, Hilco Wijbenga wrote:
+> > > On Thu, Jul 21, 2022 at 9:39 AM Phillip Susi <phill@thesusis.net> wro=
+te:
+> > >> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason <avarab@gmail.com> writes:
+> > >>
+> > >>> This has come up a bunch of times. I think that the thing git itsel=
+f
+> > >>> should be doing is to lean into the same notion that we use for tra=
+cking
+> > >>> renames. I.e. we don't, we analyze history after-the-fact and spot =
+the
+> > >>> renames for you.
+> > >> I've never been a big fan of that quality of git because it is
+> > >> inherently unreliable.
+> > > Indeed, which would be fine ... if there were a way to tell Git, "no
+> > > this is not a rename" or "hey, you missed this rename" but there
+> > > isn't.
+> > >
+> > > Reading previous messages, it seems like the
+> > > after-the-fact-rename-heuristic makes the Git code simpler. That is a
+> > > perfectly valid argument for not supporting "explicit" renames but I
+> > > have seen several messages from which I inferred that rename handling
+> > > was deemed a "solved problem". And _that_, at least in my experience,
+> > > is definitely not the case.
+> >
+> > Part of the rename problem is that there can be many different routes t=
+o
+> > the same result, and often the route used isn't the one 'specified' by
+> > those who wish a complicated rename process to have happened 'their
+> > way', plus people forget to record what they actually did. Attempting t=
+o
+> > capture what happened still results major gaps in the record.
 >
-> > +test_expect_success 'empty repo (no index) and core.untrackedCache' '
-> > +     git init emptyrepo &&
-> > +     cd emptyrepo/ &&
-> > +     git -c core.untrackedCache=3Dtrue write-tree
-> > +'
+> Doesn't git have rebase?
 >
-> I'll tweak this with "-C emptyrepo" so that future developers do not
-> have to get bitten when they add more tests to this script.
+> It is not required that the rename is captured perfectly every time so
+> long as it can be amended later.
+>
+> Thanks
+>
+> Michal
 
-Yikes. I should have known better. Thanks for catching that. If a v2 is
-needed for any reason, I'll include this change.
+Rebase is typically reserved only to modify commits which are not yet
+"permanent". Once a commit starts being referenced by many others it
+becomes more and more difficult to rebase it. Any rebase effectively
+creates a new commit.
 
-Martin
+There are multiple threads discussing renames and handling them in git
+in the past which are worth re-reading, including at least
+
+https://public-inbox.org/git/Pine.LNX.4.58.0504141102430.7211@ppc970.osdl.o=
+rg/
+
+A fuller analysis here too:
+https://public-inbox.org/git/Pine.LNX.4.64.0510221251330.10477@g5.osdl.org/
+
+As mentioned above in this thread, depending on what context you are
+using, a change to a commit could be many to many: i.e. a commit which
+splits into 2, or 3 commits merging into one, or 3 commits splitting
+apart and then becoming 2 commits. When that happens, what "change id"
+do you use for each commit?
