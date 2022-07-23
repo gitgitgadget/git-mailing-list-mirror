@@ -2,126 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72329C43334
-	for <git@archiver.kernel.org>; Sat, 23 Jul 2022 13:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B69C43334
+	for <git@archiver.kernel.org>; Sat, 23 Jul 2022 13:48:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234193AbiGWNgo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jul 2022 09:36:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54356 "EHLO
+        id S236274AbiGWNsr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jul 2022 09:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiGWNgn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jul 2022 09:36:43 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C30B1DB
-        for <git@vger.kernel.org>; Sat, 23 Jul 2022 06:36:39 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id bf9so11601207lfb.13
-        for <git@vger.kernel.org>; Sat, 23 Jul 2022 06:36:39 -0700 (PDT)
+        with ESMTP id S233071AbiGWNsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jul 2022 09:48:46 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 196C5165A3
+        for <git@vger.kernel.org>; Sat, 23 Jul 2022 06:48:43 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id bb16so8433216oib.11
+        for <git@vger.kernel.org>; Sat, 23 Jul 2022 06:48:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DTES3qVFLvEyLAx70IAbfiLzv2xzROhZTzW5OKnGSEY=;
-        b=hjuxd1qMhbvJUIuxZAdzf1w7+jlQn6FNtbe5kmILmhhSvQu6ie1qKUfmOc62uvxfgL
-         9rGZpNb1TZ5BpOWX3XULZENtIs7pKjSj9Xp+4yA+2Z684XJlJb8/wpi1MoMpqFvSFiEv
-         7yO7h/r+M+xVQQeB76vabO5rbPC+p/01iOgcUxMQx1JKL+0XZUte+ByJTRFozkbDfdJY
-         wzxgCOej8ba0eCu8tl0N58HgrbrJVa4yQL4MrqF3E28JInh51ixCc0glYj+5b+0KYzfF
-         xSVXOjwPIFMbB3oodEI1ne/sX3a6kwCLPV/ODti8SxdOmUhahxiw/N6JhKytx8vXx4HL
-         biyg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JZeXYCS0vSdBxYIwtCEaM/f2PkoWLIVeNwyrpsBkW0A=;
+        b=RdYAaGBHsQQRQD9GSMuMoPMubKEQvLxXqVlnQRj6jquR/14q7b8qAOzBWMKMLVcgp5
+         GV3eGikOLV+5ofX6+hkhJCn9mBtD+B0dLwGKUMW6NMRl+G7KyLlZxwLYRFyEv3i0TWmT
+         zZCuCvhJ1+o8VXwfcvyf9B0LoQZU6RDisseSNQ8bNqqaaJJkWK7D+YSQnJ6MFar9znss
+         N/OFwX4TOkDLuBvDqRBqQTJYEXpxd4IUcLw0UMa5O/p0RH7oWZEMaU56vdIVZLpQpx6k
+         CriXCaVPqx/eQy85F4Bwz21yt6yRgXEzOsT6hWv5CSQJMqZmMbTQsrydU4F0yqQIVzeO
+         +Otg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DTES3qVFLvEyLAx70IAbfiLzv2xzROhZTzW5OKnGSEY=;
-        b=QQvK5gjEhNyadnO6BQUArYTeVTzRyU0ZEnnXtRrh4brqHqUoJ0fUrCv2avwRXJaJ8o
-         6enyo0cP5d1DPLyXITyhPBKxPYLRQCgVzW9UUyQTA5ysxB4yC8t4xKvxF9F+NIFrN0+E
-         Wo7YaOdiEBztH62AFPljYUO9QQ7JA9U/z7/v13fGK8r1jnTp3YoNl3fventIilQY87jK
-         U4JLy0Trtg0llDKCgW5lkQqyArgaTWTkHqtqOh5Eg1MT/G+YBdkHvWgxJE/JSKIvxFlI
-         8IZsnzTL5gv0hQ5TghDJ+fiPrYUiOcleqfvXxK7pDsqcnvLvCN8TlVPSGiuCjK8ipWnn
-         QOUA==
-X-Gm-Message-State: AJIora/H//hmbH8a4bp3911JfzuzNVrX969+hv++KVE7dHa9J5z7J7zu
-        wyD1dWVBzZWDm7ZwC7gciXRgIxIZBCyycCfX0/FQzA==
-X-Google-Smtp-Source: AGRyM1t0zEa/GYUUvnUTzhOPia9b10eHkT2T64pTTm1hINunmoHJ2KRJGCG7BBgIizGe+jCUkIXy7e3jg9Hj4JQGEls=
-X-Received: by 2002:a05:6512:3503:b0:481:4470:4134 with SMTP id
- h3-20020a056512350300b0048144704134mr1734671lfs.42.1658583397803; Sat, 23 Jul
- 2022 06:36:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1658518769.git.matheus.bernardino@usp.br>
- <99823077be77bc621cfa8ccf3303bd612da343ad.1658518769.git.matheus.bernardino@usp.br>
- <220723.86pmhwquie.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220723.86pmhwquie.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JZeXYCS0vSdBxYIwtCEaM/f2PkoWLIVeNwyrpsBkW0A=;
+        b=T9/wgAFBRpySNFa1peNAOYVwXMR5Ve0KgoMkIqqvwB3qNV97trErBjn+sxKadDpENu
+         XlmUDjvOM4iTg2y4eAhUhIfF0kHlybfPm7Gh1ilbH8GFyK+reZjKemSbC4jWE2ANUwud
+         1j6ZPm+MG6YSKio+IMHcaYLWK1P6EpP1/UYFqgSXlLI0IirJgQJP4PN+cFI96VNzoTmg
+         9vY5enyTTnFHmdx//eIZrv7FKBRAp822yp8LWfKPQzIe6lsxCRMD45OWtFbTkMbyV2wS
+         KtALRI+uYkPopI2wOem/gk4SHY9eEk82dY7zZSBKGMzZw439P4It1XiWgKNRunPVeF0t
+         XL0g==
+X-Gm-Message-State: AJIora8faRt0aax0aMFHPiOyJQzcytMyCNaGHDkSHWTd+XiLE8TO+Qmu
+        G5wRc9Xh7wbId43ZOPkryeYLmzXMiw5vSA==
+X-Google-Smtp-Source: AGRyM1tK30+waSyHAHQs1LswLGmkRorEJUq+fTN6aVz5espiPbqNL9iHBF2rqndwRiLaoSMchqmEdQ==
+X-Received: by 2002:a05:6808:20f:b0:33a:6151:4e54 with SMTP id l15-20020a056808020f00b0033a61514e54mr2122082oie.257.1658584122394;
+        Sat, 23 Jul 2022 06:48:42 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.109.17])
+        by smtp.gmail.com with ESMTPSA id a32-20020a056870a1a000b0010d997ffe7asm3703538oaf.37.2022.07.23.06.48.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Jul 2022 06:48:41 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
-Date:   Sat, 23 Jul 2022 10:36:26 -0300
-Message-ID: <CAHd-oW4BCXNrUcSHLzKsrK0BTPCpGTi_fo8Buxte=RQDJahipw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] t/t0021: convert the rot13-filter.pl script to C
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     junio@pobox.com
+Cc:     git@vger.kernel.org
+Subject: mt/doc-config (Was: Re: What's cooking in git.git (Jul 2022, #07; Fri, 22))
+Date:   Sat, 23 Jul 2022 10:48:34 -0300
+Message-Id: <20220723134834.9693-1-matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <xmqqh738bq21.fsf@gitster.g>
+References: <xmqqh738bq21.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 23, 2022 at 2:15 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Fri, Jul 22, 2022 at 10:01 PM Junio C Hamano <junio@pobox.com> wrote:
 >
-> On Fri, Jul 22 2022, Matheus Tavares wrote:
->
-> Looking a bit closer...
->
-> > however, that we still use the script as a wrapper at
-> > this commit, in order to minimize the amount of changes it introduces
-> > and help reviewers. At the next commit we will properly remove the
-> > script and adjust the affected tests to use test-tool.
->
-> I'd prefer if we just squashed this, if you want to avoid some of the
-> diff verbosity you could leave the PERL prereq on all the
-> test_expect_success and remove it in a 2/2 (we just wouldn't run the
-> test until then).
->
-> But I think it's all boilerplate, so just doing it in one step would be
-> better, reasoning about the in-between steps is harder IMO (e.g. "exec"
-> escaping or whatever)
+> * mt/doc-config (2022-07-14) 3 commits
+>  - doc: notes: unify configuration variables definitions
+>  - doc: apply: unify configuration variables definitions
+>  - doc: grep: unify configuration variables definitions
+> 
+>  Unify description of configuration variables used by individual
+>  commands in the documentation of the commands and the documentation
+>  of the "git config".
+> 
+>  Will discard (Retracted?).
 
-Sure, will do! My split attempt was to try to reduce the mental load
-for the reviewers, but if it ended up making it harder instead of
-helping, let's squash the two patches.
-
-> > +     remote_caps =3D packet_read_and_check_capabilities(&supported_cap=
-s);
-> > +     packet_check_and_write_capabilities(remote_caps, &requested_caps)=
-;
-> > +     fprintf(logfile, "init handshake complete\n");
-> > +
-> > +     string_list_clear(&supported_caps, 0);
-> > +     string_list_clear(remote_caps, 0);
->
-> ..and here you're missing a free(), but I wonder why not just declare
-> this string_list in this function, and pass it down instead?
-
-Makes sense, will do.
-
-> Not knowing much about the filtering mechanism, I wonder if this code
-> here wouldn't be better as a built-in some day. I.e. isn't this all
-> shimmy we need to talk to some arbitrary conversion filter, except for
-> the rot13 part?
->
-> So if we just invoked a "tr" with run_command() to do the actual rot13
-> filtering we could do any sort of arbitrary replacement, and present a
-> variant of this this command as a "if you can't be bothered with
-> packet-line" in gitattributes(5)...
-
-Hmm, maybe so. But I would expect that someone building a long running
-process filter (as opposed to a "single-shot" filter, like the "tr"
-use case)  would also want to have finer control over the
-communication and "queueing" mechanics. And I'm not sure if that would
-be feasible via an off-the-shelf solution packed with Git itself.
-
-For example, while some filters may process the received paths
-sequentially, Git-LFS will use the delay capability to queue and
-download blobs in the background, examining the queue every time Git
-asks for the list of currently available blobs.
-
-Anyways, I could see these packet-line routines being exported as a
-library for those writing such filters.
+Yes, feel free to discard this one. Thanks.
