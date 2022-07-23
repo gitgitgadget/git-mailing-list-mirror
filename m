@@ -2,91 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1689C43334
-	for <git@archiver.kernel.org>; Sat, 23 Jul 2022 05:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0680C433EF
+	for <git@archiver.kernel.org>; Sat, 23 Jul 2022 05:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231751AbiGWFfv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jul 2022 01:35:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49334 "EHLO
+        id S233810AbiGWFjy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jul 2022 01:39:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbiGWFft (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jul 2022 01:35:49 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A8E812ACE
-        for <git@vger.kernel.org>; Fri, 22 Jul 2022 22:35:48 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B644144D9C;
-        Sat, 23 Jul 2022 01:35:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=N4qp5/1O1cvPiKJ6SKGgD722zvprECacFgr26X
-        FJywc=; b=HgmFaJ8Gspm1s0wGvL7XUAUxi1wLi1eW8TCFvrN5nurqBein4snpKp
-        6U0kadHUKP6ykaB3FhxNXiBIjOrQiP486Gl+NlOzQX+D8ZHGxe4UrjyUIrjzjP2N
-        xLENN4XGU4xgyKzp+DT/cys4qEqJaC/3VL7bW+AEx5xC3SWTU4Lu4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D46D144D9A;
-        Sat, 23 Jul 2022 01:35:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5AFA5144D99;
-        Sat, 23 Jul 2022 01:35:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229611AbiGWFjx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jul 2022 01:39:53 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40A67B5565
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 22:39:51 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id ez10so11709168ejc.13
+        for <git@vger.kernel.org>; Fri, 22 Jul 2022 22:39:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=4vRhz0iYk456e0KPZbMX+YwpcsQakGxH44YXUDTljv4=;
+        b=TUSDl4NuJKoaHrJFFbRlxCsXdISB8UeGUEicgqGVvpZWKb9PNubKVReuE1Y/pVslhT
+         Jhx7Il12XGxM6VdppplvkVqJhMf9Y2O5Ks4B/UxqbEH6dBBrJcsPUPuDXagNxYgrnTtg
+         43cD3w5kaVyVVSs5HISe/PP4CZNFZ5CiGj1vhNuZMAUHMZYOeSukzy/NvO25o8ArfHHH
+         vphu1qWz/k8BTSuDwtqVHBCUwylQaVhsoby3WGq0BWynkf0iBd83iR40s1FzOzR/wmHP
+         kEsCatkd/6bJu1x1pJn1iEnZSUV9B03im38Q6EmQyVFGuoHrLbxkKt3a2CN2OHz8ICPA
+         ldfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=4vRhz0iYk456e0KPZbMX+YwpcsQakGxH44YXUDTljv4=;
+        b=bxhP70w3vQ36+sVP2r/HFZTQ6XAPKUvLYXCMrt7zGClqSbyN5z2wnwJziAGWHOWAk2
+         VhBrw/Bbcptt2+YrYks/pkh7bPn9DxfkKO3iDZlTjbhYLtT8eRTJKnqOOAoxLFPy3lsw
+         fWzZ7e57ElJ8pLZCUNXO/vW9P2YVCDFBiRK0x1oAX8rQWWOr/rzzs6Mad51W2qRrJgFa
+         yHboWhDlSF2vuDZn2+jsQgMZuehuqJMH/oM0e1PlufwfYoIMqs5bLJq0WyqUGKotCyny
+         gLCIz9joQ24qMvQnUPDCKlp/0Zw+7r7ZD0a6eak3aL87f9gk+Cs27tXo8hsqb2XvSEuP
+         2rvw==
+X-Gm-Message-State: AJIora8ShiPxy1QwmuLfxisiFc0j7u2MK8BNPdZ6qy/s+oho+Pu34ykK
+        WuWeoQuh5clNuKVHEPW/bL4=
+X-Google-Smtp-Source: AGRyM1tiBTyLpJ7PlCvvNHp83V2KEZ7GQ2dLw5aKtNEjuOQPwnxoBwyPMqnjkw5Om3KnNq9nunCUrQ==
+X-Received: by 2002:a17:907:2710:b0:72b:7f52:75da with SMTP id w16-20020a170907271000b0072b7f5275damr2550042ejk.26.1658554789663;
+        Fri, 22 Jul 2022 22:39:49 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id c14-20020aa7d60e000000b0043b240ce57bsm3524372edr.82.2022.07.22.22.39.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Jul 2022 22:39:49 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oF7rg-005QKg-IN;
+        Sat, 23 Jul 2022 07:39:48 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        John Cai <johncai86@gmail.com>
 Subject: Re: [PATCH 2/2] builtin/cat-file.c: support NUL-delimited input
  with `-z`
+Date:   Sat, 23 Jul 2022 07:17:48 +0200
 References: <cover.1658532524.git.me@ttaylorr.com>
-        <ed1583223f63cfde99829069f14af62e4f0f2a82.1658532524.git.me@ttaylorr.com>
-Date:   Fri, 22 Jul 2022 22:35:43 -0700
-In-Reply-To: <ed1583223f63cfde99829069f14af62e4f0f2a82.1658532524.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Fri, 22 Jul 2022 19:29:05 -0400")
-Message-ID: <xmqq4jz8bdcg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <ed1583223f63cfde99829069f14af62e4f0f2a82.1658532524.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <ed1583223f63cfde99829069f14af62e4f0f2a82.1658532524.git.me@ttaylorr.com>
+Message-ID: <220723.86leskqtej.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4C182C46-0A49-11ED-AD2E-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
 
-> @@ -14,7 +14,7 @@ SYNOPSIS
->  'git cat-file' (-t | -s) [--allow-unknown-type] <object>
->  'git cat-file' (--batch | --batch-check | --batch-command) [--batch-all-objects]
->  	     [--buffer] [--follow-symlinks] [--unordered]
-> -	     [--textconv | --filters]
-> +	     [--textconv | --filters] [-z]
+On Fri, Jul 22 2022, Taylor Blau wrote:
 
-Is "-z" useful with any other option, or is it useful only in
-combination with one of the three --batch-*?  The above suggests the
-former.
+[I think John Cai would appreciate being CC'd on this]
 
+> It's tempting to think that we could use `strbuf_getwholeline()` and
+> specify either `\n` or `\0` as the terminating character. But for input
+> on platforms that include a CR character preceeding the LF, this
+> wouldn't quite be the same, since `strbuf_getline(...)` will trim any
+> trailing CR, while `strbuf_getwholeline(&buf, stdin, '\n')` will not.
+
+I commend the effort to maintain bug-for-bug compatibility, but do we
+care about this distinction, or is it just an accident that we support
+\r\n here in the first place?
+
+This doesn't apply to the rest of cat-file directly, but the origin of
+the recent --batch-command mode cdoe was to lift the same-ish code from
+builtin/update-ref.c, whose \n or \0 mode does exactly that:
+
+	while (!strbuf_getwholeline(&input, stdin, line_termination)) {
+
+I.e. it doesn't support \r\n, just \n or \0.
+
+Isn't that fine? I may be missing something, but why isn't it OK even on
+platforms that use \r\n for their normal *.txt endings to only use \n or
+\0 for this bit of protocol?
+
+For the command mode at least this passes our tests:
+	
+	diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+	index f42782e955f..8646059472d 100644
+	--- a/builtin/cat-file.c
+	+++ b/builtin/cat-file.c
+	@@ -614,12 +614,16 @@ static void batch_objects_command(struct batch_options *opt,
+	 	struct queued_cmd *queued_cmd = NULL;
+	 	size_t alloc = 0, nr = 0;
+	 
+	-	while (!strbuf_getline(&input, stdin)) {
+	+	while (!strbuf_getwholeline(&input, stdin, '\n')) {
+	 		int i;
+	 		const struct parse_cmd *cmd = NULL;
+	 		const char *p = NULL, *cmd_end;
+	 		struct queued_cmd call = {0};
+	 
+	+		if (input.len > 0 && input.buf[input.len - 1] == '\n')
+	+			--input.len;
+	+		input.buf[input.len] = '\0';
+	+
+	 		if (!input.len)
+	 			die(_("empty command in input"));
+	 		if (isspace(*input.buf))
+
+So maybe we should just do something like that instead? I.e. declare
+that a mistake.
+
+As for the rest of cat-file 05d5667fec9 (git-cat-file: Add --batch-check
+option, 2008-04-23) documents that it's LF, not CR LF, ditto
+git-cat-file.txt.
+
+So isn't this just an accident in of us having used the strbuf_getline()
+function to mean "\n", but actually it also does "\r\n".
+
+Which is a really unfortunately named function b.t.w., since it sneaks
+this bit of Windows portability into places that may not want it in the
+first place.
+
+>  strlen () {
+>      echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
+>  }
+> @@ -398,6 +403,12 @@ test_expect_success '--batch with multiple sha1s gives correct format' '
+>  	test "$(maybe_remove_timestamp "$batch_output" 1)" = "$(maybe_remove_timestamp "$(echo_without_newline "$batch_input" | git cat-file --batch)" 1)"
+>  '
+>  
 > +test_expect_success '--batch, -z with multiple sha1s gives correct format' '
 > +	echo_without_newline_nul "$batch_input" >in &&
+> +	test "$(maybe_remove_timestamp "$batch_output" 1)" = \
+> +	"$(maybe_remove_timestamp "$(git cat-file --batch -z <in)" 1)"
 
-I I recall [1/2] correctly, the input lacked the LF at the end.  In
-the original "LF terminated" use converted to use these variables,
-because $batch_*_input is "echo"ed to create the file "in", the lack
-of LF at the end is a GOOD thing.
+This...
 
-But here, echo_without_newline_nul is just a glorified "printf %s"
-piped into tr to turn LF into NUL.  What is fed by printf into the
-pipe lacks LF at the end, so the output from tr will not have NUL at
-the end, either.
-
-That might happen to work (because the EOF may be enough to signal
-the end of the entire input, thus the last input item), but it does
-not make the test case for "-z" exactly parallel to the line oriented
-input.
-
+> +'
+> +
+>  batch_check_input="$hello_sha1
+>  $tree_sha1
+>  $commit_sha1
+> @@ -418,6 +429,24 @@ test_expect_success "--batch-check with multiple sha1s gives correct format" '
+>      "$(echo_without_newline "$batch_check_input" | git cat-file --batch-check)"
+>  '
+>  
 > +test_expect_success "--batch-check, -z with multiple sha1s gives correct format" '
 > +    echo_without_newline_nul "$batch_check_input" >in &&
 > +    test "$batch_check_output" = "$(git cat-file --batch-check -z <in)"
+
+This....
+
 > +'
 > +
 > +test_expect_success FUNNYNAMES '--batch-check, -z with newline in input' '
@@ -97,38 +174,8 @@ input.
 > +
 > +	printf "HEAD:newline${LF}embedded" >in &&
 > +	git cat-file --batch-check -z <in >actual &&
-
-As I already said, I suspect that new users who know how our path
-quoting works would expect c-quoted path would work just fine
-without using "-z".  It is not a reason to refuse "-z" to exist,
-though.
-
-> @@ -436,6 +465,11 @@ test_expect_success '--batch-command with multiple info calls gives correct form
->  	echo "$batch_command_multiple_info" >in &&
->  	git cat-file --batch-command --buffer <in >actual &&
->  
-> +	test_cmp expect actual &&
 > +
-> +	echo "$batch_command_multiple_info" | tr "\n" "\0" >in &&
+> +	echo "$(git rev-parse "HEAD:newline${LF}embedded") blob 0" >expect &&
 
-This is what I would expect.  The _info variable lacks final LF,
-which is supplied by "echo", so output from tr ends with NUL, which
-mirrors the line-oriented input we used above.
-
-> +	git cat-file --batch-command --buffer -z <in >actual &&
-> +
->  	test_cmp expect actual
->  '
->  
-> @@ -459,6 +493,12 @@ test_expect_success '--batch-command with multiple command calls gives correct f
->  	echo "$batch_command_multiple_contents" >in &&
->  	git cat-file --batch-command --buffer <in >actual_raw &&
->  
-> +	remove_timestamp <actual_raw >actual &&
-> +	test_cmp expect actual &&
-> +
-> +	echo "$batch_command_multiple_contents" | tr "\n" "\0" >in &&
-> +	git cat-file --batch-command --buffer -z <in >actual_raw &&
-> +
-
-Likewise.
+..and this hides git's exit code, better to pipe to a file, use test_cmp
+etc. etc.
