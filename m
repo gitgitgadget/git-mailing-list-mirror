@@ -2,127 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C759AC43334
-	for <git@archiver.kernel.org>; Sun, 24 Jul 2022 08:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A15CAC433EF
+	for <git@archiver.kernel.org>; Sun, 24 Jul 2022 11:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230321AbiGXI70 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jul 2022 04:59:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34880 "EHLO
+        id S232369AbiGXLIO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jul 2022 07:08:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiGXI7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jul 2022 04:59:25 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C32C12AA3
-        for <git@vger.kernel.org>; Sun, 24 Jul 2022 01:59:24 -0700 (PDT)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out2.suse.de (Postfix) with ESMTP id 281DB5D101;
-        Sun, 24 Jul 2022 08:59:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1658653163; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=gQQ6ROCcsQHTiGFYu9vYDFSOOgCgFwM0LYzF+PDlFw4=;
-        b=PxRdExesbZG9prJpjOvH1JIQFhmZoJXXQauF7dZqNERWZv7BrAofFPIrwt24mS8FYgBy1B
-        mHBZ/9XYPtQJyCxT7NmLGvMiMwDU3ar2x5LC53R0uuyUX3cWrOIMYHc3x+Iqk1aAgZm5zL
-        u53YMJMmKF2j0nWMVMrAHXtjqTo6LBs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1658653163;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=gQQ6ROCcsQHTiGFYu9vYDFSOOgCgFwM0LYzF+PDlFw4=;
-        b=aaGyVU8247bZh5o8OZ8F+mdwOOcqXs/3eQJeFLsAhpxFVqlsRs+ia+fwsxg5qXfIvTjvc2
-        quShIps6DHamgCCw==
-Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id F34A62C16F;
-        Sun, 24 Jul 2022 08:59:22 +0000 (UTC)
-Date:   Sun, 24 Jul 2022 10:59:21 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-        Phillip Susi <phill@thesusis.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Stephen Finucane <stephen@that.guru>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: Feature request: provide a persistent IDs on a commit
-Message-ID: <20220724085921.GH17705@kitsune.suse.cz>
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com>
- <87a692e8vj.fsf@vps.thesusis.net>
- <CAE1pOi1pS76iXU8j=A54wPGHC7qofxrPDAO4uyy0d6yMxeQwvw@mail.gmail.com>
- <6426b5c3-0a09-f641-9876-3534b0abd96d@iee.email>
- <20220722203642.GD17705@kitsune.suse.cz>
- <CABPp-BFGLXRvwZGdF543me2qBXq3HB-TuzW6j7GVb6ATw3qNeQ@mail.gmail.com>
+        with ESMTP id S229618AbiGXLIN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jul 2022 07:08:13 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F9FA167FC
+        for <git@vger.kernel.org>; Sun, 24 Jul 2022 04:08:12 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id v2so961822ilm.4
+        for <git@vger.kernel.org>; Sun, 24 Jul 2022 04:08:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=pnvIdH8XKpxwoePagkzWAypVRWrXEst5mOyixgP2Zdg=;
+        b=DMclxnu/a8jRZIeWg8B5U91QbL8IgPW2jygXHPUuplZ83p81w9/JO8ABWeoaLroIXc
+         8Sx+jEGC9ty6aNH0zIdbIms/P/BndT/FIyv9r0HuG058kt6Wudi5h0HbC4tTmXUYATpI
+         XLd5TWtecVhY9TelXoZZKZlkD9Uun5dM9zO07lIqftdi+c+GMCxTYU0+8LjKN+ndbyWO
+         /AGxVmkEwq8xSf0IrrZpGwunFgKmBnojzowFUtCPWhbkX8uj27ZG3YEUSLa+R0lMtrdy
+         p8KuGdzBUC/0uEBY0n4JENOBEihYiO3nvW4SyGtnQgO4MNWNpRXBJi1A0EevCMNfJiFX
+         XLAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pnvIdH8XKpxwoePagkzWAypVRWrXEst5mOyixgP2Zdg=;
+        b=fn/0tE1P3cCIn51w8lw/Kv2GynpRhhhS9JeJCwYQhHVYCbK0LFBv2f0DlJuu9iW/Ub
+         e34Tma7vrMbIgoACq5Mnzoqb5ZHxEr4iN4118Rv73v/0cjK1qEVdWNl/YpTMhzyNtxkl
+         It1rSz6fISVYIXpCdXCbYhu79LmqMzJaYMM5/6ftJbZXx++F5vi/xL+J20GBkNqUp5PG
+         l/WQ5gFE3yMwZk5nS/u+L4wx4bqE3PHsCP8HQZDRAIKSj3us8agpc2pVZc2Cq8zQXjL0
+         jlTLF529RU8J3BP4un8kHZiLkSovmdGq9J50/Kq/UEr7e7bGnRQ4DQy0+q3+lcCyGzNR
+         8hog==
+X-Gm-Message-State: AJIora8vbEUNvbJAB+m6nnaIKdGd26H5TFwcmX7ehBCWVV40yRhYM2XP
+        d9nxDrfqfW7zvllDjEXSCiU4FF1t/PgEQmWFuoY=
+X-Google-Smtp-Source: AGRyM1tb1n3hZlIB9IBCZClzpO+czVcxYoQudPi8DmrCCH0KjDwZpIxUJW3aHIelNme6449POvdm0HHm4137L25tBDo=
+X-Received: by 2002:a05:6e02:1bcc:b0:2dd:1bb1:d2df with SMTP id
+ x12-20020a056e021bcc00b002dd1bb1d2dfmr2909781ilv.213.1658660891627; Sun, 24
+ Jul 2022 04:08:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BFGLXRvwZGdF543me2qBXq3HB-TuzW6j7GVb6ATw3qNeQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <pull.1262.v7.git.1657692472994.gitgitgadget@gmail.com>
+ <pull.1262.v8.git.1658334983053.gitgitgadget@gmail.com> <xmqqbktj3ct7.fsf@gitster.g>
+ <CAOLTT8RjLoooT7t+ucFqa9P=8TiVL3M+ZgcEY7qVhRbjB=9OhA@mail.gmail.com> <xmqqsfmr8ygp.fsf@gitster.g>
+In-Reply-To: <xmqqsfmr8ygp.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sun, 24 Jul 2022 19:08:00 +0800
+Message-ID: <CAOLTT8RqMU-k85LmcpY0wATHSDoWDEQLnPtfuZ2OC2nWN9305A@mail.gmail.com>
+Subject: Re: [PATCH v8] ls-files: introduce "--format" option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 23, 2022 at 10:10:11PM -0700, Elijah Newren wrote:
-> On Fri, Jul 22, 2022 at 1:42 PM Michal Suchánek <msuchanek@suse.de> wrote:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B47=E6=9C=8824=E6=97=
+=A5=E5=91=A8=E6=97=A5 02:40=E5=86=99=E9=81=93=EF=BC=9A
+>
+> ZheNing Hu <adlternative@gmail.com> writes:
+>
+> >> But is this testing the right thing?
 > >
-> > On Fri, Jul 22, 2022 at 09:08:56PM +0100, Philip Oakley wrote:
-> > > On 21/07/2022 19:58, Hilco Wijbenga wrote:
-> > > > On Thu, Jul 21, 2022 at 9:39 AM Phillip Susi <phill@thesusis.net> wrote:
-> > > >> Ęvar Arnfjörš Bjarmason <avarab@gmail.com> writes:
-> > > >>
-> > > >>> This has come up a bunch of times. I think that the thing git itself
-> > > >>> should be doing is to lean into the same notion that we use for tracking
-> > > >>> renames. I.e. we don't, we analyze history after-the-fact and spot the
-> > > >>> renames for you.
-> > > >> I've never been a big fan of that quality of git because it is
-> > > >> inherently unreliable.
-> > > > Indeed, which would be fine ... if there were a way to tell Git, "no
-> > > > this is not a rename" or "hey, you missed this rename" but there
-> > > > isn't.
-> > > >
-> > > > Reading previous messages, it seems like the
-> > > > after-the-fact-rename-heuristic makes the Git code simpler. That is a
-> > > > perfectly valid argument for not supporting "explicit" renames but I
-> > > > have seen several messages from which I inferred that rename handling
-> > > > was deemed a "solved problem". And _that_, at least in my experience,
-> > > > is definitely not the case.
-> > >
-> > > Part of the rename problem is that there can be many different routes to
-> > > the same result, and often the route used isn't the one 'specified' by
-> > > those who wish a complicated rename process to have happened 'their
-> > > way', plus people forget to record what they actually did. Attempting to
-> > > capture what happened still results major gaps in the record.
+> > Yes, I am sure about that cut can do the same thing as awk, and it can
+> > specify its delimiter.
+>
+> That is not an answer to "is this testing the right thing?"
+> question, though ;-)
+>
+> >> > +test_expect_success 'git ls-files --format objectmode v.s. -s' '
+> >> > +     git ls-files -s >files &&
+> >> > +     cut -d" " -f1 files >expect &&
+> >> > +     git ls-files --format=3D"%(objectmode)" >actual &&
+> >> > +     test_cmp expect actual
+> >> > +'
+> >>
+> >> It only looks at the first column of the "-s" output, and we are
+> >> implicitly assuming that the order of output does not change between
+> >> the "-s" output and "--format=3D<format>" output.  I wonder if it is
+> >> more useful and less error prone to come up with a format string
+> >> that 100% reproduces the "ls-files -s" output and compare the two,
+> >> e.g.
+> >>
+> >>         format=3D"%(objectmode) %(objectname) %(stage)    %(path)" &&
+> >>         git ls-files -s >expect &&
+> >>         git ls-files --format=3D"$format" >actual &&
+> >>         test_cmp expect actual
+> >>
 > >
-> > Doesn't git have rebase?
-> >
-> > It is not required that the rename is captured perfectly every time so
-> > long as it can be amended later.
-> 
-> "so long as".  Therefore, since it can't be amended after the commit
-> is accepted/merged, it is required that this auxiliary data be
-> captured perfectly before that time if it's going to be captured at
-> all.
-> 
-> Did I read that right?
+> > See test case: 'git ls-files --format imitate --stage' which just do su=
+ch thing,
+>
+>
+> That was not the point.  By extracting only "%(objectmode)" without
+> having any other clues (like "%(path)") on the same line, the test
+> is assuming that ls-files will always sort its output in the same
+> order regardless of the output format, whether it is "--stage" or
+> "--format=3D<spec>", and that was what the "is this testing the right
+> thing?" question was about.
+>
 
-Or it will be broken after it is merged, just as many other things in
-commits that are accepted into history that is not to be modified
-anymore.
+Ah, so that we should sort the ls-files output first, and then compare them=
+.
 
-The only point I can see here is that if there is any user-crafted
-metadata that describes renames then it should be considered advisory,
-and an option to override it should exist because it may be wrong.
+> The other test that makes sure --format=3D<spec> can recreate --stage
+> output is fine.  If some future developer breaks the output order by
+> mistake for --format=3D<spec>, we will catch such a mistake with it.
+>
+>
+> > maybe I should change its name to 'git ls-files --format v.s. -s'?
+>
+> I do not think you should.  "A v.s. B" does not imply "A and B
+> should create identical result".  The original title describes what
+> it does much more clearly.
 
-Nonetheless, if such feature existed users that are willing to generate
-such metadata and review it before it gets merged may get more out of
-the rename tracking than can be done automatically today.
+Ok, here I don't need another rerolling to revert it, right?
 
-Thanks
+Thanks for all the reviews!
 
-Michal
+ZheNing Hu
