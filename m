@@ -2,154 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A8D4C433EF
-	for <git@archiver.kernel.org>; Sun, 24 Jul 2022 05:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22045C43334
+	for <git@archiver.kernel.org>; Sun, 24 Jul 2022 06:27:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234191AbiGXFXY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jul 2022 01:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
+        id S234789AbiGXGMi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jul 2022 02:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiGXFXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jul 2022 01:23:23 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F24115A17
-        for <git@vger.kernel.org>; Sat, 23 Jul 2022 22:23:22 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id h18so6216252qvr.12
-        for <git@vger.kernel.org>; Sat, 23 Jul 2022 22:23:22 -0700 (PDT)
+        with ESMTP id S229663AbiGXGMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jul 2022 02:12:37 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B70413D42
+        for <git@vger.kernel.org>; Sat, 23 Jul 2022 23:12:36 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id z3so7793619plb.1
+        for <git@vger.kernel.org>; Sat, 23 Jul 2022 23:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=SCU9uR/P/BjG69az+Ws0imHFJWATFlf9aAKSmx6GKGs=;
-        b=fnY/VKV2sQBtEQnEZybcqrkS/4Y3GRi4bPTpLI3poiIR2C366wmRJ0UpXMWOZ1iBls
-         9+viAeffaQDIvu8BHPmALmhuTXyPhRUkgP9sCdOXXSK3MEuS2yk8VaT9by+Uj9jX4R4A
-         lZfYJjoYX4UnlWNDHguI/n9cUdxc14D+YKsTazSvJZgqMZlJEbkkEzUdyMFB+ZAYyiOi
-         XycD2Dqls11gS2L7csslIiBA4ToIga+N/9RQTKQ6iZWaNtR1Yyx7ggKcff7AORIcd3Xk
-         5qV+kqIGTYI/8PgGg4IKKm3rF4KfPeJ+hu6lII10cFEk2Bd4l/4ZpDEw2j30WnUQ0c39
-         yILQ==
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=EpRHYGJHafoWv4/vFISdFoe52JGtobAX66joTm6Z1QI=;
+        b=Fl13AjdGgP3Bx7bw8yPQ7Bme9qJLEr2SRRiBb6kerZkC/jB7ONc7yx6gxNtQt5zcaa
+         BxOuYhTIq7LXUy4KfpzUywO0Mc3g2mxnW0xYQ2PwucSGdcxEd+ob3fCnE9+IvvuXtl2b
+         5J8juPzHHEJMDJp+gaj6sX6W8tqTc77yYfuHl97lIJfRtADhowBUkRG1yQ0qZwk4nHjC
+         YX2a4YvDWjxMmsNodTCamO6O08sNwBL9BMRUzTMzx5KSggXaTb83FfmiPQWSMfLIDENj
+         rrGe7NwmfG46W2323HNl3fENs40ZP+Q096E/B7dRU5UMU9sWhf7DRHRa8Qmq2Xbn9jYz
+         4kZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SCU9uR/P/BjG69az+Ws0imHFJWATFlf9aAKSmx6GKGs=;
-        b=2LS8uAkT2T14Vgec4UGipA80OjmkmbxJoxeQ46Y+9VBkHBcNFXDPWQg5cf20eZPLCx
-         wBSyCo60TYo/YfD0LLa7HiQtLNFALDYfqCr9Pj04PxBxgUI5Y/Y5zJWI9FBdZ0CwQMae
-         BO7vwerKz4Ahd3OlmeAu2NZzVUPdFH00nl57aYFAAKO5fohOgmMPQENH+MtqvG8GU3j1
-         izpH4dplPqqn0qQ44O5LysscaPebNQW1byY0BP5bbHKZWHMDubBY7VLdYo2U14CQqgaf
-         iw0Jq50zewvcpAwF4sRI3RqRdGQE5W3JrvH8mnb9lL04KwfeyGw97O3WcI3xGkc61z7S
-         lDVw==
-X-Gm-Message-State: AJIora+JXex/4qHNG2pV037f2mcF0NxowxtI80Iasz4plUBvq/uE6Om6
-        MY+xPCYjC0Z5fqeDBuSBHziwzEO3eKz4GDzdv0c=
-X-Google-Smtp-Source: AGRyM1v/2oVOaoFbxKZp/EFlxDGx98HiDG1TVf96FfRNVApKrYjgVPfPfp5YEkuh4KE4bBZoUcOEfUH2/OKvQJTMuv8=
-X-Received: by 2002:a05:6214:21ec:b0:473:951b:5203 with SMTP id
- p12-20020a05621421ec00b00473951b5203mr5759393qvj.65.1658640201131; Sat, 23
- Jul 2022 22:23:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=EpRHYGJHafoWv4/vFISdFoe52JGtobAX66joTm6Z1QI=;
+        b=aSn/NYpaYJpjVwcNO4xKOwMnipe6oEbv7mTjqoqf2ZMEsuYyygPKLmV5s2f3l3Owzf
+         mSffWYRDVDQ+9llQCHoW18lQ8Y4Qb+c63ObnsqUM2gssrd9AplfXVPIlgEo4oCcuylZ7
+         0SOZUmDArDCaaKx9DIsGn+ibXBKCwnlv6eHq3KU5JJeWGH4rMUEEV6GDiufQl0MsFkIa
+         QpwcCu4uruB3LxF64j+yuYxF1sa/570JvV5+eZwnTCecWulctPp/NIVWEljfY/BkwHfO
+         tT9YSKMs3FV34T2o5i4xAGJO0qijIoJ2lOlkqEIZRn4qhROBzpw6ylvzAgVo2YFAuak9
+         LFjA==
+X-Gm-Message-State: AJIora+F3ksiLQ+2mqGiWHz7Z2AQjKOTbz96woWlRJZyiKOE5yYSMSke
+        /dgHmYFc1MCZfiai6O5Y14qefEZVBWc=
+X-Google-Smtp-Source: AGRyM1saiStp1j19P7/O7iSr7QC+n7TD4S7KKTInZ1ySpb8UU4+0aMjlIknIULozb/RIiNgY7MetBw==
+X-Received: by 2002:a17:903:2282:b0:16c:500f:b78e with SMTP id b2-20020a170903228200b0016c500fb78emr6896396plh.49.1658643155477;
+        Sat, 23 Jul 2022 23:12:35 -0700 (PDT)
+Received: from jrouhaud (2001-b011-1006-9ae2-bcf5-781b-e790-9433.dynamic-ip6.hinet.net. [2001:b011:1006:9ae2:bcf5:781b:e790:9433])
+        by smtp.gmail.com with ESMTPSA id p2-20020a170902780200b0016a091eb88esm6542076pll.126.2022.07.23.23.12.33
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Jul 2022 23:12:34 -0700 (PDT)
+Date:   Sun, 24 Jul 2022 14:12:31 +0800
+From:   Julien Rouhaud <rjuju123@gmail.com>
+To:     git@vger.kernel.org
+Subject: [RFC PATCH] gitweb: improve title shortening heuristics
+Message-ID: <20220724061231.jddhqns7bqx5c2xm@jrouhaud>
 MIME-Version: 1.0
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com> <87a692e8vj.fsf@vps.thesusis.net>
- <CAE1pOi1pS76iXU8j=A54wPGHC7qofxrPDAO4uyy0d6yMxeQwvw@mail.gmail.com>
- <6426b5c3-0a09-f641-9876-3534b0abd96d@iee.email> <20220722203642.GD17705@kitsune.suse.cz>
- <CA+P7+xr+k35RXoGv-O96fsfOJ+sg65HrVvt-3JKYAzerA0TJRw@mail.gmail.com> <20220723070055.GE17705@kitsune.suse.cz>
-In-Reply-To: <20220723070055.GE17705@kitsune.suse.cz>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 23 Jul 2022 22:23:09 -0700
-Message-ID: <CABPp-BEYQOtr6EZmi4emKRKNVXS3071Ud90jiLycdGXGG+YqgQ@mail.gmail.com>
-Subject: Re: Feature request: provide a persistent IDs on a commit
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-        Phillip Susi <phill@thesusis.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stephen Finucane <stephen@that.guru>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="ztoz5ogpnirm5wmh"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 23, 2022 at 12:44 AM Michal Such=C3=A1nek <msuchanek@suse.de> w=
-rote:
->
-> On Fri, Jul 22, 2022 at 03:46:22PM -0700, Jacob Keller wrote:
-> > On Fri, Jul 22, 2022 at 1:42 PM Michal Such=C3=A1nek <msuchanek@suse.de=
-> wrote:
-> > >
-> > > On Fri, Jul 22, 2022 at 09:08:56PM +0100, Philip Oakley wrote:
-[...]
-> > > > Part of the rename problem is that there can be many different rout=
-es to
-> > > > the same result, and often the route used isn't the one 'specified'=
- by
-> > > > those who wish a complicated rename process to have happened 'their
-> > > > way', plus people forget to record what they actually did. Attempti=
-ng to
-> > > > capture what happened still results major gaps in the record.
-> > >
-> > > Doesn't git have rebase?
-> > >
-> > > It is not required that the rename is captured perfectly every time s=
-o
-> > > long as it can be amended later.
-> > >
-> >
-> > Rebase is typically reserved only to modify commits which are not yet
-> > "permanent". Once a commit starts being referenced by many others it
-> > becomes more and more difficult to rebase it. Any rebase effectively
-> > creates a new commit.
-> >
-> > There are multiple threads discussing renames and handling them in git
-> > in the past which are worth re-reading, including at least
-> >
-> > https://public-inbox.org/git/Pine.LNX.4.58.0504141102430.7211@ppc970.os=
-dl.org/
-> >
-> > A fuller analysis here too:
-> > https://public-inbox.org/git/Pine.LNX.4.64.0510221251330.10477@g5.osdl.=
-org/
-> >
-> > As mentioned above in this thread, depending on what context you are
-> > using, a change to a commit could be many to many: i.e. a commit which
-> > splits into 2, or 3 commits merging into one, or 3 commits splitting
-> > apart and then becoming 2 commits. When that happens, what "change id"
-> > do you use for each commit?
->
-> Same as commit message and any trailers you might have - they are
-> preserved, concatenated
 
-Exactly how are they concatenated?  Is that a user operation, or
-something a Git command does automatically?  Which commands and which
-circumstances?  If users do it, what's the UI for them to discover
-what the fields are, for them to discover whether such a thing might
-be needed or beneficial, and the UI for them to change these fields?
-This sounds like a massive UX/UI issue that I don't have a clue how to
-tackle (assuming I wanted to).
+--ztoz5ogpnirm5wmh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> and can be regenerated.
+Hi,
 
-"can be".  But generally won't be even when it should be, right?
+First of all, this is my first time on this ML so apologies in advance if I
+missed anything in the patch submission guidelines.
 
-Committer name/email/date basically don't even exist as far as many
-Git users are concerned.  They aren't shown in the default log output
-(which greatly saddens me), and even after attempting to educate users
-for well over a decade now, I still routinely find developers who are
-surprised that these things exist.
+We got some report recently that the commit short title on the postgres gitweb
+instance was sometimes being mangled (1).  After a bit of digging, it appears
+to be due to some long time heuristics to remove some uninteresting parts of a
+commit message (see 198066916a8 from August 2005).  In our case, it removed any
+occurrence of "master." in the commit message even if the message contains
+"postmaster.c" rather than a cname (or something that looks like it), leading
+to the commit message:
 
-Given that committer name/email/date aren't shown with --pretty=3Dfull
-but with the lame option name --pretty=3Dfuller, I can't see why it'd
-make any sense to show Change-Ids in the log output by default.
+Remove postmaster.c's reset_shared() wrapper function.
 
-But if it's not shown -- and by default -- then it doesn't exist for
-many users.  And if it doesn't exist, users aren't going to fix it
-when they need to.
+being displayed as:
 
-(Even if it were shown by default, it's not clear to me that users
-would know when to fix it, or how to fix it, or even care to fix it
-and instead view it as a pedantic requirement being foisted on them.)
+Remove postc's reset_shared() wrapper function.
 
-I think the "many-to-many issue" others have raised in this thread is
-an important, big, and thorny problem.  I think it has the potential
-to be a minefield of UX and a steady stream of bug reports.  And
-seeing proponents of Change-Id just dismissing the issue makes me all
-the more suspicious of the proposal in the first place.
+It's probably some corner case for which there's barely any complaint, so it
+doesn't look worthwhile to spend too much effort on it.  It also seems
+impossible to make the current approach entirely bullet proof, but if we simply
+make sure that the prefix is preceded by at least one whitespace and isn't
+followed by another one we could avoid almost all of the incorrect matches (and
+all of them as far as postgres is concerned).  Would that be an acceptable
+compromise?  If yes, I'm attaching a patch that does that (and also adds git://
+and https:// to the list of trimmed protocols while at it).
+
+Otherwise, would it be acceptable to disable the whole block (the "remove
+leading stuff of merges to make the interesting part visible") with some new
+configuration option?
+
+Cheers,
+Julien.
+
+[1] https://www.postgresql.org/message-id/flat/4025723.1658013974%40sss.pgh.pa.us
+
+--ztoz5ogpnirm5wmh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment;
+	filename="v1-0001-gitweb-improve-title_short-shortening-heuristics.patch"
+
+From ed46dcd2796b9af6ba3f73d46a3141a88964ed11 Mon Sep 17 00:00:00 2001
+From: Julien Rouhaud <julien.rouhaud@free.fr>
+Date: Sun, 24 Jul 2022 13:17:19 +0800
+Subject: [PATCH v1] gitweb: improve title_short shortening heuristics
+
+In order to shorten the title, some common domain prefixes can be detected and
+removed.  However, the current regex matches those prefix anywhere in the
+title which makes it likely to remove it where it's not intended.
+
+To make that case less likely, make sure that the prefix is preceded by at
+least one whitespace and isn't followed by another whitespace.
+
+While at it, also add  git:// and https:// to the list of detected and trimmed
+protocols.
+
+Signed-off-by: Julien Rouhaud <julien.rouhaud@free.fr>
+---
+ gitweb/gitweb.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 1835487ab2..18dd0b93fb 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3565,10 +3565,10 @@ sub parse_commit_text {
+ 				$title =~ s/^Automatic //;
+ 				$title =~ s/^merge (of|with) /Merge ... /i;
+ 				if (length($title) > 50) {
+-					$title =~ s/(http|rsync):\/\///;
++					$title =~ s/(git|http|https|rsync):\/\///;
+ 				}
+ 				if (length($title) > 50) {
+-					$title =~ s/(master|www|rsync)\.//;
++					$title =~ s/\s+(master|www|rsync)\.([^\s])/ \2/;
+ 				}
+ 				if (length($title) > 50) {
+ 					$title =~ s/kernel.org:?//;
+-- 
+2.37.0
+
+
+--ztoz5ogpnirm5wmh--
