@@ -2,79 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E57DC433EF
-	for <git@archiver.kernel.org>; Sat, 23 Jul 2022 18:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A6F4C433EF
+	for <git@archiver.kernel.org>; Sun, 24 Jul 2022 05:09:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238117AbiGWSqq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jul 2022 14:46:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51632 "EHLO
+        id S235114AbiGXFJR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jul 2022 01:09:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231370AbiGWSqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jul 2022 14:46:45 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E998716598
-        for <git@vger.kernel.org>; Sat, 23 Jul 2022 11:46:44 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8317D1A2FBF;
-        Sat, 23 Jul 2022 14:46:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dudYiL1sAbe7xjgGbOp+BaCbmxRXTEvWY3lS39
-        SxQhQ=; b=L4PSXj4vsfNMIM/6iDlg3pfLxVuAYt1jWzjkfpxgBkCHOs+NtTOweB
-        T3lKEcxVQp40zWfz4FhNSPeRjEi3axinMh1UoZttsa1qEpPjZDEPrAQcSRTDj2vZ
-        +0lrA5Hos7UjJg7eJxyHqSLf/hS/PBstVP5ZVrjs8HyjTvp1sMMZU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7A0691A2FBE;
-        Sat, 23 Jul 2022 14:46:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2BC651A2FBB;
-        Sat, 23 Jul 2022 14:46:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v8] ls-files: introduce "--format" option
-References: <pull.1262.v7.git.1657692472994.gitgitgadget@gmail.com>
-        <pull.1262.v8.git.1658334983053.gitgitgadget@gmail.com>
-        <xmqqbktj3ct7.fsf@gitster.g>
-        <CAOLTT8RjLoooT7t+ucFqa9P=8TiVL3M+ZgcEY7qVhRbjB=9OhA@mail.gmail.com>
-        <xmqqsfmr8ygp.fsf@gitster.g>
-Date:   Sat, 23 Jul 2022 11:46:40 -0700
-In-Reply-To: <xmqqsfmr8ygp.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-        23 Jul 2022 11:40:06 -0700")
-Message-ID: <xmqqo7xf8y5r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229453AbiGXFJP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jul 2022 01:09:15 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F431582D
+        for <git@vger.kernel.org>; Sat, 23 Jul 2022 22:09:14 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id v28so6381365qkg.13
+        for <git@vger.kernel.org>; Sat, 23 Jul 2022 22:09:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=k1KKY2IjLRx0UU8HCDA+J3rEyoW+60FFQsFzyn6a7wY=;
+        b=IDdCdoSvx83YhFVqH3ZcihcTk+TVLVU29uawIfeAAiHefvJun5QvdBpwjW8mpWrd9j
+         mQ6/x0iXUdlD57HpeWFnBPkxd3wXaASpVZfAf+Kj/B3PE0mxommiZfFmSWQnJKFMoAMy
+         gL12GWcZwsc0suUZAMfFjkg7lPpnr3WrtsVc4qihyUPIAVc+LVJqcCT+PDrOtLCEByGi
+         G+XfY4yTM6C0p1qwjoc4ox/o39GqTLxFibtRavJ+66B1rhfuO77FjABFCMHbN/mxGce2
+         2P9HXRNp5hG5//EdHTGRvnZ6f8v1Bb1yckwzYs/T9+/vG71H/asXU9xbz4HoisFUsdwJ
+         ZctA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=k1KKY2IjLRx0UU8HCDA+J3rEyoW+60FFQsFzyn6a7wY=;
+        b=rzzkCJ9JQE4+SQ4ucCg6U63bXQX/f2D+GdtLq46osyOwBIgibS8ei+25vFc4Iqz74x
+         ArQFUk9QBQsAn2ZahXFcJCVPkwSsbe0WmVVhKimXl1NEypqrXhY/eGzJ0XBpA+R2+Ggx
+         laPuH0dBmvIJZ4c3kZumzjkHRI06sOhgFsvUCrXjmHWAcpiDbRURNFTIewJm2lXltEnv
+         jj4XqFtRLUobCdvk6D/60pUa/pk2M2UyGTvQDb1wHcNSsnzhwqyS7uPnrvPdtTYWy00o
+         L8gtLModcTAzQwDKOTER7Di1M25RkCBhqkmrHVuKxUgWfgNnuTM2YQWi0MctS5yb+kBM
+         8BuA==
+X-Gm-Message-State: AJIora9P7may0ddt7n8ZSjk+C0/u9DMOp/2nXwFA1W3bHKTs4XHx48Xj
+        WJe/wDlSj6WsjXrj0UXemz7A20XiQG+e/T8d8WU=
+X-Google-Smtp-Source: AGRyM1tNykvqxYZ+e7+G1I5vVtBRu8GLAcyn6x8DzksPu9HLgzgN0mgrmxj9Uirw7hjIER5+bCZGNi1tWwK6nuH8vkk=
+X-Received: by 2002:a05:620a:741:b0:6b5:ee4f:35e8 with SMTP id
+ i1-20020a05620a074100b006b5ee4f35e8mr5168201qki.131.1658639353434; Sat, 23
+ Jul 2022 22:09:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CA8E3412-0AB7-11ED-8D8F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
+ <20220718173511.rje43peodwdprsid@meerkat.local> <kl6lo7xmt8qw.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lo7xmt8qw.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 23 Jul 2022 22:09:02 -0700
+Message-ID: <CABPp-BHNYbLEWeG+XSzGxcTxsQ2wA2COX6DqtvVZ6Nm1KG7CEQ@mail.gmail.com>
+Subject: Re: Feature request: provide a persistent IDs on a commit
+To:     Glen Choo <chooglen@google.com>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Stephen Finucane <stephen@that.guru>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> That was not the point.  By extracting only "%(objectmode)" without
-> having any other clues (like "%(path)") on the same line, the test
-> is assuming that ls-files will always sort its output in the same
-> order regardless of the output format, whether it is "--stage" or
-> "--format=<spec>", and that was what the "is this testing the right
-> thing?" question was about.
+On Mon, Jul 18, 2022 at 2:29 PM Glen Choo <chooglen@google.com> wrote:
 >
-> The other test that makes sure --format=<spec> can recreate --stage
-> output is fine.  If some future developer breaks the output order by
-> mistake for --format=<spec>, we will catch such a mistake with it.
+> Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
+>
+> > On Mon, Jul 18, 2022 at 06:18:11PM +0100, Stephen Finucane wrote:
+> >> ...to track evolution of a patch through time.
+> >>
+> >> tl;dr: How hard would it be to retrofit an 'ChangeID' concept =C3=A0 l=
+a the 'Change-
+> >> ID' trailer used by Gerrit into git core?
+> >
+> > I just started working on this for b4, with the notable difference that=
+ the
+> > change-id trailer is used in the cover letter instead of in individual
+> > commits, which moves the concept of "change" from a single commit to a =
+series
+> > of commits. IMO, it's much more useful in that scope, because as series=
+ are
+> > reviewed and iterated, individual patches can get squashed, split up or
+> > otherwise transformed.
+>
+> My 2 cents, since I used to use Gerrit a lot :)
+>
+> I find persistent per-commit ids really useful, even when patches get
+> moved around. E.g. Gerrit can show and diff previous versions of the
+> patch, which makes it really easy to tell how the patch has evolved
+> over time.
+>
+> That's not to say that we don't need per-topic ids though ;) E.g. Gerrit
+> is pretty bad at handling whole topics - it does naive mapping on a
+> per-commit level, so it has no concept of "these (n - 1) patches should
+> replace these n patches".
+>
+> I, for one, would love to see some kind of "rewrite tracking" in Git.
+> One use case that comes up often is downstream patches, where patches
+> are continuously rebased onto a new upstream; in those cases, it's
+> pretty hard to keep track of how the patch has changed over time
 
-Having said that, let's stop rerolling the series just for this.  An
-extra test that may not catch potential breakage is fine and it is
-not worth spending an extra review cycle only to remove it.
+Two angles I can think of that partially address this:
 
-Thanks.
+1) If you have the old commits still around and know what they were,
+you can run range-diff to see differences between any pair of versions
+of the commits.
+
+2) cherry-picks and reverts might already include a link to an "old"
+commit for you in the commit message ("cherry picked from commit
+<hash>" or "This reverts <hash>").  Those could be used to show how
+the new commit differs from what would have been done with an
+automatic cherry-pick or automatic revert.  (By "automatic", I
+basically mean what the state of files in the working tree would be
+when the operation stops to allow users to resolve conflicts.)  In
+fact, I wrote some patches to do precisely this quite a while ago
+which are up at https://github.com/gitgitgadget/git/pull/1151 if
+you're curious.  But this approach is not useful for general rebasing,
+because there's no automated way to find out what the original commit
+was so that you can take a look at such a difference.
