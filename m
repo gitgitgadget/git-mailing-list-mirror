@@ -2,119 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A6F4C433EF
-	for <git@archiver.kernel.org>; Sun, 24 Jul 2022 05:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A206CC43334
+	for <git@archiver.kernel.org>; Sun, 24 Jul 2022 05:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235114AbiGXFJR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jul 2022 01:09:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41496 "EHLO
+        id S235510AbiGXFK1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jul 2022 01:10:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiGXFJP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jul 2022 01:09:15 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F431582D
-        for <git@vger.kernel.org>; Sat, 23 Jul 2022 22:09:14 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id v28so6381365qkg.13
-        for <git@vger.kernel.org>; Sat, 23 Jul 2022 22:09:14 -0700 (PDT)
+        with ESMTP id S229453AbiGXFKZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jul 2022 01:10:25 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F78DBC15
+        for <git@vger.kernel.org>; Sat, 23 Jul 2022 22:10:23 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id o1so6400569qkg.9
+        for <git@vger.kernel.org>; Sat, 23 Jul 2022 22:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=k1KKY2IjLRx0UU8HCDA+J3rEyoW+60FFQsFzyn6a7wY=;
-        b=IDdCdoSvx83YhFVqH3ZcihcTk+TVLVU29uawIfeAAiHefvJun5QvdBpwjW8mpWrd9j
-         mQ6/x0iXUdlD57HpeWFnBPkxd3wXaASpVZfAf+Kj/B3PE0mxommiZfFmSWQnJKFMoAMy
-         gL12GWcZwsc0suUZAMfFjkg7lPpnr3WrtsVc4qihyUPIAVc+LVJqcCT+PDrOtLCEByGi
-         G+XfY4yTM6C0p1qwjoc4ox/o39GqTLxFibtRavJ+66B1rhfuO77FjABFCMHbN/mxGce2
-         2P9HXRNp5hG5//EdHTGRvnZ6f8v1Bb1yckwzYs/T9+/vG71H/asXU9xbz4HoisFUsdwJ
-         ZctA==
+        bh=ktSwPSQ3GzHzNf36ccPT3FdKJCrz6HYftae6os0BBms=;
+        b=h5HuH3ge0UAu/NzcC999QuYrXw4U9kceJ3g+xsx1Rt8chDZS41WtvrZ6WLVKIFriBu
+         f5sK82wXgOXrLVq4D457L7sE65AJl6PMh2Fk9eqmLv/RCJ4lIjmHQrKTlQhqPv/KDIpD
+         E44YXJN5g6xrucICAyHgzSfo7ukWoAISb5y2es440nTLG+67gy0ebz0iEyahAuebEjG8
+         qenU37bo0dTQ/VpUjkF8dcDhb1aR1kPbGJfGh/kj7PIAdfAHpg50FQw9vfcxV+Z0PV59
+         ZFAdXHeRDa+LpOzLOFpDHgnHGUAxr7ES4RRAQx5F8oNdG/QAhcNkbLZUWYwC/eucNiHL
+         CnLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=k1KKY2IjLRx0UU8HCDA+J3rEyoW+60FFQsFzyn6a7wY=;
-        b=rzzkCJ9JQE4+SQ4ucCg6U63bXQX/f2D+GdtLq46osyOwBIgibS8ei+25vFc4Iqz74x
-         ArQFUk9QBQsAn2ZahXFcJCVPkwSsbe0WmVVhKimXl1NEypqrXhY/eGzJ0XBpA+R2+Ggx
-         laPuH0dBmvIJZ4c3kZumzjkHRI06sOhgFsvUCrXjmHWAcpiDbRURNFTIewJm2lXltEnv
-         jj4XqFtRLUobCdvk6D/60pUa/pk2M2UyGTvQDb1wHcNSsnzhwqyS7uPnrvPdtTYWy00o
-         L8gtLModcTAzQwDKOTER7Di1M25RkCBhqkmrHVuKxUgWfgNnuTM2YQWi0MctS5yb+kBM
-         8BuA==
-X-Gm-Message-State: AJIora9P7may0ddt7n8ZSjk+C0/u9DMOp/2nXwFA1W3bHKTs4XHx48Xj
-        WJe/wDlSj6WsjXrj0UXemz7A20XiQG+e/T8d8WU=
-X-Google-Smtp-Source: AGRyM1tNykvqxYZ+e7+G1I5vVtBRu8GLAcyn6x8DzksPu9HLgzgN0mgrmxj9Uirw7hjIER5+bCZGNi1tWwK6nuH8vkk=
-X-Received: by 2002:a05:620a:741:b0:6b5:ee4f:35e8 with SMTP id
- i1-20020a05620a074100b006b5ee4f35e8mr5168201qki.131.1658639353434; Sat, 23
- Jul 2022 22:09:13 -0700 (PDT)
+        bh=ktSwPSQ3GzHzNf36ccPT3FdKJCrz6HYftae6os0BBms=;
+        b=sF1fFR9iAFXrjvvTwSXh/C8qDDwVJHMWUqkR6iNtuQo8Sfo8PNxEE3W+I1+mB7poZD
+         Y7Dp2vMins2IP48xjQ3megG4c6o9oI4tfOcpL6E5jKkzasLFCVfvzTeDZM232e7nEWzg
+         CV/i90B+qhSxsCVY3i7lCzmayecUj1YO0fbgCI1sMW0TzBnev6LNfNGVnkReQdto8ttS
+         Z2MOMIXiDdqNmNdQyqUw8eGnZ12JreTuHruwvkI6o4OKr0TDUa7pLCCreuIA6nCrzXUh
+         ITweWejXwgkhD3NKfJz2d3EG8HGNdcLc67HTBdvOYkbojJDBt6mnSgu0khFD9Fxs+jO+
+         4OVA==
+X-Gm-Message-State: AJIora//GrPv01Hqgtp9qJugd9OGefY2gZlaaeM/RF4QJCbcUZLYdiK7
+        MbfLDgIbXf/uxp6m66oOCPfqOuQ5MRwfeY0YEWg=
+X-Google-Smtp-Source: AGRyM1sa1T9VuRKZa+U6fZrrF2VAh10EletacPkD6heFiFI6+aYeW+GJbdYCQ6FiDkKJ5u1F3hLtHbDW9BpiIBoi9bc=
+X-Received: by 2002:a05:620a:754:b0:6b5:eb92:42e5 with SMTP id
+ i20-20020a05620a075400b006b5eb9242e5mr5200419qki.183.1658639422041; Sat, 23
+ Jul 2022 22:10:22 -0700 (PDT)
 MIME-Version: 1.0
 References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <20220718173511.rje43peodwdprsid@meerkat.local> <kl6lo7xmt8qw.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6lo7xmt8qw.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <220718.86ilnuw8jo.gmgdl@evledraar.gmail.com> <87a692e8vj.fsf@vps.thesusis.net>
+ <CAE1pOi1pS76iXU8j=A54wPGHC7qofxrPDAO4uyy0d6yMxeQwvw@mail.gmail.com>
+ <6426b5c3-0a09-f641-9876-3534b0abd96d@iee.email> <20220722203642.GD17705@kitsune.suse.cz>
+In-Reply-To: <20220722203642.GD17705@kitsune.suse.cz>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 23 Jul 2022 22:09:02 -0700
-Message-ID: <CABPp-BHNYbLEWeG+XSzGxcTxsQ2wA2COX6DqtvVZ6Nm1KG7CEQ@mail.gmail.com>
+Date:   Sat, 23 Jul 2022 22:10:11 -0700
+Message-ID: <CABPp-BFGLXRvwZGdF543me2qBXq3HB-TuzW6j7GVb6ATw3qNeQ@mail.gmail.com>
 Subject: Re: Feature request: provide a persistent IDs on a commit
-To:     Glen Choo <chooglen@google.com>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+        Phillip Susi <phill@thesusis.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Stephen Finucane <stephen@that.guru>,
-        Git Mailing List <git@vger.kernel.org>
+        Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 18, 2022 at 2:29 PM Glen Choo <chooglen@google.com> wrote:
+On Fri, Jul 22, 2022 at 1:42 PM Michal Such=C3=A1nek <msuchanek@suse.de> wr=
+ote:
 >
-> Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
->
-> > On Mon, Jul 18, 2022 at 06:18:11PM +0100, Stephen Finucane wrote:
-> >> ...to track evolution of a patch through time.
-> >>
-> >> tl;dr: How hard would it be to retrofit an 'ChangeID' concept =C3=A0 l=
-a the 'Change-
-> >> ID' trailer used by Gerrit into git core?
+> On Fri, Jul 22, 2022 at 09:08:56PM +0100, Philip Oakley wrote:
+> > On 21/07/2022 19:58, Hilco Wijbenga wrote:
+> > > On Thu, Jul 21, 2022 at 9:39 AM Phillip Susi <phill@thesusis.net> wro=
+te:
+> > >> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason <avarab@gmail.com> writes:
+> > >>
+> > >>> This has come up a bunch of times. I think that the thing git itsel=
+f
+> > >>> should be doing is to lean into the same notion that we use for tra=
+cking
+> > >>> renames. I.e. we don't, we analyze history after-the-fact and spot =
+the
+> > >>> renames for you.
+> > >> I've never been a big fan of that quality of git because it is
+> > >> inherently unreliable.
+> > > Indeed, which would be fine ... if there were a way to tell Git, "no
+> > > this is not a rename" or "hey, you missed this rename" but there
+> > > isn't.
+> > >
+> > > Reading previous messages, it seems like the
+> > > after-the-fact-rename-heuristic makes the Git code simpler. That is a
+> > > perfectly valid argument for not supporting "explicit" renames but I
+> > > have seen several messages from which I inferred that rename handling
+> > > was deemed a "solved problem". And _that_, at least in my experience,
+> > > is definitely not the case.
 > >
-> > I just started working on this for b4, with the notable difference that=
- the
-> > change-id trailer is used in the cover letter instead of in individual
-> > commits, which moves the concept of "change" from a single commit to a =
-series
-> > of commits. IMO, it's much more useful in that scope, because as series=
- are
-> > reviewed and iterated, individual patches can get squashed, split up or
-> > otherwise transformed.
+> > Part of the rename problem is that there can be many different routes t=
+o
+> > the same result, and often the route used isn't the one 'specified' by
+> > those who wish a complicated rename process to have happened 'their
+> > way', plus people forget to record what they actually did. Attempting t=
+o
+> > capture what happened still results major gaps in the record.
 >
-> My 2 cents, since I used to use Gerrit a lot :)
+> Doesn't git have rebase?
 >
-> I find persistent per-commit ids really useful, even when patches get
-> moved around. E.g. Gerrit can show and diff previous versions of the
-> patch, which makes it really easy to tell how the patch has evolved
-> over time.
->
-> That's not to say that we don't need per-topic ids though ;) E.g. Gerrit
-> is pretty bad at handling whole topics - it does naive mapping on a
-> per-commit level, so it has no concept of "these (n - 1) patches should
-> replace these n patches".
->
-> I, for one, would love to see some kind of "rewrite tracking" in Git.
-> One use case that comes up often is downstream patches, where patches
-> are continuously rebased onto a new upstream; in those cases, it's
-> pretty hard to keep track of how the patch has changed over time
+> It is not required that the rename is captured perfectly every time so
+> long as it can be amended later.
 
-Two angles I can think of that partially address this:
+"so long as".  Therefore, since it can't be amended after the commit
+is accepted/merged, it is required that this auxiliary data be
+captured perfectly before that time if it's going to be captured at
+all.
 
-1) If you have the old commits still around and know what they were,
-you can run range-diff to see differences between any pair of versions
-of the commits.
-
-2) cherry-picks and reverts might already include a link to an "old"
-commit for you in the commit message ("cherry picked from commit
-<hash>" or "This reverts <hash>").  Those could be used to show how
-the new commit differs from what would have been done with an
-automatic cherry-pick or automatic revert.  (By "automatic", I
-basically mean what the state of files in the working tree would be
-when the operation stops to allow users to resolve conflicts.)  In
-fact, I wrote some patches to do precisely this quite a while ago
-which are up at https://github.com/gitgitgadget/git/pull/1151 if
-you're curious.  But this approach is not useful for general rebasing,
-because there's no automated way to find out what the original commit
-was so that you can take a look at such a difference.
+Did I read that right?
