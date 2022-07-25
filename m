@@ -2,182 +2,231 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BFA0C43334
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 23:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D900BC433EF
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 23:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237014AbiGYXud (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 19:50:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40054 "EHLO
+        id S231325AbiGYX5d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 19:57:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230359AbiGYXuc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 19:50:32 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D24E11BEA0
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 16:50:29 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id l14so9439719qtv.4
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 16:50:29 -0700 (PDT)
+        with ESMTP id S229877AbiGYX5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 19:57:31 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D02825C7F
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 16:57:30 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d10-20020a170903230a00b0016d63e4112bso3489373plh.19
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 16:57:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e+r8zvVbJqfDEyC0a6jjkhDrhfS7iJ3UqNko2vAkovM=;
-        b=dDofJlU4gEgFqDePiFi2lZpUvCh6NjFGpykK9Al4hs0JmUZH6ZeFFhAL2zo8vec/NG
-         FZ+xnoOKxEz2ZrvyzIAxIHSrJkPOLDXdOPXjqAJrLaEM+53fH1JEiyT+IdyUE9eRO6NG
-         Q/ChN+jn1tzXnvW/uvZvzUqLF1gKVWHwt6CKcM4r+DalZ/or95ijhWCH9BogUu7SnZUX
-         QdrRG/+H/HGG0FE/inRUGGwja+HIp30ltX8EhI4NCSbupp7yLq17NEZFq1Ln/N58L8N9
-         qod07kVp33Tbcpw4FbM/SJtssqKIbEn/FIJYflHEsybHOdSKbaT2mzuR6UdaLjbad37J
-         O84w==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=LwyI4Od667QWZnEho6t4fDHg3FRPqen+8eogqEN934w=;
+        b=rYS6hSyL5r+ssXNYRZGqVJPMGIH+keO3ZVBsxkg4TCyfFqiRFHXPowpbErisdwRJ4B
+         l3FlZzHxoqmzvztjQAaj8JqmVCkcxFFA99P6G3Vpen0+Cy4Bh0ZzoTUVrjCIAjnE0VRn
+         EjXeDJY7RoEUkQ1VHbq8UI2+1cywdvI15eRTWah98IiZeA4zh3nswUs787Ze6h4f64Lt
+         G6BhJjEFmdnFRGpfJF01h/pH/acdaKiJX8+Ut1wa/SM4YRGs+GTcw1d5vm24kfvL1nIa
+         T4Ir3n2uU67VQI6Rzo+mzpKyIFdSvEy9AM9S+iag3BMjtkc/RbMP4i67hRPEmm7Yi+ud
+         hN9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e+r8zvVbJqfDEyC0a6jjkhDrhfS7iJ3UqNko2vAkovM=;
-        b=LD7kXaek8BrdoTrA5w7NZmBrFbx+mb83AHWlMQrrdqBuGVQ2R2xggl/DeN4BhQqbi3
-         KsldFpj7jisR6w/cQgVP4BGwcMBZsM8a8aplfbgbyJrjKrTFbHho9xdSlzrPYvzOf2Mg
-         dnIbJFYAuIT5Vw5Jk6oKvHsXiYTSVFr4ppsJlKZwpJq1B5L8sunN1klo5Kbp2AxCl7tN
-         PVq0q7U8aO0WHKCK+fA7CCkbklxB8iqrzbR6z3zYtDm2La17h0EifZ/CP254Bepv/u+2
-         4ke1VKNGD+LL+uX43ScJXe0zOaF3mtT6R48at8r4oVC95txyRAg6S57QzAfjZq5rHmpB
-         x0jA==
-X-Gm-Message-State: AJIora9Lfu4AUD4P/C+zHmL7QyOvxHfXQ1sLcedM0PpJMxf7ZPijbGqC
-        d4Yy/6jI6/peCNsTj+c9K2lm6VJLNdbkew==
-X-Google-Smtp-Source: AGRyM1s+5FyN1D8UkZ+8rCDHYQGE8wWe7hdiOn2EQvI/g92ieGIWGqtBv1mJxWY6rg/dWaEiQatNjg==
-X-Received: by 2002:ac8:5815:0:b0:31f:a54:c7ce with SMTP id g21-20020ac85815000000b0031f0a54c7cemr12311788qtg.21.1658793028918;
-        Mon, 25 Jul 2022 16:50:28 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 2-20020ac856e2000000b0031ee663b5b8sm8488951qtu.83.2022.07.25.16.50.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 16:50:28 -0700 (PDT)
-Date:   Mon, 25 Jul 2022 19:50:27 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] builtin/cat-file.c: support NUL-delimited input with
- `-z`
-Message-ID: <Yt8sQ6kPoUUQFjle@nand.local>
-References: <cover.1658532524.git.me@ttaylorr.com>
- <ed1583223f63cfde99829069f14af62e4f0f2a82.1658532524.git.me@ttaylorr.com>
- <xmqq4jz8bdcg.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4jz8bdcg.fsf@gitster.g>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=LwyI4Od667QWZnEho6t4fDHg3FRPqen+8eogqEN934w=;
+        b=AZ4VHxXcyAWHMUgMP8FlygnyzIioGCPt40UeVkpHPlSEaFEnV5K36keOHPWKskoilO
+         1/k2vSqD17rHZFHVCyDKlY2Ubp84ZjOkNpOpZHvkY3wyVm3ehI+qbjnCSUZ8uE+NSJpQ
+         V03dulB+yQPFYmw9/+NiKpmLsTW/4dhP6BTGbmIiof7A12L3+LVef9BRxTwEQxiUKGBb
+         mMYy1IWNhHDLTtIRTSz2VEAacOdHcgX0+TJJ/OyjVCebHLJMAMMSq/CCRQgLTFVvJgpY
+         7SKSUld001bjooF/Gs1N6uPgfUeem7zUqTWmRM5m/21mvGi0XlTWUniuYdLQAwW6on8E
+         Bu+w==
+X-Gm-Message-State: AJIora8ttE7McJoeKKk5WBh68yrn26CbO0bMecYoGfI5FWmIEtrJ8i/W
+        uKFLsK4lSoS/bSdb80p8r+6AmJ3qiCDSTA==
+X-Google-Smtp-Source: AGRyM1vmvWNfrLZnv/uL7ZWONdPw+M89Ziqi8sdBtlaGaitt5JQ3O8Uv+2HYSfwWVjRcz3j1KTJooIPAMQK50g==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a63:4404:0:b0:415:aacf:d394 with SMTP id
+ r4-20020a634404000000b00415aacfd394mr13129053pga.437.1658793449899; Mon, 25
+ Jul 2022 16:57:29 -0700 (PDT)
+Date:   Mon, 25 Jul 2022 16:57:28 -0700
+In-Reply-To: <patch-v3-23.26-4c60784d281-20220721T191249Z-avarab@gmail.com>
+Message-Id: <kl6ltu74sq3b.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com>
+ <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com> <patch-v3-23.26-4c60784d281-20220721T191249Z-avarab@gmail.com>
+Subject: Re: [PATCH v3 23/26] submodule--helper: don't exit() on failure, return
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 22, 2022 at 10:35:43PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> Change code downstream of module_update() to short-circuit and return
+> to the top-level on failure, rather than calling exit().
 >
-> > @@ -14,7 +14,7 @@ SYNOPSIS
-> >  'git cat-file' (-t | -s) [--allow-unknown-type] <object>
-> >  'git cat-file' (--batch | --batch-check | --batch-command) [--batch-all-objects]
-> >  	     [--buffer] [--follow-symlinks] [--unordered]
-> > -	     [--textconv | --filters]
-> > +	     [--textconv | --filters] [-z]
+> To do so we need to diligently check whether we "must_die_on_failure",
+> which is a pattern started in c51f8f94e5b (submodule--helper: run
+> update procedures from C, 2021-08-24), but which hadn't been completed
+> to the point where we could avoid calling exit() here.
 >
-> Is "-z" useful with any other option, or is it useful only in
-> combination with one of the three --batch-*?  The above suggests the
-> former.
-
-It only makes sense with `--batch`-related options. But doesn't the
-above suggest the latter, not the former? That synopsis line begins
-with:
-
-    'git cat-file' (--batch | --batch-check | --batch-command) ...
-
-which made me think that this was the invocation for batch-related
-options, and only listed options that made sense with a `--batch` mode
-of one kind or another.
-
-> > +test_expect_success '--batch, -z with multiple sha1s gives correct format' '
-> > +	echo_without_newline_nul "$batch_input" >in &&
+> This introduces no functional changes, but makes it easier to both
+> call these routines as a library in the future, and to avoid leaking
+> memory.
 >
-> I I recall [1/2] correctly, the input lacked the LF at the end.  In
-> the original "LF terminated" use converted to use these variables,
-> because $batch_*_input is "echo"ed to create the file "in", the lack
-> of LF at the end is a GOOD thing.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/submodule--helper.c | 36 ++++++++++++++++++++++++++----------
+>  1 file changed, 26 insertions(+), 10 deletions(-)
 >
-> But here, echo_without_newline_nul is just a glorified "printf %s"
-> piped into tr to turn LF into NUL.  What is fed by printf into the
-> pipe lacks LF at the end, so the output from tr will not have NUL at
-> the end, either.
->
-> That might happen to work (because the EOF may be enough to signal
-> the end of the entire input, thus the last input item), but it does
-> not make the test case for "-z" exactly parallel to the line oriented
-> input.
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 790f0ccb82e..b65665105e7 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2283,7 +2283,8 @@ static int fetch_in_submodule(const char *module_pa=
+th, int depth, int quiet, str
+>  	return run_command(&cp);
+>  }
+> =20
+> -static int run_update_command(struct update_data *ud, int subforce)
+> +static int run_update_command(struct update_data *ud, int subforce,
+> +			      int *must_die_on_failurep)
 
-I see what you're saying. And, yeah, I think it happens to work since we
-treat EOF as marking the end of the last input element, regardless of
-whether or not we saw a NUL byte or a LF (depending on whether or not we
-passed `-z`).
+It's not obvious in the context lines, but there is an auto variable
+named "must_die_on_failure", so we need the "p".
 
-I think the helper should probably be something more like:
+>  {
+>  	struct child_process cp =3D CHILD_PROCESS_INIT;
+>  	char *oid =3D oid_to_hex(&ud->oid);
+> @@ -2345,8 +2346,10 @@ static int run_update_command(struct update_data *=
+ud, int subforce)
+>  			BUG("unexpected update strategy type: %s",
+>  			    submodule_strategy_to_string(&ud->update_strategy));
+>  		}
+> -		if (must_die_on_failure)
+> -			exit(128);
+> +		if (must_die_on_failure) {
+> +			*must_die_on_failurep =3D 1;
+> +			return 128;
+> +		}
 
-    echo_with_nul () {
-        echo "$@" | tr '\n' '\0'
-    }
+[...]
 
-or similar. But as you note below, this is probably not even worth
-extracting to a helper function.
+> =20
+>  		/* the command failed, but update must continue */
+>  		return 1;
+> @@ -2380,7 +2383,8 @@ static int run_update_command(struct update_data *u=
+d, int subforce)
+>  	return 0;
+>  }
+> =20
+> -static int run_update_procedure(struct update_data *ud)
+> +static int run_update_procedure(struct update_data *ud,
+> +				int *must_die_on_failure)
+>  {
+>  	int subforce =3D is_null_oid(&ud->suboid) || ud->force;
+> =20
+> @@ -2407,7 +2411,7 @@ static int run_update_procedure(struct update_data =
+*ud)
+>  			    ud->displaypath, oid_to_hex(&ud->oid));
+>  	}
+> =20
+> -	return run_update_command(ud, subforce);
+> +	return run_update_command(ud, subforce, must_die_on_failure);
+>  }
+> =20
+>  static const char *remote_submodule_branch(const char *path)
+> @@ -2543,7 +2547,8 @@ static void update_data_to_args(struct update_data =
+*update_data, struct strvec *
+>  				    "--no-single-branch");
+>  }
+> =20
+> -static int update_submodule(struct update_data *update_data)
+> +static int update_submodule(struct update_data *update_data,
+> +			    int *must_die_on_failure)
+>  {
+>  	int ret =3D 1;
+> =20
+> @@ -2584,8 +2589,13 @@ static int update_submodule(struct update_data *up=
+date_data)
+>  	}
+> =20
+>  	if (!oideq(&update_data->oid, &update_data->suboid) || update_data->for=
+ce) {
+> -		if (run_update_procedure(update_data))
+> +		ret =3D run_update_procedure(update_data, must_die_on_failure);
+> +		if (ret && *must_die_on_failure) {
+> +			goto cleanup;
+> +		} else if (ret) {
+> +			ret =3D 1;
+>  			goto cleanup;
+> +		}
+>  	}
+> =20
+>  	if (update_data->recursive) {
+> @@ -2608,7 +2618,8 @@ static int update_submodule(struct update_data *upd=
+ate_data)
+>  		die_message(_("Failed to recurse into submodule path '%s'"),
+>  			    update_data->displaypath);
+>  		if (ret =3D=3D 128) {
+> -			exit(ret);
+> +			*must_die_on_failure =3D 1;
+> +			goto cleanup;
 
-'
-> > +test_expect_success "--batch-check, -z with multiple sha1s gives correct format" '
-> > +    echo_without_newline_nul "$batch_check_input" >in &&
-> > +    test "$batch_check_output" = "$(git cat-file --batch-check -z <in)"
-> > +'
-> > +
-> > +test_expect_success FUNNYNAMES '--batch-check, -z with newline in input' '
-> > +	touch -- "newline${LF}embedded" &&
-> > +	git add -- "newline${LF}embedded" &&
-> > +	git commit -m "file with newline embedded" &&
-> > +	test_tick &&
-> > +
-> > +	printf "HEAD:newline${LF}embedded" >in &&
-> > +	git cat-file --batch-check -z <in >actual &&
->
-> As I already said, I suspect that new users who know how our path
-> quoting works would expect c-quoted path would work just fine
-> without using "-z".  It is not a reason to refuse "-z" to exist,
-> though.
+One important property in the preimage is that there's an obvious
+connection between the exit(128) and this section here, i.e. the child
+"git submodule update" process failed in a way that the parent needs to
+stop immediately.
 
-Yeah. I think we can do both, if there is a need. I suspect that just
-`-z` support would be sufficient for now, but I agree that one doesn't
-need to tie up the other.
+With this patch, this property is no longer obvious because we return
+128 from the lowest level (run_update_command()). By the time we reach
+the top level (module_update()), it's no longer clear that the return
+value was meant to be 128.
 
-> > @@ -436,6 +465,11 @@ test_expect_success '--batch-command with multiple info calls gives correct form
-> >  	echo "$batch_command_multiple_info" >in &&
-> >  	git cat-file --batch-command --buffer <in >actual &&
-> >
-> > +	test_cmp expect actual &&
-> > +
-> > +	echo "$batch_command_multiple_info" | tr "\n" "\0" >in &&
->
-> This is what I would expect.  The _info variable lacks final LF,
-> which is supplied by "echo", so output from tr ends with NUL, which
-> mirrors the line-oriented input we used above.
+Two ways we can fix this:
 
-Yep.
+1) Just return 128 at all levels to mean "must die on failure", which
+   will let us get rid of "must_die_on_failure".
 
-> > +	git cat-file --batch-command --buffer -z <in >actual &&
-> > +
-> >  	test_cmp expect actual
-> >  '
-> >
-> > @@ -459,6 +493,12 @@ test_expect_success '--batch-command with multiple command calls gives correct f
-> >  	echo "$batch_command_multiple_contents" >in &&
-> >  	git cat-file --batch-command --buffer <in >actual_raw &&
-> >
-> > +	remove_timestamp <actual_raw >actual &&
-> > +	test_cmp expect actual &&
-> > +
-> > +	echo "$batch_command_multiple_contents" | tr "\n" "\0" >in &&
-> > +	git cat-file --batch-command --buffer -z <in >actual_raw &&
-> > +
->
-> Likewise.
+or...
 
-Ditto, thanks.
+>  		} else if (ret) {
+>  			ret =3D 1;
+>  			goto cleanup;
+> @@ -2646,13 +2657,18 @@ static int update_submodules(struct update_data *=
+update_data)
+> =20
+>  	for (i =3D 0; i < suc.update_clone_nr; i++) {
+>  		struct update_clone_data ucd =3D suc.update_clone[i];
+> +		int code;
+> +		int must_die_on_failure =3D 0;
+> =20
+>  		oidcpy(&update_data->oid, &ucd.oid);
+>  		update_data->just_cloned =3D ucd.just_cloned;
+>  		update_data->sm_path =3D ucd.sub->path;
+> =20
+> -		if (update_submodule(update_data))
+> -			res =3D 1;
+> +		code =3D update_submodule(update_data, &must_die_on_failure);
+> +		if (code)
+> +			res =3D code;
+> +		if (must_die_on_failure)
+> +			goto cleanup;
+>  	}
 
-Thanks,
-Taylor
+2) In update_submodules() (i.e. just before module_update()), we make=20
+   update_submodules() return 128 if must_die_on_failure !=3D 0. Then we
+   can drop the return value of 128 from the rest of the call chain and
+   just use an opaque nonzero return value instead.
+
+> =20
+>  cleanup:
+> --=20
+> 2.37.1.1095.g0bd6f54ba8a
+
+
