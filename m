@@ -2,87 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3586FC433EF
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 21:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D56AC43334
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 21:17:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235579AbiGYVIQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 17:08:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33784 "EHLO
+        id S236463AbiGYVRb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 17:17:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbiGYVIP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 17:08:15 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB51237FC
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:08:14 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id c131so22226475ybf.9
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:08:14 -0700 (PDT)
+        with ESMTP id S235544AbiGYVRa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 17:17:30 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F01E20F7D
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:17:29 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id u12so9255582qtk.0
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:17:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=6CuI1VV0lHzmZMqAZe/Fl7+BKoGO7ErwuNdGItNh7BY=;
-        b=VJqhvxNucz1h5uuENmUrFRyOYOFdpupUkFO3vxFsDzNNf0nvPL/3RnOUiHZxU68luk
-         bcKE+gAA3BU/NAXp+6DoASfX1NpKpFJGC3SnYMsTaqJUAuQCUzXP/a/gqty6oS3TqpS8
-         mvuGV7w7GrK23euUbYwfEt4m38N9gaerN1mNqs1pJqeYkRLhYQZ1ETUE04O7fTTCd1bN
-         YIxbdohgb7ZWOeDAEtiKoxGWObtV/dS+xmyU2SL+6fLCSogVwj35EYGkAwHP8SjqwEpy
-         5VsELlrQ1iGjtQPW1hABHubypzx9nyCBdME2aFaTB4KfQ1EPw8kJ5XZleg2nPKxBdhlR
-         JzsQ==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=frramBKz/SPzBAdKkDSowJdolooZDvAqz3wsg1TCWds=;
+        b=DWmusN3aVQ46V0ijUFf9W3rsrAjUUIYClj9YiILD5Yxqk6CqVlxZvxW2OsvVe+Im/9
+         VRgjMlFM127EUyQo74XuvkJn8Mk48IDLL8pc+qNYVHnPgy/KJlm395GadviEok7JP05e
+         c4OWRO5f5z8yu4qJu1m6UQB/ZN53YpizbowPU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=6CuI1VV0lHzmZMqAZe/Fl7+BKoGO7ErwuNdGItNh7BY=;
-        b=6m/6i6NybBgOjy4AGsiNrcL3wRHeanijgVy6m1vsMb0Y0wLfJs++LoU9bUfVHPzA7h
-         J8h5//eq2Fh+kafnYgMh98teH8ZFzw30oYxNxXk1uR6NC36FyZwTg/awJwOIWUECUu6j
-         mjhrJn+OGsuDU3XwDMmi4rHd9MAvcldxPILS7oZzEz3lcWDNV9QLT+IwL+lbXXOrIJtY
-         /mZFJGW0+/fXsUozID3BElDjOUVS1ZXpnAmwbvA8Ae3GQlgR5OFb3VMCGZeIvudeHUU2
-         9tVvQeNW+F9N94h6qPNO61osuQTFAtD1JyrYKUUCFOeLzwnQTdqKoq9wmXwQsUwmVb4y
-         mJ0A==
-X-Gm-Message-State: AJIora9KdTFYT5/vAgPiqtoT/XnqNfImbLRmmSt2wTjJgH7OLF2ssY4T
-        38Z4jpHNqgc7yLmJ8Pfa9QBIbTUsK4DK3KxlE0FYxBxCem4=
-X-Google-Smtp-Source: AGRyM1u3NP4VqdIRxjeWrbxnQRsmFDqbw8IffhRZMYbFpQoo3BnI9lnjHYU8SZW6eunGv+ECtPefApk5lUWvc7df24M=
-X-Received: by 2002:a25:c008:0:b0:670:98e5:e424 with SMTP id
- c8-20020a25c008000000b0067098e5e424mr10956047ybf.150.1658783293780; Mon, 25
- Jul 2022 14:08:13 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=frramBKz/SPzBAdKkDSowJdolooZDvAqz3wsg1TCWds=;
+        b=NwXfodXEOd4vizRx/qP+LXtAlJrI2crSyl9fwPUGIWXEL0RMecZmVVF0EciGXLCXKA
+         DOSETH8nXZZGjpRcC0fvYWnufYWYZrOTy2yB8H0qZD4wYE5BqJbZKZ0GQYK/TK6jVx0m
+         cxSSgkawtBYUgQASDvyxUVWMjxtSbG2zLjqjrlO339POAKXhb2JUlGiQ5TZcWrN9gmFr
+         DRNuRi8xTjg7TE6ICOSJcMwQLLt1xu8hSQvES5KQedU3+MaT3GG6wvppYB8ZB+fPpa85
+         h1ROZcMDduMKFwTyCHrEmxfoG/fJObhd9tjqRXg8kDerTq0OCnNLQA9LZPfg60YSjWY9
+         psOQ==
+X-Gm-Message-State: AJIora9yRgr6+DJASMPpBXkXOQphI2wCmCNgX7DDjfOWDb5buE3zRXus
+        qsgaBRNGJo4gJqaybSpvle4jRA==
+X-Google-Smtp-Source: AGRyM1vboEju0bdJQo7lsoopxtF8KSfgKuwCi2sGH7bsKOMoj+jimNYEmwiyEc5Ez55JYmG821NsRQ==
+X-Received: by 2002:ac8:598e:0:b0:31e:e390:29e7 with SMTP id e14-20020ac8598e000000b0031ee39029e7mr12149028qte.265.1658783848443;
+        Mon, 25 Jul 2022 14:17:28 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id d4-20020a05620a240400b006b64d36342fsm4722372qkn.68.2022.07.25.14.17.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jul 2022 14:17:27 -0700 (PDT)
+Date:   Mon, 25 Jul 2022 17:17:26 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [filter-repo] How to reorder commits
+Message-ID: <20220725211726.tkmpvgetsh4fdfdv@meerkat.local>
+References: <20220721151937.adgufwkj3uxkk3yb@meerkat.local>
+ <CABPp-BE2391i7syZJUK1Nqjk9VZhSxqto0pb7xBLDZR_fY3FXA@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAFWJc9_QM1CQ69yXCOHTi4KSZJffhty5s=egUUx-6RTjUVF9+w@mail.gmail.com>
-In-Reply-To: <CAFWJc9_QM1CQ69yXCOHTi4KSZJffhty5s=egUUx-6RTjUVF9+w@mail.gmail.com>
-From:   Elie Obeid <elieobeid7@gmail.com>
-Date:   Tue, 26 Jul 2022 01:07:40 +0400
-Message-ID: <CAFWJc98dciS9wZ359PJjMeNhiG_+xy2otkz4a79MoPCRK-Mxew@mail.gmail.com>
-Subject: Re: How to specify a remote branch in git worktree?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BE2391i7syZJUK1Nqjk9VZhSxqto0pb7xBLDZR_fY3FXA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The regular clone (without using --bare), works excellently, with no
-issues, I just tested it,
-added workspaces and all is fine.
+On Fri, Jul 22, 2022 at 04:18:48PM -0700, Elijah Newren wrote:
+> > - keep the cover letter at the start of the series in order to cleanly
+> >   delineate where their work starts (and thus avoid potential problems with
+> >   rebases and finding fork-points with base branches, which tends to give
+> >   newbies trouble)
+> > - when the author is ready to submit their work, move the cover letter to the
+> >   tip of the branch and tag it as "foo-bar-v1"
+> > - when the author is ready to work on their changes, they run --reroll and we
+> >   move the cover letter back to the start of the series, adding any necessary
+> >   template "changes in vX" entries to it
+> >
+> > (or maybe it will go completely differently -- it's all very fluid right now)
+> >
+> > Basically, is git-filter-repo the right tool to reorder commits, or is it best
+> > to go directly with fast-export/fast-import?
+> >
+> > Thanks in advance,
+> > Konstantin
+> 
+> Generally, it makes no sense to reorder commits in filter-repo, nor
+> does it make sense to do so using fast-export/fast-import directly.
+> fast-export/fast-import don't "apply a diff" to get a new tree, they
+> say "Make these files have these exact contents".  Perhaps an example
+> would help to explain what I mean...
 
-Best Regards.
+Thank you for the detailed reply, Elijah. You did convince that filter-repo is
+not the right tool for this case, so I went with cherry-pick instead. Since my
+case is very straightforward with simple ranges and a guarantee of no
+conflicts, it's the most straightforward solution.
 
-
-On Tue, Jul 26, 2022 at 12:51 AM Elie Obeid <elieobeid7@gmail.com> wrote:
->
-> Hi, I have two remote branches prod and beta, I want to create one
-> worktree for prod and one for beta.
->
->
-> mkdir app && cd app
-> git clone --bare repo .git
-> git worktree add --checkout beta beta
-> git worktree add --checkout prod prod
-> cd prod
-> git pull
-> Mege conflict
->
->
->
-> As you can see, I get a merge conflict  right after I clone the repo,
-> create  the worktree and do a git pull, maybe the worktree is trying
-> to do a pull from master, I have no idea
-> How to fix that?
->
->
-> Best Regards.
+Cheers,
+Konstantin
