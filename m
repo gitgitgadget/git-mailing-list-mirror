@@ -2,107 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EDA6C43334
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 20:43:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35152C43334
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 20:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229955AbiGYUnw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 16:43:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47012 "EHLO
+        id S236573AbiGYUt5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 16:49:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbiGYUnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 16:43:51 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF4322B01
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:43:48 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id B21215C017E;
-        Mon, 25 Jul 2022 16:43:45 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 25 Jul 2022 16:43:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1658781825; x=1658868225; bh=uJLByq0hVv
-        xREbr0TTrMluhGlyqE7YScC7BCRq17KSg=; b=oqeQmvwg0QrxsHGl4NRO5KfjfS
-        48KG/IoTInsSDNuXuA7Vu5R/s0koUaSEMplvQ2rI11LevMJrE6GiXjxSBOnMV/xD
-        DrniCjdXu2RWslPfAJwtSd2uWFknRp53tv4teoXFghAVrEwJ3Zsv51ItbFuxhO0g
-        m1zu5bVpcNXQ9JPE4rabmtI6QRfd8cRNA2H4gHvc4kkmhD4ynwyzwWBUz93QNWKZ
-        75avLRN0w1K4udCtxTmfd5lGzOsUlbvM+uPo9ggLAiD1ZJDLYma4nyPuri4XwcC1
-        WcbSzKDe0FV52IndEwx3tKZCne1E/5lo+VdpgsptoRUunp0wofpAict8MS8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; t=1658781825; x=1658868225; bh=uJLByq0hVvxREbr0TTrMluhGlyqE
-        7YScC7BCRq17KSg=; b=BJVd7h6P7QqIIcRGigW+CxcIp6Pxv7EOVmAtUc8YJzwf
-        qkIfbh68A1SN9Tze+tch7jkPMdGlG6Gji0k1v8+IiBe0RM1Du+Slcohnl8xUqP4w
-        wEyGqHoxOnCoxLU4g2LlT0ZYuseNW4w+wrWfdyA7tbeMB+dMn+FGWs+jery8EBJQ
-        tc95Es9szbYYPGIuUkxLQgcY5wmJzbYMISxsdPo9PgQMaoxnN08N0+MVv6BNG7/C
-        bzudyA4DDkvZDnPeLsOskXXGwzS1C3dIRBZnFe/9MptNM98asf7Ba+1is6TgnF7A
-        7hUp/zizoBeDFOWT9mtWcWg3zMkPN4vXcPKXpRBzfQ==
-X-ME-Sender: <xms:gQDfYgw6HI8wBrsaa-cPeLQGqGIYR3gYfgFazt-ajwfbsYIzmraFRQ>
-    <xme:gQDfYkSbMX7UTg1-1VPQrSau1Xyb7asYPfrMgLI-6a9-Ua3BiKLvtL1qI8PRisRwf
-    U9885Bp3SqxFj4Yzw>
-X-ME-Received: <xmr:gQDfYiWMrl43OLhGDujHp6Rj3hbLp6GXELGW5FPWAAMyCEf60fm_J9TmOJEfEoZLEqw24aevXd0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvddtkedgudehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculdduhedmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredt
-    tddtjeenucfhrhhomhephfgvrhhnrghnughoucftrghmohhsuceoghhrvggvnhhfohhose
-    huledvrdgvuheqnecuggftrfgrthhtvghrnhepudfgudevtdeuhffhudfhkeekieehgeel
-    ffehkefggeelleevhfeliefgveetffdunecuffhomhgrihhnpehpohhsthhimhhgrdgttg
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgv
-    vghnfhhoohesuhelvddrvghu
-X-ME-Proxy: <xmx:gQDfYuhVOq_Os60_rm_NCnvDs4GUJ9y3XeycW8awU5zXG7UZOGJzfg>
-    <xmx:gQDfYiDIKKMjumTYQ8P06XxtKfyfiOC1U_-5hqnlLR5KDsNa6Z4sLQ>
-    <xmx:gQDfYvKRkNpN_SU-VLK4kXUG7g_jdEe74QmCpYK0joalx_FAshiyDg>
-    <xmx:gQDfYj42v292n4Fu8WU0gcuw4mV-7t8ngYCYjLU_bLAWgs2H6iW19Q>
-Feedback-ID: i96f14706:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Jul 2022 16:43:44 -0400 (EDT)
-Date:   Mon, 25 Jul 2022 22:43:42 +0200
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     Claudio Ebel <claudio.ebel@web.de>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Changed diff3 view from =?utf-8?B?Mi4z?= =?utf-8?B?NiDihpI=?=
- 2.67 for vimdiff
-Message-ID: <Yt8AfljwGc6a95Sv@zacax395.localdomain>
-References: <99c80fc2-0f94-a607-ca71-c45961c07e2b@web.de>
- <CAN0heSrCocuKA+8UvU8dH_bsM4Xg8L3M8O4W0buXkUc3uCxpGA@mail.gmail.com>
- <YtsMhb0XUPw2EekJ@zacax395.localdomain>
- <7dc225d7-eb36-9fb8-5977-6913ac4dd007@web.de>
+        with ESMTP id S233193AbiGYUtz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 16:49:55 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB86422BFC
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:49:53 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 54FC61A498D;
+        Mon, 25 Jul 2022 16:49:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=VEvXz/nk9ABs
+        sI4bbrLG0v8Snb3cxrRjpIJenNbhGhg=; b=rr9aUMqMIVylTspf1PU7kFBq+sS8
+        ASXzUxPv3iyA//nDvL0HPt9IC/QUbS2Iq62uTJ7q3WlrzOXlqldb23EHG+mfh8bB
+        YW84xVy5hsT6d7LNIjKY9isfwE6hQgSM7kvH/gKInPNZLYeIm4V/GDSR6RTCkwlA
+        vjRjlTxNtxsGM4w=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D3AC1A498C;
+        Mon, 25 Jul 2022 16:49:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EA3211A4989;
+        Mon, 25 Jul 2022 16:49:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 00/10] typed sort of linked lists
+References: <4d7cd286-398e-215c-f2bd-aa7e8207be4f@web.de>
+        <xmqqk08bv0ax.fsf@gitster.g> <xmqqy1wh3tzy.fsf@gitster.g>
+        <3c182e33-ee8e-0a1f-8915-8f97da2499e6@github.com>
+Date:   Mon, 25 Jul 2022 13:49:48 -0700
+In-Reply-To: <3c182e33-ee8e-0a1f-8915-8f97da2499e6@github.com> (Derrick
+        Stolee's message of "Mon, 25 Jul 2022 16:35:59 -0400")
+Message-ID: <xmqq8rog534j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7dc225d7-eb36-9fb8-5977-6913ac4dd007@web.de>
+X-Pobox-Relay-ID: 536FD87C-0C5B-11ED-827D-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> 
-> After successfully compiling Git, I'm almost ashamed to ask, but I was NOT
-> able to run the vim command you suggested, Fernando:
-> 
-> vim -c "echo | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis" -c "tabfirst" local.txt base.txt remote.txt merged.txt
-> 
+Derrick Stolee <derrickstolee@github.com> writes:
 
-Hi Claudio,
+> On 7/25/2022 2:52 PM, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>=20
+>>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>> A nicely presented coherent story that results in an overall code
+>>> reduction.  Thanks for a pleasant read.
+>>>
+>>> Will queue.
+>>=20
+>> No comments or objections from anybody?  I am planning to merge the
+>> topic to 'next' and to 'master' soonish.
+>
+> Sorry. I had started reading it and also found it to be a
+> pleasant read, but did not get around to finishing it and
+> saying so publicly. Consider that done now.
+>
+> Thanks, Ren=C3=A9!
+> -Stolee
 
-Notice that this command was meant to be executed *directly* from the terminal
-(and not from .gitconfig).
-
-It just opens 4 files that, as you noted, do not exist... but that's ok with
-vim: it will open 4 buffers named after the provided filenames and only save
-them to disk when running ":w".
-
-The result should be something like what is shown in [1], ie. 4 empty buffers
-named "local", "base", "remote" and "merged" shown with the expected layout.
-
-Hope this helps!
-
-Fernando.
-
-
-[1] https://postimg.cc/dL8G2mng
+Thanks.
