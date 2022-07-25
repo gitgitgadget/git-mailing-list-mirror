@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0CABC43334
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 20:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39129CCA48A
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 20:34:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237191AbiGYUep (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 16:34:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40238 "EHLO
+        id S237183AbiGYUes (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 16:34:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229737AbiGYUem (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 16:34:42 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B86822B04
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:34:41 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id u14-20020a05600c00ce00b003a323062569so7039258wmm.4
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:34:41 -0700 (PDT)
+        with ESMTP id S229736AbiGYUen (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 16:34:43 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D563C2251F
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:34:42 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id z13so17568669wro.13
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=PL/XJobI5xVcWtGY+GITFHenF1J7M/0SWg4QdXJXehs=;
-        b=PEGUQq9zyDQUtog9T7tL6CyfA/lerkt1V/haDG36Qb7YXUC3J7JwVyuSnmvS2RitLv
-         H4O5JnQx1QLHAEauGYQBAYhhxVrEk4VHUQf+C3aOxsFiCgvvUVKms01YfB6umUZoJ9Nd
-         8dG/i8+mmwwN8TxPRvgS/FUx43Xpj8EWlSwXtjOcuUIyLbsDrjF27P/dKAYPgVxAUwrf
-         qEAv3ZAZcaFs8uZtARhUhn8+mogkuZMlIJsBsK2H+VpOeKTW9Zsb24UvISaK4uSK9s0T
-         3GWGem8sM0rVgFthGF75+9r2iHek+vJ5byj38LwPoPp1EATPpzI2/AVLX7+lAZpvAxKI
-         vjZg==
+        bh=5e3esZlfRS33aCkQSz7epEvmqoy81/tkXXzjsqBAWFA=;
+        b=Sm6MMtJ6J1Jug2oUkEFZRqIUgzGbgpI/SfOZR7zfd+3U+yFA8OjEmqivEv5AhAV+IV
+         MQj6wAa84W3LHIM0NveKyVgWVYcvdhdSbCZ7UBaUvKprW7wpQwvwek6yjnHI+kkww+ka
+         j48DWl5eMr/1fu6mF+lyvMFy7Ka/4zLACUYRjtcFgDbZu1CCpEPKHmBujcsUPHAnz0Jl
+         5m52Ywar3MAKOyXU/OSaZMzNpmlcj2CyoSerEfMEVWs8AXPQj+2JOFAqfPJmX3yxXTfJ
+         mODKhslJfGkz9Xhq1euGT3i2QdQlfCT1Ri4phztTzghkHV95Zz35fZsgvqp0YH9iCF9E
+         u7tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PL/XJobI5xVcWtGY+GITFHenF1J7M/0SWg4QdXJXehs=;
-        b=EfTxoxWcKFGpFUy8lUcm4w4Ps8NCInx5WbRLAIbsU2JtyLd84V1T8Potkg8kbueedL
-         QWpxdP3rMRFlasXap90v8yFA+iCNfFI1+kug9R3up4DysOF5uDb/Tq79ot6ANKFr/346
-         Wx1aEygbQDK7PxrsrceZR26WIN/DpaRyGL04OdMtJyFykqdS+r6m+FAbr0D4CAbKFGur
-         /8gjDIZwEj7RiSvztE1h/Ji9xq8jLWuZ8tDboRrySU7cvGddpXTVAMNtTv6SbthsUepz
-         5ZCrlD2Y0RMw4806vqvRobK8V+0+symVo7q02rnHQtQkBd91kTlbJ7ss8IjfWiW+TxPS
-         3crA==
-X-Gm-Message-State: AJIora/L/lk0O0SyU3Jt/3Dpq2/VRqRIE+bxzb8w+d3nE0ny0uzryrr+
-        QGpGcou5ygwKloZxtH1H9/O3wfJ19wU=
-X-Google-Smtp-Source: AGRyM1veHh3avX/del4v++D7sBbehxtKH2f5YzN8lYMOurex2MXdu3iRVQsno2YSqsdW5PN9LnCp/A==
-X-Received: by 2002:a05:600c:6009:b0:3a3:1506:f60f with SMTP id az9-20020a05600c600900b003a31506f60fmr21699255wmb.144.1658781279650;
-        Mon, 25 Jul 2022 13:34:39 -0700 (PDT)
+        bh=5e3esZlfRS33aCkQSz7epEvmqoy81/tkXXzjsqBAWFA=;
+        b=3uoXgiyxfxtbtb+RRchsD/gMtnwHPe30nXhNHysFl6qj8K51zN2Uxbc/eDZTEA13xg
+         k0nX8CuFk5TE7s+ZdVOVuEDKcXu9kpI8PUQm6I6GlwjaGoqCukGjnbX+QXR6IfQBM4N/
+         98pruzLiyUfoYuwBIMtW3f9T+HRyU0Vh97ovqX9sUradDSQOLKFWUclyYi7M7sC3PTnu
+         50lzXvU6LhdMhGWLBT37evQsG7ZNbVZHw9BWJcTVo9TEKqBCWgHqcRW1D3cvUBRhk9/C
+         bc3f5xhqAm9kJijvOwL+2gUO3Uxt3J7Sft2aU8w56Sd+lDuoxzaFHP6oVsf4OTpp7AMY
+         VDEw==
+X-Gm-Message-State: AJIora/kER/ohRcIcLoOoSX2LpiHy/hCAGx1iNZP7r09vYOMWFDtGINq
+        rISuV2s3+zickoyGOZk30o86oOKXJHk=
+X-Google-Smtp-Source: AGRyM1sVLpJ0Uc6L9zNGYAgLevQ6zGlnURVO6ZUHfHUBLexyTditW0qagTEDL36Bp7iIB+9f897LUQ==
+X-Received: by 2002:adf:ee4b:0:b0:21e:8e1a:8f3c with SMTP id w11-20020adfee4b000000b0021e8e1a8f3cmr3119469wro.346.1658781280835;
+        Mon, 25 Jul 2022 13:34:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w10-20020adfde8a000000b0021e50971147sm12610362wrl.44.2022.07.25.13.34.38
+        by smtp.gmail.com with ESMTPSA id 9-20020a05600c22c900b003a3270735besm15459002wmg.28.2022.07.25.13.34.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 13:34:38 -0700 (PDT)
-Message-Id: <40808e92afb7bcf3e8e9b4b53d5e30b5e17816f8.1658781277.git.gitgitgadget@gmail.com>
+        Mon, 25 Jul 2022 13:34:40 -0700 (PDT)
+Message-Id: <7d3159f0d9a29a04b5856982f787f4eddfb91b53.1658781277.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1300.git.1658781277.gitgitgadget@gmail.com>
 References: <pull.1300.git.1658781277.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 25 Jul 2022 20:34:33 +0000
-Subject: [PATCH 1/5] remote-curl: add 'get' capability
+Date:   Mon, 25 Jul 2022 20:34:34 +0000
+Subject: [PATCH 2/5] bundle-uri: create basic file-copy logic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,147 +69,176 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-A future change will want a way to download a file over HTTP(S) using
-the simplest of download mechanisms. We do not want to assume that the
-server on the other side understands anything about the Git protocol but
-could be a simple static web server.
+Before implementing a way to fetch bundles into a repository, create the
+basic logic. Assume that the URI is actually a file path. Future logic
+will make this more careful to other protocols.
 
-Create the new 'get' capability for the remote helpers which advertises
-that the 'get' command is avalable. A caller can send a line containing
-'get <url> <path>' to download the file at <url> into the file at
-<path>.
+For now, we also only succeed if the content at the URI is a bundle
+file, not a bundle list. Bundle lists will be implemented in a future
+change.
+
+Note that the discovery of a temporary filename is slightly racy because
+the odb_mkstemp() relies on the temporary file not existing. With the
+current implementation being limited to file copies, we could replace
+the copy_file() with copy_fd(). The tricky part comes in future changes
+that send the filename to 'git remote-https' and its 'get' capability.
+At that point, we need the file descriptor closed _and_ the file
+unlinked. If we were to keep the file descriptor open for the sake of
+normal file copies, then we would pollute the rest of the code for
+little benefit. This is especially the case because we expect that most
+bundle URI use will be based on HTTPS instead of file copies.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/gitremote-helpers.txt |  9 +++++++
- remote-curl.c                       | 32 +++++++++++++++++++++++++
- t/t5557-http-get.sh                 | 37 +++++++++++++++++++++++++++++
- 3 files changed, 78 insertions(+)
- create mode 100755 t/t5557-http-get.sh
+ Makefile     |   1 +
+ bundle-uri.c | 104 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ bundle-uri.h |  14 +++++++
+ 3 files changed, 119 insertions(+)
+ create mode 100644 bundle-uri.c
+ create mode 100644 bundle-uri.h
 
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index 6f1e269ae43..ed8da428c98 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -168,6 +168,9 @@ Supported commands: 'list', 'import'.
- 	Can guarantee that when a clone is requested, the received
- 	pack is self contained and is connected.
- 
-+'get'::
-+	Can use the 'get' command to download a file from a given URI.
+diff --git a/Makefile b/Makefile
+index 1624471badc..7d5f48069ea 100644
+--- a/Makefile
++++ b/Makefile
+@@ -906,6 +906,7 @@ LIB_OBJS += blob.o
+ LIB_OBJS += bloom.o
+ LIB_OBJS += branch.o
+ LIB_OBJS += bulk-checkin.o
++LIB_OBJS += bundle-uri.o
+ LIB_OBJS += bundle.o
+ LIB_OBJS += cache-tree.o
+ LIB_OBJS += cbtree.o
+diff --git a/bundle-uri.c b/bundle-uri.c
+new file mode 100644
+index 00000000000..b35babc36aa
+--- /dev/null
++++ b/bundle-uri.c
+@@ -0,0 +1,104 @@
++#include "cache.h"
++#include "bundle-uri.h"
++#include "bundle.h"
++#include "object-store.h"
++#include "refs.h"
++#include "run-command.h"
 +
- If a helper advertises 'connect', Git will use it if possible and
- fall back to another capability if the helper requests so when
- connecting (see the 'connect' command under COMMANDS).
-@@ -418,6 +421,12 @@ Supported if the helper has the "connect" capability.
- +
- Supported if the helper has the "stateless-connect" capability.
- 
-+'get' <uri> <path>::
-+	Downloads the file from the given `<uri>` to the given `<path>`. If
-+	`<path>.temp` exists, then Git assumes that the `.temp` file is a
-+	partial download from a previous attempt and will resume the
-+	download from that position.
-+
- If a fatal error occurs, the program writes the error message to
- stderr and exits. The caller should expect that a suitable error
- message has been printed if the child closes the connection without
-diff --git a/remote-curl.c b/remote-curl.c
-index b8758757ece..73fbdbddd84 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1286,6 +1286,33 @@ static void parse_fetch(struct strbuf *buf)
- 	strbuf_reset(buf);
- }
- 
-+static void parse_get(struct strbuf *buf)
++static int find_temp_filename(struct strbuf *name)
 +{
-+	struct strbuf url = STRBUF_INIT;
-+	struct strbuf path = STRBUF_INIT;
-+	const char *p, *space;
++	int fd;
++	/*
++	 * Find a temporary filename that is available. This is briefly
++	 * racy, but unlikely to collide.
++	 */
++	fd = odb_mkstemp(name, "bundles/tmp_uri_XXXXXX");
++	if (fd < 0) {
++		warning(_("failed to create temporary file"));
++		return -1;
++	}
 +
-+	if (!skip_prefix(buf->buf, "get ", &p))
-+		die(_("http transport does not support %s"), buf->buf);
-+
-+	space = strchr(p, ' ');
-+
-+	if (!space)
-+		die(_("protocol error: expected '<url> <path>', missing space"));
-+
-+	strbuf_add(&url, p, space - p);
-+	strbuf_addstr(&path, space + 1);
-+
-+	if (http_get_file(url.buf, path.buf, NULL))
-+		die(_("failed to download file at URL '%s'"), url.buf);
-+
-+	strbuf_release(&url);
-+	strbuf_release(&path);
-+	printf("\n");
-+	fflush(stdout);
-+	strbuf_reset(buf);
++	close(fd);
++	unlink(name->buf);
++	return 0;
 +}
 +
- static int push_dav(int nr_spec, const char **specs)
- {
- 	struct child_process child = CHILD_PROCESS_INIT;
-@@ -1564,9 +1591,14 @@ int cmd_main(int argc, const char **argv)
- 				printf("unsupported\n");
- 			fflush(stdout);
- 
-+		} else if (skip_prefix(buf.buf, "get ", &arg)) {
-+			parse_get(&buf);
-+			fflush(stdout);
++static int copy_uri_to_file(const char *file, const char *uri)
++{
++	/* File-based URIs only for now. */
++	return copy_file(file, uri, 0);
++}
 +
- 		} else if (!strcmp(buf.buf, "capabilities")) {
- 			printf("stateless-connect\n");
- 			printf("fetch\n");
-+			printf("get\n");
- 			printf("option\n");
- 			printf("push\n");
- 			printf("check-connectivity\n");
-diff --git a/t/t5557-http-get.sh b/t/t5557-http-get.sh
-new file mode 100755
-index 00000000000..50b7dbcf957
++static int unbundle_from_file(struct repository *r, const char *file)
++{
++	int result = 0;
++	int bundle_fd;
++	struct bundle_header header = BUNDLE_HEADER_INIT;
++	struct string_list_item *refname;
++	struct strbuf bundle_ref = STRBUF_INIT;
++	size_t bundle_prefix_len;
++
++	if ((bundle_fd = read_bundle_header(file, &header)) < 0)
++		return 1;
++
++	if ((result = unbundle(r, &header, bundle_fd, NULL)))
++		return 1;
++
++	/*
++	 * Convert all refs/heads/ from the bundle into refs/bundles/
++	 * in the local repository.
++	 */
++	strbuf_addstr(&bundle_ref, "refs/bundles/");
++	bundle_prefix_len = bundle_ref.len;
++
++	for_each_string_list_item(refname, &header.references) {
++		struct object_id *oid = refname->util;
++		struct object_id old_oid;
++		const char *branch_name;
++		int has_old;
++
++		if (!skip_prefix(refname->string, "refs/heads/", &branch_name))
++			continue;
++
++		strbuf_setlen(&bundle_ref, bundle_prefix_len);
++		strbuf_addstr(&bundle_ref, branch_name);
++
++		has_old = !read_ref(bundle_ref.buf, &old_oid);
++		update_ref("fetched bundle", bundle_ref.buf, oid,
++			   has_old ? &old_oid : NULL,
++			   REF_SKIP_OID_VERIFICATION,
++			   UPDATE_REFS_MSG_ON_ERR);
++	}
++
++	bundle_header_release(&header);
++	return result;
++}
++
++int fetch_bundle_uri(struct repository *r, const char *uri)
++{
++	int result = 0;
++	struct strbuf filename = STRBUF_INIT;
++
++	if ((result = find_temp_filename(&filename)))
++		goto cleanup;
++
++	if ((result = copy_uri_to_file(filename.buf, uri))) {
++		warning(_("failed to download bundle from URI '%s'"), uri);
++		goto cleanup;
++	}
++
++	if ((result = !is_bundle(filename.buf, 0))) {
++		warning(_("file at URI '%s' is not a bundle"), uri);
++		goto cleanup;
++	}
++
++	if ((result = unbundle_from_file(r, filename.buf))) {
++		warning(_("failed to unbundle bundle from URI '%s'"), uri);
++		goto cleanup;
++	}
++
++cleanup:
++	unlink(filename.buf);
++	strbuf_release(&filename);
++	return result;
++}
+diff --git a/bundle-uri.h b/bundle-uri.h
+new file mode 100644
+index 00000000000..8a152f1ef14
 --- /dev/null
-+++ b/t/t5557-http-get.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
++++ b/bundle-uri.h
+@@ -0,0 +1,14 @@
++#ifndef BUNDLE_URI_H
++#define BUNDLE_URI_H
 +
-+test_description='test downloading a file by URL'
++struct repository;
 +
-+. ./test-lib.sh
++/**
++ * Fetch data from the given 'uri' and unbundle the bundle data found
++ * based on that information.
++ *
++ * Returns non-zero if no bundle information is found at the given 'uri'.
++ */
++int fetch_bundle_uri(struct repository *r, const char *uri);
 +
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
-+
-+test_expect_success 'get by URL: 404' '
-+	url="$HTTPD_URL/none.txt" &&
-+	cat >input <<-EOF &&
-+	capabilities
-+	get $url file1
-+	EOF
-+
-+	test_must_fail git remote-http $url <input 2>err &&
-+	test_path_is_missing file1 &&
-+	grep "failed to download file at URL" err &&
-+	rm file1.temp
-+'
-+
-+test_expect_success 'get by URL: 200' '
-+	echo data >"$HTTPD_DOCUMENT_ROOT_PATH/exists.txt" &&
-+
-+	url="$HTTPD_URL/exists.txt" &&
-+	cat >input <<-EOF &&
-+	capabilities
-+	get $url file2
-+
-+	EOF
-+
-+	GIT_TRACE2_PERF=1 git remote-http $url <input &&
-+	test_cmp "$HTTPD_DOCUMENT_ROOT_PATH/exists.txt" file2
-+'
-+
-+test_done
++#endif
 -- 
 gitgitgadget
 
