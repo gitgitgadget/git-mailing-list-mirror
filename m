@@ -2,93 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D56AC43334
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 21:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61234CCA48A
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 21:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236463AbiGYVRb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 17:17:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38694 "EHLO
+        id S237374AbiGYV2c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 17:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235544AbiGYVRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 17:17:30 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F01E20F7D
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:17:29 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id u12so9255582qtk.0
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:17:29 -0700 (PDT)
+        with ESMTP id S237383AbiGYV2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 17:28:01 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75B124F3A
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:27:34 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-10d83692d5aso16451868fac.1
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=frramBKz/SPzBAdKkDSowJdolooZDvAqz3wsg1TCWds=;
-        b=DWmusN3aVQ46V0ijUFf9W3rsrAjUUIYClj9YiILD5Yxqk6CqVlxZvxW2OsvVe+Im/9
-         VRgjMlFM127EUyQo74XuvkJn8Mk48IDLL8pc+qNYVHnPgy/KJlm395GadviEok7JP05e
-         c4OWRO5f5z8yu4qJu1m6UQB/ZN53YpizbowPU=
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0Jvbc65tF+mfzq3yDGIPbmtdfFPlDyTuTAKZEW9UcMc=;
+        b=aZ+lOqEF5iVKrCyfqtbljEj949v2xug1rIdNQQrAPnlxNvb9THqYOKzBldOjSIenxf
+         0JuOpLhCr8m3lVBtw1gDsTBc5Xo12ARhK159s1nSoPYb8ysOks4+BwZCad01mecOfEcu
+         kYsBnBFSg2Dr1A/NgJd1DC9JTQMVmFiSTSuamgBVUFYs5VnSdg4uZ5rw2sq6TaBM1eRy
+         lTUXDtFlmI6WbVtPZJrLMP/ndrvofEqVGjIBp3HBLFkgvvWO3+uxecjkGrS4iarKTBVt
+         tLcDSam/0/CRhKdZV7gLOh4iKMoLLGfJO1Rg9P/f0maiUvfI9VwHkfhpyRtwz2bK76Af
+         TCgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=frramBKz/SPzBAdKkDSowJdolooZDvAqz3wsg1TCWds=;
-        b=NwXfodXEOd4vizRx/qP+LXtAlJrI2crSyl9fwPUGIWXEL0RMecZmVVF0EciGXLCXKA
-         DOSETH8nXZZGjpRcC0fvYWnufYWYZrOTy2yB8H0qZD4wYE5BqJbZKZ0GQYK/TK6jVx0m
-         cxSSgkawtBYUgQASDvyxUVWMjxtSbG2zLjqjrlO339POAKXhb2JUlGiQ5TZcWrN9gmFr
-         DRNuRi8xTjg7TE6ICOSJcMwQLLt1xu8hSQvES5KQedU3+MaT3GG6wvppYB8ZB+fPpa85
-         h1ROZcMDduMKFwTyCHrEmxfoG/fJObhd9tjqRXg8kDerTq0OCnNLQA9LZPfg60YSjWY9
-         psOQ==
-X-Gm-Message-State: AJIora9yRgr6+DJASMPpBXkXOQphI2wCmCNgX7DDjfOWDb5buE3zRXus
-        qsgaBRNGJo4gJqaybSpvle4jRA==
-X-Google-Smtp-Source: AGRyM1vboEju0bdJQo7lsoopxtF8KSfgKuwCi2sGH7bsKOMoj+jimNYEmwiyEc5Ez55JYmG821NsRQ==
-X-Received: by 2002:ac8:598e:0:b0:31e:e390:29e7 with SMTP id e14-20020ac8598e000000b0031ee39029e7mr12149028qte.265.1658783848443;
-        Mon, 25 Jul 2022 14:17:28 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
-        by smtp.gmail.com with ESMTPSA id d4-20020a05620a240400b006b64d36342fsm4722372qkn.68.2022.07.25.14.17.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 14:17:27 -0700 (PDT)
-Date:   Mon, 25 Jul 2022 17:17:26 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [filter-repo] How to reorder commits
-Message-ID: <20220725211726.tkmpvgetsh4fdfdv@meerkat.local>
-References: <20220721151937.adgufwkj3uxkk3yb@meerkat.local>
- <CABPp-BE2391i7syZJUK1Nqjk9VZhSxqto0pb7xBLDZR_fY3FXA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0Jvbc65tF+mfzq3yDGIPbmtdfFPlDyTuTAKZEW9UcMc=;
+        b=1kZGi30jGo+RhKkOQllQ0BuFqsyxZPdIbr9jZZ3rBUWMxIbhS+3XYwraq61W+tZ8Im
+         KDQv/mesO0cP+TXyrOjAEIFVz6sHcbeSiE7dXXAVC2afUPqMjLow8rMOEcKgP5ExCzl3
+         KPeHu6BjkyQPEnKjgorglF7zzYaOM81S35XFFDyLeuHQQ4XUeo0fDBU5RGwu5xa+XA+N
+         EwyEwZIvtPnZKspz9ZIOzCKR11/xq2RWZuYhk5gvOEcy+5A7AyfztNeBdL3IQYlTkRwR
+         ef5PI+kBfO3i6BlS8fe+u/rMktI325uuBjM0o+Y9IgiSCOH7xeV2XA6lIGb0PlrlVYtR
+         SVAA==
+X-Gm-Message-State: AJIora9oWeFau5Scy1bLmzyxBS5byP45Id8fOosVZDwHsYmNgj+ne+jU
+        /cGVcf2ngHFGkyYD0yo+P1wENsF5OiNgnFep7BRL3w==
+X-Google-Smtp-Source: AGRyM1tfWdCTMe8n1lrX88uQgQEMNGoeqTAFIGSN3ucWPLmwxIOsF6tNmIalQe/Ixmoi/Tt6M430rikxwbpz+9kkEoo=
+X-Received: by 2002:a05:6870:c0d2:b0:10d:7752:e02e with SMTP id
+ e18-20020a056870c0d200b0010d7752e02emr7255616oad.236.1658784452680; Mon, 25
+ Jul 2022 14:27:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BE2391i7syZJUK1Nqjk9VZhSxqto0pb7xBLDZR_fY3FXA@mail.gmail.com>
+References: <20220712231935.2979727-1-calvinwan@google.com>
+ <20220718214349.3379328-1-calvinwan@google.com> <220725.86v8rlpdix.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220725.86v8rlpdix.gmgdl@evledraar.gmail.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 25 Jul 2022 14:27:21 -0700
+Message-ID: <CAFySSZD+kofhqYmxOnoNi49XSps6z44Ym8=qMBYjwOKJR3Mymw@mail.gmail.com>
+Subject: Re: [PATCH v5] submodule merge: update conflict error message
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, chooglen@google.com, gitster@pobox.com,
+        newren@gmail.com, levraiphilippeblain@gmail.com,
+        Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 22, 2022 at 04:18:48PM -0700, Elijah Newren wrote:
-> > - keep the cover letter at the start of the series in order to cleanly
-> >   delineate where their work starts (and thus avoid potential problems with
-> >   rebases and finding fork-points with base branches, which tends to give
-> >   newbies trouble)
-> > - when the author is ready to submit their work, move the cover letter to the
-> >   tip of the branch and tag it as "foo-bar-v1"
-> > - when the author is ready to work on their changes, they run --reroll and we
-> >   move the cover letter back to the start of the series, adding any necessary
-> >   template "changes in vX" entries to it
-> >
-> > (or maybe it will go completely differently -- it's all very fluid right now)
-> >
-> > Basically, is git-filter-repo the right tool to reorder commits, or is it best
-> > to go directly with fast-export/fast-import?
-> >
-> > Thanks in advance,
-> > Konstantin
-> 
-> Generally, it makes no sense to reorder commits in filter-repo, nor
-> does it make sense to do so using fast-export/fast-import directly.
-> fast-export/fast-import don't "apply a diff" to get a new tree, they
-> say "Make these files have these exact contents".  Perhaps an example
-> would help to explain what I mean...
+Hi =C3=86var,
 
-Thank you for the detailed reply, Elijah. You did convince that filter-repo is
-not the right tool for this case, so I went with cherry-pick instead. Since my
-case is very straightforward with simple ranges and a guarantee of no
-conflicts, it's the most straightforward solution.
+> Whereas we want this, surely?;
+>
+>  - one
+>    one continued
+>  - two
+>    two continued
+>
+> I.e. we're using " - " to mark list items, but then not indenting the
+> items.
 
-Cheers,
-Konstantin
+Yes we surely do!
+
+> I think you can borrow a bit from ba5e8a0eb80 (object-name: make
+> ambiguous object output translatable, 2022-01-27) here, i.e.:
+>
+>  1. Just translate a message like "go to submodule ...\nor update to
+>     an", have another variant for the "resolution exists".
+
+I am removing the "resolution exists" variant because the text that
+came with it was unclear to begin with.
+
+> per ba5e8a0eb80 you should explain
+> any addition of magical formatting like " %s" with a TRANSLATORS
+> comment.
+
+ack
+
+>  - A trailing  " " before a \n?
+
+ack
+
+>    It's quite odd to tell a user to run a command with the `` syntax,
+>    which is used for interpolation. Let's instead suggest:
+>
+>         blah blah blah run:
+>
+>                 git add foo \
+>                         bar \ [...]
+>                         baz
+>
+>    I.e. use \ at the end of lines to note a multi-line command, not wrap
+>    the whole thing in ``-quotes.
+
+That looks much better than what I currently have.
+
+>  - If a message must always end in a \n just add it between _()'s,
+>    instead of making it part of the _() string.
+
+ack
