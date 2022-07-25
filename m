@@ -2,143 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90C24C433EF
-	for <git@archiver.kernel.org>; Sun, 24 Jul 2022 22:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BD58C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 01:03:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231562AbiGXWEy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jul 2022 18:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48142 "EHLO
+        id S231357AbiGYBDg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jul 2022 21:03:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiGXWEw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jul 2022 18:04:52 -0400
-X-Greylist: delayed 305 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 24 Jul 2022 15:04:51 PDT
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1D12EE34
-        for <git@vger.kernel.org>; Sun, 24 Jul 2022 15:04:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1658700290;
-        bh=gDwJLbtab3ZW1/PWFAoOEJEgQw6Umy956YPAd+9gWs0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=mHoYEEidp4Su9OswZ8gsGpP2co2UFRJ7dyIMvUuarFW+gWwIsNQIAR/HhppGsp6f2
-         q6qdTx0Ww5ed33fzLHINp4PxDyM9n/N4wVAfWmnjEEgCjbI65Y0wBvTGXz1jswBQIg
-         tZaxtaUlXSPi0gYbsCuMjvFadl25TT4i8Tqvqsu0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.32] ([93.234.112.53]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MZSBG-1o1yWI3IPu-00Wj6p; Sun, 24
- Jul 2022 23:59:40 +0200
-Message-ID: <7dc225d7-eb36-9fb8-5977-6913ac4dd007@web.de>
-Date:   Sun, 24 Jul 2022 23:59:40 +0200
+        with ESMTP id S229437AbiGYBDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jul 2022 21:03:35 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB502AE5A
+        for <git@vger.kernel.org>; Sun, 24 Jul 2022 18:03:34 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5FD8519D60D;
+        Sun, 24 Jul 2022 21:03:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0f2T9BBn9UD5kQQOLKP+1ceAaieUjwY/HxRe/P
+        OOP4I=; b=BzvC2uGZYxV7Z8dqbGzNEGSgUJg8o0sNu7VkyvJs6YIMotooBGmhgX
+        yHDXuYL104dtuo/8kiHdKLtWJqGZnlaWMACxVD/PU8Q/5/+r49jWe5S2qrlwpqsA
+        F1r5khpk88fpxtshg/MoXaVscEpMkuNiIlrEctsPWQ1mWGvpX0m0k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 586B319D60C;
+        Sun, 24 Jul 2022 21:03:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 022BA19D60B;
+        Sun, 24 Jul 2022 21:03:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v8] ls-files: introduce "--format" option
+References: <pull.1262.v7.git.1657692472994.gitgitgadget@gmail.com>
+        <pull.1262.v8.git.1658334983053.gitgitgadget@gmail.com>
+        <xmqqbktj3ct7.fsf@gitster.g>
+        <CAOLTT8RjLoooT7t+ucFqa9P=8TiVL3M+ZgcEY7qVhRbjB=9OhA@mail.gmail.com>
+        <xmqqsfmr8ygp.fsf@gitster.g>
+        <CAOLTT8RqMU-k85LmcpY0wATHSDoWDEQLnPtfuZ2OC2nWN9305A@mail.gmail.com>
+Date:   Sun, 24 Jul 2022 18:03:27 -0700
+In-Reply-To: <CAOLTT8RqMU-k85LmcpY0wATHSDoWDEQLnPtfuZ2OC2nWN9305A@mail.gmail.com>
+        (ZheNing Hu's message of "Sun, 24 Jul 2022 19:08:00 +0800")
+Message-ID: <xmqq7d4280m8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: =?UTF-8?Q?Re=3a_Changed_diff3_view_from_2=2e36_=e2=86=92_2=2e67_for?=
- =?UTF-8?Q?_vimdiff?=
-Content-Language: en-US
-To:     Fernando Ramos <greenfoo@u92.eu>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <99c80fc2-0f94-a607-ca71-c45961c07e2b@web.de>
- <CAN0heSrCocuKA+8UvU8dH_bsM4Xg8L3M8O4W0buXkUc3uCxpGA@mail.gmail.com>
- <YtsMhb0XUPw2EekJ@zacax395.localdomain>
-From:   Claudio Ebel <claudio.ebel@web.de>
-In-Reply-To: <YtsMhb0XUPw2EekJ@zacax395.localdomain>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:6WJiHk8A9A3fuMhnmPP7QGzRgPRl/vmhOYCpAH5P8XMbmSP7/pb
- gawC/zX3VYMHdsdhsPtYzJy/xAEIR6qgrpfPzlkTTYJhnFAegpnu2GmcTaUURd5lDjKMk7R
- gEtWW5h+exvSXLmcSTO+NKJ4PrQzKs2ZNtMshf6kruBZI8mpfTEzqlMuVJVZ4XYybXjw9xD
- gdUsmN+635S/LCMuZdqLA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Rmt5TJtUJsU=:CkL7zd4/+op81X9q/1X+kw
- Q75x3aA8WpPGXJ9LBa4sPUBsvdwNDoPMh36Z0kAvuiec7a5CkmOB8ukrntWeSmUJpwe2nmYqb
- NzLjLqVurmKMYmVI7HYsKAAlPaXgdpwLWk7IoeONc4WJZpBZYFHORDcQb1L7zvxyEguVORHwe
- smxgsyj5tgRTcXR0jyTWEJR5spZ4RCKlXq6Av+199RoXH7mXnKq4tM2BYG32RYwEJxK00PrwE
- WllwodMkaXGgM6lALm9R1MM7q6DmQh/ZmjG17H8ahPuOUVGPQYNf/nLgE8a6/aSgQqpkYEBxg
- +ytpOwTBE1pxOxasuvgGHyfQANfM+hTSMC7P619+8yua70YbXXZ0CCRIchJ+awToP8kkT19uP
- XmZ4tbK+TtBE7JbQuf6WbjPOhK03xwTjiCuLw2bMKjFgwJJ4wymTNntV3lLlwlkzahDhdHoB+
- Ex2dq+vQCNrH78wfkLF85Y7ShBv9PSJ+ySu4XHLCiS8BhPyqyGjkPLXVXf1dU1KqF2Yd2WCWf
- N0fayvgOIkMInkbTrVEs/ydAGR6VQrxJ7ZZedzz102nahiObveK1jOo5fxcgUB3hpcLjVa1zM
- 87nLuuf0udbNUiKlqfW0PijzFlZCUtK1HPN2ig4yyQW3Zd2FavBS5j6OS6SNaud23JXCrO2j8
- cXD+Fr0i88RA+48R3ZIQ7inqdv9lfakoeUQn+j84o1YugYs/nT8q9+o3L+ndQzGeZFaAb3gGX
- kAfmTb2fRVJJ/CV1O4euPnUyjhxPunQaTH456HXE0v/FGJEGhe1X95qiKoHEBOfk8kNG4Cb5r
- 0hOc5ZdzUKsx7h12b0hD7hqrD3G+zB15yobCp8PRJoBFoDfDNVvrzv7GqFhBr6df9lehCbsoa
- 5sKjxtzlqW/OqrdvfAoPEa9MhGh49xau8QjDTM3lV2AA7pEnLDgKUCr3fKGtmNyIEWZsRJE2A
- NRBTPmToxrUPAHhaDFUXCePpnvay9r5ssfPfN7wxDtAA73luAc3BJQcyYGUFY7UqoWNfgLmXT
- FdVfVGDo1GfDZiAgvnyeQLJEbRlXtxzjK960AkV2Ys86HqL5z1YDHsIefVvsycQ8DeVcoBLlp
- OzgA1p+I/QjoGi5e6dzfOaubt3EgYB/2uNpZuSODVkdEXkLtmHUWVAvaQ==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 98495EC4-0BB5-11ED-A3DD-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Martin, dear Fernando,
+ZheNing Hu <adlternative@gmail.com> writes:
 
-first of all: Thank you both very much for your super fast and elaborate a=
-nswers. It's amazing to get responses from the developers themselves! I re=
-ad the blog post about the new vimdiff layout with delight. I like the new=
- feature very much, especially the decision and implementation of the gene=
-ric mechanism which is indeed better than the introduction of new vimdiff4=
-, =E2=80=A6 layouts. I think I'll stick to the =E2=80=9Cadvanced=E2=80=9D =
-four tab option for my future merge conflicts, like you suggested in your =
-blog, too.
+>> That was not the point.  By extracting only "%(objectmode)" without
+>> having any other clues (like "%(path)") on the same line, the test
+>> is assuming that ls-files will always sort its output in the same
+>> order regardless of the output format, whether it is "--stage" or
+>> "--format=<spec>", and that was what the "is this testing the right
+>> thing?" question was about.
+>>
+>
+> Ah, so that we should sort the ls-files output first, and then compare them.
 
-Regarding the problem, yes, you both were right, I have had a =E2=80=9Csec=
-ond rogue=E2=80=9D vimrc in my home directory. It has been =E2=80=93 as mo=
-st often =E2=80=93 a =E2=80=9Clayer eight=E2=80=9D problem (myself). I hav=
-e had a ~/.vim directory with a ~/.vim/vimrc file inside. Since I had expe=
-cted Vim to need an ~/.vimrc file, I had created a symbolic link ~/.vimrc =
--> ~/.vim/vimrc. =E2=80=9CNuking=E2=80=9C my vimrc had meant for me to del=
-ete this symbolic link (~/.vimrc), but as I learned today, the ~/.vim/vimr=
-c file is perfectly fine. You always learn new things! So to really nuke t=
-he vimrc, I had to move the .vim directory as well and then git behaved li=
-ke expected, just like you suggested.
+Imagine that there are three paths in the index and "ls-files -s"
+gives
 
-I investigated further and =E2=80=93 oh wonder! =E2=80=93 I found those tw=
-o lines in my vimrc:
+    100644 1234... 0 path1
+    100644 2345... 0 path2
+    100755 3456... 0 path3
 
-set splitbelow
-set splitright
+but a bug causes "ls-files --format=<spec>" to show entries in a
+wrong order, e.g. first for path2 and then for path1 and then for
+path3.  If the test used enough fields (like the one that mimics the
+full output of "ls-files -s"), then the output may be
 
-Uncommenting them brought the good old back behavior back, too. So the pro=
-blem is solved, great!!!
+    100644 2345... 0 path2
+    100644 1234... 0 path1
+    100755 3456... 0 path3
 
-By the way, the buggy layout looked exactly like Matthew Klein reported in=
- Martins link [1]. The difference is, obviously, the difference in tools (=
-his --tool=3Dnvimdiff versus mine --tool=3Dvimdiff).
+and you would notice that it is different from "ls-files -s".
 
-    ------------------------------------------
-    |                                        |
-    |                LOCAL                   |
-    |                                        |
-    ------------------------------------------
-    |             |           |              |
-    |   LOCAL     |   LOCAL   |   MERGED     |
-    |             |           |              |
-    ------------------------------------------
+But if the test only used %(objectmode), then the faulty output from
+"ls-files --format=%(objectmode)" would be
 
-I also managed to compile the newest master branch of git (the Arch User R=
-epository git-git package should be fixed, it's broken at the moment, but =
-I managed to bypass all obstacles) and, as you hinted, this version (git v=
-ersion 2.37.1.223.g6a475b71f8) is not sensitive to the "splitbelow / split=
-right" options!
+    100644
+    100644
+    100755
 
-After successfully compiling Git, I'm almost ashamed to ask, but I was NOT=
- able to run the vim command you suggested, Fernando:
+that matches the "ls-files -s | cut -d' ' -f1"
 
-vim -c "echo | split | vertical split | 1b | wincmd l | vertical split | 2=
-b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis" -c "tabfirst" lo=
-cal.txt base.txt remote.txt merged.txt
+If you sort, then such a breakage will become even harder to
+notice.  If the faulty output showed path3 first and then path2 and
+then path1, the raw output from "ls-files --format=%(objectmode)" may
+be 100755/100644/100644, but if you sort it, no matter what the
+broken order is, you will always get 100644/100644/100755.
 
-because there are no such files?! What do I have to do before executing th=
-is command? I read the man page and tried it with "git config mergetool.ke=
-epTemporaries true" and "git config mergetool.keepBackup true", but still =
-no such files appear. I am sure I am missing something completely obvious.=
- Even my google-foo failed=E2=80=A6 Since I solved my problem on many leve=
-ls (thanks to your great help), executing those vim commands is not import=
-ant anymore, I just would like to understand=E2=80=A6
-
-Thank you very much again,
-
-with best regards,
-Claudio
-
-[1] https://lore.kernel.org/git/CACRpdvnuAYY0U1_3uD8zKgtq05+bgwjzXpZKomro6=
-gqYDNrjGg@mail.gmail.com/
+So, no, we shouldn't sort.  If ls-files were allowed to show output
+in any random order, then sorting the output before comparing is a
+good strategy, but that does not apply here.
