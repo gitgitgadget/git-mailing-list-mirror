@@ -2,217 +2,434 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12D46C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 20:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0251C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 20:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236981AbiGYUQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 16:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46308 "EHLO
+        id S237095AbiGYUen (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 16:34:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236985AbiGYUQR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 16:16:17 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1720E6372
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:15:11 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id mi13-20020a17090b4b4d00b001ef9759d26aso22977pjb.0
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:15:11 -0700 (PDT)
+        with ESMTP id S229736AbiGYUem (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 16:34:42 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C29B2251F
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:34:40 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id b21-20020a05600c4e1500b003a32bc8612fso7040625wmq.3
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:34:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=0HhcYoDgjNZ8zQfIZrdPAHy54Hkg4d16xYM57XB1M54=;
-        b=GJYvexEyu8GAnxa4t49kYEcthLn3m2GcLCo6ZRmI4tcjILHZhAg70Xzkr5/d73mwx3
-         RNBJpV5xcRG0pUkeOAEcvV8xscQetI+Ng/WqjGkEXhA1QEsLhsJOmGD+syj3psmYU00+
-         qdwOkNXplREJAgNm1/IGx/DBoZm3KuoPBsF38mM12FlRuYPRos2kqyXjI0nckXTvJER0
-         kAPO1rOI+jB7GEkLKovWvke2KmHJzKX6Mp7vQhNJV0COfuNkPgsHiVS0DX9jXm2R22/l
-         hnBqS0E+1ARwHd30mQD8C13BBHBDoIyACqfxxqaNBIXrGUc+MmbY/Uxy6Zh+M/9gfO4D
-         5Jmg==
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=WCkA+WNGHEW5m93DmnOjy3874TIDhCvz3gt2EgP4Phk=;
+        b=b00PtZ/qzaVZ00AGKoH/idoOopuus8joNkEoFZU+el8bFZNztxBE07Y+lVxhLN5Wrj
+         MzL8aKYk8VOfr/UerPFfN6MtYo2KCBC3KxE6ODB0eayQ3IxFgZw78yQRe0g9cQL3nGSE
+         f7SMUT8TTCsUZNsiJKERJ9tMvkYsdYDYgu8vQQ/EDIR+w7Hr+XIw87Hz8RYT90LN9RCB
+         91PuApCr/nR8RmRQ/nGl92bG3jLe5WPHR/h9stfo93SEQmjjvl79e81CeV5LDYXp7Rsa
+         JuE7QfiEKBmRYX3Rl7FGGNE7j/lZu0EGwGbQ0P37OdqluLLFthTF0pJKixvESvDOaBlR
+         ekbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=0HhcYoDgjNZ8zQfIZrdPAHy54Hkg4d16xYM57XB1M54=;
-        b=F9KMuTlp9Mp1d6D4GQUy5a4K2+q9kpxSNhaWqXskwrVg0z7E65Glqi3JkA/I5l1pNz
-         b4KY80N3fllefUtAU6YVT8YsTKYnP7N2vGctmJniXVMN66UyeRg9CEGQBh3pF+7j67h4
-         jvb9145CtmU9QPLfb8Me/8RhSbU4SGKyT55wPcGkyv46fgWbkg0PFQaHbjC3k6KQV/EN
-         Ib21WbIcu4exqNp/rw0QjszP6GCtaOdWp6/9YGXiGXFQGGnDeqcDipDqlPHUWiYjO3DA
-         CIaT/42oVc7cQJEiLo0sEsCF4rxc6etRtZ9bwjDAgXTa1MfCkvSg3f+WwkQ8Wc38qHbz
-         8t9Q==
-X-Gm-Message-State: AJIora9NUzR35yHJJ0y4FfPm5asHzbS3T1nDw3v7CRVXr/5OwPpeh5M9
-        JNpOQvDwgUJoeEJWPr5KhqHDlBneQKr/EQ==
-X-Google-Smtp-Source: AGRyM1ucssHeslhmqBa6O/GPaT68lPzB4G3vwtgF15ut1t5E8zItNg0mt/9Em4C8fh4YR21gjZl8Pd4rx0hwlg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:aa7:8c55:0:b0:52b:7233:f7b1 with SMTP id
- e21-20020aa78c55000000b0052b7233f7b1mr13885828pfd.33.1658780103837; Mon, 25
- Jul 2022 13:15:03 -0700 (PDT)
-Date:   Mon, 25 Jul 2022 13:15:02 -0700
-In-Reply-To: <220725.861qu9oxl4.gmgdl@evledraar.gmail.com>
-Message-Id: <kl6l35ept0e1.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1261.v7.git.git.1657234914.gitgitgadget@gmail.com>
- <pull.1261.v8.git.git.1657834081.gitgitgadget@gmail.com> <30ac73716cbc234a1f176d2d417bf0e2b0b335cf.1657834081.git.gitgitgadget@gmail.com>
- <220725.861qu9oxl4.gmgdl@evledraar.gmail.com>
-Subject: Re: SANITIZE=address failure on master (was: [PATCH v8 3/5] config:
- learn `git_protected_config()`)
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=WCkA+WNGHEW5m93DmnOjy3874TIDhCvz3gt2EgP4Phk=;
+        b=aeRsQkb6JCBhpvwh6N6EpuCZ3FRC0RZTOX1V7XS0nMIrg7f8Rm4X1cC05LaD01Q824
+         HR/Ws2tv2fOzSlh+g1rnuvG8YnxhayJuVsby8hh9m45z7L6VR5Xq8QLVbn5AFeQSwXQV
+         bbShJZStMubipLIuoQHSs7sMiF+83I8lfCV0yJfuDaBcYRjkLt17qHxAsXKPj8mMbHSg
+         pxxJM07fmubXCwQ+U76XqLrv1FVfJ7bU+b14bWzxvN0j6LVFRrZdG4i3VSwicAbOV9p+
+         /hDqAbzlOUcbBeC9FcDps5epsGbv0+T6GSMKUFhLOLS4iouNsmivRRJYrK1xcqzwCVLW
+         fSfw==
+X-Gm-Message-State: AJIora/cmpZmF8ws8GGCztTgEPpch5KkS3uUUpRi25LXhxE32jAXnAFj
+        nMD0Mpa0LFX0JOPweTEt7eyT6N/gLAE=
+X-Google-Smtp-Source: AGRyM1sar/UMxrbR3vOV5ARpSAxgJk+J0NH49zIHBo96eMdM6GJgTKduh3rZvyDxaNXdxl2jC8ZZWg==
+X-Received: by 2002:a1c:2542:0:b0:3a3:2dcd:8736 with SMTP id l63-20020a1c2542000000b003a32dcd8736mr19246053wml.57.1658781278592;
+        Mon, 25 Jul 2022 13:34:38 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f7-20020a1c3807000000b003a3080eacb9sm15707887wma.24.2022.07.25.13.34.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jul 2022 13:34:38 -0700 (PDT)
+Message-Id: <pull.1300.git.1658781277.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 25 Jul 2022 20:34:32 +0000
+Subject: [PATCH 0/5] Bundle URIs II: git clone --bundle-uri
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        szeder.dev@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+This is the second series building the bundle URI feature as discussed in
+the previous series that added the design document [1]. This series does not
+modify the design document, so the patches are independent and can be
+applied to the latest 'master'.
 
-> On Thu, Jul 14 2022, Glen Choo via GitGitGadget wrote:
->
->> +/* Read values into protected_config. */
->> +static void read_protected_config(void)
->> +{
->> +	char *xdg_config =3D NULL, *user_config =3D NULL, *system_config =3D N=
-ULL;
->> +
->> +	git_configset_init(&protected_config);
->> +
->> +	system_config =3D git_system_config();
->> +	git_global_config(&user_config, &xdg_config);
->> +
->> +	git_configset_add_file(&protected_config, system_config);
->> +	git_configset_add_file(&protected_config, xdg_config);
->> +	git_configset_add_file(&protected_config, user_config);
->> +	git_configset_add_parameters(&protected_config);
->> +
->> +	free(system_config);
->> +	free(xdg_config);
->> +	free(user_config);
->> +}
->
-> Noticed after it landed on master: This change fails with:
->
-> 	make SANITIZE=3Daddress test T=3Dt0410*.sh
->
-> Running that manually shows that we fail like this:
-> =09
-> 	$ cat trash\ directory.t0410-partial-clone/httpd/error.log | grep -o AH0=
-.*
-> 	AH00163: Apache/2.4.54 (Debian) configured -- resuming normal operations
-> 	AH00094: Command line: '/usr/sbin/apache2 -d /home/avar/g/git/t/trash di=
-rectory.t0410-partial-clone/httpd -f /home/avar/g/git/t/lib-httpd/apache.co=
-nf -c Listen 127.0.0.1:10410'
-> 	AH01215: AddressSanitizer:DEADLYSIGNAL: /home/avar/g/git/git-http-backen=
-d
-> 	AH01215: =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D: /home/avar/g/git=
-/git-http-backend
-> 	AH01215: =3D=3D27820=3D=3DERROR: AddressSanitizer: SEGV on unknown addre=
-ss 0x000000000000 (pc 0x7f7af5dc0d66 bp 0x7fff11964450 sp 0x7fff11963be8 T0=
-): /home/avar/g/git/git-http-backend
-> 	AH01215: =3D=3D27820=3D=3DThe signal is caused by a READ memory access.:=
- /home/avar/g/git/git-http-backend
-> 	AH01215: =3D=3D27820=3D=3DHint: address points to the zero page.: /home/=
-avar/g/git/git-http-backend
-> 	AH01215:     #0 0x7f7af5dc0d66 in __sanitizer::internal_strlen(char cons=
-t*) ../../../../src/libsanitizer/sanitizer_common/sanitizer_libc.cpp:167: /=
-home/avar/g/git/git-http-backend
-> 	AH01215:     #1 0x7f7af5d512f2 in __interceptor_fopen64 ../../../../src/=
-libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:6220: /home=
-/avar/g/git/git-http-backend
-> 	AH01215:     #2 0x562a65e37cc8 in git_fopen compat/fopen.c:22: /home/ava=
-r/g/git/git-http-backend
-> 	AH01215:     #3 0x562a65df3879 in fopen_or_warn wrapper.c:431: /home/ava=
-r/g/git/git-http-backend
-> 	AH01215:     #4 0x562a65a12476 in git_config_from_file_with_options conf=
-ig.c:1982: /home/avar/g/git/git-http-backend
-> 	AH01215:     #5 0x562a65a124f4 in git_config_from_file config.c:1993: /h=
-ome/avar/g/git/git-http-backend
-> 	AH01215:     #6 0x562a65a15288 in git_configset_add_file config.c:2389: =
-/home/avar/g/git/git-http-backend
-> 	AH01215:     #7 0x562a65a16a37 in read_protected_config config.c:2649: /=
-home/avar/g/git/git-http-backend
-> 	AH01215:     #8 0x562a65a16b5c in git_protected_config config.c:2661: /h=
-ome/avar/g/git/git-http-backend
-> 	AH01215:     #9 0x562a65dd9f9a in get_upload_pack_config upload-pack.c:1=
-342: /home/avar/g/git/git-http-backend
-> 	AH01215:     #10 0x562a65ddc1cb in upload_pack_v2 upload-pack.c:1706: /h=
-ome/avar/g/git/git-http-backend
-> 	AH01215:     #11 0x562a65d2eb8a in process_request serve.c:308: /home/av=
-ar/g/git/git-http-backend
-> 	AH01215:     #12 0x562a65d2ec18 in protocol_v2_serve_loop serve.c:323: /=
-home/avar/g/git/git-http-backend
-> 	AH01215:     #13 0x562a6593c5ae in cmd_upload_pack builtin/upload-pack.c=
-:55: /home/avar/g/git/git-http-backend
-> 	AH01215:     #14 0x562a656cf8ff in run_builtin git.c:466: /home/avar/g/g=
-it/git-http-backend
-> 	AH01215:     #15 0x562a656d02ab in handle_builtin git.c:720: /home/avar/=
-g/git/git-http-backend
-> 	AH01215:     #16 0x562a656d09d5 in run_argv git.c:787: /home/avar/g/git/=
-git-http-backend
-> 	AH01215:     #17 0x562a656d174f in cmd_main git.c:920: /home/avar/g/git/=
-git-http-backend
-> 	AH01215:     #18 0x562a6594b0b9 in main common-main.c:56: /home/avar/g/g=
-it/git-http-backend
-> 	AH01215:     #19 0x7f7af5a5681c in __libc_start_main ../csu/libc-start.c=
-:332: /home/avar/g/git/git-http-backend
-> 	AH01215:     #20 0x562a656cb209 in _start (git+0x1d1209): /home/avar/g/g=
-it/git-http-backend
-> 	AH01215: : /home/avar/g/git/git-http-backend
-> 	AH01215: AddressSanitizer can not provide additional info.: /home/avar/g=
-/git/git-http-backend
-> 	AH01215: SUMMARY: AddressSanitizer: SEGV ../../../../src/libsanitizer/sa=
-nitizer_common/sanitizer_libc.cpp:167 in __sanitizer::internal_strlen(char =
-const*): /home/avar/g/git/git-http-backend
-> 	AH01215: =3D=3D27820=3D=3DABORTING: /home/avar/g/git/git-http-backend
-> 	AH01215: error: upload-pack died of signal 6: /home/avar/g/git/git-http-=
-backend
->
-> (We really should have a SANITIZE=3Daddress in CI, but it takes a while..=
-.)
+[1]
+https://lore.kernel.org/git/pull.1248.v3.git.1658757188.gitgitgadget@gmail.com
 
-Thanks. I narrowed the failure down to the hunk above, specifically this
-line:
+This series brings in just enough logic that we can bootstrap clones from a
+single bundle using git clone --bundle-uri=<X>.
 
-  git_configset_add_file(&protected_config, xdg_config);
+ * Patch 1 adds a 'get' capability to 'git remote-https' which allows
+   downloading the contents of a URI to a local file.
+ * Patch 2 creates basic file-copy logic within a new bundle-uri.c file. It
+   is not used until patch 3.
+ * Patch 3 creates the git clone --bundle-uri=<X> option, allowing Git to
+   bootstrap a clone from a bundle, but get the remaining objects from the
+   origin URL. (As of this patch, it only accepts a filename.)
+ * Patch 4 extends the git clone --bundle-uri=<X> option to allow file://
+   and https:// URIs.
+ * Patch 5 is a CLI helper to avoid using --bundle-uri and --depth at the
+   same time in git clone.
 
-Since xdg_config can be NULL, this results in the failing call
-fopen_or_warn(NULL, "r").
+As outlined in [1], the next steps after this are:
 
-This logic was lifted  from do_git_config_sequence(), which checks that
-each of the paths are not NULL. So a fix might be something like:
+ 1. Allow parsing a bundle list as a config file at the given URI. The
+    key-value format is unified with the protocol v2 verb (coming in (3)).
+    [2]
+ 2. Implement the protocol v2 verb, re-using the bundle list logic from (2).
+    Use this to auto-discover bundle URIs during 'git clone' (behind a
+    config option). [3]
+ 3. Implement the 'creationToken' heuristic, allowing incremental 'git
+    fetch' commands to download a bundle list from a configured URI, and
+    only download bundles that are new based on the creation token values.
+    [4]
 
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
+I have prepared some of this work as pull requests on my personal fork so
+curious readers can look ahead to where we are going:
 
-  diff --git a/config.c b/config.c
-  index 015bec360f..208a3dd7a7 100644
-  --- a/config.c
-  +++ b/config.c
-  @@ -2645,9 +2645,13 @@ static void read_protected_config(void)
-    system_config =3D git_system_config();
-    git_global_config(&user_config, &xdg_config);
+[2] https://github.com/derrickstolee/git/pull/20
 
-  -	git_configset_add_file(&protected_config, system_config);
-  -	git_configset_add_file(&protected_config, xdg_config);
-  -	git_configset_add_file(&protected_config, user_config);
-  +
-  +	if (system_config)
-  +		git_configset_add_file(&protected_config, system_config);
-  +	if (xdg_config)
-  +		git_configset_add_file(&protected_config, xdg_config);
-  +	if (user_config)
-  +		git_configset_add_file(&protected_config, user_config);
-    git_configset_add_parameters(&protected_config);
+[3] https://github.com/derrickstolee/git/pull/21
 
-    free(system_config);
+[4] https://github.com/derrickstolee/git/pull/22
 
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
+Note: this series includes some code pulled out of the first series [1], and
+in particular the git fetch --bundle-uri=<X> option is removed. The
+intention was to replace that with git bundle fetch <X>, but that conflicts
+with the work to refactor how subcommands are parsed. The git bundle fetch
+subcommand could be added later for maximum flexibility on the client side,
+but we can also move forward without it.
 
-I'm not sure if system_config can ever be NULL, but (xdg|user)_config is
-NULL when $HOME is unset, and xdg_config is also unset if
-$GIT_CONFIG_GLOBAL is set.
+Thanks, -Stolee
+
+P.S. Here is the range-diff compared to v2 of the previous bundle URI
+series:
+
+1:  d444042dc4dcc < -:  ------------- docs: document bundle URI standard
+2:  0a2cf60437f78 ! 1:  40808e92afb7b remote-curl: add 'get' capability
+    @@ remote-curl.c: static void parse_fetch(struct strbuf *buf)
+      
+     +static void parse_get(struct strbuf *buf)
+     +{
+    -+	struct http_get_options opts = { 0 };
+     +	struct strbuf url = STRBUF_INIT;
+     +	struct strbuf path = STRBUF_INIT;
+     +	const char *p, *space;
+    @@ remote-curl.c: static void parse_fetch(struct strbuf *buf)
+     +	strbuf_add(&url, p, space - p);
+     +	strbuf_addstr(&path, space + 1);
+     +
+    -+	if (http_get_file(url.buf, path.buf, &opts))
+    ++	if (http_get_file(url.buf, path.buf, NULL))
+     +		die(_("failed to download file at URL '%s'"), url.buf);
+     +
+     +	strbuf_release(&url);
+    @@ t/t5557-http-get.sh (new)
+     +	get $url file1
+     +	EOF
+     +
+    -+	test_must_fail git remote-http $url $url <input 2>err &&
+    ++	test_must_fail git remote-http $url <input 2>err &&
+     +	test_path_is_missing file1 &&
+     +	grep "failed to download file at URL" err &&
+     +	rm file1.temp
+    @@ t/t5557-http-get.sh (new)
+     +
+     +	EOF
+     +
+    -+	GIT_TRACE2_PERF=1 git remote-http $url $url <input &&
+    ++	GIT_TRACE2_PERF=1 git remote-http $url <input &&
+     +	test_cmp "$HTTPD_DOCUMENT_ROOT_PATH/exists.txt" file2
+     +'
+     +
+     +test_done
+    -
+    - ## transport-helper.c ##
+    -@@ transport-helper.c: struct helper_data {
+    - 		check_connectivity : 1,
+    - 		no_disconnect_req : 1,
+    - 		no_private_update : 1,
+    --		object_format : 1;
+    -+		object_format : 1,
+    -+		get : 1;
+    - 
+    - 	/*
+    - 	 * As an optimization, the transport code may invoke fetch before
+    -@@ transport-helper.c: static struct child_process *get_helper(struct transport *transport)
+    - 			data->no_private_update = 1;
+    - 		} else if (starts_with(capname, "object-format")) {
+    - 			data->object_format = 1;
+    -+		} else if (!strcmp(capname, "get")) {
+    -+			data->get = 1;
+    - 		} else if (mandatory) {
+    - 			die(_("unknown mandatory capability %s; this remote "
+    - 			      "helper probably needs newer version of Git"),
+3:  abec47564fd9c ! 2:  7d3159f0d9a29 bundle-uri: create basic file-copy logic
+    @@ Commit message
+         file, not a bundle list. Bundle lists will be implemented in a future
+         change.
+     
+    +    Note that the discovery of a temporary filename is slightly racy because
+    +    the odb_mkstemp() relies on the temporary file not existing. With the
+    +    current implementation being limited to file copies, we could replace
+    +    the copy_file() with copy_fd(). The tricky part comes in future changes
+    +    that send the filename to 'git remote-https' and its 'get' capability.
+    +    At that point, we need the file descriptor closed _and_ the file
+    +    unlinked. If we were to keep the file descriptor open for the sake of
+    +    normal file copies, then we would pollute the rest of the code for
+    +    little benefit. This is especially the case because we expect that most
+    +    bundle URI use will be based on HTTPS instead of file copies.
+    +
+         Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+     
+      ## Makefile ##
+    @@ bundle-uri.c (new)
+     +#include "refs.h"
+     +#include "run-command.h"
+     +
+    -+static void find_temp_filename(struct strbuf *name)
+    ++static int find_temp_filename(struct strbuf *name)
+     +{
+     +	int fd;
+     +	/*
+    @@ bundle-uri.c (new)
+     +	 * racy, but unlikely to collide.
+     +	 */
+     +	fd = odb_mkstemp(name, "bundles/tmp_uri_XXXXXX");
+    -+	if (fd < 0)
+    -+		die(_("failed to create temporary file"));
+    ++	if (fd < 0) {
+    ++		warning(_("failed to create temporary file"));
+    ++		return -1;
+    ++	}
+    ++
+     +	close(fd);
+     +	unlink(name->buf);
+    ++	return 0;
+     +}
+     +
+    -+static int copy_uri_to_file(const char *uri, const char *file)
+    ++static int copy_uri_to_file(const char *file, const char *uri)
+     +{
+    -+	/* Copy as a file */
+    -+	return copy_file(file, uri, 0444);
+    ++	/* File-based URIs only for now. */
+    ++	return copy_file(file, uri, 0);
+     +}
+     +
+     +static int unbundle_from_file(struct repository *r, const char *file)
+    @@ bundle-uri.c (new)
+     +	int result = 0;
+     +	int bundle_fd;
+     +	struct bundle_header header = BUNDLE_HEADER_INIT;
+    -+	struct strvec extra_index_pack_args = STRVEC_INIT;
+     +	struct string_list_item *refname;
+     +	struct strbuf bundle_ref = STRBUF_INIT;
+     +	size_t bundle_prefix_len;
+    @@ bundle-uri.c (new)
+     +	if ((bundle_fd = read_bundle_header(file, &header)) < 0)
+     +		return 1;
+     +
+    -+	if ((result = unbundle(r, &header, bundle_fd, &extra_index_pack_args)))
+    ++	if ((result = unbundle(r, &header, bundle_fd, NULL)))
+     +		return 1;
+     +
+     +	/*
+    @@ bundle-uri.c (new)
+     +	int result = 0;
+     +	struct strbuf filename = STRBUF_INIT;
+     +
+    -+	find_temp_filename(&filename);
+    -+	if ((result = copy_uri_to_file(uri, filename.buf)))
+    ++	if ((result = find_temp_filename(&filename)))
+    ++		goto cleanup;
+    ++
+    ++	if ((result = copy_uri_to_file(filename.buf, uri))) {
+    ++		warning(_("failed to download bundle from URI '%s'"), uri);
+     +		goto cleanup;
+    ++	}
+     +
+    -+	if ((result = !is_bundle(filename.buf, 0)))
+    ++	if ((result = !is_bundle(filename.buf, 0))) {
+    ++		warning(_("file at URI '%s' is not a bundle"), uri);
+     +		goto cleanup;
+    ++	}
+     +
+    -+	if ((result = unbundle_from_file(r, filename.buf)))
+    ++	if ((result = unbundle_from_file(r, filename.buf))) {
+    ++		warning(_("failed to unbundle bundle from URI '%s'"), uri);
+     +		goto cleanup;
+    ++	}
+     +
+     +cleanup:
+     +	unlink(filename.buf);
+4:  f6255ec518857 < -:  ------------- fetch: add --bundle-uri option
+-:  ------------- > 3:  29e645a54ba7f clone: add --bundle-uri option
+5:  bfbd11b48bf1b ! 4:  f6bc3177332e8 bundle-uri: add support for http(s):// and file://
+    @@ Metadata
+      ## Commit message ##
+         bundle-uri: add support for http(s):// and file://
+     
+    -    The previous change created the 'git fetch --bundle-uri=<uri>' option.
+    +    The previous change created the 'git clone --bundle-uri=<uri>' option.
+         Currently, <uri> must be a filename.
+     
+         Update copy_uri_to_file() to first inspect the URI for an HTTP(S) prefix
+    @@ Commit message
+         Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+     
+      ## bundle-uri.c ##
+    -@@ bundle-uri.c: static void find_temp_filename(struct strbuf *name)
+    - 	unlink(name->buf);
+    +@@ bundle-uri.c: static int find_temp_filename(struct strbuf *name)
+    + 	return 0;
+      }
+      
+    -+static int download_https_uri_to_file(const char *uri, const char *file)
+    -+{
+    +-static int copy_uri_to_file(const char *file, const char *uri)
+    ++static int download_https_uri_to_file(const char *file, const char *uri)
+    + {
+    +-	/* File-based URIs only for now. */
+    +-	return copy_file(file, uri, 0);
+     +	int result = 0;
+     +	struct child_process cp = CHILD_PROCESS_INIT;
+     +	FILE *child_in = NULL, *child_out = NULL;
+    @@ bundle-uri.c: static void find_temp_filename(struct strbuf *name)
+     +	return result;
+     +}
+     +
+    - static int copy_uri_to_file(const char *uri, const char *file)
+    - {
+    ++static int copy_uri_to_file(const char *filename, const char *uri)
+    ++{
+     +	const char *out;
+    ++
+     +	if (skip_prefix(uri, "https:", &out) ||
+     +	    skip_prefix(uri, "http:", &out))
+    -+		return download_https_uri_to_file(uri, file);
+    ++		return download_https_uri_to_file(filename, uri);
+     +
+     +	if (!skip_prefix(uri, "file://", &out))
+     +		out = uri;
+     +
+    - 	/* Copy as a file */
+    --	return copy_file(file, uri, 0444);
+    -+	return !!copy_file(file, out, 0);
+    ++	/* Copy as a file */
+    ++	return copy_file(filename, out, 0);
+      }
+      
+      static int unbundle_from_file(struct repository *r, const char *file)
+     
+    - ## t/t5558-fetch-bundle-uri.sh ##
+    -@@ t/t5558-fetch-bundle-uri.sh: test_expect_success 'fetch file bundle' '
+    + ## t/t5558-clone-bundle-uri.sh ##
+    +@@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with path bundle' '
+          test_cmp expect actual
+      '
+      
+    -+test_expect_success 'fetch file:// bundle' '
+    -+	git init fetch-file &&
+    -+	git -C fetch-file fetch --bundle-uri="file://$(pwd)/fetch-from/B.bundle" &&
+    -+	git -C fetch-file rev-parse refs/bundles/topic >actual &&
+    -+	git -C fetch-from rev-parse topic >expect &&
+    ++test_expect_success 'clone with file:// bundle' '
+    ++	git clone --bundle-uri="file://$(pwd)/clone-from/B.bundle" \
+    ++		clone-from clone-file &&
+    ++	git -C clone-file rev-parse refs/bundles/topic >actual &&
+    ++	git -C clone-from rev-parse topic >expect &&
+     +	test_cmp expect actual
+     +'
+     +
+    @@ t/t5558-fetch-bundle-uri.sh: test_expect_success 'fetch file bundle' '
+     +start_httpd
+     +
+     +test_expect_success 'fail to fetch from non-existent HTTP URL' '
+    -+	test_must_fail git fetch --bundle-uri="$HTTPD_URL/does-not-exist" 2>err &&
+    ++	test_when_finished rm -rf test &&
+    ++	git clone --bundle-uri="$HTTPD_URL/does-not-exist" . test 2>err &&
+     +	grep "failed to download bundle from URI" err
+     +'
+     +
+     +test_expect_success 'fail to fetch from non-bundle HTTP URL' '
+    ++	test_when_finished rm -rf test &&
+     +	echo bogus >"$HTTPD_DOCUMENT_ROOT_PATH/bogus" &&
+    -+	test_must_fail git fetch --bundle-uri="$HTTPD_URL/bogus" 2>err &&
+    ++	git clone --bundle-uri="$HTTPD_URL/bogus" . test 2>err &&
+     +	grep "is not a bundle" err
+     +'
+     +
+    -+test_expect_success 'fetch HTTP bundle' '
+    -+	cp fetch-from/B.bundle "$HTTPD_DOCUMENT_ROOT_PATH/B.bundle" &&
+    -+	git init fetch-http &&
+    -+	git -C fetch-http fetch --bundle-uri="$HTTPD_URL/B.bundle" &&
+    -+	git -C fetch-http rev-parse refs/bundles/topic >actual &&
+    -+	git -C fetch-from rev-parse topic >expect &&
+    -+	test_cmp expect actual
+    ++test_expect_success 'clone HTTP bundle' '
+    ++	cp clone-from/B.bundle "$HTTPD_DOCUMENT_ROOT_PATH/B.bundle" &&
+    ++
+    ++	git clone --no-local --mirror clone-from \
+    ++		"$HTTPD_DOCUMENT_ROOT_PATH/fetch.git" &&
+    ++
+    ++	git clone --bundle-uri="$HTTPD_URL/B.bundle" \
+    ++		"$HTTPD_URL/smart/fetch.git" clone-http &&
+    ++	git -C clone-http rev-parse refs/bundles/topic >actual &&
+    ++	git -C clone-from rev-parse topic >expect &&
+    ++	test_cmp expect actual &&
+    ++
+    ++	test_config -C clone-http log.excludedecoration refs/bundle/
+     +'
+     +
+     +# Do not add tests here unless they use the HTTP server, as they will
+6:  a217e9a0640b4 < -:  ------------- fetch: add 'refs/bundle/' to log.excludeDecoration
+-:  ------------- > 5:  e823b168ab725 clone: --bundle-uri cannot be combined with --depth
+
+
+Derrick Stolee (5):
+  remote-curl: add 'get' capability
+  bundle-uri: create basic file-copy logic
+  clone: add --bundle-uri option
+  bundle-uri: add support for http(s):// and file://
+  clone: --bundle-uri cannot be combined with --depth
+
+ Documentation/git-clone.txt         |   7 ++
+ Documentation/gitremote-helpers.txt |   9 ++
+ Makefile                            |   1 +
+ builtin/clone.c                     |  18 +++
+ bundle-uri.c                        | 168 ++++++++++++++++++++++++++++
+ bundle-uri.h                        |  14 +++
+ remote-curl.c                       |  32 ++++++
+ t/t5557-http-get.sh                 |  37 ++++++
+ t/t5558-clone-bundle-uri.sh         |  81 ++++++++++++++
+ t/t5606-clone-options.sh            |   8 ++
+ 10 files changed, 375 insertions(+)
+ create mode 100644 bundle-uri.c
+ create mode 100644 bundle-uri.h
+ create mode 100755 t/t5557-http-get.sh
+ create mode 100755 t/t5558-clone-bundle-uri.sh
+
+
+base-commit: e72d93e88cb20b06e88e6e7d81bd1dc4effe453f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1300%2Fderrickstolee%2Fbundle-redo%2Fclone-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1300/derrickstolee/bundle-redo/clone-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1300
+-- 
+gitgitgadget
