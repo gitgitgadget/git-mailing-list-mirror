@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF650C43334
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 12:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52EF3C43334
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 12:39:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235124AbiGYMjs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 08:39:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44204 "EHLO
+        id S235187AbiGYMjv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 08:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235133AbiGYMja (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 08:39:30 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17DEA1AF3A
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 05:39:24 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id ss3so20223889ejc.11
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 05:39:24 -0700 (PDT)
+        with ESMTP id S234169AbiGYMjk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 08:39:40 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 006C81B79B
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 05:39:26 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id c12so6371321ede.3
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 05:39:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aNfMgmOKKl4wheEVAcuo1W4X2MDpG+jP3VJEpIYod+0=;
-        b=aUlTIQXLq0eeF5F+h2uss7FQNZo26vGNmefciJalkIFKOjiU0KXHbzr0YVvDneOBo5
-         jvIQpuGqveWyHxOpjjIjTzqz1ARxI5MsuearMk/J6YWPUsY9MS9Hnm7s6rB3y3ADflXa
-         wFahOcmyVOdSq/5eU0dulKpPjylbo2JgQUWM0dY5aW4XfqRReJj5A6RDCTDEtoOqMOce
-         H9vREvYA1pTAirpsSwipfBk+gIsCeOzhHkxVD+Evgi1P+/zHSj418BWXh8NGccQAyTvV
-         eN/x52Y+ubuEbXvYhwyqaoacUOP9Du5Zq2WXhXltL3To0JoW+yPujxzCbhNe2Rj8rAaJ
-         8TXQ==
+        bh=ML1aLf9VSmMHZDK+x3hSBr7J7SIFGLLempBpG069tpo=;
+        b=NdOPsJawzF+dh1FYdnolZIUp8g9lNrqLhtWu15VKhesdQerTdO9n83vVc5WTJIn5m1
+         pgta1UnIdXvxzs05bhyl3I7DGIt2+FCU5PfrS+xOOhkWv5r/7DAvyWMG3tFA8ZMFlBxb
+         GgWPjK3SUa2PtCWcq7OzCDmolS2F4u8V0g83PJrD8SSenYLtpD4+kyJlg5hqpTIKf7a8
+         zMeV7vuKyjyjzEOLnqALAdCQtze/DuLALBFQKApkOtomKoGO1tGl2zdIDKI8oVtDNsu2
+         LR+98z8XI2Ow6Muw1yfeFSieR8txgKJKGfSlk6M8e2mbHmbK0WK0j9LOsihvv1HOSdYy
+         Z5IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aNfMgmOKKl4wheEVAcuo1W4X2MDpG+jP3VJEpIYod+0=;
-        b=Qb6B+chC8RrW9E8xOp5vqN8GyLtRVRmNuqcBcmYoyCd6zzYN4xBOp1RDfQkupJkGCo
-         6K+559uwe+TkHt5IMCrMSwxPiqXOOhClzrnnd41DCRQbd/+CPwHKfNNwHhU+ZWR6eGZ3
-         zWwXXG1M5abM2Fdq6ogTu03B1GnnGETJhvD6gQUCsIuZI0bZX+OASzgUuqfLJMGFlMWr
-         m6WcF6+RVrEF1bxVa5reFb8fSlD5YQIrKXDh251kchYXqYNMqeUwDnr8y2gy7Awa7hsy
-         jP/vH3FKWOB1RDMqkRGzEQh3FzR8j3G6jQVolHrB6eyFzNl5pY2IwlZZzVUBDLUeRVKF
-         e+Xw==
-X-Gm-Message-State: AJIora/1vLWH5o3+QLV2CiM6pHwEtOi2LJupCZv1LQPFsC8StVqm0vuk
-        SwRyqcJg4dPQs900+JMFy1CSv46whrA=
-X-Google-Smtp-Source: AGRyM1v4uzhzqVWUxpCHv0JpQyx2X1X/SO7lotCdxEraXzVnS6AztMTvheLFsPezYKdgM2ZQGRD34w==
-X-Received: by 2002:a17:907:1c8d:b0:6f2:eb2:1cd6 with SMTP id nb13-20020a1709071c8d00b006f20eb21cd6mr9781234ejc.568.1658752763674;
-        Mon, 25 Jul 2022 05:39:23 -0700 (PDT)
+        bh=ML1aLf9VSmMHZDK+x3hSBr7J7SIFGLLempBpG069tpo=;
+        b=GwqmwAa+kLK8dSGJ/dFAFGUWFyqcx98s+mIqLgQYRhLYITDUDDy0lnF/hpZK6YANcs
+         ZRi/AVDEx8HaWmnw2Vf9Annc16LCP0fwW/Xcp8kzqUy0gy8XnZ8WCRGQp4kGkj+HOCjn
+         EEUXLEDd306//VOmCyubT3ElgNd/GVZLJOyH0Gr+0t/SdVCGC7T+i9udnkrk+koFpJRO
+         T2ofFv0nuAQpUChT54+2Ik1icwioMOF1/E2B0PUgJc02BMgHL8LseYYbIl19WMLMFwcs
+         c3PduQ4a+I0M8/NIWnsfFbP1FiCzi7nDNcKeybr5+5ZsLdk3JlWBtIRNbPYeWzoti5tp
+         ULpw==
+X-Gm-Message-State: AJIora+g0yrweSAP6rOFELzjabxz8p10rTv4suYOjZ9IKuWMAbMLxPSY
+        y6xAn7nALvrHVgnn0XajDHtOuKXtLD8=
+X-Google-Smtp-Source: AGRyM1t0zAfniWjNOjJ2/MgHeogjYQsaZWzw9bl+bGtmbqTBHKxX4Yp/0vYKmDHfsCZpRRXTbWSRDg==
+X-Received: by 2002:a05:6402:90d:b0:43b:9ee5:f7eb with SMTP id g13-20020a056402090d00b0043b9ee5f7ebmr12982631edz.71.1658752766638;
+        Mon, 25 Jul 2022 05:39:26 -0700 (PDT)
 Received: from localhost (94-21-23-94.pool.digikabel.hu. [94.21.23.94])
-        by smtp.gmail.com with ESMTPSA id q5-20020aa7cc05000000b0043bc8677926sm6577126edt.96.2022.07.25.05.39.23
+        by smtp.gmail.com with ESMTPSA id gr19-20020a170906e2d300b0072b592ee073sm5394463ejb.147.2022.07.25.05.39.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 05:39:23 -0700 (PDT)
+        Mon, 25 Jul 2022 05:39:26 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 13/20] builtin/hook.c: let parse-option parse subcommands
-Date:   Mon, 25 Jul 2022 14:38:50 +0200
-Message-Id: <20220725123857.2773963-14-szeder.dev@gmail.com>
+Subject: [PATCH 15/20] builtin/notes.c: let parse-options parse subcommands
+Date:   Mon, 25 Jul 2022 14:38:52 +0200
+Message-Id: <20220725123857.2773963-16-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.37.1.633.g6a0fa73e39
 In-Reply-To: <20220725123857.2773963-1-szeder.dev@gmail.com>
 References: <20220725123857.2773963-1-szeder.dev@gmail.com>
@@ -65,42 +65,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git hook' parses its currently only subcommand with an if statement.
-parse-options has just learned to parse subcommands, so let's use that
-facility instead, with the benefits of shorter code, handling missing
-or unknown subcommands, and listing subcommands for Bash completion.
+'git notes' parses its subcommands with a long list of if-else if
+statements.  parse-options has just learned to parse subcommands, so
+let's use that facility instead, with the benefits of shorter code,
+handling unknown subcommands, and listing subcommands for Bash
+completion.  Make sure that the default operation mode doesn't accept
+any arguments.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/hook.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ builtin/notes.c | 43 +++++++++++++++++--------------------------
+ 1 file changed, 17 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/hook.c b/builtin/hook.c
-index 54e5c6ec93..b6530d189a 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -67,18 +67,14 @@ static int run(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/notes.c b/builtin/notes.c
+index a3d0d15a22..42cbae4659 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -994,17 +994,31 @@ static int get_ref(int argc, const char **argv, const char *prefix)
  
- int cmd_hook(int argc, const char **argv, const char *prefix)
+ int cmd_notes(int argc, const char **argv, const char *prefix)
  {
-+	parse_opt_subcommand_fn *fn = NULL;
- 	struct option builtin_hook_options[] = {
-+		OPT_SUBCOMMAND("run", &fn, run),
- 		OPT_END(),
+-	int result;
+ 	const char *override_notes_ref = NULL;
++	parse_opt_subcommand_fn *fn = list;
+ 	struct option options[] = {
+ 		OPT_STRING(0, "ref", &override_notes_ref, N_("notes-ref"),
+ 			   N_("use notes from <notes-ref>")),
++		OPT_SUBCOMMAND("list", &fn, list),
++		OPT_SUBCOMMAND("add", &fn, add),
++		OPT_SUBCOMMAND("copy", &fn, copy),
++		OPT_SUBCOMMAND("append", &fn, append_edit),
++		OPT_SUBCOMMAND("edit", &fn, append_edit),
++		OPT_SUBCOMMAND("show", &fn, show),
++		OPT_SUBCOMMAND("merge", &fn, merge),
++		OPT_SUBCOMMAND("remove", &fn, remove_cmd),
++		OPT_SUBCOMMAND("prune", &fn, prune),
++		OPT_SUBCOMMAND("get-ref", &fn, get_ref),
+ 		OPT_END()
  	};
  
- 	argc = parse_options(argc, argv, NULL, builtin_hook_options,
--			     builtin_hook_usage, PARSE_OPT_STOP_AT_NON_OPTION);
--	if (!argc)
--		goto usage;
-+			     builtin_hook_usage, 0);
+ 	git_config(git_default_config, NULL);
+ 	argc = parse_options(argc, argv, prefix, options, git_notes_usage,
+-			     PARSE_OPT_STOP_AT_NON_OPTION);
++			     PARSE_OPT_SUBCOMMAND_OPTIONAL);
++	if (fn == list && argc && strcmp(argv[0], "list")) {
++		error(_("unknown subcommand: %s"), argv[0]);
++		usage_with_options(git_notes_usage, options);
++	}
  
--	if (!strcmp(argv[0], "run"))
--		return run(argc, argv, prefix);
+ 	if (override_notes_ref) {
+ 		struct strbuf sb = STRBUF_INIT;
+@@ -1014,28 +1028,5 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		strbuf_release(&sb);
+ 	}
+ 
+-	if (argc < 1 || !strcmp(argv[0], "list"))
+-		result = list(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "add"))
+-		result = add(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "copy"))
+-		result = copy(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "append") || !strcmp(argv[0], "edit"))
+-		result = append_edit(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "show"))
+-		result = show(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "merge"))
+-		result = merge(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "remove"))
+-		result = remove_cmd(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "prune"))
+-		result = prune(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "get-ref"))
+-		result = get_ref(argc, argv, prefix);
+-	else {
+-		result = error(_("unknown subcommand: %s"), argv[0]);
+-		usage_with_options(git_notes_usage, options);
+-	}
 -
--usage:
--	usage_with_options(builtin_hook_usage, builtin_hook_options);
-+	return fn(argc, argv, prefix);
+-	return result ? 1 : 0;
++	return !!fn(argc, argv, prefix);
  }
 -- 
 2.37.1.633.g6a0fa73e39
