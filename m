@@ -2,110 +2,311 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1140FC43334
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 13:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D50C6C43334
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 13:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234761AbiGYNQA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 09:16:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44534 "EHLO
+        id S235175AbiGYNxQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 09:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233312AbiGYNP6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 09:15:58 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A8EA452
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 06:15:48 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id w29so8126498qtv.9
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 06:15:48 -0700 (PDT)
+        with ESMTP id S232047AbiGYNxO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 09:53:14 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33D601580C
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 06:53:12 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id r188-20020a1c44c5000000b003a34ac64bdfso2524392wma.1
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 06:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=NiiDqNYun+SFW2iZEHBXfLK0XfHUTgCmG2MoAy0spG4=;
-        b=KMHHWf5jMkt6lx6I/RHyffjrnT8D7vGIAYdffyIBX2rzuuLQaixhBsqxa8oDRVvkTU
-         j4Kpb1/Q2+TTTNCv6mVpIeXK+H1vVf+gRy8j1LMWMkrPiv8gCXtR5GPwDWdxUlEGp6Yn
-         rB1l5T8v6NXngj19d5t9MSQouQcewh2tue///kD/ATAC7idhN3DpmIENhbK7c0dj+G1V
-         166SSwabVh12jYg4dSi6AF2jqXjRXS79GhhPLrypt2kRqUKY1kZdYRseW63tupkkhBVU
-         E1/8eTr3VwYhPAM/2LPaWtmdOa8Q+RRoU2DA2bWb3cPiv+klR3XaLyOxRfPpLrfiDt2w
-         +UDg==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=yKbp4i/s6rx+zguq4mNFNmTlcUKhc04uzHREjA3imEY=;
+        b=ZZOkHcjsQAh5ezlJTALLkXw5H0CsTj+IujmLoR2j/yMW2xRplMlln2pNk3Cq+NY9YO
+         QPAd43qC3PKM2Lp3cCtfuLbPA2tK5HZ3gdbhD7GbTD5Qud5TXJ6V32iCzVMbGYwHaAhM
+         jLxq1NxGRB3JNzkwphIrWeiA6cl5qrzA6JSn7Ohr6lwPPelS1tLXYre1fu9v1Cw3FeVZ
+         pPcoVWJ7MmRmgPxjxvnjzH/4m2waPXM96zHDLQYhLTmfvZ2ctrUuKeWpYqC7NqDYFr8v
+         RYAb9ATFCm3QgAjoPgON1E06lWs2/1gaOPuMSilBLSu3rdzqG1ibP6iDqL/R/du3A798
+         FqGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=NiiDqNYun+SFW2iZEHBXfLK0XfHUTgCmG2MoAy0spG4=;
-        b=CjAQUH/1aN1ge6EOEGBzI9XJfdth/aexEzuOag/kkLpzk2sfl0YJWrNSHXuQ6LZ1Lc
-         7D5BIh4NTLTjm6dT6D/oBJQZ0KcvaW5YqcFIgKuoB6W4cGFfUmyRzqGov1dtnUVD1mSV
-         hIJOwIa1+LfmsHFe2O4LcDS+Hxd1VK28ZHM1qC3MDh0FyvOY4qAVaOdZc7Ia3keBehSJ
-         MyVEp7SL2J6Cx7hF7/jC5gf593N878EO6TTHrSBn8G7dRLUWKuBItYkNTnaEi21f44+T
-         f0B7iz0ZtiW4Y+PA3RcIVH2lX4PVRiwhznvy3MTu3xRSCwAz5RylGhRdi50J4zNJMryv
-         ADXA==
-X-Gm-Message-State: AJIora9gJaTyh07gELWX4vrzXtOk/HUQNnrlcU5sH1K4LhUSi1JsnxJm
-        vtrsh+Yo46qK6u4wZiWoyVJ1
-X-Google-Smtp-Source: AGRyM1t+gk2o4h8Si5jvmIr5mOIfIY1bpRaoadn7h2P6Pay5xvmSm+Nh4X9qndMgGFZizoTmGh1KsQ==
-X-Received: by 2002:ac8:59d5:0:b0:31f:dde:fca8 with SMTP id f21-20020ac859d5000000b0031f0ddefca8mr10279003qtf.86.1658754947221;
-        Mon, 25 Jul 2022 06:15:47 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:f959:7f34:301e:c14? ([2600:1700:e72:80a0:f959:7f34:301e:c14])
-        by smtp.gmail.com with ESMTPSA id t2-20020ac85882000000b0031eb02307a9sm7362658qta.80.2022.07.25.06.15.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jul 2022 06:15:46 -0700 (PDT)
-Message-ID: <16acb1ce-92eb-d7ec-d5a2-3ef08cda9b69@github.com>
-Date:   Mon, 25 Jul 2022 09:15:45 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 00/20] parse-options: handle subcommands
-Content-Language: en-US
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20220725123857.2773963-1-szeder.dev@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220725123857.2773963-1-szeder.dev@gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=yKbp4i/s6rx+zguq4mNFNmTlcUKhc04uzHREjA3imEY=;
+        b=e6tNPaUU4vefjb7ZkuO7VWlGDZqWvMSDq3EhyYhaius8FNocY1khMSBSx58vTObX4K
+         NIAhynFdrm5c7xtkSesmr7viKYetdyASyJGHTczdH4h0EOhPIrJgl4dnNR0C1fif9qms
+         +x0vsqlM9CbgoBQHiBbSbi0pgsQdtDp/ne5D13l1N7SvLfNZxij27M4APFaEQ//NgNoh
+         2UYoJ8BkFjz9Za1lfvCm97oUU2nvBvJ/oTN6zGRl/Erm3MOGE/2rZ/wW/z5vP6oEYw+W
+         9UVaMwkEw4YDsIy4lXvpSMg4512WoGmarpGEwGUGI7/ch82F5vG1sYJ8M6gS16WuVbJI
+         SV8w==
+X-Gm-Message-State: AJIora+lTJn07xhsZkum3/uhCvucRF7HXAyprX8gvdHc616D2+46u9oy
+        ca1GLK+zayzGuR3QatRDbF/ZTJWRrWA=
+X-Google-Smtp-Source: AGRyM1uaWlJxWgt0femyeShVTTro4+TUJWW4I/OCeJjf9v870Amc3fItQCmMWbEGRNWGVUtUwpxbjw==
+X-Received: by 2002:a7b:c84c:0:b0:3a3:1fd6:613f with SMTP id c12-20020a7bc84c000000b003a31fd6613fmr8399831wml.55.1658757190169;
+        Mon, 25 Jul 2022 06:53:10 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o8-20020a05600c378800b003a2e7c13a3asm14021977wmr.42.2022.07.25.06.53.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jul 2022 06:53:09 -0700 (PDT)
+Message-Id: <pull.1248.v3.git.1658757188.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1248.v2.git.1656535245.gitgitgadget@gmail.com>
+References: <pull.1248.v2.git.1656535245.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 25 Jul 2022 13:53:06 +0000
+Subject: [PATCH v3 0/2] bundle URIs: design doc and initial git fetch --bundle-uri implementation
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/25/2022 8:38 AM, SZEDER Gábor wrote:
-> Several Git commands have subcommands to implement mutually exclusive
-> "operation modes", and they usually parse their subcommand argument
-> with a bunch of if-else if statements.
-> 
-> Teach parse-options to handle subcommands as well, which will result
-> in shorter and simpler code with consistent error handling and error
-> messages on unknown or missing subcommand, and it will also make
-> possible for our Bash completion script to handle subcommands
-> programmatically in a follow-up series [1].
+This is the first of series towards building the bundle URI feature as
+discussed in previous RFCs, specifically pulled directly out of [5]:
 
-Since this has become an increasingly common pattern, I appreciate
-that you have standardized it here.
+[1]
+https://lore.kernel.org/git/RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com/
+[2]
+https://lore.kernel.org/git/cover-0.3-00000000000-20211025T211159Z-avarab@gmail.com/
+[3]
+https://lore.kernel.org/git/pull.1160.git.1645641063.gitgitgadget@gmail.com
+[4]
+https://lore.kernel.org/git/RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com/
+[5]
+https://lore.kernel.org/git/pull.1234.git.1653072042.gitgitgadget@gmail.com
 
-> Patches 1-8 are a mix of preparatory cleanups, documentation updates, and
-> test coverage improvements.
-> 
-> Patch 9 is the most important one, which teaches parse-options to handle
-> subcommands.
-> 
-> The remaining 10-20 convert most builtin commands with subcommands one by
-> one to use parse-options to handle their subcommand parameters.
+THIS ONLY INCLUDES THE DESIGN DOCUMENT. See "Updates in v3". There are two
+patches:
 
-I focused on reading the changes to the builtins I have experience with
-(commit-graph, maintenance, multi-pack-index, sparse-checkout, worktree)
-and found the adaptation to the new model very clean.
+ 1. The main design document that details the bundle URI standard and how
+    the client interacts with the bundle data.
+ 2. An addendum to the design document that details one strategy for
+    organizing bundles from the perspective of a bundle provider.
 
-The one common thing I saw was that you are updating a function pointer
-that you name "fn" but it could be more informative on first reading if
-it was named something like "subcommand_fn".
+As outlined in [5], the next steps after this are:
 
-> This patch series has two conflicts with 'seen' (but none with 'next'):
+ 1. Add 'git clone --bundle-uri=' to run a 'git bundle fetch ' step before
+    doing a fetch negotiation with the origin remote. [6]
+ 2. Allow parsing a bundle list as a config file at the given URI. The
+    key-value format is unified with the protocol v2 verb (coming in (3)).
+    [7]
+ 3. Implement the protocol v2 verb, re-using the bundle list logic from (2).
+    Use this to auto-discover bundle URIs during 'git clone' (behind a
+    config option). [8]
+ 4. Implement the 'creationToken' heuristic, allowing incremental 'git
+    fetch' commands to download a bundle list from a configured URI, and
+    only download bundles that are new based on the creation token values.
+    [9]
 
-An upcoming conflict is going to be my bundle URI topic which is going
-to replace 'git fetch --bundle-uri' with 'git bundle fetch' in its next
-version. I'll wait to see how Junio applies this series and I'll think
-about splitting the current series into "design doc" and "implementation"
-just so I can build on your work here instead of colliding.
+I have prepared some of this work as pull requests on my personal fork so
+curious readers can look ahead to where we are going:
 
-Thanks,
--Stolee
+[6] https://github.com/derrickstolee/git/pull/18 [7]
+https://github.com/derrickstolee/git/pull/20 [8]
+https://github.com/derrickstolee/git/pull/21 [9]
+https://github.com/derrickstolee/git/pull/22
 
+As mentioned in the design document, this is not all that is possible. For
+instance, Ævar's suggestion to download only the bundle headers can be used
+as a second heuristic (and as an augmentation of the timestamp heuristic).
+
+
+Updates in v3
+=============
+
+ * This version only includes the design document. Thanks to all the
+   reviewers for the significant attention that improves the doc a lot.
+ * The second patch has an addition to the design document that details a
+   potential way to organize bundles from the provider's perspective.
+ * Based on some off-list feedback, I was going to switch git fetch
+   --bundle-uri into git bundle fetch, but that has a major conflict with
+   [10] which was just submitted.
+ * I will move the git bundle fetch implementation into [6] which also has
+   the git clone --bundle-uri implementation. [10]
+   https://lore.kernel.org/git/20220725123857.2773963-1-szeder.dev@gmail.com/
+
+
+Updates in v2
+=============
+
+ * The design document has been updated based on Junio's feedback.
+ * The "bundle.list." keys are now just "bundle.".
+ * The "timestamp" heuristic is now "creationToken".
+ * More clarity on how Git parses data from the bundle URI.
+ * Dropped some unnecessary bundle list keys (*.list, *.requires).
+
+Thanks, -Stolee
+
+Derrick Stolee (2):
+  docs: document bundle URI standard
+  bundle-uri: add example bundle organization
+
+ Documentation/Makefile                 |   1 +
+ Documentation/technical/bundle-uri.txt | 573 +++++++++++++++++++++++++
+ 2 files changed, 574 insertions(+)
+ create mode 100644 Documentation/technical/bundle-uri.txt
+
+
+base-commit: e72d93e88cb20b06e88e6e7d81bd1dc4effe453f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1248%2Fderrickstolee%2Fbundle-redo%2Ffetch-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1248/derrickstolee/bundle-redo/fetch-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1248
+
+Range-diff vs v2:
+
+ 1:  d444042dc4d ! 1:  e0f003e1b5f docs: document bundle URI standard
+     @@ Commit message
+      
+          Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+      
+     + ## Documentation/Makefile ##
+     +@@ Documentation/Makefile: TECH_DOCS += SubmittingPatches
+     + TECH_DOCS += ToolsForGit
+     + TECH_DOCS += technical/bitmap-format
+     + TECH_DOCS += technical/bundle-format
+     ++TECH_DOCS += technical/bundle-uri
+     + TECH_DOCS += technical/cruft-packs
+     + TECH_DOCS += technical/hash-function-transition
+     + TECH_DOCS += technical/http-protocol
+     +
+       ## Documentation/technical/bundle-uri.txt (new) ##
+      @@
+      +Bundle URIs
+      +===========
+      +
+     ++Git bundles are files that store a pack-file along with some extra metadata,
+     ++including a set of refs and a (possibly empty) set of necessary commits. See
+     ++linkgit:git-bundle[1] and link:bundle-format.txt[the bundle format] for more
+     ++information.
+     ++
+      +Bundle URIs are locations where Git can download one or more bundles in
+      +order to bootstrap the object database in advance of fetching the remaining
+      +objects from a remote.
+     @@ Documentation/technical/bundle-uri.txt (new)
+      +	If this string-valued key exists, then the bundle list is designed to
+      +	work well with incremental `git fetch` commands. The heuristic signals
+      +	that there are additional keys available for each bundle that help
+     -+	determine which subset of bundles the client should download.
+     ++	determine which subset of bundles the client should download. The only
+     ++  heuristic currently planned is `creationToken`.
+      +
+      +The remaining keys include an `<id>` segment which is a server-designated
+     -+name for each available bundle.
+     ++name for each available bundle. The `<id>` must contain only alphanumeric
+     ++and `-` characters.
+      +
+      +bundle.<id>.uri::
+      +	(Required) This string value is the URI for downloading bundle `<id>`.
+     @@ Documentation/technical/bundle-uri.txt (new)
+      +
+      +Here is an example bundle list using the Git config format:
+      +
+     -+```
+     -+[bundle]
+     -+	version = 1
+     -+	mode = all
+     -+	heuristic = creationToken
+     ++	[bundle]
+     ++		version = 1
+     ++		mode = all
+     ++		heuristic = creationToken
+      +
+     -+[bundle "2022-02-09-1644442601-daily"]
+     -+	uri = https://bundles.example.com/git/git/2022-02-09-1644442601-daily.bundle
+     -+	timestamp = 1644442601
+     ++	[bundle "2022-02-09-1644442601-daily"]
+     ++		uri = https://bundles.example.com/git/git/2022-02-09-1644442601-daily.bundle
+     ++		creationToken = 1644442601
+      +
+     -+[bundle "2022-02-02-1643842562"]
+     -+	uri = https://bundles.example.com/git/git/2022-02-02-1643842562.bundle
+     -+	timestamp = 1643842562
+     ++	[bundle "2022-02-02-1643842562"]
+     ++		uri = https://bundles.example.com/git/git/2022-02-02-1643842562.bundle
+     ++		creationToken = 1643842562
+      +
+     -+[bundle "2022-02-09-1644442631-daily-blobless"]
+     -+	uri = 2022-02-09-1644442631-daily-blobless.bundle
+     -+	timestamp = 1644442631
+     -+	filter = blob:none
+     ++	[bundle "2022-02-09-1644442631-daily-blobless"]
+     ++		uri = 2022-02-09-1644442631-daily-blobless.bundle
+     ++		creationToken = 1644442631
+     ++		filter = blob:none
+      +
+     -+[bundle "2022-02-02-1643842568-blobless"]
+     -+	uri = /git/git/2022-02-02-1643842568-blobless.bundle
+     -+	timestamp = 1643842568
+     -+	filter = blob:none
+     -+```
+     ++	[bundle "2022-02-02-1643842568-blobless"]
+     ++		uri = /git/git/2022-02-02-1643842568-blobless.bundle
+     ++		creationToken = 1643842568
+     ++		filter = blob:none
+      +
+      +This example uses `bundle.mode=all` as well as the
+      +`bundle.<id>.creationToken` heuristic. It also uses the `bundle.<id>.filter`
+     @@ Documentation/technical/bundle-uri.txt (new)
+      +* The client fails to connect with a server at the given URI or a connection
+      +  is lost without any chance to recover.
+      +
+     -+* The client receives a response other than `200 OK` (such as `404 Not Found`,
+     -+  `401 Not Authorized`, or `500 Internal Server Error`). The client should
+     -+  use the `credential.helper` to attempt authentication after the first
+     -+  `401 Not Authorized` response, but a second such response is a failure.
+     ++* The client receives a 400-level response (such as `404 Not Found` or
+     ++  `401 Not Authorized`). The client should use the credential helper to
+     ++  find and provide a credential for the URI, but match the semantics of
+     ++  Git's other HTTP protocols in terms of handling specific 400-level
+     ++  errors.
+      +
+     -+* The client receives data that is not parsable as a bundle or bundle list.
+     ++* The server reports any other failure reponse.
+      +
+     -+* The bundle list describes a directed cycle in the
+     -+  `bundle.<id>.requires` links.
+     ++* The client receives data that is not parsable as a bundle or bundle list.
+      +
+      +* A bundle includes a filter that does not match expectations.
+      +
+      +* The client cannot unbundle the bundles because the prerequisite commit OIDs
+     -+  are not in the object database and there are no more
+     -+  `bundle.<id>.requires` links to follow.
+     ++  are not in the object database and there are no more bundles to download.
+      +
+      +There are also situations that could be seen as wasteful, but are not
+      +error conditions:
+     @@ Documentation/technical/bundle-uri.txt (new)
+      +  the client is using hourly prefetches with background maintenance, but
+      +  the server is computing bundles weekly. For this reason, the client
+      +  should not use bundle URIs for fetch unless the server has explicitly
+     -+  recommended it through the `bundle.flags = forFetch` value.
+     ++  recommended it through a `bundle.heuristic` value.
+      +
+      +Implementation Plan
+      +-------------------
+     @@ Documentation/technical/bundle-uri.txt (new)
+      +   that the config format parsing feeds a list of key-value pairs into the
+      +   bundle list logic.
+      +
+     -+3. Create the `bundle-uri` protocol v2 verb so Git servers can advertise
+     ++3. Create the `bundle-uri` protocol v2 command so Git servers can advertise
+      +   bundle URIs using the key-value pairs. Plug into the existing key-value
+      +   input to the bundle list logic. Allow `git clone` to discover these
+      +   bundle URIs and bootstrap the client repository from the bundle data.
+ 2:  0a2cf60437f < -:  ----------- remote-curl: add 'get' capability
+ 3:  abec47564fd < -:  ----------- bundle-uri: create basic file-copy logic
+ 4:  f6255ec5188 < -:  ----------- fetch: add --bundle-uri option
+ 5:  bfbd11b48bf < -:  ----------- bundle-uri: add support for http(s):// and file://
+ 6:  a217e9a0640 < -:  ----------- fetch: add 'refs/bundle/' to log.excludeDecoration
+ -:  ----------- > 2:  a933471c3af bundle-uri: add example bundle organization
+
+-- 
+gitgitgadget
