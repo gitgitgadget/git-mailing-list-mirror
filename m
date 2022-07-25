@@ -2,91 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4817C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 16:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9075C43334
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 16:49:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235509AbiGYQIW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 12:08:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45498 "EHLO
+        id S236420AbiGYQt1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 12:49:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234778AbiGYQIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 12:08:21 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D744213DC4
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 09:08:18 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id e69so9159103iof.5
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 09:08:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=FDrFDmuopX3WyDcp+rycrdr3k/eZzfH16UIGY9jGoWM=;
-        b=jlGOQkSDAuO6ViWwtNYmPZgkktx9RAsJjUuzZ8eKidFhBWbHN7OU+o36YZpgJEXaZr
-         9juSpouRX7lXMfOh32zBDysLWbX8S5zWO5kjZ7VrnRi6kHTZUI8DMsragkzitW24PSpH
-         vb0/2xGsiKC2mvgwc/e79JmK8Kn7AG1oVEesKnscM04TZFIiABQKPYID9hz8d/toeLk8
-         VlbHZ+hp62weJUc7rHs0JRqjyJmzf/YKyrjtUYqG0ue/wbv8fKIfEgArHclzQZj2fFrL
-         vpOMuYlD/PXz6MQdFh0/njHKJvjeDJxRUR2LUBc+GetYcaQOM+PxeA8u0DwIYJw807Kf
-         GNMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=FDrFDmuopX3WyDcp+rycrdr3k/eZzfH16UIGY9jGoWM=;
-        b=U/4BhOMa/RnUnwEVYfvF20iN8WJLIvg4zhyLEg/4y1UrvBcWJaVt+YgARmSm1FnE87
-         4+jKICWbozJmse492HRoAHutJuDvDVNuuIUECMm6jNwwnYmIMCEdTolHsXvP+Yuac1so
-         J5uPXYa3f/+1krxqIIR2PTUFJLDpUryMcs7HErkSargJ6x8Ryhp4u07WJeuF0nuaMjmg
-         07o+LBjMU0oAf+GU2nVJzxNaj16c7wJ+0Qa05y+MavT9JWQKCyjQrwQLuFcUluHHZOR7
-         5n5D85OEV3GNTGC70wrKrA35Uucz/flh5oO5UK8GIyOEijyRE54k0QP9uEHaJI7YSzAm
-         I84g==
-X-Gm-Message-State: AJIora8mI3la2IRrOlTa7BEjQ6kZDmVKFDdjqEP+zDLQrM/ERZx0uFW2
-        sPUDO5Uph1U0AqarnuyP0XvzxHj3riRb
-X-Google-Smtp-Source: AGRyM1u5QQofXxQ6HDtQU2rQFa7WLr+o1kn4L3kWeS7oNMZWjS7mqwW1eQqsk7L0I+ElpmdoruIkOA==
-X-Received: by 2002:a02:606f:0:b0:335:ae88:68c6 with SMTP id d47-20020a02606f000000b00335ae8868c6mr5029510jaf.320.1658765298242;
-        Mon, 25 Jul 2022 09:08:18 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:f959:7f34:301e:c14? ([2600:1700:e72:80a0:f959:7f34:301e:c14])
-        by smtp.gmail.com with ESMTPSA id 17-20020a056e020cb100b002dc789a3dddsm4924300ilg.5.2022.07.25.09.08.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jul 2022 09:08:17 -0700 (PDT)
-Message-ID: <4e28ea5a-03d3-990c-34ad-5d5a91d7b888@github.com>
-Date:   Mon, 25 Jul 2022 12:08:16 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 00/20] parse-options: handle subcommands
-Content-Language: en-US
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+        with ESMTP id S231281AbiGYQtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 12:49:25 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A3ECE31
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 09:49:24 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA1AF1B0E88;
+        Mon, 25 Jul 2022 12:49:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=7mb/5i7BTVN0
+        JqmxOn6GdPt/r8YwkAjOQL/mB79T0dM=; b=m1xTDraoRnxAU/mK9cyFxWZ4XJZC
+        RH1iWg/BNdQRQcI0+WPoiYVpjndiPrjPevbCVjscWGe6BF3nyrHSGJDf6dGpEQXQ
+        PfUbgb5x5mXndh/bSeakOUc2qn9m+0xC7Ji/7r6pbrIV1ULwophGM3JwaPXgXV9v
+        0usmlL0h5p8p3PM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B8E841B0E87;
+        Mon, 25 Jul 2022 12:49:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5C4661B0E82;
+        Mon, 25 Jul 2022 12:49:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
 Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 15/20] builtin/notes.c: let parse-options parse subcommands
 References: <20220725123857.2773963-1-szeder.dev@gmail.com>
- <16acb1ce-92eb-d7ec-d5a2-3ef08cda9b69@github.com>
- <20220725160040.GA2543@szeder.dev>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220725160040.GA2543@szeder.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        <20220725123857.2773963-16-szeder.dev@gmail.com>
+Date:   Mon, 25 Jul 2022 09:49:19 -0700
+In-Reply-To: <20220725123857.2773963-16-szeder.dev@gmail.com> ("SZEDER
+        =?utf-8?Q?G=C3=A1bor=22's?= message of "Mon, 25 Jul 2022 14:38:52 +0200")
+Message-ID: <xmqq7d416sts.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BABC22AA-0C39-11ED-A6E1-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/25/2022 12:00 PM, SZEDER Gábor wrote:
-> On Mon, Jul 25, 2022 at 09:15:45AM -0400, Derrick Stolee wrote:
->> I focused on reading the changes to the builtins I have experience with
->> (commit-graph, maintenance, multi-pack-index, sparse-checkout, worktree)
->> and found the adaptation to the new model very clean.
->>
->> The one common thing I saw was that you are updating a function pointer
->> that you name "fn" but it could be more informative on first reading if
->> it was named something like "subcommand_fn".
-> 
-> I felt that redundant, because most lines mentioning that 'fn'
-> have something clearly subcommand-specific next to it, i.e. the type
-> 'parse_opt_subcommand_fn' at its declaration, or the OPT_SUBCOMMAND
-> macro.
- 
-I guess I was just reading the final "return fn(...);" at the end
-and thought it looked a bit generic. It's probably not worth
-changing.
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Thanks,
--Stolee
+> 'git notes' parses its subcommands with a long list of if-else if
+> statements.  parse-options has just learned to parse subcommands, so
+> let's use that facility instead, with the benefits of shorter code,
+> handling unknown subcommands, and listing subcommands for Bash
+> completion.  Make sure that the default operation mode doesn't accept
+> any arguments.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>  builtin/notes.c | 43 +++++++++++++++++--------------------------
+>  1 file changed, 17 insertions(+), 26 deletions(-)
+>
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index a3d0d15a22..42cbae4659 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -994,17 +994,31 @@ static int get_ref(int argc, const char **argv, c=
+onst char *prefix)
+> =20
+>  int cmd_notes(int argc, const char **argv, const char *prefix)
+>  {
+> -	int result;
+>  	const char *override_notes_ref =3D NULL;
+> +	parse_opt_subcommand_fn *fn =3D list;
+>  	struct option options[] =3D {
+>  		OPT_STRING(0, "ref", &override_notes_ref, N_("notes-ref"),
+>  			   N_("use notes from <notes-ref>")),
+> +		OPT_SUBCOMMAND("list", &fn, list),
+> +		OPT_SUBCOMMAND("add", &fn, add),
+> +		OPT_SUBCOMMAND("copy", &fn, copy),
+> +		OPT_SUBCOMMAND("append", &fn, append_edit),
+> +		OPT_SUBCOMMAND("edit", &fn, append_edit),
+> +		OPT_SUBCOMMAND("show", &fn, show),
+> +		OPT_SUBCOMMAND("merge", &fn, merge),
+> +		OPT_SUBCOMMAND("remove", &fn, remove_cmd),
+> +		OPT_SUBCOMMAND("prune", &fn, prune),
+> +		OPT_SUBCOMMAND("get-ref", &fn, get_ref),
+>  		OPT_END()
+>  	};
+
+Reading the series backwards from the end, I would expect that the
+above to replicate the current behaviour to allow commands to have
+both "command wide" options and "per subcommand" options, e.g.
+
+    $ git notes get-ref --ref=3Damlog
+    error: unknown option `ref=3Damlog`
+    usage: git notes get-ref
+    $ git notes --ref=3Damlog get-ref
+    refs/notes/amlog
+
+Assuming that is how the new OPT_SUBCOMMAND() interacts with the
+dashed options in a single "struct option []", everything I saw
+so far in [10-20/20] makes sense.  [17/20] has another instance
+of the above, dashed-options and subcommands mixed in an array,
+to parse the option for "git remote --verbose <subcmd>" that applies
+to all subcommands.
+
+Thanks.
+
+
