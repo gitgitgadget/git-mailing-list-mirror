@@ -2,79 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35152C43334
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 20:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D021DC433EF
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 20:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236573AbiGYUt5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 16:49:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51080 "EHLO
+        id S232764AbiGYUvo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 16:51:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233193AbiGYUtz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 16:49:55 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB86422BFC
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:49:53 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 54FC61A498D;
-        Mon, 25 Jul 2022 16:49:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=VEvXz/nk9ABs
-        sI4bbrLG0v8Snb3cxrRjpIJenNbhGhg=; b=rr9aUMqMIVylTspf1PU7kFBq+sS8
-        ASXzUxPv3iyA//nDvL0HPt9IC/QUbS2Iq62uTJ7q3WlrzOXlqldb23EHG+mfh8bB
-        YW84xVy5hsT6d7LNIjKY9isfwE6hQgSM7kvH/gKInPNZLYeIm4V/GDSR6RTCkwlA
-        vjRjlTxNtxsGM4w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D3AC1A498C;
-        Mon, 25 Jul 2022 16:49:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EA3211A4989;
-        Mon, 25 Jul 2022 16:49:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 00/10] typed sort of linked lists
-References: <4d7cd286-398e-215c-f2bd-aa7e8207be4f@web.de>
-        <xmqqk08bv0ax.fsf@gitster.g> <xmqqy1wh3tzy.fsf@gitster.g>
-        <3c182e33-ee8e-0a1f-8915-8f97da2499e6@github.com>
-Date:   Mon, 25 Jul 2022 13:49:48 -0700
-In-Reply-To: <3c182e33-ee8e-0a1f-8915-8f97da2499e6@github.com> (Derrick
-        Stolee's message of "Mon, 25 Jul 2022 16:35:59 -0400")
-Message-ID: <xmqq8rog534j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229798AbiGYUvo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 16:51:44 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D1E3140B8
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:51:43 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-31e623a4ff4so123101597b3.4
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 13:51:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=dujqwb34d8aPQlrnmdNTXuRVSE0AQFQTakpkP2+zsCM=;
+        b=cUf9ABoUD3Z09CsjBgvikkPBferYeTnSIXnjNNCQIckRhU/Xh75lEo9z2MMlVF2Ap4
+         I7G1Z2H9FlC9AWvqSEcv3kvfMBCk9v3BCFeNUloR7y+RZ9fbCEkfvHeeKHVUXydRF+zM
+         jehslDSLCqbyUUIDnx3f579Lz7ueFGaYM34ypbCIUw6ZapRAjXqZUNoqDVh3zhNcVuNc
+         gKw8vepVXbFVzFojb+yxsoBFg4Eqzd5kliFsQwDXlwp2rXnbWnDFN/rx5oVJ0GKpxcKp
+         bx1V4sWBybj7Vd4Ts2sQva7xeKsHCd1B64VGP2A2ED0wpEOj8ejo+jVRLOvgvCXX3iG2
+         46Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=dujqwb34d8aPQlrnmdNTXuRVSE0AQFQTakpkP2+zsCM=;
+        b=yF4b1eNTJZ5bWMoCq/o//ZLL8sbiESdopHhMSDxhNGGYMsFbpydyekzyRoVRPFn6r+
+         ar3DAiIpfk5yb4QWfxAVHTdPtjMJQSuWR4Gt/JNNWNQxHTdACGxsLQeytG+Zr1Z69a+T
+         FwSJqjOCzpHKUBoah0fUVnm6u2Znne+AGg+9jsDrt2LDjVAUzuHJqyLJZ7wSiuct5MFk
+         JEwz/Jigm4B404KI7ZLUqIyFrQLdOxbY7mTXQ1L9FgeQaoMi74ZRfEsRoAjvNT2p4e/d
+         HLmWRAZtmDjE5kdSqBRmXZ7lmPmAVy7myu7MyWWu1ooVjPpnAerFrkkQK3e1HyslhP89
+         CS5A==
+X-Gm-Message-State: AJIora95S7W8sZGJRv/dqtaT1LhRt7hcL0n7Nl/6/5RjWbjpb+iL+TEr
+        v+lIHBuBBUuQDAhAvM7IBf9rzNLcTrgS9qMarjiWILJXlb2txQ==
+X-Google-Smtp-Source: AGRyM1u8nQg1dlcN9Qg8qlUyDiUSvp3qhBk5pzmKPJs6uWrkQMksnNSls3V47sliHhtIgAGyToMtmJi8mD5S+YgMTZM=
+X-Received: by 2002:a0d:f607:0:b0:31b:b1d2:37bf with SMTP id
+ g7-20020a0df607000000b0031bb1d237bfmr11732449ywf.313.1658782302614; Mon, 25
+ Jul 2022 13:51:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 536FD87C-0C5B-11ED-827D-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Elie Obeid <elieobeid7@gmail.com>
+Date:   Tue, 26 Jul 2022 00:51:09 +0400
+Message-ID: <CAFWJc9_QM1CQ69yXCOHTi4KSZJffhty5s=egUUx-6RTjUVF9+w@mail.gmail.com>
+Subject: How to specify a remote branch in git worktree?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Hi, I have two remote branches prod and beta, I want to create one
+worktree for prod and one for beta.
 
-> On 7/25/2022 2:52 PM, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>=20
->>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->>> A nicely presented coherent story that results in an overall code
->>> reduction.  Thanks for a pleasant read.
->>>
->>> Will queue.
->>=20
->> No comments or objections from anybody?  I am planning to merge the
->> topic to 'next' and to 'master' soonish.
->
-> Sorry. I had started reading it and also found it to be a
-> pleasant read, but did not get around to finishing it and
-> saying so publicly. Consider that done now.
->
-> Thanks, Ren=C3=A9!
-> -Stolee
 
-Thanks.
+mkdir app && cd app
+git clone --bare repo .git
+git worktree add --checkout beta beta
+git worktree add --checkout prod prod
+cd prod
+git pull
+Mege conflict
+
+
+
+As you can see, I get a merge conflict  right after I clone the repo,
+create  the worktree and do a git pull, maybe the worktree is trying
+to do a pull from master, I have no idea
+How to fix that?
+
+
+Best Regards.
