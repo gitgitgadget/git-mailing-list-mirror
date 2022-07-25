@@ -2,79 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2E51C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 16:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4817C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 16:08:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235509AbiGYQAq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 12:00:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41336 "EHLO
+        id S235509AbiGYQIW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 12:08:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233374AbiGYQAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 12:00:45 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6314D12745
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 09:00:44 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id mf4so21463491ejc.3
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 09:00:44 -0700 (PDT)
+        with ESMTP id S234778AbiGYQIV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 12:08:21 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D744213DC4
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 09:08:18 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id e69so9159103iof.5
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 09:08:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2+tnPmcqw5ke2WgIpcwGIAvLFRklg4B0SkPJdqNNBsI=;
-        b=XXYS1OBWtaCLk06PZTCdQ+9dWjaWMBVIWVoRYUcu7AL0mGjyPdIR7fNy+cttjds6iF
-         DK9w7za2KvMMRISidp2bEwabzVnqUN8hEqwzCEwSDu8OfNckWD82E3GsrJdtOc5Dww5m
-         V6md1sCajSbJR60JD5Fe/Uy37z6HwhiUr7SG+R+euM03IyPukDAB0dNtLQjsnJjanfuR
-         IJhR0xjrkNCkOBWJDCdscgtsBAd/XKB/9bE7jaZQ1MHAzdn7b1400W3cWcJX0rr/kfN6
-         IVjZV/ogJqaqUIdAT0Q2sPDe7bPvLApSene1Lb1wyOcvDNrBjFNigl1WixyrCQOIyCle
-         +Yyw==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=FDrFDmuopX3WyDcp+rycrdr3k/eZzfH16UIGY9jGoWM=;
+        b=jlGOQkSDAuO6ViWwtNYmPZgkktx9RAsJjUuzZ8eKidFhBWbHN7OU+o36YZpgJEXaZr
+         9juSpouRX7lXMfOh32zBDysLWbX8S5zWO5kjZ7VrnRi6kHTZUI8DMsragkzitW24PSpH
+         vb0/2xGsiKC2mvgwc/e79JmK8Kn7AG1oVEesKnscM04TZFIiABQKPYID9hz8d/toeLk8
+         VlbHZ+hp62weJUc7rHs0JRqjyJmzf/YKyrjtUYqG0ue/wbv8fKIfEgArHclzQZj2fFrL
+         vpOMuYlD/PXz6MQdFh0/njHKJvjeDJxRUR2LUBc+GetYcaQOM+PxeA8u0DwIYJw807Kf
+         GNMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2+tnPmcqw5ke2WgIpcwGIAvLFRklg4B0SkPJdqNNBsI=;
-        b=0TaYd3bRyAUxAFCkkzVFJ2sYUeO3nLgMc4kTS+rMx6cAVZzbs4kZePxsrSN0d3kqug
-         r1NKadr2k8bguLWLD6LfhwslTGvR3+72QwIc2NDqjUig4bY67rRvQ7i7HvWQdA9uG4VD
-         YDWa4Ykpo69ZEoi1KPfdrcN+0nA+A5WI7Q75oY4sdKoRW/1AcIloxogoV6RMnSYltIWN
-         xFidrkIEIu6UqR3+yBxVSSbDasNkPDcwf2EcPnxfQ0obDDsb27+JOKfEiGrhBRJ1MMec
-         i0/5CV9Exio99J+z9rwcD7fT33b0S326rmmEn4uyiSiPU11pC1ydCt05wmzzcMkaXRjf
-         AU4A==
-X-Gm-Message-State: AJIora8WXzzEOBmZ/j58wsHxV+4dEeGp+Xs0zo/fp8TqoTCDhoQV4mET
-        vkCP0rdKa0XdDPWCRueFMoBXTzrIAHA=
-X-Google-Smtp-Source: AGRyM1tHsKZTn6hsrC/m8IFz3MXva7ols/axB43f4W6Qxf6HtZ01+oigolQXKle7JhAf8Am9iGm5pg==
-X-Received: by 2002:a17:907:a06f:b0:72b:564c:465b with SMTP id ia15-20020a170907a06f00b0072b564c465bmr10625891ejc.344.1658764842844;
-        Mon, 25 Jul 2022 09:00:42 -0700 (PDT)
-Received: from localhost (94-21-23-94.pool.digikabel.hu. [94.21.23.94])
-        by smtp.gmail.com with ESMTPSA id p3-20020a17090653c300b006fee526ed72sm5386269ejo.217.2022.07.25.09.00.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 09:00:42 -0700 (PDT)
-Date:   Mon, 25 Jul 2022 18:00:40 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=FDrFDmuopX3WyDcp+rycrdr3k/eZzfH16UIGY9jGoWM=;
+        b=U/4BhOMa/RnUnwEVYfvF20iN8WJLIvg4zhyLEg/4y1UrvBcWJaVt+YgARmSm1FnE87
+         4+jKICWbozJmse492HRoAHutJuDvDVNuuIUECMm6jNwwnYmIMCEdTolHsXvP+Yuac1so
+         J5uPXYa3f/+1krxqIIR2PTUFJLDpUryMcs7HErkSargJ6x8Ryhp4u07WJeuF0nuaMjmg
+         07o+LBjMU0oAf+GU2nVJzxNaj16c7wJ+0Qa05y+MavT9JWQKCyjQrwQLuFcUluHHZOR7
+         5n5D85OEV3GNTGC70wrKrA35Uucz/flh5oO5UK8GIyOEijyRE54k0QP9uEHaJI7YSzAm
+         I84g==
+X-Gm-Message-State: AJIora8mI3la2IRrOlTa7BEjQ6kZDmVKFDdjqEP+zDLQrM/ERZx0uFW2
+        sPUDO5Uph1U0AqarnuyP0XvzxHj3riRb
+X-Google-Smtp-Source: AGRyM1u5QQofXxQ6HDtQU2rQFa7WLr+o1kn4L3kWeS7oNMZWjS7mqwW1eQqsk7L0I+ElpmdoruIkOA==
+X-Received: by 2002:a02:606f:0:b0:335:ae88:68c6 with SMTP id d47-20020a02606f000000b00335ae8868c6mr5029510jaf.320.1658765298242;
+        Mon, 25 Jul 2022 09:08:18 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:f959:7f34:301e:c14? ([2600:1700:e72:80a0:f959:7f34:301e:c14])
+        by smtp.gmail.com with ESMTPSA id 17-20020a056e020cb100b002dc789a3dddsm4924300ilg.5.2022.07.25.09.08.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Jul 2022 09:08:17 -0700 (PDT)
+Message-ID: <4e28ea5a-03d3-990c-34ad-5d5a91d7b888@github.com>
+Date:   Mon, 25 Jul 2022 12:08:16 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
 Subject: Re: [PATCH 00/20] parse-options: handle subcommands
-Message-ID: <20220725160040.GA2543@szeder.dev>
+Content-Language: en-US
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 References: <20220725123857.2773963-1-szeder.dev@gmail.com>
  <16acb1ce-92eb-d7ec-d5a2-3ef08cda9b69@github.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <16acb1ce-92eb-d7ec-d5a2-3ef08cda9b69@github.com>
+ <20220725160040.GA2543@szeder.dev>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220725160040.GA2543@szeder.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 25, 2022 at 09:15:45AM -0400, Derrick Stolee wrote:
-> I focused on reading the changes to the builtins I have experience with
-> (commit-graph, maintenance, multi-pack-index, sparse-checkout, worktree)
-> and found the adaptation to the new model very clean.
+On 7/25/2022 12:00 PM, SZEDER Gábor wrote:
+> On Mon, Jul 25, 2022 at 09:15:45AM -0400, Derrick Stolee wrote:
+>> I focused on reading the changes to the builtins I have experience with
+>> (commit-graph, maintenance, multi-pack-index, sparse-checkout, worktree)
+>> and found the adaptation to the new model very clean.
+>>
+>> The one common thing I saw was that you are updating a function pointer
+>> that you name "fn" but it could be more informative on first reading if
+>> it was named something like "subcommand_fn".
 > 
-> The one common thing I saw was that you are updating a function pointer
-> that you name "fn" but it could be more informative on first reading if
-> it was named something like "subcommand_fn".
+> I felt that redundant, because most lines mentioning that 'fn'
+> have something clearly subcommand-specific next to it, i.e. the type
+> 'parse_opt_subcommand_fn' at its declaration, or the OPT_SUBCOMMAND
+> macro.
+ 
+I guess I was just reading the final "return fn(...);" at the end
+and thought it looked a bit generic. It's probably not worth
+changing.
 
-I felt that redundant, because most lines mentioning that 'fn'
-have something clearly subcommand-specific next to it, i.e. the type
-'parse_opt_subcommand_fn' at its declaration, or the OPT_SUBCOMMAND
-macro.
-
+Thanks,
+-Stolee
