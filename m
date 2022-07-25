@@ -2,98 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D4C2C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 21:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5632BC433EF
+	for <git@archiver.kernel.org>; Mon, 25 Jul 2022 21:56:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229885AbiGYVwh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 17:52:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41800 "EHLO
+        id S236414AbiGYV4E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 17:56:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbiGYVwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 17:52:36 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 574EBAC
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:52:35 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id g24so9296656qtu.2
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:52:35 -0700 (PDT)
+        with ESMTP id S229586AbiGYV4D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 17:56:03 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F4E64C2
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:56:02 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id mh14so9433290qvb.1
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 14:56:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=fdbpYtosdG46ty5bV4lcNU+xfUD1Y2vE+AjPNceoUHQ=;
-        b=q6Yw2dicLPKLOdi5UtZ+Q5kd7ZSWQV3ODI+xU/5sWxpCqmift5+0/VtvZNwG1HGI+L
-         +ovyGUUtAMApdeT9HhHimGONi4MZNBptUg6L2R2WIX9HP8vkvO+4dfk2CfXso5cwgcgh
-         dtZ+Cd3IXxNzOXs752KcObHhlmrqt2Ytf8rK0xjG35V7paOWxU6zqAF4l1e1I3h48a1S
-         K4dvAyrofd0Pt81RNvtuI45la6CvQH2eRe5KsPoZjJawD/+IPalTCmn/Ozmqg8I4cNrx
-         tkK4o9SZg4T9fheSDD7xpvqBWBWTFALO7ob2OD4HgTEuHWhiuhzUNpadaRiczGXBmbJC
-         DkNw==
+        bh=b4/qAi4uvvxTU8mcA/pBN1+2GT4U6CJp+qSgV6DP4gw=;
+        b=AcRG9HDGT1lRisZUW1cDGAsqh4uFevOrHg6TrCLEhfWxpbtLuG7m64tX5rTWrex/KL
+         H8iV2ZMVYl0oU1GEXBA507dQ+cWyDJChae9wvEWWUhK7WTr5oOnQQ3uAVMPqiobHqwBH
+         2XSeZJvLntSGzQ4rILnUz87bTBQMPB6oSclmzzjassbrF60I7pPqLr436g/QJ9BMvW/X
+         b6g1SfJ2ISvP6G8guNdZEa50BbLger8ey56xm9GsXOc3INhH4Toi/y72rfYUtbQ2WVj8
+         p/p1iyrRLZELRnKMMFqCoYQ28CN3Bb3QhABcxc5IpBWg8hfYV0Z+mh77yQe8SgofW7p6
+         kVuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=fdbpYtosdG46ty5bV4lcNU+xfUD1Y2vE+AjPNceoUHQ=;
-        b=knfdp6LHSlYfoFtgP3RePaJokBEr4IB66Z0XgsV6l+GuvnRL2ck/AaF6NfHOJIJ790
-         l5XRkNRxIZpb7G+QqO5iR8JAg8SIV4ktkrQ/82pHPyP6Lcblq0KZ45Q79RnsSr+DQqLf
-         lu5mqjli0yj9YkwQXcCmB+GNjq0AHj44hdJo9HmNK8z3RmzvEmeN6rgfm2PlIWysVYXY
-         Dyl9lHQzMJyqx3isFwewzcZxBmk0WtOvtkcW+lnAP+hfUAqqt8D0FXd3YIQPN0U7UokD
-         XO6GvrUgkD9tJ9XPosDaaWshMuZV/0g6u+308GHkwDdOmlSK7ogemWW6/ObgOqCTWlwd
-         7PLA==
-X-Gm-Message-State: AJIora9orD3hGshPcW/Avoew4a8kMktzUiTXU3pfi47131+PPl5Y8xeQ
-        7DJG2mVB4Qy3XnErbWLCwqwkHw==
-X-Google-Smtp-Source: AGRyM1tQ0VLPuia3t0HhioZiD7/7jWTHBbTeGjQwLX04WDeR3F0ljKH0zte6ZTanvD/baJGmLfXz/A==
-X-Received: by 2002:ac8:5905:0:b0:31e:e346:e080 with SMTP id 5-20020ac85905000000b0031ee346e080mr11882560qty.569.1658785954455;
-        Mon, 25 Jul 2022 14:52:34 -0700 (PDT)
+        bh=b4/qAi4uvvxTU8mcA/pBN1+2GT4U6CJp+qSgV6DP4gw=;
+        b=myoMnU/qfLy/bTLraRGCwP15zwk9wuhP1ZZItpFjSvUT5Hxfo750FPyelPj65o7T5r
+         ejRT0Ms/4cizljsNb7cxJ0hoIjUUEsYvdPe4t4f0qV2Cxgy37oqPK2WLw+tlhLyl9Xy5
+         Cam118ewAKFJD7uu23yRgLtJjrRIV3KKh/+BVlVjsZMKwnUwBR+bWVK6iO3n+B24F+4/
+         Ee1/L5BbCrPqgejQwCrRrqs8VjDbSrWlqu9hTIBp2hyF0MhjEbPeCtAklwcJVbnIB/Vk
+         a4nunsSg86r6KgghaRTqDYk0+A7NXKlVNJ7BhKHYTLsge3DhhSd3N4TlpSUQlFVIG8iz
+         7AhQ==
+X-Gm-Message-State: AJIora+41En0pMRjbtRtCrizUaFRbpW6G0K5WX3EGIlRaVrnr561sxnF
+        HG6Roy8Onl8xa3IFE/3yKGaOPg==
+X-Google-Smtp-Source: AGRyM1sQzZ0GtGygiA/rxdHugi1ILFljiTRxEi1FXk0AGucAK82QnMsB6uXKZVCpLr4NOSK9W0qR1Q==
+X-Received: by 2002:ad4:5ba7:0:b0:473:6eb1:70d2 with SMTP id 7-20020ad45ba7000000b004736eb170d2mr12587134qvq.100.1658786161731;
+        Mon, 25 Jul 2022 14:56:01 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o62-20020a374141000000b006b56a4400f6sm9743546qka.16.2022.07.25.14.52.33
+        by smtp.gmail.com with ESMTPSA id k7-20020a05620a414700b006b5e5ebfff8sm10834751qko.62.2022.07.25.14.56.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 14:52:34 -0700 (PDT)
-Date:   Mon, 25 Jul 2022 17:52:33 -0400
+        Mon, 25 Jul 2022 14:56:01 -0700 (PDT)
+Date:   Mon, 25 Jul 2022 17:56:00 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC] Abhradeep's GSoC blogs (25 Jul, 2022 IST)
-Message-ID: <Yt8QoUPnZQTB2OQQ@nand.local>
-References: <20220725152326.60497-1-chakrabortyabhradeep79@gmail.com>
+To:     Junio C Hamano <junio@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: tb/commit-graph-genv2-upgrade-fix
+Message-ID: <Yt8RcDeSht56gU5v@nand.local>
+References: <xmqqh738bq21.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220725152326.60497-1-chakrabortyabhradeep79@gmail.com>
+In-Reply-To: <xmqqh738bq21.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Abhradeep,
-
-On Mon, Jul 25, 2022 at 08:53:26PM +0530, Abhradeep Chakraborty wrote:
-> Title - GSoC Week 6: using CRoaring library
-> Blog link - https://medium.com/@abhra303/gsoc-week-6-using-croaring-library-be309cfa89f5
+On Fri, Jul 22, 2022 at 06:01:10PM -0700, Junio C Hamano wrote:
+> * tb/commit-graph-genv2-upgrade-fix (2022-07-15) 3 commits
+>  - commit-graph: fix corrupt upgrade from generation v1 to v2
+>  - commit-graph: introduce `repo_find_commit_pos_in_graph()`
+>  - t5318: demonstrate commit-graph generation v2 corruption
 >
-> Summary -
+>  There was a bug in the codepath to upgrade generation information
+>  in commit-graph from v1 to v2 format, which has been corrected.
 >
-> I missed the week 5 blog update. So this blog covers both
-> week 5 and week 6 work updates. I submitted my latest version
-> Of `lookup-table-extension` patch series. There are some issues
-> with CRoaring e.g. it do not store in network byte order (which I
-> confirmed in Roaringbitmap's google group[1]). So, I need to make
-> some changes to fix it. I have already finished implementing
-> `roaring_portable_network_serialize` and `..._deserialize`. My
-> next step is to use its functions in Git's codebase. I will
-> submit the patch series soon.
+>  Will merge to 'next'?
+>  source: <cover.1657667404.git.me@ttaylorr.com>
 
-Thanks for another delightful blog post. Like I mentioned off-list, I am
-really impressed with your progress, and in your ability to reach out
-across multiple projects in order to make substantial licensing changes.
+Yeah, I think that this one is ready to go. It's the minimal fix I would
+consider acceptable for squashing this bug, but it should do what we
+need.
 
-I'm looking forward to hearing how things go with the CRoaring folks,
-and to helping out where I can. I think that the final implementation of
-Roaring bitmaps into Git's reachability bitmaps will be higher quality
-because we're able to rely on existing libraries.
-
-Thanks again for all of your hard work. I have your lookup table series
-on my list to review right after this, and I think that that should be
-getting close to being ready.
-
-Well done!
+Stolee gave it a positive review, and I doubt he has any objections.
 
 Thanks,
 Taylor
