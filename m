@@ -2,66 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BF67C25B0E
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 13:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1569C04A68
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 13:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233657AbiGZNmu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 09:42:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54980 "EHLO
+        id S239260AbiGZN5d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 09:57:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229741AbiGZNmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 09:42:49 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DDE91AD9C
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:42:48 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id c72so14886162edf.8
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:42:48 -0700 (PDT)
+        with ESMTP id S239339AbiGZN4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 09:56:55 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48FDF2BB20
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:56:30 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id oy13so26321199ejb.1
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=8MGJDmpzmQYlM4Mo41R+QyltP773lHwD/4X/m1Uvobk=;
-        b=esU77cNJ43FAsedZO/rLVhSaAktWWtA8xJ7+OP90qsp3iBRT7Rtd2vubM/lAi2NfxW
-         lWP3LNfqJAGEfW/X9Qhv0Nh+nlKeQVkHmsm0E6xpfyVi7MQKcIOFfIW/NzJMBoL7JLBK
-         v+Ql2eNtVddNaia2TrarA7NqVKCMYEHF3PoRZsLSOFdhcJMinCjG5eiXS7DBsYktCiAt
-         hO6+cZCC/83BzjBgeO7A6bvWD7VROlu/JryMvDztjIPkFHD/a7EtGyWEEB/rgPN5/qcx
-         bTaicUsg2WbGsqGxQt5xKgXKPJsub/qROvUiwh0MEEVPwpKYeWtoHnJgywISOuhNg/lZ
-         Xb2g==
+        bh=6VMoSC6q8/DG0pL90AD8rcfqI88oNIHgPN26HjB+0KE=;
+        b=J3bGId/JsR6bk4mq6VkwEfI4tyZH84FdGGLgwZ484EHQVKSTtFHjrIgbQNPlZ1NBwD
+         FU9E6i3wKuf3KWpiCPumDxLQL9BuOLC3eyMrpo3DGRuqZjxsICai6Zv1zrJB8gJLwoub
+         aXQk+q93njBmXzOKx1pdwSoEMtDZSqJ7XUXqeEjO5ZOR9M0UB/7NAwAQzXqodISej1hR
+         upq8hwtJZeaCzi8whUvp5qWbjTZJDTd3HkJY6vX47fAe4A+heBOd2kOau2Bnk02ETi0E
+         j02xqobO8bztFXmHj1TjhLrCbylkAgNqGua/BXHtcxarEczgdrjehtGMtp0RB/2qTV1G
+         Q5yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=8MGJDmpzmQYlM4Mo41R+QyltP773lHwD/4X/m1Uvobk=;
-        b=1uzU0nI+h+vFPmgBBQWZqgSFSAtmDXD8xOdBNhxfYoLkEi55/vMW+nV1FlYRpFWgQY
-         tkWFIhjumTFLzsjP9/4o6YgynUDbvmgH3x6OJw9IX1lrsv4VnVut+hgS8WOtIGfCfv9n
-         YotWuIYmhSoINU+W5ya8Pdbvpuf9B4eosRHOpmsoBrtu849k0aLg1Q64yGUaohF1S9+t
-         llMsV3oEo673xiHV6f0DONACaGwVCbHUMYOwhrjvXfDCJpkfyx9+5tFlf8v1VkyZrjN6
-         /IxIwNy+Whm9Mie8NDktg5ZSfjCsmMUoV4piBSH7/kXKTqM1O/TLvBr6sEqAXkwCSEDf
-         XUbA==
-X-Gm-Message-State: AJIora8RCofKuRagonOqO/xYI9dPhD5k18ZK0RWjExq8eZLoN20qL2P3
-        D2Hf25/xPBl5xogmUZC3gDw=
-X-Google-Smtp-Source: AGRyM1t1DPcHiG28q1WhA1R2wie+T8VFSByx1HrDLgZ48oJpWZidBotBOuQeXnc5CqnJAt0gNqUy8A==
-X-Received: by 2002:a05:6402:518d:b0:43c:32b2:a0a with SMTP id q13-20020a056402518d00b0043c32b20a0amr6726727edd.388.1658842966777;
-        Tue, 26 Jul 2022 06:42:46 -0700 (PDT)
+        bh=6VMoSC6q8/DG0pL90AD8rcfqI88oNIHgPN26HjB+0KE=;
+        b=6o0e3KET7mMOfR9zIt69a+Jsl1ESV4qL/pDq93vOtZG4LgbIth2qCmQO3YlbnWki9y
+         iZ2MblBZMQUymxJP632SHYRGme9JFY3Ytt1/zJ5QttkN9ou3k/4XV4PHM66Z32CsxH9g
+         YRGcLRblIsyDnBUVEZo81LBwf5FFNjvMdnIHtc1jnzeJwTXUj6twg6qkvwLWHZUcAUMo
+         0+ivTl/DJUT8nDzjzTMoVKqd02jdrKyVVJSxVH4H1VEEe0W43cX/cndVlayVfkOozOhA
+         xdUzlByHpZmnVPdMS5PRKQyourZjeDzqaJLJtPJDUmLCMw3NzqmRThfXl70cpJo7iEtI
+         7jrQ==
+X-Gm-Message-State: AJIora9PGyRymfjSjPWDHdPLHSMTGJKDR8GI1onH7Uf984nYSz4wCfzU
+        s5EV4byfxCtlUVxwXhWseXkys/3fKwxSaw==
+X-Google-Smtp-Source: AGRyM1thSk8ykNQg4JEBe0abuUNW1ymxbkTjNwU0ZsbdkgbpsZrzPlubCVxAp3syv2hL3GgIlfmWCg==
+X-Received: by 2002:a17:907:c0d:b0:72b:d0b0:2b55 with SMTP id ga13-20020a1709070c0d00b0072bd0b02b55mr14440064ejc.110.1658843788555;
+        Tue, 26 Jul 2022 06:56:28 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ba17-20020a0564021ad100b0043c87da1ab6sm454528edb.48.2022.07.26.06.42.46
+        by smtp.gmail.com with ESMTPSA id e16-20020a1709061e9000b0072b4da1ed9asm6420258ejj.225.2022.07.26.06.56.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 06:42:46 -0700 (PDT)
+        Tue, 26 Jul 2022 06:56:27 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1oGKpg-0068DB-Od;
-        Tue, 26 Jul 2022 15:42:44 +0200
+        id 1oGL2w-0068dN-Iq;
+        Tue, 26 Jul 2022 15:56:26 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] CI: add SANITIZE=[address|undefined] jobs
-Date:   Tue, 26 Jul 2022 15:33:50 +0200
-References: <patch-1.1-e48b6853dd5-20220726T110716Z-avarab@gmail.com>
- <d4dcb1f6-6076-3725-d479-7e9f1fece2a3@github.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Abhradeep Chakraborty via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH v5 5/6] p5310-pack-bitmaps.sh: enable
+ `pack.writeReverseIndex`
+Date:   Tue, 26 Jul 2022 15:54:04 +0200
+References: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
+ <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com>
+ <e7ef420f321b3936185b2729460b1c28f5384438.1658342304.git.gitgitgadget@gmail.com>
+ <Yt9A4Lh5MzHigeVe@nand.local>
+ <220726.86bktcny14.gmgdl@evledraar.gmail.com>
+ <733f2432-00ab-f0c2-269f-90af02b2105c@github.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <d4dcb1f6-6076-3725-d479-7e9f1fece2a3@github.com>
-Message-ID: <220726.867d40ng6j.gmgdl@evledraar.gmail.com>
+In-reply-to: <733f2432-00ab-f0c2-269f-90af02b2105c@github.com>
+Message-ID: <220726.8635eonfjp.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -72,82 +82,31 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Jul 26 2022, Derrick Stolee wrote:
 
-> On 7/26/2022 7:09 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Add CI targets for SANITIZE=3Daddress and SANITIZE=3Dundefined. The form=
-er
->> would have caught a regression in 18bbc795fc5 (Merge branch
->> 'gc/bare-repo-discovery', 2022-07-22) which made its way to
->> "master"[1].
+> On 7/26/2022 3:15 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Rather than comparing HEAD to your current tree it's generally better
+>> to do something like:
 >>=20
->> Per [2] the GitHub fork of git.git runs with these in CI, so it's
->> already useful to some forks of this repository.
+>> 	GIT_PERF_MAKE_OPTS=3D'-j3' ./run HEAD~ HEAD [...]
 >
-> I'm a fan of adding additional sanitizer checks in our CI. Let's let
-> computers do the work for us here instead of relying on humans.
-
-Thanks, good to have agreement on adding these CI runs.
-
->> Also per [2] we could use SANITIZE=3Daddress with some ASAN_OPTIONS
->> instead of our SANITIZE=3Dleak job added in 956d2e4639b (tests: add a
->> test mode for SANITIZE=3Dleak, run it in CI, 2021-09-23), but unifying
->> those two with these new jobs would be a lot harder, so let's leave
->> that for now.
->>            - jobname: linux-leaks
->>              cc: gcc
->>              pool: ubuntu-latest
->> +          - jobname: SANITIZE=3Daddress
->> +            cc: gcc
->> +            pool: ubuntu-latest
->> +          - jobname: SANITIZE=3Dundefined
->> +            cc: gcc
->> +            pool: ubuntu-latest
+> Using the 'run' script fixes the perf test in the worktree and tests
+> different versions of the 'git' executable.
 >
->> @@ -277,6 +277,12 @@ linux-leaks)
->>  	export SANITIZE=3Dleak
->>  	export GIT_TEST_PASSING_SANITIZE_LEAK=3Dtrue
->>  	;;
->> +SANITIZE=3Daddress)
->> +	export SANITIZE=3Daddress
->> +	;;
->> +SANITIZE=3Dundefined)
->> +	export SANITIZE=3Dundefined
->> +	;;
->
-> In both of these cases, we are breaking from the nearby pattern. These
-> jobs could be renamed to linux-address and linux-undefined to match the
-> linux-leaks job.
->
-> Alternatively, we could rename linux-leaks to SANITIZE=3Dleak[...]
+> That doesn't work when the change is in the performance test itself.
 
-I deliberately deviated from the "linux-leaks" pattern since it's a lot
-more than just:
+Thanks, I'm clearly wrong about that. I didn't look enough at the
+context.
 
-	make SANITIZE=3Dleak test
+But then we're losing the perf test coverage for the case where we don't
+have the *.rev files. Isn't it better to run both with & without *.rev,
+perhaps by splitting up the test file? We could make it a function in
+perf/lib-bitmap.sh that we call both with & without the wanted *.rev
+repack config.
 
-I.e. we instrument what tests we run, skip some individual ones
-etc. These are different in that we can run the entire set. I'd think
-the reverse would make sense, i.e. one day if we run fully with
-SANITIZE=3Dleak enabled to rename that job to "SANITIZE=3Dleak".
+I suspect that's also subtly broken, in that t/perf assumes that it can
+re-use the repo for a given <rev>, but this is modifying that repo, so
+if you run e.g. test Y after this Y, that Y will unexpectedly get a
+repack'd repo ...
 
-> [...], since the
-> point is not to test the Linux platform but to use the additional runtime
-> checks (and Linux is the fasted CI platform).
+But we could just start the test with a git clone . "$TEST_NAME" or
+whatever, then repack that with whatever options we want...
 
-Strictly speaking these tests are platform-specific in that they require
-us to take certain codepaths at runtime, so if we have any
-platform-specific code, or code that's affected by compilation options
-(say NO_REGEX=3DY v.s. using the libc's) we might see failures on one
-platform, but not another. Compilation flags also matter (e.g. -O0
-v.s. -O3).
-
-But I think for all of [leak,address,undefined] it's a sensible
-trade-off for now to just pick one specific platform.
-
-Since it's very unlikely that the resulting issues are OS-specific I
-thought it made sense to leave "linux" out of it, just like we have
-"pedantic", not "linux-pedantic", ditto "sparse" which is also
-platform-specific around the edges.
-
-Having said all that I really don't care much what we call these as long
-as we get the test coverage, but I'll hold off on any possible re-roll
-to see if others chime in about the bikeshed :)
