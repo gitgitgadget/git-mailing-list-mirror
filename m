@@ -2,119 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 084F6C00144
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 17:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9504C00140
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 17:44:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239702AbiGZRky (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 13:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35256 "EHLO
+        id S234121AbiGZRoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 13:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239467AbiGZRkf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 13:40:35 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5930B183B6
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 10:40:21 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id g10-20020a17090a3c8a00b001f3026313e0so315386pjc.7
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 10:40:21 -0700 (PDT)
+        with ESMTP id S239438AbiGZRn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 13:43:57 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C3ABBE03
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 10:43:53 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id e5so10973431qts.1
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 10:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=TNiDKIlVlhHmlLRPSIAX0iYQIiA98ASnUYpJxTs5tD0=;
-        b=phzz/6izD3JbrKGV0ukq1VK5AgHRgB5W03bfJYENMOtT7vkAxk8osNqYlvMPhY8j/I
-         iepPdOtM4T/LjWMwCK9+vBUvTsyTAxvNdfh5dQwFnvyJzwMjUa9socmeeNHxTyjpsdzg
-         Cgw54s20Gzx6lEEnIDYnzUCzXa1bskEQmlwaJl1t792NOa1kJ6XbEU0K8UnH4kcBIlrS
-         NyYCK28xsAvdSb6tHTOEotEKoxlGSiSZH48XtdYwriRhScAVfd49b7jC40KKtX209b7k
-         1fuej2UsZfAFT9+XYSl93wfL0Ub+M80pbBbKLJu4a1S306S06MaChhul+SEgwEdQPwgs
-         RmDA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Hu0TmtSYpkgFFqO4iCic2z/RwzVxM5zJsUvJfRaTvyY=;
+        b=v6HUMxbnndx29Pyj2HnWUasEP4K6+hn6waF9VI6r/gvHvC6aMjQx5zkg7jz1qChUSd
+         fszWoUiHbL3Uo+Q8KdjDATt2JfK4QmZyWyx9VYH6EOL37OyWCPdkMMUzwQBdHI1cLeAM
+         vge6VrP16pnABopJKeyxb+McqIECWDiePRLh0u3W5R5N2CCYuB+Aazzfi3S7M1k6aAuz
+         +eZPrlAgYw2o1McY7e2tVh+ihwuE+lv7wV7apIrx+5/FAW1jDOu0TEXNIEcW76qA3VM6
+         1MqQyUvfLt9PhHwwp3njZ8zsucH3Iyd9lX/Xj4pjkliv0Swz06q0sFAi8hfiQISJooPh
+         jkQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=TNiDKIlVlhHmlLRPSIAX0iYQIiA98ASnUYpJxTs5tD0=;
-        b=7WHK8PrdeC4vRaB/fghb52E7Icoubk5CGkTXMRu3K6qjf3p+wCID1WdYnUomkpam1k
-         bmpt3IlsFLwiuLGEoAgAUPH6hWydNNsXdPo0uuqBNVvMnXbPJbzmWa2MEhjMc5xcQPDT
-         puLePK4dXjAY4OGTf3/vH9RwfvXK4B6ABzGfK7A0QyZpDveHnyM1GLRAejF0yM0cA/VI
-         aDP1Jz6LtJf8WOsgLgoZoBssMENyXjr8I9bnOOLRifXaySloT0ZqkayuEL+ZF/yTOfHh
-         IQPvBaXJRC4vF9dvOM7rU/5qzoITd0cfJZqYG2A2CP4qEuUjcyAbW+/iXQYwDDQHORAJ
-         APQg==
-X-Gm-Message-State: AJIora+b3fJ/dxbEx7S6Zi+Lg84tPegI34FvmhORhhPOezQT9MGTaGtI
-        Qv50U/y7+2MdPv4bPYn6imk4LS6SEjHAzA==
-X-Google-Smtp-Source: AGRyM1v7g0AjrtUxqo9TBbJ8AJ3RyWQgha7ImAUr9GhTVwxUFBW35KB6j2OYim/JioUOMpIPHHbu6oUnpR6cUQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:41d0:b0:16d:4841:214e with SMTP
- id u16-20020a17090341d000b0016d4841214emr17336337ple.13.1658857220295; Tue,
- 26 Jul 2022 10:40:20 -0700 (PDT)
-Date:   Tue, 26 Jul 2022 10:40:18 -0700
-In-Reply-To: <YuAj+eBajf6jkJPc@nand.local>
-Message-Id: <kl6llesfsrgd.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1299.git.git.1658855372189.gitgitgadget@gmail.com> <YuAj+eBajf6jkJPc@nand.local>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Hu0TmtSYpkgFFqO4iCic2z/RwzVxM5zJsUvJfRaTvyY=;
+        b=rFKFo5jvEKD4vfWzcoBhwG3acdVS6sy2cMwYhdof/ufNg9gjCjxJQg4JFnAofwBUDe
+         QT2II23CZePI7M692A6TMesZK6omv2yTLcKHkpefzJFOmE2H3tXVOvjpgWsVG8kK8vM3
+         Ha7iSFbFLgS0Py7nSRAnfHNv5ZfJI8Qz8zqPLuG3vsrMoI5HGVeBM4wNG+X1Ui9c1uGu
+         sFPfEd5t1Ac6dautfqmsyPmtMET/T1SlxCeUaLm5tbpIFgACR0VnXsa4ztxOnsUV3R2K
+         c7tb00hqHKn2uXH4zdwgDJuKxYUzZcuXf4NWFuooVI0VmCIMb8WRoC0ZdqViQOO8WnJs
+         eUjA==
+X-Gm-Message-State: AJIora+N/66hteXPVF87DNkQilLX8aUEYDh4PXZDt/eOJSLdnN0iEtmw
+        EAS9AY+JHvcIN6voK7pBkIjHDA==
+X-Google-Smtp-Source: AGRyM1tZXM5qVhh1PFB5sjz613irPcZEGexYnjFFXpnglnealBIN8ChhfZPyrBaLi1b7vmnTuc28MA==
+X-Received: by 2002:ac8:5a03:0:b0:31f:38f:2a6 with SMTP id n3-20020ac85a03000000b0031f038f02a6mr15465054qta.340.1658857432180;
+        Tue, 26 Jul 2022 10:43:52 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id fb14-20020a05622a480e00b0031f338f95c0sm5206101qtb.0.2022.07.26.10.43.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 10:43:51 -0700 (PDT)
+Date:   Tue, 26 Jul 2022 13:43:51 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Subject: Re: [PATCH] config.c: NULL check when reading protected config
-From:   Glen Choo <chooglen@google.com>
-To:     Taylor Blau <me@ttaylorr.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <YuAn171BhecC1w+O@nand.local>
+References: <pull.1299.git.git.1658855372189.gitgitgadget@gmail.com>
+ <YuAj+eBajf6jkJPc@nand.local>
+ <kl6llesfsrgd.fsf@chooglen-macbookpro.roam.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <kl6llesfsrgd.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Tue, Jul 26, 2022 at 10:40:18AM -0700, Glen Choo wrote:
+> > I wonder: should it become a BUG() to call git_configset_add_file() with
+> > a NULL filename? That would have elevated the test failure outside of
+> > just the ASAn builds, I'd think.
+> >
+> > There's certainty a risk of being too defensive, but elevating this
+> > error beyond just the ASan builds indicates that this would be an
+> > appropriate layer of defense IMHO.
+>
+> Hm, if we're going in this direction, what if we made it a BUG() to call
+> fopen_or_warn() with a NULL filename? Then we wouldn't have to
+> reimplement this BUG() check in all of its callers.
 
-> On Tue, Jul 26, 2022 at 05:09:32PM +0000, Glen Choo via GitGitGadget wrote:
->> From: Glen Choo <chooglen@google.com>
->>
->> In read_protected_config(), check whether each file name is NULL before
->> attempting to read it. This mirrors do_git_config_sequence() (which
->> read_protected_config() is modelled after).
->
-> s/modelled/modeled
+That may be too low-level of a place to put this check, but I don't have
+a strong opinion about it either way (including whether we should have
+such a BUG() *anywhere* in this series, including
+git_configset_add_file()).
 
-Ah, thanks.
-
->> Without these NULL checks,
->>
->>  make SANITIZE=address test T=t0410*.sh
->
-> I'm glad that t0410 was catching this for us already, though it is too
-> bad we didn't see it outside of the ASan builds, or I think we could
-> have potentially caught this earlier.
->
-> Either way, I think the test coverage here is sufficient, so what you
-> wrote makes sense.
->
->> diff --git a/config.c b/config.c
->> index 015bec360f5..b0ba7f439a4 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -2645,9 +2645,12 @@ static void read_protected_config(void)
->>  	system_config = git_system_config();
->>  	git_global_config(&user_config, &xdg_config);
->>
->> -	git_configset_add_file(&protected_config, system_config);
->> -	git_configset_add_file(&protected_config, xdg_config);
->> -	git_configset_add_file(&protected_config, user_config);
->> +	if (system_config)
->> +		git_configset_add_file(&protected_config, system_config);
->> +	if (xdg_config)
->> +		git_configset_add_file(&protected_config, xdg_config);
->> +	if (user_config)
->> +		git_configset_add_file(&protected_config, user_config);
->>  	git_configset_add_parameters(&protected_config);
->
-> I wonder: should it become a BUG() to call git_configset_add_file() with
-> a NULL filename? That would have elevated the test failure outside of
-> just the ASAn builds, I'd think.
->
-> There's certainty a risk of being too defensive, but elevating this
-> error beyond just the ASan builds indicates that this would be an
-> appropriate layer of defense IMHO.
-
-Hm, if we're going in this direction, what if we made it a BUG() to call
-fopen_or_warn() with a NULL filename? Then we wouldn't have to
-reimplement this BUG() check in all of its callers.
-
->
-> Thanks,
-> Taylor
+Thanks,
+Taylor
