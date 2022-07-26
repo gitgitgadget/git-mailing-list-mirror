@@ -2,110 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34A2DC00140
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 14:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F297C04A68
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 14:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239216AbiGZOEQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 10:04:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45768 "EHLO
+        id S238925AbiGZOES (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 10:04:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239205AbiGZOEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 10:04:14 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE0C13F1C
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:04:13 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id h8so20289345wrw.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:04:13 -0700 (PDT)
+        with ESMTP id S239218AbiGZOEQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 10:04:16 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9E4713E1F
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:04:15 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id h8so20289470wrw.1
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=7CIRRtMmddNd7Bj1l0Klyz5AhfG7Bq7WKgk+46UUkUE=;
-        b=XpHokj9iRytrlU5fV0+/bAcSZH4/WMZJM0bV/lJP4idyKAqFfmQ0kvxGhv9Uodr/rQ
-         wp1yxpd49Yb0bzK70rjgxI570huTaSYcCYcDvXcmIa/1l9qL0SBqjE0Q5Ha/eL3ni6p9
-         4Ht5vXiHKBQI2eyUNwZgyYMkVYDrVAm6z7zHkMYvHNtCnMlEv4+haeNb6IwECWp1i8BP
-         O50Y9rvZ5ZsZtm+RXGPC2VAt0IIWLDtzsKnrH7Igrk3P1bnc3JQ/ogKKfGrvHus8Vat5
-         J1uX3gDqVlaq49ppQTSCYnGLOQyE+m5h7sEt2yzjEYFzBaTGovrp0oCz8rj+3LpFWvlX
-         E22Q==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Fjy29URKj3Un18HszCKExbcLlsxvb1I2+KYxkv7oJvo=;
+        b=oU8y8z1XmML3eLR9oHbcbma35uP9s0vjFAI2aGM0yb4JW+5OM13vi0dA7m63P8WP43
+         vTWEPrsmkgEDqdbCG6l1WWMYp1Yt6KEDw7e1Jrij4FqVYdsTEuikE74EcbPN1vsNbmbe
+         t+ADJ9SstzQRx1GX295c6AOLpc9pOXVSl2chwUjwsc/tHyo9YV8mVfpbXoVA+Z4EiZ1E
+         H+fSz7Ke3tsuKfotkagFRhWwF/4wSDyAhOQjmawF9rR+6FJgp9uk0Zh5YLhqSaQGMGIb
+         ytayiQi06st0k0ZFFj1RVCWeiQe7bZXT3aiyNU24RsDoXwITlngARmBK9VK8qMXi2zcJ
+         /VBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=7CIRRtMmddNd7Bj1l0Klyz5AhfG7Bq7WKgk+46UUkUE=;
-        b=bIe3ZBX21RVxTWGuEfl3aXBYESpWER67KhmceiByITLfglWh8oVVOah7IhFg7fyK/3
-         hc7PAu7kXDPbRLYLxxYYoUmlXu8uXb+77S5FvFXgvaZxFGlQvQSVkMy5TC9jkV13zHZD
-         OD1AMksL90qWn3u0I5kC489eRP8hXA3dHawSJW7yMB8otR2pgOeUPS5ROoXu8G+Bf2ai
-         +/vyVtoXYcDkgUy0taYCy17uaDK7Knwpj2oBp2AxqnPckdZ2kIkw0ncwgCFSBHgVTeWy
-         izNw1eFCXBdLOYWOFgpEb7CNyGcE1kF87jklxi1X0UPcYk33qUdCHwl+SZncE03cfB28
-         uxvQ==
-X-Gm-Message-State: AJIora/dHR24z03wBE/VaReSST4T0JhOl49DE/EZQXonguQcumCwrZ5/
-        OVUVCiuE5oAndIN6Bd8CT/OJmWIx7WM=
-X-Google-Smtp-Source: AGRyM1ua9Ntjpso9I5z0rKWWnDyHCdmEPD3LOA4UuenbqeVN5chzvMDXU1LxvrP8hTiTcfpTDmSEWA==
-X-Received: by 2002:a5d:4b84:0:b0:21e:b987:8837 with SMTP id b4-20020a5d4b84000000b0021eb9878837mr729402wrt.595.1658844252105;
-        Tue, 26 Jul 2022 07:04:12 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Fjy29URKj3Un18HszCKExbcLlsxvb1I2+KYxkv7oJvo=;
+        b=ORzRt6LuOqI6sIV4ioJbFSe2+r3RJNm5kCtNISB5GsKHnmUkktGwucZxaamZrfoRb3
+         qdV+5qqwLiirRkw3aO0y8z7YtEtCf2tJPkWphTEZgb+sQ2OhaVCuZDaHjHwb1Fd/QFGL
+         4CbdAEEUy0327sGjq5Gcb8sG7ZelbsMdT3ZSsc7YwgKVQ5/0qSfYcxpG7cuQu/p6vvrX
+         8ukNz6e7/f3BBcr+VCgfd6j1aqWQ8p+du1dSU4XkmU0dY+RjVeHtPEXDADIHoWZmmnu6
+         GJQX+nuDDTHpHHY4eADxmy9yCNG8Fjo3WNL/hjNX8hu3gc8RGCWX0j8b1sYQLQTTXdvh
+         7VKg==
+X-Gm-Message-State: AJIora/sqKldRRKmagdihbrp3LeBiTssW/ypNjX0OPeurPrToIX4qm05
+        v3dOj7e4lFGLADdPT0qFst/ZfymFWeI=
+X-Google-Smtp-Source: AGRyM1sdZctk4IkwnTFMDmXDylgWKPGYBo/JsCSpL75vyqFQjIlZDxV23PXXgppg2AiSwaziHfqGsg==
+X-Received: by 2002:a05:6000:1d8d:b0:21e:a1bc:6de8 with SMTP id bk13-20020a0560001d8d00b0021ea1bc6de8mr2328248wrb.712.1658844253920;
+        Tue, 26 Jul 2022 07:04:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r8-20020adfdc88000000b0021e13efa17esm14442883wrj.70.2022.07.26.07.04.10
+        by smtp.gmail.com with ESMTPSA id s2-20020adff802000000b0021e4edba1e5sm14963447wrp.111.2022.07.26.07.04.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 07:04:11 -0700 (PDT)
-Message-Id: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+        Tue, 26 Jul 2022 07:04:12 -0700 (PDT)
+Message-Id: <c2e5a0b3a50237f3b7f5ceb5d05faa83fd41de68.1658844250.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 Jul 2022 14:04:07 +0000
-Subject: [PATCH 0/3] log: create tighter default decoration filter
+Date:   Tue, 26 Jul 2022 14:04:08 +0000
+Subject: [PATCH 1/3] refs: allow "HEAD" as decoration filter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
-        steadmon@google.com, Derrick Stolee <derrickstolee@github.com>
+        steadmon@google.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When running 'git log', the default is to report any refs within refs/* as
-decorations. This series reduces the default set to be more specific to a
-set of known-useful namespaces.
+From: Derrick Stolee <derrickstolee@github.com>
 
-This was previously reduced by adding the log.excludeDecoration config
-option and modifying that config in git maintenance's prefetch task (to hide
-refs/prefetch/*). I then followed that pattern again for the bundle URI
-feature [1], but this caught some reviewers by surprise as an unfortunate
-side-effect. This series is a way to roll back the previous decision to use
-log.excludeDecoration and instead use tighter filters by default.
+The normalize_glob_ref() method was introduced in 65516f586b693 (log:
+add option to choose which refs to decorate, 2017-11-21) to help with
+decoration filters such as --decorate-refs=<filter> and
+--decorate-refs-exclude=<filter>. The method has not been used anywhere
+else.
 
-[1]
-https://lore.kernel.org/git/a217e9a0640b45d21ef971d6e91cee3f1993f383.1656535245.git.gitgitgadget@gmail.com/
+At the moment, it is impossible to specify HEAD as a decoration filter
+since normalize_glob_ref() prepends "refs/" to the filter if it isn't
+already there.
 
-As noted in the last patch, the current design ignores the new filters if
-there are any previously-specified filters. This includes the
-log.excludeDecorations=refs/prefetch/ set by the git maintenance command.
-This means that users who ran that command in their repo will not get the
-benefits of the more strict filters. While we stop writing
-log.excludeDecorations, we don't remove existing instances of it.
+Allow adding HEAD as a decoration filter by allowing the exact string
+"HEAD" to not be prepended with "refs/". Add a test in t4202-log.sh that
+would previously fail since the HEAD decoration would exist in the
+output.
 
-I'm interested if anyone has another way around this issue, or if we
-consider adding the default filter as long as no --decorate=refs options are
-specified.
+It is sufficient to only cover "HEAD" here and not include other special
+refs like REBASE_HEAD. This is because HEAD is the only ref outside of
+refs/* that is added to the list of decorations.
 
-Thanks, -Stolee
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ refs.c         | 4 ++--
+ t/t4202-log.sh | 6 ++++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-Derrick Stolee (3):
-  refs: allow "HEAD" as decoration filter
-  log: add default decoration filter
-  maintenance: stop writing log.excludeDecoration
-
- Documentation/git-log.txt |  7 ++++--
- builtin/gc.c              |  6 -----
- builtin/log.c             | 53 +++++++++++++++++++++++++++++----------
- refs.c                    |  4 +--
- t/t4202-log.sh            | 29 +++++++++++++++++++++
- t/t7900-maintenance.sh    | 21 ----------------
- 6 files changed, 76 insertions(+), 44 deletions(-)
-
-
-base-commit: 6a475b71f8c4ce708d69fdc9317aefbde3769e25
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1301%2Fderrickstolee%2Fdecorations-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1301/derrickstolee/decorations-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1301
+diff --git a/refs.c b/refs.c
+index 90bcb271687..ec3134e4842 100644
+--- a/refs.c
++++ b/refs.c
+@@ -457,8 +457,8 @@ void normalize_glob_ref(struct string_list_item *item, const char *prefix,
+ 
+ 	if (prefix) {
+ 		strbuf_addstr(&normalized_pattern, prefix);
+-	}
+-	else if (!starts_with(pattern, "refs/"))
++	} else if (!starts_with(pattern, "refs/") &&
++		   strcmp(pattern, "HEAD"))
+ 		strbuf_addstr(&normalized_pattern, "refs/");
+ 	strbuf_addstr(&normalized_pattern, pattern);
+ 	strbuf_strip_suffix(&normalized_pattern, "/");
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 6e663525582..6b7d8e269f7 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -1025,6 +1025,12 @@ test_expect_success 'decorate-refs and simplify-by-decoration without output' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'decorate-refs-exclude HEAD' '
++	git log --decorate=full --oneline \
++		--decorate-refs-exclude="HEAD" >actual &&
++	! grep HEAD actual
++'
++
+ test_expect_success 'log.decorate config parsing' '
+ 	git log --oneline --decorate=full >expect.full &&
+ 	git log --oneline --decorate=short >expect.short &&
 -- 
 gitgitgadget
+
