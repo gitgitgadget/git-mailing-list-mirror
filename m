@@ -2,67 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1F0C00140
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 14:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFAD1C00140
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 15:04:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239436AbiGZOm0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 10:42:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51014 "EHLO
+        id S239145AbiGZPEB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 11:04:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230391AbiGZOmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 10:42:25 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B0532A252
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:42:24 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id m8so17964687edd.9
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:42:24 -0700 (PDT)
+        with ESMTP id S230132AbiGZPEA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 11:04:00 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 131AD2E6B8
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 08:03:59 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id os14so26728823ejb.4
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 08:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=fVmO8pHRPbao+l4wqjagT+HnRGGm4O0U1hRR61n3Te8=;
-        b=HyOD6yDJiykuz4e3pj8WaRnZlQ70ma8Xx1+HzDERZc3MSswT1S2gzM/qLty/ADS1UJ
-         nGttuhiGf1Qe5Bx1JbF4Gv5B7GgQb+y76dHf3i4uxtajyiyOUDj++gWVCIi1Sooe9IUi
-         SaLJ4k+1PP9etZkB9ixtUZRJ9WSL2orU1pFfv992JgMqixEjrhWmiAICom+qkjnftvdN
-         ZFiiyMxzEcXzBomIblbJzSBp5/tl1ILq6dIY3Jb9nD1YK/GtnRzYXysfWC7pP+C1kr8n
-         I2YLSMqHsQzHVc8z8ZlPBugUN/05xEdxMK8FTY/gmLHoXuRh57HLWFa9RBVAcJYaCgW3
-         wmJA==
+        bh=o6H9frLA4U2/Fkiob/RR2m9004DcHjMKWFdQyTraUWI=;
+        b=OTI3fm3wt8JyoOX+Sp2jEURB0UKZNSJ0JmxeMm4Ay3/s1zSc6zdC0YU3KXIZBJuqbk
+         2VUHaT27v9+CZndqR+ujMYJFXRPLrWwyBdpZxfx5oSYANeoMf+Oi2wG3Y8ujgfFeF7xr
+         A7pRmJewS3u3jjBBtDExvPKLx3MT8hEb8b+agErI5Lb+V4xV/0SYF2oj5H5rZ03D9TSM
+         7n8SSi0JgOEm+1SisKOX32QNcjW/LyUx1jaJNgnKAakl52p+sCb4nBL5XyIgh1DnPlIU
+         Fox0irchj0NdNJWOtuX3qlIegR++qVA6PPGx46CLp4mdwk1LGkRKtnSCBxHIdupIlKFb
+         ZnmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=fVmO8pHRPbao+l4wqjagT+HnRGGm4O0U1hRR61n3Te8=;
-        b=xv6n0lI4G7OsNM5u6P9M34oFwq6RrB+mZckaK+WnaRvF8Sm+8yHj3EMEn1ihKTWJCZ
-         qHHUHATLUamwS/JmDgXajbt561VcVtSpWltgecevp57pl+sGmdnSinT6XZFo71nxuIKY
-         ycX7FbQ18vCjOkpo1KQejgf43Op8HlxcNmZieppTmtQX6TMSsJpE12nT8l23zMogs1PT
-         D1lDOjql8yAQ9Yw8ROLQFr81jc1hjjxzDlFn6vL1let8s8MraQ6afjOHsZVJYc8nF4x1
-         I/zV9sNOiDMWOiAGAuYW06GhG38K27FP91TruiMKW0emIOu4bXyGIsayfGoFQaBmNhem
-         h0vQ==
-X-Gm-Message-State: AJIora+xc5/nk2xNvfmezJ1/eHDi7CVEHalQCNA0320PcEeAFMPOgHon
-        K6Z+8i4bmXLpQaYDFs5WOBw=
-X-Google-Smtp-Source: AGRyM1sAZeV9pTIJCDxKXYy+I+9PTaiWINfXRoRSs8TVJfjMw+6qZQKLA1M9Rdv4IoLCFDwAW0U7gw==
-X-Received: by 2002:a05:6402:35c1:b0:43b:e079:83be with SMTP id z1-20020a05640235c100b0043be07983bemr15763410edc.80.1658846542716;
-        Tue, 26 Jul 2022 07:42:22 -0700 (PDT)
+        bh=o6H9frLA4U2/Fkiob/RR2m9004DcHjMKWFdQyTraUWI=;
+        b=WHL86I0cReYJl066D+RX7+gvGXa+yj+DZmP5bZlgUEv5bm4rvgrM3qzGSCufTSxkhe
+         ZBhKHayAiseNQLoAv7Y+l5Rh+2QbpRGYRuqso4H9uW4ag+rCB8ccOm3kz20/wTZFbjSL
+         P1rQBnRaAJle7OT9x7GuF0QBStZhhE2gzMx36vhjvqq6GcnDwIeO8NDMN98z9ANTQ15K
+         BCdpo99aeK4mrRzxb/E8CAkq3WZm2jlD89QXPMUilPiVOchGTS+8AAASdUsJ/FU9vIHP
+         3r/G4IZ82r/CcdVY0GwskEEPyyn1vH0m/QoZDXzeB48QmzSkmUBs8GBHxno6g3QoO7rE
+         qUAw==
+X-Gm-Message-State: AJIora+vF490LtAOYtt1cobk1fw0n2x9hgdVctS97eKeybHGHbw33f9l
+        +0xw+wjlsb+ZrExVZ7OWt4s=
+X-Google-Smtp-Source: AGRyM1uZ6vZnHHneDpR9FZKdo8dPigIWP6bTmD2OvZ5fniYjpAUXMCAdUlisv1sVAeaHc0cK5R/lug==
+X-Received: by 2002:a17:907:72ce:b0:72f:7b3:b9c8 with SMTP id du14-20020a17090772ce00b0072f07b3b9c8mr14016694ejc.248.1658847837364;
+        Tue, 26 Jul 2022 08:03:57 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id t18-20020a1709067c1200b0070b7875aa6asm6470181ejo.166.2022.07.26.07.42.21
+        by smtp.gmail.com with ESMTPSA id gn36-20020a1709070d2400b007262b9f7120sm6535989ejc.167.2022.07.26.08.03.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 07:42:21 -0700 (PDT)
+        Tue, 26 Jul 2022 08:03:56 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1oGLlN-006A7v-3O;
-        Tue, 26 Jul 2022 16:42:21 +0200
+        id 1oGM6F-006Akm-Un;
+        Tue, 26 Jul 2022 17:03:55 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
         vdye@github.com, steadmon@google.com,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 2/3] log: add default decoration filter
-Date:   Tue, 26 Jul 2022 16:39:06 +0200
+Subject: Re: [PATCH 0/3] log: create tighter default decoration filter
+Date:   Tue, 26 Jul 2022 16:44:58 +0200
 References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
- <6b40b84773c70244bb13204ec566b713f1bdf865.1658844250.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <6b40b84773c70244bb13204ec566b713f1bdf865.1658844250.git.gitgitgadget@gmail.com>
-Message-ID: <220726.86y1wglyuq.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+Message-ID: <220726.86tu73ncf8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -72,35 +71,88 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Jul 26 2022, Derrick Stolee via GitGitGadget wrote:
 
-> From: Derrick Stolee <derrickstolee@github.com>
-> [...]
->  test_expect_success 'log.decorate config parsing' '
->  	git log --oneline --decorate=full >expect.full &&
->  	git log --oneline --decorate=short >expect.short &&
-> @@ -2198,6 +2204,23 @@ test_expect_success 'log --decorate includes all levels of tag annotated tags' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'log --decorate does not include things outside filter' '
-> +	reflist="refs/prefetch/ refs/rebase-merge/ refs/bundle/" &&
-> +
-> +	for ref in $reflist
-> +	do
-> +		mkdir -p .git/$ref &&
+> This was previously reduced by adding the log.excludeDecoration config
+> option and modifying that config in git maintenance's prefetch task (to hide
+> refs/prefetch/*). I then followed that pattern again for the bundle URI
+> feature [1], but this caught some reviewers by surprise as an unfortunate
+> side-effect. This series is a way to roll back the previous decision to use
+> log.excludeDecoration and instead use tighter filters by default.
+>
+> As noted in the last patch, the current design ignores the new filters if
+> there are any previously-specified filters. This includes the
+> log.excludeDecorations=refs/prefetch/ set by the git maintenance command.
+> This means that users who ran that command in their repo will not get the
+> benefits of the more strict filters. While we stop writing
+> log.excludeDecorations, we don't remove existing instances of it.
 
-Let's not use -p, and fail if .git doesn't exist?
+Leaving aside the question of these magic refs, and if we need new ones
+(e.g. refs/bundle/*) I have sometimes made use of out-of-standard
+refspace refs.
 
-> +		echo $(git rev-parse HEAD) >.git/$ref/fake || return 1
+E.g. when I build git I create refs/built-tags/* tag object refs
+(i.e. not in refs/tags/*), which is a neat way to get "git tag -l" and
+the like to ignore it.
 
-Hiding the exit code of the "git rev-parse here, but aside fram that why
-is the echo needed at all, can't we just:
+But to still have it show decorated in logs (e.g. I'll see what my
+"private" branch is at), and "for-each-ref --contains" still knows about
+it.
 
-	git rev-parse HEAD >.git/ref/fake
+Now, that's a rather obscure use-case, and I suspect other "special
+refs" are similarly obscure (e.g. GitLab's refs/keep-around/* comes to
+mind).
 
-But even more generally can't we:
+But I think this change is going about it the wrong way, let's have a
+list of refs that Git knows about as magical, instead of assuming that
+we can ignore everything that's not on a small list of things we're
+including.
 
-	git update-ref $ref/fake HEAD
+Wouldn't that give you what you want, and not exclude these sorts of
+custom refs unexpectedly for users?
 
-?
+> I'm interested if anyone has another way around this issue, or if we
+> consider adding the default filter as long as no --decorate=refs options are
+> specified.
 
-If we need to manually munge the ref store let's add REFFILES prereq.
+I think the resulting UX here is bad, in that we ship hardcoded list of
+these if you don't specify the config in 2/3. So I can do:
+
+      -c log.excludeDecoration=this-will-never-match
+
+To "clear" the list, but not this:
+
+      -c log.excludeDecoration=
+
+Which we usually have as a synonym for "false", is it just adding a
+prefix of "" that matches everything to my exclusion list (but HEAD
+still shows up...).
+
+Speaking of funny refnames isn't your:
+
+	git -c log.excludeDecoration=HEAD log
+
+Going to exclude refs like "HEAD/foo/bar" too? I.e. it's always a
+prefix.
+
+I suspect a much better way out of this, which I think fixes the problem
+you're raising here is:
+
+	log.useBuiltinDecorationExclusions=[bool]
+
+Or whatever, i.e. we ship a hardcoded list of exclusions.
+
+Leaving aside whether that's a blacklist or whitelist, or whether we
+turn that to "true" or "false" by default it wouldn't have the behavior
+of "flushing out" the built-in config.
+
+Another way of doing that if you really want to use one variable would
+be to have:
+
+      -c log.excludeDecoration=foo
+
+Add to the built-in list, but:
+
+      -c log.excludeDecoration=
+      -c log.excludeDecoration=foo
+
+clear it, we have a couple of other list config variables that work that
+way.
