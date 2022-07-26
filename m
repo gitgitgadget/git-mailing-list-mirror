@@ -2,101 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4EB3C3F6B0
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 17:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83419C00140
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 18:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239896AbiGZRwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 13:52:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45546 "EHLO
+        id S235555AbiGZSKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 14:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239794AbiGZRwS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 13:52:18 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744CE33363
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 10:51:20 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id y10-20020a9d634a000000b006167f7ce0c5so11346072otk.0
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 10:51:20 -0700 (PDT)
+        with ESMTP id S230127AbiGZSKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 14:10:32 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EFE218E1F
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 11:10:30 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id z22so18655053edd.6
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 11:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=M1f42V3JAJOAVqD3u/ce6MPv5vsPg1Ygwzo8FVStI/w=;
-        b=Xj0Uz2RBJcsi3hkB5nNU1tECf/OxSDeoqQQYvqPGrcW7I3aN+yCcBYHW40h6i5t9ge
-         ZXRjwPOSzsCw0RxLQvm8DSBMQNlbidZIAHZKUSV3XWYlT+2uPitfF8jQO8clkboIBzcn
-         IXLiTKUHXOrjnOLN8GS1dwO2KslYZxLKfk4OjdN0duMhPipX+Ifumwekm/2zt8Ugun0i
-         wvFTRVJsdfL7yqC8feroqdkCmO7bnAhBYfzD293Iub/ZycJtbE0a4ckxM8vWt0MTfIVo
-         VvzC45+OxT8nyQqhPyXBTassrL1DEhn3CT8A5HOrH9PZXujM0usoe3YSwp7jQr1gR/GJ
-         5ixw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=UpKHxsmrZehxshZkwiFRsQRboAPi5BsAJkHDbOMlsdc=;
+        b=gMe70kQBBBctWEzHU2oCNY5Wghw/+6V8IWhSGRNJDzxZLEaBzAY2gONpe+gwS8L6LS
+         49iWlwnMETcP/sBh6OhLD6SycoiGHQIYDjPYDVasNeIaRkkaIR2NhGC0LpAevbU+Tt3i
+         ptwj5RT5OP0I5g17eSkijANX5ApfuKmQ1kuI5LSUlPvWUa7GzzMRO3UF/wEznRDrzZMM
+         XzmjglgLHGw4JFJgJMRVwVe8MDk4Ww3wiGgBs2EhCBB7e9M3S2YlBLlskMcZ9sZ0uHoF
+         I6tcLasRT77Z/h8A1ZkKXZja4SmwyT9l3HsCycutoxuoo0hCBB58jjXCyVhOwOqQTQhr
+         7d+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=M1f42V3JAJOAVqD3u/ce6MPv5vsPg1Ygwzo8FVStI/w=;
-        b=Zij+PEvHclabGwJ4MuPfMs3nYhyAEaoZ4zVQfVpmzlD7zbSzjM1nBJP44OryNtJ4St
-         LJ/NeVeH23hUxFj/53i5YAaEU4Qeg6LHN7aHZHeFOMA+YG+AYaew7dgUX4CQW7w1Ix5g
-         9J+b8i/jk5dzppYKMzJ3eVeQznS4smjTr5Ybs0ya5pqCH0D1ZiIPllFzmQ5YrqmWjtYu
-         UlwQPetzj+AzH7cFd8d2v+SRmzOBXOwD6FW3PMbMaXSrpoQBGwoo9BbHYCHVSq5Q8y5n
-         W1nkM2AaRJQ4PcWfMbfUT7dr9Ng5J4gftZX3eHRu21L4TzP7EuoohTG4Y0v6SHNvjhdy
-         abHA==
-X-Gm-Message-State: AJIora/4Qv3NWc8VumcT/dEGK6eWmyRvQN6yoIxPtBSc0Sjv3R9YQtgi
-        F/vctPioQXEjKwM7W83JXZe0WPHE4Aru
-X-Google-Smtp-Source: AGRyM1vTiCPcWn3xQ9QY9P3vl8VVQr1ljtpa/qbEs693ngyR+3MuWPxx0N1ACOebtUVfGVh31YcVig==
-X-Received: by 2002:a05:6830:2707:b0:61c:c565:d72f with SMTP id j7-20020a056830270700b0061cc565d72fmr6743386otu.101.1658857879757;
-        Tue, 26 Jul 2022 10:51:19 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:70fc:586a:b1e2:eef? ([2600:1700:e72:80a0:70fc:586a:b1e2:eef])
-        by smtp.gmail.com with ESMTPSA id e21-20020a9d63d5000000b0061ca70905absm6584281otl.49.2022.07.26.10.51.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jul 2022 10:51:19 -0700 (PDT)
-Message-ID: <47c0803c-bd98-0460-1e9f-c37dc3deeb8d@github.com>
-Date:   Tue, 26 Jul 2022 13:51:17 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] config.c: NULL check when reading protected config
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, Glen Choo <chooglen@google.com>
-Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=UpKHxsmrZehxshZkwiFRsQRboAPi5BsAJkHDbOMlsdc=;
+        b=VetdrtCV8PO8nwNe5V7+WIOa4yJZQx0gjUm6Xm48gws9Qmua397EnNA32yw35wmR9y
+         ojw1hLaxy77p1sycBDgZ/rnSl14TyL7JYIcIDvhLBamJ/oXxLRsnDeTTK/bidnizKpru
+         DVSeespEnP/k22Udz9HlTzUv/OVrF/w9qdNGVvvsnJ7p1NMHh57iobS78GayrUobE3NY
+         ovhyfwwTurzxE1vlqaIRt6hiPyEoqgeJyzZT/4y8Ox/c/2gWmT7/39xqqyNp+a75AmaX
+         4Xc9mws9VxmGbcqU0kJJNSe08Jz/iqoypnUeF0A1XEQZhW6iRrfm4K7vFIuBLPAX2EHr
+         dhBQ==
+X-Gm-Message-State: AJIora89OWYhJddhZzLYs0GvQcNUAV8dU3fdh75SjQsYwB674+vz6Ji8
+        iHX8u3ZgE4ANULP/PcwcGFA=
+X-Google-Smtp-Source: AGRyM1sckOHQuzXKudKdnRWuKffHuA+UzhI+cEP+IMNDtlank68ToSnq6hW9wU0eiX1J53B8M9Soxw==
+X-Received: by 2002:a05:6402:3707:b0:437:61f9:57a9 with SMTP id ek7-20020a056402370700b0043761f957a9mr19142326edb.1.1658859028563;
+        Tue, 26 Jul 2022 11:10:28 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id j4-20020a056402238400b0043bdd401cafsm6102641eda.47.2022.07.26.11.10.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 11:10:28 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oGP0k-006DLY-RE;
+        Tue, 26 Jul 2022 20:10:26 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         git@vger.kernel.org
-References: <pull.1299.git.git.1658855372189.gitgitgadget@gmail.com>
- <YuAj+eBajf6jkJPc@nand.local>
- <kl6llesfsrgd.fsf@chooglen-macbookpro.roam.corp.google.com>
- <YuAn171BhecC1w+O@nand.local>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <YuAn171BhecC1w+O@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 00/20] parse-options: handle subcommands
+Date:   Tue, 26 Jul 2022 20:02:32 +0200
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+ <xmqq5yjl5b4y.fsf@gitster.g> <1p04q351-9938-r0r7-snr6-9s8237s27459@tzk.qr>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <1p04q351-9938-r0r7-snr6-9s8237s27459@tzk.qr>
+Message-ID: <220726.86h733n3sd.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/26/2022 1:43 PM, Taylor Blau wrote:
-> On Tue, Jul 26, 2022 at 10:40:18AM -0700, Glen Choo wrote:
->>> I wonder: should it become a BUG() to call git_configset_add_file() with
->>> a NULL filename? That would have elevated the test failure outside of
->>> just the ASAn builds, I'd think.
->>>
->>> There's certainty a risk of being too defensive, but elevating this
->>> error beyond just the ASan builds indicates that this would be an
->>> appropriate layer of defense IMHO.
+
+On Tue, Jul 26 2022, Johannes Schindelin wrote:
+
+> Hi Junio,
+>
+> On Mon, 25 Jul 2022, Junio C Hamano wrote:
+>
+>> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 >>
->> Hm, if we're going in this direction, what if we made it a BUG() to call
->> fopen_or_warn() with a NULL filename? Then we wouldn't have to
->> reimplement this BUG() check in all of its callers.
-> 
-> That may be too low-level of a place to put this check, but I don't have
-> a strong opinion about it either way (including whether we should have
-> such a BUG() *anywhere* in this series, including
-> git_configset_add_file()).
+>> >   - builtin/bisect.c: after the conversion/rename from 'bisect--helper=
+',
+>> >     cmd_bisect() doesn't use parse-options anymore.  Take what's on 's=
+een'
+>> >     to resolve the conflict.
+>> >     Note that the conflicting topic should have marked cmd_bisect() wi=
+th
+>> >     the NO_PARSEOPT flag in 'git.c's command list.
+>>
+>> I was wondering about this one.  Does the new "subcommand" support
+>> help implementing the dispatching to subcommands better?  If so it
+>> may not be a bad idea to redo the cmd_bisect() on top of this series
+>> once it proves to be solid.
+>
+> The built-in `bisect` code carries around some local state, in a somewhat
+> futile attempt to keep things in a state that would be more amenable to
+> libifying.
+>
+> The `subcommand` series does not accommodate for such a local state, the
+> signature `typedef int parse_opt_subcommand_fn(int argc, const char
+> **argv, const char *prefix);` requires all pre-subcommand options to be
+> parsed into global (or file-local, but not function-local) variables.
+>
+> This implies that moving `cmd_bisect()` on top of the `subcommand` topic
+> would require the `bisect` code to become less libifyable, which is an
+> undesirable direction.
 
-Since git_configset_add_file() returns an 'int', could we return -1
-if the supplied 'filename' was null? (The correct place to check would
-be down in git_config_from_file_with_options().)
+What are you referring to here specifically?
 
-It would save all these checks here.
+The commands in the builtin/bisect.c take a "struct bisect_terms", but
+as far as I can tell we could simply move setting that up into the
+sub-command callbacks.
 
-(Also: do we care that we are ignoring the return values in
-read_protected_config()?
+So cmd_bisect() only needs to parse_options() enough to figure out that
+the first argument is e.g. "start", then call bisect_start(), which will
+do its own parse_options() & setup of the rest.
 
-Thanks,
--Stolee
+But I could see how we'd in general have a need to carry state from the
+cmd_name() to the cmd_name_subcmd(). Such a thing doesn't seem like a
+big change to SZEDER's patches here, we'd support functions that take a
+void *, similar to how we support two types of "callback" in the "struct
+option" itself.
+
+Or, you could have perfectly lib-ified code where your
+cmd_name_subcmd(int argc, char **argv, char *prefix) would be a one-line
+wrapper for another function taking an extra argument.
+
+You'd use a global only to ferry state between the cmd_name() and that
+cmd_name_subcmd(), which would be some boilerplate, but it wouldn't be
+prohibitive.
+
+When used as a library the API would probably want to take a struct, and
+not an argc/argv/prefix. I don't see how having just that part of the
+command callback handling needing one global would close the door on
+anything else...
