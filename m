@@ -2,89 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2C54C43334
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 13:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BF67C25B0E
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 13:45:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233982AbiGZNct (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 09:32:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49108 "EHLO
+        id S233657AbiGZNmu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 09:42:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238691AbiGZNcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 09:32:48 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1F9C2871B
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:32:47 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-10e4449327aso637151fac.4
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:32:47 -0700 (PDT)
+        with ESMTP id S229741AbiGZNmt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 09:42:49 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DDE91AD9C
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:42:48 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id c72so14886162edf.8
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:42:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=muGrzxX5iKTOCUKlm6sYBjy2ZZ5cK032hts6n8ZjYJQ=;
-        b=VInNQUUeTW3Zy5bUh/r9nNrPP5771fOTAvEjRRJMfpH0xFykbyAJc3KcePj/6PQ22g
-         NQubduct+GFEJ+T2VMk1nb20bPnkzTBnoJUfFYNu7VSAnmpN7bxb2Ssb1d1nF1nggLUP
-         LJ3bGTmfNbIQedkzfK+H3W9ltTOo181PtkKqZrbcLpLYzJIKaumSPAW2EbH6NgS2aleS
-         /evtMh/DToT6G5bc2RDHvNUMU+4e/lnFQQzybLsP0MysMALc+Sk101QYHArbPGAS2jTK
-         CQAQjQ/KIeEGhfy53sVYT2SqCthzBbntG6glkoVA/q3sQayN6iWSlGK+fhiCVkGOUnca
-         7w/g==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=8MGJDmpzmQYlM4Mo41R+QyltP773lHwD/4X/m1Uvobk=;
+        b=esU77cNJ43FAsedZO/rLVhSaAktWWtA8xJ7+OP90qsp3iBRT7Rtd2vubM/lAi2NfxW
+         lWP3LNfqJAGEfW/X9Qhv0Nh+nlKeQVkHmsm0E6xpfyVi7MQKcIOFfIW/NzJMBoL7JLBK
+         v+Ql2eNtVddNaia2TrarA7NqVKCMYEHF3PoRZsLSOFdhcJMinCjG5eiXS7DBsYktCiAt
+         hO6+cZCC/83BzjBgeO7A6bvWD7VROlu/JryMvDztjIPkFHD/a7EtGyWEEB/rgPN5/qcx
+         bTaicUsg2WbGsqGxQt5xKgXKPJsub/qROvUiwh0MEEVPwpKYeWtoHnJgywISOuhNg/lZ
+         Xb2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=muGrzxX5iKTOCUKlm6sYBjy2ZZ5cK032hts6n8ZjYJQ=;
-        b=0nSDIrGgVGKV8Rvn5zpVyGeXbYk7HBVCjWh9/9gPEEM3s2Hm1tJvlQEli/I77e55M9
-         YN2s54KamsdfwWiz3ciahLBHZpQNbmY4W0C78XQXJJJjoC0nmU/YFpVp5RxE2FEh9hbh
-         /STifSqqpQ4W+7Yy4onGGHYAsppk8JCeNYQaxLVg0IdULMU7Q2kpFt+niB34f+q2WLyD
-         DA+AlREPP2+QR4lmosTemtyUnDhQ7gaNcMT+jriucUHChlj95pE9xhaMJzuY7xmEURJm
-         bWwqJUuYFeGA9ICJIq8YAzqRo8TpE6XNxfn86J90Wzs9LmyLm/LCjkfBfuYeaEoRW5hC
-         y7xA==
-X-Gm-Message-State: AJIora9MErTqCJynGbkUFgg+DW5GT2KXc2Gx9W3zGuql+ZXC7BWAW5J7
-        5Bn9Wh7AchmVsY50+aJoi4J0
-X-Google-Smtp-Source: AGRyM1vny/uoMTI6xMAsWjGW5KxNdgzlYDoL7mN+JXawmREY1kIsC955Iy+TPco67lnSwvH4X4Itng==
-X-Received: by 2002:a05:6870:e9a8:b0:10c:685a:15a4 with SMTP id r40-20020a056870e9a800b0010c685a15a4mr16552530oao.110.1658842367180;
-        Tue, 26 Jul 2022 06:32:47 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:70fc:586a:b1e2:eef? ([2600:1700:e72:80a0:70fc:586a:b1e2:eef])
-        by smtp.gmail.com with ESMTPSA id f24-20020a9d6c18000000b0061c731fc92bsm6071427otq.64.2022.07.26.06.32.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jul 2022 06:32:46 -0700 (PDT)
-Message-ID: <733f2432-00ab-f0c2-269f-90af02b2105c@github.com>
-Date:   Tue, 26 Jul 2022 09:32:44 -0400
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=8MGJDmpzmQYlM4Mo41R+QyltP773lHwD/4X/m1Uvobk=;
+        b=1uzU0nI+h+vFPmgBBQWZqgSFSAtmDXD8xOdBNhxfYoLkEi55/vMW+nV1FlYRpFWgQY
+         tkWFIhjumTFLzsjP9/4o6YgynUDbvmgH3x6OJw9IX1lrsv4VnVut+hgS8WOtIGfCfv9n
+         YotWuIYmhSoINU+W5ya8Pdbvpuf9B4eosRHOpmsoBrtu849k0aLg1Q64yGUaohF1S9+t
+         llMsV3oEo673xiHV6f0DONACaGwVCbHUMYOwhrjvXfDCJpkfyx9+5tFlf8v1VkyZrjN6
+         /IxIwNy+Whm9Mie8NDktg5ZSfjCsmMUoV4piBSH7/kXKTqM1O/TLvBr6sEqAXkwCSEDf
+         XUbA==
+X-Gm-Message-State: AJIora8RCofKuRagonOqO/xYI9dPhD5k18ZK0RWjExq8eZLoN20qL2P3
+        D2Hf25/xPBl5xogmUZC3gDw=
+X-Google-Smtp-Source: AGRyM1t1DPcHiG28q1WhA1R2wie+T8VFSByx1HrDLgZ48oJpWZidBotBOuQeXnc5CqnJAt0gNqUy8A==
+X-Received: by 2002:a05:6402:518d:b0:43c:32b2:a0a with SMTP id q13-20020a056402518d00b0043c32b20a0amr6726727edd.388.1658842966777;
+        Tue, 26 Jul 2022 06:42:46 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id ba17-20020a0564021ad100b0043c87da1ab6sm454528edb.48.2022.07.26.06.42.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 06:42:46 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oGKpg-0068DB-Od;
+        Tue, 26 Jul 2022 15:42:44 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] CI: add SANITIZE=[address|undefined] jobs
+Date:   Tue, 26 Jul 2022 15:33:50 +0200
+References: <patch-1.1-e48b6853dd5-20220726T110716Z-avarab@gmail.com>
+ <d4dcb1f6-6076-3725-d479-7e9f1fece2a3@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <d4dcb1f6-6076-3725-d479-7e9f1fece2a3@github.com>
+Message-ID: <220726.867d40ng6j.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v5 5/6] p5310-pack-bitmaps.sh: enable
- `pack.writeReverseIndex`
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-References: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
- <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com>
- <e7ef420f321b3936185b2729460b1c28f5384438.1658342304.git.gitgitgadget@gmail.com>
- <Yt9A4Lh5MzHigeVe@nand.local> <220726.86bktcny14.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220726.86bktcny14.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/26/2022 3:15 AM, Ævar Arnfjörð Bjarmason wrote:
-> Rather than comparing HEAD to your current tree it's generally better
-> to do something like:
-> 
-> 	GIT_PERF_MAKE_OPTS='-j3' ./run HEAD~ HEAD [...]
 
-Using the 'run' script fixes the perf test in the worktree and tests
-different versions of the 'git' executable.
+On Tue, Jul 26 2022, Derrick Stolee wrote:
 
-That doesn't work when the change is in the performance test itself.
+> On 7/26/2022 7:09 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Add CI targets for SANITIZE=3Daddress and SANITIZE=3Dundefined. The form=
+er
+>> would have caught a regression in 18bbc795fc5 (Merge branch
+>> 'gc/bare-repo-discovery', 2022-07-22) which made its way to
+>> "master"[1].
+>>=20
+>> Per [2] the GitHub fork of git.git runs with these in CI, so it's
+>> already useful to some forks of this repository.
+>
+> I'm a fan of adding additional sanitizer checks in our CI. Let's let
+> computers do the work for us here instead of relying on humans.
 
-Thanks,
--Stolee
+Thanks, good to have agreement on adding these CI runs.
+
+>> Also per [2] we could use SANITIZE=3Daddress with some ASAN_OPTIONS
+>> instead of our SANITIZE=3Dleak job added in 956d2e4639b (tests: add a
+>> test mode for SANITIZE=3Dleak, run it in CI, 2021-09-23), but unifying
+>> those two with these new jobs would be a lot harder, so let's leave
+>> that for now.
+>>            - jobname: linux-leaks
+>>              cc: gcc
+>>              pool: ubuntu-latest
+>> +          - jobname: SANITIZE=3Daddress
+>> +            cc: gcc
+>> +            pool: ubuntu-latest
+>> +          - jobname: SANITIZE=3Dundefined
+>> +            cc: gcc
+>> +            pool: ubuntu-latest
+>
+>> @@ -277,6 +277,12 @@ linux-leaks)
+>>  	export SANITIZE=3Dleak
+>>  	export GIT_TEST_PASSING_SANITIZE_LEAK=3Dtrue
+>>  	;;
+>> +SANITIZE=3Daddress)
+>> +	export SANITIZE=3Daddress
+>> +	;;
+>> +SANITIZE=3Dundefined)
+>> +	export SANITIZE=3Dundefined
+>> +	;;
+>
+> In both of these cases, we are breaking from the nearby pattern. These
+> jobs could be renamed to linux-address and linux-undefined to match the
+> linux-leaks job.
+>
+> Alternatively, we could rename linux-leaks to SANITIZE=3Dleak[...]
+
+I deliberately deviated from the "linux-leaks" pattern since it's a lot
+more than just:
+
+	make SANITIZE=3Dleak test
+
+I.e. we instrument what tests we run, skip some individual ones
+etc. These are different in that we can run the entire set. I'd think
+the reverse would make sense, i.e. one day if we run fully with
+SANITIZE=3Dleak enabled to rename that job to "SANITIZE=3Dleak".
+
+> [...], since the
+> point is not to test the Linux platform but to use the additional runtime
+> checks (and Linux is the fasted CI platform).
+
+Strictly speaking these tests are platform-specific in that they require
+us to take certain codepaths at runtime, so if we have any
+platform-specific code, or code that's affected by compilation options
+(say NO_REGEX=3DY v.s. using the libc's) we might see failures on one
+platform, but not another. Compilation flags also matter (e.g. -O0
+v.s. -O3).
+
+But I think for all of [leak,address,undefined] it's a sensible
+trade-off for now to just pick one specific platform.
+
+Since it's very unlikely that the resulting issues are OS-specific I
+thought it made sense to leave "linux" out of it, just like we have
+"pedantic", not "linux-pedantic", ditto "sparse" which is also
+platform-specific around the edges.
+
+Having said all that I really don't care much what we call these as long
+as we get the test coverage, but I'll hold off on any possible re-roll
+to see if others chime in about the bikeshed :)
