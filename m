@@ -2,217 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D847C43334
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 00:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AAE5C43334
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 01:06:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235324AbiGZAw7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 20:52:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40784 "EHLO
+        id S236844AbiGZBGm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 21:06:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229971AbiGZAw6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 20:52:58 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BB727164
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 17:52:57 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id c20so9507644qtw.8
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 17:52:57 -0700 (PDT)
+        with ESMTP id S236828AbiGZBGk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 21:06:40 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E253D2656E
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 18:06:39 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id z6-20020a056902054600b00670e3c8b43fso7723392ybs.23
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 18:06:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Hg2y0TYAjJoEGKdANPvYKfZe7s9qB0gU8Z5snr01hHk=;
-        b=LCbCfWM1PS0JY3ww1QfteDvfGLJuanp0YrN1MCX8l4//OoE/oLev5gMuRIGQeYtWt7
-         hEiJf3rUmK+s1QvdAbdprFOoWYP65ObUFL6+4S+9jY7tWoKu6fU7G8luTwrvHp4KRF6A
-         RFC4TWv3MlRDZC/0kk0YAXxShHgSmfRl4ONOHpuv6p32uIDjkEeZm3sq4tIdfbxX/u+b
-         H0afjnOPAz37TluXRsBBE8hA41Y24KgtGiqYzr+sZGWEieGdYtYxkq/YmpO6pAiuHWFJ
-         5e0JMmvnjp89s5SPfxOjuoZlebtwpp/atGEhjS1oeSwsetUtNc/HuDBFNC+cmliVLkvv
-         rXkQ==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=13+ticgLr9ZRjpnfhTy+1V4pxSsTLu7lKnrVCyga8r8=;
+        b=YrvOUZpdZIAQcZHQMvhRpLzuFKi0pUSy3nn7tCW/CJTiEoPpaQ4Po6XTMTI0xRpzoy
+         ElLhuRkoSUaudxfw7bXC9yMXwTaxIeWV+gb73tQVb01zoFtBRaHAVJxtzHmjyyLXf4hm
+         tQe4QSIqGpbgilSqoh6f9hXlKJLgH9Knh/pNKd30LCwaXqOCAEyjdH5D/ETxvrBIk0KV
+         F9msJ986UKpt35zJK8qJk1QgeCgORUukeAc0TttD4J58d/TKWC/8avHoNVNeEcSYZfJV
+         gjAJghw6A8Sq2Cy+pYaPrCTEfB2WLkLI4DMMa9AmCF+p9YK8zAdHLGSpKXLBLDuraTFP
+         NA3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Hg2y0TYAjJoEGKdANPvYKfZe7s9qB0gU8Z5snr01hHk=;
-        b=fiOBTCX9Mm53/Fnx/2I1H0yFASIPS/xrmJVmITJNbY48HhtQO/r+2cJfF4K04OqHHP
-         DXTcFvHtytc0o7uYSWC3pYRcipk991ZUK67AB0XH1c1tnaAfU8hv4bDhU1Xi7xf72/Ac
-         M4Mhb/qmWWeIe3TWrkhhtBs5BY5V4GUFHF3bSXWHQ1er1yFc4TIUd+4dAvIcQfW8BJ/O
-         TMZziHxtLDYfWPwKRru2dwc4Zuspqb6vTy6YsSi+ZJgF6RU8vKuv463xwL7svHe7grpC
-         BbQqRwznL6+ydBJyYNuAbXxejnBvmD2+q+rf5Uj+y1ojjI8RgxXNKnHl3IAQSfaAZRUN
-         FLQg==
-X-Gm-Message-State: AJIora9bVjN7EjrB/VAeuxHc2X/7TlLuyuUJIZiJHkxWxEiDsetqa91i
-        jgXGGr4IBhygBGIj8wsU0bt4FA==
-X-Google-Smtp-Source: AGRyM1u+ZAE5bjaLAXuv+XaF82enyj9Ax9kJlcWVcvuRgYwbrgtac8psD44sEL/+7Sbx0+KbHbZKEA==
-X-Received: by 2002:a05:622a:46:b0:31e:f7b2:fff2 with SMTP id y6-20020a05622a004600b0031ef7b2fff2mr12367759qtw.613.1658796776493;
-        Mon, 25 Jul 2022 17:52:56 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u22-20020a05620a431600b006af147d4876sm10363140qko.30.2022.07.25.17.52.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 17:52:56 -0700 (PDT)
-Date:   Mon, 25 Jul 2022 20:52:55 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH v5 2/6] pack-bitmap-write.c: write lookup table extension
-Message-ID: <Yt8650eWLfm5VlLe@nand.local>
-References: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
- <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com>
- <a913e6a2cb36d8ec7900b60820d8ab3c35f60164.1658342304.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a913e6a2cb36d8ec7900b60820d8ab3c35f60164.1658342304.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=13+ticgLr9ZRjpnfhTy+1V4pxSsTLu7lKnrVCyga8r8=;
+        b=4IKbq1czlVQa5h2bsq8EkZWnUgSbvsC8NzgmFP8BcmldC+ST/Ws/DMiMjH+isQy6Ra
+         +sWIrQyrxXxwGp9xNjHpZyVeW6rXSd4PnTByWo3uWCbz5pQBptYfxezYRc5/Ay8zOfWn
+         bjAmwjr9/ru6Bo+LTYo4dyPsk+dMfpa3Np96rSOLP7tbTiFwXuwW3GBxAHduYuAVj0xh
+         NufyLfLqAQZNiX/MD+sASPids4SRoXyfO9/aHYdgcHCA4MHBO6cNclT8YY2DCCfF/Xi1
+         XOsamkfAXIVsk0soFxYLkjgvWkqDnFN2WpG6yosjVRUTgGk5J57YCYMrLKJyda1P5U1x
+         3s9Q==
+X-Gm-Message-State: AJIora+zaEvl8NZIyUuOYN9RRWqf8/Of4hWoRAG/mtt4VcbPjKik/qY8
+        WbphgH/IYtxLgG2pz/bP3Y8bIqwe03UbgQ==
+X-Google-Smtp-Source: AGRyM1u6tL4RZFPXeqV/5/QQUjE4Tq50ehuJrnOb4IzpoG1LPl1hgX2wdzs/9y/VnQO+ttrVw8i6De7XJVWzZw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a0d:d652:0:b0:31f:4443:968c with SMTP id
+ y79-20020a0dd652000000b0031f4443968cmr1462994ywd.468.1658797599232; Mon, 25
+ Jul 2022 18:06:39 -0700 (PDT)
+Date:   Mon, 25 Jul 2022 18:06:37 -0700
+In-Reply-To: <patch-v3-24.26-7551af195ad-20220721T191249Z-avarab@gmail.com>
+Message-Id: <kl6lr128smw2.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <cover-v2-00.24-00000000000-20220719T204458Z-avarab@gmail.com>
+ <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com> <patch-v3-24.26-7551af195ad-20220721T191249Z-avarab@gmail.com>
+Subject: Re: [PATCH v3 24/26] submodule--helper: free rest of "displaypath" in
+ "struct update_data"
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 20, 2022 at 06:38:20PM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
-> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> Fix a leak in code added in c51f8f94e5b (submodule--helper: run update
+> procedures from C, 2021-08-24), we clobber the "displaypath" member of
+> the passed-in "struct update_data" both so that die() messages in this
+> update_submodule() function itself can use it, and for the
+> run_update_procedure() called within this function.
 >
-> The bitmap lookup table extension was documented by an earlier
-> change, but Git does not yet know how to write that extension.
->
-> Teach Git to write bitmap lookup table extension. The table contains
-> the list of `N` <commit_pos, offset, xor_row>` triplets. These
-> triplets are sorted according to their commit pos (ascending order).
-> The meaning of each data in the i'th triplet is given below:
->
->   - commit_pos stores commit position (in the pack-index or midx).
->     It is a 4 byte network byte order unsigned integer.
->
->   - offset is the position (in the bitmap file) from which that
->     commit's bitmap can be read.
->
->   - xor_row is the position of the triplet in the lookup table
->     whose bitmap is used to compress this bitmap, or `0xffffffff`
->     if no such bitmap exists.
->
-> Mentored-by: Taylor Blau <me@ttaylorr.com>
-> Co-mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> Co-authored-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  pack-bitmap-write.c | 112 ++++++++++++++++++++++++++++++++++++++++----
->  pack-bitmap.h       |   5 +-
->  2 files changed, 107 insertions(+), 10 deletions(-)
+>  builtin/submodule--helper.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 >
-> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-> index c43375bd344..9843790cb60 100644
-> --- a/pack-bitmap-write.c
-> +++ b/pack-bitmap-write.c
-> @@ -650,20 +650,19 @@ static const struct object_id *oid_access(size_t pos, const void *table)
->
->  static void write_selected_commits_v1(struct hashfile *f,
->  				      struct pack_idx_entry **index,
-> -				      uint32_t index_nr)
-> +				      uint32_t index_nr,
-> +				      off_t *offsets,
-> +				      uint32_t *commit_positions)
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index b65665105e7..4e70a74357c 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2551,10 +2551,11 @@ static int update_submodule(struct update_data *u=
+pdate_data,
+>  			    int *must_die_on_failure)
 >  {
->  	int i;
+>  	int ret =3D 1;
+> +	char *to_free, *restore =3D update_data->displaypath;
+> =20
+>  	ensure_core_worktree(update_data->sm_path);
+> =20
+> -	update_data->displaypath =3D get_submodule_displaypath(
+> +	update_data->displaypath =3D to_free =3D get_submodule_displaypath(
+>  		update_data->sm_path, update_data->prefix);
 >
->  	for (i = 0; i < writer.selected_nr; ++i) {
->  		struct bitmapped_commit *stored = &writer.selected[i];
->
-> -		int commit_pos =
-> -			oid_pos(&stored->commit->object.oid, index, index_nr, oid_access);
-> +		if (offsets)
-> +			offsets[i] = hashfile_total(f);
->
-> -		if (commit_pos < 0)
-> -			BUG("trying to write commit not in index");
-> -
-> -		hashwrite_be32(f, commit_pos);
-> +		hashwrite_be32(f, commit_positions[i]);
-
-I wonder if it would make this patch a little more readable to construct
-and use the commit_positions array as a single preparatory step before
-this commit.
-
-What do you think?
-
-> +static void write_lookup_table(struct hashfile *f,
-> +			       struct pack_idx_entry **index,
-> +			       uint32_t index_nr,
-> +			       off_t *offsets,
-> +			       uint32_t *commit_positions)
-> +{
-> +	uint32_t i;
-> +	uint32_t *table, *table_inv;
+>  	determine_submodule_update_strategy(the_repository, update_data->just_c=
+loned,
+> @@ -2628,6 +2629,9 @@ static int update_submodule(struct update_data *upd=
+ate_data,
+> =20
+>  	ret =3D 0;
+>  cleanup:
+> +	free(to_free);
+> +	update_data->displaypath =3D restore;
 > +
-> +	ALLOC_ARRAY(table, writer.selected_nr);
-> +	ALLOC_ARRAY(table_inv, writer.selected_nr);
-> +
-> +	for (i = 0; i < writer.selected_nr; i++)
-> +		table[i] = i;
-> +
-> +	/*
-> +	 * At the end of this sort table[j] = i means that the i'th
-> +	 * bitmap corresponds to j'th bitmapped commit (among the selected
-> +	 * commits) in lex order of OIDs.
-> +	 */
-> +	QSORT_S(table, writer.selected_nr, table_cmp, commit_positions);
-> +
-> +	/* table_inv helps us discover that relationship (i'th bitmap
-> +	 * to j'th commit by j = table_inv[i])
-> +	 */
-> +	for (i = 0; i < writer.selected_nr; i++)
-> +		table_inv[table[i]] = i;
-> +
-> +	trace2_region_enter("pack-bitmap-write", "writing_lookup_table", the_repository);
-> +	for (i = 0; i < writer.selected_nr; i++) {
-> +		struct bitmapped_commit *selected = &writer.selected[table[i]];
-> +		uint32_t xor_offset = selected->xor_offset;
-> +		uint32_t xor_row;
-> +
-> +		if (xor_offset) {
-> +			/*
-> +			 * xor_index stores the index (in the bitmap entries)
-> +			 * of the corresponding xor bitmap. But we need to convert
-> +			 * this index into lookup table's index. So, table_inv[xor_index]
-> +			 * gives us the index position w.r.t. the lookup table.
-> +			 *
-> +			 * If "k = table[i] - xor_offset" then the xor base is the k'th
-> +			 * bitmap. `table_inv[k]` gives us the position of that bitmap
-> +			 * in the lookup table.
-> +			 */
-> +			uint32_t xor_index = table[i] - xor_offset;
-> +			xor_row = table_inv[xor_index];
-> +		} else {
-> +			xor_row = 0xffffffff;
-> +		}
-> +
-> +		hashwrite_be32(f, commit_positions[table[i]]);
-> +		hashwrite_be64(f, (uint64_t)offsets[table[i]]);
-> +		hashwrite_be32(f, xor_row);
-> +	}
-> +	trace2_region_leave("pack-bitmap-write", "writing_lookup_table", the_repository);
-> +
-> +	free(table);
-> +	free(table_inv);
-> +}
+>  	return ret;
+>  }
 
+I'm not sure why we need to have "restore". We set
+"update_data->displaypath" so that we can use it inside this function
+(and its call chain), but we don't care about it outside of this call
+chain at all.
 
-> @@ -715,7 +791,25 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
->  	dump_bitmap(f, writer.trees);
->  	dump_bitmap(f, writer.blobs);
->  	dump_bitmap(f, writer.tags);
-> -	write_selected_commits_v1(f, index, index_nr);
-> +
-> +	ALLOC_ARRAY(commit_positions, writer.selected_nr);
-> +	for (uint32_t i = 0; i < writer.selected_nr; ++i) {
+If the goal is to avoid exposing a free()-d pointer, could we just do
 
-Nit; we don't typically write for-loop expressions with variable
-declarations inside of them. Make sure to declare i outside of the loop,
-and then this becomes:
+   FREE_AND_NULL(update_data->displaypath);
 
-    for (i = 0; i < writer.selected_nr; i++)
+instead?
 
-(also, we typically use the postfix ++ operator, that is "i++" instead
-of "++i" unless there is a reason to prefer the latter over the former).
-
-Thanks,
-Taylor
+> =20
+> --=20
+> 2.37.1.1095.g0bd6f54ba8a
