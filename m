@@ -2,112 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B68F8C00140
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 19:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A746CC00144
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 19:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239107AbiGZTnF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 15:43:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33442 "EHLO
+        id S239654AbiGZTz0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 15:55:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230056AbiGZTnC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 15:43:02 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A144A1CFF5
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 12:43:01 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id ot17-20020a17090b3b5100b001f2c064b8b0so1048873pjb.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 12:43:01 -0700 (PDT)
+        with ESMTP id S232046AbiGZTzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 15:55:22 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A36BF45
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 12:55:20 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id h8so21528595wrw.1
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 12:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=unYdPuXlR6PGC6o+/npRmXOgC9u6Eq2km3ngwfkIh+g=;
-        b=kHcKo6edCa83ceOjum033MAPVe1S03JeIwpFQiEmeedN3u+qD14afLBFLRQew/ys+a
-         r4+RpCQpiAklXOCmtQ+FasgA2Y5HHT0nBqLHz8avEtI1kqHpw7U9zWJaTQD8M+goxl+p
-         WcjjLD2V7UiG/7nF6yoOgFeZQY6UMvP/nlmeRoYI+HrN7BWSdeKQXaX9dh2RgrhV6L3B
-         R+nssDknt918brxOmayAmh2PcWv4yBxaG1q0SbIeNdKapEsXKKdlKZPCoi8F0JenPdp0
-         0OlJno1n0uMGRcLKcVdciGmr/rV0m0BbfVCmq99t4estP2b/Ay8zsDEd7sejUMsokpQq
-         xNJQ==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=bAsZ6TdyzWh2eARWcnQ9kjOLWMQxdyr5OUCyOeXbwJ4=;
+        b=PYn+E4zLwiJ5bRSC5202cFiCfQAxenbg4v9fus7Meu5XKPmJXn1Ok8tYpGTIRPvq22
+         GfMZAuBXByVhxSJZedB3a5sQLZzUomalwLvZRU27xQAViJQyXzWYW2RbZvLroDkqnrQb
+         yyrhAji1HRBOxnWIxobgY3ngSl8D7uc1BOBKvw0DfFEqIMlalzISLUX8yQXqpKteb1lM
+         VE2+BMcL26A9mxRsm+RqlLK0356iOX303s+8ewdm0hf6PbBbZCj9xo/D9cs0m8Txgehm
+         zyH9560Tw9q0v+fY2xvumIBz/OMS2xf3q4M6hdrnadYy/PUVzf+XLzJv1a0/5d7vbxOs
+         uTvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=unYdPuXlR6PGC6o+/npRmXOgC9u6Eq2km3ngwfkIh+g=;
-        b=OSrBJserEmBUS2nE/AMJZ+hx7Td482iKWMqM5eoyl7M3uBVADRDgczs5cn67qGe1BZ
-         ULx1wDQcrXz7n/wM5zvLH9xinTQ9n+PXiuLVcMnK6iZL2p3S+xbzAKB1l/ztNdiM/nGH
-         gNByyuZyTv75eW9tCiGtIoorfVzfDh7Kls2mNv0Ku1zPS1Ko75D2z1b6A4c5bteZUT3h
-         ZOiVr6TZz9XlYkaLCW+hfiBnSOiSu/FGLp3SIoa6rLT8gNiHmO7XZg2AGZioYN18GnmT
-         4FE6pAg+Oi0+A+cJzwi02Y2ICS8HMMvpmNBxo3LVPPbqjif3SIAh8PIFxrs2mTH/HQ/r
-         slDw==
-X-Gm-Message-State: AJIora/Mzp8dmUPLh6ImcaDuyGPB1EpUW7LZPS4JvrKvgUZv9RqOaUj/
-        rHk46rDD2Lep8CvpPUCkEdkbc2Ey9I7U6g==
-X-Google-Smtp-Source: AGRyM1tpW9BvFxzzRukGnewR8mur2ZUu8FT9sxrobxcCpSaAj92q7TRlzaJqii6A2et9VbicuwJp6LZ4YfrUkg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:179e:b0:518:9e1d:1cbd with SMTP
- id s30-20020a056a00179e00b005189e1d1cbdmr18754204pfg.12.1658864581186; Tue,
- 26 Jul 2022 12:43:01 -0700 (PDT)
-Date:   Tue, 26 Jul 2022 12:42:44 -0700
-In-Reply-To: <47c0803c-bd98-0460-1e9f-c37dc3deeb8d@github.com>
-Message-Id: <kl6lilnjslsb.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1299.git.git.1658855372189.gitgitgadget@gmail.com>
- <YuAj+eBajf6jkJPc@nand.local> <kl6llesfsrgd.fsf@chooglen-macbookpro.roam.corp.google.com>
- <YuAn171BhecC1w+O@nand.local> <47c0803c-bd98-0460-1e9f-c37dc3deeb8d@github.com>
-Subject: Re: [PATCH] config.c: NULL check when reading protected config
-From:   Glen Choo <chooglen@google.com>
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=bAsZ6TdyzWh2eARWcnQ9kjOLWMQxdyr5OUCyOeXbwJ4=;
+        b=SrQLOHyPal8comi7VnlaTpyVg0++xzSdA5c6yitUYQHQFe1AnQbPT2WH5HVEab54os
+         onvt0KOiXw2daaQiqGZtnQMS4joX1lfG5ezdZC7vwZyZvPOJL5fb5VLNInv9VyywRiaT
+         RCvAxzeWsrJM0uBJk67zQQ1oOw7bp0farI73l8XNIiR2j61vnXGzSWz6Vzl8FxH+g6Y/
+         /eZgYe0qNmL6NOrHwZkMfLWMTTkogU8IZq8ThJFjJQyavk2KJXKS62+fjcVEHLomlswK
+         8rQ0HGzkrgospSZ2NjZM4CKq+IOf5T/HVrXEQ2Eb0OhRomdNFLd0yvPUZrs74tfVmACo
+         t1Mg==
+X-Gm-Message-State: AJIora9zkE5jF5z7jlpLQIvbEfMSrcIiHSKkYCX/vyuJzf/0qoby35x8
+        6GT6VLzPpe35z23BrQac+PHcw4oivmM=
+X-Google-Smtp-Source: AGRyM1upeo+PybpGNdesRsVJEGEHOcbsjc8WI/GQ1PJJggwffE9mwjUJdrCSrvWyR3jmyPGDxb08mA==
+X-Received: by 2002:adf:df83:0:b0:21e:beac:61f9 with SMTP id z3-20020adfdf83000000b0021ebeac61f9mr1043489wrl.125.1658865319282;
+        Tue, 26 Jul 2022 12:55:19 -0700 (PDT)
+Received: from localhost (94-21-23-94.pool.digikabel.hu. [94.21.23.94])
+        by smtp.gmail.com with ESMTPSA id m6-20020a7bce06000000b003a35516ccc3sm9582113wmc.26.2022.07.26.12.55.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 12:55:18 -0700 (PDT)
+Date:   Tue, 26 Jul 2022 21:55:16 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 01/20] git.c: update NO_PARSEOPT markings
+Message-ID: <20220726195516.GA2264@szeder.dev>
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+ <20220725123857.2773963-2-szeder.dev@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220725123857.2773963-2-szeder.dev@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+On Mon, Jul 25, 2022 at 02:38:38PM +0200, SZEDER Gábor wrote:
+> Our Bash completion script can complete --options for commands using
+> parse-options even when that command doesn't have a dedicated
+> completion function, but to do so the completion script must know
+> which commands use parse-options and which don't.  Therefore, commands
+> not using parse-options are marked in 'git.c's command list with the
+> NO_PARSEOPT flag.
+> 
+> Update this list, and remove this flag from the commands that by now
+> use parse-options.
+> 
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> ---
+>  git.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/git.c b/git.c
+> index e5d62fa5a9..c4282f194a 100644
+> --- a/git.c
+> +++ b/git.c
 
-> On 7/26/2022 1:43 PM, Taylor Blau wrote:
->> On Tue, Jul 26, 2022 at 10:40:18AM -0700, Glen Choo wrote:
->>>> I wonder: should it become a BUG() to call git_configset_add_file() with
->>>> a NULL filename? That would have elevated the test failure outside of
->>>> just the ASAn builds, I'd think.
->>>>
->>>> There's certainty a risk of being too defensive, but elevating this
->>>> error beyond just the ASan builds indicates that this would be an
->>>> appropriate layer of defense IMHO.
->>>
->>> Hm, if we're going in this direction, what if we made it a BUG() to call
->>> fopen_or_warn() with a NULL filename? Then we wouldn't have to
->>> reimplement this BUG() check in all of its callers.
->> 
->> That may be too low-level of a place to put this check, but I don't have
->> a strong opinion about it either way (including whether we should have
->> such a BUG() *anywhere* in this series, including
->> git_configset_add_file()).
->
-> Since git_configset_add_file() returns an 'int', could we return -1
-> if the supplied 'filename' was null? (The correct place to check would
-> be down in git_config_from_file_with_options().)
->
-> It would save all these checks here.
+> @@ -627,7 +627,7 @@ static struct cmd_struct commands[] = {
+>  	{ "verify-tag", cmd_verify_tag, RUN_SETUP },
+>  	{ "version", cmd_version },
+>  	{ "whatchanged", cmd_whatchanged, RUN_SETUP },
+> -	{ "worktree", cmd_worktree, RUN_SETUP | NO_PARSEOPT },
+> +	{ "worktree", cmd_worktree, RUN_SETUP },
 
-Hm, IIUC you are suggesting that git_configset_add_file() returns -1
-instead of BUG()-ing?
+This hunk is wrong, 'worktree' does not use parse_options().  I was
+fooled by seeing its (empty) 'struct option' array, thinking that then
+it must surely use parse_options(), but it only uses that options
+array to pass it to usage_with_options().
 
-BUG() sounds better IMO, since there really is nothing useful that
-git_configset_add_file() (and later functions) can do with a NULL file
-name. Plus, git_configset_add_file() has already reserved -1 to mean
-"a file was specified but could not be read".
+This NO_PARSEOPT flag should be removed in the last patch of the
+series, when I convert cmd_worktree() to handle its subcommands with
+parse_options().
 
->
-> (Also: do we care that we are ignoring the return values in
-> read_protected_config()?
-
-I don't think we care (unless this is a style issue). "git config" 
-succeeds even if it encounters non-repo files that can't be read. In a
-similar vein, I don't think it matters for protected config if we can't
-read one of the files (e.g. xdg_config) or even all of the files; all
-that matters is that we've read everything that we can.
-
->
-> Thanks,
-> -Stolee
+>  	{ "write-tree", cmd_write_tree, RUN_SETUP },
+>  };
+>  
+> -- 
+> 2.37.1.633.g6a0fa73e39
+> 
