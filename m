@@ -2,145 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51581C04A68
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 13:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34A2DC00140
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 14:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239138AbiGZN7S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 09:59:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41744 "EHLO
+        id S239216AbiGZOEQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 10:04:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239212AbiGZN7Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 09:59:16 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59A66BF53
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:59:15 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id t3-20020a17090a3b4300b001f21eb7e8b0so16795673pjf.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 06:59:15 -0700 (PDT)
+        with ESMTP id S239205AbiGZOEO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 10:04:14 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE0C13F1C
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:04:13 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id h8so20289345wrw.1
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:04:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=tVn8Gvxh2/Mk0E0/TumGhvzTUpc1I8TYTQwXhIZLpC4=;
-        b=fyTOmSJUx1FwS12mNWW6+pW7CB4vQXjtPcXzgYbyJxnRuGr/nRmjHvvc3fJ+aGr2Hi
-         XYhUrLg2EWydbQjigks0SfabnrOg7tIbe54WEzEgl4bNuRt1vEVj9hfMbWSsiq041Jjb
-         WDGLU1z5JG2wi4VSBHtDAEFTU2CjbkTNvuUoBsCfC066u+l7EHWKosOoB+ZrJXrYZnOR
-         zfMFiv/62q8A/2DWn1eQ6zfbNEIv2cyFVbkwbmbqRpjI+CNhZyo226N3D0iZAaqGL4Yc
-         n7Qa9nx/12nMSkGpa3SYS4zMj0D/QxkkoB3gSuGJlfEAANiva+We/gR5Se4FzTgcQsEU
-         InJQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=7CIRRtMmddNd7Bj1l0Klyz5AhfG7Bq7WKgk+46UUkUE=;
+        b=XpHokj9iRytrlU5fV0+/bAcSZH4/WMZJM0bV/lJP4idyKAqFfmQ0kvxGhv9Uodr/rQ
+         wp1yxpd49Yb0bzK70rjgxI570huTaSYcCYcDvXcmIa/1l9qL0SBqjE0Q5Ha/eL3ni6p9
+         4Ht5vXiHKBQI2eyUNwZgyYMkVYDrVAm6z7zHkMYvHNtCnMlEv4+haeNb6IwECWp1i8BP
+         O50Y9rvZ5ZsZtm+RXGPC2VAt0IIWLDtzsKnrH7Igrk3P1bnc3JQ/ogKKfGrvHus8Vat5
+         J1uX3gDqVlaq49ppQTSCYnGLOQyE+m5h7sEt2yzjEYFzBaTGovrp0oCz8rj+3LpFWvlX
+         E22Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=tVn8Gvxh2/Mk0E0/TumGhvzTUpc1I8TYTQwXhIZLpC4=;
-        b=6su1dkI/md7hifTFnrJQOJ+ot2n4GYTJQvhNfCQvGxCPAuG/oUvT3vGZTPaTHtPHmP
-         4ngiScY6fugySvnYQq8vVXElozrRmyu5bXwWRVnnOrO0NMU1Ot1f5HUVt/lnGmOfOw3J
-         69bRLyFLBLf2wgP287ZFyW1ccmUveFv5sIHlK+/R8sGHKMdcoZtT5gM7nCjUQnBTlmnD
-         TjYUZj+tAkUcxYfLJHbXaGDouw4C49A9iNT+WDX7uA/6k0qJmT9XPuAu2so7azaJcive
-         RlF2+iN6ovG1WyyoURdJ7QhA2uDQsS4JT//LqvRSNElKO16AfFGNR3LDluD92H3mI/hx
-         zOHw==
-X-Gm-Message-State: AJIora/jJP1Mix6hXrWo9I84RCv01ZesE//BFGCs1rVyMv2nHzGgTehm
-        xu/J3Vu4S6bLufMgHTMQSt4=
-X-Google-Smtp-Source: AGRyM1tvctJQkUpp24rpsL/VD3goJQ19LhT9MDSotKfM8qpEhY/phfwaPc/zlK3BEkxfuyPepXUo9A==
-X-Received: by 2002:a17:90b:38c4:b0:1f2:c238:37fc with SMTP id nn4-20020a17090b38c400b001f2c23837fcmr9151448pjb.166.1658843954766;
-        Tue, 26 Jul 2022 06:59:14 -0700 (PDT)
-Received: from jrouhaud (2001-b011-1006-9ae2-bc69-b20c-442f-a7da.dynamic-ip6.hinet.net. [2001:b011:1006:9ae2:bc69:b20c:442f:a7da])
-        by smtp.gmail.com with ESMTPSA id 202-20020a6302d3000000b003db7de758besm10389115pgc.5.2022.07.26.06.59.13
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7CIRRtMmddNd7Bj1l0Klyz5AhfG7Bq7WKgk+46UUkUE=;
+        b=bIe3ZBX21RVxTWGuEfl3aXBYESpWER67KhmceiByITLfglWh8oVVOah7IhFg7fyK/3
+         hc7PAu7kXDPbRLYLxxYYoUmlXu8uXb+77S5FvFXgvaZxFGlQvQSVkMy5TC9jkV13zHZD
+         OD1AMksL90qWn3u0I5kC489eRP8hXA3dHawSJW7yMB8otR2pgOeUPS5ROoXu8G+Bf2ai
+         +/vyVtoXYcDkgUy0taYCy17uaDK7Knwpj2oBp2AxqnPckdZ2kIkw0ncwgCFSBHgVTeWy
+         izNw1eFCXBdLOYWOFgpEb7CNyGcE1kF87jklxi1X0UPcYk33qUdCHwl+SZncE03cfB28
+         uxvQ==
+X-Gm-Message-State: AJIora/dHR24z03wBE/VaReSST4T0JhOl49DE/EZQXonguQcumCwrZ5/
+        OVUVCiuE5oAndIN6Bd8CT/OJmWIx7WM=
+X-Google-Smtp-Source: AGRyM1ua9Ntjpso9I5z0rKWWnDyHCdmEPD3LOA4UuenbqeVN5chzvMDXU1LxvrP8hTiTcfpTDmSEWA==
+X-Received: by 2002:a5d:4b84:0:b0:21e:b987:8837 with SMTP id b4-20020a5d4b84000000b0021eb9878837mr729402wrt.595.1658844252105;
+        Tue, 26 Jul 2022 07:04:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r8-20020adfdc88000000b0021e13efa17esm14442883wrj.70.2022.07.26.07.04.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 06:59:14 -0700 (PDT)
-Date:   Tue, 26 Jul 2022 21:59:11 +0800
-From:   Julien Rouhaud <rjuju123@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] gitweb: improve title shortening heuristics
-Message-ID: <20220726135911.ycvgwbkixb3ei6w3@jrouhaud>
-References: <20220724061231.jddhqns7bqx5c2xm@jrouhaud>
- <xmqqfsiq6ksb.fsf@gitster.g>
- <20220725020534.x33hso22ab2dwyo7@jrouhaud>
- <220725.86czdtrayy.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+        Tue, 26 Jul 2022 07:04:11 -0700 (PDT)
+Message-Id: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 26 Jul 2022 14:04:07 +0000
+Subject: [PATCH 0/3] log: create tighter default decoration filter
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220725.86czdtrayy.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
+        steadmon@google.com, Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+When running 'git log', the default is to report any refs within refs/* as
+decorations. This series reduces the default set to be more specific to a
+set of known-useful namespaces.
 
-On Mon, Jul 25, 2022 at 07:54:34AM +0200, Ævar Arnfjörð Bjarmason wrote:
->
-> Please "inline" your patches, see "Sending your patches" in
-> Documentation/SubmittingPatches (I.e. send it with git-send-email, or
-> similar). I see this as:
->
-> > [2. text/plain; v2-0001-gitweb-Remove-title_short-shortening-heuristics.patch]...
+This was previously reduced by adding the log.excludeDecoration config
+option and modifying that config in git maintenance's prefetch task (to hide
+refs/prefetch/*). I then followed that pattern again for the bundle URI
+feature [1], but this caught some reviewers by surprise as an unfortunate
+side-effect. This series is a way to roll back the previous decision to use
+log.excludeDecoration and instead use tighter filters by default.
 
-Ah I'm sorry about that.  For the archives sake (and to make sure that I
-correctly configured my MUA), I'm reattaching the v2 inline.
+[1]
+https://lore.kernel.org/git/a217e9a0640b45d21ef971d6e91cee3f1993f383.1656535245.git.gitgitgadget@gmail.com/
 
-> This looks good to me, The one thing I'd add is that we're just running:
->
-> 	 git rev-list --parents --header  --max-count=1 HEAD
->
-> And parsing that, but if we're truncating things perhaps we should just
-> run "git log" or "git show" with the "%<(<N>[,trunc|ltrunc|mtrunc])"
-> syntax or similar.
->
-> That's obviously a follow-up, but if anyone's interested in deleting
-> even more code here...
+As noted in the last patch, the current design ignores the new filters if
+there are any previously-specified filters. This includes the
+log.excludeDecorations=refs/prefetch/ set by the git maintenance command.
+This means that users who ran that command in their repo will not get the
+benefits of the more strict filters. While we stop writing
+log.excludeDecorations, we don't remove existing instances of it.
 
-Note that I didn't try to do anything about that.  I have the feeling that
-gitweb isn't wildly used nowadays, especially for bigger projects, so it didn't
-seems worth spending too much efforts.
+I'm interested if anyone has another way around this issue, or if we
+consider adding the default filter as long as no --decorate=refs options are
+specified.
 
-From ea4f31c0a2276f042322a11e258e55223863cd35 Mon Sep 17 00:00:00 2001
-From: Julien Rouhaud <julien.rouhaud@free.fr>
-Date: Sun, 24 Jul 2022 13:17:19 +0800
-Subject: [PATCH v2] gitweb: Remove title_short shortening heuristics
+Thanks, -Stolee
 
-Those heuristics are way outdated and too general to be useful outside of
-kernel.org.  Since kernel.org doesn't use gitweb anymore and at least one
-project complained about incorrect behavior, entirely remove them.
+Derrick Stolee (3):
+  refs: allow "HEAD" as decoration filter
+  log: add default decoration filter
+  maintenance: stop writing log.excludeDecoration
 
-Signed-off-by: Julien Rouhaud <julien.rouhaud@free.fr>
----
+ Documentation/git-log.txt |  7 ++++--
+ builtin/gc.c              |  6 -----
+ builtin/log.c             | 53 +++++++++++++++++++++++++++++----------
+ refs.c                    |  4 +--
+ t/t4202-log.sh            | 29 +++++++++++++++++++++
+ t/t7900-maintenance.sh    | 21 ----------------
+ 6 files changed, 76 insertions(+), 44 deletions(-)
 
-Notes:
-    Patch re-submitted inline rather than in attachment, sorry about the
-    previous attachments.
 
- gitweb/gitweb.perl | 17 -----------------
- 1 file changed, 17 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1835487ab2..e66eb3d9ba 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3560,23 +3560,6 @@ sub parse_commit_text {
- 		$title =~ s/^    //;
- 		if ($title ne "") {
- 			$co{'title'} = chop_str($title, 80, 5);
--			# remove leading stuff of merges to make the interesting part visible
--			if (length($title) > 50) {
--				$title =~ s/^Automatic //;
--				$title =~ s/^merge (of|with) /Merge ... /i;
--				if (length($title) > 50) {
--					$title =~ s/(http|rsync):\/\///;
--				}
--				if (length($title) > 50) {
--					$title =~ s/(master|www|rsync)\.//;
--				}
--				if (length($title) > 50) {
--					$title =~ s/kernel.org:?//;
--				}
--				if (length($title) > 50) {
--					$title =~ s/\/pub\/scm//;
--				}
--			}
- 			$co{'title_short'} = chop_str($title, 50, 5);
- 			last;
- 		}
---
-2.37.0
+base-commit: 6a475b71f8c4ce708d69fdc9317aefbde3769e25
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1301%2Fderrickstolee%2Fdecorations-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1301/derrickstolee/decorations-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1301
+-- 
+gitgitgadget
