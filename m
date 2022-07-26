@@ -2,146 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0BA3C04A68
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 14:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1F0C00140
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 14:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238840AbiGZOEZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jul 2022 10:04:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45916 "EHLO
+        id S239436AbiGZOm0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jul 2022 10:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239196AbiGZOEU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jul 2022 10:04:20 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D21082A27F
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:04:18 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id d8so20209730wrp.6
-        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:04:18 -0700 (PDT)
+        with ESMTP id S230391AbiGZOmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jul 2022 10:42:25 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B0532A252
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:42:24 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id m8so17964687edd.9
+        for <git@vger.kernel.org>; Tue, 26 Jul 2022 07:42:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=flNOUpFpQNk5mfo8GE8lZF5pNYZBrO+OeLGye5bTl1g=;
-        b=OSxmUkYxPxOdJmCIsLlmY0NGpL0L3/SyrPwXlc0G/DyGdJb4pLLZXnUsFnU/lmVHuh
-         XYa+jVgSR/XwU9cmK2ADexeRzDxM0sRgTvYE1J/DWzvxt4EPG/VSHw6pWKU8tUbGaQTh
-         GId70/LBfy7eHGc1uRXNPBebX9QO4nUZOxe40m/m7un9ZG/OvL9xfRCmY9ovl2C50OS/
-         bP0CdR32MZ57qr+SyVw/cjLTbGzbNWHQVkbmPFDDmO74Rz05d+DQ18ohAoCZa/go+aqc
-         snogpdq6iZ86TpsjLyy8crUUsK01ol/55eK9DnYeNfZWDuRGaIvrjp1R94zD3LVZ80jM
-         OkCA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=fVmO8pHRPbao+l4wqjagT+HnRGGm4O0U1hRR61n3Te8=;
+        b=HyOD6yDJiykuz4e3pj8WaRnZlQ70ma8Xx1+HzDERZc3MSswT1S2gzM/qLty/ADS1UJ
+         nGttuhiGf1Qe5Bx1JbF4Gv5B7GgQb+y76dHf3i4uxtajyiyOUDj++gWVCIi1Sooe9IUi
+         SaLJ4k+1PP9etZkB9ixtUZRJ9WSL2orU1pFfv992JgMqixEjrhWmiAICom+qkjnftvdN
+         ZFiiyMxzEcXzBomIblbJzSBp5/tl1ILq6dIY3Jb9nD1YK/GtnRzYXysfWC7pP+C1kr8n
+         I2YLSMqHsQzHVc8z8ZlPBugUN/05xEdxMK8FTY/gmLHoXuRh57HLWFa9RBVAcJYaCgW3
+         wmJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=flNOUpFpQNk5mfo8GE8lZF5pNYZBrO+OeLGye5bTl1g=;
-        b=mjp9YZFkMl/ii3tRu2uuWydU3yihKS0/2jwKTpilcV79EF3aOjQxuVZ58hFI2Lq4Lh
-         PTwE4S4iLsy8VBSUkLQb+611bRtMpeWPBr0pMaOYvLJ403nK68g/YI9Ax1GOoVrU24LD
-         +uftTB1esRSaf+KH6zhv156b9yfkrVJHUySw6QWNFGqlGgcLekAPfMjtpSXo5wSrYDv9
-         gvCuPjw2Xkn9u4a1e9OhiqvmYUUxPjBkoFmHZ8Gk2w7N8LmZZgosK2Tc+8BKec1boogM
-         QaRN8cQQZZFJPF5kU8R32JocBTK7Ekp2fqfa+OuTcROFxutuf1BAfDUY0Ka0fx5l0HDy
-         0KLg==
-X-Gm-Message-State: AJIora8CHu10l7OxW3i23yS+X6tSJLJj6r2p9NjUj9+8ciLBMYEIAbJO
-        XAMmcBAznXz/F0Ckjf3mEuWiGNj7a9o=
-X-Google-Smtp-Source: AGRyM1vpluWnJ18nmGeVLCUgIrCn2QASXCdXx/qXOX1GKxrQlM4cNhn01Cm7GG/EL1MvVfKEMVzwmQ==
-X-Received: by 2002:adf:ce0c:0:b0:21d:929e:1522 with SMTP id p12-20020adfce0c000000b0021d929e1522mr10448019wrn.126.1658844256955;
-        Tue, 26 Jul 2022 07:04:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j22-20020a05600c485600b003a2c7bf0497sm18080938wmo.16.2022.07.26.07.04.15
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=fVmO8pHRPbao+l4wqjagT+HnRGGm4O0U1hRR61n3Te8=;
+        b=xv6n0lI4G7OsNM5u6P9M34oFwq6RrB+mZckaK+WnaRvF8Sm+8yHj3EMEn1ihKTWJCZ
+         qHHUHATLUamwS/JmDgXajbt561VcVtSpWltgecevp57pl+sGmdnSinT6XZFo71nxuIKY
+         ycX7FbQ18vCjOkpo1KQejgf43Op8HlxcNmZieppTmtQX6TMSsJpE12nT8l23zMogs1PT
+         D1lDOjql8yAQ9Yw8ROLQFr81jc1hjjxzDlFn6vL1let8s8MraQ6afjOHsZVJYc8nF4x1
+         I/zV9sNOiDMWOiAGAuYW06GhG38K27FP91TruiMKW0emIOu4bXyGIsayfGoFQaBmNhem
+         h0vQ==
+X-Gm-Message-State: AJIora+xc5/nk2xNvfmezJ1/eHDi7CVEHalQCNA0320PcEeAFMPOgHon
+        K6Z+8i4bmXLpQaYDFs5WOBw=
+X-Google-Smtp-Source: AGRyM1sAZeV9pTIJCDxKXYy+I+9PTaiWINfXRoRSs8TVJfjMw+6qZQKLA1M9Rdv4IoLCFDwAW0U7gw==
+X-Received: by 2002:a05:6402:35c1:b0:43b:e079:83be with SMTP id z1-20020a05640235c100b0043be07983bemr15763410edc.80.1658846542716;
+        Tue, 26 Jul 2022 07:42:22 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id t18-20020a1709067c1200b0070b7875aa6asm6470181ejo.166.2022.07.26.07.42.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 07:04:16 -0700 (PDT)
-Message-Id: <84fbf16613daa0ff84e1f07d23654a96bd1a8315.1658844250.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
-References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 Jul 2022 14:04:10 +0000
-Subject: [PATCH 3/3] maintenance: stop writing log.excludeDecoration
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
-        steadmon@google.com, Derrick Stolee <derrickstolee@github.com>,
+        Tue, 26 Jul 2022 07:42:21 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oGLlN-006A7v-3O;
+        Tue, 26 Jul 2022 16:42:21 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        vdye@github.com, steadmon@google.com,
         Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 2/3] log: add default decoration filter
+Date:   Tue, 26 Jul 2022 16:39:06 +0200
+References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+ <6b40b84773c70244bb13204ec566b713f1bdf865.1658844250.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <6b40b84773c70244bb13204ec566b713f1bdf865.1658844250.git.gitgitgadget@gmail.com>
+Message-ID: <220726.86y1wglyuq.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
 
-This reverts commit 96eaffebbf3d0 (maintenance: set
-log.excludeDecoration durin prefetch, 2021-01-19).
+On Tue, Jul 26 2022, Derrick Stolee via GitGitGadget wrote:
 
-The previous change created a default decoration filter that does not
-include refs/prefetch/, so this modification of the config is no longer
-needed.
+> From: Derrick Stolee <derrickstolee@github.com>
+> [...]
+>  test_expect_success 'log.decorate config parsing' '
+>  	git log --oneline --decorate=full >expect.full &&
+>  	git log --oneline --decorate=short >expect.short &&
+> @@ -2198,6 +2204,23 @@ test_expect_success 'log --decorate includes all levels of tag annotated tags' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'log --decorate does not include things outside filter' '
+> +	reflist="refs/prefetch/ refs/rebase-merge/ refs/bundle/" &&
+> +
+> +	for ref in $reflist
+> +	do
+> +		mkdir -p .git/$ref &&
 
-One issue that can happen from this point on is that users who ran the
-prefetch task on previous versions of Git will still have a
-log.excludeDecoration value and that will prevent the new default
-decoration filter from being active. Thus, when we add the refs/bundle/
-namespace as part of the bundle URI feature, those users will see
-refs/bundle/ decorations.
+Let's not use -p, and fail if .git doesn't exist?
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- builtin/gc.c           |  6 ------
- t/t7900-maintenance.sh | 21 ---------------------
- 2 files changed, 27 deletions(-)
+> +		echo $(git rev-parse HEAD) >.git/$ref/fake || return 1
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index eeff2b760e0..6c222052177 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -910,12 +910,6 @@ static int fetch_remote(struct remote *remote, void *cbdata)
- 
- static int maintenance_task_prefetch(struct maintenance_run_opts *opts)
- {
--	git_config_set_multivar_gently("log.excludedecoration",
--					"refs/prefetch/",
--					"refs/prefetch/",
--					CONFIG_FLAGS_FIXED_VALUE |
--					CONFIG_FLAGS_MULTI_REPLACE);
--
- 	if (for_each_remote(fetch_remote, opts)) {
- 		error(_("failed to prefetch remotes"));
- 		return 1;
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 74aa6384755..62ed694a404 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -162,7 +162,6 @@ test_expect_success 'prefetch multiple remotes' '
- 	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remotes/remote1/one &&
- 	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remotes/remote2/two &&
- 
--	test_cmp_config refs/prefetch/ log.excludedecoration &&
- 	git log --oneline --decorate --all >log &&
- 	! grep "prefetch" log &&
- 
-@@ -173,26 +172,6 @@ test_expect_success 'prefetch multiple remotes' '
- 	test_subcommand git fetch remote2 $fetchargs <skip-remote1.txt
- '
- 
--test_expect_success 'prefetch and existing log.excludeDecoration values' '
--	git config --unset-all log.excludeDecoration &&
--	git config log.excludeDecoration refs/remotes/remote1/ &&
--	git maintenance run --task=prefetch &&
--
--	git config --get-all log.excludeDecoration >out &&
--	grep refs/remotes/remote1/ out &&
--	grep refs/prefetch/ out &&
--
--	git log --oneline --decorate --all >log &&
--	! grep "prefetch" log &&
--	! grep "remote1" log &&
--	grep "remote2" log &&
--
--	# a second run does not change the config
--	git maintenance run --task=prefetch &&
--	git log --oneline --decorate --all >log2 &&
--	test_cmp log log2
--'
--
- test_expect_success 'loose-objects task' '
- 	# Repack everything so we know the state of the object dir
- 	git repack -adk &&
--- 
-gitgitgadget
+Hiding the exit code of the "git rev-parse here, but aside fram that why
+is the echo needed at all, can't we just:
+
+	git rev-parse HEAD >.git/ref/fake
+
+But even more generally can't we:
+
+	git update-ref $ref/fake HEAD
+
+?
+
+If we need to manually munge the ref store let's add REFFILES prereq.
