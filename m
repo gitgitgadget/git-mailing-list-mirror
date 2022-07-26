@@ -2,117 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6797CCCA48A
-	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 00:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94353C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Jul 2022 00:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231862AbiGZAE5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jul 2022 20:04:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46828 "EHLO
+        id S231325AbiGZAea (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jul 2022 20:34:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231712AbiGZAE4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jul 2022 20:04:56 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8CFF22BFD
-        for <git@vger.kernel.org>; Mon, 25 Jul 2022 17:04:53 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id C40EF3F4114;
-        Mon, 25 Jul 2022 20:04:52 -0400 (EDT)
-Received: from jeffhost-mbp.lan (96-93-223-209-static.hfc.comcastbusiness.net [96.93.223.209])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 0C1163F4090;
-        Mon, 25 Jul 2022 20:04:51 -0400 (EDT)
-Subject: Re: [PATCH] fetch-pack: add tracing for negotiation rounds
-To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-References: <a16d86e1ced104bb331bb9e7055037a3a2821352.1658787182.git.steadmon@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <16998c06-8394-1c8a-06d1-0f7ac4034cf4@jeffhostetler.com>
-Date:   Mon, 25 Jul 2022 20:04:50 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S229755AbiGZAe3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jul 2022 20:34:29 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C26920BCC
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 17:34:29 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id z18so9655114qki.2
+        for <git@vger.kernel.org>; Mon, 25 Jul 2022 17:34:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RjNfLgVylh5nJP4AOaxvO2ZUseis9w+0BWynpBa2CcQ=;
+        b=kPADGIz2b6rameQHg0EEYx+/WLDivJmO4iOs2GovDVLqhl+VIvoZ5VltEl9t0/rZEn
+         20m1fpKj/RrY58RjSKJncRMXWFRKLbYuxkswrJRVwNCh9qv1O2S2L9z/as77TjbtgnER
+         1ohGy/cF7B5rCiALrZcosdAFLwZOzwmae82I/kZsi3n9UIK9hioaj2q208s1Glr5uAB7
+         UclkDgCUGzWaOX3/sfUoJqyCEsK2582HrNzgQoXWr61ctynjlF3s9uUZLEoSdSuCcfik
+         mOlHPqM5m3fVrl88e7Gw7Od4C82L+IjW0nUEU0QO97iRlChyRvYzYzwgczgt/M6xJQhz
+         se4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RjNfLgVylh5nJP4AOaxvO2ZUseis9w+0BWynpBa2CcQ=;
+        b=kKeJKlfpx6XFIp5LnrVCCxHtk4CknGjLCVq8jgzg+F4PbDf/c41t//Xs4N4ydIqCVX
+         xL/aTfYQ3zvUc4zHxD4pi7tcRjeNWWhBXVcmXrj2R0RL2EUsN+cYMYdWIwNLNkx/Jd+C
+         HYEo6OZG/L4L0UoJtoCrP2+SrH8/n3CLQq6eQf6zX6U45vrSxuHkcKhWKxHmMifdkndT
+         tT5rJGE3OPlAKQc8WugdA0TokGDY9B9m63nTKS14xYdQO+ZwLTtpOMNDFCsQyDEZj4Vq
+         2NyfYTMoGljaiR8+6SO+6M+yV3LH4wFFbDAo0vEm1GVNmNbZYAPeZvDu0XAg6oS9T8hz
+         Ze0Q==
+X-Gm-Message-State: AJIora/d4M8y6aqfWvaLJmtc9XMRWl6d1qnew6hfvckYJA748lMhTQhF
+        BYf3zBRNas1AHYCuhQIMJFRxxw==
+X-Google-Smtp-Source: AGRyM1sX1f1lmn7MRwkq3a0gkkxZHTD+xuvDp5tltRNJEwrDKLz1GTgkYX/zQF4tMD4orx5XAmoiQQ==
+X-Received: by 2002:a05:620a:31a1:b0:6b6:202f:d071 with SMTP id bi33-20020a05620a31a100b006b6202fd071mr11257910qkb.629.1658795668290;
+        Mon, 25 Jul 2022 17:34:28 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d21-20020ac85ad5000000b0031ea1ad6c5asm8784693qtd.75.2022.07.25.17.34.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jul 2022 17:34:27 -0700 (PDT)
+Date:   Mon, 25 Jul 2022 20:34:26 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Abhradeep Chakraborty via GitGitGadget 
+        <gitgitgadget@gmail.com>, git <git@vger.kernel.org>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 2/6] pack-bitmap-write.c: write lookup table extension
+Message-ID: <Yt82kskifigs9kAf@nand.local>
+References: <pull.1266.v2.git.1656249017.gitgitgadget@gmail.com>
+ <pull.1266.v3.git.1656924376.gitgitgadget@gmail.com>
+ <5e9b985e39b0b9edee7af55dd8b0698a20062cf7.1656924376.git.gitgitgadget@gmail.com>
+ <YtDPePTo52A+Uo0p@nand.local>
+ <CAPOJW5x8Vf2qJ-109UH=gvy2i7HdfbFH84hb6fD+YUBN4-GkRg@mail.gmail.com>
+ <YtHm+Dv0lN3Ktibx@nand.local>
+ <CAPOJW5yH=Xywqos2tPS4Cn7dAdDqymPVbb6tn_XoAz0ofsACAA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <a16d86e1ced104bb331bb9e7055037a3a2821352.1658787182.git.steadmon@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPOJW5yH=Xywqos2tPS4Cn7dAdDqymPVbb6tn_XoAz0ofsACAA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Jul 16, 2022 at 05:20:57PM +0530, Abhradeep Chakraborty wrote:
+> I think the comment I added is not that good. The following might be better -
+>
+>     At the end of this sort table[j] = i means that the i'th
+>     bitmap corresponds to j'th bitmapped commit (among the selected commits)
+>     in lex order of OIDs.
 
-
-On 7/25/22 6:13 PM, Josh Steadmon wrote:
-> Currently, negotiation for V0/V1/V2 fetch have trace2 regions covering
-> the entire negotiation process. However, we'd like additional data, such
-> as timing for each round of negotiation or the number of "haves" in each
-> round. Additionally, "independent negotiation" (AKA push negotiation)
-> has no tracing at all. Having this data would allow us to compare the
-> performance of the various negotation implementations, and to debug
-> unexpectedly slow fetch & push sessions.
-> 
-> Fix this by adding per-round trace2 regions for all negotiation
-> implementations (V0+V1, V2, and independent negotiation), as well as an
-> overall region for independent negotiation. Add trace2 data logging for
-> the number of haves and "in vain" objects for each round, and for the
-> total number of rounds once negotiation completes.  Finally, add a few
-> checks into various tests to verify that the number of rounds is logged
-> as expected.
-
-I've been wanting to add data like this around the negotiation
-code for a while now.  Thanks!
-
-> 
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->   fetch-pack.c                       | 62 +++++++++++++++++++++++++++++-
->   t/t5500-fetch-pack.sh              |  4 +-
->   t/t5516-fetch-push.sh              | 10 ++++-
->   t/t5601-clone.sh                   |  6 ++-
->   t/t5703-upload-pack-ref-in-want.sh |  6 ++-
->   5 files changed, 81 insertions(+), 7 deletions(-)
-> 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index cb6647d657..01a451e456 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -299,6 +299,7 @@ static int find_common(struct fetch_negotiator *negotiator,
->   {
->   	int fetching;
->   	int count = 0, flushes = 0, flush_at = INITIAL_FLUSH, retval;
-> +	int negotiation_round = 0, haves = 0;
->   	const struct object_id *oid;
->   	unsigned in_vain = 0;
->   	int got_continue = 0;
-> @@ -441,9 +442,19 @@ static int find_common(struct fetch_negotiator *negotiator,
->   		packet_buf_write(&req_buf, "have %s\n", oid_to_hex(oid));
->   		print_verbose(args, "have %s", oid_to_hex(oid));
->   		in_vain++;
-> +		haves++;
->   		if (flush_at <= ++count) {
->   			int ack;
->   
-> +			negotiation_round++;
-> +			trace2_region_enter_printf("negotiation_v0_v1", "round",
-> +						   the_repository, "round-%d",
-> +						   negotiation_round);
-
-I'm wondering here if the "round-%d" should have some number
-of leading zeros so that multiple rounds will sort correctly
-when you have a bunch of them.
-
-I'm also wondering (and this is more of a style thing, so feel
-free to ignore) if we could just use trace2_region_enter()
-and make the "label" field be the "round/%04d" and not need
-the extra args.
-
-
-> +			trace2_data_intmax("negotiation_v0_v1", the_repository,
-> +					   "haves_added", haves);
-> +			trace2_data_intmax("negotiation_v0_v1", the_repository,
-> +					   "in_vain", in_vain);
-> +			haves = 0;
+Makes sense, I think that version of the comment is more helpful. I
+appreciate your attention to detail on getting these things right!
 
 Thanks,
-Jeff
+Taylor
