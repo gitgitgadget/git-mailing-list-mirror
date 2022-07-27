@@ -2,165 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92B25C04A68
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 20:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50602C04A68
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 22:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233867AbiG0UyL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 16:54:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49564 "EHLO
+        id S232471AbiG0WAr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 18:00:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229924AbiG0UyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 16:54:09 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A6FF5141F
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 13:54:08 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id p5so11937604edi.12
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 13:54:08 -0700 (PDT)
+        with ESMTP id S229880AbiG0WAq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 18:00:46 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353853D5B6
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 15:00:45 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-10e615a36b0so183116fac.1
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 15:00:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=O0b7ySa5bKznApimBz3g/x7mUhRO20iyIhDZk2TUorE=;
-        b=JpgKS9coOtl6swBxBxR/TgqcFgNRW9hKZn+sw9OY4ZHCR12YpyJOuFiSRYj9S7/Te3
-         ITi6lZ3F8TqQiKqICRT/eD2aVcDEK5Omn4D3zFXRkE87a3wO3KKmqmxe6QgHsDmzmF3P
-         +L/PRK+UewZU/UAHAwdgoAp+TDbHxvSUIqR7XTvtHE3Z8azuFOndSpmT7Ns73wS+39Do
-         wOs0vt6Lk4+GE062GWxUBh2Be3Z+rbFcHuepxhM5gqLRnB4Z1d0+26rK+giBNqO7TIq3
-         9Ij75DjkVW8wjcjsqkuIp+PHS1B+xNAZR6zBkWd1v54YPl4HwW5NkW7pgAaT7eIxQIb4
-         dDvw==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CYNxKHbawhLikfhwAO4lYXoWI9uWkXbGUww7XzZIoic=;
+        b=M+ePW7YTZhhGPsEKnNOOGIbx12S/ta2QnY1ExYgMUbT8i/2awB6s9LVQ9qvksB1MaA
+         tZtkYOyPMwtpsvD22tGPa5zp1u+jKRnVvpxV2SJwHwZCZ+peCMUwFh1OuS7QcJzf1ZOk
+         JlAgVr/VZk46tjvJ5NBG1INwg80nLj8ixZyXtH8UAW+p893tf+4QIPuZeHgZWFuzYNSL
+         95fi5B+tCxRKX2fD2UqpyevoVyTJ0uTyEQ9ZaPzpKwjRJKmOkM+cxRtbXE0HfEowKpFT
+         HVZPLaKouRvEpq8OisqG1wx39dx2Dng2bFCkwW/MX3h61LH57bYOFqWSXI32zpBq1FBR
+         o8gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc;
-        bh=O0b7ySa5bKznApimBz3g/x7mUhRO20iyIhDZk2TUorE=;
-        b=acvbhYtwY+uq/RB/Jgaqva/deI3aPp9Ejy6fysWLvmjZbwZWwMyVJehbgChDaypPN1
-         2cbEltBlNrtrdfZLE3UGdcKAw+TYeOk+fhzEOV0sgKrXUymt/VA4/PxZVyDM5utCyfh6
-         ZlEv56JpqFBonpKYi0TLi2kNQIBhjPdJn2w565DgeOSqwuNVvKweew8zx6JshgUPXFce
-         Uz6+eiLdKxipWaFzuTR1pGqypNAKlpQJa7vqTWicdIpzaRrCDQ4W7LKg2xW05kor+dFj
-         qOu5zKiagQDxS3qLi9tflH6WxNnOLG3x1MQ5/XcvC1ndP6qE7QjSIQ0PB+Vno7OikYCR
-         5+/Q==
-X-Gm-Message-State: AJIora/rcKK08lxx4Yc9yT1J7RUYbzB2IBPPc1mrSl6Pet6HZH2LhQyg
-        lDiLd4uQNvfUqYFH71uNkAM=
-X-Google-Smtp-Source: AGRyM1vj3ImCiiLQwOU84Ey0XaHsTxX1KCmtbaxwqUsnQ5X1PVGrcEdk8usNct8DtLPyz++wIKWlwQ==
-X-Received: by 2002:aa7:c14f:0:b0:43b:c2f1:4020 with SMTP id r15-20020aa7c14f000000b0043bc2f14020mr24610359edp.159.1658955246702;
-        Wed, 27 Jul 2022 13:54:06 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id k19-20020a1709062a5300b0072af3deb944sm7902214eje.223.2022.07.27.13.54.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 13:54:06 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oGo2f-006ryd-BN;
-        Wed, 27 Jul 2022 22:54:05 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        vdye@github.com, steadmon@google.com
-Subject: Re: [PATCH 0/3] log: create tighter default decoration filter
-Date:   Wed, 27 Jul 2022 22:40:21 +0200
-References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
- <220726.86tu73ncf8.gmgdl@evledraar.gmail.com>
- <c3b14045-01a1-e207-a60d-2e3290ab8001@github.com>
- <220726.868rofn23f.gmgdl@evledraar.gmail.com>
- <69684d1e-ffda-367c-f0ae-2d4a3560be74@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <69684d1e-ffda-367c-f0ae-2d4a3560be74@github.com>
-Message-ID: <220727.86edy6l1jm.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CYNxKHbawhLikfhwAO4lYXoWI9uWkXbGUww7XzZIoic=;
+        b=X/FIIdQ/dIFCC4iILIeL3/Vl+lbyLbiraSKXyOXnYTsWWqsIHL4pN+ZlHRz0C9yRKo
+         64SENhBeqFnEI4fXbUNGKF5YaivswC2ff79gTI1itmd0ocT4Zo663cH2JInrbXHRUXOe
+         B/qaDpOns6DJ4S35CzIBytQU44NTaU48F6fAVp4I5/R1L6gs1oJikkdQFNaoZug0kyOe
+         eN61fTAB03qvCyNsZR9XTWR/mE+G1GiW4daXRz3mUaMSeA8fjcDnSSomUIz5zqeR9UVF
+         jmz2akL1/Zr9RY26ZesDCtW20fcGQLcf93QsJpSvv1nNincW4ht6w2dtkdMynRrqLO/G
+         BkWw==
+X-Gm-Message-State: AJIora+63CVfvuXK0Z8MJ1F4eISlV5MsE98p+M74ny8qJSWT2K5mg7Rj
+        t5AnZlGRBn8Eq+b1JN3s+8O+T+HpLk3tc6goRbTtDQ==
+X-Google-Smtp-Source: AGRyM1uk4YBp/jAKESnm2eoGBvioIcqwStXyeeuXRggwJbB8uY2UmNYrhy82HPkCAaAE/UwBnoTslmWobd+RBDme2lE=
+X-Received: by 2002:a05:6870:c0d2:b0:10d:7752:e02e with SMTP id
+ e18-20020a056870c0d200b0010d7752e02emr3238199oad.236.1658959244352; Wed, 27
+ Jul 2022 15:00:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20220718214349.3379328-1-calvinwan@google.com>
+ <20220726210020.3397249-1-calvinwan@google.com> <CABPp-BGvDLvmj720PFzsjrZrYuYauprL6JeOQhiQ4BjtfjF7Dg@mail.gmail.com>
+In-Reply-To: <CABPp-BGvDLvmj720PFzsjrZrYuYauprL6JeOQhiQ4BjtfjF7Dg@mail.gmail.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 27 Jul 2022 15:00:32 -0700
+Message-ID: <CAFySSZB6bB0qqCv5EPmJBJY9RbDRFv8JDYj89W+ND_Jw6Ys1kA@mail.gmail.com>
+Subject: Re: [PATCH v6] submodule merge: update conflict error message
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Well explained.  One very minor suggestion: perhaps change "id of the
+> commit" to "id of the submodule commit" just to make it slightly
+> clearer that this information would take work for the user to discover
+> on their own?  (When I first read it, I was thinking, "but they have
+> the commit, it's what they passed to merge", before I realized my
+> error.)
 
-On Wed, Jul 27 2022, Derrick Stolee wrote:
+ack
 
-> On 7/26/22 2:19 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Tue, Jul 26 2022, Derrick Stolee wrote:
->>=20
->>> On 7/26/2022 10:44 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> Sorry for not catching this in an earlier round, but merge_submodule()
+> has four "return 0" cases, for particular types of conflicts.  Those
+> should probably be switched to "goto cleanup" or something like that,
+> so that these messages you are adding are also provided if one of
+> those conflict cases are hit.
+
+I didn't send these four "return 0" cases to cleanup because I thought
+the error message wouldn't accurately reflect the resolution steps. Is
+merging or updating the submodule still the correct resolution? The
+first three cases are for a null o/a/b, and the fourth case is for a missing
+local submodule. Also in cleanup, the subrepo is cleared but the
+subrepo hasn't been initialized/failed to initialize in these four cases.
+
+> >         object_array_clear(&merges);
+> >  cleanup:
+> > +       if (!ret) {
 >
->>>> But I think this change is going about it the wrong way, let's have a
->>>> list of refs that Git knows about as magical, instead of assuming that
->>>> we can ignore everything that's not on a small list of things we're
->>>> including.
->>>>
->>>> Wouldn't that give you what you want, and not exclude these sorts of
->>>> custom refs unexpectedly for users?
->>>
->>> Instead of keeping track of an ever-growing list of exclusions, instead
->>> making a clear list of "this is what most users will want for their
->>> decorations" is a better approach.
->>>
->>> Users who know how to create custom refs outside of this space have the
->>> capability to figure out how to show their special refs. My general ide=
-as
->>> for designing these kinds of features is to have a default that is focu=
-sed
->>> on the typical user while giving config options for experts to tweak th=
-ose
->>> defaults.
->>>
->>> You're right that this series perhaps leaves something to be desired in
->>> that second part, since there isn't an easy _config-based_ way to enable
->>> all decorations (or a small additional subset).
->>=20
->> Yes, but this is just side-stepping the issue. Your X-Y problem is that
->> you want to exclude certain refs that we're specifically creating.
->>=20
->> I think that's fair enough, but I don't see why we're not specifically
->> excluding just those then.
+> And here's another item I have to apologize for not catching in an
+> earlier round.  We should also require !opt->priv->call_depth as well
+> in this if-condition.  If merging of merge bases produced a submodule
+> conflict, but the outer merge involves two sides that resolved the
+> inner conflict the exact same way, then there's no conflict at the
+> outer level and nothing for the user to resolve.  If users don't have
+> any conflicts to resolve, we don't want to print messages telling them
+> how to resolve their non-existent conflicts.  And if there is still a
+> conflict in the submodule for the outer merge as well as in the
+> recursive merge(s), we don't want to list the module twice (or more)
+> when we tell the user to fix conflicts in their submodules (especially
+> since that means we'd be telling them to merge multiple different
+> commits for the single submodule, which could get confusing).
+
+ack.
+
+> > +               for_each_string_list_item(item, csub) {
+> > +            const char *abbrev= item->util;
 >
-> I'm advocating that we make a one-time change to have a set of "known
-> useful refs"
+> Messed up indent here?
 
-You can't know the set of known-useful refs. Unless we explicitly lay
-claim to something in the namespace it's the user's.
+Looks like going from my editor to `git format-patch` messed
+something up here.
 
-This series seems to have started out by observing that "git log" is
-showing certain "useless" refs added in another topic, since they're
-owned by git, and "internal-only", which is fair enough.
+> > +               for_each_string_list_item(item, csub)
+> > +                       /*
+> > +                        * TRANSLATORS: This is a line of a recommended `git add` command
+> > +                        * with multiple lines of submodule folders.
+> > +                        * E.g.:     git add sub \
+> > +                        *                   sub2 \
+> > +                        *                   sub3
+>
+> Why does such a message need to be translated?  It's literal text the
+> user should type, right?  I'm not sure what a translator would do with
+> the message other than regurgitate it.
 
-But I don't see how we can or should make the leap to things that are
-not on a limited "not-useless" list git knows about should be the only
-thing we should display.
+It doesn't. My point was to let the translator know that the only text
+in this print is for a git command. I should probably add that context
+to the comment though.
 
-Wouldn't carrying a list of what to exclude achive the same goal (but
-see below...).
+> > +                        */
+> > +                       if (first) {
+> > +                               printf("       git add %s", item->string);
+>
+> But if you did mean for there to be a translation and a TRANSLATORS
+> note, then did you forget to translate it by calling _()?
 
-> as showing up in the decorations. Perhaps some users (like yourself)
-> need to react to that change, but it happens _once_.
+Same reasoning as above.
 
-It's long-established behavior, we try not to change that sort of
-thing. In this case I think we *could*, i.e. I don't imagine it would be
-a *huge* disruption if we had a good reason, e.g. the use-cases of
-machine-parsing this are fairly obscure.
+> > +                               first = 0;
+> > +                       } else {
+> > +                               printf(" \\\n               %s", item->string);
+> > +                       }
+>
+> Can we put braces around this for_each_string_list_item() block?  Or,
+> as an alternative to the whole block, do you want to consider:
+>
+>    strub strbuf tmp = STRBUF_INIT;
+>    strbuf_add_separated_string_list(&tmp, ' ', csub);
+>    printf(_("    git add %s"), tmp.buf);   /* or maybe remove the
+> translation; not sure what the point is */
+>    strbuf_release(&tmp);
+> ?  It is likely easier to copy & paste, and might be understood by
+> more users (I'm not sure how many are aware that command lines can use
+> backslashes for line continuation), but on the negative side, if you
+> have a lot of submodules it might make it harder to read.  Even if you
+> don't like space separated, though, you could still use this strategy
+> by changing the second line to
+>
+>     strbuf_add_separated_string_list(&tmp, " \\\n               ", csub);
 
-But the disruption seems unwarranted if it's just to hide the likes of
-refs/bundle/, when we can just address those specifically.
+This is a much cleaner implementation, thanks! If my goal is to make
+submodule merging easier for newer submodule users, then I think it's a
+good assumption to remove any additional possible points of confusion,
+aka with the "command lines can use backslashes for line continuation",
+so I'll swap over to spaces.
 
-And it's not "once", it's N times for each downstream user that'll run
-into this, whereas not changing the behavior is effort among a small
-group of git developers...
+> > +       print_submodule_conflict_suggestion(&opti->conflicted_submodules);
+> > +       string_list_clear(&opti->conflicted_submodules, 1);
+> > +
+>
+> It would be more consistent to have things allocated in merge_start()
+> continue to be cleared out in clear_or_reinit_internal_opts().  This
+> kind of breaks that pairing, and you're already making sure to clear
+> it there, so I'd rather remove this duplicate string_list_clear()
+> call.
 
-> Changing the rules repeatedly as new "hidden" namespaces are added is
-> more likely to cause confusion multiple times.
+ack.
 
-I really don't see the worry about a maintenance burden of having a
-thing in refs.c (or whatever) that's just:
+> >         /* Also include needed rename limit adjustment now */
+> >         diff_warn_rename_limit("merge.renamelimit",
+> >                                opti->renames.needed_limit, 0);
+> > @@ -4657,6 +4717,7 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+> >         trace2_region_enter("merge", "allocate/init", opt->repo);
+> >         if (opt->priv) {
+> >                 clear_or_reinit_internal_opts(opt->priv, 1);
+> > +               string_list_init_dup(&opt->priv->conflicted_submodules);
+>
+> This works, but there is a minor optimization available here if you're
+> interested (I understand if you're not since you're already at v6).
+> Assuming you make the important opt->priv->call_depth fix, you can
+> replace string_list_init_dup() with string_list_init_nodup() here.
+> The paths aren't freed until clear_or_reinit_internal_opts() which
+> (under the assumption previously stated) isn't called until
+> merge_finalize(), which comes after the call to
+> merge_display_update_messages(), which is where you use the data.
+>
+> (As repository paths are used all over merge-ort.c, the optimization
+> to store them in one place (opt->priv->paths) and avoid duplicating
+> them is used pretty heavily.  It's more important for a lot of the
+> other strmaps since they'll have a lot more paths in them, but it is
+> kind of nice to use this optimization where possible.)
 
-	hide_from_decorate[] =3D {
-		"refs/bundle/*"
-                [...],
-                NULL
-	};
-
-Worst case we'll create another "magic" ref, forget to add to the list,
-and someone will notice and we'll add it.
-
-Which at that point will be a one-line change, and preferrable to N
-users having to chase down some new config which explains why their
-local refs aren't shown anymore with decorate...
+Thanks for all the context of this one. I agree it's minor, but any place
+we can provide a better example to future contributors seems like a
+more than worthy reason to make this change :)
