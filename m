@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CD6FC04A68
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 23:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FE3FC04A68
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 23:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234079AbiG0XON (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 19:14:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41968 "EHLO
+        id S234241AbiG0XOP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 19:14:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234189AbiG0XOE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 19:14:04 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76764E61E
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:01 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id c22so80224wmr.2
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:01 -0700 (PDT)
+        with ESMTP id S234671AbiG0XOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 19:14:05 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C2A4E62B
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:02 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id z16so34953wrh.12
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=EOFI7IwXVuc67tBRMNAtCNPzjqwlgtg95pRvNx+NBGM=;
-        b=AIO4D4/zpeIt5Pswhy79MV6oRGXFgrg7Wpu+6nElB7RHQA+sobPld00avsw+t3sU90
-         sDi1jpjMyl0kduQDChsKPH3lnarKTMZHA03QAEAJ1U1XxJOE/G5PB6rYqLus5/ryzXOA
-         ZYsigbMbZCQbULvltIQgfaBUqfpctsv7itDi353tyBZpqUTVxq4aVZ2vViNkC6LODs3C
-         HvdqmXLwncgr2OZar6RnNJtO1XxXgMgwCqzJ92jacRt1MzTSjq0t2BXtQqpZWsRLjews
-         TITN7fl5krdlcsoRUCTj89uM1U7eQWagptfsNPBTy8uldR6PygsPG7ZXHC+z7Ut5AydN
-         jDMA==
+        bh=CNck2v6HIV9KLuzoCg+ReY4LBQtDEWtGj/wAq+3L5RM=;
+        b=k9t+YeQvlK53LyUqBARSriGZbeGb4MDiipqD6Iyio//wqV5XxQ6DkBLHr9NdMYKpi2
+         HEAl9Ott/Bn65SR0RajNpaqxcKhIRl8yM3Iu3l8T0Gusul7Z+DFwHgCQeO8PfbYpoDxY
+         ardZ4i4v14tQi3wtZbllN6M1Y6ctiDD+SOajJr73ArsqQeIOJHI0DI9ez3ADSuSgUW98
+         vmNQhxO6zUjrg9zKrdrDDi5OI9pQYLdKAluuFApd859ZF4o7AozlNaGP1MVOiyynxQUe
+         iGL9/QIU73Wd4Ojry9Vzv5wOK1nu91dLL00UdejUSCHHZn0ZqUFWshHf1P0BCudzqTQu
+         NEHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=EOFI7IwXVuc67tBRMNAtCNPzjqwlgtg95pRvNx+NBGM=;
-        b=S8S8Sxdf7kI3MrA5yKGPg8xfAzsNAnr3Djtvq8mOFH5u78frb5oe4X8AXJ61Vk9Bi7
-         qXl0QqOwAWA3O4ALe7/IyuN1xBycN+6MYd/+ESfhXoPa3HU2UbvDEUE39xhh6xzrTxFS
-         8U99vE/02lAWzEGHfQA9bxAU4DoLR2sItTTGL2W2CAp03JRzv/129Kdw+nW/1AEyoP/M
-         3rMBjsZpLaxFcnWE5nXhMXChTrFBNZy/mrAPgtbfRGq3k1nziT5H62JA+ktiKim7siaG
-         5pdLgDUgEKZWaRfDyE0JM2jOEPymKIvwuO0YPl94ZO93KvIWsceV+Qr2elmYzJQMHfCc
-         LXIQ==
-X-Gm-Message-State: AJIora81u3RfaKKvhZaYsUYx1NG6YstoHJAXkr0s6/i0VZ4mnDX/jyoL
-        w9B9z0golB66N3qb/sOwM6obs7oxGcVIWw==
-X-Google-Smtp-Source: AGRyM1txdJX+/64yZ84lObcX3r11J2QjbNm1XDbrDlP0IXz4BZ7LThhjS/wQrcV3HgMlvmdt3p/S4w==
-X-Received: by 2002:a1c:3886:0:b0:3a3:7ad9:b203 with SMTP id f128-20020a1c3886000000b003a37ad9b203mr3912669wma.189.1658963639524;
-        Wed, 27 Jul 2022 16:13:59 -0700 (PDT)
+        bh=CNck2v6HIV9KLuzoCg+ReY4LBQtDEWtGj/wAq+3L5RM=;
+        b=QYdrQ+m5cl15WGAW9aotMH6B5YpJsm9ncsQT55EGxAvT6a8Vk5NslbODDZIcyLWCJv
+         JnYOBnFIde/AbxPxfXJc/EarfI8Os++NRpgQsZJf6474HkAmKyvfT24orFMlsxoyg5J9
+         GFwF5QPPBuw2WLZEjc/1F3AOkSwETV7EMDjPBykhf0zd7oTT3aERLvcGCKQrqcd+jmxP
+         1O32euOLBbA7cKeaVkrCHURUPQmv7S3vXZNkcItcNr6c7CEZSt8iOALKzRBj6nxho0bY
+         nEjRtDz9HDf+8LjirRrCjXFYRwZxN02WTWjHJoS+nJFllKvK8XUUV5/WLFU/ODNHBPIA
+         RWAA==
+X-Gm-Message-State: AJIora8o1++k0nZEBSbqsXz3fTcRnv6E8ug/S7k6GlzL2A0zIsAEEdT1
+        shOiFf1vJN44BDIoOztxQsth716KEJYeAA==
+X-Google-Smtp-Source: AGRyM1sOnFKAiEVJfL+DzVc4C4FBKkghJEMoPkMo7a+aneNZq0Zvaxea53dlaJluvoD6/IAF5+LllA==
+X-Received: by 2002:a05:6000:3cc:b0:21e:7f8a:3925 with SMTP id b12-20020a05600003cc00b0021e7f8a3925mr13909831wrg.570.1658963640271;
+        Wed, 27 Jul 2022 16:14:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z3-20020adfec83000000b0021dd08ad8d7sm1692806wrn.46.2022.07.27.16.13.58
+        by smtp.gmail.com with ESMTPSA id z3-20020adfec83000000b0021dd08ad8d7sm1692806wrn.46.2022.07.27.16.13.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 16:13:58 -0700 (PDT)
+        Wed, 27 Jul 2022 16:13:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 09/15] test-lib: simplify by removing test_external
-Date:   Thu, 28 Jul 2022 01:13:37 +0200
-Message-Id: <patch-v3-09.15-871d266f435-20220727T230800Z-avarab@gmail.com>
+Subject: [PATCH v3 10/15] test-lib: add a GIT_TEST_PASSING_SANITIZE_LEAK=check mode
+Date:   Thu, 28 Jul 2022 01:13:38 +0200
+Message-Id: <patch-v3-10.15-32564b8fcb3-20220727T230800Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1127.g4ecf1c08f67
 In-Reply-To: <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
 References: <cover-v2-00.14-00000000000-20220720T211221Z-avarab@gmail.com> <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
@@ -67,359 +67,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the "test_external" function added in [1]. This arguably makes
-the output of t9700-perl-git.sh and friends worse. But as we'll argue
-below the trade-off is worth it, since "chaining" to another TAP
-emitter in test-lib.sh is more trouble than it's worth.
+Add a new "GIT_TEST_PASSING_SANITIZE_LEAK=check" mode to the
+test-lib.sh.
 
-The new output of t9700-perl-git.sh is now:
+As noted in the updated "t/README" this compliments the existing
+"GIT_TEST_PASSING_SANITIZE_LEAK=true" mode added in
+956d2e4639b (tests: add a test mode for SANITIZE=leak, run it in CI,
+2021-09-23).
 
-	$ ./t9700-perl-git.sh
-	ok 1 - set up test repository
-	ok 2 - use t9700/test.pl to test Git.pm
-	# passed all 2 test(s)
-	1..2
+Rather than document this all in one (even more) dense paragraph split
+up the discussion of how it combines with --immediate into its own
+paragraph following the discussion of
+"GIT_TEST_SANITIZE_LEAK_LOG=true".
 
-Whereas before this change it would be:
-
-	$ ./t9700-perl-git.sh
-	ok 1 - set up test repository
-	# run 1: Perl API (perl /home/avar/g/git/t/t9700/test.pl)
-	ok 2 - use Git;
-	[... omitting tests 3..46 from t/t9700/test.pl ...]
-	ok 47 - unquote escape sequences
-	1..47
-	# test_external test Perl API was ok
-	# test_external_without_stderr test no stderr: Perl API was ok
-
-At the time of its addition supporting "test_external" was easy, but
-when test-lib.sh itself started to emit TAP in [2] we needed to make
-everything surrounding the emission of the plan consider
-"test_external". I added that support in [2] so that we could run:
-
-	prove ./t9700-perl-git.sh :: -v
-
-But since then in [3] the door has been closed on combining
-$HARNESS_ACTIVE and -v, we'll now just die:
-
-	$ prove ./t9700-perl-git.sh :: -v
-	Bailout called.  Further testing stopped:  verbose mode forbidden under TAP harness; try --verbose-log
-	FAILED--Further testing stopped: verbose mode forbidden under TAP harness; try --verbose-log
-
-So the only use of this has been that *if* we had failure in one of
-these tests we could e.g. in CI see which test failed based on the
-test number. Now we'll need to look at the full verbose logs to get
-that same information.
-
-I think this trade-off is acceptable given the reduction in
-complexity, and it brings these tests in line with other similar
-tests, e.g. the reftable tests added in [4] will be condensed down to
-just one test, which invokes the C helper:
-
-	$ ./t0032-reftable-unittest.sh
-	ok 1 - unittests
-	# passed all 1 test(s)
-	1..1
-
-It would still be nice to have that ":: -v" form work again, it
-never *really* worked, but even though we've had edge cases test
-output screwing up the TAP it mostly worked between d998bd4ab67 and
-[3], so we may have been overzealous in forbidding it outright.
-
-I have local patches which I'm planning to submit sooner than later
-that get us to that goal, and in a way that isn't buggy. In the
-meantime getting rid of this special case makes hacking on this area
-of test-lib.sh easier, as we'll do in subsequent commits.
-
-The switch from "perl" to "$PERL_PATH" here is because "perl" is
-defined as a shell function in the test suite, see a5bf824f3b4 (t:
-prevent '-x' tracing from interfering with test helpers' stderr,
-2018-02-25). On e.g. the OSX CI the "command perl"... will be part of
-the emitted stderr.
-
-1. fb32c410087 (t/test-lib.sh: add test_external and
-   test_external_without_stderr, 2008-06-19)
-2. d998bd4ab67 (test-lib: Make the test_external_* functions
-   TAP-aware, 2010-06-24)
-3. 614fe015212 (test-lib: bail out when "-v" used under
-   "prove", 2016-10-22)
-4. ef8a6c62687 (reftable: utility functions, 2021-10-07)
+Before the removal of "test_external" in a preceding commit we would
+have had to special-case t9700-perl-git.sh and t0202-gettext-perl.sh.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .../netrc/t-git-credential-netrc.sh           |  7 +-
- t/README                                      | 26 ------
- t/t0202-gettext-perl.sh                       | 10 +--
- t/t9700-perl-git.sh                           | 10 +--
- t/test-lib-functions.sh                       | 89 +------------------
- t/test-lib.sh                                 | 40 ++++-----
- 6 files changed, 28 insertions(+), 154 deletions(-)
+ t/README      | 17 +++++++++++++++++
+ t/test-lib.sh | 34 ++++++++++++++++++++++++++--------
+ 2 files changed, 43 insertions(+), 8 deletions(-)
 
-diff --git a/contrib/credential/netrc/t-git-credential-netrc.sh b/contrib/credential/netrc/t-git-credential-netrc.sh
-index ff17a9460cd..bf2777308a5 100755
---- a/contrib/credential/netrc/t-git-credential-netrc.sh
-+++ b/contrib/credential/netrc/t-git-credential-netrc.sh
-@@ -13,13 +13,10 @@
- 		'set up test repository' \
- 		'git config --add gpg.program test.git-config-gpg'
- 
--	# The external test will outputs its own plan
--	test_external_has_tap=1
--
- 	export PERL5LIB="$GITPERLLIB"
--	test_external \
--		'git-credential-netrc' \
-+	test_expect_success 'git-credential-netrc' '
- 		perl "$GIT_BUILD_DIR"/contrib/credential/netrc/test.pl
-+	'
- 
- 	test_done
- )
 diff --git a/t/README b/t/README
-index 0664aee7ed9..98f69ed13d2 100644
+index 98f69ed13d2..e13063195e5 100644
 --- a/t/README
 +++ b/t/README
-@@ -938,32 +938,6 @@ see test-lib-functions.sh for the full list and their options.
- 	    test_done
- 	fi
+@@ -371,11 +371,28 @@ declared themselves as leak-free by setting
+ "TEST_PASSES_SANITIZE_LEAK=true" before sourcing "test-lib.sh". This
+ test mode is used by the "linux-leaks" CI target.
  
-- - test_external [<prereq>] <message> <external> <script>
--
--   Execute a <script> with an <external> interpreter (like perl). This
--   was added for tests like t9700-perl-git.sh which do most of their
--   work in an external test script.
--
--	test_external \
--	    'GitwebCache::*FileCache*' \
--	    perl "$TEST_DIRECTORY"/t9503/test_cache_interface.pl
--
--   If the test is outputting its own TAP you should set the
--   test_external_has_tap variable somewhere before calling the first
--   test_external* function. See t9700-perl-git.sh for an example.
--
--	# The external test will outputs its own plan
--	test_external_has_tap=1
--
-- - test_external_without_stderr [<prereq>] <message> <external> <script>
--
--   Like test_external but fail if there's any output on stderr,
--   instead of checking the exit code.
--
--	test_external_without_stderr \
--	    'Perl API' \
--	    perl "$TEST_DIRECTORY"/t9700/test.pl
--
-  - test_expect_code <exit-code> <command>
++GIT_TEST_PASSING_SANITIZE_LEAK=check checks that our
++"TEST_PASSES_SANITIZE_LEAK=true" markings are current. Rather than
++skipping those tests that haven't set "TEST_PASSES_SANITIZE_LEAK=true"
++before sourcing "test-lib.sh" this mode runs them with
++"--invert-exit-code". This is used to check that there's a one-to-one
++mapping between "TEST_PASSES_SANITIZE_LEAK=true" and those tests that
++pass under "SANITIZE=leak". This is especially useful when testing a
++series that fixes various memory leaks with "git rebase -x".
++
+ GIT_TEST_SANITIZE_LEAK_LOG=true will log memory leaks to
+ "test-results/$TEST_NAME.leak/trace.*" files. The logs include a
+ "dedup_token" (see +"ASAN_OPTIONS=help=1 ./git") and other options to
+ make logs +machine-readable.
  
-    Run a command and ensure that it exits with the given exit code.
-diff --git a/t/t0202-gettext-perl.sh b/t/t0202-gettext-perl.sh
-index 043b190626c..5a6f28051bd 100755
---- a/t/t0202-gettext-perl.sh
-+++ b/t/t0202-gettext-perl.sh
-@@ -10,11 +10,9 @@ TEST_PASSES_SANITIZE_LEAK=true
- . "$TEST_DIRECTORY"/lib-perl.sh
- skip_all_if_no_Test_More
++GIT_TEST_PASSING_SANITIZE_LEAK=check when combined with "--immediate"
++will run to completion faster, and result in the same failing
++tests. The only practical reason to run
++GIT_TEST_PASSING_SANITIZE_LEAK=check without "--immediate" is to
++combine it with "GIT_TEST_SANITIZE_LEAK_LOG=true". If we stop at the
++first failing test case our leak logs won't show subsequent leaks we
++might have run into.
++
+ GIT_TEST_PROTOCOL_VERSION=<n>, when set, makes 'protocol.version'
+ default to n.
  
--# The external test will outputs its own plan
--test_external_has_tap=1
--
--test_external_without_stderr \
--    'Perl Git::I18N API' \
--    perl "$TEST_DIRECTORY"/t0202/test.pl
-+test_expect_success 'run t0202/test.pl to test Git::I18N.pm' '
-+	"$PERL_PATH" "$TEST_DIRECTORY"/t0202/test.pl 2>stderr &&
-+	test_must_be_empty stderr
-+'
- 
- test_done
-diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
-index 17fc43f6e57..a48fac6f07a 100755
---- a/t/t9700-perl-git.sh
-+++ b/t/t9700-perl-git.sh
-@@ -43,11 +43,9 @@ test_expect_success \
-      git config --add test.pathmulti bar
-      '
- 
--# The external test will outputs its own plan
--test_external_has_tap=1
--
--test_external_without_stderr \
--    'Perl API' \
--    perl "$TEST_DIRECTORY"/t9700/test.pl
-+test_expect_success 'use t9700/test.pl to test Git.pm' '
-+	"$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl 2>stderr &&
-+	test_must_be_empty stderr
-+'
- 
- test_done
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 8c44856eaec..c6479f24eb5 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -633,7 +633,7 @@ test_hook () {
- # - Explicitly using test_have_prereq.
- #
- # - Implicitly by specifying the prerequisite tag in the calls to
--#   test_expect_{success,failure} and test_external{,_without_stderr}.
-+#   test_expect_{success,failure}
- #
- # The single parameter is the prerequisite tag (a simple word, in all
- # capital letters by convention).
-@@ -835,93 +835,6 @@ test_expect_success () {
- 	test_finish_
- }
- 
--# test_external runs external test scripts that provide continuous
--# test output about their progress, and succeeds/fails on
--# zero/non-zero exit code.  It outputs the test output on stdout even
--# in non-verbose mode, and announces the external script with "# run
--# <n>: ..." before running it.  When providing relative paths, keep in
--# mind that all scripts run in "trash directory".
--# Usage: test_external description command arguments...
--# Example: test_external 'Perl API' perl ../path/to/test.pl
--test_external () {
--	test "$#" = 4 && { test_prereq=$1; shift; } || test_prereq=
--	test "$#" = 3 ||
--	BUG "not 3 or 4 parameters to test_external"
--	descr="$1"
--	shift
--	test_verify_prereq
--	export test_prereq
--	if ! test_skip "$descr" "$@"
--	then
--		# Announce the script to reduce confusion about the
--		# test output that follows.
--		say_color "" "# run $test_count: $descr ($*)"
--		# Export TEST_DIRECTORY, TRASH_DIRECTORY and GIT_TEST_LONG
--		# to be able to use them in script
--		export TEST_DIRECTORY TRASH_DIRECTORY GIT_TEST_LONG
--		# Run command; redirect its stderr to &4 as in
--		# test_run_, but keep its stdout on our stdout even in
--		# non-verbose mode.
--		"$@" 2>&4
--		if test "$?" = 0
--		then
--			if test $test_external_has_tap -eq 0; then
--				test_ok_ "$descr"
--			else
--				say_color "" "# test_external test $descr was ok"
--				test_success=$(($test_success + 1))
--			fi
--		else
--			if test $test_external_has_tap -eq 0; then
--				test_failure_ "$descr" "$@"
--			else
--				say_color error "# test_external test $descr failed: $@"
--				test_failure=$(($test_failure + 1))
--			fi
--		fi
--	fi
--}
--
--# Like test_external, but in addition tests that the command generated
--# no output on stderr.
--test_external_without_stderr () {
--	# The temporary file has no (and must have no) security
--	# implications.
--	tmp=${TMPDIR:-/tmp}
--	stderr="$tmp/git-external-stderr.$$.tmp"
--	test_external "$@" 4> "$stderr"
--	test -f "$stderr" || error "Internal error: $stderr disappeared."
--	descr="no stderr: $1"
--	shift
--	say >&3 "# expecting no stderr from previous command"
--	if test ! -s "$stderr"
--	then
--		rm "$stderr"
--
--		if test $test_external_has_tap -eq 0; then
--			test_ok_ "$descr"
--		else
--			say_color "" "# test_external_without_stderr test $descr was ok"
--			test_success=$(($test_success + 1))
--		fi
--	else
--		if test "$verbose" = t
--		then
--			output=$(echo; echo "# Stderr is:"; cat "$stderr")
--		else
--			output=
--		fi
--		# rm first in case test_failure exits.
--		rm "$stderr"
--		if test $test_external_has_tap -eq 0; then
--			test_failure_ "$descr" "$@" "$output"
--		else
--			say_color error "# test_external_without_stderr test $descr failed: $@: $output"
--			test_failure=$(($test_failure + 1))
--		fi
--	fi
--}
--
- # debugging-friendly alternatives to "test [-f|-d|-e]"
- # The commands test the existence or non-existence of $1
- test_path_is_file () {
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 557f77c9717..067927eb06c 100644
+index 067927eb06c..3d0c8896e0e 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -1231,27 +1231,24 @@ test_done () {
- 	fi
- 	case "$test_failure" in
- 	0)
--		if test $test_external_has_tap -eq 0
-+		if test $test_remaining -gt 0
- 		then
--			if test $test_remaining -gt 0
--			then
--				say_color pass "# passed all $msg"
--			fi
--
--			# Maybe print SKIP message
--			test -z "$skip_all" || skip_all="# SKIP $skip_all"
--			case "$test_count" in
--			0)
--				say "1..$test_count${skip_all:+ $skip_all}"
--				;;
--			*)
--				test -z "$skip_all" ||
--				say_color warn "$skip_all"
--				say "1..$test_count"
--				;;
--			esac
-+			say_color pass "# passed all $msg"
- 		fi
+@@ -1451,17 +1451,34 @@ BAIL_OUT_ENV_NEEDS_SANITIZE_LEAK () {
  
-+		# Maybe print SKIP message
-+		test -z "$skip_all" || skip_all="# SKIP $skip_all"
-+		case "$test_count" in
-+		0)
-+			say "1..$test_count${skip_all:+ $skip_all}"
-+			;;
-+		*)
-+			test -z "$skip_all" ||
-+			say_color warn "$skip_all"
-+			say "1..$test_count"
-+			;;
-+		esac
+ if test -n "$SANITIZE_LEAK"
+ then
+-	if test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
++	# Normalize with test_bool_env
++	passes_sanitize_leak=
 +
- 		if test -n "$stress" && test -n "$invert_exit_code"
- 		then
- 			# We're about to move our "$TRASH_DIRECTORY"
-@@ -1286,11 +1283,8 @@ test_done () {
- 		exit 0 ;;
++	# We need to see TEST_PASSES_SANITIZE_LEAK in "git
++	# env--helper" (via test_bool_env)
++	export TEST_PASSES_SANITIZE_LEAK
++	if test_bool_env TEST_PASSES_SANITIZE_LEAK false
++	then
++		passes_sanitize_leak=t
++	fi
++
++	if test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check"
+ 	then
+-		# We need to see it in "git env--helper" (via
+-		# test_bool_env)
+-		export TEST_PASSES_SANITIZE_LEAK
++		if test -n "$invert_exit_code"
++		then
++			BAIL_OUT "cannot use --invert-exit-code under GIT_TEST_PASSING_SANITIZE_LEAK=check"
++		fi
  
- 	*)
--		if test $test_external_has_tap -eq 0
--		then
--			say_color error "# failed $test_failure among $msg"
--			say "1..$test_count"
--		fi
-+		say_color error "# failed $test_failure among $msg"
-+		say "1..$test_count"
- 
- 		if test -n "$invert_exit_code"
+-		if ! test_bool_env TEST_PASSES_SANITIZE_LEAK false
++		if test -z "$passes_sanitize_leak"
  		then
+-			skip_all="skipping $this_test under GIT_TEST_PASSING_SANITIZE_LEAK=true"
+-			test_done
++			say "in GIT_TEST_PASSING_SANITIZE_LEAK=check mode, setting --invert-exit-code for TEST_PASSES_SANITIZE_LEAK != true"
++			invert_exit_code=t
+ 		fi
++	elif test -z "$passes_sanitize_leak" &&
++	     test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
++	then
++		skip_all="skipping $this_test under GIT_TEST_PASSING_SANITIZE_LEAK=true"
++		test_done
+ 	fi
+ 
+ 	if test_bool_env GIT_TEST_SANITIZE_LEAK_LOG false
+@@ -1480,7 +1497,8 @@ then
+ 		prepend_var LSAN_OPTIONS : log_path=\"$TEST_RESULTS_SAN_FILE\"
+ 		export LSAN_OPTIONS
+ 	fi
+-elif test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
++elif test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check" ||
++     test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
+ then
+ 	BAIL_OUT_ENV_NEEDS_SANITIZE_LEAK "GIT_TEST_PASSING_SANITIZE_LEAK=true"
+ elif test_bool_env GIT_TEST_SANITIZE_LEAK_LOG false
 -- 
 2.37.1.1127.g4ecf1c08f67
 
