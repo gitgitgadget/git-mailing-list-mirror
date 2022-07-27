@@ -2,126 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91AD2C04A68
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 09:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D678EC19F21
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 09:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230230AbiG0JZU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 05:25:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38594 "EHLO
+        id S230088AbiG0J1W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 05:27:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230220AbiG0JZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 05:25:13 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD0265F93
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 02:25:11 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id i13so11504813edj.11
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 02:25:11 -0700 (PDT)
+        with ESMTP id S231135AbiG0J1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 05:27:14 -0400
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92473474FC
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 02:27:08 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id m10so12516753qvu.4
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 02:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc;
-        bh=wlraMQnhQVOifO1vz58epFM5uAxuEffljY8JJuQVIqg=;
-        b=FP1N9nty6q1pG+0CenhaZ/FqM+TcZsKBkaMLPJJD3N0817TpFupv+W9VrSxBFt+fUN
-         n1AXhi0fnjhmOR2jR/V2woLoIPTFhOpMXZDHhWD2u0B10b1wTh0Ro3D9gTcj9RRutA15
-         MJzZfeJr5BMT6BWP5wCo7C5eoTFLZ7nJDV3HAeEzIu+VBjyezfToRChS5X9kD4KxHLwd
-         DecAf/MFoWOOfs6t13DWVIKwysCVK34FIJRMa5rG8h6VSS/yUlrD2UwUWrspA/J1JXwK
-         kDyaV4pbN7abSehIlql2uId2uztnqZce/Zl6PsgIO6MOU6PU8LI/qgQSTQ118/b04O+i
-         eWQg==
+        h=message-id:date:mime-version:user-agent:content-language:to
+         :references:from:subject:in-reply-to:content-transfer-encoding;
+        bh=bvU0ARA9CJimav0F2TZHs8XnWjgn5vL3t4LEe8rimZc=;
+        b=e52gMZtd7sZ3zsX/y7Z/JE18XykP5I/Go/IyyoNQOAvVP26bKVX6TWbnGmEj3loEW5
+         coGz9a0pO9FFx0KaxhLRevJeV2UEPBF/Y0XPzBC8Rh/4+5SbuqIYrNzWs+exEDpRhpHn
+         pshkCeiA2cqvwvMwD8k7cEgy85yP8YIdk/wkMflCvoSpz6U/gLtZiq4YR6Mtr2uGK9zq
+         cPYfg+8hF9AA02PxVHRKzHsmNm3kCD/dnd4hRZtVkIiMQkjBvxypsd5t8Il354og7K5x
+         pyVk3AsxRaHI5iEsQ7RbbqliOrjZmrH0MEdJM07HAbSDslvc4PTRsR2kaPHKfEUQo8at
+         MPsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=wlraMQnhQVOifO1vz58epFM5uAxuEffljY8JJuQVIqg=;
-        b=6M7GA1jGJJM2j+iBe4ukuOHbAW+Zlhp8Vk+L/QXa8lup5mzVuB2ibVnrUHvv+bVwhr
-         hwYiqh639Hk+Xpp2tdMh4aaa4XnzZRO0av6Lrb+F9UfK77atL2h8mXoPH8Ragm/cwycP
-         WRRcqMRTwpEvTouQxSnhei5BsDT0d3NqT9qdMkp6WLnmxq57aI5L02f2UwJLN0b9u2ZV
-         lcjBLNYBfA7JZTIHGST5F445ZdFAB4OGNR/l4hoNgEZZYij7LBR+gVi7szVfuZSc1dun
-         YikLINn5wacrDfslNi53jSBGoUo0ZPtVdRnSM6PTqUg0xhTOhKDuEpcWIfR7uZuDkyNk
-         5I+Q==
-X-Gm-Message-State: AJIora9IeOPEjEbpmG+9mJicCN+TgqOy3Bt3sOSgQttPBeiUWpdq7PQy
-        hgtr8Muxp5UcdEDcfhMJtLz5/p5fr5ey9A==
-X-Google-Smtp-Source: AGRyM1uS8jvwPIAb3nosVCGw+RpwdZWMuJrbLe8EVeGM5X+NZ/VzxsAQFExVUUCr2bypkLDdGOgyBw==
-X-Received: by 2002:a05:6402:1d54:b0:43b:e20b:4ff1 with SMTP id dz20-20020a0564021d5400b0043be20b4ff1mr19354593edb.385.1658913910140;
-        Wed, 27 Jul 2022 02:25:10 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id o13-20020a170906768d00b0072f9e7ce354sm6851844ejm.139.2022.07.27.02.25.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 02:25:09 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oGdHw-006bXc-Rh;
-        Wed, 27 Jul 2022 11:25:08 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v6] submodule merge: update conflict error message
-Date:   Wed, 27 Jul 2022 11:20:33 +0200
-References: <20220718214349.3379328-1-calvinwan@google.com>
- <20220726210020.3397249-1-calvinwan@google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220726210020.3397249-1-calvinwan@google.com>
-Message-ID: <220727.86ilnilxfv.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:references:from:subject:in-reply-to
+         :content-transfer-encoding;
+        bh=bvU0ARA9CJimav0F2TZHs8XnWjgn5vL3t4LEe8rimZc=;
+        b=qxjXx+v3AH/dLx2IMXdsysD9r/XIXuELxBi7GshQHNfmhqDee3hDd1puWYUY4TsMLA
+         ZswbRwWNyVfDJGQMDPP8L0biKeaIwDtlYsp8CpXFKbXcdYuqGS6v5dA1S3hPXS2NZphC
+         AvGrhkdDsloNbKbPCIIOhiExdD3A6WA+f+VOXSkFN/GK5EpdMHSwb8sWjnU/tjg2fqZ5
+         pyD+fe9OkVtPwHXp9shlzigCB6PSgB8ahTRJ2YeLYFhUR7bHX3lD2cjNhz8VGFQ7DAPW
+         Pkku+tbi2YmQObfWqHDkPyizcl22HluFGJufgUmRin4iV/NhN6jxFZi1Ta6J4dj3ARsX
+         8yKA==
+X-Gm-Message-State: AJIora9SBj2VkbsdXC2qPGtSO34znJu+HMhxcRlHiQYo1r/XVNjel8bQ
+        FVAAa+yM8phxdmxPrFOk3/lhP/JrEaI6+dJE
+X-Google-Smtp-Source: AGRyM1vTE2nAN/ll9phNA9jSDQ5JA33YV2kiHzt+Ftl80fDuCuitROIo6TSSBvSvQG9TksfXeJVldw==
+X-Received: by 2002:a05:6214:29e3:b0:473:7170:dafd with SMTP id jv3-20020a05621429e300b004737170dafdmr18479190qvb.38.1658914027435;
+        Wed, 27 Jul 2022 02:27:07 -0700 (PDT)
+Received: from [192.168.67.200] (dsl-10-133-182.b2b2c.ca. [72.10.133.182])
+        by smtp.gmail.com with ESMTPSA id x8-20020a05620a12a800b006b5b7a8e6a2sm11759715qki.23.2022.07.27.02.27.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Jul 2022 02:27:07 -0700 (PDT)
+Message-ID: <80dd46c5-f9ff-d2b3-2d7f-4b80e00494b8@gmail.com>
+Date:   Wed, 27 Jul 2022 05:24:55 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Content-Language: en-US
+To:     ZheNing Hu <adlternative@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <CAOLTT8QusNzdO1mHqQFPz84pznYSpFWJunroRGXQ7qk6sJjeYg@mail.gmail.com>
+From:   Thomas Guyot <tguyot@gmail.com>
+Subject: Re: Question: What's the best way to implement directory permission
+ control in git?
+In-Reply-To: <CAOLTT8QusNzdO1mHqQFPz84pznYSpFWJunroRGXQ7qk6sJjeYg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2022-07-27 04:56, ZheNing Hu wrote:
+> if there is a monorepo such as
+> git@github.com:derrickstolee/sparse-checkout-example.git
+>
+> There are many files and directories:
+>
+> client/
+>      android/
+>      electron/
+>      iOS/
+> service/
+>      common/
+>      identity/
+>      list/
+>      photos/
+> web/
+>      browser/
+>      editor/
+>      friends/
+> boostrap.sh
+> LICENSE.md
+> README.md
+>
+> Now we can use partial-clone + sparse-checkout to reduce
+> the network overhead, and reduce disk storage space size, that's good.
+>
+> But I also need a ACL to control what directory or file people can fetch/push.
+> e.g. I don't want a client fetch the code in "service" or "web".
 
-On Tue, Jul 26 2022, Calvin Wan wrote:
+Pushes can easily be blocked with a pre-receive or update hook on the 
+server side. That covers the case where you want to prevenr users to 
+update certain paths in the repo.
+> Now if the user client use "git log -p" or "git sparse-checkout add service"...
+> or other git command, git which will  download them by
+> "git fetch --filter=blob:none --stdin <oid>" automatically.
+>
+> This means that the git client and server interact with git objects
+> (and don't care about path) we cannot simply ban someone download
+> a "path" on the server side.
 
+Indeed - core devs can correct me if I'm wrong but afaik even in the 
+case of sparse checkouts and partial clones the packs may include other 
+objects. I have no ideas how git selects objects and packs on sent and 
+when it decides to repack objects... What I know is it can pack entire 
+repos in just a few files using delta compression and it would probably 
+make sense to sent these pack if there is no real benefit in repacking 
+just the requested objects.
+> What should I do? You may recommend me to use submodule,
+> but due to its complexity, I don't really want to use it :-(
 
-Aside from what Elijah pointed out already...
+Submodules is definitively an option for read ACLs, and considering git 
+was not originally designed to hide information from a single store it's 
+probably your only option. Moreover, if the git client is able to fetch 
+directly blobs and trees (the later includes partial trees as a tree 
+object is a single "directory" that can contain other blobs and trees), 
+then even the server has no knowledge of where a tree hook into, or even 
+how it's named. All that information would have to be mapped elsewhere.
 
-> +
-> +	/* field that holds submodule conflict information */
-> +	struct string_list conflicted_submodules;
+To take your example above, the "common" subtree of "service/" could be 
+in multiple top level directories (i,e, the same tree with same 
+contents), and each top level dirs could have a different "common" 
+subtree. So git would have to find where each tree object (one per 
+directory) is accessible from for *each revision* before deciding if a 
+client should be authorized to fetch an object, and the same would be 
+required for blobs (and tree objects don't even know their own name, 
+that comes from the reference in the parent tree or commit object for 
+the top-level tree).
 
-Looks good!
+So even before solving the client/server protocol issue you mentioned, 
+you can't just hide part of a repo in git right now and changing that is 
+definitively not trivial.
 
->  cleanup:
-> +	if (!ret) {
-> +		struct string_list *csub = &opt->priv->conflicted_submodules;
-> +		char *util;
-> +		const char *abbrev;
-> +
-> +		abbrev = repo_find_unique_abbrev(&subrepo, b, DEFAULT_ABBREV);
-> +		util = xstrdup(abbrev);
-> +
-> +		string_list_append(csub, path)->util = util;
-
-Elijah pointed out that these don't need to be dup'd at all, and you
-should follow that advice. I'm not really familiar at all with this code
-(compared to him).
-
-FWIW the "util" here could be dropped in any case, in my version it was
-because we were making a struct, but the idiom for this would just be:
-
-	string_list_append(....)->util = xstrdup(...);
-
-> +			printf(_(" - go to submodule (%s), and either merge commit %s\n"
-> +				    "   or update to an existing commit which has merged those changes\n"),
-> +					item->string, abbrev);
-
-FWIW what I mentioned in v5 was to arrange this so that " - " or
-whatever would be _()'d separately, so translators wouldn't need to
-worry about the formatting...
-
-> +				printf("       git add %s", item->string);
-> +				first = 0;
-> +			} else {
-> + 				printf(" \\\n               %s", item->string);
-
-And if we're translating *some* whitespace we should translate all of
-it. In RTL languages the a string like " foo" needs to be translated as
-"foo ". I.e. the whitespace from the "right" side of your terminal.
-
-That was what I was pointing out in the object-name.c code,
-usage_with_options_internal() is another example.
-
-> +			}
-> +		printf(_("\n\n   to record the above merge or update\n"
-
-We can add \n\n unconditionally, no need to put it in the translation.
-
+--
+Thomas
