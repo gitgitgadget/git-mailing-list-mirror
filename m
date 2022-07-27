@@ -2,115 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CE91C04A68
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 13:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17DF3C19F28
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 13:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232392AbiG0NlY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 09:41:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47276 "EHLO
+        id S232923AbiG0N7R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 09:59:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231614AbiG0NlX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 09:41:23 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4AF32CE27
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 06:41:19 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id c24so13249049qkm.4
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 06:41:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QWP9dDNk5FVQVoLAViiD3IEFrnXYWykcgk17c1FGTMM=;
-        b=SG6xfPCURjwNyheD1YshkdiAfRLZaLgg5Nh0U4wIQH3R8JekVod8+HM9Rce8mQhh8O
-         HHYDFFz3p2FzINSI3R5K7C3rFvLUx86yk+ZfxGEVYtywvUX6R/Dw2qi6FvegSLjOPDjZ
-         sktSjgWpCtft6OpyUXUfNzc8kzYxQhFKuE9QzDBBlsWtqIbkUZAW8VUe264BMpz55qyR
-         Bt0Vg5gjd6ZvpQdS4XDxYgNQU9PnEKbQbOs5XeNgDz5jlt6uqdCotuUL8vOKaBPWsJUx
-         7YLxf26HpS3ZA9NZk/sMX1ROxjf4xDXsXgBkqoMuZTnOq/fVLhraPZkvs6QwR6pUxC2Z
-         JXDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=QWP9dDNk5FVQVoLAViiD3IEFrnXYWykcgk17c1FGTMM=;
-        b=p2vm8BKCBL3wgw93hplkbUSA8baY5p1tDBNc0vFuRonh4WXa2X/GsEGJQ0lanSjhuO
-         /puO+2usOejeAj/+NAU5BpC1aCtxIrgcKIETTbmuogwACmMOiBkPhN9pcjKnEiKyBuEG
-         6yrHkpIY0m8cFcNZitNuM9Tv3GptA/iOBaHvO2+kYEqF26KZHBsxjD1LZoDZoSCov+h7
-         RCjwsTQoh792H8iaCuuIW2UAoA3dsLIq2C8sLHWDGNDQ95YQlsYst02Bj5/zwbWraKiX
-         Bgqqwf62eg8CHsL/GWnTNomIAbSkgDVKdJ9J7MNY91jVEBhxnkGjAJd5sLo/DNoG2tf4
-         Wo+g==
-X-Gm-Message-State: AJIora+kpfG4HPdootquJC/R8UVDLOR++NpUixaOL81R/1bqWacAQDJb
-        LBo9H2axzAV+74xdF9KA/Ih3
-X-Google-Smtp-Source: AGRyM1uRtzChoA/E4aFVb2R86jUI/P5sMsCbESNPvuNAuC8b7Hw5yySMLutIAPAXOKFCCC+3ecva5Q==
-X-Received: by 2002:a05:620a:450b:b0:6b5:e3ea:412e with SMTP id t11-20020a05620a450b00b006b5e3ea412emr16590055qkp.381.1658929278797;
-        Wed, 27 Jul 2022 06:41:18 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:85f5:c696:22d5:b5a5? ([2600:1700:e72:80a0:85f5:c696:22d5:b5a5])
-        by smtp.gmail.com with ESMTPSA id m6-20020a05620a290600b006b5c492aafesm13738973qkp.86.2022.07.27.06.41.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Jul 2022 06:41:18 -0700 (PDT)
-Message-ID: <69684d1e-ffda-367c-f0ae-2d4a3560be74@github.com>
-Date:   Wed, 27 Jul 2022 09:41:15 -0400
+        with ESMTP id S233354AbiG0N7J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 09:59:09 -0400
+X-Greylist: delayed 1387 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 27 Jul 2022 06:59:09 PDT
+Received: from qproxy1-pub.mail.unifiedlayer.com (qproxy1-pub.mail.unifiedlayer.com [173.254.64.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 148B239BA5
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 06:59:08 -0700 (PDT)
+Received: from gproxy3-pub.mail.unifiedlayer.com (unknown [69.89.30.42])
+        by qproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id B17B38032F9A
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 13:36:00 +0000 (UTC)
+Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
+        by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id 8FEF410073841
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 13:35:41 +0000 (UTC)
+Received: from box5922.bluehost.com ([162.241.30.80])
+        by cmsmtp with ESMTP
+        id GhCPoJMmiWg0EGhCPoIeJ7; Wed, 27 Jul 2022 13:35:41 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=Y4w9DjSN c=1 sm=1 tr=0 ts=62e13f2d
+ a=u+82WREdhvUKZ7QTvcqjvQ==:117 a=u+82WREdhvUKZ7QTvcqjvQ==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=RgO8CyIxsXoA:10:nop_rcvd_month_year
+ a=3EOfIcITIxQA:10:endurance_base64_authed_username_1 a=iTzkl6VgH4E_Jhm7GEEA:9
+ a=QEXdDO2ut3YA:10:nop_charset_2
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=MIME-Version:Content-Transfer-Encoding:
+        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
+        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=MGki/4cL+gslSah40HSeuxLTSdpo46V5UkxcQwMobxo=; b=vCXxSup/EPJu3iKb3a0PcIrQmC
+        1lt1G8tlgJ/+1rCWx02a08sJgO9TAI7o9QABvg3trOsTWcROT9eYuk38cyLdQHgow9ms8erUc7dAs
+        x1oSVEzJMCfY8tooGLwA3ukMh;
+Received: from [160.231.0.90] (port=42105 helo=llin-psh13-dsa.dsone.3ds.com)
+        by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1oGhCO-0022UA-O0;
+        Wed, 27 Jul 2022 07:35:40 -0600
+Message-ID: <18f324b9934982d577c0d9b0631d33818574df00.camel@mad-scientist.net>
+Subject: Re: [PATCH] Use 'Everything up to date.' instead of 'Everything
+ up-to-date'
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     git@vger.kernel.org, Jay Berry <jb2170@selfadjointoperator.com>
+Date:   Wed, 27 Jul 2022 09:35:39 -0400
+In-Reply-To: <220727.86r126lxt0.gmgdl@evledraar.gmail.com>
+References: <pull.1298.git.1658908927714.gitgitgadget@gmail.com>
+         <220727.86r126lxt0.gmgdl@evledraar.gmail.com>
+Organization: Please remain calm--I may be mad but I am a professional!
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.3 (by Flathub.org) 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: [PATCH 0/3] log: create tighter default decoration filter
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        vdye@github.com, steadmon@google.com
-References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
- <220726.86tu73ncf8.gmgdl@evledraar.gmail.com>
- <c3b14045-01a1-e207-a60d-2e3290ab8001@github.com>
- <220726.868rofn23f.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220726.868rofn23f.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5922.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 160.231.0.90
+X-Source-L: No
+X-Exim-ID: 1oGhCO-0022UA-O0
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (llin-psh13-dsa.dsone.3ds.com) [160.231.0.90]:42105
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 2
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/26/22 2:19 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Jul 26 2022, Derrick Stolee wrote:
-> 
->> On 7/26/2022 10:44 AM, Ævar Arnfjörð Bjarmason wrote:
+On Wed, 2022-07-27 at 11:15 +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason w=
+rote:
+> That "don't" is up for discussion, but a subsequent re-roll should
+> argue it based on the points raised there.
+>=20
+> If we *are* going to change this then:
+>=20
+> =C2=A0* We should mark this for translation with _()
+> =C2=A0* Don't have the translation include the \n
 
->>> But I think this change is going about it the wrong way, let's have a
->>> list of refs that Git knows about as magical, instead of assuming that
->>> we can ignore everything that's not on a small list of things we're
->>> including.
->>>
->>> Wouldn't that give you what you want, and not exclude these sorts of
->>> custom refs unexpectedly for users?
->>
->> Instead of keeping track of an ever-growing list of exclusions, instead
->> making a clear list of "this is what most users will want for their
->> decorations" is a better approach.
->>
->> Users who know how to create custom refs outside of this space have the
->> capability to figure out how to show their special refs. My general ideas
->> for designing these kinds of features is to have a default that is focused
->> on the typical user while giving config options for experts to tweak those
->> defaults.
->>
->> You're right that this series perhaps leaves something to be desired in
->> that second part, since there isn't an easy _config-based_ way to enable
->> all decorations (or a small additional subset).
-> 
-> Yes, but this is just side-stepping the issue. Your X-Y problem is that
-> you want to exclude certain refs that we're specifically creating.
-> 
-> I think that's fair enough, but I don't see why we're not specifically
-> excluding just those then.
-
-I'm advocating that we make a one-time change to have a set of "known
-useful refs" as showing up in the decorations. Perhaps some users (like
-yourself) need to react to that change, but it happens _once_.
-
-Changing the rules repeatedly as new "hidden" namespaces are added is
-more likely to cause confusion multiple times.
-
-Thanks,
--Stolee
+If no change to the text is wanted, then maybe a patch should be
+applied that adds a comment to the code saying that these strings are
+left as-is and not localized intentionally, to avoid similar issues in
+the future.
