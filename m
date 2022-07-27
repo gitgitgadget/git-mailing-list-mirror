@@ -2,91 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA69C3F6B0
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 14:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C40CBC04A68
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 14:50:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234054AbiG0ObA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 10:31:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55136 "EHLO
+        id S234278AbiG0Ou5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 10:50:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234050AbiG0Oa6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 10:30:58 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 050DE40BE4
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 07:30:56 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 681F81BD904;
-        Wed, 27 Jul 2022 10:30:56 -0400 (EDT)
+        with ESMTP id S233234AbiG0Ouz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 10:50:55 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CD253ED58
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 07:50:54 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A06FB144773;
+        Wed, 27 Jul 2022 10:50:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=nmQ+RZ7rlsfRfGNNmPYIlnFhdQQT58luGkQMRgLRV/U=; b=mMFr
-        9FOQIVh9idm4fT7511nsLMkr5uYt6pSGvTq02lJEPddvAYpGwvpgSUM5vOBFf9pN
-        w4XJ7ueCaI+i1SJKbVnoBVTXY0mMOGKgbuuZzNLEiKo8eRJKR0LW8/5pYSG8nL2/
-        a7mnvxRYBPpB26+ihsm8TX0sdnavlwjuDYWmV2E=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 608251BD903;
-        Wed, 27 Jul 2022 10:30:56 -0400 (EDT)
+         s=sasl; bh=FXWz9mxcxSh6UA07wvcT+rsBoHo3beLG0BsfvvKbASc=; b=ybGS
+        wEpsgP4bpXsOGPGxyESHmoAYjLjK2P/thgYNBE5qy3strROr6IRlSWuVL02LlqR8
+        NnF1j3jFgmNMSdxViirsZqr0Ywo1/g0pftoEbI07b2OboHfDGlU2dDCw+2tYfVVs
+        vuveIBNvHVa6kZOyYq/dvMalz8fEj+iRqOykisA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97E02144772;
+        Wed, 27 Jul 2022 10:50:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.40.190])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 196EC1BD901;
-        Wed, 27 Jul 2022 10:30:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EF7EB144771;
+        Wed, 27 Jul 2022 10:50:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Glen Choo <chooglen@google.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] CI: add SANITIZE=[address|undefined] jobs
-References: <patch-1.1-e48b6853dd5-20220726T110716Z-avarab@gmail.com>
-        <d4dcb1f6-6076-3725-d479-7e9f1fece2a3@github.com>
-Date:   Wed, 27 Jul 2022 07:30:51 -0700
-Message-ID: <xmqqilnityp0.fsf@gitster.g>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        steadmon@google.com, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 2/3] log: add default decoration filter
+References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+        <6b40b84773c70244bb13204ec566b713f1bdf865.1658844250.git.gitgitgadget@gmail.com>
+Date:   Wed, 27 Jul 2022 07:50:51 -0700
+Message-ID: <xmqqczdqtxro.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B80A7D24-0DB8-11ED-AF13-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 833A0D5A-0DBB-11ED-BF8E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->>            - jobname: linux-leaks
->>              cc: gcc
->>              pool: ubuntu-latest
->> +          - jobname: SANITIZE=address
->> +            cc: gcc
->> +            pool: ubuntu-latest
->> +          - jobname: SANITIZE=undefined
->> +            cc: gcc
->> +            pool: ubuntu-latest
+> From: Derrick Stolee <derrickstolee@github.com>
 >
->> @@ -277,6 +277,12 @@ linux-leaks)
->>  	export SANITIZE=leak
->>  	export GIT_TEST_PASSING_SANITIZE_LEAK=true
->>  	;;
->> +SANITIZE=address)
->> +	export SANITIZE=address
->> +	;;
->> +SANITIZE=undefined)
->> +	export SANITIZE=undefined
->> +	;;
+> When a user runs 'git log', they expect a certain set of helpful
+> decorations. This includes:
 >
-> In both of these cases, we are breaking from the nearby pattern. These
-> jobs could be renamed to linux-address and linux-undefined to match the
-> linux-leaks job.
->
-> Alternatively, we could rename linux-leaks to SANITIZE=leak, since the
-> point is not to test the Linux platform but to use the additional runtime
-> checks (and Linux is the fasted CI platform).
+> * The HEAD ref
 
-I tend to agree that in the existing linux-leaks job, the
-"linux"-ness is much less important than the "leaks"-ness, so the
-"alternative" might be slightly more preferable, but I do not mind
-the renaming goes the other way, either.
+OK.
 
-Thanks for your good eyes and good taste.
+> * Branches (refs/heads/)
+
+OK.
+
+> * Notes (refs/notes/)
+
+Questionable.  None of the notes commits are on the primary history,
+so it is unlikely to be even used for decoration, so it would not
+hurt to have them as part of possible decoration sources, but on the
+other hand, the value of using them is dubious.
+
+> * Stashes (refs/stash/)
+
+Questionable, for the same reason as 'notes'.
+
+> * Tags (refs/tags/)
+
+Abolutely useful.
+
+> * Remote branches (refs/remotes/)
+
+Ditto.
+
+>  --decorate-refs=<pattern>::
+>  --decorate-refs-exclude=<pattern>::
+> -	If no `--decorate-refs` is given, pretend as if all refs were
+> -	included.  For each candidate, do not use it for decoration if it
+> +	For each candidate reference, do not use it for decoration if it
+>  	matches any patterns given to `--decorate-refs-exclude` or if it
+>  	doesn't match any of the patterns given to `--decorate-refs`. The
+>  	`log.excludeDecoration` config option allows excluding refs from
+>  	the decorations, but an explicit `--decorate-refs` pattern will
+>  	override a match in `log.excludeDecoration`.
+> ++
+> +If none of these options or config settings are given, then references are
+> +used as decoration if they match `HEAD`, `refs/heads/`, `refs/notes/`,
+> +`refs/remotes/`, `refs/stash/`, or `refs/tags/`.
+>  
+>  --source::
+>  	Print out the ref name given on the command line by which each
+
+OK.
+
+Thanks.
 
