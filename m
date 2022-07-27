@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D53C2C04A68
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 23:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA315C19F29
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 23:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234046AbiG0XOA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 19:14:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41710 "EHLO
+        id S234936AbiG0XOF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 19:14:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232724AbiG0XNz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 19:13:55 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B9F64D4C6
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:13:53 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id l4so82696wrm.13
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:13:53 -0700 (PDT)
+        with ESMTP id S233151AbiG0XN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 19:13:57 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E294D4C6
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:13:56 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id bn9so98780wrb.9
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:13:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=MxrZwK2IO/lfHzmu3Mgjck9SJ+jxnQ7/NsPXIxvVSqk=;
-        b=SBHYzozUJ+StD5RGsouW5/WdHmNvgwnmcn9+26UXSDllFjrOV3kXmyzGzQXZy7ckFN
-         8HuZrAp+IkLFEnqQ+Y5+LCU4AHJhpeHu3oh5waGzVurTDbJGvdLDNd3KhCLr7i9I/jD6
-         TVw7SgafVQpvUPP9MrO4mLjO57qrWByj5MUdpa1d6nkHl/Y0506taQosr/anvWyXYzmD
-         cc3Mda5tPpOkk79BKtJVXo9+ElK2uDfYvnwhrr5FWItM6Kyl1QPKQWbZSXejY/1ISWn1
-         C1yizNud0oV5MudhY0WfEoh9VnwPxgSJyA44RPpEWUGQUnOJPjjDW7WnnRG5R3fusYa2
-         JOjw==
+        bh=+ydImvf6cfVwO1RsBPo7CKzgDBylTtd8okEswqW+BgI=;
+        b=JgysCvpOaiUEjeyow4YHTbiZKUWqYALIKbi5EK6Udop/lBcEwYPj9AUZ49gj/5L/nl
+         OwG4YbfiywPISH+NKM9ksVOTm0aBiOXA6XsoGy0pW+vdEjqMUXC+t8nmLQKCWN5Djqg6
+         vG31qkecicikMG/GkeYWRlG0PL3TBneIgHJQEJHYKG/saNs0kQC7BIaOTaoGDSbmwWDh
+         VfBfE9YFQo7ePXO2WSpI/nxnWZxz/HaVFWZDT5TBm+r1sM3TqUYIQMPAwIieTkhCyVXl
+         5VfyKIFUToCmGUKqn5neRSJVcNoGZJVytooMCRoOYhHThHwgqrNkTC3jMPdWgAyo6Auv
+         QuLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=MxrZwK2IO/lfHzmu3Mgjck9SJ+jxnQ7/NsPXIxvVSqk=;
-        b=L5UyOsHgdOHg5X7TDMvjwJdMPcKvMMJ0s3W8IP/vi76hNVUsbzg4RQaYdd64AS/g1C
-         SKFgIlsvNN2LRfxXjhJsCXJph3NHCfV5ZGtzEoQVkpIGF7PqKbrrg4crD79KO3DH4O0O
-         bQmyyzFyw8+NyV/cJ6GuVAly0NT5hDv2i15S9V1JSZNAuqscq4QwsmQOmzc/r8LTidPz
-         5KYfVZLGIAK0tBg2VEW4JH3k0rA9NE7obAJslSrLmyYJ5Kipo2D1FgMaq1zEpYjxt3Rg
-         CzMuYar0wNo9p1Qxey0QlZ4lyvzAJKkGuV+Z/qeHhmRJB/1u5JLPyvL1Q1PVJUWMbC0m
-         fIUA==
-X-Gm-Message-State: AJIora9cV48I6wbozihp1BxGQWeNF+gdjZ5FC02p54Kyjetrm302X2zo
-        I6KWP2JRwS09pM5IkzWRm0qDw1mTBj0fVQ==
-X-Google-Smtp-Source: AGRyM1uR9Asz1q85W8Ld93hQJmYoCr26aJkBnI7B1u3DOFNLubIvQ/Ck7e6IBEu9SsLM2Tzg4AB8KA==
-X-Received: by 2002:a5d:4345:0:b0:21a:3b82:ad57 with SMTP id u5-20020a5d4345000000b0021a3b82ad57mr16105483wrr.176.1658963631544;
-        Wed, 27 Jul 2022 16:13:51 -0700 (PDT)
+        bh=+ydImvf6cfVwO1RsBPo7CKzgDBylTtd8okEswqW+BgI=;
+        b=IJjBVmai12RA/81/LcfiH2/gNqOJ0h4jB3uKDXL5uVkKY9O8P7Ag/N/OJHiYziWLI8
+         Ie9nQfagnkgMFwQfKkSY6gQlsSvfjhM1M8OFUaXPPyXyeWdSSg++xY2PW1lK64UlSrlQ
+         3A9M43gzTx7I3KUhlkF8RCVApDzhtABJ1vMSZEF5yShxJtBkNVdXjrbbia/W+EBowbb3
+         CDoYreD1fgsit6w92Q90poXy72o4LyGOnaBxcDL7M9RxnTHQCmiqNWy2G6VvNLO2yZNp
+         IUBiYXe4VhdcCWOMRnBiazAmdWVQ6ynKWQGpwkrnCZJxZnFOjQSvIRca21GdWK/0nSNP
+         DJfQ==
+X-Gm-Message-State: AJIora/n9bRtVfnv4ODE2CpiiC3qXwyQwu6+xTznCgVy2ro281EbBctb
+        4uPi3XIKU5sjQ5labhI+7fEr7XOgybNvcg==
+X-Google-Smtp-Source: AGRyM1uLKSB95sdw7uHg8Ty5BrrZ2YaBTq3jl6Y9JUgiAlNiDJmU8xJQSVjdcFpUzw2tyt49CkBlhg==
+X-Received: by 2002:a5d:47ab:0:b0:21d:b2b1:59b1 with SMTP id 11-20020a5d47ab000000b0021db2b159b1mr15148931wrb.99.1658963634425;
+        Wed, 27 Jul 2022 16:13:54 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z3-20020adfec83000000b0021dd08ad8d7sm1692806wrn.46.2022.07.27.16.13.50
+        by smtp.gmail.com with ESMTPSA id z3-20020adfec83000000b0021dd08ad8d7sm1692806wrn.46.2022.07.27.16.13.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 16:13:50 -0700 (PDT)
+        Wed, 27 Jul 2022 16:13:53 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 03/15] test-lib: fix GIT_EXIT_OK logic errors, use BAIL_OUT
-Date:   Thu, 28 Jul 2022 01:13:31 +0200
-Message-Id: <patch-v3-03.15-385d5c52d5a-20220727T230800Z-avarab@gmail.com>
+Subject: [PATCH v3 05/15] t/README: reword the "GIT_TEST_PASSING_SANITIZE_LEAK" description
+Date:   Thu, 28 Jul 2022 01:13:33 +0200
+Message-Id: <patch-v3-05.15-80a36a47b37-20220727T230800Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1127.g4ecf1c08f67
 In-Reply-To: <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
 References: <cover-v2-00.14-00000000000-20220720T211221Z-avarab@gmail.com> <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
@@ -67,93 +67,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change various "exit 1" checks that happened after our "die" handler
-had been set up to use BAIL_OUT instead. See 234383cd401 (test-lib.sh:
-use "Bail out!" syntax on bad SANITIZE=leak use, 2021-10-14) for the
-benefits of the BAIL_OUT function.
+Reword the documentation added in 956d2e4639b (tests: add a test mode
+for SANITIZE=leak, run it in CI, 2021-09-23) for brevity.
 
-The previous use of "error" here was not a logic error, but the "exit"
-without "GIT_EXIT_OK" would emit the "FATAL: Unexpected exit with code
-$code" message on top of the error we wanted to emit.
-
-Since we'd also like to stop "prove" in its tracks here, the right
-thing to do is to emit a "Bail out!" message.
-
-Let's also move the "GIT_EXIT_OK=t" assignments to just above the
-"exit [01]" in "test_done". It's not OK if we exit in
-e.g. finalize_test_output.
+The comment added in the same commit was also misleading: We skip
+certain tests if SANITIZE=leak and GIT_TEST_PASSING_SANITIZE_LEAK=true,
+not if we're compiled with SANITIZE=leak. Let's just remove the
+comment, the control flow here is obvious enough that the code can
+speak for itself.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/test-lib.sh | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ t/README      | 10 ++++------
+ t/test-lib.sh |  1 -
+ 2 files changed, 4 insertions(+), 7 deletions(-)
 
+diff --git a/t/README b/t/README
+index 4f9981cf5e3..7f409392537 100644
+--- a/t/README
++++ b/t/README
+@@ -366,12 +366,10 @@ excluded as so much relies on it, but this might change in the future.
+ GIT_TEST_SPLIT_INDEX=<boolean> forces split-index mode on the whole
+ test suite. Accept any boolean values that are accepted by git-config.
+ 
+-GIT_TEST_PASSING_SANITIZE_LEAK=<boolean> when compiled with
+-SANITIZE=leak will run only those tests that have whitelisted
+-themselves as passing with no memory leaks. Tests can be whitelisted
+-by setting "TEST_PASSES_SANITIZE_LEAK=true" before sourcing
+-"test-lib.sh" itself at the top of the test script. This test mode is
+-used by the "linux-leaks" CI target.
++GIT_TEST_PASSING_SANITIZE_LEAK=true skips those tests that haven't
++declared themselves as leak-free by setting
++"TEST_PASSES_SANITIZE_LEAK=true" before sourcing "test-lib.sh". This
++test mode is used by the "linux-leaks" CI target.
+ 
+ GIT_TEST_PROTOCOL_VERSION=<n>, when set, makes 'protocol.version'
+ default to n.
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c8c84ef9b14..118720493bb 100644
+index 31213b5f95b..f8adb92f027 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -1173,8 +1173,6 @@ test_done () {
- 	# removed, so the commands can access pidfiles and socket files.
- 	test_atexit_handler
- 
--	GIT_EXIT_OK=t
--
- 	finalize_test_output
- 
- 	if test -z "$HARNESS_ACTIVE"
-@@ -1246,6 +1244,7 @@ test_done () {
- 		fi
- 		test_at_end_hook_
- 
-+		GIT_EXIT_OK=t
- 		exit 0 ;;
- 
- 	*)
-@@ -1255,6 +1254,7 @@ test_done () {
- 			say "1..$test_count"
- 		fi
- 
-+		GIT_EXIT_OK=t
- 		exit 1 ;;
- 
- 	esac
-@@ -1387,14 +1387,12 @@ fi
- GITPERLLIB="$GIT_BUILD_DIR"/perl/build/lib
- export GITPERLLIB
- test -d "$GIT_BUILD_DIR"/templates/blt || {
--	error "You haven't built things yet, have you?"
-+	BAIL_OUT "You haven't built things yet, have you?"
- }
- 
- if ! test -x "$GIT_BUILD_DIR"/t/helper/test-tool$X
- then
--	echo >&2 'You need to build test-tool:'
--	echo >&2 'Run "make t/helper/test-tool" in the source (toplevel) directory'
--	exit 1
-+	BAIL_OUT 'You need to build test-tool; Run "make t/helper/test-tool" in the source (toplevel) directory'
+@@ -1447,7 +1447,6 @@ then
+ 	test_done
  fi
  
- # Are we running this test at all?
-@@ -1448,9 +1446,7 @@ remove_trash_directory () {
- 
- # Test repository
- remove_trash_directory "$TRASH_DIRECTORY" || {
--	GIT_EXIT_OK=t
--	echo >&5 "FATAL: Cannot prepare test area"
--	exit 1
-+	BAIL_OUT 'cannot prepare test area'
- }
- 
- remove_trash=t
-@@ -1466,7 +1462,7 @@ fi
- 
- # Use -P to resolve symlinks in our working directory so that the cwd
- # in subprocesses like git equals our $PWD (for pathname comparisons).
--cd -P "$TRASH_DIRECTORY" || exit 1
-+cd -P "$TRASH_DIRECTORY" || BAIL_OUT "cannot cd -P to \"$TRASH_DIRECTORY\""
- 
- start_test_output "$0"
- 
+-# skip non-whitelisted tests when compiled with SANITIZE=leak
+ if test -n "$SANITIZE_LEAK"
+ then
+ 	if test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
 -- 
 2.37.1.1127.g4ecf1c08f67
 
