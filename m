@@ -2,205 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50602C04A68
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 22:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52D3BC19F2C
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 22:09:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232471AbiG0WAr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 18:00:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45116 "EHLO
+        id S234925AbiG0WJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 18:09:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbiG0WAq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 18:00:46 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353853D5B6
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 15:00:45 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-10e615a36b0so183116fac.1
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 15:00:45 -0700 (PDT)
+        with ESMTP id S234280AbiG0WJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 18:09:01 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B24153D15
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 15:08:58 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id 23so13706pgc.8
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 15:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CYNxKHbawhLikfhwAO4lYXoWI9uWkXbGUww7XzZIoic=;
-        b=M+ePW7YTZhhGPsEKnNOOGIbx12S/ta2QnY1ExYgMUbT8i/2awB6s9LVQ9qvksB1MaA
-         tZtkYOyPMwtpsvD22tGPa5zp1u+jKRnVvpxV2SJwHwZCZ+peCMUwFh1OuS7QcJzf1ZOk
-         JlAgVr/VZk46tjvJ5NBG1INwg80nLj8ixZyXtH8UAW+p893tf+4QIPuZeHgZWFuzYNSL
-         95fi5B+tCxRKX2fD2UqpyevoVyTJ0uTyEQ9ZaPzpKwjRJKmOkM+cxRtbXE0HfEowKpFT
-         HVZPLaKouRvEpq8OisqG1wx39dx2Dng2bFCkwW/MX3h61LH57bYOFqWSXI32zpBq1FBR
-         o8gQ==
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=q+TxZ3qiA1Yq/rO5p9no4o0MrV7P1GUP360pzjP9TVg=;
+        b=kHgsD1oGre4mNLEISrkfbm5vpCabWMi3vBx5h8w0x6MNNr/jPdl4QlHqrCAPRrG+Fy
+         3JFx+2q3Jql5VANRlhaSRGBFxUCeROiQQqTsN/iUxC2J7d/bv8PS/dqi+S+t9hf/4ygq
+         K/oSvjzRrFJsNklVjec+jN/Z5XWRDzh7ZzPa/ucXJj4mhE5ZXzdLifQXgVKFdP/3AAsu
+         6r5J93Kr47jiXQOSEOXsO3QSBOF+XwpgFOg8t+CWSjqYMRPrH8rlxRxcCDau4sCWaBjt
+         2crooV3zLXIOtvKxsL64JFCqVUXvjSqKQyVp/2sU44pwG4vEgnE6mTwPGjLWucfU92Sf
+         Akrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CYNxKHbawhLikfhwAO4lYXoWI9uWkXbGUww7XzZIoic=;
-        b=X/FIIdQ/dIFCC4iILIeL3/Vl+lbyLbiraSKXyOXnYTsWWqsIHL4pN+ZlHRz0C9yRKo
-         64SENhBeqFnEI4fXbUNGKF5YaivswC2ff79gTI1itmd0ocT4Zo663cH2JInrbXHRUXOe
-         B/qaDpOns6DJ4S35CzIBytQU44NTaU48F6fAVp4I5/R1L6gs1oJikkdQFNaoZug0kyOe
-         eN61fTAB03qvCyNsZR9XTWR/mE+G1GiW4daXRz3mUaMSeA8fjcDnSSomUIz5zqeR9UVF
-         jmz2akL1/Zr9RY26ZesDCtW20fcGQLcf93QsJpSvv1nNincW4ht6w2dtkdMynRrqLO/G
-         BkWw==
-X-Gm-Message-State: AJIora+63CVfvuXK0Z8MJ1F4eISlV5MsE98p+M74ny8qJSWT2K5mg7Rj
-        t5AnZlGRBn8Eq+b1JN3s+8O+T+HpLk3tc6goRbTtDQ==
-X-Google-Smtp-Source: AGRyM1uk4YBp/jAKESnm2eoGBvioIcqwStXyeeuXRggwJbB8uY2UmNYrhy82HPkCAaAE/UwBnoTslmWobd+RBDme2lE=
-X-Received: by 2002:a05:6870:c0d2:b0:10d:7752:e02e with SMTP id
- e18-20020a056870c0d200b0010d7752e02emr3238199oad.236.1658959244352; Wed, 27
- Jul 2022 15:00:44 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=q+TxZ3qiA1Yq/rO5p9no4o0MrV7P1GUP360pzjP9TVg=;
+        b=yOldSC9p34m0NvpFToJLHZKpea9lUrsXJ4v62XIY5XosmY8TByYmaBKt0LOgY+EDWd
+         s8vTwU2hzfoRsbjD7RGEv0zk4i/qNK75NHZRMoKe4RxuoapxK3kXSeCjSEhmN1GhlgeK
+         pyS1d5GiDzPCk7Spu6SliKlUWiSwDUoztj58lI/QQ7XdE0bxgJRkpIOcy5SsnSLPfqgG
+         OGXfGzcm+8ltcaVeR2f+fN/0Bn88ShML6tnhO6DbZk6WAu0tYJbA+fTS8hZTSNk8I/3s
+         x5u5N5UqjOcOGOcgnpDdcXULhwwq3MWrDGJmwOJL2sJDp3W9iyJKFQ1yuq+UBeMxA4X7
+         6L+A==
+X-Gm-Message-State: AJIora9OxBobZgt/fgcBf3D44Pfg2mBCH4s718XYYmdKGpPQfaSWwYOk
+        +G5lZE05ib0gYMKb+jGC1Iqzpw==
+X-Google-Smtp-Source: AGRyM1ubDDQiFU9+Vjl0ZWit9aNEQsRDzoqkfTlNQoF5m16/RLZscCUFVD0u6cnF4bUhi1CdE/jytQ==
+X-Received: by 2002:a63:88c8:0:b0:415:b09f:9212 with SMTP id l191-20020a6388c8000000b00415b09f9212mr20182118pgd.524.1658959737276;
+        Wed, 27 Jul 2022 15:08:57 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:6dea:f5ba:2fa:f9c3])
+        by smtp.gmail.com with ESMTPSA id o6-20020a170902d4c600b0016c1b178628sm14544164plg.269.2022.07.27.15.08.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Jul 2022 15:08:56 -0700 (PDT)
+Date:   Wed, 27 Jul 2022 15:08:50 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, avarab@gmail.com, dyroneteng@gmail.com,
+        Johannes.Schindelin@gmx.de, szeder.dev@gmail.com,
+        mjcheetham@outlook.com, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/5] remote-curl: add 'get' capability
+Message-ID: <YuG3cuFEvhL+wKs/@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, avarab@gmail.com, dyroneteng@gmail.com,
+        Johannes.Schindelin@gmx.de, szeder.dev@gmail.com,
+        mjcheetham@outlook.com, Derrick Stolee <derrickstolee@github.com>
+References: <pull.1300.git.1658781277.gitgitgadget@gmail.com>
+ <40808e92afb7bcf3e8e9b4b53d5e30b5e17816f8.1658781277.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20220718214349.3379328-1-calvinwan@google.com>
- <20220726210020.3397249-1-calvinwan@google.com> <CABPp-BGvDLvmj720PFzsjrZrYuYauprL6JeOQhiQ4BjtfjF7Dg@mail.gmail.com>
-In-Reply-To: <CABPp-BGvDLvmj720PFzsjrZrYuYauprL6JeOQhiQ4BjtfjF7Dg@mail.gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Wed, 27 Jul 2022 15:00:32 -0700
-Message-ID: <CAFySSZB6bB0qqCv5EPmJBJY9RbDRFv8JDYj89W+ND_Jw6Ys1kA@mail.gmail.com>
-Subject: Re: [PATCH v6] submodule merge: update conflict error message
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <40808e92afb7bcf3e8e9b4b53d5e30b5e17816f8.1658781277.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Well explained.  One very minor suggestion: perhaps change "id of the
-> commit" to "id of the submodule commit" just to make it slightly
-> clearer that this information would take work for the user to discover
-> on their own?  (When I first read it, I was thinking, "but they have
-> the commit, it's what they passed to merge", before I realized my
-> error.)
+On 2022.07.25 20:34, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+> A future change will want a way to download a file over HTTP(S) using
+> the simplest of download mechanisms. We do not want to assume that the
+> server on the other side understands anything about the Git protocol but
+> could be a simple static web server.
+> 
+> Create the new 'get' capability for the remote helpers which advertises
+> that the 'get' command is avalable. A caller can send a line containing
+> 'get <url> <path>' to download the file at <url> into the file at
+> <path>.
+> 
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  Documentation/gitremote-helpers.txt |  9 +++++++
+>  remote-curl.c                       | 32 +++++++++++++++++++++++++
+>  t/t5557-http-get.sh                 | 37 +++++++++++++++++++++++++++++
+>  3 files changed, 78 insertions(+)
+>  create mode 100755 t/t5557-http-get.sh
+> 
+> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+> index 6f1e269ae43..ed8da428c98 100644
+> --- a/Documentation/gitremote-helpers.txt
+> +++ b/Documentation/gitremote-helpers.txt
+> @@ -168,6 +168,9 @@ Supported commands: 'list', 'import'.
+>  	Can guarantee that when a clone is requested, the received
+>  	pack is self contained and is connected.
+>  
+> +'get'::
+> +	Can use the 'get' command to download a file from a given URI.
+> +
+>  If a helper advertises 'connect', Git will use it if possible and
+>  fall back to another capability if the helper requests so when
+>  connecting (see the 'connect' command under COMMANDS).
+> @@ -418,6 +421,12 @@ Supported if the helper has the "connect" capability.
+>  +
+>  Supported if the helper has the "stateless-connect" capability.
+>  
+> +'get' <uri> <path>::
+> +	Downloads the file from the given `<uri>` to the given `<path>`. If
+> +	`<path>.temp` exists, then Git assumes that the `.temp` file is a
+> +	partial download from a previous attempt and will resume the
+> +	download from that position.
+> +
+>  If a fatal error occurs, the program writes the error message to
+>  stderr and exits. The caller should expect that a suitable error
+>  message has been printed if the child closes the connection without
+> diff --git a/remote-curl.c b/remote-curl.c
+> index b8758757ece..73fbdbddd84 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -1286,6 +1286,33 @@ static void parse_fetch(struct strbuf *buf)
+>  	strbuf_reset(buf);
+>  }
+>  
+> +static void parse_get(struct strbuf *buf)
+> +{
+> +	struct strbuf url = STRBUF_INIT;
+> +	struct strbuf path = STRBUF_INIT;
+> +	const char *p, *space;
+> +
+> +	if (!skip_prefix(buf->buf, "get ", &p))
+> +		die(_("http transport does not support %s"), buf->buf);
 
-ack
+Nit: since we're already calling skip_prefix(...) in cmd_main() below,
+can we just pass the suffix to parse_get() and avoid having to skip the
+prefix twice?
 
-> Sorry for not catching this in an earlier round, but merge_submodule()
-> has four "return 0" cases, for particular types of conflicts.  Those
-> should probably be switched to "goto cleanup" or something like that,
-> so that these messages you are adding are also provided if one of
-> those conflict cases are hit.
 
-I didn't send these four "return 0" cases to cleanup because I thought
-the error message wouldn't accurately reflect the resolution steps. Is
-merging or updating the submodule still the correct resolution? The
-first three cases are for a null o/a/b, and the fourth case is for a missing
-local submodule. Also in cleanup, the subrepo is cleared but the
-subrepo hasn't been initialized/failed to initialize in these four cases.
-
-> >         object_array_clear(&merges);
-> >  cleanup:
-> > +       if (!ret) {
->
-> And here's another item I have to apologize for not catching in an
-> earlier round.  We should also require !opt->priv->call_depth as well
-> in this if-condition.  If merging of merge bases produced a submodule
-> conflict, but the outer merge involves two sides that resolved the
-> inner conflict the exact same way, then there's no conflict at the
-> outer level and nothing for the user to resolve.  If users don't have
-> any conflicts to resolve, we don't want to print messages telling them
-> how to resolve their non-existent conflicts.  And if there is still a
-> conflict in the submodule for the outer merge as well as in the
-> recursive merge(s), we don't want to list the module twice (or more)
-> when we tell the user to fix conflicts in their submodules (especially
-> since that means we'd be telling them to merge multiple different
-> commits for the single submodule, which could get confusing).
-
-ack.
-
-> > +               for_each_string_list_item(item, csub) {
-> > +            const char *abbrev= item->util;
->
-> Messed up indent here?
-
-Looks like going from my editor to `git format-patch` messed
-something up here.
-
-> > +               for_each_string_list_item(item, csub)
-> > +                       /*
-> > +                        * TRANSLATORS: This is a line of a recommended `git add` command
-> > +                        * with multiple lines of submodule folders.
-> > +                        * E.g.:     git add sub \
-> > +                        *                   sub2 \
-> > +                        *                   sub3
->
-> Why does such a message need to be translated?  It's literal text the
-> user should type, right?  I'm not sure what a translator would do with
-> the message other than regurgitate it.
-
-It doesn't. My point was to let the translator know that the only text
-in this print is for a git command. I should probably add that context
-to the comment though.
-
-> > +                        */
-> > +                       if (first) {
-> > +                               printf("       git add %s", item->string);
->
-> But if you did mean for there to be a translation and a TRANSLATORS
-> note, then did you forget to translate it by calling _()?
-
-Same reasoning as above.
-
-> > +                               first = 0;
-> > +                       } else {
-> > +                               printf(" \\\n               %s", item->string);
-> > +                       }
->
-> Can we put braces around this for_each_string_list_item() block?  Or,
-> as an alternative to the whole block, do you want to consider:
->
->    strub strbuf tmp = STRBUF_INIT;
->    strbuf_add_separated_string_list(&tmp, ' ', csub);
->    printf(_("    git add %s"), tmp.buf);   /* or maybe remove the
-> translation; not sure what the point is */
->    strbuf_release(&tmp);
-> ?  It is likely easier to copy & paste, and might be understood by
-> more users (I'm not sure how many are aware that command lines can use
-> backslashes for line continuation), but on the negative side, if you
-> have a lot of submodules it might make it harder to read.  Even if you
-> don't like space separated, though, you could still use this strategy
-> by changing the second line to
->
->     strbuf_add_separated_string_list(&tmp, " \\\n               ", csub);
-
-This is a much cleaner implementation, thanks! If my goal is to make
-submodule merging easier for newer submodule users, then I think it's a
-good assumption to remove any additional possible points of confusion,
-aka with the "command lines can use backslashes for line continuation",
-so I'll swap over to spaces.
-
-> > +       print_submodule_conflict_suggestion(&opti->conflicted_submodules);
-> > +       string_list_clear(&opti->conflicted_submodules, 1);
-> > +
->
-> It would be more consistent to have things allocated in merge_start()
-> continue to be cleared out in clear_or_reinit_internal_opts().  This
-> kind of breaks that pairing, and you're already making sure to clear
-> it there, so I'd rather remove this duplicate string_list_clear()
-> call.
-
-ack.
-
-> >         /* Also include needed rename limit adjustment now */
-> >         diff_warn_rename_limit("merge.renamelimit",
-> >                                opti->renames.needed_limit, 0);
-> > @@ -4657,6 +4717,7 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
-> >         trace2_region_enter("merge", "allocate/init", opt->repo);
-> >         if (opt->priv) {
-> >                 clear_or_reinit_internal_opts(opt->priv, 1);
-> > +               string_list_init_dup(&opt->priv->conflicted_submodules);
->
-> This works, but there is a minor optimization available here if you're
-> interested (I understand if you're not since you're already at v6).
-> Assuming you make the important opt->priv->call_depth fix, you can
-> replace string_list_init_dup() with string_list_init_nodup() here.
-> The paths aren't freed until clear_or_reinit_internal_opts() which
-> (under the assumption previously stated) isn't called until
-> merge_finalize(), which comes after the call to
-> merge_display_update_messages(), which is where you use the data.
->
-> (As repository paths are used all over merge-ort.c, the optimization
-> to store them in one place (opt->priv->paths) and avoid duplicating
-> them is used pretty heavily.  It's more important for a lot of the
-> other strmaps since they'll have a lot more paths in them, but it is
-> kind of nice to use this optimization where possible.)
-
-Thanks for all the context of this one. I agree it's minor, but any place
-we can provide a better example to future contributors seems like a
-more than worthy reason to make this change :)
+> +
+> +	space = strchr(p, ' ');
+> +
+> +	if (!space)
+> +		die(_("protocol error: expected '<url> <path>', missing space"));
+> +
+> +	strbuf_add(&url, p, space - p);
+> +	strbuf_addstr(&path, space + 1);
+> +
+> +	if (http_get_file(url.buf, path.buf, NULL))
+> +		die(_("failed to download file at URL '%s'"), url.buf);
+> +
+> +	strbuf_release(&url);
+> +	strbuf_release(&path);
+> +	printf("\n");
+> +	fflush(stdout);
+> +	strbuf_reset(buf);
+> +}
+> +
+>  static int push_dav(int nr_spec, const char **specs)
+>  {
+>  	struct child_process child = CHILD_PROCESS_INIT;
+> @@ -1564,9 +1591,14 @@ int cmd_main(int argc, const char **argv)
+>  				printf("unsupported\n");
+>  			fflush(stdout);
+>  
+> +		} else if (skip_prefix(buf.buf, "get ", &arg)) {
+> +			parse_get(&buf);
+> +			fflush(stdout);
+> +
+>  		} else if (!strcmp(buf.buf, "capabilities")) {
+>  			printf("stateless-connect\n");
+>  			printf("fetch\n");
+> +			printf("get\n");
+>  			printf("option\n");
+>  			printf("push\n");
+>  			printf("check-connectivity\n");
+> diff --git a/t/t5557-http-get.sh b/t/t5557-http-get.sh
+> new file mode 100755
+> index 00000000000..50b7dbcf957
+> --- /dev/null
+> +++ b/t/t5557-http-get.sh
+> @@ -0,0 +1,37 @@
+> +#!/bin/sh
+> +
+> +test_description='test downloading a file by URL'
+> +
+> +. ./test-lib.sh
+> +
+> +. "$TEST_DIRECTORY"/lib-httpd.sh
+> +start_httpd
+> +
+> +test_expect_success 'get by URL: 404' '
+> +	url="$HTTPD_URL/none.txt" &&
+> +	cat >input <<-EOF &&
+> +	capabilities
+> +	get $url file1
+> +	EOF
+> +
+> +	test_must_fail git remote-http $url <input 2>err &&
+> +	test_path_is_missing file1 &&
+> +	grep "failed to download file at URL" err &&
+> +	rm file1.temp
+> +'
+> +
+> +test_expect_success 'get by URL: 200' '
+> +	echo data >"$HTTPD_DOCUMENT_ROOT_PATH/exists.txt" &&
+> +
+> +	url="$HTTPD_URL/exists.txt" &&
+> +	cat >input <<-EOF &&
+> +	capabilities
+> +	get $url file2
+> +
+> +	EOF
+> +
+> +	GIT_TRACE2_PERF=1 git remote-http $url <input &&
+> +	test_cmp "$HTTPD_DOCUMENT_ROOT_PATH/exists.txt" file2
+> +'
+> +
+> +test_done
+> -- 
+> gitgitgadget
+> 
