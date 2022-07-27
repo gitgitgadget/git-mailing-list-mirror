@@ -2,101 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90198C19F2B
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 17:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF7FBC04A68
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 18:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242968AbiG0RnP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 13:43:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34956 "EHLO
+        id S242993AbiG0SDi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 14:03:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242794AbiG0Rmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 13:42:47 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA8D54AC4
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 09:52:17 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id z6-20020a056902054600b00670e3c8b43fso11725654ybs.23
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 09:52:17 -0700 (PDT)
+        with ESMTP id S242983AbiG0SDR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 14:03:17 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74561BA4E6
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 10:07:13 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id mi13-20020a17090b4b4d00b001ef9759d26aso2272276pjb.0
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 10:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
-         :date:from:to:cc;
-        bh=UScWh6AoiYfPXB7YXtS+uO2dyfRXcf3KisI9iCue6HE=;
-        b=tOz5SrifHsOn/hEe2OLiNOzkEgnkkTKfYkpwGt0srgigi4CGZYW7k8QsGcJPlgkDHB
-         mwUwVupI60ARcc6c3pDlmIEVGTCVOIrAm8zF/dZBAX1usovBkEzKcQjRcN9aHF+TLsgc
-         m/UuQzBj2gVL/YnRI54YQz4RDYUK+RxY9zQ2Ul1jdsaD3+S4XF2hVen8q5yEBP2Y/NqU
-         Awy6yat1Vo5hqBk3cj6/e+F6BwNfeo0CxoooXN0QppHXFagI7Lm0SgzsJnq3zf10CGLY
-         JqWbMnUk33pPqzqVK/wvSIOuAdg5jAzyxUjQK0iLyC4tAZwRyJENhMsrrNMvQG3bg1Yn
-         umhg==
+        h=content-transfer-encoding:cc:to:from:subject:references
+         :mime-version:message-id:in-reply-to:date:from:to:cc;
+        bh=uROGNp1P9QtiofS9M1Z+CumNzSd1AXmJTgYZxxLbmoY=;
+        b=kHPu3t8OgS4P81fRzIuH4nFSOoy0FET5OKayT3ItZKTUy3LXG4ef/+84YSG8/Sq6G1
+         J8f2J9Q2cFmMYFmapfg48h1CipUdfzotpQxJUPGBw9BEvFKEefNI3TV1TVdtMxd3yoRc
+         z6RimckP8kFoS2b55tygBoOf/qt629AIBTQyRYkRInCT2OxDdMQc6JhNdn3txn7v/X0u
+         eedD0Wn8qOE7wW8lWaBQ8K0ja5IYEuOQ6S4pV8uhYHMPEzlv5FW8v97lnonZ8JWG6qA1
+         gQ+UcQKDilvjwo/8VcYPACV30igd0pMOQp44mOwc0vhkJIOoGiugbNewUcYRigGfO9d2
+         D72g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
-         :date:x-gm-message-state:from:to:cc;
-        bh=UScWh6AoiYfPXB7YXtS+uO2dyfRXcf3KisI9iCue6HE=;
-        b=B3Pa5leZCNeAoZCuvODDbwwNBuhb8Bkv9/zHjpm+78Cq1q1Fxf5m/q+EIA3h/KrqF7
-         01nd4rf2sLX/Wemg+ahfM036c+VBxptZFNGxs+Ol7DFlXjbJnOej8Br+2uSsrwPYaM0d
-         nsRuZOjA+pWR3FnBgvkyJ7K1iasSto4uc2x9OXL7pAa+phjq0Pn3qTEwyLMw5NY8FLx6
-         67s45EISu886Y3AkRkHgnjckrINOyMkuPDnVXzwgZPuZmrdnMcuIh8YU/ObR49WUTk/d
-         MJsOj9nG4gU4M647hsASCCAcV9MTjm2W5jI9JxlhyNeiEuDp+2n0tQPZBaBTTQaSt0on
-         1Yqw==
-X-Gm-Message-State: AJIora8sroY56R4KN3sBhumxpTsjuzvyZp5lasEsACTzQUoCUnSqwoCD
-        Jblha8Ol2x0kM8Vt8ohw08ZPfC5k9zQx2A==
-X-Google-Smtp-Source: AGRyM1u1oD9TrmBVfvDRgvKUPJWCSr+i+RG1pImBUqDYTUKvGpBX54Tu5H2HM71QkSnPGzVhHwaaUKoSLfE5tA==
+        h=content-transfer-encoding:cc:to:from:subject:references
+         :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
+         :cc;
+        bh=uROGNp1P9QtiofS9M1Z+CumNzSd1AXmJTgYZxxLbmoY=;
+        b=gvRakulZsbCoMwx6dBN1si0dvO8Snz5a9NkE2lFBx8JJXiskC8CfqW+IKFiNGSh2jr
+         3ucltRK9GAsHMgvSoC8tSHmRt/4ri/5ZrYTJiMO5y7BcCi7fLuQZhPuzQevj3bIczQhE
+         GxUVYr4BAi4aOGrvUHQDm2Hl6IiEkgRCIXa80iuluMY/HQ85RLmk5FsQl3adCLad8Y/0
+         w3ynZ7tvGbMULOQGLaTASMQaEyx9z0G/hEOQLcoL/Ram+IhFcutP9enmDbSfa2c2opvn
+         7I1WU4hjn3c3LlcmE9oxNh6o0PUfEb+r22tGvlS8i7nXc7heKKA9NsxrWBCtnmBrSqw5
+         Dwrw==
+X-Gm-Message-State: AJIora9EGZ2Pm2H2JqvKtPTJB561oSDu+7PsePhcWSDrgrRXAGeDUeok
+        EmHi/B4IMi3EhAWwEzGQofaSQZ/iXvtanw==
+X-Google-Smtp-Source: AGRyM1sqJzCmaomOnLh283Gqc8osCWHp13cXvEChsM2LHR0BG6haTIl7fZe4pp8gMRIu5rX8FELic1rnx29d4w==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a81:59c4:0:b0:31f:4804:76ad with SMTP id
- n187-20020a8159c4000000b0031f480476admr8179387ywb.143.1658940733960; Wed, 27
- Jul 2022 09:52:13 -0700 (PDT)
-Date:   Wed, 27 Jul 2022 09:52:12 -0700
-In-Reply-To: <xmqq1qu6txb0.fsf@gitster.g>
-Message-Id: <kl6lczdqsdkz.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:90a:8a8d:b0:1f3:155:3324 with SMTP id
+ x13-20020a17090a8a8d00b001f301553324mr5541808pjn.89.1658941632485; Wed, 27
+ Jul 2022 10:07:12 -0700 (PDT)
+Date:   Wed, 27 Jul 2022 10:07:11 -0700
+In-Reply-To: <220727.86v8rilxx1.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6la68uscw0.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <pull.1299.git.git.1658855372189.gitgitgadget@gmail.com>
- <pull.1299.v2.git.git.1658874067077.gitgitgadget@gmail.com> <xmqq1qu6txb0.fsf@gitster.g>
-Subject: Re: [PATCH v2] config.c: NULL check when reading protected config
+ <pull.1299.v2.git.git.1658874067077.gitgitgadget@gmail.com> <220727.86v8rilxx1.gmgdl@evledraar.gmail.com>
+Subject: Re: nonnull v.s. BUG() if !x (was: [PATCH v2] config.c: NULL check
+ when reading protected config)
 From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
         Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> It however makes me wonder if it is simpler to allow passing NULL to
-> git_config_from_file_with_options() and make it silently turn into a
-> no-op.  I.e. instead of ...
+> On Tue, Jul 26 2022, Glen Choo via GitGitGadget wrote:
 >
->> @@ -1979,6 +1979,8 @@ int git_config_from_file_with_options(config_fn_t fn, const char *filename,
->>  	int ret = -1;
->>  	FILE *f;
->>  
+>> From: Glen Choo <chooglen@google.com>
+>
 >> +	if (!filename)
 >> +		BUG("filename cannot be NULL");
 >
-> ... we could do
->
-> 	if (!filename)
-> 		return 0; /* successful no-op */
->
-> Even if there are codepaths that feed arbitrary pathnames given by
-> the end user, they wouldn't be passing NULL (they may pass an empty
-> string, or a filename that causes fopen() to fail), would they?
+> Looks good, but as an aside I wonder if we wouldn't get better code
+> analysis with "nonnull" for this sort of thing, but we can leave this
+> for now:
+> https://gcc.gnu.org/onlinedocs/gcc-12.1.0/gcc/Common-Function-Attributes.=
+html#Common-Function-Attributes
 
-Yeah, that's worth considering. I'm not sure how I feel about it yet,
-but hopefully I find some time to dig around and form an opinion.
-
->
-> But that is something we should leave to a follow-up series, not
-> "oops, we need to fix it now" fix.
->
-> Thanks, will queue.
-
-Thanks :)
-
->
->>  	f = fopen_or_warn(filename, "r");
->>  	if (f) {
->>  		ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename,
+Interesting. I wonder how good the analysis is vs the cost, e.g. it's
+useful if it detects _maybe_ NULL variables, but it might be too
+expensive if it requires us to mark all of our variables as non-NULL.
