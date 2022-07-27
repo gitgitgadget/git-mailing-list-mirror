@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 746E7C04A68
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 23:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CD82C19F29
+	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 23:14:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236372AbiG0XOb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 19:14:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
+        id S233039AbiG0XOe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 19:14:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237244AbiG0XOK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 19:14:10 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C38B4F1A0
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:06 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id r8-20020a1c4408000000b003a34ac64bdfso369202wma.1
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:06 -0700 (PDT)
+        with ESMTP id S233151AbiG0XOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 19:14:12 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1DE14E623
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:08 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 2-20020a1c0202000000b003a3a22178beso89948wmc.3
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=xYyJDH+YSkpLEFy7ue3z1qymf/q11Kmo41BzeJ7N+B8=;
-        b=J2g1iMv+1cZYtCKPzgYKd2ETznJUDmwUGer3XNt2lCEbiNuG1lOGjJo0hl9lDDUwBh
-         E4eE3jPyZavpGk1LuGc8pxuGNvcvP+jXk+c49lK98MoTz5r6l/Q6kBi5WdiDjUn53YpT
-         sFOkBZbOvxs6zVR25Z2I9jd1od7ltwgxWvJ4ePH4j9uWbEwV+F4iOWrL63rGfrkkBLEX
-         3uIQYZbjthY6R02C9cH3GQ4hIkP5WJaCv2IG+SUoVRi9HX42HuqMOBLDCVCcrH0fDnhE
-         bk6NqYl8w+Gpq16Vrkm6evc9j6R9xnqVuTxu4HRgQglcHpzxMwLf6Jq+qK7k7IBA3n+y
-         b2rQ==
+        bh=vNyikXM08Os+KaO7ckRV2QtRpse8QkML1oCapuMk5aE=;
+        b=jUoNGeaGJB3EkLrFFS37d9EwMSTHM6hWYTEAxCw87w8XGq5h16Gml8JuyEdFibXRJU
+         z4+b6npXAXq7JcTwOdNmdj+fK/dnFldYOH6r40Qgh23cEIOibcAQ7S/JJCfo99mehyZk
+         XXkVuBxr3S9BVN2yEnGYs6hBHABXqRLbdoUK2i+AZk55YNij5VyxUaJsShRay8e4j+4b
+         vec4LFN8PbsmdHOEUaR7SAsKUhB9HH4oMY4s0wozUnshQnEtL5A/wsdvdGj1MS3tgJio
+         qmgS9vScFSmUzGJx3r9uklgRA07c05N8D2iKCeXSKHZnIpf4YkrtppvakvWX+K2HhmJp
+         W1fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=xYyJDH+YSkpLEFy7ue3z1qymf/q11Kmo41BzeJ7N+B8=;
-        b=OjzZYM9y9fGoMgf++iV24tMEOiNZtGhWOziCYM2Cns3CzFo/DM1N1QUlJwynQ5Djsd
-         5cBgvsF8YNyAahMZWmE04LmJY536YsvtI7i4mRkGG0I1OGfszo2AsCVIkp5dwgDg77ON
-         9ciMwpEQZbZhuuEHW7IgGZXl9sQsXHokLTQBlIaLRDXQju43Zqp4r1igij1urUtGNsUc
-         tMLRcR6XwmCAY6U7lJfW49lzhB98iZu4ibSU39+8lAqvAABAE6IzfFdRjCpOygBdZJek
-         sWAV9Mzs7eOQ1oU6M+RO+VeZXfKDdT/7bIpUG37ooF+3Y7oMtbQ5Zx2Z8MJsdho9czJ/
-         ht1g==
-X-Gm-Message-State: AJIora8PeJKy2RV5Tfslb4dMsw4Mcjxku/7jkOxXH+GvzouEynIah1BD
-        f7Ki66Y+SUahS0NeE9T3QaBYBsASzNQPCA==
-X-Google-Smtp-Source: AGRyM1uxFJr20m9MrU0S8MJWmwkTin40RZZsJg+X7ozLaHOy5IJV38DZuX9SrkWDTVuUOBzLo8eyJQ==
-X-Received: by 2002:a05:600c:3b9e:b0:3a2:feb5:2b43 with SMTP id n30-20020a05600c3b9e00b003a2feb52b43mr4621694wms.26.1658963644367;
-        Wed, 27 Jul 2022 16:14:04 -0700 (PDT)
+        bh=vNyikXM08Os+KaO7ckRV2QtRpse8QkML1oCapuMk5aE=;
+        b=QRXRGHf+tLx1FgTepDm5G4K6e4NHc4eujT4TqztnWQX3btaRXA6/9rmZsWiVrrE+Gy
+         cY0iqA+f4+gKZE17S7W7MljQIYp+9rNduGMceg/qOW5H68+h4leBSVycS8SSPbNf03iT
+         e+dCR/5870j7EQQ3MnVdTHUQz8nRL+8f62e7MTlEhEBKtmvcu15MbFhmioYmmKHteyK5
+         0jKs6ZX98G2BCyn3ZZ97QjoekPtU4rsFbTaBI4CDPdt+gel9IMHpYoDrtshDi7O0kYE0
+         eo+4CHEf7OkZ3X1jWzr5JrMPOj5NRO6a8PlEPTQgDJHIcHPkWvLO0s/J5U8VbzHXLOKh
+         HFFQ==
+X-Gm-Message-State: AJIora+oW8WXlMKvDVQKDay+e47Gv7uNTWd/OtlgDlPVqwzrPr48IPbO
+        5kj7bCM+QSyoVCgRPS6hIaX8LyKwUeT0Cg==
+X-Google-Smtp-Source: AGRyM1sj0qCEmslo1QKEcwDVD5SGjDfLM4oHBAGVCkqYJQpoEyKlmayVLkB8xFpQ1ZsFysFmdwF1Tg==
+X-Received: by 2002:a7b:cb53:0:b0:3a2:f19e:b764 with SMTP id v19-20020a7bcb53000000b003a2f19eb764mr4407435wmj.101.1658963646407;
+        Wed, 27 Jul 2022 16:14:06 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z3-20020adfec83000000b0021dd08ad8d7sm1692806wrn.46.2022.07.27.16.14.02
+        by smtp.gmail.com with ESMTPSA id z3-20020adfec83000000b0021dd08ad8d7sm1692806wrn.46.2022.07.27.16.14.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 16:14:03 -0700 (PDT)
+        Wed, 27 Jul 2022 16:14:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 13/15] leak tests: mark passing SANITIZE=leak tests as leak-free
-Date:   Thu, 28 Jul 2022 01:13:41 +0200
-Message-Id: <patch-v3-13.15-28255ac3239-20220727T230800Z-avarab@gmail.com>
+Subject: [PATCH v3 15/15] CI: use "GIT_TEST_SANITIZE_LEAK_LOG=true" in linux-leaks
+Date:   Thu, 28 Jul 2022 01:13:43 +0200
+Message-Id: <patch-v3-15.15-e4acdb18ec2-20220727T230800Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1127.g4ecf1c08f67
 In-Reply-To: <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
 References: <cover-v2-00.14-00000000000-20220720T211221Z-avarab@gmail.com> <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
@@ -67,523 +67,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark those remaining tests that pass when run under SANITIZE=leak with
-TEST_PASSES_SANITIZE_LEAK=true, these were either omitted in
-f346fcb62a0 (Merge branch 'ab/mark-leak-free-tests-even-more',
-2021-12-15) and 5a4f8381b68 (Merge branch 'ab/mark-leak-free-tests',
-2021-10-25), or have had their memory leaks fixed since then.
+As noted in a preceding commit the leak checking done by
+"GIT_TEST_PASSING_SANITIZE_LEAK=true" (added in [1]) is incomplete
+without combining it with "GIT_TEST_SANITIZE_LEAK_LOG=true".
 
-With this change there's now a a one-to-one mapping between those
-tests that we have opted-in via "TEST_PASSES_SANITIZE_LEAK=true", and
-those that pass with the new "check" mode:
+Let's run our CI with that, to ensure that we catch cases where our
+tests are missing the abort() exit code resulting from a leak for
+whatever reason. The reasons for that are discussed in detail in a
+preceding commit.
 
-	GIT_TEST_PASSING_SANITIZE_LEAK=check \
-	GIT_TEST_SANITIZE_LEAK_LOG=true \
-	make test SANITIZE=leak
-
-Note that the "GIT_TEST_SANITIZE_LEAK_LOG=true" is needed due to the
-edge cases noted in a preceding commit, i.e. in some cases we'd pass
-the test itself, but still have outstanding leaks due to ignored exit
-codes.
-
-The "GIT_TEST_SANITIZE_LEAK_LOG=true" corrects for that, we're only
-marking those tests as passing that really don't have any leaks,
-whether that was reflected in their exit code or not.
-
-Note that the change here to "t9100-git-svn-basic.sh" is marking that
-test as passing under SANITIZE=leak, we're removing a
-"TEST_FAILS_SANITIZE_LEAK=true" line, not
-"TEST_PASSES_SANITIZE_LEAK=true". See 7a98d9ab00d (revisions API: have
-release_revisions() release "cmdline", 2022-04-13) for the
-introduction of that t/lib-git-svn.sh-specific variable.
+1. 956d2e4639b (tests: add a test mode for SANITIZE=leak, run it in
+   CI, 2021-09-23)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0027-auto-crlf.sh                | 1 +
- t/t0032-reftable-unittest.sh        | 1 +
- t/t0033-safe-directory.sh           | 1 +
- t/t0050-filesystem.sh               | 1 +
- t/t0095-bloom.sh                    | 2 ++
- t/t1405-main-ref-store.sh           | 1 +
- t/t1407-worktree-ref-store.sh       | 1 +
- t/t1418-reflog-exists.sh            | 1 +
- t/t1701-racy-split-index.sh         | 1 +
- t/t2006-checkout-index-basic.sh     | 1 +
- t/t2023-checkout-m.sh               | 1 +
- t/t2205-add-worktree-config.sh      | 1 +
- t/t3012-ls-files-dedup.sh           | 1 +
- t/t4017-diff-retval.sh              | 1 +
- t/t4051-diff-function-context.sh    | 1 +
- t/t4057-diff-combined-paths.sh      | 1 +
- t/t4114-apply-typechange.sh         | 1 +
- t/t4301-merge-tree-write-tree.sh    | 1 +
- t/t5315-pack-objects-compression.sh | 1 +
- t/t5351-unpack-large-objects.sh     | 1 +
- t/t5402-post-merge-hook.sh          | 1 +
- t/t5503-tagfollow.sh                | 1 +
- t/t6404-recursive-merge.sh          | 1 +
- t/t6405-merge-symlinks.sh           | 1 +
- t/t6408-merge-up-to-date.sh         | 1 +
- t/t6411-merge-filemode.sh           | 1 +
- t/t6413-merge-crlf.sh               | 1 +
- t/t6425-merge-rename-delete.sh      | 1 +
- t/t6431-merge-criscross.sh          | 1 +
- t/t7060-wtstatus.sh                 | 1 +
- t/t7062-wtstatus-ignorecase.sh      | 1 +
- t/t7110-reset-merge.sh              | 1 +
- t/t7111-reset-table.sh              | 1 +
- t/t7609-mergetool--lib.sh           | 1 +
- t/t9100-git-svn-basic.sh            | 1 -
- t/t9700-perl-git.sh                 | 2 ++
- t/t9901-git-web--browse.sh          | 1 +
- 37 files changed, 38 insertions(+), 1 deletion(-)
+ ci/lib.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index 7f80f463930..a22e0e1382c 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -2,6 +2,7 @@
+diff --git a/ci/lib.sh b/ci/lib.sh
+index f095519f8db..1b0cc2b57db 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -276,6 +276,7 @@ linux-musl)
+ linux-leaks)
+ 	export SANITIZE=leak
+ 	export GIT_TEST_PASSING_SANITIZE_LEAK=true
++	export GIT_TEST_SANITIZE_LEAK_LOG=true
+ 	;;
+ esac
  
- test_description='CRLF conversion all combinations'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- compare_files () {
-diff --git a/t/t0032-reftable-unittest.sh b/t/t0032-reftable-unittest.sh
-index 0ed14971a58..471cb37ac28 100755
---- a/t/t0032-reftable-unittest.sh
-+++ b/t/t0032-reftable-unittest.sh
-@@ -5,6 +5,7 @@
- 
- test_description='reftable unittests'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'unittests' '
-diff --git a/t/t0033-safe-directory.sh b/t/t0033-safe-directory.sh
-index f4d737dadd0..aecb308cf66 100755
---- a/t/t0033-safe-directory.sh
-+++ b/t/t0033-safe-directory.sh
-@@ -2,6 +2,7 @@
- 
- test_description='verify safe.directory checks'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- GIT_TEST_ASSUME_DIFFERENT_OWNER=1
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 5c9dc90d0b0..325eb1c3cd0 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -5,6 +5,7 @@ test_description='Various filesystem issues'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- auml=$(printf '\303\244')
-diff --git a/t/t0095-bloom.sh b/t/t0095-bloom.sh
-index daeb4a5e3e7..b567383eb83 100755
---- a/t/t0095-bloom.sh
-+++ b/t/t0095-bloom.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='Testing the various Bloom filter computations in bloom.c'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'compute unseeded murmur3 hash for empty string' '
-diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index 51f82916281..e4627cf1b61 100755
---- a/t/t1405-main-ref-store.sh
-+++ b/t/t1405-main-ref-store.sh
-@@ -5,6 +5,7 @@ test_description='test main ref store api'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- RUN="test-tool ref-store main"
-diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
-index ad8006c8139..05b1881c591 100755
---- a/t/t1407-worktree-ref-store.sh
-+++ b/t/t1407-worktree-ref-store.sh
-@@ -5,6 +5,7 @@ test_description='test worktree ref store api'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- RWT="test-tool ref-store worktree:wt"
-diff --git a/t/t1418-reflog-exists.sh b/t/t1418-reflog-exists.sh
-index d51ecd5e925..2268bca3c11 100755
---- a/t/t1418-reflog-exists.sh
-+++ b/t/t1418-reflog-exists.sh
-@@ -4,6 +4,7 @@ test_description='Test reflog display routines'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t1701-racy-split-index.sh b/t/t1701-racy-split-index.sh
-index 5dc221ef382..d8fa489998a 100755
---- a/t/t1701-racy-split-index.sh
-+++ b/t/t1701-racy-split-index.sh
-@@ -5,6 +5,7 @@
- 
- test_description='racy split index'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t2006-checkout-index-basic.sh b/t/t2006-checkout-index-basic.sh
-index 7705e3a3170..5d119871d41 100755
---- a/t/t2006-checkout-index-basic.sh
-+++ b/t/t2006-checkout-index-basic.sh
-@@ -3,6 +3,7 @@
- test_description='basic checkout-index tests
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'checkout-index --gobbledegook' '
-diff --git a/t/t2023-checkout-m.sh b/t/t2023-checkout-m.sh
-index 7b327b75449..81e772fb4eb 100755
---- a/t/t2023-checkout-m.sh
-+++ b/t/t2023-checkout-m.sh
-@@ -7,6 +7,7 @@ Ensures that checkout -m on a resolved file restores the conflicted file'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t2205-add-worktree-config.sh b/t/t2205-add-worktree-config.sh
-index 43d950de640..98265ba1b49 100755
---- a/t/t2205-add-worktree-config.sh
-+++ b/t/t2205-add-worktree-config.sh
-@@ -17,6 +17,7 @@ outside the repository.  Two instances for which this can occur are tested:
- 	   repository can be added to the index.
- 	'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success '1a: setup--config worktree' '
-diff --git a/t/t3012-ls-files-dedup.sh b/t/t3012-ls-files-dedup.sh
-index 2682b1f43a6..190e2f6eed7 100755
---- a/t/t3012-ls-files-dedup.sh
-+++ b/t/t3012-ls-files-dedup.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git ls-files --deduplicate test'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t4017-diff-retval.sh b/t/t4017-diff-retval.sh
-index ed461f481e2..5bc28ad9f04 100755
---- a/t/t4017-diff-retval.sh
-+++ b/t/t4017-diff-retval.sh
-@@ -5,6 +5,7 @@ test_description='Return value of diffs'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
-index 4838a1df8b4..725278ad19c 100755
---- a/t/t4051-diff-function-context.sh
-+++ b/t/t4051-diff-function-context.sh
-@@ -2,6 +2,7 @@
- 
- test_description='diff function context'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- dir="$TEST_DIRECTORY/t4051"
-diff --git a/t/t4057-diff-combined-paths.sh b/t/t4057-diff-combined-paths.sh
-index 04b8a1542a8..9a7505cbb8b 100755
---- a/t/t4057-diff-combined-paths.sh
-+++ b/t/t4057-diff-combined-paths.sh
-@@ -5,6 +5,7 @@ test_description='combined diff show only paths that are different to all parent
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # verify that diffc.expect matches output of
-diff --git a/t/t4114-apply-typechange.sh b/t/t4114-apply-typechange.sh
-index da3e64f8110..8ff36407667 100755
---- a/t/t4114-apply-typechange.sh
-+++ b/t/t4114-apply-typechange.sh
-@@ -7,6 +7,7 @@ test_description='git apply should not get confused with type changes.
- 
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup repository and commits' '
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index f091259a55e..a243e3c5176 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git merge-tree --write-tree'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # This test is ort-specific
-diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
-index 8bacd96275b..c80ea9e8b71 100755
---- a/t/t5315-pack-objects-compression.sh
-+++ b/t/t5315-pack-objects-compression.sh
-@@ -2,6 +2,7 @@
- 
- test_description='pack-object compression configuration'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t5351-unpack-large-objects.sh b/t/t5351-unpack-large-objects.sh
-index f785cb06173..4cfda648a5e 100755
---- a/t/t5351-unpack-large-objects.sh
-+++ b/t/t5351-unpack-large-objects.sh
-@@ -5,6 +5,7 @@
- 
- test_description='git unpack-objects with large objects'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- prepare_dest () {
-diff --git a/t/t5402-post-merge-hook.sh b/t/t5402-post-merge-hook.sh
-index 915af2de95e..46ebdfbeeba 100755
---- a/t/t5402-post-merge-hook.sh
-+++ b/t/t5402-post-merge-hook.sh
-@@ -7,6 +7,7 @@ test_description='Test the post-merge hook.'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
-index 195fc64dd44..5ebbaa48968 100755
---- a/t/t5503-tagfollow.sh
-+++ b/t/t5503-tagfollow.sh
-@@ -5,6 +5,7 @@ test_description='test automatic tag following'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # End state of the repository:
-diff --git a/t/t6404-recursive-merge.sh b/t/t6404-recursive-merge.sh
-index b8735c6db4d..36215518b6e 100755
---- a/t/t6404-recursive-merge.sh
-+++ b/t/t6404-recursive-merge.sh
-@@ -4,6 +4,7 @@ test_description='Test merge without common ancestors'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # This scenario is based on a real-world repository of Shawn Pearce.
-diff --git a/t/t6405-merge-symlinks.sh b/t/t6405-merge-symlinks.sh
-index 7435fce71e0..29e2b25ce5d 100755
---- a/t/t6405-merge-symlinks.sh
-+++ b/t/t6405-merge-symlinks.sh
-@@ -11,6 +11,7 @@ if core.symlinks is false.'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t6408-merge-up-to-date.sh b/t/t6408-merge-up-to-date.sh
-index 7763c1ba980..8a1ba6d23a7 100755
---- a/t/t6408-merge-up-to-date.sh
-+++ b/t/t6408-merge-up-to-date.sh
-@@ -2,6 +2,7 @@
- 
- test_description='merge fast-forward and up to date'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t6411-merge-filemode.sh b/t/t6411-merge-filemode.sh
-index 6ae2489286c..b6182723aae 100755
---- a/t/t6411-merge-filemode.sh
-+++ b/t/t6411-merge-filemode.sh
-@@ -4,6 +4,7 @@ test_description='merge: handle file mode'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'set up mode change in one branch' '
-diff --git a/t/t6413-merge-crlf.sh b/t/t6413-merge-crlf.sh
-index affea255fe9..b4f4a313f48 100755
---- a/t/t6413-merge-crlf.sh
-+++ b/t/t6413-merge-crlf.sh
-@@ -11,6 +11,7 @@ test_description='merge conflict in crlf repo
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t6425-merge-rename-delete.sh b/t/t6425-merge-rename-delete.sh
-index 459b431a60d..93cd2869b12 100755
---- a/t/t6425-merge-rename-delete.sh
-+++ b/t/t6425-merge-rename-delete.sh
-@@ -4,6 +4,7 @@ test_description='Merge-recursive rename/delete conflict message'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'rename/delete' '
-diff --git a/t/t6431-merge-criscross.sh b/t/t6431-merge-criscross.sh
-index 3824756a02e..3fe14cd73e8 100755
---- a/t/t6431-merge-criscross.sh
-+++ b/t/t6431-merge-criscross.sh
-@@ -2,6 +2,7 @@
- 
- test_description='merge-recursive backend test'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- #         A      <- create some files
-diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-index 0f4344c55e6..aaeb4a53344 100755
---- a/t/t7060-wtstatus.sh
-+++ b/t/t7060-wtstatus.sh
-@@ -5,6 +5,7 @@ test_description='basic work tree status reporting'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t7062-wtstatus-ignorecase.sh b/t/t7062-wtstatus-ignorecase.sh
-index 73709dbeee2..caf372a3d42 100755
---- a/t/t7062-wtstatus-ignorecase.sh
-+++ b/t/t7062-wtstatus-ignorecase.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git-status with core.ignorecase=true'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'status with hash collisions' '
-diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
-index 3d62e10b53f..eb881be95b6 100755
---- a/t/t7110-reset-merge.sh
-+++ b/t/t7110-reset-merge.sh
-@@ -5,6 +5,7 @@
- 
- test_description='Tests for "git reset" with "--merge" and "--keep" options'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t7111-reset-table.sh b/t/t7111-reset-table.sh
-index ce421ad5ac4..78f25c1c7ea 100755
---- a/t/t7111-reset-table.sh
-+++ b/t/t7111-reset-table.sh
-@@ -5,6 +5,7 @@
- 
- test_description='Tests to check that "reset" options follow a known table'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- 
-diff --git a/t/t7609-mergetool--lib.sh b/t/t7609-mergetool--lib.sh
-index 330d6d603d7..8b1c3bd39f2 100755
---- a/t/t7609-mergetool--lib.sh
-+++ b/t/t7609-mergetool--lib.sh
-@@ -4,6 +4,7 @@ test_description='git mergetool
- 
- Testing basic merge tools options'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'mergetool --tool=vimdiff creates the expected layout' '
-diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-index 7c5b847f584..fea41b3c360 100755
---- a/t/t9100-git-svn-basic.sh
-+++ b/t/t9100-git-svn-basic.sh
-@@ -8,7 +8,6 @@ test_description='git svn basic tests'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
--TEST_FAILS_SANITIZE_LEAK=true
- . ./lib-git-svn.sh
- 
- prepare_utf8_locale
-diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
-index a48fac6f07a..4aa5d90d328 100755
---- a/t/t9700-perl-git.sh
-+++ b/t/t9700-perl-git.sh
-@@ -4,6 +4,8 @@
- #
- 
- test_description='perl interface (Git.pm)'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-perl.sh
- 
-diff --git a/t/t9901-git-web--browse.sh b/t/t9901-git-web--browse.sh
-index de7152f8271..19f56e5680f 100755
---- a/t/t9901-git-web--browse.sh
-+++ b/t/t9901-git-web--browse.sh
-@@ -5,6 +5,7 @@ test_description='git web--browse basic tests
- 
- This test checks that git web--browse can handle various valid URLs.'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_web_browse () {
 -- 
 2.37.1.1127.g4ecf1c08f67
 
