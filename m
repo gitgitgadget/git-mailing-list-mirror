@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DDF6C19F2B
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 23:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6789EC04A68
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 23:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232260AbiG1XCf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 19:02:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33934 "EHLO
+        id S232760AbiG1XCh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 19:02:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232245AbiG1XCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 19:02:31 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0A4956BB9
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:02:29 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id q5-20020a17090a7a8500b001f0253f5aa3so1559544pjf.4
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:02:29 -0700 (PDT)
+        with ESMTP id S232492AbiG1XCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 19:02:33 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D6D568DF9
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:02:32 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id h8-20020a170902f54800b0016d9db4a55dso1921296plf.9
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
          :date:from:to:cc;
-        bh=wgvstYkC+DXXoe1uWNdzNrd/uDiXK2oE9zEoaiEDL/U=;
-        b=PaxOsm1Mv7QjIWrZWTxjHnnPAE5dgJQg1Gvq4OG8dDBV3ifdJ8Iawiq0dl8OvULVYH
-         kMooCLZdJ0kMx3qD5oJKK6MEE4Ng9vR+mUc+6iJtrxKVSl9O3NRa91mWsB3utj9WDVvQ
-         he9Z3jjpa/uohv6f2152LslH8SOlnlUhztnhavUKQh9NtNi+1EF5Q3zlMDUGTzRyngfv
-         JYrIi+5xiKJ8RbtrCFwUsct/htwCTu5IvpXpHl60UpBCLS6fqMwlaWkv+f8dofmgezB2
-         Z2N1LrfdiH19gEevOSFyFZFacxXv2Jmj8cwBR0Ft8HSHQzBBh2hKMtKUAFVpAag3eNd1
-         xztg==
+        bh=gw9HG870JjOPPSt4OJeW/zzfptYLg/V2X51R6t9Fnr0=;
+        b=cp6HxDXkIAdrVcXtEKQDK6VZMRPCBUAsoVKh2VocltFAXGHvV/usjDE2GZrdATewIH
+         O4Yqtxtmp8GU7P4K7SI/r3YKUIwRgf1nkaysBrYU9x7jywFMs0LnIhsMH/o5fuvvkLrp
+         OCHXMwULIYbhHEQ3Sk1pSUcFmAM/c7xDfveKk6jS6xJoua0XQIeYSt05xCtCmSt5+k3W
+         4WZlwbYYXsH8X97PbBmr+qSS9BbLkml4039ThqCcfRJ6FwNRm2DXESeKvK0ZSxDpQVtp
+         Uxa2Js3EFgHDz0XAsQ+pTyISQ7fewAuriGu3GTeGXJZliFTTgYF7KQvwPotYXwLqFHtg
+         C4hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
          :date:x-gm-message-state:from:to:cc;
-        bh=wgvstYkC+DXXoe1uWNdzNrd/uDiXK2oE9zEoaiEDL/U=;
-        b=NkAP4RbXSa8Q/6RTrVUMXuM1ZKuqTrw27cGbReMNQh1fR1H05sEXGhg380MdKawEvZ
-         nYtcDWzVg+Hgx2WIW42a2klo2QYGFK5MYN1D/nj9ar80I81ae8hx29IBNdMgNDhCCVfk
-         Re5FC+FZ88yUaWOMtZMA8+B22D9nr4gXV7c2dgo79osslrBGskpsZtJUW8WJK6TZj491
-         egVb+hNTBct0OZxvpKyc+TCvWVKCJWS6HRROiXcJzaON/TTM6JkwQg9Z2HXGhQWLhkYE
-         9IvmFQHpcdweVZO9p1ca0oEGxK4o90n9zf4Z2D6hvshzbEIgQyWIS70W/2yzVZpdTC+Z
-         QmXQ==
-X-Gm-Message-State: AJIora9NtQGm22pQRa3HZu3zjiCwHEwUxhaNkoiXVS+NWKNyenR68Lv3
-        YpiBnElpWIcX3wkw3iB13NwElcxmTSSrRRudhYIZ1PcmU8xZTuGpXMEaXaQM2rblegjj8N8lWpi
-        DMK5RpAKEeWhuj7q1cY0HhhCVKET3H4m4/QZISmi89yySYvY4MSudG1aRVDWaR/0j6w==
-X-Google-Smtp-Source: AGRyM1vZDN6UUPTG1UthN8+1n/E0+J+Llb3rO/6dDLOTbf4PjKvAtJ/iOvU02tdLGjW5uaCRJ+iYBCKfsfkVKn4=
+        bh=gw9HG870JjOPPSt4OJeW/zzfptYLg/V2X51R6t9Fnr0=;
+        b=1T5GecXHJCcyN451pvrUgN+PZJS6MQa0jBSHAp9fftZRVHUYWMt7tguQqEWd1tQXQX
+         l6iynHyF63JX0zyVHPufSvWr7QLE6x+kXNdeARcGwLqYb11YjlCMUfKBKMvr9dAdpMvy
+         LO6fZyBMtkNuynkYwva4YGN+yQp5iKdN1EieXVbxVGyoDOI3Azcq0Wk24IhEmiFcGuOt
+         Cg4wBmAEgHi0vtH1POyPxSK8q/qDEDtyikmR9gVbZxDvq/komkRUDYGLBA/UNr05Zb3c
+         aQ9pWRl/z88ujecArmIHBmiOx1vo0lrNOEXCSd5KpY3eLWeg3HXNLlwx/gZ1fTVgJhUB
+         OYeQ==
+X-Gm-Message-State: AJIora9B8oziWKEZf6vgxdUIuuRxWauigEl0VzOOxQXLyl33kxKtCXUy
+        JZbdQ7VPuDeYeOVz4ciqvfIAtvF6X6A0yn2WIQj6UyJwRYF3F8vuuONRuODz+xMEcKFCA+kfUK7
+        2Ygeo6XAfeWAWcSh/VTOga8tGsusqYmXQvn1REUujf2qH36QKYftPmdqCMLTAq1j2RA==
+X-Google-Smtp-Source: AGRyM1twzhGMDQfW2zyVSc60vWIcuy6mmLoZ8DnmZU9TPvCkfWBRgE/WySEPCtlYto9XdFtZrGy1a5y4cyxQt0I=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a05:6a00:150d:b0:52b:1ffb:503c with SMTP
- id q13-20020a056a00150d00b0052b1ffb503cmr1050831pfu.44.1659049349428; Thu, 28
- Jul 2022 16:02:29 -0700 (PDT)
-Date:   Thu, 28 Jul 2022 23:02:06 +0000
+ (user=calvinwan job=sendgmr) by 2002:a05:6a00:428e:b0:52b:7e40:56cf with SMTP
+ id bx14-20020a056a00428e00b0052b7e4056cfmr725714pfb.72.1659049352009; Thu, 28
+ Jul 2022 16:02:32 -0700 (PDT)
+Date:   Thu, 28 Jul 2022 23:02:07 +0000
 In-Reply-To: <20220502170904.2770649-1-calvinwan@google.com>
-Message-Id: <20220728230210.2952731-3-calvinwan@google.com>
+Message-Id: <20220728230210.2952731-4-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20220502170904.2770649-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.37.1.455.g008518b4e5-goog
-Subject: [PATCH v5 2/6] fetch-pack: move fetch initialization
+Subject: [PATCH v5 3/6] protocol-caps: initialization bug fix
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, gitster@pobox.com,
@@ -63,55 +63,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are some variables that are initialized at the start of the
-do_fetch_pack_v2() state machine. Currently, these are initialized
-in FETCH_CHECK_LOCAL, which is the initial state set at the beginning
-of the function.
-
-However, a subsequent patch will allow for another initial state,
-while still requiring these initialized variables. Therefore, move
-the initialization to before the state machine, so that they are set
-regardless of the initial state.
-
-Note that there is no change in behavior, because we're moving code
-from the beginning of the first state to just before the execution of
-the state machine.
+Initialize info. If info.size bit was on due to on-stack garbage,
+we would have given our response with "size" attribute prefixed,
+even when the client side never requested it.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ protocol-caps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 5176420b62..8c862b017e 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1628,18 +1628,18 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		reader.me = "fetch-pack";
- 	}
+diff --git a/protocol-caps.c b/protocol-caps.c
+index bbde91810a..2ad9f45c59 100644
+--- a/protocol-caps.c
++++ b/protocol-caps.c
+@@ -77,7 +77,7 @@ static void send_info(struct repository *r, struct packet_writer *writer,
  
-+	/* v2 supports these by default */
-+	allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
-+	use_sideband = 2;
-+	if (args->depth > 0 || args->deepen_since || args->deepen_not)
-+		args->deepen = 1;
-+
- 	while (state != FETCH_DONE) {
- 		switch (state) {
- 		case FETCH_CHECK_LOCAL:
- 			sort_ref_list(&ref, ref_compare_name);
- 			QSORT(sought, nr_sought, cmp_ref_by_name);
+ int cap_object_info(struct repository *r, struct packet_reader *request)
+ {
+-	struct requested_info info;
++	struct requested_info info = { 0 };
+ 	struct packet_writer writer;
+ 	struct string_list oid_str_list = STRING_LIST_INIT_DUP;
  
--			/* v2 supports these by default */
--			allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
--			use_sideband = 2;
--			if (args->depth > 0 || args->deepen_since || args->deepen_not)
--				args->deepen = 1;
--
- 			/* Filter 'ref' by 'sought' and those that aren't local */
- 			mark_complete_and_common_ref(negotiator, args, &ref);
- 			filter_refs(args, &ref, sought, nr_sought);
 -- 
 2.37.1.455.g008518b4e5-goog
 
