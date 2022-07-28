@@ -2,100 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABC2FC04A68
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 23:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD169C04A68
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 23:34:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233578AbiG1X15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 19:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49374 "EHLO
+        id S233595AbiG1Xep (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 19:34:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232711AbiG1X1y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 19:27:54 -0400
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3387B71731
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:27:53 -0700 (PDT)
-Received: by mail-yb1-f178.google.com with SMTP id j63so5619681ybb.13
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:27:53 -0700 (PDT)
+        with ESMTP id S233868AbiG1Xeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 19:34:31 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C02387AB31
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:34:04 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id z5so3857009yba.3
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:34:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WiP2+3vMDL2IafwUAq/I2WKq11//Qn9F3y0OxMwfQvY=;
+        b=qyqDwuo8AnTZnPvQ1N6vHFWtsYMe2+Hlu+SmREWKlxBhj+73s4W6Q6UNnMI2nwLuIa
+         VSmzjqX3eV+0IMZdyMZA4p3YQ/2Iq1NdmtTefQZDPXFM6aiCKg5RzcwBypmMxK/RoBrR
+         6759wawpgTDh9HDHqh/4r89GynQKIbECiwH5Jmi9fjaCLbfV3vUMQcCcIs6J7AMGfPC6
+         TF8gy1hYuIvrHHV1TS1TpNdJ4tXTwnkADOb3fO6mFPhGSWME789E6y+CoOCkJu21tFdq
+         Rgm713fj6PKMqUtpQOff4+liUcuZheClbg4zFWP+4sD/GzLLtywWV5IZ9YjtsvXWbchl
+         tIIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=rgVCVE1sm7jav2d1zl0mlQDCjOwDU8niT4W21qrJbMc=;
-        b=hqMg2iIR+uzC/S3fPje+XA8m4877rWMlGAM/VDI0pU8p3ZFEV6ICKascWPwl1pZE2r
-         aN5ca4TcCenkFHTXWepx6ZiQU3bRFh8I76/IRI0rkx6+iDqw1z3az0cQlzgRGvycSvaG
-         dwYcZ9i6cgTj8qCtlioJ10xBuDTXOduLjfl68Z51/QfDFXfC9rDVOg4YF40ldeWC79CR
-         YDH30lPUmPO8RxDsVFCNx47rRFvZdLPJM0zvnTGlyE8iUSna9InJGIPL5X0z1EeQOUgF
-         tFOOPW/B2avJomHl0hvOeib5Hm0ZaKbhZ2VQ7hM1R32/v+y3YP94TIzsnoWMlVLl3cpr
-         ILkA==
-X-Gm-Message-State: ACgBeo1s9vKULdl1FNT2Pzx7PTZqpa8wdReyJt74v9I40kOWcgCMg+nw
-        xdyjbrPJX9kcG32JxcWtvzTHPknXqREPb7vftJpJ2CV80JA=
-X-Google-Smtp-Source: AA6agR4LPaCWBu3im9gjasxC/jiOnUAUTAGTOpm5WcytiQWHb4vcSqZ0AZoupXZL1FlE6y84A6MoPj7Kvq8tgOXV2dM=
-X-Received: by 2002:a25:d013:0:b0:671:8628:9753 with SMTP id
- h19-20020a25d013000000b0067186289753mr739909ybg.462.1659050872328; Thu, 28
- Jul 2022 16:27:52 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WiP2+3vMDL2IafwUAq/I2WKq11//Qn9F3y0OxMwfQvY=;
+        b=z4FBwe46mz3MjRs6sH+KQ3pIbZNHi5Q85zCesWD2dIryqiPv8yah1mNHZ/7a0qr3CN
+         PchQhGMDJwnDfcUN0/jm/dRVgmnpF5PQr+sqPnBL9vnb9hfiXnoNPqeNuwUKtqG8rnz9
+         krRsZoHCQNM80CPoJV/dB1NoPA6dn5C+vXBHoxoiIHSNx1zZbQvZbZpgNPvAI8GaAyJ5
+         u4EG/ptZObehZltBUb9joGj+6eGSFzpVt6Dl5MaHEi6fngFZtNzPybfOaX6JMXv4vCAG
+         39b2ql7E4wH3nOZ71STZrApiD9ZuUUW5R8ErpmddIRWNWBS1w7J7C0Pkm1p1C0CmQsei
+         xAkA==
+X-Gm-Message-State: ACgBeo0AJOBC76K9SkjefpDatMoXt4HTJn8XJGD9P87Wv561NGIxVK+J
+        8boMusZmyJ75oxPFahck/9nPFugd43WOu3NqhqL7EFwP
+X-Google-Smtp-Source: AA6agR5SGAWbV9Q221wnpyX1jzf3RxIyKCzILVR2AfAcyeq8g3DIKnvjaf1Z5+01u2Qh6lhkeR2osw0fhCkYAZOVHrY=
+X-Received: by 2002:a25:6ed5:0:b0:669:8b84:bb57 with SMTP id
+ j204-20020a256ed5000000b006698b84bb57mr709532ybc.227.1659051244013; Thu, 28
+ Jul 2022 16:34:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1291.git.1657872416216.gitgitgadget@gmail.com> <pull.1291.v2.git.1659018558989.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1291.v2.git.1659018558989.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 28 Jul 2022 19:27:41 -0400
-Message-ID: <CAPig+cSpjchBUMi9qjLTu_3B3BbVDFKueeTKJNOgR4BtA-8arQ@mail.gmail.com>
-Subject: Re: [PATCH v2] lstat(mingw): correctly detect ENOTDIR scenarios
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1302.git.1658798595633.gitgitgadget@gmail.com>
+ <xmqq35ems49j.fsf@gitster.g> <CAGTqyRzfeh4HLbXUCb3Zv=bWNoBmvBU5QB=N2g2d0=y+NEToag@mail.gmail.com>
+ <xmqqpmhpb08p.fsf@gitster.g>
+In-Reply-To: <xmqqpmhpb08p.fsf@gitster.g>
+From:   Justin Donnelly <justinrdonnelly@gmail.com>
+Date:   Thu, 28 Jul 2022 19:33:28 -0400
+Message-ID: <CAGTqyRxTF=7PYCZm=xynQc2v55v-iim5iut9GxgT66E-Sqpiqg@mail.gmail.com>
+Subject: Re: [PATCH] git-prompt: show 'CONFLICT' indicator at command prompt
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 28, 2022 at 10:29 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Files' attributes can indicate more than just whether they are files or
-> directories. It was reported in Git for Windows that on certain network
-> shares, this let to a nasty problem trying to create tags:
+On Thu, Jul 28, 2022 at 1:44 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Justin Donnelly <justinrdonnelly@gmail.com> writes:
+>
+> >> It is unusual to subject our unsuspecting users to new features in a
+> >> way that is done by this patch.  A more usual practice, I think, is
+> >> to tell the users that they can set GIT_PS1_INCLUDECONFLICTSTATE to
+> >> "yes" if they want to opt in, and trigger the new feature only to
+> >> them.  Later, we may decide that the feature is useful and widely
+> >> apprlicable enough, at which time it may be turned on by default and
+> >> tell the users to set GIT_PS1_INCLUDECONFLICTSTATE to "no" if they
+> >> do not want to see it.  But one step at a time.
+> >>
+> >
+> > I see that most of the state indicators are disabled by default, so it
+> > makes sense to be consistent. Should I make a variable with 'yes'/'no'
+> > values, or set/unset? 'yes'/'no' has the benefit that if the default
+> > is later changed, existing setups will continue to work. Set/unset
+> > makes it harder to change the default later ...
+>
+> As you said, "an environment variable that is set triggers the
+> feature" is harder to transition.  Starting from a clear Boolean is
+> probably easy to see what is going on, and that is why I suggested
+> doing that way.
+>
+> Ones that are "if set, enabled" can be corrected later when needed,
+> e.g. GIT_PS1_FROTZ may enable the feature FROTZ when the environment
+> is set, but when we introduce two or more ways to do FROTZ thing
+> (e.g. in addition to always do FROTZ, which may be the original
+> design of "an environment that is set triggers the feature", we may
+> add "automatically enable FROTZ only under this and that
+> condition"), we may say "when set to 'auto', do the auto-FROTZ, and
+> when set to 'yes', do FROTZ as we have always done.  When set to any
+> other value, warn and then do FROTZ").  But let's leave them outside
+> the scope of the topic.
+>
 
-s/let/led/
-
-(not worth a re-roll)
-
->         $ git tag -a -m "automatic tag creation"  test_dir/test_tag
->         fatal: cannot lock ref 'refs/tags/test_dir/test_tag': unable to resolve reference 'refs/tags/test_dir/test_tag': Not a directory
->
-> Note: This does not necessarily happen with all types of network shares.
-> One setup where it _did_ happen is a Windows Server 2019 VM, and as
-> hinted in
->
->         http://woshub.com/slow-network-shared-folder-refresh-windows-server/
->
-> in the indicated instance the following commands worked around the bug:
->
->         Set-SmbClientConfiguration -DirectoryCacheLifetime 0
->         Set-SmbClientConfiguration -FileInfoCacheLifetime 0
->         Set-SmbClientConfiguration -FileNotFoundCacheLifetime 0
->
-> This would impact performance negatively, though, as it essentially
-> turns off all caching, therefore we do not want to require users to do
-> that just to be able to use Git on Windows.
->
-> The underlying bug is in the code added in 4b0abd5c695 (mingw: let
-> lstat() fail with errno == ENOTDIR when appropriate, 2016-01-26) that
-> emulates the POSIX behavior where `lstat()` should return `ENOENT` if
-> the file or directory simply does not exist but could be created, and
-> `ENOTDIR` if there is no file or directory nor could there be because a
-> leading path already exists and is not a directory.
->
-> In that code, the return value of `GetFileAttributesW()` is interpreted
-> as an enum value, not as a bit field, so that a perfectly fine leading
-> directory can be misdetected as "not a directory".
->
-> As a consequence, the `read_refs_internal()` function would return
-> `ENOTDIR`, suggesting not only that the tag in the `git tag` invocation
-> above does not exist, but that it cannot even be created.
->
-> Let's fix the code so that it interprets the return value of the
-> `GetFileAtrtibutesW()` call correctly.
->
-> This fixes https://github.com/git-for-windows/git/issues/3727
->
-> Reported-by: Pierre Garnier <pgarnier@mega.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Thanks. I'll incorporate these suggestions into a re-roll.
