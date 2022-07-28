@@ -2,137 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E985C04A68
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 16:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5318AC04A68
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 17:11:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231897AbiG1Q66 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 12:58:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43336 "EHLO
+        id S230081AbiG1RLI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 13:11:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232075AbiG1Q6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 12:58:55 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DF1B675A1
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:58:53 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id l23so4172230ejr.5
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:58:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=GPKKMC8n7ubYei8OYly7tt3tFLueqRMZ+nZ0MYEXcd8=;
-        b=fNVmGmoG1RencnO8rdKJPcsLJiHOBhk8IwRhANm8ijDeeDgu/LrMSrz/3Up1gAGFOd
-         zN+vqaPejvNssp9L6gEWIhNxQtbmipAK3NbUnxzWYmzQFHTLeOe7LiwnFhA5AzSV046X
-         cKOwK0TbXarwGXIKaAe3FkEaAW/YoYsd2v6goJ8FS5EOeGPYIDJ+QyvDqI/XfVYv96Cj
-         jGQp999Nt8diwM6mEDpFzr3kN5KCFnBu+o10o/cQaPZvSDtHMYIq7EWLRSE2z6BB+GkV
-         qf73gkwVQ9kLrJnqFd7liNIqPIPvVx5Rhb23rOfHyUvpOWxoNcTGumPXTNxWUmYThY68
-         8QuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc;
-        bh=GPKKMC8n7ubYei8OYly7tt3tFLueqRMZ+nZ0MYEXcd8=;
-        b=J50n1Jz/1KJZxqF5elQ36pIhIZ39ewfqUk9nW8S/HzUjr/03pb9vl6JcCxKH6oXgug
-         Ps5llqvbCg36W0LxMu+Kx7UaiF2D1VaywT6soDEp3kt9DyQ7aeOyuDP0n/tJ8aq0RSUe
-         VI/Fuw8ouWgXEtUTOVaV/XcMcdF4I6dZd/jNiFVUICwpi/givAznj7fxZg4F0QCyfJhj
-         r5bUtfoemVcyrvKAy4Kf6e8v4ACKik6I7kbuC++Cdb2ERv4dl5ThFa3xoXGlBza53yjz
-         eSY4vDnqsN5w/mSpljFPVSuylIDw/qSDTVvX6vr5gvMXW7frgAsGA7SGV6PAuLYzA2dK
-         fjpg==
-X-Gm-Message-State: AJIora+K2+cqt3wVBdXd6gL+fYyQBLo83AaIL4AkgCOhlH0zwnecsd9B
-        i7LaLrKPbeXtoH1Qgxs/NGHoSIpeJFVG6g==
-X-Google-Smtp-Source: AGRyM1uO+3XNqXtJsE4rChkGd0a9sNqnzutQblpf4YWcZtvCYFyEM6dLf39uLiIluQ8AybRae+iKbQ==
-X-Received: by 2002:a17:907:7ba9:b0:72f:2994:74aa with SMTP id ne41-20020a1709077ba900b0072f299474aamr21786247ejc.85.1659027531753;
-        Thu, 28 Jul 2022 09:58:51 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id fh22-20020a1709073a9600b0072fdb26bd9dsm605476ejc.173.2022.07.28.09.58.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 09:58:51 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oH6qY-007BbF-LF;
-        Thu, 28 Jul 2022 18:58:50 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH] CI: add SANITIZE=[address|undefined] jobs
-Date:   Thu, 28 Jul 2022 18:54:37 +0200
-References: <patch-1.1-e48b6853dd5-20220726T110716Z-avarab@gmail.com>
- <YuGPeHn9wfF6tWA5@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YuGPeHn9wfF6tWA5@coredump.intra.peff.net>
-Message-ID: <220728.86o7x9jhrp.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229555AbiG1RLH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 13:11:07 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C508F5C94F
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 10:11:06 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 71F9814D492;
+        Thu, 28 Jul 2022 13:11:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=4Y9BwOz5hO5/
+        Wx+hqnFTjuwmZXe+H0sV867558S8bIA=; b=YPp9BL21ifnQEB1ONNCu+5BZxR4F
+        6tNs9Ih624Bqc5s9hckHsCOSnO5JyirHRNxG5Fon1PVxE6GjIWkINNoz09225QKZ
+        XvIWpuJ6LxglEhuTgoqN3MxK/nGApkjzEN7uoqzjXRrx3SW7UGBzWT/ZPTo6pfIl
+        nY0rvmexsquU7dc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34CDF14D491;
+        Thu, 28 Jul 2022 13:11:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7529414D48D;
+        Thu, 28 Jul 2022 13:11:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     =?utf-8?B?TGHEj2EgVGVzYcWZw61r?= <lada.tesarik@olc.cz>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Lost file after git merge
+References: <HE1PR0501MB24096E2FBDB66318A2FDADAAF8969@HE1PR0501MB2409.eurprd05.prod.outlook.com>
+        <220728.865yjhl8wk.gmgdl@evledraar.gmail.com>
+Date:   Thu, 28 Jul 2022 10:11:00 -0700
+In-Reply-To: <220728.865yjhl8wk.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 28 Jul 2022 14:17:51 +0200")
+Message-ID: <xmqqilnhcgd7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 42172532-0E98-11ED-8B86-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Wed, Jul 27 2022, Jeff King wrote:
-
-> On Tue, Jul 26, 2022 at 01:09:13PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> On Thu, Jul 28 2022, La=C4=8Fa Tesa=C5=99=C3=ADk wrote:
 >
->> Per [2] the GitHub fork of git.git runs with these in CI, so it's
->> already useful to some forks of this repository.
->
-> Yeah, it has been helpful there and I think this is worth doing as part
-> of our CI. It's a lot of CPU versus running the test suite once on
-> Linux, but probably not compared to the overall cost of our current CI.
->
-> For the GitHub fork, the code-coverage issues you noticed were easy: we
-> only built one variant, so we could just test with those knobs. ;) But I
-> tend to agree with your approach here to just test on one platform,
-> which covers _most_ of the code. It's certainly better than the status
-> quo, and it strikes a nice balance of CPU versus coverage.
+>> 1. I added a file called 'new_file' to a master branch.
+>> 2. Then I created branch feature/2 and deleted the file in master
+>> 3. Then I deleted the file in branch feature/2 as well.
+>> 4. I created 'new_file' on branch feature/2 again.
 
-*nod*
+It heavily depends on how this creation is done, i.e. what went into
+the created file.  Imagine that a file existed with content A at
+commit 0, both commits 1 and 2 removed it on their forked history,
+and then commit 3 added exactly the same content A to the same path:
 
-> One thing I'd say...
->
->> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
->> index cd1f52692a5..4f59a7aa44c 100644
->> --- a/.github/workflows/main.yml
->> +++ b/.github/workflows/main.yml
->> @@ -251,6 +251,12 @@ jobs:
->>            - jobname: linux-leaks
->>              cc: gcc
->>              pool: ubuntu-latest
->> +          - jobname: SANITIZE=3Daddress
->> +            cc: gcc
->> +            pool: ubuntu-latest
->> +          - jobname: SANITIZE=3Dundefined
->> +            cc: gcc
->> +            pool: ubuntu-latest
->
-> There's really no reason to split the "address" and "undefined" builds
-> into two jobs. We expect them to pass, and if one fails, having the
-> results split is not likely to give any extra information. So I think
-> one job with SANITIZE=3Daddress,undefined is fine, and reclaims some of
-> the extra CPU we're spending.
+          1---3
+         /     \
+    ----0---2---4---->
 
-I'll do that in a re-roll, pending a resolution of the naming discussion
-at:
-https://lore.kernel.org/git/220728.86sfmljhyx.gmgdl@evledraar.gmail.com/
+When you are about to merge 2 and 3 to create 4, what would a
+three-way merge see?
 
-But note that it *does* give you extra information to split them up
-currently, i.e. the "test_expect_failure" that you get with "undefined"
-isn't conflated with the non-changes that SANITIZE=3Daddress flags (sans
-outstanding recent breakage) in the test report.
+    0 had content A at path P
+    2 said "no we do not want content A at path P"
+    3 said "we are happy with content A at path P"
 
-But just having that "TODO" test sitting there will suck less than
-potentially having CI run much longer, or taking up resources from
-concurrent CI runs, so I'll do this.
+So the net result is that 0-->3 "one side did not touch A at P" and
+0-->2 "one side removed A at P". =20
 
-We also leave a lot of CI performance on the table by e.g. doing "chain
-lint" in every single test run (except Windows), there *are* platform
-edge-cases there like with SANITIZE=3Daddress, but I wonder if we should
-just declare it good enough to do it in 1-2 jobs.
+Three-way merge between X and Y is all about taking what X did if Y
+didn't have any opinion on what X touched.  This is exactly that
+case.  The history 0--->3 didn't have any opinion on what should be
+in P or whether P should exist, and that is why there is no change
+between these two endpoints.  The history 0--->2 does care---it feels
+that it is detrimental to the project to have P hence it removed.
 
-Ditto TEST_NO_MALLOC_CHECK=3D1 & --no-bin-wrappers, but we can think about
-all of those some other time....
+So the end result will remove P, if 3 added identical content as
+existed at 0 and removed at 1.
 
-Thanks for reviewing this.
+If 3 added something different, then the picture becomes entirely
+different.  The history 0--->3 no longer has "no opinion".  It
+strongly believes that P having content A at 0 was wrong, and it
+should have content B, hence it changed it.  Now when that opinion
+collides with the opinion of the history 0--->2 that says it is
+wrong to have content A at path P, the person who is creating the
+merge at 4 needs to think and resolve.
