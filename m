@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA50FC04A68
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 16:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81930C19F2B
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 16:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232133AbiG1Qac (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 12:30:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43680 "EHLO
+        id S232261AbiG1Qae (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 12:30:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230463AbiG1QaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 12:30:22 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC316BE2F
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:30:21 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id l22so2891887wrz.7
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:30:21 -0700 (PDT)
+        with ESMTP id S229513AbiG1QaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 12:30:24 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A974DD8
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:30:24 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id r1-20020a05600c35c100b003a326685e7cso3431577wmq.1
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=/Gq1NyfgLUzAiQv6ZnsJD1oZyAik6HkPAulV6EOUzHY=;
-        b=ef5PHp1Rze2BlgxDE4HyInZbSwqqmPLvFpKN2FfHEzHjl0ASC48bUj9LwmiSjATHeT
-         lQtqHQwqu5d5VQJ3iLdHj1DYbdt1W4AxChrsgJLa/d/vUE8RZQ/gh31px6m8xHf76/t2
-         PrT7z2YxTd2fPbgohfIdE/IoU6hAK+iGM620jLng0XnRASupb3IoSwUq6qmjfMvnrg+G
-         uh9u5yE+D4zPBiiGaAnWdcsCI2d6PPoNPYqNaRxZqDt85nR3r5NQyOeuz/XHgM2UuY1R
-         y2LbsPNDro6MyqqWk7xNpu73xOjXH9/Tes0ghs6WoR4vVxNa+u0HE3sVKsXZ0J3Nozwi
-         ftkA==
+        bh=+9KLAtS07Gp07j/UQuFkCrlVBUtAPSpbiQ4csnWuMec=;
+        b=o8urLJAjXSTx2K+XajwverZkty8ZGndfxTQ2ppqVVb3B2bes4mKc1x+eQFABa0v6Bx
+         SShZStBYqyIx7YHEYmP5nBbrYbg5IzuACvkhi7lN9TnJsAD0Iw9QC8OUFsHt9Ue0CdCH
+         HQXgyjn+ZVUzFCoatiyHdv/v8n9y/uSv1DNVNyQ1u3Mncz70TLqTuC3SBpV1AcQ4cuE2
+         8TgH1s7z9oiruaQ/mSZD3X/E2x7Gc3cW6WEX/HUoih4p/tBOSPusWXx1IZy67KzECVAV
+         i9JZeGPOBeudkTFpgeHMkbzYxNkpgQ6fMvlWMsR3ag4PaxSAdNHaF4TiXT9qY95nVG9O
+         fLsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=/Gq1NyfgLUzAiQv6ZnsJD1oZyAik6HkPAulV6EOUzHY=;
-        b=yxeTq/TZoP0AEp1WQsxlzqk3ZYZSvekivf00TpyZ+ojgTy3dMenW+8oko1ag+GIdzp
-         imQvQg+z27Jj4NNtMpYayPh1QHEgUcRcMaK1IlbZy49Wfd633gxbytnY5sxicJTcjkud
-         v9GkYqccgm45Z7NsifMrj0fC3g/70uq07mlz2rZ20b7O2P0FzrYjgelHfaaaEzHNiX8S
-         Xat22XCj2phdjqHCN7LsZZupWEUcGwqOmYRC5/7sKI3AeiEHaRgnRm1UT7r/UWH+PLFN
-         MoCYw2OCgnwPDs3qv9ic5xHxbG/TtNOw/gfg/Vw5nyVFU0wjQusvRP/LjE+aZ+DRYapN
-         yq0A==
-X-Gm-Message-State: AJIora+KKy2oIOlWu7eTlkZSOF7RGeLQyGcWGZh3IMblRKLT/i/9Wfms
-        olfOicpgAmOxYAKkLqbsqBHU3Mdc2+wYHA==
-X-Google-Smtp-Source: AGRyM1thwjuC5+m7wIvUrbJOeeZrlq9Egn8LWpnwu/LzQ+GW9Q+Oy+cRFotiI5LbR3gf1JLPXDpHJw==
-X-Received: by 2002:a5d:620b:0:b0:21e:5b97:c826 with SMTP id y11-20020a5d620b000000b0021e5b97c826mr17101407wru.600.1659025820969;
-        Thu, 28 Jul 2022 09:30:20 -0700 (PDT)
+        bh=+9KLAtS07Gp07j/UQuFkCrlVBUtAPSpbiQ4csnWuMec=;
+        b=cSke44F+zxtkAhko5b3puljWlbw36msEsFXkREecv6zrkBl4IaA2l3qtJF7gfK8BSZ
+         SsGvkHDNYjAOKknHwlGN/VVznpEIMB4+OzSIQpTV6uolPOgPScCk+gQU/74YI8NeruD5
+         7PRzAyTnJxG2Z8FG0xSLqvwyhGuXNKIVcwynZeWBLh77v9jEaT0kP3jmgptEcn9Lyk+j
+         ABrSr7aVvX5nfz2TSkSTEB18pXQY0P4aQh+r1a/y6mxS/gzSWqEjixq5bTR09lk/wFZv
+         LYz5rtbAI53upGcDghbyU13wGJ62/okZ6aaP64ssQqjUktyTNJzXGMeHXXjKczAKfSm0
+         z10g==
+X-Gm-Message-State: AJIora+CLx07TLuEMrCZPT6YEo4dV9EvsMYWXndBv9XhWsMwPQABPWmo
+        ESB/1oD1m81dFa1THgDnxhvlYKTwgt5Z4Q==
+X-Google-Smtp-Source: AGRyM1v8qvlxOEDWpIXtJ1dVLbyQFvYziXDXlVQ08d/XkDDgNNEXx4nTfzF2HEsK+OcYqzCGafbhUw==
+X-Received: by 2002:a05:600c:4e94:b0:3a3:455b:a277 with SMTP id f20-20020a05600c4e9400b003a3455ba277mr145298wmq.198.1659025822235;
+        Thu, 28 Jul 2022 09:30:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c13-20020a5d528d000000b0021ef34124ebsm1492018wrv.11.2022.07.28.09.30.19
+        by smtp.gmail.com with ESMTPSA id c13-20020a5d528d000000b0021ef34124ebsm1492018wrv.11.2022.07.28.09.30.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 09:30:20 -0700 (PDT)
+        Thu, 28 Jul 2022 09:30:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 04/17] submodule--helper: "struct pathspec" memory leak in module_update()
-Date:   Thu, 28 Jul 2022 18:29:58 +0200
-Message-Id: <patch-v4-04.17-683d327752f-20220728T162442Z-avarab@gmail.com>
+Subject: [PATCH v4 05/17] submodule--helper: don't leak {run,capture}_command() cp.dir argument
+Date:   Thu, 28 Jul 2022 18:29:59 +0200
+Message-Id: <patch-v4-05.17-4e8e9197539-20220728T162442Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1197.g7ed548b7807
 In-Reply-To: <cover-v4-00.17-00000000000-20220728T162442Z-avarab@gmail.com>
 References: <cover-v3-00.26-00000000000-20220721T191249Z-avarab@gmail.com> <cover-v4-00.17-00000000000-20220728T162442Z-avarab@gmail.com>
@@ -69,44 +69,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The module_update() function calls module_list_compute() twice, which
-in turn will reset the "struct pathspec" passed to it. Let's instead
-track two of them, and clear them both.
+Fix a memory leak in c51f8f94e5b (submodule--helper: run update
+procedures from C, 2021-08-24) and 3c3558f0953 (submodule--helper: run
+update using child process struct, 2022-03-15) by not allocating
+memory in the first place.
+
+The "dir" member of "struct child_process" will not be modified by
+that API, and it's declared to be "const char *". So let's not
+needlessly duplicate these strings.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ builtin/submodule--helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6c53c83a2af..057cb6c0d42 100644
+index 057cb6c0d42..35a168009b7 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2537,6 +2537,7 @@ static int update_submodules(struct update_data *update_data)
- static int module_update(int argc, const char **argv, const char *prefix)
- {
- 	struct pathspec pathspec = { 0 };
-+	struct pathspec pathspec2 = { 0 };
- 	struct update_data opt = UPDATE_DATA_INIT;
- 	struct list_objects_filter_options filter_options = { 0 };
- 	int ret;
-@@ -2625,7 +2626,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 		struct init_cb info = INIT_CB_INIT;
+@@ -2105,7 +2105,7 @@ static int is_tip_reachable(const char *path, struct object_id *oid)
+ 	char *hex = oid_to_hex(oid);
  
- 		if (module_list_compute(argc, argv, opt.prefix,
--					&pathspec, &list) < 0) {
-+					&pathspec2, &list) < 0) {
- 			ret = 1;
- 			goto cleanup;
- 		}
-@@ -2648,6 +2649,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
- cleanup:
- 	list_objects_filter_release(&filter_options);
- 	clear_pathspec(&pathspec);
-+	clear_pathspec(&pathspec2);
- 	return ret;
- }
+ 	cp.git_cmd = 1;
+-	cp.dir = xstrdup(path);
++	cp.dir = path;
+ 	cp.no_stderr = 1;
+ 	strvec_pushl(&cp.args, "rev-list", "-n", "1", hex, "--not", "--all", NULL);
  
+@@ -2123,7 +2123,7 @@ static int fetch_in_submodule(const char *module_path, int depth, int quiet, str
+ 
+ 	prepare_submodule_repo_env(&cp.env);
+ 	cp.git_cmd = 1;
+-	cp.dir = xstrdup(module_path);
++	cp.dir = module_path;
+ 
+ 	strvec_push(&cp.args, "fetch");
+ 	if (quiet)
+@@ -2180,7 +2180,7 @@ static int run_update_command(struct update_data *ud, int subforce,
+ 	}
+ 	strvec_push(&cp.args, oid);
+ 
+-	cp.dir = xstrdup(ud->sm_path);
++	cp.dir = ud->sm_path;
+ 	prepare_submodule_repo_env(&cp.env);
+ 	if (run_command(&cp)) {
+ 		switch (ud->update_strategy.type) {
 -- 
 2.37.1.1197.g7ed548b7807
 
