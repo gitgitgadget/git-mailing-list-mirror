@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03844C04A68
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 16:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3F8BC19F2B
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 16:18:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232969AbiG1QSv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 12:18:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33076 "EHLO
+        id S233532AbiG1QSy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 12:18:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232781AbiG1QSf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233308AbiG1QSf (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 28 Jul 2022 12:18:35 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 336106FA04
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:18:00 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id j7so2858176wrh.3
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:18:00 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15E173918
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:18:01 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id d8so2851695wrp.6
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=+GceEB054v5gdu1A7W81MkiXOZt8MHHreEB+AcauiZk=;
-        b=C7hhUzzPmET7aTAkOgkjik5MMezTahtRZLChikzinhBZSv8KVIbVIz73rSek0RbezU
-         a2tF8WX/hjm56HuCroaGU9jpNFrqd+SCHGYYmrrp9YyofHCfBKPCU4myAFaGE55AvLrQ
-         e1ep+frfst+WLQ5V91vvPxPwOXJt/1n37WbFuHmETdlTt1qNXoMcpEZktZJvfCBVUx6c
-         UCl4fY1OPwet9Ctopo6e26q8SnLXEoDX0BkN2LFtonoIQLhxy+XuE4gzt2aqumFEY0VI
-         lNkzpPhFwfNO2QZ4Pq/Ss41z1moQ7Ax1rBAv/Uxj/VQ9coI4/stAaKWN4SM5vO+bhy33
-         tQbw==
+        bh=3ilOnEgCwjqjsIEfzeQVhRCUKPAWuAWm00oFTL1g4BU=;
+        b=quEh+SbuV0qbgi/yMqDaramDdMzqNV7emkPMGAlg8toy5bp2/wWd787W4EvMOpQpTl
+         H9jjCRehghihWbmfG2XmJ27DkXAUVVv9lAdun9LSBXwcne+/9IZUkJc1z8qA7CNK2vn1
+         h51t7e2UEiIeKY+nQkrT7VQS0DeqQwpW2XL6WRg+SJ4ZrlnJWMSnA9TNV5+omv8nfV+e
+         LP98kz16BBm8xSMMUZ0O+GLFX7djUChKu2XN+fKB5JhUFGgYQAB2ZWFmy/72MlaEzAYq
+         m45+v547vKK4Z8rAjHDc1CinevrRTcQ90OKuyjPO0oFhsFtWZH1thb8O36LUNkI8mAAe
+         YEPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=+GceEB054v5gdu1A7W81MkiXOZt8MHHreEB+AcauiZk=;
-        b=B238P7SlKq79LzNGnMJG5JE/dPNqSHdJ8S8XS/v2Ut53OsCgshBT8s/FZFWSIqAz7r
-         ir0QiMA8DIzMzLy2af85hG4RJ2BSDVLuQsS2TTDicYhN6qwfT84lnW7vs9EweGMjRpHO
-         lYmBN8f+KUkZyS0Okkbca1B3T95GQNysIrS93elxoYfgOZnmxELbhJL/o4+e+U9Ip7rw
-         BMRaWi3uPS/2PqW2XBnznnItB9KnGTa7Bn6rsXlrSs+pd7n/bqo9kJFCTxA7jLLiYyCW
-         sH13z3vTlTtLXcFbTFHNl3iA05pUwcEVoDDIYB0bOInxef+EzYwgDFjxBLaaSk5QFHDu
-         fh6w==
-X-Gm-Message-State: AJIora/bxJ1Iuk4X7q2hPmH3eVzDZwsFg2KUfAvf1UspeZWgw3Ywh0dt
-        dDRQ8l12rhzbFKQB2P0ZtLZJicEF7zx3Qw==
-X-Google-Smtp-Source: AGRyM1siq897SxFv6k1Pu0B50fMSDFFdele61056yI4/KEIGfiIqNJz++E9fzVtP/5zvpMrBJFIxFg==
-X-Received: by 2002:a05:6000:816:b0:21e:e40c:2fa5 with SMTP id bt22-20020a056000081600b0021ee40c2fa5mr4220301wrb.569.1659025078082;
-        Thu, 28 Jul 2022 09:17:58 -0700 (PDT)
+        bh=3ilOnEgCwjqjsIEfzeQVhRCUKPAWuAWm00oFTL1g4BU=;
+        b=Dz1VsNXGmFQ0Z2DmGn6F3qGuguC07JABeJHUTUHqYIrF0MGDzjgCZOljwg3oKEXeEn
+         KWGd7rjVaCXtuXMtvZM4wCci5KjnGV4s/MeUo85cVO2zOewjKSjnALRfsvOfpmPvk6Re
+         1J0EzcWUEBKOeBUlgOTINw+Rki/VnetxsWYmmxWSMqrpaJYVIaNnXWoIBZzD8teDoPJb
+         QzvztbnOds1UUeRzOcB6D6ffWX4bN0/rrsCUZPN/mRYNj3c9YUJU0YXnIclrwTbX8PIo
+         z8U39IxnDYrXQxvyhUOLxd0z9BlnrYVmUpliou/G1UCT2wLRC7YBBN6EUU1XMgHaAsQa
+         Fdwg==
+X-Gm-Message-State: AJIora/ZlJ49t4I3bMO3BJVxSKHioBXJj+47rtVe/8w7j0IcisiYuZx2
+        kxCmovxmEoABzNAndtjx6q4Qm8zLZ6nQtg==
+X-Google-Smtp-Source: AGRyM1vft4qnE3ZrG0w0myxLQiRMBsNH4B9WI2HBhFm73R1mSgAlWZfp5t/CwR83UiFZxB1f4cnLvQ==
+X-Received: by 2002:a5d:4577:0:b0:21e:f928:e911 with SMTP id a23-20020a5d4577000000b0021ef928e911mr2417648wrc.369.1659025080179;
+        Thu, 28 Jul 2022 09:18:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w13-20020adfee4d000000b0021f0af83142sm1220117wro.91.2022.07.28.09.17.56
+        by smtp.gmail.com with ESMTPSA id w13-20020adfee4d000000b0021f0af83142sm1220117wro.91.2022.07.28.09.17.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 09:17:57 -0700 (PDT)
+        Thu, 28 Jul 2022 09:17:58 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 14/20] submodule--helper: pass a "const struct module_clone_data" to clone_submodule()
-Date:   Thu, 28 Jul 2022 18:16:59 +0200
-Message-Id: <patch-14.20-b364f3200d8-20220728T161116Z-avarab@gmail.com>
+Subject: [PATCH 15/20] submodule--helper: add "const" to copy of "update_data"
+Date:   Thu, 28 Jul 2022 18:17:00 +0200
+Message-Id: <patch-15.20-e319f4edc54-20220728T161116Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1167.g38fda70d8c4
 In-Reply-To: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com>
@@ -69,199 +69,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add "const" to the "struct module_clone_data" that we pass to
-clone_submodule(), which makes the ownership clear, and stops us from
-clobbering the "clone_data->path".
+From: Glen Choo <chooglen@google.com>
 
-We still need to add to the "reference" member, which is a "struct
-string_list". Let's do this by having clone_submodule() create its
-own, and copy the contents over, allowing us to pass it as a
-separate parameter.
+Add a "const" to the copy of "struct update_data" that's tracked by
+the "struct submodule_update_clone", as it neither owns nor modifies
+it.
 
-This new "struct string_list" still leaks memory, just as the "struct
-module_clone_data" did before. let's not fix that for now, to fix that
-we'll need to add some "goto cleanup" to the relevant code. That will
-be done in a follow-up commits, at that point it'll be easier to fix
-the memory leak.
-
-The scope of the new "reference" variable in add_submodule() could be
-narrowed to the "else" block, but as we'll eventually free it with a
-"goto cleanup" let's declare it at the start of the function.
-
+Signed-off-by: Glen Choo <chooglen@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 49 ++++++++++++++++++++-----------------
- 1 file changed, 26 insertions(+), 23 deletions(-)
+ builtin/submodule--helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6cedcc5b239..e235acce985 100644
+index e235acce985..fe92c9858ce 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1434,7 +1434,6 @@ struct module_clone_data {
- 	const char *url;
- 	const char *depth;
- 	struct list_objects_filter_options *filter_options;
--	struct string_list reference;
- 	unsigned int quiet: 1;
- 	unsigned int progress: 1;
- 	unsigned int dissociate: 1;
-@@ -1442,7 +1441,6 @@ struct module_clone_data {
- 	int single_branch;
- };
- #define MODULE_CLONE_DATA_INIT { \
--	.reference = STRING_LIST_INIT_NODUP, \
- 	.single_branch = -1, \
- }
+@@ -1777,7 +1777,7 @@ struct submodule_update_clone {
+ 	int current;
  
-@@ -1569,18 +1567,20 @@ static char *clone_submodule_sm_gitdir(const char *name)
- 	return sm_gitdir;
- }
+ 	/* configuration parameters which are passed on to the children */
+-	struct update_data *update_data;
++	const struct update_data *update_data;
  
--static int clone_submodule(struct module_clone_data *clone_data)
-+static int clone_submodule(const struct module_clone_data *clone_data,
-+			   struct string_list *reference)
- {
- 	char *p;
- 	char *sm_gitdir = clone_submodule_sm_gitdir(clone_data->name);
- 	char *sm_alternate = NULL, *error_strategy = NULL;
- 	struct child_process cp = CHILD_PROCESS_INIT;
-+	const char *clone_data_path;
- 
- 	if (!is_absolute_path(clone_data->path))
--		clone_data->path = xstrfmt("%s/%s", get_git_work_tree(),
--					   clone_data->path);
-+		clone_data_path = xstrfmt("%s/%s", get_git_work_tree(),
-+					  clone_data->path);
- 	else
--		clone_data->path = xstrdup(clone_data->path);
-+		clone_data_path = xstrdup(clone_data->path);
- 
- 	if (validate_submodule_git_dir(sm_gitdir, clone_data->name) < 0)
- 		die(_("refusing to create/use '%s' in another submodule's "
-@@ -1590,7 +1590,7 @@ static int clone_submodule(struct module_clone_data *clone_data)
- 		if (safe_create_leading_directories_const(sm_gitdir) < 0)
- 			die(_("could not create directory '%s'"), sm_gitdir);
- 
--		prepare_possible_alternates(clone_data->name, &clone_data->reference);
-+		prepare_possible_alternates(clone_data->name, reference);
- 
- 		strvec_push(&cp.args, "clone");
- 		strvec_push(&cp.args, "--no-checkout");
-@@ -1600,10 +1600,10 @@ static int clone_submodule(struct module_clone_data *clone_data)
- 			strvec_push(&cp.args, "--progress");
- 		if (clone_data->depth && *(clone_data->depth))
- 			strvec_pushl(&cp.args, "--depth", clone_data->depth, NULL);
--		if (clone_data->reference.nr) {
-+		if (reference->nr) {
- 			struct string_list_item *item;
- 
--			for_each_string_list_item(item, &clone_data->reference)
-+			for_each_string_list_item(item, reference)
- 				strvec_pushl(&cp.args, "--reference",
- 					     item->string, NULL);
- 		}
-@@ -1622,7 +1622,7 @@ static int clone_submodule(struct module_clone_data *clone_data)
- 
- 		strvec_push(&cp.args, "--");
- 		strvec_push(&cp.args, clone_data->url);
--		strvec_push(&cp.args, clone_data->path);
-+		strvec_push(&cp.args, clone_data_path);
- 
- 		cp.git_cmd = 1;
- 		prepare_submodule_repo_env(&cp.env);
-@@ -1630,25 +1630,25 @@ static int clone_submodule(struct module_clone_data *clone_data)
- 
- 		if(run_command(&cp))
- 			die(_("clone of '%s' into submodule path '%s' failed"),
--			    clone_data->url, clone_data->path);
-+			    clone_data->url, clone_data_path);
- 	} else {
- 		struct strbuf sb = STRBUF_INIT;
- 
--		if (clone_data->require_init && !access(clone_data->path, X_OK) &&
--		    !is_empty_dir(clone_data->path))
--			die(_("directory not empty: '%s'"), clone_data->path);
--		if (safe_create_leading_directories_const(clone_data->path) < 0)
--			die(_("could not create directory '%s'"), clone_data->path);
-+		if (clone_data->require_init && !access(clone_data_path, X_OK) &&
-+		    !is_empty_dir(clone_data_path))
-+			die(_("directory not empty: '%s'"), clone_data_path);
-+		if (safe_create_leading_directories_const(clone_data_path) < 0)
-+			die(_("could not create directory '%s'"), clone_data_path);
- 		strbuf_addf(&sb, "%s/index", sm_gitdir);
- 		unlink_or_warn(sb.buf);
- 		strbuf_release(&sb);
- 	}
- 
--	connect_work_tree_and_git_dir(clone_data->path, sm_gitdir, 0);
-+	connect_work_tree_and_git_dir(clone_data_path, sm_gitdir, 0);
- 
--	p = git_pathdup_submodule(clone_data->path, "config");
-+	p = git_pathdup_submodule(clone_data_path, "config");
- 	if (!p)
--		die(_("could not get submodule directory for '%s'"), clone_data->path);
-+		die(_("could not get submodule directory for '%s'"), clone_data_path);
- 
- 	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
- 	git_config_get_string("submodule.alternateLocation", &sm_alternate);
-@@ -1673,6 +1673,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	int dissociate = 0, quiet = 0, progress = 0, require_init = 0;
- 	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
- 	struct list_objects_filter_options filter_options = { 0 };
-+	struct string_list reference = STRING_LIST_INIT_NODUP;
- 	struct option module_clone_options[] = {
- 		OPT_STRING(0, "prefix", &clone_data.prefix,
- 			   N_("path"),
-@@ -1686,7 +1687,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "url", &clone_data.url,
- 			   N_("string"),
- 			   N_("url where to clone the submodule from")),
--		OPT_STRING_LIST(0, "reference", &clone_data.reference,
-+		OPT_STRING_LIST(0, "reference", &reference,
- 			   N_("repo"),
- 			   N_("reference repository")),
- 		OPT_BOOL(0, "dissociate", &dissociate,
-@@ -1725,7 +1726,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_submodule_helper_usage,
- 				   module_clone_options);
- 
--	clone_submodule(&clone_data);
-+	clone_submodule(&clone_data, &reference);
- 	list_objects_filter_release(&filter_options);
- 	return 0;
- }
-@@ -2913,6 +2914,7 @@ static int add_submodule(const struct add_data *add_data)
- {
- 	char *submod_gitdir_path;
- 	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
-+	struct string_list reference = STRING_LIST_INIT_NODUP;
- 
- 	/* perhaps the path already exists and is already a git repo, else clone it */
- 	if (is_directory(add_data->sm_path)) {
-@@ -2929,6 +2931,7 @@ static int add_submodule(const struct add_data *add_data)
- 		free(submod_gitdir_path);
- 	} else {
- 		struct child_process cp = CHILD_PROCESS_INIT;
-+
- 		submod_gitdir_path = xstrfmt(".git/modules/%s", add_data->sm_name);
- 
- 		if (is_directory(submod_gitdir_path)) {
-@@ -2968,13 +2971,13 @@ static int add_submodule(const struct add_data *add_data)
- 		clone_data.quiet = add_data->quiet;
- 		clone_data.progress = add_data->progress;
- 		if (add_data->reference_path)
--			string_list_append(&clone_data.reference,
-+			string_list_append(&reference,
- 					   xstrdup(add_data->reference_path));
- 		clone_data.dissociate = add_data->dissociate;
- 		if (add_data->depth >= 0)
- 			clone_data.depth = xstrfmt("%d", add_data->depth);
- 
--		if (clone_submodule(&clone_data))
-+		if (clone_submodule(&clone_data, &reference))
- 			return -1;
- 
- 		prepare_submodule_repo_env(&cp.env);
+ 	/* to be consumed by update_submodule() */
+ 	struct update_clone_data *update_clone;
+@@ -1862,7 +1862,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	const char *update_string;
+ 	enum submodule_update_type update_type;
+ 	char *key;
+-	struct update_data *ud = suc->update_data;
++	const struct update_data *ud = suc->update_data;
+ 	char *displaypath = get_submodule_displaypath(ce->name, ud->prefix);
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int needs_cloning = 0;
 -- 
 2.37.1.1167.g38fda70d8c4
 
