@@ -2,415 +2,900 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C565C04A68
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 23:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6611C04A68
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 23:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233416AbiG1XCr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 19:02:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34234 "EHLO
+        id S233433AbiG1XCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 19:02:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232976AbiG1XCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 19:02:43 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCDD73938
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:02:37 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-31f3959ba41so28204037b3.2
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:02:37 -0700 (PDT)
+        with ESMTP id S233330AbiG1XCp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 19:02:45 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E7DD74E0A
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:02:38 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id e17-20020a656491000000b0041b51b1c9edso1499003pgv.12
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 16:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:references
-         :mime-version:message-id:in-reply-to:date:from:to:cc;
-        bh=GS5eDn4YdEh1PlE4c5v2Ab58gsl8H/MZbRe10SceZQA=;
-        b=isBushsJvjfj4BwjCCkLIwlIEquAyrgrsogaEC4EmaeMzeRF/aUOTvPgeWHhie6IUJ
-         048qs9elxfdD/NIWBGRqAOLRHGRvU6MMi/Fkerlnmgd5V4H1bjfNkhC+GQEQvriw3+Jo
-         C6nVqZRJwG3e+O2FAe78VAMS3ayJH2nsvFBf9ySV/CqoR5E1/6gU2DAncltU2qPuvy7+
-         RxZU2/IevOgxwVYbWnM311NgM5YaJpb4zhaLwEtZXk3gLr3GCkW67aDuU+kcrtwEU5IN
-         VSPKatMDtSTkf+IRqOfPWTCnI0ShpamIoICk2E265Z+dZpEXT+z5d7nURmkjq94OL3VK
-         B51A==
+        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+         :date:from:to:cc;
+        bh=5TyqHVxz+h4aXyPFXmpjtZ/RrrvuuL9TqQAFC782oAg=;
+        b=HCkZzEQs86f1mEAcf7xAaVMOnAPliVU4kyiM1jWo4v0IoCCtlfeD3H0NDCOdzFDWB1
+         ImwhG4rVuwLkeBf4i5Kj2dpq0Nuxc7MeZQk3sCg4PY9it4osgds+a4z7ybpV2kJMCCu5
+         Y7Pes/K9KUkULsjVT5b3tCnv82IZNTeWOgL1/UECzDdvBV2mbB7qjO47zLXSpiHfo2Xq
+         BHxt3GrpIefn2Zyb29w3EegPP6OLrokp1t66PYbLgAC25CQ0Nh9nu5gQBLrvW3hxhmJQ
+         Q7MiKNS18cpVcSKSwfCSaHe1yxlIT3Hi5TxOe6jYWANPvvx642At5cKgo2xOOp6k6zEo
+         5AJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:references
-         :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
-         :cc;
-        bh=GS5eDn4YdEh1PlE4c5v2Ab58gsl8H/MZbRe10SceZQA=;
-        b=UuWbBrQXyq/AfEotpL1AxMK5jgYIc9eAqqD+jmWy6ilN08OnnY9CF5YH59Pm+hAZvs
-         KTW3+lZSNbnnTeqHINb9yygPNUCfY8HQLdXMjylJcDNbTseo43Trp9ZcR0UHo7cBgtol
-         BS9EEdLvZMe/V8kjQXmFc2HPkZxcSj/O4etBEaeh9B5ZJTD4wiLFcSUzhBh4fGBXbNHV
-         yURf6JjNTzi1y+aC4EmM7KL72p0Cba8+3shXtaPse10JICWey39IZXD0dQrHDujIz6PJ
-         81uWWhJMGKnCGTORPplpenp4M19/VMmSRpYnBVzSbmTATz4c26gGEYEA4DT+s1MI+57y
-         j9TA==
-X-Gm-Message-State: ACgBeo24EL9svBBk3VTa8erUDMfIDw+0lgcwzcKmNMJGUPVrjYHZk1Up
-        j+MXdEecyYMaT45/Er9vyNOHmaGAJV3B4BV2LT1DtS8C3Lpl3sIRxVPaTi7yFiK2reeMGuCcVwC
-        WfkufO7Kc081Nx87PRfoS46RRlPVRJJl825NEfm6ay7G4/VOZlNuNLEGO1ZGntwOoEQ==
-X-Google-Smtp-Source: AA6agR5F+5ewk1R4TFnHR3m6Q7Ca1sgn4sCZh/G/eS8mte8e+vgTuoRPlU0jn4wk2cnbRW9uQ6jbDmmmlGemYII=
+        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+         :date:x-gm-message-state:from:to:cc;
+        bh=5TyqHVxz+h4aXyPFXmpjtZ/RrrvuuL9TqQAFC782oAg=;
+        b=ivzKRMI/HODtyxtYkDewil3vu4Na6pApJq6hDi1LS70A9YY8bAnyOm12gPng1Sgh6H
+         9i1dZKPK7tI8yY6o1kIElil1+7FCRQUJ4XZjwdn3td03iVpvNCTC7qn+7iexC3LMmrmM
+         ci3Br/H8JDrQayUQP+0jypsZ4SnJYhgkBywHGdAyPwn+Y+sTwJ165DWl12mdBvXQJ8kn
+         rwdRmuyg1HDgpsPbWaCNNt5eSVBOEtOjX6wSogbOqYQs4rovTWvP212Pr5q6a3fcqzjq
+         l2dZ9xcMlijt/ChZBJZm91doePoqP0C6tjPVxb/AZ2+JRijT4iajpY065iRBK1jRR75C
+         2U/Q==
+X-Gm-Message-State: ACgBeo3iQRZpfStXr8oC2QAYG++tVm+rMfljLA7cpViMZuq2f5t5fGx1
+        uAXQs/bJGX8dz1EYvmfSezR6U3kzL65XMpv2k+eCMaPUmzU2Un+qVnwEN2wOpp8LhSLdJlk6b5N
+        PkOMKbLuJ3Q0FdYcJdEKo1lg+LaGxNxA5gVmYl/wKKsRmZvxtgChGZ7SvTByAGMJAMQ==
+X-Google-Smtp-Source: AA6agR5D2yG011w4Q4FH3fA2shGSMpatvez+UGLXjqluzkS95I+kOpMVh7btoHRp2O2rt6+Idn/ANf/0f8EKkek=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a0d:dac6:0:b0:320:2d6b:4d3d with SMTP id
- c189-20020a0ddac6000000b003202d6b4d3dmr856630ywe.367.1659049356224; Thu, 28
- Jul 2022 16:02:36 -0700 (PDT)
-Date:   Thu, 28 Jul 2022 23:02:09 +0000
+ (user=calvinwan job=sendgmr) by 2002:a17:903:247:b0:16c:5017:9ad4 with SMTP
+ id j7-20020a170903024700b0016c50179ad4mr1036934plh.115.1659049357902; Thu, 28
+ Jul 2022 16:02:37 -0700 (PDT)
+Date:   Thu, 28 Jul 2022 23:02:10 +0000
 In-Reply-To: <20220502170904.2770649-1-calvinwan@google.com>
-Message-Id: <20220728230210.2952731-6-calvinwan@google.com>
+Message-Id: <20220728230210.2952731-7-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20220502170904.2770649-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.37.1.455.g008518b4e5-goog
-Subject: [PATCH v5 5/6] transport: add client support for object-info
+Subject: [PATCH v5 6/6] cat-file: add remote-object-info to batch-command
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, gitster@pobox.com,
         jonathantanmy@google.com, philipoakley@iee.email,
         johncai86@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes it is useful to get information about an object without having
-to download it completely. The server logic has already been implemented
-as =E2=80=9Ca2ba162cda (object-info: support for retrieving object info,
-2021-04-20)=E2=80=9D. This patch adds client functions to communicate with =
-the
-server.
+Since the `info` command in cat-file --batch-command prints object info
+for a given object, it is natural to add another command in cat-file
+--batch-command to print object info for a given object from a remote.
+Add `remote-object-info` to cat-file --batch-command.
 
-The client currently supports requesting a list of object ids with
-features 'size' and 'type' from a v2 server. If a server does not
-advertise either of the requested features, then the client falls back
-to making the request through 'fetch'.
+While `info` takes object ids one at a time, this creates overhead when
+making requests to a server so `remote-object-info` instead can take
+multiple object ids at once.
+
+cat-file --batch-command is generally implemented in the following
+manner:
+
+ - Receive and parse input from user
+ - Call respective function attached to command
+ - Set batch mode state, get object info, print object info
+
+In --buffer mode, this changes to:
+
+ - Receive and parse input from user
+ - Store respective function attached to command in a queue
+ - After flush, loop through commands in queue
+    - Call respective function attached to command
+    - Set batch mode state, get object info, print object info
+
+Notice how the getting and printing of object info is accomplished one
+at a time. As described above, this creates a problem for making
+requests to a server. Therefore, `remote-object-info` is implemented in
+the following manner:
+
+ - Receive and parse input from user
+ If command is `remote-object-info`:
+    - Get object info from remote
+    - Loop through object info
+        - Call respective function attached to `info`
+        - Set batch mode state, use passed in object info, print object
+          info
+ Else:
+    - Call respective function attached to command
+    - Parse input, get object info, print object info
+
+And finally for --buffer mode `remote-object-info`:
+ - Receive and parse input from user
+ - Store respective function attached to command in a queue
+ - After flush, loop through commands in queue:
+    If command is `remote-object-info`:
+        - Get object info from remote
+        - Loop through object info
+            - Call respective function attached to `info`
+            - Set batch mode state, use passed in object info, print
+              object info
+    Else:
+        - Call respective function attached to command
+        - Set batch mode state, get object info, print object info
+
+To summarize, `remote-object-info` gets object info from the remote and
+then generates multiple `info` commands with the object info passed in.
+
+In order for remote-object-info to avoid remote communication overhead
+in the non-buffer mode, the objects are passed in as such:
+
+remote-object-info <remote> <oid> <oid> ... <oid>
+
+rather than
+
+remote-object-info <remote> <oid>
+remote-object-info <remote> <oid>
+...
+remote-object-info <remote> <oid>
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c       |  28 ++++++++++++
- fetch-pack.h       |  10 +++++
- transport-helper.c |   7 ++-
- transport.c        | 110 +++++++++++++++++++++++++++++++++++++++++++--
- transport.h        |  11 +++++
- 5 files changed, 161 insertions(+), 5 deletions(-)
+ Documentation/git-cat-file.txt |  16 +-
+ builtin/cat-file.c             | 225 ++++++++++++++++-----
+ object-file.c                  |  11 ++
+ object-store.h                 |   3 +
+ t/t1006-cat-file.sh            | 348 +++++++++++++++++++++++++++++++++
+ 5 files changed, 549 insertions(+), 54 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 8c862b017e..d373aed775 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1293,6 +1293,31 @@ static void write_command_and_capabilities(struct st=
-rbuf *req_buf,
- 	packet_buf_delim(req_buf);
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 24a811f0ef..c073d5e50d 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -115,6 +115,10 @@ info <object>::
+ 	Print object info for object reference `<object>`. This corresponds to the
+ 	output of `--batch-check`.
+ 
++remote-object-info <remote> [<object>]::
++	Print object info for object references `<object>` at specified <remote>.
++	This command may be combined with `--buffer`.
++
+ flush::
+ 	Used with `--buffer` to execute all preceding commands that were issued
+ 	since the beginning or since the last flush was issued. When `--buffer`
+@@ -245,7 +249,8 @@ newline. The available atoms are:
+ 	The full hex representation of the object name.
+ 
+ `objecttype`::
+-	The type of the object (the same as `cat-file -t` reports).
++	The type of the object (the same as `cat-file -t` reports). See
++	`CAVEATS` below.
+ 
+ `objectsize`::
+ 	The size, in bytes, of the object (the same as `cat-file -s`
+@@ -253,13 +258,14 @@ newline. The available atoms are:
+ 
+ `objectsize:disk`::
+ 	The size, in bytes, that the object takes up on disk. See the
+-	note about on-disk sizes in the `CAVEATS` section below.
++	note about on-disk sizes in the `CAVEATS` section below. Not
++	supported by `remote-object-info`.
+ 
+ `deltabase`::
+ 	If the object is stored as a delta on-disk, this expands to the
+ 	full hex representation of the delta base object name.
+ 	Otherwise, expands to the null OID (all zeroes). See `CAVEATS`
+-	below.
++	below. Not supported by `remote-object-info`.
+ 
+ `rest`::
+ 	If this atom is used in the output string, input lines are split
+@@ -346,6 +352,10 @@ directory name.
+ CAVEATS
+ -------
+ 
++Note that since object type is currently not supported by the
++object-info command request, git fetches the entire object instead to
++get the object info.
++
+ Note that the sizes of objects on disk are reported accurately, but care
+ should be taken in drawing conclusions about which refs or objects are
+ responsible for disk usage. The size of a packed non-delta object may be
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 50cf38999d..68b72377e6 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -16,6 +16,9 @@
+ #include "packfile.h"
+ #include "object-store.h"
+ #include "promisor-remote.h"
++#include "alias.h"
++#include "remote.h"
++#include "transport.h"
+ 
+ enum batch_mode {
+ 	BATCH_MODE_CONTENTS,
+@@ -32,9 +35,14 @@ struct batch_options {
+ 	int unordered;
+ 	int transform_mode; /* may be 'w' or 'c' for --filters or --textconv */
+ 	const char *format;
++	int use_remote_info;
+ };
+ 
++#define DEFAULT_FORMAT "%(objectname) %(objecttype) %(objectsize)"
++
+ static const char *force_path;
++static struct object_info *remote_object_info;
++static struct oid_array object_info_oids = OID_ARRAY_INIT;
+ 
+ static int filter_object(const char *path, unsigned mode,
+ 			 const struct object_id *oid,
+@@ -423,48 +431,115 @@ static void batch_one_object(const char *obj_name,
+ 	int flags = opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0;
+ 	enum get_oid_result result;
+ 
+-	result = get_oid_with_context(the_repository, obj_name,
+-				      flags, &data->oid, &ctx);
+-	if (result != FOUND) {
+-		switch (result) {
+-		case MISSING_OBJECT:
+-			printf("%s missing\n", obj_name);
+-			break;
+-		case SHORT_NAME_AMBIGUOUS:
+-			printf("%s ambiguous\n", obj_name);
+-			break;
+-		case DANGLING_SYMLINK:
+-			printf("dangling %"PRIuMAX"\n%s\n",
+-			       (uintmax_t)strlen(obj_name), obj_name);
+-			break;
+-		case SYMLINK_LOOP:
+-			printf("loop %"PRIuMAX"\n%s\n",
+-			       (uintmax_t)strlen(obj_name), obj_name);
+-			break;
+-		case NOT_DIR:
+-			printf("notdir %"PRIuMAX"\n%s\n",
+-			       (uintmax_t)strlen(obj_name), obj_name);
+-			break;
+-		default:
+-			BUG("unknown get_sha1_with_context result %d\n",
+-			       result);
+-			break;
++	if (!opt->use_remote_info) {
++		result = get_oid_with_context(the_repository, obj_name,
++						flags, &data->oid, &ctx);
++		if (result != FOUND) {
++			switch (result) {
++			case MISSING_OBJECT:
++				printf("%s missing\n", obj_name);
++				break;
++			case SHORT_NAME_AMBIGUOUS:
++				printf("%s ambiguous\n", obj_name);
++				break;
++			case DANGLING_SYMLINK:
++				printf("dangling %"PRIuMAX"\n%s\n",
++					(uintmax_t)strlen(obj_name), obj_name);
++				break;
++			case SYMLINK_LOOP:
++				printf("loop %"PRIuMAX"\n%s\n",
++					(uintmax_t)strlen(obj_name), obj_name);
++				break;
++			case NOT_DIR:
++				printf("notdir %"PRIuMAX"\n%s\n",
++					(uintmax_t)strlen(obj_name), obj_name);
++				break;
++			default:
++				BUG("unknown get_sha1_with_context result %d\n",
++					result);
++				break;
++			}
++			fflush(stdout);
++			return;
+ 		}
+-		fflush(stdout);
+-		return;
+-	}
+ 
+-	if (ctx.mode == 0) {
+-		printf("symlink %"PRIuMAX"\n%s\n",
+-		       (uintmax_t)ctx.symlink_path.len,
+-		       ctx.symlink_path.buf);
+-		fflush(stdout);
+-		return;
++		if (ctx.mode == 0) {
++			printf("symlink %"PRIuMAX"\n%s\n",
++				(uintmax_t)ctx.symlink_path.len,
++				ctx.symlink_path.buf);
++			fflush(stdout);
++			return;
++		}
+ 	}
+ 
+ 	batch_object_write(obj_name, scratch, opt, data, NULL, 0);
  }
-=20
-+void send_object_info_request(int fd_out, struct object_info_args *args)
+ 
++static int get_remote_info(struct batch_options *opt, int argc, const char **argv)
 +{
-+	struct strbuf req_buf =3D STRBUF_INIT;
++	int retval = 0;
 +	size_t i;
++	struct remote *remote = NULL;
++	struct object_id oid;
++	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
++	static struct transport *gtransport;
++	char *format = DEFAULT_FORMAT;
 +
-+	write_command_and_capabilities(&req_buf, args->server_options, "object-in=
-fo");
++	if (opt->format)
++		format = xstrdup(opt->format);
 +
-+	if (unsorted_string_list_has_string(args->object_info_options, "size"))
-+		packet_buf_write(&req_buf, "size");
-+
-+	if (unsorted_string_list_has_string(args->object_info_options, "type"))
-+		packet_buf_write(&req_buf, "type");
-+
-+	if (args->oids) {
-+		for (i =3D 0; i < args->oids->nr; i++)
-+			packet_buf_write(&req_buf, "oid %s", oid_to_hex(&args->oids->oid[i]));
++	remote = remote_get(argv[0]);
++	if (!remote)
++		die(_("must supply valid remote when using --object-info"));
++	oid_array_clear(&object_info_oids);
++	for (i = 1; i < argc; i++) {
++		if (get_oid(argv[i], &oid))
++			die(_("malformed object id '%s'"), argv[i]);
++		oid_array_append(&object_info_oids, &oid);
 +	}
 +
-+	packet_buf_flush(&req_buf);
-+	if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-+		die_errno(_("unable to write request to remote"));
++	gtransport = transport_get(remote, NULL);
++	if (gtransport->smart_options) {
++		size_t j;
++		int include_size = 0, include_type = 0;
 +
-+	strbuf_release(&req_buf);
++		remote_object_info = xcalloc(object_info_oids.nr, sizeof(struct object_info));
++		gtransport->smart_options->object_info = 1;
++		gtransport->smart_options->object_info_oids = &object_info_oids;
++		/**
++		 * 'size' is the only option currently supported.
++		 * Other options that are passed in the format will fallback to a
++		 * standard fetch request rather than object-info.
++		 */
++		if (strstr(format, "%(objectsize)")) {
++			string_list_append(&object_info_options, "size");
++			include_size = 1;
++		}
++		if (strstr(format, "%(objecttype)")) {
++			string_list_append(&object_info_options, "type");
++			include_type = 1;
++		}
++		if (strstr(format, "%(objectsize:disk)"))
++			die(_("objectsize:disk is currently not supported with remote-object-info"));
++		if (strstr(format, "%(deltabase)"))
++			die(_("deltabase is currently not supported with remote-object-info"));
++		if (object_info_options.nr > 0) {
++			gtransport->smart_options->object_info_options = &object_info_options;
++			for (j = 0; j < object_info_oids.nr; j++) {
++				if (include_size)
++					remote_object_info[j].sizep = xcalloc(1, sizeof(long));
++				if (include_type)
++					remote_object_info[j].typep = xcalloc(1, sizeof(enum object_type));
++			}
++			gtransport->smart_options->object_info_data = &remote_object_info;
++			retval = transport_fetch_refs(gtransport, NULL);
++		}
++	} else {
++		retval = -1;
++	}
++	return retval;
 +}
 +
- static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_=
-out,
- 			      struct fetch_pack_args *args,
- 			      const struct ref *wants, struct oidset *common,
-@@ -1634,6 +1659,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack=
-_args *args,
- 	if (args->depth > 0 || args->deepen_since || args->deepen_not)
- 		args->deepen =3D 1;
-=20
-+	if (args->object_info)
-+		state =3D FETCH_SEND_REQUEST;
-+
- 	while (state !=3D FETCH_DONE) {
- 		switch (state) {
- 		case FETCH_CHECK_LOCAL:
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 8c7752fc82..11c513f748 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -17,6 +17,7 @@ struct fetch_pack_args {
- 	const struct string_list *deepen_not;
- 	struct list_objects_filter_options filter_options;
- 	const struct string_list *server_options;
-+	struct object_info **object_info_data;
-=20
- 	/*
- 	 * If not NULL, during packfile negotiation, fetch-pack will send "have"
-@@ -43,6 +44,7 @@ struct fetch_pack_args {
- 	unsigned reject_shallow_remote:1;
- 	unsigned deepen:1;
- 	unsigned refetch:1;
-+	unsigned object_info:1;
-=20
- 	/*
- 	 * Indicate that the remote of this request is a promisor remote. The
-@@ -69,6 +71,12 @@ struct fetch_pack_args {
- 	unsigned connectivity_checked:1;
+ struct object_cb_data {
+ 	struct batch_options *opt;
+ 	struct expand_data *expand;
+@@ -536,6 +611,7 @@ typedef void (*parse_cmd_fn_t)(struct batch_options *, const char *,
+ struct queued_cmd {
+ 	parse_cmd_fn_t fn;
+ 	char *line;
++	const char *name;
  };
-=20
-+struct object_info_args {
-+	struct string_list *object_info_options;
-+	const struct string_list *server_options;
-+	struct oid_array *oids;
+ 
+ static void parse_cmd_contents(struct batch_options *opt,
+@@ -556,6 +632,56 @@ static void parse_cmd_info(struct batch_options *opt,
+ 	batch_one_object(line, output, opt, data);
+ }
+ 
++static const struct parse_cmd {
++	const char *name;
++	parse_cmd_fn_t fn;
++	unsigned takes_args;
++} commands[] = {
++	{ "contents", parse_cmd_contents, 1},
++	{ "info", parse_cmd_info, 1},
++	{ "remote-object-info", parse_cmd_info, 1},
++	{ "flush", NULL, 0},
 +};
 +
- /*
-  * sought represents remote references that should be updated from.
-  * On return, the names that were found on the remote will have been
-@@ -102,4 +110,6 @@ void negotiate_using_fetch(const struct oid_array *nego=
-tiation_tips,
-  */
- int report_unmatched_refs(struct ref **sought, int nr_sought);
-=20
-+void send_object_info_request(int fd_out, struct object_info_args *args);
-+
- #endif
-diff --git a/transport-helper.c b/transport-helper.c
-index 322c722478..48a6680200 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -686,13 +686,16 @@ static int fetch_refs(struct transport *transport,
-=20
- 	/*
- 	 * If we reach here, then the server, the client, and/or the transport
--	 * helper does not support protocol v2. --negotiate-only requires
--	 * protocol v2.
-+	 * helper does not support protocol v2. --negotiate-only and --object-inf=
-o
-+	 * require protocol v2.
- 	 */
- 	if (data->transport_options.acked_commits) {
- 		warning(_("--negotiate-only requires protocol v2"));
- 		return -1;
- 	}
-+	if (transport->smart_options->object_info) {
-+		die(_("--object-info requires protocol v2"));
-+	}
-=20
- 	if (!data->get_refs_list_called)
- 		get_refs_list_using_list(transport, 0);
-diff --git a/transport.c b/transport.c
-index 52db7a3cb0..2d503e2fbd 100644
---- a/transport.c
-+++ b/transport.c
-@@ -353,6 +353,80 @@ static struct ref *handshake(struct transport *transpo=
-rt, int for_push,
- 	return refs;
- }
-=20
-+static int fetch_object_info(struct transport *transport, struct object_in=
-fo **object_info_data)
++static void parse_remote_info(struct batch_options *opt,
++			   char *line,
++			   struct strbuf *output,
++			   struct expand_data *data,
++			   const struct parse_cmd *p_cmd,
++			   struct queued_cmd *q_cmd)
 +{
++	int count;
 +	size_t i;
-+	int size_index =3D -1;
-+	struct git_transport_data *data =3D transport->data;
-+	struct object_info_args args;
-+	struct packet_reader reader;
++	const char **argv;
 +
-+	memset(&args, 0, sizeof(args));
-+	args.server_options =3D transport->server_options;
-+	args.object_info_options =3D transport->smart_options->object_info_option=
-s;
-+	args.oids =3D transport->smart_options->object_info_oids;
++	count = split_cmdline(line, &argv);
++	if (get_remote_info(opt, count, argv))
++		goto cleanup;
++	opt->use_remote_info = 1;
++	data->skip_object_info = 1;
++	data->mark_query = 0;
++	for (i = 0; i < object_info_oids.nr; i++) {
++		if (remote_object_info[i].sizep)
++			data->size = *remote_object_info[i].sizep;
++		if (remote_object_info[i].typep)
++			data->type = *remote_object_info[i].typep;
 +
-+	connect_setup(transport, 0);
-+	packet_reader_init(&reader, data->fd[0], NULL, 0,
-+			PACKET_READ_CHOMP_NEWLINE |
-+			PACKET_READ_GENTLE_ON_EOF |
-+			PACKET_READ_DIE_ON_ERR_PACKET);
-+	data->version =3D discover_version(&reader);
-+
-+	transport->hash_algo =3D reader.hash_algo;
-+
-+	switch (data->version) {
-+	case protocol_v2:
-+		if (!server_supports_v2("object-info", 0))
-+			return -1;
-+		if (unsorted_string_list_has_string(args.object_info_options, "size")
-+				&& !server_supports_feature("object-info", "size", 0)) {
-+			return -1;
-+		}
-+		if (unsorted_string_list_has_string(args.object_info_options, "type")
-+				&& !server_supports_feature("object-info", "type", 0)) {
-+			return -1;
-+		}
-+		send_object_info_request(data->fd[1], &args);
-+		break;
-+	case protocol_v1:
-+	case protocol_v0:
-+		die(_("wrong protocol version. expected v2"));
-+	case protocol_unknown_version:
-+		BUG("unknown protocol version");
++		data->oid = object_info_oids.oid[i];
++		if (p_cmd)
++			p_cmd->fn(opt, argv[i+1], output, data);
++		else
++			q_cmd->fn(opt, argv[i+1], output, data);
 +	}
++	opt->use_remote_info = 0;
++	data->skip_object_info = 0;
++	data->mark_query = 1;
 +
-+	for (i =3D 0; i < args.object_info_options->nr; i++) {
-+		if (packet_reader_read(&reader) !=3D PACKET_READ_NORMAL) {
-+			check_stateless_delimiter(transport->stateless_rpc, &reader, "stateless=
- delimiter expected");
-+			return -1;
-+		}
-+		if (unsorted_string_list_has_string(args.object_info_options, reader.lin=
-e)) {
-+			if (!strcmp(reader.line, "size"))
-+				size_index =3D i;
-+			continue;
-+		}
-+		return -1;
-+	}
-+
-+	i =3D 0;
-+	while (packet_reader_read(&reader) =3D=3D PACKET_READ_NORMAL && i < args.=
-oids->nr) {
-+		struct string_list object_info_values =3D STRING_LIST_INIT_DUP;
-+
-+		string_list_split(&object_info_values, reader.line, ' ', -1);
-+		if (0 <=3D size_index) {
-+			if (!strcmp(object_info_values.items[1 + size_index].string, ""))
-+				die("object-info: not our ref %s",
-+					object_info_values.items[0].string);
-+			*(*object_info_data)[i].sizep =3D strtoul(object_info_values.items[1 + =
-size_index].string, NULL, 10);
-+		}
-+		i++;
-+	}
-+	check_stateless_delimiter(transport->stateless_rpc, &reader, "stateless d=
-elimiter expected");
-+
-+	return 0;
++cleanup:
++	for (i = 0; i < object_info_oids.nr; i++)
++		free_object_info_contents(&remote_object_info[i]);
++	free(remote_object_info);
 +}
 +
- static struct ref *get_refs_via_connect(struct transport *transport, int f=
-or_push,
- 					struct transport_ls_refs_options *options)
- {
-@@ -363,10 +437,12 @@ static int fetch_refs_via_pack(struct transport *tran=
-sport,
- 			       int nr_heads, struct ref **to_fetch)
- {
- 	int ret =3D 0;
-+	size_t i;
- 	struct git_transport_data *data =3D transport->data;
- 	struct ref *refs =3D NULL;
- 	struct fetch_pack_args args;
- 	struct ref *refs_tmp =3D NULL;
-+	struct ref *object_info_refs =3D xcalloc(1, sizeof (struct ref));
-=20
- 	memset(&args, 0, sizeof(args));
- 	args.uploadpack =3D data->options.uploadpack;
-@@ -392,8 +468,25 @@ static int fetch_refs_via_pack(struct transport *trans=
-port,
- 	args.server_options =3D transport->server_options;
- 	args.negotiation_tips =3D data->options.negotiation_tips;
- 	args.reject_shallow_remote =3D transport->smart_options->reject_shallow;
--
--	if (!data->got_remote_heads) {
-+	args.object_info =3D transport->smart_options->object_info;
-+
-+	if (transport->smart_options && transport->smart_options->object_info) {
-+		struct ref *ref =3D object_info_refs;
-+
-+		if (!fetch_object_info(transport, data->options.object_info_data))
-+			goto cleanup;
-+		args.object_info_data =3D data->options.object_info_data;
-+		args.quiet =3D 1;
-+		args.no_progress =3D 1;
-+		for (i =3D 0; i < transport->smart_options->object_info_oids->nr; i++) {
-+			struct ref *temp_ref =3D xcalloc(1, sizeof (struct ref));
-+			temp_ref->old_oid =3D *(transport->smart_options->object_info_oids->oid=
- + i);
-+			temp_ref->exact_oid =3D 1;
-+			ref->next =3D temp_ref;
-+			ref =3D ref->next;
-+		}
-+		transport->remote_refs =3D object_info_refs->next;
-+	} else if (!data->got_remote_heads) {
- 		int i;
- 		int must_list_refs =3D 0;
- 		for (i =3D 0; i < nr_heads; i++) {
-@@ -433,12 +526,22 @@ static int fetch_refs_via_pack(struct transport *tran=
-sport,
- 			  to_fetch, nr_heads, &data->shallow,
- 			  &transport->pack_lockfiles, data->version);
-=20
-+	if (args.object_info) {
-+		struct ref *ref_cpy_reader =3D object_info_refs->next;
-+		int i =3D 0;
-+		while (ref_cpy_reader) {
-+			oid_object_info_extended(the_repository, &ref_cpy_reader->old_oid, &(*a=
-rgs.object_info_data)[i], OBJECT_INFO_LOOKUP_REPLACE);
-+			ref_cpy_reader =3D ref_cpy_reader->next;
-+			i++;
-+		}
+ static void dispatch_calls(struct batch_options *opt,
+ 		struct strbuf *output,
+ 		struct expand_data *data,
+@@ -567,8 +693,12 @@ static void dispatch_calls(struct batch_options *opt,
+ 	if (!opt->buffer_output)
+ 		die(_("flush is only for --buffer mode"));
+ 
+-	for (i = 0; i < nr; i++)
+-		cmd[i].fn(opt, cmd[i].line, output, data);
++	for (i = 0; i < nr; i++) {
++		if (!strcmp(cmd[i].name, "remote-object-info"))
++			parse_remote_info(opt, cmd[i].line, output, data, NULL, &cmd[i]);
++		else
++			cmd[i].fn(opt, cmd[i].line, output, data);
 +	}
-+
- 	data->got_remote_heads =3D 0;
- 	data->options.self_contained_and_connected =3D
- 		args.self_contained_and_connected;
- 	data->options.connectivity_checked =3D args.connectivity_checked;
-=20
--	if (!refs)
-+	if (refs =3D=3D NULL && !args.object_info)
- 		ret =3D -1;
- 	if (report_unmatched_refs(to_fetch, nr_heads))
- 		ret =3D -1;
-@@ -453,6 +556,7 @@ static int fetch_refs_via_pack(struct transport *transp=
-ort,
-=20
- 	free_refs(refs_tmp);
- 	free_refs(refs);
-+	free_refs(object_info_refs);
+ 
+ 	fflush(stdout);
+ }
+@@ -583,17 +713,6 @@ static void free_cmds(struct queued_cmd *cmd, size_t *nr)
+ 	*nr = 0;
+ }
+ 
+-
+-static const struct parse_cmd {
+-	const char *name;
+-	parse_cmd_fn_t fn;
+-	unsigned takes_args;
+-} commands[] = {
+-	{ "contents", parse_cmd_contents, 1},
+-	{ "info", parse_cmd_info, 1},
+-	{ "flush", NULL, 0},
+-};
+-
+ static void batch_objects_command(struct batch_options *opt,
+ 				    struct strbuf *output,
+ 				    struct expand_data *data)
+@@ -639,11 +758,17 @@ static void batch_objects_command(struct batch_options *opt,
+ 			dispatch_calls(opt, output, data, queued_cmd, nr);
+ 			free_cmds(queued_cmd, &nr);
+ 		} else if (!opt->buffer_output) {
+-			cmd->fn(opt, p, output, data);
++			if (!strcmp(cmd->name, "remote-object-info")) {
++				char *line = xstrdup_or_null(p);
++				parse_remote_info(opt, line, output, data, cmd, NULL);
++			} else {
++				cmd->fn(opt, p, output, data);
++			}
+ 		} else {
+ 			ALLOC_GROW(queued_cmd, nr + 1, alloc);
+ 			call.fn = cmd->fn;
+ 			call.line = xstrdup_or_null(p);
++			call.name = cmd->name;
+ 			queued_cmd[nr++] = call;
+ 		}
+ 	}
+@@ -659,8 +784,6 @@ static void batch_objects_command(struct batch_options *opt,
+ 	strbuf_release(&input);
+ }
+ 
+-#define DEFAULT_FORMAT "%(objectname) %(objecttype) %(objectsize)"
+-
+ static int batch_objects(struct batch_options *opt)
+ {
+ 	struct strbuf input = STRBUF_INIT;
+diff --git a/object-file.c b/object-file.c
+index 5b270f046d..417c76def3 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2839,3 +2839,14 @@ int read_loose_object(const char *path,
+ 		munmap(map, mapsize);
  	return ret;
  }
-=20
-diff --git a/transport.h b/transport.h
-index b5bf7b3e70..5512fdb140 100644
---- a/transport.h
-+++ b/transport.h
-@@ -6,6 +6,7 @@
- #include "remote.h"
- #include "list-objects-filter-options.h"
- #include "string-list.h"
-+#include "object-store.h"
-=20
- struct git_transport_options {
- 	unsigned thin : 1;
-@@ -31,6 +32,12 @@ struct git_transport_options {
- 	 */
- 	unsigned connectivity_checked:1;
-=20
-+	/*
-+	 * Transport will attempt to pull only object-info. Fallbacks
-+	 * to pulling entire object if object-info is not supported
-+	 */
-+	unsigned object_info : 1;
 +
- 	int depth;
- 	const char *deepen_since;
- 	const struct string_list *deepen_not;
-@@ -54,6 +61,10 @@ struct git_transport_options {
- 	 * common commits to this oidset instead of fetching any packfiles.
- 	 */
- 	struct oidset *acked_commits;
++void free_object_info_contents(struct object_info *object_info)
++{
++	if (!object_info)
++		return;
++	free(object_info->typep);
++	free(object_info->sizep);
++	free(object_info->disk_sizep);
++	free(object_info->delta_base_oid);
++	free(object_info->type_name);
++}
+diff --git a/object-store.h b/object-store.h
+index 5222ee5460..015838eb08 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -547,4 +547,7 @@ int for_each_object_in_pack(struct packed_git *p,
+ int for_each_packed_object(each_packed_object_fn, void *,
+ 			   enum for_each_object_flags flags);
+ 
++/* Free pointers inside of object_info, but not object_info itself */
++void free_object_info_contents(struct object_info *object_info);
 +
-+	struct oid_array *object_info_oids;
-+	struct object_info **object_info_data;
-+	struct string_list *object_info_options;
- };
-=20
- enum transport_family {
---=20
+ #endif /* OBJECT_STORE_H */
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index dadf3b1458..55b2a1f06f 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -2,6 +2,9 @@
+ 
+ test_description='git cat-file'
+ 
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
+ . ./test-lib.sh
+ 
+ test_cmdmode_usage () {
+@@ -1093,4 +1096,349 @@ test_expect_success 'batch-command flush without --buffer' '
+ 	grep "^fatal:.*flush is only for --buffer mode.*" err
+ '
+ 
++# This section tests --batch-command with remote-object-info command
++# If a filter is not set, the filter defaults to "%(objectname) %(objectsize) %(objecttype)"
++# Since "%(objecttype)" is currently not supported by the command request, object-info,
++# the filters are set to "%(objectname) %(objectsize)".
++# Tests with the default filter are used to test the fallback to 'fetch' command
++
++set_transport_variables () {
++    tree_sha1=$(git -C "$1" write-tree)
++	commit_sha1=$(echo_without_newline "$commit_message" | git -C "$1" commit-tree $tree_sha1)
++	tag_sha1=$(echo_without_newline "$tag_content" | git -C "$1" hash-object -t tag --stdin -w)
++	tag_size=$(strlen "$tag_content")
++}
++
++# Test --batch-command remote-object-info with 'git://' transport
++
++. "$TEST_DIRECTORY"/lib-git-daemon.sh
++start_git_daemon --export-all --enable=receive-pack
++daemon_parent=$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent
++
++test_expect_success 'create repo to be served by git-daemon' '
++	git init "$daemon_parent" &&
++	echo_without_newline "$hello_content" > $daemon_parent/hello &&
++	git -C "$daemon_parent" update-index --add hello
++'
++
++set_transport_variables "$daemon_parent"
++
++test_expect_success 'batch-command remote-object-info git://' '
++	(
++		cd "$daemon_parent" &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_sha1
++		remote-object-info "$GIT_DAEMON_URL/parent" $tree_sha1
++		remote-object-info "$GIT_DAEMON_URL/parent" $commit_sha1
++		remote-object-info "$GIT_DAEMON_URL/parent" $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info git:// multiple sha1 per line' '
++	(
++		cd "$daemon_parent" &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_sha1 $tree_sha1 $commit_sha1 $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info http:// default filter' '
++	(
++		cd "$daemon_parent" &&
++
++		echo "$hello_sha1 blob $hello_size" >expect &&
++		echo "$tree_sha1 tree $tree_size" >>expect &&
++		echo "$commit_sha1 commit $commit_size" >>expect &&
++		echo "$tag_sha1 tag $tag_size" >>expect &&
++		GIT_TRACE_PACKET=1 git cat-file --batch-command >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_sha1 $tree_sha1
++		remote-object-info "$GIT_DAEMON_URL/parent" $commit_sha1 $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command --buffer remote-object-info git://' '
++	(
++		cd "$daemon_parent" &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++		git cat-file --batch-command="%(objectname) %(objectsize)" --buffer >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_sha1 $tree_sha1
++		remote-object-info "$GIT_DAEMON_URL/parent" $commit_sha1 $tag_sha1
++		flush
++		EOF
++		test_cmp expect actual
++	)
++'
++
++stop_git_daemon
++
++# Test --batch-command remote-object-info with 'http://' transport
++
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'create repo to be served by http:// transport' '
++	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config http.receivepack true &&
++	echo_without_newline "$hello_content" > $HTTPD_DOCUMENT_ROOT_PATH/http_parent/hello &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" update-index --add hello
++'
++set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent"
++
++test_expect_success 'batch-command remote-object-info http://' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_sha1
++		remote-object-info "$HTTPD_URL/smart/http_parent" $tree_sha1
++		remote-object-info "$HTTPD_URL/smart/http_parent" $commit_sha1
++		remote-object-info "$HTTPD_URL/smart/http_parent" $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info http:// one line' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_sha1 $tree_sha1 $commit_sha1 $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command --buffer remote-object-info http://' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" --buffer >actual <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_sha1 $tree_sha1
++		remote-object-info "$HTTPD_URL/smart/http_parent" $commit_sha1 $tag_sha1
++		flush
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info http:// default filter' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		echo "$hello_sha1 blob $hello_size" >expect &&
++		echo "$tree_sha1 tree $tree_size" >>expect &&
++		echo "$commit_sha1 commit $commit_size" >>expect &&
++		echo "$tag_sha1 tag $tag_size" >>expect &&
++
++		git cat-file --batch-command >actual <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_sha1 $tree_sha1
++		remote-object-info "$HTTPD_URL/smart/http_parent" $commit_sha1 $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'remote-object-info fails on unspported filter option (objectsize:disk)' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git cat-file --batch-command="%(objectsize:disk)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_sha1
++		EOF
++		test_i18ngrep "objectsize:disk is currently not supported with remote-object-info" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on unspported filter option (deltabase)' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git cat-file --batch-command="%(deltabase)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_sha1
++		EOF
++		test_i18ngrep "deltabase is currently not supported with remote-object-info" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on server with legacy protocol' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git -c protocol.version=0 cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_sha1
++		EOF
++		test_i18ngrep "object-info requires protocol v2" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on server with legacy protocol fallback' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git -c protocol.version=0 cat-file --batch-command 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_sha1
++		EOF
++		test_i18ngrep "object-info requires protocol v2" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on malformed OID' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		malformed_object_id="this_id_is_not_valid" &&
++
++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $malformed_object_id
++		EOF
++		test_i18ngrep "malformed object id '$malformed_object_id'" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on malformed OID fallback' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		malformed_object_id="this_id_is_not_valid" &&
++
++		test_must_fail git cat-file --batch-command 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $malformed_object_id
++		EOF
++		test_i18ngrep "malformed object id '$malformed_object_id'" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on missing OID' '
++	git clone "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" missing_oid_repo &&
++	test_commit -C missing_oid_repo message1 c.txt &&
++	(
++		cd missing_oid_repo &&
++		object_id=$(git rev-parse message1:c.txt) &&
++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $object_id
++		EOF
++		test_i18ngrep "object-info: not our ref $object_id" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on missing OID fallback' '
++	(
++		cd missing_oid_repo &&
++		object_id=$(git rev-parse message1:c.txt) &&
++		test_must_fail git cat-file --batch-command 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $object_id
++		EOF
++		test_i18ngrep "fatal: remote error: upload-pack: not our ref $object_id" err
++	)
++'
++
++# Test --batch-command remote-object-info with 'file://' transport
++
++test_expect_success 'create repo to be served by file:// transport' '
++	git init server &&
++	git -C server config protocol.version 2 &&
++	echo_without_newline "$hello_content" > server/hello &&
++	git -C server update-index --add hello
++'
++
++set_transport_variables "server"
++
++test_expect_success 'batch-command remote-object-info file://' '
++	(
++		cd server &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "file://$(pwd)" $hello_sha1
++		remote-object-info "file://$(pwd)" $tree_sha1
++		remote-object-info "file://$(pwd)" $commit_sha1
++		remote-object-info "file://$(pwd)" $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info file:// multiple sha1 per line' '
++	(
++		cd server &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "file://$(pwd)" $hello_sha1 $tree_sha1 $commit_sha1 $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command --buffer remote-object-info file://' '
++	(
++		cd server &&
++
++		echo "$hello_sha1 $hello_size" >expect &&
++		echo "$tree_sha1 $tree_size" >>expect &&
++		echo "$commit_sha1 $commit_size" >>expect &&
++		echo "$tag_sha1 $tag_size" >>expect &&
++		git cat-file --batch-command="%(objectname) %(objectsize)" --buffer >actual <<-EOF &&
++		remote-object-info "file://$(pwd)" $hello_sha1 $tree_sha1
++		remote-object-info "file://$(pwd)" $commit_sha1 $tag_sha1
++		flush
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info file:// default filter' '
++	(
++		cd server &&
++
++		echo "$hello_sha1 blob $hello_size" >expect &&
++		echo "$tree_sha1 tree $tree_size" >>expect &&
++		echo "$commit_sha1 commit $commit_size" >>expect &&
++		echo "$tag_sha1 tag $tag_size" >>expect &&
++		git cat-file --batch-command >actual <<-EOF &&
++		remote-object-info "file://$(pwd)" $hello_sha1 $tree_sha1
++		remote-object-info "file://$(pwd)" $commit_sha1 $tag_sha1
++		EOF
++		test_cmp expect actual
++	)
++'
++
+ test_done
+-- 
 2.37.1.455.g008518b4e5-goog
 
