@@ -2,103 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0449C04A68
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 19:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A9EDC04A68
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 19:49:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbiG1TcU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 15:32:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53692 "EHLO
+        id S230483AbiG1TtJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 15:49:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbiG1TcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 15:32:18 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BC0C5A2E6
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 12:32:17 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C9ADC19DC3C;
-        Thu, 28 Jul 2022 15:32:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Fr8J2p7uBfCSOi4m32Ml7bcUR8KBkCugKH5z0h
-        AYKwg=; b=oU9snUIhPIARYZgR2TutxWhOo/ybuK5+4KyRgfoaUdE8bytjCMExKG
-        8+z1wcGp5ienNQzeZtO1sDS6Z7Bh94RLrXrS6ES5n4ViwlTf6fi9f8S8RrqOpQT0
-        OtXmBwMYLRAoi/ERQfBQgxByxUemFgPFyCQUWPK6Zm38KyOKJGBVs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C14B019DC39;
-        Thu, 28 Jul 2022 15:32:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 59E4219DC38;
-        Thu, 28 Jul 2022 15:32:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
-        git <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v6 0/4] Add support for mailmap in cat-file
-References: <20220716074055.1786231-1-siddharthasthana31@gmail.com>
-        <20220718195102.66321-1-siddharthasthana31@gmail.com>
-        <xmqqpmht3tq1.fsf@gitster.g>
-        <CAP8UFD0U8hQ+gyN1=7M4oYEhX6=z_1LS4JaLjqdPG52BELRqtg@mail.gmail.com>
-Date:   Thu, 28 Jul 2022 12:32:12 -0700
-In-Reply-To: <CAP8UFD0U8hQ+gyN1=7M4oYEhX6=z_1LS4JaLjqdPG52BELRqtg@mail.gmail.com>
-        (Christian Couder's message of "Thu, 28 Jul 2022 21:07:28 +0200")
-Message-ID: <xmqqh731av9f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229458AbiG1TtH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 15:49:07 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35831B7BE
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 12:49:05 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id e15so3460964edj.2
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 12:49:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc;
+        bh=wtb5cKEbk4enr3onXGm1wObrLOXs+BYJTYbISCQSkzc=;
+        b=lUET6OLTbyjwJKc4XkGf1IwXKtQGlWRErT0BBn3a+x4XmmXwc36PpXnN1M4zDrC4fL
+         qsjI4oasSzndn+fbtxYO4uMr3JbvoryeSgKgKWS7zDUfDCWztuADX6h+45CVhIQW1rXd
+         a1YepQTkl/J6dtBa/I84NoGzluluZwnZHQU03d+1e6U3/ivW4XqcRBUgOB7mBfQAhvLx
+         DkvQVcttq2+kwQHGG2D4wvLjTrh+FFmyD+izAe8tzEHSPw5SlpNbeoXusKdpaOOukze3
+         lNu8RakB7c3Mr2Jf352s7xEWDKMP4H0Dgcn6wXezVIVjgOK2iQj5mmknEBMpBaYePi4O
+         78/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc;
+        bh=wtb5cKEbk4enr3onXGm1wObrLOXs+BYJTYbISCQSkzc=;
+        b=ilnrMoxah+sPuLShjhT1xJJIr40cfDXTnKJdezIJcSGZs/mGKe/tOVoLGDyUXgKpU8
+         YgMKPKmdbNqEEQB1qUGOiwJejv3wMoT0tXfz79R6dDQqcFV1urCcQZLVx5JVFhAPt512
+         bB4Z2Hdu3uxV+urB8vpCfwVGUXs8WP00iOn0qd99Zix1lY/vLJfkVRdZJuG+JgJmqTNR
+         4e7UDmf0dqUrtFgBpeTrcg3vS62IHqMZsz9NIVqq1g42VrGVl2SC8Mm31RbjusjjibOs
+         7Clzg4By+TX4wvkGp32dTSqobMVlTwTcgvSTCUsHY1qyelniufmPwzlLdHQFFqN0S/w4
+         0p6g==
+X-Gm-Message-State: AJIora+R2CV1VBMZKZmnEzg1Fu4TjPnfZz/4C91PHUItq69oiwbfOBMy
+        IRrb3uPn2tJAZgtzYAZfrE0=
+X-Google-Smtp-Source: AGRyM1tvkXP+NN7inc6D02UBTlk+kdJY9BM+6HcYsP/vThZlIECzruRZZTAIbDr8nCp3B8bQI0LUkg==
+X-Received: by 2002:a05:6402:1e8f:b0:43a:ddfc:5c4e with SMTP id f15-20020a0564021e8f00b0043addfc5c4emr516109edf.358.1659037744143;
+        Thu, 28 Jul 2022 12:49:04 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id f11-20020a170906560b00b0072b2eab813fsm747977ejq.75.2022.07.28.12.49.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Jul 2022 12:49:03 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1oH9VG-007EPe-5M;
+        Thu, 28 Jul 2022 21:49:02 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eugen Konkov <kes-kes@yandex.ru>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Re* --creation-factor=100 does not show code
+Date:   Thu, 28 Jul 2022 21:46:49 +0200
+References: <1196830250.20220726145447@yandex.ru>
+ <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr>
+ <xmqqo7x9ch7n.fsf_-_@gitster.g>
+ <220728.86k07xjh11.gmgdl@evledraar.gmail.com> <xmqqwnbxb092.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqwnbxb092.fsf@gitster.g>
+Message-ID: <220728.86fsilj9w1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FB221218-0EAB-11ED-BC23-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
 
-> On Mon, Jul 25, 2022 at 8:58 PM Junio C Hamano <gitster@pobox.com> wrote:
->> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
->>
->> > Changes in v6:
->> > - The function rewrite_ident_line() returns the difference between the
->> >   new and the old length of the ident line. We were not using this
->> >   information and instead parsing the buffer again to look for the line
->> >   ending. This patch set starts using that information to update the
->> >   buf_offset value in commit_rewrite_person().
->> > - This patch set also tweaks the commit_rewrite_person() so that it is
->> >   easier to understand and avoids unnecessary parsing of the buffer
->> >   wherever possible.
->> >
->> > Siddharth Asthana (4):
->> >   revision: improve commit_rewrite_person()
->> >   ident: move commit_rewrite_person() to ident.c
->> >   ident: rename commit_rewrite_person() to apply_mailmap_to_header()
->> >   cat-file: add mailmap support
->> >
->> >  Documentation/git-cat-file.txt |  6 +++
->> >  builtin/cat-file.c             | 43 +++++++++++++++++++-
->> >  cache.h                        |  6 +++
->> >  ident.c                        | 74 ++++++++++++++++++++++++++++++++++
->> >  revision.c                     | 50 ++---------------------
->> >  t/t4203-mailmap.sh             | 59 +++++++++++++++++++++++++++
->> >  6 files changed, 190 insertions(+), 48 deletions(-)
->>
->> I haven't seen any comments or objections to this round.  Are people
->> happy about it going forward?  I am planning to merge it to 'next'
->> and down to 'master' soonish.
+On Thu, Jul 28 2022, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> I am biased, but I am happy with the current state of this patch
-> series. During the last versions of this patch series there were only
-> comments related to the first patch in the series (revision: improve
-> commit_rewrite_person()). It seems to me that they were all properly
-> taken into account, and that the code in that patch is now correct and
-> relatively simple to understand.
+>> That algorithm section also says:
+>>
+>> 	The cost of an edge o--C is the size of C's diff, modified by a
+>> 	fudge factor that should be smaller than 100%.
+>>
+>> Which I find quite confusing to follow, isn't that "fudge factor" the
+>> <percent> (or <factor>) we're accepting with --creation-factor? Doesn't
+>> that also need to be adjusted?
+>>
+>> I still find this documentation quicke lacking, if the default is 60 and
+>> it's not 0..100 what is it then? Are values of 200 sensible in some
+>> cases, 1k? 10k?
+>
+> I think 90% of your responses are better answered not by me.  Feel
+> free to edit "to:" header field when that happens next time ;-)
 
-Thanks, let's move it forward.
+It's a comment on your patch: If you're updating the <percent> early in
+the doc, shouldn't the proposed update also update the wording later on
+to refer to "factor?"
+
