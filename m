@@ -2,87 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E47A6C04A68
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 17:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 909C2C04A68
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 17:50:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232739AbiG1Rop (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 13:44:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50876 "EHLO
+        id S232808AbiG1Ruy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 13:50:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232576AbiG1Roo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 13:44:44 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7F5F74CC3
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 10:44:43 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 24F05197C81;
-        Thu, 28 Jul 2022 13:44:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=zunAqVFPTjiZ2gEIsyTRhr2cYOlsvLGi85LRn8SHulg=; b=yc7F
-        2qWXgxJD4I1k6eRKfri5o/cRenzwnOfNoTYDqtD7si924DfHzgb3ORvGKvjq2gjA
-        oqQs5wxgN6SpPswkTI9FyBaP10ks03NqEY0QVzRS6OPIbKz1rjScKQWETKxEKj46
-        0pGsVy0Ln0dJmcpHcswIyAeiYm/VukxtDG5zsWo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 10072197C80;
-        Thu, 28 Jul 2022 13:44:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6B62A197C7E;
-        Thu, 28 Jul 2022 13:44:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Justin Donnelly <justinrdonnelly@gmail.com>
-Cc:     Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] git-prompt: show 'CONFLICT' indicator at command prompt
-References: <pull.1302.git.1658798595633.gitgitgadget@gmail.com>
-        <xmqq35ems49j.fsf@gitster.g>
-        <CAGTqyRzfeh4HLbXUCb3Zv=bWNoBmvBU5QB=N2g2d0=y+NEToag@mail.gmail.com>
-Date:   Thu, 28 Jul 2022 10:44:38 -0700
-Message-ID: <xmqqpmhpb08p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232697AbiG1Ruy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 13:50:54 -0400
+Received: from impout007.msg.chrl.nc.charter.net (impout007aa.msg.chrl.nc.charter.net [47.43.20.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B1AC18E1B
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 10:50:52 -0700 (PDT)
+Received: from localhost.localdomain ([97.71.114.58])
+        by cmsmtp with ESMTPA
+        id H7epo19N2oB69H7etouzat; Thu, 28 Jul 2022 17:50:52 +0000
+Authentication-Results: sunshineco.com; none
+X-Authority-Analysis: v=2.4 cv=Kf3BDCUD c=1 sm=1 tr=0 ts=62e2cc7c
+ a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
+ a=VwQbUJbxAAAA:8 a=rP6RehhB1vzViJ0LBHQA:9 a=jYKBPJSq9nmHKCndOPe9:22
+ a=AjGcO6oz07-iQ99wixmX:22
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eugen Konkov <kes-kes@yandex.ru>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] format-patch: clarify --creation-factor=<factor>
+Date:   Thu, 28 Jul 2022 13:49:53 -0400
+Message-Id: <20220728174953.66964-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.37.1.550.gb06344481a
+In-Reply-To: <xmqqo7x9ch7n.fsf_-_@gitster.g>
+References: <xmqqo7x9ch7n.fsf_-_@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F44A4438-0E9C-11ED-95D0-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfCntSXajsPrlA+NVMVWO8cpXwJETs4ZsIX7cFHVfHYUusibmVUZh29NZc1BgkCzsagw+1j+RFp6rhTVNA4n8s0jRQQEh4JZeonJKGudedGBLIiyNpGjC
+ e69qYwXdDG6b1wh2K41ZAQDpgd135utUP8oCTIj5tEbbwUDPt5jhlQIpTVdZDrjN0hJdeDmCO9ysUki/Av9coKofM1fcIHkw7CHnpg76ZM2dO3x5XyGya57L
+ 6zv0SLg18ej4AVY5h1RJOqUFA6tN5v67F3+7dWkU/OVts5euiHbvCr/q6HqmwxjeOtjcPHBMxd2s+IZg4oWUFI2mL0gyIQ75RFFEEcf70PGMwQWTrDtD6gXa
+ HVSnyL2h
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Justin Donnelly <justinrdonnelly@gmail.com> writes:
+The value is not a percentage that ranges from 0 to 100, so stop
+referring to it as `percent`; instead follow the lead of the `git
+range-diff` documentation and call it `factor`.
 
->> It is unusual to subject our unsuspecting users to new features in a
->> way that is done by this patch.  A more usual practice, I think, is
->> to tell the users that they can set GIT_PS1_INCLUDECONFLICTSTATE to
->> "yes" if they want to opt in, and trigger the new feature only to
->> them.  Later, we may decide that the feature is useful and widely
->> apprlicable enough, at which time it may be turned on by default and
->> tell the users to set GIT_PS1_INCLUDECONFLICTSTATE to "no" if they
->> do not want to see it.  But one step at a time.
->>
->
-> I see that most of the state indicators are disabled by default, so it
-> makes sense to be consistent. Should I make a variable with 'yes'/'no'
-> values, or set/unset? 'yes'/'no' has the benefit that if the default
-> is later changed, existing setups will continue to work. Set/unset
-> makes it harder to change the default later ...
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
-As you said, "an environment variable that is set triggers the
-feature" is harder to transition.  Starting from a clear Boolean is
-probably easy to see what is going on, and that is why I suggested
-doing that way.  
+This is a sibling to Junio's patch[1].
 
-Ones that are "if set, enabled" can be corrected later when needed,
-e.g. GIT_PS1_FROTZ may enable the feature FROTZ when the environment
-is set, but when we introduce two or more ways to do FROTZ thing
-(e.g. in addition to always do FROTZ, which may be the original
-design of "an environment that is set triggers the feature", we may
-add "automatically enable FROTZ only under this and that
-condition"), we may say "when set to 'auto', do the auto-FROTZ, and
-when set to 'yes', do FROTZ as we have always done.  When set to any
-other value, warn and then do FROTZ").  But let's leave them outside
-the scope of the topic.
+[1]: https://lore.kernel.org/git/xmqqo7x9ch7n.fsf_-_@gitster.g/
+
+ Documentation/git-format-patch.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index be797d7a28..e06475abcd 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -27,7 +27,7 @@ SYNOPSIS
+ 		   [--[no-]encode-email-headers]
+ 		   [--no-notes | --notes[=<ref>]]
+ 		   [--interdiff=<previous>]
+-		   [--range-diff=<previous> [--creation-factor=<percent>]]
++		   [--range-diff=<previous> [--creation-factor=<factor>]]
+ 		   [--filename-max-length=<n>]
+ 		   [--progress]
+ 		   [<common diff options>]
+@@ -321,7 +321,7 @@ product of `format-patch` is generated, and they are not passed to
+ the underlying `range-diff` machinery used to generate the cover-letter
+ material (this may change in the future).
+ 
+---creation-factor=<percent>::
++--creation-factor=<factor>::
+ 	Used with `--range-diff`, tweak the heuristic which matches up commits
+ 	between the previous and current series of patches by adjusting the
+ 	creation/deletion cost fudge factor. See linkgit:git-range-diff[1])
+-- 
+2.37.1.550.gb06344481a
 
