@@ -2,151 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A830C04A68
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 17:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A38B2C04A68
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 17:29:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231277AbiG1RO6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 13:14:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54756 "EHLO
+        id S229878AbiG1R3v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 13:29:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229806AbiG1RO5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 13:14:57 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2D3E61DBA
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 10:14:53 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id os14so4262183ejb.4
-        for <git@vger.kernel.org>; Thu, 28 Jul 2022 10:14:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc;
-        bh=v5FVTAXqa+JLcjF2fOMP23lb6hai46PtleQcFl6/dSo=;
-        b=VHl6JbYnJ6RngV1ESw3FjgVN7k+/dED//2XWY6wAPx4OCSXiTOwMyNni4cQKAIkDIr
-         xfeQ3RL2M5j/GBQcl294r428NScAiwB6/Yy1b9PlOVqvhohWc926/7Y+zThFxsBmJ/tP
-         kctmKA4/8VxaAQwzRn/X+cZlOOdEIG+SupyhVTiZ1rHm5K/JsMMXjzkGDtkNsyKXk1Iu
-         fhnYCLtNxGJ7GBUqq47Zb8WFdWg7ikc8YhbIU7JzRBR8R8UWRQUuKqnNkcYzxZJ5wlKU
-         QWyTfnqDS2Q8plHEopY2oANpgTQsGvfI7a9D1IFDcfQz3DVZPvgAv4C/RUU3nAmXyQt3
-         NoXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=v5FVTAXqa+JLcjF2fOMP23lb6hai46PtleQcFl6/dSo=;
-        b=v5sLgQzqx4cupciqs7gkOP2zE1Iu8SS28rmPzMxxcOHBHk+ZTTyAxr4ZG4Bvbbz7N6
-         Kkq14Oqt/gw9bVPqFuXXZoi7GRYyRlnZonKavzI9/5QaYpw/J/ApzZlvtZKcUyyDn5CE
-         BSUAt0IgYc19H4jpuWr98lrTaTSkqADIhftiit870z1nE+HfjJv4bWtqQ6ZKYB3BVxoQ
-         s7ndiGU/EFrIcmWn11nKUc5Ao9bpUcKSo1vDJA0dVZp11RPcWrUwKDDNXkKiYDvIMUCw
-         0VzlVGh6T9pKisox/ryo39SCpn+SkIGZmyrArLIVHOzl2vqax+wjuJJfdYq4p8U0+Rv9
-         UaOA==
-X-Gm-Message-State: AJIora8iJj9jjarWcdzwzse//PX9yZ4jskyOY89DvRrGnLJVsPsjiHyL
-        pnVi02lTW3Xr2uw58j5+42c=
-X-Google-Smtp-Source: AGRyM1szriF1H9G/aeZM8Q9cN1Ur6JLsAUke6ZQ3hWqNUOGJ+mJ/yK1kJLU25CKiAo/TgxLNW/XGdQ==
-X-Received: by 2002:a17:907:2ce9:b0:72b:30e5:f1bc with SMTP id hz9-20020a1709072ce900b0072b30e5f1bcmr21684527ejc.127.1659028491834;
-        Thu, 28 Jul 2022 10:14:51 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ek6-20020a056402370600b0043a2b8ab377sm972403edb.88.2022.07.28.10.14.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 10:14:50 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1oH762-007C4o-4I;
-        Thu, 28 Jul 2022 19:14:50 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eugen Konkov <kes-kes@yandex.ru>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Re* --creation-factor=100 does not show code
-Date:   Thu, 28 Jul 2022 19:12:45 +0200
-References: <1196830250.20220726145447@yandex.ru>
- <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr>
- <xmqqo7x9ch7n.fsf_-_@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqo7x9ch7n.fsf_-_@gitster.g>
-Message-ID: <220728.86k07xjh11.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229447AbiG1R3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 13:29:50 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69FB354AC4
+        for <git@vger.kernel.org>; Thu, 28 Jul 2022 10:29:49 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C0A9314D588;
+        Thu, 28 Jul 2022 13:29:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=n/ICOl/da7HPTqKiUgaPTyjLKMdXDXmhBQMNva
+        ChIA4=; b=sLm90EJD99z7Ue9AONA76G0Xq3x9HhORubEZIsIKaN6WfD6M8x4e0k
+        ly4ZSO8Qm8SHqphR56O6L1RwpwjlU6dy1SWnXxy3/QSsShbyjWl6weji3xi+Z+F5
+        SoHrBlVAduVThD9/UXoQAOsHaDCnjOrrLPjFiKov5Yn4MkG7zxiVg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B704A14D587;
+        Thu, 28 Jul 2022 13:29:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17FE214D586;
+        Thu, 28 Jul 2022 13:29:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] mingw: include the Python parts in the build
+References: <pull.1306.git.1659016906707.gitgitgadget@gmail.com>
+Date:   Thu, 28 Jul 2022 10:29:46 -0700
+In-Reply-To: <pull.1306.git.1659016906707.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Thu, 28 Jul 2022 14:01:46
+        +0000")
+Message-ID: <xmqqczdpcfhx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: E1026362-0E9A-11ED-8510-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Thu, Jul 28 2022, Junio C Hamano wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> While Git for Windows does not _ship_ Python (in order to save on
+> bandwidth), MSYS2 provides very fine Python interpreters that users can
+> easily take advantage of, by using Git for Windows within its SDK.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> Hi Eugen,
->>
->> On Tue, 26 Jul 2022, Eugen Konkov wrote:
->>
->>> $ git range-diff --creation-factor=100 branch...origin/branch
->>> 1:  a87daecd47 < -:  ---------- Add mocked exchanges for ...::AutoRenew::General test
->>> -:  ---------- > 1:  36eaeb56a9 Add mocked exchanges for ...::AutoRenew::General test
->>> 2:  9594ccf145 = 2:  70681dd13b Remove a call to DB::state
->>> 3:  740903e01c = 3:  5745ae5702 Run cpanm without tests
->>> 4:  e8e6cac09c < -:  ---------- Do not use 'require'
->>>
->>> --creation-factor=101 does =)
->>>
->>> but maximum value for percentage is 100. So expected behaviour is to display range-diff when value 100 was provided
->>
->> Please see https://git-scm.com/docs/git-range-diff#_algorithm for an
->> explanation what the meaning of the factor is, and why 100 is not the
->> maximal sensible value.
->
-> When I had to give a huge value to the option the last time, I think
-> I used --creation-factor=999 or something.  The thing that bugged me
-> in the output of "git range-diff --help" is that SYNOPSIS section
-> has "--creation-factor=<factor>" but the OPTIONS heading says
-> "--creation-factor=<percent>" and the word is used in description as
-> well.
->
-> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
-> Subject: range-diff: clarify --creation-factor=<factor>
->
-> The value is not a per-cent that ranges from 0 to 100.  The SYNOPSIS
-> section gets it right, but the body of the documentation said "percent"
-> which confused readers.
->
-> While we are at it, rephrase "smaller one" that corresponds to
-> "larger value" earlier in the sentence to "smaller value" to be more
-> explicit, to avoid misleading eyes of the readers to an unrelated "a
-> large change" nearby.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-range-diff.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git c/Documentation/git-range-diff.txt w/Documentation/git-range-diff.txt
-> index fe350d7f40..e49630e8ad 100644
-> --- c/Documentation/git-range-diff.txt
-> +++ w/Documentation/git-range-diff.txt
-> @@ -61,11 +61,11 @@ This is known to `range-diff` as "dual coloring". Use `--no-dual-color`
->  to revert to color all lines according to the outer diff markers
->  (and completely ignore the inner diff when it comes to color).
->  
-> ---creation-factor=<percent>::
-> -	Set the creation/deletion cost fudge factor to `<percent>`.
-> +--creation-factor=<factor>::
-> +	Set the creation/deletion cost fudge factor to `<factor>`.
->  	Defaults to 60. Try a larger value if `git range-diff` erroneously
->  	considers a large change a total rewrite (deletion of one commit
-> -	and addition of another), and a smaller one in the reverse case.
-> +	and addition of another), and a smaller value in the reverse case.
->  	See the ``Algorithm`` section below for an explanation why this is
->  	needed.
->  
+It may be an accurate description of the world and there may not be
+anything incorrect in the above statement, but it took quite an
+effort to try matching that statement to what the patch does.
 
-That algorithm section also says:
+I think
 
-	The cost of an edge o--C is the size of C's diff, modified by a
-	fudge factor that should be smaller than 100%.
+    Builds on $uname_S==MINGW by default sets NO_PYTHON=YesPlease
+    and it benefits Git for Windows by allowing to omit Python.
+    However, when "Git for Windows" is used within MSYS2's SDK, we
+    can allow users to take advantage of Python interpreter that
+    comes with it.  Override NO_PYTHON when the presence of
+    ../THIS_IS_MSYSGIT indicates that we are in that situation.
 
-Which I find quite confusing to follow, isn't that "fudge factor" the
-<percent> (or <factor>) we're accepting with --creation-factor? Doesn't
-that also need to be adjusted?
+is how the logic in this patch can be explained, but I have to
+wonder if a more natural and easier-to-understand solution is to
+move NO_PYTHON=YesPlease into "if we do not have ../THIS_IS_MSYSGIT,
+do these things" ifneq() block, like the attached patch.
 
-I still find this documentation quicke lacking, if the default is 60 and
-it's not 0..100 what is it then? Are values of 200 sensible in some
-cases, 1k? 10k?
+I didn't touch it but NO_GETTEXT does not appear in the common
+section above "do we have ../THIS_IS_MSYSGIT?", and gets set 
+after "we do not have ../THIS_IS_MSYSGIT", so I do not think
+we need "NO_GETTEXT = " that clears it in the "we do have
+../THIS_IS_MSYSGIT" part.  We may want to see if there are other
+things that needs cleaning up around this area.
+
+ config.mak.uname | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git i/config.mak.uname w/config.mak.uname
+index ce83cad47a..999a7ae270 100644
+--- i/config.mak.uname
++++ w/config.mak.uname
+@@ -656,7 +656,6 @@ ifeq ($(uname_S),MINGW)
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+ 	NO_REGEX = YesPlease
+-	NO_PYTHON = YesPlease
+ 	ETAGS_TARGET = ETAGS
+ 	NO_POSIX_GOODIES = UnfortunatelyYes
+ 	DEFAULT_HELP_FORMAT = html
+@@ -686,6 +685,7 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+ 	INTERNAL_QSORT = YesPlease
+ 	HAVE_LIBCHARSET_H = YesPlease
+ 	NO_GETTEXT = YesPlease
++	NO_PYTHON = YesPlease
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS
+ else
+ 	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
