@@ -2,124 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E554C04A68
-	for <git@archiver.kernel.org>; Wed, 27 Jul 2022 23:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5215FC04A68
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 00:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232259AbiG0XOf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jul 2022 19:14:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42392 "EHLO
+        id S234159AbiG1Alu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jul 2022 20:41:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233576AbiG0XON (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jul 2022 19:14:13 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D9EA4F663
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:07 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id v5so92707wmj.0
-        for <git@vger.kernel.org>; Wed, 27 Jul 2022 16:14:07 -0700 (PDT)
+        with ESMTP id S229898AbiG1Als (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jul 2022 20:41:48 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207425466B
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 17:41:47 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id f14so514103qkm.0
+        for <git@vger.kernel.org>; Wed, 27 Jul 2022 17:41:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=4tk6gYIST59lKaFZjp2IBbYUQDw456zXvSPFm2b3aU0=;
-        b=NruTjVWqYtairGkyZdXM8Oj/NYK7zDQ6O+b3btE2sHb9NrNuN34b7A2lQdWOAo3WVl
-         0YPBekKK0nf8GgUVKJflphVGvZhebmqGSNYMh2vUCQk9QGOniMLRO2SmBjwb81eO7qaN
-         kv4RQYt6IJQTPubQWoP4MaMD9JLhmUWebQT5cYw4EWgtjmMW8Gzujlmex0eP3MFOme9W
-         If8DZU7YluuHkot1TW29mGPaxMPac6gFsggqkQtZaKOTSRz1oA/2/azsAAE6JnYrnAh/
-         1VYmS4JEfqPGpYT3chZbBbERrzbjhk1K8xX1/HXRA6URlmqXJxJg2k7tZ1+8qRn0ruqR
-         7cOQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y9mZeSTndS/OYh2274vXnwkl4tFxph+nJrxH7zaYTUA=;
+        b=EsqHJzexGizydRWNiPaghH/1z/XmyQUR9NE6BKWdZHRoe3BAiJpLEfRdEOmGiAgyTK
+         0aJQ3KawI41t2Gdsq5sM6orhz7u0pC0A5aYMbpeByVCL18L+4a0+boC8yw3OOwm89Ipv
+         +Yhs+mR2DoyD84sGPuE88NFmx/M1nDCr/NUFCoiyWfDmFEUPwIKSWop3Lq3ExbF6aunx
+         0pbUsSlliZTBzD7yaAxcgmA5YUF+3h1YY3z629KlrlcUtnACth3uVjzJhzPvd9eiEJfq
+         UJmnyW95Uu1+Sx5c186xTo8UYzsoxX74cQzaYZpuJe9r6bkRKf6utffdGdeyvbc8TT1p
+         Xuwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=4tk6gYIST59lKaFZjp2IBbYUQDw456zXvSPFm2b3aU0=;
-        b=smIfX6740U//UhMerSQPdzZl1REuc9jR8szBinukdpU3NdNetuMlsR6XfpLh4vfAJ+
-         yJrGUSxD+Ez6BfFTDT0DR8YfYHIXFzi0S5FVCxdz40hpZO9/Ps7rGFOgZ2XqXtZFCW3x
-         6lUAS3sRFD4kdQ5p3kmag2py8XC3G9kilQ1rr5hFS4yixqJ1nBYSj0oxUVo/xA8dL2qs
-         0+/m0+Nwh4LWUfnLVdFwwk231U6NFCxXcmVlhGmd15gg8nyK/n5DUFwCXj7kYReJJbN3
-         lEQ+d5w5wwAz0Yh5ixasMPOJ9erpXszpWmY/JyjW9SNLUfJ14gf64QbfenfPWDm3lXiY
-         GjxA==
-X-Gm-Message-State: AJIora9pa/6W0TtoPqMZVeL+mQbgWSj+OIFMqUXKnFyhPltkFaqgDmg9
-        6WfUnjmR2M4qGXEu4lx+vmgGswWMMMy73Q==
-X-Google-Smtp-Source: AGRyM1s2wIUDLkD7EHBU3PkJLclwRoZgo7foKYLgNd3wbRiR+CsM6dk93bIj5qJCwEDU7nz8wVgiPg==
-X-Received: by 2002:a7b:ca47:0:b0:3a3:1874:648 with SMTP id m7-20020a7bca47000000b003a318740648mr4526999wml.139.1658963645456;
-        Wed, 27 Jul 2022 16:14:05 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z3-20020adfec83000000b0021dd08ad8d7sm1692806wrn.46.2022.07.27.16.14.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 16:14:04 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 14/15] upload-pack: fix a memory leak in create_pack_file()
-Date:   Thu, 28 Jul 2022 01:13:42 +0200
-Message-Id: <patch-v3-14.15-c1436269c64-20220727T230800Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.37.1.1127.g4ecf1c08f67
-In-Reply-To: <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
-References: <cover-v2-00.14-00000000000-20220720T211221Z-avarab@gmail.com> <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y9mZeSTndS/OYh2274vXnwkl4tFxph+nJrxH7zaYTUA=;
+        b=Yju0JyVl1zGQ+5vcIZaqjuDgz94EM/4uMP+q+S86RnAk3/5LHTFFhBqwje34QyrA6L
+         zrlF8UuNW0Px53T3tPu2UFXEngDafe/H9QlqHwVog6n7bZnldW2Qgswb+jOxqKgeel/U
+         Kk5F5v1/ahyVETsVaVXbmfeQwxI3hyOKbSXkYi9i6RBZLTfqX5RRubnEH7kVX1iH8F/l
+         ixnUzxnLqaw28Ux4GUtopYX3bAWq/Vn/G2vsdqxAf70oJnfiY/rGGpYtV/22toSfUoWG
+         jHbLwpElVdgOOBj3/MoB+2Td1JKEOt9GQIuUSlT0qq0RIWaBrn/akLKMplDEyRLwM2In
+         XiNA==
+X-Gm-Message-State: AJIora+gYBt1c7gkFD7k5F+fv1DDGQHX/lEmX0UJN3o6XAz5XsYCBph8
+        73wFrEwSDW01ZjCB2gaX0N9NWlg3D1nMkOAf0ug=
+X-Google-Smtp-Source: AGRyM1twLTljuLZFvHZwVvEdPN66fojMir2neWaZPO5t1sYmNTItMVIhn7xPMowe5Rg/4K0lEAFE5VwCLKAoy1+xoQU=
+X-Received: by 2002:a05:620a:741:b0:6b5:ee4f:35e8 with SMTP id
+ i1-20020a05620a074100b006b5ee4f35e8mr18244628qki.131.1658968905937; Wed, 27
+ Jul 2022 17:41:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20220718214349.3379328-1-calvinwan@google.com>
+ <20220726210020.3397249-1-calvinwan@google.com> <CABPp-BGvDLvmj720PFzsjrZrYuYauprL6JeOQhiQ4BjtfjF7Dg@mail.gmail.com>
+ <CAFySSZB6bB0qqCv5EPmJBJY9RbDRFv8JDYj89W+ND_Jw6Ys1kA@mail.gmail.com>
+In-Reply-To: <CAFySSZB6bB0qqCv5EPmJBJY9RbDRFv8JDYj89W+ND_Jw6Ys1kA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 27 Jul 2022 17:41:34 -0700
+Message-ID: <CABPp-BF2O9mT4tX-1PuNmNvQwN8S_OmMz-Y8_yCu7tmVO_ZJmA@mail.gmail.com>
+Subject: Re: [PATCH v6] submodule merge: update conflict error message
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak that's been reported by some versions of "gcc" since
-"output_state" became malloc'd in 55a9651d26a (upload-pack.c: increase
-output buffer size, 2021-12-14).
+Hi,
 
-In e75d2f7f734 (revisions API: have release_revisions() release
-"filter", 2022-04-13) it was correctly marked as leak-free, the only
-path through this function that doesn't reach the free(output_state)
-is if we "goto fail", and that will invoke "die()".
+On Wed, Jul 27, 2022 at 3:00 PM Calvin Wan <calvinwan@google.com> wrote:
+[...]
+> > Sorry for not catching this in an earlier round, but merge_submodule()
+> > has four "return 0" cases, for particular types of conflicts.  Those
+> > should probably be switched to "goto cleanup" or something like that,
+> > so that these messages you are adding are also provided if one of
+> > those conflict cases are hit.
+>
+> I didn't send these four "return 0" cases to cleanup because I thought
+> the error message wouldn't accurately reflect the resolution steps. Is
+> merging or updating the submodule still the correct resolution? The
+> first three cases are for a null o/a/b, and the fourth case is for a missing
+> local submodule. Also in cleanup, the subrepo is cleared but the
+> subrepo hasn't been initialized/failed to initialize in these four cases.
 
-Such leaks are not included with SANITIZE=leak (but e.g. valgrind will
-still report them), but under some gcc optimization (I have not been
-able to reproduce it with "clang") we'll report a leak here
-anyway. E.g. gcc v12 with "-O2" and above will trigger it, but not
-clang v13 with any "-On".
+Ah, I remember we partially discussed this earlier in this thread;
+sorry for forgetting.
 
-The GitHub CI would also run into this leak if the "linux-leaks" job
-was made to run with "GIT_TEST_SANITIZE_LEAK_LOG=true".
+For the failed to initialize case, yes we also need a merge -- the
+submodule is conflicted due to the lack of one.  The steps the user
+needs to take are probably even more involved, though (they also need
+to initialize the submodule), so perhaps that one should be special
+cased.
 
-See [1] for a past case where gcc had similar trouble analyzing leaks
-involving a die() invocation in the function.
+The 'a' or 'b' being a null oid is actually dead code, as discussed
+earlier in the thread.  Perhaps we should change those two code paths
+from "return 0" to 'BUG("submodule deleted on one side; this should be
+handled outside of merge_submodule()")', and possibly with a commit
+message linking to
+https://lore.kernel.org/git/CABPp-BE0qGwUy80dmVszkJQ+tcpfLRW0OZyErymzhZ9+HWY1mw@mail.gmail.com/
+(and mentioning the "a and b being null oids within merge_submodule
+will never trigger" portion of that email).
 
-1. https://lore.kernel.org/git/patch-v3-5.6-9a44204c4c9-20211022T175227Z-avarab@gmail.com/
+The 'o' being a null oid is not dead code.  That particular case means
+that there was no submodule in the merge base, but both sides of the
+merge introduced the submodule and have it checked out to different
+oids.  (At least, hopefully it's the same submodule.)  In that case,
+yes we do need some kind of merge.  So I think your message should
+probably be included in this case, as-is.  Since the cleanup thing you
+mention is an issue, perhaps you need to refactor the code a bit so
+that you can make this case somehow get the same message printed for
+users?
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t1060-object-corruption.sh | 1 +
- upload-pack.c                | 1 +
- 2 files changed, 2 insertions(+)
+All that said, if you want to defer any or all of this to a follow-on
+series, that's fine...but it would be nice to have it mentioned in the
+commit message.
 
-diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
-index e8a58b15897..5b8e47e346c 100755
---- a/t/t1060-object-corruption.sh
-+++ b/t/t1060-object-corruption.sh
-@@ -2,6 +2,7 @@
- 
- test_description='see how we handle various forms of corruption'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # convert "1234abcd" to ".git/objects/12/34abcd"
-diff --git a/upload-pack.c b/upload-pack.c
-index 09f48317b02..b217a1f469e 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -455,6 +455,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 	return;
- 
-  fail:
-+	free(output_state);
- 	send_client_data(3, abort_msg, sizeof(abort_msg),
- 			 pack_data->use_sideband);
- 	die("git upload-pack: %s", abort_msg);
--- 
-2.37.1.1127.g4ecf1c08f67
+> > > +               for_each_string_list_item(item, csub)
+> > > +                       /*
+> > > +                        * TRANSLATORS: This is a line of a recommended `git add` command
+> > > +                        * with multiple lines of submodule folders.
+> > > +                        * E.g.:     git add sub \
+> > > +                        *                   sub2 \
+> > > +                        *                   sub3
+> >
+> > Why does such a message need to be translated?  It's literal text the
+> > user should type, right?  I'm not sure what a translator would do with
+> > the message other than regurgitate it.
+>
+> It doesn't. My point was to let the translator know that the only text
+> in this print is for a git command. I should probably add that context
+> to the comment though.
 
+Um...if the string doesn't need to be marked for translation, and
+isn't marked for translation, why would translators go looking for a
+comment to help explain how to translate something that doesn't appear
+in their list of strings they need to translate?
+
+Using
+    printf("    git add %s", ...)
+means that the string "    git add %s" will not appear in the po/*.po
+files.  If it had been
+    printf(_("    git add %s"), ...)
+then it would appear in those files with filename(s) and line
+number(s) stating where the string had come from in case translators
+needed to look for clues about the context in order to know how to
+translate the string.
+
+So, I think you can just drop the comment.  Or am I still not
+understanding some nuance here?
