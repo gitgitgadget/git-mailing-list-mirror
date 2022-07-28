@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AC2DC19F29
-	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 16:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21BA6C19F2C
+	for <git@archiver.kernel.org>; Thu, 28 Jul 2022 16:47:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231978AbiG1QrQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jul 2022 12:47:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59420 "EHLO
+        id S231321AbiG1QrT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jul 2022 12:47:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231321AbiG1QrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jul 2022 12:47:01 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F79D54AEC
+        with ESMTP id S231410AbiG1QrC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jul 2022 12:47:02 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C27E355089
         for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:47:00 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id b6so1289436wmq.5
+Received: by mail-wr1-x42d.google.com with SMTP id h8so2983857wrw.1
         for <git@vger.kernel.org>; Thu, 28 Jul 2022 09:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=gSTxRNKyPPfuM0Ah0Gbj9ExFbtoJdySiu/xfzHqarbk=;
-        b=jM4+aIXPsPPNmCf3G3+13BpfYKfIjH2ID2jYfAnTrlA5jd6+c4lQEZDbOWoIVjmNpl
-         to0zazLeeywBw9i1TZJLUUkqUlNpLyAotXKCvIAx5rRFASXALa6V3R9pAS8JKep6KqtK
-         PlGvCsiqC7EKIUhwCPC9OBHEb24kieWIrFI93O252AfQomE9o2Zs2F0bhM9jMNwyANwr
-         /JNXO58O3QAUpEvldm3dPjR5JMdtRJz/sDwfDD1+pKslTi+a9ahdHllG8V0+w4J+0LHZ
-         GcNATcX3im2vyWmIxawDH2tCXjkYKovnfp7Pd9TqpX3lKL0Wl64AJGoqiNv+xGy5khmb
-         /eCw==
+        bh=YssG6FKEYH9l9BXR3jfxMQJHzDvJVZ12WOBOxguu4YE=;
+        b=XaGRcN/umlF6kO6X0+E2vKG1On9CnN+qQDMh/oC5ubTwqcLgcgaEpHUIq/f/XHAJbf
+         ndL08L7ggyLGt/Mp1jIkIfCDVA144blno1pING5URdEqEZ6QNoxcbyl3tWmnRHlAIbyf
+         ifoFdET0p9gavrI8OIim5h+wsmenhgbXpkELFDE7zjk6w2kGHRWk/yrgrCR5s268HDiZ
+         bTlmNlz65lrxyAVMAS+81zzVKH858b8v9+VSIuzvvjvoBtgfyoZTO/iZGxe+se4JGirF
+         sUjCFw45yr4psmo8kfPj+Kafoy+XqP716OShp4SNHbbaSNmnl8ClGmXdyt/gt2Qj+ytH
+         vcNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=gSTxRNKyPPfuM0Ah0Gbj9ExFbtoJdySiu/xfzHqarbk=;
-        b=f0V5oukokgrRmjhzcm4w8Si6i/2cH0WmZOQlqwQXS3jUinKFAYiENe+YYY5EYp7G4w
-         HzObfugMN3qzwoR/WLWk6UHe5e/CCGDfmhpHj649TG7uKU86NOQ4TCVTY5TXtwKd8ywk
-         mzm/onusGl5L93xjtC1rEnkYJALM9efFy3D4GPaUwNSkfGLWF5eVIWGC41WMaGfRbuBz
-         n9iYhVcArvrSgSB/dVnff6ohkweYLckDdlQEJn6XWNlDrN/i3DHOfYYDQRNdhbts9bMw
-         7H98ZJQizjQ1W7bo2UheBNlKIVk0FM93ogjOvOfCE3MmxE4kiy1VVZfUApPFlX28r207
-         ZSGQ==
-X-Gm-Message-State: AJIora8GFbUwmkqbuvUBt0uOS13xM/Kb892uSWduA78WlEGhxZw3eDX+
-        N6nV5XhdAOsCpRjzUfyTJZiwMNqPfPCqZw==
-X-Google-Smtp-Source: AGRyM1t5S7JxNw36hgApE8Zi1KYVPdiTDNUztsuAzIoMabNuj5R96t23cyziSMBWNOvvNqxJXuTVpQ==
-X-Received: by 2002:a1c:7401:0:b0:3a3:182f:7be9 with SMTP id p1-20020a1c7401000000b003a3182f7be9mr166865wmc.189.1659026818369;
-        Thu, 28 Jul 2022 09:46:58 -0700 (PDT)
+        bh=YssG6FKEYH9l9BXR3jfxMQJHzDvJVZ12WOBOxguu4YE=;
+        b=Pc6i+T/LAbsbFNi8G1xAZFNTeqP736am0dZi7hLXxOHJNfv9cPJJdMyxbqOMi3WIBz
+         OKG/naMA41+ku6jkXcBh3bYTxxgx5wJGbUNgjy6cmXfad1OyVmTz3EbwTEpGdpugCmfV
+         +aITi4xFx4Sc8+ualWfzfbQE4TQ0eOW9amGgkmQdqd45CKIHbPFp20I5Dx7lO0wgheh8
+         PPTRMimP3eaP6fo53n75fQH3Qi3zUkZie+GsOFSaQQVbo+n2QacyhQeqWoODExzAZR13
+         pwBDgeGTZRluE+0CJP6GaZgmkX0yRPE1hFTHbslAQfn9Wx4081dYAKltVu0ouONWG6YG
+         g1UQ==
+X-Gm-Message-State: AJIora8pqPwFLLTupvhJH2B+uUGOJgYVFznbrEEe3+GGP8ZhA+PLMWjQ
+        cVdmyKGWejI3dsYovZdqnJrHznixMMZEkg==
+X-Google-Smtp-Source: AGRyM1s+gvM8YorUE7Df2vCeGYtk1m0OueDFED8guPnZ1+R3u7sd85AyYI4B29MJdxD2s5p0NaESuA==
+X-Received: by 2002:a5d:52c4:0:b0:21e:428a:912b with SMTP id r4-20020a5d52c4000000b0021e428a912bmr18003819wrv.395.1659026819703;
+        Thu, 28 Jul 2022 09:46:59 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j3-20020a5d6043000000b0021efc75914esm1495403wrt.79.2022.07.28.09.46.56
+        by smtp.gmail.com with ESMTPSA id j3-20020a5d6043000000b0021efc75914esm1495403wrt.79.2022.07.28.09.46.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 09:46:57 -0700 (PDT)
+        Thu, 28 Jul 2022 09:46:58 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Teng Long <dyroneteng@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 5/9] docs: move commit-graph format docs to man section 5
-Date:   Thu, 28 Jul 2022 18:46:44 +0200
-Message-Id: <patch-v6-5.9-466dbd2a993-20220728T164243Z-avarab@gmail.com>
+Subject: [PATCH v6 6/9] docs: move protocol-related docs to man section 5
+Date:   Thu, 28 Jul 2022 18:46:45 +0200
+Message-Id: <patch-v6-6.9-9a551b2d53a-20220728T164243Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1197.g7ed548b7807
 In-Reply-To: <cover-v6-0.9-00000000000-20220728T164243Z-avarab@gmail.com>
 References: <cover-v5-0.9-00000000000-20220721T160721Z-avarab@gmail.com> <cover-v6-0.9-00000000000-20220728T164243Z-avarab@gmail.com>
@@ -72,222 +72,457 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Continue the move of existing Documentation/technical/* protocol and
-file-format documentation into our main documentation space.
+file-format documentation into our main documentation space. By moving
+the things that discuss the protocol we can properly link from
+e.g. lsrefs.unborn and protocol.version documentation to a manpage we
+build by default.
 
-By moving the documentation for the commit-graph format into man
-section 5 and the new "developerinterfaces" category. This change is
-split from subsequent commits due to the relatively large amount of
-ASCIIDOC formatting changes that are required.
+So far we have been using the "gitformat-" prefix for the
+documentation we've been moving over from Documentation/technical/*,
+but for protocol documentation let's use "gitprotocol-*".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/Makefile                        |  1 +
- Documentation/git-commit-graph.txt            |  5 ++
- ...-format.txt => gitformat-commit-graph.txt} | 47 +++++++++++++------
- Documentation/technical/chunk-format.txt      |  4 +-
- command-list.txt                              |  2 +
- 5 files changed, 42 insertions(+), 17 deletions(-)
- rename Documentation/{technical/commit-graph-format.txt => gitformat-commit-graph.txt} (88%)
+ Documentation/Makefile                        |  8 +++---
+ Documentation/config/lsrefs.txt               |  2 +-
+ Documentation/config/protocol.txt             |  2 +-
+ Documentation/git-upload-pack.txt             |  5 ++--
+ Documentation/gitformat-bundle.txt            |  2 +-
+ ...ities.txt => gitprotocol-capabilities.txt} | 28 +++++++++++++++----
+ ...ocol-common.txt => gitprotocol-common.txt} | 23 +++++++++++++--
+ ...pack-protocol.txt => gitprotocol-pack.txt} | 24 +++++++++++++---
+ .../protocol-v2.txt => gitprotocol-v2.txt}    | 25 +++++++++++++----
+ Documentation/technical/api-simple-ipc.txt    |  2 +-
+ Documentation/technical/http-protocol.txt     |  6 ++--
+ .../long-running-process-protocol.txt         |  2 +-
+ Documentation/technical/packfile-uri.txt      |  2 +-
+ Documentation/technical/partial-clone.txt     |  2 +-
+ command-list.txt                              |  5 +++-
+ refspec.h                                     |  2 +-
+ t/t5551-http-fetch-smart.sh                   |  4 +--
+ 17 files changed, 106 insertions(+), 38 deletions(-)
+ rename Documentation/{technical/protocol-capabilities.txt => gitprotocol-capabilities.txt} (96%)
+ rename Documentation/{technical/protocol-common.txt => gitprotocol-common.txt} (89%)
+ rename Documentation/{technical/pack-protocol.txt => gitprotocol-pack.txt} (98%)
+ rename Documentation/{technical/protocol-v2.txt => gitprotocol-v2.txt} (98%)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 1a4a545f44a..e7bd72bb84e 100644
+index e7bd72bb84e..b53f3c12843 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -25,6 +25,7 @@ MAN1_TXT += gitweb.txt
- # man5 / man7 guides (note: new guides should also be added to command-list.txt)
- MAN5_TXT += gitattributes.txt
- MAN5_TXT += gitformat-bundle.txt
-+MAN5_TXT += gitformat-commit-graph.txt
- MAN5_TXT += githooks.txt
+@@ -30,6 +30,10 @@ MAN5_TXT += githooks.txt
  MAN5_TXT += gitignore.txt
  MAN5_TXT += gitmailmap.txt
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index e1f48c95b3c..047decdb65b 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -143,6 +143,11 @@ $ git rev-parse HEAD | git commit-graph write --stdin-commits --append
- ------------------------------------------------
+ MAN5_TXT += gitmodules.txt
++MAN5_TXT += gitprotocol-capabilities.txt
++MAN5_TXT += gitprotocol-common.txt
++MAN5_TXT += gitprotocol-pack.txt
++MAN5_TXT += gitprotocol-v2.txt
+ MAN5_TXT += gitrepository-layout.txt
+ MAN5_TXT += gitweb.conf.txt
  
+@@ -105,12 +109,8 @@ TECH_DOCS += technical/long-running-process-protocol
+ TECH_DOCS += technical/multi-pack-index
+ TECH_DOCS += technical/pack-format
+ TECH_DOCS += technical/pack-heuristics
+-TECH_DOCS += technical/pack-protocol
+ TECH_DOCS += technical/parallel-checkout
+ TECH_DOCS += technical/partial-clone
+-TECH_DOCS += technical/protocol-capabilities
+-TECH_DOCS += technical/protocol-common
+-TECH_DOCS += technical/protocol-v2
+ TECH_DOCS += technical/racy-git
+ TECH_DOCS += technical/reftable
+ TECH_DOCS += technical/send-pack-pipeline
+diff --git a/Documentation/config/lsrefs.txt b/Documentation/config/lsrefs.txt
+index adeda0f24d3..3d88fb0badb 100644
+--- a/Documentation/config/lsrefs.txt
++++ b/Documentation/config/lsrefs.txt
+@@ -1,7 +1,7 @@
+ lsrefs.unborn::
+ 	May be "advertise" (the default), "allow", or "ignore". If "advertise",
+ 	the server will respond to the client sending "unborn" (as described in
+-	protocol-v2.txt) and will advertise support for this feature during the
++	linkgit:gitprotocol-v2[5]) and will advertise support for this feature during the
+ 	protocol v2 capability advertisement. "allow" is the same as
+ 	"advertise" except that the server will not advertise support for this
+ 	feature; this is useful for load-balanced servers that cannot be
+diff --git a/Documentation/config/protocol.txt b/Documentation/config/protocol.txt
+index 756591d77b0..57603818514 100644
+--- a/Documentation/config/protocol.txt
++++ b/Documentation/config/protocol.txt
+@@ -58,6 +58,6 @@ protocol.version::
+ * `1` - the original wire protocol with the addition of a version string
+   in the initial response from the server.
  
-+FILE FORMAT
-+-----------
-+
-+see linkgit:gitformat-commit-graph[5].
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/gitformat-commit-graph.txt
-similarity index 88%
-rename from Documentation/technical/commit-graph-format.txt
-rename to Documentation/gitformat-commit-graph.txt
-index 484b185ba98..108dc2295c0 100644
---- a/Documentation/technical/commit-graph-format.txt
-+++ b/Documentation/gitformat-commit-graph.txt
-@@ -1,5 +1,18 @@
--Git commit graph format
--=======================
-+gitformat-commit-graph(5)
-+=========================
+-* `2` - link:technical/protocol-v2.html[wire protocol version 2].
++* `2` - Wire protocol version 2, see linkgit:gitprotocol-v2[5].
+ 
+ --
+diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
+index 8f87b23ea86..3409e0d36d1 100644
+--- a/Documentation/git-upload-pack.txt
++++ b/Documentation/git-upload-pack.txt
+@@ -40,9 +40,8 @@ OPTIONS
+ 	Used by linkgit:git-http-backend[1] to serve up
+ 	`$GIT_URL/info/refs?service=git-upload-pack` requests. See
+ 	"Smart Clients" in link:technical/http-protocol.html[the HTTP
+-	transfer protocols] documentation and "HTTP Transport" in
+-	link:technical/protocol-v2.html[the Git Wire Protocol, Version
+-	2] documentation. Also understood by
++	transfer protocols] documentation and "HTTP Transport" in the
++	linkgit:gitprotocol-v2[5] documentation. Also understood by
+ 	linkgit:git-receive-pack[1].
+ 
+ <directory>::
+diff --git a/Documentation/gitformat-bundle.txt b/Documentation/gitformat-bundle.txt
+index 6a9d9e5bf6f..00e0a20e657 100644
+--- a/Documentation/gitformat-bundle.txt
++++ b/Documentation/gitformat-bundle.txt
+@@ -27,7 +27,7 @@ FORMAT
+ ------
+ 
+ We will use ABNF notation to define the Git bundle format. See
+-link:technical/protocol-common.html for the details.
++linkgit:gitprotocol-common[5] for the details.
+ 
+ A v2 bundle looks like this:
+ 
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/gitprotocol-capabilities.txt
+similarity index 96%
+rename from Documentation/technical/protocol-capabilities.txt
+rename to Documentation/gitprotocol-capabilities.txt
+index 9dfade930da..c6dcc7d565d 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/gitprotocol-capabilities.txt
+@@ -1,8 +1,20 @@
+-Git Protocol Capabilities
+-=========================
++gitprotocol-capabilities(5)
++===========================
 +
 +NAME
 +----
-+gitformat-commit-graph - Git commit graph format
++gitprotocol-capabilities - Protocol v0 and v1 capabilities
 +
 +SYNOPSIS
 +--------
 +[verse]
-+$GIT_DIR/objects/info/commit-graph
-+$GIT_DIR/objects/info/commit-graphs/*
++<over-the-wire-protocol>
 +
 +DESCRIPTION
 +-----------
  
- The Git commit graph stores a list of commit OIDs and some associated
- metadata, including:
-@@ -30,7 +43,7 @@ and hash type.
+ NOTE: this document describes capabilities for versions 0 and 1 of the pack
+-protocol. For version 2, please refer to the link:protocol-v2.html[protocol-v2]
++protocol. For version 2, please refer to the linkgit:gitprotocol-v2[5]
+ doc.
  
- All multi-byte numbers are in network byte order.
+ Servers SHOULD support all capabilities defined in this document.
+@@ -77,7 +89,7 @@ interleaved with S-R-Q.
+ multi_ack_detailed
+ ------------------
+ This is an extension of multi_ack that permits client to better
+-understand the server's in-memory state. See pack-protocol.txt,
++understand the server's in-memory state. See linkgit:gitprotocol-pack[5],
+ section "Packfile Negotiation" for more information.
  
--HEADER:
-+=== HEADER:
+ no-done
+@@ -281,7 +293,7 @@ a packfile upload and reference update.  If the pushing client requests
+ this capability, after unpacking and updating references the server
+ will respond with whether the packfile unpacked successfully and if
+ each reference was updated successfully.  If any of those were not
+-successful, it will send back an error message.  See pack-protocol.txt
++successful, it will send back an error message.  See linkgit:gitprotocol-pack[5]
+ for example messages.
  
-   4-byte signature:
-       The signature is: {'C', 'G', 'P', 'H'}
-@@ -52,7 +65,7 @@ HEADER:
-       We infer the length (H*B) of the Base Graphs chunk
-       from this value.
+ report-status-v2
+@@ -292,7 +304,7 @@ adding new "option" directives in order to support reference rewritten by
+ the "proc-receive" hook.  The "proc-receive" hook may handle a command
+ for a pseudo-reference which may create or update a reference with
+ different name, new-oid, and old-oid.  While the capability
+-'report-status' cannot report for such case.  See pack-protocol.txt
++'report-status' cannot report for such case.  See linkgit:gitprotocol-pack[5]
+ for details.
  
--CHUNK LOOKUP:
-+=== CHUNK LOOKUP:
- 
-   (C + 1) * 12 bytes listing the table of contents for the chunks:
-       First 4 bytes describe the chunk id. Value 0 is a terminating label.
-@@ -68,17 +81,17 @@ CHUNK LOOKUP:
-   these chunks may be given in any order. Chunks are required unless
-   otherwise specified.
- 
--CHUNK DATA:
-+=== CHUNK DATA:
- 
--  OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
-+==== OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
-       The ith entry, F[i], stores the number of OIDs with first
-       byte at most i. Thus F[255] stores the total
-       number of commits (N).
- 
--  OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
-+====  OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
-       The OIDs for all commits in the graph, sorted in ascending order.
- 
--  Commit Data (ID: {'C', 'D', 'A', 'T' }) (N * (H + 16) bytes)
-+====  Commit Data (ID: {'C', 'D', 'A', 'T' }) (N * (H + 16) bytes)
-     * The first H bytes are for the OID of the root tree.
-     * The next 8 bytes are for the positions of the first two parents
-       of the ith commit. Stores value 0x70000000 if no parent in that
-@@ -93,7 +106,7 @@ CHUNK DATA:
-       2 bits of the lowest byte, storing the 33rd and 34th bit of the
-       commit time.
- 
--  Generation Data (ID: {'G', 'D', 'A', '2' }) (N * 4 bytes) [Optional]
-+==== Generation Data (ID: {'G', 'D', 'A', '2' }) (N * 4 bytes) [Optional]
-     * This list of 4-byte values store corrected commit date offsets for the
-       commits, arranged in the same order as commit data chunk.
-     * If the corrected commit date offset cannot be stored within 31 bits,
-@@ -104,7 +117,7 @@ CHUNK DATA:
-       by compatible versions of Git and in case of split commit-graph chains,
-       the topmost layer also has Generation Data chunk.
- 
--  Generation Data Overflow (ID: {'G', 'D', 'O', '2' }) [Optional]
-+==== Generation Data Overflow (ID: {'G', 'D', 'O', '2' }) [Optional]
-     * This list of 8-byte values stores the corrected commit date offsets
-       for commits with corrected commit date offsets that cannot be
-       stored within 31 bits.
-@@ -112,7 +125,7 @@ CHUNK DATA:
-       chunk is present and atleast one corrected commit date offset cannot
-       be stored within 31 bits.
- 
--  Extra Edge List (ID: {'E', 'D', 'G', 'E'}) [Optional]
-+==== Extra Edge List (ID: {'E', 'D', 'G', 'E'}) [Optional]
-       This list of 4-byte values store the second through nth parents for
-       all octopus merges. The second parent value in the commit data stores
-       an array position within this list along with the most-significant bit
-@@ -120,14 +133,14 @@ CHUNK DATA:
-       positions for the parents until reaching a value with the most-significant
-       bit on. The other bits correspond to the position of the last parent.
- 
--  Bloom Filter Index (ID: {'B', 'I', 'D', 'X'}) (N * 4 bytes) [Optional]
-+==== Bloom Filter Index (ID: {'B', 'I', 'D', 'X'}) (N * 4 bytes) [Optional]
-     * The ith entry, BIDX[i], stores the number of bytes in all Bloom filters
-       from commit 0 to commit i (inclusive) in lexicographic order. The Bloom
-       filter for the i-th commit spans from BIDX[i-1] to BIDX[i] (plus header
-       length), where BIDX[-1] is 0.
-     * The BIDX chunk is ignored if the BDAT chunk is not present.
- 
--  Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
-+==== Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
-     * It starts with header consisting of three unsigned 32-bit integers:
-       - Version of the hash algorithm being used. We currently only support
- 	value 1 which corresponds to the 32-bit version of the murmur3 hash
-@@ -147,13 +160,13 @@ CHUNK DATA:
-       of length one, with either all bits set to zero or one respectively.
-     * The BDAT chunk is present if and only if BIDX is present.
- 
--  Base Graphs List (ID: {'B', 'A', 'S', 'E'}) [Optional]
-+==== Base Graphs List (ID: {'B', 'A', 'S', 'E'}) [Optional]
-       This list of H-byte hashes describe a set of B commit-graph files that
-       form a commit-graph chain. The graph position for the ith commit in this
-       file's OID Lookup chunk is equal to i plus the number of commits in all
-       base graphs.  If B is non-zero, this chunk must exist.
- 
--TRAILER:
-+=== TRAILER:
- 
- 	H-byte HASH-checksum of all of the above.
- 
-@@ -164,3 +177,7 @@ the number '2' in their chunk IDs because a previous version of Git wrote
- possibly erroneous data in these chunks with the IDs "GDAT" and "GDOV". By
- changing the IDs, newer versions of Git will silently ignore those older
- chunks and write the new information without trusting the incorrect data.
+ delete-refs
+@@ -378,3 +390,7 @@ packet-line, and must not contain non-printable or whitespace characters. The
+ current implementation uses trace2 session IDs (see
+ link:api-trace2.html[api-trace2] for details), but this may change and users of
+ the session ID should not rely on this fact.
 +
 +GIT
 +---
 +Part of the linkgit:git[1] suite
-diff --git a/Documentation/technical/chunk-format.txt b/Documentation/technical/chunk-format.txt
-index 593614fceda..f36ce42f37c 100644
---- a/Documentation/technical/chunk-format.txt
-+++ b/Documentation/technical/chunk-format.txt
-@@ -6,7 +6,7 @@ sections of the file. This allows structured access to a large file by
- scanning a small "table of contents" for the remaining data. This common
- format is used by the `commit-graph` and `multi-pack-index` files. See
- link:technical/pack-format.html[the `multi-pack-index` format] and
--link:technical/commit-graph-format.html[the `commit-graph` format] for
-+the `commit-graph` format in linkgit:gitformat-commit-graph[5] for
- how they use the chunks to describe structured data.
+diff --git a/Documentation/technical/protocol-common.txt b/Documentation/gitprotocol-common.txt
+similarity index 89%
+rename from Documentation/technical/protocol-common.txt
+rename to Documentation/gitprotocol-common.txt
+index ecedb34bba5..1486651bd10 100644
+--- a/Documentation/technical/protocol-common.txt
++++ b/Documentation/gitprotocol-common.txt
+@@ -1,5 +1,20 @@
+-Documentation Common to Pack and Http Protocols
+-===============================================
++gitprotocol-common(5)
++=====================
++
++NAME
++----
++gitprotocol-common - Things common to various protocols
++
++SYNOPSIS
++--------
++[verse]
++<over-the-wire-protocol>
++
++DESCRIPTION
++-----------
++
++This document sets defines things common to various over-the-wire
++protocols and file formats used in Git.
  
- A chunk-based file format begins with some header information custom to
-@@ -108,7 +108,7 @@ for future formats:
- * *commit-graph:* see `write_commit_graph_file()` and `parse_commit_graph()`
-   in `commit-graph.c` for how the chunk-format API is used to write and
-   parse the commit-graph file format documented in
--  link:technical/commit-graph-format.html[the commit-graph file format].
-+  the commit-graph file format in linkgit:gitformat-commit-graph[5].
+ ABNF Notation
+ -------------
+@@ -97,3 +112,7 @@ Examples (as C-style strings):
+   "000bfoobar\n"    "foobar\n"
+   "0004"            ""
+ ----
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/gitprotocol-pack.txt
+similarity index 98%
+rename from Documentation/technical/pack-protocol.txt
+rename to Documentation/gitprotocol-pack.txt
+index e13a2c064d1..8a4de6decd0 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/gitprotocol-pack.txt
+@@ -1,5 +1,17 @@
+-Packfile transfer protocols
+-===========================
++gitprotocol-pack(5)
++===================
++
++NAME
++----
++gitprotocol-pack - How packs are transferred over-the-wire
++
++SYNOPSIS
++--------
++[verse]
++<over-the-wire-protocol>
++
++DESCRIPTION
++-----------
  
- * *multi-pack-index:* see `write_midx_internal()` and `load_multi_pack_index()`
-   in `midx.c` for how the chunk-format API is used to write and
+ Git supports transferring data in packfiles over the ssh://, git://, http:// and
+ file:// transports.  There exist two sets of protocols, one for pushing
+@@ -18,7 +30,7 @@ pkt-line Format
+ ---------------
+ 
+ The descriptions below build on the pkt-line format described in
+-protocol-common.txt. When the grammar indicate `PKT-LINE(...)`, unless
++linkgit:gitprotocol-common[5]. When the grammar indicate `PKT-LINE(...)`, unless
+ otherwise noted the usual pkt-line LF rules apply: the sender SHOULD
+ include a LF, but the receiver MUST NOT complain if it is not present.
+ 
+@@ -60,7 +72,7 @@ Each Extra Parameter takes the form of `<key>=<value>` or `<key>`.
+ 
+ Servers that receive any such Extra Parameters MUST ignore all
+ unrecognized keys. Currently, the only Extra Parameter recognized is
+-"version" with a value of '1' or '2'.  See protocol-v2.txt for more
++"version" with a value of '1' or '2'.  See linkgit:gitprotocol-v2[5] for more
+ information on protocol version 2.
+ 
+ Git Transport
+@@ -707,3 +719,7 @@ An example client/server communication might look like this:
+    S: 0018ok refs/heads/debug\n
+    S: 002ang refs/heads/master non-fast-forward\n
+ ----
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/gitprotocol-v2.txt
+similarity index 98%
+rename from Documentation/technical/protocol-v2.txt
+rename to Documentation/gitprotocol-v2.txt
+index 8a877d27e23..d6105e07408 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/gitprotocol-v2.txt
+@@ -1,5 +1,17 @@
+-Git Wire Protocol, Version 2
+-============================
++gitprotocol-v2(5)
++=================
++
++NAME
++----
++gitprotocol-v2 - Git Wire Protocol, Version 2
++
++SYNOPSIS
++--------
++[verse]
++<over-the-wire-protocol>
++
++DESCRIPTION
++-----------
+ 
+ This document presents a specification for a version 2 of Git's wire
+ protocol.  Protocol v2 will improve upon v1 in the following ways:
+@@ -26,8 +38,7 @@ Packet-Line Framing
+ -------------------
+ 
+ All communication is done using packet-line framing, just as in v1.  See
+-`Documentation/technical/pack-protocol.txt` and
+-`Documentation/technical/protocol-common.txt` for more information.
++linkgit:gitprotocol-pack[5] and linkgit:gitprotocol-common[5] for more information.
+ 
+ In protocol v2 these special packets will have the following semantics:
+ 
+@@ -42,7 +53,7 @@ Initial Client Request
+ In general a client can request to speak protocol v2 by sending
+ `version=2` through the respective side-channel for the transport being
+ used which inevitably sets `GIT_PROTOCOL`.  More information can be
+-found in `pack-protocol.txt` and `http-protocol.txt`, as well as the
++found in linkgit:gitprotocol-pack[5] and `http-protocol.txt`, as well as the
+ `GIT_PROTOCOL` definition in `git.txt`. In all cases the
+ response from the server is the capability advertisement.
+ 
+@@ -566,3 +577,7 @@ and associated requested information, each separated by a single space.
+ 	attr = "size"
+ 
+ 	obj-info = obj-id SP obj-size
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/api-simple-ipc.txt b/Documentation/technical/api-simple-ipc.txt
+index d79ad323e67..d44ada98e7d 100644
+--- a/Documentation/technical/api-simple-ipc.txt
++++ b/Documentation/technical/api-simple-ipc.txt
+@@ -78,7 +78,7 @@ client and an optional response message from the server.  Both the
+ client and server messages are unlimited in length and are terminated
+ with a flush packet.
+ 
+-The pkt-line routines (Documentation/technical/protocol-common.txt)
++The pkt-line routines (linkgit:gitprotocol-common[5])
+ are used to simplify buffer management during message generation,
+ transmission, and reception.  A flush packet is used to mark the end
+ of the message.  This allows the sender to incrementally generate and
+diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
+index cc5126cfeda..8bd672d55bb 100644
+--- a/Documentation/technical/http-protocol.txt
++++ b/Documentation/technical/http-protocol.txt
+@@ -222,7 +222,7 @@ smart server reply:
+    S: 0000
+ 
+ The client may send Extra Parameters (see
+-Documentation/technical/pack-protocol.txt) as a colon-separated string
++linkgit:gitprotocol-pack[5]) as a colon-separated string
+ in the Git-Protocol HTTP header.
+ 
+ Uses the `--http-backend-info-refs` option to
+@@ -518,5 +518,5 @@ References
+ 
+ http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
+ http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
+-link:technical/pack-protocol.html
+-link:technical/protocol-capabilities.html
++linkgit:gitprotocol-pack[5]
++linkgit:gitprotocol-capabilities[5]
+diff --git a/Documentation/technical/long-running-process-protocol.txt b/Documentation/technical/long-running-process-protocol.txt
+index aa0aa9af1c2..6f33654b428 100644
+--- a/Documentation/technical/long-running-process-protocol.txt
++++ b/Documentation/technical/long-running-process-protocol.txt
+@@ -3,7 +3,7 @@ Long-running process protocol
+ 
+ This protocol is used when Git needs to communicate with an external
+ process throughout the entire life of a single Git command. All
+-communication is in pkt-line format (see technical/protocol-common.txt)
++communication is in pkt-line format (see linkgit:gitprotocol-common[5])
+ over standard input and standard output.
+ 
+ Handshake
+diff --git a/Documentation/technical/packfile-uri.txt b/Documentation/technical/packfile-uri.txt
+index 1eb525fe760..9d453d47651 100644
+--- a/Documentation/technical/packfile-uri.txt
++++ b/Documentation/technical/packfile-uri.txt
+@@ -18,7 +18,7 @@ a `packfile-uris` argument, the server MAY send a `packfile-uris` section
+ directly before the `packfile` section (right after `wanted-refs` if it is
+ sent) containing URIs of any of the given protocols. The URIs point to
+ packfiles that use only features that the client has declared that it supports
+-(e.g. ofs-delta and thin-pack). See protocol-v2.txt for the documentation of
++(e.g. ofs-delta and thin-pack). See linkgit:gitprotocol-v2[5] for the documentation of
+ this section.
+ 
+ Clients should then download and index all the given URIs (in addition to
+diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
+index 99f0eb30406..92fcee2bfff 100644
+--- a/Documentation/technical/partial-clone.txt
++++ b/Documentation/technical/partial-clone.txt
+@@ -79,7 +79,7 @@ Design Details
+   upload-pack negotiation.
+ +
+ This uses the existing capability discovery mechanism.
+-See "filter" in Documentation/technical/pack-protocol.txt.
++See "filter" in linkgit:gitprotocol-pack[5].
+ 
+ - Clients pass a "filter-spec" to clone and fetch which is passed to the
+   server to request filtering during packfile construction.
 diff --git a/command-list.txt b/command-list.txt
-index 1950c4ccd9c..44e244a76f6 100644
+index 44e244a76f6..ed859fdd798 100644
 --- a/command-list.txt
 +++ b/command-list.txt
-@@ -210,6 +210,8 @@ gitdiffcore                             guide
+@@ -210,7 +210,6 @@ gitdiffcore                             guide
  giteveryday                             guide
  gitfaq                                  guide
  gitformat-bundle                        developerinterfaces
-+gitformat-bundle                        developerinterfaces
-+gitformat-commit-graph                  developerinterfaces
+-gitformat-bundle                        developerinterfaces
+ gitformat-commit-graph                  developerinterfaces
  gitglossary                             guide
  githooks                                userinterfaces
- gitignore                               userinterfaces
+@@ -219,6 +218,10 @@ gitk                                    mainporcelain
+ gitmailmap                              userinterfaces
+ gitmodules                              userinterfaces
+ gitnamespaces                           guide
++gitprotocol-capabilities                developerinterfaces
++gitprotocol-common                      developerinterfaces
++gitprotocol-pack                        developerinterfaces
++gitprotocol-v2                          developerinterfaces
+ gitremote-helpers                       guide
+ gitrepository-layout                    userinterfaces
+ gitrevisions                            userinterfaces
+diff --git a/refspec.h b/refspec.h
+index 8b79891d321..8c0c4469933 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -69,7 +69,7 @@ int valid_remote_name(const char *name);
+ struct strvec;
+ /*
+  * Determine what <prefix> values to pass to the peer in ref-prefix lines
+- * (see Documentation/technical/protocol-v2.txt).
++ * (see linkgit:gitprotocol-v2[5]).
+  */
+ void refspec_ref_prefixes(const struct refspec *rs,
+ 			  struct strvec *ref_prefixes);
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 245532df881..6a38294a476 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -181,8 +181,8 @@ test_expect_success 'no-op half-auth fetch does not require a password' '
+ 	# This is not possible with protocol v2, since both objects and refs
+ 	# are obtained from the "git-upload-pack" path. A solution to this is
+ 	# to teach the server and client to be able to inline ls-refs requests
+-	# as an Extra Parameter (see pack-protocol.txt), so that "info/refs"
+-	# can serve refs, just like it does in protocol v0.
++	# as an Extra Parameter (see "git help gitformat-pack-protocol"), so that
++	# "info/refs" can serve refs, just like it does in protocol v0.
+ 	GIT_TEST_PROTOCOL_VERSION=0 git --git-dir=half-auth fetch &&
+ 	expect_askpass none
+ '
 -- 
 2.37.1.1197.g7ed548b7807
 
