@@ -2,145 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A8A6C00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 13:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 818F8C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 13:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235974AbiG2NZM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 09:25:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46540 "EHLO
+        id S236528AbiG2NZZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 09:25:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236528AbiG2NZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 09:25:08 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F0C31EB
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 06:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1659101093;
-        bh=0b/ZRChEx8U+uOscar4XTJnAVU9RlficQUDfu6WYqM0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c1R32i36gaZphSqfOO/8IV4tfG2e07B8+2tcBaSbmbjCUF0LxdHBT/e1VHTW4YLzE
-         Faj+WRGvz8vRnWVTvjC57P3OyCGRKXX3sp62nhSYDr/QjhGTxxqRPLRVWc8e3uZMkz
-         cm4fK7pBp+PzAXOWw7jKwcB3KCedItyNBG0AfjvE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.244.62] ([89.1.214.237]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNbkp-1o5UqM02Hr-00P9KK; Fri, 29
- Jul 2022 15:24:53 +0200
-Date:   Fri, 29 Jul 2022 15:24:51 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Wong <e@80x24.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: re-mentioning --preserve-merges in the docs
-In-Reply-To: <xmqqwnc6fcik.fsf@gitster.g>
-Message-ID: <084n300p-4qp2-qp6n-232o-qs7po3q375n7@tzk.qr>
-References: <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <pull.195.v3.git.1631048712.gitgitgadget@gmail.com> <2d7a4a2c564aaafbf8da97cf017766163c77b70b.1631048713.git.gitgitgadget@gmail.com> <220721.86wnc6s2uh.gmgdl@evledraar.gmail.com>
- <xmqqwnc6fcik.fsf@gitster.g>
+        with ESMTP id S236568AbiG2NZV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 09:25:21 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66E4212776
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 06:25:20 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id i4so3557689qvv.7
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 06:25:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=BoB5RnqNoxZ1+yb45g98ekh9YC4SLPazz1XFuYppLD4=;
+        b=MkNzN2UNa9BwptMb2gAHuPubjGvrQ7Tw9sO1AsBZEnO3UEd4iNcr0bRZ5+Z0K4W7Qy
+         WsQff/rlfWlBVS/0r+K0RHWROXWWXbJaVP0phY6StrEk84sjXHQETfJr5YH9aHaWodX/
+         r2l4OM6GlwfD3vGO9T3vvxC6tpZ3QJw2sXXLz7nBuOkPUUBHDeGCkuLkgSiWbPw3MZSl
+         AUIqy3BqS9SvLhuSa4nIarMy/HTjPnvmTAd+pKdSJBt7cvgnRNrBHpD3q24LL+MRRdVU
+         Eznan302oJ9755Hxj0tEUO0pmvqQhKEn9GPnDWOXIz8fL7zA70A/WWj1moRneLRoWZUm
+         OdSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=BoB5RnqNoxZ1+yb45g98ekh9YC4SLPazz1XFuYppLD4=;
+        b=bIddTuZUXyPdE6oKROAAjv18Ax0fPGshsZvDoMZ9kCDvHljrU3x5EqhrNWxRj1WWPg
+         aHAszIuNdtXumbTcHUf52+T3ogt18mWfzMT/m2Cx5673+Unca3PXFqYpOFJ8Rhg550YH
+         YwImum7161finkXthuZPD46hUDBJDJQsY2pVhou4H45FVjZ4L01AvYgEPTkiGKh/zDHt
+         bzm0kNdRIwlIrmnPMcvbokDYRpVOuCFEkY73L6exdoqG15QFzwD55IJXU2HXIPvOsKha
+         9GVgX4K607EcRROaJBamadzaYJaxPsQmhsniqu4JcOUwe/umZqW4My7u0yYKI89u/D84
+         otPg==
+X-Gm-Message-State: ACgBeo1y0IStmG2zehf0ilVut7f4Ma6uz8KAao8tuZFJC5lbRs828A1k
+        encDkgd9RsfbkG1O0s9vGJAT
+X-Google-Smtp-Source: AA6agR6KYL13m2XBX4HRkxl/GzwMPw4Xrn1OrKRUbIex+j9g8rd1/MzI8zRo/91irtBR1VHeJHZ3fQ==
+X-Received: by 2002:a05:6214:d47:b0:474:7f18:4764 with SMTP id 7-20020a0562140d4700b004747f184764mr3081643qvr.15.1659101119530;
+        Fri, 29 Jul 2022 06:25:19 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:994a:ecce:40c:c0b7? ([2600:1700:e72:80a0:994a:ecce:40c:c0b7])
+        by smtp.gmail.com with ESMTPSA id c1-20020a05620a268100b006b64d36342fsm2357627qkp.68.2022.07.29.06.25.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Jul 2022 06:25:18 -0700 (PDT)
+Message-ID: <5fb71f12-28c4-3e37-c6c7-e7074872658b@github.com>
+Date:   Fri, 29 Jul 2022 09:25:15 -0400
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-67386799-1659101093=:223"
-X-Provags-ID: V03:K1:LF39r+vcJhpwPHnF0CxU4TMAVZCdGFcatEhAc90qIEyLNTMuu5/
- eUUygeDqsTcyQ/86Wypm+rI679oYwYVLAs0+TFZLO3c7eqDn4zMloPQANZgPXYUsvPSaxCK
- pjI+NXQY2EC8LO+NcUvQoafDIcvp0s0MhT6+mVhqH52JjZdFEut05TeVm3Ch3ZepUiB3ud3
- MmaTqMS3Nqywzhh+9VMGQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:l14I43ukG+w=:PGbL99h7Xs6GIs9iBVkJxT
- 1RZw+1+idYK0v0t1dY42FfqqJO8ImunLQCrRoVq5koF3oBDO0ozPegH8393nRWa/IlfHlP1aY
- P1z05knjunKxGp6DknHb8ZKoZBI/GGrGDJYkk7MuanMZc7XcdQt32qGUCXmXwrKfED3G3VL+n
- KwYfT5tmDZqMZKISgiE78CzHkAlfLXcXh8VjpagxiLkFvMN4Ix8yrk/NWBMj4cErZ9f3s0gwg
- dDoKIjDaBa6QW5R07t7XMJSKIanluKMr/nJ0MzPZWIP8H14JeAu+1WRGUa0wQzeFI6oLqRBe/
- dNftC0z1hgyRRd9En5z1t4eqm6Bnccctaq6JK/GTqnS9Yr97Xqk4nSSRiLxBIGi7gfHWlCdlG
- VYeFAXvunTcXB30EvT7GFa59l5AQbdZTgt3pkpV7DwhWl5DW7ZUvRGsrJ/fPpoy2GJgXfVsrR
- B0R8GqHPz3kW7Z3mrQIReywkxf9JEQGcEb7cCVv1dEWcI1wZ31hOvPL/xbGIXZxvLAFgeD9MN
- vLP/HDpbYNzM3mwxUiI+ItQmyGIIQeJ9R0Zz7n3Toa2HYdhkX3J+pBCYOo1mtjc7VzQmuGtbx
- Y1QRildvealfu4d/M2umxtGsXX59EM4C7Oyz2uPgt/BuFSti7Fvi4+KyEHdgIMMyvxi5oHQfm
- pJDS3MoInePFVOeb6KQ6Mr4OGvTf0H0vg2qQHP2tto94KBNgX+XA8OIbOnPsRr5PgqZixxNyd
- 2LAVAjCSYHg2L2n+MNwiDnU+AT8aaYw59gJsX/ZxWH21DrkQ2x9stj2/IOb9CC0Q/g72M2anU
- YVpNIMvOvIwKwlsb4bVSxR9MSbYE1bHWEWoCB6HZPn1T5UnrnjKQPmsmWJlrMt62jsTCvyorz
- jrr01zxp9Fs5NNAOsLC7s6ZsTW6V9LplIYlLEUJVbRtzYs3RbNUT0BZ0oNILMS0vgROrfa4pv
- 2R+J/Zeae5Vdr1o82aaxD5dyceeT4AA980ayYPvke5c8prgNPGenutsKQpu5K5dxjTNRNNvYS
- 1PWZCIyFRiF8lBik4nBPx9e8rl2F9SG7RCvBZ26I9hs++yZTph/yC5oaqimbpkXrLq6BK6iik
- XrZS7WLOb/pZ+uC0V5V4anq1QTaQpWSd09/Z7VTJEgL43gXnVTsNsXdvg==
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 2/3] log: add default decoration filter
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        vdye@github.com, steadmon@google.com
+References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+ <6b40b84773c70244bb13204ec566b713f1bdf865.1658844250.git.gitgitgadget@gmail.com>
+ <220726.86y1wglyuq.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220726.86y1wglyuq.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 7/26/2022 10:39 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Jul 26 2022, Derrick Stolee via GitGitGadget wrote:
+> 
+>> From: Derrick Stolee <derrickstolee@github.com>
+>> [...]
+>>  test_expect_success 'log.decorate config parsing' '
+>>  	git log --oneline --decorate=full >expect.full &&
+>>  	git log --oneline --decorate=short >expect.short &&
+>> @@ -2198,6 +2204,23 @@ test_expect_success 'log --decorate includes all levels of tag annotated tags' '
+>>  	test_cmp expect actual
+>>  '
+>>  
+>> +test_expect_success 'log --decorate does not include things outside filter' '
+>> +	reflist="refs/prefetch/ refs/rebase-merge/ refs/bundle/" &&
+>> +
+>> +	for ref in $reflist
+>> +	do
+>> +		mkdir -p .git/$ref &&
+> 
+> Let's not use -p, and fail if .git doesn't exist?
 
---8323328-67386799-1659101093=:223
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The reflist contains multi-leveled refs. However, they don't go more than
+one level beyond .git/refs/, so -p shouldn't be necessary since .git/refs/
+should exist.
+ 
+>> +		echo $(git rev-parse HEAD) >.git/$ref/fake || return 1
+> 
+> Hiding the exit code of the "git rev-parse here, but aside fram that why
+> is the echo needed at all, can't we just:
+> 
+> 	git rev-parse HEAD >.git/ref/fake
+> 
+> But even more generally can't we:
+> 
+> 	git update-ref $ref/fake HEAD
+> 
+> ?
 
-Hi Junio,
+This was just a brain fart on my part.
 
-On Thu, 21 Jul 2022, Junio C Hamano wrote:
+> If we need to manually munge the ref store let's add REFFILES prereq.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
-> > On Tue, Sep 07 2021, Johannes Schindelin via GitGitGadget wrote:
-> >
-> >> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >> [...]
-> >> --p::
-> >> ---preserve-merges::
-> >> -	[DEPRECATED: use `--rebase-merges` instead] Recreate merge commits
-> >> -	instead of flattening the history by replaying commits a merge comm=
-it
-> >> -	introduces. Merge conflict resolutions or manual amendments to merg=
-e
-> >> -	commits are not preserved.
-> >
-> > [In reply to an old commit]
-> >
-> > I opened "man git-rebase" today due to an on-list discussion and went
-> > through pretty much:
-> >
-> >  1. /preserve-merges # fails
-> >  2. skimming the SYNOPSIS, forgetting what the new thing is called
-> >  3. Paging down, eventually findinging & remembering the new thing is
-> >     "--rebase-merges".
-> >
-> > I wonder if there's objections to reinstating this in the docs
-> > somewhere, just as something like:
-> >
-> > 	--preserve-merges:
-> > 		An old "rebase" backend which is no longer supported,
-> > 		and which was removed from git in version v2.35.0.
-> >
-> > We don't do that with all flags that we've dropped, but perhaps this o=
-ne
-> > was well known enough to not leave readers hanging...
->
-> My impression is that we consider that we have done so already for a
-> few releases by keeping "DEPRECATED: use rebase-merges", exactly
-> because "this one was well known enough", and now it is time to go
-> one step further, i.e. drop it from the document like the quoted
-> patch does, while recognising an attempt to use the option and
-> giving a custom message than the bog-standard "unknown option".
->
->     $ git rebase --preserve-merges
->     fatal: --preserve-merges was replaced by --rebase-merges
->     Note: Your `pull.rebase` configuration may also be set to 'preserve'=
-,
->     which is no longer supported; use 'merges' instead
->
-> The next step will be to drop that custom error support, I think.
+We don't. Thanks.
 
-Fully agree.
-
-I _could_ see us introducing a sentence in the explanation of
-`--rebase-merges` that leaves a historical note about superseding the
-now-removed `--preserve-merges` option. But such historical notes tend to
-go pretty stale pretty quickly, and eventually cause more confusion than
-clarification.
-
-So just like you said, I'd rather not re-introduce any text mentioning
-`--preserve-merges` into the manual page.
-
-Ciao,
-Dscho
-
---8323328-67386799-1659101093=:223--
+-Stolee
