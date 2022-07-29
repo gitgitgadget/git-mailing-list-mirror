@@ -2,91 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C467C00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 17:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36325C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 17:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238393AbiG2RvQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 13:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33122 "EHLO
+        id S238402AbiG2Rv0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 13:51:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238420AbiG2RvN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 13:51:13 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF9B491D7
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:51:12 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id v16-20020a17090abb9000b001f25244c65dso9066570pjr.2
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:51:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ekzf2Qx0wuosEmmLhPytpXhP4QJxxB3ecRZmrsxQSw8=;
-        b=EtwIdi4t2w9ENcTXBjSaHMRWl/XrDEc5HmvMjkIA9ifIma0BvkFdxYJ8pbh2lzHHB1
-         Q8cdIy4pEgcB37Usl3A3lxFKR1AVtymhikLlWbyolCFrKTswOvevnYLD9t9y/LnXR7nP
-         m+zqT2GT8gE1dbX/QK+YIObSg/Vb9AcOzcWhentbwlr0ou+WH0lHV76JbYlVStrh0yIt
-         YjlcUZs8uL/1sQZzZ9y4yOCag+lOhLfiDDb2V8aF+J6u7s5PPHboQd/Y331IWIXkQ+Is
-         cG6ZuaNpC7Jb5vQLYSKHbpVPBR8fVeIpwgUIiWXIOk+j20JkhQcIjf4g3auQhhHEyq91
-         VuXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ekzf2Qx0wuosEmmLhPytpXhP4QJxxB3ecRZmrsxQSw8=;
-        b=TYcllvHjqtyKTbHg2kTpW+c5IN932FSxY66GerFSJ0kMUwnmRH6fXZcCAHQCJIYNCh
-         UAnFhKPfovTYhG9uebbvK2dKNuH8gglLckwpCVif0wFODGpzj/LzSNxOcfkAaDK1QMuT
-         /pS6cHPWhtjmHUXJV2pGQZBmlq968FgnKsJQsV2WioGSv8KN2E/pxrikVaaUMsu7ZDOn
-         zDoXWPv9/ezhKs7wxa0BJNj1x8g5C52mG+dtqWZpgFJhKRP2NMj/X/Q+T1dlcwjRvT1J
-         Hja4KzLC+PrRVLzrz/HDmbsZKcfeURcyV3IsoYUq9oREH63tcOwx2qMJ2HaFOY8lq22g
-         b1wQ==
-X-Gm-Message-State: ACgBeo000E4YxIqdU3bluord4JYBKbV8LybWZ3EWvIGKNlupRIcPrl6D
-        RSUN2ZCfvs7mGb9yZP1wTqJbMzbIKNk=
-X-Google-Smtp-Source: AA6agR6ERw83JHlj0Vi0UcG79YvcgJinRpH7f/JWBmWhY8XJBDDC/saUMopVwpUHS9/6k+jbYu7nvA==
-X-Received: by 2002:a17:90b:1d91:b0:1f0:7824:1297 with SMTP id pf17-20020a17090b1d9100b001f078241297mr5893862pjb.126.1659117071721;
-        Fri, 29 Jul 2022 10:51:11 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local (192-184-217-7.fiber.dynamic.sonic.net. [192.184.217.7])
-        by smtp.gmail.com with ESMTPSA id z11-20020a17090a468b00b001f339f9cc57sm1574046pjf.54.2022.07.29.10.51.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 10:51:10 -0700 (PDT)
-Date:   Fri, 29 Jul 2022 10:51:08 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] ci: fix the FreeBSD build
-Message-ID: <20220729175108.zk63qonchmrvprsl@Carlos-MacBook-Pro-2.local>
-References: <pull.1308.git.1659097724.gitgitgadget@gmail.com>
- <985e4bb8-0cb1-3980-aaf7-bd3c793f7627@github.com>
+        with ESMTP id S238397AbiG2RvY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 13:51:24 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B1188E10
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:51:22 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 529C51A4AA5;
+        Fri, 29 Jul 2022 13:51:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/i3uJUXuEvJ82oaxtfDNKh8/EaobX2M3g9C4oo
+        Kwx9E=; b=jz5XFHRy5MT/X15gNVItIfMh623t8LLifbjoD1v1OlaRn8+omsqWE/
+        vOoF2e6YyqWC9Y7FIQ4cDoQbCC+qfQc2ino1e7NbD6aunnHGpMpDccCDaUkQ+Onb
+        9uF4fcO6WHfgqv8MUs78602Wke/JydPUXcTTY39ucnMn31EvF1TPY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4AB011A4AA3;
+        Fri, 29 Jul 2022 13:51:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E3CF01A4AA2;
+        Fri, 29 Jul 2022 13:51:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com
+Subject: Re: [PATCH v5 3/6] protocol-caps: initialization bug fix
+References: <20220502170904.2770649-1-calvinwan@google.com>
+        <20220728230210.2952731-4-calvinwan@google.com>
+Date:   Fri, 29 Jul 2022 10:51:17 -0700
+In-Reply-To: <20220728230210.2952731-4-calvinwan@google.com> (Calvin Wan's
+        message of "Thu, 28 Jul 2022 23:02:07 +0000")
+Message-ID: <xmqqo7x77qp6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <985e4bb8-0cb1-3980-aaf7-bd3c793f7627@github.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0CD2061A-0F67-11ED-AC82-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 29, 2022 at 08:58:46AM -0400, Derrick Stolee wrote:
-> On 7/29/2022 8:28 AM, Johannes Schindelin via GitGitGadget wrote:
-> > Since 3a251bac0d1a (trace2: only include "fsync" events if we git_fsync(),
-> > 2022-07-18), the FreeBSD builds are failing in t5351.6. See
-> > https://cirrus-ci.com/task/4577761405698048 for an example. The run at
-> > https://cirrus-ci.com/task/6004115347079168 shows that this patch fixes the
-> > bug.
-> 
-> Thanks for noticing and fixing this bug. The FreeBSD build is slow
+Calvin Wan <calvinwan@google.com> writes:
 
-It usually takes a little more than 7 minutes for a full run, which is IMHO
-less (at least wall time) than the whole CI does; could you elaborate on
-why being "slow" would warrant ignoring its failures?
+> Initialize info. If info.size bit was on due to on-stack garbage,
+> we would have given our response with "size" attribute prefixed,
+> even when the client side never requested it.
+>
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> Helped-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  protocol-caps.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-> and flaky enough that I sometimes ignore its output before submitting
-> a series. Good that it will be green again.
+OK, this is new in this round and it makes sense.
 
-I'd noticed that because it runs outside GitHub actions it sometimes has
-synchronization(ex [1]) issues, but that might be some bug on the integration
-with Cirrus which is easily avoided by looking instead directly to their
-status page:
-
-  https://cirrus-ci.com/github/git/git
-
-Carlo
+> diff --git a/protocol-caps.c b/protocol-caps.c
+> index bbde91810a..2ad9f45c59 100644
+> --- a/protocol-caps.c
+> +++ b/protocol-caps.c
+> @@ -77,7 +77,7 @@ static void send_info(struct repository *r, struct packet_writer *writer,
+>  
+>  int cap_object_info(struct repository *r, struct packet_reader *request)
+>  {
+> -	struct requested_info info;
+> +	struct requested_info info = { 0 };
+>  	struct packet_writer writer;
+>  	struct string_list oid_str_list = STRING_LIST_INIT_DUP;
