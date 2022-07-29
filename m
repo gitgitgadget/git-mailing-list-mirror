@@ -2,152 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45B98C19F2C
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 21:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA690C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 21:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239291AbiG2VZB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 17:25:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
+        id S239247AbiG2VbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 17:31:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231563AbiG2VY6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 17:24:58 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2F4D8BA8B
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 14:24:56 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id AB6685A1A8;
-        Fri, 29 Jul 2022 21:24:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1659129895;
-        bh=rvmh1ziylhkgzmeMvW0x1aMSCs1OIOpjmPj7MsYlp+k=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=hTpTlK94yQLv4coNOkyvl0QRU5veAg+E9WnVtIOE2e4DLH/aDqcfHxB1SrTpyEHHm
-         RjN42GcnvTV9uWvSPlqFC2e/3/2PugWd7dPTIVwFoUY/seMUiVUZRABgfyntNBaCT2
-         sTEhVkFjDjU5Dgp9IE6je98POxWbppXte/ysQm7qpMOZOlwBd+/LLL6pAoPsi767ls
-         b2UYz1Hg9vfINP6HCxWZ/Y66h85CSVe3K1TYFLQsVPYJU8T5ye5Y6Tk61Ebk5/qCd2
-         Kb2PISxg/Yj3PGE5aQYocJvUlcljK36oPzK+nJAo2MOXFzKApFM1Wv8Ocrjwx9boFy
-         gnJ8ep7LMucxWwLNVEyYhwZyGCzYCnOWo5PQCkA0kuKAVQGQOtqWqf58UFrhvuNua7
-         8xnaCdDK69F8xdL07dnk0ls6jXVQf+W6Q/xbcOrNa+NNemAsJLR5eU+qClxTng9hbB
-         b+fCuq43cHpiJempE+mTpjKYoS3XRw5HVAmSsAHqifRZgS5cId8
-Date:   Fri, 29 Jul 2022 21:24:53 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Neeraj Singh <neerajsi@microsoft.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] t5351: avoid relying on `core.fsyncMethod = batch`
- to be supported
-Message-ID: <YuRQJTzA1EtDUFSv@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1308.git.1659097724.gitgitgadget@gmail.com>
- <501a89aa0b2de396b0c7b82b2e24046b9c98c382.1659097724.git.gitgitgadget@gmail.com>
- <xmqq1qu3aoml.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4XwuWTwAPe9LKrPv"
-Content-Disposition: inline
-In-Reply-To: <xmqq1qu3aoml.fsf@gitster.g>
-User-Agent: Mutt/2.2.6 (2022-06-05)
+        with ESMTP id S229977AbiG2VbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 17:31:11 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 887362CCB6
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 14:31:10 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id r6-20020a17090a2e8600b001f0768a1af1so4859811pjd.8
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 14:31:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:references
+         :mime-version:message-id:in-reply-to:date:from:to:cc;
+        bh=fY1qBM10muawTGVmjcmYGNy3HZ+ji8I4xo0MGUN9NO4=;
+        b=hh5gcDkqpK0eO5bOHaDQgl8Eob8LLWLOGPjEPsprHETw+xMFxssF5ZTJdvsrH6AYvj
+         l2iYC0YfOjMqiwkxJD7fQ2CkN/WWeEEGi3sdW1iYcWhnJItiGBMMfUhpOwgMwVSQ6g2p
+         ScFqZagjIbhrVSsDWrYJRlnD78x5cQDacaVrLkDoGptn6eS9ae5km8xpkImVxlgtz3K6
+         Nfgx4HIMWD1ZiU7pQi6WQpk/ICtt8HXRkaaA+ZyY0Egf6fk0RbdX1sz28ZiFZIcPopJe
+         L+M4MKUQeqVUA1dAqIGmrMqpXrUplDE4Mak7VMc0j5PD8YP09PNFLdbXPjbaBVrssFD4
+         +uAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:references
+         :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
+         :cc;
+        bh=fY1qBM10muawTGVmjcmYGNy3HZ+ji8I4xo0MGUN9NO4=;
+        b=8F/kvvm/zO75LTjGEBrJzC0GYXpXm6+cofADQT48okzCmJvXVBLDlnQv3vfLkUa1Sb
+         jQqPspUCC4tAP8KE+dVY95bEOAS7q/89qy1FaRd0TIKIGLju0TYowYiqhCc7p+FAibHf
+         RDkT6JHCrhq/L7aaSIW5YQLKSrXFlhbpEpd5jzl+hTbtpHj/TL6gWdBcDRtehH9TLZoz
+         woalYLriN5vliFJ787ZlimvSBJQh6H2TNX7VtHePD5CBgE7yv6bHcLQQAMmO7VCa9Ptw
+         tU+/JHt5LfdYcYmV1MHddc3PenI36TCduazVLLblp3VGx3QXklVjcrWR2n7Ib7heDzxv
+         CI5w==
+X-Gm-Message-State: AJIora8njTTTiseuebCTYVqhddZyuVgGggG1unZIwdZzs8xoLrD8RLVt
+        9jXW8tODZ3LDeIXrtnzCSiwCKX3DPceS7A==
+X-Google-Smtp-Source: AGRyM1uZO5s4Av7rU4SzL5OmIQ2ZFKq8i7XULdUej4dPnaT9PFaf2avOFwpnNaBghhEU6/EWkAmv73WtpyyjWA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:188e:b0:52a:af7f:e715 with SMTP
+ id x14-20020a056a00188e00b0052aaf7fe715mr5320506pfh.2.1659130269617; Fri, 29
+ Jul 2022 14:31:09 -0700 (PDT)
+Date:   Fri, 29 Jul 2022 14:31:00 -0700
+In-Reply-To: <patch-04.20-27df2efe718-20220728T161116Z-avarab@gmail.com>
+Message-Id: <kl6ly1wbr4h7.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com> <patch-04.20-27df2efe718-20220728T161116Z-avarab@gmail.com>
+Subject: Re: [PATCH 04/20] submodule--helper: remove unused "list" helper
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
---4XwuWTwAPe9LKrPv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Remove the "submodule--helper list" sub-command, which hasn't been
+> used by git-submodule.sh since 2964d6e5e1e (submodule: port subcommand
+> 'set-branch' from shell to C, 2020-06-02).
+>
+> There was a test added in 2b56bb7a87a (submodule helper list: respect
+> correct path prefix, 2016-02-24) which relied on it, but the right
+> thing to do here is to delete that test as well.
+>
+> That test was regression testing the "list" subcommand itself. We're
+> not getting anything useful from the "list | cut -f2" invocation that
+> we couldn't get from "foreach 'echo $sm_path'".
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/submodule--helper.c | 40 -------------------------------------
+>  t/t7400-submodule-basic.sh  | 25 -----------------------
+>  2 files changed, 65 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index ac2553ba9d3..47ed24c6a60 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -266,45 +266,6 @@ static char *get_up_path(const char *path)
+>  	return strbuf_detach(&sb, NULL);
+>  }
+> =20
+> -static int module_list(int argc, const char **argv, const char *prefix)
+> -{
+> -	int i;
+> -	struct pathspec pathspec;
+> -	struct module_list list =3D MODULE_LIST_INIT;
+> -
+> -	struct option module_list_options[] =3D {
+> -		OPT_STRING(0, "prefix", &prefix,
+> -			   N_("path"),
+> -			   N_("alternative anchor for relative paths")),
+> -		OPT_END()
+> -	};
+> -
+> -	const char *const git_submodule_helper_usage[] =3D {
+> -		N_("git submodule--helper list [--prefix=3D<path>] [<path>...]"),
+> -		NULL
+> -	};
+> -
+> -	argc =3D parse_options(argc, argv, prefix, module_list_options,
+> -			     git_submodule_helper_usage, 0);
+> -
+> -	if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
+> -		return 1;
+> -
+> -	for (i =3D 0; i < list.nr; i++) {
+> -		const struct cache_entry *ce =3D list.entries[i];
+> -
+> -		if (ce_stage(ce))
+> -			printf("%06o %s U\t", ce->ce_mode,
+> -			       oid_to_hex(null_oid()));
+> -		else
+> -			printf("%06o %s %d\t", ce->ce_mode,
+> -			       oid_to_hex(&ce->oid), ce_stage(ce));
+> -
+> -		fprintf(stdout, "%s\n", ce->name);
+> -	}
+> -	return 0;
+> -}
+> -
 
-On 2022-07-29 at 16:07:46, Junio C Hamano wrote:
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->=20
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > On FreeBSD, this mode is not supported. But since 3a251bac0d1a (trace2:
-> > only include "fsync" events if we git_fsync(), 2022-07-18) t5351 will
-> > fail if this mode is unsupported.
-> >
-> > Let's address this in the minimal fashion, by detecting that that mode
-> > is unsupported and expecting a different count of hardware flushes in
-> > that case.
-> >
-> > This fixes the CI/PR builds on FreeBSD again.
-> >
-> > Note: A better way would be to test only what is relevant in t5351.6
-> > "unpack big object in stream (core.fsyncmethod=3Dbatch)" again instead =
-of
-> > blindly comparing the output against some exact text. But that would
-> > pretty much revert the idea of above-mentioned commit, and that commit
-> > was _just_ accepted into Git's main branch so one must assume that it
-> > was intentional.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  bulk-checkin.c                  |  2 ++
-> >  t/t5351-unpack-large-objects.sh | 10 ++++++++--
-> >  2 files changed, 10 insertions(+), 2 deletions(-)
->=20
-> I am inclined to take this as-is for now.
+Hooray for nuking dead code! Thanks :)
 
-I think this patch is a strict improvement over the status quo, despite
-what I'm going to mention below.
+I'm happy that we're taking a sh -> C path that's catching little things
+like this.
 
-> But it inherits from 3a251bac0d1a the general "we should be able to
-> count the value" expectation, which may not be the best approach to
-> run this test; asking Acks from those originally involved in this
-> area and possibly ideas to test this in a more robust way.
-
-While it may not matter in this test, I noticed that the metrics we use
-need not be accurate in multi-threaded programs.  We use integers of
-static intmax_t which isn't necessarily atomic across threads.  Even if
-we assumed word-sized increments were atomic[0], this type might be 64
-bits on a 32-bit system.
-
-I am aware that we don't use threads in many places, but in general we
-should be safely able to assume that we can perform an fsync on any
-thread without thread safety problems because that's the assumption a
-reasonable Unix programmer would make.  Even if it's not a problem now,
-it could well be in the future, and we should either fix this (say, with
-C11 atomic integers[1]) or put a note on the metrics functions that they
-may be wrong and stop using them in tests.
-
-I would, in general, prefer that if we add wrappers that wrap common
-Unix functions we ensure that they provide the same guarantees as the
-common Unix functions we're wrapping.  I realize I may sound fussy, but
-I've been fixing giant thread-safety problems recently and it's not fun.
-
-[0] This is not, in general, a safe assumption to make, since most RISC
-architectures are load-store.
-[1] This would necessitate moving to C11, which is fine with me (and
-already required on Windows), but others may have objections to.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---4XwuWTwAPe9LKrPv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.35 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYuRQJAAKCRB8DEliiIei
-gWx4AP48ZO86HNSqu8TON/NiDLKHk2L07cswuYoCq/Gl1H3cMAEA/wd35XNCRAGB
-4AZb9VJKOQJw0yB3fasg//BpfiA2Bg4=
-=tLgN
------END PGP SIGNATURE-----
-
---4XwuWTwAPe9LKrPv--
+>  static void for_each_listed_submodule(const struct module_list *list,
+>  				      each_submodule_fn fn, void *cb_data)
+>  {
+> @@ -3340,7 +3301,6 @@ struct cmd_struct {
+>  };
+> =20
+>  static struct cmd_struct commands[] =3D {
+> -	{"list", module_list, 0},
+>  	{"clone", module_clone, SUPPORT_SUPER_PREFIX},
+>  	{"add", module_add, 0},
+>  	{"update", module_update, SUPPORT_SUPER_PREFIX},
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index 6a77d817a82..b50db3f1031 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -1255,31 +1255,6 @@ test_expect_success 'submodule add clone shallow s=
+ubmodule' '
+>  	)
+>  '
+> =20
+> -test_expect_success 'submodule helper list is not confused by common pre=
+fixes' '
+> -	mkdir -p dir1/b &&
+> -	(
+> -		cd dir1/b &&
+> -		git init &&
+> -		echo hi >testfile2 &&
+> -		git add . &&
+> -		git commit -m "test1"
+> -	) &&
+> -	mkdir -p dir2/b &&
+> -	(
+> -		cd dir2/b &&
+> -		git init &&
+> -		echo hello >testfile1 &&
+> -		git add .  &&
+> -		git commit -m "test2"
+> -	) &&
+> -	git submodule add /dir1/b dir1/b &&
+> -	git submodule add /dir2/b dir2/b &&
+> -	git commit -m "first submodule commit" &&
+> -	git submodule--helper list dir1/b | cut -f 2 >actual &&
+> -	echo "dir1/b" >expect &&
+> -	test_cmp expect actual
+> -'
+> -
+>  test_expect_success 'setup superproject with submodules' '
+>  	git init sub1 &&
+>  	test_commit -C sub1 test &&
+> --=20
+> 2.37.1.1167.g38fda70d8c4
