@@ -2,120 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C47C9C00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 22:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A42B4C19F2B
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 22:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239214AbiG2WJk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 18:09:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45346 "EHLO
+        id S239123AbiG2WTL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 18:19:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230089AbiG2WJj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 18:09:39 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A99078BABC
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 15:09:38 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id nu8-20020a17090b1b0800b001f3244a8489so2591699pjb.4
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 15:09:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:references
-         :mime-version:message-id:in-reply-to:date:from:to:cc;
-        bh=tbankgoyRFKUU+WiVF6UeELM41v3HNrbVoYEYWiwYk0=;
-        b=WclPjjbGDCWH2Y1gmgMgJu0kZS9zCPoy7NyXCP5YWSQsFV9jEdWNAOZcWkqldniQEO
-         SwCS9qgM2Gx8GtAJLgHYEx7pJ+0bdYUYbzEOa3ySf68NQnG8mV9NrekIustK1R7e0mEx
-         r08Lb3aThbSGjNE9eAQIFDRYDtAvwJqpQR1QLcaPQNM7AiqSJQy/Tnh4nYV+dhDt+ldK
-         EPKxH83R/0V8vTJkFwar3FZ3AFtOQTXTyQorVmwO7TfNTD8JzyihAZq2P6yxRUeOMVhV
-         5vmHA3nsbBv5p1tult7w7tPQm8PGPSC/N6wK9zQaST+AgV9moG+cJe5vkBYxoyeb7ljg
-         gYuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:references
-         :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
-         :cc;
-        bh=tbankgoyRFKUU+WiVF6UeELM41v3HNrbVoYEYWiwYk0=;
-        b=C31quys9u/wU6soYXe5qZqsFYcgfE5mfs6XNPZo16h1kUaPuz+O/jgR9HqlvrDk6Eb
-         Lk4KlkGfHo6LyeLXGsbazQNBNgeQipqwDM+d9Gmbg2UQzriXTi+l65QJoHKkowUpsWtB
-         vxHldZgCgwU3JIP9/XgNpOI97HIa05IrMUQrcvlyj6Xn30osucljxjHSgr+xWWsVvTn9
-         COae3xOATfqMNUhKPJNPEJEC5x13PC+XLFJvX+T1NiHKRkEbNLa+WtLGDvDD9ja8YJD6
-         MK0qKfJLnKbiI5+rmAy6h/G57E4f31zJ4gYJQm4ZBmNLCIyCR8JirH8gZcBnOByyaihY
-         Qv9A==
-X-Gm-Message-State: ACgBeo2pOMOcxZMrHhb4n8Tbyt0dJyVLaCefcEFM92ACUS+Us0i4rYxU
-        6RLZpwA2kZ7xEeCFUssG03mwx0ipNUfzNQ==
-X-Google-Smtp-Source: AA6agR6OW7/ARyETYL32giGz2QvtrbSyKD+qGzZdcg5fJ84HjvpRKOM5uHEZ/snjKzVpAbCfrPgRSOW9WaV8yg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:3506:b0:1f0:81a:6477 with SMTP id
- ls6-20020a17090b350600b001f0081a6477mr7029822pjb.46.1659132578245; Fri, 29
- Jul 2022 15:09:38 -0700 (PDT)
-Date:   Fri, 29 Jul 2022 15:09:36 -0700
-In-Reply-To: <patch-14.20-b364f3200d8-20220728T161116Z-avarab@gmail.com>
-Message-Id: <kl6lmtcrr2ov.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com> <patch-14.20-b364f3200d8-20220728T161116Z-avarab@gmail.com>
-Subject: Re: [PATCH 14/20] submodule--helper: pass a "const struct
- module_clone_data" to clone_submodule()
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S238953AbiG2WTJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 18:19:09 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B81747AE
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 15:19:08 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 345F41A4DE5;
+        Fri, 29 Jul 2022 18:19:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=R9iO3HxhMaKCGCQA9L+efg8AwUUvSzc6rUHphV
+        KMpIs=; b=Fsed0CpCyKRVMMFKGEsMc8wIfG+XLIV0GwbZ8SsWqBSeCHMTSlk54S
+        3IZjtGa23e9w6G5ldfeq1adFDuGkVaJnT6eTrBg62aylNZqetPBxMfEvzBo0u91g
+        flGBxtqxAC2jEGeC8l728RuDQhakyfiBV2H80EIBrqw0qoOG0BBFA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B2261A4DE4;
+        Fri, 29 Jul 2022 18:19:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9CD0B1A4DE1;
+        Fri, 29 Jul 2022 18:19:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eugen Konkov <kes-kes@yandex.ru>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Re* --creation-factor=100 does not show code
+References: <1196830250.20220726145447@yandex.ru>
+        <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr>
+        <xmqqo7x9ch7n.fsf_-_@gitster.g>
+        <85snn12q-po05-osqs-n1o0-n6040392q01q@tzk.qr>
+Date:   Fri, 29 Jul 2022 15:19:03 -0700
+In-Reply-To: <85snn12q-po05-osqs-n1o0-n6040392q01q@tzk.qr> (Johannes
+        Schindelin's message of "Fri, 29 Jul 2022 15:16:12 +0200 (CEST)")
+Message-ID: <xmqq5yjf4l60.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 74BABB76-0F8C-11ED-85F9-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Add "const" to the "struct module_clone_data" that we pass to
-> clone_submodule(), which makes the ownership clear, and stops us from
-> clobbering the "clone_data->path".
->
-> We still need to add to the "reference" member, which is a "struct
-> string_list". Let's do this by having clone_submodule() create its
-> own, and copy the contents over, allowing us to pass it as a
-> separate parameter.
+> As to the original claim that percentages only go from 0-100, that is
+> easily refuted. If you wanted to pay $12 for something but ended up having
+> to pay $30, you'll end up having paid 150% more than planned. There you
+> are. A percentage that is greater than 100.
 
-I can't help but think that this would be easier to review as part of
-the leaks series since:
+Playing word games and nitpicks on what I said may have helped you
+stroke your ego and annoy other folks (including me) in the
+discussion, but unfortunately I do not think it is helping us get
+closer to improve either the documentation or behaviour of
+range-diff.  Now, let's be a bit more constructive and find a way to
+unconfuse people like the original reporter?
 
-- Outside of leaks, I don't think we really care about ownership (though
-  please please correct me if I'm off base).
+When we say an option's value is expressed in <percent>, unless we
+are careful, people will assume that the valid value the option will
+take will lie between 0 and 100, and you cannot blame them.  IOW,
+while the word "percent" may be 100% correct in your mind, the way
+it is used to describe the feature in "git range-diff --help", it
+was not sufficient to help readers.
 
-- The ownership of "reference" is still quite messy (downstream code
-  might append to it, but its members are sometimes free()-able and
-  sometimes not), so it's hard to visualize what we're getting out of
-  this change without seeing the corresponding leak fix.
+If we were describing a hypothetical Git subcommand that shows a
+picture of a panda, with an option to show the picture in different
+sizes, perhaps "git panda --scale=<percent>" option is described
+like so:
 
-and...
+	--scale=<percent>::
+		Instead of showing the picture of a panda at its
+		default size, show it scaled.  "--scale=50" means
+		show it at 50%, i.e. half the width and height.
+		"--scale=200" would show the picture at twice the
+		width and height.
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 6cedcc5b239..e235acce985 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1569,18 +1567,20 @@ static char *clone_submodule_sm_gitdir(const char=
- *name)
->  	return sm_gitdir;
->  }
-> =20
-> -static int clone_submodule(struct module_clone_data *clone_data)
-> +static int clone_submodule(const struct module_clone_data *clone_data,
-> +			   struct string_list *reference)
->  {
->  	char *p;
->  	char *sm_gitdir =3D clone_submodule_sm_gitdir(clone_data->name);
->  	char *sm_alternate =3D NULL, *error_strategy =3D NULL;
->  	struct child_process cp =3D CHILD_PROCESS_INIT;
-> +	const char *clone_data_path;
-> =20
->  	if (!is_absolute_path(clone_data->path))
-> -		clone_data->path =3D xstrfmt("%s/%s", get_git_work_tree(),
-> -					   clone_data->path);
-> +		clone_data_path =3D xstrfmt("%s/%s", get_git_work_tree(),
-> +					  clone_data->path);
+and such a description would make it plenty clear that the valid
+value range is not constrainted in 0..100.  We'd need something
+similar to help users of "git range-diff".
 
-- (this is pretty minor) It feels weird to see that we're intentionally
-  leaking clone_data_path at its inception. We aren't introducing any
-  new leaks, but moving this to the leaks series makes it clearer that
-  we eventually do the right thing.
+Thanks.
