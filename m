@@ -2,150 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68602C00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 17:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C89EAC04A68
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 17:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237071AbiG2RIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 13:08:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
+        id S237296AbiG2RMP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 13:12:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232381AbiG2RIu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 13:08:50 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C73B6C10D
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:08:49 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id l8-20020a170903244800b0016dd492f4f6so1124237pls.6
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:08:49 -0700 (PDT)
+        with ESMTP id S233281AbiG2RMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 13:12:14 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 011B96C116
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:12:10 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id z17so2038703wrq.4
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:references
-         :mime-version:message-id:in-reply-to:date:from:to:cc;
-        bh=UKe9bTXCjPavS8tSMKzQ49zHzscUY/02uZ25HrWoD/s=;
-        b=V/Z3mbXHfIp+kJCgPmXg5awRdQIiHpVS4FB9tT4PxuHpkFObFupRXOxzda7V45w9Vp
-         2fG18HlhF2D4Xe2u6p3nALHfxTau4mUU9MbxSobVpIhxsY2vUhZSjFMGK+mpEFB4oYxZ
-         WGzbMTGXY7L6s3OAcHSq/bw0/AFul5kdTwcMhlZYDfh1rnLgQ2Vb3BlxnieFa6W7hENl
-         /kwxqTsdtsoUXO/xq4xk8a/AdaqYJNJRqg2amY/VkUeoIe5mIdl5F4YIvnWvOrvgif1p
-         q6o7g+icirdHvIggU5Zqs+2IzQ3j8DUOkm8YUqeroJ2i7GMlN4l86VgyPqJp8GfsyNj3
-         cPHg==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=fyL3xY6X5zYi9WlZWPCL7SKHIujEQ5pgPDx9ouoanUE=;
+        b=c/9geieItN6upZWQYubtVnQ72sFgDMZy+bmTWqFzXmn1yhNYrq5BsU03t/hnfdvoXG
+         7uL6GXODNl7e/fwGdCiO//w5TFCDogExremm0+7cvyDYw6pDs4u41ddLSFTu/ipW987x
+         HgZXfizXgtau9Yu27c92JC0uLZcfEKOzm7GlXi5JWN5zdmuE9F6p/d2UZS4MS0X8WM+z
+         TjOrK89Spq77/YtDF9IDXeEcNvCVWqydF8r+4Ts2hkvm1Qh4CQK71PvlvzmexNtj+nrc
+         GVibLrZaUafQHh9MKXVJjO+1vJ7C/sbZa4Pug1nuyZoJfmeaUckZbfxQng1w/8F5teiU
+         t66g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:references
-         :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
-         :cc;
-        bh=UKe9bTXCjPavS8tSMKzQ49zHzscUY/02uZ25HrWoD/s=;
-        b=wuTo8nV3EvANfoQwZ2b2VCDwHx84gEP/eOhpdobEhr7Fyru9l5vqlIdypOR3FqtCi1
-         s/UHPFpPTi9TBzs0P+17cT1gOllEg3jpJbOtmoNaaYeyH6QDOirGebA3IwGzNy9fWcX8
-         FDAU9HQLaqLWtn3LQyn6LhxnSSqGjF1ykAwtEx3ykD3Yr18x/8wGYZ5Za0t1mEKCk+sN
-         Msu40N/rvlBFP1K57RN0Wd3DFk3Q4LtyPRXC5ijhIPN58kE8fhZyuJ8A0l3YnyPiy5Qo
-         LFv/5cI9d3gltpvxL6qySlhve4vkxaB+ctT5tfq2N86p8Bo/gCF9RcfyvoxWitMXBKNH
-         b1Dg==
-X-Gm-Message-State: ACgBeo3cKRYieMyhIpKFaAKeLsztH+grNPEN5XwhtnWhJawC6xHwuYdS
-        mSb3/zf6aQu+vUaa2BQMm/SX2BmtIyDs+g==
-X-Google-Smtp-Source: AA6agR6cZhtICuzlrE2uYMML/djLMGVQugPzXLSYhsI728j8sxOYb1znkTZHOpuadrTl6tcKhzC3yCRSpdOSZw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:bcca:b0:16d:3e8a:bb5a with SMTP
- id o10-20020a170902bcca00b0016d3e8abb5amr4834924pls.94.1659114529127; Fri, 29
- Jul 2022 10:08:49 -0700 (PDT)
-Date:   Fri, 29 Jul 2022 10:08:47 -0700
-In-Reply-To: <patch-13.20-afe34d8b73b-20220728T161116Z-avarab@gmail.com>
-Message-Id: <kl6l4jyzsv6o.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com> <patch-13.20-afe34d8b73b-20220728T161116Z-avarab@gmail.com>
-Subject: Re: [PATCH 13/20] submodule--helper: stop conflating "sb" in clone_submodule()
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=fyL3xY6X5zYi9WlZWPCL7SKHIujEQ5pgPDx9ouoanUE=;
+        b=TA/GPZpj9pN+NBceuv5Mb9w8tVnmIpeoKb4hmyXLsM7zUo79d09EYDySGKShuwSbH8
+         NYXXZITDGNC8ul80TQxp3rnotv4o7CtZpzjtvg8likCfgefX9OUVHdBe1gyHabGVKWgS
+         jMT+sAh5lakeR0pFtMk/skt6sKdqbuZi49g792LCd7mz/ZZDehS6Hz+2I7Bzg+2+URWs
+         gqgEq1l/zC8S3OvqZW2uKYdRQi2QEpS3cHMagThbrBpweDiWW8HfyH1jLg7Ie/ZcP1Rn
+         CggJ9gCJqTVISQkTiw8Bylt8iD6dm+EJklLaVByfKrOFDo469byF4pQQIYyVkEb2ouj9
+         2v7Q==
+X-Gm-Message-State: ACgBeo2vow/Vtvb8YOpuMTlGC/HxdPvfHfOD3p+Jv2HJe95OTbgxUoTO
+        FQhFxc1Ad/u5j2hANhuawgSchCStrjI=
+X-Google-Smtp-Source: AA6agR6Ep9y56OEZctqUcRqJjSzRa9tVjuplJIf2Q85XGBLraPtVLsS7/S5DUbyDEd42/UsQ9QkHEg==
+X-Received: by 2002:a5d:453a:0:b0:21e:cfb2:b325 with SMTP id j26-20020a5d453a000000b0021ecfb2b325mr2961086wra.540.1659114728839;
+        Fri, 29 Jul 2022 10:12:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r10-20020a05600c284a00b003a3561d4f3fsm4694482wmb.43.2022.07.29.10.12.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Jul 2022 10:12:08 -0700 (PDT)
+Message-Id: <pull.1307.v2.git.1659114727.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1307.git.1659084748350.gitgitgadget@gmail.com>
+References: <pull.1307.git.1659084748350.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 29 Jul 2022 17:12:05 +0000
+Subject: [PATCH v2 0/2] merge-ort: clean up after failed merge
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+I was investigating why seen's CI runs fail, and came up with this fix.
 
-> Refactor the two uses of a "struct strbuf sb" such that each of them
-> exists in its own scope. This makes the control flow clearer.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  builtin/submodule--helper.c | 25 +++++++++++++++++--------
->  1 file changed, 17 insertions(+), 8 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index f74957444e1..6cedcc5b239 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1557,16 +1557,24 @@ static void prepare_possible_alternates(const cha=
-r *sm_name,
->  	free(error_strategy);
->  }
-> =20
-> -static int clone_submodule(struct module_clone_data *clone_data)
-> +static char *clone_submodule_sm_gitdir(const char *name)
->  {
-> -	char *p, *sm_gitdir;
-> -	char *sm_alternate =3D NULL, *error_strategy =3D NULL;
->  	struct strbuf sb =3D STRBUF_INIT;
-> -	struct child_process cp =3D CHILD_PROCESS_INIT;
-> +	char *sm_gitdir;
-> =20
-> -	submodule_name_to_gitdir(&sb, the_repository, clone_data->name);
-> +	submodule_name_to_gitdir(&sb, the_repository, name);
->  	sm_gitdir =3D absolute_pathdup(sb.buf);
-> -	strbuf_reset(&sb);
-> +	strbuf_release(&sb);
-> +
-> +	return sm_gitdir;
-> +}
-> +
-> +static int clone_submodule(struct module_clone_data *clone_data)
-> +{
-> +	char *p;
-> +	char *sm_gitdir =3D clone_submodule_sm_gitdir(clone_data->name);
-> +	char *sm_alternate =3D NULL, *error_strategy =3D NULL;
-> +	struct child_process cp =3D CHILD_PROCESS_INIT;
-> =20
->  	if (!is_absolute_path(clone_data->path))
->  		clone_data->path =3D xstrfmt("%s/%s", get_git_work_tree(),
-> @@ -1624,6 +1632,8 @@ static int clone_submodule(struct module_clone_data=
- *clone_data)
->  			die(_("clone of '%s' into submodule path '%s' failed"),
->  			    clone_data->url, clone_data->path);
->  	} else {
-> +		struct strbuf sb =3D STRBUF_INIT;
-> +
->  		if (clone_data->require_init && !access(clone_data->path, X_OK) &&
->  		    !is_empty_dir(clone_data->path))
->  			die(_("directory not empty: '%s'"), clone_data->path);
-> @@ -1631,7 +1641,7 @@ static int clone_submodule(struct module_clone_data=
- *clone_data)
->  			die(_("could not create directory '%s'"), clone_data->path);
->  		strbuf_addf(&sb, "%s/index", sm_gitdir);
->  		unlink_or_warn(sb.buf);
-> -		strbuf_reset(&sb);
-> +		strbuf_release(&sb);
->  	}
+Changes since v1:
 
-As Junio mentioned in
-https://lore.kernel.org/git/xmqqlesmf9or.fsf@gitster.g, we could also
-replace this with xstrfmt(). I think that gets rid of all of the
-users of "sb", so I doubt we'll even need this patch once we
-make that change :)
+ * Rebased onto en/merge-ort-perf.
+ * Now we're not only cleaning up the merge data structure, but also leaving
+   the Trace2 region when returning early from merge_switch_to_result().
 
-> =20
->  	connect_work_tree_and_git_dir(clone_data->path, sm_gitdir, 0);
-> @@ -1653,7 +1663,6 @@ static int clone_submodule(struct module_clone_data=
- *clone_data)
->  	free(sm_alternate);
->  	free(error_strategy);
-> =20
-> -	strbuf_release(&sb);
->  	free(sm_gitdir);
->  	free(p);
->  	return 0;
-> --=20
-> 2.37.1.1167.g38fda70d8c4
+Johannes Schindelin (2):
+  merge-ort: clean up after failed merge
+  merge-ort: do leave Trace2 region even if checkout fails
+
+ merge-ort.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+
+base-commit: 557ac0350d9efa1f59c708779ca3fb3aee121131
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1307%2Fdscho%2Fmerge-ort-impl-leakfix-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1307/dscho/merge-ort-impl-leakfix-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1307
+
+Range-diff vs v1:
+
+ 1:  128f77f7f34 ! 1:  082c7ffa41f merge-ort: clean up after failed merge
+     @@ merge-ort.c: void merge_switch_to_result(struct merge_options *opt,
+      +			merge_finalize(opt, result);
+       			return;
+       		}
+     - 
+     + 		trace2_region_leave("merge", "checkout", opt->repo);
+      @@ merge-ort.c: void merge_switch_to_result(struct merge_options *opt,
+       						    &opti->conflicted)) {
+       			/* failure to function */
+     @@ merge-ort.c: void merge_switch_to_result(struct merge_options *opt,
+      +			merge_finalize(opt, result);
+       			return;
+       		}
+     - 	}
+     + 		trace2_region_leave("merge", "record_conflicted", opt->repo);
+ -:  ----------- > 2:  d2e1af0f922 merge-ort: do leave Trace2 region even if checkout fails
+
+-- 
+gitgitgadget
