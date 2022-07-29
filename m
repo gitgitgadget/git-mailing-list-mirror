@@ -2,92 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E43E2C00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 21:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE33FC00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 21:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238987AbiG2VVU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 17:21:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38724 "EHLO
+        id S239238AbiG2VXs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 17:23:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbiG2VVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 17:21:19 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0046482FB9
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 14:21:17 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-324293f1414so28316197b3.0
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 14:21:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=CbL9Ir2KX5q6Cu2LUfQ2AMDXH05QQsfhfSAt3jRhbxU=;
-        b=ROJz7Vf47jaKGmSTOWMtG3D46Yi+qdRzypb2Oxt+msBjmBI53dyoY3ZdUjQgRztKCL
-         GBl5Sx5QDZwZ4Jzm5zsEF3qfZWYh0unlPdQpV/crLIbKqxl6BWCu8rqYMDvHOz48QS6K
-         J8BZZS5/UsGqW6q5I3L3bQ8ls/sy1+mh4tAY09z7xBNLX875AyClB9/+Xt52h+kx3wuE
-         6GSr/H96NcmJk3zEiyOJNLB1k0E2jJrjQdKNne9TSuSc5uWh+DLidv6jjHmogfMK23ki
-         ihYTOWeE7MkFz71XZsq1/xlvAW77M36T0VDV+TEUExf4Idk2TYeduLT0yg2yiUy5eBCf
-         SuqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=CbL9Ir2KX5q6Cu2LUfQ2AMDXH05QQsfhfSAt3jRhbxU=;
-        b=SLMfxunLTpIDFPj38oBQsnSBXDImUnES7pBrQMEtiqoZq/55qIGDfU0F28k6mFrva5
-         nbY6I1sF9DzwmCaDcgE4msYwiymEPptyjCCXD9BIAKPVEs04t6CUfWggcVTvjHDV+/ey
-         HXbpdNKXAAbhpbPFI2DzpjhQgya6oI0RlB3ZoHpJcCXdwbHg1AYxak4uXmeJ1uOSiiKo
-         5nYntYUW/AcguRI9aqgIv+7TfsWCJ7r7SaC+bdJV5LZ5y0bjSdWrMeQNAd0O5C+rQDbo
-         Wp9yAEV0B0VM6S8S+lJQ/W65NqTgMTa7yRdyjhchpEsmOgTL9Tp0sStEDdb5QvFtTcmo
-         SZzQ==
-X-Gm-Message-State: ACgBeo1jLx6qnTdymzlqjkiOUcsi5B71tzCM5HfOqUcEE9DV6hGFX06y
-        42n7I1zob2Qea9JB17PMzWFQqjdQmOVQH4HAivgdDw7vOEw=
-X-Google-Smtp-Source: AA6agR5WbD+JAKzURD649B1Tr8KYr82EupY/O7zbAHUHpGkkZzsfhl6U0wqn62m7SQDs+IL8ZvthqpIqUtU0hbtZ8G8=
-X-Received: by 2002:a81:4702:0:b0:31f:2ab0:8770 with SMTP id
- u2-20020a814702000000b0031f2ab08770mr4738995ywa.157.1659129676936; Fri, 29
- Jul 2022 14:21:16 -0700 (PDT)
+        with ESMTP id S238328AbiG2VXq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 17:23:46 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4261988CCF
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 14:23:46 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CB8CE1A41CE;
+        Fri, 29 Jul 2022 17:23:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ohCG0w838ly9EF1PwcL0S8Wi6UybQYS6LFmbDL
+        xUaTQ=; b=B9bZ9shmfxlvVtfk8jjW/ru9W7YtTxdr5DJUzcwKeLriOXBmp0pECH
+        qRP6rRttSLPkZv9tgIuqZ1vIBGPgrcJDx9sdp29T5g1Gu4BRGHTvYwMAJgrAs8Qv
+        JjHwYeFPTCmsmaCmnNXpXHyetAKSIfSJO2pig3SUdxYpLYw0azOLo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C4AED1A41CD;
+        Fri, 29 Jul 2022 17:23:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5DF8F1A41CB;
+        Fri, 29 Jul 2022 17:23:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqn?= =?utf-8?B?biBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH] merge-file: fix build warning with gcc 4.8.5
+References: <365e01e93dce582e9d926e83bdc6891310d22699.1659084832.git.congdanhqx@gmail.com>
+        <xmqqbkt7api9.fsf@gitster.g>
+        <YuQ60ZUPBHAVETD7@coredump.intra.peff.net>
+        <CAPig+cSiAEgopj1zwR4kUG=ZLJQrNAVj0P5g4veWYD-ERr=irw@mail.gmail.com>
+        <YuRKe/LdNs0u7G2w@coredump.intra.peff.net>
+Date:   Fri, 29 Jul 2022 14:23:41 -0700
+In-Reply-To: <YuRKe/LdNs0u7G2w@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 29 Jul 2022 17:00:43 -0400")
+Message-ID: <xmqqzggr4nqa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 29 Jul 2022 23:21:06 +0200
-Message-ID: <CAP8UFD2OngQR7KOS3rAFOK0z9VhPNHbXC3PfpO0c4QXP=OhW1Q@mail.gmail.com>
-Subject: Draft of Git Rev News edition 89
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Tao Klerks <tao@klerks.biz>, Tassilo Horn <tsdh@gnu.org>,
-        Bruno Brito <bruno@git-tower.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: B88270F4-0F84-11ED-AE35-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Jeff King <peff@peff.net> writes:
 
-A draft of a new Git Rev News edition is available here:
+> On Fri, Jul 29, 2022 at 04:48:55PM -0400, Eric Sunshine wrote:
+>
+>> Leaving aside for the moment the problem with Apple's oddball invented
+>> version numbers for `clang`, should this patch also take older `clang`
+>> versions into consideration rather than focusing only on `gcc`? (Of
+>> course, `clang` could be dealt with in a separate patch if you'd
+>> rather not worry about it here.)
+>
+> I was just fixing the reported gcc issue, and forgot totally that clang
+> had been mentioned in previous rounds. I'd be happy to just see a clang
+> patch on top of this once somebody figures out the right versions (but
+> it may be impossible without figuring out the oddball Apple thing).
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-89.md
+I am willing to say that we do not care about "oddball Apple thing"
+and have developers on that platform to propose how to handle their
+compiler.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+In any case, https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53119
+seems to indicate that given enough time this problem will
+disappear, so I'd refrain from suggesting to use -Wno-missing-braces
+everywhere.
 
-  https://github.com/git/git.github.io/issues/589
-
-You can also reply to this email.
-
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
-
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition late on Sunday
-July 31st.
-
-Thanks,
-Christian.
+Thanks.
