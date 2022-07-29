@@ -2,61 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07E95C00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 09:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDCFFC00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 09:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235499AbiG2JGf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 05:06:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42872 "EHLO
+        id S235518AbiG2JGy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 05:06:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235315AbiG2JGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 05:06:34 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 600031B797
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 02:06:33 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id h21-20020a17090aa89500b001f31a61b91dso4952508pjq.4
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 02:06:33 -0700 (PDT)
+        with ESMTP id S235516AbiG2JGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 05:06:51 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6FA50065
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 02:06:50 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id g12so4115296pfb.3
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 02:06:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Hd+ZbNougF/wSxwgd4qIi42pUrwOHU1UKeNnzLQ3A78=;
-        b=KEmQc1SRTSeJdi8NxwLsNXQAkmax21+xTX+6iy80u8GDXD+FAS8w7HUSHBr1OwGLnT
-         mcayZ7dR5U71ygIxe82gRAs8MhiRgruZaOGtN9yQ92D5nxpKT9cetVyOnKkpqVSw0/Fj
-         8KvOuRGVZuw+OiR+ai6I8g+OcXIRuSljvZ7xzg27Fyvy/JAponxEYy+bmqVVYBeNG18d
-         VbL527D5dI4lENgh0bCS+NlxAjn3IGfuY4xeU11J6hxMgQzVMnLcn1wxXTS3QHm7Gz1T
-         YESw2suD8GA/TYNjl1etc4o++q9zpN7jv8it5r22YykZelrMs6SVw4Y/Sq41V+BM4RHM
-         8PNQ==
+        bh=MkAX6ZBVrA9kmFQxxP23Uvdnv/wtzI0qjdLbfzDFpXM=;
+        b=dZ1tqAnYPkHIgayqP7w7J5b2/na6V24ymGf26xYirS35Ma0M0921bT7LZcdUbG+oyQ
+         FHK0FnCqvwgF1QAImJGf11/nTxlTH1yMuB41d/vbrzdqHxSyN4XvoZOZsbQZTRLcxOiv
+         j6QK1hKPskuAcLjGaAW1S4Hiw+ACywZm7NaEKDSc9rxliTbLcQPFPkm9BWjepNetwfB3
+         1yzrIpZCU1HTEfS47QkksjYBCB8R3notcK/a1xj0sT+emfjMGJ2T+btva5jVGo6uPU/l
+         qEfEq1YHzR3ZaNLGhNYvvuIFeJRjuo03RWajd2ZfS1+7PyVseEvs6xtffxID21N4EvUH
+         gOjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Hd+ZbNougF/wSxwgd4qIi42pUrwOHU1UKeNnzLQ3A78=;
-        b=V0xxDw8yNCvSX6RjASxxgtlu+1qDSerP2yhPr1vuBOeNka92NtWRJDoZ8hzZL56WGI
-         1tdjy2jRrMsreyD00Ymk8yPBOARhT4Cm018Lch7hHbrRG/fb2jAP4NZ3dawaI2uQfRG1
-         Kna2atyivG1DmKG69UfcyYRFowiqDbAWyKrk6B6a7LEAMI8LRKq/r22VlDSLciNbr9MB
-         VgoIxMaanDb/NkiVy+L25kOnqyOUMkv5ETcr4ZOHKFlGVAWFf1dcDWxjI0xTR22lIRaP
-         w/s78EY7aoe7R47uUARxtMk1gA5M9IUBCIQ9s8XKHF8cYC2Ckp67PeX0SGDxRoH6uNEB
-         6rIA==
-X-Gm-Message-State: ACgBeo0Piv5k84y3t9mp6ucKzV2NGPXE+MliGEtV0F7pwUC9MqecIGE7
-        roMIxcOUr3MngkHmuAM3rEvRhvPPUts=
-X-Google-Smtp-Source: AA6agR5VFrAwJsMkYOjsdAcuD82tnY2obsrgJbGdHmc3OGlOG6thGf6y9nGmmVAPZxI/UmYUIQ7jHw==
-X-Received: by 2002:a17:90a:d3cb:b0:1f1:82ca:3ba0 with SMTP id d11-20020a17090ad3cb00b001f182ca3ba0mr3737520pjw.236.1659085592609;
-        Fri, 29 Jul 2022 02:06:32 -0700 (PDT)
+        bh=MkAX6ZBVrA9kmFQxxP23Uvdnv/wtzI0qjdLbfzDFpXM=;
+        b=foAd3cWXw/oOhfPT6MZi4dA++DEg4RpN9znhs9wA2AmpkKqljyrD0o9yjNWbAJ9J0o
+         in3lvc5UxOdWwiCubjW+dm2BlYQe4yvCcgWQiU+V4EBnnkxKRVlR7lSEtZeM8TOO6mBd
+         ACSAwqbo7Hb8fJA30MYGPn8GZ3x0NjRlqA8xHSN2wVmdsTa08rSqp0BnExE3TBu7ojxv
+         lvLRbZ272R6ZJLWIbG4U5Eq6QvKLBxRM7uZtABSz6cs2drtwiy/++qpsWpnVyi2elrGg
+         GQ6mYXgNot+/7uRSd1V6j1aiL33rEpfvzSf9UH8QJYi0QW/4aIuh9PjB9oe3fhOtkmRa
+         jfbg==
+X-Gm-Message-State: AJIora+sQIgkOENA8kAT4ep9pqjm9Ut9J/CIujvbv/my3SxreyTJzTej
+        T1iZuj1doVI28ZWFvmuJwhjp2V3tOsI=
+X-Google-Smtp-Source: AGRyM1u7YR35gd7I23fgAoQnNp1L2WsnzvXJfoNfK5IVUNHQ1u3CYwDa9LFwhF2VFZZD/HS/VD4d0A==
+X-Received: by 2002:a63:1208:0:b0:411:9b47:f6cc with SMTP id h8-20020a631208000000b004119b47f6ccmr2168280pgl.79.1659085609920;
+        Fri, 29 Jul 2022 02:06:49 -0700 (PDT)
 Received: from localhost.localdomain ([113.173.163.90])
-        by smtp.gmail.com with ESMTPSA id x28-20020aa79adc000000b005286697ec68sm2289538pfp.133.2022.07.29.02.06.30
+        by smtp.gmail.com with ESMTPSA id l5-20020a170903120500b0016d62ba5665sm3002669plh.254.2022.07.29.02.06.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 02:06:32 -0700 (PDT)
+        Fri, 29 Jul 2022 02:06:49 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] submodule--helper: fix build warning with gcc 4.8.5
-Date:   Fri, 29 Jul 2022 16:06:23 +0700
-Message-Id: <2466aa5019bd950df4b77d24182f1ec848069d1b.1659085438.git.congdanhqx@gmail.com>
+        <congdanhqx@gmail.com>
+Subject: [PATCH] unpack-objects: fix build warning with gcc 4.8.5
+Date:   Fri, 29 Jul 2022 16:06:44 +0700
+Message-Id: <dfb9273964a6226472316bedf188de63169fb45c.1659084815.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.37.1.560.gdfb9273964
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -65,44 +63,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-list_objects_filter_options's first field is a struct, it must
-be initialised with {0}.
-
-Fix: 3851346be5, (submodule--helper: replace memset() with { 0 }-initialization, 2022-07-28)
+git_zstream's first field is a struct (z_stream), it must be
+initialised with {0}.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
 
-Cc: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-for-branch: ab/submodule-helper-prep and seen
+ Cc: Han Xin <hanxin.hx@alibaba-inc.com>
+ Fix for hx/unpack-streaming (merged to next)
+ Please feel free to squash into it.
 
-Feel free to squash in
+ builtin/unpack-objects.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- builtin/submodule--helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index a3e00c9929..8285c69bde 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1727,7 +1727,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 43789b8ef2..4b16f1592b 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -385,7 +385,7 @@ static const void *feed_input_zstream(struct input_stream *in_stream,
+ 
+ static void stream_blob(unsigned long size, unsigned nr)
  {
- 	int dissociate = 0, quiet = 0, progress = 0, require_init = 0;
- 	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
--	struct list_objects_filter_options filter_options = { 0 };
-+	struct list_objects_filter_options filter_options = { { 0 } };
- 	struct string_list reference = STRING_LIST_INIT_NODUP;
- 	struct option module_clone_options[] = {
- 		OPT_STRING(0, "prefix", &clone_data.prefix,
-@@ -2595,7 +2595,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 	struct pathspec pathspec = { 0 };
- 	struct pathspec pathspec2 = { 0 };
- 	struct update_data opt = UPDATE_DATA_INIT;
--	struct list_objects_filter_options filter_options = { 0 };
-+	struct list_objects_filter_options filter_options = { { 0 } };
- 	int ret;
- 	struct option module_update_options[] = {
- 		OPT__FORCE(&opt.force, N_("force checkout updates"), 0),
+-	git_zstream zstream = { 0 };
++	git_zstream zstream = { { 0 } };
+ 	struct input_zstream_data data = { 0 };
+ 	struct input_stream in_stream = {
+ 		.read = feed_input_zstream,
 -- 
 2.37.1.560.gdfb9273964
 
