@@ -2,93 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDCFFC00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 09:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98058C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 10:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235518AbiG2JGy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 05:06:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43052 "EHLO
+        id S235591AbiG2KF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 06:05:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235516AbiG2JGv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 05:06:51 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6FA50065
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 02:06:50 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id g12so4115296pfb.3
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 02:06:50 -0700 (PDT)
+        with ESMTP id S235282AbiG2KF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 06:05:58 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 039655F8E
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 03:05:57 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id q30so991765wra.11
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 03:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MkAX6ZBVrA9kmFQxxP23Uvdnv/wtzI0qjdLbfzDFpXM=;
-        b=dZ1tqAnYPkHIgayqP7w7J5b2/na6V24ymGf26xYirS35Ma0M0921bT7LZcdUbG+oyQ
-         FHK0FnCqvwgF1QAImJGf11/nTxlTH1yMuB41d/vbrzdqHxSyN4XvoZOZsbQZTRLcxOiv
-         j6QK1hKPskuAcLjGaAW1S4Hiw+ACywZm7NaEKDSc9rxliTbLcQPFPkm9BWjepNetwfB3
-         1yzrIpZCU1HTEfS47QkksjYBCB8R3notcK/a1xj0sT+emfjMGJ2T+btva5jVGo6uPU/l
-         qEfEq1YHzR3ZaNLGhNYvvuIFeJRjuo03RWajd2ZfS1+7PyVseEvs6xtffxID21N4EvUH
-         gOjw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=leYB02IzLCSD31y7AtnOtJIUg1IE1ZzfMfBtxgmb/wA=;
+        b=L3UV74iIhJZbEbx3RYWY3CkTYYp+rXXH6Xu8BtXDEdCdtBD/2bfxZgB1xnFvmiGcex
+         U4c0jIKFRTp/8wP95kTuUfgC3NK7atnLWbZpOI4Tj46Rfw/cFphhFl8AnbKrOEfrCLc9
+         DZFvsvJ0rfvxgBhaVpO5st4oMdVngnG6BYqZPpoPQVkbgFBeP+IoMGqkLk/9MnaY3h8h
+         aVbQINjqMGDOOTtCpWNa+V18YWutpZnHzynaJd9/aiwRSoLrPtLm+p1cieQbsAyVPqkc
+         kOAx0ryBmYCGslSNFiUIOscTGjU/u8rTpNCxyxKa5tzpIQNhzWL5DZlNFAnZ4YfNS/wE
+         40vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MkAX6ZBVrA9kmFQxxP23Uvdnv/wtzI0qjdLbfzDFpXM=;
-        b=foAd3cWXw/oOhfPT6MZi4dA++DEg4RpN9znhs9wA2AmpkKqljyrD0o9yjNWbAJ9J0o
-         in3lvc5UxOdWwiCubjW+dm2BlYQe4yvCcgWQiU+V4EBnnkxKRVlR7lSEtZeM8TOO6mBd
-         ACSAwqbo7Hb8fJA30MYGPn8GZ3x0NjRlqA8xHSN2wVmdsTa08rSqp0BnExE3TBu7ojxv
-         lvLRbZ272R6ZJLWIbG4U5Eq6QvKLBxRM7uZtABSz6cs2drtwiy/++qpsWpnVyi2elrGg
-         GQ6mYXgNot+/7uRSd1V6j1aiL33rEpfvzSf9UH8QJYi0QW/4aIuh9PjB9oe3fhOtkmRa
-         jfbg==
-X-Gm-Message-State: AJIora+sQIgkOENA8kAT4ep9pqjm9Ut9J/CIujvbv/my3SxreyTJzTej
-        T1iZuj1doVI28ZWFvmuJwhjp2V3tOsI=
-X-Google-Smtp-Source: AGRyM1u7YR35gd7I23fgAoQnNp1L2WsnzvXJfoNfK5IVUNHQ1u3CYwDa9LFwhF2VFZZD/HS/VD4d0A==
-X-Received: by 2002:a63:1208:0:b0:411:9b47:f6cc with SMTP id h8-20020a631208000000b004119b47f6ccmr2168280pgl.79.1659085609920;
-        Fri, 29 Jul 2022 02:06:49 -0700 (PDT)
-Received: from localhost.localdomain ([113.173.163.90])
-        by smtp.gmail.com with ESMTPSA id l5-20020a170903120500b0016d62ba5665sm3002669plh.254.2022.07.29.02.06.48
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=leYB02IzLCSD31y7AtnOtJIUg1IE1ZzfMfBtxgmb/wA=;
+        b=yDVEiwrQvLlswnD247nHmt8IXotSlpJpzDj9m2p9OnDNgW7AyD0esNZmpiUGCaYGxU
+         ZNxhXElkg0eYuKpdoGKzn7qE3sWjW2a249F38N4pV3q6xzOt5OyalfbM/uCrKkqE4dmW
+         siycn1E5E+uQVX/S8bIWJTCspEiGwybZglUsmnWX/Bpjg8tzJSvUF3fIge+6vr7LupLt
+         cdm0Yd8Vuy11ZCAU9dKokKcgTtQNCWMZmcMk3ELVrRRD+6wjBuYtWngewfdjVOgwMyRn
+         36+9FDuXQcPUMBjeoXcuxlHjAPPo8RnN2exhFp61RvbnIg1Y2mbJWDDe8uFVJ5y1EOSq
+         WYEw==
+X-Gm-Message-State: ACgBeo3EmSoCdrKAESRHS66Je42EStZHTZC4TNwUACNlcF4D4Zij/++J
+        VnUnJAKpNfE3O3CU5lYEFeE9oJMIHSQ=
+X-Google-Smtp-Source: AA6agR5QsSk9X22C7TpWpJAV6JJgmz4SG3K/btaJMMdAHGJ/8VtV7rrZAw0lKuksxdm8b9WCwyr3tQ==
+X-Received: by 2002:a5d:5c12:0:b0:21f:1c6:c36 with SMTP id cc18-20020a5d5c12000000b0021f01c60c36mr1909021wrb.350.1659089154992;
+        Fri, 29 Jul 2022 03:05:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c19-20020a05600c0a5300b003a32251c3f0sm4037067wmq.33.2022.07.29.03.05.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 02:06:49 -0700 (PDT)
-From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-Subject: [PATCH] unpack-objects: fix build warning with gcc 4.8.5
-Date:   Fri, 29 Jul 2022 16:06:44 +0700
-Message-Id: <dfb9273964a6226472316bedf188de63169fb45c.1659084815.git.congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.37.1.560.gdfb9273964
-MIME-Version: 1.0
+        Fri, 29 Jul 2022 03:05:54 -0700 (PDT)
+Message-Id: <pull.1291.v3.git.1659089152877.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1291.v2.git.1659018558989.gitgitgadget@gmail.com>
+References: <pull.1291.v2.git.1659018558989.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 29 Jul 2022 10:05:52 +0000
+Subject: [PATCH v3] lstat(mingw): correctly detect ENOTDIR scenarios
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git_zstream's first field is a struct (z_stream), it must be
-initialised with {0}.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Files' attributes can indicate more than just whether they are files or
+directories. It was reported in Git for Windows that on certain network
+shares, this led to a nasty problem trying to create tags:
+
+	$ git tag -a -m "automatic tag creation"  test_dir/test_tag
+	fatal: cannot lock ref 'refs/tags/test_dir/test_tag': unable to resolve reference 'refs/tags/test_dir/test_tag': Not a directory
+
+Note: This does not necessarily happen with all types of network shares.
+One setup where it _did_ happen is a Windows Server 2019 VM, and as
+hinted in
+
+	http://woshub.com/slow-network-shared-folder-refresh-windows-server/
+
+in the indicated instance the following commands worked around the bug:
+
+	Set-SmbClientConfiguration -DirectoryCacheLifetime 0
+	Set-SmbClientConfiguration -FileInfoCacheLifetime 0
+	Set-SmbClientConfiguration -FileNotFoundCacheLifetime 0
+
+This would impact performance negatively, though, as it essentially
+turns off all caching, therefore we do not want to require users to do
+that just to be able to use Git on Windows.
+
+The underlying bug is in the code added in 4b0abd5c695 (mingw: let
+lstat() fail with errno == ENOTDIR when appropriate, 2016-01-26) that
+emulates the POSIX behavior where `lstat()` should return `ENOENT` if
+the file or directory simply does not exist but could be created, and
+`ENOTDIR` if there is no file or directory nor could there be because a
+leading path already exists and is not a directory.
+
+In that code, the return value of `GetFileAttributesW()` is interpreted
+as an enum value, not as a bit field, so that a perfectly fine leading
+directory can be misdetected as "not a directory".
+
+As a consequence, the `read_refs_internal()` function would return
+`ENOTDIR`, suggesting not only that the tag in the `git tag` invocation
+above does not exist, but that it cannot even be created.
+
+Let's fix the code so that it interprets the return value of the
+`GetFileAttributesW()` call correctly.
+
+This fixes https://github.com/git-for-windows/git/issues/3727
+
+Reported-by: Pierre Garnier <pgarnier@mega.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
+    Fix the lstat() emulation on Windows
+    
+    One particular code path in the lstat() emulation on Windows was broken.
+    
+    This fixes https://github.com/git-for-windows/git/issues/3727
+    
+    Changes since v2:
+    
+     * Fixed typos in the commit message (I wanted to write "led" but had
+       written "let" instead, thanks once again, Eric!, and I managed to
+       misspell a function name).
+    
+    Changes since v1:
+    
+     * Thanks to Eric's excellent review, the reporter and I dug deeper and
+       figured out the real bug (and fix).
 
- Cc: Han Xin <hanxin.hx@alibaba-inc.com>
- Fix for hx/unpack-streaming (merged to next)
- Please feel free to squash into it.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1291%2Fdscho%2Fenotdir-and-enoent-can-indicate-missing-refs-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1291/dscho/enotdir-and-enoent-can-indicate-missing-refs-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1291
 
- builtin/unpack-objects.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Range-diff vs v2:
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 43789b8ef2..4b16f1592b 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -385,7 +385,7 @@ static const void *feed_input_zstream(struct input_stream *in_stream,
- 
- static void stream_blob(unsigned long size, unsigned nr)
- {
--	git_zstream zstream = { 0 };
-+	git_zstream zstream = { { 0 } };
- 	struct input_zstream_data data = { 0 };
- 	struct input_stream in_stream = {
- 		.read = feed_input_zstream,
+ 1:  2ebe899736e ! 1:  b4f08ee0d7c lstat(mingw): correctly detect ENOTDIR scenarios
+     @@ Commit message
+      
+          Files' attributes can indicate more than just whether they are files or
+          directories. It was reported in Git for Windows that on certain network
+     -    shares, this let to a nasty problem trying to create tags:
+     +    shares, this led to a nasty problem trying to create tags:
+      
+                  $ git tag -a -m "automatic tag creation"  test_dir/test_tag
+                  fatal: cannot lock ref 'refs/tags/test_dir/test_tag': unable to resolve reference 'refs/tags/test_dir/test_tag': Not a directory
+     @@ Commit message
+          above does not exist, but that it cannot even be created.
+      
+          Let's fix the code so that it interprets the return value of the
+     -    `GetFileAtrtibutesW()` call correctly.
+     +    `GetFileAttributesW()` call correctly.
+      
+          This fixes https://github.com/git-for-windows/git/issues/3727
+      
+
+
+ compat/mingw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 545e952a588..3b85bb02536 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -471,8 +471,8 @@ static int has_valid_directory_prefix(wchar_t *wfilename)
+ 		wfilename[n] = L'\0';
+ 		attributes = GetFileAttributesW(wfilename);
+ 		wfilename[n] = c;
+-		if (attributes == FILE_ATTRIBUTE_DIRECTORY ||
+-				attributes == FILE_ATTRIBUTE_DEVICE)
++		if (attributes &
++		    (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_DEVICE))
+ 			return 1;
+ 		if (attributes == INVALID_FILE_ATTRIBUTES)
+ 			switch (GetLastError()) {
+
+base-commit: 4b0abd5c695c87bf600e57b6a5c7d6844707d34c
 -- 
-2.37.1.560.gdfb9273964
-
+gitgitgadget
