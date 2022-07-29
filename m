@@ -2,131 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A71EC00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 15:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3949C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 16:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233223AbiG2P4X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 11:56:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56246 "EHLO
+        id S237075AbiG2QAB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 12:00:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbiG2P4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 11:56:22 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A000A60538
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 08:56:20 -0700 (PDT)
+        with ESMTP id S230040AbiG2P76 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 11:59:58 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A33787F60
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 08:59:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1659110178;
-        bh=ea67fk2q7TME7gKzYcaX1U9rYRiQCmoc6fMzHwWR4f8=;
+        s=badeba3b8450; t=1659110394;
+        bh=gAjgn7ZzkIm+8F2WacwCHMxoac2gwHc7faNBSV6Hgh0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cgTWplQe7A3yGH07KSG92lnjibGH4sg1HWSvS5g95rMyclAS4dXepSe5mueJMCaI2
-         0Fx5WYhrIH+8gopXUm7BZSFO0T227JxCJ/4cUZIq7c3eaA7C2WQWnO3u1oVE1kVeiY
-         k2kwmCE8ymp1ls1jhNuY+7Yktbiw/08Ag4OwHNxA=
+        b=NIW4cPqfWtT0StSONvlCVEmZoalkWZf93/Wk3jgsRByQOKSwQGeOAg8YCQuxvnYVL
+         5YJ6PThPCusz+n5jq3uOSJdO5QmDyzxXm/WsmS3gXeAAS4jEkxY6T+siJlRHtLk88D
+         Bunxt/Djx8jm9GFuQkWTKl2aBV/XXDUxmFLESHMw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.244.62] ([89.1.214.237]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAwXh-1oBAoV2GOf-00BIx7; Fri, 29
- Jul 2022 17:56:18 +0200
-Date:   Fri, 29 Jul 2022 17:56:18 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MkHMP-1nc76333qT-00kdYC; Fri, 29
+ Jul 2022 17:59:54 +0200
+Date:   Fri, 29 Jul 2022 17:59:54 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+To:     Kache Hit <kache.hit@gmail.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] mingw: include the Python parts in the build
-In-Reply-To: <pull.1306.v2.git.1659109272.gitgitgadget@gmail.com>
-Message-ID: <rq6919s9-qspp-rn6o-n704-r0400q10747r@tzk.qr>
-References: <pull.1306.git.1659016906707.gitgitgadget@gmail.com> <pull.1306.v2.git.1659109272.gitgitgadget@gmail.com>
+Subject: Re: BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the
+ index
+In-Reply-To: <CAC7ZvyYGSa-sH1LZ8Lo=NRXbvJsujgFYGPOQR5ZwGHJHZgoDzA@mail.gmail.com>
+Message-ID: <orr5573q-7148-84ro-9rpq-nr7411s894r9@tzk.qr>
+References: <CAC7ZvybvykKQyMWcZoKXxFDu_amnkxZCDq2C6KHoyhmHN2tcKw@mail.gmail.com> <CAC7ZvyYGSa-sH1LZ8Lo=NRXbvJsujgFYGPOQR5ZwGHJHZgoDzA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZotVzl8wmGVGL/Z/6cPeQLmFo218Ab4L9uDiPqqQoZgPK8dKMWh
- uNy/34hEXnSSckp6mR3BuycEgQ1XVaG9aWa3cD9UcJWUX2xwFjSdsB/zJ7gIpDJZ14iWMyc
- fmBc+qQj9HJ1ILyHX5SQ9BaVMDqbv0649lxv6w11nxp2dMw363ZAWSstxHngDn+r9IQzrM1
- 7cMaSIim06amToyeLS/eA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uNpjH5WmoNc=:byRezhCWAAuTUe0EJ39dXw
- 7gdBL8dIxa8M0ZzA3y4uRAg+WqBy3B/3c6LxU0Ni6eI+lJIpiCIcmvFsE16OMO3ZPasYlbIyo
- A45Y8nc56xI9F7+p96FboS0WOEHqE2x+FMw0/AhR9ZarjUefrZoqr3ShfCCpBD9848E/VaDWq
- wxYS5I0DAhKjh07EgG76/wvhCNJr+C1EuFYGM9MFZ2fgfHUGICmrnPp2FRhgxxx933bS4IDGN
- Xj9kpCDKZgRt8LIn0eB7k9c9brDtKh1VEEA6tHb9wUcBmY6ftMxP2jObNFD3tFt2i13297nEK
- CUkwHLAoD9GChenKco64M+7k8HOhy4xXElmYDpd35DXQiB7bLR7bMGM3F6HpLsn9u37ZvSVQg
- fKxUKX+hvQWMLcY1n4tznaY8JN7vZnKsj62iwBkGmOZMWyTtYRRZs8AwASkE6bt/LJ/L7Yn5u
- VzW+0pk1QL+iOS5Segzzqo5GpUEmLaJdrfFIpSHHrxqmWL3J4ocpNn80FiooeiRAs6yMmUQSl
- 5YpVMtWm26hnST0qvYXrTJkkzNjEXiIQx/aC/1q/RvnK6P6vYVPjG6fr2lS6Yb7bFrBzRXaho
- BmE07poLh1CxTNpxUaJ7Ioh5uoMehjvemlRMZTSvSQ+HfdaZDlqsdIk8j5tMdue7UsiPj7Vhr
- wIQT4s1/t+X9RLMZ7YLm+0iXOlAGmcvIDU+CRsnfrkn3EdJ4LKcCkCpEMaoFKyuDxQv8cKpja
- GWAMGiZDxQ0CNqfvOkXv8fGFO4ty+zEwLe/cDH5rPcD6Ns+tNpL8cCIybB+CJHeQksVuu29+X
- nuHB/+mk4y/hplyxidXO+oTrfoXiPh3/ndSd0Tj1gRPHG7e0TAn8qJQ/UC37Rb85Xgt+eNC1q
- b/aBzF4J96yxUntq7jxD5FylM4Z5JV43OE5XYkx8ZuPmGYjS8n3FpMkoSMbZOfp91UpyzZlmH
- UJW6aY9QmgT/ZqXgABofNioO2e8ZQaWFMG8Rjk19WhtNh8vf4ZYQQI9nUAQJuU6MCyU9CIjZh
- NORb88xBXv02WVcgHzbHvwLjoZTrixFlh2FDvpnxiN0rYzlP/y3OPiSS+q/Lh0fR4/Q59vsqb
- yHyz0oLdWEzBOKiuTjHjjS52NzLn6B1vu/ZNrg8L56LHnNsr4j+IvtAqg==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-373861633-1659110395=:223"
+X-Provags-ID: V03:K1:0HOmmmqZf49LlZZD17rejrlngKRs6y+kWqQcl0siz9Y6VHHzal4
+ /UBD2B/HswZA8KRLa4loiuhESHdgqif5bYYiYtzva4wzohI6qgtYp6pUUQ5mS+JhaKxaU9v
+ SSh/d6qI/a0hCWwg9CvZUqi4FUDs4a/FEgn89kdyQsAgWdCdboqDfm8INz/7C/KSx73kbvP
+ bVguvPZWGyh/h2l34vQhA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ELVfNaAPez4=:Ye22lrkUOHQ1HmDvpkzCCk
+ hgg29j3dTfw3hkNFGUDw1O4ercs0v8E6jjiYTdkasBXv86CD+/o/QtWRYzqlXCATu3U8KN2XK
+ efuJgAl/8dfrg/5JJaOncs36QlWGKVlV+UhEOdtS4SPaAWOBsn022i2xIztbqLoEzMfh0tNhL
+ TTJbDO8Ji9o8rdR5CsKVywOaB11otF+sa/qRh401IqYawVxJSWFUOpxPMv0EQZcXP6GSBtxlq
+ U/k9DrY7ZuJLdcAv/H2gWhxxJLdSwpk3Rmh41VZMKJWaf5p2gkRG+PNJ5zv4QemBGVcHLa/ya
+ ZnlrgwPS8S1wydBrI6Tnvai92GJhPsH6F5O0MoszZ3Ga4qmzEkpBpfLnHRxsQ7WrdP4eY4qQ9
+ QF3S51g/twIYSvqSiWs5ssuVoZJgXQ7VIphUdhH1znumn4T9KRPeSZUeNf2RFkEoyzzPQ7715
+ brp4nJ9Olt5bCqVaqVz6gvN/QYZ4yj71ZWfvxNsflyQrPL/+yCXjx8f6an46MMGPtaBIKxpyF
+ p2pbyeXCEok32ERYvMZYIdPJfNvNXg0AQ7CvShXO2musM/CyZmWbu/9QLffjVvoSHiW9Jj7SN
+ Wnq7xD2rOSL2JPKes8DGv7SzOxY6YIirEbr7TUFgszKbR4eWKAMYPcilor5QDtvXyd0ldavoB
+ XgKlPiU/Hhl2IAs0/WIFfO3F9q7/DkMvx6ArZzwaPPLUeIZURz3sHLjGMugdHJUXXLg2qusZ6
+ 2Mb7M4szW/C2sZVHlxdU8UQhTCpwgbrgtGaMss35JUqSwNbybGFd0iUmIvlSnD8xN/npv+SX7
+ 9qTYkQSi5AEm/KyWAXtgL/lnSFI2q2J/Z/dCGe0KvZdkXEEoHeQhIbduAI/3/Mo+l84AzlpxL
+ N1WBAuHW0NtCjVqEwzLmxYiXgHyLVvoDpf7JrV+YGfSq2+yCKhVPlaHEX2wkX4YJG6HItXEn5
+ 3bv2qtGk6t/rOhHvjdJwBUax2cwNB+LTc0SIv5lkYIvyzLESAvmMrgCHoZU6b930DcwC9kzBY
+ N95gRTvFixN9+xubs7C4RfVbnBorkTP9yUOlaDVCvxq4QTAR3mc4Qnk0ADv8xnrOhroUZEjd9
+ VViZCD3UvHkvBm+Qg4YGhGytjYFv8lxFn1/w/Aj6xHevL9kT6Qc282NYg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 29 Jul 2022, Johannes Schindelin via GitGitGadget wrote:
+--8323328-373861633-1659110395=:223
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Range-diff vs v1:
->
->  -:  ----------- > 1:  5d9b087625a windows: include the Python bits when=
- building Git for Windows
->  -:  ----------- > 2:  019fb837d68 mingw: remove unneeded `NO_GETTEXT` d=
-irective
->  1:  a5739b9cce8 ! 3:  7dc0a1a9aa8 mingw: include the Python parts in th=
-e build
->      @@ Metadata
->       Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
->        ## Commit message ##
->      -    mingw: include the Python parts in the build
->      +    mingw: remove unneeded `NO_CURL` directive
->
->      -    While Git for Windows does not _ship_ Python (in order to save=
- on
->      -    bandwidth), MSYS2 provides very fine Python interpreters that =
-users can
->      -    easily take advantage of, by using Git for Windows within its =
-SDK.
->      +    In df5218b4c30 (config.mak.uname: support MSys2, 2016-01-13), =
-we
->      +    introduced support for building Git for Windows in the then-br=
-and new
->      +    Git for Windows v2.x build environment that was based off of M=
-SYS2.
->      +
->      +    To do that, we split the non-msysGit part (that targeted MSys1=
-) in two,
->      +    and instead of sharing the `NO_CURL =3D YesPlease` setting wit=
-h MSys1, we
->      +    overrode it for MSYS2 with the empty value because we very muc=
-h want to
->      +    build Git for Windows with libcurl.
->      +
->      +    But that was unnecessary: we never set that variable beforehan=
-d,
->      +    therefore there is no need to override it.
->      +
->      +    Let's just remove that unnecessary line.
->
->           Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de=
->
->
->        ## config.mak.uname ##
->       @@ config.mak.uname: else
->      + 		HAVE_LIBCHARSET_H =3D YesPlease
->      + 		USE_GETTEXT_SCHEME =3D fallthrough
->        		USE_LIBPCRE =3D YesPlease
->      - 		NO_CURL =3D
->      +-		NO_CURL =3D
->        		USE_NED_ALLOCATOR =3D YesPlease
->      -+		NO_PYTHON =3D
->        		ifeq (/mingw64,$(subst 32,64,$(prefix)))
->        			# Move system config into top-level /etc/
->      - 			ETC_GITCONFIG =3D ../etc/gitconfig
+Hi Kache,
 
-Oh, that's funny. This is actually the first time I personally see
-`range-diff` matching up a wrong patch pair (because it really looks for
-the minimal diff between the diffs). It is of course nonsense to match up
-the original patch with the `NO_CURL` patch.
+On Tue, 19 Jul 2022, Kache Hit wrote:
+
+> A thought: the 179457 is reminiscent of something else I did just before=
+ this:
+>
+> I was doing some "code archeology" and was headlessly checking out
+> some old SHAs in this large monorepo.
+> During checkout, it said it was updating 174823 files in total.
+
+Do you think it would be possible to whittle this down a bit, and maybe
+attempt to come up with a reproducible example? Something like what is
+described in https://stackoverflow.com/help/mcve.
+
+If all else fails, and you _only_ manage to reproduce it in the original
+repository, could you at least try to figure out a reliable way to get the
+Git index into the indicated state (if I were you, I would start off by
+switching to the pre-rebase revision, deleting `.git/index` and then
+running `git reset --hard` and then see whether the bug can be
+reproduced)?
 
 Ciao,
-Dscho
+Johannes
+
+>
+> On Tue, Jul 19, 2022 at 2:36 PM Kache Hit <kache.hit@gmail.com> wrote:
+> >
+> > Hi. Output of git bugreport:
+> >
+> > ---
+> >
+> > Thank you for filling out a Git bug report!
+> > Please answer the following questions to help us understand your issue=
+.
+> >
+> > What did you do before the bug happened? (Steps to reproduce your issu=
+e)
+> >
+> > Wanted to retain git tree structure when pulling latest and rebasing.
+> > First indication of error was the `rebase -r` of the merge commit
+> >
+> > What did you expect to happen? (Expected behavior)
+> >
+> > successful --rebase-merges rebase of my commits on top of master
+> >
+> > What happened instead? (Actual behavior)
+> >
+> > ```sh
+> > =E2=9D=AF git rebase -r master
+> > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+> > (179457 > 1040)
+> > zsh: abort      git rebase -r master
+> > ```
+> >
+> > What's different between what you expected and what actually happened?
+> >
+> > Anything else you want to add:
+> >
+> > I'm currently "stuck" in this state, not sure how to recover or repro:
+> >
+> > ```sh
+> > =E2=9D=AF git s
+> > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+> > (179457 > 1040)
+> > error: git died of signal 6
+> >
+> > =E2=9D=AF git log
+> >
+> > =E2=9D=AF git d head~
+> > error: git died of signal 6
+> > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+> > (179457 > 1040)
+> >
+> > =E2=9D=AF git log # works
+> >
+> > =E2=9D=AF git status
+> > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+> > (179457 > 1040)
+> > zsh: abort      git status
+> >
+> > =E2=9D=AF git commit --amend
+> > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+> > (179457 > 1040)
+> > zsh: abort      git commit --amend
+> >
+> > =E2=9D=AF git checkout head
+> > fatal: Unable to create '/Users/XXXXX/YYYYY/.git/index.lock': File exi=
+sts.
+> >
+> > Another git process seems to be running in this repository, e.g.  #
+> > All of this was run while git bugreport was running
+> > an editor opened by 'git commit'. Please make sure all processes
+> > are terminated then try again. If it still fails, a git process
+> > may have crashed in this repository earlier:
+> > remove the file manually to continue.
+> >
+> > =E2=9D=AF rm /Users/XXXXX/YYYYY/.git/index.lock
+> >
+> > =E2=9D=AF git checkout head
+> > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
+> > (179457 > 1040)
+> > zsh: abort      git checkout head
+> >
+> > =E2=9D=AF git checkout head
+> > fatal: Unable to create '/Users/XXXXX/YYYYY/.git/index.lock': File exi=
+sts.
+> >
+> > Another git process seems to be running in this repository, e.g.
+> > an editor opened by 'git commit'. Please make sure all processes
+> > are terminated then try again. If it still fails, a git process
+> > may have crashed in this repository earlier:
+> > remove the file manually to continue.
+> > ```
+> >
+> >
+> > Please review the rest of the bug report below.
+> > You can delete any lines you don't wish to share.
+> >
+> >
+> > [System Info]
+> > git version:
+> > git version 2.37.1
+> > cpu: x86_64
+> > no commit associated with this build
+> > sizeof-long: 8
+> > sizeof-size_t: 8
+> > shell-path: /bin/sh
+> > feature: fsmonitor--daemon
+> > uname: Darwin 20.6.0 Darwin Kernel Version 20.6.0: Tue Feb 22 21:10:41
+> > PST 2022; root:xnu-7195.141.26~1/RELEASE_X86_64 x86_64
+> > compiler info: clang: 13.0.0 (clang-1300.0.29.30)
+> > libc info: no libc information available
+> > $SHELL (typically, interactive shell): /bin/zsh
+> >
+> >
+> > [Enabled Hooks]
+> > pre-commit
+> > pre-push
+>
+
+--8323328-373861633-1659110395=:223--
